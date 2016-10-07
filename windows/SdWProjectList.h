@@ -1,0 +1,46 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+*/
+
+#ifndef SDWPROJECTLIST_H
+#define SDWPROJECTLIST_H
+
+#include "objects/SdProject.h"
+#include <QWidget>
+#include <QList>
+#include <QStackedWidget>
+
+
+
+class SdWProjectList : public QWidget
+  {
+    Q_OBJECT
+
+    QStackedWidget *mWProjectStack;
+  public:
+    explicit SdWProjectList(QWidget *parent = 0);
+
+    bool isEmpty() { return mWProjectStack->count() == 0; }
+
+  signals:
+    //Name of active project changed or other project selected
+    void projectNameChanged( const QString name, bool dirty );
+
+  public slots:
+    //Close all projects
+    void fileCloseAll();
+
+    //File project open
+    void fileOpen( const QString fname );
+  };
+
+#endif // SDWPROJECTLIST_H

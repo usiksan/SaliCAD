@@ -18,21 +18,40 @@ History
 #ifndef SDCONFIG
 #define SDCONFIG
 
-#define SD_AUTHOR               "Alexander Sibilev"
+//Do'nt change this name
+#define SD_AUTHOR                   "Alexander Sibilev"
 
 //Version definition
-#define SD_VERSION_MAJOR    0
-#define SD_VERSION_MINOR 1
+#define SD_VERSION_MAJOR             0
+#define SD_VERSION_MINOR             1
 
 //Some defaults
-#define SD_DEFAULT_WEB "www.SaliLAB.com"
+#define SD_DEFAULT_WEB               "www.SaliLAB.com"
 
 //Project naming definition
-#define SD_
+#define SD_BASE_EXTENSION            ".salicad"
+#define SD_DEFAULT_FILE_NAME         "default"
 
-//Settings keys
-#define SDK_WMAIN_MAX "WMainMax"
-#define SDK_LANGUAGE  "Language"
+//SaliCAD database version
+//Must be compatible with previous versions
+#define SD_BASE_VERSION_1            1
+
+//Current SaliCAD database version
+#define SD_BASE_VERSION              SD_BASE_VERSION_1
+
+//Previous file count in menu
+#define PREVIOUS_FILES_COUNT         5
+
+//Clipboard objects format
+#define SALICAD_CLIP_FORMAT_OBJECT   "text/salicad-object"
+#define SALICAD_CLIP_FORMAT_FRAGMENT "text/salicad-fragment"
+
+
+
+//Settings key names
+#define SDK_WMAIN_MAX                "WMainMax"
+#define SDK_LANGUAGE                 "Language"
+#define SDK_MAIN_SPLITTER            "MainSplitter"
 
 #endif // SDCONFIG
 

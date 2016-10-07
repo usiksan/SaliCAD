@@ -16,21 +16,39 @@ Description
 #define SBWMAIN_H
 
 #include "SdConfig.h"
+#include "SdWProjectList.h"
+#include "SdWEditor.h"
 #include <QMainWindow>
 #include <QSplitter>
+#include <QTabWidget>
 #include <QStringList>
+
+class SdProjectItem;
 
 class SdWMain : public QMainWindow
   {
     Q_OBJECT
 
-    QSplitter *mSplitter; //Central part of programm windows - is splitter with projects and redactors
+    QSplitter      *mWSplitter;     //Central part of programm windows - is splitter with projects and redactors
+    SdWProjectList *mWProjectList;  //Project list
+    QTabWidget     *mWEditors;      //Actived visual editors
   public:
-    explicit SdWMain( const QStringList &arg, QWidget *parent = 0);
+    explicit SdWMain( QStringList args, QWidget *parent = 0 );
 
   signals:
 
   public slots:
+    void activateProjectName( const QString name, bool dirty );
+
+    void activateProjectItem( SdProjectItem *item );
+
+    // QWidget interface
+  protected:
+    virtual void closeEvent(QCloseEvent *ev) override;
+
+  private:
+    SdWEditor* getEditor( int index );
+    SdWEditor* getCurrent();
   };
 
 #endif // SBWMAIN_H
