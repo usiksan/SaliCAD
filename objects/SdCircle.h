@@ -15,7 +15,8 @@ Description
 #define SDCIRCLE_H
 
 #include "SdPoint.h"
-#include "SdRect.h"
+
+class SdRect;
 
 struct SdCircle
   {
@@ -25,9 +26,9 @@ struct SdCircle
     SdCircle() : center(), radius(0) {}
     SdCircle( SdPoint c, int r ) : center(c), radius(r) {}
 
-    bool  isPointInside( SdPoint ) const;    //Истина, если точка внутри окружности
-    bool  isRectInside( SdRect r ) const;    //Истина, если прямоугольник внутри окружности
-    bool  isCircleInside( SdCircle c) const; //Истина, если окружность внутри окружности
+    bool   isPointInside(SdPoint p) const;    //Истина, если точка внутри окружности
+    bool   isRectInside( SdRect r ) const;    //Истина, если прямоугольник внутри окружности
+    bool   isCircleInside( SdCircle c) const; //Истина, если окружность внутри окружности
 
     SdRect overRect() const;           //Описанный квадрат
     SdRect innerRect() const;          //Вписанный квадрат

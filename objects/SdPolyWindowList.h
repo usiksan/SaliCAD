@@ -11,18 +11,16 @@ Web
 Description
 */
 
-#ifndef SDPOINTLIST_H
-#define SDPOINTLIST_H
+#ifndef SDPOLYWINDOWLIST_H
+#define SDPOLYWINDOWLIST_H
 
-#include "SdPoint.h"
+#include "SdPolyWindow.h"
 #include <QList>
-#include <QJsonArray>
-#include <QJsonObject>
 
-class SdPointList : public QList<SdPoint>
+class SdPolyWindowList : public QList<SdPolyWindow>
   {
   public:
-    SdPointList() {}
+    SdPolyWindowList() {}
 
     QJsonArray write();
     void       write( const QString name, QJsonObject &obj );
@@ -31,4 +29,4 @@ class SdPointList : public QList<SdPoint>
     void       read( const QString name, const QJsonObject obj );
   };
 
-#endif // SDPOINTLIST_H
+#endif // SDPOLYWINDOWLIST_H

@@ -12,27 +12,41 @@ Description
 */
 
 #include "SdObject.h"
+#include "SdOwner.h"
 #include <QJsonValue>
 
-SdObject::SdObject()
+SdObject::SdObject() :
+  mParent(0)
   {
 
   }
 
 
-QJsonObject SdObject::write()
+QJsonObject SdObject::write() const
   {
-  QJsonObject obj = writePtr();
+  QJsonObject obj;
+  obj.insert( QStringLiteral(SDKO_ID), QJsonValue( getId() ) );
+  obj.insert( QStringLiteral(SDKO_TYPE), QJsonValue( getType() ) );
+  writePtr( mParent, QStringLiteral("Parent"), obj );
   writeObject( obj );
   return obj;
   }
 
-QJsonObject SdObject::writePtr()
+void SdObject::writePtr(const SdObject *ptr, const QString name, QJsonObject &obj)
   {
-  QJsonObject obj;
-  obj.insert( QString(SDKO_ID), QJsonValue( getId() ) );
-  obj.insert( QString(SDKO_TYPE), QJsonValue( getType() ) );
-  return obj;
+  QJsonObject sub;
+  if( ptr ) {
+    sub.insert( QStringLiteral(SDKO_ID), QJsonValue( ptr->getId() ) );
+    sub.insert( QStringLiteral(SDKO_TYPE), QJsonValue( ptr->getType() ) );
+    }
+  else
+    sub.insert( QStringLiteral(SDKO_ID), QJsonValue( (int)0 ) );
+  obj.insert( name, sub );
+  }
+
+void SdObject::readObject(SdObjectMap *map, const QJsonObject obj)
+  {
+  mParent = dynamic_cast<SdOwner*>( readPtr(QStringLiteral("Parent"), map, obj ) );
   }
 
 
@@ -42,8 +56,9 @@ QJsonObject SdObject::writePtr()
 SdObject *SdObject::read(SdObjectMap *map, const QJsonObject obj)
   {
   SdObject *r = readPtr( map, obj );
-  if( r )
+  if( r ) {
     r->readObject( map, obj );
+    }
 
   return r;
   }
@@ -54,7 +69,7 @@ SdObject *SdObject::read(SdObjectMap *map, const QJsonObject obj)
 SdObject *SdObject::readPtr(SdObjectMap *map, const QJsonObject obj)
   {
   //Get object id
-  int id = obj.value( QString(SDKO_ID) ).toInt();
+  int id = obj.value( QStringLiteral(SDKO_ID) ).toInt();
 
   //If id equals zero then no object
   if( id == 0 )
@@ -65,22 +80,25 @@ SdObject *SdObject::readPtr(SdObjectMap *map, const QJsonObject obj)
     return map->value(id);
 
   //Build new object
-  SdObject *r = build( obj.value( QString(SDKO_TYPE) ).toInt() );
+  SdObject *r = build( obj.value( QStringLiteral(SDKO_TYPE) ).toString() );
   //Register new object in the map
   map->insert( id, r );
   //and return new object
   return r;
   }
 
-
-
-
-
-SdObject *SdObject::build(int type)
+SdObject *SdObject::readPtr(const QString name, SdObjectMap *map, const QJsonObject obj)
   {
-  switch( type ) {
-    default : return 0;
-    }
+  return readPtr( map, obj.value(name).toObject() );
+  }
+
+
+
+
+
+SdObject *SdObject::build(QString type)
+  {
+  return 0;
   }
 
 

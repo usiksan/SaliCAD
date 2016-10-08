@@ -13,10 +13,6 @@ Description
 
 #include "SdPointList.h"
 
-SdPointList::SdPointList()
-  {
-
-  }
 
 
 QJsonArray SdPointList::write()

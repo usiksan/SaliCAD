@@ -14,12 +14,10 @@ Description
 #ifndef SDPROJECTITEM_H
 #define SDPROJECTITEM_H
 
-#include "SdObject.h"
+#include "SdOwner.h"
 #include <QString>
 
-#define SDKO_TITLE "title"
-
-class SdProjectItem : public SdObject
+class SdProjectItem : public SdOwner
   {
     QString mTitle;
   public:
@@ -33,7 +31,7 @@ class SdProjectItem : public SdObject
 
     // SdObject interface
   public:
-    virtual void writeObject(QJsonObject &obj) override;
+    virtual void writeObject(QJsonObject &obj) const override;
     virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
   };
 

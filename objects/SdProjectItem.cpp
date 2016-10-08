@@ -20,14 +20,15 @@ SdProjectItem::SdProjectItem()
 
 
 
-void SdProjectItem::writeObject(QJsonObject &obj)
+void SdProjectItem::writeObject(QJsonObject &obj) const
   {
-  SdObject::writeObject(obj);
-  obj.insert( QString(SDKO_TITLE), mTitle );
+  //SdOwner::writeObject( obj );
+  obj.insert( QStringLiteral("Title"), mTitle );
   }
+
 
 void SdProjectItem::readObject(SdObjectMap *map, const QJsonObject obj)
   {
-  SdObject::readObject( map, obj );
-  mTitle = obj.value( QString(SDKO_TITLE) );
+  SdOwner::readObject( map, obj );
+  mTitle = obj.value( QStringLiteral("Title") ).toString();
   }

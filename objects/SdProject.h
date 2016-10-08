@@ -14,16 +14,17 @@ Description
 #ifndef SDPROJECT_H
 #define SDPROJECT_H
 
-#include <QAbstractItemModel>
+#include "SdOwner.h"
+#include "SdProjectItem.h"
 #include <QList>
 
-class SdProject : public QAbstractItemModel
+class SdProject : public SdOwner
   {
-    Q_OBJECT
-
-
   public:
     SdProject();
+
+    int            countOf( quintptr id );
+    SdProjectItem* item( quintptr classId, int row );
   };
 
 

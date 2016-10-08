@@ -33,7 +33,19 @@ SOURCES += \
     objects/SdLineProp.cpp \
     objects/SdProp.cpp \
     objects/SdTextProp.cpp \
-    objects/SdContext.cpp
+    objects/SdContext.cpp \
+    objects/SdQuadrangle.cpp \
+    objects/SdUndo.cpp \
+    objects/SdSegment.cpp \
+    objects/SdSnapInfo.cpp \
+    objects/SdPolyWindow.cpp \
+    objects/SdPolyWindowList.cpp \
+    objects/SdRoadProp.cpp \
+    objects/SdSymPinProp.cpp \
+    objects/SdPartPinProp.cpp \
+    objects/SdSymImpProp.cpp \
+    objects/SdPartImpProp.cpp \
+    objects/SdOwner.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -57,7 +69,20 @@ HEADERS  += \
     objects/SdLineProp.h \
     objects/SdProp.h \
     objects/SdTextProp.h \
-    objects/SdContext.h
+    objects/SdContext.h \
+    objects/SdQuadrangle.h \
+    objects/SdUndoRecord.h \
+    objects/SdUndo.h \
+    objects/SdSegment.h \
+    objects/SdSnapInfo.h \
+    objects/SdPolyWindow.h \
+    objects/SdPolyWindowList.h \
+    objects/SdRoadProp.h \
+    objects/SdSymPinProp.h \
+    objects/SdPartPinProp.h \
+    objects/SdSymImpProp.h \
+    objects/SdPartImpProp.h \
+    objects/SdOwner.h
 
 DISTFILES += \
     license.txt

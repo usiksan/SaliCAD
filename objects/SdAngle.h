@@ -9,12 +9,15 @@ Web
   www.saliLab.ru
 
 Description
+  Angle in 0.001 degree. It always positive and in range from 0 to 360000
 */
 
 #ifndef SSdAngle_H
 #define SSdAngle_H
 
 #include "SdIntProp.h"
+
+const int da0 = 0, da90 = 90000, da180 = 180000, da270 = 270000;
 
 class SdAngle : public SdIntProp
   {

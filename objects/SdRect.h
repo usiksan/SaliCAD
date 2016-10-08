@@ -16,39 +16,32 @@ Description
 
 #include "SdPoint.h"
 #include "SdPointList.h"
+#include <QRect>
 
-struct SdRect
+class SdCircle;
+
+class SdRect : public QRect
   {
-    int x,y,width,height;
+  public:
+    SdRect() : QRect() {}
+    SdRect( SdPoint a, SdPoint b );
+    SdRect( int px, int py, int w, int h);
 
-    SdRect();
-    SdRect();
-    SdRect( SdPoint _a, SdPoint _b );
-    SdRect( int lx, int ly, int rx, int ry);
+    void        set( SdPoint a, SdPoint b );
+    void        set( QRect r );
+    void        grow( SdPoint point );
+    void        grow( const SdRect &rect );
+    void        move( SdPoint offset ) { translate( offset ); }
+    void        mirror( SdPoint origin );
+    void        rotate( SdPoint origin, SdAngle angle );
 
-    SdPoint leftTop() const { return SdPoint(x,y); }
-    SdPoint rightTop() const { return SdPoint(x+width,y); }
-    SdPoint leftBottom() const { return SdPoint(x,y+height); }
-    SdPoint rightBottom() const { return SdPoint(x+width,y+height); }
-    SdPoint center() const { return SdPoint(x+width/2,y+height/2); }
-    SdPoint size() const { return SdPoint(width,height); }
-
-    void    set( int lx, int ly, int rx, int ry);
-    void    grow( SdPoint point );
-    void    grow( const SdRect &rect );
-    void    move( SdPoint offset );
-    void    mirror( SdPoint origin );
-    void    mirror( SdPoint a, SdPoint b );
-    void    rotate( SdPoint origin, DAngle angle );
-
-    bool    isPointInside( const SdPoint point ) const;
-    bool    isCircleInside( SdCircle circle ) const;
-    bool    isRectInside( const SdRect &r ) const;
-    bool    isAccross( const SdPoint a, const SdPoint b ) const;
-    bool    isAccross( const SdRect &r ) const;
-    bool    isAccross( const SdPoint center, const int radius ) const;
-    void    calcOverPolygon( SdPointList &polygon );
-    void    intersect( const SdRect &sour );
+    bool        isPointInside( const SdPoint point ) const { return contains( point ); }
+    bool        isRectInside( const SdRect &r ) const { return contains( r ); }
+    bool        isCircleInside( SdCircle circle ) const;
+    bool        isAccross(const SdPoint p1, const SdPoint p2 ) const;
+    bool        isAccross( const SdRect &r ) const { return intersects( r ); }
+    void        calcOverPolygon( SdPointList &polygon );
+    void        intersect( const SdRect &sour ) { set( intersected(sour) ); }
 
     QJsonObject write() const;
     void        write( const QString name, QJsonObject &obj ) const;

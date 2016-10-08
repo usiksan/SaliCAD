@@ -28,7 +28,7 @@ class SdIntProp
     SdIntProp( int i ) : mValue( i ) { }
 
     bool       operator == ( int i ) const { return mValue == i; }
-               operator const int () const { return mValue; }
+               operator int () const { return mValue; }
     void       operator = ( int i ) { if( i >= 0 || i < AllValue ) mValue = i; }
     SdIntProp& operator = ( const SdIntProp& s ) { if( s.mValue != NoValue && s.mValue != AllValue ) mValue = s.mValue; return *this; }
     int        getValue() const { return mValue; }
@@ -39,7 +39,7 @@ class SdIntProp
       }
 
     void       write( const QString name, QJsonObject &obj ) const { obj.insert( name, mValue ); }
-    void       read( const QString name, const QJsonObject obj ) { mValue = obj.value(name); }
+    void       read( const QString name, const QJsonObject obj ) { mValue = obj.value(name).toInt(); }
   };
 
 #endif // SDINTPROP_H

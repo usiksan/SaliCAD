@@ -30,15 +30,23 @@ Description
 #define SDKO_TYPE      "type"
 #define SDKO_ID        "id"
 
+class SdOwner;
+
 class SdObject
   {
+    SdOwner *mParent;
   public:
     SdObject();
 
     //Information
     int               getId() const { return (int)(this); }
+    virtual QString   getType() const = 0;
+    virtual int       getClass() const = 0;
 
-    virtual int       getType() = 0;
+    //Hierarhy
+    SdOwner*          getParent() const { return mParent; }
+    SdOwner*          getRoot() const;
+    void              setParent( SdOwner *parent ) { mParent = parent; }
 
 
     //Copy
@@ -48,15 +56,16 @@ class SdObject
     virtual SdObject* copyNext() { return copy(); }
 
     //Write and read object
-    virtual void      writeObject( QJsonObject &obj ) = 0;
-    QJsonObject       write();
-    QJsonObject       writePtr();
+    virtual void      writeObject( QJsonObject &obj ) const = 0;
+    QJsonObject       write() const;
+    static  void      writePtr( const SdObject *ptr, const QString name, QJsonObject &obj );
 
-    virtual void      readObject( SdObjectMap *map, const QJsonObject obj ) = 0;
+    virtual void      readObject( SdObjectMap *map, const QJsonObject obj );
 
     static  SdObject* read( SdObjectMap *map, const QJsonObject obj );
     static  SdObject* readPtr( SdObjectMap *map, const QJsonObject obj );
-    static  SdObject* build( int type );
+    static  SdObject* readPtr( const QString name, SdObjectMap *map, const QJsonObject obj );
+    static  SdObject* build( QString type );
   };
 
 #endif // SDOBJECT_H
