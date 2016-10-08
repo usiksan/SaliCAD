@@ -22,3 +22,9 @@ void SdOwner::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdObject::readObject( map, obj );
   }
+
+
+void SdOwner::writeObject(QJsonObject &obj) const
+  {
+  Q_UNUSED(obj)
+  }

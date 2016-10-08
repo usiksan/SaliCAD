@@ -16,14 +16,28 @@ Description
 
 #include "SdObject.h"
 
+class SdIterator {
+  protected:
+    int classMask;
+  public:
+    SdIterator( int mask ) : classMask(mask) {}
+
+    virtual bool operation( SdObject *obj ) = 0;
+
+    virtual bool isAccept( int classId ) { return classId & classMask; }
+  };
+
+
 class SdOwner : public SdObject
   {
   public:
     SdOwner();
 
-    // SdObject interface
-  public:
     virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
+
+    virtual void forEach( SdIterator &i ) = 0;
+
+    virtual void writeObject(QJsonObject &obj) const override;
   };
 
 

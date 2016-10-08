@@ -19,12 +19,41 @@ Description
 #include "SdObjectMap.h"
 #include <QJsonObject>
 
-#define SdtObject      1
-#define SdtSymbol      50
-#define SdtPart        51
-#define SdtSheet       52
-#define SdtPlate       53
-#define SdtProject     54
+//Классы объектов
+const int
+  dctLines    = 0x0001,
+  dctText     = 0x0002,
+  dctSymPin   = 0x0004,
+  dctSPName   = 0x0008,
+  dctSPNumb   = 0x0010,
+  dctIdent    = 0x0020,
+  dctSymbol   = 0x0040,
+  dctSymImp   = 0x0080,
+  dctPrtPin   = 0x0100,
+  dctPPName   = 0x0200,
+  dctPPNumb   = 0x0400,
+  dctPart     = 0x0800,
+  dctPartImp  = 0x1000,
+  dctWire     = 0x2000,
+  dctWName    = 0x4000,
+  dctSheet    = 0x8000,
+  dctPlate    = 0x10000,
+  dctList     = 0x20000,
+  dctAlias    = 0x40000,
+  dctPoligon  = 0x80000,
+  dctVia      = 0x100000,
+  dctUser     = 0x200000,
+  dctProject  = 0x400000,
+  dctSize     = 0x800000,
+  dctSizePrp  = 0x1000000,
+  dctTextDoc  = 0x2000000,
+  dctSelector = 0x4000000,
+  dctSheetNet = 0x8000000,
+  dctPlateNet = 0x10000000,
+  dctChars    = 0x20000000,
+  dctPrjList  = 0x40000000,
+  dctData     = 0x80000000,
+  dctPicture  = dctLines | dctText | dctSize;
 
 
 #define SDKO_TYPE      "type"
@@ -37,6 +66,7 @@ class SdObject
     SdOwner *mParent;
   public:
     SdObject();
+    virtual ~SdObject() {}
 
     //Information
     int               getId() const { return (int)(this); }
@@ -67,5 +97,14 @@ class SdObject
     static  SdObject* readPtr( const QString name, SdObjectMap *map, const QJsonObject obj );
     static  SdObject* build( QString type );
   };
+
+
+template <class T>
+T* only( SdObject *obj ) {
+  T *t = dynamic_cast<T*>( obj );
+  if( t ) return t;
+  delete obj;
+  return 0;
+  }
 
 #endif // SDOBJECT_H

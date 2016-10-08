@@ -20,7 +20,6 @@ SOURCES += \
     objects/SdProject.cpp \
     windows/SdWProjectTree.cpp \
     windows/SdWProjectList.cpp \
-    objects/SdProjectModel.cpp \
     windows/SdWEditor.cpp \
     objects/SdProjectItem.cpp \
     objects/SdSymbol.cpp \
@@ -56,7 +55,6 @@ HEADERS  += \
     objects/SdProject.h \
     windows/SdWProjectTree.h \
     windows/SdWProjectList.h \
-    objects/SdProjectModel.h \
     windows/SdWEditor.h \
     objects/SdProjectItem.h \
     objects/SdObjectMap.h \

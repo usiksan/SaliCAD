@@ -35,4 +35,6 @@ class SdProjectItem : public SdOwner
     virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
   };
 
+typedef SdProjectItem *SdProjectItemPtr;
+
 #endif // SDPROJECTITEM_H

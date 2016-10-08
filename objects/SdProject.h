@@ -18,18 +18,23 @@ Description
 #include "SdProjectItem.h"
 #include <QList>
 
+#define SD_TYPE_PROJECT "Project"
+
 class SdProject : public SdOwner
   {
+    QList<SdProjectItemPtr> mItems;
   public:
     SdProject();
+    SdProject( SdProject *src );
+    ~SdProject();
 
-    int            countOf( quintptr id );
-    SdProjectItem* item( quintptr classId, int row );
+    virtual QString   getType() const override;
+    virtual int       getClass() const override;
+    virtual SdObject *copy() override;
+    virtual void      writeObject(QJsonObject &obj) const override;
+    virtual void      forEach(SdIterator &i) override;
+
+    static SdProject *load( const QString fname );
   };
-
-
-typedef SdProject *SdProjectPtr;
-
-typedef QList<SdProjectPtr> SdProjectPtrList;
 
 #endif // SDPROJECT_H

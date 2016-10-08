@@ -157,8 +157,8 @@ class SdWMain : public QMainWindow
     SdWProjectTree *activeProject() { return mWProjectList->activeProject(); }
     SdWProjectTree *project( int index ) { return mWProjectList->project(index); }
     void            createMenu();
-    void            fileOpen( const QString &fname );
     void            destroyProject( SdWProjectTree *prj );
+    void            setupTitle();
   };
 
 #endif // SBWMAIN_H

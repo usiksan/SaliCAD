@@ -12,6 +12,7 @@ Description
 */
 
 #include "SdWCommand.h"
+#include "SdWMain.h"
 #include <QMenuBar>
 #include <QSettings>
 #include <QFileInfo>

@@ -20,6 +20,7 @@ History
 
 //Do'nt change this name
 #define SD_AUTHOR                   "Alexander Sibilev"
+#define SD_NAME                     "SaliCAD"
 
 //Version definition
 #define SD_VERSION_MAJOR             0

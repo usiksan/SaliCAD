@@ -16,6 +16,7 @@ Description
 #include "SdWProjectTree.h"
 #include <QSettings>
 #include <QVBoxLayout>
+#include <QMessageBox>
 
 
 SdWProjectList::SdWProjectList(QWidget *parent) : QWidget(parent)
@@ -24,7 +25,7 @@ SdWProjectList::SdWProjectList(QWidget *parent) : QWidget(parent)
   QVBoxLayout *lay = new QVBoxLayout();
   mWProjectStack = new QStackedWidget( this );
   QHBoxLayout *hlay = new QHBoxLayout();
-  mProjectTitles = new QComboBox( w );
+  mProjectTitles = new QComboBox( this );
   mCloseProject  = new QToolButton();
   mCloseProject->setIcon( QIcon(QString(":/pic/closeFile.png")) );
   mCloseProject->setToolTip( tr("Close active project") );
@@ -37,6 +38,26 @@ SdWProjectList::SdWProjectList(QWidget *parent) : QWidget(parent)
 
   connect( mProjectTitles, SIGNAL(activated(int)), mWProjectStack, SLOT(setCurrentIndex(int)) );
   connect( mCloseProject, SIGNAL(clicked()), this, SLOT(cmFileClose()) );
+  }
+
+
+
+
+
+SdWProjectTree *SdWProjectList::activeProject()
+  {
+  return dynamic_cast<SdWProjectTree*>( mWProjectStack->currentWidget() );
+  }
+
+
+
+
+
+SdWProjectTree *SdWProjectList::project(int index)
+  {
+  if( index >= 0 && index < mWProjectStack->count() )
+    return dynamic_cast<SdWProjectTree*>( mWProjectStack->widget(index) );
+  return 0;
   }
 
 
@@ -77,11 +98,11 @@ void SdWProjectList::fileOpen(const QString fname)
   //Проверяем, создался ли проект
   if( prj->isProjectValid() ) {
     mProjectTitles->addItem( prj->fileName() );
-    mProjects->addWidget( prj );
+    mWProjectStack->addWidget( prj );
 
-    if( mProjects->count() == 1 ) {
+    if( mWProjectStack->count() == 1 ) {
       //Выключить пункты меню
-      MainMenu::projectState(true);
+      SdWCommand::projectState(true);
       mCloseProject->setEnabled(true);
       }
     }

@@ -13,6 +13,7 @@ Description
 
 #include "SdObject.h"
 #include "SdOwner.h"
+#include "SdProject.h"
 #include <QJsonValue>
 
 SdObject::SdObject() :
@@ -98,6 +99,7 @@ SdObject *SdObject::readPtr(const QString name, SdObjectMap *map, const QJsonObj
 
 SdObject *SdObject::build(QString type)
   {
+  if( type == QString(SD_TYPE_PROJECT) ) return new SdProject();
   return 0;
   }
 

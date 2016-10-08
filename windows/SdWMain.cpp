@@ -13,7 +13,9 @@ Description
 */
 
 #include "SdWMain.h"
-#include "objects/SdProjectItem.h"
+#include "SdWProjectTree.h"
+#include "SdWEditor.h"
+#include "SdWCommand.h"
 #include <QSettings>
 #include <QCloseEvent>
 #include <QMessageBox>
@@ -31,6 +33,9 @@ Description
 SdWMain::SdWMain(QStringList args, QWidget *parent) :
   QMainWindow(parent)
   {
+  //Create menu
+  SdWCommand::createMenu( this );
+
   mWProjectList = new SdWProjectList();
   mWEditors     = new QTabWidget();
 
@@ -683,7 +688,7 @@ void SdWMain::cmHelpIndex()
 
 void SdWMain::cmHelpAbout()
   {
-  QMessageBox::about( this, tr("About %1").arg(SALICAD_NAME), tr("Version %1, \nCopyright SaliLAB\n%2").arg(SALICAD_VERSION).arg(SALICAD_AUTHOR));
+  QMessageBox::about( this, tr("About %1").arg(SD_NAME), tr("Version %1.%2, \nCopyright SaliLAB\n%3").arg(SD_VERSION_MAJOR).arg(SD_VERSION_MINOR).arg(SD_AUTHOR));
   }
 
 
@@ -706,30 +711,12 @@ void SdWMain::cmClipboardChange()
 
 
 
-WClientBase *SdWMain::activeEditor()
-  {
-  return 0;
-  }
-
-WProjectTree *SdWMain::activeProject()
-  {
-  return dynamic_cast<WProjectTree*>( mProjects->currentWidget() );
-  }
-
-WProjectTree *SdWMain::project(int index)
-  {
-  return dynamic_cast<WProjectTree*>( mProjects->widget(index) );
-  }
 
 void SdWMain::createMenu()
   {
 
   }
 
-void SdWMain::fileOpen(const QString &fname)
-  {
-
-  }
 
 //void SdWMain::destroyProject(SdWProjectTree *prj)
 //  {
