@@ -18,18 +18,25 @@ Description
 #include <QWidget>
 #include <QList>
 #include <QStackedWidget>
+#include <QComboBox>
+#include <QToolButton>
 
-
+class SdWProjectTree;
 
 class SdWProjectList : public QWidget
   {
     Q_OBJECT
 
-    QStackedWidget *mWProjectStack;
+    QStackedWidget   *mWProjectStack; //Изображение деревьев открытых проектов
+    QComboBox        *mProjectTitles; //Список открытых проектов
+    QToolButton      *mCloseProject;  //Кнопка закрытия активного проекта
   public:
     explicit SdWProjectList(QWidget *parent = 0);
 
     bool isEmpty() { return mWProjectStack->count() == 0; }
+
+    SdWProjectTree* activeProject();
+    SdWProjectTree* project( int index );
 
   signals:
     //Name of active project changed or other project selected
@@ -41,6 +48,9 @@ class SdWProjectList : public QWidget
 
     //File project open
     void fileOpen( const QString fname );
+
+    //Active file close
+    bool cmFileClose();
   };
 
 #endif // SDWPROJECTLIST_H

@@ -20,11 +20,25 @@ class SdWProjectTree : public QWidget
   {
     Q_OBJECT
   public:
-    explicit SdWProjectTree(QWidget *parent = 0);
+    explicit SdWProjectTree( const QString fname, QWidget *parent = 0);
 
   signals:
 
   public slots:
+    virtual bool cmFileClose() { return true; }
+
+    virtual void cmFileSave() {}
+    virtual void cmFileSaveAs() {}
+
+    virtual void cmObjectNew();
+    virtual void cmObjectRename() {}
+    virtual void cmObjectDelete() {}
+    virtual void cmObjectCopy() {}
+    virtual void cmObjectPaste() {}
+    virtual void cmObjectCut() {}
+    virtual void cmObjectSort() {}
+
+    void cmClipboardChange() {}
   };
 
 #endif // SDWPROJECTTREE_H

@@ -13,7 +13,7 @@ Description
 
 #include "SdWProjectTree.h"
 
-SdWProjectTree::SdWProjectTree(QWidget *parent) : QWidget(parent)
+SdWProjectTree::SdWProjectTree(const QString fname, QWidget *parent) : QWidget(parent)
   {
 
   }

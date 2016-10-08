@@ -24,6 +24,7 @@ Description
 #include <QStringList>
 
 class SdProjectItem;
+class SdWProjectTree;
 
 class SdWMain : public QMainWindow
   {
@@ -42,13 +43,122 @@ class SdWMain : public QMainWindow
 
     void activateProjectItem( SdProjectItem *item );
 
+    //Реакции на команды
+    void cmFileNew();
+    void cmFileOpen();
+    void cmFilePrevious();
+    void cmFileClose();
+    void cmFileCloseAll();
+
+    void cmFileSave();
+    void cmFileSaveAs();
+    void cmFileSaveAll();
+    void cmFilePrint();
+    void cmFileExit();
+
+    void cmFileImport();
+    void cmFileExport();
+
+    void cmObjectNew();
+    void cmObjectRename();
+    void cmObjectDelete();
+    void cmObjectCopy();
+    void cmObjectPaste();
+    void cmObjectCut();
+    void cmObjectSort();
+
+    void cmEditUndo();
+    void cmEditRedo();
+    void cmEditCut();
+    void cmEditCopy();
+    void cmEditPaste();
+    void cmEditDelete();
+    void cmEditSelectAll();
+    void cmEditFind();
+    void cmEditReplace();
+    void cmEditProperties();
+
+    void cmViewProject();
+    void cmViewFill();
+    void cmViewNets();
+    void cmViewGrid();
+    void cmViewLayers();
+    void cmViewZoomIn();
+    void cmViewZoomOut();
+    void cmViewArea();
+    void cmViewMeasurement();
+
+    void cmModeLine();
+    void cmModeRect();
+    void cmModeFilledRect();
+    void cmModeRegion();
+    void cmModeFilledRegion();
+    void cmModeCircle();
+    void cmModeFilledCircle();
+    void cmModeArc();
+    void cmModeText();
+    void cmModeField();
+
+    //3d
+    void cmBall();
+    void cmPinWired();
+    void cmPinFlat();
+    void cmBodyCylinder();
+    void cmBodyBrick();
+    void cmBodyContur();
+
+    //Symbol Part
+    void cmModePin();
+    void cmModeReference();
+    void cmModeOrigin();
+
+    //Sheet
+    void cmModeComponent();
+    void cmModeNet();
+    void cmNetSetup();
+    void cmModeBus();
+    void cmModeDisconnect();
+    void cmModePcbArea();
+    void cmModeLink();
+    void cmModeNetName();
+    void cmModeNetList();
+    void cmModePack();
+
+    //Pcb
+    void cmPads();
+    void cmModeLineSize();
+    void cmModeRadiusSize();
+    void cmModeMovePart();
+    void cmModePlace();
+
+    void cmModeEditWire();
+    void cmModeWire();
+    void cmModePolygon();
+    void cmModeDeleteWire();
+    void cmModePad();
+
+    void cmOption();
+    void cmTools();
+
+    void cmHelpContens();
+    void cmHelpIndex();
+    void cmHelpAbout();
+
+    void cmClipboardChange();
+
+
     // QWidget interface
   protected:
     virtual void closeEvent(QCloseEvent *ev) override;
 
   private:
-    SdWEditor* getEditor( int index );
-    SdWEditor* getCurrent();
+    SdWEditor*      getEditor( int index );
+    SdWEditor*      activeEditor();
+    SdWProjectTree *activeProject() { return mWProjectList->activeProject(); }
+    SdWProjectTree *project( int index ) { return mWProjectList->project(index); }
+    void            createMenu();
+    void            fileOpen( const QString &fname );
+    void            destroyProject( SdWProjectTree *prj );
   };
 
 #endif // SBWMAIN_H

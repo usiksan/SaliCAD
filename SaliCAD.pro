@@ -45,7 +45,9 @@ SOURCES += \
     objects/SdPartPinProp.cpp \
     objects/SdSymImpProp.cpp \
     objects/SdPartImpProp.cpp \
-    objects/SdOwner.cpp
+    objects/SdOwner.cpp \
+    windows/SdWCommand.cpp \
+    objects/SdPulsar.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -82,7 +84,9 @@ HEADERS  += \
     objects/SdPartPinProp.h \
     objects/SdSymImpProp.h \
     objects/SdPartImpProp.h \
-    objects/SdOwner.h
+    objects/SdOwner.h \
+    windows/SdWCommand.h \
+    objects/SdPulsar.h
 
 DISTFILES += \
     license.txt

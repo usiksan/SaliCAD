@@ -52,6 +52,7 @@ History
 #define SDK_WMAIN_MAX                "WMainMax"
 #define SDK_LANGUAGE                 "Language"
 #define SDK_MAIN_SPLITTER            "MainSplitter"
+#define SDK_PREVIOUS_FILES           "PreviousFiles"
 
 #endif // SDCONFIG
 
