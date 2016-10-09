@@ -51,6 +51,12 @@ class SdWProjectList : public QWidget
 
     //Active file close
     bool cmFileClose();
+
+    //On project index activated
+    void onProjectActivated( int index );
+
+    //On rename project
+    void onRenameProject( SdProject *prj );
   };
 
 #endif // SDWPROJECTLIST_H

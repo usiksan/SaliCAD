@@ -12,26 +12,25 @@ Description
 */
 
 #include "SdProject.h"
+#include "SdProjectItem.h"
+#include "SdPulsar.h"
 #include <QJsonArray>
 #include <QFile>
 #include <QJsonDocument>
 #include <QByteArray>
 
-SdProject::SdProject()
+SdProject::SdProject() :
+  mDirty(false)
   {
-
   }
 
-SdProject::SdProject(SdProject *src)
-  {
-  for( SdProjectItemPtr ptr : src->mItems )
-    mItems.append( dynamic_cast<SdProjectItemPtr>(ptr->copy()) );
-  }
+
+
 
 SdProject::~SdProject()
   {
-  qDeleteAll(mItems);
   }
+
 
 
 
@@ -40,34 +39,62 @@ QString SdProject::getType() const
   return QString(SD_TYPE_PROJECT);
   }
 
-int SdProject::getClass() const
+
+
+
+quint64 SdProject::getClass() const
   {
   return dctProject;
   }
 
+
+
+
+void SdProject::insert(SdProjectItem *item)
+  {
+  if( !isContains(item->getTitle()) ) {
+    mChildList.append( item );
+    mItemMap.insert( item->getTitle(), item );
+    item->setParent( this );
+    mDirty = true;
+    SdPulsar::pulsar->emitInsertItem( item );
+    }
+  }
+
+
+
+
 SdObject *SdProject::copy()
   {
-  return new SdProject( this );
+  return 0;
   }
+
+
+
 
 void SdProject::writeObject(QJsonObject &obj) const
   {
-  SdOwner::writeObject( obj );
-  QJsonArray array;
-  for( SdProjectItemPtr ptr : mItems )
-    array.append( ptr->write() );
-  obj.insert( QStringLiteral("Items"), array );
+  SdContainer::writeObject( obj );
   }
 
-void SdProject::forEach(SdIterator &i)
+
+
+
+void SdProject::readObject(SdObjectMap *map, const QJsonObject obj)
   {
-  for( SdProjectItemPtr ptr : mItems ) {
-    if( ptr && i.isAccept(ptr->getClass()) ) {
-      if( !i.operation( ptr ) )
-        return;
-      }
-    }
+  SdContainer::readObject( map, obj );
+
+  //Fill map
+  forEach( dctProjectItems, [this](SdObject *obj) -> bool {
+    SdProjectItem *it = dynamic_cast<SdProjectItem*>(obj);
+    if( it ) mItemMap.insert( it->getTitle(), it );
+    return true;
+    } );
+
   }
+
+
+
 
 SdProject *SdProject::load(const QString fname)
   {
@@ -81,3 +108,20 @@ SdProject *SdProject::load(const QString fname)
     }
   return 0;
   }
+
+
+
+
+bool SdProject::save(const QString fname)
+  {
+  QFile file(fname);
+  if( file.open(QIODevice::WriteOnly) ) {
+    QJsonDocument doc( write() );
+    file.write( doc.toJson() );
+    mDirty = false;
+    return true;
+    }
+  return false;
+  }
+
+

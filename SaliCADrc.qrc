@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/">
+        <file>pic/about.png</file>
+        <file>pic/backward.png</file>
+        <file>pic/closeFile.png</file>
+        <file>pic/delete_red.png</file>
+        <file>pic/directory_closed.png</file>
+        <file>pic/editCopy.png</file>
+        <file>pic/editCut.png</file>
+        <file>pic/editPaste.png</file>
+        <file>pic/editRedo.png</file>
+        <file>pic/editSelectAll.png</file>
+        <file>pic/editUndo.png</file>
+        <file>pic/exit.png</file>
+        <file>pic/forward.png</file>
+        <file>pic/help.png</file>
+        <file>pic/new.png</file>
+        <file>pic/open.png</file>
+        <file>pic/save.png</file>
+        <file>pic/save_all.png</file>
+        <file>pic/save_as.png</file>
+        <file>pic/website.png</file>
+    </qresource>
+</RCC>

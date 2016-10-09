@@ -12,7 +12,7 @@ Description
 */
 
 #include "SdObject.h"
-#include "SdOwner.h"
+#include "SdContainer.h"
 #include "SdProject.h"
 #include <QJsonValue>
 
@@ -20,6 +20,17 @@ SdObject::SdObject() :
   mParent(0)
   {
 
+  }
+
+SdContainer *SdObject::getRoot() const
+  {
+  //if( mParent == 0 ) return dynamic_cast<SdContainer*>( this );
+  SdContainer *p = mParent;
+  while(p) {
+    if( p->mParent == 0 ) return p;
+    p = p->mParent;
+    }
+  return 0;
   }
 
 
@@ -47,7 +58,7 @@ void SdObject::writePtr(const SdObject *ptr, const QString name, QJsonObject &ob
 
 void SdObject::readObject(SdObjectMap *map, const QJsonObject obj)
   {
-  mParent = dynamic_cast<SdOwner*>( readPtr(QStringLiteral("Parent"), map, obj ) );
+  mParent = dynamic_cast<SdContainer*>( readPtr(QStringLiteral("Parent"), map, obj ) );
   }
 
 

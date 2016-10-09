@@ -16,10 +16,17 @@ Description
 
 #include "SdProjectItem.h"
 
+#define SD_TYPE_SYMBOL "Symbol"
+
 class SdSymbol : public SdProjectItem
   {
   public:
     SdSymbol();
+
+    virtual QString   getType() const override;
+    virtual quint64   getClass() const override;
+    virtual SdObject *copy() override;
+    virtual QString   getIconName() const override;
   };
 
 #endif // SDSYMBOL_H

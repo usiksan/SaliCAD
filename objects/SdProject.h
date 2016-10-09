@@ -14,27 +14,42 @@ Description
 #ifndef SDPROJECT_H
 #define SDPROJECT_H
 
-#include "SdOwner.h"
-#include "SdProjectItem.h"
-#include <QList>
+#include "SdContainer.h"
+#include <QMap>
+
 
 #define SD_TYPE_PROJECT "Project"
 
-class SdProject : public SdOwner
+class SdProjectItem;
+
+class SdProject : public SdContainer
   {
-    QList<SdProjectItemPtr> mItems;
+    bool                       mDirty;
+    QMap<QString,SdObjectPtr>  mItemMap;
   public:
     SdProject();
-    SdProject( SdProject *src );
     ~SdProject();
 
+    //Return dirty status
+    bool              isDirty() const { return mDirty; }
+
+    //Return true if object with this name present in project
+    bool              isContains( const QString name ) const { return mItemMap.contains( name ); }
+
     virtual QString   getType() const override;
-    virtual int       getClass() const override;
+    virtual quint64   getClass() const override;
+
+    void              insert( SdProjectItem *item );
+    void              remove( SdProjectItem *item );
+
     virtual SdObject *copy() override;
+
     virtual void      writeObject(QJsonObject &obj) const override;
-    virtual void      forEach(SdIterator &i) override;
+    virtual void      readObject(SdObjectMap *map, const QJsonObject obj) override;
 
     static SdProject *load( const QString fname );
+    bool              save( const QString fname );
+
   };
 
 #endif // SDPROJECT_H

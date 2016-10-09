@@ -18,3 +18,24 @@ SdSymbol::SdSymbol()
 
   }
 
+
+
+QString SdSymbol::getType() const
+  {
+  return QStringLiteral(SD_TYPE_SYMBOL);
+  }
+
+quint64 SdSymbol::getClass() const
+  {
+  return dctSymbol;
+  }
+
+SdObject *SdSymbol::copy()
+  {
+  return 0;
+  }
+
+QString SdSymbol::getIconName() const
+  {
+  return QString();
+  }

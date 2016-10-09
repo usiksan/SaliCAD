@@ -12,10 +12,17 @@ Description
 */
 
 #include "SdWProjectTree.h"
+#include "objects/SdPulsar.h"
+#include "windows/SdPNewProjectItem_SelectType.h"
+#include "windows/SdPNewProjectItem_EnterName.h"
 #include <QFileInfo>
 #include <QApplication>
 #include <QClipboard>
 #include <QMimeData>
+#include <QTreeWidgetItem>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QWizard>
 
 SdWProjectTree::SdWProjectTree(const QString fname, QWidget *parent) :
   QTreeWidget(parent),
@@ -52,7 +59,14 @@ SdWProjectTree::SdWProjectTree(const QString fname, QWidget *parent) :
     addTopLevelItem( mPartList );
     addTopLevelItem( mTextList );
     }
+
+  connect( SdPulsar::pulsar, &SdPulsar::insertItem, this, &SdWProjectTree::insertItem );
+  connect( SdPulsar::pulsar, &SdPulsar::removeItem, this, &SdWProjectTree::removeItem );
+  connect( SdPulsar::pulsar, &SdPulsar::renameItem, this, &SdWProjectTree::renameItem );
   }
+
+
+
 
 SdWProjectTree::~SdWProjectTree()
   {
@@ -60,36 +74,111 @@ SdWProjectTree::~SdWProjectTree()
     delete mProject;
   }
 
+
+
+
 QString SdWProjectTree::fileName()
   {
   if( mFileName == SD_DEFAULT_FILE_NAME )
     return mFileName;
-  return QFileInfo(mFileName).fileName();
+  return QFileInfo(mFileName).completeBaseName();
   }
+
+
+
 
 bool SdWProjectTree::isProjectValid() const
   {
   return mProject != 0;
   }
 
+
+
+
+bool SdWProjectTree::cmFileClose() {
+  //Test if file saved
+  if( mProject->isDirty() ) {
+    int res = QMessageBox::question( this, tr("Warning!"),
+                                     tr("Project \"%1\" changed! Save it?"),
+                                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
+    if( res == QMessageBox::No ) return true;
+    if( res == QMessageBox::Yes ) return cmFileSave();
+    return false;
+    }
+  return true;
+  }
+
+
+
+
+bool SdWProjectTree::cmFileSave()
+  {
+  //Test if file name default
+  if( mFileName == SD_DEFAULT_FILE_NAME )
+    return cmFileSaveAs();
+  return mProject->save( mFileName );
+  }
+
+
+
+
+bool SdWProjectTree::cmFileSaveAs()
+  {
+  QString title = QFileDialog::getSaveFileName(this, tr("Save project file"), QString(), tr("SaliCAD 3D Files (*%1)").arg(SD_BASE_EXTENSION) );
+
+  if( title.isEmpty() ) return false;
+
+  mFileName = title;
+  if( !mFileName.endsWith(SD_BASE_EXTENSION) )
+    mFileName.append( SD_BASE_EXTENSION );
+
+  SdPulsar::pulsar->emitRenameProject( mProject );
+
+  return cmFileSave();
+  }
+
+
+
+
 void SdWProjectTree::cmObjectNew()
   {
+  SdProjectItemPtr item = 0;
+  QWizard wizard(this);
+  wizard.setPage( 0, new SdPNewProjectItem_SelectType( &item, mProject, &wizard) );
+  wizard.setPage( 1, new SdPNewProjectItem_EnterName( &item, mProject, &wizard) );
 
+  if( wizard.exec() ) {
+    //Append item to the project
+    mProject->insert( item );
+    }
   }
 
 void SdWProjectTree::renameItem(SdProjectItem *item)
   {
-
+  if( item && item->getProject() == mProject ) {
+    //Item from this project
+    item->mTreeItem->setText( 0, item->getTitle() );
+    }
   }
 
 void SdWProjectTree::insertItem(SdProjectItem *item)
   {
-
+  if( item && item->getProject() == mProject ) {
+    //Item from this project
+    item->mTreeItem = new QTreeWidgetItem();
+    item->mTreeItem->setText( 0, item->getTitle() );
+    QTreeWidgetItem *ch = classList( item->getClass() );
+    if( ch ) ch->addChild( item->mTreeItem );
+    }
   }
 
 void SdWProjectTree::removeItem(SdProjectItem *item)
   {
-
+  if( item && item->getProject() == mProject ) {
+    //Item from this project
+    QTreeWidgetItem *ch = classList( item->getClass() );
+    ch->removeChild( item->mTreeItem );
+    }
   }
 
 void SdWProjectTree::showEvent(QShowEvent *event)
@@ -110,6 +199,9 @@ void SdWProjectTree::showEvent(QShowEvent *event)
   QTreeView::showEvent( event );
   }
 
+
+
+
 QTreeWidgetItem *SdWProjectTree::createItem(const QString sname, const QString stoolTip, const QString sstatusTip)
   {
   QTreeWidgetItem *item = new QTreeWidgetItem();
@@ -122,29 +214,34 @@ QTreeWidgetItem *SdWProjectTree::createItem(const QString sname, const QString s
 
 
 
-class SdiFillTopItem : public SdIterator {
-    QTreeWidgetItem *mRootItem;
-  public:
-    SdiFillTopItem( QTreeWidgetItem *item, int classId ) : SdIterator(classId), mRootItem(item) {}
-
-    virtual bool operation(SdObjectPtr obj) {
-      //Образовать элемент списка
-      QTreeWidgetItem *item = new QTreeWidgetItem();
-      SdProjectItem *ctr = dynamic_cast<SdProjectItem*>( obj );
-      if( ctr ) {
-        item->setText( 0, ctr->getTitle() );
-        mRootItem->addChild( item );
-        }
-      return true;
-      }
-  };
-
-
-
 
 void SdWProjectTree::fillTopItem(QTreeWidgetItem *item, int classId)
   {
-  SdiFillTopItem i( item, classId );
-  mProject->forEach( i );
+  mProject->forEach( classId, [item](SdObject *obj) -> bool {
+      //Образовать элемент списка
+      QTreeWidgetItem *it = new QTreeWidgetItem();
+      SdProjectItem *ctr = dynamic_cast<SdProjectItem*>( obj );
+      if( ctr ) {
+        it->setText( 0, ctr->getTitle() );
+        ctr->mTreeItem = it;
+        //it->setData(0, Qt::UserRole, QVariant(ctr->getId()) );
+        item->addChild( it );
+        }
+      return true;
+      }
+      );
+  }
+
+QTreeWidgetItem *SdWProjectTree::classList(quint64 classId)
+  {
+  switch( classId ) {
+    case dctSheet  : return mSheetList;
+    case dctPlate  : return mPlateList;
+    case dctSymbol : return mSymbolList;
+    case dctPart   : return mPartList;
+    case dctAlias  : return mAliasList;
+    case dctText   : return mTextList;
+    }
+  return 0;
   }
 

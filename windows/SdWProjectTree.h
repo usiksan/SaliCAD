@@ -16,6 +16,7 @@ Description
 
 #include "SdConfig.h"
 #include "objects/SdProject.h"
+#include "objects/SdProjectItem.h"
 #include <QWidget>
 #include <QTreeWidget>
 
@@ -37,15 +38,16 @@ class SdWProjectTree : public QTreeWidget
     explicit SdWProjectTree( const QString fname, QWidget *parent = 0);
     ~SdWProjectTree();
 
-    QString filePath() { return mFileName; }
-    QString fileName();
+    QString    filePath() { return mFileName; }
+    QString    fileName();
+    SdProject *getProject() const { return mProject; }
 
-    bool isProjectValid() const;
+    bool       isProjectValid() const;
 
-    virtual bool cmFileClose() { return true; }
+    bool       cmFileClose();
 
-    virtual void cmFileSave() {}
-    virtual void cmFileSaveAs() {}
+    bool       cmFileSave();
+    bool       cmFileSaveAs();
 
     virtual void cmObjectNew();
     virtual void cmObjectRename() {}
@@ -74,6 +76,8 @@ class SdWProjectTree : public QTreeWidget
 
     //Заполнить элемент верхнего уровня
     void fillTopItem( QTreeWidgetItem *item, int classId );
+
+    QTreeWidgetItem* classList( quint64 classId );
   };
 
 #endif // SDWPROJECTTREE_H

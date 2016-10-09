@@ -44,9 +44,11 @@ SOURCES += \
     objects/SdPartPinProp.cpp \
     objects/SdSymImpProp.cpp \
     objects/SdPartImpProp.cpp \
-    objects/SdOwner.cpp \
     windows/SdWCommand.cpp \
-    objects/SdPulsar.cpp
+    objects/SdPulsar.cpp \
+    objects/SdContainer.cpp \
+    windows/SdPNewProjectItem_SelectType.cpp \
+    windows/SdPNewProjectItem_EnterName.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -82,9 +84,16 @@ HEADERS  += \
     objects/SdPartPinProp.h \
     objects/SdSymImpProp.h \
     objects/SdPartImpProp.h \
-    objects/SdOwner.h \
     windows/SdWCommand.h \
-    objects/SdPulsar.h
+    objects/SdPulsar.h \
+    objects/SdContainer.h \
+    windows/SdPNewProjectItem_SelectType.h \
+    windows/SdPNewProjectItem_EnterName.h
 
 DISTFILES += \
     license.txt
+
+RESOURCES += \
+    SaliCADrc.qrc
+
+FORMS +=

@@ -43,6 +43,8 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   mWSplitter->addWidget( mWProjectList );
   mWSplitter->addWidget( mWEditors );
 
+  connect( mWProjectList, &SdWProjectList::projectNameChanged, this, &SdWMain::activateProjectName );
+
   setCentralWidget( mWSplitter );
 
   //Restore splitter positions
@@ -65,7 +67,7 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
 //Change title bar
 void SdWMain::activateProjectName(const QString name, bool dirty)
   {
-  setWindowTitle( QString( "SaliCAD v%1.%2 [%3%4]").arg(SD_VERSION_MAJOR).arg(SD_VERSION_MINOR).arg( dirty ? QChar(' ') : QChar('*') ).arg( name ) );
+  setWindowTitle( QString( "SaliCAD v%1.%2 [%3%4]").arg(SD_VERSION_MAJOR).arg(SD_VERSION_MINOR).arg( dirty ? QChar('*') : QChar(' ') ).arg( name ) );
   }
 
 

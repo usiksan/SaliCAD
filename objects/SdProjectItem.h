@@ -14,17 +14,25 @@ Description
 #ifndef SDPROJECTITEM_H
 #define SDPROJECTITEM_H
 
-#include "SdOwner.h"
+#include "SdContainer.h"
 #include <QString>
 
-class SdProjectItem : public SdOwner
+
+class SdProject;
+class QTreeWidgetItem;
+
+class SdProjectItem : public SdContainer
   {
-    QString mTitle;
+    QString                mTitle;
   public:
+    QTreeWidgetItem       *mTreeItem;
+
     SdProjectItem();
     SdProjectItem( SdProjectItem &src );
 
     QString                getTitle() const { return mTitle; }
+    void                   setTitle( const QString title );
+    SdProject*             getProject() const;
 
     virtual QString        getIconName() const = 0;
 

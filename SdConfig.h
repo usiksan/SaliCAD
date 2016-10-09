@@ -13,6 +13,8 @@ Description
 
 History
   06.10.2016 v0.1  created on PasCAD base
+  09.10.2016 v0.2  Append 80% from SaliCAD prior base
+  10.10.2016 v0.3  Creating inserting, removing and undo
 */
 
 #ifndef SDCONFIG
@@ -24,7 +26,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             1
+#define SD_VERSION_MINOR             3
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -47,6 +49,11 @@ History
 #define SALICAD_CLIP_FORMAT_OBJECT   "text/salicad-object"
 #define SALICAD_CLIP_FORMAT_FRAGMENT "text/salicad-fragment"
 
+#if 0
+#define SD_BASE_PATH                 QCoreApplication::applicationDirPath()
+#else
+#define SD_BASE_PATH                 QString("/home/slilab/work/SaliCAD")
+#endif
 
 
 //Settings key names

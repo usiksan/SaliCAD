@@ -20,50 +20,52 @@ Description
 #include <QJsonObject>
 
 //Классы объектов
-const int
-  dctLines    = 0x0001,
-  dctText     = 0x0002,
-  dctSymPin   = 0x0004,
-  dctSPName   = 0x0008,
-  dctSPNumb   = 0x0010,
-  dctIdent    = 0x0020,
-  dctSymbol   = 0x0040,
-  dctSymImp   = 0x0080,
-  dctPrtPin   = 0x0100,
-  dctPPName   = 0x0200,
-  dctPPNumb   = 0x0400,
-  dctPart     = 0x0800,
-  dctPartImp  = 0x1000,
-  dctWire     = 0x2000,
-  dctWName    = 0x4000,
-  dctSheet    = 0x8000,
-  dctPlate    = 0x10000,
-  dctList     = 0x20000,
-  dctAlias    = 0x40000,
-  dctPoligon  = 0x80000,
-  dctVia      = 0x100000,
-  dctUser     = 0x200000,
-  dctProject  = 0x400000,
-  dctSize     = 0x800000,
-  dctSizePrp  = 0x1000000,
-  dctTextDoc  = 0x2000000,
-  dctSelector = 0x4000000,
-  dctSheetNet = 0x8000000,
-  dctPlateNet = 0x10000000,
-  dctChars    = 0x20000000,
-  dctPrjList  = 0x40000000,
-  dctData     = 0x80000000,
-  dctPicture  = dctLines | dctText | dctSize;
+const quint64
+  dctLines         = 0x00000001l,
+  dctText          = 0x00000002l,
+  dctSymPin        = 0x00000004l,
+  dctSymPinName    = 0x00000008l,
+  dctSymPinNumber  = 0x00000010l,
+  dctIdent         = 0x00000020l,
+  dctSymbol        = 0x00000040l,
+  dctSymImp        = 0x00000080l,
+  dctPartPin       = 0x00000100l,
+  dctPartPinName   = 0x00000200l,
+  dctPartPinNumber = 0x00000400l,
+  dctPart          = 0x00000800l,
+  dctPartImp       = 0x00001000l,
+  dctWire          = 0x00002000l,
+  dctWireName      = 0x00004000l,
+  dctSheet         = 0x00008000l,
+  dctPlate         = 0x00010000l,
+  dctList          = 0x00020000l,
+  dctAlias         = 0x00040000l,
+  dctPoligon       = 0x00080000l,
+  dctVia           = 0x00100000l,
+  dctComponent     = 0x00200000l,
+  //dctUser          = 0x200000,
+  dctProject       = 0x00400000l,
+  dctSize          = 0x00800000l,
+  dctSizeProp      = 0x01000000l,
+  dctTextDoc       = 0x02000000l,
+  dctSelector      = 0x04000000l,
+  dctSheetNet      = 0x08000000l,
+  dctPlateNet      = 0x10000000l,
+  //dctChars    = 0x20000000,
+  //dctPrjList  = 0x40000000,
+  //dctData     = 0x80000000,
+  dctPicture  = dctLines | dctText | dctSize,
+  dctProjectItems = dctSymbol | dctPart | dctSheet | dctPlate | dctComponent;
 
 
 #define SDKO_TYPE      "type"
 #define SDKO_ID        "id"
 
-class SdOwner;
+class SdContainer;
 
 class SdObject
   {
-    SdOwner *mParent;
+    SdContainer *mParent;
   public:
     SdObject();
     virtual ~SdObject() {}
@@ -71,12 +73,12 @@ class SdObject
     //Information
     int               getId() const { return (int)(this); }
     virtual QString   getType() const = 0;
-    virtual int       getClass() const = 0;
+    virtual quint64   getClass() const = 0;
 
     //Hierarhy
-    SdOwner*          getParent() const { return mParent; }
-    SdOwner*          getRoot() const;
-    void              setParent( SdOwner *parent ) { mParent = parent; }
+    SdContainer*      getParent() const { return mParent; }
+    SdContainer*      getRoot() const;
+    void              setParent( SdContainer *parent ) { mParent = parent; }
 
 
     //Copy
@@ -97,6 +99,8 @@ class SdObject
     static  SdObject* readPtr( const QString name, SdObjectMap *map, const QJsonObject obj );
     static  SdObject* build( QString type );
   };
+
+typedef SdObject *SdObjectPtr;
 
 
 template <class T>
