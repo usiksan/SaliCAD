@@ -14,13 +14,25 @@ Description
 #include "SdObject.h"
 #include "SdContainer.h"
 #include "SdProject.h"
+#include "SdSymbol.h"
+#include "SdIds.h"
 #include <QJsonValue>
 
 SdObject::SdObject() :
-  mParent(0)
+  mParent(0),
+  mDeleted(false),
+  mId(0)
   {
 
   }
+
+quint64 SdObject::getId() const
+  {
+  if( mId == 0 ) mId = getLocalId();
+  return mId;
+  }
+
+
 
 SdContainer *SdObject::getRoot() const
   {
@@ -31,6 +43,22 @@ SdContainer *SdObject::getRoot() const
     p = p->mParent;
     }
   return 0;
+  }
+
+SdObject *SdObject::copy()
+  {
+  SdObject *obj = build( getType() );
+  obj->cloneFrom( this );
+  return obj;
+  }
+
+void SdObject::cloneFrom(SdObject *src)
+  {
+  if( getType() != src->getType() ) {
+    qFatal() << Q_FUNC_INFO << "Illegal clone source";
+    throw( QString("Illegal clone source") );
+    }
+  mId = src->mId;
   }
 
 
@@ -81,20 +109,22 @@ SdObject *SdObject::read(SdObjectMap *map, const QJsonObject obj)
 SdObject *SdObject::readPtr(SdObjectMap *map, const QJsonObject obj)
   {
   //Get object id
-  int id = obj.value( QStringLiteral(SDKO_ID) ).toInt();
+  mId = (quint64) (obj.value( QStringLiteral(SDKO_ID) ).toDouble());
 
   //If id equals zero then no object
-  if( id == 0 )
+  if( mId == 0 )
     return 0;
 
   //Check if object already in the map
-  if( map->contains(id) )
-    return map->value(id);
+  if( map->contains(mId) )
+    return map->value(mId);
 
   //Build new object
   SdObject *r = build( obj.value( QStringLiteral(SDKO_TYPE) ).toString() );
   //Register new object in the map
-  map->insert( id, r );
+  map->insert( mId, r );
+  if( mId < Q_UINT64_C(0x100000000) )
+    mId = 0;
   //and return new object
   return r;
   }
@@ -111,6 +141,7 @@ SdObject *SdObject::readPtr(const QString name, SdObjectMap *map, const QJsonObj
 SdObject *SdObject::build(QString type)
   {
   if( type == QString(SD_TYPE_PROJECT) ) return new SdProject();
+  if( type == QString(SD_TYPE_SYMBOL)  ) return new SdSymbol();
   return 0;
   }
 

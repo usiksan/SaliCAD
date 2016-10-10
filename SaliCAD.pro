@@ -48,7 +48,8 @@ SOURCES += \
     objects/SdPulsar.cpp \
     objects/SdContainer.cpp \
     windows/SdPNewProjectItem_SelectType.cpp \
-    windows/SdPNewProjectItem_EnterName.cpp
+    windows/SdPNewProjectItem_EnterName.cpp \
+    objects/SdIds.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -88,7 +89,8 @@ HEADERS  += \
     objects/SdPulsar.h \
     objects/SdContainer.h \
     windows/SdPNewProjectItem_SelectType.h \
-    windows/SdPNewProjectItem_EnterName.h
+    windows/SdPNewProjectItem_EnterName.h \
+    objects/SdIds.h
 
 DISTFILES += \
     license.txt

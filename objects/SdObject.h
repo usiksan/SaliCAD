@@ -65,13 +65,16 @@ class SdContainer;
 
 class SdObject
   {
-    SdContainer *mParent;
+    SdContainer *mParent;  //Parent object
+    bool         mDeleted; //Flag check if object deleted. Deleted objects not save
+  protected:
+    quint64      mId;
   public:
     SdObject();
     virtual ~SdObject() {}
 
     //Information
-    int               getId() const { return (int)(this); }
+    virtual quint64   getId() const;
     virtual QString   getType() const = 0;
     virtual quint64   getClass() const = 0;
 
@@ -80,12 +83,21 @@ class SdObject
     SdContainer*      getRoot() const;
     void              setParent( SdContainer *parent ) { mParent = parent; }
 
+    //Attach and detach
+    virtual void      attach() {}
+    virtual void      undoAttach() {}
+    virtual void      detach() {}
+    virtual void      undoDetach() {}
+    bool              isDeleted() const { return mDeleted; }
+    void              markDeleted( bool deleted ) { mDeleted = deleted; }
 
     //Copy
     //Exact copy object
-    virtual SdObject* copy() = 0;
+    SdObject*         copy();
     //Copy logic next object
     virtual SdObject* copyNext() { return copy(); }
+    //Clone contens object
+    virtual void      cloneFrom( SdObject *src );
 
     //Write and read object
     virtual void      writeObject( QJsonObject &obj ) const = 0;

@@ -61,6 +61,8 @@ History
 #define SDK_LANGUAGE                 "Language"
 #define SDK_MAIN_SPLITTER            "MainSplitter"
 #define SDK_PREVIOUS_FILES           "PreviousFiles"
+#define SDK_GLOBAL_ID_MACHINE        "Machine global id"
+#define SDK_GLOBAL_ID_COUNT          "Global id count"
 
 #endif // SDCONFIG
 

@@ -50,16 +50,6 @@ quint64 SdProject::getClass() const
 
 
 
-void SdProject::insert(SdProjectItem *item)
-  {
-  if( !isContains(item->getTitle()) ) {
-    mChildList.append( item );
-    mItemMap.insert( item->getTitle(), item );
-    item->setParent( this );
-    mDirty = true;
-    SdPulsar::pulsar->emitInsertItem( item );
-    }
-  }
 
 
 
@@ -75,6 +65,7 @@ SdObject *SdProject::copy()
 void SdProject::writeObject(QJsonObject &obj) const
   {
   SdContainer::writeObject( obj );
+  obj.insert( QStringLiteral("Properties"), mProperties );
   }
 
 
@@ -83,14 +74,10 @@ void SdProject::writeObject(QJsonObject &obj) const
 void SdProject::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdContainer::readObject( map, obj );
+  mProperties = obj.value( QStringLiteral("Properties") ).toObject();
 
   //Fill map
-  forEach( dctProjectItems, [this](SdObject *obj) -> bool {
-    SdProjectItem *it = dynamic_cast<SdProjectItem*>(obj);
-    if( it ) mItemMap.insert( it->getTitle(), it );
-    return true;
-    } );
-
+  fillMap();
   }
 
 
@@ -125,3 +112,68 @@ bool SdProject::save(const QString fname)
   }
 
 
+
+
+void SdProject::cloneFrom(SdObject *src)
+  {
+  SdContainer::cloneFrom(src);
+  mDirty = true;
+  SdProject *sour = dynamic_cast<SdProject*>(src);
+  mProperties = sour->mProperties;
+  fillMap();
+  }
+
+void SdProject::insertChild(SdObject *child)
+  {
+  SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
+  if( item && !isContains(item->getTitle()) ) {
+    SdContainer::insertChild( child );
+    mItemMap.insert( item->getTitle(), item );
+    mDirty = true;
+    SdPulsar::pulsar->emitInsertItem( item );
+    }
+  }
+
+void SdProject::undoInsertChild(SdObject *child)
+  {
+  SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
+  if( item && item->getParent() == this ) {
+    SdPulsar::pulsar->emitRemoveItem( item );
+    mItemMap.remove( item->getTitle() );
+    mDirty = true;
+    SdContainer::undoInsertChild( child );
+    }
+  }
+
+void SdProject::removeChild(SdObject *child)
+  {
+  SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
+  if( item && item->getParent() == this ) {
+    SdPulsar::pulsar->emitRemoveItem( item );
+    mItemMap.remove( item->getTitle() );
+    mDirty = true;
+    SdContainer::removeChild( child );
+    }
+  }
+
+void SdProject::undoRemoveChild(SdObject *child)
+  {
+  }
+
+void SdProject::deleteChild(SdObject *child)
+  {
+  }
+
+void SdProject::undoDeleteChild(SdObject *child)
+  {
+  }
+
+void SdProject::fillMap()
+  {
+  mItemMap.clear();
+  forEach( dctProjectItems, [this](SdObject *obj) -> bool {
+    SdProjectItem *it = dynamic_cast<SdProjectItem*>(obj);
+    if( it ) mItemMap.insert( it->getTitle(), it );
+    return true;
+    } );
+  }

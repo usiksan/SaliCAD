@@ -24,15 +24,21 @@ class QTreeWidgetItem;
 class SdProjectItem : public SdContainer
   {
     QString                mTitle;
+    int                    mRefCount;
   public:
     QTreeWidgetItem       *mTreeItem;
 
     SdProjectItem();
     SdProjectItem( SdProjectItem &src );
 
+    //Information
+    virtual quint64        getId() const;
     QString                getTitle() const { return mTitle; }
     void                   setTitle( const QString title );
     SdProject*             getProject() const;
+
+    void                   addRef() { mRefCount++; }
+    void                   decRef();
 
     virtual QString        getIconName() const = 0;
 

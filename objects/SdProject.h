@@ -24,7 +24,8 @@ class SdProjectItem;
 
 class SdProject : public SdContainer
   {
-    bool                       mDirty;
+    QJsonObject                mProperties; //Project properties
+    bool                       mDirty;      //Project dirty flag
     QMap<QString,SdObjectPtr>  mItemMap;
   public:
     SdProject();
@@ -42,14 +43,25 @@ class SdProject : public SdContainer
     void              insert( SdProjectItem *item );
     void              remove( SdProjectItem *item );
 
-    virtual SdObject *copy() override;
-
     virtual void      writeObject(QJsonObject &obj) const override;
     virtual void      readObject(SdObjectMap *map, const QJsonObject obj) override;
 
     static SdProject *load( const QString fname );
     bool              save( const QString fname );
 
+    virtual void      cloneFrom(SdObject *src) override;
+
+    // SdContainer interface
+  public:
+    virtual void insertChild(SdObject *child) override;
+    virtual void undoInsertChild(SdObject *child) override;
+    virtual void removeChild(SdObject *child) override;
+    virtual void undoRemoveChild(SdObject *child) override;
+    virtual void deleteChild(SdObject *child) override;
+    virtual void undoDeleteChild(SdObject *child) override;
+
+  private:
+    void               fillMap();
   };
 
 #endif // SDPROJECT_H

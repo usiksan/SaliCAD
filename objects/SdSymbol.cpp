@@ -30,12 +30,14 @@ quint64 SdSymbol::getClass() const
   return dctSymbol;
   }
 
-SdObject *SdSymbol::copy()
-  {
-  return 0;
-  }
 
 QString SdSymbol::getIconName() const
   {
   return QString();
+  }
+
+
+void SdSymbol::cloneFrom(SdObject *src)
+  {
+  SdContainer::cloneFrom( src );
   }
