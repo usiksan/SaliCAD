@@ -124,19 +124,21 @@ void SdWCommand::createMenu(SdWMain *frame)
   projectState(false);
   }
 
+
+
+
+
 void SdWCommand::updatePreviousMenu()
   {
-  //Удалить из меню имеющийся список
-  menuFilePrevious->clear();
   //Заполнить меню предыдущими файлами
   QSettings settings;
   QStringList files = settings.value(SDK_PREVIOUS_FILES).toStringList();
 
-  int numRecentFiles = qMin(files.size(), (int)PREVIOUS_FILES_COUNT);
+  int numRecentFiles = qMin(files.size(), (int)PREVIOUS_FILES_COUNT );
 
   for (int i = 0; i < numRecentFiles; ++i)
     {
-    QString text = QString("&%1 %2").arg(i + 1).arg( QFileInfo(files[i]).fileName() );
+    QString text = QString("&%1 %2").arg(i + 1).arg( QFileInfo(files[i]).filePath() );
     cmFilePrevious[i]->setText(text);
     cmFilePrevious[i]->setData(files[i]);
     cmFilePrevious[i]->setVisible(true);
@@ -147,6 +149,30 @@ void SdWCommand::updatePreviousMenu()
   //Сделать доступным menuFilePrevious
   menuFilePrevious->setEnabled( numRecentFiles != 0 );
   }
+
+
+
+
+void SdWCommand::addToPreviousMenu(const QString fname)
+  {
+  if( !fname.isEmpty() && fname != SD_DEFAULT_FILE_NAME ) {
+    //Если файл имеет неверное расширение, то не открываем
+    QSettings settings;
+    QStringList files = settings.value(SDK_PREVIOUS_FILES).toStringList();
+    files.removeAll(fname);
+    files.prepend(fname);
+    while( files.size() > PREVIOUS_FILES_COUNT )
+      files.removeLast();
+
+    settings.setValue(SDK_PREVIOUS_FILES, files);
+
+    //Обновить меню
+    updatePreviousMenu();
+    }
+  }
+
+
+
 
 void SdWCommand::projectState(bool enable)
   {

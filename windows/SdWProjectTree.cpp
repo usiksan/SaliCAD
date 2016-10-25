@@ -15,6 +15,7 @@ Description
 #include "objects/SdPulsar.h"
 #include "windows/SdPNewProjectItem_SelectType.h"
 #include "windows/SdPNewProjectItem_EnterName.h"
+#include "windows/SdWCommand.h"
 #include <QFileInfo>
 #include <QApplication>
 #include <QClipboard>
@@ -60,9 +61,17 @@ SdWProjectTree::SdWProjectTree(const QString fname, QWidget *parent) :
     addTopLevelItem( mTextList );
     }
 
+  fillTopItem( mSheetList, dctSheet );
+  fillTopItem( mPlateList, dctPlate );
+  fillTopItem( mAliasList, dctAlias );
+  fillTopItem( mSymbolList, dctSymbol );
+  fillTopItem( mPartList, dctPart );
+  fillTopItem( mTextList, dctTextDoc );
+
   connect( SdPulsar::pulsar, &SdPulsar::insertItem, this, &SdWProjectTree::insertItem );
   connect( SdPulsar::pulsar, &SdPulsar::removeItem, this, &SdWProjectTree::removeItem );
   connect( SdPulsar::pulsar, &SdPulsar::renameItem, this, &SdWProjectTree::renameItem );
+  connect( this, &SdWProjectTree::currentItemChanged, this, &SdWProjectTree::onCurrentItemChanged );
   }
 
 
@@ -132,6 +141,7 @@ bool SdWProjectTree::cmFileSaveAs()
   if( !mFileName.endsWith(SD_BASE_EXTENSION) )
     mFileName.append( SD_BASE_EXTENSION );
 
+  SdWCommand::addToPreviousMenu( mFileName );
   SdPulsar::pulsar->emitRenameProject( mProject );
 
   return cmFileSave();
@@ -149,9 +159,52 @@ void SdWProjectTree::cmObjectNew()
 
   if( wizard.exec() ) {
     //Append item to the project
-    mProject->insert( item );
+    item->setHand();
+    mProject->insertChild( item );
     }
   }
+
+
+
+
+void SdWProjectTree::cmObjectRename()
+  {
+  SdProjectItemPtr item = dynamic_cast<SdProjectItem*>( mProject->item(currentItem()->text(0)) );
+  if( item ) {
+    QWizard wizard(this);
+
+    wizard.setPage( 1, new SdPNewProjectItem_EnterName( &item, mProject, &wizard) );
+
+    wizard.exec();
+    }
+  else
+    QMessageBox::warning( this, tr("Error!"), tr("This is not object. Select object to rename.") );
+  }
+
+
+
+
+void SdWProjectTree::cmObjectDelete()
+  {
+  SdProjectItemPtr item = dynamic_cast<SdProjectItem*>( mProject->item(currentItem()->text(0)) );
+  if( item ) {
+    if( item->refCount() )
+      QMessageBox::warning( this, tr("Warning!"), tr("Object is referensed (used by other objects). You can not delete it until dereferenced.") );
+    else if( QMessageBox::question(this, tr("Warning!"), tr("Do You realy want to delete \'%1\'").arg(item->getTitle())) == QMessageBox::Yes )
+      mProject->deleteChild( item );
+    }
+  else
+    QMessageBox::warning( this, tr("Error!"), tr("This is not object. Select object to delete.") );
+  }
+
+void SdWProjectTree::cmClipboardChange()
+  {
+  SdWCommand::cmObjectPaste->setEnabled( QApplication::clipboard()->mimeData()->hasFormat(SD_CLIP_FORMAT_OBJECT) );
+  }
+
+
+
+
 
 void SdWProjectTree::renameItem(SdProjectItem *item)
   {
@@ -160,6 +213,9 @@ void SdWProjectTree::renameItem(SdProjectItem *item)
     item->mTreeItem->setText( 0, item->getTitle() );
     }
   }
+
+
+
 
 void SdWProjectTree::insertItem(SdProjectItem *item)
   {
@@ -172,6 +228,9 @@ void SdWProjectTree::insertItem(SdProjectItem *item)
     }
   }
 
+
+
+
 void SdWProjectTree::removeItem(SdProjectItem *item)
   {
   if( item && item->getProject() == mProject ) {
@@ -181,20 +240,41 @@ void SdWProjectTree::removeItem(SdProjectItem *item)
     }
   }
 
+
+
+
+void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem *prev)
+  {
+  Q_UNUSED(prev)
+  bool disable = cur == mSheetList || cur == mPlateList || cur == mSymbolList ||
+                 cur == mAliasList || cur == mPartList || cur == mTextList;
+  bool enable = !disable && cur != 0;
+
+  SdWCommand::cmObjectRename->setEnabled(enable);
+  SdWCommand::cmObjectDelete->setEnabled(enable);
+  SdWCommand::cmObjectCopy->setEnabled(enable);
+  SdWCommand::cmObjectCut->setEnabled(enable);
+
+  if( enable && cur ) {
+    SdProjectItem *item = dynamic_cast<SdProjectItem*>( mProject->item( cur->text(0) ) );
+    if( item )
+      emit SdPulsar::pulsar->emitActivateItem( item );
+    }
+  }
+
+
+
+
 void SdWProjectTree::showEvent(QShowEvent *event)
   {
 
-  //  //Установить пункты меню в соответствии со своим состоянием
-  //  MainMenu::cmFileSave->setEnabled( mProject->isModified() );
+  //Установить пункты меню в соответствии со своим состоянием
+  SdWCommand::cmFileSave->setEnabled( true );
 
-  //  bool enable = currentIndex().internalId() == 100;
-  //  MainMenu::cmObjectRename->setEnabled(enable);
-  //  MainMenu::cmObjectDelete->setEnabled(enable);
-  //  MainMenu::cmObjectCopy->setEnabled(enable);
-  //  MainMenu::cmObjectCut->setEnabled(enable);
+  onCurrentItemChanged( currentItem(), 0 );
 
-  //  //Проверить доступность в Clipboard объекта
-  //  MainMenu::cmObjectPaste->setEnabled( QApplication::clipboard()->mimeData()->hasFormat(SALICAD_CLIP_FORMAT_OBJECT) );
+  //Проверить доступность в Clipboard объекта
+  //MainMenu::cmObjectPaste->setEnabled( QApplication::clipboard()->mimeData()->hasFormat(SALICAD_CLIP_FORMAT_OBJECT) );
 
   QTreeView::showEvent( event );
   }
@@ -231,6 +311,9 @@ void SdWProjectTree::fillTopItem(QTreeWidgetItem *item, int classId)
       }
       );
   }
+
+
+
 
 QTreeWidgetItem *SdWProjectTree::classList(quint64 classId)
   {

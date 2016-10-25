@@ -17,6 +17,7 @@ Description
 
 #include "SdConfig.h"
 #include "SdObjectMap.h"
+#include "SdUndo.h"
 #include <QJsonObject>
 
 //Классы объектов
@@ -74,7 +75,7 @@ class SdObject
     virtual ~SdObject() {}
 
     //Information
-    virtual quint64   getId() const;
+    virtual quint64   getId();
     virtual QString   getType() const = 0;
     virtual quint64   getClass() const = 0;
 
@@ -82,12 +83,11 @@ class SdObject
     SdContainer*      getParent() const { return mParent; }
     SdContainer*      getRoot() const;
     void              setParent( SdContainer *parent ) { mParent = parent; }
+    SdUndo*           getUndo();
 
     //Attach and detach
     virtual void      attach() {}
-    virtual void      undoAttach() {}
     virtual void      detach() {}
-    virtual void      undoDetach() {}
     bool              isDeleted() const { return mDeleted; }
     void              markDeleted( bool deleted ) { mDeleted = deleted; }
 
@@ -101,8 +101,8 @@ class SdObject
 
     //Write and read object
     virtual void      writeObject( QJsonObject &obj ) const = 0;
-    QJsonObject       write() const;
-    static  void      writePtr( const SdObject *ptr, const QString name, QJsonObject &obj );
+    QJsonObject       write();
+    static  void      writePtr( SdObject *ptr, const QString name, QJsonObject &obj );
 
     virtual void      readObject( SdObjectMap *map, const QJsonObject obj );
 

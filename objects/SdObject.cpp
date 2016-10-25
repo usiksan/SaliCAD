@@ -17,6 +17,7 @@ Description
 #include "SdSymbol.h"
 #include "SdIds.h"
 #include <QJsonValue>
+#include <QDebug>
 
 SdObject::SdObject() :
   mParent(0),
@@ -26,7 +27,7 @@ SdObject::SdObject() :
 
   }
 
-quint64 SdObject::getId() const
+quint64 SdObject::getId()
   {
   if( mId == 0 ) mId = getLocalId();
   return mId;
@@ -55,28 +56,28 @@ SdObject *SdObject::copy()
 void SdObject::cloneFrom(SdObject *src)
   {
   if( getType() != src->getType() ) {
-    qFatal() << Q_FUNC_INFO << "Illegal clone source";
+    qDebug() << Q_FUNC_INFO << "Illegal clone source";
     throw( QString("Illegal clone source") );
     }
   mId = src->mId;
   }
 
 
-QJsonObject SdObject::write() const
+QJsonObject SdObject::write()
   {
   QJsonObject obj;
-  obj.insert( QStringLiteral(SDKO_ID), QJsonValue( getId() ) );
+  obj.insert( QStringLiteral(SDKO_ID), QJsonValue( (double)getId() ) );
   obj.insert( QStringLiteral(SDKO_TYPE), QJsonValue( getType() ) );
   writePtr( mParent, QStringLiteral("Parent"), obj );
   writeObject( obj );
   return obj;
   }
 
-void SdObject::writePtr(const SdObject *ptr, const QString name, QJsonObject &obj)
+void SdObject::writePtr( SdObject *ptr, const QString name, QJsonObject &obj)
   {
   QJsonObject sub;
   if( ptr ) {
-    sub.insert( QStringLiteral(SDKO_ID), QJsonValue( ptr->getId() ) );
+    sub.insert( QStringLiteral(SDKO_ID), QJsonValue( (double)(ptr->getId()) ) );
     sub.insert( QStringLiteral(SDKO_TYPE), QJsonValue( ptr->getType() ) );
     }
   else
@@ -109,22 +110,22 @@ SdObject *SdObject::read(SdObjectMap *map, const QJsonObject obj)
 SdObject *SdObject::readPtr(SdObjectMap *map, const QJsonObject obj)
   {
   //Get object id
-  mId = (quint64) (obj.value( QStringLiteral(SDKO_ID) ).toDouble());
+  quint64 id = (quint64) (obj.value( QStringLiteral(SDKO_ID) ).toDouble());
 
   //If id equals zero then no object
-  if( mId == 0 )
+  if( id == 0 )
     return 0;
 
   //Check if object already in the map
-  if( map->contains(mId) )
-    return map->value(mId);
+  if( map->contains(id) )
+    return map->value(id);
 
   //Build new object
   SdObject *r = build( obj.value( QStringLiteral(SDKO_TYPE) ).toString() );
   //Register new object in the map
-  map->insert( mId, r );
-  if( mId < Q_UINT64_C(0x100000000) )
-    mId = 0;
+  map->insert( id, r );
+  if( id < Q_UINT64_C(0x100000000) )
+    r->mId = 0;
   //and return new object
   return r;
   }

@@ -46,8 +46,8 @@ History
 #define PREVIOUS_FILES_COUNT         5
 
 //Clipboard objects format
-#define SALICAD_CLIP_FORMAT_OBJECT   "text/salicad-object"
-#define SALICAD_CLIP_FORMAT_FRAGMENT "text/salicad-fragment"
+#define SD_CLIP_FORMAT_OBJECT        "text/salicad-object"
+#define SD_CLIP_FORMAT_FRAGMENT      "text/salicad-fragment"
 
 #if 0
 #define SD_BASE_PATH                 QCoreApplication::applicationDirPath()

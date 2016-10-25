@@ -26,7 +26,7 @@ quint64 getGlobalId() {
   QSettings s;
   quint64 base = s.value( SDK_GLOBAL_ID_MACHINE ).toULongLong();
   quint64 count = s.value( SDK_GLOBAL_ID_COUNT ).toUInt();
-  base |= count;
+  base |= count++;
   s.setValue( SDK_GLOBAL_ID_COUNT, (unsigned)count );
   return base;
   }

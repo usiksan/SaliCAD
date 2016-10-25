@@ -22,6 +22,7 @@ Description
 #include <QSplitter>
 #include <QTabWidget>
 #include <QStringList>
+#include <QClipboard>
 
 class SdProjectItem;
 class SdWProjectTree;
@@ -42,6 +43,8 @@ class SdWMain : public QMainWindow
     void activateProjectName( const QString name, bool dirty );
 
     void activateProjectItem( SdProjectItem *item );
+
+    void onClipboardChanged( QClipboard::Mode mode );
 
     //Реакции на команды
     void cmFileNew();

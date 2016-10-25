@@ -45,3 +45,8 @@ void SdPulsar::emitRemoveItem(SdProjectItem *item)
   emit removeItem( item );
   }
 
+void SdPulsar::emitActivateItem(SdProjectItem *item)
+  {
+  emit activateItem( item );
+  }
+

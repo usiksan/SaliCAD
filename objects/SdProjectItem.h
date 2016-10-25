@@ -25,28 +25,29 @@ class SdProjectItem : public SdContainer
   {
     QString                mTitle;
     int                    mRefCount;
+    bool                   mAuto;
   public:
     QTreeWidgetItem       *mTreeItem;
 
     SdProjectItem();
-    SdProjectItem( SdProjectItem &src );
 
     //Information
-    virtual quint64        getId() const;
+    virtual quint64        getId();
     QString                getTitle() const { return mTitle; }
     void                   setTitle( const QString title );
     SdProject*             getProject() const;
 
     void                   addRef() { mRefCount++; }
     void                   decRef();
+    int                    refCount() const { return mRefCount; }
+    void                   setHand() { mAuto = false; }
 
     virtual QString        getIconName() const = 0;
 
+    virtual void           writeObject(QJsonObject &obj) const override;
+    virtual void           readObject(SdObjectMap *map, const QJsonObject obj) override;
 
-    // SdObject interface
-  public:
-    virtual void writeObject(QJsonObject &obj) const override;
-    virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual void           cloneFrom(SdObject *src) override;
   };
 
 typedef SdProjectItem *SdProjectItemPtr;

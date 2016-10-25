@@ -49,7 +49,10 @@ SOURCES += \
     objects/SdContainer.cpp \
     windows/SdPNewProjectItem_SelectType.cpp \
     windows/SdPNewProjectItem_EnterName.cpp \
-    objects/SdIds.cpp
+    objects/SdIds.cpp \
+    windows/SdDGetObject.cpp \
+    objects/SdObjectFactory.cpp \
+    objects/SdObjectInfo.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -90,7 +93,10 @@ HEADERS  += \
     objects/SdContainer.h \
     windows/SdPNewProjectItem_SelectType.h \
     windows/SdPNewProjectItem_EnterName.h \
-    objects/SdIds.h
+    objects/SdIds.h \
+    windows/SdDGetObject.h \
+    objects/SdObjectFactory.h \
+    objects/SdObjectInfo.h
 
 DISTFILES += \
     license.txt
@@ -98,4 +104,5 @@ DISTFILES += \
 RESOURCES += \
     SaliCADrc.qrc
 
-FORMS +=
+FORMS += \
+    windows/SdDGetObject.ui

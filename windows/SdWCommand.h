@@ -128,6 +128,7 @@ class SdWCommand
 
     static void createMenu( SdWMain *frame );
     static void updatePreviousMenu();
+    static void addToPreviousMenu( const QString fname );
     static void projectState( bool enable );
   };
 

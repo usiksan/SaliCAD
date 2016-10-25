@@ -29,6 +29,7 @@ Description
 #include <QClipboard>
 #include <QToolBar>
 #include <QToolButton>
+#include <QMimeData>
 
 SdWMain::SdWMain(QStringList args, QWidget *parent) :
   QMainWindow(parent)
@@ -52,6 +53,7 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   if( s.contains(QString(SDK_MAIN_SPLITTER)) )
     mWSplitter->restoreState( s.value(QString(SDK_MAIN_SPLITTER)).toByteArray() );
 
+  activateProjectName( QString(), false );
 
   //Open all files from command line
   args.removeFirst(); //First is executable name
@@ -91,6 +93,19 @@ void SdWMain::activateProjectItem(SdProjectItem *item)
 
   if( editor != 0 )
     mWEditors->addTab( editor, QIcon( editor->getIconName() ), editor->getTitle() );
+  }
+
+
+
+
+void SdWMain::onClipboardChanged(QClipboard::Mode mode)
+  {
+  if( mode == QClipboard::Clipboard ) {
+    if( activeProject() ) activeProject()->cmClipboardChange();
+    else SdWCommand::cmObjectPaste->setEnabled( false );
+    if( activeEditor() ) activeEditor()->cmClipboardChange();
+    else SdWCommand::cmEditPaste->setEnabled(false);
+    }
   }
 
 

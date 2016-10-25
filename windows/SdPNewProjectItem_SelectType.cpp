@@ -57,6 +57,7 @@ SdPNewProjectItem_SelectType::SdPNewProjectItem_SelectType(SdProjectItemPtr *ite
   mObjectType->addItem( tr("Component") );
   mObjectType->addItem( tr("Text doc") );
 
+  mObjectType->setCurrentRow( defaultClass );
   classChanged( defaultClass );
   orderChanged( defaultOrder );
 

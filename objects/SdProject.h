@@ -36,12 +36,10 @@ class SdProject : public SdContainer
 
     //Return true if object with this name present in project
     bool              isContains( const QString name ) const { return mItemMap.contains( name ); }
+    SdObjectPtr       item( const QString name ) const { return mItemMap.value(name); }
 
     virtual QString   getType() const override;
     virtual quint64   getClass() const override;
-
-    void              insert( SdProjectItem *item );
-    void              remove( SdProjectItem *item );
 
     virtual void      writeObject(QJsonObject &obj) const override;
     virtual void      readObject(SdObjectMap *map, const QJsonObject obj) override;
@@ -50,15 +48,10 @@ class SdProject : public SdContainer
     bool              save( const QString fname );
 
     virtual void      cloneFrom(SdObject *src) override;
-
-    // SdContainer interface
-  public:
-    virtual void insertChild(SdObject *child) override;
-    virtual void undoInsertChild(SdObject *child) override;
-    virtual void removeChild(SdObject *child) override;
-    virtual void undoRemoveChild(SdObject *child) override;
-    virtual void deleteChild(SdObject *child) override;
-    virtual void undoDeleteChild(SdObject *child) override;
+    virtual void      insertChild(SdObject *child) override;
+    virtual void      undoInsertChild(SdObject *child) override;
+    virtual void      deleteChild(SdObject *child) override;
+    virtual void      undoDeleteChild(SdObject *child) override;
 
   private:
     void               fillMap();

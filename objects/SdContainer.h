@@ -39,16 +39,13 @@ class SdContainer : public SdObject
     virtual void insertChild( SdObject *child );
     virtual void undoInsertChild( SdObject *child );
 
-    virtual void removeChild( SdObject *child );
-    virtual void undoRemoveChild( SdObject *child );
-
     virtual void deleteChild( SdObject *child );
     virtual void undoDeleteChild( SdObject *child );
 
 
     virtual void cloneFrom(SdObject *src) override;
   private:
-    void clearChildList();
+    void         clearChildList();
   };
 
 

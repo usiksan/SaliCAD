@@ -36,6 +36,10 @@ class SdPulsar : public QObject
     void emitInsertItem( SdProjectItem *item );
     //BEFORE remove item
     void emitRemoveItem( SdProjectItem *item );
+    //Activate item (bring item on top)
+    void emitActivateItem( SdProjectItem *item );
+    //Item contens changed
+    void emitItemContentChanged( SdProjectItem *item );
 
     static SdPulsar *pulsar;
   signals:
@@ -49,6 +53,10 @@ class SdPulsar : public QObject
     void insertItem( SdProjectItem *item );
     //BEFORE remove item
     void removeItem( SdProjectItem *item );
+    //Activate item (bring item on top)
+    void activateItem( SdProjectItem *item );
+    //Item contens changed
+    void itemContentChanged( SdProjectItem *item );
 
   public slots:
   };

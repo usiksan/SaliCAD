@@ -49,15 +49,15 @@ class SdWProjectTree : public QTreeWidget
     bool       cmFileSave();
     bool       cmFileSaveAs();
 
-    virtual void cmObjectNew();
-    virtual void cmObjectRename() {}
-    virtual void cmObjectDelete() {}
+    void       cmObjectNew();
+    void       cmObjectRename();
+    void       cmObjectDelete();
     virtual void cmObjectCopy() {}
     virtual void cmObjectPaste() {}
     virtual void cmObjectCut() {}
     virtual void cmObjectSort() {}
 
-    void cmClipboardChange() {}
+    void cmClipboardChange();
 
   public slots:
     //AFTER rename item
@@ -66,6 +66,8 @@ class SdWProjectTree : public QTreeWidget
     void insertItem( SdProjectItem *item );
     //BEFORE remove item
     void removeItem( SdProjectItem *item );
+
+    void onCurrentItemChanged( QTreeWidgetItem *cur, QTreeWidgetItem *prev );
 
   protected:
     virtual void showEvent( QShowEvent *event );

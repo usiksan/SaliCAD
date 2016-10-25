@@ -13,6 +13,7 @@ Description
 
 #include "SdContainer.h"
 #include <QJsonArray>
+#include <QDebug>
 
 SdContainer::SdContainer()
   {
@@ -82,6 +83,26 @@ void SdContainer::deleteChild(SdObject *child)
     //Mark as deleted
     child->markDeleted( true );
     }
+  else {
+    qDebug() << Q_FUNC_INFO << "delete not own child";
+    }
+  }
+
+
+
+
+void SdContainer::undoDeleteChild(SdObject *child)
+  {
+  //Test if in this container
+  if( child->getParent() == this ) {
+    //Mark as not deleted
+    child->markDeleted( false );
+    //Undo Detach from hierarhy
+    child->undoDetach();
+    }
+  else {
+    qDebug() << Q_FUNC_INFO << "undo delete not own child";
+    }
   }
 
 
@@ -90,8 +111,8 @@ void SdContainer::deleteChild(SdObject *child)
 void SdContainer::insertChild(SdObject *child)
   {
   if( child->getParent() ) {
-    //Remove from previous parent
-    child->getParent()->remove( child );
+    qDebug() << Q_FUNC_INFO << "Insertion with parent setuped";
+    throw( QString("Insertion with parent setuped") );
     }
   //Insert in list
   mChildList.append( child );
@@ -103,23 +124,29 @@ void SdContainer::insertChild(SdObject *child)
 
 
 
-void SdContainer::removeChild(SdObject *child)
+void SdContainer::undoInsertChild(SdObject *child)
   {
   //Test if in this container
   if( child->getParent() == this ) {
     //Detach from hierarhy
-    child->detach();
-    //Remove from list
-    mChildList.removeAll( child );
-    child->setParent( 0 );
+    child->undoAttach();
+    //Mark as deleted
+    child->markDeleted(true);
+    }
+  else {
+    qDebug() << Q_FUNC_INFO << "undo insert not own child";
     }
   }
+
+
+
+
 
 
 void SdContainer::cloneFrom(SdObject *src)
   {
   SdObject::cloneFrom( src );
-  SdContainer *sour = dynamic_cast<SdObject*>(src);
+  SdContainer *sour = dynamic_cast<SdContainer*>(src);
   if( sour ) {
     clearChildList();
     for( SdObject *ptr : sour->mChildList )

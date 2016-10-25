@@ -82,20 +82,7 @@ void SdWProjectList::fileCloseAll()
 void SdWProjectList::fileOpen(const QString fname)
   {
   //Добавить в список предыдущих файлов
-  if( !fname.isEmpty() && fname != SD_DEFAULT_FILE_NAME ) {
-    //Если файл имеет неверное расширение, то не открываем
-    QSettings settings;
-    QStringList files = settings.value(SDK_PREVIOUS_FILES).toStringList();
-    files.removeAll(fname);
-    files.prepend(fname);
-    while( files.size() > PREVIOUS_FILES_COUNT )
-      files.removeLast();
-
-    settings.setValue(SDK_PREVIOUS_FILES, files);
-
-    //Обновить меню
-    SdWCommand::updatePreviousMenu();
-    }
+  SdWCommand::addToPreviousMenu( fname );
 
   //Создаем окно проекта
   SdWProjectTree *prj = new SdWProjectTree( fname );

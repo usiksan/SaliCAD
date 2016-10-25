@@ -32,14 +32,16 @@ SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item,
   connect( mName, &QLineEdit::textChanged, this, &SdPNewProjectItem_EnterName::onTextChanged );
   }
 
+
+
 void SdPNewProjectItem_EnterName::onTextChanged(const QString name)
   {
   if( name.isEmpty() ) {
-    mUnical->setText( tr("Name is empty. You must enter correct name at least one symbol.") );
+    mUnical->setText( tr("<font color=\"blue\">Name is empty. You must enter correct name at least one symbol.</font>") );
     mValid = false;
     }
   else if( mProject->isContains(name) ) {
-    mUnical->setText( tr("This name already exist in project. Enter another name.") );
+    mUnical->setText( tr("<font color=\"red\">This name already exist in project. Enter another name.</font>") );
     mValid = false;
     }
   else {
@@ -52,18 +54,26 @@ void SdPNewProjectItem_EnterName::onTextChanged(const QString name)
 
 bool SdPNewProjectItem_EnterName::validatePage()
   {
+  if( mValid )
+    (*mItemPtr)->setTitle( mName->text() );
   return mValid;
   }
+
+
 
 bool SdPNewProjectItem_EnterName::isComplete() const
   {
   return true;
   }
 
+
+
 int SdPNewProjectItem_EnterName::nextId() const
   {
   return -1;
   }
+
+
 
 
 void SdPNewProjectItem_EnterName::initializePage()

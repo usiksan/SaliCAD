@@ -50,18 +50,6 @@ quint64 SdProject::getClass() const
 
 
 
-
-
-
-
-SdObject *SdProject::copy()
-  {
-  return 0;
-  }
-
-
-
-
 void SdProject::writeObject(QJsonObject &obj) const
   {
   SdContainer::writeObject( obj );
@@ -123,6 +111,9 @@ void SdProject::cloneFrom(SdObject *src)
   fillMap();
   }
 
+
+
+
 void SdProject::insertChild(SdObject *child)
   {
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
@@ -133,6 +124,9 @@ void SdProject::insertChild(SdObject *child)
     SdPulsar::pulsar->emitInsertItem( item );
     }
   }
+
+
+
 
 void SdProject::undoInsertChild(SdObject *child)
   {
@@ -145,28 +139,36 @@ void SdProject::undoInsertChild(SdObject *child)
     }
   }
 
-void SdProject::removeChild(SdObject *child)
+
+
+
+void SdProject::deleteChild(SdObject *child)
   {
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
   if( item && item->getParent() == this ) {
     SdPulsar::pulsar->emitRemoveItem( item );
     mItemMap.remove( item->getTitle() );
     mDirty = true;
-    SdContainer::removeChild( child );
+    SdContainer::deleteChild( child );
     }
   }
 
-void SdProject::undoRemoveChild(SdObject *child)
-  {
-  }
 
-void SdProject::deleteChild(SdObject *child)
-  {
-  }
+
 
 void SdProject::undoDeleteChild(SdObject *child)
   {
+  SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
+  if( item && item->getParent() == this ) {
+    SdContainer::undoDeleteChild( child );
+    mItemMap.insert( item->getTitle(), item );
+    mDirty = true;
+    SdPulsar::pulsar->emitInsertItem( item );
+    }
   }
+
+
+
 
 void SdProject::fillMap()
   {
