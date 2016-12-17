@@ -17,16 +17,11 @@ Description
 #include "SdIds.h"
 #include <QSettings>
 
-quint64 getLocalId() {
-  static quint64 localId = Q_UINT64_C(0x1);
-  return localId++;
-  }
 
-quint64 getGlobalId() {
+int getGlobalId() {
   QSettings s;
-  quint64 base = s.value( SDK_GLOBAL_ID_MACHINE ).toULongLong();
-  quint64 count = s.value( SDK_GLOBAL_ID_COUNT ).toUInt();
-  base |= count++;
-  s.setValue( SDK_GLOBAL_ID_COUNT, (unsigned)count );
-  return base;
+  int count = s.value( SDK_GLOBAL_ID_COUNT ).toInt();
+  count++;
+  s.setValue( SDK_GLOBAL_ID_COUNT, count );
+  return count;
   }

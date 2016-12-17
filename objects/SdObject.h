@@ -64,18 +64,18 @@ const quint64
 
 class SdContainer;
 
+typedef QString SdId;
+
 class SdObject
   {
     SdContainer *mParent;  //Parent object
     bool         mDeleted; //Flag check if object deleted. Deleted objects not save
-  protected:
-    quint64      mId;
   public:
     SdObject();
     virtual ~SdObject() {}
 
     //Information
-    virtual quint64   getId();
+    virtual QString   getId() const;
     virtual QString   getType() const = 0;
     virtual quint64   getClass() const = 0;
 
@@ -87,7 +87,9 @@ class SdObject
 
     //Attach and detach
     virtual void      attach() {}
+    virtual void      undoAttach() {}
     virtual void      detach() {}
+    virtual void      undoDetach() {}
     bool              isDeleted() const { return mDeleted; }
     void              markDeleted( bool deleted ) { mDeleted = deleted; }
 
@@ -97,12 +99,12 @@ class SdObject
     //Copy logic next object
     virtual SdObject* copyNext() { return copy(); }
     //Clone contens object
-    virtual void      cloneFrom( SdObject *src );
+    virtual void      cloneFrom( const SdObject *src );
 
     //Write and read object
     virtual void      writeObject( QJsonObject &obj ) const = 0;
-    QJsonObject       write();
-    static  void      writePtr( SdObject *ptr, const QString name, QJsonObject &obj );
+    QJsonObject       write() const;
+    static  void      writePtr( const SdObject *ptr, const QString name, QJsonObject &obj );
 
     virtual void      readObject( SdObjectMap *map, const QJsonObject obj );
 

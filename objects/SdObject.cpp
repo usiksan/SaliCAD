@@ -21,16 +21,16 @@ Description
 
 SdObject::SdObject() :
   mParent(0),
-  mDeleted(false),
-  mId(0)
+  mDeleted(false)
   {
 
   }
 
-quint64 SdObject::getId()
+
+
+QString SdObject::getId() const
   {
-  if( mId == 0 ) mId = getLocalId();
-  return mId;
+  return QString::number( (quintptr)this, 16 );
   }
 
 
@@ -46,6 +46,8 @@ SdContainer *SdObject::getRoot() const
   return 0;
   }
 
+
+
 SdObject *SdObject::copy()
   {
   SdObject *obj = build( getType() );
@@ -53,37 +55,47 @@ SdObject *SdObject::copy()
   return obj;
   }
 
-void SdObject::cloneFrom(SdObject *src)
+
+
+void SdObject::cloneFrom( const SdObject *src )
   {
   if( getType() != src->getType() ) {
     qDebug() << Q_FUNC_INFO << "Illegal clone source";
     throw( QString("Illegal clone source") );
     }
-  mId = src->mId;
   }
 
 
-QJsonObject SdObject::write()
+
+
+
+QJsonObject SdObject::write() const
   {
   QJsonObject obj;
-  obj.insert( QStringLiteral(SDKO_ID), QJsonValue( (double)getId() ) );
+  obj.insert( QStringLiteral(SDKO_ID), QJsonValue( getId() ) );
   obj.insert( QStringLiteral(SDKO_TYPE), QJsonValue( getType() ) );
   writePtr( mParent, QStringLiteral("Parent"), obj );
   writeObject( obj );
   return obj;
   }
 
-void SdObject::writePtr( SdObject *ptr, const QString name, QJsonObject &obj)
+
+
+
+void SdObject::writePtr( const SdObject *ptr, const QString name, QJsonObject &obj)
   {
   QJsonObject sub;
   if( ptr ) {
-    sub.insert( QStringLiteral(SDKO_ID), QJsonValue( (double)(ptr->getId()) ) );
+    sub.insert( QStringLiteral(SDKO_ID), QJsonValue( ptr->getId() ) );
     sub.insert( QStringLiteral(SDKO_TYPE), QJsonValue( ptr->getType() ) );
     }
   else
-    sub.insert( QStringLiteral(SDKO_ID), QJsonValue( (int)0 ) );
+    sub.insert( QStringLiteral(SDKO_ID), QJsonValue( QString() ) );
   obj.insert( name, sub );
   }
+
+
+
 
 void SdObject::readObject(SdObjectMap *map, const QJsonObject obj)
   {
@@ -110,10 +122,10 @@ SdObject *SdObject::read(SdObjectMap *map, const QJsonObject obj)
 SdObject *SdObject::readPtr(SdObjectMap *map, const QJsonObject obj)
   {
   //Get object id
-  quint64 id = (quint64) (obj.value( QStringLiteral(SDKO_ID) ).toDouble());
+  QString id = obj.value( QStringLiteral(SDKO_ID) ).toString();
 
   //If id equals zero then no object
-  if( id == 0 )
+  if( id.isEmpty() )
     return 0;
 
   //Check if object already in the map
@@ -124,11 +136,12 @@ SdObject *SdObject::readPtr(SdObjectMap *map, const QJsonObject obj)
   SdObject *r = build( obj.value( QStringLiteral(SDKO_TYPE) ).toString() );
   //Register new object in the map
   map->insert( id, r );
-  if( id < Q_UINT64_C(0x100000000) )
-    r->mId = 0;
   //and return new object
   return r;
   }
+
+
+
 
 SdObject *SdObject::readPtr(const QString name, SdObjectMap *map, const QJsonObject obj)
   {

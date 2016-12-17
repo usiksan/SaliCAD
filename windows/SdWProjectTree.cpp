@@ -210,7 +210,7 @@ void SdWProjectTree::renameItem(SdProjectItem *item)
   {
   if( item && item->getProject() == mProject ) {
     //Item from this project
-    item->mTreeItem->setText( 0, item->getTitle() );
+    item->mTreeItem->setText( 0, item->getExtendTitle() );
     }
   }
 
@@ -222,7 +222,7 @@ void SdWProjectTree::insertItem(SdProjectItem *item)
   if( item && item->getProject() == mProject ) {
     //Item from this project
     item->mTreeItem = new QTreeWidgetItem();
-    item->mTreeItem->setText( 0, item->getTitle() );
+    item->mTreeItem->setText( 0, item->getExtendTitle() );
     QTreeWidgetItem *ch = classList( item->getClass() );
     if( ch ) ch->addChild( item->mTreeItem );
     }
@@ -302,7 +302,7 @@ void SdWProjectTree::fillTopItem(QTreeWidgetItem *item, int classId)
       QTreeWidgetItem *it = new QTreeWidgetItem();
       SdProjectItem *ctr = dynamic_cast<SdProjectItem*>( obj );
       if( ctr ) {
-        it->setText( 0, ctr->getTitle() );
+        it->setText( 0, ctr->getExtendTitle() );
         ctr->mTreeItem = it;
         //it->setData(0, Qt::UserRole, QVariant(ctr->getId()) );
         item->addChild( it );

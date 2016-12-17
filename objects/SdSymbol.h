@@ -26,7 +26,7 @@ class SdSymbol : public SdProjectItem
     virtual QString   getType() const override;
     virtual quint64   getClass() const override;
     virtual QString   getIconName() const override;
-    virtual void      cloneFrom(SdObject *src) override;
+    virtual void      cloneFrom( const SdObject *src ) override;
   };
 
 #endif // SDSYMBOL_H

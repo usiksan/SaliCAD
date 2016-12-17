@@ -17,8 +17,7 @@ Description
 
 #include <QtGlobal>
 
-quint64 getLocalId();
-quint64 getGlobalId();
+int getGlobalId();
 
 #endif // SDIDS
 

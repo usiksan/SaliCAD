@@ -143,10 +143,10 @@ void SdContainer::undoInsertChild(SdObject *child)
 
 
 
-void SdContainer::cloneFrom(SdObject *src)
+void SdContainer::cloneFrom( const SdObject *src )
   {
   SdObject::cloneFrom( src );
-  SdContainer *sour = dynamic_cast<SdContainer*>(src);
+  const SdContainer *sour = dynamic_cast<const SdContainer*>(src);
   if( sour ) {
     clearChildList();
     for( SdObject *ptr : sour->mChildList )
@@ -154,6 +154,10 @@ void SdContainer::cloneFrom(SdObject *src)
         mChildList.append( ptr->copy() );
     }
   }
+
+
+
+
 
 void SdContainer::clearChildList()
   {

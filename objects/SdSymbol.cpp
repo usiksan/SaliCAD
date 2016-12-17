@@ -37,7 +37,7 @@ QString SdSymbol::getIconName() const
   }
 
 
-void SdSymbol::cloneFrom(SdObject *src)
+void SdSymbol::cloneFrom( const SdObject *src )
   {
   SdContainer::cloneFrom( src );
   }

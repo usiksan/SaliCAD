@@ -15,6 +15,7 @@ Description
 #include "SdProject.h"
 #include "SdPulsar.h"
 #include "SdIds.h"
+#include <QSettings>
 
 SdProjectItem::SdProjectItem() :
   mRefCount(0),
@@ -26,10 +27,26 @@ SdProjectItem::SdProjectItem() :
 
 
 
-quint64 SdProjectItem::getId()
+QString SdProjectItem::getId() const
   {
-  if( mId == 0 ) mId = getGlobalId();
-  return mId;
+  return mObjectInfo.getId();
+  }
+
+
+
+
+QString SdProjectItem::getIdFileName() const
+  {
+  return mObjectInfo.getIdFileName();
+  }
+
+
+
+
+
+QString SdProjectItem::getExtendTitle() const
+  {
+  return mObjectInfo.getExtendTitle();
   }
 
 
@@ -37,8 +54,9 @@ quint64 SdProjectItem::getId()
 
 void SdProjectItem::setTitle(const QString title)
   {
-  mId = 0;
-  mTitle = title;
+  mObjectInfo.setTitle( title );
+  //If false - item in edit state, when true - item can place in library
+  mFixed    = false;
   SdPulsar::pulsar->emitRenameItem( this );
   }
 
@@ -57,9 +75,10 @@ SdProject *SdProjectItem::getProject() const
 void SdProjectItem::writeObject(QJsonObject &obj) const
   {
   SdContainer::writeObject( obj );
-  obj.insert( QStringLiteral("Title"), mTitle );
+  mObjectInfo.writeObject( obj );
+  obj.insert( QStringLiteral("Fixed"),    mFixed );
   obj.insert( QStringLiteral("RefCount"), mRefCount );
-  obj.insert( QStringLiteral("Auto"), mAuto );
+  obj.insert( QStringLiteral("Auto"),     mAuto );
   }
 
 
@@ -68,7 +87,8 @@ void SdProjectItem::writeObject(QJsonObject &obj) const
 void SdProjectItem::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdContainer::readObject( map, obj );
-  mTitle    = obj.value( QStringLiteral("Title") ).toString();
+  mObjectInfo.readObject( obj );
+  mFixed    = obj.value( QStringLiteral("Fixed") ).toBool();
   mRefCount = obj.value( QStringLiteral("RefCount") ).toInt();
   mAuto     = obj.value( QStringLiteral("Auto") ).toBool();
   }
@@ -76,10 +96,12 @@ void SdProjectItem::readObject(SdObjectMap *map, const QJsonObject obj)
 
 
 
-void SdProjectItem::cloneFrom(SdObject *src)
+void SdProjectItem::cloneFrom( const SdObject *src )
   {
   SdContainer::cloneFrom( src );
-  SdProjectItem *sour = dynamic_cast<SdProjectItem*>(src);
-  mTitle = sour->mTitle;
-  mRefCount = sour->mRefCount;
+  const SdProjectItem *sour = dynamic_cast<const SdProjectItem*>(src);
+  mObjectInfo.copyFrom( sour->mObjectInfo );
+  mFixed    = sour->mFixed;
+  mRefCount = 0;
+  mAuto     = true;
   }

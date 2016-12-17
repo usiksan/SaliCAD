@@ -47,7 +47,7 @@ class SdProject : public SdContainer
     static SdProject *load( const QString fname );
     bool              save( const QString fname );
 
-    virtual void      cloneFrom(SdObject *src) override;
+    virtual void      cloneFrom( const SdObject *src) override;
     virtual void      insertChild(SdObject *child) override;
     virtual void      undoInsertChild(SdObject *child) override;
     virtual void      deleteChild(SdObject *child) override;

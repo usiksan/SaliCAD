@@ -20,6 +20,6 @@ class SdObject;
 
 typedef SdObject *SdObjectPtr;
 
-typedef QMap<quint64,SdObjectPtr> SdObjectMap;
+typedef QMap<QString,SdObjectPtr> SdObjectMap;
 
 #endif // SDOBJECTMAP_H

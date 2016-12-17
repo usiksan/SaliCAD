@@ -9,7 +9,7 @@ Web
   www.saliLab.ru
 
 Description
-  SdOwner - container object contains other objects
+  SdContainer - container object contains other objects
 */
 
 #ifndef SDCONTAINER_H
@@ -43,7 +43,7 @@ class SdContainer : public SdObject
     virtual void undoDeleteChild( SdObject *child );
 
 
-    virtual void cloneFrom(SdObject *src) override;
+    virtual void cloneFrom( const SdObject *src) override;
   private:
     void         clearChildList();
   };

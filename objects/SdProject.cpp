@@ -102,11 +102,11 @@ bool SdProject::save(const QString fname)
 
 
 
-void SdProject::cloneFrom(SdObject *src)
+void SdProject::cloneFrom(const SdObject *src)
   {
   SdContainer::cloneFrom(src);
   mDirty = true;
-  SdProject *sour = dynamic_cast<SdProject*>(src);
+  const SdProject *sour = dynamic_cast<const SdProject*>(src);
   mProperties = sour->mProperties;
   fillMap();
   }

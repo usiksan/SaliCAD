@@ -52,7 +52,8 @@ SOURCES += \
     objects/SdIds.cpp \
     windows/SdDGetObject.cpp \
     objects/SdObjectFactory.cpp \
-    objects/SdObjectInfo.cpp
+    objects/SdObjectInfo.cpp \
+    objects/SdObjectDataBaseRecord.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -96,7 +97,8 @@ HEADERS  += \
     objects/SdIds.h \
     windows/SdDGetObject.h \
     objects/SdObjectFactory.h \
-    objects/SdObjectInfo.h
+    objects/SdObjectInfo.h \
+    objects/SdObjectDataBaseRecord.h
 
 DISTFILES += \
     license.txt

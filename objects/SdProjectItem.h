@@ -15,6 +15,7 @@ Description
 #define SDPROJECTITEM_H
 
 #include "SdContainer.h"
+#include "SdObjectInfo.h"
 #include <QString>
 
 
@@ -23,17 +24,21 @@ class QTreeWidgetItem;
 
 class SdProjectItem : public SdContainer
   {
-    QString                mTitle;
-    int                    mRefCount;
-    bool                   mAuto;
+    SdObjectInfo           mObjectInfo; //Object global info searching on
+
+    bool                   mFixed;     //If false - item in edit state, when true - item can place in library
+    int                    mRefCount;  //Item ref count to autodelete item from project
+    bool                   mAuto;      //True if item inserted automatic as reference from other item
   public:
-    QTreeWidgetItem       *mTreeItem;
+    QTreeWidgetItem       *mTreeItem;  //Correspond visual tree item
 
     SdProjectItem();
 
     //Information
-    virtual quint64        getId();
-    QString                getTitle() const { return mTitle; }
+    virtual QString        getId() const override;
+    QString                getIdFileName() const;
+    QString                getExtendTitle() const;
+    QString                getTitle() const { return mObjectInfo.mTitle; }
     void                   setTitle( const QString title );
     SdProject*             getProject() const;
 
@@ -47,7 +52,7 @@ class SdProjectItem : public SdContainer
     virtual void           writeObject(QJsonObject &obj) const override;
     virtual void           readObject(SdObjectMap *map, const QJsonObject obj) override;
 
-    virtual void           cloneFrom(SdObject *src) override;
+    virtual void           cloneFrom( const SdObject *src ) override;
   };
 
 typedef SdProjectItem *SdProjectItemPtr;
