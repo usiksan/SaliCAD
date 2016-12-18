@@ -15,15 +15,9 @@ Description
 #define SDOBJECTFACTORY_H
 
 #include "SdObject.h"
+#include "SdObjectDataBaseRecord.h"
 #include <QString>
 #include <QList>
-
-struct SdObjectDataBaseRecord {
-    QString mName;   //Наименование объекта
-    QString mId;     //Идентификатор объекта
-    bool    mLocal;  //Когда истина, то имеется локальная копия
-  };
-
 
 typedef SdObjectDataBaseRecord *SdObjectDataBaseRecordPtr;
 
@@ -31,9 +25,12 @@ typedef QList<SdObjectDataBaseRecordPtr> SdObjectDataBaseRecordPtrList;
 
 class SdObjectFactory
   {
+    static QString mLibraryPath; //Путь к библиотеке
     //static QMap
   public:
-    SdObjectFactory();
+    //SdObjectFactory();
+
+    static void setLibraryPath( const QString path );
 
     static void addToFactory( const SdObject *obj );
 

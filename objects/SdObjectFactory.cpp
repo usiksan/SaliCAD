@@ -13,8 +13,15 @@ Description
 
 #include "SdObjectFactory.h"
 
-SdObjectFactory::SdObjectFactory()
+//SdObjectFactory::SdObjectFactory()
+//  {
+
+//  }
+
+
+void SdObjectFactory::setLibraryPath(const QString path)
   {
+  //Сохранить изменения в текущей библиотеке
 
+  mLibraryPath = path;
   }
-

@@ -53,7 +53,9 @@ SOURCES += \
     windows/SdDGetObject.cpp \
     objects/SdObjectFactory.cpp \
     objects/SdObjectInfo.cpp \
-    objects/SdObjectDataBaseRecord.cpp
+    objects/SdObjectDataBaseRecord.cpp \
+    windows/SdWEditorSymbol.cpp \
+    windows/SdWEditorGraph.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -98,7 +100,9 @@ HEADERS  += \
     windows/SdDGetObject.h \
     objects/SdObjectFactory.h \
     objects/SdObjectInfo.h \
-    objects/SdObjectDataBaseRecord.h
+    objects/SdObjectDataBaseRecord.h \
+    windows/SdWEditorSymbol.h \
+    windows/SdWEditorGraph.h
 
 DISTFILES += \
     license.txt
