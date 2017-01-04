@@ -58,6 +58,14 @@ QString SdObjectInfo::getExtendTitle() const
 
 
 
+QString SdObjectInfo::getRevision() const
+  {
+  return QString( "[r%1]" ).arg(mRevision);
+  }
+
+
+
+
 void SdObjectInfo::setTitle(const QString title)
   {
   QSettings s;

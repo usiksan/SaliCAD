@@ -20,8 +20,10 @@ Description
 
 class SdWEditorGraph : public SdWEditor
   {
+    Q_OBJECT
+
   public:
-    SdWEditorGraph();
+    SdWEditorGraph( QWidget *parent = 0 );
   };
 
 #endif // SDWEDITORGRAPH_H

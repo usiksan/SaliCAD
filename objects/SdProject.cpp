@@ -34,6 +34,35 @@ SdProject::~SdProject()
 
 
 
+
+//Return true if object with this name present in project
+bool SdProject::isContains(const QString name) const
+  {
+  for( SdObjectPtr ptr : mChildList ) {
+    SdProjectItemPtr pi = dynamic_cast<SdProjectItemPtr>( ptr );
+    if( pi && pi->getTitle() == name )
+      return true;
+    }
+  return false;
+  }
+
+
+
+
+//Find project item by visual tree widget item
+SdObjectPtr SdProject::item(QTreeWidgetItem *src) const
+  {
+  for( SdObjectPtr ptr : mChildList ) {
+    SdProjectItemPtr pi = dynamic_cast<SdProjectItemPtr>( ptr );
+    if( pi && pi->mTreeItem == src )
+      return ptr;
+    }
+  return 0;
+  }
+
+
+
+
 QString SdProject::getType() const
   {
   return QString(SD_TYPE_PROJECT);
@@ -119,7 +148,7 @@ void SdProject::insertChild(SdObject *child)
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
   if( item && !isContains(item->getTitle()) ) {
     SdContainer::insertChild( child );
-    mItemMap.insert( item->getTitle(), item );
+    mItemExtendNameMap.insert( item->getExtendTitle(), item );
     mDirty = true;
     SdPulsar::pulsar->emitInsertItem( item );
     }
@@ -133,7 +162,7 @@ void SdProject::undoInsertChild(SdObject *child)
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
   if( item && item->getParent() == this ) {
     SdPulsar::pulsar->emitRemoveItem( item );
-    mItemMap.remove( item->getTitle() );
+    mItemExtendNameMap.remove( item->getExtendTitle() );
     mDirty = true;
     SdContainer::undoInsertChild( child );
     }
@@ -147,7 +176,7 @@ void SdProject::deleteChild(SdObject *child)
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
   if( item && item->getParent() == this ) {
     SdPulsar::pulsar->emitRemoveItem( item );
-    mItemMap.remove( item->getTitle() );
+    mItemExtendNameMap.remove( item->getExtendTitle() );
     mDirty = true;
     SdContainer::deleteChild( child );
     }
@@ -161,7 +190,7 @@ void SdProject::undoDeleteChild(SdObject *child)
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
   if( item && item->getParent() == this ) {
     SdContainer::undoDeleteChild( child );
-    mItemMap.insert( item->getTitle(), item );
+    mItemExtendNameMap.insert( item->getExtendTitle(), item );
     mDirty = true;
     SdPulsar::pulsar->emitInsertItem( item );
     }
@@ -172,10 +201,10 @@ void SdProject::undoDeleteChild(SdObject *child)
 
 void SdProject::fillMap()
   {
-  mItemMap.clear();
+  mItemExtendNameMap.clear();
   forEach( dctProjectItems, [this](SdObject *obj) -> bool {
     SdProjectItem *it = dynamic_cast<SdProjectItem*>(obj);
-    if( it ) mItemMap.insert( it->getTitle(), it );
+    if( it ) mItemExtendNameMap.insert( it->getExtendTitle(), it );
     return true;
     } );
   }

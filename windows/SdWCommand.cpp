@@ -104,9 +104,26 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmViewMeasurement = menuView->addAction( frame->tr("Measurement"), frame, SLOT(cmViewMeasurement()) );
 
 
+
+
+
   menuDraw = new QMenu( frame->tr("Draw") );
-//  menuInsert;
-//  static QMenu *menuInstruments;
+
+
+
+
+  menuInsert = new QMenu( frame->tr("Insert") );
+
+
+
+
+  menuInstruments = new QMenu( frame->tr("Instruments") );
+  cmOption = menuInstruments->addAction( frame->tr("Options"), frame, SLOT(cmOption()) );
+  menuInstruments->addSeparator();
+  cmTools = menuInstruments->addAction( frame->tr("Tools"), frame, SLOT(cmTools()) );
+
+
+
   menuHelp = new QMenu( frame->tr("Help") );
   cmHelpContens = menuHelp->addAction( frame->tr("Contens"), frame, SLOT(cmHelpContens()) );
   cmHelpIndex   = menuHelp->addAction( frame->tr("Index"), frame, SLOT(cmHelpIndex()) );
@@ -119,6 +136,8 @@ void SdWCommand::createMenu(SdWMain *frame)
   bar->addMenu( menuEdit );
   bar->addMenu( menuView );
   bar->addMenu( menuDraw );
+  bar->addMenu( menuInsert );
+  bar->addMenu( menuInstruments );
   bar->addMenu( menuHelp );
 
   projectState(false);

@@ -33,6 +33,8 @@ struct SdObjectInfo
     QString        getId() const;
     QString        getIdFileName() const;
     QString        getExtendTitle() const;
+    QString        getRevision() const;
+    QString        getAuthor() const;
     void           setTitle( const QString title );
 
     void           writeObject(QJsonObject &obj) const;

@@ -16,6 +16,7 @@ Description
 
 #include "SdContainer.h"
 #include <QMap>
+#include <QTreeWidgetItem>
 
 
 #define SD_TYPE_PROJECT "Project"
@@ -24,9 +25,9 @@ class SdProjectItem;
 
 class SdProject : public SdContainer
   {
-    QJsonObject                mProperties; //Project properties
-    bool                       mDirty;      //Project dirty flag
-    QMap<QString,SdObjectPtr>  mItemMap;
+    QJsonObject                mProperties;           //Project properties
+    bool                       mDirty;                //Project dirty flag
+    QMap<QString,SdObjectPtr>  mItemExtendNameMap;    //Extend name - item assotiation
   public:
     SdProject();
     ~SdProject();
@@ -35,8 +36,10 @@ class SdProject : public SdContainer
     bool              isDirty() const { return mDirty; }
 
     //Return true if object with this name present in project
-    bool              isContains( const QString name ) const { return mItemMap.contains( name ); }
-    SdObjectPtr       item( const QString name ) const { return mItemMap.value(name); }
+    bool              isContains( const QString name ) const;
+    //SdObjectPtr       itemByName( const QString name ) const { return mItemNameMap.value(name); }
+    SdObjectPtr       itemByExtendName( const QString name ) const { return mItemExtendNameMap.value(name); }
+    SdObjectPtr       item( QTreeWidgetItem *src ) const;
 
     virtual QString   getType() const override;
     virtual quint64   getClass() const override;

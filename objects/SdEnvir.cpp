@@ -11,9 +11,9 @@ Web
 Description
 */
 
-#include "SdWEditorSymbol.h"
+#include "SdEnvir.h"
 
-SdWEditorSymbol::SdWEditorSymbol()
+SdEnvir::SdEnvir()
   {
 
   }

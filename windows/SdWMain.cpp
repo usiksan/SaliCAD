@@ -15,7 +15,10 @@ Description
 #include "SdWMain.h"
 #include "SdWProjectTree.h"
 #include "SdWEditor.h"
+#include "SdWEditorGraphSymbol.h"
 #include "SdWCommand.h"
+#include "SdDOptions.h"
+#include "objects/SdPulsar.h"
 #include <QSettings>
 #include <QCloseEvent>
 #include <QMessageBox>
@@ -60,6 +63,9 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   for( const QString file : args )
     mWProjectList->fileOpen( file );
 
+  //Связать с пульсаром
+  connect( SdPulsar::pulsar, &SdPulsar::activateItem, this, &SdWMain::activateProjectItem );
+  //connect( SdPulsar::pulsar, &SdPulsar::)
   }
 
 
@@ -78,6 +84,7 @@ void SdWMain::activateProjectName(const QString name, bool dirty)
 
 void SdWMain::activateProjectItem(SdProjectItem *item)
   {
+  if( item == 0 ) return;
   //Find if item already open
   for( int i = 0; i < mWEditors->count(); i++ ) {
     SdWEditor *editor = getEditor(i);
@@ -90,6 +97,11 @@ void SdWMain::activateProjectItem(SdProjectItem *item)
 
   //Item not found, create and insert editor for it
   SdWEditor *editor = 0;
+  switch( item->getClass() ) {
+    case dctSymbol :
+      editor = new SdWEditorGraphSymbol( dynamic_cast<SdSymbol*>( item ), mWEditors );
+      break;
+    }
 
   if( editor != 0 )
     mWEditors->addTab( editor, QIcon( editor->getIconName() ), editor->getTitle() );
@@ -680,9 +692,11 @@ void SdWMain::cmModePad()
     activeEditor()->cmModePad();
   }
 
+
+//Show options dialog
 void SdWMain::cmOption()
   {
-
+  SdDOptions(this).exec();
   }
 
 void SdWMain::cmTools()

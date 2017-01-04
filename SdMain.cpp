@@ -31,9 +31,9 @@ int main(int argc, char *argv[])
   QSettings s;
 
   //Check if registered
-  if( s.value(SDK_GLOBAL_ID_MACHINE).toULongLong() < Q_UINT64_C(0x200000000) ) {
+  if( s.value(SDK_GLOBAL_ID_MACHINE).toInt() < 1 ) {
     //Not registered
-    s.setValue(SDK_GLOBAL_ID_MACHINE, Q_UINT64_C(0x200000000));
+    s.setValue(SDK_GLOBAL_ID_MACHINE, 0 );
     }
   //Задать каталог библиотек
   //SgImageProvider::mImageDir = PATH_VISUAL;

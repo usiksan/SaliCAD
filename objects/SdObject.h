@@ -98,7 +98,9 @@ class SdObject
     SdObject*         copy();
     //Copy logic next object
     virtual SdObject* copyNext() { return copy(); }
-    //Clone contens object
+
+    //Clone contens object except mParent field.
+    //Cloned object has no parent
     virtual void      cloneFrom( const SdObject *src );
 
     //Write and read object
@@ -116,7 +118,7 @@ class SdObject
 
 typedef SdObject *SdObjectPtr;
 
-
+//Convert object only to desired type, other way - deleted
 template <class T>
 T* only( SdObject *obj ) {
   T *t = dynamic_cast<T*>( obj );

@@ -18,6 +18,7 @@ Description
 
 //  }
 
+QString SdObjectFactory::mLibraryPath;
 
 void SdObjectFactory::setLibraryPath(const QString path)
   {

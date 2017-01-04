@@ -15,6 +15,9 @@ Description
 #define SDWEDITOR_H
 
 
+#include "objects/SdPoint.h"
+#include "objects/SdRect.h"
+#include "objects/SdScaler.h"
 #include <QWidget>
 #include <QString>
 
@@ -23,6 +26,32 @@ class SdProjectItem;
 class SdWEditor : public QWidget
   {
     Q_OBJECT
+
+  protected:
+    SdScaler  mScale;          //Текущий масштаб изображения
+    SdPoint   mOrigin;         //Логическая точка центра изображения
+    SdPoint   mClientSize;     //Размер клиентской области в пикселах
+    SdPoint   mGrid;           //Размер сетки
+    bool      mLeftDown;       //Флаг нажатия левой кнопки мыши
+    bool      mDrag;           //Флаг активного режима перетаскивания
+    double    mPpm;            //Логических единиц в мм (преобразование в реальные размеры)
+    SdPoint   mDownPoint;      //Точка нажатия левой кнопки мыши
+    SdPoint   mPrevPoint;      //Предыдущая точка перемещения мыши
+    SdRect    mLastOver;       //Последний охватывающий прямоугольник
+    double    mScrollSizeX;    //Размер скроллинга на еденицу прокрутки
+    double    mScrollSizeY;    //Размер скроллинга на еденицу прокрутки
+
+//    int    ScaleDCoord( DCoord sour );         //Преобразовать логическую координату в экранную
+//    NPoint ScaleDPoint( DPoint p );            //Преобразовать логическую точку в экранную
+//    DPoint ConvertPoint( LPARAM lParam );      //Преобразовать экранную точку в логическую
+//    DCoord Convert( int i );                   //Преобразовать экранную координату в логическую
+//    void   AssignGraphBar( NControlBar *bar ); //Добавляет стандартную панель инструментов
+//    int    ConvertKeyCode( WPARAM wParam );    //Преобразование кодов клавиш в специальные коды
+
+    bool   editedFlag;  //Флаг состояния редактирования проекта
+    bool   bDirty;      //Флаг редактирования объекта
+    bool   emptyUndo;   //Флаг состояния буфера отмены
+
   public:
     explicit SdWEditor(QWidget *parent = 0);
 
@@ -119,6 +148,10 @@ class SdWEditor : public QWidget
   signals:
 
   public slots:
+
+    // QWidget interface
+  protected:
+    virtual void paintEvent(QPaintEvent *) override;
   };
 
 #endif // SDWEDITOR_H

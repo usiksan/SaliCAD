@@ -11,11 +11,12 @@ Web
 Description
 */
 
-#include "SdWEditorGraph.h"
+#ifndef SDSYSCOLORS_H
+#define SDSYSCOLORS_H
 
-SdWEditorGraph::SdWEditorGraph(QWidget *parent) :
-  SdWEditor( parent )
+
+class SdSysColors
   {
+  };
 
-  }
-
+#endif // SDSYSCOLORS_H

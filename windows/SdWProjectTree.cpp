@@ -169,7 +169,7 @@ void SdWProjectTree::cmObjectNew()
 
 void SdWProjectTree::cmObjectRename()
   {
-  SdProjectItemPtr item = dynamic_cast<SdProjectItem*>( mProject->item(currentItem()->text(0)) );
+  SdProjectItemPtr item = dynamic_cast<SdProjectItem*>( mProject->item( currentItem() ) );
   if( item ) {
     QWizard wizard(this);
 
@@ -186,7 +186,7 @@ void SdWProjectTree::cmObjectRename()
 
 void SdWProjectTree::cmObjectDelete()
   {
-  SdProjectItemPtr item = dynamic_cast<SdProjectItem*>( mProject->item(currentItem()->text(0)) );
+  SdProjectItemPtr item = dynamic_cast<SdProjectItem*>( mProject->item( currentItem() ) );
   if( item ) {
     if( item->refCount() )
       QMessageBox::warning( this, tr("Warning!"), tr("Object is referensed (used by other objects). You can not delete it until dereferenced.") );
@@ -256,7 +256,7 @@ void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem 
   SdWCommand::cmObjectCut->setEnabled(enable);
 
   if( enable && cur ) {
-    SdProjectItem *item = dynamic_cast<SdProjectItem*>( mProject->item( cur->text(0) ) );
+    SdProjectItem *item = dynamic_cast<SdProjectItem*>( mProject->item( cur ) );
     if( item )
       emit SdPulsar::pulsar->emitActivateItem( item );
     }

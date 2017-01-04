@@ -15,6 +15,7 @@ History
   06.10.2016 v0.1  created on PasCAD base
   09.10.2016 v0.2  Append 80% from SaliCAD prior base
   10.10.2016 v0.3  Creating inserting, removing and undo
+  18.12.2016 v0.4  Begin creating graph editors
 */
 
 #ifndef SDCONFIG
@@ -26,7 +27,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             3
+#define SD_VERSION_MINOR             4
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -63,6 +64,7 @@ History
 #define SDK_PREVIOUS_FILES           "PreviousFiles"
 #define SDK_GLOBAL_ID_MACHINE        "Machine global id"
 #define SDK_GLOBAL_ID_COUNT          "Global id count"
+#define SDK_COLOR                    "Color %d"
 
 #endif // SDCONFIG
 

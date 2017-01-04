@@ -28,3 +28,8 @@ QString SdWEditor::getIconName()
   return getProjectItem()->getIconName();
   }
 
+
+
+void SdWEditor::paintEvent(QPaintEvent *)
+  {
+  }

@@ -54,8 +54,13 @@ SOURCES += \
     objects/SdObjectFactory.cpp \
     objects/SdObjectInfo.cpp \
     objects/SdObjectDataBaseRecord.cpp \
-    windows/SdWEditorSymbol.cpp \
-    windows/SdWEditorGraph.cpp
+    windows/SdWEditorGraph.cpp \
+    windows/SdWEditorGraphSymbol.cpp \
+    objects/SdScaler.cpp \
+    windows/SdDOptions.cpp \
+    windows/SdDOptionsPageColors.cpp \
+    objects/SdSysColors.cpp \
+    objects/SdEnvir.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -101,8 +106,13 @@ HEADERS  += \
     objects/SdObjectFactory.h \
     objects/SdObjectInfo.h \
     objects/SdObjectDataBaseRecord.h \
-    windows/SdWEditorSymbol.h \
-    windows/SdWEditorGraph.h
+    windows/SdWEditorGraph.h \
+    windows/SdWEditorGraphSymbol.h \
+    objects/SdScaler.h \
+    windows/SdDOptions.h \
+    windows/SdDOptionsPageColors.h \
+    objects/SdSysColors.h \
+    objects/SdEnvir.h
 
 DISTFILES += \
     license.txt
