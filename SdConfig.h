@@ -16,6 +16,9 @@ History
   09.10.2016 v0.2  Append 80% from SaliCAD prior base
   10.10.2016 v0.3  Creating inserting, removing and undo
   18.12.2016 v0.4  Begin creating graph editors
+  07.01.2016 v0.5  Begin creation modes
+                   Envir created
+                   Status bar created
 */
 
 #ifndef SDCONFIG
@@ -27,7 +30,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             4
+#define SD_VERSION_MINOR             5
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -64,7 +67,8 @@ History
 #define SDK_PREVIOUS_FILES           "PreviousFiles"
 #define SDK_GLOBAL_ID_MACHINE        "Machine global id"
 #define SDK_GLOBAL_ID_COUNT          "Global id count"
-#define SDK_COLOR                    "Color %d"
+#define SDK_ENVIR_VERSION            "Envir version"
+#define SDK_ENVIR                    "Envir"
 
 #endif // SDCONFIG
 

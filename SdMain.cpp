@@ -14,6 +14,7 @@ Description
 
 #include "windows/SdWMain.h"
 #include "objects/SdPulsar.h"
+#include "objects/SdEnvir.h"
 #include <QApplication>
 #include <QSettings>
 #include <QTranslator>
@@ -46,6 +47,8 @@ int main(int argc, char *argv[])
   //Creating pulsar for signals distibution
   SdPulsar::pulsar = new SdPulsar();
 
+  sdEnvir = new SdEnvir();
+
   //Creating application main window
   SdWMain w( a.arguments() );
   if( s.value(QString(SDK_WMAIN_MAX), QVariant(true)).toBool() )
@@ -57,6 +60,7 @@ int main(int argc, char *argv[])
 
   int res = a.exec();
 
+  delete sdEnvir;
   delete SdPulsar::pulsar;
   return res;
   }

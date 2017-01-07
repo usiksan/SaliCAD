@@ -41,6 +41,11 @@ class SdPulsar : public QObject
     //Item contens changed
     void emitItemContentChanged( SdProjectItem *item );
 
+    //Status bar
+    void emitSetStatusLabels( const QString xlabel, const QString ylabel );
+    void emitSetStatusPositions( const QString x, const QString y );
+    void emitSetStatusMessage( const QString msg );
+
     static SdPulsar *pulsar;
   signals:
     //BEFORE destroy project
@@ -57,6 +62,10 @@ class SdPulsar : public QObject
     void activateItem( SdProjectItem *item );
     //Item contens changed
     void itemContentChanged( SdProjectItem *item );
+    //Status bar
+    void setStatusLabels( const QString xlabel, const QString ylabel );
+    void setStatusPositions( const QString x, const QString y );
+    void setStatusMessage( const QString msg );
 
   public slots:
   };

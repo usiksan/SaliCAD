@@ -23,6 +23,7 @@ Description
 #include <QTabWidget>
 #include <QStringList>
 #include <QClipboard>
+#include <QLabel>
 
 class SdProjectItem;
 class SdWProjectTree;
@@ -34,12 +35,24 @@ class SdWMain : public QMainWindow
     QSplitter      *mWSplitter;     //Central part of programm windows - is splitter with projects and redactors
     SdWProjectList *mWProjectList;  //Project list
     QTabWidget     *mWEditors;      //Actived visual editors
+
+    //Status bar infos
+    QLabel         *mXLabel;        //X axiz title (X or col)
+    QLabel         *mXPos;          //X axiz position
+    QLabel         *mYLabel;        //Y axiz title (Y or row)
+    QLabel         *mYPos;          //Y axiz position
+    QLabel         *mMessage;       //Message
   public:
     explicit SdWMain( QStringList args, QWidget *parent = 0 );
 
   signals:
 
   public slots:
+    //Status bar
+    void setStatusLabels( const QString xlabel, const QString ylabel );
+    void setStatusPositions( const QString x, const QString y );
+    void setStatusMessage( const QString msg );
+
     void activateProjectName( const QString name, bool dirty );
 
     void activateProjectItem( SdProjectItem *item );

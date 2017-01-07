@@ -11,12 +11,10 @@ Web
 Description
 */
 
-#ifndef SDSYSCOLORS_H
-#define SDSYSCOLORS_H
+#include "SdWView.h"
 
-
-class SdSysColors
+SdWView::SdWView(QWidget *parent) : QWidget(parent)
   {
-  };
 
-#endif // SDSYSCOLORS_H
+  }
+

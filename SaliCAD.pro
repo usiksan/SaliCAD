@@ -59,8 +59,10 @@ SOURCES += \
     objects/SdScaler.cpp \
     windows/SdDOptions.cpp \
     windows/SdDOptionsPageColors.cpp \
-    objects/SdSysColors.cpp \
-    objects/SdEnvir.cpp
+    objects/SdEnvir.cpp \
+    windows/SdWView.cpp \
+    modes/SdMode.cpp \
+    modes/SdModeCommon.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -111,8 +113,10 @@ HEADERS  += \
     objects/SdScaler.h \
     windows/SdDOptions.h \
     windows/SdDOptionsPageColors.h \
-    objects/SdSysColors.h \
-    objects/SdEnvir.h
+    objects/SdEnvir.h \
+    windows/SdWView.h \
+    modes/SdMode.h \
+    modes/SdModeCommon.h
 
 DISTFILES += \
     license.txt

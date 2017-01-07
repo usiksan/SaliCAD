@@ -30,41 +30,59 @@ scTraseNet      = 7,  //Цвет трассируемой цепи
 scGrid          = 8, //Цвет сетки
 scLast          = 9;
 
+
+//Вид перекрестья курсора
+const int
+  dcvNone    = 0,  //Курсор не виден
+  dcvSmall   = 1,  //Малый курсор
+  dcvFull    = 2,  //Полный курсор
+  dcvSmall45 = 3,  //Малый под углом 45
+  dcvFull45  = 4,  //Полный под углом 45
+  dcvLast    = 5;
+
+//Версия SdEnvir
+const int SdEnvirVersion = 1;
+
 class SdEnvir
   {
-    static QColor mSysColors[scLast];
+    QColor mSysColors[scLast];
   public:
-    static int      mDotSize;     //Размер точки соединений сегментов цепи
-    static int      mDotWidth;    //Толщина линии точки соединения сегментов цепи
-    static int      mSymPinSize;  //Размер перекрестья ножки символа
-    static int      mPrtPinSize;  //Размер окружности ножки корпуса
-    static int      mSmartSize;   //Размер разумной точки
-    static int      mSmartWidth;  //Толщина линии разумной точки
-    static bool     mIsSmart;     //Включение разумного режима
-    static bool     mIsWireSmart; //Второй уровень разумного режима для цепей в схеме
-    static quint64  mSmartMask;   //Маска разрешенных для поиска разумных точек
-    static bool     mNetUnionOn;  //Выводить окно объединения каждый раз
-    static int      mNetUnionMode;//Режим объединения цепей 0-нет, 1-XN, 2-все
-    static bool     mEnableComp;  //Разрешить операции с компонентами или заблокировать
-    DBool       enableNet;   //Разрешить операции с цепями
-    DBool       enablePic;   //Разрешить операции с картинкой
-    DInt32      viaSize;     //Размер переходного отверстия по умолчанию
-    DBool       showRatNet;  //Показывать резинки
-    DBool       bShowRemark;           //Показывать всплывающие подсказки над компонентами
-    DBool       bShowMessageRemark;    //Показывать информацию в строке состояния
-    DInt32      placeMode;             //Режим размещения компонентов
-    DInt32      minViewGrid;           //Минимальный видимый размер сетки
-    DInt32      undoSize;              //Размер буфера отмены
-    DInt32      cursorView;            //Вид перекрестья курсора
-    DInt32      smallCursorSize;       //Размер малого курсора в пикселах
-    DBool       bShowCursor;           //Показывать курсор
-    DInt32      traseDotSize;          //Размер точки, показывающей цепь
+    int      mDotSize;              //Размер точки соединений сегментов цепи
+    int      mDotWidth;             //Толщина линии точки соединения сегментов цепи
+    int      mSymPinSize;           //Размер перекрестья ножки символа
+    int      mPrtPinSize;           //Размер окружности ножки корпуса
+    int      mSmartSize;            //Размер разумной точки
+    int      mSmartWidth;           //Толщина линии разумной точки
+    bool     mIsSmart;              //Включение разумного режима
+    bool     mIsWireSmart;          //Второй уровень разумного режима для цепей в схеме
+    quint64  mSmartMask;            //Маска разрешенных для поиска разумных точек
+    bool     mNetUnionOn;           //Выводить окно объединения каждый раз
+    int      mNetUnionMode;         //Режим объединения цепей 0-нет, 1-XN, 2-все
+    bool     mEnableComp;           //Разрешить операции с компонентами или заблокировать
+    bool     mEnableNet;            //Разрешить операции с цепями
+    bool     mEnablePic;            //Разрешить операции с картинкой
+    int      mViaSize;              //Размер переходного отверстия по умолчанию
+    bool     mShowRatNet;           //Показывать резинки
+    bool     mShowRemark;           //Показывать всплывающие подсказки над компонентами
+    bool     mShowMessageRemark;    //Показывать информацию в строке состояния
+    int      mPlaceMode;            //Режим размещения компонентов
+    int      mMinViewGrid;          //Минимальный видимый размер сетки
+    int      mUndoSize;             //Размер буфера отмены
+    int      mCursorView;           //Вид перекрестья курсора
+    int      mSmallCursorSize;      //Размер малого курсора в пикселах
+    bool     mShowCursor;           //Показывать курсор
+    int      mTraseDotSize;         //Размер точки, показывающей цепь
 
-    static QColor getSysColor( int colorId );
-    static void   setSysColor( int colorId, QColor color );
+    SdEnvir();
 
-    static void   loadEnvir();
-    static void   saveEnvir();
+    QColor   getSysColor( int colorId );
+    void     setSysColor( int colorId, QColor color );
+
+    void     loadEnvir();
+    void     saveEnvir();
+    void     defaultEnvir();
   };
+
+extern SdEnvir *sdEnvir;
 
 #endif // SDENVIR_H

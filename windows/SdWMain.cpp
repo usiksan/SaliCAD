@@ -33,6 +33,7 @@ Description
 #include <QToolBar>
 #include <QToolButton>
 #include <QMimeData>
+#include <QStatusBar>
 
 SdWMain::SdWMain(QStringList args, QWidget *parent) :
   QMainWindow(parent)
@@ -56,6 +57,18 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   if( s.contains(QString(SDK_MAIN_SPLITTER)) )
     mWSplitter->restoreState( s.value(QString(SDK_MAIN_SPLITTER)).toByteArray() );
 
+
+  //Create status bar
+  QStatusBar *sbar = statusBar();
+  sbar->addWidget( mXLabel = new QLabel(QString("X:")) );
+  sbar->addWidget( mXPos = new QLabel(QString("0")) );
+  mXPos->setMinimumWidth( 60 );
+  sbar->addWidget( mYLabel = new QLabel(QString("Y:")) );
+  sbar->addWidget( mYPos = new QLabel(QString("0")) );
+  mYPos->setMinimumWidth( 60 );
+  sbar->addWidget( mMessage = new QLabel(), 1 );
+
+
   activateProjectName( QString(), false );
 
   //Open all files from command line
@@ -65,7 +78,31 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
 
   //Связать с пульсаром
   connect( SdPulsar::pulsar, &SdPulsar::activateItem, this, &SdWMain::activateProjectItem );
-  //connect( SdPulsar::pulsar, &SdPulsar::)
+  connect( SdPulsar::pulsar, &SdPulsar::setStatusLabels, this, &SdWMain::setStatusLabels );
+  connect( SdPulsar::pulsar, &SdPulsar::setStatusPositions, this, &SdWMain::setStatusPositions );
+  connect( SdPulsar::pulsar, &SdPulsar::setStatusMessage, this, &SdWMain::setStatusMessage );
+  }
+
+
+
+
+void SdWMain::setStatusLabels(const QString xlabel, const QString ylabel)
+  {
+  mXLabel->setText( xlabel );
+  mYLabel->setText( ylabel );
+  }
+
+
+
+void SdWMain::setStatusPositions(const QString x, const QString y)
+  {
+  mXPos->setText( x );
+  mYPos->setText( y );
+  }
+
+void SdWMain::setStatusMessage(const QString msg)
+  {
+  mMessage->setText( msg );
   }
 
 

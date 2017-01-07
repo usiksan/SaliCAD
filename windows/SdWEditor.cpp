@@ -13,7 +13,7 @@ Description
 #include "objects/SdProjectItem.h"
 #include "SdWEditor.h"
 
-SdWEditor::SdWEditor(QWidget *parent) : QWidget(parent)
+SdWEditor::SdWEditor(QWidget *parent) : QAbstractScrollArea(parent)
   {
 
   }
@@ -30,6 +30,3 @@ QString SdWEditor::getIconName()
 
 
 
-void SdWEditor::paintEvent(QPaintEvent *)
-  {
-  }
