@@ -17,6 +17,7 @@ Description
 #include "SdConfig.h"
 #include <QAction>
 #include <QMenu>
+#include <QToolBar>
 
 typedef QAction *QActionPtr;
 
@@ -32,9 +33,36 @@ class SdWCommand
     static QMenu *menuEdit;
     static QMenu *menuView;
     static QMenu *menuDraw;
-    static QMenu *menuInsert;
+    static QMenu *menuInsertSymbol;
+    static QMenu *menuInsertSheet;
+    static QMenu *menuInsertPart;
+    static QMenu *menuInsertPart3d;
+    static QMenu *menuInsertPcb;
+    static QMenu *menuInsertComp;
     static QMenu *menuInstruments;
     static QMenu *menuHelp;
+
+    static QActionPtr cmMenuInsertSymbol;
+    static QActionPtr cmMenuInsertSheet;
+    static QActionPtr cmMenuInsertPart;
+    static QActionPtr cmMenuInsertPart3d;
+    static QActionPtr cmMenuInsertPcb;
+    static QActionPtr cmMenuInsertComp;
+
+    static QToolBar *barMain;
+    static QToolBar *barSymbol;
+    static QToolBar *barPart;
+    static QToolBar *barComp;
+    static QToolBar *barSheet;
+    static QToolBar *barPcb;
+
+    static QToolBar *mbarLinear;
+
+    static void addEditCommands( QToolBar *bar );
+    static void addViewCommands( QToolBar *bar );
+    static void addDrawCommands( QToolBar *bar );
+    static void setModeBar( quint64 propType );
+
 
 
     static QActionPtr cmFileNew;
@@ -91,12 +119,13 @@ class SdWCommand
     static QActionPtr cmModeText;
     static QActionPtr cmModeField;
 
-    static QActionPtr cmBall;
-    static QActionPtr cmPinWired;
-    static QActionPtr cmPinFlat;
-    static QActionPtr cmBodyCylinder;
-    static QActionPtr cmBodyBrick;
-    static QActionPtr cmBodyContur;
+    static QActionPtr cmModeSelect;
+    static QActionPtr cmMode3dBall;
+    static QActionPtr cmMode3dPinWired;
+    static QActionPtr cmMode3dPinFlat;
+    static QActionPtr cmMode3dBodyCylinder;
+    static QActionPtr cmMode3dBodyBrick;
+    static QActionPtr cmMode3dBodyContur;
     static QActionPtr cmModePin;
     static QActionPtr cmModeReference;
     static QActionPtr cmModeOrigin;
@@ -120,8 +149,10 @@ class SdWCommand
     static QActionPtr cmModePolygon;
     static QActionPtr cmModeDeleteWire;
     static QActionPtr cmModePad;
+
     static QActionPtr cmOption;
     static QActionPtr cmTools;
+
     static QActionPtr cmHelpContens;
     static QActionPtr cmHelpIndex;
     static QActionPtr cmHelpAbout;
@@ -130,6 +161,8 @@ class SdWCommand
     static void updatePreviousMenu();
     static void addToPreviousMenu( const QString fname );
     static void projectState( bool enable );
+    static void createToolBars( SdWMain *frame );
+    static void hideEditorContext();
   };
 
 #endif // SDWCOMMAND_H

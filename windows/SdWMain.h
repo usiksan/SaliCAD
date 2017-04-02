@@ -59,6 +59,8 @@ class SdWMain : public QMainWindow
 
     void onClipboardChanged( QClipboard::Mode mode );
 
+    void onActivateEditor( int index );
+
     //Реакции на команды
     void cmFileNew();
     void cmFileOpen();
@@ -103,6 +105,8 @@ class SdWMain : public QMainWindow
     void cmViewZoomOut();
     void cmViewArea();
     void cmViewMeasurement();
+
+    void cmModeSelect();
 
     void cmModeLine();
     void cmModeRect();

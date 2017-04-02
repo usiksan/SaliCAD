@@ -37,6 +37,9 @@ class SdWEditor : public QAbstractScrollArea
 
     QString                getIconName();
 
+    //On activate editor window
+    virtual void onActivateEditor() {}
+
     //Реакции на команды
     virtual void cmFilePrint() {}
 
@@ -62,6 +65,8 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmViewZoomOut() {}
     virtual void cmViewArea() {}
     virtual void cmViewMeasurement() {}
+
+    virtual void cmModeSelect() {}
 
     virtual void cmModeLine() {}
     virtual void cmModeRect() {}

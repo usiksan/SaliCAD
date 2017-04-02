@@ -33,7 +33,7 @@ quint64 SdSymbol::getClass() const
 
 QString SdSymbol::getIconName() const
   {
-  return QString();
+  return QString(":/pic/iconSymbol.png");
   }
 
 

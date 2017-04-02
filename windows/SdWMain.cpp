@@ -41,8 +41,16 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   //Create menu
   SdWCommand::createMenu( this );
 
+  //Create tool bars
+  SdWCommand::createToolBars( this );
+
+
+  SdWCommand::hideEditorContext();
+
+
   mWProjectList = new SdWProjectList();
   mWEditors     = new QTabWidget();
+  connect( mWEditors, &QTabWidget::currentChanged, this, &SdWMain::onActivateEditor );
 
   mWSplitter    = new QSplitter();
   mWSplitter->addWidget( mWProjectList );
@@ -155,6 +163,16 @@ void SdWMain::onClipboardChanged(QClipboard::Mode mode)
     if( activeEditor() ) activeEditor()->cmClipboardChange();
     else SdWCommand::cmEditPaste->setEnabled(false);
     }
+  }
+
+
+
+
+void SdWMain::onActivateEditor(int index)
+  {
+  SdWEditor *editor = getEditor(index);
+  SdWCommand::hideEditorContext();
+  if( editor ) editor->onActivateEditor();
   }
 
 
@@ -493,6 +511,12 @@ void SdWMain::cmViewMeasurement()
   {
   if( activeEditor() )
     activeEditor()->cmViewMeasurement();
+  }
+
+void SdWMain::cmModeSelect()
+  {
+  if( activeEditor() )
+    activeEditor()->cmModeSelect();
   }
 
 void SdWMain::cmModeLine()

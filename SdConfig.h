@@ -16,9 +16,11 @@ History
   09.10.2016 v0.2  Append 80% from SaliCAD prior base
   10.10.2016 v0.3  Creating inserting, removing and undo
   18.12.2016 v0.4  Begin creating graph editors
-  07.01.2016 v0.5  Begin creation modes
+  07.01.2017 v0.5  Begin creation modes
                    Envir created
                    Status bar created
+  08.01.2017 v0.6  Move pic, icons and images from pascad9 to this
+                   Begin tool bar creation
 */
 
 #ifndef SDCONFIG
@@ -30,7 +32,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             5
+#define SD_VERSION_MINOR             6
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

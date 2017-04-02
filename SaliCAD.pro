@@ -62,7 +62,8 @@ SOURCES += \
     objects/SdEnvir.cpp \
     windows/SdWView.cpp \
     modes/SdMode.cpp \
-    modes/SdModeCommon.cpp
+    modes/SdModeCommon.cpp \
+    windows/windowsCursor.cpp
 
 HEADERS  += \
     SdConfig.h \
