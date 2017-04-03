@@ -63,7 +63,7 @@ void SdContainer::writeObject(QJsonObject &obj) const
 
 
 
-void SdContainer::forEach(int classMask, std::function<bool (SdObject *)> fun1)
+void SdContainer::forEach(quint64 classMask, std::function<bool (SdObject *)> fun1)
   {
   for( SdObject *ptr : mChildList )
     if( ptr && !ptr->isDeleted() && ptr->getClass() & classMask ) {

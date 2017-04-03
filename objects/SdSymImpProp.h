@@ -19,7 +19,7 @@ Description
 struct SdSymImpProp
   {
     SdAngle   mAngle;  //Угол поворота компонента
-    SdIntProp mMirror; //Зеркальность компонента
+    SdPropInt mMirror; //Зеркальность компонента
 
     SdSymImpProp() : mAngle(0), mMirror(0) {}
 

@@ -54,34 +54,33 @@ class SdMode
     SdMode( SdWEditorGraph *editor, SdProjectItem *obj );
     virtual ~SdMode();
 
-    virtual void activate();               //Вызывается первой, после того как режим делается текущим
-    virtual void reset();                  //Сбрасывает режим в исходное состояние
+    virtual void    activate();               //Вызывается первой, после того как режим делается текущим
+    virtual void    reset();                  //Сбрасывает режим в исходное состояние
 
-    virtual void draw( SdContext& );        //Рисует картинку через призму режима
-    virtual void show( SdContext& );        //Рисует временные данные режима
-    virtual void hide( SdContext& );        //Стирает временные данные режима
+    virtual void    draw( SdContext& );        //Рисует картинку через призму режима
+    virtual void    show( SdContext& );        //Рисует временные данные режима
+    virtual void    hide( SdContext& );        //Стирает временные данные режима
 
-    virtual void enterPoint( SdPoint, SdContext& ) {}    //Ввод точки (левая кнопка)
-    virtual void clickPoint( SdPoint, SdContext& ) {}    //Двойное нажатие левой кнопки
-    virtual void cancelPoint( SdPoint, SdContext& ) {}   //Точка прекращения (правая кнопка)
-    virtual void movePoint( SdPoint, SdContext& ) {}     //Перемещение точки
-    virtual bool keyDown( int, SdContext& );             //Нажатие кнопки
-    virtual bool keyUp( int, SdContext&);                //Отпускание клавиши
-    virtual void propChanged( SdContext& ) {}            //Извещение об изменении свойств
-    virtual void enterPrev( SdContext& ) {}              //Повторение ввода предыдущего сеанса (разумный ввод)
-    virtual void beginDrag( SdPoint, SdContext& ) {}     //Начало перетаскивания
-    virtual void dragPoint( SdPoint, SdContext& ) {}     //Перетаскивание
-    virtual void stopDrag( SdPoint, SdContext& ) {}      //Конец перетаскивания
-    virtual bool enableCopy() const;                     //Режим имеет объекты для копирования
-    virtual bool enablePaste( quint64 pasteMask ) const; //Режим разрешает вставку объектов с заданной маской
-    virtual bool getInfo( SdPoint p, QString &info );    //Получить всплывающую информацию в заданной точке
-    //virtual int  automation( int cmd, int aParam, int bParam, void *cParam );  // Автоматизация процессов
+    virtual void    enterPoint( SdPoint, SdContext& ) {}    //Ввод точки (левая кнопка)
+    virtual void    clickPoint( SdPoint, SdContext& ) {}    //Двойное нажатие левой кнопки
+    virtual void    cancelPoint( SdPoint, SdContext& ) {}   //Точка прекращения (правая кнопка)
+    virtual void    movePoint( SdPoint, SdContext& ) {}     //Перемещение точки
+    virtual bool    keyDown( int, SdContext& );             //Нажатие кнопки
+    virtual bool    keyUp( int, SdContext&);                //Отпускание клавиши
+    virtual void    propChanged( SdContext& ) {}            //Извещение об изменении свойств
+    virtual void    enterPrev( SdContext& ) {}              //Повторение ввода предыдущего сеанса (разумный ввод)
+    virtual void    beginDrag( SdPoint, SdContext& ) {}     //Начало перетаскивания
+    virtual void    dragPoint( SdPoint, SdContext& ) {}     //Перетаскивание
+    virtual void    stopDrag( SdPoint, SdContext& ) {}      //Конец перетаскивания
+    virtual bool    enableCopy() const;                     //Режим имеет объекты для копирования
+    virtual bool    enablePaste( quint64 pasteMask ) const; //Режим разрешает вставку объектов с заданной маской
+    virtual bool    getInfo( SdPoint p, QString &info );    //Получить всплывающую информацию в заданной точке
 
-    virtual const char* getStepHelp() const = 0;
-    virtual const char* getModeHelp() const = 0;
-    virtual const char* getStepThema() const = 0;
-    virtual int         getCursor() const = 0;
-    virtual int         getIndex() const = 0;
+    virtual QString getStepHelp() const = 0;
+    virtual QString getModeHelp() const = 0;
+    virtual QString getStepThema() const = 0;
+    virtual int     getCursor() const = 0;
+    virtual int     getIndex() const = 0;
 
   };
 

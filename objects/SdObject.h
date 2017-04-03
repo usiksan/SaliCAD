@@ -20,6 +20,7 @@ Description
 #include "SdUndo.h"
 #include <QJsonObject>
 
+
 //Классы объектов
 const quint64
   dctLines         = 0x00000001l,
@@ -55,8 +56,10 @@ const quint64
   //dctChars    = 0x20000000,
   //dctPrjList  = 0x40000000,
   //dctData     = 0x80000000,
-  dctPicture  = dctLines | dctText | dctSize,
-  dctProjectItems = dctSymbol | dctPart | dctSheet | dctPlate | dctComponent;
+  dctPicture       = dctLines | dctText | dctSize,
+  dctProjectItems  = dctSymbol | dctPart | dctSheet | dctPlate | dctComponent,
+  dctAll           = MAX64_MASK
+  ;
 
 
 #define SDKO_TYPE      "type"
@@ -104,7 +107,7 @@ class SdObject
     virtual void      cloneFrom( const SdObject *src );
 
     //Write and read object
-    virtual void      writeObject( QJsonObject &obj ) const = 0;
+    virtual void      writeObject( QJsonObject &obj ) const;
     QJsonObject       write() const;
     static  void      writePtr( const SdObject *ptr, const QString name, QJsonObject &obj );
 

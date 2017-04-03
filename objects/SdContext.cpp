@@ -14,7 +14,8 @@ Description
 #include "SdContext.h"
 
 
-SdContext::SdContext(SdPoint grid) :
+SdContext::SdContext(SdPoint grid, QPainter *painter) :
+  mPainter(painter),
   mConverter(0),
   mGrid(grid),
   mSelector(0)
@@ -22,7 +23,13 @@ SdContext::SdContext(SdPoint grid) :
 
   }
 
-void SdContext::rect(SdQuadrangle q, SdLineProp &prop)
+void SdContext::line(SdPoint a, SdPoint b, SdPropLine &prop)
+  {
+
+  setPen( )
+  }
+
+void SdContext::rect(SdQuadrangle q, SdPropLine &prop)
   {
   //Draw 4 edges
   line( q.p1, q.p2, prop );
@@ -31,7 +38,7 @@ void SdContext::rect(SdQuadrangle q, SdLineProp &prop)
   line( q.p4, q.p1, prop );
   }
 
-void SdContext::region(SdPointList &points, SdLineProp &prop, bool autoClose)
+void SdContext::region(SdPointList &points, SdPropLine &prop, bool autoClose)
   {
   if( points.count() > 1 ) {
     for( int i = 1; i < points.count(); i++ )
@@ -45,4 +52,9 @@ void SdContext::region(SdPointList &points, SdLineProp &prop, bool autoClose)
 void SdContext::dotTrase(SdPoint p)
   {
   Q_UNUSED(p)
+  }
+
+void SdContext::setPen(int width, unsigned color)
+  {
+  mPainter->setPen( QPen( QBrush(QRgb(color)), width ) );
   }

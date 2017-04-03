@@ -52,6 +52,10 @@ class SdWEditorGraph : public SdWEditor
 
   public:
     SdWEditorGraph( QWidget *parent = 0 );
+
+    // QWidget interface
+  protected:
+    virtual void paintEvent(QPaintEvent *event);
   };
 
 #endif // SDWEDITORGRAPH_H

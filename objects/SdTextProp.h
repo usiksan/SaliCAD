@@ -14,17 +14,17 @@ Description
 #ifndef SDTEXTPROP_H
 #define SDTEXTPROP_H
 
-#include "SdIntProp.h"
+#include "SdPropInt.h"
 #include "SdAngle.h"
 
 struct SdTextProp {
-  SdIntProp  mSize;   //Размер текста
+  SdPropInt  mSize;   //Размер текста
   SdAngle    mDir;    //Направление
-  SdIntProp  mLayer;  //Слой
-  SdIntProp  mFont;   //Идентификатор шрифта
-  SdIntProp  mHorz;   //Выравнивание горизонтальное, вертикальное и зеркальность
-  SdIntProp  mVert;
-  SdIntProp  mMirror;
+  SdPropInt  mLayer;  //Слой
+  SdPropInt  mFont;   //Идентификатор шрифта
+  SdPropInt  mHorz;   //Выравнивание горизонтальное, вертикальное и зеркальность
+  SdPropInt  mVert;
+  SdPropInt  mMirror;
 
   SdTextProp();
 

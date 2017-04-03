@@ -23,13 +23,11 @@ SOURCES += \
     windows/SdWEditor.cpp \
     objects/SdProjectItem.cpp \
     objects/SdSymbol.cpp \
-    objects/SdGraphObject.cpp \
     objects/SdPoint.cpp \
     objects/SdRect.cpp \
     objects/SdPointList.cpp \
     objects/SdCircle.cpp \
     objects/SdAngle.cpp \
-    objects/SdLineProp.cpp \
     objects/SdProp.cpp \
     objects/SdTextProp.cpp \
     objects/SdContext.cpp \
@@ -46,7 +44,6 @@ SOURCES += \
     objects/SdPartImpProp.cpp \
     windows/SdWCommand.cpp \
     objects/SdPulsar.cpp \
-    objects/SdContainer.cpp \
     windows/SdPNewProjectItem_SelectType.cpp \
     windows/SdPNewProjectItem_EnterName.cpp \
     objects/SdIds.cpp \
@@ -63,7 +60,15 @@ SOURCES += \
     windows/SdWView.cpp \
     modes/SdMode.cpp \
     modes/SdModeCommon.cpp \
-    windows/windowsCursor.cpp
+    windows/windowsCursor.cpp \
+    objects/SdLayer.cpp \
+    objects/SdContainer.cpp \
+    objects/SdGraph.cpp \
+    objects/SdGraphLinear.cpp \
+    objects/SdPropLine.cpp \
+    objects/SdPropLayer.cpp \
+    objects/SdGraphLinearLine.cpp \
+    objects/SdSelector.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -76,14 +81,11 @@ HEADERS  += \
     objects/SdProjectItem.h \
     objects/SdObjectMap.h \
     objects/SdSymbol.h \
-    objects/SdGraphObject.h \
     objects/SdPoint.h \
     objects/SdRect.h \
     objects/SdPointList.h \
     objects/SdCircle.h \
-    objects/SdIntProp.h \
     objects/SdAngle.h \
-    objects/SdLineProp.h \
     objects/SdProp.h \
     objects/SdTextProp.h \
     objects/SdContext.h \
@@ -101,7 +103,6 @@ HEADERS  += \
     objects/SdPartImpProp.h \
     windows/SdWCommand.h \
     objects/SdPulsar.h \
-    objects/SdContainer.h \
     windows/SdPNewProjectItem_SelectType.h \
     windows/SdPNewProjectItem_EnterName.h \
     objects/SdIds.h \
@@ -117,7 +118,16 @@ HEADERS  += \
     objects/SdEnvir.h \
     windows/SdWView.h \
     modes/SdMode.h \
-    modes/SdModeCommon.h
+    modes/SdModeCommon.h \
+    objects/SdLayer.h \
+    objects/SdContainer.h \
+    objects/SdGraph.h \
+    objects/SdGraphLinear.h \
+    objects/SdPropLine.h \
+    objects/SdPropInt.h \
+    objects/SdPropLayer.h \
+    objects/SdGraphLinearLine.h \
+    objects/SdSelector.h
 
 DISTFILES += \
     license.txt

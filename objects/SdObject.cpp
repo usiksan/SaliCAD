@@ -68,6 +68,14 @@ void SdObject::cloneFrom( const SdObject *src )
 
 
 
+void SdObject::writeObject(QJsonObject &obj) const
+  {
+  Q_UNUSED(obj)
+  }
+
+
+
+
 
 QJsonObject SdObject::write() const
   {

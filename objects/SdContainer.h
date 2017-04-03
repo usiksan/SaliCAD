@@ -34,7 +34,7 @@ class SdContainer : public SdObject
 
     virtual void writeObject(QJsonObject &obj) const override;
 
-    virtual void forEach( int classMask, std::function<bool(SdObject*)> fun1 );
+    virtual void forEach( quint64 classMask, std::function<bool(SdObject*)> fun1 );
 
     virtual void insertChild( SdObject *child );
     virtual void undoInsertChild( SdObject *child );

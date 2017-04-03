@@ -14,6 +14,9 @@ Description
 #ifndef SDSNAPINFO_H
 #define SDSNAPINFO_H
 
+#include "SdPoint.h"
+#include "SdAngle.h"
+
 //Маска разумной привязки
 const int
   snapEndPoint          = 0x0001,
@@ -39,11 +42,33 @@ const int
   snapNearestNetPin     = 0x10000,  //Ближайший вывод принадлежащий цепи
   snapNearestNetNet     = 0x20000;  //Ближайшая точка принадлежащая цепи и на дорожке (полигоне)
 
+//Значения для вычисления специальных точек
+const int
+  dsifExSour = 0x000001,   //Исключить из просмотра исходную точку
+  dsifExExcl = 0x000002    //Исключить из просмотра точку exclude
+  ;
 
-class SdSnapInfo
+class SdContainer;
+
+struct SdSnapInfo
   {
-  public:
+    SdPoint         mSour;     //Исходная точка
+    SdPoint         mDest;     //Получившаяся точка
+    SdPoint         mExclude;  //Точка, которую нужно исключить из просмотра
+    SdAngle         mDir;      //Направление поиска
+    int             mSnapMask; //Маска, которую нужно проверить
+    int             mDestMask; //Маска сработавшая для точки dest
+    double          mDistance; //Текущее расстояние от точки sour до точки dest
+    int             mFlag;     //Флаг управления поиском (см. выше)
+    QString         mNetName;  //Имя цепи для поиска
+    int             mSide;     //Сторона, на которой осуществлять поиск
+
     SdSnapInfo();
+
+    bool test( SdPoint p, int mask );
+    void calculate( SdContainer *object );
+    bool match( int t ) const { return (mSnapMask & t) != 0; }
+    void reset( bool resetDest = true ); //Сброс для следующего поиска
   };
 
 #endif // SDSNAPINFO_H

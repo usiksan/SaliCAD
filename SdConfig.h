@@ -72,5 +72,7 @@ History
 #define SDK_ENVIR_VERSION            "Envir version"
 #define SDK_ENVIR                    "Envir"
 
+#define MAX64_MASK 0xffffffffffffffffL
+
 #endif // SDCONFIG
 

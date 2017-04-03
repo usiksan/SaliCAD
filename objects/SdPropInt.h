@@ -16,7 +16,7 @@ Description
 
 #include <QJsonObject>
 
-class SdIntProp
+class SdPropInt
   {
   protected:
     int mValue;
@@ -24,17 +24,17 @@ class SdIntProp
     //Special codes for no value and many values
     enum { NoValue = -1, AllValue = -2 };
 
-    SdIntProp() : mValue(0) { }
-    SdIntProp( int i ) : mValue( i ) { }
+    SdPropInt() : mValue(0) { }
+    SdPropInt( int i ) : mValue( i ) { }
 
     bool       operator == ( int i ) const { return mValue == i; }
                operator int () const { return mValue; }
     void       operator = ( int i ) { if( i >= 0 || i < AllValue ) mValue = i; }
-    SdIntProp& operator = ( const SdIntProp& s ) { if( s.mValue != NoValue && s.mValue != AllValue ) mValue = s.mValue; return *this; }
+    SdPropInt& operator = ( const SdPropInt& s ) { if( s.mValue != NoValue && s.mValue != AllValue ) mValue = s.mValue; return *this; }
     int        getValue() const { return mValue; }
     void       append( int i ) { if( mValue != i && i >= 0 ) mValue = mValue == NoValue ? i : AllValue; }   //Добавить значение
     void       clear() { mValue = NoValue; }   //Нет значения
-    bool       match( SdIntProp const &s ) {
+    bool       match( SdPropInt const &s ) {
       return s.mValue != NoValue && s.mValue != AllValue && mValue != NoValue && mValue != AllValue ? s.mValue == mValue : true;
       }
 

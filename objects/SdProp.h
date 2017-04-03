@@ -14,7 +14,7 @@ Description
 #ifndef SDPROP_H
 #define SDPROP_H
 
-#include "SdLineProp.h"
+#include "SdPropLine.h"
 #include "SdTextProp.h"
 #include "SdSymPinProp.h"
 #include "SdPartPinProp.h"
@@ -24,9 +24,9 @@ Description
 
 struct SdProp
   {
-    SdLineProp    mLineProp;       //Свойства линейных объектов
+    SdPropLine    mLineProp;       //Свойства линейных объектов
     SdTextProp    mTextProp;       //Свойства текстовых объектов
-    SdLineProp    mWireProp;       //Свойства сегментов цепей схемы
+    SdPropLine    mWireProp;       //Свойства сегментов цепей схемы
     SdTextProp    mWireNameProp;   //Свойства имени цепи
     SdSymPinProp  mSymPinProp;     //Свойства вывода символа
     SdPartPinProp mPartPinProp;    //Свойства вывода корпуса

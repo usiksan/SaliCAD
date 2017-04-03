@@ -15,14 +15,14 @@ Description
 #ifndef SSdAngle_H
 #define SSdAngle_H
 
-#include "SdIntProp.h"
+#include "SdPropInt.h"
 
 const int da0 = 0, da90 = 90000, da180 = 180000, da270 = 270000;
 
-class SdAngle : public SdIntProp
+class SdAngle : public SdPropInt
   {
   public:
-    SdAngle() : SdIntProp() {}
+    SdAngle() : SdPropInt() {}
     SdAngle( int sour );
 
     double  getDegree() const { return ((double)mValue) / 1000.0; }

@@ -14,12 +14,12 @@ Description
 #ifndef SDSYMPINPROP_H
 #define SDSYMPINPROP_H
 
-#include "SdIntProp.h"
+#include "SdPropInt.h"
 
 struct SdSymPinProp
   {
-    SdIntProp mLayer;
-    SdIntProp mPinType;
+    SdPropInt mLayer;
+    SdPropInt mPinType;
 
     SdSymPinProp() : mLayer(0), mPinType(0) {}
 

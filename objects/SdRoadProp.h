@@ -14,12 +14,12 @@ Description
 #ifndef SDROADPROP_H
 #define SDROADPROP_H
 
-#include "SdIntProp.h"
+#include "SdPropInt.h"
 
 struct SdRoadProp
   {
-    SdIntProp mWidth; //Ширина проводника
-    SdIntProp mLayer; //Слой проводника (сторона)
+    SdPropInt mWidth; //Ширина проводника
+    SdPropInt mLayer; //Слой проводника (сторона)
 
     SdRoadProp() : mWidth(0), mLayer(0) { }
     void operator = ( SdRoadProp const &prop );  //Назначить свойства в соответствии с шаблоном

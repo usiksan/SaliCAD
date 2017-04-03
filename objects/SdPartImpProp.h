@@ -14,14 +14,14 @@ Description
 #ifndef SDPARTIMPPROP_H
 #define SDPARTIMPPROP_H
 
-#include "SdIntProp.h"
+#include "SdPropInt.h"
 #include "SdAngle.h"
 
 struct SdPartImpProp
   {
     SdAngle   mAngle;  //Угол поворота компонента
-    SdIntProp mMirror; //Зеркальность компонента
-    SdIntProp mSide;   //Сторона расположения на плате
+    SdPropInt mMirror; //Зеркальность компонента
+    SdPropInt mSide;   //Сторона расположения на плате
 
     void operator = ( SdPartImpProp const &sour ); //Назначить свойства
     void append( SdPartImpProp const &sour );      //Установить свойства

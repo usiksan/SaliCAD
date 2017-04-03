@@ -14,13 +14,13 @@ Description
 #ifndef SDPARTPINPROP_H
 #define SDPARTPINPROP_H
 
-#include "SdIntProp.h"
+#include "SdPropInt.h"
 
 struct SdPartPinProp
   {
-    SdIntProp mLayer;
-    SdIntProp mPinType;
-    SdIntProp mSide;
+    SdPropInt mLayer;
+    SdPropInt mPinType;
+    SdPropInt mSide;
 
     SdPartPinProp() : mLayer(0), mPinType(0), mSide(0) {}
 

@@ -11,46 +11,46 @@ Web
 Description
 */
 
-#include "SdLineProp.h"
+#include "SdPropLine.h"
 
-void SdLineProp::operator = ( SdLineProp const &sour ) {
+void SdPropLine::operator = ( SdPropLine const &sour ) {
   mWidth = sour.mWidth;
   mType  = sour.mType;
   mLayer = sour.mLayer;
   }
 
-void SdLineProp::append( SdLineProp const &sour ) {
+void SdPropLine::append( SdPropLine const &sour ) {
   mWidth.append( sour.mWidth );
   mType.append( sour.mType );
   mLayer.append( sour.mLayer );
   }
 
-void SdLineProp::clear() {
+void SdPropLine::clear() {
   mWidth.clear();
   mType.clear();
   mLayer.clear();
   }
 
-bool SdLineProp::operator == ( SdLineProp const &prop ) {
+bool SdPropLine::operator == ( SdPropLine const &prop ) {
   return (prop.mWidth < 0 || prop.mWidth == mWidth) &&
          (prop.mType < 0  || prop.mType == mType) &&
-         (prop.mLayer < 0 || prop.mLayer == mLayer);
+         (prop.mLayer == mLayer);
   }
 
-bool SdLineProp::match( SdLineProp const &prop ) {
+bool SdPropLine::match( SdPropLine const &prop ) {
   return mWidth.match( prop.mWidth ) &&
          mType.match( prop.mType ) &&
-      mLayer.match( prop.mLayer );
+         mLayer.match( prop.mLayer );
   }
 
-void SdLineProp::write(QJsonObject &obj) const
+void SdPropLine::write(QJsonObject &obj) const
   {
   mWidth.write( QStringLiteral("lineWidth"), obj );
   mType.write( QStringLiteral("lineType"), obj );
   mLayer.write( QStringLiteral("lineLayer"), obj );
   }
 
-void SdLineProp::read(const QJsonObject obj)
+void SdPropLine::read(const QJsonObject obj)
   {
   mWidth.read( QStringLiteral("lineWidth"), obj );
   mType.read( QStringLiteral("lineType"), obj );

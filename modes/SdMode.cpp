@@ -12,7 +12,7 @@ Description
 */
 
 #include "SdMode.h"
-#include "objects/SdGraphObject.h"
+#include "objects/SdGraph.h"
 #include "windows/SdWEditorGraph.h"
 
 
@@ -88,7 +88,7 @@ bool SdMode::getInfo(SdPoint p, QString &info)
   //Пройти по всем объектам и получить информацию из объекта под точкой
   mObject->forEach( -1L, [p,&info,&ok](SdObject *obj) -> bool {
     //Работаем только с графическими объектами
-    SdGraphObject *graph = dynamic_cast<SdGraphObject*>( obj );
+    SdGraph *graph = dynamic_cast<SdGraph*>( obj );
     if( graph ) {
       //Получить информацию
       if( graph->getInfo( p, info, true ) ) ok = true;

@@ -12,6 +12,8 @@ Description
 */
 
 #include "SdWEditorGraph.h"
+#include "objects/SdContext.h"
+#include <QPainter>
 
 SdWEditorGraph::SdWEditorGraph(QWidget *parent) :
   SdWEditor( parent )
@@ -19,3 +21,11 @@ SdWEditorGraph::SdWEditorGraph(QWidget *parent) :
 
   }
 
+
+
+
+void SdWEditorGraph::paintEvent(QPaintEvent *event)
+  {
+  QPainter painter( viewport() );
+
+  }
