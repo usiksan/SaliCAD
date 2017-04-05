@@ -24,6 +24,9 @@ class SdScaler
   public:
     SdScaler( double scale = 1.0 );
 
+    double  getScale() const { return mScale; }
+    void    scale( double step) { mScale *= step; }
+
     int     phys2pixel( int phys ) const;
     int     pixel2phys( int pixel ) const;
 

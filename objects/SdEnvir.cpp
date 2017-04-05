@@ -199,6 +199,31 @@ void SdEnvir::defaultEnvir()
   mShowCursor        = true;           //Показывать курсор
   mTraseDotSize      = 10;             //Размер точки, показывающей цепь
 
+  mGridView          = true;             //Включение сетки
+  mCursorGrid        = true;           //Включение движения курсора по сетке
+
+  mGuiderEnabled     = true;           //Флаг разрешения/запрещения путеводителя
+  mGuiderPosition    = 0;              //Положение разделителя путеводителя
+  mProjectEnabled    = true;           //Флаг разрешения/запрещения проекта
+  mProjectPosition   = 0;              //Позиция разделителя проекта
+  mProjectRemoveEnabled = false;       //Разрешение автоматического запрещения проекта
+  mProjectRemoveTime = 15000;          //Время удержания проекта
+//  QString         mLastFile;             //Последний файл пользователя
+//  QString         mHome;                 //Каталог пользователя
+//  QString         mLibrary;              //Каталог библиотек
+//  QString         mPattern;              //Каталог шаблонов
+//  double          mWidthStep;            //Шаг изменения толщины
+//  double          mTextSizeStep;         //Шаг изменения высоты текста
+//  bool            mMaxFrame;             //Истина, если главное окно на весь экран
+//  QString         mPadStackFile;          //Файл контактных площадок
+//  QString         mPadStackObject;        //Объект содержащий контактные площадки
+//  bool            mAutoPads;             //Автоматическая расстановка КП
+//  bool            mCreateBack;           //Создавать BAK файл при сохранении
+//  QPointF         mGridHistory[GRID_HISTORY_SIZE];  //Предыдущие значения сетки
+//  double          mPolyClear;             //Зазор между дорожками и полигоном
+//  bool            mCenterCursor;          //Центровать курсор при увеличении и уменьшении
+//  bool            mShowConflict;         //Показывать конфликты трассировки
+
   //Перечень слоев по умолчанию
   deleteLayers();
   addLayer( new SdLayer( QString( LID0_INVISIBLE ), QObject::tr("Invisible"), 0xff007f7f ) );

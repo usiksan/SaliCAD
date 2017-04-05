@@ -20,6 +20,8 @@ Description
 #include <QMap>
 #include <functional>
 
+class SdContext;
+
 typedef QList<SdObjectPtr> SdObjectPtrList;
 
 class SdContainer : public SdObject
@@ -44,6 +46,8 @@ class SdContainer : public SdObject
 
 
     virtual void cloneFrom( const SdObject *src) override;
+
+            void draw( SdContext *context );
   private:
     void         clearChildList();
   };

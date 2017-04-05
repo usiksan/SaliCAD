@@ -18,6 +18,8 @@ Description
 #include "objects/SdProjectItem.h"
 #include "objects/SdContext.h"
 
+#include <QCursor>
+
 class SdWEditorGraph;
 
 class SdMode
@@ -57,7 +59,7 @@ class SdMode
     virtual void    activate();               //Вызывается первой, после того как режим делается текущим
     virtual void    reset();                  //Сбрасывает режим в исходное состояние
 
-    virtual void    draw( SdContext& );        //Рисует картинку через призму режима
+    virtual void    draw( SdContext* );        //Рисует картинку через призму режима
     virtual void    show( SdContext& );        //Рисует временные данные режима
     virtual void    hide( SdContext& );        //Стирает временные данные режима
 
@@ -79,7 +81,7 @@ class SdMode
     virtual QString getStepHelp() const = 0;
     virtual QString getModeHelp() const = 0;
     virtual QString getStepThema() const = 0;
-    virtual int     getCursor() const = 0;
+    virtual QCursor getCursor() const = 0;
     virtual int     getIndex() const = 0;
 
   };

@@ -68,7 +68,12 @@ SOURCES += \
     objects/SdPropLine.cpp \
     objects/SdPropLayer.cpp \
     objects/SdGraphLinearLine.cpp \
-    objects/SdSelector.cpp
+    objects/SdSelector.cpp \
+    windows/SdWEditorGraphPart.cpp \
+    objects/SdConverter.cpp \
+    objects/SdConverterView.cpp \
+    modes/SdModeTemp.cpp \
+    modes/SdCursorFactory.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -127,7 +132,12 @@ HEADERS  += \
     objects/SdPropInt.h \
     objects/SdPropLayer.h \
     objects/SdGraphLinearLine.h \
-    objects/SdSelector.h
+    objects/SdSelector.h \
+    windows/SdWEditorGraphPart.h \
+    objects/SdConverter.h \
+    objects/SdConverterView.h \
+    modes/SdModeTemp.h \
+    modes/SdCursorFactory.h
 
 DISTFILES += \
     license.txt

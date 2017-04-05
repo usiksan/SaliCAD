@@ -25,6 +25,7 @@ Description
 #include "SdSnapInfo.h"
 
 #include <QPainter>
+#include <QTransform>
 
 class SdConverter;
 class SdSelector;
@@ -35,16 +36,10 @@ class SdContext {
     SdConverter    *mConverter;    //Преобразователь координат
     SdPoint         mGrid;         //Сетка
     SdSelector     *mSelector;     //Объект-селектор относительно которого выполняется рисование
-  protected:
-    SdPoint         convertPoint( SdPoint sour );
-    int             convertCoord( int sour );
-    SdAngle         convertAngle( SdAngle sour );
-    int             convertLayer( int layer );
-    int             convertMirror( int mirror );
-    bool            isLayerVisible( int layer );   //Истина если слой виден (с учетом преобразования)
-    int             convertBaseLayer( int layer ); //Возвращает слой после преобразования
+    QTransform      mTransform;    //Transform matrix
+    bool            mPairLayer;    //True for paired layer
   public:
-    SdContext( SdPoint grid, QPainter *painter );
+    SdContext(SdPoint grid, QPainter *painter);
 
     //Операции с преобразователем координат
     SdContext*      setConverter( SdConverter *c );
@@ -56,32 +51,45 @@ class SdContext {
 
     //Информационные
             SdPoint getGrid() const { return mGrid; }
-    virtual void    getViewPort( SdRect *dest ) = 0;
+    QTransform&     transform() { return mTransform; }
+    //virtual void    getViewPort( SdRect *dest ) = 0;
 
     //Примитивы рисования
     void            line( SdPoint a, SdPoint b, SdPropLine &prop );
-    virtual void    road( SdPoint a, SdPoint b, int clear, SdRoadProp &prop ) = 0;
+    //virtual void    road( SdPoint a, SdPoint b, int clear, SdRoadProp &prop ) = 0;
             void    rect( SdQuadrangle q, SdPropLine &prop );
-    virtual void    fillRect( SdPoint a, SdPoint b, SdPropLine &prop ) = 0;
-    virtual void    arc( SdPoint center, int radius, SdAngle start, SdAngle stop, SdPropLine &prop ) = 0;
-    virtual void    circle( SdPoint center, int radius, SdPropLine &prop ) = 0;
-    virtual void    text( const QString str, SdTextProp &prop, bool special = false ) = 0;
+//    virtual void    fillRect( SdPoint a, SdPoint b, SdPropLine &prop ) = 0;
+//    virtual void    arc( SdPoint center, int radius, SdAngle start, SdAngle stop, SdPropLine &prop ) = 0;
+//    virtual void    circle( SdPoint center, int radius, SdPropLine &prop ) = 0;
+//    virtual void    text( const QString str, SdTextProp &prop, bool special = false ) = 0;
     //virtual void   VectorText( DTextProp &prop, CPChar str, bool special = false ) = 0;
             void    region( SdPointList &points, SdPropLine &prop, bool autoClose = true );
-    virtual void    polygon( SdPointList &points, SdPolyWindowList &windows, SdRoadProp &prop ) = 0;
+//    virtual void    polygon( SdPointList &points, SdPolyWindowList &windows, SdRoadProp &prop ) = 0;
     //virtual void TextBox( DTextProp &prop, int charNum );
 
     //Примитивы второго уровня
-    virtual void    smartPoint( SdPoint a, int smartMask = snapCommon ) = 0;      //Отобразить точку привязки
-    virtual void    dotPoint( SdPoint p, SdPropLine &prop ) = 0;                  //Точка пересечения цепей
-    virtual void    drawCross( SdPoint p, SdSymPinProp &prop ) = 0;               //Точка перекрестья вывода символа
-    virtual void    dotCircle( SdPoint p, SdPartPinProp &prop ) = 0;              //Точка подключения вывода корпуса
-    virtual void    drawArrow( SdPoint p, SdAngle angle, SdPropLine &prop ) = 0;  //Размерная стрелка
-    virtual void    via( SdPoint p, SdRoadProp &prop ) = 0;                       //Переходное (без КП)
-    virtual void    dotTrase( SdPoint p );                                      //Точка пометки трассируемой цепи
+//    virtual void    smartPoint( SdPoint a, int smartMask = snapCommon ) = 0;      //Отобразить точку привязки
+//    virtual void    dotPoint( SdPoint p, SdPropLine &prop ) = 0;                  //Точка пересечения цепей
+//    virtual void    drawCross( SdPoint p, SdSymPinProp &prop ) = 0;               //Точка перекрестья вывода символа
+//    virtual void    dotCircle( SdPoint p, SdPartPinProp &prop ) = 0;              //Точка подключения вывода корпуса
+//    virtual void    drawArrow( SdPoint p, SdAngle angle, SdPropLine &prop ) = 0;  //Размерная стрелка
+//    virtual void    via( SdPoint p, SdRoadProp &prop ) = 0;                       //Переходное (без КП)
+    void            dotTrase( SdPoint p );                                      //Точка пометки трассируемой цепи
 
   private:
-    void setPen( int width, unsigned color );
+    void     setPen(int width, SdLayer *layer );
+
+    //Update converter context
+    void     updateConverter();
+
+    //Convert color
+    QColor   convertColor( SdLayer *layer );
+
+    //Convert layer
+    SdLayer *convertLayer( SdLayer *layer ) { return mPairLayer ? layer->pair() : layer; }
+
+    //Check - is there layer visible
+    bool     isVisible( SdLayer *layer ) { return convertLayer(layer)->isVisible(); }
   };
 
 

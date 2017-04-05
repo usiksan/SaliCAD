@@ -21,6 +21,9 @@ History
                    Status bar created
   08.01.2017 v0.6  Move pic, icons and images from pascad9 to this
                    Begin tool bar creation
+  04.04.2017 v0.7  Layers model created
+                   Converter model created
+                   Envir model updated
 */
 
 #ifndef SDCONFIG
@@ -32,7 +35,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             6
+#define SD_VERSION_MINOR             7
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -50,6 +53,9 @@ History
 
 //Previous file count in menu
 #define PREVIOUS_FILES_COUNT         5
+
+//Grid history count
+#define GRID_HISTORY_SIZE            5
 
 //Clipboard objects format
 #define SD_CLIP_FORMAT_OBJECT        "text/salicad-object"

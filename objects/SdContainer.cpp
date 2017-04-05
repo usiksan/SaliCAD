@@ -12,6 +12,7 @@ Description
 */
 
 #include "SdContainer.h"
+#include "SdGraph.h"
 #include <QJsonArray>
 #include <QDebug>
 
@@ -152,6 +153,17 @@ void SdContainer::cloneFrom( const SdObject *src )
     for( SdObject *ptr : sour->mChildList )
       if( !ptr->isDeleted() )
         mChildList.append( ptr->copy() );
+    }
+  }
+
+
+
+void SdContainer::draw(SdContext *context)
+  {
+  for( SdObject *obj : mChildList ) {
+    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+    if( graph )
+      graph->draw( context );
     }
   }
 

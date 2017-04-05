@@ -39,7 +39,7 @@ void SdMode::reset()
 
   }
 
-void SdMode::draw(SdContext &)
+void SdMode::draw(SdContext *)
   {
 
   }
