@@ -14,6 +14,7 @@ Description
 #include "SdWEditorGraphSymbol.h"
 #include "SdWCommand.h"
 #include "objects/SdPulsar.h"
+#include "objects/SdEnvir.h"
 #include <QDebug>
 
 SdWEditorGraphSymbol::SdWEditorGraphSymbol(SdSymbol *sym, QWidget *parent) :
@@ -33,6 +34,8 @@ SdProjectItem *SdWEditorGraphSymbol::getProjectItem()
 
 void SdWEditorGraphSymbol::onActivateEditor()
   {
+  SdWEditorGraph::onActivateEditor();
+
   //Activate menu
   SdWCommand::cmMenuInsertSymbol->setVisible(true);
 
@@ -42,4 +45,10 @@ void SdWEditorGraphSymbol::onActivateEditor()
 
   //qDebug() << SdWCommand::barMain->iconSize();
 
+  }
+
+
+double SdWEditorGraphSymbol::getPPM() const
+  {
+  return sdEnvir->mSchPPM;
   }

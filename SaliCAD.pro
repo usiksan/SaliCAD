@@ -73,7 +73,8 @@ SOURCES += \
     objects/SdConverter.cpp \
     objects/SdConverterView.cpp \
     modes/SdModeTemp.cpp \
-    modes/SdCursorFactory.cpp
+    modes/SdCursorFactory.cpp \
+    modes/SdModeTZoomer.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -137,7 +138,9 @@ HEADERS  += \
     objects/SdConverter.h \
     objects/SdConverterView.h \
     modes/SdModeTemp.h \
-    modes/SdCursorFactory.h
+    modes/SdCursorFactory.h \
+    modes/SdModeTZoomer.h \
+    modes/SdModeIdents.h
 
 DISTFILES += \
     license.txt

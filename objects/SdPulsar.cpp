@@ -50,3 +50,18 @@ void SdPulsar::emitActivateItem(SdProjectItem *item)
   emit activateItem( item );
   }
 
+void SdPulsar::emitSetStatusLabels(const QString xlabel, const QString ylabel)
+  {
+  emit setStatusLabels( xlabel, ylabel );
+  }
+
+void SdPulsar::emitSetStatusPositions(const QString x, const QString y)
+  {
+  emit setStatusPositions( x, y );
+  }
+
+void SdPulsar::emitSetStatusMessage(const QString msg)
+  {
+  emit setStatusMessage(msg);
+  }
+

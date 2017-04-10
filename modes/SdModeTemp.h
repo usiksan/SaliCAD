@@ -30,7 +30,7 @@ class SdModeTemp : public SdMode
 
     // SdMode interface
   public:
-    virtual void draw(SdContext *context) override;
+    virtual void drawStatic(SdContext *ctx) override;
   };
 
 #endif // SDMODETEMP_H

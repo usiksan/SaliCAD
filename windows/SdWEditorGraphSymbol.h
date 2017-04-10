@@ -29,6 +29,10 @@ class SdWEditorGraphSymbol : public SdWEditorGraph
   public:
     virtual SdProjectItem *getProjectItem() override;
     virtual void           onActivateEditor() override;
+
+    // SdWEditorGraph interface
+  public:
+    virtual double getPPM() const override;
   };
 
 #endif // SDWEDITORGRAPHSYMBOL_H

@@ -17,17 +17,22 @@ Description
 
 #include "objects/SdProjectItem.h"
 #include "objects/SdContext.h"
+#include "SdCursorFactory.h"
+#include "SdModeIdents.h"
 
-#include <QCursor>
+#include <QChar>
+#include <QTransform>
+#include <QImage>
+
 
 class SdWEditorGraph;
 
 class SdMode
   {
   protected:
-    SdProjectItem  *mObject; //Object is mode working on
-    SdWEditorGraph *mEditor; //Editor window is mode working in
-    int             mStep;   //Mode step
+    SdProjectItem  *mObject;     //Object is mode working on
+    SdWEditorGraph *mEditor;     //Editor window is mode working in
+    int             mStep;       //Mode step
 
 //    int    GetStep() const { return step; }
 //virtual void   SetStep( int stp );
@@ -39,6 +44,7 @@ class SdMode
 
    //Исполняемые через обозреватель
    void           update();          //Обновить изображение
+   void           cancelMode();      //Прекращение режима
    //void           UpdateTools() { viewer->UpdateTools(); }//Обновить панель инструментов
    //void           setMessage( const QString msg ) { GetViewer()->SetMessage( msg ); }   //Установить сообщение в строку состояния
    //void           SetPropBar( int id, DProp *prop );      //Установить панель свойств
@@ -46,7 +52,6 @@ class SdMode
    //DEnvir&        GetEnvir() { return viewer->GetEnvir(); }                    //Получить глобальные установки
    //void           SetCursor( int cursorId ) { viewer->SetCursor( cursorId ); } //Установить курсор
    //DPoint         GetGrid() { return viewer->GetGrid(); }                      //Получить сетку
-   //void           CancelMode() { GetViewer()->CancelMode(); }                  //Прекращение режима
    //void           SetDirty() { GetViewer()->SetDirty(); }                      //Объявить объект редактированным
 
    //Сервисные
@@ -56,33 +61,33 @@ class SdMode
     SdMode( SdWEditorGraph *editor, SdProjectItem *obj );
     virtual ~SdMode();
 
-    virtual void    activate();               //Вызывается первой, после того как режим делается текущим
-    virtual void    reset();                  //Сбрасывает режим в исходное состояние
+    virtual void    activate();                             //Вызывается первой, после того как режим делается текущим
+    virtual void    reset();                                //Сбрасывает режим в исходное состояние
 
-    virtual void    draw( SdContext* );        //Рисует картинку через призму режима
-    virtual void    show( SdContext& );        //Рисует временные данные режима
-    virtual void    hide( SdContext& );        //Стирает временные данные режима
+    virtual void    drawStatic( SdContext *ctx );           //Ресует постоянную часть картинки
+    virtual void    drawDynamic( SdContext *ctx );          //Рисует переменную часть картинки
 
-    virtual void    enterPoint( SdPoint, SdContext& ) {}    //Ввод точки (левая кнопка)
-    virtual void    clickPoint( SdPoint, SdContext& ) {}    //Двойное нажатие левой кнопки
-    virtual void    cancelPoint( SdPoint, SdContext& ) {}   //Точка прекращения (правая кнопка)
-    virtual void    movePoint( SdPoint, SdContext& ) {}     //Перемещение точки
-    virtual bool    keyDown( int, SdContext& );             //Нажатие кнопки
-    virtual bool    keyUp( int, SdContext&);                //Отпускание клавиши
+    virtual void    enterPoint( SdPoint ) {}                //Ввод точки (левая кнопка)
+    virtual void    clickPoint( SdPoint ) {}                //Двойное нажатие левой кнопки
+    virtual void    cancelPoint( SdPoint ) {}               //Точка прекращения (правая кнопка)
+    virtual void    movePoint( SdPoint ) {}                 //Перемещение точки
+    virtual void    wheel( SdPoint ) {}                     //Вращение колеса мыши
+    virtual void    keyDown( int key, QChar ch );           //Нажатие кнопки
+    virtual void    keyUp( int key, QChar ch );             //Отпускание клавиши
     virtual void    propChanged( SdContext& ) {}            //Извещение об изменении свойств
     virtual void    enterPrev( SdContext& ) {}              //Повторение ввода предыдущего сеанса (разумный ввод)
-    virtual void    beginDrag( SdPoint, SdContext& ) {}     //Начало перетаскивания
-    virtual void    dragPoint( SdPoint, SdContext& ) {}     //Перетаскивание
-    virtual void    stopDrag( SdPoint, SdContext& ) {}      //Конец перетаскивания
+    virtual void    beginDrag( SdPoint ) {}                 //Начало перетаскивания
+    virtual void    dragPoint( SdPoint ) {}                 //Перетаскивание
+    virtual void    stopDrag( SdPoint ) {}                  //Конец перетаскивания
     virtual bool    enableCopy() const;                     //Режим имеет объекты для копирования
     virtual bool    enablePaste( quint64 pasteMask ) const; //Режим разрешает вставку объектов с заданной маской
     virtual bool    getInfo( SdPoint p, QString &info );    //Получить всплывающую информацию в заданной точке
 
-    virtual QString getStepHelp() const = 0;
-    virtual QString getModeHelp() const = 0;
-    virtual QString getStepThema() const = 0;
-    virtual QCursor getCursor() const = 0;
-    virtual int     getIndex() const = 0;
+    virtual QString getStepHelp() const = 0;                //Краткая помощь по текущему шагу режима
+    virtual QString getModeHelp() const = 0;                //Адрес страницы помощи
+    virtual QString getStepThema() const = 0;               //Адрес страницы помощи для текущего шага
+    virtual int     getCursor() const = 0;                  //Номер курсора для режима
+    virtual int     getIndex() const = 0;                   //Номер режима в списке режимов
 
   };
 

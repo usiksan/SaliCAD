@@ -24,6 +24,9 @@ History
   04.04.2017 v0.7  Layers model created
                    Converter model created
                    Envir model updated
+  09.04.2017 v0.8  Created reading windows cursors
+                   Created modes structure
+                   Menu mode actions convert to flat table to auto switch checking action
 */
 
 #ifndef SDCONFIG
@@ -35,7 +38,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             7
+#define SD_VERSION_MINOR             8
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -78,7 +81,14 @@ History
 #define SDK_ENVIR_VERSION            "Envir version"
 #define SDK_ENVIR                    "Envir"
 
+#define MODE_HELP         //Prefix to mode help files
+
 #define MAX64_MASK 0xffffffffffffffffL
+
+#define defSymScale 20.0   /*Коэффициент масштаба по умолчанию для схемных изображений*/
+#define defPrtScale 200.0  /*Коэффициент масштаба по умолчанию для изобр. плат*/
+#define minScale    0.0001 /*Ограничения масштабирования*/
+#define maxScale    10000.0
 
 #endif // SDCONFIG
 

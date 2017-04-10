@@ -20,32 +20,31 @@ Description
 #include <QMap>
 #include <QPointF>
 
-const int
-scPureBlack     = -2, //Чисто черный цвет
-scUnvisible     = -1,  //Всегда невидимые элементы
-scLocked        = 0,  //Цвет заблокированных элементов
-scSelected      = 1,  //Цвет выбранных элементов
-scEnter         = 2,  //Цвет ввода
-scSmart         = 3,  //Цвет разумного режима
-scGraphBack     = 4,  //Цвет фона графического редактора
-scRatNet        = 5,  //Цвет резинок
-scCursor        = 6,  //Цвет курсора
-scTraseNet      = 7,  //Цвет трассируемой цепи
-scGrid          = 8,  //Цвет сетки
-scLast          = 9;
+
+#define scPureBlack     -2 //Чисто черный цвет
+#define scUnvisible     -1 //Всегда невидимые элементы
+#define scLocked         0 //Цвет заблокированных элементов
+#define scSelected       1 //Цвет выбранных элементов
+#define scEnter          2 //Цвет ввода
+#define scSmart          3 //Цвет разумного режима
+#define scGraphBack      4 //Цвет фона графического редактора
+#define scRatNet         5 //Цвет резинок
+#define scCursor         6 //Цвет курсора
+#define scTraseNet       7 //Цвет трассируемой цепи
+#define scGrid           8 //Цвет сетки
+#define scLast           9
 
 
 //Вид перекрестья курсора
-const int
-  dcvNone    = 0,  //Курсор не виден
-  dcvSmall   = 1,  //Малый курсор
-  dcvFull    = 2,  //Полный курсор
-  dcvSmall45 = 3,  //Малый под углом 45
-  dcvFull45  = 4,  //Полный под углом 45
-  dcvLast    = 5;
+#define  dcvNone     0  //Курсор не виден
+#define  dcvSmall    1  //Малый курсор
+#define  dcvFull     2  //Полный курсор
+#define  dcvSmall45  3  //Малый под углом 45
+#define  dcvFull45   4  //Полный под углом 45
+#define  dcvLast     5
 
 //Версия SdEnvir
-const int SdEnvirVersion = 2 + GRID_HISTORY_SIZE;
+#define SdEnvirVersion  (4 + GRID_HISTORY_SIZE)
 
 typedef QMap<QString,SdLayerPtr> SdLayerPtrTable;
 
@@ -80,6 +79,12 @@ class SdEnvir
     int             mSmallCursorSize;      //Размер малого курсора в пикселах
     bool            mShowCursor;           //Показывать курсор
     int             mTraseDotSize;         //Размер точки, показывающей цепь
+                                           //PPM показывает сколько физической величины приходится на одну логическую единицу
+    double          mSchPPM;               //Коэффициент преобразования в физическую величину в схемном редакторе
+    double          mPrtPPM;               //Коэффициент преобразования в физическую величину в конструкциях
+    bool            mGridView;             //Включение сетки
+    bool            mCursorGrid;           //Включение движения курсора по сетке
+    bool            mCenterCursor;         //Центровать курсор при увеличении и уменьшении
 
     bool            mGuiderEnabled;        //Флаг разрешения/запрещения путеводителя
     int             mGuiderPosition;       //Положение разделителя путеводителя
@@ -87,8 +92,6 @@ class SdEnvir
     int             mProjectPosition;      //Позиция разделителя проекта
     bool            mProjectRemoveEnabled; //Разрешение автоматического запрещения проекта
     int             mProjectRemoveTime;    //Время удержания проекта
-    bool            mGridView;             //Включение сетки
-    bool            mCursorGrid;           //Включение движения курсора по сетке
     QString         mLastFile;             //Последний файл пользователя
     QString         mHome;                 //Каталог пользователя
     QString         mLibrary;              //Каталог библиотек
@@ -102,7 +105,6 @@ class SdEnvir
     bool            mCreateBack;           //Создавать BAK файл при сохранении
     QPointF         mGridHistory[GRID_HISTORY_SIZE];  //Предыдущие значения сетки
     double          mPolyClear;             //Зазор между дорожками и полигоном
-    bool            mCenterCursor;          //Центровать курсор при увеличении и уменьшении
     bool            mShowConflict;         //Показывать конфликты трассировки
 
     SdEnvir();

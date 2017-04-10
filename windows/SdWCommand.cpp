@@ -100,38 +100,38 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmViewLayers = menuView->addAction( QIcon(QString(":/pic/layers.png")), frame->tr("Layers"), frame, SLOT(cmViewLayers()) );
   menuView->addSeparator();
   cmViewFill = menuView->addAction( QIcon(QString(":/pic/viewFit.png")), frame->tr("Zoom to fit view"), frame, SLOT(cmViewFill()) );
-  cmViewZoomIn = menuView->addAction( QIcon(QString(":/pic/viewZoomIn.png")), frame->tr("Zoom in"), frame, SLOT(cmViewZoomIn()) );
-  cmViewZoomOut = menuView->addAction( QIcon(QString(":/pic/viewZoomOut.png")), frame->tr("Zoom out"), frame, SLOT(cmViewZoomOut()) );
-  cmViewArea = menuView->addAction( QIcon(QString(":/pic/viewWin.png")), frame->tr("Zoom area"), frame, SLOT(cmViewArea()) );
+  cmModeTable[MD_ZOOM_IN]     = menuView->addAction( QIcon(QString(":/pic/viewZoomIn.png")), frame->tr("Zoom in"), frame, SLOT(cmViewZoomIn()) );
+  cmModeTable[MD_ZOOM_OUT]    = menuView->addAction( QIcon(QString(":/pic/viewZoomOut.png")), frame->tr("Zoom out"), frame, SLOT(cmViewZoomOut()) );
+  cmModeTable[MD_ZOOM_AREA]   = menuView->addAction( QIcon(QString(":/pic/viewWin.png")), frame->tr("Zoom area"), frame, SLOT(cmViewArea()) );
   menuView->addSeparator();
-  cmViewMeasurement = menuView->addAction( QIcon(QString(":/pic/viewRuller.png")), frame->tr("Measurement"), frame, SLOT(cmViewMeasurement()) );
+  cmModeTable[MD_MEASUREMENT] = menuView->addAction( QIcon(QString(":/pic/viewRuller.png")), frame->tr("Measurement"), frame, SLOT(cmViewMeasurement()) );
 
 
 
 
 
   menuDraw = new QMenu( frame->tr("Draw") );
-  cmModeSelect        = menuDraw->addAction( QIcon(QString(":/pic/select.png")), frame->tr("Select and edit"), frame, SLOT(cmModeSelect()) );
+  cmModeTable[MD_SELECT]      = menuDraw->addAction( QIcon(QString(":/pic/select.png")), frame->tr("Select and edit"), frame, SLOT(cmModeSelect()) );
   menuDraw->addSeparator();
-  cmModeLine          = menuDraw->addAction( QIcon(QString(":/pic/drawLine.png")), frame->tr("Line"), frame, SLOT(cmModeLine()) );
-  cmModeRect          = menuDraw->addAction( QIcon(QString(":/pic/drawRect.png")), frame->tr("Rect"), frame, SLOT(cmModeRect()) );
-  cmModeFilledRect    = menuDraw->addAction( QIcon(QString(":/pic/drawFRect.png")), frame->tr("Filled rect"), frame, SLOT(cmModeFilledRect()) );
-  cmModeRegion        = menuDraw->addAction( QIcon(QString(":/pic/drawRegion.png")), frame->tr("Region"), frame, SLOT(cmModeRegion()) );
-  cmModeFilledRegion  = menuDraw->addAction( QIcon(QString(":/pic/drawFRegion.png")), frame->tr("Filled region"), frame, SLOT(cmModeFilledRegion()) );
-  cmModeCircle        = menuDraw->addAction( QIcon(QString(":/pic/drawCircle.png")), frame->tr("Circle"), frame, SLOT(cmModeCircle()) );
-  cmModeFilledCircle  = menuDraw->addAction( QIcon(QString(":/pic/drawFCircle.png")), frame->tr("Filled circle"), frame, SLOT(cmModeFilledCircle()) );
-  cmModeArc           = menuDraw->addAction( QIcon(QString(":/pic/drawArc.png")), frame->tr("Arc"), frame, SLOT(cmModeArc()) );
-  cmModeText          = menuDraw->addAction( QIcon(QString(":/pic/drawText.png")), frame->tr("Text"), frame, SLOT(cmModeText()) );
-  cmModeField         = menuDraw->addAction( QIcon(QString(":/pic/drawField.png")), frame->tr("Field"), frame, SLOT(cmModeField()) );
+  cmModeTable[MD_LINE]        = menuDraw->addAction( QIcon(QString(":/pic/drawLine.png")), frame->tr("Line"), frame, SLOT(cmModeLine()) );
+  cmModeTable[MD_RECT]        = menuDraw->addAction( QIcon(QString(":/pic/drawRect.png")), frame->tr("Rect"), frame, SLOT(cmModeRect()) );
+  cmModeTable[MD_FILL_RECT]   = menuDraw->addAction( QIcon(QString(":/pic/drawFRect.png")), frame->tr("Filled rect"), frame, SLOT(cmModeFilledRect()) );
+  cmModeTable[MD_REGION]      = menuDraw->addAction( QIcon(QString(":/pic/drawRegion.png")), frame->tr("Region"), frame, SLOT(cmModeRegion()) );
+  cmModeTable[MD_FILL_REGION] = menuDraw->addAction( QIcon(QString(":/pic/drawFRegion.png")), frame->tr("Filled region"), frame, SLOT(cmModeFilledRegion()) );
+  cmModeTable[MD_CIRCLE]      = menuDraw->addAction( QIcon(QString(":/pic/drawCircle.png")), frame->tr("Circle"), frame, SLOT(cmModeCircle()) );
+  cmModeTable[MD_FILL_CIRCLE] = menuDraw->addAction( QIcon(QString(":/pic/drawFCircle.png")), frame->tr("Filled circle"), frame, SLOT(cmModeFilledCircle()) );
+  cmModeTable[MD_ARC]         = menuDraw->addAction( QIcon(QString(":/pic/drawArc.png")), frame->tr("Arc"), frame, SLOT(cmModeArc()) );
+  cmModeTable[MD_TEXT]        = menuDraw->addAction( QIcon(QString(":/pic/drawText.png")), frame->tr("Text"), frame, SLOT(cmModeText()) );
+  cmModeTable[MD_FIELD]       = menuDraw->addAction( QIcon(QString(":/pic/drawField.png")), frame->tr("Field"), frame, SLOT(cmModeField()) );
 
 
 
 
   menuInsertSymbol = new QMenu( frame->tr("Insert") );
 
-  cmModePin        = menuInsertSymbol->addAction( QIcon(QString(":/pic/objPin.png")), frame->tr("Pin"), frame, SLOT(cmModePin()) );
-  cmModeReference  = menuInsertSymbol->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Reference"), frame, SLOT(cmModeReference()) );
-  cmModeOrigin     = menuInsertSymbol->addAction( QIcon(QString(":/pic/objOrigin.png")), frame->tr("Origin"), frame, SLOT(cmModeOrigin()) );
+  cmModeTable[MD_PIN]        = menuInsertSymbol->addAction( QIcon(QString(":/pic/objPin.png")), frame->tr("Pin"), frame, SLOT(cmModePin()) );
+  cmModeTable[MD_REFERENCE]  = menuInsertSymbol->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Reference"), frame, SLOT(cmModeReference()) );
+  cmModeTable[MD_ORIGIN]     = menuInsertSymbol->addAction( QIcon(QString(":/pic/objOrigin.png")), frame->tr("Origin"), frame, SLOT(cmModeOrigin()) );
 
 
 
@@ -315,27 +315,27 @@ void SdWCommand::addViewCommands(QToolBar *bar)
   bar->insertAction( 0, cmViewGrid );
 //  bar->addSeparator();
   bar->insertAction( 0, cmViewFill );
-  bar->insertAction( 0, cmViewZoomIn );
-  bar->insertAction( 0, cmViewZoomOut );
-  bar->insertAction( 0, cmViewArea );
-  bar->insertAction( 0, cmViewMeasurement );
+  bar->insertAction( 0, cmModeTable[MD_ZOOM_IN] );
+  bar->insertAction( 0, cmModeTable[MD_ZOOM_OUT] );
+  bar->insertAction( 0, cmModeTable[MD_ZOOM_AREA] );
+  bar->insertAction( 0, cmModeTable[MD_MEASUREMENT] );
   }
 
 void SdWCommand::addDrawCommands(QToolBar *bar)
   {
   bar->addSeparator();
-  bar->insertAction( 0, cmModeSelect );
+  bar->insertAction( 0, cmModeTable[MD_SELECT] );
 //  bar->addSeparator();
-  bar->insertAction( 0, cmModeLine );
-  bar->insertAction( 0, cmModeRect );
-  bar->insertAction( 0, cmModeFilledRect );
-  bar->insertAction( 0, cmModeRegion );
-  bar->insertAction( 0, cmModeFilledRegion );
-  bar->insertAction( 0, cmModeCircle );
-  //bar->insertAction( 0, cmModeFilledCircle );
-  bar->insertAction( 0, cmModeArc );
-  bar->insertAction( 0, cmModeText );
-  //bar->insertAction( 0, cmModeField );
+  bar->insertAction( 0, cmModeTable[MD_LINE] );
+  bar->insertAction( 0, cmModeTable[MD_RECT] );
+  bar->insertAction( 0, cmModeTable[MD_FILL_RECT] );
+  bar->insertAction( 0, cmModeTable[MD_REGION] );
+  bar->insertAction( 0, cmModeTable[MD_FILL_REGION] );
+  bar->insertAction( 0, cmModeTable[MD_CIRCLE] );
+  //bar->insertAction( 0, cmModeTable[MD_FILL_CIRCLE] );
+  bar->insertAction( 0, cmModeTable[MD_ARC] );
+  bar->insertAction( 0, cmModeTable[MD_TEXT] );
+  //bar->insertAction( 0, cmModeTable[MD_FIELD] );
   bar->addSeparator();
   }
 
@@ -361,9 +361,9 @@ void SdWCommand::createToolBars(SdWMain *frame)
   addEditCommands( barSymbol );
   addViewCommands( barSymbol );
   addDrawCommands( barSymbol );
-  barSymbol->insertAction( 0, cmModePin );
-  barSymbol->insertAction( 0, cmModeReference );
-  barSymbol->insertAction( 0, cmModeOrigin );
+  barSymbol->insertAction( 0, cmModeTable[MD_PIN] );
+  barSymbol->insertAction( 0, cmModeTable[MD_REFERENCE] );
+  barSymbol->insertAction( 0, cmModeTable[MD_ORIGIN] );
 
   frame->addToolBar( barSymbol );
 
@@ -373,6 +373,9 @@ void SdWCommand::createToolBars(SdWMain *frame)
   addEditCommands( barPart );
   addViewCommands( barPart );
   addDrawCommands( barPart );
+  barPart->insertAction( 0, cmModeTable[MD_PIN] );
+  barPart->insertAction( 0, cmModeTable[MD_REFERENCE] );
+  barPart->insertAction( 0, cmModeTable[MD_ORIGIN] );
 
   frame->addToolBar( barPart );
 
@@ -435,6 +438,16 @@ void SdWCommand::hideEditorContext()
 
 
 
+void SdWCommand::selectMode(int md)
+  {
+  for( int i = 0; i < MD_LAST; i++ )
+    if( cmModeTable[i] )
+      cmModeTable[i]->setChecked( i == md );
+  }
+
+
+
+
 QActionPtr SdWCommand::cmFileNew;
 QActionPtr SdWCommand::cmFileOpen;
 QActionPtr SdWCommand::cmFileClose;
@@ -473,32 +486,13 @@ QActionPtr SdWCommand::cmViewFill;
 QActionPtr SdWCommand::cmViewNets;
 QActionPtr SdWCommand::cmViewGrid;
 QActionPtr SdWCommand::cmViewLayers;
-QActionPtr SdWCommand::cmViewZoomIn;
-QActionPtr SdWCommand::cmViewZoomOut;
-QActionPtr SdWCommand::cmViewArea;
-QActionPtr SdWCommand::cmViewMeasurement;
 
-QActionPtr SdWCommand::cmModeLine;
-QActionPtr SdWCommand::cmModeRect;
-QActionPtr SdWCommand::cmModeFilledRect;
-QActionPtr SdWCommand::cmModeRegion;
-QActionPtr SdWCommand::cmModeFilledRegion;
-QActionPtr SdWCommand::cmModeCircle;
-QActionPtr SdWCommand::cmModeFilledCircle;
-QActionPtr SdWCommand::cmModeArc;
-QActionPtr SdWCommand::cmModeText;
-QActionPtr SdWCommand::cmModeField;
-
-QActionPtr SdWCommand::cmModeSelect;
 QActionPtr SdWCommand::cmMode3dBall;
 QActionPtr SdWCommand::cmMode3dPinWired;
 QActionPtr SdWCommand::cmMode3dPinFlat;
 QActionPtr SdWCommand::cmMode3dBodyCylinder;
 QActionPtr SdWCommand::cmMode3dBodyBrick;
 QActionPtr SdWCommand::cmMode3dBodyContur;
-QActionPtr SdWCommand::cmModePin;
-QActionPtr SdWCommand::cmModeReference;
-QActionPtr SdWCommand::cmModeOrigin;
 QActionPtr SdWCommand::cmModeComponent;
 QActionPtr SdWCommand::cmModeNet;
 QActionPtr SdWCommand::cmNetSetup;
@@ -558,3 +552,6 @@ QToolBar *SdWCommand::barSheet;
 QToolBar *SdWCommand::barPcb;
 
 QToolBar *SdWCommand::mbarLinear;
+
+//Full mode action table
+QActionPtr SdWCommand::cmModeTable[MD_LAST];

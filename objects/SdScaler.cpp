@@ -10,7 +10,7 @@ Web
 
 Description
 */
-
+#include "SdConfig.h"
 #include "SdScaler.h"
 
 SdScaler::SdScaler(double scale) :
@@ -18,6 +18,17 @@ SdScaler::SdScaler(double scale) :
   {
 
   }
+
+void SdScaler::scale(double step)
+  {
+  //Convert scale
+  mScale *= step;
+  //Check scale bounds
+  if( mScale > maxScale ) mScale = maxScale;
+  if( mScale < minScale ) mScale = minScale;
+  }
+
+
 
 int SdScaler::phys2pixel(int phys) const
   {

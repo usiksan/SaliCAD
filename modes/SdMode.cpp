@@ -13,6 +13,7 @@ Description
 
 #include "SdMode.h"
 #include "objects/SdGraph.h"
+#include "objects/SdPulsar.h"
 #include "windows/SdWEditorGraph.h"
 
 
@@ -31,7 +32,8 @@ SdMode::~SdMode()
 
 void SdMode::activate()
   {
-
+  SdPulsar::pulsar->emitSetStatusMessage( getStepHelp() );
+  mEditor->viewport()->setCursor( loadCursor(getCursor()) );
   }
 
 void SdMode::reset()
@@ -39,29 +41,28 @@ void SdMode::reset()
 
   }
 
-void SdMode::draw(SdContext *)
-  {
 
+void SdMode::drawStatic(SdContext *ctx)
+  {
+  Q_UNUSED(ctx)
   }
 
-void SdMode::show(SdContext &)
+void SdMode::drawDynamic(SdContext *ctx)
   {
-
+  Q_UNUSED(ctx)
   }
 
-void SdMode::hide(SdContext &)
-  {
 
+void SdMode::keyDown(int key, QChar ch)
+  {
+  Q_UNUSED(key)
+  Q_UNUSED(ch)
   }
 
-bool SdMode::keyDown(int, SdContext &)
+void SdMode::keyUp( int key, QChar ch )
   {
-
-  }
-
-bool SdMode::keyUp(int, SdContext &)
-  {
-
+  Q_UNUSED(key)
+  Q_UNUSED(ch)
   }
 
 
@@ -76,6 +77,7 @@ bool SdMode::enableCopy() const
 //Режим разрешает вставку объектов с заданной маской
 bool SdMode::enablePaste(quint64 pasteMask) const
   {
+  Q_UNUSED(pasteMask)
   return false;
   }
 
@@ -100,5 +102,12 @@ bool SdMode::getInfo(SdPoint p, QString &info)
   }
 
 
-void SdMode::update() { mEditor->viewport()->update(); }
+void SdMode::update() {
+  mEditor->viewport()->update();
+  }
+
+void SdMode::cancelMode()
+  {
+  mEditor->modeCancel();
+  }
 

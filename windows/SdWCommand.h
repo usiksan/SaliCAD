@@ -15,6 +15,7 @@ Description
 #define SDWCOMMAND_H
 
 #include "SdConfig.h"
+#include "modes/SdModeIdents.h"
 #include <QAction>
 #include <QMenu>
 #include <QToolBar>
@@ -103,32 +104,13 @@ class SdWCommand
     static QActionPtr cmViewNets;
     static QActionPtr cmViewGrid;
     static QActionPtr cmViewLayers;
-    static QActionPtr cmViewZoomIn;
-    static QActionPtr cmViewZoomOut;
-    static QActionPtr cmViewArea;
-    static QActionPtr cmViewMeasurement;
 
-    static QActionPtr cmModeLine;
-    static QActionPtr cmModeRect;
-    static QActionPtr cmModeFilledRect;
-    static QActionPtr cmModeRegion;
-    static QActionPtr cmModeFilledRegion;
-    static QActionPtr cmModeCircle;
-    static QActionPtr cmModeFilledCircle;
-    static QActionPtr cmModeArc;
-    static QActionPtr cmModeText;
-    static QActionPtr cmModeField;
-
-    static QActionPtr cmModeSelect;
     static QActionPtr cmMode3dBall;
     static QActionPtr cmMode3dPinWired;
     static QActionPtr cmMode3dPinFlat;
     static QActionPtr cmMode3dBodyCylinder;
     static QActionPtr cmMode3dBodyBrick;
     static QActionPtr cmMode3dBodyContur;
-    static QActionPtr cmModePin;
-    static QActionPtr cmModeReference;
-    static QActionPtr cmModeOrigin;
     static QActionPtr cmModeComponent;
     static QActionPtr cmModeNet;
     static QActionPtr cmNetSetup;
@@ -157,12 +139,16 @@ class SdWCommand
     static QActionPtr cmHelpIndex;
     static QActionPtr cmHelpAbout;
 
+    //Full mode action table
+    static QActionPtr cmModeTable[MD_LAST];
+
     static void createMenu( SdWMain *frame );
     static void updatePreviousMenu();
     static void addToPreviousMenu( const QString fname );
     static void projectState( bool enable );
     static void createToolBars( SdWMain *frame );
     static void hideEditorContext();
+    static void selectMode( int md );
   };
 
 #endif // SDWCOMMAND_H

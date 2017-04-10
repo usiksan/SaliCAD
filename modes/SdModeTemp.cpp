@@ -21,8 +21,10 @@ SdModeTemp::SdModeTemp( SdWEditorGraph *editor, SdProjectItem *obj ) :
   }
 
 
-void SdModeTemp::draw(SdContext *context)
+
+
+void SdModeTemp::drawStatic(SdContext *ctx)
   {
   //Draw full picture
-  mObject->draw( context );
+  mObject->draw( ctx );
   }

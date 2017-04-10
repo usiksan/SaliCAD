@@ -1,9 +1,11 @@
 #include "SdCursorFactory.h"
 #include <QString>
+#include <QMap>
 
 QCursor loadWindowsCursor( const QString fname );
 
-QCursor loadCursor(int cursorId)
+
+static QCursor createCursor( int cursorId )
   {
   switch( cursorId ) {
     case CUR_ARC         : return loadWindowsCursor( QString(":/pic/arc.cur") );
@@ -18,41 +20,53 @@ QCursor loadCursor(int cursorId)
     case CUR_DRAGC       : return loadWindowsCursor( QString(":/pic/dragc.cur") );
     case CUR_DRAGM       : return loadWindowsCursor( QString(":/pic/dragm.cur") );
     case CUR_GROUP       : return loadWindowsCursor( QString(":/pic/group.cur") );
-#define CUR_HAND        112
-#define CUR_HYPER       113
-#define CUR_IDENT       114
-#define CUR_LINE        115
-#define CUR_MOVE        116
-#define CUR_NETLIST     117
-#define CUR_ORG         118
-#define CUR_PIN         119
-#define CUR_PINNUM      120
-#define CUR_PINNAM      121
-#define CUR_PLACE       122
-#define CUR_POINT       123
-#define CUR_RECT        124
-#define CUR_REGION      125
-#define CUR_ROTATE      126
-#define CUR_RULLER      127
-#define CUR_SEL         128
-#define CUR_SIZE_LINEAR 129
-#define CUR_SIZE_RADIAL 130
-#define CUR_STOP        131
-#define CUR_TAKE        132
-#define CUR_TAKE_COPY   133
-#define CUR_TEXT        134
-#define CUR_UCOM        135
-#define CUR_VERTEX      136
-#define CUR_VIA_ADD     137
-#define CUR_VIA_DEL     138
-#define CUR_WHAND       139
-#define CUR_WIRE        140
-#define CUR_WMOVE       141
-#define CUR_WREADY      142
-#define CUR_WSELECT     143
-#define CUR_ZOOM_IN     144
-#define CUR_ZOOM_OUT    145
-#define CUR_ZOOM_WIN    146
-
+    case CUR_HAND        : return loadWindowsCursor( QString(":/pic/hand.cur") );
+    case CUR_HYPER       : return loadWindowsCursor( QString(":/pic/hyper.cur") );
+    case CUR_IDENT       : return loadWindowsCursor( QString(":/pic/ident.cur") );
+    case CUR_LINE        : return loadWindowsCursor( QString(":/pic/line.cur") );
+    case CUR_MOVE        : return loadWindowsCursor( QString(":/pic/move.cur") );
+    case CUR_NETLIST     : return loadWindowsCursor( QString(":/pic/netlist.cur") );
+    case CUR_ORG         : return loadWindowsCursor( QString(":/pic/org.cur") );
+    case CUR_PIN         : return loadWindowsCursor( QString(":/pic/pin.cur") );
+    case CUR_PINNUM      : return loadWindowsCursor( QString(":/pic/pinnum.cur") );
+    case CUR_PINNAM      : return loadWindowsCursor( QString(":/pic/pinnam.cur") );
+    case CUR_PLACE       : return loadWindowsCursor( QString(":/pic/place.cur") );
+    case CUR_POINT       : return loadWindowsCursor( QString(":/pic/point.cur") );
+    case CUR_RECT        : return loadWindowsCursor( QString(":/pic/rect.cur") );
+    case CUR_REGION      : return loadWindowsCursor( QString(":/pic/region.cur") );
+    case CUR_ROTATE      : return loadWindowsCursor( QString(":/pic/rotate.cur") );
+    case CUR_RULLER      : return loadWindowsCursor( QString(":/pic/ruller.cur") );
+    case CUR_SEL         : return loadWindowsCursor( QString(":/pic/sel.cur") );
+    case CUR_SIZE_LINEAR : return loadWindowsCursor( QString(":/pic/sizeLinear.cur") );
+    case CUR_SIZE_RADIAL : return loadWindowsCursor( QString(":/pic/sizeRadial.cur") );
+    case CUR_STOP        : return loadWindowsCursor( QString(":/pic/stop.cur") );
+    case CUR_TAKE        : return loadWindowsCursor( QString(":/pic/take.cur") );
+    case CUR_TAKE_COPY   : return loadWindowsCursor( QString(":/pic/copy.cur") );
+    case CUR_TEXT        : return loadWindowsCursor( QString(":/pic/text.cur") );
+    case CUR_UCOM        : return loadWindowsCursor( QString(":/pic/ucom.cur") );
+    case CUR_VERTEX      : return loadWindowsCursor( QString(":/pic/vertex.cur") );
+    case CUR_VIA_ADD     : return loadWindowsCursor( QString(":/pic/viaAdd.cur") );
+    case CUR_VIA_DEL     : return loadWindowsCursor( QString(":/pic/viaDel.cur") );
+    case CUR_WHAND       : return loadWindowsCursor( QString(":/pic/whand.cur") );
+    case CUR_WIRE        : return loadWindowsCursor( QString(":/pic/wire.cur") );
+    case CUR_WMOVE       : return loadWindowsCursor( QString(":/pic/wmove.cur") );
+    case CUR_WREADY      : return loadWindowsCursor( QString(":/pic/wready.cur") );
+    case CUR_WSELECT     : return loadWindowsCursor( QString(":/pic/wselect.cur") );
+    case CUR_ZOOM_IN     : return loadWindowsCursor( QString(":/pic/zoomin.cur") );
+    case CUR_ZOOM_OUT    : return loadWindowsCursor( QString(":/pic/zoomout.cur") );
+    case CUR_ZOOM_WIN    : return loadWindowsCursor( QString(":/pic/zoomwin.cur") );
     }
+  return QCursor();
+  }
+
+
+
+
+QCursor loadCursor(int cursorId)
+  {
+  static QMap<int,QCursor> cursorMap;
+  if( cursorMap.contains(cursorId) )
+    return cursorMap.value(cursorId);
+  cursorMap.insert( cursorId, createCursor(cursorId) );
+  return cursorMap.value(cursorId);
   }

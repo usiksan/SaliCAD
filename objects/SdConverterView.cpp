@@ -30,9 +30,10 @@ QTransform SdConverterView::getMatrix()
   QTransform m = QTransform::fromTranslate( -mOrigin.x(), -mOrigin.y() );
 
   //Second - scaling
-  m = m.scale( mScale, -mScale );
+  m *= QTransform::fromScale( mScale, -mScale );
 
   //Third - center view offset
-  return m.translate( mCenter.x(), mCenter.y() );
+  m *= QTransform::fromTranslate( mCenter.x(), mCenter.y() );
+  return m;
   }
 

@@ -38,13 +38,14 @@ class SdWEditorGraph : public SdWEditor
     SdPoint    mGrid;           //Размер сетки
     bool       mLeftDown;       //Флаг нажатия левой кнопки мыши
     bool       mDrag;           //Флаг активного режима перетаскивания
-    double     mPpm;            //Логических единиц в мм (преобразование в реальные размеры)
     SdPoint    mDownPoint;      //Точка нажатия левой кнопки мыши
     SdPoint    mPrevPoint;      //Предыдущая точка перемещения мыши
     SdRect     mLastOver;       //Последний охватывающий прямоугольник
     double     mScrollSizeX;    //Размер скроллинга на еденицу прокрутки
     double     mScrollSizeY;    //Размер скроллинга на еденицу прокрутки
     QTransform mPixelTransform; //Pixel to phys transformation
+    bool       mCasheDirty;     //Cashe dirty flag. When true - static part redrawn
+    QImage     mCashe;          //Cashe for static picture part
 
 //    int    ScaleDCoord( DCoord sour );         //Преобразовать логическую координату в экранную
 //    NPoint ScaleDPoint( DPoint p );            //Преобразовать логическую точку в экранную
@@ -60,6 +61,12 @@ class SdWEditorGraph : public SdWEditor
   public:
     SdWEditorGraph( QWidget *parent = 0 );
 
+    double  scaleGet() const { return mScale.getScale(); }
+    void    scaleStep( double step );
+
+    SdPoint originGet() const { return mOrigin; }
+    void    originSet( SdPoint org );
+
     //Temporary call mode
     void    modeCall( SdModeTemp *mode );
 
@@ -72,15 +79,41 @@ class SdWEditorGraph : public SdWEditor
     //Get active mode
     SdMode *modeGet() { return mStack == nullptr ? mMode : mStack; }
 
-    // QWidget interface
-  protected:
-    virtual void paintEvent(QPaintEvent *event);
+    //return ppm for this editor. PPM is how much phys in one logical
+    virtual double         getPPM() const = 0;
 
+    //Commands
+    virtual void           onActivateEditor() override;
+    virtual void           cmViewZoomIn() override;
+    virtual void           cmViewZoomOut() override;
+
+  protected:
     //Activate new mode
-    void modeActivate( SdMode *mode );
+    void    modeActivate( SdMode *mode );
 
     //Restore previous mode
-    void modeRestore( SdMode *mode );
+    void    modeRestore( SdMode *mode );
+
+    //Display cursor positions from mPrevPoint
+    void    displayCursorPositions();
+
+    //Get phys coord from pixel
+    SdPoint pixel2phys( QPoint pos );
+
+    //Setup mouse pos. Where pos is pixel coord
+    void    updateMousePos(QMouseEvent *event);
+
+
+    // QWidget interface
+  protected:
+    virtual void paintEvent(QPaintEvent *event) override;
+    virtual void mousePressEvent(QMouseEvent *event) override;
+    virtual void mouseReleaseEvent(QMouseEvent *event) override;
+    virtual void mouseMoveEvent(QMouseEvent *event) override;
+    virtual void wheelEvent(QWheelEvent *event) override;
+    virtual void keyPressEvent(QKeyEvent *event) override;
+    virtual void keyReleaseEvent(QKeyEvent *event) override;
+
   };
 
 #endif // SDWEDITORGRAPH_H
