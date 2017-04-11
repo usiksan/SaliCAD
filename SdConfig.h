@@ -27,6 +27,8 @@ History
   09.04.2017 v0.8  Created reading windows cursors
                    Created modes structure
                    Menu mode actions convert to flat table to auto switch checking action
+  10.04.2017 v0.9  Menu modes switching is ok
+  11.04.2017 v0.10 Releasing view group modes
 */
 
 #ifndef SDCONFIG
@@ -38,7 +40,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             8
+#define SD_VERSION_MINOR             10
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

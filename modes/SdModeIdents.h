@@ -17,7 +17,7 @@ Description
 //Идентификаторы режимов
 #define MD_ZOOM_IN          0
 #define MD_ZOOM_OUT         1
-#define MD_ZOOM_AREA        2
+#define MD_ZOOM_WIN         2
 #define MD_MEASUREMENT      3
 #define MD_LINE             4
 #define MD_RECT             5

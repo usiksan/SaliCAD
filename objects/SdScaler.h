@@ -22,10 +22,11 @@ class SdScaler
   protected:
     double mScale; //Scale factor
   public:
-    SdScaler( double scale = 1.0 );
+    SdScaler( double scaleStep = 1.0 );
 
-    double  getScale() const { return mScale; }
-    void    scale( double step);
+    double  scaleGet() const { return mScale; }
+    void    scaleStep( double step);
+    void    scaleSet( double scale );
 
     int     phys2pixel( int phys ) const;
     int     pixel2phys( int pixel ) const;

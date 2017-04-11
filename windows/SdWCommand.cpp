@@ -102,7 +102,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmViewFill = menuView->addAction( QIcon(QString(":/pic/viewFit.png")), frame->tr("Zoom to fit view"), frame, SLOT(cmViewFill()) );
   cmModeTable[MD_ZOOM_IN]     = menuView->addAction( QIcon(QString(":/pic/viewZoomIn.png")), frame->tr("Zoom in"), frame, SLOT(cmViewZoomIn()) );
   cmModeTable[MD_ZOOM_OUT]    = menuView->addAction( QIcon(QString(":/pic/viewZoomOut.png")), frame->tr("Zoom out"), frame, SLOT(cmViewZoomOut()) );
-  cmModeTable[MD_ZOOM_AREA]   = menuView->addAction( QIcon(QString(":/pic/viewWin.png")), frame->tr("Zoom area"), frame, SLOT(cmViewArea()) );
+  cmModeTable[MD_ZOOM_WIN]   = menuView->addAction( QIcon(QString(":/pic/viewWin.png")), frame->tr("Zoom area"), frame, SLOT(cmViewArea()) );
   menuView->addSeparator();
   cmModeTable[MD_MEASUREMENT] = menuView->addAction( QIcon(QString(":/pic/viewRuller.png")), frame->tr("Measurement"), frame, SLOT(cmViewMeasurement()) );
 
@@ -317,7 +317,7 @@ void SdWCommand::addViewCommands(QToolBar *bar)
   bar->insertAction( 0, cmViewFill );
   bar->insertAction( 0, cmModeTable[MD_ZOOM_IN] );
   bar->insertAction( 0, cmModeTable[MD_ZOOM_OUT] );
-  bar->insertAction( 0, cmModeTable[MD_ZOOM_AREA] );
+  bar->insertAction( 0, cmModeTable[MD_ZOOM_WIN] );
   bar->insertAction( 0, cmModeTable[MD_MEASUREMENT] );
   }
 
@@ -413,6 +413,11 @@ void SdWCommand::createToolBars(SdWMain *frame)
   mbarLinear->addWidget( combo );
 
   frame->addToolBar( mbarLinear );
+
+
+  for( int i = 0; i < MD_LAST; i++ )
+    if( cmModeTable[i] )
+      cmModeTable[i]->setCheckable(true);
   }
 
 
@@ -440,6 +445,7 @@ void SdWCommand::hideEditorContext()
 
 void SdWCommand::selectMode(int md)
   {
+  qDebug() << "selectMode" << md;
   for( int i = 0; i < MD_LAST; i++ )
     if( cmModeTable[i] )
       cmModeTable[i]->setChecked( i == md );

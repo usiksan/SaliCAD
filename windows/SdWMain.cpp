@@ -463,7 +463,7 @@ void SdWMain::cmViewProject()
 void SdWMain::cmViewFill()
   {
   if( activeEditor() )
-    activeEditor()->cmViewFill();
+    activeEditor()->cmViewFit();
   }
 
 void SdWMain::cmViewNets()
@@ -504,7 +504,7 @@ void SdWMain::cmViewZoomOut()
 void SdWMain::cmViewArea()
   {
   if( activeEditor() )
-    activeEditor()->cmViewArea();
+    activeEditor()->cmViewWindow();
   }
 
 void SdWMain::cmViewMeasurement()

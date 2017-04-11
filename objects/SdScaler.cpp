@@ -19,10 +19,16 @@ SdScaler::SdScaler(double scale) :
 
   }
 
-void SdScaler::scale(double step)
+void SdScaler::scaleStep(double step)
   {
   //Convert scale
-  mScale *= step;
+  scaleSet( mScale * step );
+  }
+
+
+void SdScaler::scaleSet(double scale)
+  {
+  mScale = scale;
   //Check scale bounds
   if( mScale > maxScale ) mScale = maxScale;
   if( mScale < minScale ) mScale = minScale;
@@ -32,12 +38,12 @@ void SdScaler::scale(double step)
 
 int SdScaler::phys2pixel(int phys) const
   {
-  return ((double)phys) / mScale;
+  return static_cast<int>( static_cast<double>(phys) * mScale );
   }
 
 int SdScaler::pixel2phys(int pixel) const
   {
-  return ((double)pixel) * mScale;
+  return static_cast<int>( static_cast<double>(pixel) / mScale );
   }
 
 SdPoint SdScaler::phys2pixel(SdPoint phys) const

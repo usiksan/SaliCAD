@@ -68,6 +68,20 @@ void SdContext::rect(SdQuadrangle q, SdPropLine &prop)
     }
   }
 
+
+
+
+void SdContext::rectSelect( SdRect r, QColor color )
+  {
+  mPainter->setPen( QPen( QBrush(color), 0, Qt::DotLine ) );
+  mPainter->drawLine( r.topLeft(), r.topRight() );
+  mPainter->drawLine( r.topRight(), r.bottomRight() );
+  mPainter->drawLine( r.bottomRight(), r.bottomLeft() );
+  mPainter->drawLine( r.bottomLeft(), r.topLeft() );
+  }
+
+
+
 void SdContext::region(SdPointList &points, SdPropLine &prop, bool autoClose)
   {
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {

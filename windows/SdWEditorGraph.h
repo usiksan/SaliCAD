@@ -61,11 +61,14 @@ class SdWEditorGraph : public SdWEditor
   public:
     SdWEditorGraph( QWidget *parent = 0 );
 
-    double  scaleGet() const { return mScale.getScale(); }
+    double  scaleGet() const { return mScale.scaleGet(); }
+    void    scaleSet( double scale );
     void    scaleStep( double step );
 
     SdPoint originGet() const { return mOrigin; }
     void    originSet( SdPoint org );
+
+    SdPoint clientSize() const { return mClientSize; }
 
     //Temporary call mode
     void    modeCall( SdModeTemp *mode );
@@ -79,13 +82,18 @@ class SdWEditorGraph : public SdWEditor
     //Get active mode
     SdMode *modeGet() { return mStack == nullptr ? mMode : mStack; }
 
+    //Window zoom
+    void    zoomWindow( SdRect r );
+
     //return ppm for this editor. PPM is how much phys in one logical
     virtual double         getPPM() const = 0;
 
     //Commands
     virtual void           onActivateEditor() override;
+    virtual void           cmViewFit() override;
     virtual void           cmViewZoomIn() override;
     virtual void           cmViewZoomOut() override;
+    virtual void           cmViewWindow() override;
 
   protected:
     //Activate new mode

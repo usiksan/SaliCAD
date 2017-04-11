@@ -29,13 +29,10 @@ class SdWEditorGraph;
 
 class SdMode
   {
+    int             mStep;       //Mode step
   protected:
     SdProjectItem  *mObject;     //Object is mode working on
     SdWEditorGraph *mEditor;     //Editor window is mode working in
-    int             mStep;       //Mode step
-
-//    int    GetStep() const { return step; }
-//virtual void   SetStep( int stp );
 
 ////Информационные
 //DViewer*       GetViewer() const { return viewer; }
@@ -45,6 +42,10 @@ class SdMode
    //Исполняемые через обозреватель
    void           update();          //Обновить изображение
    void           cancelMode();      //Прекращение режима
+
+   //Сервисные
+   void           setStep( int stp );
+   int            getStep() const { return mStep; }
    //void           UpdateTools() { viewer->UpdateTools(); }//Обновить панель инструментов
    //void           setMessage( const QString msg ) { GetViewer()->SetMessage( msg ); }   //Установить сообщение в строку состояния
    //void           SetPropBar( int id, DProp *prop );      //Установить панель свойств

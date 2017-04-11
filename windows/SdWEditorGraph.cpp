@@ -13,6 +13,7 @@ Description
 
 #include "SdWEditorGraph.h"
 #include "SdWView.h"
+#include "SdWCommand.h"
 #include "objects/SdContext.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdConverterView.h"
@@ -20,6 +21,7 @@ Description
 #include "objects/SdPulsar.h"
 #include "modes/SdMode.h"
 #include "modes/SdModeTZoomer.h"
+#include "modes/SdModeTZoomWindow.h"
 
 #include <QPainter>
 #include <QPaintEvent>
@@ -53,9 +55,19 @@ SdWEditorGraph::SdWEditorGraph(QWidget *parent) :
   setMouseTracking(true);
   }
 
+
+//=================================================================================================
+// Scale and origin
+void SdWEditorGraph::scaleSet(double scale)
+  {
+  mScale.scaleSet( scale );
+  mCasheDirty = true;
+  update();
+  }
+
 void SdWEditorGraph::scaleStep(double step)
   {
-  mScale.scale(step);
+  mScale.scaleStep(step);
   mCasheDirty = true;
   update();
   }
@@ -72,6 +84,26 @@ void SdWEditorGraph::originSet(SdPoint org)
 
 
 
+//Window zoom
+void SdWEditorGraph::zoomWindow(SdRect r)
+  {
+  originSet( r.center() );
+  //Вычислить новый масштаб
+  double scale = mScale.scaleGet();
+  if( r.width() )
+    scale = static_cast<double>(mClientSize.x()) / static_cast<double>(r.width());
+  double scaleY = mScale.scaleGet();
+  if( r.height() )
+    scaleY = static_cast<double>(mClientSize.y()) / static_cast<double>(r.height());
+  if( scale > scaleY ) scale = scaleY;
+  scaleSet( scale );
+  }
+
+
+
+
+//=================================================================================================
+// Modes management
 
 //Temporary call mode
 void SdWEditorGraph::modeCall(SdModeTemp *mode)
@@ -157,10 +189,32 @@ void SdWEditorGraph::modeCancel()
 
 
 
+//Activate new mode
+void SdWEditorGraph::modeActivate(SdMode *mode)
+  {
+  mCasheDirty = true;
+  if( mode ) {
+    mode->activate();
+    SdWCommand::selectMode( mode->getIndex() );
+    }
+  }
+
+void SdWEditorGraph::modeRestore(SdMode *mode)
+  {
+
+  }
+
+
+
+
+//=================================================================================================
+// Modes
 void SdWEditorGraph::cmViewZoomIn()
   {
   modeCall( new SdModeTZoomer(true, this, getProjectItem() ) );
   }
+
+
 
 
 void SdWEditorGraph::cmViewZoomOut()
@@ -169,27 +223,60 @@ void SdWEditorGraph::cmViewZoomOut()
   }
 
 
+
+
+void SdWEditorGraph::cmViewWindow()
+  {
+  modeCall( new SdModeTZoomWindow( this, getProjectItem() ) );
+  }
+
+
+
+void SdWEditorGraph::cmViewFit()
+  {
+  //Collect fit rect
+  SdRect fit;
+  getProjectItem()->forEach( dctAll, [&fit](SdObject *obj) {
+    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+    if( graph && graph->isAble() )
+      fit.grow( graph->getOverRect() );
+    return true;
+    } );
+
+  //If fit rect not empty - expand this rect on all view
+  if( !fit.isEmpty() )
+    zoomWindow( fit );
+  }
+
+
+
+
+//=================================================================================================
+// Event handlers
+
+//Paint event
 void SdWEditorGraph::paintEvent(QPaintEvent *event)
   {
   event->accept();
   if( viewport() == nullptr ) return;
   QSize s = viewport()->size();
+  mClientSize.set( s.width(), s.height() );
 
   if( mCasheDirty ) {
     //Redraw static part
     mCashe = QImage( s, QImage::Format_ARGB32_Premultiplied );
+    //Очистить фон
+    mCashe.fill( sdEnvir->getSysColor(scGraphBack) );
+
     QPainter painter( &mCashe );
     SdContext context( mGrid, &painter );
-    SdConverterView cv( &context, s, mOrigin, mScale.getScale() );
+    SdConverterView cv( &context, s, mOrigin, mScale.scaleGet() );
     cv.getMatrix();
 
     mPixelTransform = QTransform::fromTranslate( -s.width()/2,  -s.height()/2 );
-    mPixelTransform *= QTransform::fromScale( 1 / mScale.getScale(), -1 / mScale.getScale() );
+    mPixelTransform *= QTransform::fromScale( 1 / mScale.scaleGet(), -1 / mScale.scaleGet() );
     mPixelTransform *= QTransform::fromTranslate( mOrigin.x(), mOrigin.y() );
-    qDebug() << "cashe" << mOrigin << mScale.getScale();
-
-    //Очистить фон
-    painter.fillRect( 0,0, s.width(), s.height(), sdEnvir->getSysColor(scGraphBack) );
+    qDebug() << "cashe" << mOrigin << mScale.scaleGet();
 
     //Рисовать сетку
     if( sdEnvir->mGridView ) {
@@ -236,81 +323,13 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
   if( modeGet() ) {
     //Рисовать динамическую часть
     SdContext context( mGrid, &painter );
-    SdConverterView cv( &context, s, mOrigin, mScale.getScale() );
+    SdConverterView cv( &context, s, mOrigin, mScale.scaleGet() );
     cv.getMatrix();
     modeGet()->drawDynamic( &context );
     }
   //Рисовать курсор
   //TODO cursor
   //wc.DrawHideCursor( prevPoint );
-  }
-
-
-
-
-//Activate new mode
-void SdWEditorGraph::modeActivate(SdMode *mode)
-  {
-  mCasheDirty = true;
-  if( mode ) mode->activate();
-  }
-
-void SdWEditorGraph::modeRestore(SdMode *mode)
-  {
-
-  }
-
-
-
-//Display cursor positions from mPrevPoint
-void SdWEditorGraph::displayCursorPositions()
-  {
-  double x = mPrevPoint.x();
-  double y = mPrevPoint.y();
-  x *= getPPM();
-  y *= getPPM();
-  SdPulsar::pulsar->emitSetStatusPositions( QString::number( x, 'f', 3), QString::number( y, 'f', 3) );
-  }
-
-
-
-//Get phys coord from pixel
-SdPoint SdWEditorGraph::pixel2phys(QPoint pos)
-  {
-  //Получить физическую координату мыши из пиксельной
-  SdPoint tmp( mPixelTransform.map( pos ) );
-
-  //Если курсор по сетке - то выровнять
-  if( sdEnvir->mCursorGrid ) {
-    tmp.setX( (tmp.x() / mGrid.x() ) * mGrid.x() );
-    tmp.setY( (tmp.y() / mGrid.y() ) * mGrid.y() );
-    }
-
-  return tmp;
-  }
-
-
-
-//Setup mouse pos. Where pos is pixel coord
-void SdWEditorGraph::updateMousePos(QMouseEvent *event)
-  {
-  SdPoint pos = pixel2phys( event->pos() );
-  if( pos != mPrevPoint ) {
-    //was a mouse mooving
-    mPrevPoint = pos;
-    //update actual mouse pos
-    displayCursorPositions();
-    }
-  }
-
-
-
-void SdWEditorGraph::onActivateEditor()
-  {
-  SdPulsar::pulsar->emitSetStatusLabels( QString("X:"), QString("Y:") );
-  if( modeGet() )
-    SdPulsar::pulsar->emitSetStatusMessage( modeGet()->getStepHelp() );
-  displayCursorPositions();
   }
 
 
@@ -404,4 +423,64 @@ void SdWEditorGraph::keyReleaseEvent(QKeyEvent *event)
   if( modeGet() )
     modeGet()->keyUp( event->key(), event->text().isEmpty() ? QChar() : event->text().at(0) );
   }
+
+
+
+
+//=================================================================================================
+// Misc
+
+//Display cursor positions from mPrevPoint
+void SdWEditorGraph::displayCursorPositions()
+  {
+  double x = mPrevPoint.x();
+  double y = mPrevPoint.y();
+  x *= getPPM();
+  y *= getPPM();
+  SdPulsar::pulsar->emitSetStatusPositions( QString::number( x, 'f', 3), QString::number( y, 'f', 3) );
+  }
+
+
+
+//Get phys coord from pixel
+SdPoint SdWEditorGraph::pixel2phys(QPoint pos)
+  {
+  //Получить физическую координату мыши из пиксельной
+  SdPoint tmp( mPixelTransform.map( pos ) );
+
+  //Если курсор по сетке - то выровнять
+  if( sdEnvir->mCursorGrid ) {
+    tmp.setX( (tmp.x() / mGrid.x() ) * mGrid.x() );
+    tmp.setY( (tmp.y() / mGrid.y() ) * mGrid.y() );
+    }
+
+  return tmp;
+  }
+
+
+
+//Setup mouse pos. Where pos is pixel coord
+void SdWEditorGraph::updateMousePos(QMouseEvent *event)
+  {
+  SdPoint pos = pixel2phys( event->pos() );
+  if( pos != mPrevPoint ) {
+    //was a mouse mooving
+    mPrevPoint = pos;
+    //update actual mouse pos
+    displayCursorPositions();
+    }
+  }
+
+
+
+void SdWEditorGraph::onActivateEditor()
+  {
+  SdPulsar::pulsar->emitSetStatusLabels( QString("X:"), QString("Y:") );
+  if( modeGet() ) {
+    SdPulsar::pulsar->emitSetStatusMessage( modeGet()->getStepHelp() );
+    SdWCommand::selectMode( modeGet()->getIndex() );
+    }
+  displayCursorPositions();
+  }
+
 

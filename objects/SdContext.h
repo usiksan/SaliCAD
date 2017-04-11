@@ -58,6 +58,7 @@ class SdContext {
     void            line( SdPoint a, SdPoint b, SdPropLine &prop );
     //virtual void    road( SdPoint a, SdPoint b, int clear, SdRoadProp &prop ) = 0;
             void    rect( SdQuadrangle q, SdPropLine &prop );
+            void    rectSelect(SdRect r, QColor color );
 //    virtual void    fillRect( SdPoint a, SdPoint b, SdPropLine &prop ) = 0;
 //    virtual void    arc( SdPoint center, int radius, SdAngle start, SdAngle stop, SdPropLine &prop ) = 0;
 //    virtual void    circle( SdPoint center, int radius, SdPropLine &prop ) = 0;

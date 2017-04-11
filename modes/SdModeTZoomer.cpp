@@ -9,10 +9,14 @@ Web
   www.saliLab.ru
 
 Description
+  Temporary mode.
+  Zooming.
+  Support two modes: zoomIn and zoomOut, selected on construct
 */
 #include "SdModeTZoomer.h"
 #include "windows/SdWEditorGraph.h"
 #include <QObject>
+
 
 SdModeTZoomer::SdModeTZoomer(bool zoomIn, SdWEditorGraph *editor, SdProjectItem *obj ) :
   SdModeTemp ( editor, obj ),
@@ -63,4 +67,6 @@ int SdModeTZoomer::getCursor() const
 
 int SdModeTZoomer::getIndex() const
   {
+  return mZoomIn ? MD_ZOOM_IN : MD_ZOOM_OUT;
   }
+

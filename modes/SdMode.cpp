@@ -18,9 +18,9 @@ Description
 
 
 SdMode::SdMode(SdWEditorGraph *editor, SdProjectItem *obj) :
+  mStep(0),
   mObject(obj),
-  mEditor(editor),
-  mStep(0)
+  mEditor(editor)
   {
 
   }
@@ -109,5 +109,17 @@ void SdMode::update() {
 void SdMode::cancelMode()
   {
   mEditor->modeCancel();
+  }
+
+
+
+void SdMode::setStep(int stp)
+  {
+  //assign new step
+  mStep = stp;
+
+  //update step definite params
+  SdPulsar::pulsar->emitSetStatusMessage( getStepHelp() );
+  mEditor->viewport()->setCursor( loadCursor(getCursor()) );
   }
 
