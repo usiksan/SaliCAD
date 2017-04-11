@@ -454,6 +454,15 @@ void SdWCommand::selectMode(int md)
 
 
 
+
+void SdWCommand::propertyBar(quint64 barMask)
+  {
+
+  }
+
+
+
+
 QActionPtr SdWCommand::cmFileNew;
 QActionPtr SdWCommand::cmFileOpen;
 QActionPtr SdWCommand::cmFileClose;

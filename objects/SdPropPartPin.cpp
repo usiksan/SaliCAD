@@ -11,43 +11,43 @@ Web
 Description
 */
 
-#include "SdPartPinProp.h"
+#include "SdPropPartPin.h"
 
 
-void SdPartPinProp::operator =(const SdPartPinProp &sour)
+void SdPropPartPin::operator =(const SdPropPartPin &sour)
   {
   mLayer   = sour.mLayer;
   mPinType = sour.mPinType;
   mSide    = sour.mSide;
   }
 
-void SdPartPinProp::append(const SdPartPinProp &sour)
+void SdPropPartPin::append(const SdPropPartPin &sour)
   {
   mLayer.append( sour.mLayer );
   mPinType.append( sour.mPinType );
   mSide.append( sour.mSide );
   }
 
-void SdPartPinProp::clear()
+void SdPropPartPin::clear()
   {
   mLayer.clear();
   mPinType.clear();
   mSide.clear();
   }
 
-bool SdPartPinProp::match(const SdPartPinProp &prop)
+bool SdPropPartPin::match(const SdPropPartPin &prop)
   {
   return mLayer.match(prop.mLayer) && mPinType.match(prop.mPinType) && mSide.match(prop.mSide);
   }
 
-void SdPartPinProp::write(QJsonObject &obj) const
+void SdPropPartPin::write(QJsonObject &obj) const
   {
   mLayer.write( QStringLiteral("PartPinLayer"), obj );
   mPinType.write( QStringLiteral("PartPinType"), obj );
   mSide.write( QStringLiteral("PartPinSide"), obj );
   }
 
-void SdPartPinProp::read(const QJsonObject obj)
+void SdPropPartPin::read(const QJsonObject obj)
   {
   mLayer.read( QStringLiteral("PartPinLayer"), obj );
   mPinType.read( QStringLiteral("PartPinType"), obj );

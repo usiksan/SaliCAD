@@ -11,39 +11,39 @@ Web
 Description
 */
 
-#include "SdSymImpProp.h"
+#include "SdPropSymImp.h"
 
 
-void SdSymImpProp::operator =(const SdSymImpProp &sour)
+void SdPropSymImp::operator =(const SdPropSymImp &sour)
   {
   mAngle  = sour.mAngle;
   mMirror = sour.mMirror;
   }
 
-void SdSymImpProp::append(const SdSymImpProp &sour)
+void SdPropSymImp::append(const SdPropSymImp &sour)
   {
   mAngle.append( sour.mAngle );
   mMirror.append( sour.mMirror );
   }
 
-void SdSymImpProp::clear()
+void SdPropSymImp::clear()
   {
   mAngle.clear();
   mMirror.clear();
   }
 
-bool SdSymImpProp::match(const SdSymImpProp &prop)
+bool SdPropSymImp::match(const SdPropSymImp &prop)
   {
   return mAngle.match( prop.mAngle ) && mMirror.match( prop.mMirror );
   }
 
-void SdSymImpProp::write(QJsonObject &obj) const
+void SdPropSymImp::write(QJsonObject &obj) const
   {
   mAngle.write( QStringLiteral("SymImpAngle"), obj );
   mMirror.write( QStringLiteral("SymImpMirror"), obj );
   }
 
-void SdSymImpProp::read(const QJsonObject obj)
+void SdPropSymImp::read(const QJsonObject obj)
   {
   mAngle.read( QStringLiteral("SymImpAngle"), obj );
   mMirror.read( QStringLiteral("SymImpMirror"), obj );

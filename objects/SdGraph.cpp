@@ -50,7 +50,7 @@ void SdGraph::getProp(SdProp &prop)
   Q_UNUSED(prop)
   }
 
-void SdGraph::setText(int index, QString sour, SdTextProp &prop)
+void SdGraph::setText(int index, QString sour, SdPropText &prop)
   {
   Q_UNUSED(index)
   Q_UNUSED(sour)
@@ -97,7 +97,7 @@ int SdGraph::behindCursor(SdPoint p)
   return 0;
   }
 
-int SdGraph::behindText(SdPoint p, QString &dest, SdTextProp &prop)
+int SdGraph::behindText(SdPoint p, QString &dest, SdPropText &prop)
   {
   Q_UNUSED(p)
   Q_UNUSED(dest)

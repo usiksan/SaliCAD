@@ -19,8 +19,11 @@ Description
 #include <QAction>
 #include <QMenu>
 #include <QToolBar>
+#include <QMap>
 
 typedef QAction *QActionPtr;
+typedef QToolBar *QToolBarPtr;
+typedef QMap<quint64,QToolBarPtr> QToolBarTab;
 
 class SdWMain;
 
@@ -50,6 +53,7 @@ class SdWCommand
     static QActionPtr cmMenuInsertPcb;
     static QActionPtr cmMenuInsertComp;
 
+    //Tool bars for editor command
     static QToolBar *barMain;
     static QToolBar *barSymbol;
     static QToolBar *barPart;
@@ -57,12 +61,9 @@ class SdWCommand
     static QToolBar *barSheet;
     static QToolBar *barPcb;
 
-    static QToolBar *mbarLinear;
-
     static void addEditCommands( QToolBar *bar );
     static void addViewCommands( QToolBar *bar );
     static void addDrawCommands( QToolBar *bar );
-    static void setModeBar( quint64 propType );
 
 
 
@@ -141,6 +142,12 @@ class SdWCommand
 
     //Full mode action table
     static QActionPtr cmModeTable[MD_LAST];
+
+    //Full list mode tool bars
+    static QToolBarTab mbarTable;
+
+    static void setModeBar( quint64 propType );
+
 
     static void createMenu( SdWMain *frame );
     static void updatePreviousMenu();

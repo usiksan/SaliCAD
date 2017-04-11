@@ -11,39 +11,39 @@ Web
 Description
 */
 
-#include "SdSymPinProp.h"
+#include "SdPropSymPin.h"
 
 
-void SdSymPinProp::operator =(const SdSymPinProp &sour)
+void SdPropSymPin::operator =(const SdPropSymPin &sour)
   {
   mLayer   = sour.mLayer;
   mPinType = sour.mPinType;
   }
 
-void SdSymPinProp::append(const SdSymPinProp &sour)
+void SdPropSymPin::append(const SdPropSymPin &sour)
   {
   mLayer.append( sour.mLayer );
   mPinType.append( sour.mPinType );
   }
 
-void SdSymPinProp::clear()
+void SdPropSymPin::clear()
   {
   mLayer.clear();
   mPinType.clear();
   }
 
-bool SdSymPinProp::match(const SdSymPinProp &prop)
+bool SdPropSymPin::match(const SdPropSymPin &prop)
   {
   return mLayer.match(prop.mLayer) && mPinType.match(prop.mPinType);
   }
 
-void SdSymPinProp::write(QJsonObject &obj) const
+void SdPropSymPin::write(QJsonObject &obj) const
   {
   mLayer.write( QStringLiteral("SymPinLayer"), obj );
   mPinType.write( QStringLiteral("SymPinType"), obj );
   }
 
-void SdSymPinProp::read(const QJsonObject obj)
+void SdPropSymPin::read(const QJsonObject obj)
   {
   mLayer.read( QStringLiteral("SymPinLayer"), obj );
   mPinType.read( QStringLiteral("SymPinType"), obj );

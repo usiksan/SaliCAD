@@ -29,7 +29,6 @@ SOURCES += \
     objects/SdCircle.cpp \
     objects/SdAngle.cpp \
     objects/SdProp.cpp \
-    objects/SdTextProp.cpp \
     objects/SdContext.cpp \
     objects/SdQuadrangle.cpp \
     objects/SdUndo.cpp \
@@ -37,11 +36,6 @@ SOURCES += \
     objects/SdSnapInfo.cpp \
     objects/SdPolyWindow.cpp \
     objects/SdPolyWindowList.cpp \
-    objects/SdRoadProp.cpp \
-    objects/SdSymPinProp.cpp \
-    objects/SdPartPinProp.cpp \
-    objects/SdSymImpProp.cpp \
-    objects/SdPartImpProp.cpp \
     windows/SdWCommand.cpp \
     objects/SdPulsar.cpp \
     windows/SdPNewProjectItem_SelectType.cpp \
@@ -75,7 +69,14 @@ SOURCES += \
     modes/SdModeTemp.cpp \
     modes/SdCursorFactory.cpp \
     modes/SdModeTZoomer.cpp \
-    modes/SdModeTZoomWindow.cpp
+    modes/SdModeTZoomWindow.cpp \
+    modes/SdModeCLinear.cpp \
+    objects/SdPropPartImp.cpp \
+    objects/SdPropPartPin.cpp \
+    objects/SdPropRoad.cpp \
+    objects/SdPropSymImp.cpp \
+    objects/SdPropSymPin.cpp \
+    objects/SdPropText.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -94,7 +95,6 @@ HEADERS  += \
     objects/SdCircle.h \
     objects/SdAngle.h \
     objects/SdProp.h \
-    objects/SdTextProp.h \
     objects/SdContext.h \
     objects/SdQuadrangle.h \
     objects/SdUndoRecord.h \
@@ -103,11 +103,6 @@ HEADERS  += \
     objects/SdSnapInfo.h \
     objects/SdPolyWindow.h \
     objects/SdPolyWindowList.h \
-    objects/SdRoadProp.h \
-    objects/SdSymPinProp.h \
-    objects/SdPartPinProp.h \
-    objects/SdSymImpProp.h \
-    objects/SdPartImpProp.h \
     windows/SdWCommand.h \
     objects/SdPulsar.h \
     windows/SdPNewProjectItem_SelectType.h \
@@ -142,7 +137,14 @@ HEADERS  += \
     modes/SdCursorFactory.h \
     modes/SdModeTZoomer.h \
     modes/SdModeIdents.h \
-    modes/SdModeTZoomWindow.h
+    modes/SdModeTZoomWindow.h \
+    modes/SdModeCLinear.h \
+    objects/SdPropText.h \
+    objects/SdPropSymPin.h \
+    objects/SdPropSymImp.h \
+    objects/SdPropRoad.h \
+    objects/SdPropPartPin.h \
+    objects/SdPropPartImp.h
 
 DISTFILES += \
     license.txt

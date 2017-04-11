@@ -11,45 +11,45 @@ Web
 Description
 */
 
-#include "SdRoadProp.h"
+#include "SdPropRoad.h"
 
 
 
-void SdRoadProp::operator =(const SdRoadProp &prop)
+void SdPropRoad::operator =(const SdPropRoad &prop)
   {
   mWidth = prop.mWidth;
   mLayer = prop.mLayer;
   }
 
-void SdRoadProp::append(const SdRoadProp &prop)
+void SdPropRoad::append(const SdPropRoad &prop)
   {
   mWidth.append( prop.mWidth );
   mLayer.append( prop.mLayer );
   }
 
-bool SdRoadProp::operator ==(const SdRoadProp &prop)
+bool SdPropRoad::operator ==(const SdPropRoad &prop)
   {
   return mWidth == prop.mWidth && mLayer == prop.mLayer;
   }
 
-void SdRoadProp::clear()
+void SdPropRoad::clear()
   {
   mWidth.clear();
   mLayer.clear();
   }
 
-bool SdRoadProp::match(const SdRoadProp &prop)
+bool SdPropRoad::match(const SdPropRoad &prop)
   {
   return mWidth.match( prop.mWidth ) && mLayer.match( prop.mLayer );
   }
 
-void SdRoadProp::write(QJsonObject &obj) const
+void SdPropRoad::write(QJsonObject &obj) const
   {
   mWidth.write( QStringLiteral("RoadWidth"), obj );
   mLayer.write( QStringLiteral("RoadLayer"), obj );
   }
 
-void SdRoadProp::read(const QJsonObject obj)
+void SdPropRoad::read(const QJsonObject obj)
   {
   mWidth.read( QStringLiteral("RoadWidth"), obj );
   mLayer.read( QStringLiteral("RoadLayer"), obj );

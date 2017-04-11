@@ -16,17 +16,17 @@ Description
 
 #include "SdPropInt.h"
 
-struct SdSymPinProp
+struct SdPropSymPin
   {
     SdPropInt mLayer;
     SdPropInt mPinType;
 
-    SdSymPinProp() : mLayer(0), mPinType(0) {}
+    SdPropSymPin() : mLayer(0), mPinType(0) {}
 
-    void operator = ( SdSymPinProp const &sour ); //Назначить свойства
-    void append( SdSymPinProp const &sour );      //Установить свойства
+    void operator = ( SdPropSymPin const &sour ); //Назначить свойства
+    void append( SdPropSymPin const &sour );      //Установить свойства
     void clear();                                //Установить в неопределенное состояние
-    bool match( SdSymPinProp const &prop );       //Сравнить на совпадение с эталоном
+    bool match( SdPropSymPin const &prop );       //Сравнить на совпадение с эталоном
 
     void write( QJsonObject &obj ) const;
     void read( const QJsonObject obj );

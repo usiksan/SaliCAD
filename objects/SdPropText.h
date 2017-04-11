@@ -17,7 +17,7 @@ Description
 #include "SdPropInt.h"
 #include "SdAngle.h"
 
-struct SdTextProp {
+struct SdPropText {
   SdPropInt  mSize;   //Размер текста
   SdAngle    mDir;    //Направление
   SdPropInt  mLayer;  //Слой
@@ -26,13 +26,13 @@ struct SdTextProp {
   SdPropInt  mVert;
   SdPropInt  mMirror;
 
-  SdTextProp();
+  SdPropText();
 
-  void operator = ( SdTextProp const &prop ); //Назначить свойства (кроме origin)
-  void assign( SdTextProp const &prop );      //Назначить свойства (включая origin)
-  void append( SdTextProp const &prop );      //Установить свойства
+  void operator = ( SdPropText const &prop ); //Назначить свойства (кроме origin)
+  void assign( SdPropText const &prop );      //Назначить свойства (включая origin)
+  void append( SdPropText const &prop );      //Установить свойства
   void clear();                               //Установить в неопределенное состояние
-  bool match( SdTextProp const &prop );       //Сравнить на совпадение с эталоном
+  bool match( SdPropText const &prop );       //Сравнить на совпадение с эталоном
   };
 
 

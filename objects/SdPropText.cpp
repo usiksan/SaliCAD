@@ -11,14 +11,14 @@ Web
 Description
 */
 
-#include "SdTextProp.h"
+#include "SdPropText.h"
 
-SdTextProp::SdTextProp()
+SdPropText::SdPropText()
   {
 
   }
 
-void SdTextProp::operator =(const SdTextProp &prop)
+void SdPropText::operator =(const SdPropText &prop)
   {
   mSize   = prop.mSize;   //Размер текста
   mDir    = prop.mDir;    //Направление
@@ -29,7 +29,7 @@ void SdTextProp::operator =(const SdTextProp &prop)
   mMirror = prop.mMirror;
   }
 
-void SdTextProp::clear() {
+void SdPropText::clear() {
   mSize.clear();   //Размер текста
   mDir.clear();    //Направление
   mLayer.clear();  //Слой
@@ -39,7 +39,7 @@ void SdTextProp::clear() {
   mMirror.clear();
   }
 
-bool SdTextProp::match( SdTextProp const &prop ) {
+bool SdPropText::match( SdPropText const &prop ) {
   return mSize.match( prop.mSize ) &&
          mDir.match( prop.mDir ) &&
          mLayer.match( prop.mLayer ) &&
@@ -50,12 +50,12 @@ bool SdTextProp::match( SdTextProp const &prop ) {
   }
 
 
-void SdTextProp::assign( SdTextProp const &p ) {
+void SdPropText::assign( SdPropText const &p ) {
   operator = ( p );
   }
 
 
-void SdTextProp::append( SdTextProp const &prop ) {
+void SdPropText::append( SdPropText const &prop ) {
   mSize.append( prop.mSize );
   mDir.append( prop.mDir );
   mLayer.append( prop.mLayer );

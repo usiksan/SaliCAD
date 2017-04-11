@@ -22,44 +22,42 @@ Description
 
 
 //Классы объектов
-const quint64
-  dctLines         = 0x00000001l,
-  dctText          = 0x00000002l,
-  dctSymPin        = 0x00000004l,
-  dctSymPinName    = 0x00000008l,
-  dctSymPinNumber  = 0x00000010l,
-  dctIdent         = 0x00000020l,
-  dctSymbol        = 0x00000040l,
-  dctSymImp        = 0x00000080l,
-  dctPartPin       = 0x00000100l,
-  dctPartPinName   = 0x00000200l,
-  dctPartPinNumber = 0x00000400l,
-  dctPart          = 0x00000800l,
-  dctPartImp       = 0x00001000l,
-  dctWire          = 0x00002000l,
-  dctWireName      = 0x00004000l,
-  dctSheet         = 0x00008000l,
-  dctPlate         = 0x00010000l,
-  dctList          = 0x00020000l,
-  dctAlias         = 0x00040000l,
-  dctPoligon       = 0x00080000l,
-  dctVia           = 0x00100000l,
-  dctComponent     = 0x00200000l,
+#define dctLines         0x00000001l
+#define dctText          0x00000002l
+#define dctSymPin        0x00000004l
+#define dctSymPinName    0x00000008l
+#define dctSymPinNumber  0x00000010l
+#define dctIdent         0x00000020l
+#define dctSymbol        0x00000040l
+#define dctSymImp        0x00000080l
+#define dctPartPin       0x00000100l
+#define dctPartPinName   0x00000200l
+#define dctPartPinNumber 0x00000400l
+#define dctPart          0x00000800l
+#define dctPartImp       0x00001000l
+#define dctWire          0x00002000l
+#define dctWireName      0x00004000l
+#define dctSheet         0x00008000l
+#define dctPlate         0x00010000l
+#define dctList          0x00020000l
+#define dctAlias         0x00040000l
+#define dctPoligon       0x00080000l
+#define dctVia           0x00100000l
+#define dctComponent     0x00200000l
   //dctUser          = 0x200000,
-  dctProject       = 0x00400000l,
-  dctSize          = 0x00800000l,
-  dctSizeProp      = 0x01000000l,
-  dctTextDoc       = 0x02000000l,
-  dctSelector      = 0x04000000l,
-  dctSheetNet      = 0x08000000l,
-  dctPlateNet      = 0x10000000l,
+#define dctProject       0x00400000l
+#define dctSize          0x00800000l
+#define dctSizeProp      0x01000000l
+#define dctTextDoc       0x02000000l
+#define dctSelector      0x04000000l
+#define dctSheetNet      0x08000000l
+#define dctPlateNet      0x10000000l
   //dctChars    = 0x20000000,
   //dctPrjList  = 0x40000000,
   //dctData     = 0x80000000,
-  dctPicture       = dctLines | dctText | dctSize,
-  dctProjectItems  = dctSymbol | dctPart | dctSheet | dctPlate | dctComponent,
-  dctAll           = MAX64_MASK
-  ;
+#define dctPicture       (dctLines | dctText | dctSize)
+#define dctProjectItems  (dctSymbol | dctPart | dctSheet | dctPlate | dctComponent)
+#define dctAll           MAX64_MASK
 
 
 #define SDKO_TYPE      "type"

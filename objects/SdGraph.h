@@ -43,7 +43,7 @@ class SdGraph : public SdObject
     virtual void   getProp( SdProp &prop );
 
     //Изменение обновлением текста
-    virtual void   setText(int index, QString sour, SdTextProp &prop );
+    virtual void   setText(int index, QString sour, SdPropText &prop );
 
     //Варианты выделения
     virtual void   selectByPoint( const SdPoint p, SdSelector *selector );
@@ -63,7 +63,7 @@ class SdGraph : public SdObject
     virtual void   draw( SdContext *dc );              //Рисование объекта на экране
     //Получить состояние объета под курсором
     virtual int    behindCursor( SdPoint p );
-    virtual int    behindText( SdPoint p, QString &dest, SdTextProp &prop );
+    virtual int    behindText( SdPoint p, QString &dest, SdPropText &prop );
     virtual bool   getInfo( SdPoint p, QString &info, bool extInfo );
     //Определение разумной точки
     virtual bool   snapPoint( SdSnapInfo *snap );

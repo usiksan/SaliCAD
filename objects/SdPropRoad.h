@@ -16,17 +16,17 @@ Description
 
 #include "SdPropInt.h"
 
-struct SdRoadProp
+struct SdPropRoad
   {
     SdPropInt mWidth; //Ширина проводника
     SdPropInt mLayer; //Слой проводника (сторона)
 
-    SdRoadProp() : mWidth(0), mLayer(0) { }
-    void operator = ( SdRoadProp const &prop );  //Назначить свойства в соответствии с шаблоном
-    void append( SdRoadProp const &prop );       //Добавить свойства
-    bool operator == ( SdRoadProp const &prop ); //Сравнить свойства
+    SdPropRoad() : mWidth(0), mLayer(0) { }
+    void operator = ( SdPropRoad const &prop );  //Назначить свойства в соответствии с шаблоном
+    void append( SdPropRoad const &prop );       //Добавить свойства
+    bool operator == ( SdPropRoad const &prop ); //Сравнить свойства
     void clear();                                //Установить в неопределенное состояние
-    bool match( SdRoadProp const &prop );        //Сравнить на совпадение с эталоном
+    bool match( SdPropRoad const &prop );        //Сравнить на совпадение с эталоном
 
     void write( QJsonObject &obj ) const;
     void read( const QJsonObject obj );
