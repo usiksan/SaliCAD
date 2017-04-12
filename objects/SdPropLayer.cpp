@@ -43,3 +43,19 @@ void SdPropLayer::read(const QString name, const QJsonObject obj)
   mValue = OneValue;
   mLayer = sdEnvir->getLayer( obj.value(name).toString() );
   }
+
+QDataStream& operator >> ( QDataStream &is, SdPropLayer &p ) {
+  QString id;
+  is >> id;
+  p.mLayer = sdEnvir->getLayer( id );
+  p.mValue = p.mLayer ? SdPropLayer::OneValue : SdPropLayer::NoValue;
+  return is;
+  }
+
+QDataStream& operator << ( QDataStream &os, const SdPropLayer &p ) {
+  if( p.mValue == SdPropLayer::OneValue )
+    os << p.mLayer->id();
+  else
+    os << QString();
+  return os;
+  }

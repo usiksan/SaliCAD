@@ -92,6 +92,10 @@ class SdEnvir
     bool            mCenterCursor;         //Центровать курсор при увеличении и уменьшении
     int             mLineEnterType;        //Vertex type at enter line
 
+    //Working properties
+    SdPropLine      mLineProp;       //Свойства линейных объектов
+
+
     bool            mGuiderEnabled;        //Флаг разрешения/запрещения путеводителя
     int             mGuiderPosition;       //Положение разделителя путеводителя
     bool            mProjectEnabled;       //Флаг разрешения/запрещения проекта

@@ -16,6 +16,7 @@ Description
 #include "SdLayer.h"
 #include <QString>
 #include <QJsonObject>
+#include <QDataStream>
 
 class SdPropLayer
   {
@@ -40,6 +41,9 @@ class SdPropLayer
 
     void       write( const QString name, QJsonObject &obj ) const { obj.insert( name, mLayer->id() ); }
     void       read( const QString name, const QJsonObject obj );
+
+    friend QDataStream& operator >> ( QDataStream &is, SdPropLayer &p );
+    friend QDataStream& operator << ( QDataStream &os, const SdPropLayer &p );
   };
 
 #endif // SDPROPLAYER_H

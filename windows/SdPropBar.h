@@ -36,7 +36,6 @@ class SdPropBar : public QToolBar
 
   public slots:
     void updateViewedLayers();
-    void onLayerChanged(int index);
   };
 
 #endif // SDPROPBAR_H
