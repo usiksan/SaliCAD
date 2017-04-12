@@ -96,6 +96,18 @@ class SdWEditorGraph : public SdWEditor
     virtual void           cmViewWindow() override;
 
     virtual void           cmPropChanged() override;
+
+//    virtual void cmModeLine() {}
+    virtual void           cmModeRect() override;
+//    virtual void cmModeFilledRect() {}
+//    virtual void cmModeRegion() {}
+//    virtual void cmModeFilledRegion() {}
+//    virtual void cmModeCircle() {}
+//    virtual void cmModeFilledCircle() {}
+//    virtual void cmModeArc() {}
+//    virtual void cmModeText() {}
+//    virtual void cmModeField() {}
+
   protected:
     //Activate new mode
     void    modeActivate( SdMode *mode );

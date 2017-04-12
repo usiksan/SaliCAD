@@ -22,6 +22,12 @@ Description
 #include "SdPropPartImp.h"
 #include "SdPropRoad.h"
 
+//
+#define dleOrtho         0
+#define dle45degree      1
+#define dleAnyDegree     2
+
+
 struct SdProp
   {
     SdPropLine    mLineProp;       //Свойства линейных объектов
@@ -57,5 +63,7 @@ struct SdProp
 
     void Clear();
   };
+
+extern SdProp *sdGlobalProp;
 
 #endif // SDPROP_H

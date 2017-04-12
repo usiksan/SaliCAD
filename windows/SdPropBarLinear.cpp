@@ -6,11 +6,11 @@
   Описание
 */
 #include "SdPropBarLinear.h"
-#include "objects/SdEnvir.h"
 #include <QList>
 #include <QLineEdit>
 #include <QDoubleValidator>
 #include <QIcon>
+#include <QDebug>
 
 static QList<double> prevWidth;
 
@@ -27,9 +27,16 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
   //Select first item
   mWidth->setCurrentIndex(0);
   mWidth->lineEdit()->setValidator( new QDoubleValidator() );
+  mWidth->setMinimumWidth(80);
 
   //on complete editing
   connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [=](){
+    setWidth( mWidth->currentText().toDouble() );
+    emit propChanged();
+    });
+  //on select other width
+  connect( mWidth, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
+    Q_UNUSED(index)
     setWidth( mWidth->currentText().toDouble() );
     emit propChanged();
     });
@@ -39,7 +46,7 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
   addSeparator();
 
   //Vertex type of two lines
-  mEnterOrtho = addAction( QIcon(QString(":/pic/dleOrtho.png")), tr("lines connects orthogonal") );
+  mEnterOrtho = addAction( QIcon(QString(":/pic/dleOrto.png")), tr("lines connects orthogonal") );
   mEnterOrtho->setCheckable(true);
   connect( mEnterOrtho, &QAction::triggered, [=](bool checked){
     Q_UNUSED(checked)
@@ -103,7 +110,7 @@ void SdPropBarLinear::setPropLine(SdPropLine *propLine, double ppm, int enterTyp
 
     //Set current width
     mPPM = ppm;
-    setWidth( propLine->mWidth.getDouble() / mPPM );
+    setWidth( propLine->mWidth.getDouble() * mPPM );
 
     //line enter type
     setVertexType( enterType );
@@ -124,7 +131,7 @@ void SdPropBarLinear::getPropLine(SdPropLine *propLine, int *enterType )
       propLine->mLayer = layer;
 
     if( !mWidth->currentText().isEmpty() )
-      propLine->mWidth = static_cast<int>( mWidth->currentText().toDouble() * mPPM );
+      propLine->mWidth = static_cast<int>( mWidth->currentText().toDouble() / mPPM );
 
     if( mLineSolid->isChecked() ) propLine->mType = dltSolid;
     else if( mLineDotted->isChecked() ) propLine->mType = dltDotted;

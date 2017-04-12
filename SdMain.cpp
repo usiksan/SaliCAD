@@ -15,6 +15,7 @@ Description
 #include "windows/SdWMain.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
+#include "objects/SdProp.h"
 #include <QApplication>
 #include <QSettings>
 #include <QTranslator>
@@ -48,6 +49,7 @@ int main(int argc, char *argv[])
   SdPulsar::pulsar = new SdPulsar();
 
   sdEnvir = new SdEnvir();
+  sdGlobalProp = new SdProp();
 
   //Creating application main window
   SdWMain w( a.arguments() );
@@ -60,6 +62,7 @@ int main(int argc, char *argv[])
 
   int res = a.exec();
 
+  delete sdGlobalProp;
   delete sdEnvir;
   delete SdPulsar::pulsar;
   return res;

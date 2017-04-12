@@ -9,6 +9,8 @@ Web
   www.saliLab.ru
 
 Description
+  SdSnapInfo - info structure for snap system
+  Snap system allow link to appropriate points.
 */
 
 #include "SdSnapInfo.h"
@@ -29,7 +31,7 @@ SdSnapInfo::SdSnapInfo() :
 
 
 
-bool SdSnapInfo::test(SdPoint p, int mask)
+bool SdSnapInfo::test(SdPoint p, SdSnapMask mask)
   {
   if( (mFlag & dsifExExcl) && p == mExclude )
     return false;

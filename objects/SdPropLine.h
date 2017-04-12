@@ -36,14 +36,6 @@ struct SdPropLine {
 
   void write( QJsonObject &obj ) const;
   void read( const QJsonObject obj );
-
-  friend QDataStream& operator >> ( QDataStream &is, SdPropLine &p ) {
-    return is >> p.mWidth >> p.mType >> p.mLayer;
-    }
-
-  friend QDataStream& operator << ( QDataStream &os, const SdPropLine &p ) {
-    return os << p.mWidth << p.mType << p.mLayer;
-    }
   };
 
 #endif // SDLINEPROP_H

@@ -29,6 +29,9 @@ History
                    Menu mode actions convert to flat table to auto switch checking action
   10.04.2017 v0.9  Menu modes switching is ok
   11.04.2017 v0.10 Releasing view group modes
+  12.04.2017 v0.11 Prop bars for mode properties
+                   Reconstruct SdContext
+                   Mode rect
 */
 
 #ifndef SDCONFIG
@@ -40,7 +43,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             10
+#define SD_VERSION_MINOR             11
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

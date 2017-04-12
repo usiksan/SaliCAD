@@ -11,6 +11,7 @@ Web
 Description
 */
 #include "objects/SdEnvir.h"
+#include "objects/SdProp.h"
 #include "SdModeTZoomWindow.h"
 #include "windows/SdWEditorGraph.h"
 
@@ -27,8 +28,10 @@ SdModeTZoomWindow::SdModeTZoomWindow( SdWEditorGraph *editor, SdProjectItem *obj
 
 void SdModeTZoomWindow::drawDynamic(SdContext *ctx)
   {
-  if( getStep() )
-    ctx->rectSelect( SdRect(mFirst,mSecond), sdEnvir->getSysColor(scEnter) );
+  if( getStep() ) {
+    ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltDotted );
+    ctx->rect( SdRect(mFirst,mSecond) );
+    }
   }
 
 

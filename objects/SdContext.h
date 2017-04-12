@@ -54,11 +54,18 @@ class SdContext {
     QTransform&     transform() { return mTransform; }
     //virtual void    getViewPort( SdRect *dest ) = 0;
 
+    //Draw prepare
+    void            setPen(int width, SdLayer *layer, int lineStyle);
+    void            setPen(int width, QColor color, int lineStyle );
+    void            setProp( SdPropLine &prop );
+
     //Примитивы рисования
+    void            line( SdPoint a, SdPoint b );
     void            line( SdPoint a, SdPoint b, SdPropLine &prop );
     //virtual void    road( SdPoint a, SdPoint b, int clear, SdRoadProp &prop ) = 0;
-            void    rect( SdQuadrangle q, SdPropLine &prop );
-            void    rectSelect(SdRect r, QColor color );
+            void    quadrangle( SdQuadrangle q, SdPropLine &prop );
+    void            rect( SdRect r );
+    void            rect( SdRect r, SdPropLine &prop );
 //    virtual void    fillRect( SdPoint a, SdPoint b, SdPropLine &prop ) = 0;
 //    virtual void    arc( SdPoint center, int radius, SdAngle start, SdAngle stop, SdPropLine &prop ) = 0;
 //    virtual void    circle( SdPoint center, int radius, SdPropLine &prop ) = 0;
@@ -78,7 +85,6 @@ class SdContext {
     void            dotTrase( SdPoint p );                                      //Точка пометки трассируемой цепи
 
   private:
-    void     setPen(int width, SdLayer *layer , int lineStyle);
 
     //Update converter context
     void     updateConverter();

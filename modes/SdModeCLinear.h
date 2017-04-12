@@ -19,8 +19,6 @@ Description
 
 class SdModeCLinear : public SdModeCommon
   {
-  protected:
-    SdPropLine mPropLine; //Props for linear objects
   public:
     SdModeCLinear( SdWEditorGraph *editor, SdProjectItem *obj );
 

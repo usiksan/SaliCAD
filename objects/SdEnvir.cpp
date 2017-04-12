@@ -104,8 +104,7 @@ void SdEnvir::loadEnvir()
        >> mPrtPPM               //Коэффициент преобразования в физическую величину в конструкциях
        >> mGridView             //Включение сетки
        >> mCursorGrid           //Включение движения курсора по сетке
-       >> mCenterCursor         //Центровать курсор при увеличении и уменьшении
-       >> mLineEnterType;        //Vertex type at enter line
+       >> mCenterCursor;         //Центровать курсор при увеличении и уменьшении
     }
   else defaultEnvir();
   }
@@ -160,8 +159,7 @@ void SdEnvir::saveEnvir()
      << mPrtPPM               //Коэффициент преобразования в физическую величину в конструкциях
      << mGridView             //Включение сетки
      << mCursorGrid           //Включение движения курсора по сетке
-     << mCenterCursor         //Центровать курсор при увеличении и уменьшении
-     << mLineEnterType;        //Vertex type at enter line
+     << mCenterCursor;        //Центровать курсор при увеличении и уменьшении
 
   QSettings s;
   s.setValue( QString(SDK_ENVIR_VERSION), QVariant(SdEnvirVersion) );
@@ -217,7 +215,6 @@ void SdEnvir::defaultEnvir()
   mGridView          = true;           //Включение сетки
   mCursorGrid        = true;           //Включение движения курсора по сетке
   mCenterCursor      = true;           //Центровать курсор при увеличении и уменьшении
-  mLineEnterType     = dleOrtho;       //By default orthogonal vertex line
 
   mGuiderEnabled     = true;           //Флаг разрешения/запрещения путеводителя
   mGuiderPosition    = 0;              //Положение разделителя путеводителя
@@ -320,6 +317,7 @@ SdLayer *SdEnvir::getLayer(QString id)
     else if( lid0 == QString(LID0_PCB_TOP) ) name = QObject::tr("In pcb top ");
     else if( lid0 == QString(LID0_PCB_BOT) ) name = QObject::tr("In pcb bottom ");
     else if( lid0 == QString(LID0_INVISIBLE) ) name = QObject::tr("Invisible ");
+    else if( lid0 == QString(LID0_COMMON) ) name = QObject::tr("Common ");
     else if( lid0 == QString(LID0_TRACE) ) name = QObject::tr("Trace ");
     else if( lid0 == QString(LID0_POLYGON) ) name = QObject::tr("Polygon ");
     else if( lid0 == QString(LID0_PADS) ) name = QObject::tr("Pad ");

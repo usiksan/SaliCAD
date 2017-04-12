@@ -20,6 +20,18 @@ SdPropLayer::SdPropLayer() :
 
   }
 
+void SdPropLayer::set(const QString id)
+  {
+  if( id.isEmpty() ) {
+    mValue = NoValue;
+    mLayer = 0;
+    }
+  else {
+    mValue = OneValue;
+    mLayer = sdEnvir->getLayer(id);
+    }
+  }
+
 SdLayer *SdPropLayer::layer(bool otherSide) const
   {
   if( otherSide ) return mLayer->pair();
@@ -44,18 +56,3 @@ void SdPropLayer::read(const QString name, const QJsonObject obj)
   mLayer = sdEnvir->getLayer( obj.value(name).toString() );
   }
 
-QDataStream& operator >> ( QDataStream &is, SdPropLayer &p ) {
-  QString id;
-  is >> id;
-  p.mLayer = sdEnvir->getLayer( id );
-  p.mValue = p.mLayer ? SdPropLayer::OneValue : SdPropLayer::NoValue;
-  return is;
-  }
-
-QDataStream& operator << ( QDataStream &os, const SdPropLayer &p ) {
-  if( p.mValue == SdPropLayer::OneValue )
-    os << p.mLayer->id();
-  else
-    os << QString();
-  return os;
-  }

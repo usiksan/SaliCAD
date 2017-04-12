@@ -78,7 +78,8 @@ SOURCES += \
     objects/SdPropSymPin.cpp \
     objects/SdPropText.cpp \
     windows/SdPropBar.cpp \
-    windows/SdPropBarLinear.cpp
+    windows/SdPropBarLinear.cpp \
+    modes/SdModeCLinearRect.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -148,7 +149,8 @@ HEADERS  += \
     objects/SdPropPartPin.h \
     objects/SdPropPartImp.h \
     windows/SdPropBar.h \
-    windows/SdPropBarLinear.h
+    windows/SdPropBarLinear.h \
+    modes/SdModeCLinearRect.h
 
 DISTFILES += \
     license.txt

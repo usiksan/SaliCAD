@@ -432,17 +432,16 @@ void SdWCommand::createToolBars(SdWMain *frame)
   frame->addToolBarBreak();
 
 
-  QToolBar *mbar;
-  mbar = new QToolBar( QString("Default tool bar") );
-  QComboBox *combo = new QComboBox();
-  mbar->addWidget( combo );
-
+  SdPropBar *mbar;
+  mbar = new SdPropBar( QString("Default tool bar") );
   frame->addToolBar( mbar );
   mbarTable[PB_DEFAULT] = mbar;
 
   mbar = new SdPropBarLinear( QString("Linear mode") );
   frame->addToolBar( mbar );
   mbar->setVisible(false);
+  mbarTable[PB_LINEAR] = mbar;
+  mbar->connect( mbar, &SdPropBar::propChanged, frame, &SdWMain::cmPropertiesChange );
 
 
   for( int i = 0; i < MD_LAST; i++ )

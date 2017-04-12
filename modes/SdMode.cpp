@@ -17,6 +17,8 @@ Description
 #include "windows/SdWEditorGraph.h"
 #include "windows/SdWCommand.h"
 
+#include <QDebug>
+
 
 SdMode::SdMode(SdWEditorGraph *editor, SdProjectItem *obj) :
   mStep(0),
@@ -66,7 +68,8 @@ void SdMode::reset()
 
 void SdMode::drawStatic(SdContext *ctx)
   {
-  Q_UNUSED(ctx)
+  //By default draw all picture
+  mObject->draw( ctx );
   }
 
 
@@ -81,7 +84,12 @@ void SdMode::drawDynamic(SdContext *ctx)
 
 void SdMode::keyDown(int key, QChar ch)
   {
-  Q_UNUSED(key)
+  if( key == Qt::Key_Asterisk )
+    mEditor->cmViewFit();
+  else if( key == Qt::Key_Plus )
+    mEditor->scaleStep( 2.0 );
+  else if( key == Qt::Key_Minus )
+    mEditor->scaleStep( 0.5 );
   Q_UNUSED(ch)
   }
 

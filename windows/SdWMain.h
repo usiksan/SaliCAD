@@ -165,6 +165,7 @@ class SdWMain : public QMainWindow
     void cmHelpAbout();
 
     void cmClipboardChange();
+    void cmPropertiesChange();
 
 
     // QWidget interface

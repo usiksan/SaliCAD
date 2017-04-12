@@ -49,15 +49,20 @@ void SdContext::removeConverter(SdConverter *c)
   updateConverter();
   }
 
+void SdContext::line(SdPoint a, SdPoint b)
+  {
+  mPainter->drawLine( a, b );
+  }
+
 void SdContext::line(SdPoint a, SdPoint b, SdPropLine &prop)
   {
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
-    setPen( prop.mWidth, prop.mLayer.layer(), prop.mType );
-    mPainter->drawLine( a, b );
+    setProp( prop );
+    line( a, b );
     }
   }
 
-void SdContext::rect(SdQuadrangle q, SdPropLine &prop)
+void SdContext::quadrangle(SdQuadrangle q, SdPropLine &prop)
   {
   //Draw 4 edges
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
@@ -72,13 +77,22 @@ void SdContext::rect(SdQuadrangle q, SdPropLine &prop)
 
 
 
-void SdContext::rectSelect( SdRect r, QColor color )
+void SdContext::rect(SdRect r)
   {
-  mPainter->setPen( QPen( QBrush(color), 0, Qt::DotLine ) );
   mPainter->drawLine( r.topLeft(), r.topRight() );
   mPainter->drawLine( r.topRight(), r.bottomRight() );
   mPainter->drawLine( r.bottomRight(), r.bottomLeft() );
   mPainter->drawLine( r.bottomLeft(), r.topLeft() );
+  }
+
+
+
+void SdContext::rect(SdRect r, SdPropLine &prop)
+  {
+  if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
+    setProp( prop );
+    rect( r );
+    }
   }
 
 
@@ -100,9 +114,21 @@ void SdContext::region(SdPointList &points, SdPropLine &prop, bool autoClose)
 void SdContext::dotTrase(SdPoint p)
   {
   Q_UNUSED(p)
+  //TODO dotTrase
   }
 
+
+
+
 void SdContext::setPen(int width, SdLayer *layer, int lineStyle )
+  {
+  setPen( width, convertColor(layer), lineStyle );
+  }
+
+
+
+
+void SdContext::setPen(int width, QColor color, int lineStyle)
   {
   //Convert line styles
   Qt::PenStyle style;
@@ -110,7 +136,15 @@ void SdContext::setPen(int width, SdLayer *layer, int lineStyle )
   else if( lineStyle == dltDashed ) style = Qt::DashLine;
   else style = Qt::SolidLine;
 
-  mPainter->setPen( QPen( QBrush( convertColor(layer) ), width, style ) );
+  mPainter->setPen( QPen( QBrush( color ), width, style ) );
+  }
+
+
+
+
+void SdContext::setProp(SdPropLine &prop)
+  {
+  setPen( prop.mWidth, prop.mLayer.layer(), prop.mType );
   }
 
 

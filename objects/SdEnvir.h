@@ -16,6 +16,7 @@ Description
 
 #include "SdConfig.h"
 #include "SdLayer.h"
+#include "SdSnapInfo.h"
 #include <QColor>
 #include <QMap>
 #include <QPointF>
@@ -43,13 +44,8 @@ Description
 #define dcvFull45        4  //Полный под углом 45
 #define dcvLast          5
 
-//
-#define dleOrtho         0
-#define dle45degree      1
-#define dleAnyDegree     2
-
 //Версия SdEnvir
-#define SdEnvirVersion  (5 + GRID_HISTORY_SIZE)
+#define SdEnvirVersion  (6 + GRID_HISTORY_SIZE)
 
 typedef QMap<QString,SdLayerPtr> SdLayerPtrTable;
 
@@ -67,7 +63,7 @@ class SdEnvir
     int             mSmartWidth;           //Толщина линии разумной точки
     bool            mIsSmart;              //Включение разумного режима
     bool            mIsWireSmart;          //Второй уровень разумного режима для цепей в схеме
-    quint64         mSmartMask;            //Маска разрешенных для поиска разумных точек
+    SdSnapMask      mSmartMask;            //Маска разрешенных для поиска разумных точек
     bool            mNetUnionOn;           //Выводить окно объединения каждый раз
     int             mNetUnionMode;         //Режим объединения цепей 0-нет, 1-XN, 2-все
     bool            mEnableComp;           //Разрешить операции с компонентами или заблокировать
@@ -90,11 +86,6 @@ class SdEnvir
     bool            mGridView;             //Включение сетки
     bool            mCursorGrid;           //Включение движения курсора по сетке
     bool            mCenterCursor;         //Центровать курсор при увеличении и уменьшении
-    int             mLineEnterType;        //Vertex type at enter line
-
-    //Working properties
-    SdPropLine      mLineProp;       //Свойства линейных объектов
-
 
     bool            mGuiderEnabled;        //Флаг разрешения/запрещения путеводителя
     int             mGuiderPosition;       //Положение разделителя путеводителя

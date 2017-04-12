@@ -16,7 +16,6 @@ Description
 #include "SdLayer.h"
 #include <QString>
 #include <QJsonObject>
-#include <QDataStream>
 
 class SdPropLayer
   {
@@ -32,6 +31,7 @@ class SdPropLayer
     bool       operator == ( SdPropLayer p ) const { return mValue == OneValue && mLayer == p.mLayer; }
     void       operator = ( SdPropLayer p ) { if( p.mValue == OneValue ) mLayer = p.mLayer; }
     void       operator = ( SdLayer *layer ) { mLayer = layer; mValue = layer ? OneValue : NoValue; }
+    void       set( const QString id );
     SdLayer   *layer( bool otherSide = false ) const;
     void       append( SdPropLayer p );
     void       clear() { mValue = NoValue; }   //Нет значения
@@ -41,9 +41,6 @@ class SdPropLayer
 
     void       write( const QString name, QJsonObject &obj ) const { obj.insert( name, mLayer->id() ); }
     void       read( const QString name, const QJsonObject obj );
-
-    friend QDataStream& operator >> ( QDataStream &is, SdPropLayer &p );
-    friend QDataStream& operator << ( QDataStream &os, const SdPropLayer &p );
   };
 
 #endif // SDPROPLAYER_H

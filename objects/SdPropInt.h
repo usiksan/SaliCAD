@@ -15,7 +15,6 @@ Description
 #define SDINTPROP_H
 
 #include <QJsonObject>
-#include <QDataStream>
 
 class SdPropInt
   {
@@ -42,16 +41,6 @@ class SdPropInt
 
     void       write( const QString name, QJsonObject &obj ) const { obj.insert( name, mValue ); }
     void       read( const QString name, const QJsonObject obj ) { mValue = obj.value(name).toInt(); }
-
-    friend QDataStream& operator >> ( QDataStream &is, SdPropInt &p ) {
-      is >> p.mValue;
-      return is;
-      }
-
-    friend QDataStream& operator << ( QDataStream &os, const SdPropInt &p ) {
-      os << p.mValue;
-      return os;
-      }
   };
 
 #endif // SDINTPROP_H

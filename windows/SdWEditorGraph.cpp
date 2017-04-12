@@ -22,6 +22,7 @@ Description
 #include "modes/SdMode.h"
 #include "modes/SdModeTZoomer.h"
 #include "modes/SdModeTZoomWindow.h"
+#include "modes/SdModeCLinearRect.h"
 
 #include <QPainter>
 #include <QPaintEvent>
@@ -239,6 +240,14 @@ void SdWEditorGraph::cmPropChanged()
   {
   if( modeGet() )
     modeGet()->propGetFromBar();
+  }
+
+
+
+
+void SdWEditorGraph::cmModeRect()
+  {
+  modeSet( new SdModeCLinearRect( this, getProjectItem() ) );
   }
 
 
@@ -461,8 +470,8 @@ SdPoint SdWEditorGraph::pixel2phys(QPoint pos)
 
   //Если курсор по сетке - то выровнять
   if( sdEnvir->mCursorGrid ) {
-    tmp.setX( (tmp.x() / mGrid.x() ) * mGrid.x() );
-    tmp.setY( (tmp.y() / mGrid.y() ) * mGrid.y() );
+    tmp.setX( ((tmp.x() - mGrid.x()/2) / mGrid.x() ) * mGrid.x() );
+    tmp.setY( ((tmp.y() + mGrid.y()/2) / mGrid.y() ) * mGrid.y() );
     }
 
   return tmp;

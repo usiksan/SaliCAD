@@ -799,6 +799,16 @@ void SdWMain::cmClipboardChange()
 
 
 
+void SdWMain::cmPropertiesChange()
+  {
+  if( activeEditor() )
+    activeEditor()->cmPropChanged();
+  }
+
+
+
+
+
 
 
 

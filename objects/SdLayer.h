@@ -43,6 +43,7 @@ enum SdLayerTrace {
 #define LID0_PCB_TOP       "Pct" //Плата сверху
 #define LID0_PCB_BOT       "Pcb" //Плата снизу
 #define LID0_INVISIBLE     "Inv" //Невидимые объекты
+#define LID0_COMMON        "Com" //Любые объекты
 
 #define LID0_TRACE         "Trc" //Слой трассировки
 #define LID0_POLYGON       "Pgn" //Слой полигона
