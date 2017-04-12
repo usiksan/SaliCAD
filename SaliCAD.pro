@@ -76,7 +76,9 @@ SOURCES += \
     objects/SdPropRoad.cpp \
     objects/SdPropSymImp.cpp \
     objects/SdPropSymPin.cpp \
-    objects/SdPropText.cpp
+    objects/SdPropText.cpp \
+    windows/SdPropBar.cpp \
+    windows/SdPropBarLinear.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -144,7 +146,9 @@ HEADERS  += \
     objects/SdPropSymImp.h \
     objects/SdPropRoad.h \
     objects/SdPropPartPin.h \
-    objects/SdPropPartImp.h
+    objects/SdPropPartImp.h \
+    windows/SdPropBar.h \
+    windows/SdPropBarLinear.h
 
 DISTFILES += \
     license.txt

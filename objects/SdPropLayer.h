@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -30,6 +30,7 @@ class SdPropLayer
 
     bool       operator == ( SdPropLayer p ) const { return mValue == OneValue && mLayer == p.mLayer; }
     void       operator = ( SdPropLayer p ) { if( p.mValue == OneValue ) mLayer = p.mLayer; }
+    void       operator = ( SdLayer *layer ) { mLayer = layer; mValue = layer ? OneValue : NoValue; }
     SdLayer   *layer( bool otherSide = false ) const;
     void       append( SdPropLayer p );
     void       clear() { mValue = NoValue; }   //Нет значения

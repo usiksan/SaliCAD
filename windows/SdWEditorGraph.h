@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -95,6 +95,7 @@ class SdWEditorGraph : public SdWEditor
     virtual void           cmViewZoomOut() override;
     virtual void           cmViewWindow() override;
 
+    virtual void           cmPropChanged() override;
   protected:
     //Activate new mode
     void    modeActivate( SdMode *mode );

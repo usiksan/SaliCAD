@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -16,6 +16,11 @@ Description
 
 #include "SdPropInt.h"
 #include "SdPropLayer.h"
+
+//Line types
+#define dltSolid  0 //Solid line _______
+#define dltDotted 1 //Dotted line . . . . .
+#define dltDashed 2 //Dashed line __  __  __
 
 struct SdPropLine {
   SdPropInt   mWidth; //Толщина линии

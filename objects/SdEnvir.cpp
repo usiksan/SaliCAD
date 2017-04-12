@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -104,7 +104,8 @@ void SdEnvir::loadEnvir()
        >> mPrtPPM               //Коэффициент преобразования в физическую величину в конструкциях
        >> mGridView             //Включение сетки
        >> mCursorGrid           //Включение движения курсора по сетке
-       >> mCenterCursor;         //Центровать курсор при увеличении и уменьшении
+       >> mCenterCursor         //Центровать курсор при увеличении и уменьшении
+       >> mLineEnterType;        //Vertex type at enter line
     }
   else defaultEnvir();
   }
@@ -159,7 +160,8 @@ void SdEnvir::saveEnvir()
      << mPrtPPM               //Коэффициент преобразования в физическую величину в конструкциях
      << mGridView             //Включение сетки
      << mCursorGrid           //Включение движения курсора по сетке
-     << mCenterCursor;         //Центровать курсор при увеличении и уменьшении
+     << mCenterCursor         //Центровать курсор при увеличении и уменьшении
+     << mLineEnterType;        //Vertex type at enter line
 
   QSettings s;
   s.setValue( QString(SDK_ENVIR_VERSION), QVariant(SdEnvirVersion) );
@@ -215,6 +217,7 @@ void SdEnvir::defaultEnvir()
   mGridView          = true;           //Включение сетки
   mCursorGrid        = true;           //Включение движения курсора по сетке
   mCenterCursor      = true;           //Центровать курсор при увеличении и уменьшении
+  mLineEnterType     = dleOrtho;       //By default orthogonal vertex line
 
   mGuiderEnabled     = true;           //Флаг разрешения/запрещения путеводителя
   mGuiderPosition    = 0;              //Положение разделителя путеводителя

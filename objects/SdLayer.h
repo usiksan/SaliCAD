@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -90,6 +90,8 @@ class SdLayer
     SdLayer(QString layerId, QString layerName, unsigned layerColor );
 
     QString  id() const { return mId; }
+
+    QString  name() const { return mName; }
 
     SdLayer *pair() { return mPair; }
 

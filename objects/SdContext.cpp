@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -14,6 +14,7 @@ Description
 #include "SdContext.h"
 #include "SdConverter.h"
 #include "SdEnvir.h"
+#include <QPainter>
 
 
 SdContext::SdContext(SdPoint grid, QPainter *painter) :
@@ -51,7 +52,7 @@ void SdContext::removeConverter(SdConverter *c)
 void SdContext::line(SdPoint a, SdPoint b, SdPropLine &prop)
   {
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
-    setPen( prop.mWidth, prop.mLayer.layer() );
+    setPen( prop.mWidth, prop.mLayer.layer(), prop.mType );
     mPainter->drawLine( a, b );
     }
   }
@@ -60,7 +61,7 @@ void SdContext::rect(SdQuadrangle q, SdPropLine &prop)
   {
   //Draw 4 edges
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
-    setPen( prop.mWidth, prop.mLayer.layer() );
+    setPen( prop.mWidth, prop.mLayer.layer(), prop.mType );
     mPainter->drawLine( q.p1, q.p2 );
     mPainter->drawLine( q.p2, q.p3 );
     mPainter->drawLine( q.p3, q.p4 );
@@ -86,7 +87,7 @@ void SdContext::region(SdPointList &points, SdPropLine &prop, bool autoClose)
   {
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
     if( points.count() > 1 ) {
-      setPen( prop.mWidth, prop.mLayer.layer() );
+      setPen( prop.mWidth, prop.mLayer.layer(), prop.mType );
       for( int i = 1; i < points.count(); i++ )
         mPainter->drawLine( points.at(i-1), points.at(i) );
       if( autoClose && points.first() != points.last() )
@@ -101,9 +102,15 @@ void SdContext::dotTrase(SdPoint p)
   Q_UNUSED(p)
   }
 
-void SdContext::setPen(int width, SdLayer *layer )
+void SdContext::setPen(int width, SdLayer *layer, int lineStyle )
   {
-  mPainter->setPen( QPen( QBrush( convertColor(layer) ), width ) );
+  //Convert line styles
+  Qt::PenStyle style;
+  if( lineStyle == dltDotted ) style = Qt::DotLine;
+  else if( lineStyle == dltDashed ) style = Qt::DashLine;
+  else style = Qt::SolidLine;
+
+  mPainter->setPen( QPen( QBrush( convertColor(layer) ), width, style ) );
   }
 
 

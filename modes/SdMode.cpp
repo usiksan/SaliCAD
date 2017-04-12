@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -15,6 +15,7 @@ Description
 #include "objects/SdGraph.h"
 #include "objects/SdPulsar.h"
 #include "windows/SdWEditorGraph.h"
+#include "windows/SdWCommand.h"
 
 
 SdMode::SdMode(SdWEditorGraph *editor, SdProjectItem *obj) :
@@ -30,11 +31,31 @@ SdMode::~SdMode()
 
   }
 
-void SdMode::activate()
+
+
+
+void SdMode::restore()
   {
+  //update step definite params
   SdPulsar::pulsar->emitSetStatusMessage( getStepHelp() );
   mEditor->viewport()->setCursor( loadCursor(getCursor()) );
+
+  //setup mode step properties bar
+  SdWCommand::setModeBar( getPropBarId() );
+  //setup properties in bar
+  propSetToBar();
   }
+
+
+
+
+void SdMode::activate()
+  {
+  restore();
+  }
+
+
+
 
 void SdMode::reset()
   {
@@ -42,15 +63,20 @@ void SdMode::reset()
   }
 
 
+
 void SdMode::drawStatic(SdContext *ctx)
   {
   Q_UNUSED(ctx)
   }
 
+
+
 void SdMode::drawDynamic(SdContext *ctx)
   {
   Q_UNUSED(ctx)
   }
+
+
 
 
 void SdMode::keyDown(int key, QChar ch)
@@ -59,11 +85,14 @@ void SdMode::keyDown(int key, QChar ch)
   Q_UNUSED(ch)
   }
 
+
+
 void SdMode::keyUp( int key, QChar ch )
   {
   Q_UNUSED(key)
   Q_UNUSED(ch)
   }
+
 
 
 //Режим имеет объекты для копирования
@@ -82,13 +111,14 @@ bool SdMode::enablePaste(quint64 pasteMask) const
   }
 
 
+
 //Получить всплывающую информацию в заданной точке
 bool SdMode::getInfo(SdPoint p, QString &info)
   {
   bool ok = false;
 
   //Пройти по всем объектам и получить информацию из объекта под точкой
-  mObject->forEach( -1L, [p,&info,&ok](SdObject *obj) -> bool {
+  mObject->forEach( dctAll, [p,&info,&ok](SdObject *obj) -> bool {
     //Работаем только с графическими объектами
     SdGraph *graph = dynamic_cast<SdGraph*>( obj );
     if( graph ) {
@@ -102,9 +132,12 @@ bool SdMode::getInfo(SdPoint p, QString &info)
   }
 
 
+
 void SdMode::update() {
   mEditor->viewport()->update();
   }
+
+
 
 void SdMode::cancelMode()
   {
@@ -118,8 +151,7 @@ void SdMode::setStep(int stp)
   //assign new step
   mStep = stp;
 
-  //update step definite params
-  SdPulsar::pulsar->emitSetStatusMessage( getStepHelp() );
-  mEditor->viewport()->setCursor( loadCursor(getCursor()) );
+  //restore mode step state
+  restore();
   }
 

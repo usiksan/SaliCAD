@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -46,14 +46,7 @@ class SdMode
    //Сервисные
    void           setStep( int stp );
    int            getStep() const { return mStep; }
-   //void           UpdateTools() { viewer->UpdateTools(); }//Обновить панель инструментов
-   //void           setMessage( const QString msg ) { GetViewer()->SetMessage( msg ); }   //Установить сообщение в строку состояния
-   //void           SetPropBar( int id, DProp *prop );      //Установить панель свойств
-   //DProp&         GetGlobalProp() { return viewer->GetGlobalProp(); }          //Получить глобальные свойства
-   //DEnvir&        GetEnvir() { return viewer->GetEnvir(); }                    //Получить глобальные установки
-   //void           SetCursor( int cursorId ) { viewer->SetCursor( cursorId ); } //Установить курсор
-   //DPoint         GetGrid() { return viewer->GetGrid(); }                      //Получить сетку
-   //void           SetDirty() { GetViewer()->SetDirty(); }                      //Объявить объект редактированным
+   void           setDirty();                      //Объявить объект редактированным
 
    //Сервисные
    //void           AddPic( PDBasePic pic );                     //Добавить объект к контейнеру
@@ -62,11 +55,17 @@ class SdMode
     SdMode( SdWEditorGraph *editor, SdProjectItem *obj );
     virtual ~SdMode();
 
+            void    restore();                              //Обновляет все, что касается текущего состояния режима
+
     virtual void    activate();                             //Вызывается первой, после того как режим делается текущим
     virtual void    reset();                                //Сбрасывает режим в исходное состояние
 
     virtual void    drawStatic( SdContext *ctx );           //Ресует постоянную часть картинки
     virtual void    drawDynamic( SdContext *ctx );          //Рисует переменную часть картинки
+
+    virtual int     getPropBarId() const { return -1; }     //Получить идентификатор панели свойств
+    virtual void    propGetFromBar() {}                     //Извещение об изменении свойств
+    virtual void    propSetToBar() {}                       //Установить свойства в активный бар
 
     virtual void    enterPoint( SdPoint ) {}                //Ввод точки (левая кнопка)
     virtual void    clickPoint( SdPoint ) {}                //Двойное нажатие левой кнопки
@@ -75,13 +74,14 @@ class SdMode
     virtual void    wheel( SdPoint ) {}                     //Вращение колеса мыши
     virtual void    keyDown( int key, QChar ch );           //Нажатие кнопки
     virtual void    keyUp( int key, QChar ch );             //Отпускание клавиши
-    virtual void    propChanged( SdContext& ) {}            //Извещение об изменении свойств
-    virtual void    enterPrev( SdContext& ) {}              //Повторение ввода предыдущего сеанса (разумный ввод)
+    virtual void    enterPrev() {}                          //Повторение ввода предыдущего сеанса (разумный ввод)
     virtual void    beginDrag( SdPoint ) {}                 //Начало перетаскивания
     virtual void    dragPoint( SdPoint ) {}                 //Перетаскивание
     virtual void    stopDrag( SdPoint ) {}                  //Конец перетаскивания
+
     virtual bool    enableCopy() const;                     //Режим имеет объекты для копирования
     virtual bool    enablePaste( quint64 pasteMask ) const; //Режим разрешает вставку объектов с заданной маской
+
     virtual bool    getInfo( SdPoint p, QString &info );    //Получить всплывающую информацию в заданной точке
 
     virtual QString getStepHelp() const = 0;                //Краткая помощь по текущему шагу режима

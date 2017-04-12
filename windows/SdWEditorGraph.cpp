@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -201,7 +201,10 @@ void SdWEditorGraph::modeActivate(SdMode *mode)
 
 void SdWEditorGraph::modeRestore(SdMode *mode)
   {
-
+  if( mode ) {
+    mode->restore();
+    SdWCommand::selectMode( mode->getIndex() );
+    }
   }
 
 
@@ -228,6 +231,14 @@ void SdWEditorGraph::cmViewZoomOut()
 void SdWEditorGraph::cmViewWindow()
   {
   modeCall( new SdModeTZoomWindow( this, getProjectItem() ) );
+  }
+
+
+
+void SdWEditorGraph::cmPropChanged()
+  {
+  if( modeGet() )
+    modeGet()->propGetFromBar();
   }
 
 
@@ -477,7 +488,7 @@ void SdWEditorGraph::onActivateEditor()
   {
   SdPulsar::pulsar->emitSetStatusLabels( QString("X:"), QString("Y:") );
   if( modeGet() ) {
-    SdPulsar::pulsar->emitSetStatusMessage( modeGet()->getStepHelp() );
+    modeGet()->restore();
     SdWCommand::selectMode( modeGet()->getIndex() );
     }
   displayCursorPositions();

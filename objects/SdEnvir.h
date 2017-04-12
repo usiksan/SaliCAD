@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -36,15 +36,20 @@ Description
 
 
 //Вид перекрестья курсора
-#define  dcvNone     0  //Курсор не виден
-#define  dcvSmall    1  //Малый курсор
-#define  dcvFull     2  //Полный курсор
-#define  dcvSmall45  3  //Малый под углом 45
-#define  dcvFull45   4  //Полный под углом 45
-#define  dcvLast     5
+#define dcvNone          0  //Курсор не виден
+#define dcvSmall         1  //Малый курсор
+#define dcvFull          2  //Полный курсор
+#define dcvSmall45       3  //Малый под углом 45
+#define dcvFull45        4  //Полный под углом 45
+#define dcvLast          5
+
+//
+#define dleOrtho         0
+#define dle45degree      1
+#define dleAnyDegree     2
 
 //Версия SdEnvir
-#define SdEnvirVersion  (4 + GRID_HISTORY_SIZE)
+#define SdEnvirVersion  (5 + GRID_HISTORY_SIZE)
 
 typedef QMap<QString,SdLayerPtr> SdLayerPtrTable;
 
@@ -85,6 +90,7 @@ class SdEnvir
     bool            mGridView;             //Включение сетки
     bool            mCursorGrid;           //Включение движения курсора по сетке
     bool            mCenterCursor;         //Центровать курсор при увеличении и уменьшении
+    int             mLineEnterType;        //Vertex type at enter line
 
     bool            mGuiderEnabled;        //Флаг разрешения/запрещения путеводителя
     int             mGuiderPosition;       //Положение разделителя путеводителя

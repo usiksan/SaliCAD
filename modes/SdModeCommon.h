@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -21,16 +21,7 @@ class SdModeCommon : public SdMode
   protected:
     SdPoint mPrev; //Предыдущая точка (при перемещении)
   public:
-    SdModeCommon( SdWEditorGraph *editor, SdProjectItem *obj ) : SdMode( editor, obj ) {}
-
-    //Определяются здесь
-    virtual quint64  getPropBarId() const = 0;          //Получить идентификатор панели свойств
-    virtual void     setPropertais( SdProp &prop ) = 0; //Установить свойства
-
-    //Наследуются из SdMode
-    virtual void activate();                         //Вызывается первой, после того как режим делается текущим
-//    virtual void propChanged( SdContext& );          //Извещение об изменении свойств
-//    virtual void movePoint( SdPoint, SdContext& );   //Ввод точки (левая кнопка)
+    SdModeCommon( SdWEditorGraph *editor, SdProjectItem *obj );
 
   };
 

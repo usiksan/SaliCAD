@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -59,5 +59,15 @@ Description
 #define MD_DELETE_WIRE     41
 #define MD_PAD             42
 #define MD_LAST            43
+
+#define PB_DEFAULT          0
+#define PB_LINEAR           1
+#define PB_TEXT             2
+#define PB_SYM_PIN          3
+#define PB_PART_PIN         4
+#define PB_SYM_IMP          5
+#define PB_PART_IMP         6
+#define PB_ROAD             7
+#define PB_LAST             8
 
 #endif // SDMODEIDENT_H

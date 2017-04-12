@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -78,7 +78,7 @@ class SdContext {
     void            dotTrase( SdPoint p );                                      //Точка пометки трассируемой цепи
 
   private:
-    void     setPen(int width, SdLayer *layer );
+    void     setPen(int width, SdLayer *layer , int lineStyle);
 
     //Update converter context
     void     updateConverter();

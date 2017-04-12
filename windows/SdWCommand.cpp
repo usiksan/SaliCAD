@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -13,6 +13,8 @@ Description
 
 #include "SdWCommand.h"
 #include "SdWMain.h"
+#include "SdPropBar.h"
+#include "SdPropBarLinear.h"
 #include <QMenuBar>
 #include <QSettings>
 #include <QFileInfo>
@@ -340,6 +342,28 @@ void SdWCommand::addDrawCommands(QToolBar *bar)
   }
 
 
+
+
+void SdWCommand::setModeBar(int barId)
+  {
+  if( barId >= 0 && barId < PB_LAST ) {
+    for( int i = 0; i < PB_LAST; i++ )
+      if( mbarTable[i] )
+        mbarTable[i]->setVisible( i == barId );
+    }
+  }
+
+
+
+SdPropBar *SdWCommand::getModeBar(int barId)
+  {
+  if( barId >= 0 && barId < PB_LAST )
+    return dynamic_cast<SdPropBar*>( mbarTable[barId] );
+  return 0;
+  }
+
+
+
 void SdWCommand::createToolBars(SdWMain *frame)
   {
   //Main bar
@@ -408,11 +432,17 @@ void SdWCommand::createToolBars(SdWMain *frame)
   frame->addToolBarBreak();
 
 
-  mbarLinear = new QToolBar( QString("Linear mode") );
+  QToolBar *mbar;
+  mbar = new QToolBar( QString("Default tool bar") );
   QComboBox *combo = new QComboBox();
-  mbarLinear->addWidget( combo );
+  mbar->addWidget( combo );
 
-  frame->addToolBar( mbarLinear );
+  frame->addToolBar( mbar );
+  mbarTable[PB_DEFAULT] = mbar;
+
+  mbar = new SdPropBarLinear( QString("Linear mode") );
+  frame->addToolBar( mbar );
+  mbar->setVisible(false);
 
 
   for( int i = 0; i < MD_LAST; i++ )
@@ -455,10 +485,6 @@ void SdWCommand::selectMode(int md)
 
 
 
-void SdWCommand::propertyBar(quint64 barMask)
-  {
-
-  }
 
 
 
@@ -566,7 +592,9 @@ QToolBar *SdWCommand::barComp;
 QToolBar *SdWCommand::barSheet;
 QToolBar *SdWCommand::barPcb;
 
-QToolBar *SdWCommand::mbarLinear;
 
 //Full mode action table
 QActionPtr SdWCommand::cmModeTable[MD_LAST];
+
+//Full list mode tool bars
+QToolBarPtr SdWCommand::mbarTable[PB_LAST];

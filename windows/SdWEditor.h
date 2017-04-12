@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -125,6 +125,8 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmHelpAbout() {}
 
     virtual void cmClipboardChange() {}
+
+    virtual void cmPropChanged() {}
 
   signals:
 

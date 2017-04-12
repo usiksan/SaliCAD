@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -32,6 +32,7 @@ class SdPropInt
     void       operator = ( int i ) { if( i >= 0 || i < AllValue ) mValue = i; }
     SdPropInt& operator = ( const SdPropInt& s ) { if( s.mValue != NoValue && s.mValue != AllValue ) mValue = s.mValue; return *this; }
     int        getValue() const { return mValue; }
+    double     getDouble() const { return static_cast<double>(mValue); }
     void       append( int i ) { if( mValue != i && i >= 0 ) mValue = mValue == NoValue ? i : AllValue; }   //Добавить значение
     void       clear() { mValue = NoValue; }   //Нет значения
     bool       match( SdPropInt const &s ) {
