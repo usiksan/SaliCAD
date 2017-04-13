@@ -32,6 +32,10 @@ History
   12.04.2017 v0.11 Prop bars for mode properties
                    Reconstruct SdContext
                    Mode rect
+  13.04.2017 v0.12 Object graph rect
+                   Undo system structure
+                   Mode insertion func
+                   First insertion of graph object by mode
 */
 
 #ifndef SDCONFIG
@@ -43,7 +47,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             11
+#define SD_VERSION_MINOR             12
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -89,6 +93,7 @@ History
 #define MODE_HELP         //Prefix to mode help files
 
 #define MAX64_MASK 0xffffffffffffffffL
+#define MAX32_MASK 0xffffffff
 
 #define defSymScale 20.0   /*Коэффициент масштаба по умолчанию для схемных изображений*/
 #define defPrtScale 200.0  /*Коэффициент масштаба по умолчанию для изобр. плат*/

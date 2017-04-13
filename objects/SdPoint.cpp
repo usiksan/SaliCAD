@@ -169,6 +169,14 @@ bool SdPoint::isLeftHigh(SdPoint a) const
 
 
 
+bool SdPoint::isOnSegment(SdPoint a, SdPoint b)
+  {
+  //TODO release isOnSegment
+  return false;
+  }
+
+
+
 
 
 void SdPoint::write(const QString name, QJsonObject &obj) const

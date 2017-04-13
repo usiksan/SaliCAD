@@ -42,6 +42,7 @@ Description
 #define snapCommon            0x8000
 #define snapNearestNetPin     0x10000  //Ближайший вывод принадлежащий цепи
 #define snapNearestNetNet     0x20000  //Ближайшая точка принадлежащая цепи и на дорожке (полигоне)
+#define snapFull              0xffffffff
 
 //Значения для вычисления специальных точек
 #define dsifExSour            0x000001   //Исключить из просмотра исходную точку

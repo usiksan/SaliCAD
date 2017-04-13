@@ -16,6 +16,7 @@ Description
 
 #include <QJsonObject>
 
+
 class SdPropInt
   {
   protected:

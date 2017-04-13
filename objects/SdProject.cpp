@@ -34,6 +34,14 @@ SdProject::~SdProject()
 
 
 
+void SdProject::setDirty()
+  {
+  mDirty = true;
+  }
+
+
+
+
 
 //Return true if object with this name present in project
 bool SdProject::isContains(const QString name) const
@@ -143,11 +151,11 @@ void SdProject::cloneFrom(const SdObject *src)
 
 
 
-void SdProject::insertChild(SdObject *child)
+void SdProject::insertChild(SdObject *child, SdUndo *undo)
   {
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
   if( item && !isContains(item->getTitle()) ) {
-    SdContainer::insertChild( child );
+    SdContainer::insertChild( child, undo );
     mItemExtendNameMap.insert( item->getExtendTitle(), item );
     mDirty = true;
     SdPulsar::pulsar->emitInsertItem( item );
@@ -171,14 +179,14 @@ void SdProject::undoInsertChild(SdObject *child)
 
 
 
-void SdProject::deleteChild(SdObject *child)
+void SdProject::deleteChild(SdObject *child, SdUndo *undo)
   {
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
   if( item && item->getParent() == this ) {
     SdPulsar::pulsar->emitRemoveItem( item );
     mItemExtendNameMap.remove( item->getExtendTitle() );
     mDirty = true;
-    SdContainer::deleteChild( child );
+    SdContainer::deleteChild( child, undo );
     }
   }
 

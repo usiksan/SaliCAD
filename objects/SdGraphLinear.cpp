@@ -9,12 +9,26 @@ Web
   www.saliLab.ru
 
 Description
+  Graphical object with linear type (line, rect, circle and so).
 */
 #include "SdGraphLinear.h"
 
-SdGraphLinear::SdGraphLinear()
+SdGraphLinear::SdGraphLinear() :
+  SdGraph()
   {
 
+  }
+
+SdGraphLinear::SdGraphLinear(const SdPropLine &propLine) :
+  SdGraph()
+  {
+  mProp = propLine;
+  }
+
+void SdGraphLinear::saveState(SdUndo *undo)
+  {
+  SdGraph::saveState( undo );
+  mProp.saveState( undo );
   }
 
 

@@ -23,6 +23,7 @@ Description
 #include <QString>
 
 class SdProjectItem;
+class SdProject;
 
 class SdWEditor : public QAbstractScrollArea
   {
@@ -32,6 +33,9 @@ class SdWEditor : public QAbstractScrollArea
     explicit SdWEditor(QWidget *parent = 0);
 
     virtual SdProjectItem* getProjectItem() = 0;
+
+    SdProject*             getProject();
+    void                   dirtyProject();
 
     QString                getTitle();
 

@@ -12,6 +12,7 @@ Description
 */
 
 #include "SdPropLine.h"
+#include "SdUndo.h"
 
 void SdPropLine::operator = ( SdPropLine const &sour ) {
   mWidth = sour.mWidth;
@@ -55,4 +56,11 @@ void SdPropLine::read(const QJsonObject obj)
   mWidth.read( QStringLiteral("lineWidth"), obj );
   mType.read( QStringLiteral("lineType"), obj );
   mLayer.read( QStringLiteral("lineLayer"), obj );
+  }
+
+void SdPropLine::saveState(SdUndo *undo)
+  {
+  undo->propInt( &mWidth );
+  undo->propInt( &mType );
+  undo->propLayer( &mLayer );
   }

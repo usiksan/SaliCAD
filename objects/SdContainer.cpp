@@ -75,7 +75,7 @@ void SdContainer::forEach(quint64 classMask, std::function<bool (SdObject *)> fu
 
 
 
-void SdContainer::deleteChild(SdObject *child)
+void SdContainer::deleteChild(SdObject *child, SdUndo *undo)
   {
   //Test if in this container
   if( child->getParent() == this ) {
@@ -83,6 +83,8 @@ void SdContainer::deleteChild(SdObject *child)
     child->detach();
     //Mark as deleted
     child->markDeleted( true );
+    if( undo )
+      undo->deleteObject( this, child );
     }
   else {
     qDebug() << Q_FUNC_INFO << "delete not own child";
@@ -109,7 +111,7 @@ void SdContainer::undoDeleteChild(SdObject *child)
 
 
 
-void SdContainer::insertChild(SdObject *child)
+void SdContainer::insertChild( SdObject *child, SdUndo *undo )
   {
   if( child->getParent() ) {
     qDebug() << Q_FUNC_INFO << "Insertion with parent setuped";
@@ -118,6 +120,8 @@ void SdContainer::insertChild(SdObject *child)
   //Insert in list
   mChildList.append( child );
   child->setParent( this );
+  if( undo )
+    undo->insertObject( this, child );
   //Attach to hierarhy
   child->attach();
   }

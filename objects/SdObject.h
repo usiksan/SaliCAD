@@ -84,7 +84,6 @@ class SdObject
     SdContainer*      getParent() const { return mParent; }
     SdContainer*      getRoot() const;
     void              setParent( SdContainer *parent ) { mParent = parent; }
-    SdUndo*           getUndo();
 
     //Attach and detach
     virtual void      attach() {}

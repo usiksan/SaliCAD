@@ -160,7 +160,7 @@ void SdWProjectTree::cmObjectNew()
   if( wizard.exec() ) {
     //Append item to the project
     item->setHand();
-    mProject->insertChild( item );
+    mProject->insertChild( item, mProject->getUndo() );
     }
   }
 
@@ -191,7 +191,7 @@ void SdWProjectTree::cmObjectDelete()
     if( item->refCount() )
       QMessageBox::warning( this, tr("Warning!"), tr("Object is referensed (used by other objects). You can not delete it until dereferenced.") );
     else if( QMessageBox::question(this, tr("Warning!"), tr("Do You realy want to delete \'%1\'").arg(item->getTitle())) == QMessageBox::Yes )
-      mProject->deleteChild( item );
+      mProject->deleteChild( item, mProject->getUndo() );
     }
   else
     QMessageBox::warning( this, tr("Error!"), tr("This is not object. Select object to delete.") );

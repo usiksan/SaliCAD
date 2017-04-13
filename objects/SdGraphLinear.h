@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Graphical object with linear type (line, rect, circle and so).
 */
 #ifndef SDOBJECTGRAPHLINEAR_H
 #define SDOBJECTGRAPHLINEAR_H
@@ -22,6 +23,10 @@ class SdGraphLinear : public SdGraph
     SdPropLine mProp; //Linear graph object props
   public:
     SdGraphLinear();
+    SdGraphLinear( const SdPropLine &propLine );
+
+    //Save object state
+    virtual void saveState( SdUndo *undo ) override;
 
     virtual void cloneFrom(const SdObject *src) override;
     virtual void writeObject(QJsonObject &obj) const override;

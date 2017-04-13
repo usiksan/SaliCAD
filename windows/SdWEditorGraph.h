@@ -70,6 +70,8 @@ class SdWEditorGraph : public SdWEditor
 
     SdPoint clientSize() const { return mClientSize; }
 
+    void    dirtyCashe() { mCasheDirty = true; }
+
     //Temporary call mode
     void    modeCall( SdModeTemp *mode );
 

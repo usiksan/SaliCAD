@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Base for objects with graphical presentation
 */
 
 #ifndef SDGRAPHOBJECT_H
@@ -31,7 +32,10 @@ class SdGraph : public SdObject
     SdGraph();
 
     //Select object
-    SdSelector*     getSelector() { return mSelector; }
+    SdSelector*    getSelector() { return mSelector; }
+
+    //Save object state
+    virtual void   saveState( SdUndo *undo );
 
     //Изменение перемещением
     virtual void   move( SdPoint offset );

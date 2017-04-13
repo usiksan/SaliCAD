@@ -11,7 +11,7 @@ Web
 Description
 */
 #include "SdModeCLinearRect.h"
-//#include "objects/SdGr
+#include "objects/SdGraphLinearRect.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdSnapInfo.h"
 #include <QObject>
@@ -42,8 +42,7 @@ void SdModeCLinearRect::enterPoint(SdPoint enter )
   {
   if( getStep() == sSecondCorner ) {
     mPrevMove = enter;
-    //TODO addPic
-    //addPic( new DRectPic( first, prevMove, prop ) );
+    addPic( new SdGraphLinearRect( mFirst, mPrevMove, sdGlobalProp->mLineProp ), QObject::tr("Insert rect") );
     mOffset = mPrevMove - mFirst;
     setStep( sFirstCorner );
     update();

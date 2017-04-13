@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Graphical object Line. Line is linear segment with two ends.
 */
 #ifndef SDGRAPHLINEARLINE_H
 #define SDGRAPHLINEARLINE_H

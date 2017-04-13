@@ -17,6 +17,12 @@ Description
 #ifndef SDUNDORECORD_H
 #define SDUNDORECORD_H
 
+//struct SdUndoRecord {
+//    int mUndoType;
+//    union {
+//        SdContainer *mContainer;
+//      };
+//  };
 
 class SdUndoRecord
   {

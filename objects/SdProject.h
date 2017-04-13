@@ -15,6 +15,7 @@ Description
 #define SDPROJECT_H
 
 #include "SdContainer.h"
+#include "SdUndo.h"
 #include <QMap>
 #include <QTreeWidgetItem>
 
@@ -28,12 +29,16 @@ class SdProject : public SdContainer
     QJsonObject                mProperties;           //Project properties
     bool                       mDirty;                //Project dirty flag
     QMap<QString,SdObjectPtr>  mItemExtendNameMap;    //Extend name - item assotiation
+    SdUndo                     mUndo;
   public:
     SdProject();
     ~SdProject();
 
+    SdUndo           *getUndo() { return &mUndo; }
+
     //Return dirty status
     bool              isDirty() const { return mDirty; }
+    void              setDirty();
 
     //Return true if object with this name present in project
     bool              isContains( const QString name ) const;
@@ -51,9 +56,9 @@ class SdProject : public SdContainer
     bool              save( const QString fname );
 
     virtual void      cloneFrom( const SdObject *src) override;
-    virtual void      insertChild(SdObject *child) override;
+    virtual void      insertChild(SdObject *child, SdUndo *undo ) override;
     virtual void      undoInsertChild(SdObject *child) override;
-    virtual void      deleteChild(SdObject *child) override;
+    virtual void      deleteChild(SdObject *child, SdUndo *undo ) override;
     virtual void      undoDeleteChild(SdObject *child) override;
 
   private:

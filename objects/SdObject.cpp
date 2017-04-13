@@ -16,6 +16,7 @@ Description
 #include "SdProject.h"
 #include "SdSymbol.h"
 #include "SdIds.h"
+#include "SdGraphLinearRect.h"
 #include <QJsonValue>
 #include <QDebug>
 
@@ -164,6 +165,7 @@ SdObject *SdObject::build(QString type)
   {
   if( type == QString(SD_TYPE_PROJECT) ) return new SdProject();
   if( type == QString(SD_TYPE_SYMBOL)  ) return new SdSymbol();
+  if( type == QString(SD_TYPE_RECT)    ) return new SdGraphLinearRect();
   return 0;
   }
 

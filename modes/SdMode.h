@@ -33,6 +33,7 @@ class SdMode
   protected:
     SdProjectItem  *mObject;     //Object is mode working on
     SdWEditorGraph *mEditor;     //Editor window is mode working in
+    SdUndo         *mUndo;       //Undo for this project
 
 ////Информационные
 //DViewer*       GetViewer() const { return viewer; }
@@ -49,7 +50,7 @@ class SdMode
    void           setDirty();                      //Объявить объект редактированным
 
    //Сервисные
-   //void           AddPic( PDBasePic pic );                     //Добавить объект к контейнеру
+   void           addPic(SdObject *obj , QString title);         //Добавить объект к контейнеру
 
   public:
     SdMode( SdWEditorGraph *editor, SdProjectItem *obj );

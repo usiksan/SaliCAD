@@ -54,6 +54,9 @@ SdWEditorGraph::SdWEditorGraph(QWidget *parent) :
   mView = new SdWView();
   setViewport( mView );
   setMouseTracking(true);
+
+  setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
+  setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
   }
 
 
@@ -82,6 +85,8 @@ void SdWEditorGraph::originSet(SdPoint org)
   mCasheDirty = true;
   update();
   }
+
+
 
 
 

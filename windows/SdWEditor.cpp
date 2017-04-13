@@ -11,11 +11,22 @@ Web
 Description
 */
 #include "objects/SdProjectItem.h"
+#include "objects/SdProject.h"
 #include "SdWEditor.h"
 
 SdWEditor::SdWEditor(QWidget *parent) : QAbstractScrollArea(parent)
   {
 
+  }
+
+SdProject *SdWEditor::getProject()
+  {
+  return getProjectItem()->getProject();
+  }
+
+void SdWEditor::dirtyProject()
+  {
+  getProjectItem()->getProject()->setDirty();
   }
 
 QString SdWEditor::getTitle()

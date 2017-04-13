@@ -38,10 +38,10 @@ class SdContainer : public SdObject
 
     virtual void forEach( quint64 classMask, std::function<bool(SdObject*)> fun1 );
 
-    virtual void insertChild( SdObject *child );
+    virtual void insertChild( SdObject *child, SdUndo *undo );
     virtual void undoInsertChild( SdObject *child );
 
-    virtual void deleteChild( SdObject *child );
+    virtual void deleteChild( SdObject *child, SdUndo *undo );
     virtual void undoDeleteChild( SdObject *child );
 
 

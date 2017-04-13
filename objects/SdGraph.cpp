@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Base for objects with graphical presentation
 */
 
 #include "SdGraph.h"
@@ -19,6 +20,11 @@ SdGraph::SdGraph() :
   mSelector(0)
   {
 
+  }
+
+void SdGraph::saveState(SdUndo *undo)
+  {
+  Q_UNUSED(undo)
   }
 
 

@@ -22,6 +22,8 @@ Description
 #define dltDotted 1 //Dotted line . . . . .
 #define dltDashed 2 //Dashed line __  __  __
 
+class SdUndo;
+
 struct SdPropLine {
   SdPropInt   mWidth; //Толщина линии
   SdPropInt   mType;  //Тип линии
@@ -36,6 +38,7 @@ struct SdPropLine {
 
   void write( QJsonObject &obj ) const;
   void read( const QJsonObject obj );
+  void saveState( SdUndo *undo );
   };
 
 #endif // SDLINEPROP_H

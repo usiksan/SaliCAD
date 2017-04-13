@@ -14,6 +14,7 @@ Description
 #include "SdMode.h"
 #include "objects/SdGraph.h"
 #include "objects/SdPulsar.h"
+#include "objects/SdProject.h"
 #include "windows/SdWEditorGraph.h"
 #include "windows/SdWCommand.h"
 
@@ -23,9 +24,12 @@ Description
 SdMode::SdMode(SdWEditorGraph *editor, SdProjectItem *obj) :
   mStep(0),
   mObject(obj),
-  mEditor(editor)
+  mEditor(editor),
+  mUndo(0)
   {
-
+  SdProject *prj = dynamic_cast<SdProject*>( obj->getProject() );
+  if( prj )
+    mUndo = prj->getUndo();
   }
 
 SdMode::~SdMode()
@@ -161,5 +165,17 @@ void SdMode::setStep(int stp)
 
   //restore mode step state
   restore();
+  }
+
+
+
+
+void SdMode::addPic( SdObject *obj, QString title )
+  {
+  if( mUndo )
+    mUndo->begin( title );
+  mObject->insertChild( obj, mUndo );
+  mEditor->dirtyCashe();
+  mEditor->dirtyProject();
   }
 
