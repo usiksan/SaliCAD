@@ -20,6 +20,7 @@ Description
 
 class SdGraphLinearRect : public SdGraphLinear
   {
+  protected:
     SdPoint a,b;  //Координаты
     int     mFly; //Номер плавающей вершины (или перенос всего прямоугольника)
   public:

@@ -18,6 +18,7 @@ Description
 
 class SdModeCLinearRect : public SdModeCLinear
   {
+  protected:
     SdPoint        mFirst;      //Точка первого угла
     SdPoint        mPrevMove;   //Текущая точка
 
@@ -31,7 +32,6 @@ class SdModeCLinearRect : public SdModeCLinear
     SdModeCLinearRect( SdWEditorGraph *editor, SdProjectItem *obj );
 
     // SdMode interface
-  public:
     virtual void    drawDynamic(SdContext *ctx) override;
     virtual void    enterPoint(SdPoint) override;
     virtual void    cancelPoint(SdPoint) override;
@@ -42,6 +42,9 @@ class SdModeCLinearRect : public SdModeCLinear
     virtual QString getStepThema() const override;
     virtual int     getCursor() const override;
     virtual int     getIndex() const override;
+  protected:
+    //Insert rectangle into graph object
+    virtual void    addRect();
   };
 
 #endif // SDMODECLINEARRECT_H

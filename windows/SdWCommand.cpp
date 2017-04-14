@@ -78,7 +78,9 @@ void SdWCommand::createMenu(SdWMain *frame)
   //Меню Редактирование
   menuEdit = new QMenu( frame->tr("Edit") );
   cmEditUndo = menuEdit->addAction( QIcon(QString(":/pic/editUndo.png")), frame->tr("Undo"), frame, SLOT(cmEditUndo()) );
+  cmEditUndo->setEnabled(false);
   cmEditRedo = menuEdit->addAction( QIcon(QString(":/pic/editRedo.png")), frame->tr("Redo"), frame, SLOT(cmEditRedo()) );
+  cmEditRedo->setEnabled(false);
   menuEdit->addSeparator();
   cmEditCopy = menuEdit->addAction( QIcon(QString(":/pic/editCopy.png")), frame->tr("Copy"), frame, SLOT(cmEditCopy()) );
   cmEditPaste = menuEdit->addAction( QIcon(QString(":/pic/editPaste.png")), frame->tr("Paste"), frame, SLOT(cmEditPaste()) );
@@ -306,8 +308,6 @@ void SdWCommand::addEditCommands(QToolBar *bar)
   bar->insertAction( 0, cmEditDelete );
   bar->insertAction( 0, cmEditProperties );
 //  bar->addSeparator();
-  bar->insertAction( 0, cmEditUndo );
-  bar->insertAction( 0, cmEditRedo );
   }
 
 void SdWCommand::addViewCommands(QToolBar *bar)
@@ -372,10 +372,10 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barMain->insertAction( 0, cmFileOpen );
   barMain->insertAction( 0, cmFileSave );
   barMain->insertAction( 0, cmFilePrint );
-//  barMain->addSeparator();
-  barMain->insertAction( 0, cmFileExit );
-//  barMain->addSeparator();
+  barMain->addSeparator();
   barMain->insertAction( 0, cmObjectNew );
+  barMain->insertAction( 0, cmEditUndo );
+  barMain->insertAction( 0, cmEditRedo );
 
   frame->addToolBar( barMain );
   //barMain->setIconSize( QSize(20,24) );

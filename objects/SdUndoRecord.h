@@ -17,20 +17,26 @@ Description
 #ifndef SDUNDORECORD_H
 #define SDUNDORECORD_H
 
-//struct SdUndoRecord {
-//    int mUndoType;
-//    union {
-//        SdContainer *mContainer;
-//      };
-//  };
+#include <QString>
 
 class SdUndoRecord
   {
   public:
     SdUndoRecord() {}
+    virtual ~SdUndoRecord() {}
 
-    //Undo elementary operation. Return true on last undo (first operation in undo block)
-    virtual bool undo() { return true; }
+
+    //Undo elementary operation.
+    virtual void    undo() { }
+
+    //Redo elementary operation.
+    virtual void    redo() { }
+
+    //Return true on first redo or undo (first operation in undo block)
+    virtual bool    isStep() const { return false; }
+
+    virtual QString title() const { return QString(); }
   };
 
+typedef SdUndoRecord *SdUndoRecordPtr;
 #endif // SDUNDORECORD_H

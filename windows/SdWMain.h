@@ -55,7 +55,9 @@ class SdWMain : public QMainWindow
 
     void activateProjectName( const QString name, bool dirty );
 
-    void activateProjectItem( SdProjectItem *item );
+    void onActivateProjectItem( SdProjectItem *item );
+    void onRemoveProjectItem( SdProjectItem *item );
+    void onCloseProject( SdProject *prj );
 
     void onClipboardChanged( QClipboard::Mode mode );
 

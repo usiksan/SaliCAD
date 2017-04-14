@@ -50,13 +50,14 @@ class SdContext {
     SdSelector     *getSelector() { return mSelector; }
 
     //Информационные
-            SdPoint getGrid() const { return mGrid; }
+    SdPoint         getGrid() const { return mGrid; }
     QTransform&     transform() { return mTransform; }
     //virtual void    getViewPort( SdRect *dest ) = 0;
 
     //Draw prepare
     void            setPen(int width, SdLayer *layer, int lineStyle);
     void            setPen(int width, QColor color, int lineStyle );
+    void            setBrush( QColor color );
     void            setProp( SdPropLine &prop );
 
     //Примитивы рисования
@@ -66,7 +67,8 @@ class SdContext {
             void    quadrangle( SdQuadrangle q, SdPropLine &prop );
     void            rect( SdRect r );
     void            rect( SdRect r, SdPropLine &prop );
-//    virtual void    fillRect( SdPoint a, SdPoint b, SdPropLine &prop ) = 0;
+    void            fillRect( SdRect r );
+    void            fillRect( SdRect r, SdPropLine &prop );
 //    virtual void    arc( SdPoint center, int radius, SdAngle start, SdAngle stop, SdPropLine &prop ) = 0;
 //    virtual void    circle( SdPoint center, int radius, SdPropLine &prop ) = 0;
 //    virtual void    text( const QString str, SdTextProp &prop, bool special = false ) = 0;
@@ -76,7 +78,7 @@ class SdContext {
     //virtual void TextBox( DTextProp &prop, int charNum );
 
     //Примитивы второго уровня
-//    virtual void    smartPoint( SdPoint a, int smartMask = snapCommon ) = 0;      //Отобразить точку привязки
+    void            smartPoint( SdPoint a, int smartMask = snapCommon );      //Отобразить точку привязки
 //    virtual void    dotPoint( SdPoint p, SdPropLine &prop ) = 0;                  //Точка пересечения цепей
 //    virtual void    drawCross( SdPoint p, SdSymPinProp &prop ) = 0;               //Точка перекрестья вывода символа
 //    virtual void    dotCircle( SdPoint p, SdPartPinProp &prop ) = 0;              //Точка подключения вывода корпуса

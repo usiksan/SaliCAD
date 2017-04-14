@@ -97,6 +97,25 @@ void SdContext::rect(SdRect r, SdPropLine &prop)
 
 
 
+
+void SdContext::fillRect(SdRect r)
+  {
+  mPainter->drawRect(r);
+  }
+
+
+
+
+void SdContext::fillRect(SdRect r, SdPropLine &prop)
+  {
+  if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
+    setProp( prop );
+    fillRect( r );
+    }
+  }
+
+
+
 void SdContext::region(SdPointList &points, SdPropLine &prop, bool autoClose)
   {
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
@@ -110,6 +129,115 @@ void SdContext::region(SdPointList &points, SdPropLine &prop, bool autoClose)
     }
 
   }
+
+
+
+
+void SdContext::smartPoint(SdPoint a, int smartMask)
+  {
+  if( smartMask ) {
+    //Рисовать точку
+    QPoint p = mTransform.map(a);
+    if( a.x() >= 0 && a.x() <= mPainter->device()->width() &&
+        a.y() >= 0 && a.y() <= mPainter->device()->height() ) {
+      //Точка попадает в область видимости - рисуем
+      mPainter->resetTransform();
+
+      //Подготовить перо
+      mPainter->setPen( QPen(QBrush(sdEnvir->getSysColor(scSmart)), sdEnvir->mSmartWidth) );
+      mPainter->setBrush( Qt::transparent );
+      int sm = sdEnvir->mSmartSize;
+
+      //Приступить к рисованию
+      if( smartMask & (snapNearestNet | snapNearestPin | snapNextPin | snapNetPoint) ) {
+        //Ромбик
+        QPoint p1( p.x() - sm, p.y() );
+        QPoint p2( p.x(), p.y() - sm );
+        QPoint p3( p.x() + sm, p.y() );
+        QPoint p4( p.x(), p.y() + sm );
+        mPainter->drawLine( p1, p2 );
+        mPainter->drawLine( p2, p3 );
+        mPainter->drawLine( p3, p4 );
+        mPainter->drawLine( p4, p1 );
+        }
+      else if( smartMask & snapParallel ) {
+        //Две параллельных черточки
+        int dm = sm / 2 + 1;
+        QPoint p1( p.x() - dm, p.y() - sm );
+        QPoint p2( p.x() - dm, p.y() + sm );
+        QPoint p3( p.x() + dm, p.y() - sm );
+        QPoint p4( p.x() + dm, p.y() + sm );
+        mPainter->drawLine( p1, p2 );
+        mPainter->drawLine( p3, p4 );
+        }
+      else if( smartMask & snapPerpendecular ) {
+        //Две перпендикулярных линии
+        QPoint p1( p.x() - sm, p.y() - sm );
+        QPoint p2( p.x() + sm, p.y() - sm );
+        QPoint p3( p.x(), p.y() - sm );
+        QPoint p4( p.x(), p.y() + sm );
+        mPainter->drawLine( p1, p2 );
+        mPainter->drawLine( p3, p4 );
+        }
+      else if( smartMask & snapTangent ) {
+        //Кружок и касательная
+        QPoint p1( p.x() - sm, p.y() - sm );
+        QPoint p2( p.x() + sm, p.y() - sm );
+        mPainter->drawEllipse( a, sm, sm );
+        mPainter->drawLine( p1, p2 );
+        }
+      else if( smartMask & snapQuadrant ) {
+        //Кружок и четыре точки по квадрантам
+        mPainter->drawEllipse( a, sm, sm );
+        mPainter->drawEllipse( QPoint(p.x() + sm, p.y()), 1, 1 );
+        mPainter->drawEllipse( QPoint(p.x() - sm, p.y()), 1, 1 );
+        mPainter->drawEllipse( QPoint(p.x(), p.y() + sm), 1, 1 );
+        mPainter->drawEllipse( QPoint(p.x(), p.y() - sm), 1, 1 );
+        }
+      else if( smartMask & snapCenter ) {
+        //Кружок
+        mPainter->drawEllipse( a, sm, sm );
+        }
+      else if( smartMask & (snapExtension | snapEndPoint) ) {
+        //Квадратик
+        QPoint p1( p.x() - sm, p.y() - sm );
+        QPoint p2( p.x() + sm, p.y() - sm );
+        QPoint p3( p.x() + sm, p.y() + sm );
+        QPoint p4( p.x() - sm, p.y() + sm );
+        mPainter->drawLine( p1, p2 );
+        mPainter->drawLine( p2, p3 );
+        mPainter->drawLine( p3, p4 );
+        mPainter->drawLine( p4, p1 );
+        }
+      else if( smartMask & (snapApparentIntersect | snapIntersection) ) {
+        //Крестик
+        QPoint p1( p.x() - sm, p.y() - sm );
+        QPoint p2( p.x() + sm, p.y() + sm );
+        QPoint p3( p.x() - sm, p.y() + sm );
+        QPoint p4( p.x() + sm, p.y() - sm );
+        mPainter->drawLine( p1, p2 );
+        mPainter->drawLine( p3, p4 );
+        }
+      else if( smartMask & snapMidPoint ) {
+        //Треугольник
+        QPoint p1( p.x() - sm, p.y() - sm );
+        QPoint p2( p.x() + sm, p.y() - sm );
+        QPoint p3( p.x(), p.y() + sm );
+        mPainter->drawLine( p1, p2 );
+        mPainter->drawLine( p2, p3 );
+        mPainter->drawLine( p3, p1 );
+        }
+      else {
+        //Кружок
+        mPainter->drawEllipse( a, sm, sm );
+        }
+      mPainter->setTransform( mTransform );
+      }
+    }
+  }
+
+
+
 
 void SdContext::dotTrase(SdPoint p)
   {
@@ -142,9 +270,19 @@ void SdContext::setPen(int width, QColor color, int lineStyle)
 
 
 
+void SdContext::setBrush(QColor color)
+  {
+  mPainter->setBrush( QBrush(color) );
+  }
+
+
+
+
 void SdContext::setProp(SdPropLine &prop)
   {
-  setPen( prop.mWidth, prop.mLayer.layer(), prop.mType );
+  QColor color = convertColor(prop.mLayer.layer());
+  setPen( prop.mWidth, color, prop.mType );
+  setBrush( color );
   }
 
 

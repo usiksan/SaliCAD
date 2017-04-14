@@ -80,7 +80,10 @@ SOURCES += \
     windows/SdPropBar.cpp \
     windows/SdPropBarLinear.cpp \
     modes/SdModeCLinearRect.cpp \
-    objects/SdGraphLinearRect.cpp
+    objects/SdGraphLinearRect.cpp \
+    objects/SdUndoRecordInsert.cpp \
+    modes/SdModeCLinearRectFilled.cpp \
+    objects/SdGraphLinearRectFilled.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -152,7 +155,11 @@ HEADERS  += \
     windows/SdPropBar.h \
     windows/SdPropBarLinear.h \
     modes/SdModeCLinearRect.h \
-    objects/SdGraphLinearRect.h
+    objects/SdGraphLinearRect.h \
+    objects/SdUndoRecordInsert.h \
+    objects/SdUndoRecordBegin.h \
+    modes/SdModeCLinearRectFilled.h \
+    objects/SdGraphLinearRectFilled.h
 
 DISTFILES += \
     license.txt

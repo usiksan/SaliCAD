@@ -91,6 +91,8 @@ class SdWEditorGraph : public SdWEditor
     virtual double         getPPM() const = 0;
 
     //Commands
+    virtual void           cmEditUndo() override;
+    virtual void           cmEditRedo() override;
     virtual void           onActivateEditor() override;
     virtual void           cmViewFit() override;
     virtual void           cmViewZoomIn() override;
@@ -101,7 +103,7 @@ class SdWEditorGraph : public SdWEditor
 
 //    virtual void cmModeLine() {}
     virtual void           cmModeRect() override;
-//    virtual void cmModeFilledRect() {}
+    virtual void           cmModeFilledRect() override;
 //    virtual void cmModeRegion() {}
 //    virtual void cmModeFilledRegion() {}
 //    virtual void cmModeCircle() {}

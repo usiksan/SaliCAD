@@ -78,17 +78,13 @@ void SdContainer::forEach(quint64 classMask, std::function<bool (SdObject *)> fu
 void SdContainer::deleteChild(SdObject *child, SdUndo *undo)
   {
   //Test if in this container
-  if( child->getParent() == this ) {
-    //Detach from hierarhy
-    child->detach();
-    //Mark as deleted
-    child->markDeleted( true );
-    if( undo )
-      undo->deleteObject( this, child );
-    }
-  else {
-    qDebug() << Q_FUNC_INFO << "delete not own child";
-    }
+  Q_ASSERT_X( child->getParent() == this, "deleteChild", "delete not own child" );
+  //Detach from hierarhy
+  child->detach( undo );
+  //Mark as deleted
+  child->markDeleted( true );
+  if( undo )
+    undo->deleteObject( this, child );
   }
 
 
@@ -97,15 +93,22 @@ void SdContainer::deleteChild(SdObject *child, SdUndo *undo)
 void SdContainer::undoDeleteChild(SdObject *child)
   {
   //Test if in this container
-  if( child->getParent() == this ) {
-    //Mark as not deleted
-    child->markDeleted( false );
-    //Undo Detach from hierarhy
-    child->undoDetach();
-    }
-  else {
-    qDebug() << Q_FUNC_INFO << "undo delete not own child";
-    }
+  Q_ASSERT_X( child->getParent() == this, "undoDeleteChild", "undo delete not own child" );
+  //Mark as not deleted
+  child->markDeleted( false );
+  //Undo Detach from hierarhy
+  child->undoDetach();
+  }
+
+
+
+
+void SdContainer::redoDeleteChild(SdObject *child)
+  {
+  //Test if in this container
+  Q_ASSERT_X( child->getParent() == this, "redoDeleteChild", "redo delete not own child" );
+  //Mark as deleted
+  child->markDeleted( true );
   }
 
 
@@ -113,17 +116,14 @@ void SdContainer::undoDeleteChild(SdObject *child)
 
 void SdContainer::insertChild( SdObject *child, SdUndo *undo )
   {
-  if( child->getParent() ) {
-    qDebug() << Q_FUNC_INFO << "Insertion with parent setuped";
-    throw( QString("Insertion with parent setuped") );
-    }
+  Q_ASSERT_X( child->getParent() == 0, "insertChild", "Insertion with parent setuped" );
   //Insert in list
   mChildList.append( child );
   child->setParent( this );
   if( undo )
     undo->insertObject( this, child );
   //Attach to hierarhy
-  child->attach();
+  child->attach( undo );
   }
 
 
@@ -132,15 +132,21 @@ void SdContainer::insertChild( SdObject *child, SdUndo *undo )
 void SdContainer::undoInsertChild(SdObject *child)
   {
   //Test if in this container
-  if( child->getParent() == this ) {
-    //Detach from hierarhy
-    child->undoAttach();
-    //Mark as deleted
-    child->markDeleted(true);
-    }
-  else {
-    qDebug() << Q_FUNC_INFO << "undo insert not own child";
-    }
+  Q_ASSERT_X( child->getParent() == this, "undoInsertChild", "undo insert not own child" );
+  //Detach from hierarhy
+  child->undoAttach();
+  //Mark as deleted
+  child->markDeleted(true);
+  }
+
+
+
+
+void SdContainer::redoInsertChild(SdObject *child)
+  {
+  //Test if in this container
+  Q_ASSERT_X( child->getParent() == this, "redoInsertChild", "redo insert not own child" );
+  child->markDeleted( false );
   }
 
 
@@ -166,7 +172,7 @@ void SdContainer::draw(SdContext *context)
   {
   for( SdObject *obj : mChildList ) {
     SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-    if( graph )
+    if( graph && !graph->isDeleted() )
       graph->draw( context );
     }
   }

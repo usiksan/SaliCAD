@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Graphical object rectangle.
 */
 #include "SdGraphLinearRect.h"
 #include "SdSelector.h"

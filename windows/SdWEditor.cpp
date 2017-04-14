@@ -13,6 +13,7 @@ Description
 #include "objects/SdProjectItem.h"
 #include "objects/SdProject.h"
 #include "SdWEditor.h"
+#include "SdWCommand.h"
 
 SdWEditor::SdWEditor(QWidget *parent) : QAbstractScrollArea(parent)
   {
@@ -37,6 +38,14 @@ QString SdWEditor::getTitle()
 QString SdWEditor::getIconName()
   {
   return getProjectItem()->getIconName();
+  }
+
+
+
+void SdWEditor::onActivateEditor()
+  {
+  SdWCommand::cmEditUndo->setEnabled( getProject()->getUndo()->isUndoPresent() );
+  SdWCommand::cmEditRedo->setEnabled( getProject()->getUndo()->isRedoPresent() );
   }
 
 

@@ -90,6 +90,8 @@ bool SdPNewProjectItem_SelectType::validatePage()
   return true;
   }
 
+
+
 int SdPNewProjectItem_SelectType::nextId() const
   {
   return 1;
@@ -133,6 +135,9 @@ void SdPNewProjectItem_SelectType::classChanged(int index)
     orderChanged( defaultOrder );
     }
   }
+
+
+
 
 void SdPNewProjectItem_SelectType::orderChanged(int index)
   {

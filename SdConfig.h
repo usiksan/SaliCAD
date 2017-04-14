@@ -36,6 +36,11 @@ History
                    Undo system structure
                    Mode insertion func
                    First insertion of graph object by mode
+  15.04.2017 v0.13 Undo system basics, some undo operations.
+                   Refactory object and container to obtain undo and redo.
+                   Impruve main window, tree and editor for deleting object, close file.
+                   Append filled rect. Mode and object.
+                   Correct grid alignment.
 */
 
 #ifndef SDCONFIG
@@ -47,7 +52,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             12
+#define SD_VERSION_MINOR             13
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -68,6 +73,9 @@ History
 
 //Grid history count
 #define GRID_HISTORY_SIZE            5
+
+//Undo history count
+#define UNDO_HISTORY_SIZE            100
 
 //Clipboard objects format
 #define SD_CLIP_FORMAT_OBJECT        "text/salicad-object"

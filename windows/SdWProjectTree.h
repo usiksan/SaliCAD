@@ -38,26 +38,29 @@ class SdWProjectTree : public QTreeWidget
     explicit SdWProjectTree( const QString fname, QWidget *parent = 0);
     ~SdWProjectTree();
 
-    QString    filePath() { return mFileName; }
-    QString    fileName();
-    SdProject *getProject() const { return mProject; }
+    QString      filePath() { return mFileName; }
+    QString      fileName();
+    SdProject   *getProject() const { return mProject; }
 
-    bool       isProjectValid() const;
+    bool         isProjectValid() const;
 
-    bool       cmFileClose();
+    bool         cmFileClose();
 
-    bool       cmFileSave();
-    bool       cmFileSaveAs();
+    bool         cmFileSave();
+    bool         cmFileSaveAs();
 
-    void       cmObjectNew();
-    void       cmObjectRename();
-    void       cmObjectDelete();
+    void         cmObjectNew();
+    void         cmObjectRename();
+    void         cmObjectDelete();
     virtual void cmObjectCopy() {}
     virtual void cmObjectPaste() {}
     virtual void cmObjectCut() {}
     virtual void cmObjectSort() {}
 
-    void cmClipboardChange();
+    void         cmClipboardChange();
+
+    void         cmEditUndo();
+    void         cmEditRedo();
 
   public slots:
     //AFTER rename item

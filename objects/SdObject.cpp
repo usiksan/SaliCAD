@@ -17,6 +17,7 @@ Description
 #include "SdSymbol.h"
 #include "SdIds.h"
 #include "SdGraphLinearRect.h"
+#include "SdGraphLinearRectFilled.h"
 #include <QJsonValue>
 #include <QDebug>
 
@@ -45,6 +46,22 @@ SdContainer *SdObject::getRoot() const
     p = p->mParent;
     }
   return 0;
+  }
+
+
+
+
+void SdObject::attach(SdUndo *undo)
+  {
+  Q_UNUSED(undo)
+  }
+
+
+
+
+void SdObject::detach(SdUndo *undo)
+  {
+  Q_UNUSED(undo)
   }
 
 
@@ -163,9 +180,10 @@ SdObject *SdObject::readPtr(const QString name, SdObjectMap *map, const QJsonObj
 
 SdObject *SdObject::build(QString type)
   {
-  if( type == QString(SD_TYPE_PROJECT) ) return new SdProject();
-  if( type == QString(SD_TYPE_SYMBOL)  ) return new SdSymbol();
-  if( type == QString(SD_TYPE_RECT)    ) return new SdGraphLinearRect();
+  if( type == QString(SD_TYPE_PROJECT)     ) return new SdProject();
+  if( type == QString(SD_TYPE_SYMBOL)      ) return new SdSymbol();
+  if( type == QString(SD_TYPE_RECT)        ) return new SdGraphLinearRect();
+  if( type == QString(SD_TYPE_RECT_FILLED) ) return new SdGraphLinearRectFilled();
   return 0;
   }
 

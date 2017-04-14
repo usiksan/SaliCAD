@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Mode for rectangle
 */
 #include "SdModeCLinearRect.h"
 #include "objects/SdGraphLinearRect.h"
@@ -31,7 +32,6 @@ void SdModeCLinearRect::drawDynamic(SdContext *ctx)
   if( getStep() == sSecondCorner ) {
     ctx->setPen( sdGlobalProp->mLineProp.mWidth.getValue(), sdEnvir->getSysColor(scEnter),
                  sdGlobalProp->mLineProp.mType.getValue() );
-    //ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltSolid );
     ctx->rect( SdRect(mFirst,mPrevMove) );
     }
   }
@@ -42,7 +42,7 @@ void SdModeCLinearRect::enterPoint(SdPoint enter )
   {
   if( getStep() == sSecondCorner ) {
     mPrevMove = enter;
-    addPic( new SdGraphLinearRect( mFirst, mPrevMove, sdGlobalProp->mLineProp ), QObject::tr("Insert rect") );
+    addRect();
     mOffset = mPrevMove - mFirst;
     setStep( sFirstCorner );
     update();
@@ -128,4 +128,13 @@ int SdModeCLinearRect::getCursor() const
 int SdModeCLinearRect::getIndex() const
   {
   return MD_RECT;
+  }
+
+
+
+
+//Insert rectangle into graph object
+void SdModeCLinearRect::addRect()
+  {
+  addPic( new SdGraphLinearRect( mFirst, mPrevMove, sdGlobalProp->mLineProp ), QObject::tr("Insert rect") );
   }

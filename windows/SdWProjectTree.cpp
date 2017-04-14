@@ -108,7 +108,7 @@ bool SdWProjectTree::cmFileClose() {
   //Test if file saved
   if( mProject->isDirty() ) {
     int res = QMessageBox::question( this, tr("Warning!"),
-                                     tr("Project \"%1\" changed! Save it?"),
+                                     tr("Project \"%1\" changed! Save it?").arg( fileName() ),
                                      QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
     if( res == QMessageBox::No ) return true;
     if( res == QMessageBox::Yes ) return cmFileSave();
@@ -160,6 +160,7 @@ void SdWProjectTree::cmObjectNew()
   if( wizard.exec() ) {
     //Append item to the project
     item->setHand();
+    mProject->getUndo()->begin( tr("Creating object") );
     mProject->insertChild( item, mProject->getUndo() );
     }
   }
@@ -197,9 +198,28 @@ void SdWProjectTree::cmObjectDelete()
     QMessageBox::warning( this, tr("Error!"), tr("This is not object. Select object to delete.") );
   }
 
+
+
+
 void SdWProjectTree::cmClipboardChange()
   {
   SdWCommand::cmObjectPaste->setEnabled( QApplication::clipboard()->mimeData()->hasFormat(SD_CLIP_FORMAT_OBJECT) );
+  }
+
+
+
+
+void SdWProjectTree::cmEditUndo()
+  {
+  getProject()->getUndo()->undoStep();
+  }
+
+
+
+
+void SdWProjectTree::cmEditRedo()
+  {
+  getProject()->getUndo()->redoStep();
   }
 
 

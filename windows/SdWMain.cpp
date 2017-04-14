@@ -85,7 +85,9 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
     mWProjectList->fileOpen( file );
 
   //Связать с пульсаром
-  connect( SdPulsar::pulsar, &SdPulsar::activateItem, this, &SdWMain::activateProjectItem );
+  connect( SdPulsar::pulsar, &SdPulsar::activateItem, this, &SdWMain::onActivateProjectItem );
+  connect( SdPulsar::pulsar, &SdPulsar::removeItem, this, &SdWMain::onRemoveProjectItem );
+  connect( SdPulsar::pulsar, &SdPulsar::closeProject, this, &SdWMain::onCloseProject );
   connect( SdPulsar::pulsar, &SdPulsar::setStatusLabels, this, &SdWMain::setStatusLabels );
   connect( SdPulsar::pulsar, &SdPulsar::setStatusPositions, this, &SdWMain::setStatusPositions );
   connect( SdPulsar::pulsar, &SdPulsar::setStatusMessage, this, &SdWMain::setStatusMessage );
@@ -127,7 +129,7 @@ void SdWMain::activateProjectName(const QString name, bool dirty)
 
 
 
-void SdWMain::activateProjectItem(SdProjectItem *item)
+void SdWMain::onActivateProjectItem(SdProjectItem *item)
   {
   if( item == 0 ) return;
   //Find if item already open
@@ -148,8 +150,46 @@ void SdWMain::activateProjectItem(SdProjectItem *item)
       break;
     }
 
-  if( editor != 0 )
+  if( editor != 0 ) {
+    //If editor created - insert it into tab
     mWEditors->addTab( editor, QIcon( editor->getIconName() ), editor->getTitle() );
+
+    //And make it current
+    mWEditors->setCurrentIndex( mWEditors->count() - 1 );
+    }
+  }
+
+
+
+
+void SdWMain::onRemoveProjectItem(SdProjectItem *item)
+  {
+  if( item == 0 ) return;
+  //Find if item is open
+  for( int i = 0; i < mWEditors->count(); i++ ) {
+    SdWEditor *editor = getEditor(i);
+    if( editor && editor->getProjectItem() == item ) {
+      //Item is open, close editor
+      mWEditors->removeTab( i );
+      return;
+      }
+    }
+  }
+
+
+
+
+void SdWMain::onCloseProject(SdProject *prj)
+  {
+  if( prj == 0 ) return;
+  //Find if items of this project are open
+  for( int i = mWEditors->count() - 1; i >= 0; i-- ) {
+    SdWEditor *editor = getEditor(i);
+    if( editor && editor->getProjectItem()->getProject() == prj ) {
+      //Item of this project open, close editor
+      mWEditors->removeTab( i );
+      }
+    }
   }
 
 
@@ -267,6 +307,15 @@ void SdWMain::cmFileCloseAll()
     //Если закрытие проекта прервано, то прервать и весь процесс
     if( !mWProjectList->cmFileClose() ) break;
     }
+
+  //Hide all bars and commands
+  SdWCommand::cmEditUndo->setEnabled(false);
+  SdWCommand::cmEditRedo->setEnabled(false);
+  SdWCommand::barSymbol->setVisible(false);
+  SdWCommand::barPart->setVisible(false);
+  SdWCommand::barComp->setVisible(false);
+  SdWCommand::barSheet->setVisible(false);
+  SdWCommand::barPcb->setVisible(false);
   }
 
 
@@ -331,12 +380,18 @@ void SdWMain::cmFileImport()
     activeEditor()->cmFileImport();
   }
 
+
+
+
 //Экспорт из активного редактора
 void SdWMain::cmFileExport()
   {
   if( activeEditor() )
     activeEditor()->cmFileExport();
   }
+
+
+
 
 //Создание нового объекта
 void SdWMain::cmObjectNew()
@@ -345,12 +400,18 @@ void SdWMain::cmObjectNew()
     activeProject()->cmObjectNew();
   }
 
+
+
+
 //Переименовать текущий объект в проекте
 void SdWMain::cmObjectRename()
   {
   if( activeProject() )
     activeProject()->cmObjectRename();
   }
+
+
+
 
 //Удалить активный объект в проекте
 void SdWMain::cmObjectDelete()
@@ -359,12 +420,18 @@ void SdWMain::cmObjectDelete()
     activeProject()->cmObjectDelete();
   }
 
+
+
+
 //Копировать активный объект проекта в буфер обмена
 void SdWMain::cmObjectCopy()
   {
   if( activeProject() )
     activeProject()->cmObjectCopy();
   }
+
+
+
 
 //Вставить объект в активный проект из буфера обмена
 void SdWMain::cmObjectPaste()
@@ -373,12 +440,18 @@ void SdWMain::cmObjectPaste()
     activeProject()->cmObjectPaste();
   }
 
+
+
+
 //Вырезать активный объект из активного проекта в буфер обмена
 void SdWMain::cmObjectCut()
   {
   if( activeProject() )
     activeProject()->cmObjectCut();
   }
+
+
+
 
 //Сортировать объекты в активном проекте
 void SdWMain::cmObjectSort()
@@ -387,17 +460,32 @@ void SdWMain::cmObjectSort()
     activeProject()->cmObjectSort();
   }
 
+
+
+
 void SdWMain::cmEditUndo()
   {
-  if( activeEditor() )
-    activeEditor()->cmEditUndo();
+  if( activeProject() ) {
+    activeProject()->cmEditUndo();
+    if( activeEditor() )
+      activeEditor()->cmEditUndo();
+    }
   }
+
+
+
 
 void SdWMain::cmEditRedo()
   {
-  if( activeEditor() )
-    activeEditor()->cmEditRedo();
+  if( activeProject() ) {
+    activeProject()->cmEditRedo();
+    if( activeEditor() )
+      activeEditor()->cmEditRedo();
+    }
   }
+
+
+
 
 void SdWMain::cmEditCut()
   {
@@ -405,11 +493,17 @@ void SdWMain::cmEditCut()
     activeEditor()->cmEditCut();
   }
 
+
+
+
 void SdWMain::cmEditCopy()
   {
   if( activeEditor() )
     activeEditor()->cmEditCopy();
   }
+
+
+
 
 void SdWMain::cmEditPaste()
   {
@@ -417,11 +511,17 @@ void SdWMain::cmEditPaste()
     activeEditor()->cmEditPaste();
   }
 
+
+
+
 void SdWMain::cmEditDelete()
   {
   if( activeEditor() )
     activeEditor()->cmEditDelete();
   }
+
+
+
 
 void SdWMain::cmEditSelectAll()
   {
@@ -429,11 +529,17 @@ void SdWMain::cmEditSelectAll()
     activeEditor()->cmEditSelectAll();
   }
 
+
+
+
 void SdWMain::cmEditFind()
   {
   if( activeEditor() )
     activeEditor()->cmEditFind();
   }
+
+
+
 
 void SdWMain::cmEditReplace()
   {
@@ -441,11 +547,17 @@ void SdWMain::cmEditReplace()
     activeEditor()->cmEditReplace();
   }
 
+
+
+
 void SdWMain::cmEditProperties()
   {
   if( activeEditor() )
     activeEditor()->cmEditProperties();
   }
+
+
+
 
 void SdWMain::cmViewProject()
   {
@@ -460,17 +572,26 @@ void SdWMain::cmViewProject()
 //    }
   }
 
+
+
+
 void SdWMain::cmViewFill()
   {
   if( activeEditor() )
     activeEditor()->cmViewFit();
   }
 
+
+
+
 void SdWMain::cmViewNets()
   {
   if( activeEditor() )
     activeEditor()->cmViewNets();
   }
+
+
+
 
 void SdWMain::cmViewGrid()
   {
@@ -495,11 +616,17 @@ void SdWMain::cmViewZoomIn()
     activeEditor()->cmViewZoomIn();
   }
 
+
+
+
 void SdWMain::cmViewZoomOut()
   {
   if( activeEditor() )
     activeEditor()->cmViewZoomOut();
   }
+
+
+
 
 void SdWMain::cmViewArea()
   {
@@ -507,11 +634,17 @@ void SdWMain::cmViewArea()
     activeEditor()->cmViewWindow();
   }
 
+
+
+
 void SdWMain::cmViewMeasurement()
   {
   if( activeEditor() )
     activeEditor()->cmViewMeasurement();
   }
+
+
+
 
 void SdWMain::cmModeSelect()
   {
@@ -519,11 +652,17 @@ void SdWMain::cmModeSelect()
     activeEditor()->cmModeSelect();
   }
 
+
+
+
 void SdWMain::cmModeLine()
   {
   if( activeEditor() )
     activeEditor()->cmModeLine();
   }
+
+
+
 
 void SdWMain::cmModeRect()
   {
@@ -531,11 +670,17 @@ void SdWMain::cmModeRect()
     activeEditor()->cmModeRect();
   }
 
+
+
+
 void SdWMain::cmModeFilledRect()
   {
   if( activeEditor() )
     activeEditor()->cmModeFilledRect();
   }
+
+
+
 
 void SdWMain::cmModeRegion()
   {
@@ -543,11 +688,17 @@ void SdWMain::cmModeRegion()
     activeEditor()->cmModeRegion();
   }
 
+
+
+
 void SdWMain::cmModeFilledRegion()
   {
   if( activeEditor() )
     activeEditor()->cmModeFilledRegion();
   }
+
+
+
 
 void SdWMain::cmModeCircle()
   {
@@ -555,11 +706,17 @@ void SdWMain::cmModeCircle()
     activeEditor()->cmModeCircle();
   }
 
+
+
+
 void SdWMain::cmModeFilledCircle()
   {
   if( activeEditor() )
     activeEditor()->cmModeFilledCircle();
   }
+
+
+
 
 void SdWMain::cmModeArc()
   {
@@ -567,11 +724,17 @@ void SdWMain::cmModeArc()
     activeEditor()->cmModeArc();
   }
 
+
+
+
 void SdWMain::cmModeText()
   {
   if( activeEditor() )
     activeEditor()->cmModeText();
   }
+
+
+
 
 void SdWMain::cmModeField()
   {
@@ -579,11 +742,17 @@ void SdWMain::cmModeField()
     activeEditor()->cmModeField();
   }
 
+
+
+
 void SdWMain::cmBall()
   {
   if( activeEditor() )
     activeEditor()->cmBall();
   }
+
+
+
 
 void SdWMain::cmPinWired()
   {
@@ -591,11 +760,17 @@ void SdWMain::cmPinWired()
     activeEditor()->cmPinWired();
   }
 
+
+
+
 void SdWMain::cmPinFlat()
   {
   if( activeEditor() )
     activeEditor()->cmPinFlat();
   }
+
+
+
 
 void SdWMain::cmBodyCylinder()
   {
@@ -603,11 +778,17 @@ void SdWMain::cmBodyCylinder()
     activeEditor()->cmBodyCylinder();
   }
 
+
+
+
 void SdWMain::cmBodyBrick()
   {
   if( activeEditor() )
     activeEditor()->cmBodyBrick();
   }
+
+
+
 
 void SdWMain::cmBodyContur()
   {
@@ -615,11 +796,17 @@ void SdWMain::cmBodyContur()
     activeEditor()->cmBodyContur();
   }
 
+
+
+
 void SdWMain::cmModePin()
   {
   if( activeEditor() )
     activeEditor()->cmModePin();
   }
+
+
+
 
 void SdWMain::cmModeReference()
   {
@@ -627,11 +814,17 @@ void SdWMain::cmModeReference()
     activeEditor()->cmModeReference();
   }
 
+
+
+
 void SdWMain::cmModeOrigin()
   {
   if( activeEditor() )
     activeEditor()->cmModeOrigin();
   }
+
+
+
 
 void SdWMain::cmModeComponent()
   {
@@ -639,11 +832,17 @@ void SdWMain::cmModeComponent()
     activeEditor()->cmModeComponent();
   }
 
+
+
+
 void SdWMain::cmModeNet()
   {
   if( activeEditor() )
     activeEditor()->cmModeNet();
   }
+
+
+
 
 void SdWMain::cmNetSetup()
   {
@@ -651,11 +850,17 @@ void SdWMain::cmNetSetup()
     activeEditor()->cmNetSetup();
   }
 
+
+
+
 void SdWMain::cmModeBus()
   {
   if( activeEditor() )
     activeEditor()->cmModeBus();
   }
+
+
+
 
 void SdWMain::cmModeDisconnect()
   {
@@ -663,11 +868,17 @@ void SdWMain::cmModeDisconnect()
     activeEditor()->cmModeDisconnect();
   }
 
+
+
+
 void SdWMain::cmModePcbArea()
   {
   if( activeEditor() )
     activeEditor()->cmModePcbArea();
   }
+
+
+
 
 void SdWMain::cmModeLink()
   {
@@ -675,11 +886,17 @@ void SdWMain::cmModeLink()
     activeEditor()->cmModeLink();
   }
 
+
+
+
 void SdWMain::cmModeNetName()
   {
   if( activeEditor() )
     activeEditor()->cmModeNetName();
   }
+
+
+
 
 void SdWMain::cmModeNetList()
   {
@@ -687,11 +904,17 @@ void SdWMain::cmModeNetList()
     activeEditor()->cmModeNetList();
   }
 
+
+
+
 void SdWMain::cmModePack()
   {
   if( activeEditor() )
     activeEditor()->cmModePack();
   }
+
+
+
 
 void SdWMain::cmPads()
   {
@@ -699,11 +922,17 @@ void SdWMain::cmPads()
     activeEditor()->cmPads();
   }
 
+
+
+
 void SdWMain::cmModeLineSize()
   {
   if( activeEditor() )
     activeEditor()->cmModeLineSize();
   }
+
+
+
 
 void SdWMain::cmModeRadiusSize()
   {
@@ -711,11 +940,17 @@ void SdWMain::cmModeRadiusSize()
     activeEditor()->cmModeRadiusSize();
   }
 
+
+
+
 void SdWMain::cmModeMovePart()
   {
   if( activeEditor() )
     activeEditor()->cmModeMovePart();
   }
+
+
+
 
 void SdWMain::cmModePlace()
   {
@@ -723,11 +958,17 @@ void SdWMain::cmModePlace()
     activeEditor()->cmModePlace();
   }
 
+
+
+
 void SdWMain::cmModeEditWire()
   {
   if( activeEditor() )
     activeEditor()->cmModeEditWire();
   }
+
+
+
 
 void SdWMain::cmModeWire()
   {
@@ -735,17 +976,26 @@ void SdWMain::cmModeWire()
     activeEditor()->cmModeWire();
   }
 
+
+
+
 void SdWMain::cmModePolygon()
   {
   if( activeEditor() )
     activeEditor()->cmModePolygon();
   }
 
+
+
+
 void SdWMain::cmModeDeleteWire()
   {
   if( activeEditor() )
     activeEditor()->cmModeDeleteWire();
   }
+
+
+
 
 void SdWMain::cmModePad()
   {
@@ -754,21 +1004,32 @@ void SdWMain::cmModePad()
   }
 
 
+
+
 //Show options dialog
 void SdWMain::cmOption()
   {
   SdDOptions(this).exec();
   }
 
+
+
+
 void SdWMain::cmTools()
   {
 
   }
 
+
+
+
 void SdWMain::cmHelpContens()
   {
 
   }
+
+
+
 
 void SdWMain::cmHelpIndex()
   {

@@ -86,9 +86,9 @@ class SdObject
     void              setParent( SdContainer *parent ) { mParent = parent; }
 
     //Attach and detach
-    virtual void      attach() {}
+    virtual void      attach( SdUndo *undo );
     virtual void      undoAttach() {}
-    virtual void      detach() {}
+    virtual void      detach( SdUndo *undo );
     virtual void      undoDetach() {}
     bool              isDeleted() const { return mDeleted; }
     void              markDeleted( bool deleted ) { mDeleted = deleted; }

@@ -23,6 +23,7 @@ Description
 #include "modes/SdModeTZoomer.h"
 #include "modes/SdModeTZoomWindow.h"
 #include "modes/SdModeCLinearRect.h"
+#include "modes/SdModeCLinearRectFilled.h"
 
 #include <QPainter>
 #include <QPaintEvent>
@@ -104,6 +105,9 @@ void SdWEditorGraph::zoomWindow(SdRect r)
   if( scale > scaleY ) scale = scaleY;
   scaleSet( scale );
   }
+
+
+
 
 
 
@@ -218,6 +222,7 @@ void SdWEditorGraph::modeRestore(SdMode *mode)
 
 //=================================================================================================
 // Modes
+
 void SdWEditorGraph::cmViewZoomIn()
   {
   modeCall( new SdModeTZoomer(true, this, getProjectItem() ) );
@@ -253,6 +258,14 @@ void SdWEditorGraph::cmPropChanged()
 void SdWEditorGraph::cmModeRect()
   {
   modeSet( new SdModeCLinearRect( this, getProjectItem() ) );
+  }
+
+
+
+
+void SdWEditorGraph::cmModeFilledRect()
+  {
+  modeSet( new SdModeCLinearRectFilled( this, getProjectItem() ) );
   }
 
 
@@ -301,7 +314,7 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
     mPixelTransform = QTransform::fromTranslate( -s.width()/2,  -s.height()/2 );
     mPixelTransform *= QTransform::fromScale( 1 / mScale.scaleGet(), -1 / mScale.scaleGet() );
     mPixelTransform *= QTransform::fromTranslate( mOrigin.x(), mOrigin.y() );
-    qDebug() << "cashe" << mOrigin << mScale.scaleGet();
+    //qDebug() << "cashe" << mOrigin << mScale.scaleGet();
 
     //Рисовать сетку
     if( sdEnvir->mGridView ) {
@@ -310,12 +323,12 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
         //Grid color
         painter.setPen( sdEnvir->getSysColor(scGrid) );
         SdPoint tmp( mPixelTransform.map(QPoint(0,s.height())) );
-        qDebug() << "tmp" << tmp;
+        //qDebug() << "tmp" << tmp;
         tmp.setX( (tmp.x() / mGrid.x() ) * mGrid.x() );
         tmp.setY( (tmp.y() / mGrid.y() ) * mGrid.y() );
         int oldx = tmp.x();
         QPoint p = context.transform().map( tmp );
-        qDebug() << "p" << p;
+        //qDebug() << "p" << p;
         painter.resetTransform();
         while( p.y() > 0 ) {
           while( p.x() < s.width() ) {
@@ -475,8 +488,15 @@ SdPoint SdWEditorGraph::pixel2phys(QPoint pos)
 
   //Если курсор по сетке - то выровнять
   if( sdEnvir->mCursorGrid ) {
-    tmp.setX( ((tmp.x() - mGrid.x()/2) / mGrid.x() ) * mGrid.x() );
-    tmp.setY( ((tmp.y() + mGrid.y()/2) / mGrid.y() ) * mGrid.y() );
+    if( tmp.x() < 0 )
+      tmp.setX( ((tmp.x() - mGrid.x()/2) / mGrid.x() ) * mGrid.x() );
+    else
+      tmp.setX( ((tmp.x() + mGrid.x()/2) / mGrid.x() ) * mGrid.x() );
+
+    if( tmp.y() < 0 )
+      tmp.setY( ((tmp.y() - mGrid.y()/2) / mGrid.y() ) * mGrid.y() );
+    else
+      tmp.setY( ((tmp.y() + mGrid.y()/2) / mGrid.y() ) * mGrid.y() );
     }
 
   return tmp;
@@ -500,6 +520,7 @@ void SdWEditorGraph::updateMousePos(QMouseEvent *event)
 
 void SdWEditorGraph::onActivateEditor()
   {
+  SdWEditor::onActivateEditor();
   SdPulsar::pulsar->emitSetStatusLabels( QString("X:"), QString("Y:") );
   if( modeGet() ) {
     modeGet()->restore();
@@ -508,4 +529,25 @@ void SdWEditorGraph::onActivateEditor()
   displayCursorPositions();
   }
 
+
+
+
+void SdWEditorGraph::cmEditUndo()
+  {
+  if( modeGet() )
+    modeGet()->reset();
+  mCasheDirty = true;
+  update();
+  }
+
+
+
+
+void SdWEditorGraph::cmEditRedo()
+  {
+  if( modeGet() )
+    modeGet()->reset();
+  mCasheDirty = true;
+  update();
+  }
 
