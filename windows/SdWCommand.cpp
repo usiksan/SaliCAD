@@ -15,6 +15,7 @@ Description
 #include "SdWMain.h"
 #include "SdPropBar.h"
 #include "SdPropBarLinear.h"
+#include "SdPropBarTextual.h"
 #include <QMenuBar>
 #include <QSettings>
 #include <QFileInfo>
@@ -443,6 +444,11 @@ void SdWCommand::createToolBars(SdWMain *frame)
   mbarTable[PB_LINEAR] = mbar;
   mbar->connect( mbar, &SdPropBar::propChanged, frame, &SdWMain::cmPropertiesChange );
 
+  mbar = new SdPropBarTextual( QString("Textual mode") );
+  frame->addToolBar( mbar );
+  mbar->setVisible(false);
+  mbarTable[PB_TEXT] = mbar;
+  mbar->connect( mbar, &SdPropBar::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   for( int i = 0; i < MD_LAST; i++ )
     if( cmModeTable[i] )

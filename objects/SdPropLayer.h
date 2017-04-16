@@ -41,6 +41,8 @@ class SdPropLayer
 
     void       write( const QString name, QJsonObject &obj ) const { obj.insert( name, mLayer->id() ); }
     void       read( const QString name, const QJsonObject obj );
+
+    SdLayer   *swap( SdLayer *src );
   };
 
 #endif // SDPROPLAYER_H

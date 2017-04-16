@@ -25,11 +25,7 @@ SdGraphLinear::SdGraphLinear(const SdPropLine &propLine) :
   mProp = propLine;
   }
 
-void SdGraphLinear::saveState(SdUndo *undo)
-  {
-  SdGraph::saveState( undo );
-  mProp.saveState( undo );
-  }
+
 
 
 void SdGraphLinear::cloneFrom(const SdObject *src)

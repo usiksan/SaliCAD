@@ -49,3 +49,12 @@ QTransform SdConverter::getFullMatrix()
   return m;
   }
 
+
+
+double SdConverter::getScale() const
+  {
+  if( mNext )
+    return mNext->getScale();
+  return 1.0;
+  }
+

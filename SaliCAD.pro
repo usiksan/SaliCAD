@@ -83,7 +83,15 @@ SOURCES += \
     objects/SdGraphLinearRect.cpp \
     objects/SdUndoRecordInsert.cpp \
     modes/SdModeCLinearRectFilled.cpp \
-    objects/SdGraphLinearRectFilled.cpp
+    objects/SdGraphLinearRectFilled.cpp \
+    modes/SdModeCLinearLine.cpp \
+    objects/SdUndoRecordPropLineAnd2Points.cpp \
+    windows/SdPropBarTextual.cpp \
+    modes/SdModeCText.cpp \
+    objects/SdGraphText.cpp \
+    objects/SdConverterText.cpp \
+    objects/SdUndoRecordPropTextAndText.cpp \
+    modes/SdModeCTextual.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -159,7 +167,15 @@ HEADERS  += \
     objects/SdUndoRecordInsert.h \
     objects/SdUndoRecordBegin.h \
     modes/SdModeCLinearRectFilled.h \
-    objects/SdGraphLinearRectFilled.h
+    objects/SdGraphLinearRectFilled.h \
+    modes/SdModeCLinearLine.h \
+    objects/SdUndoRecordPropLineAnd2Points.h \
+    windows/SdPropBarTextual.h \
+    modes/SdModeCText.h \
+    objects/SdGraphText.h \
+    objects/SdConverterText.h \
+    objects/SdUndoRecordPropTextAndText.h \
+    modes/SdModeCTextual.h
 
 DISTFILES += \
     license.txt

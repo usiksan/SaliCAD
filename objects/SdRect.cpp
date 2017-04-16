@@ -169,3 +169,13 @@ void SdRect::read(const QString name, const QJsonObject obj)
   read( obj.value(name).toObject() );
   }
 
+
+
+
+SdRect SdRect::swap(const SdRect &r)
+  {
+  SdRect tmp( *this );
+  set( r );
+  return tmp;
+  }
+

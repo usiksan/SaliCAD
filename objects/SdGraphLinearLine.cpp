@@ -26,6 +26,16 @@ SdGraphLinearLine::SdGraphLinearLine() :
 
   }
 
+SdGraphLinearLine::SdGraphLinearLine(SdPoint p1, SdPoint p2, const SdPropLine &propLine) :
+  SdGraphLinear( propLine ),
+  a(p1),
+  b(p2),
+  mFlyA(false),
+  mFlyB(false)
+  {
+
+  }
+
 
 
 
@@ -178,4 +188,13 @@ int SdGraphLinearLine::behindCursor(SdPoint p)
   if( isAble() && SdSegment(a,b).isPointOn( p ) )
     return getSelector() ? SEL_ELEM : UNSEL_ELEM;
   return 0;
+  }
+
+
+
+
+
+void SdGraphLinearLine::saveState(SdUndo *undo)
+  {
+  undo->propLineAnd2Point( &mProp, &a, &b );
   }

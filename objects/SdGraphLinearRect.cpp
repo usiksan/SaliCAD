@@ -228,7 +228,5 @@ bool SdGraphLinearRect::snapPoint(SdSnapInfo *snap)
 
 void SdGraphLinearRect::saveState(SdUndo *undo)
   {
-  SdGraphLinear::saveState( undo );
-  undo->point( &a );
-  undo->point( &b );
+  undo->propLineAnd2Point( &mProp, &a, &b );
   }

@@ -14,6 +14,8 @@ Description
 #include "SdUndo.h"
 #include "SdUndoRecordBegin.h"
 #include "SdUndoRecordInsert.h"
+#include "SdUndoRecordPropLineAnd2Points.h"
+#include "SdUndoRecordPropTextAndText.h"
 #include "windows/SdWCommand.h"
 
 SdUndo::SdUndo() :
@@ -22,45 +24,39 @@ SdUndo::SdUndo() :
 
   }
 
+
+
+
 void SdUndo::insertObject(SdContainer *container, SdObject *object)
   {
   addUndo( new SdUndoRecordInsert( container, object ) );
   }
+
+
+
 
 void SdUndo::deleteObject(SdContainer *container, SdObject *object)
   {
 
   }
 
-void SdUndo::point(SdPoint *p)
-  {
 
+
+
+void SdUndo::propLineAnd2Point(SdPropLine *prp, SdPoint *p1, SdPoint *p2)
+  {
+  addUndo( new SdUndoRecordPropLineAnd2Points(prp, p1, p2) );
   }
 
-void SdUndo::pointIndex(SdPointTable *table, int index)
-  {
 
+
+
+void SdUndo::propTextAndText(SdPropText *prp, SdRect *r, QString *str)
+  {
+  addUndo( new SdUndoRecordPropTextAndText( prp, r, str ) );
   }
 
-void SdUndo::intValue(int *v)
-  {
 
-  }
-
-void SdUndo::propInt(SdPropInt *propInt)
-  {
-
-  }
-
-void SdUndo::propLayer(SdPropLayer *propLayer)
-  {
-
-  }
-
-void SdUndo::propString(QString *str)
-  {
-
-  }
 
 void SdUndo::begin(QString title)
   {
@@ -72,12 +68,15 @@ void SdUndo::begin(QString title)
 
 void SdUndo::undoStep()
   {
+  //On undo we shift records from mUndo to mRedo
+  //at each shift we undo record
   while( mUndo.count() && !mUndo.top()->isStep() ) {
     mUndo.top()->undo();
-    delete mUndo.pop();
+    mRedo.push( mUndo.pop() );
     }
   if( mUndo.count() )
-    delete mUndo.pop();
+    mRedo.push( mUndo.pop() );
+  if( mUndoCount ) mUndoCount--;
   SdWCommand::cmEditUndo->setEnabled( isUndoPresent() );
   SdWCommand::cmEditRedo->setEnabled( isRedoPresent() );
   }
@@ -88,7 +87,18 @@ void SdUndo::undoStep()
 
 void SdUndo::redoStep()
   {
+  //On undo we shift records from mRedo to mUndo
+  //at each shift we redo record
+  do {
+    mRedo.top()->redo();
+    mUndo.push( mRedo.pop() );
+    }
+  while( mRedo.count() && !mRedo.top()->isStep() );
 
+  mUndoCount++;
+
+  SdWCommand::cmEditUndo->setEnabled( isUndoPresent() );
+  SdWCommand::cmEditRedo->setEnabled( isRedoPresent() );
   }
 
 

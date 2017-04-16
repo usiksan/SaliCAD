@@ -30,7 +30,7 @@ class SdUndoRecord
     virtual void    undo() { }
 
     //Redo elementary operation.
-    virtual void    redo() { }
+    virtual void    redo() { undo(); }
 
     //Return true on first redo or undo (first operation in undo block)
     virtual bool    isStep() const { return false; }

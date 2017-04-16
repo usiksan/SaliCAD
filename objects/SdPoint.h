@@ -61,12 +61,14 @@ class SdPoint : public QPoint
     void    write(const QString name, QJsonObject &obj ) const;
     void    read(const QString name, const QJsonObject obj );
 
+    void    swap( SdPoint *p );
+
     QJsonObject write() const;
     void        read( const QJsonObject obj );
   };
 
 //Вычисление интересных точек
-SdPoint calcMiddlePoint( SdPoint a, SdPoint b, int enter );
+SdPoint calcMiddlePoint(SdPoint a, SdPoint b, int enterType );
 SdPoint calcArcStop( SdPoint center, SdPoint start, SdPoint sector );
 bool    calcFreeNearIntersect( SdPoint sour, SdPoint a, SdPoint b, SdPoint &dest );
 SdAngle calcDirection90( SdPoint sour, SdPoint dest );

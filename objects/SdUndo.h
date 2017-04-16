@@ -27,6 +27,9 @@ class SdPoint;
 class SdPropInt;
 class SdPropLayer;
 class SdPointTable;
+class SdPropLine;
+class SdPropText;
+class SdRect;
 
 class SdUndo
   {
@@ -43,14 +46,8 @@ class SdUndo
     //save undo
     void insertObject( SdContainer *container, SdObject *object );
     void deleteObject( SdContainer *container, SdObject *object );
-    void point( SdPoint *p );
-    void point2( SdPoint *p1, SdPoint *p2 );
-    void pointIndex( SdPointTable *table, int index );
-    void intValue( int *v );
-    void propInt( SdPropInt *propInt );
-    void propLayer( SdPropLayer *propLayer );
-    void propLayerIntInt( SdPropLayer *propLayer, SdPropInt *propInt1, SdPropInt *propInt2 );
-    void propString( QString *str );
+    void propLineAnd2Point( SdPropLine *prp, SdPoint *p1, SdPoint *p2 );
+    void propTextAndText( SdPropText *prp, SdRect *r, QString *str );
     void begin( QString title );
 
     //do undo and redo

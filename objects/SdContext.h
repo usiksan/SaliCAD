@@ -58,22 +58,24 @@ class SdContext {
     void            setPen(int width, SdLayer *layer, int lineStyle);
     void            setPen(int width, QColor color, int lineStyle );
     void            setBrush( QColor color );
-    void            setProp( SdPropLine &prop );
+    void            setProp(const SdPropLine &prop );
+    void            setFont( const SdPropText &prop );
 
     //Примитивы рисования
     void            line( SdPoint a, SdPoint b );
-    void            line( SdPoint a, SdPoint b, SdPropLine &prop );
+    void            line(SdPoint a, SdPoint b, const SdPropLine &prop );
     //virtual void    road( SdPoint a, SdPoint b, int clear, SdRoadProp &prop ) = 0;
-            void    quadrangle( SdQuadrangle q, SdPropLine &prop );
+    void            quadrangle( SdQuadrangle q, const SdPropLine &prop );
     void            rect( SdRect r );
-    void            rect( SdRect r, SdPropLine &prop );
+    void            rect( SdRect r, const SdPropLine &prop );
     void            fillRect( SdRect r );
-    void            fillRect( SdRect r, SdPropLine &prop );
+    void            fillRect( SdRect r, const SdPropLine &prop );
 //    virtual void    arc( SdPoint center, int radius, SdAngle start, SdAngle stop, SdPropLine &prop ) = 0;
 //    virtual void    circle( SdPoint center, int radius, SdPropLine &prop ) = 0;
-//    virtual void    text( const QString str, SdTextProp &prop, bool special = false ) = 0;
-    //virtual void   VectorText( DTextProp &prop, CPChar str, bool special = false ) = 0;
-            void    region( SdPointList &points, SdPropLine &prop, bool autoClose = true );
+    void            text( SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert );
+    void            text( SdPoint pos, SdRect &over, const QString str, const SdPropText &prop );
+    void            region( const SdPointList &points, bool autoClose = true );
+    void            region( const SdPointList &points, const SdPropLine &prop, bool autoClose = true );
 //    virtual void    polygon( SdPointList &points, SdPolyWindowList &windows, SdRoadProp &prop ) = 0;
     //virtual void TextBox( DTextProp &prop, int charNum );
 

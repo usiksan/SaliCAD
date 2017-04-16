@@ -42,6 +42,8 @@ class SdPropInt
 
     void       write( const QString name, QJsonObject &obj ) const { obj.insert( name, mValue ); }
     void       read( const QString name, const QJsonObject obj ) { mValue = obj.value(name).toInt(); }
+
+    int        swap( int v ) { int t = mValue; mValue = v; return t; }
   };
 
 #endif // SDINTPROP_H

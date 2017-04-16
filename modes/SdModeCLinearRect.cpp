@@ -34,6 +34,8 @@ void SdModeCLinearRect::drawDynamic(SdContext *ctx)
                  sdGlobalProp->mLineProp.mType.getValue() );
     ctx->rect( SdRect(mFirst,mPrevMove) );
     }
+  if( sdEnvir->mIsSmart && mSmartType )
+    ctx->smartPoint( mSmartPoint, mSmartType );
   }
 
 

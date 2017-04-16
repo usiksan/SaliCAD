@@ -58,9 +58,16 @@ void SdPropLine::read(const QJsonObject obj)
   mLayer.read( QStringLiteral("lineLayer"), obj );
   }
 
-void SdPropLine::saveState(SdUndo *undo)
+void SdPropLine::saveState(SdPropLineState *dst)
   {
-  undo->propInt( &mWidth );
-  undo->propInt( &mType );
-  undo->propLayer( &mLayer );
+  dst->mWidth = mWidth.getValue();
+  dst->mType  = mType.getValue();
+  dst->mLayer = mLayer.layer();
+  }
+
+void SdPropLine::swapState(SdPropLineState *src)
+  {
+  src->mWidth = mWidth.swap( src->mWidth );
+  src->mType  = mType.swap( src->mType );
+  src->mLayer = mLayer.swap( src->mLayer );
   }

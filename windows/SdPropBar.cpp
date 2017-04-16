@@ -46,10 +46,12 @@ void SdPropBar::setSelectedLayer(SdLayer *layer)
     int index = mLayer->findText( QString() );
     if( index >= 0 )
       mLayer->setCurrentIndex( index );
-    else {
-      mLayer->addItem( QString(), QVariant(QString()) );
-      setSelectedLayer( layer );
-      }
+    else
+      mLayer->setCurrentIndex( -1 );
+//      {
+//      mLayer->addItem( QString(), QVariant(QString()) );
+//      setSelectedLayer( layer );
+//      }
     }
   }
 
@@ -58,6 +60,9 @@ void SdPropBar::setSelectedLayer(SdLayer *layer)
 
 SdLayer *SdPropBar::getSelectedLayer()
   {
+  int index = mLayer->currentIndex();
+  if( index < 0 )
+    return 0;
   QString id = mLayer->currentData().toString();
   if( id.isEmpty() )
     return 0;

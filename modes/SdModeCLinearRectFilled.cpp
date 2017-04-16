@@ -31,6 +31,8 @@ void SdModeCLinearRectFilled::drawDynamic(SdContext *ctx)
     ctx->setBrush( sdEnvir->getSysColor(scEnter) );
     ctx->fillRect( SdRect(mFirst,mPrevMove) );
     }
+  if( sdEnvir->mIsSmart && mSmartType )
+    ctx->smartPoint( mSmartPoint, mSmartType );
   }
 
 

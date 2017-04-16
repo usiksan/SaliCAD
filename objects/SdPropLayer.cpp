@@ -56,3 +56,13 @@ void SdPropLayer::read(const QString name, const QJsonObject obj)
   mLayer = sdEnvir->getLayer( obj.value(name).toString() );
   }
 
+
+
+SdLayer *SdPropLayer::swap(SdLayer *src)
+  {
+  SdLayer *lay = mLayer;
+  mLayer = src;
+  if( src ) mValue = OneValue;
+  return lay;
+  }
+

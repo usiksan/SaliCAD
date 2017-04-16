@@ -51,6 +51,25 @@ void SdEnvir::setSysColor(int colorId, QColor color)
 
 
 
+QString SdEnvir::getSysFont(int fontId)
+  {
+  if( fontId >= 0 && fontId < FONT_COUNT )
+    return mFonts[fontId];
+  return mFonts[0];
+  }
+
+
+
+
+void SdEnvir::setSysFont(int fontId, const QString fontName)
+  {
+  if( fontId >= 0 && fontId < FONT_COUNT )
+    mFonts[fontId] = fontName;
+  }
+
+
+
+
 void SdEnvir::loadEnvir()
   {
   QSettings s;
@@ -62,6 +81,10 @@ void SdEnvir::loadEnvir()
     //Прочитали цвета
     for( int i = 0; i < scLast; i++ )
       is >> mSysColors[i];
+
+    //Read fonts
+    for( int i = 0; i < FONT_COUNT; i++ )
+      is >> mFonts[i];
 
     //Прочитали слои
     deleteLayers();
@@ -120,6 +143,10 @@ void SdEnvir::saveEnvir()
   //Записали цвета
   for( int i = 0; i < scLast; i++ )
     os << mSysColors[i];
+
+  //Write fonts
+  for( int i = 0; i < FONT_COUNT; i++ )
+    os << mFonts[i];
 
   //Записали слои
   int c = mLayerTable.count();
@@ -181,6 +208,13 @@ void SdEnvir::defaultEnvir()
   mSysColors[scCursor]    = QColor(0,0,0);        //Цвет курсора
   mSysColors[scTraseNet]  = QColor(0,0,0);        //Цвет трассируемой цепи
   mSysColors[scGrid]      = QColor(100,100,100);  //Цвет сетки
+
+  //Default fonts
+  mFonts[0] = QString("FreeSerif");
+  mFonts[1] = QString("FreeSans");
+  mFonts[2] = QString("FreeMono");
+  mFonts[3] = QString("Source Code Pro");
+  mFonts[4] = QString("Arial");
 
   //Значения глобальных переменных настройки по умолчанию
   mDotSize           = 30;             //Размер точки соединений сегментов цепи

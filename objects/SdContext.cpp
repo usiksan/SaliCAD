@@ -14,7 +14,9 @@ Description
 #include "SdContext.h"
 #include "SdConverter.h"
 #include "SdEnvir.h"
+#include "SdConverterText.h"
 #include <QPainter>
+#include <QFont>
 
 
 SdContext::SdContext(SdPoint grid, QPainter *painter) :
@@ -54,7 +56,7 @@ void SdContext::line(SdPoint a, SdPoint b)
   mPainter->drawLine( a, b );
   }
 
-void SdContext::line(SdPoint a, SdPoint b, SdPropLine &prop)
+void SdContext::line(SdPoint a, SdPoint b, const SdPropLine &prop)
   {
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
     setProp( prop );
@@ -62,7 +64,7 @@ void SdContext::line(SdPoint a, SdPoint b, SdPropLine &prop)
     }
   }
 
-void SdContext::quadrangle(SdQuadrangle q, SdPropLine &prop)
+void SdContext::quadrangle(SdQuadrangle q, const SdPropLine &prop)
   {
   //Draw 4 edges
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
@@ -87,7 +89,7 @@ void SdContext::rect(SdRect r)
 
 
 
-void SdContext::rect(SdRect r, SdPropLine &prop)
+void SdContext::rect(SdRect r, const SdPropLine &prop)
   {
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
     setProp( prop );
@@ -106,7 +108,7 @@ void SdContext::fillRect(SdRect r)
 
 
 
-void SdContext::fillRect(SdRect r, SdPropLine &prop)
+void SdContext::fillRect(SdRect r, const SdPropLine &prop)
   {
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
     setProp( prop );
@@ -116,18 +118,68 @@ void SdContext::fillRect(SdRect r, SdPropLine &prop)
 
 
 
-void SdContext::region(SdPointList &points, SdPropLine &prop, bool autoClose)
+
+void SdContext::text(SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert)
+  {
+  //Get over rect of text
+  over.set( mPainter->boundingRect( 0,0, 0,0, Qt::AlignLeft | Qt::AlignTop, str ) );
+
+  //Align text with flags
+  switch( horz ) {
+    case dhjLeft   : break;
+    case dhjCenter : over.moveLeft( -over.width() / 2 ); break;
+    case dhjRight  : over.moveRight( 0 ); break;
+    }
+
+  switch( vert ) {
+    case dvjTop : break;
+    case dvjMiddle : over.moveTop( -over.height() / 2 ); break;
+    case dvjBottom : over.moveBottom( 0 ); break;
+    }
+
+  SdConverterText cnv( this, pos, dir );
+  setConverter( &cnv );
+
+  mPainter->drawText( over, Qt::AlignLeft | Qt::AlignTop, str );
+
+  over.set( cnv.getMatrix().mapRect( over ) );
+  }
+
+
+
+
+void SdContext::text( SdPoint pos, SdRect &over, const QString str, const SdPropText &prop)
+  {
+  if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
+    setFont( prop );
+    text( pos, over, str, prop.mDir.getValue(), prop.mHorz.getValue(), prop.mVert.getValue() );
+    }
+  }
+
+
+
+
+
+
+
+void SdContext::region(const SdPointList &points, bool autoClose)
+  {
+  for( int i = 1; i < points.count(); i++ )
+    mPainter->drawLine( points.at(i-1), points.at(i) );
+  if( autoClose && points.first() != points.last() )
+    mPainter->drawLine( points.first(), points.last() );
+  }
+
+
+
+void SdContext::region( const SdPointList &points, const SdPropLine &prop, bool autoClose )
   {
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
     if( points.count() > 1 ) {
       setPen( prop.mWidth, prop.mLayer.layer(), prop.mType );
-      for( int i = 1; i < points.count(); i++ )
-        mPainter->drawLine( points.at(i-1), points.at(i) );
-      if( autoClose && points.first() != points.last() )
-        mPainter->drawLine( points.first(), points.last() );
+      region( points, autoClose );
       }
     }
-
   }
 
 
@@ -278,12 +330,25 @@ void SdContext::setBrush(QColor color)
 
 
 
-void SdContext::setProp(SdPropLine &prop)
+void SdContext::setProp( const SdPropLine &prop)
   {
   QColor color = convertColor(prop.mLayer.layer());
   setPen( prop.mWidth, color, prop.mType );
   setBrush( color );
   }
+
+
+
+
+
+void SdContext::setFont(const SdPropText &prop)
+  {
+  QFont font( sdEnvir->getSysFont(prop.mFont.getValue()) );
+  font.setPixelSize( prop.mSize.getValue() );
+  mPainter->setPen( convertColor(prop.mLayer.layer()) );
+  mPainter->setFont( font );
+  }
+
 
 
 

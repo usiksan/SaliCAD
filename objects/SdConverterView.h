@@ -26,6 +26,9 @@ class SdConverterView : public SdConverter
 
     //Return local conversion transformation matrix
     virtual QTransform getMatrix() override;
+
+    //Return scale factor
+    virtual double     getScale() const override { return mScale; }
   };
 
 #endif // SDCONVERTERVIEW_H

@@ -12,6 +12,7 @@ Description
 */
 
 #include "SdPoint.h"
+#include "SdProp.h"
 #include <math.h>
 
 
@@ -147,6 +148,8 @@ bool SdPoint::isOnCircle(SdPoint center, int radius, int delta) const
   return abs( radius - getDistance(center) ) <= delta;
   }
 
+
+
 bool SdPoint::isOnArc(SdPoint center, SdPoint start, SdPoint stop, int delta) const
   {
   if( isOnCircle( center, center.getDistance(start), delta )  ) {
@@ -195,6 +198,17 @@ void SdPoint::read(const QString name, const QJsonObject obj)
 
 
 
+void SdPoint::swap(SdPoint *p)
+  {
+  int tx = p->x();
+  int ty = p->y();
+  p->set( x(), y() );
+  set( tx, ty );
+  }
+
+
+
+
 QJsonObject SdPoint::write() const
   {
   QJsonObject obj;
@@ -221,4 +235,33 @@ SdAngle calcDirection90( SdPoint a, SdPoint b ) {
   else
     //Приоритетная ось Y
     return b.y() > a.y() ? da90 : da270;
+  }
+
+
+
+SdPoint get90( SdPoint a, SdPoint b ) {
+  if( abs(b.x() - a.x()) > abs(b.y() - a.y()) ) return SdPoint(b.x(),a.y());
+  return SdPoint(a.x(),b.y());
+  }
+
+
+
+SdPoint get45( SdPoint a, SdPoint b ) {
+  int dx = b.x() - a.x();
+  int dy = b.y() - a.y();
+  int len = ( abs( dx ) > abs( dy ) ) ? abs(dy) : abs(dx);
+  if( !len ) return b;
+  return SdPoint( a.x() + ( dx > 0 ? len : -len), a.y() + ( dy > 0 ? len : -len) );
+  }
+
+
+
+
+SdPoint calcMiddlePoint(SdPoint a, SdPoint b, int enterType )
+  {
+  switch( enterType ) {
+    case dleOrtho     : return get90(a,b);
+    case dle45degree  : return get45(a,b);
+    default           : return b;
+    }
   }

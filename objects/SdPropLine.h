@@ -24,6 +24,12 @@ Description
 
 class SdUndo;
 
+struct SdPropLineState {
+    int      mWidth;
+    int      mType;
+    SdLayer *mLayer;
+  };
+
 struct SdPropLine {
   SdPropInt   mWidth; //Толщина линии
   SdPropInt   mType;  //Тип линии
@@ -38,7 +44,8 @@ struct SdPropLine {
 
   void write( QJsonObject &obj ) const;
   void read( const QJsonObject obj );
-  void saveState( SdUndo *undo );
+  void saveState( SdPropLineState *dst );
+  void swapState( SdPropLineState *src );
   };
 
 #endif // SDLINEPROP_H

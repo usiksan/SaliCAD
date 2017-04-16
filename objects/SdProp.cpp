@@ -19,11 +19,17 @@ SdProp::SdProp()
   {
   //Сформировать свойства по умолчанию
   mLineProp.mLayer.set( QString( LID0_COMMON LID1_ELEM) );       //Свойства линейных объектов
-  mLineProp.mType = dltSolid;
+  mLineProp.mType  = dltSolid;
   mLineProp.mWidth = 0;
 
+  mTextProp.mLayer.set( QString( LID0_COMMON LID1_ELEM) );       //Свойства текстовых объектов
+  mTextProp.mFont   = 0;
+  mTextProp.mSize   = 35;
+  mTextProp.mDir    = da0;
+  mTextProp.mHorz   = dhjLeft;
+  mTextProp.mVert   = dvjMiddle;
+  mTextProp.mMirror = 0;
   //TODO setup all prop defaults
-  //mTextProp.;       //Свойства текстовых объектов
 //  SdPropLine    mWireProp;       //Свойства сегментов цепей схемы
 //  SdPropText    mWireNameProp;   //Свойства имени цепи
 //  SdPropSymPin  mSymPinProp;     //Свойства вывода символа

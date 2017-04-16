@@ -22,6 +22,7 @@ Description
 #include "modes/SdMode.h"
 #include "modes/SdModeTZoomer.h"
 #include "modes/SdModeTZoomWindow.h"
+#include "modes/SdModeCLinearLine.h"
 #include "modes/SdModeCLinearRect.h"
 #include "modes/SdModeCLinearRectFilled.h"
 
@@ -250,6 +251,14 @@ void SdWEditorGraph::cmPropChanged()
   {
   if( modeGet() )
     modeGet()->propGetFromBar();
+  }
+
+
+
+
+void SdWEditorGraph::cmModeLine()
+  {
+  modeSet( new SdModeCLinearLine( this, getProjectItem() ) );
   }
 
 

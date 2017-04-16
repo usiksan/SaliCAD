@@ -36,6 +36,9 @@ class SdConverter
     //Return local conversion transformation matrix
     virtual QTransform getMatrix() { return QTransform(); }
 
+    //Return scale factor
+    virtual double     getScale() const;
+
     friend class SdContext;
   };
 

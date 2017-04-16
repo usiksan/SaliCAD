@@ -41,6 +41,9 @@ History
                    Impruve main window, tree and editor for deleting object, close file.
                    Append filled rect. Mode and object.
                    Correct grid alignment.
+  15.04.2017 v0.14 Append line. Mode and object.
+  17.04.2017 v0.15 Add text drawing.
+                   Begin text object and textual mode.
 */
 
 #ifndef SDCONFIG
@@ -52,7 +55,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             13
+#define SD_VERSION_MINOR             14
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -72,7 +75,14 @@ History
 #define PREVIOUS_FILES_COUNT         5
 
 //Grid history count
+//User can enter any grid size, but only GRID_HISTORY_SIZE grid sizes save in system for fast selection
 #define GRID_HISTORY_SIZE            5
+
+//Maximum font count
+//In project fonts referenced by index in system font table
+//This count define size of this table. So only FONT_COUNT different
+//fonts may be used in project.
+#define FONT_COUNT                   5
 
 //Undo history count
 #define UNDO_HISTORY_SIZE            100

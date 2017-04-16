@@ -17,7 +17,11 @@ Description
 
 #include "SdPropInt.h"
 
-const int da0 = 0, da90 = 90000, da180 = 180000, da270 = 270000;
+//Orthogonal angles
+#define da0        0
+#define da90   90000
+#define da180 180000
+#define da270 270000
 
 class SdAngle : public SdPropInt
   {

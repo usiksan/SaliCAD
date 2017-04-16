@@ -45,14 +45,15 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (6 + GRID_HISTORY_SIZE)
+#define SdEnvirVersion  (7 + GRID_HISTORY_SIZE + FONT_COUNT)
 
 typedef QMap<QString,SdLayerPtr> SdLayerPtrTable;
 
 
 class SdEnvir
   {
-    QColor          mSysColors[scLast];    //Системные цвета
+    QColor          mSysColors[scLast];    //System color table
+    QString         mFonts[FONT_COUNT];    //System font table
   public:
     SdLayerPtrTable mLayerTable;           //Таблица слоев
     int             mDotSize;              //Размер точки соединений сегментов цепи
@@ -87,6 +88,7 @@ class SdEnvir
     bool            mCursorGrid;           //Включение движения курсора по сетке
     bool            mCenterCursor;         //Центровать курсор при увеличении и уменьшении
 
+
     bool            mGuiderEnabled;        //Флаг разрешения/запрещения путеводителя
     int             mGuiderPosition;       //Положение разделителя путеводителя
     bool            mProjectEnabled;       //Флаг разрешения/запрещения проекта
@@ -113,6 +115,9 @@ class SdEnvir
 
     QColor   getSysColor( int colorId );
     void     setSysColor( int colorId, QColor color );
+
+    QString  getSysFont( int fontId );
+    void     setSysFont( int fontId, const QString fontName );
 
     void     loadEnvir();
     void     saveEnvir();

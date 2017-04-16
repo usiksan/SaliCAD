@@ -25,9 +25,6 @@ class SdGraphLinear : public SdGraph
     SdGraphLinear();
     SdGraphLinear( const SdPropLine &propLine );
 
-    //Save object state
-    virtual void saveState( SdUndo *undo ) override;
-
     virtual void cloneFrom(const SdObject *src) override;
     virtual void writeObject(QJsonObject &obj) const override;
     virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
