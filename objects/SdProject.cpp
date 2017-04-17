@@ -178,6 +178,19 @@ void SdProject::undoInsertChild(SdObject *child)
 
 
 
+void SdProject::redoInsertChild(SdObject *child)
+  {
+  SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
+  if( item ) {
+    SdContainer::redoInsertChild( child );
+    mItemExtendNameMap.insert( item->getExtendTitle(), item );
+    mDirty = true;
+    SdPulsar::pulsar->emitInsertItem( item );
+    }
+  }
+
+
+
 
 void SdProject::deleteChild(SdObject *child, SdUndo *undo)
   {

@@ -17,6 +17,7 @@ Description
 #include "SdWEditor.h"
 #include "SdWEditorGraphSymbol.h"
 #include "SdWCommand.h"
+#include "SdWLabel.h"
 #include "SdDOptions.h"
 #include "objects/SdPulsar.h"
 #include <QSettings>
@@ -68,14 +69,12 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
 
   //Create status bar
   QStatusBar *sbar = statusBar();
-  sbar->addWidget( mXLabel = new QLabel(QString("X:")) );
-  sbar->addWidget( mXPos = new QLabel(QString("0")) );
-  mXPos->setMinimumWidth( 60 );
-  sbar->addWidget( mYLabel = new QLabel(QString("Y:")) );
-  sbar->addWidget( mYPos = new QLabel(QString("0")) );
-  mYPos->setMinimumWidth( 60 );
-  sbar->addWidget( mMessage = new QLabel(), 1 );
-
+  sbar->addWidget( mXLabel = new SdWLabel( QString("X:"), 30 ) );
+  sbar->addWidget( mXPos = new SdWLabel( QString("0"), 60 ) );
+  sbar->addWidget( mYLabel = new SdWLabel( QString("Y:"), 30 ) );
+  sbar->addWidget( mYPos = new SdWLabel( QString("0"), 60 ) );
+  sbar->addWidget( mMessage = new SdWLabel( QString(), 100 ), 1 );
+  sbar->setSizeGripEnabled(true);
 
   activateProjectName( QString(), false );
 

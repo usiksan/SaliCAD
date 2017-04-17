@@ -58,6 +58,7 @@ class SdProject : public SdContainer
     virtual void      cloneFrom( const SdObject *src) override;
     virtual void      insertChild(SdObject *child, SdUndo *undo ) override;
     virtual void      undoInsertChild(SdObject *child) override;
+    virtual void      redoInsertChild(SdObject *child) override;
     virtual void      deleteChild(SdObject *child, SdUndo *undo ) override;
     virtual void      undoDeleteChild(SdObject *child) override;
 

@@ -5,7 +5,7 @@
 #-------------------------------------------------
 CONFIG += c++11
 
-QT       += core gui network
+QT       += core gui  network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -91,7 +91,8 @@ SOURCES += \
     objects/SdGraphText.cpp \
     objects/SdConverterText.cpp \
     objects/SdUndoRecordPropTextAndText.cpp \
-    modes/SdModeCTextual.cpp
+    modes/SdModeCTextual.cpp \
+    windows/SdWLabel.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -175,7 +176,8 @@ HEADERS  += \
     objects/SdGraphText.h \
     objects/SdConverterText.h \
     objects/SdUndoRecordPropTextAndText.h \
-    modes/SdModeCTextual.h
+    modes/SdModeCTextual.h \
+    windows/SdWLabel.h
 
 DISTFILES += \
     license.txt

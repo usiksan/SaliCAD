@@ -18,6 +18,7 @@ Description
 #include "SdConfig.h"
 #include "SdWProjectList.h"
 #include "SdWEditor.h"
+#include "SdWLabel.h"
 #include <QMainWindow>
 #include <QSplitter>
 #include <QTabWidget>
@@ -37,11 +38,11 @@ class SdWMain : public QMainWindow
     QTabWidget     *mWEditors;      //Actived visual editors
 
     //Status bar infos
-    QLabel         *mXLabel;        //X axiz title (X or col)
-    QLabel         *mXPos;          //X axiz position
-    QLabel         *mYLabel;        //Y axiz title (Y or row)
-    QLabel         *mYPos;          //Y axiz position
-    QLabel         *mMessage;       //Message
+    SdWLabel       *mXLabel;        //X axiz title (X or col)
+    SdWLabel       *mXPos;          //X axiz position
+    SdWLabel       *mYLabel;        //Y axiz title (Y or row)
+    SdWLabel       *mYPos;          //Y axiz position
+    SdWLabel       *mMessage;       //Message
   public:
     explicit SdWMain( QStringList args, QWidget *parent = 0 );
 
