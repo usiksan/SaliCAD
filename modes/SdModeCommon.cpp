@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -20,3 +20,5 @@ SdModeCommon::SdModeCommon(SdWEditorGraph *editor, SdProjectItem *obj) :
   {
 
   }
+
+

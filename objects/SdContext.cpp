@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -119,7 +119,7 @@ void SdContext::fillRect(SdRect r, const SdPropLine &prop)
 
 
 
-void SdContext::text(SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert)
+void SdContext::text(SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert, int cursor, SdPoint *cp1, SdPoint *cp2, SdRect *sel, int start, int stop  )
   {
   //Get over rect of text
   over.set( mPainter->boundingRect( 0,0, 0,0, Qt::AlignLeft | Qt::AlignTop, str ) );
@@ -141,6 +141,28 @@ void SdContext::text(SdPoint pos, SdRect &over, const QString str, int dir, int 
   setConverter( &cnv );
 
   mPainter->drawText( over, Qt::AlignLeft | Qt::AlignTop, str );
+
+  if( cp1 && cp2 ) {
+    if( cursor == 0 ) {
+      *cp1 = cnv.getMatrix().map( over.topLeft() );
+      *cp2 = cnv.getMatrix().map( over.bottomLeft() );
+      }
+    else {
+      QRect rpos = mPainter->boundingRect( over, Qt::AlignLeft | Qt::AlignTop, str.left(cursor) );
+      *cp1 = cnv.getMatrix().map( rpos.topRight() );
+      *cp2 = cnv.getMatrix().map( rpos.bottomRight() );
+      }
+    }
+
+  if( sel ) {
+    //Fill selection rect
+    QRect rStart = mPainter->boundingRect( over, Qt::AlignLeft | Qt::AlignTop, str.left(start) );
+    QRect rStop  = mPainter->boundingRect( over, Qt::AlignLeft | Qt::AlignTop, str.left(stop) );
+    QRect res;
+    res.setTopLeft( rStart.topRight() );
+    res.setBottomRight( rStop.bottomRight() );
+    sel->set( cnv.getMatrix().mapRect( res ) );
+    }
 
   over.set( cnv.getMatrix().mapRect( over ) );
   }

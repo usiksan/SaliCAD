@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -390,6 +390,8 @@ void SdWEditorGraph::mousePressEvent(QMouseEvent *event)
       mDownPoint = mPrevPoint;
       modeGet()->enterPoint( mPrevPoint );
       }
+    else if( event->button() == Qt::MiddleButton )
+      modeGet()->enterPrev();
     else if( event->button() == Qt::RightButton )
       modeGet()->cancelPoint( mPrevPoint );
     }

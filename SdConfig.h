@@ -44,6 +44,8 @@ History
   15.04.2017 v0.14 Append line. Mode and object.
   17.04.2017 v0.15 Add text drawing.
                    Begin text object and textual mode.
+  17.04.2017 v0.16 Fixed minimizing main window in windows os. Cause was in QLabel. When it
+                   insert in QStatusBar - it minimizing main window.
 */
 
 #ifndef SDCONFIG
@@ -55,7 +57,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             14
+#define SD_VERSION_MINOR             16
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
