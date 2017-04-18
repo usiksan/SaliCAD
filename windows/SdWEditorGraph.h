@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -109,7 +109,7 @@ class SdWEditorGraph : public SdWEditor
 //    virtual void cmModeCircle() {}
 //    virtual void cmModeFilledCircle() {}
 //    virtual void cmModeArc() {}
-//    virtual void cmModeText() {}
+    virtual void           cmModeText() override;
 //    virtual void cmModeField() {}
 
   protected:

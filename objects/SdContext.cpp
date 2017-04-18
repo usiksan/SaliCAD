@@ -119,7 +119,7 @@ void SdContext::fillRect(SdRect r, const SdPropLine &prop)
 
 
 
-void SdContext::text(SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert, int cursor, SdPoint *cp1, SdPoint *cp2, SdRect *sel, int start, int stop  )
+void SdContext::textEx(SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert, int cursor, SdPoint *cp1, SdPoint *cp2, SdRect *sel, int start, int stop  )
   {
   //Get over rect of text
   over.set( mPainter->boundingRect( 0,0, 0,0, Qt::AlignLeft | Qt::AlignTop, str ) );
@@ -174,7 +174,7 @@ void SdContext::text( SdPoint pos, SdRect &over, const QString str, const SdProp
   {
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
     setFont( prop );
-    text( pos, over, str, prop.mDir.getValue(), prop.mHorz.getValue(), prop.mVert.getValue() );
+    textEx( pos, over, str, prop.mDir.getValue(), prop.mHorz.getValue(), prop.mVert.getValue() );
     }
   }
 

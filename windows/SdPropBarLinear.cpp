@@ -1,9 +1,15 @@
-﻿/*
-  Проект "SaliBrick"
-    Визуальное программирование микроконтроллеров
-  Автор
-    Сибилев А.С.
-  Описание
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Properties bar for lines and other linear objects
 */
 #include "SdPropBarLinear.h"
 #include <QList>
@@ -102,6 +108,7 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
 
 
 
+//Set all visual line properties from SdPropLine structure
 void SdPropBarLinear::setPropLine(SdPropLine *propLine, double ppm, int enterType)
   {
   if( propLine ) {
@@ -122,7 +129,7 @@ void SdPropBarLinear::setPropLine(SdPropLine *propLine, double ppm, int enterTyp
 
 
 
-
+//Get all line properties from visual elements and fill SdPropLine
 void SdPropBarLinear::getPropLine(SdPropLine *propLine, int *enterType )
   {
   if( propLine ) {
@@ -146,7 +153,7 @@ void SdPropBarLinear::getPropLine(SdPropLine *propLine, int *enterType )
 
 
 
-
+//Set line width
 void SdPropBarLinear::setWidth(double width)
   {
   int index = prevWidth.indexOf( width );
@@ -164,6 +171,9 @@ void SdPropBarLinear::setWidth(double width)
     }
   }
 
+
+
+//Set line vertex type when enter line - angle between two connected segments
 void SdPropBarLinear::setVertexType(int type)
   {
   mEnterOrtho->setChecked( type == dleOrtho );
@@ -171,6 +181,9 @@ void SdPropBarLinear::setVertexType(int type)
   mEnterAnyDegree->setChecked( type == dleAnyDegree );
   }
 
+
+
+//Set line type: solid, dotted or dashed
 void SdPropBarLinear::setLineType(int type)
   {
   mLineSolid->setChecked( type == dltSolid );

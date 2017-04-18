@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Properties bar for text and other text based objects
 */
 #include "SdPropBarTextual.h"
 #include "objects/SdEnvir.h"
@@ -173,6 +174,35 @@ void SdPropBarTextual::setPropText(SdPropText *propText, double ppm)
 
     //Text direction
     setDirection( propText->mDir.getValue() );
+    }
+  }
+
+
+
+
+void SdPropBarTextual::getPropText(SdPropText *propText)
+  {
+  if( propText ) {
+    //Get current layer
+    SdLayer *layer = getSelectedLayer();
+    if( layer )
+      propText->mLayer = layer;
+
+    if( !mSize->currentText().isEmpty() )
+      propText->mSize = static_cast<int>( mSize->currentText().toDouble() / mPPM );
+
+    if( mVertTop->isChecked() ) propText->mVert = dvjTop;
+    else if( mVertMiddle->isChecked() ) propText->mVert = dvjMiddle;
+    else if( mVertBottom->isChecked() ) propText->mVert = dvjBottom;
+
+    if( mHorzLeft->isChecked() ) propText->mHorz = dhjLeft;
+    else if( mHorzCenter->isChecked() ) propText->mHorz = dhjCenter;
+    else if( mHorzRight->isChecked() ) propText->mHorz = dhjRight;
+
+    if( mDir0->isChecked() ) propText->mDir = da0;
+    else if( mDir90->isChecked() ) propText->mDir = da90;
+    else if( mDir180->isChecked() ) propText->mDir = da180;
+    else if( mDir270->isChecked() ) propText->mDir = da270;
     }
   }
 

@@ -72,7 +72,7 @@ class SdContext {
     void            fillRect( SdRect r, const SdPropLine &prop );
 //    virtual void    arc( SdPoint center, int radius, SdAngle start, SdAngle stop, SdPropLine &prop ) = 0;
 //    virtual void    circle( SdPoint center, int radius, SdPropLine &prop ) = 0;
-    void            text(SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert, int cursor = 0, SdPoint *cp1 = 0, SdPoint *cp2 = 0, SdRect *sel = 0, int start = 0, int stop = 0);
+    void            textEx(SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert, int cursor = 0, SdPoint *cp1 = 0, SdPoint *cp2 = 0, SdRect *sel = 0, int start = 0, int stop = 0);
     void            text( SdPoint pos, SdRect &over, const QString str, const SdPropText &prop );
     void            region( const SdPointList &points, bool autoClose = true );
     void            region( const SdPointList &points, const SdPropLine &prop, bool autoClose = true );

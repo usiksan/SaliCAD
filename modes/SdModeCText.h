@@ -15,15 +15,20 @@ Description
 #define SDMODECTEXT_H
 
 #include "SdModeCTextual.h"
+#include "objects/SdGraph.h"
 
 class SdModeCText : public SdModeCTextual
   {
+    SdGraph   *mPicAffected; //Элемент, содержащий редактируемый текст
+    int        mIdAffected;  //Номер редактируемого текста в элементе
+    SdPropText mEditText;    //Properties for edited text
+    const int sPlace = 0, sEdit = 1, sEnter = 2;
   public:
     SdModeCText( SdWEditorGraph *editor, SdProjectItem *obj );
 
     // SdMode interface
   public:
-    virtual void drawDynamic(SdContext *ctx) override;
+    virtual void    drawDynamic(SdContext *ctx) override;
     virtual void enterPoint(SdPoint) override;
     virtual void cancelPoint(SdPoint) override;
     virtual QString getStepHelp() const override;
