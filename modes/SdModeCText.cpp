@@ -12,13 +12,33 @@ Description
   Mode for text edit
 */
 #include "SdModeCText.h"
+#include "objects/SdGraphText.h"
+#include "windows/SdWEditorGraph.h"
 #include <QObject>
 
 SdModeCText::SdModeCText(SdWEditorGraph *editor, SdProjectItem *obj) :
-  SdModeCTextual( editor, obj )
+  SdModeCTextual( editor, obj ),
+  mPicAffected(0), //Элемент, содержащий редактируемый текст
+  mIdAffected(0),  //Номер редактируемого текста в элементе
+  mEditText()      //Properties for edited text
   {
 
   }
+
+
+
+
+void SdModeCText::drawStatic(SdContext *ctx)
+  {
+  mObject->forEach( dctAll, [=]( SdObject *obj ) {
+    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+    if( graph && graph != mPicAffected )
+      graph->draw( ctx );
+    return true;
+    });
+  }
+
+
 
 
 void SdModeCText::drawDynamic(SdContext *ctx)
@@ -35,17 +55,19 @@ void SdModeCText::enterPoint(SdPoint enter)
   if( getStep() ) SdModeCTextual::enterPoint( enter );
   else {
     //Определим цикл ввода или редактирования
+    mIdAffected = 0;
+    mPicAffected = 0;
     mEditText.clear();
-    mObject->forEach( 0, [=]( SdObject *obj ) {
+    mObject->forEach( dctAll, [=]( SdObject *obj ) {
       SdGraph *graph = dynamic_cast<SdGraph*>( obj );
       if( graph ) {
-        mIdAffected = graph->behindText( enter, mString, mEditText );
+        mIdAffected = graph->behindText( enter, mPrev, mString, mEditText );
         if( mIdAffected ) {
           mPicAffected = graph;
-          return true;
+          return false;
           }
         }
-      return false;
+      return true;
       });
 
     if( mIdAffected && mPicAffected ) {
@@ -56,6 +78,7 @@ void SdModeCText::enterPoint(SdPoint enter)
       //Осуществить редактирование
       setText( mString, true );
       setStep( sEdit );
+      mEditor->dirtyCashe();
       update();
       }
     else {
@@ -127,6 +150,7 @@ void SdModeCText::cancelEdit()
   {
   mPropText = 0;
   setStep( sPlace );
+  update();
   }
 
 
@@ -134,12 +158,17 @@ void SdModeCText::cancelEdit()
 
 void SdModeCText::applyEdit()
   {
-  if( getStep() == sEnter ) {
-
-    }
-  else if( getStep() == sEdit ) {
-
+  if( getStep() == sEnter )
+    addPic( new SdGraphText( mPrev, mString, mOverRect, sdGlobalProp->mTextProp ), QObject::tr("Text insertion") );
+  else if( getStep() == sEdit && mPicAffected ) {
+    //Store previous state of editable object
+    mUndo->begin( QObject::tr("Text edit") );
+    mPicAffected->saveState( mUndo );
+    mPicAffected->setText( mIdAffected, mString, mEditText );
+    mPicAffected = 0;
     }
   mPropText = 0;
   setStep( sPlace );
+  mEditor->dirtyCashe();
+  update();
   }

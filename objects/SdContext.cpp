@@ -122,14 +122,19 @@ void SdContext::fillRect(SdRect r, const SdPropLine &prop)
 void SdContext::textEx(SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert, int cursor, SdPoint *cp1, SdPoint *cp2, SdRect *sel, int start, int stop  )
   {
   //Get over rect of text
-  over.set( mPainter->boundingRect( 0,0, 0,0, Qt::AlignLeft | Qt::AlignTop, str ) );
+  if( str.isEmpty() )
+    over.set( mPainter->boundingRect( 0,0, 0,0, Qt::AlignLeft | Qt::AlignTop, QString("H") ) );
+  else {
+    over.set( mPainter->boundingRect( 0,0, 0,0, Qt::AlignLeft | Qt::AlignTop, str ) );
 
-  //Align text with flags
-  switch( horz ) {
-    case dhjLeft   : break;
-    case dhjCenter : over.moveLeft( -over.width() / 2 ); break;
-    case dhjRight  : over.moveRight( 0 ); break;
+    //Align text with flags
+    switch( horz ) {
+      case dhjLeft   : break;
+      case dhjCenter : over.moveLeft( -over.width() / 2 ); break;
+      case dhjRight  : over.moveRight( 0 ); break;
+      }
     }
+
 
   switch( vert ) {
     case dvjTop : break;
@@ -140,7 +145,8 @@ void SdContext::textEx(SdPoint pos, SdRect &over, const QString str, int dir, in
   SdConverterText cnv( this, pos, dir );
   setConverter( &cnv );
 
-  mPainter->drawText( over, Qt::AlignLeft | Qt::AlignTop, str );
+  if( !str.isEmpty() )
+    mPainter->drawText( over, Qt::AlignLeft | Qt::AlignTop, str );
 
   if( cp1 && cp2 ) {
     if( cursor == 0 ) {

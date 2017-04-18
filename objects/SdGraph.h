@@ -67,7 +67,7 @@ class SdGraph : public SdObject
     virtual void   draw( SdContext *dc );              //Рисование объекта на экране
     //Получить состояние объета под курсором
     virtual int    behindCursor( SdPoint p );
-    virtual int    behindText( SdPoint p, QString &dest, SdPropText &prop );
+    virtual int    behindText( SdPoint p, SdPoint &org, QString &dest, SdPropText &prop );
     virtual bool   getInfo( SdPoint p, QString &info, bool extInfo );
     //Определение разумной точки
     virtual bool   snapPoint( SdSnapInfo *snap );

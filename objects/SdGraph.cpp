@@ -103,9 +103,10 @@ int SdGraph::behindCursor(SdPoint p)
   return 0;
   }
 
-int SdGraph::behindText(SdPoint p, QString &dest, SdPropText &prop)
+int SdGraph::behindText(SdPoint p, SdPoint &org, QString &dest, SdPropText &prop)
   {
   Q_UNUSED(p)
+  Q_UNUSED(org)
   Q_UNUSED(dest)
   Q_UNUSED(prop)
   return 0;

@@ -19,6 +19,7 @@ Description
 #include "windows/SdWEditorGraph.h"
 #include <QClipboard>
 #include <QApplication>
+#include <QDebug>
 
 SdModeCTextual::SdModeCTextual(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeCommon( editor, obj ),
@@ -58,7 +59,7 @@ void SdModeCTextual::keyDown(int key, QChar ch)
     case Qt::Key_End :
       movePos( mString.length(), mShift );
       break;
-    case Qt::Key_Back :
+    case Qt::Key_Backspace :
       if( isSelectionPresent() )
         delSelected();
       movePos( mPos - 1, true );
@@ -85,6 +86,7 @@ void SdModeCTextual::keyDown(int key, QChar ch)
       applyEdit();
       break;
     default :
+      //qDebug() << Q_FUNC_INFO << key;
       if( ch.isPrint() ) {
         //Insert character
         if( isSelectionPresent() )
@@ -160,6 +162,7 @@ void SdModeCTextual::movePos(int pos, bool sel)
   else {
     mStartSel = mStopSel = mPos = pos;
     }
+  update();
   }
 
 
@@ -279,6 +282,8 @@ void SdModeCTextual::propGetFromBar()
     SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
     if( tbar ) {
       tbar->getPropText( mPropText );
+      mEditor->setFocus();
+      update();
       }
     }
   }
@@ -299,16 +304,42 @@ void SdModeCTextual::propSetToBar()
 
 
 
+void SdModeCTextual::enterPoint(SdPoint enter)
+  {
+  Q_UNUSED(enter)
+  applyEdit();
+  }
+
+
+
+
+void SdModeCTextual::cancelPoint(SdPoint p)
+  {
+  Q_UNUSED(p)
+  cancelEdit();
+  }
+
+
+
+
 void SdModeCTextual::drawText(SdContext *dc)
   {
   if( mPropText ) {
     dc->setFont( *mPropText );
     dc->setPen(0,sdEnvir->getSysColor(scEnter), dltSolid );
-    SdRect over;
-    dc->textEx( mPrev, over, mString,
+    dc->textEx( mPrev, mOverRect, mString,
               mPropText->mDir.getValue(), mPropText->mHorz.getValue(), mPropText->mVert.getValue(),
               mPos, &mCursorP1, &mCursorP2,
               &mSelectRect, mStartSel, mStopSel );
+
+    //Draw cursor as vertical line
+    dc->line( mCursorP1, mCursorP2 );
+
+    //Draw selection rect
+    if( isSelectionPresent() ) {
+      dc->setPen(0,sdEnvir->getSysColor(scEnter), dltDotted );
+      dc->rect( mSelectRect );
+      }
     }
   }
 

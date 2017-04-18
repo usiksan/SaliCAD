@@ -30,6 +30,11 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
   //Fill font list with available fonts
   for( int i = 0; i < FONT_COUNT; i++ )
     mFont->addItem( sdEnvir->getSysFont(i) );
+  //on select other font
+  connect( mFont, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
+    Q_UNUSED(index)
+    emit propChanged();
+    });
   addWidget( mFont );
 
 
@@ -188,17 +193,26 @@ void SdPropBarTextual::getPropText(SdPropText *propText)
     if( layer )
       propText->mLayer = layer;
 
+    //Get current font
+    int fontIndex = mFont->currentIndex();
+    if( fontIndex >= 0 )
+      propText->mFont = fontIndex;
+
+    //Get text size
     if( !mSize->currentText().isEmpty() )
       propText->mSize = static_cast<int>( mSize->currentText().toDouble() / mPPM );
 
+    //Get text vertical alignment
     if( mVertTop->isChecked() ) propText->mVert = dvjTop;
     else if( mVertMiddle->isChecked() ) propText->mVert = dvjMiddle;
     else if( mVertBottom->isChecked() ) propText->mVert = dvjBottom;
 
+    //Get horizontal alignment
     if( mHorzLeft->isChecked() ) propText->mHorz = dhjLeft;
     else if( mHorzCenter->isChecked() ) propText->mHorz = dhjCenter;
     else if( mHorzRight->isChecked() ) propText->mHorz = dhjRight;
 
+    //Get direction
     if( mDir0->isChecked() ) propText->mDir = da0;
     else if( mDir90->isChecked() ) propText->mDir = da90;
     else if( mDir180->isChecked() ) propText->mDir = da180;

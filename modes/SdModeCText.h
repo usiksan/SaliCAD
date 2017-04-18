@@ -28,18 +28,19 @@ class SdModeCText : public SdModeCTextual
 
     // SdMode interface
   public:
+    virtual void    drawStatic( SdContext *ctx ) override;  //Ресует постоянную часть картинки
     virtual void    drawDynamic(SdContext *ctx) override;
-    virtual void enterPoint(SdPoint) override;
-    virtual void cancelPoint(SdPoint) override;
+    virtual void    enterPoint(SdPoint) override;
+    virtual void    cancelPoint(SdPoint) override;
     virtual QString getStepHelp() const override;
     virtual QString getModeHelp() const override;
     virtual QString getStepThema() const override;
-    virtual int getIndex() const override;
+    virtual int     getIndex() const override;
 
     // SdModeCTextual interface
   protected:
-    virtual void cancelEdit() override;
-    virtual void applyEdit() override;
+    virtual void    cancelEdit() override;
+    virtual void    applyEdit() override;
   };
 
 #endif // SDMODECTEXT_H

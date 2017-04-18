@@ -23,12 +23,13 @@ Description
 
 class SdGraphText : public SdGraph
   {
+    SdPoint    mOrigin;
     SdPropText mProp;
     QString    mString;
     SdRect     mOverRect;
   public:
     SdGraphText();
-    SdGraphText( const QString str, SdRect r, SdPropText &p );
+    SdGraphText( SdPoint org, const QString str, SdRect r, SdPropText &p );
 
     // SdObject interface
   public:
@@ -54,8 +55,7 @@ class SdGraphText : public SdGraph
     virtual SdRect  getOverRect() const override;
     virtual void    draw(SdContext *dc) override;
     virtual int     behindCursor(SdPoint p) override;
-    virtual int     behindText(SdPoint p, QString &dest, SdPropText &prop) override;
-    virtual bool    getInfo(SdPoint p, QString &info, bool extInfo) override;
+    virtual int     behindText(SdPoint p, SdPoint &org, QString &dest, SdPropText &prop) override;
   };
 
 #endif // SDGRAPHTEXT_H

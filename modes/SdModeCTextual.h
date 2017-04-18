@@ -24,6 +24,7 @@ class SdModeCTextual : public SdModeCommon
     int         mPos;          //Char cursor position
     int         mStartSel;     //Char start select position
     int         mStopSel;      //Char stop select position
+    SdRect      mOverRect;     //Text over rect
     SdRect      mSelectRect;   //Selection region
     SdPoint     mCursorP1;     //Cursor position p1. Cursor is vertical line from p1 to p2 at insert position
     SdPoint     mCursorP2;     //Cursor position p2
@@ -40,6 +41,8 @@ class SdModeCTextual : public SdModeCommon
     virtual int  getPropBarId() const override;
     virtual void propGetFromBar() override;
     virtual void propSetToBar() override;
+    virtual void enterPoint( SdPoint enter ) override;      //Ввод точки (левая кнопка)
+    virtual void cancelPoint( SdPoint p ) override;         //Точка прекращения (правая кнопка)
   protected:
     void drawText( SdContext *dc );
 

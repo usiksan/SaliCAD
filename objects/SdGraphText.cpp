@@ -13,8 +13,19 @@ Description
 #include "SdGraphText.h"
 #include "SdLayer.h"
 #include "SdSelector.h"
+#include "SdContext.h"
 
 SdGraphText::SdGraphText()
+  {
+
+  }
+
+SdGraphText::SdGraphText(SdPoint org, const QString str, SdRect r, SdPropText &p) :
+  SdGraph(),
+  mOrigin(org),
+  mProp(p),
+  mString(str),
+  mOverRect(r)
   {
 
   }
@@ -187,6 +198,7 @@ SdRect SdGraphText::getOverRect() const
 
 void SdGraphText::draw(SdContext *dc)
   {
+  dc->text( mOrigin, mOverRect, mString, mProp );
   }
 
 
@@ -194,19 +206,29 @@ void SdGraphText::draw(SdContext *dc)
 
 int SdGraphText::behindCursor(SdPoint p)
   {
+  if( isAble() ) {
+    if( mOverRect.isPointInside(p) )
+      return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+    }
+  return 0;
   }
 
 
 
 
-int SdGraphText::behindText(SdPoint p, QString &dest, SdPropText &prop)
+int SdGraphText::behindText(SdPoint p, SdPoint &org, QString &dest, SdPropText &prop)
   {
+  if( isAble() ) {
+    if( mOverRect.isPointInside(p) ) {
+      org  = mOrigin;
+      dest = mString;
+      prop = mProp;
+      return 1;
+      }
+    }
+  return 0;
   }
 
 
 
-
-bool SdGraphText::getInfo(SdPoint p, QString &info, bool extInfo)
-  {
-  }
 
