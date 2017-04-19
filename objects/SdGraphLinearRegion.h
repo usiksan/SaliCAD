@@ -47,8 +47,6 @@ class SdGraphLinearRegion : public SdGraphLinear
     virtual bool    snapPoint(SdSnapInfo *snap) override;
     virtual int     behindCursor(SdPoint p) override;
     virtual void    saveState( SdUndo *undo ) override;
-  protected:
-    void clearFly();
   };
 
 #endif // SDGRAPHLINEARREGION_H

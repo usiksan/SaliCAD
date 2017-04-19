@@ -24,9 +24,9 @@ Description
 class SdContainer;
 class SdObject;
 class SdPoint;
+class SdPointList;
 class SdPropInt;
 class SdPropLayer;
-class SdPointTable;
 class SdPropLine;
 class SdPropText;
 class SdRect;
@@ -48,6 +48,7 @@ class SdUndo
     void deleteObject( SdContainer *container, SdObject *object );
     void propLineAnd2Point( SdPropLine *prp, SdPoint *p1, SdPoint *p2 );
     void propLinePointInt( SdPropLine *prp, SdPoint *p, int *val );
+    void propLinePointTable( SdPropLine *prp, SdPointList *list );
     void propTextAndText( SdPropText *prp, SdRect *r, QString *str );
     void begin( QString title );
 

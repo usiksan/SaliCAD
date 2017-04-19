@@ -96,7 +96,9 @@ SOURCES += \
     objects/SdGraphLinearCircle.cpp \
     objects/SdUndoRecordPropLinePointInt.cpp \
     objects/SdGraphLinearCircleFilled.cpp \
-    objects/SdGraphLinearRegion.cpp
+    objects/SdGraphLinearRegion.cpp \
+    objects/SdUndoRecordPropLineAndPointsList.cpp \
+    objects/SdGraphSymPin.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -185,7 +187,9 @@ HEADERS  += \
     objects/SdGraphLinearCircle.h \
     objects/SdUndoRecordPropLinePointInt.h \
     objects/SdGraphLinearCircleFilled.h \
-    objects/SdGraphLinearRegion.h
+    objects/SdGraphLinearRegion.h \
+    objects/SdUndoRecordPropLineAndPointsList.h \
+    objects/SdGraphSymPin.h
 
 DISTFILES += \
     license.txt

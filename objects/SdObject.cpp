@@ -21,6 +21,7 @@ Description
 #include "SdGraphLinearRectFilled.h"
 #include "SdGraphLinearCircle.h"
 #include "SdGraphLinearCircleFilled.h"
+#include "SdGraphLinearRegion.h"
 #include "SdGraphText.h"
 #include <QJsonValue>
 #include <QDebug>

@@ -9,27 +9,39 @@ Web
   www.saliLab.ru
 
 Description
+  Symbol pin properties
 */
 
 #ifndef SDSYMPINPROP_H
 #define SDSYMPINPROP_H
 
+#include "SdPropLayer.h"
 #include "SdPropInt.h"
+
+
+struct SdPropSymPinState {
+    SdLayer *mLayer;   //Layer is pin on
+    int      mPinType; //Pin type for modelling
+  };
+
 
 struct SdPropSymPin
   {
-    SdPropInt mLayer;
-    SdPropInt mPinType;
+    SdPropLayer mLayer;   //Layer is pin on
+    SdPropInt   mPinType; //Pin type for modelling
 
-    SdPropSymPin() : mLayer(0), mPinType(0) {}
+    SdPropSymPin() : mLayer(), mPinType(0) {}
 
     void operator = ( SdPropSymPin const &sour ); //Назначить свойства
     void append( SdPropSymPin const &sour );      //Установить свойства
-    void clear();                                //Установить в неопределенное состояние
+    void clear();                                 //Установить в неопределенное состояние
     bool match( SdPropSymPin const &prop );       //Сравнить на совпадение с эталоном
 
     void write( QJsonObject &obj ) const;
     void read( const QJsonObject obj );
+
+    void saveState( SdPropSymPinState *dst );
+    void swapState( SdPropSymPinState *src );
   };
 
 #endif // SDSYMPINPROP_H
