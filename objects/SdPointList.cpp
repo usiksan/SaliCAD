@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Point list for rigions, polygons, areas and s.o.
 */
 
 #include "SdPointList.h"
@@ -42,6 +43,9 @@ void SdPointList::read(const QJsonArray array)
     append(p);
     }
   }
+
+
+
 
 void SdPointList::read(const QString name, const QJsonObject obj)
   {

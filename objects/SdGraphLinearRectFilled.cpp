@@ -22,24 +22,17 @@ SdGraphLinearRectFilled::SdGraphLinearRectFilled() :
 
   }
 
+
+
+
 SdGraphLinearRectFilled::SdGraphLinearRectFilled(SdPoint p1, SdPoint p2, const SdPropLine &propLine) :
   SdGraphLinearRect( p1, p2, propLine )
   {
 
   }
 
-QString SdGraphLinearRectFilled::getType() const
-  {
-  return QString(SD_TYPE_RECT_FILLED);
-  }
 
 
-
-
-quint64 SdGraphLinearRectFilled::getClass() const
-  {
-  return dctLines;
-  }
 
 void SdGraphLinearRectFilled::selectByPoint(const SdPoint p, SdSelector *selector)
   {

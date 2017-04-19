@@ -16,6 +16,8 @@ Description
 #include "SdUndoRecordInsert.h"
 #include "SdUndoRecordPropLineAnd2Points.h"
 #include "SdUndoRecordPropTextAndText.h"
+#include "SdUndoRecordPropLinePointInt.h"
+#include "SdUndoRecordPropLineAndPointsList.h"
 #include "windows/SdWCommand.h"
 
 SdUndo::SdUndo() :
@@ -46,6 +48,22 @@ void SdUndo::deleteObject(SdContainer *container, SdObject *object)
 void SdUndo::propLineAnd2Point(SdPropLine *prp, SdPoint *p1, SdPoint *p2)
   {
   addUndo( new SdUndoRecordPropLineAnd2Points(prp, p1, p2) );
+  }
+
+
+
+
+void SdUndo::propLinePointInt(SdPropLine *prp, SdPoint *p, int *val)
+  {
+  addUndo( new SdUndoRecordPropLinePointInt( prp, p, val ) );
+  }
+
+
+
+
+void SdUndo::propLinePointTable(SdPropLine *prp, SdPointList *list)
+  {
+  addUndo( new SdUndoRecordPropLineAndPointsList( prp, list ) );
   }
 
 

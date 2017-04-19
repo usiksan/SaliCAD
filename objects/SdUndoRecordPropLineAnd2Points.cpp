@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Undo record for line properties and 2 points.
 */
 #include "SdUndoRecordPropLineAnd2Points.h"
 
