@@ -92,7 +92,11 @@ SOURCES += \
     objects/SdConverterText.cpp \
     objects/SdUndoRecordPropTextAndText.cpp \
     modes/SdModeCTextual.cpp \
-    windows/SdWLabel.cpp
+    windows/SdWLabel.cpp \
+    objects/SdGraphLinearCircle.cpp \
+    objects/SdUndoRecordPropLinePointInt.cpp \
+    objects/SdGraphLinearCircleFilled.cpp \
+    objects/SdGraphLinearRegion.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -177,7 +181,11 @@ HEADERS  += \
     objects/SdConverterText.h \
     objects/SdUndoRecordPropTextAndText.h \
     modes/SdModeCTextual.h \
-    windows/SdWLabel.h
+    windows/SdWLabel.h \
+    objects/SdGraphLinearCircle.h \
+    objects/SdUndoRecordPropLinePointInt.h \
+    objects/SdGraphLinearCircleFilled.h \
+    objects/SdGraphLinearRegion.h
 
 DISTFILES += \
     license.txt

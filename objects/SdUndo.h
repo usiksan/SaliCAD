@@ -47,6 +47,7 @@ class SdUndo
     void insertObject( SdContainer *container, SdObject *object );
     void deleteObject( SdContainer *container, SdObject *object );
     void propLineAnd2Point( SdPropLine *prp, SdPoint *p1, SdPoint *p2 );
+    void propLinePointInt( SdPropLine *prp, SdPoint *p, int *val );
     void propTextAndText( SdPropText *prp, SdRect *r, QString *str );
     void begin( QString title );
 

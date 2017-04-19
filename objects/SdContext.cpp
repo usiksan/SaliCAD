@@ -111,8 +111,49 @@ void SdContext::fillRect(SdRect r)
 void SdContext::fillRect(SdRect r, const SdPropLine &prop)
   {
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
-    setProp( prop );
+    QColor color = convertColor(prop.mLayer.layer());
+    mPainter->setPen( color );
+    setBrush( color );
     fillRect( r );
+    }
+  }
+
+
+
+
+void SdContext::circle(SdPoint center, int radius)
+  {
+  mPainter->setBrush( QBrush(Qt::transparent) );
+  mPainter->drawEllipse( center, radius, radius );
+  }
+
+
+
+void SdContext::circle(SdPoint center, int radius, const SdPropLine &prop)
+  {
+  if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
+    setProp( prop );
+    circle( center, radius );
+    }
+  }
+
+
+
+
+void SdContext::circleFill(SdPoint center, int radius)
+  {
+  mPainter->drawEllipse( center, radius, radius );
+  }
+
+
+
+void SdContext::circleFill(SdPoint center, int radius, const SdPropLine &prop)
+  {
+  if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
+    QColor color = convertColor(prop.mLayer.layer());
+    mPainter->setPen( color );
+    setBrush( color );
+    circleFill( center, radius );
     }
   }
 

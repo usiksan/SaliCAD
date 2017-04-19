@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Point list for rigions, polygons, areas and s.o.
 */
 
 #ifndef SDPOINTLIST_H
@@ -23,6 +24,7 @@ class SdPointList : public QList<SdPoint>
   {
   public:
     SdPointList() {}
+    SdPointList( const SdPointList &src ) : QList<SdPoint>( src ) {}
 
     QJsonArray write();
     void       write( const QString name, QJsonObject &obj );

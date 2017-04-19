@@ -54,6 +54,7 @@ class SdPoint : public QPoint
 
     //Проверка условий для точки
     bool    isOnCircle( SdPoint center, int radius, int delta = 0 ) const ;         //На окружности?
+    bool    isInsideCircle( SdPoint center, int radius ) const;
     bool    isOnArc( SdPoint center, SdPoint start, SdPoint stop, int delta = 0 ) const; //На дуге?
     bool    isLeftHigh( SdPoint a ) const;                              //Левее или выше чем a?
     bool    isOnSegment( SdPoint a, SdPoint b );

@@ -19,6 +19,8 @@ Description
 #include "SdGraphLinearLine.h"
 #include "SdGraphLinearRect.h"
 #include "SdGraphLinearRectFilled.h"
+#include "SdGraphLinearCircle.h"
+#include "SdGraphLinearCircleFilled.h"
 #include "SdGraphText.h"
 #include <QJsonValue>
 #include <QDebug>
@@ -182,12 +184,14 @@ SdObject *SdObject::readPtr(const QString name, SdObjectMap *map, const QJsonObj
 
 SdObject *SdObject::build(QString type)
   {
-  if( type == QString(SD_TYPE_PROJECT)     ) return new SdProject();
-  if( type == QString(SD_TYPE_SYMBOL)      ) return new SdSymbol();
-  if( type == QString(SD_TYPE_LINE)        ) return new SdGraphLinearLine();
-  if( type == QString(SD_TYPE_RECT)        ) return new SdGraphLinearRect();
-  if( type == QString(SD_TYPE_RECT_FILLED) ) return new SdGraphLinearRectFilled();
-  if( type == QString(SD_TYPE_TEXT)        ) return new SdGraphText();
+  if( type == QString(SD_TYPE_PROJECT)       ) return new SdProject();
+  if( type == QString(SD_TYPE_SYMBOL)        ) return new SdSymbol();
+  if( type == QString(SD_TYPE_LINE)          ) return new SdGraphLinearLine();
+  if( type == QString(SD_TYPE_RECT)          ) return new SdGraphLinearRect();
+  if( type == QString(SD_TYPE_RECT_FILLED)   ) return new SdGraphLinearRectFilled();
+  if( type == QString(SD_TYPE_CICRLE)        ) return new SdGraphLinearCircle();
+  if( type == QString(SD_TYPE_CIRCLE_FILLED) ) return new SdGraphLinearCircleFilled();
+  if( type == QString(SD_TYPE_TEXT)          ) return new SdGraphText();
   return 0;
   }
 

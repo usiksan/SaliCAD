@@ -150,6 +150,13 @@ bool SdPoint::isOnCircle(SdPoint center, int radius, int delta) const
 
 
 
+bool SdPoint::isInsideCircle(SdPoint center, int radius) const
+  {
+  return radius >= getDistance(center);
+  }
+
+
+
 bool SdPoint::isOnArc(SdPoint center, SdPoint start, SdPoint stop, int delta) const
   {
   if( isOnCircle( center, center.getDistance(start), delta )  ) {
