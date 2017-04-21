@@ -145,7 +145,7 @@ void SdWMain::onActivateProjectItem(SdProjectItem *item)
   SdWEditor *editor = 0;
   switch( item->getClass() ) {
     case dctSymbol :
-      editor = new SdWEditorGraphSymbol( dynamic_cast<SdSymbol*>( item ), mWEditors );
+      editor = new SdWEditorGraphSymbol( dynamic_cast<SdPItemSymbol*>( item ), mWEditors );
       break;
     }
 

@@ -6,14 +6,6 @@ SdGraphSymPin::SdGraphSymPin()
   }
 
 
-QString SdGraphSymPin::getType() const
-  {
-  }
-
-quint64 SdGraphSymPin::getClass() const
-  {
-  }
-
 void SdGraphSymPin::attach(SdUndo *undo)
   {
   }
@@ -102,8 +94,9 @@ int SdGraphSymPin::behindCursor(SdPoint p)
   {
   }
 
-int SdGraphSymPin::behindText(SdPoint p, QString &dest, SdPropText &prop)
+int SdGraphSymPin::behindText(SdPoint p, SdPoint &org, QString &dest, SdPropText &prop)
   {
+
   }
 
 bool SdGraphSymPin::getInfo(SdPoint p, QString &info, bool extInfo)

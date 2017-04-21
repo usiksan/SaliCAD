@@ -100,7 +100,7 @@ void SdGraphLinearRegion::selectByPoint(const SdPoint p, SdSelector *selector)
   {
   if( isAble() ) {
     for( int i = 0; i < mList.count() - 1; ++i )
-      if( p.isOnSection( mList[i], mList[i+1]) ) {
+      if( p.isOnSegment( mList[i], mList[i+1]) ) {
         if( !getSelector() ) {
           mFlyIndex.clear();
           selector->insert( this );

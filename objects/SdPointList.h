@@ -26,8 +26,8 @@ class SdPointList : public QList<SdPoint>
     SdPointList() {}
     SdPointList( const SdPointList &src ) : QList<SdPoint>( src ) {}
 
-    QJsonArray write();
-    void       write( const QString name, QJsonObject &obj );
+    QJsonArray write() const;
+    void       write( const QString name, QJsonObject &obj ) const;
 
     void       read( const QJsonArray array );
     void       read( const QString name, const QJsonObject obj );

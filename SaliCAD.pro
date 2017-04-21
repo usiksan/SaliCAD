@@ -22,7 +22,6 @@ SOURCES += \
     windows/SdWProjectList.cpp \
     windows/SdWEditor.cpp \
     objects/SdProjectItem.cpp \
-    objects/SdSymbol.cpp \
     objects/SdPoint.cpp \
     objects/SdRect.cpp \
     objects/SdPointList.cpp \
@@ -98,7 +97,14 @@ SOURCES += \
     objects/SdGraphLinearCircleFilled.cpp \
     objects/SdGraphLinearRegion.cpp \
     objects/SdUndoRecordPropLineAndPointsList.cpp \
-    objects/SdGraphSymPin.cpp
+    objects/SdGraphSymPin.cpp \
+    objects/SdGraphPartPin.cpp \
+    objects/SdGraphSymImp.cpp \
+    objects/SdGraphPartImp.cpp \
+    objects/SdPItemPart.cpp \
+    objects/SdPItemSymbol.cpp \
+    objects/SdPItemComponent.cpp \
+    objects/SdSection.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -110,7 +116,6 @@ HEADERS  += \
     windows/SdWEditor.h \
     objects/SdProjectItem.h \
     objects/SdObjectMap.h \
-    objects/SdSymbol.h \
     objects/SdPoint.h \
     objects/SdRect.h \
     objects/SdPointList.h \
@@ -189,7 +194,14 @@ HEADERS  += \
     objects/SdGraphLinearCircleFilled.h \
     objects/SdGraphLinearRegion.h \
     objects/SdUndoRecordPropLineAndPointsList.h \
-    objects/SdGraphSymPin.h
+    objects/SdGraphSymPin.h \
+    objects/SdGraphPartPin.h \
+    objects/SdGraphSymImp.h \
+    objects/SdGraphPartImp.h \
+    objects/SdPItemPart.h \
+    objects/SdPItemSymbol.h \
+    objects/SdPItemComponent.h \
+    objects/SdSection.h
 
 DISTFILES += \
     license.txt

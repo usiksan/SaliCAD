@@ -17,7 +17,7 @@ Description
 #include "objects/SdEnvir.h"
 #include <QDebug>
 
-SdWEditorGraphSymbol::SdWEditorGraphSymbol(SdSymbol *sym, QWidget *parent) :
+SdWEditorGraphSymbol::SdWEditorGraphSymbol(SdPItemSymbol *sym, QWidget *parent) :
   SdWEditorGraph( parent ),
   mSymbol(sym)
   {

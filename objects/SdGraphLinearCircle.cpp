@@ -167,7 +167,7 @@ int SdGraphLinearCircle::behindCursor(SdPoint p)
   {
   if( isAble() ) {
     if( p.isOnCircle( mCenter, mRadius ) ) {
-      return getSelect() ? SEL_ELEM : UNSEL_ELEM;
+      return getSelector() ? SEL_ELEM : UNSEL_ELEM;
       }
     }
   return 0;

@@ -52,6 +52,7 @@ Description
 #define dctSelector      0x04000000l
 #define dctSheetNet      0x08000000l
 #define dctPlateNet      0x10000000l
+#define dctSection       0x20000000l
   //dctChars    = 0x20000000,
   //dctPrjList  = 0x40000000,
   //dctData     = 0x80000000,

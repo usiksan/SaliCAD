@@ -12,7 +12,7 @@ Description
 */
 
 #include "SdPNewProjectItem_SelectType.h"
-#include "objects/SdSymbol.h"
+#include "objects/SdPItemSymbol.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -76,7 +76,7 @@ bool SdPNewProjectItem_SelectType::validatePage()
 //    case 0 :
 //      *mItemPtr = new
     case 2 :
-      *mItemPtr = new SdSymbol();
+      *mItemPtr = new SdPItemSymbol();
       name = tr("Symbol%1");
       break;
     }

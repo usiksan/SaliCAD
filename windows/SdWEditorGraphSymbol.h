@@ -15,15 +15,15 @@ Description
 #define SDWEDITORGRAPHSYMBOL_H
 
 #include "SdWEditorGraph.h"
-#include "objects/SdSymbol.h"
+#include "objects/SdPItemSymbol.h"
 
 class SdWEditorGraphSymbol : public SdWEditorGraph
   {
     Q_OBJECT
 
-    SdSymbol *mSymbol;
+    SdPItemSymbol *mSymbol;
   public:
-    SdWEditorGraphSymbol( SdSymbol *sym, QWidget *parent = 0 );
+    SdWEditorGraphSymbol( SdPItemSymbol *sym, QWidget *parent = 0 );
 
     // SdWEditor interface
   public:

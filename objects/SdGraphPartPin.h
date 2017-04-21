@@ -9,19 +9,20 @@ Web
   www.saliLab.ru
 
 Description
-  Graphical object Symbol pin.
+  Graphical object Part pin.
 */
-#ifndef SDGRAPHSYMPIN_H
-#define SDGRAPHSYMPIN_H
+#ifndef SDGRAPHPARTPIN_H
+#define SDGRAPHPARTPIN_H
 
 #include "SdGraph.h"
 #include "SdPoint.h"
 #include "SdPropText.h"
-#include "SdPropSymPin.h"
+#include "SdPropPartPin.h"
 
-#define SD_TYPE_SYM_PIN "SymPin"
+#define SD_TYPE_PART_PIN "PartPin"
 
-class SdGraphSymPin : public SdGraph
+
+class SdGraphPartPin : public SdGraph
   {
     SdPoint      mOrigin;     //Pin origin
     SdPropSymPin mPinProp;    //Pin properties
@@ -36,12 +37,12 @@ class SdGraphSymPin : public SdGraph
     bool         mNumSelect;  //Pin number selected
     bool         mNamSelect;  //Pin name selected
   public:
-    SdGraphSymPin();
+    SdGraphPartPin();
 
     // SdObject interface
   public:
-    virtual QString   getType() const override { return QString( SD_TYPE_SYM_PIN ); }
-    virtual quint64   getClass() const override { return dctSymPin; }
+    virtual QString   getType() const override { return QString( SD_TYPE_PART_PIN ); }
+    virtual quint64   getClass() const override { return dctPartPin; }
     virtual void      attach(SdUndo *undo) override;
     virtual void      undoAttach() override;
     virtual void      detach(SdUndo *undo) override;
@@ -72,4 +73,4 @@ class SdGraphSymPin : public SdGraph
     virtual bool      snapPoint(SdSnapInfo *snap) override;
   };
 
-#endif // SDGRAPHSYMPIN_H
+#endif // SDGRAPHPARTPIN_H

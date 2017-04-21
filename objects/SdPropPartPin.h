@@ -14,15 +14,23 @@ Description
 #ifndef SDPARTPINPROP_H
 #define SDPARTPINPROP_H
 
+#include "SdPropLayer.h"
 #include "SdPropInt.h"
+
+
+struct SdPropPartPinState {
+    SdLayer *mLayer;   //Layer is pin on
+    int      mSide;    //Side of pin location
+    QString  mPinType; //Pin type for pad assotiation
+  };
 
 struct SdPropPartPin
   {
-    SdPropInt mLayer;
-    SdPropInt mPinType;
-    SdPropInt mSide;
+    SdPropLayer mLayer;   //Pin layer
+    SdPropInt   mSide;    //Side of pin location
+    QString     mPinType; //Pin type for pad assotiation
 
-    SdPropPartPin() : mLayer(0), mPinType(0), mSide(0) {}
+    SdPropPartPin() : mLayer(0), mPinType(), mSide(0) {}
 
     void operator = ( SdPropPartPin const &sour ); //Назначить свойства
     void append( SdPropPartPin const &sour );      //Установить свойства
@@ -31,6 +39,9 @@ struct SdPropPartPin
 
     void write( QJsonObject &obj ) const;
     void read( const QJsonObject obj );
+
+    void saveState( SdPropPartPinState *dst );
+    void swapState( SdPropPartPinState *src );
   };
 
 #endif // SDPARTPINPROP_H

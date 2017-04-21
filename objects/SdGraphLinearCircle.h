@@ -17,7 +17,7 @@ Description
 #include "SdGraphLinear.h"
 #include "SdPoint.h"
 
-#define SD_TYPE_CICRLE "Circle"
+#define SD_TYPE_CIRCLE "Circle"
 
 
 class SdGraphLinearCircle : public SdGraphLinear

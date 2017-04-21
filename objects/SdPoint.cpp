@@ -179,7 +179,7 @@ bool SdPoint::isLeftHigh(SdPoint a) const
 
 
 
-bool SdPoint::isOnSegment(SdPoint a, SdPoint b)
+bool SdPoint::isOnSegment(SdPoint a, SdPoint b) const
   {
   //TODO release isOnSegment
   return false;

@@ -11,17 +11,17 @@ Web
 Description
 */
 
-#ifndef SDSYMBOL_H
-#define SDSYMBOL_H
+#ifndef SDPITEMSYMBOL_H
+#define SDPITEMSYMBOL_H
 
 #include "SdProjectItem.h"
 
 #define SD_TYPE_SYMBOL "Symbol"
 
-class SdSymbol : public SdProjectItem
+class SdPItemSymbol : public SdProjectItem
   {
   public:
-    SdSymbol();
+    SdPItemSymbol();
 
     virtual QString   getType() const override;
     virtual quint64   getClass() const override;
@@ -29,4 +29,4 @@ class SdSymbol : public SdProjectItem
     virtual void      cloneFrom( const SdObject *src ) override;
   };
 
-#endif // SDSYMBOL_H
+#endif // SDPITEMSYMBOL_H

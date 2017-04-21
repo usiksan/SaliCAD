@@ -16,7 +16,7 @@ Description
 
 
 
-QJsonArray SdPointList::write()
+QJsonArray SdPointList::write() const
   {
   QJsonArray array;
   for( int i = 0; i < count(); i++ )
@@ -27,7 +27,7 @@ QJsonArray SdPointList::write()
 
 
 
-void SdPointList::write(const QString name, QJsonObject &obj)
+void SdPointList::write(const QString name, QJsonObject &obj) const
   {
   obj.insert( name, QJsonValue( write() ) );
   }

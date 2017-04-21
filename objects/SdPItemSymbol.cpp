@@ -11,33 +11,33 @@ Web
 Description
 */
 
-#include "SdSymbol.h"
+#include "SdPItemSymbol.h"
 
-SdSymbol::SdSymbol()
+SdPItemSymbol::SdPItemSymbol()
   {
 
   }
 
 
 
-QString SdSymbol::getType() const
+QString SdPItemSymbol::getType() const
   {
   return QStringLiteral(SD_TYPE_SYMBOL);
   }
 
-quint64 SdSymbol::getClass() const
+quint64 SdPItemSymbol::getClass() const
   {
   return dctSymbol;
   }
 
 
-QString SdSymbol::getIconName() const
+QString SdPItemSymbol::getIconName() const
   {
   return QString(":/pic/iconSymbol.png");
   }
 
 
-void SdSymbol::cloneFrom( const SdObject *src )
+void SdPItemSymbol::cloneFrom( const SdObject *src )
   {
   SdContainer::cloneFrom( src );
   }

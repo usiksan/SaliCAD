@@ -54,3 +54,8 @@ void SdPropPartPin::read(const QJsonObject obj)
   mSide.read( QStringLiteral("PartPinSide"), obj );
   }
 
+void SdPropPartPin::saveState(SdPropPartPinState *dst)
+  {
+
+  }
+

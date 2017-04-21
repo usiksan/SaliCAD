@@ -57,7 +57,7 @@ class SdPoint : public QPoint
     bool    isInsideCircle( SdPoint center, int radius ) const;
     bool    isOnArc( SdPoint center, SdPoint start, SdPoint stop, int delta = 0 ) const; //На дуге?
     bool    isLeftHigh( SdPoint a ) const;                              //Левее или выше чем a?
-    bool    isOnSegment( SdPoint a, SdPoint b );
+    bool    isOnSegment( SdPoint a, SdPoint b ) const;
 
     void    write(const QString name, QJsonObject &obj ) const;
     void    read(const QString name, const QJsonObject obj );
