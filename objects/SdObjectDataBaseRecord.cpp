@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -25,9 +25,8 @@ QDataStream& operator << ( QDataStream &os, const SdObjectDataBaseRecord &info )
   {
   os << info.mAuthor
      << info.mDirectory
-     << info.mIndex
-     << info.mPublic
-     << info.mRevision
+     << info.mCreateTime
+     << info.mStatus
      << info.mTitle;
   return os;
   }
@@ -36,9 +35,8 @@ QDataStream& operator >> ( QDataStream &is, SdObjectDataBaseRecord &info )
   {
   is >> info.mAuthor
      >> info.mDirectory
-     >> info.mIndex
-     >> info.mPublic
-     >> info.mRevision
+     >> info.mCreateTime
+     >> info.mStatus
      >> info.mTitle;
   return is;
   }

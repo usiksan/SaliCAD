@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -19,6 +19,17 @@ SdPropLayer::SdPropLayer() :
   {
 
   }
+
+
+
+SdPropLayer::SdPropLayer(QString id) :
+  mLayer( sdEnvir->getLayer(id) ),
+  mValue(OneValue)
+  {
+
+  }
+
+
 
 void SdPropLayer::set(const QString id)
   {

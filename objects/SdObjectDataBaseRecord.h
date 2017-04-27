@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Local objects data base record
 */
 
 #ifndef SDOBJECTDATABASERECORD_H
@@ -19,6 +20,7 @@ Description
 struct SdObjectDataBaseRecord : public SdObjectInfo
   {
     int mDirectory; //Dir where object file is
+    int mRank;      //Rating of object. Object is more useful if its rank greater
 
     SdObjectDataBaseRecord();
   };

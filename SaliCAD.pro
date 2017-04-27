@@ -39,7 +39,6 @@ SOURCES += \
     objects/SdPulsar.cpp \
     windows/SdPNewProjectItem_SelectType.cpp \
     windows/SdPNewProjectItem_EnterName.cpp \
-    objects/SdIds.cpp \
     windows/SdDGetObject.cpp \
     objects/SdObjectFactory.cpp \
     objects/SdObjectInfo.cpp \
@@ -104,7 +103,9 @@ SOURCES += \
     objects/SdPItemPart.cpp \
     objects/SdPItemSymbol.cpp \
     objects/SdPItemComponent.cpp \
-    objects/SdSection.cpp
+    objects/SdSection.cpp \
+    objects/SdPropString.cpp \
+    objects/SdParamTable.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -134,7 +135,6 @@ HEADERS  += \
     objects/SdPulsar.h \
     windows/SdPNewProjectItem_SelectType.h \
     windows/SdPNewProjectItem_EnterName.h \
-    objects/SdIds.h \
     windows/SdDGetObject.h \
     objects/SdObjectFactory.h \
     objects/SdObjectInfo.h \
@@ -201,7 +201,9 @@ HEADERS  += \
     objects/SdPItemPart.h \
     objects/SdPItemSymbol.h \
     objects/SdPItemComponent.h \
-    objects/SdSection.h
+    objects/SdSection.h \
+    objects/SdPropString.h \
+    objects/SdParamTable.h
 
 DISTFILES += \
     license.txt

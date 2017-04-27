@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -15,7 +15,6 @@ Description
 #include "SdContainer.h"
 #include "SdProject.h"
 #include "SdPItemSymbol.h"
-#include "SdIds.h"
 #include "SdGraphLinearLine.h"
 #include "SdGraphLinearRect.h"
 #include "SdGraphLinearRectFilled.h"

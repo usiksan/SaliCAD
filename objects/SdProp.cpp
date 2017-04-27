@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Full properties list set
 */
 
 #include "SdProp.h"

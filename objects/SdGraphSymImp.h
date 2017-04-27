@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -17,61 +17,62 @@ Description
 #include "SdPoint.h"
 #include "SdPropText.h"
 #include "SdPropSymImp.h"
+#include "SdParamTable.h"
 
 #include <QString>
+#include <QList>
 
 class SdGraphArea;
 class SdPItemSymbol;
+class SdPItemSheet;
 class SdPart;
 class SdComponent;
 class SdGraphPartImp;
 
 //Ножка вхождения символа
 struct SdSymImpPin {
-  SdLayer  *mLayer;  //Слой расположения вывода
-  SdGraphSymPin *mSymPin;
-  SdPartImpPin *mPartPin;
-  DInt32    prtPin; //Индекс вывода корпуса
-  DPoint    origin; //Точка привязки вывода
-  DName     wire;   //Цепь, с которой связан вывод
-  DBool     com;    //Флаг подключенности вывода к цепи
+  SdLayer  *mLayer;     //Pin layer
+  QString   mPinName;   //Pin name in symbol
+  QString   mPinNumber; //Pin number in part
+  SdPoint   mOrigin;    //Pin point
+  QString   mWireName;  //Net, which pin connected to
+  bool      mCom;       //State of pin to net connectivity
 
-  DSymImpPin();
+  SdSymImpPin();
 
-  void operator = ( DSymImpPin &pin );
-  void Draw( DContext &dc );
-  void Connect( DPoint a, DPoint b, DName &name, DPrtImpPic *prt );
-  void IfConnect( DPrtImpPic *prt );
-  void Disconnect( DPoint a, DPoint b, DName &name, DPrtImpPic *prt );
-  void IfDisconnect( DPrtImpPic *prt );
-  void Ucom( DPrtImpPic *prt );
-  void PrepareMove( DSheetPic &sheet, DSelectorPic &selector );
-  void ConnectTest( DSheetPic &sheet, DPrtImpPic *prt );
+  void operator = ( SdSymImpPin &pin );
+  void draw( SdContext *dc );
+  void connect( SdPoint a, SdPoint b, const QString &name, SdGraphPartImp *prt );
+  void ifConnect( SdGraphPartImp *prt );
+  void disconnect( SdPoint a, SdPoint b, const QString &name, SdGraphPartImp *prt );
+  void ifDisconnect( SdGraphPartImp *prt );
+  void ucom( SdGraphPartImp *prt );
+  void prepareMove( SdPItemSheet *sheet, SdSelector *selector );
+  void connectTest( SdPItemSheet *sheet, SdGraphPartImp *prt );
   };
+
+
+typedef QList<SdSymImpPin> SdSymImpPinTable;
 
 
 class SdGraphSymImp : public SdGraph
   {
-    SdGraphArea    *mArea;        //PCB where this symbol implement contains in
-    int             mLogSection;  //Logical symbol section number
-    int             mLogNumber;   //Logical part number
-    QString         mName;        //Name of component
-    SdPoint         mOrigin;      //Position of Implement
-    SdPropSymImp    mProp;        //Implement properties
-    SdPropText      mIdentProp;   //Part identificator text properties
-    QString         mPrefix;      //Part identificator prefix
-    SdPoint         mPrefixPos;   //Part identificator prefix position in sheet context
+    SdGraphArea      *mArea;        //PCB where this symbol implement contains in
+    int               mLogSection;  //Logical symbol section number
+    int               mLogNumber;   //Logical part number
+    QString           mName;        //Name of component
+    SdPoint           mOrigin;      //Position of Implement
+    SdPropSymImp      mProp;        //Implement properties
+    SdPropText        mIdentProp;   //Part identificator text properties
+    QString           mPrefix;      //Part identificator prefix
+    SdPoint           mPrefixPos;   //Part identificator prefix position in sheet context
 
-    SdComponent    *mComponent;
-    SdPItemSymbol       *mSymbol;
-    SdPart         *mPart;
-    SdGraphPartImp *mPartImp;
-    DSymImpPic      *prevPtr; //Указатель для совместимости с В10
-    DPrtImpPic      *prtImp;  //Ссылка на корпус
-    DPrtPic         *part;    //Корпус
-    DSymbolPic      *symbol;  //Символ
-    DSymImpPinTable  pins;    //Информация о номерах выводов
-    DParam           param;   //Конкретные параметры элемента
+    SdComponent      *mComponent;
+    SdPItemSymbol    *mSymbol;
+    SdPart           *mPart;
+    SdGraphPartImp   *mPartImp;
+    SdSymImpPinTable  mPins;        //Pin information table
+    SdParamTable      mParam;       //Parameters
   public:
     SdGraphSymImp();
   };

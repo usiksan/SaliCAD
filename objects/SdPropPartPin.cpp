@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -56,6 +56,15 @@ void SdPropPartPin::read(const QJsonObject obj)
 
 void SdPropPartPin::saveState(SdPropPartPinState *dst)
   {
+  dst->mLayer = mLayer.layer();
+  dst->mPinType = mPinType.str();
+  dst->mSide    = mSide.getValue();
+  }
 
+void SdPropPartPin::swapState(SdPropPartPinState *src)
+  {
+  src->mLayer = mLayer.swap( src->mLayer );
+  mPinType.swap( &(src->mPinType) );
+  src->mSide = mSide.swap( src->mSide );
   }
 

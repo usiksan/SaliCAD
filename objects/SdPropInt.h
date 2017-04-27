@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Int property
 */
 
 #ifndef SDINTPROP_H

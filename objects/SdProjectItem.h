@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -16,6 +16,7 @@ Description
 
 #include "SdContainer.h"
 #include "SdObjectInfo.h"
+#include "SdParamTable.h"
 #include <QString>
 
 
@@ -26,9 +27,10 @@ class SdProjectItem : public SdContainer
   {
     SdObjectInfo           mObjectInfo; //Object global info searching on
 
-    bool                   mFixed;     //If false - item in edit state, when true - item can place in library
     int                    mRefCount;  //Item ref count to autodelete item from project
     bool                   mAuto;      //True if item inserted automatic as reference from other item
+  protected:
+    SdParamTable           mParamTable; //Object parameters
   public:
     QTreeWidgetItem       *mTreeItem;  //Correspond visual tree item
 

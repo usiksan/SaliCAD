@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -11,6 +11,7 @@ Web
 Description
 */
 #include "SdSection.h"
+#include "SdPItemSymbol.h"
 
 SdSection::SdSection() :
   SdObject(),
@@ -41,7 +42,7 @@ quint64 SdSection::getClass() const
 void SdSection::cloneFrom(const SdObject *src)
   {
   SdObject::cloneFrom( src );
-  SdSection *section = dynamic_cast<SdSection*>(src);
+  const SdSection *section = dynamic_cast<const SdSection*>(src);
   if( section ) {
     mSymbol           = section->mSymbol;
     mAssotiationTable = section->mAssotiationTable;

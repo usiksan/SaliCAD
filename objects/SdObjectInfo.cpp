@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -12,15 +12,23 @@ Description
 */
 #include "SdConfig.h"
 #include "SdObjectInfo.h"
-#include "SdIds.h"
 #include <QSettings>
+#include <QDateTime>
+
+#define timeOffsetConstant 1000000000L
 
 SdObjectInfo::SdObjectInfo() :
-  mIndex(0),
-  mRevision(0),
-  mPublic(true)
+  mCreateTime(0),
+  mStatus(soiEditing)
   {
 
+  }
+
+
+
+qint64 SdObjectInfo::getTimeFromEpoch() const
+  {
+  return timeOffsetConstant + static_cast<qint64>(mCreateTime);
   }
 
 
@@ -28,8 +36,8 @@ SdObjectInfo::SdObjectInfo() :
 
 QString SdObjectInfo::getId() const
   {
-  //Id consist from name, user, revision and local num
-  return mTitle + mAuthor + QString::number(mIndex,32) + QString::number(mRevision,32);
+  //Id consist from name, user and time creation
+  return mTitle + mAuthor + QString::number(mCreateTime,32);
   }
 
 
@@ -39,7 +47,7 @@ QString SdObjectInfo::getId() const
 QString SdObjectInfo::getIdFileName() const
   {
   //Сформировать имя
-  QString fname = QString("%1.%2.i%3.r%4" SD_BASE_EXTENSION ).arg( mTitle ).arg( mAuthor ).arg( mIndex,0,16 ).arg( mRevision, 0, 16);
+  QString fname = QString("%1.%2.i%3" SD_BASE_EXTENSION ).arg( mTitle ).arg( mAuthor ).arg( mCreateTime,0,16 );
   //Заменить все специальные символы на знак _
   for( int i = 0; i < fname.length(); i++ )
     if( fname[i] != QChar('.') && fname[i] != QChar('-') && !fname[i].isLetterOrNumber() )
@@ -52,16 +60,9 @@ QString SdObjectInfo::getIdFileName() const
 
 QString SdObjectInfo::getExtendTitle() const
   {
-  return QString("%1 [r%2] (%3)").arg(mTitle).arg(mRevision).arg(mAuthor);
+  return QString("%1 [r%2] (%3)").arg(mTitle).arg( QDateTime::fromSecsSinceEpoch(getTimeFromEpoch()).toString("yy-M-d H:m:s") ).arg(mAuthor);
   }
 
-
-
-
-QString SdObjectInfo::getRevision() const
-  {
-  return QString( "[r%1]" ).arg(mRevision);
-  }
 
 
 
@@ -70,15 +71,13 @@ void SdObjectInfo::setTitle(const QString title)
   {
   QSettings s;
   //Item author (registered program copy name)
-  mAuthor = s.value( SDK_GLOBAL_ID_MACHINE ).toString();
-  //Local index in author context
-  mIndex  = getGlobalId();
-  //Item revision
-  mRevision = 0;
-  //If true - item make public by copy to SaliLAB server
-  mPublic   = true;
+  mAuthor     = s.value( SDK_GLOBAL_ID_MACHINE ).toString();
+  //Update creation time
+  mCreateTime = static_cast<int>( QDateTime::currentDateTime().toSecsSinceEpoch() - timeOffsetConstant );
+  //Set editing status
+  mStatus     = soiEditing;
   //Title setup
-  mTitle    = title;
+  mTitle      = title;
   }
 
 
@@ -88,9 +87,8 @@ void SdObjectInfo::writeObject(QJsonObject &obj) const
   {
   obj.insert( QStringLiteral("Title"),    mTitle );
   obj.insert( QStringLiteral("Author"),   mAuthor );
-  obj.insert( QStringLiteral("Index"),    mIndex );
-  obj.insert( QStringLiteral("Revision"), mRevision );
-  obj.insert( QStringLiteral("Public"),   mPublic );
+  obj.insert( QStringLiteral("Created"),  mCreateTime );
+  obj.insert( QStringLiteral("Status"),   mStatus );
   }
 
 
@@ -98,11 +96,10 @@ void SdObjectInfo::writeObject(QJsonObject &obj) const
 
 void SdObjectInfo::readObject(const QJsonObject obj)
   {
-  mTitle    = obj.value( QStringLiteral("Title") ).toString();
-  mAuthor   = obj.value( QStringLiteral("Author") ).toString();
-  mIndex    = obj.value( QStringLiteral("Index") ).toInt();
-  mRevision = obj.value( QStringLiteral("Revision") ).toInt();
-  mPublic   = obj.value( QStringLiteral("Public") ).toBool();
+  mTitle      = obj.value( QStringLiteral("Title") ).toString();
+  mAuthor     = obj.value( QStringLiteral("Author") ).toString();
+  mCreateTime = obj.value( QStringLiteral("Created") ).toInt();
+  mStatus     = obj.value( QStringLiteral("Status") ).toInt();
   }
 
 
@@ -110,10 +107,9 @@ void SdObjectInfo::readObject(const QJsonObject obj)
 
 void SdObjectInfo::copyFrom(const SdObjectInfo &src)
   {
-  mTitle    = src.mTitle;
-  mAuthor   = src.mAuthor;
-  mIndex    = src.mIndex;
-  mRevision = src.mRevision;
-  mPublic   = src.mPublic;
+  mTitle      = src.mTitle;
+  mAuthor     = src.mAuthor;
+  mCreateTime = src.mCreateTime;
+  mStatus     = src.mStatus;
   }
 

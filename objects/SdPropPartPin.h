@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Part pin properties
 */
 
 #ifndef SDPARTPINPROP_H
@@ -16,6 +17,7 @@ Description
 
 #include "SdPropLayer.h"
 #include "SdPropInt.h"
+#include "SdPropString.h"
 
 
 struct SdPropPartPinState {
@@ -26,11 +28,11 @@ struct SdPropPartPinState {
 
 struct SdPropPartPin
   {
-    SdPropLayer mLayer;   //Pin layer
-    SdPropInt   mSide;    //Side of pin location
-    QString     mPinType; //Pin type for pad assotiation
+    SdPropLayer  mLayer;   //Pin layer
+    SdPropInt    mSide;    //Side of pin location
+    SdPropString mPinType; //Pin type for pad assotiation
 
-    SdPropPartPin() : mLayer(0), mPinType(), mSide(0) {}
+    SdPropPartPin() : mLayer(0), mSide(0), mPinType() {}
 
     void operator = ( SdPropPartPin const &sour ); //Назначить свойства
     void append( SdPropPartPin const &sour );      //Установить свойства
