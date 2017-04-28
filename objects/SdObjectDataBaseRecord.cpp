@@ -27,7 +27,8 @@ QDataStream& operator << ( QDataStream &os, const SdObjectDataBaseRecord &info )
      << info.mDirectory
      << info.mCreateTime
      << info.mStatus
-     << info.mTitle;
+     << info.mTitle
+     << info.mRank;
   return os;
   }
 
@@ -37,6 +38,7 @@ QDataStream& operator >> ( QDataStream &is, SdObjectDataBaseRecord &info )
      >> info.mDirectory
      >> info.mCreateTime
      >> info.mStatus
-     >> info.mTitle;
+     >> info.mTitle
+     >> info.mRank;
   return is;
   }

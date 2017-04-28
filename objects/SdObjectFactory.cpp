@@ -22,7 +22,8 @@ QString SdObjectFactory::mLibraryPath;
 
 void SdObjectFactory::setLibraryPath(const QString path)
   {
-  //Сохранить изменения в текущей библиотеке
+  //Save changes to current data base
+  if( mDirty )
 
   mLibraryPath = path;
   }

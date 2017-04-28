@@ -25,8 +25,9 @@ typedef QList<SdObjectDataBaseRecordPtr> SdObjectDataBaseRecordPtrList;
 
 class SdObjectFactory
   {
-    static QString mLibraryPath; //Путь к библиотеке
-    //static QMap
+    static QString                              mLibraryPath; //Data base file path
+    static QMap<QString,SdObjectDataBaseRecord> mDataBase;    //Data base contens
+    static bool                                 mDirty;       //Dirty flag
   public:
     //SdObjectFactory();
 
