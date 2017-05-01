@@ -45,7 +45,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (7 + GRID_HISTORY_SIZE + FONT_COUNT)
+#define SdEnvirVersion  (8 + GRID_HISTORY_SIZE + FONT_COUNT)
 
 typedef QMap<QString,SdLayerPtr> SdLayerPtrTable;
 
@@ -87,6 +87,11 @@ class SdEnvir
     bool            mGridView;             //Включение сетки
     bool            mCursorGrid;           //Включение движения курсора по сетке
     bool            mCenterCursor;         //Центровать курсор при увеличении и уменьшении
+    QString         mHomePath;             //Каталог пользователя
+    QString         mLibraryPath;          //Каталог библиотек
+    QString         mPatternPath;          //Каталог шаблонов
+    QString         mPadStackFile;         //Файл контактных площадок
+    QString         mPadStackObject;       //Объект содержащий контактные площадки
 
 
     bool            mGuiderEnabled;        //Флаг разрешения/запрещения путеводителя
@@ -96,14 +101,9 @@ class SdEnvir
     bool            mProjectRemoveEnabled; //Разрешение автоматического запрещения проекта
     int             mProjectRemoveTime;    //Время удержания проекта
     QString         mLastFile;             //Последний файл пользователя
-    QString         mHome;                 //Каталог пользователя
-    QString         mLibrary;              //Каталог библиотек
-    QString         mPattern;              //Каталог шаблонов
     double          mWidthStep;            //Шаг изменения толщины
     double          mTextSizeStep;         //Шаг изменения высоты текста
     bool            mMaxFrame;             //Истина, если главное окно на весь экран
-    QString         mPadStackFile;          //Файл контактных площадок
-    QString         mPadStackObject;        //Объект содержащий контактные площадки
     bool            mAutoPads;             //Автоматическая расстановка КП
     bool            mCreateBack;           //Создавать BAK файл при сохранении
     QPointF         mGridHistory[GRID_HISTORY_SIZE];  //Предыдущие значения сетки

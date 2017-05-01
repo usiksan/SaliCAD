@@ -9,33 +9,30 @@ Web
   www.saliLab.ru
 
 Description
+  ObjectFactory - local database to library storage
+  Local database resides in SQLite file.
 */
 
 #ifndef SDOBJECTFACTORY_H
 #define SDOBJECTFACTORY_H
 
 #include "SdObject.h"
-#include "SdObjectDataBaseRecord.h"
-#include <QString>
-#include <QList>
+#include <QJsonObject>
 
-typedef SdObjectDataBaseRecord *SdObjectDataBaseRecordPtr;
-
-typedef QList<SdObjectDataBaseRecordPtr> SdObjectDataBaseRecordPtrList;
+class SdProjectItem;
 
 class SdObjectFactory
   {
-    static QString                              mLibraryPath; //Data base file path
-    static QMap<QString,SdObjectDataBaseRecord> mDataBase;    //Data base contens
-    static bool                                 mDirty;       //Dirty flag
   public:
-    //SdObjectFactory();
+    //Open or create library
+    static void openLibrary();
 
-    static void setLibraryPath( const QString path );
+    //Insert object to database. If in database already present newest object,
+    //then return its id. Older object is never inserted.
+    static QString   insertObject( const SdProjectItem *item, QJsonObject obj );
 
-    static void addToFactory( const SdObject *obj );
-
-    static void fillObjectList( const QString filtr, SdObjectDataBaseRecordPtrList *list );
+    //Extract object from database
+    static SdObject *buildObject( const QString id );
   };
 
 #endif // SDOBJECTFACTORY_H

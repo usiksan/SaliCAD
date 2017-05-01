@@ -15,6 +15,7 @@ Description
 #include <QSettings>
 #include <QByteArray>
 #include <QDataStream>
+#include <QDir>
 
 SdEnvir *sdEnvir;
 
@@ -127,7 +128,12 @@ void SdEnvir::loadEnvir()
        >> mPrtPPM               //Коэффициент преобразования в физическую величину в конструкциях
        >> mGridView             //Включение сетки
        >> mCursorGrid           //Включение движения курсора по сетке
-       >> mCenterCursor;         //Центровать курсор при увеличении и уменьшении
+       >> mCenterCursor         //Центровать курсор при увеличении и уменьшении
+       >> mHomePath             //Каталог пользователя
+       >> mLibraryPath          //Каталог библиотек
+       >> mPatternPath          //Каталог шаблонов
+       >> mPadStackFile         //Файл контактных площадок
+       >> mPadStackObject;       //Объект содержащий контактные площадки
     }
   else defaultEnvir();
   }
@@ -186,7 +192,12 @@ void SdEnvir::saveEnvir()
      << mPrtPPM               //Коэффициент преобразования в физическую величину в конструкциях
      << mGridView             //Включение сетки
      << mCursorGrid           //Включение движения курсора по сетке
-     << mCenterCursor;        //Центровать курсор при увеличении и уменьшении
+     << mCenterCursor         //Центровать курсор при увеличении и уменьшении
+     << mHomePath             //Каталог пользователя
+     << mLibraryPath          //Каталог библиотек
+     << mPatternPath          //Каталог шаблонов
+     << mPadStackFile         //Файл контактных площадок
+     << mPadStackObject;       //Объект содержащий контактные площадки
 
   QSettings s;
   s.setValue( QString(SDK_ENVIR_VERSION), QVariant(SdEnvirVersion) );
@@ -256,7 +267,20 @@ void SdEnvir::defaultEnvir()
   mProjectPosition   = 0;              //Позиция разделителя проекта
   mProjectRemoveEnabled = false;       //Разрешение автоматического запрещения проекта
   mProjectRemoveTime = 15000;          //Время удержания проекта
-//  QString         mLastFile;             //Последний файл пользователя
+
+  mHomePath = QDir::homePath();        //Каталог пользователя
+  if( !mHomePath.endsWith( QChar('/') ) )
+    mHomePath.append( QChar('/') );
+  mHomePath.append( QString("SaliLAB/SaliCAD/") );
+  mLibraryPath = mHomePath;            //Каталог библиотек
+  mLibraryPath.append( QString("library/") );
+  mPatternPath = mHomePath;            //Каталог шаблонов
+  mPatternPath.append( QString("pattern/") );
+  mPadStackFile = mHomePath;           //Файл контактных площадок
+  mPadStackFile.append( QString("pads/defaultStack.pads") );
+  mPadStackObject = QString("default");//Объект содержащий контактные площадки
+
+  //  QString         mLastFile;             //Последний файл пользователя
 //  QString         mHome;                 //Каталог пользователя
 //  QString         mLibrary;              //Каталог библиотек
 //  QString         mPattern;              //Каталог шаблонов

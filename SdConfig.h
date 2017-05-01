@@ -101,6 +101,7 @@ History
 #define SD_BASE_PATH                 QString("/home/slilab/work/SaliCAD")
 #endif
 
+#define SD_DATABASE_FILE             QString("database.sqlite")
 
 //Settings key names
 #define SDK_WMAIN_MAX                "WMainMax"

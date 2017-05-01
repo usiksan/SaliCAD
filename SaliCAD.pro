@@ -5,7 +5,7 @@
 #-------------------------------------------------
 CONFIG += c++11
 
-QT       += core gui  network
+QT       += core gui  network sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -42,7 +42,6 @@ SOURCES += \
     windows/SdDGetObject.cpp \
     objects/SdObjectFactory.cpp \
     objects/SdObjectInfo.cpp \
-    objects/SdObjectDataBaseRecord.cpp \
     windows/SdWEditorGraph.cpp \
     windows/SdWEditorGraphSymbol.cpp \
     objects/SdScaler.cpp \
@@ -138,7 +137,6 @@ HEADERS  += \
     windows/SdDGetObject.h \
     objects/SdObjectFactory.h \
     objects/SdObjectInfo.h \
-    objects/SdObjectDataBaseRecord.h \
     windows/SdWEditorGraph.h \
     windows/SdWEditorGraphSymbol.h \
     objects/SdScaler.h \

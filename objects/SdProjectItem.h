@@ -27,8 +27,9 @@ class SdProjectItem : public SdContainer
   {
     SdObjectInfo           mObjectInfo; //Object global info searching on
 
-    int                    mRefCount;  //Item ref count to autodelete item from project
-    bool                   mAuto;      //True if item inserted automatic as reference from other item
+    QString                mReplaceId;  //Newest object id the same name and author
+    int                    mRefCount;   //Item ref count to autodelete item from project
+    bool                   mAuto;       //True if item inserted automatic as reference from other item
   protected:
     SdParamTable           mParamTable; //Object parameters
   public:
@@ -40,9 +41,12 @@ class SdProjectItem : public SdContainer
     virtual QString        getId() const override;
     QString                getIdFileName() const;
     QString                getExtendTitle() const;
+    QString                getAuthor() const { return mObjectInfo.mAuthor; }
+    int                    getTime() const { return mObjectInfo.mCreateTime; }
     QString                getTitle() const { return mObjectInfo.mTitle; }
     void                   setTitle( const QString title );
     SdProject*             getProject() const;
+    void                   setReplaceId( const QString id ) { mReplaceId = id; }
 
     void                   addRef() { mRefCount++; }
     void                   decRef();

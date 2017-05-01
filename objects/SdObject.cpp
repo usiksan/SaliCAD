@@ -14,6 +14,7 @@ Description
 #include "SdObject.h"
 #include "SdContainer.h"
 #include "SdProject.h"
+#include "SdObjectFactory.h"
 #include "SdPItemSymbol.h"
 #include "SdGraphLinearLine.h"
 #include "SdGraphLinearRect.h"
@@ -106,6 +107,9 @@ QJsonObject SdObject::write() const
   obj.insert( QStringLiteral(SDKO_TYPE), QJsonValue( getType() ) );
   writePtr( mParent, QStringLiteral("Parent"), obj );
   writeObject( obj );
+  const SdProjectItem *item = dynamic_cast<const SdProjectItem*>(this);
+  if( item )
+    SdObjectFactory::insertObject( item, obj );
   return obj;
   }
 
