@@ -71,7 +71,15 @@ void SdUndo::propLinePointTable(SdPropLine *prp, SdPointList *list)
 
 void SdUndo::propTextAndText(SdPropText *prp, SdPoint *org, SdRect *r, QString *str)
   {
-  addUndo( new SdUndoRecordPropTextAndText( prp, r, str ) );
+  addUndo( new SdUndoRecordPropTextAndText( prp, org, r, str ) );
+  }
+
+
+
+
+void SdUndo::propSymPin(SdPropSymPin *prp, SdPoint *org)
+  {
+
   }
 
 
