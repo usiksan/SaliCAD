@@ -105,7 +105,8 @@ SOURCES += \
     objects/SdSection.cpp \
     objects/SdPropString.cpp \
     objects/SdParamTable.cpp \
-    modes/SdModeView.cpp
+    modes/SdModeView.cpp \
+    objects/SdPartVariant.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -203,7 +204,8 @@ HEADERS  += \
     objects/SdSection.h \
     objects/SdPropString.h \
     objects/SdParamTable.h \
-    modes/SdModeView.h
+    modes/SdModeView.h \
+    objects/SdPartVariant.h
 
 DISTFILES += \
     license.txt

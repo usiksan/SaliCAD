@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -13,15 +13,18 @@ Description
 */
 #include "SdUndoRecordPropTextAndText.h"
 
-SdUndoRecordPropTextAndText::SdUndoRecordPropTextAndText(SdPropText *prp, SdRect *r, QString *str) :
+SdUndoRecordPropTextAndText::SdUndoRecordPropTextAndText(SdPropText *prp, SdPoint *org, SdRect *r, QString *str) :
   SdUndoRecord(),
   mSrcProp(prp),
+  mSrcOrigin(org),
   mSrcRect(r),
   mSrcString(str)
   {
   mSrcProp->saveState( &mPropState );
   mRect   = *r;
-  mString = *str;
+  mOrigin = *org;
+  if( str )
+    mString = *str;
   }
 
 
@@ -29,5 +32,7 @@ void SdUndoRecordPropTextAndText::undo()
   {
   mSrcProp->swapState( &mPropState );
   mRect = mSrcRect->swap( mRect );
-  mSrcString->swap( mString );
+  mOrigin.swap( mSrcOrigin );
+  if( mSrcString )
+    mSrcString->swap( mString );
   }

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -20,18 +20,18 @@ Description
 //Pin assotiation table where symbol pin name is key and part pin number is value
 typedef QMap<QString,QString> SdPinAssotiation;
 
-class SdPItemSymbol;
-
 #define SD_TYPE_SECTION "Section"
 
 class SdSection : public SdObject
   {
-    SdPItemSymbol    *mSymbol;           //Symbolic presentation of this section
+    QString           mSymbolName;       //Symbolic presentation of this section
+    QString           mSymbolAuthor;
     SdPinAssotiation  mAssotiationTable; //Pin assotiation table
   public:
     SdSection();
 
     QString getPinNumber( const QString name ) const { return mAssotiationTable.value(name); }
+    QString getSymbolShortId() const { return mSymbolName + mSymbolAuthor; }
 
     // SdObject interface
   public:

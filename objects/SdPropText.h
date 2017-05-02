@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -64,5 +64,9 @@ struct SdPropText {
   void swapState(SdPropTextState *src );
   };
 
+//Parse src string and find numeric substring. Numeric substring converted into int, int incremented
+//and convert to substring. Substring, at end, inserted into src string and return result
+//Example: src=PORT18CDF will result PORT19CDF
+QString nextText( const QString src );
 
 #endif // SDTEXTPROP_H

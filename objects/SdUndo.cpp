@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -69,7 +69,7 @@ void SdUndo::propLinePointTable(SdPropLine *prp, SdPointList *list)
 
 
 
-void SdUndo::propTextAndText(SdPropText *prp, SdRect *r, QString *str)
+void SdUndo::propTextAndText(SdPropText *prp, SdPoint *org, SdRect *r, QString *str)
   {
   addUndo( new SdUndoRecordPropTextAndText( prp, r, str ) );
   }

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -96,6 +96,7 @@ void SdGraphText::saveState(SdUndo *undo)
 
 void SdGraphText::move(SdPoint offset)
   {
+  mOrigin.move( offset );
   mOverRect.move( offset );
   }
 
@@ -107,6 +108,7 @@ void SdGraphText::rotate(SdPoint center, SdAngle angle)
   SdPoint rc( mOverRect.center() );
   rc.rotate( center, angle );
   mOverRect.moveCenter( rc );
+  mOrigin.rotate( center, angle );
   }
 
 
@@ -117,6 +119,7 @@ void SdGraphText::mirror(SdPoint a, SdPoint b)
   SdPoint rc( mOverRect.center() );
   rc.mirror( a, b );
   mOverRect.moveCenter( rc );
+  mOrigin.mirror( a, b );
   }
 
 

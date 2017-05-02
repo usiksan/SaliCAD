@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -42,10 +42,6 @@ class SdGraphSymPin : public SdGraph
   public:
     virtual QString   getType() const override { return QString( SD_TYPE_SYM_PIN ); }
     virtual quint64   getClass() const override { return dctSymPin; }
-    virtual void      attach(SdUndo *undo) override;
-    virtual void      undoAttach() override;
-    virtual void      detach(SdUndo *undo) override;
-    virtual void      undoDetach() override;
     virtual SdObject *copyNext() override;
     virtual void      cloneFrom(const SdObject *src) override;
     virtual void      writeObject(QJsonObject &obj) const override;

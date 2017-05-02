@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -29,6 +29,8 @@ class SdPropInt;
 class SdPropLayer;
 class SdPropLine;
 class SdPropText;
+class SdPropSymPin;
+class SdPropPartPin;
 class SdRect;
 
 class SdUndo
@@ -49,7 +51,9 @@ class SdUndo
     void propLineAnd2Point( SdPropLine *prp, SdPoint *p1, SdPoint *p2 );
     void propLinePointInt( SdPropLine *prp, SdPoint *p, int *val );
     void propLinePointTable( SdPropLine *prp, SdPointList *list );
-    void propTextAndText( SdPropText *prp, SdRect *r, QString *str );
+    void propTextAndText( SdPropText *prp, SdPoint *org, SdRect *r, QString *str );
+    void propSymPin( SdPropSymPin *prp, SdPoint *org );
+    void propPartPin( SdPropPartPin *prp, SdPoint *org );
     void begin( QString title );
 
     //do undo and redo

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -22,12 +22,14 @@ class SdUndoRecordPropTextAndText : public SdUndoRecord
   {
     SdPropText      *mSrcProp;
     SdPropTextState  mPropState;
+    SdPoint         *mSrcOrigin;
+    SdPoint          mOrigin;
     SdRect          *mSrcRect;
     SdRect           mRect;
     QString         *mSrcString;
     QString          mString;
   public:
-    SdUndoRecordPropTextAndText( SdPropText *prp, SdRect *r, QString *str );
+    SdUndoRecordPropTextAndText( SdPropText *prp, SdPoint *org, SdRect *r, QString *str );
 
     //Undo elementary operation.
     virtual void    undo() override;

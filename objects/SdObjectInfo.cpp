@@ -34,6 +34,15 @@ qint64 SdObjectInfo::getTimeFromEpoch() const
 
 
 
+QString SdObjectInfo::getShortId() const
+  {
+  //Short Id consists from name and user
+  return mTitle + mAuthor;
+  }
+
+
+
+
 QString SdObjectInfo::getId() const
   {
   //Id consist from name, user and time creation

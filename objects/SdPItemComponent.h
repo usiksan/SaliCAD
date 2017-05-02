@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Component contains symbol sections with pin (name-number) assotiation and component part
 */
 #ifndef SDPITEMCOMPONENT_H
 #define SDPITEMCOMPONENT_H
@@ -17,13 +18,21 @@ Description
 
 #define SD_TYPE_COMPONENT "Comp"
 
-class SdPItemPart;
+class SdSection;
+class SdPartVariant;
 
 class SdPItemComponent : public SdProjectItem
   {
-    SdPItemPart *mPart;
   public:
     SdPItemComponent();
+
+    QString getSectionShortId( int sectionIndex ) const;
+    QString getDefaultPartShortId() const;
+    QString getPartShortId( int partIndex ) const;
+
+    SdSection *getSection( int sectionIndex ) const;
+    SdPartVariant *getPart( int partIndex ) const;
+    SdPartVariant *getDefaultPart() const;
 
     // SdObject interface
   public:

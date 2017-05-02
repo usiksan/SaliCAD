@@ -39,6 +39,7 @@ class SdProjectItem : public SdContainer
 
     //Information
     virtual QString        getId() const override;
+    QString                getShortId() const { return mObjectInfo.getShortId(); }
     QString                getIdFileName() const;
     QString                getExtendTitle() const;
     QString                getAuthor() const { return mObjectInfo.mAuthor; }

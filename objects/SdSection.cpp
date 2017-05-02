@@ -11,11 +11,9 @@ Web
 Description
 */
 #include "SdSection.h"
-#include "SdPItemSymbol.h"
 
 SdSection::SdSection() :
-  SdObject(),
-  mSymbol(0)
+  SdObject()
   {
 
   }
@@ -44,7 +42,8 @@ void SdSection::cloneFrom(const SdObject *src)
   SdObject::cloneFrom( src );
   const SdSection *section = dynamic_cast<const SdSection*>(src);
   if( section ) {
-    mSymbol           = section->mSymbol;
+    mSymbolName       = section->mSymbolName;
+    mSymbolAuthor     = section->mSymbolAuthor;
     mAssotiationTable = section->mAssotiationTable;
     }
   }
@@ -55,7 +54,10 @@ void SdSection::cloneFrom(const SdObject *src)
 void SdSection::writeObject(QJsonObject &obj) const
   {
   SdObject::writeObject( obj );
-  writePtr( mSymbol, QString("Symbol"), obj );
+  obj.insert( QString("SymbolName"), mSymbolName );
+  obj.insert( QString("SymbolAuthor"), mSymbolAuthor );
+  //TODO save pin assotioation
+  //mAssotiationTable
 
   }
 
@@ -64,5 +66,9 @@ void SdSection::writeObject(QJsonObject &obj) const
 
 void SdSection::readObject(SdObjectMap *map, const QJsonObject obj)
   {
+  SdObject::readObject( map, obj );
+  mSymbolName   = obj.value( QString("SymbolName") ).toString();
+  mSymbolAuthor = obj.value( QString("SymbolAuthor") ).toString();
+  //TODO read pin assotiation
   }
 

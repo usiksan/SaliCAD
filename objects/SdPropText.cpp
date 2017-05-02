@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -115,4 +115,36 @@ void SdPropText::swapState(SdPropTextState *src)
   src->mHorz   = mHorz.swap( src->mHorz );
   src->mVert   = mVert.swap( src->mVert );
   src->mMirror = mMirror.swap( src->mMirror );
+  }
+
+
+
+
+//Parse src string and find numeric substring. Numeric substring converted into int, int incremented
+//and convert to substring. Substring, at end, inserted into src string and return result
+//Example: src=PORT18CDF will result PORT19CDF
+QString nextText(const QString src)
+  {
+  int end = 0, begin = 0;
+  int p = src.length() - 1;
+  //Find number in string from end
+  while( p >= 0 && !src.at(p).isDigit() ) p--;
+  if( src.at(p).isDigit() ) end = p+1;
+  do {
+    begin = p;
+    p--;
+    }
+  while( p >= 0 && src.at(p).isDigit() );
+
+  if( end ) {
+    //Number present
+    int i = src.mid(begin,end-begin).toInt(); //Get numerical value
+    i++;                                      //Increment, so next
+    QString res;
+    if( begin ) res = src.left(begin);
+    res.append( QString::number(i) );
+    if( end < src.length() ) res.append( src.mid(end) );
+    return res;
+    }
+  return src;
   }

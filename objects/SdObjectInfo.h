@@ -43,6 +43,7 @@ struct SdObjectInfo
     bool           isReadyForPublic() const { return mStatus == soiReadyForPublic; }
     bool           isPublished() const { return mStatus == soiPublished; }
 
+    QString        getShortId() const;
     QString        getId() const;
     QString        getIdFileName() const;
     QString        getExtendTitle() const;
