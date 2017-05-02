@@ -14,7 +14,7 @@ Description
 #define SDWEDITORGRAPHPART_H
 
 #include "SdWEditorGraph.h"
-//#include "objects/S"
+#include "objects/SdPItemPart.h"
 
 
 class SdWEditorGraphPart : public SdWEditorGraph
@@ -22,7 +22,7 @@ class SdWEditorGraphPart : public SdWEditorGraph
     Q_OBJECT
 
   public:
-    SdWEditorGraphPart();
+    SdWEditorGraphPart(SdPItemPart *part, QWidget *parent);
   };
 
 #endif // SDWEDITORGRAPHPART_H

@@ -20,6 +20,7 @@ Description
 #include "objects/SdGraph.h"
 #include "objects/SdPulsar.h"
 #include "modes/SdMode.h"
+#include "modes/SdModeView.h"
 #include "modes/SdModeTZoomer.h"
 #include "modes/SdModeTZoomWindow.h"
 #include "modes/SdModeCLinearLine.h"
@@ -32,7 +33,7 @@ Description
 #include <QImage>
 #include <QtDebug>
 
-SdWEditorGraph::SdWEditorGraph(QWidget *parent) :
+SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
   SdWEditor( parent ),
   mView(0),           //Порт для отображения объекта
   mMode(0),           //Режим для исполнения операций
@@ -60,6 +61,10 @@ SdWEditorGraph::SdWEditorGraph(QWidget *parent) :
 
   setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
   setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
+
+  //By default - view mode
+  mMode = new SdModeView( this, item );
+  modeActivate( mMode );
   }
 
 
@@ -135,7 +140,8 @@ void SdWEditorGraph::modeCall(SdModeTemp *mode)
 //Set new mode
 void SdWEditorGraph::modeSet(SdMode *mode)
   {
-  //Установка режима
+  //Mode set. Its also set edit status for graph object
+  //TODO set edit status
   //Стековый режим - снести совсем
   //Прежний режим - снести (если выделения - то просто затереть, иначе - для обычного режима
   //снести совсем, а для выделения перенести в прежний

@@ -59,7 +59,7 @@ class SdWEditorGraph : public SdWEditor
     bool   emptyUndo;   //Флаг состояния буфера отмены
 
   public:
-    SdWEditorGraph( QWidget *parent = 0 );
+    SdWEditorGraph( SdProjectItem *item, QWidget *parent = 0 );
 
     double  scaleGet() const { return mScale.scaleGet(); }
     void    scaleSet( double scale );

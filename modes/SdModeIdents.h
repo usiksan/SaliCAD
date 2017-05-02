@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -58,7 +58,8 @@ Description
 #define MD_POLYGON         40
 #define MD_DELETE_WIRE     41
 #define MD_PAD             42
-#define MD_LAST            43
+#define MD_VIEW            43
+#define MD_LAST            44
 
 #define PB_DEFAULT          0
 #define PB_LINEAR           1

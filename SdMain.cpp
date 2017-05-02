@@ -16,6 +16,7 @@ Description
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdProp.h"
+#include "objects/SdObjectFactory.h"
 #include <QApplication>
 #include <QSettings>
 #include <QTranslator>
@@ -50,6 +51,9 @@ int main(int argc, char *argv[])
 
   sdEnvir = new SdEnvir();
   sdGlobalProp = new SdProp();
+
+  //Open library for objectFactory system
+  SdObjectFactory::openLibrary();
 
   //Creating application main window
   SdWMain w( a.arguments() );

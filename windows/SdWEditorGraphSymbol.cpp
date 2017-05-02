@@ -18,7 +18,7 @@ Description
 #include <QDebug>
 
 SdWEditorGraphSymbol::SdWEditorGraphSymbol(SdPItemSymbol *sym, QWidget *parent) :
-  SdWEditorGraph( parent ),
+  SdWEditorGraph( sym, parent ),
   mSymbol(sym)
   {
   mGrid.set( 25, 25 );

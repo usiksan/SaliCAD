@@ -12,7 +12,8 @@ Description
 */
 #include "SdWEditorGraphPart.h"
 
-SdWEditorGraphPart::SdWEditorGraphPart()
+SdWEditorGraphPart::SdWEditorGraphPart(SdPItemPart *part, QWidget *parent) :
+  SdWEditorGraph( part, parent )
   {
 
   }
