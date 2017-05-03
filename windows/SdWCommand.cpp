@@ -16,6 +16,7 @@ Description
 #include "SdPropBar.h"
 #include "SdPropBarLinear.h"
 #include "SdPropBarTextual.h"
+#include "SdPropBarSymPin.h"
 #include <QMenuBar>
 #include <QSettings>
 #include <QFileInfo>
@@ -448,6 +449,12 @@ void SdWCommand::createToolBars(SdWMain *frame)
   frame->addToolBar( mbar );
   mbar->setVisible(false);
   mbarTable[PB_TEXT] = mbar;
+  mbar->connect( mbar, &SdPropBar::propChanged, frame, &SdWMain::cmPropertiesChange );
+
+  mbar = new SdPropBarSymPin( QString("Sym pin") );
+  frame->addToolBar( mbar );
+  mbar->setVisible(false);
+  mbarTable[PB_SYM_PIN] = mbar;
   mbar->connect( mbar, &SdPropBar::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   for( int i = 0; i < MD_LAST; i++ )

@@ -1,4 +1,18 @@
+﻿/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Graphical object Symbol pin.
+*/
 #include "SdGraphSymPin.h"
+#include "SdEnvir.h"
 #include "SdSelector.h"
 #include "SdContext.h"
 #include <QStringRef>
@@ -11,6 +25,24 @@ SdGraphSymPin::SdGraphSymPin() :
   mNamSelect(false)  //Pin name selected
   {
 
+  }
+
+
+
+SdGraphSymPin::SdGraphSymPin(SdPoint org, SdPoint numberPos, SdPoint namePos, const QString name) :
+  SdGraph(),
+  //Different pin part selection
+  mPinSelect(false),  //Pin selected
+  mNumSelect(false),  //Pin number selected
+  mNamSelect(false)  //Pin name selected
+  {
+  mOrigin     = org;
+  mPinProp    = sdGlobalProp->mSymPinProp;
+  mNumberPos  = numberPos;
+  mNumberProp = sdGlobalProp->mPinNumberProp;
+  mNamePos    = namePos;
+  mNameProp   = sdGlobalProp->mPinNameProp;
+  mName       = name;
   }
 
 

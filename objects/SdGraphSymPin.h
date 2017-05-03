@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -39,6 +39,7 @@ class SdGraphSymPin : public SdGraph
     bool         mNamSelect;  //Pin name selected
   public:
     SdGraphSymPin();
+    SdGraphSymPin( SdPoint org, SdPoint numberPos, SdPoint namePos, const QString name );
 
     // SdObject interface
   public:

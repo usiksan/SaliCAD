@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -14,8 +14,11 @@ Description
 #include "SdModeCSymPin.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdSnapInfo.h"
+#include "objects/SdGraphSymPin.h"
 #include "windows/SdPropBarTextual.h"
+#include "windows/SdPropBarSymPin.h"
 #include "windows/SdWCommand.h"
+#include "windows/SdWEditorGraph.h"
 #include <QObject>
 
 SdPoint
@@ -81,27 +84,103 @@ void SdModeCSymPin::propGetFromBar()
   {
   if( getStep() == sPlaceNumber ) {
     SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+    if( tbar ) {
+      tbar->getPropText( &(sdGlobalProp->mPinNumberProp) );
+      mEditor->setFocus();
+      update();
+      }
+    }
+  else if( getStep() == sEnterName ) SdModeCTextual::propGetFromBar();
+  else if( getStep() == sPlaceName ) {
+    SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+    if( tbar ) {
+      tbar->getPropText( &(sdGlobalProp->mPinNameProp) );
+      mEditor->setFocus();
+      update();
+      }
+    }
+  else if( getStep() == sPlacePin ) {
+    SdPropBarSymPin *sbar = dynamic_cast<SdPropBarSymPin*>( SdWCommand::getModeBar(PB_SYM_PIN) );
+    if( sbar ) {
+      sbar->getPropSymPin( &(sdGlobalProp->mSymPinProp) );
+      mEditor->setFocus();
+      update();
+      }
     }
   }
 
-  switch( getStep() ) {
-    case sPlaceNumber :
 
-  }
+
 
 void SdModeCSymPin::propSetToBar()
   {
+  if( getStep() == sPlaceNumber ) {
+    SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+    if( tbar ) tbar->setPropText( &(sdGlobalProp->mPinNumberProp), mEditor->getPPM() );
+    }
+  else if( getStep() == sEnterName ) SdModeCTextual::propSetToBar();
+  else if( getStep() == sPlaceName ) {
+    SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+    if( tbar ) tbar->setPropText( &(sdGlobalProp->mPinNameProp), mEditor->getPPM() );
+    }
+  else if( getStep() == sPlacePin ) {
+    SdPropBarSymPin *sbar = dynamic_cast<SdPropBarSymPin*>( SdWCommand::getModeBar(PB_SYM_PIN) );
+    if( sbar ) sbar->setPropSymPin( &(sdGlobalProp->mSymPinProp) );
+    }
   }
 
-void SdModeCSymPin::enterPoint(SdPoint)
+
+
+
+void SdModeCSymPin::enterPoint( SdPoint enter )
   {
+  switch( getStep() ) {
+    case sPlacePin :
+      //Enter pin place
+      mOrigin = enter;
+      //Switch to pin name place
+      mSmartPoint = mOrigin + mSmartName;
+      mSmartType  = snapPrev;
+      setStep( sPlaceName );
+      break;
+    case sPlaceName :
+      mName = nextText( mPrevName );
+      mNamePos = enter;
+      //Enter pin name place is completed
+      //Text editor on
+      mPropText = &(sdGlobalProp->mPinNameProp);
+      setText( mName, true );
+      setStep( sEnterName );
+      break;
+    case sEnterName :
+      applyEdit();
+      break;
+    case sPlaceNumber :
+      //Enter pin number place is completed
+      mNumberPos = enter;
+      addPic( new SdGraphSymPin( mOrigin, mNumberPos, mNamePos, mName ), QObject::tr("Enter sym pin") );
+      //Calculate smart-params
+      mSmartNumber = mNumberPos - mOrigin;
+      mSmartName   = mNamePos   - mOrigin;
+      mPrevName    = mName;
+      setStep( sPlacePin );
+      mSmartType = 0;
+      break;
+    }
   }
+
+
+
 
 void SdModeCSymPin::cancelPoint(SdPoint)
   {
+  cancelMode();
   }
 
-void SdModeCSymPin::movePoint(SdPoint)
+
+
+
+void SdModeCSymPin::movePoint( SdPoint p )
   {
   }
 
@@ -129,10 +208,20 @@ int SdModeCSymPin::getIndex() const
   {
   }
 
+
+
 void SdModeCSymPin::cancelEdit()
   {
+  mPropText = 0;
+  setStep( sPlaceName );
   }
 
+
+
+//Name editing is finished
 void SdModeCSymPin::applyEdit()
   {
+  mPropText = 0;
+  mName = mString;
+  setStep( sPlaceNumber );
   }

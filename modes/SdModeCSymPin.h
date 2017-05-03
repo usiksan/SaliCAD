@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -40,7 +40,7 @@ class SdModeCSymPin : public SdModeCTextual
     virtual int     getPropBarId() const override;
     virtual void    propGetFromBar() override;
     virtual void    propSetToBar() override;
-    virtual void    enterPoint(SdPoint) override;
+    virtual void    enterPoint(SdPoint p) override;
     virtual void    cancelPoint(SdPoint) override;
     virtual void    movePoint(SdPoint) override;
     virtual void    enterPrev() override;
