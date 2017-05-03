@@ -70,10 +70,19 @@ void SdContext::line(SdPoint a, SdPoint b, const SdPropLine &prop)
 void SdContext::symPin(SdPoint a, SdLayer *layer)
   {
   if( mSelector || (layer != 0 && layer->isVisible()) ) {
-    mPainter->setPen( convertColor( layer ) );
-    line( SdPoint(a.x()-sdEnvir->mSymPinSize,a.y()-sdEnvir->mSymPinSize), SdPoint(a.x()+sdEnvir->mSymPinSize,a.y()+sdEnvir->mSymPinSize ) );
-    line( SdPoint(a.x()+sdEnvir->mSymPinSize,a.y()-sdEnvir->mSymPinSize), SdPoint(a.x()-sdEnvir->mSymPinSize,a.y()+sdEnvir->mSymPinSize ) );
+    symPin( a, convertColor( layer ) );
     }
+  }
+
+
+
+
+
+void SdContext::symPin(SdPoint a, QColor color)
+  {
+  mPainter->setPen( color );
+  line( SdPoint(a.x()-sdEnvir->mSymPinSize,a.y()-sdEnvir->mSymPinSize), SdPoint(a.x()+sdEnvir->mSymPinSize,a.y()+sdEnvir->mSymPinSize ) );
+  line( SdPoint(a.x()+sdEnvir->mSymPinSize,a.y()-sdEnvir->mSymPinSize), SdPoint(a.x()-sdEnvir->mSymPinSize,a.y()+sdEnvir->mSymPinSize ) );
   }
 
 

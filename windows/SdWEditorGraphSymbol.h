@@ -29,10 +29,14 @@ class SdWEditorGraphSymbol : public SdWEditorGraph
   public:
     virtual SdProjectItem *getProjectItem() override;
     virtual void           onActivateEditor() override;
+    virtual void           cmModePin() override;
+    virtual void           cmModeReference() override;
+    virtual void           cmModeOrigin() override;
 
     // SdWEditorGraph interface
   public:
     virtual double getPPM() const override;
+
   };
 
 #endif // SDWEDITORGRAPHSYMBOL_H

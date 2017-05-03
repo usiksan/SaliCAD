@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Common mode for all with enter text
 */
 #ifndef SDMODECTEXTUAL_H
 #define SDMODECTEXTUAL_H

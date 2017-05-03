@@ -52,3 +52,16 @@ double SdWEditorGraphSymbol::getPPM() const
   {
   return sdEnvir->mSchPPM;
   }
+
+
+void SdWEditorGraphSymbol::cmModePin()
+  {
+  }
+
+void SdWEditorGraphSymbol::cmModeReference()
+  {
+  }
+
+void SdWEditorGraphSymbol::cmModeOrigin()
+  {
+  }
