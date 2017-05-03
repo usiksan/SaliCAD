@@ -9,12 +9,15 @@ Web
   www.saliLab.ru
 
 Description
+  Graph editor for symbol precentation of component
 */
 
 #include "SdWEditorGraphSymbol.h"
 #include "SdWCommand.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
+#include "modes/SdModeCSymPin.h"
+#include "modes/SdModeCOrigin.h"
 #include <QDebug>
 
 SdWEditorGraphSymbol::SdWEditorGraphSymbol(SdPItemSymbol *sym, QWidget *parent) :
@@ -56,12 +59,18 @@ double SdWEditorGraphSymbol::getPPM() const
 
 void SdWEditorGraphSymbol::cmModePin()
   {
+  modeSet( new SdModeCSymPin( this, mSymbol ) );
   }
+
+
 
 void SdWEditorGraphSymbol::cmModeReference()
   {
   }
 
+
+
 void SdWEditorGraphSymbol::cmModeOrigin()
   {
+  modeSet( new SdModeCOrigin( this, mSymbol, sdEnvir->mSymPinSize ) );
   }

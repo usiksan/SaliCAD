@@ -70,7 +70,7 @@ void SdContext::line(SdPoint a, SdPoint b, const SdPropLine &prop)
 void SdContext::symPin(SdPoint a, SdLayer *layer)
   {
   if( mSelector || (layer != 0 && layer->isVisible()) ) {
-    symPin( a, convertColor( layer ) );
+    cross( a, sdEnvir->mSymPinSize, convertColor( layer ) );
     }
   }
 
@@ -78,11 +78,11 @@ void SdContext::symPin(SdPoint a, SdLayer *layer)
 
 
 
-void SdContext::symPin(SdPoint a, QColor color)
+void SdContext::cross(SdPoint a, int size, QColor color)
   {
   mPainter->setPen( color );
-  line( SdPoint(a.x()-sdEnvir->mSymPinSize,a.y()-sdEnvir->mSymPinSize), SdPoint(a.x()+sdEnvir->mSymPinSize,a.y()+sdEnvir->mSymPinSize ) );
-  line( SdPoint(a.x()+sdEnvir->mSymPinSize,a.y()-sdEnvir->mSymPinSize), SdPoint(a.x()-sdEnvir->mSymPinSize,a.y()+sdEnvir->mSymPinSize ) );
+  line( SdPoint(a.x()-size,a.y()-size), SdPoint(a.x()+size,a.y()+size ) );
+  line( SdPoint(a.x()+size,a.y()-size), SdPoint(a.x()-size,a.y()+size ) );
   }
 
 

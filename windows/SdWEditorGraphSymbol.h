@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Graph editor for symbol precentation of component
 */
 
 #ifndef SDWEDITORGRAPHSYMBOL_H

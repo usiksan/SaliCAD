@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -14,6 +14,7 @@ Description
 #include "SdProjectItem.h"
 #include "SdProject.h"
 #include "SdPulsar.h"
+#include "SdPoint.h"
 #include <QSettings>
 
 SdProjectItem::SdProjectItem() :
@@ -76,6 +77,7 @@ void SdProjectItem::writeObject(QJsonObject &obj) const
   obj.insert( QStringLiteral("RefCount"), mRefCount );
   obj.insert( QStringLiteral("Auto"),     mAuto );
   sdParamWrite( QStringLiteral("Parametrs"), mParamTable, obj );
+  mOrigin.write( QStringLiteral("Origin"), obj );
   }
 
 
@@ -88,6 +90,7 @@ void SdProjectItem::readObject(SdObjectMap *map, const QJsonObject obj)
   mRefCount = obj.value( QStringLiteral("RefCount") ).toInt();
   mAuto     = obj.value( QStringLiteral("Auto") ).toBool();
   sdParamRead( QStringLiteral("Parametrs"), mParamTable, obj );
+  mOrigin.read( QStringLiteral("Origin"), obj );
   }
 
 

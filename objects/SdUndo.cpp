@@ -19,6 +19,7 @@ Description
 #include "SdUndoRecordPropLinePointInt.h"
 #include "SdUndoRecordPropLineAndPointsList.h"
 #include "SdUndoRecordPropSymPin.h"
+#include "SdUndoRecordPoint.h"
 #include "windows/SdWCommand.h"
 
 SdUndo::SdUndo() :
@@ -81,6 +82,11 @@ void SdUndo::propTextAndText(SdPropText *prp, SdPoint *org, SdRect *r, QString *
 void SdUndo::propSymPin(SdPropSymPin *prp, SdPoint *org)
   {
   addUndo( new SdUndoRecordPropSymPin( prp, org ) );
+  }
+
+void SdUndo::point(SdPoint *src)
+  {
+  addUndo( new SdUndoRecordPoint(src) );
   }
 
 

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -36,9 +36,9 @@ struct SdProp
     SdPropLine    mWireProp;       //Свойства сегментов цепей схемы
     SdPropText    mWireNameProp;   //Свойства имени цепи
     SdPropSymPin  mSymPinProp;     //Свойства вывода символа
+    SdPropText    mSymPinNameProp;    //Свойства имени вывода
+    SdPropText    mSymPinNumberProp;  //Свойства номера вывода
     SdPropPartPin mPartPinProp;    //Свойства вывода корпуса
-    SdPropText    mPinNameProp;    //Свойства имени вывода
-    SdPropText    mPinNumberProp;  //Свойства номера вывода
     SdPropSymImp  mSymImpProp;     //Свойства вхождения символа
     SdPropPartImp mPartImpProp;    //Свойства вхождения корпуса
     SdPropText    mSymIdentProp;   //Свойства идентификатора символа

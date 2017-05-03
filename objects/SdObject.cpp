@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -23,6 +23,7 @@ Description
 #include "SdGraphLinearCircleFilled.h"
 #include "SdGraphLinearRegion.h"
 #include "SdGraphText.h"
+#include "SdGraphSymPin.h"
 #include <QJsonValue>
 #include <QDebug>
 
@@ -196,6 +197,7 @@ SdObject *SdObject::build(QString type)
   if( type == QString(SD_TYPE_CIRCLE)        ) return new SdGraphLinearCircle();
   if( type == QString(SD_TYPE_CIRCLE_FILLED) ) return new SdGraphLinearCircleFilled();
   if( type == QString(SD_TYPE_TEXT)          ) return new SdGraphText();
+  if( type == QString(SD_TYPE_SYM_PIN)       ) return new SdGraphSymPin();
   return 0;
   }
 

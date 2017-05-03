@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -33,7 +33,26 @@ SdProp::SdProp()
   //TODO setup all prop defaults
 //  SdPropLine    mWireProp;       //Свойства сегментов цепей схемы
 //  SdPropText    mWireNameProp;   //Свойства имени цепи
-//  SdPropSymPin  mSymPinProp;     //Свойства вывода символа
+  //Symbol pin properties
+  mSymPinProp.mLayer.set( QString(LID0_SCHEMATIC LID1_PIN) );     //Свойства вывода символа
+  mSymPinProp.mPinType = 0;
+  //Symbol pin name properties
+  mSymPinNameProp.mLayer.set( QString(LID0_SCHEMATIC LID1_PIN_NAME) );
+  mSymPinNameProp.mFont   = 0;
+  mSymPinNameProp.mSize   = 35;
+  mSymPinNameProp.mDir    = da0;
+  mSymPinNameProp.mHorz   = dhjLeft;
+  mSymPinNameProp.mVert   = dvjMiddle;
+  mSymPinNameProp.mMirror = 0;
+  //Symbol pin number properties
+  mSymPinNumberProp.mLayer.set( QString(LID0_SCHEMATIC LID1_PIN_NUMBER) );
+  mSymPinNumberProp.mFont   = 0;
+  mSymPinNumberProp.mSize   = 35;
+  mSymPinNumberProp.mDir    = da0;
+  mSymPinNumberProp.mHorz   = dhjLeft;
+  mSymPinNumberProp.mVert   = dvjMiddle;
+  mSymPinNumberProp.mMirror = 0;
+
 //  SdPropPartPin mPartPinProp;    //Свойства вывода корпуса
 //  SdPropText    mPinNameProp;    //Свойства имени вывода
 //  SdPropText    mPinNumberProp;  //Свойства номера вывода

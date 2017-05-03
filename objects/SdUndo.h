@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -54,6 +54,7 @@ class SdUndo
     void propTextAndText( SdPropText *prp, SdPoint *org, SdRect *r, QString *str );
     void propSymPin( SdPropSymPin *prp, SdPoint *org );
     void propPartPin( SdPropPartPin *prp, SdPoint *org );
+    void point( SdPoint *src );
     void begin( QString title );
 
     //do undo and redo

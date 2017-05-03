@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -48,19 +48,19 @@ void SdModeCSymPin::drawDynamic(SdContext *ctx)
   switch( getStep() ) {
     case sPlaceNumber :
       //Rectangle for number
-      ctx->text( mNumberPos, r, QString("  "), sdGlobalProp->mPinNumberProp );
+      ctx->text( mNumberPos, r, QString("XX"), sdGlobalProp->mSymPinNumberProp );
       ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltDashed );
       ctx->rect( r );
       //Pin name
-      ctx->setFont( sdGlobalProp->mPinNameProp );
+      ctx->setFont( sdGlobalProp->mSymPinNameProp );
       ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltSolid );
-      ctx->textEx( mNamePos, r, mName, sdGlobalProp->mPinNameProp.mDir, sdGlobalProp->mPinNameProp.mHorz, sdGlobalProp->mPinNameProp.mVert );
+      ctx->textEx( mNamePos, r, mName, sdGlobalProp->mSymPinNameProp.mDir, sdGlobalProp->mSymPinNameProp.mHorz, sdGlobalProp->mSymPinNameProp.mVert );
 
     case sEnterName :
       drawText( ctx );
 
     case sPlaceName :
-      ctx->symPin( mOrigin, sdEnvir->getSysColor(scEnter) );
+      ctx->cross( mOrigin, sdEnvir->mSymPinSize, sdEnvir->getSysColor(scEnter) );
     }
   }
 
@@ -85,7 +85,7 @@ void SdModeCSymPin::propGetFromBar()
   if( getStep() == sPlaceNumber ) {
     SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
     if( tbar ) {
-      tbar->getPropText( &(sdGlobalProp->mPinNumberProp) );
+      tbar->getPropText( &(sdGlobalProp->mSymPinNumberProp) );
       mEditor->setFocus();
       update();
       }
@@ -94,7 +94,7 @@ void SdModeCSymPin::propGetFromBar()
   else if( getStep() == sPlaceName ) {
     SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
     if( tbar ) {
-      tbar->getPropText( &(sdGlobalProp->mPinNameProp) );
+      tbar->getPropText( &(sdGlobalProp->mSymPinNameProp) );
       mEditor->setFocus();
       update();
       }
@@ -116,12 +116,12 @@ void SdModeCSymPin::propSetToBar()
   {
   if( getStep() == sPlaceNumber ) {
     SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
-    if( tbar ) tbar->setPropText( &(sdGlobalProp->mPinNumberProp), mEditor->getPPM() );
+    if( tbar ) tbar->setPropText( &(sdGlobalProp->mSymPinNumberProp), mEditor->getPPM() );
     }
   else if( getStep() == sEnterName ) SdModeCTextual::propSetToBar();
   else if( getStep() == sPlaceName ) {
     SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
-    if( tbar ) tbar->setPropText( &(sdGlobalProp->mPinNameProp), mEditor->getPPM() );
+    if( tbar ) tbar->setPropText( &(sdGlobalProp->mSymPinNameProp), mEditor->getPPM() );
     }
   else if( getStep() == sPlacePin ) {
     SdPropBarSymPin *sbar = dynamic_cast<SdPropBarSymPin*>( SdWCommand::getModeBar(PB_SYM_PIN) );
@@ -146,9 +146,10 @@ void SdModeCSymPin::enterPoint( SdPoint enter )
     case sPlaceName :
       mName = nextText( mPrevName );
       mNamePos = enter;
+      mPrev = enter;
       //Enter pin name place is completed
       //Text editor on
-      mPropText = &(sdGlobalProp->mPinNameProp);
+      mPropText = &(sdGlobalProp->mSymPinNameProp);
       setText( mName, true );
       setStep( sEnterName );
       break;
@@ -182,30 +183,77 @@ void SdModeCSymPin::cancelPoint(SdPoint)
 
 void SdModeCSymPin::movePoint( SdPoint p )
   {
+  if( getStep() == sPlaceNumber ) {
+    mNumberPos = p;
+    update();
+    }
   }
+
+
+
 
 void SdModeCSymPin::enterPrev()
   {
+  if( sdEnvir->mIsSmart && mSmartType )
+    enterPoint( mSmartPoint );
   }
+
+
+
 
 QString SdModeCSymPin::getStepHelp() const
   {
+  switch( getStep() ) {
+    case sPlacePin    : return QObject::tr("Enter pin place point"); // "Укажите местрасположение вывода",
+    case sPlaceName   : return QObject::tr("Enter pin name place"); // "Укажите местрасположение имени вывода",
+    case sEnterName   : return QObject::tr("Type text");  // "Набирайте текст",
+    case sPlaceNumber : return QObject::tr("Enter pin number place"); // "Укажите местрасположение номера вывода"
+    }
+  return QString();
   }
+
+
+
 
 QString SdModeCSymPin::getModeHelp() const
   {
+  return QString( MODE_HELP "ModeCSymPin.htm" );
   }
+
+
+
 
 QString SdModeCSymPin::getStepThema() const
   {
+  switch( getStep() ) {
+    case sPlacePin    : return QString( MODE_HELP "ModeCSymPin.htm#sPlacePin" );
+    case sPlaceName   : return QString( MODE_HELP "ModeCSymPin.htm#sPlaceName" );
+    case sEnterName   : return QString( MODE_HELP "ModeCSymPin.htm#sEnterName" );
+    case sPlaceNumber : return QString( MODE_HELP "ModeCSymPin.htm#sPlaceNumber" );
+    }
+  return QString();
   }
+
+
+
 
 int SdModeCSymPin::getCursor() const
   {
+  switch( getStep() ) {
+    case sPlacePin    : return CUR_PIN;
+    case sPlaceName   : return CUR_PINNAM;
+    case sEnterName   : return CUR_TEXT;
+    case sPlaceNumber : return CUR_PINNUM;
+    }
+  return 0;
   }
+
+
+
 
 int SdModeCSymPin::getIndex() const
   {
+  return MD_PIN;
   }
 
 

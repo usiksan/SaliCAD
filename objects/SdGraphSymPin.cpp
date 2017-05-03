@@ -39,9 +39,9 @@ SdGraphSymPin::SdGraphSymPin(SdPoint org, SdPoint numberPos, SdPoint namePos, co
   mOrigin     = org;
   mPinProp    = sdGlobalProp->mSymPinProp;
   mNumberPos  = numberPos;
-  mNumberProp = sdGlobalProp->mPinNumberProp;
+  mNumberProp = sdGlobalProp->mSymPinNumberProp;
   mNamePos    = namePos;
-  mNameProp   = sdGlobalProp->mPinNameProp;
+  mNameProp   = sdGlobalProp->mSymPinNameProp;
   mName       = name;
   }
 
@@ -159,8 +159,8 @@ void SdGraphSymPin::mirror(SdPoint a, SdPoint b)
 void SdGraphSymPin::setProp(SdProp &prop)
   {
   if( mPinSelect ) mPinProp = prop.mSymPinProp;
-  if( mNamSelect ) mNameProp = prop.mPinNameProp;
-  if( mNumSelect ) mNumberProp = prop.mPinNumberProp;
+  if( mNamSelect ) mNameProp = prop.mSymPinNameProp;
+  if( mNumSelect ) mNumberProp = prop.mSymPinNumberProp;
   }
 
 
@@ -169,8 +169,8 @@ void SdGraphSymPin::setProp(SdProp &prop)
 void SdGraphSymPin::getProp(SdProp &prop)
   {
   if( mPinSelect ) prop.mSymPinProp.append( mPinProp );
-  if( mNamSelect ) prop.mPinNameProp.append( mNameProp );
-  if( mNumSelect ) prop.mPinNumberProp.append( mNumberProp );
+  if( mNamSelect ) prop.mSymPinNameProp.append( mNameProp );
+  if( mNumSelect ) prop.mSymPinNumberProp.append( mNumberProp );
   }
 
 

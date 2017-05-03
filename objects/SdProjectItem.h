@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -17,6 +17,7 @@ Description
 #include "SdContainer.h"
 #include "SdObjectInfo.h"
 #include "SdParamTable.h"
+#include "SdPoint.h"
 #include <QString>
 
 
@@ -33,7 +34,8 @@ class SdProjectItem : public SdContainer
   protected:
     SdParamTable           mParamTable; //Object parameters
   public:
-    QTreeWidgetItem       *mTreeItem;  //Correspond visual tree item
+    SdPoint                mOrigin;     //Origin for object
+    QTreeWidgetItem       *mTreeItem;   //Correspond visual tree item
 
     SdProjectItem();
 
