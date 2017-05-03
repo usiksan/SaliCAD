@@ -1,5 +1,6 @@
 #include "SdGraphSymPin.h"
 #include "SdSelector.h"
+#include "SdContext.h"
 #include <QStringRef>
 
 SdGraphSymPin::SdGraphSymPin() :
@@ -159,64 +160,138 @@ void SdGraphSymPin::selectByPoint(const SdPoint p, SdSelector *selector)
   if( mPinProp.mLayer.isEdited() && mOrigin == p ) {
     if( !getSelector() ) mNumSelect = mNamSelect = false;
     mPinSelect = true;
-    selector->
-    DoSelect( selector );
+    selector->insert( this );
     }
-  //Тестирование имени вывода
-  if( selector.IsLayerAble( info.nameProp.layer ) ) {
-    DRect rect;
-    info.nameProp.CalcOverRect(info.name, &rect);
-    if( rect.IsPointInside(p) ) {
-      if( !GetSelect() ) pinSelect = numSelect = false;
-      nameSelect = true;
-      DoSelect( selector );
+  //Test pin name
+  if( mNameProp.mLayer.isEdited() ) {
+    if( mNameRect.isPointInside(p) ) {
+      if( !getSelector() ) mPinSelect = mNumSelect = false;
+      mNamSelect = true;
+      selector->insert( this );
       }
     }
-  //Тестирование номера вывода
-  if( selector.IsLayerAble( info.numberProp.layer ) ) {
-    DRect rect;
-    info.numberProp.CalcOverRect(szDublSpace, &rect);
-    if( rect.IsPointInside(p) ) {
-      if( !GetSelect() ) pinSelect = nameSelect = false;
-      numSelect = true;
-      DoSelect( selector );
+  //Test pin number
+  if( mNumberProp.mLayer.isEdited() ) {
+    if( mNumberRect.isPointInside(p) ) {
+      if( !getSelector() ) mPinSelect = mNamSelect = false;
+      mNumSelect = true;
+      selector->insert( this );
       }
     }
   }
+
+
+
 
 void SdGraphSymPin::selectByRect(const SdRect &r, SdSelector *selector)
   {
+  //Test pin point
+  if( mPinProp.mLayer.isEdited() && r.isPointInside( mOrigin ) ) {
+    if( !getSelector() ) mNumSelect = mNamSelect = false;
+    mPinSelect = true;
+    selector->insert( this );
+    }
+  //Test pin name
+  if( mNameProp.mLayer.isEdited() ) {
+    if( r.isAccross( mNameRect ) ) {
+      if( !getSelector() ) mPinSelect = mNumSelect = false;
+      mNamSelect = true;
+      selector->insert( this );
+      }
+    }
+  //Test pin number
+  if( mNumberProp.mLayer.isEdited() ) {
+    if( r.isAccross( mNumberRect ) ) {
+      if( !getSelector() ) mPinSelect = mNamSelect = false;
+      mNumSelect = true;
+      selector->insert( this );
+      }
+    }
   }
+
+
+
 
 void SdGraphSymPin::select(SdSelector *selector)
   {
+  mPinSelect = mNamSelect = mNumSelect = true;
+  selector->insert( this );
   }
+
+
+
 
 bool SdGraphSymPin::isVisible()
   {
+  return mPinProp.mLayer.isVisible() || mNameProp.mLayer.isVisible() || mNumberProp.mLayer.isVisible();
   }
+
+
+
 
 SdRect SdGraphSymPin::getOverRect() const
   {
+  SdRect over( mOrigin, mOrigin );
+  over.grow( mNameRect );
+  over.grow( mNumberRect );
+  return over;
   }
+
+
 
 void SdGraphSymPin::draw(SdContext *dc)
   {
+  //Pin it self
+  dc->symPin( mOrigin, mPinProp.mLayer.layer() );
+
+  //Pin name
+  dc->text( mNamePos, mNameRect, mName, mNameProp );
+
+  //Pin number as over rectangle.
+  //At first calc over rectangle
+  dc->text( mNumberPos, mNumberRect, QString("  "), mNumberProp );
+  //At second draw rectangle
+  dc->setPen( 0, mNumberProp.mLayer.layer(), dltDashed );
+  dc->rect( mNumberRect );
   }
+
+
+
 
 int SdGraphSymPin::behindCursor(SdPoint p)
   {
+  //Test pin point
+  if( mPinProp.mLayer.isVisible() && mOrigin == p ) return getSelector() && mPinSelect ? SEL_ELEM : UNSEL_ELEM;
+  //Test pin name
+  if( mNameProp.mLayer.isVisible() && mNameRect.isPointInside(p) ) return getSelector() && mNamSelect ? SEL_ELEM : UNSEL_ELEM;
+  //Test pin number
+  if( mNumberProp.mLayer.isVisible() && mNumberRect.isPointInside(p) ) return getSelector() && mNumSelect ? SEL_ELEM : UNSEL_ELEM;
+  return 0;
   }
+
+
+
 
 int SdGraphSymPin::behindText(SdPoint p, SdPoint &org, QString &dest, SdPropText &prop)
   {
-
+  //Тестирование имени вывода
+  if( mNameProp.mLayer.isVisible() && mNameRect.isPointInside(p) ) {
+    org  = mNamePos;
+    dest = mName;
+    prop = mNameProp;
+    return 1;
+    }
+  return 0;
   }
 
-bool SdGraphSymPin::getInfo(SdPoint p, QString &info, bool extInfo)
-  {
-  }
+
+
+
 
 bool SdGraphSymPin::snapPoint(SdSnapInfo *snap)
   {
+  if( snap->match(snapNearestPin) )
+    return snap->test( mOrigin, snapNearestPin );
+  return false;
   }
+

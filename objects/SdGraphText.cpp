@@ -88,7 +88,7 @@ void SdGraphText::readObject(SdObjectMap *map, const QJsonObject obj)
 void SdGraphText::saveState(SdUndo *undo)
   {
   if( undo )
-    undo->propTextAndText( &mProp, &mOverRect, &mString );
+    undo->propTextAndText( &mProp, &mOrigin, &mOverRect, &mString );
   }
 
 
@@ -185,7 +185,7 @@ void SdGraphText::select(SdSelector *selector)
 
 bool SdGraphText::isVisible()
   {
-  return mProp.mLayer.layer(false)->isEdited();
+  return mProp.mLayer.isVisible();
   }
 
 

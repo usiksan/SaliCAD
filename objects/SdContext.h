@@ -84,8 +84,8 @@ class SdContext {
 
     //Примитивы второго уровня
     void            smartPoint( SdPoint a, int smartMask = snapCommon );      //Отобразить точку привязки
+    void            symPin( SdPoint a, SdLayer *layer );                      //Symbol pin cross
 //    virtual void    dotPoint( SdPoint p, SdPropLine &prop ) = 0;                  //Точка пересечения цепей
-//    virtual void    drawCross( SdPoint p, SdSymPinProp &prop ) = 0;               //Точка перекрестья вывода символа
 //    virtual void    dotCircle( SdPoint p, SdPartPinProp &prop ) = 0;              //Точка подключения вывода корпуса
 //    virtual void    drawArrow( SdPoint p, SdAngle angle, SdPropLine &prop ) = 0;  //Размерная стрелка
 //    virtual void    via( SdPoint p, SdRoadProp &prop ) = 0;                       //Переходное (без КП)

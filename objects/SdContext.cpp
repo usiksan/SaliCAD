@@ -64,6 +64,21 @@ void SdContext::line(SdPoint a, SdPoint b, const SdPropLine &prop)
     }
   }
 
+
+
+
+void SdContext::symPin(SdPoint a, SdLayer *layer)
+  {
+  if( mSelector || (layer != 0 && layer->isVisible()) ) {
+    mPainter->setPen( convertColor( layer ) );
+    line( SdPoint(a.x()-sdEnvir->mSymPinSize,a.y()-sdEnvir->mSymPinSize), SdPoint(a.x()+sdEnvir->mSymPinSize,a.y()+sdEnvir->mSymPinSize ) );
+    line( SdPoint(a.x()+sdEnvir->mSymPinSize,a.y()-sdEnvir->mSymPinSize), SdPoint(a.x()-sdEnvir->mSymPinSize,a.y()+sdEnvir->mSymPinSize ) );
+    }
+  }
+
+
+
+
 void SdContext::quadrangle(SdQuadrangle q, const SdPropLine &prop)
   {
   //Draw 4 edges
