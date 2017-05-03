@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -26,8 +26,10 @@ class SdGraphSymPin : public SdGraph
     SdPoint      mOrigin;     //Pin origin
     SdPropSymPin mPinProp;    //Pin properties
     SdPoint      mNumberPos;  //Pin number position
+    SdRect       mNumberRect; //Pin number over rect
     SdPropText   mNumberProp; //Pin number properties
     SdPoint      mNamePos;    //Pin name position
+    SdRect       mNameRect;   //Pin name over rect
     SdPropText   mNameProp;   //Pin name properties
     QString      mName;       //Pin name
 
@@ -59,7 +61,7 @@ class SdGraphSymPin : public SdGraph
     virtual void      selectByPoint(const SdPoint p, SdSelector *selector) override;
     virtual void      selectByRect(const SdRect &r, SdSelector *selector) override;
     virtual void      select(SdSelector *selector) override;
-    virtual bool      isAble() override;
+    virtual bool      isVisible() override;
     virtual SdRect    getOverRect() const override;
     virtual void      draw(SdContext *dc) override;
     virtual int       behindCursor(SdPoint p) override;

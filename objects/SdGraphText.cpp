@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -153,7 +153,7 @@ void SdGraphText::setText(int index, QString sour, SdPropText &prop)
 
 void SdGraphText::selectByPoint(const SdPoint p, SdSelector *selector)
   {
-  if( isAble() ) {
+  if( mProp.mLayer.isEdited() ) {
     if( !getSelector() && mOverRect.isPointInside(p) ) {
       selector->insert( this );
       }
@@ -165,7 +165,7 @@ void SdGraphText::selectByPoint(const SdPoint p, SdSelector *selector)
 
 void SdGraphText::selectByRect(const SdRect &r, SdSelector *selector)
   {
-  if( isAble() ) {
+  if( mProp.mLayer.isEdited() ) {
     if( !getSelector() && r.isAccross( mOverRect ) ) {
       selector->insert( this );
       }
@@ -183,7 +183,7 @@ void SdGraphText::select(SdSelector *selector)
 
 
 
-bool SdGraphText::isAble()
+bool SdGraphText::isVisible()
   {
   return mProp.mLayer.layer(false)->isEdited();
   }
@@ -209,7 +209,7 @@ void SdGraphText::draw(SdContext *dc)
 
 int SdGraphText::behindCursor(SdPoint p)
   {
-  if( isAble() ) {
+  if( isVisible() ) {
     if( mOverRect.isPointInside(p) )
       return getSelector() ? SEL_ELEM : UNSEL_ELEM;
     }
@@ -221,7 +221,7 @@ int SdGraphText::behindCursor(SdPoint p)
 
 int SdGraphText::behindText(SdPoint p, SdPoint &org, QString &dest, SdPropText &prop)
   {
-  if( isAble() ) {
+  if( isVisible() ) {
     if( mOverRect.isPointInside(p) ) {
       org  = mOrigin;
       dest = mString;

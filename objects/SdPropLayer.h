@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -28,6 +28,8 @@ class SdPropLayer
     SdPropLayer();
     SdPropLayer( QString id );
 
+    bool       isVisible( bool otherSide = false ) const;
+    bool       isEdited() const;
     bool       operator == ( SdPropLayer p ) const { return mValue == OneValue && mLayer == p.mLayer; }
     void       operator = ( SdPropLayer p ) { if( p.mValue == OneValue ) mLayer = p.mLayer; }
     void       operator = ( SdLayer *layer ) { mLayer = layer; mValue = layer ? OneValue : NoValue; }

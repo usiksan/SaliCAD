@@ -51,7 +51,7 @@ class SdGraphText : public SdGraph
     virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;
     virtual void    selectByRect(const SdRect &r, SdSelector *selector) override;
     virtual void    select(SdSelector *selector) override;
-    virtual bool    isAble() override;
+    virtual bool    isVisible() override;
     virtual SdRect  getOverRect() const override;
     virtual void    draw(SdContext *dc) override;
     virtual int     behindCursor(SdPoint p) override;

@@ -36,7 +36,7 @@ SdGraphLinearRectFilled::SdGraphLinearRectFilled(SdPoint p1, SdPoint p2, const S
 
 void SdGraphLinearRectFilled::selectByPoint(const SdPoint p, SdSelector *selector)
   {
-  if( isAble() ) {
+  if( mProp.mLayer.isEdited() ) {
     SdRect rect(a,b);
     SdPoint p1(p);
     if( !getSelector() && (p1.isOnSegment( rect.topLeft(), rect.bottomLeft() ) ||
@@ -82,7 +82,7 @@ void SdGraphLinearRectFilled::draw(SdContext *dc)
 
 int SdGraphLinearRectFilled::behindCursor(SdPoint p)
   {
-  if( isAble() ) {
+  if( isVisible() ) {
     SdRect rect(a,b);
     if( rect.contains(p,false) ) {
       return getSelector() ? SEL_ELEM : UNSEL_ELEM;

@@ -112,7 +112,7 @@ void SdGraphLinearRect::mirror(SdPoint p1, SdPoint p2)
 
 void SdGraphLinearRect::selectByPoint(const SdPoint p, SdSelector *selector)
   {
-  if( isAble() ) {
+  if( mProp.mLayer.isEdited() ) {
     SdRect rect(a,b);
     SdPoint p1(p);
     if( !getSelector() && (p1.isOnSegment( rect.topLeft(), rect.bottomLeft() ) ||
@@ -149,7 +149,7 @@ void SdGraphLinearRect::selectByPoint(const SdPoint p, SdSelector *selector)
 
 void SdGraphLinearRect::selectByRect(const SdRect &r, SdSelector *selector)
   {
-  if( isAble() ) {
+  if( mProp.mLayer.isEdited() ) {
     if( !getSelector() && r.isAccross( SdRect(a,b) ) ) {
       mFly = 0;
       selector->insert( this );
@@ -187,7 +187,7 @@ void SdGraphLinearRect::draw(SdContext *dc)
 
 int SdGraphLinearRect::behindCursor(SdPoint p)
   {
-  if( isAble() ) {
+  if( isVisible() ) {
     SdRect rect(a,b);
     if( p.isOnSegment( rect.topLeft(), rect.bottomLeft() ) ||
         p.isOnSegment( rect.bottomLeft(), rect.bottomRight() ) ||
@@ -204,7 +204,7 @@ int SdGraphLinearRect::behindCursor(SdPoint p)
 
 bool SdGraphLinearRect::snapPoint(SdSnapInfo *snap)
   {
-  if( isAble() ) {
+  if( isVisible() ) {
     SdRect r(a,b);
     if( snap->match(snapEndPoint) ) {
       snap->test( r.topLeft(), snapEndPoint );

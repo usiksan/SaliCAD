@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -27,6 +27,28 @@ SdPropLayer::SdPropLayer(QString id) :
   mValue(OneValue)
   {
 
+  }
+
+
+
+
+bool SdPropLayer::isVisible(bool otherSide) const
+  {
+  SdLayer *lay = layer( otherSide );
+  if( lay )
+    return lay->isVisible();
+  return false;
+  }
+
+
+
+
+bool SdPropLayer::isEdited() const
+  {
+  SdLayer *lay = layer( false );
+  if( lay )
+    return lay->isEdited();
+  return false;
   }
 
 

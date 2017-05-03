@@ -98,7 +98,7 @@ void SdGraphLinearCircle::mirror(SdPoint a, SdPoint b)
 
 void SdGraphLinearCircle::selectByPoint(const SdPoint p, SdSelector *selector)
   {
-  if( isAble() ) {
+  if( mProp.mLayer.isEdited() ) {
     if( !getSelector() && p.isOnCircle( mCenter, mRadius ) )
       selector->insert( this );
     }
@@ -109,7 +109,7 @@ void SdGraphLinearCircle::selectByPoint(const SdPoint p, SdSelector *selector)
 
 void SdGraphLinearCircle::selectByRect(const SdRect &r, SdSelector *selector)
   {
-  if( isAble() ) {
+  if( mProp.mLayer.isEdited() ) {
     SdRect cr( mCenter.x() - mRadius, mCenter.y() - mRadius, 2 * mRadius, 2 * mRadius );
     if( !getSelector() && r.isAccross(cr) )
       selector->insert( this );
@@ -146,7 +146,7 @@ void SdGraphLinearCircle::draw(SdContext *dc)
 
 bool SdGraphLinearCircle::snapPoint(SdSnapInfo *snap)
   {
-  if( isAble() ) {
+  if( isVisible() ) {
     if( snap->match( snapCenter ) ) {
       snap->test( mCenter, snapCenter );
       }
@@ -165,7 +165,7 @@ bool SdGraphLinearCircle::snapPoint(SdSnapInfo *snap)
 
 int SdGraphLinearCircle::behindCursor(SdPoint p)
   {
-  if( isAble() ) {
+  if( isVisible() ) {
     if( p.isOnCircle( mCenter, mRadius ) ) {
       return getSelector() ? SEL_ELEM : UNSEL_ELEM;
       }

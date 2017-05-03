@@ -59,9 +59,9 @@ class SdGraph : public SdObject
     //Обработка шрифтов
     virtual void   correctFonts() {}     //Коррекция шрифтов графических объектов
     virtual bool   canDelFont( int layer );
-    //Проверить доступность объекта
-    virtual bool   isAble() { return false; }
-    //Получить охватывающий прямоугольник
+    //Check if object is visible
+    virtual bool   isVisible() { return false; }
+    //Get over rect for visible
     virtual SdRect getOverRect() const = 0;
     //Отображения объекта
     virtual void   draw( SdContext *dc );              //Рисование объекта на экране

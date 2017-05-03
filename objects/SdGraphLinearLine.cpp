@@ -117,7 +117,7 @@ void SdGraphLinearLine::mirror(SdPoint a, SdPoint b)
 
 void SdGraphLinearLine::selectByPoint(const SdPoint p, SdSelector *selector)
   {
-  if( isAble() ) {
+  if( mProp.mLayer.isEdited() ) {
     if( !getSelector() && SdSegment(a,b).isPointOn( p ) ) {
       if( a == p ) { mFlyA = true; mFlyB = false; }
       else if( b == p ) { mFlyA = false; mFlyB = true; }
@@ -131,7 +131,7 @@ void SdGraphLinearLine::selectByPoint(const SdPoint p, SdSelector *selector)
 
 void SdGraphLinearLine::selectByRect(const SdRect &r, SdSelector *selector)
   {
-  if( isAble() ) {
+  if( mProp.mLayer.isEdited() ) {
     if( !getSelector() && r.isAccross(a,b) ) {
       mFlyA = mFlyB = true;
       selector->insert( this );
@@ -168,7 +168,7 @@ void SdGraphLinearLine::draw(SdContext *dc)
 
 bool SdGraphLinearLine::snapPoint(SdSnapInfo *snap)
   {
-  if( isAble() ) {
+  if( isVisible() ) {
     if( snap->match(snapEndPoint) ) {
       snap->test( a, snapEndPoint );
       snap->test( b, snapEndPoint );
@@ -185,7 +185,7 @@ bool SdGraphLinearLine::snapPoint(SdSnapInfo *snap)
 int SdGraphLinearLine::behindCursor(SdPoint p)
   {
   //Определить состояние объекта под курсором
-  if( isAble() && SdSegment(a,b).isPointOn( p ) )
+  if( isVisible() && SdSegment(a,b).isPointOn( p ) )
     return getSelector() ? SEL_ELEM : UNSEL_ELEM;
   return 0;
   }

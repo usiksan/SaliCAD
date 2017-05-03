@@ -106,7 +106,8 @@ SOURCES += \
     objects/SdPropString.cpp \
     objects/SdParamTable.cpp \
     modes/SdModeView.cpp \
-    objects/SdPartVariant.cpp
+    objects/SdPartVariant.cpp \
+    objects/SdUndoRecordPropSymPin.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -205,7 +206,8 @@ HEADERS  += \
     objects/SdPropString.h \
     objects/SdParamTable.h \
     modes/SdModeView.h \
-    objects/SdPartVariant.h
+    objects/SdPartVariant.h \
+    objects/SdUndoRecordPropSymPin.h
 
 DISTFILES += \
     license.txt

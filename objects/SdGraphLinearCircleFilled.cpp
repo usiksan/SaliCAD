@@ -33,7 +33,7 @@ SdGraphLinearCircleFilled::SdGraphLinearCircleFilled(SdPoint center, int radius,
 
 void SdGraphLinearCircleFilled::selectByPoint(const SdPoint p, SdSelector *selector)
   {
-  if( isAble() ) {
+  if( mProp.mLayer.isEdited() ) {
     if( !getSelector() && p.isInsideCircle( mCenter, mRadius ) )
       selector->insert( this );
     }
@@ -52,7 +52,7 @@ void SdGraphLinearCircleFilled::draw(SdContext *dc)
 
 int SdGraphLinearCircleFilled::behindCursor(SdPoint p)
   {
-  if( isAble() ) {
+  if( isVisible() ) {
     if( p.isInsideCircle( mCenter, mRadius ) ) {
       return getSelector() ? SEL_ELEM : UNSEL_ELEM;
       }

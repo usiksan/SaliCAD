@@ -300,7 +300,7 @@ void SdWEditorGraph::cmViewFit()
   SdRect fit;
   getProjectItem()->forEach( dctAll, [&fit](SdObject *obj) {
     SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-    if( graph && graph->isAble() )
+    if( graph && graph->isVisible() )
       fit.grow( graph->getOverRect() );
     return true;
     } );

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -18,6 +18,7 @@ Description
 #include "SdUndoRecordPropTextAndText.h"
 #include "SdUndoRecordPropLinePointInt.h"
 #include "SdUndoRecordPropLineAndPointsList.h"
+#include "SdUndoRecordPropSymPin.h"
 #include "windows/SdWCommand.h"
 
 SdUndo::SdUndo() :
@@ -79,7 +80,7 @@ void SdUndo::propTextAndText(SdPropText *prp, SdPoint *org, SdRect *r, QString *
 
 void SdUndo::propSymPin(SdPropSymPin *prp, SdPoint *org)
   {
-
+  addUndo( new SdUndoRecordPropSymPin( prp, org ) );
   }
 
 

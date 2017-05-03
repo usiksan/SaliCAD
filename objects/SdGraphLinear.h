@@ -34,7 +34,7 @@ class SdGraphLinear : public SdGraph
     virtual void getProp(SdProp &prop) override;
 
     //Проверить доступность объекта
-    virtual bool isAble() override;
+    virtual bool isVisible() override;
   };
 
 #endif // SDOBJECTGRAPHLINEAR_H

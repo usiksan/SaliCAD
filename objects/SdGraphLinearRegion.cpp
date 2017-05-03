@@ -98,7 +98,9 @@ void SdGraphLinearRegion::mirror(SdPoint a, SdPoint b)
 
 void SdGraphLinearRegion::selectByPoint(const SdPoint p, SdSelector *selector)
   {
-  if( isAble() ) {
+  if( mProp.mLayer.isEdited() ) {
+    //For each pair points of list check segment made by this pair
+    //and if test point p is on segment, then append two point of pair to select list
     for( int i = 0; i < mList.count() - 1; ++i )
       if( p.isOnSegment( mList[i], mList[i+1]) ) {
         if( !getSelector() ) {
@@ -121,7 +123,7 @@ void SdGraphLinearRegion::selectByPoint(const SdPoint p, SdSelector *selector)
 
 void SdGraphLinearRegion::selectByRect(const SdRect &r, SdSelector *selector)
   {
-  if( isAble() ) {
+  if( mProp.mLayer.isEdited() ) {
     for( int i = 0; i < mList.count() - 1; ++i )
       if( r.isAccross( mList[i], mList[i+1]) ) {
         if( !getSelector() ) {
@@ -177,7 +179,7 @@ bool SdGraphLinearRegion::snapPoint(SdSnapInfo *snap)
 
 int SdGraphLinearRegion::behindCursor(SdPoint p)
   {
-  if( isAble() ) {
+  if( isVisible() ) {
     for( int i = 0; i < mList.count()-1; ++i )
       if( p.isOnSegment( mList[i], mList[i+1]) )
         return getSelector() ? SEL_ELEM : UNSEL_ELEM;

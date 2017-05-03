@@ -108,7 +108,7 @@ void SdGraphPartPin::select(SdSelector *selector)
 
   }
 
-bool SdGraphPartPin::isAble()
+bool SdGraphPartPin::isVisible()
   {
 
   }
