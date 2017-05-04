@@ -30,7 +30,7 @@ class SdGraphLinearCircle : public SdGraphLinear
     SdGraphLinearCircle( SdPoint center, int radius, const SdPropLine &propLine );
     // SdObject interface
   public:
-    virtual QString getType() const override { return QString(SD_TYPE_CIRCLE); }
+    virtual QString getType() const override { return QStringLiteral(SD_TYPE_CIRCLE); }
     virtual quint64 getClass() const override { return dctLines; }
     virtual void    cloneFrom(const SdObject *src) override;
     virtual void    writeObject(QJsonObject &obj) const override;

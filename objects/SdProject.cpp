@@ -73,7 +73,7 @@ SdObjectPtr SdProject::item(QTreeWidgetItem *src) const
 
 QString SdProject::getType() const
   {
-  return QString(SD_TYPE_PROJECT);
+  return QStringLiteral(SD_TYPE_PROJECT);
   }
 
 

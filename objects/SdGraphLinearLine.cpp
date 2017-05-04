@@ -41,7 +41,7 @@ SdGraphLinearLine::SdGraphLinearLine(SdPoint p1, SdPoint p2, const SdPropLine &p
 
 QString SdGraphLinearLine::getType() const
   {
-  return QString(SD_TYPE_LINE);
+  return QStringLiteral(SD_TYPE_LINE);
   }
 
 

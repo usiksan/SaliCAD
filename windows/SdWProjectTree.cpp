@@ -46,16 +46,16 @@ SdWProjectTree::SdWProjectTree(const QString fname, QWidget *parent) :
     setLineWidth(1);
 
     //Заполнить список корневого уровня
-    mSymbolList = createItem( tr("Symbols"), tr("Project symbols list"), tr("Contains project symbols list") );   //!< Схемные изображения компонентов
-    mPartList   = createItem( tr("Parts"), tr("Project parts list"), tr("Contains project parts list") );     //!< Корпуса компонентов
-    mAliasList  = createItem( tr("Components"), tr("Project components list"), tr("Contains project components list, each of them is agregation symbols width appropriate part") );    //!< Компоненты (схемное избр. + корпус + параметры)
-    mSheetList  = createItem( tr("Sheets"), tr("Project shematic sheets"), tr("Contains project shematic sheet list") );    //!< Листы схем
-    mPlateList  = createItem( tr("Construct"), tr("Project constructs and pcb list"), tr("Contains project construct and pcb list") );    //!< Печатные платы
-    mTextList   = createItem( tr("Other docs"), tr("Project text and table docs list"), tr("Contains project text, table and others docs") );     //!< Текстовые документы
+    mSymbolList    = createItem( tr("Symbols"), tr("Project symbols list"), tr("Contains project symbols list") );   //!< Схемные изображения компонентов
+    mPartList      = createItem( tr("Parts"), tr("Project parts list"), tr("Contains project parts list") );     //!< Корпуса компонентов
+    mComponentList = createItem( tr("Components"), tr("Project components list"), tr("Contains project components list, each of them is agregation symbols width appropriate part") );    //!< Компоненты (схемное избр. + корпус + параметры)
+    mSheetList     = createItem( tr("Sheets"), tr("Project shematic sheets"), tr("Contains project shematic sheet list") );    //!< Листы схем
+    mPlateList     = createItem( tr("Construct"), tr("Project constructs and pcb list"), tr("Contains project construct and pcb list") );    //!< Печатные платы
+    mTextList      = createItem( tr("Other docs"), tr("Project text and table docs list"), tr("Contains project text, table and others docs") );     //!< Текстовые документы
 
     addTopLevelItem( mSheetList );
     addTopLevelItem( mPlateList );
-    addTopLevelItem( mAliasList );
+    addTopLevelItem( mComponentList );
     addTopLevelItem( mSymbolList );
     addTopLevelItem( mPartList );
     addTopLevelItem( mTextList );
@@ -63,7 +63,7 @@ SdWProjectTree::SdWProjectTree(const QString fname, QWidget *parent) :
 
   fillTopItem( mSheetList, dctSheet );
   fillTopItem( mPlateList, dctPlate );
-  fillTopItem( mAliasList, dctAlias );
+  fillTopItem( mComponentList, dctComponent );
   fillTopItem( mSymbolList, dctSymbol );
   fillTopItem( mPartList, dctPart );
   fillTopItem( mTextList, dctTextDoc );
@@ -243,6 +243,7 @@ void SdWProjectTree::insertItem(SdProjectItem *item)
     //Item from this project
     item->mTreeItem = new QTreeWidgetItem();
     item->mTreeItem->setText( 0, item->getExtendTitle() );
+    item->mTreeItem->setIcon( 0, QIcon(item->getIconName()) );
     QTreeWidgetItem *ch = classList( item->getClass() );
     if( ch ) ch->addChild( item->mTreeItem );
     }
@@ -267,7 +268,7 @@ void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem 
   {
   Q_UNUSED(prev)
   bool disable = cur == mSheetList || cur == mPlateList || cur == mSymbolList ||
-                 cur == mAliasList || cur == mPartList || cur == mTextList;
+                 cur == mComponentList || cur == mPartList || cur == mTextList;
   bool enable = !disable && cur != 0;
 
   SdWCommand::cmObjectRename->setEnabled(enable);
@@ -323,6 +324,7 @@ void SdWProjectTree::fillTopItem(QTreeWidgetItem *item, int classId)
       SdProjectItem *ctr = dynamic_cast<SdProjectItem*>( obj );
       if( ctr ) {
         it->setText( 0, ctr->getExtendTitle() );
+        it->setIcon( 0, QIcon(ctr->getIconName()) );
         ctr->mTreeItem = it;
         //it->setData(0, Qt::UserRole, QVariant(ctr->getId()) );
         item->addChild( it );
@@ -338,12 +340,12 @@ void SdWProjectTree::fillTopItem(QTreeWidgetItem *item, int classId)
 QTreeWidgetItem *SdWProjectTree::classList(quint64 classId)
   {
   switch( classId ) {
-    case dctSheet  : return mSheetList;
-    case dctPlate  : return mPlateList;
-    case dctSymbol : return mSymbolList;
-    case dctPart   : return mPartList;
-    case dctAlias  : return mAliasList;
-    case dctText   : return mTextList;
+    case dctSheet     : return mSheetList;
+    case dctPlate     : return mPlateList;
+    case dctSymbol    : return mSymbolList;
+    case dctPart      : return mPartList;
+    case dctComponent : return mComponentList;
+    case dctText      : return mTextList;
     }
   return 0;
   }

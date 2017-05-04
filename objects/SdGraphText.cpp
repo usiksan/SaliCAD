@@ -35,7 +35,7 @@ SdGraphText::SdGraphText(SdPoint org, const QString str, SdRect r, SdPropText &p
 
 QString SdGraphText::getType() const
   {
-  return QString( SD_TYPE_TEXT );
+  return QStringLiteral( SD_TYPE_TEXT );
   }
 
 
@@ -66,9 +66,10 @@ void SdGraphText::cloneFrom(const SdObject *src)
 void SdGraphText::writeObject(QJsonObject &obj) const
   {
   SdGraph::writeObject( obj );
-  mProp.write( QString("prop"), obj );
-  obj.insert( QString("text"), mString );
-  mOverRect.write( QString("over"), obj );
+  mProp.write( QStringLiteral("prop"), obj );
+  obj.insert( QStringLiteral("text"), mString );
+  mOverRect.write( QStringLiteral("over"), obj );
+  mOrigin.write( QStringLiteral("Origin"), obj );
   }
 
 
@@ -77,9 +78,10 @@ void SdGraphText::writeObject(QJsonObject &obj) const
 void SdGraphText::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdGraph::readObject( map, obj );
-  mProp.read( QString("prop"), obj );
-  mString = obj.value( QString("text") ).toString();
-  mOverRect.read( QString("over"), obj );
+  mProp.read( QStringLiteral("prop"), obj );
+  mString = obj.value( QStringLiteral("text") ).toString();
+  mOverRect.read( QStringLiteral("over"), obj );
+  mOrigin.read( QStringLiteral("Origin"), obj );
   }
 
 

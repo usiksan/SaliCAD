@@ -36,7 +36,7 @@ SdGraphLinearRect::SdGraphLinearRect(SdPoint p1, SdPoint p2, const SdPropLine &p
 
 QString SdGraphLinearRect::getType() const
   {
-  return QString(SD_TYPE_RECT);
+  return QStringLiteral(SD_TYPE_RECT);
   }
 
 

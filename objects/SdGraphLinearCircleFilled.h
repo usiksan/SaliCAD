@@ -27,7 +27,7 @@ class SdGraphLinearCircleFilled : public SdGraphLinearCircle
 
 
     // SdObject interface
-    virtual QString getType() const override { return QString(SD_TYPE_CIRCLE_FILLED); }
+    virtual QString getType() const override { return QStringLiteral(SD_TYPE_CIRCLE_FILLED); }
 
     // SdGraph interface
     virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;

@@ -16,6 +16,10 @@ Description
 #include "SdProject.h"
 #include "SdObjectFactory.h"
 #include "SdPItemSymbol.h"
+#include "SdPItemPart.h"
+#include "SdPItemComponent.h"
+#include "SdPItemSheet.h"
+#include "SdPItemPlate.h"
 #include "SdGraphLinearLine.h"
 #include "SdGraphLinearRect.h"
 #include "SdGraphLinearRectFilled.h"
@@ -189,15 +193,19 @@ SdObject *SdObject::readPtr(const QString name, SdObjectMap *map, const QJsonObj
 
 SdObject *SdObject::build(QString type)
   {
-  if( type == QString(SD_TYPE_PROJECT)       ) return new SdProject();
-  if( type == QString(SD_TYPE_SYMBOL)        ) return new SdPItemSymbol();
-  if( type == QString(SD_TYPE_LINE)          ) return new SdGraphLinearLine();
-  if( type == QString(SD_TYPE_RECT)          ) return new SdGraphLinearRect();
-  if( type == QString(SD_TYPE_RECT_FILLED)   ) return new SdGraphLinearRectFilled();
-  if( type == QString(SD_TYPE_CIRCLE)        ) return new SdGraphLinearCircle();
-  if( type == QString(SD_TYPE_CIRCLE_FILLED) ) return new SdGraphLinearCircleFilled();
-  if( type == QString(SD_TYPE_TEXT)          ) return new SdGraphText();
-  if( type == QString(SD_TYPE_SYM_PIN)       ) return new SdGraphSymPin();
+  if( type == QStringLiteral(SD_TYPE_PROJECT)       ) return new SdProject();
+  if( type == QStringLiteral(SD_TYPE_SYMBOL)        ) return new SdPItemSymbol();
+  if( type == QStringLiteral(SD_TYPE_LINE)          ) return new SdGraphLinearLine();
+  if( type == QStringLiteral(SD_TYPE_RECT)          ) return new SdGraphLinearRect();
+  if( type == QStringLiteral(SD_TYPE_RECT_FILLED)   ) return new SdGraphLinearRectFilled();
+  if( type == QStringLiteral(SD_TYPE_CIRCLE)        ) return new SdGraphLinearCircle();
+  if( type == QStringLiteral(SD_TYPE_CIRCLE_FILLED) ) return new SdGraphLinearCircleFilled();
+  if( type == QStringLiteral(SD_TYPE_TEXT)          ) return new SdGraphText();
+  if( type == QStringLiteral(SD_TYPE_SYM_PIN)       ) return new SdGraphSymPin();
+  if( type == QStringLiteral(SD_TYPE_PART)          ) return new SdPItemPart();
+  if( type == QStringLiteral(SD_TYPE_COMPONENT)     ) return new SdPItemComponent();
+  if( type == QStringLiteral(SD_TYPE_SHEET)         ) return new SdPItemSheet();
+  if( type == QStringLiteral(SD_TYPE_PLATE)         ) return new SdPItemPlate();
   return 0;
   }
 

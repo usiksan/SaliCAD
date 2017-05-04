@@ -26,14 +26,14 @@ class SdWProjectTree : public QTreeWidget
 
     SdProject           *mProject;
 
-    QTreeWidgetItem     *mSymbolList;   //Схемные изображения компонентов
-    QTreeWidgetItem     *mPartList;     //Корпуса компонентов
-    QTreeWidgetItem     *mAliasList;    //Компоненты (схемное избр. + корпус + параметры)
-    QTreeWidgetItem     *mSheetList;    //Листы схем
-    QTreeWidgetItem     *mPlateList;    //Печатные платы
-    QTreeWidgetItem     *mTextList;     //Текстовые документы
+    QTreeWidgetItem     *mSymbolList;    //Схемные изображения компонентов
+    QTreeWidgetItem     *mPartList;      //Корпуса компонентов
+    QTreeWidgetItem     *mComponentList; //Компоненты (схемное избр. + корпус + параметры)
+    QTreeWidgetItem     *mSheetList;     //Листы схем
+    QTreeWidgetItem     *mPlateList;     //Печатные платы
+    QTreeWidgetItem     *mTextList;      //Текстовые документы
 
-    QString              mFileName;     //Полное имя файла проекта проекта с путем
+    QString              mFileName;      //Полное имя файла проекта проекта с путем
   public:
     explicit SdWProjectTree( const QString fname, QWidget *parent = 0);
     ~SdWProjectTree();

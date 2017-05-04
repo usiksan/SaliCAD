@@ -25,7 +25,7 @@ class SdGraphLinearRectFilled : public SdGraphLinearRect
     SdGraphLinearRectFilled( SdPoint p1, SdPoint p2, const SdPropLine &propLine );
 
     // SdObject interface
-    virtual QString getType() const override { return QString(SD_TYPE_RECT_FILLED); }
+    virtual QString getType() const override { return QStringLiteral(SD_TYPE_RECT_FILLED); }
 
     // SdGraph interface
     virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;
