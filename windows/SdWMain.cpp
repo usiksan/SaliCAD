@@ -16,6 +16,8 @@ Description
 #include "SdWProjectTree.h"
 #include "SdWEditor.h"
 #include "SdWEditorGraphSymbol.h"
+#include "SdWEditorGraphPart.h"
+#include "SdWEditorComponent.h"
 #include "SdWCommand.h"
 #include "SdWLabel.h"
 #include "SdDOptions.h"
@@ -146,6 +148,12 @@ void SdWMain::onActivateProjectItem(SdProjectItem *item)
   switch( item->getClass() ) {
     case dctSymbol :
       editor = new SdWEditorGraphSymbol( dynamic_cast<SdPItemSymbol*>( item ), mWEditors );
+      break;
+    case dctPart :
+      editor = new SdWEditorGraphPart( dynamic_cast<SdPItemPart*>( item ), mWEditors );
+      break;
+    case dctComponent :
+      editor = new SdWEditorComponent( dynamic_cast<SdPItemComponent*>( item ), mWEditors );
       break;
     }
 

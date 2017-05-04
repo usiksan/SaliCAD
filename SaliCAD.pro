@@ -111,7 +111,10 @@ SOURCES += \
     modes/SdModeCSymPin.cpp \
     windows/SdPropBarSymPin.cpp \
     modes/SdModeCOrigin.cpp \
-    objects/SdUndoRecordPoint.cpp
+    objects/SdUndoRecordPoint.cpp \
+    windows/SdWEditorComponent.cpp \
+    objects/SdPItemSheet.cpp \
+    objects/SdPItemPlate.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -215,7 +218,10 @@ HEADERS  += \
     modes/SdModeCSymPin.h \
     windows/SdPropBarSymPin.h \
     modes/SdModeCOrigin.h \
-    objects/SdUndoRecordPoint.h
+    objects/SdUndoRecordPoint.h \
+    windows/SdWEditorComponent.h \
+    objects/SdPItemSheet.h \
+    objects/SdPItemPlate.h
 
 DISTFILES += \
     license.txt

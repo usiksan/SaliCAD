@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Graphical symbol presentation
 */
 
 #include "SdPItemSymbol.h"
@@ -39,5 +40,5 @@ QString SdPItemSymbol::getIconName() const
 
 void SdPItemSymbol::cloneFrom( const SdObject *src )
   {
-  SdContainer::cloneFrom( src );
+  SdProjectItem::cloneFrom( src );
   }

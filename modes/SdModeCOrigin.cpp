@@ -1,3 +1,16 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Mode for symbol pin
+*/
 #include "SdModeCOrigin.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdSnapInfo.h"

@@ -13,6 +13,10 @@ Description
 
 #include "SdPNewProjectItem_SelectType.h"
 #include "objects/SdPItemSymbol.h"
+#include "objects/SdPItemPart.h"
+#include "objects/SdPItemComponent.h"
+#include "objects/SdPItemSheet.h"
+#include "objects/SdPItemPlate.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -73,12 +77,27 @@ bool SdPNewProjectItem_SelectType::validatePage()
   if( *mItemPtr ) delete (*mItemPtr);
   QString name;
   switch( defaultClass ) {
-//    case 0 :
-//      *mItemPtr = new
+    case 0 :
+      *mItemPtr = new SdPItemSheet();
+      name = tr("Sheet%1");
+      break;
+    case 1 :
+      *mItemPtr = new SdPItemPlate();
+      name = tr("PCB%1");
+      break;
     case 2 :
       *mItemPtr = new SdPItemSymbol();
       name = tr("Symbol%1");
       break;
+    case 3 :
+      *mItemPtr = new SdPItemPart();
+      name = tr("Part%1");
+      break;
+    case 4 :
+      *mItemPtr = new SdPItemComponent();
+      name = tr("Component%1");
+      break;
+      //TODO text doc
     }
 
   //Pick up name

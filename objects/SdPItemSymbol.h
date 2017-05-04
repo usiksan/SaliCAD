@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Graphical symbol presentation
 */
 
 #ifndef SDPITEMSYMBOL_H
