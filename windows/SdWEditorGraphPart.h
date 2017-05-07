@@ -26,6 +26,8 @@ class SdWEditorGraphPart : public SdWEditorGraph
   public:
     SdWEditorGraphPart(SdPItemPart *part, QWidget *parent);
 
+    void setPart( SdPItemPart *part );
+
     // SdWEditor interface
   public:
     virtual SdProjectItem *getProjectItem() override;

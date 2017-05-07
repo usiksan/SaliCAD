@@ -24,6 +24,7 @@ Description
 #include <QMessageBox>
 #include <QHash>
 #include <QDebug>
+#include <QMessageBox>
 
 
 void SdObjectFactory::openLibrary()
@@ -51,7 +52,7 @@ void SdObjectFactory::openLibrary()
   if( !presence ) {
     QSqlQuery query;
     query.exec("CREATE TABLE objects (hash TEXT PRIMARY KEY, status INTEGER,"
-               " name TEXT, author TEXT, time INTEGER, rank INTEGER, object BLOB)");
+               " name TEXT, author TEXT, time INTEGER, type TEXT, rank INTEGER, object BLOB)");
     }
   }
 
@@ -98,18 +99,52 @@ QString SdObjectFactory::insertObject(const SdProjectItem *item, QJsonObject obj
 
   //Insert new object
   qDebug() << "insert";
-  q.prepare( QString("INSERT INTO objects (hash, status, name, author, time, rank, object) "
-                       "VALUES (:hash, :status, :name, :author, :time, :rank, :object)") );
-  q.bindValue( QString(":hash"), id );
-  q.bindValue( QString(":status"), 0 );
-  q.bindValue( QString(":name"), item->getTitle() );
-  q.bindValue( QString(":author"), item->getAuthor() );
-  q.bindValue( QString(":time"), item->getTime() );
-  q.bindValue( QString(":rank"), 0 );
-  q.bindValue( QString(":object"), QVariant(obj) );
+  q.prepare( QString("INSERT INTO objects (hash, status, name, author, time, type, rank, object) "
+                       "VALUES (:hash, :status, :name, :author, :time, :type, :rank, :object)") );
+  q.bindValue( QStringLiteral(":hash"), id );
+  q.bindValue( QStringLiteral(":status"), 0 );
+  q.bindValue( QStringLiteral(":name"), item->getTitle() );
+  q.bindValue( QStringLiteral(":author"), item->getAuthor() );
+  q.bindValue( QStringLiteral(":time"), item->getTime() );
+  q.bindValue( QStringLiteral(":type"), item->getType() );
+  q.bindValue( QStringLiteral(":rank"), 0 );
+  q.bindValue( QStringLiteral(":object"), QVariant(obj) );
   q.exec();
   qDebug() << q.lastError();
   //Add to cashe
   mCashe.insert( id, QString() );
   return QString();
+  }
+
+SdObject *SdObjectFactory::buildObject(const QString id, QWidget *parent )
+  {
+  QSqlQuery q;
+  q.prepare( QString("SELECT * FROM objects WHERE name='%1' AND author='%2'").arg( item->getTitle() ).arg( item->getAuthor()) );
+  q.exec();
+  qDebug() << "name and author" << q.lastError();
+  if( q.first() ) {
+    //Object present. Load from obj
+    QJsonObject jsonObj = q.value( QStringLiteral("object") ).toJsonObject();
+    if( obj.isEmpty() ) {
+      //TODO load object from server
+      }
+    //Build object
+    QString type = q.value( QStringLiteral("type") ).toString();
+    SdObject *obj = SdObject::build( type );
+    if( obj == nullptr ) {
+      QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Can't build object of type '%1'").arg(type) );
+      return obj;
+      }
+    else {
+      obj->read( nullptr, jsonObj );
+      }
+    }
+  QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Id '%1' not found in database").arg(id) );
+  return 0;
+  }
+
+//Extract object json from database
+QJsonObject extractObject(const QString id, QWidget *parent)
+  {
+  return QJsonObject();
   }

@@ -16,9 +16,19 @@ Description
 #include "SdObject.h"
 
 #include <QMap>
+#include <QList>
+
+//Pin assotiation where pin name assotiated with pin number
+//struct SdPinAssotiation
+//  {
+//    QString mPinName;
+//    QString mPinNumber;
+//  };
 
 //Pin assotiation table where symbol pin name is key and part pin number is value
 typedef QMap<QString,QString> SdPinAssotiation;
+
+class SdPItemSymbol;
 
 #define SD_TYPE_SECTION "Section"
 
@@ -26,12 +36,17 @@ class SdSection : public SdObject
   {
     QString           mSymbolName;       //Symbolic presentation of this section
     QString           mSymbolAuthor;
+    //QStringList       mPinList;
     SdPinAssotiation  mAssotiationTable; //Pin assotiation table
   public:
     SdSection();
 
-    QString getPinNumber( const QString name ) const { return mAssotiationTable.value(name); }
-    QString getSymbolShortId() const { return mSymbolName + mSymbolAuthor; }
+    QString          getPinNumber( const QString name ) const { return mAssotiationTable.value(name); }
+    QString          getSymbolShortId() const { return mSymbolName + mSymbolAuthor; }
+    QString          getSymbolTitle() const;
+    SdPinAssotiation getPins() const { return mAssotiationTable; }
+    //QStringList getPinNameList() const { return mPinList; }
+    void             updateFromSymbol( SdPItemSymbol *symbol );
 
     // SdObject interface
   public:

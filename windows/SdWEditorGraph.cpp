@@ -324,6 +324,15 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
   QSize s = viewport()->size();
   mClientSize.set( s.width(), s.height() );
 
+  if( getProjectItem() == 0 ) {
+    //Object not present. Show message
+    QPainter painter( viewport() );
+    QRect r(0,0, s.width(), s.height());
+    painter.fillRect( r, sdEnvir->getSysColor(scGraphBack) );
+    painter.drawText( r, Qt::AlignCenter,  tr("No object") );
+    return;
+    }
+
   if( mCasheDirty ) {
     //Redraw static part
     mCashe = QImage( s, QImage::Format_ARGB32_Premultiplied );

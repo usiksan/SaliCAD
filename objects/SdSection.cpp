@@ -11,11 +11,33 @@ Web
 Description
 */
 #include "SdSection.h"
+#include "SdPItemSymbol.h"
+#include "SdGraphSymPin.h"
 
 SdSection::SdSection() :
   SdObject()
   {
 
+  }
+
+QString SdSection::getSymbolTitle() const
+  {
+  return QString( "%1 (%2)" ).arg(mSymbolName).arg(mSymbolAuthor);
+  }
+
+
+
+void SdSection::updateFromSymbol(SdPItemSymbol *symbol)
+  {
+  SdPinAssotiation pins;
+  symbol->forEach( dctSymPin, [&pins, this] (SdObject *obj) -> bool {
+    SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>( obj );
+    if( pin ) {
+      pins.insert( pin->getPinName(), mAssotiationTable.value(pin->getPinName()) );
+      }
+    return true;
+    } );
+  mAssotiationTable = pins;
   }
 
 
@@ -54,11 +76,12 @@ void SdSection::cloneFrom(const SdObject *src)
 void SdSection::writeObject(QJsonObject &obj) const
   {
   SdObject::writeObject( obj );
-  obj.insert( QString("SymbolName"), mSymbolName );
-  obj.insert( QString("SymbolAuthor"), mSymbolAuthor );
-  //TODO save pin assotioation
-  //mAssotiationTable
-
+  obj.insert( QStringLiteral("SymbolName"), mSymbolName );
+  obj.insert( QStringLiteral("SymbolAuthor"), mSymbolAuthor );
+  QJsonObject pins;
+  for( auto i = mAssotiationTable.constBegin(); i != mAssotiationTable.constEnd(); i++ )
+    pins.insert( i.key(), i.value() );
+  obj.insert( QStringLiteral("PinAssotiation"), pins );
   }
 
 
@@ -67,8 +90,12 @@ void SdSection::writeObject(QJsonObject &obj) const
 void SdSection::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdObject::readObject( map, obj );
-  mSymbolName   = obj.value( QString("SymbolName") ).toString();
-  mSymbolAuthor = obj.value( QString("SymbolAuthor") ).toString();
-  //TODO read pin assotiation
+  mSymbolName   = obj.value( QStringLiteral("SymbolName") ).toString();
+  mSymbolAuthor = obj.value( QStringLiteral("SymbolAuthor") ).toString();
+  QJsonObject pins = obj.value( QStringLiteral("PinAssotiation") ).toObject();
+  for( auto i = pins.constBegin(); i != pins.constEnd(); i++ ) {
+//    mPinList.append( i.key() );
+    mAssotiationTable.insert( i.key(), i.value().toString() );
+    }
   }
 

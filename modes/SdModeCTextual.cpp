@@ -188,15 +188,17 @@ void SdModeCTextual::insertText(const QString str, bool sel)
   if( isSelectionPresent() )
     delSelected();
 
-  //Make insertion
-  mString.insert( mPos, str );
+  if( !str.isEmpty() ) {
+    //Make insertion
+    mString.insert( mPos, str );
 
-  //End of selection in any chois is equal position after insertion
-  mStopSel = mPos += str.length();
+    //End of selection in any chois is equal position after insertion
+    mStopSel = mPos += str.length();
 
-  //If no selection, then startSel equal stopSel
-  if( !sel )
-    mStartSel = mStopSel;
+    //If no selection, then startSel equal stopSel
+    if( !sel )
+      mStartSel = mStopSel;
+    }
 
   update();
   }

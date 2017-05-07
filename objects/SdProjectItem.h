@@ -48,7 +48,8 @@ class SdProjectItem : public SdContainer
     int                    getTime() const { return mObjectInfo.mCreateTime; }
     QString                getTitle() const { return mObjectInfo.mTitle; }
     void                   setTitle( const QString title );
-    SdProject*             getProject() const;
+    SdProject             *getProject() const;
+    SdUndo                *getUndo() const;
     void                   setReplaceId( const QString id ) { mReplaceId = id; }
 
     void                   addRef() { mRefCount++; }

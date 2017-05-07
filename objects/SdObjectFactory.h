@@ -18,6 +18,7 @@ Description
 
 #include "SdObject.h"
 #include <QJsonObject>
+#include <QWidget>
 
 class SdProjectItem;
 
@@ -29,10 +30,13 @@ class SdObjectFactory
 
     //Insert object to database. If in database already present newest object,
     //then return its id. Older object is never inserted.
-    static QString   insertObject( const SdProjectItem *item, QJsonObject obj );
+    static QString      insertObject( const SdProjectItem *item, QJsonObject obj );
 
     //Extract object from database
-    static SdObject *buildObject( const QString id );
+    static SdObject    *buildObject(const QString id , QWidget *parent);
+
+    //Extract object json from database
+    static QJsonObject  extractObject( const QString id, QWidget *parent );
   };
 
 #endif // SDOBJECTFACTORY_H

@@ -27,9 +27,9 @@ SdMode::SdMode(SdWEditorGraph *editor, SdProjectItem *obj) :
   mEditor(editor),
   mUndo(0)
   {
-  SdProject *prj = obj->getProject();
-  if( prj )
-    mUndo = prj->getUndo();
+  if( obj ) {
+    mUndo = obj->getUndo();
+    }
   }
 
 SdMode::~SdMode()

@@ -69,6 +69,16 @@ SdProject *SdProjectItem::getProject() const
 
 
 
+SdUndo *SdProjectItem::getUndo() const
+  {
+  SdProject *prj = getProject();
+  if( prj ) return prj->getUndo();
+  return nullptr;
+  }
+
+
+
+
 
 void SdProjectItem::writeObject(QJsonObject &obj) const
   {

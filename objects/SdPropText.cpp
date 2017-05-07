@@ -125,10 +125,15 @@ void SdPropText::swapState(SdPropTextState *src)
 //Example: src=PORT18CDF will result PORT19CDF
 QString nextText(const QString src)
   {
+  if( src.isEmpty() )
+    return src;
   int end = 0, begin = 0;
   int p = src.length() - 1;
   //Find number in string from end
   while( p >= 0 && !src.at(p).isDigit() ) p--;
+  if( p < 0 )
+    //no digits in src
+    return src;
   if( src.at(p).isDigit() ) end = p+1;
   do {
     begin = p;

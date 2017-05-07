@@ -26,6 +26,26 @@ SdWEditorGraphPart::SdWEditorGraphPart(SdPItemPart *part, QWidget *parent) :
   }
 
 
+
+void SdWEditorGraphPart::setPart(SdPItemPart *part)
+  {
+  //Delete previous part
+  if( mPart ) {
+    delete mPart;
+    mPart = nullptr;
+    }
+
+  //Set new part
+  mPart = part;
+
+  if( mPart ) {
+    //Fill part in view
+    cmViewFit();
+    }
+  }
+
+
+
 SdProjectItem *SdWEditorGraphPart::getProjectItem()
   {
   return mPart;

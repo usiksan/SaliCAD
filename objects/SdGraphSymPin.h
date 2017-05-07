@@ -41,6 +41,8 @@ class SdGraphSymPin : public SdGraph
     SdGraphSymPin();
     SdGraphSymPin( SdPoint org, SdPoint numberPos, SdPoint namePos, const QString name );
 
+    QString getPinName() const { return mName; }
+
     // SdObject interface
   public:
     virtual QString   getType() const override { return QStringLiteral( SD_TYPE_SYM_PIN ); }

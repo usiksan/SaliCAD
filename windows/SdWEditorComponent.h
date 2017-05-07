@@ -16,11 +16,33 @@ Description
 
 #include "SdWEditor.h"
 #include "objects/SdPItemComponent.h"
+#include "objects/SdUndo.h"
 
+#include <QTabWidget>
+#include <QPushButton>
+
+class SdWEditorGraphSymbol;
+class SdWEditorGraphPart;
 
 class SdWEditorComponent : public SdWEditor
   {
-    SdPItemComponent *mComponent;
+    Q_OBJECT
+
+    SdPItemComponent     *mComponent;
+    SdUndo               *mUndo;
+
+    SdWEditorGraphSymbol *mSymbolViewer;
+    SdWEditorGraphPart   *mPartViewer;
+
+    QTabWidget           *mSectionsTab;
+    QPushButton          *mSectionAdd;
+    QPushButton          *mSectionSelect;
+    QPushButton          *mSectionDelete;
+
+    QWidget              *mPartTable;
+    QPushButton          *mPartAdd;
+    QPushButton          *mPartSelect;
+    QPushButton          *mPartDelete;
   public:
     SdWEditorComponent(SdPItemComponent *comp, QWidget *parent);
 
@@ -28,6 +50,14 @@ class SdWEditorComponent : public SdWEditor
   public:
     virtual SdProjectItem *getProjectItem() override;
     virtual void           onActivateEditor() override;
+
+  public slots:
+    void sectionAdd();
+    void sectionSelect();
+    void sectionDelete();
+  private:
+    void fillSections();
+    void renameSymbolTabs();
   };
 
 #endif // SDWEDITORCOMPONENT_H
