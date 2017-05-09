@@ -20,6 +20,9 @@ Description
 
 class SdSection;
 class SdPartVariant;
+class SdPItemSymbol;
+class SdPItemPart;
+class QWidget;
 
 class SdPItemComponent : public SdProjectItem
   {
@@ -34,6 +37,9 @@ class SdPItemComponent : public SdProjectItem
     SdPartVariant *getPart( int partIndex ) const;
     SdPartVariant *getDefaultPart() const;
 
+    SdPItemSymbol *extractSymbolFromFactory( int sectionIndex, bool soft, QWidget *parent ) const;
+    SdPItemPart   *extractPartFromFactory(int partIndex, bool soft, QWidget *parent ) const;
+    SdPItemPart   *extractDefaultPartFromFacory( bool soft, QWidget *parent ) const;
     // SdObject interface
   public:
     virtual QString getType() const override;

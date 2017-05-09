@@ -21,7 +21,7 @@ SdWSection::SdWSection(SdSection *s, QWidget *parent) :
   {
   QHBoxLayout *hbox = new QHBoxLayout();
   hbox->addWidget( new QLabel(tr("Name:")) );
-  hbox->addWidget( mTitle = new QLabel() );
+  hbox->addWidget( mTitle = new QLabel(s->getTitle()) );
   QVBoxLayout *vbox = new QVBoxLayout();
   vbox->addLayout( hbox );
   vbox->addWidget( mPinTable = new QTableWidget( 1, 2, this) );
@@ -30,7 +30,7 @@ SdWSection::SdWSection(SdSection *s, QWidget *parent) :
   QStringList labels;
   labels << tr("Pin name") << tr("Pin number");
   mPinTable->setHorizontalHeaderLabels( labels );
-
+  updatePinTable();
   }
 
 
@@ -39,7 +39,7 @@ SdWSection::SdWSection(SdSection *s, QWidget *parent) :
 //Update visual title as in section
 void SdWSection::updateTitle()
   {
-  mTitle->setText( mSection->getSymbolTitle() );
+  mTitle->setText( mSection->getTitle() );
   }
 
 
@@ -47,7 +47,7 @@ void SdWSection::updateTitle()
 //Update visual pin assotiation table
 void SdWSection::updatePinTable()
   {
-  mPinTable->setRowCount(1);
+  mPinTable->setRowCount(0);
   SdPinAssotiation pins = mSection->getPins();
   for( auto i = pins.constBegin(); i != pins.constEnd(); i++ ) {
     mPinTable->insertRow( mPinTable->rowCount() );

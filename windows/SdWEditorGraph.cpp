@@ -62,9 +62,12 @@ SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
   setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
   setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
 
-  //By default - view mode
-  mMode = new SdModeView( this, item );
-  modeActivate( mMode );
+  //By default - view mode.
+  //If no item then no mode.
+  if( item ) {
+    mMode = new SdModeView( this, item );
+    modeActivate( mMode );
+    }
   }
 
 

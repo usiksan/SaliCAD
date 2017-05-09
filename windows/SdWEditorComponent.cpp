@@ -15,6 +15,7 @@ Description
 #include "SdWEditorGraphSymbol.h"
 #include "SdWEditorGraphPart.h"
 #include "SdWSection.h"
+#include "SdDGetObject.h"
 #include "objects/SdProject.h"
 #include <QSplitter>
 #include <QVBoxLayout>
@@ -103,17 +104,26 @@ void SdWEditorComponent::onActivateEditor()
   {
   }
 
+
+
 void SdWEditorComponent::sectionAdd()
   {
-  SdSection *section = new SdSection();
-  SdWSection *ws = new SdWSection( section, mSectionsTab );
-  mSectionsTab->addTab( ws, tr("Section %1").arg(mSectionsTab->count()+1) );
-  mComponent->insertChild( section, mUndo );
+  SdPItemSymbol *sym = dynamic_cast<SdPItemSymbol*>( SdDGetObject::getObject( dctSymbol, tr("Select symbol for section"), this ) );
+  if( sym ) {
+    SdSection *section = new SdSection();
+    section->updateFromSymbol( sym );
+    delete sym;
+    SdWSection *ws = new SdWSection( section, mSectionsTab );
+    mSectionsTab->addTab( ws, tr("Section %1").arg(mSectionsTab->count()+1) );
+    mSectionsTab->setCurrentWidget( ws );
+    mComponent->insertChild( section, mUndo );
+    }
   }
+
 
 void SdWEditorComponent::sectionSelect()
   {
-
+  SdDGetObject::getObjectName( 0, 0, dctSymbol, tr("Select symbol for section"), this );
   }
 
 void SdWEditorComponent::sectionDelete()
@@ -149,6 +159,8 @@ void SdWEditorComponent::fillSections()
     mSectionsTab->setCurrentIndex(0);
     }
   }
+
+
 
 void SdWEditorComponent::renameSymbolTabs()
   {

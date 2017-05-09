@@ -13,6 +13,7 @@ Description
 #include "SdPItemComponent.h"
 #include "SdSection.h"
 #include "SdPartVariant.h"
+#include "SdObjectFactory.h"
 
 SdPItemComponent::SdPItemComponent()
   {
@@ -61,6 +62,37 @@ SdPartVariant *SdPItemComponent::getDefaultPart() const
       }
     }
   return 0;
+  }
+
+
+
+
+SdPItemSymbol *SdPItemComponent::extractSymbolFromFactory(int sectionIndex, bool soft, QWidget *parent) const
+  {
+  SdSection *sec = getSection( sectionIndex );
+  if( sec )
+    return sec->extractFromFactory( soft, parent );
+  return nullptr;
+  }
+
+
+
+
+SdPItemPart *SdPItemComponent::extractPartFromFactory(int partIndex, bool soft, QWidget *parent) const
+  {
+  SdPartVariant *prt = getPart( partIndex );
+  if( prt ) prt->extractFromFactory( soft, parent );
+  return nullptr;
+  }
+
+
+
+
+SdPItemPart *SdPItemComponent::extractDefaultPartFromFacory(bool soft, QWidget *parent) const
+  {
+  SdPartVariant *prt = getDefaultPart();
+  if( prt ) prt->extractFromFactory( soft, parent );
+  return nullptr;
   }
 
 

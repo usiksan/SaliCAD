@@ -13,6 +13,7 @@ Description
 #include "SdSection.h"
 #include "SdPItemSymbol.h"
 #include "SdGraphSymPin.h"
+#include "SdObjectFactory.h"
 
 SdSection::SdSection() :
   SdObject()
@@ -20,15 +21,17 @@ SdSection::SdSection() :
 
   }
 
-QString SdSection::getSymbolTitle() const
+QString SdSection::getTitle() const
   {
-  return QString( "%1 (%2)" ).arg(mSymbolName).arg(mSymbolAuthor);
+  return QString( "%1 (%2)" ).arg(mSymbolTitle).arg(mSymbolAuthor);
   }
 
 
 
 void SdSection::updateFromSymbol(SdPItemSymbol *symbol)
   {
+  mSymbolTitle = symbol->getTitle();
+  mSymbolAuthor = symbol->getAuthor();
   SdPinAssotiation pins;
   symbol->forEach( dctSymPin, [&pins, this] (SdObject *obj) -> bool {
     SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>( obj );
@@ -38,6 +41,14 @@ void SdSection::updateFromSymbol(SdPItemSymbol *symbol)
     return true;
     } );
   mAssotiationTable = pins;
+  }
+
+
+
+
+SdPItemSymbol *SdSection::extractFromFactory( bool soft, QWidget *parent) const
+  {
+  return dynamic_cast<SdPItemSymbol*>( SdObjectFactory::extractObject( mSymbolTitle, mSymbolAuthor, soft, parent ) );
   }
 
 
@@ -64,7 +75,7 @@ void SdSection::cloneFrom(const SdObject *src)
   SdObject::cloneFrom( src );
   const SdSection *section = dynamic_cast<const SdSection*>(src);
   if( section ) {
-    mSymbolName       = section->mSymbolName;
+    mSymbolTitle       = section->mSymbolTitle;
     mSymbolAuthor     = section->mSymbolAuthor;
     mAssotiationTable = section->mAssotiationTable;
     }
@@ -76,7 +87,7 @@ void SdSection::cloneFrom(const SdObject *src)
 void SdSection::writeObject(QJsonObject &obj) const
   {
   SdObject::writeObject( obj );
-  obj.insert( QStringLiteral("SymbolName"), mSymbolName );
+  obj.insert( QStringLiteral("SymbolName"), mSymbolTitle );
   obj.insert( QStringLiteral("SymbolAuthor"), mSymbolAuthor );
   QJsonObject pins;
   for( auto i = mAssotiationTable.constBegin(); i != mAssotiationTable.constEnd(); i++ )
@@ -90,7 +101,7 @@ void SdSection::writeObject(QJsonObject &obj) const
 void SdSection::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdObject::readObject( map, obj );
-  mSymbolName   = obj.value( QStringLiteral("SymbolName") ).toString();
+  mSymbolTitle   = obj.value( QStringLiteral("SymbolName") ).toString();
   mSymbolAuthor = obj.value( QStringLiteral("SymbolAuthor") ).toString();
   QJsonObject pins = obj.value( QStringLiteral("PinAssotiation") ).toObject();
   for( auto i = pins.constBegin(); i != pins.constEnd(); i++ ) {

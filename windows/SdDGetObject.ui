@@ -61,21 +61,21 @@
         </widget>
        </item>
        <item>
-        <widget class="QListWidget" name="mFindList"/>
+        <widget class="QTableView" name="mFindTable"/>
        </item>
       </layout>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="mSymbolBox">
          <property name="title">
           <string>Symbol</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_2">
+        <widget class="QGroupBox" name="mPartBox">
          <property name="title">
           <string>Part</string>
          </property>

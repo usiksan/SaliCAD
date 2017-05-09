@@ -32,11 +32,12 @@ class SdObjectFactory
     //then return its id. Older object is never inserted.
     static QString      insertObject( const SdProjectItem *item, QJsonObject obj );
 
-    //Extract object from database
-    static SdObject    *buildObject(const QString id , QWidget *parent);
-
-    //Extract object json from database
-    static QJsonObject  extractObject( const QString id, QWidget *parent );
+    //Extract object from database.
+    //If no object in local database then loading from internet
+    //Soft extract object from database.
+    //If no object in local database then doing nothing
+    static SdObject    *extractObject( const QString id, bool soft, QWidget *parent );
+    static SdObject    *extractObject( const QString name, const QString author, bool soft, QWidget *parent );
   };
 
 #endif // SDOBJECTFACTORY_H

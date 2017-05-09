@@ -25,6 +25,7 @@ Description
 #include <QHash>
 #include <QDebug>
 #include <QMessageBox>
+#include <QJsonDocument>
 
 
 void SdObjectFactory::openLibrary()
@@ -52,7 +53,7 @@ void SdObjectFactory::openLibrary()
   if( !presence ) {
     QSqlQuery query;
     query.exec("CREATE TABLE objects (hash TEXT PRIMARY KEY, status INTEGER,"
-               " name TEXT, author TEXT, time INTEGER, type TEXT, rank INTEGER, object BLOB)");
+               " name TEXT, author TEXT, time INTEGER, class INTEGER, rank INTEGER, object BLOB)");
     }
   }
 
@@ -99,16 +100,16 @@ QString SdObjectFactory::insertObject(const SdProjectItem *item, QJsonObject obj
 
   //Insert new object
   qDebug() << "insert";
-  q.prepare( QString("INSERT INTO objects (hash, status, name, author, time, type, rank, object) "
-                       "VALUES (:hash, :status, :name, :author, :time, :type, :rank, :object)") );
+  q.prepare( QString("INSERT INTO objects (hash, status, name, author, time, class, rank, object) "
+                       "VALUES (:hash, :status, :name, :author, :time, :class, :rank, :object)") );
   q.bindValue( QStringLiteral(":hash"), id );
   q.bindValue( QStringLiteral(":status"), 0 );
   q.bindValue( QStringLiteral(":name"), item->getTitle() );
   q.bindValue( QStringLiteral(":author"), item->getAuthor() );
   q.bindValue( QStringLiteral(":time"), item->getTime() );
-  q.bindValue( QStringLiteral(":type"), item->getType() );
+  q.bindValue( QStringLiteral(":class"), item->getClass() );
   q.bindValue( QStringLiteral(":rank"), 0 );
-  q.bindValue( QStringLiteral(":object"), QVariant(obj) );
+  q.bindValue( QStringLiteral(":object"), QVariant( QJsonDocument(obj).toBinaryData() ), QSql::Binary | QSql::In );
   q.exec();
   qDebug() << q.lastError();
   //Add to cashe
@@ -116,35 +117,50 @@ QString SdObjectFactory::insertObject(const SdProjectItem *item, QJsonObject obj
   return QString();
   }
 
-SdObject *SdObjectFactory::buildObject(const QString id, QWidget *parent )
+
+
+
+//Extract object from database.
+//If no object in local database then loading from internet
+SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *parent )
   {
   QSqlQuery q;
-  q.prepare( QString("SELECT * FROM objects WHERE name='%1' AND author='%2'").arg( item->getTitle() ).arg( item->getAuthor()) );
+  q.prepare( QString("SELECT object FROM objects WHERE hash='%1'").arg( id ) );
   q.exec();
-  qDebug() << "name and author" << q.lastError();
   if( q.first() ) {
     //Object present. Load from obj
-    QJsonObject jsonObj = q.value( QStringLiteral("object") ).toJsonObject();
-    if( obj.isEmpty() ) {
+    QJsonObject jsonObj = QJsonDocument::fromBinaryData( q.value( QStringLiteral("object") ).toByteArray() ).object();
+    if( jsonObj.isEmpty() ) {
+      //Soft extract object from database.
+      //If no object in local database then doing nothing
+      if( soft ) return nullptr;
+
       //TODO load object from server
       }
     //Build object
-    QString type = q.value( QStringLiteral("type") ).toString();
-    SdObject *obj = SdObject::build( type );
-    if( obj == nullptr ) {
-      QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Can't build object of type '%1'").arg(type) );
-      return obj;
-      }
-    else {
-      obj->read( nullptr, jsonObj );
-      }
+    SdObjectMap map;
+    return SdObject::read( &map, jsonObj );
     }
   QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Id '%1' not found in database").arg(id) );
   return 0;
   }
 
-//Extract object json from database
-QJsonObject extractObject(const QString id, QWidget *parent)
+
+
+
+SdObject *SdObjectFactory::extractObject(const QString name, const QString author, bool soft, QWidget *parent)
   {
-  return QJsonObject();
+  QSqlQuery q;
+  q.exec( QString("SELECT hash FROM objects WHERE name='%1' AND author='%2'").arg( name ).arg( author ) );
+  if( q.first() )
+    //Object present.
+    return extractObject( q.value( QStringLiteral("hash")).toString(), soft, parent );
+  return nullptr;
   }
+
+
+
+
+
+
+

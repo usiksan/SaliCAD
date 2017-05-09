@@ -29,24 +29,26 @@ Description
 typedef QMap<QString,QString> SdPinAssotiation;
 
 class SdPItemSymbol;
+class QWidget;
 
 #define SD_TYPE_SECTION "Section"
 
 class SdSection : public SdObject
   {
-    QString           mSymbolName;       //Symbolic presentation of this section
+    QString           mSymbolTitle;       //Symbolic presentation of this section
     QString           mSymbolAuthor;
-    //QStringList       mPinList;
     SdPinAssotiation  mAssotiationTable; //Pin assotiation table
   public:
     SdSection();
 
     QString          getPinNumber( const QString name ) const { return mAssotiationTable.value(name); }
-    QString          getSymbolShortId() const { return mSymbolName + mSymbolAuthor; }
-    QString          getSymbolTitle() const;
+    QString          getSymbolShortId() const { return mSymbolTitle + mSymbolAuthor; }
+    QString          getSymbolTitle() const { return mSymbolTitle; }
+    QString          getSymbolAuthor() const { return mSymbolAuthor; }
+    QString          getTitle() const;
     SdPinAssotiation getPins() const { return mAssotiationTable; }
-    //QStringList getPinNameList() const { return mPinList; }
     void             updateFromSymbol( SdPItemSymbol *symbol );
+    SdPItemSymbol   *extractFromFactory(bool soft, QWidget *parent ) const;
 
     // SdObject interface
   public:

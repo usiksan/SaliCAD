@@ -19,6 +19,8 @@ Description
 
 #define SD_TYPE_PART_VARIANT "PartVariant"
 
+class SdPItemPart;
+class QWidget;
 
 class SdPartVariant : public SdObject
   {
@@ -28,9 +30,10 @@ class SdPartVariant : public SdObject
   public:
     SdPartVariant();
 
-    bool    isDefault() const { return mDefault; }
-    void    setDefault( bool def ) { mDefault = def; }
-    QString getPartShortId() const { return mPartName + mPartAuthor; }
+    bool         isDefault() const { return mDefault; }
+    void         setDefault( bool def ) { mDefault = def; }
+    QString      getPartShortId() const { return mPartName + mPartAuthor; }
+    SdPItemPart *extractFromFactory( bool soft, QWidget *parent ) const;
 
 
     // SdObject interface

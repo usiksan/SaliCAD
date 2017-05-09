@@ -13,12 +13,21 @@ Description
   different component placement with the same part or different parts of one component.
 */
 #include "SdPartVariant.h"
+#include "SdObjectFactory.h"
+#include "SdPItemPart.h"
 
 SdPartVariant::SdPartVariant() :
   SdObject(),
   mDefault(false)
   {
 
+  }
+
+
+
+SdPItemPart *SdPartVariant::extractFromFactory(bool soft, QWidget *parent) const
+  {
+  return dynamic_cast<SdPItemPart*>( SdObjectFactory::extractObject( mPartName, mPartAuthor, soft, parent ) );
   }
 
 
