@@ -28,6 +28,8 @@ Description
 #include "SdGraphLinearRegion.h"
 #include "SdGraphText.h"
 #include "SdGraphSymPin.h"
+#include "SdSection.h"
+#include "SdPartVariant.h"
 #include <QJsonValue>
 #include <QDebug>
 
@@ -206,6 +208,8 @@ SdObject *SdObject::build(QString type)
   if( type == QStringLiteral(SD_TYPE_COMPONENT)     ) return new SdPItemComponent();
   if( type == QStringLiteral(SD_TYPE_SHEET)         ) return new SdPItemSheet();
   if( type == QStringLiteral(SD_TYPE_PLATE)         ) return new SdPItemPlate();
+  if( type == QStringLiteral(SD_TYPE_SECTION)       ) return new SdSection();
+  if( type == QStringLiteral(SD_TYPE_PART_VARIANT)  ) return new SdPartVariant();
   return 0;
   }
 

@@ -36,6 +36,7 @@ class SdWEditorComponent : public SdWEditor
 
     QTabWidget           *mSectionsTab;
     QPushButton          *mSectionAdd;
+    QPushButton          *mSectionDubl;
     QPushButton          *mSectionSelect;
     QPushButton          *mSectionDelete;
 
@@ -53,6 +54,7 @@ class SdWEditorComponent : public SdWEditor
 
   public slots:
     void sectionAdd();
+    void sectionDubl();
     void sectionSelect();
     void sectionDelete();
   private:

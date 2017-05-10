@@ -50,6 +50,8 @@ void SdMode::restore()
   SdWCommand::setModeBar( getPropBarId() );
   //setup properties in bar
   propSetToBar();
+
+  update();
   }
 
 

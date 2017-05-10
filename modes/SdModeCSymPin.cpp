@@ -20,6 +20,7 @@ Description
 #include "windows/SdWCommand.h"
 #include "windows/SdWEditorGraph.h"
 #include <QObject>
+#include <QMessageBox>
 
 SdPoint
   SdModeCSymPin::mSmartNumber,       //Offset from previous number
@@ -269,6 +270,23 @@ void SdModeCSymPin::cancelEdit()
 //Name editing is finished
 void SdModeCSymPin::applyEdit()
   {
+  if( mString.isEmpty() ) {
+    QMessageBox::warning( mEditor, QObject::tr("Error"), QObject::tr("Pin name can't be empty") );
+    return;
+    }
+  //Check if pin name unical
+  bool unical = true;
+  mObject->forEach( dctSymPin, [&unical, this] (SdObject *obj) -> bool {
+    SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>(obj);
+    if( pin ) {
+      if( pin->getPinName() == mString ) unical = false;
+      }
+    return unical;
+    } );
+  if( !unical ) {
+    QMessageBox::warning( mEditor, QObject::tr("Error"), QObject::tr("Duplicate pin name. Change name or cancel.") );
+    return;
+    }
   mPropText = 0;
   mName = mString;
   setStep( sPlaceNumber );

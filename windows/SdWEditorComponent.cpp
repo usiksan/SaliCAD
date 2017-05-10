@@ -52,10 +52,12 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
     QVBoxLayout *buts = new QVBoxLayout();
     box->addLayout( buts );
      buts->addWidget( mSectionAdd = new QPushButton( tr("Add section") )  );
-     buts->addWidget( mSectionSelect = new QPushButton( tr("Select symbol")) );
-     buts->addWidget( mSectionDelete = new QPushButton( tr("Delete section")) );
+     buts->addWidget( mSectionDubl = new QPushButton( tr("Dubl section") ) );
+     buts->addWidget( mSectionSelect = new QPushButton( tr("Select symbol") ) );
+     buts->addWidget( mSectionDelete = new QPushButton( tr("Delete section") ) );
 
      connect( mSectionAdd, &QPushButton::clicked, this, &SdWEditorComponent::sectionAdd );
+     connect( mSectionDubl, &QPushButton::clicked, this, &SdWEditorComponent::sectionDubl );
      connect( mSectionSelect, &QPushButton::clicked, this, &SdWEditorComponent::sectionSelect );
      connect( mSectionDelete, &QPushButton::clicked, this, &SdWEditorComponent::sectionDelete );
 
@@ -119,6 +121,17 @@ void SdWEditorComponent::sectionAdd()
     mComponent->insertChild( section, mUndo );
     }
   }
+
+
+
+
+void SdWEditorComponent::sectionDubl()
+  {
+
+  }
+
+
+
 
 
 void SdWEditorComponent::sectionSelect()
