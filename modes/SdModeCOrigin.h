@@ -9,7 +9,7 @@ Web
   www.saliLab.ru
 
 Description
-  Mode for symbol pin
+  Mode for symbol pin origin
 */
 #ifndef SDMODECORIGIN_H
 #define SDMODECORIGIN_H
@@ -18,7 +18,9 @@ Description
 
 class SdModeCOrigin : public SdModeCommon
   {
+  protected:
     int mOriginSize; //Size for drawing origin symbol
+    int mModeIndex;
   public:
     SdModeCOrigin( SdWEditorGraph *editor, SdProjectItem *obj, int osize );
 

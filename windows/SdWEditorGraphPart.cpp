@@ -15,7 +15,8 @@ Description
 #include "SdWCommand.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
-#include "modes/SdModeCOrigin.h"
+#include "modes/SdModeCOriginPart.h"
+#include "modes/SdModeCPartPin.h"
 #include <QDebug>
 
 SdWEditorGraphPart::SdWEditorGraphPart(SdPItemPart *part, QWidget *parent) :
@@ -50,6 +51,7 @@ void SdWEditorGraphPart::onActivateEditor()
 
 void SdWEditorGraphPart::cmModePin()
   {
+  modeSet( new SdModeCPartPin( this, mPart ) );
   }
 
 
@@ -64,7 +66,7 @@ void SdWEditorGraphPart::cmModeReference()
 
 void SdWEditorGraphPart::cmModeOrigin()
   {
-  modeSet( new SdModeCOrigin( this, mPart, sdEnvir->mPrtPinSize ) );
+  modeSet( new SdModeCOriginPart( this, mPart, sdEnvir->mPrtPinSize ) );
   }
 
 

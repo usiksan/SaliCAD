@@ -114,7 +114,11 @@ SOURCES += \
     objects/SdUndoRecordPoint.cpp \
     windows/SdWEditorComponent.cpp \
     objects/SdPItemSheet.cpp \
-    objects/SdPItemPlate.cpp
+    objects/SdPItemPlate.cpp \
+    objects/SdUndoRecordPropPartPin.cpp \
+    modes/SdModeCPartPin.cpp \
+    windows/SdPropBarPartPin.cpp \
+    modes/SdModeCOriginPart.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -221,7 +225,11 @@ HEADERS  += \
     objects/SdUndoRecordPoint.h \
     windows/SdWEditorComponent.h \
     objects/SdPItemSheet.h \
-    objects/SdPItemPlate.h
+    objects/SdPItemPlate.h \
+    objects/SdUndoRecordPropPartPin.h \
+    modes/SdModeCPartPin.h \
+    windows/SdPropBarPartPin.h \
+    modes/SdModeCOriginPart.h
 
 DISTFILES += \
     license.txt

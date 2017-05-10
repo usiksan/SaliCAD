@@ -24,29 +24,28 @@ Description
 
 class SdGraphPartPin : public SdGraph
   {
-    SdPoint      mOrigin;     //Pin origin
-    SdPropSymPin mPinProp;    //Pin properties
-    SdPoint      mNumberPos;  //Pin number position
-    SdPropText   mNumberProp; //Pin number properties
-    SdPoint      mNamePos;    //Pin name position
-    SdPropText   mNameProp;   //Pin name properties
-    QString      mName;       //Pin name
+    SdPoint       mOrigin;     //Pin origin
+    SdPropPartPin mPinProp;    //Pin properties
+    SdPoint       mNamePos;    //Pin name position
+    SdRect        mNameRect;   //Pin name over rect
+    SdPropText    mNameProp;   //Pin name properties
+    SdPoint       mNumberPos;  //Pin number position
+    SdRect        mNumberRect; //Pin number over rect
+    SdPropText    mNumberProp; //Pin number properties
+    QString       mNumber;     //Pin number
 
     //Different pin part selection
-    bool         mPinSelect;  //Pin selected
-    bool         mNumSelect;  //Pin number selected
-    bool         mNamSelect;  //Pin name selected
+    bool          mPinSelect;  //Pin selected
+    bool          mNumSelect;  //Pin number selected
+    bool          mNamSelect;  //Pin name selected
   public:
     SdGraphPartPin();
+    SdGraphPartPin( SdPoint org, SdPoint numberPos, SdPoint namePos, const QString number );
 
     // SdObject interface
   public:
     virtual QString   getType() const override { return QString( SD_TYPE_PART_PIN ); }
     virtual quint64   getClass() const override { return dctPartPin; }
-    virtual void      attach(SdUndo *undo) override;
-    virtual void      undoAttach() override;
-    virtual void      detach(SdUndo *undo) override;
-    virtual void      undoDetach() override;
     virtual SdObject *copyNext() override;
     virtual void      cloneFrom(const SdObject *src) override;
     virtual void      writeObject(QJsonObject &obj) const override;
@@ -69,7 +68,6 @@ class SdGraphPartPin : public SdGraph
     virtual void      draw(SdContext *dc) override;
     virtual int       behindCursor(SdPoint p) override;
     virtual int       behindText( SdPoint p, SdPoint &org, QString &dest, SdPropText &prop ) override;
-    virtual bool      getInfo(SdPoint p, QString &info, bool extInfo) override;
     virtual bool      snapPoint(SdSnapInfo *snap) override;
   };
 

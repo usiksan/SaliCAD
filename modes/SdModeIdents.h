@@ -14,7 +14,7 @@ Description
 #ifndef SDMODEIDENT_H
 #define SDMODEIDENT_H
 
-//Идентификаторы режимов
+//Mode id's
 #define MD_ZOOM_IN          0
 #define MD_ZOOM_OUT         1
 #define MD_ZOOM_WIN         2
@@ -36,9 +36,9 @@ Description
 #define MD_3DBODY_CYLINDER 18
 #define MD_3DBODY_BRICK    19
 #define MD_3DBODY_COUNTUR  20
-#define MD_PIN             21
-#define MD_REFERENCE       22
-#define MD_ORIGIN          23
+#define MD_SYM_PIN         21
+#define MD_SYM_REFERENCE   22
+#define MD_SYM_ORIGIN      23
 #define MD_COMPONENT       24
 #define MD_NET             25
 #define MD_NET_SETUP       26
@@ -59,8 +59,12 @@ Description
 #define MD_DELETE_WIRE     41
 #define MD_PAD             42
 #define MD_VIEW            43
-#define MD_LAST            44
+#define MD_PART_PIN        44
+#define MD_PART_REFERENCE  45
+#define MD_PART_ORIGIN     46
+#define MD_LAST            47
 
+//Properties tool bar id's
 #define PB_DEFAULT          0
 #define PB_LINEAR           1
 #define PB_TEXT             2

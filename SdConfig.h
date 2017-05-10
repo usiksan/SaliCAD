@@ -48,6 +48,9 @@ History
                    insert in QStatusBar - it minimizing main window.
   19.04.2017 v0.17 Append text. Mode and object.
                    Correct text properties bar.
+  10.05.2017 v0.18 Append part pin mode.
+                   Append part pin bar (partial).
+                   Separate modes for symbol and part.
 */
 
 #ifndef SDCONFIG
@@ -59,7 +62,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             17
+#define SD_VERSION_MINOR             18
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

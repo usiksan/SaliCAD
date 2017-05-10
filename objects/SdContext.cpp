@@ -80,7 +80,8 @@ void SdContext::symPin(SdPoint a, SdLayer *layer)
 
 void SdContext::cross(SdPoint a, int size, QColor color)
   {
-  mPainter->setPen( color );
+  setPen( 0, color, dltSolid );
+//  mPainter->setPen( QPen( QBrush(color), 0 ) );
   line( SdPoint(a.x()-size,a.y()-size), SdPoint(a.x()+size,a.y()+size ) );
   line( SdPoint(a.x()+size,a.y()-size), SdPoint(a.x()-size,a.y()+size ) );
   }

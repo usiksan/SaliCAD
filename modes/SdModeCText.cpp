@@ -166,6 +166,7 @@ void SdModeCText::applyEdit()
     mPicAffected->saveState( mUndo );
     mPicAffected->setText( mIdAffected, mString, mEditText );
     mPicAffected = 0;
+    mEditor->dirtyProject();
     }
   mPropText = 0;
   setStep( sPlace );

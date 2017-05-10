@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -17,6 +17,7 @@ Description
 #include "SdPropBarLinear.h"
 #include "SdPropBarTextual.h"
 #include "SdPropBarSymPin.h"
+#include "SdPropBarPartPin.h"
 #include <QMenuBar>
 #include <QSettings>
 #include <QFileInfo>
@@ -135,14 +136,18 @@ void SdWCommand::createMenu(SdWMain *frame)
 
   menuInsertSymbol = new QMenu( frame->tr("Insert") );
 
-  cmModeTable[MD_PIN]        = menuInsertSymbol->addAction( QIcon(QString(":/pic/objPin.png")), frame->tr("Pin"), frame, SLOT(cmModePin()) );
-  cmModeTable[MD_REFERENCE]  = menuInsertSymbol->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Reference"), frame, SLOT(cmModeReference()) );
-  cmModeTable[MD_ORIGIN]     = menuInsertSymbol->addAction( QIcon(QString(":/pic/objOrigin.png")), frame->tr("Origin"), frame, SLOT(cmModeOrigin()) );
+  cmModeTable[MD_SYM_PIN]       = menuInsertSymbol->addAction( QIcon(QString(":/pic/objPin.png")), frame->tr("Pin"), frame, SLOT(cmModePin()) );
+  cmModeTable[MD_SYM_REFERENCE] = menuInsertSymbol->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Reference"), frame, SLOT(cmModeReference()) );
+  cmModeTable[MD_SYM_ORIGIN]    = menuInsertSymbol->addAction( QIcon(QString(":/pic/objOrigin.png")), frame->tr("Origin"), frame, SLOT(cmModeOrigin()) );
 
 
 
 
   menuInsertPart = new QMenu( frame->tr("Insert") );
+
+  cmModeTable[MD_PART_PIN]       = menuInsertPart->addAction( QIcon(QString(":/pic/objPrtPin.png")), frame->tr("Pin"), frame, SLOT(cmModePin()) );
+  cmModeTable[MD_PART_REFERENCE] = menuInsertPart->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Reference"), frame, SLOT(cmModeReference()) );
+  cmModeTable[MD_PART_ORIGIN]    = menuInsertPart->addAction( QIcon(QString(":/pic/objOrigin.png")), frame->tr("Origin"), frame, SLOT(cmModeOrigin()) );
 
 
 
@@ -382,14 +387,16 @@ void SdWCommand::createToolBars(SdWMain *frame)
   frame->addToolBar( barMain );
   //barMain->setIconSize( QSize(20,24) );
 
+
+
   //Symbol bar
   barSymbol = new QToolBar( QString("Symbol") );
   addEditCommands( barSymbol );
   addViewCommands( barSymbol );
   addDrawCommands( barSymbol );
-  barSymbol->insertAction( 0, cmModeTable[MD_PIN] );
-  barSymbol->insertAction( 0, cmModeTable[MD_REFERENCE] );
-  barSymbol->insertAction( 0, cmModeTable[MD_ORIGIN] );
+  barSymbol->insertAction( 0, cmModeTable[MD_SYM_PIN] );
+  barSymbol->insertAction( 0, cmModeTable[MD_SYM_REFERENCE] );
+  barSymbol->insertAction( 0, cmModeTable[MD_SYM_ORIGIN] );
 
   frame->addToolBar( barSymbol );
 
@@ -399,9 +406,9 @@ void SdWCommand::createToolBars(SdWMain *frame)
   addEditCommands( barPart );
   addViewCommands( barPart );
   addDrawCommands( barPart );
-  barPart->insertAction( 0, cmModeTable[MD_PIN] );
-  barPart->insertAction( 0, cmModeTable[MD_REFERENCE] );
-  barPart->insertAction( 0, cmModeTable[MD_ORIGIN] );
+  barPart->insertAction( 0, cmModeTable[MD_PART_PIN] );
+  barPart->insertAction( 0, cmModeTable[MD_PART_REFERENCE] );
+  barPart->insertAction( 0, cmModeTable[MD_PART_ORIGIN] );
 
   frame->addToolBar( barPart );
 
@@ -435,26 +442,32 @@ void SdWCommand::createToolBars(SdWMain *frame)
 
 
   SdPropBar *mbar;
-  mbar = new SdPropBar( QString("Default tool bar") );
+  mbar = new SdPropBar( QStringLiteral("Default tool bar") );
   frame->addToolBar( mbar );
   mbarTable[PB_DEFAULT] = mbar;
 
-  mbar = new SdPropBarLinear( QString("Linear mode") );
+  mbar = new SdPropBarLinear( QStringLiteral("Linear mode") );
   frame->addToolBar( mbar );
   mbar->setVisible(false);
   mbarTable[PB_LINEAR] = mbar;
   mbar->connect( mbar, &SdPropBar::propChanged, frame, &SdWMain::cmPropertiesChange );
 
-  mbar = new SdPropBarTextual( QString("Textual mode") );
+  mbar = new SdPropBarTextual( QStringLiteral("Textual mode") );
   frame->addToolBar( mbar );
   mbar->setVisible(false);
   mbarTable[PB_TEXT] = mbar;
   mbar->connect( mbar, &SdPropBar::propChanged, frame, &SdWMain::cmPropertiesChange );
 
-  mbar = new SdPropBarSymPin( QString("Sym pin") );
+  mbar = new SdPropBarSymPin( QStringLiteral("Sym pin") );
   frame->addToolBar( mbar );
   mbar->setVisible(false);
   mbarTable[PB_SYM_PIN] = mbar;
+  mbar->connect( mbar, &SdPropBar::propChanged, frame, &SdWMain::cmPropertiesChange );
+
+  mbar = new SdPropBarPartPin( QStringLiteral("Part pin") );
+  frame->addToolBar( mbar );
+  mbar->setVisible(false);
+  mbarTable[PB_PART_PIN] = mbar;
   mbar->connect( mbar, &SdPropBar::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   for( int i = 0; i < MD_LAST; i++ )

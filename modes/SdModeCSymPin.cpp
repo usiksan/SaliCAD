@@ -253,7 +253,7 @@ int SdModeCSymPin::getCursor() const
 
 int SdModeCSymPin::getIndex() const
   {
-  return MD_PIN;
+  return MD_SYM_PIN;
   }
 
 

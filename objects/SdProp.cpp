@@ -53,9 +53,27 @@ SdProp::SdProp()
   mSymPinNumberProp.mVert   = dvjMiddle;
   mSymPinNumberProp.mMirror = 0;
 
-//  SdPropPartPin mPartPinProp;    //Свойства вывода корпуса
-//  SdPropText    mPinNameProp;    //Свойства имени вывода
-//  SdPropText    mPinNumberProp;  //Свойства номера вывода
+  //Part pin properties
+  mPartPinProp.mLayer.set( QString(LID0_PCB_TOP LID1_PIN ) );    //Свойства вывода корпуса
+  mPartPinProp.mPinType = QString("h1");
+  mPartPinProp.mSide = dsThrow;
+  //Part pin name properties
+  mPartPinNameProp.mLayer.set( QString(LID0_PCB_TOP LID1_PIN_NAME) );    //Свойства имени вывода
+  mPartPinNameProp.mFont   = 0;
+  mPartPinNameProp.mSize   = 1000;
+  mPartPinNameProp.mDir    = da0;
+  mPartPinNameProp.mHorz   = dhjLeft;
+  mPartPinNameProp.mVert   = dvjMiddle;
+  mPartPinNameProp.mMirror = 0;
+  //Part pin number properties
+  mPartPinNumberProp.mLayer.set( QString(LID0_PCB_TOP LID1_PIN_NUMBER) );  //Свойства номера вывода
+  mPartPinNumberProp.mFont   = 0;
+  mPartPinNumberProp.mSize   = 1000;
+  mPartPinNumberProp.mDir    = da0;
+  mPartPinNumberProp.mHorz   = dhjLeft;
+  mPartPinNumberProp.mVert   = dvjMiddle;
+  mPartPinNumberProp.mMirror = 0;
+
 //  SdPropSymImp  mSymImpProp;     //Свойства вхождения символа
 //  SdPropPartImp mPartImpProp;    //Свойства вхождения корпуса
 //  SdPropText    mSymIdentProp;   //Свойства идентификатора символа
