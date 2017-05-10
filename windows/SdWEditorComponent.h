@@ -19,6 +19,7 @@ Description
 #include "objects/SdUndo.h"
 
 #include <QTabWidget>
+#include <QListWidget>
 #include <QPushButton>
 
 class SdWEditorGraphSymbol;
@@ -40,10 +41,11 @@ class SdWEditorComponent : public SdWEditor
     QPushButton          *mSectionSelect;
     QPushButton          *mSectionDelete;
 
-    QWidget              *mPartTable;
+    QListWidget          *mPartTable;
     QPushButton          *mPartAdd;
     QPushButton          *mPartSelect;
     QPushButton          *mPartDelete;
+    QPushButton          *mPartDefault;
   public:
     SdWEditorComponent(SdPItemComponent *comp, QWidget *parent);
 
@@ -57,9 +59,18 @@ class SdWEditorComponent : public SdWEditor
     void sectionDubl();
     void sectionSelect();
     void sectionDelete();
+    void onCurrentSection( int index );
+
+    void partAdd();
+    void partSelect();
+    void partDelete();
+    void partDefault();
+    void onCurrentPart( int index );
   private:
     void fillSections();
     void renameSymbolTabs();
+    void fillParts();
+    SdPartVariant *getPartVariant( int index );
   };
 
 #endif // SDWEDITORCOMPONENT_H

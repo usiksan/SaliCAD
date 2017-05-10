@@ -23,6 +23,7 @@ Description
 class SdSelector;
 class SdContext;
 class SdSnapInfo;
+class QWidget;
 
 class SdGraph : public SdObject
   {
@@ -47,7 +48,7 @@ class SdGraph : public SdObject
     virtual void   getProp( SdProp &prop );
 
     //Изменение обновлением текста
-    virtual void   setText(int index, QString sour, SdPropText &prop );
+    virtual void   setText(int index, QString sour, SdPropText &prop, QWidget *parent );
 
     //Варианты выделения
     virtual void   selectByPoint( const SdPoint p, SdSelector *selector );

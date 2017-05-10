@@ -9,7 +9,7 @@ Web
   www.saliLab.ru
 
 Description
-  Mode for symbol pin
+  Mode for symbol pin origin
 */
 #include "SdModeCOrigin.h"
 #include "objects/SdEnvir.h"
@@ -20,7 +20,8 @@ Description
 
 SdModeCOrigin::SdModeCOrigin(SdWEditorGraph *editor, SdProjectItem *obj, int osize) :
   SdModeCommon( editor, obj ),
-  mOriginSize(osize)
+  mOriginSize(osize),
+  mModeIndex(MD_SYM_ORIGIN)
   {
 
   }
@@ -96,6 +97,6 @@ int SdModeCOrigin::getCursor() const
 
 int SdModeCOrigin::getIndex() const
   {
-  return MD_ORIGIN;
+  return mModeIndex;
   }
 

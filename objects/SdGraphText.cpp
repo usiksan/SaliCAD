@@ -143,9 +143,10 @@ void SdGraphText::getProp(SdProp &prop)
 
 
 
-void SdGraphText::setText(int index, QString sour, SdPropText &prop)
+void SdGraphText::setText(int index, QString sour, SdPropText &prop, QWidget *parent)
   {
   Q_UNUSED(index)
+  Q_UNUSED(parent)
   mString = sour;
   mProp   = prop;
   }

@@ -18,6 +18,8 @@ Description
 #include "SdWEditorGraphSymbol.h"
 #include "SdWEditorGraphPart.h"
 #include "SdWEditorComponent.h"
+#include "SdWEditorGraphSheet.h"
+#include "SdWEditorGraphPlate.h"
 #include "SdWCommand.h"
 #include "SdWLabel.h"
 #include "SdDOptions.h"
@@ -154,6 +156,12 @@ void SdWMain::onActivateProjectItem(SdProjectItem *item)
       break;
     case dctComponent :
       editor = new SdWEditorComponent( dynamic_cast<SdPItemComponent*>( item ), mWEditors );
+      break;
+    case dctSheet :
+      editor = new SdWEditorGraphSheet( dynamic_cast<SdPItemSheet*>( item ), mWEditors );
+      break;
+    case dctPlate :
+      editor = new SdWEditorGraphPlate( dynamic_cast<SdPItemPlate*>( item ), mWEditors );
       break;
     }
 

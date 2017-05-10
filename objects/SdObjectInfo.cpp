@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -29,6 +29,33 @@ SdObjectInfo::SdObjectInfo() :
 qint64 SdObjectInfo::getTimeFromEpoch() const
   {
   return timeOffsetConstant + static_cast<qint64>(mCreateTime);
+  }
+
+
+
+//Set creation time as current
+void SdObjectInfo::updateCreationTime()
+  {
+  mCreateTime = static_cast<int>( QDateTime::currentDateTime().toSecsSinceEpoch() - timeOffsetConstant );
+  }
+
+
+
+
+//Set author as current
+void SdObjectInfo::updateAuthor()
+  {
+  QSettings s;
+  mAuthor     = s.value( SDK_GLOBAL_ID_MACHINE ).toString();
+  }
+
+
+
+
+bool SdObjectInfo::isAnotherAuthor() const
+  {
+  QSettings s;
+  return mAuthor != s.value( SDK_GLOBAL_ID_MACHINE ).toString();
   }
 
 
@@ -78,11 +105,10 @@ QString SdObjectInfo::getExtendTitle() const
 
 void SdObjectInfo::setTitle(const QString title)
   {
-  QSettings s;
   //Item author (registered program copy name)
-  mAuthor     = s.value( SDK_GLOBAL_ID_MACHINE ).toString();
+  updateAuthor();
   //Update creation time
-  mCreateTime = static_cast<int>( QDateTime::currentDateTime().toSecsSinceEpoch() - timeOffsetConstant );
+  updateCreationTime();
   //Set editing status
   mStatus     = soiEditing;
   //Title setup

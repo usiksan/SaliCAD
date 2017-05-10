@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -38,6 +38,12 @@ struct SdObjectInfo
     QString        getAuthor() const { return mAuthor; }
     int            getTime() const { return mCreateTime; }
     qint64         getTimeFromEpoch() const;
+    //Set creation time as current
+    void           updateCreationTime();
+    //Set author as current
+    void           updateAuthor();
+    //Check if another author
+    bool           isAnotherAuthor() const;
 
     bool           isEditing() const { return mStatus == soiEditing; }
     bool           isReadyForPublic() const { return mStatus == soiReadyForPublic; }

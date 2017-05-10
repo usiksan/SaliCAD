@@ -164,8 +164,9 @@ void SdModeCText::applyEdit()
     //Store previous state of editable object
     mUndo->begin( QObject::tr("Text edit") );
     mPicAffected->saveState( mUndo );
-    mPicAffected->setText( mIdAffected, mString, mEditText );
+    mPicAffected->setText( mIdAffected, mString, mEditText, mEditor );
     mPicAffected = 0;
+    mEditor->dirtyProject();
     }
   mPropText = 0;
   setStep( sPlace );

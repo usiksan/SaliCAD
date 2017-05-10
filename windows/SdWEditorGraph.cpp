@@ -31,7 +31,8 @@ Description
 #include <QPainter>
 #include <QPaintEvent>
 #include <QImage>
-#include <QtDebug>
+#include <QMessageBox>
+#include <QDebug>
 
 SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
   SdWEditor( parent ),
@@ -143,6 +144,19 @@ void SdWEditorGraph::modeCall(SdModeTemp *mode)
 //Set new mode
 void SdWEditorGraph::modeSet(SdMode *mode)
   {
+  //Check if author
+  if( getProjectItem()->isAnotherAuthor() ) {
+    int r = QMessageBox::question( this, tr("Warning"), tr("Object was created by another author '%1'. Change to your name?").arg(getProjectItem()->getAuthor()) );
+    if( r == QMessageBox::No ) {
+      //Alien author object edit not allowed
+      if( mode ) delete mode;
+      return;
+      }
+    //TODO Check if name unical for this author
+
+    getProjectItem()->updateAuthor();
+    getProjectItem()->updateCreationTime();
+    }
   //Mode set. Its also set edit status for graph object
   //TODO set edit status
   //Стековый режим - снести совсем

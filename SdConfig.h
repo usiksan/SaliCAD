@@ -48,6 +48,12 @@ History
                    insert in QStatusBar - it minimizing main window.
   19.04.2017 v0.17 Append text. Mode and object.
                    Correct text properties bar.
+  10.05.2017 v0.18 Append part pin mode.
+                   Append part pin bar (partial).
+                   Separate modes for symbol and part.
+  10.05.2017 v0.19 Continue to create Component editor. Release symbol append and part append.
+                   Append symbol pin name unical and part pin number unical
+                   Begin creation sheet and plate editors
 */
 
 #ifndef SDCONFIG
@@ -59,7 +65,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             17
+#define SD_VERSION_MINOR             19
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

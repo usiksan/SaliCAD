@@ -28,6 +28,7 @@ Description
 #include "SdGraphLinearRegion.h"
 #include "SdGraphText.h"
 #include "SdGraphSymPin.h"
+#include "SdGraphPartPin.h"
 #include "SdSection.h"
 #include "SdPartVariant.h"
 #include <QJsonValue>
@@ -204,6 +205,7 @@ SdObject *SdObject::build(QString type)
   if( type == QStringLiteral(SD_TYPE_CIRCLE_FILLED) ) return new SdGraphLinearCircleFilled();
   if( type == QStringLiteral(SD_TYPE_TEXT)          ) return new SdGraphText();
   if( type == QStringLiteral(SD_TYPE_SYM_PIN)       ) return new SdGraphSymPin();
+  if( type == QStringLiteral(SD_TYPE_PART_PIN)      ) return new SdGraphPartPin();
   if( type == QStringLiteral(SD_TYPE_PART)          ) return new SdPItemPart();
   if( type == QStringLiteral(SD_TYPE_COMPONENT)     ) return new SdPItemComponent();
   if( type == QStringLiteral(SD_TYPE_SHEET)         ) return new SdPItemSheet();

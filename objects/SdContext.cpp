@@ -77,10 +77,22 @@ void SdContext::symPin(SdPoint a, SdLayer *layer)
 
 
 
+void SdContext::partPin(SdPoint a, SdLayer *layer)
+  {
+  if( mSelector || (layer != 0 && layer->isVisible()) ) {
+    setPen( 0, convertColor( layer ), dltSolid );
+    circle( a, sdEnvir->mPrtPinSize );
+    }
+  }
+
+
+
+
 
 void SdContext::cross(SdPoint a, int size, QColor color)
   {
-  mPainter->setPen( color );
+  setPen( 0, color, dltSolid );
+//  mPainter->setPen( QPen( QBrush(color), 0 ) );
   line( SdPoint(a.x()-size,a.y()-size), SdPoint(a.x()+size,a.y()+size ) );
   line( SdPoint(a.x()+size,a.y()-size), SdPoint(a.x()-size,a.y()+size ) );
   }

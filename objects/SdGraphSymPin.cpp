@@ -12,10 +12,12 @@ Description
   Graphical object Symbol pin.
 */
 #include "SdGraphSymPin.h"
+#include "SdContainer.h"
 #include "SdEnvir.h"
 #include "SdSelector.h"
 #include "SdContext.h"
 #include <QStringRef>
+#include <QMessageBox>
 
 SdGraphSymPin::SdGraphSymPin() :
   SdGraph(),
@@ -176,9 +178,22 @@ void SdGraphSymPin::getProp(SdProp &prop)
 
 
 
-void SdGraphSymPin::setText(int index, QString sour, SdPropText &prop)
+void SdGraphSymPin::setText(int index, QString sour, SdPropText &prop, QWidget *parent)
   {
   Q_UNUSED(index)
+  //Test if pin name unical
+  if( getParent() ) {
+    bool unical = true;
+    getParent()->forEach( dctSymPin, [&unical, sour, this] (SdObject *obj) -> bool {
+      SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>( obj );
+      if( pin && pin != this && pin->getPinName() == sour ) unical = false;
+      return unical;
+      });
+    if( !unical ) {
+      QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Pin with name '%1' already present. Name must be unical").arg(sour) );
+      return;
+      }
+    }
   mName     = sour;
   mNameProp = prop;
   }

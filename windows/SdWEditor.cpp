@@ -20,20 +20,35 @@ SdWEditor::SdWEditor(QWidget *parent) : QAbstractScrollArea(parent)
 
   }
 
+
+
+
 SdProject *SdWEditor::getProject()
   {
   return getProjectItem()->getProject();
   }
 
+
+
+
 void SdWEditor::dirtyProject()
   {
+  //Set project dirty
   getProjectItem()->getProject()->setDirty();
+  //Update creation time
+  getProjectItem()->updateCreationTime();
   }
+
+
+
 
 QString SdWEditor::getTitle()
   {
   return getProjectItem()->getTitle();
   }
+
+
+
 
 QString SdWEditor::getIconName()
   {

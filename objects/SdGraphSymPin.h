@@ -60,7 +60,7 @@ class SdGraphSymPin : public SdGraph
     virtual void      mirror(SdPoint a, SdPoint b) override;
     virtual void      setProp(SdProp &prop) override;
     virtual void      getProp(SdProp &prop) override;
-    virtual void      setText(int index, QString sour, SdPropText &prop) override;
+    virtual void      setText(int index, QString sour, SdPropText &prop, QWidget *parent) override;
     virtual void      selectByPoint(const SdPoint p, SdSelector *selector) override;
     virtual void      selectByRect(const SdRect &r, SdSelector *selector) override;
     virtual void      select(SdSelector *selector) override;

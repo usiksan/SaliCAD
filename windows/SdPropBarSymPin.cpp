@@ -1,9 +1,15 @@
-﻿/*
-  Проект "SaliBrick"
-    Визуальное программирование микроконтроллеров
-  Автор
-    Сибилев А.С.
-  Описание
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Properties bar for symbol pin
 */
 #include "SdPropBarSymPin.h"
 #include <QComboBox>

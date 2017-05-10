@@ -56,11 +56,12 @@ void SdGraph::getProp(SdProp &prop)
   Q_UNUSED(prop)
   }
 
-void SdGraph::setText(int index, QString sour, SdPropText &prop)
+void SdGraph::setText(int index, QString sour, SdPropText &prop, QWidget *parent)
   {
   Q_UNUSED(index)
   Q_UNUSED(sour)
   Q_UNUSED(prop)
+  Q_UNUSED(parent)
   }
 
 void SdGraph::selectByPoint(const SdPoint p, SdSelector *selector)

@@ -27,7 +27,26 @@ SdPartVariant::SdPartVariant() :
 
 SdPItemPart *SdPartVariant::extractFromFactory(bool soft, QWidget *parent) const
   {
-  return dynamic_cast<SdPItemPart*>( SdObjectFactory::extractObject( mPartName, mPartAuthor, soft, parent ) );
+  return dynamic_cast<SdPItemPart*>( SdObjectFactory::extractObject( mPartTitle, mPartAuthor, soft, parent ) );
+  }
+
+
+
+
+QString SdPartVariant::getTitle() const
+  {
+  return QString( "%1 (%2)" ).arg(mPartTitle).arg(mPartAuthor);
+  }
+
+
+
+
+void SdPartVariant::updateFromPart(SdPItemPart *part)
+  {
+  if( part ) {
+    mPartTitle  = part->getTitle();
+    mPartAuthor = part->getAuthor();
+    }
   }
 
 
@@ -55,7 +74,7 @@ void SdPartVariant::cloneFrom(const SdObject *src)
   SdObject::cloneFrom( src );
   const SdPartVariant *part = dynamic_cast<const SdPartVariant*>(src);
   if( part ) {
-    mPartName   = part->mPartName;
+    mPartTitle   = part->mPartTitle;
     mPartAuthor = part->mPartAuthor;
     mDefault    = part->mDefault;
     }
@@ -67,7 +86,7 @@ void SdPartVariant::cloneFrom(const SdObject *src)
 void SdPartVariant::writeObject(QJsonObject &obj) const
   {
   SdObject::writeObject( obj );
-  obj.insert( QString("PartName"), mPartName );
+  obj.insert( QString("PartName"), mPartTitle );
   obj.insert( QString("PartAuthor"), mPartAuthor );
   obj.insert( QString("Default"), mDefault );
   }
@@ -78,7 +97,7 @@ void SdPartVariant::writeObject(QJsonObject &obj) const
 void SdPartVariant::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdObject::readObject( map, obj );
-  mPartName   = obj.value( QString("PartName") ).toString();
+  mPartTitle   = obj.value( QString("PartName") ).toString();
   mPartAuthor = obj.value( QString("PartAuthor") ).toString();
   mDefault    = obj.value( QString("Default") ).toBool();
   }

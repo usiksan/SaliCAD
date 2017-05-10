@@ -115,7 +115,13 @@ SOURCES += \
     windows/SdWEditorComponent.cpp \
     objects/SdPItemSheet.cpp \
     objects/SdPItemPlate.cpp \
-    windows/SdWSection.cpp
+    windows/SdWSection.cpp \
+    objects/SdUndoRecordPropPartPin.cpp \
+    modes/SdModeCPartPin.cpp \
+    windows/SdPropBarPartPin.cpp \
+    modes/SdModeCOriginPart.cpp \
+    windows/SdWEditorGraphSheet.cpp \
+    windows/SdWEditorGraphPlate.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -223,7 +229,13 @@ HEADERS  += \
     windows/SdWEditorComponent.h \
     objects/SdPItemSheet.h \
     objects/SdPItemPlate.h \
-    windows/SdWSection.h
+    windows/SdWSection.h \
+    objects/SdUndoRecordPropPartPin.h \
+    modes/SdModeCPartPin.h \
+    windows/SdPropBarPartPin.h \
+    modes/SdModeCOriginPart.h \
+    windows/SdWEditorGraphSheet.h \
+    windows/SdWEditorGraphPlate.h
 
 DISTFILES += \
     license.txt

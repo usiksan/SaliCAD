@@ -28,6 +28,13 @@ Description
 #define dle45degree      1
 #define dleAnyDegree     2
 
+//Side constant
+#define dsNone           0
+#define dsComp           0x1
+#define dsSold           0x2
+#define dsBoth           0x3
+#define dsInner          0x4
+#define dsThrow          0x7
 
 struct SdProp
   {
@@ -39,6 +46,8 @@ struct SdProp
     SdPropText    mSymPinNameProp;    //Свойства имени вывода
     SdPropText    mSymPinNumberProp;  //Свойства номера вывода
     SdPropPartPin mPartPinProp;    //Свойства вывода корпуса
+    SdPropText    mPartPinNameProp;    //Свойства имени вывода
+    SdPropText    mPartPinNumberProp;  //Свойства номера вывода
     SdPropSymImp  mSymImpProp;     //Свойства вхождения символа
     SdPropPartImp mPartImpProp;    //Свойства вхождения корпуса
     SdPropText    mSymIdentProp;   //Свойства идентификатора символа

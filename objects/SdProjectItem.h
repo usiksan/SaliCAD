@@ -51,6 +51,13 @@ class SdProjectItem : public SdContainer
     SdProject             *getProject() const;
     SdUndo                *getUndo() const;
     void                   setReplaceId( const QString id ) { mReplaceId = id; }
+    //Set creation time as current
+    void                   updateCreationTime() { mObjectInfo.updateCreationTime(); }
+    //Set author as current
+    void                   updateAuthor() { mObjectInfo.updateAuthor(); }
+    //Check if another author
+    bool                   isAnotherAuthor() const { return mObjectInfo.isAnotherAuthor(); }
+
 
     void                   addRef() { mRefCount++; }
     void                   decRef();
