@@ -43,6 +43,9 @@ Description
 SdWMain::SdWMain(QStringList args, QWidget *parent) :
   QMainWindow(parent)
   {
+  //Set window icon
+  setWindowIcon( QIcon(QStringLiteral(":/pic/iconMain.png")) );
+
   //Create menu
   SdWCommand::createMenu( this );
 

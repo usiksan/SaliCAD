@@ -78,8 +78,8 @@ void SdRect::grow(const SdRect &rect)
 
 void SdRect::mirror(SdPoint origin)
   {
-  SdPoint p1 = topLeft();
-  SdPoint p2 = bottomRight();
+  SdPoint p1 = getTopLeft();
+  SdPoint p2 = getBottomRight();
   p1.mirror(origin);
   p2.mirror(origin);
   set( p1, p2 );
@@ -89,8 +89,8 @@ void SdRect::mirror(SdPoint origin)
 
 void SdRect::rotate(SdPoint origin, SdAngle angle)
   {
-  SdPoint p1 = topLeft();
-  SdPoint p2 = bottomRight();
+  SdPoint p1 = getTopLeft();
+  SdPoint p2 = getBottomRight();
   p1.rotate(origin,angle);
   p2.rotate(origin,angle);
   set( p1, p2 );
@@ -111,10 +111,10 @@ bool SdRect::isAccross(const SdPoint p1, const SdPoint p2) const
   {
   if( isPointInside(p1) || isPointInside(p2) ) return true;
   SdSegment s(p1,p2);
-  return s.isCross( topLeft(), topRight() ) ||
-      s.isCross( topRight(), bottomRight() ) ||
-      s.isCross( bottomRight(), bottomLeft() ) ||
-      s.isCross( bottomLeft(), topLeft() );
+  return s.isCross( getTopLeft(), getTopRight() ) ||
+      s.isCross( getTopRight(), getBottomRight() ) ||
+      s.isCross( getBottomRight(), getBottomLeft() ) ||
+      s.isCross( getBottomLeft(), getTopLeft() );
   }
 
 

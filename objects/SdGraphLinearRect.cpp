@@ -122,21 +122,21 @@ void SdGraphLinearRect::selectByPoint(const SdPoint p, SdSelector *selector)
       //Выбор за одну вершину (нужно производить растяжение/сжатие)
       // перемещаем вершины таким образом, чтобы изменяемой была вершина a
       mFly = 1;
-      if( rect.topLeft() == p ) {
-        a = rect.topLeft();
-        b = rect.bottomRight();
+      if( rect.getTopLeft() == p ) {
+        a = rect.getTopLeft();
+        b = rect.getBottomRight();
         }
-      else if( rect.bottomLeft() == p ) {
-        a = rect.bottomLeft();
-        b = rect.topRight();
+      else if( rect.getBottomLeft() == p ) {
+        a = rect.getBottomLeft();
+        b = rect.getTopRight();
         }
-      else if( rect.bottomRight() == p ) {
-        a = rect.bottomRight();
-        b = rect.topLeft();
+      else if( rect.getBottomRight() == p ) {
+        a = rect.getBottomRight();
+        b = rect.getTopLeft();
         }
-      else if( rect.topRight() == p ) {
-        a = rect.topRight();
-        b = rect.bottomLeft();
+      else if( rect.getTopRight() == p ) {
+        a = rect.getTopRight();
+        b = rect.getBottomLeft();
         }
       else mFly = 0;
       selector->insert( this );
@@ -189,10 +189,10 @@ int SdGraphLinearRect::behindCursor(SdPoint p)
   {
   if( isVisible() ) {
     SdRect rect(a,b);
-    if( p.isOnSegment( rect.topLeft(), rect.bottomLeft() ) ||
-        p.isOnSegment( rect.bottomLeft(), rect.bottomRight() ) ||
-        p.isOnSegment( rect.bottomRight(), rect.topRight() ) ||
-        p.isOnSegment( rect.topRight(), rect.topLeft() ) ) {
+    if( p.isOnSegment( rect.getTopLeft(), rect.getBottomLeft() ) ||
+        p.isOnSegment( rect.getBottomLeft(), rect.getBottomRight() ) ||
+        p.isOnSegment( rect.getBottomRight(), rect.getTopRight() ) ||
+        p.isOnSegment( rect.getTopRight(), rect.getTopLeft() ) ) {
           return getSelector() ? SEL_ELEM : UNSEL_ELEM;
           }
     }
@@ -207,16 +207,16 @@ bool SdGraphLinearRect::snapPoint(SdSnapInfo *snap)
   if( isVisible() ) {
     SdRect r(a,b);
     if( snap->match(snapEndPoint) ) {
-      snap->test( r.topLeft(), snapEndPoint );
-      snap->test( r.bottomLeft(), snapEndPoint );
-      snap->test( r.topRight(), snapEndPoint );
-      snap->test( r.bottomRight(), snapEndPoint );
+      snap->test( r.getTopLeft(), snapEndPoint );
+      snap->test( r.getBottomLeft(), snapEndPoint );
+      snap->test( r.getTopRight(), snapEndPoint );
+      snap->test( r.getBottomRight(), snapEndPoint );
       }
     if( snap->match(snapMidPoint) ) {
-      snap->test( SdPoint(r.topLeft()).getMiddle( r.topRight() ), snapMidPoint );
-      snap->test( SdPoint(r.topRight()).getMiddle( r.bottomRight() ), snapMidPoint );
-      snap->test( SdPoint(r.bottomRight()).getMiddle( r.bottomLeft() ), snapMidPoint );
-      snap->test( SdPoint(r.bottomLeft()).getMiddle( r.topLeft() ), snapMidPoint );
+      snap->test( SdPoint(r.getTopLeft()).getMiddle( r.getTopRight() ), snapMidPoint );
+      snap->test( SdPoint(r.getTopRight()).getMiddle( r.getBottomRight() ), snapMidPoint );
+      snap->test( SdPoint(r.getBottomRight()).getMiddle( r.getBottomLeft() ), snapMidPoint );
+      snap->test( SdPoint(r.getBottomLeft()).getMiddle( r.getTopLeft() ), snapMidPoint );
       }
     return true;
     }

@@ -27,6 +27,10 @@ class SdRect : public QRect
     SdRect( SdPoint a, SdPoint b );
     SdRect( int px, int py, int w, int h);
 
+    SdPoint     getTopLeft() const { return SdPoint( left(), top() ); }
+    SdPoint     getTopRight() const { return SdPoint( left() + width(), top() ); }
+    SdPoint     getBottomLeft() const { return SdPoint( left(), top() + height() ); }
+    SdPoint     getBottomRight() const { return SdPoint( left() + width(), top() + height() ); }
     void        set( SdPoint a, SdPoint b );
     void        set( QRect r );
     void        grow( SdPoint point );
