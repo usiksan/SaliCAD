@@ -47,7 +47,8 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
     mSize->addItem( QString::number( v, 'f', 2) );
   //Select first item
   mSize->setCurrentIndex(0);
-  mSize->lineEdit()->setValidator( new QDoubleValidator() );
+  //TODO Problem with double validation: convert use point and validate comma (for russian local).
+  //mSize->lineEdit()->setValidator( new QDoubleValidator() );
   mSize->setMinimumWidth(80);
 
   //on complete editing

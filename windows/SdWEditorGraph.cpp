@@ -78,6 +78,7 @@ void SdWEditorGraph::scaleSet(double scale)
   {
   mScale.scaleSet( scale );
   mCasheDirty = true;
+  qDebug() << "scale=" << mScale.scaleGet();
   update();
   }
 
@@ -85,6 +86,7 @@ void SdWEditorGraph::scaleStep(double step)
   {
   mScale.scaleStep(step);
   mCasheDirty = true;
+  qDebug() << "scale=" << mScale.scaleGet();
   update();
   }
 

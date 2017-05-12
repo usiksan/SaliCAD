@@ -449,7 +449,8 @@ void SdContext::setProp( const SdPropLine &prop)
 void SdContext::setFont(const SdPropText &prop)
   {
   QFont font( sdEnvir->getSysFont(prop.mFont.getValue()) );
-  font.setPixelSize( prop.mSize.getValue() );
+  //font.setPixelSize( prop.mSize.getValue() );
+  font.setPointSizeF( prop.mSize.getValue() );
   mPainter->setPen( convertColor(prop.mLayer.layer()) );
   mPainter->setFont( font );
   }
