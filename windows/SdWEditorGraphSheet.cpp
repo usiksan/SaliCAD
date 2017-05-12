@@ -25,13 +25,25 @@ SdWEditorGraphSheet::SdWEditorGraphSheet(SdPItemSheet *sch, QWidget *parent) :
   }
 
 
+
+
 SdProjectItem *SdWEditorGraphSheet::getProjectItem()
   {
   return mSheet;
   }
 
+
+
+
 void SdWEditorGraphSheet::onActivateEditor()
   {
+  SdWEditorGraph::onActivateEditor();
+
+  //Activate menu
+  SdWCommand::cmMenuInsertSheet->setVisible(true);
+
+  //Activate tool bar
+  SdWCommand::barSheet->show();
   }
 
 void SdWEditorGraphSheet::cmModeComponent()

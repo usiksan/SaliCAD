@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -111,12 +111,7 @@ class SdWCommand
     static QActionPtr  cmMode3dBodyCylinder;
     static QActionPtr  cmMode3dBodyBrick;
     static QActionPtr  cmMode3dBodyContur;
-    static QActionPtr  cmModeComponent;
-    static QActionPtr  cmModeNet;
     static QActionPtr  cmNetSetup;
-    static QActionPtr  cmModeBus;
-    static QActionPtr  cmModeDisconnect;
-    static QActionPtr  cmModePcbArea;
     static QActionPtr  cmModeLink;
     static QActionPtr  cmModeNetName;
     static QActionPtr  cmModeNetList;

@@ -47,10 +47,10 @@ void SdQuadrangle::move(SdPoint offset)
 
 void SdQuadrangle::set(SdRect r)
   {
-  p1 = r.topLeft();
-  p2 = r.topRight();
-  p3 = r.bottomRight();
-  p4 = r.bottomLeft();
+  p1 = r.getTopLeft();
+  p2 = r.getTopRight();
+  p3 = r.getBottomRight();
+  p4 = r.getBottomLeft();
   }
 
 QJsonObject SdQuadrangle::write() const

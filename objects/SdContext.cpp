@@ -117,10 +117,10 @@ void SdContext::quadrangle(SdQuadrangle q, const SdPropLine &prop)
 
 void SdContext::rect(SdRect r)
   {
-  mPainter->drawLine( r.topLeft(), r.topRight() );
-  mPainter->drawLine( r.topRight(), r.bottomRight() );
-  mPainter->drawLine( r.bottomRight(), r.bottomLeft() );
-  mPainter->drawLine( r.bottomLeft(), r.topLeft() );
+  mPainter->drawLine( r.getTopLeft(), r.getTopRight() );
+  mPainter->drawLine( r.getTopRight(), r.getBottomRight() );
+  mPainter->drawLine( r.getBottomRight(), r.getBottomLeft() );
+  mPainter->drawLine( r.getBottomLeft(), r.topLeft() );
   }
 
 
@@ -227,8 +227,8 @@ void SdContext::textEx(SdPoint pos, SdRect &over, const QString str, int dir, in
 
   if( cp1 && cp2 ) {
     if( cursor == 0 ) {
-      *cp1 = cnv.getMatrix().map( over.topLeft() );
-      *cp2 = cnv.getMatrix().map( over.bottomLeft() );
+      *cp1 = cnv.getMatrix().map( over.getTopLeft() );
+      *cp2 = cnv.getMatrix().map( over.getBottomLeft() );
       }
     else {
       QRect rpos = mPainter->boundingRect( over, Qt::AlignLeft | Qt::AlignTop, str.left(cursor) );

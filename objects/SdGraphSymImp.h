@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -65,7 +65,9 @@ class SdGraphSymImp : public SdGraph
     SdPropSymImp      mProp;        //Implement properties
     SdPropText        mIdentProp;   //Part identificator text properties
     QString           mPrefix;      //Part identificator prefix
-    SdPoint           mPrefixPos;   //Part identificator prefix position in sheet context
+    QString           mIdent;       //Full implement identificator contains prefix, logNumber and logSection
+    SdPoint           mIdentPos;    //Part identificator position in sheet context
+    SdRect            mIdentRect;   //Part identificator over rect
 
     SdComponent      *mComponent;
     SdPItemSymbol    *mSymbol;
@@ -75,6 +77,7 @@ class SdGraphSymImp : public SdGraph
     SdParamTable      mParam;       //Parameters
   public:
     SdGraphSymImp();
+    //SdGraphSymImp( SdComponent *comp, int )
   };
 
 #endif // SDGRAPHSYMIMP_H

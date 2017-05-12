@@ -39,29 +39,29 @@ void SdGraphLinearRectFilled::selectByPoint(const SdPoint p, SdSelector *selecto
   if( mProp.mLayer.isEdited() ) {
     SdRect rect(a,b);
     SdPoint p1(p);
-    if( !getSelector() && (p1.isOnSegment( rect.topLeft(), rect.bottomLeft() ) ||
-                           p1.isOnSegment( rect.bottomLeft(), rect.bottomRight() ) ||
-                           p1.isOnSegment( rect.bottomRight(), rect.topRight() ) ||
-                           p1.isOnSegment( rect.topRight(), rect.topLeft() ) ||
+    if( !getSelector() && (p1.isOnSegment( rect.getTopLeft(), rect.getBottomLeft() ) ||
+                           p1.isOnSegment( rect.getBottomLeft(), rect.getBottomRight() ) ||
+                           p1.isOnSegment( rect.getBottomRight(), rect.getTopRight() ) ||
+                           p1.isOnSegment( rect.getTopRight(), rect.getTopLeft() ) ||
                            rect.contains(p)) ) {
       //Выбор за одну вершину (нужно производить растяжение/сжатие)
       // перемещаем вершины таким образом, чтобы изменяемой была вершина a
       mFly = 1;
-      if( rect.topLeft() == p ) {
-        a = rect.topLeft();
-        b = rect.bottomRight();
+      if( rect.getTopLeft() == p ) {
+        a = rect.getTopLeft();
+        b = rect.getBottomRight();
         }
-      else if( rect.bottomLeft() == p ) {
-        a = rect.bottomLeft();
-        b = rect.topRight();
+      else if( rect.getBottomLeft() == p ) {
+        a = rect.getBottomLeft();
+        b = rect.getTopRight();
         }
-      else if( rect.bottomRight() == p ) {
-        a = rect.bottomRight();
-        b = rect.topLeft();
+      else if( rect.getBottomRight() == p ) {
+        a = rect.getBottomRight();
+        b = rect.getTopLeft();
         }
-      else if( rect.topRight() == p ) {
-        a = rect.topRight();
-        b = rect.bottomLeft();
+      else if( rect.getTopRight() == p ) {
+        a = rect.getTopRight();
+        b = rect.getBottomLeft();
         }
       else mFly = 0;
       selector->insert( this );

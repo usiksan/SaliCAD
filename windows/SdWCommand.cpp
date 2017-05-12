@@ -169,11 +169,12 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
   menuInsertSheet = new QMenu( frame->tr("Insert") );
-  //  cmModeComponent  = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmModeNet        = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmModeBus        = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmModeDisconnect = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmModePcbArea    = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
+  cmModeTable[MD_COMPONENT]  = menuInsertSheet->addAction( QIcon(QString(":/pic/objComp.png")), frame->tr("Component"), frame, SLOT(cmModeComponent()) );
+  cmModeTable[MD_NET]        = menuInsertSheet->addAction( QIcon(QString(":/pic/objWire.png")), frame->tr("Net"), frame, SLOT(cmModeNet()) );
+  cmModeTable[MD_NET_NAME]   = menuInsertSheet->addAction( QIcon(QString(":/pic/objWireName.png")), frame->tr("Net name"), frame, SLOT(cmModeNetName()) );
+  cmModeTable[MD_BUS]        = menuInsertSheet->addAction( QIcon(QString(":/pic/objBus.png")), frame->tr("Bus (many net)"), frame, SLOT(cmModeBus()) );
+  cmModeTable[MD_DISCONNECT] = menuInsertSheet->addAction( QIcon(QString(":/pic/objUnConnect.png")), frame->tr("Disconnect net"), frame, SLOT(cmModeDisconnect()) );
+  //cmModeTable[MD_PCB_AREA]   = menuInsertSheet->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
 
 
 
@@ -320,7 +321,6 @@ void SdWCommand::addEditCommands(QToolBar *bar)
 void SdWCommand::addViewCommands(QToolBar *bar)
   {
   bar->addSeparator();
-  bar->insertAction( 0, cmViewLayers );
   bar->insertAction( 0, cmViewGrid );
 //  bar->addSeparator();
   bar->insertAction( 0, cmViewFill );
@@ -425,6 +425,11 @@ void SdWCommand::createToolBars(SdWMain *frame)
   addEditCommands( barSheet );
   addViewCommands( barSheet );
   addDrawCommands( barSheet );
+  barSheet->insertAction( 0, cmModeTable[MD_COMPONENT] );
+  barSheet->insertAction( 0, cmModeTable[MD_NET] );
+  barSheet->insertAction( 0, cmModeTable[MD_BUS] );
+  barSheet->insertAction( 0, cmModeTable[MD_DISCONNECT] );
+  barSheet->insertAction( 0, cmModeTable[MD_NET_NAME] );
 
   frame->addToolBar( barSheet );
 
@@ -559,12 +564,7 @@ QActionPtr SdWCommand::cmMode3dPinFlat;
 QActionPtr SdWCommand::cmMode3dBodyCylinder;
 QActionPtr SdWCommand::cmMode3dBodyBrick;
 QActionPtr SdWCommand::cmMode3dBodyContur;
-QActionPtr SdWCommand::cmModeComponent;
-QActionPtr SdWCommand::cmModeNet;
 QActionPtr SdWCommand::cmNetSetup;
-QActionPtr SdWCommand::cmModeBus;
-QActionPtr SdWCommand::cmModeDisconnect;
-QActionPtr SdWCommand::cmModePcbArea;
 QActionPtr SdWCommand::cmModeLink;
 QActionPtr SdWCommand::cmModeNetName;
 QActionPtr SdWCommand::cmModeNetList;

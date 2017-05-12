@@ -1,4 +1,4 @@
-﻿/*
+/*
   Проект "SaliBrick"
     Визуальное программирование микроконтроллеров
   Автор
@@ -6,12 +6,14 @@
   Описание
 */
 #include "SdPropBar.h"
+#include "SdWCommand.h"
 #include "objects/SdEnvir.h"
 
 
 SdPropBar::SdPropBar( const QString title ) :
   QToolBar( title )
   {
+  insertAction( 0, SdWCommand::cmViewLayers );
   mLayer = new QComboBox();
   mLayer->setEditable(false);
   addWidget( mLayer );
