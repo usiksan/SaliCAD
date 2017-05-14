@@ -141,7 +141,7 @@ class SdWCommand
     static QToolBarPtr mbarTable[PB_LAST];
 
     static void        setModeBar( int barId );
-    static SdPropBar  *getModeBar( int barId );
+    static QToolBar   *getModeBar( int barId );
 
 
     static void        createMenu( SdWMain *frame );

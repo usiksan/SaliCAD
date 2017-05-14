@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Converter form template matrix to convert physical coords into pixels
 */
 #ifndef SDCONVERTER_H
 #define SDCONVERTER_H

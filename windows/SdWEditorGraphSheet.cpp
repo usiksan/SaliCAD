@@ -15,6 +15,7 @@ Description
 #include "SdWCommand.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
+#include "modes/SdModeCSymImp.h"
 #include <QDebug>
 
 SdWEditorGraphSheet::SdWEditorGraphSheet(SdPItemSheet *sch, QWidget *parent) :
@@ -46,9 +47,14 @@ void SdWEditorGraphSheet::onActivateEditor()
   SdWCommand::barSheet->show();
   }
 
+
+
 void SdWEditorGraphSheet::cmModeComponent()
   {
+  modeSet( new SdModeCSymImp( this, mSheet ) );
   }
+
+
 
 void SdWEditorGraphSheet::cmModeNet()
   {

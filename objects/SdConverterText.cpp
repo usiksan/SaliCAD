@@ -27,7 +27,7 @@ QTransform SdConverterText::getMatrix()
   //At second - rotation
   m = m.rotate( -mAngle );
 
-  //At first - origin offset
+  //At third - origin offset
   m *= QTransform::fromTranslate( mOrigin.x(), mOrigin.y() );
 
   return m;

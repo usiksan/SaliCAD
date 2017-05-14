@@ -18,6 +18,7 @@ Description
 #include "SdPropBarTextual.h"
 #include "SdPropBarSymPin.h"
 #include "SdPropBarPartPin.h"
+#include "SdPropBarSymImp.h"
 #include <QMenuBar>
 #include <QSettings>
 #include <QFileInfo>
@@ -362,10 +363,10 @@ void SdWCommand::setModeBar(int barId)
 
 
 
-SdPropBar *SdWCommand::getModeBar(int barId)
+QToolBar *SdWCommand::getModeBar(int barId)
   {
   if( barId >= 0 && barId < PB_LAST )
-    return dynamic_cast<SdPropBar*>( mbarTable[barId] );
+    return mbarTable[barId];
   return 0;
   }
 
@@ -474,6 +475,12 @@ void SdWCommand::createToolBars(SdWMain *frame)
   mbar->setVisible(false);
   mbarTable[PB_PART_PIN] = mbar;
   mbar->connect( mbar, &SdPropBar::propChanged, frame, &SdWMain::cmPropertiesChange );
+
+  SdPropBarSymImp *isbar = new SdPropBarSymImp( QStringLiteral("Symbol implement") );
+  frame->addToolBar( isbar );
+  isbar->setVisible(false);
+  mbarTable[PB_SYM_IMP] = isbar;
+  isbar->connect( isbar, &SdPropBarSymImp::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   for( int i = 0; i < MD_LAST; i++ )
     if( cmModeTable[i] )

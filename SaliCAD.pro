@@ -121,7 +121,10 @@ SOURCES += \
     windows/SdPropBarPartPin.cpp \
     modes/SdModeCOriginPart.cpp \
     windows/SdWEditorGraphSheet.cpp \
-    windows/SdWEditorGraphPlate.cpp
+    windows/SdWEditorGraphPlate.cpp \
+    modes/SdModeCSymImp.cpp \
+    objects/SdConverterImplement.cpp \
+    windows/SdPropBarSymImp.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -235,7 +238,10 @@ HEADERS  += \
     windows/SdPropBarPartPin.h \
     modes/SdModeCOriginPart.h \
     windows/SdWEditorGraphSheet.h \
-    windows/SdWEditorGraphPlate.h
+    windows/SdWEditorGraphPlate.h \
+    modes/SdModeCSymImp.h \
+    objects/SdConverterImplement.h \
+    windows/SdPropBarSymImp.h
 
 DISTFILES += \
     license.txt

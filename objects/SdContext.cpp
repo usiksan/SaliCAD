@@ -120,7 +120,7 @@ void SdContext::rect(SdRect r)
   mPainter->drawLine( r.getTopLeft(), r.getTopRight() );
   mPainter->drawLine( r.getTopRight(), r.getBottomRight() );
   mPainter->drawLine( r.getBottomRight(), r.getBottomLeft() );
-  mPainter->drawLine( r.getBottomLeft(), r.topLeft() );
+  mPainter->drawLine( r.getBottomLeft(), r.getTopLeft() );
   }
 
 
