@@ -15,6 +15,7 @@ Description
 #include "SdProject.h"
 #include "SdPulsar.h"
 #include "SdPoint.h"
+#include "SdGraph.h"
 #include <QSettings>
 
 SdProjectItem::SdProjectItem() :
@@ -74,6 +75,24 @@ SdUndo *SdProjectItem::getUndo() const
   SdProject *prj = getProject();
   if( prj ) return prj->getUndo();
   return nullptr;
+  }
+
+
+
+
+//Get over rect
+SdRect SdProjectItem::getOverRect(quint64 classMask)
+  {
+  //Collect fit rect
+  SdRect fit;
+  forEach( classMask, [&fit](SdObject *obj) {
+    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+    if( graph )
+      fit.grow( graph->getOverRect() );
+    return true;
+    } );
+
+  return fit;
   }
 
 

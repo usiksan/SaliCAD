@@ -18,10 +18,14 @@ Description
 
 #define SD_TYPE_SHEET "Sheet"
 
+class SdPItemPlate;
+
 class SdPItemSheet : public SdProjectItem
   {
   public:
     SdPItemSheet();
+
+    SdPItemPlate *getPlate( SdPoint p );
 
     // SdObject interface
   public:

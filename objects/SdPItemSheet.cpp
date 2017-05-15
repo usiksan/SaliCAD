@@ -20,6 +20,13 @@ SdPItemSheet::SdPItemSheet()
 
 
 
+SdPItemPlate *SdPItemSheet::getPlate(SdPoint p)
+  {
+  //TODO select plate from areas or constructiv
+  }
+
+
+
 QString SdPItemSheet::getType() const
   {
   return QStringLiteral( SD_TYPE_SHEET );

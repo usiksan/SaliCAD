@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -9,37 +9,21 @@ Web
   www.saliLab.ru
 
 Description
-  Component contains symbol sections with pin (name-number) assotiation and component part
+  Component is symbol without graph bun contains symbol sections with pin (name-number) assotiation and component part
 */
 #ifndef SDPITEMCOMPONENT_H
 #define SDPITEMCOMPONENT_H
 
-#include "SdProjectItem.h"
+#include "SdPItemSymbol.h"
 
 #define SD_TYPE_COMPONENT "Comp"
 
-class SdSection;
-class SdPartVariant;
-class SdPItemSymbol;
-class SdPItemPart;
-class QWidget;
 
-class SdPItemComponent : public SdProjectItem
+class SdPItemComponent : public SdPItemSymbol
   {
   public:
     SdPItemComponent();
 
-    QString getSectionShortId( int sectionIndex ) const;
-    QString getDefaultPartShortId() const;
-    QString getPartShortId( int partIndex ) const;
-
-    SdSection *getSection( int sectionIndex ) const;
-    SdPartVariant *getPart( int partIndex ) const;
-    SdPartVariant *getDefaultPart() const;
-
-    SdPItemSymbol *extractSymbolFromFactory( int sectionIndex, bool soft, QWidget *parent ) const;
-    SdPItemPart   *extractPartFromFactory(int partIndex, bool soft, QWidget *parent ) const;
-    SdPItemPart   *extractDefaultPartFromFacory( bool soft, QWidget *parent ) const;
     // SdObject interface
   public:
     virtual QString getType() const override;

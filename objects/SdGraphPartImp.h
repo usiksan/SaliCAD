@@ -15,10 +15,16 @@ Description
 
 #include "SdGraph.h"
 
+class SdPItemPlate;
+
 class SdGraphPartImp : public SdGraph
   {
   public:
     SdGraphPartImp();
+
+    void pinConnectionSet( const QString pinNumber, const QString wireName, bool com );
+
+    SdPItemPlate *getPlate() const;
   };
 
 #endif // SDGRAPHPARTIMP_H
