@@ -124,7 +124,10 @@ SOURCES += \
     windows/SdWEditorGraphPlate.cpp \
     modes/SdModeCSymImp.cpp \
     objects/SdConverterImplement.cpp \
-    windows/SdPropBarSymImp.cpp
+    windows/SdPropBarSymImp.cpp \
+    objects/SdGraphWiring.cpp \
+    objects/SdGraphWiringWire.cpp \
+    objects/SdContainerSheetNet.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -241,7 +244,10 @@ HEADERS  += \
     windows/SdWEditorGraphPlate.h \
     modes/SdModeCSymImp.h \
     objects/SdConverterImplement.h \
-    windows/SdPropBarSymImp.h
+    windows/SdPropBarSymImp.h \
+    objects/SdGraphWiring.h \
+    objects/SdGraphWiringWire.h \
+    objects/SdContainerSheetNet.h
 
 DISTFILES += \
     license.txt
