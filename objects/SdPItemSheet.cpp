@@ -12,11 +12,66 @@ Description
   Graphical schematic sheet presentation
 */
 #include "SdPItemSheet.h"
+#include "SdContainerSheetNet.h"
+#include "SdGraphWiringWire.h"
 
 SdPItemSheet::SdPItemSheet()
   {
 
   }
+
+
+
+//get net by its name
+SdContainerSheetNet *SdPItemSheet::getNet(const QString name)
+  {
+  for( SdObject *ptr : mChildList )
+    if( ptr && !ptr->isDeleted() && ptr->getClass() == dctSheetNet ) {
+      SdContainerSheetNet *net = dynamic_cast<SdContainerSheetNet*>(ptr);
+      if( net && net->getNetName() == name ) return net;
+      }
+  return nullptr;
+  }
+
+
+
+
+//Creates net with desired name or return existing net
+SdContainerSheetNet *SdPItemSheet::createNet(const QString name, SdUndo *undo)
+  {
+  SdContainerSheetNet *net = getNet( name );
+  if( net ) return net;
+  net = new SdContainerSheetNet( name );
+  insertChild( net, undo );
+  return net;
+  }
+
+
+
+bool SdPItemSheet::getNetFromPoint(SdPoint p, QString &dest)
+  {
+  SdContainerSheetNet *net = nullptr;
+  forEach( dctSheetNet, [&net,p] (SdObject *obj) -> bool {
+    net = dynamic_cast<SdContainerSheetNet*>(obj);
+    Q_ASSERT( net != nullptr );
+    bool on = false;
+    net->forEach( dctWire, [&none,p] (SdObject *obj) -> bool {
+      SdGraphWiringWire *wire = dynamic_cast<SdGraphWiringWire*>(obj);
+      Q_ASSERT( wire != nullptr );
+      on = wire->isPointOnSection( p );
+      return !on;
+      } );
+    if( on ) return false;
+    net = nullptr;
+    return true;
+    });
+  if( net ) {
+    dest = net->getNetName();
+    return true;
+    }
+  return false;
+  }
+
 
 
 

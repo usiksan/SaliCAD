@@ -29,18 +29,23 @@ class SdPItemSheet : public SdProjectItem
 
     //get net by its name
     SdContainerSheetNet* getNet( const QString name );
+
     //Creates net with desired name or return existing net
-    SdContainerSheetNet* createNet( const QString name );
+    SdContainerSheetNet* createNet( const QString name, SdUndo *undo );
+
     //Get net name in point
     bool                 getNetFromPoint( SdPoint p, QString &dest );
+
     //Get visual sheet index
     int                  getSheetIndex() const { return mSheetIndex; }
+
     //Set visual sheet index
     void                 setSheetIndex( int index ) { mSheetIndex = index; }
+
     //TODO Определить к какой плате относится точка
     //int           GetPlateIndex( DPoint point );                //Получить индекс платы исходя из точки на схеме
     //Get plate from point. Plate may be default pcb or pcb of area
-    SdPItemPlate *getPlate( SdPoint p );
+    SdPItemPlate        *getPlate( SdPoint p );
 
     // SdObject interface
   public:
