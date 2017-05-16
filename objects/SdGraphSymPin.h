@@ -41,7 +41,9 @@ class SdGraphSymPin : public SdGraph
     SdGraphSymPin();
     SdGraphSymPin( SdPoint org, SdPoint numberPos, SdPoint namePos, const QString name );
 
-    QString getPinName() const { return mName; }
+    QString  getPinName() const { return mName; }
+    SdLayer *getPinLayer() const { return mPinProp.mLayer; }
+    SdPoint  getPinOrigin() const { return mOrigin; }
 
     // SdObject interface
   public:

@@ -58,6 +58,9 @@ class SdProjectItem : public SdContainer
     //Check if another author
     bool                   isAnotherAuthor() const { return mObjectInfo.isAnotherAuthor(); }
 
+    //Get over rect
+    SdRect                 getOverRect( quint64 classMask = dctAll );
+
 
     void                   addRef() { mRefCount++; }
     void                   decRef();

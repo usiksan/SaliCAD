@@ -37,6 +37,7 @@ class SdGraph : public SdObject
 
     //Save object state
     virtual void   saveState( SdUndo *undo );
+    virtual void   moveComplete( SdUndo *undo );
 
     //Изменение перемещением
     virtual void   move( SdPoint offset );
@@ -54,19 +55,16 @@ class SdGraph : public SdObject
     virtual void   selectByPoint( const SdPoint p, SdSelector *selector );
     virtual void   selectByRect( const SdRect &r, SdSelector *selector );
     virtual void   select( SdSelector *selector );
+    virtual void   prepareMove();
     //Обработка слоев
-    virtual void   correctLayers() {}   //Коррекция слоев графических объектов
-    virtual bool   canDelLayer( int layer );
-    //Обработка шрифтов
-    virtual void   correctFonts() {}     //Коррекция шрифтов графических объектов
-    virtual bool   canDelFont( int layer );
+    virtual bool   canHideLayer( SdLayer *layer );
     //Check if object is visible
     virtual bool   isVisible() { return false; }
     //Get over rect for visible
     virtual SdRect getOverRect() const = 0;
-    //Отображения объекта
+    //Drawing object
     virtual void   draw( SdContext *dc );              //Рисование объекта на экране
-    //Получить состояние объета под курсором
+    //Get object state behind cursor
     virtual int    behindCursor( SdPoint p );
     virtual int    behindText( SdPoint p, SdPoint &org, QString &dest, SdPropText &prop );
     virtual bool   getInfo( SdPoint p, QString &info, bool extInfo );

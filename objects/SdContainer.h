@@ -32,6 +32,9 @@ class SdContainer : public SdObject
     SdContainer();
     ~SdContainer();
 
+    //Information
+    virtual bool isContainer() const { return true; }
+
     virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
 
     virtual void writeObject(QJsonObject &obj) const override;

@@ -127,7 +127,8 @@ SOURCES += \
     windows/SdPropBarSymImp.cpp \
     objects/SdGraphWiring.cpp \
     objects/SdGraphWiringWire.cpp \
-    objects/SdContainerSheetNet.cpp
+    objects/SdContainerSheetNet.cpp \
+    objects/SdUndoRecordSymImpPin.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -247,7 +248,8 @@ HEADERS  += \
     windows/SdPropBarSymImp.h \
     objects/SdGraphWiring.h \
     objects/SdGraphWiringWire.h \
-    objects/SdContainerSheetNet.h
+    objects/SdContainerSheetNet.h \
+    objects/SdUndoRecordSymImpPin.h
 
 DISTFILES += \
     license.txt

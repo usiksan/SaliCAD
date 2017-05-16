@@ -29,6 +29,13 @@ void SdGraph::saveState(SdUndo *undo)
 
 
 
+void SdGraph::moveComplete(SdUndo *undo)
+  {
+  Q_UNUSED(undo)
+  }
+
+
+
 void SdGraph::move(SdPoint offset)
   {
   Q_UNUSED(offset)
@@ -81,7 +88,14 @@ void SdGraph::select(SdSelector *selector)
   selector->insert( this );
   }
 
-bool SdGraph::canDelLayer(int layer)
+
+
+void SdGraph::prepareMove()
+  {
+
+  }
+
+bool SdGraph::canHideLayer(SdLayer *layer)
   {
   Q_UNUSED(layer)
   return true;
