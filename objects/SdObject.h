@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -25,14 +25,14 @@ Description
 #define dctLines         0x00000001l
 #define dctText          0x00000002l
 #define dctSymPin        0x00000004l
-#define dctSymPinName    0x00000008l
-#define dctSymPinNumber  0x00000010l
+//#define dctSymPinName    0x00000008l
+//#define dctSymPinNumber  0x00000010l
 #define dctIdent         0x00000020l
 #define dctSymbol        0x00000040l
 #define dctSymImp        0x00000080l
 #define dctPartPin       0x00000100l
-#define dctPartPinName   0x00000200l
-#define dctPartPinNumber 0x00000400l
+//#define dctPartPinName   0x00000200l
+//#define dctPartPinNumber 0x00000400l
 #define dctPart          0x00000800l
 #define dctPartImp       0x00001000l
 #define dctWire          0x00002000l
@@ -54,6 +54,7 @@ Description
 #define dctPlateNet      0x10000000l
 #define dctSection       0x20000000l
 #define dctPartVariant   0x40000000l
+#define dctArea          0x80000000l
   //dctChars    = 0x20000000,
   //dctPrjList  = 0x40000000,
   //dctData     = 0x80000000,
