@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -25,6 +25,8 @@ class SdPointList : public QList<SdPoint>
   public:
     SdPointList() {}
     SdPointList( const SdPointList &src ) : QList<SdPoint>( src ) {}
+
+    bool isPointInside( SdPoint p );
 
     QJsonArray write() const;
     void       write( const QString name, QJsonObject &obj ) const;

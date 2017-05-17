@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -26,6 +26,9 @@ Description
 class SdPoint : public QPoint
   {
   public:
+    enum CLS {LEFT,  RIGHT,  BEYOND,  BEHIND, BETWEEN, ORIGIN, DESTINATION};
+    //    СЛЕВА, СПРАВА, ВПЕРЕДИ, ПОЗАДИ, МЕЖДУ,   НАЧАЛО, КОНЕЦ
+
     SdPoint() : QPoint() { }
     SdPoint( int xpos, int ypos ) : QPoint(xpos,ypos) { }
     SdPoint( QPoint p ) : QPoint(p) {}
@@ -47,6 +50,9 @@ class SdPoint : public QPoint
     SdPoint getMiddle( SdPoint b ) { return SdPoint( (x() + b.x()) / 2, (y() + b.y()) ); }
     SdAngle getAngle( SdPoint center = SdPoint() ) const; //Угол поворота до точки относительно центра
     double  getDistance( SdPoint p ) const;
+    CLS     classify( SdPoint p0, SdPoint p1 ) const;
+    double  getLenght() const;
+    bool    isEqual( SdPoint p ) const { return x() == p.x() && y() == p.y(); }
 
     //Комплексное преобразование
     SdPoint convertImplement( SdPoint origin, SdPoint offset, SdAngle angle, bool mirror );

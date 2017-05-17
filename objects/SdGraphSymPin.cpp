@@ -50,6 +50,24 @@ SdGraphSymPin::SdGraphSymPin(SdPoint org, SdPoint numberPos, SdPoint namePos, co
 
 
 
+//Draw pin in symbol implementation
+void SdGraphSymPin::drawImp(SdContext *dc, const QString pinNumber, bool com)
+  {
+  //Pin it self
+  if( com )
+    dc->symPin( mOrigin, mPinProp.mLayer.layer() );
+
+  //Pin name
+  dc->text( mNamePos, mNameRect, mName, mNameProp );
+
+  //Pin number
+  SdRect r;
+  dc->text( mNumberPos, r, pinNumber, mNumberProp );
+  }
+
+
+
+
 SdObject *SdGraphSymPin::copyNext()
   {
   //Copy pin with next pinName

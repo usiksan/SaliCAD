@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -106,6 +106,39 @@ double SdPoint::getDistance(SdPoint p) const
   double dx = x() - p.x();
   double dy = y() - p.y();
   return sqrt( dx*dx + dy*dy );
+  }
+
+
+
+
+SdPoint::CLS SdPoint::classify(SdPoint p0, SdPoint p1) const
+  {
+  QPointF a(p1 - p0);
+  QPointF b( *this - p0);
+  double sa = a.x() * b.y() - b.x() * a.y();
+  if( sa > 0.0 )
+    return LEFT;
+  if( sa < 0.0 )
+    return RIGHT;
+  if( isEqual( p0 ) )
+    return ORIGIN;
+  if( isEqual( p1 ) )
+    return DESTINATION;
+  if( (a.x() * b.x() < 0.0) || (a.y() * b.y() < 0.0) )
+    return BEHIND;
+  if( sqrt(a.x()*a.x() + a.y() * a.y()) < sqrt(a.x()*a.x() + a.y() * a.y()) )
+    return BEYOND;
+  return BETWEEN;
+  }
+
+
+
+
+double SdPoint::getLenght() const
+  {
+  double fx = x();
+  double fy = y();
+  return sqrt( fx * fx + fy * fy );
   }
 
 

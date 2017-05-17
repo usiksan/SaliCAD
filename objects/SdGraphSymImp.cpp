@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -25,11 +25,32 @@ Description
 //Pin for symbol implementation
 
 SdSymImpPin::SdSymImpPin() :
-  mLayer(0),     //Pin layer
+  mPin(0),       //Pin
   mCom(false)    //State of pin to net connectivity
   {
 
   }
+
+
+
+void SdSymImpPin::operator =(SdSymImpPin &pin)
+  {
+  mPin       = pin.mPin;       //Pin
+  mPinName   = pin.mPinName;   //Pin name in symbol
+  mPinNumber = pin.mPinNumber; //Pin number in part
+  mPosition  = pin.mPosition;  //Pin position in sheet context
+  mWireName  = pin.mWireName;  //Net, which pin connected to
+  mCom       = pin.mCom;       //State of pin to net connectivity
+  }
+
+
+
+void SdSymImpPin::draw(SdContext *dc)
+  {
+  mPin->drawImp( dc, mPinNumber, mCom );
+  }
+
+
 
 void SdSymImpPin::ucom(SdGraphPartImp *prt)
   {
@@ -58,14 +79,15 @@ void SdGraphSymImp::saveState(SdUndo *undo)
 
 void SdGraphSymImp::moveComplete(SdUndo *undo)
   {
-  //Перенос завершен - проверить подключения выводов
-  if( GetSheet() ) {
-    ConnectIterator connect( *GetSheet(), prtImp );
-    NForEach( pins, connect );
-    //Проверить область
-    if( prtImp ) {
-      //Корпус назначен, проверить местонахождение
-      if( GetSheet()->GetPlate( info.over.LeftBottom() ) != prtImp->GetPlate() ) {
+  //Mooving is completed, check pin connection
+  SdPItemSheet *sheet = getSheet();
+  if( sheet ) {
+    for( SdSymImpPin &pin : mPins )
+      pin.connectTest( sheet, mPartImp );
+    //Check current area
+    if( mPartImp ) {
+      //Part is assigned, check current area
+      if( sheet->getPlate( mOrigin ) != mPartImp->getPlate() ) {
         //Плата изменилась
         UnLinkPrt();
         }
@@ -86,7 +108,7 @@ void SdGraphSymImp::prepareMove()
   SdPItemSheet *sheet = getSheet();
   if( sel && sheet ) {
     for( SdSymImpPin &pin : mPins )
-      pin.prepareMove( sel, sheet );
+      pin.prepareMove( sheet, sel );
     }
   }
 
@@ -226,8 +248,8 @@ void SdGraphSymImp::updatePinsPositions()
   SdConverterImplement impl( nullptr, mOrigin, mSymbol->mOrigin, mProp.mAngle.getValue(), mProp.mMirror.getValue() );
   QTransform t = impl.getMatrix();
   for( SdSymImpPin &pin : mPins )
-    pin.mPosition = t.map( pin.mOrigin );
-  mOverRect = t.mapRect( mSymbol->getOverRect() );
+    pin.mPosition = t.map( pin.mPin->getPinOrigin() );
+  mOverRect.set( t.mapRect( mSymbol->getOverRect() ) );
   mIdentPos = t.map( mIdentOrigin );
   }
 
@@ -258,8 +280,7 @@ void SdGraphSymImp::createPins()
       SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>(obj);
       if( pin ) {
         SdSymImpPin impPin;
-        impPin.mLayer = pin->getPinLayer();
-        impPin.mOrigin = pin->getPinOrigin();
+        impPin.mPin     = pin;
         impPin.mPinName = pin->getPinName();
         if( s )
           impPin.mPinNumber = s->getPinNumber( impPin.mPinName );
@@ -267,6 +288,19 @@ void SdGraphSymImp::createPins()
       return true;
       });
     }
+  }
+
+
+
+
+void SdGraphSymImp::unLinkFromPart()
+  {
+  //Отвязать выводы
+  UnLinkIterator iterator( prtImp );
+  NForEach( pins, iterator );
+  //Отключение от компонента
+  if( prtImp ) prtImp->Remove( this );
+  prtImp = 0;
   }
 
 

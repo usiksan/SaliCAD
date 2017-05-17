@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -25,6 +25,7 @@ Description
 #define SD_TYPE_SYM_IMP "SymImp"
 
 class SdGraphArea;
+class SdGraphSymPin;
 class SdPItemSymbol;
 class SdPItemSheet;
 class SdPItemPart;
@@ -32,13 +33,12 @@ class SdGraphPartImp;
 
 //Pin for symbol implementation
 struct SdSymImpPin {
-  SdLayer  *mLayer;     //Pin layer
-  QString   mPinName;   //Pin name in symbol
-  QString   mPinNumber; //Pin number in part
-  SdPoint   mOrigin;    //Pin point origin from symbol view
-  SdPoint   mPosition;  //Pin position in sheet context
-  QString   mWireName;  //Net, which pin connected to
-  bool      mCom;       //State of pin to net connectivity
+  SdGraphSymPin  *mPin;       //Pin
+  QString         mPinName;   //Pin name in symbol
+  QString         mPinNumber; //Pin number in part
+  SdPoint         mPosition;  //Pin position in sheet context
+  QString         mWireName;  //Net, which pin connected to
+  bool            mCom;       //State of pin to net connectivity
 
   SdSymImpPin();
 
@@ -119,6 +119,8 @@ class SdGraphSymImp : public SdGraph
     void          ucomAllPins();
     //Create new pins
     void          createPins();
+    //Ucom part
+    void          unLinkFromPart();
   };
 
 #endif // SDGRAPHSYMIMP_H

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -42,8 +42,9 @@ class SdGraphSymPin : public SdGraph
     SdGraphSymPin( SdPoint org, SdPoint numberPos, SdPoint namePos, const QString name );
 
     QString  getPinName() const { return mName; }
-    SdLayer *getPinLayer() const { return mPinProp.mLayer; }
     SdPoint  getPinOrigin() const { return mOrigin; }
+    //Draw pin in symbol implementation
+    void     drawImp( SdContext *dc, const QString pinNumber, bool com );
 
     // SdObject interface
   public:
