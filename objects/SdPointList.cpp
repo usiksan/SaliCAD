@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -15,50 +15,49 @@ Description
 #include "SdPointList.h"
 
 
-enum { INSIDE, OUTSIDE, BOUNDARY };         // положение точки
-//     ВНУТРИ, ВНЕ,     НА ГРАНИЦЕ
-enum { TOUCHING, CROSSING, INESSENTIAL };   // положение ребра
-//     КАСАТЕЛbНОЕ, ПЕРЕСЕКАЮЩЕЕ, НЕСУЩЕСТВЕННОЕ
 
-inline int edgeType( SdPoint a, SdPoint v, SdPoint w )
+
+
+void SdPointList::move(QSet<int> indexes, SdPoint offset)
   {
-  switch( a.classify( v, w ) ) {
-    case SdPoint::LEFT :
-      return ((v.y() < a.y()) && (a.y() <= w.y())) ? CROSSING : INESSENTIAL;
-    case SdPoint::RIGHT:
-      return ((w.y() < a.y()) && (a.y() <= v.y())) ? CROSSING : INESSENTIAL;
-    case SdPoint::BETWEEN:
-    case SdPoint::ORIGIN:
-    case SdPoint::DESTINATION:
-      return TOUCHING;
-    case SdPoint::BEYOND :
-    case SdPoint::BEHIND :
-      return INESSENTIAL;
+  for( int index : indexes ) {
+    SdPoint p( at(index) );
+    p.move(offset);
+    setPoint( index, p );
     }
   }
 
 
-bool SdPointList::isPointInside(SdPoint p)
+
+
+void SdPointList::rotate(SdPoint center, SdAngle angle)
   {
-  if( count() < 3 )
-    return false;
-  int parity = 0;
-  for( int i = 0; i < count(); i++ ) {
-    switch( edgeType( p, at(i), at( i == 0 ? count()-1 : i - 1 ) )  ) {
-      case TOUCHING:
-        return true;
-      case CROSSING:
-        parity = 1 - parity;
-      }
+  for( int index = 0; index < count(); index++ ) {
+    SdPoint p( at(index) );
+    p.rotate( center, angle );
+    setPoint( index, p );
     }
-  return parity;
   }
+
+
+
+
+void SdPointList::mirror(SdPoint a, SdPoint b)
+  {
+  for( int index = 0; index < count(); index++ ) {
+    SdPoint p( at(index) );
+    p.mirror( a, b );
+    setPoint( index, p );
+    }
+  }
+
+
 
 QJsonArray SdPointList::write() const
   {
   QJsonArray array;
   for( int i = 0; i < count(); i++ )
-    array.append( QJsonValue(at(i).write()) );
+    array.append( QJsonValue(get(i).write()) );
   return array;
   }
 

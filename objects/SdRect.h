@@ -24,6 +24,7 @@ class SdRect : public QRect
   {
   public:
     SdRect() : QRect() {}
+    SdRect( const QRect &r ) : QRect( r ) {}
     SdRect( SdPoint a, SdPoint b );
     SdRect( int px, int py, int w, int h);
 

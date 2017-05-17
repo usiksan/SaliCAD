@@ -78,6 +78,10 @@ bool SdPItemSheet::getNetFromPoint(SdPoint p, QString &dest)
 SdPItemPlate *SdPItemSheet::getPlate(SdPoint p)
   {
   //TODO select plate from areas or constructiv
+  SdPItemPlate *plate = nullptr;
+  forEach( dctArea, [&plate] (SdObject *obj) -> bool {
+
+    });
   }
 
 

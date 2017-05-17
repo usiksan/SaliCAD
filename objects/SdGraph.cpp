@@ -95,28 +95,31 @@ void SdGraph::prepareMove()
 
   }
 
+
+
+
 bool SdGraph::canHideLayer(SdLayer *layer)
   {
   Q_UNUSED(layer)
   return true;
   }
 
-bool SdGraph::canDelFont(int layer)
-  {
-  Q_UNUSED(layer)
-  return true;
-  }
+
 
 void SdGraph::draw(SdContext *dc)
   {
   Q_UNUSED(dc)
   }
 
+
+
 int SdGraph::behindCursor(SdPoint p)
   {
   Q_UNUSED(p)
   return 0;
   }
+
+
 
 int SdGraph::behindText(SdPoint p, SdPoint &org, QString &dest, SdPropText &prop)
   {

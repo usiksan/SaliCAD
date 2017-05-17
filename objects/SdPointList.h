@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -16,17 +16,22 @@ Description
 #define SDPOINTLIST_H
 
 #include "SdPoint.h"
-#include <QList>
+#include <QPolygon>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QSet>
 
-class SdPointList : public QList<SdPoint>
+class SdPointList : public QPolygon
   {
   public:
     SdPointList() {}
-    SdPointList( const SdPointList &src ) : QList<SdPoint>( src ) {}
+    SdPointList( const SdPointList &src ) : QPolygon( src ) {}
 
-    bool isPointInside( SdPoint p );
+    SdPoint    get(int i) const { return SdPoint( at(i) ); }
+
+    void       move( QSet<int> indexes, SdPoint offset );
+    void       rotate(SdPoint center, SdAngle angle);
+    void       mirror(SdPoint a, SdPoint b);
 
     QJsonArray write() const;
     void       write( const QString name, QJsonObject &obj ) const;

@@ -15,8 +15,7 @@ SdUndoRecordPropLineAndPointsList::SdUndoRecordPropLineAndPointsList(SdPropLine 
 void SdUndoRecordPropLineAndPointsList::undo()
   {
   mProp->swapState( &mPropState );
-  for( int i = 0; i < mPointList.count(); i++ )
-    mPointList[i].swap( &((*mSrc)[i]) );
+  mPointList.swap( *mSrc );
   }
 
 
