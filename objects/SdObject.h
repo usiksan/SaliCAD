@@ -81,6 +81,7 @@ class SdObject
     virtual QString   getId() const;
     virtual QString   getType() const = 0;
     virtual quint64   getClass() const = 0;
+    virtual bool      isContainer() const { return false; }
 
     //Hierarhy
     SdContainer*      getParent() const { return mParent; }

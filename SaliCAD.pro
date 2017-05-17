@@ -125,6 +125,9 @@ SOURCES += \
     modes/SdModeCSymImp.cpp \
     objects/SdConverterImplement.cpp \
     windows/SdPropBarSymImp.cpp \
+    objects/SdGraphWiring.cpp \
+    objects/SdGraphWiringWire.cpp \
+    objects/SdContainerSheetNet.cpp \
     objects/SdUndoRecordSymImpPin.cpp
 
 HEADERS  += \
@@ -243,6 +246,9 @@ HEADERS  += \
     modes/SdModeCSymImp.h \
     objects/SdConverterImplement.h \
     windows/SdPropBarSymImp.h \
+    objects/SdGraphWiring.h \
+    objects/SdGraphWiringWire.h \
+    objects/SdContainerSheetNet.h \
     objects/SdUndoRecordSymImpPin.h
 
 DISTFILES += \
