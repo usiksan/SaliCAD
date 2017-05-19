@@ -168,6 +168,8 @@ void SdGraphLinearRegion::draw(SdContext *dc)
 
 bool SdGraphLinearRegion::snapPoint(SdSnapInfo *snap)
   {
+  Q_UNUSED(snap)
+  //TODO snap region
   return false;
   }
 
@@ -178,7 +180,7 @@ int SdGraphLinearRegion::behindCursor(SdPoint p)
   {
   if( isVisible() ) {
     for( int i = 0; i < mList.count()-1; ++i )
-      if( p.isOnSegment( mList.get(i), mList[i+1]) )
+      if( p.isOnSegment( mList.get(i), mList.get(i+1)) )
         return getSelector() ? SEL_ELEM : UNSEL_ELEM;
     if( p.isOnSegment( mList.last(), mList.first() ) )
       return getSelector() ? SEL_ELEM : UNSEL_ELEM;

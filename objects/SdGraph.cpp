@@ -29,10 +29,13 @@ void SdGraph::saveState(SdUndo *undo)
 
 
 
-void SdGraph::moveComplete(SdUndo *undo)
+
+void SdGraph::moveComplete(SdPoint grid, SdUndo *undo)
   {
   Q_UNUSED(undo)
+  Q_UNUSED(grid)
   }
+
 
 
 

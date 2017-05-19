@@ -15,6 +15,7 @@ Description
 #include "SdContainerSheetNet.h"
 #include "SdGraphWiringWire.h"
 #include "SdGraphArea.h"
+#include "SdGraphSymImp.h"
 #include "SdProject.h"
 
 SdPItemSheet::SdPItemSheet()
@@ -25,7 +26,7 @@ SdPItemSheet::SdPItemSheet()
 
 
 //get net by its name
-SdContainerSheetNet *SdPItemSheet::getNet(const QString name)
+SdContainerSheetNet *SdPItemSheet::netGet(const QString name)
   {
   for( SdObject *ptr : mChildList )
     if( ptr && !ptr->isDeleted() && ptr->getClass() == dctSheetNet ) {
@@ -39,13 +40,33 @@ SdContainerSheetNet *SdPItemSheet::getNet(const QString name)
 
 
 //Creates net with desired name or return existing net
-SdContainerSheetNet *SdPItemSheet::createNet(const QString name, SdUndo *undo)
+SdContainerSheetNet *SdPItemSheet::netCreate(const QString name, SdUndo *undo)
   {
-  SdContainerSheetNet *net = getNet( name );
+  SdContainerSheetNet *net = netGet( name );
   if( net ) return net;
   net = new SdContainerSheetNet( name );
   insertChild( net, undo );
   return net;
+  }
+
+
+
+
+void SdPItemSheet::netWirePlace(SdPoint a, SdPoint b, const QString name, SdUndo *undo)
+  {
+  forEach( dctComponent, [a, b, name, undo] (SdObject *obj) -> bool {
+    SdGraphSymImp *sym = dynamic_cast<SdGraphSymImp*>(obj);
+    Q_ASSERT( sym != nullptr );
+    sym-
+    });
+  }
+
+
+
+
+void SdPItemSheet::insertWire(const QString name, SdGraphWiringWire *wire, SdUndo *undo)
+  {
+
   }
 
 
@@ -122,4 +143,6 @@ QString SdPItemSheet::getIconName() const
   {
   return QStringLiteral(":/pic/iconSheet.png");
   }
+
+
 

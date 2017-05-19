@@ -20,7 +20,7 @@ Description
 #include "SdParamTable.h"
 
 #include <QString>
-#include <QList>
+#include <QVector>
 
 #define SD_TYPE_SYM_IMP "SymImp"
 
@@ -40,12 +40,17 @@ struct SdSymImpPin {
   SdPoint         mPosition;  //Pin position in sheet context
   QString         mWireName;  //Net, which pin connected to
   bool            mCom;       //State of pin to net connectivity
+  int             mPinIndex;  //Pin index in pin array
+  int             mPrtPin;    //Pin index in pin array of part implement
 
   SdSymImpPin();
 
   void operator = ( SdSymImpPin &pin );
   void draw( SdContext *dc );
-  void connect( SdPoint a, SdPoint b, const QString &name, SdGraphPartImp *prt );
+  void setConnection( const QString wireName, bool com );
+  bool isCanConnect( SdPoint a, SdPoint b ) const;
+  bool isCanDisconnect( SdPoint a, SdPoint b, const QString wireName ) const;
+  //void connect(SdPoint a, SdPoint b, const QString &name, SdGraphSymImp *sym, SdGraphPartImp *prt, SdUndo *undo );
   void ifConnect( SdGraphPartImp *prt );
   void disconnect( SdPoint a, SdPoint b, const QString &name, SdGraphPartImp *prt );
   void ifDisconnect( SdGraphPartImp *prt );
@@ -55,7 +60,7 @@ struct SdSymImpPin {
   };
 
 
-typedef QList<SdSymImpPin> SdSymImpPinTable;
+typedef QVector<SdSymImpPin> SdSymImpPinTable;
 
 
 class SdGraphSymImp : public SdGraph
@@ -85,17 +90,58 @@ class SdGraphSymImp : public SdGraph
     SdGraphSymImp();
     SdGraphSymImp( SdPItemSymbol *comp, SdPItemSymbol *sym, SdPItemPart *part );
 
+    //Pin connection-disconnection by index
+    void          pinConnectionSet( int pinIndex, const QString wireName, bool com );
+    QString       pinWireName( int pinIndex ) const;
+    bool          isPinConnected( int pinIndex ) const;
+
     //Move section to plate
-    void moveToPlate( SdPItemPlate *plate, SdUndo *undo );
+    void          moveToPlate( SdPItemPlate *plate, SdUndo *undo );
 
     //Return current plate of section
     SdPItemPlate *currentPlate() const;
 
 
+    //Notifications about segment operation
+            //Notification about wire segment position changed
+            void netWirePlace( SdPoint a, SdPoint b, const QString name, SdUndo *undo );
+            //Notification about wire segment deletion
+            void netWireDelete( SdPoint a, SdPoint b, const QString name, SdUndo *undo ); //Извещение об удалении сегмента
+            //Accumulate segments connected to component
+            void accumLinked( SdPoint a, SdPoint b, SdSelector *sel );
+    //Сервисные
+            void ReplacePrt( DPrtPic *prt );  //Заменить корпус на новый
+            void GetIdent( DString &buf );    //Получить полный идентификатор
+            bool GetListItem( DString &buf ); //Полная строка в перечень
+            //void InsertInSheet();             //Извещение о вставке в лист схемы
+            void UcomPin( DPoint p );                     //Отключить вывод в данной точке
+            void AutoNet( DNetListTable &table );         //Накопить цепи в текстовый список цепей
+            void LinkPrt( DPrtImpPic *prt, int section ); //Связать с компонентом
+            void UnLinkPrt();                             //Отвязать от компонента
+            void ConnectToComp( DPrtImpPic *prt );        //Подключиться к компоненту
+    //Параметры
+          //Получение и установка полного массива параметров
+          CPChar GetParamString() const { return param.GetBuffer(); }
+          DParam& GetParam() { return param; }
+    //Идентификатор
+          void   GetIdentInfo( DIdent &prefix, int &logNumber, int &logSection );
+          void   SetIdentInfo( CPChar prefix, int logNumber, int logSection );
+          void   GetRenumSect( DPoint &dest, int &sheetNumber, DIdent &prefix );
+    //Совместимость с В10
+          bool   CheckPrtImp( DSymImpPic *prev, DPrtImpPic *prtImp );
+
+    //Дополнительная обработка
+          void   UpdateImp( DSymbolPic *symbol );
+
     // SdObject interface
   public:
     virtual QString getType() const override { return QStringLiteral( SD_TYPE_SYM_IMP ); }
     virtual quint64 getClass() const override { return dctSymImp; }
+    virtual void attach(SdUndo *undo) override;
+    virtual void detach(SdUndo *undo) override;
+    virtual void cloneFrom(const SdObject *src) override;
+    virtual void writeObject(QJsonObject &obj) const override;
+    virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
 
     // SdGraph interface
   public:
@@ -118,6 +164,7 @@ class SdGraphSymImp : public SdGraph
     virtual bool    getInfo(SdPoint p, QString &info, bool extInfo) override;
     virtual bool    snapPoint(SdSnapInfo *snap) override;
 
+
   private:
     SdPItemSheet *getSheet() const;
     void          updatePinsPositions();
@@ -127,6 +174,7 @@ class SdGraphSymImp : public SdGraph
     void          createPins();
     //Ucom part
     void          unLinkFromPart();
+
   };
 
 #endif // SDGRAPHSYMIMP_H

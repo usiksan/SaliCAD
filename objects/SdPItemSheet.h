@@ -20,6 +20,7 @@ Description
 
 class SdPItemPlate;
 class SdContainerSheetNet;
+class SdGraphWiringWire;
 
 class SdPItemSheet : public SdProjectItem
   {
@@ -28,10 +29,16 @@ class SdPItemSheet : public SdProjectItem
     SdPItemSheet();
 
     //get net by its name
-    SdContainerSheetNet* getNet( const QString name );
+    SdContainerSheetNet* netGet( const QString name );
 
     //Creates net with desired name or return existing net
-    SdContainerSheetNet* createNet( const QString name, SdUndo *undo );
+    SdContainerSheetNet* netCreate( const QString name, SdUndo *undo );
+
+    //Information about wire segment moving to make connection to pin
+    void                 netWirePlace( SdPoint a, SdPoint b, const QString name, SdUndo *undo );
+
+    //Insert wire
+    void                 insertWire( const QString name, SdGraphWiringWire *wire, SdUndo *undo );
 
     //Get net name in point
     bool                 getNetFromPoint( SdPoint p, QString &dest );
@@ -54,6 +61,7 @@ class SdPItemSheet : public SdProjectItem
     // SdProjectItem interface
   public:
     virtual QString getIconName() const override;
+
   };
 
 #endif // SDPITEMSHEET_H

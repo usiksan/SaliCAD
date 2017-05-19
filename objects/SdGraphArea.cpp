@@ -236,12 +236,29 @@ SdRect SdGraphArea::getOverRect() const
 
 void SdGraphArea::draw(SdContext *dc)
   {
+  dc->region( mRegion, mRegionProp );
   }
 
+
+
+
 int SdGraphArea::behindCursor(SdPoint p)
-    {
+  {
+  if( isVisible() ) {
+    for( int i = 0; i < mRegion.count()-1; ++i )
+      if( p.isOnSegment( mRegion.get(i), mRegion.get(i+1) ) )
+        return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+    if( p.isOnSegment( mRegion.last(), mRegion.first() ) )
+      return getSelector() ? SEL_ELEM : UNSEL_ELEM;
     }
+  return 0;
+  }
+
+
 
 bool SdGraphArea::snapPoint(SdSnapInfo *snap)
-    {
-    }
+  {
+  Q_UNUSED(snap)
+  //TODO add snap to area
+  return false;
+  }

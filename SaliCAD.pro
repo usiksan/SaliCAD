@@ -129,7 +129,8 @@ SOURCES += \
     objects/SdGraphWiringWire.cpp \
     objects/SdContainerSheetNet.cpp \
     objects/SdUndoRecordSymImpPin.cpp \
-    objects/SdGraphArea.cpp
+    objects/SdGraphArea.cpp \
+    objects/SdUndoRecordPlatePointer.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -251,7 +252,8 @@ HEADERS  += \
     objects/SdGraphWiringWire.h \
     objects/SdContainerSheetNet.h \
     objects/SdUndoRecordSymImpPin.h \
-    objects/SdGraphArea.h
+    objects/SdGraphArea.h \
+    objects/SdUndoRecordPlatePointer.h
 
 DISTFILES += \
     license.txt

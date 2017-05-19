@@ -22,7 +22,6 @@ class SdGraphWiring : public SdGraph
     SdGraphWiring();
 
     virtual void prepareMove() = 0;
-    virtual void moveComplete( SdPoint grid, SdUndo *undo ) = 0;
     virtual bool getNetOnPoint( SdPoint p, QString &destName ) = 0;
 
   };

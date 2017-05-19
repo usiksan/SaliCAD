@@ -85,6 +85,26 @@ void SdContainer::forEach(quint64 classMask, std::function<bool (SdObject *)> fu
 
 
 
+//void SdContainer::forEachDown(quint64 classMask, std::function<bool (SdObject *)> fun1)
+//  {
+//  for( SdObject *ptr : mChildList )
+//    if( ptr && !ptr->isDeleted() ) {
+//      //Check if object match class mask
+//      if( ptr->getClass() & classMask ) {
+//        //Check if it container and if true then down to elements of container
+//        if( ptr->isContainer() ) {
+//          SdContainer *down = dynamic_cast<SdContainer*>(ptr);
+//          if( down )
+//            down->forEach( classMask, fun1 );
+//          }
+//        else if( !fun1(ptr) ) return;
+//        }
+//      }
+//  }
+
+
+
+
 void SdContainer::deleteChild(SdObject *child, SdUndo *undo)
   {
   //Test if in this container

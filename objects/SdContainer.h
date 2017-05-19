@@ -39,8 +39,6 @@ class SdContainer : public SdObject
 
     virtual void writeObject(QJsonObject &obj) const override;
 
-    virtual void forEach( quint64 classMask, std::function<bool(SdObject*)> fun1 );
-
     virtual void insertChild( SdObject *child, SdUndo *undo );
     virtual void undoInsertChild( SdObject *child );
     virtual void redoInsertChild( SdObject *child );
@@ -53,6 +51,11 @@ class SdContainer : public SdObject
     virtual void cloneFrom( const SdObject *src) override;
 
             void draw( SdContext *context );
+
+            void forEach( quint64 classMask, std::function<bool(SdObject*)> fun1 );
+
+            //void forEachDown( quint64 classMask, std::function<bool(SdObject*)> fun1 );
+
   private:
     void         clearChildList();
   };

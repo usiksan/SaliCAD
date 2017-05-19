@@ -54,6 +54,7 @@ History
   10.05.2017 v0.19 Continue to create Component editor. Release symbol append and part append.
                    Append symbol pin name unical and part pin number unical
                    Begin creation sheet and plate editors
+  19.05.2017 v0.20 Continue creation GraphArea
 */
 
 #ifndef SDCONFIG
@@ -65,7 +66,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             19
+#define SD_VERSION_MINOR             20
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

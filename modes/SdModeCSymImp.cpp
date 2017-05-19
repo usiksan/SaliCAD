@@ -40,8 +40,6 @@ SdModeCSymImp::~SdModeCSymImp()
 
 
 
-
-
 void SdModeCSymImp::activate()
   {
   SdModeCommon::activate();

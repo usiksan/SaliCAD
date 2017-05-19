@@ -21,6 +21,7 @@ Description
 #include "SdUndoRecordPropSymPin.h"
 #include "SdUndoRecordPropPartPin.h"
 #include "SdUndoRecordPoint.h"
+#include "SdUndoRecordPlatePointer.h"
 #include "windows/SdWCommand.h"
 
 SdUndo::SdUndo() :
@@ -91,6 +92,14 @@ void SdUndo::propSymPin(SdPropSymPin *prp, SdPoint *org)
 void SdUndo::propPartPin(SdPropPartPin *prp, SdPoint *org)
   {
   addUndo( new SdUndoRecordPropPartPin( prp, org ) );
+  }
+
+
+
+
+void SdUndo::platePointer(SdPItemPlatePtr *ptr)
+  {
+  addUndo( new SdUndoRecordPlatePointer(ptr) );
   }
 
 

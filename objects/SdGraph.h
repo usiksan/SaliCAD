@@ -37,7 +37,7 @@ class SdGraph : public SdObject
 
     //Save object state
     virtual void   saveState( SdUndo *undo );
-    virtual void   moveComplete( SdUndo *undo );
+    virtual void   moveComplete( SdPoint grid, SdUndo *undo );
 
     //Изменение перемещением
     virtual void   move( SdPoint offset );
