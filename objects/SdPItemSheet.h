@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -42,8 +42,6 @@ class SdPItemSheet : public SdProjectItem
     //Set visual sheet index
     void                 setSheetIndex( int index ) { mSheetIndex = index; }
 
-    //TODO Определить к какой плате относится точка
-    //int           GetPlateIndex( DPoint point );                //Получить индекс платы исходя из точки на схеме
     //Get plate from point. Plate may be default pcb or pcb of area
     SdPItemPlate        *getPlate( SdPoint p );
 

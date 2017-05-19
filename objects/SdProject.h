@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -23,6 +23,7 @@ Description
 #define SD_TYPE_PROJECT "Project"
 
 class SdProjectItem;
+class SdPItemPlate;
 
 class SdProject : public SdContainer
   {
@@ -35,6 +36,8 @@ class SdProject : public SdContainer
     ~SdProject();
 
     SdUndo           *getUndo() { return &mUndo; }
+
+    SdPItemPlate     *getDefaultPlate();
 
     //Return dirty status
     bool              isDirty() const { return mDirty; }

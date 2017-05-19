@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -14,6 +14,8 @@ Description
 #include "SdPItemSheet.h"
 #include "SdContainerSheetNet.h"
 #include "SdGraphWiringWire.h"
+#include "SdGraphArea.h"
+#include "SdProject.h"
 
 SdPItemSheet::SdPItemSheet()
   {
@@ -77,11 +79,19 @@ bool SdPItemSheet::getNetFromPoint(SdPoint p, QString &dest)
 
 SdPItemPlate *SdPItemSheet::getPlate(SdPoint p)
   {
-  //TODO select plate from areas or constructiv
   SdPItemPlate *plate = nullptr;
-  forEach( dctArea, [&plate] (SdObject *obj) -> bool {
-
+  forEach( dctArea, [&plate,p] (SdObject *obj) -> bool {
+    SdGraphArea *area = dynamic_cast<SdGraphArea*>( obj );
+    Q_ASSERT( area != nullptr );
+    if( area->isPointInside(p) ) {
+      plate = area->getPlate();
+      return false;
+      }
+    return true;
     });
+  if( plate == nullptr )
+    return getProject()->getDefaultPlate();
+  return plate;
   }
 
 

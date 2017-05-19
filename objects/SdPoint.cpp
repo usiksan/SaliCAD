@@ -214,8 +214,31 @@ bool SdPoint::isLeftHigh(SdPoint a) const
 
 bool SdPoint::isOnSegment(SdPoint a, SdPoint b) const
   {
-  //TODO release isOnSegment
-  return false;
+
+  SdPoint pa( b - a );
+  SdPoint pb( SdPoint(x(),y()) - a );
+
+  const int cr = pa.x()*pb.y() - pb.x()*pa.y();
+  if((cr > 0) || (cr < 0) || (pa.x()*pb.x() < 0) ||
+    (pa.y()*pb.y() < 0) || (pa.x()*pa.x()+pa.y()*pa.y() < pb.x()*pb.x()+pb.y()*pb.y()))
+    return false;
+  return true;
+
+  //If segment is vertical
+/*  if( a.x() == b.x() )
+    return ( x() == a.x() && y() >= qMin(a.y(), b.y()) && y() <= qMax( a.y(), b.y()) );
+
+  if( a.y() == b.y() )
+    return ( y() == a.y() && x() >= qMin(a.x(), b.x()) && x() <= qMax( a.x(), b.x()) );
+
+  double k, c;
+  QPointF af(a);
+  QPointF bf(b);
+  k = (af.y() - bf.y()) / (af.x() - bf.x());
+  c = af.y() - k * af.x();
+
+  return y() == (static_cast<double>(x()) * k + c);
+  */
   }
 
 

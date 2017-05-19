@@ -30,6 +30,7 @@ class SdPItemSymbol;
 class SdPItemSheet;
 class SdPItemPart;
 class SdGraphPartImp;
+class SdPItemPlate;
 
 //Pin for symbol implementation
 struct SdSymImpPin {
@@ -84,6 +85,11 @@ class SdGraphSymImp : public SdGraph
     SdGraphSymImp();
     SdGraphSymImp( SdPItemSymbol *comp, SdPItemSymbol *sym, SdPItemPart *part );
 
+    //Move section to plate
+    void moveToPlate( SdPItemPlate *plate, SdUndo *undo );
+
+    //Return current plate of section
+    SdPItemPlate *currentPlate() const;
 
 
     // SdObject interface
