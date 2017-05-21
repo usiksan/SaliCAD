@@ -25,13 +25,14 @@ class SdPItemPlate : public SdProjectItem
 
     // SdObject interface
   public:
-    virtual QString getType() const override;
-    virtual quint64 getClass() const override;
-    virtual void    cloneFrom(const SdObject *src) override;
+    virtual QString       getType() const override;
+    virtual quint64       getClass() const override;
+    virtual void          cloneFrom(const SdObject *src) override;
 
     // SdProjectItem interface
   public:
-    virtual QString getIconName() const override;
+    virtual QString       getIconName() const override;
+    virtual SdGraphIdent *createIdent() override;
   };
 
 #endif // SDPITEMPLATE_H

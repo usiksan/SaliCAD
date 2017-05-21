@@ -11,6 +11,8 @@ Web
 Description
 */
 #include "SdPItemPart.h"
+#include "SdGraphIdent.h"
+#include "SdProject.h"
 
 SdPItemPart::SdPItemPart()
   {
@@ -38,3 +40,14 @@ QString SdPItemPart::getIconName() const
   {
   return QString(":/pic/iconPart.png");
   }
+
+
+SdGraphIdent *SdPItemPart::createIdent()
+  {
+  SdGraphIdent *ident = new SdGraphIdent( SdPoint(), QStringLiteral("Id"), SdRect(), sdGlobalProp->mPartIdentProp );
+  SdProject *prj = getProject();
+  Q_ASSERT( prj != nullptr );
+  insertChild( ident, prj->getUndo() );
+  return ident;
+  }
+

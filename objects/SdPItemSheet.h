@@ -29,39 +29,39 @@ class SdPItemSheet : public SdProjectItem
     SdPItemSheet();
 
     //get net by its name
-    SdContainerSheetNet* netGet( const QString name );
+    SdContainerSheetNet  *netGet( const QString name );
 
     //Creates net with desired name or return existing net
-    SdContainerSheetNet* netCreate( const QString name, SdUndo *undo );
+    SdContainerSheetNet  *netCreate( const QString name, SdUndo *undo );
 
     //Information about wire segment moving to make connection to pin
-    void                 netWirePlace( SdPoint a, SdPoint b, const QString name, SdUndo *undo );
+    void                  netWirePlace( SdPoint a, SdPoint b, const QString name, SdUndo *undo );
 
     //Insert wire
-    void                 insertWire( const QString name, SdGraphWiringWire *wire, SdUndo *undo );
+    void                  insertWire( const QString name, SdGraphWiringWire *wire, SdUndo *undo );
 
     //Get net name in point
-    bool                 getNetFromPoint( SdPoint p, QString &dest );
+    bool                  getNetFromPoint( SdPoint p, QString &dest );
 
     //Get visual sheet index
-    int                  getSheetIndex() const { return mSheetIndex; }
+    int                   getSheetIndex() const { return mSheetIndex; }
 
     //Set visual sheet index
-    void                 setSheetIndex( int index ) { mSheetIndex = index; }
+    void                  setSheetIndex( int index ) { mSheetIndex = index; }
 
     //Get plate from point. Plate may be default pcb or pcb of area
-    SdPItemPlate        *getPlate( SdPoint p );
+    SdPItemPlate         *getPlate( SdPoint p );
 
     // SdObject interface
   public:
-    virtual QString getType() const override;
-    virtual quint64 getClass() const override;
-    virtual void    cloneFrom(const SdObject *src) override;
+    virtual QString       getType() const override;
+    virtual quint64       getClass() const override;
+    virtual void          cloneFrom(const SdObject *src) override;
 
     // SdProjectItem interface
   public:
-    virtual QString getIconName() const override;
-
+    virtual QString       getIconName() const override;
+    virtual SdGraphIdent *createIdent() override;
   };
 
 #endif // SDPITEMSHEET_H

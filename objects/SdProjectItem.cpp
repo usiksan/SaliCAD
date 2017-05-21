@@ -99,6 +99,26 @@ SdRect SdProjectItem::getOverRect(quint64 classMask)
 
 
 
+//Object visual (graphical) identificator
+SdGraphIdent *SdProjectItem::getIdent()
+  {
+  //Find ident if present
+  SdGraphIdent *ident = nullptr;
+  forEach( dctIdent, [&ident] (SdObject *obj) -> bool {
+    ident = dynamic_cast<SdGraphIdent*>(obj);
+    return ident == nullptr;
+    });
+
+  //If not found then create default
+  if( ident == nullptr )
+    return createIdent();
+  return ident;
+  }
+
+
+
+
+
 void SdProjectItem::writeObject(QJsonObject &obj) const
   {
   SdContainer::writeObject( obj );

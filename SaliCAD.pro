@@ -130,7 +130,9 @@ SOURCES += \
     objects/SdContainerSheetNet.cpp \
     objects/SdUndoRecordSymImpPin.cpp \
     objects/SdGraphArea.cpp \
-    objects/SdUndoRecordPlatePointer.cpp
+    objects/SdUndoRecordPlatePointer.cpp \
+    objects/SdUndoRecordImpPin.cpp \
+    objects/SdGraphIdent.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -253,7 +255,9 @@ HEADERS  += \
     objects/SdContainerSheetNet.h \
     objects/SdUndoRecordSymImpPin.h \
     objects/SdGraphArea.h \
-    objects/SdUndoRecordPlatePointer.h
+    objects/SdUndoRecordPlatePointer.h \
+    objects/SdUndoRecordImpPin.h \
+    objects/SdGraphIdent.h
 
 DISTFILES += \
     license.txt

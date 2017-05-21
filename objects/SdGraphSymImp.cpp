@@ -95,8 +95,44 @@ void SdSymImpPin::ucom(SdGraphPartImp *prt)
 
 //====================================================================================
 //Symbol implementation
-SdGraphSymImp::SdGraphSymImp()
+SdGraphSymImp::SdGraphSymImp() :
+  mArea(nullptr),        //PCB where this symbol implement contains in
+  mSectionIndex(0),      //Section index (from 0)
+  mLogSection(0),        //Logical symbol section number (from 1)
+  mLogNumber(0),         //Logical part number (from 1)
+  mComponent(nullptr),   //Object contains section information, pin assotiation info. May be same as mSymbol.
+  mSymbol(nullptr),      //Symbol contains graph information
+  mPart(nullptr),
+  mPartImp(nullptr)
   {
+
+  }
+
+SdGraphSymImp::SdGraphSymImp(SdPItemSymbol *comp, SdPItemSymbol *sym, SdPItemPart *part, SdPoint pos, SdPropSymImp *prp ) :
+  mArea(nullptr),        //PCB where this symbol implement contains in
+  mSectionIndex(0),      //Section index (from 0)
+  mLogSection(0),        //Logical symbol section number (from 1)
+  mLogNumber(0),         //Logical part number (from 1)
+  mOrigin(pos),          //Position of Implement
+  mComponent(comp),      //Object contains section information, pin assotiation info. May be same as mSymbol.
+  mSymbol(sym),          //Symbol contains graph information
+  mPart(part),
+  mPartImp(nullptr)
+
+  {
+  //QString           mName;        //Name of component
+  mProp = *prp;        //Implement properties
+  if( sym ) {
+    SdConverterImplement imp( nullptr, mOrigin, sym->mOrigin, mProp.mAngle.getValue(), mProp.mMirror.getValue() );
+    QTransform t( imp.getMatrix() );
+    mOverRect.set( t.mapRect(sym->getOverRect()) );    //Over rect
+    mPrefix = sym->get;      //Part identificator prefix
+    SdPropText        mIdentProp;   //Part identificator text properties
+    QString           mIdent;       //Full implement identificator contains prefix, logNumber and logSection
+    SdPoint           mIdentOrigin; //Part identificator position in symbol context
+    SdPoint           mIdentPos;    //Part identificator position in sheet context
+    SdRect            mIdentRect;   //Part identificator over rect
+    }
 
   }
 
@@ -106,16 +142,43 @@ SdGraphSymImp::SdGraphSymImp()
 //Pin connection-disconnection by index
 void SdGraphSymImp::pinConnectionSet(int pinIndex, const QString wireName, bool com)
   {
+  if( pinIndex < 0 ) return;
   Q_ASSERT( pinIndex >= 0 && pinIndex < mPins.count() );
   mPins[pinIndex].setConnection( wireName, com );
   }
 
+
+
+
+//Unconnect pin in point
+void SdGraphSymImp::unconnectPinInPoint( SdPoint p, SdUndo *undo )
+  {
+  for( int index = 0; index < mPins.count(); index++ )
+    if( mPins[index].mPosition == p ) {
+      //Undo previous state of pin
+      undo->pinImpConnect( this, index, mPartImp, mPins[index].mPrtPin, mPins[index].mWireName, mPins[index].mCom );
+      //Set new state of pin
+      mPins[index].setConnection( QString(), false );
+      if( mPartImp )
+        mPartImp->pinConnectionSet( mPins[index].mPrtPin, QString(), false );
+      return;
+      }
+  }
+
+
+
+
+//Get wire name pin with pinIndex connected to
 QString SdGraphSymImp::pinWireName(int pinIndex) const
   {
   Q_ASSERT( pinIndex >= 0 && pinIndex < mPins.count() );
   return mPins[pinIndex].mWireName;
   }
 
+
+
+
+//Return if pin with pinIndex connected to any wire or not
 bool SdGraphSymImp::isPinConnected(int pinIndex) const
   {
   Q_ASSERT( pinIndex >= 0 && pinIndex < mPins.count() );
@@ -124,6 +187,18 @@ bool SdGraphSymImp::isPinConnected(int pinIndex) const
 
 
 
+
+//Get full visual ident of section aka D4.2
+QString SdGraphSymImp::getIdent() const
+  {
+  if( mLogSection )
+    return QString("%1%2.%3").arg( mPrefix ).arg( mLogNumber ).arg( mLogSection );
+  return QString("%1%2").arg( mPrefix ).arg( mLogNumber );
+  }
+
+
+
+//Notification about wire segment position changed
 void SdGraphSymImp::netWirePlace(SdPoint a, SdPoint b, const QString name, SdUndo *undo)
   {
   for( int index = 0; index < mPins.count(); index++ )
@@ -140,6 +215,7 @@ void SdGraphSymImp::netWirePlace(SdPoint a, SdPoint b, const QString name, SdUnd
 
 
 
+//Notification about wire segment deletion
 void SdGraphSymImp::netWireDelete(SdPoint a, SdPoint b, const QString name, SdUndo *undo)
   {
   for( int index = 0; index < mPins.count(); index++ )
@@ -156,8 +232,10 @@ void SdGraphSymImp::netWireDelete(SdPoint a, SdPoint b, const QString name, SdUn
 
 
 
+//Accumulate segments connected to component
 void SdGraphSymImp::accumLinked(SdPoint a, SdPoint b, SdSelector *sel)
   {
+  //Scan all pins and check if segment ab connected to any pin then select component
   for( int index = 0; index < mPins.count(); index++ )
     if( mPins[index].mCom && mPins[index].mPosition.isOnSection(a,b) ) {
       sel->insert( this );

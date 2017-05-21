@@ -32,7 +32,6 @@ class SdPItemSymbol : public SdProjectItem
   public:
     SdPItemSymbol();
 
-
     //Return section count
     int            getSectionCount() const;
     //Return section by index
@@ -54,6 +53,10 @@ class SdPItemSymbol : public SdProjectItem
     virtual quint64   getClass() const override;
     virtual QString   getIconName() const override;
     virtual void      cloneFrom( const SdObject *src ) override;
+
+    // SdProjectItem interface
+  public:
+    virtual SdGraphIdent *createIdent() override;
   };
 
 #endif // SDPITEMSYMBOL_H

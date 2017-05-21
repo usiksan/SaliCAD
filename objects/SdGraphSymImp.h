@@ -40,7 +40,6 @@ struct SdSymImpPin {
   SdPoint         mPosition;  //Pin position in sheet context
   QString         mWireName;  //Net, which pin connected to
   bool            mCom;       //State of pin to net connectivity
-  int             mPinIndex;  //Pin index in pin array
   int             mPrtPin;    //Pin index in pin array of part implement
 
   SdSymImpPin();
@@ -50,6 +49,7 @@ struct SdSymImpPin {
   void setConnection( const QString wireName, bool com );
   bool isCanConnect( SdPoint a, SdPoint b ) const;
   bool isCanDisconnect( SdPoint a, SdPoint b, const QString wireName ) const;
+
   //void connect(SdPoint a, SdPoint b, const QString &name, SdGraphSymImp *sym, SdGraphPartImp *prt, SdUndo *undo );
   void ifConnect( SdGraphPartImp *prt );
   void disconnect( SdPoint a, SdPoint b, const QString &name, SdGraphPartImp *prt );
@@ -69,7 +69,7 @@ class SdGraphSymImp : public SdGraph
     int               mSectionIndex;//Section index (from 0)
     int               mLogSection;  //Logical symbol section number (from 1)
     int               mLogNumber;   //Logical part number (from 1)
-    QString           mName;        //Name of component
+    //QString           mName;        //Name of component
     SdPoint           mOrigin;      //Position of Implement
     SdPropSymImp      mProp;        //Implement properties
     SdRect            mOverRect;    //Over rect
@@ -88,33 +88,41 @@ class SdGraphSymImp : public SdGraph
     SdParamTable      mParam;       //Parameters
   public:
     SdGraphSymImp();
-    SdGraphSymImp( SdPItemSymbol *comp, SdPItemSymbol *sym, SdPItemPart *part );
+    SdGraphSymImp(SdPItemSymbol *comp, SdPItemSymbol *sym, SdPItemPart *part , SdPoint pos, SdPropSymImp *prp);
 
-    //Pin connection-disconnection by index
-    void          pinConnectionSet( int pinIndex, const QString wireName, bool com );
-    QString       pinWireName( int pinIndex ) const;
-    bool          isPinConnected( int pinIndex ) const;
 
-    //Move section to plate
-    void          moveToPlate( SdPItemPlate *plate, SdUndo *undo );
 
+    //Information
     //Return current plate of section
     SdPItemPlate *currentPlate() const;
+    //Get full visual ident of section aka D4.2
+    QString       getIdent() const;
+    //Get wire name pin with pinIndex connected to
+    QString       pinWireName( int pinIndex ) const;
+    //Return if pin with pinIndex connected to any wire or not
+    bool          isPinConnected( int pinIndex ) const;
+
 
 
     //Notifications about segment operation
-            //Notification about wire segment position changed
-            void netWirePlace( SdPoint a, SdPoint b, const QString name, SdUndo *undo );
-            //Notification about wire segment deletion
-            void netWireDelete( SdPoint a, SdPoint b, const QString name, SdUndo *undo ); //Извещение об удалении сегмента
-            //Accumulate segments connected to component
-            void accumLinked( SdPoint a, SdPoint b, SdSelector *sel );
-    //Сервисные
+    //Notification about wire segment position changed
+    void          netWirePlace( SdPoint a, SdPoint b, const QString name, SdUndo *undo );
+    //Notification about wire segment deletion
+    void          netWireDelete( SdPoint a, SdPoint b, const QString name, SdUndo *undo ); //Извещение об удалении сегмента
+    //Accumulate segments connected to component
+    void          accumLinked( SdPoint a, SdPoint b, SdSelector *sel );
+
+    //Service
+    //Pin connection-disconnection by index
+    void          pinConnectionSet( int pinIndex, const QString wireName, bool com );
+    //Move section to plate
+    void          moveToPlate( SdPItemPlate *plate, SdUndo *undo );
+    //Unconnect pin in point
+    void          unconnectPinInPoint(SdPoint p , SdUndo *undo);
+
             void ReplacePrt( DPrtPic *prt );  //Заменить корпус на новый
-            void GetIdent( DString &buf );    //Получить полный идентификатор
             bool GetListItem( DString &buf ); //Полная строка в перечень
             //void InsertInSheet();             //Извещение о вставке в лист схемы
-            void UcomPin( DPoint p );                     //Отключить вывод в данной точке
             void AutoNet( DNetListTable &table );         //Накопить цепи в текстовый список цепей
             void LinkPrt( DPrtImpPic *prt, int section ); //Связать с компонентом
             void UnLinkPrt();                             //Отвязать от компонента
@@ -137,7 +145,7 @@ class SdGraphSymImp : public SdGraph
   public:
     virtual QString getType() const override { return QStringLiteral( SD_TYPE_SYM_IMP ); }
     virtual quint64 getClass() const override { return dctSymImp; }
-    virtual void attach(SdUndo *undo) override;
+    virtual void    attach(SdUndo *undo) override;
     virtual void detach(SdUndo *undo) override;
     virtual void cloneFrom(const SdObject *src) override;
     virtual void writeObject(QJsonObject &obj) const override;

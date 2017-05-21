@@ -94,6 +94,7 @@ void SdModeCSymImp::propSetToBar()
 
 void SdModeCSymImp::enterPoint(SdPoint)
   {
+  //TODO insert symbol implementation
   getSection();
   }
 

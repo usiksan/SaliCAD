@@ -30,6 +30,10 @@ class SdPItemPart : public SdProjectItem
     // SdProjectItem interface
   public:
     virtual QString getIconName() const override;
+
+    // SdProjectItem interface
+  public:
+    virtual SdGraphIdent *createIdent() override;
   };
 
 #endif // SDPITEMPART_H

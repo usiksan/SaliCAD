@@ -12,6 +12,7 @@ Description
   Graphical PCB layout with component placement
 */
 #include "SdPItemPlate.h"
+#include "SdGraphIdent.h"
 
 SdPItemPlate::SdPItemPlate()
   {
@@ -38,3 +39,14 @@ QString SdPItemPlate::getIconName() const
   {
   return QStringLiteral(":/pic/iconPlate.png");
   }
+
+
+SdGraphIdent *SdPItemPlate::createIdent()
+  {
+  SdGraphIdent *ident = new SdGraphIdent( SdPoint(), QStringLiteral("Id"), SdRect(), sdGlobalProp->mPartIdentProp );
+  SdProject *prj = getProject();
+  Q_ASSERT( prj != nullptr );
+  insertChild( ident, prj->getUndo() );
+  return ident;
+  }
+

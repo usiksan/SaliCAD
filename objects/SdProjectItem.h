@@ -23,6 +23,7 @@ Description
 
 class SdProject;
 class QTreeWidgetItem;
+class SdGraphIdent;
 
 class SdProjectItem : public SdContainer
   {
@@ -57,9 +58,14 @@ class SdProjectItem : public SdContainer
     void                   updateAuthor() { mObjectInfo.updateAuthor(); }
     //Check if another author
     bool                   isAnotherAuthor() const { return mObjectInfo.isAnotherAuthor(); }
-
     //Get over rect
     SdRect                 getOverRect( quint64 classMask = dctAll );
+
+    //Object visual (graphical) identificator
+    SdGraphIdent          *getIdent();
+    virtual SdGraphIdent  *createIdent() = 0;
+
+
 
 
     void                   addRef() { mRefCount++; }

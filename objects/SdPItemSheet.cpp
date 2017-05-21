@@ -146,3 +146,14 @@ QString SdPItemSheet::getIconName() const
 
 
 
+
+
+SdGraphIdent *SdPItemSheet::createIdent()
+  {
+  SdGraphIdent *ident = new SdGraphIdent( SdPoint(), QStringLiteral("Id"), SdRect(), sdGlobalProp->mSymIdentProp );
+  SdProject *prj = getProject();
+  Q_ASSERT( prj != nullptr );
+  insertChild( ident, prj->getUndo() );
+  return ident;
+  }
+

@@ -22,6 +22,7 @@ Description
 #include "SdUndoRecordPropPartPin.h"
 #include "SdUndoRecordPoint.h"
 #include "SdUndoRecordPlatePointer.h"
+#include "SdUndoRecordImpPin.h"
 #include "windows/SdWCommand.h"
 
 SdUndo::SdUndo() :
@@ -100,6 +101,15 @@ void SdUndo::propPartPin(SdPropPartPin *prp, SdPoint *org)
 void SdUndo::platePointer(SdPItemPlatePtr *ptr)
   {
   addUndo( new SdUndoRecordPlatePointer(ptr) );
+  }
+
+
+
+
+
+void SdUndo::pinImpConnect(SdGraphSymImp *sym, int symPinIndex, SdGraphPartImp *part, int partPinIndex, const QString wireName, bool com)
+  {
+  addUndo( new SdUndoRecordImpPin( sym, symPinIndex, part, partPinIndex, wireName, com ) );
   }
 
 
