@@ -23,6 +23,7 @@ Description
 
 class SdGraphText : public SdGraph
   {
+  protected:
     SdPoint    mOrigin;
     SdPropText mProp;
     QString    mString;
@@ -30,6 +31,11 @@ class SdGraphText : public SdGraph
   public:
     SdGraphText();
     SdGraphText( SdPoint org, const QString str, SdRect r, SdPropText &p );
+
+    //Information
+    QString         getText() const { return mString; }
+    SdPoint         getOrigin() const { return mOrigin; }
+    SdPropText      getPropText() const { return mProp; }
 
     // SdObject interface
   public:

@@ -24,6 +24,8 @@ class SdGraphIdent : public SdGraphText
     SdGraphIdent();
     SdGraphIdent( SdPoint org, const QString str, SdRect r, SdPropText &p );
 
+    void updateIdent( SdPoint org, const QString str, SdRect r, SdPropText *p );
+
     // SdObject interface
   public:
     virtual QString getType() const override { return QStringLiteral( SD_TYPE_IDENT ); }

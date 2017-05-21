@@ -31,6 +31,7 @@ Description
 #include "SdGraphIdent.h"
 #include "SdGraphSymPin.h"
 #include "SdGraphPartPin.h"
+#include "SdGraphIdent.h"
 #include "SdSection.h"
 #include "SdPartVariant.h"
 #include <QJsonValue>
@@ -208,6 +209,7 @@ SdObject *SdObject::build(QString type)
   if( type == QStringLiteral(SD_TYPE_SYM_PIN)       ) return new SdGraphSymPin();
   if( type == QStringLiteral(SD_TYPE_PART_PIN)      ) return new SdGraphPartPin();
   if( type == QStringLiteral(SD_TYPE_AREA)          ) return new SdGraphArea();
+  if( type == QStringLiteral(SD_TYPE_IDENT)         ) return new SdGraphIdent();
 
   if( type == QStringLiteral(SD_TYPE_SYMBOL)        ) return new SdPItemSymbol();
   if( type == QStringLiteral(SD_TYPE_PART)          ) return new SdPItemPart();

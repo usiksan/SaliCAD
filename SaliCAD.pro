@@ -132,7 +132,8 @@ SOURCES += \
     objects/SdGraphArea.cpp \
     objects/SdUndoRecordPlatePointer.cpp \
     objects/SdUndoRecordImpPin.cpp \
-    objects/SdGraphIdent.cpp
+    objects/SdGraphIdent.cpp \
+    modes/SdModeCIdent.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -257,7 +258,8 @@ HEADERS  += \
     objects/SdGraphArea.h \
     objects/SdUndoRecordPlatePointer.h \
     objects/SdUndoRecordImpPin.h \
-    objects/SdGraphIdent.h
+    objects/SdGraphIdent.h \
+    modes/SdModeCIdent.h
 
 DISTFILES += \
     license.txt
