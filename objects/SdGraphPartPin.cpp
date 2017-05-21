@@ -49,6 +49,22 @@ SdGraphPartPin::SdGraphPartPin(SdPoint org, SdPoint numberPos, SdPoint namePos, 
 
 
 
+void SdGraphPartPin::drawImp(SdContext *dc, const QString pinName, bool com)
+  {
+  //Pin it self
+  if( !com )
+    dc->partPin( mOrigin, mPinProp.mLayer.layer() );
+
+  //Pin name
+  dc->text( mNamePos, mNameRect, pinName, mNameProp );
+
+  //Pin number as over rectangle.
+  dc->text( mNumberPos, mNumberRect, mNumber, mNumberProp );
+  }
+
+
+
+
 
 SdObject *SdGraphPartPin::copyNext()
   {

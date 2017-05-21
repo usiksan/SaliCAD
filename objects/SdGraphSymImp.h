@@ -45,10 +45,14 @@ struct SdSymImpPin {
   SdSymImpPin();
 
   void operator = ( SdSymImpPin &pin );
-  void draw( SdContext *dc );
-  void setConnection( const QString wireName, bool com );
-  bool isCanConnect( SdPoint a, SdPoint b ) const;
-  bool isCanDisconnect( SdPoint a, SdPoint b, const QString wireName ) const;
+  void        draw( SdContext *dc );
+  void        setConnection( const QString wireName, bool com );
+  void        setConnection( SdGraphPartImp *partImp, const QString wireName, bool com );
+  bool        isCanConnect( SdPoint a, SdPoint b ) const;
+  bool        isCanDisconnect( SdPoint a, SdPoint b, const QString wireName ) const;
+
+  QJsonObject toJson();
+  void        fromJson( SdObjectMap *map, const QJsonObject obj );
 
   //void connect(SdPoint a, SdPoint b, const QString &name, SdGraphSymImp *sym, SdGraphPartImp *prt, SdUndo *undo );
   void ifConnect( SdGraphPartImp *prt );
@@ -75,7 +79,6 @@ class SdGraphSymImp : public SdGraph
     SdRect            mOverRect;    //Over rect
     QString           mPrefix;      //Part identificator prefix
     SdPropText        mIdentProp;   //Part identificator text properties
-    QString           mIdent;       //Full implement identificator contains prefix, logNumber and logSection
     SdPoint           mIdentOrigin; //Part identificator position in symbol context
     SdPoint           mIdentPos;    //Part identificator position in sheet context
     SdRect            mIdentRect;   //Part identificator over rect

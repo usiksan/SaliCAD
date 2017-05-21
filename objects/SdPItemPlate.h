@@ -16,12 +16,29 @@ Description
 
 #include "SdProjectItem.h"
 
+class SdGraphPartImp;
+class SdGraphSymImp;
+class SdPItemPart;
+class SdPItemSymbol;
+class SdContainerPlateNet;
+
 #define SD_TYPE_PLATE "Plate"
 
 class SdPItemPlate : public SdProjectItem
   {
   public:
     SdPItemPlate();
+
+    //get net by its name
+    SdContainerPlateNet  *netGet( const QString name );
+
+    //Creates net with desired name or return existing net
+    SdContainerPlateNet  *netCreate( const QString name, SdUndo *undo );
+
+
+    SdGraphPartImp       *allocPartImp( SdPItemPart *part, SdPItemSymbol *comp, SdGraphSymImp *symImp );
+//    DPrtImpPic*  FindCompPart( DPrtPic *part, CPChar name, int numSection );
+//    DPrtImpPic*  FindCompById( CPChar ident );
 
     // SdObject interface
   public:

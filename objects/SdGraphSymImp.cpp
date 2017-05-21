@@ -14,11 +14,14 @@ Description
 #include "SdGraphPartImp.h"
 #include "SdPItemSymbol.h"
 #include "SdGraphSymPin.h"
+#include "SdGraphIdent.h"
 #include "SdPItemPlate.h"
 #include "SdPItemSheet.h"
+#include "SdProject.h"
 #include "SdSection.h"
 #include "SdSelector.h"
 #include "SdConverterImplement.h"
+#include "SdContext.h"
 
 
 //====================================================================================
@@ -27,7 +30,6 @@ Description
 SdSymImpPin::SdSymImpPin() :
   mPin(0),       //Pin
   mCom(false),   //State of pin to net connectivity
-  mPinIndex(-1), //Pin index in pin array
   mPrtPin(-1)    //Pin index in pin array of part implement
   {
 
@@ -43,7 +45,6 @@ void SdSymImpPin::operator =(SdSymImpPin &pin)
   mPosition  = pin.mPosition;  //Pin position in sheet context
   mWireName  = pin.mWireName;  //Net, which pin connected to
   mCom       = pin.mCom;       //State of pin to net connectivity
-  mPinIndex  = pin.mPinIndex;  //Pin index in pin array
   mPrtPin    = pin.mPrtPin;    //Pin index in pin array of part implement
   }
 
@@ -62,6 +63,15 @@ void SdSymImpPin::setConnection(const QString wireName, bool com)
   mCom = com;
   if( mCom )
     mWireName = wireName;
+  }
+
+void SdSymImpPin::setConnection(SdGraphPartImp *partImp, const QString wireName, bool com)
+  {
+  mCom = com;
+  if( mCom )
+    mWireName = wireName;
+  if( partImp )
+    partImp->pinConnectionSet( mPrtPin, wireName, com );
   }
 
 
@@ -125,15 +135,13 @@ SdGraphSymImp::SdGraphSymImp(SdPItemSymbol *comp, SdPItemSymbol *sym, SdPItemPar
   if( sym ) {
     SdConverterImplement imp( nullptr, mOrigin, sym->mOrigin, mProp.mAngle.getValue(), mProp.mMirror.getValue() );
     QTransform t( imp.getMatrix() );
-    mOverRect.set( t.mapRect(sym->getOverRect()) );    //Over rect
-    mPrefix = sym->get;      //Part identificator prefix
-    SdPropText        mIdentProp;   //Part identificator text properties
-    QString           mIdent;       //Full implement identificator contains prefix, logNumber and logSection
-    SdPoint           mIdentOrigin; //Part identificator position in symbol context
-    SdPoint           mIdentPos;    //Part identificator position in sheet context
-    SdRect            mIdentRect;   //Part identificator over rect
+    mOverRect.set( t.mapRect(sym->getOverRect()) );//Over rect
+    mPrefix = sym->getIdent()->getText();          //Part identificator prefix
+    mIdentProp = sym->getIdent()->getPropText();   //Part identificator text properties
+    mIdentOrigin = sym->getIdent()->getOrigin();   //Part identificator position in symbol context
+    mIdentPos = t.map( mIdentOrigin );    //Part identificator position in sheet context
+    mIdentRect.set( t.mapRect( sym->getIdent()->getOverRect() )  );   //Part identificator over rect
     }
-
   }
 
 
@@ -158,9 +166,7 @@ void SdGraphSymImp::unconnectPinInPoint( SdPoint p, SdUndo *undo )
       //Undo previous state of pin
       undo->pinImpConnect( this, index, mPartImp, mPins[index].mPrtPin, mPins[index].mWireName, mPins[index].mCom );
       //Set new state of pin
-      mPins[index].setConnection( QString(), false );
-      if( mPartImp )
-        mPartImp->pinConnectionSet( mPins[index].mPrtPin, QString(), false );
+      mPins[index].setConnection( mPartImp, QString(), false );
       return;
       }
   }
@@ -206,9 +212,7 @@ void SdGraphSymImp::netWirePlace(SdPoint a, SdPoint b, const QString name, SdUnd
       //Undo previous state of pin
       undo->pinImpConnect( this, index, mPartImp, mPins[index].mPrtPin, mPins[index].mWireName, mPins[index].mCom );
       //Set new state of pin
-      mPins[index].setConnection( name, true );
-      if( mPartImp )
-        mPartImp->pinConnectionSet( mPins[index].mPrtPin, name, true );
+      mPins[index].setConnection( mPartImp, name, true );
       }
   }
 
@@ -223,9 +227,7 @@ void SdGraphSymImp::netWireDelete(SdPoint a, SdPoint b, const QString name, SdUn
       //Undo previous state of pin
       undo->pinImpConnect( this, index, mPartImp, mPins[index].mPrtPin, mPins[index].mWireName, mPins[index].mCom );
       //Set new state of pin
-      mPins[index].setConnection( name, false );
-      if( mPartImp )
-        mPartImp->pinConnectionSet( mPins[index].mPrtPin, name, false );
+      mPins[index].setConnection( mPartImp, name, false );
       }
   }
 
@@ -256,9 +258,17 @@ void SdGraphSymImp::moveComplete(SdUndo *undo)
   {
   //Mooving is completed, check pin connection
   SdPItemSheet *sheet = getSheet();
+  QString netName;
   if( sheet ) {
-    for( SdSymImpPin &pin : mPins )
-      pin.connectTest( sheet, mPartImp );
+    for( int index = 0; index < mPins.count(); index++ )
+      if( !mPins[index].mCom ) {
+        //If pin unconnected then check possible connection
+        if( sheet->getNetFromPoint( mPins[index].mPosition, netName ) ) {
+          //New connection
+          undo->pinImpConnect( this, index, mPartImp, mPins[index].mPrtPin, mPins[index].mWireName, mPins[index].mCom );
+          mPins[index].setConnection( mPartImp, netName, true );
+          }
+        }
     //Check current area
     if( mPartImp ) {
       //Part is assigned, check current area
@@ -378,10 +388,8 @@ SdRect SdGraphSymImp::getOverRect() const
 
 void SdGraphSymImp::draw(SdContext *dc)
   {
-  //Draw ident
-  DString str;
-  GetIdent( str );
-  dc.Text( info.ident, str );
+  //Draw ident in sheet context
+  dc->text( mIdentPos, mIdentRect, getIdent(), mIdentProp );
   //Рисовать выводы
   DrawSymImpPinIterator draw( dc );
   NForEach( pins, draw );
@@ -426,6 +434,7 @@ void SdGraphSymImp::updatePinsPositions()
     pin.mPosition = t.map( pin.mPin->getPinOrigin() );
   mOverRect.set( t.mapRect( mSymbol->getOverRect() ) );
   mIdentPos = t.map( mIdentOrigin );
+  //mIdentRect.set( )
   }
 
 
@@ -484,6 +493,21 @@ void SdGraphSymImp::unLinkFromPart()
 
 void SdGraphSymImp::attach(SdUndo *undo)
   {
+  SdProject *prj = getSheet()->getProject();
+  Q_ASSERT( prj != nullptr );
+  //Realloc objects for this project
+  mComponent = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(mComponent) );  //Object contains section information, pin assotiation info. May be same as mSymbol.
+  mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(mSymbol) );        //Symbol contains graph information
+  mPart = dynamic_cast<SdPItemPart*>( prj->getProjectsItem(mPart) );
+
+  //Get plate where component resides
+  SdPItemPlate *plate = getSheet()->getPlate( mOrigin );
+  Q_ASSERT( plate != nullptr );
+
+  //Get part where this section resides
+  mPartImp = plate->allocPartImp( mPart, mComponent, this );
+
+  //Assign pins
   }
 
 void SdGraphSymImp::detach(SdUndo *undo)

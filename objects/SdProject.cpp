@@ -34,6 +34,43 @@ SdProject::~SdProject()
 
 
 
+//Return object of project for given object
+SdProjectItem *SdProject::getProjectsItem(SdProjectItem *item)
+  {
+  //If source is null then return null also
+  if( item == nullptr ) return item;
+  //First try find equal object
+  SdProjectItem *res = getProjectsItem( item->getClass(), item->getId() );
+  //If object is found then return it
+  if( res )
+    return res;
+  //else insert copy
+  res = dynamic_cast<SdProjectItem*>( item->copy() );
+  Q_ASSERT( res != nullptr );
+  insertChild( res, mUndo );
+  return res;
+  }
+
+
+
+
+SdProjectItem *SdProject::getProjectsItem(quint64 mask, const QString id)
+  {
+  SdProjectItem *res = nullptr;
+  forEach( mask, [&res, id] (SdObject *obj) -> bool {
+    res = dynamic_cast<SdProjectItem*>( obj );
+    Q_ASSERT( res != nullptr );
+    if( res->getId() == id )
+      return false;
+    res = nullptr;
+    return true;
+    });
+  return res;
+  }
+
+
+
+
 void SdProject::setDirty()
   {
   mDirty = true;

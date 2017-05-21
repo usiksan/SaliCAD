@@ -37,7 +37,14 @@ class SdProject : public SdContainer
 
     SdUndo           *getUndo() { return &mUndo; }
 
+    //Return default plate and if none - created new
     SdPItemPlate     *getDefaultPlate();
+
+    //Return object of project for given object
+    SdProjectItem    *getProjectsItem( SdProjectItem *item );
+
+    //Return object of project for given id
+    SdProjectItem    *getProjectsItem( quint64 mask, const QString id );
 
     //Return dirty status
     bool              isDirty() const { return mDirty; }
