@@ -47,16 +47,18 @@ SdProjectItem *SdProject::getProjectsItem(SdProjectItem *item)
   //else insert copy
   res = dynamic_cast<SdProjectItem*>( item->copy() );
   Q_ASSERT( res != nullptr );
-  insertChild( res, mUndo );
+  insertChild( res, &mUndo );
   return res;
   }
 
 
 
-
+//Find object in project with id
 SdProjectItem *SdProject::getProjectsItem(quint64 mask, const QString id)
   {
+  //Place for result
   SdProjectItem *res = nullptr;
+  //Scan all child objects and find id
   forEach( mask, [&res, id] (SdObject *obj) -> bool {
     res = dynamic_cast<SdProjectItem*>( obj );
     Q_ASSERT( res != nullptr );

@@ -15,9 +15,9 @@ Description
 #include "SdContext.h"
 
 
-SdConverter::SdConverter(SdContext *context) :
+SdConverter::SdConverter() :
   mNext(0),
-  mContext(context),
+  mContext(nullptr),
   mPairLayer(false)
   {
   }

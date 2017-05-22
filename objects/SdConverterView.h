@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Convertor for view point
 */
 #ifndef SDCONVERTERVIEW_H
 #define SDCONVERTERVIEW_H
@@ -22,7 +23,7 @@ class SdConverterView : public SdConverter
     double  mScale;  //View scale
     SdPoint mOrigin; //View offset
   public:
-    SdConverterView( SdContext *context, QSize viewSize, SdPoint origin, double scale );
+    SdConverterView( QSize viewSize, SdPoint origin, double scale );
 
     //Return local conversion transformation matrix
     virtual QTransform getMatrix() override;

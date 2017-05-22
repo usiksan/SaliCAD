@@ -17,11 +17,13 @@ Description
 #include "SdGraphIdent.h"
 #include "SdPItemPlate.h"
 #include "SdPItemSheet.h"
+#include "SdPItemPart.h"
 #include "SdProject.h"
 #include "SdSection.h"
 #include "SdSelector.h"
 #include "SdConverterImplement.h"
 #include "SdContext.h"
+#include "SdUndo.h"
 
 
 //====================================================================================
@@ -169,6 +171,18 @@ void SdGraphSymImp::unconnectPinInPoint( SdPoint p, SdUndo *undo )
       mPins[index].setConnection( mPartImp, QString(), false );
       return;
       }
+  }
+
+
+
+
+void SdGraphSymImp::unLinkPartImp(SdUndo *undo)
+  {
+  //Save current link state
+  undo->linkSection( mSectionIndex, this, mPartImp, mPartImp != nullptr );
+  if( mPartImp )
+    mPartImp->setLinkSection( mSectionIndex, nullptr );
+  setLinkSection( -1, nullptr );
   }
 
 
@@ -390,6 +404,9 @@ void SdGraphSymImp::draw(SdContext *dc)
   {
   //Draw ident in sheet context
   dc->text( mIdentPos, mIdentRect, getIdent(), mIdentProp );
+  //Convertor for symbol implementation
+  SdConverterImplement imp( dc, mOrigin, mSymbol->mOrigin, mProp.mAngle.getValue(), mProp.mMirror.getValue() );
+  dc->setConverter( &imp );
   //Рисовать выводы
   DrawSymImpPinIterator draw( dc );
   NForEach( pins, draw );
@@ -505,7 +522,8 @@ void SdGraphSymImp::attach(SdUndo *undo)
   Q_ASSERT( plate != nullptr );
 
   //Get part where this section resides
-  mPartImp = plate->allocPartImp( mPart, mComponent, this );
+  int section;
+  SdGraphPartImp *partImp = plate->allocPartImp( &section, mPart, mComponent, this );
 
   //Assign pins
   }

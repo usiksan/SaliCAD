@@ -25,7 +25,7 @@ class SdConverter
     SdContext   *mContext;   //Context is working on
     bool         mPairLayer; //True when need paired layer
   public:
-    SdConverter( SdContext *context );
+    SdConverter();
     virtual ~SdConverter();
 
     //Convert layer flag

@@ -16,12 +16,13 @@ Description
 #include "objects/SdGraphIdent.h"
 #include <QObject>
 
-SdModeCIdent::SdModeCIdent(SdWEditorGraph *editor, SdProjectItem *obj, SdPropText *prp ) :
+SdModeCIdent::SdModeCIdent(SdWEditorGraph *editor, SdProjectItem *obj, SdPropText *prp , int index) :
   SdModeCTextual( editor, obj )
   {
   mIdent    = obj->getIdent();
   mString   = mIdent->getText();
   mPropText = prp;
+  mIndex    = index;
   }
 
 
@@ -114,7 +115,7 @@ QString SdModeCIdent::getStepThema() const
 
 int SdModeCIdent::getIndex() const
   {
-  return MD_REFERENCE;
+  return mIndex;
   }
 
 

@@ -9,11 +9,12 @@ Web
   www.saliLab.ru
 
 Description
+  Converter transformation for text drawing
 */
 #include "SdConverterText.h"
 
-SdConverterText::SdConverterText( SdContext *context, SdPoint origin, int angle ) :
-  SdConverter( context ),
+SdConverterText::SdConverterText(SdPoint origin, int angle ) :
+  SdConverter(),
   mOrigin(origin)
   {
   mAngle = static_cast<double>(angle) / 1000.0;

@@ -360,8 +360,8 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
 
     QPainter painter( &mCashe );
     SdContext context( mGrid, &painter );
-    SdConverterView cv( &context, s, mOrigin, mScale.scaleGet() );
-    cv.getMatrix();
+    SdConverterView cv( s, mOrigin, mScale.scaleGet() );
+    context.setConverter( &cv );
 
     mPixelTransform = QTransform::fromTranslate( -s.width()/2,  -s.height()/2 );
     mPixelTransform *= QTransform::fromScale( 1 / mScale.scaleGet(), -1 / mScale.scaleGet() );
@@ -413,8 +413,8 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
   if( modeGet() ) {
     //Рисовать динамическую часть
     SdContext context( mGrid, &painter );
-    SdConverterView cv( &context, s, mOrigin, mScale.scaleGet() );
-    cv.getMatrix();
+    SdConverterView cv( s, mOrigin, mScale.scaleGet() );
+    context.setConverter( &cv );
     modeGet()->drawDynamic( &context );
     }
   //Рисовать курсор

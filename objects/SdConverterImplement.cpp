@@ -9,12 +9,13 @@ Web
   www.saliLab.ru
 
 Description
+  Converter for symbol and part implementation
 */
 #include "SdConverterImplement.h"
 
 
-SdConverterImplement::SdConverterImplement(SdContext *context, SdPoint pos, SdPoint org, int angle, bool mirror, bool sideOther) :
-  SdConverter(context),
+SdConverterImplement::SdConverterImplement(SdPoint pos, SdPoint org, int angle, bool mirror, bool sideOther) :
+  SdConverter(),
   mPosition(pos),
   mOrigin(org),
   mMirror(mirror)

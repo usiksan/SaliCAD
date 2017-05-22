@@ -81,7 +81,7 @@ void SdWEditorGraphPart::cmModePin()
 
 void SdWEditorGraphPart::cmModeReference()
   {
-  modeSet( new SdModeCIdent( this, mPart, &(sdGlobalProp->mPartIdentProp) )  );
+  modeSet( new SdModeCIdent( this, mPart, &(sdGlobalProp->mPartIdentProp), MD_PART_IDENT )  );
   }
 
 

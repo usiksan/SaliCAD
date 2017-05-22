@@ -17,6 +17,7 @@ Description
 #include "SdPartVariant.h"
 #include "SdObjectFactory.h"
 #include "SdGraphIdent.h"
+#include "SdProject.h"
 
 SdPItemSymbol::SdPItemSymbol()
   {
@@ -29,14 +30,14 @@ SdPItemSymbol::SdPItemSymbol()
 //Return section count
 int SdPItemSymbol::getSectionCount() const
   {
-  int count = 0;
-  forEach( dctSection, [&count] (SdObject *obj) -> bool {
+  int cnt = 0;
+  forEach( dctSection, [&cnt] (SdObject *obj) -> bool {
     SdSection *section = dynamic_cast<SdSection*>( obj );
     Q_ASSERT( section != 0 );
-    count++;
+    cnt++;
     return true;
     });
-  return count;
+  return cnt;
   }
 
 

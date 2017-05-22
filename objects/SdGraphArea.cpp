@@ -120,8 +120,9 @@ void SdGraphArea::saveState(SdUndo *undo)
 
 
 
-void SdGraphArea::moveComplete(SdUndo *undo)
+void SdGraphArea::moveComplete(SdPoint grid, SdUndo *undo)
   {
+  Q_UNUSED(grid)
   attach( undo );
   }
 

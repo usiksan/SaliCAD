@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Converter for symbol and part implementation
 */
 #ifndef SDCONVERTERIMPLEMENT_H
 #define SDCONVERTERIMPLEMENT_H
@@ -23,7 +24,7 @@ class SdConverterImplement : public SdConverter
     double  mAngle;    //Angle of rotation
     bool    mMirror;   //True if implement mirrored
   public:
-    SdConverterImplement( SdContext *context, SdPoint pos, SdPoint org, int angle, bool mirror, bool sideOther = false );
+    SdConverterImplement( SdPoint pos, SdPoint org, int angle, bool mirror, bool sideOther = false );
 
     // SdConverter interface
   public:

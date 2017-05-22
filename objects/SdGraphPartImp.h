@@ -98,8 +98,10 @@ class SdGraphPartImp : public SdGraph
     bool          isPinConnected( int pinIndex ) const;
     //Return pin index of pinNumber
     int           getPinIndex( const QString pinNumber ) const;
-    //Check if there free section slot
-    bool          isSectionFree( SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *section );
+    //Check if there free section slot. If there - setup section and return true
+    bool          isSectionFree( int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *symbol );
+    //link-unlink section
+    void          setLinkSection( int section, SdGraphSymImp *symImp );
 
 
     //Service

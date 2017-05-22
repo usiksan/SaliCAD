@@ -120,8 +120,12 @@ class SdGraphSymImp : public SdGraph
     void          pinConnectionSet( int pinIndex, const QString wireName, bool com );
     //Move section to plate
     void          moveToPlate( SdPItemPlate *plate, SdUndo *undo );
+    //Link with partImp
+    void          setLinkSection( int section, SdGraphPartImp *partImp );
     //Unconnect pin in point
     void          unconnectPinInPoint(SdPoint p , SdUndo *undo);
+    //Unlink symbol from part
+    void          unLinkPartImp( SdUndo *undo );
 
             void ReplacePrt( DPrtPic *prt );  //Заменить корпус на новый
             bool GetListItem( DString &buf ); //Полная строка в перечень

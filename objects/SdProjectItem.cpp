@@ -12,6 +12,7 @@ Description
 */
 
 #include "SdProjectItem.h"
+#include "SdGraphIdent.h"
 #include "SdProject.h"
 #include "SdPulsar.h"
 #include "SdPoint.h"

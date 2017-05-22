@@ -23,6 +23,7 @@ Description
 #include "SdUndoRecordPoint.h"
 #include "SdUndoRecordPlatePointer.h"
 #include "SdUndoRecordImpPin.h"
+#include "SdUndoRecordLinkSection.h"
 #include "windows/SdWCommand.h"
 
 SdUndo::SdUndo() :
@@ -44,7 +45,7 @@ void SdUndo::insertObject(SdContainer *container, SdObject *object)
 
 void SdUndo::deleteObject(SdContainer *container, SdObject *object)
   {
-
+  //TODO deleteObject
   }
 
 
@@ -110,6 +111,14 @@ void SdUndo::platePointer(SdPItemPlatePtr *ptr)
 void SdUndo::pinImpConnect(SdGraphSymImp *sym, int symPinIndex, SdGraphPartImp *part, int partPinIndex, const QString wireName, bool com)
   {
   addUndo( new SdUndoRecordImpPin( sym, symPinIndex, part, partPinIndex, wireName, com ) );
+  }
+
+
+
+
+void SdUndo::linkSection(int section, SdGraphSymImp *sym, SdGraphPartImp *part, bool link)
+  {
+  addUndo( new SdUndoRecordLinkSection( section, sym, part, link ) );
   }
 
 

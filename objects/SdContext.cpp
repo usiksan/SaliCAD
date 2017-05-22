@@ -219,7 +219,7 @@ void SdContext::textEx(SdPoint pos, SdRect &over, const QString str, int dir, in
     case dvjBottom : over.moveBottom( 0 ); break;
     }
 
-  SdConverterText cnv( this, pos, dir );
+  SdConverterText cnv( pos, dir );
   setConverter( &cnv );
 
   if( !str.isEmpty() )

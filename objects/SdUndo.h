@@ -60,6 +60,7 @@ class SdUndo
     void propPartPin( SdPropPartPin *prp, SdPoint *org );
     void platePointer( SdPItemPlatePtr *ptr );
     void pinImpConnect( SdGraphSymImp *sym, int symPinIndex, SdGraphPartImp *part, int partPinIndex, const QString wireName, bool com );
+    void linkSection( int section, SdGraphSymImp *sym, SdGraphPartImp *part, bool link );
     void point( SdPoint *src );
     void begin( QString title );
 

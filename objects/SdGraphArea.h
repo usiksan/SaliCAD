@@ -53,7 +53,7 @@ class SdGraphArea : public SdGraph
     // SdGraph interface
   public:
     virtual void    saveState(SdUndo *undo) override;
-    virtual void    moveComplete(SdUndo *undo) override;
+    virtual void    moveComplete( SdPoint grid, SdUndo *undo ) override;
     virtual void    move(SdPoint offset) override;
     virtual void    rotate(SdPoint center, SdAngle angle) override;
     virtual void    mirror(SdPoint a, SdPoint b) override;

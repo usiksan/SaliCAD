@@ -21,8 +21,9 @@ class SdGraphIdent;
 class SdModeCIdent : public SdModeCTextual
   {
     SdGraphIdent *mIdent;
+    int           mIndex;
   public:
-    SdModeCIdent( SdWEditorGraph *editor, SdProjectItem *obj, SdPropText *prp );
+    SdModeCIdent( SdWEditorGraph *editor, SdProjectItem *obj, SdPropText *prp, int index );
 
     // SdMode interface
   public:

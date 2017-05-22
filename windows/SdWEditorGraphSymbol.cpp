@@ -87,7 +87,7 @@ void SdWEditorGraphSymbol::cmModePin()
 
 void SdWEditorGraphSymbol::cmModeReference()
   {
-  modeSet( new SdModeCIdent( this, mSymbol, &(sdGlobalProp->mSymIdentProp) )  );
+  modeSet( new SdModeCIdent( this, mSymbol, &(sdGlobalProp->mSymIdentProp), MD_SYM_IDENT )  );
   }
 
 

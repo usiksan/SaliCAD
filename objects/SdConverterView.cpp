@@ -9,17 +9,17 @@ Web
   www.saliLab.ru
 
 Description
+  Convertor for view point
 */
 #include "SdConverterView.h"
 #include "SdContext.h"
 
-SdConverterView::SdConverterView(SdContext *context, QSize viewSize, SdPoint origin, double scale) :
-  SdConverter (context),
+SdConverterView::SdConverterView(QSize viewSize, SdPoint origin, double scale) :
+  SdConverter(),
   mCenter( viewSize.width() / 2, viewSize.height() / 2 ),
   mScale(scale),
   mOrigin(origin)
   {
-  context->setConverter( this );
   }
 
 
