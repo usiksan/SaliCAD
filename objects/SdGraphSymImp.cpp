@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -93,16 +93,21 @@ bool SdSymImpPin::isCanDisconnect(SdPoint a, SdPoint b, const QString wireName) 
 
 
 
-
-
-
-void SdSymImpPin::ucom(SdGraphPartImp *prt)
+QJsonObject SdSymImpPin::toJson()
   {
-  if( mCom ) {
-    mCom = false;
-    if( prt ) prt->pinConnectionSet( mPinNumber, mWireName, mCom );
-    }
+  QJsonObject obj;
+  SdObject::writePtr( mPin, QStringLiteral("Pin"), obj );
+  obj.insert( QStringLiteral("Name"), mPinName );     //Pin name in symbol
+  obj.insert( QStringLiteral("Number"), mPinNumber ); //Pin number in part
+  mPosition.write( QStringLiteral("Pos"), obj );      //Pin position in sheet context
+  obj.insert( QStringLiteral("Wire"), mWireName );    //Net, which pin connected to
+  obj.insert( QStringLiteral("Com"), mCom );          //State of pin to net connectivity
+  obj.insert( QStringLiteral("Prt"), mPrtPin );       //Pin index in pin array of part implement
+  return obj;
   }
+
+
+
 
 
 //====================================================================================
@@ -160,6 +165,46 @@ void SdGraphSymImp::pinConnectionSet(int pinIndex, const QString wireName, bool 
 
 
 
+void SdGraphSymImp::setLinkSection(int section, SdGraphPartImp *partImp)
+  {
+  //If symbol linked then unlink
+  if( mPartImp != nullptr ) {
+    //Scan all pins and disconnect from partImp
+    for( int index = 0; index < mPins.count(); index++ ) {
+      mPartImp->pinConnectionSet( mPins[index].mPrtPin, QString(), false );
+      mPins[index].mPrtPin = -1;
+      }
+    mPartImp = nullptr;
+    mSectionIndex = -1;
+    }
+
+  //If passed new one link part then link
+  if( partImp != nullptr ) {
+    SdSection *sct = mComponent->getSection( section );
+    //Part unliked. Perform link
+    for( int index = 0; index < mPins.count(); index++ ) {
+      //Try get from section info pinNumber for pinName
+      if( sct ) {
+        mPins[index].mPinNumber = sct->getPinNumber( mPins[index].mPinName );
+        //PinNumber received, get part pin index
+        mPins[index].mPrtPin = partImp->getPinIndex( mPins[index].mPinNumber );
+        //Assign pin connection
+        partImp->pinConnectionSet( mPins[index].mPrtPin, mPins[index].mWireName, mPins[index].mCom );
+        }
+      else {
+        //No pin number.
+        mPins[index].mPinNumber.clear();
+        mPins[index].mPrtPin = -1;
+        }
+      }
+    mPartImp = partImp;
+    mSectionIndex = section;
+    }
+  }
+
+
+
+
 //Unconnect pin in point
 void SdGraphSymImp::unconnectPinInPoint( SdPoint p, SdUndo *undo )
   {
@@ -183,6 +228,27 @@ void SdGraphSymImp::unLinkPartImp(SdUndo *undo)
   if( mPartImp )
     mPartImp->setLinkSection( mSectionIndex, nullptr );
   setLinkSection( -1, nullptr );
+  }
+
+
+
+
+//Link auto partImp. partImp and section are selected automatic
+void SdGraphSymImp::linkAutoPart(SdUndo *undo)
+  {
+  //Get plate where component resides
+  SdPItemPlate *plate = getSheet()->getPlate( mOrigin );
+  Q_ASSERT( plate != nullptr );
+
+  //Get part where this section resides
+  int section;
+  SdGraphPartImp *partImp = plate->allocPartImp( &section, mPart, mComponent, mSymbol, undo );
+  Q_ASSERT( partImp != nullptr );
+
+  //Link to part
+  partImp->setLinkSection( section, this );
+  setLinkSection( section, partImp );
+
   }
 
 
@@ -276,24 +342,25 @@ void SdGraphSymImp::moveComplete(SdUndo *undo)
   if( sheet ) {
     for( int index = 0; index < mPins.count(); index++ )
       if( !mPins[index].mCom ) {
-        //If pin unconnected then check possible connection
+        //If pin unconnected then check possibilities connection
         if( sheet->getNetFromPoint( mPins[index].mPosition, netName ) ) {
           //New connection
           undo->pinImpConnect( this, index, mPartImp, mPins[index].mPrtPin, mPins[index].mWireName, mPins[index].mCom );
           mPins[index].setConnection( mPartImp, netName, true );
           }
         }
+
     //Check current area
     if( mPartImp ) {
       //Part is assigned, check current area
       if( sheet->getPlate( mOrigin ) != mPartImp->getPlate() ) {
-        //Плата изменилась
-        UnLinkPrt();
+        //Plate is changed. Unlink from part
+        unLinkPartImp( undo );
         }
       else return;
       }
-    //Нужно назначить корпус автоматически
-    ConnectToComp( 0 );
+    //Assign part
+    linkAutoPart( undo );
     }
   }
 
@@ -405,16 +472,24 @@ void SdGraphSymImp::draw(SdContext *dc)
   //Draw ident in sheet context
   dc->text( mIdentPos, mIdentRect, getIdent(), mIdentProp );
   //Convertor for symbol implementation
-  SdConverterImplement imp( dc, mOrigin, mSymbol->mOrigin, mProp.mAngle.getValue(), mProp.mMirror.getValue() );
+  SdConverterImplement imp( mOrigin, mSymbol->mOrigin, mProp.mAngle.getValue(), mProp.mMirror.getValue() );
   dc->setConverter( &imp );
-  //Рисовать выводы
-  DrawSymImpPinIterator draw( dc );
-  NForEach( pins, draw );
-  //Рисовать корпус
-  DImplementConverter conv( dc, symbol->GetOrigin(), info.origin, info.prop.angle, info.prop.mirror, 0 );
-  symbol->ForEachPic( DrawGraphIterator(conv) );
-  symbol->ForEachPin( DrawSymPinIterator(conv,info.section) );
+
+  //Draw symbol except ident and pins
+  mSymbol->forEach( dctAll & (dctSymPin | dctIdent), [dc] (SdObject *obj) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>( obj );
+    if( graph )
+      graph->draw( dc );
+    return true;
+    });
+
+  //Draw pins
+  for( int i = 0; i < mPins.count(); i++ )
+    mPins[i].draw( dc );
   }
+
+
+
 
 int SdGraphSymImp::behindCursor(SdPoint p)
   {
@@ -458,10 +533,13 @@ void SdGraphSymImp::updatePinsPositions()
 
 
 //Unconnect all pins from wires
-void SdGraphSymImp::ucomAllPins()
+void SdGraphSymImp::ucomAllPins(SdUndo *undo)
   {
-  for( SdSymImpPin &pin : mPins )
-    pin.ucom( mPartImp );
+  for( int index = 0; index < mPins.count(); index++ ) {
+    //Save state of pins
+    undo->pinImpConnect( this, index, mPartImp, mPins[index].mPrtPin, mPins[index].mWireName, mPins[index].mCom );
+    mPins[index].mCom = false;
+    }
   }
 
 
@@ -494,19 +572,6 @@ void SdGraphSymImp::createPins()
 
 
 
-void SdGraphSymImp::unLinkFromPart()
-  {
-  //Отвязать выводы
-  UnLinkIterator iterator( prtImp );
-  NForEach( pins, iterator );
-  //Отключение от компонента
-  if( prtImp ) prtImp->Remove( this );
-  prtImp = 0;
-  }
-
-
-
-
 
 void SdGraphSymImp::attach(SdUndo *undo)
   {
@@ -517,20 +582,23 @@ void SdGraphSymImp::attach(SdUndo *undo)
   mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(mSymbol) );        //Symbol contains graph information
   mPart = dynamic_cast<SdPItemPart*>( prj->getProjectsItem(mPart) );
 
-  //Get plate where component resides
-  SdPItemPlate *plate = getSheet()->getPlate( mOrigin );
-  Q_ASSERT( plate != nullptr );
-
-  //Get part where this section resides
-  int section;
-  SdGraphPartImp *partImp = plate->allocPartImp( &section, mPart, mComponent, this );
-
-  //Assign pins
+  linkAutoPart( undo );
   }
+
+
+
 
 void SdGraphSymImp::detach(SdUndo *undo)
   {
+  //Ucon all pins
+  ucomAllPins( undo );
+  //Unlink from part
+  unLinkPartImp( undo );
   }
+
+
+
+
 
 void SdGraphSymImp::cloneFrom(const SdObject *src)
   {

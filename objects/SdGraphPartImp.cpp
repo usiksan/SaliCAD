@@ -100,6 +100,16 @@ int SdGraphPartImp::getPinIndex(const QString pinNumber) const
 
 
 
+void SdGraphPartImp::setLinkSection(int section, SdGraphSymImp *symImp)
+  {
+  if( section >= 0 && section < mSections.count() ) {
+    mSections[section].mSymImp = symImp;
+    }
+  }
+
+
+
+
 //Check if there free section slot
 bool SdGraphPartImp::isSectionFree(SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *section)
   {

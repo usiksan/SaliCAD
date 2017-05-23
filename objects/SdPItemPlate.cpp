@@ -13,6 +13,7 @@ Description
 */
 #include "SdPItemPlate.h"
 #include "SdGraphIdent.h"
+#include "SdGraphPartImp.h"
 
 SdPItemPlate::SdPItemPlate()
   {
@@ -20,25 +21,65 @@ SdPItemPlate::SdPItemPlate()
   }
 
 
+
+
+SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym, SdUndo *undo )
+  {
+  //At first, scan all part implements and find match
+  SdGraphPartImp *res = nullptr;
+  forEach( dctPartImp, [&] (SdObject *obj) -> bool {
+    res = dynamic_cast<SdGraphPartImp*>( obj );
+    Q_ASSERT( res != nullptr );
+    if( res->isSectionFree( section, part, comp, sym ) )
+      return false;
+    res = nullptr;
+    return true;
+    });
+  //If part implement found then return it
+  if( res )
+    return res;
+
+  //Create new part implement
+  res = new SdGraphPartImp( SdPoint(), part, comp );
+  insertChild( res, undo );
+
+  Q_ASSERT( res->isSectionFree( section, part, comp, sym ) );
+  return res;
+  }
+
+
+
+
 QString SdPItemPlate::getType() const
   {
   return QStringLiteral( SD_TYPE_PLATE );
   }
+
+
+
 
 quint64 SdPItemPlate::getClass() const
   {
   return dctPlate;
   }
 
+
+
+
 void SdPItemPlate::cloneFrom(const SdObject *src)
   {
   SdProjectItem::cloneFrom( src );
   }
 
+
+
+
 QString SdPItemPlate::getIconName() const
   {
   return QStringLiteral(":/pic/iconPlate.png");
   }
+
+
 
 
 SdGraphIdent *SdPItemPlate::createIdent()

@@ -36,7 +36,7 @@ class SdPItemPlate : public SdProjectItem
     SdContainerPlateNet  *netCreate( const QString name, SdUndo *undo );
 
 
-    SdGraphPartImp       *allocPartImp( int *section, SdPItemPart *part, SdPItemSymbol *comp, SdGraphSymImp *symImp );
+    SdGraphPartImp       *allocPartImp(int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym , SdUndo *undo);
 //    DPrtImpPic*  FindCompPart( DPrtPic *part, CPChar name, int numSection );
 //    DPrtImpPic*  FindCompById( CPChar ident );
 

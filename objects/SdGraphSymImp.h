@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -55,12 +55,12 @@ struct SdSymImpPin {
   void        fromJson( SdObjectMap *map, const QJsonObject obj );
 
   //void connect(SdPoint a, SdPoint b, const QString &name, SdGraphSymImp *sym, SdGraphPartImp *prt, SdUndo *undo );
-  void ifConnect( SdGraphPartImp *prt );
-  void disconnect( SdPoint a, SdPoint b, const QString &name, SdGraphPartImp *prt );
-  void ifDisconnect( SdGraphPartImp *prt );
-  void ucom( SdGraphPartImp *prt );
-  void prepareMove( SdPItemSheet *sheet, SdSelector *selector );
-  void connectTest( SdPItemSheet *sheet, SdGraphPartImp *prt );
+//  void ifConnect( SdGraphPartImp *prt );
+//  void disconnect( SdPoint a, SdPoint b, const QString &name, SdGraphPartImp *prt );
+//  void ifDisconnect( SdGraphPartImp *prt );
+//  void ucom( SdGraphPartImp *prt );
+//  void prepareMove( SdPItemSheet *sheet, SdSelector *selector );
+//  void connectTest( SdPItemSheet *sheet, SdGraphPartImp *prt );
   };
 
 
@@ -100,10 +100,21 @@ class SdGraphSymImp : public SdGraph
     SdPItemPlate *currentPlate() const;
     //Get full visual ident of section aka D4.2
     QString       getIdent() const;
+    //Get separated ident information
+    QString       getIdentInfo( int &logNumber, int &logSection );
+    //Set ident information
+    void          setIdentInfo( const QString prefix, int logNumber, int logSection );
+    QString       getRenumSect( SdPoint &dest, int &sheetNumber );
     //Get wire name pin with pinIndex connected to
     QString       pinWireName( int pinIndex ) const;
     //Return if pin with pinIndex connected to any wire or not
     bool          isPinConnected( int pinIndex ) const;
+    //Param full list
+    SdParamTable& getParamTable() { return mParam; }
+    //Get param
+    QVariant      getParam( const QString key ) { return mParam.value( key ); }
+    //Get BOM item line
+    QString       getBomItemLine() const;
 
 
 
@@ -126,34 +137,21 @@ class SdGraphSymImp : public SdGraph
     void          unconnectPinInPoint(SdPoint p , SdUndo *undo);
     //Unlink symbol from part
     void          unLinkPartImp( SdUndo *undo );
-
-            void ReplacePrt( DPrtPic *prt );  //Заменить корпус на новый
-            bool GetListItem( DString &buf ); //Полная строка в перечень
-            //void InsertInSheet();             //Извещение о вставке в лист схемы
-            void AutoNet( DNetListTable &table );         //Накопить цепи в текстовый список цепей
-            void LinkPrt( DPrtImpPic *prt, int section ); //Связать с компонентом
-            void UnLinkPrt();                             //Отвязать от компонента
-            void ConnectToComp( DPrtImpPic *prt );        //Подключиться к компоненту
-    //Параметры
-          //Получение и установка полного массива параметров
-          CPChar GetParamString() const { return param.GetBuffer(); }
-          DParam& GetParam() { return param; }
-    //Идентификатор
-          void   GetIdentInfo( DIdent &prefix, int &logNumber, int &logSection );
-          void   SetIdentInfo( CPChar prefix, int logNumber, int logSection );
-          void   GetRenumSect( DPoint &dest, int &sheetNumber, DIdent &prefix );
-    //Совместимость с В10
-          bool   CheckPrtImp( DSymImpPic *prev, DPrtImpPic *prtImp );
-
-    //Дополнительная обработка
-          void   UpdateImp( DSymbolPic *symbol );
+    //Link auto partImp. partImp and section are selected automatic
+    void          linkAutoPart( SdUndo *undo );
+    //Replace part
+    void          replacePart( SdPItemPart *part, SdUndo *undo );
+    //TODO Accum auto net
+    //void          autoNet( DNetListTable &table );         //Накопить цепи в текстовый список цепей
+    //Replace symbol
+    void          replace( SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *symbol, SdUndo *undo );
 
     // SdObject interface
   public:
     virtual QString getType() const override { return QStringLiteral( SD_TYPE_SYM_IMP ); }
     virtual quint64 getClass() const override { return dctSymImp; }
     virtual void    attach(SdUndo *undo) override;
-    virtual void detach(SdUndo *undo) override;
+    virtual void    detach(SdUndo *undo) override;
     virtual void cloneFrom(const SdObject *src) override;
     virtual void writeObject(QJsonObject &obj) const override;
     virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
@@ -184,11 +182,9 @@ class SdGraphSymImp : public SdGraph
     SdPItemSheet *getSheet() const;
     void          updatePinsPositions();
     //Unconnect all pins from wires
-    void          ucomAllPins();
+    void          ucomAllPins( SdUndo *undo );
     //Create new pins
     void          createPins();
-    //Ucom part
-    void          unLinkFromPart();
 
   };
 

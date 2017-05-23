@@ -100,13 +100,13 @@ class SdGraphPartImp : public SdGraph
     int           getPinIndex( const QString pinNumber ) const;
     //Check if there free section slot. If there - setup section and return true
     bool          isSectionFree( int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *symbol );
-    //link-unlink section
-    void          setLinkSection( int section, SdGraphSymImp *symImp );
 
 
     //Service
     //Pin connection-disconnection by index
-    void          pinConnectionSet( int pinIndex, const QString wireName, bool com );
+    void          pinConnectionSet(int pinIndex, const QString wireName, bool com);
+    //link-unlink section
+    void          setLinkSection( int section, SdGraphSymImp *symImp );
 
   };
 
