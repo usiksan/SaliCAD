@@ -184,7 +184,7 @@ class SdGraphSymImp : public SdGraph
     //Unconnect all pins from wires
     void          ucomAllPins( SdUndo *undo );
     //Create new pins
-    void          createPins();
+    void          createPins( SdUndo *undo );
 
   };
 

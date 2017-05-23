@@ -410,7 +410,7 @@ void SdGraphSymImp::setProp(SdProp &prop)
   {
   if( !mProp.match( prop.mSymImpProp ) ) {
     //Unconnect all pins from wires
-    ucomAllPins();
+    //ucomAllPins();
     //setup props
     mProp = prop.mSymImpProp;
     //Correct pins positions
@@ -544,26 +544,26 @@ void SdGraphSymImp::ucomAllPins(SdUndo *undo)
 
 
 
-void SdGraphSymImp::createPins()
+void SdGraphSymImp::createPins(SdUndo *undo)
   {
   //Unconnect all pins from wires
-  ucomAllPins();
+  ucomAllPins( undo );
   //Remove previous pins
   mPins.clear();
   SdSection *s = nullptr;
-  if( mComponent )
-    s = mComponent->getSection( mSectionIndex );
   //Accumulate pins
   if( mSymbol ) {
     mSymbol->forEach( dctSymPin, [this, s] (SdObject *obj) -> bool {
       SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>(obj);
-      if( pin ) {
-        SdSymImpPin impPin;
-        impPin.mPin     = pin;
-        impPin.mPinName = pin->getPinName();
-        if( s )
-          impPin.mPinNumber = s->getPinNumber( impPin.mPinName );
-        }
+      Q_ASSERT( pin != nullptr );
+
+      //Create implement pin
+      SdSymImpPin impPin;
+      impPin.mPin     = pin;
+      impPin.mPinName = pin->getPinName();
+
+      //Add pin to table
+      mPins.append( impPin );
       return true;
       });
     }
@@ -581,6 +581,8 @@ void SdGraphSymImp::attach(SdUndo *undo)
   mComponent = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(mComponent) );  //Object contains section information, pin assotiation info. May be same as mSymbol.
   mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(mSymbol) );        //Symbol contains graph information
   mPart = dynamic_cast<SdPItemPart*>( prj->getProjectsItem(mPart) );
+
+  createPins( undo );
 
   linkAutoPart( undo );
   }
@@ -602,11 +604,63 @@ void SdGraphSymImp::detach(SdUndo *undo)
 
 void SdGraphSymImp::cloneFrom(const SdObject *src)
   {
+  SdGraph::cloneFrom( src );
+  const SdGraphSymImp *imp = dynamic_cast<const SdGraphSymImp*>( src );
+  Q_ASSERT( imp != nullptr );
+  mArea         = imp->mArea;        //PCB where this symbol implement contains in
+  mSectionIndex = imp->mSectionIndex;//Section index (from 0)
+  mLogSection   = imp->mLogSection;  //Logical symbol section number (from 1)
+  mLogNumber    = imp->mLogNumber;   //Logical part number (from 1)
+  mOrigin       = imp->mOrigin;      //Position of Implement
+  mProp         = imp->mProp;        //Implement properties
+  mOverRect     = imp->mOverRect;    //Over rect
+  mPrefix       = imp->mPrefix;      //Part identificator prefix
+  mIdentProp    = imp->mIdentProp;   //Part identificator text properties
+  mIdentOrigin  = imp->mIdentOrigin; //Part identificator position in symbol context
+  mIdentPos     = imp->mIdentPos;    //Part identificator position in sheet context
+  mIdentRect    = imp->mIdentRect;   //Part identificator over rect
+
+  mComponent    = imp->mComponent;   //Object contains section information, pin assotiation info. May be same as mSymbol.
+  mSymbol       = imp->mSymbol;      //Symbol contains graph information
+  mPart         = imp->mPart;
+  mPartImp      = imp->mPartImp;
+  //mPins         = imp->mPins;        //Pin information table
+  mParam        = imp->mParam;       //Parameters
   }
+
+
+
 
 void SdGraphSymImp::writeObject(QJsonObject &obj) const
   {
+  SdGraph::writeObject( obj );
+  writePtr( mArea, QStringLiteral("Area"), obj );        //PCB where this symbol implement contains in
+  obj.insert( QStringLiteral("SectionIndex"), mSectionIndex );//Section index (from 0)
+  obj.insert( QStringLiteral("LogSection"), mLogSection );    //Logical symbol section number (from 1)
+  obj.insert( QStringLiteral("LogNumber"), mLogNumber );   //Logical part number (from 1)
+  mOrigin.write( QStringLiteral("Org"), obj );      //Position of Implement
+  mProp.write( obj );        //Implement properties
+  mOverRect.write( QStringLiteral("Over"), obj );    //Over rect
+  obj.insert( QStringLiteral("Prefix"), mPrefix );      //Part identificator prefix
+  mIdentProp.write( QStringLiteral("Ident"), obj );   //Part identificator text properties
+  mIdentOrigin.write( QStringLiteral("IdentOrg"), obj ); //Part identificator position in symbol context
+  mIdentPos.write( QStringLiteral("IdentPos"), obj );    //Part identificator position in sheet context
+  mIdentRect.write( QStringLiteral("IdentOver"), obj );   //Part identificator over rect
+
+  writePtr( mComponent, QStringLiteral("Comp"), obj );   //Object contains section information, pin assotiation info. May be same as mSymbol.
+  writePtr( mSymbol, QStringLiteral("Sym"), obj );      //Symbol contains graph information
+  writePtr( mPart, QStringLiteral("Part"), obj );
+  writePtr( mPartImp, QStringLiteral("Imp"), obj );
+  //Pin information table
+  QJsonArray pins;
+  for( SdSymImpPin &pin : mPins )
+    pins.append( pin.toJson() );
+  obj.insert( QStringLiteral("Pins"), pins );
+  //Parameters
+  sdParamWrite( QStringLiteral("Param"), mParam, obj );
   }
+
+
 
 void SdGraphSymImp::readObject(SdObjectMap *map, const QJsonObject obj)
   {
