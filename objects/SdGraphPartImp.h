@@ -15,6 +15,9 @@ Description
 
 #include "SdGraph.h"
 
+#define SD_TYPE_PART_IMP "PartImp"
+
+
 class SdPItemPlate;
 class SdPItemPart;
 class SdGraphPartPin;
@@ -23,12 +26,11 @@ class SdGraphSymImp;
 
 //Ножка вхождения корпуса
 struct SdPartImpPin {
-  SdGraphPartPin *mPin;
+  SdGraphPartPin *mPin;       //Original pin
   QString         mPinNumber; //Part pin number
   QString         mPinName;   //Part pin name
   QString         mWireName;  //Name of net pin conneted to
   SdPoint         mPosition;  //Pin position in plate context
-  //DPrtPinProp  prop;      //Свойства вывода: Тип и слой вывода
   bool            mCom;       //Pin to wire flag connection
   SdPItemPart    *mPadStack;  //Pad stack
 
@@ -60,6 +62,8 @@ struct SdPartImpSection {
 
   QJsonObject toJson();
   void        fromJson( SdObjectMap *map, const QJsonObject obj );
+
+  bool        isFree( SdPItemSymbol *symbol ) { return mSymbol == symbol && mSymImp == nullptr; }
   };
 
 typedef QVector<SdPartImpSection> SdPartImpSectionTable;
@@ -99,7 +103,7 @@ class SdGraphPartImp : public SdGraph
     //Return pin index of pinNumber
     int           getPinIndex( const QString pinNumber ) const;
     //Check if there free section slot. If there - setup section and return true
-    bool          isSectionFree( int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *symbol );
+    bool          isSectionFree(int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym );
 
 
     //Service
@@ -108,6 +112,37 @@ class SdGraphPartImp : public SdGraph
     //link-unlink section
     void          setLinkSection( int section, SdGraphSymImp *symImp );
 
+
+    // SdObject interface
+  public:
+    virtual QString getType() const override { return QStringLiteral(SD_TYPE_PART_IMP); }
+    virtual quint64 getClass() const override { return dctPartImp; }
+    virtual void    attach(SdUndo *undo) override;
+    virtual void detach(SdUndo *undo) override;
+    virtual void cloneFrom(const SdObject *src) override;
+    virtual void writeObject(QJsonObject &obj) const override;
+    virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
+
+    // SdGraph interface
+  public:
+    virtual void saveState(SdUndo *undo) override;
+    virtual void moveComplete(SdPoint grid, SdUndo *undo) override;
+    virtual void move(SdPoint offset) override;
+    virtual void rotate(SdPoint center, SdAngle angle) override;
+    virtual void mirror(SdPoint a, SdPoint b) override;
+    virtual void setProp(SdProp &prop) override;
+    virtual void getProp(SdProp &prop) override;
+    virtual void selectByPoint(const SdPoint p, SdSelector *selector) override;
+    virtual void selectByRect(const SdRect &r, SdSelector *selector) override;
+    virtual void select(SdSelector *selector) override;
+    virtual void prepareMove() override;
+    virtual bool canHideLayer(SdLayer *layer) override;
+    virtual bool isVisible() override;
+    virtual SdRect getOverRect() const override;
+    virtual void draw(SdContext *dc) override;
+    virtual int behindCursor(SdPoint p) override;
+    virtual bool getInfo(SdPoint p, QString &info, bool extInfo) override;
+    virtual bool snapPoint(SdSnapInfo *snap) override;
   };
 
 #endif // SDGRAPHPARTIMP_H

@@ -52,7 +52,7 @@ void SdModeCSymImp::activate()
 void SdModeCSymImp::drawDynamic(SdContext *ctx)
   {
   if( mSection ) {
-    SdConverterImplement imp( ctx, mOrigin, mSection->mOrigin, sdGlobalProp->mSymImpProp.mAngle.getValue(), sdGlobalProp->mSymImpProp.mMirror.getValue() );
+    SdConverterImplement imp( mOrigin, mSection->mOrigin, sdGlobalProp->mSymImpProp.mAngle.getValue(), sdGlobalProp->mSymImpProp.mMirror.getValue() );
     ctx->setConverter( &imp );
 
     mSection->draw( ctx );

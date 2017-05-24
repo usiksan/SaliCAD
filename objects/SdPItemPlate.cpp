@@ -14,6 +14,7 @@ Description
 #include "SdPItemPlate.h"
 #include "SdGraphIdent.h"
 #include "SdGraphPartImp.h"
+#include "SdProject.h"
 
 SdPItemPlate::SdPItemPlate()
   {

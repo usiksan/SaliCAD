@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -37,7 +37,7 @@ class SdProject : public SdContainer
 
     SdUndo           *getUndo() { return &mUndo; }
 
-    //Return default plate and if none - created new
+    //Return default plate and if none - create new one
     SdPItemPlate     *getDefaultPlate();
 
     //Return object of project for given object

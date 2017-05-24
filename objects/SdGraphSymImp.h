@@ -44,14 +44,15 @@ struct SdSymImpPin {
 
   SdSymImpPin();
 
-  void operator = ( SdSymImpPin &pin );
+  void operator = (const SdSymImpPin &pin );
   void        draw( SdContext *dc );
   void        setConnection( const QString wireName, bool com );
   void        setConnection( SdGraphPartImp *partImp, const QString wireName, bool com );
   bool        isCanConnect( SdPoint a, SdPoint b ) const;
   bool        isCanDisconnect( SdPoint a, SdPoint b, const QString wireName ) const;
+  void        prepareMove( SdPItemSheet *sheet, SdSelector *selector );
 
-  QJsonObject toJson();
+  QJsonObject toJson() const;
   void        fromJson( SdObjectMap *map, const QJsonObject obj );
 
   //void connect(SdPoint a, SdPoint b, const QString &name, SdGraphSymImp *sym, SdGraphPartImp *prt, SdUndo *undo );
@@ -59,7 +60,6 @@ struct SdSymImpPin {
 //  void disconnect( SdPoint a, SdPoint b, const QString &name, SdGraphPartImp *prt );
 //  void ifDisconnect( SdGraphPartImp *prt );
 //  void ucom( SdGraphPartImp *prt );
-//  void prepareMove( SdPItemSheet *sheet, SdSelector *selector );
 //  void connectTest( SdPItemSheet *sheet, SdGraphPartImp *prt );
   };
 
@@ -98,12 +98,6 @@ class SdGraphSymImp : public SdGraph
     //Information
     //Return current plate of section
     SdPItemPlate *currentPlate() const;
-    //Get full visual ident of section aka D4.2
-    QString       getIdent() const;
-    //Get separated ident information
-    QString       getIdentInfo( int &logNumber, int &logSection );
-    //Set ident information
-    void          setIdentInfo( const QString prefix, int logNumber, int logSection );
     QString       getRenumSect( SdPoint &dest, int &sheetNumber );
     //Get wire name pin with pinIndex connected to
     QString       pinWireName( int pinIndex ) const;
@@ -115,6 +109,21 @@ class SdGraphSymImp : public SdGraph
     QVariant      getParam( const QString key ) { return mParam.value( key ); }
     //Get BOM item line
     QString       getBomItemLine() const;
+
+
+    //Ident edit
+    //Get full visual ident of section aka D4.2
+    QString       getIdent() const;
+    //Get separated ident information
+    QString       getIdentInfo( int &logNumber, int &logSection );
+    //Set ident information
+    void          setIdentInfo( const QString prefix, int logNumber, int logSection );
+    //Move ident regarding symbol implement
+    void          moveIdent( SdPoint offset );
+    //Get ident properties
+    void          getIdentProp( SdProp &prop );
+    //Set ident properties
+    void          setIdentProp( const SdProp &prop );
 
 
 
@@ -152,14 +161,14 @@ class SdGraphSymImp : public SdGraph
     virtual quint64 getClass() const override { return dctSymImp; }
     virtual void    attach(SdUndo *undo) override;
     virtual void    detach(SdUndo *undo) override;
-    virtual void cloneFrom(const SdObject *src) override;
-    virtual void writeObject(QJsonObject &obj) const override;
-    virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual void    cloneFrom(const SdObject *src) override;
+    virtual void    writeObject(QJsonObject &obj) const override;
+    virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
 
     // SdGraph interface
   public:
     virtual void    saveState(SdUndo *undo) override;
-    virtual void    moveComplete(SdUndo *undo) override;
+    virtual void    moveComplete( SdPoint grid, SdUndo *undo ) override;
     virtual void    prepareMove() override;
     virtual void    move(SdPoint offset) override;
     virtual void    rotate(SdPoint center, SdAngle angle) override;
@@ -173,7 +182,6 @@ class SdGraphSymImp : public SdGraph
     virtual SdRect  getOverRect() const override;
     virtual void    draw(SdContext *dc) override;
     virtual int     behindCursor(SdPoint p) override;
-    virtual int     behindText(SdPoint p, SdPoint &org, QString &dest, SdPropText &prop) override;
     virtual bool    getInfo(SdPoint p, QString &info, bool extInfo) override;
     virtual bool    snapPoint(SdSnapInfo *snap) override;
 
@@ -185,6 +193,8 @@ class SdGraphSymImp : public SdGraph
     void          ucomAllPins( SdUndo *undo );
     //Create new pins
     void          createPins( SdUndo *undo );
+    //Link auto partImp in given plate. partImp and section are selected automatic
+    void          linkAutoPartInPlate( SdPItemPlate *plate, SdUndo *undo );
 
   };
 

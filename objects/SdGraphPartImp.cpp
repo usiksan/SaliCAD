@@ -87,6 +87,27 @@ SdPItemPlate *SdGraphPartImp::getPlate() const
 
 
 
+//Get wire name pin with pinIndex connected to
+QString SdGraphPartImp::pinWireName(int pinIndex) const
+  {
+  if( pinIndex < 0 ) return QString();
+  Q_ASSERT( pinIndex < mPins.count() );
+  return mPins[pinIndex].mWireName;
+  }
+
+
+
+
+//Return if pin with pinIndex connected to any wire or not
+bool SdGraphPartImp::isPinConnected(int pinIndex) const
+  {
+  if( pinIndex < 0 ) return false;
+  Q_ASSERT( pinIndex < mPins.count() );
+  return mPins[pinIndex].mCom;
+  }
+
+
+
 
 //Return pin index of pinNumber
 int SdGraphPartImp::getPinIndex(const QString pinNumber) const
@@ -111,13 +132,108 @@ void SdGraphPartImp::setLinkSection(int section, SdGraphSymImp *symImp)
 
 
 //Check if there free section slot
-bool SdGraphPartImp::isSectionFree(SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *section)
+bool SdGraphPartImp::isSectionFree( int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym)
   {
   if( mPart != part || mComp != comp )
     return false;
-  for( SdPartImpSection &sec : mSections )
-    if( sec.mSymbol == section && sec.mSymImp == nullptr )
+  for( int index = 0; index < mSections.count(); index++ )
+    if( mSections[index].isFree(sym) ) {
+      *section = index;
       return true;
+      }
   return false;
   }
 
+
+
+void SdGraphPartImp::attach(SdUndo *undo)
+    {
+    }
+
+void SdGraphPartImp::detach(SdUndo *undo)
+    {
+    }
+
+void SdGraphPartImp::cloneFrom(const SdObject *src)
+    {
+    }
+
+void SdGraphPartImp::writeObject(QJsonObject &obj) const
+    {
+    }
+
+void SdGraphPartImp::readObject(SdObjectMap *map, const QJsonObject obj)
+    {
+    }
+
+void SdGraphPartImp::saveState(SdUndo *undo)
+    {
+    }
+
+void SdGraphPartImp::moveComplete(SdPoint grid, SdUndo *undo)
+    {
+    }
+
+void SdGraphPartImp::move(SdPoint offset)
+    {
+    }
+
+void SdGraphPartImp::rotate(SdPoint center, SdAngle angle)
+    {
+    }
+
+void SdGraphPartImp::mirror(SdPoint a, SdPoint b)
+    {
+    }
+
+void SdGraphPartImp::setProp(SdProp &prop)
+    {
+    }
+
+void SdGraphPartImp::getProp(SdProp &prop)
+    {
+    }
+
+void SdGraphPartImp::selectByPoint(const SdPoint p, SdSelector *selector)
+    {
+    }
+
+void SdGraphPartImp::selectByRect(const SdRect &r, SdSelector *selector)
+    {
+    }
+
+void SdGraphPartImp::select(SdSelector *selector)
+    {
+    }
+
+void SdGraphPartImp::prepareMove()
+    {
+    }
+
+bool SdGraphPartImp::canHideLayer(SdLayer *layer)
+    {
+    }
+
+bool SdGraphPartImp::isVisible()
+    {
+    }
+
+SdRect SdGraphPartImp::getOverRect() const
+    {
+    }
+
+void SdGraphPartImp::draw(SdContext *dc)
+    {
+    }
+
+int SdGraphPartImp::behindCursor(SdPoint p)
+    {
+    }
+
+bool SdGraphPartImp::getInfo(SdPoint p, QString &info, bool extInfo)
+    {
+    }
+
+bool SdGraphPartImp::snapPoint(SdSnapInfo *snap)
+    {
+    }

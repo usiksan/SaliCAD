@@ -11,6 +11,8 @@ Web
 Description
 */
 #include "SdContainerSheetNet.h"
+#include "SdGraphWiringWire.h"
+#include "SdProject.h"
 
 SdContainerSheetNet::SdContainerSheetNet() :
   SdContainer()
@@ -27,6 +29,22 @@ SdContainerSheetNet::SdContainerSheetNet(const QString netName) :
   {
 
   }
+
+
+
+
+void SdContainerSheetNet::accumLinked(SdPoint a, SdPoint b, SdSelector *sel)
+  {
+  SdProject *prj = dynamic_cast<SdProject*>( getRoot() );
+  SdUndo *undo = prj == nullptr ? nullptr : prj->getUndo();
+  forEach( dctWire, [a,b,sel,undo] (SdObject *obj) -> bool {
+    SdGraphWiringWire *wire = dynamic_cast<SdGraphWiringWire*>( obj );
+    Q_ASSERT( wire != nullptr );
+    wire->accumLinked( a, b, sel, undo );
+    return true;
+    });
+  }
+
 
 
 

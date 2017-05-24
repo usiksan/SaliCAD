@@ -46,6 +46,7 @@ void SdModeCIdent::drawDynamic(SdContext *ctx)
     drawText( ctx );
     }
   else {
+    SdRect r;
     ctx->text( mPrev, r, mString, *mPropText );
     }
   }

@@ -25,7 +25,7 @@ SdUndoRecordPlatePointer::SdUndoRecordPlatePointer(SdPItemPlatePtr *src) :
 void SdUndoRecordPlatePointer::undo()
   {
   SdPItemPlatePtr tmp = *mSrc;
-  mSrc = mValue;
+  *mSrc = mValue;
   mValue = tmp;
   }
 

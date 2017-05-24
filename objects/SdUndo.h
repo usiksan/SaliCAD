@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -31,6 +31,7 @@ class SdPropLine;
 class SdPropText;
 class SdPropSymPin;
 class SdPropPartPin;
+class SdPropSymImp;
 class SdRect;
 class SdPItemPlate;
 typedef SdPItemPlate *SdPItemPlatePtr;
@@ -61,6 +62,8 @@ class SdUndo
     void platePointer( SdPItemPlatePtr *ptr );
     void pinImpConnect( SdGraphSymImp *sym, int symPinIndex, SdGraphPartImp *part, int partPinIndex, const QString wireName, bool com );
     void linkSection( int section, SdGraphSymImp *sym, SdGraphPartImp *part, bool link );
+    void symImp( SdPoint *origin, SdPropSymImp *imp, int *logSection, int *logNumber, SdRect *over, QString *prefix, SdPropText *identProp,
+                 SdPoint *identOrigin, SdPoint *identPos, SdRect *identRect );
     void point( SdPoint *src );
     void begin( QString title );
 

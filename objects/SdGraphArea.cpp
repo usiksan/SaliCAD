@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -18,6 +18,7 @@ Description
 #include "SdProject.h"
 #include "SdSelector.h"
 #include "SdPropLayer.h"
+#include "SdContext.h"
 
 SdGraphArea::SdGraphArea()
   {
@@ -215,7 +216,7 @@ void SdGraphArea::select(SdSelector *selector)
 
 bool SdGraphArea::canHideLayer(SdLayer *layer)
   {
-  return mRegionProp.mLayer != layer;
+  return mRegionProp.mLayer.canHide( layer );
   }
 
 

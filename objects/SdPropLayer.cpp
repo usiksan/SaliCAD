@@ -83,6 +83,15 @@ void SdPropLayer::append(SdPropLayer p)
     }
   }
 
+
+
+bool SdPropLayer::canHide(SdLayer *layer) const
+  {
+  return mLayer != layer && mLayer->pair() != layer;
+  }
+
+
+
 void SdPropLayer::read(const QString name, const QJsonObject obj)
   {
   mValue = OneValue;

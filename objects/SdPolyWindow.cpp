@@ -37,11 +37,15 @@ SdPolyWindow::SdPolyWindow(SdCircle circle, int gap) :
 
 SdPolyWindow::SdPolyWindow(SdRect r, int gap) :
   radius(-1),
-  p1( r.getTopLeft() + QPoint(-gap,-gap) ),
-  p2( r.getTopRight() + QPoint(gap,-gap) ),
-  p3( r.getBottomRight() + QPoint(gap,gap) ),
-  p4( r.getBottomLeft() + QPoint(-gap,gap) )
+  p1( r.getTopLeft() ),
+  p2( r.getTopRight() ),
+  p3( r.getBottomRight() ),
+  p4( r.getBottomLeft() )
   {
+  p1.move( SdPoint(-gap,-gap) );
+  p2.move( SdPoint(gap,-gap) );
+  p3.move( SdPoint(gap,gap) );
+  p4.move( SdPoint(-gap,gap) );
   }
 
 SdPolyWindow::SdPolyWindow(SdPoint a, SdPoint b, int gap) :

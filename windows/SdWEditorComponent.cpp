@@ -281,6 +281,7 @@ void SdWEditorComponent::fillParts()
       else
         mPartTable->addItem( prt->getTitle() );
       }
+    return true;
     });
   }
 

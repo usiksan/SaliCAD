@@ -13,6 +13,7 @@ Description
 #ifndef SDCONTAINERPLATENET_H
 #define SDCONTAINERPLATENET_H
 
+#include "SdContainer.h"
 
 class SdContainerPlateNet : public SdContainer
   {

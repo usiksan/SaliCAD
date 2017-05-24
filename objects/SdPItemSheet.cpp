@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -16,6 +16,7 @@ Description
 #include "SdGraphWiringWire.h"
 #include "SdGraphArea.h"
 #include "SdGraphSymImp.h"
+#include "SdGraphIdent.h"
 #include "SdProject.h"
 
 SdPItemSheet::SdPItemSheet()
@@ -54,10 +55,11 @@ SdContainerSheetNet *SdPItemSheet::netCreate(const QString name, SdUndo *undo)
 
 void SdPItemSheet::netWirePlace(SdPoint a, SdPoint b, const QString name, SdUndo *undo)
   {
-  forEach( dctComponent, [a, b, name, undo] (SdObject *obj) -> bool {
+  forEach( dctSymImp, [a, b, name, undo] (SdObject *obj) -> bool {
     SdGraphSymImp *sym = dynamic_cast<SdGraphSymImp*>(obj);
     Q_ASSERT( sym != nullptr );
-    sym-
+    sym->netWirePlace( a, b, name, undo );
+    return true;
     });
   }
 
@@ -66,7 +68,9 @@ void SdPItemSheet::netWirePlace(SdPoint a, SdPoint b, const QString name, SdUndo
 
 void SdPItemSheet::insertWire(const QString name, SdGraphWiringWire *wire, SdUndo *undo)
   {
-
+  SdContainerSheetNet *net = netCreate( name, undo );
+  Q_ASSERT( net != nullptr );
+  net->insertChild( wire, undo );
   }
 
 
@@ -78,7 +82,7 @@ bool SdPItemSheet::getNetFromPoint(SdPoint p, QString &dest)
     net = dynamic_cast<SdContainerSheetNet*>(obj);
     Q_ASSERT( net != nullptr );
     bool on = false;
-    net->forEach( dctWire, [&none,p] (SdObject *obj) -> bool {
+    net->forEach( dctWire, [&on,p] (SdObject *obj) -> bool {
       SdGraphWiringWire *wire = dynamic_cast<SdGraphWiringWire*>(obj);
       Q_ASSERT( wire != nullptr );
       on = wire->isPointOnSection( p );

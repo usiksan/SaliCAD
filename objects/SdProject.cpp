@@ -14,6 +14,7 @@ Description
 #include "SdProject.h"
 #include "SdProjectItem.h"
 #include "SdPulsar.h"
+#include "SdPItemPlate.h"
 #include <QJsonArray>
 #include <QFile>
 #include <QJsonDocument>
@@ -29,6 +30,27 @@ SdProject::SdProject() :
 
 SdProject::~SdProject()
   {
+  }
+
+
+
+
+//Return default plate and if none - create new one
+SdPItemPlate *SdProject::getDefaultPlate()
+  {
+  //At first try to find plate in child list
+  for( SdObject *obj : mChildList ) {
+    if( !obj->isDeleted() && obj->getClass() == dctPlate ) {
+      //Plate found. Return it
+      return dynamic_cast<SdPItemPlate*>(obj);
+      }
+    }
+
+  //Plate not found. Create new one
+  SdPItemPlate *plate = new SdPItemPlate();
+  plate->setTitle( QStringLiteral("Default plate") );
+  insertChild( plate, &mUndo );
+  return plate;
   }
 
 

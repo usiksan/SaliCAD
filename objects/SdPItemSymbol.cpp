@@ -31,12 +31,13 @@ SdPItemSymbol::SdPItemSymbol()
 int SdPItemSymbol::getSectionCount() const
   {
   int cnt = 0;
-  forEach( dctSection, [&cnt] (SdObject *obj) -> bool {
-    SdSection *section = dynamic_cast<SdSection*>( obj );
-    Q_ASSERT( section != 0 );
-    cnt++;
-    return true;
-    });
+  for( SdObject *obj : mChildList ) {
+    if( obj && !obj->isDeleted() && obj->getClass() == dctSection ) {
+      SdSection *section = dynamic_cast<SdSection*>( obj );
+      Q_ASSERT( section != 0 );
+      cnt++;
+      }
+    }
   return cnt;
   }
 
