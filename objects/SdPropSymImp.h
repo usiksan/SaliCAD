@@ -16,6 +16,11 @@ Description
 
 #include "SdAngle.h"
 
+struct SdPropSymImpState {
+    int mAngle;
+    int mMirror;
+  };
+
 struct SdPropSymImp
   {
     SdAngle   mAngle;  //Угол поворота компонента
@@ -30,6 +35,9 @@ struct SdPropSymImp
 
     void write( QJsonObject &obj ) const;
     void read( const QJsonObject obj );
+
+    void saveState( SdPropSymImpState *dst );
+    void swapState( SdPropSymImpState *src );
   };
 
 #endif // SDSYMIMPPROP_H

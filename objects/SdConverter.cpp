@@ -25,7 +25,8 @@ SdConverter::SdConverter() :
 
 SdConverter::~SdConverter()
   {
-  mContext->removeConverter( this );
+  if( mContext )
+    mContext->removeConverter( this );
   }
 
 

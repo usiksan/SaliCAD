@@ -33,6 +33,7 @@ SdContext::SdContext(SdPoint grid, QPainter *painter) :
 SdContext *SdContext::setConverter(SdConverter *c)
   {
   //Append converter to stack
+  c->mContext = this;
   c->mNext = mConverter;
   mConverter = c;
 

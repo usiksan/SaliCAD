@@ -14,6 +14,9 @@ Description
 #include "SdModeCIdent.h"
 #include "objects/SdGraph.h"
 #include "objects/SdGraphIdent.h"
+#include "windows/SdPropBarTextual.h"
+#include "windows/SdWCommand.h"
+#include "windows/SdWEditorGraph.h"
 #include <QObject>
 
 SdModeCIdent::SdModeCIdent(SdWEditorGraph *editor, SdProjectItem *obj, SdPropText *prp , int index) :
@@ -60,6 +63,26 @@ int SdModeCIdent::getPropBarId() const
 
 
 
+
+void SdModeCIdent::propGetFromBar()
+  {
+  SdPropBarTextual *bar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+  Q_ASSERT( bar != nullptr );
+  bar->getPropText( mPropText );
+  }
+
+
+
+
+void SdModeCIdent::propSetToBar()
+  {
+  SdPropBarTextual *bar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+  Q_ASSERT( bar != nullptr );
+  bar->setPropText( mPropText, mEditor->getPPM() );
+  }
+
+
+
 void SdModeCIdent::enterPoint(SdPoint)
   {
   if( getStep() ) applyEdit();
@@ -81,8 +104,10 @@ void SdModeCIdent::cancelPoint(SdPoint)
 
 void SdModeCIdent::movePoint(SdPoint p)
   {
-  mPrev = p;
-  update();
+  if( getStep() == 0 ) {
+    mPrev = p;
+    update();
+    }
   }
 
 
@@ -134,5 +159,6 @@ void SdModeCIdent::applyEdit()
   //Save previous state of ident
   mUndo->begin( QObject::tr("Edit ident") );
   mIdent->saveState( mUndo );
+  mIdent->updateIdent( mPrev, mString, mOverRect, mPropText );
   cancelMode();
   }

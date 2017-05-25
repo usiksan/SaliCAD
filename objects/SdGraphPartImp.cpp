@@ -65,6 +65,11 @@ SdGraphPartImp::SdGraphPartImp()
 
   }
 
+SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPItemPart *part, SdPItemSymbol *comp)
+  {
+
+  }
+
 
 
 
