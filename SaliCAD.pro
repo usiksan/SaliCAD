@@ -41,7 +41,6 @@ SOURCES += \
     windows/SdPNewProjectItem_EnterName.cpp \
     windows/SdDGetObject.cpp \
     objects/SdObjectFactory.cpp \
-    objects/SdObjectInfo.cpp \
     windows/SdWEditorGraph.cpp \
     windows/SdWEditorGraphSymbol.cpp \
     objects/SdScaler.cpp \
@@ -168,7 +167,6 @@ HEADERS  += \
     windows/SdPNewProjectItem_EnterName.h \
     windows/SdDGetObject.h \
     objects/SdObjectFactory.h \
-    objects/SdObjectInfo.h \
     windows/SdWEditorGraph.h \
     windows/SdWEditorGraphSymbol.h \
     objects/SdScaler.h \
