@@ -91,6 +91,20 @@ SdPartVariant *SdPItemSymbol::getDefaultPart() const
 
 
 
+//Set new default part
+void SdPItemSymbol::setDefaultPart(SdPartVariant *partVar)
+  {
+  forEach( dctPartVariant, [partVar] (SdObject *obj) -> bool {
+    SdPartVariant *pv = dynamic_cast<SdPartVariant*>( obj );
+    Q_ASSERT(pv);
+    pv->setDefault( pv == partVar );
+    return true;
+    });
+  }
+
+
+
+
 SdPItemSymbol *SdPItemSymbol::extractSymbolFromFactory(int sectionIndex, bool soft, QWidget *parent) const
   {
   SdSection *sec = getSection( sectionIndex );

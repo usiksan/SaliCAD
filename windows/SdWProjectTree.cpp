@@ -189,8 +189,8 @@ void SdWProjectTree::cmObjectDelete()
   {
   SdProjectItemPtr item = dynamic_cast<SdProjectItem*>( mProject->item( currentItem() ) );
   if( item ) {
-    if( item->refCount() )
-      QMessageBox::warning( this, tr("Warning!"), tr("Object is referensed (used by other objects). You can not delete it until dereferenced.") );
+    if( mProject->isUsed(item) )
+      QMessageBox::warning( this, tr("Warning!"), tr("Object is used by other objects. You can not delete it until dereferenced.") );
     else if( QMessageBox::question(this, tr("Warning!"), tr("Do You realy want to delete \'%1\'").arg(item->getTitle())) == QMessageBox::Yes )
       mProject->deleteChild( item, mProject->getUndo() );
     }

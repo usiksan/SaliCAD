@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -49,6 +49,7 @@ class SdSection : public SdObject
     SdPinAssotiation getPins() const { return mAssotiationTable; }
     void             updateFromSymbol( SdPItemSymbol *symbol );
     SdPItemSymbol   *extractFromFactory(bool soft, QWidget *parent ) const;
+    void             setPinNumber( const QString name, const QString number );
 
     // SdObject interface
   public:

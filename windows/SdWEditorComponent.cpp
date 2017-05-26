@@ -23,6 +23,7 @@ Description
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGroupBox>
+#include <QDebug>
 
 SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) :
   SdWEditor( parent ),
@@ -153,6 +154,9 @@ void SdWEditorComponent::sectionSelect()
   SdDGetObject::getObjectName( 0, 0, dctSymbol, tr("Select symbol for section"), this );
   }
 
+
+
+
 void SdWEditorComponent::sectionDelete()
   {
   SdWSection *sw = dynamic_cast<SdWSection*>( mSectionsTab->currentWidget() );
@@ -198,6 +202,7 @@ void SdWEditorComponent::partAdd()
     delete part;
     mPartTable->addItem( pvar->getTitle() );
     mPartTable->setCurrentRow( mPartTable->count() - 1 );
+    onCurrentPart( mPartTable->count() - 1 );
     mComponent->insertChild( pvar, mUndo );
     }
   }
@@ -214,10 +219,21 @@ void SdWEditorComponent::partDelete()
 
   }
 
+
+
 void SdWEditorComponent::partDefault()
   {
-
+  int cur = mPartTable->currentRow();
+  qDebug() << Q_FUNC_INFO << cur;
+  if( cur >= 0 ) {
+//    mComponent->setDefaultPart( nullptr );
+    mComponent->setDefaultPart( getPartVariant(cur) );
+    fillParts();
+    }
   }
+
+
+
 
 void SdWEditorComponent::onCurrentPart(int index)
   {
@@ -272,17 +288,30 @@ void SdWEditorComponent::renameSymbolTabs()
 void SdWEditorComponent::fillParts()
   {
   mPartTable->clear();
-  mComponent->forEach( dctPartVariant, [this] (SdObject *obj) -> bool {
+  mPartTable->setSortingEnabled(false);
+  int def = -1;
+  mComponent->forEach( dctPartVariant, [this,&def] (SdObject *obj) -> bool {
     SdPartVariant *prt = dynamic_cast<SdPartVariant*>(obj);
     if( prt ) {
       prt->mVisualIndex = mPartTable->count();
-      if( prt->isDefault() )
+      if( prt->isDefault() ) {
         mPartTable->addItem( tr("[def] %1").arg(prt->getTitle()) );
+        def = prt->mVisualIndex;
+        }
       else
         mPartTable->addItem( prt->getTitle() );
       }
     return true;
     });
+
+  if( def >= 0 ) {
+    mPartTable->setCurrentRow( def );
+    onCurrentPart( def );
+    }
+  else if( mPartTable->count() ) {
+    mPartTable->setCurrentRow( 0 );
+    onCurrentPart( 0 );
+    }
   }
 
 
@@ -290,24 +319,18 @@ void SdWEditorComponent::fillParts()
 
 SdPartVariant *SdWEditorComponent::getPartVariant(int index)
   {
-  //Extract current item
-  QListWidgetItem *item = mPartTable->item(index);
-  if( item ) {
-    //From current item extract index of SdPartVariant
-    index = item->type();
-    //And find SdPartVariant with this index
-    SdPartVariant *prt = nullptr;
-    mComponent->forEach( dctPartVariant, [&prt, index] (SdObject *obj) -> bool {
-      prt = dynamic_cast<SdPartVariant*>(obj);
-      if( prt && prt->mVisualIndex == index )
-        //SdPartVariant is found. Break iterations
-        return false;
-      //Continue iterations
-      prt = nullptr;
-      return true;
-      });
-    return prt;
-    }
-  return nullptr;
+  //And find SdPartVariant with this index
+  SdPartVariant *prt = nullptr;
+  mComponent->forEach( dctPartVariant, [&prt, index] (SdObject *obj) -> bool {
+    prt = dynamic_cast<SdPartVariant*>(obj);
+    qDebug() << prt->mVisualIndex << prt->getPartTitle();
+    if( prt && prt->mVisualIndex == index )
+      //SdPartVariant is found. Break iterations
+      return false;
+    //Continue iterations
+    prt = nullptr;
+    return true;
+    });
+  return prt;
   }
 

@@ -84,6 +84,15 @@ void SdObject::detach(SdUndo *undo)
 
 
 
+
+bool SdObject::isUsed(SdObject *obj) const
+  {
+  Q_UNUSED(obj)
+  return false;
+  }
+
+
+
 SdObject *SdObject::copy()
   {
   SdObject *obj = build( getType() );
@@ -121,7 +130,7 @@ QJsonObject SdObject::write() const
   writePtr( mParent, QStringLiteral("Parent"), obj );
   writeObject( obj );
   const SdProjectItem *item = dynamic_cast<const SdProjectItem*>(this);
-  if( item )
+  if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol)) )
     SdObjectFactory::insertObject( item, obj );
   return obj;
   }

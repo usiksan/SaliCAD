@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -49,6 +49,14 @@ void SdSection::updateFromSymbol(SdPItemSymbol *symbol)
 SdPItemSymbol *SdSection::extractFromFactory( bool soft, QWidget *parent) const
   {
   return dynamic_cast<SdPItemSymbol*>( SdObjectFactory::extractObject( mSymbolTitle, mSymbolAuthor, soft, parent ) );
+  }
+
+
+
+
+void SdSection::setPinNumber(const QString name, const QString number)
+  {
+  mAssotiationTable.insert( name, number );
   }
 
 

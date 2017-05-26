@@ -96,6 +96,7 @@ class SdObject
     virtual void      undoDetach() {}
     bool              isDeleted() const { return mDeleted; }
     void              markDeleted( bool deleted ) { mDeleted = deleted; }
+    virtual bool      isUsed( SdObject *obj ) const;
 
     //Copy
     //Exact copy object

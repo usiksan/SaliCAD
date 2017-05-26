@@ -37,6 +37,9 @@ class SdWSection : public QWidget
 
     //Update visual pin assotiation table
     void updatePinTable();
+
+    //On pin edit finish
+    void onPinEditFinish( int row, int column );
   };
 
 #endif // SDWSECTION_H

@@ -31,6 +31,8 @@ SdWSection::SdWSection(SdSection *s, QWidget *parent) :
   labels << tr("Pin name") << tr("Pin number");
   mPinTable->setHorizontalHeaderLabels( labels );
   updatePinTable();
+
+  connect( mPinTable, &QTableWidget::cellChanged, this, &SdWSection::onPinEditFinish );
   }
 
 
@@ -47,12 +49,24 @@ void SdWSection::updateTitle()
 //Update visual pin assotiation table
 void SdWSection::updatePinTable()
   {
+  mPinTable->setSortingEnabled(false);
   mPinTable->setRowCount(0);
   SdPinAssotiation pins = mSection->getPins();
   for( auto i = pins.constBegin(); i != pins.constEnd(); i++ ) {
     mPinTable->insertRow( mPinTable->rowCount() );
     mPinTable->setItem( mPinTable->rowCount() - 1, 0, new QTableWidgetItem( i.key() ) );
+    mPinTable->item( mPinTable->rowCount() - 1, 0 )->setFlags( Qt::NoItemFlags );
     mPinTable->setItem( mPinTable->rowCount() - 1, 1, new QTableWidgetItem( i.value() ) );
     }
+  }
+
+
+
+
+//On pin edit finish
+void SdWSection::onPinEditFinish(int row, int column)
+  {
+  Q_UNUSED(column)
+  mSection->setPinNumber( mPinTable->item( row, 0 )->text(), mPinTable->item( row, 1 )->text() );
   }
 

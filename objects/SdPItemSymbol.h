@@ -40,6 +40,8 @@ class SdPItemSymbol : public SdProjectItem
     SdPartVariant *getPart( int partIndex ) const;
     //Return default part
     SdPartVariant *getDefaultPart() const;
+    //Set new default part
+    void           setDefaultPart( SdPartVariant *partVar );
 
     //Return symbol from section by index
     SdPItemSymbol *extractSymbolFromFactory( int sectionIndex, bool soft, QWidget *parent ) const;

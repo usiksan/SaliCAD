@@ -18,9 +18,11 @@ Description
 #include "SdPoint.h"
 #include "SdGraph.h"
 #include <QSettings>
+#include <QDateTime>
+
+#define timeOffsetConstant 1000000000L
 
 SdProjectItem::SdProjectItem() :
-  mRefCount(0),
   mAuto(true)
   {
 
@@ -31,16 +33,19 @@ SdProjectItem::SdProjectItem() :
 
 QString SdProjectItem::getId() const
   {
-  return mObjectInfo.getId();
+  //Id consist from name, user and time creation
+  return getType() + mTitle + mAuthor + QString::number(mCreateTime,32);
   }
 
 
 
 
-QString SdProjectItem::getIdFileName() const
+QString SdProjectItem::getShortId() const
   {
-  return mObjectInfo.getIdFileName();
+  //Id consist from name and user
+  return getType() + mTitle + mAuthor;
   }
+
 
 
 
@@ -48,7 +53,15 @@ QString SdProjectItem::getIdFileName() const
 
 QString SdProjectItem::getExtendTitle() const
   {
-  return mObjectInfo.getExtendTitle();
+  return QString("%1 [r%2] (%3)").arg(mTitle).arg( QDateTime::fromSecsSinceEpoch(getTimeFromEpoch()).toString("yy-M-d H:m:s") ).arg(mAuthor);
+  }
+
+
+
+
+qint64 SdProjectItem::getTimeFromEpoch() const
+  {
+  return timeOffsetConstant + static_cast<qint64>(mCreateTime);
   }
 
 
@@ -56,7 +69,12 @@ QString SdProjectItem::getExtendTitle() const
 
 void SdProjectItem::setTitle(const QString title)
   {
-  mObjectInfo.setTitle( title );
+  //Item author (registered program copy name)
+  updateAuthor();
+  //Update creation time
+  updateCreationTime();
+  //Title setup
+  mTitle      = title;
   SdPulsar::pulsar->emitRenameItem( this );
   }
 
@@ -76,6 +94,32 @@ SdUndo *SdProjectItem::getUndo() const
   SdProject *prj = getProject();
   if( prj ) return prj->getUndo();
   return nullptr;
+  }
+
+
+
+
+void SdProjectItem::updateCreationTime()
+  {
+  mCreateTime = static_cast<int>( QDateTime::currentDateTime().toSecsSinceEpoch() - timeOffsetConstant );
+  }
+
+
+
+
+void SdProjectItem::updateAuthor()
+  {
+  QSettings s;
+  mAuthor     = s.value( SDK_GLOBAL_ID_MACHINE ).toString();
+  }
+
+
+
+
+bool SdProjectItem::isAnotherAuthor() const
+  {
+  QSettings s;
+  return mAuthor != s.value( SDK_GLOBAL_ID_MACHINE ).toString();
   }
 
 
@@ -123,8 +167,9 @@ SdGraphIdent *SdProjectItem::getIdent()
 void SdProjectItem::writeObject(QJsonObject &obj) const
   {
   SdContainer::writeObject( obj );
-  mObjectInfo.writeObject( obj );
-  obj.insert( QStringLiteral("RefCount"), mRefCount );
+  obj.insert( QStringLiteral("Title"),    mTitle );
+  obj.insert( QStringLiteral("Author"),   mAuthor );
+  obj.insert( QStringLiteral("Created"),  mCreateTime );
   obj.insert( QStringLiteral("Auto"),     mAuto );
   sdParamWrite( QStringLiteral("Parametrs"), mParamTable, obj );
   mOrigin.write( QStringLiteral("Origin"), obj );
@@ -136,9 +181,10 @@ void SdProjectItem::writeObject(QJsonObject &obj) const
 void SdProjectItem::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdContainer::readObject( map, obj );
-  mObjectInfo.readObject( obj );
-  mRefCount = obj.value( QStringLiteral("RefCount") ).toInt();
-  mAuto     = obj.value( QStringLiteral("Auto") ).toBool();
+  mTitle      = obj.value( QStringLiteral("Title") ).toString();
+  mAuthor     = obj.value( QStringLiteral("Author") ).toString();
+  mCreateTime = obj.value( QStringLiteral("Created") ).toInt();
+  mAuto       = obj.value( QStringLiteral("Auto") ).toBool();
   sdParamRead( QStringLiteral("Parametrs"), mParamTable, obj );
   mOrigin.read( QStringLiteral("Origin"), obj );
   }
@@ -150,8 +196,10 @@ void SdProjectItem::cloneFrom( const SdObject *src )
   {
   SdContainer::cloneFrom( src );
   const SdProjectItem *sour = dynamic_cast<const SdProjectItem*>(src);
-  mObjectInfo.copyFrom( sour->mObjectInfo );
-  mRefCount   = 0;
+  mTitle      = sour->mTitle;
+  mAuthor     = sour->mAuthor;
+  mCreateTime = sour->mCreateTime;
   mAuto       = true;
   mParamTable = sour->mParamTable;
+  mOrigin     = sour->mOrigin;
   }
