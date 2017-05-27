@@ -27,8 +27,9 @@ Description
 
 SdModeCSymImp::SdModeCSymImp(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeCommon( editor, obj ),
-  mSection(0),
-  mComponent(0)
+  mSection(nullptr),
+  mComponent(nullptr),
+  mPart(nullptr)
   {
 
   }
@@ -75,6 +76,7 @@ void SdModeCSymImp::propGetFromBar()
   SdPropBarSymImp *sbar = dynamic_cast<SdPropBarSymImp*>( SdWCommand::getModeBar(PB_SYM_IMP) );
   if( sbar ) {
     sbar->getPropSymImp( &(sdGlobalProp->mSymImpProp) );
+    update();
     }
   }
 
@@ -94,7 +96,7 @@ void SdModeCSymImp::propSetToBar()
 
 void SdModeCSymImp::enterPoint(SdPoint)
   {
-  //TODO insert symbol implementation
+  addPic( new SdGraphSymImp( mComponent, mSection, mPart, mOrigin,  &(sdGlobalProp->mSymImpProp) ), QObject::tr("Insert symbol") );
   getSection();
   }
 
@@ -158,8 +160,10 @@ int SdModeCSymImp::getIndex() const
 
 void SdModeCSymImp::getSection()
   {
+  clear();
+  int sectionIndex = -1, partIndex = -1;
   do {
-    SdObject *obj = SdDGetObject::getObject( dctSymbol | dctComponent, QObject::tr("Select component to insert"), mEditor );
+    SdObject *obj = SdDGetObject::getComponent( &sectionIndex, &partIndex, dctSymbol | dctComponent, QObject::tr("Select component to insert"), mEditor );
     if( obj == nullptr ) {
       cancelMode();
       return;
@@ -168,12 +172,17 @@ void SdModeCSymImp::getSection()
     clear();
 
     mSection = dynamic_cast<SdPItemSymbol*>( obj );
+
+    if( sectionIndex >= 0 ) {
+      mComponent = mSection;
+      mSection = mComponent->extractSymbolFromFactory( sectionIndex, false, mEditor );
+      }
+
+    if( partIndex >= 0 ) {
+      mPart = mComponent->extractPartFromFactory( partIndex, false, mEditor );
+      }
     }
   while( mSection == nullptr );
-//  mComponent = dynamic_cast<SdPItemComponent*>( obj );
-//  if( mComponent ) {
-//    mSection = mComponent->
-//    }
   }
 
 
@@ -181,7 +190,19 @@ void SdModeCSymImp::getSection()
 
 void SdModeCSymImp::clear()
   {
-  if( mSection ) { delete mSection; mSection = nullptr; }
-  if( mComponent ) { delete mComponent; mComponent = nullptr; }
+  if( mComponent ) {
+    if( mSection == mComponent )
+      mSection = nullptr;
+    delete mComponent;
+    mComponent = nullptr;
+    }
+  if( mSection ) {
+    delete mSection;
+    mSection = nullptr;
+    }
+  if( mPart ) {
+    delete mPart;
+    mPart = nullptr;
+    }
   }
 

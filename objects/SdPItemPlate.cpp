@@ -41,7 +41,7 @@ SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPI
     return res;
 
   //Create new part implement
-  res = new SdGraphPartImp( SdPoint(), part, comp );
+  res = new SdGraphPartImp( SdPoint(), &(sdGlobalProp->mPartImpProp), part, comp );
   insertChild( res, undo );
 
   Q_ASSERT( res->isSectionFree( section, part, comp, sym ) );

@@ -60,6 +60,24 @@ SdSection *SdPItemSymbol::getSection(int sectionIndex) const
 
 
 
+
+//Return part count
+int SdPItemSymbol::getPartCount() const
+  {
+  int count = 0;
+  for( SdObject *obj : mChildList ) {
+    if( obj && !obj->isDeleted() && obj->getClass() == dctPartVariant ) {
+      SdPartVariant *part = dynamic_cast<SdPartVariant*>( obj );
+      Q_ASSERT( part != 0 );
+      count++;
+      }
+    }
+  return count;
+  }
+
+
+
+
 SdPartVariant *SdPItemSymbol::getPart(int partIndex) const
   {
   for( SdObject *obj : mChildList ) {

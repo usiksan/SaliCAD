@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Part implementation properties
 */
 
 #ifndef SDPARTIMPPROP_H
@@ -16,6 +17,12 @@ Description
 
 #include "SdPropInt.h"
 #include "SdAngle.h"
+
+struct SdPropPartImpState {
+    int mAngle;
+    int mMirror;
+    int mSide;
+  };
 
 struct SdPropPartImp
   {
@@ -28,8 +35,11 @@ struct SdPropPartImp
     void clear();                                  //Установить в неопределенное состояние
     bool match( SdPropPartImp const &prop );       //Сравнить на совпадение с эталоном
 
-    void write( QJsonObject &obj );
+    void write( QJsonObject &obj ) const;
     void read( const QJsonObject obj );
+
+    void saveState( SdPropPartImpState *dst );
+    void swapState( SdPropPartImpState *src );
   };
 
 #endif // SDPARTIMPPROP_H

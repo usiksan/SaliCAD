@@ -18,12 +18,14 @@ Description
 
 class SdPItemSymbol;
 class SdPItemComponent;
+class SdPItemPart;
 
 class SdModeCSymImp : public SdModeCommon
   {
     SdPoint        mOrigin;
     SdPItemSymbol *mSection;
     SdPItemSymbol *mComponent;
+    SdPItemPart   *mPart;
   public:
     SdModeCSymImp( SdWEditorGraph *editor, SdProjectItem *obj );
     ~SdModeCSymImp();

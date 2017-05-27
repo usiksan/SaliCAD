@@ -36,7 +36,7 @@ struct SdPartImpPin {
 
   SdPartImpPin();
 
-  void operator = ( SdPartImpPin &pin );
+  void operator = ( const SdPartImpPin &pin );
   void setConnection( const QString wireName, bool com );
   void draw( SdContext *dc );
 
@@ -86,10 +86,10 @@ class SdGraphPartImp : public SdGraph
     SdPartImpPinTable      mPins;
     SdPartImpSectionTable  mSections;
     SdPItemPart           *mPart;        //Part for this implementation
-    SdPItemSymbol         *mComp;        //Component
+    SdPItemSymbol         *mComponent;   //Component
   public:
     SdGraphPartImp();
-    SdGraphPartImp( SdPoint org, SdPItemPart *part, SdPItemSymbol *comp );
+    SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemSymbol *comp );
 
     //Information
     //Return plate where part resides
@@ -118,16 +118,15 @@ class SdGraphPartImp : public SdGraph
     virtual QString getType() const override { return QStringLiteral(SD_TYPE_PART_IMP); }
     virtual quint64 getClass() const override { return dctPartImp; }
     virtual void    attach(SdUndo *undo) override;
-    virtual void detach(SdUndo *undo) override;
-    virtual void cloneFrom(const SdObject *src) override;
-    virtual void writeObject(QJsonObject &obj) const override;
-    virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual void    detach(SdUndo *undo) override;
+    virtual void    cloneFrom(const SdObject *src) override;
+    virtual void    writeObject(QJsonObject &obj) const override;
+    virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
 
     // SdGraph interface
   public:
-    virtual void saveState(SdUndo *undo) override;
-    virtual void moveComplete(SdPoint grid, SdUndo *undo) override;
-    virtual void move(SdPoint offset) override;
+    virtual void    saveState(SdUndo *undo) override;
+    virtual void    move(SdPoint offset) override;
     virtual void rotate(SdPoint center, SdAngle angle) override;
     virtual void mirror(SdPoint a, SdPoint b) override;
     virtual void setProp(SdProp &prop) override;
@@ -135,7 +134,6 @@ class SdGraphPartImp : public SdGraph
     virtual void selectByPoint(const SdPoint p, SdSelector *selector) override;
     virtual void selectByRect(const SdRect &r, SdSelector *selector) override;
     virtual void select(SdSelector *selector) override;
-    virtual void prepareMove() override;
     virtual bool canHideLayer(SdLayer *layer) override;
     virtual bool isVisible() override;
     virtual SdRect getOverRect() const override;
@@ -143,6 +141,9 @@ class SdGraphPartImp : public SdGraph
     virtual int behindCursor(SdPoint p) override;
     virtual bool getInfo(SdPoint p, QString &info, bool extInfo) override;
     virtual bool snapPoint(SdSnapInfo *snap) override;
+
+  private:
+    void updatePinsPositions();
   };
 
 #endif // SDGRAPHPARTIMP_H

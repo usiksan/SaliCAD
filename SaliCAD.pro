@@ -135,7 +135,8 @@ SOURCES += \
     modes/SdModeCIdent.cpp \
     objects/SdContainerPlateNet.cpp \
     objects/SdUndoRecordLinkSection.cpp \
-    objects/SdUndoRecordSymImp.cpp
+    objects/SdUndoRecordSymImp.cpp \
+    objects/SdUndoRecordPartImp.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -263,7 +264,8 @@ HEADERS  += \
     modes/SdModeCIdent.h \
     objects/SdContainerPlateNet.h \
     objects/SdUndoRecordLinkSection.h \
-    objects/SdUndoRecordSymImp.h
+    objects/SdUndoRecordSymImp.h \
+    objects/SdUndoRecordPartImp.h
 
 DISTFILES += \
     license.txt

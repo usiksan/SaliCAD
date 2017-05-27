@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Part implementation properties
 */
 
 #include "SdPropPartImp.h"
@@ -21,12 +22,17 @@ void SdPropPartImp::operator =(const SdPropPartImp &sour)
   mSide   = sour.mSide;
   }
 
+
+
 void SdPropPartImp::append(const SdPropPartImp &sour)
   {
   mAngle.append( sour.mAngle );
   mMirror.append( sour.mMirror );
   mSide.append( sour.mSide );
   }
+
+
+
 
 void SdPropPartImp::clear()
   {
@@ -35,22 +41,51 @@ void SdPropPartImp::clear()
   mSide.clear();
   }
 
+
+
+
 bool SdPropPartImp::match(const SdPropPartImp &prop)
   {
   return mAngle.match( prop.mAngle ) && mMirror.match( prop.mMirror ) && mSide.match( prop.mSide );
   }
 
-void SdPropPartImp::write(QJsonObject &obj)
+
+
+
+void SdPropPartImp::write(QJsonObject &obj) const
   {
   mAngle.write( QStringLiteral("PartImpAngle"), obj );
   mMirror.write( QStringLiteral("PartImpMirror"), obj );
   mSide.write( QStringLiteral("PartImpSide"), obj );
   }
 
+
+
+
 void SdPropPartImp::read(const QJsonObject obj)
   {
   mAngle.read( QStringLiteral("PartImpAngle"), obj );
   mMirror.read( QStringLiteral("PartImpMirror"), obj );
   mSide.read( QStringLiteral("PartImpSide"), obj );
+  }
+
+
+
+
+void SdPropPartImp::saveState(SdPropPartImpState *dst)
+  {
+  dst->mAngle  = mAngle.getValue();
+  dst->mMirror = mMirror.getValue();
+  dst->mSide   = mSide.getValue();
+  }
+
+
+
+
+void SdPropPartImp::swapState(SdPropPartImpState *src)
+  {
+  src->mAngle  = mAngle.swap( src->mAngle );
+  src->mMirror = mMirror.swap( src->mMirror );
+  src->mSide   = mSide.swap( src->mSide );
   }
 

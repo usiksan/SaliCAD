@@ -18,6 +18,9 @@ Description
 #include "objects/SdObjectFactory.h"
 #include "objects/SdProjectItem.h"
 #include "objects/SdPItemComponent.h"
+#include "objects/SdPItemSymbol.h"
+#include "objects/SdSection.h"
+#include "objects/SdPartVariant.h"
 
 #include <QSqlRecord>
 #include <QSqlField>
@@ -29,6 +32,8 @@ QSqlQueryModel *SdDGetObject::mModel;
 
 SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   QDialog(parent),
+  mSectionIndex(-1), //Section index
+  mPartIndex(-1),    //Part variant index
   mSort(sort),
   ui(new Ui::SdDGetObject)
   {
@@ -51,6 +56,10 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
 
   connect( ui->mFindButton, &QPushButton::clicked, this, &SdDGetObject::find );
   connect( ui->mFindTable, &QTableView::clicked, this, &SdDGetObject::onSelectItem );
+  connect( ui->mSections, &QListWidget::currentRowChanged, this, &SdDGetObject::onCurrentSegment );
+  connect( ui->mParts, &QListWidget::currentRowChanged, this, &SdDGetObject::onCurrentPart );
+  ui->mSections->setSortingEnabled(false);
+  ui->mParts->setSortingEnabled(false);
 
   if( mModel == nullptr ) {
     mModel = new QSqlQueryModel();
@@ -93,19 +102,71 @@ void SdDGetObject::onSelectItem(QModelIndex index)
   qDebug() << "select" << rec.value( QStringLiteral("name") ).toString() << rec.value( QStringLiteral("hash") ).toString();
   SdObject *obj = SdObjectFactory::extractObject( rec.value( QStringLiteral("hash") ).toString(), true, this );
 
-  SdPItemComponent *comp = dynamic_cast<SdPItemComponent*>( obj );
-  if( comp ) {
-    mSymbolView->setSymbol( dynamic_cast<SdPItemSymbol*>(comp->extractSymbolFromFactory(0,true,this)) );
-    mPartView->setPart( dynamic_cast<SdPItemPart*>( comp->extractDefaultPartFromFacory(true, this)) );
+  ui->mSections->clear();
+  mSectionIndex = -1;
+  ui->mParts->clear();
+  mPartIndex = -1;
+
+  mComponent = dynamic_cast<SdPItemSymbol*>( obj );
+  if( mComponent ) {
+    //Get section count
+    int sectionCount = mComponent->getSectionCount();
+    //If sections present, then fill visual list with sections
+    if( sectionCount ) {
+      for( int i = 0; i < sectionCount; i++ ) {
+        ui->mSections->addItem( tr("Section %1: %2").arg(i+1).arg(mComponent->getSection(i)->getTitle()) );
+        }
+      ui->mSections->setCurrentRow(0);
+      mSectionIndex = 0;
+      mSymbolView->setSymbol( dynamic_cast<SdPItemSymbol*>(mComponent->extractSymbolFromFactory(0,true,this)) );
+      }
+    else {
+      mSymbolView->setSymbol( mComponent );
+      }
+
+    //Get part count
+    int partCount = mComponent->getPartCount();
+    //If parts present then fill visual list with parts
+    if( partCount ) {
+      for( int i = 0; i < partCount; i++ ) {
+        SdPartVariant *v = mComponent->getPart(i);
+        if( v->isDefault() ) {
+          ui->mParts->addItem( tr("[def] %1").arg( v->getTitle() ) );
+          mPartIndex = i;
+          }
+        else
+          ui->mParts->addItem( v->getTitle() );
+        }
+      }
+    mPartView->setPart( dynamic_cast<SdPItemPart*>( mComponent->extractDefaultPartFromFacory(true, this)) );
     }
   else {
-    SdPItemSymbol *sym = dynamic_cast<SdPItemSymbol*>( obj );
-    mSymbolView->setSymbol( sym );
-
     SdPItemPart *prt = dynamic_cast<SdPItemPart*>( obj );
     mPartView->setPart( prt );
     }
 
+  }
+
+
+
+
+void SdDGetObject::onCurrentSegment(int row)
+  {
+  if( mComponent ) {
+    mSymbolView->setSymbol( dynamic_cast<SdPItemSymbol*>(mComponent->extractSymbolFromFactory(row,true,this)) );
+    mSectionIndex = row;
+    }
+  }
+
+
+
+
+void SdDGetObject::onCurrentPart(int row)
+  {
+  if( mComponent ) {
+    mPartView->setPart( dynamic_cast<SdPItemPart*>( mComponent->extractPartFromFactory( row, true, this ) ) );
+    mPartIndex = row;
+    }
   }
 
 
@@ -159,6 +220,22 @@ SdProjectItem *SdDGetObject::getObject(quint64 sort, const QString title, QWidge
   {
   SdDGetObject dget( sort, title, parent );
   if( dget.exec() ) {
+    return dynamic_cast<SdProjectItem*>( SdObjectFactory::extractObject( dget.getObjId(), false, parent ) );
+    }
+  return nullptr;
+  }
+
+
+
+
+SdProjectItem *SdDGetObject::getComponent(int *logSectionPtr, int *partPtr, quint64 sort, const QString title, QWidget *parent)
+  {
+  SdDGetObject dget( sort, title, parent );
+  if( dget.exec() ) {
+    if( logSectionPtr )
+      *logSectionPtr = dget.getSectionIndex();
+    if( partPtr )
+      *partPtr = dget.getPartIndex();
     return dynamic_cast<SdProjectItem*>( SdObjectFactory::extractObject( dget.getObjId(), false, parent ) );
     }
   return nullptr;

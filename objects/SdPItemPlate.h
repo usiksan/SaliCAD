@@ -15,6 +15,7 @@ Description
 #define SDPITEMPLATE_H
 
 #include "SdProjectItem.h"
+#include <QMap>
 
 class SdGraphPartImp;
 class SdGraphSymImp;
@@ -24,8 +25,13 @@ class SdContainerPlateNet;
 
 #define SD_TYPE_PLATE "Plate"
 
+//typedef SdPItemPart *SdPItemPartPtr;
+
+typedef QMap<QString,SdPItemPart*> SdPadAssotiation;
+
 class SdPItemPlate : public SdProjectItem
   {
+    SdPadAssotiation mPadAssotiation;
   public:
     SdPItemPlate();
 
@@ -37,6 +43,9 @@ class SdPItemPlate : public SdProjectItem
 
 
     SdGraphPartImp       *allocPartImp(int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym , SdUndo *undo);
+
+    //Get pad
+    SdPItemPart          *getPad( const QString pinType ) const { return mPadAssotiation.value( pinType ); }
 //    DPrtImpPic*  FindCompPart( DPrtPic *part, CPChar name, int numSection );
 //    DPrtImpPic*  FindCompById( CPChar ident );
 

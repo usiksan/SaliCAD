@@ -36,6 +36,8 @@ class SdPItemSymbol : public SdProjectItem
     int            getSectionCount() const;
     //Return section by index
     SdSection     *getSection( int sectionIndex ) const;
+    //Return part count
+    int            getPartCount() const;
     //Return part variant by index
     SdPartVariant *getPart( int partIndex ) const;
     //Return default part

@@ -18,6 +18,7 @@ Description
 #include <QSqlQueryModel>
 
 class SdProjectItem;
+class SdPItemSymbol;
 class SdWEditorGraphSymbol;
 class SdWEditorGraphPart;
 
@@ -29,14 +30,17 @@ class SdDGetObject : public QDialog
   {
     Q_OBJECT
 
-    SdWEditorGraphSymbol *mSymbolView;
-    SdWEditorGraphPart   *mPartView;
+    SdWEditorGraphSymbol  *mSymbolView;   //Widget for schematic preview
+    SdWEditorGraphPart    *mPartView;     //Widget for part preview
+    SdPItemSymbol         *mComponent;    //Component if selected
 
-    QString mObjName;
-    QString mObjAuthor;
-    QString mObjId;
+    QString                mObjName;      //Object name
+    QString                mObjAuthor;    //Object author
+    QString                mObjId;        //Unical object id
+    int                    mSectionIndex; //Section index
+    int                    mPartIndex;    //Part variant index
 
-    quint64 mSort;       //Object select sort (class)
+    quint64                mSort;         //Object select sort (class)
 
     static QSqlQueryModel *mModel;
   public:
@@ -46,10 +50,14 @@ class SdDGetObject : public QDialog
     QString getObjName() const { return mObjName; }
     QString getObjAuthor() const { return mObjAuthor; }
     QString getObjId() const { return mObjId; }
+    int     getSectionIndex() const { return mSectionIndex; }
+    int     getPartIndex() const { return mPartIndex; }
 
   public slots:
     void find();
     void onSelectItem( QModelIndex index );
+    void onCurrentSegment( int row );
+    void onCurrentPart( int row );
 
   protected:
     void changeEvent(QEvent *e);
@@ -59,6 +67,7 @@ class SdDGetObject : public QDialog
   public:
     static bool           getObjectName( QString *name, QString *author, quint64 sort, const QString title, QWidget *parent );
     static SdProjectItem *getObject( quint64 sort, const QString title, QWidget *parent);
+    static SdProjectItem *getComponent( int *logSectionPtr, int *partPtr, quint64 sort, const QString title, QWidget *parent);
 
     // QDialog interface
   public slots:

@@ -9,18 +9,15 @@ Web
   www.saliLab.ru
 
 Description
-  Undo record for symbol implementation in sheet
+  Undo record for part implementation in plate
 */
-#include "SdUndoRecordSymImp.h"
+#include "SdUndoRecordPartImp.h"
 
-
-SdUndoRecordSymImp::SdUndoRecordSymImp(SdPoint *origin, SdPropSymImp *imp, int *logSection, int *logNumber, SdRect *over, QString *prefix, SdPropText *identProp, SdPoint *identOrigin, SdPoint *identPos, SdRect *identRect) :
+SdUndoRecordPartImp::SdUndoRecordPartImp(SdPoint *origin, SdPropPartImp *imp, int *logNumber, SdRect *over, QString *prefix, SdPropText *identProp, SdPoint *identOrigin, SdPoint *identPos, SdRect *identRect) :
   SdUndoRecord(),
   mOriginSrc(origin),
   mOriginValue(*origin),
   mPropSrc(imp),
-  mLogSectionSrc(logSection),
-  mLogSectionValue(*logSection),
   mLogNumberSrc(logNumber),
   mLogNumberValue(*logNumber),
   mOverSrc(over),
@@ -42,16 +39,12 @@ SdUndoRecordSymImp::SdUndoRecordSymImp(SdPoint *origin, SdPropSymImp *imp, int *
 
 
 
-void SdUndoRecordSymImp::undo()
+void SdUndoRecordPartImp::undo()
   {
   mOriginValue.swap( mOriginSrc );
   mPropSrc->swapState( &mProp );
 
-  int tmp = *mLogSectionSrc;
-  *mLogSectionSrc = mLogSectionValue;
-  mLogSectionValue = tmp;
-
-  tmp = *mLogNumberSrc;
+  int tmp = *mLogNumberSrc;
   *mLogNumberSrc = mLogNumberValue;
   mLogNumberValue = tmp;
 

@@ -55,12 +55,6 @@ struct SdSymImpPin {
   QJsonObject toJson() const;
   void        fromJson( SdObjectMap *map, const QJsonObject obj );
 
-  //void connect(SdPoint a, SdPoint b, const QString &name, SdGraphSymImp *sym, SdGraphPartImp *prt, SdUndo *undo );
-//  void ifConnect( SdGraphPartImp *prt );
-//  void disconnect( SdPoint a, SdPoint b, const QString &name, SdGraphPartImp *prt );
-//  void ifDisconnect( SdGraphPartImp *prt );
-//  void ucom( SdGraphPartImp *prt );
-//  void connectTest( SdPItemSheet *sheet, SdGraphPartImp *prt );
   };
 
 
@@ -73,7 +67,6 @@ class SdGraphSymImp : public SdGraph
     int               mSectionIndex;//Section index (from 0)
     int               mLogSection;  //Logical symbol section number (from 1)
     int               mLogNumber;   //Logical part number (from 1)
-    //QString           mName;        //Name of component
     SdPoint           mOrigin;      //Position of Implement
     SdPropSymImp      mProp;        //Implement properties
     SdRect            mOverRect;    //Over rect

@@ -32,6 +32,7 @@ class SdPropText;
 class SdPropSymPin;
 class SdPropPartPin;
 class SdPropSymImp;
+class SdPropPartImp;
 class SdRect;
 class SdPItemPlate;
 typedef SdPItemPlate *SdPItemPlatePtr;
@@ -64,6 +65,8 @@ class SdUndo
     void linkSection( int section, SdGraphSymImp *sym, SdGraphPartImp *part, bool link );
     void symImp( SdPoint *origin, SdPropSymImp *imp, int *logSection, int *logNumber, SdRect *over, QString *prefix, SdPropText *identProp,
                  SdPoint *identOrigin, SdPoint *identPos, SdRect *identRect );
+    void partImp( SdPoint *origin, SdPropPartImp *imp, int *logNumber, SdRect *over, QString *prefix, SdPropText *identProp,
+                  SdPoint *identOrigin, SdPoint *identPos, SdRect *identRect );
     void point( SdPoint *src );
     void begin( QString title );
 
