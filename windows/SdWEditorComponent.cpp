@@ -31,6 +31,8 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
   {
   mUndo = mComponent->getUndo();
 
+  mAnotherAuthor = mComponent->isAnotherAuthor();
+
   QSplitter *splitter = new QSplitter( Qt::Vertical, this );
   QVBoxLayout *lay = new QVBoxLayout();
   lay->addWidget( splitter );
@@ -60,10 +62,15 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
      buts->addWidget( mSectionSelect = new QPushButton( tr("Select symbol") ) );
      buts->addWidget( mSectionDelete = new QPushButton( tr("Delete section") ) );
 
-     connect( mSectionAdd, &QPushButton::clicked, this, &SdWEditorComponent::sectionAdd );
-     connect( mSectionDubl, &QPushButton::clicked, this, &SdWEditorComponent::sectionDubl );
-     connect( mSectionSelect, &QPushButton::clicked, this, &SdWEditorComponent::sectionSelect );
-     connect( mSectionDelete, &QPushButton::clicked, this, &SdWEditorComponent::sectionDelete );
+     if( anotherAuthor ) {
+
+       }
+     else {
+       connect( mSectionAdd, &QPushButton::clicked, this, &SdWEditorComponent::sectionAdd );
+       connect( mSectionDubl, &QPushButton::clicked, this, &SdWEditorComponent::sectionDubl );
+       connect( mSectionSelect, &QPushButton::clicked, this, &SdWEditorComponent::sectionSelect );
+       connect( mSectionDelete, &QPushButton::clicked, this, &SdWEditorComponent::sectionDelete );
+       }
 
 
 

@@ -68,7 +68,10 @@ void SdPartImpPin::draw(SdContext *dc)
 
 //====================================================================================
 //Part implementation
-SdGraphPartImp::SdGraphPartImp()
+SdGraphPartImp::SdGraphPartImp() :
+  SdGraph(),
+  mPart(nullptr),
+  mComponent(nullptr)
   {
 
   }

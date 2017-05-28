@@ -76,8 +76,24 @@ SdProp::SdProp()
 
 //  SdPropSymImp  mSymImpProp;     //Свойства вхождения символа
 //  SdPropPartImp mPartImpProp;    //Свойства вхождения корпуса
-//  SdPropText    mSymIdentProp;   //Свойства идентификатора символа
-//  SdPropText    mPartIdentProp;  //Свойства идентификатора корпуса
+  //Symbol identifier (reference) aka D4.5
+  mSymIdentProp.mLayer.set( QString(LID0_SCHEMATIC LID1_PIN_NUMBER) );
+  mSymIdentProp.mFont   = 0;
+  mSymIdentProp.mSize   = 35;
+  mSymIdentProp.mDir    = da0;
+  mSymIdentProp.mHorz   = dhjCenter;
+  mSymIdentProp.mVert   = dvjMiddle;
+  mSymIdentProp.mMirror = 0;
+
+  //Part identifier (reference) aka D4
+  mPartIdentProp.mLayer.set( QString(LID0_PCB_TOP LID1_PIN_NAME) );    //Свойства имени вывода
+  mPartIdentProp.mFont   = 0;
+  mPartIdentProp.mSize   = 1000;
+  mPartIdentProp.mDir    = da0;
+  mPartIdentProp.mHorz   = dhjLeft;
+  mPartIdentProp.mVert   = dvjMiddle;
+  mPartIdentProp.mMirror = 0;
+
 //  SdPropRoad    mRoadProp;       //Свойства дорожки
 ////    SdViaProp    viaProp;        //Свойства переходных отверстий
 //  SdPropText    mTextDocProp;    //Свойства текста в текстовых документах

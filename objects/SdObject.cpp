@@ -222,6 +222,7 @@ SdObject *SdObject::build(QString type)
   if( type == QStringLiteral(SD_TYPE_AREA)          ) return new SdGraphArea();
   if( type == QStringLiteral(SD_TYPE_IDENT)         ) return new SdGraphIdent();
   if( type == QStringLiteral(SD_TYPE_SYM_IMP)       ) return new SdGraphSymImp();
+  if( type == QStringLiteral(SD_TYPE_PART_IMP)      ) return new SdGraphPartImp();
 
   if( type == QStringLiteral(SD_TYPE_SYMBOL)        ) return new SdPItemSymbol();
   if( type == QStringLiteral(SD_TYPE_PART)          ) return new SdPItemPart();
