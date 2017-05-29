@@ -221,8 +221,10 @@ void SdGraphPartImp::attach(SdUndo *undo)
     int sectionCount = mComponent->getSectionCount();
     for( int i = 0; i < sectionCount; i++ ) {
       SdPartImpSection s;
-      s.mSymbol = mComponent->extractSymbolFromFactory( i, false, nullptr );
-      s.mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(s.mSymbol) );
+      SdPItemSymbol *sym = mComponent->extractSymbolFromFactory( i, false, nullptr );
+      s.mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(sym) );
+      if( sym )
+        delete sym;
       mSections.append( s );
       }
     }

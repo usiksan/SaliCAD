@@ -748,14 +748,14 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
   {
 
   //Get part where this section resides
-  int section;
+  int section = -1;
   SdGraphPartImp *partImp = plate->allocPartImp( &section, mPart, mComponent, mSymbol, undo );
   Q_ASSERT( partImp != nullptr );
 
   //Link to part
   partImp->setLinkSection( section, this );
   setLinkSection( section, partImp );
-
+  qDebug() <<Q_FUNC_INFO << section;
   }
 
 

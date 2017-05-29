@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -54,7 +54,7 @@ SdGraphSymPin::SdGraphSymPin(SdPoint org, SdPoint numberPos, SdPoint namePos, co
 void SdGraphSymPin::drawImp(SdContext *dc, const QString pinNumber, bool com)
   {
   //Pin it self
-  if( com )
+  if( !com )
     dc->symPin( mOrigin, mPinProp.mLayer.layer() );
 
   //Pin name
