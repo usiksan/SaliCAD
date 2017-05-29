@@ -420,7 +420,7 @@ void SdGraphPartImp::draw(SdContext *dc)
   dc->setConverter( &imp );
 
   //Draw symbol except ident and pins
-  mPart->forEach( dctAll & (dctPartPin | dctIdent), [dc] (SdObject *obj) -> bool {
+  mPart->forEach( dctAll & ~(dctPartPin | dctIdent), [dc] (SdObject *obj) -> bool {
     SdGraph *graph = dynamic_cast<SdGraph*>( obj );
     if( graph )
       graph->draw( dc );

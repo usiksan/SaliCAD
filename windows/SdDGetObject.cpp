@@ -138,6 +138,7 @@ void SdDGetObject::onSelectItem(QModelIndex index)
           ui->mParts->addItem( v->getTitle() );
         }
       }
+    ui->mParts->setCurrentRow( mPartIndex );
     mPartView->setPart( dynamic_cast<SdPItemPart*>( mComponent->extractDefaultPartFromFacory(true, this)) );
     }
   else {

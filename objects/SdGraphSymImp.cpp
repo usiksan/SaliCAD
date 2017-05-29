@@ -26,6 +26,7 @@ Description
 #include "SdConverterImplement.h"
 #include "SdContext.h"
 #include "SdUndo.h"
+#include <QDebug>
 
 
 //====================================================================================
@@ -613,7 +614,7 @@ void SdGraphSymImp::draw(SdContext *dc)
   dc->setConverter( &imp );
 
   //Draw symbol except ident and pins
-  mSymbol->forEach( dctAll & (dctSymPin | dctIdent), [dc] (SdObject *obj) -> bool {
+  mSymbol->forEach( dctAll & ~(dctSymPin | dctIdent), [dc] (SdObject *obj) -> bool {
     SdGraph *graph = dynamic_cast<SdGraph*>( obj );
     if( graph )
       graph->draw( dc );
@@ -770,6 +771,7 @@ void SdGraphSymImp::attach(SdUndo *undo)
   mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(mSymbol) );        //Symbol contains graph information
   mPart = dynamic_cast<SdPItemPart*>( prj->getProjectsItem(mPart) );
 
+  qDebug() << "attach";
   createPins( undo );
 
   linkAutoPart( undo );

@@ -137,7 +137,8 @@ SdPItemSymbol *SdPItemSymbol::extractSymbolFromFactory(int sectionIndex, bool so
 SdPItemPart *SdPItemSymbol::extractPartFromFactory(int partIndex, bool soft, QWidget *parent) const
   {
   SdPartVariant *prt = getPart( partIndex );
-  if( prt ) prt->extractFromFactory( soft, parent );
+  if( prt )
+    return prt->extractFromFactory( soft, parent );
   return nullptr;
   }
 
@@ -147,9 +148,12 @@ SdPItemPart *SdPItemSymbol::extractPartFromFactory(int partIndex, bool soft, QWi
 SdPItemPart *SdPItemSymbol::extractDefaultPartFromFacory(bool soft, QWidget *parent) const
   {
   SdPartVariant *prt = getDefaultPart();
-  if( prt ) prt->extractFromFactory( soft, parent );
+  if( prt )
+    return prt->extractFromFactory( soft, parent );
   return nullptr;
   }
+
+
 
 
 QString SdPItemSymbol::getType() const
@@ -157,10 +161,15 @@ QString SdPItemSymbol::getType() const
   return QStringLiteral(SD_TYPE_SYMBOL);
   }
 
+
+
+
 quint64 SdPItemSymbol::getClass() const
   {
   return dctSymbol;
   }
+
+
 
 
 QString SdPItemSymbol::getIconName() const
@@ -169,10 +178,14 @@ QString SdPItemSymbol::getIconName() const
   }
 
 
+
+
 void SdPItemSymbol::cloneFrom( const SdObject *src )
   {
   SdProjectItem::cloneFrom( src );
   }
+
+
 
 
 

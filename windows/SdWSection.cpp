@@ -11,11 +11,12 @@ Web
 Description
 */
 #include "SdWSection.h"
+#include "objects/SdProjectItem.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QStringList>
 
-SdWSection::SdWSection(SdSection *s, QWidget *parent) :
+SdWSection::SdWSection(bool anotherAuthor, SdSection *s, QWidget *parent) :
   QWidget(parent),
   mSection(s)
   {
@@ -30,9 +31,10 @@ SdWSection::SdWSection(SdSection *s, QWidget *parent) :
   QStringList labels;
   labels << tr("Pin name") << tr("Pin number");
   mPinTable->setHorizontalHeaderLabels( labels );
-  updatePinTable();
+  updatePinTable( anotherAuthor );
 
-  connect( mPinTable, &QTableWidget::cellChanged, this, &SdWSection::onPinEditFinish );
+  if( !anotherAuthor )
+    connect( mPinTable, &QTableWidget::cellChanged, this, &SdWSection::onPinEditFinish );
   }
 
 
@@ -47,7 +49,7 @@ void SdWSection::updateTitle()
 
 
 //Update visual pin assotiation table
-void SdWSection::updatePinTable()
+void SdWSection::updatePinTable(bool anotherAuthor)
   {
   mPinTable->setSortingEnabled(false);
   mPinTable->setRowCount(0);
@@ -57,6 +59,9 @@ void SdWSection::updatePinTable()
     mPinTable->setItem( mPinTable->rowCount() - 1, 0, new QTableWidgetItem( i.key() ) );
     mPinTable->item( mPinTable->rowCount() - 1, 0 )->setFlags( Qt::NoItemFlags );
     mPinTable->setItem( mPinTable->rowCount() - 1, 1, new QTableWidgetItem( i.value() ) );
+    //If another author then disable edit function
+    if( anotherAuthor )
+      mPinTable->item( mPinTable->rowCount() - 1, 1 )->setFlags( Qt::NoItemFlags );
     }
   }
 
@@ -68,5 +73,9 @@ void SdWSection::onPinEditFinish(int row, int column)
   {
   Q_UNUSED(column)
   mSection->setPinNumber( mPinTable->item( row, 0 )->text(), mPinTable->item( row, 1 )->text() );
+  //update time creation for parent object
+  SdProjectItem *item = dynamic_cast<SdProjectItem*>( mSection->getParent() );
+  if( item )
+    item->updateCreationTime();
   }
 

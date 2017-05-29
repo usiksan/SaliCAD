@@ -23,6 +23,7 @@ Description
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGroupBox>
+#include <QMessageBox>
 #include <QDebug>
 
 SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) :
@@ -61,15 +62,22 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
      buts->addWidget( mSectionDubl = new QPushButton( tr("Dubl section") ) );
      buts->addWidget( mSectionSelect = new QPushButton( tr("Select symbol") ) );
      buts->addWidget( mSectionDelete = new QPushButton( tr("Delete section") ) );
+     buts->addWidget( mSectionDeleteAll = new QPushButton( tr("Delete all sections") ) );
 
-     if( anotherAuthor ) {
-
+     if( mAnotherAuthor ) {
+       //For another author editing is prohibited
+       mSectionAdd->setEnabled(false);
+       mSectionDubl->setEnabled(false);
+       mSectionSelect->setEnabled(false);
+       mSectionDelete->setEnabled(false);
+       mSectionDeleteAll->setEnabled(false);
        }
      else {
        connect( mSectionAdd, &QPushButton::clicked, this, &SdWEditorComponent::sectionAdd );
        connect( mSectionDubl, &QPushButton::clicked, this, &SdWEditorComponent::sectionDubl );
        connect( mSectionSelect, &QPushButton::clicked, this, &SdWEditorComponent::sectionSelect );
        connect( mSectionDelete, &QPushButton::clicked, this, &SdWEditorComponent::sectionDelete );
+       connect( mSectionDeleteAll, &QPushButton::clicked, this, &SdWEditorComponent::sectionDeleteAll );
        }
 
 
@@ -95,22 +103,30 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
     buts = new QVBoxLayout();
     box->addLayout( buts );
      buts->addWidget( mPartAdd = new QPushButton( tr("Add part")) );
+     buts->addWidget( mPartDefault = new QPushButton( tr("Set def part")) );
      buts->addWidget( mPartSelect = new QPushButton( tr("Select part")) );
      buts->addWidget( mPartDelete = new QPushButton( tr("Delete part")) );
-     buts->addWidget( mPartDefault = new QPushButton( tr("Set def part")) );
+     buts->addWidget( mPartDeleteAll = new QPushButton( tr("Delete all parts")) );
 
-     connect( mPartAdd, &QPushButton::clicked, this, &SdWEditorComponent::partAdd );
-     connect( mPartSelect, &QPushButton::clicked, this, &SdWEditorComponent::partSelect );
-     connect( mPartDelete, &QPushButton::clicked, this, &SdWEditorComponent::partDelete );
-     connect( mPartDefault, &QPushButton::clicked, this, &SdWEditorComponent::partDefault );
+     if( mAnotherAuthor ) {
+       mPartAdd->setEnabled(false);
+       mPartSelect->setEnabled(false);
+       mPartDelete->setEnabled(false);
+       mPartDefault->setEnabled(false);
+       mPartDeleteAll->setEnabled(false);
+       }
+     else {
+       connect( mPartAdd, &QPushButton::clicked, this, &SdWEditorComponent::partAdd );
+       connect( mPartSelect, &QPushButton::clicked, this, &SdWEditorComponent::partSelect );
+       connect( mPartDelete, &QPushButton::clicked, this, &SdWEditorComponent::partDelete );
+       connect( mPartDeleteAll, &QPushButton::clicked, this, &SdWEditorComponent::partDeleteAll );
+       connect( mPartDefault, &QPushButton::clicked, this, &SdWEditorComponent::partDefault );
+       }
 
   //Params
   QGroupBox *param = new QGroupBox( tr("Params"), splitter );
   splitter->addWidget( param );
 
-  //Update info from component
-  fillSections();
-  fillParts();
   }
 
 
@@ -126,6 +142,10 @@ SdProjectItem *SdWEditorComponent::getProjectItem()
 
 void SdWEditorComponent::onActivateEditor()
   {
+  SdWEditor::onActivateEditor();
+  //Update info from component
+  fillSections();
+  fillParts();
   }
 
 
@@ -137,10 +157,16 @@ void SdWEditorComponent::sectionAdd()
     SdSection *section = new SdSection();
     section->updateFromSymbol( sym );
     delete sym;
-    SdWSection *ws = new SdWSection( section, mSectionsTab );
+    SdWSection *ws = new SdWSection( mAnotherAuthor, section, mSectionsTab );
     mSectionsTab->addTab( ws, tr("Section %1").arg(mSectionsTab->count()+1) );
     mSectionsTab->setCurrentWidget( ws );
     mComponent->insertChild( section, mUndo );
+    mComponent->updateCreationTime();
+
+    mSectionDelete->setEnabled( mSectionsTab->count() != 0 );
+    mSectionDeleteAll->setEnabled( mSectionsTab->count() != 0 );
+    mSectionDubl->setEnabled( mSectionsTab->count() != 0 );
+    mSectionSelect->setEnabled( mSectionsTab->count() != 0 );
     }
   }
 
@@ -149,7 +175,17 @@ void SdWEditorComponent::sectionAdd()
 
 void SdWEditorComponent::sectionDubl()
   {
-
+  SdWSection *sw = dynamic_cast<SdWSection*>( mSectionsTab->currentWidget() );
+  if( sw ) {
+    SdSection *src = sw->getSection();
+    SdSection *section = new SdSection();
+    section->cloneFrom( src );
+    SdWSection *ws = new SdWSection( mAnotherAuthor, section, mSectionsTab );
+    mSectionsTab->addTab( ws, tr("Section %1").arg(mSectionsTab->count()+1) );
+    mSectionsTab->setCurrentWidget( ws );
+    mComponent->insertChild( section, mUndo );
+    mComponent->updateCreationTime();
+    }
   }
 
 
@@ -158,7 +194,22 @@ void SdWEditorComponent::sectionDubl()
 
 void SdWEditorComponent::sectionSelect()
   {
-  SdDGetObject::getObjectName( 0, 0, dctSymbol, tr("Select symbol for section"), this );
+  SdWSection *sw = dynamic_cast<SdWSection*>( mSectionsTab->currentWidget() );
+  if( sw ) {
+    SdSection *section = sw->getSection();
+    SdPItemSymbol *sym = dynamic_cast<SdPItemSymbol*>( SdDGetObject::getObject( dctSymbol, tr("Select symbol for section"), this ) );
+    if( sym ) {
+      section->updateFromSymbol( sym );
+      delete sym;
+      int index = mSectionsTab->currentIndex();
+      mSectionsTab->removeTab( index );
+      SdWSection *ws = new SdWSection( mAnotherAuthor, section, mSectionsTab );
+      mSectionsTab->insertTab( index, ws, tr("Section %1").arg(index+1) );
+      mSectionsTab->setCurrentWidget( ws );
+      mComponent->insertChild( section, mUndo );
+      mComponent->updateCreationTime();
+      }
+    }
   }
 
 
@@ -166,13 +217,31 @@ void SdWEditorComponent::sectionSelect()
 
 void SdWEditorComponent::sectionDelete()
   {
-  SdWSection *sw = dynamic_cast<SdWSection*>( mSectionsTab->currentWidget() );
-  if( sw ) {
-    //Remove from component
-    mComponent->deleteChild( sw->getSection(), mUndo );
-    mSectionsTab->removeTab( mSectionsTab->currentIndex() );
-    //Rename tabs
-    renameSymbolTabs();
+  if( QMessageBox::question( this, tr("Attention!"), tr("You attempting to delete section %1").arg(mSectionsTab->currentIndex()) ) == QMessageBox::Yes ) {
+    SdWSection *sw = dynamic_cast<SdWSection*>( mSectionsTab->currentWidget() );
+    if( sw ) {
+      //Remove from component
+      mComponent->deleteChild( sw->getSection(), mUndo );
+      mSectionsTab->removeTab( mSectionsTab->currentIndex() );
+      //Rename tabs
+      renameSymbolTabs();
+      mComponent->updateCreationTime();
+
+      mSectionDelete->setEnabled( mSectionsTab->count() != 0 );
+      mSectionDeleteAll->setEnabled( mSectionsTab->count() != 0 );
+      mSectionDubl->setEnabled( mSectionsTab->count() != 0 );
+      mSectionSelect->setEnabled( mSectionsTab->count() != 0 );
+      }
+    }
+  }
+
+
+
+
+void SdWEditorComponent::sectionDeleteAll()
+  {
+  if( QMessageBox::question( this, tr("Attention!"), tr("Are You sure delete All sections?") ) == QMessageBox::Yes ) {
+    //TODO add delete all sections
     }
   }
 
@@ -211,6 +280,12 @@ void SdWEditorComponent::partAdd()
     mPartTable->setCurrentRow( mPartTable->count() - 1 );
     onCurrentPart( mPartTable->count() - 1 );
     mComponent->insertChild( pvar, mUndo );
+    mComponent->updateCreationTime();
+
+    mPartDefault->setEnabled( mPartTable->count() );
+    mPartSelect->setEnabled( mPartTable->count() );
+    mPartDelete->setEnabled( mPartTable->count() );
+    mPartDeleteAll->setEnabled( mPartTable->count() );
     }
   }
 
@@ -218,13 +293,38 @@ void SdWEditorComponent::partAdd()
 
 void SdWEditorComponent::partSelect()
   {
-
+  int cur = mPartTable->currentRow();
+  qDebug() << Q_FUNC_INFO << cur;
+  if( cur >= 0 ) {
+    SdPartVariant *var = getPartVariant(cur);
+    if( var ) {
+      SdPItemPart *part = dynamic_cast<SdPItemPart*>( SdDGetObject::getObject( dctPart, tr("Select part for component"), this ) );
+      var->updateFromPart( part );
+      mComponent->updateCreationTime();
+      fillParts();
+      }
+    }
   }
+
+
+
 
 void SdWEditorComponent::partDelete()
   {
-
+  int cur = mPartTable->currentRow();
+  qDebug() << Q_FUNC_INFO << cur;
+  if( cur >= 0 ) {
+    SdPartVariant *var = getPartVariant(cur);
+    if( var ) {
+      if( QMessageBox::question( this, tr("Attention!"), tr("You attemption to delete part %1").arg(var->getTitle())) == QMessageBox::Yes ) {
+        mComponent->deleteChild( var, mUndo );
+        mComponent->updateCreationTime();
+        fillParts();
+        }
+      }
+    }
   }
+
 
 
 
@@ -236,6 +336,17 @@ void SdWEditorComponent::partDefault()
 //    mComponent->setDefaultPart( nullptr );
     mComponent->setDefaultPart( getPartVariant(cur) );
     fillParts();
+    mComponent->updateCreationTime();
+    }
+  }
+
+
+
+
+void SdWEditorComponent::partDeleteAll()
+  {
+  if( QMessageBox::question( this, tr("Attention!"), tr("Are You sure delete All parts?") ) == QMessageBox::Yes ) {
+    //TODO add delete all parts
     }
   }
 
@@ -264,17 +375,25 @@ void SdWEditorComponent::onCurrentPart(int index)
 
 void SdWEditorComponent::fillSections()
   {
+  //Remove previous tabs
+  mSectionsTab->clear();
+
+  //Fill with actual tabs
   mComponent->forEach( dctSection, [this] (SdObject *obj) -> bool {
     SdSection *section = dynamic_cast<SdSection*>(obj);
     if( section ) {
-      SdWSection *ws = new SdWSection( section, mSectionsTab );
+      SdWSection *ws = new SdWSection( mAnotherAuthor, section, mSectionsTab );
       mSectionsTab->addTab( ws, tr("Section %1").arg(mSectionsTab->count()+1) );
       }
     return true;
     });
 
-  mSectionDelete->setEnabled( mSectionsTab->count() );
-  mSectionSelect->setEnabled( mSectionsTab->count() );
+  //Enable-disable buttons on editing enable
+  if( !mAnotherAuthor ) {
+    mSectionDelete->setEnabled( mSectionsTab->count() );
+    mSectionDeleteAll->setEnabled( mSectionsTab->count() );
+    mSectionSelect->setEnabled( mSectionsTab->count() );
+    }
   if( mSectionsTab->count() ) {
     //Sections present, select first one
     mSectionsTab->setCurrentIndex(0);
@@ -294,8 +413,12 @@ void SdWEditorComponent::renameSymbolTabs()
 
 void SdWEditorComponent::fillParts()
   {
+  //Remove previous list
   mPartTable->clear();
+
   mPartTable->setSortingEnabled(false);
+
+  //Fill new list with default detecting
   int def = -1;
   mComponent->forEach( dctPartVariant, [this,&def] (SdObject *obj) -> bool {
     SdPartVariant *prt = dynamic_cast<SdPartVariant*>(obj);
@@ -319,6 +442,12 @@ void SdWEditorComponent::fillParts()
     mPartTable->setCurrentRow( 0 );
     onCurrentPart( 0 );
     }
+  if( !mAnotherAuthor ) {
+    mPartDefault->setEnabled( mPartTable->count() );
+    mPartSelect->setEnabled( mPartTable->count() );
+    mPartDelete->setEnabled( mPartTable->count() );
+    mPartDeleteAll->setEnabled( mPartTable->count() );
+    }
   }
 
 
@@ -340,4 +469,8 @@ SdPartVariant *SdWEditorComponent::getPartVariant(int index)
     });
   return prt;
   }
+
+
+
+
 

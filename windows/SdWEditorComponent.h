@@ -40,12 +40,14 @@ class SdWEditorComponent : public SdWEditor
     QPushButton          *mSectionDubl;
     QPushButton          *mSectionSelect;
     QPushButton          *mSectionDelete;
+    QPushButton          *mSectionDeleteAll;
 
     QListWidget          *mPartTable;
     QPushButton          *mPartAdd;
     QPushButton          *mPartSelect;
     QPushButton          *mPartDelete;
     QPushButton          *mPartDefault;
+    QPushButton          *mPartDeleteAll;
 
     bool                  mAnotherAuthor;   //True if component crated another author and edit prohibited
   public:
@@ -61,12 +63,14 @@ class SdWEditorComponent : public SdWEditor
     void sectionDubl();
     void sectionSelect();
     void sectionDelete();
+    void sectionDeleteAll();
     void onCurrentSection( int index );
 
     void partAdd();
     void partSelect();
     void partDelete();
     void partDefault();
+    void partDeleteAll();
     void onCurrentPart( int index );
   private:
     void fillSections();
