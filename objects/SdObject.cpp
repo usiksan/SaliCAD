@@ -69,6 +69,15 @@ SdContainer *SdObject::getRoot() const
 
 
 
+void SdObject::setParent(SdContainer *parent)
+  {
+  Q_ASSERT( mParent == nullptr );
+  mParent = parent;
+  }
+
+
+
+
 void SdObject::attach(SdUndo *undo)
   {
   Q_UNUSED(undo)

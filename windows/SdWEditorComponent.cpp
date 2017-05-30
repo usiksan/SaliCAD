@@ -206,7 +206,6 @@ void SdWEditorComponent::sectionSelect()
       SdWSection *ws = new SdWSection( mAnotherAuthor, section, mSectionsTab );
       mSectionsTab->insertTab( index, ws, tr("Section %1").arg(index+1) );
       mSectionsTab->setCurrentWidget( ws );
-      mComponent->insertChild( section, mUndo );
       mComponent->updateCreationTime();
       }
     }

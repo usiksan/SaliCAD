@@ -107,6 +107,8 @@ class SdGraphPartImp : public SdGraph
 
 
     //Service
+    //Set pin name for pin index
+    void          setPinName( int pinIndex, const QString pinName );
     //Pin connection-disconnection by index
     void          pinConnectionSet(int pinIndex, const QString wireName, bool com);
     //link-unlink section

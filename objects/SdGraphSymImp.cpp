@@ -213,6 +213,8 @@ void SdGraphSymImp::setLinkSection(int section, SdGraphPartImp *partImp)
     //Scan all pins and disconnect from partImp
     for( int index = 0; index < mPins.count(); index++ ) {
       mPartImp->pinConnectionSet( mPins[index].mPrtPin, QString(), false );
+      //Reset part pin name
+      mPartImp->setPinName( mPins[index].mPrtPin, QString() );
       mPins[index].mPrtPin = -1;
       }
     mPartImp = nullptr;
@@ -229,6 +231,8 @@ void SdGraphSymImp::setLinkSection(int section, SdGraphPartImp *partImp)
         mPins[index].mPinNumber = sct->getPinNumber( mPins[index].mPinName );
         //PinNumber received, get part pin index
         mPins[index].mPrtPin = partImp->getPinIndex( mPins[index].mPinNumber );
+        //Assign part pin name
+        partImp->setPinName( mPins[index].mPrtPin, mPins[index].mPinName );
         //Assign pin connection
         partImp->pinConnectionSet( mPins[index].mPrtPin, mPins[index].mWireName, mPins[index].mCom );
         }

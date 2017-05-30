@@ -186,6 +186,17 @@ bool SdGraphPartImp::isSectionFree( int *section, SdPItemPart *part, SdPItemSymb
 
 
 
+
+//Set pin name for pin index
+void SdGraphPartImp::setPinName(int pinIndex, const QString pinName)
+  {
+  if( pinIndex < 0 ) return;
+  Q_ASSERT( pinIndex < mPins.count() );
+  mPins[pinIndex].mPinName = pinName;
+  }
+
+
+
 void SdGraphPartImp::attach(SdUndo *undo)
   {
   SdPItemPlate *plate = getPlate();
