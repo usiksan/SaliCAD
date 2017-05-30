@@ -12,15 +12,21 @@ Description
 */
 #include "SdGraphWiringWire.h"
 #include "SdContainerSheetNet.h"
+#include "SdPItemSheet.h"
 
 SdGraphWiringWire::SdGraphWiringWire()
   {
 
   }
 
-SdGraphWiringWire::SdGraphWiringWire(SdPoint a, SdPoint b, const SdPropLine &prp)
+SdGraphWiringWire::SdGraphWiringWire(SdPoint a, SdPoint b, const SdPropLine &prp) :
+  SdGraphWiring(),
+  mA(a), mB(b),
+  mDotA(false), mDotB(false),
+  mDir(false),
+  mFix(0)
   {
-
+  mProp = prp;
   }
 
 
@@ -88,23 +94,59 @@ void SdGraphWiringWire::fragmentation(SdPoint p, SdSelector *sel, SdUndo *undo)
 
 void SdGraphWiringWire::attach(SdUndo *undo)
   {
+  getNet()->getSheet()->netWirePlace( mA, mB, getWireName(), undo );
+  //TODO calc dots
   }
+
+
+
 
 void SdGraphWiringWire::detach(SdUndo *undo)
   {
+  getNet()->getSheet()->netWireDelete( mA, mB, getWireName(), undo );
   }
+
+
 
 void SdGraphWiringWire::cloneFrom(const SdObject *src)
   {
+  SdGraphWiring::cloneFrom( src );
+  const SdGraphWiringWire *wire = dynamic_cast<const SdGraphWiringWire*>(src);
+  Q_ASSERT(wire != nullptr);
+  mA    = wire->mA;
+  mB    = wire->mB;       //Wire segment
+  mProp = wire->mProp;    //Wire drawing properties
+  mDotA = wire->mDotA;
+  mDotB = wire->mDotB;    //Dots present flag
   }
+
+
 
 void SdGraphWiringWire::writeObject(QJsonObject &obj) const
   {
+  SdGraphWiring::writeObject(obj);
+  mA.write( QStringLiteral("a"), obj );
+  mB.write( QStringLiteral("b"), obj );        //Wire segment
+  mProp.write( obj );       //Wire drawing properties
+  obj.insert( QStringLiteral("dotA"), mDotA );
+  obj.insert( QStringLiteral("dotB"), mDotB ); //Dots present flag
   }
+
+
+
 
 void SdGraphWiringWire::readObject(SdObjectMap *map, const QJsonObject obj)
   {
+  SdGraphWiring::readObject( map, obj );
+  mA.read( QStringLiteral("a"), obj );
+  mB.read( QStringLiteral("b"), obj );        //Wire segment
+  mProp.read( obj );       //Wire drawing properties
+  mDotA = obj.value( QStringLiteral("dotA") ).toBool();
+  mDotB = obj.value( QStringLiteral("dotB") ).toBool(); //Dots present flag
   }
+
+
+
 
 void SdGraphWiringWire::saveState(SdUndo *undo)
   {

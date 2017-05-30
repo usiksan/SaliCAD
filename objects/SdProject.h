@@ -31,6 +31,8 @@ class SdProject : public SdContainer
     bool                       mDirty;                //Project dirty flag
     QMap<QString,SdObjectPtr>  mItemExtendNameMap;    //Extend name - item assotiation
     SdUndo                     mUndo;
+
+    int                        mNetIndex;             //Net index for creation default net
   public:
     SdProject();
     ~SdProject();
@@ -45,6 +47,9 @@ class SdProject : public SdContainer
 
     //Return object of project for given id
     SdProjectItem    *getProjectsItem( quint64 mask, const QString id );
+
+    //Return net name unused in project
+    QString           getUnusedNetName();
 
     //Return dirty status
     bool              isDirty() const { return mDirty; }
@@ -73,7 +78,8 @@ class SdProject : public SdContainer
     virtual void      undoDeleteChild(SdObject *child) override;
 
   private:
-    void               fillMap();
+    void              fillMap();
+    bool              isNetNameUsed( const QString netName );
   };
 
 #endif // SDPROJECT_H

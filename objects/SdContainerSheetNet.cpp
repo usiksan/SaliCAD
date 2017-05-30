@@ -13,6 +13,7 @@ Description
 #include "SdContainerSheetNet.h"
 #include "SdGraphWiringWire.h"
 #include "SdProject.h"
+#include "SdPItemSheet.h"
 
 SdContainerSheetNet::SdContainerSheetNet() :
   SdContainer()
@@ -28,6 +29,15 @@ SdContainerSheetNet::SdContainerSheetNet(const QString netName) :
   mNetName(netName)
   {
 
+  }
+
+
+
+
+//Return sheet where in net inserted
+SdPItemSheet *SdContainerSheetNet::getSheet() const
+  {
+  return dynamic_cast<SdPItemSheet*>(getParent());
   }
 
 

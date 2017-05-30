@@ -85,6 +85,25 @@ void SdContainer::forEach(quint64 classMask, std::function<bool (SdObject *)> fu
 
 
 
+SdObject *SdContainer::behindPoint(quint64 classMask, SdPoint p, int *state)
+  {
+  SdObject *res = nullptr;
+  forEach( classMask, [p,state,&res] (SdObject *obj) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+    if( graph ) {
+      int tmp = graph->behindCursor(p);
+      *state |= tmp;
+      if( tmp ) res = graph;
+      }
+    return true;
+    });
+
+  return res;
+  }
+
+
+
+
 //void SdContainer::forEachDown(quint64 classMask, std::function<bool (SdObject *)> fun1)
 //  {
 //  for( SdObject *ptr : mChildList )

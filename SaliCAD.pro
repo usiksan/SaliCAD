@@ -138,7 +138,8 @@ SOURCES += \
     objects/SdUndoRecordSymImp.cpp \
     objects/SdUndoRecordPartImp.cpp \
     modes/SdModeCWire.cpp \
-    windows/SdPropBarWire.cpp
+    windows/SdPropBarWire.cpp \
+    windows/SdDNetUnion.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -269,7 +270,8 @@ HEADERS  += \
     objects/SdUndoRecordSymImp.h \
     objects/SdUndoRecordPartImp.h \
     modes/SdModeCWire.h \
-    windows/SdPropBarWire.h
+    windows/SdPropBarWire.h \
+    windows/SdDNetUnion.h
 
 DISTFILES += \
     license.txt
@@ -278,4 +280,5 @@ RESOURCES += \
     SaliCADrc.qrc
 
 FORMS += \
-    windows/SdDGetObject.ui
+    windows/SdDGetObject.ui \
+    windows/SdDNetUnion.ui

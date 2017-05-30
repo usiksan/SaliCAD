@@ -51,10 +51,14 @@ class SdContainer : public SdObject
     virtual void cloneFrom( const SdObject *src) override;
 
             void draw( SdContext *context );
+/*[] (SdObject *obj) -> bool {
 
+   }
+   */
             void forEach( quint64 classMask, std::function<bool(SdObject*)> fun1 );
 
-            //void forEachDown( quint64 classMask, std::function<bool(SdObject*)> fun1 );
+    //Return object and its state behind point
+    SdObject    *behindPoint( quint64 classMask, SdPoint p, int *state );
 
   private:
     void         clearChildList();

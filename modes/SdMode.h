@@ -43,6 +43,7 @@ class SdMode
    //Исполняемые через обозреватель
    void           update();          //Обновить изображение
    void           cancelMode();      //Прекращение режима
+   SdPoint        getGrid() const;
 
    //Сервисные
    void           setStep( int stp );

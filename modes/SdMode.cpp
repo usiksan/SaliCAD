@@ -160,6 +160,14 @@ void SdMode::cancelMode()
 
 
 
+
+SdPoint SdMode::getGrid() const
+  {
+  return mEditor->gridGet();
+  }
+
+
+
 void SdMode::setStep(int stp)
   {
   //assign new step

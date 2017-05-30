@@ -16,6 +16,7 @@ Description
 #include "SdContainer.h"
 
 class SdSelector;
+class SdPItemSheet;
 
 #define SD_TYPE_SHEET_NET "SheetNet"
 
@@ -27,8 +28,15 @@ class SdContainerSheetNet : public SdContainer
     SdContainerSheetNet();
     SdContainerSheetNet( const QString netName );
 
-    QString getNetName() const { return mNetName; }
-    void    accumLinked( SdPoint a, SdPoint b, SdSelector *sel );
+    //Information
+    //Return net name
+    QString       getNetName() const { return mNetName; }
+    //Return sheet where in net inserted
+    SdPItemSheet *getSheet() const;
+
+    //Service
+    //Accumulate to selector segments of net
+    void          accumLinked( SdPoint a, SdPoint b, SdSelector *sel );
 
     // SdObject interface
   public:

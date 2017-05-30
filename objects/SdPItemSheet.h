@@ -40,6 +40,9 @@ class SdPItemSheet : public SdProjectItem
     //Information about wire segment moving to make connection to pin
     void                  netWirePlace( SdPoint a, SdPoint b, const QString name, SdUndo *undo );
 
+    //Information about wire segment delete to remove connection from pin
+    void                  netWireDelete( SdPoint a, SdPoint b, const QString name, SdUndo *undo );
+
     //Insert wire
     void                  insertWire( const QString name, SdGraphWiringWire *wire, SdUndo *undo );
 

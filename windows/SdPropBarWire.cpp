@@ -12,6 +12,7 @@ Description
   Properties bar for wires
 */
 #include "SdPropBarWire.h"
+#include <QLineEdit>
 
 static QList<double> prevWidth;
 
@@ -62,13 +63,13 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
 
   //on complete editing
   connect( mWireName->lineEdit(), &QLineEdit::editingFinished, [=](){
-    setWireName( mWireName->>currentText() );
+    setWireName( mWireName->currentText() );
     emit propChanged();
     });
   //on select other width
   connect( mWireName, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
     Q_UNUSED(index)
-    setWireName( mWireName->>currentText() );
+    setWireName( mWireName->currentText() );
     emit propChanged();
     });
 

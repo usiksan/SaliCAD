@@ -30,9 +30,9 @@ class SdWEditorGraphSheet : public SdWEditorGraph
     // SdWEditor interface
   public:
     virtual SdProjectItem *getProjectItem() override;
-    virtual void onActivateEditor() override;
-    virtual void cmModeComponent() override;
-    virtual void cmModeNet() override;
+    virtual void           onActivateEditor() override;
+    virtual void           cmModeComponent() override;
+    virtual void           cmModeNet() override;
     virtual void cmModeBus() override;
     virtual void cmModeDisconnect() override;
     virtual void cmModePcbArea() override;

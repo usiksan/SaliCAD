@@ -15,13 +15,15 @@ Description
 #include "SdProjectItem.h"
 #include "SdPulsar.h"
 #include "SdPItemPlate.h"
+#include "SdPItemSheet.h"
 #include <QJsonArray>
 #include <QFile>
 #include <QJsonDocument>
 #include <QByteArray>
 
 SdProject::SdProject() :
-  mDirty(false)
+  mDirty(false),
+  mNetIndex(0)
   {
   }
 
@@ -90,6 +92,22 @@ SdProjectItem *SdProject::getProjectsItem(quint64 mask, const QString id)
     return true;
     });
   return res;
+  }
+
+
+
+
+//Return net name unused in project
+QString SdProject::getUnusedNetName()
+  {
+  //Prepare net pattern
+  QString netName(defNetNamePrefix "%1" );
+  while(true) {
+    //Check if name not used
+    if( isNetNameUsed( netName.arg(mNetIndex) ) )
+      mNetIndex++;
+    else return netName.arg(mNetIndex);
+    }
   }
 
 
@@ -289,4 +307,19 @@ void SdProject::fillMap()
     if( it ) mItemExtendNameMap.insert( it->getExtendTitle(), it );
     return true;
     } );
+  }
+
+
+
+
+bool SdProject::isNetNameUsed(const QString netName)
+  {
+  bool unused = true;
+  forEach( dctSheet, [&unused,netName] (SdObject *obj) ->bool {
+    SdPItemSheet *sheet = dynamic_cast<SdPItemSheet*>(obj);
+    Q_ASSERT(sheet != nullptr);
+    unused = sheet->netGet( netName ) == nullptr;
+    return unused;
+    });
+  return unused;
   }

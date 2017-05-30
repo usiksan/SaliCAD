@@ -64,7 +64,7 @@ void SdPItemSheet::netRename(const QString oldName, const QString newName, SdUnd
     //New net does not exist, create it
     newNet = netCreate(newName,undo);
     }
-  oldNet->forEach( dctAll, [this] (SdObject *obj) ->bool {
+  oldNet->forEach( dctAll, [this,oldNet,newNet,undo] (SdObject *obj) ->bool {
     //Create obj copy
     SdObject *cpy = obj->copy();
     //Delete prev obj
@@ -78,12 +78,26 @@ void SdPItemSheet::netRename(const QString oldName, const QString newName, SdUnd
 
 
 
+//Information about wire segment moving to make connection to pin
 void SdPItemSheet::netWirePlace(SdPoint a, SdPoint b, const QString name, SdUndo *undo)
   {
   forEach( dctSymImp, [a, b, name, undo] (SdObject *obj) -> bool {
     SdGraphSymImp *sym = dynamic_cast<SdGraphSymImp*>(obj);
     Q_ASSERT( sym != nullptr );
     sym->netWirePlace( a, b, name, undo );
+    return true;
+    });
+  }
+
+
+
+//Information about wire segment delete to remove connection from pin
+void SdPItemSheet::netWireDelete(SdPoint a, SdPoint b, const QString name, SdUndo *undo)
+  {
+  forEach( dctSymImp, [a, b, name, undo] (SdObject *obj) -> bool {
+    SdGraphSymImp *sym = dynamic_cast<SdGraphSymImp*>(obj);
+    Q_ASSERT( sym != nullptr );
+    sym->netWireDelete( a, b, name, undo );
     return true;
     });
   }

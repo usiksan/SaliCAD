@@ -68,6 +68,9 @@ class SdWEditorGraph : public SdWEditor
     SdPoint originGet() const { return mOrigin; }
     void    originSet( SdPoint org );
 
+    SdPoint gridGet() const { return mGrid; }
+    void    gridSet( SdPoint grid );
+
     SdPoint clientSize() const { return mClientSize; }
 
     void    dirtyCashe() { mCasheDirty = true; }

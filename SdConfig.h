@@ -130,5 +130,7 @@ History
 #define minScale    0.0001 /*Ограничения масштабирования*/
 #define maxScale    10000.0
 
+#define defNetNamePrefix "XN" //Default net name prefix
+
 #endif // SDCONFIG
 

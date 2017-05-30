@@ -487,7 +487,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   frame->addToolBar( wbar );
   wbar->setVisible(false);
   mbarTable[PB_WIRE] = wbar;
-  wbar->connect( wbar, &SdPropBarSymImp::propChanged, frame, &SdWMain::cmPropertiesChange );
+  wbar->connect( wbar, &SdPropBarWire::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   for( int i = 0; i < MD_LAST; i++ )
     if( cmModeTable[i] )

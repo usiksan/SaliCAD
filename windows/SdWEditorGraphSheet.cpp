@@ -16,6 +16,7 @@ Description
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
 #include "modes/SdModeCSymImp.h"
+#include "modes/SdModeCWire.h"
 #include <QDebug>
 
 SdWEditorGraphSheet::SdWEditorGraphSheet(SdPItemSheet *sch, QWidget *parent) :
@@ -58,6 +59,7 @@ void SdWEditorGraphSheet::cmModeComponent()
 
 void SdWEditorGraphSheet::cmModeNet()
   {
+  modeSet( new SdModeCWire( this, mSheet ) );
   }
 
 void SdWEditorGraphSheet::cmModeBus()

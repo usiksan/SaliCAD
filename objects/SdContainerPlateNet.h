@@ -15,6 +15,10 @@ Description
 
 #include "SdContainer.h"
 
+class SdSelector;
+
+#define SD_TYPE_PLATE_NET "PlateNet"
+
 class SdContainerPlateNet : public SdContainer
   {
   public:
