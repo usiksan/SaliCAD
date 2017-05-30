@@ -9,18 +9,15 @@ Web
   www.saliLab.ru
 
 Description
-  Properties bar for lines and other linear objects
+  Properties bar for wires
 */
-#include "SdPropBarLinear.h"
-#include <QList>
-#include <QLineEdit>
-#include <QDoubleValidator>
-#include <QIcon>
-#include <QDebug>
+#include "SdPropBarWire.h"
 
 static QList<double> prevWidth;
 
-SdPropBarLinear::SdPropBarLinear(const QString title) :
+static QList<QString> prevWires;
+
+SdPropBarWire::SdPropBarWire( const QString title ) :
   SdPropBar( title )
   {
   mWidth = new QComboBox();
@@ -48,6 +45,34 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
     });
 
   addWidget( mWidth );
+
+  addSeparator();
+
+
+  mWireName = new QComboBox();
+  mWireName->setEditable(true);
+  //Fill name list with previous wire names
+  if( prevWires.count() == 0 )
+    prevWires.append( QStringLiteral("----") );
+  for( QString v : prevWires )
+    mWireName->addItem( v );
+  //Select first item
+  mWireName->setCurrentIndex(0);
+  mWireName->setMinimumWidth(80);
+
+  //on complete editing
+  connect( mWireName->lineEdit(), &QLineEdit::editingFinished, [=](){
+    setWireName( mWireName->>currentText() );
+    emit propChanged();
+    });
+  //on select other width
+  connect( mWireName, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
+    Q_UNUSED(index)
+    setWireName( mWireName->>currentText() );
+    emit propChanged();
+    });
+
+  addWidget( mWireName );
 
   addSeparator();
 
@@ -108,8 +133,8 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
 
 
 
-//Set all visual line properties from SdPropLine structure
-void SdPropBarLinear::setPropLine(SdPropLine *propLine, double ppm, int enterType)
+
+void SdPropBarWire::setPropWire(SdPropLine *propLine, double ppm, int enterType, const QString wireName)
   {
   if( propLine ) {
     //Set current layer
@@ -124,13 +149,16 @@ void SdPropBarLinear::setPropLine(SdPropLine *propLine, double ppm, int enterTyp
 
     //line type
     setLineType( propLine->mType.getValue() );
+
+    //Current wire name
+    mWireName->setCurrentText( wireName );
     }
   }
 
 
 
-//Get all line properties from visual elements and fill SdPropLine
-void SdPropBarLinear::getPropLine(SdPropLine *propLine, int *enterType )
+
+void SdPropBarWire::getPropWire(SdPropLine *propLine, int *enterType, QString *wireName)
   {
   if( propLine ) {
     SdLayer *layer = getSelectedLayer();
@@ -139,6 +167,9 @@ void SdPropBarLinear::getPropLine(SdPropLine *propLine, int *enterType )
 
     if( !mWidth->currentText().isEmpty() )
       propLine->mWidth = static_cast<int>( mWidth->currentText().toDouble() / mPPM );
+
+    if( !mWireName->currentText().isEmpty() )
+      *wireName = mWireName->currentText();
 
     if( mLineSolid->isChecked() ) propLine->mType = dltSolid;
     else if( mLineDotted->isChecked() ) propLine->mType = dltDotted;
@@ -153,13 +184,13 @@ void SdPropBarLinear::getPropLine(SdPropLine *propLine, int *enterType )
 
 
 
-//Set line width
-void SdPropBarLinear::setWidth(double width)
+
+void SdPropBarWire::setWidth(double width)
   {
   int index = prevWidth.indexOf( width );
   if( index < 0 ) {
     //new value, insert
-    if( prevWidth.count() >= LINEAR_WIDTH_PREV_COUNT )
+    if( prevWidth.count() >= WIRE_WIDTH_PREV_COUNT )
       //List of previous width is full. Remove last value.
       prevWidth.removeLast();
     prevWidth.insert( 0, width );
@@ -173,8 +204,28 @@ void SdPropBarLinear::setWidth(double width)
 
 
 
+
+void SdPropBarWire::setWireName(const QString wire)
+  {
+  int index = prevWires.indexOf( wire );
+  if( index < 0 ) {
+    //new value, insert
+    if( prevWires.count() >= WIRE_WIDTH_PREV_COUNT )
+      //List of previous width is full. Remove last value.
+      prevWires.removeLast();
+    prevWires.insert( 0, wire );
+    }
+  else {
+    //Move used value to top
+    prevWires.removeAt( index );
+    prevWires.insert( 0, wire );
+    }
+  }
+
+
+
 //Set line vertex type when enter line - angle between two connected segments
-void SdPropBarLinear::setVertexType(int type)
+void SdPropBarWire::setVertexType(int type)
   {
   mEnterOrtho->setChecked( type == dleOrtho );
   mEnter45degree->setChecked( type == dle45degree );
@@ -183,8 +234,9 @@ void SdPropBarLinear::setVertexType(int type)
 
 
 
+
 //Set line type: solid, dotted or dashed
-void SdPropBarLinear::setLineType(int type)
+void SdPropBarWire::setLineType(int type)
   {
   mLineSolid->setChecked( type == dltSolid );
   mLineDotted->setChecked( type == dltDotted );

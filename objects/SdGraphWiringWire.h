@@ -49,6 +49,7 @@ class SdGraphWiringWire : public SdGraphWiring
     bool    isPointOnSection( SdPoint p ) const { return p.isOnSegment( mA, mB ); }
 //    void   Utilise();
 //    void   SetDotPoint();
+    void    drawWire( SdContext *dc, QColor color );
   protected:
 //    void CalcVertexPoints( DPoint &p1, DPoint &p2, DPoint gridSize );
 //    void Exchange();

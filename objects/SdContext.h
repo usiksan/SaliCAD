@@ -38,15 +38,23 @@ class SdContext {
     SdSelector     *mSelector;     //Объект-селектор относительно которого выполняется рисование
     QTransform      mTransform;    //Transform matrix
     bool            mPairLayer;    //True for paired layer
+    QColor          mOverColor;    //Color for overriding default layers color
+    bool            mOverOn;       //True if overriding is on
   public:
     SdContext(SdPoint grid, QPainter *painter);
 
-    //Операции с преобразователем координат
+    //Operations with coord convertor
     SdContext*      setConverter( SdConverter *c );
     void            removeConverter( SdConverter *c );
 
+    //Overriding color. If this color is setuped then drawing perform by this color but not default layer color.
+    //This possibility is for draw "selected" elements or "enter" elements and so on
+    //By default over color is not defined
+    void            setOverColor( QColor color ) { mOverColor = color; mOverOn = true; }
+    void            resetOverColor() { mOverOn = false; }
+
     //Операции с селектором
-    void            setSelector( SdSelector* );
+    void            setSelector( SdSelector *selector );
     SdSelector     *getSelector() { return mSelector; }
 
     //Информационные

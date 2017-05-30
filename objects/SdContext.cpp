@@ -25,7 +25,8 @@ SdContext::SdContext(SdPoint grid, QPainter *painter) :
   mGrid(grid),
   mSelector(0),
   mTransform(),
-  mPairLayer(false)
+  mPairLayer(false),
+  mOverOn(false)      //True if overriding is on
   {
 
   }
@@ -51,6 +52,17 @@ void SdContext::removeConverter(SdConverter *c)
     }
   updateConverter();
   }
+
+
+
+
+void SdContext::setSelector(SdSelector *selector)
+  {
+  mSelector = selector;
+  }
+
+
+
 
 void SdContext::line(SdPoint a, SdPoint b)
   {
@@ -475,8 +487,13 @@ void SdContext::updateConverter()
   mPainter->setTransform( mTransform, false );
   }
 
+
+
+
 QColor SdContext::convertColor(SdLayer *layer)
   {
+  if( mOverOn )
+    return mOverColor;
   if( mSelector )
     return sdEnvir->getSysColor(scSelected);
   return convertLayer(layer)->color();

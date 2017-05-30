@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -33,6 +33,9 @@ class SdPItemSheet : public SdProjectItem
 
     //Creates net with desired name or return existing net
     SdContainerSheetNet  *netCreate( const QString name, SdUndo *undo );
+
+    //Rename net. Both simple rename and union two nets
+    void                  netRename( const QString oldName, const QString newName, SdUndo *undo );
 
     //Information about wire segment moving to make connection to pin
     void                  netWirePlace( SdPoint a, SdPoint b, const QString name, SdUndo *undo );

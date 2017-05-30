@@ -53,6 +53,31 @@ SdContainerSheetNet *SdPItemSheet::netCreate(const QString name, SdUndo *undo)
 
 
 
+//Rename net. Both simple rename and union two nets
+void SdPItemSheet::netRename(const QString oldName, const QString newName, SdUndo *undo)
+  {
+  SdContainerSheetNet *oldNet = netGet(oldName);
+  if( oldNet == nullptr )
+    return;
+  SdContainerSheetNet *newNet = netGet(newName);
+  if( newNet == nullptr ) {
+    //New net does not exist, create it
+    newNet = netCreate(newName,undo);
+    }
+  oldNet->forEach( dctAll, [this] (SdObject *obj) ->bool {
+    //Create obj copy
+    SdObject *cpy = obj->copy();
+    //Delete prev obj
+    oldNet->deleteChild( obj, undo );
+    //Insert new obj
+    newNet->insertChild( cpy, undo );
+    return true;
+    });
+  }
+
+
+
+
 void SdPItemSheet::netWirePlace(SdPoint a, SdPoint b, const QString name, SdUndo *undo)
   {
   forEach( dctSymImp, [a, b, name, undo] (SdObject *obj) -> bool {

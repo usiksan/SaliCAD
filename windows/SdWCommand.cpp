@@ -19,6 +19,7 @@ Description
 #include "SdPropBarSymPin.h"
 #include "SdPropBarPartPin.h"
 #include "SdPropBarSymImp.h"
+#include "SdPropBarWire.h"
 #include <QMenuBar>
 #include <QSettings>
 #include <QFileInfo>
@@ -481,6 +482,12 @@ void SdWCommand::createToolBars(SdWMain *frame)
   isbar->setVisible(false);
   mbarTable[PB_SYM_IMP] = isbar;
   isbar->connect( isbar, &SdPropBarSymImp::propChanged, frame, &SdWMain::cmPropertiesChange );
+
+  SdPropBarWire *wbar = new SdPropBarWire( QStringLiteral("Wire") );
+  frame->addToolBar( wbar );
+  wbar->setVisible(false);
+  mbarTable[PB_WIRE] = wbar;
+  wbar->connect( wbar, &SdPropBarSymImp::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   for( int i = 0; i < MD_LAST; i++ )
     if( cmModeTable[i] )

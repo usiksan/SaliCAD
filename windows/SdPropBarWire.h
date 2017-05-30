@@ -9,17 +9,19 @@ Web
   www.saliLab.ru
 
 Description
-  Properties bar for lines and other linear objects
+  Properties bar for wires
 */
-#ifndef SDPROPBARLINEAR_H
-#define SDPROPBARLINEAR_H
+#ifndef SDPROPBARWIRE_H
+#define SDPROPBARWIRE_H
 
 #include "SdPropBar.h"
 #include <QComboBox>
 
-#define LINEAR_WIDTH_PREV_COUNT 10
+#define WIRE_WIDTH_PREV_COUNT 10
+#define WIRE_NAME_PREV_COUNT  10
 
-class SdPropBarLinear : public SdPropBar
+
+class SdPropBarWire : public SdPropBar
   {
     Q_OBJECT
 
@@ -27,6 +29,8 @@ class SdPropBarLinear : public SdPropBar
     //Width of line
     double     mPPM;   //Logical coord per physical
     QComboBox *mWidth; //Width of linear objects
+
+    QComboBox *mWireName; //Name of nets for wires
 
     //Vertex type of two lines
     QAction   *mEnterOrtho;
@@ -38,15 +42,16 @@ class SdPropBarLinear : public SdPropBar
     QAction   *mLineDotted;
     QAction   *mLineDashed;
   public:
-    SdPropBarLinear( const QString title );
+    SdPropBarWire( const QString title );
 
-    void setPropLine( SdPropLine *propLine, double ppm, int enterType );
-    void getPropLine( SdPropLine *propLine, int *enterType );
+    void setPropWire( SdPropLine *propLine, double ppm, int enterType, const QString wireName );
+    void getPropWire( SdPropLine *propLine, int *enterType, QString *wireName );
 
   private:
     void setWidth( double width );
+    void setWireName( const QString wire );
     void setVertexType( int type );
     void setLineType( int type );
   };
 
-#endif // SDPROPBARLINEAR_H
+#endif // SDPROPBARWIRE_H

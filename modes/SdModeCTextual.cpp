@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Common mode for all with enter text
 */
 #include "SdModeCTextual.h"
 #include "objects/SdEnvir.h"
