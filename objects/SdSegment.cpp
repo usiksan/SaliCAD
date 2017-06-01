@@ -12,7 +12,7 @@ Description
 */
 
 #include "SdSegment.h"
-
+#include <math.h>
 
 /*
   int i = (b.x()-a.x())*(y()-a.y()) - (b.y()-a.y())*(x()-a.x());
@@ -57,6 +57,22 @@ bool SdSegment::isCross(SdPoint a, SdPoint b, SdPoint *out ) const
 
 
 
+
+bool SdSegment::isContinue(SdSegment s) const
+  {
+  if( isSectionX() && s.isSectionX() ) {
+    return qMin(p1.x(),p2.x()) < qMax(s.p1.x(),s.p2.x()) &&
+           qMax(p1.x(),p2.x()) > qMin(s.p1.x(),s.p2.x());
+    }
+  if( isSectionY() && s.isSectionY() ) {
+    return qMin(p1.y(),p2.y()) < qMax(s.p1.y(),s.p2.y()) &&
+           qMax(p1.y(),p2.y()) > qMin(s.p1.y(),s.p2.y());
+    }
+  return false;
+  }
+
+
+
 bool SdSegment::isPointOn(SdPoint p) const
   {
   if( vectorMultiplication(p1,p) != 0 )
@@ -74,3 +90,62 @@ int SdSegment::vectorMultiplication(SdPoint a, SdPoint b) const
   {
   return (b.x()-a.x()) * (p2.y()-p1.y()) - (b.y()-a.y()) * (p2.x()-p1.x());
   }
+
+
+
+void SdSegment::calcLineK(int &A, int &B, int &C) const
+  {
+  //Отыскать уравнение прямой
+  int dx = p2.x() - p1.x();
+  int dy = p2.y() - p1.y();
+  //Коэффициенты уравнения
+  A = -dy;
+  B = dx;
+  C = dy * p1.x() - dx * p2.y();
+  }
+
+
+
+double SdSegment::lineDistance(SdPoint p) const
+  {
+  //Частный случай совпадения концов отрезка
+  if( p1 == p2 ) return p1.getDistance( p );
+  //Коэффициенты уравнения
+  int A, B, C;
+  calcLineK( A, B, C );
+  //Вычислить величину
+  Q_ASSERT( A != 0 || B != 0 );
+  double res = ( A * p.x() + B * p.y() + C ) / sqrt( A * A + B * B );
+  return res >= 0 ? res : -res;
+  }
+
+
+
+
+SdPoint SdSegment::getLineNearest(SdPoint sour) const
+  {
+  //Частный случай совпадения концов отрезка
+  if( p1 == p2 ) return p1;
+  //Коэффициенты уравнения
+  int A, B, C;
+  calcLineK( A, B, C );
+  Q_ASSERT( A != 0 || B != 0 );
+  SdPoint p;
+  p.rx() = -A / (A*A + B*B) * (A*sour.x() + B*sour.y() + C) + sour.x();
+  p.ry() = -B / (A*A + B*B) * (A*sour.x() + B*sour.y() + C) + sour.y();
+  return p;
+  }
+
+bool SdSegment::isOneSideLine(const SdSegment &s) const
+  {
+  //Коэффициенты уравнения
+  int A, B, C;
+  calcLineK( A, B, C );
+  //Вычислить числа условия
+  int m1 = A * s.p1.x() + B * s.p1.y() + C;
+  int m2 = A * s.p2.x() + B * s.p2.y() + C;
+  //Проверить условие
+  return (m1 < 0 && m2 < 0) || (m1 > 0 && m2 > 0);
+  }
+
+

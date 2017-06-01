@@ -26,6 +26,7 @@ Description
 #include "SdUndoRecordLinkSection.h"
 #include "SdUndoRecordSymImp.h"
 #include "SdUndoRecordPartImp.h"
+#include "SdUndoRecordWire.h"
 #include "windows/SdWCommand.h"
 
 SdUndo::SdUndo() :
@@ -136,6 +137,13 @@ void SdUndo::symImp(SdPoint *origin, SdPropSymImp *imp, int *logSection, int *lo
 void SdUndo::partImp(SdPoint *origin, SdPropPartImp *imp, int *logNumber, SdRect *over, QString *prefix, SdPropText *identProp, SdPoint *identOrigin, SdPoint *identPos, SdRect *identRect)
   {
   addUndo( new SdUndoRecordPartImp( origin, imp, logNumber, over, prefix, identProp, identOrigin, identPos, identRect ) );
+  }
+
+
+
+void SdUndo::wire(SdPropLine *prop, SdPoint *p1, SdPoint *p2, bool *dot1, bool *dot2)
+  {
+  addUndo( new SdUndoRecordWire( prop, p1, p2, dot1, dot2 ) );
   }
 
 

@@ -33,6 +33,7 @@ class SdPropString
     void       operator = ( const QString src ) { mString = src; mValue = OneValue; }
     QString    str() const { return mString; }
     void       append( SdPropString p );
+    void       append( const QString str );
     void       clear() { mValue = NoValue; }   //Нет значения
     bool       match( SdPropString const &s ) {
       return s.mValue == OneValue && mValue == OneValue ? mString.compare( s.mString ) == 0 : true;

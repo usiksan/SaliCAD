@@ -55,7 +55,7 @@ class SdGraph : public SdObject
     virtual void   selectByPoint( const SdPoint p, SdSelector *selector );
     virtual void   selectByRect( const SdRect &r, SdSelector *selector );
     virtual void   select( SdSelector *selector );
-    virtual void   prepareMove();
+    virtual void   prepareMove( SdUndo *undo );
     //Обработка слоев
     virtual bool   canHideLayer( SdLayer *layer );
     //Check if object is visible

@@ -14,6 +14,7 @@ Description
 #include "SdGraphWiringWire.h"
 #include "SdProject.h"
 #include "SdPItemSheet.h"
+#include "SdSegment.h"
 
 SdContainerSheetNet::SdContainerSheetNet() :
   SdContainer()
@@ -43,6 +44,55 @@ SdPItemSheet *SdContainerSheetNet::getSheet() const
 
 
 
+
+//Return nesessity of dot on net vertex
+bool SdContainerSheetNet::getNeedDot(SdPoint p, SdGraphWiringWire *own)
+  {
+  int  nodeInCount = 0; //Счетчик сегментов, входящих в узел
+  bool thereDot = false;    //Наличие точки в данном узле
+  forEach( dctWire, [p,own,&nodeInCount,&thereDot] (SdObject *obj) ->bool {
+    SdGraphWiringWire *wire = dynamic_cast<SdGraphWiringWire*>(obj);
+    if( obj != own && wire && wire->isPointOnSection(p) ) {
+      //Точка на тестируемом сегменте
+      if( wire->getA() == p ) {
+        //Точка на конце a
+        if( wire->getDotA() ) thereDot = true;
+        else nodeInCount++;
+        }
+      else if( wire->getB() == p ) {
+        //Точка на конце b
+        if( wire->getDotB() ) thereDot = true;
+        else nodeInCount++;
+        }
+      else {
+        SdSegment s1(wire->getA(),wire->getB()), s2( own->getA(), own->getB() );
+        if( !s1.isContinue( s2 ) ) nodeInCount += 2;
+        }
+      }
+    return !thereDot; //Блокировать дальнейшую итерацию, если точка уже есть
+    });
+  return nodeInCount > 1 && !thereDot;
+  }
+
+
+
+
+//Return fix point of movig segment
+SdPoint SdContainerSheetNet::getFixPoint(SdPoint a, SdPoint b)
+  {
+  forEach( dctWire, [a,&b] (SdObject *obj) -> bool {
+    SdGraphWiringWire *wire = dynamic_cast<SdGraphWiringWire*>( obj );
+    Q_ASSERT( wire != nullptr );
+    if( a != wire->getA() && b != wire->getA() && wire->getA().isOnSegment(a,b) ) b = wire->getA();
+    if( a != wire->getB() && b != wire->getB() && wire->getB().isOnSegment(a,b) ) b = wire->getB();
+    return true;
+    });
+  return b;
+  }
+
+
+
+
 void SdContainerSheetNet::accumLinked(SdPoint a, SdPoint b, SdSelector *sel)
   {
   SdProject *prj = dynamic_cast<SdProject*>( getRoot() );
@@ -53,6 +103,29 @@ void SdContainerSheetNet::accumLinked(SdPoint a, SdPoint b, SdSelector *sel)
     wire->accumLinked( a, b, sel, undo );
     return true;
     });
+  }
+
+
+
+
+//Union segments
+void SdContainerSheetNet::unionSegment(SdGraphWiringWire *sour, SdUndo *undo)
+  {
+  forEach( dctWire, [sour,undo] (SdObject *obj) -> bool {
+    SdGraphWiringWire *wire = dynamic_cast<SdGraphWiringWire*>( obj );
+    Q_ASSERT( wire != nullptr );
+    if( wire != sour ) wire->unionSegments( sour, undo );
+    return true;
+    });
+  }
+
+
+
+
+//Notification about segment position is changed
+void SdContainerSheetNet::netWirePlace(SdPoint a, SdPoint b, SdUndo *undo )
+  {
+  getSheet()->netWirePlace( a, b, mNetName, undo );
   }
 
 

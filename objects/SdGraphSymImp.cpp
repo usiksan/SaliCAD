@@ -509,8 +509,9 @@ void SdGraphSymImp::moveComplete(SdPoint grid, SdUndo *undo)
 
 
 
-void SdGraphSymImp::prepareMove()
+void SdGraphSymImp::prepareMove(SdUndo *undo)
   {
+  Q_UNUSED(undo)
   //Prepare to move - accept linked wire segments
   SdSelector *sel = getSelector();
   SdPItemSheet *sheet = getSheet();

@@ -328,3 +328,47 @@ SdPoint calcMiddlePoint(SdPoint a, SdPoint b, int enterType )
     default           : return b;
     }
   }
+
+
+
+
+int sred(int a, int b, int gridSize)
+  {
+  if( gridSize < 1 ) gridSize = 1;
+  return (((a + b) / 2) / gridSize) * gridSize;
+  }
+
+
+
+
+bool calcFreeNearIntersect(SdPoint sour, SdPoint a, SdPoint b, SdPoint &dest)
+  {
+  if( a.x() == b.x() ) {
+    //Вертикальная линия
+    dest.rx() = a.x();
+    if( sour.y() >= qMin(a.y(),b.y()) && sour.y() <= qMax(a.y(),b.y()) ) {
+      //Ближайшая точка находится на отрезке
+      dest.ry() = sour.y();
+      }
+    else {
+      //Ближайшая точка это один из концов отрезка
+      if( sour.y() < qMin(a.y(),b.y()) ) dest.ry() = qMin(a.y(),b.y());
+      else dest.ry() = qMax(a.y(),b.y());
+      }
+    }
+  else if( a.y() == b.y() ) {
+    //Горизонтальная линия
+    dest.ry() = a.y();
+    if( sour.x() >= qMin(a.x(),b.x()) && sour.x() <= qMax(a.x(),b.x()) ) {
+      //Ближайшая точка находится на отрезке
+      dest.rx() = sour.x();
+      }
+    else {
+      //Ближайшая точка это один из концов отрезка
+      if( sour.x() < qMin(a.x(),b.x()) ) dest.rx() = qMin(a.x(),b.x());
+      else dest.rx() = qMax(a.x(),b.x());
+      }
+    }
+  else return false;
+  return true;
+  }

@@ -39,6 +39,20 @@ void SdPropString::append(SdPropString p)
 
 
 
+void SdPropString::append(const QString str)
+  {
+  if( mValue == NoValue ) {
+    mValue  = OneValue;
+    mString = str;
+    }
+  else if( mValue == OneValue ) {
+    if( mString.compare( str ) != 0 )
+      mValue = AllValue;
+    }
+  }
+
+
+
 
 void SdPropString::read(const QString name, const QJsonObject obj)
   {

@@ -93,9 +93,9 @@ void SdGraph::select(SdSelector *selector)
 
 
 
-void SdGraph::prepareMove()
+void SdGraph::prepareMove(SdUndo *undo)
   {
-
+  Q_UNUSED(undo)
   }
 
 

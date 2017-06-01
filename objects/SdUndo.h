@@ -67,6 +67,7 @@ class SdUndo
                  SdPoint *identOrigin, SdPoint *identPos, SdRect *identRect );
     void partImp( SdPoint *origin, SdPropPartImp *imp, int *logNumber, SdRect *over, QString *prefix, SdPropText *identProp,
                   SdPoint *identOrigin, SdPoint *identPos, SdRect *identRect );
+    void wire( SdPropLine *prop, SdPoint *p1, SdPoint *p2, bool *dot1, bool *dot2 );
     void point( SdPoint *src );
     void begin( QString title );
 

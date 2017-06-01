@@ -27,8 +27,8 @@ class SdGraphWiringWire : public SdGraphWiring
     SdPropLine mProp;       //Wire drawing properties
     bool       mDotA,mDotB; //Dots present flag
 
-    const int vdNone = 0, vdX = 1, vdY = 2;
-    int        mDir;
+    enum { vdNone = 0, vdX = 1, vdY = 2 };
+    int        mDirX;
     bool       mFix;
   public:
     SdGraphWiringWire();
@@ -45,15 +45,15 @@ class SdGraphWiringWire : public SdGraphWiring
     bool    getDotA() const { return mDotA; }
     bool    getDotB() const { return mDotB; }
     void    accumLinked( SdPoint a, SdPoint b, SdSelector *sel, SdUndo *undo );
-//    void   Union( DWirePic *segment );
+    void    unionSegments(SdGraphWiringWire *segment , SdUndo *undo);
     bool    isPointOnSection( SdPoint p ) const { return p.isOnSegment( mA, mB ); }
-//    void   Utilise();
-//    void   SetDotPoint();
+    void    utilise( SdUndo *undo );
+    void    setDotPoint();
   protected:
-//    void CalcVertexPoints( DPoint &p1, DPoint &p2, DPoint gridSize );
-//    void Exchange();
+    void    calcVertexPoints( SdPoint &p1, SdPoint &p2, SdPoint gridSize );
+    void    exchange();
     void    fragmentation( SdPoint p, SdSelector *sel, SdUndo *undo );
-//    bool GetNeedDot( DPoint p );
+    bool    getNeedDot( SdPoint p );
 
     // SdObject interface
   public:
@@ -77,7 +77,7 @@ class SdGraphWiringWire : public SdGraphWiring
     virtual void selectByPoint(const SdPoint p, SdSelector *selector) override;
     virtual void selectByRect(const SdRect &r, SdSelector *selector) override;
     virtual void select(SdSelector *selector) override;
-    virtual void prepareMove() override;
+    virtual void prepareMove( SdUndo *undo ) override;
     virtual bool canHideLayer(SdLayer *layer) override;
     virtual bool isVisible() override;
     virtual SdRect getOverRect() const override;

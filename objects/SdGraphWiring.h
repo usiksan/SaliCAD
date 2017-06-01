@@ -21,7 +21,6 @@ class SdGraphWiring : public SdGraph
   public:
     SdGraphWiring();
 
-    virtual void prepareMove() = 0;
     virtual bool getNetOnPoint( SdPoint p, QString &destName ) = 0;
 
   };
