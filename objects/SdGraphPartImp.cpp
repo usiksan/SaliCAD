@@ -66,6 +66,56 @@ void SdPartImpPin::draw(SdContext *dc)
 
 
 
+QJsonObject SdPartImpPin::toJson() const
+  {
+  QJsonObject obj;
+  SdObject::writePtr( mPin, QStringLiteral("Pin"), obj );      //Original pin
+  obj.insert( QStringLiteral("PinNum"), mPinNumber );          //Part pin number
+  obj.insert( QStringLiteral("PinNam"), mPinName );            //Part pin name
+  obj.insert( QStringLiteral("Wire"), mWireName );             //Name of net pin conneted to
+  mPosition.write( QStringLiteral("Pos"), obj );               //Pin position in plate context
+  obj.insert( QStringLiteral("Com"), mCom );                   //Pin to wire flag connection
+  SdObject::writePtr( mPadStack, QStringLiteral("Pad"), obj ); //Pad stack
+  return obj;
+  }
+
+
+
+
+void SdPartImpPin::fromJson(SdObjectMap *map, const QJsonObject obj)
+  {
+  mPin = dynamic_cast<SdGraphPartPin*>( SdObject::readPtr( QStringLiteral("Pin"), map, obj )  );
+  mPinNumber = obj.value( QStringLiteral("PinNum") ).toString();
+  mPinName = obj.value( QStringLiteral("PinNam") ).toString();            //Part pin name
+  mWireName = obj.value( QStringLiteral("Wire") ).toString();             //Name of net pin conneted to
+  mPosition.read( QStringLiteral("Pos"), obj );                           //Pin position in plate context
+  mCom = obj.value( QStringLiteral("Com") ).toBool();                     //Pin to wire flag connection
+  mPadStack = dynamic_cast<SdPItemPart*>( SdObject::readPtr( QStringLiteral("Pad"), map, obj )  );
+  }
+
+
+
+
+
+//====================================================================================
+//Section in part implementation
+QJsonObject SdPartImpSection::toJson() const
+  {
+  QJsonObject obj;
+  SdObject::writePtr( mSymbol, QStringLiteral("Sym"), obj );
+  SdObject::writePtr( mSymImp, QStringLiteral("Imp"), obj );
+  return obj;
+  }
+
+
+void SdPartImpSection::fromJson(SdObjectMap *map, const QJsonObject obj)
+  {
+  mSymbol = dynamic_cast<SdPItemSymbol*>( SdObject::readPtr( QStringLiteral("Sym"), map, obj )  );
+  mSymImp = dynamic_cast<SdGraphSymImp*>( SdObject::readPtr( QStringLiteral("Imp"), map, obj )  );
+  }
+
+
+
 //====================================================================================
 //Part implementation
 SdGraphPartImp::SdGraphPartImp() :
@@ -296,6 +346,16 @@ void SdGraphPartImp::writeObject(QJsonObject &obj) const
   mIdentRect.write( QStringLiteral("IdentRect"), obj );
   writePtr( mPart, QStringLiteral("Part"), obj );
   writePtr( mComponent, QStringLiteral("Comp"), obj );
+  //Write sections
+  QJsonArray sections;
+  for( const SdPartImpSection &sec : mSections )
+    sections.append( sec.toJson() );
+  obj.insert( QStringLiteral("Sections"), sections );
+  //Write pins
+  QJsonArray pins;
+  for( const SdPartImpPin &pin : mPins )
+    pins.append( pin.toJson() );
+  obj.insert( QStringLiteral("Pins"), pins );
   }
 
 
@@ -316,6 +376,23 @@ void SdGraphPartImp::readObject(SdObjectMap *map, const QJsonObject obj)
   mIdentRect.read( QStringLiteral("IdentRect"), obj );
   mPart = dynamic_cast<SdPItemPart*>( readPtr( QStringLiteral("Part"), map, obj )  );
   mComponent = dynamic_cast<SdPItemSymbol*>( readPtr( QStringLiteral("Comp"), map, obj )  );
+  //Read sections
+  QJsonArray sections = obj.value( QStringLiteral("Sections") ).toArray();
+  for( QJsonValue s : sections ) {
+    SdPartImpSection sec;
+    sec.fromJson( map, s.toObject() );
+    mSections.append( sec );
+    }
+
+  //Pin information table
+  QJsonArray pins = obj.value( QStringLiteral("Pins") ).toArray();
+  for( QJsonValue vpin : pins ) {
+    SdPartImpPin pin;
+    pin.fromJson( map, vpin.toObject() );
+    mPins.append( pin );
+    }
+  //Parameters
+  //sdParamRead( QStringLiteral("Param"), mParam, obj );
   }
 
 
@@ -485,3 +562,4 @@ void SdGraphPartImp::updatePinsPositions()
   mOverRect.set( t.mapRect( mPart->getOverRect() ) );
   mIdentPos = t.map( mIdentOrigin );
   }
+

@@ -40,7 +40,7 @@ struct SdPartImpPin {
   void setConnection( const QString wireName, bool com );
   void draw( SdContext *dc );
 
-  QJsonObject toJson();
+  QJsonObject toJson() const;
   void        fromJson( SdObjectMap *map, const QJsonObject obj );
 //  void Connect( CPChar wire );  //Подключить вывод к цепи
 //  void Disconnect();            //Отключить вывод от цепи
@@ -60,7 +60,7 @@ struct SdPartImpSection {
 
   SdPartImpSection() : mSymbol(nullptr), mSymImp(nullptr) {}
 
-  QJsonObject toJson();
+  QJsonObject toJson() const;
   void        fromJson( SdObjectMap *map, const QJsonObject obj );
 
   bool        isFree( SdPItemSymbol *symbol ) { return mSymbol == symbol && mSymImp == nullptr; }

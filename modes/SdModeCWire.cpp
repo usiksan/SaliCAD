@@ -156,6 +156,7 @@ void SdModeCWire::enterPoint( SdPoint enter )
       mUndo->begin( QObject::tr("Insert wire segment") );
       needCurNet()->insertChild( new SdGraphWiringWire( mFirst, mPrevMove, sdGlobalProp->mWireProp ), mUndo );
       mFirst = mPrevMove;
+      setDirty();
       }
     mPrevMove = enter;
     }
@@ -164,6 +165,7 @@ void SdModeCWire::enterPoint( SdPoint enter )
     mPrevMove = mFirst;
     if( testFirstPoint( mFirst ) ) setStep(sNextPoint);
     }
+  update();
   }
 
 
@@ -501,4 +503,12 @@ SdContainerSheetNet *SdModeCWire::needCurNet()
 SdPItemSheet *SdModeCWire::getSheet()
   {
   return dynamic_cast<SdPItemSheet*>(mObject);
+  }
+
+
+
+
+void SdModeCWire::activate()
+  {
+  nextNet();
   }

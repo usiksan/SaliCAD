@@ -97,7 +97,7 @@ void SdModeCSymImp::propSetToBar()
 void SdModeCSymImp::enterPoint(SdPoint)
   {
   addPic( new SdGraphSymImp( mComponent, mSection, mPart, mOrigin,  &(sdGlobalProp->mSymImpProp) ), QObject::tr("Insert symbol") );
-  getSection();
+  //getSection();
   }
 
 

@@ -179,6 +179,21 @@ void SdMode::setStep(int stp)
 
 
 
+void SdMode::setDirty()
+  {
+  mEditor->dirtyCashe();
+  mEditor->dirtyProject();
+  }
+
+
+
+void SdMode::setDirtyCashe()
+  {
+  mEditor->dirtyCashe();
+  }
+
+
+
 
 void SdMode::addPic( SdObject *obj, QString title )
   {

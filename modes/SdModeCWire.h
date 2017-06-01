@@ -34,7 +34,7 @@ class SdModeCWire : public SdModeCommon
                          mSmA,       //Intermediate point of autonet
                          mSmEnd;     //Last point of autonet
 
-    const int sFirstPoint = 1, sNextPoint = 2;
+    const int sFirstPoint = 0, sNextPoint = 1;
 
   public:
     enum RenumResult { renCancel, renFirst, renSecond };
@@ -43,6 +43,7 @@ class SdModeCWire : public SdModeCommon
 
     // SdMode interface
   public:
+    virtual void    activate() override;
     virtual void    drawStatic(SdContext *ctx) override;
     virtual void    drawDynamic(SdContext *ctx) override;
     virtual int     getPropBarId() const override;
@@ -73,6 +74,7 @@ class SdModeCWire : public SdModeCommon
     void                 nextNet();
     SdContainerSheetNet *needCurNet();
     SdPItemSheet        *getSheet();
+
   };
 
 #endif // SDMODECWIRE_H

@@ -13,6 +13,8 @@ Description
 #include "SdGraphWiringWire.h"
 #include "SdContainerSheetNet.h"
 #include "SdPItemSheet.h"
+#include "SdContext.h"
+#include "SdEnvir.h"
 
 SdGraphWiringWire::SdGraphWiringWire()
   {
@@ -206,6 +208,9 @@ SdRect SdGraphWiringWire::getOverRect() const
 
 void SdGraphWiringWire::draw(SdContext *dc)
   {
+  dc->line( mA, mB, mProp );
+  if( mDotA ) dc->circleFill( mA, sdEnvir->mDotSize, mProp );
+  if( mDotB ) dc->circleFill( mB, sdEnvir->mDotSize, mProp );
   }
 
 int SdGraphWiringWire::behindCursor(SdPoint p)

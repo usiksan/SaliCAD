@@ -30,12 +30,25 @@ SdProp::SdProp()
   mTextProp.mHorz   = dhjLeft;
   mTextProp.mVert   = dvjMiddle;
   mTextProp.mMirror = 0;
-  //TODO setup all prop defaults
-//  SdPropLine    mWireProp;       //Свойства сегментов цепей схемы
-//  SdPropText    mWireNameProp;   //Свойства имени цепи
+
+  //Props of wire
+  mWireProp.mLayer.set( QString(LID0_SCHEMATIC LID1_NET ) );       //Свойства сегментов цепей схемы
+  mWireProp.mType  = dltSolid;
+  mWireProp.mWidth = 0;
+
+  //Props of wire name
+  mWireNameProp.mLayer.set( QString( LID0_SCHEMATIC LID1_NET_NAME) );       //Свойства текстовых объектов
+  mWireNameProp.mFont   = 0;
+  mWireNameProp.mSize   = 35;
+  mWireNameProp.mDir    = da0;
+  mWireNameProp.mHorz   = dhjLeft;
+  mWireNameProp.mVert   = dvjMiddle;
+  mWireNameProp.mMirror = 0;
+
   //Symbol pin properties
   mSymPinProp.mLayer.set( QString(LID0_SCHEMATIC LID1_PIN) );     //Свойства вывода символа
   mSymPinProp.mPinType = 0;
+
   //Symbol pin name properties
   mSymPinNameProp.mLayer.set( QString(LID0_SCHEMATIC LID1_PIN_NAME) );
   mSymPinNameProp.mFont   = 0;
@@ -44,6 +57,7 @@ SdProp::SdProp()
   mSymPinNameProp.mHorz   = dhjLeft;
   mSymPinNameProp.mVert   = dvjMiddle;
   mSymPinNameProp.mMirror = 0;
+
   //Symbol pin number properties
   mSymPinNumberProp.mLayer.set( QString(LID0_SCHEMATIC LID1_PIN_NUMBER) );
   mSymPinNumberProp.mFont   = 0;
@@ -57,6 +71,7 @@ SdProp::SdProp()
   mPartPinProp.mLayer.set( QString(LID0_PCB_TOP LID1_PIN ) );    //Свойства вывода корпуса
   mPartPinProp.mPinType = QString("h1");
   mPartPinProp.mSide = dsThrow;
+
   //Part pin name properties
   mPartPinNameProp.mLayer.set( QString(LID0_PCB_TOP LID1_PIN_NAME) );    //Свойства имени вывода
   mPartPinNameProp.mFont   = 0;
@@ -65,6 +80,7 @@ SdProp::SdProp()
   mPartPinNameProp.mHorz   = dhjLeft;
   mPartPinNameProp.mVert   = dvjMiddle;
   mPartPinNameProp.mMirror = 0;
+
   //Part pin number properties
   mPartPinNumberProp.mLayer.set( QString(LID0_PCB_TOP LID1_PIN_NUMBER) );  //Свойства номера вывода
   mPartPinNumberProp.mFont   = 0;
@@ -74,8 +90,15 @@ SdProp::SdProp()
   mPartPinNumberProp.mVert   = dvjMiddle;
   mPartPinNumberProp.mMirror = 0;
 
-//  SdPropSymImp  mSymImpProp;     //Свойства вхождения символа
-//  SdPropPartImp mPartImpProp;    //Свойства вхождения корпуса
+  //Props of symbol implement
+  mSymImpProp.mAngle = 0;
+  mSymImpProp.mMirror = 0;
+
+  //Props of part implement
+  mPartImpProp.mAngle = 0;
+  mPartImpProp.mMirror = 0;
+  mPartImpProp.mSide   = dsComp;
+
   //Symbol identifier (reference) aka D4.5
   mSymIdentProp.mLayer.set( QString(LID0_SCHEMATIC LID1_PIN_NUMBER) );
   mSymIdentProp.mFont   = 0;
@@ -94,12 +117,13 @@ SdProp::SdProp()
   mPartIdentProp.mVert   = dvjMiddle;
   mPartIdentProp.mMirror = 0;
 
+  //TODO setup all prop defaults
 //  SdPropRoad    mRoadProp;       //Свойства дорожки
 ////    SdViaProp    viaProp;        //Свойства переходных отверстий
 //  SdPropText    mTextDocProp;    //Свойства текста в текстовых документах
 
   mLineEnterType     = dleOrtho;       //By default orthogonal vertex line
-//  int           mWireEnterType;
+  mWireEnterType     = dleOrtho;
 //  QString       mWireName;       //Имя цепи
 //  bool          mTextBold;       //Жирный шрифт
 //  bool          mTextItalic;     //Наклонный текст

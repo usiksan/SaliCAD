@@ -321,5 +321,5 @@ bool SdProject::isNetNameUsed(const QString netName)
     unused = sheet->netGet( netName ) == nullptr;
     return unused;
     });
-  return unused;
+  return !unused;
   }

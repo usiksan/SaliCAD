@@ -162,6 +162,8 @@ void SdWProjectTree::cmObjectNew()
     item->setHand();
     mProject->getUndo()->begin( tr("Creating object") );
     mProject->insertChild( item, mProject->getUndo() );
+    //Open window to edit item
+    SdPulsar::pulsar->emitActivateItem( item );
     }
   }
 

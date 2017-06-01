@@ -49,6 +49,7 @@ class SdMode
    void           setStep( int stp );
    int            getStep() const { return mStep; }
    void           setDirty();                      //Объявить объект редактированным
+   void           setDirtyCashe();
 
    //Сервисные
    void           addPic(SdObject *obj , QString title);         //Добавить объект к контейнеру
