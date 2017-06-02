@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  One segment of wire in schematic diagram
 */
 #ifndef SDGRAPHWIRINGWIRE_H
 #define SDGRAPHWIRINGWIRE_H
@@ -60,31 +61,31 @@ class SdGraphWiringWire : public SdGraphWiring
     virtual QString getType() const override { return QStringLiteral(SD_TYPE_WIRE); }
     virtual quint64 getClass() const override { return dctWire; }
     virtual void    attach(SdUndo *undo) override;
-    virtual void detach(SdUndo *undo) override;
-    virtual void cloneFrom(const SdObject *src) override;
-    virtual void writeObject(QJsonObject &obj) const override;
-    virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual void    detach(SdUndo *undo) override;
+    virtual void    cloneFrom(const SdObject *src) override;
+    virtual void    writeObject(QJsonObject &obj) const override;
+    virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
 
     // SdGraph interface
   public:
-    virtual void saveState(SdUndo *undo) override;
-    virtual void moveComplete(SdPoint grid, SdUndo *undo) override;
-    virtual void move(SdPoint offset) override;
-    virtual void rotate(SdPoint center, SdAngle angle) override;
-    virtual void mirror(SdPoint a, SdPoint b) override;
-    virtual void setProp(SdProp &prop) override;
-    virtual void getProp(SdProp &prop) override;
-    virtual void selectByPoint(const SdPoint p, SdSelector *selector) override;
-    virtual void selectByRect(const SdRect &r, SdSelector *selector) override;
-    virtual void select(SdSelector *selector) override;
-    virtual void prepareMove( SdUndo *undo ) override;
-    virtual bool canHideLayer(SdLayer *layer) override;
-    virtual bool isVisible() override;
-    virtual SdRect getOverRect() const override;
-    virtual void draw(SdContext *dc) override;
-    virtual int behindCursor(SdPoint p) override;
-    virtual bool getInfo(SdPoint p, QString &info, bool extInfo) override;
-    virtual bool snapPoint(SdSnapInfo *snap) override;
+    virtual void    saveState(SdUndo *undo) override;
+    virtual void    moveComplete(SdPoint grid, SdUndo *undo) override;
+    virtual void    move(SdPoint offset) override;
+    virtual void    rotate(SdPoint center, SdAngle angle) override;
+    virtual void    mirror(SdPoint a, SdPoint b) override;
+    virtual void    setProp(SdProp &prop) override;
+    virtual void    getProp(SdProp &prop) override;
+    virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;
+    virtual void    selectByRect(const SdRect &r, SdSelector *selector) override;
+    virtual void    select(SdSelector *selector) override;
+    virtual void    prepareMove( SdUndo *undo ) override;
+    virtual bool    canHideLayer(SdLayer *layer) override;
+    virtual bool    isVisible() override;
+    virtual SdRect  getOverRect() const override;
+    virtual void    draw(SdContext *dc) override;
+    virtual int     behindCursor(SdPoint p) override;
+    virtual bool    getInfo(SdPoint p, QString &info, bool extInfo) override;
+    virtual bool    snapPoint(SdSnapInfo *snap) override;
 
     // SdGraphWiring interface
   public:

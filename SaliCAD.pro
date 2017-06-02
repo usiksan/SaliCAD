@@ -140,7 +140,8 @@ SOURCES += \
     modes/SdModeCWire.cpp \
     windows/SdPropBarWire.cpp \
     windows/SdDNetUnion.cpp \
-    objects/SdUndoRecordWire.cpp
+    objects/SdUndoRecordWire.cpp \
+    objects/SdGraphWireName.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -273,7 +274,8 @@ HEADERS  += \
     modes/SdModeCWire.h \
     windows/SdPropBarWire.h \
     windows/SdDNetUnion.h \
-    objects/SdUndoRecordWire.h
+    objects/SdUndoRecordWire.h \
+    objects/SdGraphWireName.h
 
 DISTFILES += \
     license.txt

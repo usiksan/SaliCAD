@@ -45,7 +45,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (9 + GRID_HISTORY_SIZE + FONT_COUNT)
+#define SdEnvirVersion  (10 + GRID_HISTORY_SIZE + FONT_COUNT)
 
 typedef QMap<QString,SdLayerPtr> SdLayerPtrTable;
 

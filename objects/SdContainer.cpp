@@ -219,11 +219,12 @@ void SdContainer::cloneFrom( const SdObject *src )
 
 void SdContainer::draw(SdContext *context)
   {
-  for( SdObject *obj : mChildList ) {
+  forEach( dctAll, [context] (SdObject *obj) -> bool {
     SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-    if( graph && !graph->isDeleted() )
+    if( graph )
       graph->draw( context );
-    }
+    return true;
+    });
   }
 
 

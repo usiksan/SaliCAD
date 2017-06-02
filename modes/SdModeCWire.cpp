@@ -214,6 +214,7 @@ void SdModeCWire::enterPrev()
       }
     }
   nextNet();
+  setDirty();
   update();
   calcSecondSmart();
   mFirst = mPrevMove;

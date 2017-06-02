@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  One segment of wire in schematic diagram
 */
 #include "SdGraphWiringWire.h"
 #include "SdContainerSheetNet.h"
@@ -17,7 +18,11 @@ Description
 #include "SdEnvir.h"
 #include "SdSelector.h"
 
-SdGraphWiringWire::SdGraphWiringWire()
+SdGraphWiringWire::SdGraphWiringWire() :
+  SdGraphWiring(),
+  mDotA(false), mDotB(false),
+  mDirX(false),
+  mFix(0)
   {
 
   }

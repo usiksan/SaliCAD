@@ -13,6 +13,7 @@ Description
 
 #include "SdPoint.h"
 #include "SdProp.h"
+#include "SdSegment.h"
 #include <math.h>
 
 
@@ -214,7 +215,8 @@ bool SdPoint::isLeftHigh(SdPoint a) const
 
 bool SdPoint::isOnSegment(SdPoint a, SdPoint b) const
   {
-
+  return SdSegment(a,b).isPointOn( *this );
+  /*
   SdPoint pa( b - a );
   SdPoint pb( SdPoint(x(),y()) - a );
 
@@ -223,7 +225,7 @@ bool SdPoint::isOnSegment(SdPoint a, SdPoint b) const
     (pa.y()*pb.y() < 0) || (pa.x()*pa.x()+pa.y()*pa.y() < pb.x()*pb.x()+pb.y()*pb.y()))
     return false;
   return true;
-
+*/
   //If segment is vertical
 /*  if( a.x() == b.x() )
     return ( x() == a.x() && y() >= qMin(a.y(), b.y()) && y() <= qMax( a.y(), b.y()) );

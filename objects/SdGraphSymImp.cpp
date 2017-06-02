@@ -760,7 +760,6 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
   //Link to part
   partImp->setLinkSection( section, this );
   setLinkSection( section, partImp );
-  qDebug() <<Q_FUNC_INFO << section;
   }
 
 
@@ -776,8 +775,9 @@ void SdGraphSymImp::attach(SdUndo *undo)
   mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(mSymbol) );        //Symbol contains graph information
   mPart = dynamic_cast<SdPItemPart*>( prj->getProjectsItem(mPart) );
 
-  qDebug() << "attach";
   createPins( undo );
+
+  updatePinsPositions();
 
   linkAutoPart( undo );
   }
