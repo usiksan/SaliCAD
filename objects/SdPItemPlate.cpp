@@ -24,6 +24,33 @@ SdPItemPlate::SdPItemPlate()
 
 
 
+//get net by its name
+SdContainerPlateNet *SdPItemPlate::netGet(const QString name)
+  {
+  for( SdObject *ptr : mChildList )
+    if( ptr && !ptr->isDeleted() && ptr->getClass() == dctPlateNet ) {
+      SdContainerPlateNet *net = dynamic_cast<SdContainerPlateNet*>(ptr);
+      if( net && net->getNetName() == name ) return net;
+      }
+  return nullptr;
+  }
+
+
+
+
+//Creates net with desired name or return existing net
+SdContainerPlateNet *SdPItemPlate::netCreate(const QString name, SdUndo *undo)
+  {
+  SdContainerPlateNet *net = netGet( name );
+  if( net ) return net;
+  net = new SdContainerPlateNet( name );
+  insertChild( net, undo );
+  return net;
+  }
+
+
+
+
 SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym, SdUndo *undo )
   {
   //At first, scan all part implements and find match
