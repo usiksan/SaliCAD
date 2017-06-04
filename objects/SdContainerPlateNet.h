@@ -30,9 +30,17 @@ class SdContainerPlateNet : public SdContainer
 
     //Information
     //Return net name
-    QString       getNetName() const { return mNetName; }
+    QString         getNetName() const { return mNetName; }
     //Return plate where in net recides
-    SdPItemPlate *getPlate() const;
+    SdPItemPlate   *getPlate() const;
+
+    // SdObject interface
+  public:
+    virtual QString getType() const override { return QStringLiteral(SD_TYPE_PLATE_NET); }
+    virtual quint64 getClass() const override { return dctPlateNet; }
+    virtual void    cloneFrom(const SdObject *src) override;
+    virtual void    writeObject(QJsonObject &obj) const override;
+    virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
   };
 
 #endif // SDCONTAINERPLATENET_H

@@ -31,7 +31,7 @@ Description
 #define dctSymbol        0x00000040l
 #define dctSymImp        0x00000080l
 #define dctPartPin       0x00000100l
-//#define dctPartPinName   0x00000200l
+#define dctRoadPin       0x00000200l
 //#define dctPartPinNumber 0x00000400l
 #define dctPart          0x00000800l
 #define dctPartImp       0x00001000l

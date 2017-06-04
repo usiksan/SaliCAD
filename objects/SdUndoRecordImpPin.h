@@ -18,6 +18,7 @@ Description
 
 class SdGraphSymImp;
 class SdGraphPartImp;
+class SdGraphRoadPin;
 
 class SdUndoRecordImpPin : public SdUndoRecord
   {
@@ -25,6 +26,7 @@ class SdUndoRecordImpPin : public SdUndoRecord
     int             mSymPinIndex;   //Pin index in symbol implementation
     SdGraphPartImp *mPartImp;       //Part implementation for pin
     int             mPartPinIndex;  //Pin index in part implementation
+    SdGraphRoadPin *mPartRoadPin;   //Road pin assotiated with partImp pin
     QString         mWireName;      //Wire name for connection
     bool            mCom;           //Status of connection
   public:

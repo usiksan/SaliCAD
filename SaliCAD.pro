@@ -143,7 +143,8 @@ SOURCES += \
     objects/SdUndoRecordWire.cpp \
     objects/SdGraphWireName.cpp \
     objects/SdGraphRoad.cpp \
-    objects/SdGraphRoadPin.cpp
+    objects/SdGraphRoadPin.cpp \
+    objects/SdStratum.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -279,7 +280,8 @@ HEADERS  += \
     objects/SdUndoRecordWire.h \
     objects/SdGraphWireName.h \
     objects/SdGraphRoad.h \
-    objects/SdGraphRoadPin.h
+    objects/SdGraphRoadPin.h \
+    objects/SdStratum.h
 
 DISTFILES += \
     license.txt

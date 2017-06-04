@@ -70,14 +70,6 @@ void SdSymImpPin::setConnection(const QString wireName, bool com)
     mWireName = wireName;
   }
 
-void SdSymImpPin::setConnection(SdGraphPartImp *partImp, const QString wireName, bool com)
-  {
-  mCom = com;
-  if( mCom )
-    mWireName = wireName;
-  if( partImp )
-    partImp->pinConnectionSet( mPrtPin, wireName, com );
-  }
 
 
 
@@ -184,7 +176,7 @@ SdGraphSymImp::SdGraphSymImp(SdPItemSymbol *comp, SdPItemSymbol *sym, SdPItemPar
 
 
 //Pin connection-disconnection by index
-void SdGraphSymImp::pinConnectionSet(int pinIndex, const QString wireName, bool com)
+void SdGraphSymImp::symPinConnectionSet(int pinIndex, const QString wireName, bool com)
   {
   if( pinIndex < 0 ) return;
   Q_ASSERT( pinIndex >= 0 && pinIndex < mPins.count() );
@@ -206,13 +198,13 @@ void SdGraphSymImp::moveToPlate(SdPItemPlate *plate, SdUndo *undo)
 
 
 
-void SdGraphSymImp::setLinkSection(int section, SdGraphPartImp *partImp)
+void SdGraphSymImp::setLinkSection(int section, SdGraphPartImp *partImp, SdUndo *undo )
   {
   //If symbol linked then unlink
   if( mPartImp != nullptr ) {
     //Scan all pins and disconnect from partImp
     for( int index = 0; index < mPins.count(); index++ ) {
-      mPartImp->pinConnectionSet( mPins[index].mPrtPin, QString(), false );
+      mPartImp->pinConnectionSet( mPins[index].mPrtPin, QString(), false, undo );
       //Reset part pin name
       mPartImp->setPinName( mPins[index].mPrtPin, QString() );
       mPins[index].mPrtPin = -1;
@@ -234,7 +226,7 @@ void SdGraphSymImp::setLinkSection(int section, SdGraphPartImp *partImp)
         //Assign part pin name
         partImp->setPinName( mPins[index].mPrtPin, mPins[index].mPinName );
         //Assign pin connection
-        partImp->pinConnectionSet( mPins[index].mPrtPin, mPins[index].mWireName, mPins[index].mCom );
+        partImp->pinConnectionSet( mPins[index].mPrtPin, mPins[index].mWireName, mPins[index].mCom, undo );
         }
       else {
         //No pin number.
@@ -255,10 +247,8 @@ void SdGraphSymImp::unconnectPinInPoint( SdPoint p, SdUndo *undo )
   {
   for( int index = 0; index < mPins.count(); index++ )
     if( mPins[index].mPosition == p ) {
-      //Undo previous state of pin
-      undo->pinImpConnect( this, index, mPartImp, mPins[index].mPrtPin, mPins[index].mWireName, mPins[index].mCom );
       //Set new state of pin
-      mPins[index].setConnection( mPartImp, QString(), false );
+      pinConnectionSet( index, QString(), false, undo );
       return;
       }
   }
@@ -272,7 +262,7 @@ void SdGraphSymImp::unLinkPartImp(SdUndo *undo)
   undo->linkSection( mSectionIndex, this, mPartImp, mPartImp != nullptr );
   if( mPartImp )
     mPartImp->setLinkSection( mSectionIndex, nullptr );
-  setLinkSection( -1, nullptr );
+  setLinkSection( -1, nullptr, undo );
   }
 
 
@@ -429,10 +419,8 @@ void SdGraphSymImp::netWirePlace(SdPoint a, SdPoint b, const QString name, SdUnd
   {
   for( int index = 0; index < mPins.count(); index++ )
     if( mPins[index].isCanConnect( a, b ) ) {
-      //Undo previous state of pin
-      undo->pinImpConnect( this, index, mPartImp, mPins[index].mPrtPin, mPins[index].mWireName, mPins[index].mCom );
       //Set new state of pin
-      mPins[index].setConnection( mPartImp, name, true );
+      pinConnectionSet( index, name, true, undo );
       }
   }
 
@@ -444,10 +432,8 @@ void SdGraphSymImp::netWireDelete(SdPoint a, SdPoint b, const QString name, SdUn
   {
   for( int index = 0; index < mPins.count(); index++ )
     if( mPins[index].isCanDisconnect( a, b, name ) ) {
-      //Undo previous state of pin
-      undo->pinImpConnect( this, index, mPartImp, mPins[index].mPrtPin, mPins[index].mWireName, mPins[index].mCom );
       //Set new state of pin
-      mPins[index].setConnection( mPartImp, name, false );
+      pinConnectionSet( index, name, false, undo );
       }
   }
 
@@ -487,8 +473,7 @@ void SdGraphSymImp::moveComplete(SdPoint grid, SdUndo *undo)
         //If pin unconnected then check possibilities connection
         if( sheet->getNetFromPoint( mPins[index].mPosition, netName ) ) {
           //New connection
-          undo->pinImpConnect( this, index, mPartImp, mPins[index].mPrtPin, mPins[index].mWireName, mPins[index].mCom );
-          mPins[index].setConnection( mPartImp, netName, true );
+          pinConnectionSet( index, netName, true, undo );
           }
         }
 
@@ -759,7 +744,22 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
 
   //Link to part
   partImp->setLinkSection( section, this );
-  setLinkSection( section, partImp );
+  setLinkSection( section, partImp, undo );
+  }
+
+
+
+
+//Pin connection-disconnection by index for symbol and part implements
+void SdGraphSymImp::pinConnectionSet(int pinIndex, const QString netName, bool com, SdUndo *undo)
+  {
+  //Undo previous state of pin
+  undo->pinImpConnect( this, pinIndex, mPartImp, mPins[pinIndex].mPrtPin, mPins[pinIndex].mWireName, mPins[pinIndex].mCom );
+  //Set symbol pin connection state
+  mPins[pinIndex].setConnection( netName, com );
+  //Set part pin connection state
+  if( mPartImp )
+    mPartImp->pinConnectionSet( mPins[pinIndex].mPrtPin, netName, com, undo );
   }
 
 

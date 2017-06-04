@@ -240,7 +240,7 @@ SdObject *SdObject::build(QString type)
   if( type == QStringLiteral(SD_TYPE_WIRE_NAME)     ) return new SdGraphWireName();
 
   if( type == QStringLiteral(SD_TYPE_SHEET_NET)     ) return new SdContainerSheetNet();
-  //if( type == QStringLiteral(SD_TYPE_PLATE_NET)     ) return new SdContainerPlateNet();
+  if( type == QStringLiteral(SD_TYPE_PLATE_NET)     ) return new SdContainerPlateNet();
 
   if( type == QStringLiteral(SD_TYPE_SYMBOL)        ) return new SdPItemSymbol();
   if( type == QStringLiteral(SD_TYPE_PART)          ) return new SdPItemPart();

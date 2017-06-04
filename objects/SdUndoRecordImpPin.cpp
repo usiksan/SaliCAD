@@ -21,10 +21,11 @@ SdUndoRecordImpPin::SdUndoRecordImpPin(SdGraphSymImp *sym, int symPin, SdGraphPa
   mSymPinIndex(symPin),   //Pin index in symbol implementation
   mPartImp(part),         //Part implementation for pin
   mPartPinIndex(partPin), //Pin index in part implementation
+  mPartRoadPin(nullptr),
   mWireName(wireName),    //Wire name for connection
   mCom(com)               //Status of connection
   {
-
+  //if( mPartImp )
   }
 
 
@@ -37,7 +38,7 @@ void SdUndoRecordImpPin::undo()
     QString prevWireName = mSymImp->pinWireName(mSymPinIndex);
     bool    prevCom      = mSymImp->isPinConnected(mSymPinIndex);
     //Undo connection
-    mSymImp->pinConnectionSet( mSymPinIndex, mWireName, mCom );
+    mSymImp->symPinConnectionSet( mSymPinIndex, mWireName, mCom );
     if( mPartImp )
       mPartImp->pinConnectionSet( mPartPinIndex, mWireName, mCom );
     //Set connection state prior undo

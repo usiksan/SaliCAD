@@ -129,12 +129,12 @@ class SdGraphSymImp : public SdGraph
     void          accumLinked( SdPoint a, SdPoint b, SdSelector *sel );
 
     //Service
-    //Pin connection-disconnection by index
-    void          pinConnectionSet( int pinIndex, const QString wireName, bool com );
+    //Pin connection-disconnection by index only for symbol implement
+    void          symPinConnectionSet( int pinIndex, const QString wireName, bool com );
     //Move section to plate
     void          moveToPlate( SdPItemPlate *plate, SdUndo *undo );
     //Link with partImp
-    void          setLinkSection( int section, SdGraphPartImp *partImp );
+    void          setLinkSection(int section, SdGraphPartImp *partImp , SdUndo *undo);
     //Unconnect pin in point
     void          unconnectPinInPoint(SdPoint p , SdUndo *undo);
     //Unlink symbol from part
@@ -188,6 +188,8 @@ class SdGraphSymImp : public SdGraph
     void          createPins( SdUndo *undo );
     //Link auto partImp in given plate. partImp and section are selected automatic
     void          linkAutoPartInPlate( SdPItemPlate *plate, SdUndo *undo );
+    //Pin connection-disconnection by index for symbol and part implements
+    void          pinConnectionSet( int pinIndex, const QString netName, bool com, SdUndo *undo );
 
   };
 
