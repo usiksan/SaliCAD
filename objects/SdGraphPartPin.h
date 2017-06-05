@@ -18,6 +18,7 @@ Description
 #include "SdPoint.h"
 #include "SdPropText.h"
 #include "SdPropPartPin.h"
+#include "SdStratum.h"
 
 #define SD_TYPE_PART_PIN "PartPin"
 
@@ -43,11 +44,13 @@ class SdGraphPartPin : public SdGraph
     SdGraphPartPin( SdPoint org, SdPoint numberPos, SdPoint namePos, const QString number );
 
     //Return pin number
-    QString getPinNumber() const { return mNumber; }
+    QString   getPinNumber() const { return mNumber; }
     //Return pin type
-    QString getPinType() const { return mPinProp.mPinType.str(); }
+    QString   getPinType() const { return mPinProp.mPinType.str(); }
     //Return pin origin
-    SdPoint getPinOrigin() const { return mOrigin; }
+    SdPoint   getPinOrigin() const { return mOrigin; }
+    //Return pin stratum
+    SdStratum getPinStratum( bool otherSide ) const;
 
     void    drawImp( SdContext *dc, const QString pinName, bool com );
 

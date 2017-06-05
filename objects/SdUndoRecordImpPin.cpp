@@ -47,7 +47,7 @@ void SdUndoRecordImpPin::undo()
     }
   else if( mPartImp ) {
     //Temporary store previous state of connection
-    QString prevWireName = mPartImp->pinWireName(mPartPinIndex);
+    QString prevWireName = mPartImp->pinNetName(mPartPinIndex);
     bool    prevCom      = mPartImp->isPinConnected(mPartPinIndex);
     mPartImp->pinConnectionSet( mPartPinIndex, mWireName, mCom );
     //Set connection state prior undo

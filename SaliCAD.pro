@@ -133,7 +133,6 @@ SOURCES += \
     objects/SdUndoRecordImpPin.cpp \
     objects/SdGraphIdent.cpp \
     modes/SdModeCIdent.cpp \
-    objects/SdContainerPlateNet.cpp \
     objects/SdUndoRecordLinkSection.cpp \
     objects/SdUndoRecordSymImp.cpp \
     objects/SdUndoRecordPartImp.cpp \
@@ -142,9 +141,11 @@ SOURCES += \
     windows/SdDNetUnion.cpp \
     objects/SdUndoRecordWire.cpp \
     objects/SdGraphWireName.cpp \
-    objects/SdGraphRoad.cpp \
-    objects/SdGraphRoadPin.cpp \
-    objects/SdStratum.cpp
+    objects/SdStratum.cpp \
+    objects/SdGraphTraced.cpp \
+    objects/SdGraphTracedRoad.cpp \
+    objects/SdGraphTracedVia.cpp \
+    objects/SdGraphTracedPolygon.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -270,7 +271,6 @@ HEADERS  += \
     objects/SdUndoRecordImpPin.h \
     objects/SdGraphIdent.h \
     modes/SdModeCIdent.h \
-    objects/SdContainerPlateNet.h \
     objects/SdUndoRecordLinkSection.h \
     objects/SdUndoRecordSymImp.h \
     objects/SdUndoRecordPartImp.h \
@@ -279,9 +279,11 @@ HEADERS  += \
     windows/SdDNetUnion.h \
     objects/SdUndoRecordWire.h \
     objects/SdGraphWireName.h \
-    objects/SdGraphRoad.h \
-    objects/SdGraphRoadPin.h \
-    objects/SdStratum.h
+    objects/SdStratum.h \
+    objects/SdGraphTraced.h \
+    objects/SdGraphTracedRoad.h \
+    objects/SdGraphTracedVia.h \
+    objects/SdGraphTracedPolygon.h
 
 DISTFILES += \
     license.txt

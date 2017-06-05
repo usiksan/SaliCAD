@@ -21,16 +21,15 @@ Description
 #include "SdProject.h"
 #include "SdContext.h"
 #include "SdSelector.h"
-#include "SdGraphRoadPin.h"
-#include "SdContainerPlateNet.h"
 
 
 //====================================================================================
 //Pin for part implementation
 SdPartImpPin::SdPartImpPin() :
   mPin(nullptr),
-  mRoadPin(nullptr),   //Reference to pin assigned to net
-  mPadStack(nullptr)   //Pad stack
+  mCom(false),
+  mPadStack(nullptr),  //Pad stack
+  mSubNetIndex(0)
   {
   }
 
@@ -43,8 +42,12 @@ void SdPartImpPin::operator =(const SdPartImpPin &pin)
   mPinNumber = pin.mPinNumber; //Part pin number
   mPinName   = pin.mPinName;   //Part pin name
   mPosition  = pin.mPosition;  //Pin position in plate context
-  mRoadPin   = pin.mRoadPin;   //Pin to wire flag connection
+  mNetName   = pin.mNetName;
+  mCom       = pin.mCom;
   mPadStack  = pin.mPadStack;  //Pad stack
+  mStratum   = pin.mStratum;
+
+  mSubNetIndex = pin.mSubNetIndex;
   }
 
 
@@ -54,7 +57,7 @@ void SdPartImpPin::operator =(const SdPartImpPin &pin)
 
 void SdPartImpPin::draw(SdContext *dc)
   {
-  mPin->drawImp( dc, mPinName, mRoadPin != nullptr );
+  mPin->drawImp( dc, mPinName, mCom );
   }
 
 
@@ -65,9 +68,11 @@ QJsonObject SdPartImpPin::toJson() const
   SdObject::writePtr( mPin, QStringLiteral("Pin"), obj );          //Original pin
   obj.insert( QStringLiteral("PinNum"), mPinNumber );              //Part pin number
   obj.insert( QStringLiteral("PinNam"), mPinName );                //Part pin name
+  obj.insert( QStringLiteral("Net"), mNetName );                   //Name of net pin conneted to
   mPosition.write( QStringLiteral("Pos"), obj );                   //Pin position in plate context
-  SdObject::writePtr( mPadStack, QStringLiteral("RoadPin"), obj ); //Pin to wire flag connection
+  obj.insert( QStringLiteral("Com"), mCom );                       //Pin to wire flag connection
   SdObject::writePtr( mPadStack, QStringLiteral("Pad"), obj );     //Pad stack
+  mStratum.write( obj );
   return obj;
   }
 
@@ -79,9 +84,11 @@ void SdPartImpPin::fromJson(SdObjectMap *map, const QJsonObject obj)
   mPin = dynamic_cast<SdGraphPartPin*>( SdObject::readPtr( QStringLiteral("Pin"), map, obj )  );
   mPinNumber = obj.value( QStringLiteral("PinNum") ).toString();
   mPinName = obj.value( QStringLiteral("PinNam") ).toString();            //Part pin name
+  mNetName = obj.value( QStringLiteral("Net") ).toString();               //Name of net pin conneted to
   mPosition.read( QStringLiteral("Pos"), obj );                           //Pin position in plate context
-  mRoadPin = dynamic_cast<SdGraphRoadPin*>( SdObject::readPtr( QStringLiteral("RoadPin"), map, obj )  );
+  mCom = obj.value( QStringLiteral("Com") ).toBool();                     //Pin to wire flag connection
   mPadStack = dynamic_cast<SdPItemPart*>( SdObject::readPtr( QStringLiteral("Pad"), map, obj )  );
+  mStratum.read( obj );
   }
 
 
@@ -110,7 +117,7 @@ void SdPartImpSection::fromJson(SdObjectMap *map, const QJsonObject obj)
 //====================================================================================
 //Part implementation
 SdGraphPartImp::SdGraphPartImp() :
-  SdGraph(),
+  SdGraphTraced(),
   mPart(nullptr),
   mComponent(nullptr)
   {
@@ -118,7 +125,7 @@ SdGraphPartImp::SdGraphPartImp() :
   }
 
 SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemSymbol *comp) :
-  SdGraph(),
+  SdGraphTraced(),
   mLogNumber(0),   //Logical part number (from 1)
   mOrigin(org),    //Position of Implement
   mPart(part),     //Part for this implementation
@@ -141,34 +148,18 @@ SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *par
 
 
 
-void SdGraphPartImp::pinConnectionSet(int pinIndex, const QString wireName, bool com, SdUndo *undo)
+void SdGraphPartImp::pinConnectionSet(int pinIndex, const QString netName, bool com)
   {
   //If no pinIndex then doing nothink
   if( pinIndex < 0 ) return;
   Q_ASSERT( pinIndex >= 0 && pinIndex < mPins.count() );
-  //Test if pin connected, then disconnect
-  if( mPins[pinIndex].mRoadPin != nullptr ) {
-    mPins[pinIndex].mRoadPin->getNet()->deleteChild( mPins[pinIndex].mRoadPin, undo );
-    mPins[pinIndex].mRoadPin = nullptr;
-    }
-  if( com ) {
-    //Connecting to net
-    SdContainerPlateNet *net = getPlate()->netCreate( wireName, undo );
-    SdGraphRoadPin *pin = new SdGraphRoadPin( this, pinIndex );
-    Q_ASSERT( net != nullptr && pin != nullptr );
-    net->insertChild( pin, undo );
-    mPins[pinIndex].mRoadPin = pin;
-    }
+  mPins[pinIndex].mNetName = netName;
+  mPins[pinIndex].mCom = com;
+  setDirtyRatNet();
   }
 
 
 
-
-
-SdPItemPlate *SdGraphPartImp::getPlate() const
-  {
-  return dynamic_cast<SdPItemPlate*>( getParent() );
-  }
 
 
 
@@ -181,13 +172,13 @@ QString SdGraphPartImp::getIdent() const
 
 
 //Get wire name pin with pinIndex connected to
-QString SdGraphPartImp::pinWireName(int pinIndex) const
+QString SdGraphPartImp::pinNetName(int pinIndex) const
   {
   if( pinIndex < 0 ) return QString();
   Q_ASSERT( pinIndex < mPins.count() );
-  if( mPins[pinIndex].mRoadPin == nullptr )
-    return QString();
-  return mPins[pinIndex].mRoadPin->getNetName();
+  if( mPins[pinIndex].mCom )
+    return mPins[pinIndex].mNetName;
+  return QString();
   }
 
 
@@ -209,7 +200,7 @@ bool SdGraphPartImp::isPinConnected(int pinIndex) const
   {
   if( pinIndex < 0 ) return false;
   Q_ASSERT( pinIndex < mPins.count() );
-  return mPins[pinIndex].mRoadPin != nullptr;
+  return mPins[pinIndex].mCom;
   }
 
 
@@ -574,9 +565,34 @@ void SdGraphPartImp::updatePinsPositions()
   {
   SdConverterImplement impl( mOrigin, mPart->mOrigin, mProp.mAngle.getValue(), mProp.mMirror.getValue(), mProp.mSide.getValue() );
   QTransform t = impl.getMatrix();
-  for( SdPartImpPin &pin : mPins )
+  for( SdPartImpPin &pin : mPins ) {
     pin.mPosition = t.map( pin.mPin->getPinOrigin() );
+    pin.mStratum  = pin.mPin->getPinStratum( mProp.mSide.getValue() );
+    }
   mOverRect.set( t.mapRect( mPart->getOverRect() ) );
   mIdentPos = t.map( mIdentOrigin );
   }
 
+
+
+bool SdGraphPartImp::isPointOnNet(SdPoint p, SdStratum stratum, QString &netName)
+  {
+  //Run on each pin, test stratum and pos. If match then return true and assign wireName
+  for( SdPartImpPin &pin : mPins ) {
+    if( pin.mCom && pin.mPosition == p && pin.mStratum.match( stratum ) ) {
+      netName = pin.mNetName;
+      return true;
+      }
+    }
+  return false;
+  }
+
+
+
+
+void SdGraphPartImp::unionSubNet(int srcSubNet, int dstSubNet)
+  {
+  for( SdPartImpPin &pin : mPins )
+    if( pin.mSubNetIndex == srcSubNet )
+      pin.mSubNetIndex = dstSubNet;
+  }

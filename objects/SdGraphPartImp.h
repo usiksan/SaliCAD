@@ -13,7 +13,8 @@ Description
 #ifndef SDGRAPHPARTIMP_H
 #define SDGRAPHPARTIMP_H
 
-#include "SdGraph.h"
+#include "SdGraphTraced.h"
+#include "SdStratum.h"
 
 #define SD_TYPE_PART_IMP "PartImp"
 
@@ -30,25 +31,21 @@ struct SdPartImpPin {
   SdGraphPartPin *mPin;       //Original pin
   QString         mPinNumber; //Part pin number
   QString         mPinName;   //Part pin name
-  //QString         mWireName;  //Name of net pin conneted to
+  QString         mNetName;   //Name of net pin conneted to
   SdPoint         mPosition;  //Pin position in plate context
-  SdGraphRoadPin *mRoadPin;   //Reference to pin assigned to net
-  //bool            mCom;       //Pin to wire flag connection
+  bool            mCom;       //Pin to wire flag connection
   SdPItemPart    *mPadStack;  //Pad stack
+  SdStratum       mStratum;   //Pin stratum
+  //Unsaved
+  int             mSubNetIndex; //Index of subnet to detecting subnets
 
   SdPartImpPin();
 
   void operator = ( const SdPartImpPin &pin );
-  //void setConnection( const QString wireName, bool com );
   void draw( SdContext *dc );
 
   QJsonObject toJson() const;
   void        fromJson( SdObjectMap *map, const QJsonObject obj );
-//  void Connect( CPChar wire );  //Подключить вывод к цепи
-//  void Disconnect();            //Отключить вывод от цепи
-//  void Draw( DContext &dc, DAngle angle, DMirror mirror, DSide side );    //Рисовать вывод
-//  void CalcSide( DSide side );
-  //void SetPadStack( bool connect, DPadTable &table );
   };
 
 typedef QVector<SdPartImpPin> SdPartImpPinTable;
@@ -73,7 +70,7 @@ typedef QVector<SdPartImpSection> SdPartImpSectionTable;
 
 
 
-class SdGraphPartImp : public SdGraph
+class SdGraphPartImp : public SdGraphTraced
   {
     int                    mLogNumber;   //Logical part number (from 1)
     SdPoint                mOrigin;      //Position of Implement
@@ -94,18 +91,14 @@ class SdGraphPartImp : public SdGraph
     SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemSymbol *comp );
 
     //Information
-    //Return plate where part resides
-    SdPItemPlate   *getPlate() const;
     //Get full visual ident of part aka D4 or R45
     QString         getIdent() const;
     //Get wire name pin with pinIndex connected to
-    QString         pinWireName( int pinIndex ) const;
+    QString         pinNetName( int pinIndex ) const;
     //Pin position
     SdPoint         pinPosition( int pinIndex ) const;
     //Return if pin with pinIndex connected to any wire or not
     bool            isPinConnected( int pinIndex ) const;
-    //Return road pin assotiated with pin
-    SdGraphRoadPin *getRoadPin( int pinIndex ) const;
     //Return pin index of pinNumber
     int             getPinIndex( const QString pinNumber ) const;
     //Check if there free section slot. If there - setup section and return true
@@ -116,7 +109,7 @@ class SdGraphPartImp : public SdGraph
     //Set pin name for pin index
     void            setPinName( int pinIndex, const QString pinName );
     //Pin connection-disconnection by index
-    void            pinConnectionSet(int pinIndex, const QString wireName, bool com, SdUndo *undo );
+    void            pinConnectionSet(int pinIndex, const QString netName, bool com );
     //link-unlink section
     void            setLinkSection( int section, SdGraphSymImp *symImp );
 
@@ -156,6 +149,11 @@ class SdGraphPartImp : public SdGraph
     void            partPinConnectionSet( int pinIndex, SdGraphRoadPin *roadPin );
 
     friend class SdUndoRecordImpPin;
+
+    // SdGraphTraced interface
+  public:
+    virtual bool isPointOnNet(SdPoint p, SdStratum stratum, QString &netName) override;
+    virtual void unionSubNet(int srcSubNet, int dstSubNet) override;
   };
 
 #endif // SDGRAPHPARTIMP_H

@@ -49,6 +49,25 @@ SdGraphPartPin::SdGraphPartPin(SdPoint org, SdPoint numberPos, SdPoint namePos, 
 
 
 
+SdStratum SdGraphPartPin::getPinStratum(bool otherSide) const
+  {
+  if( mPinProp.mSide.getValue() == dsComp ) {
+    if( otherSide ) return SdStratum(stmBottom);
+    return SdStratum(stmTop);
+    }
+  if( mPinProp.mSide.getValue() == dsSold ) {
+    if( otherSide ) return SdStratum(stmTop);
+    return SdStratum(stmBottom);
+    }
+  if( mPinProp.mSide.getValue() == dsThrow ) {
+    return SdStratum(stmThrow);
+    }
+  return SdStratum();
+  }
+
+
+
+
 void SdGraphPartPin::drawImp(SdContext *dc, const QString pinName, bool com)
   {
   //Pin it self

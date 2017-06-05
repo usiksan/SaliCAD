@@ -15,37 +15,46 @@ Description
 #define SDPITEMPLATE_H
 
 #include "SdProjectItem.h"
+#include "SdRect.h"
 #include <QMap>
+#include <QVector>
 
 class SdGraphPartImp;
 class SdGraphSymImp;
 class SdPItemPart;
 class SdPItemSymbol;
-class SdContainerPlateNet;
 
 #define SD_TYPE_PLATE "Plate"
 
-//typedef SdPItemPart *SdPItemPartPtr;
+
+struct SdRatNetPair {
+    SdPoint a,b;
+  };
+
+typedef QVector<SdRatNetPair> SdRatNet;
 
 typedef QMap<QString,SdPItemPart*> SdPadAssotiation;
 
 class SdPItemPlate : public SdProjectItem
   {
-    SdPadAssotiation mPadAssotiation;
+    SdRect           mPartRow;           //Row for allocation autoinserted parts
+    SdPadAssotiation mPadAssotiation;    //Pad to pin assotiation table
+
+    //Not saved
+    SdRatNet         mRatNet;            //Rat net is unconnected pairs
   public:
     SdPItemPlate();
 
-    //get net by its name
-    SdContainerPlateNet  *netGet( const QString name );
-
-    //Creates net with desired name or return existing net
-    SdContainerPlateNet  *netCreate( const QString name, SdUndo *undo );
+//    void                  netForEach( quint64 classMask, const QString  std::function<bool(SdObject*)> fun1 );
 
 
     SdGraphPartImp       *allocPartImp(int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym , SdUndo *undo);
 
     //Get pad
     SdPItemPart          *getPad( const QString pinType ) const { return mPadAssotiation.value( pinType ); }
+
+    //Set flag to update rat net
+    void                  setDirtyRatNet();
 //    DPrtImpPic*  FindCompPart( DPrtPic *part, CPChar name, int numSection );
 //    DPrtImpPic*  FindCompById( CPChar ident );
 

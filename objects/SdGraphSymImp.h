@@ -134,7 +134,7 @@ class SdGraphSymImp : public SdGraph
     //Move section to plate
     void          moveToPlate( SdPItemPlate *plate, SdUndo *undo );
     //Link with partImp
-    void          setLinkSection(int section, SdGraphPartImp *partImp , SdUndo *undo);
+    void          setLinkSection(int section, SdGraphPartImp *partImp );
     //Unconnect pin in point
     void          unconnectPinInPoint(SdPoint p , SdUndo *undo);
     //Unlink symbol from part

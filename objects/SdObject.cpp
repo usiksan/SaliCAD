@@ -21,7 +21,6 @@ Description
 #include "SdPItemSheet.h"
 #include "SdPItemPlate.h"
 #include "SdContainerSheetNet.h"
-#include "SdContainerPlateNet.h"
 #include "SdGraphArea.h"
 #include "SdGraphLinearLine.h"
 #include "SdGraphLinearRect.h"
@@ -240,7 +239,6 @@ SdObject *SdObject::build(QString type)
   if( type == QStringLiteral(SD_TYPE_WIRE_NAME)     ) return new SdGraphWireName();
 
   if( type == QStringLiteral(SD_TYPE_SHEET_NET)     ) return new SdContainerSheetNet();
-  if( type == QStringLiteral(SD_TYPE_PLATE_NET)     ) return new SdContainerPlateNet();
 
   if( type == QStringLiteral(SD_TYPE_SYMBOL)        ) return new SdPItemSymbol();
   if( type == QStringLiteral(SD_TYPE_PART)          ) return new SdPItemPart();

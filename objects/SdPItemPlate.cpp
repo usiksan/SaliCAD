@@ -14,8 +14,8 @@ Description
 #include "SdPItemPlate.h"
 #include "SdGraphIdent.h"
 #include "SdGraphPartImp.h"
+#include "SdPItemPart.h"
 #include "SdProject.h"
-#include "SdContainerPlateNet.h"
 
 SdPItemPlate::SdPItemPlate()
   {
@@ -23,31 +23,6 @@ SdPItemPlate::SdPItemPlate()
   }
 
 
-
-
-//get net by its name
-SdContainerPlateNet *SdPItemPlate::netGet(const QString name)
-  {
-  for( SdObject *ptr : mChildList )
-    if( ptr && !ptr->isDeleted() && ptr->getClass() == dctPlateNet ) {
-      SdContainerPlateNet *net = dynamic_cast<SdContainerPlateNet*>(ptr);
-      if( net && net->getNetName() == name ) return net;
-      }
-  return nullptr;
-  }
-
-
-
-
-//Creates net with desired name or return existing net
-SdContainerPlateNet *SdPItemPlate::netCreate(const QString name, SdUndo *undo)
-  {
-  SdContainerPlateNet *net = netGet( name );
-  if( net ) return net;
-  net = new SdContainerPlateNet( name );
-  insertChild( net, undo );
-  return net;
-  }
 
 
 
@@ -68,12 +43,32 @@ SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPI
   if( res )
     return res;
 
+  //Calculate insert position for part implementation
+  if( mPartRow.isEmpty() || mPartRow.width() > 100000 ) {
+    //Create new row
+    mPartRow = getOverRect();
+    }
+  SdRect over = part->getOverRect();
+  SdPoint p( mPartRow.getTopLeft() );
+  p.ry() += over.height();
+  p.rx() = (p.x() + 2500) / 2500 * 2500;
+  mPartRow.setRight( p.x() + over.width() );
+
   //Create new part implement
-  res = new SdGraphPartImp( SdPoint(), &(sdGlobalProp->mPartImpProp), part, comp );
+  res = new SdGraphPartImp( p, &(sdGlobalProp->mPartImpProp), part, comp );
   insertChild( res, undo );
 
   Q_ASSERT( res->isSectionFree( section, part, comp, sym ) );
   return res;
+  }
+
+
+
+
+//Set flag to update rat net
+void SdPItemPlate::setDirtyRatNet()
+  {
+  //TODO set dirty rat net
   }
 
 
