@@ -83,3 +83,15 @@ double SdWEditorGraphPlate::getPPM() const
   {
   return sdEnvir->mPrtPPM;
   }
+
+
+void SdWEditorGraphPlate::onActivateEditor()
+  {
+  SdWEditorGraph::onActivateEditor();
+
+  //Activate menu
+  SdWCommand::cmMenuInsertPcb->setVisible(true);
+
+  //Activate tool bar
+  SdWCommand::barPcb->show();
+  }

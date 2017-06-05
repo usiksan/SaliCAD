@@ -44,6 +44,10 @@ class SdWEditorGraphPlate : public SdWEditorGraph
     // SdWEditorGraph interface
   public:
     virtual double getPPM() const override;
+
+    // SdWEditor interface
+  public:
+    virtual void onActivateEditor() override;
   };
 
 #endif // SDWEDITORGRAPHPLATE_H

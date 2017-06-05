@@ -18,6 +18,9 @@ Description
 #include "SdPropInt.h"
 #include "SdAngle.h"
 
+#define dsideTop 0
+#define dsideBot 1
+
 struct SdPropPartImpState {
     int mAngle;
     int mMirror;

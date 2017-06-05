@@ -16,6 +16,7 @@ Description
 #include "SdGraphPartImp.h"
 #include "SdPItemPart.h"
 #include "SdProject.h"
+#include <QDebug>
 
 SdPItemPlate::SdPItemPlate()
   {
@@ -44,15 +45,21 @@ SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPI
     return res;
 
   //Calculate insert position for part implementation
-  if( mPartRow.isEmpty() || mPartRow.width() > 100000 ) {
+  if( mPartRow.isEmpty() || mPartRow.isNull() || mPartRow.width() > 100000 ) {
     //Create new row
     mPartRow = getOverRect();
+    if( mPartRow.isEmpty() || mPartRow.isNull() )
+      mPartRow.set( SdPoint(0,0), SdPoint(2500,2500) );
+    mPartRow.setWidth(2500);
+    qDebug() << "row start" << mPartRow;
     }
   SdRect over = part->getOverRect();
-  SdPoint p( mPartRow.getTopLeft() );
-  p.ry() += over.height();
+  SdPoint p( mPartRow.getTopRight() );
+  qDebug() << p;
+  p.ry() = (p.y() + over.height()) / 2500 * 2500;
   p.rx() = (p.x() + 2500) / 2500 * 2500;
   mPartRow.setRight( p.x() + over.width() );
+  qDebug() << Q_FUNC_INFO << mPartRow << p << over.height();
 
   //Create new part implement
   res = new SdGraphPartImp( p, &(sdGlobalProp->mPartImpProp), part, comp );

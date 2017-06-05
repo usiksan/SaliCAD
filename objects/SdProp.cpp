@@ -95,9 +95,9 @@ SdProp::SdProp()
   mSymImpProp.mMirror = 0;
 
   //Props of part implement
-  mPartImpProp.mAngle = 0;
+  mPartImpProp.mAngle  = 0;
   mPartImpProp.mMirror = 0;
-  mPartImpProp.mSide   = dsComp;
+  mPartImpProp.mSide   = dsideTop;
 
   //Symbol identifier (reference) aka D4.5
   mSymIdentProp.mLayer.set( QString(LID0_SCHEMATIC LID1_PIN_NUMBER) );

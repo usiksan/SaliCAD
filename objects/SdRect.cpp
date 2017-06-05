@@ -60,8 +60,8 @@ void SdRect::grow(SdPoint point)
   else {
     if( point.x() < left() ) setLeft( point.x() );
     if( point.x() > right() ) setRight( point.x() );
-    if( point.y() < top() ) setTop( point.y() );
-    if( point.y() > bottom() ) setBottom( point.y() );
+    if( point.y() > top() ) setTop( point.y() );
+    if( point.y() < bottom() ) setBottom( point.y() );
     }
   }
 
@@ -70,7 +70,10 @@ void SdRect::grow(SdPoint point)
 
 void SdRect::grow(const SdRect &rect)
   {
-  set( united( rect ) );
+  if( isEmpty() )
+    set( rect );
+  else
+    set( united( rect ) );
   }
 
 
