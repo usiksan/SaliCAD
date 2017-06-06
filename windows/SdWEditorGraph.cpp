@@ -19,6 +19,7 @@ Description
 #include "objects/SdConverterView.h"
 #include "objects/SdGraph.h"
 #include "objects/SdPulsar.h"
+#include "objects/SdPItemPlate.h"
 #include "modes/SdMode.h"
 #include "modes/SdModeView.h"
 #include "modes/SdModeTZoomer.h"
@@ -401,8 +402,6 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
     else {
       //Рисовать содержимое
       getProjectItem()->draw( &context );
-      //TODO ratNet
-      //GetObject()->ForEach( DrawIterator( wc, 0, GetEnvir().showRatNet ) );
       }
     mCasheDirty = false;
     }
@@ -417,6 +416,14 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
     context.setConverter( &cv );
     modeGet()->drawDynamic( &context );
     }
+
+  //On plate object draw rat net
+  if( sdEnvir->mShowRatNet && getProjectItem()->getClass() == dctPlate ) {
+    SdPItemPlate *plate = dynamic_cast<SdPItemPlate*>( getProjectItem() );
+    Q_ASSERT( plate != nullptr );
+    plate->drawRatNet( &context );
+    }
+
   //Рисовать курсор
   //TODO cursor
   //wc.DrawHideCursor( prevPoint );

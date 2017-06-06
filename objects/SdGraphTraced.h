@@ -32,6 +32,7 @@ class SdGraphTraced : public SdGraph
 
     //Defined here
     virtual bool         isPointOnNet( SdPoint p, SdStratum stratum, QString &wireName ) = 0;
+    virtual int          getSubNet( const QString netName, SdPoint p, SdStratum s ) = 0;
     //virtual void         accumLinked( SdPoint a, SdPoint b, SdLayer *layer, SdSelector *sel ) = 0;
     virtual void         unionSubNet( int srcSubNet, int dstSubNet ) = 0;
 

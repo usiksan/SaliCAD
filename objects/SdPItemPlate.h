@@ -16,6 +16,7 @@ Description
 
 #include "SdProjectItem.h"
 #include "SdRect.h"
+#include "SdStratum.h"
 #include <QMap>
 #include <QVector>
 
@@ -42,6 +43,8 @@ class SdPItemPlate : public SdProjectItem
 
     //Not saved
     SdRatNet         mRatNet;            //Rat net is unconnected pairs
+    bool             mRatNetDirty;
+    QVector<int>     mSubNet;            //Contains indexes of subnet
   public:
     SdPItemPlate();
 
@@ -55,6 +58,14 @@ class SdPItemPlate : public SdProjectItem
 
     //Set flag to update rat net
     void                  setDirtyRatNet();
+
+    //Draw rat net
+    void                  drawRatNet( SdContext *dc );
+
+    //Get subnet position index (cell number in mSubNet witch contains subNet index)
+    int                   getSubNetRef(SdObject *last, const QString netName, SdPoint p, SdStratum s );
+
+
 //    DPrtImpPic*  FindCompPart( DPrtPic *part, CPChar name, int numSection );
 //    DPrtImpPic*  FindCompById( CPChar ident );
 

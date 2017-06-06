@@ -75,7 +75,45 @@ SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPI
 //Set flag to update rat net
 void SdPItemPlate::setDirtyRatNet()
   {
-  //TODO set dirty rat net
+  mRatNetDirty = true;
+  }
+
+
+
+void SdPItemPlate::drawRatNet(SdContext *dc)
+  {
+  //TODO draw rat net
+  if( mRatNetDirty ) {
+    //Cleat previous rat net
+    mRatNet.clear();
+
+    //Accum ratNet pairs
+    }
+  }
+
+
+
+
+//Get subnet position index (cell number in mSubNet witch contains subNet index)
+int SdPItemPlate::getSubNetRef( SdObject *last, const QString netName, SdPoint p, SdStratum s)
+  {
+  int cell = 0;
+  //Scan all component until last and try get subNet
+  forEach( dctAll, [ &cell, last, netName, p, s] (SdObject *obj) -> bool {
+    if( obj == last ) return false;
+    SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>( obj );
+    if( traced != nullptr )
+      cell = traced->getSubNet( netName, p, s );
+    return cell == 0;
+    });
+
+  //If subNet found, then return it
+  if( cell ) return cell;
+
+  //SubNet not found, create new one
+  cell = mSubNet.count();
+  mSubNet.append( cell );
+  return cell;
   }
 
 
