@@ -17,6 +17,7 @@ Description
 #include "SdProjectItem.h"
 #include "SdRect.h"
 #include "SdStratum.h"
+#include "SdGraphTraced.h"
 #include <QMap>
 #include <QVector>
 
@@ -30,6 +31,8 @@ class SdPItemSymbol;
 
 struct SdRatNetPair {
     SdPoint a,b;
+
+    SdRatNetPair( SdPoint sa, SdPoint sb ) : a(sa), b(sb) {}
   };
 
 typedef QVector<SdRatNetPair> SdRatNet;
@@ -62,9 +65,13 @@ class SdPItemPlate : public SdProjectItem
     //Draw rat net
     void                  drawRatNet( SdContext *dc );
 
+    int                   getSubNetPairs
+
     //Get subnet position index (cell number in mSubNet witch contains subNet index)
     int                   getSubNetRef(SdObject *last, const QString netName, SdPoint p, SdStratum s );
 
+    //Get minimal distance from one subnet to another
+    void                  getMinDistance( int subNet, const QString netName, SdPoint p, SdDistanceInfo *dst );
 
 //    DPrtImpPic*  FindCompPart( DPrtPic *part, CPChar name, int numSection );
 //    DPrtImpPic*  FindCompById( CPChar ident );

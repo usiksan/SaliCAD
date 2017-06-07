@@ -88,6 +88,36 @@ void SdPItemPlate::drawRatNet(SdContext *dc)
     mRatNet.clear();
 
     //Accum ratNet pairs
+
+    //At first, accum sub nets
+    mSubNet.clear();
+    mSubNet.append( 0 );
+    forEach( dctAll, [this] (SdObject *obj) -> bool {
+      SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
+      if( traced )
+        traced->forsedSubNet( this );
+      return true;
+      });
+
+    //For each sub net calc and addon minimal distance beatween pairs of sub nets
+    for( int i : mSubNet )
+      if( i == 0 ) continue;
+      else {
+        SdDistanceInfo info;
+        forEach( dctAll, [this,i,&info] (SdObject *obj) -> bool {
+          SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
+          if( traced )
+            traced->getSubNetDistance( i, &info );
+          return true;
+          });
+        if( info.mDestSubNet ) {
+          //Link beatween sub nets present. Append it to rat net pair table
+          SdRatNetPair pair( info.mSource, info.mDest );
+          mRatNet.append( pair );
+          //Convert dest sub net to sour
+          }
+
+        }
     }
   }
 
