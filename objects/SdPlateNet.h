@@ -79,6 +79,9 @@ class SdPlateNet
   private:
     //For each points if point subnet equals oldSubNet then replace on newSubNet
     void replaceSubNet( int newSubNet, int oldSubNet );
+
+    //Add sub net distance
+    void addSubNetDistance( int srcSubNet, SdPoint src, int dstSubNet, SdPoint dst );
   };
 
 

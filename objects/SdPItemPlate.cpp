@@ -20,7 +20,8 @@ Description
 #include "SdEnvir.h"
 #include <QDebug>
 
-SdPItemPlate::SdPItemPlate()
+SdPItemPlate::SdPItemPlate() :
+  mRatNetDirty(true)
   {
 
   }
@@ -84,7 +85,7 @@ void SdPItemPlate::setDirtyRatNet()
 
 void SdPItemPlate::drawRatNet(SdContext *dc)
   {
-  //TODO draw rat net
+  //Build rat net if neccessary
   if( mRatNetDirty )
     buildRatNet();
   //Draw rat net pairs

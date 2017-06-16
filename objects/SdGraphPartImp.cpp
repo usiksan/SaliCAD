@@ -294,6 +294,8 @@ void SdGraphPartImp::attach(SdUndo *undo)
       mSections.append( s );
       }
     }
+
+  updatePinsPositions();
   }
 
 

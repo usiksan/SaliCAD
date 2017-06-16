@@ -18,7 +18,7 @@ SdSubNetDistance SdSubNet::findMinimalDistance()
 //Calculate distance and call addDistance( int mDestSubNet, double distance, SdPoint sour, SdPoint dest );
 void SdSubNet::addDistance(int mDestSubNet, SdPoint sour, SdPoint dest)
   {
-  addDistance( mDestSubNet, sour.getDistance(dest), sour, dest );
+  addDistance( mDestSubNet, sour.getQrtDistance(dest), sour, dest );
   }
 
 
@@ -43,7 +43,7 @@ void SdSubNet::addSubNet(int curSubNet, const SdSubNet &net)
 
 
 //======================================================================================================================================
-//     SdSubNet
+//     SdPlateNet
 
 
 
@@ -68,7 +68,7 @@ int SdPlateNet::addNetPoint(SdStratum s, SdPoint org, int subNet)
           }
         }
       }
-  if( subNet == 0 ) subNet = mNetPointList.count();
+  if( subNet == 0 ) subNet = mNetPointList.count()+1;
   SdPlateNetPoint p;
   p.mStratum = s;
   p.mOrigin  = org;
@@ -81,6 +81,16 @@ int SdPlateNet::addNetPoint(SdStratum s, SdPoint org, int subNet)
 
 void SdPlateNet::buildRatNet(SdRatNet *ratNet)
   {
+  //Fill mSubNetList with distance beatween sub nets
+  for( int i = 0; i < mNetPointList.count() - 1; i++ ) {
+    int subNet = mNetPointList.at(i).mSubNet;
+    SdPoint src = mNetPointList.at(i).mOrigin;
+    //Check current point with other points
+    for( int d = i + 1; d < mNetPointList.count(); d++ )
+      //If other sub net then append distance
+      if( mNetPointList.at(d).mSubNet != subNet )
+        addSubNetDistance( subNet, src, mNetPointList.at(d).mSubNet, mNetPointList.at(d).mOrigin );
+    }
   //We link sub net pair with minimal distance
   //Then linked sub nets union into one sub net
   //Process continue while present more then one sub nets
@@ -92,6 +102,12 @@ void SdPlateNet::buildRatNet(SdRatNet *ratNet)
     //Move dest sub net to current sub net
     mSubNetList.first().addSubNet( mSubNetList.firstKey(), mSubNetList.value(distance.mDestSubNet) );
     mSubNetList.remove(distance.mDestSubNet);
+    }
+  if( mSubNetList.count() ) {
+    //Find minimal distance
+    SdSubNetDistance distance = mSubNetList.first().findMinimalDistance();
+    //Add into rat net link pair
+    ratNet->append( SdRatNetPair(distance.mSour, distance.mDest) );
     }
   }
 
@@ -108,6 +124,21 @@ void SdPlateNet::replaceSubNet(int newSubNet, int oldSubNet)
 
 
 
+
+//Add sub net distance
+void SdPlateNet::addSubNetDistance(int srcSubNet, SdPoint src, int dstSubNet, SdPoint dst)
+  {
+  if( !mSubNetList.contains(srcSubNet) )
+    mSubNetList.insert( srcSubNet, SdSubNet() );
+  mSubNetList[srcSubNet].addDistance( dstSubNet, src, dst );
+  }
+
+
+
+
+
+//======================================================================================================================================
+//     SdPlateNetList
 
 SdPlateNetList::SdPlateNetList()
   {
@@ -136,3 +167,5 @@ void SdPlateNetList::buildRatNet(SdRatNet *ratNet)
   for( SdPlateNet *net : mNetList )
     net->buildRatNet( ratNet );
   }
+
+
