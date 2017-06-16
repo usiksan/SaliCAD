@@ -145,7 +145,8 @@ SOURCES += \
     objects/SdGraphTraced.cpp \
     objects/SdGraphTracedRoad.cpp \
     objects/SdGraphTracedVia.cpp \
-    objects/SdGraphTracedPolygon.cpp
+    objects/SdGraphTracedPolygon.cpp \
+    objects/SdPlateNet.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -283,7 +284,8 @@ HEADERS  += \
     objects/SdGraphTraced.h \
     objects/SdGraphTracedRoad.h \
     objects/SdGraphTracedVia.h \
-    objects/SdGraphTracedPolygon.h
+    objects/SdGraphTracedPolygon.h \
+    objects/SdPlateNet.h
 
 DISTFILES += \
     license.txt

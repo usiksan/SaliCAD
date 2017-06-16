@@ -16,6 +16,8 @@ Description
 #include "SdGraphPartImp.h"
 #include "SdPItemPart.h"
 #include "SdProject.h"
+#include "SdContext.h"
+#include "SdEnvir.h"
 #include <QDebug>
 
 SdPItemPlate::SdPItemPlate()
@@ -83,68 +85,42 @@ void SdPItemPlate::setDirtyRatNet()
 void SdPItemPlate::drawRatNet(SdContext *dc)
   {
   //TODO draw rat net
-  if( mRatNetDirty ) {
-    //Cleat previous rat net
-    mRatNet.clear();
-
-    //Accum ratNet pairs
-
-    //At first, accum sub nets
-    mSubNet.clear();
-    mSubNet.append( 0 );
-    forEach( dctAll, [this] (SdObject *obj) -> bool {
-      SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
-      if( traced )
-        traced->forsedSubNet( this );
-      return true;
-      });
-
-    //For each sub net calc and addon minimal distance beatween pairs of sub nets
-    for( int i : mSubNet )
-      if( i == 0 ) continue;
-      else {
-        SdDistanceInfo info;
-        forEach( dctAll, [this,i,&info] (SdObject *obj) -> bool {
-          SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
-          if( traced )
-            traced->getSubNetDistance( i, &info );
-          return true;
-          });
-        if( info.mDestSubNet ) {
-          //Link beatween sub nets present. Append it to rat net pair table
-          SdRatNetPair pair( info.mSource, info.mDest );
-          mRatNet.append( pair );
-          //Convert dest sub net to sour
-          }
-
-        }
-    }
+  if( mRatNetDirty )
+    buildRatNet();
+  //Draw rat net pairs
+  dc->setPen( 0, sdEnvir->getSysColor(scRatNet), dltSolid );
+  for( const SdRatNetPair &pair : mRatNet )
+    dc->line( pair.a, pair.b );
   }
 
 
 
 
-//Get subnet position index (cell number in mSubNet witch contains subNet index)
-int SdPItemPlate::getSubNetRef( SdObject *last, const QString netName, SdPoint p, SdStratum s)
+//Build rat net
+void SdPItemPlate::buildRatNet()
   {
-  int cell = 0;
-  //Scan all component until last and try get subNet
-  forEach( dctAll, [ &cell, last, netName, p, s] (SdObject *obj) -> bool {
-    if( obj == last ) return false;
-    SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>( obj );
-    if( traced != nullptr )
-      cell = traced->getSubNet( netName, p, s );
-    return cell == 0;
+  //Cleat previous rat net
+  mRatNet.clear();
+
+  //Create net list for build rat net
+  SdPlateNetList netList;
+
+  //Accum points for nets
+  forEach( dctAll, [&netList] (SdObject *obj) -> bool {
+    SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
+    if( traced )
+      traced->accumNetPoints( netList );
+    return true;
     });
 
-  //If subNet found, then return it
-  if( cell ) return cell;
+  //Build rat net
+  netList.buildRatNet( &mRatNet );
 
-  //SubNet not found, create new one
-  cell = mSubNet.count();
-  mSubNet.append( cell );
-  return cell;
+  mRatNetDirty = false;
   }
+
+
+
 
 
 

@@ -104,9 +104,16 @@ SdAngle SdPoint::getAngle(SdPoint center) const
 
 double SdPoint::getDistance(SdPoint p) const
   {
+  return sqrt( getQrtDistance(p) );
+  }
+
+
+
+double SdPoint::getQrtDistance(SdPoint p) const
+  {
   double dx = x() - p.x();
   double dy = y() - p.y();
-  return sqrt( dx*dx + dy*dy );
+  return dx*dx + dy*dy;
   }
 
 

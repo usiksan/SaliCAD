@@ -50,6 +50,7 @@ class SdPoint : public QPoint
     SdPoint getMiddle( SdPoint b ) { return SdPoint( (x() + b.x()) / 2, (y() + b.y()) ); }
     SdAngle getAngle( SdPoint center = SdPoint() ) const; //Угол поворота до точки относительно центра
     double  getDistance( SdPoint p ) const;
+    double  getQrtDistance( SdPoint p ) const;
     CLS     classify( SdPoint p0, SdPoint p1 ) const;
     double  getLenght() const;
     bool    isEqual( SdPoint p ) const { return x() == p.x() && y() == p.y(); }

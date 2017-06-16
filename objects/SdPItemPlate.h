@@ -18,6 +18,7 @@ Description
 #include "SdRect.h"
 #include "SdStratum.h"
 #include "SdGraphTraced.h"
+#include "SdPlateNet.h"
 #include <QMap>
 #include <QVector>
 
@@ -29,13 +30,6 @@ class SdPItemSymbol;
 #define SD_TYPE_PLATE "Plate"
 
 
-struct SdRatNetPair {
-    SdPoint a,b;
-
-    SdRatNetPair( SdPoint sa, SdPoint sb ) : a(sa), b(sb) {}
-  };
-
-typedef QVector<SdRatNetPair> SdRatNet;
 
 typedef QMap<QString,SdPItemPart*> SdPadAssotiation;
 
@@ -47,7 +41,6 @@ class SdPItemPlate : public SdProjectItem
     //Not saved
     SdRatNet         mRatNet;            //Rat net is unconnected pairs
     bool             mRatNetDirty;
-    QVector<int>     mSubNet;            //Contains indexes of subnet
   public:
     SdPItemPlate();
 
@@ -65,13 +58,9 @@ class SdPItemPlate : public SdProjectItem
     //Draw rat net
     void                  drawRatNet( SdContext *dc );
 
-    int                   getSubNetPairs
+    //Build rat net
+    void                  buildRatNet();
 
-    //Get subnet position index (cell number in mSubNet witch contains subNet index)
-    int                   getSubNetRef(SdObject *last, const QString netName, SdPoint p, SdStratum s );
-
-    //Get minimal distance from one subnet to another
-    void                  getMinDistance( int subNet, const QString netName, SdPoint p, SdDistanceInfo *dst );
 
 //    DPrtImpPic*  FindCompPart( DPrtPic *part, CPChar name, int numSection );
 //    DPrtImpPic*  FindCompById( CPChar ident );

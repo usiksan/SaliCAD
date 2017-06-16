@@ -28,8 +28,7 @@ Description
 SdPartImpPin::SdPartImpPin() :
   mPin(nullptr),
   mCom(false),
-  mPadStack(nullptr),  //Pad stack
-  mSubNetIndex(0)
+  mPadStack(nullptr)  //Pad stack
   {
   }
 
@@ -46,8 +45,6 @@ void SdPartImpPin::operator =(const SdPartImpPin &pin)
   mCom       = pin.mCom;
   mPadStack  = pin.mPadStack;  //Pad stack
   mStratum   = pin.mStratum;
-
-  mSubNetIndex = pin.mSubNetIndex;
   }
 
 
@@ -590,9 +587,11 @@ bool SdGraphPartImp::isPointOnNet(SdPoint p, SdStratum stratum, QString &netName
 
 
 
-void SdGraphPartImp::unionSubNet(int srcSubNet, int dstSubNet)
+
+
+void SdGraphPartImp::accumNetPoints(SdPlateNetList &netList)
   {
   for( SdPartImpPin &pin : mPins )
-    if( pin.mSubNetIndex == srcSubNet )
-      pin.mSubNetIndex = dstSubNet;
+    if( pin.mCom )
+      netList.addNetPoint( pin.mNetName, pin.mStratum, pin.mPosition );
   }

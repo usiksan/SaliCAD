@@ -36,8 +36,6 @@ struct SdPartImpPin {
   bool            mCom;       //Pin to wire flag connection
   SdPItemPart    *mPadStack;  //Pad stack
   SdStratum       mStratum;   //Pin stratum
-  //Unsaved
-  int             mSubNetIndex; //Index of subnet to detecting subnets
 
   SdPartImpPin();
 
@@ -153,7 +151,7 @@ class SdGraphPartImp : public SdGraphTraced
     // SdGraphTraced interface
   public:
     virtual bool isPointOnNet(SdPoint p, SdStratum stratum, QString &netName) override;
-    virtual void unionSubNet(int srcSubNet, int dstSubNet) override;
+    virtual void accumNetPoints(SdPlateNetList &netList) override;
   };
 
 #endif // SDGRAPHPARTIMP_H

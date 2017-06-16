@@ -409,11 +409,13 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
   QPainter painter( viewport() );
   //Восстановить статическую часть
   painter.drawImage( QPoint(), mCashe );
+
+  SdContext context( mGrid, &painter );
+  SdConverterView cv( s, mOrigin, mScale.scaleGet() );
+  context.setConverter( &cv );
+
   if( modeGet() ) {
     //Рисовать динамическую часть
-    SdContext context( mGrid, &painter );
-    SdConverterView cv( s, mOrigin, mScale.scaleGet() );
-    context.setConverter( &cv );
     modeGet()->drawDynamic( &context );
     }
 
