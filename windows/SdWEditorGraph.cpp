@@ -34,6 +34,7 @@ Description
 #include <QImage>
 #include <QMessageBox>
 #include <QDebug>
+#include <QScrollBar>
 
 SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
   SdWEditor( parent ),
@@ -63,6 +64,14 @@ SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
 
   setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
   setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
+
+  //Tracking scroll bar position
+  connect( verticalScrollBar(), &QScrollBar::valueChanged, this, [this] (int value) {
+    originSet( SdPoint(originGet().x(), -value) );
+    });
+  connect( horizontalScrollBar(), &QScrollBar::valueChanged, this, [this] (int value) {
+    originSet( SdPoint(value,originGet().y()) );
+    });
 
   //By default - view mode.
   //If no item then no mode.
@@ -356,7 +365,7 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
   if( mCasheDirty ) {
     //Redraw static part
     mCashe = QImage( s, QImage::Format_ARGB32_Premultiplied );
-    //Очистить фон
+    //Clear backspace
     mCashe.fill( sdEnvir->getSysColor(scGraphBack) );
 
     QPainter painter( &mCashe );
@@ -369,7 +378,7 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
     mPixelTransform *= QTransform::fromTranslate( mOrigin.x(), mOrigin.y() );
     //qDebug() << "cashe" << mOrigin << mScale.scaleGet();
 
-    //Рисовать сетку
+    //Draw grid
     if( sdEnvir->mGridView ) {
       //Не чертить сетку менее чем в minViewGrid пикселов
       if( mScale.phys2pixel(mGrid.x()) >= sdEnvir->mMinViewGrid && mScale.phys2pixel(mGrid.y()) >= sdEnvir->mMinViewGrid ) {
@@ -395,14 +404,36 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
           }
         }
       }
-    //Рисовать содержимое
+    //Draw contens
     painter.setTransform( context.transform(), false );
     if( modeGet() )
+      //Thrue mode
       modeGet()->drawStatic( &context );
     else {
-      //Рисовать содержимое
+      //Draw contens item
       getProjectItem()->draw( &context );
       }
+
+    //Get over rect
+    SdRect over = getProjectItem()->getOverRect();
+    //Calculate page size
+    double pagex = qMax( s.width(), 1);
+    pagex /= mScale.scaleGet();
+    double pagey = qMax( s.height(), 1 );
+    pagey /= mScale.scaleGet();
+
+    //Update scrollbars
+    verticalScrollBar()->setRange( -over.getTop() * 2, -over.getBottom() * 2 );
+    verticalScrollBar()->setSingleStep( mGrid.y() );
+    verticalScrollBar()->setPageStep( pagey );
+    verticalScrollBar()->setValue( -mOrigin.y() );
+
+    horizontalScrollBar()->setRange( over.getLeft() * 2, over.getRight() * 2 );
+    horizontalScrollBar()->setSingleStep( mGrid.x() );
+    horizontalScrollBar()->setPageStep( pagex );
+    horizontalScrollBar()->setValue( mOrigin.x() );
+
+
     mCasheDirty = false;
     }
 
