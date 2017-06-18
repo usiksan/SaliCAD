@@ -33,6 +33,7 @@ class SdGraphArea : public SdGraph
     QSet<int>     mFlyIndex;   //Fly vertex numbers
   public:
     SdGraphArea();
+    SdGraphArea( const SdPointList list, const SdPropLine &propLine, SdPItemPlate *plate );
 
     SdPItemPlate *getPlate() const { return mPlate; }
 

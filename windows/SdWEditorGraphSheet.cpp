@@ -49,7 +49,7 @@ void SdWEditorGraphSheet::onActivateEditor()
   }
 
 
-
+//Component insertion mode
 void SdWEditorGraphSheet::cmModeComponent()
   {
   modeSet( new SdModeCSymImp( this, mSheet ) );
@@ -57,6 +57,7 @@ void SdWEditorGraphSheet::cmModeComponent()
 
 
 
+//Sheet net wire insertion mode
 void SdWEditorGraphSheet::cmModeNet()
   {
   modeSet( new SdModeCWire( this, mSheet ) );

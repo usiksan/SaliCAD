@@ -31,7 +31,9 @@ class SdWEditorGraphSheet : public SdWEditorGraph
   public:
     virtual SdProjectItem *getProjectItem() override;
     virtual void           onActivateEditor() override;
+    //Component insertion mode
     virtual void           cmModeComponent() override;
+    //Sheet net wire insertion mode
     virtual void           cmModeNet() override;
     virtual void cmModeBus() override;
     virtual void cmModeDisconnect() override;

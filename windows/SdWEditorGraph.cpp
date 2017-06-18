@@ -27,6 +27,7 @@ Description
 #include "modes/SdModeCLinearLine.h"
 #include "modes/SdModeCLinearRect.h"
 #include "modes/SdModeCLinearRectFilled.h"
+#include "modes/SdModeCLinearRegion.h"
 #include "modes/SdModeCText.h"
 
 #include <QPainter>
@@ -311,6 +312,14 @@ void SdWEditorGraph::cmModeRect()
 void SdWEditorGraph::cmModeFilledRect()
   {
   modeSet( new SdModeCLinearRectFilled( this, getProjectItem() ) );
+  }
+
+
+
+
+void SdWEditorGraph::cmModeRegion()
+  {
+  modeSet( new SdModeCLinearRegion( this, getProjectItem() )  );
   }
 
 

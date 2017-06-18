@@ -20,7 +20,18 @@ Description
 #include "SdPropLayer.h"
 #include "SdContext.h"
 
-SdGraphArea::SdGraphArea()
+SdGraphArea::SdGraphArea() :
+  SdGraph(),
+  mPlate(nullptr)
+  {
+
+  }
+
+SdGraphArea::SdGraphArea(const SdPointList list, const SdPropLine &propLine, SdPItemPlate *plate) :
+  SdGraph(),
+  mRegion(list),
+  mRegionProp(propLine),
+  mPlate(plate)
   {
 
   }
@@ -45,6 +56,7 @@ bool SdGraphArea::isPointInside(SdPoint p) const
 //Scan all components in sheet and move it in appropriate pcb if it inside this area
 void SdGraphArea::attach(SdUndo *undo)
   {
+  mPlate = get
   //TODO check if plate assigned to this project
   getSheet()->forEach( dctSymImp, [undo, this] (SdObject *obj) -> bool {
     SdGraphSymImp *sym = dynamic_cast<SdGraphSymImp*>( obj );

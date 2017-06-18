@@ -146,7 +146,9 @@ SOURCES += \
     objects/SdGraphTracedRoad.cpp \
     objects/SdGraphTracedVia.cpp \
     objects/SdGraphTracedPolygon.cpp \
-    objects/SdPlateNet.cpp
+    objects/SdPlateNet.cpp \
+    modes/SdModeCLinearRegion.cpp \
+    modes/SdModeCLinearArea.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -285,7 +287,9 @@ HEADERS  += \
     objects/SdGraphTracedRoad.h \
     objects/SdGraphTracedVia.h \
     objects/SdGraphTracedPolygon.h \
-    objects/SdPlateNet.h
+    objects/SdPlateNet.h \
+    modes/SdModeCLinearRegion.h \
+    modes/SdModeCLinearArea.h
 
 DISTFILES += \
     license.txt

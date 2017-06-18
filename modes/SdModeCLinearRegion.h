@@ -9,29 +9,25 @@ Web
   www.saliLab.ru
 
 Description
-  Mode for line
+  Mode for closed regions
 */
-#ifndef SDMODECLINEARLINE_H
-#define SDMODECLINEARLINE_H
+#ifndef SDMODECLINEARREGION_H
+#define SDMODECLINEARREGION_H
 
 #include "SdModeCLinear.h"
 
-class SdModeCLinearLine : public SdModeCLinear
+class SdModeCLinearRegion : public SdModeCLinear
   {
-    SdPoint        mFirst;      //First point
-    SdPoint        mMiddle;     //Vertex point
+    SdPointList    mList;       //Region vertex points
+    SdPoint        mMiddle;     //Yet no entered vertex point
     SdPoint        mPrevMove;   //Previous entered point
-
-    SdPoint        mSmartPoint; //Точка разумного ввода
-    int            mSmartType;  //Тип разумной точки
-
-    static SdPoint mOffset;     //Предположительная очередная точка
 
     const int sFirstPoint = 0, sNextPoint = 1;
   public:
-    SdModeCLinearLine( SdWEditorGraph *editor, SdProjectItem *obj );
+    SdModeCLinearRegion( SdWEditorGraph *editor, SdProjectItem *obj );
 
     // SdMode interface
+  public:
     virtual void    drawDynamic(SdContext *ctx) override;
     virtual void    enterPoint(SdPoint enter) override;
     virtual void    cancelPoint(SdPoint) override;
@@ -44,4 +40,4 @@ class SdModeCLinearLine : public SdModeCLinear
     virtual int     getIndex() const override;
   };
 
-#endif // SDMODECLINEARLINE_H
+#endif // SDMODECLINEARREGION_H
