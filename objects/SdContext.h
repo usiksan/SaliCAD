@@ -78,7 +78,8 @@ class SdContext {
     void            rect( SdRect r, const SdPropLine &prop );
     void            fillRect( SdRect r );
     void            fillRect( SdRect r, const SdPropLine &prop );
-//    virtual void    arc( SdPoint center, int radius, SdAngle start, SdAngle stop, SdPropLine &prop ) = 0;
+    void            arc( SdPoint center, SdPoint start, SdPoint stop );
+    void            arc( SdPoint center, SdPoint start, SdPoint stop, const SdPropLine &prop );
     void            circle( SdPoint center, int radius );
     void            circle( SdPoint center, int radius, const SdPropLine &prop );
     void            circleFill( SdPoint center, int radius );

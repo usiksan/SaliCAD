@@ -9,7 +9,7 @@ Web
   www.saliLab.ru
 
 Description
-  Undo record for line properties and 2 points.
+  Undo record for line properties and 3 points.
 */
 #ifndef SDUNDORECORDPROPLINEAND2POINTS_H
 #define SDUNDORECORDPROPLINEAND2POINTS_H
@@ -18,7 +18,7 @@ Description
 #include "SdPropLine.h"
 #include "SdPoint.h"
 
-class SdUndoRecordPropLineAnd2Points : public SdUndoRecord
+class SdUndoRecordPropLineAnd3Points : public SdUndoRecord
   {
     SdPropLine      *mProp;
     SdPropLineState  mPropState;
@@ -26,8 +26,10 @@ class SdUndoRecordPropLineAnd2Points : public SdUndoRecord
     SdPoint          mPoint1;
     SdPoint         *mSrc2;
     SdPoint          mPoint2;
+    SdPoint         *mSrc3;
+    SdPoint          mPoint3;
   public:
-    SdUndoRecordPropLineAnd2Points( SdPropLine *prop, SdPoint *p1, SdPoint *p2 );
+    SdUndoRecordPropLineAnd3Points( SdPropLine *prop, SdPoint *p1, SdPoint *p2, SdPoint *p3 = nullptr );
 
     //Undo elementary operation.
     virtual void    undo() override;

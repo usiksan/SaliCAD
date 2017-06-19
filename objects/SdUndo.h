@@ -54,7 +54,7 @@ class SdUndo
     //save undo
     void insertObject( SdContainer *container, SdObject *object );
     void deleteObject( SdContainer *container, SdObject *object );
-    void propLineAnd2Point( SdPropLine *prp, SdPoint *p1, SdPoint *p2 );
+    void propLineAnd3Point(SdPropLine *prp, SdPoint *p1, SdPoint *p2 , SdPoint *p3 = nullptr);
     void propLinePointInt( SdPropLine *prp, SdPoint *p, int *val );
     void propLinePointTable( SdPropLine *prp, SdPointList *list );
     void propLineRect2Int( SdPropLine *prp, SdRect *r, int *val1, int *val2 );

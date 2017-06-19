@@ -81,7 +81,6 @@ SOURCES += \
     modes/SdModeCLinearRectFilled.cpp \
     objects/SdGraphLinearRectFilled.cpp \
     modes/SdModeCLinearLine.cpp \
-    objects/SdUndoRecordPropLineAnd2Points.cpp \
     windows/SdPropBarTextual.cpp \
     modes/SdModeCText.cpp \
     objects/SdGraphText.cpp \
@@ -152,7 +151,8 @@ SOURCES += \
     windows/SdDGetProjectObject.cpp \
     windows/SdWEditorGraphView.cpp \
     objects/SdGraphLinearArc.cpp \
-    objects/SdUndoRecordPropLineRect2Int.cpp
+    objects/SdUndoRecordPropLineRect2Int.cpp \
+    objects/SdUndoRecordPropLineAnd3Points.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -226,7 +226,6 @@ HEADERS  += \
     modes/SdModeCLinearRectFilled.h \
     objects/SdGraphLinearRectFilled.h \
     modes/SdModeCLinearLine.h \
-    objects/SdUndoRecordPropLineAnd2Points.h \
     windows/SdPropBarTextual.h \
     modes/SdModeCText.h \
     objects/SdGraphText.h \
@@ -297,7 +296,8 @@ HEADERS  += \
     windows/SdDGetProjectObject.h \
     windows/SdWEditorGraphView.h \
     objects/SdGraphLinearArc.h \
-    objects/SdUndoRecordPropLineRect2Int.h
+    objects/SdUndoRecordPropLineRect2Int.h \
+    objects/SdUndoRecordPropLineAnd3Points.h
 
 DISTFILES += \
     license.txt

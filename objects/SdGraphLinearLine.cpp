@@ -196,5 +196,5 @@ int SdGraphLinearLine::behindCursor(SdPoint p)
 
 void SdGraphLinearLine::saveState(SdUndo *undo)
   {
-  undo->propLineAnd2Point( &mProp, &a, &b );
+  undo->propLineAnd3Point( &mProp, &a, &b );
   }
