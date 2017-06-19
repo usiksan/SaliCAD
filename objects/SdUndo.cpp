@@ -18,6 +18,7 @@ Description
 #include "SdUndoRecordPropTextAndText.h"
 #include "SdUndoRecordPropLinePointInt.h"
 #include "SdUndoRecordPropLineAndPointsList.h"
+#include "SdUndoRecordPropLineRect2Int.h"
 #include "SdUndoRecordPropSymPin.h"
 #include "SdUndoRecordPropPartPin.h"
 #include "SdUndoRecordPoint.h"
@@ -73,6 +74,14 @@ void SdUndo::propLinePointInt(SdPropLine *prp, SdPoint *p, int *val)
 void SdUndo::propLinePointTable(SdPropLine *prp, SdPointList *list)
   {
   addUndo( new SdUndoRecordPropLineAndPointsList( prp, list ) );
+  }
+
+
+
+
+void SdUndo::propLineRect2Int(SdPropLine *prp, SdRect *r, int *val1, int *val2)
+  {
+  addUndo( new SdUndoRecordPropLineRect2Int( prp, r, val1, val2 ) );
   }
 
 

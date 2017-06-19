@@ -150,7 +150,9 @@ SOURCES += \
     modes/SdModeCLinearRegion.cpp \
     modes/SdModeCLinearArea.cpp \
     windows/SdDGetProjectObject.cpp \
-    windows/SdWEditorGraphView.cpp
+    windows/SdWEditorGraphView.cpp \
+    objects/SdGraphLinearArc.cpp \
+    objects/SdUndoRecordPropLineRect2Int.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -293,7 +295,9 @@ HEADERS  += \
     modes/SdModeCLinearRegion.h \
     modes/SdModeCLinearArea.h \
     windows/SdDGetProjectObject.h \
-    windows/SdWEditorGraphView.h
+    windows/SdWEditorGraphView.h \
+    objects/SdGraphLinearArc.h \
+    objects/SdUndoRecordPropLineRect2Int.h
 
 DISTFILES += \
     license.txt

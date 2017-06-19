@@ -57,6 +57,7 @@ class SdUndo
     void propLineAnd2Point( SdPropLine *prp, SdPoint *p1, SdPoint *p2 );
     void propLinePointInt( SdPropLine *prp, SdPoint *p, int *val );
     void propLinePointTable( SdPropLine *prp, SdPointList *list );
+    void propLineRect2Int( SdPropLine *prp, SdRect *r, int *val1, int *val2 );
     void propTextAndText( SdPropText *prp, SdPoint *org, SdRect *r, QString *str );
     void propSymPin( SdPropSymPin *prp, SdPoint *org );
     void propPartPin( SdPropPartPin *prp, SdPoint *org );
