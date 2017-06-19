@@ -17,6 +17,7 @@ Description
 #include "objects/SdEnvir.h"
 #include "modes/SdModeCSymImp.h"
 #include "modes/SdModeCWire.h"
+#include "modes/SdModeCLinearArea.h"
 #include <QDebug>
 
 SdWEditorGraphSheet::SdWEditorGraphSheet(SdPItemSheet *sch, QWidget *parent) :
@@ -73,6 +74,7 @@ void SdWEditorGraphSheet::cmModeDisconnect()
 
 void SdWEditorGraphSheet::cmModePcbArea()
   {
+  modeSet( new SdModeCLinearArea( this, mSheet ) );
   }
 
 void SdWEditorGraphSheet::cmModeNetName()

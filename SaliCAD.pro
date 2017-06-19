@@ -148,7 +148,9 @@ SOURCES += \
     objects/SdGraphTracedPolygon.cpp \
     objects/SdPlateNet.cpp \
     modes/SdModeCLinearRegion.cpp \
-    modes/SdModeCLinearArea.cpp
+    modes/SdModeCLinearArea.cpp \
+    windows/SdDGetProjectObject.cpp \
+    windows/SdWEditorGraphView.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -289,7 +291,9 @@ HEADERS  += \
     objects/SdGraphTracedPolygon.h \
     objects/SdPlateNet.h \
     modes/SdModeCLinearRegion.h \
-    modes/SdModeCLinearArea.h
+    modes/SdModeCLinearArea.h \
+    windows/SdDGetProjectObject.h \
+    windows/SdWEditorGraphView.h
 
 DISTFILES += \
     license.txt
@@ -299,4 +303,5 @@ RESOURCES += \
 
 FORMS += \
     windows/SdDGetObject.ui \
-    windows/SdDNetUnion.ui
+    windows/SdDNetUnion.ui \
+    windows/SdDGetProjectObject.ui

@@ -388,7 +388,8 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
     //qDebug() << "cashe" << mOrigin << mScale.scaleGet();
 
     //Draw grid
-    if( sdEnvir->mGridView ) {
+    if( sdEnvir->mGridView && mGrid.x() > 0 ) {
+      //We don't draw grid with cell less then minViewGrid pixels
       //Не чертить сетку менее чем в minViewGrid пикселов
       if( mScale.phys2pixel(mGrid.x()) >= sdEnvir->mMinViewGrid && mScale.phys2pixel(mGrid.y()) >= sdEnvir->mMinViewGrid ) {
         //Grid color
@@ -432,6 +433,7 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
     pagey /= mScale.scaleGet();
 
     //Update scrollbars
+    //Range of scrollbars is twice of over rect existing picture
     verticalScrollBar()->setRange( -over.getTop() * 2, -over.getBottom() * 2 );
     verticalScrollBar()->setSingleStep( mGrid.y() );
     verticalScrollBar()->setPageStep( pagey );

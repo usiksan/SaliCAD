@@ -56,8 +56,12 @@ bool SdGraphArea::isPointInside(SdPoint p) const
 //Scan all components in sheet and move it in appropriate pcb if it inside this area
 void SdGraphArea::attach(SdUndo *undo)
   {
-  mPlate = get
-  //TODO check if plate assigned to this project
+  SdProject *prj = getSheet()->getProject();
+  Q_ASSERT( prj != nullptr );
+  //Realloc objects for this project
+  mPlate = dynamic_cast<SdPItemPlate*>( prj->getProjectsItem(mPlate) );
+
+  //Reallocate all components in area
   getSheet()->forEach( dctSymImp, [undo, this] (SdObject *obj) -> bool {
     SdGraphSymImp *sym = dynamic_cast<SdGraphSymImp*>( obj );
     Q_ASSERT( sym != nullptr );

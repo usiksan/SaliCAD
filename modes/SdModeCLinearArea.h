@@ -39,6 +39,8 @@ class SdModeCLinearArea : public SdModeCLinear
     virtual int     getCursor() const override;
     virtual int     getIndex() const override;
 
+  private:
+    void addArea();
   };
 
 #endif // SDMODECLINEARAREA_H
