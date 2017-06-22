@@ -18,12 +18,12 @@ Description
 #include "windows/SdWCommand.h"
 #include "windows/SdWEditorGraph.h"
 #include <QObject>
+#include <QDebug>
 
 SdModeCIdent::SdModeCIdent(SdWEditorGraph *editor, SdProjectItem *obj, SdPropText *prp , int index) :
   SdModeCTextual( editor, obj )
   {
   mIdent    = obj->getIdent();
-  mString   = mIdent->getText();
   mPropText = prp;
   mIndex    = index;
   }
@@ -160,5 +160,20 @@ void SdModeCIdent::applyEdit()
   mUndo->begin( QObject::tr("Edit ident") );
   mIdent->saveState( mUndo );
   mIdent->updateIdent( mPrev, mString, mOverRect, mPropText );
+  setDirty();
+  setDirtyCashe();
   cancelMode();
+  }
+
+
+void SdModeCIdent::activate()
+  {
+  //Make all text selected
+  setText( mIdent->getText(), true );
+  }
+
+
+int SdModeCIdent::getCursor() const
+  {
+  return getStep() == 0 ? CUR_IDENT : CUR_TEXT;
   }

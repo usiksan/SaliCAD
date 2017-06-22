@@ -39,6 +39,8 @@ class SdModeCIdent : public SdModeCTextual
     virtual QString getModeHelp() const override;
     virtual QString getStepThema() const override;
     virtual int     getIndex() const override;
+    virtual void    activate() override;
+    virtual int     getCursor() const override;
 
     // SdModeCTextual interface
   protected:
