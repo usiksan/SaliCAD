@@ -49,6 +49,7 @@ class SdPoint : public QPoint
     SdPoint operator + ( SdPoint b ) { return SdPoint( x() + b.x(), y() + b.y() ); }
     SdPoint getMiddle( SdPoint b ) { return SdPoint( (x() + b.x()) / 2, (y() + b.y()) ); }
     SdAngle getAngle( SdPoint center = SdPoint() ) const; //Угол поворота до точки относительно центра
+    double  getAngleDegree(SdPoint center) const;
     double  getDistance( SdPoint p ) const;
     double  getQrtDistance( SdPoint p ) const;
     CLS     classify( SdPoint p0, SdPoint p1 ) const;

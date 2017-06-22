@@ -39,8 +39,9 @@ void SdPoint::rotate(SdPoint origin, SdAngle angle)
       p.setY( -x() + origin.x() );
       break;
     default :
+      //Move to zero point origin
       double dx = x() - origin.x(), dy = y() - origin.y();
-      double sinAngle = sin(M_PI * angle), cosAngle = cos(M_PI * angle);
+      double sinAngle = sin((M_PI / 180.0) * angle.getDegree()), cosAngle = cos((M_PI / 180.0) * angle.getDegree());
       setX( (int)(origin.x() + dx*cosAngle - dy*sinAngle) );
       setY( (int)(origin.y() + dx*sinAngle + dy*cosAngle) );
       return;
@@ -84,18 +85,27 @@ void SdPoint::mirror(SdPoint a, SdPoint b)
 
 SdAngle SdPoint::getAngle(SdPoint center) const
   {
+  return SdAngle( (int)(getAngleDegree(center) * 1000.0) );
+  }
+
+
+
+double SdPoint::getAngleDegree(SdPoint center) const
+  {
   double dx = x() - center.x();
   double dy = y() - center.y();
   double radius = getDistance(center);
   double ang;
-  if( radius ) {
-    ang = asin( dy / radius ) * 90 / M_PI_2;
-    //double angCos = acos( dx / radius ) * 90 / M_PI_2;
+  if( radius > 0 ) {
+    if( fabs(dx) > fabs(dy) )
+      ang = acos( fabs(dx) / radius ) * 90.0 / M_PI_2;
+    else
+      ang = asin( fabs(dy) / radius ) * 90.0 / M_PI_2;
     if( dx < 0 ) ang = 180 - ang;
-    if( dy < 0 ) ang = 360 + ang;
+    if( dy < 0 ) ang = 360 - ang;
+    return ang;
     }
-  else ang = 0;
-  return SdAngle((int)(ang*1000));
+  return 0.0;
   }
 
 
@@ -380,4 +390,15 @@ bool calcFreeNearIntersect(SdPoint sour, SdPoint a, SdPoint b, SdPoint &dest)
     }
   else return false;
   return true;
+  }
+
+
+
+
+SdPoint calcArcStop(SdPoint center, SdPoint start, SdPoint sector)
+  {
+  double radius = center.getDistance(start);
+  SdPoint stop((int)(center.x()+radius),center.y());
+  stop.rotate( center, sector.getAngle(center) );
+  return stop;
   }

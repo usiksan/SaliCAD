@@ -55,6 +55,7 @@ History
                    Append symbol pin name unical and part pin number unical
                    Begin creation sheet and plate editors
   19.05.2017 v0.20 Continue creation GraphArea
+  22.06.2017 v0.21 Append arc, arc mode
 */
 
 #ifndef SDCONFIG
@@ -66,7 +67,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             20
+#define SD_VERSION_MINOR             21
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

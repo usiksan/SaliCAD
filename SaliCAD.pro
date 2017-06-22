@@ -153,7 +153,8 @@ SOURCES += \
     objects/SdGraphLinearArc.cpp \
     objects/SdUndoRecordPropLineRect2Int.cpp \
     objects/SdUndoRecordPropLineAnd3Points.cpp \
-    modes/SdModeCWireName.cpp
+    modes/SdModeCWireName.cpp \
+    modes/SdModeCLinearArc.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -299,7 +300,8 @@ HEADERS  += \
     objects/SdGraphLinearArc.h \
     objects/SdUndoRecordPropLineRect2Int.h \
     objects/SdUndoRecordPropLineAnd3Points.h \
-    modes/SdModeCWireName.h
+    modes/SdModeCWireName.h \
+    modes/SdModeCLinearArc.h
 
 DISTFILES += \
     license.txt

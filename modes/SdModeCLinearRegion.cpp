@@ -89,6 +89,7 @@ void SdModeCLinearRegion::movePoint(SdPoint p)
   mPrevMove = p;
   if( getStep() == sNextPoint )
     mMiddle = calcMiddlePoint( mList.last(), mPrevMove, sdGlobalProp->mLineEnterType );
+  update();
   }
 
 

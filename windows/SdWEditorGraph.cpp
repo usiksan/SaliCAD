@@ -24,6 +24,7 @@ Description
 #include "modes/SdModeView.h"
 #include "modes/SdModeTZoomer.h"
 #include "modes/SdModeTZoomWindow.h"
+#include "modes/SdModeCLinearArc.h"
 #include "modes/SdModeCLinearLine.h"
 #include "modes/SdModeCLinearRect.h"
 #include "modes/SdModeCLinearRectFilled.h"
@@ -320,6 +321,14 @@ void SdWEditorGraph::cmModeFilledRect()
 void SdWEditorGraph::cmModeRegion()
   {
   modeSet( new SdModeCLinearRegion( this, getProjectItem() )  );
+  }
+
+
+
+
+void SdWEditorGraph::cmModeArc()
+  {
+  modeSet( new SdModeCLinearArc( this, getProjectItem() )  );
   }
 
 

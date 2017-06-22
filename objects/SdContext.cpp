@@ -170,6 +170,31 @@ void SdContext::fillRect(SdRect r, const SdPropLine &prop)
 
 
 
+void SdContext::arc(SdPoint center, SdPoint start, SdPoint stop)
+  {
+  double radius = center.getDistance(start);
+  QRectF r( center.x()-radius, center.y()-radius, 2.0*radius, 2.0*radius );
+  double startAngle = start.getAngleDegree( center );
+  double stopAngle = stop.getAngleDegree( center ) - startAngle;
+  if( stopAngle < 0 )
+    stopAngle += 360.0;
+  mPainter->drawArc( r, -startAngle * 16.0, -stopAngle * 16.0 );
+  }
+
+
+
+
+void SdContext::arc(SdPoint center, SdPoint start, SdPoint stop, const SdPropLine &prop)
+  {
+  if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
+    setProp( prop );
+    arc( center, start, stop );
+    }
+  }
+
+
+
+
 void SdContext::circle(SdPoint center, int radius)
   {
   mPainter->setBrush( QBrush(Qt::transparent) );

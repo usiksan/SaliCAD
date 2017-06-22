@@ -22,6 +22,7 @@ Description
 #include "SdPItemPlate.h"
 #include "SdContainerSheetNet.h"
 #include "SdGraphArea.h"
+#include "SdGraphLinearArc.h"
 #include "SdGraphLinearLine.h"
 #include "SdGraphLinearRect.h"
 #include "SdGraphLinearRectFilled.h"
@@ -222,11 +223,13 @@ SdObject *SdObject::readPtr(const QString name, SdObjectMap *map, const QJsonObj
 
 SdObject *SdObject::build(QString type)
   {
+  if( type == QStringLiteral(SD_TYPE_ARC)           ) return new SdGraphLinearArc();
   if( type == QStringLiteral(SD_TYPE_LINE)          ) return new SdGraphLinearLine();
   if( type == QStringLiteral(SD_TYPE_RECT)          ) return new SdGraphLinearRect();
   if( type == QStringLiteral(SD_TYPE_RECT_FILLED)   ) return new SdGraphLinearRectFilled();
   if( type == QStringLiteral(SD_TYPE_CIRCLE)        ) return new SdGraphLinearCircle();
   if( type == QStringLiteral(SD_TYPE_CIRCLE_FILLED) ) return new SdGraphLinearCircleFilled();
+  if( type == QStringLiteral(SD_TYPE_REGION)        ) return new SdGraphLinearRegion();
   if( type == QStringLiteral(SD_TYPE_TEXT)          ) return new SdGraphText();
   if( type == QStringLiteral(SD_TYPE_IDENT)         ) return new SdGraphIdent();
   if( type == QStringLiteral(SD_TYPE_SYM_PIN)       ) return new SdGraphSymPin();
