@@ -74,7 +74,7 @@ QString SdModeView::getStepHelp() const
 
 
 
-QString SdModeView::getModeHelp() const
+QString SdModeView::getModeThema() const
   {
   return QString( MODE_HELP "ModeView.htm" );
   }

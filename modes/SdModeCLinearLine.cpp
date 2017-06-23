@@ -130,7 +130,7 @@ QString SdModeCLinearLine::getStepHelp() const
 
 
 
-QString SdModeCLinearLine::getModeHelp() const
+QString SdModeCLinearLine::getModeThema() const
   {
   return QStringLiteral( MODE_HELP "ModeCLinearLine.htm" );
   }

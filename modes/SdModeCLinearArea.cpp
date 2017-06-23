@@ -104,7 +104,7 @@ QString SdModeCLinearArea::getStepHelp() const
 
 
 
-QString SdModeCLinearArea::getModeHelp() const
+QString SdModeCLinearArea::getModeThema() const
   {
   return QString( MODE_HELP "ModeCLinearArea.htm" );
   }

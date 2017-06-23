@@ -31,7 +31,7 @@ class SdModeCOrigin : public SdModeCommon
     virtual void    enterPoint(SdPoint enter) override;
     virtual void    movePoint(SdPoint) override;
     virtual QString getStepHelp() const override;
-    virtual QString getModeHelp() const override;
+    virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;
     virtual int     getCursor() const override;
     virtual int     getIndex() const override;

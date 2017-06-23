@@ -33,7 +33,7 @@ class SdModeCText : public SdModeCTextual
     virtual void    enterPoint(SdPoint) override;
     virtual void    cancelPoint(SdPoint) override;
     virtual QString getStepHelp() const override;
-    virtual QString getModeHelp() const override;
+    virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;
     virtual int     getIndex() const override;
 

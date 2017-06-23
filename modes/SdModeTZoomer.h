@@ -27,7 +27,7 @@ class SdModeTZoomer : public SdModeTemp
     virtual void    enterPoint(SdPoint point) override;
     virtual void    cancelPoint(SdPoint point) override;
     virtual QString getStepHelp() const override;
-    virtual QString getModeHelp() const override;
+    virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;
     virtual int     getCursor() const override;
     virtual int     getIndex() const override;

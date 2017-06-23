@@ -216,7 +216,7 @@ QString SdModeCPartPin::getStepHelp() const
 
 
 
-QString SdModeCPartPin::getModeHelp() const
+QString SdModeCPartPin::getModeThema() const
   {
   return QStringLiteral( MODE_HELP "ModeCPartPin.htm" );
   }

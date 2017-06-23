@@ -38,7 +38,7 @@ void SdModeCLinearRectFilled::drawDynamic(SdContext *ctx)
 
 
 
-QString SdModeCLinearRectFilled::getModeHelp() const
+QString SdModeCLinearRectFilled::getModeThema() const
   {
   return QString( MODE_HELP "ModeCLinearRectFilled.htm" );
   }

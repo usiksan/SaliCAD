@@ -50,7 +50,7 @@ QString SdModeTZoomer::getStepHelp() const
                    QObject::tr( "Press mouse left button to zoom-out" );
   }
 
-QString SdModeTZoomer::getModeHelp() const
+QString SdModeTZoomer::getModeThema() const
   {
   return getStepThema();
   }

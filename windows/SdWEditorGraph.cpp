@@ -441,6 +441,19 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
     double pagey = qMax( s.height(), 1 );
     pagey /= mScale.scaleGet();
 
+    if( over.isEmpty() )
+      over.set( SdPoint(mOrigin.x() - pagex / 2, mOrigin.y() - pagey / 2), SdPoint(mOrigin.y() + pagex / 2, mOrigin.y() + pagey / 2) );
+
+    if( over.width() < pagex ) {
+      SdPoint center = over.center();
+      over.setWidth( pagex );
+      over.moveCenter( center );
+      }
+    if( over.height() < pagey ) {
+      SdPoint center = over.center();
+      over.setHeight( pagey );
+      over.moveCenter( center );
+      }
     //Update scrollbars
     //Range of scrollbars is twice of over rect existing picture
     verticalScrollBar()->setRange( -over.getTop() * 2, -over.getBottom() * 2 );

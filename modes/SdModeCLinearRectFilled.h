@@ -23,7 +23,7 @@ class SdModeCLinearRectFilled : public SdModeCLinearRect
 
     // SdMode interface
     virtual void    drawDynamic(SdContext *ctx) override;
-    virtual QString getModeHelp() const override;
+    virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;
     virtual int     getIndex() const override;
   protected:

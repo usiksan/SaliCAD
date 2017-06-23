@@ -113,7 +113,7 @@ QString SdModeCLinearRegion::getStepHelp() const
 
 
 
-QString SdModeCLinearRegion::getModeHelp() const
+QString SdModeCLinearRegion::getModeThema() const
   {
   return QString( MODE_HELP "ModeCLinearRegion.htm" );
   }

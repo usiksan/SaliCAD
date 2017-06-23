@@ -121,7 +121,7 @@ QString SdModeCIdent::getStepHelp() const
 
 
 
-QString SdModeCIdent::getModeHelp() const
+QString SdModeCIdent::getModeThema() const
   {
   return QStringLiteral( MODE_HELP "ModeCIdent.htm" );
   }

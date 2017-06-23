@@ -88,8 +88,8 @@ class SdMode
     virtual bool    getInfo( SdPoint p, QString &info );    //Получить всплывающую информацию в заданной точке
 
     virtual QString getStepHelp() const = 0;                //Краткая помощь по текущему шагу режима
-    virtual QString getModeHelp() const = 0;                //Адрес страницы помощи
-    virtual QString getStepThema() const = 0;               //Адрес страницы помощи для текущего шага
+    virtual QString getModeThema() const = 0;               //Help page address Адрес страницы помощи
+    virtual QString getStepThema() const = 0;               //Help page address and link for current step Адрес страницы помощи для текущего шага
     virtual int     getCursor() const = 0;                  //Номер курсора для режима
     virtual int     getIndex() const = 0;                   //Номер режима в списке режимов
 

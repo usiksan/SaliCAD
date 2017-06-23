@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Mode for placement net names
 */
 #ifndef SDMODECWIRENAME_H
 #define SDMODECWIRENAME_H
@@ -34,14 +35,14 @@ class SdModeCWireName : public SdModeCommon
   public:
     virtual void drawStatic(SdContext *ctx) override;
     virtual void drawDynamic(SdContext *ctx) override;
-    virtual int getPropBarId() const override;
+    virtual int  getPropBarId() const override;
     virtual void propGetFromBar() override;
     virtual void propSetToBar() override;
-    virtual void enterPoint(SdPoint) override;
+    virtual void enterPoint(SdPoint p) override;
     virtual void cancelPoint(SdPoint) override;
     virtual void movePoint(SdPoint) override;
     virtual QString getStepHelp() const override;
-    virtual QString getModeHelp() const override;
+    virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;
     virtual int getCursor() const override;
     virtual int getIndex() const override;

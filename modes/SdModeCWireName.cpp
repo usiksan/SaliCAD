@@ -9,13 +9,17 @@ Web
   www.saliLab.ru
 
 Description
+  Mode for placement net names
 */
 #include "SdModeCWireName.h"
 #include "objects/SdContainerSheetNet.h"
 #include "objects/SdGraphWireName.h"
 #include "objects/SdPItemSheet.h"
+#include "objects/SdContext.h"
+#include "objects/SdEnvir.h"
 #include "windows/SdWCommand.h"
 #include "windows/SdPropBarTextual.h"
+#include "windows/SdWEditorGraph.h"
 #include <QObject>
 
 SdModeCWireName::SdModeCWireName(SdWEditorGraph *editor, SdProjectItem *obj) :
@@ -56,6 +60,7 @@ void SdModeCWireName::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sPlaceName ) {
     ctx->setOverColor( sdEnvir->getSysColor(scEnter) );
+    SdRect r;
     ctx->text( mPrev, r, mName, sdGlobalProp->mWireNameProp );
     ctx->resetOverColor();
     }
@@ -95,7 +100,7 @@ void SdModeCWireName::propSetToBar()
 
 
 
-void SdModeCWireName::enterPoint(SdPoint)
+void SdModeCWireName::enterPoint( SdPoint p )
   {
   if( getStep() == sPlaceName ) {
     mUndo->begin( QObject::tr("Insert sheet net name") );
@@ -113,33 +118,67 @@ void SdModeCWireName::enterPoint(SdPoint)
     }
   }
 
+
+
+
 void SdModeCWireName::cancelPoint(SdPoint)
   {
+  if( getStep() == sPlaceName ) {
+    setStep( sSelectNet );
+    update();
+    }
   }
 
-void SdModeCWireName::movePoint(SdPoint)
+
+
+
+void SdModeCWireName::movePoint( SdPoint p )
   {
+  if( getStep() == sPlaceName ) {
+    mPrev = p;
+    update();
+    }
   }
+
+
+
 
 QString SdModeCWireName::getStepHelp() const
   {
+  return getStep() == sPlaceName ? QObject::tr("Enter net name place point") : QObject::tr("Select net for name placement");
   }
 
-QString SdModeCWireName::getModeHelp() const
+
+
+
+QString SdModeCWireName::getModeThema() const
   {
+  return QStringLiteral( MODE_HELP "ModeCWireName.htm" );
   }
+
+
+
 
 QString SdModeCWireName::getStepThema() const
   {
+  return getStep() == sPlaceName ? QStringLiteral( MODE_HELP "ModeCWireName.htm#placeName" ) : QStringLiteral( MODE_HELP "ModeCWireName.htm#selectNet" );
   }
+
+
+
 
 int SdModeCWireName::getCursor() const
   {
+  return CUR_ARROW;
   }
+
+
 
 int SdModeCWireName::getIndex() const
   {
+  return MD_NET_NAME;
   }
+
 
 
 

@@ -91,7 +91,7 @@ QString SdModeTZoomWindow::getStepHelp() const
 
 
 
-QString SdModeTZoomWindow::getModeHelp() const
+QString SdModeTZoomWindow::getModeThema() const
   {
   return QString( MODE_HELP "ModeZoomWin.htm" );
   }

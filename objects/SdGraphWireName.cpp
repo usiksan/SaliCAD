@@ -18,10 +18,21 @@ Description
 #include "SdEnvir.h"
 #include "SdSelector.h"
 
-SdGraphWireName::SdGraphWireName()
+SdGraphWireName::SdGraphWireName() :
+  SdGraph()
   {
 
   }
+
+SdGraphWireName::SdGraphWireName(SdPoint org, const SdPropText &prp) :
+  SdGraph(),
+  mOrigin(org),
+  mProp(prp)
+  {
+
+  }
+
+
 
 SdContainerSheetNet *SdGraphWireName::getNet() const
   {

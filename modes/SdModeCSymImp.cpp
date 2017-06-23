@@ -127,7 +127,7 @@ QString SdModeCSymImp::getStepHelp() const
 
 
 
-QString SdModeCSymImp::getModeHelp() const
+QString SdModeCSymImp::getModeThema() const
   {
   return QString( MODE_HELP "ModeCSymImp.htm" );
   }
@@ -136,7 +136,7 @@ QString SdModeCSymImp::getModeHelp() const
 
 QString SdModeCSymImp::getStepThema() const
   {
-  return getModeHelp();
+  return getModeThema();
   }
 
 

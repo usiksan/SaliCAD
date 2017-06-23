@@ -55,7 +55,7 @@ class SdModeCWire : public SdModeCommon
     virtual void    enterPrev() override;
     //virtual bool getInfo(SdPoint p, QString &info) override;
     virtual QString getStepHelp() const override;
-    virtual QString getModeHelp() const override;
+    virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;
     virtual int     getCursor() const override;
     virtual int     getIndex() const override;

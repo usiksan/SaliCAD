@@ -119,7 +119,7 @@ QString SdModeCText::getStepHelp() const
 
 
 
-QString SdModeCText::getModeHelp() const
+QString SdModeCText::getModeThema() const
   {
   return QString( MODE_HELP "ModeCText.htm" );
   }

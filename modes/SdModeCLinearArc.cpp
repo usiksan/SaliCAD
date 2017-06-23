@@ -110,7 +110,7 @@ QString SdModeCLinearArc::getStepHelp() const
 
 
 
-QString SdModeCLinearArc::getModeHelp() const
+QString SdModeCLinearArc::getModeThema() const
   {
   return QStringLiteral( MODE_HELP "ModeCLinearArc.htm" );
   }

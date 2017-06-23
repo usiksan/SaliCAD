@@ -233,7 +233,7 @@ QString SdModeCWire::getStepHelp() const
 
 
 
-QString SdModeCWire::getModeHelp() const
+QString SdModeCWire::getModeThema() const
   {
   return QString( MODE_HELP "ModeCWire.htm" );
   }

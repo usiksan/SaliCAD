@@ -216,7 +216,7 @@ QString SdModeCSymPin::getStepHelp() const
 
 
 
-QString SdModeCSymPin::getModeHelp() const
+QString SdModeCSymPin::getModeThema() const
   {
   return QString( MODE_HELP "ModeCSymPin.htm" );
   }

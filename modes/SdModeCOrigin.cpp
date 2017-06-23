@@ -74,7 +74,7 @@ QString SdModeCOrigin::getStepHelp() const
 
 
 
-QString SdModeCOrigin::getModeHelp() const
+QString SdModeCOrigin::getModeThema() const
   {
   return QString( MODE_HELP "ModeCOrigin.htm" );
   }
@@ -83,7 +83,7 @@ QString SdModeCOrigin::getModeHelp() const
 
 QString SdModeCOrigin::getStepThema() const
   {
-  return getModeHelp();
+  return getModeThema();
   }
 
 
