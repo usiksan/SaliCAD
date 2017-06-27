@@ -181,14 +181,17 @@ void SdContext::arc(SdPoint center, SdPoint start, SdPoint stop)
   {
   double radius = center.getDistance(start);
   QRectF r( center.x()-radius, center.y()-radius, 2.0*radius, 2.0*radius );
+  double ang = mAngle;
+  ang /= 1000.0;
   double startAngle = start.getAngleDegree( center );
-  double stopAngle = stop.getAngleDegree( center ) - startAngle;
-  if( stopAngle < 0 )
-    stopAngle += 360.0;
+  double arcAngle = stop.getAngleDegree( center ) - startAngle;
+  startAngle += ang;
+  if( arcAngle < 0 )
+    arcAngle += 360.0;
   if( mMirror )
-    mPainter->drawArc( mTransform.mapRect(r), -startAngle * 16.0, -stopAngle * 16.0 );
+    mPainter->drawArc( mTransform.mapRect(r), startAngle * 16.0, -arcAngle * 16.0 );
   else
-    mPainter->drawArc( mTransform.mapRect(r), startAngle * 16.0, stopAngle * 16.0 );
+    mPainter->drawArc( mTransform.mapRect(r), startAngle * 16.0, arcAngle * 16.0 );
   }
 
 
@@ -270,9 +273,7 @@ void SdContext::textEx(SdPoint pos, SdRect &over, const QString str, int dir, in
 
   SdConverterText cnv( mTransform.map(pos), dir + mAngle, mMirror );
   QTransform txt = cnv.getMatrix();
-  qDebug() << mTransform.map(pos) << txt.map( mTransform.map(pos) );
   mPainter->setTransform( txt, false );
-  //setConverter( &cnv );
 
   if( !str.isEmpty() )
     mPainter->drawText( over, Qt::AlignLeft | Qt::AlignTop, str );
