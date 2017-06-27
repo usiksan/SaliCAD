@@ -18,6 +18,8 @@ Description
 #include "modes/SdModeCSymImp.h"
 #include "modes/SdModeCWire.h"
 #include "modes/SdModeCLinearArea.h"
+#include "modes/SdModeCWireName.h"
+#include "modes/SdModeWireDisconnect.h"
 #include <QDebug>
 
 SdWEditorGraphSheet::SdWEditorGraphSheet(SdPItemSheet *sch, QWidget *parent) :
@@ -64,22 +66,36 @@ void SdWEditorGraphSheet::cmModeNet()
   modeSet( new SdModeCWire( this, mSheet ) );
   }
 
+
+
+
 void SdWEditorGraphSheet::cmModeBus()
   {
   }
 
+
+
+
 void SdWEditorGraphSheet::cmModeDisconnect()
   {
+  modeSet( new SdModeWireDisconnect( this, mSheet )  );
   }
+
+
 
 void SdWEditorGraphSheet::cmModePcbArea()
   {
   modeSet( new SdModeCLinearArea( this, mSheet ) );
   }
 
+
+
 void SdWEditorGraphSheet::cmModeNetName()
   {
+  modeSet( new SdModeCWireName( this, mSheet ) );
   }
+
+
 
 void SdWEditorGraphSheet::cmModeNetList()
   {

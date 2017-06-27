@@ -248,10 +248,11 @@ void SdGraphSymImp::setLinkSection(int section, SdGraphPartImp *partImp )
 
 
 //Unconnect pin in point
-void SdGraphSymImp::unconnectPinInPoint( SdPoint p, SdUndo *undo )
+void SdGraphSymImp::unconnectPinInPoint( SdPoint p, SdUndo *undo, const QString undoTitle )
   {
   for( int index = 0; index < mPins.count(); index++ )
     if( mPins[index].mPosition == p ) {
+      if( undo ) undo->begin( undoTitle );
       //Set new state of pin
       pinConnectionSet( index, QString(), false, undo );
       return;

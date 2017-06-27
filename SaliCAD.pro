@@ -154,7 +154,8 @@ SOURCES += \
     objects/SdUndoRecordPropLineRect2Int.cpp \
     objects/SdUndoRecordPropLineAnd3Points.cpp \
     modes/SdModeCWireName.cpp \
-    modes/SdModeCLinearArc.cpp
+    modes/SdModeCLinearArc.cpp \
+    modes/SdModeWireDisconnect.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -301,7 +302,8 @@ HEADERS  += \
     objects/SdUndoRecordPropLineRect2Int.h \
     objects/SdUndoRecordPropLineAnd3Points.h \
     modes/SdModeCWireName.h \
-    modes/SdModeCLinearArc.h
+    modes/SdModeCLinearArc.h \
+    modes/SdModeWireDisconnect.h
 
 DISTFILES += \
     license.txt

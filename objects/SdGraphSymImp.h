@@ -136,7 +136,7 @@ class SdGraphSymImp : public SdGraph
     //Link with partImp
     void          setLinkSection(int section, SdGraphPartImp *partImp );
     //Unconnect pin in point
-    void          unconnectPinInPoint(SdPoint p , SdUndo *undo);
+    void          unconnectPinInPoint(SdPoint p , SdUndo *undo, const QString undoTitle);
     //Unlink symbol from part
     void          unLinkPartImp( SdUndo *undo );
     //Link auto partImp. partImp and section are selected automatic
