@@ -45,6 +45,7 @@ void SdRect::set(SdPoint a, SdPoint b)
 
 void SdRect::set(QRect r)
   {
+//  set( r.topLeft(), bottomRight() );
   setLeft( r.left() );
   setTop( r.top() );
   setWidth( r.width() );

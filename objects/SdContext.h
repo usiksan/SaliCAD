@@ -39,6 +39,7 @@ class SdContext {
     SdSelector     *mSelector;     //Объект-селектор относительно которого выполняется рисование
     QTransform      mTransform;    //Transform matrix
     bool            mMirror;       //Mirror flag
+    int             mAngle;        //Rotation angle
     SdScaler        mScaler;       //Current scale
     bool            mPairLayer;    //True for paired layer
     QColor          mOverColor;    //Color for overriding default layers color

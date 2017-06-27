@@ -145,7 +145,7 @@ SdRect SdGraphLinearArc::getOverRect() const
 
 void SdGraphLinearArc::draw(SdContext *dc)
   {
-  //dc->arc( mCenter, mStart, mStop, mProp );
+  dc->arc( mCenter, mStart, mStop, mProp );
   }
 
 

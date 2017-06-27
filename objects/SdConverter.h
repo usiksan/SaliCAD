@@ -43,6 +43,8 @@ class SdConverter
 
     virtual bool       getMirror() const;
 
+    virtual int        getAngle() const;
+
     friend class SdContext;
   };
 

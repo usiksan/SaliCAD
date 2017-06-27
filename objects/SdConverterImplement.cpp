@@ -55,3 +55,13 @@ bool SdConverterImplement::getMirror() const
     return mMirror ? !mNext->getMirror() : mNext->getMirror();
   return mMirror;
   }
+
+
+
+
+int SdConverterImplement::getAngle() const
+  {
+  if( mNext )
+    return mAngle * 1000.0 + mNext->getAngle();
+  return mAngle * 1000.0;
+  }

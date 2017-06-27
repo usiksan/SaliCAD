@@ -70,3 +70,13 @@ bool SdConverter::getMirror() const
   return false;
   }
 
+
+
+
+int SdConverter::getAngle() const
+  {
+  if( mNext )
+    return mNext->getAngle();
+  return 0;
+  }
+

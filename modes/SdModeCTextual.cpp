@@ -336,7 +336,7 @@ void SdModeCTextual::drawText(SdContext *dc)
               &mSelectRect, mStartSel, mStopSel );
 
     //Draw cursor as vertical line
-    dc->line( mCursorP1, mCursorP2 );
+    //dc->line( mCursorP1, mCursorP2 );
 
     //Draw selection rect
     if( isSelectionPresent() ) {

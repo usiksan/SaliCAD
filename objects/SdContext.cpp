@@ -17,6 +17,7 @@ Description
 #include "SdConverterText.h"
 #include <QPainter>
 #include <QFont>
+#include <QDebug>
 
 
 SdContext::SdContext(SdPoint grid, QPainter *painter) :
@@ -26,6 +27,7 @@ SdContext::SdContext(SdPoint grid, QPainter *painter) :
   mSelector(0),
   mTransform(),
   mMirror(false),
+  mAngle(0),
   mScaler(1.0),
   mPairLayer(false),
   mOverOn(false)      //True if overriding is on
@@ -184,9 +186,9 @@ void SdContext::arc(SdPoint center, SdPoint start, SdPoint stop)
   if( stopAngle < 0 )
     stopAngle += 360.0;
   if( mMirror )
-    mPainter->drawArc( mTransform.mapRect(r), startAngle * 16.0, stopAngle * 16.0 );
-  else
     mPainter->drawArc( mTransform.mapRect(r), -startAngle * 16.0, -stopAngle * 16.0 );
+  else
+    mPainter->drawArc( mTransform.mapRect(r), startAngle * 16.0, stopAngle * 16.0 );
   }
 
 
@@ -246,12 +248,11 @@ void SdContext::circleFill(SdPoint center, int radius, const SdPropLine &prop)
 
 void SdContext::textEx(SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert, int cursor, SdPoint *cp1, SdPoint *cp2, SdRect *sel, int start, int stop  )
   {
-  QTransform inv = mTransform.inverted();
   //Get over rect of text
   if( str.isEmpty() )
-    over.set( inv.mapRect( mPainter->boundingRect( 0,0, 0,0, Qt::AlignLeft | Qt::AlignTop, QString("H") ) ) );
+    over.set( mPainter->boundingRect( 0,0, 0,0, Qt::AlignLeft | Qt::AlignTop, QString("H") ) );
   else {
-    over.set( inv.mapRect( mPainter->boundingRect( 0,0, 0,0, Qt::AlignLeft | Qt::AlignTop, str ) ) );
+    over.set( mPainter->boundingRect( 0,0, 0,0, Qt::AlignLeft | Qt::AlignTop, str ) );
 
     //Align text with flags
     switch( horz ) {
@@ -261,44 +262,46 @@ void SdContext::textEx(SdPoint pos, SdRect &over, const QString str, int dir, in
       }
     }
 
-
   switch( vert ) {
     case dvjTop : break;
     case dvjMiddle : over.moveTop( -over.height() / 2 ); break;
     case dvjBottom : over.moveBottom( 0 ); break;
     }
 
-  SdConverterText cnv( pos, dir );
-  mPainter->setTransform( cnv.getMatrix(), false );
+  SdConverterText cnv( mTransform.map(pos), dir + mAngle, mMirror );
+  QTransform txt = cnv.getMatrix();
+  qDebug() << mTransform.map(pos) << txt.map( mTransform.map(pos) );
+  mPainter->setTransform( txt, false );
   //setConverter( &cnv );
 
   if( !str.isEmpty() )
-    mPainter->drawText( mTransform.mapRect(over), Qt::AlignLeft | Qt::AlignTop, str );
+    mPainter->drawText( over, Qt::AlignLeft | Qt::AlignTop, str );
+  mPainter->resetTransform();
 
   if( cp1 && cp2 ) {
     if( cursor == 0 ) {
-      *cp1 = cnv.getMatrix().map( mTransform.map(over.getTopLeft()) );
-      *cp2 = cnv.getMatrix().map( mTransform.map(over.getBottomLeft()) );
+      *cp1 = txt.map( over.getTopLeft() );
+      *cp2 = txt.map( over.getBottomLeft() );
       }
     else {
-      QRect rpos = mPainter->boundingRect( mTransform.mapRect(over), Qt::AlignLeft | Qt::AlignTop, str.left(cursor) );
-      *cp1 = cnv.getMatrix().map( rpos.topRight() );
-      *cp2 = cnv.getMatrix().map( rpos.bottomRight() );
+      QRect rpos = mPainter->boundingRect( over, Qt::AlignLeft | Qt::AlignTop, str.left(cursor) );
+      *cp1 = txt.map( rpos.topRight() );
+      *cp2 = txt.map( rpos.bottomRight() );
       }
+    mPainter->drawLine( *cp1, *cp2 );
     }
 
   if( sel ) {
     //Fill selection rect
-    QRect rStart = inv.mapRect( mPainter->boundingRect( mTransform.mapRect(over), Qt::AlignLeft | Qt::AlignTop, str.left(start) ) );
-    QRect rStop  = inv.mapRect( mPainter->boundingRect( mTransform.mapRect(over), Qt::AlignLeft | Qt::AlignTop, str.left(stop) ) );
+    QRect rStart = mPainter->boundingRect( over, Qt::AlignLeft | Qt::AlignTop, str.left(start) );
+    QRect rStop  = mPainter->boundingRect( over, Qt::AlignLeft | Qt::AlignTop, str.left(stop) );
     QRect res;
     res.setTopLeft( rStart.topRight() );
     res.setBottomRight( rStop.bottomRight() );
-    sel->set( inv.mapRect( cnv.getMatrix().mapRect( mTransform.mapRect(res) ) ) );
+    sel->set( mTransform.inverted().mapRect( txt.mapRect( res ) ) );
     }
 
-  over.set( inv.mapRect( cnv.getMatrix().mapRect( over ) ) );
-  mPainter->resetTransform();
+  over.set( mTransform.inverted().mapRect( txt.mapRect( over ) ) );
   }
 
 
@@ -516,12 +519,14 @@ void SdContext::updateConverter()
     mTransform = mConverter->getFullMatrix();
     mPairLayer = mConverter->getFullPairLayer();
     mMirror    = mConverter->getMirror();
+    mAngle     = mConverter->getAngle();
     mScaler.scaleSet( mConverter->getScale() );
     }
   else {
     mTransform.reset();
     mPairLayer = false;
     mMirror    = false;
+    mAngle     = 0;
     mScaler.scaleSet(1.0);
     }
 

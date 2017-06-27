@@ -78,6 +78,7 @@ void SdModeCLinearArc::movePoint(SdPoint p)
   snap.mSour     = mPrev;
   snap.mSnapMask = sdEnvir->mSmartMask;
   snap.mExclude  = mCenter;
+  snap.mFlag     = dsifExExcl;
   snap.calculate( mObject );
   mSmartType  = snap.mDestMask;
   mSmartPoint = snap.mDest;
