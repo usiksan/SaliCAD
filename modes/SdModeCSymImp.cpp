@@ -17,6 +17,7 @@ Description
 #include "objects/SdGraphSymImp.h"
 #include "objects/SdConverterImplement.h"
 #include "objects/SdPItemSymbol.h"
+#include "objects/SdPItemPart.h"
 #include "objects/SdPItemComponent.h"
 #include "windows/SdPropBarSymImp.h"
 #include "windows/SdWCommand.h"

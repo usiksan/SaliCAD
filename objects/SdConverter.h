@@ -21,6 +21,7 @@ class SdLayer;
 
 class SdConverter
   {
+  protected:
     SdConverter *mNext;      //Next linked converter
     SdContext   *mContext;   //Context is working on
     bool         mPairLayer; //True when need paired layer
@@ -39,6 +40,8 @@ class SdConverter
 
     //Return scale factor
     virtual double     getScale() const;
+
+    virtual bool       getMirror() const;
 
     friend class SdContext;
   };

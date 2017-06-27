@@ -29,6 +29,7 @@ class SdConverterImplement : public SdConverter
     // SdConverter interface
   public:
     virtual QTransform getMatrix() override;
+    virtual bool       getMirror() const override;
   };
 
 #endif // SDCONVERTERIMPLEMENT_H

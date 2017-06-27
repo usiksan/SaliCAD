@@ -45,3 +45,13 @@ QTransform SdConverterImplement::getMatrix()
 
   return m;
   }
+
+
+
+
+bool SdConverterImplement::getMirror() const
+  {
+  if( mNext )
+    return mMirror ? !mNext->getMirror() : mNext->getMirror();
+  return mMirror;
+  }

@@ -47,6 +47,7 @@ SdDGetProjectObject::SdDGetProjectObject(SdContainer *project, quint64 mask, con
       //Append item into internal list
       mList.append( item );
       }
+    return true;
     });
 
   //Reaction on selection is set object for preview

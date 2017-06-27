@@ -22,7 +22,7 @@ class SdScaler
   protected:
     double mScale; //Scale factor
   public:
-    SdScaler( double scaleStep = 1.0 );
+    SdScaler( double scale = 1.0 );
 
     double  scaleGet() const { return mScale; }
     void    scaleStep( double step);

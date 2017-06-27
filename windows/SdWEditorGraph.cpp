@@ -391,6 +391,7 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
     SdConverterView cv( s, mOrigin, mScale.scaleGet() );
     context.setConverter( &cv );
 
+    //Matrix transformation from screen coord to phis coord
     mPixelTransform = QTransform::fromTranslate( -s.width()/2,  -s.height()/2 );
     mPixelTransform *= QTransform::fromScale( 1 / mScale.scaleGet(), -1 / mScale.scaleGet() );
     mPixelTransform *= QTransform::fromTranslate( mOrigin.x(), mOrigin.y() );
@@ -424,7 +425,7 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
         }
       }
     //Draw contens
-    painter.setTransform( context.transform(), false );
+    //painter.setTransform( context.transform(), false );
     if( modeGet() )
       //Thrue mode
       modeGet()->drawStatic( &context );

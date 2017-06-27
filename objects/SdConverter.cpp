@@ -60,3 +60,13 @@ double SdConverter::getScale() const
   return 1.0;
   }
 
+
+
+
+bool SdConverter::getMirror() const
+  {
+  if( mNext )
+    return mNext->getMirror();
+  return false;
+  }
+

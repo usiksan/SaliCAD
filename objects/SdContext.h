@@ -23,6 +23,7 @@ Description
 #include "SdQuadrangle.h"
 #include "SdPolyWindowList.h"
 #include "SdSnapInfo.h"
+#include "SdScaler.h"
 
 #include <QPainter>
 #include <QTransform>
@@ -37,6 +38,8 @@ class SdContext {
     SdPoint         mGrid;         //Сетка
     SdSelector     *mSelector;     //Объект-селектор относительно которого выполняется рисование
     QTransform      mTransform;    //Transform matrix
+    bool            mMirror;       //Mirror flag
+    SdScaler        mScaler;       //Current scale
     bool            mPairLayer;    //True for paired layer
     QColor          mOverColor;    //Color for overriding default layers color
     bool            mOverOn;       //True if overriding is on
