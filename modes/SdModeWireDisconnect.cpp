@@ -35,6 +35,9 @@ void SdModeWireDisconnect::enterPoint(SdPoint enter)
     sym->unconnectPinInPoint( enter, mUndo, QObject::tr("Unconnect pin") );
     return true;
     });
+  setDirty();
+  setDirtyCashe();
+  update();
   }
 
 

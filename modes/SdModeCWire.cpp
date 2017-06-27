@@ -371,7 +371,7 @@ void SdModeCWire::calcSecondSmart()
   snap.mSour     = mPrevMove;
   snap.mSnapMask = snapNearestNet;
   snap.mExclude  = mPrevMove;
-  //snap.mFlag     = dsifExSour;
+  snap.mFlag     = dsifExSour;
   snap.mDest     = mPrevMove;
   snap.calculate( getSheet() );
   mFirst = snap.mDest;

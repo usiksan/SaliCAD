@@ -23,7 +23,9 @@ Description
 #include <QObject>
 
 SdModeCWireName::SdModeCWireName(SdWEditorGraph *editor, SdProjectItem *obj) :
-  SdModeCommon( editor, obj )
+  SdModeCommon( editor, obj ),
+  mNet(nullptr),
+  mShow(nullptr)
   {
 
   }
