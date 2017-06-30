@@ -155,7 +155,8 @@ SOURCES += \
     objects/SdUndoRecordPropLineAnd3Points.cpp \
     modes/SdModeCWireName.cpp \
     modes/SdModeCLinearArc.cpp \
-    modes/SdModeWireDisconnect.cpp
+    modes/SdModeWireDisconnect.cpp \
+    windows/SdDGetBus.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -303,7 +304,8 @@ HEADERS  += \
     objects/SdUndoRecordPropLineAnd3Points.h \
     modes/SdModeCWireName.h \
     modes/SdModeCLinearArc.h \
-    modes/SdModeWireDisconnect.h
+    modes/SdModeWireDisconnect.h \
+    windows/SdDGetBus.h
 
 DISTFILES += \
     license.txt
@@ -314,4 +316,5 @@ RESOURCES += \
 FORMS += \
     windows/SdDGetObject.ui \
     windows/SdDNetUnion.ui \
-    windows/SdDGetProjectObject.ui
+    windows/SdDGetProjectObject.ui \
+    windows/SdDGetBus.ui
