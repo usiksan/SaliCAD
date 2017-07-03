@@ -24,11 +24,12 @@ class SdDGetBus : public QDialog
   {
     Q_OBJECT
 
+    QStringList mNets;
   public:
     explicit SdDGetBus(QWidget *parent = 0);
     ~SdDGetBus();
 
-    QStringList busList() const;
+    QStringList busList() const { return mNets; }
 
   private:
     Ui::SdDGetBus *ui;
@@ -36,6 +37,11 @@ class SdDGetBus : public QDialog
     // QDialog interface
   public slots:
     virtual void accept() override;
+
+  private:
+    bool translation(const QString sour);
+    int  checkDigit( const QString buf, int index, QChar delim );
+    bool syntaxError();
   };
 
 #endif // SDDGETBUS_H

@@ -130,6 +130,7 @@ History
 #define defPrtScale 200.0  /*Коэффициент масштаба по умолчанию для изобр. плат*/
 #define minScale    0.0001 /*Ограничения масштабирования*/
 #define maxScale    10000.0
+#define maxBusNumber 1000  //Max net number in bus when enter bus mode
 
 #define defNetNamePrefix "XN" //Default net name prefix
 
