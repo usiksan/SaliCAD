@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -64,7 +64,7 @@ bool SdDGetBus::translation( const QString sour )
           return syntaxError();
 
         int dptr = checkDigit( buf, nptr+1, QChar(':') ); //Проверить первый индекс и индексный разделитель
-        if( dptr < )
+        if( dptr < 0 )
           return syntaxError();
 
         int start = buf.mid( nptr + 1, dptr - nptr - 1 ).toInt(); //Выделить начальный индекс

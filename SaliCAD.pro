@@ -156,7 +156,8 @@ SOURCES += \
     modes/SdModeCWireName.cpp \
     modes/SdModeCLinearArc.cpp \
     modes/SdModeWireDisconnect.cpp \
-    windows/SdDGetBus.cpp
+    windows/SdDGetBus.cpp \
+    modes/SdModeCBus.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -305,7 +306,8 @@ HEADERS  += \
     modes/SdModeCWireName.h \
     modes/SdModeCLinearArc.h \
     modes/SdModeWireDisconnect.h \
-    windows/SdDGetBus.h
+    windows/SdDGetBus.h \
+    modes/SdModeCBus.h
 
 DISTFILES += \
     license.txt
