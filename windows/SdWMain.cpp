@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -80,6 +80,8 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   sbar->addWidget( mXPos = new SdWLabel( QString("0"), 60 ) );
   sbar->addWidget( mYLabel = new SdWLabel( QString("Y:"), 30 ) );
   sbar->addWidget( mYPos = new SdWLabel( QString("0"), 60 ) );
+  SdWLabel *enterPos;
+  sbar->addWidget( enterPos = new SdWLabel( tr("Enter..."), 70 ) );
   sbar->addWidget( mMessage = new SdWLabel( QString(), 100 ), 1 );
   sbar->setSizeGripEnabled(true);
 
@@ -1082,6 +1084,15 @@ void SdWMain::cmPropertiesChange()
   {
   if( activeEditor() )
     activeEditor()->cmPropChanged();
+  }
+
+
+
+
+void SdWMain::cmEnterPosition()
+  {
+  if( activeEditor() )
+    activeEditor()->cmEnterPosition();
   }
 
 

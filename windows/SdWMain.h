@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -169,6 +169,8 @@ class SdWMain : public QMainWindow
 
     void cmClipboardChange();
     void cmPropertiesChange();
+
+    void cmEnterPosition();
 
 
     // QWidget interface

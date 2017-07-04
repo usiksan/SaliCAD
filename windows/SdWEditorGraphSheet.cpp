@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -20,6 +20,7 @@ Description
 #include "modes/SdModeCLinearArea.h"
 #include "modes/SdModeCWireName.h"
 #include "modes/SdModeWireDisconnect.h"
+#include "modes/SdModeCBus.h"
 #include <QDebug>
 
 SdWEditorGraphSheet::SdWEditorGraphSheet(SdPItemSheet *sch, QWidget *parent) :
@@ -71,6 +72,7 @@ void SdWEditorGraphSheet::cmModeNet()
 
 void SdWEditorGraphSheet::cmModeBus()
   {
+  modeSet( new SdModeCBus( this, mSheet )  );
   }
 
 
@@ -100,6 +102,8 @@ void SdWEditorGraphSheet::cmModeNetName()
 void SdWEditorGraphSheet::cmModeNetList()
   {
   }
+
+
 
 double SdWEditorGraphSheet::getPPM() const
   {

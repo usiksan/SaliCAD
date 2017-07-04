@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -38,4 +38,12 @@ void SdWLabel::resizeEvent(QResizeEvent *event)
   {
   mLabel->resize( event->size() );
   QWidget::resizeEvent( event );
+  }
+
+
+
+void SdWLabel::mousePressEvent(QMouseEvent *event)
+  {
+  QWidget::mousePressEvent(event);
+  emit trigger();
   }

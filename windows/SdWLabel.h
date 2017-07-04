@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -28,9 +28,14 @@ class SdWLabel : public QWidget
 
     void setText( const QString text );
 
+  signals:
+    //Emit when mouse press on label
+    void trigger();
+
     // QWidget interface
   protected:
     virtual void resizeEvent(QResizeEvent *event) override;
+    virtual void mousePressEvent(QMouseEvent *event) override;
   };
 
 #endif // SDWLABEL_H

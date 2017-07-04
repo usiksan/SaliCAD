@@ -132,6 +132,8 @@ class SdWEditor : public QAbstractScrollArea
 
     virtual void cmPropChanged() {}
 
+    virtual void cmEnterPosition() {}
+
   signals:
 
   public slots:
