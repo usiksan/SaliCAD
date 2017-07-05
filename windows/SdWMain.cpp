@@ -76,13 +76,19 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
 
   //Create status bar
   QStatusBar *sbar = statusBar();
-  sbar->addWidget( mXLabel = new SdWLabel( QString("X:"), 30 ) );
-  sbar->addWidget( mXPos = new SdWLabel( QString("0"), 60 ) );
-  sbar->addWidget( mYLabel = new SdWLabel( QString("Y:"), 30 ) );
-  sbar->addWidget( mYPos = new SdWLabel( QString("0"), 60 ) );
-  SdWLabel *enterPos;
-  sbar->addWidget( enterPos = new SdWLabel( tr("Enter..."), 70 ) );
-  sbar->addWidget( mMessage = new SdWLabel( QString(), 100 ), 1 );
+  sbar->addWidget( mXLabel = new SdWLabel( QString("X:"), QString(), 30 ) );
+  sbar->addWidget( mXPos = new SdWLabel( QString("0"), tr("Current cursor position X coord"), 60 ) );
+  sbar->addWidget( mYLabel = new SdWLabel( QString("Y:"), QString(), 30 ) );
+  sbar->addWidget( mYPos = new SdWLabel( QString("0"), tr("Current cursor position Y coord"), 60 ) );
+  //Button for handle enter position
+  QPushButton *enterPos = new QPushButton( tr("Enter..."), sbar );
+  enterPos->setMaximumWidth( 70 );
+  enterPos->setMaximumHeight( 20 );
+  enterPos->setToolTip( tr("When press this button, You can enter cursor coord") );
+  sbar->addWidget( enterPos );
+  connect( enterPos, &QPushButton::pressed, this, &SdWMain::cmEnterPosition );
+
+  sbar->addWidget( mMessage = new SdWLabel( QString(), tr("Short guide to current mode step or other messages"), 100 ), 1 );
   sbar->setSizeGripEnabled(true);
 
   activateProjectName( QString(), false );

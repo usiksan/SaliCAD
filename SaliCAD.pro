@@ -158,7 +158,8 @@ SOURCES += \
     modes/SdModeWireDisconnect.cpp \
     windows/SdDGetBus.cpp \
     modes/SdModeCBus.cpp \
-    windows/SdDEnterPosition.cpp
+    windows/SdDEnterPosition.cpp \
+    objects/SdUtil.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -309,7 +310,8 @@ HEADERS  += \
     modes/SdModeWireDisconnect.h \
     windows/SdDGetBus.h \
     modes/SdModeCBus.h \
-    windows/SdDEnterPosition.h
+    windows/SdDEnterPosition.h \
+    objects/SdUtil.h
 
 DISTFILES += \
     license.txt

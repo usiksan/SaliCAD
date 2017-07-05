@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Dialog for handle enter position of cursor
 */
 #ifndef SDDENTERPOSITION_H
 #define SDDENTERPOSITION_H
@@ -27,16 +28,20 @@ class SdDEnterPosition : public QDialog
     explicit SdDEnterPosition(QWidget *parent = 0);
     ~SdDEnterPosition();
 
-    bool getRef() const;
-    int  getX() const;
-    int  getY() const;
-    int  getZ() const;
+    bool     getRef() const;
+    QString  getX() const;
+    QString  getY() const;
+    QString  getZ() const;
 
   protected:
     void changeEvent(QEvent *e);
 
   private:
     Ui::SdDEnterPosition *ui;
+
+    // QDialog interface
+  public slots:
+    virtual void accept() override;
   };
 
 #endif // SDDENTERPOSITION_H

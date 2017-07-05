@@ -24,7 +24,7 @@ class SdWLabel : public QWidget
 
     QLabel *mLabel;
   public:
-    explicit SdWLabel( const QString text, int minWidth, QWidget *parent = 0);
+    explicit SdWLabel( const QString text, const QString toolTipText, int minWidth, QWidget *parent = 0);
 
     void setText( const QString text );
 

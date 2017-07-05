@@ -115,6 +115,8 @@ class SdWEditorGraph : public SdWEditor
     virtual void           cmModeText() override;
 //    virtual void cmModeField() {}
 
+    virtual void           cmEnterPosition() override;
+
   protected:
     //Activate new mode
     void    modeActivate( SdMode *mode );

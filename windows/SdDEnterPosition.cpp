@@ -9,12 +9,13 @@ Web
   www.saliLab.ru
 
 Description
+  Dialog for handle enter position of cursor
 */
 #include "SdDEnterPosition.h"
 #include "ui_SdDEnterPosition.h"
 
-static bool prevRef;
-static int  prevX,prevY,prevZ;
+static bool    prevRef = false;
+static QString prevX("0"),prevY("0"),prevZ("0");
 
 SdDEnterPosition::SdDEnterPosition(QWidget *parent) :
   QDialog(parent),
@@ -22,8 +23,13 @@ SdDEnterPosition::SdDEnterPosition(QWidget *parent) :
   {
   ui->setupUi(this);
 
-  ui->m
+  //Restore previous control state
+  ui->mRef->setChecked(prevRef);
+  ui->mX->setText( prevX );
+  ui->mY->setText( prevY );
+  ui->mZ->setText( prevZ );
   }
+
 
 
 
@@ -31,6 +37,37 @@ SdDEnterPosition::~SdDEnterPosition()
   {
   delete ui;
   }
+
+
+
+
+bool SdDEnterPosition::getRef() const
+  {
+  return ui->mRef->isChecked();
+  }
+
+
+
+QString SdDEnterPosition::getX() const
+  {
+  return ui->mX->text();
+  }
+
+
+
+QString SdDEnterPosition::getY() const
+  {
+  return ui->mY->text();
+  }
+
+
+
+QString SdDEnterPosition::getZ() const
+  {
+  return ui->mZ->text();
+  }
+
+
 
 void SdDEnterPosition::changeEvent(QEvent *e)
   {
@@ -42,4 +79,14 @@ void SdDEnterPosition::changeEvent(QEvent *e)
     default:
       break;
     }
+  }
+
+
+void SdDEnterPosition::accept()
+  {
+  prevRef = ui->mRef->isChecked();
+  prevX = ui->mX->text();
+  prevY = ui->mY->text();
+  prevZ = ui->mZ->text();
+  QDialog::accept();
   }

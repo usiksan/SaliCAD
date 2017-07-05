@@ -12,6 +12,7 @@ Description
   Properties bar for lines and other linear objects
 */
 #include "SdPropBarLinear.h"
+#include "objects/SdUtil.h"
 #include <QList>
 #include <QLineEdit>
 #include <QDoubleValidator>
@@ -138,7 +139,7 @@ void SdPropBarLinear::getPropLine(SdPropLine *propLine, int *enterType )
       propLine->mLayer = layer;
 
     if( !mWidth->currentText().isEmpty() )
-      propLine->mWidth = static_cast<int>( mWidth->currentText().toDouble() / mPPM );
+      propLine->mWidth = SdUtil::coord2int( mWidth->currentText(), mPPM );
 
     if( mLineSolid->isChecked() ) propLine->mType = dltSolid;
     else if( mLineDotted->isChecked() ) propLine->mType = dltDotted;

@@ -17,13 +17,16 @@ Description
 #include <QPainter>
 #include <QResizeEvent>
 
-SdWLabel::SdWLabel(const QString text, int minWidth, QWidget *parent) :
+SdWLabel::SdWLabel(const QString text, const QString toolTipText, int minWidth, QWidget *parent) :
   QWidget(parent)
   {
   mLabel = new QLabel( this );
   mLabel->setText( text );
   mLabel->setMinimumWidth( minWidth );
   setMinimumWidth( minWidth );
+  //If tool tip present, then append it
+  if( !toolTipText.isEmpty() )
+    mLabel->setToolTip( toolTipText );
   }
 
 void SdWLabel::setText(const QString text)

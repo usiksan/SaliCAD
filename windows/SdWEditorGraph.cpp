@@ -14,12 +14,14 @@ Description
 #include "SdWEditorGraph.h"
 #include "SdWView.h"
 #include "SdWCommand.h"
+#include "SdDEnterPosition.h"
 #include "objects/SdContext.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdConverterView.h"
 #include "objects/SdGraph.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdPItemPlate.h"
+#include "objects/SdUtil.h"
 #include "modes/SdMode.h"
 #include "modes/SdModeView.h"
 #include "modes/SdModeTZoomer.h"
@@ -355,6 +357,27 @@ void SdWEditorGraph::cmViewFit()
   //If fit rect not empty - expand this rect on all view
   if( !fit.isEmpty() )
     zoomWindow( fit );
+  }
+
+
+
+
+void SdWEditorGraph::cmEnterPosition()
+  {
+  //Handle enter cursor position
+  SdDEnterPosition dep(this);
+  if( dep.exec() ) {
+    //Build point from entered coord
+    SdPoint p;
+    p.setX( SdUtil::coord2int( dep.getX(), getPPM() ) );
+    p.setY( SdUtil::coord2int( dep.getY(), getPPM() ) );
+    if( dep.getRef() )
+      //Referenced coord
+      p.move( mPrevPoint );
+    //Absolute coord
+    if( modeGet() )
+      modeGet()->enterPoint( p );
+    }
   }
 
 
