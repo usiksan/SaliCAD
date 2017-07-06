@@ -11,6 +11,19 @@ Web
 Description
 */
 #include "SdModeSelect.h"
+#include "objects/SdContainerSheetNet.h"
+
+//All prop bars
+#include "windows/SdPropBarLinear.h"
+#include "windows/SdPropBarPartPin.h"
+#include "windows/SdPropBarSymImp.h"
+#include "windows/SdPropBarSymPin.h"
+#include "windows/SdPropBarTextual.h"
+#include "windows/SdPropBarWire.h"
+
+#include "windows/SdWCommand.h"
+
+#include <QObject>
 
 SdModeSelect::SdModeSelect(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdMode( editor, obj )
@@ -20,16 +33,6 @@ SdModeSelect::SdModeSelect(SdWEditorGraph *editor, SdProjectItem *obj) :
 
 
 #if 0
-enum {
-  smNoSelect,      //Нет выделения
-  smSelRect,       //Происходит выделение прямоугольником
-  smSelPresent,    //Есть выделение
-  smCopy,          //Копирование
-  smMove,          //Перенос
-  smRotateBase,    //Указание базы для поворота
-  smRotateDir,     //Указание направления поворота
-  smPaste,         //Вставка из карамана
-  smLast };
 
 
 //================== Итераторы =================================================
@@ -60,33 +63,6 @@ SelectPointIterator::operation( DBasePic *pic ) {
   return true;
   }
 
-//Выделение объектов точкой
-class ClickPointIterator : public DownIterator {
-    DPoint        point;
-    DSelectorPic &selector;
-  public:
-    ClickPointIterator( DPoint p, DSelectorPic &s ) : point(p), selector(s) {}
-
-    bool operation( DBasePic *pic );
-  };
-
-bool
-ClickPointIterator::operation( DBasePic *pic ) {
-  if( !TestLookUpObject(pic) ) return true;
-  DGraphObjectPic *graph = dynamic_cast<DGraphObjectPic*>(pic);
-  if( graph ) {
-    graph->SelectByPoint( point, selector );
-    if( graph->BehindCursor( point ) && pic->GetType() == dptWirePic ) {
-      //Для цепей полное выделение цепей
-      DSheetNetPic *net = dynamic_cast<DSheetNetPic*>( graph->GetParent() );
-      if( net ) {
-        SelectAllIterator it( selector );
-        net->ForEach( it );
-        }
-      }
-    }
-  return true;
-  }
 
 //Выделение объектов прямоугольником
 class SelectRectIterator : public DownIterator {
@@ -246,93 +222,12 @@ DSelectMode::DeleteSelected() {
   GetProp();
   }
 
-void
-DSelectMode::EnterPoint( DPoint point, DContext& ) {
-  //GetBase()->GetProject()->Dirty();
-  switch( GetStep() ) {
-    case smPaste : EnterPaste( point ); break;
-    default :
-      //Проверить клавишу Shift, если не нажата то удалить предыдущее выделение
-      if( !(CheckPoint(point) & SEL_ELEM) ) {
-        if( !shift ) Unselect( false );
-        //Пройтись по объектам и выделить точкой
-        GetBase()->ForEach( SelectPointIterator( point, fragment ) );
-        //Обновить свойства и обновить изображение
-        GetProp();
-        }
-    }
-  //Определить состояние курсора в текущей точке
-  CheckPoint( point );
-  }
 
-void
-DSelectMode::ClickPoint( DPoint point, DContext& ) {
-  if( GetStep() != smPaste ) {
-    //Проверить клавишу Shift, если не нажата то удалить предыдущее выделение
-    if( !shift ) Unselect( false );
-    //Пройтись по объектам и выделить точкой
-    GetBase()->ForEach( ClickPointIterator( point, fragment ) );
-    //Обновить свойства и обновить изображение
-    GetProp();
-    //Определить состояние курсора в текущей точке
-    CheckPoint( point );
-    }
-  }
 
-void
-DSelectMode::CancelPoint( DPoint point, DContext& ) {
-  switch( GetStep() ) {
-    case smPaste : CancelPaste(); break;
-    default :
-      if( CheckPoint(point) ) {
-        ActivateMenu();
-        return;
-        }
-      if( IsSelectPresent() ) Unselect( true );
-      else CancelMode();
-    }
-  SetStep( smNoSelect );
-  //Определить состояние курсора в текущей точке
-  CheckPoint( point );
-  }
 
-void
-DSelectMode::MovePoint( DPoint p, DContext &dc ) {
-  curPoint = p;
-  switch( GetStep() ) {
-    case smPaste : DragCopy( p, dc ); break;
-    default      : CheckPoint( p ); //Определить состояние курсора в текущей точке
-    }
-  }
 
-void
-DSelectMode::BeginDrag( DPoint point, DContext &dc ) {
-  if( CheckPoint(point) ) {
-    //Над объектом
-    if( control ) BeginCopy( point );
-    else BeginMove( point );
-    }
-  else BeginRect( point, dc );
-  }
 
-void
-DSelectMode::DragPoint( DPoint point, DContext &dc ) {
-  switch( GetStep() ) {
-    case smCopy    : DragCopy( point, dc ); break;
-    case smMove    : DragMove( point, dc ); break;
-    case smSelRect : DragRect( point, dc ); break;
-    }
-  }
 
-void
-DSelectMode::StopDrag( DPoint point, DContext &dc ) {
-  DragPoint( point, dc );
-  switch( GetStep() ) {
-    case smCopy    : StopCopy( point, dc ); break;
-    case smMove    : StopMove( point, dc ); break;
-    case smSelRect : StopRect( point ); break;
-    }
-  }
 
 //Выделение прямоугольником-начало
 void
@@ -584,49 +479,8 @@ DSelectMode::DrawDefault( DContext &dc ) {
   if( GetStep() == smSelRect ) ShowRect( dc );
   }
 
-CPChar
-DSelectMode::GetStepHelp() const {
-  static CPChar stepDescr[smLast] = {
-    "Нет выбранных элементов",
-    "Укажите второй угол для выделения группы объектов",
-    "Имеются выбранные элементы. Их можно переносить, копировать и изменять",
-    "Укажите место вставки новых объектов",
-    "Укажите новое месторасположение объектов",
-    "Укажите точку центра поворота",
-    "Задайте угол поворота" };
-  return stepDescr[ GetStep() ];
-  }
 
-CPChar
-DSelectMode::GetStepThema() const {
-  static CPChar stepDescr[smLast] = {
-    MODEHELP "SelectNone",
-    MODEHELP "SelectSecondCorner",
-    MODEHELP "SelectPresent",
-    MODEHELP "SelectInsertPoint",
-    MODEHELP "SelectPlacePoint",
-    MODEHELP "SelectRotateCenter",
-    MODEHELP "SelectRotateAngle" };
-  return stepDescr[ GetStep() ];
-  }
 
-int
-DSelectMode::GetCursor() const {
-  switch( GetStep() ) {
-    case smNoSelect :
-    case smSelPresent :
-      if( state & SEL_ELEM ) return control ? TAKECOPY_CUR : TAKE_CUR;
-      else if( state & UNSEL_ELEM ) return HAND_CUR;
-      return POINT_CUR;
-    case smSelRect    : return SEL_CUR;
-    case smCopy       : return COPY_CUR;
-    case smMove       : return MOVE_CUR;
-    case smRotateBase : return ROTATE_CUR;
-    case smRotateDir  : return ROTATE_CUR;
-    case smPaste      : return ARROW_CUR;
-    }
-  throw( CadError("DSelectMode::GetCursor") );
-  }
 
 void
 DSelectMode::Reset() {
@@ -713,10 +567,6 @@ DSelectMode::EnterPaste( DPoint point ) {
   CancelPaste();
   }
 
-bool
-DSelectMode::EnablePaste( int pasteMask ) const {
-  return !(pasteMask & (~GetBase()->GetSubObjectMask()));
-  }
 
 
 #endif
@@ -1189,3 +1039,351 @@ WinSelectMode::Numerate() {
 
 
 #endif
+
+
+void SdModeSelect::activate()
+  {
+  }
+
+void SdModeSelect::reset()
+  {
+  }
+
+void SdModeSelect::drawStatic(SdContext *ctx)
+  {
+  }
+
+void SdModeSelect::drawDynamic(SdContext *ctx)
+  {
+  }
+
+
+
+
+int SdModeSelect::getPropBarId() const
+  {
+  //On base mPropObject return prop bar id
+  switch( mPropObject ) {
+    default :
+    case dctArea          :
+    case dctLines         : return PB_LINEAR;
+    case dctIdent         :
+    case dctWireName      :
+    case dctText          : return PB_TEXT;
+    case dctSymPin        : return PB_SYM_PIN;
+    case dctSymImp        : return PB_SYM_IMP;
+    case dctPartPin       : return PB_PART_PIN;
+    //case dctRoadPin       :
+    case dctPartImp       : return PB_PART_IMP;
+    case dctWire          : return PB_WIRE;
+    //case dctList          :
+    //case dctPoligon       :
+    //case dctVia           :
+    //case dctSize          :
+    //case dctSizeProp      :
+    }
+  }
+
+
+
+void SdModeSelect::propGetFromBar()
+  {
+  mUndo->begin( QObject::tr("Properties changed") );
+  //Сохранить состояние объектов до изменения свойств
+  mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>( obj );
+    if( graph != nullptr )
+      graph->saveState( mUndo );
+    return true;
+    });
+
+  if( mFragment.count() ) setDirty();
+  //Получить новые свойства
+  SdPropBarLinear  *barLinear  = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
+  SdPropBarPartPin *barPartPin = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
+  SdPropBarSymImp  *barSymImp  = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
+  SdPropBarSymPin  *barSymPin  = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
+  SdPropBarTextual *barTextual = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
+  SdPropBarWire    *barWire    = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
+
+  mLocalProp.Clear();
+  switch( mPropObject ) {
+    default :
+    case dctArea          :
+    case dctLines         :
+      barLinear->getPropLine( &(mLocalProp.mLineProp), &(mLocalProp.mLineEnterType) );
+      break;
+    case dctIdent         :
+      barTextual->getPropText( &(mLocalProp.mSymIdentProp) );
+      break;
+    case dctWireName      :
+      barTextual->getPropText( &(mLocalProp.mWireNameProp) );
+      break;
+    case dctText          :
+      barTextual->getPropText( &(mLocalProp.mTextProp) );
+      break;
+    case dctSymPin        :
+      barSymPin->getPropSymPin( &(mLocalProp.mSymPinProp) );
+      break;
+    case dctSymImp        : return PB_SYM_IMP;
+    case dctPartPin       : return PB_PART_PIN;
+    //case dctRoadPin       :
+    case dctPartImp       : return PB_PART_IMP;
+    case dctWire          : return PB_WIRE;
+    //case dctList          :
+    //case dctPoligon       :
+    //case dctVia           :
+    //case dctSize          :
+    //case dctSizeProp      :
+    }
+  //Setup new properties
+  mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>( obj );
+    if( graph != nullptr )
+      graph->setProp( mLocalProp );
+    return true;
+    });
+  }
+
+
+
+
+void SdModeSelect::propSetToBar()
+  {
+  }
+
+
+
+
+void SdModeSelect::enterPoint( SdPoint point )
+  {
+  //GetBase()->GetProject()->Dirty();
+  switch( getStep() ) {
+    case smPaste : enterPaste( point ); break;
+    default :
+      //Проверить клавишу Shift, если не нажата то удалить предыдущее выделение
+      if( !(checkPoint(point) & SEL_ELEM) ) {
+        if( !mShift ) unselect( false );
+        //Пройтись по объектам и выделить точкой
+        mObject->forEach( dctAll, [point,this] (SdObject *obj) ->bool {
+          SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+          if( graph != nullptr )
+            graph->selectByPoint( point, &mFragment );
+          return true;
+          });
+        //Обновить свойства и обновить изображение
+        propSetToBar();
+        }
+    }
+  //Определить состояние курсора в текущей точке
+  checkPoint( point );
+  }
+
+
+
+
+
+void SdModeSelect::clickPoint( SdPoint point )
+  {
+  if( getStep() != smPaste ) {
+    //Проверить клавишу Shift, если не нажата то удалить предыдущее выделение
+    if( !mShift ) unselect( false );
+    //Пройтись по объектам и выделить точкой
+    mObject->forEach( dctAll, [point,this] (SdObject *obj) ->bool {
+      SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+      if( graph != nullptr ) {
+        graph->selectByPoint( point, &mFragment );
+        }
+      SdContainerSheetNet *net = dynamic_cast<SdContainerSheetNet*>(obj);
+      if( net != nullptr ) {
+        //For nets full net selection
+        net->forEach( dctAll, [this] (SdObject *subObj) -> bool {
+          SdGraph *subGraph = dynamic_cast<SdGraph*>(subObj);
+          if( subGraph != nullptr )
+            subGraph->select( &mFragment );
+          return true;
+          });
+        }
+      return true;
+      });
+    //Обновить свойства и обновить изображение
+    propSetToBar();
+    //Определить состояние курсора в текущей точке
+    checkPoint( point );
+    }
+  }
+
+
+
+void SdModeSelect::cancelPoint( SdPoint point )
+  {
+  switch( getStep() ) {
+    case smPaste : cancelPaste(); break;
+    default :
+      if( checkPoint(point) ) {
+        activateMenu();
+        return;
+        }
+      if( isSelectPresent() ) unselect( true );
+      else cancelMode();
+    }
+  setStep( smNoSelect );
+  //Определить состояние курсора в текущей точке
+  checkPoint( point );
+  }
+
+
+
+
+void SdModeSelect::movePoint( SdPoint p )
+  {
+  mCurPoint = p;
+  switch( getStep() ) {
+    case smPaste : dragCopy( p ); break;
+    default      : checkPoint( p ); //Определить состояние курсора в текущей точке
+    }
+  }
+
+
+
+void SdModeSelect::wheel(SdPoint)
+  {
+  }
+
+void SdModeSelect::beginDrag( SdPoint point )
+  {
+  if( checkPoint(point) ) {
+    //Над объектом
+    if( mControl ) beginCopy( point );
+    else beginMove( point );
+    }
+  else beginRect( point );
+  }
+
+
+
+void SdModeSelect::dragPoint( SdPoint point )
+  {
+  switch( getStep() ) {
+    case smCopy    : dragCopy( point ); break;
+    case smMove    : dragMove( point ); break;
+    case smSelRect : dragRect( point ); break;
+    }
+  }
+
+
+
+void SdModeSelect::stopDrag(SdPoint point)
+  {
+  dragPoint( point );
+  switch( getStep() ) {
+    case smCopy    : stopCopy( point ); break;
+    case smMove    : stopMove( point ); break;
+    case smSelRect : stopRect( point ); break;
+    }
+  }
+
+
+
+bool SdModeSelect::enableCopy() const
+  {
+  }
+
+
+
+bool SdModeSelect::enablePaste(quint64 pasteMask) const
+  {
+  return (mObject->getAcceptedObjectsMask() & pasteMask) != 0l;
+  }
+
+
+
+bool SdModeSelect::getInfo(SdPoint p, QString &info)
+  {
+  }
+
+
+
+
+QString SdModeSelect::getStepHelp() const
+  {
+  switch( getStep() ) {
+    default :
+    case smNoSelect   : return QObject::tr( "No selected elements" );
+    //Происходит выделение прямоугольником
+    case smSelRect    : return QObject::tr( "Enter second corner for selection objects group" );
+    //Есть выделение
+    case smSelPresent : return QObject::tr( "There selected elements. You may them move, copy and edit");
+    //Копирование
+    case smCopy       : return QObject::tr( "Enter position for new elements" );
+    //Перенос
+    case smMove       : return QObject::tr( "Enter new position for selected elements" );
+    //Указание базы для поворота
+    case smRotateBase : return QObject::tr( "Enter center point for elements group rotation");
+    //Указание направления поворота
+    case smRotateDir  : return QObject::tr( "Enter point to define angle of rotation" );
+    //Вставка из карамана
+    case smPaste      : return QObject::tr( "Enter position for pasted elements" );
+    }
+  }
+
+
+
+
+QString SdModeSelect::getModeThema() const
+  {
+  return QStringLiteral( MODE_HELP "ModeSelect.htm" );
+  }
+
+
+
+
+QString SdModeSelect::getStepThema() const
+  {
+  switch( getStep() ) {
+    default :
+    case smNoSelect   : return QStringLiteral( MODE_HELP "ModeSelect.htm#SelectNone" );
+    //Происходит выделение прямоугольником
+    case smSelRect    : return QStringLiteral( MODE_HELP "ModeSelect.htm#SelectSecondCorner" );
+    //Есть выделение
+    case smSelPresent : return QStringLiteral( MODE_HELP "ModeSelect.htm#SelectPresent" );
+    //Копирование
+    case smCopy       : return QStringLiteral( MODE_HELP "ModeSelect.htm#SelectInsertPoint" );
+    //Перенос
+    case smMove       : return QStringLiteral( MODE_HELP "ModeSelect.htm#SelectPlacePoint" );
+    //Указание базы для поворота
+    case smRotateBase : return QStringLiteral( MODE_HELP "ModeSelect.htm#SelectRotateCenter" );
+    //Указание направления поворота
+    case smRotateDir  : return QStringLiteral( MODE_HELP "ModeSelect.htm#SelectRotateAngle" );
+    //Вставка из карамана
+    case smPaste      : return QStringLiteral( MODE_HELP "ModeSelect.htm#SelectPaste" );
+    }
+  }
+
+
+
+int SdModeSelect::getCursor() const
+  {
+  switch( getStep() ) {
+    case smNoSelect :
+    case smSelPresent :
+      if( mState & SEL_ELEM ) return mControl ? CUR_TAKE_COPY : CUR_TAKE;
+      else if( mState & UNSEL_ELEM ) return CUR_HAND;
+      return CUR_POINT;
+    case smSelRect    : return CUR_SEL;
+    case smCopy       : return CUR_COPY;
+    case smMove       : return CUR_MOVE;
+    case smRotateBase : return CUR_ROTATE;
+    case smRotateDir  : return CUR_ROTATE;
+    case smPaste      : return CUR_ARROW;
+    }
+  return CUR_ARROW;
+  }
+
+
+
+
+int SdModeSelect::getIndex() const
+  {
+  return MD_SELECT;
+  }

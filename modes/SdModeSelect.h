@@ -15,28 +15,97 @@ Description
 #define SDMODESELECT_H
 
 #include "SdMode.h"
+#include "objects/SdProp.h"
+#include "objects/SdSelector.h"
+#include "objects/SdProject.h"
 
 class SdModeSelect : public SdMode
   {
+    SdProp          mLocalProp;  //Свойства выделенных объектов
+    quint64         mPropObject; //Object class prop bar for
+    SdSelector      mFragment;   //Набор выделенных объектов
+    //PDSheetNetTable netFragment;//Набор выделенных цепей
+    SdPoint         mFirst;      //Начальная точка
+    SdPoint         mPrevMove;   //Предыдущая точка
+    SdPoint         mCurPoint;   //Текущая точка
+    int             mState;      //Состояние курсора
+    bool            mShift;      //Нажата клавиша Shift
+    bool            mControl;    //Нажата клавиша Control
+
+    SdSelector     *mPaste;      //Врагмент для вставки (копирования)
+    SdProject      *mPastePrj;   //Проект, из которого производится вставка
+
+    enum {
+      smNoSelect,      //Нет выделения
+      smSelRect,       //Происходит выделение прямоугольником
+      smSelPresent,    //Есть выделение
+      smCopy,          //Копирование
+      smMove,          //Перенос
+      smRotateBase,    //Указание базы для поворота
+      smRotateDir,     //Указание направления поворота
+      smPaste,         //Вставка из карамана
+      smLast };
+
   public:
     SdModeSelect( SdWEditorGraph *editor, SdProjectItem *obj );
+
+    // SdMode interface
+  public:
+    virtual void activate() override;
+    virtual void reset() override;
+    virtual void drawStatic(SdContext *ctx) override;
+    virtual void drawDynamic(SdContext *ctx) override;
+    virtual int getPropBarId() const override;
+    virtual void    propGetFromBar() override;
+    virtual void propSetToBar() override;
+    virtual void    enterPoint(SdPoint point) override;
+    virtual void    clickPoint(SdPoint) override;
+    virtual void    cancelPoint(SdPoint point) override;
+    virtual void    movePoint(SdPoint p) override;
+    virtual void wheel(SdPoint) override;
+    virtual void    beginDrag(SdPoint point) override;
+    virtual void    dragPoint(SdPoint point) override;
+    virtual void    stopDrag(SdPoint point) override;
+    virtual bool enableCopy() const override;
+    virtual bool    enablePaste(quint64 pasteMask) const override;
+    virtual bool getInfo(SdPoint p, QString &info) override;
+    virtual QString getStepHelp() const override;
+    virtual QString getModeThema() const override;
+    virtual QString getStepThema() const override;
+    virtual int     getCursor() const override;
+    virtual int     getIndex() const override;
+  protected:
+    void copy();                 //Копировать в карман
+    void paste();                //Вставить из кармана
+    void selectAll();            //Выделить все
+    void unselect( bool update); //Убрать выделение
+    int  checkPoint( SdPoint p ); //Проверить объект под точкой
+    void beginCopy( SdPoint p );  //Начало копирования
+    void dragCopy( SdPoint p );   //Процесс копирования
+    void stopCopy( SdPoint p );   //Завершение копирования
+    void beginMove( SdPoint p );  //Начало переноса
+    void dragMove( SdPoint p );   //Процесс переноса
+    void stopMove( SdPoint p );   //Завершение переноса
+    void beginRect( SdPoint p );  //Начало выделения прямоугольником
+    void dragRect( SdPoint p );   //Процесс выделения прямоугольником
+    void stopRect( SdPoint p );   //Завершение выделения прямоугольником
+    void getProp();              //Получить свойства выделенных объектов
+    void deleteSelected();       //Удалить все выделенные объекты
+    void drawCopy( SdContext *ctx );   //Рисование копии объектов из paste
+    void drawDefault( SdContext *ctx );//Рисовать режим по умолчанию
+    void enterPaste( SdPoint point ); //Вставка фрагмента
+    void cancelPaste();              //Отмена вставки фрагмента
+    void movePaste( SdPoint p );      //Перемещение вставляемого фрагмента
+    void showRect( SdContext *ctx );
+    void showSelect( SdContext *ctx );
+    void showPaste( SdContext *ctx );
+    void drawUnselected( SdContext *ctx );
+    void insertCopy( SdPoint offset, bool next );//Вставить копии объектов
   };
 
 #if 0
 class DSelectMode : public DMode {
   protected:
-    DProp          localProp;  //Свойства выделенных объектов
-    DSelectorPic   fragment;   //Набор выделенных объектов
-    PDSheetNetTable netFragment;//Набор выделенных цепей
-    DPoint         first;      //Начальная точка
-    DPoint         prevMove;   //Предыдущая точка
-    DPoint         curPoint;   //Текущая точка
-    int            state;      //Состояние курсора
-    bool           shift;      //Нажата клавиша Shift
-    bool           control;    //Нажата клавиша Control
-
-    DSelectorPic  *paste;      //Врагмент для вставки (копирования)
-    DProjectPic   *pastePrj;   //Проект, из которого производится вставка
 
     virtual CPChar GetStepHelp() const;
     virtual CPChar GetStepThema() const;
@@ -61,7 +130,6 @@ class DSelectMode : public DMode {
     virtual bool KeyDown( int, DContext& );
     virtual bool KeyUp( int, DContext& );
     virtual void PropChanged( DContext& );         //Извещение об изменении свойств
-    virtual int  GetIndex() const { return IDM_SELECT; }
             bool IsSelectPresent() { return fragment.GetNumber() != 0; }
     virtual bool EnableCopy() const { return fragment.GetNumber() != 0; }
     virtual bool EnablePaste( int pasteMask ) const;
@@ -73,32 +141,6 @@ class DSelectMode : public DMode {
     virtual void                            Dublicate() = 0;
     virtual void                            Param() = 0;
     virtual void                            Numerate() = 0;
-            void Copy();                 //Копировать в карман
-            void Paste();                //Вставить из кармана
-            void SelectAll();            //Выделить все
-            void Unselect( bool update); //Убрать выделение
-            int  CheckPoint( DPoint p ); //Проверить объект под точкой
-            void BeginCopy( DPoint p );  //Начало копирования
-            void DragCopy( DPoint p, DContext& );   //Процесс копирования
-            void StopCopy( DPoint p, DContext& );   //Завершение копирования
-            void BeginMove( DPoint p );  //Начало переноса
-            void DragMove( DPoint p, DContext& );   //Процесс переноса
-            void StopMove( DPoint p, DContext& );   //Завершение переноса
-            void BeginRect( DPoint p, DContext& );  //Начало выделения прямоугольником
-            void DragRect( DPoint p, DContext& );   //Процесс выделения прямоугольником
-            void StopRect( DPoint p );   //Завершение выделения прямоугольником
-            void GetProp();              //Получить свойства выделенных объектов
-            void DeleteSelected();       //Удалить все выделенные объекты
-            void DrawCopy( DContext &dc );   //Рисование копии объектов из paste
-            void DrawDefault( DContext &dc );//Рисовать режим по умолчанию
-            void EnterPaste( DPoint point ); //Вставка фрагмента
-            void CancelPaste();              //Отмена вставки фрагмента
-            void MovePaste( DPoint p );      //Перемещение вставляемого фрагмента
-            void ShowRect( DContext& );
-            void ShowSelect( DContext& );
-            void ShowPaste( DContext& );
-            void DrawUnselected( DContext& );
-            void InsertCopy( DPoint offset, bool next );//Вставить копии объектов
   };
 
 class WinSelectMode : public DSelectMode {
