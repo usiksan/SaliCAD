@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -12,6 +12,11 @@ Description
 */
 #include "SdModeSelect.h"
 #include "objects/SdContainerSheetNet.h"
+#include "objects/SdEnvir.h"
+#include "objects/SdPItemSheet.h"
+#include "objects/SdPItemPlate.h"
+#include "objects/SdGraphWiringWire.h"
+#include "objects/SdPulsar.h"
 
 //All prop bars
 #include "windows/SdPropBarLinear.h"
@@ -22,6 +27,8 @@ Description
 #include "windows/SdPropBarWire.h"
 
 #include "windows/SdWCommand.h"
+#include "windows/SdWEditorGraph.h"
+
 
 #include <QObject>
 
@@ -146,81 +153,6 @@ DSelectMode::~DSelectMode() {
   if( GetStep() ) Unselect( false );
   }
 
-//Отменить выделение
-void
-DSelectMode::Unselect( bool update ) {
-  GetUndo()->AppendAction();
-
-  //Очистить таблицу цепей
-  netFragment.Clear();
-
-  //Завершить перенос, накопить выделенные цепи
-  fragment.ForEach( PostMoveIterator( GetViewer()->GetGrid(), netFragment ) );
-
-  //Объекты становятся невыделенными
-  fragment.RemoveAll();
-
-  //Утилизировать цепи
-  FOR_EACH( netFragment ) netFragment[i]->Utilise();
-
-  GetUndo()->EndAction( 0 );
-
-  //Обновить свойства и обновить изображение
-  if( update ) GetProp();
-  }
-
-bool
-DSelectMode::KeyDown( int ch, DContext &dc ) {
-  switch( ch ) {
-    case vkCopy     : Copy(); break;
-    case vkPaste    : SetDirty(); Paste(); break;
-    case vkCut      : SetDirty(); Copy(); DeleteSelected(); break;
-    case vkSelAll   : SelectAll(); break;
-    case vkShift    : shift = true; break;
-    case vkControl  : control = true; break;
-    case vkDelete   : SetDirty(); DeleteSelected(); break;
-    case vkDubl     : SetDirty(); Dublicate(); break;
-    case vkParam    : SetDirty(); Param(); break;
-    case vkNumerate : SetDirty(); Numerate(); break;
-    case vkF7 :
-      SetDirty();
-      //Поворот как группы компонентов
-      if( fragment.GetNumber() && GetStep() == smSelPresent ) {
-        dc.SetXorMode( wccDSLSelected );
-        Hide( dc );  //Стереть
-        PMRotateIterator rot( curPoint, DAngle(90000) );
-        fragment.ForEach( rot );
-        Show( dc );  //Нарисовать
-        }
-      break;
-    default : return false;
-    }
-  return true;
-  }
-
-bool
-DSelectMode::KeyUp( int ch, DContext& ) {
-  switch( ch ) {
-    case vkShift : shift = false; break;
-    case vkControl : control = false; break;
-    }
-  return false;
-  }
-
-void
-DSelectMode::DeleteSelected() {
-  SetDirty();
-
-  GetUndo()->BeginAction();
-
-  //Произвести удаление объектов
-  fragment.DeleteAll();
-
-  GetUndo()->EndAction( "Удаление" );
-
-  //Обновить свойства и обновить изображение
-  GetProp();
-  }
 
 
 
@@ -229,71 +161,9 @@ DSelectMode::DeleteSelected() {
 
 
 
-//Выделение прямоугольником-начало
-void
-DSelectMode::BeginRect( DPoint point, DContext &dc ) {
-  first = point;
-  prevMove = point;
-  SetStep( smSelRect );
-  dc.SetXorMode( wccDSLSelected );
-  ShowRect( dc );
-  }
 
-//Выделение прямоугольником-процесс выделения
-void
-DSelectMode::DragRect( DPoint point, DContext &dc ) {
-  dc.SetXorMode( wccDSLSelected );  //Режим инвертирования
-  ShowRect( dc );   //Стереть
-  prevMove = point; //Установить новую координату
-  ShowRect( dc );   //Нарисовать
-  }
 
-//Выделение прямоугольником-завершение
-void
-DSelectMode::StopRect( DPoint point ) {
-  //Проверить клавишу Shift, если не нажата то удалить предыдущее выделение
-  if( !shift ) fragment.RemoveAll();
-  //Пройтись по объектам и выделить прямоугольником
-  GetBase()->ForEach( SelectRectIterator( DRect( first, point ), fragment ) );
-  //Обновить свойства и обновить изображение
-  GetProp();
-  //Определить состояние курсора в текущей точке
-  CheckPoint( point );
-  }
 
-//Подготовка переноса
-void
-DSelectMode::BeginMove( DPoint p ) {
-  SetDirty();
-  GetUndo()->BeginAction();
-  //Сохранить состояние объектов до переноса
-  fragment.ForEach( DISaveState() );
-  //Подготовка переноса
-  fragment.ForEach( PrepareMoveIterator( fragment ) );
-  first = p;
-  prevMove = p;
-  SetStep( smMove );
-  //Сохранить состояние объектов до переноса
-  //fragment.ForEach( DISaveState() );
-  GetUndo()->EndAction( "Перенос" );
-  //Обновить изображение
-  Update();
-  }
-
-void
-DSelectMode::DragMove( DPoint p, DContext &dc  ) {
-  dc.SetXorMode( wccDSLSelected );                   //Установить инвертирование
-  ShowSelect( dc );                                  //Стереть изображение
-  fragment.ForEach( MoveIterator( p - prevMove ) );  //Перемещение объектов
-  prevMove = p;                                      //Установить новую текущую точку
-  ShowSelect( dc );                                  //Рисовать изображение
-  }
-
-void
-DSelectMode::StopMove( DPoint p, DContext &dc ) {
-  DragMove( p, dc );
-  SetStep( smSelPresent );
-  }
 
 void
 DSelectMode::BeginCopy( DPoint p ) {
@@ -398,21 +268,6 @@ DSelectMode::GetProp() {
   }
 
 
-int
-DSelectMode::CheckPoint( DPoint point ) {
-  CheckIterator chk( point );
-  GetBase()->ForEach( chk );
-  state = chk.GetResult();
-  if( DEnvir::envir->bShowMessageRemark ) {
-    static DString info;
-    DIGetInfo iter( point, info, true );
-    if( GetBase()->ForEach( iter ) )
-      SetMessage( GetStepHelp() );
-    else
-      SetMessage( info );
-    }
-  return state;
-  }
 
 void
 DSelectMode::DrawUnselected( DContext &dc ) {
@@ -456,14 +311,6 @@ DSelectMode::ShowSelect( DContext &dc ) {
   fragment.ForEach( DrawSelectIterator( dc ) );
   }
 
-void
-DSelectMode::ShowRect( DContext &dc ) {
-  DLineProp prp;
-  prp.layer = dslSelected;
-  prp.width = 0;
-  prp.type  = dltDashed;
-  dc.Rect( first, prevMove, prp );
-  }
 
 void
 DSelectMode::DrawDefault( DContext &dc ) {
@@ -482,17 +329,7 @@ DSelectMode::DrawDefault( DContext &dc ) {
 
 
 
-void
-DSelectMode::Reset() {
-  SetStep(0);
-  Update();
-  UpdateTools();
-  }
 
-void
-DSelectMode::Activate() {
-  SetPropBar( dpNone, &localProp );
-  }
 
 void
 DSelectMode::SelectAll() {
@@ -548,26 +385,6 @@ DSelectMode::CancelPaste() {
   pastePrj = 0;
   SetStep( smNoSelect );
   }
-
-void
-DSelectMode::EnterPaste( DPoint point ) {
-  SetDirty();
-  GetUndo()->BeginAction();
-  //Произвести вставку
-  DSelectorPic tmpTable;
-  DBaseIterator<DGraphObjectPic> *copyIterator = GetCopyIterator( tmpTable, point - first, false );
-  if( !copyIterator ) throw CadError("DSelectMode::EnterPaste: не создан итератор вставки" );
-  paste->ForEach( *copyIterator );
-  delete copyIterator;
-  GetUndo()->EndAction( "Вставка из кармана" );
-  //Теперь все копии вставлены, а их ссылки находятся в tmpTable
-  Unselect( false ); //Старые объекты развыделяем
-  tmpTable.ForEachBack( SelectAllGraphIterator(fragment) ); //Выделяем все копии
-  Unselect( true ); //Новые объекты развыделяем
-  CancelPaste();
-  }
-
-
 
 #endif
 
@@ -1043,18 +860,50 @@ WinSelectMode::Numerate() {
 
 void SdModeSelect::activate()
   {
+  propSetToBar();
   }
+
+
 
 void SdModeSelect::reset()
   {
+  setStep(smNoSelect);
+  update();
+  //UpdateTools();
   }
+
+
+
 
 void SdModeSelect::drawStatic(SdContext *ctx)
   {
+  //Draw all object except selected
+  mObject->forEach( dctAll, [this, ctx] (SdObject *obj) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>( obj );
+    if( graph != nullptr && graph->getSelector() != &mFragment )
+      graph->draw( ctx );
+    return true;
+    });
   }
+
+
+
 
 void SdModeSelect::drawDynamic(SdContext *ctx)
   {
+  //Draw all selected elements
+  ctx->setOverColor( sdEnvir->getSysColor(scSelected) );
+  mFragment.forEach( dctAll, [ctx] (SdObject *obj) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>( obj );
+    if( graph != nullptr )
+      graph->draw( ctx );
+    return true;
+    });
+
+  //On according step
+  switch( getStep() ) {
+    case smSelRect : showRect( ctx ); break;
+    }
   }
 
 
@@ -1062,26 +911,8 @@ void SdModeSelect::drawDynamic(SdContext *ctx)
 
 int SdModeSelect::getPropBarId() const
   {
-  //On base mPropObject return prop bar id
-  switch( mPropObject ) {
-    default :
-    case dctArea          :
-    case dctLines         : return PB_LINEAR;
-    case dctIdent         :
-    case dctWireName      :
-    case dctText          : return PB_TEXT;
-    case dctSymPin        : return PB_SYM_PIN;
-    case dctSymImp        : return PB_SYM_IMP;
-    case dctPartPin       : return PB_PART_PIN;
-    //case dctRoadPin       :
-    case dctPartImp       : return PB_PART_IMP;
-    case dctWire          : return PB_WIRE;
-    //case dctList          :
-    //case dctPoligon       :
-    //case dctVia           :
-    //case dctSize          :
-    //case dctSizeProp      :
-    }
+  //Return prop bar according selected objects prop
+  return mLocalProp.mPropBarId;
   }
 
 
@@ -1098,44 +929,53 @@ void SdModeSelect::propGetFromBar()
     });
 
   if( mFragment.count() ) setDirty();
-  //Получить новые свойства
-  SdPropBarLinear  *barLinear  = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
-  SdPropBarPartPin *barPartPin = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
-  SdPropBarSymImp  *barSymImp  = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
-  SdPropBarSymPin  *barSymPin  = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
-  SdPropBarTextual *barTextual = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
-  SdPropBarWire    *barWire    = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
 
-  mLocalProp.Clear();
-  switch( mPropObject ) {
-    default :
-    case dctArea          :
-    case dctLines         :
-      barLinear->getPropLine( &(mLocalProp.mLineProp), &(mLocalProp.mLineEnterType) );
+  //Get new props
+  mLocalProp.clear();
+  switch( mLocalProp.getPropBarId() ) {
+    case PB_LINEAR : {
+      SdPropBarLinear  *barLinear  = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
+      barLinear->getPropLine( &(mLocalProp.mLineProp), &(mLocalProp.mEnterType) );
+      }
       break;
-    case dctIdent         :
-      barTextual->getPropText( &(mLocalProp.mSymIdentProp) );
-      break;
-    case dctWireName      :
-      barTextual->getPropText( &(mLocalProp.mWireNameProp) );
-      break;
-    case dctText          :
+    case PB_TEXT : {
+      SdPropBarTextual *barTextual = dynamic_cast<SdPropBarTextual*>(SdWCommand::getModeBar(PB_LINEAR));
       barTextual->getPropText( &(mLocalProp.mTextProp) );
+      }
       break;
-    case dctSymPin        :
+    case PB_WIRE : {
+      SdPropBarWire    *barWire    = dynamic_cast<SdPropBarWire*>(SdWCommand::getModeBar(PB_LINEAR));
+      QString wireName;
+      barWire->getPropWire( &(mLocalProp.mWireProp), &(mLocalProp.mEnterType), &(wireName) );
+      if( !wireName.isEmpty() )
+        mLocalProp.mWireName = wireName;
+      }
+      break;
+    case PB_SYM_PIN : {
+      SdPropBarSymPin  *barSymPin  = dynamic_cast<SdPropBarSymPin*>(SdWCommand::getModeBar(PB_LINEAR));
       barSymPin->getPropSymPin( &(mLocalProp.mSymPinProp) );
+      }
       break;
-    case dctSymImp        : return PB_SYM_IMP;
-    case dctPartPin       : return PB_PART_PIN;
-    //case dctRoadPin       :
-    case dctPartImp       : return PB_PART_IMP;
-    case dctWire          : return PB_WIRE;
-    //case dctList          :
-    //case dctPoligon       :
-    //case dctVia           :
-    //case dctSize          :
-    //case dctSizeProp      :
+    case PB_PART_PIN : {
+      SdPropBarPartPin *barPartPin = dynamic_cast<SdPropBarPartPin*>(SdWCommand::getModeBar(PB_LINEAR));
+      barPartPin->getPropPartPin( &(mLocalProp.mPartPinProp) );
+      }
+      break;
+    case PB_SYM_IMP : {
+      SdPropBarSymImp  *barSymImp  = dynamic_cast<SdPropBarSymImp*>(SdWCommand::getModeBar(PB_LINEAR));
+      barSymImp->getPropSymImp( &(mLocalProp.mSymImpProp) );
+      }
+      break;
+    case PB_PART_IMP : {
+      //TODO partPropBar in select mode
+      }
+      break;
+    case PB_ROAD : {
+      //TODO roadPropBar in select mode
+      }
+      break;
     }
+
   //Setup new properties
   mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
     SdGraph *graph = dynamic_cast<SdGraph*>( obj );
@@ -1150,6 +990,58 @@ void SdModeSelect::propGetFromBar()
 
 void SdModeSelect::propSetToBar()
   {
+  //Collect prop for selected objects
+  mLocalProp.clear();
+  mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>( obj );
+    if( graph != nullptr )
+      graph->getProp( mLocalProp );
+    return true;
+    });
+
+  //Set new bar
+  SdWCommand::setModeBar( mLocalProp.getPropBarId() );
+  //Set prop into bar
+  switch( mLocalProp.getPropBarId() ) {
+    case PB_LINEAR : {
+      SdPropBarLinear  *barLinear  = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
+      barLinear->setPropLine( &(mLocalProp.mLineProp), getPPM(), mLocalProp.mEnterType );
+      }
+      break;
+    case PB_TEXT : {
+      SdPropBarTextual *barTextual = dynamic_cast<SdPropBarTextual*>(SdWCommand::getModeBar(PB_LINEAR));
+      barTextual->setPropText( &(mLocalProp.mTextProp), getPPM() );
+      }
+      break;
+    case PB_WIRE : {
+      SdPropBarWire    *barWire    = dynamic_cast<SdPropBarWire*>(SdWCommand::getModeBar(PB_LINEAR));
+      barWire->setPropWire( &(mLocalProp.mWireProp), getPPM(), mLocalProp.mEnterType, mLocalProp.mWireName.str() );
+      }
+      break;
+    case PB_SYM_PIN : {
+      SdPropBarSymPin  *barSymPin  = dynamic_cast<SdPropBarSymPin*>(SdWCommand::getModeBar(PB_LINEAR));
+      barSymPin->setPropSymPin( &(mLocalProp.mSymPinProp) );
+      }
+      break;
+    case PB_PART_PIN : {
+      SdPropBarPartPin *barPartPin = dynamic_cast<SdPropBarPartPin*>(SdWCommand::getModeBar(PB_LINEAR));
+      barPartPin->setPropPartPin( &(mLocalProp.mPartPinProp) );
+      }
+      break;
+    case PB_SYM_IMP : {
+      SdPropBarSymImp  *barSymImp  = dynamic_cast<SdPropBarSymImp*>(SdWCommand::getModeBar(PB_LINEAR));
+      barSymImp->setPropSymImp( &(mLocalProp.mSymImpProp) );
+      }
+      break;
+    case PB_PART_IMP : {
+      //TODO partPropBar in select mode
+      }
+      break;
+    case PB_ROAD : {
+      //TODO roadPropBar in select mode
+      }
+      break;
+    }
   }
 
 
@@ -1224,7 +1116,7 @@ void SdModeSelect::cancelPoint( SdPoint point )
         activateMenu();
         return;
         }
-      if( isSelectPresent() ) unselect( true );
+      if( mFragment.count() ) unselect( true );
       else cancelMode();
     }
   setStep( smNoSelect );
@@ -1386,4 +1278,257 @@ int SdModeSelect::getCursor() const
 int SdModeSelect::getIndex() const
   {
   return MD_SELECT;
+  }
+
+
+
+
+void SdModeSelect::enterPaste(SdPoint point)
+  {
+  Q_UNUSED(point)
+  if( mPaste ) {
+    setDirty();
+    //Unselect selected objects
+    unselect(false);
+    mUndo->begin( QObject::tr("Insert from clipboard") );
+    //Insert copy of pasted elements into object without selection them
+    mObject->insertObjects( mPaste, mUndo, mEditor, nullptr );
+    cancelPaste();
+    }
+  }
+
+
+
+
+void SdModeSelect::showRect(SdContext *ctx)
+  {
+  ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltDotted );
+  ctx->rect( SdRect(mFirst, mPrevMove) );
+  }
+
+
+
+
+
+void SdModeSelect::keyDown(int key, QChar ch)
+  {
+  Q_UNUSED(ch)
+  switch( key ) {
+    case Qt::Key_Copy    : copy(); break;
+    case Qt::Key_Paste   : setDirty(); paste(); break;
+    case Qt::Key_Cut     : setDirty(); copy(); deleteSelected(); break;
+    case Qt::Key_Select  : selectAll(); break;
+    case Qt::Key_Shift   : mShift = true; break;
+    case Qt::Key_Control : mControl = true; break;
+    case Qt::Key_Delete  : setDirty(); deleteSelected(); break;
+      //TODO special codes
+//    case vkDubl     : SetDirty(); Dublicate(); break;
+//    case vkParam    : SetDirty(); Param(); break;
+//    case vkNumerate : SetDirty(); Numerate(); break;
+    case Qt::Key_F7 :
+      setDirty();
+      //Поворот как группы компонентов
+      if( mFragment.count() && getStep() == smSelPresent ) {
+        mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
+          SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+          if( graph != nullptr )
+            graph->rotate( mCurPoint, da90 );
+          return true;
+          });
+        }
+      break;
+    }
+  update();
+  }
+
+
+
+void SdModeSelect::keyUp(int key, QChar ch)
+  {
+  Q_UNUSED(ch)
+  switch( key ) {
+    case Qt::Key_Shift   : mShift = false; break;
+    case Qt::Key_Control : mControl = false; break;
+    }
+
+  }
+
+
+
+
+void SdModeSelect::unselect(bool update)
+  {
+  if( mFragment.count() ) {
+
+    mUndo->begin( QObject::tr("Finish selection") );
+
+    mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
+      SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+      if( graph != nullptr )
+        graph->moveComplete( mEditor->gridGet(), mUndo );
+      return true;
+      });
+
+    mFragment.removeAll();
+
+    setDirty();
+    setDirtyCashe();
+    }
+  }
+
+
+
+
+int SdModeSelect::checkPoint(SdPoint p)
+  {
+  //Reset status
+  mState = 0;
+
+  //Get state object behind cursor
+  mObject->forEach( dctAll, [this,p,&cursorObj] (SdObject *obj) ->bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+    if( graph != nullptr )
+      mState |= graph->behindCursor(p);
+    return true;
+    });
+
+  if( sdEnvir->mShowMessageRemark ) {
+    //If need display extended remark then scan objects behind cursor and get their info
+    QString info;
+    mFragment.forEach( dctAll, [this,p,&info] (SdObject *obj) ->bool {
+      SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+      if( graph != nullptr )
+        return !graph->getInfo( p, info, true );
+      return true;
+      });
+
+    //If message received then display it other wise display help
+    if( info.isEmpty() )
+      SdPulsar::setStatusMessage( getStepHelp() );
+    else
+      SdPulsar::setStatusMessage( info );
+    }
+
+  return mState;
+  }
+
+
+
+
+//Moving prepare
+void SdModeSelect::beginMove(SdPoint p)
+  {
+  if( mFragment.count() ) {
+    mUndo->begin( QObject::tr("Move begin") );
+
+    //Save state of all object before moving
+    mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
+      SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+      if( graph != nullptr )
+        graph->saveState( mUndo );
+      return true;
+      });
+
+    //Moving prepare
+    mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
+      SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+      if( graph != nullptr )
+        graph->prepareMove( mUndo );
+      return true;
+      });
+
+    mFirst = p;
+    mPrevMove = p;
+    setStep( smMove );
+    setDirty();
+    setDirtyCashe();
+    update();
+    }
+  }
+
+
+
+//Moving process
+void SdModeSelect::dragMove(SdPoint p)
+  {
+  SdPoint offset = p.sub(mPrevMove);
+  mFragment.forEach( dctAll, [offset] (SdObject *obj) ->bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+    if( graph != nullptr )
+      graph->move( offset );
+    return true;
+    });
+  update();
+  }
+
+
+
+
+//Moving complete
+void SdModeSelect::stopMove(SdPoint p)
+  {
+  dragMove(p);
+  setStep(smSelPresent);
+  }
+
+
+
+//Begin selection by rect
+void SdModeSelect::beginRect(SdPoint point)
+  {
+  mFirst = point;
+  mPrevMove = point;
+  setStep( smSelRect );
+  update();
+  }
+
+
+
+//Selection by rect - selection process
+void SdModeSelect::dragRect(SdPoint p)
+  {
+  mPrevMove = p;
+  update();
+  }
+
+
+
+//Selection by rect - selection complete, accumulate selected elements
+void SdModeSelect::stopRect(SdPoint p)
+  {
+  //Проверить клавишу Shift, если не нажата то удалить предыдущее выделение
+  if( !mShift ) mFragment.removeAll();
+  //Пройтись по объектам и выделить прямоугольником
+  SdRect r(mFirst,p);
+  mObject->forEach( dctAll, [this,r] (SdObject *obj) ->bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+    if( graph != nullptr )
+      graph->selectByRect( r, &mFragment );
+    return true;
+    });
+  //Обновить свойства и обновить изображение
+  getProp();
+  //Определить состояние курсора в текущей точке
+  checkPoint( p );
+  }
+
+
+
+
+void SdModeSelect::deleteSelected()
+  {
+  if( mFragment.count() ) {
+    mUndo->begin( QObject::tr("Deletion elements") );
+    mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
+      SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+      if( graph != nullptr )
+        graph->deleteObject( mUndo );
+      return true;
+      });
+    mFragment.removeAll();
+
+    setDirty();
+    setDirtyCashe();
+    update();
+    }
   }

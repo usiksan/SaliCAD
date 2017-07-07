@@ -180,6 +180,22 @@ QString SdPItemSymbol::getIconName() const
 
 
 
+quint64 SdPItemSymbol::getAcceptedObjectsMask() const
+  {
+  return dctSymbolObjects;
+  }
+
+
+
+
+void SdPItemSymbol::insertObjects(SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor)
+  {
+
+  }
+
+
+
+
 void SdPItemSymbol::cloneFrom( const SdObject *src )
   {
   SdProjectItem::cloneFrom( src );

@@ -127,7 +127,7 @@ void SdGraphText::mirror(SdPoint a, SdPoint b)
 
 
 
-void SdGraphText::setProp(SdProp &prop)
+void SdGraphText::setProp(SdPropSelected &prop)
   {
   mProp = prop.mTextProp;
   }
@@ -135,9 +135,10 @@ void SdGraphText::setProp(SdProp &prop)
 
 
 
-void SdGraphText::getProp(SdProp &prop)
+void SdGraphText::getProp(SdPropSelected &prop)
   {
   prop.mTextProp.append( mProp );
+  prop.mFilledPropMask |= spsTextProp;
   }
 
 

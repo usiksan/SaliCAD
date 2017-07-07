@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -58,8 +58,8 @@ class SdGraphArea : public SdGraph
     virtual void    move(SdPoint offset) override;
     virtual void    rotate(SdPoint center, SdAngle angle) override;
     virtual void    mirror(SdPoint a, SdPoint b) override;
-    virtual void    setProp(SdProp &prop) override;
-    virtual void    getProp(SdProp &prop) override;
+    virtual void    setProp(SdPropSelected &prop) override;
+    virtual void    getProp(SdPropSelected &prop) override;
     virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;
     virtual void    selectByRect(const SdRect &r, SdSelector *selector) override;
     virtual void    select(SdSelector *selector) override;

@@ -18,7 +18,7 @@ Description
 #include "SdObject.h"
 #include "SdPoint.h"
 #include "SdRect.h"
-#include "SdProp.h"
+#include "SdPropSelected.h"
 
 class SdSelector;
 class SdContext;
@@ -45,8 +45,8 @@ class SdGraph : public SdObject
     virtual void   mirror( SdPoint a, SdPoint b );
 
     //Изменение свойствами
-    virtual void   setProp( SdProp &prop );
-    virtual void   getProp( SdProp &prop );
+    virtual void   setProp( SdPropSelected &prop );
+    virtual void   getProp( SdPropSelected &prop );
 
     //Изменение обновлением текста
     virtual void   setText(int index, QString sour, SdPropText &prop, QWidget *parent );

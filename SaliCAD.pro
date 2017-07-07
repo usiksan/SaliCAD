@@ -160,7 +160,8 @@ SOURCES += \
     modes/SdModeCBus.cpp \
     windows/SdDEnterPosition.cpp \
     objects/SdUtil.cpp \
-    modes/SdModeSelect.cpp
+    modes/SdModeSelect.cpp \
+    objects/SdPropSelected.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -313,7 +314,8 @@ HEADERS  += \
     modes/SdModeCBus.h \
     windows/SdDEnterPosition.h \
     objects/SdUtil.h \
-    modes/SdModeSelect.h
+    modes/SdModeSelect.h \
+    objects/SdPropSelected.h
 
 DISTFILES += \
     license.txt

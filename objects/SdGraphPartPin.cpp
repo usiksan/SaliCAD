@@ -195,21 +195,30 @@ void SdGraphPartPin::mirror(SdPoint a, SdPoint b)
 
 
 
-void SdGraphPartPin::setProp(SdProp &prop)
+void SdGraphPartPin::setProp(SdPropSelected &prop)
   {
   if( mPinSelect ) mPinProp = prop.mPartPinProp;
-  if( mNamSelect ) mNameProp = prop.mPartPinNameProp;
-  if( mNumSelect ) mNumberProp = prop.mPartPinNumberProp;
+  if( mNamSelect ) mNameProp = prop.mTextProp;
+  if( mNumSelect ) mNumberProp = prop.mTextProp;
   }
 
 
 
 
-void SdGraphPartPin::getProp(SdProp &prop)
+void SdGraphPartPin::getProp(SdPropSelected &prop)
   {
-  if( mPinSelect ) prop.mPartPinProp.append( mPinProp );
-  if( mNamSelect ) prop.mPartPinNameProp.append( mNameProp );
-  if( mNumSelect ) prop.mPartPinNumberProp.append( mNumberProp );
+  if( mPinSelect ) {
+    prop.mPartPinProp.append( mPinProp );
+    prop.mFilledPropMask |= spsPartPinProp;
+    }
+  if( mNamSelect ) {
+    prop.mTextProp.append( mNameProp );
+    prop.mFilledPropMask |= spsTextProp;
+    }
+  if( mNumSelect ) {
+    prop.mTextProp.append( mNumberProp );
+    prop.mFilledPropMask |= spsTextProp;
+    }
   }
 
 

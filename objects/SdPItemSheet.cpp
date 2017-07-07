@@ -190,6 +190,14 @@ QString SdPItemSheet::getIconName() const
 
 
 
+quint64 SdPItemSheet::getAcceptedObjectsMask() const
+  {
+  return dctSheetObjects;
+  }
+
+
+
+
 
 SdGraphIdent *SdPItemSheet::createIdent()
   {

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -44,6 +44,7 @@ class SdMode
    void           update();          //Обновить изображение
    void           cancelMode();      //Прекращение режима
    SdPoint        getGrid() const;
+   double         getPPM() const;
 
    //Сервисные
    void           setStep( int stp );

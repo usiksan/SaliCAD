@@ -540,7 +540,7 @@ void SdGraphSymImp::mirror(SdPoint a, SdPoint b)
 
 
 
-void SdGraphSymImp::setProp(SdProp &prop)
+void SdGraphSymImp::setProp(SdPropSelected &prop)
   {
   if( !mProp.match( prop.mSymImpProp ) ) {
     //Unconnect all pins from wires
@@ -554,9 +554,10 @@ void SdGraphSymImp::setProp(SdProp &prop)
 
 
 
-void SdGraphSymImp::getProp(SdProp &prop)
+void SdGraphSymImp::getProp(SdPropSelected &prop)
   {
   prop.mSymImpProp.append( mProp );
+  prop.mFilledPropMask |= spsSymImpProp;
   }
 
 

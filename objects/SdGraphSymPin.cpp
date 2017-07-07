@@ -176,21 +176,30 @@ void SdGraphSymPin::mirror(SdPoint a, SdPoint b)
 
 
 
-void SdGraphSymPin::setProp(SdProp &prop)
+void SdGraphSymPin::setProp(SdPropSelected &prop)
   {
   if( mPinSelect ) mPinProp = prop.mSymPinProp;
-  if( mNamSelect ) mNameProp = prop.mSymPinNameProp;
-  if( mNumSelect ) mNumberProp = prop.mSymPinNumberProp;
+  if( mNamSelect ) mNameProp = prop.mTextProp;
+  if( mNumSelect ) mNumberProp = prop.mTextProp;
   }
 
 
 
 
-void SdGraphSymPin::getProp(SdProp &prop)
+void SdGraphSymPin::getProp(SdPropSelected &prop)
   {
-  if( mPinSelect ) prop.mSymPinProp.append( mPinProp );
-  if( mNamSelect ) prop.mSymPinNameProp.append( mNameProp );
-  if( mNumSelect ) prop.mSymPinNumberProp.append( mNumberProp );
+  if( mPinSelect ) {
+    prop.mSymPinProp.append( mPinProp );
+    prop.mFilledPropMask |= spsSymPinProp;
+    }
+  if( mNamSelect ) {
+    prop.mTextProp.append( mNameProp );
+    prop.mFilledPropMask |= spsTextProp;
+    }
+  if( mNumSelect ) {
+    prop.mTextProp.append( mNumberProp );
+    prop.mFilledPropMask |= spsTextProp;
+    }
   }
 
 

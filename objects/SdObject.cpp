@@ -97,6 +97,14 @@ void SdObject::detach(SdUndo *undo)
 
 
 
+void SdObject::deleteObject(SdUndo *undo)
+  {
+  if( mParent )
+    mParent->deleteChild( this, undo );
+  }
+
+
+
 
 bool SdObject::isUsed(SdObject *obj) const
   {

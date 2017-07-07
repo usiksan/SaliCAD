@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -165,6 +165,14 @@ void SdMode::cancelMode()
 SdPoint SdMode::getGrid() const
   {
   return mEditor->gridGet();
+  }
+
+
+
+
+double SdMode::getPPM() const
+  {
+  return mEditor->getPPM();
   }
 
 

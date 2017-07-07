@@ -56,12 +56,12 @@ void SdGraph::mirror(SdPoint a, SdPoint b)
   Q_UNUSED(b)
   }
 
-void SdGraph::setProp(SdProp &prop)
+void SdGraph::setProp(SdPropSelected &prop)
   {
   Q_UNUSED(prop)
   }
 
-void SdGraph::getProp(SdProp &prop)
+void SdGraph::getProp(SdPropSelected &prop)
   {
   Q_UNUSED(prop)
   }

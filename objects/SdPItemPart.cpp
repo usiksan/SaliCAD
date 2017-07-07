@@ -42,6 +42,15 @@ QString SdPItemPart::getIconName() const
   }
 
 
+
+
+quint64 SdPItemPart::getAcceptedObjectsMask() const
+  {
+  return dctPartObjects;
+  }
+
+
+
 SdGraphIdent *SdPItemPart::createIdent()
   {
   SdGraphIdent *ident = new SdGraphIdent( SdPoint(), QStringLiteral("Id"), SdRect(), sdGlobalProp->mPartIdentProp );

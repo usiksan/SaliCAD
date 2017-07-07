@@ -117,18 +117,19 @@ void SdGraphWireName::mirror(SdPoint a, SdPoint b)
 
 
 
-void SdGraphWireName::setProp(SdProp &prop)
+void SdGraphWireName::setProp(SdPropSelected &prop)
   {
-  mProp = prop.mWireNameProp;
+  mProp = prop.mTextProp;
   //TODO when change name of wire
   }
 
 
 
 
-void SdGraphWireName::getProp(SdProp &prop)
+void SdGraphWireName::getProp(SdPropSelected &prop)
   {
-  prop.mWireNameProp.append( mProp );
+  prop.mTextProp.append( mProp );
+  prop.mFilledPropMask |= spsTextProp;
   prop.mWireName.append( getNetName() );
   }
 

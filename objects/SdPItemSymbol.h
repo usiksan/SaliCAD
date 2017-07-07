@@ -56,6 +56,8 @@ class SdPItemSymbol : public SdProjectItem
     virtual QString   getType() const override;
     virtual quint64   getClass() const override;
     virtual QString   getIconName() const override;
+    virtual quint64   getAcceptedObjectsMask() const override;
+    virtual void      insertObjects( SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor ) override;
     virtual void      cloneFrom( const SdObject *src ) override;
 
     // SdProjectItem interface

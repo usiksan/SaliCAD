@@ -442,7 +442,7 @@ void SdGraphPartImp::mirror(SdPoint a, SdPoint b)
 
 
 
-void SdGraphPartImp::setProp(SdProp &prop)
+void SdGraphPartImp::setProp(SdPropSelected &prop)
   {
   mProp = prop.mPartImpProp;
   }
@@ -450,9 +450,10 @@ void SdGraphPartImp::setProp(SdProp &prop)
 
 
 
-void SdGraphPartImp::getProp(SdProp &prop)
+void SdGraphPartImp::getProp(SdPropSelected &prop)
   {
   prop.mPartImpProp.append( mProp );
+  prop.mFilledPropMask |= spsPartImpProp;
   }
 
 

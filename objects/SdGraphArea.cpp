@@ -166,16 +166,17 @@ void SdGraphArea::mirror(SdPoint a, SdPoint b)
 
 
 
-void SdGraphArea::setProp(SdProp &prop)
+void SdGraphArea::setProp(SdPropSelected &prop)
   {
   mRegionProp = prop.mLineProp;
   }
 
 
 
-void SdGraphArea::getProp(SdProp &prop)
+void SdGraphArea::getProp(SdPropSelected &prop)
   {
   prop.mLineProp.append( mRegionProp );
+  prop.mFilledPropMask |= spsLineProp;
   }
 
 

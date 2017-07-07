@@ -61,6 +61,10 @@ Description
 #define dctPicture       (dctLines | dctText | dctSize)
 #define dctProjectItems  (dctSymbol | dctPart | dctSheet | dctPlate | dctComponent)
 #define dctAll           MAX64_MASK
+#define dctSymbolObjects (dctPicture | dctSymPin | dctSection | dctPartVariant)
+#define dctPartObjects   (dctPicture | dctPartPin)
+#define dctSheetObjects  (dctPicture | dctSymImp | dctSheetNet | dctWire | dctWireName)
+#define dctPlateObjects  (dctPicture | dctPartImp | dctVia )
 
 
 #define SDKO_TYPE      "type"
@@ -96,6 +100,7 @@ class SdObject
     virtual void      undoDetach() {}
     bool              isDeleted() const { return mDeleted; }
     void              markDeleted( bool deleted ) { mDeleted = deleted; }
+    void              deleteObject( SdUndo *undo );
     virtual bool      isUsed( SdObject *obj ) const;
 
     //Copy

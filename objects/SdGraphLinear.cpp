@@ -53,16 +53,17 @@ void SdGraphLinear::readObject(SdObjectMap *map, const QJsonObject obj)
 
 
 
-void SdGraphLinear::setProp(SdProp &prop)
+void SdGraphLinear::setProp(SdPropSelected &prop)
   {
   mProp = prop.mLineProp;
   }
 
 
 
-void SdGraphLinear::getProp(SdProp &prop)
+void SdGraphLinear::getProp(SdPropSelected &prop)
   {
   prop.mLineProp.append( mProp );
+  prop.mFilledPropMask |= spsLineProp;
   }
 
 

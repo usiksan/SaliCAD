@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -21,8 +21,7 @@ Description
 
 class SdModeSelect : public SdMode
   {
-    SdProp          mLocalProp;  //Свойства выделенных объектов
-    quint64         mPropObject; //Object class prop bar for
+    SdPropSelected  mLocalProp;  //Свойства выделенных объектов
     SdSelector      mFragment;   //Набор выделенных объектов
     //PDSheetNetTable netFragment;//Набор выделенных цепей
     SdPoint         mFirst;      //Начальная точка
@@ -53,11 +52,11 @@ class SdModeSelect : public SdMode
   public:
     virtual void activate() override;
     virtual void reset() override;
-    virtual void drawStatic(SdContext *ctx) override;
-    virtual void drawDynamic(SdContext *ctx) override;
-    virtual int getPropBarId() const override;
+    virtual void    drawStatic(SdContext *ctx) override;
+    virtual void    drawDynamic(SdContext *ctx) override;
+    virtual int     getPropBarId() const override;
     virtual void    propGetFromBar() override;
-    virtual void propSetToBar() override;
+    virtual void    propSetToBar() override;
     virtual void    enterPoint(SdPoint point) override;
     virtual void    clickPoint(SdPoint) override;
     virtual void    cancelPoint(SdPoint point) override;
@@ -74,6 +73,8 @@ class SdModeSelect : public SdMode
     virtual QString getStepThema() const override;
     virtual int     getCursor() const override;
     virtual int     getIndex() const override;
+    virtual void    keyDown(int key, QChar ch) override;
+    virtual void    keyUp(int key, QChar ch) override;
   protected:
     void copy();                 //Копировать в карман
     void paste();                //Вставить из кармана
@@ -83,12 +84,12 @@ class SdModeSelect : public SdMode
     void beginCopy( SdPoint p );  //Начало копирования
     void dragCopy( SdPoint p );   //Процесс копирования
     void stopCopy( SdPoint p );   //Завершение копирования
-    void beginMove( SdPoint p );  //Начало переноса
-    void dragMove( SdPoint p );   //Процесс переноса
-    void stopMove( SdPoint p );   //Завершение переноса
-    void beginRect( SdPoint p );  //Начало выделения прямоугольником
-    void dragRect( SdPoint p );   //Процесс выделения прямоугольником
-    void stopRect( SdPoint p );   //Завершение выделения прямоугольником
+    void beginMove( SdPoint p );  //Moving prepare
+    void dragMove( SdPoint p );   //Moving process
+    void stopMove( SdPoint p );   //Moving complete
+    void beginRect( SdPoint p );  //Begin selection by rect
+    void dragRect( SdPoint p );   //Selection by rect - selection process
+    void stopRect( SdPoint p );   //Selection by rect - selection complete, accumulate selected elements
     void getProp();              //Получить свойства выделенных объектов
     void deleteSelected();       //Удалить все выделенные объекты
     void drawCopy( SdContext *ctx );   //Рисование копии объектов из paste
@@ -101,6 +102,8 @@ class SdModeSelect : public SdMode
     void showPaste( SdContext *ctx );
     void drawUnselected( SdContext *ctx );
     void insertCopy( SdPoint offset, bool next );//Вставить копии объектов
+    void activateMenu();
+
   };
 
 #if 0
