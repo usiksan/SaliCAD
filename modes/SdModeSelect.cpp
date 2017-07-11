@@ -167,17 +167,6 @@ DSelectMode::~DSelectMode() {
 
 void
 DSelectMode::BeginCopy( DPoint p ) {
-  SetDirty();
-  //Поскольку это копирование, то нужно выделить объекты целиком (пользователь мог выделить и частично)
-  fragment.ForEach( SelectAllGraphIterator( fragment ) );
-  fragment.SetOrigin( p );
-  if( paste ) throw CadError( "DSelectMode::BeginCopy:" );
-  paste = &fragment;
-  first = p;
-  prevMove = p;
-  SetStep( smCopy );
-  //Пусть рисуется заново
-  Update();
   }
 
 void
@@ -331,13 +320,6 @@ DSelectMode::DrawDefault( DContext &dc ) {
 
 
 
-void
-DSelectMode::SelectAll() {
-  //Выделить все объекты
-  GetBase()->ForEach( SelectAllIterator( fragment ) );
-  //Обновить изображение
-  GetProp();
-  }
 
 
 void
@@ -1306,6 +1288,11 @@ void SdModeSelect::showRect(SdContext *ctx)
   ctx->rect( SdRect(mFirst, mPrevMove) );
   }
 
+void SdModeSelect::activateMenu()
+  {
+  //TODO context menu
+  }
+
 
 
 
@@ -1356,6 +1343,30 @@ void SdModeSelect::keyUp(int key, QChar ch)
 
 
 
+void SdModeSelect::copy()
+  {
+
+  }
+
+
+
+
+void SdModeSelect::selectAll()
+  {
+  //Select all objects
+  mObject->forEach( dctAll, [this] (SdObject *obj) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+    if( graph != nullptr )
+      graph->select( &mFragment );
+    return true;
+    });
+  //update
+  propSetToBar();
+  }
+
+
+
+
 void SdModeSelect::unselect(bool update)
   {
   if( mFragment.count() ) {
@@ -1385,7 +1396,7 @@ int SdModeSelect::checkPoint(SdPoint p)
   mState = 0;
 
   //Get state object behind cursor
-  mObject->forEach( dctAll, [this,p,&cursorObj] (SdObject *obj) ->bool {
+  mObject->forEach( dctAll, [this,p] (SdObject *obj) ->bool {
     SdGraph *graph = dynamic_cast<SdGraph*>(obj);
     if( graph != nullptr )
       mState |= graph->behindCursor(p);
@@ -1404,12 +1415,35 @@ int SdModeSelect::checkPoint(SdPoint p)
 
     //If message received then display it other wise display help
     if( info.isEmpty() )
-      SdPulsar::setStatusMessage( getStepHelp() );
+      SdPulsar::pulsar->setStatusMessage( getStepHelp() );
     else
-      SdPulsar::setStatusMessage( info );
+      SdPulsar::pulsar->setStatusMessage( info );
     }
 
   return mState;
+  }
+
+
+
+
+void SdModeSelect::beginCopy(SdPoint p)
+  {
+  setDirty();
+  //Поскольку это копирование, то нужно выделить объекты целиком (пользователь мог выделить и частично)
+  mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+    if( graph != nullptr )
+      graph->select( &mFragment );
+    return true;
+    });
+  mFragment.setOrigin( p );
+  Q_ASSERT( mPaste == nullptr );
+  mPaste = &mFragment;
+  mFirst = p;
+  mPrevMove = p;
+  setStep( smCopy );
+  //Пусть рисуется заново
+  update();
   }
 
 
@@ -1507,10 +1541,14 @@ void SdModeSelect::stopRect(SdPoint p)
     return true;
     });
   //Обновить свойства и обновить изображение
-  getProp();
+  propSetToBar();
   //Определить состояние курсора в текущей точке
   checkPoint( p );
   }
+
+
+
+
 
 
 

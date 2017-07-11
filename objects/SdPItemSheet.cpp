@@ -208,3 +208,11 @@ SdGraphIdent *SdPItemSheet::createIdent()
   return ident;
   }
 
+
+
+
+void SdPItemSheet::insertObjects(SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest)
+  {
+
+  }
+

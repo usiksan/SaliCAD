@@ -175,3 +175,11 @@ SdGraphIdent *SdPItemPlate::createIdent()
   return ident;
   }
 
+
+
+
+void SdPItemPlate::insertObjects(SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest)
+  {
+
+  }
+

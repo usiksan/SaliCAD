@@ -21,6 +21,7 @@ Description
 #include "modes/SdModeTemp.h"
 
 #include <QTransform>
+#include <QMenu>
 
 class SdWEditorGraph : public SdWEditor
   {
@@ -89,6 +90,9 @@ class SdWEditorGraph : public SdWEditor
 
     //Window zoom
     void    zoomWindow( SdRect r );
+
+    //Show and exec context menu
+    void    contextMenu( QMenu *menu );
 
     //return ppm for this editor. PPM is how much phys in one logical
     virtual double         getPPM() const = 0;

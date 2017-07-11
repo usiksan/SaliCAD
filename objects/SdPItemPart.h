@@ -32,6 +32,7 @@ class SdPItemPart : public SdProjectItem
     virtual QString       getIconName() const override;
     virtual quint64       getAcceptedObjectsMask() const override;
     virtual SdGraphIdent *createIdent() override;
+    virtual void          insertObjects( SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest ) override;
   };
 
 #endif // SDPITEMPART_H

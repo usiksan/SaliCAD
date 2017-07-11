@@ -137,6 +137,15 @@ void SdWEditorGraph::zoomWindow(SdRect r)
 
 
 
+void SdWEditorGraph::contextMenu(QMenu *menu)
+  {
+
+  }
+
+
+
+
+
 
 
 //=================================================================================================

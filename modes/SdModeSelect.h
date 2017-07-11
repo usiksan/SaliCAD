@@ -90,7 +90,6 @@ class SdModeSelect : public SdMode
     void beginRect( SdPoint p );  //Begin selection by rect
     void dragRect( SdPoint p );   //Selection by rect - selection process
     void stopRect( SdPoint p );   //Selection by rect - selection complete, accumulate selected elements
-    void getProp();              //Получить свойства выделенных объектов
     void deleteSelected();       //Удалить все выделенные объекты
     void drawCopy( SdContext *ctx );   //Рисование копии объектов из paste
     void drawDefault( SdContext *ctx );//Рисовать режим по умолчанию
