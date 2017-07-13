@@ -38,6 +38,11 @@ SdModeSelect::SdModeSelect(SdWEditorGraph *editor, SdProjectItem *obj) :
 
   }
 
+SdModeSelect::~SdModeSelect()
+  {
+  if( mPastePrj ) delete mPastePrj;
+  }
+
 
 #if 0
 
@@ -165,48 +170,8 @@ DSelectMode::~DSelectMode() {
 
 
 
-void
-DSelectMode::BeginCopy( DPoint p ) {
-  }
 
-void
-DSelectMode::DragCopy( DPoint p, DContext &dc ) {
-  dc.SetXorMode( wccDSLSelected );                     //Установить инвертирование
-  ShowPaste( dc );                                     //Стереть изображение
-  if( !paste ) throw CadError("DSelectMode::DragCopy");
-  prevMove = p;                                        //Установить новую текущую точку
-  ShowPaste( dc );                                     //Рисовать изображение
-  }
 
-void
-DSelectMode::InsertCopy( DPoint offset, bool next ) {
-  SetDirty();
-  if( !paste ) throw CadError( "DSelectMode::InsertCopy" );
-  GetUndo()->BeginAction();
-  //Произвести вставку
-  DSelectorPic tmpTable;
-  DBaseIterator<DGraphObjectPic> *copyIterator = GetCopyIterator( tmpTable, offset, next );
-  if( !copyIterator ) throw CadError("DSelectMode::InsertCopy: не создан итератор копирования");
-  paste->ForEach( *copyIterator );
-  delete copyIterator;
-  GetUndo()->EndAction( "Копирование" );
-  //Теперь все копии вставлены, а их ссылки находятся в tmpTable
-  Unselect( false ); //Старые объекты развыделяем
-  tmpTable.ForEachBack( SelectAllGraphIterator(fragment) ); //Выделяем все копии
-  }
-
-void
-DSelectMode::StopCopy( DPoint p, DContext &dc ) {
-  if( !paste ) throw CadError( "DSelectMode::StopCopy" );
-  DragCopy( p, dc );
-  if( p != first ) {
-    //Произвести вставку
-    InsertCopy( p - first, false );
-    }
-  paste = 0;
-  SetStep( smSelPresent );
-  GetProp();
-  }
 
 void
 DSelectMode::PropChanged( DContext &dc ) {
@@ -322,51 +287,8 @@ DSelectMode::DrawDefault( DContext &dc ) {
 
 
 
-void
-DSelectMode::Copy() {
-  if( fragment.GetNumber() ) {
-    //Имеются выделенные объекты
 
-    //Вычислить и записать базовую точку фрагмента
-    GetGraphOverRect over;
-    fragment.ForEach( over );
-    //Подогнать к текущей сетке
-    DPoint a = ((DRect&)over).LeftBottom();
-    DPoint grid = GetViewer()->GetGrid();
-    a.x /= grid.x;
-    a.x *= grid.x;
-    a.y /= grid.y;
-    a.y *= grid.y;
 
-    fragment.SetOrigin( a );
-
-    //Осуществить запись в карман
-    CopyClipboard();
-    }
-  }
-
-void
-DSelectMode::Paste() {
-  SetDirty();
-  if( IsSelectPresent() ) Unselect( false );
-  if( PasteClipboard() ) {
-    // paste и pastePrj содержат указатели на объекты и проект для вставки
-    if( !paste || !pastePrj ) throw CadError("DSelectMode::Paste: нет указателя на объект или проект для вставки" );
-    first = paste->GetOrigin();
-    prevMove = first;
-    SetStep( smPaste );
-    }
-  Update();
-  }
-
-void
-DSelectMode::CancelPaste() {
-  delete paste;
-  paste = 0;
-  delete pastePrj;
-  pastePrj = 0;
-  SetStep( smNoSelect );
-  }
 
 #endif
 
@@ -641,137 +563,7 @@ WinSelectMode::GetCopyIterator( DSelectorPic &tbl, DPoint offset, bool next ) {
   return new WinCopyIterator( tbl, *GetBase(), GetWindow(), offset, GetUndo(), next );
   }
 
-void
-WinSelectMode::CopyClipboard() {
-  try {
-    //Создать файл в памяти
-    NWHandleFile file;
 
-    //Определить класс входящих объектов
-    int i = fragment.GetObjectClass();
-
-    //Записать класс входящих объектов
-    file.Write( &i, sizeof(int) );
-
-    //Образовать поток вывода
-    ClipStream os( file );
-
-    //Записать проект
-    DProjectPic *prj = GetBase()->GetProject();
-    if( !prj ) throw CadError("WinSelectMode::CopyClipboard");
-    bool ed = prj->IsEdited();
-    prj->Save( VERSION, os );
-    if( ed ) prj->SetDirty();
-
-    //Записать фрагмент
-    os.WriteObject( &fragment );
-
-    //Записать в буфер обмена
-    file.CopyToClipboard( GetWindow()->GetHWND(), WFrame::pFrame->GetCbfPasCAD() );
-
-    //Записываем в формате битовой картинки
-    NClientContext cc( *window );
-    HDC hdc = CreateCompatibleDC( cc );
-    DRect r( fragment.GetOverRect() );    //Охватывающий прямоугольник
-    r.a.x -= 10;  //Расширить, чтобы вошли пограничные объекты
-    r.a.y -= 10;
-    r.b.x += 10;
-    r.b.y += 10;
-    NPoint s;                             //Размер битовой карты в пикселах
-    s.x = r.Width() / window->GetScale() + 10; //Вычисление размера
-    s.y = r.High()  / window->GetScale() + 10;
-    HBITMAP bmp = CreateCompatibleBitmap( cc.GetHDC(), s.x, s.y );
-    if( bmp ) {
-      HBITMAP old = SelectObject( hdc, bmp );
-      NRect rect;
-      rect.right  = s.x;
-      rect.bottom = s.y;
-      //Закрасить белым
-      FillRect( hdc, &rect, GetStockObject(WHITE_BRUSH) );
-      NContext dest( hdc );
-      WContext wc( &cc, dest, NPoint(100,100), window->GetScale(), r.Center(), s );
-      //Рисовать выделенные цветом выделения
-      fragment.ForEach( DrawGraphIterator( wc ) );
-      dest.ClearContext();
-      SelectObject( hdc, old );
-      }
-    DeleteDC( hdc );
-    //Поместить карту в карман
-    if( bmp ) NClipboard( *window ).SetData( CF_BITMAP, bmp );
-    }
-  catch( NCommon::FileError ) {
-    //Ошибка ввода/вывода
-    GetWindow()->ErrorBox( "Ошибка ввода/вывода" );
-    }
-  catch( NWinError err ) {
-    //Ошибка Windows
-    if( err.GetId() ) {
-      char buf[1000];
-      wsprintf( buf, "%s : %d", err.GetErrMsg(), err.GetId() );
-      GetWindow()->ErrorBox( buf );
-      }
-    else if( err.GetErrMsg() ) GetWindow()->ErrorBox( err.GetErrMsg() );
-    else GetWindow()->ErrorBox( "Ошибка в программе Билла Гейтса. Обратитесь к автору (Биллу)!" );
-    }
-  catch( ... ) {
-    //Общая ошибка
-    GetWindow()->ErrorBox( "Непонятная ошибка!.." );
-    }
-  }
-
-bool
-WinSelectMode::PasteClipboard() {
-  if( IsClipboardFormatAvailable( WFrame::pFrame->GetCbfPasCAD() ) ) {
-    //Формат данных PasCAD доступен в буфере обмена
-
-    try {
-      //Образуем файл в памяти
-      NWHandleFile file;
-
-      //Читаем из буфера обмена
-      file.PasteFromClipboard( GetWindow()->GetHWND(), WFrame::pFrame->GetCbfPasCAD() );
-
-      //Образовать поток ввода
-      ClipStream is(file);
-
-      //Считать класс записанных объектов и сравнить с воспринимаемым
-      int i;
-      is.Read( &i, sizeof(i) );
-      if( i & ~(GetBase()->GetSubObjectMask()) )
-        GetWindow()->ErrorBox( "Данные из буфера обмена не подходят для данного объекта" );
-      else {
-        //Все хорошо, вставляем
-
-        //Создать и читать проект
-        pastePrj = new DProjectPic( "", false );
-        LoadProjectFile( GetWindow(), pastePrj, is, "Буфер обмена" );
-
-        //Создать и читать фрагмент
-        paste = dynamic_cast<DSelectorPic*>( is.ReadObject(0) );
-        return true;
-        }
-      }
-    catch( NCommon::FileError ) {
-      //Ошибка ввода/вывода
-      GetWindow()->ErrorBox( "Ошибка ввода/вывода" );
-      }
-    catch( NWinError err ) {
-      //Ошибка Windows
-      if( err.GetId() ) {
-        char buf[1000];
-        wsprintf( buf, "%s : %d", err.GetErrMsg(), err.GetId() );
-        GetWindow()->ErrorBox( buf );
-        }
-      else if( err.GetErrMsg() ) GetWindow()->ErrorBox( err.GetErrMsg() );
-      else GetWindow()->ErrorBox( "Ошибка в программе Билла Гейтса. Обратитесь к автору (Биллу)!" );
-      }
-    catch( ... ) {
-      //Общая ошибка
-      GetWindow()->ErrorBox( "Непонятная ошибка!.." );
-      }
-    }
-  return false;
-  }
 
 void
 WinSelectMode::ActivateMenu() {
@@ -1267,16 +1059,27 @@ int SdModeSelect::getIndex() const
 
 void SdModeSelect::enterPaste(SdPoint point)
   {
-  Q_UNUSED(point)
   if( mPaste ) {
     setDirty();
     //Unselect selected objects
     unselect(false);
     mUndo->begin( QObject::tr("Insert from clipboard") );
     //Insert copy of pasted elements into object without selection them
-    mObject->insertObjects( mPaste, mUndo, mEditor, nullptr );
+    mObject->insertObjects( point, &mPaste, mUndo, mEditor, &mFragment, false );
     cancelPaste();
     }
+  }
+
+
+
+
+void SdModeSelect::cancelPaste()
+  {
+  mPaste.clear();
+  if( mPastePrj != nullptr )
+    delete mPastePrj;
+  mPastePrj =  nullptr;
+  setStep( smNoSelect );
   }
 
 
@@ -1287,6 +1090,22 @@ void SdModeSelect::showRect(SdContext *ctx)
   ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltDotted );
   ctx->rect( SdRect(mFirst, mPrevMove) );
   }
+
+
+
+
+void SdModeSelect::insertCopy(SdPoint offset, bool next)
+  {
+  setDirty();
+  setDirtyCashe();
+  mUndo->begin( QObject::tr("Copy insertion") );
+  //Произвести вставку
+  //Perform insertion
+  mObject->insertObjects( offset, &mPaste, mUndo, mEditor, &mFragment, next );
+  }
+
+
+
 
 void SdModeSelect::activateMenu()
   {
@@ -1345,7 +1164,41 @@ void SdModeSelect::keyUp(int key, QChar ch)
 
 void SdModeSelect::copy()
   {
+  //If selection present, then put it into clipboard
+  if( mFragment.count() ) {
+    //Calculate and write base fragment origin
+    //Вычислить и записать базовую точку фрагмента
+    SdRect over = mFragment.getOverRect();
+    //Align to current grid
+    SdPoint a = over.getBottomLeft();
+    SdPoint grid = mEditor->gridGet();
+    a.setX( (a.x() / grid.x()) * grid.x() );
+    a.setY( (a.y()  / grid.y()) * grid.y() );
 
+    mFragment.setOrigin( a );
+
+    //Write to clipboard
+    mFragment.putToClipboard( mObject->getProject() );
+    }
+  }
+
+
+
+
+void SdModeSelect::paste()
+  {
+  setDirty();
+  setDirtyCashe();
+  if( mFragment.count() )
+    unselect( false );
+  cancelPaste();
+  mPastePrj = mPaste.getFromClipboard();
+  if( mPastePrj != nullptr ) {
+    mFirst = mPaste.getOrigin();
+    mPrevMove = mFirst;
+    setStep( smPaste );
+    }
+  update();
   }
 
 
@@ -1437,13 +1290,37 @@ void SdModeSelect::beginCopy(SdPoint p)
     return true;
     });
   mFragment.setOrigin( p );
-  Q_ASSERT( mPaste == nullptr );
-  mPaste = &mFragment;
+  cancelPaste();
+  mPaste = mFragment;
   mFirst = p;
   mPrevMove = p;
   setStep( smCopy );
   //Пусть рисуется заново
   update();
+  }
+
+
+
+
+void SdModeSelect::dragCopy(SdPoint p)
+  {
+  mPrevMove = p;
+  update();
+  }
+
+
+
+
+void SdModeSelect::stopCopy(SdPoint p)
+  {
+  dragCopy( p );
+  if( p != mFirst ) {
+    //Произвести вставку
+    //Perform inserting
+    insertCopy( p.sub( first ), false );
+    }
+  setStep( smSelPresent );
+  propGetFromBar();
   }
 
 

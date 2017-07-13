@@ -31,7 +31,7 @@ class SdModeSelect : public SdMode
     bool            mShift;      //Нажата клавиша Shift
     bool            mControl;    //Нажата клавиша Control
 
-    SdSelector     *mPaste;      //Врагмент для вставки (копирования)
+    SdSelector      mPaste;      //Врагмент для вставки (копирования)
     SdProject      *mPastePrj;   //Проект, из которого производится вставка
 
     enum {
@@ -47,6 +47,7 @@ class SdModeSelect : public SdMode
 
   public:
     SdModeSelect( SdWEditorGraph *editor, SdProjectItem *obj );
+    ~SdModeSelect();
 
     // SdMode interface
   public:
@@ -76,21 +77,21 @@ class SdModeSelect : public SdMode
     virtual void    keyDown(int key, QChar ch) override;
     virtual void    keyUp(int key, QChar ch) override;
   protected:
-    void copy();                 //Копировать в карман
-    void paste();                //Вставить из кармана
-    void selectAll();            //Выделить все
-    void unselect( bool update); //Убрать выделение
-    int  checkPoint( SdPoint p ); //Проверить объект под точкой
-    void beginCopy( SdPoint p );  //Начало копирования
-    void dragCopy( SdPoint p );   //Процесс копирования
-    void stopCopy( SdPoint p );   //Завершение копирования
+    void copy();                  //Copy selection to clipboard
+    void paste();                 //Insert from clipboard
+    void selectAll();             //Select all [Выделить все]
+    void unselect( bool update);  //Remove selection [Убрать выделение]
+    int  checkPoint( SdPoint p ); //Check object behind point [Проверить объект под точкой]
+    void beginCopy( SdPoint p );  //Begin copy process [Начало копирования]
+    void dragCopy( SdPoint p );   //Copy process [Процесс копирования]
+    void stopCopy( SdPoint p );   //Copy complete [Завершение копирования]
     void beginMove( SdPoint p );  //Moving prepare
     void dragMove( SdPoint p );   //Moving process
     void stopMove( SdPoint p );   //Moving complete
     void beginRect( SdPoint p );  //Begin selection by rect
     void dragRect( SdPoint p );   //Selection by rect - selection process
     void stopRect( SdPoint p );   //Selection by rect - selection complete, accumulate selected elements
-    void deleteSelected();       //Удалить все выделенные объекты
+    void deleteSelected();        //Delete all selected objects [Удалить все выделенные объекты]
     void drawCopy( SdContext *ctx );   //Рисование копии объектов из paste
     void drawDefault( SdContext *ctx );//Рисовать режим по умолчанию
     void enterPaste( SdPoint point ); //Вставка фрагмента

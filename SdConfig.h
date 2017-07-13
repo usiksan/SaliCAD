@@ -100,8 +100,13 @@ History
 #define UNDO_HISTORY_SIZE            100
 
 //Clipboard objects format
-#define SD_CLIP_FORMAT_OBJECT        "text/salicad-object"
-#define SD_CLIP_FORMAT_FRAGMENT      "text/salicad-fragment"
+#define SD_CLIP_FORMAT_PITEM         "bin/salicad-SdProjectItem"    //Partial salicad SdProjectItem
+#define SD_CLIP_FORMAT_SELECTOR      "bin/salicad-SdSelector"       //Project and selection SdSelector
+
+//Size of picture to draw fragment to clipboard
+#define CLIP_IMAGE_WIDTH             1920
+#define CLIP_IMAGE_HEIGHT            1280
+
 
 #if 0
 #define SD_BASE_PATH                 QCoreApplication::applicationDirPath()

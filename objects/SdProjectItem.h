@@ -74,7 +74,7 @@ class SdProjectItem : public SdContainer
 
     virtual QString        getIconName() const = 0;
     virtual quint64        getAcceptedObjectsMask() const = 0;
-    virtual void           insertObjects( SdSelector *sour, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest ) = 0;
+    virtual void           insertObjects( SdPoint offset, SdSelector *sour, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next ) = 0;
 
     virtual void           writeObject(QJsonObject &obj) const override;
     virtual void           readObject(SdObjectMap *map, const QJsonObject obj) override;

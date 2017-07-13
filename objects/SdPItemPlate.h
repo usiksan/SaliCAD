@@ -76,7 +76,7 @@ class SdPItemPlate : public SdProjectItem
     virtual QString       getIconName() const override;
     virtual quint64       getAcceptedObjectsMask() const override;
     virtual SdGraphIdent *createIdent() override;
-    virtual void          insertObjects( SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest ) override;
+    virtual void          insertObjects( SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next ) override;
   };
 
 #endif // SDPITEMPLATE_H

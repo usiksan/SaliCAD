@@ -205,7 +205,7 @@ void SdWProjectTree::cmObjectDelete()
 
 void SdWProjectTree::cmClipboardChange()
   {
-  SdWCommand::cmObjectPaste->setEnabled( QApplication::clipboard()->mimeData()->hasFormat(SD_CLIP_FORMAT_OBJECT) );
+  SdWCommand::cmObjectPaste->setEnabled( QApplication::clipboard()->mimeData()->hasFormat(SD_CLIP_FORMAT_PITEM) );
   }
 
 

@@ -29,6 +29,8 @@ const int
 
 typedef QSet<SdGraphPtr> SdGraphPtrTable;
 
+class SdProject;
+
 class SdSelector : public SdObject
   {
     SdPoint           mOrigin;        //Точка привязки селектора
@@ -43,17 +45,20 @@ class SdSelector : public SdObject
     bool                getOwner() const { return mOwner; }
     SdGraphPtrTable&    getTable() { return mTable; }
 
-    virtual QString     getType() const { return QString("Selector"); } //Тип объекта
+    virtual QString     getType() const { return QStringLiteral("Selector"); } //Тип объекта
     virtual quint64     getClass() const { return dctSelector; } //Получить класс объекта
 
-    //SdGraph*            operator [] ( int index ) { return mTable[index]; }
-
-//    virtual PDBasePic     Copy();
-    void                deleteAll(); //Удалить входящие в селектор объекты
+    void                markDeleteAll(); //Удалить входящие в селектор объекты
     void                removeAll(); //Убрать все сслыки на объекты
     void                remove(SdGraph *graph);
     void                insert( SdGraph *graph );
     int                 count() const { return mTable.count(); }
+    void                clear();
+    void                operator = ( const SdSelector &sour );
+
+    //Clipboard functions
+    void                putToClipboard(const SdProject *project , double scale);
+    SdProject          *getFromClipboard();
 
     virtual void        writeObject( QJsonObject &obj ) const; //Запись объекта в файл
     virtual void        readObject( SdObjectMap *map, const QJsonObject obj ); //Чтение объекта из файла
@@ -61,6 +66,7 @@ class SdSelector : public SdObject
     //Итерация
     void                forEach( quint64 classMask, std::function<bool(SdGraph*)> fun1 );
     SdRect              getOverRect();
+    void                draw( SdContext *ctx );
   };
 
 #endif // SDSELECTOR_H
