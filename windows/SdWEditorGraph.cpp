@@ -49,7 +49,7 @@ SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
   mMode(0),           //Режим для исполнения операций
   mPrevMode(0),       //Предыдущий режим
   mStack(0),          //Временный режим
-  mSelect(0),         //Режим выделения
+  mSelect(nullptr),   //Режим выделения
   mScale(),           //Текущий масштаб изображения
   mOrigin(),          //Логическая точка центра изображения
   mClientSize(),      //Размер клиентской области в пикселах
@@ -279,7 +279,6 @@ void SdWEditorGraph::modeActivate(SdMode *mode)
   //Update edit status command
   setSelectionStatus( mMode == mSelect && mSelect->enableCopy() );
   }
-
 
 
 
@@ -751,6 +750,63 @@ void SdWEditorGraph::cmEditRedo()
     modeGet()->reset();
   mCasheDirty = true;
   update();
+  }
+
+
+
+
+void SdWEditorGraph::cmEditCut()
+  {
+  //Only for selecting mode
+  if( mMode == mSelect && mSelect != nullptr )
+    mSelect->cut();
+  }
+
+
+
+
+void SdWEditorGraph::cmEditCopy()
+  {
+  //Only for selecting mode
+  if( mMode == mSelect && mSelect != nullptr )
+    mSelect->copy();
+  }
+
+
+
+
+void SdWEditorGraph::cmEditPaste()
+  {
+  //When paste set Select mode to current if it is not
+  if( mMode != mSelect )
+    modeSet( mSelect );
+  //Only for selecting mode
+  if( mMode == mSelect && mSelect != nullptr )
+    mSelect->paste();
+  }
+
+
+
+
+void SdWEditorGraph::cmEditDelete()
+  {
+  //Only for selecting mode
+  if( mMode == mSelect && mSelect != nullptr )
+    mSelect->deleteSelected();
+  }
+
+
+
+
+
+void SdWEditorGraph::cmEditSelectAll()
+  {
+  //When selecting all set Select mode to current if it is not
+  if( mMode != mSelect )
+    modeSet( mSelect );
+  //Only for selecting mode
+  if( mMode == mSelect && mSelect != nullptr )
+    mSelect->selectAll();
   }
 
 

@@ -51,8 +51,8 @@ class SdModeSelect : public SdMode
 
     // SdMode interface
   public:
-    virtual void activate() override;
-    virtual void reset() override;
+    virtual void    activate() override;
+    virtual void    reset() override;
     virtual void    drawStatic(SdContext *ctx) override;
     virtual void    drawDynamic(SdContext *ctx) override;
     virtual int     getPropBarId() const override;
@@ -76,10 +76,14 @@ class SdModeSelect : public SdMode
     virtual int     getIndex() const override;
     virtual void    keyDown(int key, QChar ch) override;
     virtual void    keyUp(int key, QChar ch) override;
-  protected:
+
+
     void copy();                  //Copy selection to clipboard
+    void cut();                   //Cut selection to clipboard
     void paste();                 //Insert from clipboard
     void selectAll();             //Select all [Выделить все]
+    void deleteSelected();        //Delete all selected objects [Удалить все выделенные объекты]
+  protected:
     void unselect( bool update);  //Remove selection [Убрать выделение]
     int  checkPoint( SdPoint p ); //Check object behind point [Проверить объект под точкой]
     void beginCopy( SdPoint p );  //Begin copy process [Начало копирования]
@@ -91,7 +95,6 @@ class SdModeSelect : public SdMode
     void beginRect( SdPoint p );  //Begin selection by rect
     void dragRect( SdPoint p );   //Selection by rect - selection process
     void stopRect( SdPoint p );   //Selection by rect - selection complete, accumulate selected elements
-    void deleteSelected();        //Delete all selected objects [Удалить все выделенные объекты]
     void drawCopy( SdContext *ctx );   //Рисование копии объектов из paste
     void drawDefault( SdContext *ctx );//Рисовать режим по умолчанию
     void enterPaste( SdPoint point ); //Вставка фрагмента

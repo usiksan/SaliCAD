@@ -23,31 +23,34 @@ Description
 #include <QTransform>
 #include <QMenu>
 
+
+class SdModeSelect;
+
 class SdWEditorGraph : public SdWEditor
   {
     Q_OBJECT
 
   protected:
-    SdWView   *mView;           //Порт для отображения объекта
-    SdMode    *mMode;           //Режим для исполнения операций
-    SdMode    *mPrevMode;       //Предыдущий режим
-    SdMode    *mStack;          //Временный режим
-    SdMode    *mSelect;         //Режим выделения
-    SdScaler   mScale;          //Текущий масштаб изображения
-    SdPoint    mOrigin;         //Логическая точка центра изображения
-    SdPoint    mClientSize;     //Размер клиентской области в пикселах
-    SdPoint    mGrid;           //Размер сетки
-    bool       mLeftDown;       //Флаг нажатия левой кнопки мыши
-    bool       mDrag;           //Флаг активного режима перетаскивания
-    SdPoint    mDownPoint;      //Точка нажатия левой кнопки мыши
-    SdPoint    mPrevPoint;      //Предыдущая точка перемещения мыши
-    QPoint     mCursorPos;      //Позиция курсора в координатах экрана
-    SdRect     mLastOver;       //Последний охватывающий прямоугольник
-    double     mScrollSizeX;    //Размер скроллинга на еденицу прокрутки
-    double     mScrollSizeY;    //Размер скроллинга на еденицу прокрутки
-    QTransform mPixelTransform; //Pixel to phys transformation
-    bool       mCasheDirty;     //Cashe dirty flag. When true - static part redrawn
-    QImage     mCashe;          //Cashe for static picture part
+    SdWView         *mView;           //Порт для отображения объекта
+    SdMode          *mMode;           //Режим для исполнения операций
+    SdMode          *mPrevMode;       //Предыдущий режим
+    SdMode          *mStack;          //Временный режим
+    SdModeSelect    *mSelect;         //Режим выделения
+    SdScaler         mScale;          //Текущий масштаб изображения
+    SdPoint          mOrigin;         //Логическая точка центра изображения
+    SdPoint          mClientSize;     //Размер клиентской области в пикселах
+    SdPoint          mGrid;           //Размер сетки
+    bool             mLeftDown;       //Флаг нажатия левой кнопки мыши
+    bool             mDrag;           //Флаг активного режима перетаскивания
+    SdPoint          mDownPoint;      //Точка нажатия левой кнопки мыши
+    SdPoint          mPrevPoint;      //Предыдущая точка перемещения мыши
+    QPoint           mCursorPos;      //Позиция курсора в координатах экрана
+    SdRect           mLastOver;       //Последний охватывающий прямоугольник
+    double           mScrollSizeX;    //Размер скроллинга на еденицу прокрутки
+    double           mScrollSizeY;    //Размер скроллинга на еденицу прокрутки
+    QTransform       mPixelTransform; //Pixel to phys transformation
+    bool             mCasheDirty;     //Cashe dirty flag. When true - static part redrawn
+    QImage           mCashe;          //Cashe for static picture part
 
 //    int    ScaleDCoord( DCoord sour );         //Преобразовать логическую координату в экранную
 //    NPoint ScaleDPoint( DPoint p );            //Преобразовать логическую точку в экранную
@@ -104,11 +107,11 @@ class SdWEditorGraph : public SdWEditor
     //Commands
     virtual void           cmEditUndo() override;
     virtual void           cmEditRedo() override;
-//    virtual void           cmEditCut() override;
-//    virtual void cmEditCopy() {}
-//    virtual void cmEditPaste() {}
-//    virtual void cmEditDelete() {}
-//    virtual void cmEditSelectAll() {}
+    virtual void           cmEditCut() override;
+    virtual void           cmEditCopy() override;
+    virtual void           cmEditPaste() override;
+    virtual void           cmEditDelete() override;
+    virtual void           cmEditSelectAll() override;
 //    virtual void cmEditFind() {}
 //    virtual void cmEditReplace() {}
 //    virtual void cmEditProperties() {}

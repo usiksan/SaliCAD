@@ -966,6 +966,7 @@ void SdModeSelect::stopDrag(SdPoint point)
     case smMove    : stopMove( point ); break;
     case smSelRect : stopRect( point ); break;
     }
+  mEditor->setSelectionStatus( mFragment.count() != 0 );
   }
 
 
@@ -1142,13 +1143,13 @@ void SdModeSelect::keyDown(int key, QChar ch)
   {
   Q_UNUSED(ch)
   switch( key ) {
-    case Qt::Key_Copy    : copy(); break;
-    case Qt::Key_Paste   : setDirty(); paste(); break;
-    case Qt::Key_Cut     : setDirty(); copy(); deleteSelected(); break;
+    case Qt::Key_Copy    : copy();  break;
+    case Qt::Key_Paste   : paste(); break;
+    case Qt::Key_Cut     : cut();   break;
     case Qt::Key_Select  : selectAll(); break;
     case Qt::Key_Shift   : mShift = true; break;
     case Qt::Key_Control : mControl = true; break;
-    case Qt::Key_Delete  : setDirty(); deleteSelected(); break;
+    case Qt::Key_Delete  : deleteSelected(); break;
       //TODO special codes
 //    case vkDubl     : SetDirty(); Dublicate(); break;
 //    case vkParam    : SetDirty(); Param(); break;
@@ -1202,6 +1203,16 @@ void SdModeSelect::copy()
     //Write to clipboard
     mFragment.putToClipboard( mObject->getProject(), mEditor->scaleGet() );
     }
+  }
+
+
+
+
+void SdModeSelect::cut()
+  {
+  setDirty();
+  copy();
+  deleteSelected();
   }
 
 
