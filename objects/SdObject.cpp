@@ -114,7 +114,7 @@ bool SdObject::isUsed(SdObject *obj) const
 
 
 
-SdObject *SdObject::copy()
+SdObject *SdObject::copy() const
   {
   SdObject *obj = build( getType() );
   obj->cloneFrom( this );

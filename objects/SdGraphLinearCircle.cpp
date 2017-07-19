@@ -119,13 +119,6 @@ void SdGraphLinearCircle::selectByRect(const SdRect &r, SdSelector *selector)
 
 
 
-void SdGraphLinearCircle::select(SdSelector *selector)
-  {
-  selector->insert( this );
-  }
-
-
-
 
 SdRect SdGraphLinearCircle::getOverRect() const
   {

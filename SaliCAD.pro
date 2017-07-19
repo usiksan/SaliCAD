@@ -161,7 +161,8 @@ SOURCES += \
     windows/SdDEnterPosition.cpp \
     objects/SdUtil.cpp \
     modes/SdModeSelect.cpp \
-    objects/SdPropSelected.cpp
+    objects/SdPropSelected.cpp \
+    objects/SdConverterOffset.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -315,7 +316,8 @@ HEADERS  += \
     windows/SdDEnterPosition.h \
     objects/SdUtil.h \
     modes/SdModeSelect.h \
-    objects/SdPropSelected.h
+    objects/SdPropSelected.h \
+    objects/SdConverterOffset.h
 
 DISTFILES += \
     license.txt

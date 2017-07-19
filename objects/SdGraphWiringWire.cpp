@@ -435,7 +435,8 @@ void SdGraphWiringWire::selectByRect(const SdRect &r, SdSelector *selector)
 void SdGraphWiringWire::select(SdSelector *selector)
   {
   mFix = false;
-  selector->insert( this );
+  if( selector != nullptr )
+    selector->insert( this );
   }
 
 

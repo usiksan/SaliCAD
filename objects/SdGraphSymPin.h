@@ -50,7 +50,7 @@ class SdGraphSymPin : public SdGraph
   public:
     virtual QString   getType() const override { return QStringLiteral( SD_TYPE_SYM_PIN ); }
     virtual quint64   getClass() const override { return dctSymPin; }
-    virtual SdObject *copyNext() override;
+    virtual SdObject *copyNext() const override;
     virtual void      cloneFrom(const SdObject *src) override;
     virtual void      writeObject(QJsonObject &obj) const override;
     virtual void      readObject(SdObjectMap *map, const QJsonObject obj) override;

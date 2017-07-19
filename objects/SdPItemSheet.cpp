@@ -211,8 +211,12 @@ SdGraphIdent *SdPItemSheet::createIdent()
 
 
 
-void SdPItemSheet::insertObjects(SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest)
+void SdPItemSheet::insertObjects(SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)
   {
 
   }
+
+
+
+
 

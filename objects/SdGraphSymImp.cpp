@@ -580,13 +580,6 @@ void SdGraphSymImp::selectByRect(const SdRect &r, SdSelector *selector)
 
 
 
-void SdGraphSymImp::select(SdSelector *selector)
-  {
-  selector->insert( this );
-  }
-
-
-
 bool SdGraphSymImp::isVisible()
   {
   return true;

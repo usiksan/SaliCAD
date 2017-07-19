@@ -163,6 +163,36 @@ SdGraphIdent *SdProjectItem::getIdent()
 
 
 
+void SdProjectItem::insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)
+  {
+  sour->forEach( dctAll, [this, offset, undo, editor, next, editor, dest ] (SdGraph *obj) ->bool {
+    obj = insertCopyObject( obj, offset, undo, editor, next );
+    if( obj != nullptr && dest != nullptr )
+      obj->select( dest );
+    return true;
+    });
+  }
+
+
+
+
+SdGraph *SdProjectItem::insertCopyObject(const SdGraph *obj, SdPoint offset, SdUndo *undo, SdWEditorGraph *editor, bool next)
+  {
+  Q_UNUSED(editor)
+  if( obj != nullptr && (obj->getClass() & getAcceptedObjectsMask()) ) {
+    SdGraph *cp = dynamic_cast<SdGraph*>( next ? obj->copyNext() : obj->copy() );
+    Q_ASSERT( cp != nullptr );
+    cp->select( nullptr );
+    cp->move( offset );
+    insertChild( cp, undo );
+    return cp;
+    }
+  return nullptr;
+  }
+
+
+
+
 
 void SdProjectItem::writeObject(QJsonObject &obj) const
   {

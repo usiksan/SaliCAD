@@ -178,8 +178,12 @@ SdGraphIdent *SdPItemPlate::createIdent()
 
 
 
-void SdPItemPlate::insertObjects(SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest)
+void SdPItemPlate::insertObjects(SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)
   {
 
   }
+
+
+
+
 

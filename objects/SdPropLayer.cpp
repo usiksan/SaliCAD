@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Layer property
 */
 #include "SdPropLayer.h"
 #include "SdEnvir.h"
@@ -57,7 +58,7 @@ void SdPropLayer::set(const QString id)
   {
   if( id.isEmpty() ) {
     mValue = NoValue;
-    mLayer = 0;
+    mLayer = sdEnvir->getLayer(LID0_INVISIBLE);
     }
   else {
     mValue = OneValue;

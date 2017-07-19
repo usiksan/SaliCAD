@@ -41,6 +41,7 @@ class SdWEditorGraph : public SdWEditor
     bool       mDrag;           //Флаг активного режима перетаскивания
     SdPoint    mDownPoint;      //Точка нажатия левой кнопки мыши
     SdPoint    mPrevPoint;      //Предыдущая точка перемещения мыши
+    QPoint     mCursorPos;      //Позиция курсора в координатах экрана
     SdRect     mLastOver;       //Последний охватывающий прямоугольник
     double     mScrollSizeX;    //Размер скроллинга на еденицу прокрутки
     double     mScrollSizeY;    //Размер скроллинга на еденицу прокрутки
@@ -76,6 +77,9 @@ class SdWEditorGraph : public SdWEditor
 
     void    dirtyCashe() { mCasheDirty = true; }
 
+    //Update selection status
+    void    setSelectionStatus( bool status );
+
     //Temporary call mode
     void    modeCall( SdModeTemp *mode );
 
@@ -100,6 +104,16 @@ class SdWEditorGraph : public SdWEditor
     //Commands
     virtual void           cmEditUndo() override;
     virtual void           cmEditRedo() override;
+//    virtual void           cmEditCut() override;
+//    virtual void cmEditCopy() {}
+//    virtual void cmEditPaste() {}
+//    virtual void cmEditDelete() {}
+//    virtual void cmEditSelectAll() {}
+//    virtual void cmEditFind() {}
+//    virtual void cmEditReplace() {}
+//    virtual void cmEditProperties() {}
+    virtual void           cmClipboardChange() override;
+
     virtual void           onActivateEditor() override;
     virtual void           cmViewFit() override;
     virtual void           cmViewZoomIn() override;
@@ -118,6 +132,7 @@ class SdWEditorGraph : public SdWEditor
     virtual void           cmModeArc() override;
     virtual void           cmModeText() override;
 //    virtual void cmModeField() {}
+    virtual void           cmModeSelect() override;
 
     virtual void           cmEnterPosition() override;
 

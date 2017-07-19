@@ -145,7 +145,8 @@ void SdGraphLinearLine::selectByRect(const SdRect &r, SdSelector *selector)
 void SdGraphLinearLine::select(SdSelector *selector)
   {
   mFlyA = mFlyB = true;
-  selector->insert( this );
+  if( selector != nullptr )
+    selector->insert( this );
   }
 
 

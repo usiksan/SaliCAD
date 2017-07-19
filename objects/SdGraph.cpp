@@ -88,7 +88,8 @@ void SdGraph::selectByRect(const SdRect &r, SdSelector *selector)
 
 void SdGraph::select(SdSelector *selector)
   {
-  selector->insert( this );
+  if( selector != nullptr )
+    selector->insert( this );
   }
 
 

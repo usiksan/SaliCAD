@@ -67,6 +67,8 @@ class SdSelector : public SdObject
     void                forEach( quint64 classMask, std::function<bool(SdGraph*)> fun1 );
     SdRect              getOverRect();
     void                draw( SdContext *ctx );
+
+    static bool         isClipboardAvailable();
   };
 
 #endif // SDSELECTOR_H

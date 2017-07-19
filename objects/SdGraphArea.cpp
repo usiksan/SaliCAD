@@ -225,7 +225,8 @@ void SdGraphArea::select(SdSelector *selector)
   {
   mFlyIndex.clear();
   for( int i = 0; i < mRegion.count(); ++i ) mFlyIndex.insert( i );
-  selector->insert( this );
+  if( selector != nullptr )
+    selector->insert( this );
   }
 
 

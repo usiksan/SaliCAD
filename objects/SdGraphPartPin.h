@@ -58,7 +58,7 @@ class SdGraphPartPin : public SdGraph
   public:
     virtual QString   getType() const override { return QString( SD_TYPE_PART_PIN ); }
     virtual quint64   getClass() const override { return dctPartPin; }
-    virtual SdObject *copyNext() override;
+    virtual SdObject *copyNext() const override;
     virtual void      cloneFrom(const SdObject *src) override;
     virtual void      writeObject(QJsonObject &obj) const override;
     virtual void      readObject(SdObjectMap *map, const QJsonObject obj) override;

@@ -60,7 +60,6 @@ class SdGraphWireName : public SdGraph
     virtual int     behindCursor(SdPoint p) override;
     virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;
     virtual void    selectByRect(const SdRect &r, SdSelector *selector) override;
-    virtual void    select(SdSelector *selector) override;
   };
 
 #endif // SDGRAPHWIRENAME_H

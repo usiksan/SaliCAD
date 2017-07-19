@@ -477,14 +477,6 @@ void SdGraphPartImp::selectByRect(const SdRect &r, SdSelector *selector)
 
 
 
-void SdGraphPartImp::select(SdSelector *selector)
-  {
-  selector->insert( this );
-  }
-
-
-
-
 
 bool SdGraphPartImp::canHideLayer(SdLayer *layer)
   {

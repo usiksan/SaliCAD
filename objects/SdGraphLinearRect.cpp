@@ -115,10 +115,10 @@ void SdGraphLinearRect::selectByPoint(const SdPoint p, SdSelector *selector)
   if( mProp.mLayer.isEdited() ) {
     SdRect rect(a,b);
     SdPoint p1(p);
-    if( !getSelector() && (p1.isOnSegment( rect.topLeft(), rect.bottomLeft() ) ||
-                           p1.isOnSegment( rect.bottomLeft(), rect.bottomRight() ) ||
-                           p1.isOnSegment( rect.bottomRight(), rect.topRight() ) ||
-                           p1.isOnSegment( rect.topRight(), rect.topLeft() ) ) ) {
+    if( !getSelector() && (p1.isOnSegment( rect.getTopLeft(), rect.getBottomLeft() ) ||
+                           p1.isOnSegment( rect.getBottomLeft(), rect.getBottomRight() ) ||
+                           p1.isOnSegment( rect.getBottomRight(), rect.getTopRight() ) ||
+                           p1.isOnSegment( rect.getTopRight(), rect.getTopLeft() ) ) ) {
       //Выбор за одну вершину (нужно производить растяжение/сжатие)
       // перемещаем вершины таким образом, чтобы изменяемой была вершина a
       mFly = 1;
@@ -163,7 +163,8 @@ void SdGraphLinearRect::selectByRect(const SdRect &r, SdSelector *selector)
 void SdGraphLinearRect::select(SdSelector *selector)
   {
   mFly = 0;
-  selector->insert( this );
+  if( selector != nullptr )
+    selector->insert( this );
   }
 
 

@@ -135,8 +135,8 @@ void SdSelector::putToClipboard( const SdProject *project, double scale )
   b.move( SdPoint(10,10) ); //Расширить, чтобы вошли пограничные объекты
   r.set( a, b );
   QSize s;                             //Размер битовой карты в пикселах
-  s.setWidth( qMin( r.width() / scale + 10, CLIP_IMAGE_WIDTH ) ); //Вычисление размера
-  s.setHeight( qMin( r.height() / scale + 10, CLIP_IMAGE_HEIGHT ) );
+  s.setWidth( qMin( static_cast<int>(r.width() / scale + 10), CLIP_IMAGE_WIDTH ) ); //Вычисление размера
+  s.setHeight( qMin( static_cast<int>(r.height() / scale + 10), CLIP_IMAGE_HEIGHT ) );
 
 
   //Alternative copy as image
@@ -172,7 +172,7 @@ SdProject *SdSelector::getFromClipboard()
     //Data with appropriate format present, read it
 
     //Retrive Json object from clipboard
-    QJsonObject obj = QJsonDocument::fromBinaryData( mime->data(QStringLiteral(SD_CLIP_FORMAT_SELECTOR)) );
+    QJsonObject obj = QJsonDocument::fromBinaryData( mime->data(QStringLiteral(SD_CLIP_FORMAT_SELECTOR)) ).object();
 
     //Create project
     SdProject *project = new SdProject();
@@ -225,7 +225,7 @@ void SdSelector::readObject(SdObjectMap *map, const QJsonObject obj)
   //Count of objects
   int count = obj.value( QStringLiteral("Count") ).toInt();
   for( int i = 0; i < count; i++ ) {
-    SdGraphPtr ptr = dynamic_cast<SdGraphPtr*>( readPtr( QString::number(i), map, obj ) );
+    SdGraphPtr ptr = dynamic_cast<SdGraphPtr>( readPtr( QString::number(i), map, obj ) );
     ptr->select( this );
     }
   }
@@ -266,8 +266,18 @@ SdRect SdSelector::getOverRect()
 void SdSelector::draw(SdContext *ctx)
   {
   for( SdGraph *graph : mTable )
-    if( !graph->isDeleted() )
+    if( graph != nullptr && !graph->isDeleted() )
       graph->draw( ctx );
+  }
+
+
+
+
+
+bool SdSelector::isClipboardAvailable()
+  {
+  const QMimeData *mime = QGuiApplication::clipboard()->mimeData();
+  return mime != nullptr && mime->hasFormat( QStringLiteral(SD_CLIP_FORMAT_SELECTOR) );
   }
 
 

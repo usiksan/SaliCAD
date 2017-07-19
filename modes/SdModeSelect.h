@@ -66,7 +66,7 @@ class SdModeSelect : public SdMode
     virtual void    beginDrag(SdPoint point) override;
     virtual void    dragPoint(SdPoint point) override;
     virtual void    stopDrag(SdPoint point) override;
-    virtual bool enableCopy() const override;
+    virtual bool    enableCopy() const override;
     virtual bool    enablePaste(quint64 pasteMask) const override;
     virtual bool getInfo(SdPoint p, QString &info) override;
     virtual QString getStepHelp() const override;

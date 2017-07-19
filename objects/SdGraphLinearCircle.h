@@ -40,7 +40,6 @@ class SdGraphLinearCircle : public SdGraphLinear
     virtual void    mirror(SdPoint a, SdPoint b) override;
     virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;
     virtual void    selectByRect(const SdRect &r, SdSelector *selector) override;
-    virtual void    select(SdSelector *selector) override;
     virtual SdRect  getOverRect() const override;
     virtual void    draw(SdContext *dc) override;
     virtual bool    snapPoint(SdSnapInfo *snap) override;

@@ -188,10 +188,15 @@ quint64 SdPItemSymbol::getAcceptedObjectsMask() const
 
 
 
-void SdPItemSymbol::insertObjects(SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest)
-  {
 
-  }
+//void SdPItemSymbol::insertObjects(SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)
+//  {
+
+//  }
+
+
+
+
 
 
 

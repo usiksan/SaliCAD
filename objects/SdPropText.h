@@ -41,18 +41,18 @@ struct SdPropTextState {
   };
 
 struct SdPropText {
-  SdPropLayer mLayer; //Слой
-  SdPropInt   mSize;   //Размер текста
-  SdAngle     mDir;    //Направление
-  SdPropInt   mFont;   //Идентификатор шрифта
-  SdPropInt   mHorz;   //Выравнивание горизонтальное, вертикальное и зеркальность
+  SdPropLayer mLayer;  //Layer of text [Слой]
+  SdPropInt   mSize;   //Text size [Размер текста]
+  SdAngle     mDir;    //Direction [Направление]
+  SdPropInt   mFont;   //Font ident [Идентификатор шрифта]
+  SdPropInt   mHorz;   //Alignment [Выравнивание горизонтальное, вертикальное и зеркальность]
   SdPropInt   mVert;
   SdPropInt   mMirror;
 
   SdPropText();
 
-  void operator = ( SdPropText const &prop ); //Назначить свойства (кроме origin)
-  void assign( SdPropText const &prop );      //Назначить свойства (включая origin)
+  void operator = ( SdPropText const &prop ); //Назначить свойства
+  void assign( SdPropText const &prop );      //Назначить свойства
   void append( SdPropText const &prop );      //Установить свойства
   void clear();                               //Установить в неопределенное состояние
   bool match( SdPropText const &prop );       //Сравнить на совпадение с эталоном

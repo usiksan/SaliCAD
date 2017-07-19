@@ -68,7 +68,7 @@ void SdGraphSymPin::drawImp(SdContext *dc, const QString pinNumber, bool com)
 
 
 
-SdObject *SdGraphSymPin::copyNext()
+SdObject *SdGraphSymPin::copyNext() const
   {
   //Copy pin with next pinName
   //At first - clone pin
@@ -289,7 +289,8 @@ void SdGraphSymPin::selectByRect(const SdRect &r, SdSelector *selector)
 void SdGraphSymPin::select(SdSelector *selector)
   {
   mPinSelect = mNamSelect = mNumSelect = true;
-  selector->insert( this );
+  if( selector != nullptr )
+    selector->insert( this );
   }
 
 

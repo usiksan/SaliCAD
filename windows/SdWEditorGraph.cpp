@@ -22,6 +22,7 @@ Description
 #include "objects/SdPulsar.h"
 #include "objects/SdPItemPlate.h"
 #include "objects/SdUtil.h"
+#include "objects/SdSelector.h"
 #include "modes/SdMode.h"
 #include "modes/SdModeView.h"
 #include "modes/SdModeTZoomer.h"
@@ -32,6 +33,7 @@ Description
 #include "modes/SdModeCLinearRectFilled.h"
 #include "modes/SdModeCLinearRegion.h"
 #include "modes/SdModeCText.h"
+#include "modes/SdModeSelect.h"
 
 #include <QPainter>
 #include <QPaintEvent>
@@ -39,6 +41,7 @@ Description
 #include <QMessageBox>
 #include <QDebug>
 #include <QScrollBar>
+
 
 SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
   SdWEditor( parent ),
@@ -77,11 +80,15 @@ SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
     originSet( SdPoint(value,originGet().y()) );
     });
 
+
   //By default - view mode.
   //If no item then no mode.
   if( item ) {
     mMode = new SdModeView( this, item );
     modeActivate( mMode );
+
+    //Create select mode for this window
+    mSelect = new SdModeSelect( this, item );
     }
   }
 
@@ -112,6 +119,17 @@ void SdWEditorGraph::originSet(SdPoint org)
   mOrigin = org;
   mCasheDirty = true;
   update();
+  }
+
+
+
+
+
+void SdWEditorGraph::setSelectionStatus(bool status)
+  {
+  SdWCommand::cmEditCopy->setEnabled( status );
+  SdWCommand::cmEditCut->setEnabled( status );
+  SdWCommand::cmEditDelete->setEnabled( status );
   }
 
 
@@ -257,7 +275,14 @@ void SdWEditorGraph::modeActivate(SdMode *mode)
     mode->activate();
     SdWCommand::selectMode( mode->getIndex() );
     }
+
+  //Update edit status command
+  setSelectionStatus( mMode == mSelect && mSelect->enableCopy() );
   }
+
+
+
+
 
 void SdWEditorGraph::modeRestore(SdMode *mode)
   {
@@ -265,6 +290,9 @@ void SdWEditorGraph::modeRestore(SdMode *mode)
     mode->restore();
     SdWCommand::selectMode( mode->getIndex() );
     }
+
+  //Update edit status command
+  setSelectionStatus( mMode == mSelect && mSelect->enableCopy() );
   }
 
 
@@ -348,6 +376,14 @@ void SdWEditorGraph::cmModeArc()
 void SdWEditorGraph::cmModeText()
   {
   modeSet( new SdModeCText( this, getProjectItem() ) );
+  }
+
+
+
+
+void SdWEditorGraph::cmModeSelect()
+  {
+  modeSet( mSelect );
   }
 
 
@@ -566,11 +602,12 @@ void SdWEditorGraph::mouseReleaseEvent(QMouseEvent *event)
 
 void SdWEditorGraph::mouseMoveEvent(QMouseEvent *event)
   {
-  SdPoint pos = pixel2phys( event->pos() );
+  mCursorPos = event->pos();
+  SdPoint pos = pixel2phys( mCursorPos );
   if( pos != mPrevPoint ) {
     //was a mouse mooving
     if( modeGet() ) {
-      if( event->button() == Qt::LeftButton ) {
+      if( event->buttons() & Qt::LeftButton ) {
         if( !mLeftDown ) {
           mDownPoint = mPrevPoint;
           mLeftDown = true;
@@ -667,7 +704,8 @@ SdPoint SdWEditorGraph::pixel2phys(QPoint pos)
 //Setup mouse pos. Where pos is pixel coord
 void SdWEditorGraph::updateMousePos(QMouseEvent *event)
   {
-  SdPoint pos = pixel2phys( event->pos() );
+  mCursorPos = event->pos();
+  SdPoint pos = pixel2phys( mCursorPos );
   if( pos != mPrevPoint ) {
     //was a mouse mooving
     mPrevPoint = pos;
@@ -687,6 +725,10 @@ void SdWEditorGraph::onActivateEditor()
     SdWCommand::selectMode( modeGet()->getIndex() );
     }
   displayCursorPositions();
+  //Update edit status command
+  setSelectionStatus( mMode == mSelect && mSelect->enableCopy() );
+  //Change status of clipboard
+  SdWCommand::cmEditPaste->setEnabled( SdSelector::isClipboardAvailable() );
   }
 
 
@@ -709,5 +751,14 @@ void SdWEditorGraph::cmEditRedo()
     modeGet()->reset();
   mCasheDirty = true;
   update();
+  }
+
+
+
+
+void SdWEditorGraph::cmClipboardChange()
+  {
+  //Change status of clipboard
+  SdWCommand::cmEditPaste->setEnabled( SdSelector::isClipboardAvailable() );
   }
 

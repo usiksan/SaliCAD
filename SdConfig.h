@@ -56,6 +56,9 @@ History
                    Begin creation sheet and plate editors
   19.05.2017 v0.20 Continue creation GraphArea
   22.06.2017 v0.21 Append arc, arc mode
+  19.07.2017 v0.22 Creation selection mode
+                   in SdGraph::select selector may be nullptr, insert check of this
+                   remove empty select (base insertion released in SdGraph::select)
 */
 
 #ifndef SDCONFIG
@@ -67,7 +70,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             21
+#define SD_VERSION_MINOR             22
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

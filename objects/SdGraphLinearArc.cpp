@@ -128,13 +128,6 @@ void SdGraphLinearArc::selectByRect(const SdRect &r, SdSelector *selector)
 
 
 
-void SdGraphLinearArc::select(SdSelector *selector)
-  {
-  selector->insert( this );
-  }
-
-
-
 
 SdRect SdGraphLinearArc::getOverRect() const
   {

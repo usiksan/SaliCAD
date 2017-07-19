@@ -179,13 +179,6 @@ void SdGraphText::selectByRect(const SdRect &r, SdSelector *selector)
 
 
 
-void SdGraphText::select(SdSelector *selector)
-  {
-  selector->insert( this );
-  }
-
-
-
 
 bool SdGraphText::isVisible()
   {

@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Layer property
 */
 #ifndef SDPROPLAYER_H
 #define SDPROPLAYER_H
@@ -31,7 +32,7 @@ class SdPropLayer
     bool       isVisible( bool otherSide = false ) const;
     bool       isEdited() const;
     bool       operator == ( SdPropLayer p ) const { return mValue == OneValue && mLayer == p.mLayer; }
-    void       operator = ( SdPropLayer p ) { if( p.mValue == OneValue ) mLayer = p.mLayer; }
+    void       operator = ( SdPropLayer p ) { if( p.mValue == OneValue ) { mLayer = p.mLayer; mValue = OneValue; } }
     void       operator = ( SdLayer *layer ) { mLayer = layer; mValue = layer ? OneValue : NoValue; }
     void       set( const QString id );
     SdLayer   *layer( bool otherSide = false ) const;

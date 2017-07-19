@@ -105,9 +105,9 @@ class SdObject
 
     //Copy
     //Exact copy object
-    SdObject*         copy();
+    SdObject*         copy() const;
     //Copy logic next object
-    virtual SdObject* copyNext() { return copy(); }
+    virtual SdObject* copyNext() const { return copy(); }
 
     //Clone contens object except mParent field.
     //Cloned object has no parent

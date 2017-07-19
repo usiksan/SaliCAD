@@ -17,6 +17,7 @@ Description
 #include "objects/SdPItemPlate.h"
 #include "objects/SdGraphWiringWire.h"
 #include "objects/SdPulsar.h"
+#include "objects/SdConverterOffset.h"
 
 //All prop bars
 #include "windows/SdPropBarLinear.h"
@@ -33,7 +34,10 @@ Description
 #include <QObject>
 
 SdModeSelect::SdModeSelect(SdWEditorGraph *editor, SdProjectItem *obj) :
-  SdMode( editor, obj )
+  SdMode( editor, obj ),
+  mShift(false),      //Shift key pressed [Нажата клавиша Shift]
+  mControl(false),    //Control key pressed [Нажата клавиша Control]
+  mPastePrj(nullptr)  //Project, fragment inserted from [Проект, из которого производится вставка]
   {
 
   }
@@ -635,6 +639,7 @@ WinSelectMode::Numerate() {
 void SdModeSelect::activate()
   {
   propSetToBar();
+  SdMode::activate();
   }
 
 
@@ -667,12 +672,14 @@ void SdModeSelect::drawDynamic(SdContext *ctx)
   {
   //Draw all selected elements
   ctx->setOverColor( sdEnvir->getSysColor(scSelected) );
-  mFragment.forEach( dctAll, [ctx] (SdObject *obj) -> bool {
-    SdGraph *graph = dynamic_cast<SdGraph*>( obj );
-    if( graph != nullptr )
-      graph->draw( ctx );
-    return true;
-    });
+  mFragment.draw( ctx );
+
+  {
+  //Draw all copy in current point
+  SdConverterOffset offset( mPrevMove.sub(mFirst) );
+  ctx->setConverter( &offset );
+  mPaste.draw( ctx );
+  }
 
   //On according step
   switch( getStep() ) {
@@ -713,12 +720,12 @@ void SdModeSelect::propGetFromBar()
       }
       break;
     case PB_TEXT : {
-      SdPropBarTextual *barTextual = dynamic_cast<SdPropBarTextual*>(SdWCommand::getModeBar(PB_LINEAR));
+      SdPropBarTextual *barTextual = dynamic_cast<SdPropBarTextual*>(SdWCommand::getModeBar(PB_TEXT));
       barTextual->getPropText( &(mLocalProp.mTextProp) );
       }
       break;
     case PB_WIRE : {
-      SdPropBarWire    *barWire    = dynamic_cast<SdPropBarWire*>(SdWCommand::getModeBar(PB_LINEAR));
+      SdPropBarWire    *barWire    = dynamic_cast<SdPropBarWire*>(SdWCommand::getModeBar(PB_WIRE));
       QString wireName;
       barWire->getPropWire( &(mLocalProp.mWireProp), &(mLocalProp.mEnterType), &(wireName) );
       if( !wireName.isEmpty() )
@@ -726,17 +733,17 @@ void SdModeSelect::propGetFromBar()
       }
       break;
     case PB_SYM_PIN : {
-      SdPropBarSymPin  *barSymPin  = dynamic_cast<SdPropBarSymPin*>(SdWCommand::getModeBar(PB_LINEAR));
+      SdPropBarSymPin  *barSymPin  = dynamic_cast<SdPropBarSymPin*>(SdWCommand::getModeBar(PB_SYM_PIN));
       barSymPin->getPropSymPin( &(mLocalProp.mSymPinProp) );
       }
       break;
     case PB_PART_PIN : {
-      SdPropBarPartPin *barPartPin = dynamic_cast<SdPropBarPartPin*>(SdWCommand::getModeBar(PB_LINEAR));
+      SdPropBarPartPin *barPartPin = dynamic_cast<SdPropBarPartPin*>(SdWCommand::getModeBar(PB_PART_PIN));
       barPartPin->getPropPartPin( &(mLocalProp.mPartPinProp) );
       }
       break;
     case PB_SYM_IMP : {
-      SdPropBarSymImp  *barSymImp  = dynamic_cast<SdPropBarSymImp*>(SdWCommand::getModeBar(PB_LINEAR));
+      SdPropBarSymImp  *barSymImp  = dynamic_cast<SdPropBarSymImp*>(SdWCommand::getModeBar(PB_SYM_IMP));
       barSymImp->getPropSymImp( &(mLocalProp.mSymImpProp) );
       }
       break;
@@ -783,27 +790,27 @@ void SdModeSelect::propSetToBar()
       }
       break;
     case PB_TEXT : {
-      SdPropBarTextual *barTextual = dynamic_cast<SdPropBarTextual*>(SdWCommand::getModeBar(PB_LINEAR));
+      SdPropBarTextual *barTextual = dynamic_cast<SdPropBarTextual*>(SdWCommand::getModeBar(PB_TEXT));
       barTextual->setPropText( &(mLocalProp.mTextProp), getPPM() );
       }
       break;
     case PB_WIRE : {
-      SdPropBarWire    *barWire    = dynamic_cast<SdPropBarWire*>(SdWCommand::getModeBar(PB_LINEAR));
+      SdPropBarWire    *barWire    = dynamic_cast<SdPropBarWire*>(SdWCommand::getModeBar(PB_WIRE));
       barWire->setPropWire( &(mLocalProp.mWireProp), getPPM(), mLocalProp.mEnterType, mLocalProp.mWireName.str() );
       }
       break;
     case PB_SYM_PIN : {
-      SdPropBarSymPin  *barSymPin  = dynamic_cast<SdPropBarSymPin*>(SdWCommand::getModeBar(PB_LINEAR));
+      SdPropBarSymPin  *barSymPin  = dynamic_cast<SdPropBarSymPin*>(SdWCommand::getModeBar(PB_SYM_PIN));
       barSymPin->setPropSymPin( &(mLocalProp.mSymPinProp) );
       }
       break;
     case PB_PART_PIN : {
-      SdPropBarPartPin *barPartPin = dynamic_cast<SdPropBarPartPin*>(SdWCommand::getModeBar(PB_LINEAR));
+      SdPropBarPartPin *barPartPin = dynamic_cast<SdPropBarPartPin*>(SdWCommand::getModeBar(PB_PART_PIN));
       barPartPin->setPropPartPin( &(mLocalProp.mPartPinProp) );
       }
       break;
     case PB_SYM_IMP : {
-      SdPropBarSymImp  *barSymImp  = dynamic_cast<SdPropBarSymImp*>(SdWCommand::getModeBar(PB_LINEAR));
+      SdPropBarSymImp  *barSymImp  = dynamic_cast<SdPropBarSymImp*>(SdWCommand::getModeBar(PB_SYM_IMP));
       barSymImp->setPropSymImp( &(mLocalProp.mSymImpProp) );
       }
       break;
@@ -838,11 +845,16 @@ void SdModeSelect::enterPoint( SdPoint point )
           return true;
           });
         //Обновить свойства и обновить изображение
+        setDirtyCashe();
         propSetToBar();
+        update();
+        //Go to sel or unsel step
+        setStep( mFragment.count() ? smSelPresent : smNoSelect );
         }
     }
   //Определить состояние курсора в текущей точке
   checkPoint( point );
+  mEditor->setSelectionStatus( mFragment.count() != 0 );
   }
 
 
@@ -877,6 +889,7 @@ void SdModeSelect::clickPoint( SdPoint point )
     //Определить состояние курсора в текущей точке
     checkPoint( point );
     }
+  mEditor->setSelectionStatus( mFragment.count() != 0 );
   }
 
 
@@ -891,11 +904,15 @@ void SdModeSelect::cancelPoint( SdPoint point )
         return;
         }
       if( mFragment.count() ) unselect( true );
-      else cancelMode();
+      else {
+        cancelMode();
+        return;
+        }
     }
   setStep( smNoSelect );
   //Определить состояние курсора в текущей точке
   checkPoint( point );
+  mEditor->setSelectionStatus( mFragment.count() != 0 );
   }
 
 
@@ -915,6 +932,8 @@ void SdModeSelect::movePoint( SdPoint p )
 void SdModeSelect::wheel(SdPoint)
   {
   }
+
+
 
 void SdModeSelect::beginDrag( SdPoint point )
   {
@@ -953,6 +972,7 @@ void SdModeSelect::stopDrag(SdPoint point)
 
 bool SdModeSelect::enableCopy() const
   {
+  return mFragment.count() != 0;
   }
 
 
@@ -1059,7 +1079,7 @@ int SdModeSelect::getIndex() const
 
 void SdModeSelect::enterPaste(SdPoint point)
   {
-  if( mPaste ) {
+  if( mPaste.count() ) {
     setDirty();
     //Unselect selected objects
     unselect(false);
@@ -1079,7 +1099,7 @@ void SdModeSelect::cancelPaste()
   if( mPastePrj != nullptr )
     delete mPastePrj;
   mPastePrj =  nullptr;
-  setStep( smNoSelect );
+  setStep( mFragment.count() ? smSelPresent : smNoSelect );
   }
 
 
@@ -1101,7 +1121,9 @@ void SdModeSelect::insertCopy(SdPoint offset, bool next)
   mUndo->begin( QObject::tr("Copy insertion") );
   //Произвести вставку
   //Perform insertion
+  unselect(false);
   mObject->insertObjects( offset, &mPaste, mUndo, mEditor, &mFragment, next );
+  cancelPaste();
   }
 
 
@@ -1178,7 +1200,7 @@ void SdModeSelect::copy()
     mFragment.setOrigin( a );
 
     //Write to clipboard
-    mFragment.putToClipboard( mObject->getProject() );
+    mFragment.putToClipboard( mObject->getProject(), mEditor->scaleGet() );
     }
   }
 
@@ -1235,8 +1257,10 @@ void SdModeSelect::unselect(bool update)
 
     mFragment.removeAll();
 
-    setDirty();
-    setDirtyCashe();
+    if( update ) {
+      setDirty();
+      setDirtyCashe();
+      }
     }
   }
 
@@ -1245,6 +1269,7 @@ void SdModeSelect::unselect(bool update)
 
 int SdModeSelect::checkPoint(SdPoint p)
   {
+  int prevStatus = mState;
   //Reset status
   mState = 0;
 
@@ -1272,6 +1297,9 @@ int SdModeSelect::checkPoint(SdPoint p)
     else
       SdPulsar::pulsar->setStatusMessage( info );
     }
+
+  if( mState != prevStatus )
+    mEditor->viewport()->setCursor( loadCursor(getCursor()) );
 
   return mState;
   }
@@ -1317,7 +1345,7 @@ void SdModeSelect::stopCopy(SdPoint p)
   if( p != mFirst ) {
     //Произвести вставку
     //Perform inserting
-    insertCopy( p.sub( first ), false );
+    insertCopy( p.sub( mFirst ), false );
     }
   setStep( smSelPresent );
   propGetFromBar();
@@ -1369,6 +1397,7 @@ void SdModeSelect::dragMove(SdPoint p)
       graph->move( offset );
     return true;
     });
+  mPrevMove.move( offset );
   update();
   }
 
@@ -1421,6 +1450,8 @@ void SdModeSelect::stopRect(SdPoint p)
   propSetToBar();
   //Определить состояние курсора в текущей точке
   checkPoint( p );
+  //Go to sel or unsel step
+  setStep( mFragment.count() ? smSelPresent : smNoSelect );
   }
 
 

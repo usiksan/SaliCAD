@@ -194,7 +194,3 @@ void SdGraphWireName::selectByRect(const SdRect &r, SdSelector *selector)
 
 
 
-void SdGraphWireName::select(SdSelector *selector)
-  {
-  selector->insert( this );
-  }
