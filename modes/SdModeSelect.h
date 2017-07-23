@@ -95,15 +95,9 @@ class SdModeSelect : public SdMode
     void beginRect( SdPoint p );  //Begin selection by rect
     void dragRect( SdPoint p );   //Selection by rect - selection process
     void stopRect( SdPoint p );   //Selection by rect - selection complete, accumulate selected elements
-    void drawCopy( SdContext *ctx );   //Рисование копии объектов из paste
-    void drawDefault( SdContext *ctx );//Рисовать режим по умолчанию
     void enterPaste( SdPoint point ); //Вставка фрагмента
-    void cancelPaste();              //Отмена вставки фрагмента
-    void movePaste( SdPoint p );      //Перемещение вставляемого фрагмента
+    void cancelPaste();           //Cancel paste [Отмена вставки фрагмента]
     void showRect( SdContext *ctx );
-    void showSelect( SdContext *ctx );
-    void showPaste( SdContext *ctx );
-    void drawUnselected( SdContext *ctx );
     void insertCopy( SdPoint offset, bool next );//Вставить копии объектов
     void activateMenu();
 

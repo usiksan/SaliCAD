@@ -172,9 +172,9 @@ void SdModeCWire::enterPoint( SdPoint enter )
 
 void SdModeCWire::cancelPoint(SdPoint)
   {
+  update();
   if( getStep() ) nextNet();
   else cancelMode();
-  update();
   }
 
 

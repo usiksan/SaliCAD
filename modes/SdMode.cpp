@@ -155,8 +155,8 @@ void SdMode::update() {
 
 void SdMode::cancelMode()
   {
-  mEditor->modeCancel();
   update();
+  mEditor->modeCancel();
   }
 
 

@@ -1086,7 +1086,7 @@ void SdModeSelect::enterPaste(SdPoint point)
     unselect(false);
     mUndo->begin( QObject::tr("Insert from clipboard") );
     //Insert copy of pasted elements into object without selection them
-    mObject->insertObjects( point, &mPaste, mUndo, mEditor, &mFragment, false );
+    mObject->insertObjects( point.sub( mFirst ), &mPaste, mUndo, mEditor, &mFragment, false );
     cancelPaste();
     }
   }

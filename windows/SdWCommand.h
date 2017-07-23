@@ -45,6 +45,8 @@ class SdWCommand
     static QMenu *menuInstruments;
     static QMenu *menuHelp;
 
+    static QMenu *menuSelect;
+
     static QActionPtr cmMenuInsertSymbol;
     static QActionPtr cmMenuInsertSheet;
     static QActionPtr cmMenuInsertPart;
