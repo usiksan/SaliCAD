@@ -95,6 +95,7 @@ class SdWMain : public QMainWindow
     void cmEditPaste();
     void cmEditDelete();
     void cmEditSelectAll();
+    void cmEditUnSelect();
     void cmEditFind();
     void cmEditReplace();
     void cmEditProperties();

@@ -561,6 +561,15 @@ void SdWMain::cmEditSelectAll()
 
 
 
+void SdWMain::cmEditUnSelect()
+  {
+  if( activeEditor() )
+    activeEditor()->cmEditUnSelect();
+  }
+
+
+
+
 void SdWMain::cmEditFind()
   {
   if( activeEditor() )
