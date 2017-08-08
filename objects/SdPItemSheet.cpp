@@ -213,10 +213,27 @@ SdGraphIdent *SdPItemSheet::createIdent()
 
 void SdPItemSheet::insertObjects(SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)
   {
-
+  //TODO insert objects
   }
 
 
 
 
+
+
+
+void SdPItemSheet::writeObject(QJsonObject &obj) const
+  {
+  SdProjectItem::writeObject( obj );
+  obj.insert( QStringLiteral("index"), mSheetIndex );
+  }
+
+
+
+
+void SdPItemSheet::readObject(SdObjectMap *map, const QJsonObject obj)
+  {
+  SdProjectItem::readObject( map, obj );
+  mSheetIndex = obj.value( QStringLiteral("index") ).toInt();
+  }
 

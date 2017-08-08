@@ -341,7 +341,7 @@ void SdGraphPartImp::cloneFrom(const SdObject *src)
 
 void SdGraphPartImp::writeObject(QJsonObject &obj) const
   {
-  SdGraph::writeObject( obj );
+  SdGraphTraced::writeObject( obj );
   obj.insert( QStringLiteral("LogNum"), mLogNumber );
   mOrigin.write( QStringLiteral("Org"), obj );
   mProp.write( obj );
@@ -371,7 +371,7 @@ void SdGraphPartImp::writeObject(QJsonObject &obj) const
 
 void SdGraphPartImp::readObject(SdObjectMap *map, const QJsonObject obj)
   {
-  SdGraph::readObject( map, obj );
+  SdGraphTraced::readObject( map, obj );
   mLogNumber = obj.value( QStringLiteral("LogNum") ).toInt();
   mOrigin.read( QStringLiteral("Org"), obj );
   mProp.read( obj );

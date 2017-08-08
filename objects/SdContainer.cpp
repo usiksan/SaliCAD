@@ -41,8 +41,10 @@ void SdContainer::readObject(SdObjectMap *map, const QJsonObject obj)
   QJsonArray array = obj.value( QStringLiteral("ChildList") ).toArray();
   for( int i = 0; i < array.count(); i++ ) {
     SdObject *ptr = SdObject::read( map, array.at(i).toObject() );
-    if( ptr )
+    if( ptr ) {
+      ptr->setParent( this );
       mChildList.append( ptr );
+      }
     }
   }
 

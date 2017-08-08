@@ -44,7 +44,7 @@ Description
 #include <QDebug>
 
 SdObject::SdObject() :
-  mParent(0),
+  mParent(nullptr),
   mDeleted(false)
   {
 
@@ -99,6 +99,7 @@ void SdObject::detach(SdUndo *undo)
 
 void SdObject::deleteObject(SdUndo *undo)
   {
+  qDebug() << "deleteObject" << mParent;
   if( mParent )
     mParent->deleteChild( this, undo );
   }
@@ -148,7 +149,7 @@ QJsonObject SdObject::write() const
   QJsonObject obj;
   obj.insert( QStringLiteral(SDKO_ID), QJsonValue( getId() ) );
   obj.insert( QStringLiteral(SDKO_TYPE), QJsonValue( getType() ) );
-  writePtr( mParent, QStringLiteral("Parent"), obj );
+  //writePtr( mParent, QStringLiteral("Parent"), obj );
   writeObject( obj );
   const SdProjectItem *item = dynamic_cast<const SdProjectItem*>(this);
   if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol)) )
@@ -176,7 +177,9 @@ void SdObject::writePtr( const SdObject *ptr, const QString name, QJsonObject &o
 
 void SdObject::readObject(SdObjectMap *map, const QJsonObject obj)
   {
-  mParent = dynamic_cast<SdContainer*>( readPtr(QStringLiteral("Parent"), map, obj ) );
+  Q_UNUSED(map)
+  Q_UNUSED(obj)
+  //mParent = dynamic_cast<SdContainer*>( readPtr(QStringLiteral("Parent"), map, obj ) );
   }
 
 
