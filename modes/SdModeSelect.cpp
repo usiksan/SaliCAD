@@ -987,6 +987,10 @@ bool SdModeSelect::enablePaste(quint64 pasteMask) const
 
 bool SdModeSelect::getInfo(SdPoint p, QString &info)
   {
+  //TODO getInfo in select mode
+  Q_UNUSED(p)
+  Q_UNUSED(info)
+  return false;
   }
 
 
@@ -1132,7 +1136,7 @@ void SdModeSelect::insertCopy(SdPoint offset, bool next)
 
 void SdModeSelect::activateMenu()
   {
-  //TODO context menu
+  mEditor->contextMenu( SdWCommand::menuSelect );
   }
 
 

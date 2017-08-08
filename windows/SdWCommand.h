@@ -97,6 +97,7 @@ class SdWCommand
     static QActionPtr  cmEditPaste;
     static QActionPtr  cmEditDelete;
     static QActionPtr  cmEditSelectAll;
+    static QActionPtr  cmEditUnSelect;
     static QActionPtr  cmEditFind;
     static QActionPtr  cmEditReplace;
     static QActionPtr  cmEditProperties;

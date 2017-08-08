@@ -93,6 +93,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmEditDelete = menuEdit->addAction( QIcon(QString(":/pic/editDel.png")), frame->tr("Delete"), frame, SLOT(cmEditDelete()) );
   menuEdit->addSeparator();
   cmEditSelectAll = menuEdit->addAction( QIcon(QString(":/pic/editSelectAll.png")), frame->tr("Select All"), frame, SLOT(cmEditSelectAll()) );
+  cmEditUnSelect  = menuEdit->addAction( QIcon(QString(":/pic/editSelectAll.png")), frame->tr("UnSelect"), frame, SLOT(cmEditUnSelect()) );
   cmEditFind = menuEdit->addAction( frame->tr("Find"), frame, SLOT(cmEditFind()) );
   cmEditReplace = menuEdit->addAction( frame->tr("Replace"), frame, SLOT(cmEditReplace()) );
   menuEdit->addSeparator();
@@ -217,21 +218,19 @@ void SdWCommand::createMenu(SdWMain *frame)
 
   menuSelect = new QMenu( frame->tr("Select") );
   menuSelect->insertAction( nullptr, cmEditUndo );
-  cmEditUndo = menuEdit->addAction( QIcon(QString(":/pic/editUndo.png")), frame->tr("Undo"), frame, SLOT(cmEditUndo()) );
-  cmEditUndo->setEnabled(false);
-  cmEditRedo = menuEdit->addAction( QIcon(QString(":/pic/editRedo.png")), frame->tr("Redo"), frame, SLOT(cmEditRedo()) );
-  cmEditRedo->setEnabled(false);
-  menuEdit->addSeparator();
-  cmEditCopy = menuEdit->addAction( QIcon(QString(":/pic/editCopy.png")), frame->tr("Copy"), frame, SLOT(cmEditCopy()) );
-  cmEditPaste = menuEdit->addAction( QIcon(QString(":/pic/editPaste.png")), frame->tr("Paste"), frame, SLOT(cmEditPaste()) );
-  cmEditCut = menuEdit->addAction( QIcon(QString(":/pic/editCut.png")), frame->tr("Cut"), frame, SLOT(cmEditCut()) );
-  cmEditDelete = menuEdit->addAction( QIcon(QString(":/pic/editDel.png")), frame->tr("Delete"), frame, SLOT(cmEditDelete()) );
-  menuEdit->addSeparator();
-  cmEditSelectAll = menuEdit->addAction( QIcon(QString(":/pic/editSelectAll.png")), frame->tr("Select All"), frame, SLOT(cmEditSelectAll()) );
-  cmEditFind = menuEdit->addAction( frame->tr("Find"), frame, SLOT(cmEditFind()) );
-  cmEditReplace = menuEdit->addAction( frame->tr("Replace"), frame, SLOT(cmEditReplace()) );
-  menuEdit->addSeparator();
-  cmEditProperties = menuEdit->addAction( QIcon(QString(":/pic/editProp.png")), frame->tr("Properties..."), frame, SLOT(cmEditProperties()) );
+  menuSelect->insertAction( nullptr, cmEditRedo );
+  menuSelect->addSeparator();
+  menuSelect->insertAction( nullptr, cmEditCopy );
+  menuSelect->insertAction( nullptr, cmEditPaste );
+  menuSelect->insertAction( nullptr, cmEditCut );
+  menuSelect->insertAction( nullptr, cmEditDelete );
+  menuSelect->addSeparator();
+  menuSelect->insertAction( nullptr, cmEditSelectAll );
+  menuSelect->insertAction( nullptr, cmEditUnSelect );
+  menuSelect->insertAction( nullptr, cmEditFind );
+  menuSelect->insertAction( nullptr, cmEditReplace );
+  menuSelect->addSeparator();
+  menuSelect->insertAction( nullptr, cmEditProperties );
 
 
 
@@ -582,6 +581,7 @@ QActionPtr SdWCommand::cmEditCopy;
 QActionPtr SdWCommand::cmEditPaste;
 QActionPtr SdWCommand::cmEditDelete;
 QActionPtr SdWCommand::cmEditSelectAll;
+QActionPtr SdWCommand::cmEditUnSelect;
 QActionPtr SdWCommand::cmEditFind;
 QActionPtr SdWCommand::cmEditReplace;
 QActionPtr SdWCommand::cmEditProperties;

@@ -105,6 +105,7 @@ void SdModeCTextual::keyDown(int key, QChar ch)
 
 void SdModeCTextual::keyUp(int key, QChar ch)
   {
+  Q_UNUSED(ch)
   switch( key ) {
     case Qt::Key_Shift :
       mShift = false;

@@ -57,6 +57,7 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmEditPaste() {}
     virtual void cmEditDelete() {}
     virtual void cmEditSelectAll() {}
+    virtual void cmEditUnSelect() {}
     virtual void cmEditFind() {}
     virtual void cmEditReplace() {}
     virtual void cmEditProperties() {}

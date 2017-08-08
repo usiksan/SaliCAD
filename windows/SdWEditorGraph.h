@@ -44,7 +44,6 @@ class SdWEditorGraph : public SdWEditor
     bool             mDrag;           //Флаг активного режима перетаскивания
     SdPoint          mDownPoint;      //Точка нажатия левой кнопки мыши
     SdPoint          mPrevPoint;      //Предыдущая точка перемещения мыши
-    QPoint           mCursorPos;      //Позиция курсора в координатах экрана
     SdRect           mLastOver;       //Последний охватывающий прямоугольник
     double           mScrollSizeX;    //Размер скроллинга на еденицу прокрутки
     double           mScrollSizeY;    //Размер скроллинга на еденицу прокрутки
@@ -112,6 +111,7 @@ class SdWEditorGraph : public SdWEditor
     virtual void           cmEditPaste() override;
     virtual void           cmEditDelete() override;
     virtual void           cmEditSelectAll() override;
+    virtual void           cmEditUnSelect() override;
 //    virtual void cmEditFind() {}
 //    virtual void cmEditReplace() {}
 //    virtual void cmEditProperties() {}

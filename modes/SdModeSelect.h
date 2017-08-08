@@ -83,8 +83,8 @@ class SdModeSelect : public SdMode
     void paste();                 //Insert from clipboard
     void selectAll();             //Select all [Выделить все]
     void deleteSelected();        //Delete all selected objects [Удалить все выделенные объекты]
-  protected:
     void unselect( bool update);  //Remove selection [Убрать выделение]
+  protected:
     int  checkPoint( SdPoint p ); //Check object behind point [Проверить объект под точкой]
     void beginCopy( SdPoint p );  //Begin copy process [Начало копирования]
     void dragCopy( SdPoint p );   //Copy process [Процесс копирования]

@@ -157,7 +157,7 @@ void SdWEditorGraph::zoomWindow(SdRect r)
 
 void SdWEditorGraph::contextMenu(QMenu *menu)
   {
-
+  menu->exec( QCursor::pos() );
   }
 
 
@@ -601,8 +601,7 @@ void SdWEditorGraph::mouseReleaseEvent(QMouseEvent *event)
 
 void SdWEditorGraph::mouseMoveEvent(QMouseEvent *event)
   {
-  mCursorPos = event->pos();
-  SdPoint pos = pixel2phys( mCursorPos );
+  SdPoint pos = pixel2phys( event->pos() );
   if( pos != mPrevPoint ) {
     //was a mouse mooving
     if( modeGet() ) {
@@ -703,8 +702,7 @@ SdPoint SdWEditorGraph::pixel2phys(QPoint pos)
 //Setup mouse pos. Where pos is pixel coord
 void SdWEditorGraph::updateMousePos(QMouseEvent *event)
   {
-  mCursorPos = event->pos();
-  SdPoint pos = pixel2phys( mCursorPos );
+  SdPoint pos = pixel2phys( event->pos() );
   if( pos != mPrevPoint ) {
     //was a mouse mooving
     mPrevPoint = pos;
@@ -807,6 +805,16 @@ void SdWEditorGraph::cmEditSelectAll()
   //Only for selecting mode
   if( mMode == mSelect && mSelect != nullptr )
     mSelect->selectAll();
+  }
+
+
+
+
+void SdWEditorGraph::cmEditUnSelect()
+  {
+  //Only for selecting mode
+  if( mMode == mSelect && mSelect != nullptr )
+    mSelect->unselect(false);
   }
 
 
