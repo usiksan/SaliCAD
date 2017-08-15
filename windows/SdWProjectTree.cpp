@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -233,6 +233,7 @@ void SdWProjectTree::renameItem(SdProjectItem *item)
   if( item && item->getProject() == mProject ) {
     //Item from this project
     item->mTreeItem->setText( 0, item->getExtendTitle() );
+    item->mTreeItem->setToolTip( 0, item->getExtendTitle() );
     }
   }
 
@@ -245,6 +246,7 @@ void SdWProjectTree::insertItem(SdProjectItem *item)
     //Item from this project
     item->mTreeItem = new QTreeWidgetItem();
     item->mTreeItem->setText( 0, item->getExtendTitle() );
+    item->mTreeItem->setToolTip( 0, item->getExtendTitle() );
     item->mTreeItem->setIcon( 0, QIcon(item->getIconName()) );
     QTreeWidgetItem *ch = classList( item->getClass() );
     if( ch ) ch->addChild( item->mTreeItem );
@@ -318,22 +320,23 @@ QTreeWidgetItem *SdWProjectTree::createItem(const QString sname, const QString s
 
 
 
-void SdWProjectTree::fillTopItem(QTreeWidgetItem *item, int classId)
+void SdWProjectTree::fillTopItem(QTreeWidgetItem *item, quint64 classId)
   {
   mProject->forEach( classId, [item](SdObject *obj) -> bool {
-      //Образовать элемент списка
-      QTreeWidgetItem *it = new QTreeWidgetItem();
-      SdProjectItem *ctr = dynamic_cast<SdProjectItem*>( obj );
-      if( ctr ) {
-        it->setText( 0, ctr->getExtendTitle() );
-        it->setIcon( 0, QIcon(ctr->getIconName()) );
-        ctr->mTreeItem = it;
-        //it->setData(0, Qt::UserRole, QVariant(ctr->getId()) );
-        item->addChild( it );
-        }
-      return true;
+    //Create list element [Образовать элемент списка]
+    QTreeWidgetItem *it = new QTreeWidgetItem();
+    SdProjectItem *ctr = dynamic_cast<SdProjectItem*>( obj );
+    if( ctr ) {
+      it->setText( 0, ctr->getExtendTitle() );
+      it->setToolTip( 0, ctr->getExtendTitle() );
+      it->setIcon( 0, QIcon(ctr->getIconName()) );
+      ctr->mTreeItem = it;
+      //it->setData(0, Qt::UserRole, QVariant(ctr->getId()) );
+      item->addChild( it );
       }
-      );
+    return true;
+    }
+    );
   }
 
 

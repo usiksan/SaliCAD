@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -46,6 +46,7 @@ class SdProjectItem : public SdContainer
     virtual QString        getId() const override;
     QString                getShortId() const;
     QString                getExtendTitle() const;
+    QString                getToolTip() const;
     QString                getAuthor() const { return mAuthor; }
     int                    getTime() const { return mCreateTime; }
     qint64                 getTimeFromEpoch() const;

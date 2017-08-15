@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Complex mode for selection, edit, move many graph objects
 */
 #include "SdModeSelect.h"
 #include "objects/SdContainerSheetNet.h"
@@ -764,6 +765,8 @@ void SdModeSelect::propGetFromBar()
       graph->setProp( mLocalProp );
     return true;
     });
+
+  update();
   }
 
 

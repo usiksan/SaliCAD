@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -80,7 +80,7 @@ class SdWProjectTree : public QTreeWidget
     QTreeWidgetItem* createItem( const QString sname, const QString stoolTip, const QString sstatusTip );
 
     //Заполнить элемент верхнего уровня
-    void fillTopItem( QTreeWidgetItem *item, int classId );
+    void fillTopItem(QTreeWidgetItem *item, quint64 classId );
 
     QTreeWidgetItem* classList( quint64 classId );
   };
