@@ -104,6 +104,8 @@ class SdWEditorGraph : public SdWEditor
     virtual double         getPPM() const = 0;
 
     //Commands
+    virtual void           cmFilePrint() override;
+
     virtual void           cmEditUndo() override;
     virtual void           cmEditRedo() override;
     virtual void           cmEditCut() override;

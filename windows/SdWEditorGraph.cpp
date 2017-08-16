@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -16,6 +16,7 @@ Description
 #include "SdWView.h"
 #include "SdWCommand.h"
 #include "SdDEnterPosition.h"
+#include "SdDPrint.h"
 #include "objects/SdContext.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdConverterView.h"
@@ -42,6 +43,7 @@ Description
 #include <QMessageBox>
 #include <QDebug>
 #include <QScrollBar>
+#include <QtPrintSupport/QPrinter>
 
 
 SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
@@ -159,6 +161,18 @@ void SdWEditorGraph::zoomWindow(SdRect r)
 void SdWEditorGraph::contextMenu(QMenu *menu)
   {
   menu->exec( QCursor::pos() );
+  }
+
+
+
+
+void SdWEditorGraph::cmFilePrint()
+  {
+  QPrinter printer;
+  SdDPrint printDlg( &printer, this );
+  if( printDlg.exec() ) {
+    //Or pressed, print
+    }
   }
 
 

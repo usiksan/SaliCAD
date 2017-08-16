@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -279,6 +279,10 @@ void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem 
   SdWCommand::cmObjectDelete->setEnabled(enable);
   SdWCommand::cmObjectCopy->setEnabled(enable);
   SdWCommand::cmObjectCut->setEnabled(enable);
+
+  SdWCommand::cmFilePrint->setEnabled(enable);
+  SdWCommand::cmFileExport->setEnabled(enable);
+  SdWCommand::cmFileImport->setEnabled(enable);
 
   if( enable && cur ) {
     SdProjectItem *item = dynamic_cast<SdProjectItem*>( mProject->item( cur ) );

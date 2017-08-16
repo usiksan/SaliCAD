@@ -5,7 +5,7 @@
 #-------------------------------------------------
 CONFIG += c++11
 
-QT       += core gui  network sql
+QT       += core gui network sql printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -162,7 +162,8 @@ SOURCES += \
     objects/SdUtil.cpp \
     modes/SdModeSelect.cpp \
     objects/SdPropSelected.cpp \
-    objects/SdConverterOffset.cpp
+    objects/SdConverterOffset.cpp \
+    windows/SdDPrint.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -317,7 +318,8 @@ HEADERS  += \
     objects/SdUtil.h \
     modes/SdModeSelect.h \
     objects/SdPropSelected.h \
-    objects/SdConverterOffset.h
+    objects/SdConverterOffset.h \
+    windows/SdDPrint.h
 
 DISTFILES += \
     license.txt
@@ -330,4 +332,5 @@ FORMS += \
     windows/SdDNetUnion.ui \
     windows/SdDGetProjectObject.ui \
     windows/SdDGetBus.ui \
-    windows/SdDEnterPosition.ui
+    windows/SdDEnterPosition.ui \
+    windows/SdDPrint.ui
