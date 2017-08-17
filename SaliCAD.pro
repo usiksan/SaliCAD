@@ -163,7 +163,8 @@ SOURCES += \
     modes/SdModeSelect.cpp \
     objects/SdPropSelected.cpp \
     objects/SdConverterOffset.cpp \
-    windows/SdDPrint.cpp
+    windows/SdDPrint.cpp \
+    net/netMain.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -319,7 +320,8 @@ HEADERS  += \
     modes/SdModeSelect.h \
     objects/SdPropSelected.h \
     objects/SdConverterOffset.h \
-    windows/SdDPrint.h
+    windows/SdDPrint.h \
+    net/SdNetCommand.h
 
 DISTFILES += \
     license.txt

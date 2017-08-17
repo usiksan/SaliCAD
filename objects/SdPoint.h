@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  2D point object
 */
 
 #ifndef SDPOINT_H
