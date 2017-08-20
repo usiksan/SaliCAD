@@ -78,42 +78,35 @@ class SdModeSelect : public SdMode
     virtual void    keyUp(int key, QChar ch) override;
 
 
-    void copy();                  //Copy selection to clipboard
-    void cut();                   //Cut selection to clipboard
-    void paste();                 //Insert from clipboard
-    void selectAll();             //Select all [Выделить все]
-    void deleteSelected();        //Delete all selected objects [Удалить все выделенные объекты]
-    void unselect( bool update);  //Remove selection [Убрать выделение]
+    void        copy();                  //Copy selection to clipboard
+    void        cut();                   //Cut selection to clipboard
+    void        paste();                 //Insert from clipboard
+    void        selectAll();             //Select all [Выделить все]
+    void        deleteSelected();        //Delete all selected objects [Удалить все выделенные объекты]
+    void        unselect( bool update);  //Remove selection [Убрать выделение]
+    SdRect      getFragmentOver();       //Return selected fragment over rect
+    SdSelector *getFragment();           //Return selected fragment
   protected:
-    int  checkPoint( SdPoint p ); //Check object behind point [Проверить объект под точкой]
-    void beginCopy( SdPoint p );  //Begin copy process [Начало копирования]
-    void dragCopy( SdPoint p );   //Copy process [Процесс копирования]
-    void stopCopy( SdPoint p );   //Copy complete [Завершение копирования]
-    void beginMove( SdPoint p );  //Moving prepare
-    void dragMove( SdPoint p );   //Moving process
-    void stopMove( SdPoint p );   //Moving complete
-    void beginRect( SdPoint p );  //Begin selection by rect
-    void dragRect( SdPoint p );   //Selection by rect - selection process
-    void stopRect( SdPoint p );   //Selection by rect - selection complete, accumulate selected elements
-    void enterPaste( SdPoint point ); //Вставка фрагмента
-    void cancelPaste();           //Cancel paste [Отмена вставки фрагмента]
-    void showRect( SdContext *ctx );
-    void insertCopy( SdPoint offset, bool next );//Вставить копии объектов
-    void activateMenu();
+    int         checkPoint( SdPoint p ); //Check object behind point [Проверить объект под точкой]
+    void        beginCopy( SdPoint p );  //Begin copy process [Начало копирования]
+    void        dragCopy( SdPoint p );   //Copy process [Процесс копирования]
+    void        stopCopy( SdPoint p );   //Copy complete [Завершение копирования]
+    void        beginMove( SdPoint p );  //Moving prepare
+    void        dragMove( SdPoint p );   //Moving process
+    void        stopMove( SdPoint p );   //Moving complete
+    void        beginRect( SdPoint p );  //Begin selection by rect
+    void        dragRect( SdPoint p );   //Selection by rect - selection process
+    void        stopRect( SdPoint p );   //Selection by rect - selection complete, accumulate selected elements
+    void        enterPaste( SdPoint point ); //Вставка фрагмента
+    void        cancelPaste();           //Cancel paste [Отмена вставки фрагмента]
+    void        showRect( SdContext *ctx );
+    void        insertCopy( SdPoint offset, bool next );//Вставить копии объектов
+    void        activateMenu();
 
   };
 
 #if 0
 class DSelectMode : public DMode {
-  protected:
-
-    virtual CPChar GetStepHelp() const;
-    virtual CPChar GetStepThema() const;
-    virtual int    GetCursor() const;
-    virtual CPChar GetModeHelp() const { return "MSelect"; }
-  public:
-    DSelectMode( DViewer *viewer, DGraphTopPic *obj );
-    ~DSelectMode();
 
     DSelectorPic* GetSelector() { return &fragment; }
 

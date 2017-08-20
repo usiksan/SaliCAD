@@ -1285,6 +1285,22 @@ void SdModeSelect::unselect(bool update)
 
 
 
+SdRect SdModeSelect::getFragmentOver()
+  {
+  return mFragment.getOverRect();
+  }
+
+
+
+
+SdSelector *SdModeSelect::getFragment()
+  {
+  return &mFragment;
+  }
+
+
+
+
 int SdModeSelect::checkPoint(SdPoint p)
   {
   int prevStatus = mState;

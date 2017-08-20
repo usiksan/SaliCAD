@@ -141,6 +141,12 @@ class SdWEditorGraph : public SdWEditor
 
     virtual void           cmEnterPosition() override;
 
+  public slots:
+
+    //Print dialog
+    void    printDialog( SdRect wnd );
+
+
   protected:
     //Activate new mode
     void    modeActivate( SdMode *mode );

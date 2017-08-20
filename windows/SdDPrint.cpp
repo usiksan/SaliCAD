@@ -16,7 +16,9 @@ Description
 
 #include <QtPrintSupport/QPageSetupDialog>
 
-SdDPrint::SdDPrint(QPrinter *printer,  QWidget *parent) :
+
+
+SdDPrint::SdDPrint(SdRect over, SdRect sel, SdRect wnd, double ppm, QPrinter *printer,  QWidget *parent) :
   QDialog(parent),
   mPrinter( printer ),
   ui(new Ui::SdDPrint)
@@ -44,6 +46,8 @@ SdDPrint::SdDPrint(QPrinter *printer,  QWidget *parent) :
   updateOrientation( true );
   }
 
+
+
 SdDPrint::~SdDPrint()
   {
   delete ui;
@@ -60,4 +64,18 @@ void SdDPrint::updateOrientation(bool horizontal)
     ui->mOrientationIcon->setPixmap( QPixmap(QStringLiteral(":/pic/printHorz.png")) );
   else
     ui->mOrientationIcon->setPixmap( QPixmap(QStringLiteral(":/pic/printVert.png")) );
+  }
+
+
+
+
+void SdDPrint::updatePrintArea(int area, SdRect ovr)
+  {
+  //Check area
+  ui->mAreaFull->setChecked( area == SDPA_FULL_OBJECT );
+  ui->mAreaSelection->setChecked( area == SDPA_SELECTION );
+  ui->mAreaWindow->setChecked( area == SDPA_WINDOW );
+  //Setup window coords
+  ui->mAreaWindowBottom->setText( log2physStr(ovr.getBottom()) );
+  ui->mAreaW
   }

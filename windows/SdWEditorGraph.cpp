@@ -36,6 +36,7 @@ Description
 #include "modes/SdModeCLinearRegion.h"
 #include "modes/SdModeCText.h"
 #include "modes/SdModeSelect.h"
+#include "modes/SdModePrintWindow.h"
 
 #include <QPainter>
 #include <QPaintEvent>
@@ -164,16 +165,6 @@ void SdWEditorGraph::contextMenu(QMenu *menu)
   }
 
 
-
-
-void SdWEditorGraph::cmFilePrint()
-  {
-  QPrinter printer;
-  SdDPrint printDlg( &printer, this );
-  if( printDlg.exec() ) {
-    //Or pressed, print
-    }
-  }
 
 
 
@@ -428,14 +419,36 @@ void SdWEditorGraph::cmEnterPosition()
   if( dep.exec() ) {
     //Build point from entered coord
     SdPoint p;
-    p.setX( SdUtil::coord2int( dep.getX(), getPPM() ) );
-    p.setY( SdUtil::coord2int( dep.getY(), getPPM() ) );
+    p.setX( SdUtil::phys2log( dep.getX(), getPPM() ) );
+    p.setY( SdUtil::phys2log( dep.getY(), getPPM() ) );
     if( dep.getRef() )
       //Referenced coord
       p.move( mPrevPoint );
     //Absolute coord
     if( modeGet() )
       modeGet()->enterPoint( p );
+    }
+  }
+
+
+
+
+
+void SdWEditorGraph::printDialog(SdRect wnd)
+  {
+  int dlgRes;
+  QPrinter printer;
+  //By default print whole contens
+  SdRect over = getProjectItem()->getOverRect();
+  SdRect sel = mSelect->getFragmentOver();
+  SdDPrint printDlg( over, sel, wnd, &printer, this );
+  dlgRes = printDlg.exec();
+  if( dlgRes == 1 ) {
+    //Print
+    }
+  else if( dlgRes == 2 ) {
+    //Select window
+    modeSet( new SdModePrintWindow( this, getProjectItem() )  );
     }
   }
 
@@ -742,6 +755,18 @@ void SdWEditorGraph::onActivateEditor()
   //Change status of clipboard
   SdWCommand::cmEditPaste->setEnabled( SdSelector::isClipboardAvailable() );
   }
+
+
+
+
+
+void SdWEditorGraph::cmFilePrint()
+  {
+  //Call printDlg with default window rect
+  printDialog( SdRect() );
+  }
+
+
 
 
 

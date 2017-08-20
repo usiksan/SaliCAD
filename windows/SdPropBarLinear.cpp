@@ -139,7 +139,7 @@ void SdPropBarLinear::getPropLine(SdPropLine *propLine, int *enterType )
       propLine->mLayer = layer;
 
     if( !mWidth->currentText().isEmpty() )
-      propLine->mWidth = SdUtil::coord2int( mWidth->currentText(), mPPM );
+      propLine->mWidth = SdUtil::phys2log( mWidth->currentText(), mPPM );
 
     if( mLineSolid->isChecked() ) propLine->mType = dltSolid;
     else if( mLineDotted->isChecked() ) propLine->mType = dltDotted;
