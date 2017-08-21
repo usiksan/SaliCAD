@@ -22,8 +22,15 @@ class SdUtil
     //Convert textual representation of physical coords to int
     static int     phys2log( const QString src, double ppm );
 
+    //Convert textual representation of physical coord to double phys
+    static double  str2phys( const QString src );
+
     //Convert logical int coords to textual physical
     static QString log2physStr( int log, double ppm );
+
+    //Convert logical int coord to physical
+    static double  log2phys( int log, double ppm );
+
   };
 
 #endif // SDUTIL_H

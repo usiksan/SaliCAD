@@ -14,10 +14,10 @@ Description
 #ifndef SDMODEPRINTWINDOW_H
 #define SDMODEPRINTWINDOW_H
 
-#include "SdMode.h"
+#include "SdModeTemp.h"
 #include "objects/SdRect.h"
 
-class SdModePrintWindow : public SdMode
+class SdModePrintWindow : public SdModeTemp
   {
   public:
     SdModePrintWindow( SdWEditorGraph *editor, SdProjectItem *obj );

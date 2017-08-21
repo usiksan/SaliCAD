@@ -164,7 +164,6 @@ SOURCES += \
     objects/SdPropSelected.cpp \
     objects/SdConverterOffset.cpp \
     windows/SdDPrint.cpp \
-    net/netMain.cpp \
     modes/SdModePrintWindow.cpp
 
 HEADERS  += \

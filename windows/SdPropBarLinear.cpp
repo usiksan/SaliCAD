@@ -38,13 +38,13 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
 
   //on complete editing
   connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [=](){
-    setWidth( mWidth->currentText().toDouble() );
+    setWidth( SdUtil::str2phys( mWidth->currentText() ) );
     emit propChanged();
     });
   //on select other width
   connect( mWidth, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
     Q_UNUSED(index)
-    setWidth( mWidth->currentText().toDouble() );
+    setWidth( SdUtil::str2phys( mWidth->currentText() ) );
     emit propChanged();
     });
 

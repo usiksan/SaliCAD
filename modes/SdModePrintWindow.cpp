@@ -12,7 +12,8 @@ Description
 */
 #include "SdModePrintWindow.h"
 
-SdModePrintWindow::SdModePrintWindow(SdWEditorGraph *editor, SdProjectItem *obj)
+SdModePrintWindow::SdModePrintWindow(SdWEditorGraph *editor, SdProjectItem *obj) :
+  SdModeTemp( editor, obj )
   {
 
   }

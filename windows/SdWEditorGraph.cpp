@@ -441,15 +441,45 @@ void SdWEditorGraph::printDialog(SdRect wnd)
   //By default print whole contens
   SdRect over = getProjectItem()->getOverRect();
   SdRect sel = mSelect->getFragmentOver();
-  SdDPrint printDlg( over, sel, wnd, &printer, this );
+  SdDPrint printDlg( over, sel, wnd, getPPM(), &printer, this );
   dlgRes = printDlg.exec();
   if( dlgRes == 1 ) {
     //Print
+    int printArea = printDlg.getPrintArea();
+    double scale = printDlg.getScaleFactor();
+    if( printArea == SDPA_FULL_OBJECT )
+      print( printer, over, scale, nullptr );
+    else if( printArea == SDPA_SELECTION )
+      print( printer, sel, scale, mSelect->getFragment() );
+    else
+      print( printer, printDlg.getWindow(), scale, nullptr );
     }
   else if( dlgRes == 2 ) {
     //Select window
-    modeSet( new SdModePrintWindow( this, getProjectItem() )  );
+    modeCall( new SdModePrintWindow( this, getProjectItem() )  );
     }
+  }
+
+
+
+
+//Print projectItem or selection in desired window
+void SdWEditorGraph::print(QPrinter &printer, SdRect wnd, double scale, SdSelector *selector)
+  {
+  //Size of page in pixels
+  QRect r = printer.pageRect(QPrinter::DevicePixel).toRect();
+
+  //Create painter, context and converter
+  QPainter painter( &printer );
+  SdContext context( mGrid, &painter );
+  SdConverterView cv( QSize(r.width(),r.height()), wnd.center(), scale );
+  context.setConverter( &cv );
+
+  //Print
+  if( selector == nullptr )
+    getProjectItem()->draw( &context );
+  else
+    selector->draw( &context );
   }
 
 
