@@ -57,7 +57,6 @@ SdDPrint::SdDPrint(SdRect over, SdRect sel, SdRect wnd, double ppm, QPrinter *pr
     updateOrientation(!checked);
     });
 
-  updateOrientation( true );
 
 
 
@@ -107,6 +106,18 @@ SdDPrint::SdDPrint(SdRect over, SdRect sel, SdRect wnd, double ppm, QPrinter *pr
   connect( ui->mAreaWindowSelect, &QPushButton::clicked, this, [this] (bool) {
     done(2);
     });
+
+
+
+  //Autoselect best orientation
+  updateOrientation( false );
+  double vertScale = getScaleFactor();
+  updateOrientation( true );
+  double horzScale = getScaleFactor();
+  if( horzScale < vertScale )
+    updateOrientation( false );
+
+
 
 
   //Copy count
