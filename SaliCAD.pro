@@ -165,7 +165,6 @@ SOURCES += \
     windows/SdDPrint.cpp \
     modes/SdModePrintWindow.cpp \
     bug.cpp \
-    objects/SdUndoRecordDelete.cpp \
     objects/SdUndoRecordInsertDelete.cpp
 
 HEADERS  += \
@@ -324,7 +323,6 @@ HEADERS  += \
     windows/SdDPrint.h \
     net/SdNetCommand.h \
     modes/SdModePrintWindow.h \
-    objects/SdUndoRecordDelete.h \
     objects/SdUndoRecordInsertDelete.h
 
 DISTFILES += \

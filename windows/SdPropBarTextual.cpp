@@ -13,6 +13,7 @@ Description
 */
 #include "SdPropBarTextual.h"
 #include "objects/SdEnvir.h"
+#include "objects/SdUtil.h"
 #include <QList>
 #include <QLineEdit>
 #include <QDoubleValidator>
@@ -47,19 +48,18 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
     mSize->addItem( QString::number( v, 'f', 2) );
   //Select first item
   mSize->setCurrentIndex(0);
-  //TODO B008 Problem with double validation: convert use point and validate comma (for russian local).
-  //mSize->lineEdit()->setValidator( new QDoubleValidator() );
+  mSize->lineEdit()->setValidator( new QRegExpValidator( QRegExp("[0-9]{1,3}((\\.|\\,)[0-9]{0,3})?")) );
   mSize->setMinimumWidth(80);
 
   //on complete editing
   connect( mSize->lineEdit(), &QLineEdit::editingFinished, [=](){
-    setSize( mSize->currentText().toDouble() );
+    setSize( SdUtil::str2phys( mSize->currentText() ) );
     emit propChanged();
     });
   //on select other size
   connect( mSize, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
     Q_UNUSED(index)
-    setSize( mSize->currentText().toDouble() );
+    setSize( SdUtil::str2phys( mSize->currentText() ) );
     emit propChanged();
     });
 
@@ -201,7 +201,7 @@ void SdPropBarTextual::getPropText(SdPropText *propText)
 
     //Get text size
     if( !mSize->currentText().isEmpty() )
-      propText->mSize = static_cast<int>( mSize->currentText().toDouble() / mPPM );
+      propText->mSize = SdUtil::phys2log( mSize->currentText(), mPPM );
 
     //Get text vertical alignment
     if( mVertTop->isChecked() ) propText->mVert = dvjTop;

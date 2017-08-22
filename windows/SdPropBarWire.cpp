@@ -12,6 +12,7 @@ Description
   Properties bar for wires
 */
 #include "SdPropBarWire.h"
+#include "objects/SdUtil.h"
 #include <QLineEdit>
 
 static QList<double> prevWidth;
@@ -30,18 +31,19 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
     mWidth->addItem( QString::number( v, 'f', 3) );
   //Select first item
   mWidth->setCurrentIndex(0);
-  mWidth->lineEdit()->setValidator( new QDoubleValidator() );
+  mWidth->lineEdit()->setValidator( new QRegExpValidator( QRegExp("[0-9]{1,3}((\\.|\\,)[0-9]{0,3})?")) );
+//  mWidth->lineEdit()->setValidator( new QDoubleValidator() );
   mWidth->setMinimumWidth(80);
 
   //on complete editing
   connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [=](){
-    setWidth( mWidth->currentText().toDouble() );
+    setWidth( SdUtil::str2phys( mWidth->currentText() ) );
     emit propChanged();
     });
   //on select other width
   connect( mWidth, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
     Q_UNUSED(index)
-    setWidth( mWidth->currentText().toDouble() );
+    setWidth( SdUtil::str2phys( mWidth->currentText() ) );
     emit propChanged();
     });
 
@@ -167,7 +169,7 @@ void SdPropBarWire::getPropWire(SdPropLine *propLine, int *enterType, QString *w
       propLine->mLayer = layer;
 
     if( !mWidth->currentText().isEmpty() )
-      propLine->mWidth = static_cast<int>( mWidth->currentText().toDouble() / mPPM );
+      propLine->mWidth = SdUtil::phys2log( mWidth->currentText(), mPPM );
 
     if( !mWireName->currentText().isEmpty() )
       *wireName = mWireName->currentText();

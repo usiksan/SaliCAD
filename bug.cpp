@@ -1,5 +1,5 @@
 
-//B008 bugs
+//B010 bugs
 //F001 fatal
 //C001 critical
 //D030 do
@@ -17,8 +17,14 @@
 //TODO B007 arrows key to move cursor
 //Использовать кнопки со стрелками для перемещения курсора
 
+//TODO B009 3 undo's on one text properties changes
+
+//TODO B010 when selecting line width dont setup
+//При выборе линии ширина в панели не соответствует
 
 //Fixed:
+//B008 Problem with double validation: convert use point and validate comma (for russian local).
+
 //D021 undo deleteObject
 
 //B006 when creating editor - dont work print (not enabled)

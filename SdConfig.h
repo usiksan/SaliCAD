@@ -65,6 +65,8 @@ History
                      Select any printer.
                      Correct scale calculation.
                      Color appliance.
+  22.08.2017 v0.25 Print dialog complete.
+                   Append undo deleting.
 */
 
 #ifndef SDCONFIG
@@ -76,7 +78,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             24
+#define SD_VERSION_MINOR             25
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
