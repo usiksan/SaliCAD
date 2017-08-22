@@ -48,6 +48,9 @@ class SdDPrint : public QDialog
 
     //Return current scale factor
     double getScaleFactor();
+
+    //Return color print flag
+    bool   isColor() const;
   private:
     Ui::SdDPrint *ui;
 

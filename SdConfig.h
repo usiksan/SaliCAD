@@ -60,6 +60,11 @@ History
                    in SdGraph::select selector may be nullptr, insert check of this
                    remove empty select (base insertion released in SdGraph::select)
   16.08.2017 v0.23 Begin creation print dialog and print system
+  22.08.2017 v0.24 Continue with print dialog.
+                     Print count.
+                     Select any printer.
+                     Correct scale calculation.
+                     Color appliance.
 */
 
 #ifndef SDCONFIG
@@ -71,11 +76,12 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             23
+#define SD_VERSION_MINOR             24
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
 #define SD_DEFAULT_IP                "62.109.11.83"
+#define SD_DEFAULT_PORT              1970
 
 //Project naming definition
 #define SD_BASE_EXTENSION            ".salicad"

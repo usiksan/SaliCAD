@@ -16,6 +16,7 @@ Description
 #include "objects/SdUtil.h"
 
 #include <QtPrintSupport/QPageSetupDialog>
+#include <QtPrintSupport/QPrintDialog>
 
 
 
@@ -34,8 +35,13 @@ SdDPrint::SdDPrint(SdRect over, SdRect sel, SdRect wnd, double ppm, QPrinter *pr
   ui->mPrinter->setText( mPrinter->printerName() );
 
   connect( ui->mPrinterOptions, &QPushButton::clicked, this, [this] () {
-    QPageSetupDialog setupDlg( mPrinter, this );
+//    QPageSetupDialog setupDlg( mPrinter, this );
+    QPrintDialog setupDlg( mPrinter, this );
     setupDlg.exec();
+    //Update printer name
+    ui->mPrinter->setText( mPrinter->printerName() );
+    //Update copy count
+    ui->mCopyCount->setValue( mPrinter->copyCount() );
     //Update page orientation
     updateOrientation( mPrinter->pageLayout().orientation() == QPageLayout::Landscape );
     });
@@ -101,6 +107,14 @@ SdDPrint::SdDPrint(SdRect over, SdRect sel, SdRect wnd, double ppm, QPrinter *pr
   connect( ui->mAreaWindowSelect, &QPushButton::clicked, this, [this] (bool) {
     done(2);
     });
+
+
+  //Copy count
+  ui->mCopyCount->setValue(1);
+  ui->mCopyCount->setRange(1,100);
+  connect( ui->mCopyCount, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, [this] (int val) {
+    mPrinter->setCopyCount(val);
+    });
   }
 
 
@@ -142,6 +156,15 @@ int SdDPrint::getPrintArea()
 double SdDPrint::getScaleFactor()
   {
   return SdUtil::str2phys( ui->mScaleValue->text() );
+  }
+
+
+
+
+//Return color print flag
+bool SdDPrint::isColor() const
+  {
+  return ui->mColorPrint->isChecked();
   }
 
 
@@ -191,16 +214,16 @@ void SdDPrint::updateScaleFactor()
     SdRect wnd = getWindow();
     //Calculate scale factor log window to page
     double dw = r.width();
-    if( dw == 0 ) dw = 1.0;
     double sw = wnd.width();
-    double scalew = sw / dw;
+    if( sw == 0 ) sw = 1.0;
+    double scalew = dw / sw;
 
     double dh = r.height();
-    if( dh == 0 ) dh = 1.0;
     double sh = wnd.height();
-    double scaleh = sh / dh;
+    if( sh == 0 ) sh = 1.0;
+    double scaleh = dh / sh;
 
-    double scale = qMax( scalew, scaleh );
+    double scale = qMin( scalew, scaleh );
     ui->mScaleValue->setText( QString::number(scale, 'f', 3) );
     }
   }

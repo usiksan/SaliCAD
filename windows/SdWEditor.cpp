@@ -61,6 +61,8 @@ void SdWEditor::onActivateEditor()
   {
   SdWCommand::cmEditUndo->setEnabled( getProject()->getUndo()->isUndoPresent() );
   SdWCommand::cmEditRedo->setEnabled( getProject()->getUndo()->isRedoPresent() );
+
+  SdWCommand::cmFilePrint->setEnabled(true);
   }
 
 

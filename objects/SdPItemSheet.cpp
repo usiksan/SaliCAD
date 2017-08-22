@@ -213,7 +213,7 @@ SdGraphIdent *SdPItemSheet::createIdent()
 
 void SdPItemSheet::insertObjects(SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)
   {
-  //TODO insert objects
+  //TODO B003 sheet insert objects
   }
 
 

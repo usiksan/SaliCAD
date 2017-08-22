@@ -447,12 +447,13 @@ void SdWEditorGraph::printDialog(SdRect wnd)
     //Print
     int printArea = printDlg.getPrintArea();
     double scale = printDlg.getScaleFactor();
+    bool colorPrint = printDlg.isColor();
     if( printArea == SDPA_FULL_OBJECT )
-      print( printer, over, scale, nullptr );
+      print( printer, over, colorPrint, scale, nullptr );
     else if( printArea == SDPA_SELECTION )
-      print( printer, sel, scale, mSelect->getFragment() );
+      print( printer, sel, colorPrint, scale, mSelect->getFragment() );
     else
-      print( printer, printDlg.getWindow(), scale, nullptr );
+      print( printer, printDlg.getWindow(), colorPrint, scale, nullptr );
     }
   else if( dlgRes == 2 ) {
     //Select window
@@ -464,7 +465,7 @@ void SdWEditorGraph::printDialog(SdRect wnd)
 
 
 //Print projectItem or selection in desired window
-void SdWEditorGraph::print(QPrinter &printer, SdRect wnd, double scale, SdSelector *selector)
+void SdWEditorGraph::print(QPrinter &printer, SdRect wnd, bool colorPrint, double scale, SdSelector *selector)
   {
   //Size of page in pixels
   QRect r = printer.pageRect(QPrinter::DevicePixel).toRect();
@@ -474,6 +475,9 @@ void SdWEditorGraph::print(QPrinter &printer, SdRect wnd, double scale, SdSelect
   SdContext context( mGrid, &painter );
   SdConverterView cv( QSize(r.width(),r.height()), wnd.center(), scale );
   context.setConverter( &cv );
+
+  if( !colorPrint )
+    context.setOverColor( Qt::black );
 
   //Print
   if( selector == nullptr )
