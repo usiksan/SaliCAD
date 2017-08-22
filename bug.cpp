@@ -19,6 +19,8 @@
 
 
 //Fixed:
+//D021 undo deleteObject
+
 //B006 when creating editor - dont work print (not enabled)
 
 //B004 dont work space for smart insert
@@ -26,4 +28,5 @@
 
 //B002 print window
 //При печати края не пропечатываются. Увеличивать окно печати.
+
 

@@ -13,7 +13,8 @@ Description
 
 #include "SdUndo.h"
 #include "SdUndoRecordBegin.h"
-#include "SdUndoRecordInsert.h"
+#include "SdUndoRecordInsertDelete.h"
+#include "SdUndoRecordDelete.h"
 #include "SdUndoRecordPropLineAnd3Points.h"
 #include "SdUndoRecordPropTextAndText.h"
 #include "SdUndoRecordPropLinePointInt.h"
@@ -41,7 +42,7 @@ SdUndo::SdUndo() :
 
 void SdUndo::insertObject(SdContainer *container, SdObject *object)
   {
-  addUndo( new SdUndoRecordInsert( container, object ) );
+  addUndo( new SdUndoRecordInsertDelete( container, object ) );
   }
 
 
@@ -49,7 +50,7 @@ void SdUndo::insertObject(SdContainer *container, SdObject *object)
 
 void SdUndo::deleteObject(SdContainer *container, SdObject *object)
   {
-  //TODO D021 deleteObject
+  addUndo( new SdUndoRecordDelete( container, object ) );
   }
 
 

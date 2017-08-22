@@ -77,7 +77,6 @@ SOURCES += \
     windows/SdPropBarLinear.cpp \
     modes/SdModeCLinearRect.cpp \
     objects/SdGraphLinearRect.cpp \
-    objects/SdUndoRecordInsert.cpp \
     modes/SdModeCLinearRectFilled.cpp \
     objects/SdGraphLinearRectFilled.cpp \
     modes/SdModeCLinearLine.cpp \
@@ -165,7 +164,9 @@ SOURCES += \
     objects/SdConverterOffset.cpp \
     windows/SdDPrint.cpp \
     modes/SdModePrintWindow.cpp \
-    bug.cpp
+    bug.cpp \
+    objects/SdUndoRecordDelete.cpp \
+    objects/SdUndoRecordInsertDelete.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -234,7 +235,6 @@ HEADERS  += \
     windows/SdPropBarLinear.h \
     modes/SdModeCLinearRect.h \
     objects/SdGraphLinearRect.h \
-    objects/SdUndoRecordInsert.h \
     objects/SdUndoRecordBegin.h \
     modes/SdModeCLinearRectFilled.h \
     objects/SdGraphLinearRectFilled.h \
@@ -323,7 +323,9 @@ HEADERS  += \
     objects/SdConverterOffset.h \
     windows/SdDPrint.h \
     net/SdNetCommand.h \
-    modes/SdModePrintWindow.h
+    modes/SdModePrintWindow.h \
+    objects/SdUndoRecordDelete.h \
+    objects/SdUndoRecordInsertDelete.h
 
 DISTFILES += \
     license.txt

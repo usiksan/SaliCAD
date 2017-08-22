@@ -9,28 +9,30 @@ Web
   www.saliLab.ru
 
 Description
+  Undo record for deleted object
 */
-#ifndef SDUNDORECORDINSERT_H
-#define SDUNDORECORDINSERT_H
+#ifndef SDUNDORECORDDELETE_H
+#define SDUNDORECORDDELETE_H
 
 #include "SdUndoRecord.h"
 #include "SdObject.h"
 #include "SdContainer.h"
 
-class SdUndoRecordInsert : public SdUndoRecord
+class SdUndoRecordDelete : public SdUndoRecord
   {
     SdContainer *mContainer;
     SdObject    *mObject;
   public:
-    SdUndoRecordInsert( SdContainer *container, SdObject *object );
+    SdUndoRecordDelete( SdContainer *container, SdObject *object );
 
     // SdUndoRecord interface
   public:
-    //Undo elementary operation. Return true on last undo (first operation in undo block)
+    //Undo elementary operation.
     virtual void undo() override;
 
-    //Redo elementary operation. Return true on first redo
+    //Redo elementary operation.
     virtual void redo() override;
+
   };
 
-#endif // SDUNDORECORDINSERT_H
+#endif // SDUNDORECORDDELETE_H
