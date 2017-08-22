@@ -96,6 +96,8 @@ void SdMode::keyDown(int key, QChar ch)
     mEditor->scaleStep( 2.0 );
   else if( key == Qt::Key_Minus )
     mEditor->scaleStep( 0.5 );
+  else if( key == Qt::Key_Space )
+    enterPrev();
   Q_UNUSED(ch)
   }
 

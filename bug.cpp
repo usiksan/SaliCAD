@@ -13,13 +13,13 @@
 //TODO B003 copy in sheet
 //При копировании в sheet нету вставки
 
-//TODO B004 dont work space
-//Не работает пробел для выбора по разумному режиму
-
 //TODO B005 dont work wheel functions
 //Не работает функция колеса
 
 
 //Fixed:
 //B006 when creating editor - dont work print (not enabled)
+
+//B004 dont work space for smart insert
+//Не работает пробел для выбора по разумному режиму
 

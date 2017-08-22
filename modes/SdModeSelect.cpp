@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -1148,7 +1148,6 @@ void SdModeSelect::activateMenu()
 
 void SdModeSelect::keyDown(int key, QChar ch)
   {
-  Q_UNUSED(ch)
   switch( key ) {
     case Qt::Key_Copy    : copy();  break;
     case Qt::Key_Paste   : paste(); break;
@@ -1173,6 +1172,7 @@ void SdModeSelect::keyDown(int key, QChar ch)
           });
         }
       break;
+    default : SdMode::keyDown( key, ch );
     }
   update();
   }
