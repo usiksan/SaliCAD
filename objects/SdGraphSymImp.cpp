@@ -311,7 +311,7 @@ bool SdGraphSymImp::isPinConnected(int pinIndex) const
 //Get BOM item line
 QString SdGraphSymImp::getBomItemLine() const
   {
-  //TODO make BOM
+  //TODO D013 make BOM
   return QString();
 #if 0
   QString bom = mParam.value( QStringLiteral("bom") ).toString();
@@ -396,7 +396,7 @@ void SdGraphSymImp::setIdentInfo(const QString prefix, int logNumber, int logSec
 //Move ident regarding symbol implement
 void SdGraphSymImp::moveIdent(SdPoint offset)
   {
-  //TODO update origin regarding symbol
+  //TODO D004 update origin regarding symbol
   mIdentOrigin = mIdentPos.unConvertImplement( mOrigin, offset, mProp.mAngle, mProp.mMirror.getValue() );
   mIdentPos.move( offset );
   }

@@ -279,6 +279,6 @@ int SdGraphArea::behindCursor(SdPoint p)
 bool SdGraphArea::snapPoint(SdSnapInfo *snap)
   {
   Q_UNUSED(snap)
-  //TODO add snap to area
+  //TODO D014 add snap to area
   return false;
   }

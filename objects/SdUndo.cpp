@@ -49,7 +49,7 @@ void SdUndo::insertObject(SdContainer *container, SdObject *object)
 
 void SdUndo::deleteObject(SdContainer *container, SdObject *object)
   {
-  //TODO deleteObject
+  //TODO D021 deleteObject
   }
 
 

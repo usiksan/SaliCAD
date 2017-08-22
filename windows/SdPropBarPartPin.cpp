@@ -23,7 +23,7 @@ void SdPropBarPartPin::setPropPartPin(SdPropPartPin *propPartPin)
     //Set current layer
     setSelectedLayer( propPartPin->mLayer.layer(false) );
 
-    //TODO Set current pin type
+    //TODO D019 Set current pin type
     //mPinType->setCurrentIndex( propSymPin->mPinType.getValue() );
     }
   }

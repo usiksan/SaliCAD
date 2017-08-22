@@ -126,6 +126,11 @@ SdDPrint::SdDPrint(SdRect over, SdRect sel, SdRect wnd, double ppm, QPrinter *pr
   connect( ui->mCopyCount, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, [this] (int val) {
     mPrinter->setCopyCount(val);
     });
+
+
+  //Zero width line
+  ui->mZeroLineWidth->setValue(0);
+  ui->mZeroLineWidth->setRange(0,100);
   }
 
 
@@ -140,10 +145,11 @@ SdDPrint::~SdDPrint()
 
 SdRect SdDPrint::getWindow()
   {
-  int left = SdUtil::phys2log( ui->mAreaWindowLeft->text(), mPPM );
-  int bottom = SdUtil::phys2log( ui->mAreaWindowBottom->text(), mPPM );
-  int right = SdUtil::phys2log( ui->mAreaWindowRight->text(), mPPM );
-  int top = SdUtil::phys2log( ui->mAreaWindowTop->text(), mPPM );
+  //+-10 is for exclude clipping at area edges
+  int left = SdUtil::phys2log( ui->mAreaWindowLeft->text(), mPPM ) - 10;
+  int bottom = SdUtil::phys2log( ui->mAreaWindowBottom->text(), mPPM ) - 10;
+  int right = SdUtil::phys2log( ui->mAreaWindowRight->text(), mPPM ) + 10;
+  int top = SdUtil::phys2log( ui->mAreaWindowTop->text(), mPPM ) + 10;
   return SdRect( SdPoint(left,bottom), SdPoint(right,top) );
   }
 
@@ -176,6 +182,15 @@ double SdDPrint::getScaleFactor()
 bool SdDPrint::isColor() const
   {
   return ui->mColorPrint->isChecked();
+  }
+
+
+
+
+//Return zero width line conversion width
+int SdDPrint::getZeroWidth() const
+  {
+  return ui->mZeroLineWidth->value();
   }
 
 

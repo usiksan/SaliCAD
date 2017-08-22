@@ -537,7 +537,7 @@ int SdGraphPartImp::behindCursor(SdPoint p)
 
 bool SdGraphPartImp::getInfo(SdPoint p, QString &info, bool extInfo)
   {
-  //TODO getInfo partImp
+  //TODO D024 getInfo partImp
   return false;
   }
 
@@ -546,7 +546,7 @@ bool SdGraphPartImp::getInfo(SdPoint p, QString &info, bool extInfo)
 
 bool SdGraphPartImp::snapPoint(SdSnapInfo *snap)
   {
-  //TODO snap partImp
+  //TODO D010 snap partImp
   return false;
   }
 

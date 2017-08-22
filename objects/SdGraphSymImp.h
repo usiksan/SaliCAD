@@ -143,7 +143,7 @@ class SdGraphSymImp : public SdGraph
     void          linkAutoPart( SdUndo *undo );
     //Replace part
     void          replacePart( SdPItemPart *part, SdUndo *undo );
-    //TODO Accum auto net
+    //TODO D017 Accum auto net
     //void          autoNet( DNetListTable &table );         //Накопить цепи в текстовый список цепей
     //Replace symbol
     void          replace( SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *symbol, SdUndo *undo );

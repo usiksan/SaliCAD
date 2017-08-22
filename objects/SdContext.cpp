@@ -30,7 +30,8 @@ SdContext::SdContext(SdPoint grid, QPainter *painter) :
   mAngle(0),
   mScaler(1.0),
   mPairLayer(false),
-  mOverOn(false)      //True if overriding is on
+  mOverOn(false),      //True if overriding is on
+  mZeroOn(false)       //True if overriding zero width line on
   {
 
   }
@@ -112,7 +113,6 @@ void SdContext::partPin(SdPoint a, SdLayer *layer)
 void SdContext::cross(SdPoint a, int size, QColor color)
   {
   setPen( 0, color, dltSolid );
-//  mPainter->setPen( QPen( QBrush(color), 0 ) );
   line( SdPoint(a.x()-size,a.y()-size), SdPoint(a.x()+size,a.y()+size ) );
   line( SdPoint(a.x()+size,a.y()-size), SdPoint(a.x()-size,a.y()+size ) );
   }
@@ -454,7 +454,7 @@ void SdContext::smartPoint(SdPoint a, int smartMask)
 void SdContext::dotTrase(SdPoint p)
   {
   Q_UNUSED(p)
-  //TODO dotTrase
+  //TODO D022 draw dotTrase
   }
 
 
@@ -476,7 +476,11 @@ void SdContext::setPen(int width, QColor color, int lineStyle)
   else if( lineStyle == dltDashed ) style = Qt::DashLine;
   else style = Qt::SolidLine;
 
-  mPainter->setPen( QPen( QBrush( color ), mScaler.phys2pixel(width), style ) );
+  if( mZeroOn && width == 0 )
+    //When zero width line conversion is on, then draw zero line with setupped width
+    mPainter->setPen( QPen( QBrush( color ), mZeroWidth, style ) );
+  else
+    mPainter->setPen( QPen( QBrush( color ), mScaler.phys2pixel(width), style ) );
   }
 
 

@@ -117,7 +117,7 @@ SdProp::SdProp()
   mPartIdentProp.mVert   = dvjMiddle;
   mPartIdentProp.mMirror = 0;
 
-  //TODO setup all prop defaults
+  //TODO D011 setup all prop defaults
 //  SdPropRoad    mRoadProp;       //Свойства дорожки
 ////    SdViaProp    viaProp;        //Свойства переходных отверстий
 //  SdPropText    mTextDocProp;    //Свойства текста в текстовых документах

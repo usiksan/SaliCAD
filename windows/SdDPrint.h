@@ -51,6 +51,9 @@ class SdDPrint : public QDialog
 
     //Return color print flag
     bool   isColor() const;
+
+    //Return zero width line conversion width
+    int    getZeroWidth() const;
   private:
     Ui::SdDPrint *ui;
 

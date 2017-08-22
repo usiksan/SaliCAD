@@ -201,13 +201,13 @@ void SdWEditorGraph::modeSet(SdMode *mode)
       if( mode ) delete mode;
       return;
       }
-    //TODO Check if name unical for this author
+    //TODO D018 Check if name unical for this author
 
     getProjectItem()->updateAuthor();
     getProjectItem()->updateCreationTime();
     }
   //Mode set. Its also set edit status for graph object
-  //TODO set edit status
+  //TODO D012 set edit status
   //Стековый режим - снести совсем
   //Прежний режим - снести (если выделения - то просто затереть, иначе - для обычного режима
   //снести совсем, а для выделения перенести в прежний
@@ -448,12 +448,13 @@ void SdWEditorGraph::printDialog(SdRect wnd)
     int printArea = printDlg.getPrintArea();
     double scale = printDlg.getScaleFactor();
     bool colorPrint = printDlg.isColor();
+    int zeroWidth = printDlg.getZeroWidth();
     if( printArea == SDPA_FULL_OBJECT )
-      print( printer, over, colorPrint, scale, nullptr );
+      print( printer, printDlg.getWindow(), zeroWidth, colorPrint, scale, nullptr );
     else if( printArea == SDPA_SELECTION )
-      print( printer, sel, colorPrint, scale, mSelect->getFragment() );
+      print( printer, printDlg.getWindow(), zeroWidth, colorPrint, scale, mSelect->getFragment() );
     else
-      print( printer, printDlg.getWindow(), colorPrint, scale, nullptr );
+      print( printer, printDlg.getWindow(), zeroWidth, colorPrint, scale, nullptr );
     }
   else if( dlgRes == 2 ) {
     //Select window
@@ -465,7 +466,7 @@ void SdWEditorGraph::printDialog(SdRect wnd)
 
 
 //Print projectItem or selection in desired window
-void SdWEditorGraph::print(QPrinter &printer, SdRect wnd, bool colorPrint, double scale, SdSelector *selector)
+void SdWEditorGraph::print(QPrinter &printer, SdRect wnd, int zeroWidth, bool colorPrint, double scale, SdSelector *selector)
   {
   //Size of page in pixels
   QRect r = printer.pageRect(QPrinter::DevicePixel).toRect();
@@ -478,6 +479,9 @@ void SdWEditorGraph::print(QPrinter &printer, SdRect wnd, bool colorPrint, doubl
 
   if( !colorPrint )
     context.setOverColor( Qt::black );
+
+  if( zeroWidth )
+    context.setOverZeroWidth( zeroWidth );
 
   //Print
   if( selector == nullptr )
@@ -621,7 +625,7 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
     }
 
   //Рисовать курсор
-  //TODO cursor
+  //TODO D020 draw cursor
   //wc.DrawHideCursor( prevPoint );
   }
 

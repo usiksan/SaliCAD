@@ -135,7 +135,7 @@ SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *p
       //If no object in local database then doing nothing
       if( soft ) return nullptr;
 
-      //TODO load object from server
+      //TODO D025 load object from server
       }
     //Build object
     SdObjectMap map;

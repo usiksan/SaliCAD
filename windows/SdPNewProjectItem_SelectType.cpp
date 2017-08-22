@@ -97,7 +97,7 @@ bool SdPNewProjectItem_SelectType::validatePage()
       *mItemPtr = new SdPItemComponent();
       name = tr("Component%1");
       break;
-      //TODO text doc
+      //TODO D005 text doc
     }
 
   //Pick up name

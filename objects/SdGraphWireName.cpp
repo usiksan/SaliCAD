@@ -120,7 +120,7 @@ void SdGraphWireName::mirror(SdPoint a, SdPoint b)
 void SdGraphWireName::setProp(SdPropSelected &prop)
   {
   mProp = prop.mTextProp;
-  //TODO when change name of wire
+  //TODO D003 when change name of wire
   }
 
 

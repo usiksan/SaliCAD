@@ -240,7 +240,7 @@ void SdWEditorComponent::sectionDelete()
 void SdWEditorComponent::sectionDeleteAll()
   {
   if( QMessageBox::question( this, tr("Attention!"), tr("Are You sure delete All sections?") ) == QMessageBox::Yes ) {
-    //TODO add delete all sections
+    //TODO D015 add delete all sections
     }
   }
 
@@ -345,7 +345,7 @@ void SdWEditorComponent::partDefault()
 void SdWEditorComponent::partDeleteAll()
   {
   if( QMessageBox::question( this, tr("Attention!"), tr("Are You sure delete All parts?") ) == QMessageBox::Yes ) {
-    //TODO add delete all parts
+    //TODO D016 add delete all parts
     }
   }
 

@@ -170,7 +170,7 @@ void SdGraphLinearRegion::draw(SdContext *dc)
 bool SdGraphLinearRegion::snapPoint(SdSnapInfo *snap)
   {
   Q_UNUSED(snap)
-  //TODO snap region
+  //TODO D009 snap region
   return false;
   }
 

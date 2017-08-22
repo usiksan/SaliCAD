@@ -150,7 +150,7 @@ class SdWEditorGraph : public SdWEditor
 
   protected:
     //Print projectItem or selection in desired window
-    void    print(QPrinter &printer, SdRect wnd, bool colorPrint, double scale, SdSelector *selector );
+    void    print(QPrinter &printer, SdRect wnd, int zeroWidth, bool colorPrint, double scale, SdSelector *selector );
 
     //Activate new mode
     void    modeActivate( SdMode *mode );

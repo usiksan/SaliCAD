@@ -749,11 +749,11 @@ void SdModeSelect::propGetFromBar()
       }
       break;
     case PB_PART_IMP : {
-      //TODO partPropBar in select mode
+      //TODO D027 partPropBar in select mode
       }
       break;
     case PB_ROAD : {
-      //TODO roadPropBar in select mode
+      //TODO D030 roadPropBar in select mode
       }
       break;
     }
@@ -818,11 +818,11 @@ void SdModeSelect::propSetToBar()
       }
       break;
     case PB_PART_IMP : {
-      //TODO partPropBar in select mode
+      //TODO D026 partPropBar in select mode
       }
       break;
     case PB_ROAD : {
-      //TODO roadPropBar in select mode
+      //TODO D029 roadPropBar in select mode
       }
       break;
     }
@@ -990,7 +990,7 @@ bool SdModeSelect::enablePaste(quint64 pasteMask) const
 
 bool SdModeSelect::getInfo(SdPoint p, QString &info)
   {
-  //TODO getInfo in select mode
+  //TODO D023 getInfo in select mode
   Q_UNUSED(p)
   Q_UNUSED(info)
   return false;
@@ -1156,7 +1156,7 @@ void SdModeSelect::keyDown(int key, QChar ch)
     case Qt::Key_Shift   : mShift = true; break;
     case Qt::Key_Control : mControl = true; break;
     case Qt::Key_Delete  : deleteSelected(); break;
-      //TODO special codes
+      //TODO D008 special codes
 //    case vkDubl     : SetDirty(); Dublicate(); break;
 //    case vkParam    : SetDirty(); Param(); break;
 //    case vkNumerate : SetDirty(); Numerate(); break;

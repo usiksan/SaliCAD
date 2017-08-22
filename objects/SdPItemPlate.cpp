@@ -193,7 +193,7 @@ void SdPItemPlate::writeObject(QJsonObject &obj) const
   {
   SdProjectItem::writeObject( obj );
   mPartRow.write( QStringLiteral("PartRow"), obj );
-  //TODO write pad assotiation
+  //TODO D001 write pad assotiation
 
   }
 
@@ -204,6 +204,6 @@ void SdPItemPlate::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdProjectItem::readObject( map, obj );
   mPartRow.read( QStringLiteral("PartRow"), obj );
-  //TODO read pad assotiation
+  //TODO D028 read pad assotiation
 
   }

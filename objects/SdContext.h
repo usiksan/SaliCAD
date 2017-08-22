@@ -44,6 +44,8 @@ class SdContext {
     bool            mPairLayer;    //True for paired layer
     QColor          mOverColor;    //Color for overriding default layers color
     bool            mOverOn;       //True if overriding is on
+    int             mZeroWidth;    //Width for zero width line
+    bool            mZeroOn;       //True if overriding zero width line on
   public:
     SdContext(SdPoint grid, QPainter *painter);
 
@@ -56,6 +58,12 @@ class SdContext {
     //By default over color is not defined
     void            setOverColor( QColor color ) { mOverColor = color; mOverOn = true; }
     void            resetOverColor() { mOverOn = false; }
+
+
+    //Overriding zero width line. If this width is setupedthen drawing perform with this width when draw zero width line.
+    //This possibility is for print. By default over width is not defined
+    void            setOverZeroWidth( int width ) { mZeroWidth = width; mZeroOn = true; }
+    void            resetOverZeroWidth() { mZeroOn = false; }
 
     //Операции с селектором
     void            setSelector( SdSelector *selector );
