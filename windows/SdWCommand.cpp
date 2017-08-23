@@ -362,7 +362,7 @@ void SdWCommand::addDrawCommands(QToolBar *bar)
   bar->insertAction( 0, cmModeTable[MD_REGION] );
   bar->insertAction( 0, cmModeTable[MD_FILL_REGION] );
   bar->insertAction( 0, cmModeTable[MD_CIRCLE] );
-  //bar->insertAction( 0, cmModeTable[MD_FILL_CIRCLE] );
+  bar->insertAction( 0, cmModeTable[MD_FILL_CIRCLE] );
   bar->insertAction( 0, cmModeTable[MD_ARC] );
   bar->insertAction( 0, cmModeTable[MD_TEXT] );
   //bar->insertAction( 0, cmModeTable[MD_FIELD] );

@@ -1,5 +1,5 @@
 
-//B010 bugs
+//B014 bugs
 //F001 fatal
 //C001 critical
 //D030 do
@@ -19,10 +19,24 @@
 
 //TODO B009 3 undo's on one text properties changes
 
-//TODO B010 when selecting line width dont setup
+//TODO B011 when inserting sheet wires - they not connected to symImp
+
+//TODO B012 when moving symImp and stop, when connecting to sheet wires - abnormal finish
+
+//TODO B013 smart mode for sheet wire start at 0,0
+
+//TODO B014 previous setuped text size don't set. Only after begin editing
+
+
+//===================================================================================
+//Fixed:
+//B010 when selecting line width dont setup
 //При выборе линии ширина в панели не соответствует
 
-//Fixed:
+//D028 read pad assotiation
+
+//D001 write pad assotiation
+
 //B008 Problem with double validation: convert use point and validate comma (for russian local).
 
 //D021 undo deleteObject

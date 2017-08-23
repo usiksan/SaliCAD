@@ -18,7 +18,7 @@ Description
 int SdUtil::phys2log(const QString src, double ppm)
   {
   if( ppm == 0 ) ppm = 1.0;
-  return str2phys(src) / ppm;
+  return (str2phys(src) + ppm/2) / ppm;
   }
 
 

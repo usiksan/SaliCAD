@@ -33,6 +33,8 @@ SdPItemPlate::SdPItemPlate() :
 
 SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym, SdUndo *undo )
   {
+  if( part == nullptr )
+    return nullptr;
   //At first, scan all part implements and find match
   SdGraphPartImp *res = nullptr;
   forEach( dctPartImp, [&] (SdObject *obj) -> bool {
@@ -193,8 +195,15 @@ void SdPItemPlate::writeObject(QJsonObject &obj) const
   {
   SdProjectItem::writeObject( obj );
   mPartRow.write( QStringLiteral("PartRow"), obj );
-  //TODO D001 write pad assotiation
 
+  //Write pad assotiation
+  QMapIterator<QString,SdPItemPart*> it( mPadAssotiation );
+  QJsonObject assotiation;
+  while( it.hasNext() ) {
+    SdPItemPart *part = it.next().value();
+    writePtr( part, it.key(), assotiation );
+    }
+  obj.insert( QStringLiteral("PadAssotiation"), assotiation );
   }
 
 
@@ -204,6 +213,10 @@ void SdPItemPlate::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdProjectItem::readObject( map, obj );
   mPartRow.read( QStringLiteral("PartRow"), obj );
-  //TODO D028 read pad assotiation
-
+  //Read pad assotiation
+  mPadAssotiation.clear();
+  QJsonObject assotiation = obj.value( QStringLiteral("PadAssotiation") ).toObject();
+  for( QJsonObject::const_iterator it = assotiation.constBegin(); it != assotiation.constEnd(); it++ ) {
+    mPadAssotiation.insert( it.key(), dynamic_cast<SdPItemPart*>(readPtr( map, it.value().toObject() ))  );
+    }
   }

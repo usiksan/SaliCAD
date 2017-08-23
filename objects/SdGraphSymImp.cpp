@@ -736,15 +736,16 @@ void SdGraphSymImp::createPins(SdUndo *undo)
 //Link auto partImp in given plate. partImp and section are selected automatic
 void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
   {
+  if( mPart != nullptr ) {
+    //Get part where this section resides
+    int section = -1;
+    SdGraphPartImp *partImp = plate->allocPartImp( &section, mPart, mComponent, mSymbol, undo );
+    Q_ASSERT( partImp != nullptr );
 
-  //Get part where this section resides
-  int section = -1;
-  SdGraphPartImp *partImp = plate->allocPartImp( &section, mPart, mComponent, mSymbol, undo );
-  Q_ASSERT( partImp != nullptr );
-
-  //Link to part
-  partImp->setLinkSection( section, this );
-  setLinkSection( section, partImp );
+    //Link to part
+    partImp->setLinkSection( section, this );
+    setLinkSection( section, partImp );
+    }
   }
 
 

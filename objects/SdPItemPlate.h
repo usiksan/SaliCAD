@@ -71,7 +71,7 @@ class SdPItemPlate : public SdProjectItem
     virtual quint64       getClass() const override;
     virtual void          cloneFrom(const SdObject *src) override;
     virtual void          writeObject(QJsonObject &obj) const override;
-    virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual void          readObject(SdObjectMap *map, const QJsonObject obj) override;
 
     // SdProjectItem interface
   public:

@@ -193,5 +193,7 @@
         <file>pic/zoomin.cur</file>
         <file>pic/zoomout.cur</file>
         <file>pic/zoomwin.cur</file>
+        <file>pic/drawFCircle.png</file>
+        <file>pic/drawFRegion.png</file>
     </qresource>
 </RCC>

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -45,6 +45,8 @@ class SdPropInt
     void       read( const QString name, const QJsonObject obj ) { mValue = obj.value(name).toInt(); }
 
     int        swap( int v ) { int t = mValue; mValue = v; return t; }
+
+    bool       isValid() const { return mValue >= 0; }
   };
 
 #endif // SDINTPROP_H

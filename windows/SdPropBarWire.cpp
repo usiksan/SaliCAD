@@ -145,7 +145,12 @@ void SdPropBarWire::setPropWire(SdPropLine *propLine, double ppm, int enterType,
 
     //Set current width
     mPPM = ppm;
-    setWidth( propLine->mWidth.getDouble() * mPPM );
+    if( propLine->mWidth.isValid() ) {
+      mWidth->setCurrentText( QString::number( propLine->mWidth.getDouble() * mPPM, 'f', 3 )  );
+      setWidth( propLine->mWidth.getDouble() * mPPM );
+      }
+    else
+      mWidth->setCurrentText( QString()  );
 
     //line enter type
     setVertexType( enterType );

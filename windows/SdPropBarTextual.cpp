@@ -48,7 +48,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
     mSize->addItem( QString::number( v, 'f', 2) );
   //Select first item
   mSize->setCurrentIndex(0);
-  mSize->lineEdit()->setValidator( new QRegExpValidator( QRegExp("[0-9]{1,3}((\\.|\\,)[0-9]{0,3})?")) );
+  mSize->lineEdit()->setValidator( new QRegExpValidator( QRegExp("[0-9]{0,3}((\\.|\\,)[0-9]{0,3})?")) );
   mSize->setMinimumWidth(80);
 
   //on complete editing
@@ -170,7 +170,12 @@ void SdPropBarTextual::setPropText(SdPropText *propText, double ppm)
 
     //Set current width
     mPPM = ppm;
-    setSize( propText->mSize.getDouble() * mPPM );
+    if( propText->mSize.isValid() ) {
+      mSize->setCurrentText( QString::number( propText->mSize.getDouble() * mPPM, 'f', 2) );
+      setSize( propText->mSize.getDouble() * mPPM );
+      }
+    else
+      mSize->setCurrentText( QString( ) );
 
     //Vertical alignment
     setVerticalAlignment( propText->mVert.getValue() );
