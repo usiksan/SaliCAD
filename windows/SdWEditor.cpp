@@ -15,7 +15,8 @@ Description
 #include "SdWEditor.h"
 #include "SdWCommand.h"
 
-SdWEditor::SdWEditor(QWidget *parent) : QAbstractScrollArea(parent)
+SdWEditor::SdWEditor(QWidget *parent) :
+  QAbstractScrollArea(parent)
   {
 
   }
@@ -44,7 +45,7 @@ void SdWEditor::dirtyProject()
 
 QString SdWEditor::getTitle()
   {
-  return getProjectItem()->getTitle();
+  return getProjectItem()->getTitle() + (getProjectItem()->isEditEnable() ? QStringLiteral(" [*]") : QStringLiteral(" [-]"));
   }
 
 
@@ -57,6 +58,8 @@ QString SdWEditor::getIconName()
 
 
 
+
+
 void SdWEditor::onActivateEditor()
   {
   SdWCommand::cmEditUndo->setEnabled( getProject()->getUndo()->isUndoPresent() );
@@ -64,6 +67,7 @@ void SdWEditor::onActivateEditor()
 
   SdWCommand::cmFilePrint->setEnabled(true);
   }
+
 
 
 

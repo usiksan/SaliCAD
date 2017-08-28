@@ -66,12 +66,15 @@ SdProjectItem *SdProject::getProjectsItem(SdProjectItem *item)
   //First try find equal object
   SdProjectItem *res = getProjectsItem( item->getClass(), item->getId() );
   //If object is found then return it
-  if( res )
+  if( res ) {
+    res->setEditEnable(false);
     return res;
+    }
   //else insert copy
   res = dynamic_cast<SdProjectItem*>( item->copy() );
   Q_ASSERT( res != nullptr );
   insertChild( res, &mUndo );
+  res->setEditEnable(false);
   return res;
   }
 

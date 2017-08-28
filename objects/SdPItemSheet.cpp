@@ -19,7 +19,8 @@ Description
 #include "SdGraphIdent.h"
 #include "SdProject.h"
 
-SdPItemSheet::SdPItemSheet()
+SdPItemSheet::SdPItemSheet() :
+  SdProjectItem()
   {
 
   }
@@ -215,6 +216,20 @@ void SdPItemSheet::insertObjects(SdPoint offset, SdSelector *sel, SdUndo *undo, 
   {
   //TODO B003 sheet insert objects
   }
+
+
+
+
+//Set editEnable flag. Return copy object when object editing is prohibited
+SdProjectItem *SdPItemSheet::setEditEnable(bool edit)
+  {
+  Q_UNUSED(edit)
+  return this;
+  }
+
+
+
+
 
 
 

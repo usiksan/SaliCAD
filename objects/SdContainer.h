@@ -62,6 +62,11 @@ class SdContainer : public SdObject
 
   private:
     void         clearChildList();
+
+    // SdObject interface
+  public:
+    //Return true if used any of objects in container but exclude itself objects in container
+    virtual bool isUsed(SdObject *test) const override;
   };
 
 

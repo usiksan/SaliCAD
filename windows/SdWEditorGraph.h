@@ -32,11 +32,11 @@ class SdWEditorGraph : public SdWEditor
     Q_OBJECT
 
   protected:
-    SdWView         *mView;           //Порт для отображения объекта
-    SdMode          *mMode;           //Режим для исполнения операций
-    SdMode          *mPrevMode;       //Предыдущий режим
-    SdMode          *mStack;          //Временный режим
-    SdModeSelect    *mSelect;         //Режим выделения
+    SdWView         *mView;           //Port for object view [Порт для отображения объекта]
+    SdMode          *mMode;           //Current active mode [Режим для исполнения операций]
+    SdMode          *mPrevMode;       //Previous mode [Предыдущий режим]
+    SdMode          *mStack;          //Temporary mode [Временный режим]
+    SdModeSelect    *mSelect;         //Select mode [Режим выделения]
     SdScaler         mScale;          //Текущий масштаб изображения
     SdPoint          mOrigin;         //Логическая точка центра изображения
     SdPoint          mClientSize;     //Размер клиентской области в пикселах
@@ -51,17 +51,6 @@ class SdWEditorGraph : public SdWEditor
     QTransform       mPixelTransform; //Pixel to phys transformation
     bool             mCasheDirty;     //Cashe dirty flag. When true - static part redrawn
     QImage           mCashe;          //Cashe for static picture part
-
-//    int    ScaleDCoord( DCoord sour );         //Преобразовать логическую координату в экранную
-//    NPoint ScaleDPoint( DPoint p );            //Преобразовать логическую точку в экранную
-//    DPoint ConvertPoint( LPARAM lParam );      //Преобразовать экранную точку в логическую
-//    DCoord Convert( int i );                   //Преобразовать экранную координату в логическую
-//    void   AssignGraphBar( NControlBar *bar ); //Добавляет стандартную панель инструментов
-//    int    ConvertKeyCode( WPARAM wParam );    //Преобразование кодов клавиш в специальные коды
-
-    bool   editedFlag;  //Флаг состояния редактирования проекта
-    bool   bDirty;      //Флаг редактирования объекта
-    bool   emptyUndo;   //Флаг состояния буфера отмены
 
   public:
     SdWEditorGraph( SdProjectItem *item, QWidget *parent = 0 );

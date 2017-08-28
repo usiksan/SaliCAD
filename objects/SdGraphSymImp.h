@@ -157,6 +157,7 @@ class SdGraphSymImp : public SdGraph
     virtual void    cloneFrom(const SdObject *src) override;
     virtual void    writeObject(QJsonObject &obj) const override;
     virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual bool    isUsed(SdObject *obj) const override;
 
     // SdGraph interface
   public:
@@ -189,6 +190,7 @@ class SdGraphSymImp : public SdGraph
     void          linkAutoPartInPlate( SdPItemPlate *plate, SdUndo *undo );
     //Pin connection-disconnection by index for symbol and part implements
     void          pinConnectionSet( int pinIndex, const QString netName, bool com, SdUndo *undo );
+
 
   };
 

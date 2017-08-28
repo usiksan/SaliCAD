@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -56,7 +56,8 @@ class SdWMain : public QMainWindow
 
     void activateProjectName( const QString name, bool dirty );
 
-    void onActivateProjectItem( SdProjectItem *item );
+    void onActivateProjectItem(SdProjectItem *item);
+    void onUpdateItemTitle( SdProjectItem *item );
     void onRemoveProjectItem( SdProjectItem *item );
     void onCloseProject( SdProject *prj );
 

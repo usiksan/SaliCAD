@@ -182,7 +182,15 @@ SdGraphIdent *SdPItemPlate::createIdent()
 
 void SdPItemPlate::insertObjects(SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)
   {
+  //TODO D031 insert objects into plate
+  }
 
+
+
+SdProjectItem *SdPItemPlate::setEditEnable(bool edit)
+  {
+  Q_UNUSED(edit)
+  return this;
   }
 
 
@@ -220,3 +228,23 @@ void SdPItemPlate::readObject(SdObjectMap *map, const QJsonObject obj)
     mPadAssotiation.insert( it.key(), dynamic_cast<SdPItemPart*>(readPtr( map, it.value().toObject() ))  );
     }
   }
+
+
+
+
+bool SdPItemPlate::isUsed(SdObject *obj) const
+  {
+  //Test obj in all child objects
+  if( SdContainer::isUsed( obj ) )
+    return true;
+
+  //Test obj in pad assotiation
+  QMapIterator<QString,SdPItemPart*> it( mPadAssotiation );
+  while( it.hasNext() ) {
+    if( it.next().value() == obj )
+      return true;
+    }
+
+  return false;
+  }
+

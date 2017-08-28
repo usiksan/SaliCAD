@@ -60,12 +60,5 @@ SdGraphIdent *SdPItemPart::createIdent()
   return ident;
   }
 
-void SdPItemPart::insertObjects(SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)
-  {
-
-  }
-
-
-
 
 

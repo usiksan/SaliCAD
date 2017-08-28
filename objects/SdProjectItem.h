@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Base for all project items
 */
 
 #ifndef SDPROJECTITEM_H
@@ -31,8 +32,7 @@ class SdProjectItem : public SdContainer
     QString                mTitle;      //Item title
     QString                mAuthor;     //Item author (registered program copy name)
     int                    mCreateTime; //Create time with sec from 2000year
-
-    QString                mReplaceId;  //Newest object id the same name and author
+    bool                   mEditEnable; //True if edit enable for this object
     bool                   mAuto;       //True if item inserted automatic as reference from other item
   protected:
     SdParamTable           mParamTable; //Object parameters
@@ -54,7 +54,10 @@ class SdProjectItem : public SdContainer
     void                   setTitle( const QString title );
     SdProject             *getProject() const;
     SdUndo                *getUndo() const;
-    void                   setReplaceId( const QString id ) { mReplaceId = id; }
+    //Get editEnable flag
+    bool                   isEditEnable() const { return mEditEnable; }
+    //Set editEnable flag. Return copy object when object editing is prohibited
+    virtual SdProjectItem* setEditEnable( bool edit );
     //Set creation time as current
     void                   updateCreationTime();
     //Set author as current
@@ -67,6 +70,9 @@ class SdProjectItem : public SdContainer
     //Object visual (graphical) identificator
     SdGraphIdent          *getIdent();
     virtual SdGraphIdent  *createIdent() = 0;
+
+    //Upgrade old item to new item
+    void                   upgradeItem( const SdProjectItem *oldItem, const SdProjectItem *newItem );
 
 
 

@@ -238,3 +238,17 @@ void SdContainer::clearChildList()
   qDeleteAll( mChildList );
   mChildList.clear();
   }
+
+
+
+
+//Return true if used any of objects in container but exclude itself objects in container
+bool SdContainer::isUsed(SdObject *test) const
+  {
+  for( SdObject *ptr : mChildList )
+    if( !ptr->isDeleted() ) {
+      if( ptr->isUsed( test ) ) return true;
+      }
+  return false;
+  }
+

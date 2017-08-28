@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -187,6 +187,27 @@ void SdWMain::onActivateProjectItem(SdProjectItem *item)
     mWEditors->setCurrentIndex( mWEditors->count() - 1 );
     }
   }
+
+void SdWMain::onUpdateItemTitle(SdProjectItem *item)
+  {
+
+  }
+
+
+
+//void SdWMain::onLockProjectItem(SdProjectItem *item)
+//  {
+//  if( item == 0 ) return;
+//  //Find if item already open
+//  for( int i = 0; i < mWEditors->count(); i++ ) {
+//    SdWEditor *editor = getEditor(i);
+//    if( editor && editor->getProjectItem() == item ) {
+//      //Item already open, update title
+//      mWEditors->setCurrentIndex( i );
+//      return;
+//      }
+//    }
+//  }
 
 
 

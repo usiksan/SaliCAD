@@ -47,19 +47,19 @@ class SdPItemPlate : public SdProjectItem
 //    void                  netForEach( quint64 classMask, const QString  std::function<bool(SdObject*)> fun1 );
 
 
-    SdGraphPartImp       *allocPartImp(int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym , SdUndo *undo);
+    SdGraphPartImp        *allocPartImp(int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym , SdUndo *undo);
 
     //Get pad
-    SdPItemPart          *getPad( const QString pinType ) const { return mPadAssotiation.value( pinType ); }
+    SdPItemPart           *getPad( const QString pinType ) const { return mPadAssotiation.value( pinType ); }
 
     //Set flag to update rat net
-    void                  setDirtyRatNet();
+    void                   setDirtyRatNet();
 
     //Draw rat net
-    void                  drawRatNet( SdContext *dc );
+    void                   drawRatNet( SdContext *dc );
 
     //Build rat net
-    void                  buildRatNet();
+    void                   buildRatNet();
 
 
 //    DPrtImpPic*  FindCompPart( DPrtPic *part, CPChar name, int numSection );
@@ -67,18 +67,22 @@ class SdPItemPlate : public SdProjectItem
 
     // SdObject interface
   public:
-    virtual QString       getType() const override;
-    virtual quint64       getClass() const override;
-    virtual void          cloneFrom(const SdObject *src) override;
-    virtual void          writeObject(QJsonObject &obj) const override;
-    virtual void          readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual QString        getType() const override;
+    virtual quint64        getClass() const override;
+    virtual void           cloneFrom(const SdObject *src) override;
+    virtual void           writeObject(QJsonObject &obj) const override;
+    virtual void           readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual bool           isUsed(SdObject *obj) const override;
 
     // SdProjectItem interface
   public:
-    virtual QString       getIconName() const override;
-    virtual quint64       getAcceptedObjectsMask() const override;
-    virtual SdGraphIdent *createIdent() override;
-    virtual void          insertObjects( SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next ) override;
+    virtual QString        getIconName() const override;
+    virtual quint64        getAcceptedObjectsMask() const override;
+    virtual SdGraphIdent  *createIdent() override;
+    virtual void           insertObjects( SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next ) override;
+    //Set editEnable flag. Return copy object when object editing is prohibited
+    virtual SdProjectItem *setEditEnable( bool edit );
+
   };
 
 #endif // SDPITEMPLATE_H

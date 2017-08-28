@@ -88,11 +88,15 @@ SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
   //By default - view mode.
   //If no item then no mode.
   if( item ) {
-    mMode = new SdModeView( this, item );
-    modeActivate( mMode );
-
-    //Create select mode for this window
-    mSelect = new SdModeSelect( this, item );
+    if( item->isEditEnable() ) {
+      //Create select mode for this window
+      mSelect = new SdModeSelect( this, item );
+      modeSet( mSelect );
+      }
+    else {
+      mMode = new SdModeView( this, item );
+      modeActivate( mMode );
+      }
     }
   }
 

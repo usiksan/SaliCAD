@@ -36,8 +36,10 @@ class SdPulsar : public QObject
     void emitInsertItem( SdProjectItem *item );
     //BEFORE remove item
     void emitRemoveItem( SdProjectItem *item );
-    //Activate item (bring item on top)
-    void emitActivateItem( SdProjectItem *item );
+    //Activate item (bring item on top) with edit status
+    void emitActivateItem(SdProjectItem *item);
+    //Block edit status of item (make it read only)
+    void emitLockItem( SdProjectItem *item );
     //Item contens changed
     void emitItemContentChanged( SdProjectItem *item );
 
@@ -60,6 +62,8 @@ class SdPulsar : public QObject
     void removeItem( SdProjectItem *item );
     //Activate item (bring item on top)
     void activateItem( SdProjectItem *item );
+    //Block edit status of item (make it read only)
+    void lockItem( SdProjectItem *item );
     //Item contens changed
     void itemContentChanged( SdProjectItem *item );
     //Status bar

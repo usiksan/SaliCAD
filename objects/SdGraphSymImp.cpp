@@ -892,3 +892,13 @@ void SdGraphSymImp::readObject(SdObjectMap *map, const QJsonObject obj)
   //Parameters
   sdParamRead( QStringLiteral("Param"), mParam, obj );
   }
+
+
+
+
+
+bool SdGraphSymImp::isUsed(SdObject *obj) const
+  {
+  return obj == mComponent || obj == mSymbol || obj == mPart;
+  }
+

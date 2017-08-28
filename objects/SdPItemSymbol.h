@@ -33,24 +33,24 @@ class SdPItemSymbol : public SdProjectItem
     SdPItemSymbol();
 
     //Return section count
-    int            getSectionCount() const;
+    int              getSectionCount() const;
     //Return section by index
-    SdSection     *getSection( int sectionIndex ) const;
+    SdSection       *getSection( int sectionIndex ) const;
     //Return part count
-    int            getPartCount() const;
+    int              getPartCount() const;
     //Return part variant by index
-    SdPartVariant *getPart( int partIndex ) const;
+    SdPartVariant   *getPart( int partIndex ) const;
     //Return default part
-    SdPartVariant *getDefaultPart() const;
+    SdPartVariant   *getDefaultPart() const;
     //Set new default part
-    void           setDefaultPart( SdPartVariant *partVar );
+    void             setDefaultPart( SdPartVariant *partVar );
 
     //Return symbol from section by index
-    SdPItemSymbol *extractSymbolFromFactory( int sectionIndex, bool soft, QWidget *parent ) const;
+    SdPItemSymbol    *extractSymbolFromFactory( int sectionIndex, bool soft, QWidget *parent ) const;
     //Return part from part variant by index
-    SdPItemPart   *extractPartFromFactory(int partIndex, bool soft, QWidget *parent ) const;
+    SdPItemPart      *extractPartFromFactory(int partIndex, bool soft, QWidget *parent ) const;
     //Return default part from default part variant
-    SdPItemPart   *extractDefaultPartFromFacory( bool soft, QWidget *parent ) const;
+    SdPItemPart      *extractDefaultPartFromFacory( bool soft, QWidget *parent ) const;
 
 
     virtual QString   getType() const override;
@@ -63,7 +63,7 @@ class SdPItemSymbol : public SdProjectItem
 
     // SdProjectItem interface
   public:
-    virtual SdGraphIdent *createIdent() override;
+    virtual SdGraphIdent  *createIdent() override;
   };
 
 #endif // SDPITEMSYMBOL_H

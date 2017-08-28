@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Base for all project items
 */
 
 #include "SdProjectItem.h"
@@ -23,7 +24,10 @@ Description
 #define timeOffsetConstant 1000000000L
 
 SdProjectItem::SdProjectItem() :
-  mAuto(true)
+  mCreateTime(0),
+  mAuto(true),
+  mTreeItem(nullptr),
+  mEditEnable(false)
   {
 
   }
@@ -99,9 +103,50 @@ SdUndo *SdProjectItem::getUndo() const
 
 
 
+//Set editEnable flag. Return copy object when object editing is prohibited
+SdProjectItem *SdProjectItem::setEditEnable(bool edit)
+  {
+  if( mEditEnable ) {
+    if( !edit ) {
+      //Disable edit.
+      mEditEnable = edit;
+      //Change name presentation
+      SdPulsar::pulsar->emitLockItem(this);
+      }
+    }
+  else {
+    if( edit ) {
+      //Enable edit
+      //Test if object is used
+      if( getProject()->isUsed( this ) ) {
+        //Object is used. Create new one
+        SdProjectItem *item = dynamic_cast<SdProjectItem*>( copy() );
+        item->updateAuthor();
+        item->updateCreationTime();
+        //Insert item to project
+        getProject()->insertChild( item, getProject()->getUndo() );
+        return item;
+        }
+      mEditEnable = edit;
+      updateCreationTime();
+      //Change name presentation
+      SdPulsar::pulsar->emitLockItem(this);
+      }
+    }
+  return this;
+  }
+
+
+
+
+//On call this function time setup after previous time
 void SdProjectItem::updateCreationTime()
   {
-  mCreateTime = static_cast<int>( QDateTime::currentDateTime().toSecsSinceEpoch() - timeOffsetConstant );
+  int time = static_cast<int>( QDateTime::currentDateTimeUtc().toSecsSinceEpoch() - timeOffsetConstant );
+  if( time <= mCreateTime )
+    mCreateTime++;
+  else
+    mCreateTime = time;
   }
 
 
@@ -158,6 +203,21 @@ SdGraphIdent *SdProjectItem::getIdent()
   if( ident == nullptr )
     return createIdent();
   return ident;
+  }
+
+
+
+
+//Upgrade old item to new item
+void SdProjectItem::upgradeItem(const SdProjectItem *oldItem, const SdProjectItem *newItem)
+  {
+  //For each graph objects perform item upgrade
+  forEach( dctAll, [oldItem,newItem] (SdObject *obj) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+    if( graph != nullptr )
+      graph->upgradeItem( oldItem, newItem );
+    return true;
+    });
   }
 
 

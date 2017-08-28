@@ -50,6 +50,15 @@ void SdPulsar::emitActivateItem(SdProjectItem *item)
   emit activateItem( item );
   }
 
+
+
+//Block edit status of item (make it read only)
+void SdPulsar::emitLockItem(SdProjectItem *item)
+  {
+  emit lockItem( item );
+  }
+
+
 void SdPulsar::emitSetStatusLabels(const QString xlabel, const QString ylabel)
   {
   emit setStatusLabels( xlabel, ylabel );

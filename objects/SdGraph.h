@@ -24,6 +24,7 @@ class SdSelector;
 class SdContext;
 class SdSnapInfo;
 class QWidget;
+class SdProjectItem;
 
 class SdGraph : public SdObject
   {
@@ -70,6 +71,9 @@ class SdGraph : public SdObject
     virtual bool   getInfo( SdPoint p, QString &info, bool extInfo );
     //Определение разумной точки
     virtual bool   snapPoint( SdSnapInfo *snap );
+
+    //Upgrade old item on new item
+    virtual void   upgradeItem( const SdProjectItem *oldItem, const SdProjectItem *newItem );
 
     friend class SdSelector;
   };

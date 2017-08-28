@@ -590,3 +590,12 @@ void SdGraphPartImp::accumNetPoints(SdPlateNetList &netList)
     if( pin.mCom )
       netList.addNetPoint( pin.mNetName, pin.mStratum, pin.mPosition );
   }
+
+
+
+
+bool SdGraphPartImp::isUsed(SdObject *obj) const
+  {
+  return obj == mPart || obj == mComponent;
+  }
+

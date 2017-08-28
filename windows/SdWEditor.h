@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -30,7 +30,7 @@ class SdWEditor : public QAbstractScrollArea
     Q_OBJECT
 
   public:
-    explicit SdWEditor(QWidget *parent = 0);
+    explicit SdWEditor( QWidget *parent = 0);
 
     virtual SdProjectItem* getProjectItem() = 0;
 
@@ -44,7 +44,7 @@ class SdWEditor : public QAbstractScrollArea
     //On activate editor window
     virtual void onActivateEditor();
 
-    //Реакции на команды
+    //Command on rections [Реакции на команды]
     virtual void cmFilePrint() {}
 
     virtual void cmFileImport() {}

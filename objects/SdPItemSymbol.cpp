@@ -218,3 +218,8 @@ SdGraphIdent *SdPItemSymbol::createIdent()
   insertChild( ident, prj->getUndo() );
   return ident;
   }
+
+
+
+
+

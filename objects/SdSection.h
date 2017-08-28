@@ -37,7 +37,7 @@ class SdSection : public SdObject
   {
     QString           mSymbolTitle;       //Symbolic presentation of this section
     QString           mSymbolAuthor;
-    SdPinAssotiation  mAssotiationTable; //Pin assotiation table
+    SdPinAssotiation  mAssotiationTable;  //Pin assotiation table
   public:
     SdSection();
 

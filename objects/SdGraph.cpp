@@ -148,3 +148,12 @@ bool SdGraph::snapPoint(SdSnapInfo *snap)
   return false;
   }
 
+
+
+void SdGraph::upgradeItem(const SdProjectItem *oldItem, const SdProjectItem *newItem)
+  {
+  //By default nothing done
+  Q_UNUSED(oldItem)
+  Q_UNUSED(newItem)
+  }
+

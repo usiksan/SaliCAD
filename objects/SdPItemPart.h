@@ -24,15 +24,14 @@ class SdPItemPart : public SdProjectItem
 
     // SdObject interface
   public:
-    virtual QString getType() const override;
-    virtual quint64 getClass() const override;
+    virtual QString        getType() const override;
+    virtual quint64        getClass() const override;
 
     // SdProjectItem interface
   public:
-    virtual QString       getIconName() const override;
-    virtual quint64       getAcceptedObjectsMask() const override;
-    virtual SdGraphIdent *createIdent() override;
-    virtual void          insertObjects( SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next ) override;
+    virtual QString        getIconName() const override;
+    virtual quint64        getAcceptedObjectsMask() const override;
+    virtual SdGraphIdent  *createIdent() override;
   };
 
 #endif // SDPITEMPART_H

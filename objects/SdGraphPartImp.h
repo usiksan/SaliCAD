@@ -121,6 +121,7 @@ class SdGraphPartImp : public SdGraphTraced
     virtual void    cloneFrom(const SdObject *src) override;
     virtual void    writeObject(QJsonObject &obj) const override;
     virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual bool    isUsed(SdObject *obj) const override;
 
     // SdGraph interface
   public:
@@ -151,6 +152,7 @@ class SdGraphPartImp : public SdGraphTraced
   public:
     virtual bool isPointOnNet(SdPoint p, SdStratum stratum, QString &netName) override;
     virtual void accumNetPoints(SdPlateNetList &netList) override;
+
   };
 
 #endif // SDGRAPHPARTIMP_H
