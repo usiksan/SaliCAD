@@ -51,6 +51,10 @@ Description
 #define SDR_F_TIME_REC      0 //32bit time of record write
 #define SDR_F_TIME          4 //32bit time of object revision
 #define SDR_F_AUTHOR        8 //32bit author id
+#define SDR_F_RESERV       12 //Reserved area
 #define SDR_F_NAME        256 //Object name in UTF-8
+
+
+#define timeOffsetConstant 1000000000L
 
 #endif // SDNETCOMMAND_H
