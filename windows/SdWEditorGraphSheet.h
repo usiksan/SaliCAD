@@ -29,7 +29,7 @@ class SdWEditorGraphSheet : public SdWEditorGraph
 
     // SdWEditor interface
   public:
-    virtual SdProjectItem *getProjectItem() override;
+    virtual SdProjectItem *getProjectItem() const override;
     virtual void           onActivateEditor() override;
     //Component insertion mode
     virtual void           cmModeComponent() override;
@@ -40,10 +40,6 @@ class SdWEditorGraphSheet : public SdWEditorGraph
     virtual void cmModePcbArea() override;
     virtual void cmModeNetName() override;
     virtual void cmModeNetList() override;
-
-    // SdWEditorGraph interface
-  public:
-    virtual double getPPM() const override;
   };
 
 #endif // SDWEDITORGRAPHSHEET_H

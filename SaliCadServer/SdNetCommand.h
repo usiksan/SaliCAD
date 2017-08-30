@@ -43,7 +43,7 @@ Description
 #define SDC_ERROR_COMMAND   7 //Invalid command code
 #define SDC_ERROR_KEY       8 //Invalid registration key
 
-#define SDC_OBJECT_COUNT_IN_LIST 16
+#define SDC_OBJECT_COUNT_IN_LIST 32
 #define SDC_INFO_LENGHT          128
 
 //Object table
@@ -53,6 +53,8 @@ Description
 #define SDR_F_AUTHOR        8 //32bit author id
 #define SDR_F_RESERV       12 //Reserved area
 #define SDR_F_NAME        256 //Object name in UTF-8
+
+#define MAX_PACKET        (SDR_LENGHT * SDC_OBJECT_COUNT_IN_LIST + 5)
 
 
 #define timeOffsetConstant 1000000000L

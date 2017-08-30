@@ -28,7 +28,7 @@ SdWEditorGraphPlate::SdWEditorGraphPlate(SdPItemPlate *pcb, QWidget *parent) :
 
 
 
-SdProjectItem *SdWEditorGraphPlate::getProjectItem()
+SdProjectItem *SdWEditorGraphPlate::getProjectItem() const
   {
   return mPlate;
   }
@@ -79,10 +79,6 @@ void SdWEditorGraphPlate::cmModePad()
   {
   }
 
-double SdWEditorGraphPlate::getPPM() const
-  {
-  return sdEnvir->mPrtPPM;
-  }
 
 
 void SdWEditorGraphPlate::onActivateEditor()

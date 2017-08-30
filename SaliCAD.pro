@@ -321,7 +321,7 @@ HEADERS  += \
     objects/SdPropSelected.h \
     objects/SdConverterOffset.h \
     windows/SdDPrint.h \
-    net/SdNetCommand.h \
+    SaliCadServer/SdNetCommand.h \
     modes/SdModePrintWindow.h \
     objects/SdUndoRecordInsertDelete.h
 

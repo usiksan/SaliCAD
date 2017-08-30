@@ -49,7 +49,7 @@ void SdWEditorGraphPart::setPart(SdPItemPart *part)
 
 
 
-SdProjectItem *SdWEditorGraphPart::getProjectItem()
+SdProjectItem *SdWEditorGraphPart::getProjectItem() const
   {
   return mPart;
   }
@@ -95,7 +95,3 @@ void SdWEditorGraphPart::cmModeOrigin()
 
 
 
-double SdWEditorGraphPart::getPPM() const
-  {
-  return sdEnvir->mPrtPPM;
-  }

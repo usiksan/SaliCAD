@@ -132,7 +132,7 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
 
 
 
-SdProjectItem *SdWEditorComponent::getProjectItem()
+SdProjectItem *SdWEditorComponent::getProjectItem() const
   {
   return mComponent;
   }

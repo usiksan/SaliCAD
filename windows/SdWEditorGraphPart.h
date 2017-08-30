@@ -30,15 +30,11 @@ class SdWEditorGraphPart : public SdWEditorGraph
 
     // SdWEditor interface
   public:
-    virtual SdProjectItem *getProjectItem() override;
+    virtual SdProjectItem *getProjectItem() const override;
     virtual void           onActivateEditor() override;
     virtual void           cmModePin() override;
     virtual void           cmModeReference() override;
     virtual void           cmModeOrigin() override;
-
-    // SdWEditorGraph interface
-  public:
-    virtual double getPPM() const override;
   };
 
 #endif // SDWEDITORGRAPHPART_H

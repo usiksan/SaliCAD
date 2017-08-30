@@ -91,7 +91,7 @@ class SdWEditorGraph : public SdWEditor
     void    contextMenu( QMenu *menu );
 
     //return ppm for this editor. PPM is how much phys in one logical
-    virtual double         getPPM() const = 0;
+    double  getPPM() const;
 
     //Commands
     virtual void           cmFilePrint() override;

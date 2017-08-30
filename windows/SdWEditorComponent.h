@@ -55,7 +55,7 @@ class SdWEditorComponent : public SdWEditor
 
     // SdWEditor interface
   public:
-    virtual SdProjectItem *getProjectItem() override;
+    virtual SdProjectItem *getProjectItem() const override;
     virtual void           onActivateEditor() override;
 
   public slots:

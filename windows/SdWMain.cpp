@@ -20,6 +20,7 @@ Description
 #include "SdWEditorComponent.h"
 #include "SdWEditorGraphSheet.h"
 #include "SdWEditorGraphPlate.h"
+#include "SdWEditorGraphView.h"
 #include "SdWCommand.h"
 #include "SdWLabel.h"
 #include "SdDOptions.h"
@@ -163,19 +164,31 @@ void SdWMain::onActivateProjectItem(SdProjectItem *item)
   SdWEditor *editor = 0;
   switch( item->getClass() ) {
     case dctSymbol :
-      editor = new SdWEditorGraphSymbol( dynamic_cast<SdPItemSymbol*>( item ), mWEditors );
+      if( item->isEditEnable() )
+        editor = new SdWEditorGraphSymbol( dynamic_cast<SdPItemSymbol*>( item ), mWEditors );
+      else
+        editor = new SdWEditorGraphView( item, mWEditors );
       break;
     case dctPart :
-      editor = new SdWEditorGraphPart( dynamic_cast<SdPItemPart*>( item ), mWEditors );
+      if( item->isEditEnable() )
+        editor = new SdWEditorGraphPart( dynamic_cast<SdPItemPart*>( item ), mWEditors );
+      else
+        editor = new SdWEditorGraphView( item, mWEditors );
       break;
     case dctComponent :
       editor = new SdWEditorComponent( dynamic_cast<SdPItemComponent*>( item ), mWEditors );
       break;
     case dctSheet :
-      editor = new SdWEditorGraphSheet( dynamic_cast<SdPItemSheet*>( item ), mWEditors );
+      if( item->isEditEnable() )
+        editor = new SdWEditorGraphSheet( dynamic_cast<SdPItemSheet*>( item ), mWEditors );
+      else
+        editor = new SdWEditorGraphView( item, mWEditors );
       break;
     case dctPlate :
-      editor = new SdWEditorGraphPlate( dynamic_cast<SdPItemPlate*>( item ), mWEditors );
+      if( item->isEditEnable() )
+        editor = new SdWEditorGraphPlate( dynamic_cast<SdPItemPlate*>( item ), mWEditors );
+      else
+        editor = new SdWEditorGraphView( item, mWEditors );
       break;
     }
 
@@ -187,6 +200,9 @@ void SdWMain::onActivateProjectItem(SdProjectItem *item)
     mWEditors->setCurrentIndex( mWEditors->count() - 1 );
     }
   }
+
+
+
 
 void SdWMain::onUpdateItemTitle(SdProjectItem *item)
   {

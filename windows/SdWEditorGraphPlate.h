@@ -28,7 +28,7 @@ class SdWEditorGraphPlate : public SdWEditorGraph
 
     // SdWEditor interface
   public:
-    virtual SdProjectItem *getProjectItem() override;
+    virtual SdProjectItem *getProjectItem() const override;
     virtual void cmModeComponent() override;
     virtual void cmNetSetup() override;
     virtual void cmModeDisconnect() override;
@@ -40,13 +40,6 @@ class SdWEditorGraphPlate : public SdWEditorGraph
     virtual void cmModePolygon() override;
     virtual void cmModeDeleteWire() override;
     virtual void cmModePad() override;
-
-    // SdWEditorGraph interface
-  public:
-    virtual double getPPM() const override;
-
-    // SdWEditor interface
-  public:
     virtual void onActivateEditor() override;
   };
 

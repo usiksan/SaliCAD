@@ -13,12 +13,28 @@ Description
 */
 #include "SdWEditorGraphView.h"
 
+SdWEditorGraphView::SdWEditorGraphView(SdProjectItem *item, QWidget *parent) :
+  SdWEditorGraph( item, parent ),
+  mItem(item),
+  mOwner(false)
+  {
+  if( item != nullptr && item->getClass() & (dctPart | dctPlate) ) {
+    mGrid.set( 2500, 2500 );
+    mScale.scaleSet( 0.01 );
+    }
+  else {
+    mGrid.set( 25, 25 );
+    mScale.scaleSet( 1.0 );
+    }
+  }
+
 SdWEditorGraphView::SdWEditorGraphView( QWidget *parent ) :
   SdWEditorGraph( nullptr, parent ),
   mItem(nullptr),
   mOwner(false)
   {
-
+  mGrid.set(1,1);
+  mScale.scaleSet(1.0);
   }
 
 
@@ -46,7 +62,7 @@ void SdWEditorGraphView::setItem( SdProjectItem *item, bool owner )
 
 
 
-SdProjectItem *SdWEditorGraphView::getProjectItem()
+SdProjectItem *SdWEditorGraphView::getProjectItem() const
   {
   return mItem;
   }
@@ -54,7 +70,7 @@ SdProjectItem *SdWEditorGraphView::getProjectItem()
 
 
 
-double SdWEditorGraphView::getPPM() const
+void SdWEditorGraphView::onActivateEditor()
   {
-  return 1.0; //Not used
+
   }

@@ -25,9 +25,9 @@ Description
 
 SdProjectItem::SdProjectItem() :
   mCreateTime(0),
+  mEditEnable(false),
   mAuto(true),
-  mTreeItem(nullptr),
-  mEditEnable(false)
+  mTreeItem(nullptr)
   {
 
   }
@@ -118,7 +118,7 @@ SdProjectItem *SdProjectItem::setEditEnable(bool edit)
     if( edit ) {
       //Enable edit
       //Test if object is used
-      if( getProject()->isUsed( this ) ) {
+      if( getProject()->isUsed( this ) || isAnotherAuthor() ) {
         //Object is used. Create new one
         SdProjectItem *item = dynamic_cast<SdProjectItem*>( copy() );
         item->updateAuthor();
@@ -225,7 +225,7 @@ void SdProjectItem::upgradeItem(const SdProjectItem *oldItem, const SdProjectIte
 
 void SdProjectItem::insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)
   {
-  sour->forEach( dctAll, [this, offset, undo, editor, next, editor, dest ] (SdGraph *obj) ->bool {
+  sour->forEach( dctAll, [this, offset, undo, next, editor, dest ] (SdGraph *obj) ->bool {
     obj = insertCopyObject( obj, offset, undo, editor, next );
     if( obj != nullptr && dest != nullptr )
       obj->select( dest );

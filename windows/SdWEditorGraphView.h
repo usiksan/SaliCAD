@@ -23,6 +23,7 @@ class SdWEditorGraphView : public SdWEditorGraph
     SdProjectItem *mItem;  //Item for view
     bool           mOwner; //True if widget is owner of item and must delete if unused
   public:
+    SdWEditorGraphView( SdProjectItem *item, QWidget *parent );
     SdWEditorGraphView(QWidget *parent);
 
     //Set new item
@@ -30,11 +31,8 @@ class SdWEditorGraphView : public SdWEditorGraph
 
     // SdWEditor interface
   public:
-    virtual SdProjectItem *getProjectItem() override;
-
-    // SdWEditorGraph interface
-  public:
-    virtual double getPPM() const override;
+    virtual SdProjectItem *getProjectItem() const override;
+    virtual void           onActivateEditor() override;
   };
 
 #endif // SDWEDITORGRAPHVIEW_H

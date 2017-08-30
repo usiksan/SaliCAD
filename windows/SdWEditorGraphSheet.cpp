@@ -33,7 +33,7 @@ SdWEditorGraphSheet::SdWEditorGraphSheet(SdPItemSheet *sch, QWidget *parent) :
 
 
 
-SdProjectItem *SdWEditorGraphSheet::getProjectItem()
+SdProjectItem *SdWEditorGraphSheet::getProjectItem() const
   {
   return mSheet;
   }
@@ -105,7 +105,3 @@ void SdWEditorGraphSheet::cmModeNetList()
 
 
 
-double SdWEditorGraphSheet::getPPM() const
-  {
-  return sdEnvir->mSchPPM;
-  }

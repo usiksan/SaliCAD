@@ -172,6 +172,19 @@ void SdWEditorGraph::contextMenu(QMenu *menu)
 
 
 
+double SdWEditorGraph::getPPM() const
+  {
+  if( getProjectItem() == nullptr )
+    return 1.0; //Not used because item not installed
+  if( getProjectItem()->getClass() & (dctPart | dctPlate) )
+    return sdEnvir->mPrtPPM;
+  return sdEnvir->mSchPPM;
+  }
+
+
+
+
+
 
 
 

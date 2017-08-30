@@ -50,7 +50,7 @@ void SdWEditorGraphSymbol::setSymbol(SdPItemSymbol *sym)
 
 
 
-SdProjectItem *SdWEditorGraphSymbol::getProjectItem()
+SdProjectItem *SdWEditorGraphSymbol::getProjectItem() const
   {
   return mSymbol;
   }
@@ -72,10 +72,6 @@ void SdWEditorGraphSymbol::onActivateEditor()
   }
 
 
-double SdWEditorGraphSymbol::getPPM() const
-  {
-  return sdEnvir->mSchPPM;
-  }
 
 
 void SdWEditorGraphSymbol::cmModePin()

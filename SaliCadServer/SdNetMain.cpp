@@ -35,7 +35,6 @@
 
 #define MAX_CONNECTION      64
 
-#define MAX_PACKET        1096
 
 FILE *objectTableFile;
 FILE *keyListFile;

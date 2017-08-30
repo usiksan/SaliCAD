@@ -32,7 +32,7 @@ class SdWEditor : public QAbstractScrollArea
   public:
     explicit SdWEditor( QWidget *parent = 0);
 
-    virtual SdProjectItem* getProjectItem() = 0;
+    virtual SdProjectItem* getProjectItem() const = 0;
 
     SdProject*             getProject();
     void                   dirtyProject();
