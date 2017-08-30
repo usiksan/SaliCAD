@@ -12,6 +12,7 @@ Description
 */
 #include "objects/SdProjectItem.h"
 #include "objects/SdProject.h"
+#include "objects/SdPulsar.h"
 #include "SdWEditor.h"
 #include "SdWCommand.h"
 
@@ -66,6 +67,34 @@ void SdWEditor::onActivateEditor()
   SdWCommand::cmEditRedo->setEnabled( getProject()->getUndo()->isRedoPresent() );
 
   SdWCommand::cmFilePrint->setEnabled(true);
+  }
+
+
+
+
+void SdWEditor::cmObjectEditDisable()
+  {
+  if( getProjectItem() ) {
+    SdProjectItem *item = getProjectItem()->setEditEnable( false );
+    //Close this editor (viewer)
+    SdPulsar::pulsar->emitCloseEditView( getProjectItem() );
+    //Open new item with edit status
+    SdPulsar::pulsar->emitActivateItem( item );
+    }
+  }
+
+
+
+
+void SdWEditor::cmObjectEditEnable()
+  {
+  if( getProjectItem() ) {
+    SdProjectItem *item = getProjectItem()->setEditEnable( true );
+    //Close this editor (viewer)
+    SdPulsar::pulsar->emitCloseEditView( getProjectItem() );
+    //Open new item with edit status
+    SdPulsar::pulsar->emitActivateItem( item );
+    }
   }
 
 

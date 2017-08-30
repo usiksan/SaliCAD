@@ -110,8 +110,6 @@ SdProjectItem *SdProjectItem::setEditEnable(bool edit)
     if( !edit ) {
       //Disable edit.
       mEditEnable = edit;
-      //Change name presentation
-      SdPulsar::pulsar->emitLockItem(this);
       }
     }
   else {
@@ -129,8 +127,6 @@ SdProjectItem *SdProjectItem::setEditEnable(bool edit)
         }
       mEditEnable = edit;
       updateCreationTime();
-      //Change name presentation
-      SdPulsar::pulsar->emitLockItem(this);
       }
     }
   return this;

@@ -529,6 +529,23 @@ void SdWMain::cmObjectSort()
 
 
 
+void SdWMain::cmObjectEditEnable()
+  {
+  if( activeEditor() )
+    activeEditor()->cmObjectEditEnable();
+  }
+
+
+
+void SdWMain::cmObjectEditDisable()
+  {
+  if( activeEditor() )
+    activeEditor()->cmObjectEditDisable();
+  }
+
+
+
+
 void SdWMain::cmEditUndo()
   {
   if( activeProject() ) {

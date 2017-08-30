@@ -50,6 +50,9 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmFileImport() {}
     virtual void cmFileExport() {}
 
+    virtual void cmObjectEditEnable();
+    virtual void cmObjectEditDisable();
+
     virtual void cmEditUndo() {}
     virtual void cmEditRedo() {}
     virtual void cmEditCut() {}

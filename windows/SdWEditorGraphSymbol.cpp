@@ -66,6 +66,8 @@ void SdWEditorGraphSymbol::onActivateEditor()
   //Activate tool bar
   SdWCommand::barSymbol->show();
 
+  //Enable finish edit
+  SdWCommand::cmObjectEditDisable->setVisible(true);
 
   //qDebug() << SdWCommand::barMain->iconSize();
 

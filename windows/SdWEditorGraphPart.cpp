@@ -66,6 +66,9 @@ void SdWEditorGraphPart::onActivateEditor()
 
   //Activate tool bar
   SdWCommand::barPart->show();
+
+  //Enable finish edit
+  SdWCommand::cmObjectEditDisable->setVisible(true);
   }
 
 

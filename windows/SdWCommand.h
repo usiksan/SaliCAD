@@ -61,6 +61,7 @@ class SdWCommand
     static QToolBar *barComp;
     static QToolBar *barSheet;
     static QToolBar *barPcb;
+    static QToolBar *barView;
 
     static void addEditCommands( QToolBar *bar );
     static void addViewCommands( QToolBar *bar );
@@ -89,6 +90,8 @@ class SdWCommand
     static QActionPtr  cmObjectPaste;
     static QActionPtr  cmObjectCut;
     static QActionPtr  cmObjectSort;
+    static QActionPtr  cmObjectEditEnable;
+    static QActionPtr  cmObjectEditDisable;
 
     static QActionPtr  cmEditUndo;
     static QActionPtr  cmEditRedo;

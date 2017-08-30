@@ -69,13 +69,15 @@ void SdWCommand::createMenu(SdWMain *frame)
 
   //Меню Объект
   menuObject = new QMenu( frame->tr("Objects") );
-  cmObjectNew = menuObject->addAction( QIcon(QString(":/pic/objectNew.png")), frame->tr("Create"), frame, SLOT(cmObjectNew()) );
-  cmObjectRename = menuObject->addAction( QIcon(QString(":/pic/objectRename.png")), frame->tr("Rename"), frame, SLOT(cmObjectRename()) );
+  cmObjectNew         = menuObject->addAction( QIcon(QString(":/pic/objectNew.png")), frame->tr("Create"), frame, SLOT(cmObjectNew()) );
+  cmObjectRename      = menuObject->addAction( QIcon(QString(":/pic/objectRename.png")), frame->tr("Rename"), frame, SLOT(cmObjectRename()) );
   cmObjectDelete = menuObject->addAction( frame->tr("Delete"), frame, SLOT(cmObjectDelete()) );
   cmObjectCopy = menuObject->addAction( frame->tr("Copy"), frame, SLOT(cmObjectCopy()) );
   cmObjectPaste = menuObject->addAction( frame->tr("Paste"), frame, SLOT(cmObjectPaste()) );
   cmObjectCut = menuObject->addAction( frame->tr("Cut"), frame, SLOT(cmObjectCut()) );
-  cmObjectSort = menuObject->addAction( frame->tr("Sort"), frame, SLOT(cmObjectSort()) );
+  cmObjectSort        = menuObject->addAction( frame->tr("Sort"), frame, SLOT(cmObjectSort()) );
+  cmObjectEditEnable  = menuObject->addAction( QIcon(QString(":/pic/objectEdit.png")), frame->tr("Enable edit"), frame, SLOT(cmObjectEditEnable()) );
+  cmObjectEditDisable = menuObject->addAction( QIcon(QString(":/pic/objectEdit.png")), frame->tr("Finish edit"), frame, SLOT(cmObjectEditDisable()) );
 
 
 
@@ -115,7 +117,6 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_ZOOM_WIN]   = menuView->addAction( QIcon(QString(":/pic/viewWin.png")), frame->tr("Zoom area"), frame, SLOT(cmViewArea()) );
   menuView->addSeparator();
   cmModeTable[MD_MEASUREMENT] = menuView->addAction( QIcon(QString(":/pic/viewRuller.png")), frame->tr("Measurement"), frame, SLOT(cmViewMeasurement()) );
-
 
 
 
@@ -206,7 +207,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   menuInstruments = new QMenu( frame->tr("Instruments") );
   cmOption = menuInstruments->addAction( frame->tr("Options"), frame, SLOT(cmOption()) );
   menuInstruments->addSeparator();
-  cmTools = menuInstruments->addAction( frame->tr("Tools"), frame, SLOT(cmTools()) );
+  cmTools  = menuInstruments->addAction( frame->tr("Tools"), frame, SLOT(cmTools()) );
 
 
 
@@ -331,13 +332,17 @@ void SdWCommand::projectState(bool enable)
 
 void SdWCommand::addEditCommands(QToolBar *bar)
   {
+  bar->insertAction( 0, cmObjectEditDisable );
+  bar->addSeparator();
   bar->insertAction( 0, cmEditCopy );
   bar->insertAction( 0, cmEditCut );
   bar->insertAction( 0, cmEditPaste );
   bar->insertAction( 0, cmEditDelete );
   bar->insertAction( 0, cmEditProperties );
-//  bar->addSeparator();
   }
+
+
+
 
 void SdWCommand::addViewCommands(QToolBar *bar)
   {
@@ -464,6 +469,14 @@ void SdWCommand::createToolBars(SdWMain *frame)
 
   frame->addToolBar( barPcb );
 
+
+
+  //View bar
+  barView = new QToolBar( QString("View") );
+  barView->insertAction( 0, cmObjectEditEnable );
+
+  frame->addToolBar( barView );
+
   frame->addToolBarBreak();
 
 
@@ -524,6 +537,8 @@ void SdWCommand::hideEditorContext()
   cmMenuInsertPcb->setVisible(false);
   cmMenuInsertSheet->setVisible(false);
   cmMenuInsertSymbol->setVisible(false);
+  cmObjectEditEnable->setVisible(false);
+  cmObjectEditDisable->setVisible(false);
 
   //Погасить все редакторо-зависимые toolBars
   barComp->hide();
@@ -531,6 +546,7 @@ void SdWCommand::hideEditorContext()
   barPcb->hide();
   barSheet->hide();
   barSymbol->hide();
+  barView->hide();
   }
 
 
@@ -573,6 +589,8 @@ QActionPtr SdWCommand::cmObjectCopy;
 QActionPtr SdWCommand::cmObjectPaste;
 QActionPtr SdWCommand::cmObjectCut;
 QActionPtr SdWCommand::cmObjectSort;
+QActionPtr SdWCommand::cmObjectEditEnable;
+QActionPtr SdWCommand::cmObjectEditDisable;
 
 QActionPtr SdWCommand::cmEditUndo;
 QActionPtr SdWCommand::cmEditRedo;
@@ -652,6 +670,7 @@ QToolBar *SdWCommand::barPart;
 QToolBar *SdWCommand::barComp;
 QToolBar *SdWCommand::barSheet;
 QToolBar *SdWCommand::barPcb;
+QToolBar *SdWCommand::barView;
 
 
 //Full mode action table
