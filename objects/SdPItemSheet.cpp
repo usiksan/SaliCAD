@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -223,7 +223,7 @@ void SdPItemSheet::insertObjects(SdPoint offset, SdSelector *sel, SdUndo *undo, 
 //Set editEnable flag. Return copy object when object editing is prohibited
 SdProjectItem *SdPItemSheet::setEditEnable(bool edit)
   {
-  Q_UNUSED(edit)
+  mEditEnable = edit;
   return this;
   }
 

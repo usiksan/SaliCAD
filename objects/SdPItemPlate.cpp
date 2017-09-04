@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -189,7 +189,7 @@ void SdPItemPlate::insertObjects(SdPoint offset, SdSelector *sel, SdUndo *undo, 
 
 SdProjectItem *SdPItemPlate::setEditEnable(bool edit)
   {
-  Q_UNUSED(edit)
+  mEditEnable = edit;
   return this;
   }
 

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -152,7 +152,7 @@ QJsonObject SdObject::write() const
   //writePtr( mParent, QStringLiteral("Parent"), obj );
   writeObject( obj );
   const SdProjectItem *item = dynamic_cast<const SdProjectItem*>(this);
-  if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol)) )
+  if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol)) && item->isEditEnable() )
     SdObjectFactory::insertObject( item, obj );
   return obj;
   }

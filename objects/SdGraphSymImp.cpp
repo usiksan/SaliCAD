@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -902,3 +902,8 @@ bool SdGraphSymImp::isUsed(SdObject *obj) const
   return obj == mComponent || obj == mSymbol || obj == mPart;
   }
 
+
+
+void SdGraphSymImp::upgradeItem(const SdProjectItem *oldItem, const SdProjectItem *newItem)
+  {
+  }

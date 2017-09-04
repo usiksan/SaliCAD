@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -177,6 +177,7 @@ class SdGraphSymImp : public SdGraph
     virtual int     behindCursor(SdPoint p) override;
     virtual bool    getInfo(SdPoint p, QString &info, bool extInfo) override;
     virtual bool    snapPoint(SdSnapInfo *snap) override;
+    virtual void    upgradeItem(const SdProjectItem *oldItem, const SdProjectItem *newItem) override;
 
 
   private:
@@ -190,7 +191,6 @@ class SdGraphSymImp : public SdGraph
     void          linkAutoPartInPlate( SdPItemPlate *plate, SdUndo *undo );
     //Pin connection-disconnection by index for symbol and part implements
     void          pinConnectionSet( int pinIndex, const QString netName, bool com, SdUndo *undo );
-
 
   };
 

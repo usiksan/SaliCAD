@@ -31,8 +31,11 @@ SdWEditorGraphView::SdWEditorGraphView(SdProjectItem *item, QWidget *parent) :
     mScale.scaleSet( 1.0 );
     }
   //Fill item in view
-  cmViewFit();
+  //cmViewFit();
   }
+
+
+
 
 SdWEditorGraphView::SdWEditorGraphView( QWidget *parent ) :
   SdWEditorGraph( nullptr, parent ),

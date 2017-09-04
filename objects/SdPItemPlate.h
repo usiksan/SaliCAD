@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -81,7 +81,7 @@ class SdPItemPlate : public SdProjectItem
     virtual SdGraphIdent  *createIdent() override;
     virtual void           insertObjects( SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next ) override;
     //Set editEnable flag. Return copy object when object editing is prohibited
-    virtual SdProjectItem *setEditEnable( bool edit );
+    virtual SdProjectItem *setEditEnable( bool edit ) override;
 
   };
 

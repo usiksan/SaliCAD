@@ -147,6 +147,7 @@ void SdWEditorGraph::setSelectionStatus(bool status)
 //Window zoom
 void SdWEditorGraph::zoomWindow(SdRect r)
   {
+  qDebug() << "zoomWindow" << r;
   originSet( r.center() );
   //Вычислить новый масштаб
   double scale = mScale.scaleGet();
@@ -416,8 +417,13 @@ void SdWEditorGraph::cmViewFit()
   SdRect fit;
   getProjectItem()->forEach( dctAll, [&fit](SdObject *obj) {
     SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-    if( graph && graph->isVisible() )
-      fit.grow( graph->getOverRect() );
+    if( graph && graph->isVisible() ) {
+      //qDebug() << graph->getOverRect();
+      if( fit.isEmpty() )
+        fit = graph->getOverRect();
+      else
+        fit.grow( graph->getOverRect() );
+      }
     return true;
     } );
 

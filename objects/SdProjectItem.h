@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -32,9 +32,9 @@ class SdProjectItem : public SdContainer
     QString                mTitle;      //Item title
     QString                mAuthor;     //Item author (registered program copy name)
     int                    mCreateTime; //Create time with sec from 2000year
-    bool                   mEditEnable; //True if edit enable for this object
     bool                   mAuto;       //True if item inserted automatic as reference from other item
   protected:
+    bool                   mEditEnable; //True if edit enable for this object
     SdParamTable           mParamTable; //Object parameters
   public:
     SdPoint                mOrigin;     //Origin for object

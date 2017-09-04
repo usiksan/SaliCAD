@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -25,8 +25,8 @@ Description
 
 SdProjectItem::SdProjectItem() :
   mCreateTime(0),
-  mEditEnable(false),
   mAuto(true),
+  mEditEnable(false),
   mTreeItem(nullptr)
   {
 
@@ -110,6 +110,11 @@ SdProjectItem *SdProjectItem::setEditEnable(bool edit)
     if( !edit ) {
       //Disable edit.
       mEditEnable = edit;
+      //Update object version and author creation
+      updateAuthor();
+      updateCreationTime();
+      //Write object to local library
+      write();
       }
     }
   else {
@@ -173,8 +178,12 @@ SdRect SdProjectItem::getOverRect(quint64 classMask)
   SdRect fit;
   forEach( classMask, [&fit](SdObject *obj) {
     SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-    if( graph )
-      fit.grow( graph->getOverRect() );
+    if( graph ) {
+      if( fit.isEmpty() )
+        fit = graph->getOverRect();
+      else
+        fit.grow( graph->getOverRect() );
+      }
     return true;
     } );
 
