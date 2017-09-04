@@ -1,4 +1,4 @@
-
+﻿
 //B014 bugs
 //F001 fatal
 //C001 critical
@@ -27,6 +27,7 @@
 
 //TODO B014 previous setuped text size don't set. Only after begin editing
 
+//TODO B015 on edit disable update time and set need update link on prototipe
 
 //===================================================================================
 //Fixed:

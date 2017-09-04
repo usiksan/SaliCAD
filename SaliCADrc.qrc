@@ -195,5 +195,11 @@
         <file>pic/zoomwin.cur</file>
         <file>pic/drawFCircle.png</file>
         <file>pic/drawFRegion.png</file>
+        <file>pic/editFind.png</file>
+        <file>pic/objectEditEnable.png</file>
+        <file>pic/fileSaveAs.png</file>
+        <file>pic/objField.png</file>
+        <file>pic/fileExport.png</file>
+        <file>pic/objectEditDisable.png</file>
     </qresource>
 </RCC>

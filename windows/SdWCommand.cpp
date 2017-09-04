@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -49,7 +49,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmFileSaveAll = menuFile->addAction( QIcon(QString(":/pic/save_all.png")), frame->tr("Save all projects"), frame, SLOT(cmFileSaveAll()) );
   menuFile->addSeparator();
   cmFileImport = menuFile->addAction( QIcon(QString(":/pic/fileImport.png")), frame->tr("Import..."), frame, SLOT(cmFileImport()) );
-  cmFileExport = menuFile->addAction( frame->tr("Export..."), frame, SLOT(cmFileExport()) );
+  cmFileExport = menuFile->addAction( QIcon(QString(":/pic/fileExport.png")), frame->tr("Export..."), frame, SLOT(cmFileExport()) );
   menuFile->addSeparator();
   cmFilePrint = menuFile->addAction( QIcon(QString(":/pic/filePrint.png")), frame->tr("Print..."), frame, SLOT(cmFilePrint()) );
   menuFile->addSeparator();
@@ -76,8 +76,8 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmObjectPaste = menuObject->addAction( frame->tr("Paste"), frame, SLOT(cmObjectPaste()) );
   cmObjectCut = menuObject->addAction( frame->tr("Cut"), frame, SLOT(cmObjectCut()) );
   cmObjectSort        = menuObject->addAction( frame->tr("Sort"), frame, SLOT(cmObjectSort()) );
-  cmObjectEditEnable  = menuObject->addAction( QIcon(QString(":/pic/objectEdit.png")), frame->tr("Enable edit"), frame, SLOT(cmObjectEditEnable()) );
-  cmObjectEditDisable = menuObject->addAction( QIcon(QString(":/pic/objectEdit.png")), frame->tr("Finish edit"), frame, SLOT(cmObjectEditDisable()) );
+  cmObjectEditEnable  = menuObject->addAction( QIcon(QString(":/pic/objectEditEnable.png")), frame->tr("Enable edit"), frame, SLOT(cmObjectEditEnable()) );
+  cmObjectEditDisable = menuObject->addAction( QIcon(QString(":/pic/objectEditDisable.png")), frame->tr("Finish edit"), frame, SLOT(cmObjectEditDisable()) );
 
 
 
@@ -96,7 +96,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   menuEdit->addSeparator();
   cmEditSelectAll = menuEdit->addAction( QIcon(QString(":/pic/editSelectAll.png")), frame->tr("Select All"), frame, SLOT(cmEditSelectAll()) );
   cmEditUnSelect  = menuEdit->addAction( QIcon(QString(":/pic/editSelectAll.png")), frame->tr("UnSelect"), frame, SLOT(cmEditUnSelect()) );
-  cmEditFind = menuEdit->addAction( frame->tr("Find"), frame, SLOT(cmEditFind()) );
+  cmEditFind = menuEdit->addAction( QIcon(QString(":/pic/editFind.png")), frame->tr("Find"), frame, SLOT(cmEditFind()) );
   cmEditReplace = menuEdit->addAction( frame->tr("Replace"), frame, SLOT(cmEditReplace()) );
   menuEdit->addSeparator();
   cmEditProperties = menuEdit->addAction( QIcon(QString(":/pic/editProp.png")), frame->tr("Properties..."), frame, SLOT(cmEditProperties()) );
@@ -179,6 +179,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_BUS]        = menuInsertSheet->addAction( QIcon(QString(":/pic/objBus.png")), frame->tr("Bus (many net)"), frame, SLOT(cmModeBus()) );
   cmModeTable[MD_DISCONNECT] = menuInsertSheet->addAction( QIcon(QString(":/pic/objUnConnect.png")), frame->tr("Disconnect net"), frame, SLOT(cmModeDisconnect()) );
   //cmModeTable[MD_PCB_AREA]   = menuInsertSheet->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
+//  cmModeTable[MD_FIELD]      = menuInsertSheet->addAction( QIcon(QString(":/pic/objField.png")), frame->tr("Field"), frame, SLOT(cmModeF) );
 
 
 
@@ -332,8 +333,6 @@ void SdWCommand::projectState(bool enable)
 
 void SdWCommand::addEditCommands(QToolBar *bar)
   {
-  bar->insertAction( 0, cmObjectEditDisable );
-  bar->addSeparator();
   bar->insertAction( 0, cmEditCopy );
   bar->insertAction( 0, cmEditCut );
   bar->insertAction( 0, cmEditPaste );
@@ -407,6 +406,8 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barMain->insertAction( 0, cmFilePrint );
   barMain->addSeparator();
   barMain->insertAction( 0, cmObjectNew );
+  barMain->insertAction( 0, cmObjectEditEnable );
+  barMain->insertAction( 0, cmObjectEditDisable );
   barMain->insertAction( 0, cmEditUndo );
   barMain->insertAction( 0, cmEditRedo );
 
@@ -473,7 +474,8 @@ void SdWCommand::createToolBars(SdWMain *frame)
 
   //View bar
   barView = new QToolBar( QString("View") );
-  barView->insertAction( 0, cmObjectEditEnable );
+  addViewCommands( barView );
+  //barView->insertAction( 0, cmObjectEditEnable );
 
   frame->addToolBar( barView );
 

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -67,6 +67,8 @@ History
                      Color appliance.
   22.08.2017 v0.25 Print dialog complete.
                    Append undo deleting.
+  04.09.2017 v0.26 Append some icons.
+                   Set edit-view mech.
 */
 
 #ifndef SDCONFIG
@@ -78,7 +80,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             25
+#define SD_VERSION_MINOR             26
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

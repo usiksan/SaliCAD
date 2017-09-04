@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -90,8 +90,8 @@ SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
   if( item ) {
     if( item->isEditEnable() ) {
       //Create select mode for this window
-      mSelect = new SdModeSelect( this, item );
-      modeSet( mSelect );
+      mMode = mSelect = new SdModeSelect( this, item );
+      modeActivate( mSelect );
       }
     else {
       mMode = new SdModeView( this, item );

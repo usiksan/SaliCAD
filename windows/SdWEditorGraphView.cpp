@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -12,6 +12,10 @@ Description
   Widget for viewing any object
 */
 #include "SdWEditorGraphView.h"
+#include "SdWCommand.h"
+#include "objects/SdPulsar.h"
+
+#include <QDebug>
 
 SdWEditorGraphView::SdWEditorGraphView(SdProjectItem *item, QWidget *parent) :
   SdWEditorGraph( item, parent ),
@@ -26,6 +30,8 @@ SdWEditorGraphView::SdWEditorGraphView(SdProjectItem *item, QWidget *parent) :
     mGrid.set( 25, 25 );
     mScale.scaleSet( 1.0 );
     }
+  //Fill item in view
+  cmViewFit();
   }
 
 SdWEditorGraphView::SdWEditorGraphView( QWidget *parent ) :
@@ -72,5 +78,28 @@ SdProjectItem *SdWEditorGraphView::getProjectItem() const
 
 void SdWEditorGraphView::onActivateEditor()
   {
+  SdWEditorGraph::onActivateEditor();
 
+  //Activate menu
+  SdWCommand::cmObjectEditEnable->setVisible(true);
+
+  //Activate tool bar
+  SdWCommand::barView->show();
+  }
+
+
+
+
+
+void SdWEditorGraphView::cmObjectEditEnable()
+  {
+  if( getProjectItem() ) {
+    SdProjectItem *item = getProjectItem()->setEditEnable( true );
+    if( item != nullptr ) {
+      //Close this editor
+      SdPulsar::pulsar->emitCloseEditView( getProjectItem() );
+      //Open new editor
+      SdPulsar::pulsar->emitActivateItem( item );
+      }
+    }
   }

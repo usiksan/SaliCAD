@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -101,6 +101,7 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
 
   //Связать с пульсаром
   connect( SdPulsar::pulsar, &SdPulsar::activateItem, this, &SdWMain::onActivateProjectItem );
+  connect( SdPulsar::pulsar, &SdPulsar::closeEditView, this, &SdWMain::onCloseEditView );
   connect( SdPulsar::pulsar, &SdPulsar::removeItem, this, &SdWMain::onRemoveProjectItem );
   connect( SdPulsar::pulsar, &SdPulsar::closeProject, this, &SdWMain::onCloseProject );
   connect( SdPulsar::pulsar, &SdPulsar::setStatusLabels, this, &SdWMain::setStatusLabels );
@@ -198,6 +199,23 @@ void SdWMain::onActivateProjectItem(SdProjectItem *item)
 
     //And make it current
     mWEditors->setCurrentIndex( mWEditors->count() - 1 );
+    }
+  }
+
+
+
+
+void SdWMain::onCloseEditView(SdProjectItem *item)
+  {
+  if( item == nullptr ) return;
+  //Find if item already open
+  for( int i = 0; i < mWEditors->count(); i++ ) {
+    SdWEditor *editor = getEditor(i);
+    if( editor && editor->getProjectItem() == item ) {
+      //Item is open, close editor
+      mWEditors->removeTab( i );
+      return;
+      }
     }
   }
 

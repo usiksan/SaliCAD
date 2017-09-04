@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -33,6 +33,7 @@ class SdWEditorGraphView : public SdWEditorGraph
   public:
     virtual SdProjectItem *getProjectItem() const override;
     virtual void           onActivateEditor() override;
+    virtual void           cmObjectEditEnable() override;
   };
 
 #endif // SDWEDITORGRAPHVIEW_H
