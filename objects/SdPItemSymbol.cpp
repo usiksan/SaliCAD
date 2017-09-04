@@ -19,7 +19,8 @@ Description
 #include "SdGraphIdent.h"
 #include "SdProject.h"
 
-SdPItemSymbol::SdPItemSymbol()
+SdPItemSymbol::SdPItemSymbol() :
+  SdProjectItem()
   {
 
   }
@@ -210,14 +211,6 @@ void SdPItemSymbol::cloneFrom( const SdObject *src )
 
 
 
-SdGraphIdent *SdPItemSymbol::createIdent()
-  {
-  SdGraphIdent *ident = new SdGraphIdent( SdPoint(), QStringLiteral("Id"), SdRect(), sdGlobalProp->mSymIdentProp );
-  SdProject *prj = getProject();
-  Q_ASSERT( prj != nullptr );
-  insertChild( ident, prj->getUndo() );
-  return ident;
-  }
 
 
 

@@ -20,6 +20,7 @@ Description
 #include <QFile>
 #include <QJsonDocument>
 #include <QByteArray>
+#include <QDebug>
 
 SdProject::SdProject() :
   mDirty(false),
@@ -68,6 +69,7 @@ SdProjectItem *SdProject::getProjectsItem(SdProjectItem *item)
   //If object is found then return it
   if( res ) {
     res->setEditEnable(false);
+    qDebug() << "getProjectItem from project" << item << res;
     return res;
     }
   //else insert copy
@@ -75,6 +77,7 @@ SdProjectItem *SdProject::getProjectsItem(SdProjectItem *item)
   Q_ASSERT( res != nullptr );
   insertChild( res, &mUndo );
   res->setEditEnable(false);
+  qDebug() << "getProjectItem copy" << item->getId() << res->getId() << item << res;
   return res;
   }
 

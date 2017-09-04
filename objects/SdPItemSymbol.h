@@ -61,9 +61,6 @@ class SdPItemSymbol : public SdProjectItem
     //virtual void      insertObjects( SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next ) override;
     virtual void      cloneFrom( const SdObject *src ) override;
 
-    // SdProjectItem interface
-  public:
-    virtual SdGraphIdent  *createIdent() override;
   };
 
 #endif // SDPITEMSYMBOL_H

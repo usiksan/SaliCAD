@@ -78,7 +78,6 @@ class SdPItemPlate : public SdProjectItem
   public:
     virtual QString        getIconName() const override;
     virtual quint64        getAcceptedObjectsMask() const override;
-    virtual SdGraphIdent  *createIdent() override;
     virtual void           insertObjects( SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next ) override;
     //Set editEnable flag. Return copy object when object editing is prohibited
     virtual SdProjectItem *setEditEnable( bool edit ) override;

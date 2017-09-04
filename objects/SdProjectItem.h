@@ -69,7 +69,7 @@ class SdProjectItem : public SdContainer
 
     //Object visual (graphical) identificator
     SdGraphIdent          *getIdent();
-    virtual SdGraphIdent  *createIdent() = 0;
+    SdGraphIdent          *createIdent();
 
     //Upgrade old item to new item
     void                   upgradeItem( const SdProjectItem *oldItem, const SdProjectItem *newItem );

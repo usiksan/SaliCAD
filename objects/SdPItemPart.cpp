@@ -14,7 +14,8 @@ Description
 #include "SdGraphIdent.h"
 #include "SdProject.h"
 
-SdPItemPart::SdPItemPart()
+SdPItemPart::SdPItemPart() :
+  SdProjectItem()
   {
 
   }
@@ -49,16 +50,6 @@ quint64 SdPItemPart::getAcceptedObjectsMask() const
   return dctPartObjects;
   }
 
-
-
-SdGraphIdent *SdPItemPart::createIdent()
-  {
-  SdGraphIdent *ident = new SdGraphIdent( SdPoint(), QStringLiteral("Id"), SdRect(), sdGlobalProp->mPartIdentProp );
-  SdProject *prj = getProject();
-  Q_ASSERT( prj != nullptr );
-  insertChild( ident, prj->getUndo() );
-  return ident;
-  }
 
 
 

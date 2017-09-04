@@ -13,12 +13,12 @@ Description
 
 #include "SdDGetObject.h"
 #include "ui_SdDGetObject.h"
-#include "SdWEditorGraphSymbol.h"
-#include "SdWEditorGraphPart.h"
+#include "SdWEditorGraphView.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdProjectItem.h"
 #include "objects/SdPItemComponent.h"
 #include "objects/SdPItemSymbol.h"
+#include "objects/SdPItemPart.h"
 #include "objects/SdSection.h"
 #include "objects/SdPartVariant.h"
 
@@ -44,12 +44,12 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   ui->mFind->setEditable(true);
 
   //Create symbol and part view
-  mSymbolView = new SdWEditorGraphSymbol( nullptr, ui->mSymbolBox );
+  mSymbolView = new SdWEditorGraphView( ui->mSymbolBox );
   QHBoxLayout *lay = new QHBoxLayout();
   ui->mSymbolBox->setLayout( lay );
   lay->addWidget( mSymbolView );
 
-  mPartView = new SdWEditorGraphPart( nullptr, ui->mPartBox );
+  mPartView = new SdWEditorGraphView( ui->mPartBox );
   lay = new QHBoxLayout();
   ui->mPartBox->setLayout( lay );
   lay->addWidget( mPartView );
@@ -118,10 +118,10 @@ void SdDGetObject::onSelectItem(QModelIndex index)
         }
       ui->mSections->setCurrentRow(0);
       mSectionIndex = 0;
-      mSymbolView->setSymbol( dynamic_cast<SdPItemSymbol*>(mComponent->extractSymbolFromFactory(0,true,this)) );
+      mSymbolView->setItem( mComponent->extractSymbolFromFactory(0,true,this), true );
       }
     else {
-      mSymbolView->setSymbol( mComponent );
+      mSymbolView->setItem( mComponent, true );
       }
 
     //Get part count
@@ -139,11 +139,10 @@ void SdDGetObject::onSelectItem(QModelIndex index)
         }
       }
     ui->mParts->setCurrentRow( mPartIndex );
-    mPartView->setPart( dynamic_cast<SdPItemPart*>( mComponent->extractDefaultPartFromFacory(true, this)) );
+    mPartView->setItem( mComponent->extractDefaultPartFromFacory(true, this), true );
     }
   else {
-    SdPItemPart *prt = dynamic_cast<SdPItemPart*>( obj );
-    mPartView->setPart( prt );
+    mPartView->setItem( dynamic_cast<SdProjectItem*>(obj), true );
     }
 
   }
@@ -154,7 +153,7 @@ void SdDGetObject::onSelectItem(QModelIndex index)
 void SdDGetObject::onCurrentSegment(int row)
   {
   if( mComponent ) {
-    mSymbolView->setSymbol( dynamic_cast<SdPItemSymbol*>(mComponent->extractSymbolFromFactory(row,true,this)) );
+    mSymbolView->setItem( mComponent->extractSymbolFromFactory(row,true,this), true );
     mSectionIndex = row;
     }
   }
@@ -165,7 +164,7 @@ void SdDGetObject::onCurrentSegment(int row)
 void SdDGetObject::onCurrentPart(int row)
   {
   if( mComponent ) {
-    mPartView->setPart( dynamic_cast<SdPItemPart*>( mComponent->extractPartFromFactory( row, true, this ) ) );
+    mPartView->setItem( mComponent->extractPartFromFactory( row, true, this ), true );
     mPartIndex = row;
     }
   }

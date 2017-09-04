@@ -20,6 +20,7 @@ Description
 #include "SdGraph.h"
 #include <QSettings>
 #include <QDateTime>
+#include <QDebug>
 
 #define timeOffsetConstant 1000000000L
 
@@ -114,6 +115,7 @@ SdProjectItem *SdProjectItem::setEditEnable(bool edit)
       updateAuthor();
       updateCreationTime();
       //Write object to local library
+      qDebug() << "disable edit";
       write();
       }
     }
@@ -207,6 +209,24 @@ SdGraphIdent *SdProjectItem::getIdent()
   //If not found then create default
   if( ident == nullptr )
     return createIdent();
+  return ident;
+  }
+
+
+
+
+SdGraphIdent *SdProjectItem::createIdent()
+  {
+  SdGraphIdent *ident;
+  if( getClass() & (dctPart | dctPlate) )
+    ident = new SdGraphIdent( SdPoint(), QStringLiteral("Id"), SdRect(), sdGlobalProp->mPartIdentProp );
+  else
+   ident = new SdGraphIdent( SdPoint(), QStringLiteral("Id"), SdRect(), sdGlobalProp->mSymIdentProp );
+  SdProject *prj = getProject();
+  if( prj == nullptr )
+    insertChild( ident, nullptr );
+  else
+    insertChild( ident, prj->getUndo() );
   return ident;
   }
 
