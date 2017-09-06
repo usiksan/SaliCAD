@@ -470,7 +470,7 @@ void SdGraphPartImp::selectByPoint(const SdPoint p, SdSelector *selector)
 
 void SdGraphPartImp::selectByRect(const SdRect &r, SdSelector *selector)
   {
-  if( !getSelector() && mOverRect.isAccross(r) )
+  if( !getSelector() && r.isAccross( mOverRect ) )
     selector->insert( this );
   }
 

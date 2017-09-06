@@ -124,6 +124,16 @@ bool SdRect::isAccross(const SdPoint p1, const SdPoint p2) const
 
 
 
+bool SdRect::isAccross(const SdRect &rect) const {
+  return isAccross( rect.getTopLeft(), rect.getBottomLeft() ) ||
+         isAccross( rect.getTopLeft(), rect.getTopRight() ) ||
+         isAccross( rect.getBottomLeft(), rect.getBottomRight() ) ||
+         isAccross( rect.getTopRight(), rect.getBottomRight() );
+  }
+
+
+
+
 void SdRect::calcOverPolygon(SdPointList &polygon)
   {
   for( SdPoint p : polygon )

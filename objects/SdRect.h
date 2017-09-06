@@ -57,7 +57,7 @@ class SdRect : public QRect
     bool        isRectInside( const SdRect &r ) const { return contains( r ); }
     bool        isCircleInside( SdCircle circle ) const;
     bool        isAccross(const SdPoint p1, const SdPoint p2 ) const;
-    bool        isAccross( const SdRect &r ) const { return intersects( r ); }
+    bool        isAccross( const SdRect &r ) const;
     void        calcOverPolygon( SdPointList &polygon );
     void        intersect( const SdRect &sour ) { set( intersected(sour) ); }
 

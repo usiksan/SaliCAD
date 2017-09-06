@@ -24,13 +24,17 @@ Description
 
 bool SdSegment::isCross(SdPoint a, SdPoint b, SdPoint *out ) const
   {
+  Q_UNUSED(out)
+  SdSegment s(a,b);
+  return !isOneSideLine( s ) && !s.isOneSideLine( *this );
+#if 0
   QPoint dir1 = p2 - p1;
   QPoint dir2 = b - a;
 
   //считаем уравнения прямых проходящих через отрезки
   double a1 = -dir1.y();
   double b1 = +dir1.x();
-  double d1 = -(a1*p1.x() + b1*p1.y());
+  double d1 = -(a1*p1.x() + b1*p2.y());
 
   double a2 = -dir2.y();
   double b2 = +dir2.x();
@@ -53,6 +57,7 @@ bool SdSegment::isCross(SdPoint a, SdPoint b, SdPoint *out ) const
     }
 
   return true;
+#endif
   }
 
 
@@ -135,6 +140,9 @@ SdPoint SdSegment::getLineNearest(SdPoint sour) const
   p.ry() = -B / (A*A + B*B) * (A*sour.x() + B*sour.y() + C) + sour.y();
   return p;
   }
+
+
+
 
 bool SdSegment::isOneSideLine(const SdSegment &s) const
   {

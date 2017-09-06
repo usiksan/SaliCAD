@@ -29,6 +29,7 @@ class SdGraphLinearRectFilled : public SdGraphLinearRect
 
     // SdGraph interface
     virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;
+//    virtual void    selectByRect(const SdRect &r, SdSelector *selector) override;
     virtual void    draw(SdContext *dc) override;
     virtual int     behindCursor(SdPoint p) override;
   };

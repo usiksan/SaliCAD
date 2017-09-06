@@ -91,3 +91,15 @@ int SdGraphLinearRectFilled::behindCursor(SdPoint p)
   return 0;
   }
 
+
+
+//void SdGraphLinearRectFilled::selectByRect(const SdRect &r, SdSelector *selector)
+//  {
+//  if( mProp.mLayer.isEdited() ) {
+//    SdRect sr(a,b);
+//    if( !getSelector() && (r.intersects( sr ) || r.isAccross( sr )) ) {
+//      mFly = 0;
+//      selector->insert( this );
+//      }
+//    }
+//  }

@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -573,7 +573,7 @@ void SdGraphSymImp::selectByPoint(const SdPoint p, SdSelector *selector)
 
 void SdGraphSymImp::selectByRect(const SdRect &r, SdSelector *selector)
   {
-  if( !getSelector() && mOverRect.isAccross(r) )
+  if( !getSelector() && r.isAccross( mOverRect ) )
     selector->insert( this );
   }
 
