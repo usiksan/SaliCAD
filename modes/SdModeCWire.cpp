@@ -24,6 +24,7 @@ Description
 #include "windows/SdDNetUnion.h"
 #include "windows/SdWEditorGraph.h"
 #include <QMessageBox>
+#include <QDebug>
 
 SdModeCWire::SdModeCWire(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeCommon( editor, obj ),
@@ -67,12 +68,14 @@ void SdModeCWire::drawStatic(SdContext *ctx)
 void SdModeCWire::drawDynamic(SdContext *ctx)
   {
   if( getStep() ) {
+    //Draw entering segment with possible vertex
     ctx->setOverColor( sdEnvir->getSysColor(scEnter) );
     if( mFirst != mMiddle ) ctx->line( mFirst, mMiddle, sdGlobalProp->mWireProp );
     if( mMiddle != mPrevMove ) ctx->line( mMiddle, mPrevMove, sdGlobalProp->mWireProp );
     ctx->resetOverColor();
     }
   if( sdEnvir->mIsWireSmart ) {
+    //Draw smart variant
     ctx->setOverColor( sdEnvir->getSysColor(scSmart) );
     if( mSmA != mMiddle ) ctx->line( mFirst, mSmA, sdGlobalProp->mWireProp );
     ctx->line( mSmA, mStrEnd, sdGlobalProp->mWireProp );
@@ -369,7 +372,7 @@ void SdModeCWire::calcSecondSmart()
   {
   SdSnapInfo snap;
   snap.mSour     = mPrevMove;
-  snap.mSnapMask = snapNearestNet;
+  snap.mSnapMask = snapNearestNet | snapNearestPin;
   snap.mExclude  = mPrevMove;
   snap.mFlag     = dsifExSour;
   snap.mDest     = mPrevMove;
@@ -413,6 +416,7 @@ void SdModeCWire::calcSmartPoint()
     return noResult;
     });
 
+  qDebug() << "calcSmartPoint" << noResult << snap.mDest;
   if( noResult ) {
     mSmEnd = mPrevMove;
     mSmA   = mSmEnd;

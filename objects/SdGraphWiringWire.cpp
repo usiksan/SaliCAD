@@ -146,9 +146,13 @@ void SdGraphWiringWire::utilise(SdUndo *undo)
   if( mA == mB )
     //Delete segment with zero length
     getNet()->deleteChild( this, undo ); //Удалить, если нулевой длины
-  else
+  else {
     //Test segment union
     getNet()->unionSegment( this, undo );  //Проверить объединение сегментов
+    //Update dot nets
+    mDotA = getNeedDot( mA );
+    mDotB = getNeedDot( mB );
+    }
   }
 
 

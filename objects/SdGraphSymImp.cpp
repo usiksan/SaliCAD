@@ -781,6 +781,8 @@ void SdGraphSymImp::attach(SdUndo *undo)
   updatePinsPositions();
 
   linkAutoPart( undo );
+
+  moveComplete( SdPoint(1,1), undo );
   }
 
 

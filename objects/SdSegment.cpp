@@ -66,12 +66,12 @@ bool SdSegment::isCross(SdPoint a, SdPoint b, SdPoint *out ) const
 bool SdSegment::isContinue(SdSegment s) const
   {
   if( isSectionX() && s.isSectionX() ) {
-    return qMin(p1.x(),p2.x()) < qMax(s.p1.x(),s.p2.x()) &&
-           qMax(p1.x(),p2.x()) > qMin(s.p1.x(),s.p2.x());
+    return qMin(p1.x(),p2.x()) <= qMax(s.p1.x(),s.p2.x()) &&
+           qMax(p1.x(),p2.x()) >= qMin(s.p1.x(),s.p2.x());
     }
   if( isSectionY() && s.isSectionY() ) {
-    return qMin(p1.y(),p2.y()) < qMax(s.p1.y(),s.p2.y()) &&
-           qMax(p1.y(),p2.y()) > qMin(s.p1.y(),s.p2.y());
+    return qMin(p1.y(),p2.y()) <= qMax(s.p1.y(),s.p2.y()) &&
+           qMax(p1.y(),p2.y()) >= qMin(s.p1.y(),s.p2.y());
     }
   return false;
   }

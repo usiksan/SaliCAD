@@ -1,5 +1,5 @@
 
-//B014 bugs
+//B016 bugs
 //F001 fatal
 //C001 critical
 //D032 do
@@ -21,14 +21,17 @@
 
 //TODO B012 when moving symImp and stop, when connecting to sheet wires - abnormal finish
 
-//TODO B013 smart mode for sheet wire start at 0,0
-
 //TODO B014 previous setuped text size don't set. Only after begin editing
 
 //TODO B015 on edit disable update time and set need update link on prototipe
 
+//TODO B016 insertComponent mode: when select component and after select symbol part remain from component
+
 //===================================================================================
 //Fixed:
+//B013 smart mode for sheet wire start at 0,0
+
+
 //B001 selection problem
 //При выделении внутри прямоугольника прямоугольником выделяется прямоугольник, а не должен
 
