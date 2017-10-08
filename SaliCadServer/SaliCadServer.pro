@@ -20,10 +20,12 @@ SOURCES += \
     SdCsMain.cpp \
     SdCsServer.cpp \
     SdCsChannel.cpp \
-    SdCsPacket.cpp
+    SdCsPacketInfo.cpp \
+    SdCsChannelServer.cpp
 
 HEADERS += \
     SdCsConfig.h \
     SdCsChannel.h \
     SdCsServer.h \
-    SdCsPacket.h
+    SdCsPacketInfo.h \
+    SdCsChannelServer.h
