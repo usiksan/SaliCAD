@@ -180,12 +180,6 @@ void SdPItemPlate::insertObjects(SdPoint offset, SdSelector *sel, SdUndo *undo, 
 
 
 
-SdProjectItem *SdPItemPlate::setEditEnable(bool edit)
-  {
-  mEditEnable = edit;
-  return this;
-  }
-
 
 
 

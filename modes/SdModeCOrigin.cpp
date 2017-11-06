@@ -38,8 +38,8 @@ void SdModeCOrigin::activate()
 void SdModeCOrigin::drawDynamic(SdContext *ctx)
   {
   //Show current position of origin
-  ctx->cross( mObject->mOrigin, mOriginSize, sdEnvir->getSysColor(scEnter) );
-  ctx->circle( mObject->mOrigin, mOriginSize );
+  ctx->cross( mObject->getOrigin(), mOriginSize, sdEnvir->getSysColor(scEnter) );
+  ctx->circle( mObject->getOrigin(), mOriginSize );
   }
 
 
@@ -47,15 +47,10 @@ void SdModeCOrigin::drawDynamic(SdContext *ctx)
 
 void SdModeCOrigin::enterPoint( SdPoint enter )
   {
-  if( mUndo ) {
-    mUndo->begin( QObject::tr("Origin position changed") );
-    mUndo->point( &(mObject->mOrigin) );
-    }
-  mObject->mOrigin = enter;
+  mObject->setOrigin( enter, mUndo );
   mEditor->dirtyCashe();
   mEditor->dirtyProject();
   update();
-  //cancelMode();
   }
 
 

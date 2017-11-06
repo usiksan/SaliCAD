@@ -44,7 +44,7 @@ int SdPItemSymbol::getSectionCount() const
 
 
 
-
+//Return section with desired index
 SdSection *SdPItemSymbol::getSection(int sectionIndex) const
   {
   for( SdObject *obj : mChildList ) {
@@ -62,68 +62,30 @@ SdSection *SdPItemSymbol::getSection(int sectionIndex) const
 
 
 
-//Return part count
-int SdPItemSymbol::getPartCount() const
-  {
-  int count = 0;
-  for( SdObject *obj : mChildList ) {
-    if( obj && !obj->isDeleted() && obj->getClass() == dctPartVariant ) {
-      SdPartVariant *part = dynamic_cast<SdPartVariant*>( obj );
-      Q_ASSERT( part != 0 );
-      count++;
-      }
-    }
-  return count;
-  }
 
 
 
-
-SdPartVariant *SdPItemSymbol::getPart(int partIndex) const
+//Return default part
+SdPartVariant *SdPItemSymbol::getPart() const
   {
   for( SdObject *obj : mChildList ) {
     if( obj && !obj->isDeleted() && obj->getClass() == dctPartVariant ) {
       SdPartVariant *part = dynamic_cast<SdPartVariant*>( obj );
       Q_ASSERT( part != 0 );
-      if( partIndex == 0 ) return part;
-      partIndex--;
+      return part;
       }
     }
-  return 0;
+  return nullptr;
   }
 
 
 
 
-SdPartVariant *SdPItemSymbol::getDefaultPart() const
-  {
-  for( SdObject *obj : mChildList ) {
-    if( obj && !obj->isDeleted() && obj->getClass() == dctPartVariant ) {
-      SdPartVariant *part = dynamic_cast<SdPartVariant*>( obj );
-      Q_ASSERT( part != 0 );
-      if( part->isDefault() ) return part;
-      }
-    }
-  return 0;
-  }
 
 
 
 
-//Set new default part
-void SdPItemSymbol::setDefaultPart(SdPartVariant *partVar)
-  {
-  forEach( dctPartVariant, [partVar] (SdObject *obj) -> bool {
-    SdPartVariant *pv = dynamic_cast<SdPartVariant*>( obj );
-    Q_ASSERT(pv);
-    pv->setDefault( pv == partVar );
-    return true;
-    });
-  }
-
-
-
-
+//Return symbol from section by index
 SdPItemSymbol *SdPItemSymbol::extractSymbolFromFactory(int sectionIndex, bool soft, QWidget *parent) const
   {
   SdSection *sec = getSection( sectionIndex );
@@ -135,9 +97,11 @@ SdPItemSymbol *SdPItemSymbol::extractSymbolFromFactory(int sectionIndex, bool so
 
 
 
-SdPItemPart *SdPItemSymbol::extractPartFromFactory(int partIndex, bool soft, QWidget *parent) const
+
+//Return part descripted part variant
+SdPItemPart *SdPItemSymbol::extractPartFromFactory(bool soft, QWidget *parent) const
   {
-  SdPartVariant *prt = getPart( partIndex );
+  SdPartVariant *prt = getPart();
   if( prt )
     return prt->extractFromFactory( soft, parent );
   return nullptr;
@@ -145,14 +109,6 @@ SdPItemPart *SdPItemSymbol::extractPartFromFactory(int partIndex, bool soft, QWi
 
 
 
-
-SdPItemPart *SdPItemSymbol::extractDefaultPartFromFacory(bool soft, QWidget *parent) const
-  {
-  SdPartVariant *prt = getDefaultPart();
-  if( prt )
-    return prt->extractFromFactory( soft, parent );
-  return nullptr;
-  }
 
 
 
@@ -211,8 +167,15 @@ void SdPItemSymbol::cloneFrom( const SdObject *src )
 
 
 
-
-
-
-
-
+void SdPItemSymbol::insertChild(SdObject *child, SdUndo *undo)
+  {
+  Q_ASSERT( child != nullptr );
+  if( child->getClass() == dctPartVariant ) {
+    //If part present then remove it
+    SdPartVariant *part = getPart();
+    if( part != nullptr )
+      part->deleteObject( undo );
+    //Insert new part
+    SdProjectItem::insertChild( child, undo );
+    }
+  }

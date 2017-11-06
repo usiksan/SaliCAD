@@ -40,8 +40,8 @@ void SdPNewProjectItem_EnterName::onTextChanged(const QString name)
     mUnical->setText( tr("<font color=\"blue\">Name is empty. You must enter correct name at least one symbol.</font>") );
     mValid = false;
     }
-  else if( mProject->isContains(name) ) {
-    mUnical->setText( tr("<font color=\"red\">This name already exist in project. Enter another name.</font>") );
+  else if( mProject->isNameUsed(name) ) {
+    mUnical->setText( tr("<font color=\"red\">This name already exist. Enter another name.</font>") );
     mValid = false;
     }
   else {

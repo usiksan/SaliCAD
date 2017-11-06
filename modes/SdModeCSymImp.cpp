@@ -54,7 +54,7 @@ void SdModeCSymImp::activate()
 void SdModeCSymImp::drawDynamic(SdContext *ctx)
   {
   if( mSection ) {
-    SdConverterImplement imp( mOrigin, mSection->mOrigin, sdGlobalProp->mSymImpProp.mAngle.getValue(), sdGlobalProp->mSymImpProp.mMirror.getValue() );
+    SdConverterImplement imp( mOrigin, mSection->getOrigin(), sdGlobalProp->mSymImpProp.mAngle.getValue(), sdGlobalProp->mSymImpProp.mMirror.getValue() );
     ctx->setConverter( &imp );
 
     mSection->draw( ctx );
@@ -162,9 +162,9 @@ int SdModeCSymImp::getIndex() const
 void SdModeCSymImp::getSection()
   {
   clear();
-  int sectionIndex = -1, partIndex = -1;
+  int sectionIndex = -1;
   do {
-    SdObject *obj = SdDGetObject::getComponent( &sectionIndex, &partIndex, dctSymbol | dctComponent, QObject::tr("Select component to insert"), mEditor );
+    SdObject *obj = SdDGetObject::getComponent( &sectionIndex, dctSymbol | dctComponent, QObject::tr("Select component to insert"), mEditor );
     if( obj == nullptr ) {
       cancelMode();
       return;
@@ -179,9 +179,7 @@ void SdModeCSymImp::getSection()
       mSection = mComponent->extractSymbolFromFactory( sectionIndex, false, mEditor );
       }
 
-    if( partIndex >= 0 ) {
-      mPart = mComponent->extractPartFromFactory( partIndex, false, mEditor );
-      }
+    mPart = mComponent->extractPartFromFactory( false, mEditor );
     }
   while( mSection == nullptr );
   }

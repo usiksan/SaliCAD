@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Dialog for retrive object from dataBase
 */
 
 #ifndef SDDGETOBJECT_H
@@ -37,7 +38,6 @@ class SdDGetObject : public QDialog
     QString                mObjAuthor;    //Object author
     QString                mObjId;        //Unical object id
     int                    mSectionIndex; //Section index
-    int                    mPartIndex;    //Part variant index
 
     quint64                mSort;         //Object select sort (class)
 
@@ -50,7 +50,6 @@ class SdDGetObject : public QDialog
     QString getObjAuthor() const { return mObjAuthor; }
     QString getObjId() const { return mObjId; }
     int     getSectionIndex() const { return mSectionIndex; }
-    int     getPartIndex() const { return mPartIndex; }
 
   public slots:
     void find();
@@ -66,7 +65,7 @@ class SdDGetObject : public QDialog
   public:
     static bool           getObjectName( QString *name, QString *author, quint64 sort, const QString title, QWidget *parent );
     static SdProjectItem *getObject( quint64 sort, const QString title, QWidget *parent);
-    static SdProjectItem *getComponent( int *logSectionPtr, int *partPtr, quint64 sort, const QString title, QWidget *parent);
+    static SdProjectItem *getComponent( int *logSectionPtr, quint64 sort, const QString title, QWidget *parent );
 
     // QDialog interface
   public slots:

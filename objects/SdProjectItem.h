@@ -31,20 +31,22 @@ class SdProjectItem : public SdContainer
   {
     QString                mTitle;      //Item title
     QString                mAuthor;     //Item author (registered program copy name)
+    QString                mTag0;       //Group 0 assotiation
+    QString                mTag1;       //Group 1 assotiation
     int                    mCreateTime; //Create time with sec from 2000year
     bool                   mAuto;       //True if item inserted automatic as reference from other item
   protected:
     bool                   mEditEnable; //True if edit enable for this object
     SdParamTable           mParamTable; //Object parameters
-  public:
     SdPoint                mOrigin;     //Origin for object
+  public:
     QTreeWidgetItem       *mTreeItem;   //Correspond visual tree item
+    QString                mNewestId;   //Id of newest object of this name and author
 
     SdProjectItem();
 
     //Information
     virtual QString        getId() const override;
-    QString                getShortId() const;
     QString                getExtendTitle() const;
     QString                getToolTip() const;
     QString                getAuthor() const { return mAuthor; }
@@ -52,12 +54,16 @@ class SdProjectItem : public SdContainer
     qint64                 getTimeFromEpoch() const;
     QString                getTitle() const { return mTitle; }
     void                   setTitle( const QString title );
+    QString                getTag0() const { return mTag0; }
+    void                   setTag0( const QString tag );
+    QString                getTag1() const { return mTag1; }
+    void                   setTag1( const QString tag );
     SdProject             *getProject() const;
     SdUndo                *getUndo() const;
     //Get editEnable flag
     bool                   isEditEnable() const { return mEditEnable; }
     //Set editEnable flag. Return copy object when object editing is prohibited
-    virtual SdProjectItem* setEditEnable( bool edit );
+    void                   setEditEnable( bool edit );
     //Set creation time as current
     void                   updateCreationTime();
     //Set author as current
@@ -71,8 +77,12 @@ class SdProjectItem : public SdContainer
     SdGraphIdent          *getIdent();
     SdGraphIdent          *createIdent();
 
+    SdPoint                getOrigin() const { return mOrigin; }
+    void                   setOrigin( const SdPoint org, SdUndo *undo );
+
     //Upgrade old item to new item
     void                   upgradeItem( const SdProjectItem *oldItem, const SdProjectItem *newItem );
+
 
 
 
@@ -88,6 +98,8 @@ class SdProjectItem : public SdContainer
     virtual void           readObject(SdObjectMap *map, const QJsonObject obj) override;
 
     virtual void           cloneFrom( const SdObject *src ) override;
+
+    static  QString        getDefaultAuthor();
   };
 
 typedef SdProjectItem *SdProjectItemPtr;

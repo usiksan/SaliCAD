@@ -48,6 +48,12 @@ class SdProject : public SdContainer
     //Return object of project for given id
     SdProjectItem    *getProjectsItem( quint64 mask, const QString id );
 
+    //Begin edit project item. On this all objects contains item must unconnect
+    void              beginEditItem( SdProjectItem *item );
+
+    //End edit project item. On this all objects contains item must connect
+    void              endEditItem( SdProjectItem *item );
+
     //Return net name unused in project
     QString           getUnusedNetName();
 
@@ -56,8 +62,7 @@ class SdProject : public SdContainer
     void              setDirty();
 
     //Return true if object with this name present in project
-    bool              isContains( const QString name ) const;
-    //SdObjectPtr       itemByName( const QString name ) const { return mItemNameMap.value(name); }
+    bool              isNameUsed( const QString name ) const;
     SdObjectPtr       itemByExtendName( const QString name ) const { return mItemExtendNameMap.value(name); }
     SdObjectPtr       item( QTreeWidgetItem *src ) const;
 

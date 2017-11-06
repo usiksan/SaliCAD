@@ -44,7 +44,7 @@ struct SdSymImpPin {
 
   SdSymImpPin();
 
-  void operator = (const SdSymImpPin &pin );
+  void        operator = (const SdSymImpPin &pin );
   void        draw( SdContext *dc );
   void        setConnection( const QString wireName, bool com );
   void        setConnection( SdGraphPartImp *partImp, const QString wireName, bool com );
@@ -63,27 +63,31 @@ typedef QVector<SdSymImpPin> SdSymImpPinTable;
 
 class SdGraphSymImp : public SdGraph
   {
-    SdGraphArea      *mArea;        //PCB where this symbol implement contains in
-    int               mSectionIndex;//Section index (from 0)
-    int               mLogSection;  //Logical symbol section number (from 1)
-    int               mLogNumber;   //Logical part number (from 1)
-    SdPoint           mOrigin;      //Position of Implement
-    SdPropSymImp      mProp;        //Implement properties
-    SdRect            mOverRect;    //Over rect
-    QString           mPrefix;      //Part identificator prefix
-    SdPropText        mIdentProp;   //Part identificator text properties
-    SdPoint           mIdentOrigin; //Part identificator position in symbol context
-    SdPoint           mIdentPos;    //Part identificator position in sheet context
-    SdRect            mIdentRect;   //Part identificator over rect
+    SdGraphArea      *mArea;         //PCB where this symbol implement contains in
+    int               mSectionIndex; //Section index (from 0)
+    int               mLogSection;   //Logical symbol section number (from 1, 0 - not assigned)
+    int               mLogNumber;    //Logical part number (from 1, 0 - not assigned)
+    SdPoint           mOrigin;       //Position of Implement
+    SdPropSymImp      mProp;         //Implement properties
+    SdRect            mOverRect;     //Over rect
+    QString           mPrefix;       //Part identificator prefix
+    SdPropText        mIdentProp;    //Part identificator text properties
+    SdPoint           mIdentOrigin;  //Part identificator position in symbol context
+    SdPoint           mIdentPos;     //Part identificator position in sheet context
+    SdRect            mIdentRect;    //Part identificator over rect
 
-    SdPItemSymbol    *mComponent;   //Object contains section information, pin assotiation info. May be same as mSymbol.
-    SdPItemSymbol    *mSymbol;      //Symbol contains graph information
-    SdPItemPart      *mPart;
-    SdGraphPartImp   *mPartImp;
-    SdSymImpPinTable  mPins;        //Pin information table
-    SdParamTable      mParam;       //Parameters
+    SdPItemSymbol    *mComponent;    //Object contains section information, pin assotiation info. May be same as mSymbol.
+    SdPItemSymbol    *mSymbol;       //Symbol contains graph information
+    SdPItemPart      *mPart;         //Part for partImp construction
+    SdGraphPartImp   *mPartImp;      //Part implement in desired plate
+    SdSymImpPinTable  mPins;         //Pin information table
+    SdParamTable      mParam;        //Parameters
   public:
     SdGraphSymImp();
+
+    //comp - contains pack info
+    //sym  - contains graphics
+    //part - part type
     SdGraphSymImp(SdPItemSymbol *comp, SdPItemSymbol *sym, SdPItemPart *part , SdPoint pos, SdPropSymImp *prp);
 
 

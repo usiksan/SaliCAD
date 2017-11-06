@@ -17,37 +17,34 @@ Description
 #include "SdWEditor.h"
 #include "objects/SdPItemComponent.h"
 #include "objects/SdUndo.h"
+#include "windows/SdWEditorGraphView.h"
 
 #include <QTabWidget>
 #include <QListWidget>
 #include <QPushButton>
+#include <QLineEdit>
 
-class SdWEditorGraphSymbol;
-class SdWEditorGraphPart;
 
 class SdWEditorComponent : public SdWEditor
   {
     Q_OBJECT
 
-    SdPItemComponent     *mComponent;
-    SdUndo               *mUndo;
+    SdPItemComponent     *mComponent;         //Editing component
+    SdUndo               *mUndo;              //Undo for editing
 
-    SdWEditorGraphSymbol *mSymbolViewer;
-    SdWEditorGraphPart   *mPartViewer;
+    SdWEditorGraphView   *mSymbolViewer;      //View for symbol sections
+    SdWEditorGraphView   *mPartViewer;        //View for part of this component
 
-    QTabWidget           *mSectionsTab;
+    QTabWidget           *mSectionsTab;       //Sections of component
     QPushButton          *mSectionAdd;
     QPushButton          *mSectionDubl;
     QPushButton          *mSectionSelect;
     QPushButton          *mSectionDelete;
     QPushButton          *mSectionDeleteAll;
 
-    QListWidget          *mPartTable;
-    QPushButton          *mPartAdd;
+    QLineEdit            *mPart;
     QPushButton          *mPartSelect;
     QPushButton          *mPartDelete;
-    QPushButton          *mPartDefault;
-    QPushButton          *mPartDeleteAll;
 
     bool                  mAnotherAuthor;   //True if component crated another author and edit prohibited
   public:
@@ -66,12 +63,8 @@ class SdWEditorComponent : public SdWEditor
     void sectionDeleteAll();
     void onCurrentSection( int index );
 
-    void partAdd();
     void partSelect();
     void partDelete();
-    void partDefault();
-    void partDeleteAll();
-    void onCurrentPart( int index );
   private:
     void fillSections();
     void renameSymbolTabs();

@@ -131,7 +131,7 @@ SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *par
   //Implement properties
   mProp = *prp;
   if( part ) {
-    SdConverterImplement imp( mOrigin, part->mOrigin, mProp.mAngle.getValue(), mProp.mMirror.getValue(), mProp.mSide.getValue() );
+    SdConverterImplement imp( mOrigin, part->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue(), mProp.mSide.getValue() );
     QTransform t( imp.getMatrix() );
     mOverRect.set( t.mapRect(part->getOverRect()) );//Over rect
     mPrefix = part->getIdent()->getText();          //Part identificator prefix
@@ -506,7 +506,7 @@ void SdGraphPartImp::draw(SdContext *dc)
   //Draw ident in plate context
   dc->text( mIdentPos, mIdentRect, getIdent(), mIdentProp );
   //Convertor for symbol implementation
-  SdConverterImplement imp( mOrigin, mPart->mOrigin, mProp.mAngle.getValue(), mProp.mMirror.getValue(), mProp.mSide.getValue() );
+  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue(), mProp.mSide.getValue() );
   dc->setConverter( &imp );
 
   //Draw symbol except ident and pins
@@ -555,7 +555,7 @@ bool SdGraphPartImp::snapPoint(SdSnapInfo *snap)
 
 void SdGraphPartImp::updatePinsPositions()
   {
-  SdConverterImplement impl( mOrigin, mPart->mOrigin, mProp.mAngle.getValue(), mProp.mMirror.getValue(), mProp.mSide.getValue() );
+  SdConverterImplement impl( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue(), mProp.mSide.getValue() );
   QTransform t = impl.getMatrix();
   for( SdPartImpPin &pin : mPins ) {
     pin.mPosition = t.map( pin.mPin->getPinOrigin() );

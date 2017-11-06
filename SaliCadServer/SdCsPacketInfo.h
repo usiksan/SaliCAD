@@ -69,8 +69,10 @@ struct SdItemInfo {
     QString mHashId;      //Unical object id
     QString mName;        //Object name
     QString mAuthor;      //Author name
+    QString mTag0;        //Group 0 assotiation
+    QString mTag1;        //Group 1 assotiation
     qint32  mObjectTime;  //Time of last object editing
-    qint32  mObjectClass; //Class of object
+    qint64  mObjectClass; //Class of object
 
     SdItemInfo() : mObjectTime(0), mObjectClass(0) {}
   };

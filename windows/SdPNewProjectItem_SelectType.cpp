@@ -17,6 +17,7 @@ Description
 #include "objects/SdPItemComponent.h"
 #include "objects/SdPItemSheet.h"
 #include "objects/SdPItemPlate.h"
+#include "objects/SdObjectFactory.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -102,7 +103,7 @@ bool SdPNewProjectItem_SelectType::validatePage()
 
   //Pick up name
   for( int i = 1; i < 10000; i++ )
-    if( !mProject->isContains(name.arg(i)) ) {
+    if( !mProject->isNameUsed( name.arg(i) ) ) {
       (*mItemPtr)->setTitle( name.arg(i) );
       break;
       }

@@ -212,16 +212,6 @@ void SdPItemSheet::insertObjects(SdPoint offset, SdSelector *sel, SdUndo *undo, 
 
 
 
-//Set editEnable flag. Return copy object when object editing is prohibited
-SdProjectItem *SdPItemSheet::setEditEnable(bool edit)
-  {
-  mEditEnable = edit;
-  return this;
-  }
-
-
-
-
 
 
 

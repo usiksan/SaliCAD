@@ -33,7 +33,6 @@ QSqlQueryModel *SdDGetObject::mModel;
 SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   QDialog(parent),
   mSectionIndex(-1), //Section index
-  mPartIndex(-1),    //Part variant index
   mSort(sort),
   ui(new Ui::SdDGetObject)
   {
@@ -57,9 +56,7 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   connect( ui->mFindButton, &QPushButton::clicked, this, &SdDGetObject::find );
   connect( ui->mFindTable, &QTableView::clicked, this, &SdDGetObject::onSelectItem );
   connect( ui->mSections, &QListWidget::currentRowChanged, this, &SdDGetObject::onCurrentSegment );
-  connect( ui->mParts, &QListWidget::currentRowChanged, this, &SdDGetObject::onCurrentPart );
   ui->mSections->setSortingEnabled(false);
-  ui->mParts->setSortingEnabled(false);
 
   if( mModel == nullptr ) {
     mModel = new QSqlQueryModel();
@@ -104,8 +101,6 @@ void SdDGetObject::onSelectItem(QModelIndex index)
 
   ui->mSections->clear();
   mSectionIndex = -1;
-  ui->mParts->clear();
-  mPartIndex = -1;
 
   mComponent = dynamic_cast<SdPItemSymbol*>( obj );
   if( mComponent ) {
@@ -124,22 +119,8 @@ void SdDGetObject::onSelectItem(QModelIndex index)
       mSymbolView->setItem( mComponent, true );
       }
 
-    //Get part count
-    int partCount = mComponent->getPartCount();
-    //If parts present then fill visual list with parts
-    if( partCount ) {
-      for( int i = 0; i < partCount; i++ ) {
-        SdPartVariant *v = mComponent->getPart(i);
-        if( v->isDefault() ) {
-          ui->mParts->addItem( tr("[def] %1").arg( v->getTitle() ) );
-          mPartIndex = i;
-          }
-        else
-          ui->mParts->addItem( v->getTitle() );
-        }
-      }
-    ui->mParts->setCurrentRow( mPartIndex );
-    mPartView->setItem( mComponent->extractDefaultPartFromFacory(true, this), true );
+    //Setup part for view
+    mPartView->setItem( mComponent->extractPartFromFactory(true, this), true );
     }
   else {
     mPartView->setItem( dynamic_cast<SdProjectItem*>(obj), true );
@@ -159,15 +140,6 @@ void SdDGetObject::onCurrentSegment(int row)
   }
 
 
-
-
-void SdDGetObject::onCurrentPart(int row)
-  {
-  if( mComponent ) {
-    mPartView->setItem( mComponent->extractPartFromFactory( row, true, this ), true );
-    mPartIndex = row;
-    }
-  }
 
 
 
@@ -228,14 +200,12 @@ SdProjectItem *SdDGetObject::getObject(quint64 sort, const QString title, QWidge
 
 
 
-SdProjectItem *SdDGetObject::getComponent(int *logSectionPtr, int *partPtr, quint64 sort, const QString title, QWidget *parent)
+SdProjectItem *SdDGetObject::getComponent(int *logSectionPtr, quint64 sort, const QString title, QWidget *parent)
   {
   SdDGetObject dget( sort, title, parent );
   if( dget.exec() ) {
     if( logSectionPtr )
       *logSectionPtr = dget.getSectionIndex();
-    if( partPtr )
-      *partPtr = dget.getPartIndex();
     return dynamic_cast<SdProjectItem*>( SdObjectFactory::extractObject( dget.getObjId(), false, parent ) );
     }
   return nullptr;

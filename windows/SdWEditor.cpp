@@ -75,7 +75,8 @@ void SdWEditor::onActivateEditor()
 void SdWEditor::cmObjectEditDisable()
   {
   if( getProjectItem() ) {
-    SdProjectItem *item = getProjectItem()->setEditEnable( false );
+    SdProjectItem *item = getProjectItem();
+    getProjectItem()->setEditEnable( false );
     //Close this editor (viewer)
     SdPulsar::pulsar->emitCloseEditView( getProjectItem() );
     //Open new item with edit status
@@ -89,7 +90,8 @@ void SdWEditor::cmObjectEditDisable()
 void SdWEditor::cmObjectEditEnable()
   {
   if( getProjectItem() ) {
-    SdProjectItem *item = getProjectItem()->setEditEnable( true );
+    SdProjectItem *item = getProjectItem();
+    getProjectItem()->setEditEnable( true );
     //Close this editor (viewer)
     SdPulsar::pulsar->emitCloseEditView( getProjectItem() );
     //Open new item with edit status

@@ -161,7 +161,7 @@ SdGraphSymImp::SdGraphSymImp(SdPItemSymbol *comp, SdPItemSymbol *sym, SdPItemPar
   //QString           mName;        //Name of component
   mProp = *prp;        //Implement properties
   if( sym ) {
-    SdConverterImplement imp( mOrigin, sym->mOrigin, mProp.mAngle.getValue(), mProp.mMirror.getValue() );
+    SdConverterImplement imp( mOrigin, sym->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue() );
     QTransform t( imp.getMatrix() );
     mOverRect.set( t.mapRect(sym->getOverRect()) );//Over rect
     mPrefix = sym->getIdent()->getText();          //Part identificator prefix
@@ -225,6 +225,7 @@ void SdGraphSymImp::setLinkSection(int section, SdGraphPartImp *partImp )
     for( int index = 0; index < mPins.count(); index++ ) {
       //Try get from section info pinNumber for pinName
       if( sct ) {
+        //Retrive pin number from section
         mPins[index].mPinNumber = sct->getPinNumber( mPins[index].mPinName );
         //PinNumber received, get part pin index
         mPins[index].mPrtPin = partImp->getPinIndex( mPins[index].mPinNumber );
@@ -600,7 +601,7 @@ void SdGraphSymImp::draw(SdContext *dc)
   //Draw ident in sheet context
   dc->text( mIdentPos, mIdentRect, getIdent(), mIdentProp );
   //Convertor for symbol implementation
-  SdConverterImplement imp( mOrigin, mSymbol->mOrigin, mProp.mAngle.getValue(), mProp.mMirror.getValue() );
+  SdConverterImplement imp( mOrigin, mSymbol->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue() );
   dc->setConverter( &imp );
 
   //Draw symbol except ident and pins
@@ -680,7 +681,7 @@ SdPItemSheet *SdGraphSymImp::getSheet() const
 
 void SdGraphSymImp::updatePinsPositions()
   {
-  SdConverterImplement impl( mOrigin, mSymbol->mOrigin, mProp.mAngle.getValue(), mProp.mMirror.getValue() );
+  SdConverterImplement impl( mOrigin, mSymbol->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue() );
   QTransform t = impl.getMatrix();
   for( SdSymImpPin &pin : mPins )
     pin.mPosition = t.map( pin.mPin->getPinOrigin() );

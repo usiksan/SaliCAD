@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Part implementation
 */
 #ifndef SDGRAPHPARTIMP_H
 #define SDGRAPHPARTIMP_H
@@ -39,8 +40,8 @@ struct SdPartImpPin {
 
   SdPartImpPin();
 
-  void operator = ( const SdPartImpPin &pin );
-  void draw( SdContext *dc );
+  void        operator = ( const SdPartImpPin &pin );
+  void        draw( SdContext *dc );
 
   QJsonObject toJson() const;
   void        fromJson( SdObjectMap *map, const QJsonObject obj );
@@ -83,7 +84,7 @@ class SdGraphPartImp : public SdGraphTraced
     SdPartImpPinTable      mPins;
     SdPartImpSectionTable  mSections;
     SdPItemPart           *mPart;        //Part for this implementation
-    SdPItemSymbol         *mComponent;   //Component
+    SdPItemSymbol         *mComponent;   //Component with pack info
   public:
     SdGraphPartImp();
     SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemSymbol *comp );

@@ -97,7 +97,8 @@ void SdWEditorGraphView::onActivateEditor()
 void SdWEditorGraphView::cmObjectEditEnable()
   {
   if( getProjectItem() ) {
-    SdProjectItem *item = getProjectItem()->setEditEnable( true );
+    SdProjectItem *item = getProjectItem();
+    getProjectItem()->setEditEnable( true );
     if( item != nullptr ) {
       //Close this editor
       SdPulsar::pulsar->emitCloseEditView( getProjectItem() );

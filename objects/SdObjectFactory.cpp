@@ -162,5 +162,20 @@ SdObject *SdObjectFactory::extractObject(const QString name, const QString autho
 
 
 
+//Return true if object already present in dataBase
+bool SdObjectFactory::isObjectPresent(const QString name, const QString author)
+  {
+  QSqlQuery q;
+  q.exec( QString("SELECT hash FROM objects WHERE name='%1' AND author='%2'").arg( name ).arg( author ) );
+  if( q.first() )
+    //Object present.
+    return true;
+  return false;
+  }
+
+
+
+
+
 
 

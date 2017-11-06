@@ -16,6 +16,7 @@ Description
 #include "SdPulsar.h"
 #include "SdPItemPlate.h"
 #include "SdPItemSheet.h"
+#include "SdObjectFactory.h"
 #include <QJsonArray>
 #include <QFile>
 #include <QJsonDocument>
@@ -103,6 +104,16 @@ SdProjectItem *SdProject::getProjectsItem(quint64 mask, const QString id)
 
 
 
+
+//Begin edit project item. On this all objects contains item must unconnect
+void SdProject::beginEditItem(SdProjectItem *item)
+  {
+
+  }
+
+
+
+
 //Return net name unused in project
 QString SdProject::getUnusedNetName()
   {
@@ -129,13 +140,18 @@ void SdProject::setDirty()
 
 
 //Return true if object with this name present in project
-bool SdProject::isContains(const QString name) const
+bool SdProject::isNameUsed(const QString name) const
   {
+  //Find object with desired name in this project
   for( SdObjectPtr ptr : mChildList ) {
     SdProjectItemPtr pi = dynamic_cast<SdProjectItemPtr>( ptr );
-    if( pi && pi->getTitle() == name )
+    if( pi && !pi->isDeleted() && pi->getTitle() == name && pi->getAuthor() == SdProjectItem::getDefaultAuthor() )
       return true;
     }
+
+  //Find object with desired name in data base
+  if( SdObjectFactory::isObjectPresent( name, SdProjectItem::getDefaultAuthor() ) )
+    return true;
   return false;
   }
 
@@ -239,7 +255,7 @@ void SdProject::cloneFrom(const SdObject *src)
 void SdProject::insertChild(SdObject *child, SdUndo *undo)
   {
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
-  if( item && !isContains(item->getTitle()) ) {
+  if( item ) {
     SdContainer::insertChild( child, undo );
     mItemExtendNameMap.insert( item->getExtendTitle(), item );
     mDirty = true;

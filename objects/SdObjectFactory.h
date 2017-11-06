@@ -38,6 +38,9 @@ class SdObjectFactory
     //If no object in local database then doing nothing
     static SdObject    *extractObject( const QString id, bool soft, QWidget *parent );
     static SdObject    *extractObject( const QString name, const QString author, bool soft, QWidget *parent );
+
+    //Return true if object already present in dataBase
+    static bool         isObjectPresent( const QString name, const QString author );
   };
 
 #endif // SDOBJECTFACTORY_H

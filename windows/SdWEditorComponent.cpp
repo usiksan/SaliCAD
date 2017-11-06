@@ -48,7 +48,7 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
    box->addWidget( symbolViewer );
     QHBoxLayout *psym = new QHBoxLayout();
     symbolViewer->setLayout( psym );
-    psym->addWidget( mSymbolViewer = new SdWEditorGraphSymbol(0,symbolViewer) );
+    psym->addWidget( mSymbolViewer = new SdWEditorGraphView( nullptr, symbolViewer ) );
    QGroupBox *sectionBox = new QGroupBox( tr("Sections"), sym );
    box->addWidget( sectionBox );
     box = new QHBoxLayout();
@@ -92,35 +92,27 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
    box->addWidget( partViewer );
     QHBoxLayout *ppart = new QHBoxLayout();
     partViewer->setLayout( ppart );
-    ppart->addWidget( mPartViewer = new SdWEditorGraphPart(0,part) );
-   QGroupBox *partBox = new QGroupBox( tr("Parts"), part );
+    ppart->addWidget( mPartViewer = new SdWEditorGraphView( nullptr, part ) );
+   QGroupBox *partBox = new QGroupBox( tr("Part"), part );
    box->addWidget( partBox );
     box = new QHBoxLayout();
     partBox->setLayout( box );
-    mPartTable = new QListWidget(partBox);
-    box->addWidget( mPartTable );
-    connect( mPartTable, &QListWidget::currentRowChanged, this, &SdWEditorComponent::onCurrentPart );
+    mPart = new QLineEdit(partBox);
+    mPart->setReadOnly( true );
+    box->addWidget( mPart );
     buts = new QVBoxLayout();
     box->addLayout( buts );
-     buts->addWidget( mPartAdd = new QPushButton( tr("Add part")) );
-     buts->addWidget( mPartDefault = new QPushButton( tr("Set def part")) );
      buts->addWidget( mPartSelect = new QPushButton( tr("Select part")) );
      buts->addWidget( mPartDelete = new QPushButton( tr("Delete part")) );
-     buts->addWidget( mPartDeleteAll = new QPushButton( tr("Delete all parts")) );
 
      if( mAnotherAuthor ) {
-       mPartAdd->setEnabled(false);
+       //mPartAdd->setEnabled(false);
        mPartSelect->setEnabled(false);
        mPartDelete->setEnabled(false);
-       mPartDefault->setEnabled(false);
-       mPartDeleteAll->setEnabled(false);
        }
      else {
-       connect( mPartAdd, &QPushButton::clicked, this, &SdWEditorComponent::partAdd );
        connect( mPartSelect, &QPushButton::clicked, this, &SdWEditorComponent::partSelect );
        connect( mPartDelete, &QPushButton::clicked, this, &SdWEditorComponent::partDelete );
-       connect( mPartDeleteAll, &QPushButton::clicked, this, &SdWEditorComponent::partDeleteAll );
-       connect( mPartDefault, &QPushButton::clicked, this, &SdWEditorComponent::partDefault );
        }
 
   //Params
@@ -256,13 +248,13 @@ void SdWEditorComponent::onCurrentSection(int index)
     if( obj ) {
       SdPItemSymbol *sym = dynamic_cast<SdPItemSymbol*>( obj );
       if( sym ) {
-        mSymbolViewer->setSymbol( sym );
+        mSymbolViewer->setItem( sym, true );
         return;
         }
       delete obj;
       }
     }
-  mSymbolViewer->setSymbol( nullptr );
+  mSymbolViewer->setItem( nullptr, true );
   }
 
 
@@ -327,20 +319,6 @@ void SdWEditorComponent::partDelete()
 
 
 
-void SdWEditorComponent::partDefault()
-  {
-  int cur = mPartTable->currentRow();
-  qDebug() << Q_FUNC_INFO << cur;
-  if( cur >= 0 ) {
-//    mComponent->setDefaultPart( nullptr );
-    mComponent->setDefaultPart( getPartVariant(cur) );
-    fillParts();
-    mComponent->updateCreationTime();
-    }
-  }
-
-
-
 
 void SdWEditorComponent::partDeleteAll()
   {
@@ -360,13 +338,13 @@ void SdWEditorComponent::onCurrentPart(int index)
     if( obj ) {
       SdPItemPart *part = dynamic_cast<SdPItemPart*>( obj );
       if( part ) {
-        mPartViewer->setPart( part );
+        mPartViewer->setItem( part, true );
         return;
         }
       delete obj;
       }
     }
-  mPartViewer->setPart( nullptr );
+  mPartViewer->setItem( nullptr, true );
   }
 
 
@@ -452,10 +430,10 @@ void SdWEditorComponent::fillParts()
 
 
 
-SdPartVariant *SdWEditorComponent::getPartVariant(int index)
+SdPartVariant *SdWEditorComponent::getPartVariant()
   {
   //And find SdPartVariant with this index
-  SdPartVariant *prt = nullptr;
+  SdPartVariant *prt = mComponent->getPart();
   mComponent->forEach( dctPartVariant, [&prt, index] (SdObject *obj) -> bool {
     prt = dynamic_cast<SdPartVariant*>(obj);
     qDebug() << prt->mVisualIndex << prt->getPartTitle();

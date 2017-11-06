@@ -115,6 +115,34 @@ bool SdObject::isUsed(SdObject *obj) const
 
 
 
+//Signal begin edit, end edit of items
+void SdObject::beginEditItem(SdProjectItem *item, SdUndo *undo)
+  {
+  Q_UNUSED(item)
+  Q_UNUSED(undo)
+  }
+
+
+
+void SdObject::endEditItem(SdProjectItem *item, SdUndo *undo)
+  {
+  Q_UNUSED(item)
+  Q_UNUSED(undo)
+  }
+
+
+
+
+//Signal to replace item
+void SdObject::replaceItem(SdProjectItem *oldItem, SdProjectItem *newItem, SdUndo *undo)
+  {
+  Q_UNUSED(oldItem)
+  Q_UNUSED(newItem)
+  Q_UNUSED(undo)
+  }
+
+
+
 SdObject *SdObject::copy() const
   {
   SdObject *obj = build( getType() );
@@ -191,6 +219,10 @@ SdObject *SdObject::read(SdObjectMap *map, const QJsonObject obj)
   SdObject *r = readPtr( map, obj );
   if( r ) {
     r->readObject( map, obj );
+
+    SdProjectItem *item = dynamic_cast<SdProjectItem*>(r);
+    if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol)) && !item->isEditEnable() )
+      item->mNewestId = SdObjectFactory::insertObject( item, obj );
     }
 
   return r;

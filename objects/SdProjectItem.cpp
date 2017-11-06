@@ -27,7 +27,7 @@ Description
 SdProjectItem::SdProjectItem() :
   mCreateTime(0),
   mAuto(true),
-  mEditEnable(false),
+  mEditEnable(true),
   mTreeItem(nullptr)
   {
 
@@ -43,13 +43,6 @@ QString SdProjectItem::getId() const
   }
 
 
-
-
-QString SdProjectItem::getShortId() const
-  {
-  //Id consist from name and user
-  return getType() + mTitle + mAuthor;
-  }
 
 
 
@@ -105,7 +98,7 @@ SdUndo *SdProjectItem::getUndo() const
 
 
 //Set editEnable flag. Return copy object when object editing is prohibited
-SdProjectItem *SdProjectItem::setEditEnable(bool edit)
+void SdProjectItem::setEditEnable(bool edit)
   {
   if( mEditEnable ) {
     if( !edit ) {
@@ -117,26 +110,19 @@ SdProjectItem *SdProjectItem::setEditEnable(bool edit)
       //Write object to local library
       qDebug() << "disable edit";
       write();
+      getProject()->endEditItem( this );
       }
     }
   else {
     if( edit ) {
       //Enable edit
-      //Test if object is used
-      if( getProject()->isUsed( this ) || isAnotherAuthor() ) {
-        //Object is used. Create new one
-        SdProjectItem *item = dynamic_cast<SdProjectItem*>( copy() );
-        item->updateAuthor();
-        item->updateCreationTime();
-        //Insert item to project
-        getProject()->insertChild( item, getProject()->getUndo() );
-        return item;
-        }
-      mEditEnable = edit;
+      getProject()->beginEditItem( this );
+      //Update object version and author creation
+      updateAuthor();
       updateCreationTime();
+      mEditEnable = edit;
       }
     }
-  return this;
   }
 
 
@@ -157,8 +143,7 @@ void SdProjectItem::updateCreationTime()
 
 void SdProjectItem::updateAuthor()
   {
-  QSettings s;
-  mAuthor     = s.value( SDK_GLOBAL_ID_MACHINE ).toString();
+  mAuthor = getDefaultAuthor();
   }
 
 
@@ -166,8 +151,7 @@ void SdProjectItem::updateAuthor()
 
 bool SdProjectItem::isAnotherAuthor() const
   {
-  QSettings s;
-  return mAuthor != s.value( SDK_GLOBAL_ID_MACHINE ).toString();
+  return mAuthor != getDefaultAuthor();
   }
 
 
@@ -229,6 +213,21 @@ SdGraphIdent *SdProjectItem::createIdent()
     insertChild( ident, prj->getUndo() );
   return ident;
   }
+
+
+
+
+
+void SdProjectItem::setOrigin(const SdPoint org, SdUndo *undo)
+  {
+  if( undo ) {
+    undo->begin( QObject::tr("Origin position changed") );
+    undo->point( &mOrigin );
+    }
+  mOrigin = org;
+  }
+
+
 
 
 
@@ -317,4 +316,13 @@ void SdProjectItem::cloneFrom( const SdObject *src )
   mAuto       = true;
   mParamTable = sour->mParamTable;
   mOrigin     = sour->mOrigin;
+  }
+
+
+
+
+QString SdProjectItem::getDefaultAuthor()
+  {
+  QSettings s;
+  return s.value( SDK_GLOBAL_ID_MACHINE ).toString();
   }
