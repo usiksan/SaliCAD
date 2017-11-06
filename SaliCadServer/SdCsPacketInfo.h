@@ -9,7 +9,7 @@ Web
   www.saliLab.ru
 
 Description
-  Packet - is the transfer header. Id describes information block.
+  Packet - is the transfer header. It describes information block.
 */
 #ifndef SDCSPACKETINFO_H
 #define SDCSPACKETINFO_H
@@ -21,7 +21,7 @@ Description
 
 #define SCPI_GET_SERVER_VERSION   1 //Get cad server version to decide properties
                                     //data: none
-#define SCPI_SERVER_VERSION       2 //In lenght field is server version
+#define SCPI_SERVER_VERSION       2 //Server info packet
                                     //data: SdCadServerVersion - server version info
 #define SCPI_GET_UPDATE_LIST      3 //Request to get update data base list
                                     //data: quint32 - time of last upgrading
