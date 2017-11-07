@@ -55,7 +55,6 @@ class SdDGetObject : public QDialog
     void find();
     void onSelectItem( QModelIndex index );
     void onCurrentSegment( int row );
-    void onCurrentPart( int row );
 
   protected:
     void changeEvent(QEvent *e);

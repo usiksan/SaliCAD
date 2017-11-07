@@ -108,7 +108,27 @@ SdProjectItem *SdProject::getProjectsItem(quint64 mask, const QString id)
 //Begin edit project item. On this all objects contains item must unconnect
 void SdProject::beginEditItem(SdProjectItem *item)
   {
+  //For all child objects send signal
+  forEach( dctAll, [this,item] (SdObject *obj) -> bool {
+    if( obj != nullptr )
+      obj->beginEditItem( item, &mUndo );
+    return true;
+    });
+  }
 
+
+
+
+
+//End edit project item. On this all objects contains item must connect
+void SdProject::endEditItem(SdProjectItem *item)
+  {
+  //For all child objects send signal
+  forEach( dctAll, [this,item] (SdObject *obj) -> bool {
+    if( obj != nullptr )
+      obj->endEditItem( item, &mUndo );
+    return true;
+    });
   }
 
 

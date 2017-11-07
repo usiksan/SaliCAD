@@ -68,8 +68,7 @@ class SdWEditorComponent : public SdWEditor
   private:
     void fillSections();
     void renameSymbolTabs();
-    void fillParts();
-    SdPartVariant *getPartVariant( int index );
+    void fillPart();
   };
 
 #endif // SDWEDITORCOMPONENT_H

@@ -25,9 +25,13 @@ class SdWEditorGraphView : public SdWEditorGraph
   public:
     SdWEditorGraphView( SdProjectItem *item, QWidget *parent );
     SdWEditorGraphView(QWidget *parent);
+    ~SdWEditorGraphView();
 
     //Set new item
     void setItem(SdProjectItem *item , bool owner);
+
+    //Set new item by item name and item author
+    void setItemByNameAndAuthor( const QString name, const QString author );
 
     // SdWEditor interface
   public:

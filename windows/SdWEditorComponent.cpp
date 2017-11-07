@@ -137,7 +137,7 @@ void SdWEditorComponent::onActivateEditor()
   SdWEditor::onActivateEditor();
   //Update info from component
   fillSections();
-  fillParts();
+  fillPart();
   }
 
 
@@ -244,57 +244,25 @@ void SdWEditorComponent::onCurrentSection(int index)
   SdWSection *sw = dynamic_cast<SdWSection*>( mSectionsTab->widget(index) );
   if( sw ) {
     SdSection *sect = sw->getSection();
-    SdObject *obj = SdObjectFactory::extractObject( sect->getSymbolTitle(), sect->getSymbolAuthor(), true, this );
-    if( obj ) {
-      SdPItemSymbol *sym = dynamic_cast<SdPItemSymbol*>( obj );
-      if( sym ) {
-        mSymbolViewer->setItem( sym, true );
-        return;
-        }
-      delete obj;
-      }
+    mSymbolViewer->setItemByNameAndAuthor( sect->getSymbolTitle(), sect->getSymbolAuthor() );
     }
-  mSymbolViewer->setItem( nullptr, true );
+  else
+    mSymbolViewer->setItem( nullptr, true );
   }
 
-
-
-
-void SdWEditorComponent::partAdd()
-  {
-  SdPItemPart *part = dynamic_cast<SdPItemPart*>( SdDGetObject::getObject( dctPart, tr("Select part for component"), this ) );
-  if( part ) {
-    SdPartVariant *pvar = new SdPartVariant();
-    pvar->updateFromPart( part );
-    delete part;
-    mPartTable->addItem( pvar->getTitle() );
-    mPartTable->setCurrentRow( mPartTable->count() - 1 );
-    onCurrentPart( mPartTable->count() - 1 );
-    mComponent->insertChild( pvar, mUndo );
-    mComponent->updateCreationTime();
-
-    mPartDefault->setEnabled( mPartTable->count() );
-    mPartSelect->setEnabled( mPartTable->count() );
-    mPartDelete->setEnabled( mPartTable->count() );
-    mPartDeleteAll->setEnabled( mPartTable->count() );
-    }
-  }
 
 
 
 void SdWEditorComponent::partSelect()
   {
-  int cur = mPartTable->currentRow();
-  qDebug() << Q_FUNC_INFO << cur;
-  if( cur >= 0 ) {
-    SdPartVariant *var = getPartVariant(cur);
-    if( var ) {
-      SdPItemPart *part = dynamic_cast<SdPItemPart*>( SdDGetObject::getObject( dctPart, tr("Select part for component"), this ) );
-      var->updateFromPart( part );
-      mComponent->updateCreationTime();
-      fillParts();
-      }
+  SdPartVariant *part = mComponent->getPart();
+  if( part == nullptr ) {
+    part = new SdPartVariant();
+    mComponent->insertChild( part, mUndo );
     }
+  SdPItemPart *prt = dynamic_cast<SdPItemPart*>( SdDGetObject::getObject( dctPart, tr("Select part for component"), this ) );
+  part->updateFromPart( prt );
+  fillPart();
   }
 
 
@@ -302,50 +270,17 @@ void SdWEditorComponent::partSelect()
 
 void SdWEditorComponent::partDelete()
   {
-  int cur = mPartTable->currentRow();
-  qDebug() << Q_FUNC_INFO << cur;
-  if( cur >= 0 ) {
-    SdPartVariant *var = getPartVariant(cur);
-    if( var ) {
-      if( QMessageBox::question( this, tr("Attention!"), tr("You attemption to delete part %1").arg(var->getTitle())) == QMessageBox::Yes ) {
-        mComponent->deleteChild( var, mUndo );
-        mComponent->updateCreationTime();
-        fillParts();
-        }
-      }
+  SdPartVariant *part = mComponent->getPart();
+  if( part != nullptr ) {
+    //Remove object
+    part->deleteObject( mUndo );
+    //Remove visual element
+    mPart->clear();
+    mPartViewer->setItem( nullptr, true );
     }
   }
 
 
-
-
-
-void SdWEditorComponent::partDeleteAll()
-  {
-  if( QMessageBox::question( this, tr("Attention!"), tr("Are You sure delete All parts?") ) == QMessageBox::Yes ) {
-    //TODO D016 add delete all parts
-    }
-  }
-
-
-
-
-void SdWEditorComponent::onCurrentPart(int index)
-  {
-  SdPartVariant *prt = getPartVariant( index );
-  if( prt ) {
-    SdObject *obj = SdObjectFactory::extractObject( prt->getPartTitle(), prt->getPartAuthor(), true, this );
-    if( obj ) {
-      SdPItemPart *part = dynamic_cast<SdPItemPart*>( obj );
-      if( part ) {
-        mPartViewer->setItem( part, true );
-        return;
-        }
-      delete obj;
-      }
-    }
-  mPartViewer->setItem( nullptr, true );
-  }
 
 
 
@@ -388,65 +323,23 @@ void SdWEditorComponent::renameSymbolTabs()
 
 
 
-void SdWEditorComponent::fillParts()
+void SdWEditorComponent::fillPart()
   {
-  //Remove previous list
-  mPartTable->clear();
-
-  mPartTable->setSortingEnabled(false);
-
-  //Fill new list with default detecting
-  int def = -1;
-  mComponent->forEach( dctPartVariant, [this,&def] (SdObject *obj) -> bool {
-    SdPartVariant *prt = dynamic_cast<SdPartVariant*>(obj);
-    if( prt ) {
-      prt->mVisualIndex = mPartTable->count();
-      if( prt->isDefault() ) {
-        mPartTable->addItem( tr("[def] %1").arg(prt->getTitle()) );
-        def = prt->mVisualIndex;
-        }
-      else
-        mPartTable->addItem( prt->getTitle() );
-      }
-    return true;
-    });
-
-  if( def >= 0 ) {
-    mPartTable->setCurrentRow( def );
-    onCurrentPart( def );
+  SdPartVariant *part = mComponent->getPart();
+  if( part == nullptr ) {
+    mPart->clear();
+    mPartViewer->setItem( nullptr, true );
     }
-  else if( mPartTable->count() ) {
-    mPartTable->setCurrentRow( 0 );
-    onCurrentPart( 0 );
+  else {
+    mPart->setText( part->getTitle() );
+    mPartViewer->setItemByNameAndAuthor( part->getPartTitle(), part->getPartAuthor() );
     }
+
   if( !mAnotherAuthor ) {
-    mPartDefault->setEnabled( mPartTable->count() );
-    mPartSelect->setEnabled( mPartTable->count() );
-    mPartDelete->setEnabled( mPartTable->count() );
-    mPartDeleteAll->setEnabled( mPartTable->count() );
+    mPartSelect->setEnabled( true );
+    mPartDelete->setEnabled( part != nullptr );
     }
   }
-
-
-
-
-SdPartVariant *SdWEditorComponent::getPartVariant()
-  {
-  //And find SdPartVariant with this index
-  SdPartVariant *prt = mComponent->getPart();
-  mComponent->forEach( dctPartVariant, [&prt, index] (SdObject *obj) -> bool {
-    prt = dynamic_cast<SdPartVariant*>(obj);
-    qDebug() << prt->mVisualIndex << prt->getPartTitle();
-    if( prt && prt->mVisualIndex == index )
-      //SdPartVariant is found. Break iterations
-      return false;
-    //Continue iterations
-    prt = nullptr;
-    return true;
-    });
-  return prt;
-  }
-
 
 
 

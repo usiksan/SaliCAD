@@ -14,6 +14,7 @@ Description
 #include "SdWEditorGraphView.h"
 #include "SdWCommand.h"
 #include "objects/SdPulsar.h"
+#include "objects/SdObjectFactory.h"
 
 #include <QDebug>
 
@@ -48,6 +49,15 @@ SdWEditorGraphView::SdWEditorGraphView( QWidget *parent ) :
 
 
 
+
+SdWEditorGraphView::~SdWEditorGraphView()
+  {
+  if( mItem != nullptr && mOwner )
+    delete mItem;
+  }
+
+
+
 //Set new item
 void SdWEditorGraphView::setItem( SdProjectItem *item, bool owner )
   {
@@ -66,6 +76,16 @@ void SdWEditorGraphView::setItem( SdProjectItem *item, bool owner )
     //Fill item in view
     cmViewFit();
     }
+  }
+
+
+
+
+//Set new item by item name and item author
+void SdWEditorGraphView::setItemByNameAndAuthor(const QString name, const QString author)
+  {
+  SdProjectItem *item = dynamic_cast<SdProjectItem*>( SdObjectFactory::extractObject( name, author, true, this ) );
+  setItem( item, true );
   }
 
 
