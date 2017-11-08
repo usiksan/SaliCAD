@@ -12,6 +12,7 @@ Description
   Some utils
 */
 #include "SdUtil.h"
+#include <QDateTime>
 
 
 //Convert textual representation of physical coords to logical int
@@ -50,6 +51,23 @@ QString SdUtil::log2physStr( int log, double ppm )
 double SdUtil::log2phys(int log, double ppm)
   {
   return static_cast<double>(log) * ppm;
+  }
+
+
+
+
+//Get current time from 2000year
+int SdUtil::getTime2000()
+  {
+  return static_cast<int>( QDateTime::currentDateTimeUtc().toSecsSinceEpoch() - timeOffsetConstant );
+  }
+
+
+
+//Convert time from 2000year to time from epoch
+qint64 SdUtil::time2000toEpoch(int time)
+  {
+  return timeOffsetConstant + static_cast<qint64>(time);
   }
 
 

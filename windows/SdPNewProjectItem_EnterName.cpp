@@ -12,6 +12,7 @@ Description
 */
 
 #include "SdPNewProjectItem_EnterName.h"
+#include "SdWCategory.h"
 #include <QVBoxLayout>
 
 SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item, SdProject *prj, QWidget *parent) :
@@ -26,6 +27,8 @@ SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item,
   QVBoxLayout *vlay = new QVBoxLayout();
   vlay->addWidget( mUnical = new QLabel() );
   vlay->addWidget( mName = new QLineEdit() );
+  vlay->addWidget( new QLabel(tr("Element category")) );
+  vlay->addWidget( new SdWCategory() );
 
   setLayout( vlay );
 

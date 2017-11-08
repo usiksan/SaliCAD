@@ -18,11 +18,11 @@ Description
 #include "SdPulsar.h"
 #include "SdPoint.h"
 #include "SdGraph.h"
+#include "SdUtil.h"
 #include <QSettings>
 #include <QDateTime>
 #include <QDebug>
 
-#define timeOffsetConstant 1000000000L
 
 SdProjectItem::SdProjectItem() :
   mCreateTime(0),
@@ -59,7 +59,7 @@ QString SdProjectItem::getExtendTitle() const
 
 qint64 SdProjectItem::getTimeFromEpoch() const
   {
-  return timeOffsetConstant + static_cast<qint64>(mCreateTime);
+  return SdUtil::time2000toEpoch( mCreateTime );
   }
 
 
@@ -131,7 +131,7 @@ void SdProjectItem::setEditEnable(bool edit)
 //On call this function time setup after previous time
 void SdProjectItem::updateCreationTime()
   {
-  int time = static_cast<int>( QDateTime::currentDateTimeUtc().toSecsSinceEpoch() - timeOffsetConstant );
+  int time = SdUtil::getTime2000();
   if( time <= mCreateTime )
     mCreateTime++;
   else

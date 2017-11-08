@@ -19,8 +19,12 @@ Description
 #include "SdObject.h"
 #include <QJsonObject>
 #include <QWidget>
+#include <QTreeWidgetItem>
+#include <QList>
 
 class SdProjectItem;
+
+typedef QList<QTreeWidgetItem*> QTreeList;
 
 class SdObjectFactory
   {
@@ -41,6 +45,14 @@ class SdObjectFactory
 
     //Return true if object already present in dataBase
     static bool         isObjectPresent( const QString name, const QString author );
+
+
+    //Hierarchy table
+    static void         hierarchyAddItem( const QString parent, const QString item );
+    static bool         hierarchyIsPresent( const QString item );
+    static void         hierarchyTranslate( const QString item, const QString translate );
+    static QString      hierarchyGetTranslated( const QString item );
+    static QTreeList    hierarchyGet( const QString parent );
   };
 
 #endif // SDOBJECTFACTORY_H

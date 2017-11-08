@@ -16,6 +16,8 @@ Description
 
 #include <QString>
 
+#define timeOffsetConstant 1000000000L
+
 class SdUtil
   {
   public:
@@ -31,6 +33,11 @@ class SdUtil
     //Convert logical int coord to physical
     static double  log2phys( int log, double ppm );
 
+    //Get current time from 2000year
+    static int     getTime2000();
+
+    //Convert time from 2000year to time from epoch
+    static qint64  time2000toEpoch( int time );
   };
 
 #endif // SDUTIL_H
