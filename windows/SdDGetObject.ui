@@ -6,32 +6,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>834</width>
-    <height>541</height>
+    <width>1005</width>
+    <height>634</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_4">
+  <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QGroupBox" name="mCategoryBox">
+       <property name="title">
+        <string>Category filtr</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Select category</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="mCategory"/>
-         </item>
-        </layout>
-       </item>
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
@@ -63,10 +56,6 @@
        <item>
         <widget class="QTableView" name="mFindTable"/>
        </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QLabel" name="label_4">
          <property name="maximumSize">
@@ -84,8 +73,8 @@
         <widget class="QListWidget" name="mSections">
          <property name="maximumSize">
           <size>
-           <width>200</width>
-           <height>16777215</height>
+           <width>16777215</width>
+           <height>100</height>
           </size>
          </property>
         </widget>

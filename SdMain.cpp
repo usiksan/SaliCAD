@@ -20,6 +20,8 @@ Description
 #include <QApplication>
 #include <QSettings>
 #include <QTranslator>
+#include <QLocale>
+#include <QDebug>
 
 int main(int argc, char *argv[])
   {
@@ -33,6 +35,16 @@ int main(int argc, char *argv[])
 
   QSettings s;
 
+  if( !s.contains(SDK_LANGUAGE) ) {
+    //Language is not assigned yet, assign it
+
+    //Get system language
+    QString lang = QLocale::languageToString( QLocale::system().language() );
+
+    //Assign default language
+    s.setValue( SDK_LANGUAGE, lang );
+    }
+
   //Check if registered
   if( s.value(SDK_GLOBAL_ID_MACHINE).toInt() < 1 ) {
     //Not registered
@@ -43,7 +55,7 @@ int main(int argc, char *argv[])
 
   //Translation system
   QTranslator appTranslator;
-  if( appTranslator.load( QString( QCoreApplication::applicationDirPath() + "/lang_%1.qm").arg( s.value( SDK_LANGUAGE, QVariant(QString("en")) ).toString() ) ) )
+  if( appTranslator.load( QString( QCoreApplication::applicationDirPath() + "/lang_%1.qm").arg( s.value( SDK_LANGUAGE, QVariant(QString("English")) ).toString() ) ) )
     a.installTranslator( &appTranslator );
 
   //Creating pulsar for signals distibution

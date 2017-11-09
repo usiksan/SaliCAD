@@ -26,6 +26,9 @@ class SdWCategory : public QTreeWidget
     //Send when user select any category
     void categorySelected( const QString category );
 
+    //Send when user select any category
+    void tagPathSelected( const QString path );
+
   public slots:
     //Select and activate this category
     void setCategory( const QString category );
@@ -36,12 +39,18 @@ class SdWCategory : public QTreeWidget
     //Append new category to item
     void addCetagory2Item();
 
-    //Rename (translate) current category
+    //Translate current category
     void translateCategory();
+
+    //Rename current category
+    //void renameCategory();
+
+    void onCurrentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous );
 
     // QWidget interface
   protected:
     virtual void mousePressEvent(QMouseEvent *event) override;
+
   };
 
 #endif // SDWCATEGORY_H

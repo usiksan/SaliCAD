@@ -79,6 +79,19 @@ void SdProjectItem::setTitle(const QString title)
 
 
 
+void SdProjectItem::setTag(const QString tag)
+  {
+  //Item author (registered program copy name)
+  updateAuthor();
+  //Update creation time
+  updateCreationTime();
+  //Tag setup
+  mTag = tag;
+  }
+
+
+
+
 SdProject *SdProjectItem::getProject() const
   {
   return dynamic_cast<SdProject*>( getParent() );

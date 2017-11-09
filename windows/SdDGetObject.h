@@ -52,9 +52,17 @@ class SdDGetObject : public QDialog
     int     getSectionIndex() const { return mSectionIndex; }
 
   public slots:
+    //Find button pressed
     void find();
+
+    //On change selection item in find item table
     void onSelectItem( QModelIndex index );
+
+    //On change segment selection
     void onCurrentSegment( int row );
+
+    //Selected new category, apply filtr
+    void onTagPath( const QString path );
 
   protected:
     void changeEvent(QEvent *e);

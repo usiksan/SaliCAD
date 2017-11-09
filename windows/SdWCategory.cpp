@@ -12,10 +12,12 @@ Description
 */
 #include "SdWCategory.h"
 #include "objects/SdObjectFactory.h"
+#include "objects/SdUtil.h"
 
 #include <QMouseEvent>
 #include <QMenu>
 #include <QInputDialog>
+#include <QMessageBox>
 
 SdWCategory::SdWCategory(QWidget *parent) :
   QTreeWidget(parent)
@@ -23,6 +25,9 @@ SdWCategory::SdWCategory(QWidget *parent) :
   //Fill category list with items
   setColumnCount(1);
   addTopLevelItems( SdObjectFactory::hierarchyGet(QString("root")) );
+
+  connect( this, &SdWCategory::currentItemChanged, this, &SdWCategory::onCurrentItemChanged );
+  setHeaderHidden(true);
   }
 
 
@@ -31,14 +36,25 @@ SdWCategory::SdWCategory(QWidget *parent) :
 void SdWCategory::setCategory(const QString category)
   {
   //Find category
+  QTreeList list = findItems( category, Qt::MatchFixedString, 1 );
+  //If found then select first item
+  if( !list.empty() )
+    setCurrentItem( list.at(0) );
   }
 
 
 //Add category to root item
 void SdWCategory::addCategory2Root()
   {
-  QString category = QInputDialog::getText( this, tr("Enter category name"), tr("Category") );
+  QString category = QInputDialog::getText( this, tr("Enter category name in English"), tr("Category") );
+
   if( !category.isEmpty() ) {
+    //Test if name in English
+    if( !SdUtil::isEnglish( category ) ) {
+      QMessageBox::warning( this, tr("Error!"), tr("Category must be in English. After you may translate it to your language.") );
+      return;
+      }
+
     //Item category entered successfully
 
     //Add category to database
@@ -58,9 +74,15 @@ void SdWCategory::addCetagory2Item()
   {
   QTreeWidgetItem *cur = currentItem();
   if( cur != nullptr ) {
-    QString category = QInputDialog::getText( this, tr("Enter category name for '%1'").arg(cur->text(0)), tr("Category") );
+    QString category = QInputDialog::getText( this, tr("Enter category name for '%1' in English").arg(cur->text(0)), tr("Category") );
 
     if( !category.isEmpty() ) {
+      //Test if name in English
+      if( !SdUtil::isEnglish( category ) ) {
+        QMessageBox::warning( this, tr("Error!"), tr("Category must be in English. After you may translate it to your language.") );
+        return;
+        }
+
       //Item category entered successfully
 
       //Add category to database
@@ -96,6 +118,53 @@ void SdWCategory::translateCategory()
 
 
 
+
+void SdWCategory::onCurrentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+  {
+  Q_UNUSED(previous )
+  if( current ) {
+    //Send category name change
+    emit categorySelected( current->text(0) );
+
+    //Send tag path
+    emit tagPathSelected( SdObjectFactory::hierarchyGetPath( current->text(1) )  );
+    }
+  }
+
+
+
+#if 0
+//Rename current category
+void SdWCategory::renameCategory()
+  {
+  QTreeWidgetItem *cur = currentItem();
+  if( cur != nullptr ) {
+    QString category = QInputDialog::getText( this, tr("Enter new category for '%1'").arg(cur->text(1)), tr("Category") );
+
+    if( !category.isEmpty() ) {
+      //Test if name in English
+      if( !SdUtil::isEnglish( category ) ) {
+        QMessageBox::warning( this, tr("Error!"), tr("Category must be in English. After you may translate it to your language.") );
+        return;
+        }
+
+      //Item category entered successfully
+
+      //Rename category in database
+      SdObjectFactory::hi
+      SdObjectFactory::hierarchyAddItem( cur->text(1), category );
+      QTreeWidgetItem *item = new QTreeWidgetItem();
+      item->setText( 0, category );
+      item->setText( 1, category );
+      cur->addChild( item );
+      }
+    }
+  }
+#endif
+
+
+
+
 void SdWCategory::mousePressEvent(QMouseEvent *event)
   {
   //Default reaction
@@ -109,7 +178,7 @@ void SdWCategory::mousePressEvent(QMouseEvent *event)
     QTreeWidgetItem *cur = currentItem();
     if( cur != nullptr ) {
       menu.addAction( tr("Add to '%1' category").arg(cur->text(0)), this, &SdWCategory::addCetagory2Item );
-      menu.addAction( tr("Rename '%1' category").arg(cur->text(0)), this, &SdWCategory::translateCategory );
+      menu.addAction( tr("Translate '%1' category").arg(cur->text(0)), this, &SdWCategory::translateCategory );
       }
     menu.exec( QCursor::pos() );
     }

@@ -28,7 +28,9 @@ class SdPNewProjectItem_EnterName : public QWizardPage
     SdProject        *mProject;
     QLabel           *mUnical;
     QLineEdit        *mName;
+    QLineEdit        *mCategory;
     bool              mValid;
+    QString           mTagPath;
   public:
     SdPNewProjectItem_EnterName( SdProjectItemPtr *item, SdProject *prj, QWidget *parent = 0 );
 

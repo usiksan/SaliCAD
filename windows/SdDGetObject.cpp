@@ -14,6 +14,7 @@ Description
 #include "SdDGetObject.h"
 #include "ui_SdDGetObject.h"
 #include "SdWEditorGraphView.h"
+#include "SdWCategory.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdProjectItem.h"
 #include "objects/SdPItemComponent.h"
@@ -53,6 +54,13 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   ui->mPartBox->setLayout( lay );
   lay->addWidget( mPartView );
 
+  SdWCategory *category = new SdWCategory( ui->mCategoryBox );
+  lay = new QHBoxLayout();
+  ui->mCategoryBox->setLayout( lay );
+  lay->addWidget( category );
+  connect( category, &SdWCategory::tagPathSelected, this, &SdDGetObject::onTagPath );
+
+
   connect( ui->mFindButton, &QPushButton::clicked, this, &SdDGetObject::find );
   connect( ui->mFindTable, &QTableView::clicked, this, &SdDGetObject::onSelectItem );
   connect( ui->mSections, &QListWidget::currentRowChanged, this, &SdDGetObject::onCurrentSegment );
@@ -80,9 +88,9 @@ void SdDGetObject::find()
   {
   QString name = ui->mFind->currentText();
   if( name.isEmpty() )
-    mModel->setQuery( QString("SELECT name, author, rank, hash FROM objects WHERE (class & %1)<>0").arg(mSort) );
+    mModel->setQuery( QString("SELECT name, author, timeCreate, hash FROM objects WHERE (class & %1)<>0").arg(mSort) );
   else
-    mModel->setQuery( QString("SELECT name, author, rank, hash FROM objects WHERE lower(name) LIKE '%%%1%%'").arg(name.toLower()) );
+    mModel->setQuery( QString("SELECT name, author, timeCreate, hash FROM objects WHERE lower(name) LIKE '%%%1%%'").arg(name.toLower()) );
 
   mModel->setHeaderData( 0, Qt::Horizontal, tr("Name") );
   mModel->setHeaderData( 1, Qt::Horizontal, tr("Author") );
@@ -137,6 +145,21 @@ void SdDGetObject::onCurrentSegment(int row)
     mSymbolView->setItem( mComponent->extractSymbolFromFactory(row,true,this), true );
     mSectionIndex = row;
     }
+  }
+
+
+
+
+//Selected new category, apply filtr
+void SdDGetObject::onTagPath(const QString path)
+  {
+//  mModel->setQuery( QString("SELECT name, author, timeCreate, hash FROM objects WHERE tag LIKE '%1%%' ORDER BY timeCreate DESC").arg(path) );
+  mModel->setQuery( QString("SELECT name, author, timeCreate, hash FROM objects WHERE tag LIKE '%1%%' ORDER BY timeCreate DESC").arg(path) );
+
+  mModel->setHeaderData( 0, Qt::Horizontal, tr("Name") );
+  mModel->setHeaderData( 1, Qt::Horizontal, tr("Author") );
+  mModel->setHeaderData( 2, Qt::Horizontal, tr("Rank") );
+  ui->mFindTable->hideColumn(3);
   }
 
 

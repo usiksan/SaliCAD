@@ -38,6 +38,10 @@ class SdUtil
 
     //Convert time from 2000year to time from epoch
     static qint64  time2000toEpoch( int time );
+
+    //Test if string contains only english symbols
+    static bool    isEnglish( const QString str );
+
   };
 
 #endif // SDUTIL_H

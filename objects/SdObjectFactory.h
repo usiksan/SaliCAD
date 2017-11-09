@@ -51,6 +51,7 @@ class SdObjectFactory
     static void         hierarchyAddItem( const QString parent, const QString item );
     static bool         hierarchyIsPresent( const QString item );
     static void         hierarchyTranslate( const QString item, const QString translate );
+    static QString      hierarchyGetPath( const QString item );
     static QString      hierarchyGetTranslated( const QString item );
     static QTreeList    hierarchyGet( const QString parent );
   };

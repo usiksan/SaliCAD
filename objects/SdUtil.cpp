@@ -71,3 +71,16 @@ qint64 SdUtil::time2000toEpoch(int time)
   }
 
 
+
+
+//Test if string contains only english symbols
+bool SdUtil::isEnglish(const QString str)
+  {
+  for( QChar ch : str ) {
+    if( !ch.toLatin1() )
+      return false;
+    }
+  return true;
+  }
+
+

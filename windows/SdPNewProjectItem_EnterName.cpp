@@ -28,7 +28,11 @@ SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item,
   vlay->addWidget( mUnical = new QLabel() );
   vlay->addWidget( mName = new QLineEdit() );
   vlay->addWidget( new QLabel(tr("Element category")) );
-  vlay->addWidget( new SdWCategory() );
+  vlay->addWidget( mCategory = new QLineEdit() );
+  SdWCategory *category = new SdWCategory();
+  connect( category, &SdWCategory::categorySelected, mCategory, &QLineEdit::setText );
+  connect( category, &SdWCategory::tagPathSelected, this, [this] ( const QString path) { mTagPath = path; } );
+  vlay->addWidget( category );
 
   setLayout( vlay );
 
@@ -57,8 +61,10 @@ void SdPNewProjectItem_EnterName::onTextChanged(const QString name)
 
 bool SdPNewProjectItem_EnterName::validatePage()
   {
-  if( mValid )
+  if( mValid ) {
     (*mItemPtr)->setTitle( mName->text() );
+    (*mItemPtr)->setTag( mTagPath );
+    }
   return mValid;
   }
 

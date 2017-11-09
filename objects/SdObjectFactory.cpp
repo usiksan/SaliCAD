@@ -58,10 +58,10 @@ void SdObjectFactory::openLibrary()
     QSqlQuery query;
     //Create objects table
     query.exec("CREATE TABLE objects (hash TEXT PRIMARY KEY, "
-               " name TEXT, author TEXT, timeCreate INTEGER, class INTEGER, timeUpgrade INTEGER, object BLOB)");
+               " name TEXT, author TEXT, tag TEXT, timeCreate INTEGER, class INTEGER, timeUpgrade INTEGER, object BLOB)");
 
     //Create hierarchical table
-    query.exec("CREATE TABLE hierarchy (section TEXT PRIMARY KEY, parent TEXT, time INTEGER)");
+    query.exec("CREATE TABLE hierarchy (section TEXT PRIMARY KEY, path TEXT, parent TEXT, time INTEGER)");
     //Hierarchy table translation on all languages
     query.exec("CREATE TABLE translation (translate TEXT PRIMARY KEY, lang TEXT, section TEXT, time INTEGER)");
     }
@@ -112,11 +112,12 @@ QString SdObjectFactory::insertObject(const SdProjectItem *item, QJsonObject obj
 
   //Insert new object
   qDebug() << "insert";
-  q.prepare( QString("INSERT INTO objects (hash, name, author, timeCreate, class, timeUpgrade, object) "
-                       "VALUES (:hash, :name, :author, :timeCreate, :class, :timeUpgrade, :object)") );
+  q.prepare( QString("INSERT INTO objects (hash, name, author, tag, timeCreate, class, timeUpgrade, object) "
+                       "VALUES (:hash, :name, :author, :tag, :timeCreate, :class, :timeUpgrade, :object)") );
   q.bindValue( QStringLiteral(":hash"), id );
   q.bindValue( QStringLiteral(":name"), item->getTitle() );
   q.bindValue( QStringLiteral(":author"), item->getAuthor() );
+  q.bindValue( QStringLiteral(":tag"), item->getTag() );
   q.bindValue( QStringLiteral(":timeCreate"), item->getTime() );
   q.bindValue( QStringLiteral(":class"), item->getClass() );
   q.bindValue( QStringLiteral(":timeUpgrade"), SdUtil::getTime2000() );
@@ -193,14 +194,17 @@ void SdObjectFactory::hierarchyAddItem(const QString parent, const QString item)
   {
   QSqlQuery q;
   if( hierarchyIsPresent(item) )
-    //Delete existing item
-    q.exec( QString("DELETE FROM hierarchy WHERE section='%1'").arg( item ) );
+    //Ignore request. Nothing done
+    return;
+    //q.exec( QString("DELETE FROM hierarchy WHERE section='%1'").arg( item ) );
 
   //Insert new item
+  QString path = hierarchyGetPath( parent );
   qDebug() << "insert hierarchy item" << parent << item;
-  q.prepare( QString("INSERT INTO hierarchy (section, parent, time) "
-                     "VALUES (:section, :parent, :time)") );
+  q.prepare( QString("INSERT INTO hierarchy (section, path, parent, time) "
+                     "VALUES (:section, :path, :parent, :time)") );
   q.bindValue( QStringLiteral(":section"), item );
+  q.bindValue( QStringLiteral(":path"), path + QString(".") + item );
   q.bindValue( QStringLiteral(":parent"), parent );
   q.bindValue( QStringLiteral(":time"), SdUtil::getTime2000() );
   q.exec();
@@ -242,6 +246,18 @@ void SdObjectFactory::hierarchyTranslate(const QString item, const QString trans
   q.bindValue( QStringLiteral(":translate"), translate );
   q.bindValue( QStringLiteral(":time"), SdUtil::getTime2000() );
   q.exec();
+  }
+
+
+
+QString SdObjectFactory::hierarchyGetPath(const QString item)
+  {
+  QSqlQuery q;
+  q.exec( QString("SELECT path FROM hierarchy WHERE section='%1'").arg( item ) );
+  if( q.first() )
+    //Element present, return its path
+    return q.value( QStringLiteral("path") ).toString();
+  return item;
   }
 
 

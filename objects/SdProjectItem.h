@@ -31,8 +31,7 @@ class SdProjectItem : public SdContainer
   {
     QString                mTitle;      //Item title
     QString                mAuthor;     //Item author (registered program copy name)
-    QString                mTag0;       //Group 0 assotiation
-    QString                mTag1;       //Group 1 assotiation
+    QString                mTag;        //Group assotiation path
     int                    mCreateTime; //Create time with sec from 2000year
     bool                   mAuto;       //True if item inserted automatic as reference from other item
   protected:
@@ -54,10 +53,8 @@ class SdProjectItem : public SdContainer
     qint64                 getTimeFromEpoch() const;
     QString                getTitle() const { return mTitle; }
     void                   setTitle( const QString title );
-    QString                getTag0() const { return mTag0; }
-    void                   setTag0( const QString tag );
-    QString                getTag1() const { return mTag1; }
-    void                   setTag1( const QString tag );
+    QString                getTag() const { return mTag; }
+    void                   setTag( const QString tag );
     SdProject             *getProject() const;
     SdUndo                *getUndo() const;
     //Get editEnable flag
