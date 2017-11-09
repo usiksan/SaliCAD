@@ -62,8 +62,8 @@ void SdPNewProjectItem_EnterName::onTextChanged(const QString name)
 bool SdPNewProjectItem_EnterName::validatePage()
   {
   if( mValid ) {
-    (*mItemPtr)->setTitle( mName->text() );
-    (*mItemPtr)->setTag( mTagPath );
+    (*mItemPtr)->setTitle( mName->text(), tr("Set object title") );
+    (*mItemPtr)->setTag( mTagPath, tr("Set object tag") );
     }
   return mValid;
   }

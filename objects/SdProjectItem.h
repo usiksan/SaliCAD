@@ -34,8 +34,8 @@ class SdProjectItem : public SdContainer
     QString                mTag;        //Group assotiation path
     int                    mCreateTime; //Create time with sec from 2000year
     bool                   mAuto;       //True if item inserted automatic as reference from other item
-  protected:
     bool                   mEditEnable; //True if edit enable for this object
+  protected:
     SdParamTable           mParamTable; //Object parameters
     SdPoint                mOrigin;     //Origin for object
   public:
@@ -52,19 +52,17 @@ class SdProjectItem : public SdContainer
     int                    getTime() const { return mCreateTime; }
     qint64                 getTimeFromEpoch() const;
     QString                getTitle() const { return mTitle; }
-    void                   setTitle( const QString title );
     QString                getTag() const { return mTag; }
-    void                   setTag( const QString tag );
     SdProject             *getProject() const;
     SdUndo                *getUndo() const;
+    //Set information and editing status
+    void                   setTitle(const QString title, const QString undoTitle );
+    void                   setUnicalTitle( const QString undoTitle );
+    void                   setTag(const QString tag , const QString undoTitle);
     //Get editEnable flag
     bool                   isEditEnable() const { return mEditEnable; }
-    //Set editEnable flag. Return copy object when object editing is prohibited
-    void                   setEditEnable( bool edit );
-    //Set creation time as current
-    void                   updateCreationTime();
-    //Set author as current
-    void                   updateAuthor();
+    //Set editEnable flag
+    void                   setEditEnable(bool edit , const QString undoTitle);
     //Check if another author
     bool                   isAnotherAuthor() const;
     //Get over rect
@@ -97,6 +95,13 @@ class SdProjectItem : public SdContainer
     virtual void           cloneFrom( const SdObject *src ) override;
 
     static  QString        getDefaultAuthor();
+
+  private:
+    //Set creation time as current
+    void                   updateCreationTime();
+    //Set author as current
+    void                   updateAuthor();
+
   };
 
 typedef SdProjectItem *SdProjectItemPtr;

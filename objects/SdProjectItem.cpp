@@ -12,6 +12,7 @@ Description
   Base for all project items
 */
 
+#include "SdObjectFactory.h"
 #include "SdProjectItem.h"
 #include "SdGraphIdent.h"
 #include "SdProject.h"
@@ -65,8 +66,15 @@ qint64 SdProjectItem::getTimeFromEpoch() const
 
 
 
-void SdProjectItem::setTitle(const QString title)
+void SdProjectItem::setTitle(const QString title, const QString undoTitle)
   {
+  SdUndo *undo = getUndo();
+  if( undo != nullptr ) {
+    if( !undoTitle.isEmpty() )
+      undo->begin( undoTitle );
+    undo->projectItemInfo( this, &mTitle, &mAuthor, &mTag, &mCreateTime, &mEditEnable );
+    }
+
   //Item author (registered program copy name)
   updateAuthor();
   //Update creation time
@@ -79,8 +87,28 @@ void SdProjectItem::setTitle(const QString title)
 
 
 
-void SdProjectItem::setTag(const QString tag)
+void SdProjectItem::setUnicalTitle(const QString undoTitle)
   {
+  QString title = mTitle;
+  do {
+    title.append( QString("(1)") );
+    }
+  while( SdObjectFactory::isObjectPresent( title, getDefaultAuthor() ) );
+  setTitle( title, undoTitle );
+  }
+
+
+
+
+void SdProjectItem::setTag(const QString tag, const QString undoTitle )
+  {
+  SdUndo *undo = getUndo();
+  if( undo != nullptr ) {
+    if( !undoTitle.isEmpty() )
+      undo->begin( undoTitle );
+    undo->projectItemInfo( this, &mTitle, &mAuthor, &mTag, &mCreateTime, &mEditEnable );
+    }
+
   //Item author (registered program copy name)
   updateAuthor();
   //Update creation time
@@ -111,11 +139,16 @@ SdUndo *SdProjectItem::getUndo() const
 
 
 //Set editEnable flag. Return copy object when object editing is prohibited
-void SdProjectItem::setEditEnable(bool edit)
+void SdProjectItem::setEditEnable( bool edit, const QString undoTitle )
   {
   if( mEditEnable ) {
     if( !edit ) {
       //Disable edit.
+      SdUndo *undo = getUndo();
+      if( !undoTitle.isEmpty() )
+        undo->begin( undoTitle );
+      undo->projectItemInfo( this, &mTitle, &mAuthor, &mTag, &mCreateTime, &mEditEnable );
+
       mEditEnable = edit;
       //Update object version and author creation
       updateAuthor();
@@ -123,13 +156,28 @@ void SdProjectItem::setEditEnable(bool edit)
       //Write object to local library
       qDebug() << "disable edit";
       write();
-      getProject()->endEditItem( this );
+      //For all child objects send signal
+      getProject()->forEach( dctAll, [this,undo] (SdObject *obj) -> bool {
+        if( obj != nullptr )
+          obj->endEditItem( this, undo );
+        return true;
+        });
       }
     }
   else {
     if( edit ) {
       //Enable edit
-      getProject()->beginEditItem( this );
+      SdUndo *undo = getUndo();
+      if( !undoTitle.isEmpty() )
+        undo->begin( undoTitle );
+      //Begin edit
+      //For all child objects send signal
+      getProject()->forEach( dctAll, [this,undo] (SdObject *obj) -> bool {
+        if( obj != nullptr )
+          obj->beginEditItem( this, undo );
+        return true;
+        });
+      undo->projectItemInfo( this, &mTitle, &mAuthor, &mTag, &mCreateTime, &mEditEnable );
       //Update object version and author creation
       updateAuthor();
       updateCreationTime();

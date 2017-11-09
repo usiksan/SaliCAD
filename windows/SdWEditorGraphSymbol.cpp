@@ -31,24 +31,6 @@ SdWEditorGraphSymbol::SdWEditorGraphSymbol(SdPItemSymbol *sym, QWidget *parent) 
 
 
 
-void SdWEditorGraphSymbol::setSymbol(SdPItemSymbol *sym)
-  {
-  //Delete previous symbol
-  if( mSymbol ) {
-    delete mSymbol;
-    mSymbol = 0;
-    }
-
-  //Set new symbol
-  mSymbol = sym;
-
-  if( mSymbol ) {
-    //Fill symbol in view
-    cmViewFit();
-    }
-  }
-
-
 
 SdProjectItem *SdWEditorGraphSymbol::getProjectItem() const
   {

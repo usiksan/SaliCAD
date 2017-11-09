@@ -104,7 +104,7 @@ bool SdPNewProjectItem_SelectType::validatePage()
   //Pick up name
   for( int i = 1; i < 10000; i++ )
     if( !mProject->isNameUsed( name.arg(i) ) ) {
-      (*mItemPtr)->setTitle( name.arg(i) );
+      (*mItemPtr)->setTitle( name.arg(i), tr("Set object title") );
       break;
       }
   return true;

@@ -84,3 +84,27 @@ bool SdUtil::isEnglish(const QString str)
   }
 
 
+
+//Swap int
+void SdUtil::swapInt(int &src, int *dst)
+  {
+  if( dst != nullptr ) {
+    int tmp = *dst;
+    *dst = src;
+    src = tmp;
+    }
+  }
+
+
+
+//Swap bool
+void SdUtil::swapBool(bool &src, bool *dst)
+  {
+  if( dst != nullptr ) {
+    bool tmp = *dst;
+    *dst = src;
+    src = tmp;
+    }
+  }
+
+

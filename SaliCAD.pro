@@ -166,7 +166,8 @@ SOURCES += \
     modes/SdModePrintWindow.cpp \
     bug.cpp \
     objects/SdUndoRecordInsertDelete.cpp \
-    windows/SdWCategory.cpp
+    windows/SdWCategory.cpp \
+    objects/SdUndoRecordProjectItem.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -325,7 +326,8 @@ HEADERS  += \
     SaliCadServer/SdNetCommand.h \
     modes/SdModePrintWindow.h \
     objects/SdUndoRecordInsertDelete.h \
-    windows/SdWCategory.h
+    windows/SdWCategory.h \
+    objects/SdUndoRecordProjectItem.h
 
 DISTFILES += \
     license.txt

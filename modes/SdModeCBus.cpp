@@ -42,12 +42,11 @@ void SdModeCBus::drawDynamic(SdContext *ctx)
     case sNextNet :
       if( sdEnvir->mIsSmart ) smartDraw( ctx );
       //break absent specialy
-      [[clang::fallthrough]];
     case sFirstPoint :
       //Using previous pattern
       //Использование предыдущего шаблона
       if( mPattern.count() == 0 ) break;
-      [[clang::fallthrough]];
+      //break absent specialy
     case sNamePlace : {
       //Enter wire name placement
       //Поиск расположения имени цепи

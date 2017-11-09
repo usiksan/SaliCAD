@@ -73,9 +73,5 @@ void SdWSection::onPinEditFinish(int row, int column)
   {
   Q_UNUSED(column)
   mSection->setPinNumber( mPinTable->item( row, 0 )->text(), mPinTable->item( row, 1 )->text() );
-  //update time creation for parent object
-  SdProjectItem *item = dynamic_cast<SdProjectItem*>( mSection->getParent() );
-  if( item )
-    item->updateCreationTime();
   }
 

@@ -153,7 +153,6 @@ void SdWEditorComponent::sectionAdd()
     mSectionsTab->addTab( ws, tr("Section %1").arg(mSectionsTab->count()+1) );
     mSectionsTab->setCurrentWidget( ws );
     mComponent->insertChild( section, mUndo );
-    mComponent->updateCreationTime();
 
     mSectionDelete->setEnabled( mSectionsTab->count() != 0 );
     mSectionDeleteAll->setEnabled( mSectionsTab->count() != 0 );
@@ -176,7 +175,6 @@ void SdWEditorComponent::sectionDubl()
     mSectionsTab->addTab( ws, tr("Section %1").arg(mSectionsTab->count()+1) );
     mSectionsTab->setCurrentWidget( ws );
     mComponent->insertChild( section, mUndo );
-    mComponent->updateCreationTime();
     }
   }
 
@@ -198,7 +196,6 @@ void SdWEditorComponent::sectionSelect()
       SdWSection *ws = new SdWSection( mAnotherAuthor, section, mSectionsTab );
       mSectionsTab->insertTab( index, ws, tr("Section %1").arg(index+1) );
       mSectionsTab->setCurrentWidget( ws );
-      mComponent->updateCreationTime();
       }
     }
   }
@@ -216,7 +213,6 @@ void SdWEditorComponent::sectionDelete()
       mSectionsTab->removeTab( mSectionsTab->currentIndex() );
       //Rename tabs
       renameSymbolTabs();
-      mComponent->updateCreationTime();
 
       mSectionDelete->setEnabled( mSectionsTab->count() != 0 );
       mSectionDeleteAll->setEnabled( mSectionsTab->count() != 0 );

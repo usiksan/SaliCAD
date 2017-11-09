@@ -28,6 +28,7 @@ Description
 #include "SdUndoRecordSymImp.h"
 #include "SdUndoRecordPartImp.h"
 #include "SdUndoRecordWire.h"
+#include "SdUndoRecordProjectItem.h"
 #include "windows/SdWCommand.h"
 
 SdUndo::SdUndo() :
@@ -168,6 +169,15 @@ void SdUndo::point(SdPoint *src)
 void SdUndo::begin(QString title)
   {
   addUndo( new SdUndoRecordBegin(title) );
+  }
+
+
+
+
+
+void SdUndo::projectItemInfo(SdProjectItem *item, QString *title, QString *author, QString *tag, int *timeCreation, bool *editEnable)
+  {
+  addUndo( new SdUndoRecordProjectItem( item, title, author, tag, timeCreation, editEnable ) );
   }
 
 

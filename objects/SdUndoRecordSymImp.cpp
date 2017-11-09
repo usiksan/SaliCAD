@@ -12,6 +12,7 @@ Description
   Undo record for symbol implementation in sheet
 */
 #include "SdUndoRecordSymImp.h"
+#include "SdUtil.h"
 
 
 SdUndoRecordSymImp::SdUndoRecordSymImp(SdPoint *origin, SdPropSymImp *imp, int *logSection, int *logNumber, SdRect *over, QString *prefix, SdPropText *identProp, SdPoint *identOrigin, SdPoint *identPos, SdRect *identRect) :
@@ -47,13 +48,9 @@ void SdUndoRecordSymImp::undo()
   mOriginValue.swap( mOriginSrc );
   mPropSrc->swapState( &mProp );
 
-  int tmp = *mLogSectionSrc;
-  *mLogSectionSrc = mLogSectionValue;
-  mLogSectionValue = tmp;
+  SdUtil::swapInt( mLogSectionValue, mLogSectionSrc );
 
-  tmp = *mLogNumberSrc;
-  *mLogNumberSrc = mLogNumberValue;
-  mLogNumberValue = tmp;
+  SdUtil::swapInt( mLogNumberValue, mLogNumberSrc );
 
   mOver = mOverSrc->swap( mOver );
   mPrefixSrc->swap( mPrefix );

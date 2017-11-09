@@ -12,6 +12,7 @@ Description
   Undo record for part implementation in plate
 */
 #include "SdUndoRecordPartImp.h"
+#include "SdUtil.h"
 
 SdUndoRecordPartImp::SdUndoRecordPartImp(SdPoint *origin, SdPropPartImp *imp, int *logNumber, SdRect *over, QString *prefix, SdPropText *identProp, SdPoint *identOrigin, SdPoint *identPos, SdRect *identRect) :
   SdUndoRecord(),
@@ -44,9 +45,7 @@ void SdUndoRecordPartImp::undo()
   mOriginValue.swap( mOriginSrc );
   mPropSrc->swapState( &mProp );
 
-  int tmp = *mLogNumberSrc;
-  *mLogNumberSrc = mLogNumberValue;
-  mLogNumberValue = tmp;
+  SdUtil::swapInt( mLogNumberValue, mLogNumberSrc );
 
   mOver = mOverSrc->swap( mOver );
   mPrefixSrc->swap( mPrefix );

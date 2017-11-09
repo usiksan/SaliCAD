@@ -26,8 +26,6 @@ class SdWEditorGraphSymbol : public SdWEditorGraph
   public:
     SdWEditorGraphSymbol( SdPItemSymbol *sym, QWidget *parent = 0 );
 
-    void setSymbol( SdPItemSymbol *sym );
-
     // SdWEditor interface
   public:
     virtual SdProjectItem *getProjectItem() const override;

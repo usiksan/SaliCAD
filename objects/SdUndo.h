@@ -38,6 +38,7 @@ class SdPItemPlate;
 typedef SdPItemPlate *SdPItemPlatePtr;
 class SdGraphSymImp;
 class SdGraphPartImp;
+class SdProjectItem;
 
 class SdUndo
   {
@@ -71,6 +72,7 @@ class SdUndo
     void wire( SdPropLine *prop, SdPoint *p1, SdPoint *p2, bool *dot1, bool *dot2 );
     void point( SdPoint *src );
     void begin( QString title );
+    void projectItemInfo( SdProjectItem *item, QString *title, QString *author, QString *tag, int *timeCreation, bool *editEnable );
 
     //do undo and redo
     void undoStep();

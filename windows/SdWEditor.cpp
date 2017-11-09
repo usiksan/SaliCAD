@@ -9,12 +9,15 @@ Web
   www.saliLab.ru
 
 Description
+  Common base class for any editors.
 */
 #include "objects/SdProjectItem.h"
 #include "objects/SdProject.h"
 #include "objects/SdPulsar.h"
 #include "SdWEditor.h"
 #include "SdWCommand.h"
+
+#include <QMessageBox>
 
 SdWEditor::SdWEditor(QWidget *parent) :
   QAbstractScrollArea(parent)
@@ -37,8 +40,6 @@ void SdWEditor::dirtyProject()
   {
   //Set project dirty
   getProjectItem()->getProject()->setDirty();
-  //Update creation time
-  getProjectItem()->updateCreationTime();
   }
 
 
@@ -76,7 +77,7 @@ void SdWEditor::cmObjectEditDisable()
   {
   if( getProjectItem() ) {
     SdProjectItem *item = getProjectItem();
-    getProjectItem()->setEditEnable( false );
+    getProjectItem()->setEditEnable( false, tr("Object edit disable") );
     //Close this editor (viewer)
     SdPulsar::pulsar->emitCloseEditView( getProjectItem() );
     //Open new item with edit status
@@ -90,15 +91,23 @@ void SdWEditor::cmObjectEditDisable()
 void SdWEditor::cmObjectEditEnable()
   {
   if( getProjectItem() ) {
-    SdProjectItem *item = getProjectItem();
-    getProjectItem()->setEditEnable( true );
+    //Check if author
+    if( getProjectItem()->isAnotherAuthor() ) {
+      int r = QMessageBox::question( this, tr("Warning"), tr("Object was created by another author '%1'. Change to your name?").arg(getProjectItem()->getAuthor()) );
+      //Alien author object edit not allowed
+      if( r == QMessageBox::No ) return;
+      //Check if name unical for this author
+      getProjectItem()->setUnicalTitle( tr("Set unical object name") );
+      getProjectItem()->setEditEnable( true, QString() );
+      }
+    else
+      getProjectItem()->setEditEnable( true, tr("Object edit enable") );
     //Close this editor (viewer)
     SdPulsar::pulsar->emitCloseEditView( getProjectItem() );
     //Open new item with edit status
-    SdPulsar::pulsar->emitActivateItem( item );
+    SdPulsar::pulsar->emitActivateItem( getProjectItem() );
     }
   }
-
 
 
 

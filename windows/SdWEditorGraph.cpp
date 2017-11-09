@@ -211,21 +211,7 @@ void SdWEditorGraph::modeCall(SdModeTemp *mode)
 //Set new mode
 void SdWEditorGraph::modeSet(SdMode *mode)
   {
-  //Check if author
-  if( getProjectItem()->isAnotherAuthor() ) {
-    int r = QMessageBox::question( this, tr("Warning"), tr("Object was created by another author '%1'. Change to your name?").arg(getProjectItem()->getAuthor()) );
-    if( r == QMessageBox::No ) {
-      //Alien author object edit not allowed
-      if( mode ) delete mode;
-      return;
-      }
-    //TODO D018 Check if name unical for this author
-
-    getProjectItem()->updateAuthor();
-    getProjectItem()->updateCreationTime();
-    }
-  //Mode set. Its also set edit status for graph object
-  //TODO D012 set edit status
+  //Mode set.
   //Стековый режим - снести совсем
   //Прежний режим - снести (если выделения - то просто затереть, иначе - для обычного режима
   //снести совсем, а для выделения перенести в прежний

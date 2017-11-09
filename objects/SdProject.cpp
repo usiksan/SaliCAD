@@ -52,7 +52,7 @@ SdPItemPlate *SdProject::getDefaultPlate()
 
   //Plate not found. Create new one
   SdPItemPlate *plate = new SdPItemPlate();
-  plate->setTitle( QStringLiteral("Default plate") );
+  plate->setTitle( QStringLiteral("Default plate"), QString() );
   insertChild( plate, &mUndo );
   return plate;
   }
@@ -69,7 +69,7 @@ SdProjectItem *SdProject::getProjectsItem(SdProjectItem *item)
   SdProjectItem *res = getProjectsItem( item->getClass(), item->getId() );
   //If object is found then return it
   if( res ) {
-    res->setEditEnable(false);
+    res->setEditEnable( false, QString() );
     qDebug() << "getProjectItem from project" << item << res;
     return res;
     }
@@ -77,7 +77,7 @@ SdProjectItem *SdProject::getProjectsItem(SdProjectItem *item)
   res = dynamic_cast<SdProjectItem*>( item->copy() );
   Q_ASSERT( res != nullptr );
   insertChild( res, &mUndo );
-  res->setEditEnable(false);
+  res->setEditEnable( false, QString() );
   qDebug() << "getProjectItem copy" << item->getId() << res->getId() << item << res;
   return res;
   }
@@ -102,34 +102,6 @@ SdProjectItem *SdProject::getProjectsItem(quint64 mask, const QString id)
   }
 
 
-
-
-
-//Begin edit project item. On this all objects contains item must unconnect
-void SdProject::beginEditItem(SdProjectItem *item)
-  {
-  //For all child objects send signal
-  forEach( dctAll, [this,item] (SdObject *obj) -> bool {
-    if( obj != nullptr )
-      obj->beginEditItem( item, &mUndo );
-    return true;
-    });
-  }
-
-
-
-
-
-//End edit project item. On this all objects contains item must connect
-void SdProject::endEditItem(SdProjectItem *item)
-  {
-  //For all child objects send signal
-  forEach( dctAll, [this,item] (SdObject *obj) -> bool {
-    if( obj != nullptr )
-      obj->endEditItem( item, &mUndo );
-    return true;
-    });
-  }
 
 
 

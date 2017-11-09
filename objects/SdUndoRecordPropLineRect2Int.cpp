@@ -12,6 +12,7 @@ Description
   Undo record for line properties, rect and 2 ints.
 */
 #include "SdUndoRecordPropLineRect2Int.h"
+#include "SdUtil.h"
 
 SdUndoRecordPropLineRect2Int::SdUndoRecordPropLineRect2Int(SdPropLine *prp, SdRect *r, int *v1, int *v2) :
   SdUndoRecord(),
@@ -39,15 +40,7 @@ void SdUndoRecordPropLineRect2Int::undo()
     mProp->swapState( &mPropState );
   if( mRectSrc )
     mRectSrc->swap( mRect );
-  if( mValSrc1 ) {
-    int tmp = *mValSrc1;
-    *mValSrc1 = mVal1;
-    mVal1 = tmp;
-    }
-  if( mValSrc2 ) {
-    int tmp = *mValSrc2;
-    *mValSrc2 = mVal2;
-    mVal2 = tmp;
-    }
+  SdUtil::swapInt( mVal1, mValSrc1 );
+  SdUtil::swapInt( mVal2, mValSrc2 );
   }
 

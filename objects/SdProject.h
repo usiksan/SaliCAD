@@ -48,12 +48,6 @@ class SdProject : public SdContainer
     //Return object of project for given id
     SdProjectItem    *getProjectsItem( quint64 mask, const QString id );
 
-    //Begin edit project item. On this all objects contains item must unconnect
-    void              beginEditItem( SdProjectItem *item );
-
-    //End edit project item. On this all objects contains item must connect
-    void              endEditItem( SdProjectItem *item );
-
     //Return net name unused in project
     QString           getUnusedNetName();
 

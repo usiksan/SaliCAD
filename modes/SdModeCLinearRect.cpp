@@ -16,6 +16,7 @@ Description
 #include "objects/SdEnvir.h"
 #include "objects/SdSnapInfo.h"
 #include <QObject>
+#include <QDebug>
 
 SdPoint SdModeCLinearRect::mOffset; //Предположительная очередная точка
 
@@ -139,5 +140,6 @@ int SdModeCLinearRect::getIndex() const
 //Insert rectangle into graph object
 void SdModeCLinearRect::addRect()
   {
+  qDebug() << Q_FUNC_INFO;
   addPic( new SdGraphLinearRect( mFirst, mPrevMove, sdGlobalProp->mLineProp ), QObject::tr("Insert rect") );
   }

@@ -29,6 +29,10 @@
 
 //===================================================================================
 //Fixed:
+//D018 Check if name unical for this author
+
+//D012 set edit status
+
 //B013 smart mode for sheet wire start at 0,0
 
 

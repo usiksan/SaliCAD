@@ -12,6 +12,7 @@ Description
   Undo record for line properties, one point and int.
 */
 #include "SdUndoRecordPropLinePointInt.h"
+#include "SdUtil.h"
 
 SdUndoRecordPropLinePointInt::SdUndoRecordPropLinePointInt(SdPropLine *prop, SdPoint *p1, int *val) :
   mProp(prop),
@@ -31,8 +32,6 @@ void SdUndoRecordPropLinePointInt::undo()
   {
   mProp->swapState( &mPropState );
   mSrc1->swap( &mPoint1 );
-  int tmp = *mSrc2;
-  *mSrc2 = mValue2;
-  mValue2 = tmp;
+  SdUtil::swapInt( mValue2, mSrc2 );
   }
 

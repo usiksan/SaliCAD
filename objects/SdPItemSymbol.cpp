@@ -178,4 +178,5 @@ void SdPItemSymbol::insertChild(SdObject *child, SdUndo *undo)
     //Insert new part
     SdProjectItem::insertChild( child, undo );
     }
+  else SdProjectItem::insertChild( child, undo );
   }

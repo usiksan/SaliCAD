@@ -36,6 +36,7 @@ class SdUndoRecord
     virtual bool    isStep() const { return false; }
 
     virtual QString title() const { return QString(); }
+
   };
 
 typedef SdUndoRecord *SdUndoRecordPtr;

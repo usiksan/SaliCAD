@@ -42,6 +42,12 @@ class SdUtil
     //Test if string contains only english symbols
     static bool    isEnglish( const QString str );
 
+    //Swap int
+    static void    swapInt( int &src, int *dst );
+
+    //Swap bool
+    static void    swapBool( bool &src, bool *dst );
+
   };
 
 #endif // SDUTIL_H
