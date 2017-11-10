@@ -49,8 +49,16 @@ SdCsChannelServer::SdCsChannelServer(QTcpSocket *socket, QObject *parent) :
 
   if( !presence ) {
     QSqlQuery query;
+    //Create objects table
     query.exec("CREATE TABLE objects (hash TEXT PRIMARY KEY, "
-               " name TEXT, author TEXT, timeCreate INTEGER, class INTEGER, timeUpgrade INTEGER, object BLOB)");
+               " name TEXT, author TEXT, tag TEXT, timeCreate INTEGER, class INTEGER, timeUpgrade INTEGER, object BLOB)");
+
+    //Create hierarchical table
+    query.exec("CREATE TABLE hierarchy (section TEXT PRIMARY KEY, path TEXT, parent TEXT, time INTEGER)");
+    //Hierarchy table translation on all languages
+    query.exec("CREATE TABLE translation (translate TEXT PRIMARY KEY, lang TEXT, section TEXT, time INTEGER)");
+    //User table
+    query.exec("CREATE TABLE author TEXT PRIMARY KEY, description TEXT, delivered INTEGER, limit INTEGER");
     }
   }
 

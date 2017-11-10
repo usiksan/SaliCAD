@@ -19,18 +19,27 @@ Description
 #include <QByteArray>
 #include <QList>
 
+//Commands available before login
 #define SCPI_GET_SERVER_VERSION   1 //Get cad server version to decide properties
                                     //data: none
 #define SCPI_SERVER_VERSION       2 //Server info packet
                                     //data: SdCadServerVersion - server version info
-#define SCPI_GET_UPDATE_LIST      3 //Request to get update data base list
+#define SCPI_REQUEST_AUTHOR       3 //Register new author
+                                    //data: SdAuthorInfo
+#define SCPI_LOGIN                4 //Login to server for author. For different authors available different possibilities
+                                    //data: SdAuthorInfo
+#define SCPI_ACKNOWLEDGE          5 //Acknowledge registration and login. After login available all functionality
+                                    //data: SdAuthorInfo
+
+//Commands available after login
+#define SCPI_GET_UPDATE_LIST      6 //Request to get update data base list
                                     //data: quint32 - time of last upgrading
-#define SCPI_UPGRADE_LIST         4 //Upgrade data base list
+#define SCPI_UPGRADE_LIST         7 //Upgrade data base list
                                     //data: SdItemInfoList - list of upgrade obects
-#define SCPI_GET_OBJECT           5 //Request to get object from data base with desired hashId
+#define SCPI_GET_OBJECT           8 //Request to get object from data base with desired hashId
                                     //data: QString - hashId of requested object
-#define SCPI_OBJECT               6 //Object
-                                    //data: SdProjectItem
+#define SCPI_OBJECT               9 //Object
+                                    //data: SdItemInfo, SdProjectItem
 
 
 
@@ -69,12 +78,12 @@ struct SdItemInfo {
     QString mHashId;      //Unical object id
     QString mName;        //Object name
     QString mAuthor;      //Author name
-    QString mTag0;        //Group 0 assotiation
-    QString mTag1;        //Group 1 assotiation
-    qint32  mObjectTime;  //Time of last object editing
+    QString mTag;         //Group assotiation
+    qint32  mTimeCreate;  //Time object creation
+    qint32  mTimeUpgrade; //Time object reside in database
     qint64  mObjectClass; //Class of object
 
-    SdItemInfo() : mObjectTime(0), mObjectClass(0) {}
+    SdItemInfo() : mTimeCreate(0), mTimeUpgrade(0), mObjectClass(0) {}
   };
 
 
@@ -85,7 +94,8 @@ inline QDataStream& operator << ( QDataStream &os, const SdItemInfo &info ) {
   os << info.mHashId
      << info.mName
      << info.mAuthor
-     << info.mObjectTime
+     << info.mTimeCreate
+     << info.mTimeUpgrade
      << info.mObjectClass;
   return os;
   }
@@ -95,11 +105,99 @@ inline QDataStream& operator >> ( QDataStream &is, SdItemInfo &info ) {
   is >> info.mHashId
      >> info.mName
      >> info.mAuthor
-     >> info.mObjectTime
+     >> info.mTimeCreate
+     >> info.mTimeUpgrade
      >> info.mObjectClass;
   return is;
   }
 
+
+
+
+
+struct SdCategoryInfo {
+    QString mName;
+    QString mParent;
+    QString mPath;
+    qint32  mTime;
+  };
+
+typedef QList<SdCategoryInfo> SdCategoryInfoList;
+
+//Serialise SdCategoryInfo object
+inline QDataStream& operator << ( QDataStream &os, const SdCategoryInfo &info ) {
+  os << info.mName
+     << info.mParent
+     << info.mPath
+     << info.mTime;
+  return os;
+  }
+
+//Deserialise SdCategoryInfo object
+inline QDataStream& operator >> ( QDataStream &is, SdCategoryInfo &info ) {
+  is >> info.mName
+     >> info.mParent
+     >> info.mPath
+     >> info.mTime;
+  return is;
+  }
+
+
+
+
+struct SdTranslationInfo {
+    QString mName;
+    QString mTranslation;
+    QString mLanguage;
+    qint32  mTime;
+  };
+
+typedef QList<SdTranslationInfo> SdTranslationInfoList;
+
+//Serialise SdTranslationInfo object
+inline QDataStream& operator << ( QDataStream &os, const SdTranslationInfo &info ) {
+  os << info.mName
+     << info.mTranslation
+     << info.mLanguage
+     << info.mTime;
+  return os;
+  }
+
+//Deserialise SdTranslationInfo object
+inline QDataStream& operator >> ( QDataStream &is, SdTranslationInfo &info ) {
+  is >> info.mName
+     >> info.mTranslation
+     >> info.mLanguage
+     >> info.mTime;
+  return is;
+  }
+
+
+
+struct SdAuthorInfo {
+    QString mAuthor;      //Author name
+    QString mDescription; //Author description
+    QString mKey;         //Author key
+    qint32  mLimit;       //Limit delivery element count
+  };
+
+//Serialise SdAuthorInfo
+inline QDataStream& operator << ( QDataStream &os, const SdAuthorInfo &info ) {
+  os << info.mAuthor
+     << info.mDescription
+     << info.mKey
+     << info.mLimit;
+  return os;
+  }
+
+//Deserialise SdAuthorInfo
+inline QDataStream& operator >> ( QDataStream &is, SdAuthorInfo &info ) {
+  is >> info.mAuthor
+     >> info.mDescription
+     >> info.mKey
+     >> info.mLimit;
+  return is;
+  }
 
 
 class SdCsPacketInfo
