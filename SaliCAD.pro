@@ -167,7 +167,10 @@ SOURCES += \
     bug.cpp \
     objects/SdUndoRecordInsertDelete.cpp \
     windows/SdWCategory.cpp \
-    objects/SdUndoRecordProjectItem.cpp
+    objects/SdUndoRecordProjectItem.cpp \
+    objects/SdObjectNetClient.cpp \
+    windows/SdDNetClient.cpp \
+    windows/SdDRegistation.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -327,7 +330,10 @@ HEADERS  += \
     modes/SdModePrintWindow.h \
     objects/SdUndoRecordInsertDelete.h \
     windows/SdWCategory.h \
-    objects/SdUndoRecordProjectItem.h
+    objects/SdUndoRecordProjectItem.h \
+    objects/SdObjectNetClient.h \
+    windows/SdDNetClient.h \
+    windows/SdDRegistation.h
 
 DISTFILES += \
     license.txt
@@ -341,4 +347,6 @@ FORMS += \
     windows/SdDGetProjectObject.ui \
     windows/SdDGetBus.ui \
     windows/SdDEnterPosition.ui \
-    windows/SdDPrint.ui
+    windows/SdDPrint.ui \
+    windows/SdDNetClient.ui \
+    windows/SdDRegistation.ui

@@ -29,6 +29,8 @@
 
 //===================================================================================
 //Fixed:
+//D025 load object from server
+
 //D018 Check if name unical for this author
 
 //D012 set edit status

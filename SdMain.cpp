@@ -17,6 +17,7 @@ Description
 #include "objects/SdEnvir.h"
 #include "objects/SdProp.h"
 #include "objects/SdObjectFactory.h"
+#include "objects/SdObjectNetClient.h"
 #include <QApplication>
 #include <QSettings>
 #include <QTranslator>
@@ -33,6 +34,9 @@ int main(int argc, char *argv[])
   //Creating application
   QApplication a(argc, argv);
 
+  //Create remote database client
+  sdObjectNetClient = new SdObjectNetClient();
+
   QSettings s;
 
   if( !s.contains(SDK_LANGUAGE) ) {
@@ -45,18 +49,21 @@ int main(int argc, char *argv[])
     s.setValue( SDK_LANGUAGE, lang );
     }
 
-  //Check if registered
-  if( s.value(SDK_GLOBAL_ID_MACHINE).toInt() < 1 ) {
-    //Not registered
-    s.setValue(SDK_GLOBAL_ID_MACHINE, 0 );
-    }
-  //Задать каталог библиотек
-  //SgImageProvider::mImageDir = PATH_VISUAL;
 
   //Translation system
   QTranslator appTranslator;
   if( appTranslator.load( QString( QCoreApplication::applicationDirPath() + "/lang_%1.qm").arg( s.value( SDK_LANGUAGE, QVariant(QString("English")) ).toString() ) ) )
     a.installTranslator( &appTranslator );
+
+
+  //Check if registered
+  if( !s.contains(SDK_GLOBAL_AUTHOR) ) {
+    //Not registered, show register dialog
+
+    }
+  //Задать каталог библиотек
+  //SgImageProvider::mImageDir = PATH_VISUAL;
+
 
   //Creating pulsar for signals distibution
   SdPulsar::pulsar = new SdPulsar();

@@ -17,6 +17,8 @@ Description
 #include "SdEnvir.h"
 #include "SdProjectItem.h"
 #include "SdUtil.h"
+#include "windows/SdDNetClient.h"
+
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -136,6 +138,7 @@ QString SdObjectFactory::insertObject(const SdProjectItem *item, QJsonObject obj
 //If no object in local database then loading from internet
 SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *parent )
   {
+  SdObjectMap map;
   QSqlQuery q;
   q.prepare( QString("SELECT object FROM objects WHERE hash='%1'").arg( id ) );
   q.exec();
@@ -147,10 +150,31 @@ SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *p
       //If no object in local database then doing nothing
       if( soft ) return nullptr;
 
-      //TODO D025 load object from server
+      //load object from server
+      if( !SdDNetClient::getObject( parent, id ) ) {
+        QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Id '%1' can't be received from remote database").arg(id) );
+        return nullptr;
+        }
+
+      //Repeate extract object
+      q.prepare( QString("SELECT object FROM objects WHERE hash='%1'").arg( id ) );
+      q.exec();
+      if( !q.first() ) {
+        //Something wrong, but object is not found
+        QMessageBox::warning( parent, QObject::tr("Fatal"), QObject::tr("Id '%1' not found").arg(id) );
+        return nullptr;
+        }
+
+      //Object present. Load from obj
+      jsonObj = QJsonDocument::fromBinaryData( q.value( QStringLiteral("object") ).toByteArray() ).object();
+      if( jsonObj.isEmpty() ) {
+        //Something wrong, but object is not found
+        QMessageBox::warning( parent, QObject::tr("Fatal"), QObject::tr("Id '%1' reported as loaded but it's wrong").arg(id) );
+        return nullptr;
+        }
+
       }
     //Build object
-    SdObjectMap map;
     return SdObject::read( &map, jsonObj );
     }
   QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Id '%1' not found in database").arg(id) );

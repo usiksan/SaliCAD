@@ -385,5 +385,5 @@ void SdProjectItem::cloneFrom( const SdObject *src )
 QString SdProjectItem::getDefaultAuthor()
   {
   QSettings s;
-  return s.value( SDK_GLOBAL_ID_MACHINE ).toString();
+  return s.value( SDK_GLOBAL_AUTHOR ).toString();
   }

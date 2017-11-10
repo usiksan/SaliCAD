@@ -136,8 +136,8 @@ History
 #define SDK_LANGUAGE                 "Language"
 #define SDK_MAIN_SPLITTER            "MainSplitter"
 #define SDK_PREVIOUS_FILES           "PreviousFiles"
-#define SDK_GLOBAL_ID_MACHINE        "Machine global id"
-#define SDK_GLOBAL_ID_COUNT          "Global id count"
+#define SDK_GLOBAL_AUTHOR            "Author global id"
+#define SDK_AUTHOR_KEY               "Author global key"
 #define SDK_ENVIR_VERSION            "Envir version"
 #define SDK_ENVIR                    "Envir"
 
