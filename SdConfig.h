@@ -84,7 +84,8 @@ History
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
-#define SD_DEFAULT_IP                "62.109.11.83"
+//#define SD_DEFAULT_IP                "62.109.11.83"
+#define SD_DEFAULT_IP                "127.0.0.0"
 #define SD_DEFAULT_PORT              1970
 
 //Project naming definition
@@ -122,6 +123,8 @@ History
 #define CLIP_IMAGE_WIDTH             1920
 #define CLIP_IMAGE_HEIGHT            1280
 
+//Max default delivered limit elements
+#define SD_DEFAULT_DELIVERED_LIMIT    100
 
 #if 0
 #define SD_BASE_PATH                 QCoreApplication::applicationDirPath()
@@ -137,7 +140,8 @@ History
 #define SDK_MAIN_SPLITTER            "MainSplitter"
 #define SDK_PREVIOUS_FILES           "PreviousFiles"
 #define SDK_GLOBAL_AUTHOR            "Author global id"
-#define SDK_AUTHOR_KEY               "Author global key"
+#define SDK_MACHINE_KEY              "Machine global key"
+#define SDK_SERVER_IP                "SaliCAD server IP"
 #define SDK_ENVIR_VERSION            "Envir version"
 #define SDK_ENVIR                    "Envir"
 

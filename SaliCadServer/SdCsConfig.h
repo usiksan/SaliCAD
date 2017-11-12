@@ -14,18 +14,21 @@ Description
 History
   07.10.2017 v0.1 created
   08.10.2017 v0.2 data base interface
+  12.11.2017 v0.3 append user registration and login
 */
 #ifndef SDCSCONFIG_H
 #define SDCSCONFIG_H
 
 #define SALI_CAD_MAJOR   0
-#define SALI_CAD_MINOR   1
-#define SALI_CAD_VERSION "v0.1"
+#define SALI_CAD_MINOR   3
+#define SALI_CAD_VERSION "v0.3"
 
 #define SALI_CAD_SERVER_INFO "A.Sibilev SaliCAD library server " SALI_CAD_VERSION
 
 #define UPGRADE_PATH "upgrade/"
 #define LIBRARY_PATH "/library/"
 #define LIBRARY_FILE "salicad.lib"
+
+#define MACHINE_LIMIT 3
 
 #endif // SDCSCONFIG_H

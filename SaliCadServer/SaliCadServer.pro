@@ -21,11 +21,13 @@ SOURCES += \
     SdCsServer.cpp \
     SdCsChannel.cpp \
     SdCsPacketInfo.cpp \
-    SdCsChannelServer.cpp
+    SdCsChannelServer.cpp \
+    ../objects/SdUtil.cpp
 
 HEADERS += \
     SdCsConfig.h \
     SdCsChannel.h \
     SdCsServer.h \
     SdCsPacketInfo.h \
-    SdCsChannelServer.h
+    SdCsChannelServer.h \
+    ../objects/SdUtil.h

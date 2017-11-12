@@ -170,7 +170,8 @@ SOURCES += \
     objects/SdUndoRecordProjectItem.cpp \
     objects/SdObjectNetClient.cpp \
     windows/SdDNetClient.cpp \
-    windows/SdDRegistation.cpp
+    windows/SdDRegistation.cpp \
+    SaliCadServer/SdCsPacketInfo.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -333,7 +334,8 @@ HEADERS  += \
     objects/SdUndoRecordProjectItem.h \
     objects/SdObjectNetClient.h \
     windows/SdDNetClient.h \
-    windows/SdDRegistation.h
+    windows/SdDRegistation.h \
+    SaliCadServer/SdCsPacketInfo.h
 
 DISTFILES += \
     license.txt

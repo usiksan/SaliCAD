@@ -27,6 +27,16 @@ class SdDRegistation : public QDialog
     explicit SdDRegistation(QWidget *parent = 0);
     ~SdDRegistation();
 
+  public slots:
+    //Registration new user
+    void cmRegistration();
+
+    //Add to user new machine
+    void cmAddMachine();
+
+    //Close dialog
+    void cmClose();
+
   private:
     Ui::SdDRegistation *ui;
   };

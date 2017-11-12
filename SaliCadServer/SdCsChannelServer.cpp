@@ -12,6 +12,7 @@ Description
 */
 #include "SdCsConfig.h"
 #include "SdCsChannelServer.h"
+#include "../objects/SdUtil.h"
 
 
 #include <QSqlDatabase>
@@ -23,6 +24,7 @@ Description
 #include <QFile>
 #include <QCoreApplication>
 #include <QDebug>
+#include <QUuid>
 
 
 SdCsChannelServer::SdCsChannelServer(QTcpSocket *socket, QObject *parent) :
@@ -57,8 +59,19 @@ SdCsChannelServer::SdCsChannelServer(QTcpSocket *socket, QObject *parent) :
     query.exec("CREATE TABLE hierarchy (section TEXT PRIMARY KEY, path TEXT, parent TEXT, time INTEGER)");
     //Hierarchy table translation on all languages
     query.exec("CREATE TABLE translation (translate TEXT PRIMARY KEY, lang TEXT, section TEXT, time INTEGER)");
+
+
+
     //User table
-    query.exec("CREATE TABLE author TEXT PRIMARY KEY, description TEXT, delivered INTEGER, limit INTEGER");
+    //Every user have
+    // description - any author description
+    // limit count - element count he can download within their licension plan
+    // delivered count - element count witch already downloaded
+    query.exec("CREATE TABLE users (author TEXT PRIMARY KEY, description TEXT, delivered INTEGER, limit INTEGER)");
+
+    //Every user can have many machine on witch he works
+    //this table contains this machines list
+    query.exec("CREATE TABLE machines (uid TEXT PRIMARY KEY, author TEXT, changeTime INTEGER)");
     }
   }
 
@@ -72,6 +85,11 @@ void SdCsChannelServer::blockReceived()
       //Get cad server version to decide properties
       //data: none
       cmGetServerVersion();
+      break;
+
+    case SCPI_REQUEST_AUTHOR :
+      //Register new user
+      cmRegister();
       break;
 
     case SCPI_GET_UPDATE_LIST      :
@@ -123,7 +141,7 @@ void FillItemInfo( SdItemInfo &info, QSqlRecord rec ) {
   info.mName        = rec.field( QString("name") ).value().toString();
   info.mAuthor      = rec.field( QString("author") ).value().toString();
   info.mObjectClass = rec.field( QString("class") ).value().toInt();
-  info.mObjectTime  = rec.field( QString("timeCreate") ).value().toInt();
+  info.mTimeCreate  = rec.field( QString("timeCreate") ).value().toInt();
   }
 
 
@@ -159,7 +177,7 @@ void SdCsChannelServer::cmGetUpgradeList()
   //Prepare block
   QByteArray ar;
   if( list.count() ) {
-    QDataStream os( &ar );
+    QDataStream os( &ar, QIODevice::WriteOnly );
     os << list;
     }
 
@@ -196,7 +214,7 @@ void SdCsChannelServer::cmGetObject()
 
   //Prepare answer
   QByteArray ar;
-  QDataStream os( &ar );
+  QDataStream os( &ar, QIODevice::WriteOnly );
   os << info << obj;
 
   //Transmit object
@@ -214,18 +232,93 @@ void SdCsChannelServer::cmObject()
   is >> info >> obj;
 
   //Query to insert new object
-  QSqlQuery q;
-  //Insert new object
-  qDebug() << "insert";
-  q.prepare( QString("INSERT INTO objects (hash, name, author, timeCreate, class, timeUpgrade, object) "
-                       "VALUES (:hash, :name, :author, :timeCreate, :class, :timeUpgrade, :object)") );
-  q.bindValue( QStringLiteral(":hash"), id );
-  q.bindValue( QStringLiteral(":name"), item->getTitle() );
-  q.bindValue( QStringLiteral(":author"), item->getAuthor() );
-  q.bindValue( QStringLiteral(":timeCreate"), item->getTime() );
-  q.bindValue( QStringLiteral(":class"), item->getClass() );
-  q.bindValue( QStringLiteral(":timeUpgrade"), 0 );
-  q.bindValue( QStringLiteral(":object"), QVariant( QJsonDocument(obj).toBinaryData() ), QSql::Binary | QSql::In );
-  q.exec();
 
+  //First check if database already contains newest object
+//  QSqlQuery q;
+//  //Insert new object
+//  qDebug() << "insert";
+//  q.prepare( QString("INSERT INTO objects (hash, name, author, timeCreate, class, timeUpgrade, object) "
+//                       "VALUES (:hash, :name, :author, :timeCreate, :class, :timeUpgrade, :object)") );
+//  q.bindValue( QStringLiteral(":hash"), info.mHashId );
+//  q.bindValue( QStringLiteral(":name"), info.mName );
+//  q.bindValue( QStringLiteral(":author"), item->getAuthor() );
+//  q.bindValue( QStringLiteral(":timeCreate"), item->getTime() );
+//  q.bindValue( QStringLiteral(":class"), item->getClass() );
+//  q.bindValue( QStringLiteral(":timeUpgrade"), 0 );
+//  q.bindValue( QStringLiteral(":object"), QVariant( QJsonDocument(obj).toBinaryData() ), QSql::Binary | QSql::In );
+//  q.exec();
+
+  }
+
+
+
+
+//Register new user
+void SdCsChannelServer::cmRegister()
+  {
+  SdAuthorInfo info;
+  QDataStream is( mBlock );
+  is >> info;
+
+  //Query if author already present
+  QSqlQuery q;
+  q.exec( QString("SELECT * FROM users WHERE author='%1'").arg(info.mAuthor) );
+  if( q.first() ) {
+    //Author already present
+    info.mKey.clear();
+    info.mLimit = -1;
+    info.mDelivered = -1;
+    }
+  else {
+    info.mDelivered = 0;
+    //No author with this name, register
+    q.prepare( QString("INSERT INTO users (author, description, delivered, limit) "
+                       "VALUES (:author, :description, :delivered, :limit)") );
+    q.bindValue( QStringLiteral(":author"), info.mAuthor );
+    q.bindValue( QStringLiteral(":description"), info.mDescription );
+    q.bindValue( QStringLiteral(":delivered"), info.mDelivered );
+    q.bindValue( QStringLiteral(":limit"), info.mLimit );
+    if( q.exec() ) {
+      //Author added. Insert first machine for new user.
+      info.mKey = addMachine( info.mAuthor );
+
+      //If register successfull then login automaticly
+      if( !info.mKey.isEmpty() )
+        mAuthor = info.mAuthor;
+      }
+    else info.mLimit = -1;
+    }
+
+  //Prepare answer
+  QByteArray ar;
+  QDataStream os( &ar, QIODevice::WriteOnly );
+  os << info;
+
+  //Transmit object
+  writeBlock( SCPI_ACKNOWLEDGE, ar );
+  }
+
+
+
+
+//Add machine for user
+QString SdCsChannelServer::addMachine(const QString author)
+  {
+  //Prepare key for machine
+  QString uid = QUuid::createUuid().toString();
+  //Prepare change time when key will changed
+  int changeTime = SdUtil::getTime2000() + 200000;
+
+  //Prepare query to database
+  QSqlQuery q;
+  q.prepare( QString("INSERT INTO machines (uid, author, changeTime) "
+                     "VALUES (:uid, :author, :changeTime)") );
+  q.bindValue( QStringLiteral(":uid"), uid );
+  q.bindValue( QStringLiteral(":author"), author );
+  q.bindValue( QStringLiteral(":changeTime"), changeTime );
+  if( q.exec() )
+    //Machine registerd successfully, return its key
+    return uid;
+  //Wrong registration
+  return QString();
   }

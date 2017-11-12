@@ -30,6 +30,8 @@ Description
                                     //data: SdAuthorInfo
 #define SCPI_ACKNOWLEDGE          5 //Acknowledge registration and login. After login available all functionality
                                     //data: SdAuthorInfo
+#define SCPI_REQUEST_MACHINE      6 //Add new machine to existing user
+                                    //data: SdAuthorInfo
 
 //Commands available after login
 #define SCPI_GET_UPDATE_LIST      6 //Request to get update data base list
@@ -52,7 +54,7 @@ struct SdCadServerVersion {
     //Write to block
     void write( QByteArray &ar ) {
       ar.clear();
-      QDataStream os( &ar );
+      QDataStream os( &ar, QIODevice::WriteOnly );
       os << mMajor
          << mMinor
          << mServerName;
@@ -80,10 +82,9 @@ struct SdItemInfo {
     QString mAuthor;      //Author name
     QString mTag;         //Group assotiation
     qint32  mTimeCreate;  //Time object creation
-    qint32  mTimeUpgrade; //Time object reside in database
     qint64  mObjectClass; //Class of object
 
-    SdItemInfo() : mTimeCreate(0), mTimeUpgrade(0), mObjectClass(0) {}
+    SdItemInfo() : mTimeCreate(0), mObjectClass(0) {}
   };
 
 
@@ -95,7 +96,6 @@ inline QDataStream& operator << ( QDataStream &os, const SdItemInfo &info ) {
      << info.mName
      << info.mAuthor
      << info.mTimeCreate
-     << info.mTimeUpgrade
      << info.mObjectClass;
   return os;
   }
@@ -106,7 +106,6 @@ inline QDataStream& operator >> ( QDataStream &is, SdItemInfo &info ) {
      >> info.mName
      >> info.mAuthor
      >> info.mTimeCreate
-     >> info.mTimeUpgrade
      >> info.mObjectClass;
   return is;
   }
@@ -179,6 +178,7 @@ struct SdAuthorInfo {
     QString mDescription; //Author description
     QString mKey;         //Author key
     qint32  mLimit;       //Limit delivery element count
+    qint32  mDelivered;   //Delivered element count
   };
 
 //Serialise SdAuthorInfo
@@ -186,7 +186,8 @@ inline QDataStream& operator << ( QDataStream &os, const SdAuthorInfo &info ) {
   os << info.mAuthor
      << info.mDescription
      << info.mKey
-     << info.mLimit;
+     << info.mLimit
+     << info.mDelivered;
   return os;
   }
 
@@ -195,7 +196,8 @@ inline QDataStream& operator >> ( QDataStream &is, SdAuthorInfo &info ) {
   is >> info.mAuthor
      >> info.mDescription
      >> info.mKey
-     >> info.mLimit;
+     >> info.mLimit
+     >> info.mDelivered;
   return is;
   }
 

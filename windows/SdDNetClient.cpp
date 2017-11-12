@@ -12,6 +12,7 @@ Description
 */
 #include "SdDNetClient.h"
 #include "ui_SdDNetClient.h"
+#include "objects/SdObjectNetClient.h"
 #include <QTimer>
 
 SdDNetClient::SdDNetClient(const QString id, QWidget *parent) :

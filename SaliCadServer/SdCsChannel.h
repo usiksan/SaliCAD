@@ -27,10 +27,11 @@ class SdCsChannel : public QObject
 
     QTcpSocket     *mSocket;     //Socket, witch connection made with
     QThread        *mThread;     //Thread, where SvChannel live in
-    SdCsPacketInfo  mPacketInfo; //Packet info of receiving block
-    QByteArray      mBlock;      //Receiving block
     int             mReadOffset; //Position of next received data portion
     int             mReadSize;   //Full read size
+  protected:
+    SdCsPacketInfo  mPacketInfo; //Packet info of receiving block
+    QByteArray      mBlock;      //Receiving block
   public:
     explicit SdCsChannel( QTcpSocket *socket, QObject *parent = nullptr);
 
