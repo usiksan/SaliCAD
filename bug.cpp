@@ -2,7 +2,7 @@
 //B016 bugs
 //F001 fatal
 //C001 critical
-//D032 do
+//D033 do
 
 
 
@@ -29,6 +29,8 @@
 
 //===================================================================================
 //Fixed:
+//D032 fill new hierarhy and translation list
+
 //D025 load object from server
 
 //D018 Check if name unical for this author

@@ -21,26 +21,33 @@ class SdCsChannelServer : public SdCsChannel
   {
     Q_OBJECT
 
-    QString mAuthor; //Author name receiv when user is login or register
+    SdCadServerVersion mVersion;
+    //QString            mAuthor;  //Author name receiv when user is login or register
   public:
     explicit SdCsChannelServer( QTcpSocket *socket, QObject *parent = nullptr );
+    ~SdCsChannelServer();
 
     // SdCsChannel interface
   public:
-    virtual void blockReceived() override;
+    virtual void onBlockReceived(int cmd, QDataStream &is ) override;
+
+  public slots:
+    //On connection timeout
+    void         onTimeout();
 
   private:
-    void cmGetServerVersion();
-    void cmGetUpgradeList();
-    void cmGetObject();
-    void cmObject();
-    void cmLogin();
-
     //Register new user and add for it new machine
-    void    cmRegister();
+    void cmRegistrationRequest( QDataStream &is );
+    void cmMachineRequest( QDataStream &is );
+    void cmSyncRequest( QDataStream &is );
+    void cmObjectRequest( QDataStream &is );
+
 
     //Add machine for user
     QString addMachine( const QString author );
+
+    //Check user and machine key
+    bool    checkAuthorAndKey( const QString author, const QString key );
   };
 
 #endif // SDCSCHANNELSERVER_H

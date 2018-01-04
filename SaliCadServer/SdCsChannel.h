@@ -25,31 +25,25 @@ class SdCsChannel : public QObject
   {
     Q_OBJECT
 
+  protected:
     QTcpSocket     *mSocket;     //Socket, witch connection made with
-    QThread        *mThread;     //Thread, where SvChannel live in
     int             mReadOffset; //Position of next received data portion
     int             mReadSize;   //Full read size
-  protected:
     SdCsPacketInfo  mPacketInfo; //Packet info of receiving block
     QByteArray      mBlock;      //Receiving block
   public:
     explicit SdCsChannel( QTcpSocket *socket, QObject *parent = nullptr);
 
     //Block received
-    virtual void blockReceived();
+    virtual void onBlockReceived( int cmd, QDataStream &is );
 
-  public slots:
     //Write block
     void         writeBlock( int cmd, QByteArray ar );
 
+  public slots:
     //On receiv bytes
     void         onReceivBytes();
 
-    //On write complete
-    virtual void onWriteComplete();
-
-    //On connection complete
-    void         onConnectionClose();
   };
 
 #endif // SDCSCHANNEL_H

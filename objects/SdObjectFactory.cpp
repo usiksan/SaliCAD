@@ -60,11 +60,14 @@ void SdObjectFactory::openLibrary()
     QSqlQuery query;
     //Create objects table
     query.exec("CREATE TABLE objects (hash TEXT PRIMARY KEY, "
-               " name TEXT, author TEXT, tag TEXT, timeCreate INTEGER, class INTEGER, timeUpgrade INTEGER, object BLOB)");
+               " name TEXT, author TEXT, tag TEXT, timeCreate INTEGER, class INTEGER, object BLOB)");
 
     //Create hierarchical table
     query.exec("CREATE TABLE hierarchy (section TEXT PRIMARY KEY, path TEXT, parent TEXT, time INTEGER)");
     //Hierarchy table translation on all languages
+    //translate - national language text (result of translation)
+    //lang - national language name
+    //section - section name (what translate)
     query.exec("CREATE TABLE translation (translate TEXT PRIMARY KEY, lang TEXT, section TEXT, time INTEGER)");
     }
   }
@@ -87,13 +90,15 @@ QString SdObjectFactory::insertObject(const SdProjectItem *item, QJsonObject obj
   //Add to cashe. Later object will be added to database or already in database
   //
   QSqlQuery q;
-  q.prepare( QString("SELECT hash FROM objects WHERE hash='%1'").arg( id ) );
+  q.prepare( QString("SELECT * FROM objects WHERE hash='%1'").arg( id ) );
   q.exec();
   if( q.first() ) {
     //Object is already in database
-    //Add to cashe
-    mCashe.insert( id, QString() );
-    return QString();
+    if( !q.record().value( QStringLiteral("object") ).toByteArray().isEmpty() ) {
+      //Add to cashe
+      mCashe.insert( id, QString() );
+      return QString();
+      }
     }
 
   q.prepare( QString("SELECT * FROM objects WHERE name='%1' AND author='%2'").arg( item->getTitle() ).arg( item->getAuthor()) );
@@ -114,15 +119,14 @@ QString SdObjectFactory::insertObject(const SdProjectItem *item, QJsonObject obj
 
   //Insert new object
   qDebug() << "insert";
-  q.prepare( QString("INSERT INTO objects (hash, name, author, tag, timeCreate, class, timeUpgrade, object) "
-                       "VALUES (:hash, :name, :author, :tag, :timeCreate, :class, :timeUpgrade, :object)") );
+  q.prepare( QString("INSERT INTO objects (hash, name, author, tag, timeCreate, class, object) "
+                       "VALUES (:hash, :name, :author, :tag, :timeCreate, :class, :object)") );
   q.bindValue( QStringLiteral(":hash"), id );
   q.bindValue( QStringLiteral(":name"), item->getTitle() );
   q.bindValue( QStringLiteral(":author"), item->getAuthor() );
   q.bindValue( QStringLiteral(":tag"), item->getTag() );
   q.bindValue( QStringLiteral(":timeCreate"), item->getTime() );
   q.bindValue( QStringLiteral(":class"), item->getClass() );
-  q.bindValue( QStringLiteral(":timeUpgrade"), SdUtil::getTime2000() );
   q.bindValue( QStringLiteral(":object"), QVariant( QJsonDocument(obj).toBinaryData() ), QSql::Binary | QSql::In );
   q.exec();
   qDebug() << q.lastError();

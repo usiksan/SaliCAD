@@ -10,42 +10,70 @@ Web
 
 Description
   Client for dataBase server communicate
+
+  1. Communicate to server
+  2. Login or registrate
+  3. Send request
+  4. Receiv ansver
+  5. Disconnect
 */
 #ifndef SDOBJECTNETCLIENT_H
 #define SDOBJECTNETCLIENT_H
 
+#include "SaliCadServer/SdCsChannel.h"
+#include "SaliCadServer/SdCsPacketInfo.h"
 #include <QObject>
 #include <QTcpSocket>
 #include <QTimer>
 
-
-class SdObjectNetClient : public QObject
+class SdObjectNetClient : public SdCsChannel
   {
     Q_OBJECT
 
-    QString     mAuthor;
-    QString     mKey;
-    QTcpSocket *mSocket;
-    QTimer     *mTimer;
+    SdAuthorInfo  mAuthorInfo;
+    QString       mHostIp;
+    QTimer        mTimer;
+    QByteArray    mBuffer;
+    int           mCommand;
+    QByteArray    mBufferSync;
+    int           mCommandSync;
   public:
     explicit SdObjectNetClient(QObject *parent = nullptr);
 
-  signals:
-    void objectComplete( const QString hashId, bool successfull );
+    bool isRegistered() const;
 
-    void loginComplete( const QString author, const QString key, int limit, int delivered );
+  signals:
+    void process( QString desr, bool complete );
+
+    void objectComplete( int result );
+
+    void registrationComplete( const QString authorName, const QString descr, const QString key, int limit, int delivered, int result );
   public slots:
-    //Begin object receiving process
-    void needObject( const QString hashId );
 
     //Begin registration process
-    void needRegistration(const QString ip, const QString name, const QString description );
+    void doRegistration(const QString ip, const QString authorName, const QString description );
 
-    //Begin login process
-    void needLogin( const QString name, const QString key );
+    //Begin append machine
+    void doMachine( const QString ip, const QString authorName, const QString key );
 
-    //Begin background process
-    void start();
+    //Begin object receiving process
+    void doObject( const QString hashId );
+
+    //When connected to host send to it prepared block
+    void onConnected();
+
+    //By timer do syncronisation
+    void doSync();
+
+    // SdCsChannel interface
+  public:
+    virtual void onBlockReceived( int cmd, QDataStream &is ) override;
+
+  private:
+    void cmRegistrationInfo( QDataStream &is );
+    void cmSyncList( QDataStream &is );
+    void cmObject( QDataStream &is );
+    void startTransmit();
   };
 
 //Main object for remote database communication

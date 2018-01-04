@@ -12,6 +12,7 @@ Description
 */
 #include "SdCsServer.h"
 #include "SdCsChannel.h"
+#include "SdCsChannelServer.h"
 
 #include <QDebug>
 
@@ -22,7 +23,7 @@ SdCsServer::SdCsServer(QObject *parent) :
   connect( this, &SdCsServer::newConnection, this, [this] () {
     //On every new connection we create SvChannel-s while present pending connections
     while( hasPendingConnections() )
-      new SdCsChannel( nextPendingConnection() );
+      new SdCsChannelServer( nextPendingConnection() );
     });
 
   //Set server to listen for connections

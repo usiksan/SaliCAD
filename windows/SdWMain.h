@@ -171,6 +171,7 @@ class SdWMain : public QMainWindow
     void cmHelpContens();
     void cmHelpIndex();
     void cmHelpAbout();
+    void cmHelpRegistration();
 
     void cmClipboardChange();
     void cmPropertiesChange();

@@ -141,6 +141,7 @@ History
 #define SDK_PREVIOUS_FILES           "PreviousFiles"
 #define SDK_GLOBAL_AUTHOR            "Author global id"
 #define SDK_MACHINE_KEY              "Machine global key"
+#define SDK_LAST_SYNC                "Last sync"
 #define SDK_SERVER_IP                "SaliCAD server IP"
 #define SDK_ENVIR_VERSION            "Envir version"
 #define SDK_ENVIR                    "Envir"

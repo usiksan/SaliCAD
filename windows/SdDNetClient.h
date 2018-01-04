@@ -31,16 +31,11 @@ class SdDNetClient : public QDialog
     //Get object from remote server
     static bool getObject( QWidget *parent, const QString id );
 
-    //Register new user
-    static bool registerAuthor( QWidget *parent, const QString author, const QString descr, int limit );
-
   signals:
     void requestObject( const QString id );
 
   public slots:
-    void onCompleteRequestObject( bool res );
-
-    void onProcess( int pos, int range, const QString oper );
+    void onCompleteRequestObject( int result );
 
   private:
     Ui::SdDNetClient *ui;

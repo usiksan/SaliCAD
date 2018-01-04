@@ -171,6 +171,7 @@ SOURCES += \
     objects/SdObjectNetClient.cpp \
     windows/SdDNetClient.cpp \
     windows/SdDRegistation.cpp \
+    SaliCadServer/SdCsChannel.cpp \
     SaliCadServer/SdCsPacketInfo.cpp
 
 HEADERS  += \
@@ -335,6 +336,7 @@ HEADERS  += \
     objects/SdObjectNetClient.h \
     windows/SdDNetClient.h \
     windows/SdDRegistation.h \
+    SaliCadServer/SdCsChannel.h \
     SaliCadServer/SdCsPacketInfo.h
 
 DISTFILES += \

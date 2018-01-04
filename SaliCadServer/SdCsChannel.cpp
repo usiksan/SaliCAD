@@ -11,35 +11,29 @@ Web
 Description
 */
 #include "SdCsChannel.h"
+#include <QDataStream>
 
 SdCsChannel::SdCsChannel(QTcpSocket *socket, QObject *parent) :
   QObject(parent),
   mSocket(socket),  //Socket, witch connection made with
-  mThread(nullptr), //Thread, where SvChannel live in
   mReadOffset(0),   //Position of next received data portion
   mReadSize(0)      //Full read size
   {
 
-  //Create thread, where SvChannel will be live in
-  mThread = new QThread();
-  moveToThread( mThread );
-
   //Connections
   connect( mSocket, &QTcpSocket::readyRead, this, &SdCsChannel::onReceivBytes );
-  connect( mSocket, &QTcpSocket::bytesWritten, this, &SdCsChannel::onWriteComplete );
-  connect( mSocket, &QTcpSocket::disconnected, this, &SdCsChannel::onConnectionClose );
-
-  mThread->start();
+//  connect( mSocket, &QTcpSocket::bytesWritten, this, &SdCsChannel::onWriteComplete );
+//  connect( mSocket, &QTcpSocket::disconnected, this, &SdCsChannel::onConnectionClose );
   }
 
 
 
-
-//Block received
-void SdCsChannel::blockReceived()
+void SdCsChannel::onBlockReceived(int cmd, QDataStream &is)
   {
-
+  Q_UNUSED( cmd );
+  Q_UNUSED( is );
   }
+
 
 
 
@@ -68,13 +62,18 @@ void SdCsChannel::onReceivBytes()
       int len = mSocket->read( mBlock.data() + mReadOffset, mReadSize - mReadOffset );
       mReadOffset += len;
       //if last part of block then parse received block
-      if( mReadOffset >= mReadSize )
-        blockReceived();
+      if( mReadOffset >= mReadSize ) {
+        QDataStream is(mBlock);
+        onBlockReceived( mPacketInfo.command(), is );
+        return;
+        }
       }
     else {
       //Packet info received
       if( mSocket->read( (char*) (&mPacketInfo), sizeof(SdCsPacketInfo) ) != sizeof(SdCsPacketInfo) ) {
-        //Sycronization error
+        //Syncronization error, break connection
+        mSocket->disconnectFromHost();
+        return;
         }
       else {
         mReadSize = mPacketInfo.lenght();
@@ -83,8 +82,9 @@ void SdCsChannel::onReceivBytes()
           mBlock.resize( mReadSize );
           }
         else {
-          //No addon data requered
-          blockReceived();
+          //No addon data requered - syncronization error, break connection
+          mSocket->disconnectFromHost();
+          return;
           }
         }
       }
@@ -94,15 +94,11 @@ void SdCsChannel::onReceivBytes()
 
 
 
-void SdCsChannel::onWriteComplete()
-  {
-
-  }
 
 
 
 
-
+#if 0
 void SdCsChannel::onConnectionClose()
   {
   mThread->quit();
@@ -110,3 +106,15 @@ void SdCsChannel::onConnectionClose()
   deleteLater();
   mSocket->deleteLater();
   }
+
+
+
+
+void SdCsChannel::sendAuthorInfo(int cmd, SdAuthorInfo &info)
+  {
+  QByteArray ar;
+  QDataStream os( &ar, QIODevice::WriteOnly );
+  os << info;
+  writeBlock( cmd, ar );
+  }
+#endif

@@ -174,10 +174,10 @@ void SdModeCSymImp::getSection()
 
     mSection = dynamic_cast<SdPItemSymbol*>( obj );
 
-    if( sectionIndex >= 0 ) {
-      mComponent = mSection;
+    mComponent = mSection;
+    if( sectionIndex >= 0 )
       mSection = mComponent->extractSymbolFromFactory( sectionIndex, false, mEditor );
-      }
+
 
     mPart = mComponent->extractPartFromFactory( false, mEditor );
     }

@@ -24,6 +24,7 @@ Description
 #include "SdWCommand.h"
 #include "SdWLabel.h"
 #include "SdDOptions.h"
+#include "SdDRegistation.h"
 #include "objects/SdPulsar.h"
 #include <QSettings>
 #include <QCloseEvent>
@@ -1152,6 +1153,18 @@ void SdWMain::cmHelpIndex()
 void SdWMain::cmHelpAbout()
   {
   QMessageBox::about( this, tr("About %1").arg(SD_NAME), tr("Version %1.%2, \nCopyright SaliLAB\n%3").arg(SD_VERSION_MAJOR).arg(SD_VERSION_MINOR).arg(SD_AUTHOR));
+  }
+
+
+
+
+
+
+
+void SdWMain::cmHelpRegistration()
+  {
+  SdDRegistation d;
+  d.exec();
   }
 
 

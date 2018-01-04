@@ -10,6 +10,10 @@ Web
 
 Description
   Packet - is the transfer header. It describes information block.
+
+  Interchange is:
+  - receiv packet with query
+  - send packet with answer
 */
 #ifndef SDCSPACKETINFO_H
 #define SDCSPACKETINFO_H
@@ -19,30 +23,50 @@ Description
 #include <QByteArray>
 #include <QList>
 
-//Commands available before login
-#define SCPI_GET_SERVER_VERSION   1 //Get cad server version to decide properties
-                                    //data: none
-#define SCPI_SERVER_VERSION       2 //Server info packet
-                                    //data: SdCadServerVersion - server version info
-#define SCPI_REQUEST_AUTHOR       3 //Register new author
+//Commands
+#define SCPI_REGISTARTION_REQUEST 1 //Request to registration new user
                                     //data: SdAuthorInfo
-#define SCPI_LOGIN                4 //Login to server for author. For different authors available different possibilities
-                                    //data: SdAuthorInfo
-#define SCPI_ACKNOWLEDGE          5 //Acknowledge registration and login. After login available all functionality
-                                    //data: SdAuthorInfo
-#define SCPI_REQUEST_MACHINE      6 //Add new machine to existing user
-                                    //data: SdAuthorInfo
+#define SCPI_REGISTRATION_INFO    2 //Answer with registration data
+                                    //data: SdCadServerVersion
+                                    //      SdAuthorInfo
 
-//Commands available after login
-#define SCPI_GET_UPDATE_LIST      6 //Request to get update data base list
-                                    //data: quint32 - time of last upgrading
-#define SCPI_UPGRADE_LIST         7 //Upgrade data base list
-                                    //data: SdItemInfoList - list of upgrade obects
-#define SCPI_GET_OBJECT           8 //Request to get object from data base with desired hashId
-                                    //data: QString - hashId of requested object
-#define SCPI_OBJECT               9 //Object
-                                    //data: SdItemInfo, SdProjectItem
+#define SCPI_MACHINE_REQUEST      3 //Add new machine to existing user
+                                    //data: SdAuthorInfo
+#define SCPI_MACHINE_INFO         4 //Answer with registration data
+                                    //data: SdCadServerVersion
+                                    //      SdAuthorInfo
 
+
+#define SCPI_SYNC_REQUEST         5 //Request to get update data base list
+                                    //data: SdAuthorInfo
+                                    //      list of
+                                    //        SdItemInfo, SdProjectItem
+#define SCPI_SYNC_LIST            6 //Upgrade data base list
+                                    //data: SdCadServerVersion
+                                    //      SdAuthorInfo
+                                    //      SdItemInfoList - list of upgrade obects
+
+
+#define SCPI_OBJECT_REQUEST       7 //Request to get object from data base with desired hashId
+                                    //data: SdAuthorInfo
+                                    //      QString - hashId of requested object
+#define SCPI_OBJECT               8 //Object
+                                    //data: SdCadServerVersion
+                                    //      SdAuthorInfo
+                                    //      SdItemInfo, SdProjectItem
+
+
+#define SCPE_UNDEFINED              0 //Result of operation is undefined
+#define SCPE_SUCCESSFULL            1 //Successfull operation
+#define SCPE_AUTHOR_IS_EMPTY        2 //Not registered or login because author is null
+#define SCPE_AUTHOR_ALREADY_PRESENT 3 //Not registerd because author already registered
+#define SCPE_REGISTER_FAIL          4 //Internal error when registration
+#define SCPE_INVALID_KEY            5 //Invalid key when machine addon
+#define SCPE_MACHINE_LIMIT          6 //Machine limit
+#define SCPE_NOT_REGISTERED         7
+#define SCPE_SYNC_FAIL              8
+#define SCPE_OBJECT_NOT_FOUND       9
+#define SCPE_OBJECT_LIMIT          10
 
 
 
@@ -50,26 +74,25 @@ struct SdCadServerVersion {
     qint32  mMajor;      //Cad server major version
     qint32  mMinor;      //Cad server minor version
     QString mServerName; //Server name
-
-    //Write to block
-    void write( QByteArray &ar ) {
-      ar.clear();
-      QDataStream os( &ar, QIODevice::WriteOnly );
-      os << mMajor
-         << mMinor
-         << mServerName;
-      }
-
-    //Read from block
-    void read( const QByteArray &ar ) {
-      QDataStream is( ar );
-      is >> mMajor
-         >> mMinor
-         >> mServerName;
-      }
   };
 
 
+//Serialise SdCadServerVersion object
+inline QDataStream& operator << ( QDataStream &os, const SdCadServerVersion &version ) {
+  os << version.mMajor
+     << version.mMinor
+     << version.mServerName;
+  return os;
+  }
+
+
+//Deserialise SdCadServerVersion object
+inline QDataStream& operator >> ( QDataStream &is, SdCadServerVersion &version ) {
+  is >> version.mMajor
+     >> version.mMinor
+     >> version.mServerName;
+  return is;
+  }
 
 
 
@@ -115,7 +138,7 @@ inline QDataStream& operator >> ( QDataStream &is, SdItemInfo &info ) {
 
 
 struct SdCategoryInfo {
-    QString mName;
+    QString mSection;
     QString mParent;
     QString mPath;
     qint32  mTime;
@@ -125,7 +148,7 @@ typedef QList<SdCategoryInfo> SdCategoryInfoList;
 
 //Serialise SdCategoryInfo object
 inline QDataStream& operator << ( QDataStream &os, const SdCategoryInfo &info ) {
-  os << info.mName
+  os << info.mSection
      << info.mParent
      << info.mPath
      << info.mTime;
@@ -134,7 +157,7 @@ inline QDataStream& operator << ( QDataStream &os, const SdCategoryInfo &info ) 
 
 //Deserialise SdCategoryInfo object
 inline QDataStream& operator >> ( QDataStream &is, SdCategoryInfo &info ) {
-  is >> info.mName
+  is >> info.mSection
      >> info.mParent
      >> info.mPath
      >> info.mTime;
@@ -145,9 +168,9 @@ inline QDataStream& operator >> ( QDataStream &is, SdCategoryInfo &info ) {
 
 
 struct SdTranslationInfo {
-    QString mName;
-    QString mTranslation;
-    QString mLanguage;
+    QString mSection;
+    QString mTranslate;
+    QString mLang;
     qint32  mTime;
   };
 
@@ -155,18 +178,18 @@ typedef QList<SdTranslationInfo> SdTranslationInfoList;
 
 //Serialise SdTranslationInfo object
 inline QDataStream& operator << ( QDataStream &os, const SdTranslationInfo &info ) {
-  os << info.mName
-     << info.mTranslation
-     << info.mLanguage
+  os << info.mSection
+     << info.mTranslate
+     << info.mLang
      << info.mTime;
   return os;
   }
 
 //Deserialise SdTranslationInfo object
 inline QDataStream& operator >> ( QDataStream &is, SdTranslationInfo &info ) {
-  is >> info.mName
-     >> info.mTranslation
-     >> info.mLanguage
+  is >> info.mSection
+     >> info.mTranslate
+     >> info.mLang
      >> info.mTime;
   return is;
   }
@@ -179,6 +202,8 @@ struct SdAuthorInfo {
     QString mKey;         //Author key
     qint32  mLimit;       //Limit delivery element count
     qint32  mDelivered;   //Delivered element count
+    quint32 mLastSync;    //Time of last syncronisation
+    qint32  mResult;      //Result of operation
   };
 
 //Serialise SdAuthorInfo
@@ -187,7 +212,9 @@ inline QDataStream& operator << ( QDataStream &os, const SdAuthorInfo &info ) {
      << info.mDescription
      << info.mKey
      << info.mLimit
-     << info.mDelivered;
+     << info.mDelivered
+     << info.mLastSync
+     << info.mResult;
   return os;
   }
 
@@ -197,7 +224,9 @@ inline QDataStream& operator >> ( QDataStream &is, SdAuthorInfo &info ) {
      >> info.mDescription
      >> info.mKey
      >> info.mLimit
-     >> info.mDelivered;
+     >> info.mDelivered
+     >> info.mLastSync
+     >> info.mResult;
   return is;
   }
 
@@ -216,7 +245,6 @@ class SdCsPacketInfo
     //Lenght access
     void setLenght( int len );
     int  lenght() const;
-
   };
 
 #endif // SDCSPACKETINFO_H

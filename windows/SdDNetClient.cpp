@@ -14,6 +14,7 @@ Description
 #include "ui_SdDNetClient.h"
 #include "objects/SdObjectNetClient.h"
 #include <QTimer>
+#include <QMessageBox>
 
 SdDNetClient::SdDNetClient(const QString id, QWidget *parent) :
   QDialog(parent),
@@ -21,13 +22,21 @@ SdDNetClient::SdDNetClient(const QString id, QWidget *parent) :
   ui(new Ui::SdDNetClient)
   {
   ui->setupUi(this);
+  ui->mOperation->setText( id );
 
   //In an 100ms after creation emit signal
   QTimer::singleShot( 100, this, [this] () {
     emit requestObject( mId );
     } );
 
+  //In an 10sec after creation close dialog with fail
+  QTimer::singleShot( 10000, this, [this] () {
+    done(0);
+    });
+
   connect( ui->mCancel, &QPushButton::clicked, this, &SdDNetClient::reject );
+  connect( this, &SdDNetClient::requestObject, sdObjectNetClient, &SdObjectNetClient::doObject );
+  connect( sdObjectNetClient, &SdObjectNetClient::objectComplete, this, &SdDNetClient::onCompleteRequestObject );
   }
 
 
@@ -49,16 +58,15 @@ bool SdDNetClient::getObject(QWidget *parent, const QString id)
 
 
 
-void SdDNetClient::onCompleteRequestObject(bool res)
+void SdDNetClient::onCompleteRequestObject(int result)
   {
-  done( res ? 1 : 0 );
+  if( result == SCPE_SUCCESSFULL )
+    done(1);
+  else {
+    QMessageBox::warning( this, tr("Error!"), tr("Request result %1").arg(result) );
+    done(0);
+    }
   }
 
 
 
-void SdDNetClient::onProcess(int pos, int range, const QString oper)
-  {
-  ui->mProgress->setRange( 0, range );
-  ui->mProgress->setValue( pos );
-  ui->mOperation->setText( oper );
-  }

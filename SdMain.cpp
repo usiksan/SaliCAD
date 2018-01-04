@@ -13,6 +13,7 @@ Description
 */
 
 #include "windows/SdWMain.h"
+#include "windows/SdDRegistation.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdProp.h"
@@ -59,7 +60,9 @@ int main(int argc, char *argv[])
   //Check if registered
   if( !s.contains(SDK_GLOBAL_AUTHOR) ) {
     //Not registered, show register dialog
-
+    SdDRegistation rd;
+    if( rd.exec() == 0 )
+      return 0;
     }
   //Задать каталог библиотек
   //SgImageProvider::mImageDir = PATH_VISUAL;

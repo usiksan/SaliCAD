@@ -139,6 +139,7 @@ class SdWCommand
     static QActionPtr  cmHelpContens;
     static QActionPtr  cmHelpIndex;
     static QActionPtr  cmHelpAbout;
+    static QActionPtr  cmHelpRegistration;
 
     //Full mode action table
     static QActionPtr  cmModeTable[MD_LAST];

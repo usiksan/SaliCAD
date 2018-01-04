@@ -213,9 +213,10 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
   menuHelp = new QMenu( frame->tr("Help") );
-  cmHelpContens = menuHelp->addAction( QIcon(QString(":/pic/help.png")), frame->tr("Contens"), frame, SLOT(cmHelpContens()) );
-  cmHelpIndex   = menuHelp->addAction( QIcon(QString(":/pic/helpContext.png")), frame->tr("Index"), frame, SLOT(cmHelpIndex()) );
-  cmHelpAbout   = menuHelp->addAction( QIcon(QString(":/pic/about.png")), frame->tr("About"), frame, SLOT(cmHelpAbout()) );
+  cmHelpContens      = menuHelp->addAction( QIcon(QString(":/pic/help.png")), frame->tr("Contens"), frame, SLOT(cmHelpContens()) );
+  cmHelpIndex        = menuHelp->addAction( QIcon(QString(":/pic/helpContext.png")), frame->tr("Index"), frame, SLOT(cmHelpIndex()) );
+  cmHelpAbout        = menuHelp->addAction( QIcon(QString(":/pic/about.png")), frame->tr("About"), frame, SLOT(cmHelpAbout()) );
+  cmHelpRegistration = menuHelp->addAction( QIcon(QString(":/pic/about.png")), frame->tr("Registration"), frame, SLOT(cmHelpRegistration()) );
 
 
   menuSelect = new QMenu( frame->tr("Select") );
@@ -641,6 +642,7 @@ QActionPtr SdWCommand::cmTools;
 QActionPtr SdWCommand::cmHelpContens;
 QActionPtr SdWCommand::cmHelpIndex;
 QActionPtr SdWCommand::cmHelpAbout;
+QActionPtr SdWCommand::cmHelpRegistration;
 
 QMenu *SdWCommand::menuFile;
 QMenu *SdWCommand::menuFilePrevious;
