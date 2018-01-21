@@ -457,6 +457,19 @@ void SdWMain::cmFileExit()
 
 
 
+//Загрузить проект PasCAD
+void SdWMain::cmFileImportPis()
+  {
+  QString title = QFileDialog::getOpenFileName(this, tr("Import PasCAD project file"), QString(), tr("PasCAD Files (*%1)").arg(".pis") );
+
+  if( title.isEmpty() ) return;
+
+  mWProjectList->fileImportPis( title );
+  }
+
+
+
+
 
 //Импорт в активный редактор
 void SdWMain::cmFileImport()

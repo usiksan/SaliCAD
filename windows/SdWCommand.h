@@ -78,6 +78,7 @@ class SdWCommand
     static QActionPtr  cmFileSaveAll;
     static QActionPtr  cmFilePrint;
     static QActionPtr  cmFileExit;
+    static QActionPtr  cmFileImportPis;
     static QActionPtr  cmFileImport;
     static QActionPtr  cmFileExport;
 

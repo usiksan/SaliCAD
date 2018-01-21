@@ -44,19 +44,22 @@ class SdWProjectList : public QWidget
 
   public slots:
     //Close all projects
-    void fileCloseAll();
+    void            fileCloseAll();
 
     //File project open
-    void fileOpen( const QString fname );
+    SdWProjectTree *fileOpen( const QString fname );
+
+    //File import PasCAD
+    void            fileImportPis( const QString fname );
 
     //Active file close
-    bool cmFileClose();
+    bool            cmFileClose();
 
     //On project index activated
-    void onProjectActivated( int index );
+    void            onProjectActivated( int index );
 
     //On rename project
-    void onRenameProject( SdProject *prj );
+    void            onRenameProject( SdProject *prj );
   };
 
 #endif // SDWPROJECTLIST_H

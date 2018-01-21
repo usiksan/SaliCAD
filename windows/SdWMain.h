@@ -79,6 +79,7 @@ class SdWMain : public QMainWindow
     void cmFilePrint();
     void cmFileExit();
 
+    void cmFileImportPis();
     void cmFileImport();
     void cmFileExport();
 

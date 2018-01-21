@@ -15,6 +15,7 @@ Description
 #include "SdWCommand.h"
 #include "SdWProjectTree.h"
 #include "objects/SdPulsar.h"
+#include "objects/SdPasCadImport.h"
 #include <QSettings>
 #include <QVBoxLayout>
 #include <QMessageBox>
@@ -79,7 +80,7 @@ void SdWProjectList::fileCloseAll()
 
 
 //File project open
-void SdWProjectList::fileOpen(const QString fname)
+SdWProjectTree *SdWProjectList::fileOpen(const QString fname)
   {
   //Добавить в список предыдущих файлов
   SdWCommand::addToPreviousMenu( fname );
@@ -102,11 +103,27 @@ void SdWProjectList::fileOpen(const QString fname)
     }
   else {
     delete prj;
+    prj = nullptr;
     //Проект не создан
     QMessageBox::warning( this, tr("Warning"), tr("Error on file reading [%1]").arg(fname) );
     }
   //
+  return prj;
+  }
 
+
+
+
+//File import PasCAD
+void SdWProjectList::fileImportPis(const QString fname)
+  {
+  //Создаем новый проект
+  SdWProjectTree *prj = fileOpen( QString() );
+
+  if( prj != nullptr ) {
+    SdPasCadImport importer( prj->getProject() );
+    importer.import( fname );
+    }
   }
 
 

@@ -172,7 +172,8 @@ SOURCES += \
     windows/SdDNetClient.cpp \
     windows/SdDRegistation.cpp \
     SaliCadServer/SdCsChannel.cpp \
-    SaliCadServer/SdCsPacketInfo.cpp
+    SaliCadServer/SdCsPacketInfo.cpp \
+    objects/SdPasCadImport.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -337,7 +338,8 @@ HEADERS  += \
     windows/SdDNetClient.h \
     windows/SdDRegistation.h \
     SaliCadServer/SdCsChannel.h \
-    SaliCadServer/SdCsPacketInfo.h
+    SaliCadServer/SdCsPacketInfo.h \
+    objects/SdPasCadImport.h
 
 DISTFILES += \
     license.txt

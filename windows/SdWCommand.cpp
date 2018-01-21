@@ -48,8 +48,9 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmFileSaveAs = menuFile->addAction( QIcon(QString(":/pic/save_as.png")), frame->tr("Save project as..."), frame, SLOT(cmFileSaveAs()) );
   cmFileSaveAll = menuFile->addAction( QIcon(QString(":/pic/save_all.png")), frame->tr("Save all projects"), frame, SLOT(cmFileSaveAll()) );
   menuFile->addSeparator();
-  cmFileImport = menuFile->addAction( QIcon(QString(":/pic/fileImport.png")), frame->tr("Import..."), frame, SLOT(cmFileImport()) );
-  cmFileExport = menuFile->addAction( QIcon(QString(":/pic/fileExport.png")), frame->tr("Export..."), frame, SLOT(cmFileExport()) );
+  cmFileImportPis = menuFile->addAction( tr("Import PasCAD"), frame, SLOT(cmFileImportPis()) );
+  cmFileImport    = menuFile->addAction( QIcon(QString(":/pic/fileImport.png")), frame->tr("Import..."), frame, SLOT(cmFileImport()) );
+  cmFileExport    = menuFile->addAction( QIcon(QString(":/pic/fileExport.png")), frame->tr("Export..."), frame, SLOT(cmFileExport()) );
   menuFile->addSeparator();
   cmFilePrint = menuFile->addAction( QIcon(QString(":/pic/filePrint.png")), frame->tr("Print..."), frame, SLOT(cmFilePrint()) );
   menuFile->addSeparator();
@@ -580,6 +581,7 @@ QActionPtr SdWCommand::cmFileSaveAs;
 QActionPtr SdWCommand::cmFileSaveAll;
 QActionPtr SdWCommand::cmFilePrint;
 QActionPtr SdWCommand::cmFileExit;
+QActionPtr SdWCommand::cmFileImportPis;
 QActionPtr SdWCommand::cmFileImport;
 QActionPtr SdWCommand::cmFileExport;
 
