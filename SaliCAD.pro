@@ -173,7 +173,10 @@ SOURCES += \
     windows/SdDRegistation.cpp \
     SaliCadServer/SdCsChannel.cpp \
     SaliCadServer/SdCsPacketInfo.cpp \
-    objects/SdPasCadImport.cpp
+    objects/SdPasCadImport.cpp \
+    objects/SdUndoRecordImpPinConnection.cpp \
+    objects/SdSymImpPin.cpp \
+    objects/SdUndoRecordPartImpPin.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -339,7 +342,10 @@ HEADERS  += \
     windows/SdDRegistation.h \
     SaliCadServer/SdCsChannel.h \
     SaliCadServer/SdCsPacketInfo.h \
-    objects/SdPasCadImport.h
+    objects/SdPasCadImport.h \
+    objects/SdUndoRecordImpPinConnection.h \
+    objects/SdSymImpPin.h \
+    objects/SdUndoRecordPartImpPin.h
 
 DISTFILES += \
     license.txt

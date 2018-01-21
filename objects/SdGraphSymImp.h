@@ -18,47 +18,17 @@ Description
 #include "SdPropText.h"
 #include "SdPropSymImp.h"
 #include "SdParamTable.h"
+#include "SdSymImpPin.h"
 
-#include <QString>
-#include <QVector>
 
 #define SD_TYPE_SYM_IMP "SymImp"
 
 class SdGraphArea;
-class SdGraphSymPin;
 class SdPItemSymbol;
 class SdPItemSheet;
 class SdPItemPart;
 class SdGraphPartImp;
 class SdPItemPlate;
-
-//Pin for symbol implementation
-struct SdSymImpPin {
-  SdGraphSymPin  *mPin;       //Pin
-  QString         mPinName;   //Pin name in symbol
-  QString         mPinNumber; //Pin number in part
-  SdPoint         mPosition;  //Pin position in sheet context
-  QString         mWireName;  //Net, which pin connected to
-  bool            mCom;       //State of pin to net connectivity
-  int             mPrtPin;    //Pin index in pin array of part implement
-
-  SdSymImpPin();
-
-  void        operator = (const SdSymImpPin &pin );
-  void        draw( SdContext *dc );
-  void        setConnection( const QString wireName, bool com );
-  void        setConnection( SdGraphPartImp *partImp, const QString wireName, bool com );
-  bool        isCanConnect( SdPoint a, SdPoint b ) const;
-  bool        isCanDisconnect( SdPoint a, SdPoint b, const QString wireName ) const;
-  void        prepareMove( SdPItemSheet *sheet, SdSelector *selector );
-
-  QJsonObject toJson() const;
-  void        fromJson( SdObjectMap *map, const QJsonObject obj );
-
-  };
-
-
-typedef QVector<SdSymImpPin> SdSymImpPinTable;
 
 
 class SdGraphSymImp : public SdGraph
@@ -96,10 +66,8 @@ class SdGraphSymImp : public SdGraph
     //Return current plate of section
     SdPItemPlate *currentPlate() const;
     QString       getRenumSect( SdPoint &dest, int &sheetNumber );
-    //Get wire name pin with pinIndex connected to
-    QString       pinWireName( int pinIndex ) const;
-    //Return if pin with pinIndex connected to any wire or not
-    bool          isPinConnected( int pinIndex ) const;
+    //Pin information
+    SdSymImpPin  *getPin( const QString pinName ) const;
     //Param full list
     SdParamTable& getParamTable() { return mParam; }
     //Get param
@@ -133,8 +101,8 @@ class SdGraphSymImp : public SdGraph
     void          accumLinked( SdPoint a, SdPoint b, SdSelector *sel );
 
     //Service
-    //Pin connection-disconnection by index only for symbol implement
-    void          symPinConnectionSet( int pinIndex, const QString wireName, bool com );
+    //Pin status set
+    void          symPinStatusSet( const QString pinName, const QString pinNumber, SdPoint pos, const QString wireName, bool com );
     //Move section to plate
     void          moveToPlate( SdPItemPlate *plate, SdUndo *undo );
     //Link with partImp
@@ -193,9 +161,12 @@ class SdGraphSymImp : public SdGraph
     void          createPins( SdUndo *undo );
     //Link auto partImp in given plate. partImp and section are selected automatic
     void          linkAutoPartInPlate( SdPItemPlate *plate, SdUndo *undo );
-    //Pin connection-disconnection by index for symbol and part implements
-    void          pinConnectionSet( int pinIndex, const QString netName, bool com, SdUndo *undo );
-
+    //Pin connection-disconnection by name for symbol and part implements
+    void          pinConnectionSet(const QString pinName, const QString netName, bool com, SdUndo *undo );
+    //Link pins between symImp and partImp
+    void          linkPins( SdUndo *undo );
+    //Unlink pins
+    void          unLinkPins( SdUndo *undo );
   };
 
 #endif // SDGRAPHSYMIMP_H

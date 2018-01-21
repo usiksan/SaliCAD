@@ -17,6 +17,8 @@ Description
 #include "SdGraphTraced.h"
 #include "SdStratum.h"
 
+#include <QMap>
+
 #define SD_TYPE_PART_IMP "PartImp"
 
 
@@ -30,11 +32,9 @@ class SdGraphRoadPin;
 //Ножка вхождения корпуса
 struct SdPartImpPin {
   SdGraphPartPin *mPin;       //Original pin
-  QString         mPinNumber; //Part pin number
+  SdGraphSymImp  *mSection;   //Schematic section where pin is
   QString         mPinName;   //Part pin name
-  QString         mNetName;   //Name of net pin conneted to
   SdPoint         mPosition;  //Pin position in plate context
-  bool            mCom;       //Pin to wire flag connection
   SdPItemPart    *mPadStack;  //Pad stack
   SdStratum       mStratum;   //Pin stratum
 
@@ -43,11 +43,11 @@ struct SdPartImpPin {
   void        operator = ( const SdPartImpPin &pin );
   void        draw( SdContext *dc );
 
-  QJsonObject toJson() const;
-  void        fromJson( SdObjectMap *map, const QJsonObject obj );
+  QJsonObject toJson(const QString pinNumber) const;
+  QString     fromJson( SdObjectMap *map, const QJsonObject obj );
   };
 
-typedef QVector<SdPartImpPin> SdPartImpPinTable;
+typedef QMap<SdPartImpPin> SdPartImpPinTable;
 
 
 
@@ -92,14 +92,8 @@ class SdGraphPartImp : public SdGraphTraced
     //Information
     //Get full visual ident of part aka D4 or R45
     QString         getIdent() const;
-    //Get wire name pin with pinIndex connected to
-    QString         pinNetName( int pinIndex ) const;
-    //Pin position
-    SdPoint         pinPosition( int pinIndex ) const;
-    //Return if pin with pinIndex connected to any wire or not
-    bool            isPinConnected( int pinIndex ) const;
-    //Return pin index of pinNumber
-    int             getPinIndex( const QString pinNumber ) const;
+    //Get pin by pin number
+    SdPartImpPin   *getPin( const QString pinNumber );
     //Check if there free section slot. If there - setup section and return true
     bool            isSectionFree(int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym );
 
@@ -108,7 +102,8 @@ class SdGraphPartImp : public SdGraphTraced
     //Set pin name for pin index
     void            setPinName( int pinIndex, const QString pinName );
     //Pin connection-disconnection by index
-    void            pinConnectionSet(int pinIndex, const QString netName, bool com );
+    //void            partPinStatusSet( const QString pinNumber, SdGraphSymImp *imp, const QString pinName,  );
+    void            partPinLink( const QString pinNumber, SdGraphSymImp *imp, const QString pinName );
     //link-unlink section
     void            setLinkSection( int section, SdGraphSymImp *symImp );
 

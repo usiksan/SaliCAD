@@ -39,6 +39,8 @@ typedef SdPItemPlate *SdPItemPlatePtr;
 class SdGraphSymImp;
 class SdGraphPartImp;
 class SdProjectItem;
+class SdSymImpPinTable;
+class SdPartImpPinTable;
 
 class SdUndo
   {
@@ -63,7 +65,10 @@ class SdUndo
     void propSymPin( SdPropSymPin *prp, SdPoint *org );
     void propPartPin( SdPropPartPin *prp, SdPoint *org );
     void platePointer( SdPItemPlatePtr *ptr );
-    void pinImpConnect( SdGraphSymImp *sym, int symPinIndex, SdGraphPartImp *part, int partPinIndex, const QString wireName, bool com );
+    void pinSymImpStatus( SdGraphSymImp *sym, const QString symPinName );
+    void pinPartImpStatus( SdGraphPartImp *part, const QString partPinNumber );
+    void symImpPins( SdSymImpPinTable *table );
+    void partImpPins( SdPartImpPinTable *table );
     void linkSection( int section, SdGraphSymImp *sym, SdGraphPartImp *part, bool link );
     void symImp( SdPoint *origin, SdPropSymImp *imp, int *logSection, int *logNumber, SdRect *over, QString *prefix, SdPropText *identProp,
                  SdPoint *identOrigin, SdPoint *identPos, SdRect *identRect );

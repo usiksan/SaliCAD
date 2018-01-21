@@ -31,6 +31,70 @@ SdUndoRecordImpPin::SdUndoRecordImpPin(SdGraphSymImp *sym, int symPin, SdGraphPa
 
 
 
+SdUndoRecordImpPin::SdUndoRecordImpPin(SdGraphSymImp *sym, const QString symPinName, SdGraphPartImp *part) :
+  SdUndoRecord(),
+  mSymImp(sym),                  //Symbol implementation for pin
+  mSymPinName(symPinName),       //Pin index in symbol implementation
+  mSymPin(nullptr),              //Symbol pin
+  mPartImp(part),                //Part implementation for pin
+  mPartPadStack(nullptr),        //Pad stack
+  mPartRoadPin(nullptr),         //Road pin assotiated with partImp pin
+  mCom(false)                    //Status of connection
+  {
+  if( mSymImp != nullptr ) {
+    SdSymImpPin *pin = mSymImp->getPin( mSymPinName );
+    if( pin == nullptr )
+      mSymImp = nullptr;
+    else {
+      mSymPin        = pin->mPin;
+      mSymPosition   = pin->mPosition;
+      mWireName      = pin->mWireName;
+      mCom           = pin->mCom;
+      mPartPinNumber = pin->mPinNumber;
+      if( mPartImp != nullptr ) {
+        SdPartImpPin *partPin = mPartImp->getPin( mPartPinNumber );
+        if( partPin == nullptr )
+          mPartImp = nullptr;
+        else {
+          //Check link
+          Q_ASSERT( partPin->mPinName == mSymPinName && partPin->mSection == mSymImp );
+          mPartPosition = partPin->mPosition;
+          mPartPadStack = partPin->mPadStack;
+          mPartStratum  = partPin->mStratum;
+          mPartPin      = partPin->mPin;
+          }
+        }
+      }
+    }
+  }
+
+
+SdUndoRecordImpPin::SdUndoRecordImpPin(SdGraphPartImp *part, const QString partPinNumber) :
+  SdUndoRecord(),
+  mSymImp(nullptr),              //Symbol implementation for pin
+  mSymPin(nullptr),              //Symbol pin
+  mPartImp(part),                //Part implementation for pin
+  mPartPinNumber(partPinNumber),
+  mPartPadStack(nullptr),        //Pad stack
+  mPartRoadPin(nullptr),         //Road pin assotiated with partImp pin
+  mCom(false)                    //Status of connection
+  {
+  if( mPartImp != nullptr ) {
+    SdPartImpPin *partPin = mPartImp->getPin( mPartPinNumber );
+    if( partPin == nullptr )
+      mPartImp = nullptr;
+    else {
+      //Check link
+      Q_ASSERT( partPin->mPinName == mSymPinName && partPin->mSection == mSymImp );
+      mPartPosition = partPin->mPosition;
+      mPartPadStack = partPin->mPadStack;
+      mPartStratum  = partPin->mStratum;
+      mPartPin      = partPin->mPin;
+      }
+
+    }
+  }
+
 void SdUndoRecordImpPin::undo()
   {
   if( mSymImp ) {

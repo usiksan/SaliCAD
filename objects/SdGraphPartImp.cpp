@@ -26,9 +26,10 @@ Description
 //====================================================================================
 //Pin for part implementation
 SdPartImpPin::SdPartImpPin() :
-  mPin(nullptr),
-  mCom(false),
-  mPadStack(nullptr)  //Pad stack
+  mPin(nullptr),       //Original pin
+  mSection(nullptr),   //Schematic section where pin is
+  mPadStack(nullptr),  //Pad stack
+  mStratum()           //Pin stratum
   {
   }
 
@@ -38,11 +39,9 @@ SdPartImpPin::SdPartImpPin() :
 void SdPartImpPin::operator =(const SdPartImpPin &pin)
   {
   mPin       = pin.mPin;
-  mPinNumber = pin.mPinNumber; //Part pin number
+  mSection   = pin.mSection;
   mPinName   = pin.mPinName;   //Part pin name
   mPosition  = pin.mPosition;  //Pin position in plate context
-  mNetName   = pin.mNetName;
-  mCom       = pin.mCom;
   mPadStack  = pin.mPadStack;  //Pad stack
   mStratum   = pin.mStratum;
   }
@@ -59,15 +58,14 @@ void SdPartImpPin::draw(SdContext *dc)
 
 
 
-QJsonObject SdPartImpPin::toJson() const
+QJsonObject SdPartImpPin::toJson( const QString pinNumber ) const
   {
   QJsonObject obj;
   SdObject::writePtr( mPin, QStringLiteral("Pin"), obj );          //Original pin
-  obj.insert( QStringLiteral("PinNum"), mPinNumber );              //Part pin number
+  SdObject::writePtr( mSection, QStringLiteral("Section"), obj );  //Section
+  obj.insert( QStringLiteral("PinNum"), pinNumber );               //Part pin number
   obj.insert( QStringLiteral("PinNam"), mPinName );                //Part pin name
-  obj.insert( QStringLiteral("Net"), mNetName );                   //Name of net pin conneted to
   mPosition.write( QStringLiteral("Pos"), obj );                   //Pin position in plate context
-  obj.insert( QStringLiteral("Com"), mCom );                       //Pin to wire flag connection
   SdObject::writePtr( mPadStack, QStringLiteral("Pad"), obj );     //Pad stack
   mStratum.write( obj );
   return obj;
@@ -76,16 +74,15 @@ QJsonObject SdPartImpPin::toJson() const
 
 
 
-void SdPartImpPin::fromJson(SdObjectMap *map, const QJsonObject obj)
+QString SdPartImpPin::fromJson(SdObjectMap *map, const QJsonObject obj)
   {
   mPin = dynamic_cast<SdGraphPartPin*>( SdObject::readPtr( QStringLiteral("Pin"), map, obj )  );
-  mPinNumber = obj.value( QStringLiteral("PinNum") ).toString();
+  mSection = dynamic_cast<SdGraphSymImp*>( SdObject::readPtr( QStringLiteral("Section"), map, obj )  );
   mPinName = obj.value( QStringLiteral("PinNam") ).toString();            //Part pin name
-  mNetName = obj.value( QStringLiteral("Net") ).toString();               //Name of net pin conneted to
   mPosition.read( QStringLiteral("Pos"), obj );                           //Pin position in plate context
-  mCom = obj.value( QStringLiteral("Com") ).toBool();                     //Pin to wire flag connection
   mPadStack = dynamic_cast<SdPItemPart*>( SdObject::readPtr( QStringLiteral("Pad"), map, obj )  );
   mStratum.read( obj );
+  return obj.value( QStringLiteral("PinNum") ).toString();
   }
 
 
