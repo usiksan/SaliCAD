@@ -23,7 +23,6 @@ Description
 #include "SdUndoRecordPropPartPin.h"
 #include "SdUndoRecordPoint.h"
 #include "SdUndoRecordPlatePointer.h"
-#include "SdUndoRecordImpPin.h"
 #include "SdUndoRecordLinkSection.h"
 #include "SdUndoRecordSymImp.h"
 #include "SdUndoRecordSymImpPin.h"

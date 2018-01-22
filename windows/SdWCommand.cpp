@@ -48,7 +48,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmFileSaveAs = menuFile->addAction( QIcon(QString(":/pic/save_as.png")), frame->tr("Save project as..."), frame, SLOT(cmFileSaveAs()) );
   cmFileSaveAll = menuFile->addAction( QIcon(QString(":/pic/save_all.png")), frame->tr("Save all projects"), frame, SLOT(cmFileSaveAll()) );
   menuFile->addSeparator();
-  cmFileImportPis = menuFile->addAction( tr("Import PasCAD"), frame, SLOT(cmFileImportPis()) );
+  cmFileImportPis = menuFile->addAction( frame->tr("Import PasCAD"), frame, SLOT(cmFileImportPis()) );
   cmFileImport    = menuFile->addAction( QIcon(QString(":/pic/fileImport.png")), frame->tr("Import..."), frame, SLOT(cmFileImport()) );
   cmFileExport    = menuFile->addAction( QIcon(QString(":/pic/fileExport.png")), frame->tr("Export..."), frame, SLOT(cmFileExport()) );
   menuFile->addSeparator();

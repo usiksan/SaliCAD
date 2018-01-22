@@ -19,6 +19,7 @@ Description
 #include "SdConfig.h"
 #include "SdUndoRecord.h"
 #include <QStack>
+#include <QMap>
 
 
 class SdContainer;
@@ -39,8 +40,10 @@ typedef SdPItemPlate *SdPItemPlatePtr;
 class SdGraphSymImp;
 class SdGraphPartImp;
 class SdProjectItem;
-class SdSymImpPinTable;
-class SdPartImpPinTable;
+class SdSymImpPin;
+typedef QMap<QString,SdSymImpPin> SdSymImpPinTable;
+class SdPartImpPin;
+typedef QMap<QString,SdPartImpPin> SdPartImpPinTable;
 
 class SdUndo
   {

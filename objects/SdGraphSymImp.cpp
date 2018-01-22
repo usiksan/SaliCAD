@@ -74,15 +74,24 @@ SdGraphSymImp::SdGraphSymImp(SdPItemSymbol *comp, SdPItemSymbol *sym, SdPItemPar
 
 
 
-
-SdSymImpPin *SdGraphSymImp::getPin(const QString pinName) const
+//Pin connection status
+bool SdGraphSymImp::isPinConnected(const QString pinName) const
   {
   if( mPins.contains(pinName) )
-    return &(mPins[pinName]);
-  return nullptr;
+    return mPins.value( pinName ).isConnected();
+  return false;
   }
 
 
+
+
+//Pin net name
+QString SdGraphSymImp::pinNetName(const QString pinName) const
+  {
+  if( mPins.contains(pinName) )
+    return mPins.value( pinName ).mWireName;
+  return QString();
+  }
 
 
 
@@ -116,7 +125,7 @@ void SdGraphSymImp::unconnectPinInPoint( SdPoint p, SdUndo *undo, const QString 
     if( i.value().mPosition == p ) {
       if( undo ) undo->begin( undoTitle );
       //Set new state of pin
-      pinConnectionSet( i.key(), QString(), false, undo );
+      pinConnectionSet( i.key(), QString(), undo );
       return;
       }
   }
@@ -126,12 +135,19 @@ void SdGraphSymImp::unconnectPinInPoint( SdPoint p, SdUndo *undo, const QString 
 
 void SdGraphSymImp::unLinkPartImp(SdUndo *undo)
   {
-  //UnLink pins
-  unLinkPins( undo );
+  //Save pin state
+  undo->symImpPins( &mPins );
+  //UnLink pins if mPartImp present
+  if( mPartImp != nullptr ) {
+    for( SdSymImpPinTable::iterator i = mPins.begin(); i != mPins.end(); i++ )
+      mPartImp->partPinLink( i.value().mPinNumber, nullptr, QString(), undo );
+    }
   //Save current link state
   undo->linkSection( mSectionIndex, this, mPartImp, mPartImp != nullptr );
-  if( mPartImp )
+  if( mPartImp ) {
     mPartImp->setLinkSection( mSectionIndex, nullptr );
+    mPartImp->autoDelete( undo );
+    }
   setLinkSection( -1, nullptr );
   }
 
@@ -146,7 +162,6 @@ void SdGraphSymImp::linkAutoPart(SdUndo *undo)
   Q_ASSERT( plate != nullptr );
 
   linkAutoPartInPlate( plate, undo );
-
   }
 
 
@@ -272,11 +287,10 @@ void SdGraphSymImp::setIdentProp(const SdProp &prop)
 //Notification about wire segment position changed
 void SdGraphSymImp::netWirePlace(SdPoint a, SdPoint b, const QString name, SdUndo *undo)
   {
-  for( int index = 0; index < mPins.count(); index++ )
-    if( mPins[index].isCanConnect( a, b ) ) {
+  for( SdSymImpPinTable::const_iterator i = mPins.constBegin(); i != mPins.constEnd(); i++ )
+    if( i.value().isCanConnect( a, b ) )
       //Set new state of pin
-      pinConnectionSet( index, name, true, undo );
-      }
+      pinConnectionSet( i.key(), name, undo );
   }
 
 
@@ -285,11 +299,10 @@ void SdGraphSymImp::netWirePlace(SdPoint a, SdPoint b, const QString name, SdUnd
 //Notification about wire segment deletion
 void SdGraphSymImp::netWireDelete(SdPoint a, SdPoint b, const QString name, SdUndo *undo)
   {
-  for( int index = 0; index < mPins.count(); index++ )
-    if( mPins[index].isCanDisconnect( a, b, name ) ) {
+  for( SdSymImpPinTable::const_iterator i = mPins.constBegin(); i != mPins.constEnd(); i++ )
+    if( i.value().isCanDisconnect( a, b, name ) )
       //Set new state of pin
-      pinConnectionSet( index, name, false, undo );
-      }
+      pinConnectionSet( i.key(), QString(), undo );
   }
 
 
@@ -299,15 +312,30 @@ void SdGraphSymImp::netWireDelete(SdPoint a, SdPoint b, const QString name, SdUn
 void SdGraphSymImp::accumLinked(SdPoint a, SdPoint b, SdSelector *sel)
   {
   //Scan all pins and check if segment ab connected to any pin then select component
-  for( int index = 0; index < mPins.count(); index++ )
-    if( mPins[index].mCom && mPins[index].mPosition.isOnSegment(a,b) ) {
+  for( SdSymImpPin &pin : mPins )
+    if( pin.isConnected() && pin.mPosition.isOnSegment(a,b) ) {
       sel->insert( this );
       return;
       }
   }
 
-void SdGraphSymImp::symPinStatusSet(const QString pinName, const SdSymImpPin &pin)
+
+
+
+
+//Pin status get
+void SdGraphSymImp::pinStatusGet(const QString pinName, SdSymImpPin &pin) const
   {
+  Q_ASSERT( mPins.contains(pinName) );
+  pin = mPins[pinName];
+  }
+
+
+
+
+void SdGraphSymImp::pinStatusSet(const QString pinName, const SdSymImpPin &pin)
+  {
+  Q_ASSERT( mPins.contains(pinName) );
   mPins[pinName] = pin;
   }
 
@@ -317,8 +345,7 @@ void SdGraphSymImp::saveState(SdUndo *undo)
   {
   undo->symImp( &mOrigin, &mProp, &mLogSection, &mLogNumber, &mOverRect, &mPrefix, &mIdentProp, &mIdentOrigin, &mIdentPos, &mIdentRect );
   //Save state of all pins
-  for( SdSymImpPinTable::iterator i = mPins.begin(); i != mPins.end(); i++ )
-    undo->pinSymImpStatus( this, i.key(), mPartImp );
+  undo->symImpPins( &mPins );
   }
 
 
@@ -329,29 +356,29 @@ void SdGraphSymImp::moveComplete(SdPoint grid, SdUndo *undo)
   Q_UNUSED(grid);
   //Mooving is completed, check pin connection
   SdPItemSheet *sheet = getSheet();
+  Q_ASSERT( sheet != nullptr );
   QString netName;
-  if( sheet ) {
-    for( int index = 0; index < mPins.count(); index++ )
-      if( !mPins[index].mCom ) {
-        //If pin unconnected then check possibilities connection
-        if( sheet->getNetFromPoint( mPins[index].mPosition, netName ) ) {
-          //New connection
-          pinConnectionSet( index, netName, true, undo );
-          }
-        }
-
-    //Check current area
-    if( mPartImp ) {
-      //Part is assigned, check current area
-      if( sheet->getPlate( mOrigin ) != mPartImp->getPlate() ) {
-        //Plate is changed. Unlink from part
-        unLinkPartImp( undo );
-        }
-      else return;
+  //Check current area
+  if( mPartImp ) {
+    //Part is assigned, check current area
+    if( sheet->getPlate( mOrigin ) != mPartImp->getPlate() ) {
+      //Plate is changed. Unlink from part
+      detach( undo );
       }
-    //Assign part
-    linkAutoPart( undo );
+    else {
+      //Check for new pin connections
+      for( SdSymImpPinTable::const_iterator i = mPins.constBegin(); i != mPins.constEnd(); i++ )
+        if( !i.value().isConnected() ) {
+          //If pin unconnected then check possibilities connection
+          if( sheet->getNetFromPoint( i.value().mPosition, netName ) )
+            //New connection
+            pinConnectionSet( i.key(), netName, undo );
+          }
+      return;
+      }
     }
+  //Assign part
+  attach( undo );
   }
 
 
@@ -513,13 +540,13 @@ bool SdGraphSymImp::snapPoint(SdSnapInfo *snap)
   if( snap->match(snapNextPin) ) {
     //Must be checking with direction control
     for( SdSymImpPin &pin : mPins )
-      if( !pin.mCom &&
+      if( !pin.isConnected() &&
           calcDirection90( snap->mSour, pin.mPosition ) == snap->mDir &&
           snap->test( pin.mPosition, snapNextPin ) ) res = true;
     }
   if( snap->match(snapNearestPin|snapNearestNet) ) {
     for( SdSymImpPin &pin : mPins )
-      if( !pin.mCom && snap->test( pin.mPosition, snapNearestPin ) ) res = true;
+      if( !pin.isConnected() && snap->test( pin.mPosition, snapNearestPin ) ) res = true;
     }
   return res;
   }
@@ -549,40 +576,6 @@ void SdGraphSymImp::updatePinsPositions()
 
 
 
-//Unconnect all pins from wires
-void SdGraphSymImp::ucomAllPins(SdUndo *undo)
-  {
-  for( SdSymImpPinTable::iterator i = mPins.begin(); i != mPins.end(); i++ )
-    //Ucom pin
-    pinConnectionSet( i.key(), QString(), false, undo );
-  }
-
-
-
-
-void SdGraphSymImp::createPins(SdUndo *undo)
-  {
-  //Unconnect all pins from wires
-  ucomAllPins( undo );
-  //Remove previous pins
-  mPins.clear();
-  SdSection *s = nullptr;
-  //Accumulate pins
-  if( mSymbol ) {
-    mSymbol->forEach( dctSymPin, [this, s] (SdObject *obj) -> bool {
-      SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>(obj);
-      Q_ASSERT( pin != nullptr );
-
-      //Create implement pin
-      SdSymImpPin impPin;
-      impPin.mPin     = pin;
-
-      //Add pin to table
-      mPins.insert( pin->getPinName(), impPin );
-      return true;
-      });
-    }
-  }
 
 
 
@@ -600,7 +593,15 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
     undo->linkSection( section, this, partImp, true );
     partImp->setLinkSection( section, this );
     setLinkSection( section, partImp );
-    linkPins( undo );
+    SdSection *sectionPtr = mComponent->getSection( section );
+    if( sectionPtr != nullptr ) {
+      //Link pins between symImp and partImp
+      for( SdSymImpPinTable::iterator i = mPins.begin(); i != mPins.end(); i++ ) {
+        i.value().mPinNumber = sectionPtr->getPinNumber( i.key() );
+        if( !mPartImp->partPinLink( i.value().mPinNumber, this, i.key(), undo ) )
+          i.value().mPinNumber.clear();
+        }
+      }
     }
   }
 
@@ -608,42 +609,23 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
 
 
 //Pin connection-disconnection by index for symbol and part implements
-void SdGraphSymImp::pinConnectionSet( const QString pinName, const QString netName, bool com, SdUndo *undo)
+void SdGraphSymImp::pinConnectionSet( const QString pinName, const QString netName, SdUndo *undo)
   {
   Q_ASSERT( mPins.contains(pinName) );
   //Undo previous state of pin
   undo->pinSymImpStatus( this, pinName );
   //Set symbol pin connection state
   mPins[pinName].mWireName = netName;
-  mPins[pinName].mCom      = com;
+  //Report to part to rebuild rat net
+  if( mPartImp != nullptr )
+    mPartImp->setDirtyRatNet();
   }
 
 
 
 
-//Link pins between symImp and partImp
-void SdGraphSymImp::linkPins(SdUndo *undo)
-  {
-  if( mPartImp != nullptr ) {
-    for( SdSymImpPinTable::iterator i = mPins.begin(); i != mPins.end(); i++ ) {
-      undo->pinPartImpStatus( mPartImp, i.value().mPinNumber );
-      mPartImp->partPinLink( i.value().mPinNumber, this, i.key() );
-      }
-    }
-  }
 
 
-
-//Unlink pins
-void SdGraphSymImp::unLinkPins(SdUndo *undo)
-  {
-  if( mPartImp != nullptr ) {
-    for( SdSymImpPinTable::iterator i = mPins.begin(); i != mPins.end(); i++ ) {
-      undo->pinPartImpStatus( mPartImp, i.value().mPinNumber );
-      mPartImp->partPinLink( i.value().mPinNumber, nullptr, QString() );
-      }
-    }
-  }
 
 
 
@@ -658,7 +640,24 @@ void SdGraphSymImp::attach(SdUndo *undo)
   mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(mSymbol) );        //Symbol contains graph information
   mPart = dynamic_cast<SdPItemPart*>( prj->getProjectsItem(mPart) );
 
-  createPins( undo );
+  //Apply all items (symbol, component, part and partImp)
+  Q_ASSERT( mPins.count() == 0 && mSymbol != nullptr && mComponent != nullptr );
+  //Accumulate pins
+  SdSection *s = mComponent->getSection(0);
+  mSymbol->forEach( dctSymPin, [this,s] (SdObject *obj) -> bool {
+    SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>(obj);
+    Q_ASSERT( pin != nullptr );
+
+    //Create implement pin
+    SdSymImpPin impPin;
+    impPin.mPin = pin;
+    if( s != nullptr )
+      impPin.mPinNumber = s->getPinNumber( pin->getPinName() );
+
+    //Add pin to table
+    mPins.insert( pin->getPinName(), impPin );
+    return true;
+    });
 
   updatePinsPositions();
 
@@ -670,12 +669,13 @@ void SdGraphSymImp::attach(SdUndo *undo)
 
 
 
+//UnLink all items (symbol, component, part and partImp)
 void SdGraphSymImp::detach(SdUndo *undo)
   {
-  //Ucon all pins
-  ucomAllPins( undo );
   //Unlink from part
   unLinkPartImp( undo );
+  //Remove previous pins
+  mPins.clear();
   }
 
 

@@ -17,13 +17,8 @@ SdUndoRecordPartImpPin::SdUndoRecordPartImpPin(SdGraphPartImp *partImp, QString 
   mPartImp(partImp),
   mPinNumber(pinNumber)
   {
-  if( mPartImp != nullptr ) {
-    SdPartImpPin *pin = mPartImp->getPin( pinNumber );
-    if( pin != nullptr )
-      mPinState = *pin;
-    else
-      mPartImp = nullptr;
-    }
+  if( mPartImp != nullptr )
+    mPartImp->pinStatusGet( pinNumber, mPinState );
   }
 
 
@@ -31,10 +26,9 @@ SdUndoRecordPartImpPin::SdUndoRecordPartImpPin(SdGraphPartImp *partImp, QString 
 void SdUndoRecordPartImpPin::undo()
   {
   if( mPartImp != nullptr ) {
-    SdPartImpPin *pin = mPartImp->getPin( mPinNumber );
     SdPartImpPin tmpPin;
-    tmpPin = *pin;
-    *pin = mPinState;
+    mPartImp->pinStatusGet( mPinNumber, tmpPin );
+    mPartImp->pinStatusSet( mPinNumber, mPinState );
     mPinState = tmpPin;
     }
   }

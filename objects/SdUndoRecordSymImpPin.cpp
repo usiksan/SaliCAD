@@ -19,13 +19,8 @@ SdUndoRecordSymImpPin::SdUndoRecordSymImpPin(SdGraphSymImp *imp, QString pinName
   mSymImp(imp),
   mPinName(pinName)
   {
-  if( mSymImp != nullptr ) {
-    SdSymImpPin *pin = mSymImp->getPin( mPinName );
-    if( pin != nullptr )
-      mPinState = *pin;
-    else
-      mSymImp = nullptr;
-    }
+  if( mSymImp != nullptr )
+    mSymImp->pinStatusGet( mPinName, mPinState );
   }
 
 
@@ -34,10 +29,9 @@ SdUndoRecordSymImpPin::SdUndoRecordSymImpPin(SdGraphSymImp *imp, QString pinName
 void SdUndoRecordSymImpPin::undo()
   {
   if( mSymImp != nullptr ) {
-    SdSymImpPin *pin = mSymImp->getPin( mPinName );
     SdSymImpPin tmpPin;
-    tmpPin = *pin;
-    *pin = mPinState;
+    mSymImp->pinStatusGet( mPinName, tmpPin );
+    mSymImp->pinStatusSet( mPinName, mPinState );
     mPinState = tmpPin;
     }
   }

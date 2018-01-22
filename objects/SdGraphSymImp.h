@@ -67,7 +67,12 @@ class SdGraphSymImp : public SdGraph
     SdPItemPlate *currentPlate() const;
     QString       getRenumSect( SdPoint &dest, int &sheetNumber );
     //Pin information
-    SdSymImpPin  *getPin( const QString pinName ) const;
+    //Pin presention
+    bool          isPinPresent( const QString pinName ) const { return mPins.contains(pinName); }
+    //Pin connection status
+    bool          isPinConnected( const QString pinName ) const;
+    //Pin net name
+    QString       pinNetName( const QString pinName ) const;
     //Param full list
     SdParamTable& getParamTable() { return mParam; }
     //Get param
@@ -101,8 +106,10 @@ class SdGraphSymImp : public SdGraph
     void          accumLinked( SdPoint a, SdPoint b, SdSelector *sel );
 
     //Service
+    //Pin status get
+    void          pinStatusGet( const QString pinName, SdSymImpPin &pin ) const;
     //Pin status set
-    void          symPinStatusSet( const QString pinName, const QString pinNumber, SdPoint pos, const QString wireName, bool com );
+    void          pinStatusSet( const QString pinName, const SdSymImpPin &pin );
     //Move section to plate
     void          moveToPlate( SdPItemPlate *plate, SdUndo *undo );
     //Link with partImp
@@ -155,18 +162,12 @@ class SdGraphSymImp : public SdGraph
   private:
     SdPItemSheet *getSheet() const;
     void          updatePinsPositions();
-    //Unconnect all pins from wires
-    void          ucomAllPins( SdUndo *undo );
-    //Create new pins
-    void          createPins( SdUndo *undo );
     //Link auto partImp in given plate. partImp and section are selected automatic
     void          linkAutoPartInPlate( SdPItemPlate *plate, SdUndo *undo );
     //Pin connection-disconnection by name for symbol and part implements
-    void          pinConnectionSet(const QString pinName, const QString netName, bool com, SdUndo *undo );
-    //Link pins between symImp and partImp
-    void          linkPins( SdUndo *undo );
-    //Unlink pins
-    void          unLinkPins( SdUndo *undo );
+    void          pinConnectionSet(const QString pinName, const QString netName, SdUndo *undo );
+    //
+    void          setComponent( SdPItemSymbol *comp );
   };
 
 #endif // SDGRAPHSYMIMP_H

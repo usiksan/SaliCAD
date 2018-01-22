@@ -51,9 +51,27 @@ void SdPartImpPin::operator =(const SdPartImpPin &pin)
 
 
 
-void SdPartImpPin::draw(SdContext *dc)
+void SdPartImpPin::draw(SdContext *dc) const
   {
-  mPin->drawImp( dc, mPinName, mCom );
+  mPin->drawImp( dc, mPinName, isConnected() );
+  }
+
+
+
+
+bool SdPartImpPin::isConnected() const
+  {
+  return mSection != nullptr && mSection->isPinConnected(mPinName);
+  }
+
+
+
+
+QString SdPartImpPin::getNetName() const
+  {
+  if( mSection != nullptr )
+    return mSection->pinNetName( mPinName );
+  return QString();
   }
 
 
@@ -142,15 +160,6 @@ SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *par
 
 
 
-void SdGraphPartImp::pinConnectionSet(int pinIndex, const QString netName, bool com)
-  {
-  //If no pinIndex then doing nothink
-  if( pinIndex < 0 ) return;
-  Q_ASSERT( pinIndex >= 0 && pinIndex < mPins.count() );
-  mPins[pinIndex].mNetName = netName;
-  mPins[pinIndex].mCom = com;
-  setDirtyRatNet();
-  }
 
 
 
@@ -165,58 +174,26 @@ QString SdGraphPartImp::getIdent() const
 
 
 
-//Get wire name pin with pinIndex connected to
-QString SdGraphPartImp::pinNetName(int pinIndex) const
-  {
-  if( pinIndex < 0 ) return QString();
-  Q_ASSERT( pinIndex < mPins.count() );
-  if( mPins[pinIndex].mCom )
-    return mPins[pinIndex].mNetName;
-  return QString();
-  }
 
 
-
-
-//Pin position
-SdPoint SdGraphPartImp::pinPosition(int pinIndex) const
-  {
-  if( pinIndex < 0 ) return SdPoint();
-  Q_ASSERT( pinIndex < mPins.count() );
-  return mPins[pinIndex].mPin->getPinOrigin();
-  }
-
-
-
-
-//Return if pin with pinIndex connected to any wire or not
-bool SdGraphPartImp::isPinConnected(int pinIndex) const
-  {
-  if( pinIndex < 0 ) return false;
-  Q_ASSERT( pinIndex < mPins.count() );
-  return mPins[pinIndex].mCom;
-  }
-
-
-
-
-//Return pin index of pinNumber
-int SdGraphPartImp::getPinIndex(const QString pinNumber) const
-  {
-  for( int index = 0; index < mPins.count(); index++ )
-    if( mPins[index].mPinNumber == pinNumber ) return index;
-  //No pin with that pinNumber
-  return -1;
-  }
 
 
 
 
 void SdGraphPartImp::setLinkSection(int section, SdGraphSymImp *symImp)
   {
-  if( section >= 0 && section < mSections.count() ) {
+  if( section >= 0 && section < mSections.count() )
     mSections[section].mSymImp = symImp;
-    }
+  }
+
+
+
+//Check if all section removed, then autodeleted
+void SdGraphPartImp::autoDelete(SdUndo *undo)
+  {
+  for( const SdPartImpSection &sect : mSections )
+    if( sect.mSymImp != nullptr ) return;
+  deleteObject( undo );
   }
 
 
@@ -238,13 +215,24 @@ bool SdGraphPartImp::isSectionFree( int *section, SdPItemPart *part, SdPItemSymb
 
 
 
-//Set pin name for pin index
-void SdGraphPartImp::setPinName(int pinIndex, const QString pinName)
+
+//Pin link-unlink
+bool SdGraphPartImp::partPinLink(const QString pinNumber, SdGraphSymImp *imp, const QString pinName, SdUndo *undo)
   {
-  if( pinIndex < 0 ) return;
-  Q_ASSERT( pinIndex < mPins.count() );
-  mPins[pinIndex].mPinName = pinName;
+  if( mPins.contains(pinNumber) ) {
+    if( mPins[pinNumber].mSection != nullptr )
+      return false;
+    undo->pinPartImpStatus( this, pinNumber );
+    mPins[pinNumber].mSection = imp;
+    mPins[pinNumber].mPinName = pinName;
+    return true;
+    }
+  return false;
   }
+
+
+
+
 
 
 
@@ -266,14 +254,17 @@ void SdGraphPartImp::attach(SdUndo *undo)
       SdGraphPartPin *pin = dynamic_cast<SdGraphPartPin*>(obj);
       Q_ASSERT( pin != nullptr );
 
+      //Duplicate pin numbers not allowed
+      if( mPins.contains(pin->getPinNumber()) )
+        return true;
+
       //Create implement pin
       SdPartImpPin impPin;
       impPin.mPin       = pin;
-      impPin.mPinNumber = pin->getPinNumber();
       impPin.mPadStack  = plate->getPad( pin->getPinType() );
 
       //Add pin to table
-      mPins.append( impPin );
+      mPins.insert( pin->getPinNumber(), impPin );
       return true;
       });
     }
@@ -357,8 +348,8 @@ void SdGraphPartImp::writeObject(QJsonObject &obj) const
   obj.insert( QStringLiteral("Sections"), sections );
   //Write pins
   QJsonArray pins;
-  for( const SdPartImpPin &pin : mPins )
-    pins.append( pin.toJson() );
+  for( SdPartImpPinTable::const_iterator i = mPins.constBegin(); i != mPins.constEnd(); i++ )
+    pins.append( i.value().toJson( i.key() ) );
   obj.insert( QStringLiteral("Pins"), pins );
   }
 
@@ -392,8 +383,8 @@ void SdGraphPartImp::readObject(SdObjectMap *map, const QJsonObject obj)
   QJsonArray pins = obj.value( QStringLiteral("Pins") ).toArray();
   for( QJsonValue vpin : pins ) {
     SdPartImpPin pin;
-    pin.fromJson( map, vpin.toObject() );
-    mPins.append( pin );
+    QString pinNumber = pin.fromJson( map, vpin.toObject() );
+    mPins.insert( pinNumber, pin );
     }
   //Parameters
   //sdParamRead( QStringLiteral("Param"), mParam, obj );
@@ -515,8 +506,8 @@ void SdGraphPartImp::draw(SdContext *dc)
     });
 
   //Draw pins
-  for( int i = 0; i < mPins.count(); i++ )
-    mPins[i].draw( dc );
+  for( const SdPartImpPin &pin : mPins )
+    pin.draw( dc );
   }
 
 
@@ -568,8 +559,8 @@ bool SdGraphPartImp::isPointOnNet(SdPoint p, SdStratum stratum, QString &netName
   {
   //Run on each pin, test stratum and pos. If match then return true and assign wireName
   for( SdPartImpPin &pin : mPins ) {
-    if( pin.mCom && pin.mPosition == p && pin.mStratum.match( stratum ) ) {
-      netName = pin.mNetName;
+    if( pin.isConnected() && pin.mPosition == p && pin.mStratum.match( stratum ) ) {
+      netName = pin.getNetName();
       return true;
       }
     }
@@ -584,8 +575,8 @@ bool SdGraphPartImp::isPointOnNet(SdPoint p, SdStratum stratum, QString &netName
 void SdGraphPartImp::accumNetPoints(SdPlateNetList &netList)
   {
   for( SdPartImpPin &pin : mPins )
-    if( pin.mCom )
-      netList.addNetPoint( pin.mNetName, pin.mStratum, pin.mPosition );
+    if( pin.isConnected() )
+      netList.addNetPoint( pin.getNetName(), pin.mStratum, pin.mPosition );
   }
 
 

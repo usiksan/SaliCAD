@@ -41,13 +41,15 @@ struct SdPartImpPin {
   SdPartImpPin();
 
   void        operator = ( const SdPartImpPin &pin );
-  void        draw( SdContext *dc );
+  void        draw( SdContext *dc ) const;
+  bool        isConnected() const;
+  QString     getNetName() const;
 
   QJsonObject toJson(const QString pinNumber) const;
   QString     fromJson( SdObjectMap *map, const QJsonObject obj );
   };
 
-typedef QMap<SdPartImpPin> SdPartImpPinTable;
+typedef QMap<QString,SdPartImpPin> SdPartImpPinTable;
 
 
 
@@ -92,20 +94,21 @@ class SdGraphPartImp : public SdGraphTraced
     //Information
     //Get full visual ident of part aka D4 or R45
     QString         getIdent() const;
-    //Get pin by pin number
-    SdPartImpPin   *getPin( const QString pinNumber );
     //Check if there free section slot. If there - setup section and return true
     bool            isSectionFree(int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym );
 
 
     //Service
-    //Set pin name for pin index
-    void            setPinName( int pinIndex, const QString pinName );
-    //Pin connection-disconnection by index
-    //void            partPinStatusSet( const QString pinNumber, SdGraphSymImp *imp, const QString pinName,  );
-    void            partPinLink( const QString pinNumber, SdGraphSymImp *imp, const QString pinName );
+    //Pin link-unlink
+    bool            partPinLink( const QString pinNumber, SdGraphSymImp *imp, const QString pinName, SdUndo *undo );
     //link-unlink section
     void            setLinkSection( int section, SdGraphSymImp *symImp );
+    //Check if all section removed, then autodeleted
+    void            autoDelete( SdUndo *undo );
+    //Pin status get
+    void            pinStatusGet( const QString pinNumber, SdPartImpPin &pin ) const;
+    //Pin status set
+    void            pinStatusSet( const QString pinNumber, const SdPartImpPin &pin );
 
 
     // SdObject interface

@@ -30,15 +30,15 @@ struct SdSymImpPin {
   QString         mPinNumber; //Pin number in part
   SdPoint         mPosition;  //Pin position in sheet context
   QString         mWireName;  //Net, which pin connected to
-  bool            mCom;       //State of pin to net connectivity
 
   SdSymImpPin();
 
   void        operator = (const SdSymImpPin &pin );
-  void        draw( SdContext *dc );
+  void        draw( SdContext *dc ) const;
   bool        isCanConnect( SdPoint a, SdPoint b ) const;
   bool        isCanDisconnect( SdPoint a, SdPoint b, const QString wireName ) const;
   void        prepareMove( SdPItemSheet *sheet, SdSelector *selector );
+  bool        isConnected() const { return !mWireName.isEmpty(); }
 
   QJsonObject toJson(const QString pinName) const;
   QString     fromJson( SdObjectMap *map, const QJsonObject obj );

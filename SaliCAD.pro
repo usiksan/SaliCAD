@@ -128,7 +128,6 @@ SOURCES += \
     objects/SdUndoRecordSymImpPin.cpp \
     objects/SdGraphArea.cpp \
     objects/SdUndoRecordPlatePointer.cpp \
-    objects/SdUndoRecordImpPin.cpp \
     objects/SdGraphIdent.cpp \
     modes/SdModeCIdent.cpp \
     objects/SdUndoRecordLinkSection.cpp \
@@ -174,7 +173,6 @@ SOURCES += \
     SaliCadServer/SdCsChannel.cpp \
     SaliCadServer/SdCsPacketInfo.cpp \
     objects/SdPasCadImport.cpp \
-    objects/SdUndoRecordImpPinConnection.cpp \
     objects/SdSymImpPin.cpp \
     objects/SdUndoRecordPartImpPin.cpp
 
@@ -297,7 +295,6 @@ HEADERS  += \
     objects/SdUndoRecordSymImpPin.h \
     objects/SdGraphArea.h \
     objects/SdUndoRecordPlatePointer.h \
-    objects/SdUndoRecordImpPin.h \
     objects/SdGraphIdent.h \
     modes/SdModeCIdent.h \
     objects/SdUndoRecordLinkSection.h \
@@ -343,7 +340,6 @@ HEADERS  += \
     SaliCadServer/SdCsChannel.h \
     SaliCadServer/SdCsPacketInfo.h \
     objects/SdPasCadImport.h \
-    objects/SdUndoRecordImpPinConnection.h \
     objects/SdSymImpPin.h \
     objects/SdUndoRecordPartImpPin.h
 
