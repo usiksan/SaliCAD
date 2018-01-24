@@ -219,6 +219,7 @@ void SdEnvir::defaultEnvir()
   mSysColors[scCursor]    = QColor(0,0,0);        //Цвет курсора
   mSysColors[scTraseNet]  = QColor(0,0,0);        //Цвет трассируемой цепи
   mSysColors[scGrid]      = QColor(100,100,100);  //Цвет сетки
+  mSysColors[scNotLinked] = QColor(200,50,50);    //Color for not linked objects
 
   //Default fonts
   mFonts[0] = QString("FreeSerif");

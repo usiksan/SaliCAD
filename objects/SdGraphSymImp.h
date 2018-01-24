@@ -50,9 +50,10 @@ class SdGraphSymImp : public SdGraph
     SdPItemSymbol    *mSymbol;       //Symbol contains graph information
     SdPItemPart      *mPart;         //Part for partImp construction
     SdGraphPartImp   *mPartImp;      //Part implement in desired plate
-    bool              mLinked;
+                                     //If mPartImp == nullptr then symbol not linked
     SdSymImpPinTable  mPins;         //Pin information table
     SdParamTable      mParam;        //Parameters
+    QString           mLinkError;    //Error string, which displays when no link
   public:
     SdGraphSymImp();
 
@@ -118,15 +119,11 @@ class SdGraphSymImp : public SdGraph
     //Unconnect pin in point
     void          unconnectPinInPoint(SdPoint p , SdUndo *undo, const QString undoTitle);
     //Unlink symbol from part
-    void          unLinkPartImp( SdUndo *undo );
+    void          unLinkPart( SdUndo *undo );
     //Link auto partImp. partImp and section are selected automatic
     void          linkAutoPart( SdUndo *undo );
-    //Replace part
-    void          replacePart( SdPItemPart *part, SdUndo *undo );
     //TODO D017 Accum auto net
     //void          autoNet( DNetListTable &table );         //Накопить цепи в текстовый список цепей
-    //Replace symbol
-    void          replace( SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *symbol, SdUndo *undo );
 
     // SdObject interface
   public:
@@ -162,13 +159,14 @@ class SdGraphSymImp : public SdGraph
 
   private:
     SdPItemSheet *getSheet() const;
+    //Update pins positions upon position and props of symbol implement
     void          updatePinsPositions();
     //Link auto partImp in given plate. partImp and section are selected automatic
     void          linkAutoPartInPlate( SdPItemPlate *plate, SdUndo *undo );
     //Pin connection-disconnection by name for symbol and part implements
     void          pinConnectionSet(const QString pinName, const QString netName, SdUndo *undo );
-    //
-    void          setComponent( SdPItemSymbol *comp );
+    //Update connection status for all pins
+    void          updatePinsConnectionStatus( SdUndo *undo );
   };
 
 #endif // SDGRAPHSYMIMP_H

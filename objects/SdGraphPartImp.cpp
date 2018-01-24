@@ -199,6 +199,26 @@ void SdGraphPartImp::autoDelete(SdUndo *undo)
 
 
 
+//Pin status get
+void SdGraphPartImp::pinStatusGet(const QString pinNumber, SdPartImpPin &pin) const
+  {
+  Q_ASSERT( mPins.contains(pinNumber) );
+  pin = mPins.value(pinNumber);
+  }
+
+
+
+
+//Pin status set
+void SdGraphPartImp::pinStatusSet(const QString pinNumber, const SdPartImpPin &pin)
+  {
+  Q_ASSERT( mPins.contains(pinNumber) );
+  mPins.insert( pinNumber, pin );
+  }
+
+
+
+
 //Check if there free section slot
 bool SdGraphPartImp::isSectionFree( int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym)
   {
@@ -295,7 +315,7 @@ void SdGraphPartImp::detach(SdUndo *undo)
   //Unlink all sections
   for( SdPartImpSection &s : mSections ) {
     if( s.mSymImp )
-      s.mSymImp->unLinkPartImp( undo );
+      s.mSymImp->unLinkPart( undo );
     }
   }
 

@@ -33,7 +33,8 @@ Description
 #define scCursor         6 //Цвет курсора
 #define scTraseNet       7 //Цвет трассируемой цепи
 #define scGrid           8 //Цвет сетки
-#define scLast           9
+#define scNotLinked      9 //Color for not linked objects
+#define scLast          10
 
 
 //Вид перекрестья курсора
@@ -45,7 +46,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (10 + GRID_HISTORY_SIZE + FONT_COUNT)
+#define SdEnvirVersion  (11 + GRID_HISTORY_SIZE + FONT_COUNT)
 
 typedef QMap<QString,SdLayerPtr> SdLayerPtrTable;
 

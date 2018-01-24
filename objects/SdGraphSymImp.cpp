@@ -26,6 +26,8 @@ Description
 #include "SdConverterImplement.h"
 #include "SdContext.h"
 #include "SdUndo.h"
+#include "SdEnvir.h"
+
 #include <QDebug>
 
 
@@ -100,7 +102,7 @@ QString SdGraphSymImp::pinNetName(const QString pinName) const
 void SdGraphSymImp::moveToPlate(SdPItemPlate *plate, SdUndo *undo)
   {
   //UnLink part in current plate
-  unLinkPartImp( undo );
+  unLinkPart( undo );
 
   //And link to part in another plate
   linkAutoPartInPlate( plate, undo );
@@ -133,22 +135,22 @@ void SdGraphSymImp::unconnectPinInPoint( SdPoint p, SdUndo *undo, const QString 
 
 
 
-void SdGraphSymImp::unLinkPartImp(SdUndo *undo)
+void SdGraphSymImp::unLinkPart(SdUndo *undo)
   {
-  //Save pin state
-  undo->symImpPins( &mPins );
-  //UnLink pins if mPartImp present
   if( mPartImp != nullptr ) {
+    //Save pin state
+    undo->symImpPins( &mPins );
+    //UnLink pins if mPartImp present
     for( SdSymImpPinTable::iterator i = mPins.begin(); i != mPins.end(); i++ )
       mPartImp->partPinLink( i.value().mPinNumber, nullptr, QString(), undo );
-    }
-  //Save current link state
-  undo->linkSection( mSectionIndex, this, mPartImp, mPartImp != nullptr );
-  if( mPartImp ) {
+    //Remove previous pins
+    mPins.clear();
+    //Save current link state
+    undo->linkSection( mSectionIndex, this, mPartImp, mPartImp != nullptr );
     mPartImp->setLinkSection( mSectionIndex, nullptr );
     mPartImp->autoDelete( undo );
+    setLinkSection( -1, nullptr );
     }
-  setLinkSection( -1, nullptr );
   }
 
 
@@ -327,7 +329,7 @@ void SdGraphSymImp::accumLinked(SdPoint a, SdPoint b, SdSelector *sel)
 void SdGraphSymImp::pinStatusGet(const QString pinName, SdSymImpPin &pin) const
   {
   Q_ASSERT( mPins.contains(pinName) );
-  pin = mPins[pinName];
+  pin = mPins.value(pinName);
   }
 
 
@@ -336,7 +338,7 @@ void SdGraphSymImp::pinStatusGet(const QString pinName, SdSymImpPin &pin) const
 void SdGraphSymImp::pinStatusSet(const QString pinName, const SdSymImpPin &pin)
   {
   Q_ASSERT( mPins.contains(pinName) );
-  mPins[pinName] = pin;
+  mPins.insert( pinName, pin );
   }
 
 
@@ -357,23 +359,15 @@ void SdGraphSymImp::moveComplete(SdPoint grid, SdUndo *undo)
   //Mooving is completed, check pin connection
   SdPItemSheet *sheet = getSheet();
   Q_ASSERT( sheet != nullptr );
-  QString netName;
   //Check current area
-  if( mPartImp ) {
+  if( mPartImp != nullptr ) {
     //Part is assigned, check current area
-    if( sheet->getPlate( mOrigin ) != mPartImp->getPlate() ) {
+    if( sheet->getPlate( mOrigin ) != mPartImp->getPlate() )
       //Plate is changed. Unlink from part
-      detach( undo );
-      }
+      unLinkPart( undo );
     else {
       //Check for new pin connections
-      for( SdSymImpPinTable::const_iterator i = mPins.constBegin(); i != mPins.constEnd(); i++ )
-        if( !i.value().isConnected() ) {
-          //If pin unconnected then check possibilities connection
-          if( sheet->getNetFromPoint( i.value().mPosition, netName ) )
-            //New connection
-            pinConnectionSet( i.key(), netName, undo );
-          }
+      updatePinsConnectionStatus( undo );
       return;
       }
     }
@@ -481,23 +475,30 @@ SdRect SdGraphSymImp::getOverRect() const
 
 void SdGraphSymImp::draw(SdContext *dc)
   {
-  //Draw ident in sheet context
-  dc->text( mIdentPos, mIdentRect, getIdent(), mIdentProp );
-  //Convertor for symbol implementation
-  SdConverterImplement imp( mOrigin, mSymbol->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue() );
-  dc->setConverter( &imp );
+  if( mPartImp == nullptr ) {
+    //Draw over rect
+    dc->setOverColor( sdEnvir->getSysColor(scNotLinked) );
+    dc->rect( mOverRect );
+    }
+  else {
+    //Draw ident in sheet context
+    dc->text( mIdentPos, mIdentRect, getIdent(), mIdentProp );
+    //Convertor for symbol implementation
+    SdConverterImplement imp( mOrigin, mSymbol->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue() );
+    dc->setConverter( &imp );
 
-  //Draw symbol except ident and pins
-  mSymbol->forEach( dctAll & ~(dctSymPin | dctIdent), [dc] (SdObject *obj) -> bool {
-    SdGraph *graph = dynamic_cast<SdGraph*>( obj );
-    if( graph )
-      graph->draw( dc );
-    return true;
-    });
+    //Draw symbol except ident and pins
+    mSymbol->forEach( dctAll & ~(dctSymPin | dctIdent), [dc] (SdObject *obj) -> bool {
+      SdGraph *graph = dynamic_cast<SdGraph*>( obj );
+      if( graph )
+        graph->draw( dc );
+      return true;
+      });
 
-  //Draw pins
-  for( SdSymImpPin &pin : mPins )
-    pin.draw( dc );
+    //Draw pins
+    for( SdSymImpPin &pin : mPins )
+      pin.draw( dc );
+    }
   }
 
 
@@ -583,26 +584,74 @@ void SdGraphSymImp::updatePinsPositions()
 //Link auto partImp in given plate. partImp and section are selected automatic
 void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
   {
-  if( mPart != nullptr ) {
-    //Get part where this section resides
-    int section = -1;
-    SdGraphPartImp *partImp = plate->allocPartImp( &section, mPart, mComponent, mSymbol, undo );
-    Q_ASSERT( partImp != nullptr );
+  SdProject *prj = getSheet()->getProject();
+  Q_ASSERT( prj != nullptr );
 
-    //Link to part
-    undo->linkSection( section, this, partImp, true );
-    partImp->setLinkSection( section, this );
-    setLinkSection( section, partImp );
-    SdSection *sectionPtr = mComponent->getSection( section );
-    if( sectionPtr != nullptr ) {
-      //Link pins between symImp and partImp
-      for( SdSymImpPinTable::iterator i = mPins.begin(); i != mPins.end(); i++ ) {
-        i.value().mPinNumber = sectionPtr->getPinNumber( i.key() );
-        if( !mPartImp->partPinLink( i.value().mPinNumber, this, i.key(), undo ) )
-          i.value().mPinNumber.clear();
-        }
-      }
+  //Realloc objects for this project
+  mComponent = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(mComponent) );  //Object contains section information, pin assotiation info. May be same as mSymbol.
+  mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(mSymbol) );        //Symbol contains graph information
+  mPart = dynamic_cast<SdPItemPart*>( prj->getProjectsItem(mPart) );
+
+  //Apply all items (symbol, component, part and partImp)
+  Q_ASSERT( mPins.count() == 0 && mSymbol != nullptr && mComponent != nullptr && mPart != nullptr );
+
+  //Ensure all components are fixed
+  if( mSymbol->isEditEnable() ) {
+    mLinkError = QObject::tr("Symbol %1 in editing state").arg(mSymbol->getTitle());
+    return;
     }
+  if( mComponent->isEditEnable() ) {
+    mLinkError = QObject::tr("Component %1 in editing state").arg(mComponent->getTitle());
+    return;
+    }
+  if( mPart->isEditEnable() ) {
+    mLinkError = QObject::tr("Part %1 in editing state").arg(mPart->getTitle());
+    return;
+    }
+
+  undo->symImpPins( &mPins );
+
+  //Get part where this section resides
+  int section = -1;
+  SdGraphPartImp *partImp = plate->allocPartImp( &section, mPart, mComponent, mSymbol, undo );
+  Q_ASSERT( partImp != nullptr );
+
+  //Link to part
+  undo->linkSection( section, this, partImp, true );
+  partImp->setLinkSection( section, this );
+  setLinkSection( section, partImp );
+  SdSection *sectionPtr = mComponent->getSection( section );
+  if( sectionPtr == nullptr ) {
+    mLinkError = QObject::tr("No pack info in %1 for section %2").arg(mComponent->getTitle()).arg(section+1);
+    return;
+    }
+
+  //Accumulate pins
+  mSymbol->forEach( dctSymPin, [this,sectionPtr,undo] (SdObject *obj) -> bool {
+    SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>(obj);
+    Q_ASSERT( pin != nullptr );
+
+    QString pinName = pin->getPinName();
+    //Test, if pinName duplicate
+    if( mPins.contains(pinName) )
+      pinName = QObject::tr("Duplicated pin name %1").arg(pinName);
+    //Create implement pin
+    SdSymImpPin impPin;
+    impPin.mPin = pin;
+    impPin.mPinNumber = sectionPtr->getPinNumber( pinName );
+
+    //Link pins between symImp and partImp
+    if( !mPartImp->partPinLink( impPin.mPinNumber, this, pinName, undo ) )
+      impPin.mPinNumber.clear();
+
+    //Add pin to table
+    mPins.insert( pinName, impPin );
+    return true;
+    });
+
+  updatePinsPositions();
+
+  updatePinsConnectionStatus( undo );
   }
 
 
@@ -626,6 +675,30 @@ void SdGraphSymImp::pinConnectionSet( const QString pinName, const QString netNa
 
 
 
+//Update connection status for all pins
+void SdGraphSymImp::updatePinsConnectionStatus(SdUndo *undo)
+  {
+  SdPItemSheet *sheet = getSheet();
+  Q_ASSERT( sheet != nullptr );
+  QString netName;
+  for( SdSymImpPinTable::const_iterator i = mPins.constBegin(); i != mPins.constEnd(); i++ )
+    if( !i.value().isConnected() ) {
+      //If pin unconnected then check possibilities connection
+      if( sheet->getNetFromPoint( i.value().mPosition, netName ) )
+        //New connection
+        pinConnectionSet( i.key(), netName, undo );
+//          else
+//            //Disconnection
+//            pinConnectionSet( i.key(), QString(), undo );
+      }
+
+  }
+
+
+
+
+
+
 
 
 
@@ -633,45 +706,7 @@ void SdGraphSymImp::pinConnectionSet( const QString pinName, const QString netNa
 
 void SdGraphSymImp::attach(SdUndo *undo)
   {
-  SdProject *prj = getSheet()->getProject();
-  Q_ASSERT( prj != nullptr );
-  //Realloc objects for this project
-  mComponent = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(mComponent) );  //Object contains section information, pin assotiation info. May be same as mSymbol.
-  mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(mSymbol) );        //Symbol contains graph information
-  mPart = dynamic_cast<SdPItemPart*>( prj->getProjectsItem(mPart) );
-
-  //Apply all items (symbol, component, part and partImp)
-  Q_ASSERT( mPins.count() == 0 && mSymbol != nullptr && mComponent != nullptr );
-
-  //Ensure all components are fixed
-  if( mPart != nullptr && mPart->isEditEnable() ) return;
-
-  if( mSymbol->isEditEnable() || mComponent->isEditEnable() ) return;
-
-  //Accumulate pins
-  SdSection *s = mComponent->getSection(0);
-  if( s == nullptr ) mSectionIndex = -1;
-  else mSectionIndex = 0;
-  mSymbol->forEach( dctSymPin, [this,s] (SdObject *obj) -> bool {
-    SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>(obj);
-    Q_ASSERT( pin != nullptr );
-
-    //Create implement pin
-    SdSymImpPin impPin;
-    impPin.mPin = pin;
-    if( s != nullptr )
-      impPin.mPinNumber = s->getPinNumber( pin->getPinName() );
-
-    //Add pin to table
-    mPins.insert( pin->getPinName(), impPin );
-    return true;
-    });
-
-  updatePinsPositions();
-
   linkAutoPart( undo );
-
-  moveComplete( SdPoint(1,1), undo );
   }
 
 
@@ -681,9 +716,7 @@ void SdGraphSymImp::attach(SdUndo *undo)
 void SdGraphSymImp::detach(SdUndo *undo)
   {
   //Unlink from part
-  unLinkPartImp( undo );
-  //Remove previous pins
-  mPins.clear();
+  unLinkPart( undo );
   }
 
 

@@ -26,8 +26,10 @@ Description
 #include "SdUndoRecordLinkSection.h"
 #include "SdUndoRecordSymImp.h"
 #include "SdUndoRecordSymImpPin.h"
+#include "SdUndoRecordSymImpPins.h"
 #include "SdUndoRecordPartImp.h"
 #include "SdUndoRecordPartImpPin.h"
+#include "SdUndoRecordPartImpPins.h"
 #include "SdUndoRecordWire.h"
 #include "SdUndoRecordProjectItem.h"
 #include "windows/SdWCommand.h"
@@ -125,6 +127,30 @@ void SdUndo::platePointer(SdPItemPlatePtr *ptr)
 void SdUndo::pinSymImpStatus(SdGraphSymImp *sym, const QString symPinName)
   {
   addUndo( new SdUndoRecordSymImpPin( sym, symPinName )  );
+  }
+
+
+
+
+void SdUndo::pinPartImpStatus(SdGraphPartImp *part, const QString partPinNumber)
+  {
+  addUndo( new SdUndoRecordPartImpPin( part, partPinNumber )  );
+  }
+
+
+
+
+void SdUndo::symImpPins(SdSymImpPinTable *table)
+  {
+  addUndo( new SdUndoRecordSymImpPins(table) );
+  }
+
+
+
+
+void SdUndo::partImpPins(SdPartImpPinTable *table)
+  {
+  addUndo( new SdUndoRecordPartImpPins(table) );
   }
 
 

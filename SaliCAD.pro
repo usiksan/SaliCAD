@@ -174,7 +174,9 @@ SOURCES += \
     SaliCadServer/SdCsPacketInfo.cpp \
     objects/SdPasCadImport.cpp \
     objects/SdSymImpPin.cpp \
-    objects/SdUndoRecordPartImpPin.cpp
+    objects/SdUndoRecordPartImpPin.cpp \
+    objects/SdUndoRecordSymImpPins.cpp \
+    objects/SdUndoRecordPartImpPins.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -341,7 +343,9 @@ HEADERS  += \
     SaliCadServer/SdCsPacketInfo.h \
     objects/SdPasCadImport.h \
     objects/SdSymImpPin.h \
-    objects/SdUndoRecordPartImpPin.h
+    objects/SdUndoRecordPartImpPin.h \
+    objects/SdUndoRecordSymImpPins.h \
+    objects/SdUndoRecordPartImpPins.h
 
 DISTFILES += \
     license.txt

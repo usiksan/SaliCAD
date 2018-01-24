@@ -60,6 +60,7 @@ void SdGraphArea::attach(SdUndo *undo)
   Q_ASSERT( prj != nullptr );
   //Realloc objects for this project
   mPlate = dynamic_cast<SdPItemPlate*>( prj->getProjectsItem(mPlate) );
+  Q_ASSERT( mPlate != nullptr );
 
   //Reallocate all components in area
   getSheet()->forEach( dctSymImp, [undo, this] (SdObject *obj) -> bool {
@@ -79,6 +80,7 @@ void SdGraphArea::attach(SdUndo *undo)
 void SdGraphArea::detach(SdUndo *undo)
   {
   SdPItemPlate *def = getSheet()->getProject()->getDefaultPlate();
+  Q_ASSERT( def != nullptr );
   getSheet()->forEach( dctSymImp, [def, undo, this] (SdObject *obj) -> bool {
     SdGraphSymImp *sym = dynamic_cast<SdGraphSymImp*>( obj );
     Q_ASSERT( sym != nullptr );
