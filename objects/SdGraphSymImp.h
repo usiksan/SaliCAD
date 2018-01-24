@@ -50,6 +50,7 @@ class SdGraphSymImp : public SdGraph
     SdPItemSymbol    *mSymbol;       //Symbol contains graph information
     SdPItemPart      *mPart;         //Part for partImp construction
     SdGraphPartImp   *mPartImp;      //Part implement in desired plate
+    bool              mLinked;
     SdSymImpPinTable  mPins;         //Pin information table
     SdParamTable      mParam;        //Parameters
   public:

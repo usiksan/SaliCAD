@@ -642,8 +642,16 @@ void SdGraphSymImp::attach(SdUndo *undo)
 
   //Apply all items (symbol, component, part and partImp)
   Q_ASSERT( mPins.count() == 0 && mSymbol != nullptr && mComponent != nullptr );
+
+  //Ensure all components are fixed
+  if( mPart != nullptr && mPart->isEditEnable() ) return;
+
+  if( mSymbol->isEditEnable() || mComponent->isEditEnable() ) return;
+
   //Accumulate pins
   SdSection *s = mComponent->getSection(0);
+  if( s == nullptr ) mSectionIndex = -1;
+  else mSectionIndex = 0;
   mSymbol->forEach( dctSymPin, [this,s] (SdObject *obj) -> bool {
     SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>(obj);
     Q_ASSERT( pin != nullptr );

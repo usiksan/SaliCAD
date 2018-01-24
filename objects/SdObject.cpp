@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Root object of Database object hierarhy
 */
 
 #include "SdObject.h"
@@ -64,7 +65,7 @@ SdContainer *SdObject::getRoot() const
   //if( mParent == 0 ) return dynamic_cast<SdContainer*>( this );
   SdContainer *p = mParent;
   while(p) {
-    if( p->mParent == 0 ) return p;
+    if( p->mParent == nullptr ) return p;
     p = p->mParent;
     }
   return 0;
