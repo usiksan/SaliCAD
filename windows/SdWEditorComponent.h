@@ -45,8 +45,6 @@ class SdWEditorComponent : public SdWEditor
     QLineEdit            *mPart;
     QPushButton          *mPartSelect;
     QPushButton          *mPartDelete;
-
-    bool                  mAnotherAuthor;   //True if component crated another author and edit prohibited
   public:
     SdWEditorComponent(SdPItemComponent *comp, QWidget *parent);
 

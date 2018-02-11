@@ -16,7 +16,7 @@ Description
 #include <QHBoxLayout>
 #include <QStringList>
 
-SdWSection::SdWSection(bool anotherAuthor, SdSection *s, QWidget *parent) :
+SdWSection::SdWSection(bool editEnabled, SdSection *s, QWidget *parent) :
   QWidget(parent),
   mSection(s)
   {
@@ -31,9 +31,9 @@ SdWSection::SdWSection(bool anotherAuthor, SdSection *s, QWidget *parent) :
   QStringList labels;
   labels << tr("Pin name") << tr("Pin number");
   mPinTable->setHorizontalHeaderLabels( labels );
-  updatePinTable( anotherAuthor );
+  updatePinTable( editEnabled );
 
-  if( !anotherAuthor )
+  if( editEnabled )
     connect( mPinTable, &QTableWidget::cellChanged, this, &SdWSection::onPinEditFinish );
   }
 
@@ -49,7 +49,7 @@ void SdWSection::updateTitle()
 
 
 //Update visual pin assotiation table
-void SdWSection::updatePinTable(bool anotherAuthor)
+void SdWSection::updatePinTable( bool editEnabled )
   {
   mPinTable->setSortingEnabled(false);
   mPinTable->setRowCount(0);
@@ -57,11 +57,11 @@ void SdWSection::updatePinTable(bool anotherAuthor)
   for( auto i = pins.constBegin(); i != pins.constEnd(); i++ ) {
     mPinTable->insertRow( mPinTable->rowCount() );
     mPinTable->setItem( mPinTable->rowCount() - 1, 0, new QTableWidgetItem( i.key() ) );
-    mPinTable->item( mPinTable->rowCount() - 1, 0 )->setFlags( Qt::NoItemFlags );
+    mPinTable->item( mPinTable->rowCount() - 1, 0 )->setFlags( Qt::ItemIsEnabled );
     mPinTable->setItem( mPinTable->rowCount() - 1, 1, new QTableWidgetItem( i.value() ) );
     //If another author then disable edit function
-    if( anotherAuthor )
-      mPinTable->item( mPinTable->rowCount() - 1, 1 )->setFlags( Qt::NoItemFlags );
+    if( !editEnabled )
+      mPinTable->item( mPinTable->rowCount() - 1, 1 )->setFlags( Qt::ItemIsEnabled );
     }
   }
 

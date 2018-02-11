@@ -16,6 +16,7 @@ Description
 #include "SdWEditorGraphPart.h"
 #include "SdWSection.h"
 #include "SdDGetObject.h"
+#include "SdWCommand.h"
 #include "objects/SdProject.h"
 #include "objects/SdPartVariant.h"
 #include "objects/SdObjectFactory.h"
@@ -31,8 +32,6 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
   mComponent(comp)
   {
   mUndo = mComponent->getUndo();
-
-  mAnotherAuthor = mComponent->isAnotherAuthor();
 
   QSplitter *splitter = new QSplitter( Qt::Vertical, this );
   QVBoxLayout *lay = new QVBoxLayout();
@@ -64,20 +63,21 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
      buts->addWidget( mSectionDelete = new QPushButton( tr("Delete section") ) );
      buts->addWidget( mSectionDeleteAll = new QPushButton( tr("Delete all sections") ) );
 
-     if( mAnotherAuthor ) {
-       //For another author editing is prohibited
-       mSectionAdd->setEnabled(false);
-       mSectionDubl->setEnabled(false);
-       mSectionSelect->setEnabled(false);
-       mSectionDelete->setEnabled(false);
-       mSectionDeleteAll->setEnabled(false);
-       }
-     else {
+     if( mComponent->isEditEnable() ) {
+       //Connect signals when edit enabled
        connect( mSectionAdd, &QPushButton::clicked, this, &SdWEditorComponent::sectionAdd );
        connect( mSectionDubl, &QPushButton::clicked, this, &SdWEditorComponent::sectionDubl );
        connect( mSectionSelect, &QPushButton::clicked, this, &SdWEditorComponent::sectionSelect );
        connect( mSectionDelete, &QPushButton::clicked, this, &SdWEditorComponent::sectionDelete );
        connect( mSectionDeleteAll, &QPushButton::clicked, this, &SdWEditorComponent::sectionDeleteAll );
+       }
+     else {
+       //Disable buttons when edit disabled
+       mSectionAdd->setEnabled(false);
+       mSectionDubl->setEnabled(false);
+       mSectionSelect->setEnabled(false);
+       mSectionDelete->setEnabled(false);
+       mSectionDeleteAll->setEnabled(false);
        }
 
 
@@ -105,14 +105,15 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
      buts->addWidget( mPartSelect = new QPushButton( tr("Select part")) );
      buts->addWidget( mPartDelete = new QPushButton( tr("Delete part")) );
 
-     if( mAnotherAuthor ) {
-       //mPartAdd->setEnabled(false);
-       mPartSelect->setEnabled(false);
-       mPartDelete->setEnabled(false);
-       }
-     else {
+     if( mComponent->isEditEnable() ) {
+       //Connect signals when edit enabled
        connect( mPartSelect, &QPushButton::clicked, this, &SdWEditorComponent::partSelect );
        connect( mPartDelete, &QPushButton::clicked, this, &SdWEditorComponent::partDelete );
+       }
+     else {
+       //Disable buttons when edit disabled
+       mPartSelect->setEnabled(false);
+       mPartDelete->setEnabled(false);
        }
 
   //Params
@@ -135,6 +136,11 @@ SdProjectItem *SdWEditorComponent::getProjectItem() const
 void SdWEditorComponent::onActivateEditor()
   {
   SdWEditor::onActivateEditor();
+
+  //Activate menu
+  SdWCommand::cmObjectEditEnable->setVisible( !mComponent->isEditEnable() );
+  SdWCommand::cmObjectEditDisable->setVisible( mComponent->isEditEnable() );
+
   //Update info from component
   fillSections();
   fillPart();
@@ -149,7 +155,7 @@ void SdWEditorComponent::sectionAdd()
     SdSection *section = new SdSection();
     section->updateFromSymbol( sym );
     delete sym;
-    SdWSection *ws = new SdWSection( mAnotherAuthor, section, mSectionsTab );
+    SdWSection *ws = new SdWSection( mComponent->isEditEnable(), section, mSectionsTab );
     mSectionsTab->addTab( ws, tr("Section %1").arg(mSectionsTab->count()+1) );
     mSectionsTab->setCurrentWidget( ws );
     mComponent->insertChild( section, mUndo );
@@ -171,7 +177,7 @@ void SdWEditorComponent::sectionDubl()
     SdSection *src = sw->getSection();
     SdSection *section = new SdSection();
     section->cloneFrom( src );
-    SdWSection *ws = new SdWSection( mAnotherAuthor, section, mSectionsTab );
+    SdWSection *ws = new SdWSection( mComponent->isEditEnable(), section, mSectionsTab );
     mSectionsTab->addTab( ws, tr("Section %1").arg(mSectionsTab->count()+1) );
     mSectionsTab->setCurrentWidget( ws );
     mComponent->insertChild( section, mUndo );
@@ -193,7 +199,7 @@ void SdWEditorComponent::sectionSelect()
       delete sym;
       int index = mSectionsTab->currentIndex();
       mSectionsTab->removeTab( index );
-      SdWSection *ws = new SdWSection( mAnotherAuthor, section, mSectionsTab );
+      SdWSection *ws = new SdWSection( mComponent->isEditEnable(), section, mSectionsTab );
       mSectionsTab->insertTab( index, ws, tr("Section %1").arg(index+1) );
       mSectionsTab->setCurrentWidget( ws );
       }
@@ -290,14 +296,14 @@ void SdWEditorComponent::fillSections()
   mComponent->forEach( dctSection, [this] (SdObject *obj) -> bool {
     SdSection *section = dynamic_cast<SdSection*>(obj);
     if( section ) {
-      SdWSection *ws = new SdWSection( mAnotherAuthor, section, mSectionsTab );
+      SdWSection *ws = new SdWSection( mComponent->isEditEnable(), section, mSectionsTab );
       mSectionsTab->addTab( ws, tr("Section %1").arg(mSectionsTab->count()+1) );
       }
     return true;
     });
 
   //Enable-disable buttons on editing enable
-  if( !mAnotherAuthor ) {
+  if( mComponent->isEditEnable() ) {
     mSectionDelete->setEnabled( mSectionsTab->count() );
     mSectionDeleteAll->setEnabled( mSectionsTab->count() );
     mSectionSelect->setEnabled( mSectionsTab->count() );
@@ -305,6 +311,7 @@ void SdWEditorComponent::fillSections()
   if( mSectionsTab->count() ) {
     //Sections present, select first one
     mSectionsTab->setCurrentIndex(0);
+    onCurrentSection(0);
     }
   }
 
@@ -331,7 +338,7 @@ void SdWEditorComponent::fillPart()
     mPartViewer->setItemByNameAndAuthor( part->getPartTitle(), part->getPartAuthor() );
     }
 
-  if( !mAnotherAuthor ) {
+  if( mComponent->isEditEnable() ) {
     mPartSelect->setEnabled( true );
     mPartDelete->setEnabled( part != nullptr );
     }

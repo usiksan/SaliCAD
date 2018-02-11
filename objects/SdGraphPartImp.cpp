@@ -607,3 +607,11 @@ bool SdGraphPartImp::isUsed(SdObject *obj) const
   return obj == mPart || obj == mComponent;
   }
 
+
+
+
+void SdGraphPartImp::upgradeProjectItem(SdProjectItem *newItem, SdUndo *undo)
+  {
+
+  }
+

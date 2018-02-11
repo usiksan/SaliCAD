@@ -121,7 +121,7 @@ void SdWProjectList::fileImportPis(const QString fname)
   SdWProjectTree *prj = fileOpen( QString() );
 
   if( prj != nullptr ) {
-    SdPasCadImport importer( prj->getProject() );
+    SdPasCadImport importer( prj->getProject(), this );
     importer.import( fname );
     }
   }

@@ -163,7 +163,7 @@ void SdModeCSymImp::getSection()
   {
   clear();
   int sectionIndex = -1;
-  do {
+  while(1) {
     SdObject *obj = SdDGetObject::getComponent( &sectionIndex, dctSymbol | dctComponent, QObject::tr("Select component to insert"), mEditor );
     if( obj == nullptr ) {
       cancelMode();
@@ -174,14 +174,38 @@ void SdModeCSymImp::getSection()
 
     mSection = dynamic_cast<SdPItemSymbol*>( obj );
 
+    if( mSection == nullptr ) {
+      QMessageBox::warning( mEditor, QObject::tr("Warning!"), QObject::tr("Can't load selected component. Select another.") );
+      continue;
+      }
+
     mComponent = mSection;
-    if( sectionIndex >= 0 )
+    if( sectionIndex >= 0 ) {
       mSection = mComponent->extractSymbolFromFactory( sectionIndex, false, mEditor );
+      if( mSection == nullptr ) {
+        QMessageBox::warning( mEditor, QObject::tr("Warning!"), QObject::tr("Can't load selected component section. Select another.") );
+        continue;
+        }
+      }
+
+    if( mComponent->isEditEnable() ) {
+      QMessageBox::warning( mEditor, QObject::tr("Warning!"), QObject::tr("Component is in editing state. Switch it to lock state or select another.") );
+      continue;
+      }
+    if( mSection->isEditEnable() ) {
+      QMessageBox::warning( mEditor, QObject::tr("Warning!"), QObject::tr("Section is in editing state. Switch it to lock state or select another.") );
+      continue;
+      }
 
 
     mPart = mComponent->extractPartFromFactory( false, mEditor );
+    if( mPart != nullptr && mPart->isEditEnable() ) {
+      QMessageBox::warning( mEditor, QObject::tr("Warning!"), QObject::tr("Part is in editing state. Switch it to lock state or select another.") );
+      continue;
+      }
+
+    break;
     }
-  while( mSection == nullptr );
   }
 
 

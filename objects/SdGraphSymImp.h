@@ -135,6 +135,7 @@ class SdGraphSymImp : public SdGraph
     virtual void    writeObject(QJsonObject &obj) const override;
     virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
     virtual bool    isUsed(SdObject *obj) const override;
+    virtual void    upgradeProjectItem(SdProjectItem *newItem, SdUndo *undo) override;
 
     // SdGraph interface
   public:
@@ -154,7 +155,6 @@ class SdGraphSymImp : public SdGraph
     virtual int     behindCursor(SdPoint p) override;
     virtual bool    getInfo(SdPoint p, QString &info, bool extInfo) override;
     virtual bool    snapPoint(SdSnapInfo *snap) override;
-    virtual void    upgradeItem(const SdProjectItem *oldItem, const SdProjectItem *newItem) override;
 
 
   private:
@@ -167,6 +167,7 @@ class SdGraphSymImp : public SdGraph
     void          pinConnectionSet(const QString pinName, const QString netName, SdUndo *undo );
     //Update connection status for all pins
     void          updatePinsConnectionStatus( SdUndo *undo );
+
   };
 
 #endif // SDGRAPHSYMIMP_H

@@ -72,9 +72,6 @@ class SdGraph : public SdObject
     //Определение разумной точки
     virtual bool   snapPoint( SdSnapInfo *snap );
 
-    //Upgrade old item on new item
-    virtual void   upgradeItem( const SdProjectItem *oldItem, const SdProjectItem *newItem );
-
     friend class SdSelector;
   };
 

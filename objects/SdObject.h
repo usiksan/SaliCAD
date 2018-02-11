@@ -104,12 +104,8 @@ class SdObject
     void              deleteObject( SdUndo *undo );
     virtual bool      isUsed( SdObject *obj ) const;
 
-    //Signal begin edit, end edit of items
-    virtual void      beginEditItem( SdProjectItem *item, SdUndo *undo );
-    virtual void      endEditItem( SdProjectItem *item, SdUndo *undo );
-
-    //Signal to replace item
-    virtual void      replaceItem( SdProjectItem *oldItem, SdProjectItem *newItem, SdUndo *undo );
+    //Upgrade project item on new one
+    virtual void      upgradeProjectItem( SdProjectItem *newItem, SdUndo *undo );
 
     //Copy
     //Exact copy object

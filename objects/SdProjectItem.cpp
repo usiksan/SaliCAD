@@ -139,14 +139,14 @@ SdUndo *SdProjectItem::getUndo() const
 
 
 //Set editEnable flag. Return copy object when object editing is prohibited
-void SdProjectItem::setEditEnable( bool edit, const QString undoTitle )
+SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle )
   {
+  SdUndo *undo = getUndo();
+  if( !undoTitle.isEmpty() )
+    undo->begin( undoTitle );
   if( mEditEnable ) {
     if( !edit ) {
       //Disable edit.
-      SdUndo *undo = getUndo();
-      if( !undoTitle.isEmpty() )
-        undo->begin( undoTitle );
       undo->projectItemInfo( this, &mTitle, &mAuthor, &mTag, &mCreateTime, &mEditEnable );
 
       mEditEnable = edit;
@@ -156,10 +156,10 @@ void SdProjectItem::setEditEnable( bool edit, const QString undoTitle )
       //Write object to local library
       qDebug() << "disable edit";
       write();
-      //For all child objects send signal
+      //Upgrade item throw project
       getProject()->forEach( dctAll, [this,undo] (SdObject *obj) -> bool {
         if( obj != nullptr )
-          obj->endEditItem( this, undo );
+          obj->upgradeProjectItem( this, undo );
         return true;
         });
       }
@@ -167,23 +167,21 @@ void SdProjectItem::setEditEnable( bool edit, const QString undoTitle )
   else {
     if( edit ) {
       //Enable edit
-      SdUndo *undo = getUndo();
-      if( !undoTitle.isEmpty() )
-        undo->begin( undoTitle );
-      //Begin edit
-      //For all child objects send signal
-      getProject()->forEach( dctAll, [this,undo] (SdObject *obj) -> bool {
-        if( obj != nullptr )
-          obj->beginEditItem( this, undo );
-        return true;
-        });
-      undo->projectItemInfo( this, &mTitle, &mAuthor, &mTag, &mCreateTime, &mEditEnable );
-      //Update object version and author creation
-      updateAuthor();
-      updateCreationTime();
+      //Test if object is used
+      if( getProject()->isUsed( this ) || isAnotherAuthor() ) {
+        //Object is used. Create new one
+        SdProjectItem *item = dynamic_cast<SdProjectItem*>( copy() );
+        item->updateAuthor();
+        item->updateCreationTime();
+        //Insert item to project
+        getProject()->insertChild( item, undo );
+        return item;
+        }
       mEditEnable = edit;
+      updateCreationTime();
       }
     }
+  return this;
   }
 
 
@@ -235,6 +233,15 @@ SdRect SdProjectItem::getOverRect(quint64 classMask)
     } );
 
   return fit;
+  }
+
+
+
+
+
+bool SdProjectItem::isCanUpgaded(SdProjectItem *newObj)
+  {
+  return newObj != nullptr && getClass() == newObj->getClass() && getTitle() == newObj->getTitle();
   }
 
 
@@ -293,21 +300,6 @@ void SdProjectItem::setOrigin(const SdPoint org, SdUndo *undo)
 
 
 
-//Upgrade old item to new item
-void SdProjectItem::upgradeItem(const SdProjectItem *oldItem, const SdProjectItem *newItem)
-  {
-  //For each graph objects perform item upgrade
-  forEach( dctAll, [oldItem,newItem] (SdObject *obj) -> bool {
-    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-    if( graph != nullptr )
-      graph->upgradeItem( oldItem, newItem );
-    return true;
-    });
-  }
-
-
-
-
 void SdProjectItem::insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)
   {
   sour->forEach( dctAll, [this, offset, undo, next, editor, dest ] (SdGraph *obj) ->bool {
@@ -342,10 +334,11 @@ SdGraph *SdProjectItem::insertCopyObject(const SdGraph *obj, SdPoint offset, SdU
 void SdProjectItem::writeObject(QJsonObject &obj) const
   {
   SdContainer::writeObject( obj );
-  obj.insert( QStringLiteral("Title"),    mTitle );
-  obj.insert( QStringLiteral("Author"),   mAuthor );
-  obj.insert( QStringLiteral("Created"),  mCreateTime );
-  obj.insert( QStringLiteral("Auto"),     mAuto );
+  obj.insert( QStringLiteral("Title"),       mTitle );
+  obj.insert( QStringLiteral("Author"),      mAuthor );
+  obj.insert( QStringLiteral("Created"),     mCreateTime );
+  obj.insert( QStringLiteral("Auto"),        mAuto );
+  obj.insert( QStringLiteral("Edit enable"), mEditEnable );
   sdParamWrite( QStringLiteral("Parametrs"), mParamTable, obj );
   mOrigin.write( QStringLiteral("Origin"), obj );
   }
@@ -356,10 +349,11 @@ void SdProjectItem::writeObject(QJsonObject &obj) const
 void SdProjectItem::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdContainer::readObject( map, obj );
-  mTitle      = obj.value( QStringLiteral("Title") ).toString();
-  mAuthor     = obj.value( QStringLiteral("Author") ).toString();
-  mCreateTime = obj.value( QStringLiteral("Created") ).toInt();
-  mAuto       = obj.value( QStringLiteral("Auto") ).toBool();
+  mTitle        = obj.value( QStringLiteral("Title") ).toString();
+  mAuthor       = obj.value( QStringLiteral("Author") ).toString();
+  mCreateTime   = obj.value( QStringLiteral("Created") ).toInt();
+  mAuto         = obj.value( QStringLiteral("Auto") ).toBool();
+  mEditEnable   = obj.value( QStringLiteral("Edit enable") ).toBool();
   sdParamRead( QStringLiteral("Parametrs"), mParamTable, obj );
   mOrigin.read( QStringLiteral("Origin"), obj );
   }
@@ -374,9 +368,10 @@ void SdProjectItem::cloneFrom( const SdObject *src )
   mTitle      = sour->mTitle;
   mAuthor     = sour->mAuthor;
   mCreateTime = sour->mCreateTime;
-  mAuto       = true;
+  mAuto       = false;
   mParamTable = sour->mParamTable;
   mOrigin     = sour->mOrigin;
+  mEditEnable = true;
   }
 
 

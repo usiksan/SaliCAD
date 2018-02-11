@@ -40,7 +40,6 @@ class SdProjectItem : public SdContainer
     SdPoint                mOrigin;     //Origin for object
   public:
     QTreeWidgetItem       *mTreeItem;   //Correspond visual tree item
-    QString                mNewestId;   //Id of newest object of this name and author
 
     SdProjectItem();
 
@@ -61,12 +60,19 @@ class SdProjectItem : public SdContainer
     void                   setTag(const QString tag , const QString undoTitle);
     //Get editEnable flag
     bool                   isEditEnable() const { return mEditEnable; }
-    //Set editEnable flag
-    void                   setEditEnable(bool edit , const QString undoTitle);
+    //Set editEnable flag. When needed - creation new object perhaps
+    SdProjectItem         *setEditEnable(bool edit , const QString undoTitle);
     //Check if another author
     bool                   isAnotherAuthor() const;
     //Get over rect
     SdRect                 getOverRect( quint64 classMask = dctAll );
+    //Test if this object can be upgraded by other
+    bool                   isCanUpgaded( SdProjectItem *newObj );
+
+    //Params
+    bool                   paramContains( const QString key ) const { return mParamTable.contains(key); }
+    QVariant               paramGet( const QString key ) const { return mParamTable.value(key); }
+    void                   paramSet( const QString key, QVariant val ) { mParamTable.insert( key, val ); }
 
     //Object visual (graphical) identificator
     SdGraphIdent          *getIdent();
@@ -74,13 +80,6 @@ class SdProjectItem : public SdContainer
 
     SdPoint                getOrigin() const { return mOrigin; }
     void                   setOrigin( const SdPoint org, SdUndo *undo );
-
-    //Upgrade old item to new item
-    void                   upgradeItem( const SdProjectItem *oldItem, const SdProjectItem *newItem );
-
-
-
-
 
     void                   setHand() { mAuto = false; }
 

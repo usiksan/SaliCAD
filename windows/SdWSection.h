@@ -26,7 +26,7 @@ class SdWSection : public QWidget
     QLabel       *mTitle;    //Section symbol name
     QTableWidget *mPinTable; //Section pin assotiation table
   public:
-    explicit SdWSection( bool anotherAuthor, SdSection *s, QWidget *parent = 0);
+    explicit SdWSection( bool editEnabled, SdSection *s, QWidget *parent = 0);
 
     SdSection *getSection() const { return mSection; }
   signals:
@@ -36,7 +36,7 @@ class SdWSection : public QWidget
     void updateTitle();
 
     //Update visual pin assotiation table
-    void updatePinTable( bool anotherAuthor );
+    void updatePinTable(bool editEnabled );
 
     //On pin edit finish
     void onPinEditFinish( int row, int column );

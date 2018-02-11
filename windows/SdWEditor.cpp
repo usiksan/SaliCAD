@@ -91,6 +91,7 @@ void SdWEditor::cmObjectEditDisable()
 void SdWEditor::cmObjectEditEnable()
   {
   if( getProjectItem() ) {
+    SdProjectItem *item;
     //Check if author
     if( getProjectItem()->isAnotherAuthor() ) {
       int r = QMessageBox::question( this, tr("Warning"), tr("Object was created by another author '%1'. Change to your name?").arg(getProjectItem()->getAuthor()) );
@@ -98,14 +99,14 @@ void SdWEditor::cmObjectEditEnable()
       if( r == QMessageBox::No ) return;
       //Check if name unical for this author
       getProjectItem()->setUnicalTitle( tr("Set unical object name") );
-      getProjectItem()->setEditEnable( true, QString() );
+      item = getProjectItem()->setEditEnable( true, QString() );
       }
     else
-      getProjectItem()->setEditEnable( true, tr("Object edit enable") );
+      item = getProjectItem()->setEditEnable( true, tr("Object edit enable") );
     //Close this editor (viewer)
     SdPulsar::pulsar->emitCloseEditView( getProjectItem() );
     //Open new item with edit status
-    SdPulsar::pulsar->emitActivateItem( getProjectItem() );
+    SdPulsar::pulsar->emitActivateItem( item );
     }
   }
 
