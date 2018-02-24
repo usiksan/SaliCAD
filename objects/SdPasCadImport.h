@@ -19,8 +19,9 @@ Description
 #include <QWidget>
 #include <QMap>
 
-class DLayer;
-class DFont;
+struct DLayer;
+struct DFont;
+class  SdLayer;
 
 typedef QMap<int,SdObjectPtr> SdImportMap;
 
@@ -42,23 +43,28 @@ class SdPasCadImport
     bool import( const QString fname );
 
   private:
-    bool      project();
-    bool      symbol();
-    bool      part();
-    bool      alias();
-    bool      sheet();
-    bool      plate();
-    bool      text();
-    bool      projectItem( SdProjectItem *item );
-    SdObject *readObject( const QString type );
+    bool         project();
+    bool         projectItem( SdProjectItem *item );
+    SdObject    *buildObject( int id );
+    SdLayer     *readLayer();
 
-    int       readInt32();
-    bool      readBool();
-    QString   readNString();
-    QString   readConstString( int len );
-    QString   readWName() { return readConstString(32); }
-    QString   readName() { return readConstString(8); }
-    bool      error( QString msg );
+    int          readInt8();
+    int          readInt16();
+    int          readInt32();
+    bool         readBool();
+    QString      readNString();
+    QString      readConstString( int len );
+    QString      readWName() { return readConstString(32); }
+    QString      readName() { return readConstString(8); }
+    bool         error( QString msg );
+    bool         readObjectTable( SdContainer *container );
+    bool         readSingleObject( SdContainer *container );
+    bool         readSymbol( SdObject *obj );
+    SdPoint      readPoint();
+    bool         readLinear( SdObject *obj );
+    bool         readRect( SdObject *obj );
+    bool         readLine( SdObject *obj );
+    bool         readText( SdObject *obj );
   };
 
 #endif // SDPASCADIMPORT_H

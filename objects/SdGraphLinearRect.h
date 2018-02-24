@@ -49,6 +49,8 @@ class SdGraphLinearRect : public SdGraphLinear
 
     //Save object state
     virtual void    saveState( SdUndo *undo ) override;
+
+    friend class SdPasCadImport;
   };
 
 #endif // SDGRAPHLINEARRECT_H

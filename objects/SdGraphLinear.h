@@ -35,6 +35,8 @@ class SdGraphLinear : public SdGraph
 
     //Проверить доступность объекта
     virtual bool isVisible() override;
+
+    friend class SdPasCadImport;
   };
 
 #endif // SDOBJECTGRAPHLINEAR_H

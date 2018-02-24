@@ -47,6 +47,8 @@ class SdGraphLinearLine : public SdGraphLinear
     virtual bool    snapPoint(SdSnapInfo *snap) override;
     virtual int     behindCursor(SdPoint p) override;
     virtual void    saveState( SdUndo *undo ) override;
+
+    friend class SdPasCadImport;
   };
 
 #endif // SDGRAPHLINEARLINE_H
