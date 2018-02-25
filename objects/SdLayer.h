@@ -38,6 +38,46 @@ enum SdLayerTrace {
   layerTraceLast
   };
 
+//Layer class
+#define LID_INVISIBLE             0
+#define LID_SCHEMATIC      0x000001
+#define LID_PCB            0x000002
+#define LID_COMMON         0x0000ff
+
+//Layer type for pcb
+#define LID_TRACE          0x000100
+#define LID_POLYGON        0x000200
+#define LID_PAD            0x000300
+#define LID_HOLE           0x000400
+#define LID_CLEAR          0x000500
+#define LID_MASK           0x000600
+#define LID_STENSIL        0x000700
+#define LID_STENSIL_REPER  0x000800
+#define LID_TRACE_AREA     0x000900
+#define LID_PCB_CONTOUR    0x000a00
+#define LID_THROUGH_PAD    0x000b00
+//Layer type for schematic
+#define LID_NET            0x004100
+#define LID_NET_NAME       0x004200
+#define LID_BUS            0x004300
+#define LID_PCB_AREA       0x004400
+//Layer type for common
+#define LID_ELEMENT        0x008100
+#define LID_PIN            0x008200
+#define LID_PIN_NAME       0x008300
+#define LID_PIN_NUMBER     0x008400
+#define LID_IDENT          0x008500
+#define LID_PICTURE        0x008600
+#define LID_REMARK         0x008700
+#define LID_VALUES         0x008800
+
+//Layer PCB z-layout
+#define LID_TOP            0x000000
+#define LID_INT1           0x010000
+#define LID_INT62          0x3e0000
+#define LID_BOT            0x3f0000
+#define LID_THROUGH        0x400000
+
 //Обозначения в идентификаторе слоя
 #define LID0_SCHEMATIC     "Sch" //Схема
 #define LID0_PCB_TOP       "Pct" //Плата сверху

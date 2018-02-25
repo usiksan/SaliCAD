@@ -18,8 +18,21 @@ Description
 //Convert textual representation of physical coords to logical int
 int SdUtil::phys2log(const QString src, double ppm)
   {
+  return phys2log( str2phys(src), ppm );
+  }
+
+int SdUtil::phys2log(double phys, double ppm)
+  {
   if( ppm == 0 ) ppm = 1.0;
-  return (str2phys(src) + ppm/2) / ppm;
+  return (phys + ppm/2) / ppm;
+  }
+
+QPoint SdUtil::phys2log(QPointF phys, double ppm)
+  {
+  QPoint p;
+  p.rx() = phys2log( phys.x(), ppm );
+  p.ry() = phys2log( phys.y(), ppm );
+  return p;
   }
 
 
@@ -51,6 +64,17 @@ QString SdUtil::log2physStr( int log, double ppm )
 double SdUtil::log2phys(int log, double ppm)
   {
   return static_cast<double>(log) * ppm;
+  }
+
+
+
+//Convert logical point to physical
+QPointF SdUtil::log2phys(QPoint log, double ppm)
+  {
+  QPointF p;
+  p.rx() = log2phys( log.x(), ppm );
+  p.ry() = log2phys( log.y(), ppm );
+  return p;
   }
 
 

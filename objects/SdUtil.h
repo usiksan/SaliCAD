@@ -15,6 +15,8 @@ Description
 #define SDUTIL_H
 
 #include <QString>
+#include <QPoint>
+#include <QPointF>
 
 #define timeOffsetConstant 1000000000L
 
@@ -24,6 +26,12 @@ class SdUtil
     //Convert textual representation of physical coords to int
     static int     phys2log( const QString src, double ppm );
 
+    //Convert physical coord to int
+    static int     phys2log( double phys, double ppm );
+
+    //Convert physical point to int point
+    static QPoint  phys2log( QPointF phys, double ppm );
+
     //Convert textual representation of physical coord to double phys
     static double  str2phys( const QString src );
 
@@ -32,6 +40,9 @@ class SdUtil
 
     //Convert logical int coord to physical
     static double  log2phys( int log, double ppm );
+
+    //Convert logical point to physical
+    static QPointF log2phys( QPoint log, double ppm );
 
     //Get current time from 2000year
     static int     getTime2000();

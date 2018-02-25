@@ -12,16 +12,17 @@ Description
 */
 #include "SdConfig.h"
 #include "SdEnvir.h"
+
 #include <QSettings>
 #include <QByteArray>
 #include <QDataStream>
 #include <QDir>
+#include <QDebug>
 
 SdEnvir *sdEnvir;
 
 SdEnvir::SdEnvir()
   {
-  loadEnvir();
   }
 
 SdEnvir::~SdEnvir()
@@ -98,7 +99,7 @@ void SdEnvir::loadEnvir()
       layer->read( is );
       }
 
-    //Записали остальные значения
+    //Read other values
     is >> mDotSize              //Размер точки соединений сегментов цепи
        >> mDotWidth             //Толщина линии точки соединения сегментов цепи
        >> mSymPinSize           //Размер перекрестья ножки символа
@@ -122,18 +123,20 @@ void SdEnvir::loadEnvir()
        >> mUndoSize             //Размер буфера отмены
        >> mCursorView           //Вид перекрестья курсора
        >> mSmallCursorSize      //Размер малого курсора в пикселах
-       >> mShowCursor           //Показывать курсор
+       >> mCursorShow           //Показывать курсор
        >> mTraseDotSize         //Размер точки, показывающей цепь
        >> mSchPPM               //Коэффициент преобразования в физическую величину в схемном редакторе
        >> mPrtPPM               //Коэффициент преобразования в физическую величину в конструкциях
-       >> mGridView             //Включение сетки
-       >> mCursorGrid           //Включение движения курсора по сетке
+       >> mGridSyncXY           //Syncronisated edition x and grid steps
+       >> mGridShow             //Включение сетки
+       >> mCursorAlignGrid           //Включение движения курсора по сетке
        >> mCenterCursor         //Центровать курсор при увеличении и уменьшении
        >> mHomePath             //Каталог пользователя
        >> mLibraryPath          //Каталог библиотек
        >> mPatternPath          //Каталог шаблонов
        >> mPadStackFile         //Файл контактных площадок
-       >> mPadStackObject;       //Объект содержащий контактные площадки
+       >> mPadStackObject       //Объект содержащий контактные площадки
+       >> mGridHistory;         //Previous grid history table
     }
   else defaultEnvir();
   }
@@ -162,6 +165,7 @@ void SdEnvir::saveEnvir()
     layer->write( os );
     }
 
+
   //Записали остальные значения
   os << mDotSize              //Размер точки соединений сегментов цепи
      << mDotWidth             //Толщина линии точки соединения сегментов цепи
@@ -186,18 +190,20 @@ void SdEnvir::saveEnvir()
      << mUndoSize             //Размер буфера отмены
      << mCursorView           //Вид перекрестья курсора
      << mSmallCursorSize      //Размер малого курсора в пикселах
-     << mShowCursor           //Показывать курсор
+     << mCursorShow           //Показывать курсор
      << mTraseDotSize         //Размер точки, показывающей цепь
      << mSchPPM               //Коэффициент преобразования в физическую величину в схемном редакторе
      << mPrtPPM               //Коэффициент преобразования в физическую величину в конструкциях
-     << mGridView             //Включение сетки
-     << mCursorGrid           //Включение движения курсора по сетке
+     << mGridSyncXY           //Syncronisated edition x and grid steps
+     << mGridShow             //Включение сетки
+     << mCursorAlignGrid           //Включение движения курсора по сетке
      << mCenterCursor         //Центровать курсор при увеличении и уменьшении
      << mHomePath             //Каталог пользователя
      << mLibraryPath          //Каталог библиотек
      << mPatternPath          //Каталог шаблонов
      << mPadStackFile         //Файл контактных площадок
-     << mPadStackObject;       //Объект содержащий контактные площадки
+     << mPadStackObject       //Объект содержащий контактные площадки
+     << mGridHistory;         //Previous grid history table
 
   QSettings s;
   s.setValue( QString(SDK_ENVIR_VERSION), QVariant(SdEnvirVersion) );
@@ -252,15 +258,17 @@ void SdEnvir::defaultEnvir()
   mUndoSize          = 100000;         //Размер буфера отмены
   mCursorView        = dcvSmall;       //Вид перекрестья курсора
   mSmallCursorSize   = 30;             //Размер малого курсора в пикселах
-  mShowCursor        = true;           //Показывать курсор
+  mCursorShow        = true;           //Показывать курсор
   mTraseDotSize      = 10;             //Размер точки, показывающей цепь
 
   //PPM показывает сколько физической величины приходится на одну логическую единицу
   mSchPPM            = 0.1;            //Коэффициент преобразования в физическую величину в схемном редакторе
   mPrtPPM            = 0.001;          //Коэффициент преобразования в физическую величину в конструкциях
-  mGridView          = true;           //Включение сетки
-  mCursorGrid        = true;           //Включение движения курсора по сетке
+  mGridSyncXY        = true;           //Syncronisated edition x and grid steps
+  mGridShow          = true;           //Включение сетки
+  mCursorAlignGrid        = true;           //Включение движения курсора по сетке
   mCenterCursor      = true;           //Центровать курсор при увеличении и уменьшении
+  mGridHistory.clear();
 
   mGuiderEnabled     = true;           //Флаг разрешения/запрещения путеводителя
   mGuiderPosition    = 0;              //Положение разделителя путеводителя

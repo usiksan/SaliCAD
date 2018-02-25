@@ -17,6 +17,7 @@ Description
 #include "SdWCommand.h"
 #include "SdDEnterPosition.h"
 #include "SdDPrint.h"
+#include "SdDGrid.h"
 #include "objects/SdContext.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdConverterView.h"
@@ -421,6 +422,20 @@ void SdWEditorGraph::cmViewFit()
 
 
 
+
+void SdWEditorGraph::cmViewGrid()
+  {
+  SdDGrid gridDlg( SdUtil::log2phys( mGrid, getPPM() ), this );
+  if( gridDlg.exec() ) {
+    mGrid = SdUtil::phys2log( gridDlg.getGrid(), getPPM() );
+    dirtyCashe();
+    update();
+    }
+  }
+
+
+
+
 void SdWEditorGraph::cmEnterPosition()
   {
   //Handle enter cursor position
@@ -540,7 +555,7 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
     //qDebug() << "cashe" << mOrigin << mScale.scaleGet();
 
     //Draw grid
-    if( sdEnvir->mGridView && mGrid.x() > 0 ) {
+    if( sdEnvir->mGridShow && mGrid.x() > 0 ) {
       //We don't draw grid with cell less then minViewGrid pixels
       //Не чертить сетку менее чем в minViewGrid пикселов
       if( mScale.phys2pixel(mGrid.x()) >= sdEnvir->mMinViewGrid && mScale.phys2pixel(mGrid.y()) >= sdEnvir->mMinViewGrid ) {
@@ -757,7 +772,7 @@ SdPoint SdWEditorGraph::pixel2phys(QPoint pos)
   SdPoint tmp( mPixelTransform.map( pos ) );
 
   //Если курсор по сетке - то выровнять
-  if( sdEnvir->mCursorGrid ) {
+  if( sdEnvir->mCursorAlignGrid ) {
     if( tmp.x() < 0 )
       tmp.setX( ((tmp.x() - mGrid.x()/2) / mGrid.x() ) * mGrid.x() );
     else

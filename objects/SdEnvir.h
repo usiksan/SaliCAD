@@ -20,6 +20,7 @@ Description
 #include <QColor>
 #include <QMap>
 #include <QPointF>
+#include <QList>
 
 
 #define scPureBlack     -2 //Чисто черный цвет
@@ -46,7 +47,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (11 + GRID_HISTORY_SIZE + FONT_COUNT)
+#define SdEnvirVersion  (21 + FONT_COUNT)
 
 typedef QMap<QString,SdLayerPtr> SdLayerPtrTable;
 
@@ -80,19 +81,21 @@ class SdEnvir
     int             mUndoSize;             //Размер буфера отмены
     int             mCursorView;           //Вид перекрестья курсора
     int             mSmallCursorSize;      //Размер малого курсора в пикселах
-    bool            mShowCursor;           //Показывать курсор
+    bool            mCursorShow;           //Показывать курсор
     int             mTraseDotSize;         //Размер точки, показывающей цепь
                                            //PPM показывает сколько физической величины приходится на одну логическую единицу
     double          mSchPPM;               //Коэффициент преобразования в физическую величину в схемном редакторе
     double          mPrtPPM;               //Коэффициент преобразования в физическую величину в конструкциях
-    bool            mGridView;             //Включение сетки
-    bool            mCursorGrid;           //Включение движения курсора по сетке
+    bool            mGridSyncXY;           //Syncronisated edition x and grid steps
+    bool            mGridShow;             //Включение сетки
+    bool            mCursorAlignGrid;           //Включение движения курсора по сетке
     bool            mCenterCursor;         //Центровать курсор при увеличении и уменьшении
     QString         mHomePath;             //Каталог пользователя
     QString         mLibraryPath;          //Каталог библиотек
     QString         mPatternPath;          //Каталог шаблонов
     QString         mPadStackFile;         //Файл контактных площадок
     QString         mPadStackObject;       //Объект содержащий контактные площадки
+    QList<QPointF>  mGridHistory;          //Previous grid history
 
 
     bool            mGuiderEnabled;        //Флаг разрешения/запрещения путеводителя
@@ -107,7 +110,6 @@ class SdEnvir
     bool            mMaxFrame;             //Истина, если главное окно на весь экран
     bool            mAutoPads;             //Автоматическая расстановка КП
     bool            mCreateBack;           //Создавать BAK файл при сохранении
-    QPointF         mGridHistory[GRID_HISTORY_SIZE];  //Предыдущие значения сетки
     double          mPolyClear;             //Зазор между дорожками и полигоном
     bool            mShowConflict;         //Показывать конфликты трассировки
 

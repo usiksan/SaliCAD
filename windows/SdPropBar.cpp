@@ -1,13 +1,21 @@
 /*
-  Проект "SaliBrick"
-    Визуальное программирование микроконтроллеров
-  Автор
-    Сибилев А.С.
-  Описание
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Base tool bar for property bars
 */
 #include "SdPropBar.h"
 #include "SdWCommand.h"
 #include "objects/SdEnvir.h"
+
+#include <QStyleFactory>
 
 
 SdPropBar::SdPropBar( const QString title ) :
@@ -15,7 +23,9 @@ SdPropBar::SdPropBar( const QString title ) :
   {
   insertAction( 0, SdWCommand::cmViewLayers );
   mLayer = new QComboBox();
-  mLayer->setEditable(false);
+  mLayer->setStyle( QStyleFactory::create("windows") );
+  //mLayer->setEditable( true );
+  mLayer->setMaxVisibleItems( 10 );
   addWidget( mLayer );
   mLayer->setMinimumWidth( 150 );
 

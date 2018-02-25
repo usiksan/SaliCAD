@@ -74,6 +74,9 @@ int main(int argc, char *argv[])
   sdEnvir = new SdEnvir();
   sdGlobalProp = new SdProp();
 
+  //Load environment
+  sdEnvir->loadEnvir();
+
   //Open library for objectFactory system
   SdObjectFactory::openLibrary();
 
@@ -87,6 +90,9 @@ int main(int argc, char *argv[])
   //w.restorePositions();
 
   int res = a.exec();
+
+  //Save current environment
+  sdEnvir->saveEnvir();
 
   delete sdGlobalProp;
   delete sdEnvir;

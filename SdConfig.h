@@ -69,6 +69,7 @@ History
                    Append undo deleting.
   04.09.2017 v0.26 Append some icons.
                    Set edit-view mech.
+  25.02.2018 v0.27 Append grid dialog
 */
 
 #ifndef SDCONFIG
@@ -80,7 +81,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             26
+#define SD_VERSION_MINOR             27
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -104,7 +105,7 @@ History
 
 //Grid history count
 //User can enter any grid size, but only GRID_HISTORY_SIZE grid sizes save in system for fast selection
-#define GRID_HISTORY_SIZE            5
+#define GRID_HISTORY_SIZE            8
 
 //Maximum font count
 //In project fonts referenced by index in system font table
