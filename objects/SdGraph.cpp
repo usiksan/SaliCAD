@@ -102,10 +102,10 @@ void SdGraph::prepareMove(SdUndo *undo)
 
 
 
-bool SdGraph::canHideLayer(SdLayer *layer)
+
+
+void SdGraph::setLayerUsage()
   {
-  Q_UNUSED(layer)
-  return true;
   }
 
 

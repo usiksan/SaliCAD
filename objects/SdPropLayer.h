@@ -38,7 +38,7 @@ class SdPropLayer
     SdLayer   *layer( bool otherSide = false ) const;
     void       append( SdPropLayer p );
     void       clear() { mValue = NoValue; }   //Нет значения
-    bool       canHide( SdLayer *layer ) const;
+    void       setLayerUsage() const;
     bool       match( SdPropLayer const &s ) {
       return s.mValue == OneValue && mValue == OneValue ? s.mLayer == mLayer : true;
       }

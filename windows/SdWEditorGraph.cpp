@@ -18,6 +18,7 @@ Description
 #include "SdDEnterPosition.h"
 #include "SdDPrint.h"
 #include "SdDGrid.h"
+#include "SdDLayers.h"
 #include "objects/SdContext.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdConverterView.h"
@@ -431,6 +432,18 @@ void SdWEditorGraph::cmViewGrid()
     dirtyCashe();
     update();
     }
+  }
+
+
+
+
+
+void SdWEditorGraph::cmViewLayers()
+  {
+  SdDLayers layersDlg( getProject(), this );
+  layersDlg.exec();
+  dirtyCashe();
+  update();
   }
 
 

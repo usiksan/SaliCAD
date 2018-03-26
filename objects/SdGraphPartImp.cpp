@@ -485,11 +485,13 @@ void SdGraphPartImp::selectByRect(const SdRect &r, SdSelector *selector)
 
 
 
-
-bool SdGraphPartImp::canHideLayer(SdLayer *layer)
+void SdGraphPartImp::setLayerUsage()
   {
-  return mIdentProp.mLayer.canHide( layer );
+  mIdentProp.mLayer.setLayerUsage();
   }
+
+
+
 
 
 

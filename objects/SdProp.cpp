@@ -19,11 +19,11 @@ SdProp *sdGlobalProp;
 SdProp::SdProp()
   {
   //Сформировать свойства по умолчанию
-  mLineProp.mLayer.set( QString( LID0_COMMON LID1_ELEM) );       //Свойства линейных объектов
+  mLineProp.mLayer.set( QString( LID0_COMMON ) );       //Свойства линейных объектов
   mLineProp.mType  = dltSolid;
   mLineProp.mWidth = 0;
 
-  mTextProp.mLayer.set( QString( LID0_COMMON LID1_ELEM) );       //Свойства текстовых объектов
+  mTextProp.mLayer.set( QString( LID0_COMMON ) );       //Свойства текстовых объектов
   mTextProp.mFont   = 0;
   mTextProp.mSize   = 35;
   mTextProp.mDir    = da0;
@@ -32,12 +32,12 @@ SdProp::SdProp()
   mTextProp.mMirror = 0;
 
   //Props of wire
-  mWireProp.mLayer.set( QString(LID0_SCHEMATIC LID1_NET ) );       //Свойства сегментов цепей схемы
+  mWireProp.mLayer.set( QString( LID0_NET ) );       //Свойства сегментов цепей схемы
   mWireProp.mType  = dltSolid;
   mWireProp.mWidth = 0;
 
   //Props of wire name
-  mWireNameProp.mLayer.set( QString( LID0_SCHEMATIC LID1_NET_NAME) );       //Свойства текстовых объектов
+  mWireNameProp.mLayer.set( QString( LID0_NET_NAME ) );       //Свойства текстовых объектов
   mWireNameProp.mFont   = 0;
   mWireNameProp.mSize   = 35;
   mWireNameProp.mDir    = da0;
@@ -46,11 +46,11 @@ SdProp::SdProp()
   mWireNameProp.mMirror = 0;
 
   //Symbol pin properties
-  mSymPinProp.mLayer.set( QString(LID0_SCHEMATIC LID1_PIN) );     //Свойства вывода символа
+  mSymPinProp.mLayer.set( QString(LID0_PIN) );     //Свойства вывода символа
   mSymPinProp.mPinType = 0;
 
   //Symbol pin name properties
-  mSymPinNameProp.mLayer.set( QString(LID0_SCHEMATIC LID1_PIN_NAME) );
+  mSymPinNameProp.mLayer.set( QString(LID0_PIN_NAME) );
   mSymPinNameProp.mFont   = 0;
   mSymPinNameProp.mSize   = 35;
   mSymPinNameProp.mDir    = da0;
@@ -59,7 +59,7 @@ SdProp::SdProp()
   mSymPinNameProp.mMirror = 0;
 
   //Symbol pin number properties
-  mSymPinNumberProp.mLayer.set( QString(LID0_SCHEMATIC LID1_PIN_NUMBER) );
+  mSymPinNumberProp.mLayer.set( QString(LID0_PIN_NUMBER) );
   mSymPinNumberProp.mFont   = 0;
   mSymPinNumberProp.mSize   = 35;
   mSymPinNumberProp.mDir    = da0;
@@ -68,12 +68,12 @@ SdProp::SdProp()
   mSymPinNumberProp.mMirror = 0;
 
   //Part pin properties
-  mPartPinProp.mLayer.set( QString(LID0_PCB_TOP LID1_PIN ) );    //Свойства вывода корпуса
+  mPartPinProp.mLayer.set( QString(LID0_PIN LID1_TOP) );    //Свойства вывода корпуса
   mPartPinProp.mPinType = QString("h1");
   mPartPinProp.mSide = dsThrow;
 
   //Part pin name properties
-  mPartPinNameProp.mLayer.set( QString(LID0_PCB_TOP LID1_PIN_NAME) );    //Свойства имени вывода
+  mPartPinNameProp.mLayer.set( QString(LID0_PIN_NAME LID1_TOP) );    //Свойства имени вывода
   mPartPinNameProp.mFont   = 0;
   mPartPinNameProp.mSize   = 1000;
   mPartPinNameProp.mDir    = da0;
@@ -82,7 +82,7 @@ SdProp::SdProp()
   mPartPinNameProp.mMirror = 0;
 
   //Part pin number properties
-  mPartPinNumberProp.mLayer.set( QString(LID0_PCB_TOP LID1_PIN_NUMBER) );  //Свойства номера вывода
+  mPartPinNumberProp.mLayer.set( QString(LID0_PIN_NUMBER LID1_TOP) );  //Свойства номера вывода
   mPartPinNumberProp.mFont   = 0;
   mPartPinNumberProp.mSize   = 1000;
   mPartPinNumberProp.mDir    = da0;
@@ -100,7 +100,7 @@ SdProp::SdProp()
   mPartImpProp.mSide   = dsideTop;
 
   //Symbol identifier (reference) aka D4.5
-  mSymIdentProp.mLayer.set( QString(LID0_SCHEMATIC LID1_PIN_NUMBER) );
+  mSymIdentProp.mLayer.set( QString(LID0_IDENT) );
   mSymIdentProp.mFont   = 0;
   mSymIdentProp.mSize   = 35;
   mSymIdentProp.mDir    = da0;
@@ -109,7 +109,7 @@ SdProp::SdProp()
   mSymIdentProp.mMirror = 0;
 
   //Part identifier (reference) aka D4
-  mPartIdentProp.mLayer.set( QString(LID0_PCB_TOP LID1_PIN_NAME) );    //Свойства имени вывода
+  mPartIdentProp.mLayer.set( QString(LID0_IDENT LID1_TOP) );    //Свойства имени вывода
   mPartIdentProp.mFont   = 0;
   mPartIdentProp.mSize   = 1000;
   mPartIdentProp.mDir    = da0;

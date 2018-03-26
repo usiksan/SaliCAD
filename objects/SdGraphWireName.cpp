@@ -135,10 +135,13 @@ void SdGraphWireName::getProp(SdPropSelected &prop)
 
 
 
-bool SdGraphWireName::canHideLayer(SdLayer *layer)
+
+void SdGraphWireName::setLayerUsage()
   {
-  return mProp.mLayer.canHide(layer);
+  mProp.mLayer.setLayerUsage();
   }
+
+
 
 
 

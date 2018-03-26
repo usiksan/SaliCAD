@@ -41,6 +41,7 @@ struct SdPropLine {
   bool operator == ( SdPropLine const &prop );//Сравнить свойства
   void clear();
   bool match( SdPropLine const &prop );       //Сравнить на совпадение с эталоном
+  void setLayerUsage() const { mLayer.setLayerUsage(); }
 
   void write( QJsonObject &obj ) const;
   void read( const QJsonObject obj );

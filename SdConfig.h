@@ -70,6 +70,11 @@ History
   04.09.2017 v0.26 Append some icons.
                    Set edit-view mech.
   25.02.2018 v0.27 Append grid dialog
+  18.02.2018 v0.28 Append layer dialog
+                   - layer name change
+                   - color change
+                   - state change
+                   - save list
 */
 
 #ifndef SDCONFIG
@@ -81,7 +86,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             27
+#define SD_VERSION_MINOR             28
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -92,6 +97,9 @@ History
 //Project naming definition
 #define SD_BASE_EXTENSION            ".salicad"
 #define SD_DEFAULT_FILE_NAME         "default"
+
+//Layer list naming definition
+#define SD_LAYER_LIST_EXTENSION      ".layersSet"
 
 //SaliCAD database version
 //Must be compatible with previous versions

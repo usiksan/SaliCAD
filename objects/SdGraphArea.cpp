@@ -234,9 +234,11 @@ void SdGraphArea::select(SdSelector *selector)
 
 
 
-bool SdGraphArea::canHideLayer(SdLayer *layer)
+
+
+void SdGraphArea::setLayerUsage()
   {
-  return mRegionProp.mLayer.canHide( layer );
+  mRegionProp.mLayer.setLayerUsage();
   }
 
 

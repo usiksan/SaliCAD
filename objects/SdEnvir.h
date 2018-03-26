@@ -47,7 +47,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (21 + FONT_COUNT)
+#define SdEnvirVersion  (22 + FONT_COUNT)
 
 typedef QMap<QString,SdLayerPtr> SdLayerPtrTable;
 
@@ -135,6 +135,7 @@ class SdEnvir
   private:
     void deleteLayers();
     void addLayer( SdLayer *layer );
+    void addLayerId( const QString layerId, unsigned ccolor );
   };
 
 extern SdEnvir *sdEnvir;

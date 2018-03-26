@@ -72,3 +72,11 @@ bool SdGraphLinear::isVisible()
   return mProp.mLayer.isVisible();
   }
 
+
+
+
+void SdGraphLinear::setLayerUsage()
+  {
+  mProp.mLayer.setLayerUsage();
+  }
+

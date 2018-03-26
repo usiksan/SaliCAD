@@ -112,6 +112,7 @@ class SdWEditorGraph : public SdWEditor
     virtual void           onActivateEditor() override;
     virtual void           cmViewFit() override;
     virtual void           cmViewGrid() override;
+    virtual void           cmViewLayers() override;
     virtual void           cmViewZoomIn() override;
     virtual void           cmViewZoomOut() override;
     virtual void           cmViewWindow() override;

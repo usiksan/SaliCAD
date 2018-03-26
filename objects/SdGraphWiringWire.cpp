@@ -472,10 +472,14 @@ void SdGraphWiringWire::prepareMove(SdUndo *undo)
 
 
 
-bool SdGraphWiringWire::canHideLayer(SdLayer *layer)
+
+
+void SdGraphWiringWire::setLayerUsage()
   {
-  return mProp.mLayer.canHide(layer);
+  mProp.mLayer.setLayerUsage();
   }
+
+
 
 
 

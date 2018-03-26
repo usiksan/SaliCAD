@@ -36,6 +36,8 @@ class SdGraphLinear : public SdGraph
     //Проверить доступность объекта
     virtual bool isVisible() override;
 
+    virtual void setLayerUsage() override;
+
     friend class SdPasCadImport;
   };
 

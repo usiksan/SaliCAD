@@ -79,7 +79,7 @@ class SdGraphWiringWire : public SdGraphWiring
     virtual void    selectByRect(const SdRect &r, SdSelector *selector) override;
     virtual void    select(SdSelector *selector) override;
     virtual void    prepareMove( SdUndo *undo ) override;
-    virtual bool    canHideLayer(SdLayer *layer) override;
+    virtual void    setLayerUsage() override;
     virtual bool    isVisible() override;
     virtual SdRect  getOverRect() const override;
     virtual void    draw(SdContext *dc) override;

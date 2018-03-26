@@ -53,7 +53,7 @@ class SdGraphWireName : public SdGraph
     virtual void    mirror(SdPoint a, SdPoint b) override;
     virtual void    setProp(SdPropSelected &prop) override;
     virtual void    getProp(SdPropSelected &prop) override;
-    virtual bool    canHideLayer(SdLayer *layer) override;
+    virtual void    setLayerUsage() override;
     virtual bool    isVisible() override;
     virtual SdRect  getOverRect() const override;
     virtual void    draw(SdContext *dc) override;

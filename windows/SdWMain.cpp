@@ -728,7 +728,8 @@ void SdWMain::cmViewGrid()
 
 void SdWMain::cmViewLayers()
   {
-  //if( activeEditor() )
+  if( activeEditor() )
+    activeEditor()->cmViewLayers();
   }
 
 

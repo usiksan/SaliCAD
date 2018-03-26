@@ -148,8 +148,7 @@ bool SdPasCadImport::import(const QString fname)
       mLayerTable = new DLayer[mLayerNumber];
       readInt32(); //delta
       for( int i = 0; i < mLayerNumber; i++ ) {
-        //mLayerTable[i].name =
-        readWName();
+        QString lname = mLayerTable[i].name = readWName();
         int field = readInt32();
         mLayerTable[i].state = field & 0xf;
         mLayerTable[i].trase = (field >> 4) & 0xf;
@@ -159,7 +158,24 @@ bool SdPasCadImport::import(const QString fname)
         mLayerTable[i].id    = readInt32();
         mLayerTable[i].pair  = readInt32();
         mLayerTable[i].flag  = readInt32();
-        mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_SCHEMATIC LID1_ELEM );
+        //Layer assignment
+        if( lname == QString("Изображение корпуса") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_COMPONENT );
+        else if( lname == QString("Ножки") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_PIN );
+        else if( lname == QString("Номера ножек") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_PIN_NUMBER );
+        else if( lname == QString("Имена ножек") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_PIN_NAME );
+        else if( lname == QString("Идентификаторы") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_IDENT );
+        else if( lname == QString("Цепи") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_NET );
+        else if( lname == QString("Имена цепей") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_NET_NAME );
+        else if( lname == QString("Шины") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_BUS );
+        else if( lname == QString("Рисунок") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_PICTURE );
+        else if( lname == QString("Коментарий") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_REMARK );
+        else if( lname == QString("Контур платы") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_PCB );
+        else if( lname == QString("Верхний слой (дорожки)") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_WIRE LID1_TOP );
+        else if( lname == QString("Верхний слой (площадки)") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_PAD LID1_TOP );
+        else if( lname == QString("Нижний слой (дорожки)") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_WIRE LID1_BOT );
+        else if( lname == QString("Нижний слой (площадки)") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_PAD LID1_BOT );
+        else if( lname == QString("Площадки") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_PAD );
+        else mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_COMMON );
         qDebug() << "Layer " << i << mLayerTable[i].name;
         }
 

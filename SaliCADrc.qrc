@@ -201,5 +201,7 @@
         <file>pic/objField.png</file>
         <file>pic/fileExport.png</file>
         <file>pic/objectEditDisable.png</file>
+        <file>pic/lampDisable.png</file>
+        <file>pic/lampEnable.png</file>
     </qresource>
 </RCC>

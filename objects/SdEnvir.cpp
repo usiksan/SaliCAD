@@ -305,67 +305,24 @@ void SdEnvir::defaultEnvir()
 //  bool            mShowConflict;         //Показывать конфликты трассировки
 
   //Перечень слоев по умолчанию
+  //Default layer list
   deleteLayers();
-  addLayer( new SdLayer( QString( LID0_INVISIBLE ), QObject::tr("Invisible"), 0xff007f7f ) );
+  for( int i = 0; sdLayerDescrActual[i].mId != nullptr; i++ )
+    addLayerId( QString(sdLayerDescrActual[i].mId), sdLayerDescrActual[i].mColor );
+  for( int i = 0; sdLayerDescrAddon[i].mId != nullptr; i++ )
+    addLayerId( QString(sdLayerDescrAddon[i].mId), sdLayerDescrAddon[i].mColor );
 
-  addLayer( new SdLayer( QString( LID0_SCHEMATIC LID1_ELEM ), QObject::tr("Schematic element"), 0x000000ff ) );
-  addLayer( new SdLayer( QString( LID0_SCHEMATIC LID1_PIN ), QObject::tr("Schematic element pin"), 0x0000ff00 ) );
-  addLayer( new SdLayer( QString( LID0_SCHEMATIC LID1_PIN_NAME ), QObject::tr("Schematic element pin name"), 0x007f7f00 ) );
-  addLayer( new SdLayer( QString( LID0_SCHEMATIC LID1_PIN_NUMBER ), QObject::tr("Schematic element pin number"), 0x00ff0000 ) );
-  addLayer( new SdLayer( QString( LID0_SCHEMATIC LID1_IDENT ), QObject::tr("Schematic element ident"), 0x00ff7f00 ) );
-  addLayer( new SdLayer( QString( LID0_SCHEMATIC LID1_NET ), QObject::tr("Schematic net"), 0x00ffff7f ) );
-  addLayer( new SdLayer( QString( LID0_SCHEMATIC LID1_NET_NAME ), QObject::tr("Schematic net name"), 0x00ff00ff ) );
-  addLayer( new SdLayer( QString( LID0_SCHEMATIC LID1_BUS ), QObject::tr("Schematic net bus"), 0xff0000ff ) );
-  addLayer( new SdLayer( QString( LID0_SCHEMATIC LID1_PICTURE ), QObject::tr("Schematic picture"), 0xff00ff00 ) );
-  addLayer( new SdLayer( QString( LID0_SCHEMATIC LID1_REMARK ), QObject::tr("Schematic remark"), 0xffff0000 ) );
 
-  addLayer( new SdLayer( QString( LID0_PCB_TOP LID1_ELEM ), QObject::tr("Pcb top part"), 0x000000ff ) );
-  addLayer( new SdLayer( QString( LID0_PCB_TOP LID1_PIN ), QObject::tr("Pcb top pin"), 0x0000ff00 ) );
-  addLayer( new SdLayer( QString( LID0_PCB_TOP LID1_PIN_NAME ), QObject::tr("Pcb top pin name"), 0x007f7f00 ) );
-  addLayer( new SdLayer( QString( LID0_PCB_TOP LID1_PIN_NUMBER ), QObject::tr("Pcb top pin number"), 0x00ff0000 ) );
-  addLayer( new SdLayer( QString( LID0_PCB_TOP LID1_IDENT ), QObject::tr("Pcb top ident"), 0x00ff7f00 ) );
-  addLayer( new SdLayer( QString( LID0_PCB_TOP LID1_PICTURE ), QObject::tr("Pcb top picture"), 0xff00ff00 ) );
-  addLayer( new SdLayer( QString( LID0_PCB_TOP LID1_REMARK ), QObject::tr("Pcb top remark"), 0xffff0000 ) );
+  //Assign paired layers
+  setPair( QString( LID0_COMPONENT ),  QString( LID0_COMPONENT LID1_BOT ) );
+  setPair( QString( LID0_PIN ),        QString( LID0_PIN LID1_BOT ) );
+  setPair( QString( LID0_PIN_NAME ),   QString( LID0_PIN_NAME LID1_BOT ) );
+  setPair( QString( LID0_PIN_NUMBER ), QString( LID0_PIN_NUMBER LID1_BOT ) );
+  setPair( QString( LID0_IDENT ),      QString( LID0_IDENT LID1_BOT ) );
 
-  addLayer( new SdLayer( QString( LID0_PCB_BOT LID1_ELEM ), QObject::tr("Pcb bot part"), 0x000000ff ) );
-  addLayer( new SdLayer( QString( LID0_PCB_BOT LID1_PIN ), QObject::tr("Pcb bot pin"), 0x0000ff00 ) );
-  addLayer( new SdLayer( QString( LID0_PCB_BOT LID1_PIN_NAME ), QObject::tr("Pcb bot pin name"), 0x007f7f00 ) );
-  addLayer( new SdLayer( QString( LID0_PCB_BOT LID1_PIN_NUMBER ), QObject::tr("Pcb bot pin number"), 0x00ff0000 ) );
-  addLayer( new SdLayer( QString( LID0_PCB_BOT LID1_IDENT ), QObject::tr("Pcb bot ident"), 0x00ff7f00 ) );
-
-  addLayer( new SdLayer( QString( LID0_TRACE LID1_TOP ), QObject::tr("Trace top"), 0xffffff00 ) );
-  addLayer( new SdLayer( QString( LID0_TRACE LID1_BOT ), QObject::tr("Trace bot"), 0xff00007f ) );
-  addLayer( new SdLayer( QString( LID0_TRACE LID1_INT00 ), QObject::tr("Trace int1"), 0xffffff40 ) );
-  addLayer( new SdLayer( QString( LID0_TRACE LID1_INT01 ), QObject::tr("Trace int2"), 0xffffff80 ) );
-  addLayer( new SdLayer( QString( LID0_TRACE LID1_INT02 ), QObject::tr("Trace int3"), 0xff00407f ) );
-  addLayer( new SdLayer( QString( LID0_TRACE LID1_INT03 ), QObject::tr("Trace int4"), 0xff00807f ) );
-
-  addLayer( new SdLayer( QString( LID0_POLYGON LID1_TOP ), QObject::tr("Polygon top"), 0xffffff00 ) );
-  addLayer( new SdLayer( QString( LID0_POLYGON LID1_BOT ), QObject::tr("Polygon bot"), 0xff00007f ) );
-
-  addLayer( new SdLayer( QString( LID0_PADS LID1_TOP ), QObject::tr("Pads top"), 0xff3fff00 ) );
-  addLayer( new SdLayer( QString( LID0_PADS LID1_BOT ), QObject::tr("Pads bot"), 0xff40007f ) );
-
-  addLayer( new SdLayer( QString( LID0_HOLE ), QObject::tr("Holes"), 0xff3f3f40 ) );
-
-  addLayer( new SdLayer( QString( LID0_CLEAR LID1_TOP ), QObject::tr("Clears top"), 0xff3f3f00 ) );
-  addLayer( new SdLayer( QString( LID0_CLEAR LID1_BOT ), QObject::tr("Clears bot"), 0xff40407f ) );
-
-  addLayer( new SdLayer( QString( LID0_MASK LID1_TOP ), QObject::tr("Mask top"), 0xff3fff00 ) );
-  addLayer( new SdLayer( QString( LID0_MASK LID1_BOT ), QObject::tr("Mask bot"), 0xff40007f ) );
-
-  addLayer( new SdLayer( QString( LID0_PCB_TOP LID1_BORDER ), QObject::tr("Pcb countur"), 0xff00ffff ) );
-
-  //Назначить парные слои
-  setPair( QString( LID0_PCB_TOP LID1_ELEM ),       QString( LID0_PCB_BOT LID1_ELEM ) );
-  setPair( QString( LID0_PCB_TOP LID1_PIN ),        QString( LID0_PCB_BOT LID1_PIN ) );
-  setPair( QString( LID0_PCB_TOP LID1_PIN_NAME ),   QString( LID0_PCB_BOT LID1_PIN_NAME ) );
-  setPair( QString( LID0_PCB_TOP LID1_PIN_NUMBER ), QString( LID0_PCB_BOT LID1_PIN_NUMBER ) );
-  setPair( QString( LID0_PCB_TOP LID1_IDENT ),      QString( LID0_PCB_BOT LID1_IDENT ) );
-
-  setPair( QString( LID0_PADS LID1_TOP ),  QString( LID0_PADS LID1_BOT ) );
+  setPair( QString( LID0_PAD LID1_TOP ),  QString( LID0_PAD LID1_BOT ) );
   setPair( QString( LID0_CLEAR LID1_TOP ), QString( LID0_CLEAR LID1_BOT ) );
-  setPair( QString( LID0_MASK LID1_TOP ),  QString( LID0_MASK LID1_BOT ) );
+  setPair( QString( LID0_SOLDER_MASK LID1_TOP ),  QString( LID0_SOLDER_MASK LID1_BOT ) );
   }
 
 
@@ -374,49 +331,58 @@ void SdEnvir::defaultEnvir()
 //Get existing layer, if it is not exist - then it's created as default
 SdLayer *SdEnvir::getLayer(QString id)
   {
+  if( id.isEmpty() )
+    return getLayer( LID0_COMMON );
+
   if( !mLayerTable.contains(id) ) {
     //Not exist. Create new one.
 
     //Build layer name
     QString name;
-    QString lid0 = id.mid(0,3);
-    if( lid0 == QString(LID0_SCHEMATIC) ) name = QObject::tr("In schematic ");
-    else if( lid0 == QString(LID0_PCB_TOP) ) name = QObject::tr("In pcb top ");
-    else if( lid0 == QString(LID0_PCB_BOT) ) name = QObject::tr("In pcb bottom ");
-    else if( lid0 == QString(LID0_INVISIBLE) ) name = QObject::tr("Invisible ");
-    else if( lid0 == QString(LID0_COMMON) ) name = QObject::tr("Common ");
-    else if( lid0 == QString(LID0_TRACE) ) name = QObject::tr("Trace ");
-    else if( lid0 == QString(LID0_POLYGON) ) name = QObject::tr("Polygon ");
-    else if( lid0 == QString(LID0_PADS) ) name = QObject::tr("Pad ");
-    else if( lid0 == QString(LID0_HOLE) ) name = QObject::tr("Hole ");
-    else if( lid0 == QString(LID0_CLEAR) ) name = QObject::tr("Clear ");
-    else if( lid0 == QString(LID0_MASK) ) name = QObject::tr("Mask ");
-    else if( lid0 == QString(LID0_STENSIL) ) name = QObject::tr("Stensil ");
-    else if( lid0 == QString(LID0_STENSIL_REPER) ) name = QObject::tr("Stensil reper ");
+    QStringList list = id.split( QChar('.') );
+    QString lid0 = list.at(0);
+    if( lid0 == QString(LID0_COMMON) )          name = QObject::tr("Common");
+    else if( lid0 == QString(LID0_INVISIBLE) )  name = QObject::tr("Invisible");
+    //Schematic specific
+    else if( lid0 == QString(LID0_NET) )        name = QObject::tr("Schematic net");
+    else if( lid0 == QString(LID0_NET_NAME) )   name = QObject::tr("Schematic net name");
+    else if( lid0 == QString(LID0_BUS) )        name = QObject::tr("Schematic net bus");
+    else if( lid0 == QString(LID0_AREA) )       name = QObject::tr("Schematic pcb area contour");
+    //PCB specific
+    else if( lid0 == QString(LID0_PCB) )        name = QObject::tr("PCB contour");
+    else if( lid0 == QString(LID0_WIRE) )       name = QObject::tr("PCB wire");
+    else if( lid0 == QString(LID0_POLYGON) )    name = QObject::tr("PCB polygon");
+    else if( lid0 == QString(LID0_PAD) )        name = QObject::tr("PCB pad");
+    else if( lid0 == QString(LID0_HOLE) )       name = QObject::tr("PCB hole");
+    else if( lid0 == QString(LID0_CLEAR) )      name = QObject::tr("PCB trace clear");
+    else if( lid0 == QString(LID0_SOLDER_MASK) )       name = QObject::tr("PCB solder mask");
+    else if( lid0 == QString(LID0_STENSIL) )    name = QObject::tr("PCB stensil aperture");
+    else if( lid0 == QString(LID0_STENSIL_REPER) ) name = QObject::tr("PCB stensil reper");
+    else if( lid0 == QString(LID0_EXCLUSION) )  name = QObject::tr("PCB trace exclusion area");
+    else if( lid0 == QString(LID0_TRACE) )      name = QObject::tr("PCB trace area");
+    //Both schematic and PCB
+    else if( lid0 == QString(LID0_COMPONENT) )  name = QObject::tr("Component");
+    else if( lid0 == QString(LID0_PIN) )        name = QObject::tr("Pin");
+    else if( lid0 == QString(LID0_PIN_NAME) )   name = QObject::tr("Pin name");
+    else if( lid0 == QString(LID0_PIN_NUMBER) ) name = QObject::tr("Pin number");
+    else if( lid0 == QString(LID0_IDENT) )      name = QObject::tr("Component ident");
+    else if( lid0 == QString(LID0_PICTURE) )    name = QObject::tr("Picture");
+    else if( lid0 == QString(LID0_REMARK) )     name = QObject::tr("Remark");
+    else if( lid0 == QString(LID0_VALUE) )      name = QObject::tr("Value");
+    else if( lid0 == QString(LID0_CONTOUR) )    name = QObject::tr("Contour");
+    else name = lid0;
 
-    QString lid1 = id.mid(3,3);
-    if( lid1.length() == 3 ) {
-      if( lid1 == QString(LID1_TOP) ) name.append( QObject::tr("top") );
-      else if( lid1 == QString(LID1_BOT) ) name.append( QObject::tr("bottom") );
-      else if( lid1 == QString(LID1_INT00) ) name.append( QObject::tr("internal 1") );
-      else if( lid1 == QString(LID1_INT01) ) name.append( QObject::tr("internal 2") );
-      else if( lid1 == QString(LID1_INT02) ) name.append( QObject::tr("internal 3") );
-      else if( lid1 == QString(LID1_INT03) ) name.append( QObject::tr("internal 4") );
-      else if( lid1 == QString(LID1_BORDER) ) name.append( QObject::tr("border") );
-      else if( lid1 == QString(LID1_ELEM) ) name.append( QObject::tr("element") );
-      else if( lid1 == QString(LID1_PIN) ) name.append( QObject::tr("pin") );
-      else if( lid1 == QString(LID1_PIN_NAME) ) name.append( QObject::tr("pin name") );
-      else if( lid1 == QString(LID1_PIN_NUMBER) ) name.append( QObject::tr("pin number") );
-      else if( lid1 == QString(LID1_IDENT) ) name.append( QObject::tr("ident") );
-      else if( lid1 == QString(LID1_NET) ) name.append( QObject::tr("net") );
-      else if( lid1 == QString(LID1_NET_NAME) ) name.append( QObject::tr("net name") );
-      else if( lid1 == QString(LID1_BUS) ) name.append( QObject::tr("bus") );
-      else if( lid1 == QString(LID1_PICTURE) ) name.append( QObject::tr("picture") );
-      else if( lid1 == QString(LID1_REMARK) ) name.append( QObject::tr("remark") );
-      else if( lid1 == QString(LID1_VALUES) ) name.append( QObject::tr("values") );
-      else if( lid1 == QString(LID1_COUNTUR) ) name.append( QObject::tr("countur") );
+    if( list.count() > 1 ) {
+      QString lid1clear = list.at(1);
+      QString lid1 = QString(".") + lid1clear;
+      if( lid1 == QString(LID1_TOP) )        name.append( QObject::tr(" on top") );
+      else if( lid1 == QString(LID1_BOT) )   name.append( QObject::tr(" on bottom") );
+      else if( lid1 == QString(LID1_INT00) ) name.append( QObject::tr(" on internal 1") );
+      else if( lid1 == QString(LID1_INT01) ) name.append( QObject::tr(" on internal 2") );
+      else if( lid1 == QString(LID1_INT02) ) name.append( QObject::tr(" on internal 3") );
+      else if( lid1 == QString(LID1_INT03) ) name.append( QObject::tr(" on internal 4") );
+      else name.append( " " ).append( lid1 );
       }
-
     addLayer( new SdLayer(id, name, 0x3f803f) );
     }
 
@@ -445,4 +411,12 @@ void SdEnvir::deleteLayers()
 void SdEnvir::addLayer(SdLayer *layer)
   {
   mLayerTable.insert( layer->id(), layer );
+  }
+
+
+
+
+void SdEnvir::addLayerId(const QString layerId, unsigned ccolor)
+  {
+  getLayer( layerId )->setColor( ccolor );
   }

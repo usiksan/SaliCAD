@@ -177,7 +177,9 @@ SOURCES += \
     objects/SdUndoRecordPartImpPin.cpp \
     objects/SdUndoRecordSymImpPins.cpp \
     objects/SdUndoRecordPartImpPins.cpp \
-    windows/SdDGrid.cpp
+    windows/SdDGrid.cpp \
+    windows/SdDLayers.cpp \
+    windows/SdDLayerList.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -347,7 +349,9 @@ HEADERS  += \
     objects/SdUndoRecordPartImpPin.h \
     objects/SdUndoRecordSymImpPins.h \
     objects/SdUndoRecordPartImpPins.h \
-    windows/SdDGrid.h
+    windows/SdDGrid.h \
+    windows/SdDLayers.h \
+    windows/SdDLayerList.h
 
 DISTFILES += \
     license.txt
@@ -364,4 +368,6 @@ FORMS += \
     windows/SdDPrint.ui \
     windows/SdDNetClient.ui \
     windows/SdDRegistation.ui \
-    windows/SdDGrid.ui
+    windows/SdDGrid.ui \
+    windows/SdDLayers.ui \
+    windows/SdDLayerList.ui

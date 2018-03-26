@@ -70,6 +70,7 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmViewFit() {}
     virtual void cmViewNets() {}
     virtual void cmViewGrid() {}
+    virtual void cmViewLayers() {}
     virtual void cmViewZoomIn() {}
     virtual void cmViewZoomOut() {}
     virtual void cmViewWindow() {}

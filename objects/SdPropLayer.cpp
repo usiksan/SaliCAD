@@ -86,9 +86,16 @@ void SdPropLayer::append(SdPropLayer p)
 
 
 
-bool SdPropLayer::canHide(SdLayer *layer) const
+
+
+
+
+void SdPropLayer::setLayerUsage() const
   {
-  return mLayer != layer && mLayer->pair() != layer;
+  if( mValue == OneValue && mLayer != nullptr ) {
+    mLayer->setUsage();
+    mLayer->pair()->setUsage();
+    }
   }
 
 
