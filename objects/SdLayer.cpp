@@ -76,6 +76,82 @@ SdLayerDescr sdLayerDescrAddon[] = {
   { nullptr, 0 }
 };
 
+SdLayerLevel sdLayerLevel0[] = {
+  { LID0_COMMON,        QT_TR_NOOP( "Common" ) },
+  { LID0_INVISIBLE,     QT_TR_NOOP( "Invisible" ) },
+
+  //Schematic specific
+  { LID0_NET,           QT_TR_NOOP( "Schematic net" ) },
+  { LID0_NET_NAME,      QT_TR_NOOP( "Schematic net name" ) },
+  { LID0_BUS,           QT_TR_NOOP( "Schematic net bus" ) },
+  { LID0_AREA,          QT_TR_NOOP( "Schematic pcb area contour" ) },
+
+  //PCB specific
+  { LID0_PCB,           QT_TR_NOOP( "PCB contour" ) },
+  { LID0_WIRE,          QT_TR_NOOP( "PCB wire" ) },
+  { LID0_POLYGON,       QT_TR_NOOP( "PCB polygon" ) },
+  { LID0_PAD,           QT_TR_NOOP( "PCB pad" ) },
+  { LID0_HOLE,          QT_TR_NOOP( "PCB hole" ) },
+  { LID0_CLEAR,         QT_TR_NOOP( "PCB trace clear" ) },
+  { LID0_SOLDER_MASK,   QT_TR_NOOP( "PCB solder mask" ) },
+  { LID0_STENSIL,       QT_TR_NOOP( "PCB stensil aperture" ) },
+  { LID0_STENSIL_REPER, QT_TR_NOOP( "PCB stensil reper" ) },
+  { LID0_EXCLUSION,     QT_TR_NOOP( "PCB trace exclusion area" ) },
+  { LID0_TRACE,         QT_TR_NOOP( "PCB trace area" ) },
+
+  //Both schematic and PCB
+  { LID0_COMPONENT,     QT_TR_NOOP( "Component" ) },
+  { LID0_PIN,           QT_TR_NOOP( "Pin" ) },
+  { LID0_PIN_NAME,      QT_TR_NOOP( "Pin name" ) },
+  { LID0_PIN_NUMBER,    QT_TR_NOOP( "Pin number" ) },
+  { LID0_IDENT,         QT_TR_NOOP( "Component ident" ) },
+  { LID0_PICTURE,       QT_TR_NOOP( "Picture" ) },
+  { LID0_REMARK,        QT_TR_NOOP( "Remark" ) },
+  { LID0_VALUE,         QT_TR_NOOP( "Value" ) },
+  { LID0_CONTOUR,       QT_TR_NOOP( "Contour" ) },
+  { nullptr, nullptr }
+};
+
+
+
+SdLayerLevel sdLayerLevel1[] = {
+  { "",                 QT_TR_NOOP( "---" ) },
+  { LID1_TOP,           QT_TR_NOOP( "on top" ) },
+  { LID1_BOT,           QT_TR_NOOP( "on bottom" ) },
+  { LID1_INT00,         QT_TR_NOOP( "on internal 1" ) },
+  { LID1_INT01,         QT_TR_NOOP( "on internal 2" ) },
+  { LID1_INT02,         QT_TR_NOOP( "on internal 3" ) },
+  { LID1_INT03,         QT_TR_NOOP( "on internal 4" ) },
+  { LID1_INT04,         QT_TR_NOOP( "on internal 5" ) },
+  { LID1_INT05,         QT_TR_NOOP( "on internal 6" ) },
+  { LID1_INT06,         QT_TR_NOOP( "on internal 7" ) },
+  { LID1_INT07,         QT_TR_NOOP( "on internal 8" ) },
+  { LID1_INT08,         QT_TR_NOOP( "on internal 9" ) },
+  { LID1_INT09,         QT_TR_NOOP( "on internal 10" ) },
+  { LID1_INT10,         QT_TR_NOOP( "on internal 11" ) },
+  { LID1_INT11,         QT_TR_NOOP( "on internal 12" ) },
+  { LID1_INT12,         QT_TR_NOOP( "on internal 13" ) },
+  { LID1_INT13,         QT_TR_NOOP( "on internal 14" ) },
+  { LID1_INT14,         QT_TR_NOOP( "on internal 15" ) },
+  { LID1_INT15,         QT_TR_NOOP( "on internal 16" ) },
+  { LID1_INT16,         QT_TR_NOOP( "on internal 17" ) },
+  { LID1_INT17,         QT_TR_NOOP( "on internal 18" ) },
+  { LID1_INT18,         QT_TR_NOOP( "on internal 19" ) },
+  { LID1_INT19,         QT_TR_NOOP( "on internal 20" ) },
+  { LID1_INT20,         QT_TR_NOOP( "on internal 21" ) },
+  { LID1_INT21,         QT_TR_NOOP( "on internal 22" ) },
+  { LID1_INT22,         QT_TR_NOOP( "on internal 23" ) },
+  { LID1_INT23,         QT_TR_NOOP( "on internal 24" ) },
+  { LID1_INT24,         QT_TR_NOOP( "on internal 25" ) },
+  { LID1_INT25,         QT_TR_NOOP( "on internal 26" ) },
+  { LID1_INT26,         QT_TR_NOOP( "on internal 27" ) },
+  { LID1_INT27,         QT_TR_NOOP( "on internal 28" ) },
+  { LID1_INT28,         QT_TR_NOOP( "on internal 29" ) },
+  { LID1_INT29,         QT_TR_NOOP( "on internal 30" ) },
+  { LID1_INT30,         QT_TR_NOOP( "on internal 31" ) },
+  { LID1_INT31,         QT_TR_NOOP( "on internal 32" ) },
+  { nullptr, nullptr }
+};
 
 
 SdLayer::SdLayer(QString layerId, QString layerName, unsigned layerColor) :

@@ -12,6 +12,7 @@ Description
 */
 #include "SdConfig.h"
 #include "SdEnvir.h"
+#include "SdLayer.h"
 
 #include <QSettings>
 #include <QByteArray>
@@ -341,47 +342,12 @@ SdLayer *SdEnvir::getLayer(QString id)
     QString name;
     QStringList list = id.split( QChar('.') );
     QString lid0 = list.at(0);
-    if( lid0 == QString(LID0_COMMON) )          name = QObject::tr("Common");
-    else if( lid0 == QString(LID0_INVISIBLE) )  name = QObject::tr("Invisible");
-    //Schematic specific
-    else if( lid0 == QString(LID0_NET) )        name = QObject::tr("Schematic net");
-    else if( lid0 == QString(LID0_NET_NAME) )   name = QObject::tr("Schematic net name");
-    else if( lid0 == QString(LID0_BUS) )        name = QObject::tr("Schematic net bus");
-    else if( lid0 == QString(LID0_AREA) )       name = QObject::tr("Schematic pcb area contour");
-    //PCB specific
-    else if( lid0 == QString(LID0_PCB) )        name = QObject::tr("PCB contour");
-    else if( lid0 == QString(LID0_WIRE) )       name = QObject::tr("PCB wire");
-    else if( lid0 == QString(LID0_POLYGON) )    name = QObject::tr("PCB polygon");
-    else if( lid0 == QString(LID0_PAD) )        name = QObject::tr("PCB pad");
-    else if( lid0 == QString(LID0_HOLE) )       name = QObject::tr("PCB hole");
-    else if( lid0 == QString(LID0_CLEAR) )      name = QObject::tr("PCB trace clear");
-    else if( lid0 == QString(LID0_SOLDER_MASK) )       name = QObject::tr("PCB solder mask");
-    else if( lid0 == QString(LID0_STENSIL) )    name = QObject::tr("PCB stensil aperture");
-    else if( lid0 == QString(LID0_STENSIL_REPER) ) name = QObject::tr("PCB stensil reper");
-    else if( lid0 == QString(LID0_EXCLUSION) )  name = QObject::tr("PCB trace exclusion area");
-    else if( lid0 == QString(LID0_TRACE) )      name = QObject::tr("PCB trace area");
-    //Both schematic and PCB
-    else if( lid0 == QString(LID0_COMPONENT) )  name = QObject::tr("Component");
-    else if( lid0 == QString(LID0_PIN) )        name = QObject::tr("Pin");
-    else if( lid0 == QString(LID0_PIN_NAME) )   name = QObject::tr("Pin name");
-    else if( lid0 == QString(LID0_PIN_NUMBER) ) name = QObject::tr("Pin number");
-    else if( lid0 == QString(LID0_IDENT) )      name = QObject::tr("Component ident");
-    else if( lid0 == QString(LID0_PICTURE) )    name = QObject::tr("Picture");
-    else if( lid0 == QString(LID0_REMARK) )     name = QObject::tr("Remark");
-    else if( lid0 == QString(LID0_VALUE) )      name = QObject::tr("Value");
-    else if( lid0 == QString(LID0_CONTOUR) )    name = QObject::tr("Contour");
-    else name = lid0;
+    name = layerId2NameLevel0( lid0 );
 
     if( list.count() > 1 ) {
       QString lid1clear = list.at(1);
       QString lid1 = QString(".") + lid1clear;
-      if( lid1 == QString(LID1_TOP) )        name.append( QObject::tr(" on top") );
-      else if( lid1 == QString(LID1_BOT) )   name.append( QObject::tr(" on bottom") );
-      else if( lid1 == QString(LID1_INT00) ) name.append( QObject::tr(" on internal 1") );
-      else if( lid1 == QString(LID1_INT01) ) name.append( QObject::tr(" on internal 2") );
-      else if( lid1 == QString(LID1_INT02) ) name.append( QObject::tr(" on internal 3") );
-      else if( lid1 == QString(LID1_INT03) ) name.append( QObject::tr(" on internal 4") );
-      else name.append( " " ).append( lid1 );
+      name.append( " " ).append( layerId2NameLevel1(lid1) );
       }
     addLayer( new SdLayer(id, name, 0x3f803f) );
     }
@@ -395,6 +361,40 @@ SdLayer *SdEnvir::getLayer(QString id)
 void SdEnvir::setPair(QString idTop, QString idBot)
   {
   getLayer(idTop)->setPair( getLayer(idBot) );
+  }
+
+
+
+
+
+//Reset "usage" layer flag for all layers
+void SdEnvir::resetLayerUsage()
+  {
+  for( SdLayer *layer : mLayerTable )
+    layer->resetUsage();
+  }
+
+
+
+
+
+//Layer id to name translation service
+QString SdEnvir::layerId2NameLevel0(QString lid0 )
+  {
+  for( int i = 0; sdLayerLevel0[i].mLid != nullptr; i++ )
+    if( lid0 == QString(sdLayerLevel0[i].mLid) )
+      return QObject::tr( sdLayerLevel0[i].mTranslate );
+  return lid0;
+  }
+
+
+//Layer id to name translation service
+QString SdEnvir::layerId2NameLevel1(QString lid1)
+  {
+  for( int i = 1; sdLayerLevel1[i].mLid != nullptr; i++ )
+    if( lid1 == QString(sdLayerLevel1[i].mLid) )
+      return QObject::tr( sdLayerLevel1[i].mTranslate );
+  return lid1;
   }
 
 

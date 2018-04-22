@@ -132,6 +132,13 @@ class SdEnvir
     //Set layer pair
     void     setPair( QString idTop, QString idBot );
 
+    //Reset "usage" layer flag for all layers
+    void     resetLayerUsage();
+
+    //Layer id to name translation service
+    QString  layerId2NameLevel0(QString lid0 );
+    QString  layerId2NameLevel1( QString lid1 );
+
   private:
     void deleteLayers();
     void addLayer( SdLayer *layer );

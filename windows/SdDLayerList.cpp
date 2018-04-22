@@ -28,11 +28,14 @@ SdDLayerList::SdDLayerList(const QString currentPair, QWidget *parent) :
   connect( ui->mAssign, &QPushButton::clicked, this, &SdDLayerList::cmAssign );
   connect( ui->mRemove, &QPushButton::clicked, this, &SdDLayerList::cmRemove );
 
-  //ui->mList->so
+  int currentPairIndex = -1, index = 0;
   //Fill layer list
   for( SdLayerPtr layer : sdEnvir->mLayerTable ) {
     //Append id to internal list
     mLayerIdList.append( layer->id() );
+    if( layer->id() == currentPair )
+      currentPairIndex = index;
+    index++;
     //Create visual representation of layer name
     QString name;
     if( layer->pair() != nullptr && layer->pair() != layer )
@@ -41,6 +44,8 @@ SdDLayerList::SdDLayerList(const QString currentPair, QWidget *parent) :
     name.append( layer->name() );
     ui->mList->addItem( name );
     }
+  if( currentPairIndex >= 0 )
+    ui->mList->setCurrentRow( currentPairIndex );
   }
 
 SdDLayerList::~SdDLayerList()

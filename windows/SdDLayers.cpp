@@ -17,12 +17,14 @@ Description
 #include "SdDLayers.h"
 #include "ui_SdDLayers.h"
 #include "SdDLayerList.h"
+#include "SdDLayerCreate.h"
 
 #include <QColorDialog>
 #include <QFileDialog>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QMessageBox>
 
 
 int SdDLayers::mShow; //Define show all, actual or used layers
@@ -59,16 +61,10 @@ SdDLayers::SdDLayers(SdProject *prj, QWidget *parent) :
 
   //Accum usaged layers
   //At first - clear all usages
-  for( SdLayer *layer : sdEnvir->mLayerTable )
-    layer->resetUsage();
+  sdEnvir->resetLayerUsage();
 
   //Accum usages
-  mProject->forEach( dctAll, [] ( SdObject *obj ) -> bool {
-    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-    if( graph != nullptr )
-      graph->setLayerUsage();
-    return true;
-    } );
+  mProject->accumLayerUsage();
 
 
   ui->mLayerList->setColumnCount(6);
@@ -187,7 +183,13 @@ void SdDLayers::cmHelp()
 //Create new layer
 void SdDLayers::cmCreate()
   {
-
+  SdDLayerCreate cr(this);
+  if( cr.exec() ) {
+    //New layer created, append it to visual list
+    appendLyaerToVisualList( cr.layerId() );
+    //Mark as usage for visibility
+    sdEnvir->getLayer( cr.layerId() )->setUsage();
+    }
   }
 
 
@@ -199,12 +201,25 @@ void SdDLayers::cmDelete()
   //Current layer
   int index = ui->mLayerList->currentRow();
   if( index >= 0 && index < mList.count() ) {
-
+    SdLayer *layer = sdEnvir->getLayer( mList.at(index) );
+    //Show acknowledge to delete layer
+    if( QMessageBox::question( this, tr("Warning!"), tr("Are You sure to delete layer \"%1\"").arg(layer->name()), QMessageBox::Yes | QMessageBox::No  ) == QMessageBox::Yes ) {
+      //Test layer to able be deleted
+      sdEnvir->resetLayerUsage();
+      for( SdProjectPtr prj : sdProjectList )
+        prj->accumLayerUsage();
+      if( layer->isUsage() || layer->pair() != layer )
+        QMessageBox::warning( this, tr("Error"), tr("Layer \"%1\" is used in some projects. It can't be deleted.").arg(layer->name()) );
+      else {
+        ui->mLayerList->removeRow( index );
+        mList.removeAt( index );
+        sdEnvir->mLayerTable.remove( layer->id() );
+        delete layer;
+        }
+      }
     }
   else
-
-  //Show acknowledge to delete layer
-
+    QMessageBox::warning( this, tr("Error"), tr("Select layer to delete") );
   }
 
 

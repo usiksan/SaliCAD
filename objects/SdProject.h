@@ -18,6 +18,7 @@ Description
 #include "SdUndo.h"
 #include <QMap>
 #include <QTreeWidgetItem>
+#include <QSet>
 
 
 #define SD_TYPE_PROJECT "Project"
@@ -51,6 +52,9 @@ class SdProject : public SdContainer
     //Return net name unused in project
     QString           getUnusedNetName();
 
+    //Accum used layers
+    void              accumLayerUsage();
+
     //Return dirty status
     bool              isDirty() const { return mDirty; }
     void              setDirty();
@@ -80,5 +84,10 @@ class SdProject : public SdContainer
     void              fillMap();
     bool              isNetNameUsed( const QString netName );
   };
+
+
+typedef SdProject *SdProjectPtr;
+
+extern QSet<SdProjectPtr> sdProjectList;
 
 #endif // SDPROJECT_H

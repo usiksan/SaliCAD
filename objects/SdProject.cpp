@@ -23,10 +23,15 @@ Description
 #include <QByteArray>
 #include <QDebug>
 
+QSet<SdProjectPtr> sdProjectList;
+
+
 SdProject::SdProject() :
   mDirty(false),
   mNetIndex(0)
   {
+  //Add project to global project list
+  sdProjectList.insert( this );
   }
 
 
@@ -34,6 +39,7 @@ SdProject::SdProject() :
 
 SdProject::~SdProject()
   {
+  sdProjectList.remove( this );
   }
 
 
@@ -117,6 +123,22 @@ QString SdProject::getUnusedNetName()
       mNetIndex++;
     else return netName.arg(mNetIndex);
     }
+  }
+
+
+
+
+
+
+//Accum used layers
+void SdProject::accumLayerUsage()
+  {
+  forEach( dctAll, [] ( SdObject *obj ) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+    if( graph != nullptr )
+      graph->setLayerUsage();
+    return true;
+    } );
   }
 
 

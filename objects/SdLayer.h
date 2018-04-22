@@ -41,7 +41,7 @@ enum SdLayerTrace {
   };
 
 
-//Обозначения в идентификаторе слоя
+//Layer identification
 #define LID0_COMMON        "Common"       //Любые объекты
 #define LID0_INVISIBLE     "Invisible"    //Невидимые объекты
 
@@ -82,6 +82,35 @@ enum SdLayerTrace {
 #define LID1_INT01         ".Int01" //Внутренняя сторона 1
 #define LID1_INT02         ".Int02" //Внутренняя сторона 2
 #define LID1_INT03         ".Int03" //Внутренняя сторона 3
+#define LID1_INT04         ".Int04" //Внутренняя сторона 4
+#define LID1_INT05         ".Int05" //Внутренняя сторона 5
+#define LID1_INT06         ".Int06" //Внутренняя сторона 6
+#define LID1_INT07         ".Int07" //Внутренняя сторона 7
+#define LID1_INT08         ".Int08" //Внутренняя сторона 8
+#define LID1_INT09         ".Int09" //Внутренняя сторона 9
+#define LID1_INT10         ".Int10" //Внутренняя сторона 10
+#define LID1_INT11         ".Int11" //Внутренняя сторона 11
+#define LID1_INT12         ".Int12" //Внутренняя сторона 12
+#define LID1_INT13         ".Int13" //Внутренняя сторона 13
+#define LID1_INT14         ".Int14" //Внутренняя сторона 14
+#define LID1_INT15         ".Int15" //Внутренняя сторона 15
+#define LID1_INT16         ".Int16" //Внутренняя сторона 16
+#define LID1_INT17         ".Int17" //Внутренняя сторона 17
+#define LID1_INT18         ".Int18" //Внутренняя сторона 18
+#define LID1_INT19         ".Int19" //Внутренняя сторона 19
+#define LID1_INT20         ".Int20" //Внутренняя сторона 20
+#define LID1_INT21         ".Int21" //Внутренняя сторона 21
+#define LID1_INT22         ".Int22" //Внутренняя сторона 22
+#define LID1_INT23         ".Int23" //Внутренняя сторона 23
+#define LID1_INT24         ".Int24" //Внутренняя сторона 24
+#define LID1_INT25         ".Int25" //Внутренняя сторона 25
+#define LID1_INT26         ".Int26" //Внутренняя сторона 26
+#define LID1_INT27         ".Int27" //Внутренняя сторона 27
+#define LID1_INT28         ".Int28" //Внутренняя сторона 28
+#define LID1_INT29         ".Int29" //Внутренняя сторона 29
+#define LID1_INT30         ".Int30" //Внутренняя сторона 30
+#define LID1_INT31         ".Int31" //Внутренняя сторона 31
+#define LID1_INT32         ".Int32" //Внутренняя сторона 32
 
 
 struct SdLayerDescr {
@@ -93,6 +122,15 @@ struct SdLayerDescr {
 //#define LAYER_DESCR_COUNT  20 //Default layers count
 extern SdLayerDescr sdLayerDescrActual[];
 extern SdLayerDescr sdLayerDescrAddon[];
+
+//Translation layer id to human visible name
+struct SdLayerLevel {
+    const char *mLid;       //Level id LIDxxx
+    const char *mTranslate; //Human visible name aca "Schematic net"
+  };
+
+extern SdLayerLevel sdLayerLevel0[];
+extern SdLayerLevel sdLayerLevel1[];
 
 
 class SdLayer
