@@ -185,6 +185,8 @@ void SdDLayers::cmCreate()
   {
   SdDLayerCreate cr(this);
   if( cr.exec() ) {
+    //New layer created, append it to internal list
+    mList.append( cr.layerId() );
     //New layer created, append it to visual list
     appendLyaerToVisualList( cr.layerId() );
     //Mark as usage for visibility
