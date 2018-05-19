@@ -431,7 +431,7 @@ void SdGraphPartImp::move(SdPoint offset)
 
 
 
-void SdGraphPartImp::rotate(SdPoint center, SdAngle angle)
+void SdGraphPartImp::rotate(SdPoint center, SdPropAngle angle)
   {
   mOrigin.rotate( center, angle );
   mProp.mAngle += angle;

@@ -15,7 +15,7 @@ Description
 #ifndef SDPOINT_H
 #define SDPOINT_H
 
-#include "SdAngle.h"
+#include "SdPropAngle.h"
 #include <QJsonObject>
 #include <QPoint>
 
@@ -40,7 +40,7 @@ class SdPoint : public QPoint
     void    operator += ( SdPoint p ) { rx() += p.x(); ry() += p.y(); }
     void    operator = ( QPoint p ) { setX(p.x()); setY(p.y()); }
     void    set( int cx, int cy ) { setX(cx); setY(cy); }
-    void    rotate( SdPoint origin, SdAngle angle );
+    void    rotate( SdPoint origin, SdPropAngle angle );
     void    mirror( SdPoint origin );
     void    mirror( SdPoint a, SdPoint b );
     void    move( SdPoint offset ) { setX( x() + offset.x() ); setY( y() + offset.y() ); }
@@ -50,7 +50,7 @@ class SdPoint : public QPoint
     SdPoint operator - ( SdPoint b ) { return sub(b); }
     SdPoint operator + ( SdPoint b ) { return SdPoint( x() + b.x(), y() + b.y() ); }
     SdPoint getMiddle( SdPoint b ) { return SdPoint( (x() + b.x()) / 2, (y() + b.y()) / 2 ); }
-    SdAngle getAngle( SdPoint center = SdPoint() ) const; //Угол поворота до точки относительно центра
+    SdPropAngle getAngle( SdPoint center = SdPoint() ) const; //Угол поворота до точки относительно центра
     double  getAngleDegree(SdPoint center) const;
     double  getDistance( SdPoint p ) const;
     double  getQrtDistance( SdPoint p ) const;
@@ -59,8 +59,8 @@ class SdPoint : public QPoint
     bool    isEqual( SdPoint p ) const { return x() == p.x() && y() == p.y(); }
 
     //Комплексное преобразование
-    SdPoint convertImplement( SdPoint origin, SdPoint offset, SdAngle angle, bool mirror );
-    SdPoint unConvertImplement( SdPoint origin, SdPoint offset, SdAngle angle, bool mirror );
+    SdPoint convertImplement( SdPoint origin, SdPoint offset, SdPropAngle angle, bool mirror );
+    SdPoint unConvertImplement( SdPoint origin, SdPoint offset, SdPropAngle angle, bool mirror );
 
     //Проверка условий для точки
     bool    isOnCircle( SdPoint center, int radius, int delta = 0 ) const ;         //На окружности?
@@ -82,7 +82,7 @@ class SdPoint : public QPoint
 SdPoint calcMiddlePoint(SdPoint a, SdPoint b, int enterType );
 SdPoint calcArcStop( SdPoint center, SdPoint start, SdPoint sector );
 bool    calcFreeNearIntersect( SdPoint sour, SdPoint a, SdPoint b, SdPoint &dest );
-SdAngle calcDirection90( SdPoint sour, SdPoint dest );
+SdPropAngle calcDirection90( SdPoint sour, SdPoint dest );
 int     sred( int a, int b, int gridSize );
 bool    isSegmentYAccross( int y, int x1, int x2, SdPoint p1, SdPoint p2, bool inside, int *result = 0 );
 bool    isSegmentYAccrossA( int y, int x1, int x2, SdPoint p1, SdPoint p2, bool inside );

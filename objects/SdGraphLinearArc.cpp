@@ -87,7 +87,7 @@ void SdGraphLinearArc::move(SdPoint offset)
 
 
 
-void SdGraphLinearArc::rotate(SdPoint center, SdAngle angle)
+void SdGraphLinearArc::rotate(SdPoint center, SdPropAngle angle)
   {
   mCenter.rotate( center, angle );
   mStart.rotate( center, angle );

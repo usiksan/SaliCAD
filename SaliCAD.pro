@@ -26,7 +26,6 @@ SOURCES += \
     objects/SdRect.cpp \
     objects/SdPointList.cpp \
     objects/SdCircle.cpp \
-    objects/SdAngle.cpp \
     objects/SdProp.cpp \
     objects/SdContext.cpp \
     objects/SdQuadrangle.cpp \
@@ -180,7 +179,8 @@ SOURCES += \
     windows/SdDGrid.cpp \
     windows/SdDLayers.cpp \
     windows/SdDLayerList.cpp \
-    windows/SdDLayerCreate.cpp
+    windows/SdDLayerCreate.cpp \
+    objects/SdPropAngle.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -196,7 +196,6 @@ HEADERS  += \
     objects/SdRect.h \
     objects/SdPointList.h \
     objects/SdCircle.h \
-    objects/SdAngle.h \
     objects/SdProp.h \
     objects/SdContext.h \
     objects/SdQuadrangle.h \
@@ -353,7 +352,8 @@ HEADERS  += \
     windows/SdDGrid.h \
     windows/SdDLayers.h \
     windows/SdDLayerList.h \
-    windows/SdDLayerCreate.h
+    windows/SdDLayerCreate.h \
+    objects/SdPropAngle.h
 
 DISTFILES += \
     license.txt

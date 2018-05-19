@@ -280,7 +280,8 @@ SdObject *SdPasCadImport::buildObject(int id)
       return new SdGraphLinearLine();
     case pasCadObjRectPic        : //Прямоугольник
       return new SdGraphLinearRect();
-//#define pasCadObjCirclePic      3 //Окружность
+    case pasCadObjCirclePic      : //Окружность
+      return new SdGraphLinearCircle();
 //#define pasCadObjArcPic         4 //Дуга
     case pasCadObjTextPic        : //Текст
       return new SdGraphText();
@@ -448,9 +449,11 @@ bool SdPasCadImport::readSingleObject(SdContainer *container)
     case pasCadObjFillRectPic    : //Залитый прямоугольник
     case pasCadObjRectPic        : //Прямоугольник
       return readRect( obj );
-//#define pasCadObjCirclePic      3 //Окружность
+    case pasCadObjCirclePic      : //Окружность
+      return readCircle( obj );
 //#define pasCadObjArcPic         4 //Дуга
-//#define pasCadObjTextPic        5 //Текст
+    case pasCadObjTextPic        : //Текст
+      return readText( obj );
 //#define pasCadObjSymPinPic      6 //Ножка символа
 //#define pasCadObjIdentPic       7 //Идентификатор
 //#define pasCadObjWirePic        8 //Сегмент цепи
@@ -522,7 +525,8 @@ bool SdPasCadImport::readSymbol(SdObject *obj)
 SdPoint SdPasCadImport::readPoint()
   {
   SdPoint p;
-  p.set( readInt32(), readInt32() );
+  p.setX( readInt32() );
+  p.setY( readInt32() );
   return p;
   }
 
@@ -572,6 +576,58 @@ bool SdPasCadImport::readLine(SdObject *obj)
 
   line->a = readPoint();
   line->b = readPoint();
+
+  return true;
+  }
+
+bool SdPasCadImport::readTextProp(SdPropText *prp, SdPoint *origin )
+  {
+//  DPoint     origin; //Точка привязки
+//  DTextSize  size;   //Размер текста
+//  DAngle     dir;    //Направление
+//  DLayerId   layer;  //Слой
+//  DFontId    fontId; //Идентификатор шрифта
+//  DTextFlags flags;  //Выравнивание горизонтальное, вертикальное и зеркальность
+  *origin = readPoint();
+
+  prp->mSize   = readInt32();
+  prp->mDir    = readInt32();
+  prp->mLayer  = readLayer();
+  prp->mFont   = readInt8();
+  int flags    = readInt16();
+  prp->mHorz   = flags & 0x7;
+  prp->mVert   = (flags >> 3) & 0x7;
+  prp->mMirror = (flags >> 6) & 0x3;
+
+  return prp->mLayer.layer() != nullptr;
+  }
+
+
+
+
+bool SdPasCadImport::readText(SdObject *obj)
+  {
+  SdGraphText *text = dynamic_cast<SdGraphText*>(obj);
+  if( text == nullptr ) return false;
+
+  if( !readTextProp( &(text->mProp), &(text->mOrigin) ) ) return false;
+  text->mString = readNString();
+
+  return true;
+  }
+
+
+
+
+bool SdPasCadImport::readCircle(SdObject *obj)
+  {
+  SdGraphLinearCircle *circle = dynamic_cast<SdGraphLinearCircle*>(obj);
+  if( circle == nullptr ) return false;
+
+  if( !readLinear(obj) ) return false;
+
+  circle->mRadius = readInt32();
+  circle->mCenter = readPoint();
 
   return true;
   }

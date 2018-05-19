@@ -157,7 +157,7 @@ void SdGraphSymPin::move(SdPoint offset)
 
 
 
-void SdGraphSymPin::rotate(SdPoint center, SdAngle angle)
+void SdGraphSymPin::rotate(SdPoint center, SdPropAngle angle)
   {
   if( mPinSelect ) mOrigin.rotate( center, angle );
   if( mNamSelect ) mNamePos.rotate( center, angle );

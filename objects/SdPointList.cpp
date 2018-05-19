@@ -30,7 +30,7 @@ void SdPointList::move(QSet<int> indexes, SdPoint offset)
 
 
 
-void SdPointList::rotate(SdPoint center, SdAngle angle)
+void SdPointList::rotate(SdPoint center, SdPropAngle angle)
   {
   for( int index = 0; index < count(); index++ ) {
     SdPoint p( at(index) );

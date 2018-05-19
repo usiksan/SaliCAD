@@ -18,7 +18,7 @@ Description
 
 
 
-void SdPoint::rotate(SdPoint origin, SdAngle angle)
+void SdPoint::rotate(SdPoint origin, SdPropAngle angle)
   {
   SdPoint p;
   switch( angle ) {
@@ -70,7 +70,7 @@ void SdPoint::mirror(SdPoint a, SdPoint b)
   //Переносим
   move( a.complement() );
   //Поворачиваем
-  SdAngle ang = b.getAngle(a);
+  SdPropAngle ang = b.getAngle(a);
   rotate( SdPoint(), ang.complement() );
   //Зеркализация
   setY( -y() );
@@ -83,9 +83,9 @@ void SdPoint::mirror(SdPoint a, SdPoint b)
 
 
 
-SdAngle SdPoint::getAngle(SdPoint center) const
+SdPropAngle SdPoint::getAngle(SdPoint center) const
   {
-  return SdAngle( (int)(getAngleDegree(center) * 1000.0) );
+  return SdPropAngle( (int)(getAngleDegree(center) * 1000.0) );
   }
 
 
@@ -162,7 +162,7 @@ double SdPoint::getLenght() const
 
 
 
-SdPoint SdPoint::convertImplement(SdPoint origin, SdPoint offset, SdAngle angle, bool mirror)
+SdPoint SdPoint::convertImplement(SdPoint origin, SdPoint offset, SdPropAngle angle, bool mirror)
   {
   //Образовать точку и перенести начало координат в origin
   SdPoint p(x()-origin.x(),y()-origin.y());
@@ -177,7 +177,7 @@ SdPoint SdPoint::convertImplement(SdPoint origin, SdPoint offset, SdAngle angle,
 
 
 
-SdPoint SdPoint::unConvertImplement(SdPoint origin, SdPoint offset, SdAngle angle, bool mirror)
+SdPoint SdPoint::unConvertImplement(SdPoint origin, SdPoint offset, SdPropAngle angle, bool mirror)
   {
   //Образовать точку и перенести начало координат в offset
   SdPoint p(x()-offset.x(),y()-offset.y());
@@ -212,9 +212,9 @@ bool SdPoint::isOnArc(SdPoint center, SdPoint start, SdPoint stop, int delta) co
   {
   if( isOnCircle( center, center.getDistance(start), delta )  ) {
     //Расстояние отсюда до центра дуги равно радиусу дуги, проверяем дальше
-    SdAngle anStart = start.getAngle(center);
-    SdAngle anStop  = stop.getAngle(center);
-    SdAngle cur     = getAngle(center);
+    SdPropAngle anStart = start.getAngle(center);
+    SdPropAngle anStop  = stop.getAngle(center);
+    SdPropAngle cur     = getAngle(center);
     return cur - anStart < anStop - anStart;
     }
   return false;
@@ -310,7 +310,7 @@ void SdPoint::read(const QJsonObject obj)
 
 
 
-SdAngle calcDirection90( SdPoint a, SdPoint b ) {
+SdPropAngle calcDirection90( SdPoint a, SdPoint b ) {
   if( abs(b.x() - a.x()) > abs(b.y() - a.y()) )
     //Приоритетная ось X
     return b.x() > a.x() ? da0 : da180;

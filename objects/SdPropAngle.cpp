@@ -9,56 +9,74 @@ Web
   www.saliLab.ru
 
 Description
+  Angle in 0.001 degree. It always positive and in range from 0 to 360000
 */
 
-#include "SdAngle.h"
+#include "SdPropAngle.h"
 
 
 
-SdAngle::SdAngle(int sour)
+SdPropAngle::SdPropAngle(int sour)
   {
   sour %= 360000;                //Преобразовать чтобы находился в диапазоне
   if( sour < 0 ) sour += 360000; //Преобразовать в положительные углы
   mValue = sour;
   }
 
+
+
+
 //Разность между двумя углами (угол на который нужно повернуться, чтобы из данного угла получить целевой)
-double SdAngle::sweep( SdAngle sour ) const
+double SdPropAngle::sweep( SdPropAngle sour ) const
   {
   if( mValue > sour.mValue ) return ((sour.mValue - mValue) + 360000) / 1000.0;
   return (sour.mValue - mValue) / 1000.0;
   }
 
-SdAngle SdAngle::operator -(SdAngle sour) const
+
+
+
+SdPropAngle SdPropAngle::operator -(SdPropAngle sour) const
   {
-  SdAngle an;
+  SdPropAngle an;
   an.mValue = mValue - sour.mValue;
   if( an.mValue < 0 ) an.mValue += 360000;
   return an;
   }
 
-SdAngle SdAngle::operator + ( SdAngle sour ) const {
-  SdAngle an;
+
+
+
+SdPropAngle SdPropAngle::operator + ( SdPropAngle sour ) const {
+  SdPropAngle an;
   an.mValue = mValue + sour.mValue;
   if( an.mValue < 0 ) an.mValue += 360000;
   if( an.mValue >= 360000 ) an.mValue %= 360000;
   return an;
   }
 
-SdAngle SdAngle::operator += ( int sour ) {
+
+
+
+SdPropAngle SdPropAngle::operator += ( int sour ) {
   mValue += sour;
   while( mValue >= 360000 ) mValue -= 360000;
   while( mValue < 0 )       mValue += 360000;
   return *this;
   }
 
-void SdAngle::append( SdAngle an ) {
+
+
+
+void SdPropAngle::append( SdPropAngle an ) {
   if( mValue == NoValue ) mValue = an.mValue;
   else if( mValue >= 0 && mValue != an.mValue ) mValue = AllValue;
   }
 
 
-SdAngle SdAngle::complement() const {
-  return SdAngle( 360000 - mValue );
+
+
+SdPropAngle SdPropAngle::complement() const {
+  return SdPropAngle( 360000 - mValue );
   }
 

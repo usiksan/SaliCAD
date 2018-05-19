@@ -37,7 +37,7 @@ class SdGraphLinearRegion : public SdGraphLinear
     virtual void    writeObject(QJsonObject &obj) const override;
     virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
     virtual void    move(SdPoint offset) override;
-    virtual void    rotate(SdPoint center, SdAngle angle) override;
+    virtual void    rotate(SdPoint center, SdPropAngle angle) override;
     virtual void    mirror(SdPoint a, SdPoint b) override;
     virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;
     virtual void    selectByRect(const SdRect &r, SdSelector *selector) override;

@@ -51,7 +51,7 @@ class SdRect : public QRect
     void        grow( const SdRect &rect );
     void        move( SdPoint offset ) { translate( offset ); }
     void        mirror( SdPoint origin );
-    void        rotate( SdPoint origin, SdAngle angle );
+    void        rotate( SdPoint origin, SdPropAngle angle );
 
     bool        isPointInside( const SdPoint point ) const { return contains( point ); }
     bool        isRectInside( const SdRect &r ) const { return contains( r ); }

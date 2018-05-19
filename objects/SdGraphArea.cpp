@@ -154,7 +154,7 @@ void SdGraphArea::move(SdPoint offset)
 
 
 
-void SdGraphArea::rotate(SdPoint center, SdAngle angle)
+void SdGraphArea::rotate(SdPoint center, SdPropAngle angle)
   {
   mRegion.rotate( center, angle );
   }

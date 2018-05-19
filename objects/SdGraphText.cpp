@@ -105,7 +105,7 @@ void SdGraphText::move(SdPoint offset)
 
 
 
-void SdGraphText::rotate(SdPoint center, SdAngle angle)
+void SdGraphText::rotate(SdPoint center, SdPropAngle angle)
   {
   SdPoint rc( mOverRect.center() );
   rc.rotate( center, angle );

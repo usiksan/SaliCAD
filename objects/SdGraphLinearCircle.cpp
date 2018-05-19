@@ -80,7 +80,7 @@ void SdGraphLinearCircle::move(SdPoint offset)
 
 
 
-void SdGraphLinearCircle::rotate(SdPoint center, SdAngle angle)
+void SdGraphLinearCircle::rotate(SdPoint center, SdPropAngle angle)
   {
   mCenter.rotate( center, angle );
   }

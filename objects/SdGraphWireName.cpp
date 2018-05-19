@@ -100,7 +100,7 @@ void SdGraphWireName::move(SdPoint offset)
 
 
 
-void SdGraphWireName::rotate(SdPoint center, SdAngle angle)
+void SdGraphWireName::rotate(SdPoint center, SdPropAngle angle)
   {
   mOrigin.rotate( center, angle );
   mProp.mDir += angle;

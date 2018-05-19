@@ -14,7 +14,7 @@ Description
 #ifndef SDSYMIMPPROP_H
 #define SDSYMIMPPROP_H
 
-#include "SdAngle.h"
+#include "SdPropAngle.h"
 
 struct SdPropSymImpState {
     int mAngle;
@@ -23,7 +23,7 @@ struct SdPropSymImpState {
 
 struct SdPropSymImp
   {
-    SdAngle   mAngle;  //Угол поворота компонента
+    SdPropAngle   mAngle;  //Угол поворота компонента
     SdPropInt mMirror; //Зеркальность компонента
 
     SdPropSymImp() : mAngle(0), mMirror(0) {}

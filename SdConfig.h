@@ -75,6 +75,7 @@ History
                    - color change
                    - state change
                    - save list
+  19.05.2018 v0.29 Append pasCad text prop import, text import, circle import
 */
 
 #ifndef SDCONFIG
@@ -86,7 +87,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             28
+#define SD_VERSION_MINOR             29
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

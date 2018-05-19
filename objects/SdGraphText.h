@@ -49,7 +49,7 @@ class SdGraphText : public SdGraph
   public:
     virtual void    saveState(SdUndo *undo) override;
     virtual void    move(SdPoint offset) override;
-    virtual void    rotate(SdPoint center, SdAngle angle) override;
+    virtual void    rotate(SdPoint center, SdPropAngle angle) override;
     virtual void    mirror(SdPoint a, SdPoint b) override;
     virtual void    setProp(SdPropSelected &prop) override;
     virtual void    getProp(SdPropSelected &prop) override;
@@ -61,6 +61,8 @@ class SdGraphText : public SdGraph
     virtual void    draw(SdContext *dc) override;
     virtual int     behindCursor(SdPoint p) override;
     virtual int     behindText(SdPoint p, SdPoint &org, QString &dest, SdPropText &prop) override;
+
+    friend class SdPasCadImport;
   };
 
 #endif // SDGRAPHTEXT_H

@@ -30,7 +30,7 @@ class SdPointList : public QPolygon
     SdPoint    get(int i) const { return SdPoint( at(i) ); }
 
     void       move( QSet<int> indexes, SdPoint offset );
-    void       rotate(SdPoint center, SdAngle angle);
+    void       rotate(SdPoint center, SdPropAngle angle);
     void       mirror(SdPoint a, SdPoint b);
 
     QJsonArray write() const;

@@ -143,7 +143,7 @@ class SdGraphSymImp : public SdGraph
     virtual void    moveComplete( SdPoint grid, SdUndo *undo ) override;
     virtual void    prepareMove( SdUndo *undo ) override;
     virtual void    move(SdPoint offset) override;
-    virtual void    rotate(SdPoint center, SdAngle angle) override;
+    virtual void    rotate(SdPoint center, SdPropAngle angle) override;
     virtual void    mirror(SdPoint a, SdPoint b) override;
     virtual void    setProp(SdPropSelected &prop) override;
     virtual void    getProp(SdPropSelected &prop) override;

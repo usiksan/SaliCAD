@@ -27,7 +27,7 @@ struct SdQuadrangle
     SdQuadrangle( int x, int y, int w, int h );
     SdQuadrangle( SdRect r );
 
-    void rotate( SdPoint center, SdAngle angle );
+    void rotate( SdPoint center, SdPropAngle angle );
     void move( SdPoint offset );
     void set( SdRect r );
 

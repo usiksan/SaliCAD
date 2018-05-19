@@ -44,7 +44,7 @@ void SdGraph::move(SdPoint offset)
   Q_UNUSED(offset)
   }
 
-void SdGraph::rotate(SdPoint center, SdAngle angle)
+void SdGraph::rotate(SdPoint center, SdPropAngle angle)
   {
   Q_UNUSED(center)
   Q_UNUSED(angle)

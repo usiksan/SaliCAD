@@ -80,7 +80,7 @@ void SdGraphLinearRegion::move(SdPoint offset)
 
 
 
-void SdGraphLinearRegion::rotate(SdPoint center, SdAngle angle)
+void SdGraphLinearRegion::rotate(SdPoint center, SdPropAngle angle)
   {
   mList.rotate( center, angle );
   }

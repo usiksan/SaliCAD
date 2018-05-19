@@ -42,7 +42,7 @@ class SdGraph : public SdObject
 
     //Изменение перемещением
     virtual void   move( SdPoint offset );
-    virtual void   rotate( SdPoint center, SdAngle angle );
+    virtual void   rotate( SdPoint center, SdPropAngle angle );
     virtual void   mirror( SdPoint a, SdPoint b );
 
     //Изменение свойствами

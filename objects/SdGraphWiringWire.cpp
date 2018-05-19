@@ -330,7 +330,7 @@ void SdGraphWiringWire::move(SdPoint offset)
 
 
 
-void SdGraphWiringWire::rotate(SdPoint center, SdAngle angle)
+void SdGraphWiringWire::rotate(SdPoint center, SdPropAngle angle)
   {
   if( !mFix ) mB.rotate( center, angle );
   mA.rotate( center, angle );

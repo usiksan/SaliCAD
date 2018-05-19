@@ -16,7 +16,7 @@ Description
 #define SDPARTIMPPROP_H
 
 #include "SdPropInt.h"
-#include "SdAngle.h"
+#include "SdPropAngle.h"
 
 #define dsideTop 0
 #define dsideBot 1
@@ -29,7 +29,7 @@ struct SdPropPartImpState {
 
 struct SdPropPartImp
   {
-    SdAngle   mAngle;  //Угол поворота компонента
+    SdPropAngle   mAngle;  //Угол поворота компонента
     SdPropInt mMirror; //Зеркальность компонента
     SdPropInt mSide;   //Сторона расположения на плате
 

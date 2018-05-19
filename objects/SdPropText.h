@@ -15,7 +15,7 @@ Description
 #define SDTEXTPROP_H
 
 #include "SdPropInt.h"
-#include "SdAngle.h"
+#include "SdPropAngle.h"
 #include "SdPropLayer.h"
 
 //Horizontal alignment
@@ -43,7 +43,7 @@ struct SdPropTextState {
 struct SdPropText {
   SdPropLayer mLayer;  //Layer of text [Слой]
   SdPropInt   mSize;   //Text size [Размер текста]
-  SdAngle     mDir;    //Direction [Направление]
+  SdPropAngle mDir;    //Direction [Направление]
   SdPropInt   mFont;   //Font ident [Идентификатор шрифта]
   SdPropInt   mHorz;   //Alignment [Выравнивание горизонтальное, вертикальное и зеркальность]
   SdPropInt   mVert;

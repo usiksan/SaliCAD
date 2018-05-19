@@ -95,7 +95,7 @@ void SdGraphLinearLine::move(SdPoint offset)
 
 
 
-void SdGraphLinearLine::rotate(SdPoint center, SdAngle angle)
+void SdGraphLinearLine::rotate(SdPoint center, SdPropAngle angle)
   {
   //Повернуть
   if( mFlyA ) a.rotate( center, angle );
