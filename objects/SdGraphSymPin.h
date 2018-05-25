@@ -73,6 +73,8 @@ class SdGraphSymPin : public SdGraph
     virtual int       behindCursor(SdPoint p) override;
     virtual int       behindText( SdPoint p, SdPoint &org, QString &dest, SdPropText &prop ) override;
     virtual bool      snapPoint(SdSnapInfo *snap) override;
+
+    friend class SdPasCadImport;
   };
 
 #endif // SDGRAPHSYMPIN_H

@@ -68,6 +68,7 @@ class SdPasCadImport
     bool         readTextProp(SdPropText *prp , SdPoint *origin);
     bool         readText( SdObject *obj );
     bool         readCircle( SdObject *obj );
+    bool         readSymPin( SdObject *obj );
   };
 
 #endif // SDPASCADIMPORT_H

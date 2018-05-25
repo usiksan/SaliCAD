@@ -18,6 +18,7 @@ Description
 #include "SdGraphLinearRectFilled.h"
 #include "SdGraphLinearCircle.h"
 #include "SdGraphText.h"
+#include "SdGraphSymPin.h"
 #include "SdSection.h"
 #include "SdEnvir.h"
 
@@ -285,7 +286,8 @@ SdObject *SdPasCadImport::buildObject(int id)
 //#define pasCadObjArcPic         4 //Дуга
     case pasCadObjTextPic        : //Текст
       return new SdGraphText();
-//#define pasCadObjSymPinPic      6 //Ножка символа
+    case pasCadObjSymPinPic      : //Ножка символа
+      return new SdGraphSymPin();
 //#define pasCadObjIdentPic       7 //Идентификатор
 //#define pasCadObjWirePic        8 //Сегмент цепи
 //#define pasCadObjWireNamePic    9 //Имя цепи
@@ -454,7 +456,8 @@ bool SdPasCadImport::readSingleObject(SdContainer *container)
 //#define pasCadObjArcPic         4 //Дуга
     case pasCadObjTextPic        : //Текст
       return readText( obj );
-//#define pasCadObjSymPinPic      6 //Ножка символа
+    case pasCadObjSymPinPic      : //Ножка символа
+      return readSymPin( obj );
 //#define pasCadObjIdentPic       7 //Идентификатор
 //#define pasCadObjWirePic        8 //Сегмент цепи
 //#define pasCadObjWireNamePic    9 //Имя цепи
@@ -629,6 +632,38 @@ bool SdPasCadImport::readCircle(SdObject *obj)
   circle->mRadius = readInt32();
   circle->mCenter = readPoint();
 
+  return true;
+  }
+
+
+
+
+
+bool SdPasCadImport::readSymPin(SdObject *obj)
+  {
+  SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>(obj);
+  if( pin == nullptr ) return false;
+
+//  DPoint      origin;     //Точка привязки
+//  DSymPinProp prop;       //Свойства вывода символа
+  //  DLayerId    layer;      //Слой
+  //  DSymPinType type;       //Тип вывода
+//  DTextProp   numberProp; //Параметры для номера
+//  DTextProp   nameProp;   //Параметры для имени
+//  DName       name;       //Имя ножки
+//  DInt32      sections;   //Количество секций
+//  DInt32      group;      //Группа, в которую входит вывод
+
+  pin->mOrigin = readPoint();
+  pin->mPinProp.mLayer   = readLayer();
+  pin->mPinProp.mPinType = readInt8();
+  if( !readTextProp( &(pin->mNumberProp), &(pin->mNumberPos) )  ) return false;
+  if( !readTextProp( &(pin->mNameProp), &(pin->mNamePos) )  ) return false;
+  pin->mName = readName();
+  int s = readInt32();
+  readInt32();
+  for( int i = 0; i < s; i++ )
+    readName();
   return true;
   }
 
