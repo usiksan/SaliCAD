@@ -157,7 +157,7 @@ void SdModeCIdent::cancelEdit()
 void SdModeCIdent::applyEdit()
   {
   //Save previous state of ident
-  mUndo->begin( QObject::tr("Edit ident") );
+  mUndo->begin( QObject::tr("Edit ident"), mObject );
   mIdent->saveState( mUndo );
   mIdent->updateIdent( mPrev, mString, mOverRect, mPropText );
   setDirty();

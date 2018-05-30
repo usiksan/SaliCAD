@@ -125,7 +125,7 @@ void SdGraphSymImp::unconnectPinInPoint( SdPoint p, SdUndo *undo, const QString 
   {
   for( SdSymImpPinTable::const_iterator i = mPins.constBegin(); i != mPins.constEnd(); i++ )
     if( i.value().mPosition == p ) {
-      if( undo ) undo->begin( undoTitle );
+      if( undo ) undo->begin( undoTitle, getSheet() );
       //Set new state of pin
       pinConnectionSet( i.key(), QString(), undo );
       return;
@@ -140,6 +140,7 @@ void SdGraphSymImp::unLinkPart(SdUndo *undo)
   if( mPartImp != nullptr ) {
     //Save pin state
     undo->symImpPins( &mPins );
+    //undo->partImpPins( )
     //UnLink pins if mPartImp present
     for( SdSymImpPinTable::iterator i = mPins.begin(); i != mPins.end(); i++ )
       mPartImp->partPinLink( i.value().mPinNumber, nullptr, QString(), undo );
@@ -649,6 +650,7 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
       return;
       }
 
+    mPartImp->savePins( undo );
     //Accumulate pins
     mSymbol->forEach( dctSymPin, [this,sectionPtr,undo] (SdObject *obj) -> bool {
       SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>(obj);
@@ -664,7 +666,7 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
       impPin.mPinNumber = sectionPtr->getPinNumber( pinName );
 
       //Link pins between symImp and partImp
-      if( !mPartImp->partPinLink( impPin.mPinNumber, this, pinName, undo ) )
+      if( !mPartImp->partPinLink( impPin.mPinNumber, this, pinName, true ) )
         impPin.mPinNumber.clear();
 
       //Add pin to table

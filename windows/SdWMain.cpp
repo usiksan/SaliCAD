@@ -25,6 +25,7 @@ Description
 #include "SdWLabel.h"
 #include "SdDOptions.h"
 #include "SdDRegistation.h"
+#include "SdDLayers.h"
 #include "objects/SdPulsar.h"
 #include <QSettings>
 #include <QCloseEvent>
@@ -151,7 +152,7 @@ void SdWMain::activateProjectName(const QString name, bool dirty)
 
 void SdWMain::onActivateProjectItem(SdProjectItem *item)
   {
-  if( item == 0 ) return;
+  if( item == nullptr ) return;
   //Find if item already open
   for( int i = 0; i < mWEditors->count(); i++ ) {
     SdWEditor *editor = getEditor(i);
@@ -163,7 +164,7 @@ void SdWMain::onActivateProjectItem(SdProjectItem *item)
     }
 
   //Item not found, create and insert editor for it
-  SdWEditor *editor = 0;
+  SdWEditor *editor = nullptr;
   switch( item->getClass() ) {
     case dctSymbol :
       if( item->isEditEnable() )
@@ -194,7 +195,7 @@ void SdWMain::onActivateProjectItem(SdProjectItem *item)
       break;
     }
 
-  if( editor != 0 ) {
+  if( editor != nullptr ) {
     //If editor created - insert it into tab
     mWEditors->addTab( editor, QIcon( editor->getIconName() ), editor->getTitle() );
 
@@ -728,6 +729,18 @@ void SdWMain::cmViewGrid()
 
 void SdWMain::cmViewLayers()
   {
+  //Layers dialog
+  //Get active project or nullptr
+  SdProject *prj = nullptr;
+  if( activeProject() != nullptr )
+    prj = activeProject()->getProject();
+  //Show layers dialog with active project
+  SdDLayers layersDlg( prj, this );
+  layersDlg.exec();
+  //Signal viewed layers are changed
+  SdPulsar::pulsar->emitViewedLayers();
+
+  //For active editor update
   if( activeEditor() )
     activeEditor()->cmViewLayers();
   }

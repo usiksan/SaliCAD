@@ -64,7 +64,8 @@ SdDLayers::SdDLayers(SdProject *prj, QWidget *parent) :
   sdEnvir->resetLayerUsage();
 
   //Accum usages
-  mProject->accumLayerUsage();
+  if( mProject != nullptr )
+    mProject->accumLayerUsage();
 
 
   ui->mLayerList->setColumnCount(6);

@@ -209,7 +209,7 @@ void SdMode::setDirtyCashe()
 void SdMode::addPic( SdObject *obj, QString title )
   {
   if( mUndo )
-    mUndo->begin( title );
+    mUndo->begin( title, mObject );
   mObject->insertChild( obj, mUndo );
   mEditor->dirtyCashe();
   mEditor->dirtyProject();

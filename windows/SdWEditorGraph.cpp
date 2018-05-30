@@ -440,8 +440,6 @@ void SdWEditorGraph::cmViewGrid()
 
 void SdWEditorGraph::cmViewLayers()
   {
-  SdDLayers layersDlg( getProject(), this );
-  layersDlg.exec();
   dirtyCashe();
   update();
   }

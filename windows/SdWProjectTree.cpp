@@ -152,7 +152,7 @@ bool SdWProjectTree::cmFileSaveAs()
 
 void SdWProjectTree::cmObjectNew()
   {
-  SdProjectItemPtr item = 0;
+  SdProjectItemPtr item = nullptr;
   QWizard wizard(this);
   wizard.setPage( 0, new SdPNewProjectItem_SelectType( &item, mProject, &wizard) );
   wizard.setPage( 1, new SdPNewProjectItem_EnterName( &item, mProject, &wizard) );
@@ -160,7 +160,7 @@ void SdWProjectTree::cmObjectNew()
   if( wizard.exec() ) {
     //Append item to the project
     item->setHand();
-    mProject->getUndo()->begin( tr("Creating object") );
+    mProject->getUndo()->begin( tr("Creating object"), item );
     mProject->insertChild( item, mProject->getUndo() );
     //Open window to edit item
     SdPulsar::pulsar->emitActivateItem( item );

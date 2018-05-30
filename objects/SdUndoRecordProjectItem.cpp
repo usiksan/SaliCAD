@@ -45,5 +45,6 @@ void SdUndoRecordProjectItem::undo()
   mTagSrc->swap( mTag );
   SdUtil::swapInt( mTimeCreation, mTimeCreationSrc );
   SdUtil::swapBool( mEditEnable, mEditEnableSrc );
+
   }
 

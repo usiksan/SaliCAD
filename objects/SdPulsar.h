@@ -46,6 +46,10 @@ class SdPulsar : public QObject
     void emitSetStatusPositions( const QString x, const QString y );
     void emitSetStatusMessage( const QString msg );
 
+    //Prop bar
+    //Emit signal on viewed layers changed. It emited when layer dialog completed
+    void emitViewedLayers();
+
     static SdPulsar *pulsar;
   signals:
     //BEFORE destroy project
@@ -67,6 +71,10 @@ class SdPulsar : public QObject
     void setStatusLabels( const QString xlabel, const QString ylabel );
     void setStatusPositions( const QString x, const QString y );
     void setStatusMessage( const QString msg );
+
+    //Prop bar
+    //Emit signal on viewed layers changed. It emited when layer dialog completed
+    void viewedLayers();
 
   public slots:
   };

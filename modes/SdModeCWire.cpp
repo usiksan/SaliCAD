@@ -156,7 +156,7 @@ void SdModeCWire::enterPoint( SdPoint enter )
     mShow = 0;
     //Append segment
     if( testNextPoint( mPrevMove ) && mFirst != mPrevMove ) {
-      mUndo->begin( QObject::tr("Insert wire segment") );
+      mUndo->begin( QObject::tr("Insert wire segment"), mObject );
       needCurNet()->insertChild( new SdGraphWiringWire( mFirst, mPrevMove, sdGlobalProp->mWireProp ), mUndo );
       mFirst = mPrevMove;
       setDirty();
@@ -201,7 +201,7 @@ void SdModeCWire::movePoint( SdPoint p )
 
 void SdModeCWire::enterPrev()
   {
-  mUndo->begin( QObject::tr("Insert smart net") );
+  mUndo->begin( QObject::tr("Insert smart net"), mObject );
   if( getStep() ) {
     //Net end variant
     if( mFirst != mSmA ) needCurNet()->insertChild( new SdGraphWiringWire( mFirst, mSmA, sdGlobalProp->mWireProp ), mUndo );

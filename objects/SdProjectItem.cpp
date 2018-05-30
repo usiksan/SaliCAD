@@ -71,7 +71,7 @@ void SdProjectItem::setTitle(const QString title, const QString undoTitle)
   SdUndo *undo = getUndo();
   if( undo != nullptr ) {
     if( !undoTitle.isEmpty() )
-      undo->begin( undoTitle );
+      undo->begin( undoTitle, this );
     undo->projectItemInfo( this, &mTitle, &mAuthor, &mTag, &mCreateTime, &mEditEnable );
     }
 
@@ -105,7 +105,7 @@ void SdProjectItem::setTag(const QString tag, const QString undoTitle )
   SdUndo *undo = getUndo();
   if( undo != nullptr ) {
     if( !undoTitle.isEmpty() )
-      undo->begin( undoTitle );
+      undo->begin( undoTitle, this );
     undo->projectItemInfo( this, &mTitle, &mAuthor, &mTag, &mCreateTime, &mEditEnable );
     }
 
@@ -143,7 +143,7 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
   {
   SdUndo *undo = getUndo();
   if( !undoTitle.isEmpty() )
-    undo->begin( undoTitle );
+    undo->begin( undoTitle, this );
   if( mEditEnable ) {
     if( !edit ) {
       //Disable edit.
@@ -289,7 +289,7 @@ SdGraphIdent *SdProjectItem::createIdent()
 void SdProjectItem::setOrigin(const SdPoint org, SdUndo *undo)
   {
   if( undo ) {
-    undo->begin( QObject::tr("Origin position changed") );
+    undo->begin( QObject::tr("Origin position changed"), this );
     undo->point( &mOrigin );
     }
   mOrigin = org;

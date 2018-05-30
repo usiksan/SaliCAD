@@ -14,6 +14,7 @@ Description
 #include "SdPropBar.h"
 #include "SdWCommand.h"
 #include "objects/SdEnvir.h"
+#include "objects/SdPulsar.h"
 
 #include <QStyleFactory>
 
@@ -21,7 +22,7 @@ Description
 SdPropBar::SdPropBar( const QString title ) :
   QToolBar( title )
   {
-  insertAction( 0, SdWCommand::cmViewLayers );
+  insertAction( nullptr, SdWCommand::cmViewLayers );
   mLayer = new QComboBox();
   mLayer->setStyle( QStyleFactory::create("windows") );
   //mLayer->setEditable( true );
@@ -41,6 +42,8 @@ SdPropBar::SdPropBar( const QString title ) :
     Q_UNUSED(index)
     emit propChanged();
     });
+  //When layer dialog completed
+  connect( SdPulsar::pulsar, &SdPulsar::viewedLayers, this, &SdPropBar::updateViewedLayers );
   }
 
 
@@ -74,10 +77,10 @@ SdLayer *SdPropBar::getSelectedLayer()
   {
   int index = mLayer->currentIndex();
   if( index < 0 )
-    return 0;
+    return nullptr;
   QString id = mLayer->currentData().toString();
   if( id.isEmpty() )
-    return 0;
+    return nullptr;
   return sdEnvir->getLayer( id );
   }
 

@@ -388,7 +388,7 @@ bool SdModeCBus::testNextPoint(SdPoint p)
 
 void SdModeCBus::enterNet()
   {
-  mUndo->begin( QObject::tr("Insert bus wire") );
+  mUndo->begin( QObject::tr("Insert bus wire"), mObject );
   //Попробуем найти цепь в схеме
   SdContainerSheetNet *net = getSheet()->netCreate( mNetList.at(mIndex), mUndo );
   Q_ASSERT( net != nullptr );

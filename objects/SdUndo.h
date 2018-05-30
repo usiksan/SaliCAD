@@ -69,7 +69,6 @@ class SdUndo
     void propPartPin( SdPropPartPin *prp, SdPoint *org );
     void platePointer( SdPItemPlatePtr *ptr );
     void pinSymImpStatus( SdGraphSymImp *sym, const QString symPinName );
-    void pinPartImpStatus( SdGraphPartImp *part, const QString partPinNumber );
     void symImpPins( SdSymImpPinTable *table );
     void partImpPins( SdPartImpPinTable *table );
     void linkSection( int section, SdGraphSymImp *sym, SdGraphPartImp *part, bool link );
@@ -79,7 +78,7 @@ class SdUndo
                   SdPoint *identOrigin, SdPoint *identPos, SdRect *identRect );
     void wire( SdPropLine *prop, SdPoint *p1, SdPoint *p2, bool *dot1, bool *dot2 );
     void point( SdPoint *src );
-    void begin( QString title );
+    void begin(QString title , SdProjectItem *item);
     void projectItemInfo( SdProjectItem *item, QString *title, QString *author, QString *tag, int *timeCreation, bool *editEnable );
 
     //do undo and redo

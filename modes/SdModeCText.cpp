@@ -18,9 +18,9 @@ Description
 
 SdModeCText::SdModeCText(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeCTextual( editor, obj ),
-  mPicAffected(0), //Элемент, содержащий редактируемый текст
-  mIdAffected(0),  //Номер редактируемого текста в элементе
-  mEditText()      //Properties for edited text
+  mPicAffected(nullptr), //Element containing edititing text [Элемент, содержащий редактируемый текст]
+  mIdAffected(0),        //Text item number for editing element [Номер редактируемого текста в элементе]
+  mEditText()            //Properties for edited text
   {
 
   }
@@ -54,9 +54,9 @@ void SdModeCText::enterPoint(SdPoint enter)
   {
   if( getStep() ) SdModeCTextual::enterPoint( enter );
   else {
-    //Определим цикл ввода или редактирования
+    //It's edit or enter new text [Определим цикл ввода или редактирования]
     mIdAffected = 0;
-    mPicAffected = 0;
+    mPicAffected = nullptr;
     mEditText.clear();
     mObject->forEach( dctAll, [=]( SdObject *obj ) {
       SdGraph *graph = dynamic_cast<SdGraph*>( obj );
@@ -83,7 +83,7 @@ void SdModeCText::enterPoint(SdPoint enter)
       }
     else {
       //Осуществить ввод текста
-      mPicAffected = 0;
+      mPicAffected = nullptr;
       mPrev = enter;
       setText( QString(""), false );
       //Установить глобальные свойства
@@ -148,7 +148,7 @@ int SdModeCText::getIndex() const
 
 void SdModeCText::cancelEdit()
   {
-  mPropText = 0;
+  mPropText = nullptr;
   setStep( sPlace );
   update();
   }
@@ -162,13 +162,13 @@ void SdModeCText::applyEdit()
     addPic( new SdGraphText( mPrev, mString, mOverRect, sdGlobalProp->mTextProp ), QObject::tr("Text insertion") );
   else if( getStep() == sEdit && mPicAffected ) {
     //Store previous state of editable object
-    mUndo->begin( QObject::tr("Text edit") );
+    mUndo->begin( QObject::tr("Text edit"), mObject );
     mPicAffected->saveState( mUndo );
     mPicAffected->setText( mIdAffected, mString, mEditText, mEditor );
-    mPicAffected = 0;
+    mPicAffected = nullptr;
     mEditor->dirtyProject();
     }
-  mPropText = 0;
+  mPropText = nullptr;
   setStep( sPlace );
   mEditor->dirtyCashe();
   update();

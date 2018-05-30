@@ -28,7 +28,6 @@ Description
 #include "SdUndoRecordSymImpPin.h"
 #include "SdUndoRecordSymImpPins.h"
 #include "SdUndoRecordPartImp.h"
-#include "SdUndoRecordPartImpPin.h"
 #include "SdUndoRecordPartImpPins.h"
 #include "SdUndoRecordWire.h"
 #include "SdUndoRecordProjectItem.h"
@@ -132,12 +131,6 @@ void SdUndo::pinSymImpStatus(SdGraphSymImp *sym, const QString symPinName)
 
 
 
-void SdUndo::pinPartImpStatus(SdGraphPartImp *part, const QString partPinNumber)
-  {
-  addUndo( new SdUndoRecordPartImpPin( part, partPinNumber )  );
-  }
-
-
 
 
 void SdUndo::symImpPins(SdSymImpPinTable *table)
@@ -196,9 +189,9 @@ void SdUndo::point(SdPoint *src)
 
 
 
-void SdUndo::begin(QString title)
+void SdUndo::begin(QString title, SdProjectItem *item)
   {
-  addUndo( new SdUndoRecordBegin(title) );
+  addUndo( new SdUndoRecordBegin(title, item) );
   }
 
 
@@ -217,12 +210,12 @@ void SdUndo::undoStep()
   {
   //On undo we shift records from mUndo to mRedo
   //at each shift we undo record
-  while( mUndo.count() && !mUndo.top()->isStep() ) {
+  bool isStep = false;
+  while( mUndo.count() && !isStep ) {
+    isStep = mUndo.top()->isStep();
     mUndo.top()->undo();
     mRedo.push( mUndo.pop() );
     }
-  if( mUndo.count() )
-    mRedo.push( mUndo.pop() );
   if( mUndoCount ) mUndoCount--;
   SdWCommand::cmEditUndo->setEnabled( isUndoPresent() );
   SdWCommand::cmEditRedo->setEnabled( isRedoPresent() );

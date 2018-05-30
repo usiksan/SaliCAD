@@ -701,7 +701,7 @@ int SdModeSelect::getPropBarId() const
 
 void SdModeSelect::propGetFromBar()
   {
-  mUndo->begin( QObject::tr("Properties changed") );
+  mUndo->begin( QObject::tr("Properties changed"), mObject );
   //Сохранить состояние объектов до изменения свойств
   mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
     SdGraph *graph = dynamic_cast<SdGraph*>( obj );
@@ -1091,7 +1091,7 @@ void SdModeSelect::enterPaste(SdPoint point)
     setDirty();
     //Unselect selected objects
     unselect(false);
-    mUndo->begin( QObject::tr("Insert from clipboard") );
+    mUndo->begin( QObject::tr("Insert from clipboard"), mObject );
     //Insert copy of pasted elements into object without selection them
     mObject->insertObjects( point.sub( mFirst ), &mPaste, mUndo, mEditor, &mFragment, false );
     cancelPaste();
@@ -1126,7 +1126,7 @@ void SdModeSelect::insertCopy(SdPoint offset, bool next)
   {
   setDirty();
   setDirtyCashe();
-  mUndo->begin( QObject::tr("Copy insertion") );
+  mUndo->begin( QObject::tr("Copy insertion"), mObject );
   //Произвести вставку
   //Perform insertion
   unselect(false);
@@ -1264,7 +1264,7 @@ void SdModeSelect::unselect(bool update)
   {
   if( mFragment.count() ) {
 
-    mUndo->begin( QObject::tr("Finish selection") );
+    mUndo->begin( QObject::tr("Finish selection"), mObject );
 
     mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
       SdGraph *graph = dynamic_cast<SdGraph*>(obj);
@@ -1392,7 +1392,7 @@ void SdModeSelect::stopCopy(SdPoint p)
 void SdModeSelect::beginMove(SdPoint p)
   {
   if( mFragment.count() ) {
-    mUndo->begin( QObject::tr("Move begin") );
+    mUndo->begin( QObject::tr("Move begin"), mObject );
 
     //Save state of all object before moving
     mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
@@ -1498,7 +1498,7 @@ void SdModeSelect::stopRect(SdPoint p)
 void SdModeSelect::deleteSelected()
   {
   if( mFragment.count() ) {
-    mUndo->begin( QObject::tr("Deletion elements") );
+    mUndo->begin( QObject::tr("Deletion elements"), mObject );
     mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
       SdGraph *graph = dynamic_cast<SdGraph*>(obj);
       if( graph != nullptr )

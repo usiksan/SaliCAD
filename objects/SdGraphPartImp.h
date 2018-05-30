@@ -100,15 +100,13 @@ class SdGraphPartImp : public SdGraphTraced
 
     //Service
     //Pin link-unlink
-    bool            partPinLink( const QString pinNumber, SdGraphSymImp *imp, const QString pinName, SdUndo *undo );
+    bool            partPinLink(const QString pinNumber, SdGraphSymImp *imp, const QString pinName, bool link );
     //link-unlink section
     void            setLinkSection( int section, SdGraphSymImp *symImp );
     //Check if all section removed, then autodeleted
     void            autoDelete( SdUndo *undo );
-    //Pin status get
-    void            pinStatusGet( const QString pinNumber, SdPartImpPin &pin ) const;
-    //Pin status set
-    void            pinStatusSet( const QString pinNumber, const SdPartImpPin &pin );
+    //Save to undo state of all pins
+    void            savePins( SdUndo *undo );
 
 
     // SdObject interface

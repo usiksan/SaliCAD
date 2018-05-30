@@ -74,3 +74,12 @@ void SdPulsar::emitSetStatusMessage(const QString msg)
   emit setStatusMessage(msg);
   }
 
+
+
+
+//Emit signal on viewed layers changed. It emited when layer dialog completed
+void SdPulsar::emitViewedLayers()
+  {
+  emit viewedLayers();
+  }
+

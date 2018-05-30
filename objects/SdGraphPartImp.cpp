@@ -199,21 +199,12 @@ void SdGraphPartImp::autoDelete(SdUndo *undo)
 
 
 
-//Pin status get
-void SdGraphPartImp::pinStatusGet(const QString pinNumber, SdPartImpPin &pin) const
+
+//Save to undo state of all pins
+void SdGraphPartImp::savePins(SdUndo *undo)
   {
-  Q_ASSERT( mPins.contains(pinNumber) );
-  pin = mPins.value(pinNumber);
-  }
-
-
-
-
-//Pin status set
-void SdGraphPartImp::pinStatusSet(const QString pinNumber, const SdPartImpPin &pin)
-  {
-  Q_ASSERT( mPins.contains(pinNumber) );
-  mPins.insert( pinNumber, pin );
+  //Save state of all pins
+  undo->partImpPins( &mPins );
   }
 
 
@@ -237,17 +228,24 @@ bool SdGraphPartImp::isSectionFree( int *section, SdPItemPart *part, SdPItemSymb
 
 
 //Pin link-unlink
-bool SdGraphPartImp::partPinLink(const QString pinNumber, SdGraphSymImp *imp, const QString pinName, SdUndo *undo)
+bool SdGraphPartImp::partPinLink(const QString pinNumber, SdGraphSymImp *imp, const QString pinName, bool link)
   {
-  if( mPins.contains(pinNumber) ) {
+  if( !mPins.contains(pinNumber) )
+    return false;
+  if( link ) {
+    //Link pins
     if( mPins[pinNumber].mSection != nullptr )
       return false;
-    undo->pinPartImpStatus( this, pinNumber );
     mPins[pinNumber].mSection = imp;
     mPins[pinNumber].mPinName = pinName;
     return true;
     }
-  return false;
+  //Unlink pins
+  if( mPins[pinNumber].mSection != imp )
+    return false;
+  mPins[pinNumber].mSection = nullptr;
+  mPins[pinNumber].mPinName.clear();
+  return true;
   }
 
 
@@ -416,6 +414,8 @@ void SdGraphPartImp::readObject(SdObjectMap *map, const QJsonObject obj)
 void SdGraphPartImp::saveState(SdUndo *undo)
   {
   undo->partImp( &mOrigin, &mProp, &mLogNumber, &mOverRect, &mPrefix, &mIdentProp, &mIdentOrigin, &mIdentPos, &mIdentRect );
+  //Save state of all pins
+  undo->partImpPins( &mPins );
   }
 
 

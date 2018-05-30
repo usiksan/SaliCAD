@@ -173,14 +173,14 @@ SOURCES += \
     SaliCadServer/SdCsPacketInfo.cpp \
     objects/SdPasCadImport.cpp \
     objects/SdSymImpPin.cpp \
-    objects/SdUndoRecordPartImpPin.cpp \
     objects/SdUndoRecordSymImpPins.cpp \
     objects/SdUndoRecordPartImpPins.cpp \
     windows/SdDGrid.cpp \
     windows/SdDLayers.cpp \
     windows/SdDLayerList.cpp \
     windows/SdDLayerCreate.cpp \
-    objects/SdPropAngle.cpp
+    objects/SdPropAngle.cpp \
+    objects/SdUndoRecordBegin.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -346,7 +346,6 @@ HEADERS  += \
     SaliCadServer/SdCsPacketInfo.h \
     objects/SdPasCadImport.h \
     objects/SdSymImpPin.h \
-    objects/SdUndoRecordPartImpPin.h \
     objects/SdUndoRecordSymImpPins.h \
     objects/SdUndoRecordPartImpPins.h \
     windows/SdDGrid.h \
