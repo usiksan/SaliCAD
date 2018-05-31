@@ -222,7 +222,7 @@ SdObject *SdObject::readPtr(SdObjectMap *map, const QJsonObject obj)
 
   //If id equals zero then no object
   if( id.isEmpty() )
-    return 0;
+    return nullptr;
 
   //Check if object already in the map
   if( map->contains(id) )
@@ -280,7 +280,7 @@ SdObject *SdObject::build(QString type)
   if( type == QStringLiteral(SD_TYPE_PART_VARIANT)  ) return new SdPartVariant();
 
   if( type == QStringLiteral(SD_TYPE_PROJECT)       ) return new SdProject();
-  return 0;
+  return nullptr;
   }
 
 
