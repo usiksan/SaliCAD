@@ -246,7 +246,7 @@ void SdWEditorComponent::onCurrentSection(int index)
   SdWSection *sw = dynamic_cast<SdWSection*>( mSectionsTab->widget(index) );
   if( sw ) {
     SdSection *sect = sw->getSection();
-    mSymbolViewer->setItemByNameAndAuthor( sect->getSymbolTitle(), sect->getSymbolAuthor() );
+    mSymbolViewer->setItemById( sect->getSymbolId() );
     }
   else
     mSymbolViewer->setItem( nullptr, true );
@@ -257,13 +257,13 @@ void SdWEditorComponent::onCurrentSection(int index)
 
 void SdWEditorComponent::partSelect()
   {
+  mUndo->begin( tr("Part select for component"), mComponent );
   SdPartVariant *part = mComponent->getPart();
   if( part == nullptr ) {
     part = new SdPartVariant();
     mComponent->insertChild( part, mUndo );
     }
-  SdPItemPart *prt = dynamic_cast<SdPItemPart*>( SdDGetObject::getObject( dctPart, tr("Select part for component"), this ) );
-  part->updateFromPart( prt );
+  part->setPartId( SdDGetObject::getObjectId( dctPart, tr("Select part for component"), this ), mUndo );
   fillPart();
   }
 
@@ -272,6 +272,7 @@ void SdWEditorComponent::partSelect()
 
 void SdWEditorComponent::partDelete()
   {
+  mUndo->begin( tr("Remove part from component"), mComponent );
   SdPartVariant *part = mComponent->getPart();
   if( part != nullptr ) {
     //Remove object
@@ -334,8 +335,8 @@ void SdWEditorComponent::fillPart()
     mPartViewer->setItem( nullptr, true );
     }
   else {
-    mPart->setText( part->getTitle() );
-    mPartViewer->setItemByNameAndAuthor( part->getPartTitle(), part->getPartAuthor() );
+    mPart->setText( part->getPartTitle() );
+    mPartViewer->setItemById( part->getPartId() );
     }
 
   if( mComponent->isEditEnable() ) {

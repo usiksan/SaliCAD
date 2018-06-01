@@ -30,10 +30,10 @@ class SdContainer : public SdObject
     SdObjectPtrList mChildList; //List of child objects
   public:
     SdContainer();
-    ~SdContainer();
+    ~SdContainer() override;
 
     //Information
-    virtual bool isContainer() const { return true; }
+    virtual bool isContainer() const override { return true; }
 
     virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
 

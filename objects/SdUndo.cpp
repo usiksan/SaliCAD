@@ -31,6 +31,7 @@ Description
 #include "SdUndoRecordPartImpPins.h"
 #include "SdUndoRecordWire.h"
 #include "SdUndoRecordProjectItem.h"
+#include "SdUndoRecordString2.h"
 #include "windows/SdWCommand.h"
 
 SdUndo::SdUndo() :
@@ -201,6 +202,16 @@ void SdUndo::begin(QString title, SdProjectItem *item)
 void SdUndo::projectItemInfo(SdProjectItem *item, QString *title, QString *author, QString *tag, int *timeCreation, bool *editEnable)
   {
   addUndo( new SdUndoRecordProjectItem( item, title, author, tag, timeCreation, editEnable ) );
+  }
+
+
+
+
+
+
+void SdUndo::string2(QString *str1, QString *str2)
+  {
+  addUndo( new SdUndoRecordString2( str1, str2 ) );
   }
 
 

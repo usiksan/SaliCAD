@@ -81,12 +81,15 @@ void SdWEditorGraphView::setItem( SdProjectItem *item, bool owner )
 
 
 
-//Set new item by item name and item author
-void SdWEditorGraphView::setItemByNameAndAuthor(const QString name, const QString author)
+//Set new item by item id
+void SdWEditorGraphView::setItemById(const QString id)
   {
-  SdProjectItem *item = dynamic_cast<SdProjectItem*>( SdObjectFactory::extractObject( name, author, true, this ) );
+  SdProjectItem *item = dynamic_cast<SdProjectItem*>( SdObjectFactory::extractObject( id, true, this ) );
   setItem( item, true );
   }
+
+
+
 
 
 

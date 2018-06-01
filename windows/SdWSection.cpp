@@ -22,7 +22,7 @@ SdWSection::SdWSection(bool editEnabled, SdSection *s, QWidget *parent) :
   {
   QHBoxLayout *hbox = new QHBoxLayout();
   hbox->addWidget( new QLabel(tr("Name:")) );
-  hbox->addWidget( mTitle = new QLabel(s->getTitle()) );
+  hbox->addWidget( mTitle = new QLabel(s->getSymbolTitle()) );
   QVBoxLayout *vbox = new QVBoxLayout();
   vbox->addLayout( hbox );
   vbox->addWidget( mPinTable = new QTableWidget( 1, 2, this) );
@@ -43,7 +43,7 @@ SdWSection::SdWSection(bool editEnabled, SdSection *s, QWidget *parent) :
 //Update visual title as in section
 void SdWSection::updateTitle()
   {
-  mTitle->setText( mSection->getTitle() );
+  mTitle->setText( mSection->getSymbolTitle() );
   }
 
 

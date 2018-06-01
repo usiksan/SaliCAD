@@ -17,6 +17,7 @@ Description
 #include "SdEnvir.h"
 #include "SdProjectItem.h"
 #include "SdUtil.h"
+#include "library/SdLibraryStorage.h"
 #include "windows/SdDNetClient.h"
 
 #include <QSqlDatabase>
@@ -33,43 +34,21 @@ Description
 #include <QJsonDocument>
 #include <QSettings>
 
+static SdLibraryStorage library;
 
+//Open or create library
 void SdObjectFactory::openLibrary()
   {
-  static QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-  //Test if previous dbase is opened and close it if nessesery
-  if( db.isOpen() )
-    db.close();
+  library.setLibraryPath( sdEnvir->mLibraryPath );
+  }
 
-  //Test if database exist
-  bool presence = QFile::exists( sdEnvir->mLibraryPath + SD_DATABASE_FILE );
-  //Create directory if nessesery
-  QDir().mkpath( sdEnvir->mLibraryPath );
-  db.setDatabaseName( sdEnvir->mLibraryPath + SD_DATABASE_FILE );
-  if( !db.open() ) {
-    QMessageBox::critical(0, QObject::tr("Cannot open database"),
-        QObject::tr("Unable to establish a database connection.\n"
-                    "This example needs SQLite support. Please read "
-                    "the Qt SQL driver documentation for information how "
-                    "to build it.\n\n"
-                    "Click Cancel to exit."), QMessageBox::Cancel);
-    return;
-    }
 
-  if( !presence ) {
-    QSqlQuery query;
-    //Create objects table
-    query.exec("CREATE TABLE objects (hash TEXT PRIMARY KEY, "
-               " name TEXT, author TEXT, tag TEXT, timeCreate INTEGER, class INTEGER, object BLOB)");
 
-    //Create hierarchical table
-    query.exec("CREATE TABLE hierarchy (section TEXT PRIMARY KEY, path TEXT, parent TEXT, time INTEGER)");
-    //Hierarchy table translation on all languages
-    //translate - national language text (result of translation)
-    //lang - national language name
-    //section - section name (what translate)
-    query.exec("CREATE TABLE translation (translate TEXT PRIMARY KEY, lang TEXT, section TEXT, time INTEGER)");
-    }
+
+//Close library and save unsaved data
+void SdObjectFactory::closeLibrary()
+  {
+  library.flush();
   }
 
 
@@ -77,62 +56,20 @@ void SdObjectFactory::openLibrary()
 
 //Insert object to database. If in database already present newest object,
 //then return its id. Older object is never inserted.
-QString SdObjectFactory::insertObject(const SdProjectItem *item, QJsonObject obj)
+void SdObjectFactory::insertObject(const SdProjectItem *item, QJsonObject obj)
   {
-  static QHash<QString,QString> mCashe;
+  if( item == nullptr )
+    return;
+
   QString id = item->getId();
-  //At first check in the cashe
-  if( mCashe.contains(id) ) {
-    //Already in base. Nothing done.
-    qDebug() << "cashe present";
-    return mCashe.value(id);
-    }
-  //Add to cashe. Later object will be added to database or already in database
-  //
-  QSqlQuery q;
-  q.prepare( QString("SELECT * FROM objects WHERE hash='%1'").arg( id ) );
-  q.exec();
-  if( q.first() ) {
-    //Object is already in database
-    if( !q.record().value( QStringLiteral("object") ).toByteArray().isEmpty() ) {
-      //Add to cashe
-      mCashe.insert( id, QString() );
-      return QString();
-      }
-    }
+  //If object in library then nothing done
+  if( library.isObjectContains(id) )
+    return;
+  //Insert object
+  SdLibraryHeader hdr;
+  item->getHeader( hdr );
 
-  q.prepare( QString("SELECT * FROM objects WHERE name='%1' AND author='%2'").arg( item->getTitle() ).arg( item->getAuthor()) );
-  q.exec();
-  qDebug() << "name and author" << q.lastError();
-  if( q.first() ) {
-    //Object alredy present. Check if it is older or newer.
-    if( q.value( QString("timeCreate") ).toInt() > item->getTime() ) {
-      //In database newest object. Report to replace.
-      mCashe.insert( id, q.value( QString("hash") ).toString() );
-      return q.value( QString("hash") ).toString();
-      }
-    //In database older object. Replace in database
-
-    //Delete older object.
-    q.exec( QString("DELETE FROM objects WHERE hash='%1'").arg( q.value( QString("hash")).toString() ) );
-    }
-
-  //Insert new object
-  qDebug() << "insert";
-  q.prepare( QString("INSERT INTO objects (hash, name, author, tag, timeCreate, class, object) "
-                       "VALUES (:hash, :name, :author, :tag, :timeCreate, :class, :object)") );
-  q.bindValue( QStringLiteral(":hash"), id );
-  q.bindValue( QStringLiteral(":name"), item->getTitle() );
-  q.bindValue( QStringLiteral(":author"), item->getAuthor() );
-  q.bindValue( QStringLiteral(":tag"), item->getTag() );
-  q.bindValue( QStringLiteral(":timeCreate"), item->getTime() );
-  q.bindValue( QStringLiteral(":class"), item->getClass() );
-  q.bindValue( QStringLiteral(":object"), QVariant( QJsonDocument(obj).toBinaryData() ), QSql::Binary | QSql::In );
-  q.exec();
-  qDebug() << q.lastError();
-  //Add to cashe
-  mCashe.insert( id, QString() );
-  return QString();
+  library.insert( id, hdr, QJsonDocument(obj).toBinaryData() );
   }
 
 
@@ -142,61 +79,44 @@ QString SdObjectFactory::insertObject(const SdProjectItem *item, QJsonObject obj
 //If no object in local database then loading from internet
 SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *parent )
   {
+  if( id.isEmpty() )
+    return nullptr;
+
   SdObjectMap map;
-  QSqlQuery q;
-  q.prepare( QString("SELECT object FROM objects WHERE hash='%1'").arg( id ) );
-  q.exec();
-  if( q.first() ) {
-    //Object present. Load from obj
-    QJsonObject jsonObj = QJsonDocument::fromBinaryData( q.value( QStringLiteral("object") ).toByteArray() ).object();
-    if( jsonObj.isEmpty() ) {
-      //Soft extract object from database.
-      //If no object in local database then doing nothing
-      if( soft ) return nullptr;
 
-      //load object from server
-      if( !SdDNetClient::getObject( parent, id ) ) {
-        QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Id '%1' can't be received from remote database").arg(id) );
-        return nullptr;
-        }
+  if( !library.isObjectContains(id) ) {
+    //Soft extract object from database.
+    //If no object in local database then doing nothing
+    if( soft ) return nullptr;
 
-      //Repeate extract object
-      q.prepare( QString("SELECT object FROM objects WHERE hash='%1'").arg( id ) );
-      q.exec();
-      if( !q.first() ) {
-        //Something wrong, but object is not found
-        QMessageBox::warning( parent, QObject::tr("Fatal"), QObject::tr("Id '%1' not found").arg(id) );
-        return nullptr;
-        }
-
-      //Object present. Load from obj
-      jsonObj = QJsonDocument::fromBinaryData( q.value( QStringLiteral("object") ).toByteArray() ).object();
-      if( jsonObj.isEmpty() ) {
-        //Something wrong, but object is not found
-        QMessageBox::warning( parent, QObject::tr("Fatal"), QObject::tr("Id '%1' reported as loaded but it's wrong").arg(id) );
-        return nullptr;
-        }
-
+    //load object from server
+    if( !SdDNetClient::getObject( parent, id ) ) {
+      QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Id '%1' can't be received from remote database").arg(id) );
+      return nullptr;
       }
-    //Build object
-    return SdObject::read( &map, jsonObj );
     }
+
+  //At this point object already in local base
+  if( library.isObjectContains(id) )
+    //Build object
+    return SdObject::read( &map, QJsonDocument::fromBinaryData( library.object(id) ).object() );
+
   QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Id '%1' not found in database").arg(id) );
-  return 0;
-  }
-
-
-
-
-SdObject *SdObjectFactory::extractObject(const QString name, const QString author, bool soft, QWidget *parent)
-  {
-  QSqlQuery q;
-  q.exec( QString("SELECT hash FROM objects WHERE name='%1' AND author='%2' ORDER BY timeCreate DESC").arg( name ).arg( author ) );
-  if( q.first() )
-    //Object present.
-    return extractObject( q.value( QStringLiteral("hash")).toString(), soft, parent );
   return nullptr;
   }
+
+
+
+
+//SdObject *SdObjectFactory::extractObject(const QString name, const QString author, bool soft, QWidget *parent)
+//  {
+//  QSqlQuery q;
+//  q.exec( QString("SELECT hash FROM objects WHERE name='%1' AND author='%2' ORDER BY timeCreate DESC").arg( name ).arg( author ) );
+//  if( q.first() )
+//    //Object present.
+//    return extractObject( q.value( QStringLiteral("hash")).toString(), soft, parent );
+//  return nullptr;
+//  }
 
 
 
@@ -205,12 +125,31 @@ SdObject *SdObjectFactory::extractObject(const QString name, const QString autho
 //Return true if object already present in dataBase
 bool SdObjectFactory::isObjectPresent(const QString name, const QString author)
   {
-  QSqlQuery q;
-  q.exec( QString("SELECT hash FROM objects WHERE name='%1' AND author='%2'").arg( name ).arg( author ) );
-  if( q.first() )
-    //Object present.
-    return true;
-  return false;
+  return library.forEachHeader( [name,author] (SdLibraryHeader &hdr) -> bool {
+    if( hdr.mName == name && hdr.mAuthor == author )
+      return true;
+    return false;
+    });
+  }
+
+
+
+
+
+//Extract object header
+//If no object in library return false
+bool SdObjectFactory::extractHeader(const QString id, SdLibraryHeader &hdr)
+  {
+  return library.header( id, hdr );
+  }
+
+
+
+
+
+bool SdObjectFactory::forEachHeader(std::function<bool (SdLibraryHeader &)> fun1)
+  {
+  return library.forEachHeader( fun1 );
   }
 
 
@@ -300,6 +239,7 @@ QString SdObjectFactory::hierarchyGetTranslated(const QString item)
 
   if( lang.isEmpty() )
     return item;
+
 
   QSqlQuery q;
   q.exec( QString("SELECT translate FROM translation WHERE section='%1' AND lang='%2'").arg( item ).arg(lang) );

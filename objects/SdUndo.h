@@ -80,6 +80,7 @@ class SdUndo
     void point( SdPoint *src );
     void begin(QString title , SdProjectItem *item);
     void projectItemInfo( SdProjectItem *item, QString *title, QString *author, QString *tag, int *timeCreation, bool *editEnable );
+    void string2( QString *str1, QString *str2 );
 
     //do undo and redo
     void undoStep();

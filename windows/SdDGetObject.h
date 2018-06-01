@@ -15,8 +15,9 @@ Description
 #ifndef SDDGETOBJECT_H
 #define SDDGETOBJECT_H
 
+#include "library/SdLibraryHeader.h"
+
 #include <QDialog>
-#include <QSqlQueryModel>
 
 class SdProjectItem;
 class SdPItemSymbol;
@@ -25,6 +26,8 @@ class SdWEditorGraphView;
 namespace Ui {
 class SdDGetObject;
 }
+
+
 
 class SdDGetObject : public QDialog
   {
@@ -40,11 +43,11 @@ class SdDGetObject : public QDialog
     int                    mSectionIndex; //Section index
 
     quint64                mSort;         //Object select sort (class)
-
-    static QSqlQueryModel *mModel;
+    SdLibraryHeaderList    mHeaderList;
+    QMap<QString,int>      mHeaderMap;
   public:
-    explicit SdDGetObject( quint64 sort, const QString title, QWidget *parent = 0);
-    ~SdDGetObject();
+    explicit SdDGetObject( quint64 sort, const QString title, QWidget *parent = nullptr);
+    ~SdDGetObject() override;
 
     QString getObjName() const { return mObjName; }
     QString getObjAuthor() const { return mObjAuthor; }
@@ -56,22 +59,31 @@ class SdDGetObject : public QDialog
     void find();
 
     //On change selection item in find item table
-    void onSelectItem( QModelIndex index );
+    void onSelectItem( int row, int column );
 
-    //On change segment selection
-    void onCurrentSegment( int row );
+    //On change component section selection
+    void onCurrentSection( int row );
 
     //Selected new category, apply filtr
     void onTagPath( const QString path );
 
   protected:
-    void changeEvent(QEvent *e);
+    void changeEvent(QEvent *e) override;
 
   private:
     Ui::SdDGetObject *ui;
+    void clearComponent();
+
+    //Fill visual table with mHeaderList contens
+    void fillTable();
+
+    //Append header to internal list with time check
+    //If object already in list and its time early newly inserted, then previous inserted header removed
+    void appendNewly( SdLibraryHeader &hdr );
   public:
     static bool           getObjectName( QString *name, QString *author, quint64 sort, const QString title, QWidget *parent );
     static SdProjectItem *getObject( quint64 sort, const QString title, QWidget *parent);
+    static QString        getObjectId( quint64 sort, const QString title, QWidget *parent );
     static SdProjectItem *getComponent( int *logSectionPtr, quint64 sort, const QString title, QWidget *parent );
 
     // QDialog interface

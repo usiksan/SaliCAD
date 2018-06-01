@@ -45,9 +45,11 @@ class SdPItemSymbol : public SdProjectItem
 
     //Return symbol from section by index
     SdPItemSymbol    *extractSymbolFromFactory( int sectionIndex, bool soft, QWidget *parent ) const;
+    QString           getSectionSymbolId( int sectionIndex ) const;
 
     //Return part descripted part variant
     SdPItemPart      *extractPartFromFactory( bool soft, QWidget *parent ) const;
+    QString           getPartId() const;
 
 
 

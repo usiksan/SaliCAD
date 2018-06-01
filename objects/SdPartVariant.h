@@ -25,7 +25,7 @@ class QWidget;
 class SdPartVariant : public SdObject
   {
     QString           mPartTitle;      //Part for this variant
-    QString           mPartAuthor;
+    QString           mPartId;
     bool              mDefault;        //True if default part
   public:
     int               mVisualIndex;    //Index in visual list. This is temporary element and not saved
@@ -33,12 +33,11 @@ class SdPartVariant : public SdObject
 
     bool         isDefault() const { return mDefault; }
     void         setDefault( bool def ) { mDefault = def; }
-    QString      getPartShortId() const { return mPartTitle + mPartAuthor; }
     SdPItemPart *extractFromFactory( bool soft, QWidget *parent ) const;
     QString      getPartTitle() const { return mPartTitle; }
-    QString      getPartAuthor() const { return mPartAuthor; }
+    QString      getPartId() const { return mPartId; }
     QString      getTitle() const;
-    void         updateFromPart( SdPItemPart *part );
+    void         setPartId( const QString id, SdUndo *undo );
 
 
     // SdObject interface

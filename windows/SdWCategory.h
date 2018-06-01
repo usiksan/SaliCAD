@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Category tree widget. All objects in library fall into category
 */
 #ifndef SDWCATEGORY_H
 #define SDWCATEGORY_H

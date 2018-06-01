@@ -35,17 +35,15 @@ class QWidget;
 
 class SdSection : public SdObject
   {
-    QString           mSymbolTitle;       //Symbolic presentation of this section
-    QString           mSymbolAuthor;
+    QString           mSymbolId;          //Symbolic presentation of this section
+    QString           mSymbolTitle;       //Symbolic title
     SdPinAssotiation  mAssotiationTable;  //Pin assotiation table
   public:
     SdSection();
 
     QString          getPinNumber( const QString name ) const { return mAssotiationTable.value(name); }
-    QString          getSymbolShortId() const { return mSymbolTitle + mSymbolAuthor; }
     QString          getSymbolTitle() const { return mSymbolTitle; }
-    QString          getSymbolAuthor() const { return mSymbolAuthor; }
-    QString          getTitle() const;
+    QString          getSymbolId() const { return mSymbolId; }
     SdPinAssotiation getPins() const { return mAssotiationTable; }
     void             updateFromSymbol( SdPItemSymbol *symbol );
     SdPItemSymbol   *extractFromFactory(bool soft, QWidget *parent ) const;

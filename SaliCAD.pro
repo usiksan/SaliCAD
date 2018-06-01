@@ -180,7 +180,9 @@ SOURCES += \
     windows/SdDLayerList.cpp \
     windows/SdDLayerCreate.cpp \
     objects/SdPropAngle.cpp \
-    objects/SdUndoRecordBegin.cpp
+    objects/SdUndoRecordBegin.cpp \
+    library/SdLibraryStorage.cpp \
+    objects/SdUndoRecordString2.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -352,7 +354,11 @@ HEADERS  += \
     windows/SdDLayers.h \
     windows/SdDLayerList.h \
     windows/SdDLayerCreate.h \
-    objects/SdPropAngle.h
+    objects/SdPropAngle.h \
+    library/SdLibraryReference.h \
+    library/SdLibraryStorage.h \
+    library/SdLibraryHeader.h \
+    objects/SdUndoRecordString2.h
 
 DISTFILES += \
     license.txt

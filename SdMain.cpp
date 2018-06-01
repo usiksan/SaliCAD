@@ -24,6 +24,8 @@ Description
 #include <QTranslator>
 #include <QLocale>
 #include <QDebug>
+#include <QFile>
+
 
 int main(int argc, char *argv[])
   {
@@ -37,6 +39,8 @@ int main(int argc, char *argv[])
 
   //Create remote database client
   sdObjectNetClient = new SdObjectNetClient();
+
+
 
   QSettings s;
 

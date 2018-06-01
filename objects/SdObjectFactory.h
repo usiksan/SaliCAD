@@ -17,6 +17,8 @@ Description
 #define SDOBJECTFACTORY_H
 
 #include "SdObject.h"
+#include "library/SdLibraryHeader.h"
+
 #include <QJsonObject>
 #include <QWidget>
 #include <QTreeWidgetItem>
@@ -32,19 +34,29 @@ class SdObjectFactory
     //Open or create library
     static void openLibrary();
 
+    //Close library and save unsaved data
+    static void closeLibrary();
+
     //Insert object to database. If in database already present newest object,
     //then return its id. Older object is never inserted.
-    static QString      insertObject( const SdProjectItem *item, QJsonObject obj );
+    static void         insertObject( const SdProjectItem *item, QJsonObject obj );
 
     //Extract object from database.
     //If no object in local database then loading from internet
     //Soft extract object from database.
     //If no object in local database then doing nothing
     static SdObject    *extractObject( const QString id, bool soft, QWidget *parent );
-    static SdObject    *extractObject( const QString name, const QString author, bool soft, QWidget *parent );
 
     //Return true if object already present in dataBase
     static bool         isObjectPresent( const QString name, const QString author );
+
+    //Extract object header
+    //If no object in library return false
+    static bool         extractHeader( const QString id, SdLibraryHeader &hdr );
+
+    //Function must return false to continue iteration
+    //When function return true - iteration break and return true as indicator
+    static bool         forEachHeader(std::function<bool(SdLibraryHeader&)> fun1 );
 
 
     //Hierarchy table

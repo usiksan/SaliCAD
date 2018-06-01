@@ -98,13 +98,35 @@ SdPItemSymbol *SdPItemSymbol::extractSymbolFromFactory(int sectionIndex, bool so
 
 
 
+QString SdPItemSymbol::getSectionSymbolId(int sectionIndex) const
+  {
+  SdSection *sec = getSection( sectionIndex );
+  if( sec != nullptr )
+    return sec->getSymbolId();
+  return QString();
+  }
+
+
+
+
+
 //Return part descripted part variant
 SdPItemPart *SdPItemSymbol::extractPartFromFactory(bool soft, QWidget *parent) const
   {
   SdPartVariant *prt = getPart();
-  if( prt )
+  if( prt != nullptr )
     return prt->extractFromFactory( soft, parent );
   return nullptr;
+  }
+
+
+
+QString SdPItemSymbol::getPartId() const
+  {
+  SdPartVariant *prt = getPart();
+  if( prt != nullptr )
+    return prt->getPartId();
+  return QString();
   }
 
 

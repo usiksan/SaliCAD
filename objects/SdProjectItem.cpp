@@ -138,6 +138,20 @@ SdUndo *SdProjectItem::getUndo() const
 
 
 
+void SdProjectItem::getHeader(SdLibraryHeader &hdr) const
+  {
+  hdr.mName       = mTitle;
+  hdr.mType       = getType();
+  hdr.mAuthor     = mAuthor;
+  hdr.mTag        = mTag;
+  hdr.mTime       = getTime();
+  hdr.mClass      = getClass();
+  hdr.mParamTable = mParamTable;
+  }
+
+
+
+
 //Set editEnable flag. Return copy object when object editing is prohibited
 SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle )
   {
