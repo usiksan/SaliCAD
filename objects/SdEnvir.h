@@ -17,6 +17,7 @@ Description
 #include "SdConfig.h"
 #include "SdLayer.h"
 #include "SdSnapInfo.h"
+#include "SdUtil.h"
 #include <QColor>
 #include <QMap>
 #include <QPointF>
@@ -47,7 +48,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (23 + FONT_COUNT)
+#define SdEnvirVersion  (24 + FONT_COUNT)
 
 typedef QMap<QString,SdLayerPtr> SdLayerPtrTable;
 
@@ -61,7 +62,7 @@ class SdEnvir
     int             mDotSize;              //Размер точки соединений сегментов цепи
     int             mDotWidth;             //Толщина линии точки соединения сегментов цепи
     int             mSymPinSize;           //Размер перекрестья ножки символа
-    int             mPrtPinSize;           //Размер окружности ножки корпуса
+    int             mPartPinSize;          //Размер окружности ножки корпуса
     int             mSmartSize;            //Размер разумной точки
     int             mSmartWidth;           //Толщина линии разумной точки
     bool            mIsSmart;              //Включение разумного режима
@@ -138,6 +139,12 @@ class SdEnvir
     //Layer id to name translation service
     QString  layerId2NameLevel0(QString lid0 );
     QString  layerId2NameLevel1( QString lid1 );
+
+    QString  toPhisSchematic( int val ) const { return SdUtil::log2physStr(val,mSchPPM); }
+    int      fromPhisSchematic( const QString str ) const { return SdUtil::phys2log(str,mSchPPM); }
+
+    QString  toPhisPcb( int val ) const { return SdUtil::log2physStr(val,mPrtPPM); }
+    int      fromPhisPcb( const QString str ) const { return SdUtil::phys2log(str,mPrtPPM); }
 
   private:
     void deleteLayers();

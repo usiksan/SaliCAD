@@ -22,9 +22,9 @@ Description
 
 SdContext::SdContext(SdPoint grid, QPainter *painter) :
   mPainter(painter),
-  mConverter(0),
+  mConverter(nullptr),
   mGrid(grid),
-  mSelector(0),
+  mSelector(nullptr),
   mTransform(),
   mMirror(false),
   mAngle(0),
@@ -90,7 +90,7 @@ void SdContext::line(SdPoint a, SdPoint b, const SdPropLine &prop)
 
 void SdContext::symPin(SdPoint a, SdLayer *layer)
   {
-  if( mSelector || (layer != 0 && layer->isVisible()) ) {
+  if( mSelector || (layer != nullptr && layer->isVisible()) ) {
     cross( a, sdEnvir->mSymPinSize, convertColor( layer ) );
     }
   }
@@ -100,9 +100,9 @@ void SdContext::symPin(SdPoint a, SdLayer *layer)
 
 void SdContext::partPin(SdPoint a, SdLayer *layer)
   {
-  if( mSelector || (layer != 0 && layer->isVisible()) ) {
+  if( mSelector || (layer != nullptr && layer->isVisible()) ) {
     setPen( 0, convertColor( layer ), dltSolid );
-    circle( a, sdEnvir->mPrtPinSize );
+    circle( a, sdEnvir->mPartPinSize );
     }
   }
 
@@ -189,9 +189,9 @@ void SdContext::arc(SdPoint center, SdPoint start, SdPoint stop)
   if( arcAngle < 0 )
     arcAngle += 360.0;
   if( mMirror )
-    mPainter->drawArc( mTransform.mapRect(r), startAngle * 16.0, -arcAngle * 16.0 );
+    mPainter->drawArc( mTransform.mapRect(r), static_cast<int>(startAngle * 16.0), static_cast<int>(-arcAngle * 16.0) );
   else
-    mPainter->drawArc( mTransform.mapRect(r), startAngle * 16.0, arcAngle * 16.0 );
+    mPainter->drawArc( mTransform.mapRect(r), static_cast<int>(startAngle * 16.0), static_cast<int>(arcAngle * 16.0) );
   }
 
 

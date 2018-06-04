@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Display and selecting system colors
 */
 
 #ifndef SDDOPTIONSPAGECOLORS_H
@@ -31,6 +32,8 @@ class SdDOptionsPageColors : public QWidget
     //Activate on select cell in color table
     //We shows color dialog
     void onColorSelect( int row, int column );
+
+    void accept();
 
   private:
     void addColor(int colorIndex, const QString descr);

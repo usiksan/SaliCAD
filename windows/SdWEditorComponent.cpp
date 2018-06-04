@@ -425,9 +425,8 @@ void SdWEditorComponent::fillParams()
   mParamTable->setColumnCount(2);
   mParamTable->setRowCount( tab.count() );
   //Setup header
-  QStringList header;
-  header << tr("Param name") << tr("Param value");
-  mParamTable->setHorizontalHeaderLabels( header );
+  mParamTable->setHorizontalHeaderLabels( {tr("Param name"), tr("Param value")} );
+  mParamTable->setColumnWidth(1,200);
   int row = 0;
   for( auto iter = tab.constBegin(); iter != tab.constEnd(); iter++ ) {
     mParamTable->setItem( row, 0, new QTableWidgetItem(iter.key()) );

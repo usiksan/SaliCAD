@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Display and selecting system colors
 */
 #include "SdConfig.h"
 #include "SdDOptionsPageColors.h"
@@ -53,11 +54,18 @@ void SdDOptionsPageColors::onColorSelect(int row, int column)
   {
   if( column ) {
     QColor color = QColorDialog::getColor( sdEnvir->getSysColor(row), this, mTable->item(row,0)->text() );
-    if( color.isValid() ) {
-      sdEnvir->setSysColor( row, color );
+    if( color.isValid() )
       mTable->item(row,1)->setBackgroundColor( color );
-      }
     }
+  }
+
+
+
+
+void SdDOptionsPageColors::accept()
+  {
+  for( int i = 0; i < mTable->rowCount(); i++ )
+    sdEnvir->setSysColor( i, mTable->item(i,1)->backgroundColor() );
   }
 
 

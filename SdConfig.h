@@ -77,6 +77,8 @@ History
                    - save list
   19.05.2018 v0.29 Append pasCad text prop import, text import, circle import
   04.06.2018 v0.30 Append wheel support in graph windows
+  04.06.2018 v0.31 Append arc pic pasCad import. Symbols imported.
+                   Append system color selction to Options dialog.
 */
 
 #ifndef SDCONFIG
@@ -88,7 +90,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             30
+#define SD_VERSION_MINOR             31
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

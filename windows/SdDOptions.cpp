@@ -13,6 +13,7 @@ Description
 
 #include "SdDOptions.h"
 #include "SdDOptionsPageColors.h"
+#include "SdDOptionsPageEditors.h"
 #include <QVBoxLayout>
 #include <QLabel>
 
@@ -23,8 +24,8 @@ SdDOptions::SdDOptions(QWidget *parent) :
   mTabWidget = new QTabWidget( this );
   mButtons = new QDialogButtonBox(QDialogButtonBox::Ok);
 
-  connect(mButtons, SIGNAL(accepted()), this, SLOT(accept()));
-  //connect(mButtons, SIGNAL(rejected()), this, SLOT(reject()));
+  connect(mButtons, &QDialogButtonBox::accepted, this, &SdDOptions::accept );
+  connect(mButtons, &QDialogButtonBox::rejected, this, &SdDOptions::reject );
 
   QVBoxLayout *mainLayout = new QVBoxLayout;
   mainLayout->addWidget( title );
@@ -33,7 +34,13 @@ SdDOptions::SdDOptions(QWidget *parent) :
   setLayout(mainLayout);
 
   //Append option pages
-  mTabWidget->addTab( new SdDOptionsPageColors(), tr("Colors") );
+  SdDOptionsPageColors *colors = new SdDOptionsPageColors();
+  connect(mButtons, &QDialogButtonBox::accepted, colors, &SdDOptionsPageColors::accept );
+  mTabWidget->addTab( colors, tr("Colors") );
+
+  SdDOptionsPageEditors *editors = new SdDOptionsPageEditors();
+  connect(mButtons, &QDialogButtonBox::accepted, editors, &SdDOptionsPageEditors::accept );
+  mTabWidget->addTab( editors, tr("Editors") );
 
   setWindowTitle( tr("Options") );
   resize( 700, 500 );

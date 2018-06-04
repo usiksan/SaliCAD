@@ -60,7 +60,7 @@ void SdModeCPartPin::drawDynamic(SdContext *ctx)
       drawText( ctx );
 
     case sPlaceNumber :
-      ctx->cross( mOrigin, sdEnvir->mPrtPinSize, sdEnvir->getSysColor(scEnter) );
+      ctx->cross( mOrigin, sdEnvir->mPartPinSize, sdEnvir->getSysColor(scEnter) );
     }
   }
 
