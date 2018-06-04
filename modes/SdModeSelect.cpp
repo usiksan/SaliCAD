@@ -932,8 +932,9 @@ void SdModeSelect::movePoint( SdPoint p )
 
 
 
-void SdModeSelect::wheel(SdPoint)
+bool SdModeSelect::wheel(SdPoint)
   {
+  return false;
   }
 
 

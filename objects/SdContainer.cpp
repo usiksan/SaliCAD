@@ -181,11 +181,11 @@ void SdContainer::redoDeleteChild(SdObject *child)
 
 void SdContainer::insertChild( SdObject *child, SdUndo *undo )
   {
-  Q_ASSERT_X( child->getParent() == 0, "insertChild", "Insertion with parent setuped" );
+  Q_ASSERT_X( child->getParent() == nullptr, "insertChild", "Insertion with parent setuped" );
   //Insert in list
   mChildList.append( child );
   child->setParent( this );
-  if( undo )
+  if( undo != nullptr )
     undo->insertObject( this, child );
   //Attach to hierarhy
   child->attach( undo );

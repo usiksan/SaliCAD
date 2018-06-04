@@ -12,6 +12,7 @@ Description
 */
 #include "SdPasCadImport.h"
 #include "SdPItemSymbol.h"
+#include "SdPItemComponent.h"
 #include "SdGraphLinear.h"
 #include "SdGraphLinearLine.h"
 #include "SdGraphLinearRect.h"
@@ -507,11 +508,10 @@ bool SdPasCadImport::readSymbol(SdObject *obj)
   //DInt32           sect;    //Количество секций
   int sections = readInt32();
 
-//  for( int i = 0; i < sections; i++ ) {
-//    SdSection *section = new SdSection();
-//    section->updateFromSymbol( sym );
-//    sym->insertChild( section, nullptr );
-//    }
+  mPinsPack.clear();
+  for( int i = 0; i < sections; i++ ) {
+    mPinsPack.append( SdStringMap() );
+    }
 
   //picture.Read( is, this );
   if( !readObjectTable( sym ) ) return false;
@@ -519,7 +519,19 @@ bool SdPasCadImport::readSymbol(SdObject *obj)
   //pins.Read( is, this );
   if( !readObjectTable( sym ) ) return false;
 
+
+  //Create associated component
+//  SdPItemComponent *comp = new SdPItemComponent();
+//  for( int i = 0; i < sections; i++ ) {
+//    comp->appendSection( sym->getId(), nullptr );
+
+//    }
+
   //ident.Read( is );
+  // DTextProp prop
+  // DIdent    ident (NConstString)
+  // DRect     overRect
+
   return false;
   }
 
@@ -660,10 +672,16 @@ bool SdPasCadImport::readSymPin(SdObject *obj)
   if( !readTextProp( &(pin->mNumberProp), &(pin->mNumberPos) )  ) return false;
   if( !readTextProp( &(pin->mNameProp), &(pin->mNamePos) )  ) return false;
   pin->mName = readName();
-  int s = readInt32();
+  //Sections count
+  int sections = readInt32();
+  //Pin group - unused
   readInt32();
-  for( int i = 0; i < s; i++ )
-    readName();
+  for( int i = 0; i < sections; i++ ) {
+    if( i < mPinsPack.count() )
+      mPinsPack[i].insert( pin->mName, readName() );
+    else
+      readName();
+    }
   return true;
   }
 

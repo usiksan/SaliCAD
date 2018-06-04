@@ -62,7 +62,7 @@ class SdModeSelect : public SdMode
     virtual void    clickPoint(SdPoint) override;
     virtual void    cancelPoint(SdPoint point) override;
     virtual void    movePoint(SdPoint p) override;
-    virtual void wheel(SdPoint) override;
+    virtual bool    wheel(SdPoint) override;
     virtual void    beginDrag(SdPoint point) override;
     virtual void    dragPoint(SdPoint point) override;
     virtual void    stopDrag(SdPoint point) override;

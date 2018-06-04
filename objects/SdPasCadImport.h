@@ -14,28 +14,32 @@ Description
 #define SDPASCADIMPORT_H
 
 #include "SdProject.h"
+#include "SdStringMap.h"
 
 #include <QFile>
 #include <QWidget>
 #include <QMap>
+#include <QList>
 
 struct DLayer;
 struct DFont;
 class  SdLayer;
 class  SdPropText;
+class  SdPItemComponent;
 
 typedef QMap<int,SdObjectPtr> SdImportMap;
 
 class SdPasCadImport
   {
-    SdProject   *mProject;
-    QFile       *mFile;
-    QWidget     *mOwner;
-    DLayer      *mLayerTable;
-    int          mLayerNumber;
-    DFont       *mFontTable;
-    int          mFontNumber;
-    SdImportMap  mObjectMap;
+    SdProject         *mProject;
+    QFile             *mFile;
+    QWidget           *mOwner;
+    DLayer            *mLayerTable;
+    int                mLayerNumber;
+    DFont             *mFontTable;
+    int                mFontNumber;
+    SdImportMap        mObjectMap;
+    QList<SdStringMap> mPinsPack;
   public:
     SdPasCadImport( SdProject *prj, QWidget *owner );
     ~SdPasCadImport();

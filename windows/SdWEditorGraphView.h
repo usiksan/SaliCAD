@@ -25,7 +25,7 @@ class SdWEditorGraphView : public SdWEditorGraph
   public:
     SdWEditorGraphView( SdProjectItem *item, QWidget *parent );
     SdWEditorGraphView(QWidget *parent);
-    ~SdWEditorGraphView();
+    ~SdWEditorGraphView() override;
 
     //Set new item
     void setItem(SdProjectItem *item , bool owner);

@@ -75,7 +75,7 @@ class SdMode
     virtual void    clickPoint( SdPoint ) {}                //Двойное нажатие левой кнопки
     virtual void    cancelPoint( SdPoint ) {}               //Точка прекращения (правая кнопка)
     virtual void    movePoint( SdPoint ) {}                 //Перемещение точки
-    virtual void    wheel( SdPoint ) {}                     //Вращение колеса мыши
+    virtual bool    wheel( SdPoint ) { return false; }      //Вращение колеса мыши
     virtual void    keyDown( int key, QChar ch );           //Нажатие кнопки
     virtual void    keyUp( int key, QChar ch );             //Отпускание клавиши
     virtual void    enterPrev() {}                          //Повторение ввода предыдущего сеанса (разумный ввод)

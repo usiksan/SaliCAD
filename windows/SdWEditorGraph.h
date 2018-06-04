@@ -53,7 +53,7 @@ class SdWEditorGraph : public SdWEditor
     QImage           mCashe;          //Cashe for static picture part
 
   public:
-    SdWEditorGraph( SdProjectItem *item, QWidget *parent = 0 );
+    SdWEditorGraph( SdProjectItem *item, QWidget *parent = nullptr );
 
     double  scaleGet() const { return mScale.scaleGet(); }
     void    scaleSet( double scale );

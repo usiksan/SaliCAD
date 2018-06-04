@@ -51,10 +51,10 @@ Description
 
 SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
   SdWEditor( parent ),
-  mView(0),           //Порт для отображения объекта
-  mMode(0),           //Режим для исполнения операций
-  mPrevMode(0),       //Предыдущий режим
-  mStack(0),          //Временный режим
+  mView(nullptr),           //View port for object display [Порт для отображения объекта]
+  mMode(nullptr),           //Current active mode [Режим для исполнения операций]
+  mPrevMode(nullptr),       //Previous active mode for return to it [Предыдущий режим]
+  mStack(nullptr),          //Temporary mode aka zoom [Временный режим]
   mSelect(nullptr),   //Режим выделения
   mScale(),           //Текущий масштаб изображения
   mOrigin(),          //Логическая точка центра изображения
@@ -739,8 +739,25 @@ void SdWEditorGraph::mouseMoveEvent(QMouseEvent *event)
 
 void SdWEditorGraph::wheelEvent(QWheelEvent *event)
   {
-  if( modeGet() )
-    modeGet()->wheel( event->angleDelta() );
+  //At first try handle event with mode
+  //if mode not handle event, then make defaul behavior
+  if( modeGet() && modeGet()->wheel( event->angleDelta() ) )
+    return;
+  int delta = event->angleDelta().y() / 120;
+  qDebug() << "wheel" << event->angleDelta().y();
+  if( event->modifiers() & Qt::ControlModifier ) {
+    //Move by vertical
+    originSet( SdPoint(originGet().x(), originGet().y() + delta * gridGet().y()) );
+    }
+  else if( event->modifiers() & Qt::ShiftModifier ) {
+    //Scale
+    if( event->angleDelta().y() < 0 ) scaleStep(1.2);
+    else scaleStep(0.83);
+    }
+  else {
+    //Move by horizontal
+    originSet( SdPoint(originGet().x() + delta * gridGet().x(), originGet().y()) );
+    }
   }
 
 

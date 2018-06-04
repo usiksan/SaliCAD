@@ -29,6 +29,8 @@ SdSection::SdSection() :
 
 void SdSection::setSymbolId(const QString id, SdUndo *undo)
   {
+  if( id.isEmpty() )
+    return;
   SdObject *obj = SdObjectFactory::extractObject( id, true, nullptr );
   SdPItemSymbol *symbol = dynamic_cast<SdPItemSymbol*>(obj);
   if( symbol != nullptr ) {

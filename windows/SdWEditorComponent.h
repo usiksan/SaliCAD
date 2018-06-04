@@ -45,6 +45,7 @@ class SdWEditorComponent : public SdWEditor
     QPushButton          *mSectionSymbol;
     QPushButton          *mSectionDelete;
     QPushButton          *mSectionDeleteAll;
+    QPushButton          *mPackSelect;        //Shows dialog with available pin numbers
 
     QLineEdit            *mPart;
     QPushButton          *mPartSelect;

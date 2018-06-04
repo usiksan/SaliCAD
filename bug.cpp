@@ -9,9 +9,6 @@
 //TODO B003 copy in sheet
 //При копировании в sheet нету вставки
 
-//TODO B005 dont work wheel functions
-//Не работает функция колеса
-
 //TODO B007 arrows key to move cursor
 //Использовать кнопки со стрелками для перемещения курсора
 
@@ -29,6 +26,10 @@
 
 //===================================================================================
 //Fixed:
+
+//B005 dont work wheel functions
+//Не работает функция колеса
+
 //D032 fill new hierarhy and translation list
 
 //D025 load object from server

@@ -68,7 +68,7 @@ SdContainer *SdObject::getRoot() const
     if( p->mParent == nullptr ) return p;
     p = p->mParent;
     }
-  return 0;
+  return nullptr;
   }
 
 
