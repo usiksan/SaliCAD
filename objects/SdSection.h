@@ -9,24 +9,21 @@ Web
   www.saliLab.ru
 
 Description
+  Symbol section is one of more schematic sections where all section
+  declare full component.
 */
 #ifndef SDSECTION_H
 #define SDSECTION_H
 
 #include "SdObject.h"
+#include "SdStringMap.h"
 
 #include <QMap>
 #include <QList>
 
-//Pin assotiation where pin name assotiated with pin number
-//struct SdPinAssotiation
-//  {
-//    QString mPinName;
-//    QString mPinNumber;
-//  };
-
+//Pin association where pin name assotiated with pin number
 //Pin assotiation table where symbol pin name is key and part pin number is value
-typedef QMap<QString,QString> SdPinAssotiation;
+typedef SdStringMap SdPinAssociation;
 
 class SdPItemSymbol;
 class QWidget;
@@ -37,17 +34,17 @@ class SdSection : public SdObject
   {
     QString           mSymbolId;          //Symbolic presentation of this section
     QString           mSymbolTitle;       //Symbolic title
-    SdPinAssotiation  mAssotiationTable;  //Pin assotiation table
+    SdPinAssociation  mAssociationTable;  //Pin assotiation table
   public:
     SdSection();
 
-    QString          getPinNumber( const QString name ) const { return mAssotiationTable.value(name); }
+    QString          getPinNumber( const QString name ) const { return mAssociationTable.value(name); }
     QString          getSymbolTitle() const { return mSymbolTitle; }
     QString          getSymbolId() const { return mSymbolId; }
-    SdPinAssotiation getPins() const { return mAssotiationTable; }
-    void             updateFromSymbol( SdPItemSymbol *symbol );
+    SdPinAssociation getPins() const { return mAssociationTable; }
+    void             setSymbolId( const QString id, SdUndo *undo );
     SdPItemSymbol   *extractFromFactory(bool soft, QWidget *parent ) const;
-    void             setPinNumber( const QString name, const QString number );
+    void             setPinNumber( const QString name, const QString number, SdUndo *undo );
 
     // SdObject interface
   public:
@@ -57,5 +54,7 @@ class SdSection : public SdObject
     virtual void    writeObject(QJsonObject &obj) const override;
     virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
   };
+
+typedef SdSection *SdSectionPtr;
 
 #endif // SDSECTION_H

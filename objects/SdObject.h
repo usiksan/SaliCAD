@@ -61,7 +61,7 @@ Description
 #define dctPicture       (dctLines | dctText | dctSize)
 #define dctProjectItems  (dctSymbol | dctPart | dctSheet | dctPlate | dctComponent)
 #define dctAll           MAX64_MASK
-#define dctSymbolObjects (dctPicture | dctSymPin | dctSection | dctPartVariant)
+#define dctSymbolObjects (dctPicture | dctSymPin )
 #define dctPartObjects   (dctPicture | dctPartPin)
 #define dctSheetObjects  (dctPicture | dctSymImp | dctSheetNet | dctWire | dctWireName)
 #define dctPlateObjects  (dctPicture | dctPartImp | dctVia )

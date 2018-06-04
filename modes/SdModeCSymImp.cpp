@@ -164,7 +164,7 @@ void SdModeCSymImp::getSection()
   clear();
   int sectionIndex = -1;
   while(1) {
-    SdObject *obj = SdDGetObject::getComponent( &sectionIndex, dctSymbol | dctComponent, QObject::tr("Select component to insert"), mEditor );
+    SdObject *obj = SdDGetObject::getComponent( &sectionIndex, dctComponent, QObject::tr("Select component to insert"), mEditor );
     if( obj == nullptr ) {
       cancelMode();
       return;
@@ -172,14 +172,13 @@ void SdModeCSymImp::getSection()
 
     clear();
 
-    mSection = dynamic_cast<SdPItemSymbol*>( obj );
+    mComponent = only<SdPItemComponent>( obj );
 
-    if( mSection == nullptr ) {
+    if( mComponent == nullptr ) {
       QMessageBox::warning( mEditor, QObject::tr("Warning!"), QObject::tr("Can't load selected component. Select another.") );
       continue;
       }
 
-    mComponent = mSection;
     if( sectionIndex >= 0 ) {
       mSection = mComponent->extractSymbolFromFactory( sectionIndex, false, mEditor );
       if( mSection == nullptr ) {
@@ -187,6 +186,7 @@ void SdModeCSymImp::getSection()
         continue;
         }
       }
+
 
     if( mComponent->isEditEnable() ) {
       QMessageBox::warning( mEditor, QObject::tr("Warning!"), QObject::tr("Component is in editing state. Switch it to lock state or select another.") );
@@ -213,9 +213,7 @@ void SdModeCSymImp::getSection()
 
 void SdModeCSymImp::clear()
   {
-  if( mComponent ) {
-    if( mSection == mComponent )
-      mSection = nullptr;
+  if( mComponent != nullptr ) {
     delete mComponent;
     mComponent = nullptr;
     }

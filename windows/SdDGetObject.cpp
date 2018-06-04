@@ -109,9 +109,6 @@ void SdDGetObject::onSelectItem(int row, int column)
   SdLibraryHeader hdr = mHeaderList.at(row);
   if( hdr.mClass == dctSymbol || hdr.mClass == dctSheet ) {
     mSymbolView->setItemById( hdr.id() );
-    SdObject *obj = SdObjectFactory::extractObject( hdr.id(), true, this );
-    mComponent = dynamic_cast<SdPItemSymbol*>( obj );
-    if( mComponent == nullptr && obj != nullptr ) delete obj;
     mPartView->setItem( nullptr, true);
     }
   else if( hdr.mClass == dctPart ) {
@@ -120,7 +117,7 @@ void SdDGetObject::onSelectItem(int row, int column)
     }
   else if( hdr.mClass == dctComponent ) {
     SdObject *obj = SdObjectFactory::extractObject( hdr.id(), true, this );
-    mComponent = dynamic_cast<SdPItemSymbol*>( obj );
+    mComponent = dynamic_cast<SdPItemComponent*>( obj );
     if( mComponent == nullptr && obj != nullptr ) delete obj;
     }
 

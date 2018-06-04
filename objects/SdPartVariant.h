@@ -36,7 +36,6 @@ class SdPartVariant : public SdObject
     SdPItemPart *extractFromFactory( bool soft, QWidget *parent ) const;
     QString      getPartTitle() const { return mPartTitle; }
     QString      getPartId() const { return mPartId; }
-    QString      getTitle() const;
     void         setPartId( const QString id, SdUndo *undo );
 
 
@@ -48,5 +47,7 @@ class SdPartVariant : public SdObject
     virtual void    writeObject(QJsonObject &obj) const override;
     virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
   };
+
+typedef SdPartVariant *SdPartVariantPtr;
 
 #endif // SDPARTVARIANT_H

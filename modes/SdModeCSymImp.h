@@ -22,10 +22,10 @@ class SdPItemPart;
 
 class SdModeCSymImp : public SdModeCommon
   {
-    SdPoint        mOrigin;
-    SdPItemSymbol *mSection;
-    SdPItemSymbol *mComponent;
-    SdPItemPart   *mPart;
+    SdPoint           mOrigin;
+    SdPItemSymbol    *mSection;
+    SdPItemComponent *mComponent;
+    SdPItemPart      *mPart;
   public:
     SdModeCSymImp( SdWEditorGraph *editor, SdProjectItem *obj );
     ~SdModeCSymImp();

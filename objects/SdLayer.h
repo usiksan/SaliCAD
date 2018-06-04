@@ -58,7 +58,7 @@ enum SdLayerTrace {
 #define LID0_PAD           "Pad"          //Площадки
 #define LID0_HOLE          "Hole"         //Отверстие
 #define LID0_CLEAR         "Clear"        //Зазор
-#define LID0_SOLDER_MASK          "Mask"         //Маска
+#define LID0_SOLDER_MASK   "Mask"         //Маска
 #define LID0_STENSIL       "Stensil"      //Трафарет
 #define LID0_STENSIL_REPER "StensilReper" //Репер на трафарете
 #define LID0_EXCLUSION     "Exclusion"    //Trace exclusion area
@@ -126,7 +126,7 @@ extern SdLayerDescr sdLayerDescrAddon[];
 //Translation layer id to human visible name
 struct SdLayerLevel {
     const char *mLid;       //Level id LIDxxx
-    const char *mTranslate; //Human visible name aca "Schematic net"
+    const char *mTranslate; //Human visible name aka "Schematic net"
   };
 
 extern SdLayerLevel sdLayerLevel0[];

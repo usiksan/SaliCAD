@@ -26,6 +26,7 @@ class SdPItemPlate;
 class SdPItemPart;
 class SdGraphPartPin;
 class SdPItemSymbol;
+class SdPItemComponent;
 class SdGraphSymImp;
 class SdGraphRoadPin;
 
@@ -86,16 +87,16 @@ class SdGraphPartImp : public SdGraphTraced
     SdPartImpPinTable      mPins;
     SdPartImpSectionTable  mSections;
     SdPItemPart           *mPart;        //Part for this implementation
-    SdPItemSymbol         *mComponent;   //Component with pack info
+    SdPItemComponent         *mComponent;   //Component with pack info
   public:
     SdGraphPartImp();
-    SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemSymbol *comp );
+    SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemComponent *comp );
 
     //Information
     //Get full visual ident of part aka D4 or R45
     QString         getIdent() const;
     //Check if there free section slot. If there - setup section and return true
-    bool            isSectionFree(int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym );
+    bool            isSectionFree(int *section, SdPItemPart *part, SdPItemComponent *comp, SdPItemSymbol *sym );
 
 
     //Service

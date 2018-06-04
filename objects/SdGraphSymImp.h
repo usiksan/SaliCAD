@@ -17,8 +17,9 @@ Description
 #include "SdPoint.h"
 #include "SdPropText.h"
 #include "SdPropSymImp.h"
-#include "SdParamTable.h"
 #include "SdSymImpPin.h"
+#include "SdStringMap.h"
+#include "SdPItemComponent.h"
 
 
 #define SD_TYPE_SYM_IMP "SymImp"
@@ -46,13 +47,13 @@ class SdGraphSymImp : public SdGraph
     SdPoint           mIdentPos;     //Part identificator position in sheet context
     SdRect            mIdentRect;    //Part identificator over rect
 
-    SdPItemSymbol    *mComponent;    //Object contains section information, pin assotiation info. May be same as mSymbol.
+    SdPItemComponent *mComponent;    //Object contains section information, pin assotiation info. May be same as mSymbol.
     SdPItemSymbol    *mSymbol;       //Symbol contains graph information
     SdPItemPart      *mPart;         //Part for partImp construction
     SdGraphPartImp   *mPartImp;      //Part implement in desired plate
                                      //If mPartImp == nullptr then symbol not linked
     SdSymImpPinTable  mPins;         //Pin information table
-    SdParamTable      mParam;        //Parameters
+    SdStringMap       mParam;        //Parameters
     QString           mLinkError;    //Error string, which displays when no link
   public:
     SdGraphSymImp();
@@ -60,7 +61,7 @@ class SdGraphSymImp : public SdGraph
     //comp - contains pack info
     //sym  - contains graphics
     //part - part type
-    SdGraphSymImp(SdPItemSymbol *comp, SdPItemSymbol *sym, SdPItemPart *part , SdPoint pos, SdPropSymImp *prp);
+    SdGraphSymImp(SdPItemComponent *comp, SdPItemSymbol *sym, SdPItemPart *part , SdPoint pos, SdPropSymImp *prp);
 
 
 
@@ -76,9 +77,11 @@ class SdGraphSymImp : public SdGraph
     //Pin net name
     QString       pinNetName( const QString pinName ) const;
     //Param full list
-    SdParamTable& getParamTable() { return mParam; }
+    SdStringMap   getParamTable() const { return mParam; }
     //Get param
-    QVariant      getParam( const QString key ) { return mParam.value( key ); }
+    QString       getParam( const QString key ) { return mParam.value( key ); }
+    //Set param
+    void          setParam( const QString key, const QString val, SdUndo *undo );
     //Get BOM item line
     QString       getBomItemLine() const;
 

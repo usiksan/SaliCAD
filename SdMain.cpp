@@ -75,11 +75,11 @@ int main(int argc, char *argv[])
   //Creating pulsar for signals distibution
   SdPulsar::pulsar = new SdPulsar();
 
-  sdEnvir = new SdEnvir();
-  sdGlobalProp = new SdProp();
-
+  sdEnvir = new SdEnvir();  
   //Load environment
   sdEnvir->loadEnvir();
+  //Global properties
+  sdGlobalProp = new SdProp();
 
   //Open library for objectFactory system
   SdObjectFactory::openLibrary();

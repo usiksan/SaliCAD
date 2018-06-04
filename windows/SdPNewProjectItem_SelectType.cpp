@@ -124,26 +124,36 @@ void SdPNewProjectItem_SelectType::classChanged(int index)
   {
   defaultClass = index;
   mCreationOrder->clear();
+  mDescriptions.clear();
   switch(index) {
     case 0 :
       mCreationOrder->addItem( tr("Empty sheet") );
+      mDescriptions.append( tr("Creates empty schematic sheet with no any component or graphics.") );
       mCreationOrder->addItem( tr("Copy of existing sheet") );
+      mDescriptions.append( tr("Creates copy of existing schematic sheet") );
       //mCreationType->addItem( tr(""));
       break;
     case 1 :
       mCreationOrder->addItem( tr("Empty construction") );
+      mDescriptions.append( tr("Creates empty construction or pcb") );
       break;
     case 2 :
       mCreationOrder->addItem( tr("Empty symbol") );
+      mDescriptions.append( tr("Creates empty schematic component section symbol with no any pins or graphics.") );
       mCreationOrder->addItem( tr("Copy existing symbol") );
+      mDescriptions.append( tr("Creates copy of existing schematic component section") );
       break;
     case 3 :
       mCreationOrder->addItem( tr("Empty part") );
+      mDescriptions.append( tr("Creates empty component part with no any pins or graphics.") );
       mCreationOrder->addItem( tr("Copy existing part") );
+      mDescriptions.append( tr("Creates copy of existing component part") );
       break;
     case 4 :
       mCreationOrder->addItem( tr("Empty component") );
+      mDescriptions.append( tr("Creates empty component as pair schematic and part with no any schematic or part.") );
       mCreationOrder->addItem( tr("Copy existing component") );
+      mDescriptions.append( tr("Creates copy of existing component") );
       break;
     case 5 :
       mCreationOrder->addItem( tr("Element list") );
@@ -162,16 +172,9 @@ void SdPNewProjectItem_SelectType::classChanged(int index)
 void SdPNewProjectItem_SelectType::orderChanged(int index)
   {
   defaultOrder = index;
-  QSettings s;
-  QString fname = SD_BASE_PATH + QString("/html/newProjectItem_%1_%2_%3.html").
-                  arg(defaultClass).arg(index).arg(s.value(SDK_LANGUAGE,QString("en")).toString() );
-  if( !QFile::exists(fname) )
-    fname = SD_BASE_PATH + QString("/html/newProjectItem_%1_%2_en.html").
-            arg(defaultClass).arg(index);
-  QFile file(fname);
-  if( file.open(QIODevice::ReadOnly) )
-    mDescription->setHtml( QString::fromUtf8( file.readAll() ) );
+  if( index >= 0 && index < mDescriptions.count() )
+    mDescription->setText( mDescriptions[index] );
   else
-    mDescription->setText( tr("Can't read help file %1. Try reinstall SaliCAD").arg(fname) );
+    mDescription->clear();
   }
 

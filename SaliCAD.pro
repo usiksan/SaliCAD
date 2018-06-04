@@ -100,7 +100,6 @@ SOURCES += \
     objects/SdPItemComponent.cpp \
     objects/SdSection.cpp \
     objects/SdPropString.cpp \
-    objects/SdParamTable.cpp \
     modes/SdModeView.cpp \
     objects/SdPartVariant.cpp \
     objects/SdUndoRecordPropSymPin.cpp \
@@ -111,7 +110,6 @@ SOURCES += \
     windows/SdWEditorComponent.cpp \
     objects/SdPItemSheet.cpp \
     objects/SdPItemPlate.cpp \
-    windows/SdWSection.cpp \
     objects/SdUndoRecordPropPartPin.cpp \
     modes/SdModeCPartPin.cpp \
     windows/SdPropBarPartPin.cpp \
@@ -182,7 +180,10 @@ SOURCES += \
     objects/SdPropAngle.cpp \
     objects/SdUndoRecordBegin.cpp \
     library/SdLibraryStorage.cpp \
-    objects/SdUndoRecordString2.cpp
+    objects/SdUndoRecordString2.cpp \
+    objects/SdStringMap.cpp \
+    objects/SdUndoRecordStringMapItem.cpp \
+    objects/SdUndoRecordStringMap.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -275,7 +276,6 @@ HEADERS  += \
     objects/SdPItemComponent.h \
     objects/SdSection.h \
     objects/SdPropString.h \
-    objects/SdParamTable.h \
     modes/SdModeView.h \
     objects/SdPartVariant.h \
     objects/SdUndoRecordPropSymPin.h \
@@ -286,7 +286,6 @@ HEADERS  += \
     windows/SdWEditorComponent.h \
     objects/SdPItemSheet.h \
     objects/SdPItemPlate.h \
-    windows/SdWSection.h \
     objects/SdUndoRecordPropPartPin.h \
     modes/SdModeCPartPin.h \
     windows/SdPropBarPartPin.h \
@@ -358,7 +357,10 @@ HEADERS  += \
     library/SdLibraryReference.h \
     library/SdLibraryStorage.h \
     library/SdLibraryHeader.h \
-    objects/SdUndoRecordString2.h
+    objects/SdUndoRecordString2.h \
+    objects/SdStringMap.h \
+    objects/SdUndoRecordStringMapItem.h \
+    objects/SdUndoRecordStringMap.h
 
 DISTFILES += \
     license.txt

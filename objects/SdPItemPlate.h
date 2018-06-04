@@ -26,6 +26,7 @@ class SdGraphPartImp;
 class SdGraphSymImp;
 class SdPItemPart;
 class SdPItemSymbol;
+class SdPItemComponent;
 
 #define SD_TYPE_PLATE "Plate"
 
@@ -47,7 +48,7 @@ class SdPItemPlate : public SdProjectItem
 //    void                  netForEach( quint64 classMask, const QString  std::function<bool(SdObject*)> fun1 );
 
 
-    SdGraphPartImp        *allocPartImp(int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym , SdUndo *undo);
+    SdGraphPartImp        *allocPartImp(int *section, SdPItemPart *part, SdPItemComponent *comp, SdPItemSymbol *sym , SdUndo *undo);
 
     //Get pad
     SdPItemPart           *getPad( const QString pinType ) const { return mPadAssotiation.value( pinType ); }

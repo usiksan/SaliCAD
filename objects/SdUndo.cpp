@@ -32,6 +32,8 @@ Description
 #include "SdUndoRecordWire.h"
 #include "SdUndoRecordProjectItem.h"
 #include "SdUndoRecordString2.h"
+#include "SdUndoRecordStringMapItem.h"
+#include "SdUndoRecordStringMap.h"
 #include "windows/SdWCommand.h"
 
 SdUndo::SdUndo() :
@@ -212,6 +214,22 @@ void SdUndo::projectItemInfo(SdProjectItem *item, QString *title, QString *autho
 void SdUndo::string2(QString *str1, QString *str2)
   {
   addUndo( new SdUndoRecordString2( str1, str2 ) );
+  }
+
+
+
+
+void SdUndo::stringMapItem(SdStringMap *assoc, const QString key)
+  {
+  addUndo( new SdUndoRecordStringMapItem( assoc, key ) );
+  }
+
+
+
+
+void SdUndo::stringMap(SdStringMap *assoc)
+  {
+  addUndo( new SdUndoRecordStringMap(assoc) );
   }
 
 

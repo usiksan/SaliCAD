@@ -15,6 +15,7 @@ Description
 #include "SdGraphIdent.h"
 #include "SdGraphPartImp.h"
 #include "SdPItemPart.h"
+#include "SdPItemComponent.h"
 #include "SdProject.h"
 #include "SdContext.h"
 #include "SdEnvir.h"
@@ -32,7 +33,7 @@ SdPItemPlate::SdPItemPlate() :
 
 
 
-SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym, SdUndo *undo )
+SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPItemComponent *comp, SdPItemSymbol *sym, SdUndo *undo )
   {
   if( part == nullptr )
     return nullptr;

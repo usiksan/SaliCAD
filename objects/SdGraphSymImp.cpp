@@ -47,7 +47,7 @@ SdGraphSymImp::SdGraphSymImp() :
 
   }
 
-SdGraphSymImp::SdGraphSymImp(SdPItemSymbol *comp, SdPItemSymbol *sym, SdPItemPart *part, SdPoint pos, SdPropSymImp *prp ) :
+SdGraphSymImp::SdGraphSymImp(SdPItemComponent *comp, SdPItemSymbol *sym, SdPItemPart *part, SdPoint pos, SdPropSymImp *prp ) :
   mArea(nullptr),        //PCB where this symbol implement contains in
   mSectionIndex(0),      //Section index (from 0)
   mLogSection(0),        //Logical symbol section number (from 1)
@@ -93,6 +93,16 @@ QString SdGraphSymImp::pinNetName(const QString pinName) const
   if( mPins.contains(pinName) )
     return mPins.value( pinName ).mWireName;
   return QString();
+  }
+
+
+
+
+//Set param
+void SdGraphSymImp::setParam(const QString key, const QString val, SdUndo *undo)
+  {
+  undo->stringMapItem( &mParam, key );
+  mParam.insert( key, val );
   }
 
 
@@ -582,7 +592,7 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
   Q_ASSERT( prj != nullptr );
 
   //Realloc objects for this project
-  mComponent = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(mComponent) );  //Object contains section information, pin assotiation info. May be same as mSymbol.
+  mComponent = dynamic_cast<SdPItemComponent*>( prj->getProjectsItem(mComponent) );  //Object contains section information, pin assotiation info. May be same as mSymbol.
   mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(mSymbol) );        //Symbol contains graph information
   mPart = dynamic_cast<SdPItemPart*>( prj->getProjectsItem(mPart) );
 
@@ -805,7 +815,7 @@ void SdGraphSymImp::writeObject(QJsonObject &obj) const
     pins.append( i.value().toJson( i.key() ) );
   obj.insert( QStringLiteral("Pins"), pins );
   //Parameters
-  sdParamWrite( QStringLiteral("Param"), mParam, obj );
+  sdStringMapWrite( QStringLiteral("Param"), mParam, obj );
   }
 
 
@@ -828,7 +838,7 @@ void SdGraphSymImp::readObject(SdObjectMap *map, const QJsonObject obj)
   mIdentPos.read( QStringLiteral("IdentPos"), obj );    //Part identificator position in sheet context
   mIdentRect.read( QStringLiteral("IdentOver"), obj );   //Part identificator over rect
 
-  mComponent = dynamic_cast<SdPItemSymbol*>( readPtr( QStringLiteral("Comp"), map, obj )  );
+  mComponent = dynamic_cast<SdPItemComponent*>( readPtr( QStringLiteral("Comp"), map, obj )  );
   mSymbol = dynamic_cast<SdPItemSymbol*>( readPtr( QStringLiteral("Sym"), map, obj )  );
   mPart = dynamic_cast<SdPItemPart*>( readPtr( QStringLiteral("Part"), map, obj )  );
   mPartImp = dynamic_cast<SdGraphPartImp*>( readPtr( QStringLiteral("Imp"), map, obj )  );
@@ -841,7 +851,7 @@ void SdGraphSymImp::readObject(SdObjectMap *map, const QJsonObject obj)
     mPins.insert( pinName, pin );
     }
   //Parameters
-  sdParamRead( QStringLiteral("Param"), mParam, obj );
+  sdStringMapRead( QStringLiteral("Param"), mParam, obj );
   }
 
 
@@ -868,7 +878,7 @@ void SdGraphSymImp::upgradeProjectItem(SdProjectItem *newItem, SdUndo *undo)
   else if( mComponent->isCanUpgaded(newItem) ) {
     //Component upgrade and may be symbol
     detach(undo);
-    mComponent = dynamic_cast<SdPItemSymbol*>(newItem);
+    mComponent = dynamic_cast<SdPItemComponent*>(newItem);
     if( mSymbol->isCanUpgaded(newItem) )
       mSymbol = dynamic_cast<SdPItemSymbol*>(newItem);
     attach(undo);

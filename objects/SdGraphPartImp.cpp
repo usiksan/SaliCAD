@@ -18,6 +18,7 @@ Description
 #include "SdConverterImplement.h"
 #include "SdPItemPart.h"
 #include "SdPItemSymbol.h"
+#include "SdPItemComponent.h"
 #include "SdProject.h"
 #include "SdContext.h"
 #include "SdSelector.h"
@@ -136,7 +137,7 @@ SdGraphPartImp::SdGraphPartImp() :
 
   }
 
-SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemSymbol *comp) :
+SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemComponent *comp) :
   SdGraphTraced(),
   mLogNumber(0),   //Logical part number (from 1)
   mOrigin(org),    //Position of Implement
@@ -211,7 +212,7 @@ void SdGraphPartImp::savePins(SdUndo *undo)
 
 
 //Check if there free section slot
-bool SdGraphPartImp::isSectionFree( int *section, SdPItemPart *part, SdPItemSymbol *comp, SdPItemSymbol *sym)
+bool SdGraphPartImp::isSectionFree(int *section, SdPItemPart *part, SdPItemComponent *comp, SdPItemSymbol *sym)
   {
   if( mPart != part || mComponent != comp )
     return false;
@@ -262,7 +263,7 @@ void SdGraphPartImp::attach(SdUndo *undo)
   SdProject *prj = plate->getProject();
   Q_ASSERT( prj != nullptr );
   //Realloc objects for this project
-  mComponent = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(mComponent) );  //Object contains section information, pin assotiation info. May be same as mSymbol.
+  mComponent = dynamic_cast<SdPItemComponent*>( prj->getProjectsItem(mComponent) );  //Object contains section information, pin assotiation info. May be same as mSymbol.
   mPart = dynamic_cast<SdPItemPart*>( prj->getProjectsItem(mPart) );
 
   //Fill pin table
@@ -388,7 +389,7 @@ void SdGraphPartImp::readObject(SdObjectMap *map, const QJsonObject obj)
   mIdentPos.read( QStringLiteral("IdentPos"), obj );
   mIdentRect.read( QStringLiteral("IdentRect"), obj );
   mPart = dynamic_cast<SdPItemPart*>( readPtr( QStringLiteral("Part"), map, obj )  );
-  mComponent = dynamic_cast<SdPItemSymbol*>( readPtr( QStringLiteral("Comp"), map, obj )  );
+  mComponent = dynamic_cast<SdPItemComponent*>( readPtr( QStringLiteral("Comp"), map, obj )  );
   //Read sections
   QJsonArray sections = obj.value( QStringLiteral("Sections") ).toArray();
   for( QJsonValue s : sections ) {

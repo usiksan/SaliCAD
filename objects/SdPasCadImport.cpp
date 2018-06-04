@@ -250,7 +250,7 @@ bool SdPasCadImport::projectItem(SdProjectItem *item)
   for( QString line : lines ) {
     QStringList param = line.split( QChar('=') );
     if( param.count() >= 2 )
-      item->paramSet( param.at(0), param.at(1) );
+      item->paramSet( param.at(0), param.at(1), nullptr );
     }
 
   //is.Read( &info, sizeof(DContainerInfo) );
@@ -507,11 +507,11 @@ bool SdPasCadImport::readSymbol(SdObject *obj)
   //DInt32           sect;    //Количество секций
   int sections = readInt32();
 
-  for( int i = 0; i < sections; i++ ) {
-    SdSection *section = new SdSection();
-    section->updateFromSymbol( sym );
-    sym->insertChild( section, nullptr );
-    }
+//  for( int i = 0; i < sections; i++ ) {
+//    SdSection *section = new SdSection();
+//    section->updateFromSymbol( sym );
+//    sym->insertChild( section, nullptr );
+//    }
 
   //picture.Read( is, this );
   if( !readObjectTable( sym ) ) return false;

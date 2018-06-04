@@ -87,6 +87,20 @@ void SdContainer::forEach(quint64 classMask, std::function<bool (SdObject *)> fu
 
 
 
+void SdContainer::forEachConst(quint64 classMask, std::function<bool (SdObject *)> fun1) const
+  {
+  for( SdObject *ptr : mChildList )
+    if( ptr && !ptr->isDeleted() ) {
+      //Check if object match class mask
+      if( ptr->getClass() & classMask ) {
+        if( !fun1(ptr) ) return;
+        }
+      }
+  }
+
+
+
+
 SdObject *SdContainer::behindPoint(quint64 classMask, SdPoint p, int *state)
   {
   SdObject *res = nullptr;

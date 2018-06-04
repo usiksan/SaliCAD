@@ -18,6 +18,7 @@ Description
 #define SDUNDO_H
 #include "SdConfig.h"
 #include "SdUndoRecord.h"
+#include "SdStringMap.h"
 #include <QStack>
 #include <QMap>
 
@@ -81,6 +82,8 @@ class SdUndo
     void begin(QString title , SdProjectItem *item);
     void projectItemInfo( SdProjectItem *item, QString *title, QString *author, QString *tag, int *timeCreation, bool *editEnable );
     void string2( QString *str1, QString *str2 );
+    void stringMapItem( SdStringMap *assoc, const QString key );
+    void stringMap( SdStringMap *assoc );
 
     //do undo and redo
     void undoStep();

@@ -20,7 +20,7 @@ Description
 #include <QDialog>
 
 class SdProjectItem;
-class SdPItemSymbol;
+class SdPItemComponent;
 class SdWEditorGraphView;
 
 namespace Ui {
@@ -35,7 +35,7 @@ class SdDGetObject : public QDialog
 
     SdWEditorGraphView    *mSymbolView;   //Widget for schematic preview
     SdWEditorGraphView    *mPartView;     //Widget for part preview
-    SdPItemSymbol         *mComponent;    //Component if selected
+    SdPItemComponent      *mComponent;    //Component if selected
 
     QString                mObjName;      //Object name
     QString                mObjAuthor;    //Object author

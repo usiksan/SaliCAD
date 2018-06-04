@@ -29,6 +29,7 @@ class SdPNewProjectItem_SelectType : public QWizardPage
     QListWidget      *mObjectType;
     QListWidget      *mCreationOrder;
     QTextEdit        *mDescription;
+    QStringList       mDescriptions;
   public:
     SdPNewProjectItem_SelectType( SdProjectItemPtr *item, SdProject *prj, QWidget *parent = 0);
 

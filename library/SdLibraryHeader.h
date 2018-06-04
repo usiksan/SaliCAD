@@ -22,7 +22,7 @@ Description
 #ifndef SDLIBRARYHEADER_H
 #define SDLIBRARYHEADER_H
 
-#include "objects/SdParamTable.h"
+#include "objects/SdStringMap.h"
 
 #include <QString>
 #include <QMap>
@@ -38,14 +38,14 @@ inline QString headerId( QString type, QString name, QString author, qint32 time
 //Library object header
 struct SdLibraryHeader
   {
-    QString      mName;       //Name of stored object
-    QString      mType;       //Type of stored object
-    QString      mAuthor;     //Author who create object
-    QString      mTag;        //Object's tags
-    qint32       mTime;       //Object time creation
-    quint64      mClass;      //Object class
+    QString     mName;       //Name of stored object
+    QString     mType;       //Type of stored object
+    QString     mAuthor;     //Author who create object
+    QString     mTag;        //Object's tags
+    qint32      mTime;       //Object time creation
+    quint64     mClass;      //Object class
 
-    SdParamTable mParamTable; //User defined object params
+    SdStringMap mParamTable; //User defined object params
 
     SdLibraryHeader() : mName(), mType(), mAuthor(), mTime(0), mClass(0), mParamTable() {}
 

@@ -16,7 +16,7 @@ Description
 #define SDPROJECTITEM_H
 
 #include "SdContainer.h"
-#include "SdParamTable.h"
+#include "SdStringMap.h"
 #include "SdPoint.h"
 #include "SdSelector.h"
 #include "library/SdLibraryHeader.h"
@@ -37,7 +37,7 @@ class SdProjectItem : public SdContainer
     bool                   mAuto;       //True if item inserted automatic as reference from other item
     bool                   mEditEnable; //True if edit enable for this object
   protected:
-    SdParamTable           mParamTable; //Object parameters
+    SdStringMap            mParamTable; //Object parameters
     SdPoint                mOrigin;     //Origin for object
   public:
     QTreeWidgetItem       *mTreeItem;   //Correspond visual tree item
@@ -73,8 +73,9 @@ class SdProjectItem : public SdContainer
 
     //Params
     bool                   paramContains( const QString key ) const { return mParamTable.contains(key); }
-    QVariant               paramGet( const QString key ) const { return mParamTable.value(key); }
-    void                   paramSet( const QString key, QVariant val ) { mParamTable.insert( key, val ); }
+    QString                paramGet( const QString key ) const { return mParamTable.value(key); }
+    void                   paramSet( const QString key, QString val, SdUndo *undo );
+    SdStringMap            paramTable() const { return mParamTable; }
 
     //Object visual (graphical) identificator
     SdGraphIdent          *getIdent();

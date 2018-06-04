@@ -23,6 +23,9 @@ Description
 #include <QListWidget>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QListWidget>
+#include <QTableWidget>
+#include <QSet>
 
 
 class SdWEditorComponent : public SdWEditor
@@ -35,16 +38,25 @@ class SdWEditorComponent : public SdWEditor
     SdWEditorGraphView   *mSymbolViewer;      //View for symbol sections
     SdWEditorGraphView   *mPartViewer;        //View for part of this component
 
-    QTabWidget           *mSectionsTab;       //Sections of component
+    QListWidget          *mSectionList;       //Sections of component
+    QTableWidget         *mPackTable;         //Packing table
     QPushButton          *mSectionAdd;
     QPushButton          *mSectionDubl;
-    QPushButton          *mSectionSelect;
+    QPushButton          *mSectionSymbol;
     QPushButton          *mSectionDelete;
     QPushButton          *mSectionDeleteAll;
 
     QLineEdit            *mPart;
     QPushButton          *mPartSelect;
-    QPushButton          *mPartDelete;
+
+    QTableWidget         *mParamTable;        //Table of user params
+    QPushButton          *mParamAdd;
+    QPushButton          *mParamDelete;
+    QPushButton          *mParamCopy;
+
+    SdStringMap           mPackNumbers;
+    QSet<QString>         mDuplicateNumbers;
+
   public:
     SdWEditorComponent(SdPItemComponent *comp, QWidget *parent);
 
@@ -61,12 +73,25 @@ class SdWEditorComponent : public SdWEditor
     void sectionDeleteAll();
     void onCurrentSection( int index );
 
+    void onPackChanged( int row, int column );
+
     void partSelect();
-    void partDelete();
+
+    void paramAdd();
+    void paramDelete();
+    void paramCopy();
   private:
     void fillSections();
-    void renameSymbolTabs();
     void fillPart();
+    void fillParams();
+    void fillUsedPins();
+
+    QString packetPin( int section, const QString pinName );
+
+    // SdWEditor interface
+  public:
+    virtual void cmEditUndo() override;
+    virtual void cmEditRedo() override;
   };
 
 #endif // SDWEDITORCOMPONENT_H
