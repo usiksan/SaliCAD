@@ -50,6 +50,8 @@ class SdGraphLinearArc : public SdGraphLinear
     virtual void    draw(SdContext *dc) override;
     virtual int     behindCursor(SdPoint p) override;
     virtual bool    snapPoint(SdSnapInfo *snap) override;
+
+    friend class SdPasCadImport;
   };
 
 #endif // SDGRAPHLINEARARC_H

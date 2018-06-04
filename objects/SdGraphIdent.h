@@ -30,6 +30,8 @@ class SdGraphIdent : public SdGraphText
   public:
     virtual QString getType() const override { return QStringLiteral( SD_TYPE_IDENT ); }
     virtual quint64 getClass() const override { return dctIdent; }
+
+  friend class SdPasCadImport;
   };
 
 #endif // SDGRAPHIDENT_H

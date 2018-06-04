@@ -18,6 +18,8 @@ Description
 #include "SdGraphLinearRect.h"
 #include "SdGraphLinearRectFilled.h"
 #include "SdGraphLinearCircle.h"
+#include "SdGraphLinearArc.h"
+#include "SdGraphIdent.h"
 #include "SdGraphText.h"
 #include "SdGraphSymPin.h"
 #include "SdSection.h"
@@ -284,7 +286,8 @@ SdObject *SdPasCadImport::buildObject(int id)
       return new SdGraphLinearRect();
     case pasCadObjCirclePic      : //Окружность
       return new SdGraphLinearCircle();
-//#define pasCadObjArcPic         4 //Дуга
+    case pasCadObjArcPic         : //Дуга
+      return new SdGraphLinearArc();
     case pasCadObjTextPic        : //Текст
       return new SdGraphText();
     case pasCadObjSymPinPic      : //Ножка символа
@@ -454,7 +457,8 @@ bool SdPasCadImport::readSingleObject(SdContainer *container)
       return readRect( obj );
     case pasCadObjCirclePic      : //Окружность
       return readCircle( obj );
-//#define pasCadObjArcPic         4 //Дуга
+    case pasCadObjArcPic         : //Дуга
+      return readArc( obj );
     case pasCadObjTextPic        : //Текст
       return readText( obj );
     case pasCadObjSymPinPic      : //Ножка символа
@@ -531,8 +535,8 @@ bool SdPasCadImport::readSymbol(SdObject *obj)
   // DTextProp prop
   // DIdent    ident (NConstString)
   // DRect     overRect
-
-  return false;
+  SdGraphIdent *ident = sym->getIdent();
+  return readIdent( ident );
   }
 
 
@@ -543,6 +547,17 @@ SdPoint SdPasCadImport::readPoint()
   p.setX( readInt32() );
   p.setY( readInt32() );
   return p;
+  }
+
+
+
+
+
+SdRect SdPasCadImport::readRectangle()
+  {
+  SdPoint a = readPoint();
+  SdPoint b = readPoint();
+  return SdRect( a, b );
   }
 
 
@@ -594,6 +609,10 @@ bool SdPasCadImport::readLine(SdObject *obj)
 
   return true;
   }
+
+
+
+
 
 bool SdPasCadImport::readTextProp(SdPropText *prp, SdPoint *origin )
   {
@@ -651,6 +670,25 @@ bool SdPasCadImport::readCircle(SdObject *obj)
 
 
 
+
+bool SdPasCadImport::readArc(SdObject *obj)
+  {
+  SdGraphLinearArc *arc = dynamic_cast<SdGraphLinearArc*>(obj);
+  if( arc == nullptr ) return false;
+
+  if( !readLinear(obj) ) return false;
+
+  arc->mCenter = readPoint();
+  int radius = readInt32();
+  arc->mStart = readPoint();
+  arc->mStop  = readPoint();
+  return true;
+  }
+
+
+
+
+
 bool SdPasCadImport::readSymPin(SdObject *obj)
   {
   SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>(obj);
@@ -682,6 +720,20 @@ bool SdPasCadImport::readSymPin(SdObject *obj)
     else
       readName();
     }
+  return true;
+  }
+
+
+
+
+bool SdPasCadImport::readIdent(SdGraphIdent *ident)
+  {
+  // DTextProp prop
+  // DIdent    ident (NConstString)
+  // DRect     overRect
+  if( !readTextProp( &(ident->mProp), &(ident->mOrigin) )  ) return false;
+  ident->mString = readConstString(3);
+  ident->mOverRect = readRectangle();
   return true;
   }
 

@@ -539,7 +539,7 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
   QSize s = viewport()->size();
   mClientSize.set( s.width(), s.height() );
 
-  if( getProjectItem() == 0 ) {
+  if( getProjectItem() == nullptr ) {
     //Object not present. Show message
     QPainter painter( viewport() );
     QRect r(0,0, s.width(), s.height());
@@ -611,29 +611,36 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
     pagey /= mScale.scaleGet();
 
     if( over.isEmpty() )
-      over.set( SdPoint(mOrigin.x() - pagex / 2, mOrigin.y() - pagey / 2), SdPoint(mOrigin.y() + pagex / 2, mOrigin.y() + pagey / 2) );
+      //If over is empty create over rect with default size
+      over.set( SdPoint(mOrigin.x() - static_cast<int>(pagex / 2.0), mOrigin.y() - static_cast<int>(pagey / 2.0)),
+                SdPoint(mOrigin.y() + static_cast<int>(pagex / 2.0), mOrigin.y() + static_cast<int>(pagey / 2.0)) );
 
-    if( over.width() < pagex ) {
-      SdPoint center = over.center();
-      over.setWidth( pagex );
-      over.moveCenter( center );
-      }
-    if( over.height() < pagey ) {
-      SdPoint center = over.center();
-      over.setHeight( pagey );
-      over.moveCenter( center );
-      }
-    //Update scrollbars
-    //Range of scrollbars is twice of over rect existing picture
-    verticalScrollBar()->setRange( -over.getTop() * 2, -over.getBottom() * 2 );
-    verticalScrollBar()->setSingleStep( mGrid.y() );
-    verticalScrollBar()->setPageStep( pagey );
-    verticalScrollBar()->setValue( -mOrigin.y() );
+    if( over != mLastOver ) {
+      //Over rect changed - recalc scroll bars
+      if( over.width() < pagex ) {
+        SdPoint center = over.center();
+        over.setWidth( static_cast<int>(pagex) );
+        over.moveCenter( center );
+        }
+      if( over.height() < pagey ) {
+        SdPoint center = over.center();
+        over.setHeight( static_cast<int>(pagey) );
+        over.moveCenter( center );
+        }
+      //Update scrollbars
+      //Range of scrollbars is twice of over rect existing picture
+      verticalScrollBar()->setRange( -over.getTop() * 2, -over.getBottom() * 2 );
+      verticalScrollBar()->setSingleStep( mGrid.y() );
+      verticalScrollBar()->setPageStep( static_cast<int>(pagey) );
+      verticalScrollBar()->setValue( -mOrigin.y() );
 
-    horizontalScrollBar()->setRange( over.getLeft() * 2, over.getRight() * 2 );
-    horizontalScrollBar()->setSingleStep( mGrid.x() );
-    horizontalScrollBar()->setPageStep( pagex );
-    horizontalScrollBar()->setValue( mOrigin.x() );
+      horizontalScrollBar()->setRange( over.getLeft() * 2, over.getRight() * 2 );
+      horizontalScrollBar()->setSingleStep( mGrid.x() );
+      horizontalScrollBar()->setPageStep( static_cast<int>(pagex) );
+      horizontalScrollBar()->setValue( mOrigin.x() );
+
+      mLastOver = over;
+      }
 
 
     mCasheDirty = false;
@@ -744,10 +751,10 @@ void SdWEditorGraph::wheelEvent(QWheelEvent *event)
   if( modeGet() && modeGet()->wheel( event->angleDelta() ) )
     return;
   int delta = event->angleDelta().y() / 120;
-  qDebug() << "wheel" << event->angleDelta().y();
+  //qDebug() << "wheel" << event->angleDelta().y();
   if( event->modifiers() & Qt::ControlModifier ) {
-    //Move by vertical
-    originSet( SdPoint(originGet().x(), originGet().y() + delta * gridGet().y()) );
+    //Move by horizontal
+    originSet( SdPoint(originGet().x() + delta * gridGet().x(), originGet().y()) );
     }
   else if( event->modifiers() & Qt::ShiftModifier ) {
     //Scale
@@ -755,8 +762,8 @@ void SdWEditorGraph::wheelEvent(QWheelEvent *event)
     else scaleStep(0.83);
     }
   else {
-    //Move by horizontal
-    originSet( SdPoint(originGet().x() + delta * gridGet().x(), originGet().y()) );
+    //Move by vertical
+    originSet( SdPoint(originGet().x(), originGet().y() + delta * gridGet().y()) );
     }
   }
 
@@ -768,6 +775,9 @@ void SdWEditorGraph::keyPressEvent(QKeyEvent *event)
   if( modeGet() )
     modeGet()->keyDown( event->key(), event->text().isEmpty() ? QChar() : event->text().at(0) );
   }
+
+
+
 
 void SdWEditorGraph::keyReleaseEvent(QKeyEvent *event)
   {

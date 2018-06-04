@@ -26,6 +26,7 @@ struct DFont;
 class  SdLayer;
 class  SdPropText;
 class  SdPItemComponent;
+class  SdGraphIdent;
 
 typedef QMap<int,SdObjectPtr> SdImportMap;
 
@@ -66,13 +67,16 @@ class SdPasCadImport
     bool         readSingleObject( SdContainer *container );
     bool         readSymbol( SdObject *obj );
     SdPoint      readPoint();
+    SdRect       readRectangle();
     bool         readLinear( SdObject *obj );
     bool         readRect( SdObject *obj );
     bool         readLine( SdObject *obj );
     bool         readTextProp(SdPropText *prp , SdPoint *origin);
     bool         readText( SdObject *obj );
     bool         readCircle( SdObject *obj );
+    bool         readArc( SdObject *obj );
     bool         readSymPin( SdObject *obj );
+    bool         readIdent( SdGraphIdent *ident );
   };
 
 #endif // SDPASCADIMPORT_H

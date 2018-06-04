@@ -23,14 +23,17 @@ class SdDOptionsPageColors : public QWidget
 
     QTableWidget *mTable; //Table with colors
   public:
-    explicit SdDOptionsPageColors(QWidget *parent = 0);
+    explicit SdDOptionsPageColors(QWidget *parent = nullptr);
 
   signals:
 
   public slots:
+    //Activate on select cell in color table
+    //We shows color dialog
+    void onColorSelect( int row, int column );
 
   private:
-    void addColor( const QString descr, const QString key );
+    void addColor(int colorIndex, const QString descr);
   };
 
 #endif // SDDOPTIONSPAGECOLORS_H

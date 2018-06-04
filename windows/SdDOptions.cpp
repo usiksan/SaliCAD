@@ -12,6 +12,7 @@ Description
 */
 
 #include "SdDOptions.h"
+#include "SdDOptionsPageColors.h"
 #include <QVBoxLayout>
 #include <QLabel>
 
@@ -20,10 +21,10 @@ SdDOptions::SdDOptions(QWidget *parent) :
   {
   QLabel *title = new QLabel( tr("Options"), this );
   mTabWidget = new QTabWidget( this );
-  mButtons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+  mButtons = new QDialogButtonBox(QDialogButtonBox::Ok);
 
   connect(mButtons, SIGNAL(accepted()), this, SLOT(accept()));
-  connect(mButtons, SIGNAL(rejected()), this, SLOT(reject()));
+  //connect(mButtons, SIGNAL(rejected()), this, SLOT(reject()));
 
   QVBoxLayout *mainLayout = new QVBoxLayout;
   mainLayout->addWidget( title );
@@ -31,10 +32,15 @@ SdDOptions::SdDOptions(QWidget *parent) :
   mainLayout->addWidget(mButtons);
   setLayout(mainLayout);
 
+  //Append option pages
+  mTabWidget->addTab( new SdDOptionsPageColors(), tr("Colors") );
+
   setWindowTitle( tr("Options") );
   resize( 700, 500 );
   setModal( true );
   }
+
+
 
 SdDOptions::~SdDOptions()
   {
