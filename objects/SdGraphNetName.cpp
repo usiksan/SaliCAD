@@ -23,8 +23,8 @@ SdGraphNetName::SdGraphNetName() :
 
   }
 
-SdGraphNetName::SdGraphNetName(SdPoint org, const SdPropText &prp) :
-  SdGraph(),
+SdGraphNetName::SdGraphNetName(SdPoint org, const QString netName, const SdPropText &prp) :
+  SdGraphNet(netName),
   mOrigin(org),
   mProp(prp)
   {
@@ -72,6 +72,7 @@ void SdGraphNetName::readObject(SdObjectMap *map, const QJsonObject obj)
 
 void SdGraphNetName::saveState(SdUndo *undo)
   {
+  SdGraphNet::saveState(undo);
   undo->propTextAndText( &mProp, &mOrigin, &mOver, nullptr );
   }
 
@@ -106,8 +107,7 @@ void SdGraphNetName::mirror(SdPoint a, SdPoint b)
 void SdGraphNetName::setProp(SdPropSelected &prop)
   {
   mProp = prop.mTextProp;
-  if( prop.mWireName)
-  //TODO D003 when change name of wire
+  SdGraphNet::setProp( prop );
   }
 
 
@@ -117,7 +117,7 @@ void SdGraphNetName::getProp(SdPropSelected &prop)
   {
   prop.mTextProp.append( mProp );
   prop.mFilledPropMask |= spsTextProp;
-  prop.mWireName.append( getNetName() );
+  SdGraphNet::getProp( prop );
   }
 
 

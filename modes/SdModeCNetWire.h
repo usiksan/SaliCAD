@@ -17,18 +17,16 @@ Description
 #include "SdModeCommon.h"
 #include "objects/SdPropLine.h"
 
-class SdContainerSheetNet;
 class SdPItemSheet;
 
-class SdModeCWire : public SdModeCommon
+class SdModeCNetWire : public SdModeCommon
   {
     SdPoint              mFirst;     //First wire point
     SdPoint              mPrevMove;  //Previous move point
     SdPoint              mMiddle;    //Vertex point
     //int           enterType; //Режим ввода линий
-    QString              mName;      //Wire name
-    SdContainerSheetNet *mNet;       //Enter net
-    SdContainerSheetNet *mShow;      //Net for show
+    QString              mNetName;   //Wire name
+    bool                 mShowNet;   //Show current net with enter color
 
     SdPoint              mStrEnd,    //Stringet of last point of autonet
                          mSmA,       //Intermediate point of autonet
@@ -39,7 +37,7 @@ class SdModeCWire : public SdModeCommon
   public:
     enum RenumResult { renCancel, renFirst, renSecond };
 
-    SdModeCWire( SdWEditorGraph *editor, SdProjectItem *obj );
+    SdModeCNetWire( SdWEditorGraph *editor, SdProjectItem *obj );
 
     // SdMode interface
   public:
@@ -72,7 +70,6 @@ class SdModeCWire : public SdModeCommon
     void                 calcSecondSmart();
     void                 calcSmartPoint();
     void                 nextNet();
-    SdContainerSheetNet *needCurNet();
     SdPItemSheet        *getSheet();
 
   };

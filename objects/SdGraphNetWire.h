@@ -18,7 +18,7 @@ Description
 #include "SdPropLine.h"
 #include "SdPoint.h"
 
-#define SD_TYPE_WIRE "Wire"
+#define SD_TYPE_NET_WIRE "NetWire"
 
 class SdGraphNetWire : public SdGraphNet
   {
@@ -28,10 +28,11 @@ class SdGraphNetWire : public SdGraphNet
 
     enum { vdNone = 0, vdX = 1, vdY = 2 };
     int        mDirX;
-    bool       mFix;
+    bool       mFixA;
+    bool       mFixB;
   public:
     SdGraphNetWire();
-    SdGraphNetWire( SdPoint a, SdPoint b, const SdPropLine &prp );
+    SdGraphNetWire(SdPoint a, SdPoint b, const QString netName, const SdPropLine &prp );
 
     SdPoint getA() const { return mA; }
     SdPoint getB() const { return mB; }
@@ -41,18 +42,17 @@ class SdGraphNetWire : public SdGraphNet
     void    unionSegments(SdGraphNetWire *segment , SdUndo *undo);
     bool    isPointOnSection( SdPoint p ) const { return p.isOnSegment( mA, mB ); }
     void    utilise( SdUndo *undo );
-    void    setDotPoint();
-    bool    getNetOnPoint(SdPoint p, QString &destName);
+    //bool    getNetOnPoint(SdPoint p, QString &destName);
   protected:
-    void    calcVertexPoints( SdPoint &p1, SdPoint &p2, SdPoint gridSize );
-    void    exchange();
+    void    calcVertexPoints( SdPoint &p1, SdPoint &p2, SdPoint gridSize ) const;
     void    fragmentation( SdPoint p, SdSelector *sel, SdUndo *undo );
-    bool    getNeedDot( SdPoint p );
+    bool    getNeedDot( SdPoint a, SdPoint b);
+    SdPoint getFixPoint(SdPoint a, SdPoint b);
 
     // SdObject interface
   public:
-    virtual QString getType() const override { return QStringLiteral(SD_TYPE_WIRE); }
-    virtual quint64 getClass() const override { return dctWire; }
+    virtual QString getType() const override { return QStringLiteral(SD_TYPE_NET_WIRE); }
+    virtual quint64 getClass() const override { return dctNetWire; }
     virtual void    attach(SdUndo *undo) override;
     virtual void    detach(SdUndo *undo) override;
     virtual void    cloneFrom(const SdObject *src) override;
@@ -79,6 +79,10 @@ class SdGraphNetWire : public SdGraphNet
     virtual int     behindCursor(SdPoint p) override;
     virtual bool    getInfo(SdPoint p, QString &info, bool extInfo) override;
     virtual bool    snapPoint(SdSnapInfo *snap) override;
+
+    // SdGraphNet interface
+  public:
+    virtual void setNetName(const QString netName, SdUndo *undo) override;
   };
 
 #endif // SDGRAPHWIRINGWIRE_H

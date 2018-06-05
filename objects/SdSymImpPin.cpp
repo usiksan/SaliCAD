@@ -13,8 +13,8 @@ Description
 */
 #include "SdSymImpPin.h"
 #include "SdGraphSymPin.h"
-#include "SdContainerSheetNet.h"
 #include "SdPItemSheet.h"
+#include "SdGraphNetWire.h"
 
 //====================================================================================
 //Pin for symbol implementation
@@ -31,7 +31,7 @@ void SdSymImpPin::operator =(const SdSymImpPin &pin)
   mPin       = pin.mPin;       //Pin
   mPinNumber = pin.mPinNumber; //Pin number in part
   mPosition  = pin.mPosition;  //Pin position in sheet context
-  mWireName  = pin.mWireName;  //Net, which pin connected to
+  mNetName  = pin.mNetName;  //Net, which pin connected to
   }
 
 
@@ -57,19 +57,17 @@ bool SdSymImpPin::isCanConnect(SdPoint a, SdPoint b) const
 
 bool SdSymImpPin::isCanDisconnect(SdPoint a, SdPoint b, const QString wireName) const
   {
-  return mWireName == wireName && mPosition.isOnSegment( a, b );
+  return mNetName == wireName && mPosition.isOnSegment( a, b );
   }
 
 
 
 
-void SdSymImpPin::prepareMove(SdPItemSheet *sheet, SdSelector *selector)
+void SdSymImpPin::prepareMove(SdPItemSheet *sheet, SdSelector *selector, SdUndo *undo )
   {
-  if( isConnected() ) {
-    SdContainerSheetNet *net = sheet->netGet( mWireName );
-    Q_ASSERT( net != nullptr );
-    net->accumLinked( mPosition, mPosition, selector );
-    }
+  if( isConnected() )
+    //Scan all segments to find connected to pin
+    sheet->accumLinked( mPosition, mPosition, mNetName, selector, undo );
   }
 
 
@@ -81,7 +79,7 @@ QJsonObject SdSymImpPin::toJson( const QString pinName ) const
   SdObject::writePtr( mPin, QStringLiteral("Pin"), obj );
   obj.insert( QStringLiteral("Number"), mPinNumber ); //Pin number in part
   mPosition.write( QStringLiteral("Pos"), obj );      //Pin position in sheet context
-  obj.insert( QStringLiteral("Wire"), mWireName );    //Net, which pin connected to
+  obj.insert( QStringLiteral("Wire"), mNetName );    //Net, which pin connected to
   return obj;
   }
 
@@ -93,7 +91,7 @@ QString SdSymImpPin::fromJson(SdObjectMap *map, const QJsonObject obj)
   mPin = dynamic_cast<SdGraphSymPin*>( SdObject::readPtr( QStringLiteral("Pin"), map, obj ) );
   mPinNumber = obj.value( QStringLiteral("Number") ).toString();
   mPosition.read( QStringLiteral("Pos"), obj );
-  mWireName = obj.value( QStringLiteral("Wire") ).toString();
+  mNetName = obj.value( QStringLiteral("Wire") ).toString();
   return obj.value( QStringLiteral("Name") ).toString();
   }
 

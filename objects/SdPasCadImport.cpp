@@ -679,7 +679,7 @@ bool SdPasCadImport::readArc(SdObject *obj)
   if( !readLinear(obj) ) return false;
 
   arc->mCenter = readPoint();
-  int radius = readInt32();
+  readInt32(); //radius
   arc->mStart = readPoint();
   arc->mStop  = readPoint();
   return true;

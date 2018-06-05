@@ -25,7 +25,7 @@ SdWEditorGraphSymbol::SdWEditorGraphSymbol(SdPItemSymbol *sym, QWidget *parent) 
   SdWEditorGraph( sym, parent ),
   mSymbol(sym)
   {
-  mGrid.set( 25, 25 );
+  mGrid.set( 250, 250 );
   }
 
 

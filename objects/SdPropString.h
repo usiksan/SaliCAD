@@ -43,6 +43,8 @@ class SdPropString
     void       read( const QString name, const QJsonObject obj );
 
     void       swap( QString *src );
+
+    void       assignTo( QString &dst );
   };
 
 #endif // SDPROPSTRING_H

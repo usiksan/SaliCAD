@@ -11,8 +11,7 @@ Web
 Description
   Mode for placement net names
 */
-#include "SdModeCWireName.h"
-#include "objects/SdContainerSheetNet.h"
+#include "SdModeCNetName.h"
 #include "objects/SdGraphNetName.h"
 #include "objects/SdPItemSheet.h"
 #include "objects/SdContext.h"
@@ -22,34 +21,37 @@ Description
 #include "windows/SdWEditorGraph.h"
 #include <QObject>
 
-SdModeCWireName::SdModeCWireName(SdWEditorGraph *editor, SdProjectItem *obj) :
-  SdModeCommon( editor, obj ),
-  mNet(nullptr),
-  mShow(nullptr)
+SdModeCNetName::SdModeCNetName(SdWEditorGraph *editor, SdProjectItem *obj) :
+  SdModeCommon( editor, obj )
   {
 
   }
 
 
-void SdModeCWireName::drawStatic(SdContext *ctx)
+void SdModeCNetName::drawStatic(SdContext *ctx)
   {
-  //All objects draw normally except mShow net. It show selected
-  mObject->forEach( dctAll, [this, ctx] (SdObject *obj) -> bool {
-    if( obj->getParent() != mShow ) {
+  //All objects draw normally except net with netName.
+  mObject->forEach( dctAll, [this,ctx] (SdObject *obj) -> bool {
+    SdGraphNet *net = dynamic_cast<SdGraphNet*>( obj );
+    if( net != nullptr ) {
+      if( net->getNetName() != mNetName )
+        net->draw( ctx );
+      }
+    else {
       SdGraph *graph = dynamic_cast<SdGraph*>( obj );
-      if( graph )
+      if( graph != nullptr )
         graph->draw( ctx );
       }
     return true;
     });
 
-  //Draw mShow net if present
-  if( mShow ) {
+  //Draw if net present
+  if( !mNetName.isEmpty() ) {
     ctx->setOverColor( sdEnvir->getSysColor(scEnter) );
-    mShow->forEach( dctAll, [ctx] (SdObject *obj) -> bool {
-      SdGraph *graph = dynamic_cast<SdGraph*>( obj );
-      if( graph )
-        graph->draw( ctx );
+    mObject->forEach( dctNetWire | dctNetName, [this,ctx] (SdObject *obj) -> bool {
+      SdGraphNet *net = dynamic_cast<SdGraphNet*>( obj );
+      if( net != nullptr && net->getNetName() == mNetName )
+        net->draw( ctx );
       return true;
       });
     ctx->resetOverColor();
@@ -58,12 +60,12 @@ void SdModeCWireName::drawStatic(SdContext *ctx)
 
 
 
-void SdModeCWireName::drawDynamic(SdContext *ctx)
+void SdModeCNetName::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sPlaceName ) {
     ctx->setOverColor( sdEnvir->getSysColor(scEnter) );
     SdRect r;
-    ctx->text( mPrev, r, mName, sdGlobalProp->mWireNameProp );
+    ctx->text( mPrev, r, mNetName, sdGlobalProp->mWireNameProp );
     ctx->resetOverColor();
     }
   }
@@ -71,7 +73,7 @@ void SdModeCWireName::drawDynamic(SdContext *ctx)
 
 
 
-int SdModeCWireName::getPropBarId() const
+int SdModeCNetName::getPropBarId() const
   {
   return PB_TEXT;
   }
@@ -79,7 +81,7 @@ int SdModeCWireName::getPropBarId() const
 
 
 
-void SdModeCWireName::propGetFromBar()
+void SdModeCNetName::propGetFromBar()
   {
   SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
   if( tbar ) {
@@ -91,7 +93,7 @@ void SdModeCWireName::propGetFromBar()
 
 
 
-void SdModeCWireName::propSetToBar()
+void SdModeCNetName::propSetToBar()
   {
   SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
   if( tbar ) {
@@ -102,18 +104,19 @@ void SdModeCWireName::propSetToBar()
 
 
 
-void SdModeCWireName::enterPoint( SdPoint p )
+void SdModeCNetName::enterPoint( SdPoint p )
   {
   if( getStep() == sPlaceName ) {
     mUndo->begin( QObject::tr("Insert sheet net name"), mObject );
-    mNet->insertChild( new SdGraphNetName( mPrev, sdGlobalProp->mWireNameProp ), mUndo );
+    mObject->insertChild( new SdGraphNetName( mPrev, mNetName, sdGlobalProp->mWireNameProp ), mUndo );
     setDirty();
     setDirtyCashe();
     update();
     }
   else {
-    if( getSheet()->getNetFromPoint( p, mName ) ) {
-      mNet = getSheet()->netGet( mName );
+    if( getSheet()->getNetFromPoint( p, mNetName ) ) {
+      setDirty();
+      setDirtyCashe();
       setStep( sPlaceName );
       update();
       }
@@ -123,9 +126,12 @@ void SdModeCWireName::enterPoint( SdPoint p )
 
 
 
-void SdModeCWireName::cancelPoint(SdPoint)
+void SdModeCNetName::cancelPoint(SdPoint)
   {
   if( getStep() == sPlaceName ) {
+    mNetName.clear();
+    setDirty();
+    setDirtyCashe();
     setStep( sSelectNet );
     update();
     }
@@ -134,7 +140,7 @@ void SdModeCWireName::cancelPoint(SdPoint)
 
 
 
-void SdModeCWireName::movePoint( SdPoint p )
+void SdModeCNetName::movePoint( SdPoint p )
   {
   if( getStep() == sPlaceName ) {
     mPrev = p;
@@ -145,7 +151,7 @@ void SdModeCWireName::movePoint( SdPoint p )
 
 
 
-QString SdModeCWireName::getStepHelp() const
+QString SdModeCNetName::getStepHelp() const
   {
   return getStep() == sPlaceName ? QObject::tr("Enter net name place point") : QObject::tr("Select net for name placement");
   }
@@ -153,7 +159,7 @@ QString SdModeCWireName::getStepHelp() const
 
 
 
-QString SdModeCWireName::getModeThema() const
+QString SdModeCNetName::getModeThema() const
   {
   return QStringLiteral( MODE_HELP "ModeCWireName.htm" );
   }
@@ -161,7 +167,7 @@ QString SdModeCWireName::getModeThema() const
 
 
 
-QString SdModeCWireName::getStepThema() const
+QString SdModeCNetName::getStepThema() const
   {
   return getStep() == sPlaceName ? QStringLiteral( MODE_HELP "ModeCWireName.htm#placeName" ) : QStringLiteral( MODE_HELP "ModeCWireName.htm#selectNet" );
   }
@@ -169,14 +175,14 @@ QString SdModeCWireName::getStepThema() const
 
 
 
-int SdModeCWireName::getCursor() const
+int SdModeCNetName::getCursor() const
   {
   return CUR_ARROW;
   }
 
 
 
-int SdModeCWireName::getIndex() const
+int SdModeCNetName::getIndex() const
   {
   return MD_NET_NAME;
   }
@@ -184,7 +190,7 @@ int SdModeCWireName::getIndex() const
 
 
 
-SdPItemSheet *SdModeCWireName::getSheet()
+SdPItemSheet *SdModeCNetName::getSheet()
   {
   return dynamic_cast<SdPItemSheet*>(mObject);
   }

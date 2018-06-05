@@ -354,7 +354,7 @@ bool SdProject::isNetNameUsed(const QString netName)
   forEach( dctSheet, [&unused,netName] (SdObject *obj) ->bool {
     SdPItemSheet *sheet = dynamic_cast<SdPItemSheet*>(obj);
     Q_ASSERT(sheet != nullptr);
-    unused = sheet->netGet( netName ) == nullptr;
+    unused = !sheet->isNetPresent( netName );
     return unused;
     });
   return !unused;

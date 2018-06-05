@@ -48,7 +48,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (24 + FONT_COUNT)
+#define SdEnvirVersion  (25 + FONT_COUNT)
 
 typedef QMap<QString,SdLayerPtr> SdLayerPtrTable;
 
@@ -89,7 +89,7 @@ class SdEnvir
     double          mPrtPPM;               //Коэффициент преобразования в физическую величину в конструкциях
     bool            mGridSyncXY;           //Syncronisated edition x and grid steps
     bool            mGridShow;             //Включение сетки
-    bool            mCursorAlignGrid;           //Включение движения курсора по сетке
+    bool            mCursorAlignGrid;      //Включение движения курсора по сетке
     bool            mCenterCursor;         //Центровать курсор при увеличении и уменьшении
     QString         mHomePath;             //Каталог пользователя
     QString         mLibraryPath;          //Каталог библиотек

@@ -22,40 +22,39 @@ Description
 
 
 //Классы объектов
-#define dctLines         0x00000001l
-#define dctText          0x00000002l
-#define dctSymPin        0x00000004l
-//#define dctSymPinName    0x00000008l
-//#define dctSymPinNumber  0x00000010l
-#define dctIdent         0x00000020l
-#define dctSymbol        0x00000040l
-#define dctSymImp        0x00000080l
-#define dctPartPin       0x00000100l
-#define dctRoadPin       0x00000200l
+#define dctLines         0x00000001ul
+#define dctText          0x00000002ul
+#define dctSymPin        0x00000004ul
+#define dctPartPin       0x00000008ul
+#define dctIdent         0x00000010ul
+#define dctSymbol        0x00000020ul
+#define dctSymImp        0x00000040ul
+#define dctPart          0x00000080ul
+#define dctPartImp       0x00000100ul
+#define dctNetWire       0x00000200ul
+#define dctNetName       0x00000400ul
+#define dctSheet         0x00000800ul
+#define dctPlate         0x00001000ul
+#define dctComponent     0x00002000ul
+#define dctProject       0x00004000ul
+#define dctSection       0x00008000ul
+#define dctPartVariant   0x00010000ul
+#define dctArea          0x00020000ul
+#define dctSelector      0x00040000ul
+
+#define dctList          0x00020000ul
+#define dctAlias         0x00040000ul
+#define dctPoligon       0x00080000ul
+#define dctVia           0x00100000ul
+#define dctSize          0x00800000ul
+#define dctSizeProp      0x01000000ul
+#define dctTextDoc       0x02000000ul
+#define dctPlateNet      0x10000000ul
+
+//dctUser          = 0x200000,
 //#define dctPartPinNumber 0x00000400l
-#define dctPart          0x00000800l
-#define dctPartImp       0x00001000l
-#define dctWire          0x00002000l
-#define dctWireName      0x00004000l
-#define dctSheet         0x00008000l
-#define dctPlate         0x00010000l
-#define dctList          0x00020000l
-#define dctAlias         0x00040000l
-#define dctPoligon       0x00080000l
-#define dctVia           0x00100000l
-#define dctComponent     0x00200000l
-  //dctUser          = 0x200000,
-#define dctProject       0x00400000l
-#define dctSize          0x00800000l
-#define dctSizeProp      0x01000000l
-#define dctTextDoc       0x02000000l
-#define dctSelector      0x04000000l
-#define dctSheetNet      0x08000000l
-#define dctPlateNet      0x10000000l
-#define dctSection       0x20000000l
-#define dctPartVariant   0x40000000l
-#define dctArea          0x80000000l
-  //dctChars    = 0x20000000,
+//#define dctRoadPin       0x00000200ul
+//dctChars    = 0x20000000,
   //dctPrjList  = 0x40000000,
   //dctData     = 0x80000000,
 #define dctPicture       (dctLines | dctText | dctSize)
@@ -63,7 +62,7 @@ Description
 #define dctAll           MAX64_MASK
 #define dctSymbolObjects (dctPicture | dctSymPin )
 #define dctPartObjects   (dctPicture | dctPartPin)
-#define dctSheetObjects  (dctPicture | dctSymImp | dctSheetNet | dctWire | dctWireName)
+#define dctSheetObjects  (dctPicture | dctSymImp | dctNetWire | dctNetName)
 #define dctPlateObjects  (dctPicture | dctPartImp | dctVia )
 
 

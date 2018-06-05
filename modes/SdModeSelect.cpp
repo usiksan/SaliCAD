@@ -12,7 +12,6 @@ Description
   Complex mode for selection, edit, move many graph objects
 */
 #include "SdModeSelect.h"
-#include "objects/SdContainerSheetNet.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdPItemSheet.h"
 #include "objects/SdPItemPlate.h"
@@ -875,16 +874,6 @@ void SdModeSelect::clickPoint( SdPoint point )
       if( graph != nullptr ) {
         graph->selectByPoint( point, &mFragment );
         }
-      SdContainerSheetNet *net = dynamic_cast<SdContainerSheetNet*>(obj);
-      if( net != nullptr ) {
-        //For nets full net selection
-        net->forEach( dctAll, [this] (SdObject *subObj) -> bool {
-          SdGraph *subGraph = dynamic_cast<SdGraph*>(subObj);
-          if( subGraph != nullptr )
-            subGraph->select( &mFragment );
-          return true;
-          });
-        }
       return true;
       });
     //Обновить свойства и обновить изображение
@@ -1319,7 +1308,7 @@ int SdModeSelect::checkPoint(SdPoint p)
   if( sdEnvir->mShowMessageRemark ) {
     //If need display extended remark then scan objects behind cursor and get their info
     QString info;
-    mFragment.forEach( dctAll, [this,p,&info] (SdObject *obj) ->bool {
+    mFragment.forEach( dctAll, [p,&info] (SdObject *obj) ->bool {
       SdGraph *graph = dynamic_cast<SdGraph*>(obj);
       if( graph != nullptr )
         return !graph->getInfo( p, info, true );

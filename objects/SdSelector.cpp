@@ -55,7 +55,7 @@ void SdSelector::markDeleteAll()
 void SdSelector::removeAll()
   {
   for( SdGraph *graph : mTable )
-    graph->mSelector = 0;
+    graph->mSelector = nullptr;
   mTable.clear();
   }
 
@@ -65,7 +65,7 @@ void SdSelector::removeAll()
 void SdSelector::remove(SdGraph *graph)
   {
   if( graph->mSelector == this ) {
-    graph->mSelector = 0;
+    graph->mSelector = nullptr;
     mTable.remove( graph );
     }
   }

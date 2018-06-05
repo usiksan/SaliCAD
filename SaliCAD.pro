@@ -119,7 +119,6 @@ SOURCES += \
     modes/SdModeCSymImp.cpp \
     objects/SdConverterImplement.cpp \
     windows/SdPropBarSymImp.cpp \
-    objects/SdContainerSheetNet.cpp \
     objects/SdUndoRecordSymImpPin.cpp \
     objects/SdGraphArea.cpp \
     objects/SdUndoRecordPlatePointer.cpp \
@@ -128,7 +127,6 @@ SOURCES += \
     objects/SdUndoRecordLinkSection.cpp \
     objects/SdUndoRecordSymImp.cpp \
     objects/SdUndoRecordPartImp.cpp \
-    modes/SdModeCWire.cpp \
     windows/SdPropBarWire.cpp \
     windows/SdDNetUnion.cpp \
     objects/SdUndoRecordWire.cpp \
@@ -145,7 +143,6 @@ SOURCES += \
     objects/SdGraphLinearArc.cpp \
     objects/SdUndoRecordPropLineRect2Int.cpp \
     objects/SdUndoRecordPropLineAnd3Points.cpp \
-    modes/SdModeCWireName.cpp \
     modes/SdModeCLinearArc.cpp \
     modes/SdModeWireDisconnect.cpp \
     windows/SdDGetBus.cpp \
@@ -184,7 +181,9 @@ SOURCES += \
     windows/SdDOptionsPageEditors.cpp \
     objects/SdGraphNet.cpp \
     objects/SdGraphNetWire.cpp \
-    objects/SdGraphNetName.cpp
+    objects/SdGraphNetName.cpp \
+    modes/SdModeCNetWire.cpp \
+    modes/SdModeCNetName.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -296,7 +295,6 @@ HEADERS  += \
     modes/SdModeCSymImp.h \
     objects/SdConverterImplement.h \
     windows/SdPropBarSymImp.h \
-    objects/SdContainerSheetNet.h \
     objects/SdUndoRecordSymImpPin.h \
     objects/SdGraphArea.h \
     objects/SdUndoRecordPlatePointer.h \
@@ -305,7 +303,6 @@ HEADERS  += \
     objects/SdUndoRecordLinkSection.h \
     objects/SdUndoRecordSymImp.h \
     objects/SdUndoRecordPartImp.h \
-    modes/SdModeCWire.h \
     windows/SdPropBarWire.h \
     windows/SdDNetUnion.h \
     objects/SdUndoRecordWire.h \
@@ -322,7 +319,6 @@ HEADERS  += \
     objects/SdGraphLinearArc.h \
     objects/SdUndoRecordPropLineRect2Int.h \
     objects/SdUndoRecordPropLineAnd3Points.h \
-    modes/SdModeCWireName.h \
     modes/SdModeCLinearArc.h \
     modes/SdModeWireDisconnect.h \
     windows/SdDGetBus.h \
@@ -362,7 +358,9 @@ HEADERS  += \
     windows/SdDOptionsPageEditors.h \
     objects/SdGraphNet.h \
     objects/SdGraphNetWire.h \
-    objects/SdGraphNetName.h
+    objects/SdGraphNetName.h \
+    modes/SdModeCNetWire.h \
+    modes/SdModeCNetName.h
 
 DISTFILES += \
     license.txt

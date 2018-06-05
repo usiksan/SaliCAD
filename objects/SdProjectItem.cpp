@@ -326,7 +326,7 @@ void SdProjectItem::setOrigin(const SdPoint org, SdUndo *undo)
 
 void SdProjectItem::insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)
   {
-  sour->forEach( dctAll, [this, offset, undo, next, editor, dest ] (SdGraph *obj) ->bool {
+  sour->forEach( dctAll, [this, editor, dest, undo, offset, next ] (SdGraph *obj) ->bool {
     obj = insertCopyObject( obj, offset, undo, editor, next );
     if( obj != nullptr && dest != nullptr )
       obj->select( dest );

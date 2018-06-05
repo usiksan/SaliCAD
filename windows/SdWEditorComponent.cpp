@@ -266,9 +266,18 @@ void SdWEditorComponent::onCurrentSection(int index)
   int row = 0;
   for( auto iter = pins.constBegin(); iter != pins.constEnd(); iter++ ) {
     QTableWidgetItem *item;
+
+    //Item cell with pin name
     mPackTable->setItem( row, 0, item = new QTableWidgetItem(iter.key()) );
+    //Pin name disable for editing
     item->setFlags(Qt::ItemIsEnabled);
+
+    //Item cell with pin number
     mPackTable->setItem( row, 1, item = new QTableWidgetItem(iter.value()) );
+    //If componen editing disabled then disable edit item
+    if( !mComponent->isEditEnable() )
+      item->setFlags(Qt::ItemIsEnabled);
+    //pin number cell background indicate errors in packing
     if( !mPackNumbers.contains(iter.value()) ) {
       item->setBackgroundColor( QColor(Qt::red).lighter() );
       item->setToolTip( tr("No pin with this number in part") );
@@ -280,7 +289,8 @@ void SdWEditorComponent::onCurrentSection(int index)
     mPackTable->setRowHeight( row, 20 );
     row++;
     }
-  connect( mPackTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onPackChanged );
+  if( mComponent->isEditEnable() )
+    connect( mPackTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onPackChanged );
   }
 
 

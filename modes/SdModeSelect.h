@@ -47,7 +47,7 @@ class SdModeSelect : public SdMode
 
   public:
     SdModeSelect( SdWEditorGraph *editor, SdProjectItem *obj );
-    ~SdModeSelect();
+    ~SdModeSelect() override;
 
     // SdMode interface
   public:

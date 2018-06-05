@@ -25,7 +25,7 @@ SdProp::SdProp()
 
   mTextProp.mLayer.set( QString( LID0_COMMON ) );       //Свойства текстовых объектов
   mTextProp.mFont   = 0;
-  mTextProp.mSize   = 35;
+  mTextProp.mSize   = 350;
   mTextProp.mDir    = da0;
   mTextProp.mHorz   = dhjLeft;
   mTextProp.mVert   = dvjMiddle;
@@ -39,7 +39,7 @@ SdProp::SdProp()
   //Props of wire name
   mWireNameProp.mLayer.set( QString( LID0_NET_NAME ) );       //Свойства текстовых объектов
   mWireNameProp.mFont   = 0;
-  mWireNameProp.mSize   = 35;
+  mWireNameProp.mSize   = 350;
   mWireNameProp.mDir    = da0;
   mWireNameProp.mHorz   = dhjLeft;
   mWireNameProp.mVert   = dvjMiddle;
@@ -52,7 +52,7 @@ SdProp::SdProp()
   //Symbol pin name properties
   mSymPinNameProp.mLayer.set( QString(LID0_PIN_NAME) );
   mSymPinNameProp.mFont   = 0;
-  mSymPinNameProp.mSize   = 35;
+  mSymPinNameProp.mSize   = 350;
   mSymPinNameProp.mDir    = da0;
   mSymPinNameProp.mHorz   = dhjLeft;
   mSymPinNameProp.mVert   = dvjMiddle;
@@ -61,7 +61,7 @@ SdProp::SdProp()
   //Symbol pin number properties
   mSymPinNumberProp.mLayer.set( QString(LID0_PIN_NUMBER) );
   mSymPinNumberProp.mFont   = 0;
-  mSymPinNumberProp.mSize   = 35;
+  mSymPinNumberProp.mSize   = 350;
   mSymPinNumberProp.mDir    = da0;
   mSymPinNumberProp.mHorz   = dhjLeft;
   mSymPinNumberProp.mVert   = dvjMiddle;
@@ -102,7 +102,7 @@ SdProp::SdProp()
   //Symbol identifier (reference) aka D4.5
   mSymIdentProp.mLayer.set( QString(LID0_IDENT) );
   mSymIdentProp.mFont   = 0;
-  mSymIdentProp.mSize   = 35;
+  mSymIdentProp.mSize   = 350;
   mSymIdentProp.mDir    = da0;
   mSymIdentProp.mHorz   = dhjCenter;
   mSymIdentProp.mVert   = dvjMiddle;

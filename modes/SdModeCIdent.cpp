@@ -69,6 +69,7 @@ void SdModeCIdent::propGetFromBar()
   SdPropBarTextual *bar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
   Q_ASSERT( bar != nullptr );
   bar->getPropText( mPropText );
+  update();
   }
 
 
@@ -154,6 +155,7 @@ void SdModeCIdent::cancelEdit()
 
 
 
+
 void SdModeCIdent::applyEdit()
   {
   //Save previous state of ident
@@ -166,11 +168,15 @@ void SdModeCIdent::applyEdit()
   }
 
 
+
+
 void SdModeCIdent::activate()
   {
+  SdModeCTextual::activate();
   //Make all text selected
   setText( mIdent->getText(), true );
   }
+
 
 
 int SdModeCIdent::getCursor() const

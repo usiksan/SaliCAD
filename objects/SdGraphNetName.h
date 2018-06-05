@@ -18,7 +18,7 @@ Description
 #include "SdPropText.h"
 #include "SdPoint.h"
 
-#define SD_TYPE_WIRE_NAME "WireName"
+#define SD_TYPE_NET_NAME "NetName"
 
 class SdContainerSheetNet;
 
@@ -30,12 +30,12 @@ class SdGraphNetName : public SdGraphNet
     SdRect     mOver;   //Over rect
   public:
     SdGraphNetName();
-    SdGraphNetName( SdPoint org, const SdPropText &prp );
+    SdGraphNetName(SdPoint org, const QString netName, const SdPropText &prp );
 
     // SdObject interface
   public:
-    virtual QString getType() const override { return QStringLiteral(SD_TYPE_WIRE_NAME); }
-    virtual quint64 getClass() const override { return dctWireName; }
+    virtual QString getType() const override { return QStringLiteral(SD_TYPE_NET_NAME); }
+    virtual quint64 getClass() const override { return dctNetName; }
     virtual void    cloneFrom(const SdObject *src) override;
     virtual void    writeObject(QJsonObject &obj) const override;
     virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;

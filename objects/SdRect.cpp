@@ -125,6 +125,7 @@ bool SdRect::isAccross(const SdPoint p1, const SdPoint p2) const
 
 
 bool SdRect::isAccross(const SdRect &rect) const {
+//  return intersects(rect);
   return isAccross( rect.getTopLeft(), rect.getBottomLeft() ) ||
          isAccross( rect.getTopLeft(), rect.getTopRight() ) ||
          isAccross( rect.getBottomLeft(), rect.getBottomRight() ) ||

@@ -160,9 +160,9 @@ void SdPNewProjectItem_SelectType::classChanged(int index)
       mCreationOrder->addItem( tr("Specification") );
       break;
     }
-  if( defaultOrder < mCreationOrder->count() ) {
-    mCreationOrder->setCurrentRow( defaultOrder );
-    orderChanged( defaultOrder );
+  if( mCreationOrder->count() ) {
+    mCreationOrder->setCurrentRow( 0 );
+    orderChanged( 0 );
     }
   }
 

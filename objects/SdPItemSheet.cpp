@@ -12,7 +12,6 @@ Description
   Graphical schematic sheet presentation
 */
 #include "SdPItemSheet.h"
-#include "SdContainerSheetNet.h"
 #include "SdGraphNetWire.h"
 #include "SdGraphArea.h"
 #include "SdGraphSymImp.h"
@@ -28,28 +27,23 @@ SdPItemSheet::SdPItemSheet() :
 
 
 //get net by its name
-SdContainerSheetNet *SdPItemSheet::netGet(const QString name)
+bool SdPItemSheet::isNetPresent(const QString name)
   {
-  for( SdObject *ptr : mChildList )
-    if( ptr && !ptr->isDeleted() && ptr->getClass() == dctSheetNet ) {
-      SdContainerSheetNet *net = dynamic_cast<SdContainerSheetNet*>(ptr);
-      if( net && net->getNetName() == name ) return net;
+  bool present = false;
+  //Find net element with desired name
+  forEach( dctNetName | dctNetWire, [&present,name] (SdObject *obj) -> bool {
+    SdGraphNet *net = dynamic_cast<SdGraphNet*>(obj);
+    if( net != nullptr && net->getNetName() == name ) {
+      //Net found, break subsequent repetition
+      present = true;
+      return false;
       }
-  return nullptr;
+    return true;
+    } );
+  return present;
   }
 
 
-
-
-//Creates net with desired name or return existing net
-SdContainerSheetNet *SdPItemSheet::netCreate(const QString name, SdUndo *undo)
-  {
-  SdContainerSheetNet *net = netGet( name );
-  if( net ) return net;
-  net = new SdContainerSheetNet( name );
-  insertChild( net, undo );
-  return net;
-  }
 
 
 
@@ -57,21 +51,10 @@ SdContainerSheetNet *SdPItemSheet::netCreate(const QString name, SdUndo *undo)
 //Rename net. Both simple rename and union two nets
 void SdPItemSheet::netRename(const QString oldName, const QString newName, SdUndo *undo)
   {
-  SdContainerSheetNet *oldNet = netGet(oldName);
-  if( oldNet == nullptr )
-    return;
-  SdContainerSheetNet *newNet = netGet(newName);
-  if( newNet == nullptr ) {
-    //New net does not exist, create it
-    newNet = netCreate(newName,undo);
-    }
-  oldNet->forEach( dctAll, [this,oldNet,newNet,undo] (SdObject *obj) ->bool {
-    //Create obj copy
-    SdObject *cpy = obj->copy();
-    //Delete prev obj
-    oldNet->deleteChild( obj, undo );
-    //Insert new obj
-    newNet->insertChild( cpy, undo );
+  forEach( dctNetWire | dctNetName, [oldName, newName, undo] (SdObject *obj) -> bool {
+    SdGraphNet *net = dynamic_cast<SdGraphNet*>(obj);
+    if( net != nullptr && net->getNetName() == oldName )
+      net->setNetName( newName, undo );
     return true;
     });
   }
@@ -80,12 +63,12 @@ void SdPItemSheet::netRename(const QString oldName, const QString newName, SdUnd
 
 
 //Information about wire segment moving to make connection to pin
-void SdPItemSheet::netWirePlace(SdPoint a, SdPoint b, const QString name, SdUndo *undo)
+void SdPItemSheet::netWirePlace(SdGraphNetWire *wire, SdUndo *undo)
   {
-  forEach( dctSymImp, [a, b, name, undo] (SdObject *obj) -> bool {
+  forEach( dctSymImp, [wire, undo] (SdObject *obj) -> bool {
     SdGraphSymImp *sym = dynamic_cast<SdGraphSymImp*>(obj);
     Q_ASSERT( sym != nullptr );
-    sym->netWirePlace( a, b, name, undo );
+    sym->netWirePlace( wire, undo );
     return true;
     });
   }
@@ -93,50 +76,34 @@ void SdPItemSheet::netWirePlace(SdPoint a, SdPoint b, const QString name, SdUndo
 
 
 //Information about wire segment delete to remove connection from pin
-void SdPItemSheet::netWireDelete(SdPoint a, SdPoint b, const QString name, SdUndo *undo)
+void SdPItemSheet::netWireDelete( SdGraphNetWire *wire, SdUndo *undo)
   {
-  forEach( dctSymImp, [a, b, name, undo] (SdObject *obj) -> bool {
+  forEach( dctSymImp, [ wire, undo] (SdObject *obj) -> bool {
     SdGraphSymImp *sym = dynamic_cast<SdGraphSymImp*>(obj);
     Q_ASSERT( sym != nullptr );
-    sym->netWireDelete( a, b, name, undo );
+    sym->netWireDelete( wire, undo );
     return true;
     });
   }
 
 
 
-
-void SdPItemSheet::insertWire(const QString name, SdGraphNetWire *wire, SdUndo *undo)
-  {
-  SdContainerSheetNet *net = netCreate( name, undo );
-  Q_ASSERT( net != nullptr );
-  net->insertChild( wire, undo );
-  }
 
 
 
 bool SdPItemSheet::getNetFromPoint(SdPoint p, QString &dest)
   {
-  SdContainerSheetNet *net = nullptr;
-  forEach( dctSheetNet, [&net,p] (SdObject *obj) -> bool {
-    net = dynamic_cast<SdContainerSheetNet*>(obj);
-    Q_ASSERT( net != nullptr );
-    bool on = false;
-    net->forEach( dctWire, [&on,p] (SdObject *obj) -> bool {
-      SdGraphNetWire *wire = dynamic_cast<SdGraphNetWire*>(obj);
-      Q_ASSERT( wire != nullptr );
-      on = wire->isPointOnSection( p );
-      return !on;
-      } );
-    if( on ) return false;
-    net = nullptr;
+  dest.clear();
+  forEach( dctNetWire, [&dest,p] (SdObject *obj) -> bool {
+    SdGraphNetWire *netWire = dynamic_cast<SdGraphNetWire*>(obj);
+    Q_ASSERT( netWire != nullptr );
+    if( netWire->isPointOnSection(p) ) {
+      dest = netWire->getNetName();
+      return false;
+      }
     return true;
     });
-  if( net ) {
-    dest = net->getNetName();
-    return true;
-    }
-  return false;
+  return !dest.isEmpty();
   }
 
 
@@ -158,6 +125,30 @@ SdPItemPlate *SdPItemSheet::getPlate(SdPoint p)
     return getProject()->getDefaultPlate();
   return plate;
   }
+
+
+
+
+
+//Accumulate to selector element linked with point and net name
+void SdPItemSheet::accumLinked(SdPoint a, SdPoint b, const QString netName, SdSelector *selector, SdUndo *undo)
+  {
+  forEach( dctNetWire | dctSymImp, [a,b,netName,selector,undo] (SdObject *obj) -> bool {
+    SdGraphNetWire *wire = dynamic_cast<SdGraphNetWire*>(obj);
+    if( wire != nullptr ) {
+      if( wire->getNetName() == netName )
+        wire->accumLinked( a, b, selector, undo );
+      }
+    else {
+      SdGraphSymImp *sym = dynamic_cast<SdGraphSymImp*>(obj);
+      if( sym != nullptr )
+        sym->accumLinked( a, b, netName, selector );
+      }
+    return true;
+    } );
+  }
+
+
 
 
 
@@ -195,24 +186,6 @@ quint64 SdPItemSheet::getAcceptedObjectsMask() const
   {
   return dctSheetObjects;
   }
-
-
-
-
-
-
-
-
-
-void SdPItemSheet::insertObjects(SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)
-  {
-  //TODO B003 sheet insert objects
-  }
-
-
-
-
-
 
 
 

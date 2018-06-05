@@ -11,9 +11,8 @@ Web
 Description
   Mode for enter wire in sheet
 */
-#include "SdModeCWire.h"
+#include "SdModeCNetWire.h"
 #include "objects/SdGraph.h"
-#include "objects/SdContainerSheetNet.h"
 #include "objects/SdPItemSheet.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdProject.h"
@@ -26,10 +25,8 @@ Description
 #include <QMessageBox>
 #include <QDebug>
 
-SdModeCWire::SdModeCWire(SdWEditorGraph *editor, SdProjectItem *obj) :
-  SdModeCommon( editor, obj ),
-  mNet(nullptr),       //Enter net
-  mShow(nullptr)       //Net for show
+SdModeCNetWire::SdModeCNetWire(SdWEditorGraph *editor, SdProjectItem *obj) :
+  SdModeCommon( editor, obj )
   {
 
   }
@@ -37,25 +34,30 @@ SdModeCWire::SdModeCWire(SdWEditorGraph *editor, SdProjectItem *obj) :
 
 
 
-void SdModeCWire::drawStatic(SdContext *ctx)
+void SdModeCNetWire::drawStatic(SdContext *ctx)
   {
-  //All objects draw normally except mShow net. It show selected
-  mObject->forEach( dctAll, [this, ctx] (SdObject *obj) -> bool {
-    if( obj->getParent() != mShow ) {
+  //All objects draw normally except net with netName.
+  mObject->forEach( dctAll, [this,ctx] (SdObject *obj) -> bool {
+    SdGraphNet *net = dynamic_cast<SdGraphNet*>( obj );
+    if( net != nullptr ) {
+      if( net->getNetName() != mNetName )
+        net->draw( ctx );
+      }
+    else {
       SdGraph *graph = dynamic_cast<SdGraph*>( obj );
-      if( graph )
+      if( graph != nullptr )
         graph->draw( ctx );
       }
     return true;
     });
 
-  //Draw mShow net if present
-  if( mShow ) {
+  //Draw if net present
+  if( !mNetName.isEmpty() ) {
     ctx->setOverColor( sdEnvir->getSysColor(scEnter) );
-    mShow->forEach( dctAll, [ctx] (SdObject *obj) -> bool {
-      SdGraph *graph = dynamic_cast<SdGraph*>( obj );
-      if( graph )
-        graph->draw( ctx );
+    mObject->forEach( dctNetWire | dctNetName, [this,ctx] (SdObject *obj) -> bool {
+      SdGraphNet *net = dynamic_cast<SdGraphNet*>( obj );
+      if( net != nullptr && net->getNetName() == mNetName )
+        net->draw( ctx );
       return true;
       });
     ctx->resetOverColor();
@@ -65,7 +67,7 @@ void SdModeCWire::drawStatic(SdContext *ctx)
 
 
 
-void SdModeCWire::drawDynamic(SdContext *ctx)
+void SdModeCNetWire::drawDynamic(SdContext *ctx)
   {
   if( getStep() ) {
     //Draw entering segment with possible vertex
@@ -88,14 +90,14 @@ void SdModeCWire::drawDynamic(SdContext *ctx)
 
 
 
-int SdModeCWire::getPropBarId() const
+int SdModeCNetWire::getPropBarId() const
   {
   return PB_WIRE;
   }
 
 
 
-void SdModeCWire::propGetFromBar()
+void SdModeCNetWire::propGetFromBar()
   {
   SdPropBarWire *bar = dynamic_cast<SdPropBarWire*>( SdWCommand::mbarTable[PB_WIRE] );
   if( bar ) {
@@ -103,31 +105,31 @@ void SdModeCWire::propGetFromBar()
     bar->getPropWire( &(sdGlobalProp->mWireProp), &(sdGlobalProp->mWireEnterType), &wireName );
     if( getStep() ) {
       //If wire enter in process then perhaps net union. Detect it
-      if( mName != wireName ) {
+      if( mNetName != wireName ) {
         //Entered new wire name
-        if( getSheet()->netGet(wireName) ) {
-          if( getSheet()->netGet(mName) ) {
+        if( getSheet()->isNetPresent(wireName) ) {
+          if( getSheet()->isNetPresent(mNetName) ) {
             //Both nets present: with new name and with old name
             if( okUnion(wireName) ) {
-              getSheet()->netRename( mName, wireName, mUndo );
+              getSheet()->netRename( mNetName, wireName, mUndo );
               //Question: rename net in other sheets and rename if yes
               renameOtherSheets( wireName );
               }
             }
           }
         else {
-          if( getSheet()->netGet(mName) ) {
+          if( getSheet()->isNetPresent(mNetName) ) {
             //New net is not defined yet. Rename old net
-            getSheet()->netRename( mName, wireName, mUndo );
+            getSheet()->netRename( mNetName, wireName, mUndo );
             //Question: rename net in other sheets and rename if yes
             renameOtherSheets( wireName );
             }
           }
-        mName = wireName;
+        mNetName = wireName;
         }
       }
     else {
-      mName = wireName;
+      mNetName = wireName;
       }
     mEditor->setFocus();
     update();
@@ -138,26 +140,26 @@ void SdModeCWire::propGetFromBar()
 
 
 
-void SdModeCWire::propSetToBar()
+void SdModeCNetWire::propSetToBar()
   {
   SdPropBarWire *bar = dynamic_cast<SdPropBarWire*>( SdWCommand::mbarTable[PB_WIRE] );
   if( bar )
-    bar->setPropWire( &(sdGlobalProp->mWireProp), mEditor->getPPM(), sdGlobalProp->mWireEnterType, mName );
+    bar->setPropWire( &(sdGlobalProp->mWireProp), mEditor->getPPM(), sdGlobalProp->mWireEnterType, mNetName );
   }
 
 
 
 
-void SdModeCWire::enterPoint( SdPoint enter )
+void SdModeCNetWire::enterPoint( SdPoint enter )
   {
   if( getStep() ) {
     mPrevMove = calcMiddlePoint( mFirst, enter, sdGlobalProp->mWireEnterType );
     if( mPrevMove == mFirst ) mPrevMove = enter;
-    mShow = 0;
+    mShowNet = false;
     //Append segment
     if( testNextPoint( mPrevMove ) && mFirst != mPrevMove ) {
       mUndo->begin( QObject::tr("Insert wire segment"), mObject );
-      needCurNet()->insertChild( new SdGraphNetWire( mFirst, mPrevMove, sdGlobalProp->mWireProp ), mUndo );
+      mObject->insertChild( new SdGraphNetWire( mFirst, mPrevMove, mNetName, sdGlobalProp->mWireProp ), mUndo );
       mFirst = mPrevMove;
       setDirty();
       }
@@ -173,7 +175,7 @@ void SdModeCWire::enterPoint( SdPoint enter )
 
 
 
-void SdModeCWire::cancelPoint(SdPoint)
+void SdModeCNetWire::cancelPoint(SdPoint)
   {
   update();
   if( getStep() ) nextNet();
@@ -182,7 +184,7 @@ void SdModeCWire::cancelPoint(SdPoint)
 
 
 
-void SdModeCWire::movePoint( SdPoint p )
+void SdModeCNetWire::movePoint( SdPoint p )
   {
   if( getStep() ) {
     mPrevMove = p;
@@ -199,21 +201,21 @@ void SdModeCWire::movePoint( SdPoint p )
 
 
 
-void SdModeCWire::enterPrev()
+void SdModeCNetWire::enterPrev()
   {
   mUndo->begin( QObject::tr("Insert smart net"), mObject );
   if( getStep() ) {
     //Net end variant
-    if( mFirst != mSmA ) needCurNet()->insertChild( new SdGraphNetWire( mFirst, mSmA, sdGlobalProp->mWireProp ), mUndo );
-    if( mSmA != mStrEnd && mSmEnd != mSmA ) needCurNet()->insertChild( new SdGraphNetWire( mSmA, mStrEnd, sdGlobalProp->mWireProp ), mUndo );
-    if( mStrEnd != mSmEnd && mSmEnd != mSmA  ) needCurNet()->insertChild( new SdGraphNetWire( mStrEnd, mSmEnd, sdGlobalProp->mWireProp ), mUndo );
+    if( mFirst != mSmA ) getSheet()->insertChild( new SdGraphNetWire( mFirst, mSmA, mNetName, sdGlobalProp->mWireProp ), mUndo );
+    if( mSmA != mStrEnd && mSmEnd != mSmA ) getSheet()->insertChild( new SdGraphNetWire( mSmA, mStrEnd, mNetName, sdGlobalProp->mWireProp ), mUndo );
+    if( mStrEnd != mSmEnd && mSmEnd != mSmA  ) getSheet()->insertChild( new SdGraphNetWire( mStrEnd, mSmEnd, mNetName, sdGlobalProp->mWireProp ), mUndo );
     }
   else {
     //Full routing net variant
     if( testFirstPoint( mFirst ) ) {
-      if( mFirst != mSmA ) needCurNet()->insertChild( new SdGraphNetWire( mFirst, mSmA, sdGlobalProp->mWireProp ), mUndo );
-      if( mSmA != mStrEnd && mSmEnd != mSmA  ) needCurNet()->insertChild( new SdGraphNetWire( mSmA, mStrEnd, sdGlobalProp->mWireProp ), mUndo );
-      if( mStrEnd != mSmEnd && mSmEnd != mSmA  ) needCurNet()->insertChild( new SdGraphNetWire( mStrEnd, mSmEnd, sdGlobalProp->mWireProp ), mUndo );
+      if( mFirst != mSmA ) getSheet()->insertChild( new SdGraphNetWire( mFirst, mSmA, mNetName, sdGlobalProp->mWireProp ), mUndo );
+      if( mSmA != mStrEnd && mSmEnd != mSmA  ) getSheet()->insertChild( new SdGraphNetWire( mSmA, mStrEnd, mNetName, sdGlobalProp->mWireProp ), mUndo );
+      if( mStrEnd != mSmEnd && mSmEnd != mSmA  ) getSheet()->insertChild( new SdGraphNetWire( mStrEnd, mSmEnd, mNetName, sdGlobalProp->mWireProp ), mUndo );
       }
     }
   nextNet();
@@ -228,7 +230,7 @@ void SdModeCWire::enterPrev()
 
 
 
-QString SdModeCWire::getStepHelp() const
+QString SdModeCNetWire::getStepHelp() const
   {
   return getStep() == sNextPoint ? QObject::tr("Enter next point of wire polyline") : QObject::tr("Enter first wire point");
   }
@@ -236,7 +238,7 @@ QString SdModeCWire::getStepHelp() const
 
 
 
-QString SdModeCWire::getModeThema() const
+QString SdModeCNetWire::getModeThema() const
   {
   return QString( MODE_HELP "ModeCWire.htm" );
   }
@@ -244,7 +246,7 @@ QString SdModeCWire::getModeThema() const
 
 
 
-QString SdModeCWire::getStepThema() const
+QString SdModeCNetWire::getStepThema() const
   {
   return getStep() == sNextPoint ? QString( MODE_HELP "ModeCWire.htm#nextPoint" ) : QString( MODE_HELP "ModeCWire.htm#firstPoint" );
   }
@@ -252,7 +254,7 @@ QString SdModeCWire::getStepThema() const
 
 
 
-int SdModeCWire::getCursor() const
+int SdModeCNetWire::getCursor() const
   {
   return CUR_WIRE;
   }
@@ -260,7 +262,7 @@ int SdModeCWire::getCursor() const
 
 
 
-int SdModeCWire::getIndex() const
+int SdModeCNetWire::getIndex() const
   {
   return MD_WIRE;
   }
@@ -268,22 +270,22 @@ int SdModeCWire::getIndex() const
 
 
 
-SdModeCWire::RenumResult SdModeCWire::getUnionResult(const QString firstWireName, const QString secondWireName)
+SdModeCNetWire::RenumResult SdModeCNetWire::getUnionResult(const QString firstWireName, const QString secondWireName)
   {
-  return static_cast<SdModeCWire::RenumResult>( SdDNetUnion( firstWireName, secondWireName, mEditor ).exec() );
+  return static_cast<SdModeCNetWire::RenumResult>( SdDNetUnion( firstWireName, secondWireName, mEditor ).exec() );
   }
 
 
 
 
-bool SdModeCWire::okUnion(const QString newName)
+bool SdModeCNetWire::okUnion(const QString newName)
   {
-  return QMessageBox::question( mEditor, QObject::tr("Warning!"), QObject::tr("Union net '%1' and net '%2'?").arg(mName).arg(newName) ) == QMessageBox::Yes;
+  return QMessageBox::question( mEditor, QObject::tr("Warning!"), QObject::tr("Union net '%1' and net '%2'?").arg(mNetName).arg(newName) ) == QMessageBox::Yes;
   }
 
 
 
-void SdModeCWire::renameOtherSheets(const QString wireName)
+void SdModeCNetWire::renameOtherSheets(const QString wireName)
   {
   if( QMessageBox::question( mEditor, QObject::tr("Query"), QObject::tr("Rename nets in all other sheets?")) == QMessageBox::Yes ) {
     //User answer "Yes", so for each sheet in project execute renaming
@@ -292,7 +294,7 @@ void SdModeCWire::renameOtherSheets(const QString wireName)
     prj->forEach( dctSheet, [this,wireName] (SdObject *obj) -> bool {
       SdPItemSheet *sheet = dynamic_cast<SdPItemSheet*>(obj);
       Q_ASSERT( sheet != nullptr );
-      sheet->netRename( mName, wireName, mUndo );
+      sheet->netRename( mNetName, wireName, mUndo );
       return true;
       });
     }
@@ -302,73 +304,73 @@ void SdModeCWire::renameOtherSheets(const QString wireName)
 
 
 
-bool SdModeCWire::testFirstPoint(SdPoint p)
+bool SdModeCNetWire::testFirstPoint(SdPoint p)
   {
   QString tmpName;
   if( getSheet()->getNetFromPoint( p, tmpName ) ) {
-    if( mName.startsWith( defNetNamePrefix ) )
+    if( mNetName.startsWith( defNetNamePrefix ) )
       //Our net has default name, assign it found net name
-      mName = tmpName;
+      mNetName = tmpName;
     else {
       if( tmpName.startsWith( defNetNamePrefix ) )
         //Net has default name, override it with our existing net (rename)
-        renameNet( tmpName, mName );
+        renameNet( tmpName, mNetName );
       else {
         //Nets have not default names. Query user to deсision what name assign
-        switch( getUnionResult( tmpName, mName ) ) {
-          case renFirst  : mName = tmpName; break;             //Lets first
-          case renSecond : renameNet( tmpName, mName ); break; //Lets second
+        switch( getUnionResult( tmpName, mNetName ) ) {
+          case renFirst  : mNetName = tmpName; break;             //Lets first
+          case renSecond : renameNet( tmpName, mNetName ); break; //Lets second
           default : return false;
           }
         }
       }
     }
   propSetToBar();
-  mShow = mNet = getSheet()->netGet( mName );
+  mShowNet = getSheet()->isNetPresent( mNetName );
   return true;
   }
 
 
 
 
-bool SdModeCWire::testNextPoint(SdPoint p)
+bool SdModeCNetWire::testNextPoint(SdPoint p)
   {
   QString tmpName;
-  if( getSheet()->getNetFromPoint( p, tmpName ) && tmpName != mName ) {
+  if( getSheet()->getNetFromPoint( p, tmpName ) && tmpName != mNetName ) {
     if( okUnion(tmpName) ) {
       //Net union
-      if( mName.startsWith( defNetNamePrefix ) ) renameNet( mName, tmpName );
-      else if( tmpName.startsWith( defNetNamePrefix ) ) renameNet( tmpName, mName );
+      if( mNetName.startsWith( defNetNamePrefix ) ) renameNet( mNetName, tmpName );
+      else if( tmpName.startsWith( defNetNamePrefix ) ) renameNet( tmpName, mNetName );
       else {
         //Nets have not default names. Query user to deсision what name assign
-        switch( getUnionResult( mName, tmpName ) ) {
-          case renFirst  : renameNet( tmpName, mName ); break; //Lets first
-          case renSecond : renameNet( mName, tmpName ); break; //Lets second
+        switch( getUnionResult( mNetName, tmpName ) ) {
+          case renFirst  : renameNet( tmpName, mNetName ); break; //Lets first
+          case renSecond : renameNet( mNetName, tmpName ); break; //Lets second
           default : return false;
           }
         }
       }
     else return false;
-    mShow = getSheet()->netGet( mName );
+    mShowNet = getSheet()->isNetPresent( mNetName );
     }
   propSetToBar();
-  mNet = getSheet()->netGet( mName );
   return true;
   }
 
 
 
 
-void SdModeCWire::renameNet(const QString sour, const QString dest)
+void SdModeCNetWire::renameNet(const QString sour, const QString dest)
   {
   getSheet()->netRename( sour, dest, mUndo );
-  mName = dest;
+  mNetName = dest;
   }
 
 
 
 
-void SdModeCWire::calcSecondSmart()
+
+void SdModeCNetWire::calcSecondSmart()
   {
   SdSnapInfo snap;
   snap.mSour     = mPrevMove;
@@ -397,7 +399,7 @@ static SdPoint pointToFar( SdPoint sour, SdPoint dest ) {
   }
 
 
-void SdModeCWire::calcSmartPoint()
+void SdModeCNetWire::calcSmartPoint()
   {
   SdSnapInfo snap;
   snap.mSour     = mPrevMove;
@@ -406,7 +408,7 @@ void SdModeCWire::calcSmartPoint()
   snap.mFlag     = dsifExExcl;
   SdRect over;
   bool noResult = true;
-  getSheet()->forEach( dctSymImp, [this, &snap, &over, &noResult] (SdObject *obj) -> bool {
+  getSheet()->forEach( dctSymImp, [&snap, &over, &noResult] (SdObject *obj) -> bool {
     SdGraphSymImp *sym = dynamic_cast<SdGraphSymImp*>( obj );
     Q_ASSERT( sym != nullptr );
     if( sym->snapPoint( &snap ) ) {
@@ -479,25 +481,12 @@ void SdModeCWire::calcSmartPoint()
 
 
 
-void SdModeCWire::nextNet()
+void SdModeCNetWire::nextNet()
   {
   setStep(sFirstPoint);
-  mName = getSheet()->getProject()->getUnusedNetName();
+  mNetName = getSheet()->getProject()->getUnusedNetName();
   propSetToBar();
-  mShow = mNet = 0;
-  }
-
-
-
-
-SdContainerSheetNet *SdModeCWire::needCurNet()
-  {
-  if( !mNet || mName != mNet->getNetName() ) {
-    //Try to find net in schematic sheet, if not found then create it
-    mNet = getSheet()->netCreate( mName, mUndo );
-    }
-  //At this point net must be defined
-  return mNet;
+  mShowNet = false;
   }
 
 
@@ -506,7 +495,8 @@ SdContainerSheetNet *SdModeCWire::needCurNet()
 
 
 
-SdPItemSheet *SdModeCWire::getSheet()
+
+SdPItemSheet *SdModeCNetWire::getSheet()
   {
   return dynamic_cast<SdPItemSheet*>(mObject);
   }
@@ -514,7 +504,7 @@ SdPItemSheet *SdModeCWire::getSheet()
 
 
 
-void SdModeCWire::activate()
+void SdModeCNetWire::activate()
   {
   nextNet();
   }

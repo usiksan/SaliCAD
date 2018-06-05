@@ -30,6 +30,7 @@ class SdPItemSheet;
 class SdPItemPart;
 class SdGraphPartImp;
 class SdPItemPlate;
+class SdGraphNetWire;
 
 
 class SdGraphSymImp : public SdGraph
@@ -104,11 +105,11 @@ class SdGraphSymImp : public SdGraph
 
     //Notifications about segment operation
     //Notification about wire segment position changed
-    void          netWirePlace( SdPoint a, SdPoint b, const QString name, SdUndo *undo );
+    void          netWirePlace( SdGraphNetWire *wire, SdUndo *undo );
     //Notification about wire segment deletion
-    void          netWireDelete( SdPoint a, SdPoint b, const QString name, SdUndo *undo ); //Извещение об удалении сегмента
+    void          netWireDelete(SdGraphNetWire *wire, SdUndo *undo ); //Извещение об удалении сегмента
     //Accumulate segments connected to component
-    void          accumLinked( SdPoint a, SdPoint b, SdSelector *sel );
+    void          accumLinked(SdPoint a, SdPoint b, const QString netName, SdSelector *sel );
 
     //Service
     //Pin status get

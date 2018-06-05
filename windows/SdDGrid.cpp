@@ -88,6 +88,10 @@ void SdDGrid::accept()
   //Syncro flag
   sdEnvir->mGridSyncXY = ui->mSyncXY->isChecked();
 
+  //Current grid
+  mGrid.rx() = SdUtil::str2phys( ui->mStepX->text() );
+  mGrid.ry() = SdUtil::str2phys( ui->mStepY->text() );
+
   //Grid history
   int i;
   for( i = 0; i < sdEnvir->mGridHistory.count(); i++ )
@@ -106,10 +110,6 @@ void SdDGrid::accept()
       sdEnvir->mGridHistory.removeLast();
     sdEnvir->mGridHistory.insert( 0, mGrid );
     }
-
-  //Current grid
-  mGrid.rx() = SdUtil::str2phys( ui->mStepX->text() );
-  mGrid.ry() = SdUtil::str2phys( ui->mStepY->text() );
 
   //Flags
   sdEnvir->mGridShow        = ui->mShowGrid->isChecked();

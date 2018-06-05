@@ -12,7 +12,7 @@ Description
 */
 #include "SdDNetUnion.h"
 #include "ui_SdDNetUnion.h"
-#include "modes/SdModeCWire.h"
+#include "modes/SdModeCNetWire.h"
 #include <QMessageBox>
 
 SdDNetUnion::SdDNetUnion(const QString first, const QString second, QWidget *parent) :
@@ -33,12 +33,12 @@ SdDNetUnion::~SdDNetUnion()
 
 void SdDNetUnion::accept()
   {
-  if( ui->mFirst->isChecked() ) done( SdModeCWire::renFirst );
-  else if( ui->mSecond->isChecked() ) done( SdModeCWire::renSecond );
+  if( ui->mFirst->isChecked() ) done( SdModeCNetWire::renFirst );
+  else if( ui->mSecond->isChecked() ) done( SdModeCNetWire::renSecond );
   else QMessageBox::warning( this, tr("Error"), tr("You must select one variant or cancel") );
   }
 
 void SdDNetUnion::reject()
   {
-  done( SdModeCWire::renCancel );
+  done( SdModeCNetWire::renCancel );
   }

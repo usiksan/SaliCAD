@@ -15,6 +15,8 @@ Description
 #define SDGRAPHWIRE_H
 
 #include "SdGraph.h"
+#include "SdPItemSheet.h"
+
 
 class SdGraphNet : public SdGraph
   {
@@ -22,16 +24,26 @@ class SdGraphNet : public SdGraph
     QString mNetName;
   public:
     SdGraphNet();
+    SdGraphNet( const QString netName );
 
-    QString getNetName() const { return mNetName; }
+    SdPItemSheet *getSheet() const { return dynamic_cast<SdPItemSheet*>(getParent()); }
 
-    virtual void setNetName( const QString netName, SdUndo *undo );
+    QString       getNetName() const { return mNetName; }
+
+    virtual void  setNetName( const QString netName, SdUndo *undo );
 
     // SdObject interface
   public:
     virtual void cloneFrom(const SdObject *src) override;
     virtual void writeObject(QJsonObject &obj) const override;
     virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
+
+    // SdGraph interface
+  public:
+    virtual void setProp(SdPropSelected &prop) override;
+    virtual void getProp(SdPropSelected &prop) override;
+    virtual void saveState(SdUndo *undo) override;
   };
+
 
 #endif // SDGRAPHWIRE_H

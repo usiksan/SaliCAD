@@ -41,7 +41,7 @@ typedef SdPItemPlate *SdPItemPlatePtr;
 class SdGraphSymImp;
 class SdGraphPartImp;
 class SdProjectItem;
-class SdSymImpPin;
+struct SdSymImpPin;
 typedef QMap<QString,SdSymImpPin> SdSymImpPinTable;
 class SdPartImpPin;
 typedef QMap<QString,SdPartImpPin> SdPartImpPinTable;

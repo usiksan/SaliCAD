@@ -150,7 +150,7 @@ void SdEnvir::saveEnvir()
   QByteArray ar;
   QDataStream os( &ar, QIODevice::WriteOnly );
 
-  //Записали цвета
+  //Write colors [Записали цвета]
   for( int i = 0; i < scLast; i++ )
     os << mSysColors[i];
 
@@ -158,7 +158,7 @@ void SdEnvir::saveEnvir()
   for( int i = 0; i < FONT_COUNT; i++ )
     os << mFonts[i];
 
-  //Записали слои
+  //Write layers [Записали слои]
   int c = mLayerTable.count();
   os << c;
   for( SdLayer *layer : mLayerTable ) {

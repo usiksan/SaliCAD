@@ -16,9 +16,9 @@ Description
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
 #include "modes/SdModeCSymImp.h"
-#include "modes/SdModeCWire.h"
+#include "modes/SdModeCNetWire.h"
 #include "modes/SdModeCLinearArea.h"
-#include "modes/SdModeCWireName.h"
+#include "modes/SdModeCNetName.h"
 #include "modes/SdModeWireDisconnect.h"
 #include "modes/SdModeCBus.h"
 #include <QDebug>
@@ -27,7 +27,7 @@ SdWEditorGraphSheet::SdWEditorGraphSheet(SdPItemSheet *sch, QWidget *parent) :
   SdWEditorGraph( sch, parent ),
   mSheet(sch)
   {
-  mGrid.set( 25, 25 );
+  mGrid.set( 250, 250 );
   }
 
 
@@ -64,7 +64,7 @@ void SdWEditorGraphSheet::cmModeComponent()
 //Sheet net wire insertion mode
 void SdWEditorGraphSheet::cmModeNet()
   {
-  modeSet( new SdModeCWire( this, mSheet ) );
+  modeSet( new SdModeCNetWire( this, mSheet ) );
   }
 
 
@@ -94,7 +94,7 @@ void SdWEditorGraphSheet::cmModePcbArea()
 
 void SdWEditorGraphSheet::cmModeNetName()
   {
-  modeSet( new SdModeCWireName( this, mSheet ) );
+  modeSet( new SdModeCNetName( this, mSheet ) );
   }
 
 

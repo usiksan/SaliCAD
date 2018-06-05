@@ -19,7 +19,7 @@ Description
 #include "SdPItemPlate.h"
 #include "SdPItemSheet.h"
 #include "SdPItemPart.h"
-#include "SdContainerSheetNet.h"
+#include "SdGraphNetWire.h"
 #include "SdProject.h"
 #include "SdSection.h"
 #include "SdSelector.h"
@@ -91,7 +91,7 @@ bool SdGraphSymImp::isPinConnected(const QString pinName) const
 QString SdGraphSymImp::pinNetName(const QString pinName) const
   {
   if( mPins.contains(pinName) )
-    return mPins.value( pinName ).mWireName;
+    return mPins.value( pinName ).mNetName;
   return QString();
   }
 
@@ -298,20 +298,25 @@ void SdGraphSymImp::setIdentProp(const SdProp &prop)
 
 
 //Notification about wire segment position changed
-void SdGraphSymImp::netWirePlace(SdPoint a, SdPoint b, const QString name, SdUndo *undo)
+void SdGraphSymImp::netWirePlace(SdGraphNetWire *wire, SdUndo *undo)
   {
+  SdPoint a = wire->getA();
+  SdPoint b = wire->getB();
   for( SdSymImpPinTable::const_iterator i = mPins.constBegin(); i != mPins.constEnd(); i++ )
     if( i.value().isCanConnect( a, b ) )
       //Set new state of pin
-      pinConnectionSet( i.key(), name, undo );
+      pinConnectionSet( i.key(), wire->getNetName(), undo );
   }
 
 
 
 
 //Notification about wire segment deletion
-void SdGraphSymImp::netWireDelete(SdPoint a, SdPoint b, const QString name, SdUndo *undo)
+void SdGraphSymImp::netWireDelete(SdGraphNetWire *wire, SdUndo *undo)
   {
+  SdPoint a = wire->getA();
+  SdPoint b = wire->getB();
+  QString name = wire->getNetName();
   for( SdSymImpPinTable::const_iterator i = mPins.constBegin(); i != mPins.constEnd(); i++ )
     if( i.value().isCanDisconnect( a, b, name ) )
       //Set new state of pin
@@ -322,14 +327,16 @@ void SdGraphSymImp::netWireDelete(SdPoint a, SdPoint b, const QString name, SdUn
 
 
 //Accumulate segments connected to component
-void SdGraphSymImp::accumLinked(SdPoint a, SdPoint b, SdSelector *sel)
+void SdGraphSymImp::accumLinked(SdPoint a, SdPoint b, const QString netName, SdSelector *sel)
   {
-  //Scan all pins and check if segment ab connected to any pin then select component
-  for( SdSymImpPin &pin : mPins )
-    if( pin.isConnected() && pin.mPosition.isOnSegment(a,b) ) {
-      sel->insert( this );
-      return;
-      }
+  if( getSelector() == nullptr ) {
+    //Scan all pins and check if segment ab connected to any pin then select component
+    for( SdSymImpPin &pin : mPins )
+      if( pin.isConnected() && pin.mNetName == netName && pin.mPosition.isOnSegment(a,b) ) {
+        sel->insert( this );
+        return;
+        }
+    }
   }
 
 
@@ -397,7 +404,7 @@ void SdGraphSymImp::prepareMove(SdUndo *undo)
   SdPItemSheet *sheet = getSheet();
   if( sel && sheet ) {
     for( SdSymImpPin &pin : mPins )
-      pin.prepareMove( sheet, sel );
+      pin.prepareMove( sheet, sel, undo );
     }
   }
 
@@ -700,7 +707,7 @@ void SdGraphSymImp::pinConnectionSet( const QString pinName, const QString netNa
   //Undo previous state of pin
   undo->pinSymImpStatus( this, pinName );
   //Set symbol pin connection state
-  mPins[pinName].mWireName = netName;
+  mPins[pinName].mNetName = netName;
   //Report to part to rebuild rat net
   if( mPartImp != nullptr )
     mPartImp->setDirtyRatNet();

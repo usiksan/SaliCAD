@@ -47,6 +47,7 @@ Description
 #include <QDebug>
 #include <QScrollBar>
 #include <QtPrintSupport/QPrinter>
+#include <QTimer>
 
 
 SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
@@ -99,7 +100,9 @@ SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
       mMode = new SdModeView( this, item );
       modeActivate( mMode );
       }
+    QTimer::singleShot( 200, this, &SdWEditorGraph::cmViewFit );
     }
+
   }
 
 
@@ -222,7 +225,7 @@ void SdWEditorGraph::modeSet(SdMode *mode)
   if( mStack ) {
     //Стековый режим снести совсем
     delete mStack;
-    mStack = 0;
+    mStack = nullptr;
     }
   //Если был режим выделения - просто затереть
   if( mMode && mMode == mSelect ) mMode = mode;
@@ -253,7 +256,7 @@ void SdWEditorGraph::modeCancel()
   if( mStack ) {
     //Если был стековый режим, то снести и реанимировать текущий режим
     delete mStack;
-    mStack = 0;
+    mStack = nullptr;
     modeRestore( mMode );
     }
   else {
@@ -262,7 +265,7 @@ void SdWEditorGraph::modeCancel()
       //Если текущим был режим выделения, то активировать прежний, если он был
       if( mPrevMode ) {
         mMode = mPrevMode;
-        mPrevMode = 0;
+        mPrevMode = nullptr;
         modeActivate( mMode );
         }
       }

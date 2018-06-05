@@ -25,39 +25,18 @@ Description
 bool SdSegment::isCross(SdPoint a, SdPoint b, SdPoint *out ) const
   {
   Q_UNUSED(out)
+  //special case - orthogonal segments
   SdSegment s(a,b);
-  return !isOneSideLine( s ) && !s.isOneSideLine( *this );
-#if 0
-  QPoint dir1 = p2 - p1;
-  QPoint dir2 = b - a;
-
-  //считаем уравнения прямых проходящих через отрезки
-  double a1 = -dir1.y();
-  double b1 = +dir1.x();
-  double d1 = -(a1*p1.x() + b1*p2.y());
-
-  double a2 = -dir2.y();
-  double b2 = +dir2.x();
-  double d2 = -(a2*a.x() + b2*b.y());
-
-  //подставляем концы отрезков, для выяснения в каких полуплоскотях они
-  double seg1_line2_start = a2*p1.x() + b2*p1.y() + d2;
-  double seg1_line2_end = a2*p2.x() + b2*p2.y() + d2;
-
-  double seg2_line1_start = a1*a.x() + b1*a.y() + d1;
-  double seg2_line1_end = a1*b.x() + b1*b.y() + d1;
-
-  //если концы одного отрезка имеют один знак, значит он в одной полуплоскости и пересечения нет.
-  if( seg1_line2_start * seg1_line2_end >= 0 || seg2_line1_start * seg2_line1_end >= 0 )
-    return false;
-
-  if( out ) {
-    double u = seg1_line2_start / (seg1_line2_start - seg1_line2_end);
-    *out = p1 + u*dir1;
+  if( (isSectionX() || isSectionY()) && (s.isSectionX() || s.isSectionY()) ) {
+    if( isSectionY() )
+      //section Y
+      return qMin(a.x(),b.x()) <= p1.x() && qMax(a.x(),b.x()) >= p1.x() &&
+             qMin(a.y(),b.y()) <= qMax(p1.y(),p2.y()) && qMax(a.y(),b.y()) >= qMin(p1.y(),p2.y());
+    //section X
+    return qMin(a.y(),b.y()) <= p1.y() && qMax(a.y(),b.y()) >= p1.y() &&
+           qMin(a.x(),b.x()) <= qMax(p1.x(),p2.x()) && qMax(a.x(),b.x()) >= qMin(p1.x(),p2.x());
     }
-
-  return true;
-#endif
+  return !isOneSideLine( s ) && !s.isOneSideLine( *this );
   }
 
 
@@ -98,7 +77,7 @@ int SdSegment::vectorMultiplication(SdPoint a, SdPoint b) const
 
 
 
-void SdSegment::calcLineK(int &A, int &B, int &C) const
+void SdSegment::calcLineK(double &A, double &B, double &C) const
   {
   //Отыскать уравнение прямой
   int dx = p2.x() - p1.x();
@@ -116,10 +95,10 @@ double SdSegment::lineDistance(SdPoint p) const
   //Частный случай совпадения концов отрезка
   if( p1 == p2 ) return p1.getDistance( p );
   //Коэффициенты уравнения
-  int A, B, C;
+  double A, B, C;
   calcLineK( A, B, C );
   //Вычислить величину
-  Q_ASSERT( A != 0 || B != 0 );
+  //Q_ASSERT( A != 0 || B != 0 );
   double res = ( A * p.x() + B * p.y() + C ) / sqrt( A * A + B * B );
   return res >= 0 ? res : -res;
   }
@@ -132,12 +111,12 @@ SdPoint SdSegment::getLineNearest(SdPoint sour) const
   //Частный случай совпадения концов отрезка
   if( p1 == p2 ) return p1;
   //Коэффициенты уравнения
-  int A, B, C;
+  double A, B, C;
   calcLineK( A, B, C );
-  Q_ASSERT( A != 0 || B != 0 );
+  //Q_ASSERT( A != 0 || B != 0 );
   SdPoint p;
-  p.rx() = -A / (A*A + B*B) * (A*sour.x() + B*sour.y() + C) + sour.x();
-  p.ry() = -B / (A*A + B*B) * (A*sour.x() + B*sour.y() + C) + sour.y();
+  p.rx() = static_cast<int>(-A / (A*A + B*B) * (A*sour.x() + B*sour.y() + C) + sour.x());
+  p.ry() = static_cast<int>(-B / (A*A + B*B) * (A*sour.x() + B*sour.y() + C) + sour.y());
   return p;
   }
 
@@ -147,11 +126,11 @@ SdPoint SdSegment::getLineNearest(SdPoint sour) const
 bool SdSegment::isOneSideLine(const SdSegment &s) const
   {
   //Коэффициенты уравнения
-  int A, B, C;
+  double A, B, C;
   calcLineK( A, B, C );
   //Вычислить числа условия
-  int m1 = A * s.p1.x() + B * s.p1.y() + C;
-  int m2 = A * s.p2.x() + B * s.p2.y() + C;
+  double m1 = A * s.p1.x() + B * s.p1.y() + C;
+  double m2 = A * s.p2.x() + B * s.p2.y() + C;
   //Проверить условие
   return (m1 < 0 && m2 < 0) || (m1 > 0 && m2 > 0);
   }

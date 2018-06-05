@@ -16,7 +16,6 @@ Description
 #include "objects/SdGraphNetWire.h"
 #include "objects/SdGraphNetName.h"
 #include "objects/SdSnapInfo.h"
-#include "objects/SdContainerSheetNet.h"
 #include "windows/SdPropBarTextual.h"
 #include "windows/SdPropBarWire.h"
 #include "windows/SdWCommand.h"
@@ -153,6 +152,7 @@ void SdModeCBus::enterPoint(SdPoint enter)
       mNamePos = enter;
       //Установить панель соответствующую имени цепи
       //SetPropBar( dpWireName, 0 );
+
     case sNextNet :
       //Вводим цепь в базу данных
       enterNet();
@@ -390,15 +390,14 @@ void SdModeCBus::enterNet()
   {
   mUndo->begin( QObject::tr("Insert bus wire"), mObject );
   //Попробуем найти цепь в схеме
-  SdContainerSheetNet *net = getSheet()->netCreate( mNetList.at(mIndex), mUndo );
-  Q_ASSERT( net != nullptr );
+  QString netName = mNetList.at(mIndex);
 
   //Ввод сегментов цепи
   for( int i = 1; i < mPattern.count(); ++i )
     if( mPattern[i-1] != mPattern[i] )
-      net->insertChild( new SdGraphNetWire( mPattern[i-1], mPattern[i], sdGlobalProp->mWireProp ), mUndo );
+      getSheet()->insertChild( new SdGraphNetWire( mPattern[i-1], mPattern[i], netName, sdGlobalProp->mWireProp ), mUndo );
   //Ввод имени цепи
-  net->insertChild( new SdGraphNetName( mNamePos, sdGlobalProp->mWireNameProp ), mUndo );
+  getSheet()->insertChild( new SdGraphNetName( mNamePos, netName, sdGlobalProp->mWireNameProp ), mUndo );
   //Объявить проект как измененный
   setDirty();
   setDirtyCashe();

@@ -68,3 +68,12 @@ void SdPropString::swap(QString *src)
   src->swap( mString );
   mValue = OneValue;
   }
+
+
+
+
+void SdPropString::assignTo(QString &dst)
+  {
+  if( mValue == OneValue )
+    dst = mString;
+  }
