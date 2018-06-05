@@ -14,15 +14,13 @@ Description
 #ifndef SDGRAPHWIRINGWIRE_H
 #define SDGRAPHWIRINGWIRE_H
 
-#include "SdGraphWiring.h"
+#include "SdGraphNet.h"
 #include "SdPropLine.h"
 #include "SdPoint.h"
 
 #define SD_TYPE_WIRE "Wire"
 
-class SdContainerSheetNet;
-
-class SdGraphWiringWire : public SdGraphWiring
+class SdGraphNetWire : public SdGraphNet
   {
     SdPoint    mA,mB;       //Wire segment
     SdPropLine mProp;       //Wire drawing properties
@@ -32,24 +30,19 @@ class SdGraphWiringWire : public SdGraphWiring
     int        mDirX;
     bool       mFix;
   public:
-    SdGraphWiringWire();
-    SdGraphWiringWire( SdPoint a, SdPoint b, const SdPropLine &prp );
-
-    //Convert parent to net
-    SdContainerSheetNet*  getNet() const;
-
-    //Get wire name
-    QString               getWireName() const;
+    SdGraphNetWire();
+    SdGraphNetWire( SdPoint a, SdPoint b, const SdPropLine &prp );
 
     SdPoint getA() const { return mA; }
     SdPoint getB() const { return mB; }
     bool    getDotA() const { return mDotA; }
     bool    getDotB() const { return mDotB; }
     void    accumLinked( SdPoint a, SdPoint b, SdSelector *sel, SdUndo *undo );
-    void    unionSegments(SdGraphWiringWire *segment , SdUndo *undo);
+    void    unionSegments(SdGraphNetWire *segment , SdUndo *undo);
     bool    isPointOnSection( SdPoint p ) const { return p.isOnSegment( mA, mB ); }
     void    utilise( SdUndo *undo );
     void    setDotPoint();
+    bool    getNetOnPoint(SdPoint p, QString &destName);
   protected:
     void    calcVertexPoints( SdPoint &p1, SdPoint &p2, SdPoint gridSize );
     void    exchange();
@@ -86,10 +79,6 @@ class SdGraphWiringWire : public SdGraphWiring
     virtual int     behindCursor(SdPoint p) override;
     virtual bool    getInfo(SdPoint p, QString &info, bool extInfo) override;
     virtual bool    snapPoint(SdSnapInfo *snap) override;
-
-    // SdGraphWiring interface
-  public:
-    virtual bool getNetOnPoint(SdPoint p, QString &destName) override;
   };
 
 #endif // SDGRAPHWIRINGWIRE_H

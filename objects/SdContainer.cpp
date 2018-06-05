@@ -73,13 +73,6 @@ void SdContainer::forEach(quint64 classMask, std::function<bool (SdObject *)> fu
       //Check if object match class mask
       if( ptr->getClass() & classMask ) {
         if( !fun1(ptr) ) return;
-
-        //Check if it container and if true then down to elements of container
-        if( ptr->isContainer() ) {
-          SdContainer *down = dynamic_cast<SdContainer*>(ptr);
-          if( down )
-            down->forEach( classMask, fun1 );
-          }
         }
       }
   }

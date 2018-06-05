@@ -18,7 +18,7 @@ Description
 #include "objects/SdEnvir.h"
 #include "objects/SdProject.h"
 #include "objects/SdGraphSymImp.h"
-#include "objects/SdGraphWiringWire.h"
+#include "objects/SdGraphNetWire.h"
 #include "windows/SdPropBarWire.h"
 #include "windows/SdWCommand.h"
 #include "windows/SdDNetUnion.h"
@@ -157,7 +157,7 @@ void SdModeCWire::enterPoint( SdPoint enter )
     //Append segment
     if( testNextPoint( mPrevMove ) && mFirst != mPrevMove ) {
       mUndo->begin( QObject::tr("Insert wire segment"), mObject );
-      needCurNet()->insertChild( new SdGraphWiringWire( mFirst, mPrevMove, sdGlobalProp->mWireProp ), mUndo );
+      needCurNet()->insertChild( new SdGraphNetWire( mFirst, mPrevMove, sdGlobalProp->mWireProp ), mUndo );
       mFirst = mPrevMove;
       setDirty();
       }
@@ -204,16 +204,16 @@ void SdModeCWire::enterPrev()
   mUndo->begin( QObject::tr("Insert smart net"), mObject );
   if( getStep() ) {
     //Net end variant
-    if( mFirst != mSmA ) needCurNet()->insertChild( new SdGraphWiringWire( mFirst, mSmA, sdGlobalProp->mWireProp ), mUndo );
-    if( mSmA != mStrEnd && mSmEnd != mSmA ) needCurNet()->insertChild( new SdGraphWiringWire( mSmA, mStrEnd, sdGlobalProp->mWireProp ), mUndo );
-    if( mStrEnd != mSmEnd && mSmEnd != mSmA  ) needCurNet()->insertChild( new SdGraphWiringWire( mStrEnd, mSmEnd, sdGlobalProp->mWireProp ), mUndo );
+    if( mFirst != mSmA ) needCurNet()->insertChild( new SdGraphNetWire( mFirst, mSmA, sdGlobalProp->mWireProp ), mUndo );
+    if( mSmA != mStrEnd && mSmEnd != mSmA ) needCurNet()->insertChild( new SdGraphNetWire( mSmA, mStrEnd, sdGlobalProp->mWireProp ), mUndo );
+    if( mStrEnd != mSmEnd && mSmEnd != mSmA  ) needCurNet()->insertChild( new SdGraphNetWire( mStrEnd, mSmEnd, sdGlobalProp->mWireProp ), mUndo );
     }
   else {
     //Full routing net variant
     if( testFirstPoint( mFirst ) ) {
-      if( mFirst != mSmA ) needCurNet()->insertChild( new SdGraphWiringWire( mFirst, mSmA, sdGlobalProp->mWireProp ), mUndo );
-      if( mSmA != mStrEnd && mSmEnd != mSmA  ) needCurNet()->insertChild( new SdGraphWiringWire( mSmA, mStrEnd, sdGlobalProp->mWireProp ), mUndo );
-      if( mStrEnd != mSmEnd && mSmEnd != mSmA  ) needCurNet()->insertChild( new SdGraphWiringWire( mStrEnd, mSmEnd, sdGlobalProp->mWireProp ), mUndo );
+      if( mFirst != mSmA ) needCurNet()->insertChild( new SdGraphNetWire( mFirst, mSmA, sdGlobalProp->mWireProp ), mUndo );
+      if( mSmA != mStrEnd && mSmEnd != mSmA  ) needCurNet()->insertChild( new SdGraphNetWire( mSmA, mStrEnd, sdGlobalProp->mWireProp ), mUndo );
+      if( mStrEnd != mSmEnd && mSmEnd != mSmA  ) needCurNet()->insertChild( new SdGraphNetWire( mStrEnd, mSmEnd, sdGlobalProp->mWireProp ), mUndo );
       }
     }
   nextNet();

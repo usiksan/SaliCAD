@@ -17,7 +17,7 @@ Description
 
 class SdSelector;
 class SdPItemSheet;
-class SdGraphWiringWire;
+class SdGraphNetWire;
 
 #define SD_TYPE_SHEET_NET "SheetNet"
 
@@ -35,7 +35,7 @@ class SdContainerSheetNet : public SdContainer
     //Return sheet where in net inserted
     SdPItemSheet *getSheet() const;
     //Return nesessity of dot on net vertex
-    bool          getNeedDot( SdPoint p, SdGraphWiringWire *own );
+    bool          getNeedDot( SdPoint p, SdGraphNetWire *own );
     //Return fix point of movig segment
     SdPoint       getFixPoint( SdPoint a, SdPoint b );
 
@@ -45,7 +45,7 @@ class SdContainerSheetNet : public SdContainer
     //Segments utilising
     void          utilise();
     //Union segments
-    void          unionSegment( SdGraphWiringWire *sour, SdUndo *undo );
+    void          unionSegment( SdGraphNetWire *sour, SdUndo *undo );
     //Notification about segment position is changed
     void          netWirePlace(SdPoint a, SdPoint b , SdUndo *undo);
 

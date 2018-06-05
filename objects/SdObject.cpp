@@ -37,8 +37,8 @@ Description
 #include "SdGraphIdent.h"
 #include "SdGraphSymImp.h"
 #include "SdGraphPartImp.h"
-#include "SdGraphWiringWire.h"
-#include "SdGraphWireName.h"
+#include "SdGraphNetWire.h"
+#include "SdGraphNetName.h"
 #include "SdSection.h"
 #include "SdPartVariant.h"
 #include <QJsonValue>
@@ -265,8 +265,8 @@ SdObject *SdObject::build(QString type)
   if( type == QStringLiteral(SD_TYPE_IDENT)         ) return new SdGraphIdent();
   if( type == QStringLiteral(SD_TYPE_SYM_IMP)       ) return new SdGraphSymImp();
   if( type == QStringLiteral(SD_TYPE_PART_IMP)      ) return new SdGraphPartImp();
-  if( type == QStringLiteral(SD_TYPE_WIRE)          ) return new SdGraphWiringWire();
-  if( type == QStringLiteral(SD_TYPE_WIRE_NAME)     ) return new SdGraphWireName();
+  if( type == QStringLiteral(SD_TYPE_WIRE)          ) return new SdGraphNetWire();
+  if( type == QStringLiteral(SD_TYPE_WIRE_NAME)     ) return new SdGraphNetName();
 
   if( type == QStringLiteral(SD_TYPE_SHEET_NET)     ) return new SdContainerSheetNet();
 

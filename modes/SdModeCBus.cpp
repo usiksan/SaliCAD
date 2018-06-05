@@ -13,8 +13,8 @@ Description
 */
 #include "SdModeCBus.h"
 #include "objects/SdEnvir.h"
-#include "objects/SdGraphWiringWire.h"
-#include "objects/SdGraphWireName.h"
+#include "objects/SdGraphNetWire.h"
+#include "objects/SdGraphNetName.h"
 #include "objects/SdSnapInfo.h"
 #include "objects/SdContainerSheetNet.h"
 #include "windows/SdPropBarTextual.h"
@@ -396,9 +396,9 @@ void SdModeCBus::enterNet()
   //Ввод сегментов цепи
   for( int i = 1; i < mPattern.count(); ++i )
     if( mPattern[i-1] != mPattern[i] )
-      net->insertChild( new SdGraphWiringWire( mPattern[i-1], mPattern[i], sdGlobalProp->mWireProp ), mUndo );
+      net->insertChild( new SdGraphNetWire( mPattern[i-1], mPattern[i], sdGlobalProp->mWireProp ), mUndo );
   //Ввод имени цепи
-  net->insertChild( new SdGraphWireName( mNamePos, sdGlobalProp->mWireNameProp ), mUndo );
+  net->insertChild( new SdGraphNetName( mNamePos, sdGlobalProp->mWireNameProp ), mUndo );
   //Объявить проект как измененный
   setDirty();
   setDirtyCashe();

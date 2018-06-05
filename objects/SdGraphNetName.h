@@ -14,7 +14,7 @@ Description
 #ifndef SDGRAPHWIRENAME_H
 #define SDGRAPHWIRENAME_H
 
-#include "SdGraph.h"
+#include "SdGraphNet.h"
 #include "SdPropText.h"
 #include "SdPoint.h"
 
@@ -23,19 +23,14 @@ Description
 class SdContainerSheetNet;
 
 
-class SdGraphWireName : public SdGraph
+class SdGraphNetName : public SdGraphNet
   {
     SdPoint    mOrigin; //Place of wire name
     SdPropText mProp;   //Text properties of name
     SdRect     mOver;   //Over rect
   public:
-    SdGraphWireName();
-    SdGraphWireName( SdPoint org, const SdPropText &prp );
-
-    //Get owner net
-    SdContainerSheetNet *getNet() const;
-    //Get owner net name
-    QString              getNetName() const;
+    SdGraphNetName();
+    SdGraphNetName( SdPoint org, const SdPropText &prp );
 
     // SdObject interface
   public:

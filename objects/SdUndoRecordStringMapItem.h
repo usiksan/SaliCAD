@@ -22,12 +22,15 @@ class SdUndoRecordStringMapItem : public SdUndoRecord
     SdStringMap *mStringMap;
     QString      mKey;
     QString      mValue;
+    bool         mPresence;   //True if key was present in map
   public:
     SdUndoRecordStringMapItem( SdStringMap *map, const QString key );
 
     // SdUndoRecord interface
   public:
     virtual void undo() override;
+    virtual void redo() override;
   };
+
 
 #endif // SDUNDORECORDSTRINGMAPITEM_H

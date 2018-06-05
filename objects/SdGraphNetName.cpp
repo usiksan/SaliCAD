@@ -11,20 +11,19 @@ Web
 Description
   Net name in schematic diagram
 */
-#include "SdGraphWireName.h"
-#include "SdContainerSheetNet.h"
+#include "SdGraphNetName.h"
 #include "SdPItemSheet.h"
 #include "SdContext.h"
 #include "SdEnvir.h"
 #include "SdSelector.h"
 
-SdGraphWireName::SdGraphWireName() :
-  SdGraph()
+SdGraphNetName::SdGraphNetName() :
+  SdGraphNet()
   {
 
   }
 
-SdGraphWireName::SdGraphWireName(SdPoint org, const SdPropText &prp) :
+SdGraphNetName::SdGraphNetName(SdPoint org, const SdPropText &prp) :
   SdGraph(),
   mOrigin(org),
   mProp(prp)
@@ -34,25 +33,12 @@ SdGraphWireName::SdGraphWireName(SdPoint org, const SdPropText &prp) :
 
 
 
-SdContainerSheetNet *SdGraphWireName::getNet() const
-  {
-  return dynamic_cast<SdContainerSheetNet*>( getParent() );
-  }
 
 
-
-
-//Get owner net name
-QString SdGraphWireName::getNetName() const
-  {
-  return getNet()->getNetName();
-  }
-
-
-void SdGraphWireName::cloneFrom(const SdObject *src)
+void SdGraphNetName::cloneFrom(const SdObject *src)
   {
   SdGraph::cloneFrom( src );
-  const SdGraphWireName *wname = dynamic_cast<const SdGraphWireName*>(src);
+  const SdGraphNetName *wname = dynamic_cast<const SdGraphNetName*>(src);
   Q_ASSERT(wname != nullptr);
   mOrigin = wname->mOrigin;
   mProp   = wname->mProp;
@@ -62,7 +48,7 @@ void SdGraphWireName::cloneFrom(const SdObject *src)
 
 
 
-void SdGraphWireName::writeObject(QJsonObject &obj) const
+void SdGraphNetName::writeObject(QJsonObject &obj) const
   {
   SdGraph::writeObject(obj);
   mOrigin.write( QStringLiteral("Org"), obj );
@@ -73,7 +59,7 @@ void SdGraphWireName::writeObject(QJsonObject &obj) const
 
 
 
-void SdGraphWireName::readObject(SdObjectMap *map, const QJsonObject obj)
+void SdGraphNetName::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdGraph::readObject( map, obj );
   mOrigin.read( QStringLiteral("Org"), obj );
@@ -84,7 +70,7 @@ void SdGraphWireName::readObject(SdObjectMap *map, const QJsonObject obj)
 
 
 
-void SdGraphWireName::saveState(SdUndo *undo)
+void SdGraphNetName::saveState(SdUndo *undo)
   {
   undo->propTextAndText( &mProp, &mOrigin, &mOver, nullptr );
   }
@@ -92,7 +78,7 @@ void SdGraphWireName::saveState(SdUndo *undo)
 
 
 
-void SdGraphWireName::move(SdPoint offset)
+void SdGraphNetName::move(SdPoint offset)
   {
   mOrigin.move( offset );
   }
@@ -100,7 +86,7 @@ void SdGraphWireName::move(SdPoint offset)
 
 
 
-void SdGraphWireName::rotate(SdPoint center, SdPropAngle angle)
+void SdGraphNetName::rotate(SdPoint center, SdPropAngle angle)
   {
   mOrigin.rotate( center, angle );
   mProp.mDir += angle;
@@ -109,7 +95,7 @@ void SdGraphWireName::rotate(SdPoint center, SdPropAngle angle)
 
 
 
-void SdGraphWireName::mirror(SdPoint a, SdPoint b)
+void SdGraphNetName::mirror(SdPoint a, SdPoint b)
   {
   mOrigin.mirror( a, b );
   }
@@ -117,16 +103,17 @@ void SdGraphWireName::mirror(SdPoint a, SdPoint b)
 
 
 
-void SdGraphWireName::setProp(SdPropSelected &prop)
+void SdGraphNetName::setProp(SdPropSelected &prop)
   {
   mProp = prop.mTextProp;
+  if( prop.mWireName)
   //TODO D003 when change name of wire
   }
 
 
 
 
-void SdGraphWireName::getProp(SdPropSelected &prop)
+void SdGraphNetName::getProp(SdPropSelected &prop)
   {
   prop.mTextProp.append( mProp );
   prop.mFilledPropMask |= spsTextProp;
@@ -136,7 +123,7 @@ void SdGraphWireName::getProp(SdPropSelected &prop)
 
 
 
-void SdGraphWireName::setLayerUsage()
+void SdGraphNetName::setLayerUsage()
   {
   mProp.mLayer.setLayerUsage();
   }
@@ -146,21 +133,21 @@ void SdGraphWireName::setLayerUsage()
 
 
 
-bool SdGraphWireName::isVisible()
+bool SdGraphNetName::isVisible()
   {
   return mProp.mLayer.isVisible();
   }
 
 
 
-SdRect SdGraphWireName::getOverRect() const
+SdRect SdGraphNetName::getOverRect() const
   {
   return mOver;
   }
 
 
 
-void SdGraphWireName::draw(SdContext *dc)
+void SdGraphNetName::draw(SdContext *dc)
   {
   dc->text( mOrigin, mOver, getNetName(), mProp );
   }
@@ -169,7 +156,7 @@ void SdGraphWireName::draw(SdContext *dc)
 
 
 
-int SdGraphWireName::behindCursor(SdPoint p)
+int SdGraphNetName::behindCursor(SdPoint p)
   {
   if( mProp.mLayer.isEdited() )
     if( mOver.isPointInside(p) ) return getSelector() ? SEL_ELEM : UNSEL_ELEM;
@@ -179,7 +166,7 @@ int SdGraphWireName::behindCursor(SdPoint p)
 
 
 
-void SdGraphWireName::selectByPoint(const SdPoint p, SdSelector *selector)
+void SdGraphNetName::selectByPoint(const SdPoint p, SdSelector *selector)
   {
   if( mProp.mLayer.isEdited() && mOver.isPointInside(p) )
     selector->insert( this );
@@ -188,7 +175,7 @@ void SdGraphWireName::selectByPoint(const SdPoint p, SdSelector *selector)
 
 
 
-void SdGraphWireName::selectByRect(const SdRect &r, SdSelector *selector)
+void SdGraphNetName::selectByRect(const SdRect &r, SdSelector *selector)
   {
   if( mProp.mLayer.isEdited() && r.isAccross( mOver ) )
     selector->insert( this );

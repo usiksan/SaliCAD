@@ -11,14 +11,14 @@ Web
 Description
   One segment of wire in schematic diagram
 */
-#include "SdGraphWiringWire.h"
+#include "SdGraphNetWire.h"
 #include "SdContainerSheetNet.h"
 #include "SdPItemSheet.h"
 #include "SdContext.h"
 #include "SdEnvir.h"
 #include "SdSelector.h"
 
-SdGraphWiringWire::SdGraphWiringWire() :
+SdGraphNetWire::SdGraphNetWire() :
   SdGraphWiring(),
   mDotA(false), mDotB(false),
   mDirX(false),
@@ -27,7 +27,7 @@ SdGraphWiringWire::SdGraphWiringWire() :
 
   }
 
-SdGraphWiringWire::SdGraphWiringWire(SdPoint a, SdPoint b, const SdPropLine &prp) :
+SdGraphNetWire::SdGraphNetWire(SdPoint a, SdPoint b, const SdPropLine &prp) :
   SdGraphWiring(),
   mA(a), mB(b),
   mDotA(false), mDotB(false),
@@ -40,7 +40,7 @@ SdGraphWiringWire::SdGraphWiringWire(SdPoint a, SdPoint b, const SdPropLine &prp
 
 
 
-SdContainerSheetNet *SdGraphWiringWire::getNet() const
+SdContainerSheetNet *SdGraphNetWire::getNet() const
   {
   return dynamic_cast<SdContainerSheetNet*>( getParent() );
   }
@@ -48,7 +48,7 @@ SdContainerSheetNet *SdGraphWiringWire::getNet() const
 
 
 //Get wire name
-QString SdGraphWiringWire::getWireName() const
+QString SdGraphNetWire::getWireName() const
   {
   SdContainerSheetNet *net = getNet();
   if( net ) return net->getNetName();
@@ -58,7 +58,7 @@ QString SdGraphWiringWire::getWireName() const
 
 
 
-void SdGraphWiringWire::accumLinked(SdPoint a, SdPoint b, SdSelector *sel, SdUndo *undo)
+void SdGraphNetWire::accumLinked(SdPoint a, SdPoint b, SdSelector *sel, SdUndo *undo)
   {
   if( !getSelector() ) {
     //Yet not selected, selecting
@@ -80,7 +80,7 @@ void SdGraphWiringWire::accumLinked(SdPoint a, SdPoint b, SdSelector *sel, SdUnd
 
 
 
-void SdGraphWiringWire::unionSegments(SdGraphWiringWire *segment, SdUndo *undo )
+void SdGraphNetWire::unionSegments(SdGraphNetWire *segment, SdUndo *undo )
   {
   Q_ASSERT( segment != nullptr && getNet() != nullptr );
 //  if( !segment ) throw( CadError("DWirePic::Union: нет сегмента для объединения") );
@@ -141,7 +141,7 @@ void SdGraphWiringWire::unionSegments(SdGraphWiringWire *segment, SdUndo *undo )
 
 
 
-void SdGraphWiringWire::utilise(SdUndo *undo)
+void SdGraphNetWire::utilise(SdUndo *undo)
   {
   if( mA == mB )
     //Delete segment with zero length
@@ -159,7 +159,7 @@ void SdGraphWiringWire::utilise(SdUndo *undo)
 
 
 
-void SdGraphWiringWire::calcVertexPoints(SdPoint &p1, SdPoint &p2, SdPoint gridSize)
+void SdGraphNetWire::calcVertexPoints(SdPoint &p1, SdPoint &p2, SdPoint gridSize)
   {
   switch( mDirX ) {
     //Нет излома
@@ -192,7 +192,7 @@ void SdGraphWiringWire::calcVertexPoints(SdPoint &p1, SdPoint &p2, SdPoint gridS
 
 
 
-void SdGraphWiringWire::exchange()
+void SdGraphNetWire::exchange()
   {
   mA.swap( &mB );
   bool dot = mDotA;
@@ -203,12 +203,12 @@ void SdGraphWiringWire::exchange()
 
 
 
-void SdGraphWiringWire::fragmentation(SdPoint p, SdSelector *sel, SdUndo *undo)
+void SdGraphNetWire::fragmentation(SdPoint p, SdSelector *sel, SdUndo *undo)
   {
   //Save state
   saveState( undo );
   //Create new segment with points p and mB
-  SdGraphWiringWire *wire = new SdGraphWiringWire( p, mB, mProp );
+  SdGraphNetWire *wire = new SdGraphNetWire( p, mB, mProp );
   //Current segment cut until p
   mB = p;
   //Insert new segment into net
@@ -221,7 +221,7 @@ void SdGraphWiringWire::fragmentation(SdPoint p, SdSelector *sel, SdUndo *undo)
 
 
 
-bool SdGraphWiringWire::getNeedDot(SdPoint p)
+bool SdGraphNetWire::getNeedDot(SdPoint p)
   {
   return getNet()->getNeedDot( p, this );
   }
@@ -230,7 +230,7 @@ bool SdGraphWiringWire::getNeedDot(SdPoint p)
 
 
 
-void SdGraphWiringWire::attach(SdUndo *undo)
+void SdGraphNetWire::attach(SdUndo *undo)
   {
   getNet()->getSheet()->netWirePlace( mA, mB, getWireName(), undo );
   //Calc dots
@@ -241,17 +241,17 @@ void SdGraphWiringWire::attach(SdUndo *undo)
 
 
 
-void SdGraphWiringWire::detach(SdUndo *undo)
+void SdGraphNetWire::detach(SdUndo *undo)
   {
   getNet()->getSheet()->netWireDelete( mA, mB, getWireName(), undo );
   }
 
 
 
-void SdGraphWiringWire::cloneFrom(const SdObject *src)
+void SdGraphNetWire::cloneFrom(const SdObject *src)
   {
-  SdGraphWiring::cloneFrom( src );
-  const SdGraphWiringWire *wire = dynamic_cast<const SdGraphWiringWire*>(src);
+  SdGraphNet::cloneFrom( src );
+  const SdGraphNetWire *wire = dynamic_cast<const SdGraphNetWire*>(src);
   Q_ASSERT(wire != nullptr);
   mA    = wire->mA;
   mB    = wire->mB;       //Wire segment
@@ -262,9 +262,9 @@ void SdGraphWiringWire::cloneFrom(const SdObject *src)
 
 
 
-void SdGraphWiringWire::writeObject(QJsonObject &obj) const
+void SdGraphNetWire::writeObject(QJsonObject &obj) const
   {
-  SdGraphWiring::writeObject(obj);
+  SdGraphNet::writeObject(obj);
   mA.write( QStringLiteral("a"), obj );
   mB.write( QStringLiteral("b"), obj );        //Wire segment
   mProp.write( obj );       //Wire drawing properties
@@ -275,9 +275,9 @@ void SdGraphWiringWire::writeObject(QJsonObject &obj) const
 
 
 
-void SdGraphWiringWire::readObject(SdObjectMap *map, const QJsonObject obj)
+void SdGraphNetWire::readObject(SdObjectMap *map, const QJsonObject obj)
   {
-  SdGraphWiring::readObject( map, obj );
+  SdGraphNet::readObject( map, obj );
   mA.read( QStringLiteral("a"), obj );
   mB.read( QStringLiteral("b"), obj );        //Wire segment
   mProp.read( obj );       //Wire drawing properties
@@ -288,7 +288,7 @@ void SdGraphWiringWire::readObject(SdObjectMap *map, const QJsonObject obj)
 
 
 
-void SdGraphWiringWire::saveState(SdUndo *undo)
+void SdGraphNetWire::saveState(SdUndo *undo)
   {
   undo->wire( &mProp, &mA, &mB, &mDotA, &mDotB );
   }
@@ -296,7 +296,7 @@ void SdGraphWiringWire::saveState(SdUndo *undo)
 
 
 
-void SdGraphWiringWire::moveComplete(SdPoint grid, SdUndo *undo)
+void SdGraphNetWire::moveComplete(SdPoint grid, SdUndo *undo)
   {
 //  if( !GetNet() ) throw CadError("DWirePic::MoveComplete: нет цепи");
   //Complete moving operation
@@ -308,8 +308,8 @@ void SdGraphWiringWire::moveComplete(SdPoint grid, SdUndo *undo)
     if( mB != p2 ) {
       saveState( undo );
       mA = p2;
-      if( p3 != p1 ) getNet()->insertChild( new SdGraphWiringWire( p3, p1, mProp ), undo );
-      if( p1 != p2 ) getNet()->insertChild( new SdGraphWiringWire( p1, p2, mProp ), undo );
+      if( p3 != p1 ) getNet()->insertChild( new SdGraphNetWire( p3, p1, mProp ), undo );
+      if( p1 != p2 ) getNet()->insertChild( new SdGraphNetWire( p1, p2, mProp ), undo );
       }
     }
   //Известить о завершении перемещения
@@ -321,7 +321,7 @@ void SdGraphWiringWire::moveComplete(SdPoint grid, SdUndo *undo)
 
 
 
-void SdGraphWiringWire::move(SdPoint offset)
+void SdGraphNetWire::move(SdPoint offset)
   {
   if( !mFix ) mB.move( offset );
   mA.move( offset );
@@ -330,7 +330,7 @@ void SdGraphWiringWire::move(SdPoint offset)
 
 
 
-void SdGraphWiringWire::rotate(SdPoint center, SdPropAngle angle)
+void SdGraphNetWire::rotate(SdPoint center, SdPropAngle angle)
   {
   if( !mFix ) mB.rotate( center, angle );
   mA.rotate( center, angle );
@@ -339,7 +339,7 @@ void SdGraphWiringWire::rotate(SdPoint center, SdPropAngle angle)
 
 
 
-void SdGraphWiringWire::mirror(SdPoint a, SdPoint b)
+void SdGraphNetWire::mirror(SdPoint a, SdPoint b)
   {
   if( !mFix ) mB.mirror( a, b );
   mA.mirror( a, b );
@@ -348,7 +348,7 @@ void SdGraphWiringWire::mirror(SdPoint a, SdPoint b)
 
 
 
-void SdGraphWiringWire::setProp(SdPropSelected &prop)
+void SdGraphNetWire::setProp(SdPropSelected &prop)
   {
   mProp = prop.mWireProp;
   //TODO D002 when change name of wire
@@ -356,7 +356,7 @@ void SdGraphWiringWire::setProp(SdPropSelected &prop)
 
 
 
-void SdGraphWiringWire::getProp(SdPropSelected &prop)
+void SdGraphNetWire::getProp(SdPropSelected &prop)
   {
   prop.mWireProp.append( mProp );
   prop.mFilledPropMask |= spsWireProp;
@@ -365,7 +365,7 @@ void SdGraphWiringWire::getProp(SdPropSelected &prop)
 
 
 
-void SdGraphWiringWire::selectByPoint(const SdPoint p, SdSelector *selector)
+void SdGraphNetWire::selectByPoint(const SdPoint p, SdSelector *selector)
   {
   if( mProp.mLayer.isEdited() ) {
     if( !getSelector() ) {
@@ -403,7 +403,7 @@ void SdGraphWiringWire::selectByPoint(const SdPoint p, SdSelector *selector)
 
 
 
-void SdGraphWiringWire::selectByRect(const SdRect &r, SdSelector *selector)
+void SdGraphNetWire::selectByRect(const SdRect &r, SdSelector *selector)
   {
   if( mProp.mLayer.isEdited() ) {
     if( !getSelector() ) {
@@ -436,7 +436,7 @@ void SdGraphWiringWire::selectByRect(const SdRect &r, SdSelector *selector)
 
 
 
-void SdGraphWiringWire::select(SdSelector *selector)
+void SdGraphNetWire::select(SdSelector *selector)
   {
   mFix = false;
   if( selector != nullptr )
@@ -445,7 +445,7 @@ void SdGraphWiringWire::select(SdSelector *selector)
 
 
 
-void SdGraphWiringWire::prepareMove(SdUndo *undo)
+void SdGraphNetWire::prepareMove(SdUndo *undo)
   {
   Q_ASSERT( getNet() && getSelector() );
   //if( !GetNet() || !GetSelect() ) throw CadError("DWirePic::PrepareMove");
@@ -455,7 +455,7 @@ void SdGraphWiringWire::prepareMove(SdUndo *undo)
     SdPoint b = getNet()->getFixPoint( mA, mB );
     if( b != mB ) {
       //Break segment
-      getNet()->insertChild( new SdGraphWiringWire( b, mB, mProp ), undo );
+      getNet()->insertChild( new SdGraphNetWire( b, mB, mProp ), undo );
       saveState( undo );
       mB = b;
       }
@@ -474,7 +474,7 @@ void SdGraphWiringWire::prepareMove(SdUndo *undo)
 
 
 
-void SdGraphWiringWire::setLayerUsage()
+void SdGraphNetWire::setLayerUsage()
   {
   mProp.mLayer.setLayerUsage();
   }
@@ -484,7 +484,7 @@ void SdGraphWiringWire::setLayerUsage()
 
 
 
-bool SdGraphWiringWire::isVisible()
+bool SdGraphNetWire::isVisible()
   {
   return mProp.mLayer.isVisible();
   }
@@ -492,14 +492,14 @@ bool SdGraphWiringWire::isVisible()
 
 
 
-SdRect SdGraphWiringWire::getOverRect() const
+SdRect SdGraphNetWire::getOverRect() const
   {
   return SdRect( mA, mB );
   }
 
 
 
-void SdGraphWiringWire::draw(SdContext *dc)
+void SdGraphNetWire::draw(SdContext *dc)
   {
   SdPoint p1,p2;
   calcVertexPoints( p1, p2, dc->getGrid() );
@@ -514,7 +514,7 @@ void SdGraphWiringWire::draw(SdContext *dc)
 
 
 
-int SdGraphWiringWire::behindCursor(SdPoint p)
+int SdGraphNetWire::behindCursor(SdPoint p)
   {
   //Определить состояние объекта под курсором
   if( mProp.mLayer.isVisible() ) {
@@ -528,7 +528,7 @@ int SdGraphWiringWire::behindCursor(SdPoint p)
 
 
 
-bool SdGraphWiringWire::getInfo(SdPoint p, QString &info, bool extInfo)
+bool SdGraphNetWire::getInfo(SdPoint p, QString &info, bool extInfo)
   {
   Q_UNUSED(extInfo)
   if( behindCursor( p ) ) {
@@ -541,7 +541,7 @@ bool SdGraphWiringWire::getInfo(SdPoint p, QString &info, bool extInfo)
 
 
 
-bool SdGraphWiringWire::snapPoint(SdSnapInfo *snap)
+bool SdGraphNetWire::snapPoint(SdSnapInfo *snap)
   {
   if( snap->match( snapNearestNet ) ) {
     SdPoint dest;
@@ -553,7 +553,7 @@ bool SdGraphWiringWire::snapPoint(SdSnapInfo *snap)
 
 
 
-bool SdGraphWiringWire::getNetOnPoint(SdPoint p, QString &destName)
+bool SdGraphNetWire::getNetOnPoint(SdPoint p, QString &destName)
   {
   if( p.isOnSegment( mA, mB ) ) {
     destName = getWireName();

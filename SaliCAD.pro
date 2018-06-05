@@ -119,8 +119,6 @@ SOURCES += \
     modes/SdModeCSymImp.cpp \
     objects/SdConverterImplement.cpp \
     windows/SdPropBarSymImp.cpp \
-    objects/SdGraphWiring.cpp \
-    objects/SdGraphWiringWire.cpp \
     objects/SdContainerSheetNet.cpp \
     objects/SdUndoRecordSymImpPin.cpp \
     objects/SdGraphArea.cpp \
@@ -134,7 +132,6 @@ SOURCES += \
     windows/SdPropBarWire.cpp \
     windows/SdDNetUnion.cpp \
     objects/SdUndoRecordWire.cpp \
-    objects/SdGraphWireName.cpp \
     objects/SdStratum.cpp \
     objects/SdGraphTraced.cpp \
     objects/SdGraphTracedRoad.cpp \
@@ -184,7 +181,10 @@ SOURCES += \
     objects/SdStringMap.cpp \
     objects/SdUndoRecordStringMapItem.cpp \
     objects/SdUndoRecordStringMap.cpp \
-    windows/SdDOptionsPageEditors.cpp
+    windows/SdDOptionsPageEditors.cpp \
+    objects/SdGraphNet.cpp \
+    objects/SdGraphNetWire.cpp \
+    objects/SdGraphNetName.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -296,8 +296,6 @@ HEADERS  += \
     modes/SdModeCSymImp.h \
     objects/SdConverterImplement.h \
     windows/SdPropBarSymImp.h \
-    objects/SdGraphWiring.h \
-    objects/SdGraphWiringWire.h \
     objects/SdContainerSheetNet.h \
     objects/SdUndoRecordSymImpPin.h \
     objects/SdGraphArea.h \
@@ -311,7 +309,6 @@ HEADERS  += \
     windows/SdPropBarWire.h \
     windows/SdDNetUnion.h \
     objects/SdUndoRecordWire.h \
-    objects/SdGraphWireName.h \
     objects/SdStratum.h \
     objects/SdGraphTraced.h \
     objects/SdGraphTracedRoad.h \
@@ -362,7 +359,10 @@ HEADERS  += \
     objects/SdStringMap.h \
     objects/SdUndoRecordStringMapItem.h \
     objects/SdUndoRecordStringMap.h \
-    windows/SdDOptionsPageEditors.h
+    windows/SdDOptionsPageEditors.h \
+    objects/SdGraphNet.h \
+    objects/SdGraphNetWire.h \
+    objects/SdGraphNetName.h
 
 DISTFILES += \
     license.txt

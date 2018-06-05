@@ -20,7 +20,7 @@ Description
 
 class SdPItemPlate;
 class SdContainerSheetNet;
-class SdGraphWiringWire;
+class SdGraphNetWire;
 
 class SdPItemSheet : public SdProjectItem
   {
@@ -44,7 +44,7 @@ class SdPItemSheet : public SdProjectItem
     void                   netWireDelete( SdPoint a, SdPoint b, const QString name, SdUndo *undo );
 
     //Insert wire
-    void                   insertWire( const QString name, SdGraphWiringWire *wire, SdUndo *undo );
+    void                   insertWire( const QString name, SdGraphNetWire *wire, SdUndo *undo );
 
     //Get net name in point
     bool                   getNetFromPoint( SdPoint p, QString &dest );

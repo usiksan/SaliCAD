@@ -13,7 +13,7 @@ Description
 */
 #include "SdPItemSheet.h"
 #include "SdContainerSheetNet.h"
-#include "SdGraphWiringWire.h"
+#include "SdGraphNetWire.h"
 #include "SdGraphArea.h"
 #include "SdGraphSymImp.h"
 #include "SdGraphIdent.h"
@@ -106,7 +106,7 @@ void SdPItemSheet::netWireDelete(SdPoint a, SdPoint b, const QString name, SdUnd
 
 
 
-void SdPItemSheet::insertWire(const QString name, SdGraphWiringWire *wire, SdUndo *undo)
+void SdPItemSheet::insertWire(const QString name, SdGraphNetWire *wire, SdUndo *undo)
   {
   SdContainerSheetNet *net = netCreate( name, undo );
   Q_ASSERT( net != nullptr );
@@ -123,7 +123,7 @@ bool SdPItemSheet::getNetFromPoint(SdPoint p, QString &dest)
     Q_ASSERT( net != nullptr );
     bool on = false;
     net->forEach( dctWire, [&on,p] (SdObject *obj) -> bool {
-      SdGraphWiringWire *wire = dynamic_cast<SdGraphWiringWire*>(obj);
+      SdGraphNetWire *wire = dynamic_cast<SdGraphNetWire*>(obj);
       Q_ASSERT( wire != nullptr );
       on = wire->isPointOnSection( p );
       return !on;

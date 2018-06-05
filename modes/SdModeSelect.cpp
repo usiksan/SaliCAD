@@ -16,7 +16,7 @@ Description
 #include "objects/SdEnvir.h"
 #include "objects/SdPItemSheet.h"
 #include "objects/SdPItemPlate.h"
-#include "objects/SdGraphWiringWire.h"
+#include "objects/SdGraphNetWire.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdConverterOffset.h"
 

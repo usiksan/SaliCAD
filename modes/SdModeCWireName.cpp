@@ -13,7 +13,7 @@ Description
 */
 #include "SdModeCWireName.h"
 #include "objects/SdContainerSheetNet.h"
-#include "objects/SdGraphWireName.h"
+#include "objects/SdGraphNetName.h"
 #include "objects/SdPItemSheet.h"
 #include "objects/SdContext.h"
 #include "objects/SdEnvir.h"
@@ -106,7 +106,7 @@ void SdModeCWireName::enterPoint( SdPoint p )
   {
   if( getStep() == sPlaceName ) {
     mUndo->begin( QObject::tr("Insert sheet net name"), mObject );
-    mNet->insertChild( new SdGraphWireName( mPrev, sdGlobalProp->mWireNameProp ), mUndo );
+    mNet->insertChild( new SdGraphNetName( mPrev, sdGlobalProp->mWireNameProp ), mUndo );
     setDirty();
     setDirtyCashe();
     update();
