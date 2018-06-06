@@ -30,11 +30,11 @@ Description
 
 //Side constant
 #define dsNone           0
-#define dsComp           0x1
-#define dsSold           0x2
-#define dsBoth           0x3
-#define dsInner          0x4
-#define dsThrow          0x7
+#define dsTop            0x1
+#define dsBottom         0x2
+//#define dsBoth           0x3
+//#define dsInner          0x4
+#define dsThrow          0x3
 
 struct SdProp
   {

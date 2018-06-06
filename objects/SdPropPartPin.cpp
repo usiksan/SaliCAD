@@ -21,12 +21,18 @@ void SdPropPartPin::operator =(const SdPropPartPin &sour)
   mSide    = sour.mSide;
   }
 
+
+
+
 void SdPropPartPin::append(const SdPropPartPin &sour)
   {
   mLayer.append( sour.mLayer );
   mPinType.append( sour.mPinType );
   mSide.append( sour.mSide );
   }
+
+
+
 
 void SdPropPartPin::clear()
   {
@@ -35,10 +41,16 @@ void SdPropPartPin::clear()
   mSide.clear();
   }
 
+
+
+
 bool SdPropPartPin::match(const SdPropPartPin &prop)
   {
   return mLayer.match(prop.mLayer) && mPinType.match(prop.mPinType) && mSide.match(prop.mSide);
   }
+
+
+
 
 void SdPropPartPin::write(QJsonObject &obj) const
   {
@@ -47,6 +59,9 @@ void SdPropPartPin::write(QJsonObject &obj) const
   mSide.write( QStringLiteral("PartPinSide"), obj );
   }
 
+
+
+
 void SdPropPartPin::read(const QJsonObject obj)
   {
   mLayer.read( QStringLiteral("PartPinLayer"), obj );
@@ -54,12 +69,18 @@ void SdPropPartPin::read(const QJsonObject obj)
   mSide.read( QStringLiteral("PartPinSide"), obj );
   }
 
+
+
+
 void SdPropPartPin::saveState(SdPropPartPinState *dst)
   {
-  dst->mLayer = mLayer.layer();
+  dst->mLayer   = mLayer.layer();
   dst->mPinType = mPinType.str();
   dst->mSide    = mSide.getValue();
   }
+
+
+
 
 void SdPropPartPin::swapState(SdPropPartPinState *src)
   {

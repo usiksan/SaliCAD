@@ -19,12 +19,11 @@ Description
 
 class SdModeCLinearArc : public SdModeCLinear
   {
-    SdPoint mCenter;
-    SdPoint mStart;
-    //SdPoint mPrevPoint;
+    SdPoint    mCenter;      //Arc center
+    SdPoint    mStart;       //Arc start point
 
-    SdPoint mSmartPoint;  //Точка разумного ввода
-    int     mSmartType;   //Тип разумной точки
+    SdPoint    mSmartPoint;  //Smart mode point [Точка разумного ввода]
+    SdSnapMask mSmartType;   //Smart point type [Тип разумной точки]
 
     static SdPoint mStartOffset, mStopOffset;
     enum { sCenter, sStart, sStop, sLast };

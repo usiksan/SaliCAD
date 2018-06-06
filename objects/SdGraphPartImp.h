@@ -42,7 +42,7 @@ struct SdPartImpPin {
   SdPartImpPin();
 
   void        operator = ( const SdPartImpPin &pin );
-  void        draw( SdContext *dc ) const;
+  void        draw(SdContext *dc , SdPItemPlate *plate) const;
   bool        isConnected() const;
   QString     getNetName() const;
 
@@ -87,7 +87,7 @@ class SdGraphPartImp : public SdGraphTraced
     SdPartImpPinTable      mPins;
     SdPartImpSectionTable  mSections;
     SdPItemPart           *mPart;        //Part for this implementation
-    SdPItemComponent         *mComponent;   //Component with pack info
+    SdPItemComponent      *mComponent;   //Component with pack info
   public:
     SdGraphPartImp();
     SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemComponent *comp );

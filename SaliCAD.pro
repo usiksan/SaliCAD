@@ -183,7 +183,9 @@ SOURCES += \
     objects/SdGraphNetWire.cpp \
     objects/SdGraphNetName.cpp \
     modes/SdModeCNetWire.cpp \
-    modes/SdModeCNetName.cpp
+    modes/SdModeCNetName.cpp \
+    objects/SdPad.cpp \
+    modes/SdModeCLinearCircle.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -360,7 +362,9 @@ HEADERS  += \
     objects/SdGraphNetWire.h \
     objects/SdGraphNetName.h \
     modes/SdModeCNetWire.h \
-    modes/SdModeCNetName.h
+    modes/SdModeCNetName.h \
+    objects/SdPad.h \
+    modes/SdModeCLinearCircle.h
 
 DISTFILES += \
     license.txt

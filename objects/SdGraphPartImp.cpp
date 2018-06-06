@@ -52,9 +52,17 @@ void SdPartImpPin::operator =(const SdPartImpPin &pin)
 
 
 
-void SdPartImpPin::draw(SdContext *dc) const
+void SdPartImpPin::draw(SdContext *dc, SdPItemPlate *plate) const
   {
+  //Draw standard pin (pin connection point, pin number and pin name)
   mPin->drawImp( dc, mPinName, isConnected() );
+  //Draw pin pad
+  SdPItemPart *pad = plate->getPad( mPin->getPinType() );
+  if( pad != nullptr ) {
+    //Convertor for symbol implementation
+    SdConverterImplement imp( mPosition, pad->getOrigin(), 0, false, false );
+    dc->setConverter( &imp );
+    }
   }
 
 
@@ -530,7 +538,7 @@ void SdGraphPartImp::draw(SdContext *dc)
 
   //Draw pins
   for( const SdPartImpPin &pin : mPins )
-    pin.draw( dc );
+    pin.draw( dc, getPlate() );
   }
 
 

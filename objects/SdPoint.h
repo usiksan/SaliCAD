@@ -53,6 +53,7 @@ class SdPoint : public QPoint
     SdPropAngle getAngle( SdPoint center = SdPoint() ) const; //Угол поворота до точки относительно центра
     double  getAngleDegree(SdPoint center) const;
     double  getDistance( SdPoint p ) const;
+    int     getDistanceInt( SdPoint p ) const { return static_cast<int>(getDistance(p)); }
     double  getQrtDistance( SdPoint p ) const;
     CLS     classify( SdPoint p0, SdPoint p1 ) const;
     double  getLenght() const;
@@ -84,7 +85,7 @@ SdPoint calcArcStop( SdPoint center, SdPoint start, SdPoint sector );
 bool    calcFreeNearIntersect( SdPoint sour, SdPoint a, SdPoint b, SdPoint &dest );
 SdPropAngle calcDirection90( SdPoint sour, SdPoint dest );
 int     sred( int a, int b, int gridSize );
-bool    isSegmentYAccross( int y, int x1, int x2, SdPoint p1, SdPoint p2, bool inside, int *result = 0 );
+bool    isSegmentYAccross( int y, int x1, int x2, SdPoint p1, SdPoint p2, bool inside, int *result = nullptr );
 bool    isSegmentYAccrossA( int y, int x1, int x2, SdPoint p1, SdPoint p2, bool inside );
 
 

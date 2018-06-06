@@ -51,11 +51,11 @@ SdGraphPartPin::SdGraphPartPin(SdPoint org, SdPoint numberPos, SdPoint namePos, 
 
 SdStratum SdGraphPartPin::getPinStratum(bool otherSide) const
   {
-  if( mPinProp.mSide.getValue() == dsComp ) {
+  if( mPinProp.mSide.getValue() == dsTop ) {
     if( otherSide ) return SdStratum(stmBottom);
     return SdStratum(stmTop);
     }
-  if( mPinProp.mSide.getValue() == dsSold ) {
+  if( mPinProp.mSide.getValue() == dsBottom ) {
     if( otherSide ) return SdStratum(stmTop);
     return SdStratum(stmBottom);
     }
@@ -159,7 +159,7 @@ void SdGraphPartPin::saveState(SdUndo *undo)
   {
   undo->propPartPin( &mPinProp, &mOrigin );
   undo->propTextAndText( &mNumberProp, &mNumberPos, &mNumberRect, &mNumber );
-  undo->propTextAndText( &mNameProp, &mNamePos, &mNameRect, 0 );
+  undo->propTextAndText( &mNameProp, &mNamePos, &mNameRect, nullptr );
   }
 
 

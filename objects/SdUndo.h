@@ -43,7 +43,7 @@ class SdGraphPartImp;
 class SdProjectItem;
 struct SdSymImpPin;
 typedef QMap<QString,SdSymImpPin> SdSymImpPinTable;
-class SdPartImpPin;
+struct SdPartImpPin;
 typedef QMap<QString,SdPartImpPin> SdPartImpPinTable;
 
 class SdUndo

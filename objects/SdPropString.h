@@ -29,12 +29,12 @@ class SdPropString
     SdPropString( QString src );
 
     bool       operator == ( SdPropString p ) const { return mValue == OneValue && mString.compare( p.mString ) == 0; }
-    void       operator = ( SdPropString p ) { if( p.mValue == OneValue ) mString = p.mString; }
+    void       operator = ( SdPropString p ) { if( p.mValue == OneValue ) { mString = p.mString; mValue = OneValue; } }
     void       operator = ( const QString src ) { mString = src; mValue = OneValue; }
-    QString    str() const { return mString; }
+    QString    str() const { return mValue == OneValue ? mString : QString(); }
     void       append( SdPropString p );
     void       append( const QString str );
-    void       clear() { mValue = NoValue; }   //Нет значения
+    void       clear() { mValue = NoValue; mString.clear(); }   //Нет значения
     bool       match( SdPropString const &s ) {
       return s.mValue == OneValue && mValue == OneValue ? mString.compare( s.mString ) == 0 : true;
       }

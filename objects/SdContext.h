@@ -96,7 +96,7 @@ class SdContext {
     void            circle( SdPoint center, int radius, const SdPropLine &prop );
     void            circleFill( SdPoint center, int radius );
     void            circleFill( SdPoint center, int radius, const SdPropLine &prop );
-    void            textEx(SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert, int cursor = 0, SdPoint *cp1 = 0, SdPoint *cp2 = 0, SdRect *sel = 0, int start = 0, int stop = 0);
+    void            textEx(SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert, int cursor = 0, SdPoint *cp1 = nullptr, SdPoint *cp2 = nullptr, SdRect *sel = nullptr, int start = 0, int stop = 0);
     void            text( SdPoint pos, SdRect &over, const QString str, const SdPropText &prop );
     void            region( const SdPointList &points, bool autoClose = true );
     void            region( const SdPointList &points, const SdPropLine &prop, bool autoClose = true );
@@ -104,7 +104,7 @@ class SdContext {
     //virtual void TextBox( DTextProp &prop, int charNum );
 
     //Примитивы второго уровня
-    void            smartPoint( SdPoint a, int smartMask = snapCommon );      //Отобразить точку привязки
+    void            smartPoint(SdPoint a, SdSnapMask smartMask = snapCommon );      //Отобразить точку привязки
     void            symPin( SdPoint a, SdLayer *layer );                      //Symbol pin cross
     void            partPin( SdPoint a, SdLayer *layer );                     //Part pin circle
     void            cross( SdPoint a, int size, QColor color );               //Draw cross

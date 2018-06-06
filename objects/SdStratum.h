@@ -17,9 +17,9 @@ Description
 #include "SdConfig.h"
 #include <QJsonObject>
 
-#define stmTop      0x000000000000001l
-#define stmBottom   0x800000000000000l
-#define stmThrow    0xfffffffffffffffl
+#define stmTop      0x000000000000001ul
+#define stmBottom   0x800000000000000ul
+#define stmThrow    0xffffffffffffffful
 
 class SdStratum
   {

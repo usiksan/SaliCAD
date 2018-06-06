@@ -36,6 +36,7 @@ Description
 #include "modes/SdModeCLinearRect.h"
 #include "modes/SdModeCLinearRectFilled.h"
 #include "modes/SdModeCLinearRegion.h"
+#include "modes/SdModeCLinearCircle.h"
 #include "modes/SdModeCText.h"
 #include "modes/SdModeSelect.h"
 #include "modes/SdModePrintWindow.h"
@@ -374,6 +375,14 @@ void SdWEditorGraph::cmModeFilledRect()
 void SdWEditorGraph::cmModeRegion()
   {
   modeSet( new SdModeCLinearRegion( this, getProjectItem() )  );
+  }
+
+
+
+
+void SdWEditorGraph::cmModeCircle()
+  {
+  modeSet( new SdModeCLinearCircle( this, getProjectItem() )  );
   }
 
 

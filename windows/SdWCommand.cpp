@@ -201,7 +201,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   // cmModePack       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeLineSize   = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeRadiusSize = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  cmModeTable[MD_MOVE_PART] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrtPlace.png")), frame->tr("Move part"), frame, SLOT(cmModeMovePart) );
+  cmModeTable[MD_MOVE_PART] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrtPlace.png")), frame->tr("Move part"), frame, SLOT(cmModeMovePart()) );
   //  cmModePlace      = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeEditWire   = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeWire       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );

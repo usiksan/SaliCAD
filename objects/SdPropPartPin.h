@@ -32,7 +32,7 @@ struct SdPropPartPin
     SdPropInt    mSide;    //Side of pin location
     SdPropString mPinType; //Pin type for pad assotiation
 
-    SdPropPartPin() : mLayer(0), mSide(0), mPinType() {}
+    SdPropPartPin() : mLayer(nullptr), mSide(0), mPinType() {}
 
     void operator = ( SdPropPartPin const &sour ); //Назначить свойства
     void append( SdPropPartPin const &sour );      //Установить свойства

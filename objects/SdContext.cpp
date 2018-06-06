@@ -345,7 +345,7 @@ void SdContext::region( const SdPointList &points, const SdPropLine &prop, bool 
 
 
 
-void SdContext::smartPoint(SdPoint a, int smartMask)
+void SdContext::smartPoint(SdPoint a, SdSnapMask smartMask)
   {
   if( smartMask ) {
     //Рисовать точку
