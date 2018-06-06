@@ -100,6 +100,12 @@ void SdRect::rotate(SdPoint origin, SdPropAngle angle)
   set( p1, p2 );
   }
 
+bool SdRect::isPointInside(const SdPoint point) const
+  {
+  return getTop() >= point.y() && getBottom() <= point.y() &&
+         getLeft() <= point.x() && getRight() >= point.x();
+  }
+
 
 
 

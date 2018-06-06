@@ -194,6 +194,11 @@ void SdUndo::point(SdPoint *src)
 
 void SdUndo::begin(QString title, SdProjectItem *item)
   {
+  if( mUndo.count() && mUndo.top()->isStep() ) {
+    //Previous record is empty. Remove it
+    delete mUndo.pop();
+    mUndoCount--;
+    }
   addUndo( new SdUndoRecordBegin(title, item) );
   }
 

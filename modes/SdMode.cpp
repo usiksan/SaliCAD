@@ -25,7 +25,7 @@ SdMode::SdMode(SdWEditorGraph *editor, SdProjectItem *obj) :
   mStep(0),
   mObject(obj),
   mEditor(editor),
-  mUndo(0)
+  mUndo(nullptr)
   {
   if( obj ) {
     mUndo = obj->getUndo();

@@ -40,7 +40,7 @@ void SdModeCNetWire::drawStatic(SdContext *ctx)
   mObject->forEach( dctAll, [this,ctx] (SdObject *obj) -> bool {
     SdGraphNet *net = dynamic_cast<SdGraphNet*>( obj );
     if( net != nullptr ) {
-      if( net->getNetName() != mNetName )
+      if( !mShowNet || net->getNetName() != mNetName )
         net->draw( ctx );
       }
     else {
@@ -52,7 +52,7 @@ void SdModeCNetWire::drawStatic(SdContext *ctx)
     });
 
   //Draw if net present
-  if( !mNetName.isEmpty() ) {
+  if( !mNetName.isEmpty() && mShowNet ) {
     ctx->setOverColor( sdEnvir->getSysColor(scEnter) );
     mObject->forEach( dctNetWire | dctNetName, [this,ctx] (SdObject *obj) -> bool {
       SdGraphNet *net = dynamic_cast<SdGraphNet*>( obj );
@@ -156,6 +156,7 @@ void SdModeCNetWire::enterPoint( SdPoint enter )
     mPrevMove = calcMiddlePoint( mFirst, enter, sdGlobalProp->mWireEnterType );
     if( mPrevMove == mFirst ) mPrevMove = enter;
     mShowNet = false;
+    setDirtyCashe();
     //Append segment
     if( testNextPoint( mPrevMove ) && mFirst != mPrevMove ) {
       mUndo->begin( QObject::tr("Insert wire segment"), mObject );
@@ -327,6 +328,7 @@ bool SdModeCNetWire::testFirstPoint(SdPoint p)
     }
   propSetToBar();
   mShowNet = getSheet()->isNetPresent( mNetName );
+  setDirtyCashe();
   return true;
   }
 
@@ -352,6 +354,7 @@ bool SdModeCNetWire::testNextPoint(SdPoint p)
       }
     else return false;
     mShowNet = getSheet()->isNetPresent( mNetName );
+    setDirtyCashe();
     }
   propSetToBar();
   return true;
@@ -487,6 +490,7 @@ void SdModeCNetWire::nextNet()
   mNetName = getSheet()->getProject()->getUnusedNetName();
   propSetToBar();
   mShowNet = false;
+  setDirtyCashe();
   }
 
 

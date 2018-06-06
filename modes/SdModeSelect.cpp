@@ -1135,6 +1135,19 @@ void SdModeSelect::activateMenu()
 
 
 
+void SdModeSelect::moveComplete()
+  {
+  mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+    if( graph != nullptr )
+      graph->moveComplete( mEditor->gridGet(), mUndo );
+    return true;
+    });
+  }
+
+
+
+
 
 void SdModeSelect::keyDown(int key, QChar ch)
   {
@@ -1254,14 +1267,8 @@ void SdModeSelect::unselect(bool update)
   {
   if( mFragment.count() ) {
 
-    mUndo->begin( QObject::tr("Finish selection"), mObject );
-
-    mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
-      SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-      if( graph != nullptr )
-        graph->moveComplete( mEditor->gridGet(), mUndo );
-      return true;
-      });
+    //mUndo->begin( QObject::tr("Finish selection"), mObject );
+    moveComplete();
 
     mFragment.removeAll();
 
@@ -1384,19 +1391,19 @@ void SdModeSelect::beginMove(SdPoint p)
   if( mFragment.count() ) {
     mUndo->begin( QObject::tr("Move begin"), mObject );
 
-    //Save state of all object before moving
-    mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
-      SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-      if( graph != nullptr )
-        graph->saveState( mUndo );
-      return true;
-      });
-
     //Moving prepare
     mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
       SdGraph *graph = dynamic_cast<SdGraph*>(obj);
       if( graph != nullptr )
         graph->prepareMove( mUndo );
+      return true;
+      });
+
+    //Save state of all object before moving
+    mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
+      SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+      if( graph != nullptr )
+        graph->saveState( mUndo );
       return true;
       });
 
@@ -1432,6 +1439,7 @@ void SdModeSelect::dragMove(SdPoint p)
 void SdModeSelect::stopMove(SdPoint p)
   {
   dragMove(p);
+  moveComplete();
   setStep(smSelPresent);
   }
 

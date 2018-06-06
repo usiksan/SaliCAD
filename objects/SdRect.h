@@ -53,7 +53,7 @@ class SdRect : public QRect
     void        mirror( SdPoint origin );
     void        rotate( SdPoint origin, SdPropAngle angle );
 
-    bool        isPointInside( const SdPoint point ) const { return contains( point ); }
+    bool        isPointInside( const SdPoint point ) const;
     bool        isRectInside( const SdRect &r ) const { return contains( r ); }
     bool        isCircleInside( SdCircle circle ) const;
     bool        isAccross(const SdPoint p1, const SdPoint p2 ) const;

@@ -382,7 +382,7 @@ void SdGraphNetWire::mirror(SdPoint a, SdPoint b)
 
 
 
-
+//Set new properties to wire
 void SdGraphNetWire::setProp(SdPropSelected &prop)
   {
   mProp = prop.mWireProp;
@@ -391,6 +391,7 @@ void SdGraphNetWire::setProp(SdPropSelected &prop)
 
 
 
+//Get properties from wire
 void SdGraphNetWire::getProp(SdPropSelected &prop)
   {
   prop.mWireProp.append( mProp );

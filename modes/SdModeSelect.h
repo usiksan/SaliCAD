@@ -102,7 +102,7 @@ class SdModeSelect : public SdMode
     void        showRect( SdContext *ctx );
     void        insertCopy( SdPoint offset, bool next );//Вставить копии объектов
     void        activateMenu();
-
+    void        moveComplete();
   };
 
 #if 0

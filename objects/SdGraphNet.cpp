@@ -65,16 +65,18 @@ void SdGraphNet::readObject(SdObjectMap *map, const QJsonObject obj)
 
 
 
+//Set new properties to net
 void SdGraphNet::setProp(SdPropSelected &prop)
   {
-  prop.mWireName.append( mNetName );
+  prop.mWireName.assignTo( mNetName );
   }
 
 
 
+//Get properties from net
 void SdGraphNet::getProp(SdPropSelected &prop)
   {
-  prop.mWireName.assignTo( mNetName );
+  prop.mWireName.append( mNetName );
   }
 
 
