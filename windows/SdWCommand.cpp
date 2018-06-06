@@ -20,6 +20,7 @@ Description
 #include "SdPropBarPartPin.h"
 #include "SdPropBarSymImp.h"
 #include "SdPropBarWire.h"
+#include "objects/SdEnvir.h"
 #include <QMenuBar>
 #include <QSettings>
 #include <QFileInfo>
@@ -139,20 +140,20 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
 
-  menuInsertSymbol = new QMenu( frame->tr("Insert") );
+  menuInsertSymbol = new QMenu( frame->tr("Symbol") );
 
-  cmModeTable[MD_SYM_PIN]       = menuInsertSymbol->addAction( QIcon(QString(":/pic/objPin.png")), frame->tr("Pin"), frame, SLOT(cmModePin()) );
-  cmModeTable[MD_SYM_IDENT]     = menuInsertSymbol->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Reference"), frame, SLOT(cmModeReference()) );
-  cmModeTable[MD_SYM_ORIGIN]    = menuInsertSymbol->addAction( QIcon(QString(":/pic/objOrigin.png")), frame->tr("Origin"), frame, SLOT(cmModeOrigin()) );
-
-
+  cmModeTable[MD_SYM_PIN]       = menuInsertSymbol->addAction( QIcon(QString(":/pic/objPin.png")), frame->tr("Insert pin"), frame, SLOT(cmModePin()) );
+  cmModeTable[MD_SYM_IDENT]     = menuInsertSymbol->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Edit reference"), frame, SLOT(cmModeReference()) );
+  cmModeTable[MD_SYM_ORIGIN]    = menuInsertSymbol->addAction( QIcon(QString(":/pic/objOrigin.png")), frame->tr("Edit origin"), frame, SLOT(cmModeOrigin()) );
 
 
-  menuInsertPart = new QMenu( frame->tr("Insert") );
 
-  cmModeTable[MD_PART_PIN]       = menuInsertPart->addAction( QIcon(QString(":/pic/objPrtPin.png")), frame->tr("Pin"), frame, SLOT(cmModePin()) );
-  cmModeTable[MD_PART_IDENT]     = menuInsertPart->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Reference"), frame, SLOT(cmModeReference()) );
-  cmModeTable[MD_PART_ORIGIN]    = menuInsertPart->addAction( QIcon(QString(":/pic/objOrigin.png")), frame->tr("Origin"), frame, SLOT(cmModeOrigin()) );
+
+  menuInsertPart = new QMenu( frame->tr("Part") );
+
+  cmModeTable[MD_PART_PIN]       = menuInsertPart->addAction( QIcon(QString(":/pic/objPrtPin.png")), frame->tr("Insert pin"), frame, SLOT(cmModePin()) );
+  cmModeTable[MD_PART_IDENT]     = menuInsertPart->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Edit reference"), frame, SLOT(cmModeReference()) );
+  cmModeTable[MD_PART_ORIGIN]    = menuInsertPart->addAction( QIcon(QString(":/pic/objOrigin.png")), frame->tr("Edit origin"), frame, SLOT(cmModeOrigin()) );
 
 
 
@@ -173,11 +174,11 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
 
-  menuInsertSheet = new QMenu( frame->tr("Insert") );
-  cmModeTable[MD_COMPONENT]  = menuInsertSheet->addAction( QIcon(QString(":/pic/objComp.png")), frame->tr("Component"), frame, SLOT(cmModeComponent()) );
-  cmModeTable[MD_NET]        = menuInsertSheet->addAction( QIcon(QString(":/pic/objWire.png")), frame->tr("Net"), frame, SLOT(cmModeNet()) );
-  cmModeTable[MD_NET_NAME]   = menuInsertSheet->addAction( QIcon(QString(":/pic/objWireName.png")), frame->tr("Net name"), frame, SLOT(cmModeNetName()) );
-  cmModeTable[MD_BUS]        = menuInsertSheet->addAction( QIcon(QString(":/pic/objBus.png")), frame->tr("Bus (many net)"), frame, SLOT(cmModeBus()) );
+  menuInsertSheet = new QMenu( frame->tr("Sheet") );
+  cmModeTable[MD_COMPONENT]  = menuInsertSheet->addAction( QIcon(QString(":/pic/objComp.png")), frame->tr("Insert component"), frame, SLOT(cmModeComponent()) );
+  cmModeTable[MD_NET]        = menuInsertSheet->addAction( QIcon(QString(":/pic/objWire.png")), frame->tr("Insert net wire"), frame, SLOT(cmModeNet()) );
+  cmModeTable[MD_NET_NAME]   = menuInsertSheet->addAction( QIcon(QString(":/pic/objWireName.png")), frame->tr("Insert net name"), frame, SLOT(cmModeNetName()) );
+  cmModeTable[MD_BUS]        = menuInsertSheet->addAction( QIcon(QString(":/pic/objBus.png")), frame->tr("Insert bus (many net)"), frame, SLOT(cmModeBus()) );
   cmModeTable[MD_DISCONNECT] = menuInsertSheet->addAction( QIcon(QString(":/pic/objUnConnect.png")), frame->tr("Disconnect net"), frame, SLOT(cmModeDisconnect()) );
   //cmModeTable[MD_PCB_AREA]   = menuInsertSheet->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
 //  cmModeTable[MD_FIELD]      = menuInsertSheet->addAction( QIcon(QString(":/pic/objField.png")), frame->tr("Field"), frame, SLOT(cmModeF) );
@@ -185,17 +186,22 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
 
-  menuInsertPcb = new QMenu( frame->tr("Insert") );
+  menuInsertPcb = new QMenu( frame->tr("Plate") );
+  cmShowRatNet = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/viewRatnet.png")), frame->tr("Show rat net") ); //, frame, SLOT(cmShowRatNet) );
+  cmShowRatNet->setCheckable(true);
+  cmShowRatNet->setChecked( sdEnvir->mShowRatNet );
+  cmShowRatNet->connect( cmShowRatNet, &QAction::toggled, frame, &SdWMain::cmShowRatNet );
+  //cmShowRatNet->co
 //  cmNetSetup       = menuInsertPcb->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
 //  cmPads           = menuInsertPcb->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
 //  menuInsertPcb->addSeparator();
   //  cmModeLink       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeNetName    = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeNetList    = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmModePack       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
+  // cmModePack       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeLineSize   = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeRadiusSize = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmModeMovePart   = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
+  cmModeTable[MD_MOVE_PART] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrtPlace.png")), frame->tr("Move part"), frame, SLOT(cmModeMovePart) );
   //  cmModePlace      = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeEditWire   = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeWire       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
@@ -266,7 +272,7 @@ void SdWCommand::updatePreviousMenu()
   QSettings settings;
   QStringList files = settings.value(SDK_PREVIOUS_FILES).toStringList();
 
-  int numRecentFiles = qMin(files.size(), (int)PREVIOUS_FILES_COUNT );
+  int numRecentFiles = qMin(files.size(), static_cast<int>(PREVIOUS_FILES_COUNT) );
 
   for (int i = 0; i < numRecentFiles; ++i)
     {
@@ -335,11 +341,11 @@ void SdWCommand::projectState(bool enable)
 
 void SdWCommand::addEditCommands(QToolBar *bar)
   {
-  bar->insertAction( 0, cmEditCopy );
-  bar->insertAction( 0, cmEditCut );
-  bar->insertAction( 0, cmEditPaste );
-  bar->insertAction( 0, cmEditDelete );
-  bar->insertAction( 0, cmEditProperties );
+  bar->insertAction( nullptr, cmEditCopy );
+  bar->insertAction( nullptr, cmEditCut );
+  bar->insertAction( nullptr, cmEditPaste );
+  bar->insertAction( nullptr, cmEditDelete );
+  bar->insertAction( nullptr, cmEditProperties );
   }
 
 
@@ -348,30 +354,30 @@ void SdWCommand::addEditCommands(QToolBar *bar)
 void SdWCommand::addViewCommands(QToolBar *bar)
   {
   bar->addSeparator();
-  bar->insertAction( 0, cmViewGrid );
+  bar->insertAction( nullptr, cmViewGrid );
 //  bar->addSeparator();
-  bar->insertAction( 0, cmViewFill );
-  bar->insertAction( 0, cmModeTable[MD_ZOOM_IN] );
-  bar->insertAction( 0, cmModeTable[MD_ZOOM_OUT] );
-  bar->insertAction( 0, cmModeTable[MD_ZOOM_WIN] );
-  bar->insertAction( 0, cmModeTable[MD_MEASUREMENT] );
+  bar->insertAction( nullptr, cmViewFill );
+  bar->insertAction( nullptr, cmModeTable[MD_ZOOM_IN] );
+  bar->insertAction( nullptr, cmModeTable[MD_ZOOM_OUT] );
+  bar->insertAction( nullptr, cmModeTable[MD_ZOOM_WIN] );
+  bar->insertAction( nullptr, cmModeTable[MD_MEASUREMENT] );
   }
 
 void SdWCommand::addDrawCommands(QToolBar *bar)
   {
   bar->addSeparator();
-  bar->insertAction( 0, cmModeTable[MD_SELECT] );
+  bar->insertAction( nullptr, cmModeTable[MD_SELECT] );
 //  bar->addSeparator();
-  bar->insertAction( 0, cmModeTable[MD_LINE] );
-  bar->insertAction( 0, cmModeTable[MD_RECT] );
-  bar->insertAction( 0, cmModeTable[MD_FILL_RECT] );
-  bar->insertAction( 0, cmModeTable[MD_REGION] );
-  bar->insertAction( 0, cmModeTable[MD_FILL_REGION] );
-  bar->insertAction( 0, cmModeTable[MD_CIRCLE] );
-  bar->insertAction( 0, cmModeTable[MD_FILL_CIRCLE] );
-  bar->insertAction( 0, cmModeTable[MD_ARC] );
-  bar->insertAction( 0, cmModeTable[MD_TEXT] );
-  //bar->insertAction( 0, cmModeTable[MD_FIELD] );
+  bar->insertAction( nullptr, cmModeTable[MD_LINE] );
+  bar->insertAction( nullptr, cmModeTable[MD_RECT] );
+  bar->insertAction( nullptr, cmModeTable[MD_FILL_RECT] );
+  bar->insertAction( nullptr, cmModeTable[MD_REGION] );
+  bar->insertAction( nullptr, cmModeTable[MD_FILL_REGION] );
+  bar->insertAction( nullptr, cmModeTable[MD_CIRCLE] );
+  bar->insertAction( nullptr, cmModeTable[MD_FILL_CIRCLE] );
+  bar->insertAction( nullptr, cmModeTable[MD_ARC] );
+  bar->insertAction( nullptr, cmModeTable[MD_TEXT] );
+  //bar->insertAction( nullptr, cmModeTable[MD_FIELD] );
   bar->addSeparator();
   }
 
@@ -393,7 +399,7 @@ QToolBar *SdWCommand::getModeBar(int barId)
   {
   if( barId >= 0 && barId < PB_LAST )
     return mbarTable[barId];
-  return 0;
+  return nullptr;
   }
 
 
@@ -402,16 +408,16 @@ void SdWCommand::createToolBars(SdWMain *frame)
   {
   //Main bar
   barMain = new QToolBar( QString("Main") );
-  barMain->insertAction( 0, cmFileNew );
-  barMain->insertAction( 0, cmFileOpen );
-  barMain->insertAction( 0, cmFileSave );
-  barMain->insertAction( 0, cmFilePrint );
+  barMain->insertAction( nullptr, cmFileNew );
+  barMain->insertAction( nullptr, cmFileOpen );
+  barMain->insertAction( nullptr, cmFileSave );
+  barMain->insertAction( nullptr, cmFilePrint );
   barMain->addSeparator();
-  barMain->insertAction( 0, cmObjectNew );
-  barMain->insertAction( 0, cmObjectEditEnable );
-  barMain->insertAction( 0, cmObjectEditDisable );
-  barMain->insertAction( 0, cmEditUndo );
-  barMain->insertAction( 0, cmEditRedo );
+  barMain->insertAction( nullptr, cmObjectNew );
+  barMain->insertAction( nullptr, cmObjectEditEnable );
+  barMain->insertAction( nullptr, cmObjectEditDisable );
+  barMain->insertAction( nullptr, cmEditUndo );
+  barMain->insertAction( nullptr, cmEditRedo );
 
   frame->addToolBar( barMain );
   //barMain->setIconSize( QSize(20,24) );
@@ -423,9 +429,9 @@ void SdWCommand::createToolBars(SdWMain *frame)
   addEditCommands( barSymbol );
   addViewCommands( barSymbol );
   addDrawCommands( barSymbol );
-  barSymbol->insertAction( 0, cmModeTable[MD_SYM_PIN] );
-  barSymbol->insertAction( 0, cmModeTable[MD_SYM_IDENT] );
-  barSymbol->insertAction( 0, cmModeTable[MD_SYM_ORIGIN] );
+  barSymbol->insertAction( nullptr, cmModeTable[MD_SYM_PIN] );
+  barSymbol->insertAction( nullptr, cmModeTable[MD_SYM_IDENT] );
+  barSymbol->insertAction( nullptr, cmModeTable[MD_SYM_ORIGIN] );
 
   frame->addToolBar( barSymbol );
 
@@ -435,9 +441,9 @@ void SdWCommand::createToolBars(SdWMain *frame)
   addEditCommands( barPart );
   addViewCommands( barPart );
   addDrawCommands( barPart );
-  barPart->insertAction( 0, cmModeTable[MD_PART_PIN] );
-  barPart->insertAction( 0, cmModeTable[MD_PART_IDENT] );
-  barPart->insertAction( 0, cmModeTable[MD_PART_ORIGIN] );
+  barPart->insertAction( nullptr, cmModeTable[MD_PART_PIN] );
+  barPart->insertAction( nullptr, cmModeTable[MD_PART_IDENT] );
+  barPart->insertAction( nullptr, cmModeTable[MD_PART_ORIGIN] );
 
   frame->addToolBar( barPart );
 
@@ -454,11 +460,11 @@ void SdWCommand::createToolBars(SdWMain *frame)
   addEditCommands( barSheet );
   addViewCommands( barSheet );
   addDrawCommands( barSheet );
-  barSheet->insertAction( 0, cmModeTable[MD_COMPONENT] );
-  barSheet->insertAction( 0, cmModeTable[MD_NET] );
-  barSheet->insertAction( 0, cmModeTable[MD_BUS] );
-  barSheet->insertAction( 0, cmModeTable[MD_DISCONNECT] );
-  barSheet->insertAction( 0, cmModeTable[MD_NET_NAME] );
+  barSheet->insertAction( nullptr, cmModeTable[MD_COMPONENT] );
+  barSheet->insertAction( nullptr, cmModeTable[MD_NET] );
+  barSheet->insertAction( nullptr, cmModeTable[MD_BUS] );
+  barSheet->insertAction( nullptr, cmModeTable[MD_DISCONNECT] );
+  barSheet->insertAction( nullptr, cmModeTable[MD_NET_NAME] );
 
   frame->addToolBar( barSheet );
 
@@ -469,6 +475,8 @@ void SdWCommand::createToolBars(SdWMain *frame)
   addEditCommands( barPcb );
   addViewCommands( barPcb );
   addDrawCommands( barPcb );
+  barPcb->insertAction( nullptr, cmShowRatNet );
+  barPcb->insertAction( nullptr, cmModeTable[MD_MOVE_PART] );
 
   frame->addToolBar( barPcb );
 
@@ -477,7 +485,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   //View bar
   barView = new QToolBar( QString("View") );
   addViewCommands( barView );
-  //barView->insertAction( 0, cmObjectEditEnable );
+  //barView->insertAction( nullptr, cmObjectEditEnable );
 
   frame->addToolBar( barView );
 
@@ -629,13 +637,14 @@ QActionPtr SdWCommand::cmModePack;
 QActionPtr SdWCommand::cmPads;
 QActionPtr SdWCommand::cmModeLineSize;
 QActionPtr SdWCommand::cmModeRadiusSize;
-QActionPtr SdWCommand::cmModeMovePart;
 QActionPtr SdWCommand::cmModePlace;
 QActionPtr SdWCommand::cmModeEditWire;
 QActionPtr SdWCommand::cmModeWire;
 QActionPtr SdWCommand::cmModePolygon;
 QActionPtr SdWCommand::cmModeDeleteWire;
 QActionPtr SdWCommand::cmModePad;
+
+QActionPtr SdWCommand::cmShowRatNet;
 
 QActionPtr SdWCommand::cmOption;
 

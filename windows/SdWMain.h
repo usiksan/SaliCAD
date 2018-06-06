@@ -154,6 +154,7 @@ class SdWMain : public QMainWindow
     void cmModePack();
 
     //Pcb
+    void cmShowRatNet(bool st);
     void cmPads();
     void cmModeLineSize();
     void cmModeRadiusSize();

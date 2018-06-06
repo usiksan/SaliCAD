@@ -27,6 +27,7 @@ Description
 #include "SdDRegistation.h"
 #include "SdDLayers.h"
 #include "objects/SdPulsar.h"
+#include "objects/SdEnvir.h"
 #include <QSettings>
 #include <QCloseEvent>
 #include <QMessageBox>
@@ -1049,6 +1050,15 @@ void SdWMain::cmModePack()
   {
   if( activeEditor() )
     activeEditor()->cmModePack();
+  }
+
+
+
+void SdWMain::cmShowRatNet( bool st )
+  {
+  sdEnvir->mShowRatNet = st;
+  if( activeEditor() )
+    activeEditor()->update();
   }
 
 

@@ -134,6 +134,8 @@ class SdWCommand
     static QActionPtr  cmModeDeleteWire;
     static QActionPtr  cmModePad;
 
+    static QActionPtr  cmShowRatNet;
+
     static QActionPtr  cmOption;
     static QActionPtr  cmTools;
 

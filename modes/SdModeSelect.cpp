@@ -1273,6 +1273,9 @@ void SdModeSelect::unselect(bool update)
     mFragment.removeAll();
 
     if( update ) {
+      //Special case for pcb's
+      SdPItemPlate *plate = dynamic_cast<SdPItemPlate*>(mObject);
+      if( plate != nullptr ) plate->setDirtyRatNet();
       setDirty();
       setDirtyCashe();
       }
