@@ -279,7 +279,7 @@ void SdLibraryStorage::setObject(const QString key, QByteArray obj)
 
 
 //Insert new object with creation reference and append header and object
-void SdLibraryStorage::insert(const QString key, SdLibraryHeader &hdr, QByteArray obj)
+void SdLibraryStorage::insert(const QString key, const SdLibraryHeader &hdr, QByteArray obj)
   {
   QWriteLocker locker( &mLock );
 

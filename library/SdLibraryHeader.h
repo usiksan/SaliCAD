@@ -49,7 +49,7 @@ struct SdLibraryHeader
 
     SdLibraryHeader() : mName(), mType(), mAuthor(), mTime(0), mClass(0), mParamTable() {}
 
-    void    write( QDataStream &os ) { os << mName << mType << mAuthor << mTag << mTime << mClass << mParamTable; }
+    void    write( QDataStream &os ) const { os << mName << mType << mAuthor << mTag << mTime << mClass << mParamTable; }
 
     void    read( QDataStream &is ) { is >> mName >> mType >> mAuthor >> mTag >> mTime >> mClass >> mParamTable; }
 

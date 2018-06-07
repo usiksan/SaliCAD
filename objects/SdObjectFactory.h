@@ -32,14 +32,17 @@ class SdObjectFactory
   {
   public:
     //Open or create library
-    static void openLibrary();
+    static void         openLibrary();
 
     //Close library and save unsaved data
-    static void closeLibrary();
+    static void         closeLibrary();
 
-    //Insert object to database. If in database already present newest object,
+    //Insert object to database with externally created header
+    static void         insertObject( const SdObject *obj, const SdLibraryHeader &hdr, QJsonObject json );
+
+    //Insert item object to database. If in database already present newest object,
     //then return its id. Older object is never inserted.
-    static void         insertObject( const SdProjectItem *item, QJsonObject obj );
+    static void         insertItemObject( const SdProjectItem *item, QJsonObject obj );
 
     //Extract object from database.
     //If no object in local database then loading from internet

@@ -54,9 +54,26 @@ void SdObjectFactory::closeLibrary()
 
 
 
+void SdObjectFactory::insertObject(const SdObject *obj, const SdLibraryHeader &hdr, QJsonObject json)
+  {
+  if( obj == nullptr )
+    return;
+
+  QString id = obj->getId();
+  //If object in library then nothing done
+  if( library.isObjectContains(id) )
+    return;
+
+  //Insert object
+  library.insert( id, hdr, QJsonDocument(json).toBinaryData() );
+  }
+
+
+
+
 //Insert object to database. If in database already present newest object,
 //then return its id. Older object is never inserted.
-void SdObjectFactory::insertObject(const SdProjectItem *item, QJsonObject obj)
+void SdObjectFactory::insertItemObject(const SdProjectItem *item, QJsonObject obj)
   {
   if( item == nullptr )
     return;

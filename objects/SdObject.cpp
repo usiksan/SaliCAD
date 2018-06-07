@@ -164,7 +164,7 @@ QJsonObject SdObject::write() const
   writeObject( obj );
   const SdProjectItem *item = dynamic_cast<const SdProjectItem*>(this);
   if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol)) && !item->isEditEnable() )
-    SdObjectFactory::insertObject( item, obj );
+    SdObjectFactory::insertItemObject( item, obj );
   return obj;
   }
 
@@ -205,7 +205,7 @@ SdObject *SdObject::read(SdObjectMap *map, const QJsonObject obj)
 
     SdProjectItem *item = dynamic_cast<SdProjectItem*>(r);
     if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol)) && !item->isEditEnable() )
-      SdObjectFactory::insertObject( item, obj );
+      SdObjectFactory::insertItemObject( item, obj );
     }
 
   return r;

@@ -76,7 +76,7 @@ class SdLibraryStorage
     void        setObject( const QString key, QByteArray obj );
 
     //Insert new object with creation reference and append header and object
-    void        insert( const QString key, SdLibraryHeader &hdr, QByteArray obj );
+    void        insert(const QString key, const SdLibraryHeader &hdr, QByteArray obj );
 
     //Flush reference map if needed
     void        flush();
