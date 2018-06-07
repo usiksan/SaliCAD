@@ -19,6 +19,7 @@ Description
 #include "SdStratum.h"
 #include "SdGraphTraced.h"
 #include "SdPlateNet.h"
+#include "SdPadAssociation.h"
 #include <QMap>
 #include <QVector>
 
@@ -32,12 +33,10 @@ class SdPItemComponent;
 
 
 
-typedef QMap<QString,SdPItemPart*> SdPadAssotiation;
-
 class SdPItemPlate : public SdProjectItem
   {
     SdRect           mPartRow;           //Row for allocation autoinserted parts
-    SdPadAssotiation mPadAssotiation;    //Pad to pin assotiation table
+    SdPadAssociation mPadAssociation;    //Pad to pin assotiation table
 
     //Not saved
     SdRatNet         mRatNet;            //Rat net is unconnected pairs
@@ -50,8 +49,8 @@ class SdPItemPlate : public SdProjectItem
 
     SdGraphPartImp        *allocPartImp(int *section, SdPItemPart *part, SdPItemComponent *comp, SdPItemSymbol *sym , SdUndo *undo);
 
-    //Get pad
-    SdPItemPart           *getPad( const QString pinType ) const { return mPadAssotiation.value( pinType ); }
+    //Draw pad
+    void                   drawPad( SdContext *dc, SdPoint p, const QString pinType ) const;
 
     //Set flag to update rat net
     void                   setDirtyRatNet();
@@ -73,7 +72,6 @@ class SdPItemPlate : public SdProjectItem
     virtual void           cloneFrom(const SdObject *src) override;
     virtual void           writeObject(QJsonObject &obj) const override;
     virtual void           readObject(SdObjectMap *map, const QJsonObject obj) override;
-    virtual bool           isUsed(SdObject *obj) const override;
 
     // SdProjectItem interface
   public:

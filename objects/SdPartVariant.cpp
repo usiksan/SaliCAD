@@ -53,7 +53,7 @@ void SdPartVariant::setPartId(const QString id, SdUndo *undo)
 
 QString SdPartVariant::getType() const
   {
-  return QString( SD_TYPE_PART_VARIANT );
+  return QStringLiteral( SD_TYPE_PART_VARIANT );
   }
 
 

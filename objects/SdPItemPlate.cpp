@@ -79,6 +79,15 @@ SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPI
 
 
 
+
+void SdPItemPlate::drawPad(SdContext *dc, SdPoint p, const QString pinType) const
+  {
+  //TODO D034 draw pad
+  }
+
+
+
+
 //Set flag to update rat net
 void SdPItemPlate::setDirtyRatNet()
   {
@@ -193,13 +202,7 @@ void SdPItemPlate::writeObject(QJsonObject &obj) const
   mPartRow.write( QStringLiteral("PartRow"), obj );
 
   //Write pad assotiation
-  QMapIterator<QString,SdPItemPart*> it( mPadAssotiation );
-  QJsonObject assotiation;
-  while( it.hasNext() ) {
-    SdPItemPart *part = it.next().value();
-    writePtr( part, it.key(), assotiation );
-    }
-  obj.insert( QStringLiteral("PadAssotiation"), assotiation );
+  obj.insert( QStringLiteral("PadAssociation"), mPadAssociation.write() );
   }
 
 
@@ -210,29 +213,9 @@ void SdPItemPlate::readObject(SdObjectMap *map, const QJsonObject obj)
   SdProjectItem::readObject( map, obj );
   mPartRow.read( QStringLiteral("PartRow"), obj );
   //Read pad assotiation
-  mPadAssotiation.clear();
-  QJsonObject assotiation = obj.value( QStringLiteral("PadAssotiation") ).toObject();
-  for( QJsonObject::const_iterator it = assotiation.constBegin(); it != assotiation.constEnd(); it++ ) {
-    mPadAssotiation.insert( it.key(), dynamic_cast<SdPItemPart*>(readPtr( map, it.value().toObject() ))  );
-    }
+  mPadAssociation.readObject( map, obj.value( QStringLiteral("PadAssociation") ).toObject() );
   }
 
 
 
-
-bool SdPItemPlate::isUsed(SdObject *obj) const
-  {
-  //Test obj in all child objects
-  if( SdContainer::isUsed( obj ) )
-    return true;
-
-  //Test obj in pad assotiation
-  QMapIterator<QString,SdPItemPart*> it( mPadAssotiation );
-  while( it.hasNext() ) {
-    if( it.next().value() == obj )
-      return true;
-    }
-
-  return false;
-  }
 

@@ -29,7 +29,6 @@ Description
 SdPartImpPin::SdPartImpPin() :
   mPin(nullptr),       //Original pin
   mSection(nullptr),   //Schematic section where pin is
-  mPadStack(nullptr),  //Pad stack
   mStratum()           //Pin stratum
   {
   }
@@ -43,7 +42,6 @@ void SdPartImpPin::operator =(const SdPartImpPin &pin)
   mSection   = pin.mSection;
   mPinName   = pin.mPinName;   //Part pin name
   mPosition  = pin.mPosition;  //Pin position in plate context
-  mPadStack  = pin.mPadStack;  //Pad stack
   mStratum   = pin.mStratum;
   }
 
@@ -57,12 +55,7 @@ void SdPartImpPin::draw(SdContext *dc, SdPItemPlate *plate) const
   //Draw standard pin (pin connection point, pin number and pin name)
   mPin->drawImp( dc, mPinName, isConnected() );
   //Draw pin pad
-  SdPItemPart *pad = plate->getPad( mPin->getPinType() );
-  if( pad != nullptr ) {
-    //Convertor for symbol implementation
-    SdConverterImplement imp( mPosition, pad->getOrigin(), 0, false, false );
-    dc->setConverter( &imp );
-    }
+  plate->drawPad( dc, mPosition, mPin->getPinType() );
   }
 
 
@@ -93,7 +86,6 @@ QJsonObject SdPartImpPin::toJson( const QString pinNumber ) const
   obj.insert( QStringLiteral("PinNum"), pinNumber );               //Part pin number
   obj.insert( QStringLiteral("PinNam"), mPinName );                //Part pin name
   mPosition.write( QStringLiteral("Pos"), obj );                   //Pin position in plate context
-  SdObject::writePtr( mPadStack, QStringLiteral("Pad"), obj );     //Pad stack
   mStratum.write( obj );
   return obj;
   }
@@ -107,7 +99,6 @@ QString SdPartImpPin::fromJson(SdObjectMap *map, const QJsonObject obj)
   mSection = dynamic_cast<SdGraphSymImp*>( SdObject::readPtr( QStringLiteral("Section"), map, obj )  );
   mPinName = obj.value( QStringLiteral("PinNam") ).toString();            //Part pin name
   mPosition.read( QStringLiteral("Pos"), obj );                           //Pin position in plate context
-  mPadStack = dynamic_cast<SdPItemPart*>( SdObject::readPtr( QStringLiteral("Pad"), map, obj )  );
   mStratum.read( obj );
   return obj.value( QStringLiteral("PinNum") ).toString();
   }
@@ -277,7 +268,7 @@ void SdGraphPartImp::attach(SdUndo *undo)
   //Fill pin table
   mPins.clear();
   if( mPart ) {
-    mPart->forEach( dctPartPin, [this, plate] (SdObject *obj) -> bool {
+    mPart->forEach( dctPartPin, [this] (SdObject *obj) -> bool {
       SdGraphPartPin *pin = dynamic_cast<SdGraphPartPin*>(obj);
       Q_ASSERT( pin != nullptr );
 
@@ -288,7 +279,6 @@ void SdGraphPartImp::attach(SdUndo *undo)
       //Create implement pin
       SdPartImpPin impPin;
       impPin.mPin       = pin;
-      impPin.mPadStack  = plate->getPad( pin->getPinType() );
 
       //Add pin to table
       mPins.insert( pin->getPinNumber(), impPin );

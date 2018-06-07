@@ -22,25 +22,26 @@ Description
 
 
 //Классы объектов
-#define dctLines         0x00000001ul
-#define dctText          0x00000002ul
-#define dctSymPin        0x00000004ul
-#define dctPartPin       0x00000008ul
-#define dctIdent         0x00000010ul
-#define dctSymbol        0x00000020ul
-#define dctSymImp        0x00000040ul
-#define dctPart          0x00000080ul
-#define dctPartImp       0x00000100ul
-#define dctNetWire       0x00000200ul
-#define dctNetName       0x00000400ul
-#define dctSheet         0x00000800ul
-#define dctPlate         0x00001000ul
-#define dctComponent     0x00002000ul
-#define dctProject       0x00004000ul
-#define dctSection       0x00008000ul
-#define dctPartVariant   0x00010000ul
-#define dctArea          0x00020000ul
-#define dctSelector      0x00040000ul
+#define dctLines          0x00000001ul
+#define dctText           0x00000002ul
+#define dctSymPin         0x00000004ul
+#define dctPartPin        0x00000008ul
+#define dctIdent          0x00000010ul
+#define dctSymbol         0x00000020ul
+#define dctSymImp         0x00000040ul
+#define dctPart           0x00000080ul
+#define dctPartImp        0x00000100ul
+#define dctNetWire        0x00000200ul
+#define dctNetName        0x00000400ul
+#define dctSheet          0x00000800ul
+#define dctPlate          0x00001000ul
+#define dctComponent      0x00002000ul
+#define dctProject        0x00004000ul
+#define dctSection        0x00008000ul
+#define dctPartVariant    0x00010000ul
+#define dctArea           0x00020000ul
+#define dctSelector       0x00040000ul
+#define dctPadAssociation 0x00080000ul
 
 #define dctList          0x00020000ul
 #define dctAlias         0x00040000ul

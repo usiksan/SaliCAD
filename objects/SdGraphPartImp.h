@@ -30,13 +30,12 @@ class SdPItemComponent;
 class SdGraphSymImp;
 class SdGraphRoadPin;
 
-//Ножка вхождения корпуса
+//Part implementation pin [Ножка вхождения корпуса]
 struct SdPartImpPin {
   SdGraphPartPin *mPin;       //Original pin
-  SdGraphSymImp  *mSection;   //Schematic section where pin is
+  SdGraphSymImp  *mSection;   //Schematic section where pin located
   QString         mPinName;   //Part pin name
   SdPoint         mPosition;  //Pin position in plate context
-  SdPItemPart    *mPadStack;  //Pad stack
   SdStratum       mStratum;   //Pin stratum
 
   SdPartImpPin();
@@ -51,6 +50,8 @@ struct SdPartImpPin {
   };
 
 typedef QMap<QString,SdPartImpPin> SdPartImpPinTable;
+
+
 
 
 
@@ -72,6 +73,8 @@ typedef QVector<SdPartImpSection> SdPartImpSectionTable;
 
 
 
+
+//Part implementation
 class SdGraphPartImp : public SdGraphTraced
   {
     int                    mLogNumber;   //Logical part number (from 1)
