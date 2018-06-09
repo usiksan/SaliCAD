@@ -96,6 +96,7 @@ class SdProjectItem : public SdContainer
 
     virtual void           cloneFrom( const SdObject *src ) override;
 
+    //Return current registered author
     static  QString        getDefaultAuthor();
 
   private:

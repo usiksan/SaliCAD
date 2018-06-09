@@ -79,6 +79,8 @@ History
   04.06.2018 v0.30 Append wheel support in graph windows
   04.06.2018 v0.31 Append arc pic pasCad import. Symbols imported.
                    Append system color selction to Options dialog.
+  09.06.2018 v0.32 Begin PadDialog creation
+                   Append pad description building
 */
 
 #ifndef SDCONFIG

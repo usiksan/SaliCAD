@@ -16,6 +16,7 @@ Description
 
 #include "SdGraphTraced.h"
 #include "SdStratum.h"
+#include "SdPadAssociation.h"
 
 #include <QMap>
 
@@ -44,6 +45,7 @@ struct SdPartImpPin {
   void        draw(SdContext *dc , SdPItemPlate *plate, int startum) const;
   bool        isConnected() const;
   QString     getNetName() const;
+  void        accumUsedPin( SdPadMap &map ) const;
 
   QJsonObject toJson(const QString pinNumber) const;
   QString     fromJson( SdObjectMap *map, const QJsonObject obj );
@@ -111,6 +113,8 @@ class SdGraphPartImp : public SdGraphTraced
     void            autoDelete( SdUndo *undo );
     //Save to undo state of all pins
     void            savePins( SdUndo *undo );
+    //Accum used pins
+    void            accumUsedPins(SdPadMap &map ) const;
 
 
     // SdObject interface

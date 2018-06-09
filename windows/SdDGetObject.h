@@ -19,6 +19,7 @@ Description
 
 #include <QDialog>
 
+class SdObject;
 class SdProjectItem;
 class SdPItemComponent;
 class SdWEditorGraphView;
@@ -82,7 +83,7 @@ class SdDGetObject : public QDialog
     void appendNewly( SdLibraryHeader &hdr );
   public:
     static bool           getObjectName( QString *name, QString *author, quint64 sort, const QString title, QWidget *parent );
-    static SdProjectItem *getObject( quint64 sort, const QString title, QWidget *parent);
+    static SdObject      *getObject( quint64 sort, const QString title, QWidget *parent);
     static QString        getObjectId( quint64 sort, const QString title, QWidget *parent );
     static SdProjectItem *getComponent( int *logSectionPtr, quint64 sort, const QString title, QWidget *parent );
 

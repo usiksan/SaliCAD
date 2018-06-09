@@ -13,6 +13,7 @@ Description
 #include "SdConfig.h"
 #include "SdEnvir.h"
 #include "SdLayer.h"
+#include "SdObjectFactory.h"
 
 #include <QSettings>
 #include <QByteArray>
@@ -22,13 +23,16 @@ Description
 
 SdEnvir *sdEnvir;
 
-SdEnvir::SdEnvir()
+SdEnvir::SdEnvir() :
+  mPadStack(nullptr)
   {
   }
 
 SdEnvir::~SdEnvir()
   {
   deleteLayers();
+  if( mPadStack != nullptr )
+    delete mPadStack;
   }
 
 
@@ -135,8 +139,8 @@ void SdEnvir::loadEnvir()
        >> mHomePath             //Каталог пользователя
        >> mLibraryPath          //Каталог библиотек
        >> mPatternPath          //Каталог шаблонов
-       >> mPadStackFile         //Файл контактных площадок
-       >> mPadStackObject       //Объект содержащий контактные площадки
+       >> mPadStackId         //Файл контактных площадок
+       >> mPadStackTitle       //Объект содержащий контактные площадки
        >> mGridHistory;         //Previous grid history table
     }
   else defaultEnvir();
@@ -205,8 +209,8 @@ void SdEnvir::saveEnvir()
      << mHomePath             //Каталог пользователя
      << mLibraryPath          //Каталог библиотек
      << mPatternPath          //Каталог шаблонов
-     << mPadStackFile         //Файл контактных площадок
-     << mPadStackObject       //Объект содержащий контактные площадки
+     << mPadStackId         //Файл контактных площадок
+     << mPadStackTitle       //Объект содержащий контактные площадки
      << mGridHistory;         //Previous grid history table
 
   QSettings s;
@@ -289,9 +293,9 @@ void SdEnvir::defaultEnvir()
   mLibraryPath.append( QString("library/") );
   mPatternPath = mHomePath;            //Каталог шаблонов
   mPatternPath.append( QString("pattern/") );
-  mPadStackFile = mHomePath;           //Файл контактных площадок
-  mPadStackFile.append( QString("pads/defaultStack.pads") );
-  mPadStackObject = QString("default");//Объект содержащий контактные площадки
+  mPadStackId = mHomePath;           //Файл контактных площадок
+  mPadStackId.append( QString("pads/defaultStack.pads") );
+  mPadStackTitle = QString("default");//Объект содержащий контактные площадки
 
   //  QString         mLastFile;             //Последний файл пользователя
 //  QString         mHome;                 //Каталог пользователя
@@ -417,6 +421,31 @@ QString SdEnvir::layerId2NameLevel1(QString lid1)
     if( lid1 == QString(sdLayerLevel1[i].mLid) )
       return QObject::tr( sdLayerLevel1[i].mTranslate );
   return lid1;
+  }
+
+
+
+
+
+SdPad SdEnvir::getPad(const QString pinType)
+  {
+  //If pad stack not yet loaded then load it
+  if( mPadStack == nullptr )
+    mPadStack = only<SdPadAssociation>( SdObjectFactory::extractObject( mPadStackId, true, nullptr ) );
+  //If pad stack present then return pad associated with pinType
+  if( mPadStack != nullptr )
+    return mPadStack->pin(pinType);
+  //Return empty pad
+  return SdPad();
+  }
+
+
+
+void SdEnvir::resetPads()
+  {
+  if( mPadStack != nullptr )
+    delete mPadStack;
+  mPadStack = nullptr;
   }
 
 

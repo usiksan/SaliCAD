@@ -22,6 +22,7 @@ Description
 #include "SdProject.h"
 #include "SdContext.h"
 #include "SdSelector.h"
+#include "SdEnvir.h"
 
 
 //====================================================================================
@@ -73,6 +74,18 @@ QString SdPartImpPin::getNetName() const
     return mSection->pinNetName( mPinName );
   return QString();
   }
+
+
+
+
+
+void SdPartImpPin::accumUsedPin(SdPadMap &map) const
+  {
+  if( !map.contains(mPin->getPinType()) )
+    //Append new pin-to-pad association with default pad
+    map.insert( mPin->getPinType(), sdEnvir->getPad(mPin->getPinType()) );
+  }
+
 
 
 
@@ -203,6 +216,16 @@ void SdGraphPartImp::savePins(SdUndo *undo)
   {
   //Save state of all pins
   undo->partImpPins( &mPins );
+  }
+
+
+
+
+//Accum used pins
+void SdGraphPartImp::accumUsedPins(SdPadMap &map) const
+  {
+  for( const SdPartImpPin &pin : mPins )
+    pin.accumUsedPin( map );
   }
 
 

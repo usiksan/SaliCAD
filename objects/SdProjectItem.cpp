@@ -400,7 +400,7 @@ void SdProjectItem::cloneFrom( const SdObject *src )
 
 
 
-
+//Return current registered author
 QString SdProjectItem::getDefaultAuthor()
   {
   QSettings s;

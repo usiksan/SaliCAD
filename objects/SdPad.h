@@ -1,3 +1,16 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Single pad description. On this description pads created on demand.
+*/
 #ifndef SDPAD_H
 #define SDPAD_H
 
@@ -34,6 +47,14 @@ class SdPad
     void        draw(SdContext *dcx, SdPoint p, int stratum ) const;
 
     QPolygon    polygon( SdPoint p );
+
+    //Create textual pad description
+    QString     description() const;
+
+    //Clear to create default pad
+    void        clear();
+
+    bool        isEmpty() const { return mHeight < 0; }
   };
 
 #endif // SDPAD_H

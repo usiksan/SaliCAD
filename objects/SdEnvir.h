@@ -19,6 +19,7 @@ Description
 #include "SdLayerCache.h"
 #include "SdSnapInfo.h"
 #include "SdUtil.h"
+#include "SdPadAssociation.h"
 #include <QColor>
 #include <QMap>
 #include <QPointF>
@@ -93,8 +94,8 @@ class SdEnvir
     QString         mHomePath;             //Каталог пользователя
     QString         mLibraryPath;          //Каталог библиотек
     QString         mPatternPath;          //Каталог шаблонов
-    QString         mPadStackFile;         //Файл контактных площадок
-    QString         mPadStackObject;       //Объект содержащий контактные площадки
+    QString         mPadStackId;           //SdPadAssociation object id [Объект контактных площадок]
+    QString         mPadStackTitle;        //SdPadAssociation object title [Название объекта с контактными площадками]
     QList<QPointF>  mGridHistory;          //Previous grid history
 
 
@@ -115,14 +116,15 @@ class SdEnvir
 
     //Not saved
     //Cashed layers for stratum
-    SdLayerCache    mCacheForPad;
-    SdLayerCache    mCacheForMask;
-    SdLayerCache    mCacheForStensil;
-    SdLayerCache    mCacheForHole;
-    SdLayerCache    mCacheForWire;
-    SdLayerCache    mCacheForPolygon;
-    SdLayerCache    mCacheForBoundary;
-    SdLayerCache    mCacheForKeepout;
+    SdLayerCache      mCacheForPad;
+    SdLayerCache      mCacheForMask;
+    SdLayerCache      mCacheForStensil;
+    SdLayerCache      mCacheForHole;
+    SdLayerCache      mCacheForWire;
+    SdLayerCache      mCacheForPolygon;
+    SdLayerCache      mCacheForBoundary;
+    SdLayerCache      mCacheForKeepout;
+    SdPadAssociation *mPadStack;
 
 
     SdEnvir();
@@ -160,6 +162,8 @@ class SdEnvir
     QString  toPhisPcb( int val ) const { return SdUtil::log2physStr(val,mPrtPPM); }
     int      fromPhisPcb( const QString str ) const { return SdUtil::phys2log(str,mPrtPPM); }
 
+    SdPad    getPad( const QString pinType );
+    void     resetPads();
   private:
     void deleteLayers();
     void addLayer( SdLayer *layer );

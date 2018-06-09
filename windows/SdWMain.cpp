@@ -1159,6 +1159,7 @@ void SdWMain::cmModePad()
 void SdWMain::cmOption()
   {
   SdDOptions(this).exec();
+  sdEnvir->resetPads();
   }
 
 

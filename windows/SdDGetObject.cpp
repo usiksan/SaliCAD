@@ -287,9 +287,9 @@ bool SdDGetObject::getObjectName(QString *name, QString *author, quint64 sort, c
 
 
 
-SdProjectItem *SdDGetObject::getObject(quint64 sort, const QString title, QWidget *parent)
+SdObject *SdDGetObject::getObject(quint64 sort, const QString title, QWidget *parent)
   {
-  return dynamic_cast<SdProjectItem*>( SdObjectFactory::extractObject( getObjectId( sort, title, parent), false, parent ) );
+  return SdObjectFactory::extractObject( getObjectId( sort, title, parent), false, parent );
   }
 
 

@@ -187,7 +187,8 @@ SOURCES += \
     objects/SdPad.cpp \
     modes/SdModeCLinearCircle.cpp \
     objects/SdPadAssociation.cpp \
-    objects/SdLayerCache.cpp
+    objects/SdLayerCache.cpp \
+    windows/SdDPads.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -368,7 +369,8 @@ HEADERS  += \
     objects/SdPad.h \
     modes/SdModeCLinearCircle.h \
     objects/SdPadAssociation.h \
-    objects/SdLayerCache.h
+    objects/SdLayerCache.h \
+    windows/SdDPads.h
 
 DISTFILES += \
     license.txt
@@ -388,4 +390,5 @@ FORMS += \
     windows/SdDGrid.ui \
     windows/SdDLayers.ui \
     windows/SdDLayerList.ui \
-    windows/SdDLayerCreate.ui
+    windows/SdDLayerCreate.ui \
+    windows/SdDPads.ui

@@ -1,3 +1,16 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Single pad description. On this description pads created on demand.
+*/
 #include "SdPad.h"
 #include "SdContext.h"
 #include "SdPItemPlate.h"
@@ -6,7 +19,20 @@
 
 #include <QJsonObject>
 
-SdPad::SdPad()
+SdPad::SdPad() :
+  mCenterX(0),          //Center of circle or rectangle
+  mCenterY(0),
+  mDiametrWidth(400),     //Diametr of circle or rectangle dimensions
+  mHeight(-1),
+  mMaskThreshold(100),    //Mask threshold. Calculation: maskSize = size + mMaskThreshold
+  mStensilThreshold(40), //Stensil threshold. Calculation: stensilSize = size + mMaskThreshold
+  mStensilRows(0),      //If rows or colons > 1 then stensil area divided on array of aperture with
+  mStensilCols(0),      // width and height
+  mStensilWidth(0),
+  mStensilHeight(0),
+  mHoleDiametr(0),
+  //Not saved. Circle determine by mHeight = 0.
+  mIsCircle(true)
   {
 
   }
@@ -135,6 +161,84 @@ QPolygon SdPad::polygon(SdPoint p)
         << SdPoint(p.x() + mCenterX - (mDiametrWidth >> 1), p.y() + mCenterY + (mHeight >> 1));
     }
   return pgn;
+  }
+
+
+
+
+
+//Create textual pad description
+QString SdPad::description() const
+  {
+  double ppm = sdEnvir->mPrtPPM;
+  if( mIsCircle ) {
+    if( mHoleDiametr <= 0 )
+      //smd
+      return QObject::tr("Planar circle diam pad%1 mask%2 stensil%3").arg( SdUtil::log2physStr(mDiametrWidth,ppm) )
+          .arg( SdUtil::log2physStr(mDiametrWidth+mMaskThreshold,ppm) )
+          .arg( SdUtil::log2physStr(mDiametrWidth-mStensilThreshold,ppm) );
+    else
+      //throw (no stensil)
+      return QObject::tr("Throw circle diam hole%3 pad%1 mask%2").arg( SdUtil::log2physStr(mDiametrWidth,ppm) )
+          .arg( SdUtil::log2physStr(mDiametrWidth+mMaskThreshold,ppm) )
+          .arg( SdUtil::log2physStr(mHoleDiametr,ppm) );
+    }
+  else {
+    if( mHoleDiametr <= 0 ) {
+      //smd
+      if( mStensilCols > 1 || mStensilRows > 1 )
+        //Array of stensil apertures
+        return QObject::tr("Planar rect pad%1x%2 mask%3x%4 stensil ar%5x%6 of%7x%8")
+            .arg( SdUtil::log2physStr(mDiametrWidth,ppm) )
+            .arg( SdUtil::log2physStr(mHeight,ppm))
+            .arg( SdUtil::log2physStr(mDiametrWidth+mMaskThreshold,ppm) )
+            .arg( SdUtil::log2physStr(mHeight+mMaskThreshold,ppm) )
+            .arg( qMax(mStensilCols,1) )
+            .arg( qMax(mStensilRows,1) )
+            .arg( SdUtil::log2physStr(mDiametrWidth-mStensilThreshold,ppm) )
+            .arg( SdUtil::log2physStr(mHeight-mStensilThreshold,ppm) );
+      else
+        //Single stensil aperture
+        return QObject::tr("Planar rect pad%1x%2 mask%3x%4 stensil%5x%6")
+            .arg( SdUtil::log2physStr(mDiametrWidth,ppm) )
+            .arg( SdUtil::log2physStr(mHeight,ppm))
+            .arg( SdUtil::log2physStr(mDiametrWidth+mMaskThreshold,ppm) )
+            .arg( SdUtil::log2physStr(mHeight+mMaskThreshold,ppm) )
+            .arg( SdUtil::log2physStr(mDiametrWidth-mStensilThreshold,ppm) )
+            .arg( SdUtil::log2physStr(mHeight-mStensilThreshold,ppm) );
+
+      }
+    else {
+      //throw (no stensil)
+      //Single stensil aperture
+      return QObject::tr("Throw rect hole%5 pad%1x%2 mask%3x%4")
+          .arg( SdUtil::log2physStr(mDiametrWidth,ppm) )
+          .arg( SdUtil::log2physStr(mHeight,ppm))
+          .arg( SdUtil::log2physStr(mDiametrWidth+mMaskThreshold,ppm) )
+          .arg( SdUtil::log2physStr(mHeight+mMaskThreshold,ppm) )
+          .arg( SdUtil::log2physStr(mHoleDiametr,ppm) );
+      }
+    }
+  //return QString();
+  }
+
+
+
+void SdPad::clear()
+  {
+  mCenterX = 0;          //Center of circle or rectangle
+  mCenterY = 0;
+  mDiametrWidth = 400;     //Diametr of circle or rectangle dimensions
+  mHeight = -1;
+  mMaskThreshold = 100;    //Mask threshold. Calculation: maskSize = size + mMaskThreshold
+  mStensilThreshold = 40; //Stensil threshold. Calculation: stensilSize = size + mMaskThreshold
+  mStensilRows = 0;      //If rows or colons > 1 then stensil area divided on array of aperture with
+  mStensilCols = 0;      // width and height
+  mStensilWidth = 0;
+  mStensilHeight = 0;
+  mHoleDiametr = 0;
+  //Not saved. Circle determine by mHeight = 0.
+  mIsCircle = true;
   }
 
 
