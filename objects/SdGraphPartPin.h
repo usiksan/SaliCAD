@@ -22,6 +22,7 @@ Description
 
 #define SD_TYPE_PART_PIN "PartPin"
 
+class SdPItemPlate;
 
 class SdGraphPartPin : public SdGraph
   {
@@ -50,9 +51,9 @@ class SdGraphPartPin : public SdGraph
     //Return pin origin
     SdPoint   getPinOrigin() const { return mOrigin; }
     //Return pin stratum
-    SdStratum getPinStratum( bool otherSide ) const;
+    int       getPinStratum( bool otherSide ) const;
 
-    void    drawImp( SdContext *dc, const QString pinName, bool com );
+    void      drawImp(SdContext *dc, const QString pinName, bool com );
 
     // SdObject interface
   public:

@@ -16,9 +16,12 @@ Description
 #ifndef SDLAYER_H
 #define SDLAYER_H
 
+#include "SdStratum.h"
+
 #include <QString>
 #include <QColor>
 #include <QDataStream>
+#include <QMap>
 
 //Layer visibility and editing status
 enum SdLayerState {
@@ -29,14 +32,15 @@ enum SdLayerState {
 
 //Layer trace status
 enum SdLayerTrace {
-  layerTraceNone,   //Слой не трассировочный
-  layerTraceSignal, //Трассировка сигнальных цепей
-  layerTracePower,  //Трассировка цепей питания
-  layerTraceJumper, //Слой перемычек
-  layerTraceBar,    //Слой барьера
-  layerTraceAllBar, //Слой сквозного барьера
-  layerTracePad,    //Слой площадок
-  layerTraceAllPad, //Сквозные площадки
+  layerTraceNone,     //Layer not tracing [Слой не трассировочный]
+  layerTracePad,      //Layer for pads
+  layerTraceMask,     //Layer for mask
+  layerTraceStensil,  //Layer for stensil apertures
+  layerTraceHole,     //Layer for holes
+  layerTraceWire,     //Layer for wires
+  layerTracePolygon,  //Layer for polygons
+  layerTraceBoundary, //Layer for tracing boundary
+  layerTraceKeepout,  //Layer for tracing keepout
   layerTraceLast
   };
 
@@ -63,6 +67,7 @@ enum SdLayerTrace {
 #define LID0_STENSIL_REPER "StensilReper" //Репер на трафарете
 #define LID0_EXCLUSION     "Exclusion"    //Trace exclusion area
 #define LID0_TRACE         "Trace"        //Trace area
+#define LID0_TRACE_DEFAULT "TraceDefault" //Default trace layer for undefined stratum
 
 //Both schematic and PCB
 #define LID0_COMPONENT     "Component"    //Изображение элемента (символа или корпуса)
@@ -108,14 +113,13 @@ enum SdLayerTrace {
 #define LID1_INT27         ".Int27" //Внутренняя сторона 27
 #define LID1_INT28         ".Int28" //Внутренняя сторона 28
 #define LID1_INT29         ".Int29" //Внутренняя сторона 29
-#define LID1_INT30         ".Int30" //Внутренняя сторона 30
-#define LID1_INT31         ".Int31" //Внутренняя сторона 31
-#define LID1_INT32         ".Int32" //Внутренняя сторона 32
 
 
 struct SdLayerDescr {
-  const char *mId;
-  unsigned    mColor;
+  const char   *mId;
+  unsigned      mColor;
+  SdLayerTrace  mTrace;
+  int           mStratum;
   };
 
 //#define LAYER_DESCR_ACTUAL 10 //Actual layers count
@@ -135,63 +139,72 @@ extern SdLayerLevel sdLayerLevel1[];
 
 class SdLayer
   {
-    QString      mId;             //Layer ident
-    QString      mName;           //Layer name for visual
-    SdLayerState mState;          //State (visible, editing, invisible)
-    SdLayerTrace mTrace;          //Разрешение трассировки на данном слое
-    int          mTracePosition;  //Позиция слоя при трассировке (верх, низ, внутри)
-    unsigned     mColor;          //Цвет
-    SdLayer     *mPair;           //Парный слой
-    bool         mUsage;          //Флаг использования
+    QString       mId;       //Layer ident - unical handle
+    QString       mName;     //Layer name for visual
+    SdLayerState  mState;    //State (visible, editing, invisible)
+    SdLayerTrace  mTrace;    //Layer trace type
+    int           mStratum;  //Layer stratum [Позиция слоя при трассировке (верх, низ, внутри)]
+    unsigned      mColor;    //Layer color [Цвет]
+    SdLayer      *mPair;     //Layer pair for flipped component [Парный слой]
+    bool          mUsage;    //Usage flag [Флаг использования]
   public:
     SdLayer(QString layerId, QString layerName, unsigned layerColor );
 
-    QString  id() const { return mId; }
+    QString      id() const { return mId; }
 
-    QString  name() const { return mName; }
-    void     setName( const QString nm ) { mName = nm; }
+    QString      name() const { return mName; }
+    void         setName( const QString nm ) { mName = nm; }
 
-    SdLayer *pair() { return mPair; }
+    SdLayer     *pair() { return mPair; }
 
     //Установить новую пару для слоя
-    void     setPair( SdLayer *p );
+    void         setPair( SdLayer *p );
 
     //Reset pair for layer
-    void     resetPair();
+    void         resetPair();
 
     //Return true when layer is visible
-    bool     isVisible() const { return mState != layerStateOff; }
+    bool         isVisible() const { return mState != layerStateOff; }
 
     //Возвращает истину когда слой редактируемый
-    bool     isEdited() const { return mState == layerStateEdit; }
+    bool         isEdited() const { return mState == layerStateEdit; }
 
     //Layer state
     SdLayerState state() const { return mState; }
     void         setState( SdLayerState st ) { mState = st; }
 
+    //Layer trace type
+    SdLayerTrace trace() const { return mTrace; }
+    void         setTrace( SdLayerTrace tr ) { mTrace = tr; }
+
+    int          stratum() const { return mStratum; }
+    void         setStratum( int st ) { mStratum = st; }
+
     //Layer color
     //Return layer color
-    QColor   color() const { return QColor( QRgb(mColor) ); }
+    QColor       color() const { return QColor( QRgb(mColor) ); }
     //Set new color for layer
-    void     setColor( unsigned c ) { mColor = c; }
+    void         setColor( unsigned c ) { mColor = c; }
 
     //Usage flag. Indicate layer is used anywhere
     //Сбросить флаг использования
     //Reset flag
-    void     resetUsage() { mUsage = false; }
+    void         resetUsage() { mUsage = false; }
     //Установить флаг использования
     //Set flag
-    void     setUsage() { mUsage = true; }
+    void         setUsage() { mUsage = true; }
     //Get flag
-    bool     isUsage() const { return mUsage; }
+    bool         isUsage() const { return mUsage; }
 
     //Сохранить слой
-    void     write( QDataStream &os );
+    void         write( QDataStream &os );
 
     //Загрузить слой
-    void     read( QDataStream &is );
+    void         read( QDataStream &is );
   };
 
 typedef SdLayer *SdLayerPtr;
+
+typedef QMap<QString,SdLayerPtr> SdLayerPtrTable;
 
 #endif // SDLAYER_H

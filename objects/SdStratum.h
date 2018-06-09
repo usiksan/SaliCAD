@@ -9,29 +9,44 @@ Web
   www.saliLab.ru
 
 Description
-  Tracing layers order and contens
+  Tracing layers identify
+  Supporting max 30 layers
 */
 #ifndef SDSTRATUM_H
 #define SDSTRATUM_H
 
 #include "SdConfig.h"
+#include "SdPropInt.h"
 #include <QJsonObject>
 
-#define stmTop      0x000000000000001ul
-#define stmBottom   0x800000000000000ul
-#define stmThrow    0xffffffffffffffful
+#define stmTop    0x00000001
+#define stmBottom 0x00000002
+#define stmThrow  0x3fffffff
+#define stmInt00  0x00000004
+#define stmInt01  0x00000008
+#define stmInt02  0x00000010
+#define stmInt03  0x00000020
 
-class SdStratum
+class SdStratum : public SdPropInt
   {
-    qint64 mStratum;
   public:
     SdStratum();
-    SdStratum( qint64 str );
+    SdStratum( int str );
 
-    bool match( SdStratum s ) const { return (mStratum & s.mStratum) != 0; }
+    bool match( SdStratum s ) const { return mValue > 0 && s.mValue > 0 && (mValue & s.mValue) != 0; }
 
-    void write( QJsonObject &obj ) const;
-    void read( const QJsonObject &obj );
+    void writeStratum(QJsonObject &obj) const;
+    void readStratum(const QJsonObject &obj);
+
+    bool isTop() const { return mValue == stmTop; }
+
+    bool isBottom() const { return mValue == stmBottom; }
+
+    int  stratum( bool top = true ) const;
+
+    int  stratumComp( const SdStratum &src ) const;
+
+
   };
 
 #endif // SDSTRATUM_H

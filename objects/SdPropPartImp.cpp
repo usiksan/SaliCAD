@@ -18,7 +18,6 @@ Description
 void SdPropPartImp::operator =(const SdPropPartImp &sour)
   {
   mAngle  = sour.mAngle;
-  mMirror = sour.mMirror;
   mSide   = sour.mSide;
   }
 
@@ -27,7 +26,6 @@ void SdPropPartImp::operator =(const SdPropPartImp &sour)
 void SdPropPartImp::append(const SdPropPartImp &sour)
   {
   mAngle.append( sour.mAngle );
-  mMirror.append( sour.mMirror );
   mSide.append( sour.mSide );
   }
 
@@ -37,7 +35,6 @@ void SdPropPartImp::append(const SdPropPartImp &sour)
 void SdPropPartImp::clear()
   {
   mAngle.clear();
-  mMirror.clear();
   mSide.clear();
   }
 
@@ -46,7 +43,7 @@ void SdPropPartImp::clear()
 
 bool SdPropPartImp::match(const SdPropPartImp &prop)
   {
-  return mAngle.match( prop.mAngle ) && mMirror.match( prop.mMirror ) && mSide.match( prop.mSide );
+  return mAngle.match( prop.mAngle ) && mSide.match( prop.mSide );
   }
 
 
@@ -55,7 +52,6 @@ bool SdPropPartImp::match(const SdPropPartImp &prop)
 void SdPropPartImp::write(QJsonObject &obj) const
   {
   mAngle.write( QStringLiteral("PartImpAngle"), obj );
-  mMirror.write( QStringLiteral("PartImpMirror"), obj );
   mSide.write( QStringLiteral("PartImpSide"), obj );
   }
 
@@ -65,7 +61,6 @@ void SdPropPartImp::write(QJsonObject &obj) const
 void SdPropPartImp::read(const QJsonObject obj)
   {
   mAngle.read( QStringLiteral("PartImpAngle"), obj );
-  mMirror.read( QStringLiteral("PartImpMirror"), obj );
   mSide.read( QStringLiteral("PartImpSide"), obj );
   }
 
@@ -75,7 +70,6 @@ void SdPropPartImp::read(const QJsonObject obj)
 void SdPropPartImp::saveState(SdPropPartImpState *dst)
   {
   dst->mAngle  = mAngle.getValue();
-  dst->mMirror = mMirror.getValue();
   dst->mSide   = mSide.getValue();
   }
 
@@ -85,7 +79,6 @@ void SdPropPartImp::saveState(SdPropPartImpState *dst)
 void SdPropPartImp::swapState(SdPropPartImpState *src)
   {
   src->mAngle  = mAngle.swap( src->mAngle );
-  src->mMirror = mMirror.swap( src->mMirror );
   src->mSide   = mSide.swap( src->mSide );
   }
 

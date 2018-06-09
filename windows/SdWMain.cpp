@@ -738,6 +738,7 @@ void SdWMain::cmViewLayers()
   //Show layers dialog with active project
   SdDLayers layersDlg( prj, this );
   layersDlg.exec();
+  sdEnvir->resetForCache();
   //Signal viewed layers are changed
   SdPulsar::pulsar->emitViewedLayers();
 

@@ -16,6 +16,7 @@ Description
 
 #include "SdConfig.h"
 #include "SdLayer.h"
+#include "SdLayerCache.h"
 #include "SdSnapInfo.h"
 #include "SdUtil.h"
 #include <QColor>
@@ -48,9 +49,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (25 + FONT_COUNT)
-
-typedef QMap<QString,SdLayerPtr> SdLayerPtrTable;
+#define SdEnvirVersion  (26 + FONT_COUNT)
 
 
 class SdEnvir
@@ -114,6 +113,18 @@ class SdEnvir
     double          mPolyClear;             //Зазор между дорожками и полигоном
     bool            mShowConflict;         //Показывать конфликты трассировки
 
+    //Not saved
+    //Cashed layers for stratum
+    SdLayerCache    mCacheForPad;
+    SdLayerCache    mCacheForMask;
+    SdLayerCache    mCacheForStensil;
+    SdLayerCache    mCacheForHole;
+    SdLayerCache    mCacheForWire;
+    SdLayerCache    mCacheForPolygon;
+    SdLayerCache    mCacheForBoundary;
+    SdLayerCache    mCacheForKeepout;
+
+
     SdEnvir();
     ~SdEnvir();
 
@@ -129,6 +140,9 @@ class SdEnvir
 
     //Get existing layer, if it is not exist - then it's created as default
     SdLayer *getLayer( QString id );
+
+    //Clear stratum layer association cashe
+    void     resetForCache();
 
     //Set layer pair
     void     setPair( QString idTop, QString idBot );
@@ -149,7 +163,7 @@ class SdEnvir
   private:
     void deleteLayers();
     void addLayer( SdLayer *layer );
-    void addLayerId( const QString layerId, unsigned ccolor );
+    void addLayerId(const QString layerId, unsigned ccolor , SdLayerTrace st, int stratum);
   };
 
 extern SdEnvir *sdEnvir;

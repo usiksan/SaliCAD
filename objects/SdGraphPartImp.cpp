@@ -28,8 +28,7 @@ Description
 //Pin for part implementation
 SdPartImpPin::SdPartImpPin() :
   mPin(nullptr),       //Original pin
-  mSection(nullptr),   //Schematic section where pin is
-  mStratum()           //Pin stratum
+  mSection(nullptr)    //Schematic section where pin is located
   {
   }
 
@@ -42,7 +41,6 @@ void SdPartImpPin::operator =(const SdPartImpPin &pin)
   mSection   = pin.mSection;
   mPinName   = pin.mPinName;   //Part pin name
   mPosition  = pin.mPosition;  //Pin position in plate context
-  mStratum   = pin.mStratum;
   }
 
 
@@ -50,12 +48,12 @@ void SdPartImpPin::operator =(const SdPartImpPin &pin)
 
 
 
-void SdPartImpPin::draw(SdContext *dc, SdPItemPlate *plate) const
+void SdPartImpPin::draw(SdContext *dc, SdPItemPlate *plate, int startum ) const
   {
   //Draw standard pin (pin connection point, pin number and pin name)
   mPin->drawImp( dc, mPinName, isConnected() );
   //Draw pin pad
-  plate->drawPad( dc, mPosition, mPin->getPinType() );
+  plate->drawPad( dc, mPin->getPinOrigin(), mPin->getPinType(), mStratum.stratum() & startum );
   }
 
 
@@ -86,7 +84,7 @@ QJsonObject SdPartImpPin::toJson( const QString pinNumber ) const
   obj.insert( QStringLiteral("PinNum"), pinNumber );               //Part pin number
   obj.insert( QStringLiteral("PinNam"), mPinName );                //Part pin name
   mPosition.write( QStringLiteral("Pos"), obj );                   //Pin position in plate context
-  mStratum.write( obj );
+  mStratum.writeStratum( obj );
   return obj;
   }
 
@@ -99,7 +97,7 @@ QString SdPartImpPin::fromJson(SdObjectMap *map, const QJsonObject obj)
   mSection = dynamic_cast<SdGraphSymImp*>( SdObject::readPtr( QStringLiteral("Section"), map, obj )  );
   mPinName = obj.value( QStringLiteral("PinNam") ).toString();            //Part pin name
   mPosition.read( QStringLiteral("Pos"), obj );                           //Pin position in plate context
-  mStratum.read( obj );
+  mStratum.readStratum( obj );
   return obj.value( QStringLiteral("PinNum") ).toString();
   }
 
@@ -146,7 +144,7 @@ SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *par
   //Implement properties
   mProp = *prp;
   if( part ) {
-    SdConverterImplement imp( mOrigin, part->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue(), mProp.mSide.getValue() );
+    SdConverterImplement imp( mOrigin, part->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
     QTransform t( imp.getMatrix() );
     mOverRect.set( t.mapRect(part->getOverRect()) );//Over rect
     mPrefix = part->getIdent()->getText();          //Part identificator prefix
@@ -510,25 +508,28 @@ SdRect SdGraphPartImp::getOverRect() const
 
 
 
-void SdGraphPartImp::draw(SdContext *dc)
+void SdGraphPartImp::drawStratum(SdContext *dc, int stratum)
   {
   //Draw ident in plate context
-  dc->text( mIdentPos, mIdentRect, getIdent(), mIdentProp );
+  if( stratum == 0 || stratum == stmThrow )
+    dc->text( mIdentPos, mIdentRect, getIdent(), mIdentProp );
   //Convertor for symbol implementation
-  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue(), mProp.mSide.getValue() );
+  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
   dc->setConverter( &imp );
 
   //Draw symbol except ident and pins
-  mPart->forEach( dctAll & ~(dctPartPin | dctIdent), [dc] (SdObject *obj) -> bool {
-    SdGraph *graph = dynamic_cast<SdGraph*>( obj );
-    if( graph )
-      graph->draw( dc );
-    return true;
-    });
+  if( stratum == 0 || stratum == stmThrow ) {
+    mPart->forEach( dctAll & ~(dctPartPin | dctIdent), [dc] (SdObject *obj) -> bool {
+      SdGraph *graph = dynamic_cast<SdGraph*>( obj );
+      if( graph )
+        graph->draw( dc );
+      return true;
+      });
+    }
 
   //Draw pins
   for( const SdPartImpPin &pin : mPins )
-    pin.draw( dc, getPlate() );
+    pin.draw( dc, getPlate(), stratum );
   }
 
 
@@ -564,11 +565,11 @@ bool SdGraphPartImp::snapPoint(SdSnapInfo *snap)
 
 void SdGraphPartImp::updatePinsPositions()
   {
-  SdConverterImplement impl( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue(), mProp.mSide.getValue() );
+  SdConverterImplement impl( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
   QTransform t = impl.getMatrix();
   for( SdPartImpPin &pin : mPins ) {
     pin.mPosition = t.map( pin.mPin->getPinOrigin() );
-    pin.mStratum  = pin.mPin->getPinStratum( mProp.mSide.getValue() );
+    pin.mStratum  = pin.mPin->getPinStratum( mProp.mSide.isBottom() );
     }
   mOverRect.set( t.mapRect( mPart->getOverRect() ) );
   mIdentPos = t.map( mIdentOrigin );
@@ -615,4 +616,7 @@ void SdGraphPartImp::upgradeProjectItem(SdProjectItem *newItem, SdUndo *undo)
   {
 
   }
+
+
+
 

@@ -80,9 +80,10 @@ SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPI
 
 
 
-void SdPItemPlate::drawPad(SdContext *dc, SdPoint p, const QString pinType) const
+void SdPItemPlate::drawPad(SdContext *dc, SdPoint p, const QString pinType, int stratum) const
   {
-  //TODO D034 draw pad
+  if( mPadAssociation.contains(pinType) )
+    mPadAssociation.pin( pinType ).draw( dc, p, stratum );
   }
 
 
@@ -181,21 +182,6 @@ quint64 SdPItemPlate::getAcceptedObjectsMask() const
 
 
 
-
-
-void SdPItemPlate::insertObjects(SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)
-  {
-  //TODO D031 insert objects into plate
-  }
-
-
-
-
-
-
-
-
-
 void SdPItemPlate::writeObject(QJsonObject &obj) const
   {
   SdProjectItem::writeObject( obj );
@@ -204,6 +190,7 @@ void SdPItemPlate::writeObject(QJsonObject &obj) const
   //Write pad assotiation
   obj.insert( QStringLiteral("PadAssociation"), mPadAssociation.write() );
   }
+
 
 
 

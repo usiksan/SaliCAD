@@ -140,6 +140,9 @@ void SdEnvir::loadEnvir()
        >> mGridHistory;         //Previous grid history table
     }
   else defaultEnvir();
+
+  //Reset stratum layers cache
+  resetForCache();
   }
 
 
@@ -309,9 +312,9 @@ void SdEnvir::defaultEnvir()
   //Default layer list
   deleteLayers();
   for( int i = 0; sdLayerDescrActual[i].mId != nullptr; i++ )
-    addLayerId( QString(sdLayerDescrActual[i].mId), sdLayerDescrActual[i].mColor );
+    addLayerId( QString(sdLayerDescrActual[i].mId), sdLayerDescrActual[i].mColor, sdLayerDescrActual[i].mTrace, sdLayerDescrActual[i].mStratum );
   for( int i = 0; sdLayerDescrAddon[i].mId != nullptr; i++ )
-    addLayerId( QString(sdLayerDescrAddon[i].mId), sdLayerDescrAddon[i].mColor );
+    addLayerId( QString(sdLayerDescrAddon[i].mId), sdLayerDescrAddon[i].mColor, sdLayerDescrAddon[i].mTrace, sdLayerDescrAddon[i].mStratum );
 
 
   //Assign paired layers
@@ -324,6 +327,7 @@ void SdEnvir::defaultEnvir()
   setPair( QString( LID0_PAD LID1_TOP ),  QString( LID0_PAD LID1_BOT ) );
   setPair( QString( LID0_CLEAR LID1_TOP ), QString( LID0_CLEAR LID1_BOT ) );
   setPair( QString( LID0_SOLDER_MASK LID1_TOP ),  QString( LID0_SOLDER_MASK LID1_BOT ) );
+
   }
 
 
@@ -354,6 +358,24 @@ SdLayer *SdEnvir::getLayer(QString id)
 
   return mLayerTable.value(id);
   }
+
+
+
+void SdEnvir::resetForCache()
+  {
+  mCacheForPad.rebuild( mLayerTable, layerTracePad );
+  mCacheForMask.rebuild( mLayerTable, layerTraceMask );
+  mCacheForStensil.rebuild( mLayerTable, layerTraceStensil );
+  mCacheForHole.rebuild( mLayerTable, layerTraceHole );
+  mCacheForWire.rebuild( mLayerTable, layerTraceWire );
+  mCacheForPolygon.rebuild( mLayerTable, layerTracePolygon );
+  mCacheForBoundary.rebuild( mLayerTable, layerTraceBoundary );
+  mCacheForKeepout.rebuild( mLayerTable, layerTraceKeepout );
+  }
+
+
+
+
 
 
 
@@ -416,7 +438,10 @@ void SdEnvir::addLayer(SdLayer *layer)
 
 
 
-void SdEnvir::addLayerId(const QString layerId, unsigned ccolor)
+void SdEnvir::addLayerId(const QString layerId, unsigned ccolor, SdLayerTrace st, int stratum )
   {
-  getLayer( layerId )->setColor( ccolor );
+  SdLayer *layer = getLayer( layerId );
+  layer->setColor( ccolor );
+  layer->setTrace( st );
+  layer->setStratum( stratum );
   }

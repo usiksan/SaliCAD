@@ -24,7 +24,7 @@ int SdUtil::phys2log(const QString src, double ppm)
 int SdUtil::phys2log(double phys, double ppm)
   {
   if( ppm == 0 ) ppm = 1.0;
-  return (phys + ppm/2) / ppm;
+  return static_cast<int>((phys + ppm/2) / ppm);
   }
 
 QPoint SdUtil::phys2log(QPointF phys, double ppm)
@@ -129,6 +129,25 @@ void SdUtil::swapBool(bool &src, bool *dst)
     *dst = src;
     src = tmp;
     }
+  }
+
+
+
+
+//Create octagon over circle
+QPolygon SdUtil::octagon(int centerx, int centery, int radius)
+  {
+  int d = radius * 41 / 100;
+  QPolygon pgn;
+  pgn << SdPoint(centerx - radius, centery - d )
+      << SdPoint(centerx - d,      centery - radius )
+      << SdPoint(centerx + d,      centery - radius )
+      << SdPoint(centerx + radius, centery - d )
+      << SdPoint(centerx + radius, centery + d )
+      << SdPoint(centerx + d,      centery + radius )
+      << SdPoint(centerx - d,      centery + radius )
+      << SdPoint(centerx - radius, centery + d );
+  return pgn;
   }
 
 

@@ -27,6 +27,12 @@
 //===================================================================================
 //Fixed:
 
+//D034 draw pad
+
+//D036 read pad association
+
+//D035 write pad association
+
 //D019 Set current pin type
 
 //D002 when change name of wire

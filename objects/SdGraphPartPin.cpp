@@ -16,6 +16,8 @@ Description
 #include "SdSelector.h"
 #include "SdContext.h"
 #include "SdContainer.h"
+#include "SdPItemPlate.h"
+
 #include <QStringRef>
 #include <QMessageBox>
 
@@ -49,20 +51,9 @@ SdGraphPartPin::SdGraphPartPin(SdPoint org, SdPoint numberPos, SdPoint namePos, 
 
 
 
-SdStratum SdGraphPartPin::getPinStratum(bool otherSide) const
+int SdGraphPartPin::getPinStratum(bool otherSide) const
   {
-  if( mPinProp.mSide.getValue() == dsTop ) {
-    if( otherSide ) return SdStratum(stmBottom);
-    return SdStratum(stmTop);
-    }
-  if( mPinProp.mSide.getValue() == dsBottom ) {
-    if( otherSide ) return SdStratum(stmTop);
-    return SdStratum(stmBottom);
-    }
-  if( mPinProp.mSide.getValue() == dsThrow ) {
-    return SdStratum(stmThrow);
-    }
-  return SdStratum();
+  return mPinProp.mSide.stratum( !otherSide );
   }
 
 

@@ -28,14 +28,6 @@ Description
 #define dle45degree      1
 #define dleAnyDegree     2
 
-//Side constant
-#define dsNone           0
-#define dsTop            0x1
-#define dsBottom         0x2
-//#define dsBoth           0x3
-//#define dsInner          0x4
-#define dsThrow          0x3
-
 struct SdProp
   {
     SdPropLine    mLineProp;       //Свойства линейных объектов

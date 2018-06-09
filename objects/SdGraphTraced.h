@@ -35,8 +35,13 @@ class SdGraphTraced : public SdGraph
     //Defined here
     virtual bool         isPointOnNet( SdPoint p, SdStratum stratum, QString &wireName ) = 0;
     virtual void         accumNetPoints( SdPlateNetList &netList ) = 0;
+    virtual void         drawStratum( SdContext *dcx, int stratum ) = 0;
     //virtual void         accumLinked( SdPoint a, SdPoint b, SdLayer *layer, SdSelector *sel ) = 0;
 
+
+    // SdGraph interface
+  public:
+    virtual void         draw(SdContext *dc) override;
   };
 
 #endif // SDGRAPHTRACED_H

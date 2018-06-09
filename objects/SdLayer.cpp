@@ -14,66 +14,67 @@ Description
 #include "SdEnvir.h"
 
 SdLayerDescr sdLayerDescrActual[] = {
-  { LID0_COMMON,               0x00404040 }, //0
-  { LID0_INVISIBLE,            0xff007f7f }, //1
+  { LID0_COMMON,                 0x00404040, layerTraceNone, 0x00000000 }, //0
+  { LID0_INVISIBLE,              0xff007f7f, layerTraceNone, 0x00000000 }, //1
   //Schematic specific
-  { LID0_NET,                  0x00ffff7f }, //2
-  { LID0_NET_NAME,             0x007f7f00 }, //3
-  { LID0_BUS,                  0xff0000ff }, //4
-  { LID0_AREA,                 0x007f7fff }, //5
+  { LID0_NET,                    0x00ffff7f, layerTraceNone, 0x00000000 }, //2
+  { LID0_NET_NAME,               0x007f7f00, layerTraceNone, 0x00000000 }, //3
+  { LID0_BUS,                    0xff0000ff, layerTraceNone, 0x00000000 }, //4
+  { LID0_AREA,                   0x007f7fff, layerTraceNone, 0x00000000 }, //5
   //PCB specific
-  { LID0_PCB,                  0x00ffff00 }, //6
-  { LID0_WIRE LID1_TOP,        0x00cf0000 }, //7
-  { LID0_WIRE LID1_BOT,        0x000000cf }, //8
+  { LID0_PCB,                    0x00ffff00, layerTraceBoundary, stmThrow }, //6
+  { LID0_WIRE LID1_TOP,          0x00cf0000, layerTraceWire, stmTop }, //7
+  { LID0_WIRE LID1_BOT,          0x000000cf, layerTraceWire, stmBottom }, //8
 
-  { LID0_POLYGON LID1_TOP,     0x808f0000 }, //9
-  { LID0_POLYGON LID1_BOT,     0x8000008f }, //10
+  { LID0_POLYGON LID1_TOP,       0x808f0000, layerTracePolygon, stmTop }, //9
+  { LID0_POLYGON LID1_BOT,       0x8000008f, layerTracePolygon, stmBottom }, //10
 
-  { LID0_PAD,                  0x0000bf00 }, //11
-  { LID0_PAD LID1_TOP,         0x00bf0000 }, //12
-  { LID0_PAD LID1_BOT,         0x000000bf }, //13
+  //{ LID0_PAD,                  0x0000bf00, layerTraceNone, 0x00000000 }, //11
+  { LID0_PAD LID1_TOP,           0x00bf0000, layerTracePad, stmTop }, //12
+  { LID0_PAD LID1_BOT,           0x000000bf, layerTracePad, stmBottom }, //13
 
-  { LID0_HOLE,                 0x00bf4000 }, //14
+  { LID0_HOLE,                   0x00bf4000, layerTraceHole, stmThrow }, //14
 
-  { LID0_CLEAR,                0x803f3f00 }, //15
-  { LID0_CLEAR LID1_TOP,       0x803f3f00 }, //16
-  { LID0_CLEAR LID1_BOT,       0x8040407f }, //17
+  //{ LID0_CLEAR,                0x803f3f00, layerTraceNone, 0x00000000 }, //15
+  { LID0_CLEAR LID1_TOP,         0x803f3f00, layerTraceKeepout, stmTop }, //16
+  { LID0_CLEAR LID1_BOT,         0x8040407f, layerTraceKeepout, stmBottom }, //17
 
-  { LID0_SOLDER_MASK,          0x803fff00 },
-  { LID0_SOLDER_MASK LID1_TOP, 0x803fff00 },
-  { LID0_SOLDER_MASK LID1_BOT, 0x8040007f },
+  //{ LID0_SOLDER_MASK,          0x803fff00 },
+  { LID0_SOLDER_MASK LID1_TOP,   0x803fff00, layerTraceMask, stmTop },
+  { LID0_SOLDER_MASK LID1_BOT,   0x8040007f, layerTraceMask, stmBottom },
 
-  { LID0_STENSIL,              0x003f8000 },
-  { LID0_STENSIL_REPER,        0x003f4000 },
+  { LID0_STENSIL LID1_TOP,       0x003f8000, layerTraceStensil, stmTop },
+  { LID0_STENSIL_REPER LID1_TOP, 0x003f4000, layerTraceNone, 0x00000000 },
 
-  { LID0_EXCLUSION,            0x00002080 },
-  { LID0_TRACE,                0x00200080 },
+  { LID0_EXCLUSION,              0x00002080, layerTraceNone, 0x00000000 },
+  { LID0_TRACE,                  0x00200080, layerTraceNone, 0x00000000 },
+  { LID0_TRACE_DEFAULT,          0x00404020, layerTraceNone, 0x00000000 }, //Default trace layer for undefined stratum
 
   //Both schematic and PCB
-  { LID0_COMPONENT,            0x00ff0000 },
-  { LID0_COMPONENT LID1_BOT,   0x000000ff },
-  { LID0_PIN,                  0x0000ff00 },
-  { LID0_PIN LID1_BOT,         0x00008040 },
-  { LID0_PIN_NAME,             0x000000ff },
-  { LID0_PIN_NAME LID1_BOT,    0x00002080 },
-  { LID0_PIN_NUMBER,           0x000020ff },
-  { LID0_PIN_NUMBER LID1_BOT,  0x0000a040 },
-  { LID0_IDENT,                0x00ff7f00 },
-  { LID0_IDENT LID1_BOT,       0x00207f00 },
+  { LID0_COMPONENT,            0x00ff0000, layerTraceNone, 0x00000000 },
+  { LID0_COMPONENT LID1_BOT,   0x000000ff, layerTraceNone, 0x00000000 },
+  { LID0_PIN,                  0x0000ff00, layerTraceNone, 0x00000000 },
+  { LID0_PIN LID1_BOT,         0x00008040, layerTraceNone, 0x00000000 },
+  { LID0_PIN_NAME,             0x000000ff, layerTraceNone, 0x00000000 },
+  { LID0_PIN_NAME LID1_BOT,    0x00002080, layerTraceNone, 0x00000000 },
+  { LID0_PIN_NUMBER,           0x000020ff, layerTraceNone, 0x00000000 },
+  { LID0_PIN_NUMBER LID1_BOT,  0x0000a040, layerTraceNone, 0x00000000 },
+  { LID0_IDENT,                0x00ff7f00, layerTraceNone, 0x00000000 },
+  { LID0_IDENT LID1_BOT,       0x00207f00, layerTraceNone, 0x00000000 },
 
-  { LID0_PICTURE,              0x0000ff00 },
-  { LID0_REMARK,               0x00ff2000 },
-  { LID0_VALUE,                0x00404000 },
-  { nullptr, 0 }
+  { LID0_PICTURE,              0x0000ff00, layerTraceNone, 0x00000000 },
+  { LID0_REMARK,               0x00ff2000, layerTraceNone, 0x00000000 },
+  { LID0_VALUE,                0x00404000, layerTraceNone, 0x00000000 },
+  { nullptr, 0, layerTraceNone, 0x00000000 }
 };
 
 
 SdLayerDescr sdLayerDescrAddon[] = {
-  { LID0_WIRE LID1_INT00, 0x000040cf },
-  { LID0_WIRE LID1_INT01, 0x004040cf },
-  { LID0_WIRE LID1_INT02, 0x004000cf },
-  { LID0_WIRE LID1_INT03, 0x00cf4040 },
-  { nullptr, 0 }
+  { LID0_WIRE LID1_INT00, 0x000040cf, layerTraceWire, stmInt00 },
+  { LID0_WIRE LID1_INT01, 0x004040cf, layerTraceWire, stmInt01 },
+  { LID0_WIRE LID1_INT02, 0x004000cf, layerTraceWire, stmInt02 },
+  { LID0_WIRE LID1_INT03, 0x00cf4040, layerTraceWire, stmInt03 },
+  { nullptr, 0, layerTraceNone, 0x00000000 }
 };
 
 SdLayerLevel sdLayerLevel0[] = {
@@ -98,6 +99,7 @@ SdLayerLevel sdLayerLevel0[] = {
   { LID0_STENSIL_REPER, QT_TR_NOOP( "PCB stensil reper" ) },
   { LID0_EXCLUSION,     QT_TR_NOOP( "PCB trace exclusion area" ) },
   { LID0_TRACE,         QT_TR_NOOP( "PCB trace area" ) },
+  { LID0_TRACE_DEFAULT, QT_TR_NOOP( "PCB trace default" ) }, //Default trace layer for undefined stratum
 
   //Both schematic and PCB
   { LID0_COMPONENT,     QT_TR_NOOP( "Component" ) },
@@ -148,8 +150,6 @@ SdLayerLevel sdLayerLevel1[] = {
   { LID1_INT27,         QT_TR_NOOP( "on internal 28" ) },
   { LID1_INT28,         QT_TR_NOOP( "on internal 29" ) },
   { LID1_INT29,         QT_TR_NOOP( "on internal 30" ) },
-  { LID1_INT30,         QT_TR_NOOP( "on internal 31" ) },
-  { LID1_INT31,         QT_TR_NOOP( "on internal 32" ) },
   { nullptr, nullptr }
 };
 
@@ -159,9 +159,9 @@ SdLayer::SdLayer(QString layerId, QString layerName, unsigned layerColor) :
   mName(layerName),            //Имя слоя
   mState(layerStateEdit), //Состояние
   mTrace(layerTraceNone), //Разрешение трассировки на данном слое
-  mTracePosition(0),      //Позиция слоя при трассировке (верх, низ, внутри)
+  mStratum(0),      //Позиция слоя при трассировке (верх, низ, внутри)
   mColor(layerColor),          //Цвет
-  mPair(0),               //Парный слой
+  mPair(nullptr),               //Парный слой
   mUsage(false)          //Флаг использования
   {
   //Невидимый слой выключить
@@ -169,7 +169,7 @@ SdLayer::SdLayer(QString layerId, QString layerName, unsigned layerColor) :
     mState = layerStateOff;
   //Трассировочный слой
   if( mId.startsWith(LID0_WIRE) )
-    mTrace = layerTraceSignal;
+    mTrace = layerTraceWire;
   //По умолчанию пара - этот-же слой
   //By default, pair - is same layer
   mPair = this;
@@ -212,7 +212,7 @@ void SdLayer::write(QDataStream &os)
      << mName
      << static_cast<int>(mState)
      << static_cast<int>(mTrace)
-     << mTracePosition
+     << mStratum
      << mColor
      << mPair->mId;
   }
@@ -229,7 +229,7 @@ void SdLayer::read(QDataStream &is)
      >> mName
      >> state
      >> trace
-     >> mTracePosition
+     >> mStratum
      >> mColor
      >> pair;
   mState = static_cast<SdLayerState>(state);

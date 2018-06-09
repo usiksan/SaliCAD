@@ -186,7 +186,8 @@ SOURCES += \
     modes/SdModeCNetName.cpp \
     objects/SdPad.cpp \
     modes/SdModeCLinearCircle.cpp \
-    objects/SdPadAssociation.cpp
+    objects/SdPadAssociation.cpp \
+    objects/SdLayerCache.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -366,7 +367,8 @@ HEADERS  += \
     modes/SdModeCNetName.h \
     objects/SdPad.h \
     modes/SdModeCLinearCircle.h \
-    objects/SdPadAssociation.h
+    objects/SdPadAssociation.h \
+    objects/SdLayerCache.h
 
 DISTFILES += \
     license.txt

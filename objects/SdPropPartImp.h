@@ -17,21 +17,17 @@ Description
 
 #include "SdPropInt.h"
 #include "SdPropAngle.h"
-
-#define dsideTop 0
-#define dsideBot 1
+#include "SdStratum.h"
 
 struct SdPropPartImpState {
     int mAngle;
-    int mMirror;
     int mSide;
   };
 
 struct SdPropPartImp
   {
-    SdPropAngle   mAngle;  //Угол поворота компонента
-    SdPropInt mMirror; //Зеркальность компонента
-    SdPropInt mSide;   //Сторона расположения на плате
+    SdPropAngle   mAngle;  //Angle of rotation component [Угол поворота компонента]
+    SdStratum     mSide;   //Side of component location [Сторона расположения на плате]
 
     void operator = ( SdPropPartImp const &sour ); //Назначить свойства
     void append( SdPropPartImp const &sour );      //Установить свойства

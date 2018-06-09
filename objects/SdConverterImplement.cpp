@@ -14,17 +14,13 @@ Description
 #include "SdConverterImplement.h"
 
 
-SdConverterImplement::SdConverterImplement(SdPoint pos, SdPoint org, int angle, bool mirror, bool sideOther) :
+SdConverterImplement::SdConverterImplement(SdPoint pos, SdPoint org, int angle, bool mirror) :
   SdConverter(),
   mPosition(pos),
   mOrigin(org),
   mMirror(mirror)
   {
   mAngle = static_cast<double>(angle) / 1000.0;
-
-  if( sideOther )
-    mMirror = !mMirror;
-
   }
 
 

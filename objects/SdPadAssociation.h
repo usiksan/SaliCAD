@@ -22,8 +22,9 @@ class SdPadAssociation : public SdObject
 
     void         setMap( const SdPadMap &src, SdUndo *undo );
 
-//    void         drawPad( );
-//    const SdPad *pin( const QString pinType ) const;
+    bool         contains( const QString pinType ) const { return mMap.contains(pinType); }
+
+    const SdPad  pin( const QString pinType ) const { return mMap[pinType]; }
 
     // SdObject interface
   public:

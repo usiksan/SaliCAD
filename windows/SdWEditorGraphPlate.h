@@ -24,7 +24,7 @@ class SdWEditorGraphPlate : public SdWEditorGraph
 
     SdPItemPlate *mPlate;
   public:
-    SdWEditorGraphPlate( SdPItemPlate *pcb, QWidget *parent = 0 );
+    SdWEditorGraphPlate( SdPItemPlate *pcb, QWidget *parent = nullptr );
 
     // SdWEditor interface
   public:

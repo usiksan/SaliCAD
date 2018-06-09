@@ -41,7 +41,7 @@ struct SdPartImpPin {
   SdPartImpPin();
 
   void        operator = ( const SdPartImpPin &pin );
-  void        draw(SdContext *dc , SdPItemPlate *plate) const;
+  void        draw(SdContext *dc , SdPItemPlate *plate, int startum) const;
   bool        isConnected() const;
   QString     getNetName() const;
 
@@ -138,7 +138,6 @@ class SdGraphPartImp : public SdGraphTraced
     virtual void    setLayerUsage() override;
     virtual bool isVisible() override;
     virtual SdRect getOverRect() const override;
-    virtual void draw(SdContext *dc) override;
     virtual int behindCursor(SdPoint p) override;
     virtual bool getInfo(SdPoint p, QString &info, bool extInfo) override;
     virtual bool snapPoint(SdSnapInfo *snap) override;
@@ -154,7 +153,7 @@ class SdGraphPartImp : public SdGraphTraced
   public:
     virtual bool isPointOnNet(SdPoint p, SdStratum stratum, QString &netName) override;
     virtual void accumNetPoints(SdPlateNetList &netList) override;
-
+    virtual void drawStratum(SdContext *dc, int stratum ) override;
   };
 
 #endif // SDGRAPHPARTIMP_H

@@ -38,7 +38,7 @@ class SdDLayers : public QDialog
 
     static int mShow;    //Define show all, actual or used layers
   public:
-    explicit SdDLayers( SdProject *prj, QWidget *parent = 0);
+    explicit SdDLayers( SdProject *prj, QWidget *parent = nullptr);
     ~SdDLayers();
 
   private:

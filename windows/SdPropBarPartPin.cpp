@@ -56,9 +56,9 @@ void SdPropBarPartPin::setPropPartPin(SdPropPartPin *propPartPin)
     //Set current pin side
     int side = propPartPin->mSide.getValue();
     switch(side) {
-      case dsTop    : mPinSide->setCurrentIndex(1); break;
-      case dsBottom : mPinSide->setCurrentIndex(2); break;
-      case dsThrow  : mPinSide->setCurrentIndex(3); break;
+      case stmTop    : mPinSide->setCurrentIndex(1); break;
+      case stmBottom : mPinSide->setCurrentIndex(2); break;
+      case stmThrow  : mPinSide->setCurrentIndex(3); break;
       default: mPinSide->setCurrentIndex(0);
       }
 
@@ -80,9 +80,9 @@ void SdPropBarPartPin::getPropPartPin(SdPropPartPin *propPartPin)
 
     int side = mPinSide->currentIndex();
     switch( side ) {
-      case 1 : propPartPin->mSide = dsTop; break;
-      case 2 : propPartPin->mSide = dsBottom; break;
-      case 3 : propPartPin->mSide = dsThrow; break;
+      case 1 : propPartPin->mSide = stmTop; break;
+      case 2 : propPartPin->mSide = stmBottom; break;
+      case 3 : propPartPin->mSide = stmThrow; break;
       }
 
     //Get current pin type

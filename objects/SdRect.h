@@ -30,7 +30,9 @@ class SdRect : public QRect
   public:
     SdRect() : QRect() {}
     SdRect( const QRect &r ) : QRect( r ) {}
+    //Construct rect by two diagonal corners
     SdRect( SdPoint a, SdPoint b );
+    //Construct rect by leftTop corner and width and height
     SdRect( int px, int py, int w, int h);
 
     //Because Y axiz point to down, then "top" in fact is bottom and wise wersa

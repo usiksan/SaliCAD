@@ -37,3 +37,9 @@ void SdGraphTraced::setDirtyRatNet()
   }
 
 
+
+
+void SdGraphTraced::draw(SdContext *dc)
+  {
+  drawStratum( dc, stmThrow );
+  }

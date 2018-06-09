@@ -24,7 +24,7 @@ class SdConverterImplement : public SdConverter
     double  mAngle;    //Angle of rotation
     bool    mMirror;   //True if implement mirrored
   public:
-    SdConverterImplement( SdPoint pos, SdPoint org, int angle, bool mirror, bool sideOther = false );
+    SdConverterImplement( SdPoint pos, SdPoint org, int angle, bool mirror );
 
     // SdConverter interface
   public:

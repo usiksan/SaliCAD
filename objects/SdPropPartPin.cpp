@@ -56,7 +56,7 @@ void SdPropPartPin::write(QJsonObject &obj) const
   {
   mLayer.write( QStringLiteral("PartPinLayer"), obj );
   mPinType.write( QStringLiteral("PartPinType"), obj );
-  mSide.write( QStringLiteral("PartPinSide"), obj );
+  mSide.writeStratum( obj );
   }
 
 
@@ -66,7 +66,7 @@ void SdPropPartPin::read(const QJsonObject obj)
   {
   mLayer.read( QStringLiteral("PartPinLayer"), obj );
   mPinType.read( QStringLiteral("PartPinType"), obj );
-  mSide.read( QStringLiteral("PartPinSide"), obj );
+  mSide.readStratum( obj );
   }
 
 

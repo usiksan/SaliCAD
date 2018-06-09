@@ -50,7 +50,7 @@ class SdPItemPlate : public SdProjectItem
     SdGraphPartImp        *allocPartImp(int *section, SdPItemPart *part, SdPItemComponent *comp, SdPItemSymbol *sym , SdUndo *undo);
 
     //Draw pad
-    void                   drawPad( SdContext *dc, SdPoint p, const QString pinType ) const;
+    void                   drawPad( SdContext *dc, SdPoint p, const QString pinType, int stratum ) const;
 
     //Set flag to update rat net
     void                   setDirtyRatNet();
@@ -77,7 +77,6 @@ class SdPItemPlate : public SdProjectItem
   public:
     virtual QString        getIconName() const override;
     virtual quint64        getAcceptedObjectsMask() const override;
-    virtual void           insertObjects( SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next ) override;
 
   };
 

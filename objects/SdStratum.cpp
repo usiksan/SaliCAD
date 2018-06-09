@@ -13,14 +13,14 @@ Description
 #include "SdStratum.h"
 
 SdStratum::SdStratum() :
-  mStratum(0l)
+  SdPropInt()
   {
 
   }
 
 
-SdStratum::SdStratum(qint64 str) :
-  mStratum(str)
+SdStratum::SdStratum(int str) :
+  SdPropInt(str)
   {
 
   }
@@ -28,15 +28,34 @@ SdStratum::SdStratum(qint64 str) :
 
 
 
-void SdStratum::write(QJsonObject &obj) const
+void SdStratum::writeStratum(QJsonObject &obj) const
   {
-  obj.insert( QStringLiteral("Stratum"), QString::number( mStratum, 16 ) );
+  obj.insert( QStringLiteral("Stratum"), QString::number( mValue, 16 ) );
   }
 
 
 
 
-void SdStratum::read(const QJsonObject &obj)
+void SdStratum::readStratum(const QJsonObject &obj)
   {
-  mStratum = obj.value( QStringLiteral("Stratum") ).toString().toLongLong( nullptr, 16 );
+  mValue = obj.value( QStringLiteral("Stratum") ).toString().toInt( nullptr, 16 );
+  }
+
+
+
+
+int SdStratum::stratum(bool top) const
+  {
+  if( mValue < 0 ) return 0;
+  if( !top && mValue == stmTop )
+    return stmBottom;
+  return mValue;
+  }
+
+
+
+
+int SdStratum::stratumComp(const SdStratum &src) const
+  {
+  return stratum( !src.isBottom() );
   }

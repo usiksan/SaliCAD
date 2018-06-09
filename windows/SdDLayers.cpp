@@ -217,6 +217,7 @@ void SdDLayers::cmDelete()
         ui->mLayerList->removeRow( index );
         mList.removeAt( index );
         sdEnvir->mLayerTable.remove( layer->id() );
+        sdEnvir->resetForCache();
         delete layer;
         }
       }
@@ -317,7 +318,7 @@ void SdDLayers::cmLoad()
         QJsonObject obj = ar.at(i).toObject();
         QString id = obj.value( QStringLiteral("id") ).toString();
         int state = obj.value( QStringLiteral("state") ).toInt();
-        sdEnvir->getLayer(id)->setState( (SdLayerState)state );
+        sdEnvir->getLayer(id)->setState( static_cast<SdLayerState>(state) );
         }
 
       //Update visula list
@@ -341,7 +342,7 @@ void SdDLayers::cmSave()
       fname.append( QStringLiteral(SD_LAYER_LIST_EXTENSION) );
     //Make visible layer list
     QJsonArray ar;
-    for( const QString id : mList ) {
+    for( const QString &id : mList ) {
       int state = sdEnvir->getLayer(id)->state();
       QJsonObject obj;
       obj.insert( QStringLiteral("id"), id );

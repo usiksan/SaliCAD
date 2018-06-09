@@ -70,7 +70,7 @@ SdProp::SdProp()
   //Part pin properties
   mPartPinProp.mLayer.set( QString(LID0_PIN LID1_TOP) );    //Свойства вывода корпуса
   mPartPinProp.mPinType = QString("h1");
-  mPartPinProp.mSide = dsThrow;
+  mPartPinProp.mSide    = stmThrow;
 
   //Part pin name properties
   mPartPinNameProp.mLayer.set( QString(LID0_PIN_NAME LID1_TOP) );    //Свойства имени вывода
@@ -96,8 +96,7 @@ SdProp::SdProp()
 
   //Props of part implement
   mPartImpProp.mAngle  = 0;
-  mPartImpProp.mMirror = 0;
-  mPartImpProp.mSide   = dsideTop;
+  mPartImpProp.mSide   = stmTop;
 
   //Symbol identifier (reference) aka D4.5
   mSymIdentProp.mLayer.set( QString(LID0_IDENT) );
