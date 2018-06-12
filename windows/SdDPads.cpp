@@ -9,16 +9,46 @@
 #include <QTableWidgetItem>
 #include <QMessageBox>
 
-SdDPads::SdDPads(QWidget *parent) :
+
+#define ACTUAL_PIN Qt::UserRole
+
+
+SdDPads::SdDPads(SdPItemPlate *plate, const QString associationName, SdPadMap map, QWidget *parent) :
   QDialog(parent),
-  ui(new Ui::SdDPads)
+  ui(new Ui::SdDPads),
+  mMap(map),
+  mPlate(plate)
   {
   ui->setupUi(this);
+
+  //Setup association name
+  ui->mAssociationName->setText( associationName );
+
+  //Connect signals from buttons
+  connect( ui->mAccumUsedPins,    &QPushButton::clicked, this, &SdDPads::cmAccumUsedPins );
+  connect( ui->mAppendPin,        &QPushButton::clicked, this, &SdDPads::cmAppendPin );
+  connect( ui->mDeletePin,        &QPushButton::clicked, this, &SdDPads::cmDeletePin );
+  connect( ui->mDeleteAllPins,    &QPushButton::clicked, this, &SdDPads::cmDeleteAllPins );
+  connect( ui->mAssociationClear, &QPushButton::clicked, this, &SdDPads::cmAssociationClear );
+  connect( ui->mAssociationLoad,  &QPushButton::clicked, this, &SdDPads::cmAssociationLoad );
+  connect( ui->mAssociationSave,  &QPushButton::clicked, this, &SdDPads::cmAssociationSave );
+  connect( ui->mAssociationUse,   &QPushButton::clicked, this, &SdDPads::cmAssociationUse );
+  //Connect signals from table
+  connect( ui->mPadTable, &QTableWidget::cellClicked, this, &SdDPads::cmCellClicked );
+
+  updatePinTable();
+
+
   }
 
 SdDPads::~SdDPads()
   {
   delete ui;
+  }
+
+QString SdDPads::getAssociationName() const
+  {
+  return ui->mAssociationName->text();
   }
 
 void SdDPads::changeEvent(QEvent *e)
@@ -38,21 +68,24 @@ void SdDPads::changeEvent(QEvent *e)
 
 void SdDPads::updatePinTable()
   {
+  disconnect( ui->mPadTable, &QTableWidget::cellChanged, this, &SdDPads::cmCellEditComplete );
   int curRow = ui->mPadTable->currentRow();
   //int curCol
   //Clear current table contens
   ui->mPadTable->clear();
   //Table dimensions
   ui->mPadTable->setColumnCount(2);
+  ui->mPadTable->setColumnWidth(1,300);
   ui->mPadTable->setRowCount( mMap.count() );
   //Table header
   ui->mPadTable->setHorizontalHeaderLabels( {tr("Pin type"), tr("Pad description") } );
 
   int i = 0;
   for( auto iter = mMap.cbegin(); iter != mMap.cend(); iter++ ) {
+    ui->mPadTable->setRowHeight(i,25);
     QTableWidgetItem *item;
     ui->mPadTable->setItem( i, 0, item = new QTableWidgetItem(iter.key()) );
-    item->setData( Qt::UserRole, iter.key() );
+    item->setData( ACTUAL_PIN, iter.key() );
     ui->mPadTable->setItem( i, 1, item = new QTableWidgetItem(iter.value().description()) );
     item->setFlags( Qt::ItemIsEnabled );
     if( iter.value().isEmpty() )
@@ -61,6 +94,7 @@ void SdDPads::updatePinTable()
     }
 
   ui->mPadTable->setCurrentCell( curRow, 0 );
+  connect( ui->mPadTable, &QTableWidget::cellChanged, this, &SdDPads::cmCellEditComplete );
   }
 
 
@@ -108,7 +142,7 @@ void SdDPads::cmDeletePin()
     QMessageBox::warning( this, tr("Error"), tr("Not selected pin to delete. Select one and retry.") );
   else {
     //Retrive key (pinType) from padTable
-    QString key = item->data(Qt::UserRole).toString();
+    QString key = item->data(ACTUAL_PIN).toString();
     if( !key.isEmpty() ) {
       //PinType present, ask question to delete pin
       if( QMessageBox::question( this, tr("Warning"), tr("Are you sure to delete pin \"%1\"").arg(key) ) == QMessageBox::Yes )
@@ -218,11 +252,42 @@ void SdDPads::cmAssociationLoad()
 
 
 
+
+//Complete edit pin-to-pad association
 void SdDPads::cmCellEditComplete(int row, int column)
   {
-
+  if( column == 0 ) {
+    //Edit enable only for pin name
+    QString newPin = ui->mPadTable->item( row, 0 )->text();
+    QString oldPin = ui->mPadTable->item( row, 0 )->data( ACTUAL_PIN ).toString();
+    if( newPin != oldPin ) {
+      //Pin name changed
+      if( !newPin.isEmpty() ) {
+        //New name present
+        if( mMap.contains(oldPin) )
+          //For new pin name insert previous pad defined for this pin
+          mMap.insert( newPin, mMap.value(oldPin) );
+        else
+          //No previous pin - insert default pad
+          mMap.insert( newPin, SdPad() );
+        }
+      //If present, then remove previous pin
+      if( mMap.contains(oldPin) )
+        mMap.remove( oldPin );
+      //Update visual table
+      ui->mPadTable->item( row, 0 )->setData( ACTUAL_PIN, newPin );
+      ui->mPadTable->item( row, 1 )->setText( mMap.value(newPin).description() );
+      if( mMap.value(newPin).isEmpty() )
+        ui->mPadTable->item( row, 1 )->setBackgroundColor( QColor(Qt::yellow).lighter() );
+      }
+    }
   }
 
+
+
+
+
+//On clicked pad description cell show pad master
 void SdDPads::cmCellClicked(int row, int column)
   {
 

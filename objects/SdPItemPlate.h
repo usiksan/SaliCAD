@@ -36,7 +36,7 @@ class SdPItemComponent;
 class SdPItemPlate : public SdProjectItem
   {
     SdRect           mPartRow;           //Row for allocation autoinserted parts
-    SdPadAssociation mPadAssociation;    //Pad to pin assotiation table
+    SdPadAssociation mPadAssociation;    //Pad to pin association table
 
     //Not saved
     SdRatNet         mRatNet;            //Rat net is unconnected pairs
@@ -49,8 +49,15 @@ class SdPItemPlate : public SdProjectItem
 
     SdGraphPartImp        *allocPartImp(int *section, SdPItemPart *part, SdPItemComponent *comp, SdPItemSymbol *sym , SdUndo *undo);
 
+    //Pin-to-pad association
+    //Full association table
+    SdPadMap               getPadMap() const { return mPadAssociation.getMap(); }
+    //Pad association table name
+    QString                getPadAssociationName() const { return mPadAssociation.getName(); }
     //Draw pad
     void                   drawPad( SdContext *dc, SdPoint p, const QString pinType, int stratum ) const;
+    //Setup new map and name
+    void                   setPadAssociation(const QString nm, const SdPadMap &map, SdUndo *undo );
 
     //Set flag to update rat net
     void                   setDirtyRatNet();

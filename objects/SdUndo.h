@@ -19,6 +19,7 @@ Description
 #include "SdConfig.h"
 #include "SdUndoRecord.h"
 #include "SdStringMap.h"
+#include "SdPad.h"
 #include <QStack>
 #include <QMap>
 
@@ -84,6 +85,7 @@ class SdUndo
     void string2( QString *str1, QString *str2 );
     void stringMapItem( SdStringMap *assoc, const QString key );
     void stringMap( SdStringMap *assoc );
+    void padAssociation( QString *id, QString *srcName, SdPadMap *srcMap );
 
     //do undo and redo
     void undoStep();

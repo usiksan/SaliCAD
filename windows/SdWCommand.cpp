@@ -191,6 +191,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmShowRatNet->setCheckable(true);
   cmShowRatNet->setChecked( sdEnvir->mShowRatNet );
   cmShowRatNet->connect( cmShowRatNet, &QAction::toggled, frame, &SdWMain::cmShowRatNet );
+  cmPads = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/pads.png")), frame->tr("Pads association"), frame, SLOT(cmPads()) );
   //cmShowRatNet->co
 //  cmNetSetup       = menuInsertPcb->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
 //  cmPads           = menuInsertPcb->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
@@ -476,6 +477,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   addViewCommands( barPcb );
   addDrawCommands( barPcb );
   barPcb->insertAction( nullptr, cmShowRatNet );
+  barPcb->insertAction( nullptr, cmPads );
   barPcb->insertAction( nullptr, cmModeTable[MD_MOVE_PART] );
 
   frame->addToolBar( barPcb );

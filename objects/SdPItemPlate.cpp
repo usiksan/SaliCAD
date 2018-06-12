@@ -89,6 +89,16 @@ void SdPItemPlate::drawPad(SdContext *dc, SdPoint p, const QString pinType, int 
 
 
 
+
+//Setup new map and name
+void SdPItemPlate::setPadAssociation(const QString nm, const SdPadMap &map, SdUndo *undo)
+  {
+  mPadAssociation.setMap( nm, map, undo );
+  }
+
+
+
+
 //Set flag to update rat net
 void SdPItemPlate::setDirtyRatNet()
   {

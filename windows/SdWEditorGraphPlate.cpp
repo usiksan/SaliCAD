@@ -13,6 +13,7 @@ Description
 */
 #include "SdWEditorGraphPlate.h"
 #include "SdWCommand.h"
+#include "SdDPads.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
 #include <QDebug>
@@ -90,4 +91,15 @@ void SdWEditorGraphPlate::onActivateEditor()
 
   //Activate tool bar
   SdWCommand::barPcb->show();
+  }
+
+
+
+
+void SdWEditorGraphPlate::cmPads()
+  {
+  SdDPads pads( mPlate, mPlate->getPadAssociationName(), mPlate->getPadMap(), this );
+  if( pads.exec() ) {
+    mPlate->setPadAssociation( pads.getAssociationName(), pads.getPadMap(), mPlate->getUndo() );
+    }
   }

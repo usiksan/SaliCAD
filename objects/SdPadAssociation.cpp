@@ -13,6 +13,7 @@ Description
   and retrive from external library for share using.
 */
 #include "SdPadAssociation.h"
+#include "SdProjectItem.h"
 #include "SdUtil.h"
 
 SdPadAssociation::SdPadAssociation()
@@ -25,6 +26,17 @@ SdPadAssociation::SdPadAssociation(const SdPadMap map, const QString name, const
   mName(name)
   {
   mId = QString("PinToPadAssociation %1 %2 %3").arg(name).arg(author).arg( SdUtil::getTime2000() );
+  }
+
+
+
+
+void SdPadAssociation::setMap(const QString name, const SdPadMap &src, SdUndo *undo)
+  {
+  undo->padAssociation( &mId, &mName, &mMap );
+  mName = name;
+  mMap = src;
+  mId = QString("PinToPadAssociation %1 %2 %3").arg(name).arg(SdProjectItem::getDefaultAuthor()).arg( SdUtil::getTime2000() );
   }
 
 
@@ -88,6 +100,3 @@ void SdPadAssociation::readObject(SdObjectMap *map, const QJsonObject obj)
   }
 
 
-QString SdPadAssociation::getId() const
-  {
-  }

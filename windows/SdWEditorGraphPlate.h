@@ -41,6 +41,7 @@ class SdWEditorGraphPlate : public SdWEditorGraph
     virtual void cmModeDeleteWire() override;
     virtual void cmModePad() override;
     virtual void onActivateEditor() override;
+    virtual void cmPads() override;
   };
 
 #endif // SDWEDITORGRAPHPLATE_H

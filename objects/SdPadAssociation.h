@@ -18,11 +18,9 @@ Description
 #include "SdObject.h"
 #include "SdPad.h"
 
-#include <QMap>
 
 class SdContext;
 
-typedef QMap<QString,SdPad> SdPadMap;
 
 #define SD_TYPE_PAD_ASSOCIATION "PadAssociation"
 

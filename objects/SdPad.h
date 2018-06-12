@@ -19,6 +19,7 @@ Description
 
 #include <QJsonObject>
 #include <QPolygon>
+#include <QMap>
 
 class SdPItemPlate;
 class SdContext;
@@ -56,5 +57,8 @@ class SdPad
 
     bool        isEmpty() const { return mHeight < 0; }
   };
+
+
+typedef QMap<QString,SdPad> SdPadMap;
 
 #endif // SDPAD_H

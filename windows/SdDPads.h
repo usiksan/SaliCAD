@@ -30,9 +30,12 @@ class SdDPads : public QDialog
     SdPadMap           mMap;    //Edited pin-to-pad association
     SdPItemPlate      *mPlate;  //Plate, owned pin-to-pad association
   public:
-    explicit SdDPads( SdPItemPlate *plate, const QString associationName, QWidget *parent = nullptr);
+    explicit SdDPads( SdPItemPlate *plate, const QString associationName, SdPadMap map, QWidget *parent = nullptr);
     ~SdDPads();
 
+    QString  getAssociationName() const;
+
+    SdPadMap getPadMap() const { return mMap; }
   protected:
     void changeEvent(QEvent *e);
 
@@ -61,6 +64,7 @@ class SdDPads : public QDialog
     //Replace pin-to-pad association table with loaded table
     void cmAssociationLoad();
 
+    //Complete edit pin-to-pad association
     void cmCellEditComplete( int row, int column );
     void cmCellClicked( int row, int column );
   };
