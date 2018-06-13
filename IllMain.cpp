@@ -1,6 +1,8 @@
 #include "windows/SdIllustrator.h"
 #include <QApplication>
 #include <QLabel>
+#include <QPolygon>
+#include <QDebug>
 
 
 
@@ -57,14 +59,25 @@ int main(int argc, char *argv[])
   {
   QApplication a(argc, argv);
 
-  SdIllustrator ill;
-  draw( ill, false, false, true );
-  ill.setPixmap( 250, 250, Qt::white );
-  draw( ill, false, false, true );
+  QPolygon pol;
+  pol << QPoint(-100,-100) << QPoint(100,-100) << QPoint(100,100) << QPoint(-100,100);
+  qDebug() << pol;
+  qDebug() << pol.containsPoint( QPoint(0,0), Qt::OddEvenFill );
+  QPolygon win;
+  win << QPoint(-10,-200) << QPoint(10,-10) << QPoint(10,10) << QPoint(-10,10);
+  pol = pol.subtracted( win );
+  qDebug() << pol;
+  qDebug() << pol.containsPoint( QPoint(0,0), Qt::OddEvenFill );
 
-  QLabel lab;
-  lab.setPixmap( ill.pixmap() );
-  lab.show();
+//  SdIllustrator ill;
+//  draw( ill, false, false, true );
+//  ill.setPixmap( 250, 250, Qt::white );
+//  draw( ill, false, false, true );
 
-  return a.exec();
+//  QLabel lab;
+//  lab.setPixmap( ill.pixmap() );
+//  lab.show();
+
+  //return a.exec();
+  return 0;
   }
