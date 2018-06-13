@@ -81,6 +81,10 @@ History
                    Append system color selction to Options dialog.
   09.06.2018 v0.32 Begin PadDialog creation
                    Append pad description building
+  13.06.2018 v0.33 Continue with pad dialog.
+                   Begin PadMaster dialog creation.
+  13.06.2018 v0.34 Complete with PadMaster dialog and Pads dialog.
+                   Append SdIllustrator to use in masters to draw actual object schematic
 */
 
 #ifndef SDCONFIG
@@ -92,7 +96,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             31
+#define SD_VERSION_MINOR             34
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

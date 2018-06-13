@@ -85,7 +85,7 @@ void SdPoint::mirror(SdPoint a, SdPoint b)
 
 SdPropAngle SdPoint::getAngle(SdPoint center) const
   {
-  return SdPropAngle( (int)(getAngleDegree(center) * 1000.0) );
+  return SdPropAngle( static_cast<int>(getAngleDegree(center) * 1000.0) );
   }
 
 

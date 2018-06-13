@@ -5,6 +5,7 @@
 #include "objects/SdUtil.h"
 #include "objects/SdObjectFactory.h"
 #include "SdDGetObject.h"
+#include "SdDPadMaster.h"
 
 #include <QTableWidgetItem>
 #include <QMessageBox>
@@ -15,9 +16,9 @@
 
 SdDPads::SdDPads(SdPItemPlate *plate, const QString associationName, SdPadMap map, QWidget *parent) :
   QDialog(parent),
-  ui(new Ui::SdDPads),
   mMap(map),
-  mPlate(plate)
+  mPlate(plate),
+  ui(new Ui::SdDPads)
   {
   ui->setupUi(this);
 
@@ -75,7 +76,7 @@ void SdDPads::updatePinTable()
   ui->mPadTable->clear();
   //Table dimensions
   ui->mPadTable->setColumnCount(2);
-  ui->mPadTable->setColumnWidth(1,300);
+  ui->mPadTable->setColumnWidth(1,440);
   ui->mPadTable->setRowCount( mMap.count() );
   //Table header
   ui->mPadTable->setHorizontalHeaderLabels( {tr("Pin type"), tr("Pad description") } );
@@ -109,6 +110,7 @@ void SdDPads::cmAccumUsedPins()
     SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(obj);
     if( imp != nullptr )
       imp->accumUsedPins( mMap );
+    return true;
     });
 
   //Update visual pin table
@@ -124,6 +126,7 @@ void SdDPads::cmAppendPin()
   //Append new empty pin association
   int row = ui->mPadTable->rowCount();
   ui->mPadTable->insertRow( row );
+  ui->mPadTable->setRowHeight( row, 25 );
   ui->mPadTable->setItem( row, 0, new QTableWidgetItem() );
   QTableWidgetItem *item;
   ui->mPadTable->setItem( row, 1, item = new QTableWidgetItem() );
@@ -290,7 +293,20 @@ void SdDPads::cmCellEditComplete(int row, int column)
 //On clicked pad description cell show pad master
 void SdDPads::cmCellClicked(int row, int column)
   {
-
+  if( column ) {
+    QString pin = ui->mPadTable->item(row,0)->text();
+    if( mMap.contains(pin) ) {
+      //Show pad master
+      SdDPadMaster master( mMap.value(pin), this );
+      if( master.exec() ) {
+        //Update pad description
+        mMap.insert( pin, master.pad() );
+        ui->mPadTable->setItem( row, 1, new QTableWidgetItem( master.pad().description() ) );
+        if( master.pad().isEmpty() )
+          ui->mPadTable->item( row, 1 )->setBackgroundColor( QColor(Qt::yellow).lighter() );
+        }
+      }
+    }
   }
 
 

@@ -56,6 +56,8 @@ class SdPad
     void        clear();
 
     bool        isEmpty() const { return mHeight < 0; }
+
+    friend class SdDPadMaster;
   };
 
 
