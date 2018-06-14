@@ -18,7 +18,7 @@ Description
 #include "SdPoint.h"
 
 #include <QJsonObject>
-#include <QPolygon>
+#include <QPolygonF>
 #include <QMap>
 
 class SdPItemPlate;
@@ -47,7 +47,8 @@ class SdPad
 
     void        draw(SdContext *dcx, SdPoint p, int stratum ) const;
 
-    QPolygon    polygon( SdPoint p );
+
+    QPolygonF   polygon(SdPoint p , int addon) const;
 
     //Create textual pad description
     QString     description() const;

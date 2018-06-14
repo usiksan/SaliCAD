@@ -139,9 +139,11 @@ void SdEnvir::loadEnvir()
        >> mHomePath             //Каталог пользователя
        >> mLibraryPath          //Каталог библиотек
        >> mPatternPath          //Каталог шаблонов
-       >> mPadStackId         //Файл контактных площадок
-       >> mPadStackTitle       //Объект содержащий контактные площадки
-       >> mGridHistory;         //Previous grid history table
+       >> mPadStackId           //Файл контактных площадок
+       >> mPadStackTitle        //Объект содержащий контактные площадки
+       >> mGridHistory          //Previous grid history table
+       >> mDefaultRules         //Default rules for pcb
+       >> mShowRuleErrors;       //If true then over pcb shows rule error indicators as rectangles
     }
   else defaultEnvir();
 
@@ -211,7 +213,9 @@ void SdEnvir::saveEnvir()
      << mPatternPath          //Каталог шаблонов
      << mPadStackId         //Файл контактных площадок
      << mPadStackTitle       //Объект содержащий контактные площадки
-     << mGridHistory;         //Previous grid history table
+     << mGridHistory         //Previous grid history table
+     << mDefaultRules         //Default rules for pcb
+     << mShowRuleErrors;       //If true then over pcb shows rule error indicators as rectangles
 
   QSettings s;
   s.setValue( QString(SDK_ENVIR_VERSION), QVariant(SdEnvirVersion) );
@@ -224,16 +228,16 @@ void SdEnvir::saveEnvir()
 void SdEnvir::defaultEnvir()
   {
   //Цвета по умолчанию
-  mSysColors[scLocked]    = QColor(200,200,0);    //Цвет заблокированных элементов
-  mSysColors[scSelected]  = QColor(150,150,150);  //Цвет выбранных элементов
-  mSysColors[scEnter]     = QColor(65,65,65);     //Цвет ввода
-  mSysColors[scSmart]     = QColor(36,27,99);     //Цвет разумного режима
-  mSysColors[scGraphBack] = QColor(255,255,255);  //Цвет фона графического редактора
-  mSysColors[scRatNet]    = QColor(30,30,30);     //Цвет резинок
-  mSysColors[scCursor]    = QColor(0,0,0);        //Цвет курсора
-  mSysColors[scTraseNet]  = QColor(0,0,0);        //Цвет трассируемой цепи
-  mSysColors[scGrid]      = QColor(100,100,100);  //Цвет сетки
-  mSysColors[scNotLinked] = QColor(200,50,50);    //Color for not linked objects
+  mSysColors[scLocked]     = QColor(200,200,0);    //Цвет заблокированных элементов
+  mSysColors[scSelected]   = QColor(150,150,150);  //Цвет выбранных элементов
+  mSysColors[scEnter]      = QColor(65,65,65);     //Цвет ввода
+  mSysColors[scSmart]      = QColor(36,27,99);     //Цвет разумного режима
+  mSysColors[scGraphBack]  = QColor(255,255,255);  //Цвет фона графического редактора
+  mSysColors[scRatNet]     = QColor(30,30,30);     //Цвет резинок
+  mSysColors[scCursor]     = QColor(0,0,0);        //Цвет курсора
+  mSysColors[scTraseNet]   = QColor(0,0,0);        //Цвет трассируемой цепи
+  mSysColors[scGrid]       = QColor(100,100,100);  //Цвет сетки
+  mSysColors[scRuleErrors] = QColor(0xff,0xd8,0);  //Color for rectangles indicator for rule errors
 
   //Default fonts
   mFonts[0] = QString("FreeSerif");
@@ -277,6 +281,8 @@ void SdEnvir::defaultEnvir()
   mCursorAlignGrid   = true;           //Включение движения курсора по сетке
   mCenterCursor      = true;           //Центровать курсор при увеличении и уменьшении
   mGridHistory.clear();
+  mShowRuleErrors    = true;           //If true then over pcb shows rule error indicators as rectangles
+
 
   mGuiderEnabled     = true;           //Флаг разрешения/запрещения путеводителя
   mGuiderPosition    = 0;              //Положение разделителя путеводителя
@@ -331,6 +337,13 @@ void SdEnvir::defaultEnvir()
   setPair( QString( LID0_PAD LID1_TOP ),  QString( LID0_PAD LID1_BOT ) );
   setPair( QString( LID0_CLEAR LID1_TOP ), QString( LID0_CLEAR LID1_BOT ) );
   setPair( QString( LID0_SOLDER_MASK LID1_TOP ),  QString( LID0_SOLDER_MASK LID1_BOT ) );
+
+
+  //Default pcb rules
+  mDefaultRules.mRules[ruleWireWidth] = 300;
+  mDefaultRules.mRules[rulePadPad] = 300;
+  mDefaultRules.mRules[ruleWirePad] = 300;
+  mDefaultRules.mRules[ruleWireWire] = 300;
 
   }
 

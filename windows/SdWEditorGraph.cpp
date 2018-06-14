@@ -671,11 +671,14 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
     modeGet()->drawDynamic( &context );
     }
 
-  //On plate object draw rat net
-  if( sdEnvir->mShowRatNet && getProjectItem()->getClass() == dctPlate ) {
+  //On plate object draw rat net and rule errors
+  if( getProjectItem()->getClass() == dctPlate ) {
     SdPItemPlate *plate = dynamic_cast<SdPItemPlate*>( getProjectItem() );
     Q_ASSERT( plate != nullptr );
-    plate->drawRatNet( &context );
+    if( sdEnvir->mShowRatNet )
+      plate->drawRatNet( &context );
+    if( sdEnvir->mShowRuleErrors )
+      plate->drawRuleErrors( &context );
     }
 
   //Рисовать курсор

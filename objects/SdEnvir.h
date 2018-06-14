@@ -20,6 +20,7 @@ Description
 #include "SdSnapInfo.h"
 #include "SdUtil.h"
 #include "SdPadAssociation.h"
+#include "SdRuleBlock.h"
 #include <QColor>
 #include <QMap>
 #include <QPointF>
@@ -37,7 +38,7 @@ Description
 #define scCursor         6 //Цвет курсора
 #define scTraseNet       7 //Цвет трассируемой цепи
 #define scGrid           8 //Цвет сетки
-#define scNotLinked      9 //Color for not linked objects
+#define scRuleErrors     9 //Rule errors color
 #define scLast          10
 
 
@@ -50,7 +51,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (26 + FONT_COUNT)
+#define SdEnvirVersion  (28 + FONT_COUNT)
 
 
 class SdEnvir
@@ -97,6 +98,8 @@ class SdEnvir
     QString         mPadStackId;           //SdPadAssociation object id [Объект контактных площадок]
     QString         mPadStackTitle;        //SdPadAssociation object title [Название объекта с контактными площадками]
     QList<QPointF>  mGridHistory;          //Previous grid history
+    SdRuleBlock     mDefaultRules;         //Default rules for pcb
+    bool            mShowRuleErrors;       //If true then over pcb shows rule error indicators as rectangles
 
 
     bool            mGuiderEnabled;        //Флаг разрешения/запрещения путеводителя
@@ -112,7 +115,6 @@ class SdEnvir
     bool            mAutoPads;             //Автоматическая расстановка КП
     bool            mCreateBack;           //Создавать BAK файл при сохранении
     double          mPolyClear;             //Зазор между дорожками и полигоном
-    bool            mShowConflict;         //Показывать конфликты трассировки
 
     //Not saved
     //Cashed layers for stratum

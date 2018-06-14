@@ -17,6 +17,7 @@ Description
 #include "SdGraphTraced.h"
 #include "SdStratum.h"
 #include "SdPadAssociation.h"
+#include "SdBarrier.h"
 
 #include <QMap>
 
@@ -46,6 +47,7 @@ struct SdPartImpPin {
   bool        isConnected() const;
   QString     getNetName() const;
   void        accumUsedPin( SdPadMap &map ) const;
+  void        accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int stratum, SdRuleId ruleId, int clearance , int halfWidth) const;
 
   QJsonObject toJson(const QString pinNumber) const;
   QString     fromJson( SdObjectMap *map, const QJsonObject obj );
@@ -158,6 +160,7 @@ class SdGraphPartImp : public SdGraphTraced
     virtual bool isPointOnNet(SdPoint p, SdStratum stratum, QString &netName) override;
     virtual void accumNetPoints(SdPlateNetList &netList) override;
     virtual void drawStratum(SdContext *dc, int stratum ) override;
+    virtual void accumBarriers(QList<QPolygonF> &dest, int stratum, const QString excludeWire, bool toWire, const SdRuleBlock &blk ) const override;
   };
 
 #endif // SDGRAPHPARTIMP_H

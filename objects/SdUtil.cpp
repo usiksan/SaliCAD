@@ -135,18 +135,18 @@ void SdUtil::swapBool(bool &src, bool *dst)
 
 
 //Create octagon over circle
-QPolygon SdUtil::octagon(int centerx, int centery, int radius)
+QPolygonF SdUtil::octagon(int centerx, int centery, int radius)
   {
   int d = radius * 41 / 100;
-  QPolygon pgn;
-  pgn << SdPoint(centerx - radius, centery - d )
-      << SdPoint(centerx - d,      centery - radius )
-      << SdPoint(centerx + d,      centery - radius )
-      << SdPoint(centerx + radius, centery - d )
-      << SdPoint(centerx + radius, centery + d )
-      << SdPoint(centerx + d,      centery + radius )
-      << SdPoint(centerx - d,      centery + radius )
-      << SdPoint(centerx - radius, centery + d );
+  QPolygonF pgn;
+  pgn << QPointF(centerx - radius, centery - d )
+      << QPointF(centerx - d,      centery - radius )
+      << QPointF(centerx + d,      centery - radius )
+      << QPointF(centerx + radius, centery - d )
+      << QPointF(centerx + radius, centery + d )
+      << QPointF(centerx + d,      centery + radius )
+      << QPointF(centerx - d,      centery + radius )
+      << QPointF(centerx - radius, centery + d );
   return pgn;
   }
 

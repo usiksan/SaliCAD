@@ -16,6 +16,8 @@ Description
 
 #include "SdGraph.h"
 #include "SdStratum.h"
+#include "SdRuleBlock.h"
+#include "SdBarrier.h"
 
 
 class SdPItemPlate;
@@ -36,6 +38,7 @@ class SdGraphTraced : public SdGraph
     virtual bool         isPointOnNet( SdPoint p, SdStratum stratum, QString &wireName ) = 0;
     virtual void         accumNetPoints( SdPlateNetList &netList ) = 0;
     virtual void         drawStratum( SdContext *dcx, int stratum ) = 0;
+    virtual void         accumBarriers( SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk ) const = 0;
     //virtual void         accumLinked( SdPoint a, SdPoint b, SdLayer *layer, SdSelector *sel ) = 0;
 
 

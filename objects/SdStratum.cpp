@@ -59,3 +59,12 @@ int SdStratum::stratumComp(const SdStratum &src) const
   {
   return stratum( !src.isBottom() );
   }
+
+
+
+int SdStratum::stratumIndex(int stratum)
+  {
+  for( int i = 0; i < 30; i++ )
+    if( stratum & (1 << i) ) return i;
+  return 0;
+  }

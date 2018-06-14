@@ -46,6 +46,7 @@ class SdStratum : public SdPropInt
 
     int  stratumComp( const SdStratum &src ) const;
 
+    static int stratumIndex( int stratum );
 
   };
 

@@ -42,29 +42,21 @@ Description
 #define dctArea           0x00020000ul
 #define dctSelector       0x00040000ul
 #define dctPadAssociation 0x00080000ul
+#define dctTraceRoad      0x00100000ul
+#define dctTraceVia       0x00200000ul
+#define dctTextDoc        0x00400000ul
 
-#define dctList          0x00020000ul
-#define dctAlias         0x00040000ul
-#define dctPoligon       0x00080000ul
-#define dctVia           0x00100000ul
-#define dctSize          0x00800000ul
-#define dctSizeProp      0x01000000ul
-#define dctTextDoc       0x02000000ul
-#define dctPlateNet      0x10000000ul
+#define dctLocal          0x80000000ul //This flag setup for objects which must not be send to global storage
 
-//dctUser          = 0x200000,
-//#define dctPartPinNumber 0x00000400l
-//#define dctRoadPin       0x00000200ul
-//dctChars    = 0x20000000,
-  //dctPrjList  = 0x40000000,
-  //dctData     = 0x80000000,
-#define dctPicture       (dctLines | dctText | dctSize)
+
+#define dctPicture       (dctLines | dctText)
 #define dctProjectItems  (dctSymbol | dctPart | dctSheet | dctPlate | dctComponent)
 #define dctAll           MAX64_MASK
 #define dctSymbolObjects (dctPicture | dctSymPin )
 #define dctPartObjects   (dctPicture | dctPartPin)
 #define dctSheetObjects  (dctPicture | dctSymImp | dctNetWire | dctNetName)
-#define dctPlateObjects  (dctPicture | dctPartImp | dctVia )
+#define dctPlateObjects  (dctPicture | dctPartImp | dctTraceVia | dctTraceRoad )
+#define dctTraced        (dctPartImp | dctTraceVia | dctTraceRoad )
 
 
 #define SDKO_TYPE      "type"

@@ -20,6 +20,7 @@ Description
 #include "SdGraphTraced.h"
 #include "SdPlateNet.h"
 #include "SdPadAssociation.h"
+#include "SdRuleBlock.h"
 #include <QMap>
 #include <QVector>
 
@@ -35,12 +36,19 @@ class SdPItemComponent;
 
 class SdPItemPlate : public SdProjectItem
   {
-    SdRect           mPartRow;           //Row for allocation autoinserted parts
-    SdPadAssociation mPadAssociation;    //Pad to pin association table
+    SdRect            mPartRow;           //Row for allocation autoinserted parts
+    SdPadAssociation  mPadAssociation;    //Pad to pin association table
+    SdRuleBlockList   mRules;             //Rules table
+    QMap<QString,int> mRulesMap;          //Net, class names -to- rule map
 
     //Not saved
-    SdRatNet         mRatNet;            //Rat net is unconnected pairs
-    bool             mRatNetDirty;
+    SdRatNet          mRatNet;            //Rat net is unconnected pairs
+    bool              mRatNetDirty;
+//    QString           mRuleCacheNetName;  //Net name cache for rule extract
+//    int               mRuleCacheStratum;  //Stratum for rule extract
+//    int               mRuleCacheBlockId;  //Block id for net name and stratum
+
+    SdRectList        mRuleErrors;        //Indicator rule errors
   public:
     SdPItemPlate();
 
@@ -58,6 +66,8 @@ class SdPItemPlate : public SdProjectItem
     void                   drawPad( SdContext *dc, SdPoint p, const QString pinType, int stratum ) const;
     //Setup new map and name
     void                   setPadAssociation(const QString nm, const SdPadMap &map, SdUndo *undo );
+    //Return over pad polygon
+    QPolygonF              getPadPolygon(SdPoint p, const QString pinType , int addon) const;
 
     //Set flag to update rat net
     void                   setDirtyRatNet();
@@ -69,8 +79,45 @@ class SdPItemPlate : public SdProjectItem
     void                   buildRatNet();
 
 
-//    DPrtImpPic*  FindCompPart( DPrtPic *part, CPChar name, int numSection );
-//    DPrtImpPic*  FindCompById( CPChar ident );
+    //Tracing rules
+    //Rebuild rules map by scan all nets
+    //void                   buildRulesMap();
+    //Get rules for key
+    const SdRuleBlock     &getRuleBlock( const QString key ) const;
+    //Set rules for key
+    void                   setRuleBlock( const QString key, const SdRuleBlock &src );
+    //List of child rules
+    QStringList            childRulesList( const QString key ) const;
+    //Remove child rule
+    void                   childRuleRemove( const QString key, const QString child );
+    //Append child rule
+    void                   childRuleAppend( const QString key, const QString child );
+    //Get one rule for given net
+    int                    ruleForNet(int stratum, const QString netName, SdRuleId ruleId);
+    //Build rules block for given net
+    void                   ruleBlockForNet(int stratum, const QString netName, SdRuleBlock &blockDest );
+
+
+    //Tracing tests
+    bool                   isAvailableSegment( SdPoint start, SdPoint &stop, int stratum, const QString netName, int width );
+
+    //Accum bariers
+    void                   accumBarriers( QList<QPolygonF> &dest, int stratum, const QString netName, bool toWire, const SdRuleBlock &rule );
+
+    //Check rules
+    void                   checkRules();
+
+    //Rule errors count
+    int                    ruleErrorsCount() const { return mRuleErrors.count(); }
+
+    //Draw rule error indicators
+    void                   drawRuleErrors( SdContext *dc );
+
+    //Read-write rules
+    QJsonObject            writeRuleMap() const;
+    QJsonArray             writeRuleTable() const;
+    void                   readRuleMap( const QJsonObject obj);
+    void                   readRuleTable( const QJsonArray ar);
 
     // SdObject interface
   public:
@@ -85,6 +132,11 @@ class SdPItemPlate : public SdProjectItem
     virtual QString        getIconName() const override;
     virtual quint64        getAcceptedObjectsMask() const override;
 
+  private:
+    void clearRuleCache();
+
+    //Retrive rule starting with blockId
+    int  ruleFromId(int stratumIndex, int blockId , int ruleId);
   };
 
 #endif // SDPITEMPLATE_H

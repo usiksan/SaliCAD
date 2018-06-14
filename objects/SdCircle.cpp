@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Primitive Circle defined by center point and radius
 */
 
 #include "SdCircle.h"
@@ -19,7 +20,7 @@ Description
 
 bool SdCircle::isPointInside(SdPoint p) const
   {
-  return p.getDistance(center) <= radius;
+  return p.getDistance(mCenter) <= mRadius;
   }
 
 
@@ -29,7 +30,7 @@ bool SdCircle::isRectInside(SdRect r) const
   double w = r.width();
   double h = r.height();
   double rr = sqrt( w*w + h*h ) / 2;
-  return isCircleInside( SdCircle(r.center(), rr) );
+  return isCircleInside( SdCircle(r.center(), static_cast<int>(rr) ) );
   }
 
 
@@ -37,19 +38,25 @@ bool SdCircle::isRectInside(SdRect r) const
 
 bool SdCircle::isCircleInside(SdCircle c) const
   {
-  double dist = c.center.getDistance(center);
-  return dist + c.radius <= radius;
+  double dist = c.mCenter.getDistance(mCenter);
+  return dist + c.mRadius <= mRadius;
   }
+
+
+
 
 SdRect SdCircle::overRect() const
   {
-  return SdRect( center.x() - radius, center.y() - radius, radius * 2, radius * 2 );
+  return SdRect( mCenter.x() - mRadius, mCenter.y() - mRadius, mRadius * 2, mRadius * 2 );
   }
+
+
+
 
 SdRect SdCircle::innerRect() const
   {
-  double r = radius;
+  double r = mRadius;
   r *= r;
-  int w = sqrt(r/2);
-  return SdRect( center.x() - w, center.y() - w, w * 2, w * 2 );
+  int w = static_cast<int>(sqrt(r/2));
+  return SdRect( mCenter.x() - w, mCenter.y() - w, w * 2, w * 2 );
   }

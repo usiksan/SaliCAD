@@ -89,6 +89,25 @@ void SdPartImpPin::accumUsedPin(SdPadMap &map) const
 
 
 
+void SdPartImpPin::accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int stratum, SdRuleId ruleId, int clearance, int halfWidth ) const
+  {
+
+  //Compare on stratum
+  if( mStratum.match(stratum) ) {
+    if( ruleId >= ruleLast )
+      clearance = 0;
+    else
+      clearance = qMax( clearance, plate->ruleForNet( stratum, getNetName(), ruleId ) );
+    SdBarrier bar;
+    bar.mNetName = getNetName();
+    bar.mPolygon = plate->getPadPolygon( mPosition, mPin->getPinType(), clearance + halfWidth);
+    dest.append( bar );
+    }
+  }
+
+
+
+
 QJsonObject SdPartImpPin::toJson( const QString pinNumber ) const
   {
   QJsonObject obj;
@@ -554,6 +573,26 @@ void SdGraphPartImp::drawStratum(SdContext *dc, int stratum)
   for( const SdPartImpPin &pin : mPins )
     pin.draw( dc, getPlate(), stratum );
   }
+
+
+
+
+
+
+
+void SdGraphPartImp::accumBarriers(QList<QPolygonF> &dest, int stratum, const QString excludeWire, bool toWire, const SdRuleBlock &blk ) const
+  {
+  //Accum barriers for all pin pad
+  SdPItemPlate *plate = getPlate();
+  SdRuleId id = toWire ? ruleWirePad : rulePadPad;
+  int clearance = blk.mRules[id];
+  int halfWidth = blk.mRules[ruleWireWidth];
+  for( const SdPartImpPin &pin : mPins )
+    pin.accumBarriers( plate, dest, stratum, excludeWire, id, clearance, halfWidth  );
+  }
+
+
+
 
 
 

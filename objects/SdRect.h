@@ -22,6 +22,7 @@ Description
 #include "SdPoint.h"
 #include "SdPointList.h"
 #include <QRect>
+#include <QList>
 
 class SdCircle;
 
@@ -70,5 +71,9 @@ class SdRect : public QRect
 
     SdRect      swap( const SdRect &r );
   };
+
+
+//List of rectangles
+typedef QList<SdRect> SdRectList;
 
 #endif // SSdRect_H

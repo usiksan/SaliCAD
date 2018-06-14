@@ -146,20 +146,17 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
 
 
 
-QPolygon SdPad::polygon(SdPoint p)
+QPolygonF SdPad::polygon(SdPoint p, int addon ) const
   {
-  QPolygon pgn;
-  if( mIsCircle ) {
+  if( mIsCircle )
     //Return over octagon
-    pgn = SdUtil::octagon( p.x() + mCenterX, p.y() + mCenterY, mDiametrWidth >> 1 );
-    }
-  else {
-    //Fill rect
-    pgn << SdPoint(p.x() + mCenterX - (mDiametrWidth >> 1), p.y() + mCenterY - (mHeight >> 1))
-        << SdPoint(p.x() + mCenterX + (mDiametrWidth >> 1), p.y() + mCenterY - (mHeight >> 1))
-        << SdPoint(p.x() + mCenterX + (mDiametrWidth >> 1), p.y() + mCenterY + (mHeight >> 1))
-        << SdPoint(p.x() + mCenterX - (mDiametrWidth >> 1), p.y() + mCenterY + (mHeight >> 1));
-    }
+    return SdUtil::octagon( p.x() + mCenterX, p.y() + mCenterY, (mDiametrWidth >> 1) + addon );
+  QPolygonF pgn;
+  //Fill rect
+  pgn << QPointF(p.x() + mCenterX - (mDiametrWidth >> 1) - addon, p.y() + mCenterY - (mHeight >> 1) - addon)
+      << QPointF(p.x() + mCenterX + (mDiametrWidth >> 1) + addon, p.y() + mCenterY - (mHeight >> 1) - addon)
+      << QPointF(p.x() + mCenterX + (mDiametrWidth >> 1) + addon, p.y() + mCenterY + (mHeight >> 1) + addon)
+      << QPointF(p.x() + mCenterX - (mDiametrWidth >> 1) - addon, p.y() + mCenterY + (mHeight >> 1) + addon);
   return pgn;
   }
 

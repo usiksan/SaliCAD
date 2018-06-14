@@ -191,7 +191,8 @@ SOURCES += \
     windows/SdDPads.cpp \
     objects/SdUndoRecordPadAssociation.cpp \
     windows/SdDPadMaster.cpp \
-    windows/SdIllustrator.cpp
+    windows/SdIllustrator.cpp \
+    objects/SdRuleBlock.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -376,7 +377,9 @@ HEADERS  += \
     windows/SdDPads.h \
     objects/SdUndoRecordPadAssociation.h \
     windows/SdDPadMaster.h \
-    windows/SdIllustrator.h
+    windows/SdIllustrator.h \
+    objects/SdRuleBlock.h \
+    objects/SdBarrier.h
 
 DISTFILES += \
     license.txt

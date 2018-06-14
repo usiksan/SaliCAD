@@ -26,8 +26,8 @@ SdPolyWindow::SdPolyWindow() :
 
 
 SdPolyWindow::SdPolyWindow(SdCircle circle, int gap) :
-  radius( circle.radius + gap ),
-  p1(circle.center),p2(),p3(),p4()
+  radius( circle.mRadius + gap ),
+  p1(circle.mCenter),p2(),p3(),p4()
   {
 
   }

@@ -85,6 +85,7 @@ History
                    Begin PadMaster dialog creation.
   13.06.2018 v0.34 Complete with PadMaster dialog and Pads dialog.
                    Append SdIllustrator to use in masters to draw actual object schematic
+  14.06.2018 v0.35 Append rules and rules extractor
 */
 
 #ifndef SDCONFIG

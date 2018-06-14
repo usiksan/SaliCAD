@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Primitive Circle defined by center point and radius
 */
 
 #ifndef SDCIRCLE_H
@@ -20,11 +21,11 @@ class SdRect;
 
 struct SdCircle
   {
-    SdPoint center;  //Центр окружности
-    int     radius;  //Радиус окружности
+    SdPoint mCenter;  //Circle center point [Центр окружности]
+    int     mRadius;  //Circle radius [Радиус окружности]
 
-    SdCircle() : center(), radius(0) {}
-    SdCircle( SdPoint c, int r ) : center(c), radius(r) {}
+    SdCircle() : mCenter(), mRadius(0) {}
+    SdCircle( SdPoint c, int r ) : mCenter(c), mRadius(r) {}
 
     bool   isPointInside(SdPoint p) const;    //Истина, если точка внутри окружности
     bool   isRectInside( SdRect r ) const;    //Истина, если прямоугольник внутри окружности
