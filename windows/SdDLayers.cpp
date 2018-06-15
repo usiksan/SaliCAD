@@ -84,6 +84,9 @@ SdDLayers::SdDLayers(SdProject *prj, QWidget *parent) :
   //Hide row header
   ui->mLayerList->verticalHeader()->hide();
 
+  //By default stratum count disabled. When set stratum count it is enabled
+  ui->mStratumCount->setEnabled(false);
+
   fillLayerList();
   }
 
@@ -92,6 +95,23 @@ SdDLayers::SdDLayers(SdProject *prj, QWidget *parent) :
 SdDLayers::~SdDLayers()
   {
   delete ui;
+  }
+
+
+
+//Stratum count. By default stratum count disabled. When set stratum count it is enabled
+void SdDLayers::setStratumCount(int c)
+  {
+  ui->mStratumCount->setEnabled(true);
+  ui->mStratumCount->setText( QString::number(c) );
+  }
+
+
+
+
+int SdDLayers::getStratumCount() const
+  {
+  return SdUtil::iLimit( ui->mStratumCount->text().toInt(), 1, 30 );
   }
 
 

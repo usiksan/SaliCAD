@@ -17,6 +17,7 @@ Description
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
 #include <QDebug>
+#include <QProgressDialog>
 
 SdWEditorGraphPlate::SdWEditorGraphPlate(SdPItemPlate *pcb, QWidget *parent) :
   SdWEditorGraph( pcb, parent ),
@@ -102,4 +103,23 @@ void SdWEditorGraphPlate::cmPads()
   if( pads.exec() ) {
     mPlate->setPadAssociation( pads.getAssociationName(), pads.getPadMap(), mPlate->getUndo() );
     }
+  }
+
+
+
+
+void SdWEditorGraphPlate::cmCheckRules()
+  {
+  QProgressDialog progress( tr("Checking rules..."), tr("Abort check"), 0, 10 * mPlate->stratumCount(), this );
+  progress.setWindowModality(Qt::WindowModal);
+  int count = 0;
+  //Check rules
+  mPlate->checkRules( [&count, &progress] () -> bool {
+                        progress.setValue(++count);
+                        return progress.wasCanceled();
+                      });
+  //Set show rule errors
+  SdWCommand::cmShowRuleErrors->setChecked( sdEnvir->mShowRuleErrors = true );
+  //Update
+  update();
   }

@@ -735,9 +735,23 @@ void SdWMain::cmViewLayers()
   SdProject *prj = nullptr;
   if( activeProject() != nullptr )
     prj = activeProject()->getProject();
+  //Get active plate for stratum count definition
+  SdPItemPlate *plate = nullptr;
+  if( activeEditor() )
+    plate = dynamic_cast<SdPItemPlate*>( activeEditor()->getProjectItem() );
   //Show layers dialog with active project
   SdDLayers layersDlg( prj, this );
+  //If active plate then set stratum count for edition
+  if( plate != nullptr )
+    layersDlg.setStratumCount( plate->stratumCount() );
+
+  //Execute layer dialog
   layersDlg.exec();
+
+  //If active plate then get stratum count upgrade
+  if( plate != nullptr )
+    plate->setStratumCount( layersDlg.getStratumCount() );
+
   sdEnvir->resetForCache();
   //Signal viewed layers are changed
   SdPulsar::pulsar->emitViewedLayers();
@@ -1060,6 +1074,25 @@ void SdWMain::cmShowRatNet( bool st )
   sdEnvir->mShowRatNet = st;
   if( activeEditor() )
     activeEditor()->update();
+  }
+
+
+
+
+void SdWMain::cmShowRuleErrors(bool st)
+  {
+  sdEnvir->mShowRuleErrors = st;
+  if( activeEditor() )
+    activeEditor()->update();
+  }
+
+
+
+
+void SdWMain::cmCheckRules()
+  {
+  if( activeEditor() )
+    activeEditor()->cmCheckRules();
   }
 
 

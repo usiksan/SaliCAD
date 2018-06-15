@@ -9,10 +9,29 @@ SdRuleBlock::SdRuleBlock() :
 
 
 
-void SdRuleBlock::clear()
+//Set all rules to value
+void SdRuleBlock::setAllRule(int val)
   {
   for( int i = 0; i < ruleLast; i++ )
-    mRules[i] = -1;
+    mRules[i] = val;
+  }
+
+
+
+//Set rule block to value
+void SdRuleBlock::setRuleBlock(int val, SdRuleId first, SdRuleId last)
+  {
+  for( int i = first; i <= last; i++ )
+    mRules[i] = val;
+  }
+
+
+
+
+//Set all rules to -1, i.e. inherited
+void SdRuleBlock::clear()
+  {
+  setAllRule(-1);
   }
 
 

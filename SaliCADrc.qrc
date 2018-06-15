@@ -203,5 +203,7 @@
         <file>pic/objectEditDisable.png</file>
         <file>pic/lampDisable.png</file>
         <file>pic/lampEnable.png</file>
+        <file>pic/objRulesCheck.png</file>
+        <file>pic/objShowRuleErrors.png</file>
     </qresource>
 </RCC>

@@ -40,6 +40,7 @@ class SdPItemPlate : public SdProjectItem
     SdPadAssociation  mPadAssociation;    //Pad to pin association table
     SdRuleBlockList   mRules;             //Rules table
     QMap<QString,int> mRulesMap;          //Net, class names -to- rule map
+    qint32            mStratumCount;      //Tracing stratum (layers) count
 
     //Not saved
     SdRatNet          mRatNet;            //Rat net is unconnected pairs
@@ -52,8 +53,9 @@ class SdPItemPlate : public SdProjectItem
   public:
     SdPItemPlate();
 
-//    void                  netForEach( quint64 classMask, const QString  std::function<bool(SdObject*)> fun1 );
-
+    //Stratum count
+    int                    stratumCount() const { return mStratumCount; }
+    void                   setStratumCount( int sc ) { mStratumCount = sc; mRatNetDirty = true; }
 
     SdGraphPartImp        *allocPartImp(int *section, SdPItemPart *part, SdPItemComponent *comp, SdPItemSymbol *sym , SdUndo *undo);
 
@@ -102,10 +104,10 @@ class SdPItemPlate : public SdProjectItem
     bool                   isAvailableSegment( SdPoint start, SdPoint &stop, int stratum, const QString netName, int width );
 
     //Accum bariers
-    void                   accumBarriers( QList<QPolygonF> &dest, int stratum, const QString netName, bool toWire, const SdRuleBlock &rule );
+    void                   accumBarriers( quint64 mask, SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &rule );
 
     //Check rules
-    void                   checkRules();
+    void                   checkRules(std::function<bool()> fun1);
 
     //Rule errors count
     int                    ruleErrorsCount() const { return mRuleErrors.count(); }
@@ -137,6 +139,9 @@ class SdPItemPlate : public SdProjectItem
 
     //Retrive rule starting with blockId
     int  ruleFromId(int stratumIndex, int blockId , int ruleId);
+
+    //Check intersection on barriers and form errorList
+    void checkIntersection(const SdBarrierList &src, const SdBarrierList &dst, bool excludeSameIndex );
   };
 
 #endif // SDPITEMPLATE_H

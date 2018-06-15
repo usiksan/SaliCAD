@@ -160,7 +160,7 @@ class SdGraphPartImp : public SdGraphTraced
     virtual bool isPointOnNet(SdPoint p, SdStratum stratum, QString &netName) override;
     virtual void accumNetPoints(SdPlateNetList &netList) override;
     virtual void drawStratum(SdContext *dc, int stratum ) override;
-    virtual void accumBarriers(QList<QPolygonF> &dest, int stratum, const QString excludeWire, bool toWire, const SdRuleBlock &blk ) const override;
+    virtual void accumBarriers( SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk ) const override;
   };
 
 #endif // SDGRAPHPARTIMP_H

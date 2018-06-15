@@ -9,6 +9,11 @@ Web
   www.saliLab.ru
 
 Description
+  This file contains list of all gui commands and toolBars
+
+  Functions of this class used to init menus and creation tool bars.
+
+  All command mapping to main window handlers
 */
 
 #include "SdWCommand.h"
@@ -187,10 +192,15 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
   menuInsertPcb = new QMenu( frame->tr("Plate") );
-  cmShowRatNet = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/viewRatnet.png")), frame->tr("Show rat net") ); //, frame, SLOT(cmShowRatNet) );
+  cmShowRatNet = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/viewRatnet.png")), frame->tr("Show rat net") );
   cmShowRatNet->setCheckable(true);
   cmShowRatNet->setChecked( sdEnvir->mShowRatNet );
   cmShowRatNet->connect( cmShowRatNet, &QAction::toggled, frame, &SdWMain::cmShowRatNet );
+  cmShowRuleErrors = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/objShowRuleErrors.png")), frame->tr("Show rule errors") );
+  cmShowRuleErrors->setCheckable(true);
+  cmShowRuleErrors->setChecked( sdEnvir->mShowRuleErrors );
+  cmShowRuleErrors->connect( cmShowRuleErrors, &QAction::toggled, frame, &SdWMain::cmShowRuleErrors );
+  cmCheckRules = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/objRulesCheck.png")), frame->tr("Check all rules"), frame, SLOT(cmCheckRules()) );
   cmPads = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/pads.png")), frame->tr("Pads association"), frame, SLOT(cmPads()) );
   //cmShowRatNet->co
 //  cmNetSetup       = menuInsertPcb->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
@@ -477,6 +487,8 @@ void SdWCommand::createToolBars(SdWMain *frame)
   addViewCommands( barPcb );
   addDrawCommands( barPcb );
   barPcb->insertAction( nullptr, cmShowRatNet );
+  barPcb->insertAction( nullptr, cmShowRuleErrors );
+  barPcb->insertAction( nullptr, cmCheckRules );
   barPcb->insertAction( nullptr, cmPads );
   barPcb->insertAction( nullptr, cmModeTable[MD_MOVE_PART] );
 
@@ -647,6 +659,8 @@ QActionPtr SdWCommand::cmModeDeleteWire;
 QActionPtr SdWCommand::cmModePad;
 
 QActionPtr SdWCommand::cmShowRatNet;
+QActionPtr SdWCommand::cmShowRuleErrors;
+QActionPtr SdWCommand::cmCheckRules;
 
 QActionPtr SdWCommand::cmOption;
 

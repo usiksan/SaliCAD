@@ -116,6 +116,7 @@ class SdWEditor : public QAbstractScrollArea
 
     //Pcb
     virtual void cmPads() {}
+    virtual void cmCheckRules() {}
     virtual void cmModeLineSize() {}
     virtual void cmModeRadiusSize() {}
     virtual void cmModeMovePart() {}

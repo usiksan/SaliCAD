@@ -151,3 +151,13 @@ QPolygonF SdUtil::octagon(int centerx, int centery, int radius)
   }
 
 
+
+
+int SdUtil::iLimit(int val, int vmin, int vmax)
+  {
+  if( val < vmin ) return vmin;
+  if( val > vmax ) return vmax;
+  return val;
+  }
+
+

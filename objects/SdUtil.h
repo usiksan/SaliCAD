@@ -64,6 +64,9 @@ class SdUtil
 
     //Create octagon over circle
     static QPolygonF octagon( int centerx, int centery, int radius );
+
+    //Value limitation
+    static int       iLimit( int val, int vmin, int vmax );
   };
 
 #endif // SDUTIL_H

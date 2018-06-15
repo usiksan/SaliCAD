@@ -577,19 +577,33 @@ void SdGraphPartImp::drawStratum(SdContext *dc, int stratum)
 
 
 
-
-
-
-void SdGraphPartImp::accumBarriers(QList<QPolygonF> &dest, int stratum, const QString excludeWire, bool toWire, const SdRuleBlock &blk ) const
+//Accum barriers for all pin pad. It allow accum clear pad, pad with clearance only or pad with clearance and road width
+void SdGraphPartImp::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const
   {
   //Accum barriers for all pin pad
   SdPItemPlate *plate = getPlate();
-  SdRuleId id = toWire ? ruleWirePad : rulePadPad;
-  int clearance = blk.mRules[id];
-  int halfWidth = blk.mRules[ruleWireWidth];
+  //Addon clearance and halfWidth
+  //Clearance needed to determine which clearance is max one and use
+  //halfWidth needed to trace road as line with null width because absent intersection
+  //allow trace road
+  int clearance, halfWidth;
+  if( toWhich == ruleWireWidth )
+    clearance = halfWidth = 0;
+  else {
+    if( toWhich == ruleWireWire ) toWhich = ruleWirePad;
+    clearance = blk.mRules[toWhich];
+    halfWidth = blk.mRules[ruleWireWidth] / 2;
+    }
   for( const SdPartImpPin &pin : mPins )
-    pin.accumBarriers( plate, dest, stratum, excludeWire, id, clearance, halfWidth  );
+    pin.accumBarriers( plate, dest, stratum, toWhich, clearance, halfWidth  );
   }
+
+
+
+
+
+
+
 
 
 

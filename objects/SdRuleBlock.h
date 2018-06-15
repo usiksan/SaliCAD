@@ -36,6 +36,13 @@ struct SdRuleBlock
 
     SdRuleBlock();
 
+    //Set all rules to value
+    void setAllRule( int val );
+
+    //Set rule block to value
+    void setRuleBlock( int val, SdRuleId first = ruleWireWidth, SdRuleId last = ruleWireWire );
+
+    //Set all rules to -1, i.e. inherited
     void clear();
 
   };

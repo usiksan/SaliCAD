@@ -86,6 +86,9 @@ History
   13.06.2018 v0.34 Complete with PadMaster dialog and Pads dialog.
                    Append SdIllustrator to use in masters to draw actual object schematic
   14.06.2018 v0.35 Append rules and rules extractor
+  15.06.2018 v0.36 Append command for check rules and showRuleErrors with icons
+                   Append "check rules" algorithm
+                   Append tracing layer count edit line in layers dialog when calling from plate
 */
 
 #ifndef SDCONFIG
@@ -97,7 +100,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             34
+#define SD_VERSION_MINOR             36
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

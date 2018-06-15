@@ -28,16 +28,16 @@ SdDOptionsPageColors::SdDOptionsPageColors(QWidget *parent) :
   mTable->setHorizontalHeaderLabels( { tr("Description"), tr("Color") } );
   mTable->setColumnWidth( 0, 300 );
   //Fill color table
-  addColor( scLocked, tr("Locked objects") );
-  addColor( scSelected, tr("Selected objects") );
-  addColor( scEnter,    tr("Object color when entered") );
-  addColor( scSmart,    tr("Smart mode remarks when entering") );
-  addColor( scGraphBack, tr("Graph editor background color") );
-  addColor( scRatNet,    tr("Rat net color in pcb editor") );
-  addColor( scCursor,    tr("Cursor color when cross-hair mode") );
-  addColor( scTraseNet,  tr("Trasing net color") );
-  addColor( scGrid,      tr("Grid color in graph editors") );
-  addColor( scNotLinked, tr("Color for not linked objects") );
+  addColor( scLocked,     tr("Locked objects") );
+  addColor( scSelected,   tr("Selected objects") );
+  addColor( scEnter,      tr("Object color when entered") );
+  addColor( scSmart,      tr("Smart mode remarks when entering") );
+  addColor( scGraphBack,  tr("Graph editor background color") );
+  addColor( scRatNet,     tr("Rat net color in pcb editor") );
+  addColor( scCursor,     tr("Cursor color when cross-hair mode") );
+  addColor( scTraseNet,   tr("Trasing net color") );
+  addColor( scGrid,       tr("Grid color in graph editors") );
+  addColor( scRuleErrors, tr("Color for rule errors") );
 
   mainLayout->addWidget( mTable );
   setLayout( mainLayout );

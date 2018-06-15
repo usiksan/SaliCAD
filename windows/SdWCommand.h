@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  This file contains list of all gui commands and toolBars
 */
 
 #ifndef SDWCOMMAND_H
@@ -135,6 +136,8 @@ class SdWCommand
     static QActionPtr  cmModePad;
 
     static QActionPtr  cmShowRatNet;
+    static QActionPtr  cmShowRuleErrors;
+    static QActionPtr  cmCheckRules;
 
     static QActionPtr  cmOption;
     static QActionPtr  cmTools;

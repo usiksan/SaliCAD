@@ -41,6 +41,10 @@ class SdDLayers : public QDialog
     explicit SdDLayers( SdProject *prj, QWidget *parent = nullptr);
     ~SdDLayers();
 
+    //Stratum count. By default stratum count disabled. When set stratum count it is enabled
+    void setStratumCount( int c );
+    int  getStratumCount() const;
+
   private:
     Ui::SdDLayers *ui;
 
