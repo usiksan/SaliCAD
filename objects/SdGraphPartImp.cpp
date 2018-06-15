@@ -93,7 +93,7 @@ void SdPartImpPin::accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int s
   {
 
   //Compare on stratum
-  if( mStratum.match(stratum) ) {
+  if( mStratum & stratum ) {
     if( ruleId >= ruleLast )
       clearance = 0;
     else
@@ -587,12 +587,12 @@ void SdGraphPartImp::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId to
   //halfWidth needed to trace road as line with null width because absent intersection
   //allow trace road
   int clearance, halfWidth;
-  if( toWhich == ruleWireWidth )
+  if( toWhich == ruleRoadWidth )
     clearance = halfWidth = 0;
   else {
-    if( toWhich == ruleWireWire ) toWhich = ruleWirePad;
+    if( toWhich == ruleRoadRoad ) toWhich = ruleRoadPad;
     clearance = blk.mRules[toWhich];
-    halfWidth = blk.mRules[ruleWireWidth] / 2;
+    halfWidth = blk.mRules[ruleRoadWidth] / 2;
     }
   for( const SdPartImpPin &pin : mPins )
     pin.accumBarriers( plate, dest, stratum, toWhich, clearance, halfWidth  );

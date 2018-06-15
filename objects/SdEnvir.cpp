@@ -340,10 +340,10 @@ void SdEnvir::defaultEnvir()
 
 
   //Default pcb rules
-  mDefaultRules.mRules[ruleWireWidth] = 300;
+  mDefaultRules.mRules[ruleRoadWidth] = 300;
   mDefaultRules.mRules[rulePadPad] = 300;
-  mDefaultRules.mRules[ruleWirePad] = 300;
-  mDefaultRules.mRules[ruleWireWire] = 300;
+  mDefaultRules.mRules[ruleRoadPad] = 300;
+  mDefaultRules.mRules[ruleRoadRoad] = 300;
 
   }
 
@@ -384,7 +384,7 @@ void SdEnvir::resetForCache()
   mCacheForMask.rebuild( mLayerTable, layerTraceMask );
   mCacheForStensil.rebuild( mLayerTable, layerTraceStensil );
   mCacheForHole.rebuild( mLayerTable, layerTraceHole );
-  mCacheForWire.rebuild( mLayerTable, layerTraceWire );
+  mCacheForRoad.rebuild( mLayerTable, layerTraceRoad );
   mCacheForPolygon.rebuild( mLayerTable, layerTracePolygon );
   mCacheForBoundary.rebuild( mLayerTable, layerTraceBoundary );
   mCacheForKeepout.rebuild( mLayerTable, layerTraceKeepout );

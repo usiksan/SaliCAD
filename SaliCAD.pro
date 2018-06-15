@@ -68,7 +68,6 @@ SOURCES += \
     modes/SdModeCLinear.cpp \
     objects/SdPropPartImp.cpp \
     objects/SdPropPartPin.cpp \
-    objects/SdPropRoad.cpp \
     objects/SdPropSymImp.cpp \
     objects/SdPropSymPin.cpp \
     objects/SdPropText.cpp \
@@ -132,7 +131,6 @@ SOURCES += \
     objects/SdUndoRecordWire.cpp \
     objects/SdStratum.cpp \
     objects/SdGraphTraced.cpp \
-    objects/SdGraphTracedRoad.cpp \
     objects/SdGraphTracedVia.cpp \
     objects/SdGraphTracedPolygon.cpp \
     objects/SdPlateNet.cpp \
@@ -192,7 +190,10 @@ SOURCES += \
     objects/SdUndoRecordPadAssociation.cpp \
     windows/SdDPadMaster.cpp \
     windows/SdIllustrator.cpp \
-    objects/SdRuleBlock.cpp
+    objects/SdRuleBlock.cpp \
+    objects/SdPropRoad.cpp \
+    objects/SdGraphTracedRoad.cpp \
+    modes/SdModeCRoadEnter.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -253,7 +254,6 @@ HEADERS  += \
     objects/SdPropText.h \
     objects/SdPropSymPin.h \
     objects/SdPropSymImp.h \
-    objects/SdPropRoad.h \
     objects/SdPropPartPin.h \
     objects/SdPropPartImp.h \
     windows/SdPropBar.h \
@@ -317,7 +317,6 @@ HEADERS  += \
     objects/SdUndoRecordWire.h \
     objects/SdStratum.h \
     objects/SdGraphTraced.h \
-    objects/SdGraphTracedRoad.h \
     objects/SdGraphTracedVia.h \
     objects/SdGraphTracedPolygon.h \
     objects/SdPlateNet.h \
@@ -379,7 +378,10 @@ HEADERS  += \
     windows/SdDPadMaster.h \
     windows/SdIllustrator.h \
     objects/SdRuleBlock.h \
-    objects/SdBarrier.h
+    objects/SdBarrier.h \
+    objects/SdPropRoad.h \
+    objects/SdGraphTracedRoad.h \
+    modes/SdModeCRoadEnter.h
 
 DISTFILES += \
     license.txt

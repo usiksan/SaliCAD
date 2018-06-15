@@ -37,7 +37,7 @@ enum SdLayerTrace {
   layerTraceMask,     //Layer for mask
   layerTraceStensil,  //Layer for stensil apertures
   layerTraceHole,     //Layer for holes
-  layerTraceWire,     //Layer for wires
+  layerTraceRoad,     //Layer for wires
   layerTracePolygon,  //Layer for polygons
   layerTraceBoundary, //Layer for tracing boundary
   layerTraceKeepout,  //Layer for tracing keepout

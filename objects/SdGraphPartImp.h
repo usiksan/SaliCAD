@@ -118,6 +118,11 @@ class SdGraphPartImp : public SdGraphTraced
     //Accum used pins
     void            accumUsedPins(SdPadMap &map ) const;
 
+    //Special drawing
+    //Draw part without pads
+    void            drawWithoutPads( SdContext *cdx );
+    //Draw pads only
+    void            drawPads( SdContext *cdx, SdStratum stratum, const QString highlightNetName );
 
     // SdObject interface
   public:

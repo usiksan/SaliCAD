@@ -33,6 +33,8 @@ class SdStratum : public SdPropInt
     SdStratum();
     SdStratum( int str );
 
+    bool operator & ( int s ) const { return mValue > 0 && (mValue & s); }
+
     bool match( SdStratum s ) const { return mValue > 0 && s.mValue > 0 && (mValue & s.mValue) != 0; }
 
     void writeStratum(QJsonObject &obj) const;

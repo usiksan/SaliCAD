@@ -23,8 +23,8 @@ SdLayerDescr sdLayerDescrActual[] = {
   { LID0_AREA,                   0x007f7fff, layerTraceNone, 0x00000000 }, //5
   //PCB specific
   { LID0_PCB,                    0x00ffff00, layerTraceBoundary, stmThrow }, //6
-  { LID0_WIRE LID1_TOP,          0x00cf0000, layerTraceWire, stmTop }, //7
-  { LID0_WIRE LID1_BOT,          0x000000cf, layerTraceWire, stmBottom }, //8
+  { LID0_WIRE LID1_TOP,          0x00cf0000, layerTraceRoad, stmTop }, //7
+  { LID0_WIRE LID1_BOT,          0x000000cf, layerTraceRoad, stmBottom }, //8
 
   { LID0_POLYGON LID1_TOP,       0x808f0000, layerTracePolygon, stmTop }, //9
   { LID0_POLYGON LID1_BOT,       0x8000008f, layerTracePolygon, stmBottom }, //10
@@ -70,10 +70,10 @@ SdLayerDescr sdLayerDescrActual[] = {
 
 
 SdLayerDescr sdLayerDescrAddon[] = {
-  { LID0_WIRE LID1_INT00, 0x000040cf, layerTraceWire, stmInt00 },
-  { LID0_WIRE LID1_INT01, 0x004040cf, layerTraceWire, stmInt01 },
-  { LID0_WIRE LID1_INT02, 0x004000cf, layerTraceWire, stmInt02 },
-  { LID0_WIRE LID1_INT03, 0x00cf4040, layerTraceWire, stmInt03 },
+  { LID0_WIRE LID1_INT00, 0x000040cf, layerTraceRoad, stmInt00 },
+  { LID0_WIRE LID1_INT01, 0x004040cf, layerTraceRoad, stmInt01 },
+  { LID0_WIRE LID1_INT02, 0x004000cf, layerTraceRoad, stmInt02 },
+  { LID0_WIRE LID1_INT03, 0x00cf4040, layerTraceRoad, stmInt03 },
   { nullptr, 0, layerTraceNone, 0x00000000 }
 };
 
@@ -169,7 +169,7 @@ SdLayer::SdLayer(QString layerId, QString layerName, unsigned layerColor) :
     mState = layerStateOff;
   //Трассировочный слой
   if( mId.startsWith(LID0_WIRE) )
-    mTrace = layerTraceWire;
+    mTrace = layerTraceRoad;
   //По умолчанию пара - этот-же слой
   //By default, pair - is same layer
   mPair = this;

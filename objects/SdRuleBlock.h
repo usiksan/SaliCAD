@@ -12,10 +12,10 @@
 //   void                   readRuleTable( const QJsonArray ar);
 // in SdEnvir - default list
 enum SdRuleId {
-  ruleWireWidth,
+  ruleRoadWidth,
   rulePadPad,
-  ruleWirePad,
-  ruleWireWire,
+  ruleRoadPad,
+  ruleRoadRoad,
   ruleLast
   };
 
@@ -40,7 +40,7 @@ struct SdRuleBlock
     void setAllRule( int val );
 
     //Set rule block to value
-    void setRuleBlock( int val, SdRuleId first = ruleWireWidth, SdRuleId last = ruleWireWire );
+    void setRuleBlock( int val, SdRuleId first = ruleRoadWidth, SdRuleId last = ruleRoadRoad );
 
     //Set all rules to -1, i.e. inherited
     void clear();

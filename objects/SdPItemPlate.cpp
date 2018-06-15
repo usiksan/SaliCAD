@@ -308,7 +308,7 @@ void SdPItemPlate::checkRules(std::function<bool()> fun1)
     //Prepare rule for pads and pads with clearance. We need all rule zero
     SdRuleBlock rule;
     rule.setAllRule( 0 );
-    accumBarriers( dctPartImp | dctTraceVia, pads, 1 << stratumIndex, ruleWireWidth, rule );
+    accumBarriers( dctPartImp | dctTraceVia, pads, 1 << stratumIndex, ruleRoadWidth, rule );
     if( fun1() ) return;
     accumBarriers( dctPartImp | dctTraceVia, padsWithClearance, 1 << stratumIndex, rulePadPad, rule );
     if( fun1() ) return;
@@ -321,16 +321,16 @@ void SdPItemPlate::checkRules(std::function<bool()> fun1)
     //We accum pads with clearance to wires and wire to pad clearance and wire to wire clearance.
     // Then, we compare wire to pad clearance with pads
     padsWithClearance.clear();
-    accumBarriers( dctPartImp | dctTraceVia, padsWithClearance, 1 << stratumIndex, ruleWireWire, rule );
+    accumBarriers( dctPartImp | dctTraceVia, padsWithClearance, 1 << stratumIndex, ruleRoadRoad, rule );
     if( fun1() ) return;
     SdBarrierList wires;
     SdBarrierList wiresWithPadClearance;
     SdBarrierList wiresWithWireClearance;
-    accumBarriers( dctTraceRoad, wires, 1 << stratumIndex, ruleWireWidth, rule );
+    accumBarriers( dctTraceRoad, wires, 1 << stratumIndex, ruleRoadWidth, rule );
     if( fun1() ) return;
     accumBarriers( dctTraceRoad, wiresWithPadClearance, 1 << stratumIndex, rulePadPad, rule );
     if( fun1() ) return;
-    accumBarriers( dctTraceRoad, wiresWithWireClearance, 1 << stratumIndex, ruleWireWire, rule );
+    accumBarriers( dctTraceRoad, wiresWithWireClearance, 1 << stratumIndex, ruleRoadRoad, rule );
     if( fun1() ) return;
 
     //Compare pads with wire clearance to wires
@@ -377,10 +377,10 @@ QJsonArray SdPItemPlate::writeRuleTable() const
   QJsonArray ar;
   for( const SdRuleBlock &blk : mRules ) {
     QJsonObject obj;
-    obj.insert( QStringLiteral("Width"), blk.mRules[ruleWireWidth] );
+    obj.insert( QStringLiteral("Width"), blk.mRules[ruleRoadWidth] );
     obj.insert( QStringLiteral("PadPad"), blk.mRules[rulePadPad] );
-    obj.insert( QStringLiteral("WirePad"), blk.mRules[ruleWirePad] );
-    obj.insert( QStringLiteral("WireWire"), blk.mRules[ruleWireWire] );
+    obj.insert( QStringLiteral("RoadPad"), blk.mRules[ruleRoadPad] );
+    obj.insert( QStringLiteral("RoadRoad"), blk.mRules[ruleRoadRoad] );
     obj.insert( QStringLiteral("Top"), blk.mTopBlock );
     ar.append( obj );
     }
@@ -407,10 +407,10 @@ void SdPItemPlate::readRuleTable(const QJsonArray ar)
   SdRuleBlock blk;
   for( auto iter = ar.constBegin(); iter != ar.constEnd(); iter++ ) {
     QJsonObject obj = iter->toObject();
-    blk.mRules[ruleWireWidth] = obj.value( QStringLiteral("Width") ).toInt();
+    blk.mRules[ruleRoadWidth] = obj.value( QStringLiteral("Width") ).toInt();
     blk.mRules[rulePadPad] = obj.value( QStringLiteral("PadPad") ).toInt();
-    blk.mRules[ruleWirePad] = obj.value( QStringLiteral("WirePad") ).toInt();
-    blk.mRules[ruleWireWire] = obj.value( QStringLiteral("WireWire") ).toInt();
+    blk.mRules[ruleRoadPad] = obj.value( QStringLiteral("RoadPad") ).toInt();
+    blk.mRules[ruleRoadRoad] = obj.value( QStringLiteral("RoadRoad") ).toInt();
     blk.mTopBlock = obj.value( QStringLiteral("Top") ).toInt();
     mRules.append( blk );
     }

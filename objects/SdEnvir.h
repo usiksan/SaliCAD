@@ -122,7 +122,7 @@ class SdEnvir
     SdLayerCache      mCacheForMask;
     SdLayerCache      mCacheForStensil;
     SdLayerCache      mCacheForHole;
-    SdLayerCache      mCacheForWire;
+    SdLayerCache      mCacheForRoad;
     SdLayerCache      mCacheForPolygon;
     SdLayerCache      mCacheForBoundary;
     SdLayerCache      mCacheForKeepout;

@@ -18,10 +18,9 @@ Description
 
 struct SdPropRoad
   {
-    SdPropInt mWidth; //Ширина проводника
-    SdPropInt mLayer; //Слой проводника (сторона)
+    SdPropInt mWidth;   //Road width [Ширина проводника]
 
-    SdPropRoad() : mWidth(0), mLayer(0) { }
+    SdPropRoad() : mWidth(0) { }
     void operator = ( SdPropRoad const &prop );  //Назначить свойства в соответствии с шаблоном
     void append( SdPropRoad const &prop );       //Добавить свойства
     bool operator == ( SdPropRoad const &prop ); //Сравнить свойства

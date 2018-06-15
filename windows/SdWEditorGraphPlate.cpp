@@ -102,6 +102,8 @@ void SdWEditorGraphPlate::cmPads()
   SdDPads pads( mPlate, mPlate->getPadAssociationName(), mPlate->getPadMap(), this );
   if( pads.exec() ) {
     mPlate->setPadAssociation( pads.getAssociationName(), pads.getPadMap(), mPlate->getUndo() );
+    //Update
+    update();
     }
   }
 
