@@ -1,3 +1,16 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Tracing road segment presented by end points, net name, stratum and road width
+*/
 #include "SdGraphTracedRoad.h"
 #include "SdEnvir.h"
 #include "SdSegment.h"
@@ -34,11 +47,9 @@ void SdGraphTracedRoad::cloneFrom(const SdObject *src)
   //Clone current
   const SdGraphTracedRoad *road = dynamic_cast<const SdGraphTracedRoad*>(src);
   if( road != nullptr ) {
-    mNetName = road->mNetName;
     mA       = road->mA;
     mB       = road->mB;
     mProp    = road->mProp;
-    mStratum = road->mStratum;
     }
   }
 
@@ -49,11 +60,9 @@ void SdGraphTracedRoad::writeObject(QJsonObject &obj) const
   //Write top
   SdGraphTraced::writeObject( obj );
   //Members of this class
-  obj.insert( QStringLiteral("Net"), mNetName );
   mA.write( QStringLiteral("a"), obj );
   mB.write( QStringLiteral("b"), obj );
   mProp.write( obj );
-  mStratum.writeStratum( obj );
   }
 
 
@@ -63,12 +72,11 @@ void SdGraphTracedRoad::readObject(SdObjectMap *map, const QJsonObject obj)
   //Read top
   SdGraphTraced::readObject( map, obj );
   //Members of this class
-  mNetName = obj.value( QStringLiteral("Net") ).toString();
   mA.read( QStringLiteral("a"), obj );
   mB.read( QStringLiteral("b"), obj );
   mProp.read( obj );
-  mStratum.readStratum( obj );
   }
+
 
 
 
@@ -76,9 +84,15 @@ void SdGraphTracedRoad::saveState(SdUndo *undo)
   {
   }
 
+
+
+
 void SdGraphTracedRoad::moveComplete(SdPoint grid, SdUndo *undo)
   {
   }
+
+
+
 
 void SdGraphTracedRoad::move(SdPoint offset)
   {
@@ -88,16 +102,25 @@ void SdGraphTracedRoad::move(SdPoint offset)
 
 
 
+//Properties service [Изменение свойствами]
+//Set properties of this object from prop
 void SdGraphTracedRoad::setProp(SdPropSelected &prop)
   {
+  //From global we can set only width
+  mProp.mWidth = prop.mRoadProp.mWidth;
   }
 
 
 
 
+//Get (append) properties from this object to prop
 void SdGraphTracedRoad::getProp(SdPropSelected &prop)
   {
+  prop.mRoadProp.append( mProp );
   }
+
+
+
 
 void SdGraphTracedRoad::selectByPoint(const SdPoint p, SdSelector *selector)
   {
@@ -115,8 +138,15 @@ void SdGraphTracedRoad::prepareMove(SdUndo *undo)
   {
   }
 
+
+
+
 void SdGraphTracedRoad::setLayerUsage()
   {
+  //Layer of road
+  SdLayer *layer = getLayer();
+  if( layer != nullptr )
+    layer->setUsage();
   }
 
 
@@ -125,7 +155,7 @@ void SdGraphTracedRoad::setLayerUsage()
 bool SdGraphTracedRoad::isVisible()
   {
   //Layer of road
-  SdLayer *layer = sdEnvir->mCacheForRoad.getLayer(mStratum);
+  SdLayer *layer = getLayer();
   return layer != nullptr && layer->isVisible();
   }
 
@@ -153,7 +183,7 @@ bool SdGraphTracedRoad::getInfo(SdPoint p, QString &info, bool extInfo)
   {
   Q_UNUSED(extInfo)
   if( behindCursor( p ) ) {
-    info = QObject::tr("Net: ") + mNetName;
+    info = QObject::tr("Net: ") + mProp.mNetName.str();
     return true;
     }
   return false;
@@ -171,6 +201,10 @@ bool SdGraphTracedRoad::snapPoint(SdSnapInfo *snap)
 
 bool SdGraphTracedRoad::isPointOnNet(SdPoint p, SdStratum stratum, QString &wireName)
   {
+  if( mProp.mStratum.match( stratum ) && SdSegment(mA,mB).isPointOn( p ) ) {
+    wireName = mProp.mNetName.str();
+    return true;
+    }
   return false;
   }
 
@@ -185,9 +219,9 @@ void SdGraphTracedRoad::accumNetPoints(SdPlateNetList &netList)
 
 void SdGraphTracedRoad::drawStratum(SdContext *dcx, int stratum)
   {
-  if( mStratum & stratum ) {
+  if( mProp.mStratum & stratum ) {
     //Layer of road
-    SdLayer *layer = sdEnvir->mCacheForRoad.getLayer(mStratum);
+    SdLayer *layer = getLayer();
     if( layer != nullptr && layer->isVisible() ) {
       dcx->setPen( mProp.mWidth.getValue(), layer, dltSolid );
       dcx->line( mA, mB );
@@ -243,4 +277,13 @@ void SdGraphTracedRoad::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId
     bar.mPolygon = pgn;
     dest.append( bar );
     }
+  }
+
+
+
+
+//Return layer for road stratum
+SdLayer *SdGraphTracedRoad::getLayer() const
+  {
+  return sdEnvir->mCacheForRoad.getLayer( mProp.mStratum );
   }

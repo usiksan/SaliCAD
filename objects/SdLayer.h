@@ -30,6 +30,8 @@ enum SdLayerState {
   layerStateEdit  //Layer is visible and editable
   };
 
+
+
 //Layer trace status
 enum SdLayerTrace {
   layerTraceNone,     //Layer not tracing [Слой не трассировочный]

@@ -146,7 +146,7 @@ void SdPropBarWire::setPropWire(SdPropLine *propLine, double ppm, int enterType,
     //Set current width
     mPPM = ppm;
     if( propLine->mWidth.isValid() ) {
-      mWidth->setCurrentText( QString::number( propLine->mWidth.getDouble() * mPPM, 'f', 3 )  );
+      mWidth->setCurrentText( propLine->mWidth.log2Phis(mPPM) );
       setWidth( propLine->mWidth.getDouble() * mPPM );
       }
     else
@@ -174,7 +174,7 @@ void SdPropBarWire::getPropWire(SdPropLine *propLine, int *enterType, QString *w
       propLine->mLayer = layer;
 
     if( !mWidth->currentText().isEmpty() )
-      propLine->mWidth = SdUtil::phys2log( mWidth->currentText(), mPPM );
+      propLine->mWidth.setFromPhis( mWidth->currentText(), mPPM );
 
     if( !mWireName->currentText().isEmpty() )
       *wireName = mWireName->currentText();

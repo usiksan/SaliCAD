@@ -33,21 +33,29 @@ class SdStratum : public SdPropInt
     SdStratum();
     SdStratum( int str );
 
-    bool operator & ( int s ) const { return mValue > 0 && (mValue & s); }
+    //Return true if this stratum intersect with given stratum presented with int
+    bool     operator & ( int s ) const { return mValue > 0 && s > 0 && (mValue & s); }
 
-    bool match( SdStratum s ) const { return mValue > 0 && s.mValue > 0 && (mValue & s.mValue) != 0; }
+    //Return true if this stratum intersect with given stratum
+    bool     match( SdStratum s ) const { return mValue > 0 && s.mValue > 0 && (mValue & s.mValue) != 0; }
 
-    void writeStratum(QJsonObject &obj) const;
-    void readStratum(const QJsonObject &obj);
+    //Write-read stratum
+    void     writeStratum(QJsonObject &obj) const;
+    void     readStratum(const QJsonObject &obj);
 
-    bool isTop() const { return mValue == stmTop; }
+    //Return true if exactly top side
+    bool     isTop() const { return mValue == stmTop; }
 
-    bool isBottom() const { return mValue == stmBottom; }
+    //Return true if exactly bottom side
+    bool     isBottom() const { return mValue == stmBottom; }
 
-    int  stratum( bool top = true ) const;
+    //Flip stratum stack for pcb bottom and unchange it if other
+    int      stratum( bool top = true ) const;
 
-    int  stratumComp( const SdStratum &src ) const;
+    //Flip stratum stack if component is bottom and unchange it if none
+    int      stratumComp( const SdStratum &src ) const;
 
+    //Get stratum index of first stratum in the stack
     static int stratumIndex( int stratum );
 
   };

@@ -16,6 +16,7 @@ Description
 #include "SdDPads.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
+#include "modes/SdModeCRoadEnter.h"
 #include <QDebug>
 #include <QProgressDialog>
 
@@ -65,8 +66,9 @@ void SdWEditorGraphPlate::cmModeEditWire()
   {
   }
 
-void SdWEditorGraphPlate::cmModeWire()
+void SdWEditorGraphPlate::cmModeRoadEnter()
   {
+  modeSet( new SdModeCRoadEnter( this, getProjectItem() )  );
   }
 
 void SdWEditorGraphPlate::cmModePolygon()

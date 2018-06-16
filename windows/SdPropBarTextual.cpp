@@ -171,7 +171,7 @@ void SdPropBarTextual::setPropText(SdPropText *propText, double ppm)
     //Set current width
     mPPM = ppm;
     if( propText->mSize.isValid() ) {
-      mSize->setCurrentText( QString::number( propText->mSize.getDouble() * mPPM, 'f', 2) );
+      mSize->setCurrentText( propText->mSize.log2Phis(mPPM) );
       setSize( propText->mSize.getDouble() * mPPM );
       }
     else
@@ -206,7 +206,7 @@ void SdPropBarTextual::getPropText(SdPropText *propText)
 
     //Get text size
     if( !mSize->currentText().isEmpty() )
-      propText->mSize = SdUtil::phys2log( mSize->currentText(), mPPM );
+      propText->mSize.setFromPhis( mSize->currentText(), mPPM );
 
     //Get text vertical alignment
     if( mVertTop->isChecked() ) propText->mVert = dvjTop;

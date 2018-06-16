@@ -29,7 +29,7 @@ class SdGraphLinear : public SdGraph
     virtual void writeObject(QJsonObject &obj) const override;
     virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
 
-    //Изменение свойствами
+    //Properties service [Изменение свойствами]
     virtual void setProp(SdPropSelected &prop) override;
     virtual void getProp(SdPropSelected &prop) override;
 

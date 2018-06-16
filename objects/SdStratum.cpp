@@ -11,6 +11,7 @@ Web
 Description
 */
 #include "SdStratum.h"
+#include "SdEnvir.h"
 
 SdStratum::SdStratum() :
   SdPropInt()
@@ -28,6 +29,7 @@ SdStratum::SdStratum(int str) :
 
 
 
+//Write-read stratum
 void SdStratum::writeStratum(QJsonObject &obj) const
   {
   obj.insert( QStringLiteral("Stratum"), QString::number( mValue, 16 ) );
@@ -44,6 +46,7 @@ void SdStratum::readStratum(const QJsonObject &obj)
 
 
 
+//Flip stratum stack for pcb bottom and unchange it if other
 int SdStratum::stratum(bool top) const
   {
   if( mValue < 0 ) return 0;
@@ -55,6 +58,7 @@ int SdStratum::stratum(bool top) const
 
 
 
+//Flip stratum stack if component is bottom and unchange it if none
 int SdStratum::stratumComp(const SdStratum &src) const
   {
   return stratum( !src.isBottom() );
@@ -62,6 +66,15 @@ int SdStratum::stratumComp(const SdStratum &src) const
 
 
 
+//Return layer associated with this stratum and trace variant
+SdLayer *SdStratum::layer(SdLayerTrace trace) const
+  {
+  //sdEnvir
+  }
+
+
+
+//Get stratum index of first stratum in the stack
 int SdStratum::stratumIndex(int stratum)
   {
   for( int i = 0; i < 30; i++ )

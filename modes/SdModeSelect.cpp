@@ -25,6 +25,7 @@ Description
 #include "windows/SdPropBarSymImp.h"
 #include "windows/SdPropBarSymPin.h"
 #include "windows/SdPropBarTextual.h"
+#include "windows/SdPropBarRoad.h"
 #include "windows/SdPropBarWire.h"
 
 #include "windows/SdWCommand.h"
@@ -752,7 +753,8 @@ void SdModeSelect::propGetFromBar()
       }
       break;
     case PB_ROAD : {
-      //TODO D030 roadPropBar in select mode
+      SdPropBarRoad *barRoad = dynamic_cast<SdPropBarRoad*>(SdWCommand::getModeBar(PB_ROAD) );
+      barRoad->getPropRoad( &(mLocalProp.mRoadProp), &(mLocalProp.mEnterType) );
       }
       break;
     }
@@ -821,7 +823,8 @@ void SdModeSelect::propSetToBar()
       }
       break;
     case PB_ROAD : {
-      //TODO D029 roadPropBar in select mode
+      SdPropBarRoad *barRoad = dynamic_cast<SdPropBarRoad*>(SdWCommand::getModeBar(PB_ROAD) );
+      barRoad->setPropRoad( &(mLocalProp.mRoadProp), getPPM(), mLocalProp.mEnterType );
       }
       break;
     }

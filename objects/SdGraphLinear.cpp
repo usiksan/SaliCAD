@@ -53,13 +53,15 @@ void SdGraphLinear::readObject(SdObjectMap *map, const QJsonObject obj)
 
 
 
+//Properties service [Изменение свойствами]
+//Set properties of this object from prop
 void SdGraphLinear::setProp(SdPropSelected &prop)
   {
   mProp = prop.mLineProp;
   }
 
 
-
+//Get (append) properties from this object to prop
 void SdGraphLinear::getProp(SdPropSelected &prop)
   {
   prop.mLineProp.append( mProp );

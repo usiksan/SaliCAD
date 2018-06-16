@@ -22,9 +22,9 @@ class SdPropBar : public QToolBar
   {
     Q_OBJECT
 
+  protected:
     QComboBox *mLayer; //List of available layers
 
-  protected:
     void     setSelectedLayer( SdLayer *layer );
     SdLayer *getSelectedLayer();
   public:
@@ -35,7 +35,7 @@ class SdPropBar : public QToolBar
     void propChanged();
 
   public slots:
-    void updateViewedLayers();
+    virtual void updateViewedLayers();
   };
 
 #endif // SDPROPBAR_H

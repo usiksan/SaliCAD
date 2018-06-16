@@ -193,7 +193,10 @@ SOURCES += \
     objects/SdRuleBlock.cpp \
     objects/SdPropRoad.cpp \
     objects/SdGraphTracedRoad.cpp \
-    modes/SdModeCRoadEnter.cpp
+    modes/SdModeCRoadEnter.cpp \
+    windows/SdPropBarRoad.cpp \
+    windows/SdPropBarStratum.cpp \
+    objects/SdPropInt.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -381,7 +384,9 @@ HEADERS  += \
     objects/SdBarrier.h \
     objects/SdPropRoad.h \
     objects/SdGraphTracedRoad.h \
-    modes/SdModeCRoadEnter.h
+    modes/SdModeCRoadEnter.h \
+    windows/SdPropBarRoad.h \
+    windows/SdPropBarStratum.h
 
 DISTFILES += \
     license.txt

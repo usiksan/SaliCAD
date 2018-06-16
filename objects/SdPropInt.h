@@ -33,8 +33,17 @@ class SdPropInt
                operator int () const { return mValue; }
     void       operator = ( int i ) { if( i >= 0 || i < AllValue ) mValue = i; }
     SdPropInt& operator = ( const SdPropInt& s ) { if( s.mValue != NoValue && s.mValue != AllValue ) mValue = s.mValue; return *this; }
+
+    //Value as int
     int        getValue() const { return mValue; }
+
+    //Value as double
     double     getDouble() const { return static_cast<double>(mValue); }
+
+    //Visual representation
+    QString    log2Phis( double ppm ) const;
+    void       setFromPhis( const QString src, double ppm );
+
     void       append( int i ) { if( mValue != i && i >= 0 ) mValue = mValue == NoValue ? i : AllValue; }   //Добавить значение
     void       clear() { mValue = NoValue; }   //Нет значения
     bool       match( SdPropInt const &s ) {

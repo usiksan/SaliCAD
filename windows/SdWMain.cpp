@@ -1152,10 +1152,10 @@ void SdWMain::cmModeEditWire()
 
 
 
-void SdWMain::cmModeWire()
+void SdWMain::cmModeRoadEnter()
   {
   if( activeEditor() )
-    activeEditor()->cmModeWire();
+    activeEditor()->cmModeRoadEnter();
   }
 
 

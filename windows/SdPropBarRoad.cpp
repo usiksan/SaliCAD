@@ -9,20 +9,17 @@ Web
   www.saliLab.ru
 
 Description
-  Properties bar for lines and other linear objects
+  Properties bar for tracing road
 */
-#include "SdPropBarLinear.h"
+#include "SdPropBarRoad.h"
 #include "objects/SdUtil.h"
-#include <QList>
 #include <QLineEdit>
-#include <QDoubleValidator>
-#include <QIcon>
-#include <QDebug>
 
 static QList<double> prevWidth;
 
-SdPropBarLinear::SdPropBarLinear(const QString title) :
-  SdPropBar( title )
+
+SdPropBarRoad::SdPropBarRoad(const QString title) :
+  SdPropBarStratum( title )
   {
   mWidth = new QComboBox();
   mWidth->setEditable(true);
@@ -34,7 +31,6 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
   //Select first item
   mWidth->setCurrentIndex(0);
   mWidth->lineEdit()->setValidator( new QRegExpValidator( QRegExp("[0-9]{1,3}((\\.|\\,)[0-9]{0,3})?")) );
-//  mWidth->lineEdit()->setValidator( new QDoubleValidator() );
   mWidth->setMinimumWidth(80);
 
   //on complete editing
@@ -50,6 +46,15 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
     });
 
   addWidget( mWidth );
+
+  addSeparator();
+
+
+  mWireName = new QLineEdit();
+  mWireName->setReadOnly(true);
+  mWireName->setMinimumWidth(80);
+
+  addWidget( mWireName );
 
   addSeparator();
 
@@ -78,50 +83,22 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
     emit propChanged();
     });
 
-  addSeparator();
-
-
-  //Line type
-  mLineSolid = addAction( QIcon(QString(":/pic/dltSolid.png")), tr("lines connects at any degree") );
-  mLineSolid->setCheckable(true);
-  connect( mLineSolid, &QAction::triggered, [=](bool checked){
-    Q_UNUSED(checked)
-    setLineType( dltSolid );
-    emit propChanged();
-    });
-
-  mLineDotted = addAction( QIcon(QString(":/pic/dltDotted.png")), tr("lines connects at any degree") );
-  mLineDotted->setCheckable(true);
-  connect( mLineDotted, &QAction::triggered, [=](bool checked){
-    Q_UNUSED(checked)
-    setLineType( dltDotted );
-    emit propChanged();
-    });
-
-  mLineDashed = addAction( QIcon(QString(":/pic/dltDashed.png")), tr("lines connects at any degree") );
-  mLineDashed->setCheckable(true);
-  connect( mLineDashed, &QAction::triggered, [=](bool checked){
-    Q_UNUSED(checked)
-    setLineType( dltDashed );
-    emit propChanged();
-    });
-
   }
 
 
 
-//Set all visual line properties from SdPropLine structure
-void SdPropBarLinear::setPropLine(SdPropLine *propLine, double ppm, int enterType)
+
+void SdPropBarRoad::setPropRoad(SdPropRoad *propRoad, double ppm, int enterType)
   {
-  if( propLine ) {
-    //Set current layer
-    setSelectedLayer( propLine->mLayer.layer(false) );
+  if( propRoad ) {
+    //Set current stratum
+    setSelectedStratum( propRoad->mStratum );
 
     //Set current width
     mPPM = ppm;
-    if( propLine->mWidth.isValid() ) {
-      mWidth->setCurrentText( propLine->mWidth.log2Phis(mPPM) );
-      setWidth( propLine->mWidth.getDouble() * mPPM );
+    if( propRoad->mWidth.isValid() ) {
+      mWidth->setCurrentText( propRoad->mWidth.log2Phis(mPPM)  );
+      setWidth( propRoad->mWidth.getDouble() * mPPM );
       }
     else
       mWidth->setCurrentText( QString()  );
@@ -129,27 +106,26 @@ void SdPropBarLinear::setPropLine(SdPropLine *propLine, double ppm, int enterTyp
     //line enter type
     setVertexType( enterType );
 
-    //line type
-    setLineType( propLine->mType.getValue() );
+    //Current road name name
+    mWireName->setText( propRoad->mNetName.str() );
     }
   }
 
 
 
-//Get all line properties from visual elements and fill SdPropLine
-void SdPropBarLinear::getPropLine(SdPropLine *propLine, int *enterType )
+
+
+void SdPropBarRoad::getPropRoad(SdPropRoad *propRoad, int *enterType)
   {
-  if( propLine ) {
-    SdLayer *layer = getSelectedLayer();
-    if( layer )
-      propLine->mLayer = layer;
+  if( propRoad ) {
+    int stratum = getSelectedStratum();
+    if( stratum )
+      propRoad->mStratum = stratum;
 
     if( !mWidth->currentText().isEmpty() )
-      propLine->mWidth.setFromPhis( mWidth->currentText(), mPPM );
+      propRoad->mWidth.setFromPhis( mWidth->currentText(), mPPM );
 
-    if( mLineSolid->isChecked() ) propLine->mType = dltSolid;
-    else if( mLineDotted->isChecked() ) propLine->mType = dltDotted;
-    else if( mLineDashed->isChecked() ) propLine->mType = dltDashed;
+    //Net name not used
     }
   if( enterType ) {
     if( mEnterOrtho->isChecked() ) *enterType = dleOrtho;
@@ -160,13 +136,13 @@ void SdPropBarLinear::getPropLine(SdPropLine *propLine, int *enterType )
 
 
 
-//Set line width
-void SdPropBarLinear::setWidth(double width)
+
+void SdPropBarRoad::setWidth(double width)
   {
   int index = prevWidth.indexOf( width );
   if( index < 0 ) {
     //new value, insert
-    if( prevWidth.count() >= LINEAR_WIDTH_PREV_COUNT )
+    if( prevWidth.count() >= ROAD_WIDTH_PREV_COUNT )
       //List of previous width is full. Remove last value.
       prevWidth.removeLast();
     prevWidth.insert( 0, width );
@@ -180,8 +156,8 @@ void SdPropBarLinear::setWidth(double width)
 
 
 
-//Set line vertex type when enter line - angle between two connected segments
-void SdPropBarLinear::setVertexType(int type)
+
+void SdPropBarRoad::setVertexType(int type)
   {
   mEnterOrtho->setChecked( type == dleOrtho );
   mEnter45degree->setChecked( type == dle45degree );
@@ -190,10 +166,5 @@ void SdPropBarLinear::setVertexType(int type)
 
 
 
-//Set line type: solid, dotted or dashed
-void SdPropBarLinear::setLineType(int type)
-  {
-  mLineSolid->setChecked( type == dltSolid );
-  mLineDotted->setChecked( type == dltDotted );
-  mLineDashed->setChecked( type == dltDashed );
-  }
+
+

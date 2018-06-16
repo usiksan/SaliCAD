@@ -24,6 +24,7 @@ Description
 #include "SdPropBarSymPin.h"
 #include "SdPropBarPartPin.h"
 #include "SdPropBarSymImp.h"
+#include "SdPropBarRoad.h"
 #include "SdPropBarWire.h"
 #include "objects/SdEnvir.h"
 #include <QMenuBar>
@@ -212,7 +213,8 @@ void SdWCommand::createMenu(SdWMain *frame)
   // cmModePack       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeLineSize   = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeRadiusSize = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  cmModeTable[MD_MOVE_PART] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrtPlace.png")), frame->tr("Move part"), frame, SLOT(cmModeMovePart()) );
+  cmModeTable[MD_MOVE_PART]  = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrtPlace.png")), frame->tr("Move part"), frame, SLOT(cmModeMovePart()) );
+  cmModeTable[MD_ROAD_ENTER] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPcbWire.png")), frame->tr("Road enter"), frame, SLOT(cmModeRoadEnter()) );
   //  cmModePlace      = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeEditWire   = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeWire       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
@@ -540,6 +542,12 @@ void SdWCommand::createToolBars(SdWMain *frame)
   isbar->setVisible(false);
   mbarTable[PB_SYM_IMP] = isbar;
   isbar->connect( isbar, &SdPropBarSymImp::propChanged, frame, &SdWMain::cmPropertiesChange );
+
+  SdPropBarRoad *rbar = new SdPropBarRoad( QStringLiteral("Road") );
+  frame->addToolBar( rbar );
+  rbar->setVisible(false);
+  mbarTable[PB_ROAD] = rbar;
+  rbar->connect( rbar, &SdPropBarRoad::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   SdPropBarWire *wbar = new SdPropBarWire( QStringLiteral("Wire") );
   frame->addToolBar( wbar );

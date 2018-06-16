@@ -27,6 +27,10 @@
 //===================================================================================
 //Fixed:
 
+//D029 roadPropBar in select mode
+
+//D030 roadPropBar in select mode
+
 //D034 draw pad
 
 //D036 read pad association

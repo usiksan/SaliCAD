@@ -123,7 +123,7 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmModePlace() {}
 
     virtual void cmModeEditWire() {}
-    virtual void cmModeWire() {}
+    virtual void cmModeRoadEnter() {}
     virtual void cmModePolygon() {}
     virtual void cmModeDeleteWire() {}
     virtual void cmModePad() {}
