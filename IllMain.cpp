@@ -60,11 +60,11 @@ int main(int argc, char *argv[])
   QApplication a(argc, argv);
 
   QPolygon pol;
-  pol << QPoint(-100,-100) << QPoint(100,-100) << QPoint(100,100) << QPoint(-100,100);
+  pol << QPoint(-100,-10) << QPoint(100,-10) << QPoint(100,10) << QPoint(-100,10);
   qDebug() << pol;
   qDebug() << pol.containsPoint( QPoint(0,0), Qt::OddEvenFill );
   QPolygon win;
-  win << QPoint(-10,-200) << QPoint(10,-10) << QPoint(10,10) << QPoint(-10,10);
+  win << QPoint(-10,-200) << QPoint(10,-200) << QPoint(10,200) << QPoint(-10,200);
   pol = pol.subtracted( win );
   qDebug() << pol;
   qDebug() << pol.containsPoint( QPoint(0,0), Qt::OddEvenFill );

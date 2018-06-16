@@ -9,9 +9,10 @@
 
 class SdGraphTracedRoad : public SdGraphTraced
   {
-    QString    mNetName; //Net name which contains this road
     SdPropRoad mProp;    //Road properties
-    SdStratum  mStratum; //Stratum of road
+                         // - road width
+                         // - net name which contains this road
+                         // - stratum of road
     SdPoint    mA,mB;    //End points of road
 
     //Not save and used when road edit

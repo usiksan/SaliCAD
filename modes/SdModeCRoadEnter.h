@@ -24,6 +24,7 @@ class SdModeCRoadEnter : public SdModeCommon
     SdPoint        mMiddle;     //Vertex point
     SdPoint        mPrevMove;   //Previous entered point
     QString        mNetName;    //Net name for entered road
+    SdStratum      mActive;     //Current stratum
 
     bool           mShowNet;    //Show current net with enter color
 

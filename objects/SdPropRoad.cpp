@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Tracing road properties. It contains road width, net name which road and road stratum
 */
 
 #include "SdPropRoad.h"
@@ -17,7 +18,9 @@ Description
 
 void SdPropRoad::operator =(const SdPropRoad &prop)
   {
-  mWidth = prop.mWidth;
+  mWidth   = prop.mWidth;
+  mNetName = prop.mNetName;
+  mStratum = prop.mStratum;
   }
 
 
@@ -25,13 +28,15 @@ void SdPropRoad::operator =(const SdPropRoad &prop)
 void SdPropRoad::append(const SdPropRoad &prop)
   {
   mWidth.append( prop.mWidth );
+  mNetName.append( prop.mNetName );
+  mStratum.append( prop.mStratum );
   }
 
 
 
 bool SdPropRoad::operator ==(const SdPropRoad &prop)
   {
-  return mWidth == prop.mWidth;
+  return mWidth == prop.mWidth && mNetName == prop.mNetName && mStratum == prop.mStratum;
   }
 
 
@@ -39,13 +44,15 @@ bool SdPropRoad::operator ==(const SdPropRoad &prop)
 void SdPropRoad::clear()
   {
   mWidth.clear();
+  mNetName.clear();
+  mStratum.clear();
   }
 
 
 
 bool SdPropRoad::match(const SdPropRoad &prop)
   {
-  return mWidth.match( prop.mWidth );
+  return mWidth.match( prop.mWidth ) && mNetName.match( prop.mNetName ) && mStratum.match( prop.mStratum );
   }
 
 
@@ -53,8 +60,9 @@ bool SdPropRoad::match(const SdPropRoad &prop)
 
 void SdPropRoad::write(QJsonObject &obj) const
   {
-  mWidth.write( QStringLiteral("RoadWidth"), obj );
-//  mLayer.write( QStringLiteral("RoadLayer"), obj );
+  mWidth.write( QStringLiteral("rWidth"), obj );
+  mStratum.write( QStringLiteral("rStratum"), obj );
+  mNetName.write( QStringLiteral("rNet"), obj );
   }
 
 
@@ -62,7 +70,8 @@ void SdPropRoad::write(QJsonObject &obj) const
 
 void SdPropRoad::read(const QJsonObject obj)
   {
-  mWidth.read( QStringLiteral("RoadWidth"), obj );
-//  mLayer.read( QStringLiteral("RoadLayer"), obj );
+  mWidth.read( QStringLiteral("rWidth"), obj );
+  mStratum.read( QStringLiteral("rStratum"), obj );
+  mNetName.read( QStringLiteral("rNet"), obj );
   }
 
