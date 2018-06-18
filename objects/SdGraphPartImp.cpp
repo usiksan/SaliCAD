@@ -24,6 +24,8 @@ Description
 #include "SdSelector.h"
 #include "SdEnvir.h"
 
+#include <QDebug>
+
 
 //====================================================================================
 //Pin for part implementation
@@ -699,6 +701,7 @@ void SdGraphPartImp::updatePinsPositions()
   QTransform t = impl.getMatrix();
   for( SdPartImpPin &pin : mPins ) {
     pin.mPosition = t.map( pin.mPin->getPinOrigin() );
+    qDebug() << "pin" << pin.mPosition;
     pin.mStratum  = pin.mPin->getPinStratum( mProp.mSide.isBottom() );
     }
   mOverRect.set( t.mapRect( mPart->getOverRect() ) );

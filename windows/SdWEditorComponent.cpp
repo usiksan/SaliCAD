@@ -41,6 +41,7 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
   //                        param editor
   //                      (param table, buttons)
   QHBoxLayout *root = new QHBoxLayout();
+  //QSplitter *split = new QSplitter();
 
     //Left column contains preview widgets
     QVBoxLayout *lay = new QVBoxLayout();
@@ -436,7 +437,7 @@ void SdWEditorComponent::fillParams()
   mParamTable->setRowCount( tab.count() );
   //Setup header
   mParamTable->setHorizontalHeaderLabels( {tr("Param name"), tr("Param value")} );
-  mParamTable->setColumnWidth(1,200);
+  mParamTable->setColumnWidth(1,400);
   int row = 0;
   for( auto iter = tab.constBegin(); iter != tab.constEnd(); iter++ ) {
     mParamTable->setItem( row, 0, new QTableWidgetItem(iter.key()) );

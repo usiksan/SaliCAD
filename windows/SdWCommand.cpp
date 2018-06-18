@@ -493,6 +493,8 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barPcb->insertAction( nullptr, cmCheckRules );
   barPcb->insertAction( nullptr, cmPads );
   barPcb->insertAction( nullptr, cmModeTable[MD_MOVE_PART] );
+  barPcb->insertAction( nullptr, cmModeTable[MD_ROAD_ENTER] );
+
 
   frame->addToolBar( barPcb );
 

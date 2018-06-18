@@ -53,6 +53,7 @@ SdPropBarRoad::SdPropBarRoad(const QString title) :
   mWireName = new QLineEdit();
   mWireName->setReadOnly(true);
   mWireName->setMinimumWidth(80);
+  mWireName->setMaximumWidth(120);
 
   addWidget( mWireName );
 
