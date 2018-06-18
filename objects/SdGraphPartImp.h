@@ -43,7 +43,9 @@ struct SdPartImpPin {
   SdPartImpPin();
 
   void        operator = ( const SdPartImpPin &pin );
-  void        draw(SdContext *dc , SdPItemPlate *plate, int startum) const;
+  void        draw(SdContext *dc , SdPItemPlate *plate, int stratum) const;
+  void        drawWithoutPad( SdContext *dc ) const;
+  void        drawPad(SdContext *dc , SdPItemPlate *plate, int stratum, const QString highliteNet) const;
   bool        isConnected() const;
   QString     getNetName() const;
   void        accumUsedPin( SdPadMap &map ) const;

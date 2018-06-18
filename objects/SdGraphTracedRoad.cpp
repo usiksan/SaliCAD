@@ -244,7 +244,7 @@ void SdGraphTracedRoad::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId
   //
   //Treat road as vector with "angle" and "len" and mA as start point
   //
-  if( mStratum & stratum ) {
+  if( mProp.mStratum & stratum ) {
     double angle = mB.getAngleDegree(mA);
     double len   = mA.getDistance(mB);
     double halfWidth = mProp.mWidth.getValue() / 2;
@@ -273,7 +273,7 @@ void SdGraphTracedRoad::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId
     pgn.translate( mA.x(), mA.y() );
 
     SdBarrier bar;
-    bar.mNetName = mNetName;
+    bar.mNetName = mProp.mNetName.str();
     bar.mPolygon = pgn;
     dest.append( bar );
     }

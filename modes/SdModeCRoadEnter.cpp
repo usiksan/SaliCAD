@@ -4,6 +4,7 @@
 #include "objects/SdEnvir.h"
 #include "windows/SdPropBarRoad.h"
 #include "windows/SdWCommand.h"
+#include "windows/SdWEditorGraph.h"
 
 SdModeCRoadEnter::SdModeCRoadEnter(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeCommon( editor, obj )
@@ -131,12 +132,18 @@ void SdModeCRoadEnter::movePoint(SdPoint)
   {
   }
 
+
+
 QString SdModeCRoadEnter::getStepHelp() const
   {
+  return getStep() == sNextPoint ? QObject::tr("Enter next point of road polyline") : QObject::tr("Select point to start road");
   }
+
+
 
 QString SdModeCRoadEnter::getModeThema() const
   {
+  return  QString( MODE_HELP "ModeCRoadEnter.htm" );
   }
 
 

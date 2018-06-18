@@ -37,7 +37,7 @@ void SdPropBarStratum::setStratumCountAndTrace(int stratumCount, SdLayerTrace tr
 void SdPropBarStratum::setSelectedStratum(SdStratum stratum)
   {
   for( int i = 0; i < mLayer->count(); i++ ) {
-    QString id = mLayer->itemData(i);
+    QString id = mLayer->itemData(i).toString();
     if( id.isEmpty() )
       continue;
     SdLayer *layer = sdEnvir->getLayer( id );

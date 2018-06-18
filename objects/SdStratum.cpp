@@ -66,12 +66,6 @@ int SdStratum::stratumComp(const SdStratum &src) const
 
 
 
-//Return layer associated with this stratum and trace variant
-SdLayer *SdStratum::layer(SdLayerTrace trace) const
-  {
-  //sdEnvir
-  }
-
 
 
 //Get stratum index of first stratum in the stack

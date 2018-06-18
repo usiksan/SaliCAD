@@ -49,12 +49,30 @@ void SdPartImpPin::operator =(const SdPartImpPin &pin)
 
 
 
-void SdPartImpPin::draw(SdContext *dc, SdPItemPlate *plate, int startum ) const
+void SdPartImpPin::draw(SdContext *dc, SdPItemPlate *plate, int stratum ) const
+  {
+  drawWithoutPad( dc );
+  //Draw pin pad
+  plate->drawPad( dc, mPin->getPinOrigin(), mPin->getPinType(), mStratum.stratum() & stratum );
+  }
+
+
+
+void SdPartImpPin::drawWithoutPad(SdContext *dc) const
   {
   //Draw standard pin (pin connection point, pin number and pin name)
   mPin->drawImp( dc, mPinName, isConnected() );
+  }
+
+
+
+void SdPartImpPin::drawPad(SdContext *dc, SdPItemPlate *plate, int stratum, const QString highliteNet ) const
+  {
   //Draw pin pad
-  plate->drawPad( dc, mPin->getPinOrigin(), mPin->getPinType(), mStratum.stratum() & startum );
+  if( !highliteNet.isEmpty() && getNetName() == highliteNet )
+    dc->setOverColor( sdEnvir->getSysColor(scTraseNet) );
+  plate->drawPad( dc, mPin->getPinOrigin(), mPin->getPinType(), mStratum.stratum() & stratum );
+  dc->resetOverColor();
   }
 
 
@@ -245,6 +263,42 @@ void SdGraphPartImp::accumUsedPins(SdPadMap &map) const
   {
   for( const SdPartImpPin &pin : mPins )
     pin.accumUsedPin( map );
+  }
+
+
+
+
+
+//Draw part without pads
+void SdGraphPartImp::drawWithoutPads(SdContext *cdx)
+  {
+  cdx->text( mIdentPos, mIdentRect, getIdent(), mIdentProp );
+  //Convertor for symbol implementation
+  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
+  cdx->setConverter( &imp );
+
+  //Draw symbol except ident and pins
+  mPart->forEach( dctAll & ~(dctPartPin | dctIdent), [cdx] (SdObject *obj) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>( obj );
+    if( graph )
+      graph->draw( cdx );
+    return true;
+    });
+
+  //Draw pins
+  for( const SdPartImpPin &pin : mPins )
+    pin.drawWithoutPad( cdx );
+  }
+
+
+
+
+//Draw pads only
+void SdGraphPartImp::drawPads(SdContext *cdx, SdStratum stratum, const QString highlightNetName)
+  {
+  //Draw pins
+  for( const SdPartImpPin &pin : mPins )
+    pin.drawPad( cdx, getPlate(), stratum, highlightNetName );
   }
 
 

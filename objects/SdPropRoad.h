@@ -17,12 +17,13 @@ Description
 
 #include "SdPropInt.h"
 #include "SdPropString.h"
+#include "SdStratum.h"
 
 struct SdPropRoad
   {
     SdPropInt    mWidth;   //Road width [Ширина проводника]
     SdPropString mNetName; //Net name which road is
-    SdPropInt    mStratum; //Road stratum
+    SdStratum    mStratum; //Road stratum
 
     SdPropRoad() : mWidth(0), mNetName(), mStratum(1) { }
     void operator = ( SdPropRoad const &prop );  //Назначить свойства в соответствии с шаблоном
