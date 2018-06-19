@@ -1,0 +1,39 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Plate net list. Contains list of all named nets.
+  On list base we build ratnet.
+*/
+#ifndef SDPLATENETLIST_H
+#define SDPLATENETLIST_H
+
+#include "SdRatNet.h"
+#include "SdPlateNet.h"
+
+#include <QMap>
+#include <QString>
+
+//List of plate nets
+class SdPlateNetList {
+    QMap<QString,SdPlateNet*> mNetList; //Net list
+  public:
+    SdPlateNetList();
+    ~SdPlateNetList();
+
+    //Add net segment to appropriate net
+    void addNetSegment(const QString netName, SdStratum s, SdPoint p1, SdPoint p2);
+
+    //For each net build ratnet
+    void buildRatNet( SdRatNet *ratNet );
+  };
+
+
+#endif // SDPLATENETLIST_H

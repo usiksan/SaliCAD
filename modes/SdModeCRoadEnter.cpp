@@ -2,6 +2,7 @@
 #include "objects/SdGraphPartImp.h"
 #include "objects/SdProp.h"
 #include "objects/SdEnvir.h"
+#include "objects/SdGraphTracedRoad.h"
 #include "windows/SdPropBarRoad.h"
 #include "windows/SdWCommand.h"
 #include "windows/SdWEditorGraph.h"
@@ -117,8 +118,57 @@ void SdModeCRoadEnter::propSetToBar()
 
 
 
-void SdModeCRoadEnter::enterPoint(SdPoint)
+void SdModeCRoadEnter::enterPoint(SdPoint p)
   {
+  if( getStep() ) {
+    //Entered next road path point
+    if( mFirst == p ) {
+      //Circle stratum change
+      SdStratum st = mStack.stratumNext( mProp.mStratum );
+      if( st == mProp.mStratum ) {
+        //No stratum stack at this point
+        //Try insert Via
+        }
+      else {
+        mProp.mStratum = st;
+        }
+      //Update rules
+
+      }
+    else {
+      //Append new segment
+      addPic( new SdGraphTracedRoad( mProp, mFirst, mMiddle ), QObject::tr("Insert trace road") );
+      mFirst = mMiddle;
+      rebuildBarriers();
+      }
+    }
+  else {
+    //Entered first road path point
+    //Find whose net it contained
+    //At first find on current stratum
+    QString netName;
+    int destStratum;
+    getNetOnPoint( p, mProp.mStratum, &netName, &destStratum );
+
+    if( netName.isEmpty() )
+      //No net on this point at current stratum
+      //Try on all stratums
+      getNetOnPoint( p, stmThrow, &netName, &destStratum );
+
+    if( !netName.isEmpty() ) {
+      mFirst = p;
+      mStack = destStratum;
+      mProp.mNetName = netName;
+      mProp.mStratum = mStack.stratumFirst(mStack);
+      plate()->ruleBlockForNet( mProp.mStratum.getValue(), mProp.mNetName.str(), mRule );
+      mProp.mWidth   = mRule.mRules[ruleRoadWidth];
+      propSetToBar();
+      setStep(sNextPoint);
+      rebuildBarriers();
+      }
+    }
+  setDirtyCashe();
+  update();
   }
 
 
@@ -128,8 +178,16 @@ void SdModeCRoadEnter::cancelPoint(SdPoint)
   {
   }
 
-void SdModeCRoadEnter::movePoint(SdPoint)
+
+
+
+void SdModeCRoadEnter::movePoint(SdPoint p)
   {
+  if( getStep() == sNextPoint ) {
+    mMiddle = calcMiddlePoint( mFirst, p, sdGlobalProp->mWireEnterType );
+    //Check if current point available
+
+    }
   }
 
 
@@ -170,8 +228,20 @@ int SdModeCRoadEnter::getIndex() const
 
 
 
+void SdModeCRoadEnter::getNetOnPoint(SdPoint p, SdStratum s, QString *netName, int *destStratum)
+  {
+  plate()->forEach( dctTraced, [p,s,netName,destStratum] (SdObject *obj) -> bool {
+    SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
+    if( traced != nullptr )
+      traced->isPointOnNet( p, s, netName, destStratum );
+    return true;
+    });
+  }
+
+
+
 void SdModeCRoadEnter::rebuildBarriers()
   {
-
+  //plate()->accumBarriers( dctTraced, )
   }
 

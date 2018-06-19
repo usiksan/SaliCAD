@@ -23,6 +23,7 @@ Description
 #include "SdContext.h"
 #include "SdSelector.h"
 #include "SdEnvir.h"
+#include "SdPlateNetList.h"
 
 #include <QDebug>
 
@@ -710,12 +711,13 @@ void SdGraphPartImp::updatePinsPositions()
 
 
 
-bool SdGraphPartImp::isPointOnNet(SdPoint p, SdStratum stratum, QString &netName)
+bool SdGraphPartImp::isPointOnNet(SdPoint p, SdStratum stratum, QString *netName, int *destStratum)
   {
   //Run on each pin, test stratum and pos. If match then return true and assign wireName
   for( SdPartImpPin &pin : mPins ) {
     if( pin.isConnected() && pin.mPosition == p && pin.mStratum.match( stratum ) ) {
-      netName = pin.getNetName();
+      *destStratum = pin.mStratum.getValue();
+      *netName = pin.getNetName();
       return true;
       }
     }
@@ -724,15 +726,15 @@ bool SdGraphPartImp::isPointOnNet(SdPoint p, SdStratum stratum, QString &netName
 
 
 
-
-
-
-void SdGraphPartImp::accumNetPoints(SdPlateNetList &netList)
+void SdGraphPartImp::accumNetSegments(SdPlateNetList &netList) const
   {
-  for( SdPartImpPin &pin : mPins )
+  for( const SdPartImpPin &pin : mPins )
     if( pin.isConnected() )
-      netList.addNetPoint( pin.getNetName(), pin.mStratum, pin.mPosition );
+      netList.addNetSegment( pin.getNetName(), pin.mStratum, pin.mPosition, pin.mPosition );
   }
+
+
+
 
 
 

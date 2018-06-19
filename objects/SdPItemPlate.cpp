@@ -19,6 +19,7 @@ Description
 #include "SdProject.h"
 #include "SdContext.h"
 #include "SdEnvir.h"
+#include "SdPlateNetList.h"
 #include <QDebug>
 #include <QLineF>
 #include <QLine>
@@ -158,7 +159,7 @@ void SdPItemPlate::buildRatNet()
   forEach( dctAll, [&netList] (SdObject *obj) -> bool {
     SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
     if( traced )
-      traced->accumNetPoints( netList );
+      traced->accumNetSegments( netList );
     return true;
     });
 

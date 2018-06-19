@@ -26,6 +26,7 @@ Description
 #define stmInt01  0x00000008
 #define stmInt02  0x00000010
 #define stmInt03  0x00000020
+#define stmEnd    0x40000000
 
 class SdStratum : public SdPropInt
   {
@@ -54,6 +55,14 @@ class SdStratum : public SdPropInt
 
     //Flip stratum stack if component is bottom and unchange it if none
     int      stratumComp( const SdStratum &src ) const;
+
+    //Get first stratum from stratum stack
+    int      stratumFirst( SdStratum s ) const;
+
+    //Get next stratum from stratum stack
+    int      stratumNext( SdStratum s ) const;
+
+    int      getStratumIndex() const;
 
     //Get stratum index of first stratum in the stack
     static int stratumIndex( int stratum );

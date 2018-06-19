@@ -35,8 +35,8 @@ class SdGraphTraced : public SdGraph
     void                 setDirtyRatNet();
 
     //Defined here
-    virtual bool         isPointOnNet( SdPoint p, SdStratum stratum, QString &wireName ) = 0;
-    virtual void         accumNetPoints( SdPlateNetList &netList ) = 0;
+    virtual bool         isPointOnNet( SdPoint p, SdStratum stratum, QString *wireName, int *destStratum ) = 0;
+    virtual void         accumNetSegments( SdPlateNetList &netList ) const = 0;
     virtual void         drawStratum( SdContext *dcx, int stratum ) = 0;
     virtual void         accumBarriers( SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk ) const = 0;
     //virtual void         accumLinked( SdPoint a, SdPoint b, SdLayer *layer, SdSelector *sel ) = 0;

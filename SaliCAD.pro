@@ -196,7 +196,8 @@ SOURCES += \
     modes/SdModeCRoadEnter.cpp \
     windows/SdPropBarRoad.cpp \
     windows/SdPropBarStratum.cpp \
-    objects/SdPropInt.cpp
+    objects/SdPropInt.cpp \
+    objects/SdPlateNetList.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -386,7 +387,10 @@ HEADERS  += \
     objects/SdGraphTracedRoad.h \
     modes/SdModeCRoadEnter.h \
     windows/SdPropBarRoad.h \
-    windows/SdPropBarStratum.h
+    windows/SdPropBarStratum.h \
+    objects/SdRatNet.h \
+    objects/SdPlateNetList.h \
+    objects/SdPlateNetSegment.h
 
 DISTFILES += \
     license.txt

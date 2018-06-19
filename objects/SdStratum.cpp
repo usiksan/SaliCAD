@@ -68,6 +68,58 @@ int SdStratum::stratumComp(const SdStratum &src) const
 
 
 
+//Get first stratum from stratum stack
+int SdStratum::stratumFirst(SdStratum s) const
+  {
+  if( mValue <= 0 || s.mValue <= 0 )
+    stmTop;
+  int st = 1 << s.getStratumIndex();
+  while( st < stmEnd ) {
+    if( mValue & st ) return st;
+    st <<= 1;
+    }
+  int end = 1 << s.getStratumIndex();
+  st = 1;
+  while( st < end ) {
+    if( mValue & st ) return st;
+    st <<= 1;
+    }
+  return stmTop;
+  }
+
+
+
+
+//Get next stratum from stratum stack
+int SdStratum::stratumNext(SdStratum s) const
+  {
+  if( mValue <= 0 || s.mValue <= 0 )
+    stmTop;
+  int st = 1 << (s.getStratumIndex() + 1);
+  while( st < stmEnd ) {
+    if( mValue & st ) return st;
+    st <<= 1;
+    }
+  int end = 1 << s.getStratumIndex();
+  st = 1;
+  while( st <= end ) {
+    if( mValue & st ) return st;
+    st <<= 1;
+    }
+  return stmTop;
+  }
+
+
+
+int SdStratum::getStratumIndex() const
+  {
+  return stratumIndex(mValue);
+  }
+
+
+
+
+
 //Get stratum index of first stratum in the stack
 int SdStratum::stratumIndex(int stratum)
   {

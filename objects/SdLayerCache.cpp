@@ -31,7 +31,7 @@ void SdLayerCache::rebuild(const SdLayerPtrTable &tab, SdLayerTrace tr)
     if( iter.value()->trace() == tr )
       mMap.insert( iter.value()->stratum(), iter.value() );
   //Check all available 1' stratum
-  for( int s = 1; s < 0x40000000; s <<= 1 ) {
+  for( int s = 1; s < stmEnd; s <<= 1 ) {
     if( !mMap.contains(s) ) {
       bool finded = false;
       for( auto iter = tab.cbegin(); iter != tab.cend() && !finded; iter++ )
@@ -64,7 +64,7 @@ SdLayer *SdLayerCache::getLayer(int stratum)
     mCache = mMap.value(stratum);
   else {
     //Find new association
-    for( int i = 0x1; i < 0x40000000; i <<= 1 )
+    for( int i = 0x1; i < stmEnd; i <<= 1 )
       if( stratum & i ) {
         mCache = mMap.value(i);
         break;

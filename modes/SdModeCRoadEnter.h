@@ -18,6 +18,7 @@ Description
 #include "objects/SdPItemPlate.h"
 #include "objects/SdBarrier.h"
 #include "objects/SdPropRoad.h"
+#include "objects/SdRuleBlock.h"
 
 class SdModeCRoadEnter : public SdModeCommon
   {
@@ -26,7 +27,8 @@ class SdModeCRoadEnter : public SdModeCommon
     SdPoint        mPrevMove;   //Previous entered point
     SdPropRoad     mProp;       //Current properties for road
 //    QString        mNetName;    //Net name for entered road
-//    SdStratum      mActive;     //Current stratum
+    SdStratum      mStack;      //Available stratum stack
+    SdRuleBlock    mRule;       //Rule block for segment
 
     bool           mShowNet;    //Show current net with enter color
     SdBarrierList  mPads;
@@ -45,14 +47,18 @@ class SdModeCRoadEnter : public SdModeCommon
     virtual int     getPropBarId() const override;
     virtual void    propGetFromBar() override;
     virtual void    propSetToBar() override;
-    virtual void enterPoint(SdPoint) override;
+    virtual void enterPoint(SdPoint p) override;
     virtual void cancelPoint(SdPoint) override;
-    virtual void movePoint(SdPoint) override;
+    virtual void    movePoint(SdPoint p) override;
     virtual QString getStepHelp() const override;
     virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;
     virtual int getCursor() const override;
     virtual int getIndex() const override;
+
+  private:
+    SdPItemPlate *plate() { return dynamic_cast<SdPItemPlate*>(mObject); }
+    void          getNetOnPoint( SdPoint p, SdStratum s, QString *netName, int *destStratum );
   };
 
 #endif // SDMODECROADENTER_H

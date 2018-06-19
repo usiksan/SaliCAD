@@ -33,6 +33,7 @@ class SdGraphTracedRoad : public SdGraphTraced
     bool       mFlyB;
   public:
     SdGraphTracedRoad();
+    SdGraphTracedRoad( const SdPropRoad &prp, SdPoint a, SdPoint b );
 
     // SdObject interface
   public:
@@ -66,10 +67,10 @@ class SdGraphTracedRoad : public SdGraphTraced
 
     // SdGraphTraced interface
   public:
-    virtual bool    isPointOnNet(SdPoint p, SdStratum stratum, QString &wireName) override;
-    virtual void accumNetPoints(SdPlateNetList &netList) override;
-    virtual void drawStratum(SdContext *dcx, int stratum) override;
-    virtual void accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const override;
+    virtual bool    isPointOnNet(SdPoint p, SdStratum stratum, QString *wireName, int *destStratum) override;
+    virtual void    accumNetSegments( SdPlateNetList &netList ) const override;
+    virtual void    drawStratum(SdContext *dcx, int stratum) override;
+    virtual void    accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const override;
 
   private:
     //Return layer for road stratum

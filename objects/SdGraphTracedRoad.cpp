@@ -16,9 +16,22 @@ Description
 #include "SdSegment.h"
 #include "SdContext.h"
 #include "SdSelector.h"
+#include "SdPlateNetList.h"
+
 #include <QTransform>
 
 SdGraphTracedRoad::SdGraphTracedRoad()
+  {
+
+  }
+
+SdGraphTracedRoad::SdGraphTracedRoad(const SdPropRoad &prp, SdPoint a, SdPoint b) :
+  SdGraphTraced(),
+  mProp(prp),
+  mA(a),
+  mB(b),
+  mFlyA(false),
+  mFlyB(false)
   {
 
   }
@@ -197,12 +210,11 @@ bool SdGraphTracedRoad::snapPoint(SdSnapInfo *snap)
   }
 
 
-
-
-bool SdGraphTracedRoad::isPointOnNet(SdPoint p, SdStratum stratum, QString &wireName)
+bool SdGraphTracedRoad::isPointOnNet(SdPoint p, SdStratum stratum, QString *wireName, int *destStratum)
   {
   if( mProp.mStratum.match( stratum ) && SdSegment(mA,mB).isPointOn( p ) ) {
-    wireName = mProp.mNetName.str();
+    *destStratum = mProp.mStratum.getValue();
+    *wireName = mProp.mNetName.str();
     return true;
     }
   return false;
@@ -210,9 +222,15 @@ bool SdGraphTracedRoad::isPointOnNet(SdPoint p, SdStratum stratum, QString &wire
 
 
 
-void SdGraphTracedRoad::accumNetPoints(SdPlateNetList &netList)
+
+
+
+
+void SdGraphTracedRoad::accumNetSegments(SdPlateNetList &netList) const
   {
+  netList.addNetSegment( mProp.mNetName.str(), mProp.mStratum, mA, mB );
   }
+
 
 
 
