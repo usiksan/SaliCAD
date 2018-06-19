@@ -138,6 +138,7 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
     else {
       //Append new segment
       addPic( new SdGraphTracedRoad( mProp, mFirst, mMiddle ), QObject::tr("Insert trace road") );
+      plate()->setDirtyRatNet();
       mFirst = mMiddle;
       rebuildBarriers();
       }
@@ -157,6 +158,7 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
 
     if( !netName.isEmpty() ) {
       mFirst = p;
+      mMiddle = mFirst;
       mStack = destStratum;
       mProp.mNetName = netName;
       mProp.mStratum = mStack.stratumFirst(mStack);
@@ -187,6 +189,7 @@ void SdModeCRoadEnter::movePoint(SdPoint p)
     mMiddle = calcMiddlePoint( mFirst, p, sdGlobalProp->mWireEnterType );
     //Check if current point available
 
+    update();
     }
   }
 
