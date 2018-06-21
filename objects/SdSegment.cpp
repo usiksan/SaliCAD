@@ -136,3 +136,43 @@ bool SdSegment::isOneSideLine(const SdSegment &s) const
   }
 
 
+
+
+//Calculation segment orientation
+SdSegment::SdOrientation SdSegment::orientation() const
+  {
+  if( p1 == p2 ) return sorNull;
+  if( p1.x() == p2.x() ) return sorVertical;
+  if( p1.y() == p2.y() ) return sorHorizontal;
+  int dx = p1.x() - p2.x();
+  int dy = p1.y() - p2.y();
+  if( dx == dy ) return sorSlashForward;
+  if( dx == -dy ) return sorSlashBackward;
+  return sorAny;
+  }
+
+
+
+
+void SdSegment::writeSegment(QJsonObject &obj) const
+  {
+  obj.insert( QStringLiteral("p1.x"), p1.x() );
+  obj.insert( QStringLiteral("p1.y"), p1.y() );
+  obj.insert( QStringLiteral("p2.x"), p2.x() );
+  obj.insert( QStringLiteral("p2.y"), p2.y() );
+  }
+
+
+
+
+void SdSegment::readSegment(const QJsonObject obj)
+  {
+  p1.rx() = obj.value( QStringLiteral("p1.x") ).toInt();
+  p1.ry() = obj.value( QStringLiteral("p1.y") ).toInt();
+  p2.rx() = obj.value( QStringLiteral("p2.x") ).toInt();
+  p2.ry() = obj.value( QStringLiteral("p2.y") ).toInt();
+  }
+
+
+
+

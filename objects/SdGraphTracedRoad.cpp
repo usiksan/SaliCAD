@@ -28,10 +28,8 @@ SdGraphTracedRoad::SdGraphTracedRoad()
 SdGraphTracedRoad::SdGraphTracedRoad(const SdPropRoad &prp, SdPoint a, SdPoint b) :
   SdGraphTraced(),
   mProp(prp),
-  mA(a),
-  mB(b),
-  mFlyA(false),
-  mFlyB(false)
+  mSegment(a,b),
+  mFly(flyAB)
   {
 
   }
@@ -109,6 +107,23 @@ void SdGraphTracedRoad::moveComplete(SdPoint grid, SdUndo *undo)
 
 void SdGraphTracedRoad::move(SdPoint offset)
   {
+  if( mFly == flyP1P2 ) mSegment.move( offset );
+  else if( mFly == flyP1 ) {
+    mSegment.moveP1( offset );
+    switch( mSegment.orientation() ) {
+      case SdSegment::sorNull :
+      case SdSegment::sorAny :
+        break;
+      case SdSegment::sorHorizontal :
+        mSegment.moveP2( SdPoint(0,offset.y()) );
+        break;
+      case SdSegment::sorVertical :
+        mSegment.moveP2( SdPoint(offset.x(),0) );
+        break;
+      case SdSegment::sorSlashForward
+      }
+
+    }
   }
 
 
@@ -137,15 +152,57 @@ void SdGraphTracedRoad::getProp(SdPropSelected &prop)
 
 void SdGraphTracedRoad::selectByPoint(const SdPoint p, SdSelector *selector)
   {
+//  SdLayer *layer = sdEnvir->mCacheForRoad.getLayer(mProp.mStratum);
+//  if( layer != nullptr ) {
+//    if( layer->isEdited() ) {
+//      if( !getSelector() ) {
+//        //Not selected yet
+//        if( mSegment.isPointOn( p ) ) {
+//          //Test fixing variant
+//          if( mSegment.getP1() == p ) {
+//            switch( mSegment.orientation() ) {
+//              case SdSegment::sorNull
+//              }
+//            { mFixB = true; mFixA = false; } //Point B is fixed, point A is fly
+//          else if( mB == p ) { mFixA = true; mFixB = false; }  //Point A is fixed, point B is fly
+//          else mFixB = mFixA = false;
+//          //Проверить отсутствие фиксации на плавающем сегменте
+
+//          //Определить способ и направление излома
+//          //Define vertex direction variant
+//          if( mA.x() == mB.x() ) mDirX = vdX;
+//          else if( mA.y() == mB.y() ) mDirX = vdY;
+//          else mDirX = vdNone;
+//          selector->insert( this );
+//          }
+//        }
+//      else {
+//        //Already selected
+//        if( p.isOnSegment(mA,mB) ) {
+//          //If one point if fixed, then check new fix condition
+//          //Если одна точка фиксирована, проверяем новое условие фиксации
+//          if( mFixB && mA != p ) mFixB = false;
+//          if( mFixA && mB != p ) mFixA = false;
+//          }
+//        }
+//      }
+
+//    }
   }
 
 void SdGraphTracedRoad::selectByRect(const SdRect &r, SdSelector *selector)
   {
   }
 
+
+
 void SdGraphTracedRoad::select(SdSelector *selector)
   {
+  if( selector != nullptr )
+    selector->insert( this );
   }
+
+
 
 void SdGraphTracedRoad::prepareMove(SdUndo *undo)
   {

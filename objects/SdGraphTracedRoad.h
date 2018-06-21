@@ -17,8 +17,26 @@ Description
 #include "SdGraphTraced.h"
 #include "SdPropRoad.h"
 #include "SdStratum.h"
+#include "SdSegment.h"
 
 #define SD_TYPE_GRAPH_TRACE_ROAD "Road"
+
+enum SdFlyMode {
+  flyP1P2,
+  flyP1,
+  flyP2,
+  flyAB,   //When move then translate both points
+  flyA,
+  flyB,
+  flyABx,  //Vertical segment with y-unchanged for B
+  flyABy,  //Horizontal segment with x-unchanged for B
+  flyABfs, //Forward slash segment
+  flyABbs,
+  flyBAx,
+  flyBAy,
+  flyBAfs,
+  flyBAbs
+  };
 
 class SdGraphTracedRoad : public SdGraphTraced
   {
@@ -26,11 +44,10 @@ class SdGraphTracedRoad : public SdGraphTraced
                          // - road width
                          // - net name which contains this road
                          // - stratum of road
-    SdPoint    mA,mB;    //End points of road
+    SdSegment  mSegment; //Road segemnt (End points of road)
 
     //Not save and used when road edit
-    bool       mFlyA;
-    bool       mFlyB;
+    SdFlyMode  mFly;
   public:
     SdGraphTracedRoad();
     SdGraphTracedRoad( const SdPropRoad &prp, SdPoint a, SdPoint b );
@@ -56,7 +73,7 @@ class SdGraphTracedRoad : public SdGraphTraced
     virtual void    getProp(SdPropSelected &prop) override;
     virtual void selectByPoint(const SdPoint p, SdSelector *selector) override;
     virtual void selectByRect(const SdRect &r, SdSelector *selector) override;
-    virtual void select(SdSelector *selector) override;
+    virtual void    select(SdSelector *selector) override;
     virtual void prepareMove(SdUndo *undo) override;
     virtual void    setLayerUsage() override;
     virtual bool    isVisible() override;

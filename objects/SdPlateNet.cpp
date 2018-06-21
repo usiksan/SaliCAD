@@ -1,3 +1,17 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Plate net. Contains list of all net segments.
+  On list base we build ratnet.
+*/
 #include "SdPlateNet.h"
 
 
@@ -52,7 +66,7 @@ void SdPlateNet::buildRatNet(SdRatNet *ratNet) const
   //At first, build subnet map
   QMap<int,SdPoint> mSubNetMap;
 
-  //Scan all segments and chech subnet
+  //Scan all segments and check subnet
   //for each sub net we append one ratnet pair with shortest distance to other subnets
   for( const SdPlateNetSegment &segment : mSegmentList ) {
     if( !mSubNetMap.contains(segment.mSubNet) ) {
