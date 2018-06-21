@@ -86,6 +86,7 @@ class SdUndo
     void stringMapItem( SdStringMap *assoc, const QString key );
     void stringMap( SdStringMap *assoc );
     void padAssociation( QString *id, QString *srcName, SdPadMap *srcMap );
+    void road( SdPropInt *width, SdPoint *p1, SdPoint *p2 );
 
     //do undo and redo
     void undoStep();

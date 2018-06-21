@@ -112,14 +112,16 @@ double SdPoint::getAngleDegree(SdPoint center) const
 
 
 
+//Return distance between two points - this and p
 double SdPoint::getDistance(SdPoint p) const
   {
-  return sqrt( getQrtDistance(p) );
+  return sqrt( getSquareDistance(p) );
   }
 
 
 
-double SdPoint::getQrtDistance(SdPoint p) const
+//Return square distance between two points
+double SdPoint::getSquareDistance(SdPoint p) const
   {
   double dx = x() - p.x();
   double dy = y() - p.y();

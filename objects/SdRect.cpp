@@ -116,15 +116,21 @@ bool SdRect::isCircleInside(SdCircle circle) const
 
 
 
-
-bool SdRect::isAccross(const SdPoint p1, const SdPoint p2) const
+bool SdRect::isAccross(const SdSegment &s) const
   {
-  if( isPointInside(p1) || isPointInside(p2) ) return true;
-  SdSegment s(p1,p2);
+  if( isPointInside(s.getP1()) || isPointInside(s.getP2()) ) return true;
   return s.isCross( getTopLeft(), getTopRight() ) ||
       s.isCross( getTopRight(), getBottomRight() ) ||
       s.isCross( getBottomRight(), getBottomLeft() ) ||
       s.isCross( getBottomLeft(), getTopLeft() );
+  }
+
+
+
+
+bool SdRect::isAccross(const SdPoint p1, const SdPoint p2) const
+  {
+  return isAccross( SdSegment(p1,p2) );
   }
 
 

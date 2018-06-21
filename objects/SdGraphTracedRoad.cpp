@@ -17,7 +17,8 @@ Description
 #include "SdContext.h"
 #include "SdSelector.h"
 #include "SdPlateNetList.h"
-
+#include "SdPItemPlate.h"
+#include "SdUndo.h"
 #include <QTransform>
 
 SdGraphTracedRoad::SdGraphTracedRoad()
@@ -29,7 +30,7 @@ SdGraphTracedRoad::SdGraphTracedRoad(const SdPropRoad &prp, SdPoint a, SdPoint b
   SdGraphTraced(),
   mProp(prp),
   mSegment(a,b),
-  mFly(flyAB)
+  mFly(flyP1P2)
   {
 
   }
@@ -58,8 +59,7 @@ void SdGraphTracedRoad::cloneFrom(const SdObject *src)
   //Clone current
   const SdGraphTracedRoad *road = dynamic_cast<const SdGraphTracedRoad*>(src);
   if( road != nullptr ) {
-    mA       = road->mA;
-    mB       = road->mB;
+    mSegment = road->mSegment;
     mProp    = road->mProp;
     }
   }
@@ -71,8 +71,7 @@ void SdGraphTracedRoad::writeObject(QJsonObject &obj) const
   //Write top
   SdGraphTraced::writeObject( obj );
   //Members of this class
-  mA.write( QStringLiteral("a"), obj );
-  mB.write( QStringLiteral("b"), obj );
+  mSegment.writeSegment( obj );
   mProp.write( obj );
   }
 
@@ -83,8 +82,7 @@ void SdGraphTracedRoad::readObject(SdObjectMap *map, const QJsonObject obj)
   //Read top
   SdGraphTraced::readObject( map, obj );
   //Members of this class
-  mA.read( QStringLiteral("a"), obj );
-  mB.read( QStringLiteral("b"), obj );
+  mSegment.readSegment( obj );
   mProp.read( obj );
   }
 
@@ -93,6 +91,7 @@ void SdGraphTracedRoad::readObject(SdObjectMap *map, const QJsonObject obj)
 
 void SdGraphTracedRoad::saveState(SdUndo *undo)
   {
+  undo->road( &(mProp.mWidth), mSegment.ptrP1(), mSegment.ptrP2() );
   }
 
 
@@ -100,6 +99,15 @@ void SdGraphTracedRoad::saveState(SdUndo *undo)
 
 void SdGraphTracedRoad::moveComplete(SdPoint grid, SdUndo *undo)
   {
+  Q_UNUSED(grid)
+  if( mFly == flyP1_45 || mFly == flyP2_45 ) {
+    //Divide segment on two segments
+    SdPoint m = mSegment.vertex45();
+    if( m != mSegment.getP2() ) {
+      getPlate()->insertChild( new SdGraphTracedRoad( mProp, mSegment.getP1(), m ), undo );
+      mSegment.setP1( m );
+      }
+    }
   }
 
 
@@ -108,22 +116,8 @@ void SdGraphTracedRoad::moveComplete(SdPoint grid, SdUndo *undo)
 void SdGraphTracedRoad::move(SdPoint offset)
   {
   if( mFly == flyP1P2 ) mSegment.move( offset );
-  else if( mFly == flyP1 ) {
-    mSegment.moveP1( offset );
-    switch( mSegment.orientation() ) {
-      case SdSegment::sorNull :
-      case SdSegment::sorAny :
-        break;
-      case SdSegment::sorHorizontal :
-        mSegment.moveP2( SdPoint(0,offset.y()) );
-        break;
-      case SdSegment::sorVertical :
-        mSegment.moveP2( SdPoint(offset.x(),0) );
-        break;
-      case SdSegment::sorSlashForward
-      }
-
-    }
+  else if( mFly == flyP1 || mFly == flyP1_45 ) mSegment.moveP1( offset );
+  else if( mFly == flyP2 || mFly == flyP2_45 ) mSegment.moveP2( offset );
   }
 
 
@@ -152,47 +146,70 @@ void SdGraphTracedRoad::getProp(SdPropSelected &prop)
 
 void SdGraphTracedRoad::selectByPoint(const SdPoint p, SdSelector *selector)
   {
-//  SdLayer *layer = sdEnvir->mCacheForRoad.getLayer(mProp.mStratum);
-//  if( layer != nullptr ) {
-//    if( layer->isEdited() ) {
-//      if( !getSelector() ) {
-//        //Not selected yet
-//        if( mSegment.isPointOn( p ) ) {
-//          //Test fixing variant
-//          if( mSegment.getP1() == p ) {
-//            switch( mSegment.orientation() ) {
-//              case SdSegment::sorNull
-//              }
-//            { mFixB = true; mFixA = false; } //Point B is fixed, point A is fly
-//          else if( mB == p ) { mFixA = true; mFixB = false; }  //Point A is fixed, point B is fly
-//          else mFixB = mFixA = false;
-//          //Проверить отсутствие фиксации на плавающем сегменте
-
-//          //Определить способ и направление излома
-//          //Define vertex direction variant
-//          if( mA.x() == mB.x() ) mDirX = vdX;
-//          else if( mA.y() == mB.y() ) mDirX = vdY;
-//          else mDirX = vdNone;
-//          selector->insert( this );
-//          }
-//        }
-//      else {
-//        //Already selected
-//        if( p.isOnSegment(mA,mB) ) {
-//          //If one point if fixed, then check new fix condition
-//          //Если одна точка фиксирована, проверяем новое условие фиксации
-//          if( mFixB && mA != p ) mFixB = false;
-//          if( mFixA && mB != p ) mFixA = false;
-//          }
-//        }
-//      }
-
-//    }
+  SdLayer *layer = getLayer();
+  if( layer != nullptr && layer->isEdited() ) {
+    if( !getSelector() ) {
+      //Not selected yet
+      if( mSegment.isPointOn( p ) ) {
+        //Test fixing variant
+        if( mSegment.getP1() == p ) {
+          if( mSegment.orientation() == SdSegment::sorAny ) mFly = flyP1;
+          else mFly = flyP1_45;
+          }
+        else if( mSegment.getP2() == p ) {
+          if( mSegment.orientation() == SdSegment::sorAny ) mFly = flyP2;
+          else mFly = flyP2_45;
+          }
+        else mFly = flyP1P2;
+        selector->insert( this );
+        }
+      }
+    else {
+      //Already selected
+      if( mFly != flyP1P2 && mSegment.isPointOn( p ) ) {
+        //If one point if fixed, then check new fix condition
+        //Если одна точка фиксирована, проверяем новое условие фиксации
+        if( mSegment.getP1() == p && (mFly == flyP2 || mFly == flyP2_45) ) mFly = flyP1P2;
+        else if( mSegment.getP2() == p && (mFly == flyP1 || mFly == flyP1_45) ) mFly = flyP1P2;
+        }
+      }
+    }
   }
+
+
+
+
 
 void SdGraphTracedRoad::selectByRect(const SdRect &r, SdSelector *selector)
   {
+  SdLayer *layer = getLayer();
+  if( layer != nullptr && layer->isEdited() ) {
+    if( !getSelector() ) {
+      //Not selected yet
+      if( r.isAccross( mSegment ) ) {
+        if( r.isPointInside(mSegment.getP1()) && !r.isPointInside(mSegment.getP2()) ) {
+          if( mSegment.orientation() == SdSegment::sorAny ) mFly = flyP1;
+          else mFly = flyP1_45;
+          }
+        else if( r.isPointInside(mSegment.getP2()) && !r.isPointInside(mSegment.getP1()) ) {
+          if( mSegment.orientation() == SdSegment::sorAny ) mFly = flyP2;
+          else mFly = flyP2_45;
+          }
+        else mFly = flyP1P2;
+        selector->insert( this );
+        }
+      }
+    else {
+      //Already selected
+      if( r.isAccross( mSegment ) ) {
+        //If inside selecting rect then check if was only one end selected then select both
+        if( r.isPointInside(mSegment.getP1()) && (mFly == flyP2 || mFly == flyP2_45) ) mFly = flyP1P2;
+        else if( r.isPointInside(mSegment.getP2()) && (mFly == flyP1 || mFly == flyP1_45) ) mFly = flyP1P2;
+        }
+      }
+    }
   }
+
 
 
 
@@ -204,9 +221,25 @@ void SdGraphTracedRoad::select(SdSelector *selector)
 
 
 
+
+
+
 void SdGraphTracedRoad::prepareMove(SdUndo *undo)
   {
+  Q_UNUSED(undo)
+  Q_ASSERT( getSelector() != nullptr );
+  //for flying point accum roads connected to end point
+  getPlate()->forEach( dctTraceRoad | dctTraceVia, [this] (SdObject *obj) -> bool {
+    SdGraphTraced *trace = dynamic_cast<SdGraphTracedRoad*>(obj);
+    if( trace != nullptr && trace->isMatchNetAndStratum( mProp.mNetName.str(), mProp.mStratum ) && trace != this ) {
+      trace->selectByPoint( mSegment.getP1(), getSelector() );
+      trace->selectByPoint( mSegment.getP2(), getSelector() );
+      }
+    return true;
+    });
   }
+
+
 
 
 
@@ -233,7 +266,7 @@ bool SdGraphTracedRoad::isVisible()
 
 SdRect SdGraphTracedRoad::getOverRect() const
   {
-  return SdRect(mA, mB);
+  return mSegment.getOverRect();
   }
 
 
@@ -241,7 +274,7 @@ SdRect SdGraphTracedRoad::getOverRect() const
 int SdGraphTracedRoad::behindCursor(SdPoint p)
   {
   //Определить состояние объекта под курсором
-  if( isVisible() && SdSegment(mA,mB).isPointOn( p ) )
+  if( isVisible() && mSegment.isPointOn( p ) )
     return getSelector() ? SEL_ELEM : UNSEL_ELEM;
   return 0;
   }
@@ -261,15 +294,21 @@ bool SdGraphTracedRoad::getInfo(SdPoint p, QString &info, bool extInfo)
 
 
 
+
+
 bool SdGraphTracedRoad::snapPoint(SdSnapInfo *snap)
   {
+  //TODO D037 snap point for roads
   return false;
   }
 
 
+
+
+
 bool SdGraphTracedRoad::isPointOnNet(SdPoint p, SdStratum stratum, QString *wireName, int *destStratum)
   {
-  if( mProp.mStratum.match( stratum ) && SdSegment(mA,mB).isPointOn( p ) ) {
+  if( mProp.mStratum.match( stratum ) && mSegment.isPointOn( p ) ) {
     *destStratum = mProp.mStratum.getValue();
     *wireName = mProp.mNetName.str();
     return true;
@@ -285,7 +324,7 @@ bool SdGraphTracedRoad::isPointOnNet(SdPoint p, SdStratum stratum, QString *wire
 
 void SdGraphTracedRoad::accumNetSegments(SdPlateNetList &netList) const
   {
-  netList.addNetSegment( mProp.mNetName.str(), mProp.mStratum, mA, mB );
+  netList.addNetSegment( mProp.mNetName.str(), mProp.mStratum, mSegment.getP1(), mSegment.getP2() );
   }
 
 
@@ -299,7 +338,16 @@ void SdGraphTracedRoad::drawStratum(SdContext *dcx, int stratum)
     SdLayer *layer = getLayer();
     if( layer != nullptr && layer->isVisible() ) {
       dcx->setPen( mProp.mWidth.getValue(), layer, dltSolid );
-      dcx->line( mA, mB );
+      if( mFly == flyP1_45 || mFly == flyP2_45 ) {
+        //Draw segment with vertex
+        SdPoint m = mSegment.vertex45();
+        dcx->line( mSegment.getP1(), m );
+        if( m != mSegment.getP2() )
+          dcx->line( m, mSegment.getP2() );
+        }
+      else
+        //Draw simple line
+        dcx->line( mSegment.getP1(), mSegment.getP2() );
       }
     }
   }
@@ -320,8 +368,8 @@ void SdGraphTracedRoad::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId
   //Treat road as vector with "angle" and "len" and mA as start point
   //
   if( mProp.mStratum & stratum ) {
-    double angle = mB.getAngleDegree(mA);
-    double len   = mA.getDistance(mB);
+    double angle = mSegment.getAngleDegree();
+    double len   = mSegment.getLenght();
     double halfWidth = mProp.mWidth.getValue() / 2;
     //In accordings target compares we correct width of over polygon
     if( toWhich == ruleRoadPad || toWhich == rulePadPad )
@@ -345,7 +393,7 @@ void SdGraphTracedRoad::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId
     pgn = t.map(pgn);
 
     //Translate polygon to start point of vector
-    pgn.translate( mA.x(), mA.y() );
+    pgn.translate( mSegment.getP1().x(), mSegment.getP1().y() );
 
     SdBarrier bar;
     bar.mNetName = mProp.mNetName.str();
@@ -353,6 +401,16 @@ void SdGraphTracedRoad::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId
     dest.append( bar );
     }
   }
+
+
+
+
+
+bool SdGraphTracedRoad::isMatchNetAndStratum(const QString netName, SdStratum stratum) const
+  {
+  return mProp.mNetName.str() == netName && mProp.mStratum.match( stratum );
+  }
+
 
 
 

@@ -22,20 +22,11 @@ Description
 #define SD_TYPE_GRAPH_TRACE_ROAD "Road"
 
 enum SdFlyMode {
-  flyP1P2,
-  flyP1,
-  flyP2,
-  flyAB,   //When move then translate both points
-  flyA,
-  flyB,
-  flyABx,  //Vertical segment with y-unchanged for B
-  flyABy,  //Horizontal segment with x-unchanged for B
-  flyABfs, //Forward slash segment
-  flyABbs,
-  flyBAx,
-  flyBAy,
-  flyBAfs,
-  flyBAbs
+  flyP1P2,  //Both ends fly synchronously
+  flyP1,    //Fly p1 point with arbitraty angle
+  flyP2,    //Fly p2 point with arbitraty angle
+  flyP1_45, //Fly p1 point with angle multiple of 45 degree
+  flyP2_45  //Fly p2 point with angle multiple of 45 degree
   };
 
 class SdGraphTracedRoad : public SdGraphTraced
@@ -62,19 +53,19 @@ class SdGraphTracedRoad : public SdGraphTraced
 
     // SdGraph interface
   public:
-    virtual void saveState(SdUndo *undo) override;
-    virtual void moveComplete(SdPoint grid, SdUndo *undo) override;
-    virtual void move(SdPoint offset) override;
+    virtual void    saveState(SdUndo *undo) override;
+    virtual void    moveComplete(SdPoint grid, SdUndo *undo) override;
+    virtual void    move(SdPoint offset) override;
 
     //Properties service [Изменение свойствами]
     //Set properties of this object from prop
     virtual void    setProp(SdPropSelected &prop) override;
     //Get (append) properties from this object to prop
     virtual void    getProp(SdPropSelected &prop) override;
-    virtual void selectByPoint(const SdPoint p, SdSelector *selector) override;
-    virtual void selectByRect(const SdRect &r, SdSelector *selector) override;
+    virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;
+    virtual void    selectByRect(const SdRect &r, SdSelector *selector) override;
     virtual void    select(SdSelector *selector) override;
-    virtual void prepareMove(SdUndo *undo) override;
+    virtual void    prepareMove(SdUndo *undo) override;
     virtual void    setLayerUsage() override;
     virtual bool    isVisible() override;
     virtual SdRect  getOverRect() const override;
@@ -88,6 +79,7 @@ class SdGraphTracedRoad : public SdGraphTraced
     virtual void    accumNetSegments( SdPlateNetList &netList ) const override;
     virtual void    drawStratum(SdContext *dcx, int stratum) override;
     virtual void    accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const override;
+    virtual bool    isMatchNetAndStratum( const QString netName, SdStratum stratum ) const override;
 
   private:
     //Return layer for road stratum

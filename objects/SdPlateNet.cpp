@@ -76,12 +76,12 @@ void SdPlateNet::buildRatNet(SdRatNet *ratNet) const
         auto iter = mSubNetMap.cbegin();
         //First point set as shortest at first
         SdPoint p(iter.value());
-        double d = p.getQrtDistance( segment.mSegment.getP1() );
+        double d = p.getSquareDistance( segment.mSegment.getP1() );
         iter++;
         while( iter != mSubNetMap.cend() ) {
           //Test the next point
           SdPoint tp( iter.value() );
-          double td = tp.getQrtDistance( segment.mSegment.getP1() );
+          double td = tp.getSquareDistance( segment.mSegment.getP1() );
           //If new point distance is shortest then reassign
           if( td < d ) {
             d = td;

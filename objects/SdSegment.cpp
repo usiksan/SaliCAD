@@ -12,6 +12,7 @@ Description
 */
 
 #include "SdSegment.h"
+#include "SdRect.h"
 #include <math.h>
 
 /*
@@ -21,6 +22,25 @@ Description
       qMin(a.y(),b.y()) <= y() && qMax(a.y(),b.y()) >= y() ) return true;
   return false;
 */
+
+//Vertex point with 45 degree step
+SdPoint SdSegment::vertex45() const
+  {
+  int dx = p2.x() - p1.x();
+  int dy = p2.y() - p1.y();
+  if( dx == 0 || dy == 0 || abs(dx) == abs(dy) ) return p2;
+  if( abs(dx) < abs(dy) ) {
+    //45 degree segment equals dx
+    if( dy > 0 ) return SdPoint( p2.x(), p1.y() + abs(dx) );
+    return SdPoint( p2.x(), p1.y() - abs(dx) );
+    }
+  //45 degree segment equals dy
+  if( dx > 0 ) return SdPoint( p1.x() + abs(dy), p2.y() );
+  return SdPoint( p1.x() - abs(dy), p2.y() );
+  }
+
+
+
 
 bool SdSegment::isCross(SdPoint a, SdPoint b, SdPoint *out ) const
   {
@@ -142,8 +162,8 @@ bool SdSegment::isOneSideLine(const SdSegment &s) const
 SdSegment::SdOrientation SdSegment::orientation() const
   {
   if( p1 == p2 ) return sorNull;
-  if( p1.x() == p2.x() ) return sorVertical;
-  if( p1.y() == p2.y() ) return sorHorizontal;
+  if( isSectionX() ) return sorVertical;
+  if( isSectionY() ) return sorHorizontal;
   int dx = p1.x() - p2.x();
   int dy = p1.y() - p2.y();
   if( dx == dy ) return sorSlashForward;
@@ -154,6 +174,16 @@ SdSegment::SdOrientation SdSegment::orientation() const
 
 
 
+//Return over rect
+SdRect SdSegment::getOverRect() const
+  {
+  return SdRect(p1,p2);
+  }
+
+
+
+
+//Write-read as segment. Coord values write immediately to obj
 void SdSegment::writeSegment(QJsonObject &obj) const
   {
   obj.insert( QStringLiteral("p1.x"), p1.x() );

@@ -16,6 +16,8 @@ Description
 
 #include "SdPoint.h"
 
+class SdRect;
+
 class SdSegment
   {
     SdPoint p1;
@@ -33,17 +35,38 @@ class SdSegment
     SdSegment() : p1(), p2() {}
     SdSegment( SdPoint a, SdPoint b ) : p1(a), p2(b) {}
 
-    SdPoint getP1() const { return p1; }
-    SdPoint getP2() const { return p2; }
-    void    set( SdPoint a, SdPoint b ) { p1 = a; p2 = b; }
-    void    setP1( SdPoint p ) { p1 = p; }
-    void    setP2( SdPoint p ) { p2 = p; }
+    //End points
+    SdPoint       getP1() const { return p1; }
+    SdPoint       getP2() const { return p2; }
+
+    //Set end points
+    void          set( SdPoint a, SdPoint b ) { p1 = a; p2 = b; }
+    void          setP1( SdPoint p ) { p1 = p; }
+    void          setP2( SdPoint p ) { p2 = p; }
+
+    //Move end points
     void          move( SdPoint offset ) { p1.move( offset ); p2.move( offset ); }
     void          moveP1( SdPoint offset ) { p1.move( offset ); }
     void          moveP2( SdPoint offset ) { p2.move( offset ); }
-    SdPoint middle() const { return SdPoint( (p1.x() + p2.x()) / 2, (p1.y() + p2.y()) / 2 ); }
-    bool    isSectionX() const { return p1.y() == p2.y(); }
-    bool    isSectionY() const { return p1.x() == p2.x(); }
+
+    //End point pointers
+    SdPoint      *ptrP1() { return &p1; }
+    SdPoint      *ptrP2() { return &p2; }
+
+    //Middle point of segment
+    SdPoint       middle() const { return SdPoint( (p1.x() + p2.x()) / 2, (p1.y() + p2.y()) / 2 ); }
+
+    //Vertex point with 45 degree step
+    SdPoint       vertex45() const;
+
+    //Return true if segment is horizontal
+    bool          isSectionX() const { return p1.y() == p2.y(); }
+
+    //Return true if segment is vertical
+    bool          isSectionY() const { return p1.x() == p2.x(); }
+
+    //Return true if segment with zero lenght
+    bool          isZero() const { return p1 == p2; }
 
     bool    isCross( SdPoint a, SdPoint b , SdPoint *out = nullptr ) const;
     bool    isCross( SdSegment s ) const { return isCross( s.p1, s.p2 ); }
@@ -56,10 +79,30 @@ class SdSegment
     bool    isOneSideLine( const SdSegment &s ) const;
 
     //Calculation segment orientation
-    SdOrientation orientation() const;
+    SdOrientation  orientation() const;
 
-    void    writeSegment( QJsonObject &obj ) const;
-    void    readSegment( const QJsonObject obj );
+    //Angle of segment
+    double         getAngleDegree() const { return p2.getAngleDegree(p1); }
+
+    //Angle of segment as properties
+    SdPropAngle    getAngle() const { return p2.getAngle(p1); }
+
+    //Distance between two ends
+    double         getLenght() const { return p1.getDistance(p2); }
+
+    //Distance between two ends as int
+    int            getLenghtInt() const { return p1.getDistanceInt(p2); }
+
+    //Square distance between two ends
+    double         getSquareLenght() const { return p1.getSquareDistance(p2); }
+
+    //Return over rect
+    SdRect         getOverRect() const;
+
+
+    //Write-read as segment. Coord values write immediately to obj
+    void           writeSegment( QJsonObject &obj ) const;
+    void           readSegment( const QJsonObject obj );
 
   };
 

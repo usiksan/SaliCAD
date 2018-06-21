@@ -197,7 +197,8 @@ SOURCES += \
     windows/SdPropBarRoad.cpp \
     windows/SdPropBarStratum.cpp \
     objects/SdPropInt.cpp \
-    objects/SdPlateNetList.cpp
+    objects/SdPlateNetList.cpp \
+    objects/SdUndoRecordRoad.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -390,7 +391,8 @@ HEADERS  += \
     windows/SdPropBarStratum.h \
     objects/SdRatNet.h \
     objects/SdPlateNetList.h \
-    objects/SdPlateNetSegment.h
+    objects/SdPlateNetSegment.h \
+    objects/SdUndoRecordRoad.h
 
 DISTFILES += \
     license.txt

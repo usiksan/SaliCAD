@@ -52,9 +52,16 @@ class SdPoint : public QPoint
     SdPoint getMiddle( SdPoint b ) { return SdPoint( (x() + b.x()) / 2, (y() + b.y()) / 2 ); }
     SdPropAngle getAngle( SdPoint center = SdPoint() ) const; //Угол поворота до точки относительно центра
     double  getAngleDegree(SdPoint center) const;
+
+    //Return distance between two points - this and p
     double  getDistance( SdPoint p ) const;
+
+    //Return distance as int between two points - this and p
     int     getDistanceInt( SdPoint p ) const { return static_cast<int>(getDistance(p)); }
-    double  getQrtDistance( SdPoint p ) const;
+
+    //Return square distance between two points - this and p
+    double  getSquareDistance( SdPoint p ) const;
+
     CLS     classify( SdPoint p0, SdPoint p1 ) const;
     double  getLenght() const;
     bool    isEqual( SdPoint p ) const { return x() == p.x() && y() == p.y(); }

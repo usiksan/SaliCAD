@@ -35,6 +35,7 @@ Description
 #include "SdUndoRecordStringMapItem.h"
 #include "SdUndoRecordStringMap.h"
 #include "SdUndoRecordPadAssociation.h"
+#include "SdUndoRecordRoad.h"
 #include "windows/SdWCommand.h"
 
 SdUndo::SdUndo() :
@@ -244,6 +245,15 @@ void SdUndo::stringMap(SdStringMap *assoc)
 void SdUndo::padAssociation(QString *id, QString *srcName, SdPadMap *srcMap)
   {
   addUndo( new SdUndoRecordPadAssociation( id, srcName, srcMap ) );
+  }
+
+
+
+
+
+void SdUndo::road(SdPropInt *width, SdPoint *p1, SdPoint *p2)
+  {
+  addUndo( new SdUndoRecordRoad( width, p1, p2 ) );
   }
 
 

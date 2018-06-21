@@ -36,6 +36,15 @@ void SdGraphTraced::setDirtyRatNet()
   getPlate()->setDirtyRatNet();
   }
 
+bool SdGraphTraced::isMatchNetAndStratum(const QString netName, SdStratum stratum) const
+  {
+  Q_UNUSED(netName)
+  Q_UNUSED(stratum)
+  return false;
+  }
+
+
+
 
 
 
