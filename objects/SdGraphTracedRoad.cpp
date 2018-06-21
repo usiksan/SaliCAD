@@ -104,10 +104,16 @@ void SdGraphTracedRoad::moveComplete(SdPoint grid, SdUndo *undo)
     //Divide segment on two segments
     SdPoint m = mSegment.vertex45();
     if( m != mSegment.getP2() ) {
-      getPlate()->insertChild( new SdGraphTracedRoad( mProp, mSegment.getP1(), m ), undo );
+      SdGraphTracedRoad *road = new SdGraphTracedRoad( mProp, mSegment.getP1(), m );
+      getPlate()->insertChild( road, undo );
       mSegment.setP1( m );
+      mFly = flyP1P2;
+      road->selectByPoint( m, getSelector() );
       }
     }
+  if( mSegment.isZero() )
+    //This road segment is zero lenght. Delete self
+    getPlate()->deleteChild( this, undo );
   }
 
 
@@ -228,12 +234,16 @@ void SdGraphTracedRoad::prepareMove(SdUndo *undo)
   {
   Q_UNUSED(undo)
   Q_ASSERT( getSelector() != nullptr );
+  bool tryP1 = mFly == flyP1P2 || mFly == flyP1 || mFly == flyP1_45;
+  bool tryP2 = mFly == flyP1P2 || mFly == flyP2 || mFly == flyP2_45;
   //for flying point accum roads connected to end point
-  getPlate()->forEach( dctTraceRoad | dctTraceVia, [this] (SdObject *obj) -> bool {
+  getPlate()->forEach( dctTraceRoad | dctTraceVia, [this,tryP1,tryP2] (SdObject *obj) -> bool {
     SdGraphTraced *trace = dynamic_cast<SdGraphTracedRoad*>(obj);
     if( trace != nullptr && trace->isMatchNetAndStratum( mProp.mNetName.str(), mProp.mStratum ) && trace != this ) {
-      trace->selectByPoint( mSegment.getP1(), getSelector() );
-      trace->selectByPoint( mSegment.getP2(), getSelector() );
+      if( tryP1 )
+        trace->selectByPoint( mSegment.getP1(), getSelector() );
+      if( tryP2 )
+        trace->selectByPoint( mSegment.getP2(), getSelector() );
       }
     return true;
     });
