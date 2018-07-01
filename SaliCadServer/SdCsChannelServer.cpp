@@ -12,14 +12,11 @@ Description
 */
 #include "SdCsConfig.h"
 #include "SdCsChannelServer.h"
+#include "SdCsAuthorTable.h"
+#include "../library/SdLibraryStorage.h"
 #include "../objects/SdUtil.h"
 
 
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlField>
-#include <QSqlError>
 #include <QDir>
 #include <QFile>
 #include <QCoreApplication>
@@ -27,6 +24,7 @@ Description
 #include <QUuid>
 #include <QTimer>
 
+SdLibraryStorage sdLibraryStorage;
 
 SdCsChannelServer::SdCsChannelServer(QTcpSocket *socket, QObject *parent) :
   SdCsChannel( socket, parent )
@@ -41,55 +39,6 @@ SdCsChannelServer::SdCsChannelServer(QTcpSocket *socket, QObject *parent) :
   mVersion.mMinor      = SALI_CAD_MINOR;
   mVersion.mServerName = SALI_CAD_SERVER_INFO;
 
-  static QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-  //Test if previous dbase is opened and close it if nessesery
-  if( !db.isOpen() ) {
-
-    //Test if database exist
-    bool presence = QFile::exists( QCoreApplication::applicationDirPath() + QString( LIBRARY_PATH LIBRARY_FILE ) );
-    //Create directory if nessesery
-    QDir().mkpath( QCoreApplication::applicationDirPath() + QString( LIBRARY_PATH ) );
-    db.setDatabaseName( QCoreApplication::applicationDirPath() + QString( LIBRARY_PATH LIBRARY_FILE ) );
-    if( !db.open() ) {
-      qDebug() << "Cannot open database";
-      qDebug() << "Unable to establish a database connection.\n"
-                  "This example needs SQLite support. Please read "
-                  "the Qt SQL driver documentation for information how "
-                  "to build it.";
-      return;
-      }
-
-    if( !presence ) {
-      QSqlQuery query;
-      //Create objects table
-      if( !query.exec("CREATE TABLE objects (hash TEXT PRIMARY KEY, "
-                      " name TEXT, author TEXT, tag TEXT, timeCreate INTEGER, class INTEGER, timeUpgrade INTEGER, object BLOB)") )
-        qDebug() << "Fail create objects table";
-
-      //Create hierarchical table
-      if( !query.exec("CREATE TABLE hierarchy (section TEXT PRIMARY KEY, path TEXT, parent TEXT, time INTEGER)") )
-        qDebug() << "Fail create hierarchy table";
-      //Hierarchy table translation on all languages
-      if( !query.exec("CREATE TABLE translation (translate TEXT PRIMARY KEY, lang TEXT, section TEXT, time INTEGER)") )
-        qDebug() << "Fail create translation table";
-
-
-
-
-      //User table
-      //Every user have
-      // description - any author description
-      // limit count - element count he can download within their licension plan
-      // delivered count - element count witch already downloaded
-      if( !query.exec("CREATE TABLE users (author TEXT PRIMARY KEY, description TEXT, delivered INTEGER, maxLimit INTEGER)") )
-        qDebug() << "Fail create users table" << query.lastError();
-
-      //Every user can have many machine on witch he works
-      //this table contains this machines list
-      if( !query.exec("CREATE TABLE machines (uid TEXT PRIMARY KEY, author TEXT, changeTime INTEGER)") )
-        qDebug() << "Fail create machines table";
-      }
-    }
   }
 
 
@@ -149,38 +98,8 @@ void SdCsChannelServer::cmRegistrationRequest(QDataStream &is)
   SdAuthorInfo info;
   is >> info;
 
-  //qDebug() << "cmRegistrationRequest" << info.mAuthor;
-
-  if( info.mAuthor.isEmpty() )
-    info.mResult = SCPE_AUTHOR_IS_EMPTY;
-  else {
-    //Query if author already present
-    QSqlQuery q;
-    q.exec( QString("SELECT * FROM users WHERE author='%1'").arg(info.mAuthor) );
-    if( q.first() )
-      //Author already present
-      info.mResult = SCPE_AUTHOR_ALREADY_PRESENT;
-    else {
-      info.mDelivered = 0;
-      //No author with this name, register
-      q.clear();
-      q.prepare( QString("INSERT INTO users (author, description, delivered, maxLimit) "
-                         "VALUES (:author, :description, :delivered, :maxLimit)") );
-      q.bindValue( QStringLiteral(":author"), info.mAuthor );
-      q.bindValue( QStringLiteral(":description"), info.mDescription );
-      q.bindValue( QStringLiteral(":delivered"), info.mDelivered );
-      q.bindValue( QStringLiteral(":maxLimit"), info.mLimit );
-      if( q.exec() ) {
-        //Author added. Insert first machine for new user.
-        info.mKey = addMachine( info.mAuthor );
-        info.mResult = SCPE_SUCCESSFULL;
-        }
-      else {
-        qDebug() << q.lastError();
-        info.mResult = SCPE_REGISTER_FAIL;
-        }
-      }
-    }
+  //New author registration
+  sdCsAuthorTable.registerAuthor( info.mAuthor, 5, info.mRemain, &info.mKey );
 
   //Send answer
   QByteArray ar;
@@ -199,31 +118,8 @@ void SdCsChannelServer::cmMachineRequest(QDataStream &is)
   SdAuthorInfo info;
   is >> info;
 
-  //Query if author already present
-  QSqlQuery q;
-  q.exec( QString("SELECT * FROM users WHERE author='%1'").arg(info.mAuthor) );
-  if( q.first() ) {
-    //Author already present, fill fields
-    info.mLimit       = q.record().field(QStringLiteral("maxLimit")).value().toInt();
-    info.mDelivered   = q.record().field(QStringLiteral("delivered")).value().toInt();
-    info.mDescription = q.record().field(QStringLiteral("description")).value().toString();
-    //Check if machine present
-    q.exec( QString("SELECT * FROM machines WHERE uid='%1' AND author='%2'").arg(info.mKey).arg(info.mAuthor) );
-    if( q.first() ) {
-      //Key present, append machine
-      info.mKey = addMachine( info.mAuthor );
-      if( info.mKey.isEmpty() )
-        info.mResult = SCPE_MACHINE_LIMIT;
-      else
-        info.mResult = SCPE_SUCCESSFULL;
-      }
-    else
-      //Invalid key for this author
-      info.mResult = SCPE_INVALID_KEY;
-    }
-  else
-    //Author not found
-    info.mResult = SCPE_NOT_REGISTERED;
+  if( sdCsAuthorTable.registerMachine( info.mAuthor, &info.mKey ) )
+    info.mRemain = sdCsAuthorTable.remainObject( info.mAuthor );
 
   //Send answer
   QByteArray ar;
@@ -236,14 +132,6 @@ void SdCsChannelServer::cmMachineRequest(QDataStream &is)
 
 
 
-
-void FillItemInfo( SdItemInfo &info, QSqlRecord rec ) {
-  info.mHashId      = rec.field( QString("hash") ).value().toString();
-  info.mName        = rec.field( QString("name") ).value().toString();
-  info.mAuthor      = rec.field( QString("author") ).value().toString();
-  info.mObjectClass = rec.field( QString("class") ).value().toLongLong();
-  info.mTimeCreate  = rec.field( QString("timeCreate") ).value().toUInt();
-  }
 
 
 
@@ -258,7 +146,7 @@ void SdCsChannelServer::cmSyncRequest(QDataStream &is)
   SdCategoryInfoList categoryList;
   SdTranslationInfoList translationList;
 
-  if( checkAuthorAndKey( info.mAuthor, info.mKey ) ) {
+  if( sdCsAuthorTable.login( info.mAuthor, info.mKey ) ) {
     //Execute sync
     is >> categoryList >> translationList;
 

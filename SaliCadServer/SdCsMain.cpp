@@ -14,6 +14,7 @@ Description
 */
 #include "SdCsConfig.h"
 #include "SdCsServer.h"
+#include "../library/SdLibraryStorage.h"
 
 #include <QCoreApplication>
 #include <QDebug>

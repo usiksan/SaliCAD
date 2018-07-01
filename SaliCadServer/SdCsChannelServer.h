@@ -22,7 +22,7 @@ class SdCsChannelServer : public SdCsChannel
     Q_OBJECT
 
     SdCadServerVersion mVersion;
-    //QString            mAuthor;  //Author name receiv when user is login or register
+    QString            mAuthor;  //Author name receiv when user is login or register
   public:
     explicit SdCsChannelServer( QTcpSocket *socket, QObject *parent = nullptr );
     ~SdCsChannelServer();

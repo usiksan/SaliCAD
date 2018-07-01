@@ -22,7 +22,7 @@ Description
 #ifndef SDLIBRARYHEADER_H
 #define SDLIBRARYHEADER_H
 
-#include "objects/SdStringMap.h"
+#include "SdStringMap.h"
 
 #include <QString>
 #include <QMap>

@@ -23,7 +23,7 @@ Description
 
 struct SdLibraryReference
   {
-    qint32 mTime;      //Time object registration
+    qint32 mTime;      //Time object registration. Second count since 2010 year
     qint64 mHeaderPtr; //Header reference. It contains offset from begining headers file to header of this object
     qint64 mObjectPtr; //Object reference. It contains offset from begining objects file to object.
                        //Object reference can be null if no object loaded. Header can not be null.

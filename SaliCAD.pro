@@ -198,7 +198,8 @@ SOURCES += \
     windows/SdPropBarStratum.cpp \
     objects/SdPropInt.cpp \
     objects/SdPlateNetList.cpp \
-    objects/SdUndoRecordRoad.cpp
+    objects/SdUndoRecordRoad.cpp \
+    library/SdStringMap.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -365,7 +366,6 @@ HEADERS  += \
     library/SdLibraryStorage.h \
     library/SdLibraryHeader.h \
     objects/SdUndoRecordString2.h \
-    objects/SdStringMap.h \
     objects/SdUndoRecordStringMapItem.h \
     objects/SdUndoRecordStringMap.h \
     windows/SdDOptionsPageEditors.h \
@@ -392,7 +392,8 @@ HEADERS  += \
     objects/SdRatNet.h \
     objects/SdPlateNetList.h \
     objects/SdPlateNetSegment.h \
-    objects/SdUndoRecordRoad.h
+    objects/SdUndoRecordRoad.h \
+    library/SdStringMap.h
 
 DISTFILES += \
     license.txt

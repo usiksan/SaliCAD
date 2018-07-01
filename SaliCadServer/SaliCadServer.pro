@@ -22,7 +22,10 @@ SOURCES += \
     SdCsChannel.cpp \
     SdCsPacketInfo.cpp \
     SdCsChannelServer.cpp \
-    ../objects/SdUtil.cpp
+    ../objects/SdUtil.cpp \
+    ../library/SdLibraryStorage.cpp \
+    ../library/SdStringMap.cpp \
+    SdCsAuthorTable.cpp
 
 HEADERS += \
     SdCsConfig.h \
@@ -30,4 +33,9 @@ HEADERS += \
     SdCsServer.h \
     SdCsPacketInfo.h \
     SdCsChannelServer.h \
-    ../objects/SdUtil.h
+    ../objects/SdUtil.h \
+    ../library/SdLibraryHeader.h \
+    ../library/SdLibraryReference.h \
+    ../library/SdLibraryStorage.h \
+    ../library/SdStringMap.h \
+    SdCsAuthorTable.h

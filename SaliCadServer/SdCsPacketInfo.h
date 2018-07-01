@@ -198,35 +198,26 @@ inline QDataStream& operator >> ( QDataStream &is, SdTranslationInfo &info ) {
 
 struct SdAuthorInfo {
     QString mAuthor;      //Author name
-    QString mDescription; //Author description
-    QString mKey;         //Author key
-    qint32  mLimit;       //Limit delivery element count
-    qint32  mDelivered;   //Delivered element count
-    quint32 mLastSync;    //Time of last syncronisation
-    qint32  mResult;      //Result of operation
+    qint64  mKey;         //Author key
+    qint32  mRemain;      //Remain object count for loading
+    qint32  mTime;        //Time of sync
   };
 
 //Serialise SdAuthorInfo
 inline QDataStream& operator << ( QDataStream &os, const SdAuthorInfo &info ) {
   os << info.mAuthor
-     << info.mDescription
      << info.mKey
-     << info.mLimit
-     << info.mDelivered
-     << info.mLastSync
-     << info.mResult;
+     << info.mRemain
+     << info.mTime;
   return os;
   }
 
 //Deserialise SdAuthorInfo
 inline QDataStream& operator >> ( QDataStream &is, SdAuthorInfo &info ) {
   is >> info.mAuthor
-     >> info.mDescription
      >> info.mKey
-     >> info.mLimit
-     >> info.mDelivered
-     >> info.mLastSync
-     >> info.mResult;
+     >> info.mRemain
+     >> info.mTime;
   return is;
   }
 
