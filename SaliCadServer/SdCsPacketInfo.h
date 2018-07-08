@@ -99,41 +99,6 @@ inline QDataStream& operator >> ( QDataStream &is, SdCadServerVersion &version )
 
 
 
-struct SdItemInfo {
-    QString mHashId;      //Unical object id
-    QString mName;        //Object name
-    QString mAuthor;      //Author name
-    QString mTag;         //Group assotiation
-    qint32  mTimeCreate;  //Time object creation
-    qint64  mObjectClass; //Class of object
-
-    SdItemInfo() : mTimeCreate(0), mObjectClass(0) {}
-  };
-
-
-typedef QList<SdItemInfo> SdItemInfoList;
-
-//Serialise SdItemInfo object
-inline QDataStream& operator << ( QDataStream &os, const SdItemInfo &info ) {
-  os << info.mHashId
-     << info.mName
-     << info.mAuthor
-     << info.mTimeCreate
-     << info.mObjectClass;
-  return os;
-  }
-
-//Deserialise SdItemInfo object
-inline QDataStream& operator >> ( QDataStream &is, SdItemInfo &info ) {
-  is >> info.mHashId
-     >> info.mName
-     >> info.mAuthor
-     >> info.mTimeCreate
-     >> info.mObjectClass;
-  return is;
-  }
-
-
 
 
 
@@ -198,7 +163,8 @@ inline QDataStream& operator >> ( QDataStream &is, SdTranslationInfo &info ) {
 
 struct SdAuthorInfo {
     QString mAuthor;      //Author name
-    qint64  mKey;         //Author key
+    QString mEmail;
+    quint64 mKey;         //Author key
     qint32  mRemain;      //Remain object count for loading
     qint32  mTime;        //Time of sync
   };
@@ -206,6 +172,7 @@ struct SdAuthorInfo {
 //Serialise SdAuthorInfo
 inline QDataStream& operator << ( QDataStream &os, const SdAuthorInfo &info ) {
   os << info.mAuthor
+     << info.mEmail
      << info.mKey
      << info.mRemain
      << info.mTime;
@@ -215,6 +182,7 @@ inline QDataStream& operator << ( QDataStream &os, const SdAuthorInfo &info ) {
 //Deserialise SdAuthorInfo
 inline QDataStream& operator >> ( QDataStream &is, SdAuthorInfo &info ) {
   is >> info.mAuthor
+     >> info.mEmail
      >> info.mKey
      >> info.mRemain
      >> info.mTime;

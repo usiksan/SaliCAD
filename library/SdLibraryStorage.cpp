@@ -19,7 +19,6 @@ Description
   Storage complains all three files and formalized access to it.
 */
 #include "SdLibraryStorage.h"
-#include "objects/SdUtil.h"
 
 #include <QDir>
 #include <QReadLocker>
@@ -152,8 +151,8 @@ bool SdLibraryStorage::isObjectContains(const QString key)
 
 
 
-//Get list of objects older time
-QStringList SdLibraryStorage::getOlder(qint32 time, int limit)
+//Get list of objects inserted after index
+QStringList SdLibraryStorage::getAfter(qint32 index, int limit)
   {
   QReadLocker locker( &mLock );
   QStringList result;
@@ -161,7 +160,7 @@ QStringList SdLibraryStorage::getOlder(qint32 time, int limit)
   int i = 0;
   while( iter.hasNext() ) {
     iter.next();
-    if( iter.value().mTime >= time ) {
+    if( iter.value().mCreationIndex >= index ) {
       result.append( iter.key() );
       if( ++i >= limit ) break;
       }
@@ -171,7 +170,7 @@ QStringList SdLibraryStorage::getOlder(qint32 time, int limit)
 
 
 
-
+//Execute function for each object header
 bool SdLibraryStorage::forEachHeader(std::function<bool(SdLibraryHeader&)> fun1)
   {
   QReadLocker locker( &mLock );
@@ -218,9 +217,9 @@ void SdLibraryStorage::setHeader(const QString key, SdLibraryHeader &hdr)
   QFile file(FNAME_HDR);
   if( file.open(QIODevice::Append) ) {
     SdLibraryReference ref;
-    ref.mHeaderPtr = file.size();
-    ref.mTime      = SdUtil::getTime2000();
-    ref.mObjectPtr = 0;
+    ref.mHeaderPtr     = file.size();
+    ref.mCreationIndex = mReferenceMap.count() + 1;
+    ref.mObjectPtr     = 0;
 
     QDataStream os( &file );
     hdr.write( os );
@@ -292,8 +291,8 @@ void SdLibraryStorage::insert(const QString key, const SdLibraryHeader &hdr, QBy
     if( !mReferenceMap.contains(key) ) {
       //No record with this name
       //write header first
-      ref.mTime      = SdUtil::getTime2000();
-      ref.mHeaderPtr = fileHdr.size();
+      ref.mCreationIndex = mReferenceMap.count() + 1;
+      ref.mHeaderPtr     = fileHdr.size();
       QDataStream os( &fileHdr );
       hdr.write( os );
       fileHdr.close();

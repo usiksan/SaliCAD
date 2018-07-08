@@ -56,8 +56,8 @@ class SdLibraryStorage
     //Return true if object contained in map
     bool        isObjectContains( const QString key );
 
-    //Get list of objects older time
-    QStringList getOlder(qint32 time, int limit = 100 );
+    //Get list of objects which inserted after index
+    QStringList getAfter( qint32 index, int limit = 100 );
 
     //Function must return false to continue iteration
     //When function return true - iteration break and return true as indicator

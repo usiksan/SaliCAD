@@ -99,7 +99,7 @@ void SdCsChannelServer::cmRegistrationRequest(QDataStream &is)
   is >> info;
 
   //New author registration
-  sdCsAuthorTable.registerAuthor( info.mAuthor, 5, info.mRemain, &info.mKey );
+  sdCsAuthorTable.registerAuthor( info.mAuthor, info.mEmail, 5, info.mRemain, &info.mKey );
 
   //Send answer
   QByteArray ar;
@@ -313,53 +313,28 @@ void SdCsChannelServer::cmObjectRequest(QDataStream &is)
   QByteArray ar;
   QDataStream os( &ar, QIODevice::WriteOnly );
 
+  //For object header
+  SdLibraryHeader header;
   //For object store
-  SdItemInfo item;
   QByteArray obj;
 
-  if( checkAuthorAndKey( info.mAuthor, info.mKey ) ) {
+  if( sdCsAuthorTable.login( info.mAuthor, info.mKey ) ) {
     //Execute request objects
     QString hash;
 
     is >> hash;
 
     //Query to select object with requested hash
-    QSqlQuery q;
-    q.prepare( QString("SELECT * FROM objects WHERE hash='%1'").arg( hash ) );
-    q.exec();
-    if( q.first() ) {
-      //Object is present
-
-      //Fill info from object record
-      FillItemInfo( item, q.record() );
-
-      obj = q.record().field( QString("object") ).value().toByteArray();
-
-      //Increment component count
-      q.exec( QString("SELECT * FROM users WHERE author='%1'").arg(info.mAuthor) );
-      if( q.first() ) {
-        //Author already present, fill fields
-        info.mLimit       = q.record().field(QStringLiteral("maxLimit")).value().toInt();
-        info.mDelivered   = q.record().field(QStringLiteral("delivered")).value().toInt();
-        if( info.mDelivered < info.mLimit ) {
-          info.mDelivered++;
-          q.exec( QString("UPDATE users SET delivered=%1 WHERE author='%2'").arg(info.mDelivered).arg(info.mAuthor));
-          info.mResult = SCPE_SUCCESSFULL;
-          }
-        else
-          info.mResult = SCPE_OBJECT_LIMIT;
-        }
-      else
-        info.mResult = SCPE_NOT_REGISTERED;
-      }
-    else
-      info.mResult = SCPE_OBJECT_NOT_FOUND;
+    obj = sdLibraryStorage.object(hash);
+    sdLibraryStorage.header( hash, header );
     }
   else
     //Login fail
-    info.mResult = SCPE_NOT_REGISTERED;
+    info.mKey = 0;
 
-  os << mVersion << info << item << obj;
+  os << mVersion << info;
+  header.write( os );
+  os << obj;
 
   //Transmit object
   writeBlock( SCPI_OBJECT, ar );
@@ -369,57 +344,3 @@ void SdCsChannelServer::cmObjectRequest(QDataStream &is)
 
 
 
-
-
-
-
-//Add machine for user
-QString SdCsChannelServer::addMachine(const QString author)
-  {
-  //Prepare key for machine
-  QString uid = QUuid::createUuid().toString();
-  //Prepare change time when key will changed
-  int changeTime = SdUtil::getTime2000() + 200000;
-
-  QSqlQuery q;
-  //Get registered machines count
-  q.prepare( QString("SELECT * FROM machines WHERE author='%1'").arg( author ) );
-  q.exec();
-  int count = 0;
-  if( q.first() ) {
-    do { count++; } while( q.next() );
-    }
-  qDebug() << "limit" << count;
-  if( count > MACHINE_LIMIT ) {
-    qDebug() << "addMachine limit" << q.size();
-    return QString();
-    }
-
-  //Prepare query to database
-  q.prepare( QString("INSERT INTO machines (uid, author, changeTime) "
-                     "VALUES (:uid, :author, :changeTime)") );
-  q.bindValue( QStringLiteral(":uid"), uid );
-  q.bindValue( QStringLiteral(":author"), author );
-  q.bindValue( QStringLiteral(":changeTime"), changeTime );
-  if( q.exec() )
-    //Machine registerd successfully, return its key
-    return uid;
-  qDebug() << "addMachine" << q.lastError();
-  //Wrong registration
-  return QString();
-  }
-
-
-
-
-//Check user and machine key
-bool SdCsChannelServer::checkAuthorAndKey(const QString author, const QString key)
-  {
-  //Query if author already present
-  QSqlQuery q;
-  q.exec( QString("SELECT * FROM machines WHERE uid='%1' AND author='%2'").arg(key).arg(author) );
-  if( q.first() )
-    //Key present
-    return true;
-  return false;
-  }

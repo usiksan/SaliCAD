@@ -19,29 +19,55 @@ Description
 #include <QMap>
 #include <QReadWriteLock>
 
+
+/*!
+   \brief The SdCsAuthor struct represents one user at global space
+
+   To perform global object storage we need to separate users one to another. This
+   need for to trust some users and fix another in black list. One user may be in fact
+   a group of users. Also user can have many computers. All computers of one user
+   have individual key. So, we register individual user and all machines of this user.
+
+   To register new machine user must enter key of existing machine.
+ */
 struct SdCsAuthor {
-    qint32       mRemainObject;  //Object count available for loading
-    qint32       mMaxMachines;
-    QSet<qint64> mMachineKeys;   //Author machine keys
+    QString       mEmail;         //User email for key restoring
+    qint32        mRemainObject;  //Object count available for loading
+    qint32        mMaxMachines;   //Max available machines count for this user
+    QSet<quint64> mMachineKeys;   //Author machine keys
   };
+
+QDataStream &operator << ( QDataStream &os, const SdCsAuthor &author ) {
+  os << author.mEmail << author.mRemainObject << author.mMaxMachines << author.mMachineKeys;
+  return os;
+  }
+
+QDataStream &operator >> ( QDataStream &is, SdCsAuthor &author ) {
+  is >> author.mEmail >> author.mRemainObject >> author.mMaxMachines >> author.mMachineKeys;
+  return is;
+  }
 
 
 
 class SdCsAuthorTable
   {
-    QReadWriteLock           mLock;
+    QReadWriteLock           mLock;     //Lock semaphor
     QMap<QString,SdCsAuthor> mUserList; //Author table
+    bool                     mDirty;    //If true then save needed
   public:
     SdCsAuthorTable();
+
+    bool isDirty() const { return mDirty; }
 
     /*!
        \brief registerAuthor Register new author
        \param author Author name
+       \param email Author email to restore machine key
        \param maxObject Maximum object count available for loading
        \param key New key for first author machine
        \return True if registration successfull or false if its not
      */
-    bool registerAuthor( const QString author, int maxMachines, int maxObject, qint64 *key );
+    bool registerAuthor(const QString author, const QString email, int maxMachines, int maxObject, qint64 *key );
 
 
     /*!
@@ -51,7 +77,7 @@ class SdCsAuthorTable
         On out key for new machine or zero if machine limit reached.
        \return True if new machine registered or false if not.
      */
-    bool registerMachine( const QString author, qint64 *key );
+    bool registerMachine( const QString author, quint64 *key );
 
 
     /*!
@@ -60,7 +86,7 @@ class SdCsAuthorTable
        \param key Author key for login
        \return True if author with this key can login
      */
-    bool login( const QString author, qint64 key );
+    bool login( const QString author, quint64 key );
 
 
     /*!
@@ -91,6 +117,8 @@ class SdCsAuthorTable
      */
     void save( const QString path );
 
+  private:
+    bool registerMachinePrivate(const QString author, quint64 *key );
   };
 
 extern SdCsAuthorTable sdCsAuthorTable;

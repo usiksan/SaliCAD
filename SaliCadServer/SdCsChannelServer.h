@@ -43,11 +43,6 @@ class SdCsChannelServer : public SdCsChannel
     void cmObjectRequest( QDataStream &is );
 
 
-    //Add machine for user
-    QString addMachine( const QString author );
-
-    //Check user and machine key
-    bool    checkAuthorAndKey( const QString author, const QString key );
   };
 
 #endif // SDCSCHANNELSERVER_H
