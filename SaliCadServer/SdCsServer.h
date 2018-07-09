@@ -16,12 +16,18 @@ Description
 #define SDCSSERVER_H
 
 #include <QTcpServer>
+#include <QTimer>
 
 class SdCsServer : public QTcpServer
   {
     Q_OBJECT
+
+    QTimer mTimer;
   public:
     explicit SdCsServer( QObject *parent = 0 );
+
+  signals:
+    void second();
   };
 
 #endif // SDCSSERVER_H

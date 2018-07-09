@@ -31,6 +31,7 @@ class SdObjectNetClient : public SdCsChannel
     Q_OBJECT
 
     SdAuthorInfo  mAuthorInfo;
+    SdAuthorInfo  mAuthorResult;
     QString       mHostIp;
     QTimer        mTimer;
     QByteArray    mBuffer;
@@ -47,14 +48,14 @@ class SdObjectNetClient : public SdCsChannel
 
     void objectComplete( int result );
 
-    void registrationComplete( const QString authorName, const QString descr, const QString key, int limit, int delivered, int result );
+    void registrationComplete( const QString authorName, const QString email, const QString key, int remain );
   public slots:
 
     //Begin registration process
-    void doRegistration(const QString ip, const QString authorName, const QString description );
+    void doRegistration(const QString ip, const QString authorName, const QString email );
 
     //Begin append machine
-    void doMachine( const QString ip, const QString authorName, const QString key );
+    void doMachine(const QString ip, const QString authorName, quint64 key );
 
     //Begin object receiving process
     void doObject( const QString hashId );

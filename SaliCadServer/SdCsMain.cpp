@@ -15,6 +15,7 @@ Description
 #include "SdCsConfig.h"
 #include "SdCsServer.h"
 #include "../library/SdLibraryStorage.h"
+#include "SdCsAuthorTable.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -25,6 +26,10 @@ int main(int argc, char *argv[])
   qDebug() << "SaliCadServer " SALI_CAD_VERSION;
 
   QCoreApplication a(argc, argv);
+
+  //Create data base
+  sdLibraryStorage.setLibraryPath( QCoreApplication::applicationDirPath() + QString("/library/") );
+  sdCsAuthorTable.load( QCoreApplication::applicationDirPath() + QString("/library/author.list")  );
 
   //Create server. It will receiv all connect requests and
   // create link channel. Link channel is connection element with client.

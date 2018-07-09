@@ -23,6 +23,7 @@ Description
 
 #include "SdLibraryReference.h"
 #include "SdLibraryHeader.h"
+#include "SdLibraryCategory.h"
 
 #include <QString>
 #include <QStringList>
@@ -34,12 +35,16 @@ Description
 
 typedef QMap<QString,SdLibraryReference> SdLibraryReferenceMap;
 
+typedef QMap<QString,SdLibraryCategory> SdLibraryCategoryMap;
+
 class SdLibraryStorage
   {
   protected:
     QString                mPath;
     QReadWriteLock         mLock;
+    qint32                 mCreationIndex;
     SdLibraryReferenceMap  mReferenceMap;
+    SdLibraryCategoryMap   mCategoryMap;
     QFile                  mHeaderFile;
     QFile                  mObjectFile;
     bool                   mDirty;
@@ -78,8 +83,23 @@ class SdLibraryStorage
     //Insert new object with creation reference and append header and object
     void        insert(const QString key, const SdLibraryHeader &hdr, QByteArray obj );
 
+    //Return true if key contains in categories list
+    bool        isCategoryContains( const QString key );
+
+    //Return category association map
+    QString     category( const QString key );
+
+    //Insert new category
+    void        categoryInsert( const QString key, const QString association );
+
+    //Get list of categories which inserted after index
+    QStringList categoryGetAfter(qint32 index, int limit = 100 );
+
     //Flush reference map if needed
     void        flush();
   };
+
+
+extern SdLibraryStorage sdLibraryStorage;
 
 #endif // SDLIBRARYSTORAGE_H

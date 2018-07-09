@@ -34,12 +34,12 @@ Description
 #include <QJsonDocument>
 #include <QSettings>
 
-static SdLibraryStorage library;
+static SdLibraryStorage sdLibraryStorage;
 
 //Open or create library
 void SdObjectFactory::openLibrary()
   {
-  library.setLibraryPath( sdEnvir->mLibraryPath );
+  sdLibraryStorage.setLibraryPath( sdEnvir->mLibraryPath );
   }
 
 
@@ -48,7 +48,7 @@ void SdObjectFactory::openLibrary()
 //Close library and save unsaved data
 void SdObjectFactory::closeLibrary()
   {
-  library.flush();
+  sdLibraryStorage.flush();
   }
 
 
@@ -61,11 +61,11 @@ void SdObjectFactory::insertObject(const SdObject *obj, const SdLibraryHeader &h
 
   QString id = obj->getId();
   //If object in library then nothing done
-  if( library.isObjectContains(id) )
+  if( sdLibraryStorage.isObjectContains(id) )
     return;
 
   //Insert object
-  library.insert( id, hdr, QJsonDocument(json).toBinaryData() );
+  sdLibraryStorage.insert( id, hdr, QJsonDocument(json).toBinaryData() );
   }
 
 
@@ -80,13 +80,13 @@ void SdObjectFactory::insertItemObject(const SdProjectItem *item, QJsonObject ob
 
   QString id = item->getId();
   //If object in library then nothing done
-  if( library.isObjectContains(id) )
+  if( sdLibraryStorage.isObjectContains(id) )
     return;
   //Insert object
   SdLibraryHeader hdr;
   item->getHeader( hdr );
 
-  library.insert( id, hdr, QJsonDocument(obj).toBinaryData() );
+  sdLibraryStorage.insert( id, hdr, QJsonDocument(obj).toBinaryData() );
   }
 
 
@@ -101,7 +101,7 @@ SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *p
 
   SdObjectMap map;
 
-  if( !library.isObjectContains(id) ) {
+  if( !sdLibraryStorage.isObjectContains(id) ) {
     //Soft extract object from database.
     //If no object in local database then doing nothing
     if( soft ) return nullptr;
@@ -114,9 +114,9 @@ SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *p
     }
 
   //At this point object already in local base
-  if( library.isObjectContains(id) )
+  if( sdLibraryStorage.isObjectContains(id) )
     //Build object
-    return SdObject::read( &map, QJsonDocument::fromBinaryData( library.object(id) ).object() );
+    return SdObject::read( &map, QJsonDocument::fromBinaryData( sdLibraryStorage.object(id) ).object() );
 
   QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Id '%1' not found in database").arg(id) );
   return nullptr;
@@ -142,7 +142,7 @@ SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *p
 //Return true if object already present in dataBase
 bool SdObjectFactory::isObjectPresent(const QString name, const QString author)
   {
-  return library.forEachHeader( [name,author] (SdLibraryHeader &hdr) -> bool {
+  return sdLibraryStorage.forEachHeader( [name,author] (SdLibraryHeader &hdr) -> bool {
     if( hdr.mName == name && hdr.mAuthor == author )
       return true;
     return false;
@@ -157,7 +157,7 @@ bool SdObjectFactory::isObjectPresent(const QString name, const QString author)
 //If no object in library return false
 bool SdObjectFactory::extractHeader(const QString id, SdLibraryHeader &hdr)
   {
-  return library.header( id, hdr );
+  return sdLibraryStorage.header( id, hdr );
   }
 
 
@@ -166,7 +166,7 @@ bool SdObjectFactory::extractHeader(const QString id, SdLibraryHeader &hdr)
 
 bool SdObjectFactory::forEachHeader(std::function<bool (SdLibraryHeader &)> fun1)
   {
-  return library.forEachHeader( fun1 );
+  return sdLibraryStorage.forEachHeader( fun1 );
   }
 
 

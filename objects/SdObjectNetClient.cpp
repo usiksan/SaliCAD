@@ -13,6 +13,7 @@ Description
 #include "SdConfig.h"
 #include "SdObjectNetClient.h"
 #include "SaliCadServer/SdCsPacketInfo.h"
+#include "library/SdLibraryStorage.h"
 
 #include <QThread>
 #include <QHostAddress>
@@ -34,10 +35,10 @@ SdObjectNetClient::SdObjectNetClient(QObject *parent) :
   mCommandSync(0)
   {
   QSettings s;
-  mAuthorInfo.mAuthor   = s.value( SDK_GLOBAL_AUTHOR ).toString();
-  mAuthorInfo.mKey      = s.value( SDK_MACHINE_KEY ).toString();
-  mAuthorInfo.mLastSync = s.value( SDK_LAST_SYNC ).toInt();
-  mHostIp               = s.value( SDK_SERVER_IP ).toString();
+  mAuthorInfo.mAuthor    = s.value( SDK_GLOBAL_AUTHOR ).toString();
+  mAuthorInfo.mKey       = s.value( SDK_MACHINE_KEY ).toString();
+  mAuthorInfo.mSyncIndex = s.value( SDK_LAST_SYNC ).toInt();
+  mHostIp                = s.value( SDK_SERVER_IP ).toString();
 
   mTimer.setInterval( 30000 );
   mTimer.start();
@@ -53,7 +54,7 @@ SdObjectNetClient::SdObjectNetClient(QObject *parent) :
 
 bool SdObjectNetClient::isRegistered() const
   {
-  return !mHostIp.isEmpty() && !mAuthorInfo.mAuthor.isEmpty() && !mAuthorInfo.mKey.isEmpty();
+  return !mHostIp.isEmpty() && !mAuthorInfo.mAuthor.isEmpty() && mAuthorInfo.mKey != 0;
   }
 
 
@@ -64,16 +65,14 @@ bool SdObjectNetClient::isRegistered() const
 
 
 //Begin registration process
-void SdObjectNetClient::doRegistration(const QString ip, const QString authorName, const QString description)
+void SdObjectNetClient::doRegistration(const QString ip, const QString authorName, const QString email)
   {
   //Prepare block for transmition
-  mHostIp                  = ip;
-  mAuthorInfo.mAuthor      = authorName;
-  mAuthorInfo.mDescription = description;
-  mAuthorInfo.mLimit       = 100;
-  mAuthorInfo.mDelivered   = 0;
-  mAuthorInfo.mResult      = SCPE_UNDEFINED;
-  mAuthorInfo.mLastSync    = 0;
+  mHostIp                = ip;
+  mAuthorInfo.mAuthor    = authorName;
+  mAuthorInfo.mEmail     = email;
+  mAuthorInfo.mRemain    = 100;
+  mAuthorInfo.mSyncIndex = 0;
   mBuffer.clear();
   QDataStream os( &mBuffer, QIODevice::WriteOnly );
   os << mAuthorInfo;
@@ -87,16 +86,14 @@ void SdObjectNetClient::doRegistration(const QString ip, const QString authorNam
 
 
 //Begin append machine
-void SdObjectNetClient::doMachine(const QString ip, const QString authorName, const QString key)
+void SdObjectNetClient::doMachine(const QString ip, const QString authorName, quint64 key)
   {
   //Prepare block for transmition
-  mHostIp                  = ip;
-  mAuthorInfo.mAuthor      = authorName;
-  mAuthorInfo.mKey         = key;
-  mAuthorInfo.mLimit       = 100;
-  mAuthorInfo.mDelivered   = 0;
-  mAuthorInfo.mResult      = SCPE_UNDEFINED;
-  mAuthorInfo.mLastSync    = 0;
+  mHostIp                = ip;
+  mAuthorInfo.mAuthor    = authorName;
+  mAuthorInfo.mKey       = key;
+  mAuthorInfo.mRemain    = 100;
+  mAuthorInfo.mSyncIndex = 0;
   mBuffer.clear();
   QDataStream os( &mBuffer, QIODevice::WriteOnly );
   os << mAuthorInfo;
@@ -272,14 +269,14 @@ void SdObjectNetClient::cmRegistrationInfo(QDataStream &is)
   {
   Q_UNUSED(is)
   qDebug() << "cmRegistrationInfo" << mAuthorInfo.mKey;
-  if( mAuthorInfo.mResult == SCPE_SUCCESSFULL ) {
+  if( !mAuthorInfo.isFail() ) {
     QSettings s;
     s.setValue( SDK_GLOBAL_AUTHOR, mAuthorInfo.mAuthor );
     s.setValue( SDK_MACHINE_KEY, mAuthorInfo.mKey );
-    s.setValue( SDK_LAST_SYNC, mAuthorInfo.mLastSync );
+    s.setValue( SDK_LAST_SYNC, mAuthorInfo.mSyncIndex );
     s.setValue( SDK_SERVER_IP, mHostIp );
     }
-  emit registrationComplete( mAuthorInfo.mAuthor, mAuthorInfo.mDescription, mAuthorInfo.mKey, mAuthorInfo.mLimit, mAuthorInfo.mDelivered, mAuthorInfo.mResult );
+  emit registrationComplete( mAuthorInfo.mAuthor, mAuthorInfo.mEmail, mAuthorInfo.mKey, mAuthorInfo.mRemain );
   }
 
 
@@ -360,11 +357,20 @@ void SdObjectNetClient::cmSyncList(QDataStream &is)
 
 void SdObjectNetClient::cmObject(QDataStream &is)
   {
-  qDebug() << "cmObject" << mAuthorInfo.mResult;
-  if( mAuthorInfo.mResult == SCPE_SUCCESSFULL ) {
-    SdItemInfo info;
+  qDebug() << "cmObject" << mAuthorResult.isFail();
+  if( mAuth)
+  if( !mAuthorResult.isFail() ) {
+    //For object header
+    SdLibraryHeader header;
+    //For object store
     QByteArray obj;
-    is >> info >> obj;
+
+    is >> header >> obj;
+
+    if( obj.isEmpty() )
+      emit objectComplete( SCPE_OBJECT_NOT_FOUND );
+    else
+      sdLibraryStorage.insert( header.id(), header, obj );
 
     QSqlQuery q;
     q.prepare( QString("DELETE FROM objects WHERE hash='%1'").arg( info.mHashId ) );

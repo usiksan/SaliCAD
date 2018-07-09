@@ -14,7 +14,6 @@ Description
 #include "SdCsChannelServer.h"
 #include "SdCsAuthorTable.h"
 #include "../library/SdLibraryStorage.h"
-#include "../objects/SdUtil.h"
 
 
 #include <QDir>
@@ -25,6 +24,7 @@ Description
 #include <QTimer>
 
 SdLibraryStorage sdLibraryStorage;
+SdCsAuthorTable  sdCsAuthorTable;
 
 SdCsChannelServer::SdCsChannelServer(QTcpSocket *socket, QObject *parent) :
   SdCsChannel( socket, parent )
@@ -99,7 +99,8 @@ void SdCsChannelServer::cmRegistrationRequest(QDataStream &is)
   is >> info;
 
   //New author registration
-  sdCsAuthorTable.registerAuthor( info.mAuthor, info.mEmail, 5, info.mRemain, &info.mKey );
+  if( !sdCsAuthorTable.registerAuthor( info.mAuthor, info.mEmail, 5, info.mRemain, &info.mKey ) )
+    info.setFail();
 
   //Send answer
   QByteArray ar;
@@ -120,6 +121,7 @@ void SdCsChannelServer::cmMachineRequest(QDataStream &is)
 
   if( sdCsAuthorTable.registerMachine( info.mAuthor, &info.mKey ) )
     info.mRemain = sdCsAuthorTable.remainObject( info.mAuthor );
+  else info.setFail();
 
   //Send answer
   QByteArray ar;
@@ -142,159 +144,68 @@ void SdCsChannelServer::cmSyncRequest(QDataStream &is)
   SdAuthorInfo info;
   is >> info;
 
-  SdItemInfoList list;
-  SdCategoryInfoList categoryList;
-  SdTranslationInfoList translationList;
+  //Prepare answer block
+  QByteArray ar;
+  QDataStream os( &ar, QIODevice::WriteOnly );
+  os << mVersion;
 
   if( sdCsAuthorTable.login( info.mAuthor, info.mKey ) ) {
     //Execute sync
-    is >> categoryList >> translationList;
+    //Prepare objects with newer index
+    QStringList newerObjects = sdLibraryStorage.getAfter( info.mSyncIndex );
+    QStringList newerCategories = sdLibraryStorage.categoryGetAfter( info.mSyncIndex );
+    info.mSyncIndex += newerObjects.count() + newerCategories.count();
+    os << info;
+
+    //Setup received categories
+    SdCategoryInfoList categoryList;
+    is >> categoryList;
 
 
-    for( const SdCategoryInfo &info : categoryList ) {
-      //Replace object
-      QSqlQuery q;
-      q.prepare( QString("SELECT * FROM hierarchy WHERE section='%1' AND time>%2").arg( info.mSection ).arg( info.mTime ) );
-      q.exec();
-      if( q.first() ) continue;
+    for( const SdCategoryInfo &info : categoryList )
+      //Replace category
+      sdLibraryStorage.categoryInsert( info.mCategory, info.mAssociation );
 
-      q.exec( QString("DELETE FROM hierarchy WHERE section='%1' AND time<=%2").arg( info.mSection ).arg( info.mTime ) );
-
-      //Insert record with new object
-      q.prepare( QString("INSERT INTO hierarchy (section, path, parent, time) "
-                                   "VALUES (:section, :path, :parent, :time)") );
-      q.bindValue( QStringLiteral(":section"), info.mSection );
-      q.bindValue( QStringLiteral(":path"), info.mPath );
-      q.bindValue( QStringLiteral(":parent"), info.mParent );
-      q.bindValue( QStringLiteral(":time"), info.mTime );
-      q.exec();
-      }
-
-
-    for( const SdTranslationInfo &info : translationList ) {
-      //Replace object
-      QSqlQuery q;
-      q.prepare( QString("SELECT * FROM translation WHERE section='%1' AND lang='%2' AND time>%3").arg( info.mSection ).arg( info.mLang ).arg( info.mTime ) );
-      q.exec();
-      if( q.first() ) continue;
-
-      q.exec( QString("DELETE FROM translation WHERE section='%1' AND lang='%2' AND time<=%3").arg( info.mSection ).arg( info.mLang ).arg( info.mTime ) );
-
-      //Insert record with new object
-      q.prepare( QString("INSERT INTO hierarchy (translate, lang, section, time) "
-                                   "VALUES (:translate, :lang, :section, :time)") );
-      q.bindValue( QStringLiteral(":translate"), info.mTranslate );
-      q.bindValue( QStringLiteral(":lang"), info.mLang );
-      q.bindValue( QStringLiteral(":section"), info.mSection );
-      q.bindValue( QStringLiteral(":time"), info.mTime );
-      q.exec();
-      }
 
     //Append objects if presend
-    bool good = true;
     while( !is.atEnd() ) {
       //Object
-      SdItemInfo info;
-      QByteArray obj;
+      SdLibraryHeader header;
+      QByteArray      obj;
       //Read object
-      is >> info >> obj;
+      is >> header >> obj;
       //Replace object
-      QSqlQuery q;
-      q.prepare( QString("SELECT * FROM objects WHERE name='%1' AND author='%2'").arg( info.mName ).arg( info.mAuthor ) );
-      q.exec();
-      if( q.first() ) {
-        //Check if in database newest object or not
-        if( q.record().field( QStringLiteral("timeCreate") ).value().toInt() > info.mTimeCreate )
-          //In database newest object do nothing
-          continue;
+      QString hash = header.id();
 
-        //Delete record
-        q.prepare( QString("DELETE FROM objects WHERE name='%1' AND author='%2'").arg( info.mName ).arg( info.mAuthor ) );
-        q.exec();
-        }
-      //Insert record with new object
-      q.prepare( QString("INSERT INTO objects (hash, name, author, tag, timeCreate, class, timeUpgrade, object) "
-                                   "VALUES (:hash, :name, :author, :tag, :timeCreate, :class, :timeUpgrade, :object)") );
-      q.bindValue( QStringLiteral(":hash"), info.mHashId );
-      q.bindValue( QStringLiteral(":name"), info.mName );
-      q.bindValue( QStringLiteral(":author"), info.mAuthor );
-      q.bindValue( QStringLiteral(":tag"), info.mTag );
-      q.bindValue( QStringLiteral(":timeCreate"), info.mTimeCreate );
-      q.bindValue( QStringLiteral(":class"), info.mObjectClass );
-      q.bindValue( QStringLiteral(":timeUpgrade"), SdUtil::getTime2000() );
-      q.bindValue( QStringLiteral(":object"), QVariant( obj ), QSql::Binary | QSql::In );
-      if( !q.exec() ) {
-        good = false;
-        qDebug() << "Unable insert new object" << q.lastError();
+      if( !sdLibraryStorage.contains(hash) ) {
+        //Insert new object
+        sdLibraryStorage.insert( hash, header, obj );
         }
       }
 
 
-    //Query to select all object after append time
-    QSqlQuery q;
-    q.prepare( QString("SELECT * FROM objects WHERE timeUpgrade>%1").arg( info.mLastSync ) );
-    q.exec();
-    if( q.first() ) {
-      do {
-        //Object info to send
-        SdItemInfo item;
-        //Fill info from object record
-        FillItemInfo( item, q.record() );
-        //Append info to list
-        list.append( item );
-        }
-      while( q.next() );
-      }
-
+    //At now prepare categories with founded interval
     categoryList.clear();
-    //Query to select all category after append time
-    q.prepare( QString("SELECT * FROM hierarchy WHERE time>%1").arg( info.mLastSync ) );
-    q.exec();
-    if( q.first() ) {
-      do {
-        SdCategoryInfo item;
-        //Fill item from object record
-        item.mSection = q.record().field( QStringLiteral("section") ).value().toString();
-        item.mParent  = q.record().field( QStringLiteral("parent") ).value().toString();
-        item.mPath    = q.record().field( QStringLiteral("path") ).value().toString();
-        item.mTime    = q.record().field( QStringLiteral("time") ).value().toInt();
-        categoryList.append( item );
-        }
-      while( q.next() );
+    for( const QString &str : newerCategories ) {
+      SdCategoryInfo cinf;
+      cinf.mCategory = str;
+      cinf.mAssociation = sdLibraryStorage.category( str );
+      categoryList.append( cinf );
       }
 
-    translationList.clear();
-    //Query to select all category after append time
-    q.prepare( QString("SELECT * FROM translation WHERE time>%1").arg( info.mLastSync ) );
-    q.exec();
-    if( q.first() ) {
-      do {
-        SdTranslationInfo item;
-        //Fill item from object record
-        item.mSection   = q.record().field( QStringLiteral("section") ).value().toString();
-        item.mLang      = q.record().field( QStringLiteral("lang") ).value().toString();
-        item.mTranslate = q.record().field( QStringLiteral("translate") ).value().toString();
-        item.mTime      = q.record().field( QStringLiteral("time") ).value().toInt();
-        translationList.append( item );
-        }
-      while( q.next() );
-      }
+    os << categoryList;
 
-    if( good ) {
-      info.mLastSync = SdUtil::getTime2000();
-      info.mResult = SCPE_SUCCESSFULL;
+    //At now write object headers
+    for( const QString &hash : newerObjects ) {
+      SdLibraryHeader hdr;
+      sdLibraryStorage.header( hash, hdr );
+      os << hdr;
       }
-    else
-      info.mResult = SCPE_SYNC_FAIL;
     }
-  else
-    //Login fail
-    info.mResult = SCPE_NOT_REGISTERED;
-
-  //Prepare block
-  QByteArray ar;
-  QDataStream os( &ar, QIODevice::WriteOnly );
-  os << mVersion << info << categoryList << translationList << list;
+  else {
+    info.setFail();
+    os << info;
+    }
 
   //Send block
   writeBlock( SCPI_SYNC_LIST, ar );
@@ -330,11 +241,9 @@ void SdCsChannelServer::cmObjectRequest(QDataStream &is)
     }
   else
     //Login fail
-    info.mKey = 0;
+    info.setFail();
 
-  os << mVersion << info;
-  header.write( os );
-  os << obj;
+  os << mVersion << info << header << obj;
 
   //Transmit object
   writeBlock( SCPI_OBJECT, ar );

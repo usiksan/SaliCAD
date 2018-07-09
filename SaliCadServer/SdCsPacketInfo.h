@@ -103,61 +103,31 @@ inline QDataStream& operator >> ( QDataStream &is, SdCadServerVersion &version )
 
 
 struct SdCategoryInfo {
-    QString mSection;
-    QString mParent;
-    QString mPath;
-    qint32  mTime;
+    QString mCategory;
+    QString mAssociation;
   };
 
 typedef QList<SdCategoryInfo> SdCategoryInfoList;
 
 //Serialise SdCategoryInfo object
 inline QDataStream& operator << ( QDataStream &os, const SdCategoryInfo &info ) {
-  os << info.mSection
-     << info.mParent
-     << info.mPath
-     << info.mTime;
+  os << info.mCategory
+     << info.mAssociation;
   return os;
   }
 
 //Deserialise SdCategoryInfo object
 inline QDataStream& operator >> ( QDataStream &is, SdCategoryInfo &info ) {
-  is >> info.mSection
-     >> info.mParent
-     >> info.mPath
-     >> info.mTime;
+  is >> info.mCategory
+     >> info.mAssociation;
   return is;
   }
 
 
 
 
-struct SdTranslationInfo {
-    QString mSection;
-    QString mTranslate;
-    QString mLang;
-    qint32  mTime;
-  };
 
-typedef QList<SdTranslationInfo> SdTranslationInfoList;
 
-//Serialise SdTranslationInfo object
-inline QDataStream& operator << ( QDataStream &os, const SdTranslationInfo &info ) {
-  os << info.mSection
-     << info.mTranslate
-     << info.mLang
-     << info.mTime;
-  return os;
-  }
-
-//Deserialise SdTranslationInfo object
-inline QDataStream& operator >> ( QDataStream &is, SdTranslationInfo &info ) {
-  is >> info.mSection
-     >> info.mTranslate
-     >> info.mLang
-     >> info.mTime;
-  return is;
-  }
 
 
 
@@ -166,7 +136,11 @@ struct SdAuthorInfo {
     QString mEmail;
     quint64 mKey;         //Author key
     qint32  mRemain;      //Remain object count for loading
-    qint32  mTime;        //Time of sync
+    qint32  mSyncIndex;   //Index of sync
+
+    void setFail() { mAuthor.clear(); mEmail.clear(); mKey = 0; mRemain = mSyncIndex = 0; }
+
+    bool isFail() const { return mKey == 0 || mAuthor.isEmpty(); }
   };
 
 //Serialise SdAuthorInfo
@@ -175,7 +149,7 @@ inline QDataStream& operator << ( QDataStream &os, const SdAuthorInfo &info ) {
      << info.mEmail
      << info.mKey
      << info.mRemain
-     << info.mTime;
+     << info.mSyncIndex;
   return os;
   }
 
@@ -185,7 +159,7 @@ inline QDataStream& operator >> ( QDataStream &is, SdAuthorInfo &info ) {
      >> info.mEmail
      >> info.mKey
      >> info.mRemain
-     >> info.mTime;
+     >> info.mSyncIndex;
   return is;
   }
 

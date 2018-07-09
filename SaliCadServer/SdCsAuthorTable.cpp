@@ -24,7 +24,7 @@ SdCsAuthorTable::SdCsAuthorTable()
 
   }
 
-bool SdCsAuthorTable::registerAuthor(const QString author, const QString email, int maxMachines, int maxObject, qint64 *key)
+bool SdCsAuthorTable::registerAuthor(const QString author, const QString email, int maxMachines, int maxObject, quint64 *key)
   {
   QWriteLocker locker(&mLock);
   //Test if user exist return false
@@ -82,6 +82,7 @@ int SdCsAuthorTable::decrementObject(const QString author)
   QWriteLocker locker(&mLock);
   mUserList[author].mRemainObject--;
   mDirty = true;
+  return mUserList[author].mRemainObject;
   }
 
 
@@ -89,6 +90,7 @@ int SdCsAuthorTable::decrementObject(const QString author)
 
 void SdCsAuthorTable::load(const QString path)
   {
+  mPath = path;
   QFile file(path);
   if( file.open(QIODevice::ReadOnly) ) {
     QDataStream is( &file );
@@ -100,19 +102,21 @@ void SdCsAuthorTable::load(const QString path)
 
 
 
-void SdCsAuthorTable::save(const QString path)
+void SdCsAuthorTable::save()
   {
   QReadLocker locker(&mLock);
 
-  QFileInfo info(path);
-  QDir dir(info.absoluteDir());
-  dir.mkpath( info.absolutePath() );
+  if( mDirty ) {
+    QFileInfo info(mPath);
+    QDir dir(info.absoluteDir());
+    dir.mkpath( info.absolutePath() );
 
-  QSaveFile file(path);
-  if( file.open(QIODevice::WriteOnly) ) {
-    QDataStream os( &file );
-    os << mUserList;
-    mDirty = false;
+    QSaveFile file(mPath);
+    if( file.open(QIODevice::WriteOnly) ) {
+      QDataStream os( &file );
+      os << mUserList;
+      mDirty = false;
+      }
     }
   }
 

@@ -1,6 +1,6 @@
 QT -= gui
 
-QT += network sql
+QT += network
 
 CONFIG += c++11 console
 CONFIG -= app_bundle
@@ -22,7 +22,6 @@ SOURCES += \
     SdCsChannel.cpp \
     SdCsPacketInfo.cpp \
     SdCsChannelServer.cpp \
-    ../objects/SdUtil.cpp \
     ../library/SdLibraryStorage.cpp \
     ../library/SdStringMap.cpp \
     SdCsAuthorTable.cpp
@@ -33,9 +32,9 @@ HEADERS += \
     SdCsServer.h \
     SdCsPacketInfo.h \
     SdCsChannelServer.h \
-    ../objects/SdUtil.h \
     ../library/SdLibraryHeader.h \
     ../library/SdLibraryReference.h \
     ../library/SdLibraryStorage.h \
     ../library/SdStringMap.h \
-    SdCsAuthorTable.h
+    SdCsAuthorTable.h \
+    ../library/SdLibraryCategory.h

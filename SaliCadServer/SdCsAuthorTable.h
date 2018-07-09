@@ -37,12 +37,12 @@ struct SdCsAuthor {
     QSet<quint64> mMachineKeys;   //Author machine keys
   };
 
-QDataStream &operator << ( QDataStream &os, const SdCsAuthor &author ) {
+inline QDataStream &operator << ( QDataStream &os, const SdCsAuthor &author ) {
   os << author.mEmail << author.mRemainObject << author.mMaxMachines << author.mMachineKeys;
   return os;
   }
 
-QDataStream &operator >> ( QDataStream &is, SdCsAuthor &author ) {
+inline QDataStream &operator >> ( QDataStream &is, SdCsAuthor &author ) {
   is >> author.mEmail >> author.mRemainObject >> author.mMaxMachines >> author.mMachineKeys;
   return is;
   }
@@ -54,6 +54,7 @@ class SdCsAuthorTable
     QReadWriteLock           mLock;     //Lock semaphor
     QMap<QString,SdCsAuthor> mUserList; //Author table
     bool                     mDirty;    //If true then save needed
+    QString                  mPath;
   public:
     SdCsAuthorTable();
 
@@ -67,7 +68,7 @@ class SdCsAuthorTable
        \param key New key for first author machine
        \return True if registration successfull or false if its not
      */
-    bool registerAuthor(const QString author, const QString email, int maxMachines, int maxObject, qint64 *key );
+    bool registerAuthor(const QString author, const QString email, int maxMachines, int maxObject, quint64 *key );
 
 
     /*!
@@ -113,9 +114,8 @@ class SdCsAuthorTable
 
     /*!
        \brief save Save author table
-       \param path Path where author table is reside
      */
-    void save( const QString path );
+    void save();
 
   private:
     bool registerMachinePrivate(const QString author, quint64 *key );

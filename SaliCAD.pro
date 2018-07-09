@@ -146,7 +146,6 @@ SOURCES += \
     windows/SdDGetBus.cpp \
     modes/SdModeCBus.cpp \
     windows/SdDEnterPosition.cpp \
-    objects/SdUtil.cpp \
     modes/SdModeSelect.cpp \
     objects/SdPropSelected.cpp \
     objects/SdConverterOffset.cpp \
@@ -338,7 +337,6 @@ HEADERS  += \
     windows/SdDGetBus.h \
     modes/SdModeCBus.h \
     windows/SdDEnterPosition.h \
-    objects/SdUtil.h \
     modes/SdModeSelect.h \
     objects/SdPropSelected.h \
     objects/SdConverterOffset.h \
@@ -393,7 +391,8 @@ HEADERS  += \
     objects/SdPlateNetList.h \
     objects/SdPlateNetSegment.h \
     objects/SdUndoRecordRoad.h \
-    library/SdStringMap.h
+    library/SdStringMap.h \
+    library/SdLibrarySection.h
 
 DISTFILES += \
     license.txt

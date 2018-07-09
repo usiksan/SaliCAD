@@ -34,6 +34,7 @@ Description
 SdLibraryStorage::SdLibraryStorage() :
   mPath(),
   mLock(),
+  mCreationIndex(0),
   mReferenceMap(),
   mHeaderFile(),
   mObjectFile(),
@@ -122,7 +123,7 @@ void SdLibraryStorage::setLibraryPath(const QString path)
   QFile file(FNAME_REF);
   if( file.open(QIODevice::ReadOnly) ) {
     QDataStream is( &file );
-    is >> mReferenceMap;
+    is >> mCreationIndex >> mReferenceMap >> mCategoryMap;
     }
   else mPath.clear();
   }
@@ -156,14 +157,15 @@ QStringList SdLibraryStorage::getAfter(qint32 index, int limit)
   {
   QReadLocker locker( &mLock );
   QStringList result;
+  //if index greater or equal creationIndex then no objects after index
+  if( index >= mCreationIndex )
+    return result;
   QMapIterator<QString,SdLibraryReference> iter( mReferenceMap );
-  int i = 0;
+  qint32 last = index + limit;
   while( iter.hasNext() ) {
     iter.next();
-    if( iter.value().mCreationIndex >= index ) {
+    if( iter.value().mCreationIndex >= index && iter.value().mCreationIndex < last )
       result.append( iter.key() );
-      if( ++i >= limit ) break;
-      }
     }
   return result;
   }
@@ -218,7 +220,7 @@ void SdLibraryStorage::setHeader(const QString key, SdLibraryHeader &hdr)
   if( file.open(QIODevice::Append) ) {
     SdLibraryReference ref;
     ref.mHeaderPtr     = file.size();
-    ref.mCreationIndex = mReferenceMap.count() + 1;
+    ref.mCreationIndex = mCreationIndex++;
     ref.mObjectPtr     = 0;
 
     QDataStream os( &file );
@@ -291,7 +293,7 @@ void SdLibraryStorage::insert(const QString key, const SdLibraryHeader &hdr, QBy
     if( !mReferenceMap.contains(key) ) {
       //No record with this name
       //write header first
-      ref.mCreationIndex = mReferenceMap.count() + 1;
+      ref.mCreationIndex = mCreationIndex++;
       ref.mHeaderPtr     = fileHdr.size();
       QDataStream os( &fileHdr );
       hdr.write( os );
@@ -315,6 +317,64 @@ void SdLibraryStorage::insert(const QString key, const SdLibraryHeader &hdr, QBy
 
 
 
+//Return true if key contains in categories list
+bool SdLibraryStorage::isCategoryContains(const QString key)
+  {
+  QReadLocker locker( &mLock );
+  return mCategoryMap.contains( key );
+  }
+
+
+
+
+//Return category association map
+QString SdLibraryStorage::category(const QString key)
+  {
+  QReadLocker locker( &mLock );
+  return mCategoryMap.value( key ).mAssociation;
+  }
+
+
+
+
+//Insert new category
+void SdLibraryStorage::categoryInsert(const QString key, const QString association)
+  {
+  if( key.isEmpty() )
+    return;
+  QWriteLocker locker( &mLock );
+  SdLibraryCategory libcat;
+  libcat.mAssociation = association;
+  libcat.mCreationIndex = mCreationIndex++;
+  mCategoryMap.insert( key, libcat );
+  mDirty = true;
+  }
+
+
+
+
+//Get list of categories which inserted after index
+QStringList SdLibraryStorage::categoryGetAfter(qint32 index, int limit )
+  {
+  QReadLocker locker( &mLock );
+  QStringList result;
+  //if index greater or equal creationIndex then no objects after index
+  if( index >= mCreationIndex )
+    return result;
+  QMapIterator<QString,SdLibraryCategory> iter( mCategoryMap );
+  qint32 last = index + limit;
+  while( iter.hasNext() ) {
+    iter.next();
+    if( iter.value().mCreationIndex >= index && iter.value().mCreationIndex < last )
+      result.append( iter.key() );
+    }
+  return result;
+  }
+
+
+
+
+
 //Flush reference map if needed
 void SdLibraryStorage::flush()
   {
@@ -323,7 +383,7 @@ void SdLibraryStorage::flush()
     QSaveFile file(FNAME_REF);
     if( file.open(QIODevice::WriteOnly) ) {
       QDataStream os( &file );
-      os << mReferenceMap;
+      os << mCreationIndex << mReferenceMap << mCategoryMap;
       if( file.commit() )
         mDirty = false;
       }

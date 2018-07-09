@@ -58,6 +58,16 @@ struct SdLibraryHeader
     QString typeNameAndAuthor() const { return mType + mName + mAuthor; }
   };
 
+inline QDataStream &operator << ( QDataStream &os, const SdLibraryHeader &header ) {
+  header.write( os );
+  return os;
+  }
+
+inline QDataStream &operator >> ( QDataStream &is, SdLibraryHeader &header ) {
+  header.read( is );
+  return is;
+  }
+
 //Headers list
 typedef QList<SdLibraryHeader> SdLibraryHeaderList;
 

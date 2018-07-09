@@ -13,6 +13,8 @@ Description
 #include "SdCsServer.h"
 #include "SdCsChannel.h"
 #include "SdCsChannelServer.h"
+#include "../library/SdLibraryStorage.h"
+#include "SdCsAuthorTable.h"
 
 #include <QDebug>
 
@@ -26,8 +28,16 @@ SdCsServer::SdCsServer(QObject *parent) :
       new SdCsChannelServer( nextPendingConnection() );
     });
 
+  connect( &mTimer, &QTimer::timeout, this, [] () {
+    sdLibraryStorage.flush();
+    sdCsAuthorTable.save();
+    });
+
   //Set server to listen for connections
   listen( QHostAddress::Any, 1970 );
+
+  mTimer.setInterval( 2000 );
+  mTimer.start();
 
   qDebug() << "SaliCadServer created";
   }
