@@ -60,11 +60,11 @@ Description
 #define SCPE_SUCCESSFULL            1 //Successfull operation
 #define SCPE_AUTHOR_IS_EMPTY        2 //Not registered or login because author is null
 #define SCPE_AUTHOR_ALREADY_PRESENT 3 //Not registerd because author already registered
-#define SCPE_REGISTER_FAIL          4 //Internal error when registration
-#define SCPE_INVALID_KEY            5 //Invalid key when machine addon
+//#define SCPE_REGISTER_FAIL          4 //Internal error when registration
+//#define SCPE_INVALID_KEY            5 //Invalid key when machine addon
 #define SCPE_MACHINE_LIMIT          6 //Machine limit
 #define SCPE_NOT_REGISTERED         7
-#define SCPE_SYNC_FAIL              8
+//#define SCPE_SYNC_FAIL              8
 #define SCPE_OBJECT_NOT_FOUND       9
 #define SCPE_OBJECT_LIMIT          10
 
@@ -138,9 +138,21 @@ struct SdAuthorInfo {
     qint32  mRemain;      //Remain object count for loading
     qint32  mSyncIndex;   //Index of sync
 
-    void setFail() { mAuthor.clear(); mEmail.clear(); mKey = 0; mRemain = mSyncIndex = 0; }
+    SdAuthorInfo() : mAuthor(), mEmail(), mKey(0), mRemain(0), mSyncIndex(0) {}
+    SdAuthorInfo( const QString author, quint64 key, qint32 syncIndex ) : mAuthor(author), mEmail(), mKey(key), mRemain(0), mSyncIndex(syncIndex) {}
 
-    bool isFail() const { return mKey == 0 || mAuthor.isEmpty(); }
+    //Set result of query
+    void setResult( int res ) { mSyncIndex = res; }
+
+    //Set fail query with result
+    void setFail( int res ) { mAuthor.clear(); mEmail.clear(); mKey = 0; mRemain = 0; setResult(res); }
+
+    //Test login fail
+    bool isLoginFail() const { return mKey == 0 || mAuthor.isEmpty(); }
+
+    int  result() const { return mSyncIndex; }
+
+    bool isSuccessfull() const { return result() == SCPE_SUCCESSFULL; }
   };
 
 //Serialise SdAuthorInfo

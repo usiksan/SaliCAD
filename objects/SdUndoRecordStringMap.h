@@ -15,7 +15,7 @@ Description
 #define SDUNDORECORDSTRINGMAP_H
 
 #include "SdUndoRecord.h"
-#include "SdStringMap.h"
+#include "library/SdStringMap.h"
 
 class SdUndoRecordStringMap : public SdUndoRecord
   {

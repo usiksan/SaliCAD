@@ -164,7 +164,9 @@ QStringList SdLibraryStorage::getAfter(qint32 index, int limit)
   qint32 last = index + limit;
   while( iter.hasNext() ) {
     iter.next();
-    if( iter.value().mCreationIndex >= index && iter.value().mCreationIndex < last )
+    //If object inside index bound and present not only head but object itsels
+    // then append such object to list
+    if( iter.value().mCreationIndex >= index && iter.value().mCreationIndex < last && iter.value().mObjectPtr )
       result.append( iter.key() );
     }
   return result;
@@ -211,16 +213,18 @@ bool SdLibraryStorage::header(const QString key, SdLibraryHeader &hdr)
 
 
 //Set reference to object with header
-void SdLibraryStorage::setHeader(const QString key, SdLibraryHeader &hdr)
+void SdLibraryStorage::setHeader(const QString key, SdLibraryHeader &hdr, bool remote)
   {
   QWriteLocker locker( &mLock );
+  //If object already in base then do nothing
   if( mReferenceMap.contains(key) )
     return;
+  //Else insert record
   QFile file(FNAME_HDR);
   if( file.open(QIODevice::Append) ) {
     SdLibraryReference ref;
     ref.mHeaderPtr     = file.size();
-    ref.mCreationIndex = mCreationIndex++;
+    ref.mCreationIndex = remote ? -1 : mCreationIndex++;
     ref.mObjectPtr     = 0;
 
     QDataStream os( &file );
@@ -338,14 +342,15 @@ QString SdLibraryStorage::category(const QString key)
 
 
 //Insert new category
-void SdLibraryStorage::categoryInsert(const QString key, const QString association)
+void SdLibraryStorage::categoryInsert(const QString key, const QString association, bool remote)
   {
   if( key.isEmpty() )
     return;
   QWriteLocker locker( &mLock );
   SdLibraryCategory libcat;
   libcat.mAssociation = association;
-  libcat.mCreationIndex = mCreationIndex++;
+  //For remote insertion exclude record from subsequent transmit to server
+  libcat.mCreationIndex = remote ? -1 : mCreationIndex++;
   mCategoryMap.insert( key, libcat );
   mDirty = true;
   }
@@ -369,6 +374,18 @@ QStringList SdLibraryStorage::categoryGetAfter(qint32 index, int limit )
       result.append( iter.key() );
     }
   return result;
+  }
+
+
+
+
+void SdLibraryStorage::forEachCategory(std::function<void (const QString &, const QString &)> fun1)
+  {
+  QMapIterator<QString,SdLibraryCategory> iter( mCategoryMap );
+  while( iter.hasNext() ) {
+    iter.next();
+    fun1( iter.key(), iter.value().mAssociation );
+    }
   }
 
 

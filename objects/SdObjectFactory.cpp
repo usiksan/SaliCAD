@@ -10,7 +10,7 @@ Web
 
 Description
   ObjectFactory - local database to library storage
-  Local database resides in SQLite file.
+  Local database resides in sdLibraryStorage.
 */
 
 #include "SdObjectFactory.h"
@@ -34,7 +34,7 @@ Description
 #include <QJsonDocument>
 #include <QSettings>
 
-static SdLibraryStorage sdLibraryStorage;
+SdLibraryStorage sdLibraryStorage;
 
 //Open or create library
 void SdObjectFactory::openLibrary()
@@ -86,7 +86,7 @@ void SdObjectFactory::insertItemObject(const SdProjectItem *item, QJsonObject ob
   SdLibraryHeader hdr;
   item->getHeader( hdr );
 
-  sdLibraryStorage.insert( id, hdr, QJsonDocument(obj).toBinaryData() );
+  sdLibraryStorage.insert( id, hdr, qCompress( QJsonDocument(obj).toBinaryData(), -1 ) );
   }
 
 
@@ -116,7 +116,7 @@ SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *p
   //At this point object already in local base
   if( sdLibraryStorage.isObjectContains(id) )
     //Build object
-    return SdObject::read( &map, QJsonDocument::fromBinaryData( sdLibraryStorage.object(id) ).object() );
+    return SdObject::read( &map, QJsonDocument::fromBinaryData( qUncompress(sdLibraryStorage.object(id)) ).object() );
 
   QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Id '%1' not found in database").arg(id) );
   return nullptr;
@@ -124,16 +124,6 @@ SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *p
 
 
 
-
-//SdObject *SdObjectFactory::extractObject(const QString name, const QString author, bool soft, QWidget *parent)
-//  {
-//  QSqlQuery q;
-//  q.exec( QString("SELECT hash FROM objects WHERE name='%1' AND author='%2' ORDER BY timeCreate DESC").arg( name ).arg( author ) );
-//  if( q.first() )
-//    //Object present.
-//    return extractObject( q.value( QStringLiteral("hash")).toString(), soft, parent );
-//  return nullptr;
-//  }
 
 
 
@@ -147,6 +137,37 @@ bool SdObjectFactory::isObjectPresent(const QString name, const QString author)
       return true;
     return false;
     });
+  }
+
+
+
+
+//Return true if object present in dataBase
+bool SdObjectFactory::isObjectPresent(const QString hash)
+  {
+  return sdLibraryStorage.isObjectContains(hash);
+  }
+
+
+
+
+
+//Load object from remote server
+bool SdObjectFactory::loadObject(const QString hash, const QString title, QWidget *parent)
+  {
+  if( hash.isEmpty() )
+    return false;
+
+  if( sdLibraryStorage.isObjectContains(hash) )
+    return true;
+
+  //load object from server
+  if( !SdDNetClient::getObject( parent, hash ) ) {
+    QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Obj '%1' can't be received from remote database").arg(title) );
+    return false;
+    }
+
+  return true;
   }
 
 
@@ -176,22 +197,12 @@ bool SdObjectFactory::forEachHeader(std::function<bool (SdLibraryHeader &)> fun1
 
 void SdObjectFactory::hierarchyAddItem(const QString parent, const QString item)
   {
-  QSqlQuery q;
   if( hierarchyIsPresent(item) )
     //Ignore request. Nothing done
     return;
-    //q.exec( QString("DELETE FROM hierarchy WHERE section='%1'").arg( item ) );
 
   //Insert new item
-  QString path = hierarchyGetPath( parent );
-  qDebug() << "insert hierarchy item" << parent << item;
-  q.prepare( QString("INSERT INTO hierarchy (section, path, parent, time) "
-                     "VALUES (:section, :path, :parent, :time)") );
-  q.bindValue( QStringLiteral(":section"), item );
-  q.bindValue( QStringLiteral(":path"), path + QString(".") + item );
-  q.bindValue( QStringLiteral(":parent"), parent );
-  q.bindValue( QStringLiteral(":time"), SdUtil::getTime2000() );
-  q.exec();
+  sdLibraryStorage.categoryInsert( item, parent, false );
   }
 
 
@@ -199,9 +210,7 @@ void SdObjectFactory::hierarchyAddItem(const QString parent, const QString item)
 //Return true if item present in hierarchy table
 bool SdObjectFactory::hierarchyIsPresent(const QString item)
   {
-  QSqlQuery q;
-  q.exec( QString("SELECT section FROM hierarchy WHERE section='%1'").arg( item ) );
-  return q.first();
+  return sdLibraryStorage.isCategoryContains( item );
   }
 
 
@@ -216,32 +225,20 @@ void SdObjectFactory::hierarchyTranslate(const QString item, const QString trans
   if( lang.isEmpty() )
     return;
 
-  QSqlQuery q;
-  if( hierarchyGetTranslated(item) != item )
-    //Item already precent in table, delete it
-    q.exec( QString("DELETE FROM translation WHERE section='%1' AND lang='%2'").arg( item ).arg(lang) );
-
-  //Insert new translate record
-  qDebug() << "insert translate item" << item << translate;
-  q.prepare( QString("INSERT INTO translation (section, lang, translate, time) "
-                     "VALUES (:section, :lang, :translate, :time)") );
-  q.bindValue( QStringLiteral(":section"), item );
-  q.bindValue( QStringLiteral(":lang"), lang );
-  q.bindValue( QStringLiteral(":translate"), translate );
-  q.bindValue( QStringLiteral(":time"), SdUtil::getTime2000() );
-  q.exec();
+  lang.append( "+_" ).append( item );
+  sdLibraryStorage.categoryInsert( lang, translate, false );
   }
+
 
 
 
 QString SdObjectFactory::hierarchyGetPath(const QString item)
   {
-  QSqlQuery q;
-  q.exec( QString("SELECT path FROM hierarchy WHERE section='%1'").arg( item ) );
-  if( q.first() )
-    //Element present, return its path
-    return q.value( QStringLiteral("path") ).toString();
-  return item;
+  QString path(item);
+  for( QString parent(item); !parent.isEmpty() && parent != sdLibraryStorage.category(parent); parent = sdLibraryStorage.category(parent) ) {
+    path = parent + QString(".") + path;
+    }
+  return path;
   }
 
 
@@ -257,12 +254,9 @@ QString SdObjectFactory::hierarchyGetTranslated(const QString item)
   if( lang.isEmpty() )
     return item;
 
-
-  QSqlQuery q;
-  q.exec( QString("SELECT translate FROM translation WHERE section='%1' AND lang='%2'").arg( item ).arg(lang) );
-  if( q.first() )
-    //Translation present, return it
-    return q.value( QStringLiteral("translate") ).toString();
+  lang.append( "+_" ).append( item );
+  if( sdLibraryStorage.isCategoryContains(lang) )
+    return sdLibraryStorage.category( lang );
 
   return item;
   }
@@ -276,15 +270,11 @@ QString SdObjectFactory::hierarchyGetTranslated(const QString item)
 QTreeList SdObjectFactory::hierarchyGet(const QString parent)
   {
   QTreeList list;
-  QSqlQuery q;
-  q.exec( QString("SELECT section FROM hierarchy WHERE parent='%1'").arg( parent ) );
-  if( q.first() ) {
-    do {
-      //For each finded elements we creating QTreeWidgetItem and append it to list
-      QString section = q.value( QStringLiteral("section") ).toString();
+  sdLibraryStorage.forEachCategory( [&list, parent] (const QString section, const QString &assoc ) {
+    if( assoc == parent ) {
       //Translate section to user language
       QString text = hierarchyGetTranslated( section );
-      //Create item for this section
+      //Create new item
       QTreeWidgetItem *item = new QTreeWidgetItem();
       item->setText( 0, text );
       item->setText( 1, section );
@@ -301,11 +291,8 @@ QTreeList SdObjectFactory::hierarchyGet(const QString parent)
 
       //Append item to list
       list.append( item );
-
       }
-    //Take next record
-    while( q.next() );
-    }
+    });
 
   return list;
   }

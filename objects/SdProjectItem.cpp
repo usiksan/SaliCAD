@@ -392,10 +392,10 @@ void SdProjectItem::cloneFrom( const SdObject *src )
   mTitle      = sour->mTitle;
   mAuthor     = sour->mAuthor;
   mCreateTime = sour->mCreateTime;
-  mAuto       = false;
+  mAuto       = true;
   mParamTable = sour->mParamTable;
   mOrigin     = sour->mOrigin;
-  mEditEnable = true;
+  mEditEnable = sour->mEditEnable;
   }
 
 

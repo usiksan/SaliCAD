@@ -52,8 +52,19 @@ class SdLibraryStorage
     SdLibraryStorage();
     ~SdLibraryStorage();
 
+    //==================================================================
+    //Common library properties
+
     //With settings library path Storage creates files if yet not created, open files and load map
     void        setLibraryPath( const QString path );
+
+    //Flush reference map if needed
+    void        flush();
+
+
+
+    //==================================================================
+    //Objects
 
     //Return true if object referenced in map
     bool        contains( const QString key );
@@ -72,7 +83,7 @@ class SdLibraryStorage
     bool        header( const QString key, SdLibraryHeader &hdr );
 
     //Set reference to object with header
-    void        setHeader( const QString key, SdLibraryHeader &hdr );
+    void        setHeader( const QString key, SdLibraryHeader &hdr, bool remote = false );
 
     //Get object
     QByteArray  object( const QString key );
@@ -83,6 +94,11 @@ class SdLibraryStorage
     //Insert new object with creation reference and append header and object
     void        insert(const QString key, const SdLibraryHeader &hdr, QByteArray obj );
 
+
+
+    //==================================================================
+    //Categories
+
     //Return true if key contains in categories list
     bool        isCategoryContains( const QString key );
 
@@ -90,13 +106,14 @@ class SdLibraryStorage
     QString     category( const QString key );
 
     //Insert new category
-    void        categoryInsert( const QString key, const QString association );
+    void        categoryInsert( const QString key, const QString association, bool remote = false );
 
     //Get list of categories which inserted after index
     QStringList categoryGetAfter(qint32 index, int limit = 100 );
 
-    //Flush reference map if needed
-    void        flush();
+    //Iteration for each category
+    void        forEachCategory(std::function<void(const QString&,const QString&)> fun1 );
+
   };
 
 

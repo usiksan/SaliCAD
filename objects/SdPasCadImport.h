@@ -14,7 +14,7 @@ Description
 #define SDPASCADIMPORT_H
 
 #include "SdProject.h"
-#include "SdStringMap.h"
+#include "library/SdStringMap.h"
 
 #include <QFile>
 #include <QWidget>

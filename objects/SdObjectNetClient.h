@@ -30,14 +30,19 @@ class SdObjectNetClient : public SdCsChannel
   {
     Q_OBJECT
 
-    SdAuthorInfo  mAuthorInfo;
-    SdAuthorInfo  mAuthorResult;
+    QString       mAuthor;          //Author name
+    QString       mEmail;
+    quint64       mKey;             //Author key
+    qint32        mRemain;          //Remain object count for loading
+    qint32        mLocalSyncIndex;  //Index of last sync in local storage
+    qint32        mRemoteSyncIndex; //Index of last sync in remote storage
     QString       mHostIp;
     QTimer        mTimer;
     QByteArray    mBuffer;
     int           mCommand;
     QByteArray    mBufferSync;
     int           mCommandSync;
+    int           mLocalSyncCount;
   public:
     explicit SdObjectNetClient(QObject *parent = nullptr);
 
@@ -46,9 +51,9 @@ class SdObjectNetClient : public SdCsChannel
   signals:
     void process( QString desr, bool complete );
 
-    void objectComplete( int result );
+    void objectComplete( int result, int remain );
 
-    void registrationComplete( const QString authorName, const QString email, const QString key, int remain );
+    void registrationComplete( const QString authorName, const QString email, quint64 key, int remain, int result );
   public slots:
 
     //Begin registration process
@@ -70,11 +75,13 @@ class SdObjectNetClient : public SdCsChannel
   public:
     virtual void onBlockReceived( int cmd, QDataStream &is ) override;
 
+    //Conver error code to string description
+    static QString error( int code );
   private:
-    void cmRegistrationInfo( QDataStream &is );
-    void cmSyncList( QDataStream &is );
-    void cmObject( QDataStream &is );
-    void startTransmit();
+    void    cmRegistrationInfo( QDataStream &is );
+    void    cmSyncList( QDataStream &is );
+    void    cmObject( QDataStream &is );
+    void    startTransmit();
   };
 
 //Main object for remote database communication

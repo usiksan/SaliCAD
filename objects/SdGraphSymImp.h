@@ -18,7 +18,7 @@ Description
 #include "SdPropText.h"
 #include "SdPropSymImp.h"
 #include "SdSymImpPin.h"
-#include "SdStringMap.h"
+#include "library/SdStringMap.h"
 #include "SdPItemComponent.h"
 
 

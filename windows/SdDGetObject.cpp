@@ -15,6 +15,7 @@ Description
 #include "ui_SdDGetObject.h"
 #include "SdWEditorGraphView.h"
 #include "SdWCategory.h"
+#include "SdDNetClient.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdProjectItem.h"
 #include "objects/SdPItemComponent.h"
@@ -64,6 +65,12 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   connect( ui->mTable, &QTableWidget::cellClicked, this, &SdDGetObject::onSelectItem );
   connect( ui->mSections, &QListWidget::currentRowChanged, this, &SdDGetObject::onCurrentSection );
   ui->mSections->setSortingEnabled(false);
+
+  connect( ui->mAccept, &QPushButton::clicked, this, &SdDGetObject::accept );
+  ui->mAccept->setDisabled(true);
+  connect( ui->mReject, &QPushButton::clicked, this, &SdDGetObject::reject );
+  connect( ui->mLoadFromCentral, &QPushButton::clicked, this, &SdDGetObject::onLoadFromCentral );
+  ui->mLoadFromCentral->setDisabled(true);
   }
 
 
@@ -124,6 +131,8 @@ void SdDGetObject::onSelectItem(int row, int column)
   ui->mSections->clear();
   mSectionIndex = -1;
 
+  bool present = SdObjectFactory::isObjectPresent(hdr.id());
+
   if( mComponent ) {
     //Get section count
     int sectionCount = mComponent->getSectionCount();
@@ -131,6 +140,9 @@ void SdDGetObject::onSelectItem(int row, int column)
     if( sectionCount ) {
       for( int i = 0; i < sectionCount; i++ ) {
         ui->mSections->addItem( tr("Section %1: %2").arg(i+1).arg(mComponent->getSection(i)->getSymbolTitle()) );
+        //If any section not present in library then set present to false
+        if( !SdObjectFactory::isObjectPresent(mComponent->getSection(i)->getSymbolId()) )
+          present = false;
         }
       ui->mSections->setCurrentRow(0);
       mSectionIndex = 0;
@@ -142,7 +154,12 @@ void SdDGetObject::onSelectItem(int row, int column)
 
     //Setup part for view
     mPartView->setItemById( mComponent->getPartId() );
+    if( !SdObjectFactory::isObjectPresent( mComponent->getPartId() ) )
+      present = false;
     }
+
+  ui->mAccept->setEnabled( present );
+  ui->mLoadFromCentral->setDisabled( present );
   }
 
 
@@ -182,6 +199,40 @@ void SdDGetObject::onTagPath(const QString path)
 
   //Fill visual table
   fillTable();
+  }
+
+
+
+
+//Pressed button "Load from central repository"
+void SdDGetObject::onLoadFromCentral()
+  {
+  //Get current row
+  int row = ui->mTable->currentRow();
+  if( row >= 0 && row < mHeaderList.count() ) {
+    //Header of selected object
+    SdLibraryHeader hdr = mHeaderList.at(row);
+
+    //If selected object not present in library then load it
+    if( !SdObjectFactory::loadObject( hdr.id(), hdr.mName, this ) )
+      return;
+    else
+      onSelectItem( row, 0 );
+
+    if( mComponent != nullptr ) {
+      int sections = mComponent->getSectionCount();
+      for( int s = 0; s < sections; s++ ) {
+        //If selected object not present in library then load it
+        if( !SdObjectFactory::loadObject( mComponent->getSectionSymbolId(s), mComponent->getSectionSymbolTitle(s), this ) )
+          return;
+        }
+
+      if( !SdObjectFactory::loadObject( mComponent->getPartId(), mComponent->getPartTitle(), this ) )
+        return;
+
+      onSelectItem( row, 0 );
+      }
+    }
   }
 
 

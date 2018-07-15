@@ -16,7 +16,7 @@ Description
 #define SDSECTION_H
 
 #include "SdObject.h"
-#include "SdStringMap.h"
+#include "library/SdStringMap.h"
 
 #include <QMap>
 #include <QList>

@@ -68,6 +68,9 @@ class SdDGetObject : public QDialog
     //Selected new category, apply filtr
     void onTagPath( const QString path );
 
+    //Pressed button "Load from central repository"
+    void onLoadFromCentral();
+
   protected:
     void changeEvent(QEvent *e) override;
 

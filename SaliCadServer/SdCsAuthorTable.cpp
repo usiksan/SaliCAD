@@ -18,8 +18,10 @@ Description
 #include <QDataStream>
 #include <QSaveFile>
 #include <QRandomGenerator64>
+#include <QDebug>
 
-SdCsAuthorTable::SdCsAuthorTable()
+SdCsAuthorTable::SdCsAuthorTable() :
+  mDirty(false)
   {
 
   }
@@ -106,6 +108,7 @@ void SdCsAuthorTable::save()
   {
   QReadLocker locker(&mLock);
 
+  //qDebug() << "save" << mDirty << mPath;
   if( mDirty ) {
     QFileInfo info(mPath);
     QDir dir(info.absoluteDir());
@@ -116,6 +119,7 @@ void SdCsAuthorTable::save()
       QDataStream os( &file );
       os << mUserList;
       mDirty = false;
+      file.commit();
       }
     }
   }

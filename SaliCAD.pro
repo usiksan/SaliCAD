@@ -172,7 +172,6 @@ SOURCES += \
     objects/SdUndoRecordBegin.cpp \
     library/SdLibraryStorage.cpp \
     objects/SdUndoRecordString2.cpp \
-    objects/SdStringMap.cpp \
     objects/SdUndoRecordStringMapItem.cpp \
     objects/SdUndoRecordStringMap.cpp \
     windows/SdDOptionsPageEditors.cpp \
@@ -198,7 +197,8 @@ SOURCES += \
     objects/SdPropInt.cpp \
     objects/SdPlateNetList.cpp \
     objects/SdUndoRecordRoad.cpp \
-    library/SdStringMap.cpp
+    library/SdStringMap.cpp \
+    objects/SdUtil.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -392,7 +392,7 @@ HEADERS  += \
     objects/SdPlateNetSegment.h \
     objects/SdUndoRecordRoad.h \
     library/SdStringMap.h \
-    library/SdLibrarySection.h
+    objects/SdUtil.h
 
 DISTFILES += \
     license.txt

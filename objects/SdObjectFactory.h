@@ -53,6 +53,12 @@ class SdObjectFactory
     //Return true if object already present in dataBase
     static bool         isObjectPresent( const QString name, const QString author );
 
+    //Return true if object present in dataBase
+    static bool         isObjectPresent( const QString hash );
+
+    //Load object from remote server
+    static bool         loadObject( const QString hash, const QString title, QWidget *parent );
+
     //Extract object header
     //If no object in library return false
     static bool         extractHeader( const QString id, SdLibraryHeader &hdr );

@@ -35,16 +35,20 @@ SdObjectNetClient::SdObjectNetClient(QObject *parent) :
   mCommandSync(0)
   {
   QSettings s;
-  mAuthorInfo.mAuthor    = s.value( SDK_GLOBAL_AUTHOR ).toString();
-  mAuthorInfo.mKey       = s.value( SDK_MACHINE_KEY ).toString();
-  mAuthorInfo.mSyncIndex = s.value( SDK_LAST_SYNC ).toInt();
-  mHostIp                = s.value( SDK_SERVER_IP ).toString();
+  mAuthor          = s.value( SDK_GLOBAL_AUTHOR ).toString();
+  mKey             = s.value( SDK_MACHINE_KEY ).toString().toULongLong( nullptr, 32 );
+  mLocalSyncIndex  = s.value( SDK_LOCAL_SYNC ).toInt();
+  mRemoteSyncIndex = s.value( SDK_REMOTE_SYNC ).toInt();
+  mHostIp          = s.value( SDK_SERVER_IP ).toString();
 
   mTimer.setInterval( 30000 );
   mTimer.start();
 
   connect( mSocket, &QTcpSocket::connected, this, &SdObjectNetClient::onConnected );
   connect( &mTimer, &QTimer::timeout, this, &SdObjectNetClient::doSync );
+  connect( mSocket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), [=] (QAbstractSocket::SocketError socketError) {
+    emit process( tr("Connection error: %1").arg( socketError), true );
+    });
   }
 
 
@@ -54,7 +58,7 @@ SdObjectNetClient::SdObjectNetClient(QObject *parent) :
 
 bool SdObjectNetClient::isRegistered() const
   {
-  return !mHostIp.isEmpty() && !mAuthorInfo.mAuthor.isEmpty() && mAuthorInfo.mKey != 0;
+  return !mHostIp.isEmpty() && !mAuthor.isEmpty() && mKey != 0;
   }
 
 
@@ -68,17 +72,21 @@ bool SdObjectNetClient::isRegistered() const
 void SdObjectNetClient::doRegistration(const QString ip, const QString authorName, const QString email)
   {
   //Prepare block for transmition
-  mHostIp                = ip;
-  mAuthorInfo.mAuthor    = authorName;
-  mAuthorInfo.mEmail     = email;
-  mAuthorInfo.mRemain    = 100;
-  mAuthorInfo.mSyncIndex = 0;
+  mHostIp         = ip;
+  SdAuthorInfo info;
+  info.mAuthor    = authorName;
+  info.mEmail     = email;
+  info.mRemain    = 100;
+  info.mSyncIndex = 0;
+  info.mKey       = 0;
   mBuffer.clear();
   QDataStream os( &mBuffer, QIODevice::WriteOnly );
-  os << mAuthorInfo;
+  os << info;
   mCommand = SCPI_REGISTARTION_REQUEST;
-  if( mSocket->state() != QAbstractSocket::ConnectedState )
+  if( mSocket->state() != QAbstractSocket::ConnectedState ) {
     mSocket->connectToHost( QHostAddress(mHostIp), SD_DEFAULT_PORT );
+    emit process( tr("Try connect to host %1").arg(mHostIp), false );
+    }
   }
 
 
@@ -88,18 +96,18 @@ void SdObjectNetClient::doRegistration(const QString ip, const QString authorNam
 //Begin append machine
 void SdObjectNetClient::doMachine(const QString ip, const QString authorName, quint64 key)
   {
+  SdAuthorInfo info( authorName, key, 0 );
   //Prepare block for transmition
-  mHostIp                = ip;
-  mAuthorInfo.mAuthor    = authorName;
-  mAuthorInfo.mKey       = key;
-  mAuthorInfo.mRemain    = 100;
-  mAuthorInfo.mSyncIndex = 0;
+  mHostIp         = ip;
+  info.mRemain    = 100;
   mBuffer.clear();
   QDataStream os( &mBuffer, QIODevice::WriteOnly );
-  os << mAuthorInfo;
+  os << info;
   mCommand = SCPI_MACHINE_REQUEST;
-  if( mSocket->state() != QAbstractSocket::ConnectedState )
+  if( mSocket->state() != QAbstractSocket::ConnectedState ) {
     mSocket->connectToHost( QHostAddress(mHostIp), SD_DEFAULT_PORT );
+    emit process( tr("Try connect to host %1").arg(mHostIp), false );
+    }
   }
 
 
@@ -112,10 +120,13 @@ void SdObjectNetClient::doObject(const QString hashId)
   mCommand = 0;
   mBuffer.clear();
   QDataStream os( &mBuffer, QIODevice::WriteOnly );
-  os << mAuthorInfo << hashId;
+  SdAuthorInfo info( mAuthor, mKey, 0 );
+  os << info << hashId;
   mCommand = SCPI_OBJECT_REQUEST;
-  if( mSocket->state() != QAbstractSocket::ConnectedState )
+  if( mSocket->state() != QAbstractSocket::ConnectedState ) {
     mSocket->connectToHost( QHostAddress(mHostIp), SD_DEFAULT_PORT );
+    emit process( tr("Try connect to host %1").arg(mHostIp), false );
+    }
   }
 
 
@@ -130,20 +141,11 @@ void SdObjectNetClient::doObject(const QString hashId)
 void SdObjectNetClient::onConnected()
   {
   qDebug() << "Connected to host" << mHostIp;
+  emit process( tr("Connected to host %1").arg(mHostIp), false );
   startTransmit();
   }
 
 
-
-
-void FillItemInfo( SdItemInfo &info, QSqlRecord rec ) {
-  info.mHashId      = rec.field( QString("hash") ).value().toString();
-  info.mName        = rec.field( QString("name") ).value().toString();
-  info.mAuthor      = rec.field( QString("author") ).value().toString();
-  info.mTag         = rec.field( QString("tag") ).value().toString();
-  info.mObjectClass = rec.field( QString("class") ).value().toLongLong();
-  info.mTimeCreate  = rec.field( QString("timeCreate") ).value().toUInt();
-  }
 
 
 
@@ -154,78 +156,49 @@ void FillItemInfo( SdItemInfo &info, QSqlRecord rec ) {
 //By timer do syncronisation
 void SdObjectNetClient::doSync()
   {
-  if( isRegistered() ) {
+  if( !mHostIp.isEmpty() ) {
     qDebug() << "doSync";
     mCommandSync = 0;
     mBufferSync.clear();
     QDataStream os( &mBufferSync, QIODevice::WriteOnly );
-    os << mAuthorInfo;
+    SdAuthorInfo info( mAuthor, mKey, mRemoteSyncIndex );
+    os << info;
 
+    //Category list for last entered or edited
     SdCategoryInfoList categoryList;
-    SdTranslationInfoList translationList;
-    QSqlQuery q;
 
-    categoryList.clear();
-    //Query to select all category after append time
-    q.prepare( QString("SELECT * FROM hierarchy WHERE time>%1").arg( mAuthorInfo.mLastSync ) );
-    q.exec();
-    if( q.first() ) {
-      do {
-        SdCategoryInfo item;
-        //Fill item from object record
-        item.mSection = q.record().field( QStringLiteral("section") ).value().toString();
-        item.mParent  = q.record().field( QStringLiteral("parent") ).value().toString();
-        item.mPath    = q.record().field( QStringLiteral("path") ).value().toString();
-        item.mTime    = q.record().field( QStringLiteral("time") ).value().toInt();
-        categoryList.append( item );
-        }
-      while( q.next() );
+    //Scan category list for last entered or edited
+    QStringList list = sdLibraryStorage.categoryGetAfter( mLocalSyncIndex );
+    //For each category create info
+    for( const QString &category : list ) {
+      //Category info
+      SdCategoryInfo cinf;
+      cinf.mCategory = category;
+      cinf.mAssociation = sdLibraryStorage.category( category );
+      //Append info to list
+      categoryList.append( cinf );
       }
 
-    translationList.clear();
-    //Query to select all category after append time
-    q.prepare( QString("SELECT * FROM translation WHERE time>%1").arg( mAuthorInfo.mLastSync ) );
-    q.exec();
-    if( q.first() ) {
-      do {
-        SdTranslationInfo item;
-        //Fill item from object record
-        item.mSection   = q.record().field( QStringLiteral("section") ).value().toString();
-        item.mLang      = q.record().field( QStringLiteral("lang") ).value().toString();
-        item.mTranslate = q.record().field( QStringLiteral("translate") ).value().toString();
-        item.mTime      = q.record().field( QStringLiteral("time") ).value().toInt();
-        translationList.append( item );
+    //Write list
+    os << categoryList;
+
+    //Scan object list for last entered
+    list = sdLibraryStorage.getAfter( mLocalSyncIndex );
+    //For each object write header and object itself
+    for( const QString &hash : list ) {
+      SdLibraryHeader hdr;
+      if( sdLibraryStorage.header( hash, hdr ) ) {
+        //Header readed successfull, transmit header and object
+        os << hdr << sdLibraryStorage.object(hash);
         }
-      while( q.next() );
       }
-
-    os << categoryList << translationList;
-    qDebug() << "sync category" << categoryList.count();
-    qDebug() << "sync translation" << translationList.count();
-
-    int objCount = 0;
-    //Query to select all object after append time
-    q.prepare( QString("SELECT * FROM objects WHERE timeCreate>'%1'").arg( mAuthorInfo.mLastSync ) );
-    q.exec();
-    if( q.first() ) {
-      do {
-        //Object info to send
-        SdItemInfo item;
-        //Fill info from object record
-        FillItemInfo( item, q.record() );
-        //Append info to stream
-        os << item;
-        QByteArray obj = q.record().field("object").value().toByteArray();
-        os << obj;
-        objCount++;
-        }
-      while( q.next() );
-      }
-    qDebug() << "sync obj" << objCount;
-
+    qDebug() << "sync obj, categories" << categoryList.count() << " objects " << list.count();
+    mLocalSyncCount = categoryList.count() + list.count();
     mCommandSync = SCPI_SYNC_REQUEST;
-    if( mSocket->state() != QAbstractSocket::ConnectedState )
+    if( mSocket->state() != QAbstractSocket::ConnectedState ) {
       mSocket->connectToHost( QHostAddress(mHostIp), SD_DEFAULT_PORT );
+      emit process( tr("Try connect to host %1").arg(mHostIp), false );
+      }
     }
   }
 
@@ -241,7 +214,7 @@ void SdObjectNetClient::doSync()
 void SdObjectNetClient::onBlockReceived(int cmd, QDataStream &is)
   {
   SdCadServerVersion version;
-  is >> version >> mAuthorInfo;
+  is >> version;
   switch( cmd ) {
     case SCPI_REGISTRATION_INFO :
       cmRegistrationInfo( is );
@@ -267,16 +240,22 @@ void SdObjectNetClient::onBlockReceived(int cmd, QDataStream &is)
 
 void SdObjectNetClient::cmRegistrationInfo(QDataStream &is)
   {
-  Q_UNUSED(is)
-  qDebug() << "cmRegistrationInfo" << mAuthorInfo.mKey;
-  if( !mAuthorInfo.isFail() ) {
+  SdAuthorInfo info;
+  is >> info;
+  qDebug() << "cmRegistrationInfo" << info.mKey;
+  if( info.isSuccessfull() ) {
     QSettings s;
-    s.setValue( SDK_GLOBAL_AUTHOR, mAuthorInfo.mAuthor );
-    s.setValue( SDK_MACHINE_KEY, mAuthorInfo.mKey );
-    s.setValue( SDK_LAST_SYNC, mAuthorInfo.mSyncIndex );
+    s.setValue( SDK_GLOBAL_AUTHOR, info.mAuthor );
+    s.setValue( SDK_MACHINE_KEY, QString::number(info.mKey, 32) );
     s.setValue( SDK_SERVER_IP, mHostIp );
+    s.setValue( SDK_REMOTE_REMAIN, QString::number(info.mRemain) );
+    mAuthor = info.mAuthor;
+    mKey    = info.mKey;
+    doSync();
+    emit process( tr("Registration successfull"), false );
     }
-  emit registrationComplete( mAuthorInfo.mAuthor, mAuthorInfo.mEmail, mAuthorInfo.mKey, mAuthorInfo.mRemain );
+  else emit process( tr("Failure registration. ") + error(info.result()), false );
+  emit registrationComplete( info.mAuthor, info.mEmail, info.mKey, info.mRemain, info.result() );
   }
 
 
@@ -284,82 +263,51 @@ void SdObjectNetClient::cmRegistrationInfo(QDataStream &is)
 
 void SdObjectNetClient::cmSyncList(QDataStream &is)
   {
-  qDebug() << "cmSyncList" << mAuthorInfo.mResult;
-  if( mAuthorInfo.mResult == SCPE_SUCCESSFULL ) {
+  SdAuthorInfo info;
+  is >> info;
+  qDebug() << "cmSyncList" << info.mAuthor << info.mKey << info.mRemain;
+  if( info.isSuccessfull() ) {
+    mLocalSyncIndex += mLocalSyncCount;
+
     SdCategoryInfoList categoryList;
-    SdTranslationInfoList translationList;
-    SdItemInfoList list;
-    is >> categoryList >> translationList >> list;
+    is >> categoryList;
 
-    for( const SdCategoryInfo &info : categoryList ) {
+    for( const SdCategoryInfo &info : categoryList )
       //Replace object
-      QSqlQuery q;
-      q.prepare( QString("SELECT * FROM hierarchy WHERE section='%1' AND time>%2").arg( info.mSection ).arg( info.mTime ) );
-      q.exec();
-      if( q.first() ) continue;
+      sdLibraryStorage.categoryInsert( info.mCategory, info.mAssociation, true );
 
-      q.exec( QString("DELETE FROM hierarchy WHERE section='%1' AND time<=%2").arg( info.mSection ).arg( info.mTime ) );
+    int updateCount = categoryList.count();
 
-      //Insert record with new object
-      q.prepare( QString("INSERT INTO hierarchy (section, path, parent, time) "
-                                   "VALUES (:section, :path, :parent, :time)") );
-      q.bindValue( QStringLiteral(":section"), info.mSection );
-      q.bindValue( QStringLiteral(":path"), info.mPath );
-      q.bindValue( QStringLiteral(":parent"), info.mParent );
-      q.bindValue( QStringLiteral(":time"), info.mTime );
-      q.exec();
+    //Here is headers list (may be empty)
+    while( !is.atEnd() ) {
+      SdLibraryHeader hdr;
+      is >> hdr;
+      sdLibraryStorage.setHeader( hdr.id(), hdr, true );
+      updateCount++;
       }
-
-
-    for( const SdTranslationInfo &info : translationList ) {
-      //Replace object
-      QSqlQuery q;
-      q.prepare( QString("SELECT * FROM translation WHERE section='%1' AND lang='%2' AND time>%3").arg( info.mSection ).arg( info.mLang ).arg( info.mTime ) );
-      q.exec();
-      if( q.first() ) continue;
-
-      q.exec( QString("DELETE FROM translation WHERE section='%1' AND lang='%2' AND time<=%3").arg( info.mSection ).arg( info.mLang ).arg( info.mTime ) );
-
-      //Insert record with new object
-      q.prepare( QString("INSERT INTO hierarchy (translate, lang, section, time) "
-                                   "VALUES (:translate, :lang, :section, :time)") );
-      q.bindValue( QStringLiteral(":translate"), info.mTranslate );
-      q.bindValue( QStringLiteral(":lang"), info.mLang );
-      q.bindValue( QStringLiteral(":section"), info.mSection );
-      q.bindValue( QStringLiteral(":time"), info.mTime );
-      q.exec();
+    qDebug() << "synced" << updateCount << mLocalSyncCount;
+    if( updateCount != 0 || mLocalSyncCount != 0 ) {
+      mRemoteSyncIndex += updateCount;
+      QSettings s;
+      s.setValue( SDK_REMOTE_SYNC, mRemoteSyncIndex );
+      s.setValue( SDK_LOCAL_SYNC, mLocalSyncIndex );
+      doSync();
       }
-
-    for( const SdItemInfo &info : list ) {
-      QSqlQuery q;
-      q.prepare( QString("SELECT * FROM objects WHERE hash='%1'").arg( info.mHashId ) );
-      q.exec();
-      if( q.first() )
-        //Object already present in local database
-        continue;
-
-      //Add upgraded object
-      q.prepare( QString("INSERT INTO objects (hash, name, author, tag, timeCreate, class) "
-                           "VALUES (:hash, :name, :author, :tag, :timeCreate, :class)") );
-      q.bindValue( QStringLiteral(":hash"), info.mHashId );
-      q.bindValue( QStringLiteral(":name"), info.mName );
-      q.bindValue( QStringLiteral(":author"), info.mAuthor );
-      q.bindValue( QStringLiteral(":tag"), info.mTag );
-      q.bindValue( QStringLiteral(":timeCreate"), info.mTimeCreate );
-      q.bindValue( QStringLiteral(":class"), info.mObjectClass );
-      q.exec();
-      }
+    sdLibraryStorage.flush();
     }
   }
 
 
 
 
+
+
 void SdObjectNetClient::cmObject(QDataStream &is)
   {
-  qDebug() << "cmObject" << mAuthorResult.isFail();
-  if( mAuth)
-  if( !mAuthorResult.isFail() ) {
+  SdAuthorInfo info;
+  is >> info;
+  qDebug() << "cmObject" << info.mAuthor << info.mKey << info.mRemain;
+  if( info.isSuccessfull() ) {
     //For object header
     SdLibraryHeader header;
     //For object store
@@ -367,28 +315,13 @@ void SdObjectNetClient::cmObject(QDataStream &is)
 
     is >> header >> obj;
 
-    if( obj.isEmpty() )
-      emit objectComplete( SCPE_OBJECT_NOT_FOUND );
-    else
-      sdLibraryStorage.insert( header.id(), header, obj );
+    sdLibraryStorage.insert( header.id(), header, obj );
 
-    QSqlQuery q;
-    q.prepare( QString("DELETE FROM objects WHERE hash='%1'").arg( info.mHashId ) );
-    q.exec();
-
-    //Add upgraded object
-    q.prepare( QString("INSERT INTO objects (hash, name, author, tag, timeCreate, class, object) "
-                         "VALUES (:hash, :name, :author, :tag, :timeCreate, :class, :object)") );
-    q.bindValue( QStringLiteral(":hash"), info.mHashId );
-    q.bindValue( QStringLiteral(":name"), info.mName );
-    q.bindValue( QStringLiteral(":author"), info.mAuthor );
-    q.bindValue( QStringLiteral(":tag"), info.mTag );
-    q.bindValue( QStringLiteral(":timeCreate"), info.mTimeCreate );
-    q.bindValue( QStringLiteral(":class"), info.mObjectClass );
-    q.bindValue( QStringLiteral(":object"), QVariant( obj ), QSql::Binary | QSql::In );
-    q.exec();
+    QSettings s;
+    s.setValue( SDK_REMOTE_REMAIN, QString::number(info.mRemain) );
     }
-  emit objectComplete( mAuthorInfo.mResult );
+  else emit process( error(info.result()), false );
+  emit objectComplete( info.result(), info.mRemain );
   }
 
 
@@ -396,10 +329,18 @@ void SdObjectNetClient::cmObject(QDataStream &is)
 void SdObjectNetClient::startTransmit()
   {
   if( mCommandSync ) {
+    emit process( tr("Syncronisation request"), false );
     writeBlock( mCommandSync, mBufferSync );
     mCommandSync = 0;
     }
   else if( mCommand ) {
+    QString msg;
+    switch( mCommand ) {
+      case SCPI_REGISTARTION_REQUEST : msg = tr("Registration request"); break;
+      case SCPI_MACHINE_REQUEST : msg = tr("Machine appendion request"); break;
+      case SCPI_OBJECT_REQUEST : msg = tr("Object request"); break;
+      }
+    emit process( msg, false );
     writeBlock( mCommand, mBuffer );
     mCommand = 0;
     }
@@ -407,6 +348,22 @@ void SdObjectNetClient::startTransmit()
     qDebug() << "Disconnect";
     mSocket->disconnectFromHost();
     }
+  }
+
+
+
+
+QString SdObjectNetClient::error(int code)
+  {
+  switch( code ) {
+    case SCPE_AUTHOR_ALREADY_PRESENT : return tr("Author with this name already present. Select another name.");
+    case SCPE_AUTHOR_IS_EMPTY : return tr("Author can't be empty string.");
+    case SCPE_MACHINE_LIMIT : return tr("No more machines available. Limit reached.");
+    case SCPE_NOT_REGISTERED : return tr("Author with this name and key is not registered.");
+    case SCPE_OBJECT_LIMIT : return tr("No more object load available. Limit reached.");
+    case SCPE_OBJECT_NOT_FOUND : return tr("Object not found.");
+    }
+  return tr("Undefined code %1").arg(code);
   }
 
 

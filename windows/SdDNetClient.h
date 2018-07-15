@@ -35,7 +35,7 @@ class SdDNetClient : public QDialog
     void requestObject( const QString id );
 
   public slots:
-    void onCompleteRequestObject( int result );
+    void onCompleteRequestObject( int result, int remain );
 
   private:
     Ui::SdDNetClient *ui;

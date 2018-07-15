@@ -29,6 +29,7 @@ SdCsServer::SdCsServer(QObject *parent) :
     });
 
   connect( &mTimer, &QTimer::timeout, this, [] () {
+    //qDebug() << "timer";
     sdLibraryStorage.flush();
     sdCsAuthorTable.save();
     });

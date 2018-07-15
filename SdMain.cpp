@@ -61,17 +61,6 @@ int main(int argc, char *argv[])
     a.installTranslator( &appTranslator );
 
 
-  //Check if registered
-  if( !s.contains(SDK_GLOBAL_AUTHOR) ) {
-    //Not registered, show register dialog
-    SdDRegistation rd;
-    if( rd.exec() == 0 )
-      return 0;
-    }
-  //Задать каталог библиотек
-  //SgImageProvider::mImageDir = PATH_VISUAL;
-
-
   //Creating pulsar for signals distibution
   SdPulsar::pulsar = new SdPulsar();
 
@@ -83,6 +72,14 @@ int main(int argc, char *argv[])
 
   //Open library for objectFactory system
   SdObjectFactory::openLibrary();
+
+  //Check if registered
+  if( !s.contains(SDK_GLOBAL_AUTHOR) ) {
+    //Not registered, show register dialog
+    SdDRegistation rd(false);
+    if( rd.exec() == 0 )
+      return 0;
+    }
 
   //Creating application main window
   SdWMain w( a.arguments() );

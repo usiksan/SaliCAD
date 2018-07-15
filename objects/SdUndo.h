@@ -18,7 +18,7 @@ Description
 #define SDUNDO_H
 #include "SdConfig.h"
 #include "SdUndoRecord.h"
-#include "SdStringMap.h"
+#include "library/SdStringMap.h"
 #include "SdPad.h"
 #include <QStack>
 #include <QMap>

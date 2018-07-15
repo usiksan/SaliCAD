@@ -16,9 +16,9 @@ Description
 #define SDPROJECTITEM_H
 
 #include "SdContainer.h"
-#include "SdStringMap.h"
 #include "SdPoint.h"
 #include "SdSelector.h"
+#include "library/SdStringMap.h"
 #include "library/SdLibraryHeader.h"
 #include <QString>
 

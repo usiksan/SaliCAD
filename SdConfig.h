@@ -89,6 +89,11 @@ History
   15.06.2018 v0.36 Append command for check rules and showRuleErrors with icons
                    Append "check rules" algorithm
                    Append tracing layer count edit line in layers dialog when calling from plate
+  15.07.2018 v0.37 Append central object repository with server.
+                   Reconstruct communication with central object repository.
+  16.07.2018 v0.38 Append compression to object database to reduce traffic
+                   Disable "sali" subname when registration
+                   Convert all author names to lower to exclude clones with sAli, saLi and so on
 */
 
 #ifndef SDCONFIG
@@ -100,7 +105,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             36
+#define SD_VERSION_MINOR             38
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -164,7 +169,9 @@ History
 #define SDK_PREVIOUS_FILES           "PreviousFiles"
 #define SDK_GLOBAL_AUTHOR            "Author global id"
 #define SDK_MACHINE_KEY              "Machine global key"
-#define SDK_LAST_SYNC                "Last sync"
+#define SDK_LOCAL_SYNC               "Local sync"
+#define SDK_REMOTE_SYNC              "Remote sync"
+#define SDK_REMOTE_REMAIN            "Remote remain"
 #define SDK_SERVER_IP                "SaliCAD server IP"
 #define SDK_ENVIR_VERSION            "Envir version"
 #define SDK_ENVIR                    "Envir"

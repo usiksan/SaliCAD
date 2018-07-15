@@ -38,7 +38,6 @@ SdCsChannelServer::SdCsChannelServer(QTcpSocket *socket, QObject *parent) :
   mVersion.mMajor      = SALI_CAD_MAJOR;
   mVersion.mMinor      = SALI_CAD_MINOR;
   mVersion.mServerName = SALI_CAD_SERVER_INFO;
-
   }
 
 
@@ -98,10 +97,18 @@ void SdCsChannelServer::cmRegistrationRequest(QDataStream &is)
   SdAuthorInfo info;
   is >> info;
 
-  //New author registration
-  if( !sdCsAuthorTable.registerAuthor( info.mAuthor, info.mEmail, 5, info.mRemain, &info.mKey ) )
-    info.setFail();
+  if( info.mAuthor.isEmpty() )
+    info.setFail( SCPE_AUTHOR_IS_EMPTY );
 
+  //New author registration
+  else if( !sdCsAuthorTable.registerAuthor( info.mAuthor, info.mEmail, 5, info.mRemain, &info.mKey ) )
+    info.setFail( SCPE_AUTHOR_ALREADY_PRESENT );
+
+  else
+    //All ok
+    info.setResult( SCPE_SUCCESSFULL );
+
+  qDebug() << "User registration " << info.mAuthor;
   //Send answer
   QByteArray ar;
   QDataStream os( &ar, QIODevice::WriteOnly );
@@ -119,10 +126,15 @@ void SdCsChannelServer::cmMachineRequest(QDataStream &is)
   SdAuthorInfo info;
   is >> info;
 
-  if( sdCsAuthorTable.registerMachine( info.mAuthor, &info.mKey ) )
+  if( !sdCsAuthorTable.login( info.mAuthor, info.mKey ) )
+    info.setFail( SCPE_NOT_REGISTERED );
+  else if( sdCsAuthorTable.registerMachine( info.mAuthor, &info.mKey ) ) {
     info.mRemain = sdCsAuthorTable.remainObject( info.mAuthor );
-  else info.setFail();
+    info.setResult( SCPE_SUCCESSFULL );
+    }
+  else info.setFail( SCPE_MACHINE_LIMIT );
 
+  qDebug() << "Machine append " << info.mAuthor << info.mKey;
   //Send answer
   QByteArray ar;
   QDataStream os( &ar, QIODevice::WriteOnly );
@@ -149,16 +161,16 @@ void SdCsChannelServer::cmSyncRequest(QDataStream &is)
   QDataStream os( &ar, QIODevice::WriteOnly );
   os << mVersion;
 
+  //Prepare objects with newer index
+  QStringList newerObjects = sdLibraryStorage.getAfter( info.mSyncIndex );
+  QStringList newerCategories = sdLibraryStorage.categoryGetAfter( info.mSyncIndex );
+  SdCategoryInfoList categoryList;
+
   if( sdCsAuthorTable.login( info.mAuthor, info.mKey ) ) {
     //Execute sync
-    //Prepare objects with newer index
-    QStringList newerObjects = sdLibraryStorage.getAfter( info.mSyncIndex );
-    QStringList newerCategories = sdLibraryStorage.categoryGetAfter( info.mSyncIndex );
-    info.mSyncIndex += newerObjects.count() + newerCategories.count();
-    os << info;
+    info.setResult( SCPE_SUCCESSFULL );
 
     //Setup received categories
-    SdCategoryInfoList categoryList;
     is >> categoryList;
 
 
@@ -182,30 +194,31 @@ void SdCsChannelServer::cmSyncRequest(QDataStream &is)
         sdLibraryStorage.insert( hash, header, obj );
         }
       }
-
-
-    //At now prepare categories with founded interval
-    categoryList.clear();
-    for( const QString &str : newerCategories ) {
-      SdCategoryInfo cinf;
-      cinf.mCategory = str;
-      cinf.mAssociation = sdLibraryStorage.category( str );
-      categoryList.append( cinf );
-      }
-
-    os << categoryList;
-
-    //At now write object headers
-    for( const QString &hash : newerObjects ) {
-      SdLibraryHeader hdr;
-      sdLibraryStorage.header( hash, hdr );
-      os << hdr;
-      }
     }
-  else {
-    info.setFail();
-    os << info;
+  else
+    info.setFail( SCPE_NOT_REGISTERED );
+
+  os << info;
+
+  //At now prepare categories with founded interval
+  categoryList.clear();
+  for( const QString &str : newerCategories ) {
+    SdCategoryInfo cinf;
+    cinf.mCategory = str;
+    cinf.mAssociation = sdLibraryStorage.category( str );
+    categoryList.append( cinf );
     }
+
+  os << categoryList;
+
+  //At now write object headers
+  for( const QString &hash : newerObjects ) {
+    SdLibraryHeader hdr;
+    sdLibraryStorage.header( hash, hdr );
+    os << hdr;
+    }
+
+  qDebug() << "For author " << info.mAuthor << " synced categories " << categoryList.count() << " headers " << newerObjects.count();
 
   //Send block
   writeBlock( SCPI_SYNC_LIST, ar );
@@ -235,15 +248,35 @@ void SdCsChannelServer::cmObjectRequest(QDataStream &is)
 
     is >> hash;
 
-    //Query to select object with requested hash
-    obj = sdLibraryStorage.object(hash);
-    sdLibraryStorage.header( hash, header );
+    if( sdLibraryStorage.contains( hash ) ) {
+      if( sdCsAuthorTable.remainObject( info.mAuthor ) ) {
+        info.mRemain = sdCsAuthorTable.decrementObject( info.mAuthor );
+        //Query to select object with requested hash
+        obj = sdLibraryStorage.object(hash);
+        sdLibraryStorage.header( hash, header );
+        info.setResult( SCPE_SUCCESSFULL );
+        }
+      else {
+        info.setResult( SCPE_OBJECT_LIMIT );
+        info.mRemain = 0;
+        }
+      }
+    else {
+      info.setResult( SCPE_OBJECT_NOT_FOUND );
+      info.mRemain = sdCsAuthorTable.remainObject( info.mAuthor );
+      }
     }
   else
     //Login fail
-    info.setFail();
+    info.setFail( SCPE_NOT_REGISTERED );
 
-  os << mVersion << info << header << obj;
+
+  if( info.isSuccessfull() ) {
+    os << mVersion << info << header << obj;
+    qDebug() << "For author " << info.mAuthor << " object " << header.mName;
+    }
+  else
+    os << mVersion << info;
 
   //Transmit object
   writeBlock( SCPI_OBJECT, ar );
