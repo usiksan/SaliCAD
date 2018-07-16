@@ -9,6 +9,10 @@ Web
   www.saliLab.ru
 
 Description
+  Registration dialog.
+
+  Registration is to set the name of user with appropriate key. By this name and key
+  server counts object transfered to user.
 */
 #include "SdConfig.h"
 #include "SdDRegistation.h"
@@ -28,7 +32,7 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
 
   //Fill fields
   QSettings s;
-  ui->mServerIP->setText( s.value( QStringLiteral(SDK_SERVER_IP), QString("62.109.11.83")).toString() );
+  ui->mServerIP->setText( s.value( QStringLiteral(SDK_SERVER_IP), QString(SD_DEFAULT_IP)).toString() );
   ui->mName->setText( s.value( QStringLiteral(SDK_GLOBAL_AUTHOR), QString()).toString() );
   onEditAuthorName( ui->mName->text() );
   ui->mMachineKey->setText( s.value( QStringLiteral(SDK_MACHINE_KEY), QString()).toString() );

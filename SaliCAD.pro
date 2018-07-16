@@ -198,7 +198,8 @@ SOURCES += \
     objects/SdPlateNetList.cpp \
     objects/SdUndoRecordRoad.cpp \
     library/SdStringMap.cpp \
-    objects/SdUtil.cpp
+    objects/SdUtil.cpp \
+    master/SdDPartTwoPin.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -392,7 +393,9 @@ HEADERS  += \
     objects/SdPlateNetSegment.h \
     objects/SdUndoRecordRoad.h \
     library/SdStringMap.h \
-    objects/SdUtil.h
+    objects/SdUtil.h \
+    master/SdDPartTwoPin.h \
+    master/SdMasterIds.h
 
 DISTFILES += \
     license.txt
@@ -414,4 +417,5 @@ FORMS += \
     windows/SdDLayerList.ui \
     windows/SdDLayerCreate.ui \
     windows/SdDPads.ui \
-    windows/SdDPadMaster.ui
+    windows/SdDPadMaster.ui \
+    master/SdDPartTwoPin.ui

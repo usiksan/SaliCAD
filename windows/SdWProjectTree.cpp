@@ -16,6 +16,7 @@ Description
 #include "windows/SdPNewProjectItem_SelectType.h"
 #include "windows/SdPNewProjectItem_EnterName.h"
 #include "windows/SdWCommand.h"
+#include "master/SdMasterIds.h"
 #include <QFileInfo>
 #include <QApplication>
 #include <QClipboard>
@@ -273,7 +274,7 @@ void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem 
   Q_UNUSED(prev)
   bool disable = cur == mSheetList || cur == mPlateList || cur == mSymbolList ||
                  cur == mComponentList || cur == mPartList || cur == mTextList;
-  bool enable = !disable && cur != 0;
+  bool enable = !disable && cur != nullptr;
 
   SdWCommand::cmObjectRename->setEnabled(enable);
   SdWCommand::cmObjectDelete->setEnabled(enable);
@@ -300,7 +301,7 @@ void SdWProjectTree::showEvent(QShowEvent *event)
   //Установить пункты меню в соответствии со своим состоянием
   SdWCommand::cmFileSave->setEnabled( true );
 
-  onCurrentItemChanged( currentItem(), 0 );
+  onCurrentItemChanged( currentItem(), nullptr );
 
   //Проверить доступность в Clipboard объекта
   //MainMenu::cmObjectPaste->setEnabled( QApplication::clipboard()->mimeData()->hasFormat(SALICAD_CLIP_FORMAT_OBJECT) );

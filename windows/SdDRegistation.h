@@ -30,7 +30,7 @@ class SdDRegistation : public QDialog
     bool mFromHelp;
     int  mNameStatus; //0-empty, 1-sali, 2-other
   public:
-    explicit SdDRegistation( bool fromHelp = true, QWidget *parent = 0);
+    explicit SdDRegistation( bool fromHelp = true, QWidget *parent = nullptr);
     ~SdDRegistation();
 
   signals:

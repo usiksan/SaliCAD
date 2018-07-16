@@ -76,6 +76,30 @@ void SdIllustrator::drawRect(int x1, int y1, int x2, int y2, QColor color)
 
 
 
+void SdIllustrator::drawCircle(int cx, int cy, int r, QColor color )
+  {
+  if( mPainter.isActive() ) {
+    mPainter.setPen( color );
+    mPainter.setBrush( QBrush(Qt::transparent) );
+    mPainter.drawEllipse( mapX(cx-r), mapY(cy+r), scale(r*2), scale(r*2) );
+    }
+  else {
+    addPoint(cx-r,cy-r);
+    addPoint(cx+r,cy+r);
+    }
+  }
+
+
+
+
+void SdIllustrator::drawCross(int cx, int cy, int r, QColor color)
+  {
+  drawLine( cx-r, cy, cx+r, cy, color );
+  drawLine( cx, cy-r, cx, cy+r, color );
+  }
+
+
+
 
 void SdIllustrator::drawText(int x, int y, const QString str, QColor color, int size)
   {

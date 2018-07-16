@@ -148,6 +148,8 @@ void SdPNewProjectItem_SelectType::classChanged(int index)
       mDescriptions.append( tr("Creates empty component part with no any pins or graphics.") );
       mCreationOrder->addItem( tr("Copy existing part") );
       mDescriptions.append( tr("Creates copy of existing component part") );
+      mCreationOrder->addItem( tr("Two pin master") );
+      mDescriptions.append( tr("Start master which creates part with exactly two pin (resistor, condensator)") );
       break;
     case 4 :
       mCreationOrder->addItem( tr("Empty component") );

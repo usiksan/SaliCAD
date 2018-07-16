@@ -96,6 +96,8 @@ History
                    Convert all author names to lower to exclude clones with sAli, saLi and so on
   16.07.2018 v0.39 Append last resently editor automatic remove
                    Fix: rename component name not changed in graph editor
+  16.07.2018 v0.40 Append in SdIllustrator circle draw and cross draw
+                   Begin creation twoPinPart master
 
 */
 
@@ -108,7 +110,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             39
+#define SD_VERSION_MINOR             40
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

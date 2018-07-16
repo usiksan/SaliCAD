@@ -31,7 +31,7 @@ class SdPNewProjectItem_SelectType : public QWizardPage
     QTextEdit        *mDescription;
     QStringList       mDescriptions;
   public:
-    SdPNewProjectItem_SelectType( SdProjectItemPtr *item, SdProject *prj, QWidget *parent = 0);
+    SdPNewProjectItem_SelectType( SdProjectItemPtr *item, SdProject *prj, QWidget *parent = nullptr);
 
     virtual bool validatePage() override;
     virtual int  nextId() const override;

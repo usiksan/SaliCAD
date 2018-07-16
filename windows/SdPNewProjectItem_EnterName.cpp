@@ -13,7 +13,10 @@ Description
 
 #include "SdPNewProjectItem_EnterName.h"
 #include "SdWCategory.h"
+#include "objects/SdObjectFactory.h"
+
 #include <QVBoxLayout>
+#include <QMessageBox>
 
 SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item, SdProject *prj, QWidget *parent) :
   QWizardPage(parent),
@@ -52,7 +55,7 @@ void SdPNewProjectItem_EnterName::onTextChanged(const QString name)
     mValid = false;
     }
   else {
-    mUnical->setText( tr("Name is correct.") );
+    mUnical->setText( tr("Name is correct and free.") );
     mValid = true;
     }
   }
@@ -62,6 +65,11 @@ void SdPNewProjectItem_EnterName::onTextChanged(const QString name)
 bool SdPNewProjectItem_EnterName::validatePage()
   {
   if( mValid ) {
+    if( SdObjectFactory::isObjectPresent( mName->text(), SdProjectItem::getDefaultAuthor() ) ) {
+      if( QMessageBox::question( this, tr("Warning!"), tr("Object with this name and author already exist in base. Overwrite existing object?"),
+                                 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel) != QMessageBox::Yes )
+        return false;
+      }
     (*mItemPtr)->setTitle( mName->text(), tr("Set object title") );
     (*mItemPtr)->setTag( mTagPath, tr("Set object tag") );
     }
