@@ -91,9 +91,12 @@ History
                    Append tracing layer count edit line in layers dialog when calling from plate
   15.07.2018 v0.37 Append central object repository with server.
                    Reconstruct communication with central object repository.
-  16.07.2018 v0.38 Append compression to object database to reduce traffic
+  15.07.2018 v0.38 Append compression to object database to reduce traffic
                    Disable "sali" subname when registration
                    Convert all author names to lower to exclude clones with sAli, saLi and so on
+  16.07.2018 v0.39 Append last resently editor automatic remove
+                   Fix: rename component name not changed in graph editor
+
 */
 
 #ifndef SDCONFIG
@@ -105,7 +108,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             38
+#define SD_VERSION_MINOR             39
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -133,6 +136,11 @@ History
 //Grid history count
 //User can enter any grid size, but only GRID_HISTORY_SIZE grid sizes save in system for fast selection
 #define GRID_HISTORY_SIZE            8
+
+//Maximum open editors
+//When open editor which index more than this maximum
+// then last resently editor removed
+#define SD_MAX_EDITORS              10
 
 //Maximum font count
 //In project fonts referenced by index in system font table

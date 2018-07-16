@@ -28,7 +28,7 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
 
   //Fill fields
   QSettings s;
-  ui->mServerIP->setText( s.value( QStringLiteral(SDK_SERVER_IP), QString("127.0.0.1")).toString() );
+  ui->mServerIP->setText( s.value( QStringLiteral(SDK_SERVER_IP), QString("62.109.11.83")).toString() );
   ui->mName->setText( s.value( QStringLiteral(SDK_GLOBAL_AUTHOR), QString()).toString() );
   onEditAuthorName( ui->mName->text() );
   ui->mMachineKey->setText( s.value( QStringLiteral(SDK_MACHINE_KEY), QString()).toString() );

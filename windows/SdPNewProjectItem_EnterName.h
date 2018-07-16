@@ -32,7 +32,7 @@ class SdPNewProjectItem_EnterName : public QWizardPage
     bool              mValid;
     QString           mTagPath;
   public:
-    SdPNewProjectItem_EnterName( SdProjectItemPtr *item, SdProject *prj, QWidget *parent = 0 );
+    SdPNewProjectItem_EnterName( SdProjectItemPtr *item, SdProject *prj, QWidget *parent = nullptr );
 
     virtual bool validatePage() override;
     virtual bool isComplete() const override;

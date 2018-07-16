@@ -15,7 +15,7 @@ Description
 #ifndef SDWEDITOR_H
 #define SDWEDITOR_H
 
-
+#include "SdConfig.h"
 #include "objects/SdPoint.h"
 #include "objects/SdRect.h"
 #include "objects/SdScaler.h"
@@ -29,8 +29,9 @@ class SdWEditor : public QAbstractScrollArea
   {
     Q_OBJECT
 
+    int mRecentlyIndex; //Index for release last resently used mechanism
   public:
-    explicit SdWEditor( QWidget *parent = 0);
+    explicit SdWEditor( QWidget *parent = nullptr);
     virtual ~SdWEditor() {}
 
     virtual SdProjectItem* getProjectItem() const = 0;
@@ -41,6 +42,10 @@ class SdWEditor : public QAbstractScrollArea
     QString                getTitle();
 
     QString                getIconName();
+
+    int                    getRecentlyIndex() const { return mRecentlyIndex; }
+
+    void                   updateRecentlyIndex( bool dec ) { mRecentlyIndex = dec ? qMax(0,mRecentlyIndex-1) : SD_MAX_EDITORS; }
 
     //On activate editor window
     virtual void onActivateEditor();

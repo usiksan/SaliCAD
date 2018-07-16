@@ -98,7 +98,7 @@ QString SdWProjectTree::fileName()
 
 bool SdWProjectTree::isProjectValid() const
   {
-  return mProject != 0;
+  return mProject != nullptr;
   }
 
 

@@ -20,7 +20,8 @@ Description
 #include <QMessageBox>
 
 SdWEditor::SdWEditor(QWidget *parent) :
-  QAbstractScrollArea(parent)
+  QAbstractScrollArea(parent),
+  mRecentlyIndex(SD_MAX_EDITORS)
   {
 
   }

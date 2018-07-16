@@ -1,8 +1,8 @@
 
-//B016 bugs
+//B017 bugs
 //F001 fatal
 //C001 critical
-//D037 do
+//D038 do
 
 
 
@@ -26,6 +26,10 @@
 
 //===================================================================================
 //Fixed:
+
+//D038 limit simultaneously opened editors
+
+//B017 When rename component name not changed in graph editor
 
 //D029 roadPropBar in select mode
 
