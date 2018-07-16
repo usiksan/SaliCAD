@@ -12,6 +12,7 @@ Description
 */
 
 #include "SdPNewProjectItem_SelectType.h"
+#include "SdPNewProjectItem.h"
 #include "objects/SdPItemSymbol.h"
 #include "objects/SdPItemPart.h"
 #include "objects/SdPItemComponent.h"
@@ -114,7 +115,20 @@ bool SdPNewProjectItem_SelectType::validatePage()
 
 int SdPNewProjectItem_SelectType::nextId() const
   {
-  return 1;
+  if( defaultClass <= 4 ) {
+    //Create empty object
+    if( defaultOrder == 0 )
+      return SDP_NPI_NAME;
+
+    //Create copy of existing object
+    if( defaultOrder == 1 )
+      return SDP_NPI_COPY;
+
+    //Use master
+    return SDP_NPI_MASTER;
+    }
+  //Create text docs
+  return SDP_NPI_NAME;
   }
 
 
@@ -148,8 +162,8 @@ void SdPNewProjectItem_SelectType::classChanged(int index)
       mDescriptions.append( tr("Creates empty component part with no any pins or graphics.") );
       mCreationOrder->addItem( tr("Copy existing part") );
       mDescriptions.append( tr("Creates copy of existing component part") );
-      mCreationOrder->addItem( tr("Two pin master") );
-      mDescriptions.append( tr("Start master which creates part with exactly two pin (resistor, condensator)") );
+      mCreationOrder->addItem( tr("Part master") );
+      mDescriptions.append( tr("Start master which quide you to create part") );
       break;
     case 4 :
       mCreationOrder->addItem( tr("Empty component") );

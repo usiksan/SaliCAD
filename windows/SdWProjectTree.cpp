@@ -15,6 +15,8 @@ Description
 #include "objects/SdPulsar.h"
 #include "windows/SdPNewProjectItem_SelectType.h"
 #include "windows/SdPNewProjectItem_EnterName.h"
+#include "windows/SdPNewProjectItem_Master.h"
+#include "windows/SdPNewProjectItem.h"
 #include "windows/SdWCommand.h"
 #include "master/SdMasterIds.h"
 #include <QFileInfo>
@@ -151,13 +153,18 @@ bool SdWProjectTree::cmFileSaveAs()
 
 
 
+//Create new object in project hierarchy with wizard
 void SdWProjectTree::cmObjectNew()
   {
+  //Place for object
   SdProjectItemPtr item = nullptr;
-  QWizard wizard(this);
-  wizard.setPage( 0, new SdPNewProjectItem_SelectType( &item, mProject, &wizard) );
-  wizard.setPage( 1, new SdPNewProjectItem_EnterName( &item, mProject, &wizard) );
 
+  //Wizard
+  QWizard wizard(this);
+  //Fill it with pages
+  wizard.setPage( SDP_NPI_TYPE,   new SdPNewProjectItem_SelectType( &item, mProject, &wizard) );
+  wizard.setPage( SDP_NPI_NAME,   new SdPNewProjectItem_EnterName( &item, mProject, &wizard) );
+  wizard.setPage( SDP_NPI_MASTER, new SdPNewProjectItem_Master( &item, mProject, &wizard) );
   if( wizard.exec() ) {
     //Append item to the project
     item->setHand();

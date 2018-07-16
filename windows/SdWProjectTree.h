@@ -49,7 +49,9 @@ class SdWProjectTree : public QTreeWidget
     bool         cmFileSave();
     bool         cmFileSaveAs();
 
+    //Create new object in project hierarchy with wizard
     void         cmObjectNew();
+
     void         cmObjectRename();
     void         cmObjectDelete();
     virtual void cmObjectCopy() {}
