@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Part master with exactly two pins
 */
 #include "SdDMasterPartDoubleRect.h"
 #include "ui_SdDMasterPartDoubleRect.h"
@@ -89,6 +90,37 @@ void SdDMasterPartDoubleRect::drawPart(SdIllustrator &il)
 void SdDMasterPartDoubleRect::accept()
   {
   //Build part
+  int partSizeX = sdEnvir->fromPhisPcb( ui->mBodySizeX->text() );
+  int partSizeY = sdEnvir->fromPhisPcb( ui->mBodySizeY->text() );
+  int sizeX = sdEnvir->fromPhisPcb( ui->mBetweenPins->text() );
+  int pinLen = (sizeX - partSizeX) / 2;
+  //Pin types
+  QString leftPinType = ui->mLeftPinType->text();
+  QString rightPinType = ui->mRightPinType->text();
+  if( rightPinType.isEmpty() )
+    rightPinType = leftPinType;
+
+  //Rectangle body
+  addRect( SdPoint(pinLen,-partSizeY/2), SdPoint(sizeX-pinLen,partSizeY/2) );
+
+  //If pins outside body rectangle then draw pins
+  if( pinLen > 0 ) {
+    addLine( SdPoint(0,0), SdPoint(pinLen,0) );
+    addLine( SdPoint(sizeX-pinLen,0), SdPoint(sizeX,0) );
+    }
+
+  //Add pins
+  if( ui->mSmd->isChecked() )
+    setupSmdPin();
+  else
+    setupThrouPin();
+  addPin( SdPoint(0,0), leftPinType, SdPoint(0,250), QString("1"), SdPoint(0,-250) );
+  addPin( SdPoint(sizeX,0), rightPinType, SdPoint(sizeX,250), QString("1"), SdPoint(sizeX,-250) );
+
+  //Update ident position
+  //When part size greater then ident text size (1000) then place ident in center of part
+  // else place ident at top of part
+  setId( SdPoint( sizeX/2, partSizeY > 1000 ? 0 : partSizeY/2+500), QString("Id") );
 
   //Close dialog
   SdDMasterPart::accept();

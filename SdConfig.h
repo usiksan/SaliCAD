@@ -98,7 +98,7 @@ History
                    Fix: rename component name not changed in graph editor
   16.07.2018 v0.40 Append in SdIllustrator circle draw and cross draw
                    Begin creation twoPinPart master
-
+  17.07.2018 v0.41 Append part master which creates rectangle part with two pins.
 */
 
 #ifndef SDCONFIG
@@ -110,7 +110,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             40
+#define SD_VERSION_MINOR             41
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

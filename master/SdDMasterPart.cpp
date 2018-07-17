@@ -11,10 +11,112 @@ Web
 Description
 */
 #include "SdDMasterPart.h"
+#include "objects/SdGraphLinearLine.h"
+#include "objects/SdGraphLinearRect.h"
+#include "objects/SdGraphLinearCircle.h"
+#include "objects/SdGraphPartPin.h"
+#include "objects/SdEnvir.h"
+#include "objects/SdGraphIdent.h"
+
+
+void SdDMasterPart::addLine(SdPoint a, SdPoint b)
+  {
+  mItem->insertChild( new SdGraphLinearLine( a, b, mLineProp), nullptr );
+  }
+
+
+
+
+void SdDMasterPart::addRect(SdPoint a, SdPoint b)
+  {
+  mItem->insertChild( new SdGraphLinearRect( a, b, mLineProp), nullptr );
+  }
+
+
+
+
+void SdDMasterPart::addCircle(SdPoint c, int r)
+  {
+  mItem->insertChild( new SdGraphLinearCircle( c, r, mLineProp), nullptr );
+  }
+
+
+
+//Identifier append to "id" layer
+void SdDMasterPart::setId(SdPoint p, const QString id, int size)
+  {
+  SdGraphIdent *ident = mItem->getIdent();
+  int half = size / 2;
+  SdRect r( p.x()-half, p.y()-half, size, size );
+  mIdentProp.mSize = size;
+  ident->updateIdent( p, id, r, &mIdentProp );
+  }
+
+
+
+
+
+void SdDMasterPart::setupSmdPin()
+  {
+  mPinProp.mLayer.set( LID0_PIN LID1_TOP );
+  mPinProp.mSide  = stmTop;
+  }
+
+
+
+
+
+void SdDMasterPart::setupThrouPin()
+  {
+  mPinProp.mLayer.set( LID0_PIN );
+  mPinProp.mSide  = stmThrow;
+  }
+
+
+
+
+void SdDMasterPart::addPin(SdPoint org, const QString type, SdPoint pinNumberOrg, const QString pinNumber, SdPoint pinNameOrg)
+  {
+  mPinProp.mPinType = type;
+  mItem->insertChild( new SdGraphPartPin( org, mPinProp, pinNumberOrg, mPinNumberProp, pinNameOrg, mPinNameProp, pinNumber), nullptr );
+  }
+
+
 
 SdDMasterPart::SdDMasterPart(SdProjectItem *item, QWidget *parent) :
   QDialog( parent ),
   mItem(item)
   {
+  mLineProp.mLayer.set( LID0_COMPONENT );
+  mLineProp.mType  = dltSolid;
+  mLineProp.mWidth = 0;
+
+  setupSmdPin();
+
+  mPinNumberProp.mLayer.set( LID0_PIN_NUMBER LID1_TOP );
+  mPinNumberProp.mFont   = 0;
+  mPinNumberProp.mSize   = 500;
+  mPinNumberProp.mDir    = da0;
+  mPinNumberProp.mHorz   = dhjLeft;
+  mPinNumberProp.mVert   = dvjMiddle;
+  mPinNumberProp.mMirror = 0;
+
+  mPinNameProp.mLayer.set( QString(LID0_PIN_NAME LID1_TOP) );    //Свойства имени вывода
+  mPinNameProp.mFont   = 0;
+  mPinNameProp.mSize   = 500;
+  mPinNameProp.mDir    = da0;
+  mPinNameProp.mHorz   = dhjLeft;
+  mPinNameProp.mVert   = dvjMiddle;
+  mPinNameProp.mMirror = 0;
+
+  mIdentProp.mLayer.set( QString(LID0_IDENT LID1_TOP) );    //Layer of ident
+  mIdentProp.mFont   = 0;
+  mIdentProp.mSize   = 1000;
+  mIdentProp.mDir    = da0;
+  mIdentProp.mHorz   = dhjCenter;
+  mIdentProp.mVert   = dvjMiddle;
+  mIdentProp.mMirror = 0;
 
   }
+
+

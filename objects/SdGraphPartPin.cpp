@@ -50,6 +50,23 @@ SdGraphPartPin::SdGraphPartPin(SdPoint org, SdPoint numberPos, SdPoint namePos, 
 
 
 
+SdGraphPartPin::SdGraphPartPin(SdPoint org, const SdPropPartPin &pinProp, SdPoint numberPos, const SdPropText &numberProp, SdPoint namePos, const SdPropText &nameProp, const QString number) :
+  SdGraph(),
+  mPinSelect(false),  //Pin selected
+  mNumSelect(false),  //Pin number selected
+  mNamSelect(false)   //Pin name selected
+  {
+  mOrigin     = org;        //Pin origin
+  mPinProp    = pinProp;    //Pin properties
+  mNamePos    = namePos;    //Pin name position
+  mNameProp   = nameProp;   //Pin name properties
+  mNumberPos  = numberPos;  //Pin number position
+  mNumberProp = numberProp; //Pin number properties
+  mNumber     = number;     //Pin number
+  }
+
+
+
 
 int SdGraphPartPin::getPinStratum(bool otherSide) const
   {

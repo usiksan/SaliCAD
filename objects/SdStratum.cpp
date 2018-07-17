@@ -72,7 +72,7 @@ int SdStratum::stratumComp(const SdStratum &src) const
 int SdStratum::stratumFirst(SdStratum s) const
   {
   if( mValue <= 0 || s.mValue <= 0 )
-    stmTop;
+    return stmTop;
   int st = 1 << s.getStratumIndex();
   while( st < stmEnd ) {
     if( mValue & st ) return st;
@@ -94,7 +94,7 @@ int SdStratum::stratumFirst(SdStratum s) const
 int SdStratum::stratumNext(SdStratum s) const
   {
   if( mValue <= 0 || s.mValue <= 0 )
-    stmTop;
+    return stmTop;
   int st = 1 << (s.getStratumIndex() + 1);
   while( st < stmEnd ) {
     if( mValue & st ) return st;

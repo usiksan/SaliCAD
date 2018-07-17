@@ -108,7 +108,7 @@ SdProp::SdProp()
   mSymIdentProp.mMirror = 0;
 
   //Part identifier (reference) aka D4
-  mPartIdentProp.mLayer.set( QString(LID0_IDENT LID1_TOP) );    //Свойства имени вывода
+  mPartIdentProp.mLayer.set( QString(LID0_IDENT LID1_TOP) );    //Layer of ident
   mPartIdentProp.mFont   = 0;
   mPartIdentProp.mSize   = 1000;
   mPartIdentProp.mDir    = da0;

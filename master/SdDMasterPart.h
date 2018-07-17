@@ -22,6 +22,24 @@ class SdDMasterPart : public QDialog
 
   protected:
     SdProjectItem *mItem;
+    SdPropLine     mLineProp;       //All graph objects append by default to "component" layer with 0-width
+    SdPropPartPin  mPinProp;        //All pins
+    SdPropText     mIdentProp;
+    SdPropText     mPinNumberProp;
+    SdPropText     mPinNameProp;
+
+
+    void addLine( SdPoint a, SdPoint b );
+    void addRect( SdPoint a, SdPoint b );
+    void addCircle( SdPoint c, int r );
+
+    //Identifier append to "id" layer
+    void setId( SdPoint p, const QString id, int size = 1000 );
+
+    //Pin append to "pin" layer
+    void setupSmdPin();
+    void setupThrouPin();
+    void addPin( SdPoint org, const QString type, SdPoint pinNumberOrg, const QString pinNumber, SdPoint pinNameOrg );
   public:
     SdDMasterPart( SdProjectItem *item, QWidget *parent );
 

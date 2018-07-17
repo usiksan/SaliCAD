@@ -43,6 +43,7 @@ class SdGraphPartPin : public SdGraph
   public:
     SdGraphPartPin();
     SdGraphPartPin( SdPoint org, SdPoint numberPos, SdPoint namePos, const QString number );
+    SdGraphPartPin( SdPoint org, const SdPropPartPin &pinProp, SdPoint numberPos, const SdPropText &numberProp, SdPoint namePos, const SdPropText &nameProp, const QString number );
 
     //Return pin number
     QString   getPinNumber() const { return mNumber; }

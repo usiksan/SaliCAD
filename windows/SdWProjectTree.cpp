@@ -18,7 +18,6 @@ Description
 #include "windows/SdPNewProjectItem_Master.h"
 #include "windows/SdPNewProjectItem.h"
 #include "windows/SdWCommand.h"
-#include "master/SdMasterIds.h"
 #include <QFileInfo>
 #include <QApplication>
 #include <QClipboard>
