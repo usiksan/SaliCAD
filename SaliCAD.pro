@@ -397,7 +397,6 @@ HEADERS  += \
     objects/SdUndoRecordRoad.h \
     library/SdStringMap.h \
     objects/SdUtil.h \
-    master/SdMasterIds.h \
     windows/SdPNewProjectItem_PartMaster.h \
     windows/SdPNewProjectItem_Master.h \
     windows/SdPNewProjectItem.h \

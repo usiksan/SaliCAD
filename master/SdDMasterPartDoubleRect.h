@@ -14,6 +14,7 @@ Description
 #define SDDMASTERPARTDOUBLERECT_H
 
 #include "SdDMasterPart.h"
+#include "windows/SdIllustrator.h"
 
 namespace Ui {
   class SdDMasterPartDoubleRect;
@@ -25,10 +26,19 @@ class SdDMasterPartDoubleRect : public SdDMasterPart
 
   public:
     explicit SdDMasterPartDoubleRect( SdProjectItem *item, QWidget *parent = nullptr);
-    ~SdDMasterPartDoubleRect();
+    ~SdDMasterPartDoubleRect() override;
+
+  public slots:
+    void onEditChanged( const QString txt );
 
   private:
     Ui::SdDMasterPartDoubleRect *ui;
+
+    void drawPart( SdIllustrator &il );
+
+    // QDialog interface
+  public slots:
+    virtual void accept() override;
   };
 
 #endif // SDDMASTERPARTDOUBLERECT_H
