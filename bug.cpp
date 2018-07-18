@@ -2,7 +2,7 @@
 //B017 bugs
 //F001 fatal
 //C001 critical
-//D038 do
+//D039 do
 
 
 
@@ -26,6 +26,8 @@
 
 //===================================================================================
 //Fixed:
+
+//D039 bottom line in illustrator invisible
 
 //D038 limit simultaneously opened editors
 

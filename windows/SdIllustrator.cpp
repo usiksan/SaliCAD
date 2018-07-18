@@ -188,6 +188,7 @@ void SdIllustrator::setPixmap(int sizex, int sizey, QColor back )
     mScale = qMin(dsizex / sx, dsizey / sy);
     minx -= static_cast<int>(dsizex / mScale - sx)  / 2;
     miny -= static_cast<int>(dsizey / mScale - sy ) / 2;
+    mScale *= 0.98;
     }
   }
 
@@ -226,7 +227,7 @@ int SdIllustrator::mapX(int x) const
 
 int SdIllustrator::mapY(int y) const
   {
-  return mSizeY - scale( y - miny );
+  return mSizeY - scale( y - miny ) - 4;
   }
 
 
@@ -235,7 +236,7 @@ int SdIllustrator::mapY(int y) const
 void SdIllustrator::addPoint(int x, int y)
   {
   minx = qMin(minx,x);
-  miny = qMin(minx,y);
+  miny = qMin(miny,y);
   maxx = qMax(maxx,x);
   maxy = qMax(maxy,y);
   }

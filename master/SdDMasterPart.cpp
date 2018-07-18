@@ -19,25 +19,25 @@ Description
 #include "objects/SdGraphIdent.h"
 
 
-void SdDMasterPart::addLine(SdPoint a, SdPoint b)
+void SdDMasterPart::addLine(int x1, int y1, int x2, int y2)
   {
-  mItem->insertChild( new SdGraphLinearLine( a, b, mLineProp), nullptr );
+  mItem->insertChild( new SdGraphLinearLine( SdPoint(x1, y1), SdPoint(x2,y2), mLineProp), nullptr );
   }
 
 
 
 
-void SdDMasterPart::addRect(SdPoint a, SdPoint b)
+void SdDMasterPart::addRect(int x1, int y1, int x2, int y2)
   {
-  mItem->insertChild( new SdGraphLinearRect( a, b, mLineProp), nullptr );
+  mItem->insertChild( new SdGraphLinearRect( SdPoint(x1, y1), SdPoint(x2,y2), mLineProp), nullptr );
   }
 
 
 
 
-void SdDMasterPart::addCircle(SdPoint c, int r)
+void SdDMasterPart::addCircle(int cx, int cy, int r)
   {
-  mItem->insertChild( new SdGraphLinearCircle( c, r, mLineProp), nullptr );
+  mItem->insertChild( new SdGraphLinearCircle( SdPoint(cx,cy), r, mLineProp), nullptr );
   }
 
 

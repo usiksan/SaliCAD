@@ -101,12 +101,12 @@ void SdDMasterPartDoubleRect::accept()
     rightPinType = leftPinType;
 
   //Rectangle body
-  addRect( SdPoint(pinLen,-partSizeY/2), SdPoint(sizeX-pinLen,partSizeY/2) );
+  addRect( pinLen,-partSizeY/2, sizeX-pinLen,partSizeY/2 );
 
   //If pins outside body rectangle then draw pins
   if( pinLen > 0 ) {
-    addLine( SdPoint(0,0), SdPoint(pinLen,0) );
-    addLine( SdPoint(sizeX-pinLen,0), SdPoint(sizeX,0) );
+    addLine( 0,0, pinLen,0 );
+    addLine( sizeX-pinLen,0, sizeX,0 );
     }
 
   //Add pins
@@ -118,7 +118,7 @@ void SdDMasterPartDoubleRect::accept()
   mPinNameProp.mLayer.set( LID0_INVISIBLE );
   mPinNumberProp.mLayer.set( LID0_INVISIBLE );
   addPin( SdPoint(0,0), leftPinType, SdPoint(0,250), QString("1"), SdPoint(0,-250) );
-  addPin( SdPoint(sizeX,0), rightPinType, SdPoint(sizeX,250), QString("1"), SdPoint(sizeX,-250) );
+  addPin( SdPoint(sizeX,0), rightPinType, SdPoint(sizeX,250), QString("2"), SdPoint(sizeX,-250) );
 
   //Update ident position
   //When part size greater then ident text size (1000) then place ident in center of part

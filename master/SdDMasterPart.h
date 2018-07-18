@@ -29,9 +29,9 @@ class SdDMasterPart : public QDialog
     SdPropText     mPinNameProp;
 
 
-    void addLine( SdPoint a, SdPoint b );
-    void addRect( SdPoint a, SdPoint b );
-    void addCircle( SdPoint c, int r );
+    void addLine( int x1, int y1, int x2, int y2 );
+    void addRect( int x1, int y1, int x2, int y2 );
+    void addCircle( int cx, int cy, int r );
 
     //Identifier append to "id" layer
     void setId( SdPoint p, const QString id, int size = 1000 );

@@ -15,6 +15,7 @@ Description
 
 //Master dialogs
 #include "master/SdDMasterPartDoubleRect.h"
+#include "master/SdDMasterPartDoubleSide.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -86,12 +87,24 @@ void SdPNewProjectItem_Master::initializePage()
   {
   //Fill object classes
   switch( (*mItemPtr)->getClass() ) {
+
+    //Masters for part
     case dctPart :
-      addMaster( tr("Two pins part"), tr("Creates part with exact two pins and rectangle body (resistor, condensator and so on"),
+
+      addMaster( tr("Two pins part"), tr("Creates part with exact two pins and rectangle body (resistor, condensator and so on)"),
                  QString(":/pic/partMasterDoubleRect.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
         SdDMasterPartDoubleRect dlg( item, p );
         return dlg.exec();
         });
+
+      addMaster( tr("Two sided pins part"), tr("Creates part with rectangle body and two pins columns by left and right sides"),
+                 QString(":/pic/partMasterDoubleSide.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
+        SdDMasterPartDoubleSide dlg( item, p );
+        return dlg.exec();
+        });
+
+      break;
+
     }
 
   mMasterType->setCurrentRow( 0 );

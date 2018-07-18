@@ -199,10 +199,10 @@ SOURCES += \
     objects/SdUndoRecordRoad.cpp \
     library/SdStringMap.cpp \
     objects/SdUtil.cpp \
-    windows/SdPNewProjectItem_PartMaster.cpp \
     windows/SdPNewProjectItem_Master.cpp \
     master/SdDMasterPart.cpp \
-    master/SdDMasterPartDoubleRect.cpp
+    master/SdDMasterPartDoubleRect.cpp \
+    master/SdDMasterPartDoubleSide.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -397,11 +397,11 @@ HEADERS  += \
     objects/SdUndoRecordRoad.h \
     library/SdStringMap.h \
     objects/SdUtil.h \
-    windows/SdPNewProjectItem_PartMaster.h \
     windows/SdPNewProjectItem_Master.h \
     windows/SdPNewProjectItem.h \
     master/SdDMasterPart.h \
-    master/SdDMasterPartDoubleRect.h
+    master/SdDMasterPartDoubleRect.h \
+    master/SdDMasterPartDoubleSide.h
 
 DISTFILES += \
     license.txt
@@ -424,4 +424,5 @@ FORMS += \
     windows/SdDLayerCreate.ui \
     windows/SdDPads.ui \
     windows/SdDPadMaster.ui \
-    master/SdDMasterPartDoubleRect.ui
+    master/SdDMasterPartDoubleRect.ui \
+    master/SdDMasterPartDoubleSide.ui
