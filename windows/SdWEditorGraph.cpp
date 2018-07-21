@@ -193,6 +193,24 @@ double SdWEditorGraph::getPPM() const
 
 
 
+//Handle move cursor
+void SdWEditorGraph::cursorMove(int dx, int dy)
+  {
+  //Target point in logical coords
+  SdPoint pos( mPrevPoint.x() + dx * mGrid.x(), mPrevPoint.y() + dy * mGrid.y() );
+
+  //Target point in pixels
+  SdPoint pixPos( mPixelTransform.inverted().map(pos) );
+
+  //Set new cursor pos
+  QCursor::setPos( mapToGlobal(pixPos) );
+  }
+
+
+
+
+
+
 
 
 
@@ -540,6 +558,7 @@ void SdWEditorGraph::print(QPrinter &printer, SdRect wnd, int zeroWidth, bool co
 
 
 
+
 //=================================================================================================
 // Event handlers
 
@@ -854,6 +873,8 @@ void SdWEditorGraph::updateMousePos(QMouseEvent *event)
     displayCursorPositions();
     }
   }
+
+
 
 
 

@@ -106,6 +106,16 @@ void SdMode::keyDown(int key, QChar ch)
       sdEnvir->mCursorView = dcvNone;
     update();
     }
+  else if( key == Qt::Key_Up )
+    mEditor->cursorMove( 0, 1 );
+  else if( key == Qt::Key_Down )
+    mEditor->cursorMove( 0, -1 );
+  else if( key == Qt::Key_Left )
+    mEditor->cursorMove( -1, 0 );
+  else if( key == Qt::Key_Right )
+    mEditor->cursorMove( 1, 0 );
+  else if( key == Qt::Key_Enter )
+    enterPoint( mEditor->cursorPosition() );
   Q_UNUSED(ch)
   }
 

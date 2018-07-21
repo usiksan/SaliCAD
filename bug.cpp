@@ -9,9 +9,6 @@
 //TODO B003 copy in sheet
 //При копировании в sheet нету вставки
 
-//TODO B007 arrows key to move cursor
-//Использовать кнопки со стрелками для перемещения курсора
-
 //TODO B009 3 undo's on one text properties changes
 
 //TODO B011 when inserting sheet wires - they not connected to symImp
@@ -26,6 +23,9 @@
 
 //===================================================================================
 //Fixed:
+
+//B007 arrows key to move cursor
+//Использовать кнопки со стрелками для перемещения курсора
 
 //D020 draw cursor
 

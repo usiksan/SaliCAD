@@ -67,6 +67,10 @@ class SdWEditorGraph : public SdWEditor
 
     SdPoint clientSize() const { return mClientSize; }
 
+    //Return current cursor point coord in logical
+    SdPoint cursorPosition() const { return mPrevPoint; }
+
+    //Declare paint area as dirty. This rebuild static paint area when next draw
     void    dirtyCashe() { mCasheDirty = true; }
 
     //Update selection status
@@ -92,6 +96,9 @@ class SdWEditorGraph : public SdWEditor
 
     //return ppm for this editor. PPM is how much phys in one logical
     double  getPPM() const;
+
+    //Handle move cursor
+    void    cursorMove( int dx, int dy );
 
     //Commands
     virtual void           cmFilePrint() override;
@@ -157,7 +164,6 @@ class SdWEditorGraph : public SdWEditor
 
     //Setup mouse pos. Where pos is pixel coord
     void    updateMousePos(QMouseEvent *event);
-
 
     // QWidget interface
   protected:
