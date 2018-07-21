@@ -101,6 +101,7 @@ History
   17.07.2018 v0.41 Append part master which creates rectangle part with two pins.
   18.07.2018 v0.42 Append part master which creates double sided pins part.
                    Fix error in illustrator. Image shifted down.
+  21.07.2018 v0.43 Append all modes for draw cursor
 */
 
 #ifndef SDCONFIG
@@ -112,12 +113,12 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             42
+#define SD_VERSION_MINOR             43
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
-//#define SD_DEFAULT_IP                "62.109.11.83"
-#define SD_DEFAULT_IP                "127.0.0.0"
+#define SD_DEFAULT_IP                "62.109.11.83"
+//#define SD_DEFAULT_IP                "127.0.0.0"
 #define SD_DEFAULT_PORT              1970
 
 //Project naming definition

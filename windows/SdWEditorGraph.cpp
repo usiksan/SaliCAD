@@ -682,8 +682,7 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
     }
 
   //Рисовать курсор
-  //TODO D020 draw cursor
-  //wc.DrawHideCursor( prevPoint );
+  context.drawCursor( mPrevPoint );
   }
 
 
@@ -753,6 +752,8 @@ void SdWEditorGraph::mouseMoveEvent(QMouseEvent *event)
       //update actual mouse pos
       displayCursorPositions();
       }
+    if( sdEnvir->mCursorView != dcvNone )
+      update();
     }
   }
 

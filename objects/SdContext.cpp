@@ -460,6 +460,63 @@ void SdContext::dotTrase(SdPoint p)
 
 
 
+//Draw cursor with current mode
+void SdContext::drawCursor(SdPoint p)
+  {
+  if( sdEnvir->mCursorView != dcvNone ) {
+    //Рисовать точку
+    p = mTransform.map(p);
+    //Setup pen
+    mPainter->setPen( QPen( QBrush( sdEnvir->getSysColor(scCursor) ), 0, Qt::SolidLine ) );
+    SdPoint a1,a2;
+    SdRect r = mPainter->viewport();
+    int w;
+    //Draw cursor
+    switch( sdEnvir->mCursorView ) {
+      case dcvSmall :
+        //X-line
+        a1.set( p.x() - sdEnvir->mSmallCursorSize, p.y() );
+        a2.set( p.x() + sdEnvir->mSmallCursorSize, p.y() );
+        mPainter->drawLine( a1, a2 );
+        //Y-line
+        a1.set( p.x(), p.y() - sdEnvir->mSmallCursorSize );
+        a2.set( p.x(), p.y() + sdEnvir->mSmallCursorSize );
+        mPainter->drawLine( a1, a2 );
+        break;
+      case dcvSmall45 :
+        a1.set( p.x() - sdEnvir->mSmallCursorSize, p.y() - sdEnvir->mSmallCursorSize );
+        a2.set( p.x() + sdEnvir->mSmallCursorSize, p.y() + sdEnvir->mSmallCursorSize );
+        mPainter->drawLine( a1, a2 );
+        a1.set( p.x() + sdEnvir->mSmallCursorSize, p.y() - sdEnvir->mSmallCursorSize );
+        a2.set( p.x() - sdEnvir->mSmallCursorSize, p.y() + sdEnvir->mSmallCursorSize );
+        mPainter->drawLine( a1, a2 );
+        break;
+      case dcvFull :
+        //X-line
+        a1.set( 0, p.y() );
+        a2.set( r.width(), p.y() );
+        mPainter->drawLine( a1, a2 );
+        //Y-line
+        a1.set( p.x(), 0 );
+        a2.set( p.x(), r.height() );
+        mPainter->drawLine( a1, a2 );
+        break;
+      case dcvFull45 :
+        w = qMax( r.width(), r.height() );
+        a1.set( p.x() - w, p.y() - w );
+        a2.set( p.x() + w, p.y() + w );
+        mPainter->drawLine( a1, a2 );
+        a1.set( p.x() + w, p.y() - w );
+        a2.set( p.x() - w, p.y() + w );
+        mPainter->drawLine( a1, a2 );
+        break;
+      }
+    }
+  }
+
+
+
+
 void SdContext::setPen(int width, SdLayer *layer, int lineStyle )
   {
   setPen( width, convertColor(layer), lineStyle );

@@ -27,6 +27,8 @@
 //===================================================================================
 //Fixed:
 
+//D020 draw cursor
+
 //D039 bottom line in illustrator invisible
 
 //D038 limit simultaneously opened editors

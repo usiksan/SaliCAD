@@ -43,11 +43,11 @@ Description
 
 
 //Вид перекрестья курсора
-#define dcvNone          0  //Курсор не виден
-#define dcvSmall         1  //Малый курсор
-#define dcvFull          2  //Полный курсор
-#define dcvSmall45       3  //Малый под углом 45
-#define dcvFull45        4  //Полный под углом 45
+#define dcvNone          0  //Cursor is invisible [Курсор не виден]
+#define dcvSmall         1  //Small cursor crosshair [Малый курсор]
+#define dcvFull          2  //Crosshair to fill view [Полный курсор]
+#define dcvSmall45       3  //Small cursor crosshair with angle 45 [Малый под углом 45]
+#define dcvFull45        4  //Crosshair to fill view with angle 45 [Полный под углом 45]
 #define dcvLast          5
 
 //Версия SdEnvir

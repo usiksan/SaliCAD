@@ -112,7 +112,10 @@ class SdContext {
 //    virtual void    dotCircle( SdPoint p, SdPartPinProp &prop ) = 0;              //Точка подключения вывода корпуса
 //    virtual void    drawArrow( SdPoint p, SdAngle angle, SdPropLine &prop ) = 0;  //Размерная стрелка
 //    virtual void    via( SdPoint p, SdRoadProp &prop ) = 0;                       //Переходное (без КП)
-    void            dotTrase( SdPoint p );                                      //Точка пометки трассируемой цепи
+    void            dotTrase( SdPoint p );                                    //Точка пометки трассируемой цепи
+
+    //Draw cursor with current mode
+    void            drawCursor( SdPoint p );
 
   private:
 

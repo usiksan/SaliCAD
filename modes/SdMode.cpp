@@ -15,6 +15,7 @@ Description
 #include "objects/SdGraph.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdProject.h"
+#include "objects/SdEnvir.h"
 #include "windows/SdWEditorGraph.h"
 #include "windows/SdWCommand.h"
 
@@ -98,6 +99,13 @@ void SdMode::keyDown(int key, QChar ch)
     mEditor->scaleStep( 0.5 );
   else if( key == Qt::Key_Space )
     enterPrev();
+  else if( key == Qt::Key_X ) {
+    //Switch cursor view
+    sdEnvir->mCursorView++;
+    if( sdEnvir->mCursorView >= dcvLast )
+      sdEnvir->mCursorView = dcvNone;
+    update();
+    }
   Q_UNUSED(ch)
   }
 
