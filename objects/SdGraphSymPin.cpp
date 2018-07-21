@@ -31,19 +31,19 @@ SdGraphSymPin::SdGraphSymPin() :
 
 
 
-SdGraphSymPin::SdGraphSymPin(SdPoint org, SdPoint numberPos, SdPoint namePos, const QString name) :
+SdGraphSymPin::SdGraphSymPin(SdPoint org, const SdPropSymPin &pinProp, SdPoint numberPos, const SdPropText &numberProp, SdPoint namePos, const SdPropText &nameProp, const QString name) :
   SdGraph(),
-  //Different pin part selection
+  //Different pin parts selection
   mPinSelect(false),  //Pin selected
   mNumSelect(false),  //Pin number selected
   mNamSelect(false)  //Pin name selected
   {
   mOrigin     = org;
-  mPinProp    = sdGlobalProp->mSymPinProp;
+  mPinProp    = pinProp;
   mNumberPos  = numberPos;
-  mNumberProp = sdGlobalProp->mSymPinNumberProp;
+  mNumberProp = numberProp;
   mNamePos    = namePos;
-  mNameProp   = sdGlobalProp->mSymPinNameProp;
+  mNameProp   = nameProp;
   mName       = name;
   }
 

@@ -17,6 +17,8 @@ Description
 #include "master/SdDMasterPartDoubleRect.h"
 #include "master/SdDMasterPartDoubleSide.h"
 
+#include "master/SdDMasterSymbolConnector.h"
+
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -87,6 +89,16 @@ void SdPNewProjectItem_Master::initializePage()
   {
   //Fill object classes
   switch( (*mItemPtr)->getClass() ) {
+
+    //Masters for symbol
+    case dctSymbol :
+      addMaster( tr("Connectors"), tr("Creates symbol for connector"),
+                 QString(":/pic/symbolMasterConnector.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
+        SdDMasterSymbolConnector dlg( item, p );
+        return dlg.exec();
+        });
+
+      break;
 
     //Masters for part
     case dctPart :

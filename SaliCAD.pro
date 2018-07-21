@@ -202,7 +202,9 @@ SOURCES += \
     windows/SdPNewProjectItem_Master.cpp \
     master/SdDMasterPart.cpp \
     master/SdDMasterPartDoubleRect.cpp \
-    master/SdDMasterPartDoubleSide.cpp
+    master/SdDMasterPartDoubleSide.cpp \
+    master/SdDMasterSymbol.cpp \
+    master/SdDMasterSymbolConnector.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -401,7 +403,9 @@ HEADERS  += \
     windows/SdPNewProjectItem.h \
     master/SdDMasterPart.h \
     master/SdDMasterPartDoubleRect.h \
-    master/SdDMasterPartDoubleSide.h
+    master/SdDMasterPartDoubleSide.h \
+    master/SdDMasterSymbol.h \
+    master/SdDMasterSymbolConnector.h
 
 DISTFILES += \
     license.txt
@@ -425,4 +429,5 @@ FORMS += \
     windows/SdDPads.ui \
     windows/SdDPadMaster.ui \
     master/SdDMasterPartDoubleRect.ui \
-    master/SdDMasterPartDoubleSide.ui
+    master/SdDMasterPartDoubleSide.ui \
+    master/SdDMasterSymbolConnector.ui

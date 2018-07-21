@@ -9,24 +9,26 @@ Web
   www.saliLab.ru
 
 Description
-  Base class for part masters.
+  Base class for symbol masters.
 
-  Contains operations for append graphics and pins to part when creation.
+  Contains operations for append graphics and pins to symbol when creation.
 */
-#ifndef SDDMASTERPART_H
-#define SDDMASTERPART_H
+#ifndef SDDMASTERSYMBOL_H
+#define SDDMASTERSYMBOL_H
 
 #include "objects/SdProjectItem.h"
+
 #include <QDialog>
 
-class SdDMasterPart : public QDialog
+
+class SdDMasterSymbol : public QDialog
   {
     Q_OBJECT
 
   protected:
     SdProjectItem *mItem;
     SdPropLine     mLineProp;       //All graph objects append by default to "component" layer with 0-width
-    SdPropPartPin  mPinProp;        //All pins
+    SdPropSymPin   mPinProp;        //All pins
     SdPropText     mIdentProp;
     SdPropText     mPinNumberProp;
     SdPropText     mPinNameProp;
@@ -38,16 +40,13 @@ class SdDMasterPart : public QDialog
     void addCircle( int cx, int cy, int r );
 
     //Identifier append to "id" layer
-    void setId( SdPoint p, const QString id, int size = 1000 );
+    void setId( SdPoint p, const QString id, int size = 350 );
 
     //Pin append to "pin" layer
-    void setupSmdPin();
-    void setupThrouPin();
-    void addPin( SdPoint org, const QString type, SdPoint pinNumberOrg, const QString pinNumber, SdPoint pinNameOrg );
+    void addPin( SdPoint org, int type, SdPoint pinNameOrg, const QString pinName, SdPoint pinNumberOrg );
   public:
-    SdDMasterPart( SdProjectItem *item, QWidget *parent );
+    SdDMasterSymbol( SdProjectItem *item, QWidget *parent );
 
-  protected:
   };
 
-#endif // SDDMASTERPART_H
+#endif // SDDMASTERSYMBOL_H

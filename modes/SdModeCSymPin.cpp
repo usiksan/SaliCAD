@@ -160,7 +160,7 @@ void SdModeCSymPin::enterPoint( SdPoint enter )
     case sPlaceNumber :
       //Enter pin number place is completed
       mNumberPos = enter;
-      addPic( new SdGraphSymPin( mOrigin, mNumberPos, mNamePos, mName ), QObject::tr("Enter sym pin") );
+      addPic( new SdGraphSymPin( mOrigin, sdGlobalProp->mSymPinProp, mNumberPos, sdGlobalProp->mSymPinNumberProp, mNamePos, sdGlobalProp->mSymPinNameProp, mName ), QObject::tr("Enter sym pin") );
       //Calculate smart-params
       mSmartNumber = mNumberPos - mOrigin;
       mSmartName   = mNamePos   - mOrigin;

@@ -33,23 +33,6 @@ SdGraphPartPin::SdGraphPartPin() :
 
 
 
-SdGraphPartPin::SdGraphPartPin(SdPoint org, SdPoint numberPos, SdPoint namePos, const QString number) :
-  SdGraph(),
-  mPinSelect(false),  //Pin selected
-  mNumSelect(false),  //Pin number selected
-  mNamSelect(false)   //Pin name selected
-  {
-  mOrigin     = org;     //Pin origin
-  mPinProp    = sdGlobalProp->mPartPinProp;    //Pin properties
-  mNamePos    = namePos;    //Pin name position
-  mNameProp   = sdGlobalProp->mPartPinNameProp;   //Pin name properties
-  mNumberPos  = numberPos;  //Pin number position
-  mNumberProp = sdGlobalProp->mPartPinNumberProp; //Pin number properties
-  mNumber     = number;     //Pin number
-  }
-
-
-
 SdGraphPartPin::SdGraphPartPin(SdPoint org, const SdPropPartPin &pinProp, SdPoint numberPos, const SdPropText &numberProp, SdPoint namePos, const SdPropText &nameProp, const QString number) :
   SdGraph(),
   mPinSelect(false),  //Pin selected

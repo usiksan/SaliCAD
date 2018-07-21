@@ -39,7 +39,7 @@ class SdGraphSymPin : public SdGraph
     bool         mNamSelect;  //Pin name selected
   public:
     SdGraphSymPin();
-    SdGraphSymPin( SdPoint org, SdPoint numberPos, SdPoint namePos, const QString name );
+    SdGraphSymPin( SdPoint org, const SdPropSymPin &pinProp, SdPoint numberPos, const SdPropText &numberProp, SdPoint namePos, const SdPropText &nameProp, const QString name );
 
     QString  getPinName() const { return mName; }
     SdPoint  getPinOrigin() const { return mOrigin; }

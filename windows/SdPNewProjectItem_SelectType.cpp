@@ -156,6 +156,8 @@ void SdPNewProjectItem_SelectType::classChanged(int index)
       mDescriptions.append( tr("Creates empty schematic component section symbol with no any pins or graphics.") );
       mCreationOrder->addItem( tr("Copy existing symbol") );
       mDescriptions.append( tr("Creates copy of existing schematic component section") );
+      mCreationOrder->addItem( tr("Symbol master") );
+      mDescriptions.append( tr("Start master which guide you to create symbol") );
       break;
     case 3 :
       mCreationOrder->addItem( tr("Empty part") );
@@ -163,7 +165,7 @@ void SdPNewProjectItem_SelectType::classChanged(int index)
       mCreationOrder->addItem( tr("Copy existing part") );
       mDescriptions.append( tr("Creates copy of existing component part") );
       mCreationOrder->addItem( tr("Part master") );
-      mDescriptions.append( tr("Start master which quide you to create part") );
+      mDescriptions.append( tr("Start master which guide you to create part") );
       break;
     case 4 :
       mCreationOrder->addItem( tr("Empty component") );

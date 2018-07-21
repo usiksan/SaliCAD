@@ -9,20 +9,20 @@ Web
   www.saliLab.ru
 
 Description
-  Base class for part masters.
+  Base class for symbol masters.
 
-  Contains operations for append graphics and pins to part when creation.
+  Contains operations for append graphics and pins to symbol when creation.
 */
-#include "SdDMasterPart.h"
+#include "SdDMasterSymbol.h"
 #include "objects/SdGraphLinearLine.h"
 #include "objects/SdGraphLinearRect.h"
 #include "objects/SdGraphLinearCircle.h"
-#include "objects/SdGraphPartPin.h"
+#include "objects/SdGraphSymPin.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdGraphIdent.h"
 
 
-void SdDMasterPart::addLine(int x1, int y1, int x2, int y2)
+void SdDMasterSymbol::addLine(int x1, int y1, int x2, int y2)
   {
   mItem->insertChild( new SdGraphLinearLine( SdPoint(x1, y1), SdPoint(x2,y2), mLineProp), nullptr );
   }
@@ -30,7 +30,7 @@ void SdDMasterPart::addLine(int x1, int y1, int x2, int y2)
 
 
 
-void SdDMasterPart::addRect(int x1, int y1, int x2, int y2)
+void SdDMasterSymbol::addRect(int x1, int y1, int x2, int y2)
   {
   mItem->insertChild( new SdGraphLinearRect( SdPoint(x1, y1), SdPoint(x2,y2), mLineProp), nullptr );
   }
@@ -38,7 +38,7 @@ void SdDMasterPart::addRect(int x1, int y1, int x2, int y2)
 
 
 
-void SdDMasterPart::addCircle(int cx, int cy, int r)
+void SdDMasterSymbol::addCircle(int cx, int cy, int r)
   {
   mItem->insertChild( new SdGraphLinearCircle( SdPoint(cx,cy), r, mLineProp), nullptr );
   }
@@ -46,7 +46,7 @@ void SdDMasterPart::addCircle(int cx, int cy, int r)
 
 
 //Identifier append to "id" layer
-void SdDMasterPart::setId(SdPoint p, const QString id, int size)
+void SdDMasterSymbol::setId(SdPoint p, const QString id, int size)
   {
   SdGraphIdent *ident = mItem->getIdent();
   int half = size / 2;
@@ -59,34 +59,25 @@ void SdDMasterPart::setId(SdPoint p, const QString id, int size)
 
 
 
-void SdDMasterPart::setupSmdPin()
-  {
-  mPinProp.mLayer.set( LID0_PIN LID1_TOP );
-  mPinProp.mSide  = stmTop;
-  }
 
 
-
-
-
-void SdDMasterPart::setupThrouPin()
-  {
-  mPinProp.mLayer.set( LID0_PIN );
-  mPinProp.mSide  = stmThrow;
-  }
-
-
-
-
-void SdDMasterPart::addPin(SdPoint org, const QString type, SdPoint pinNumberOrg, const QString pinNumber, SdPoint pinNameOrg)
+//Pin append to "pin" layer
+void SdDMasterSymbol::addPin(SdPoint org, int type, SdPoint pinNameOrg, const QString pinName, SdPoint pinNumberOrg)
   {
   mPinProp.mPinType = type;
-  mItem->insertChild( new SdGraphPartPin( org, mPinProp, pinNumberOrg, mPinNumberProp, pinNameOrg, mPinNameProp, pinNumber), nullptr );
+  mItem->insertChild( new SdGraphSymPin( org, mPinProp, pinNumberOrg, mPinNumberProp, pinNameOrg, mPinNameProp, pinName), nullptr );
   }
 
 
 
-SdDMasterPart::SdDMasterPart(SdProjectItem *item, QWidget *parent) :
+
+
+
+
+
+
+
+SdDMasterSymbol::SdDMasterSymbol(SdProjectItem *item, QWidget *parent) :
   QDialog( parent ),
   mItem(item)
   {
@@ -94,32 +85,32 @@ SdDMasterPart::SdDMasterPart(SdProjectItem *item, QWidget *parent) :
   mLineProp.mType  = dltSolid;
   mLineProp.mWidth = 0;
 
-  setupSmdPin();
+  mPinProp.mLayer.set( LID0_PIN );
+  mPinProp.mPinType = 0;
 
-  mPinNumberProp.mLayer.set( LID0_PIN_NUMBER LID1_TOP );
+  mPinNumberProp.mLayer.set( LID0_PIN_NUMBER );
   mPinNumberProp.mFont   = 0;
-  mPinNumberProp.mSize   = 500;
+  mPinNumberProp.mSize   = 350;
   mPinNumberProp.mDir    = da0;
   mPinNumberProp.mHorz   = dhjLeft;
   mPinNumberProp.mVert   = dvjMiddle;
   mPinNumberProp.mMirror = 0;
 
-  mPinNameProp.mLayer.set( QString(LID0_PIN_NAME LID1_TOP) );    //Свойства имени вывода
+  mPinNameProp.mLayer.set( QString(LID0_PIN_NAME) );    //Свойства имени вывода
   mPinNameProp.mFont   = 0;
-  mPinNameProp.mSize   = 500;
+  mPinNameProp.mSize   = 350;
   mPinNameProp.mDir    = da0;
   mPinNameProp.mHorz   = dhjLeft;
   mPinNameProp.mVert   = dvjMiddle;
   mPinNameProp.mMirror = 0;
 
-  mIdentProp.mLayer.set( QString(LID0_IDENT LID1_TOP) );    //Layer of ident
+  mIdentProp.mLayer.set( QString(LID0_IDENT) );    //Layer of ident
   mIdentProp.mFont   = 0;
-  mIdentProp.mSize   = 1000;
+  mIdentProp.mSize   = 350;
   mIdentProp.mDir    = da0;
   mIdentProp.mHorz   = dhjCenter;
   mIdentProp.mVert   = dvjMiddle;
   mIdentProp.mMirror = 0;
 
   }
-
 

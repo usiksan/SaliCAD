@@ -205,5 +205,6 @@
         <file>pic/lampEnable.png</file>
         <file>pic/objRulesCheck.png</file>
         <file>pic/objShowRuleErrors.png</file>
+        <file>pic/symbolMasterConnector.png</file>
     </qresource>
 </RCC>
