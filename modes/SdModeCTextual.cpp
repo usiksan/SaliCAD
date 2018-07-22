@@ -85,6 +85,7 @@ void SdModeCTextual::keyDown(int key, QChar ch)
       cancelEdit();
       break;
     case Qt::Key_Return :
+    case Qt::Key_Enter :
       applyEdit();
       break;
     default :
