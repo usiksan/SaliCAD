@@ -12,12 +12,13 @@ Description
   Properties bar for wires
 */
 #include "SdPropBarWire.h"
+#include "SdStringHistory.h"
 #include "objects/SdUtil.h"
 #include <QLineEdit>
 
-static QList<double> prevWidth;
+static SdStringHistory prevWidth;
 
-static QList<QString> prevWires;
+static SdStringHistory prevWires;
 
 SdPropBarWire::SdPropBarWire( const QString title ) :
   SdPropBar( title )
@@ -26,9 +27,9 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
   mWidth->setEditable(true);
   //Fill width list with previous values
   if( prevWidth.count() == 0 )
-    prevWidth.append( 0.0 );
-  for( double v : prevWidth )
-    mWidth->addItem( QString::number( v, 'f', 3) );
+    prevWidth.addDouble( 0.0 );
+  for( const QString &v : prevWidth )
+    mWidth->addItem( v );
   //Select first item
   mWidth->setCurrentIndex(0);
   mWidth->lineEdit()->setValidator( new QRegExpValidator( QRegExp("[0-9]{1,3}((\\.|\\,)[0-9]{0,3})?")) );
@@ -36,14 +37,13 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
   mWidth->setMinimumWidth(80);
 
   //on complete editing
-  connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [=](){
-    setWidth( SdUtil::str2phys( mWidth->currentText() ) );
+  connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [=]() {
+    prevWidth.reorderComboBoxDoubleString( mWidth );
     emit propChanged();
     });
   //on select other width
-  connect( mWidth, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
-    Q_UNUSED(index)
-    setWidth( SdUtil::str2phys( mWidth->currentText() ) );
+  connect( mWidth, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int) {
+    prevWidth.reorderComboBoxDoubleString( mWidth );
     emit propChanged();
     });
 
@@ -56,22 +56,21 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
   mWireName->setEditable(true);
   //Fill name list with previous wire names
   if( prevWires.count() == 0 )
-    prevWires.append( QStringLiteral("----") );
-  for( QString v : prevWires )
+    prevWires.addString( QStringLiteral("----") );
+  for( const QString &v : prevWires )
     mWireName->addItem( v );
   //Select first item
   mWireName->setCurrentIndex(0);
   mWireName->setMinimumWidth(80);
 
   //on complete editing
-  connect( mWireName->lineEdit(), &QLineEdit::editingFinished, [=](){
-    setWireName( mWireName->currentText() );
+  connect( mWireName->lineEdit(), &QLineEdit::editingFinished, [=]() {
+    prevWires.reorderComboBoxString( mWireName );
     emit propChanged();
     });
   //on select other width
-  connect( mWireName, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
-    Q_UNUSED(index)
-    setWireName( mWireName->currentText() );
+  connect( mWireName, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int) {
+    prevWires.reorderComboBoxString( mWireName );
     emit propChanged();
     });
 
@@ -147,7 +146,7 @@ void SdPropBarWire::setPropWire(SdPropLine *propLine, double ppm, int enterType,
     mPPM = ppm;
     if( propLine->mWidth.isValid() ) {
       mWidth->setCurrentText( propLine->mWidth.log2Phis(mPPM) );
-      setWidth( propLine->mWidth.getDouble() * mPPM );
+      prevWidth.reorderComboBoxDoubleString( mWidth );
       }
     else
       mWidth->setCurrentText( QString()  );
@@ -160,6 +159,7 @@ void SdPropBarWire::setPropWire(SdPropLine *propLine, double ppm, int enterType,
 
     //Current wire name
     mWireName->setCurrentText( wireName );
+    prevWires.reorderComboBoxString( mWireName );
     }
   }
 
@@ -193,42 +193,7 @@ void SdPropBarWire::getPropWire(SdPropLine *propLine, int *enterType, QString *w
 
 
 
-void SdPropBarWire::setWidth(double width)
-  {
-  int index = prevWidth.indexOf( width );
-  if( index < 0 ) {
-    //new value, insert
-    if( prevWidth.count() >= WIRE_WIDTH_PREV_COUNT )
-      //List of previous width is full. Remove last value.
-      prevWidth.removeLast();
-    prevWidth.insert( 0, width );
-    }
-  else {
-    //Move used value to top
-    prevWidth.removeAt( index );
-    prevWidth.insert( 0, width );
-    }
-  }
 
-
-
-
-void SdPropBarWire::setWireName(const QString wire)
-  {
-  int index = prevWires.indexOf( wire );
-  if( index < 0 ) {
-    //new value, insert
-    if( prevWires.count() >= WIRE_WIDTH_PREV_COUNT )
-      //List of previous width is full. Remove last value.
-      prevWires.removeLast();
-    prevWires.insert( 0, wire );
-    }
-  else {
-    //Move used value to top
-    prevWires.removeAt( index );
-    prevWires.insert( 0, wire );
-    }
-  }
 
 
 

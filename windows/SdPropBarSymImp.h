@@ -9,13 +9,14 @@ Web
   www.saliLab.ru
 
 Description
+  Symbol implementation properties bar for component insertion and edit in sheet editor
 */
 #ifndef SDPROPBARSYMIMP_H
 #define SDPROPBARSYMIMP_H
 
 #include <QToolBar>
 
-class SdPropSymImp;
+struct SdPropSymImp;
 
 class SdPropBarSymImp : public QToolBar
   {

@@ -13,13 +13,16 @@ Description
 */
 #include "SdPropBarLinear.h"
 #include "objects/SdUtil.h"
+#include "SdStringHistory.h"
 #include <QList>
 #include <QLineEdit>
 #include <QDoubleValidator>
 #include <QIcon>
 #include <QDebug>
 
-static QList<double> prevWidth;
+
+static SdStringHistory prevWidth;
+//static QList<double> prevWidth;
 
 SdPropBarLinear::SdPropBarLinear(const QString title) :
   SdPropBar( title )
@@ -28,9 +31,9 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
   mWidth->setEditable(true);
   //Fill width list with previous values
   if( prevWidth.count() == 0 )
-    prevWidth.append( 0.0 );
-  for( double v : prevWidth )
-    mWidth->addItem( QString::number( v, 'f', 3) );
+    prevWidth.addDouble( 0.0 );
+  for( const QString &v : prevWidth )
+    mWidth->addItem( v );
   //Select first item
   mWidth->setCurrentIndex(0);
   mWidth->lineEdit()->setValidator( new QRegExpValidator( QRegExp("[0-9]{1,3}((\\.|\\,)[0-9]{0,3})?")) );
@@ -39,13 +42,13 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
 
   //on complete editing
   connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [=](){
-    setWidth( SdUtil::str2phys( mWidth->currentText() ) );
+    prevWidth.reorderComboBoxDoubleString( mWidth );
     emit propChanged();
     });
   //on select other width
   connect( mWidth, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
     Q_UNUSED(index)
-    setWidth( SdUtil::str2phys( mWidth->currentText() ) );
+    prevWidth.reorderComboBoxDoubleString( mWidth );
     emit propChanged();
     });
 
@@ -121,7 +124,7 @@ void SdPropBarLinear::setPropLine(SdPropLine *propLine, double ppm, int enterTyp
     mPPM = ppm;
     if( propLine->mWidth.isValid() ) {
       mWidth->setCurrentText( propLine->mWidth.log2Phis(mPPM) );
-      setWidth( propLine->mWidth.getDouble() * mPPM );
+      prevWidth.reorderComboBoxDoubleString( mWidth );
       }
     else
       mWidth->setCurrentText( QString()  );
@@ -155,26 +158,6 @@ void SdPropBarLinear::getPropLine(SdPropLine *propLine, int *enterType )
     if( mEnterOrtho->isChecked() ) *enterType = dleOrtho;
     else if( mEnter45degree->isChecked() ) *enterType = dle45degree;
     else *enterType = dleAnyDegree;
-    }
-  }
-
-
-
-//Set line width
-void SdPropBarLinear::setWidth(double width)
-  {
-  int index = prevWidth.indexOf( width );
-  if( index < 0 ) {
-    //new value, insert
-    if( prevWidth.count() >= LINEAR_WIDTH_PREV_COUNT )
-      //List of previous width is full. Remove last value.
-      prevWidth.removeLast();
-    prevWidth.insert( 0, width );
-    }
-  else {
-    //Move used value to top
-    prevWidth.removeAt( index );
-    prevWidth.insert( 0, width );
     }
   }
 

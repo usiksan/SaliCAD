@@ -38,6 +38,12 @@ class SdPropAngle : public SdPropInt
     void        append( SdPropAngle an );              //Добавить значение
     SdPropAngle complement() const;                    //Дополнение данного угла до 360 градусов
 
+    //Convert angle to string representation
+    QString     toString() const;
+
+    //Create angle from string representation
+    static SdPropAngle fromString( const QString str );
+
   };
 
 #endif // SSdAngle_H

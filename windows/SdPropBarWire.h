@@ -48,8 +48,6 @@ class SdPropBarWire : public SdPropBar
     void getPropWire( SdPropLine *propLine, int *enterType, QString *wireName );
 
   private:
-    void setWidth( double width );
-    void setWireName( const QString wire );
     void setVertexType( int type );
     void setLineType( int type );
   };

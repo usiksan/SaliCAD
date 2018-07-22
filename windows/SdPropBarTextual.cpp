@@ -12,6 +12,7 @@ Description
   Properties bar for text and other text based objects
 */
 #include "SdPropBarTextual.h"
+#include "SdStringHistory.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdUtil.h"
 #include <QList>
@@ -20,7 +21,7 @@ Description
 #include <QIcon>
 #include <QDebug>
 
-static QList<double> prevSize;
+static SdStringHistory prevSize;
 
 SdPropBarTextual::SdPropBarTextual(const QString title) :
   SdPropBar( title )
@@ -43,23 +44,22 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
   mSize->setEditable(true);
   //Fill font sizes list with previous values
   if( prevSize.count() == 0 )
-    prevSize.append( 3.5 );
-  for( double v : prevSize )
-    mSize->addItem( QString::number( v, 'f', 2) );
+    prevSize.addDouble( 3.5 );
+  for( const QString &v : prevSize )
+    mSize->addItem( v );
   //Select first item
   mSize->setCurrentIndex(0);
   mSize->lineEdit()->setValidator( new QRegExpValidator( QRegExp("[0-9]{0,3}((\\.|\\,)[0-9]{0,3})?")) );
   mSize->setMinimumWidth(80);
 
   //on complete editing
-  connect( mSize->lineEdit(), &QLineEdit::editingFinished, [=](){
-    setSize( SdUtil::str2phys( mSize->currentText() ) );
+  connect( mSize->lineEdit(), &QLineEdit::editingFinished, [=]() {
+    prevSize.reorderComboBoxDoubleString( mSize );
     emit propChanged();
     });
   //on select other size
-  connect( mSize, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
-    Q_UNUSED(index)
-    setSize( SdUtil::str2phys( mSize->currentText() ) );
+  connect( mSize, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int) {
+    prevSize.reorderComboBoxDoubleString( mSize );
     emit propChanged();
     });
 
@@ -159,6 +159,10 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
 
   }
 
+
+
+
+
 void SdPropBarTextual::setPropText(SdPropText *propText, double ppm)
   {
   if( propText ) {
@@ -172,7 +176,7 @@ void SdPropBarTextual::setPropText(SdPropText *propText, double ppm)
     mPPM = ppm;
     if( propText->mSize.isValid() ) {
       mSize->setCurrentText( propText->mSize.log2Phis(mPPM) );
-      setSize( propText->mSize.getDouble() * mPPM );
+      prevSize.reorderComboBoxDoubleString( mSize );
       }
     else
       mSize->setCurrentText( QString( ) );
@@ -240,22 +244,6 @@ void SdPropBarTextual::setFont(int index)
 
 
 
-void SdPropBarTextual::setSize(double size)
-  {
-  int index = prevSize.indexOf( size );
-  if( index < 0 ) {
-    //new value, insert
-    if( prevSize.count() >= FONT_SIZE_PREV_COUNT )
-      //List of previous width is full. Remove last value.
-      prevSize.removeLast();
-    prevSize.insert( 0, size );
-    }
-  else {
-    //Move used value to top
-    prevSize.removeAt( index );
-    prevSize.insert( 0, size );
-    }
-  }
 
 
 
@@ -269,12 +257,20 @@ void SdPropBarTextual::setVerticalAlignment(int vert)
 
 
 
+
+
+
+
 void SdPropBarTextual::setHorizontalAlignment(int horz)
   {
   mHorzLeft->setChecked( horz == dhjLeft );
   mHorzCenter->setChecked( horz == dhjCenter );
   mHorzRight->setChecked( horz == dhjRight );
   }
+
+
+
+
 
 
 

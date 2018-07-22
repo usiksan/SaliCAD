@@ -13,7 +13,7 @@ Description
 */
 
 #include "SdPropAngle.h"
-
+#include "SdUtil.h"
 
 
 SdPropAngle::SdPropAngle(int sour)
@@ -78,5 +78,23 @@ void SdPropAngle::append( SdPropAngle an ) {
 
 SdPropAngle SdPropAngle::complement() const {
   return SdPropAngle( 360000 - mValue );
+  }
+
+
+
+
+//Convert angle to string representation
+QString SdPropAngle::toString() const
+  {
+  return SdUtil::log2physStr( mValue, 0.001 );
+  }
+
+
+
+
+//Create angle from string representation
+SdPropAngle SdPropAngle::fromString(const QString str)
+  {
+  return SdPropAngle( SdUtil::phys2log( str, 0.001 ) );
   }
 

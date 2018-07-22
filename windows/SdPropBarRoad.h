@@ -40,7 +40,6 @@ class SdPropBarRoad : public SdPropBarStratum
     void getPropRoad( SdPropRoad *propRoad, int *enterType );
 
   private:
-    void setWidth( double width );
     void setVertexType( int type );
   };
 

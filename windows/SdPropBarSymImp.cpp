@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Symbol implementation properties bar for component insertion and edit in sheet editor
 */
 #include "SdPropBarSymImp.h"
 #include "objects/SdPropSymImp.h"

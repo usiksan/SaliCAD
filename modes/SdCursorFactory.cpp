@@ -35,7 +35,7 @@ static QCursor createCursor( int cursorId )
     case CUR_RECT        : return loadWindowsCursor( QString(":/pic/rect.cur") );
     case CUR_REGION      : return loadWindowsCursor( QString(":/pic/region.cur") );
     case CUR_ROTATE      : return loadWindowsCursor( QString(":/pic/rotate.cur") );
-    case CUR_RULLER      : return loadWindowsCursor( QString(":/pic/ruller.cur") );
+    case CUR_RULLER      : return loadWindowsCursor( QString(":/pic/ruler.cur") );
     case CUR_SEL         : return loadWindowsCursor( QString(":/pic/sel.cur") );
     case CUR_SIZE_LINEAR : return loadWindowsCursor( QString(":/pic/sizeLinear.cur") );
     case CUR_SIZE_RADIAL : return loadWindowsCursor( QString(":/pic/sizeRadial.cur") );

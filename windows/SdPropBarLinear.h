@@ -44,7 +44,6 @@ class SdPropBarLinear : public SdPropBar
     void getPropLine( SdPropLine *propLine, int *enterType );
 
   private:
-    void setWidth( double width );
     void setVertexType( int type );
     void setLineType( int type );
   };

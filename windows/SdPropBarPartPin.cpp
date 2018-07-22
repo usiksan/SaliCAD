@@ -12,7 +12,10 @@ Description
   Properties bar for part pin
 */
 #include "SdPropBarPartPin.h"
+#include "SdStringHistory.h"
 #include <QLineEdit>
+
+static SdStringHistory pinTypeHistory;
 
 SdPropBarPartPin::SdPropBarPartPin(const QString title) :
   SdPropBar( title )
@@ -29,16 +32,17 @@ SdPropBarPartPin::SdPropBarPartPin(const QString title) :
 
   mPinType = new QComboBox();
   mPinType->setEditable(true);
-  mPinType->addItem( QString() );
+  for( const QString &str : pinTypeHistory )
+    mPinType->addItem( str );
   mPinType->setMinimumWidth(150);
 
   //on select other pin type
-  connect( mPinType, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
-    Q_UNUSED(index)
-    setPinType();
+  connect( mPinType, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int){
+    pinTypeHistory.reorderComboBoxString( mPinType );
+    emit propChanged();
     });
   connect( mPinType->lineEdit(), &QLineEdit::editingFinished, [=](){
-    setPinType();
+    pinTypeHistory.reorderComboBoxString( mPinType );
     emit propChanged();
     });
   addWidget( mPinType );
@@ -64,6 +68,7 @@ void SdPropBarPartPin::setPropPartPin(SdPropPartPin *propPartPin)
 
     //Set current pin type
     mPinType->setCurrentText( propPartPin->mPinType.str() );
+    pinTypeHistory.reorderComboBoxString( mPinType );
     }
   }
 
@@ -95,19 +100,3 @@ void SdPropBarPartPin::getPropPartPin(SdPropPartPin *propPartPin)
 
 
 
-void SdPropBarPartPin::setPinType()
-  {
-  QString pinType = mPinType->currentText();
-  if( !pinType.isEmpty() ) {
-    //Reorder previous pin type list
-    int i = mPinType->findText( pinType );
-    if( i >= 0 ) {
-      //New pin type already present in previous list
-      //move it to first position
-      mPinType->removeItem(i);
-      }
-    mPinType->insertItem(1, pinType);
-    }
-  mPinType->setCurrentText( pinType );
-  emit propChanged();
-  }

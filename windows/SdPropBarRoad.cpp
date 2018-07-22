@@ -12,10 +12,11 @@ Description
   Properties bar for tracing road
 */
 #include "SdPropBarRoad.h"
+#include "SdStringHistory.h"
 #include "objects/SdUtil.h"
 #include <QLineEdit>
 
-static QList<double> prevWidth;
+static SdStringHistory prevWidth;
 
 
 SdPropBarRoad::SdPropBarRoad(const QString title) :
@@ -25,23 +26,22 @@ SdPropBarRoad::SdPropBarRoad(const QString title) :
   mWidth->setEditable(true);
   //Fill width list with previous values
   if( prevWidth.count() == 0 )
-    prevWidth.append( 0.0 );
-  for( double v : prevWidth )
-    mWidth->addItem( QString::number( v, 'f', 3) );
+    prevWidth.addDouble( 0.0 );
+  for( const QString &str : prevWidth )
+    mWidth->addItem( str );
   //Select first item
   mWidth->setCurrentIndex(0);
   mWidth->lineEdit()->setValidator( new QRegExpValidator( QRegExp("[0-9]{1,3}((\\.|\\,)[0-9]{0,3})?")) );
   mWidth->setMinimumWidth(80);
 
   //on complete editing
-  connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [=](){
-    setWidth( SdUtil::str2phys( mWidth->currentText() ) );
+  connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [=]() {
+    prevWidth.reorderComboBoxDoubleString( mWidth );
     emit propChanged();
     });
   //on select other width
-  connect( mWidth, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
-    Q_UNUSED(index)
-    setWidth( SdUtil::str2phys( mWidth->currentText() ) );
+  connect( mWidth, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int){
+    prevWidth.reorderComboBoxDoubleString( mWidth );
     emit propChanged();
     });
 
@@ -99,7 +99,7 @@ void SdPropBarRoad::setPropRoad(SdPropRoad *propRoad, double ppm, int enterType)
     mPPM = ppm;
     if( propRoad->mWidth.isValid() ) {
       mWidth->setCurrentText( propRoad->mWidth.log2Phis(mPPM)  );
-      setWidth( propRoad->mWidth.getDouble() * mPPM );
+      prevWidth.reorderComboBoxDoubleString( mWidth );
       }
     else
       mWidth->setCurrentText( QString()  );
@@ -137,23 +137,6 @@ void SdPropBarRoad::getPropRoad(SdPropRoad *propRoad, int *enterType)
 
 
 
-
-void SdPropBarRoad::setWidth(double width)
-  {
-  int index = prevWidth.indexOf( width );
-  if( index < 0 ) {
-    //new value, insert
-    if( prevWidth.count() >= ROAD_WIDTH_PREV_COUNT )
-      //List of previous width is full. Remove last value.
-      prevWidth.removeLast();
-    prevWidth.insert( 0, width );
-    }
-  else {
-    //Move used value to top
-    prevWidth.removeAt( index );
-    prevWidth.insert( 0, width );
-    }
-  }
 
 
 
