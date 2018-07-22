@@ -9,28 +9,27 @@ Web
   www.saliLab.ru
 
 Description
-  Mode for symbol pin origin
+  Mode for distance measurement
 */
-#ifndef SDMODECORIGIN_H
-#define SDMODECORIGIN_H
+#ifndef SDMODETEMPRULLER_H
+#define SDMODETEMPRULLER_H
 
-#include "SdModeCommon.h"
+#include "SdModeTemp.h"
 
-class SdModeCOrigin : public SdModeCommon
+class SdModeTRuller : public SdModeTemp
   {
-  protected:
-    int mOriginSize; //Size for drawing origin symbol
-    int mModeIndex;
+    SdPoint mFirst;
+    SdPoint mSecond;
+    const int sFirst = 0, sSecond = 1;
   public:
-    SdModeCOrigin( SdWEditorGraph *editor, SdProjectItem *obj, int osize );
+    SdModeTRuller( SdWEditorGraph *editor, SdProjectItem *obj );
 
     // SdMode interface
   public:
-    virtual void    activate() override;
     virtual void    drawDynamic(SdContext *ctx) override;
     virtual void    enterPoint(SdPoint enter) override;
     virtual void    cancelPoint(SdPoint) override;
-    virtual void    movePoint(SdPoint) override;
+    virtual void    movePoint(SdPoint pos) override;
     virtual QString getStepHelp() const override;
     virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;
@@ -38,4 +37,4 @@ class SdModeCOrigin : public SdModeCommon
     virtual int     getIndex() const override;
   };
 
-#endif // SDMODECORIGIN_H
+#endif // SDMODETEMPRULLER_H

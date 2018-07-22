@@ -123,6 +123,7 @@ class SdWEditorGraph : public SdWEditor
     virtual void           cmViewZoomIn() override;
     virtual void           cmViewZoomOut() override;
     virtual void           cmViewWindow() override;
+    virtual void           cmViewMeasurement() override;
 
     virtual void           cmPropChanged() override;
 

@@ -56,6 +56,15 @@ void SdModeCOrigin::enterPoint( SdPoint enter )
 
 
 
+void SdModeCOrigin::cancelPoint(SdPoint)
+  {
+  cancelMode();
+  }
+
+
+
+
+
 void SdModeCOrigin::movePoint(SdPoint)
   {
   }

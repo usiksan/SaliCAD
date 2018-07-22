@@ -204,7 +204,8 @@ SOURCES += \
     master/SdDMasterPartDoubleRect.cpp \
     master/SdDMasterPartDoubleSide.cpp \
     master/SdDMasterSymbol.cpp \
-    master/SdDMasterSymbolConnector.cpp
+    master/SdDMasterSymbolConnector.cpp \
+    modes/SdModeTRuller.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -405,7 +406,8 @@ HEADERS  += \
     master/SdDMasterPartDoubleRect.h \
     master/SdDMasterPartDoubleSide.h \
     master/SdDMasterSymbol.h \
-    master/SdDMasterSymbolConnector.h
+    master/SdDMasterSymbolConnector.h \
+    modes/SdModeTRuller.h
 
 DISTFILES += \
     license.txt

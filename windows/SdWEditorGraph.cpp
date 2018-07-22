@@ -31,6 +31,7 @@ Description
 #include "modes/SdModeView.h"
 #include "modes/SdModeTZoomer.h"
 #include "modes/SdModeTZoomWindow.h"
+#include "modes/SdModeTRuller.h"
 #include "modes/SdModeCLinearArc.h"
 #include "modes/SdModeCLinearLine.h"
 #include "modes/SdModeCLinearRect.h"
@@ -353,6 +354,14 @@ void SdWEditorGraph::cmViewZoomOut()
 void SdWEditorGraph::cmViewWindow()
   {
   modeCall( new SdModeTZoomWindow( this, getProjectItem() ) );
+  }
+
+
+
+
+void SdWEditorGraph::cmViewMeasurement()
+  {
+  modeCall( new SdModeTRuller( this, getProjectItem() ) );
   }
 
 
