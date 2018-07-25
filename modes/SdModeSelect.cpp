@@ -23,6 +23,7 @@ Description
 #include "windows/SdPropBarLinear.h"
 #include "windows/SdPropBarPartPin.h"
 #include "windows/SdPropBarSymImp.h"
+#include "windows/SdPropBarPartImp.h"
 #include "windows/SdPropBarSymPin.h"
 #include "windows/SdPropBarTextual.h"
 #include "windows/SdPropBarRoad.h"
@@ -749,7 +750,8 @@ void SdModeSelect::propGetFromBar()
       }
       break;
     case PB_PART_IMP : {
-      //TODO D027 partPropBar in select mode
+      SdPropBarPartImp *barPartImp = dynamic_cast<SdPropBarPartImp*>(SdWCommand::getModeBar(PB_PART_IMP));
+      barPartImp->getPropPartImp( &(mLocalProp.mPartImpProp) );
       }
       break;
     case PB_ROAD : {
@@ -819,7 +821,8 @@ void SdModeSelect::propSetToBar()
       }
       break;
     case PB_PART_IMP : {
-      //TODO D026 partPropBar in select mode
+      SdPropBarPartImp *barPartImp = dynamic_cast<SdPropBarPartImp*>(SdWCommand::getModeBar(PB_PART_IMP));
+      barPartImp->setPropPartImp( &(mLocalProp.mPartImpProp) );
       }
       break;
     case PB_ROAD : {

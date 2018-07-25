@@ -86,6 +86,9 @@ SdPropAngle SdPropAngle::complement() const {
 //Convert angle to string representation
 QString SdPropAngle::toString() const
   {
+  if( mValue < 0 )
+    //For undefined angles
+    return QString();
   return SdUtil::log2physStr( mValue, 0.001 );
   }
 

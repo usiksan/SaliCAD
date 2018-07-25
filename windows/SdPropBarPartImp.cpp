@@ -13,6 +13,7 @@ Description
 #include "SdPropBarPartImp.h"
 #include "SdStringHistory.h"
 #include "objects/SdPropAngle.h"
+#include "objects/SdPropPartImp.h"
 #include <QLabel>
 #include <QLineEdit>
 #include <QComboBox>
@@ -48,12 +49,12 @@ SdPropBarPartImp::SdPropBarPartImp(const QString title) :
   addWidget( mDirection );
 
 
-  mMirror = addAction( QIcon(QStringLiteral(":/pic/dthMirror.png")), tr("Part mirroring") );
-  mMirror->setCheckable(true);
-  connect( mMirror, &QAction::triggered, [=](bool checked){
-    Q_UNUSED(checked)
-    emit propChanged();
-    });
+//  mMirror = addAction( QIcon(QStringLiteral(":/pic/dthMirror.png")), tr("Part mirroring") );
+//  mMirror->setCheckable(true);
+//  connect( mMirror, &QAction::triggered, [=](bool checked){
+//    Q_UNUSED(checked)
+//    emit propChanged();
+//    });
 
   mBottom = addAction( QIcon(QStringLiteral(":/pic/dthMirror.png")), tr("Part at bottom side") );
   mBottom->setCheckable(true);
@@ -67,7 +68,14 @@ SdPropBarPartImp::SdPropBarPartImp(const QString title) :
 
 void SdPropBarPartImp::setPropPartImp(SdPropPartImp *propPartImp)
   {
+  if( propPartImp ) {
+    //Set angle
+    mDirection->setCurrentText( propPartImp->mAngle.toString() );
+    reorderDirection();
 
+    //Set bottom side
+    mBottom->setChecked( propPartImp->mSide.isBottom() );
+    }
   }
 
 
@@ -75,7 +83,15 @@ void SdPropBarPartImp::setPropPartImp(SdPropPartImp *propPartImp)
 
 void SdPropBarPartImp::getPropPartImp(SdPropPartImp *propPartImp)
   {
+  if( propPartImp ) {
+    //Get direction
+    QString angle = mDirection->currentText();
+    if( !angle.isEmpty() )
+      propPartImp->mAngle = SdPropAngle::fromString( angle );
 
+    if( mBottom->isChecked() ) propPartImp->mSide = stmBottom;
+    else propPartImp->mSide = stmTop;
+    }
   }
 
 
@@ -85,6 +101,8 @@ void SdPropBarPartImp::getPropPartImp(SdPropPartImp *propPartImp)
 void SdPropBarPartImp::reorderDirection()
   {
   QString str = mDirection->currentText();
+  if( str.isEmpty() )
+    return;
   int i = prevAngle.addDoubleString( str );
   if( i >= 0 )
     mDirection->removeItem( i + 4 );

@@ -24,6 +24,7 @@ Description
 #include "SdPropBarSymPin.h"
 #include "SdPropBarPartPin.h"
 #include "SdPropBarSymImp.h"
+#include "SdPropBarPartImp.h"
 #include "SdPropBarRoad.h"
 #include "SdPropBarWire.h"
 #include "objects/SdEnvir.h"
@@ -544,6 +545,12 @@ void SdWCommand::createToolBars(SdWMain *frame)
   isbar->setVisible(false);
   mbarTable[PB_SYM_IMP] = isbar;
   isbar->connect( isbar, &SdPropBarSymImp::propChanged, frame, &SdWMain::cmPropertiesChange );
+
+  SdPropBarPartImp *ipbar = new SdPropBarPartImp( QStringLiteral("Part implement") );
+  frame->addToolBar( ipbar );
+  ipbar->setVisible(false);
+  mbarTable[PB_PART_IMP] = ipbar;
+  ipbar->connect( ipbar, &SdPropBarPartImp::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   SdPropBarRoad *rbar = new SdPropBarRoad( QStringLiteral("Road") );
   frame->addToolBar( rbar );
