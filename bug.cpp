@@ -1,8 +1,8 @@
 
-//B017 bugs
+//B020 bugs
 //F001 fatal
 //C001 critical
-//D039 do
+//D041 do
 
 
 
@@ -21,8 +21,20 @@
 
 //TODO B016 insertComponent mode: when select component and after select symbol part remain from component
 
+//TODO D040 show close point on region as smart point
+
+//TODO B019 in trace mode pads shown not at place
+
+//TODO B020 in trace mode show smart start point
+
+//TODO D041 change id only name and author (without creation time).
+//Creation time save in database. It allow update objects with newly created.
+//When name test - use also data base objects (simple test object id)
+
 //===================================================================================
 //Fixed:
+
+//B018 when handle enter coord wrong axiz
 
 //D027 partPropBar in select mode
 

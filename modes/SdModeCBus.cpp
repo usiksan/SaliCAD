@@ -243,7 +243,7 @@ void SdModeCBus::movePoint( SdPoint p )
 
 
 
-void SdModeCBus::enterPrev()
+SdPoint SdModeCBus::enterPrev()
   {
   switch( getStep() ) {
     case sNextNet :
@@ -274,6 +274,7 @@ void SdModeCBus::enterPrev()
         }
       break;
     }
+  return mSmartOrigin;
 //  update();
   }
 

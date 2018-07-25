@@ -43,7 +43,7 @@ class SdModeCSymPin : public SdModeCTextual
     virtual void    enterPoint(SdPoint p) override;
     virtual void    cancelPoint(SdPoint) override;
     virtual void    movePoint(SdPoint) override;
-    virtual void    enterPrev() override;
+    virtual SdPoint enterPrev() override;
     virtual QString getStepHelp() const override;
     virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;

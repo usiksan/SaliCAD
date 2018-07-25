@@ -50,7 +50,7 @@ class SdModeCNetWire : public SdModeCommon
     virtual void    enterPoint(SdPoint) override;
     virtual void    cancelPoint(SdPoint) override;
     virtual void    movePoint(SdPoint p) override;
-    virtual void    enterPrev() override;
+    virtual SdPoint enterPrev() override;
     //virtual bool getInfo(SdPoint p, QString &info) override;
     virtual QString getStepHelp() const override;
     virtual QString getModeThema() const override;

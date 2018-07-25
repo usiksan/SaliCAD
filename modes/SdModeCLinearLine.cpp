@@ -108,7 +108,7 @@ void SdModeCLinearLine::movePoint( SdPoint p )
 
 
 
-void SdModeCLinearLine::enterPrev()
+SdPoint SdModeCLinearLine::enterPrev()
   {
   if( sdEnvir->mIsSmart && mSmartType ) {
     if( getStep() ) {
@@ -118,6 +118,7 @@ void SdModeCLinearLine::enterPrev()
     else
       enterPoint( mSmartPoint );
     }
+  return mSmartPoint;
   }
 
 

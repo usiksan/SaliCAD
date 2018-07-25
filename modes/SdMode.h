@@ -78,7 +78,7 @@ class SdMode
     virtual bool    wheel( SdPoint ) { return false; }      //Вращение колеса мыши
     virtual void    keyDown( int key, QChar ch );           //Нажатие кнопки
     virtual void    keyUp( int key, QChar ch );             //Отпускание клавиши
-    virtual void    enterPrev() {}                          //Повторение ввода предыдущего сеанса (разумный ввод)
+    virtual SdPoint enterPrev() { return SdPoint(); }       //Повторение ввода предыдущего сеанса (разумный ввод)
     virtual void    beginDrag( SdPoint ) {}                 //Начало перетаскивания
     virtual void    dragPoint( SdPoint ) {}                 //Перетаскивание
     virtual void    stopDrag( SdPoint ) {}                  //Конец перетаскивания

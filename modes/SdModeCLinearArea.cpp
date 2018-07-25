@@ -86,11 +86,13 @@ void SdModeCLinearArea::movePoint(SdPoint p)
 
 
 
-void SdModeCLinearArea::enterPrev()
+SdPoint SdModeCLinearArea::enterPrev()
   {
   if( getStep() == sNextPoint && mList.count() > 2 ) {
     addArea();
+    return mList.at(0);
     }
+  return SdPoint();
   }
 
 

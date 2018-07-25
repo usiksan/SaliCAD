@@ -123,9 +123,10 @@ int SdModeCLinearCircle::getIndex() const
 
 
 
-void SdModeCLinearCircle::enterPrev()
+SdPoint SdModeCLinearCircle::enterPrev()
   {
   if( sdEnvir->mIsSmart && mSmartType )
     enterPoint( mSmartPoint );
+  return mSmartPoint;
   }
 

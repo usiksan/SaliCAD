@@ -202,7 +202,7 @@ void SdModeCNetWire::movePoint( SdPoint p )
 
 
 
-void SdModeCNetWire::enterPrev()
+SdPoint SdModeCNetWire::enterPrev()
   {
   mUndo->begin( QObject::tr("Insert smart net"), mObject );
   if( getStep() ) {
@@ -224,6 +224,7 @@ void SdModeCNetWire::enterPrev()
   update();
   calcSecondSmart();
   mFirst = mPrevMove;
+  return mFirst;
   }
 
 

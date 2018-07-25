@@ -193,10 +193,11 @@ void SdModeCPartPin::movePoint(SdPoint p)
 
 
 
-void SdModeCPartPin::enterPrev()
+SdPoint SdModeCPartPin::enterPrev()
   {
   if( sdEnvir->mIsSmart && mSmartType )
     enterPoint( mSmartPoint );
+  return mSmartPoint;
   }
 
 

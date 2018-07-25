@@ -26,6 +26,9 @@ SdPropBarPartImp::SdPropBarPartImp(const QString title) :
   {
   addWidget( new QLabel(tr("Direction:")) );
   mDirection = new QComboBox();
+  mDirection->setMinimumWidth(150);
+  //Enable handle enter angles
+  mDirection->setEditable(true);
   //Main angles
   mDirection->addItem( QIcon(QString(":/pic/textDirLR.png")), QString("0") );
   mDirection->addItem( QIcon(QString(":/pic/textDirBT.png")), QString("90") );

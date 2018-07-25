@@ -193,10 +193,11 @@ void SdModeCSymPin::movePoint( SdPoint p )
 
 
 
-void SdModeCSymPin::enterPrev()
+SdPoint SdModeCSymPin::enterPrev()
   {
   if( sdEnvir->mIsSmart && mSmartType )
     enterPoint( mSmartPoint );
+  return mSmartPoint;
   }
 
 

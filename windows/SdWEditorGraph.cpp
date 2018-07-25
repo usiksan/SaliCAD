@@ -490,15 +490,18 @@ void SdWEditorGraph::cmEnterPosition()
   {
   //Handle enter cursor position
   SdDEnterPosition dep(this);
-  if( dep.exec() ) {
+  while( dep.exec() ) {
     //Build point from entered coord
     SdPoint p;
     p.setX( SdUtil::phys2log( dep.getX(), getPPM() ) );
     p.setY( SdUtil::phys2log( dep.getY(), getPPM() ) );
+    //qDebug() << "enter" << p;
     if( dep.getRef() )
       //Referenced coord
-      p.move( mPrevPoint );
+      p.move( mPrevEnter );
+    //qDebug() << "enter" << p;
     //Absolute coord
+    mPrevEnter = p;
     if( modeGet() )
       modeGet()->enterPoint( p );
     }
@@ -720,12 +723,13 @@ void SdWEditorGraph::mousePressEvent(QMouseEvent *event)
   {
   if( modeGet() ) {
     mPrevPoint = pixel2phys( event->pos() );
+    mPrevEnter = mPrevPoint;
     if( event->button() == Qt::LeftButton ) {
       mDownPoint = mPrevPoint;
       modeGet()->enterPoint( mPrevPoint );
       }
     else if( event->button() == Qt::MiddleButton )
-      modeGet()->enterPrev();
+      mPrevEnter = modeGet()->enterPrev();
     else if( event->button() == Qt::RightButton )
       modeGet()->cancelPoint( mPrevPoint );
     }

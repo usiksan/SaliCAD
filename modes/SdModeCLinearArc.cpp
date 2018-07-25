@@ -89,10 +89,11 @@ void SdModeCLinearArc::movePoint(SdPoint p)
 
 
 
-void SdModeCLinearArc::enterPrev()
+SdPoint SdModeCLinearArc::enterPrev()
   {
   if( sdEnvir->mIsSmart && mSmartType )
     enterPoint( mSmartPoint );
+  return mSmartPoint;
   }
 
 

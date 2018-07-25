@@ -95,12 +95,14 @@ void SdModeCLinearRegion::movePoint(SdPoint p)
 
 
 
-void SdModeCLinearRegion::enterPrev()
+SdPoint SdModeCLinearRegion::enterPrev()
   {
   if( getStep() == sNextPoint && mList.count() > 2 ) {
     addPic( new SdGraphLinearRegion( mList, sdGlobalProp->mLineProp ), QObject::tr("Insert region") );
     setStep( sFirstPoint );
+    return mList.at(0);
     }
+  return SdPoint();
   }
 
 

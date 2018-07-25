@@ -36,7 +36,7 @@ class SdModeCLinearArc : public SdModeCLinear
     virtual void    enterPoint(SdPoint enter) override;
     virtual void    cancelPoint(SdPoint) override;
     virtual void    movePoint(SdPoint p) override;
-    virtual void    enterPrev() override;
+    virtual SdPoint enterPrev() override;
     virtual QString getStepHelp() const override;
     virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;

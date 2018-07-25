@@ -51,7 +51,7 @@ class SdModeCBus : public SdModeCommon
     virtual void    enterPoint(SdPoint) override;
     virtual void    cancelPoint(SdPoint) override;
     virtual void    movePoint(SdPoint) override;
-    virtual void    enterPrev() override;
+    virtual SdPoint enterPrev() override;
     virtual QString getStepHelp() const override;
     virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;
