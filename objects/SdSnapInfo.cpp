@@ -22,7 +22,6 @@ SdSnapInfo::SdSnapInfo() :
   mSnapMask(0),
   mDestMask(0),
   mDistance(DBL_MAX),
-  mFlag(0),
   mNetName()
   {
 
@@ -33,11 +32,11 @@ SdSnapInfo::SdSnapInfo() :
 
 bool SdSnapInfo::test(SdPoint p, SdSnapMask mask)
   {
-  if( (mFlag & dsifExExcl) && p == mExclude )
+  if( (mSnapMask & snapExcludeExcl) && p == mExclude )
     return false;
-  if( (mFlag & dsifExSour) && p == mSour )
+  if( (mSnapMask & snapExcludeSour) && p == mSour )
     return false;
-  double d = mSour.getDistance(p);
+  double d = mSour.getSquareDistance(p);
   if( d < mDistance ) {
     mDistance = d;
     mDest     = p;

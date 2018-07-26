@@ -65,10 +65,11 @@ void SdModeCLinearLine::enterPoint(SdPoint enter)
     mPrevMove = mFirst;
     mMiddle = mFirst;
     setStep( sNextPoint );
+
+    //Установить разумную точку как относительное смещение
+    mSmartPoint = mPrevMove + mOffset;
+    mSmartType  = snapPrev;
     }
-  //Установить разумную точку как относительное смещение
-  mSmartPoint = mPrevMove + mOffset;
-  mSmartType  = snapPrev;
   update();
   }
 
@@ -86,18 +87,18 @@ void SdModeCLinearLine::cancelPoint(SdPoint)
 
 void SdModeCLinearLine::movePoint( SdPoint p )
   {
+  if( p == mPrevMove )
+    return;
+
   mPrevMove = p;
   if( getStep() ) mMiddle = calcMiddlePoint( mFirst, mPrevMove, sdGlobalProp->mLineEnterType );
   else mFirst = p;
-  if( getStep() ) mSmartPoint = mFirst + mOffset;
-  else mSmartPoint = p + mOffset;
 
   //Вычислить предполагаемую точку вывода
   SdSnapInfo snap;
   snap.mSour     = mPrevMove;
-  snap.mSnapMask = sdEnvir->mSmartMask;
+  snap.mSnapMask = sdEnvir->mSmartMask | snapExcludeExcl;
   snap.mExclude  = mFirst;
-  snap.mFlag     = dsifExExcl;
   snap.calculate( mObject );
   mSmartType  = snap.mDestMask;
   mSmartPoint = snap.mDest;

@@ -23,7 +23,7 @@ class SdModeCLinearLine : public SdModeCLinear
     SdPoint        mPrevMove;   //Previous entered point
 
     SdPoint        mSmartPoint; //Точка разумного ввода
-    int            mSmartType;  //Тип разумной точки
+    SdSnapMask     mSmartType;  //Тип разумной точки
 
     static SdPoint mOffset;     //Предположительная очередная точка
 

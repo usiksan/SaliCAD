@@ -71,14 +71,16 @@ void SdModeCLinearArc::cancelPoint(SdPoint)
 
 void SdModeCLinearArc::movePoint(SdPoint p)
   {
+  if( p == mPrev )
+    return;
+
   mPrev = p;
 
   //Вычислить предполагаемую точку вывода
   SdSnapInfo snap;
   snap.mSour     = mPrev;
-  snap.mSnapMask = sdEnvir->mSmartMask;
+  snap.mSnapMask = sdEnvir->mSmartMask | snapExcludeExcl;
   snap.mExclude  = mCenter;
-  snap.mFlag     = dsifExExcl;
   snap.calculate( mObject );
   mSmartType  = snap.mDestMask;
   mSmartPoint = snap.mDest;

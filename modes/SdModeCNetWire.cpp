@@ -170,6 +170,11 @@ void SdModeCNetWire::enterPoint( SdPoint enter )
     mFirst = enter;
     mPrevMove = mFirst;
     if( testFirstPoint( mFirst ) ) setStep(sNextPoint);
+    //Reset smart
+    mMiddle = enter;
+    mSmA = mMiddle;
+    mStrEnd = mSmA;
+    mSmEnd = mSmA;
     }
   update();
   }
@@ -378,9 +383,8 @@ void SdModeCNetWire::calcSecondSmart()
   {
   SdSnapInfo snap;
   snap.mSour     = mPrevMove;
-  snap.mSnapMask = snapNearestNet | snapNearestPin;
+  snap.mSnapMask = snapNearestNet | snapNearestPin | snapExcludeSour;
   snap.mExclude  = mPrevMove;
-  snap.mFlag     = dsifExSour;
   snap.mDest     = mPrevMove;
   snap.calculate( getSheet() );
   mFirst = snap.mDest;
@@ -407,9 +411,8 @@ void SdModeCNetWire::calcSmartPoint()
   {
   SdSnapInfo snap;
   snap.mSour     = mPrevMove;
-  snap.mSnapMask = snapNearestPin;
+  snap.mSnapMask = snapNearestPin | snapExcludeExcl;
   snap.mExclude  = mFirst;
-  snap.mFlag     = dsifExExcl;
   SdRect over;
   bool noResult = true;
   getSheet()->forEach( dctSymImp, [&snap, &over, &noResult] (SdObject *obj) -> bool {
@@ -419,10 +422,10 @@ void SdModeCNetWire::calcSmartPoint()
       noResult = false;
       over = sym->getOverRect();
       }
-    return noResult;
+    return true;
     });
 
-  qDebug() << "calcSmartPoint" << noResult << snap.mDest;
+  //qDebug() << "calcSmartPoint" << noResult << snap.mDest;
   if( noResult ) {
     mSmEnd = mPrevMove;
     mSmA   = mSmEnd;
