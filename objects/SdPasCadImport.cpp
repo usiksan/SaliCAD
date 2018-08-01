@@ -13,6 +13,7 @@ Description
 #include "SdPasCadImport.h"
 #include "SdPItemSymbol.h"
 #include "SdPItemComponent.h"
+#include "SdPItemPart.h"
 #include "SdGraphLinear.h"
 #include "SdGraphLinearLine.h"
 #include "SdGraphLinearRect.h"
@@ -23,7 +24,9 @@ Description
 #include "SdGraphText.h"
 #include "SdGraphSymPin.h"
 #include "SdSection.h"
+#include "SdGraphPartPin.h"
 #include "SdEnvir.h"
+#include "SdStratum.h"
 
 #include <QTextCodec>
 #include <QMessageBox>
@@ -303,8 +306,10 @@ SdObject *SdPasCadImport::buildObject(int id)
       return new SdPItemSymbol();
 //#define pasCadObjAliasPic      15 //Компонент (связывает воедино символ, корпус и параметры)
 //#define pasCadObjPrtImpPic     16 //Вхождение корпуса в печатную плату
-//#define pasCadObjPrtPinPic     17 //Ножка корпуса
-//#define pasCadObjPrtPic        18 //Корпус (изображение корпуса компоненты)
+    case pasCadObjPrtPinPic     : //Ножка корпуса
+      return new SdGraphPartPin();
+    case pasCadObjPrtPic        : //Корпус (изображение корпуса компоненты)
+      return new SdPItemPart();
 //#define pasCadObjSheetPic      19 //Лист схемы
 //#define pasCadObjPlatePic      20 //Печатная плата
 //#define pasCadObjListPic       21 //Перечень элементов
@@ -474,8 +479,10 @@ bool SdPasCadImport::readSingleObject(SdContainer *container)
       return readSymbol( obj );
 //#define pasCadObjAliasPic      15 //Компонент (связывает воедино символ, корпус и параметры)
 //#define pasCadObjPrtImpPic     16 //Вхождение корпуса в печатную плату
-//#define pasCadObjPrtPinPic     17 //Ножка корпуса
-//#define pasCadObjPrtPic        18 //Корпус (изображение корпуса компоненты)
+    case pasCadObjPrtPinPic      : //Ножка корпуса
+      return readPartPin( obj );
+    case pasCadObjPrtPic         : //Корпус (изображение корпуса компоненты)
+      return readPart( obj );
 //#define pasCadObjSheetPic      19 //Лист схемы
 //#define pasCadObjPlatePic      20 //Печатная плата
 //#define pasCadObjListPic       21 //Перечень элементов
@@ -536,6 +543,33 @@ bool SdPasCadImport::readSymbol(SdObject *obj)
   // DIdent    ident (NConstString)
   // DRect     overRect
   SdGraphIdent *ident = sym->getIdent();
+  return readIdent( ident );
+  }
+
+
+
+
+
+bool SdPasCadImport::readPart(SdObject *obj)
+  {
+  SdPItemPart *part = dynamic_cast<SdPItemPart*>( obj );
+  if( part == nullptr )
+    return error( QObject::tr("Internal error part") );
+  if( !projectItem(part) )
+    return false;
+
+  //is.Read( &info, sizeof(DPartInfo) );
+  //DInt32      reserv;   //Корпус создан вручную (нельзя удалить автоматически)
+  int reserv = readInt32();
+
+//  picture.Read( is, this );
+  if( !readObjectTable( part ) ) return false;
+
+//  pins.Read( is, this );
+  if( !readObjectTable( part ) ) return false;
+
+//  ident.Read( is );
+  SdGraphIdent *ident = part->getIdent();
   return readIdent( ident );
   }
 
@@ -734,6 +768,39 @@ bool SdPasCadImport::readIdent(SdGraphIdent *ident)
   if( !readTextProp( &(ident->mProp), &(ident->mOrigin) )  ) return false;
   ident->mString = readConstString(3);
   ident->mOverRect = readRectangle();
+  return true;
+  }
+
+
+
+
+bool SdPasCadImport::readPartPin(SdObject *obj)
+  {
+  SdGraphPartPin *pin = dynamic_cast<SdGraphPartPin*>(obj);
+  if( pin == nullptr ) return false;
+
+  //struct DPrtPinInfo {
+  //  DPoint       origin;     //Точка привязки
+  //  DPrtPinProp  prop;       //Свойства вывода
+  //    DLayerId    layer;      //Слой
+  //    DPrtPinType type;       //Тип вывода
+  //    DSide       side;       //Сторона расположения вывода
+  //  DTextProp    numberProp; //Параметры номера
+  //  DTextProp    nameProp;   //Параметры имени
+  //  DName        number;     //Номер
+
+  pin->mOrigin = readPoint();
+  pin->mPinProp.mLayer   = readLayer();
+  pin->mPinProp.mPinType = QString::number( readInt32() );
+  int side = readInt8();
+  if( side == 2 ) pin->mPinProp.mSide = stmBottom;
+  else if( side == 3 || side == 7 ) pin->mPinProp.mSide = stmThrow;
+  else pin->mPinProp.mSide = stmTop;
+
+  if( !readTextProp( &(pin->mNumberProp), &(pin->mNumberPos) )  ) return false;
+  if( !readTextProp( &(pin->mNameProp), &(pin->mNamePos) )  ) return false;
+  pin->mNumber = readName();
+
   return true;
   }
 

@@ -40,19 +40,18 @@ class SdDGetObject : public QDialog
 
     QString                mObjName;      //Object name
     QString                mObjAuthor;    //Object author
-    QString                mObjId;        //Unical object id
+    QString                mObjUid;       //Unical object id
     int                    mSectionIndex; //Section index
 
     quint64                mSort;         //Object select sort (class)
     SdLibraryHeaderList    mHeaderList;
-    QMap<QString,int>      mHeaderMap;
   public:
     explicit SdDGetObject( quint64 sort, const QString title, QWidget *parent = nullptr);
     ~SdDGetObject() override;
 
     QString getObjName() const { return mObjName; }
     QString getObjAuthor() const { return mObjAuthor; }
-    QString getObjId() const { return mObjId; }
+    QString getObjUid() const { return mObjUid; }
     int     getSectionIndex() const { return mSectionIndex; }
 
   public slots:
@@ -81,13 +80,10 @@ class SdDGetObject : public QDialog
     //Fill visual table with mHeaderList contens
     void fillTable();
 
-    //Append header to internal list with time check
-    //If object already in list and its time early newly inserted, then previous inserted header removed
-    void appendNewly( SdLibraryHeader &hdr );
   public:
     static bool           getObjectName( QString *name, QString *author, quint64 sort, const QString title, QWidget *parent );
     static SdObject      *getObject( quint64 sort, const QString title, QWidget *parent);
-    static QString        getObjectId( quint64 sort, const QString title, QWidget *parent );
+    static QString        getObjectUid( quint64 sort, const QString title, QWidget *parent );
     static SdProjectItem *getComponent( int *logSectionPtr, quint64 sort, const QString title, QWidget *parent );
 
     // QDialog interface

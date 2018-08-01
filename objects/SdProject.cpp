@@ -162,10 +162,6 @@ bool SdProject::isNameUsed(const QString name) const
     if( pi && !pi->isDeleted() && pi->getTitle() == name && pi->getAuthor() == SdProjectItem::getDefaultAuthor() )
       return true;
     }
-
-  //Find object with desired name in data base
-  if( SdObjectFactory::isObjectPresent( name, SdProjectItem::getDefaultAuthor() ) )
-    return true;
   return false;
   }
 
@@ -180,7 +176,7 @@ SdObjectPtr SdProject::item(QTreeWidgetItem *src) const
     if( pi && pi->mTreeItem == src )
       return ptr;
     }
-  return 0;
+  return nullptr;
   }
 
 

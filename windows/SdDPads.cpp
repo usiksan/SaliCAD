@@ -4,6 +4,7 @@
 #include "objects/SdGraphPartImp.h"
 #include "objects/SdUtil.h"
 #include "objects/SdObjectFactory.h"
+#include "objects/SdTime2x.h"
 #include "SdDGetObject.h"
 #include "SdDPadMaster.h"
 
@@ -203,11 +204,11 @@ void SdDPads::cmAssociationSave()
     hdr.mName = name;
     hdr.mType = assoc.getType();
     hdr.mAuthor = mPlate->getDefaultAuthor();
-    //hdr.mTag =
-    hdr.mTime = SdUtil::getTime2000();
+    hdr.mTag = QString("pads");
+    hdr.mTime = SdTime2x::current();
     hdr.mClass = assoc.getClass();
     //Store in library
-    SdObjectFactory::insertObject( &assoc, hdr, assoc.write() );
+    SdObjectFactory::insertObject( hdr, assoc.write() );
     QMessageBox::information( this, tr("Info"), tr("Pad association saved") );
     }
   }

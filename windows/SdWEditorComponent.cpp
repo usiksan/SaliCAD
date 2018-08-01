@@ -180,7 +180,7 @@ void SdWEditorComponent::onActivateEditor()
 void SdWEditorComponent::sectionAdd()
   {
   mUndo->begin( tr("Append section for component"), mComponent );
-  mComponent->appendSection( SdDGetObject::getObjectId( dctSymbol, tr("Select symbol for section"), this ), mUndo );
+  mComponent->appendSection( SdDGetObject::getObjectUid( dctSymbol, tr("Select symbol for section"), this ), mUndo );
   fillSections();
   mSectionList->setCurrentRow(mSectionList->count() - 1);
   onCurrentSection(mSectionList->count() - 1);
@@ -210,7 +210,7 @@ void SdWEditorComponent::sectionSelect()
   int row = mSectionList->currentRow();
   if( row >= 0 ) {
     mUndo->begin( tr("Set section for component"), mComponent );
-    mComponent->setSectionSymbolId( SdDGetObject::getObjectId( dctSymbol, tr("Select symbol for section"), this ),
+    mComponent->setSectionSymbolId( SdDGetObject::getObjectUid( dctSymbol, tr("Select symbol for section"), this ),
                                     row, mUndo );
     fillSections();
     mSectionList->setCurrentRow(row);
@@ -345,7 +345,7 @@ void SdWEditorComponent::partSelect()
     part = new SdPartVariant();
     mComponent->insertChild( part, mUndo );
     }
-  part->setPartId( SdDGetObject::getObjectId( dctPart, tr("Select part for component"), this ), mUndo );
+  part->setPartId( SdDGetObject::getObjectUid( dctPart, tr("Select part for component"), this ), mUndo );
   fillPart();
   }
 

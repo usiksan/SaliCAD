@@ -11,7 +11,7 @@ Web
 Description
   Base for all project items
 */
-
+#include "library/SdLibraryHeader.h"
 #include "SdObjectFactory.h"
 #include "SdProjectItem.h"
 #include "SdGraphIdent.h"
@@ -20,6 +20,7 @@ Description
 #include "SdPoint.h"
 #include "SdGraph.h"
 #include "SdUtil.h"
+#include "SdTime2x.h"
 #include <QSettings>
 #include <QDateTime>
 #include <QDebug>
@@ -37,10 +38,10 @@ SdProjectItem::SdProjectItem() :
 
 
 
-QString SdProjectItem::getId() const
+QString SdProjectItem::getUid() const
   {
   //Id consist from name, user and time creation
-  return getType() + mTitle + mAuthor + QString::number(mCreateTime,32);
+  return headerUid( getType(), mTitle, mAuthor );
   }
 
 
@@ -52,16 +53,11 @@ QString SdProjectItem::getId() const
 
 QString SdProjectItem::getExtendTitle() const
   {
-  return QString("%1 [r%2] (%3)").arg(mTitle).arg( QDateTime::fromSecsSinceEpoch(getTimeFromEpoch()).toString("yy-M-d H:m:s") ).arg(mAuthor);
+  return QString("%1 [r%2] (%3)").arg(mTitle).arg( SdTime2x::toLocalString(getTime()) ).arg(mAuthor);
   }
 
 
 
-
-qint64 SdProjectItem::getTimeFromEpoch() const
-  {
-  return SdUtil::time2000toEpoch( mCreateTime );
-  }
 
 
 
@@ -89,11 +85,13 @@ void SdProjectItem::setTitle(const QString title, const QString undoTitle)
 
 void SdProjectItem::setUnicalTitle(const QString undoTitle)
   {
+  int test = 1;
   QString title = mTitle;
   do {
-    title.append( QString("(1)") );
+    title = mTitle;
+    title.append( QString("(%1)").arg(test++) );
     }
-  while( SdObjectFactory::isObjectPresent( title, getDefaultAuthor() ) );
+  while( SdObjectFactory::isObjectPresent( headerUid( getType(), title, getDefaultAuthor() ) ) );
   setTitle( title, undoTitle );
   }
 
@@ -204,7 +202,7 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
 //On call this function time setup after previous time
 void SdProjectItem::updateCreationTime()
   {
-  int time = SdUtil::getTime2000();
+  int time = SdTime2x::current();
   if( time <= mCreateTime )
     mCreateTime++;
   else

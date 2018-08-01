@@ -87,13 +87,12 @@ void SdDGetObject::find()
   {
   QString name = ui->mFind->currentText();
   mHeaderList.clear();
-  mHeaderMap.clear();
   SdObjectFactory::forEachHeader( [this,name] (SdLibraryHeader &hdr) -> bool {
     if( hdr.mClass & mSort ) {
       //Test if name match any part of object name
       if( hdr.mName.indexOf(name, 0, Qt::CaseInsensitive) >= 0 ) {
         //Name matched, insert header in list
-        appendNewly( hdr );
+        mHeaderList.append( hdr );
         //Prevent too much headers in find result
         if( mHeaderList.count() > 300 )
           return true;
@@ -115,15 +114,15 @@ void SdDGetObject::onSelectItem(int row, int column)
   clearComponent();
   SdLibraryHeader hdr = mHeaderList.at(row);
   if( hdr.mClass == dctSymbol || hdr.mClass == dctSheet ) {
-    mSymbolView->setItemById( hdr.id() );
+    mSymbolView->setItemById( hdr.uid() );
     mPartView->setItem( nullptr, true);
     }
   else if( hdr.mClass == dctPart ) {
     mSymbolView->setItem( nullptr, true );
-    mPartView->setItemById( hdr.id() );
+    mPartView->setItemById( hdr.uid() );
     }
   else if( hdr.mClass == dctComponent ) {
-    SdObject *obj = SdObjectFactory::extractObject( hdr.id(), true, this );
+    SdObject *obj = SdObjectFactory::extractObject( hdr.uid(), true, this );
     mComponent = dynamic_cast<SdPItemComponent*>( obj );
     if( mComponent == nullptr && obj != nullptr ) delete obj;
     }
@@ -131,7 +130,7 @@ void SdDGetObject::onSelectItem(int row, int column)
   ui->mSections->clear();
   mSectionIndex = -1;
 
-  bool present = SdObjectFactory::isObjectPresent(hdr.id());
+  bool present = SdObjectFactory::isObjectPresent(hdr.uid());
 
   if( mComponent ) {
     //Get section count
@@ -181,13 +180,12 @@ void SdDGetObject::onCurrentSection(int row)
 void SdDGetObject::onTagPath(const QString path)
   {
   mHeaderList.clear();
-  mHeaderMap.clear();
   SdObjectFactory::forEachHeader( [this,path] (SdLibraryHeader &hdr) -> bool {
     if( hdr.mClass & mSort ) {
       //Test if tag match any part of object tag
       if( hdr.mTag.indexOf(path, 0, Qt::CaseInsensitive) >= 0 || path.indexOf(hdr.mTag, 0, Qt::CaseInsensitive) >= 0 ) {
         //Name matched, insert header in list
-        appendNewly( hdr );
+        mHeaderList.append( hdr );
         //Prevent too much headers in find result
         if( mHeaderList.count() > 300 )
           return true;
@@ -214,7 +212,7 @@ void SdDGetObject::onLoadFromCentral()
     SdLibraryHeader hdr = mHeaderList.at(row);
 
     //If selected object not present in library then load it
-    if( !SdObjectFactory::loadObject( hdr.id(), hdr.mName, this ) )
+    if( !SdObjectFactory::loadObject( hdr.uid(), hdr.mName, this ) )
       return;
     else
       onSelectItem( row, 0 );
@@ -289,19 +287,6 @@ void SdDGetObject::fillTable()
 
 
 
-void SdDGetObject::appendNewly(SdLibraryHeader &hdr)
-  {
-  QString id = hdr.typeNameAndAuthor();
-  if( mHeaderMap.contains(id) ) {
-    int index = mHeaderMap.value(id);
-    if( mHeaderList.at(index).mTime < hdr.mTime )
-      mHeaderList[index] = hdr;
-    }
-  else {
-    mHeaderMap.insert(id,mHeaderList.count());
-    mHeaderList.append( hdr );
-    }
-  }
 
 
 
@@ -315,7 +300,7 @@ void SdDGetObject::accept()
     SdLibraryHeader hdr = mHeaderList.at(row);
     mObjName   = hdr.mName;
     mObjAuthor = hdr.mAuthor;
-    mObjId     = hdr.id();
+    mObjUid     = hdr.uid();
     QDialog::accept();
     }
   else QMessageBox::warning( this, tr("Error"), tr("You must select element or press Cancel") );
@@ -340,17 +325,17 @@ bool SdDGetObject::getObjectName(QString *name, QString *author, quint64 sort, c
 
 SdObject *SdDGetObject::getObject(quint64 sort, const QString title, QWidget *parent)
   {
-  return SdObjectFactory::extractObject( getObjectId( sort, title, parent), false, parent );
+  return SdObjectFactory::extractObject( getObjectUid( sort, title, parent), false, parent );
   }
 
 
 
 
-QString SdDGetObject::getObjectId(quint64 sort, const QString title, QWidget *parent)
+QString SdDGetObject::getObjectUid(quint64 sort, const QString title, QWidget *parent)
   {
   SdDGetObject dget( sort, title, parent );
   if( dget.exec() )
-    return dget.getObjId();
+    return dget.getObjUid();
   return QString();
   }
 
@@ -363,7 +348,7 @@ SdProjectItem *SdDGetObject::getComponent(int *logSectionPtr, quint64 sort, cons
   if( dget.exec() ) {
     if( logSectionPtr )
       *logSectionPtr = dget.getSectionIndex();
-    return dynamic_cast<SdProjectItem*>( SdObjectFactory::extractObject( dget.getObjId(), false, parent ) );
+    return dynamic_cast<SdProjectItem*>( SdObjectFactory::extractObject( dget.getObjUid(), false, parent ) );
     }
   return nullptr;
   }

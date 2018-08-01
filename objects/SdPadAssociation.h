@@ -28,12 +28,14 @@ class SdContext;
 
 class SdPadAssociation : public SdObject
   {
-    SdPadMap mMap;  //Pin-to-pad association table map
-    QString  mName; //Name of association
-    QString  mId;   //Unical object id
+    SdPadMap mMap;    //Pin-to-pad association table map
+    QString  mName;   //Name of association
+    QString  mAuthor; //Association author
   public:
     SdPadAssociation();
     SdPadAssociation(const SdPadMap map, const QString name , const QString author);
+
+    QString      getUid() const;
 
     SdPadMap     getMap() const { return mMap; }
 
@@ -47,7 +49,6 @@ class SdPadAssociation : public SdObject
 
     // SdObject interface
   public:
-    virtual QString getId() const override { return mId; }
     virtual QString getType() const override;
     virtual quint64 getClass() const override;
     virtual void    cloneFrom(const SdObject *src) override;

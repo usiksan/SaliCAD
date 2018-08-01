@@ -76,7 +76,7 @@ class SdObject
     virtual ~SdObject() {}
 
     //Information
-    virtual QString   getId() const;
+            QString   getId() const;
     virtual QString   getType() const = 0;
     virtual quint64   getClass() const = 0;
     virtual bool      isContainer() const { return false; }

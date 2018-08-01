@@ -15,17 +15,25 @@ Description
 #include "SdPadAssociation.h"
 #include "SdProjectItem.h"
 #include "SdUtil.h"
+#include "library/SdLibraryHeader.h"
 
 SdPadAssociation::SdPadAssociation()
   {
-  mId = QString("PinToPadAssociation %1").arg( SdUtil::getTime2000() );
   }
 
 SdPadAssociation::SdPadAssociation(const SdPadMap map, const QString name, const QString author) :
   mMap(map),
-  mName(name)
+  mName(name),
+  mAuthor(author)
   {
-  mId = QString("PinToPadAssociation %1 %2 %3").arg(name).arg(author).arg( SdUtil::getTime2000() );
+  }
+
+
+
+
+QString SdPadAssociation::getUid() const
+  {
+  return headerUid( getType(), mName, mAuthor );
   }
 
 
@@ -33,10 +41,10 @@ SdPadAssociation::SdPadAssociation(const SdPadMap map, const QString name, const
 
 void SdPadAssociation::setMap(const QString name, const SdPadMap &src, SdUndo *undo)
   {
-  undo->padAssociation( &mId, &mName, &mMap );
-  mName = name;
-  mMap = src;
-  mId = QString("PinToPadAssociation %1 %2 %3").arg(name).arg(SdProjectItem::getDefaultAuthor()).arg( SdUtil::getTime2000() );
+  undo->padAssociation( &mAuthor, &mName, &mMap );
+  mName   = name;
+  mMap    = src;
+  mAuthor = SdProjectItem::getDefaultAuthor();
   }
 
 
@@ -68,6 +76,8 @@ void SdPadAssociation::cloneFrom(const SdObject *src)
   if( pads != nullptr ) {
     SdObject::cloneFrom( src );
     mMap = pads->mMap;
+    mName = pads->mName;
+    mAuthor = pads->mAuthor;
     }
   }
 
@@ -79,6 +89,7 @@ void SdPadAssociation::writeObject(QJsonObject &obj) const
   {
   SdObject::writeObject( obj );
   obj.insert( QStringLiteral("pad association name"), mName );
+  obj.insert( QStringLiteral("pad association author"), mAuthor );
   QJsonObject ar;
   for( auto iter = mMap.cbegin(); iter != mMap.cend(); iter++ )
     ar.insert( iter.key(), iter.value().write() );
@@ -91,6 +102,7 @@ void SdPadAssociation::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdObject::readObject( map, obj );
   mName = obj.value( QStringLiteral("pad association name") ).toString();
+  mAuthor = obj.value( QStringLiteral("pad association author") ).toString();
   QJsonObject ar = obj.value( QStringLiteral("association") ).toObject();
   SdPad pad;
   for( auto iter = ar.constBegin(); iter != ar.constEnd(); iter++ ) {

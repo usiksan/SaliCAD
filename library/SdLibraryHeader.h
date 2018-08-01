@@ -29,10 +29,10 @@ Description
 #include <QDataStream>
 #include <QList>
 
-
-inline QString headerId( QString type, QString name, QString author, qint32 time )
+//Create uid from type, object name and author name
+inline QString headerUid( QString type, QString name, QString author )
   {
-  return type + name + author + QString::number( time, 32 );
+  return type + name + author;
   }
 
 //Library object header
@@ -44,18 +44,17 @@ struct SdLibraryHeader
     QString     mTag;        //Object's tags
     qint32      mTime;       //Object time creation
     quint64     mClass;      //Object class
+    QString     mInherit;    //Inheritance object
 
     SdStringMap mParamTable; //User defined object params
 
     SdLibraryHeader() : mName(), mType(), mAuthor(), mTime(0), mClass(0), mParamTable() {}
 
-    void    write( QDataStream &os ) const { os << mName << mType << mAuthor << mTag << mTime << mClass << mParamTable; }
+    void    write( QDataStream &os ) const { os << mName << mType << mAuthor << mTag << mTime << mClass << mInherit << mParamTable; }
 
-    void    read( QDataStream &is ) { is >> mName >> mType >> mAuthor >> mTag >> mTime >> mClass >> mParamTable; }
+    void    read( QDataStream &is ) { is >> mName >> mType >> mAuthor >> mTag >> mTime >> mClass >> mInherit >> mParamTable; }
 
-    QString id() const { return headerId( mType, mName, mAuthor, mTime ); }
-
-    QString typeNameAndAuthor() const { return mType + mName + mAuthor; }
+    QString uid() const { return headerUid( mType, mName, mAuthor ); }
   };
 
 inline QDataStream &operator << ( QDataStream &os, const SdLibraryHeader &header ) {

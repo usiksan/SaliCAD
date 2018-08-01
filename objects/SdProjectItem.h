@@ -45,12 +45,11 @@ class SdProjectItem : public SdContainer
     SdProjectItem();
 
     //Information
-    virtual QString        getId() const override;
+    QString                getUid() const;
     QString                getExtendTitle() const;
     QString                getToolTip() const;
     QString                getAuthor() const { return mAuthor; }
     int                    getTime() const { return mCreateTime; }
-    qint64                 getTimeFromEpoch() const;
     QString                getTitle() const { return mTitle; }
     QString                getTag() const { return mTag; }
     SdProject             *getProject() const;

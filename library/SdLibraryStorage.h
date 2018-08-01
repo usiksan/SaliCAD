@@ -72,6 +72,9 @@ class SdLibraryStorage
     //Return true if object contained in map
     bool        isObjectContains( const QString key );
 
+    //Return true if newer object referenced in map
+    bool        isNewerObject( const QString key, qint32 time );
+
     //Get list of objects which inserted after index
     QStringList getAfter( qint32 index, int limit = 100 );
 
@@ -83,16 +86,17 @@ class SdLibraryStorage
     bool        header( const QString key, SdLibraryHeader &hdr );
 
     //Set reference to object with header
-    void        setHeader( const QString key, SdLibraryHeader &hdr, bool remote = false );
+    // key - object key
+    // hdr - object header
+    // remote - if true then object referenced as received from remote
+    //          with mCreationIndex=-1, else referenced as next created
+    void        setHeader( SdLibraryHeader &hdr, bool remote = false );
 
     //Get object
     QByteArray  object( const QString key );
 
-    //Set object to reference. Reference must be exist
-    void        setObject( const QString key, QByteArray obj );
-
     //Insert new object with creation reference and append header and object
-    void        insert(const QString key, const SdLibraryHeader &hdr, QByteArray obj );
+    void        insert( const SdLibraryHeader &hdr, QByteArray obj );
 
 
 

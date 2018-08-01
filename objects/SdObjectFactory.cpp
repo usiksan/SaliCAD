@@ -54,18 +54,11 @@ void SdObjectFactory::closeLibrary()
 
 
 
-void SdObjectFactory::insertObject(const SdObject *obj, const SdLibraryHeader &hdr, QJsonObject json)
+void SdObjectFactory::insertObject( const SdLibraryHeader &hdr, QJsonObject json)
   {
-  if( obj == nullptr )
-    return;
-
-  QString id = obj->getId();
-  //If object in library then nothing done
-  if( sdLibraryStorage.isObjectContains(id) )
-    return;
 
   //Insert object
-  sdLibraryStorage.insert( id, hdr, QJsonDocument(json).toBinaryData() );
+  sdLibraryStorage.insert( hdr, qCompress( QJsonDocument(json).toBinaryData(), -1 ) );
   }
 
 
@@ -75,18 +68,14 @@ void SdObjectFactory::insertObject(const SdObject *obj, const SdLibraryHeader &h
 //then return its id. Older object is never inserted.
 void SdObjectFactory::insertItemObject(const SdProjectItem *item, QJsonObject obj)
   {
-  if( item == nullptr )
+  if( item == nullptr || sdLibraryStorage.isNewerObject( item->getUid(), item->getTime() ) )
     return;
 
-  QString id = item->getId();
-  //If object in library then nothing done
-  if( sdLibraryStorage.isObjectContains(id) )
-    return;
   //Insert object
   SdLibraryHeader hdr;
   item->getHeader( hdr );
 
-  sdLibraryStorage.insert( id, hdr, qCompress( QJsonDocument(obj).toBinaryData(), -1 ) );
+  insertObject( hdr, obj );
   }
 
 
@@ -129,23 +118,21 @@ SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *p
 
 
 
-//Return true if object already present in dataBase
-bool SdObjectFactory::isObjectPresent(const QString name, const QString author)
+//Return true if object present in dataBase
+bool SdObjectFactory::isObjectPresent(const QString hash)
   {
-  return sdLibraryStorage.forEachHeader( [name,author] (SdLibraryHeader &hdr) -> bool {
-    if( hdr.mName == name && hdr.mAuthor == author )
-      return true;
-    return false;
-    });
+  return sdLibraryStorage.isObjectContains(hash);
   }
 
 
 
 
-//Return true if object present in dataBase
-bool SdObjectFactory::isObjectPresent(const QString hash)
+
+
+//Return true if object name is referenced in dataBase
+bool SdObjectFactory::isContains(const QString type, const QString name, const QString author)
   {
-  return sdLibraryStorage.isObjectContains(hash);
+  return sdLibraryStorage.contains( headerUid( type, name, author ) );
   }
 
 

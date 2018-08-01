@@ -102,6 +102,12 @@ History
   18.07.2018 v0.42 Append part master which creates double sided pins part.
                    Fix error in illustrator. Image shifted down.
   21.07.2018 v0.43 Append all modes for draw cursor
+  01.08.2018 v0.44 Append unical ident (uid) for libary storage objects.
+                   Object id at now is simple pointer to resolve crossreference over project.
+                   From uid removed time component, so object with same type, name and author is identical.
+                   Time of creation used for replace older objects in base, so updating component when
+                   upgraded symbol or part no more needed.
+  01.08.2018 v0.45 Append part import from pascad
 */
 
 #ifndef SDCONFIG
@@ -113,13 +119,17 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             43
+#define SD_VERSION_MINOR             45
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
 #define SD_DEFAULT_IP                "62.109.11.83"
 //#define SD_DEFAULT_IP                "127.0.0.0"
 #define SD_DEFAULT_PORT              1970
+
+
+//When defined disable registration with sali name
+//#define SD_DISABLE_SALI_AUTHOR
 
 //Project naming definition
 #define SD_BASE_EXTENSION            ".salicad"

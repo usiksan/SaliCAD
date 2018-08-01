@@ -207,7 +207,8 @@ SOURCES += \
     master/SdDMasterSymbolConnector.cpp \
     modes/SdModeTRuller.cpp \
     windows/SdPropBarPartImp.cpp \
-    windows/SdStringHistory.cpp
+    windows/SdStringHistory.cpp \
+    objects/SdTime2x.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -411,7 +412,8 @@ HEADERS  += \
     master/SdDMasterSymbolConnector.h \
     modes/SdModeTRuller.h \
     windows/SdPropBarPartImp.h \
-    windows/SdStringHistory.h
+    windows/SdStringHistory.h \
+    objects/SdTime2x.h
 
 DISTFILES += \
     license.txt

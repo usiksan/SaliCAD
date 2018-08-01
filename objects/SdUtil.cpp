@@ -80,22 +80,6 @@ QPointF SdUtil::log2phys(QPoint log, double ppm)
 
 
 
-//Get current time from 2000year
-int SdUtil::getTime2000()
-  {
-  return static_cast<int>( QDateTime::currentDateTimeUtc().toSecsSinceEpoch() - timeOffsetConstant );
-  }
-
-
-
-//Convert time from 2000year to time from epoch
-qint64 SdUtil::time2000toEpoch(int time)
-  {
-  return timeOffsetConstant + static_cast<qint64>(time);
-  }
-
-
-
 
 //Test if string contains only english symbols
 bool SdUtil::isEnglish(const QString str)

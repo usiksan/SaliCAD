@@ -66,6 +66,7 @@ class SdPasCadImport
     bool         readObjectTable( SdContainer *container );
     bool         readSingleObject( SdContainer *container );
     bool         readSymbol( SdObject *obj );
+    bool         readPart( SdObject *obj );
     SdPoint      readPoint();
     SdRect       readRectangle();
     bool         readLinear( SdObject *obj );
@@ -77,6 +78,7 @@ class SdPasCadImport
     bool         readArc( SdObject *obj );
     bool         readSymPin( SdObject *obj );
     bool         readIdent( SdGraphIdent *ident );
+    bool         readPartPin( SdObject *obj );
   };
 
 #endif // SDPASCADIMPORT_H

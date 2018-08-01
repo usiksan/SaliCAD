@@ -186,13 +186,8 @@ void SdCsChannelServer::cmSyncRequest(QDataStream &is)
       QByteArray      obj;
       //Read object
       is >> header >> obj;
-      //Replace object
-      QString hash = header.id();
-
-      if( !sdLibraryStorage.contains(hash) ) {
-        //Insert new object
-        sdLibraryStorage.insert( hash, header, obj );
-        }
+      //Insert new object
+      sdLibraryStorage.insert( header, obj );
       }
     }
   else

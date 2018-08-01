@@ -38,10 +38,10 @@ class SdObjectFactory
     static void         closeLibrary();
 
     //Insert object to database with externally created header
-    static void         insertObject( const SdObject *obj, const SdLibraryHeader &hdr, QJsonObject json );
+    static void         insertObject(const SdLibraryHeader &hdr, QJsonObject json );
 
     //Insert item object to database. If in database already present newest object,
-    //then return its id. Older object is never inserted.
+    //then nothing done. Older object is never inserted.
     static void         insertItemObject( const SdProjectItem *item, QJsonObject obj );
 
     //Extract object from database.
@@ -55,6 +55,9 @@ class SdObjectFactory
 
     //Return true if object present in dataBase
     static bool         isObjectPresent( const QString hash );
+
+    //Return true if object name is referenced in dataBase
+    static bool         isContains( const QString type, const QString name, const QString author );
 
     //Load object from remote server
     static bool         loadObject( const QString hash, const QString title, QWidget *parent );

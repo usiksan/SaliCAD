@@ -152,6 +152,17 @@ bool SdLibraryStorage::isObjectContains(const QString key)
 
 
 
+
+//Return true if newer object referenced in map
+bool SdLibraryStorage::isNewerObject(const QString key, qint32 time)
+  {
+  QReadLocker locker( &mLock );
+  return mReferenceMap.contains( key ) && mReferenceMap.value(key).isObjectNewerOrSame( time );
+  }
+
+
+
+
 //Get list of objects inserted after index
 QStringList SdLibraryStorage::getAfter(qint32 index, int limit)
   {
@@ -183,8 +194,11 @@ bool SdLibraryStorage::forEachHeader(std::function<bool(SdLibraryHeader&)> fun1)
   SdLibraryHeader hdr;
   while( !mHeaderFile.atEnd() ) {
     hdr.read( is );
-    if( fun1( hdr) )
-      return true;
+    //Test if header not deleted
+    if( mReferenceMap.value(hdr.uid()).mCreationTime == hdr.mTime ) {
+      if( fun1( hdr) )
+        return true;
+      }
     }
   return false;
   }
@@ -213,12 +227,17 @@ bool SdLibraryStorage::header(const QString key, SdLibraryHeader &hdr)
 
 
 //Set reference to object with header
-void SdLibraryStorage::setHeader(const QString key, SdLibraryHeader &hdr, bool remote)
+void SdLibraryStorage::setHeader(SdLibraryHeader &hdr, bool remote)
   {
   QWriteLocker locker( &mLock );
+
+  QString key = hdr.uid();
   //If object already in base then do nothing
-  if( mReferenceMap.contains(key) )
+  if( mReferenceMap.contains(key) && mReferenceMap.value(key).isNewerOrSame(hdr.mTime) )
+    //Newer or same header already present in base
+    //Nothing done
     return;
+
   //Else insert record
   QFile file(FNAME_HDR);
   if( file.open(QIODevice::Append) ) {
@@ -259,43 +278,23 @@ QByteArray SdLibraryStorage::object(const QString key)
 
 
 
-//Set object to reference. Reference must be exist
-void SdLibraryStorage::setObject(const QString key, QByteArray obj)
-  {
-  QWriteLocker locker( &mLock );
-
-  if( !mReferenceMap.contains(key) )
-    return;
-  QFile file(FNAME_OBJ);
-  if( file.open(QIODevice::Append) ) {
-    SdLibraryReference ref( mReferenceMap.value(key) );
-    ref.mObjectPtr = file.size();
-
-    QDataStream os( &file );
-    os << obj;
-    file.close();
-
-    mReferenceMap.insert( key, ref );
-    mDirty = true;
-    }
-  }
-
-
-
-
 //Insert new object with creation reference and append header and object
-void SdLibraryStorage::insert(const QString key, const SdLibraryHeader &hdr, QByteArray obj)
+void SdLibraryStorage::insert(const SdLibraryHeader &hdr, QByteArray obj)
   {
   QWriteLocker locker( &mLock );
 
-  if( mReferenceMap.contains(key) && mReferenceMap.value(key).mObjectPtr != 0 )
+  QString key = hdr.uid();
+
+  if( mReferenceMap.contains(key) && mReferenceMap.value(key).isObjectNewerOrSame(hdr.mTime) )
+    //Newer or same object already present in database
     return;
+
   QFile fileObj(FNAME_OBJ);
   QFile fileHdr(FNAME_HDR);
   if( fileObj.open(QIODevice::Append) && fileHdr.open(QIODevice::Append) ) {
     SdLibraryReference ref;
-    if( !mReferenceMap.contains(key) ) {
-      //No record with this name
+    if( !mReferenceMap.contains(key) || mReferenceMap.value(key).mCreationTime != hdr.mTime ) {
+      //No record with this name and time
       //write header first
       ref.mCreationIndex = mCreationIndex++;
       ref.mHeaderPtr     = fileHdr.size();
@@ -406,6 +405,10 @@ void SdLibraryStorage::flush()
       }
     }
   }
+
+
+
+
 
 
 

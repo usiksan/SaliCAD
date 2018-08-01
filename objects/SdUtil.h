@@ -21,7 +21,6 @@ Description
 #include <QPointF>
 #include <QPolygonF>
 
-#define timeOffsetConstant 1000000000L
 
 class SdUtil
   {
@@ -46,12 +45,6 @@ class SdUtil
 
     //Convert logical point to physical
     static QPointF   log2phys( QPoint log, double ppm );
-
-    //Get current time from 2000year
-    static int       getTime2000();
-
-    //Convert time from 2000year to time from epoch
-    static qint64    time2000toEpoch( int time );
 
     //Test if string contains only english symbols
     static bool      isEnglish( const QString str );

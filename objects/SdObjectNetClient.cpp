@@ -282,7 +282,7 @@ void SdObjectNetClient::cmSyncList(QDataStream &is)
     while( !is.atEnd() ) {
       SdLibraryHeader hdr;
       is >> hdr;
-      sdLibraryStorage.setHeader( hdr.id(), hdr, true );
+      sdLibraryStorage.setHeader( hdr, true );
       updateCount++;
       }
     qDebug() << "synced" << updateCount << mLocalSyncCount;
@@ -315,7 +315,7 @@ void SdObjectNetClient::cmObject(QDataStream &is)
 
     is >> header >> obj;
 
-    sdLibraryStorage.insert( header.id(), header, obj );
+    sdLibraryStorage.insert( header, obj );
 
     QSettings s;
     s.setValue( SDK_REMOTE_REMAIN, QString::number(info.mRemain) );

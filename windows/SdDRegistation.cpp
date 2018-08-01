@@ -135,8 +135,10 @@ void SdDRegistation::onEditAuthorName(const QString nm)
   int nstatus;
   if( nm.isEmpty() )
     nstatus = 0;
+#ifdef SD_DISABLE_SALI_AUTHOR
   else if( nm.toLower().contains( QString("sali") ) )
     nstatus = 1;
+#endif
   else
     nstatus = 2;
   if( mNameStatus != nstatus ) {

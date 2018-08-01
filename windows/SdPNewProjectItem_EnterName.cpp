@@ -50,7 +50,7 @@ void SdPNewProjectItem_EnterName::onTextChanged(const QString name)
     mUnical->setText( tr("<font color=\"blue\">Name is empty. You must enter correct name at least one symbol.</font>") );
     mValid = false;
     }
-  else if( mProject->isNameUsed(name) ) {
+  else if( mProject->isNameUsed(name) || SdObjectFactory::isContains( (*mItemPtr)->getType(), name, SdProjectItem::getDefaultAuthor() ) ) {
     mUnical->setText( tr("<font color=\"red\">This name already exist. Enter another name.</font>") );
     mValid = false;
     }
@@ -65,7 +65,7 @@ void SdPNewProjectItem_EnterName::onTextChanged(const QString name)
 bool SdPNewProjectItem_EnterName::validatePage()
   {
   if( mValid ) {
-    if( SdObjectFactory::isObjectPresent( mName->text(), SdProjectItem::getDefaultAuthor() ) ) {
+    if( SdObjectFactory::isContains( (*mItemPtr)->getType(), mName->text(), SdProjectItem::getDefaultAuthor() ) ) {
       if( QMessageBox::question( this, tr("Warning!"), tr("Object with this name and author already exist in base. Overwrite existing object?"),
                                  QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel) != QMessageBox::Yes )
         return false;
