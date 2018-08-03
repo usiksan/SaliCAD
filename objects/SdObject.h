@@ -126,7 +126,7 @@ typedef SdObject *SdObjectPtr;
 
 //Convert object only to desired type, other way - deleted
 template <class T>
-T* only( SdObject *obj ) {
+T* sdObjectOnly( SdObject *obj ) {
   T *t = dynamic_cast<T*>( obj );
   if( t ) return t;
   delete obj;

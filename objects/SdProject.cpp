@@ -226,7 +226,7 @@ SdProject *SdProject::load(const QString fname)
     QJsonDocument doc = QJsonDocument::fromJson( file.readAll(), 0 );
     if( !doc.isEmpty() ) {
       SdObjectMap map;
-      return only<SdProject>( SdObject::read( &map, doc.object() ) );
+      return sdObjectOnly<SdProject>( SdObject::read( &map, doc.object() ) );
       }
     }
   return 0;

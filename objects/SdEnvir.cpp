@@ -444,7 +444,7 @@ SdPad SdEnvir::getPad(const QString pinType)
   {
   //If pad stack not yet loaded then load it
   if( mPadStack == nullptr )
-    mPadStack = only<SdPadAssociation>( SdObjectFactory::extractObject( mPadStackId, true, nullptr ) );
+    mPadStack = sdObjectOnly<SdPadAssociation>( SdObjectFactory::extractObject( mPadStackId, true, nullptr ) );
   //If pad stack present then return pad associated with pinType
   if( mPadStack != nullptr )
     return mPadStack->pin(pinType);

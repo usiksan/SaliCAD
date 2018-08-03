@@ -84,7 +84,7 @@ class SdDGetObject : public QDialog
     static bool           getObjectName( QString *name, QString *author, quint64 sort, const QString title, QWidget *parent );
     static SdObject      *getObject( quint64 sort, const QString title, QWidget *parent);
     static QString        getObjectUid( quint64 sort, const QString title, QWidget *parent );
-    static SdProjectItem *getComponent( int *logSectionPtr, quint64 sort, const QString title, QWidget *parent );
+    static SdPItemComponent *getComponent( int *logSectionPtr, quint64 sort, const QString title, QWidget *parent );
 
     // QDialog interface
   public slots:

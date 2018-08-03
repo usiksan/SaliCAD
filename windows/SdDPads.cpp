@@ -220,7 +220,7 @@ void SdDPads::cmAssociationSave()
 void SdDPads::cmAssociationUse()
   {
   //Assign associations from loaded table
-  SdPadAssociation *assoc = only<SdPadAssociation>( SdDGetObject::getObject(dctPadAssociation, tr("Select pad association table"), this) );
+  SdPadAssociation *assoc = sdObjectOnly<SdPadAssociation>( SdDGetObject::getObject(dctPadAssociation, tr("Select pad association table"), this) );
   if( assoc != nullptr ) {
     //Source table loaded - parse
     SdPadMap dst;
@@ -244,7 +244,7 @@ void SdDPads::cmAssociationUse()
 void SdDPads::cmAssociationLoad()
   {
   //Replace table with loaded
-  SdPadAssociation *assoc = only<SdPadAssociation>( SdDGetObject::getObject(dctPadAssociation, tr("Select pad association table"), this) );
+  SdPadAssociation *assoc = sdObjectOnly<SdPadAssociation>( SdDGetObject::getObject(dctPadAssociation, tr("Select pad association table"), this) );
   if( assoc != nullptr ) {
     ui->mAssociationName->setText( assoc->getName() );
     mMap = assoc->getMap();

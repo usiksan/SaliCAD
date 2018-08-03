@@ -342,13 +342,13 @@ QString SdDGetObject::getObjectUid(quint64 sort, const QString title, QWidget *p
 
 
 
-SdProjectItem *SdDGetObject::getComponent(int *logSectionPtr, quint64 sort, const QString title, QWidget *parent)
+SdPItemComponent *SdDGetObject::getComponent(int *logSectionPtr, quint64 sort, const QString title, QWidget *parent)
   {
   SdDGetObject dget( sort, title, parent );
   if( dget.exec() ) {
     if( logSectionPtr )
       *logSectionPtr = dget.getSectionIndex();
-    return dynamic_cast<SdProjectItem*>( SdObjectFactory::extractObject( dget.getObjUid(), false, parent ) );
+    return sdObjectOnly<SdPItemComponent>( SdObjectFactory::extractObject( dget.getObjUid(), false, parent ) );
     }
   return nullptr;
   }
