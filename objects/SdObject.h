@@ -66,6 +66,8 @@ class SdContainer;
 class SdProjectItem;
 
 typedef QString SdId;
+typedef QString SdUid;
+typedef quint64 SdClass;
 
 class SdObject
   {
@@ -78,7 +80,7 @@ class SdObject
     //Information
             QString   getId() const;
     virtual QString   getType() const = 0;
-    virtual quint64   getClass() const = 0;
+    virtual SdClass   getClass() const = 0;
     virtual bool      isContainer() const { return false; }
 
     //Hierarhy

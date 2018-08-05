@@ -187,12 +187,13 @@ SdGraphPartImp::SdGraphPartImp() :
 
   }
 
-SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemComponent *comp) :
+SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemComponent *comp, quint32 paramHash) :
   SdGraphTraced(),
-  mLogNumber(0),   //Logical part number (from 1)
-  mOrigin(org),    //Position of Implement
-  mPart(part),     //Part for this implementation
-  mComponent(comp)      //Component
+  mLogNumber(0),          //Logical part number (from 1)
+  mOrigin(org),           //Position of Implement
+  mPart(part),            //Part for this implementation
+  mComponent(comp),       //Component
+  mParamHash(paramHash)   //Component param hash
   {
   //Implement properties
   mProp = *prp;
@@ -271,6 +272,14 @@ void SdGraphPartImp::accumUsedPins(SdPadMap &map) const
 
 
 
+void SdGraphPartImp::setParam(const QString key, const QString val, SdUndo *undo)
+  {
+
+  }
+
+
+
+
 
 //Draw part without pads
 void SdGraphPartImp::drawWithoutPads(SdContext *cdx)
@@ -308,9 +317,9 @@ void SdGraphPartImp::drawPads(SdContext *cdx, SdStratum stratum, const QString h
 
 
 //Check if there free section slot
-bool SdGraphPartImp::isSectionFree(int *section, SdPItemPart *part, SdPItemComponent *comp, SdPItemSymbol *sym)
+bool SdGraphPartImp::isSectionFree(int *section, SdPItemPart *part, SdPItemComponent *comp, quint32 paramHash, SdPItemSymbol *sym)
   {
-  if( mPart != part || mComponent != comp )
+  if( mPart != part || mComponent != comp || mParamHash != paramHash )
     return false;
   for( int index = 0; index < mSections.count(); index++ )
     if( mSections[index].isFree(sym) ) {
@@ -359,8 +368,8 @@ void SdGraphPartImp::attach(SdUndo *undo)
   SdProject *prj = plate->getProject();
   Q_ASSERT( prj != nullptr );
   //Realloc objects for this project
-  mComponent = dynamic_cast<SdPItemComponent*>( prj->getProjectsItem(mComponent) );  //Object contains section information, pin assotiation info. May be same as mSymbol.
-  mPart = dynamic_cast<SdPItemPart*>( prj->getProjectsItem(mPart) );
+  mComponent = dynamic_cast<SdPItemComponent*>( prj->getFixedProjectItem(mComponent) );  //Object contains section information, pin assotiation info. May be same as mSymbol.
+  mPart = dynamic_cast<SdPItemPart*>( prj->getFixedProjectItem(mPart) );
 
   //Fill pin table
   mPins.clear();
@@ -390,7 +399,7 @@ void SdGraphPartImp::attach(SdUndo *undo)
     for( int i = 0; i < sectionCount; i++ ) {
       SdPartImpSection s;
       SdPItemSymbol *sym = mComponent->extractSymbolFromFactory( i, false, nullptr );
-      s.mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(sym) );
+      s.mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getFixedProjectItem(sym) );
       if( sym )
         delete sym;
       mSections.append( s );

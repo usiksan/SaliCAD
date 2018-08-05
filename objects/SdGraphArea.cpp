@@ -59,7 +59,7 @@ void SdGraphArea::attach(SdUndo *undo)
   SdProject *prj = getSheet()->getProject();
   Q_ASSERT( prj != nullptr );
   //Realloc objects for this project
-  mPlate = dynamic_cast<SdPItemPlate*>( prj->getProjectsItem(mPlate) );
+  mPlate = dynamic_cast<SdPItemPlate*>( prj->getFixedProjectItem(mPlate) );
   Q_ASSERT( mPlate != nullptr );
 
   //Reallocate all components in area

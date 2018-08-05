@@ -43,11 +43,9 @@ class SdProject : public SdContainer
     //Return default plate and if none - create new one
     SdPItemPlate     *getDefaultPlate();
 
-    //Return object of project for given object
-    SdProjectItem    *getProjectsItem( SdProjectItem *item );
-
-    //Return object of project for given id
-    SdProjectItem    *getProjectsItem( quint64 mask, const QString id );
+    //Return object of project for given object. Return only newer or same object
+    // not in editing state
+    SdProjectItem    *getFixedProjectItem( SdProjectItem *item );
 
     //Return net name unused in project
     QString           getUnusedNetName();

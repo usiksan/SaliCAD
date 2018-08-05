@@ -47,7 +47,7 @@ SdGraphSymImp::SdGraphSymImp() :
 
   }
 
-SdGraphSymImp::SdGraphSymImp(SdPItemComponent *comp, SdPItemSymbol *sym, SdPItemPart *part, SdPoint pos, SdPropSymImp *prp ) :
+SdGraphSymImp::SdGraphSymImp(SdPItemComponent *comp, SdPItemSymbol *sym, SdPItemPart *part, const SdStringMap &param, SdPoint pos, SdPropSymImp *prp ) :
   mArea(nullptr),        //PCB where this symbol implement contains in
   mSectionIndex(0),      //Section index (from 0)
   mLogSection(0),        //Logical symbol section number (from 1)
@@ -56,8 +56,8 @@ SdGraphSymImp::SdGraphSymImp(SdPItemComponent *comp, SdPItemSymbol *sym, SdPItem
   mComponent(comp),      //Object contains section information, pin assotiation info. May be same as mSymbol.
   mSymbol(sym),          //Symbol contains graph information
   mPart(part),
-  mPartImp(nullptr)
-
+  mPartImp(nullptr),
+  mParam(param)
   {
   //QString           mName;        //Name of component
   mProp = *prp;        //Implement properties
@@ -599,26 +599,12 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
   Q_ASSERT( prj != nullptr );
 
   //Realloc objects for this project
-  mComponent = dynamic_cast<SdPItemComponent*>( prj->getProjectsItem(mComponent) );  //Object contains section information, pin assotiation info. May be same as mSymbol.
-  mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getProjectsItem(mSymbol) );        //Symbol contains graph information
-  mPart = dynamic_cast<SdPItemPart*>( prj->getProjectsItem(mPart) );
+  mComponent = dynamic_cast<SdPItemComponent*>( prj->getFixedProjectItem(mComponent) );  //Object contains section information, pin assotiation info. May be same as mSymbol.
+  mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getFixedProjectItem(mSymbol) );        //Symbol contains graph information
+  mPart = dynamic_cast<SdPItemPart*>( prj->getFixedProjectItem(mPart) );
 
   //Apply all items (symbol, component, part and partImp)
-  Q_ASSERT( mPins.count() == 0 && mSymbol != nullptr && mComponent != nullptr );
-
-  //Ensure all components are fixed
-  if( mSymbol->isEditEnable() ) {
-    mLinkError = QObject::tr("Symbol %1 in editing state").arg(mSymbol->getTitle());
-    return;
-    }
-  if( mComponent->isEditEnable() ) {
-    mLinkError = QObject::tr("Component %1 in editing state").arg(mComponent->getTitle());
-    return;
-    }
-  if( mPart != nullptr && mPart->isEditEnable() ) {
-    mLinkError = QObject::tr("Part %1 in editing state").arg(mPart->getTitle());
-    return;
-    }
+  Q_ASSERT( mSymbol != nullptr && mComponent != nullptr );
 
   undo->symImpPins( &mPins );
 
