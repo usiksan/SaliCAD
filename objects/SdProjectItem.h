@@ -74,6 +74,7 @@ class SdProjectItem : public SdContainer
     bool                   paramContains( const QString key ) const { return mParamTable.contains(key); }
     QString                paramGet( const QString key ) const { return mParamTable.value(key); }
     void                   paramSet( const QString key, QString val, SdUndo *undo );
+    void                   paramDelete( const QString key, SdUndo *undo );
     SdStringMap            paramTable() const { return mParamTable; }
 
     //Object visual (graphical) identificator

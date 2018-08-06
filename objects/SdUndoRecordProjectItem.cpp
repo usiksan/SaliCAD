@@ -37,7 +37,7 @@ SdUndoRecordProjectItem::SdUndoRecordProjectItem(SdProjectItem *item, QString *t
 void SdUndoRecordProjectItem::undo()
   {
   //Close item editors (if any)
-  SdPulsar::pulsar->emitCloseEditView( mItem );
+  SdPulsar::sdPulsar->emitCloseEditView( mItem );
 
   //Undo
   mTitleSrc->swap( mTitle );

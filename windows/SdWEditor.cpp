@@ -63,10 +63,20 @@ QString SdWEditor::getIconName()
 
 
 
-void SdWEditor::onActivateEditor()
+//Update status of undo and redo
+void SdWEditor::updateUndoRedoStatus()
   {
   SdWCommand::cmEditUndo->setEnabled( getProject()->getUndo()->isUndoPresent() );
   SdWCommand::cmEditRedo->setEnabled( getProject()->getUndo()->isRedoPresent() );
+  }
+
+
+
+
+
+void SdWEditor::onActivateEditor()
+  {
+  updateUndoRedoStatus();
 
   SdWCommand::cmFilePrint->setEnabled(true);
   }
@@ -80,9 +90,9 @@ void SdWEditor::cmObjectEditDisable()
     SdProjectItem *item = getProjectItem();
     getProjectItem()->setEditEnable( false, tr("Object edit disable") );
     //Close this editor (viewer)
-    SdPulsar::pulsar->emitCloseEditView( getProjectItem() );
+    SdPulsar::sdPulsar->emitCloseEditView( getProjectItem() );
     //Open new item with edit status
-    SdPulsar::pulsar->emitActivateItem( item );
+    SdPulsar::sdPulsar->emitActivateItem( item );
     }
   }
 
@@ -105,9 +115,9 @@ void SdWEditor::cmObjectEditEnable()
     else
       item = getProjectItem()->setEditEnable( true, tr("Object edit enable") );
     //Close this editor (viewer)
-    SdPulsar::pulsar->emitCloseEditView( getProjectItem() );
+    SdPulsar::sdPulsar->emitCloseEditView( getProjectItem() );
     //Open new item with edit status
-    SdPulsar::pulsar->emitActivateItem( item );
+    SdPulsar::sdPulsar->emitActivateItem( item );
     }
   }
 

@@ -57,7 +57,7 @@ class SdPItemPlate : public SdProjectItem
     int                    stratumCount() const { return mStratumCount; }
     void                   setStratumCount( int sc ) { mStratumCount = sc; mRatNetDirty = true; }
 
-    SdGraphPartImp        *allocPartImp(int *section, SdPItemPart *part, SdPItemComponent *comp, SdPItemSymbol *sym , SdUndo *undo);
+    SdGraphPartImp        *allocPartImp(int *section, SdPItemPart *part, SdPItemComponent *comp, SdPItemSymbol *sym, const SdStringMap &param, SdUndo *undo);
 
     //Pin-to-pad association
     //Full association table

@@ -50,7 +50,7 @@ class SdPulsar : public QObject
     //Emit signal on viewed layers changed. It emited when layer dialog completed
     void emitViewedLayers();
 
-    static SdPulsar *pulsar;
+    static SdPulsar *sdPulsar;
   signals:
     //BEFORE destroy project
     void closeProject( SdProject *project );

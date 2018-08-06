@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 
 
   //Creating pulsar for signals distibution
-  SdPulsar::pulsar = new SdPulsar();
+  SdPulsar::sdPulsar = new SdPulsar();
 
   sdEnvir = new SdEnvir();  
   //Load environment
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
 
   delete sdGlobalProp;
   delete sdEnvir;
-  delete SdPulsar::pulsar;
+  delete SdPulsar::sdPulsar;
   return res;
   }
 

@@ -97,7 +97,7 @@ void SdModeCSymImp::propSetToBar()
 
 void SdModeCSymImp::enterPoint(SdPoint)
   {
-  addPic( new SdGraphSymImp( mComponent, mSection, mPart, mOrigin,  &(sdGlobalProp->mSymImpProp) ), QObject::tr("Insert symbol") );
+  addPic( new SdGraphSymImp( mComponent, mSection, mPart, mParams, mOrigin,  &(sdGlobalProp->mSymImpProp) ), QObject::tr("Insert symbol") );
   //getSection();
   }
 
@@ -164,7 +164,7 @@ void SdModeCSymImp::getSection()
   clear();
   int sectionIndex = -1;
   while(1) {
-    SdObject *obj = SdDGetObject::getComponent( &sectionIndex, dctComponent, QObject::tr("Select component to insert"), mEditor );
+    SdObject *obj = SdDGetObject::getComponent( &sectionIndex, &mParams, QObject::tr("Select component to insert"), mEditor );
     if( obj == nullptr ) {
       cancelMode();
       return;

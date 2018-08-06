@@ -342,12 +342,16 @@ QString SdDGetObject::getObjectUid(quint64 sort, const QString title, QWidget *p
 
 
 
-SdPItemComponent *SdDGetObject::getComponent(int *logSectionPtr, quint64 sort, const QString title, QWidget *parent)
+SdPItemComponent *SdDGetObject::getComponent(int *logSectionPtr, SdStringMap *param, const QString title, QWidget *parent)
   {
-  SdDGetObject dget( sort, title, parent );
+  SdDGetObject dget( dctComponent|dctInstance, title, parent );
   if( dget.exec() ) {
+    //If available pointer to logical section then set selected section
     if( logSectionPtr )
       *logSectionPtr = dget.getSectionIndex();
+    //If available pointer to param then set component or instance params
+    if( param )
+      *param = dget.getParams();
     return sdObjectOnly<SdPItemComponent>( SdObjectFactory::extractObject( dget.getObjUid(), false, parent ) );
     }
   return nullptr;

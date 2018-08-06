@@ -70,9 +70,9 @@ SdWProjectTree::SdWProjectTree(const QString fname, QWidget *parent) :
   fillTopItem( mPartList, dctPart );
   fillTopItem( mTextList, dctTextDoc );
 
-  connect( SdPulsar::pulsar, &SdPulsar::insertItem, this, &SdWProjectTree::insertItem );
-  connect( SdPulsar::pulsar, &SdPulsar::removeItem, this, &SdWProjectTree::removeItem );
-  connect( SdPulsar::pulsar, &SdPulsar::renameItem, this, &SdWProjectTree::renameItem );
+  connect( SdPulsar::sdPulsar, &SdPulsar::insertItem, this, &SdWProjectTree::insertItem );
+  connect( SdPulsar::sdPulsar, &SdPulsar::removeItem, this, &SdWProjectTree::removeItem );
+  connect( SdPulsar::sdPulsar, &SdPulsar::renameItem, this, &SdWProjectTree::renameItem );
   connect( this, &SdWProjectTree::currentItemChanged, this, &SdWProjectTree::onCurrentItemChanged );
   }
 
@@ -144,7 +144,7 @@ bool SdWProjectTree::cmFileSaveAs()
     mFileName.append( SD_BASE_EXTENSION );
 
   SdWCommand::addToPreviousMenu( mFileName );
-  SdPulsar::pulsar->emitRenameProject( mProject );
+  SdPulsar::sdPulsar->emitRenameProject( mProject );
 
   return cmFileSave();
   }
@@ -170,7 +170,7 @@ void SdWProjectTree::cmObjectNew()
     mProject->getUndo()->begin( tr("Creating object"), item );
     mProject->insertChild( item, mProject->getUndo() );
     //Open window to edit item
-    SdPulsar::pulsar->emitActivateItem( item );
+    SdPulsar::sdPulsar->emitActivateItem( item );
     }
   }
 
@@ -294,7 +294,7 @@ void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem 
   if( enable && cur ) {
     SdProjectItem *item = dynamic_cast<SdProjectItem*>( mProject->item( cur ) );
     if( item )
-      emit SdPulsar::pulsar->emitActivateItem( item );
+      emit SdPulsar::sdPulsar->emitActivateItem( item );
     }
   }
 

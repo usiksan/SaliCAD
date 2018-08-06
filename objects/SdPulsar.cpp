@@ -13,7 +13,7 @@ Description
 
 #include "SdPulsar.h"
 
-SdPulsar* SdPulsar::pulsar;
+SdPulsar* SdPulsar::sdPulsar;
 
 SdPulsar::SdPulsar(QObject *parent) : QObject(parent)
   {

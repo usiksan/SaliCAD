@@ -42,7 +42,7 @@ SdWProjectList::SdWProjectList(QWidget *parent) : QWidget(parent)
   //connect( mProjectTitles, &QComboBox::activated, this, &SdWProjectList::onProjectActivated );
   connect( mProjectTitles, SIGNAL(activated(int)), this, SLOT(onProjectActivated(int)) );
   connect( mCloseProject, SIGNAL(clicked()), this, SLOT(cmFileClose()) );
-  connect( SdPulsar::pulsar, &SdPulsar::renameProject, this, &SdWProjectList::onRenameProject );
+  connect( SdPulsar::sdPulsar, &SdPulsar::renameProject, this, &SdWProjectList::onRenameProject );
   }
 
 
@@ -133,7 +133,7 @@ bool SdWProjectList::cmFileClose()
   SdWProjectTree *active = activeProject();
   if( active && active->cmFileClose() ) {
     //Send signal before closing
-    SdPulsar::pulsar->emitCloseProject( active->getProject() );
+    SdPulsar::sdPulsar->emitCloseProject( active->getProject() );
     //Remove name from drop down box
     mProjectTitles->removeItem( mWProjectStack->currentIndex() );
     //Remove tree window

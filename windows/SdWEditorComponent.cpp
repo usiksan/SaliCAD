@@ -25,6 +25,7 @@ Description
 #include <QHBoxLayout>
 #include <QGroupBox>
 #include <QMessageBox>
+#include <QInputDialog>
 #include <QLabel>
 #include <QTimer>
 #include <QDebug>
@@ -181,6 +182,7 @@ void SdWEditorComponent::sectionAdd()
   {
   mUndo->begin( tr("Append section for component"), mComponent );
   mComponent->appendSection( SdDGetObject::getObjectUid( dctSymbol, tr("Select symbol for section"), this ), mUndo );
+  dirtyProject();
   fillSections();
   mSectionList->setCurrentRow(mSectionList->count() - 1);
   onCurrentSection(mSectionList->count() - 1);
@@ -195,6 +197,7 @@ void SdWEditorComponent::sectionDubl()
   if( row >= 0 ) {
     mUndo->begin( tr("Duplicate section for component"), mComponent );
     mComponent->appendSection( mComponent->getSectionSymbolId(row), mUndo );
+    dirtyProject();
     fillSections();
     mSectionList->setCurrentRow(row+1);
     onCurrentSection(row+1);
@@ -212,6 +215,7 @@ void SdWEditorComponent::sectionSelect()
     mUndo->begin( tr("Set section for component"), mComponent );
     mComponent->setSectionSymbolId( SdDGetObject::getObjectUid( dctSymbol, tr("Select symbol for section"), this ),
                                     row, mUndo );
+    dirtyProject();
     fillSections();
     mSectionList->setCurrentRow(row);
     onCurrentSection(row);
@@ -226,8 +230,9 @@ void SdWEditorComponent::sectionDelete()
   mUndo->begin( tr("Delete component section"), mComponent );
   int row = mSectionList->currentRow();
   if( row >= 0 ) {
-    if( QMessageBox::question( this, tr("Attention!"), tr("You attempting to delete section %1").arg(row) ) == QMessageBox::Yes ) {
+    if( QMessageBox::question( this, tr("Attention!"), tr("You attempting to delete section %1. Delete?").arg(row+1) ) == QMessageBox::Yes ) {
       mComponent->removeSection( row, mUndo );
+      dirtyProject();
       fillSections();
       }
     }
@@ -243,6 +248,7 @@ void SdWEditorComponent::sectionDeleteAll()
     int count = mComponent->getSectionCount() - 1;
     while( count >= 0 )
       mComponent->removeSection( count--, mUndo );
+    dirtyProject();
     fillSections();
     }
   }
@@ -332,6 +338,26 @@ void SdWEditorComponent::onPackChanged(int row, int column)
     mPackTable->setItem(row,column, new QTableWidgetItem(number) );
     }
   connect( mPackTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onPackChanged );
+  updateUndoRedoStatus();
+  dirtyProject();
+  }
+
+
+
+
+
+
+void SdWEditorComponent::onParamChanged(int row, int column)
+  {
+  Q_UNUSED(column)
+  disconnect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onParamChanged );
+  QString key = mParamTable->item(row,0)->text();
+  QString value = mParamTable->item(row,1)->text();
+  //qDebug() << Q_FUNC_INFO << key <<value;
+  mComponent->paramSet( key, value, mUndo );
+  connect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onParamChanged );
+  updateUndoRedoStatus();
+  dirtyProject();
   }
 
 
@@ -346,22 +372,62 @@ void SdWEditorComponent::partSelect()
     mComponent->insertChild( part, mUndo );
     }
   part->setPartId( SdDGetObject::getObjectUid( dctPart, tr("Select part for component"), this ), mUndo );
+  dirtyProject();
   fillPart();
   }
 
+
+
+
 void SdWEditorComponent::paramAdd()
   {
-
+  QString key = QInputDialog::getText( this, tr("Param name"), tr("Enter param name") );
+  if( !key.isEmpty() ) {
+    if( mComponent->paramContains(key) )
+      QMessageBox::warning( this, tr("Warning!"), tr("Param with this name already exist. Enter another name.") );
+    else {
+      mComponent->paramSet( key, QString(), mUndo );
+      int row = mParamTable->rowCount();
+      mParamTable->insertRow( row );
+      paramAppend( row, key, QString() );
+      dirtyProject();
+      }
+    }
   }
+
+
+
+
 
 void SdWEditorComponent::paramDelete()
   {
-
+  int paramIndex = mParamTable->currentRow();
+  if( paramIndex >= 0 ) {
+    QString key = mParamTable->item( paramIndex, 0 )->text();
+    mComponent->paramDelete( key, mUndo );
+    mParamTable->removeRow( paramIndex );
+    dirtyProject();
+    }
+  else
+    QMessageBox::warning( this, tr("Warning!"), tr("Select param to delete") );
   }
 
+
+
+
+
+//Copy params from another component
 void SdWEditorComponent::paramCopy()
   {
-
+  SdStringMap param; //Params to get in
+  SdPItemComponent *comp = SdDGetObject::getComponent( nullptr, &param, tr("Select component to copy param from"), this );
+  if( comp != nullptr ) {
+    //Append params
+    for( auto iter = param.cbegin(); iter != param.cend(); iter++ )
+      mComponent->paramSet( iter.key(), iter.value(), mUndo );
+    dirtyProject();
+    fillParams();
+    }
   }
 
 
@@ -431,6 +497,7 @@ void SdWEditorComponent::fillPart()
 
 void SdWEditorComponent::fillParams()
   {
+  disconnect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onParamChanged );
   mParamTable->clear();
   SdStringMap tab = mComponent->paramTable();
   mParamTable->setColumnCount(2);
@@ -439,11 +506,9 @@ void SdWEditorComponent::fillParams()
   mParamTable->setHorizontalHeaderLabels( {tr("Param name"), tr("Param value")} );
   mParamTable->setColumnWidth(1,400);
   int row = 0;
-  for( auto iter = tab.constBegin(); iter != tab.constEnd(); iter++ ) {
-    mParamTable->setItem( row, 0, new QTableWidgetItem(iter.key()) );
-    mParamTable->setItem( row, 1, new QTableWidgetItem(iter.value()) );
-    row++;
-    }
+  for( auto iter = tab.constBegin(); iter != tab.constEnd(); iter++ )
+    paramAppend( row++, iter.key(), iter.value() );
+  connect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onParamChanged );
   }
 
 
@@ -461,6 +526,17 @@ void SdWEditorComponent::fillUsedPins()
         mPackNumbers.insert( iter.value(), packetPin(section,iter.key()) );
       }
     }
+  }
+
+
+
+
+void SdWEditorComponent::paramAppend( int row, const QString key, const QString value)
+  {
+  mParamTable->setRowHeight( row, 25 );
+  mParamTable->setItem( row, 0, new QTableWidgetItem(key) );
+  mParamTable->item( row, 0 )->setFlags( Qt::ItemIsEnabled );
+  mParamTable->setItem( row, 1, new QTableWidgetItem(value) );
   }
 
 
@@ -488,7 +564,11 @@ void SdWEditorComponent::cmEditUndo()
   mSectionList->setCurrentRow(currSection);
   mPackTable->setCurrentCell(currPin,1);
   mParamTable->setCurrentCell(currParam,1);
+  dirtyProject();
   }
+
+
+
 
 void SdWEditorComponent::cmEditRedo()
   {

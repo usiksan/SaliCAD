@@ -108,6 +108,9 @@ History
                    Time of creation used for replace older objects in base, so updating component when
                    upgraded symbol or part no more needed.
   01.08.2018 v0.45 Append part import from pascad
+  06.08.2018 v0.46 Append param edit to component editor
+                   Append param delete possibility to ProjectItem
+                   Fix bugs with object insertion to library
 */
 
 #ifndef SDCONFIG
@@ -119,7 +122,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             45
+#define SD_VERSION_MINOR             46
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

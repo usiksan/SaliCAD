@@ -104,14 +104,14 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
     mWProjectList->fileOpen( file );
 
   //Связать с пульсаром
-  connect( SdPulsar::pulsar, &SdPulsar::activateItem, this, &SdWMain::onActivateProjectItem );
-  connect( SdPulsar::pulsar, &SdPulsar::closeEditView, this, &SdWMain::onCloseEditView );
-  connect( SdPulsar::pulsar, &SdPulsar::removeItem, this, &SdWMain::onRemoveProjectItem );
-  connect( SdPulsar::pulsar, &SdPulsar::closeProject, this, &SdWMain::onCloseProject );
-  connect( SdPulsar::pulsar, &SdPulsar::setStatusLabels, this, &SdWMain::setStatusLabels );
-  connect( SdPulsar::pulsar, &SdPulsar::setStatusPositions, this, &SdWMain::setStatusPositions );
-  connect( SdPulsar::pulsar, &SdPulsar::setStatusMessage, this, &SdWMain::setStatusMessage );
-  connect( SdPulsar::pulsar, &SdPulsar::renameItem, this, &SdWMain::onUpdateItemTitle );
+  connect( SdPulsar::sdPulsar, &SdPulsar::activateItem, this, &SdWMain::onActivateProjectItem );
+  connect( SdPulsar::sdPulsar, &SdPulsar::closeEditView, this, &SdWMain::onCloseEditView );
+  connect( SdPulsar::sdPulsar, &SdPulsar::removeItem, this, &SdWMain::onRemoveProjectItem );
+  connect( SdPulsar::sdPulsar, &SdPulsar::closeProject, this, &SdWMain::onCloseProject );
+  connect( SdPulsar::sdPulsar, &SdPulsar::setStatusLabels, this, &SdWMain::setStatusLabels );
+  connect( SdPulsar::sdPulsar, &SdPulsar::setStatusPositions, this, &SdWMain::setStatusPositions );
+  connect( SdPulsar::sdPulsar, &SdPulsar::setStatusMessage, this, &SdWMain::setStatusMessage );
+  connect( SdPulsar::sdPulsar, &SdPulsar::renameItem, this, &SdWMain::onUpdateItemTitle );
 
   //Clipboard notification
   connect( QGuiApplication::clipboard(), &QClipboard::changed, this, &SdWMain::onClipboardChanged );
@@ -790,7 +790,7 @@ void SdWMain::cmViewLayers()
 
   sdEnvir->resetForCache();
   //Signal viewed layers are changed
-  SdPulsar::pulsar->emitViewedLayers();
+  SdPulsar::sdPulsar->emitViewedLayers();
 
   //For active editor update
   if( activeEditor() )

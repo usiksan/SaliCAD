@@ -61,7 +61,7 @@ void SdModeTRuller::movePoint(SdPoint pos)
     double dx = static_cast<double>(pos.x() - mFirst.x()) * mEditor->getPPM();
     double dy = static_cast<double>(pos.y() - mFirst.y()) * mEditor->getPPM();
     double delta = sqrt( dx*dx + dy*dy );
-    SdPulsar::pulsar->emitSetStatusMessage( QString("dx=%1, dy=%2, distance=%3").arg(dx,0,'f',3).arg(dy,0,'f',3).arg(delta,0,'f',3) );
+    SdPulsar::sdPulsar->emitSetStatusMessage( QString("dx=%1, dy=%2, distance=%3").arg(dx,0,'f',3).arg(dy,0,'f',3).arg(delta,0,'f',3) );
     }
   }
 

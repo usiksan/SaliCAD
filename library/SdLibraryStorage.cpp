@@ -245,6 +245,7 @@ void SdLibraryStorage::setHeader(SdLibraryHeader &hdr, bool remote)
     ref.mHeaderPtr     = file.size();
     ref.mCreationIndex = remote ? -1 : mCreationIndex++;
     ref.mObjectPtr     = 0;
+    ref.mCreationTime  = hdr.mTime;
 
     QDataStream os( &file );
     hdr.write( os );
@@ -298,6 +299,7 @@ void SdLibraryStorage::insert(const SdLibraryHeader &hdr, QByteArray obj)
       //write header first
       ref.mCreationIndex = mCreationIndex++;
       ref.mHeaderPtr     = fileHdr.size();
+      ref.mCreationTime  = hdr.mTime;
       QDataStream os( &fileHdr );
       hdr.write( os );
       fileHdr.close();

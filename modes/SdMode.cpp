@@ -44,7 +44,7 @@ SdMode::~SdMode()
 void SdMode::restore()
   {
   //update step definite params
-  SdPulsar::pulsar->emitSetStatusMessage( getStepHelp() );
+  SdPulsar::sdPulsar->emitSetStatusMessage( getStepHelp() );
   mEditor->viewport()->setCursor( loadCursor(getCursor()) );
 
   //setup mode step properties bar

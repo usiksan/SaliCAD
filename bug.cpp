@@ -1,5 +1,5 @@
 
-//B020 bugs
+//B021 bugs
 //F001 fatal
 //C001 critical
 //D041 do
@@ -27,12 +27,16 @@
 
 //TODO B020 in trace mode show smart start point
 
-//TODO D041 change id only name and author (without creation time).
-//Creation time save in database. It allow update objects with newly created.
-//When name test - use also data base objects (simple test object id)
+//TODO B022 With press close icon graph editor do not closing
 
 //===================================================================================
 //Fixed:
+
+//B021 after disable edit in project tree need update time
+
+//D041 change id only name and author (without creation time).
+//Creation time save in database. It allow update objects with newly created.
+//When name test - use also data base objects (simple test object id)
 
 //B018 when handle enter coord wrong axiz
 

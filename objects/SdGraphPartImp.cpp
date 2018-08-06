@@ -187,13 +187,13 @@ SdGraphPartImp::SdGraphPartImp() :
 
   }
 
-SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemComponent *comp, quint32 paramHash) :
+SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param) :
   SdGraphTraced(),
   mLogNumber(0),          //Logical part number (from 1)
   mOrigin(org),           //Position of Implement
   mPart(part),            //Part for this implementation
   mComponent(comp),       //Component
-  mParamHash(paramHash)   //Component param hash
+  mParam(param)           //Component params
   {
   //Implement properties
   mProp = *prp;
@@ -274,7 +274,8 @@ void SdGraphPartImp::accumUsedPins(SdPadMap &map) const
 
 void SdGraphPartImp::setParam(const QString key, const QString val, SdUndo *undo)
   {
-
+  undo->stringMapItem( &mParam, key );
+  mParam.insert( key, val );
   }
 
 
@@ -317,9 +318,9 @@ void SdGraphPartImp::drawPads(SdContext *cdx, SdStratum stratum, const QString h
 
 
 //Check if there free section slot
-bool SdGraphPartImp::isSectionFree(int *section, SdPItemPart *part, SdPItemComponent *comp, quint32 paramHash, SdPItemSymbol *sym)
+bool SdGraphPartImp::isSectionFree(int *section, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param, SdPItemSymbol *sym)
   {
-  if( mPart != part || mComponent != comp || mParamHash != paramHash )
+  if( mPart != part || mComponent != comp || mParam != param )
     return false;
   for( int index = 0; index < mSections.count(); index++ )
     if( mSections[index].isFree(sym) ) {
@@ -474,6 +475,8 @@ void SdGraphPartImp::writeObject(QJsonObject &obj) const
   for( SdPartImpPinTable::const_iterator i = mPins.constBegin(); i != mPins.constEnd(); i++ )
     pins.append( i.value().toJson( i.key() ) );
   obj.insert( QStringLiteral("Pins"), pins );
+  //Parameters
+  sdStringMapWrite( QStringLiteral("Param"), mParam, obj );
   }
 
 
@@ -510,7 +513,7 @@ void SdGraphPartImp::readObject(SdObjectMap *map, const QJsonObject obj)
     mPins.insert( pinNumber, pin );
     }
   //Parameters
-  //sdParamRead( QStringLiteral("Param"), mParam, obj );
+  sdStringMapRead( QStringLiteral("Param"), mParam, obj );
   }
 
 

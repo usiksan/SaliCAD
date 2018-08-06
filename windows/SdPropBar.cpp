@@ -43,7 +43,7 @@ SdPropBar::SdPropBar( const QString title ) :
     emit propChanged();
     });
   //When layer dialog completed
-  connect( SdPulsar::pulsar, &SdPulsar::viewedLayers, this, &SdPropBar::updateViewedLayers );
+  connect( SdPulsar::sdPulsar, &SdPulsar::viewedLayers, this, &SdPropBar::updateViewedLayers );
   }
 
 

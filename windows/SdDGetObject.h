@@ -42,6 +42,7 @@ class SdDGetObject : public QDialog
     QString                mObjAuthor;    //Object author
     QString                mObjUid;       //Unical object id
     int                    mSectionIndex; //Section index
+    SdStringMap            mParam;        //Component or instance params
 
     quint64                mSort;         //Object select sort (class)
     SdLibraryHeaderList    mHeaderList;
@@ -49,10 +50,11 @@ class SdDGetObject : public QDialog
     explicit SdDGetObject( quint64 sort, const QString title, QWidget *parent = nullptr);
     ~SdDGetObject() override;
 
-    QString getObjName() const { return mObjName; }
-    QString getObjAuthor() const { return mObjAuthor; }
-    QString getObjUid() const { return mObjUid; }
-    int     getSectionIndex() const { return mSectionIndex; }
+    QString     getObjName() const { return mObjName; }
+    QString     getObjAuthor() const { return mObjAuthor; }
+    QString     getObjUid() const { return mObjUid; }
+    int         getSectionIndex() const { return mSectionIndex; }
+    SdStringMap getParams() const { return mParam; }
 
   public slots:
     //Find button pressed
@@ -81,10 +83,10 @@ class SdDGetObject : public QDialog
     void fillTable();
 
   public:
-    static bool           getObjectName( QString *name, QString *author, quint64 sort, const QString title, QWidget *parent );
-    static SdObject      *getObject( quint64 sort, const QString title, QWidget *parent);
-    static QString        getObjectUid( quint64 sort, const QString title, QWidget *parent );
-    static SdPItemComponent *getComponent( int *logSectionPtr, quint64 sort, const QString title, QWidget *parent );
+    static bool              getObjectName( QString *name, QString *author, quint64 sort, const QString title, QWidget *parent );
+    static SdObject         *getObject( quint64 sort, const QString title, QWidget *parent);
+    static QString           getObjectUid( quint64 sort, const QString title, QWidget *parent );
+    static SdPItemComponent *getComponent( int *logSectionPtr, SdStringMap *param, const QString title, QWidget *parent );
 
     // QDialog interface
   public slots:

@@ -77,7 +77,7 @@ void SdProjectItem::setTitle(const QString title, const QString undoTitle)
   updateCreationTime();
   //Title setup
   mTitle      = title;
-  SdPulsar::pulsar->emitRenameItem( this );
+  SdPulsar::sdPulsar->emitRenameItem( this );
   }
 
 
@@ -185,6 +185,7 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
         SdProjectItem *item = dynamic_cast<SdProjectItem*>( copy() );
         item->updateAuthor();
         item->updateCreationTime();
+        item->mEditEnable = true;
         //Insert item to project
         getProject()->insertChild( item, undo );
         return item;
@@ -193,6 +194,8 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
       updateCreationTime();
       }
     }
+  //To update time send signal
+  SdPulsar::sdPulsar->emitRenameItem( this );
   return this;
   }
 
@@ -264,6 +267,17 @@ void SdProjectItem::paramSet(const QString key, QString val, SdUndo *undo)
   if( undo != nullptr )
     undo->stringMapItem( &mParamTable, key );
   mParamTable.insert( key, val );
+
+  }
+
+
+
+
+void SdProjectItem::paramDelete(const QString key, SdUndo *undo)
+  {
+  if( undo != nullptr )
+    undo->stringMapItem( &mParamTable, key );
+  mParamTable.remove( key );
   }
 
 

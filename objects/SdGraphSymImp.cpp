@@ -620,7 +620,7 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
       }
 
     //Accumulate pins
-    mSymbol->forEach( dctSymPin, [this,sectionPtr,undo] (SdObject *obj) -> bool {
+    mSymbol->forEach( dctSymPin, [this,sectionPtr] (SdObject *obj) -> bool {
       SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>(obj);
       Q_ASSERT( pin != nullptr );
 
@@ -631,6 +631,7 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
       //Create implement pin
       SdSymImpPin impPin;
       impPin.mPin = pin;
+      impPin.mPinNumber = sectionPtr->getPinNumber( pinName );
 
       //Add pin to table
       mPins.insert( pinName, impPin );
@@ -640,7 +641,7 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
   else {
     //Get part where this section resides
     int section = -1;
-    SdGraphPartImp *partImp = plate->allocPartImp( &section, mPart, mComponent, mSymbol, undo );
+    SdGraphPartImp *partImp = plate->allocPartImp( &section, mPart, mComponent, mSymbol, mParam, undo );
     Q_ASSERT( partImp != nullptr );
 
     //Link to part
@@ -655,7 +656,7 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
 
     mPartImp->savePins( undo );
     //Accumulate pins
-    mSymbol->forEach( dctSymPin, [this,sectionPtr,undo] (SdObject *obj) -> bool {
+    mSymbol->forEach( dctSymPin, [this,sectionPtr] (SdObject *obj) -> bool {
       SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>(obj);
       Q_ASSERT( pin != nullptr );
 

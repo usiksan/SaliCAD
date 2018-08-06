@@ -48,7 +48,7 @@ SdPItemPlate::SdPItemPlate() :
 
 
 
-SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPItemComponent *comp, SdPItemSymbol *sym, SdUndo *undo )
+SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPItemComponent *comp, SdPItemSymbol *sym, const SdStringMap &param, SdUndo *undo )
   {
   if( part == nullptr )
     return nullptr;
@@ -57,7 +57,7 @@ SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPI
   forEach( dctPartImp, [&] (SdObject *obj) -> bool {
     res = dynamic_cast<SdGraphPartImp*>( obj );
     Q_ASSERT( res != nullptr );
-    if( res->isSectionFree( section, part, comp, sym ) )
+    if( res->isSectionFree( section, part, comp, param, sym ) )
       return false;
     res = nullptr;
     return true;
@@ -84,10 +84,10 @@ SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPI
   qDebug() << Q_FUNC_INFO << mPartRow << p << over.height();
 
   //Create new part implement
-  res = new SdGraphPartImp( p, &(sdGlobalProp->mPartImpProp), part, comp );
+  res = new SdGraphPartImp( p, &(sdGlobalProp->mPartImpProp), part, comp, param );
   insertChild( res, undo );
 
-  Q_ASSERT( res->isSectionFree( section, part, comp, sym ) );
+  Q_ASSERT( res->isSectionFree( section, part, comp, param, sym ) );
   return res;
   }
 

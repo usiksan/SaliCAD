@@ -47,6 +47,9 @@ class SdWEditor : public QAbstractScrollArea
 
     void                   updateRecentlyIndex( bool dec ) { mRecentlyIndex = dec ? qMax(0,mRecentlyIndex-1) : SD_MAX_EDITORS; }
 
+    //Update status of undo and redo
+    void                   updateUndoRedoStatus();
+
     //On activate editor window
     virtual void onActivateEditor();
 

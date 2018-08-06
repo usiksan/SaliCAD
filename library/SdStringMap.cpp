@@ -33,3 +33,13 @@ void sdStringMapRead(const QString name, SdStringMap &table, const QJsonObject &
   for( auto i = src.constBegin(); i != src.constEnd(); i++ )
     table.insert( i.key(), i.value().toString() );
   }
+
+
+
+
+//Union two string maps. All keys from source map append and replace keys in dest map.
+void sdStringMapUnion(const SdStringMap &src, SdStringMap &dst)
+  {
+  for( auto i = src.cbegin(); i != src.cend(); i++ )
+    dst.insert( i.key(), i.value() );
+  }

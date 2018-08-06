@@ -26,6 +26,7 @@ class SdModeCSymImp : public SdModeCommon
     SdPItemSymbol    *mSection;
     SdPItemComponent *mComponent;
     SdPItemPart      *mPart;
+    SdStringMap       mParams;
   public:
     SdModeCSymImp( SdWEditorGraph *editor, SdProjectItem *obj );
     ~SdModeCSymImp() override;

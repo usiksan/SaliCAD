@@ -45,12 +45,13 @@ Description
 #define dctTraceRoad      0x00100000ul
 #define dctTraceVia       0x00200000ul
 #define dctTextDoc        0x00400000ul
+#define dctInstance       0x00800000ul
 
 #define dctLocal          0x80000000ul //This flag setup for objects which must not be send to global storage
 
 
 #define dctPicture       (dctLines | dctText)
-#define dctProjectItems  (dctSymbol | dctPart | dctSheet | dctPlate | dctComponent)
+#define dctProjectItems  (dctSymbol | dctPart | dctSheet | dctPlate | dctComponent | dctInstance)
 #define dctAll           MAX64_MASK
 #define dctSymbolObjects (dctPicture | dctSymPin )
 #define dctPartObjects   (dctPicture | dctPartPin)
@@ -87,6 +88,7 @@ class SdObject
     SdContainer*      getParent() const { return mParent; }
     SdContainer*      getRoot() const;
     void              setParent( SdContainer *parent );
+    void              setProjectDirtyFlag();
 
     //Attach and detach
     virtual void      attach( SdUndo *undo );

@@ -14,6 +14,8 @@ Description
 #include "SdPItemComponent.h"
 #include "SdPartVariant.h"
 
+#include <QDebug>
+
 SdPItemComponent::SdPItemComponent() :
   SdProjectItem()
   {
@@ -113,6 +115,7 @@ int SdPItemComponent::getSectionCount() const
 //Append section with symbol id. May be empty
 void SdPItemComponent::appendSection(const QString id, SdUndo *undo)
   {
+  //qDebug() << "appendSection" << id;
   SdSection *section = new SdSection();
   insertChild( section, undo );
   section->setSymbolId( id, undo );
@@ -162,7 +165,7 @@ SdSection *SdPItemComponent::getSection(int sectionIndex) const
   forEachConst( dctSection, [&section,&sectionIndex] (SdObject *obj) -> bool {
     if( sectionIndex == 0 ) {
       section = dynamic_cast<SdSection*>( obj );
-      Q_ASSERT( section != 0 );
+      Q_ASSERT( section != nullptr );
       //Break repeation
       return false;
       }

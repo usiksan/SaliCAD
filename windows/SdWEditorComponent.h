@@ -75,6 +75,7 @@ class SdWEditorComponent : public SdWEditor
     void onCurrentSection( int index );
 
     void onPackChanged( int row, int column );
+    void onParamChanged( int row, int column );
 
     void partSelect();
 
@@ -86,6 +87,7 @@ class SdWEditorComponent : public SdWEditor
     void fillPart();
     void fillParams();
     void fillUsedPins();
+    void paramAppend(int row, const QString key, const QString value );
 
     QString packetPin( int section, const QString pinName );
 

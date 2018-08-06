@@ -98,7 +98,7 @@ SdProjectItem *SdProject::getFixedProjectItem(SdProjectItem *item)
   Q_ASSERT( res != nullptr );
   insertChild( res, &mUndo );
   res->setEditEnable( false, QString() );
-  qDebug() << "getProjectItem copy" << item->getId() << res->getId() << item << res;
+  qDebug() << "getProjectItem copy" << item->getUid() << res->getUid() << item << res;
   return res;
   }
 
@@ -265,7 +265,7 @@ void SdProject::insertChild(SdObject *child, SdUndo *undo)
     SdContainer::insertChild( child, undo );
     mItemExtendNameMap.insert( item->getExtendTitle(), item );
     mDirty = true;
-    SdPulsar::pulsar->emitInsertItem( item );
+    SdPulsar::sdPulsar->emitInsertItem( item );
     }
   }
 
@@ -276,7 +276,7 @@ void SdProject::undoInsertChild(SdObject *child)
   {
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
   if( item && item->getParent() == this ) {
-    SdPulsar::pulsar->emitRemoveItem( item );
+    SdPulsar::sdPulsar->emitRemoveItem( item );
     mItemExtendNameMap.remove( item->getExtendTitle() );
     mDirty = true;
     SdContainer::undoInsertChild( child );
@@ -292,7 +292,7 @@ void SdProject::redoInsertChild(SdObject *child)
     SdContainer::redoInsertChild( child );
     mItemExtendNameMap.insert( item->getExtendTitle(), item );
     mDirty = true;
-    SdPulsar::pulsar->emitInsertItem( item );
+    SdPulsar::sdPulsar->emitInsertItem( item );
     }
   }
 
@@ -303,7 +303,7 @@ void SdProject::deleteChild(SdObject *child, SdUndo *undo)
   {
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
   if( item && item->getParent() == this ) {
-    SdPulsar::pulsar->emitRemoveItem( item );
+    SdPulsar::sdPulsar->emitRemoveItem( item );
     mItemExtendNameMap.remove( item->getExtendTitle() );
     mDirty = true;
     SdContainer::deleteChild( child, undo );
@@ -320,7 +320,7 @@ void SdProject::undoDeleteChild(SdObject *child)
     SdContainer::undoDeleteChild( child );
     mItemExtendNameMap.insert( item->getExtendTitle(), item );
     mDirty = true;
-    SdPulsar::pulsar->emitInsertItem( item );
+    SdPulsar::sdPulsar->emitInsertItem( item );
     }
   }
 

@@ -82,6 +82,17 @@ void SdObject::setParent(SdContainer *parent)
 
 
 
+
+void SdObject::setProjectDirtyFlag()
+  {
+  SdProject *project = dynamic_cast<SdProject*>( getRoot() );
+  if( project )
+    project->setDirty();
+  }
+
+
+
+
 void SdObject::attach(SdUndo *undo)
   {
   Q_UNUSED(undo)

@@ -97,16 +97,16 @@ class SdGraphPartImp : public SdGraphTraced
     SdPartImpSectionTable  mSections;
     SdPItemPart           *mPart;        //Part for this implementation
     SdPItemComponent      *mComponent;   //Component with pack info
-    quint32                mParamHash;   //Component param hash
+    SdStringMap            mParam;        //Parameters
   public:
     SdGraphPartImp();
-    SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemComponent *comp, quint32 paramHash );
+    SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param );
 
     //Information
     //Get full visual ident of part aka D4 or R45
     QString         getIdent() const;
     //Check if there free section slot. If there - setup section and return true
-    bool            isSectionFree(int *section, SdPItemPart *part, SdPItemComponent *comp, quint32 paramHash, SdPItemSymbol *sym );
+    bool            isSectionFree(int *section, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param, SdPItemSymbol *sym );
 
 
     //Service
@@ -120,6 +120,12 @@ class SdGraphPartImp : public SdGraphTraced
     void            savePins( SdUndo *undo );
     //Accum used pins
     void            accumUsedPins(SdPadMap &map ) const;
+
+    //Parameters
+    //Param full list
+    SdStringMap     getParamTable() const { return mParam; }
+    //Get param
+    QString         getParam( const QString key ) { return mParam.value( key ); }
     //Set param
     void            setParam( const QString key, const QString val, SdUndo *undo );
 

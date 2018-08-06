@@ -846,7 +846,7 @@ void SdWEditorGraph::displayCursorPositions()
   double y = mPrevPoint.y();
   x *= getPPM();
   y *= getPPM();
-  SdPulsar::pulsar->emitSetStatusPositions( QString::number( x, 'f', 3), QString::number( y, 'f', 3) );
+  SdPulsar::sdPulsar->emitSetStatusPositions( QString::number( x, 'f', 3), QString::number( y, 'f', 3) );
   }
 
 
@@ -894,7 +894,7 @@ void SdWEditorGraph::updateMousePos(QMouseEvent *event)
 void SdWEditorGraph::onActivateEditor()
   {
   SdWEditor::onActivateEditor();
-  SdPulsar::pulsar->emitSetStatusLabels( QString("X:"), QString("Y:") );
+  SdPulsar::sdPulsar->emitSetStatusLabels( QString("X:"), QString("Y:") );
   if( modeGet() ) {
     modeGet()->restore();
     SdWCommand::selectMode( modeGet()->getIndex() );

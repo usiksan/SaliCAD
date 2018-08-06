@@ -9,6 +9,8 @@ Web
   www.saliLab.ru
 
 Description
+  Symbol section is one of more schematic sections where all section
+  declare full component.
 */
 #include "SdSection.h"
 #include "SdPItemSymbol.h"
@@ -38,7 +40,7 @@ void SdSection::setSymbolId(const QString id, SdUndo *undo)
     undo->string2( &mSymbolId, &mSymbolTitle );
     undo->stringMap( &mAssociationTable );
     //Setup new symbol info
-    mSymbolId = symbol->getId();
+    mSymbolId = symbol->getUid();
     mSymbolTitle = QString( "%1 (%2)" ).arg(symbol->getTitle()).arg(symbol->getAuthor());
     //Accum pins
     SdPinAssociation pins;

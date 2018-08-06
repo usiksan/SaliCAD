@@ -18,5 +18,5 @@ Description
 void SdUndoRecordBegin::undo()
   {
   //Bring to top edit object
-  SdPulsar::pulsar->emitActivateItem( mEditItem );
+  SdPulsar::sdPulsar->emitActivateItem( mEditItem );
   }
