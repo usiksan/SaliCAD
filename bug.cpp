@@ -1,5 +1,5 @@
 
-//B021 bugs
+//B025 bugs
 //F001 fatal
 //C001 critical
 //D041 do
@@ -10,8 +10,6 @@
 //При копировании в sheet нету вставки
 
 //TODO B009 3 undo's on one text properties changes
-
-//TODO B011 when inserting sheet wires - they not connected to symImp
 
 //TODO B012 when moving symImp and stop, when connecting to sheet wires - abnormal finish
 
@@ -29,8 +27,22 @@
 
 //TODO B022 With press close icon graph editor do not closing
 
+//TODO B023 When copy component in schematic link with part not correct (rat net not builded)
+
+//TODO B024 Not connected pin lock display pads
+
 //===================================================================================
 //Fixed:
+
+//B025 When moving cursor in select mode do not displaing bom behind cursor component
+
+//D023 getInfo in select mode
+
+//D024 getInfo partImp
+
+//B011 when inserting sheet wires - they not connected to symImp
+
+//D013 make BOM
 
 //B021 after disable edit in project tree need update time
 

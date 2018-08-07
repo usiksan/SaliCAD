@@ -45,7 +45,7 @@ class SdDGetObject : public QDialog
     SdStringMap            mParam;        //Component or instance params
 
     quint64                mSort;         //Object select sort (class)
-    SdLibraryHeaderList    mHeaderList;
+    SdLibraryHeaderList    mHeaderList;   //Header list for filtered objects
   public:
     explicit SdDGetObject( quint64 sort, const QString title, QWidget *parent = nullptr);
     ~SdDGetObject() override;

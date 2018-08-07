@@ -177,19 +177,27 @@ void SdWProjectTree::cmObjectNew()
 
 
 
-void SdWProjectTree::cmObjectRename()
+void SdWProjectTree::cmObjectRename( bool category )
   {
   SdProjectItemPtr item = dynamic_cast<SdProjectItem*>( mProject->item( currentItem() ) );
   if( item ) {
-    QWizard wizard(this);
+    if( item->isEditEnable() ) {
+      QWizard wizard(this);
 
-    wizard.setPage( 1, new SdPNewProjectItem_EnterName( &item, mProject, &wizard) );
+      wizard.setPage( 1, new SdPNewProjectItem_EnterName( &item, mProject, &wizard) );
 
-    wizard.exec();
+      wizard.exec();
+      }
+    else
+      QMessageBox::warning( this, tr("Error!"), tr("To rename or category set object must be edit enable") );
     }
   else
     QMessageBox::warning( this, tr("Error!"), tr("This is not object. Select object to rename.") );
   }
+
+
+
+
 
 
 

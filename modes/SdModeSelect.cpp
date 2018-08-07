@@ -34,6 +34,7 @@ Description
 
 
 #include <QObject>
+#include <QDebug>
 
 SdModeSelect::SdModeSelect(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdMode( editor, obj ),
@@ -986,10 +987,14 @@ bool SdModeSelect::enablePaste(quint64 pasteMask) const
 
 bool SdModeSelect::getInfo(SdPoint p, QString &info)
   {
-  //TODO D023 getInfo in select mode
-  Q_UNUSED(p)
-  Q_UNUSED(info)
-  return false;
+  info.clear();
+  mObject->forEach( dctAll, [p,&info] (SdObject *obj) ->bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+    if( graph != nullptr )
+      return !graph->getInfo( p, info, true );
+    return true;
+    });
+  return !info.isEmpty();
   }
 
 
@@ -1325,12 +1330,7 @@ int SdModeSelect::checkPoint(SdPoint p)
   if( sdEnvir->mShowMessageRemark ) {
     //If need display extended remark then scan objects behind cursor and get their info
     QString info;
-    mFragment.forEach( dctAll, [p,&info] (SdObject *obj) ->bool {
-      SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-      if( graph != nullptr )
-        return !graph->getInfo( p, info, true );
-      return true;
-      });
+    getInfo( p, info );
 
     //If message received then display it other wise display help
     if( info.isEmpty() )

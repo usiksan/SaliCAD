@@ -208,7 +208,8 @@ SOURCES += \
     modes/SdModeTRuller.cpp \
     windows/SdPropBarPartImp.cpp \
     windows/SdStringHistory.cpp \
-    objects/SdTime2x.cpp
+    objects/SdTime2x.cpp \
+    objects/SdPItemInheritance.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -413,7 +414,8 @@ HEADERS  += \
     modes/SdModeTRuller.h \
     windows/SdPropBarPartImp.h \
     windows/SdStringHistory.h \
-    objects/SdTime2x.h
+    objects/SdTime2x.h \
+    objects/SdPItemInheritance.h
 
 DISTFILES += \
     license.txt

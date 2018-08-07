@@ -389,7 +389,9 @@ void SdWEditorComponent::paramAdd()
       mComponent->paramSet( key, QString(), mUndo );
       int row = mParamTable->rowCount();
       mParamTable->insertRow( row );
+      disconnect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onParamChanged );
       paramAppend( row, key, QString() );
+      connect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onParamChanged );
       dirtyProject();
       }
     }

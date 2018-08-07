@@ -344,7 +344,7 @@ QString SdDGetObject::getObjectUid(quint64 sort, const QString title, QWidget *p
 
 SdPItemComponent *SdDGetObject::getComponent(int *logSectionPtr, SdStringMap *param, const QString title, QWidget *parent)
   {
-  SdDGetObject dget( dctComponent|dctInstance, title, parent );
+  SdDGetObject dget( dctComponent|dctInheritance, title, parent );
   if( dget.exec() ) {
     //If available pointer to logical section then set selected section
     if( logSectionPtr )

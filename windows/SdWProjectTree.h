@@ -35,7 +35,7 @@ class SdWProjectTree : public QTreeWidget
 
     QString              mFileName;      //Полное имя файла проекта проекта с путем
   public:
-    explicit SdWProjectTree( const QString fname, QWidget *parent = 0);
+    explicit SdWProjectTree( const QString fname, QWidget *parent = nullptr);
     ~SdWProjectTree();
 
     QString      filePath() { return mFileName; }
@@ -52,7 +52,7 @@ class SdWProjectTree : public QTreeWidget
     //Create new object in project hierarchy with wizard
     void         cmObjectNew();
 
-    void         cmObjectRename();
+    void         cmObjectRename(bool category);
     void         cmObjectDelete();
     virtual void cmObjectCopy() {}
     virtual void cmObjectPaste() {}

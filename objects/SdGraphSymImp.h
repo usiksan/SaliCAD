@@ -83,7 +83,7 @@ class SdGraphSymImp : public SdGraph
     //Param full list
     SdStringMap     getParamTable() const { return mParam; }
     //Get param
-    QString         getParam( const QString key ) { return mParam.value( key ); }
+    QString         getParam( const QString key ) const { return mParam.value( key ); }
     //Set param
     void            setParam( const QString key, const QString val, SdUndo *undo );
     //Get BOM item line

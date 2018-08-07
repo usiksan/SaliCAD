@@ -18,7 +18,7 @@ Description
 #include <QVBoxLayout>
 #include <QMessageBox>
 
-SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item, SdProject *prj, QWidget *parent) :
+SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item, SdProject *prj, bool categoryOnly, QWidget *parent) :
   QWizardPage(parent),
   mItemPtr(item),
   mProject(prj),
@@ -39,7 +39,10 @@ SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item,
 
   setLayout( vlay );
 
-  connect( mName, &QLineEdit::textChanged, this, &SdPNewProjectItem_EnterName::onTextChanged );
+  if( categoryOnly )
+    mName->setReadOnly(true);
+  else
+    connect( mName, &QLineEdit::textChanged, this, &SdPNewProjectItem_EnterName::onTextChanged );
   }
 
 

@@ -188,51 +188,18 @@ void SdGraphSymImp::linkAutoPart(SdUndo *undo)
 //Get BOM item line
 QString SdGraphSymImp::getBomItemLine() const
   {
-  //TODO D013 make BOM
-  return QString();
-#if 0
-  QString bom = mParam.value( QStringLiteral("bom") ).toString();
-  CPChar sour;
-  if( param.GetBuffer() != NULL ) sour = strstr( param.GetBuffer(), "Перечень=" );
-  else return false; //Не заносим в перечень неопределенный компонент
-  char buf[1000];
-  char *dest = buf;
-  int c = 0;
-  if( sour ) {
-    sour += 9; //Пропустить слово Перечень=
-    while( c < 999 && *sour && *sour != '\n' && *sour != '\r' ) {
-      if( *sour == '<' ) {
-        sour++; //Пропустить открывающую скобку
-        //Сканировать имя
-        char tmpName[260];
-        int i;
-        for( i = 0; i < 259 && *sour && *sour != '\n' && *sour != '>'; ++i ) {
-          tmpName[i] = *sour++;
-          }
-        tmpName[i] = 0; //Закрыть имя
-        if( *sour == '>' ) sour++; //Пропустить закрывающую скобку
-        else break;
-        //Обнаружить параметр, соответствующий имени
-        strcat( tmpName, "=" );
-        CPChar ptr = strstr( param.GetBuffer(), tmpName );
-        if( ptr ) {
-          ptr += strlen( tmpName );
-          //Скопировать значение параметра
-          for( ; c < 999 && *ptr && *ptr != '\n' && *ptr != '\r'; ++c )
-            *dest++ = *ptr++;
-          }
-        }
-      else {
-        c++;
-        *dest++ = *sour++;
-        }
-      }
+  QString bom = getParam( QStringLiteral("bom") );
+  if( bom.isEmpty() )
+    return bom;
+
+  //For each param key test if it present in bom line
+  for( auto iter = mParam.cbegin(); iter != mParam.cend(); iter++ ) {
+    QString field = QString("<%1>").arg( iter.key() );
+    if( bom.contains( field ) )
+      bom.replace( field, iter.value() );
     }
-  else return false; //Не заносим в перечень неопределенный компонент
-  *dest = 0; //Закрываем сформированную строку
-  def = buf;
-  return true;
-#endif
+
+  return bom;
   }
 
 
@@ -530,9 +497,15 @@ bool SdGraphSymImp::getInfo(SdPoint p, QString &info, bool extInfo)
   {
   if( behindCursor( p ) ) {
     if( extInfo ) {
-      info = getBomItemLine();
-      if( !info.isEmpty() )
+      QString bom;
+      if( mPartImp )
+        bom = mPartImp->getBomItemLine();
+      else
+        bom = getBomItemLine();
+      if( !bom.isEmpty() ) {
+        info = getIdent() + QString("  ") + bom;
         return true;
+        }
       }
     info = getIdent();
     if( mComponent )

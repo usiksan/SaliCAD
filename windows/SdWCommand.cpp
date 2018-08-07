@@ -80,6 +80,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   menuObject = new QMenu( frame->tr("Objects") );
   cmObjectNew         = menuObject->addAction( QIcon(QString(":/pic/objectNew.png")), frame->tr("Create"), frame, SLOT(cmObjectNew()) );
   cmObjectRename      = menuObject->addAction( QIcon(QString(":/pic/objectRename.png")), frame->tr("Rename"), frame, SLOT(cmObjectRename()) );
+  cmObjectCategory    = menuObject->addAction( frame->tr("Edit category"), frame, SLOT(cmObjectCategory()) );
   cmObjectDelete = menuObject->addAction( frame->tr("Delete"), frame, SLOT(cmObjectDelete()) );
   cmObjectCopy = menuObject->addAction( frame->tr("Copy"), frame, SLOT(cmObjectCopy()) );
   cmObjectPaste = menuObject->addAction( frame->tr("Paste"), frame, SLOT(cmObjectPaste()) );
@@ -628,6 +629,7 @@ QActionPtr SdWCommand::cmFilePrevious[PREVIOUS_FILES_COUNT];
 
 QActionPtr SdWCommand::cmObjectNew;
 QActionPtr SdWCommand::cmObjectRename;
+QActionPtr SdWCommand::cmObjectCategory;
 QActionPtr SdWCommand::cmObjectDelete;
 QActionPtr SdWCommand::cmObjectCopy;
 QActionPtr SdWCommand::cmObjectPaste;

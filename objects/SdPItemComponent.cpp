@@ -258,5 +258,5 @@ quint64 SdPItemComponent::getClass() const
 
 QString SdPItemComponent::getIconName() const
   {
-  return QString(":/pic/iconProject.png");
+  return QString(":/pic/iconComp.png");
   }

@@ -281,6 +281,25 @@ void SdGraphPartImp::setParam(const QString key, const QString val, SdUndo *undo
 
 
 
+QString SdGraphPartImp::getBomItemLine() const
+  {
+  QString bom = getParam( QStringLiteral("bom") );
+  if( bom.isEmpty() )
+    return bom;
+
+  //For each param key test if it present in bom line
+  for( auto iter = mParam.cbegin(); iter != mParam.cend(); iter++ ) {
+    QString field = QString("<%1>").arg( iter.key() );
+    if( bom.contains( field ) )
+      bom.replace( field, iter.value() );
+    }
+
+  return bom;
+  }
+
+
+
+
 
 //Draw part without pads
 void SdGraphPartImp::drawWithoutPads(SdContext *cdx)
@@ -692,7 +711,17 @@ int SdGraphPartImp::behindCursor(SdPoint p)
 
 bool SdGraphPartImp::getInfo(SdPoint p, QString &info, bool extInfo)
   {
-  //TODO D024 getInfo partImp
+  if( behindCursor( p ) ) {
+    if( extInfo ) {
+      info = getBomItemLine();
+      if( !info.isEmpty() )
+        return true;
+      }
+    info = getIdent();
+    if( mComponent )
+      info.append( QString("  ") ).append( mComponent->getTitle() );
+    return true;
+    }
   return false;
   }
 

@@ -44,7 +44,7 @@ class SdWMain : public QMainWindow
     SdWLabel       *mYPos;          //Y axiz position
     SdWLabel       *mMessage;       //Message
   public:
-    explicit SdWMain( QStringList args, QWidget *parent = 0 );
+    explicit SdWMain( QStringList args, QWidget *parent = nullptr );
 
   signals:
 
@@ -85,6 +85,7 @@ class SdWMain : public QMainWindow
 
     void cmObjectNew();
     void cmObjectRename();
+    void cmObjectCategory();
     void cmObjectDelete();
     void cmObjectCopy();
     void cmObjectPaste();
