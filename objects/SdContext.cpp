@@ -158,7 +158,7 @@ void SdContext::rect(SdRect r, const SdPropLine &prop)
 
 void SdContext::fillRect(SdRect r)
   {
-  mPainter->drawRect( mTransform.mapRect(r) );
+  mPainter->drawPolygon( mTransform.mapToPolygon(r) );
   }
 
 
