@@ -49,7 +49,7 @@ struct SdPartImpPin {
   bool        isConnected() const;
   QString     getNetName() const;
   void        accumUsedPin( SdPadMap &map ) const;
-  void        accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int stratum, SdRuleId ruleId, int clearance , int halfWidth) const;
+  void        accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int stratum, SdRuleId ruleId, int clearance , int halfWidth, QTransform t) const;
 
   QJsonObject toJson(const QString pinNumber) const;
   QString     fromJson( SdObjectMap *map, const QJsonObject obj );

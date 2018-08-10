@@ -33,7 +33,7 @@ void SdModeCRoadEnter::drawStatic(SdContext *ctx)
     } );
 
   //Draw component pads down stratums
-  SdStratum stratum;
+  SdStratum stratum = stmThrow;
   if( mProp.mStratum.isValid() ) stratum = stmThrow & (~mProp.mStratum.getValue());
   mObject->forEach( dctPartImp, [ctx,stratum] (SdObject *obj) -> bool {
     SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(obj);

@@ -76,6 +76,7 @@ void SdPartImpPin::drawPad(SdContext *dc, SdPItemPlate *plate, int stratum, cons
   if( !highliteNet.isEmpty() && getNetName() == highliteNet )
     dc->setOverColor( sdEnvir->getSysColor(scTraseNet) );
   plate->drawPad( dc, mPin->getPinOrigin(), mPin->getPinType(), mStratum.stratum() & stratum );
+//  plate->drawPad( dc, mPosition, mPin->getPinType(), mStratum.stratum() & stratum );
   dc->resetOverColor();
   }
 
@@ -111,7 +112,7 @@ void SdPartImpPin::accumUsedPin(SdPadMap &map) const
 
 
 
-void SdPartImpPin::accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int stratum, SdRuleId ruleId, int clearance, int halfWidth ) const
+void SdPartImpPin::accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int stratum, SdRuleId ruleId, int clearance, int halfWidth, QTransform t ) const
   {
 
   //Compare on stratum
@@ -122,7 +123,7 @@ void SdPartImpPin::accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int s
       clearance = qMax( clearance, plate->ruleForNet( stratum, getNetName(), ruleId ) );
     SdBarrier bar;
     bar.mNetName = getNetName();
-    bar.mPolygon = plate->getPadPolygon( mPosition, mPin->getPinType(), clearance + halfWidth);
+    bar.mPolygon = t.map( plate->getPadPolygon( mPin->getPinOrigin(), mPin->getPinType(), clearance + halfWidth) );
     dest.append( bar );
     }
   }
@@ -329,6 +330,9 @@ void SdGraphPartImp::drawWithoutPads(SdContext *cdx)
 //Draw pads only
 void SdGraphPartImp::drawPads(SdContext *cdx, SdStratum stratum, const QString highlightNetName)
   {
+  //Convertor for symbol implementation
+  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
+  cdx->setConverter( &imp );
   //Draw pins
   for( const SdPartImpPin &pin : mPins )
     pin.drawPad( cdx, getPlate(), stratum, highlightNetName );
@@ -683,8 +687,12 @@ void SdGraphPartImp::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId to
     clearance = blk.mRules[toWhich];
     halfWidth = blk.mRules[ruleRoadWidth] / 2;
     }
+
+  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
+  QTransform t( imp.getMatrix() );
+
   for( const SdPartImpPin &pin : mPins )
-    pin.accumBarriers( plate, dest, stratum, toWhich, clearance, halfWidth  );
+    pin.accumBarriers( plate, dest, stratum, toWhich, clearance, halfWidth, t );
   }
 
 
