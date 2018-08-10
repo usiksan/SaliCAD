@@ -54,9 +54,10 @@ void SdPartImpPin::operator =(const SdPartImpPin &pin)
 
 void SdPartImpPin::draw(SdContext *dc, SdPItemPlate *plate, int stratum ) const
   {
-  drawWithoutPad( dc );
   //Draw pin pad
   plate->drawPad( dc, mPin->getPinOrigin(), mPin->getPinType(), mStratum.stratum() & stratum );
+  //Draw pin connection and also pin name and number
+  drawWithoutPad( dc );
   }
 
 
@@ -643,11 +644,11 @@ void SdGraphPartImp::drawStratum(SdContext *dc, int stratum)
   //Draw ident in plate context
   if( stratum == 0 || stratum == stmThrow )
     dc->text( mIdentPos, mIdentRect, getIdent(), mIdentProp );
-  //Convertor for symbol implementation
+  //Convertor for part implementation
   SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
   dc->setConverter( &imp );
 
-  //Draw symbol except ident and pins
+  //Draw part except ident and pins
   if( stratum == 0 || stratum == stmThrow ) {
     mPart->forEach( dctAll & ~(dctPartPin | dctIdent), [dc] (SdObject *obj) -> bool {
       SdGraph *graph = dynamic_cast<SdGraph*>( obj );

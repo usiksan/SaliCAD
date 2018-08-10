@@ -24,6 +24,9 @@ SdModeCLinearRegion::SdModeCLinearRegion(SdWEditorGraph *editor, SdProjectItem *
   }
 
 
+
+
+//Draw dinamic part of mode scene
 void SdModeCLinearRegion::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sNextPoint ) {
@@ -33,10 +36,14 @@ void SdModeCLinearRegion::drawDynamic(SdContext *ctx)
     ctx->line( mList.last(), mMiddle );
     if( mMiddle != mPrevMove )
       ctx->line( mMiddle, mPrevMove );
+
+    if( sdEnvir->mIsSmart && mList.count() > 2 )
+      ctx->smartPoint( mList.at(0), snapEndPoint );
     }
-//  if( sdEnvir->mIsSmart && mSmartType )
-  //    ctx->smartPoint( mSmartPoint, mSmartType );
   }
+
+
+
 
 void SdModeCLinearRegion::enterPoint(SdPoint enter)
   {

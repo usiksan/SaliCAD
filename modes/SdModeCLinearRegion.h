@@ -28,6 +28,7 @@ class SdModeCLinearRegion : public SdModeCLinear
 
     // SdMode interface
   public:
+    //Draw dinamic part of mode scene
     virtual void    drawDynamic(SdContext *ctx) override;
     virtual void    enterPoint(SdPoint enter) override;
     virtual void    cancelPoint(SdPoint) override;

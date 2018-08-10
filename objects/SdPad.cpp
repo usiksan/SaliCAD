@@ -94,6 +94,7 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
   SdLayer *layer = sdEnvir->mCacheForPad.getLayer(stratum);
   if( layer != nullptr && layer->isVisible() ) {
     dcx->setPen( 0, layer, 0 );
+    dcx->setBrush( layer->color() );
     if( mIsCircle ) dcx->circleFill( SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth >> 1 );
     else dcx->fillRect( SdRect( p.x() + mCenterX - (mDiametrWidth >> 1), p.y() + mCenterY - (mHeight >> 1), mDiametrWidth, mHeight) );
     }
@@ -102,6 +103,7 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
   layer = sdEnvir->mCacheForMask.getLayer(stratum);
   if( layer != nullptr && layer->isVisible() ) {
     dcx->setPen( 0, layer, 0 );
+    dcx->setBrush( layer->color() );
     int w = mDiametrWidth + mMaskThreshold * 2;
     int h = mHeight + mMaskThreshold * 2;
     if( mIsCircle ) dcx->circleFill( SdPoint( p.x() + mCenterX, p.y() + mCenterY), w >> 1 );
@@ -112,6 +114,7 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
   layer = sdEnvir->mCacheForStensil.getLayer(stratum);
   if( layer != nullptr && layer->isVisible() ) {
     dcx->setPen( 0, layer, 0 );
+    dcx->setBrush( layer->color() );
     int w = mDiametrWidth - mStensilThreshold * 2;
     int h = mHeight - mStensilThreshold * 2;
     if( mIsCircle ) dcx->circleFill( SdPoint( p.x() + mCenterX, p.y() + mCenterY), w >> 1 );
@@ -137,6 +140,7 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
   layer = sdEnvir->mCacheForHole.getLayer(stratum);
   if( layer != nullptr && layer->isVisible() ) {
     dcx->setPen( 0, layer, 0 );
+    dcx->setBrush( layer->color() );
     dcx->circleFill( p, mHoleDiametr >> 1 );
     }
 

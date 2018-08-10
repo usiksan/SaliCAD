@@ -282,7 +282,11 @@ int SdGraphArea::behindCursor(SdPoint p)
 
 bool SdGraphArea::snapPoint(SdSnapInfo *snap)
   {
-  Q_UNUSED(snap)
-  //TODO D014 add snap to area
-  return false;
+  int res = false;
+  if( snap->match(snapEndPoint) ) {
+    //Test for all points of area region
+    for( SdPoint p : mRegion )
+      res = snap->test( p, snapEndPoint ) || res;
+    }
+  return res;
   }

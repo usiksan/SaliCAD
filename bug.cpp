@@ -29,10 +29,12 @@
 
 //TODO B023 When copy component in schematic link with part not correct (rat net not builded)
 
-//TODO B024 Not connected pin lock display pads
-
 //===================================================================================
 //Fixed:
+
+//B024 Not connected pin locks display pads
+
+//D014 add snap to area
 
 //B025 When moving cursor in select mode do not displaing bom behind cursor component
 
