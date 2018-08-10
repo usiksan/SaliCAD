@@ -15,19 +15,21 @@ Description
 
 #include "SdPropBar.h"
 
+class SdPItemPlate;
+
 class SdPropBarStratum : public SdPropBar
   {
     Q_OBJECT
 
-    int          mStratumCount;
-    SdLayerTrace mLayerTrace;
+    SdPItemPlate *mPlate;      //Plate contains stratum count
+    SdLayerTrace  mLayerTrace;
   protected:
     void      setSelectedStratum( SdStratum stratum );
     SdStratum getSelectedStratum();
   public:
     SdPropBarStratum(const QString title);
 
-    void setStratumCountAndTrace( int stratumCount, SdLayerTrace trace );
+    void setPlateAndTrace( SdPItemPlate *plate, SdLayerTrace trace );
   public slots:
     virtual void updateViewedLayers();
   };

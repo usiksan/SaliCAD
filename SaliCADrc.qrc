@@ -208,5 +208,6 @@
         <file>pic/symbolMasterConnector.png</file>
         <file>pic/iconComp.png</file>
         <file>pic/iconInheritance.png</file>
+        <file>pic/flipSide.png</file>
     </qresource>
 </RCC>

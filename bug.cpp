@@ -2,7 +2,7 @@
 //B025 bugs
 //F001 fatal
 //C001 critical
-//D041 do
+//D043 do
 
 
 
@@ -19,8 +19,6 @@
 
 //TODO B016 insertComponent mode: when select component and after select symbol part remain from component
 
-//TODO D040 show close point on region as smart point
-
 //TODO B019 in trace mode pads shown not at place
 
 //TODO B020 in trace mode show smart start point
@@ -29,8 +27,16 @@
 
 //TODO B023 When copy component in schematic link with part not correct (rat net not builded)
 
+//TODO D042 Append posibility to load object to project for edit
+
+//TODO D043 Append posibility to delete object from library and also from remote library
+
 //===================================================================================
 //Fixed:
+
+//D009 snap region
+
+//D040 show close point on region as smart point
 
 //B024 Not connected pin locks display pads
 

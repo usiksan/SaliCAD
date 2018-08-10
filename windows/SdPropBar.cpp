@@ -31,11 +31,7 @@ SdPropBar::SdPropBar( const QString title ) :
   mLayer->setMinimumWidth( 150 );
 
   //fill new layers list
-  for( SdLayer *p : sdEnvir->mLayerTable ) {
-    if( p->isEdited() ) {
-      mLayer->addItem( p->name(), QVariant( p->id() ) );
-      }
-    }
+  updateViewedLayers();
 
   //current layer selection changed. Send signal "prop changed"
   connect( mLayer, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){

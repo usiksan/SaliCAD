@@ -13,21 +13,25 @@ Description
 #include "SdPropBarStratum.h"
 #include "objects/SdUtil.h"
 #include "objects/SdEnvir.h"
+#include "objects/SdPItemPlate.h"
 
 SdPropBarStratum::SdPropBarStratum(const QString title) :
-  SdPropBar(title)
+  SdPropBar(title),
+  mPlate(nullptr)
   {
-
   }
 
 
 
 
-void SdPropBarStratum::setStratumCountAndTrace(int stratumCount, SdLayerTrace trace)
+void SdPropBarStratum::setPlateAndTrace(SdPItemPlate *plate, SdLayerTrace trace)
   {
-  mStratumCount = stratumCount;
-  mLayerTrace   = trace;
-  updateViewedLayers();
+  if( mPlate != plate || mLayerTrace != trace ) {
+    //Do only if changed, else do nothing
+    mPlate        = plate;
+    mLayerTrace   = trace;
+    updateViewedLayers();
+    }
   }
 
 
@@ -76,7 +80,10 @@ void SdPropBarStratum::updateViewedLayers()
   {
   SdStratum curStratum = getSelectedStratum();
   //fill new layers list
-  int stratumMask = ~(-1 << mStratumCount);
+  int c = mPlate == nullptr ? 2 : mPlate->stratumCount();
+  int stratumMask = ~(-1 << c);
+  //Remove previous layers
+  mLayer->clear();
   for( SdLayer *p : sdEnvir->mLayerTable ) {
     if( p->trace() == mLayerTrace && (p->stratum() & stratumMask) && p->isEdited() ) {
       mLayer->addItem( p->name(), QVariant( p->id() ) );

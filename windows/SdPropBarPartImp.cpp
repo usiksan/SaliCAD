@@ -59,7 +59,7 @@ SdPropBarPartImp::SdPropBarPartImp(const QString title) :
 //    emit propChanged();
 //    });
 
-  mBottom = addAction( QIcon(QStringLiteral(":/pic/dthMirror.png")), tr("Part at bottom side") );
+  mBottom = addAction( QIcon(QStringLiteral(":/pic/flipSide.png")), tr("Part at bottom side") );
   mBottom->setCheckable(true);
   connect( mBottom, &QAction::triggered, [=](bool) {
     emit propChanged();

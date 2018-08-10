@@ -169,9 +169,13 @@ void SdGraphLinearRegion::draw(SdContext *dc)
 
 bool SdGraphLinearRegion::snapPoint(SdSnapInfo *snap)
   {
-  Q_UNUSED(snap)
-  //TODO D009 snap region
-  return false;
+  int res = false;
+  if( snap->match(snapEndPoint) ) {
+    //Test for all points of region
+    for( SdPoint p : mList )
+      res = snap->test( p, snapEndPoint ) || res;
+    }
+  return res;
   }
 
 
