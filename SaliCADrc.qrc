@@ -209,5 +209,7 @@
         <file>pic/iconComp.png</file>
         <file>pic/iconInheritance.png</file>
         <file>pic/flipSide.png</file>
+        <file>pic/download.png</file>
+        <file>pic/upload.png</file>
     </qresource>
 </RCC>

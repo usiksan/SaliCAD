@@ -209,7 +209,9 @@ SOURCES += \
     windows/SdPropBarPartImp.cpp \
     windows/SdStringHistory.cpp \
     objects/SdTime2x.cpp \
-    objects/SdPItemInheritance.cpp
+    objects/SdPItemInheritance.cpp \
+    modes/SdModeCPartPlace.cpp \
+    modes/SdModeCFragment.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -415,7 +417,9 @@ HEADERS  += \
     windows/SdPropBarPartImp.h \
     windows/SdStringHistory.h \
     objects/SdTime2x.h \
-    objects/SdPItemInheritance.h
+    objects/SdPItemInheritance.h \
+    modes/SdModeCPartPlace.h \
+    modes/SdModeCFragment.h
 
 DISTFILES += \
     license.txt

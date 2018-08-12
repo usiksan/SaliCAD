@@ -68,6 +68,7 @@ class SdWMain : public QMainWindow
 
     //Реакции на команды
     void cmFileNew();
+    void cmFileLoad();
     void cmFileOpen();
     void cmFilePrevious();
     void cmFileClose();
@@ -76,6 +77,7 @@ class SdWMain : public QMainWindow
     void cmFileSave();
     void cmFileSaveAs();
     void cmFileSaveAll();
+    void cmFileStore();
     void cmFilePrint();
     void cmFileExit();
 

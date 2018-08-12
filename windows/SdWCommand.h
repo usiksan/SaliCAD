@@ -82,6 +82,8 @@ class SdWCommand
     static QActionPtr  cmFileImportPis;
     static QActionPtr  cmFileImport;
     static QActionPtr  cmFileExport;
+    static QActionPtr  cmFileStoreToLibrary;
+    static QActionPtr  cmFileLoadFromLibrary;
 
     static QActionPtr  cmFilePrevious[PREVIOUS_FILES_COUNT];
 

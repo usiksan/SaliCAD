@@ -29,6 +29,7 @@ SdModeWireDisconnect::SdModeWireDisconnect(SdWEditorGraph *editor, SdProjectItem
 
 void SdModeWireDisconnect::enterPoint(SdPoint enter)
   {
+  //TODO D044 Append possibilities to ucom set of pins by select them with rect
   getSheet()->forEach( dctSymImp, [this, enter] (SdObject *obj) -> bool {
     SdGraphSymImp *sym = dynamic_cast<SdGraphSymImp*>(obj);
     Q_ASSERT( sym != nullptr );

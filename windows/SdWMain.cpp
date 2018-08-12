@@ -390,6 +390,16 @@ void SdWMain::cmFileNew()
 
 
 
+void SdWMain::cmFileLoad()
+  {
+
+  }
+
+
+
+
+
+
 void SdWMain::cmFileOpen()
   {
   QString title = QFileDialog::getOpenFileName(this, tr("Open project file"), QString(), tr("SaliCAD 3D Files (*%1)").arg(SD_BASE_EXTENSION) );
@@ -470,6 +480,15 @@ void SdWMain::cmFileSaveAll()
   //Для всех открытых проектов выполнить сохранение
   for( int i = 0; project(i); ++i )
     project(i)->cmFileSave();
+  }
+
+
+
+
+
+void SdWMain::cmFileStore()
+  {
+
   }
 
 

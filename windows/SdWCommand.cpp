@@ -46,6 +46,7 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
   cmFileNew = menuFile->addAction( QIcon(QString(":/pic/new.png")), frame->tr("New project"), frame, SLOT(cmFileNew()) );
+  cmFileLoadFromLibrary = menuFile->addAction( QIcon(QString(":/pic/download.png")), frame->tr("Load from library..."), frame, SLOT(cmFileLoad()) );
   cmFileOpen = menuFile->addAction( QIcon(QString(":/pic/fileOpen.png")), frame->tr("Open project ..."), frame, SLOT(cmFileOpen()) );
   menuFilePrevious = menuFile->addMenu( frame->tr("Previous files") );
   menuFile->addSeparator();
@@ -55,6 +56,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmFileSave = menuFile->addAction( QIcon(QString(":/pic/save.png")),frame->tr("Save project"), frame, SLOT(cmFileSave()) );
   cmFileSaveAs = menuFile->addAction( QIcon(QString(":/pic/save_as.png")), frame->tr("Save project as..."), frame, SLOT(cmFileSaveAs()) );
   cmFileSaveAll = menuFile->addAction( QIcon(QString(":/pic/save_all.png")), frame->tr("Save all projects"), frame, SLOT(cmFileSaveAll()) );
+  cmFileStoreToLibrary = menuFile->addAction( QIcon(QString(":/pic/upload.png")),frame->tr("Store to library"), frame, SLOT(cmFileStore()) );
   menuFile->addSeparator();
   cmFileImportPis = menuFile->addAction( frame->tr("Import PasCAD"), frame, SLOT(cmFileImportPis()) );
   cmFileImport    = menuFile->addAction( QIcon(QString(":/pic/fileImport.png")), frame->tr("Import..."), frame, SLOT(cmFileImport()) );
@@ -624,6 +626,8 @@ QActionPtr SdWCommand::cmFileExit;
 QActionPtr SdWCommand::cmFileImportPis;
 QActionPtr SdWCommand::cmFileImport;
 QActionPtr SdWCommand::cmFileExport;
+QActionPtr SdWCommand::cmFileStoreToLibrary;
+QActionPtr SdWCommand::cmFileLoadFromLibrary;
 
 QActionPtr SdWCommand::cmFilePrevious[PREVIOUS_FILES_COUNT];
 
