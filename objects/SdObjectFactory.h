@@ -72,11 +72,22 @@ class SdObjectFactory
 
 
     //Hierarchy table
+    //Append category to hierarchy
     static void         hierarchyAddItem( const QString parent, const QString item );
+
+    //Test if category present
     static bool         hierarchyIsPresent( const QString item );
+
+    //Fix category translation to default language
     static void         hierarchyTranslate( const QString item, const QString translate );
+
+    //Create full path to item category
     static QString      hierarchyGetPath( const QString item );
+
+    //Get category translation if there or category itself if none
     static QString      hierarchyGetTranslated( const QString item );
+
+    //Build visual hierarchy tree
     static QTreeList    hierarchyGet( const QString parent );
   };
 

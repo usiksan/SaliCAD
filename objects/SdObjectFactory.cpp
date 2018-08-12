@@ -219,12 +219,17 @@ void SdObjectFactory::hierarchyTranslate(const QString item, const QString trans
 
 
 
+//Create full path to item category
 QString SdObjectFactory::hierarchyGetPath(const QString item)
   {
-  QString path(item);
+  QString path;
   for( QString parent(item); !parent.isEmpty() && parent != sdLibraryStorage.category(parent); parent = sdLibraryStorage.category(parent) ) {
-    path = parent + QString(".") + path;
+    if( path.isEmpty() )
+      path = parent;
+    else
+      path = parent + QString(".") + path;
     }
+  //qDebug() << "Hierarchy" << path;
   return path;
   }
 
