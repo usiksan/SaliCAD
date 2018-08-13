@@ -14,6 +14,7 @@ Description
 #include "SdPItemSymbol.h"
 #include "SdPItemComponent.h"
 #include "SdPItemPart.h"
+#include "SdPItemSheet.h"
 #include "SdGraphLinear.h"
 #include "SdGraphLinearLine.h"
 #include "SdGraphLinearRect.h"
@@ -310,7 +311,8 @@ SdObject *SdPasCadImport::buildObject(int id)
       return new SdGraphPartPin();
     case pasCadObjPrtPic        : //Корпус (изображение корпуса компоненты)
       return new SdPItemPart();
-//#define pasCadObjSheetPic      19 //Лист схемы
+    case pasCadObjSheetPic      : //Лист схемы
+      return new SdPItemSheet();
 //#define pasCadObjPlatePic      20 //Печатная плата
 //#define pasCadObjListPic       21 //Перечень элементов
 //#define pasCadObjNetListPic    22 //Текстовый перечень цепей
@@ -483,7 +485,8 @@ bool SdPasCadImport::readSingleObject(SdContainer *container)
       return readPartPin( obj );
     case pasCadObjPrtPic         : //Корпус (изображение корпуса компоненты)
       return readPart( obj );
-//#define pasCadObjSheetPic      19 //Лист схемы
+    case pasCadObjSheetPic       : //Лист схемы
+      return readSheet( obj );
 //#define pasCadObjPlatePic      20 //Печатная плата
 //#define pasCadObjListPic       21 //Перечень элементов
 //#define pasCadObjNetListPic    22 //Текстовый перечень цепей
@@ -561,6 +564,7 @@ bool SdPasCadImport::readPart(SdObject *obj)
   //is.Read( &info, sizeof(DPartInfo) );
   //DInt32      reserv;   //Корпус создан вручную (нельзя удалить автоматически)
   int reserv = readInt32();
+  Q_UNUSED(reserv)
 
 //  picture.Read( is, this );
   if( !readObjectTable( part ) ) return false;
@@ -571,6 +575,35 @@ bool SdPasCadImport::readPart(SdObject *obj)
 //  ident.Read( is );
   SdGraphIdent *ident = part->getIdent();
   return readIdent( ident );
+  }
+
+
+
+
+
+bool SdPasCadImport::readSheet(SdObject *obj)
+  {
+//  DGraphTopPic::Read( is );
+  SdPItemSheet *sheet = dynamic_cast<SdPItemSheet*>( obj );
+  if( sheet == nullptr )
+    return error( QObject::tr("Internal error part") );
+  if( !projectItem(sheet) )
+    return false;
+//  picture.Read( is, this );
+  if( !readObjectTable( sheet ) ) return false;
+
+//  comp.Read( is, this );
+  if( !readObjectTable( sheet ) ) return false;
+
+//  nets.Read( is, this );
+  if( !readObjectTable( sheet ) ) return false;
+
+//  areas.Read( is, this );
+  if( !readObjectTable( sheet ) ) return false;
+
+//  is.Read( &info, sizeof(DSheetInfo) );
+  sheet->mSheetIndex = readInt32();
+  return true;
   }
 
 

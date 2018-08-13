@@ -67,6 +67,8 @@ class SdPItemSheet : public SdProjectItem
   public:
     virtual QString        getIconName() const override;
     virtual quint64        getAcceptedObjectsMask() const override;
+
+    friend class SdPasCadImport;
   };
 
 #endif // SDPITEMSHEET_H

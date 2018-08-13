@@ -14,6 +14,7 @@ Description
 #include "SdLayer.h"
 #include "SdSelector.h"
 #include "SdContext.h"
+#include "SdProjectItem.h"
 
 SdGraphText::SdGraphText()
   {
@@ -54,6 +55,7 @@ void SdGraphText::cloneFrom(const SdObject *src)
   SdGraph::cloneFrom( src );
   const SdGraphText *text = dynamic_cast<const SdGraphText*>(src);
   if( text ) {
+    mOrigin   = text->mOrigin;
     mProp     = text->mProp;
     mString   = text->mString;
     mOverRect = text->mOverRect;
@@ -198,6 +200,16 @@ SdRect SdGraphText::getOverRect() const
 
 void SdGraphText::draw(SdContext *dc)
   {
+//  if( mString.startsWith( QString("field.") ) ) {
+//    //Draw as field
+//    const SdProjectItem *item = dynamic_cast<const SdProjectItem*>(getParent());
+//    if( item ) {
+//      QString str = item->paramGet( mString.mid( 6 ) );
+//      dc->text( mOrigin, mOverRect, str, mProp );
+//      return;
+//      }
+//    }
+//  else
   dc->text( mOrigin, mOverRect, mString, mProp );
   }
 
