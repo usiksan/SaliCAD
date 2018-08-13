@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Page of creation master with enter ProjectItem name and category selection
 */
 
 #ifndef SDPNEWPROJECTITEM_ENTERNAME_H
@@ -24,11 +25,11 @@ class SdPNewProjectItem_EnterName : public QWizardPage
   {
     Q_OBJECT
 
-    SdProjectItemPtr *mItemPtr;
-    SdProject        *mProject;
-    QLabel           *mUnical;
-    QLineEdit        *mName;
-    QLineEdit        *mCategory;
+    SdProjectItemPtr *mItemPtr;   //Pointer to item pointer which store ProjectItem
+    SdProject        *mProject;   //Project to which will be appended ProjectItem
+    QLabel           *mUnical;    //Message which indicate unical or not ProjectItem name
+    QLineEdit        *mName;      //ProjectItem name
+    QLineEdit        *mCategory;  //Category name
     bool              mValid;
     QString           mTagPath;
   public:
@@ -39,6 +40,7 @@ class SdPNewProjectItem_EnterName : public QWizardPage
     virtual int  nextId() const override;
     virtual void initializePage() override;
   public slots:
+    //On changed ProjectItem name
     void onTextChanged( const QString name );
   };
 

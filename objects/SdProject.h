@@ -16,6 +16,7 @@ Description
 
 #include "SdContainer.h"
 #include "SdUndo.h"
+#include "library/SdStringMap.h"
 #include <QMap>
 #include <QTreeWidgetItem>
 #include <QSet>
@@ -28,17 +29,28 @@ class SdPItemPlate;
 
 class SdProject : public SdContainer
   {
-    QJsonObject                mProperties;           //Project properties
+    SdStringMap                mParams;               //Project params
     bool                       mDirty;                //Project dirty flag
-    QMap<QString,SdObjectPtr>  mItemExtendNameMap;    //Extend name - item assotiation
-    SdUndo                     mUndo;
+
+    //Not saved
+    SdUndo                     mUndo;                 //Undo buffer for project
 
     int                        mNetIndex;             //Net index for creation default net
   public:
     SdProject();
-    ~SdProject();
+    ~SdProject() override;
 
     SdUndo           *getUndo() { return &mUndo; }
+
+    //Param table
+    //Get full table
+    SdStringMap       paramGetTable() const { return mParams; }
+    //Get one param
+    QString           paramGet( QString key ) const { return mParams.value(key); }
+    //Set one param
+    void              paramSet( QString key, QString val );
+
+
 
     //Return default plate and if none - create new one
     SdPItemPlate     *getDefaultPlate();
@@ -59,7 +71,6 @@ class SdProject : public SdContainer
 
     //Return true if object with this name present in project
     bool              isNameUsed( const QString name ) const;
-    SdObjectPtr       itemByExtendName( const QString name ) const { return mItemExtendNameMap.value(name); }
     SdObjectPtr       item( QTreeWidgetItem *src ) const;
 
     virtual QString   getType() const override;
@@ -79,7 +90,7 @@ class SdProject : public SdContainer
     virtual void      undoDeleteChild(SdObject *child) override;
 
   private:
-    void              fillMap();
+    //Test if net name already used
     bool              isNetNameUsed( const QString netName );
   };
 

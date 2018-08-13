@@ -211,7 +211,8 @@ SOURCES += \
     objects/SdTime2x.cpp \
     objects/SdPItemInheritance.cpp \
     modes/SdModeCPartPlace.cpp \
-    modes/SdModeCFragment.cpp
+    modes/SdModeCFragment.cpp \
+    windows/SdDProjectStore.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -419,7 +420,8 @@ HEADERS  += \
     objects/SdTime2x.h \
     objects/SdPItemInheritance.h \
     modes/SdModeCPartPlace.h \
-    modes/SdModeCFragment.h
+    modes/SdModeCFragment.h \
+    windows/SdDProjectStore.h
 
 DISTFILES += \
     license.txt

@@ -135,7 +135,7 @@ bool SdWProjectTree::cmFileSave()
 
 bool SdWProjectTree::cmFileSaveAs()
   {
-  QString title = QFileDialog::getSaveFileName(this, tr("Save project file"), QString(), tr("SaliCAD 3D Files (*%1)").arg(SD_BASE_EXTENSION) );
+  QString title = QFileDialog::getSaveFileName(this, tr("Save project file"), QString(), tr("SaliCAD Files (*%1)").arg(SD_BASE_EXTENSION) );
 
   if( title.isEmpty() ) return false;
 
@@ -162,7 +162,7 @@ void SdWProjectTree::cmObjectNew()
   QWizard wizard(this);
   //Fill it with pages
   wizard.setPage( SDP_NPI_TYPE,   new SdPNewProjectItem_SelectType( &item, mProject, &wizard) );
-  wizard.setPage( SDP_NPI_NAME,   new SdPNewProjectItem_EnterName( &item, mProject, &wizard) );
+  wizard.setPage( SDP_NPI_NAME,   new SdPNewProjectItem_EnterName( &item, mProject, false, &wizard) );
   wizard.setPage( SDP_NPI_MASTER, new SdPNewProjectItem_Master( &item, mProject, &wizard) );
   if( wizard.exec() ) {
     //Append item to the project
@@ -184,7 +184,7 @@ void SdWProjectTree::cmObjectRename( bool category )
     if( item->isEditEnable() ) {
       QWizard wizard(this);
 
-      wizard.setPage( 1, new SdPNewProjectItem_EnterName( &item, mProject, &wizard) );
+      wizard.setPage( 1, new SdPNewProjectItem_EnterName( &item, mProject, category, &wizard) );
 
       wizard.exec();
       }

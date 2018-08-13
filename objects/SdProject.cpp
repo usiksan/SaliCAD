@@ -45,6 +45,16 @@ SdProject::~SdProject()
 
 
 
+//Set one param
+void SdProject::paramSet(QString key, QString val)
+  {
+  mUndo.stringMapItem( &mParams, key );
+  mParams.insert( key, val );
+  }
+
+
+
+
 //Return default plate and if none - create new one
 SdPItemPlate *SdProject::getDefaultPlate()
   {
@@ -197,7 +207,7 @@ quint64 SdProject::getClass() const
 void SdProject::writeObject(QJsonObject &obj) const
   {
   SdContainer::writeObject( obj );
-  obj.insert( QStringLiteral("Properties"), mProperties );
+  sdStringMapWrite( QStringLiteral("Params"), mParams, obj );
   }
 
 
@@ -206,10 +216,7 @@ void SdProject::writeObject(QJsonObject &obj) const
 void SdProject::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdContainer::readObject( map, obj );
-  mProperties = obj.value( QStringLiteral("Properties") ).toObject();
-
-  //Fill map
-  fillMap();
+  sdStringMapRead( QStringLiteral("Params"), mParams, obj );
   }
 
 
@@ -219,13 +226,13 @@ SdProject *SdProject::load(const QString fname)
   {
   QFile file(fname);
   if( file.open(QIODevice::ReadOnly) ) {
-    QJsonDocument doc = QJsonDocument::fromJson( file.readAll(), 0 );
+    QJsonDocument doc = QJsonDocument::fromJson( file.readAll(), nullptr );
     if( !doc.isEmpty() ) {
       SdObjectMap map;
       return sdObjectOnly<SdProject>( SdObject::read( &map, doc.object() ) );
       }
     }
-  return 0;
+  return nullptr;
   }
 
 
@@ -251,8 +258,7 @@ void SdProject::cloneFrom(const SdObject *src)
   SdContainer::cloneFrom(src);
   mDirty = true;
   const SdProject *sour = dynamic_cast<const SdProject*>(src);
-  mProperties = sour->mProperties;
-  fillMap();
+  mParams = sour->mParams;
   }
 
 
@@ -263,7 +269,6 @@ void SdProject::insertChild(SdObject *child, SdUndo *undo)
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
   if( item ) {
     SdContainer::insertChild( child, undo );
-    mItemExtendNameMap.insert( item->getExtendTitle(), item );
     mDirty = true;
     SdPulsar::sdPulsar->emitInsertItem( item );
     }
@@ -277,7 +282,6 @@ void SdProject::undoInsertChild(SdObject *child)
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
   if( item && item->getParent() == this ) {
     SdPulsar::sdPulsar->emitRemoveItem( item );
-    mItemExtendNameMap.remove( item->getExtendTitle() );
     mDirty = true;
     SdContainer::undoInsertChild( child );
     }
@@ -290,7 +294,6 @@ void SdProject::redoInsertChild(SdObject *child)
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
   if( item ) {
     SdContainer::redoInsertChild( child );
-    mItemExtendNameMap.insert( item->getExtendTitle(), item );
     mDirty = true;
     SdPulsar::sdPulsar->emitInsertItem( item );
     }
@@ -304,7 +307,6 @@ void SdProject::deleteChild(SdObject *child, SdUndo *undo)
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
   if( item && item->getParent() == this ) {
     SdPulsar::sdPulsar->emitRemoveItem( item );
-    mItemExtendNameMap.remove( item->getExtendTitle() );
     mDirty = true;
     SdContainer::deleteChild( child, undo );
     }
@@ -318,7 +320,6 @@ void SdProject::undoDeleteChild(SdObject *child)
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
   if( item && item->getParent() == this ) {
     SdContainer::undoDeleteChild( child );
-    mItemExtendNameMap.insert( item->getExtendTitle(), item );
     mDirty = true;
     SdPulsar::sdPulsar->emitInsertItem( item );
     }
@@ -327,19 +328,11 @@ void SdProject::undoDeleteChild(SdObject *child)
 
 
 
-void SdProject::fillMap()
-  {
-  mItemExtendNameMap.clear();
-  forEach( dctProjectItems, [this](SdObject *obj) -> bool {
-    SdProjectItem *it = dynamic_cast<SdProjectItem*>(obj);
-    if( it ) mItemExtendNameMap.insert( it->getExtendTitle(), it );
-    return true;
-    } );
-  }
 
 
 
 
+//Test if net name already used
 bool SdProject::isNetNameUsed(const QString netName)
   {
   bool unused = true;

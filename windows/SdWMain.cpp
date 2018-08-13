@@ -26,6 +26,7 @@ Description
 #include "SdDOptions.h"
 #include "SdDRegistation.h"
 #include "SdDLayers.h"
+#include "SdDProjectStore.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
 #include <QSettings>
@@ -100,7 +101,7 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
 
   //Open all files from command line
   args.removeFirst(); //First is executable name
-  for( const QString file : args )
+  for( const QString &file : args )
     mWProjectList->fileOpen( file );
 
   //Связать с пульсаром
@@ -342,7 +343,7 @@ void SdWMain::onActivateEditor(int index)
 
 void SdWMain::closeEvent(QCloseEvent *ev)
   {
-
+  //TODO B026 When cancel close programm
   //Try close all files
   mWProjectList->fileCloseAll();
 
@@ -485,10 +486,16 @@ void SdWMain::cmFileSaveAll()
 
 
 
-
+//Store current project to library
 void SdWMain::cmFileStore()
   {
-
+  SdWProjectTree *tree = activeProject();
+  if( tree ) {
+    SdProject *project = tree->getProject();
+    QString    name    = tree->fileName();
+    SdDProjectStore store( name, project, this );
+    store.exec();
+    }
   }
 
 

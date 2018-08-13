@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Page of creation master with enter ProjectItem name and category selection
 */
 
 #include "SdPNewProjectItem_EnterName.h"
@@ -47,6 +48,9 @@ SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item,
 
 
 
+
+
+//On changed ProjectItem name
 void SdPNewProjectItem_EnterName::onTextChanged(const QString name)
   {
   if( name.isEmpty() ) {
