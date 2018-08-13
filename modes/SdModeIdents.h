@@ -64,7 +64,8 @@ Description
 #define MD_PART_IDENT      46
 #define MD_PRINT_WINDOW    47
 #define MD_ROAD_ENTER      48
-#define MD_LAST            49
+#define MD_FRAGMENT        49
+#define MD_LAST            50
 
 //Properties tool bar id's
 #define PB_DEFAULT          0

@@ -25,20 +25,33 @@ class SdWEditorGraphSheet : public SdWEditorGraph
 
     SdPItemSheet *mSheet;
   public:
-    SdWEditorGraphSheet( SdPItemSheet *sch, QWidget *parent = 0 );
+    SdWEditorGraphSheet( SdPItemSheet *sch, QWidget *parent = nullptr );
 
     // SdWEditor interface
   public:
     virtual SdProjectItem *getProjectItem() const override;
     virtual void           onActivateEditor() override;
+
+    //Fragment insertion mode
+    virtual void           cmModeFragment() override;
+
     //Component insertion mode
     virtual void           cmModeComponent() override;
+
     //Sheet net wire insertion mode
     virtual void           cmModeNet() override;
-    virtual void cmModeBus() override;
-    virtual void cmModeDisconnect() override;
-    virtual void cmModePcbArea() override;
-    virtual void cmModeNetName() override;
+
+    //Sheet bus insertion mode
+    virtual void           cmModeBus() override;
+
+    //Sheet net wire disconnect from pin mode
+    virtual void           cmModeDisconnect() override;
+
+    //Sheet pcb area insertion mode
+    virtual void           cmModePcbArea() override;
+
+    //Sheet net name insertion mode
+    virtual void           cmModeNetName() override;
     virtual void cmModeNetList() override;
   };
 

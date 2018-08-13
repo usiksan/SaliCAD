@@ -55,6 +55,38 @@ void SdProject::paramSet(QString key, QString val)
 
 
 
+//Return first sheet
+SdPItemSheet *SdProject::getFirstSheet() const
+  {
+  for( SdObject *obj : mChildList ) {
+    if( !obj->isDeleted() && obj->getClass() == dctSheet ) {
+      //Sheet found. Return it
+      return dynamic_cast<SdPItemSheet*>(obj);
+      }
+    }
+  //Sheet not found
+  return nullptr;
+  }
+
+
+
+
+//Return first plate
+SdPItemPlate *SdProject::getFirstPlate() const
+  {
+  for( SdObject *obj : mChildList ) {
+    if( !obj->isDeleted() && obj->getClass() == dctPlate ) {
+      //Plate found. Return it
+      return dynamic_cast<SdPItemPlate*>(obj);
+      }
+    }
+  //Plate not found
+  return nullptr;
+  }
+
+
+
+
 //Return default plate and if none - create new one
 SdPItemPlate *SdProject::getDefaultPlate()
   {

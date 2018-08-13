@@ -1062,6 +1062,18 @@ void SdWMain::cmModeOrigin()
 
 
 
+
+
+
+void SdWMain::cmModeFragment()
+  {
+  if( activeEditor() )
+    activeEditor()->cmModeFragment();
+  }
+
+
+
+
 void SdWMain::cmModeComponent()
   {
   if( activeEditor() )

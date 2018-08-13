@@ -21,8 +21,11 @@ Description
 #include "objects/SdPItemComponent.h"
 #include "objects/SdPItemSymbol.h"
 #include "objects/SdPItemPart.h"
+#include "objects/SdPItemSheet.h"
+#include "objects/SdPItemPlate.h"
 #include "objects/SdSection.h"
 #include "objects/SdPartVariant.h"
+#include "objects/SdProject.h"
 
 #include <QHBoxLayout>
 #include <QMessageBox>
@@ -32,6 +35,7 @@ Description
 SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   QDialog(parent),
   mComponent(nullptr),
+  mProject(nullptr),
   mSectionIndex(-1), //Section index
   mSort(sort),
   ui(new Ui::SdDGetObject)
@@ -122,9 +126,10 @@ void SdDGetObject::onSelectItem(int row, int column)
     mPartView->setItemById( hdr.uid() );
     }
   else if( hdr.mClass == dctComponent ) {
-    SdObject *obj = SdObjectFactory::extractObject( hdr.uid(), true, this );
-    mComponent = dynamic_cast<SdPItemComponent*>( obj );
-    if( mComponent == nullptr && obj != nullptr ) delete obj;
+    mComponent = sdObjectOnly<SdPItemComponent>( SdObjectFactory::extractObject( hdr.uid(), true, this ) );
+    }
+  else if( hdr.mClass == dctProject ) {
+    mProject = sdObjectOnly<SdProject>( SdObjectFactory::extractObject( hdr.uid(), true, this ) );
     }
 
   ui->mSections->clear();
@@ -155,6 +160,12 @@ void SdDGetObject::onSelectItem(int row, int column)
     mPartView->setItemById( mComponent->getPartId() );
     if( !SdObjectFactory::isObjectPresent( mComponent->getPartId() ) )
       present = false;
+    }
+
+  if( mProject ) {
+    mSymbolView->setItem( mProject->getFirstSheet(), false );
+    mPartView->setItem( mProject->getFirstPlate(), false );
+    present = true;
     }
 
   ui->mAccept->setEnabled( present );
@@ -250,11 +261,23 @@ void SdDGetObject::changeEvent(QEvent *e)
     }
   }
 
+
+
+
 void SdDGetObject::clearComponent()
   {
   if( mComponent != nullptr )
     delete mComponent;
   mComponent = nullptr;
+
+  if( mProject != nullptr ) {
+    //Remove views
+    mSymbolView->setItem( nullptr, false );
+    mPartView->setItem( nullptr, false );
+    //At now delete project itself
+    delete mProject;
+    }
+  mProject = nullptr;
   }
 
 

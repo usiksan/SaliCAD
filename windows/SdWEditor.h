@@ -111,6 +111,7 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmModeOrigin() {}
 
     //Sheet
+    virtual void cmModeFragment() {}
     virtual void cmModeComponent() {}
     virtual void cmModeNet() {}
     virtual void cmNetSetup() {}

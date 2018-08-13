@@ -21,6 +21,7 @@ Description
 #include "modes/SdModeCNetName.h"
 #include "modes/SdModeWireDisconnect.h"
 #include "modes/SdModeCBus.h"
+#include "modes/SdModeCFragment.h"
 #include <QDebug>
 
 SdWEditorGraphSheet::SdWEditorGraphSheet(SdPItemSheet *sch, QWidget *parent) :
@@ -53,6 +54,16 @@ void SdWEditorGraphSheet::onActivateEditor()
   }
 
 
+
+
+
+//Fragment insertion mode
+void SdWEditorGraphSheet::cmModeFragment()
+  {
+  modeSet( new SdModeCFragment( this, mSheet ) );
+  }
+
+
 //Component insertion mode
 void SdWEditorGraphSheet::cmModeComponent()
   {
@@ -70,6 +81,7 @@ void SdWEditorGraphSheet::cmModeNet()
 
 
 
+//Sheet bus insertion mode
 void SdWEditorGraphSheet::cmModeBus()
   {
   modeSet( new SdModeCBus( this, mSheet )  );
@@ -78,6 +90,7 @@ void SdWEditorGraphSheet::cmModeBus()
 
 
 
+//Sheet net wire disconnect from pin mode
 void SdWEditorGraphSheet::cmModeDisconnect()
   {
   modeSet( new SdModeWireDisconnect( this, mSheet )  );
@@ -85,6 +98,8 @@ void SdWEditorGraphSheet::cmModeDisconnect()
 
 
 
+
+//Sheet pcb area insertion mode
 void SdWEditorGraphSheet::cmModePcbArea()
   {
   modeSet( new SdModeCLinearArea( this, mSheet ) );
@@ -92,6 +107,7 @@ void SdWEditorGraphSheet::cmModePcbArea()
 
 
 
+//Sheet net name insertion mode
 void SdWEditorGraphSheet::cmModeNetName()
   {
   modeSet( new SdModeCNetName( this, mSheet ) );

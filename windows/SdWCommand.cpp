@@ -185,6 +185,7 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
   menuInsertSheet = new QMenu( frame->tr("Sheet") );
+  cmModeTable[MD_FRAGMENT]   = menuInsertSheet->addAction( QIcon(QString(":/pic/iconSheet.png")), frame->tr("Insert fragment"), frame, SLOT(cmModeFragment()) );
   cmModeTable[MD_COMPONENT]  = menuInsertSheet->addAction( QIcon(QString(":/pic/objComp.png")), frame->tr("Insert component"), frame, SLOT(cmModeComponent()) );
   cmModeTable[MD_NET]        = menuInsertSheet->addAction( QIcon(QString(":/pic/objWire.png")), frame->tr("Insert net wire"), frame, SLOT(cmModeNet()) );
   cmModeTable[MD_NET_NAME]   = menuInsertSheet->addAction( QIcon(QString(":/pic/objWireName.png")), frame->tr("Insert net name"), frame, SLOT(cmModeNetName()) );
@@ -477,6 +478,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   addEditCommands( barSheet );
   addViewCommands( barSheet );
   addDrawCommands( barSheet );
+  barSheet->insertAction( nullptr, cmModeTable[MD_FRAGMENT] );
   barSheet->insertAction( nullptr, cmModeTable[MD_COMPONENT] );
   barSheet->insertAction( nullptr, cmModeTable[MD_NET] );
   barSheet->insertAction( nullptr, cmModeTable[MD_BUS] );

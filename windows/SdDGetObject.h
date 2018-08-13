@@ -23,6 +23,7 @@ class SdObject;
 class SdProjectItem;
 class SdPItemComponent;
 class SdWEditorGraphView;
+class SdProject;
 
 namespace Ui {
 class SdDGetObject;
@@ -37,6 +38,7 @@ class SdDGetObject : public QDialog
     SdWEditorGraphView    *mSymbolView;   //Widget for schematic preview
     SdWEditorGraphView    *mPartView;     //Widget for part preview
     SdPItemComponent      *mComponent;    //Component if selected
+    SdProject             *mProject;      //Project if selected
 
     QString                mObjName;      //Object name
     QString                mObjAuthor;    //Object author
@@ -78,6 +80,7 @@ class SdDGetObject : public QDialog
   private:
     Ui::SdDGetObject *ui;
     void clearComponent();
+    void clearProject();
 
     //Fill visual table with mHeaderList contens
     void fillTable();

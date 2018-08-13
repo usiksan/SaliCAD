@@ -145,6 +145,7 @@ class SdWMain : public QMainWindow
     void cmModeOrigin();
 
     //Sheet
+    void cmModeFragment();
     void cmModeComponent();
     void cmModeNet();
     void cmNetSetup();

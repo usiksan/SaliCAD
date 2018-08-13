@@ -26,6 +26,7 @@ Description
 
 class SdProjectItem;
 class SdPItemPlate;
+class SdPItemSheet;
 
 class SdProject : public SdContainer
   {
@@ -50,6 +51,11 @@ class SdProject : public SdContainer
     //Set one param
     void              paramSet( QString key, QString val );
 
+    //Return first sheet
+    SdPItemSheet     *getFirstSheet() const;
+
+    //Return first plate
+    SdPItemPlate     *getFirstPlate() const;
 
 
     //Return default plate and if none - create new one
