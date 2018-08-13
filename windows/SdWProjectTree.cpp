@@ -27,27 +27,31 @@ Description
 #include <QMessageBox>
 #include <QWizard>
 
-SdWProjectTree::SdWProjectTree(const QString fname, QWidget *parent) :
+SdWProjectTree::SdWProjectTree(const QString fname, SdProject *prj, QWidget *parent) :
   QTreeWidget(parent),
   mFileName(fname)
   {
   if( fname.isEmpty() ) {
-    //Создаем пустой проект
+    //Creating empty project [Создаем пустой проект]
     mFileName = SD_DEFAULT_FILE_NAME;
     mProject = new SdProject();
     }
   else {
-    //Загружаем проект из файла
-    mProject = SdProject::load( fname );
+    if( prj == nullptr )
+      //Loading project from file [Загружаем проект из файла]
+      mProject = SdProject::load( fname );
+    else
+      //Project loaded outside. Simple assign it
+      mProject = prj;
     }
-  //Если проект построен, то отобразить содержимое
+  //If project builded then display its contens [Если проект построен, то отобразить содержимое]
   if( mProject ) {
     setHeaderHidden(true);
     setRootIsDecorated(true);
     setItemsExpandable(true);
     setLineWidth(1);
 
-    //Заполнить список корневого уровня
+    //Fill root level list [Заполнить список корневого уровня]
     mSymbolList    = createItem( tr("Symbols"), tr("Project symbols list"), tr("Contains project symbols list") );   //!< Схемные изображения компонентов
     mPartList      = createItem( tr("Parts"), tr("Project parts list"), tr("Contains project parts list") );     //!< Корпуса компонентов
     mComponentList = createItem( tr("Components"), tr("Project components list"), tr("Contains project components list, each of them is agregation symbols width appropriate part") );    //!< Компоненты (схемное избр. + корпус + параметры)

@@ -27,8 +27,10 @@ Description
 #include "SdDRegistation.h"
 #include "SdDLayers.h"
 #include "SdDProjectStore.h"
+#include "SdDGetObject.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
+#include "objects/SdObjectFactory.h"
 #include <QSettings>
 #include <QCloseEvent>
 #include <QMessageBox>
@@ -393,7 +395,16 @@ void SdWMain::cmFileNew()
 
 void SdWMain::cmFileLoad()
   {
-
+  QString uid = SdDGetObject::getObjectUid( dctProject, tr("Select project to load"), this );
+  if( !uid.isEmpty() ) {
+    SdLibraryHeader hdr;
+    if( SdObjectFactory::extractHeader( uid, hdr ) ) {
+      SdProject *prj = sdObjectOnly<SdProject>( SdObjectFactory::extractObject( uid, false, this ) );
+      if( prj )
+        //Open loaded project
+        mWProjectList->fileOpen( hdr.mName, prj );
+      }
+    }
   }
 
 

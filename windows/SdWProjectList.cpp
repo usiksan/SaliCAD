@@ -80,15 +80,16 @@ void SdWProjectList::fileCloseAll()
 
 
 //File project open
-SdWProjectTree *SdWProjectList::fileOpen(const QString fname)
+SdWProjectTree *SdWProjectList::fileOpen(const QString fname, SdProject *project)
   {
-  //Добавить в список предыдущих файлов
-  SdWCommand::addToPreviousMenu( fname );
+  if( project == nullptr )
+    //Append file name to previous file list [Добавить в список предыдущих файлов]
+    SdWCommand::addToPreviousMenu( fname );
 
-  //Создаем окно проекта
-  SdWProjectTree *prj = new SdWProjectTree( fname );
+  //Creating project window [Создаем окно проекта]
+  SdWProjectTree *prj = new SdWProjectTree( fname, project );
 
-  //Проверяем, создался ли проект
+  //Check if project is created (valid) [Проверяем, создался ли проект]
   if( prj->isProjectValid() ) {
     mProjectTitles->addItem( prj->fileName() );
     mWProjectStack->addWidget( prj );

@@ -47,7 +47,7 @@ class SdWProjectList : public QWidget
     void            fileCloseAll();
 
     //File project open
-    SdWProjectTree *fileOpen( const QString fname );
+    SdWProjectTree *fileOpen(const QString fname , SdProject *project = nullptr);
 
     //File import PasCAD
     void            fileImportPis( const QString fname );

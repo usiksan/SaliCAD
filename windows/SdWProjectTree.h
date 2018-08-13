@@ -35,7 +35,7 @@ class SdWProjectTree : public QTreeWidget
 
     QString              mFileName;      //Полное имя файла проекта проекта с путем
   public:
-    explicit SdWProjectTree( const QString fname, QWidget *parent = nullptr);
+    explicit SdWProjectTree( const QString fname, SdProject *prj, QWidget *parent = nullptr);
     ~SdWProjectTree();
 
     QString      filePath() { return mFileName; }
