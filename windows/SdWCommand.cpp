@@ -602,7 +602,7 @@ void SdWCommand::hideEditorContext()
 
 void SdWCommand::selectMode(int md)
   {
-  qDebug() << "selectMode" << md;
+  //qDebug() << "selectMode" << md;
   for( int i = 0; i < MD_LAST; i++ )
     if( cmModeTable[i] )
       cmModeTable[i]->setChecked( i == md );

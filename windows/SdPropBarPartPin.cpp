@@ -14,6 +14,7 @@ Description
 #include "SdPropBarPartPin.h"
 #include "SdStringHistory.h"
 #include <QLineEdit>
+#include <QDebug>
 
 static SdStringHistory pinTypeHistory;
 
@@ -67,6 +68,7 @@ void SdPropBarPartPin::setPropPartPin(SdPropPartPin *propPartPin)
       }
 
     //Set current pin type
+    qDebug() << "setPropPartPin" << propPartPin->mPinType.str();
     mPinType->setCurrentText( propPartPin->mPinType.str() );
     pinTypeHistory.reorderComboBoxString( mPinType );
     }

@@ -13,6 +13,7 @@ Description
   Support history limitation, recently used
 */
 #include "SdStringHistory.h"
+#include <QDebug>
 
 SdStringHistory::SdStringHistory(int limit, int precision) :
   mPrecision(precision),
@@ -86,10 +87,12 @@ int SdStringHistory::addDouble(double val)
 void SdStringHistory::reorderComboBoxString(QComboBox *box)
   {
   QString str = box->currentText();
+  qDebug() << "reorder" << str;
   int i = addString( str );
   if( i >= 0 )
     box->removeItem( i );
   box->insertItem( 0, str );
+  box->setCurrentText( str );
   }
 
 
@@ -100,20 +103,12 @@ void SdStringHistory::reorderComboBoxString(QComboBox *box)
 //With this fucntion we reorder stringHistory itself and comboBox
 void SdStringHistory::reorderComboBoxDoubleString(QComboBox *box)
   {
-  //int a;
-  //Переводим число a в двоичную форму
-
-  //Вывести двоичные разряды в массив
-  //Циклически, пока число не ноль
-  // брать остаток от деления на 2
-
-  //Распечатать массив в обратном порядке
-
   QString str = box->currentText();
   int i = addDoubleString( str );
   if( i >= 0 )
     box->removeItem( i );
   box->insertItem( 0, str );
+  box->setCurrentText( str );
   }
 
 

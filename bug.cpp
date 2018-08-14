@@ -1,5 +1,5 @@
 
-//B026 bugs
+//B033 bugs
 //F001 fatal
 //C001 critical
 //D044 do
@@ -28,6 +28,20 @@
 //TODO D042 Append posibility to load object to project for edit
 
 //TODO D043 Append posibility to delete object from library and also from remote library
+
+//TODO B027 When copy param into component nothing done
+
+//TODO B028 First line of section in component section list is empty
+
+//TODO B029 Duplicate components in GetObject dialog
+
+//TODO B030 Wrong components in list of GetObject dialog
+
+//TODO B031 Error in comboBox of partImp rotation
+
+//TODO B032 When partImp rotated overRect not rebuild
+
+//TODO B033 After closing pad editor need redraw
 
 //===================================================================================
 //Fixed:
