@@ -30,10 +30,15 @@ SdPropBarPartImp::SdPropBarPartImp(const QString title) :
   //Enable handle enter angles
   mDirection->setEditable(true);
   //Main angles
-  mDirection->addItem( QIcon(QString(":/pic/textDirLR.png")), QString("0") );
-  mDirection->addItem( QIcon(QString(":/pic/textDirBT.png")), QString("90") );
-  mDirection->addItem( QIcon(QString(":/pic/textDirRL.png")), QString("180") );
-  mDirection->addItem( QIcon(QString(":/pic/textDirTB.png")), QString("270") );
+//  mDirection->addItem( QIcon(QString(":/pic/textDirLR.png")), QString("0") );
+//  mDirection->addItem( QIcon(QString(":/pic/textDirBT.png")), QString("90") );
+//  mDirection->addItem( QIcon(QString(":/pic/textDirRL.png")), QString("180") );
+//  mDirection->addItem( QIcon(QString(":/pic/textDirTB.png")), QString("270") );
+  //Try angles without icon
+  mDirection->addItem( QString("0.000") );
+  mDirection->addItem( QString("90.000") );
+  mDirection->addItem( QString("180.000") );
+  mDirection->addItem( QString("270.000") );
   //Append from history
   for( const QString &s : prevAngle )
     mDirection->addItem( s );
@@ -104,12 +109,14 @@ void SdPropBarPartImp::getPropPartImp(SdPropPartImp *propPartImp)
 void SdPropBarPartImp::reorderDirection()
   {
   QString str = mDirection->currentText();
-  if( str.isEmpty() )
+  if( str.isEmpty() || str == QString("0.000") || str == QString("90.000") ||
+      str == QString("180.000") || str == QString("270.000") )
     return;
   int i = prevAngle.addDoubleString( str );
   if( i >= 0 )
     mDirection->removeItem( i + 4 );
   mDirection->insertItem( 4, str );
+  mDirection->setCurrentText( str );
   }
 
 

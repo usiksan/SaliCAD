@@ -103,8 +103,12 @@ void SdWEditorGraphPlate::cmPads()
   {
   SdDPads pads( mPlate, mPlate->getPadAssociationName(), mPlate->getPadMap(), this );
   if( pads.exec() ) {
+    //Setup pads
     mPlate->setPadAssociation( pads.getAssociationName(), pads.getPadMap(), mPlate->getUndo() );
+    //Set project dirty with pads changed
+    dirtyProject();
     //Update
+    dirtyCashe();
     update();
     }
   }

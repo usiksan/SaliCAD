@@ -584,7 +584,10 @@ void SdGraphPartImp::mirror(SdPoint a, SdPoint b)
 
 void SdGraphPartImp::setProp(SdPropSelected &prop)
   {
-  mProp = prop.mPartImpProp;
+  if( !mProp.match( prop.mPartImpProp ) ) {
+    mProp = prop.mPartImpProp;
+    updatePinsPositions();
+    }
   }
 
 

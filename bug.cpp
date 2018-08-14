@@ -37,14 +37,14 @@
 
 //TODO B030 Wrong components in list of GetObject dialog
 
-//TODO B031 Error in comboBox of partImp rotation
-
 //TODO B032 When partImp rotated overRect not rebuild
-
-//TODO B033 After closing pad editor need redraw
 
 //===================================================================================
 //Fixed:
+
+//B031 Error in comboBox of partImp rotation
+
+//B033 After closing pad editor need redraw
 
 //B022 With press close icon graph editor do not closing
 
