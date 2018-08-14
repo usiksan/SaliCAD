@@ -35,12 +35,12 @@
 
 //TODO B029 Duplicate components in GetObject dialog
 
-//TODO B030 Wrong components in list of GetObject dialog
-
-//TODO B032 When partImp rotated overRect not rebuild
-
 //===================================================================================
 //Fixed:
+
+//B030 Wrong components in list of GetObject dialog
+
+//B032 When partImp rotated overRect not rebuild
 
 //B031 Error in comboBox of partImp rotation
 

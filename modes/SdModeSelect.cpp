@@ -1269,6 +1269,10 @@ void SdModeSelect::selectAll()
     });
   //update
   propSetToBar();
+  //Go to sel or unsel step
+  setStep( mFragment.count() ? smSelPresent : smNoSelect );
+  //Update edit menu (copy, paste, delete)
+  mEditor->setSelectionStatus( mFragment.count() != 0 );
   }
 
 

@@ -194,7 +194,8 @@ void SdDGetObject::onTagPath(const QString path)
   SdObjectFactory::forEachHeader( [this,path] (SdLibraryHeader &hdr) -> bool {
     if( hdr.mClass & mSort ) {
       //Test if tag match any part of object tag
-      if( hdr.mTag.indexOf(path, 0, Qt::CaseInsensitive) >= 0 || path.indexOf(hdr.mTag, 0, Qt::CaseInsensitive) >= 0 ) {
+//      if( hdr.mTag.indexOf(path, 0, Qt::CaseInsensitive) >= 0 || path.indexOf(hdr.mTag, 0, Qt::CaseInsensitive) >= 0 ) {
+      if( hdr.mTag.indexOf(path, 0, Qt::CaseInsensitive) >= 0 ) {
         //Name matched, insert header in list
         mHeaderList.append( hdr );
         //Prevent too much headers in find result

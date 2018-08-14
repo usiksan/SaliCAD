@@ -21,6 +21,7 @@ Description
 #include "SdPItemComponent.h"
 #include "SdPItemSheet.h"
 #include "SdPItemPlate.h"
+#include "SdPadAssociation.h"
 #include "SdGraphArea.h"
 #include "SdGraphLinearArc.h"
 #include "SdGraphLinearLine.h"
@@ -260,35 +261,37 @@ SdObject *SdObject::readPtr(const QString name, SdObjectMap *map, const QJsonObj
 
 SdObject *SdObject::build(QString type)
   {
-  if( type == QStringLiteral(SD_TYPE_ARC)           ) return new SdGraphLinearArc();
-  if( type == QStringLiteral(SD_TYPE_LINE)          ) return new SdGraphLinearLine();
-  if( type == QStringLiteral(SD_TYPE_RECT)          ) return new SdGraphLinearRect();
-  if( type == QStringLiteral(SD_TYPE_RECT_FILLED)   ) return new SdGraphLinearRectFilled();
-  if( type == QStringLiteral(SD_TYPE_CIRCLE)        ) return new SdGraphLinearCircle();
-  if( type == QStringLiteral(SD_TYPE_CIRCLE_FILLED) ) return new SdGraphLinearCircleFilled();
-  if( type == QStringLiteral(SD_TYPE_REGION)        ) return new SdGraphLinearRegion();
-  if( type == QStringLiteral(SD_TYPE_TEXT)          ) return new SdGraphText();
-  if( type == QStringLiteral(SD_TYPE_IDENT)         ) return new SdGraphIdent();
-  if( type == QStringLiteral(SD_TYPE_SYM_PIN)       ) return new SdGraphSymPin();
-  if( type == QStringLiteral(SD_TYPE_PART_PIN)      ) return new SdGraphPartPin();
-  if( type == QStringLiteral(SD_TYPE_AREA)          ) return new SdGraphArea();
-  if( type == QStringLiteral(SD_TYPE_IDENT)         ) return new SdGraphIdent();
-  if( type == QStringLiteral(SD_TYPE_SYM_IMP)       ) return new SdGraphSymImp();
-  if( type == QStringLiteral(SD_TYPE_PART_IMP)      ) return new SdGraphPartImp();
-  if( type == QStringLiteral(SD_TYPE_NET_WIRE)      ) return new SdGraphNetWire();
-  if( type == QStringLiteral(SD_TYPE_NET_NAME)      ) return new SdGraphNetName();
+  if( type == QStringLiteral(SD_TYPE_ARC)             ) return new SdGraphLinearArc();
+  if( type == QStringLiteral(SD_TYPE_LINE)            ) return new SdGraphLinearLine();
+  if( type == QStringLiteral(SD_TYPE_RECT)            ) return new SdGraphLinearRect();
+  if( type == QStringLiteral(SD_TYPE_RECT_FILLED)     ) return new SdGraphLinearRectFilled();
+  if( type == QStringLiteral(SD_TYPE_CIRCLE)          ) return new SdGraphLinearCircle();
+  if( type == QStringLiteral(SD_TYPE_CIRCLE_FILLED)   ) return new SdGraphLinearCircleFilled();
+  if( type == QStringLiteral(SD_TYPE_REGION)          ) return new SdGraphLinearRegion();
+  if( type == QStringLiteral(SD_TYPE_TEXT)            ) return new SdGraphText();
+  if( type == QStringLiteral(SD_TYPE_IDENT)           ) return new SdGraphIdent();
+  if( type == QStringLiteral(SD_TYPE_SYM_PIN)         ) return new SdGraphSymPin();
+  if( type == QStringLiteral(SD_TYPE_PART_PIN)        ) return new SdGraphPartPin();
+  if( type == QStringLiteral(SD_TYPE_AREA)            ) return new SdGraphArea();
+  if( type == QStringLiteral(SD_TYPE_IDENT)           ) return new SdGraphIdent();
+  if( type == QStringLiteral(SD_TYPE_SYM_IMP)         ) return new SdGraphSymImp();
+  if( type == QStringLiteral(SD_TYPE_PART_IMP)        ) return new SdGraphPartImp();
+  if( type == QStringLiteral(SD_TYPE_NET_WIRE)        ) return new SdGraphNetWire();
+  if( type == QStringLiteral(SD_TYPE_NET_NAME)        ) return new SdGraphNetName();
 
 
-  if( type == QStringLiteral(SD_TYPE_SYMBOL)        ) return new SdPItemSymbol();
-  if( type == QStringLiteral(SD_TYPE_PART)          ) return new SdPItemPart();
-  if( type == QStringLiteral(SD_TYPE_SHEET)         ) return new SdPItemSheet();
-  if( type == QStringLiteral(SD_TYPE_PLATE)         ) return new SdPItemPlate();
-  if( type == QStringLiteral(SD_TYPE_COMPONENT)     ) return new SdPItemComponent();
+  if( type == QStringLiteral(SD_TYPE_SYMBOL)          ) return new SdPItemSymbol();
+  if( type == QStringLiteral(SD_TYPE_PART)            ) return new SdPItemPart();
+  if( type == QStringLiteral(SD_TYPE_SHEET)           ) return new SdPItemSheet();
+  if( type == QStringLiteral(SD_TYPE_PLATE)           ) return new SdPItemPlate();
+  if( type == QStringLiteral(SD_TYPE_COMPONENT)       ) return new SdPItemComponent();
 
-  if( type == QStringLiteral(SD_TYPE_SECTION)       ) return new SdSection();
-  if( type == QStringLiteral(SD_TYPE_PART_VARIANT)  ) return new SdPartVariant();
+  if( type == QStringLiteral(SD_TYPE_SECTION)         ) return new SdSection();
+  if( type == QStringLiteral(SD_TYPE_PART_VARIANT)    ) return new SdPartVariant();
 
-  if( type == QStringLiteral(SD_TYPE_PROJECT)       ) return new SdProject();
+  if( type == QStringLiteral(SD_TYPE_PAD_ASSOCIATION) ) return new SdPadAssociation();
+
+  if( type == QStringLiteral(SD_TYPE_PROJECT)         ) return new SdProject();
   return nullptr;
   }
 
