@@ -27,14 +27,14 @@
 
 //TODO D043 Append posibility to delete object from library and also from remote library
 
-//TODO B027 When copy param into component nothing done
-
 //TODO B028 First line of section in component section list is empty
 
 //TODO B029 Duplicate components in GetObject dialog
 
 //===================================================================================
 //Fixed:
+
+//B027 When copy param into component nothing done
 
 //B023 When copy component in schematic link with part not correct (rat net not builded)
 

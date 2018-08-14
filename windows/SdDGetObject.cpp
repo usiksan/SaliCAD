@@ -132,6 +132,8 @@ void SdDGetObject::onSelectItem(int row, int column)
     mProject = sdObjectOnly<SdProject>( SdObjectFactory::extractObject( hdr.uid(), true, this ) );
     }
 
+  mParam = hdr.mParamTable;
+
   ui->mSections->clear();
   mSectionIndex = -1;
 
