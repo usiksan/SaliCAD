@@ -747,8 +747,9 @@ void SdGraphSymImp::cloneFrom(const SdObject *src)
   mComponent    = imp->mComponent;   //Object contains section information, pin assotiation info. May be same as mSymbol.
   mSymbol       = imp->mSymbol;      //Symbol contains graph information
   mPart         = imp->mPart;
-  mPartImp      = imp->mPartImp;
-  mPins         = imp->mPins;        //Pin information table
+  //PartImp and pins assigned when attached to schematic sheet
+  //mPartImp      = imp->mPartImp;
+  //mPins         = imp->mPins;        //Pin information table
   mParam        = imp->mParam;       //Parameters
   }
 

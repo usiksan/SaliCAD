@@ -23,8 +23,6 @@
 
 //TODO B020 in trace mode show smart start point
 
-//TODO B023 When copy component in schematic link with part not correct (rat net not builded)
-
 //TODO D042 Append posibility to load object to project for edit
 
 //TODO D043 Append posibility to delete object from library and also from remote library
@@ -37,6 +35,8 @@
 
 //===================================================================================
 //Fixed:
+
+//B023 When copy component in schematic link with part not correct (rat net not builded)
 
 //B030 Wrong components in list of GetObject dialog
 
