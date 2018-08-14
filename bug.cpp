@@ -1,5 +1,5 @@
 
-//B033 bugs
+//B034 bugs
 //F001 fatal
 //C001 critical
 //D044 do
@@ -10,8 +10,6 @@
 //При копировании в sheet нету вставки
 
 //TODO B009 3 undo's on one text properties changes
-
-//TODO B012 when moving symImp and stop, when connecting to sheet wires - abnormal finish
 
 //TODO B014 previous setuped text size don't set. Only after begin editing
 
@@ -31,8 +29,14 @@
 
 //TODO B029 Duplicate components in GetObject dialog
 
+//TODO B034 When copy mirrored symImp sometimes changes to nonmirrored
+
+//TODO B035 When copy sheet wires need copy nextWires for default wires
+
 //===================================================================================
 //Fixed:
+
+//B012 when moving symImp and stop, when connecting to sheet wires - abnormal finish
 
 //B027 When copy param into component nothing done
 
