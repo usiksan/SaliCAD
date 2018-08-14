@@ -112,6 +112,8 @@ History
                    Append param delete possibility to ProjectItem
                    Fix bugs with object insertion to library
   07.08.2018 v0.47 Append inheritance object which inherits component
+  14.08.2018 v0.48 Append sort possibility to SdContainer
+                   Release sort for project items
 */
 
 #ifndef SDCONFIG
@@ -123,7 +125,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             47
+#define SD_VERSION_MINOR             48
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

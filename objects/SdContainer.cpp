@@ -15,6 +15,7 @@ Description
 #include "SdGraph.h"
 #include <QJsonArray>
 #include <QDebug>
+#include <algorithm>
 
 SdContainer::SdContainer()
   {
@@ -89,6 +90,16 @@ void SdContainer::forEachConst(quint64 classMask, std::function<bool (SdObject *
         if( !fun1(ptr) ) return;
         }
       }
+  }
+
+
+
+
+
+void SdContainer::sort(std::function<bool(SdObject *, SdObject *)> fun1)
+  {
+  std::stable_sort( mChildList.begin(), mChildList.end(), fun1 );
+  //qStableSort( mChildList.begin(), mChildList.end(), fun1 );
   }
 
 

@@ -57,7 +57,7 @@ class SdWProjectTree : public QTreeWidget
     virtual void cmObjectCopy() {}
     virtual void cmObjectPaste() {}
     virtual void cmObjectCut() {}
-    virtual void cmObjectSort() {}
+    void         cmObjectSort();
 
     void         cmClipboardChange();
 
@@ -83,6 +83,9 @@ class SdWProjectTree : public QTreeWidget
 
     //Заполнить элемент верхнего уровня
     void fillTopItem(QTreeWidgetItem *item, quint64 classId );
+
+    //Build visual tree
+    void buildVisualTree();
 
     QTreeWidgetItem* classList( quint64 classId );
   };

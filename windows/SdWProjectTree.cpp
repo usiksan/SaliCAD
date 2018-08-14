@@ -13,6 +13,7 @@ Description
 
 #include "SdWProjectTree.h"
 #include "objects/SdPulsar.h"
+#include "objects/SdProjectItem.h"
 #include "windows/SdPNewProjectItem_SelectType.h"
 #include "windows/SdPNewProjectItem_EnterName.h"
 #include "windows/SdPNewProjectItem_Master.h"
@@ -45,34 +46,7 @@ SdWProjectTree::SdWProjectTree(const QString fname, SdProject *prj, QWidget *par
       mProject = prj;
     }
   //If project builded then display its contens [Если проект построен, то отобразить содержимое]
-  if( mProject ) {
-    setHeaderHidden(true);
-    setRootIsDecorated(true);
-    setItemsExpandable(true);
-    setLineWidth(1);
-
-    //Fill root level list [Заполнить список корневого уровня]
-    mSymbolList    = createItem( tr("Symbols"), tr("Project symbols list"), tr("Contains project symbols list") );   //!< Схемные изображения компонентов
-    mPartList      = createItem( tr("Parts"), tr("Project parts list"), tr("Contains project parts list") );     //!< Корпуса компонентов
-    mComponentList = createItem( tr("Components"), tr("Project components list"), tr("Contains project components list, each of them is agregation symbols width appropriate part") );    //!< Компоненты (схемное избр. + корпус + параметры)
-    mSheetList     = createItem( tr("Sheets"), tr("Project shematic sheets"), tr("Contains project shematic sheet list") );    //!< Листы схем
-    mPlateList     = createItem( tr("Construct"), tr("Project constructs and pcb list"), tr("Contains project construct and pcb list") );    //!< Печатные платы
-    mTextList      = createItem( tr("Other docs"), tr("Project text and table docs list"), tr("Contains project text, table and others docs") );     //!< Текстовые документы
-
-    addTopLevelItem( mSheetList );
-    addTopLevelItem( mPlateList );
-    addTopLevelItem( mComponentList );
-    addTopLevelItem( mSymbolList );
-    addTopLevelItem( mPartList );
-    addTopLevelItem( mTextList );
-    }
-
-  fillTopItem( mSheetList, dctSheet );
-  fillTopItem( mPlateList, dctPlate );
-  fillTopItem( mComponentList, dctComponent );
-  fillTopItem( mSymbolList, dctSymbol );
-  fillTopItem( mPartList, dctPart );
-  fillTopItem( mTextList, dctTextDoc );
+  buildVisualTree();
 
   connect( SdPulsar::sdPulsar, &SdPulsar::insertItem, this, &SdWProjectTree::insertItem );
   connect( SdPulsar::sdPulsar, &SdPulsar::removeItem, this, &SdWProjectTree::removeItem );
@@ -222,6 +196,24 @@ void SdWProjectTree::cmObjectDelete()
 
 
 
+void SdWProjectTree::cmObjectSort()
+  {
+  //Sort project items by alphabet
+  mProject->sort( [] (SdObject *obj1, SdObject *obj2) -> bool {
+    SdProjectItem *item1 = dynamic_cast<SdProjectItem*>(obj1);
+    SdProjectItem *item2 = dynamic_cast<SdProjectItem*>(obj2);
+    if( item1 == nullptr || item2 == nullptr ) return false;
+    return item1->getTitle().compare( item2->getTitle(), Qt::CaseInsensitive ) < 0;
+    } );
+
+  //Rebuild visual tree
+  buildVisualTree();
+  //mSymbolList->sortChildren( 0, Qt::AscendingOrder );
+  }
+
+
+
+
 void SdWProjectTree::cmClipboardChange()
   {
   SdWCommand::cmObjectPaste->setEnabled( QApplication::clipboard()->mimeData()->hasFormat(SD_CLIP_FORMAT_PITEM) );
@@ -359,7 +351,43 @@ void SdWProjectTree::fillTopItem(QTreeWidgetItem *item, quint64 classId)
       }
     return true;
     }
-    );
+  );
+  }
+
+
+
+
+void SdWProjectTree::buildVisualTree()
+  {
+  clear();
+  if( mProject ) {
+    setHeaderHidden(true);
+    setRootIsDecorated(true);
+    setItemsExpandable(true);
+    setLineWidth(1);
+
+    //Fill root level list [Заполнить список корневого уровня]
+    mSymbolList    = createItem( tr("Symbols"), tr("Project symbols list"), tr("Contains project symbols list") );   //!< Схемные изображения компонентов
+    mPartList      = createItem( tr("Parts"), tr("Project parts list"), tr("Contains project parts list") );     //!< Корпуса компонентов
+    mComponentList = createItem( tr("Components"), tr("Project components list"), tr("Contains project components list, each of them is agregation symbols width appropriate part") );    //!< Компоненты (схемное избр. + корпус + параметры)
+    mSheetList     = createItem( tr("Sheets"), tr("Project shematic sheets"), tr("Contains project shematic sheet list") );    //!< Листы схем
+    mPlateList     = createItem( tr("Construct"), tr("Project constructs and pcb list"), tr("Contains project construct and pcb list") );    //!< Печатные платы
+    mTextList      = createItem( tr("Other docs"), tr("Project text and table docs list"), tr("Contains project text, table and others docs") );     //!< Текстовые документы
+
+    addTopLevelItem( mSheetList );
+    addTopLevelItem( mPlateList );
+    addTopLevelItem( mComponentList );
+    addTopLevelItem( mSymbolList );
+    addTopLevelItem( mPartList );
+    addTopLevelItem( mTextList );
+    }
+
+  fillTopItem( mSheetList, dctSheet );
+  fillTopItem( mPlateList, dctPlate );
+  fillTopItem( mComponentList, dctComponent );
+  fillTopItem( mSymbolList, dctSymbol );
+  fillTopItem( mPartList, dctPart );
+  fillTopItem( mTextList, dctTextDoc );
   }
 
 
@@ -375,6 +403,6 @@ QTreeWidgetItem *SdWProjectTree::classList(quint64 classId)
     case dctComponent : return mComponentList;
     case dctText      : return mTextList;
     }
-  return 0;
+  return nullptr;
   }
 

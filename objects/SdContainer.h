@@ -58,6 +58,8 @@ class SdContainer : public SdObject
             void forEach( quint64 classMask, std::function<bool(SdObject*)> fun1 );
             void forEachConst( quint64 classMask, std::function<bool(SdObject*)> fun1 ) const;
 
+            void sort( std::function<bool(SdObject *obj1, SdObject *obj2)> fun1 );
+
     //Return object and its state behind point
     SdObject    *behindPoint( quint64 classMask, SdPoint p, int *state );
 
