@@ -904,6 +904,7 @@ void SdWEditorGraph::onActivateEditor()
   setSelectionStatus( mMode == mSelect && mSelect->enableCopy() );
   //Change status of clipboard
   SdWCommand::cmEditPaste->setEnabled( SdSelector::isClipboardAvailable() );
+  mCasheDirty = true;
   }
 
 

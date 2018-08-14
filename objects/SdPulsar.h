@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Object to send messages to visual elements
 */
 
 #ifndef SDPULSAR_H
@@ -23,7 +24,7 @@ class SdPulsar : public QObject
   {
     Q_OBJECT
   public:
-    explicit SdPulsar(QObject *parent = 0);
+    explicit SdPulsar(QObject *parent = nullptr);
 
     //Send signals
     //BEFORE destroy project
