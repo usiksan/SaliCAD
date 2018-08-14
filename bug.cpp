@@ -23,8 +23,6 @@
 
 //TODO B020 in trace mode show smart start point
 
-//TODO B022 With press close icon graph editor do not closing
-
 //TODO B023 When copy component in schematic link with part not correct (rat net not builded)
 
 //TODO D042 Append posibility to load object to project for edit
@@ -33,6 +31,8 @@
 
 //===================================================================================
 //Fixed:
+
+//B022 With press close icon graph editor do not closing
 
 //D009 snap region
 

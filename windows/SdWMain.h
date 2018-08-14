@@ -64,7 +64,11 @@ class SdWMain : public QMainWindow
 
     void onClipboardChanged( QClipboard::Mode mode );
 
+
+    //Calling when press tab of editor
     void onActivateEditor( int index );
+    //Calling when press close tab of editor
+    void onCloseEditor( int index );
 
     //Реакции на команды
     void cmFileNew();

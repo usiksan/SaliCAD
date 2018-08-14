@@ -67,6 +67,7 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   mWEditors     = new QTabWidget();
   mWEditors->setTabsClosable(true);
   connect( mWEditors, &QTabWidget::currentChanged, this, &SdWMain::onActivateEditor );
+  connect( mWEditors, &QTabWidget::tabCloseRequested, this, &SdWMain::onCloseEditor );
 
   mWSplitter    = new QSplitter();
   mWSplitter->addWidget( mWProjectList );
@@ -215,7 +216,10 @@ void SdWMain::onActivateProjectItem(SdProjectItem *item)
           }
         }
       //Remove founded editor
+      SdWEditor *toRemove = getEditor(minEditor);
       mWEditors->removeTab(minEditor);
+      if( toRemove )
+        toRemove->deleteLater();
       }
     //If editor created - insert it into tab
     mWEditors->addTab( editor, QIcon( editor->getIconName() ), editor->getTitle() );
@@ -327,11 +331,16 @@ void SdWMain::onClipboardChanged(QClipboard::Mode mode)
 
 
 
+
+//Calling when press tab of editor
 void SdWMain::onActivateEditor(int index)
   {
   SdWEditor *editor = getEditor(index);
   SdWCommand::hideEditorContext();
-  if( editor ) editor->onActivateEditor();
+  if( editor ) {
+    mWProjectList->onItemActivated( editor->getProjectItem() );
+    editor->onActivateEditor();
+    }
 
   //For each editors decrement recently index except selected
   for( int i = 0; i < mWEditors->count(); i++ ) {
@@ -339,6 +348,19 @@ void SdWMain::onActivateEditor(int index)
     if( ed ) ed->updateRecentlyIndex( ed != editor );
     }
 
+  }
+
+
+
+
+//Calling when press close tab of editor
+void SdWMain::onCloseEditor(int index)
+  {
+  //Remove founded editor
+  SdWEditor *toRemove = getEditor(index);
+  mWEditors->removeTab(index);
+  if( toRemove )
+    toRemove->deleteLater();
   }
 
 

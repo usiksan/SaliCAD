@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Open project list widget
 */
 
 #ifndef SDWPROJECTLIST_H
@@ -31,7 +32,7 @@ class SdWProjectList : public QWidget
     QComboBox        *mProjectTitles; //Список открытых проектов
     QToolButton      *mCloseProject;  //Кнопка закрытия активного проекта
   public:
-    explicit SdWProjectList(QWidget *parent = 0);
+    explicit SdWProjectList(QWidget *parent = nullptr);
 
     bool isEmpty() { return mWProjectStack->count() == 0; }
 
@@ -60,6 +61,9 @@ class SdWProjectList : public QWidget
 
     //On rename project
     void            onRenameProject( SdProject *prj );
+
+    //On activate item. We brings item's project up
+    void            onItemActivated( SdProjectItem *item );
   };
 
 #endif // SDWPROJECTLIST_H

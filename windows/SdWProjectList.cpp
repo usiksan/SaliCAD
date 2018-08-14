@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Open project list widget
 */
 
 #include "SdWProjectList.h"
@@ -20,7 +21,7 @@ Description
 #include <QVBoxLayout>
 #include <QMessageBox>
 #include <QComboBox>
-
+#include <QDebug>
 
 SdWProjectList::SdWProjectList(QWidget *parent) : QWidget(parent)
   {
@@ -62,7 +63,7 @@ SdWProjectTree *SdWProjectList::project(int index)
   {
   if( index >= 0 && index < mWProjectStack->count() )
     return dynamic_cast<SdWProjectTree*>( mWProjectStack->widget(index) );
-  return 0;
+  return nullptr;
   }
 
 
@@ -144,7 +145,7 @@ bool SdWProjectList::cmFileClose()
     onProjectActivated( mProjectTitles->currentIndex() );
     return true;
     }
-  return active == 0;
+  return active == nullptr;
   }
 
 
@@ -174,6 +175,27 @@ void SdWProjectList::onRenameProject(SdProject *prj)
     mProjectTitles->setItemText( mWProjectStack->currentIndex(), active->fileName() );
     //And send signal to change title
     emit projectNameChanged( active->fileName(), active->getProject()->isDirty() );
+    }
+  }
+
+
+
+
+//On activate item. We brings item's project up
+void SdWProjectList::onItemActivated(SdProjectItem *item)
+  {
+  if( item == nullptr || activeProject() == nullptr || item->getProject() == activeProject()->getProject() )
+    return;
+
+  //Switch to item's project
+  for( int i = 0; i < mWProjectStack->count(); i++ ) {
+    SdWProjectTree *prj = dynamic_cast<SdWProjectTree*>( mWProjectStack->widget(i) );
+    if( prj && prj->getProject() == item->getProject() ) {
+      //Project found, bring it up
+      mProjectTitles->setCurrentIndex( i );
+      onProjectActivated( i );
+      return;
+      }
     }
   }
 
