@@ -24,7 +24,12 @@ class SdGraphNetWire;
 
 class SdPItemSheet : public SdProjectItem
   {
-    int mSheetIndex; //Sheet index
+    int         mSheetIndex; //Sheet index
+
+    //Not saved
+    SdStringMap mNetCopyMap; //When copy schematic fragment named nets copied exactly.
+                             //But default named nets must be copied with new default names
+                             //This map stores association inserted net name and new net name
   public:
     SdPItemSheet();
 
@@ -67,6 +72,8 @@ class SdPItemSheet : public SdProjectItem
   public:
     virtual QString        getIconName() const override;
     virtual quint64        getAcceptedObjectsMask() const override;
+    virtual SdGraph       *insertCopyObject( const SdGraph *obj, SdPoint offset, SdUndo *undo, SdWEditorGraph *editor, bool next ) override;
+    virtual void           insertObjects( SdPoint offset, SdSelector *sour, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next ) override;
 
     friend class SdPasCadImport;
   };

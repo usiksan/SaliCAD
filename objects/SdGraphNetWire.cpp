@@ -599,10 +599,14 @@ bool SdGraphNetWire::snapPoint(SdSnapInfo *snap)
 
 void SdGraphNetWire::setNetName(const QString netName, SdUndo *undo)
   {
-  undo->wire( &mProp, &mA, &mB, &mDotA, &mDotB );
-  //Information about wire segment delete to remove connection from pin
-  getSheet()->netWireDelete( this, undo );
-  SdGraphNet::setNetName( netName, undo );
-  attach( undo );
+  if( undo ) {
+    undo->wire( &mProp, &mA, &mB, &mDotA, &mDotB );
+    //Information about wire segment delete to remove connection from pin
+    getSheet()->netWireDelete( this, undo );
+    SdGraphNet::setNetName( netName, undo );
+    attach( undo );
+    }
+  else
+    SdGraphNet::setNetName( netName, undo );
   }
 

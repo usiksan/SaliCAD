@@ -31,10 +31,10 @@
 
 //TODO B034 When copy mirrored symImp sometimes changes to nonmirrored
 
-//TODO B035 When copy sheet wires need copy nextWires for default wires
-
 //===================================================================================
 //Fixed:
+
+//B035 When copy sheet wires need copy nextWires for default wires
 
 //B012 when moving symImp and stop, when connecting to sheet wires - abnormal finish
 

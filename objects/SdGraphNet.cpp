@@ -32,7 +32,8 @@ SdGraphNet::SdGraphNet(const QString netName) :
 void SdGraphNet::setNetName(const QString netName, SdUndo *undo)
   {
   //Store previous net name
-  undo->string2( &mNetName, nullptr );
+  if( undo )
+    undo->string2( &mNetName, nullptr );
   mNetName = netName;
   }
 
