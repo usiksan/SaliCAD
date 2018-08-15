@@ -27,12 +27,14 @@
 
 //TODO B028 First line of section in component section list is empty
 
-//TODO B029 Duplicate components in GetObject dialog
-
 //TODO B034 When copy mirrored symImp sometimes changes to nonmirrored
+
+//TODO B035 When undo in plate we need to rebuild rat net
 
 //===================================================================================
 //Fixed:
+
+//B029 Duplicate components in GetObject dialog
 
 //B035 When copy sheet wires need copy nextWires for default wires
 

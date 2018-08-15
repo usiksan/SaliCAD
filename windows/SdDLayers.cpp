@@ -160,6 +160,7 @@ void SdDLayers::appendLyaerToVisualList(const QString id)
   //Append row to table
   int row = ui->mLayerList->rowCount();
   ui->mLayerList->insertRow( row );
+  ui->mLayerList->setRowHeight( row, 20 );
   //Layer name
   QTableWidgetItem *item = new QTableWidgetItem( layer->name() );
   ui->mLayerList->setItem( row, 0, item );

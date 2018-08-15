@@ -25,6 +25,7 @@ Description
 #include <QWriteLocker>
 #include <QSaveFile>
 #include <QFileInfo>
+#include <QDebug>
 
 #define FNAME_REF mPath + QStringLiteral("reference.dat")
 #define FNAME_HDR mPath + QStringLiteral("headers.dat")
@@ -194,6 +195,7 @@ bool SdLibraryStorage::forEachHeader(std::function<bool(SdLibraryHeader&)> fun1)
   SdLibraryHeader hdr;
   while( !mHeaderFile.atEnd() ) {
     hdr.read( is );
+    //qDebug() << hdr.uid() << hdr.mTime;
     //Test if header not deleted
     if( mReferenceMap.value(hdr.uid()).mCreationTime == hdr.mTime ) {
       if( fun1( hdr) )

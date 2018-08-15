@@ -297,6 +297,7 @@ void SdDGetObject::fillTable()
   ui->mTable->setHorizontalHeaderLabels( header );
   int row = 0;
   for( SdLibraryHeader &hdr : mHeaderList ) {
+    ui->mTable->setRowHeight( row, 20 );
     ui->mTable->setItem( row, 0, new QTableWidgetItem(hdr.mName) );
     ui->mTable->setItem( row, 1, new QTableWidgetItem(hdr.mAuthor) );
     ui->mTable->setItem( row, 2, new QTableWidgetItem( QString::number(hdr.mTime) ) );
