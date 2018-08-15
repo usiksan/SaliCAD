@@ -24,14 +24,14 @@ Description
 
 SdModeCTextual::SdModeCTextual(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeCommon( editor, obj ),
-  mPropText(0),     //Text properties
-  mString(),       //Work string
-  mPos(0),          //Char cursor position
-  mStartSel(0),     //Char start select position
-  mStopSel(0),      //Char stop select position
-  mSelectRect(),   //Selection region
-  mCursorP1(),     //Cursor position p1. Cursor is vertical line from p1 to p2 at insert position
-  mCursorP2(),    //Cursor position p2
+  mPropText(nullptr),  //Text properties
+  mString(),           //Work string
+  mPos(0),             //Char cursor position
+  mStartSel(0),        //Char start select position
+  mStopSel(0),         //Char stop select position
+  mSelectRect(),       //Selection region
+  mCursorP1(),         //Cursor position p1. Cursor is vertical line from p1 to p2 at insert position
+  mCursorP2(),         //Cursor position p2
   mShift(false),
   mControl(false)
   {
@@ -284,13 +284,14 @@ int SdModeCTextual::getPropBarId() const
 
 void SdModeCTextual::propGetFromBar()
   {
-  if( mPropText ) {
-    SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
-    if( tbar ) {
+  SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+  if( tbar ) {
+    if( mPropText )
       tbar->getPropText( mPropText );
-      mEditor->setFocus();
-      update();
-      }
+    else
+      tbar->getPropText( &(sdGlobalProp->mTextProp) );
+    mEditor->setFocus();
+    update();
     }
   }
 
@@ -299,11 +300,12 @@ void SdModeCTextual::propGetFromBar()
 
 void SdModeCTextual::propSetToBar()
   {
-  if( mPropText ) {
-    SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
-    if( tbar ) {
+  SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+  if( tbar ) {
+    if( mPropText )
       tbar->setPropText( mPropText, mEditor->getPPM() );
-      }
+    else
+      tbar->setPropText( &(sdGlobalProp->mTextProp), mEditor->getPPM() );
     }
   }
 

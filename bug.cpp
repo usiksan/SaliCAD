@@ -6,22 +6,14 @@
 
 
 
-//TODO B003 copy in sheet
-//При копировании в sheet нету вставки
 
 //TODO B009 3 undo's on one text properties changes
-
-//TODO B014 previous setuped text size don't set. Only after begin editing
-
-//TODO B015 on edit disable update time and set need update link on prototipe
 
 //TODO B016 insertComponent mode: when select component and after select symbol part remain from component
 
 //TODO B019 in trace mode pads shown not at place
 
 //TODO B020 in trace mode show smart start point
-
-//TODO D042 Append posibility to load object to project for edit
 
 //TODO D043 Append posibility to delete object from library and also from remote library
 
@@ -33,6 +25,15 @@
 
 //===================================================================================
 //Fixed:
+
+//B014 previous setuped text size don't set. Only after begin editing
+
+//B003 copy in sheet
+//При копировании в sheet нету вставки
+
+//B015 on edit disable update time and set need update link on prototipe
+
+//D042 Append posibility to load object to project for edit
 
 //B029 Duplicate components in GetObject dialog
 
