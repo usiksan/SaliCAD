@@ -90,6 +90,7 @@ class SdWMain : public QMainWindow
     void cmFileExport();
 
     void cmObjectNew();
+    void cmObjectLoad();
     void cmObjectRename();
     void cmObjectCategory();
     void cmObjectDelete();

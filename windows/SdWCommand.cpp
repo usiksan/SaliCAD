@@ -56,7 +56,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmFileSave = menuFile->addAction( QIcon(QString(":/pic/save.png")),frame->tr("Save project"), frame, SLOT(cmFileSave()) );
   cmFileSaveAs = menuFile->addAction( QIcon(QString(":/pic/save_as.png")), frame->tr("Save project as..."), frame, SLOT(cmFileSaveAs()) );
   cmFileSaveAll = menuFile->addAction( QIcon(QString(":/pic/save_all.png")), frame->tr("Save all projects"), frame, SLOT(cmFileSaveAll()) );
-  cmFileStoreToLibrary = menuFile->addAction( QIcon(QString(":/pic/upload.png")),frame->tr("Store to library"), frame, SLOT(cmFileStore()) );
+  cmFileStoreToLibrary = menuFile->addAction( QIcon(QString(":/pic/upload.png")),frame->tr("Store to library..."), frame, SLOT(cmFileStore()) );
   menuFile->addSeparator();
   cmFileImportPis = menuFile->addAction( frame->tr("Import PasCAD"), frame, SLOT(cmFileImportPis()) );
   cmFileImport    = menuFile->addAction( QIcon(QString(":/pic/fileImport.png")), frame->tr("Import..."), frame, SLOT(cmFileImport()) );
@@ -80,14 +80,15 @@ void SdWCommand::createMenu(SdWMain *frame)
 
   //Меню Объект
   menuObject = new QMenu( frame->tr("Objects") );
-  cmObjectNew         = menuObject->addAction( QIcon(QString(":/pic/objectNew.png")), frame->tr("Create"), frame, SLOT(cmObjectNew()) );
-  cmObjectRename      = menuObject->addAction( QIcon(QString(":/pic/objectRename.png")), frame->tr("Rename"), frame, SLOT(cmObjectRename()) );
-  cmObjectCategory    = menuObject->addAction( frame->tr("Edit category"), frame, SLOT(cmObjectCategory()) );
-  cmObjectDelete = menuObject->addAction( frame->tr("Delete"), frame, SLOT(cmObjectDelete()) );
-  cmObjectCopy = menuObject->addAction( frame->tr("Copy"), frame, SLOT(cmObjectCopy()) );
-  cmObjectPaste = menuObject->addAction( frame->tr("Paste"), frame, SLOT(cmObjectPaste()) );
-  cmObjectCut = menuObject->addAction( frame->tr("Cut"), frame, SLOT(cmObjectCut()) );
-  cmObjectSort        = menuObject->addAction( frame->tr("Sort"), frame, SLOT(cmObjectSort()) );
+  cmObjectNew         = menuObject->addAction( QIcon(QString(":/pic/objectNew.png")), frame->tr("Create..."), frame, SLOT(cmObjectNew()) );
+  cmObjectLoad        = menuObject->addAction( QIcon(QString(":/pic/download.png")), frame->tr("Load from library..."), frame, SLOT(cmObjectLoad()) );
+  cmObjectRename      = menuObject->addAction( QIcon(QString(":/pic/objectRename.png")), frame->tr("Rename..."), frame, SLOT(cmObjectRename()) );
+  cmObjectCategory    = menuObject->addAction( QIcon(QString(":/pic/objectCategory.png")), frame->tr("Edit category..."), frame, SLOT(cmObjectCategory()) );
+  cmObjectDelete      = menuObject->addAction( QIcon(QString(":/pic/objectDelete.png")), frame->tr("Delete"), frame, SLOT(cmObjectDelete()) );
+  cmObjectCopy        = menuObject->addAction( QIcon(QString(":/pic/objectCopy.png")), frame->tr("Copy"), frame, SLOT(cmObjectCopy()) );
+  cmObjectPaste       = menuObject->addAction( QIcon(QString(":/pic/objectPaste.png")), frame->tr("Paste"), frame, SLOT(cmObjectPaste()) );
+  cmObjectCut         = menuObject->addAction( QIcon(QString(":/pic/objectCut.png")), frame->tr("Cut"), frame, SLOT(cmObjectCut()) );
+  cmObjectSort        = menuObject->addAction( QIcon(QString(":/pic/objectSort.png")), frame->tr("Sort"), frame, SLOT(cmObjectSort()) );
   cmObjectEditEnable  = menuObject->addAction( QIcon(QString(":/pic/objectEditEnable.png")), frame->tr("Enable edit"), frame, SLOT(cmObjectEditEnable()) );
   cmObjectEditDisable = menuObject->addAction( QIcon(QString(":/pic/objectEditDisable.png")), frame->tr("Finish edit"), frame, SLOT(cmObjectEditDisable()) );
 
@@ -339,6 +340,7 @@ void SdWCommand::projectState(bool enable)
     cmFileExport->setEnabled(enable);
 
     cmObjectRename->setEnabled(enable);
+    cmObjectCategory->setEnabled(enable);
     cmObjectDelete->setEnabled(enable);
     cmObjectCopy->setEnabled(enable);
     cmObjectCut->setEnabled(enable);
@@ -351,6 +353,7 @@ void SdWCommand::projectState(bool enable)
   cmFileSaveAll->setEnabled(enable);
 
   cmObjectNew->setEnabled(enable);
+  cmObjectLoad->setEnabled(enable);
   cmObjectSort->setEnabled(enable);
   }
 
@@ -634,6 +637,7 @@ QActionPtr SdWCommand::cmFileLoadFromLibrary;
 QActionPtr SdWCommand::cmFilePrevious[PREVIOUS_FILES_COUNT];
 
 QActionPtr SdWCommand::cmObjectNew;
+QActionPtr SdWCommand::cmObjectLoad;
 QActionPtr SdWCommand::cmObjectRename;
 QActionPtr SdWCommand::cmObjectCategory;
 QActionPtr SdWCommand::cmObjectDelete;

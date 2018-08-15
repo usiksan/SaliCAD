@@ -19,6 +19,8 @@ Description
 #include "windows/SdPNewProjectItem_Master.h"
 #include "windows/SdPNewProjectItem.h"
 #include "windows/SdWCommand.h"
+#include "SdDGetObject.h"
+
 #include <QFileInfo>
 #include <QApplication>
 #include <QClipboard>
@@ -155,6 +157,19 @@ void SdWProjectTree::cmObjectNew()
 
 
 
+//Load object from library
+void SdWProjectTree::cmObjectLoad()
+  {
+  SdProjectItem *item = sdObjectOnly<SdProjectItem>( SdDGetObject::getObject( dctProjectItems, tr("Select object to load"), this ) );
+  if( item ) {
+    mProject->getUndo()->begin( tr("Load object"), nullptr );
+    mProject->getFixedProjectItem( item );
+    }
+  }
+
+
+
+
 void SdWProjectTree::cmObjectRename( bool category )
   {
   SdProjectItemPtr item = dynamic_cast<SdProjectItem*>( mProject->item( currentItem() ) );
@@ -208,7 +223,6 @@ void SdWProjectTree::cmObjectSort()
 
   //Rebuild visual tree
   buildVisualTree();
-  //mSymbolList->sortChildren( 0, Qt::AscendingOrder );
   }
 
 
@@ -406,3 +420,15 @@ QTreeWidgetItem *SdWProjectTree::classList(quint64 classId)
   return nullptr;
   }
 
+
+
+//Reimplement to display context menu
+void SdWProjectTree::mousePressEvent(QMouseEvent *event)
+  {
+  if( event->button() == Qt::RightButton )
+    //On right button display context menu
+    SdWCommand::menuObject->exec( QCursor::pos() );
+  else
+    //On other buttons - default
+    QTreeWidget::mousePressEvent( event );
+  }

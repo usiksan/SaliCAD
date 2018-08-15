@@ -88,6 +88,7 @@ class SdWCommand
     static QActionPtr  cmFilePrevious[PREVIOUS_FILES_COUNT];
 
     static QActionPtr  cmObjectNew;
+    static QActionPtr  cmObjectLoad;
     static QActionPtr  cmObjectRename;
     static QActionPtr  cmObjectCategory;
     static QActionPtr  cmObjectDelete;

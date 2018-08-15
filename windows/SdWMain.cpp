@@ -598,6 +598,15 @@ void SdWMain::cmObjectNew()
 
 
 
+void SdWMain::cmObjectLoad()
+  {
+  if( activeProject() )
+    activeProject()->cmObjectLoad();
+  }
+
+
+
+
 //Переименовать текущий объект в проекте
 void SdWMain::cmObjectRename()
   {

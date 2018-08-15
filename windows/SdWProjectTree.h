@@ -49,15 +49,26 @@ class SdWProjectTree : public QTreeWidget
     bool         cmFileSave();
     bool         cmFileSaveAs();
 
+
     //Create new object in project hierarchy with wizard
     void         cmObjectNew();
 
+    //Load object from library
+    void         cmObjectLoad();
+
+    //Rename object or/and change category
     void         cmObjectRename(bool category);
+
+    //Delete object
     void         cmObjectDelete();
     virtual void cmObjectCopy() {}
     virtual void cmObjectPaste() {}
     virtual void cmObjectCut() {}
+
+    //Sort object list by alphabet
     void         cmObjectSort();
+
+
 
     void         cmClipboardChange();
 
@@ -75,7 +86,7 @@ class SdWProjectTree : public QTreeWidget
     void onCurrentItemChanged( QTreeWidgetItem *cur, QTreeWidgetItem *prev );
 
   protected:
-    virtual void showEvent( QShowEvent *event );
+    virtual void showEvent( QShowEvent *event ) override;
 
   private:
     //Создать элемент дерева проекта
@@ -88,6 +99,11 @@ class SdWProjectTree : public QTreeWidget
     void buildVisualTree();
 
     QTreeWidgetItem* classList( quint64 classId );
+
+    // QWidget interface
+  protected:
+    //Reimplement to display context menu
+    virtual void mousePressEvent(QMouseEvent *event) override;
   };
 
 #endif // SDWPROJECTTREE_H

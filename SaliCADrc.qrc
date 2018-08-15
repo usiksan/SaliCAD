@@ -211,5 +211,11 @@
         <file>pic/flipSide.png</file>
         <file>pic/download.png</file>
         <file>pic/upload.png</file>
+        <file>pic/objectCopy.png</file>
+        <file>pic/objectDelete.png</file>
+        <file>pic/objectCut.png</file>
+        <file>pic/objectPaste.png</file>
+        <file>pic/objectSort.png</file>
+        <file>pic/objectCategory.png</file>
     </qresource>
 </RCC>
