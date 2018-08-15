@@ -35,6 +35,9 @@ class SdDPads : public QDialog
 
     QString  getAssociationName() const;
 
+    //Retrive current selected pin from association table
+    QString  getCurrentPin() const;
+
     SdPadMap getPadMap() const { return mMap; }
   protected:
     void changeEvent(QEvent *e);

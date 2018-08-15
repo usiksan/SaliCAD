@@ -72,6 +72,7 @@ void SdDOptionsPageColors::accept()
 
 void SdDOptionsPageColors::addColor(int colorIndex, const QString descr)
   {
+  mTable->setRowHeight( colorIndex, 20 );
   QTableWidgetItem *item;
   mTable->setItem( colorIndex, 0, item = new QTableWidgetItem(descr) );
   item->setFlags( Qt::ItemIsEnabled );

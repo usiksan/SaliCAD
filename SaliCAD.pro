@@ -212,7 +212,8 @@ SOURCES += \
     objects/SdPItemInheritance.cpp \
     modes/SdModeCPartPlace.cpp \
     modes/SdModeCFragment.cpp \
-    windows/SdDProjectStore.cpp
+    windows/SdDProjectStore.cpp \
+    windows/SdDOptionsPagePads.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -421,7 +422,8 @@ HEADERS  += \
     objects/SdPItemInheritance.h \
     modes/SdModeCPartPlace.h \
     modes/SdModeCFragment.h \
-    windows/SdDProjectStore.h
+    windows/SdDProjectStore.h \
+    windows/SdDOptionsPagePads.h
 
 DISTFILES += \
     license.txt

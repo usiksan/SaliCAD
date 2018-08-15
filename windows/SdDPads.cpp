@@ -28,6 +28,7 @@ SdDPads::SdDPads(SdPItemPlate *plate, const QString associationName, SdPadMap ma
 
   //Connect signals from buttons
   connect( ui->mAccumUsedPins,    &QPushButton::clicked, this, &SdDPads::cmAccumUsedPins );
+  ui->mAccumUsedPins->setDisabled( mPlate == nullptr );
   connect( ui->mAppendPin,        &QPushButton::clicked, this, &SdDPads::cmAppendPin );
   connect( ui->mDeletePin,        &QPushButton::clicked, this, &SdDPads::cmDeletePin );
   connect( ui->mDeleteAllPins,    &QPushButton::clicked, this, &SdDPads::cmDeleteAllPins );
@@ -39,19 +40,38 @@ SdDPads::SdDPads(SdPItemPlate *plate, const QString associationName, SdPadMap ma
   connect( ui->mPadTable, &QTableWidget::cellClicked, this, &SdDPads::cmCellClicked );
 
   updatePinTable();
-
-
   }
+
+
+
+
 
 SdDPads::~SdDPads()
   {
   delete ui;
   }
 
+
+
+
 QString SdDPads::getAssociationName() const
   {
   return ui->mAssociationName->text();
   }
+
+
+
+//Retrive current selected pin from association table
+QString SdDPads::getCurrentPin() const
+  {
+  int index = ui->mPadTable->currentRow();
+  if( index >= 0 )
+    return ui->mPadTable->item( index, 0 )->text();
+  return QString();
+  }
+
+
+
 
 void SdDPads::changeEvent(QEvent *e)
   {
@@ -198,12 +218,12 @@ void SdDPads::cmAssociationSave()
     QMessageBox::warning( this, tr("Error"), tr("Can't save because name not entered. Enter name for this association table and retry save."));
   else {
     //Object for saving
-    SdPadAssociation assoc( mMap, name, mPlate->getDefaultAuthor() );
+    SdPadAssociation assoc( mMap, name, SdProjectItem::getDefaultAuthor() );
     //Creating header
     SdLibraryHeader hdr;
     hdr.mName = name;
     hdr.mType = assoc.getType();
-    hdr.mAuthor = mPlate->getDefaultAuthor();
+    hdr.mAuthor = SdProjectItem::getDefaultAuthor();
     hdr.mTag = QString("pads");
     hdr.mTime = SdTime2x::current();
     hdr.mClass = assoc.getClass();

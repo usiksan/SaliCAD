@@ -95,7 +95,7 @@ class SdEnvir
     QString         mHomePath;             //Каталог пользователя
     QString         mLibraryPath;          //Каталог библиотек
     QString         mPatternPath;          //Каталог шаблонов
-    QString         mPadStackId;           //SdPadAssociation object id [Объект контактных площадок]
+    QString         mPadStackUid;           //SdPadAssociation object id [Объект контактных площадок]
     QString         mPadStackTitle;        //SdPadAssociation object title [Название объекта с контактными площадками]
     QList<QPointF>  mGridHistory;          //Previous grid history
     SdRuleBlock     mDefaultRules;         //Default rules for pcb

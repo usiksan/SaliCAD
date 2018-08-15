@@ -14,6 +14,7 @@ Description
 #include "SdDOptions.h"
 #include "SdDOptionsPageColors.h"
 #include "SdDOptionsPageEditors.h"
+#include "SdDOptionsPagePads.h"
 #include <QVBoxLayout>
 #include <QLabel>
 
@@ -33,14 +34,23 @@ SdDOptions::SdDOptions(QWidget *parent) :
   mainLayout->addWidget(mButtons);
   setLayout(mainLayout);
 
+  //---------------------------
   //Append option pages
+
+  //Colors page
   SdDOptionsPageColors *colors = new SdDOptionsPageColors();
   connect(mButtons, &QDialogButtonBox::accepted, colors, &SdDOptionsPageColors::accept );
   mTabWidget->addTab( colors, tr("Colors") );
 
+  //Editors page
   SdDOptionsPageEditors *editors = new SdDOptionsPageEditors();
   connect(mButtons, &QDialogButtonBox::accepted, editors, &SdDOptionsPageEditors::accept );
   mTabWidget->addTab( editors, tr("Editors") );
+
+  //Pads page
+  SdDOptionsPagePads *pads = new SdDOptionsPagePads();
+  connect(mButtons, &QDialogButtonBox::accepted, pads, &SdDOptionsPagePads::accept );
+  mTabWidget->addTab( pads, tr("Pads") );
 
   setWindowTitle( tr("Options") );
   resize( 700, 500 );

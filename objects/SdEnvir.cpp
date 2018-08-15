@@ -139,7 +139,7 @@ void SdEnvir::loadEnvir()
        >> mHomePath             //Каталог пользователя
        >> mLibraryPath          //Каталог библиотек
        >> mPatternPath          //Каталог шаблонов
-       >> mPadStackId           //Файл контактных площадок
+       >> mPadStackUid           //Файл контактных площадок
        >> mPadStackTitle        //Объект содержащий контактные площадки
        >> mGridHistory          //Previous grid history table
        >> mDefaultRules         //Default rules for pcb
@@ -211,7 +211,7 @@ void SdEnvir::saveEnvir()
      << mHomePath             //Каталог пользователя
      << mLibraryPath          //Каталог библиотек
      << mPatternPath          //Каталог шаблонов
-     << mPadStackId         //Файл контактных площадок
+     << mPadStackUid         //Файл контактных площадок
      << mPadStackTitle       //Объект содержащий контактные площадки
      << mGridHistory         //Previous grid history table
      << mDefaultRules         //Default rules for pcb
@@ -299,8 +299,8 @@ void SdEnvir::defaultEnvir()
   mLibraryPath.append( QString("library/") );
   mPatternPath = mHomePath;            //Каталог шаблонов
   mPatternPath.append( QString("pattern/") );
-  mPadStackId = mHomePath;           //Файл контактных площадок
-  mPadStackId.append( QString("pads/defaultStack.pads") );
+
+  mPadStackUid.clear();  //Default SdPadAssociation uid [UID контактных площадок]
   mPadStackTitle = QString("default");//Объект содержащий контактные площадки
 
   //  QString         mLastFile;             //Последний файл пользователя
@@ -444,7 +444,7 @@ SdPad SdEnvir::getPad(const QString pinType)
   {
   //If pad stack not yet loaded then load it
   if( mPadStack == nullptr )
-    mPadStack = sdObjectOnly<SdPadAssociation>( SdObjectFactory::extractObject( mPadStackId, true, nullptr ) );
+    mPadStack = sdObjectOnly<SdPadAssociation>( SdObjectFactory::extractObject( mPadStackUid, true, nullptr ) );
   //If pad stack present then return pad associated with pinType
   if( mPadStack != nullptr )
     return mPadStack->pin(pinType);

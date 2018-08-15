@@ -33,8 +33,10 @@ SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item,
   vlay->addWidget( mName = new QLineEdit() );
   vlay->addWidget( new QLabel(tr("Element category")) );
   vlay->addWidget( mCategory = new QLineEdit() );
-  mTagPath = (*item)->getTag();
-  mCategory->setText( mTagPath );
+  if( (*item) != nullptr ) {
+    mTagPath = (*item)->getTag();
+    mCategory->setText( mTagPath );
+    }
   SdWCategory *category = new SdWCategory();
   connect( category, &SdWCategory::categorySelected, mCategory, &QLineEdit::setText );
   connect( category, &SdWCategory::tagPathSelected, this, [this] ( const QString path) { mTagPath = path; } );
