@@ -1188,6 +1188,7 @@ void SdModeSelect::keyDown(int key, QChar ch)
       break;
     default : SdMode::keyDown( key, ch );
     }
+  mEditor->viewport()->setCursor( loadCursor(getCursor()) );
   update();
   }
 
@@ -1200,7 +1201,7 @@ void SdModeSelect::keyUp(int key, QChar ch)
     case Qt::Key_Shift   : mShift = false; break;
     case Qt::Key_Control : mControl = false; break;
     }
-
+  mEditor->viewport()->setCursor( loadCursor(getCursor()) );
   }
 
 
