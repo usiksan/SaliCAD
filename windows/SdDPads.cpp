@@ -5,6 +5,7 @@
 #include "objects/SdUtil.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdTime2x.h"
+#include "objects/SdEnvir.h"
 #include "SdDGetObject.h"
 #include "SdDPadMaster.h"
 
@@ -68,6 +69,32 @@ QString SdDPads::getCurrentPin() const
   if( index >= 0 )
     return ui->mPadTable->item( index, 0 )->text();
   return QString();
+  }
+
+
+
+
+QString SdDPads::selectPinType(QWidget *parent)
+  {
+  QString ass;
+  SdPadMap map;
+  //Request to load default pad association if it not loaded yet
+  sdEnvir->getPad( QString("def") );
+  if( sdEnvir->mPadStack ) {
+    //Pad association loaded. Get name and map
+    ass = sdEnvir->mPadStack->getName();
+    map = sdEnvir->mPadStack->getMap();
+    }
+  SdDPads pads( nullptr, ass, map, parent );
+  pads.exec();
+
+  //Check if need default pad association reload
+  if( !pads.getAssociationUid().isEmpty() ) {
+    //Need reload
+    sdEnvir->resetPads();
+    sdEnvir->mPadStackUid = pads.getAssociationUid();
+    }
+  return pads.getCurrentPin();
   }
 
 
@@ -227,6 +254,7 @@ void SdDPads::cmAssociationSave()
     hdr.mTag = QString("pads");
     hdr.mTime = SdTime2x::current();
     hdr.mClass = assoc.getClass();
+    mUid = hdr.uid();
     //Store in library
     SdObjectFactory::insertObject( hdr, assoc.write() );
     QMessageBox::information( this, tr("Info"), tr("Pad association saved") );

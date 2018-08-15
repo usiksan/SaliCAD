@@ -13,7 +13,10 @@ Description
 */
 #include "SdDMasterPartDoubleSide.h"
 #include "ui_SdDMasterPartDoubleSide.h"
+#include "windows/SdDPads.h"
 #include "objects/SdEnvir.h"
+
+#include <QToolButton>
 
 
 SdDMasterPartDoubleSide::SdDMasterPartDoubleSide(SdProjectItem *item, QWidget *parent) :
@@ -51,6 +54,18 @@ SdDMasterPartDoubleSide::SdDMasterPartDoubleSide(SdProjectItem *item, QWidget *p
   connect( ui->mRightPinCount, &QLineEdit::textEdited, this, &SdDMasterPartDoubleSide::onEditChanged );
   connect( ui->mRightPinDistance, &QLineEdit::textEdited, this, &SdDMasterPartDoubleSide::onEditChanged );
   connect( ui->mRightPinOffsetY, &QLineEdit::textEdited, this, &SdDMasterPartDoubleSide::onEditChanged );
+
+  connect( ui->mLeftPinTypeSelect, &QToolButton::clicked, this, [this] () {
+    QString str = SdDPads::selectPinType(this);
+    if( !str.isEmpty() )
+      ui->mLeftPinType->setText( str );
+    } );
+
+  connect( ui->mRightPinTypeSelect, &QToolButton::clicked, this, [this] () {
+    QString str = SdDPads::selectPinType(this);
+    if( !str.isEmpty() )
+      ui->mRightPinType->setText( str );
+    } );
   }
 
 

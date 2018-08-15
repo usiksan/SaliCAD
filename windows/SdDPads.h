@@ -29,9 +29,12 @@ class SdDPads : public QDialog
 
     SdPadMap           mMap;    //Edited pin-to-pad association
     SdPItemPlate      *mPlate;  //Plate, owned pin-to-pad association
+    QString            mUid;
   public:
     explicit SdDPads( SdPItemPlate *plate, const QString associationName, SdPadMap map, QWidget *parent = nullptr);
     ~SdDPads();
+
+    QString  getAssociationUid() const { return mUid; }
 
     QString  getAssociationName() const;
 
@@ -39,6 +42,8 @@ class SdDPads : public QDialog
     QString  getCurrentPin() const;
 
     SdPadMap getPadMap() const { return mMap; }
+
+    static QString selectPinType( QWidget *parent );
   protected:
     void changeEvent(QEvent *e);
 
