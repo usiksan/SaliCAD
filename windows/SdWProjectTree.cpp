@@ -380,14 +380,14 @@ void SdWProjectTree::buildVisualTree()
     addTopLevelItem( mSymbolList );
     addTopLevelItem( mPartList );
     addTopLevelItem( mTextList );
-    }
 
-  fillTopItem( mSheetList, dctSheet );
-  fillTopItem( mPlateList, dctPlate );
-  fillTopItem( mComponentList, dctComponent );
-  fillTopItem( mSymbolList, dctSymbol );
-  fillTopItem( mPartList, dctPart );
-  fillTopItem( mTextList, dctTextDoc );
+    fillTopItem( mSheetList, dctSheet );
+    fillTopItem( mPlateList, dctPlate );
+    fillTopItem( mComponentList, dctComponent );
+    fillTopItem( mSymbolList, dctSymbol );
+    fillTopItem( mPartList, dctPart );
+    fillTopItem( mTextList, dctTextDoc );
+    }
   }
 
 
