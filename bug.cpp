@@ -1,5 +1,5 @@
 
-//B034 bugs
+//B035 bugs
 //F001 fatal
 //C001 critical
 //D046 do
@@ -17,8 +17,6 @@
 
 //TODO D043 Append posibility to delete object from library and also from remote library
 
-//TODO B028 First line of section in component section list is empty
-
 //TODO B034 When copy mirrored symImp sometimes changes to nonmirrored
 
 //TODO B035 When undo in plate we need to rebuild rat net
@@ -27,8 +25,12 @@
 
 //TODO D046 When try to select pin type from default pad association table and no default table offer to enter one
 
+//TODO B035 When close project incorect deleting from comboBox
+
 //===================================================================================
 //Fixed:
+
+//B028 First line of section in component section list is empty
 
 //B014 previous setuped text size don't set. Only after begin editing
 

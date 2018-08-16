@@ -182,12 +182,18 @@ void SdWEditorComponent::onActivateEditor()
 
 void SdWEditorComponent::sectionAdd()
   {
-  mUndo->begin( tr("Append section for component"), mComponent );
-  mComponent->appendSection( SdDGetObject::getObjectUid( dctSymbol, tr("Select symbol for section"), this ), mUndo );
-  dirtyProject();
-  fillSections();
-  mSectionList->setCurrentRow(mSectionList->count() - 1);
-  onCurrentSection(mSectionList->count() - 1);
+  //Query from user symbol for section
+  QString uid = SdDGetObject::getObjectUid( dctSymbol, tr("Select symbol for section"), this );
+  //If user selected symbol then append it as section
+  if( !uid.isEmpty() ) {
+    //Symbol selected
+    mUndo->begin( tr("Append section for component"), mComponent );
+    mComponent->appendSection( uid, mUndo );
+    dirtyProject();
+    fillSections();
+    mSectionList->setCurrentRow(mSectionList->count() - 1);
+    onCurrentSection(mSectionList->count() - 1);
+    }
   }
 
 
@@ -367,15 +373,20 @@ void SdWEditorComponent::onParamChanged(int row, int column)
 
 void SdWEditorComponent::partSelect()
   {
-  mUndo->begin( tr("Part select for component"), mComponent );
-  SdPartVariant *part = mComponent->getPart();
-  if( part == nullptr ) {
-    part = new SdPartVariant();
-    mComponent->insertChild( part, mUndo );
+  //Get part uid from user
+  QString uid = SdDGetObject::getObjectUid( dctPart, tr("Select part for component"), this );
+  if( !uid.isEmpty() ) {
+    //If user selected part then assign it
+    mUndo->begin( tr("Part select for component"), mComponent );
+    SdPartVariant *part = mComponent->getPart();
+    if( part == nullptr ) {
+      part = new SdPartVariant();
+      mComponent->insertChild( part, mUndo );
+      }
+    part->setPartId( uid, mUndo );
+    dirtyProject();
+    fillPart();
     }
-  part->setPartId( SdDGetObject::getObjectUid( dctPart, tr("Select part for component"), this ), mUndo );
-  dirtyProject();
-  fillPart();
   }
 
 
