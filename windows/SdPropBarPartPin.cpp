@@ -13,10 +13,16 @@ Description
 */
 #include "SdPropBarPartPin.h"
 #include "SdStringHistory.h"
+#include "SdDPads.h"
+
 #include <QLineEdit>
+#include <QToolButton>
 #include <QDebug>
 
+
 static SdStringHistory pinTypeHistory;
+
+
 
 SdPropBarPartPin::SdPropBarPartPin(const QString title) :
   SdPropBar( title )
@@ -35,7 +41,8 @@ SdPropBarPartPin::SdPropBarPartPin(const QString title) :
   mPinType->setEditable(true);
   for( const QString &str : pinTypeHistory )
     mPinType->addItem( str );
-  mPinType->setMinimumWidth(150);
+  mPinType->setMinimumWidth(180);
+
 
   //on select other pin type
   connect( mPinType, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int){
@@ -47,6 +54,19 @@ SdPropBarPartPin::SdPropBarPartPin(const QString title) :
     emit propChanged();
     });
   addWidget( mPinType );
+
+  //Button to select pin type from default pad association table
+  QToolButton *but = new QToolButton();
+  but->setText( QStringLiteral("...") );
+  connect( but, &QToolButton::clicked, this, [this] () {
+    QString str = SdDPads::selectPinType(this);
+    if( !str.isEmpty() ) {
+      mPinType->setCurrentText( str );
+      pinTypeHistory.reorderComboBoxString( mPinType );
+      emit propChanged();
+      }
+    } );
+  addWidget( but );
   }
 
 
