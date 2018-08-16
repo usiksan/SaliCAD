@@ -1394,7 +1394,8 @@ void SdModeSelect::stopCopy(SdPoint p)
     insertCopy( p.sub( mFirst ), false );
     }
   setStep( smSelPresent );
-  propGetFromBar();
+  //When get from bar in this point then changed properties of selected components
+  //propGetFromBar();
   }
 
 

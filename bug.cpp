@@ -17,8 +17,6 @@
 
 //TODO D043 Append posibility to delete object from library and also from remote library
 
-//TODO B034 When copy mirrored symImp sometimes changes to nonmirrored
-
 //TODO B035 When undo in plate we need to rebuild rat net
 
 //TODO D046 When try to select pin type from default pad association table and no default table offer to enter one
@@ -27,6 +25,8 @@
 
 //===================================================================================
 //Fixed:
+
+//B034 When copy mirrored symImp sometimes changes to nonmirrored
 
 //D045 When press lamp icon in layer table switch layer state on-off
 
