@@ -121,6 +121,16 @@ class SdGraphPartImp : public SdGraphTraced
     //Accum used pins
     void            accumUsedPins(SdPadMap &map ) const;
 
+
+    //Renumeration
+    QString         getIdentPrefix();
+    //Compare partImp's
+    bool            compareRenumeration( const SdGraphPartImp *imp ) const;
+    //Lower sheet
+    bool            getLowerPosAndSheet( SdPoint &dest, int &sheet ) const;
+    //Set index
+    void            setIdentIndex( int index );
+
     //Parameters
     //Param full list
     SdStringMap     getParamTable() const { return mParam; }

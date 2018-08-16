@@ -121,3 +121,17 @@ void SdWEditorGraphSheet::cmModeNetList()
 
 
 
+
+void SdWEditorGraphSheet::cmRenumeration()
+  {
+  //Perform renumeration
+  getProject()->renumeration();
+
+  //Update visual
+  dirtyCashe();
+  dirtyProject();
+  update();
+  }
+
+
+

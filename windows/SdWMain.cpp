@@ -1093,6 +1093,15 @@ void SdWMain::cmModeOrigin()
 
 
 
+void SdWMain::cmRenumeration()
+  {
+  if( activeEditor() )
+    activeEditor()->cmRenumeration();
+  }
+
+
+
+
 
 
 

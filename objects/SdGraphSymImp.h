@@ -69,7 +69,8 @@ class SdGraphSymImp : public SdGraph
     //Information
     //Return current plate of section
     SdPItemPlate   *currentPlate() const;
-    QString         getRenumSect( SdPoint &dest, int &sheetNumber );
+    //Retrive origin point and sheet number
+    QString         getRenumSect( SdPoint &dest, int &sheetNumber ) const;
     //Return part implement
     SdGraphPartImp *getPartImp() const { return mPartImp; }
 

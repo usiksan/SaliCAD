@@ -131,3 +131,16 @@ void SdWEditorGraphPlate::cmCheckRules()
   //Update
   update();
   }
+
+
+
+
+void SdWEditorGraphPlate::cmRenumeration()
+  {
+  //Perform renumeration of current pcb
+  mPlate->renumeration();
+
+  dirtyCashe();
+  dirtyProject();
+  update();
+  }

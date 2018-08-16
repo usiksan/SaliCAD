@@ -110,6 +110,9 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmModeReference() {}
     virtual void cmModeOrigin() {}
 
+    //Sheet and pcb
+    virtual void cmRenumeration() {}
+
     //Sheet
     virtual void cmModeFragment() {}
     virtual void cmModeComponent() {}
@@ -137,6 +140,7 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmModeDeleteWire() {}
     virtual void cmModePad() {}
 
+    //All
     virtual void cmOption() {}
     virtual void cmTools() {}
 

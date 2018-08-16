@@ -274,6 +274,108 @@ void SdGraphPartImp::accumUsedPins(SdPadMap &map) const
 
 
 
+
+QString SdGraphPartImp::getIdentPrefix()
+  {
+  if( mSections.count() && mSections.at(0).mSymbol )
+    mPrefix = mSections.at(0).mSymbol->getIdent()->getText();
+
+  return mPrefix;
+  }
+
+
+
+
+bool SdGraphPartImp::compareRenumeration(const SdGraphPartImp *imp) const
+  {
+  SdPoint p1,p2;
+  int sheet1,sheet2;
+  if( getLowerPosAndSheet( p1, sheet1 ) && imp->getLowerPosAndSheet(p2, sheet2) ) {
+    if( sheet2 < sheet1 ) return true;
+    if( sheet2 == sheet1 ) {
+      if( p2.x() < p1.x() ) return true;
+      if( p1.x() == p2.x() ) {
+        if( p2.y() > p1.y() ) return true;
+        }
+      }
+    }
+  return false;
+  }
+
+
+
+
+
+//Lower sheet
+bool SdGraphPartImp::getLowerPosAndSheet(SdPoint &dest, int &sheet) const
+  {
+  int i = 0;
+  //Find presented section
+  while( i < mSections.count() ) {
+    if( mSections.at(i).mSymImp ) {
+      //Section present
+      mSections.at(i).mSymImp->getRenumSect( dest, sheet );
+      break;
+      }
+    i++;
+    }
+
+  if( i > mSections.count() )
+    //No presented section
+    return false;
+
+  //With next we select from all sections the section with lowerst sheet number
+  // and more left and top
+  i++;
+  while( i > mSections.count() ) {
+    if( mSections.at(i).mSymImp ) {
+      //Section present
+      SdPoint p;
+      int s;
+      mSections.at(i).mSymImp->getRenumSect( p, s );
+      if( sheet > s ) {
+        //This section in early sheet
+        dest  = p;
+        sheet = s;
+        }
+      else if( sheet == s ) {
+        if( p.x() < dest.x() )
+          //This section is lefter
+          dest  = p;
+        else if( p.x() == dest.x() ) {
+          if( p.y() > dest.y() )
+            //This section is upper
+            dest  = p;
+          }
+        }
+      }
+    }
+
+  return true;
+  }
+
+
+
+
+//Set index
+void SdGraphPartImp::setIdentIndex(int index)
+  {
+  //Assign log number for part implement
+  mLogNumber = index;
+  //Assign log numbers for each connected section
+  int log = mSections.count() > 1 ? 1 : 0;
+  for( int i = 0; i < mSections.count(); i++ )
+    if( mSections.at(i).mSymImp )
+      mSections.at(i).mSymImp->setIdentInfo( mPrefix, mLogNumber, log++ );
+  }
+
+
+
+
+
+
+
+
 void SdGraphPartImp::setParam(const QString key, const QString val, SdUndo *undo)
   {
   undo->stringMapItem( &mParam, key );
@@ -349,6 +451,9 @@ bool SdGraphPartImp::isSectionFree(int *section, SdPItemPart *part, SdPItemCompo
   for( int index = 0; index < mSections.count(); index++ )
     if( mSections[index].isFree(sym) ) {
       *section = index;
+      //Assign prefix if not assigned
+      if( mPrefix.isEmpty() )
+        mPrefix = sym->getIdent()->getText();
       return true;
       }
   return false;

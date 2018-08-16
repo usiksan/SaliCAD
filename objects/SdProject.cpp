@@ -182,6 +182,21 @@ void SdProject::accumLayerUsage()
 
 
 
+//Renumeration implements
+void SdProject::renumeration()
+  {
+  //For each plate perform renumeration
+  forEach( dctPlate, [] (SdObject *obj) -> bool {
+    SdPItemPlate *plate = dynamic_cast<SdPItemPlate*>(obj);
+    if( plate )
+      plate->renumeration();
+    return true;
+    });
+  }
+
+
+
+
 void SdProject::setDirty()
   {
   mDirty = true;

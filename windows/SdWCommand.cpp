@@ -186,6 +186,8 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
   menuInsertSheet = new QMenu( frame->tr("Sheet") );
+  cmRenumeration             = menuInsertSheet->addAction( QIcon(QStringLiteral(":/pic/pads.png")), frame->tr("Renumeration"), frame, SLOT(cmRenumeration()) );
+  menuInsertSheet->addSeparator();
   cmModeTable[MD_FRAGMENT]   = menuInsertSheet->addAction( QIcon(QString(":/pic/iconSheet.png")), frame->tr("Insert fragment"), frame, SLOT(cmModeFragment()) );
   cmModeTable[MD_COMPONENT]  = menuInsertSheet->addAction( QIcon(QString(":/pic/objComp.png")), frame->tr("Insert component"), frame, SLOT(cmModeComponent()) );
   cmModeTable[MD_NET]        = menuInsertSheet->addAction( QIcon(QString(":/pic/objWire.png")), frame->tr("Insert net wire"), frame, SLOT(cmModeNet()) );
@@ -209,6 +211,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmShowRuleErrors->connect( cmShowRuleErrors, &QAction::toggled, frame, &SdWMain::cmShowRuleErrors );
   cmCheckRules = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/objRulesCheck.png")), frame->tr("Check all rules"), frame, SLOT(cmCheckRules()) );
   cmPads = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/pads.png")), frame->tr("Pads association"), frame, SLOT(cmPads()) );
+  menuInsertPcb->insertAction( nullptr, cmRenumeration );
   //cmShowRatNet->co
 //  cmNetSetup       = menuInsertPcb->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
 //  cmPads           = menuInsertPcb->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
@@ -690,6 +693,7 @@ QActionPtr SdWCommand::cmModePad;
 QActionPtr SdWCommand::cmShowRatNet;
 QActionPtr SdWCommand::cmShowRuleErrors;
 QActionPtr SdWCommand::cmCheckRules;
+QActionPtr SdWCommand::cmRenumeration;
 
 QActionPtr SdWCommand::cmOption;
 

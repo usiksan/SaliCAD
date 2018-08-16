@@ -142,6 +142,7 @@ class SdWCommand
     static QActionPtr  cmShowRatNet;
     static QActionPtr  cmShowRuleErrors;
     static QActionPtr  cmCheckRules;
+    static QActionPtr  cmRenumeration;
 
     static QActionPtr  cmOption;
     static QActionPtr  cmTools;

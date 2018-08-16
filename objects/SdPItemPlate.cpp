@@ -20,9 +20,11 @@ Description
 #include "SdContext.h"
 #include "SdEnvir.h"
 #include "SdPlateNetList.h"
+
 #include <QDebug>
 #include <QLineF>
 #include <QLine>
+#include <algorithm>
 
 SdPItemPlate::SdPItemPlate() :
   SdProjectItem(),
@@ -414,6 +416,60 @@ void SdPItemPlate::readRuleTable(const QJsonArray ar)
     blk.mRules[ruleRoadRoad] = obj.value( QStringLiteral("RoadRoad") ).toInt();
     blk.mTopBlock = obj.value( QStringLiteral("Top") ).toInt();
     mRules.append( blk );
+    }
+  }
+
+
+
+
+
+typedef QList<SdGraphPartImp*> SdPartImpList;
+//Renumeration implements
+void SdPItemPlate::renumeration()
+  {
+  //Renumeration perform on comp ident prefix base.
+  //For all component with same prefix base components renumerated
+  // from top to bottom and from left to right
+
+  //In this map will contains all implements by ident prefix
+  QMap<QString, SdPartImpList* > map;
+
+  //Accum all implements
+  forEach( dctPartImp, [&map] (SdObject *obj) -> bool {
+    SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(obj);
+    if( imp ) {
+      //Retrive implement prefix
+      QString prefix = imp->getIdentPrefix();
+      //Test if prefix already contained in map
+      if( map.contains(prefix) )
+        //Prefix already contained in map. Append to list
+        map.value(prefix)->append( imp );
+      else {
+        //No prefix in map yet
+        SdPartImpList *list = new SdPartImpList();
+        list->append( imp );
+        map.insert( prefix, list );
+        }
+      }
+    return true;
+    });
+
+  //For each prefix sort components
+  for( auto i = map.begin(); i != map.end(); i++ ) {
+    SdPartImpList *list = i.value();
+    if( list->count() > 1 ) {
+      //Perform sorting from top to bottom and from left to right
+      std::stable_sort( list->begin(), list->end(), [] ( SdGraphPartImp *imp1, SdGraphPartImp *imp2 ) -> bool {
+        if( imp1 == nullptr || imp2 == nullptr )
+          return false;
+        return imp1->compareRenumeration( imp2 );
+        });
+      }
+
+    //Sorted. Assign new indexes
+    int logNum = 1;
+    for( SdGraphPartImp *imp : (*list) )
+      imp->setIdentIndex( logNum++ );
     }
   }
 

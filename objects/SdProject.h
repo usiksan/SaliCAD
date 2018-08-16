@@ -71,6 +71,9 @@ class SdProject : public SdContainer
     //Accum used layers
     void              accumLayerUsage();
 
+    //Renumeration implements
+    void              renumeration();
+
     //Return dirty status
     bool              isDirty() const { return mDirty; }
     void              setDirty();

@@ -52,7 +52,11 @@ class SdWEditorGraphSheet : public SdWEditorGraph
 
     //Sheet net name insertion mode
     virtual void           cmModeNetName() override;
+
     virtual void cmModeNetList() override;
+
+    virtual void           cmRenumeration() override;
+
   };
 
 #endif // SDWEDITORGRAPHSHEET_H

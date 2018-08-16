@@ -76,6 +76,18 @@ SdGraphSymImp::SdGraphSymImp(SdPItemComponent *comp, SdPItemSymbol *sym, SdPItem
 
 
 
+
+//Retrive origin point and sheet number
+QString SdGraphSymImp::getRenumSect(SdPoint &dest, int &sheetNumber) const
+  {
+  dest = mOverRect.getTopLeft();
+  sheetNumber = getSheet()->getSheetIndex();
+  return mPrefix;
+  }
+
+
+
+
 //Pin connection status
 bool SdGraphSymImp::isPinConnected(const QString pinName) const
   {

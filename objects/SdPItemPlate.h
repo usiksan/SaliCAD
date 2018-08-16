@@ -121,6 +121,10 @@ class SdPItemPlate : public SdProjectItem
     void                   readRuleMap( const QJsonObject obj);
     void                   readRuleTable( const QJsonArray ar);
 
+
+    //Renumeration implements
+    void                   renumeration();
+
     // SdObject interface
   public:
     virtual QString        getType() const override;
