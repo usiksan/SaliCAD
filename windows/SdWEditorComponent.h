@@ -52,6 +52,7 @@ class SdWEditorComponent : public SdWEditor
 
     QTableWidget         *mParamTable;        //Table of user params
     QPushButton          *mParamAdd;
+    QPushButton          *mParamAddDefault;
     QPushButton          *mParamDelete;
     QPushButton          *mParamCopy;
 
@@ -80,6 +81,7 @@ class SdWEditorComponent : public SdWEditor
     void partSelect();
 
     void paramAdd();
+    void paramAddDefault();
     void paramDelete();
     void paramCopy();
   private:
@@ -88,6 +90,7 @@ class SdWEditorComponent : public SdWEditor
     void fillParams();
     void fillUsedPins();
     void paramAppend(int row, const QString key, const QString value );
+    void paramAddInt( const QString key, const QString value = QString() );
 
     QString packetPin( int section, const QString pinName );
 

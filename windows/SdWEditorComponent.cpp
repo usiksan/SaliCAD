@@ -106,6 +106,7 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
         //Buttons
         vbox = new QVBoxLayout();
           vbox->addWidget( mParamAdd = new QPushButton( tr("Add param")) );
+          vbox->addWidget( mParamAddDefault = new QPushButton( tr("Add defaults")) );
           vbox->addWidget( mParamCopy = new QPushButton( tr("Copy param")) );
           vbox->addWidget( mParamDelete = new QPushButton( tr("Delete param")) );
         hbox->addLayout( vbox );
@@ -126,6 +127,7 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
     connect( mPartSelect, &QPushButton::clicked, this, &SdWEditorComponent::partSelect );
 
     connect( mParamAdd, &QPushButton::clicked, this, &SdWEditorComponent::paramAdd );
+    connect( mParamAddDefault, &QPushButton::clicked, this, &SdWEditorComponent::paramAddDefault );
     connect( mParamDelete, &QPushButton::clicked, this, &SdWEditorComponent::paramDelete );
     connect( mParamCopy, &QPushButton::clicked, this, &SdWEditorComponent::paramCopy );
     }
@@ -385,16 +387,24 @@ void SdWEditorComponent::paramAdd()
   if( !key.isEmpty() ) {
     if( mComponent->paramContains(key) )
       QMessageBox::warning( this, tr("Warning!"), tr("Param with this name already exist. Enter another name.") );
-    else {
-      mComponent->paramSet( key, QString(), mUndo );
-      int row = mParamTable->rowCount();
-      mParamTable->insertRow( row );
-      disconnect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onParamChanged );
-      paramAppend( row, key, QString() );
-      connect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onParamChanged );
-      dirtyProject();
-      }
+    else
+      paramAddInt( key );
     }
+  }
+
+
+
+//Append default param group
+void SdWEditorComponent::paramAddDefault()
+  {
+  if( !mComponent->paramContains(QStringLiteral("bom")) )
+    paramAddInt( QStringLiteral("bom"), QStringLiteral("<article> <title> <value>") );
+  if( !mComponent->paramContains(QStringLiteral("article")) )
+    paramAddInt( QStringLiteral("article") );
+  if( !mComponent->paramContains(QStringLiteral("title")) )
+    paramAddInt( QStringLiteral("title"), mComponent->getTitle() );
+  if( !mComponent->paramContains(QStringLiteral("value")) )
+    paramAddInt( QStringLiteral("value") );
   }
 
 
@@ -539,6 +549,20 @@ void SdWEditorComponent::paramAppend( int row, const QString key, const QString 
   mParamTable->setItem( row, 0, new QTableWidgetItem(key) );
   mParamTable->item( row, 0 )->setFlags( Qt::ItemIsEnabled );
   mParamTable->setItem( row, 1, new QTableWidgetItem(value) );
+  }
+
+
+
+
+void SdWEditorComponent::paramAddInt(const QString key, const QString value)
+  {
+  mComponent->paramSet( key, value, mUndo );
+  int row = mParamTable->rowCount();
+  mParamTable->insertRow( row );
+  disconnect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onParamChanged );
+  paramAppend( row, key, value );
+  connect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onParamChanged );
+  dirtyProject();
   }
 
 
