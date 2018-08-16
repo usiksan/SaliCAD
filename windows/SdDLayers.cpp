@@ -403,6 +403,21 @@ void SdDLayers::onCellClicked(int row, int column)
     if( item != nullptr )
       item->setIcon( QIcon( sdEnvir->getLayer(id)->isVisible() ? QString(":/pic/lampEnable.png") : QString(":/pic/lampDisable.png") ) );
     }
+  else if( column == 3 ) {
+    //Icon for visible state. Press on icon change visible state
+    SdLayerState state = sdEnvir->getLayer(id)->state();
+    if( state == layerStateOff ) state = layerStateOn;
+    else state = layerStateOff;
+    sdEnvir->getLayer(id)->setState( state );
+    //Change in table
+    QTableWidgetItem *item = ui->mLayerList->item(row,2);
+    if( item != nullptr )
+      item->setText( layerState(sdEnvir->getLayer(id)) );
+    //Change visibility
+    item = ui->mLayerList->item( row, 3 );
+    if( item != nullptr )
+      item->setIcon( QIcon( sdEnvir->getLayer(id)->isVisible() ? QString(":/pic/lampEnable.png") : QString(":/pic/lampDisable.png") ) );
+    }
   else if( column == 4 ) {
     //Layer color
     QColor color = QColorDialog::getColor( sdEnvir->getLayer(id)->color(), this, tr("Select layer color") );

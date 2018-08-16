@@ -21,14 +21,14 @@
 
 //TODO B035 When undo in plate we need to rebuild rat net
 
-//TODO D045 When press lamp icon in layer table switch layer state on-off
-
 //TODO D046 When try to select pin type from default pad association table and no default table offer to enter one
 
 //TODO B035 When close project incorect deleting from comboBox
 
 //===================================================================================
 //Fixed:
+
+//D045 When press lamp icon in layer table switch layer state on-off
 
 //B028 First line of section in component section list is empty
 
