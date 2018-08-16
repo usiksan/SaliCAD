@@ -847,8 +847,17 @@ bool SdGraphPartImp::getInfo(SdPoint p, QString &info, bool extInfo)
 
 bool SdGraphPartImp::snapPoint(SdSnapInfo *snap)
   {
-  //TODO D010 snap partImp
-  return false;
+  //We snap to pins
+  bool res = false;
+  if( snap->match( snapNearestPin | snapNearestNetPin ) ) {
+    for( SdPartImpPin &pin : mPins )
+      if( pin.isConnected() ) {
+        //Perform snap only on connected pins
+        if( (snap->match( snapNearestPin ) || snap->mNetName == pin.getNetName()) && snap->mStratum.match(pin.mStratum) )
+          res = snap->test( pin.mPosition, snapNearestPin | snapNearestNetPin ) || res;
+        }
+    }
+  return res;
   }
 
 

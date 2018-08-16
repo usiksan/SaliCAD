@@ -59,6 +59,8 @@ class SdModeCRoadEnter : public SdModeCommon
   private:
     SdPItemPlate *plate() { return dynamic_cast<SdPItemPlate*>(mObject); }
     void          getNetOnPoint( SdPoint p, SdStratum s, QString *netName, int *destStratum );
+    void          calcFirstSmartPoint();
+    void          calcNextSmartPoint();
   };
 
 #endif // SDMODECROADENTER_H

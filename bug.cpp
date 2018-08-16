@@ -2,7 +2,7 @@
 //B035 bugs
 //F001 fatal
 //C001 critical
-//D046 do
+//D047 do
 
 
 
@@ -25,6 +25,8 @@
 
 //===================================================================================
 //Fixed:
+
+//D010 snap partImp
 
 //B034 When copy mirrored symImp sometimes changes to nonmirrored
 

@@ -52,6 +52,10 @@ void SdLayerCache::rebuild(const SdLayerPtrTable &tab, SdLayerTrace tr)
 //Return layer mapped to stratum
 SdLayer *SdLayerCache::getLayer(int stratum)
   {
+  //If no stratum then return no layer
+  if( stratum == 0 )
+    return nullptr;
+
   //Check if cache hit then return cached layer
   if( mStratum == stratum )
     return mCache;

@@ -186,7 +186,7 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
   menuInsertSheet = new QMenu( frame->tr("Sheet") );
-  cmRenumeration             = menuInsertSheet->addAction( QIcon(QStringLiteral(":/pic/pads.png")), frame->tr("Renumeration"), frame, SLOT(cmRenumeration()) );
+  cmRenumeration             = menuInsertSheet->addAction( QIcon(QStringLiteral(":/pic/renumeration.png")), frame->tr("Renumeration"), frame, SLOT(cmRenumeration()) );
   menuInsertSheet->addSeparator();
   cmModeTable[MD_FRAGMENT]   = menuInsertSheet->addAction( QIcon(QString(":/pic/iconSheet.png")), frame->tr("Insert fragment"), frame, SLOT(cmModeFragment()) );
   cmModeTable[MD_COMPONENT]  = menuInsertSheet->addAction( QIcon(QString(":/pic/objComp.png")), frame->tr("Insert component"), frame, SLOT(cmModeComponent()) );

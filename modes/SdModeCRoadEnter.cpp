@@ -1,3 +1,16 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Mode for enter plate trace road
+*/
 #include "SdModeCRoadEnter.h"
 #include "objects/SdGraphPartImp.h"
 #include "objects/SdProp.h"
@@ -52,7 +65,11 @@ void SdModeCRoadEnter::drawStatic(SdContext *ctx)
 
   //Draw component pads for current stratum
   if( mProp.mStratum.isValid() ) {
-    QString netName = mProp.mNetName.str();
+    //Net name for highlighting
+    QString netName;
+    if( getStep() )
+      //If mode in tracing state then assign net name, else no highlighting
+      netName = mProp.mNetName.str();
     stratum = mProp.mStratum.getValue();
     mObject->forEach( dctPartImp, [ctx,stratum,netName] (SdObject *obj) -> bool {
       SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(obj);
@@ -84,6 +101,10 @@ void SdModeCRoadEnter::drawDynamic(SdContext *ctx)
     else ctx->setPen( mProp.mWidth, sdEnvir->getSysColor(scEnter), dltSolid );
     ctx->line( mFirst, mMiddle );
     }
+  else {
+    if( sdEnvir->mIsWireSmart )
+      ctx->smartPoint( mFirst, snapEndPoint );
+    }
   }
 
 
@@ -101,6 +122,7 @@ void SdModeCRoadEnter::propGetFromBar()
   if( bar ) {
     bar->getPropRoad( &mProp, &(sdGlobalProp->mWireEnterType) );
     mEditor->setFocus();
+    setDirtyCashe();
     update();
     }
   }
@@ -152,15 +174,15 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
     //At first find on current stratum
     QString netName;
     int destStratum;
-    getNetOnPoint( p, mProp.mStratum, &netName, &destStratum );
+    getNetOnPoint( mFirst, mProp.mStratum, &netName, &destStratum );
 
     if( netName.isEmpty() )
       //No net on this point at current stratum
       //Try on all stratums
-      getNetOnPoint( p, stmThrow, &netName, &destStratum );
+      getNetOnPoint( mFirst, stmThrow, &netName, &destStratum );
 
     if( !netName.isEmpty() ) {
-      mFirst = p;
+      //mFirst = p;
       mMiddle = mFirst;
       mStack = destStratum;
       mProp.mNetName = netName;
@@ -181,6 +203,11 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
 
 void SdModeCRoadEnter::cancelPoint(SdPoint)
   {
+  if( getStep() ) {
+    setDirtyCashe();
+    setStep( sFirstPoint );
+    }
+  else cancelMode();
   }
 
 
@@ -192,8 +219,12 @@ void SdModeCRoadEnter::movePoint(SdPoint p)
     mMiddle = calcMiddlePoint( mFirst, p, sdGlobalProp->mWireEnterType );
     //Check if current point available
 
-    update();
     }
+  else {
+    mPrevMove = p;
+    calcFirstSmartPoint();
+    }
+  update();
   }
 
 
@@ -242,6 +273,34 @@ void SdModeCRoadEnter::getNetOnPoint(SdPoint p, SdStratum s, QString *netName, i
       traced->isPointOnNet( p, s, netName, destStratum );
     return true;
     });
+  }
+
+
+
+
+void SdModeCRoadEnter::calcFirstSmartPoint()
+  {
+  SdSnapInfo info;
+  info.mSour = mPrevMove;
+  info.mSnapMask = snapNearestNet | snapNearestPin;
+  info.mStratum = stmThrow;
+  bool res = false;
+  plate()->forEach( dctTraced, [&info,&res] (SdObject *obj) -> bool {
+    SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
+    if( traced != nullptr )
+      res = traced->snapPoint( &info ) || res;
+    return true;
+    });
+
+  if( res )
+    mFirst = info.mDest;
+  else
+    mFirst = mPrevMove;
+  }
+
+void SdModeCRoadEnter::calcNextSmartPoint()
+  {
+
   }
 
 

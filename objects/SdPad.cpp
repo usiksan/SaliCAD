@@ -90,6 +90,10 @@ void SdPad::read(const QJsonObject obj)
 
 void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
   {
+  //If no stratum then no draw
+  if( stratum == 0 )
+    return;
+
   //Draw pad itself
   SdLayer *layer = sdEnvir->mCacheForPad.getLayer(stratum);
   if( layer != nullptr && layer->isVisible() ) {

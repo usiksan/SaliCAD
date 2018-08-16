@@ -545,7 +545,10 @@ void SdContext::setPen(int width, QColor color, int lineStyle)
 
 void SdContext::setBrush(QColor color)
   {
-  mPainter->setBrush( QBrush(color) );
+  if( mOverOn )
+    mPainter->setBrush( QBrush(mOverColor) );
+  else
+    mPainter->setBrush( QBrush(color) );
   }
 
 
