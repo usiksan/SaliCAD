@@ -184,9 +184,9 @@ bool SdObjectFactory::forEachHeader(std::function<bool (SdLibraryHeader &)> fun1
 
 void SdObjectFactory::hierarchyAddItem(const QString parent, const QString item)
   {
-  if( hierarchyIsPresent(item) )
-    //Ignore request. Nothing done
-    return;
+//  if( hierarchyIsPresent(item) )
+//    //Ignore request. Nothing done
+//    return;
 
   //Insert new item
   sdLibraryStorage.categoryInsert( item, parent, false );
@@ -217,21 +217,6 @@ void SdObjectFactory::hierarchyTranslate(const QString item, const QString trans
   }
 
 
-
-
-//Create full path to item category
-QString SdObjectFactory::hierarchyGetPath(const QString item)
-  {
-  QString path;
-  for( QString parent(item); !parent.isEmpty() && parent != sdLibraryStorage.category(parent); parent = sdLibraryStorage.category(parent) ) {
-    if( path.isEmpty() )
-      path = parent;
-    else
-      path = parent + QString(".") + path;
-    }
-  //qDebug() << "Hierarchy" << path;
-  return path;
-  }
 
 
 
@@ -287,6 +272,20 @@ QTreeList SdObjectFactory::hierarchyGet(const QString parent)
     });
 
   return list;
+  }
+
+
+
+
+void SdObjectFactory::hierarchySet(const QString parent, QStringSet &set)
+  {
+  set.insert( parent );
+  sdLibraryStorage.forEachCategory( [&set, parent] (const QString section, const QString &assoc ) {
+    if( assoc == parent ) {
+      //Append section to set
+      hierarchySet( section, set );
+      }
+    });
   }
 
 

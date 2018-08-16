@@ -192,12 +192,13 @@ void SdDGetObject::onCurrentSection(int row)
 //Selected new category, apply filtr
 void SdDGetObject::onTagPath(const QString path)
   {
+  QStringSet set;
+  SdObjectFactory::hierarchySet( path, set );
   mHeaderList.clear();
-  SdObjectFactory::forEachHeader( [this,path] (SdLibraryHeader &hdr) -> bool {
+  SdObjectFactory::forEachHeader( [this, &set] (SdLibraryHeader &hdr) -> bool {
     if( hdr.mClass & mSort ) {
       //Test if tag match any part of object tag
-//      if( hdr.mTag.indexOf(path, 0, Qt::CaseInsensitive) >= 0 || path.indexOf(hdr.mTag, 0, Qt::CaseInsensitive) >= 0 ) {
-      if( hdr.mTag.indexOf(path, 0, Qt::CaseInsensitive) >= 0 ) {
+      if( set.contains(hdr.mTag) ) {
         //Name matched, insert header in list
         mHeaderList.append( hdr );
         //Prevent too much headers in find result

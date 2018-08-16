@@ -9,6 +9,8 @@ Web
   www.saliLab.ru
 
 Description
+  Category for category tree.
+  Category list is a map with value of SdLibraryCategory
 */
 #ifndef SDLIBRARYSECTION_H
 #define SDLIBRARYSECTION_H
@@ -16,7 +18,7 @@ Description
 #include <QDataStream>
 
 struct SdLibraryCategory {
-    QString mAssociation;
+    QString mAssociation;   //Association string with category
     qint32  mCreationIndex;
   };
 

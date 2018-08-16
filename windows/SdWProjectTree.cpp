@@ -301,6 +301,7 @@ void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem 
   bool enable = !disable && cur != nullptr;
 
   SdWCommand::cmObjectRename->setEnabled(enable);
+  SdWCommand::cmObjectCategory->setEnabled(enable);
   SdWCommand::cmObjectDelete->setEnabled(enable);
   SdWCommand::cmObjectCopy->setEnabled(enable);
   SdWCommand::cmObjectCut->setEnabled(enable);

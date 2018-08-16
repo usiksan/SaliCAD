@@ -23,10 +23,13 @@ Description
 #include <QWidget>
 #include <QTreeWidgetItem>
 #include <QList>
+#include <QSet>
 
 class SdProjectItem;
 
 typedef QList<QTreeWidgetItem*> QTreeList;
+
+typedef QSet<QString> QStringSet;
 
 class SdObjectFactory
   {
@@ -81,14 +84,14 @@ class SdObjectFactory
     //Fix category translation to default language
     static void         hierarchyTranslate( const QString item, const QString translate );
 
-    //Create full path to item category
-    static QString      hierarchyGetPath( const QString item );
-
     //Get category translation if there or category itself if none
     static QString      hierarchyGetTranslated( const QString item );
 
     //Build visual hierarchy tree
     static QTreeList    hierarchyGet( const QString parent );
+
+    //Build selected category list
+    static void         hierarchySet( const QString parent, QStringSet &set );
   };
 
 #endif // SDOBJECTFACTORY_H

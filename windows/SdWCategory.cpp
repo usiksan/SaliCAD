@@ -84,6 +84,11 @@ void SdWCategory::addCetagory2Item()
         }
 
       //Item category entered successfully
+      //Check if category in database already
+      if( SdObjectFactory::hierarchyIsPresent(category) )
+        //Category present. Show query to replace category
+        if( QMessageBox::warning( this, tr("Warning!"), tr("Category already exist. Replace it?"), QMessageBox::Yes | QMessageBox::No ) != QMessageBox::Yes )
+          return;
 
       //Add category to database
       SdObjectFactory::hierarchyAddItem( cur->text(1), category );
@@ -127,7 +132,7 @@ void SdWCategory::onCurrentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem
     emit categorySelected( current->text(0) );
 
     //Send tag path
-    emit tagPathSelected( SdObjectFactory::hierarchyGetPath( current->text(1) )  );
+    emit tagPathSelected( current->text(1)  );
     }
   }
 
