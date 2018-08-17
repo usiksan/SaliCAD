@@ -24,21 +24,6 @@ SdPItemInheritance::SdPItemInheritance() :
 
 
 
-//Return component uid
-QString SdPItemInheritance::componentUid() const
-  {
-  return paramGet( SD_COMPONENT_UID );
-  }
-
-
-
-
-//Return component title
-QString SdPItemInheritance::componentTitle() const
-  {
-  return paramGet( SD_COMPONENT_TITLE );
-  }
-
 
 
 
@@ -47,8 +32,9 @@ void SdPItemInheritance::setComponentUid(const QString uid, SdUndo *undo)
   {
   SdLibraryHeader hdr;
   if( SdObjectFactory::extractHeader( uid, hdr ) ) {
-    paramSet( SD_COMPONENT_TITLE, QString("%1 (%2) [%3]").arg(hdr.mName).arg(hdr.mAuthor).arg(SdTime2x::toLocalString(hdr.mTime)), undo );
-    paramSet( SD_COMPONENT_UID, uid, undo );
+    undo->string2( &mComponentUid, &mComponentTitle );
+    mComponentTitle = QString("%1 (%2) [%3]").arg(hdr.mName).arg(hdr.mAuthor).arg(SdTime2x::toLocalString(hdr.mTime));
+    mComponentUid   = uid;
     }
   }
 
@@ -83,3 +69,45 @@ quint64 SdPItemInheritance::getAcceptedObjectsMask() const
   {
   return 0;
   }
+
+
+
+
+void SdPItemInheritance::getHeader(SdLibraryHeader &hdr) const
+  {
+  hdr.mInherit = mComponentUid;
+  }
+
+
+
+
+void SdPItemInheritance::cloneFrom(const SdObject *src)
+  {
+  SdProjectItem::cloneFrom( src );
+  const SdPItemInheritance *inh = dynamic_cast<const SdPItemInheritance*>(src);
+  if( inh ) {
+    mComponentUid   = inh->mComponentUid;
+    mComponentTitle = inh->mComponentTitle;
+    }
+  }
+
+
+
+
+void SdPItemInheritance::writeObject(QJsonObject &obj) const
+  {
+  SdProjectItem::writeObject( obj );
+  obj.insert( QStringLiteral("CompUid"), mComponentUid );
+  obj.insert( QStringLiteral("CompTitle"), mComponentTitle );
+  }
+
+
+
+
+void SdPItemInheritance::readObject(SdObjectMap *map, const QJsonObject obj)
+  {
+  SdProjectItem::readObject( map, obj );
+  mComponentUid   = obj.value( QStringLiteral("CompUid") ).toString();
+  mComponentTitle = obj.value( QStringLiteral("CompTitle") ).toString();
+  }
+

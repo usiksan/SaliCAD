@@ -18,19 +18,19 @@ Description
 #include "SdProjectItem.h"
 
 #define SD_TYPE_INHERITANCE "Inhtn"
-#define SD_COMPONENT_UID    "CompUid"
-#define SD_COMPONENT_TITLE  "CompTitle"
 
 class SdPItemInheritance : public SdProjectItem
   {
+    QString mComponentUid;   //Inherited component uid
+    QString mComponentTitle; //Inherited component title
   public:
     SdPItemInheritance();
 
     //Return component uid
-    QString componentUid() const;
+    QString componentUid() const { return mComponentUid; }
 
     //Return component title
-    QString componentTitle() const;
+    QString componentTitle() const { return mComponentTitle; }
 
     //Set component uid
     void    setComponentUid( const QString uid, SdUndo *undo );
@@ -39,11 +39,15 @@ class SdPItemInheritance : public SdProjectItem
   public:
     virtual QString getType() const override;
     virtual SdClass getClass() const override;
+    virtual void    cloneFrom(const SdObject *src) override;
+    virtual void    writeObject(QJsonObject &obj) const override;
+    virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
 
     // SdProjectItem interface
   public:
     virtual QString getIconName() const override;
     virtual quint64 getAcceptedObjectsMask() const override;
+    virtual void    getHeader( SdLibraryHeader &hdr ) const override;
   };
 
 #endif // SDPITEMINHERITANCE_H

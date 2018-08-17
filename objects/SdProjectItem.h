@@ -54,7 +54,7 @@ class SdProjectItem : public SdContainer
     QString                getTag() const { return mTag; }
     SdProject             *getProject() const;
     SdUndo                *getUndo() const;
-    void                   getHeader( SdLibraryHeader &hdr ) const;
+    virtual void           getHeader( SdLibraryHeader &hdr ) const;
     //Set information and editing status
     void                   setTitle(const QString title, const QString undoTitle );
     void                   setUnicalTitle( const QString undoTitle );

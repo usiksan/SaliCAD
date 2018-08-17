@@ -1,8 +1,8 @@
 
-//B035 bugs
+//B037 bugs
 //F001 fatal
 //C001 critical
-//D047 do
+//D048 do
 
 
 
@@ -22,6 +22,12 @@
 //TODO D046 When try to select pin type from default pad association table and no default table offer to enter one
 
 //TODO B035 When close project incorect deleting from comboBox
+
+//TODO B036 When duplicate object to edit state it not positioned in project window tree
+
+//TODO D048 When deleting implements perform check reference for symbol, part and component
+
+//TODO B037 Reverse renumeration sorting algorithm
 
 //===================================================================================
 //Fixed:
