@@ -16,6 +16,7 @@ Description
 #include "objects/SdPItemSymbol.h"
 #include "objects/SdPItemPart.h"
 #include "objects/SdPItemComponent.h"
+#include "objects/SdPItemInheritance.h"
 #include "objects/SdPItemSheet.h"
 #include "objects/SdPItemPlate.h"
 #include "objects/SdObjectFactory.h"
@@ -61,6 +62,7 @@ SdPNewProjectItem_SelectType::SdPNewProjectItem_SelectType(SdProjectItemPtr *ite
   mObjectType->addItem( tr("Symbol") );
   mObjectType->addItem( tr("Part") );
   mObjectType->addItem( tr("Component") );
+  mObjectType->addItem( tr("Inheritance") );
   mObjectType->addItem( tr("Text doc") );
 
   mObjectType->setCurrentRow( defaultClass );
@@ -98,6 +100,10 @@ bool SdPNewProjectItem_SelectType::validatePage()
     case 4 :
       *mItemPtr = new SdPItemComponent();
       name = tr("Component%1");
+      break;
+    case 5 :
+      *mItemPtr = new SdPItemInheritance();
+      name = tr("Inheritance%1");
       break;
       //TODO D005 text doc
     }
@@ -174,6 +180,14 @@ void SdPNewProjectItem_SelectType::classChanged(int index)
       mDescriptions.append( tr("Creates copy of existing component") );
       break;
     case 5 :
+      mCreationOrder->addItem( tr("Empty inheritance") );
+      mDescriptions.append( tr("Creates empty inherited component which inherits pair schematic and part and replace params.") );
+      mCreationOrder->addItem( tr("Copy existing inheritance") );
+      mDescriptions.append( tr("Creates copy of existing inheritance or inherits existing component") );
+//      mCreationOrder->addItem( tr("Copy existing inheritance") );
+//      mDescriptions.append( tr("Creates copy of existing inheritance") );
+      break;
+    case 6 :
       mCreationOrder->addItem( tr("Element list") );
       mCreationOrder->addItem( tr("Specification") );
       break;

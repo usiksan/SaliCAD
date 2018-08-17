@@ -21,6 +21,7 @@ Description
 #include "SdWEditorGraphSheet.h"
 #include "SdWEditorGraphPlate.h"
 #include "SdWEditorGraphView.h"
+#include "SdWEditorInheritance.h"
 #include "SdWCommand.h"
 #include "SdWLabel.h"
 #include "SdDOptions.h"
@@ -31,6 +32,7 @@ Description
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdObjectFactory.h"
+
 #include <QSettings>
 #include <QCloseEvent>
 #include <QMessageBox>
@@ -187,6 +189,9 @@ void SdWMain::onActivateProjectItem(SdProjectItem *item)
       break;
     case dctComponent :
       editor = new SdWEditorComponent( dynamic_cast<SdPItemComponent*>( item ), mWEditors );
+      break;
+    case dctInheritance :
+      editor = new SdWEditorInheritance( dynamic_cast<SdPItemInheritance*>( item ), mWEditors );
       break;
     case dctSheet :
       if( item->isEditEnable() )

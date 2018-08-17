@@ -213,7 +213,8 @@ SOURCES += \
     modes/SdModeCPartPlace.cpp \
     modes/SdModeCFragment.cpp \
     windows/SdDProjectStore.cpp \
-    windows/SdDOptionsPagePads.cpp
+    windows/SdDOptionsPagePads.cpp \
+    windows/SdWEditorInheritance.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -423,7 +424,8 @@ HEADERS  += \
     modes/SdModeCPartPlace.h \
     modes/SdModeCFragment.h \
     windows/SdDProjectStore.h \
-    windows/SdDOptionsPagePads.h
+    windows/SdDOptionsPagePads.h \
+    windows/SdWEditorInheritance.h
 
 DISTFILES += \
     license.txt

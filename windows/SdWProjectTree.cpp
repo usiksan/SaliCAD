@@ -399,6 +399,7 @@ void SdWProjectTree::buildVisualTree()
     fillTopItem( mSheetList, dctSheet );
     fillTopItem( mPlateList, dctPlate );
     fillTopItem( mComponentList, dctComponent );
+    fillTopItem( mComponentList, dctInheritance );
     fillTopItem( mSymbolList, dctSymbol );
     fillTopItem( mPartList, dctPart );
     fillTopItem( mTextList, dctTextDoc );
@@ -411,12 +412,13 @@ void SdWProjectTree::buildVisualTree()
 QTreeWidgetItem *SdWProjectTree::classList(quint64 classId)
   {
   switch( classId ) {
-    case dctSheet     : return mSheetList;
-    case dctPlate     : return mPlateList;
-    case dctSymbol    : return mSymbolList;
-    case dctPart      : return mPartList;
-    case dctComponent : return mComponentList;
-    case dctText      : return mTextList;
+    case dctSheet       : return mSheetList;
+    case dctPlate       : return mPlateList;
+    case dctSymbol      : return mSymbolList;
+    case dctPart        : return mPartList;
+    case dctComponent   : return mComponentList;
+    case dctInheritance : return mComponentList;
+    case dctText        : return mTextList;
     }
   return nullptr;
   }
