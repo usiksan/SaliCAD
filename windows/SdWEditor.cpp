@@ -17,6 +17,7 @@ Description
 #include "SdWEditor.h"
 #include "SdWCommand.h"
 
+
 #include <QMessageBox>
 
 SdWEditor::SdWEditor(QWidget *parent) :
@@ -95,6 +96,41 @@ void SdWEditor::cmObjectEditDisable()
     SdPulsar::sdPulsar->emitActivateItem( item );
     }
   }
+
+
+
+
+
+
+////Show dialog with error msg
+//QMessageBox::StandardButton SdWEditor::msgError(QString msg, QMessageBox::StandardButton buttons)
+//  {
+//  return QMessageBox::warning( this, tr("Error!"), msg, buttons );
+//  }
+
+
+
+
+
+////Show dialog with warning msg
+//QMessageBox::StandardButton SdWEditor::msgWarning(QString msg, QMessageBox::StandardButton buttons)
+//  {
+//  return QMessageBox::warning( this, tr("Warning!"), msg, buttons );
+//  }
+
+
+
+
+
+////Show dialog with info msg
+//QMessageBox::StandardButton SdWEditor::msgInfo(QString msg, QMessageBox::StandardButton buttons)
+//  {
+//  return QMessageBox::information( this, tr("Information!"), msg, buttons );
+//  }
+
+
+
+
 
 
 

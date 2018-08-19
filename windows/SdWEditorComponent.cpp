@@ -142,6 +142,7 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
     mPartSelect->setEnabled(false);
 
     mParamAdd->setEnabled(false);
+    mParamAddDefault->setEnabled(false);
     mParamDelete->setEnabled(false);
     mParamCopy->setEnabled(false);
     }

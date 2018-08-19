@@ -131,6 +131,9 @@ void SdDGetObject::onSelectItem(int row, int column)
   else if( hdr.mClass == dctProject ) {
     mProject = sdObjectOnly<SdProject>( SdObjectFactory::extractObject( hdr.uid(), true, this ) );
     }
+  else if( hdr.mClass == dctInheritance ) {
+    mComponent = sdObjectOnly<SdPItemComponent>( SdObjectFactory::extractObject( hdr.mInherit, true, this ) );
+    }
 
   mParam = hdr.mParamTable;
 
@@ -329,6 +332,12 @@ void SdDGetObject::accept()
     mObjName   = hdr.mName;
     mObjAuthor = hdr.mAuthor;
     mObjUid     = hdr.uid();
+    if( hdr.mClass == dctInheritance )
+      mCompUid = hdr.mInherit;
+    else if( hdr.mClass == dctComponent )
+      mCompUid = mObjUid;
+    else
+      mCompUid.clear();
     QDialog::accept();
     }
   else QMessageBox::warning( this, tr("Error"), tr("You must select element or press Cancel") );
@@ -380,7 +389,7 @@ SdPItemComponent *SdDGetObject::getComponent(int *logSectionPtr, SdStringMap *pa
     //If available pointer to param then set component or instance params
     if( param )
       *param = dget.getParams();
-    return sdObjectOnly<SdPItemComponent>( SdObjectFactory::extractObject( dget.getObjUid(), false, parent ) );
+    return sdObjectOnly<SdPItemComponent>( SdObjectFactory::extractObject( dget.getCompUid(), false, parent ) );
     }
   return nullptr;
   }

@@ -101,7 +101,7 @@ SdWEditorInheritance::SdWEditorInheritance(SdPItemInheritance *inh, QWidget *par
     root->addLayout( lay );
 
   setLayout( root );
-  if( mComponent->isEditEnable() ) {
+  if( mInheritance->isEditEnable() ) {
     //Connect signals when edit enabled
     connect( mComponentSelect, &QPushButton::clicked, this, &SdWEditorInheritance::componentSelect );
 
@@ -122,6 +122,7 @@ SdWEditorInheritance::SdWEditorInheritance(SdPItemInheritance *inh, QWidget *par
     mParamInheritAll->setEnabled(false);
 
     mParamAdd->setEnabled(false);
+    mParamAddDefault->setEnabled(false);
     mParamDelete->setEnabled(false);
     mParamCopy->setEnabled(false);
     }
@@ -130,6 +131,15 @@ SdWEditorInheritance::SdWEditorInheritance(SdPItemInheritance *inh, QWidget *par
     fillComponent();
     fillParams();
     });
+  }
+
+
+
+
+SdWEditorInheritance::~SdWEditorInheritance()
+  {
+  if( mComponent )
+    delete mComponent;
   }
 
 
@@ -148,8 +158,8 @@ void SdWEditorInheritance::onActivateEditor()
   SdWEditor::onActivateEditor();
 
   //Activate menu
-  SdWCommand::cmObjectEditEnable->setVisible( !mComponent->isEditEnable() );
-  SdWCommand::cmObjectEditDisable->setVisible( mComponent->isEditEnable() );
+  SdWCommand::cmObjectEditEnable->setVisible( !mInheritance->isEditEnable() );
+  SdWCommand::cmObjectEditDisable->setVisible( mInheritance->isEditEnable() );
   }
 
 
@@ -181,7 +191,7 @@ void SdWEditorInheritance::onParamChanged(int row, int column)
   QString key = mParamTable->item(row,0)->text();
   QString value = mParamTable->item(row,1)->text();
   //qDebug() << Q_FUNC_INFO << key <<value;
-  mComponent->paramSet( key, value, mUndo );
+  mInheritance->paramSet( key, value, mUndo );
   connect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorInheritance::onParamChanged );
   updateUndoRedoStatus();
   dirtyProject();
@@ -192,17 +202,50 @@ void SdWEditorInheritance::onParamChanged(int row, int column)
 
 void SdWEditorInheritance::componentSelect()
   {
-
+  QString uid = SdDGetObject::getObjectUid( dctComponent, tr("Select base component for inheritance"), this );
+  if( !uid.isEmpty() ) {
+    mInheritance->setComponentUid( uid, mUndo );
+    fillComponent();
+    }
   }
 
+
+
+
+//Copy current param from component param table to inheritance param table
 void SdWEditorInheritance::paramInherit()
   {
-
+  int srcRow = mComponentParamTable->currentRow();
+  if( srcRow >= 0 ) {
+    //Correct row selected
+    //Get key and value from source
+    QString key = mComponentParamTable->item( srcRow, 0 )->text();
+    QString value = mComponentParamTable->item( srcRow, 1 )->text();
+    //Insert key and value to dest
+    mInheritance->paramSet( key, value, mUndo );
+    //Update visual table
+    fillParams();
+    }
+  else
+    QMessageBox::warning( this, tr("Error!"), tr("No component parametr selected. Select one and try again.") );
   }
+
+
+
+
 
 void SdWEditorInheritance::paramInheritAll()
   {
-
+  if( mComponent ) {
+    SdStringMap param = mComponent->paramTable(); //Params to get in
+    //Append params
+    for( auto iter = param.cbegin(); iter != param.cend(); iter++ )
+      mInheritance->paramSet( iter.key(), iter.value(), mUndo );
+    dirtyProject();
+    fillParams();
+    }
+  else
+    QMessageBox::warning( this, tr("Error!"), tr("No component defined for this inheritance or component can't be loaded") );
   }
 
 
@@ -219,37 +262,144 @@ void SdWEditorInheritance::paramAdd()
     }
   }
 
+
+
+
+
 void SdWEditorInheritance::paramAddDefault()
   {
-
+  if( !mInheritance->paramContains(QStringLiteral("bom")) )
+    paramAddInt( QStringLiteral("bom"), QStringLiteral("<article> <title> <value>") );
+  if( !mInheritance->paramContains(QStringLiteral("article")) )
+    paramAddInt( QStringLiteral("article") );
+  if( !mInheritance->paramContains(QStringLiteral("title")) )
+    paramAddInt( QStringLiteral("title"), mComponent->getTitle() );
+  if( !mInheritance->paramContains(QStringLiteral("value")) )
+    paramAddInt( QStringLiteral("value") );
   }
+
+
+
+
 
 void SdWEditorInheritance::paramDelete()
   {
-
+  int paramIndex = mParamTable->currentRow();
+  if( paramIndex >= 0 ) {
+    QString key = mParamTable->item( paramIndex, 0 )->text();
+    mInheritance->paramDelete( key, mUndo );
+    mParamTable->removeRow( paramIndex );
+    dirtyProject();
+    }
+  else
+    QMessageBox::warning( this, tr("Warning!"), tr("Select param to delete") );
   }
+
+
+
 
 void SdWEditorInheritance::paramCopy()
   {
-
+  SdStringMap param; //Params to get in
+  SdPItemComponent *comp = SdDGetObject::getComponent( nullptr, &param, tr("Select component to copy param from"), this );
+  if( comp != nullptr ) {
+    //Append params
+    for( auto iter = param.cbegin(); iter != param.cend(); iter++ )
+      mInheritance->paramSet( iter.key(), iter.value(), mUndo );
+    dirtyProject();
+    fillParams();
+    }
   }
+
+
+
+
 
 void SdWEditorInheritance::fillComponent()
   {
+  //Delete previously loaded component
+  if( mComponent )
+    delete mComponent;
+  //Fill component title
+  mComponentTitle->setText( mInheritance->componentTitle() );
+  //Load component to show schematic and part
+  mComponent = sdObjectOnly<SdPItemComponent>( SdObjectFactory::extractObject(mInheritance->componentUid(), false, this ) );
+  if( mComponent ) {
+    //Component extracted successfully
 
+    //Assign to views schematic and part
+    mSymbolViewer->setItemById( mComponent->getSectionSymbolId(0) );
+    mPartViewer->setItemById( mComponent->getPartId() );
+
+    //Fill component param table
+    mComponentParamTable->clear();
+    SdStringMap tab = mComponent->paramTable();
+    mComponentParamTable->setColumnCount(2);
+    mComponentParamTable->setRowCount( tab.count() );
+    //Setup header
+    mComponentParamTable->setHorizontalHeaderLabels( {tr("Param name"), tr("Param value")} );
+    mComponentParamTable->setColumnWidth(1,400);
+    int row = 0;
+    for( auto iter = tab.constBegin(); iter != tab.constEnd(); iter++ ) {
+      mComponentParamTable->setRowHeight( row, 25 );
+      mComponentParamTable->setItem( row, 0, new QTableWidgetItem(iter.key()) );
+      mComponentParamTable->item( row, 0 )->setFlags( Qt::ItemIsEnabled );
+      mComponentParamTable->setItem( row, 1, new QTableWidgetItem(iter.value()) );
+      row++;
+      }
+    }
+  else {
+    //Clear views
+    mSymbolViewer->setItem( nullptr, false );
+    mPartViewer->setItem( nullptr, false );
+    //Clear param table
+    mComponentParamTable->clear();
+    }
   }
+
+
+
+
 
 void SdWEditorInheritance::fillParams()
   {
-
+  disconnect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorInheritance::onParamChanged );
+  mParamTable->clear();
+  SdStringMap tab = mInheritance->paramTable();
+  mParamTable->setColumnCount(2);
+  mParamTable->setRowCount( tab.count() );
+  //Setup header
+  mParamTable->setHorizontalHeaderLabels( {tr("Param name"), tr("Param value")} );
+  mParamTable->setColumnWidth(1,400);
+  int row = 0;
+  for( auto iter = tab.constBegin(); iter != tab.constEnd(); iter++ )
+    paramAppend( row++, iter.key(), iter.value() );
+  connect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorInheritance::onParamChanged );
   }
+
+
+
+
 
 void SdWEditorInheritance::paramAppend(int row, const QString key, const QString value)
   {
-
+  mParamTable->setRowHeight( row, 25 );
+  mParamTable->setItem( row, 0, new QTableWidgetItem(key) );
+  mParamTable->item( row, 0 )->setFlags( Qt::ItemIsEnabled );
+  mParamTable->setItem( row, 1, new QTableWidgetItem(value) );
   }
+
+
+
 
 void SdWEditorInheritance::paramAddInt(const QString key, const QString value)
   {
-
+  mInheritance->paramSet( key, value, mUndo );
+  int row = mParamTable->rowCount();
+  mParamTable->insertRow( row );
+  disconnect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorInheritance::onParamChanged );
+  paramAppend( row, key, value );
+  connect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorInheritance::onParamChanged );
+  dirtyProject();
   }
+

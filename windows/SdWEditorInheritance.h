@@ -49,6 +49,7 @@ class SdWEditorInheritance : public SdWEditor
     QPushButton          *mParamCopy;
   public:
     SdWEditorInheritance(SdPItemInheritance *inh, QWidget *parent);
+    ~SdWEditorInheritance() override;
 
     // SdWEditor interface
   public:

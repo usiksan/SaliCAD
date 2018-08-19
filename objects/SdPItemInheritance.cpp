@@ -75,6 +75,7 @@ quint64 SdPItemInheritance::getAcceptedObjectsMask() const
 
 void SdPItemInheritance::getHeader(SdLibraryHeader &hdr) const
   {
+  SdProjectItem::getHeader( hdr );
   hdr.mInherit = mComponentUid;
   }
 

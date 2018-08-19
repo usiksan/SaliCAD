@@ -291,11 +291,11 @@ bool SdGraphPartImp::compareRenumeration(const SdGraphPartImp *imp) const
   SdPoint p1,p2;
   int sheet1,sheet2;
   if( getLowerPosAndSheet( p1, sheet1 ) && imp->getLowerPosAndSheet(p2, sheet2) ) {
-    if( sheet2 < sheet1 ) return true;
+    if( sheet2 > sheet1 ) return true;
     if( sheet2 == sheet1 ) {
-      if( p2.x() < p1.x() ) return true;
+      if( p2.x() > p1.x() ) return true;
       if( p1.x() == p2.x() ) {
-        if( p2.y() > p1.y() ) return true;
+        if( p2.y() < p1.y() ) return true;
         }
       }
     }

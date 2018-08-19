@@ -89,7 +89,8 @@ class SdWEditorComponent : public SdWEditor
     void fillPart();
     void fillParams();
     void fillUsedPins();
-    void paramAppend(int row, const QString key, const QString value );
+
+    void paramAppend( int row, const QString key, const QString value );
     void paramAddInt( const QString key, const QString value = QString() );
 
     QString packetPin( int section, const QString pinName );

@@ -43,6 +43,7 @@ class SdDGetObject : public QDialog
     QString                mObjName;      //Object name
     QString                mObjAuthor;    //Object author
     QString                mObjUid;       //Unical object id
+    QString                mCompUid;      //Unical object id for components
     int                    mSectionIndex; //Section index
     SdStringMap            mParam;        //Component or instance params
 
@@ -55,6 +56,7 @@ class SdDGetObject : public QDialog
     QString     getObjName() const { return mObjName; }
     QString     getObjAuthor() const { return mObjAuthor; }
     QString     getObjUid() const { return mObjUid; }
+    QString     getCompUid() const { return mCompUid; }
     int         getSectionIndex() const { return mSectionIndex; }
     SdStringMap getParams() const { return mParam; }
 

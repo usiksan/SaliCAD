@@ -158,6 +158,13 @@ class SdWEditor : public QAbstractScrollArea
 
   public slots:
 
+//  protected:
+//    //Show dialog with error msg
+//    QMessageBox::StandardButton msgError( QString msg, QMessageBox::StandardButton buttons = QMessageBox::Ok );
+//    //Show dialog with warning msg
+//    QMessageBox::StandardButton msgWarning( QString msg, QMessageBox::StandardButton buttons = QMessageBox::Ok );
+//    //Show dialog with info msg
+//    QMessageBox::StandardButton msgInfo( QString msg, QMessageBox::StandardButton buttons = QMessageBox::Ok );
   };
 
 #endif // SDWEDITOR_H
