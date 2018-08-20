@@ -41,7 +41,7 @@ SdModeCTextual::SdModeCTextual(SdWEditorGraph *editor, SdProjectItem *obj) :
 
 void SdModeCTextual::keyDown(int key, QChar ch)
   {
-  qDebug() << Q_FUNC_INFO << key;
+  //qDebug() << Q_FUNC_INFO << key;
   switch( key ) {
     case Qt::Key_Shift :
       mShift = true;

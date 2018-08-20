@@ -83,3 +83,11 @@ void SdPulsar::emitViewedLayers()
   emit viewedLayers();
   }
 
+
+
+
+void SdPulsar::emitHelpTopic(const QString topic)
+  {
+  emit helpTopic(topic);
+  }
+

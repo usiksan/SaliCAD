@@ -22,6 +22,7 @@ Description
 #include "SdWEditorGraphPlate.h"
 #include "SdWEditorGraphView.h"
 #include "SdWEditorInheritance.h"
+#include "SdWEditorHelp.h"
 #include "SdWCommand.h"
 #include "SdWLabel.h"
 #include "SdDOptions.h"
@@ -64,16 +65,25 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
 
   SdWCommand::hideEditorContext();
 
-
+  //At left - project list widget (stacked)
   mWProjectList = new SdWProjectList();
+  //At center - editor list widget (tabbed)
   mWEditors     = new QTabWidget();
   mWEditors->setTabsClosable(true);
   connect( mWEditors, &QTabWidget::currentChanged, this, &SdWMain::onActivateEditor );
   connect( mWEditors, &QTabWidget::tabCloseRequested, this, &SdWMain::onCloseEditor );
+  //At right - help wizard
+  mWHelp        = new SdWHelp();
+  mWHelp->setMinimumWidth(200);
+  //mWHelp->resize( 300, mWHelp->size().height() );
+  connect( SdPulsar::sdPulsar, &SdPulsar::helpTopic, mWHelp, &SdWHelp::helpTopic );
+  connect( SdPulsar::sdPulsar, &SdPulsar::helpTopic, this, &SdWMain::cmHelpTopic );
 
   mWSplitter    = new QSplitter();
   mWSplitter->addWidget( mWProjectList );
   mWSplitter->addWidget( mWEditors );
+  mWSplitter->addWidget( mWHelp );
+  mWHelp->hide();
 
   connect( mWProjectList, &SdWProjectList::projectNameChanged, this, &SdWMain::activateProjectName );
 
@@ -403,6 +413,40 @@ SdWEditor *SdWMain::getEditor(int index)
 SdWEditor *SdWMain::activeEditor()
   {
   return dynamic_cast<SdWEditor*>( mWEditors->currentWidget() );
+  }
+
+
+
+
+//Return help widget in editor area. If none it created
+SdWEditor *SdWMain::helpWidget()
+  {
+  //Find help widget
+  SdWEditor *help = findHelpWidget();
+  if( help == nullptr ) {
+    //Help widget not found, create it
+    help = new SdWEditorHelp();
+    //insert it into tab
+    mWEditors->addTab( help, QIcon( QString(":/pic/help.png") ), tr("Help system") );
+    }
+  return help;
+  }
+
+
+
+
+//Find help widget in editor area. Return nullptr if none
+SdWEditor *SdWMain::findHelpWidget()
+  {
+  for( int i = 0; i < mWEditors->count(); i++ ) {
+    SdWEditorHelp *help = dynamic_cast<SdWEditorHelp*>( getEditor(i) );
+    if( help ) {
+      //Item already open, bring it on top
+      mWEditors->setCurrentIndex( i );
+      return help;
+      }
+    }
+  return nullptr;
   }
 
 
@@ -805,15 +849,17 @@ void SdWMain::cmEditProperties()
 
 void SdWMain::cmViewProject()
   {
-//  if( mSplitter->position() > 5 ) {
-//    //Скрыть проект
-//    mSplitterPos = mSplitter->position();
-//    mSplitter->setPosition( 0 );
-//    }
-//  else {
-//    //Показать проект
-//    mSplitter->setPosition( mSplitterPos );
-//    }
+  if( mWProjectList->isHidden() )
+    mWProjectList->show();
+  else {
+    auto sizes = mWSplitter->sizes();
+    if( sizes.at(0) )
+      mWProjectList->hide();
+    else {
+      sizes[0] = 300;
+      mWSplitter->setSizes( sizes );
+      }
+    }
   }
 
 
@@ -1347,7 +1393,8 @@ void SdWMain::cmTools()
 
 void SdWMain::cmHelpContens()
   {
-
+  SdWEditorHelp *help = dynamic_cast<SdWEditorHelp*>( helpWidget() );
+  help->helpTopic( QString("contens.htm") );
   }
 
 
@@ -1355,7 +1402,8 @@ void SdWMain::cmHelpContens()
 
 void SdWMain::cmHelpIndex()
   {
-
+  SdWEditorHelp *help = dynamic_cast<SdWEditorHelp*>( helpWidget() );
+  help->helpTopic( QString("index.htm") );
   }
 
 
@@ -1407,6 +1455,20 @@ void SdWMain::cmEnterPosition()
   {
   if( activeEditor() )
     activeEditor()->cmEnterPosition();
+  }
+
+
+
+
+void SdWMain::cmHelpTopic(const QString topic)
+  {
+  Q_UNUSED(topic)
+  auto sizes = mWSplitter->sizes();
+  if( mWHelp->isHidden() || sizes.at(2) == 0 ) {
+    mWHelp->show();
+    sizes[2] = 300;
+    mWSplitter->setSizes( sizes );
+    }
   }
 
 

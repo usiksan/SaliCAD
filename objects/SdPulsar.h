@@ -51,6 +51,9 @@ class SdPulsar : public QObject
     //Emit signal on viewed layers changed. It emited when layer dialog completed
     void emitViewedLayers();
 
+    //Help system
+    void emitHelpTopic( const QString topic );
+
     static SdPulsar *sdPulsar;
   signals:
     //BEFORE destroy project
@@ -77,6 +80,9 @@ class SdPulsar : public QObject
     //Emit signal on viewed layers changed. It emited when layer dialog completed
     void viewedLayers();
 
+
+    //Help system
+    void helpTopic( const QString topic );
   public slots:
   };
 

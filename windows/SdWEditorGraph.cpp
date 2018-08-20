@@ -820,7 +820,12 @@ void SdWEditorGraph::wheelEvent(QWheelEvent *event)
 
 void SdWEditorGraph::keyPressEvent(QKeyEvent *event)
   {
-  if( modeGet() )
+  //Help key
+  if( event->key() == Qt::Key_F1 ) {
+    if( modeGet() )
+      SdPulsar::sdPulsar->emitHelpTopic( modeGet()->getStepThema() );
+    }
+  else if( modeGet() )
     modeGet()->keyDown( event->key(), event->text().isEmpty() ? QChar() : event->text().at(0) );
   }
 
@@ -1015,5 +1020,14 @@ void SdWEditorGraph::cmClipboardChange()
   {
   //Change status of clipboard
   SdWCommand::cmEditPaste->setEnabled( SdSelector::isClipboardAvailable() );
+  }
+
+
+
+void SdWEditorGraph::resizeEvent(QResizeEvent *event)
+  {
+  //Invalidate cache
+  dirtyCashe();
+  SdWEditor::resizeEvent( event );
   }
 

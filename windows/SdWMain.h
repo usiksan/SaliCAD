@@ -19,6 +19,8 @@ Description
 #include "SdWProjectList.h"
 #include "SdWEditor.h"
 #include "SdWLabel.h"
+#include "SdWHelp.h"
+
 #include <QMainWindow>
 #include <QSplitter>
 #include <QTabWidget>
@@ -36,6 +38,7 @@ class SdWMain : public QMainWindow
     QSplitter      *mWSplitter;     //Central part of programm windows - is splitter with projects and redactors
     SdWProjectList *mWProjectList;  //Project list
     QTabWidget     *mWEditors;      //Actived visual editors
+    SdWHelp        *mWHelp;         //Edge help
 
     //Status bar infos
     SdWLabel       *mXLabel;        //X axiz title (X or col)
@@ -194,6 +197,7 @@ class SdWMain : public QMainWindow
 
     void cmEnterPosition();
 
+    void cmHelpTopic( const QString topic );
 
     // QWidget interface
   protected:
@@ -202,6 +206,10 @@ class SdWMain : public QMainWindow
   private:
     SdWEditor*      getEditor( int index );
     SdWEditor*      activeEditor();
+    //Return help widget in editor area. If none it created
+    SdWEditor*      helpWidget();
+    //Find help widget in editor area. Return nullptr if none
+    SdWEditor*      findHelpWidget();
     SdWProjectTree *activeProject() { return mWProjectList->activeProject(); }
     SdWProjectTree *project( int index ) { return mWProjectList->project(index); }
     void            createMenu();

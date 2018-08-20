@@ -204,6 +204,7 @@ History
 #define SDK_SERVER_IP                "SaliCAD server IP"
 #define SDK_ENVIR_VERSION            "Envir version"
 #define SDK_ENVIR                    "Envir"
+#define SDK_HELP_PATH                "HelpPath"
 
 #define MODE_HELP         //Prefix to mode help files
 

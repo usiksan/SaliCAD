@@ -176,6 +176,7 @@ class SdWEditorGraph : public SdWEditor
     virtual void wheelEvent(QWheelEvent *event) override;
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;
+    virtual void resizeEvent(QResizeEvent *event) override;
 
   };
 
