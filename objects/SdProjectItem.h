@@ -84,7 +84,11 @@ class SdProjectItem : public SdContainer
     SdPoint                getOrigin() const { return mOrigin; }
     void                   setOrigin( const SdPoint org, SdUndo *undo );
 
+    //Status creation flag for project.
     void                   setHand() { mAuto = false; }
+    bool                   isAuto() const { return mAuto; }
+    //Delete object if it is mAuto=true and no more reference to it
+    void                   autoDelete( SdUndo *undo );
 
     virtual QString        getIconName() const = 0;
     virtual quint64        getAcceptedObjectsMask() const = 0;

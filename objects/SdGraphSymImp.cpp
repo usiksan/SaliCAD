@@ -732,6 +732,10 @@ void SdGraphSymImp::detach(SdUndo *undo)
   {
   //Unlink from part
   unLinkPart( undo );
+  //Autodelete all referenced objects
+  if( mComponent ) mComponent->autoDelete( undo );
+  if( mSymbol ) mSymbol->autoDelete( undo );
+  if( mPart ) mPart->autoDelete( undo );
   }
 
 

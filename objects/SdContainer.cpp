@@ -148,6 +148,8 @@ void SdContainer::deleteChild(SdObject *child, SdUndo *undo)
   {
   //Test if in this container
   Q_ASSERT_X( child->getParent() == this, "deleteChild", "delete not own child" );
+  //Mark as deleted
+  child->markDeleted( true );
   //Detach from hierarhy
   child->detach( undo );
   //Mark as deleted

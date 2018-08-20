@@ -163,7 +163,11 @@ void SdWProjectTree::cmObjectLoad()
   SdProjectItem *item = sdObjectOnly<SdProjectItem>( SdDGetObject::getObject( dctProjectItems, tr("Select object to load"), this ) );
   if( item ) {
     mProject->getUndo()->begin( tr("Load object"), nullptr );
-    mProject->getFixedProjectItem( item );
+    SdProjectItem *it = mProject->getFixedProjectItem( item );
+    //Escape auto deletion
+    if( it != nullptr ) it->setHand();
+    //Delete source item
+    delete item;
     }
   }
 

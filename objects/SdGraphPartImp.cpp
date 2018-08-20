@@ -493,6 +493,7 @@ bool SdGraphPartImp::partPinLink(const QString pinNumber, SdGraphSymImp *imp, co
 
 void SdGraphPartImp::attach(SdUndo *undo)
   {
+  Q_UNUSED(undo)
   SdPItemPlate *plate = getPlate();
   Q_ASSERT( plate != nullptr );
   SdProject *prj = plate->getProject();
@@ -549,7 +550,11 @@ void SdGraphPartImp::detach(SdUndo *undo)
   for( SdPartImpSection &s : mSections ) {
     if( s.mSymImp )
       s.mSymImp->unLinkPart( undo );
+    if( s.mSymbol ) s.mSymbol->autoDelete( undo );
     }
+  //Autodelete all referenced objects
+  if( mComponent ) mComponent->autoDelete( undo );
+  if( mPart ) mComponent->autoDelete( undo );
   }
 
 

@@ -112,9 +112,10 @@ void SdObject::detach(SdUndo *undo)
 
 void SdObject::deleteObject(SdUndo *undo)
   {
-  qDebug() << "deleteObject" << mParent;
-  if( mParent )
+  if( mParent && !mDeleted ) {
+    //qDebug() << "deleteObject" << mParent;
     mParent->deleteChild( this, undo );
+    }
   }
 
 

@@ -334,6 +334,18 @@ void SdProjectItem::setOrigin(const SdPoint org, SdUndo *undo)
 
 
 
+//Delete object if it is mAuto=true and no more reference to it
+void SdProjectItem::autoDelete(SdUndo *undo)
+  {
+  if( mAuto && getProject() ) {
+    if( !getProject()->isUsed( this ) )
+      deleteObject( undo );
+    }
+  }
+
+
+
+
 
 
 void SdProjectItem::insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)

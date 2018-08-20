@@ -1,5 +1,5 @@
 
-//B037 bugs
+//B038 bugs
 //F001 fatal
 //C001 critical
 //D048 do
@@ -25,12 +25,14 @@
 
 //TODO B036 When duplicate object to edit state it not positioned in project window tree
 
-//TODO D048 When deleting implements perform check reference for symbol, part and component
-
 //TODO B037 Reverse renumeration sorting algorithm
+
+//TODO B038 When undo sheet insert editor not removed
 
 //===================================================================================
 //Fixed:
+
+//D048 When deleting implements perform check reference for symbol, part and component
 
 //D010 snap partImp
 
