@@ -9,6 +9,9 @@ Web
   www.saliLab.ru
 
 Description
+  Symbol implementation properties:
+   angle of implementation rotation
+   mirror of implementation
 */
 
 #include "SdPropSymImp.h"

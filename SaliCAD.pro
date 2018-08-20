@@ -217,7 +217,8 @@ SOURCES += \
     windows/SdWEditorInheritance.cpp \
     windows/SdWHelp.cpp \
     library/SvDir.cpp \
-    windows/SdWEditorHelp.cpp
+    windows/SdWEditorHelp.cpp \
+    windows/SdDRowValue.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -431,7 +432,8 @@ HEADERS  += \
     windows/SdWEditorInheritance.h \
     windows/SdWHelp.h \
     library/SvDir.h \
-    windows/SdWEditorHelp.h
+    windows/SdWEditorHelp.h \
+    windows/SdDRowValue.h
 
 DISTFILES += \
     license.txt
@@ -456,4 +458,5 @@ FORMS += \
     windows/SdDPadMaster.ui \
     master/SdDMasterPartDoubleRect.ui \
     master/SdDMasterPartDoubleSide.ui \
-    master/SdDMasterSymbolConnector.ui
+    master/SdDMasterSymbolConnector.ui \
+    windows/SdDRowValue.ui
