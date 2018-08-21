@@ -27,6 +27,7 @@ QSet<SdProjectPtr> sdProjectList;
 
 
 SdProject::SdProject() :
+  SdContainer(),
   mDirty(false),
   mNetIndex(0)
   {
@@ -42,15 +43,6 @@ SdProject::~SdProject()
   sdProjectList.remove( this );
   }
 
-
-
-
-//Set one param
-void SdProject::paramSet(QString key, QString val)
-  {
-  mUndo.stringMapItem( &mParams, key );
-  mParams.insert( key, val );
-  }
 
 
 
@@ -254,7 +246,6 @@ quint64 SdProject::getClass() const
 void SdProject::writeObject(QJsonObject &obj) const
   {
   SdContainer::writeObject( obj );
-  sdStringMapWrite( QStringLiteral("Params"), mParams, obj );
   }
 
 
@@ -263,7 +254,6 @@ void SdProject::writeObject(QJsonObject &obj) const
 void SdProject::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdContainer::readObject( map, obj );
-  sdStringMapRead( QStringLiteral("Params"), mParams, obj );
   }
 
 
@@ -304,8 +294,7 @@ void SdProject::cloneFrom(const SdObject *src)
   {
   SdContainer::cloneFrom(src);
   mDirty = true;
-  const SdProject *sour = dynamic_cast<const SdProject*>(src);
-  mParams = sour->mParams;
+  //const SdProject *sour = dynamic_cast<const SdProject*>(src);
   }
 
 

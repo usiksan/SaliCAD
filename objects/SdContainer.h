@@ -9,7 +9,9 @@ Web
   www.saliLab.ru
 
 Description
-  SdContainer - container object contains other objects
+  SdContainer - container object contains other objects with param table
+
+  Param table is map of key-value pairs. Value is a string.
 */
 
 #ifndef SDCONTAINER_H
@@ -27,7 +29,8 @@ typedef QList<SdObjectPtr> SdObjectPtrList;
 class SdContainer : public SdObject
   {
   protected:
-    SdObjectPtrList mChildList; //List of child objects
+    SdObjectPtrList  mChildList;  //List of child objects
+    SdStringMap      mParamTable; //Object parameters
   public:
     SdContainer();
     ~SdContainer() override;
@@ -62,6 +65,31 @@ class SdContainer : public SdObject
 
     //Return object and its state behind point
     SdObject    *behindPoint( quint64 classMask, SdPoint p, int *state );
+
+
+
+    //Params with local param table
+    //Test if param present in local table
+    bool         paramContains( const QString key ) const { return mParamTable.contains(key); }
+
+    //Get param value from local table
+    QString      paramGet( const QString key ) const { return mParamTable.value(key); }
+
+    //Set param value to local table
+    void         paramSet( const QString key, QString val, SdUndo *undo );
+
+    //Delete param from local table
+    void         paramDelete( const QString key, SdUndo *undo );
+
+    //Full local param table
+    SdStringMap  paramTable() const { return mParamTable; }
+
+    //Return param value from hierarchy. We start from local table
+    // if param present in local table - return it
+    // If no param in local table then we look at parent container
+    // if no parent then return empty string
+    QString      paramHierarchy( const QString key ) const;
+
 
   private:
     void         clearChildList();

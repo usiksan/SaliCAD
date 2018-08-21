@@ -30,7 +30,6 @@ class SdPItemSheet;
 
 class SdProject : public SdContainer
   {
-    SdStringMap                mParams;               //Project params
     bool                       mDirty;                //Project dirty flag
 
     //Not saved
@@ -43,13 +42,6 @@ class SdProject : public SdContainer
 
     SdUndo           *getUndo() { return &mUndo; }
 
-    //Param table
-    //Get full table
-    SdStringMap       paramGetTable() const { return mParams; }
-    //Get one param
-    QString           paramGet( QString key ) const { return mParams.value(key); }
-    //Set one param
-    void              paramSet( QString key, QString val );
 
     //Return first sheet
     SdPItemSheet     *getFirstSheet() const;

@@ -47,6 +47,9 @@ void SdContainer::readObject(SdObjectMap *map, const QJsonObject obj)
       mChildList.append( ptr );
       }
     }
+
+  //Read param table
+  sdStringMapRead( QStringLiteral("Parametrs"), mParamTable, obj );
   }
 
 
@@ -61,6 +64,9 @@ void SdContainer::writeObject(QJsonObject &obj) const
       array.append( ptr->write() );
       }
   obj.insert( QStringLiteral("ChildList"), array );
+
+  //Write param table
+  sdStringMapWrite( QStringLiteral("Parametrs"), mParamTable, obj );
   }
 
 
@@ -124,22 +130,56 @@ SdObject *SdContainer::behindPoint(quint64 classMask, SdPoint p, int *state)
 
 
 
-//void SdContainer::forEachDown(quint64 classMask, std::function<bool (SdObject *)> fun1)
-//  {
-//  for( SdObject *ptr : mChildList )
-//    if( ptr && !ptr->isDeleted() ) {
-//      //Check if object match class mask
-//      if( ptr->getClass() & classMask ) {
-//        //Check if it container and if true then down to elements of container
-//        if( ptr->isContainer() ) {
-//          SdContainer *down = dynamic_cast<SdContainer*>(ptr);
-//          if( down )
-//            down->forEach( classMask, fun1 );
-//          }
-//        else if( !fun1(ptr) ) return;
-//        }
-//      }
-//  }
+
+//Set param value to local table
+void SdContainer::paramSet(const QString key, QString val, SdUndo *undo)
+  {
+  if( undo != nullptr )
+    undo->stringMapItem( &mParamTable, key );
+  mParamTable.insert( key, val );
+  }
+
+
+
+
+
+
+
+//Delete param from local table
+void SdContainer::paramDelete(const QString key, SdUndo *undo)
+  {
+  if( undo != nullptr )
+    undo->stringMapItem( &mParamTable, key );
+  mParamTable.remove( key );
+  }
+
+
+
+
+
+
+//Return param value from hierarchy. We start from local table
+// if param present in local table - return it
+// If no param in local table then we look at parent container
+// if no parent then return empty string
+QString SdContainer::paramHierarchy(const QString key) const
+  {
+  //We start from local table
+  // if param present in local table - return it
+  if( mParamTable.contains(key) )
+    return mParamTable.value(key);
+
+  // If no param in local table then we look at parent container
+  if( getParent() )
+    getParent()->paramHierarchy(key);
+
+  // if no parent then return empty string
+  return QString();
+  }
+
+
+
+
 
 
 
@@ -157,6 +197,8 @@ void SdContainer::deleteChild(SdObject *child, SdUndo *undo)
   if( undo )
     undo->deleteObject( this, child );
   }
+
+
 
 
 
@@ -229,13 +271,20 @@ void SdContainer::cloneFrom( const SdObject *src )
   {
   SdObject::cloneFrom( src );
   const SdContainer *sour = dynamic_cast<const SdContainer*>(src);
+
+  //Copy children
   if( sour ) {
     clearChildList();
     for( SdObject *ptr : sour->mChildList )
       if( !ptr->isDeleted() )
         mChildList.append( ptr->copy() );
+
+    //Copy param table
+    mParamTable = sour->mParamTable;
     }
   }
+
+
 
 
 

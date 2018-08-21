@@ -37,7 +37,6 @@ class SdProjectItem : public SdContainer
     bool                   mAuto;       //True if item inserted automatic as reference from other item
     bool                   mEditEnable; //True if edit enable for this object
   protected:
-    SdStringMap            mParamTable; //Object parameters
     SdPoint                mOrigin;     //Origin for object
   public:
     QTreeWidgetItem       *mTreeItem;   //Correspond visual tree item
@@ -69,13 +68,6 @@ class SdProjectItem : public SdContainer
     SdRect                 getOverRect( quint64 classMask = dctAll );
     //Test if this object can be upgraded by other
     bool                   isCanUpgaded( SdProjectItem *newObj );
-
-    //Params
-    bool                   paramContains( const QString key ) const { return mParamTable.contains(key); }
-    QString                paramGet( const QString key ) const { return mParamTable.value(key); }
-    void                   paramSet( const QString key, QString val, SdUndo *undo );
-    void                   paramDelete( const QString key, SdUndo *undo );
-    SdStringMap            paramTable() const { return mParamTable; }
 
     //Object visual (graphical) identificator
     SdGraphIdent          *getIdent();

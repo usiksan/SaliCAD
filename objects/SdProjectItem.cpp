@@ -262,26 +262,6 @@ bool SdProjectItem::isCanUpgaded(SdProjectItem *newObj)
 
 
 
-void SdProjectItem::paramSet(const QString key, QString val, SdUndo *undo)
-  {
-  if( undo != nullptr )
-    undo->stringMapItem( &mParamTable, key );
-  mParamTable.insert( key, val );
-
-  }
-
-
-
-
-void SdProjectItem::paramDelete(const QString key, SdUndo *undo)
-  {
-  if( undo != nullptr )
-    undo->stringMapItem( &mParamTable, key );
-  mParamTable.remove( key );
-  }
-
-
-
 
 
 //Object visual (graphical) identificator
@@ -388,7 +368,6 @@ void SdProjectItem::writeObject(QJsonObject &obj) const
   obj.insert( QStringLiteral("Created"),     mCreateTime );
   obj.insert( QStringLiteral("Auto"),        mAuto );
   obj.insert( QStringLiteral("Edit enable"), mEditEnable );
-  sdStringMapWrite( QStringLiteral("Parametrs"), mParamTable, obj );
   mOrigin.write( QStringLiteral("Origin"), obj );
   }
 
@@ -404,7 +383,6 @@ void SdProjectItem::readObject(SdObjectMap *map, const QJsonObject obj)
   mCreateTime   = obj.value( QStringLiteral("Created") ).toInt();
   mAuto         = obj.value( QStringLiteral("Auto") ).toBool();
   mEditEnable   = obj.value( QStringLiteral("Edit enable") ).toBool();
-  sdStringMapRead( QStringLiteral("Parametrs"), mParamTable, obj );
   mOrigin.read( QStringLiteral("Origin"), obj );
   }
 
@@ -419,7 +397,6 @@ void SdProjectItem::cloneFrom( const SdObject *src )
   mAuthor     = sour->mAuthor;
   mCreateTime = sour->mCreateTime;
   mAuto       = true;
-  mParamTable = sour->mParamTable;
   mOrigin     = sour->mOrigin;
   mEditEnable = sour->mEditEnable;
   }
