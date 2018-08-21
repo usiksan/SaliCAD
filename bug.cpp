@@ -25,12 +25,12 @@
 
 //TODO B036 When duplicate object to edit state it not positioned in project window tree
 
-//TODO B037 Reverse renumeration sorting algorithm
-
 //TODO B038 When undo sheet insert editor not removed
 
 //===================================================================================
 //Fixed:
+
+//B037 Reverse renumeration sorting algorithm
 
 //D048 When deleting implements perform check reference for symbol, part and component
 

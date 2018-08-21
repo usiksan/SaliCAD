@@ -20,6 +20,7 @@ Description
 #include "windows/SdPNewProjectItem_Copy.h"
 #include "windows/SdPNewProjectItem.h"
 #include "windows/SdWCommand.h"
+#include "windows/SdDParamEditor.h"
 #include "SdDGetObject.h"
 
 #include <QFileInfo>
@@ -238,6 +239,30 @@ void SdWProjectTree::cmObjectSort()
 
 
 
+//Edit object param
+void SdWProjectTree::cmObjectParam()
+  {
+  //Get current item and show its param
+  SdProjectItem *item = dynamic_cast<SdProjectItem*>( mProject->item( currentItem() ) );
+  if( item ) {
+    SdDParamEditor editor( tr("Edit param"), item, item->isEditEnable(), this );
+    editor.exec();
+    }
+  }
+
+
+
+
+//Edit project param
+void SdWProjectTree::cmProjectParam()
+  {
+  SdDParamEditor editor( tr("Edit project param"), mProject, true, this );
+  editor.exec();
+  }
+
+
+
+
 void SdWProjectTree::cmClipboardChange()
   {
   SdWCommand::cmObjectPaste->setEnabled( QApplication::clipboard()->mimeData()->hasFormat(SD_CLIP_FORMAT_PITEM) );
@@ -312,6 +337,7 @@ void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem 
 
   SdWCommand::cmObjectRename->setEnabled(enable);
   SdWCommand::cmObjectCategory->setEnabled(enable);
+  SdWCommand::cmObjectParam->setEnabled(enable);
   SdWCommand::cmObjectDelete->setEnabled(enable);
   SdWCommand::cmObjectCopy->setEnabled(enable);
   SdWCommand::cmObjectCut->setEnabled(enable);

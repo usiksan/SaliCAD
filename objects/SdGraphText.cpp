@@ -15,6 +15,9 @@ Description
 #include "SdSelector.h"
 #include "SdContext.h"
 #include "SdProjectItem.h"
+#include "SdEnvir.h"
+
+#include <QDebug>
 
 SdGraphText::SdGraphText()
   {
@@ -200,16 +203,15 @@ SdRect SdGraphText::getOverRect() const
 
 void SdGraphText::draw(SdContext *dc)
   {
-//  if( mString.startsWith( QString("field.") ) ) {
-//    //Draw as field
-//    const SdProjectItem *item = dynamic_cast<const SdProjectItem*>(getParent());
-//    if( item ) {
-//      QString str = item->paramGet( mString.mid( 6 ) );
-//      dc->text( mOrigin, mOverRect, str, mProp );
-//      return;
-//      }
-//    }
-//  else
+  if( !sdEnvir->mShowFields && mString.startsWith( QChar('{') ) && mString.endsWith( QChar('}') ) ) {
+    //Draw as field
+    if( getParent() ) {
+      qDebug() << mString << ":" << getParent()->paramHierarchy(mString);
+      dc->text( mOrigin, mOverRect, getParent()->paramHierarchy(mString), mProp );
+      return;
+      }
+    }
+  //Draw as simple text
   dc->text( mOrigin, mOverRect, mString, mProp );
   }
 

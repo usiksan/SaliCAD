@@ -36,7 +36,7 @@ class SdWProjectTree : public QTreeWidget
     QString              mFileName;      //Полное имя файла проекта проекта с путем
   public:
     explicit SdWProjectTree( const QString fname, SdProject *prj, QWidget *parent = nullptr);
-    ~SdWProjectTree();
+    ~SdWProjectTree() override;
 
     QString      filePath() { return mFileName; }
     QString      fileName();
@@ -67,6 +67,12 @@ class SdWProjectTree : public QTreeWidget
 
     //Sort object list by alphabet
     void         cmObjectSort();
+
+    //Edit object param
+    void         cmObjectParam();
+
+    //Edit project param
+    void         cmProjectParam();
 
 
 

@@ -87,7 +87,7 @@ void SdDProjectStore::accept()
   hdr.mTag    = mTagPath;               //Object's tags
   hdr.mTime   = SdTime2x::current();    //Object time creation
   hdr.mClass  = mProject->getClass();   //Object class
-  hdr.mParamTable = mProject->paramGetTable();
+  hdr.mParamTable = mProject->paramTable();
 
   //Store project in library
   SdObjectFactory::insertObject( hdr, mProject->write() );

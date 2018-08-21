@@ -725,6 +725,15 @@ void SdWMain::cmObjectSort()
 
 
 
+void SdWMain::cmObjectParam()
+  {
+  if( activeProject() )
+    activeProject()->cmObjectParam();
+  }
+
+
+
+
 void SdWMain::cmObjectEditEnable()
   {
   if( activeEditor() )
@@ -737,6 +746,15 @@ void SdWMain::cmObjectEditDisable()
   {
   if( activeEditor() )
     activeEditor()->cmObjectEditDisable();
+  }
+
+
+
+
+void SdWMain::cmProjectParam()
+  {
+  if( activeProject() )
+    activeProject()->cmProjectParam();
   }
 
 
@@ -960,6 +978,23 @@ void SdWMain::cmViewMeasurement()
   if( activeEditor() )
     activeEditor()->cmViewMeasurement();
   }
+
+
+
+
+
+void SdWMain::cmShowFields(bool st)
+  {
+  sdEnvir->mShowFields = st;
+  if( activeEditor() ) {
+    SdWEditorGraph *gr = dynamic_cast<SdWEditorGraph*>( activeEditor() );
+    if( gr ) gr->dirtyCashe();
+    activeEditor()->update();
+    }
+  }
+
+
+
 
 
 

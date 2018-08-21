@@ -171,7 +171,7 @@ QString SdContainer::paramHierarchy(const QString key) const
 
   // If no param in local table then we look at parent container
   if( getParent() )
-    getParent()->paramHierarchy(key);
+    return getParent()->paramHierarchy(key);
 
   // if no parent then return empty string
   return QString();

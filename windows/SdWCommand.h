@@ -97,8 +97,10 @@ class SdWCommand
     static QActionPtr  cmObjectPaste;
     static QActionPtr  cmObjectCut;
     static QActionPtr  cmObjectSort;
+    static QActionPtr  cmObjectParam;
     static QActionPtr  cmObjectEditEnable;
     static QActionPtr  cmObjectEditDisable;
+    static QActionPtr  cmProjectParam;
 
     static QActionPtr  cmEditUndo;
     static QActionPtr  cmEditRedo;
@@ -144,6 +146,7 @@ class SdWCommand
     static QActionPtr  cmShowRuleErrors;
     static QActionPtr  cmCheckRules;
     static QActionPtr  cmRenumeration;
+    static QActionPtr  cmShowField;
 
     static QActionPtr  cmOption;
     static QActionPtr  cmTools;

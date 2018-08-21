@@ -51,7 +51,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (28 + FONT_COUNT)
+#define SdEnvirVersion  (29 + FONT_COUNT)
 
 
 class SdEnvir
@@ -59,7 +59,7 @@ class SdEnvir
     QColor          mSysColors[scLast];    //System color table
     QString         mFonts[FONT_COUNT];    //System font table
   public:
-    SdLayerPtrTable mLayerTable;           //Таблица слоев
+    SdLayerPtrTable mLayerTable;           //Layers table [Таблица слоев]
     int             mDotSize;              //Размер точки соединений сегментов цепи
     int             mDotWidth;             //Толщина линии точки соединения сегментов цепи
     int             mSymPinSize;           //Размер перекрестья ножки символа
@@ -95,11 +95,12 @@ class SdEnvir
     QString         mHomePath;             //Каталог пользователя
     QString         mLibraryPath;          //Каталог библиотек
     QString         mPatternPath;          //Каталог шаблонов
-    QString         mPadStackUid;           //SdPadAssociation object id [Объект контактных площадок]
+    QString         mPadStackUid;          //SdPadAssociation object id [Объект контактных площадок]
     QString         mPadStackTitle;        //SdPadAssociation object title [Название объекта с контактными площадками]
     QList<QPointF>  mGridHistory;          //Previous grid history
     SdRuleBlock     mDefaultRules;         //Default rules for pcb
     bool            mShowRuleErrors;       //If true then over pcb shows rule error indicators as rectangles
+    bool            mShowFields;           //If true then draw fields as fields names else draw fields as values
 
 
     bool            mGuiderEnabled;        //Флаг разрешения/запрещения путеводителя

@@ -143,7 +143,8 @@ void SdEnvir::loadEnvir()
        >> mPadStackTitle        //Объект содержащий контактные площадки
        >> mGridHistory          //Previous grid history table
        >> mDefaultRules         //Default rules for pcb
-       >> mShowRuleErrors;       //If true then over pcb shows rule error indicators as rectangles
+       >> mShowRuleErrors       //If true then over pcb shows rule error indicators as rectangles
+       >> mShowFields;           //If true then draw fields as fields names else draw fields as values
     }
   else defaultEnvir();
 
@@ -180,7 +181,7 @@ void SdEnvir::saveEnvir()
   os << mDotSize              //Размер точки соединений сегментов цепи
      << mDotWidth             //Толщина линии точки соединения сегментов цепи
      << mSymPinSize           //Размер перекрестья ножки символа
-     << mPartPinSize           //Размер окружности ножки корпуса
+     << mPartPinSize          //Размер окружности ножки корпуса
      << mSmartSize            //Размер разумной точки
      << mSmartWidth           //Толщина линии разумной точки
      << mIsSmart              //Включение разумного режима
@@ -206,16 +207,17 @@ void SdEnvir::saveEnvir()
      << mPrtPPM               //Коэффициент преобразования в физическую величину в конструкциях
      << mGridSyncXY           //Syncronisated edition x and grid steps
      << mGridShow             //Включение сетки
-     << mCursorAlignGrid           //Включение движения курсора по сетке
+     << mCursorAlignGrid      //Включение движения курсора по сетке
      << mCenterCursor         //Центровать курсор при увеличении и уменьшении
      << mHomePath             //Каталог пользователя
      << mLibraryPath          //Каталог библиотек
      << mPatternPath          //Каталог шаблонов
-     << mPadStackUid         //Файл контактных площадок
-     << mPadStackTitle       //Объект содержащий контактные площадки
-     << mGridHistory         //Previous grid history table
+     << mPadStackUid          //Файл контактных площадок
+     << mPadStackTitle        //Объект содержащий контактные площадки
+     << mGridHistory          //Previous grid history table
      << mDefaultRules         //Default rules for pcb
-     << mShowRuleErrors;       //If true then over pcb shows rule error indicators as rectangles
+     << mShowRuleErrors       //If true then over pcb shows rule error indicators as rectangles
+     << mShowFields;           //If true then draw fields as fields names else draw fields as values
 
   QSettings s;
   s.setValue( QString(SDK_ENVIR_VERSION), QVariant(SdEnvirVersion) );
@@ -282,6 +284,7 @@ void SdEnvir::defaultEnvir()
   mCenterCursor      = true;           //Центровать курсор при увеличении и уменьшении
   mGridHistory.clear();
   mShowRuleErrors    = true;           //If true then over pcb shows rule error indicators as rectangles
+  mShowFields        = true;           //If true then draw fields as fields names else draw fields as values
 
 
   mGuiderEnabled     = true;           //Флаг разрешения/запрещения путеводителя

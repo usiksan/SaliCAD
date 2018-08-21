@@ -84,6 +84,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmObjectLoad        = menuObject->addAction( QIcon(QString(":/pic/download.png")), frame->tr("Load from library..."), frame, SLOT(cmObjectLoad()) );
   cmObjectRename      = menuObject->addAction( QIcon(QString(":/pic/objectRename.png")), frame->tr("Rename..."), frame, SLOT(cmObjectRename()) );
   cmObjectCategory    = menuObject->addAction( QIcon(QString(":/pic/objectCategory.png")), frame->tr("Edit category..."), frame, SLOT(cmObjectCategory()) );
+  cmObjectParam       = menuObject->addAction( QIcon(QString(":/pic/objectCategory.png")), frame->tr("Edit param..."), frame, SLOT(cmObjectParam()) );
   cmObjectDelete      = menuObject->addAction( QIcon(QString(":/pic/objectDelete.png")), frame->tr("Delete"), frame, SLOT(cmObjectDelete()) );
   cmObjectCopy        = menuObject->addAction( QIcon(QString(":/pic/objectCopy.png")), frame->tr("Copy"), frame, SLOT(cmObjectCopy()) );
   cmObjectPaste       = menuObject->addAction( QIcon(QString(":/pic/objectPaste.png")), frame->tr("Paste"), frame, SLOT(cmObjectPaste()) );
@@ -91,6 +92,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmObjectSort        = menuObject->addAction( QIcon(QString(":/pic/objectSort.png")), frame->tr("Sort"), frame, SLOT(cmObjectSort()) );
   cmObjectEditEnable  = menuObject->addAction( QIcon(QString(":/pic/objectEditEnable.png")), frame->tr("Enable edit"), frame, SLOT(cmObjectEditEnable()) );
   cmObjectEditDisable = menuObject->addAction( QIcon(QString(":/pic/objectEditDisable.png")), frame->tr("Finish edit"), frame, SLOT(cmObjectEditDisable()) );
+  cmProjectParam      = menuObject->addAction( QIcon(QString(":/pic/objectCategory.png")), frame->tr("Edit project param..."), frame, SLOT(cmProjectParam()) );
 
 
 
@@ -147,6 +149,10 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_ARC]         = menuDraw->addAction( QIcon(QString(":/pic/drawArc.png")), frame->tr("Arc"), frame, SLOT(cmModeArc()) );
   cmModeTable[MD_TEXT]        = menuDraw->addAction( QIcon(QString(":/pic/drawText.png")), frame->tr("Text"), frame, SLOT(cmModeText()) );
   cmModeTable[MD_FIELD]       = menuDraw->addAction( QIcon(QString(":/pic/drawField.png")), frame->tr("Field"), frame, SLOT(cmModeField()) );
+  cmShowField = menuDraw->addAction( QIcon(QStringLiteral(":/pic/showField.png")), frame->tr("Show fields or values") );
+  cmShowField->setCheckable(true);
+  cmShowField->setChecked( sdEnvir->mShowFields );
+  cmShowField->connect( cmShowField, &QAction::toggled, frame, &SdWMain::cmShowFields );
 
 
 
@@ -344,6 +350,7 @@ void SdWCommand::projectState(bool enable)
 
     cmObjectRename->setEnabled(enable);
     cmObjectCategory->setEnabled(enable);
+    cmObjectParam->setEnabled(enable);
     cmObjectDelete->setEnabled(enable);
     cmObjectCopy->setEnabled(enable);
     cmObjectCut->setEnabled(enable);
@@ -401,7 +408,7 @@ void SdWCommand::addDrawCommands(QToolBar *bar)
   bar->insertAction( nullptr, cmModeTable[MD_FILL_CIRCLE] );
   bar->insertAction( nullptr, cmModeTable[MD_ARC] );
   bar->insertAction( nullptr, cmModeTable[MD_TEXT] );
-  //bar->insertAction( nullptr, cmModeTable[MD_FIELD] );
+  bar->insertAction( nullptr, cmShowField );
   bar->addSeparator();
   }
 
@@ -649,8 +656,10 @@ QActionPtr SdWCommand::cmObjectCopy;
 QActionPtr SdWCommand::cmObjectPaste;
 QActionPtr SdWCommand::cmObjectCut;
 QActionPtr SdWCommand::cmObjectSort;
+QActionPtr SdWCommand::cmObjectParam;
 QActionPtr SdWCommand::cmObjectEditEnable;
 QActionPtr SdWCommand::cmObjectEditDisable;
+QActionPtr SdWCommand::cmProjectParam;
 
 QActionPtr SdWCommand::cmEditUndo;
 QActionPtr SdWCommand::cmEditRedo;
@@ -695,6 +704,7 @@ QActionPtr SdWCommand::cmShowRatNet;
 QActionPtr SdWCommand::cmShowRuleErrors;
 QActionPtr SdWCommand::cmCheckRules;
 QActionPtr SdWCommand::cmRenumeration;
+QActionPtr SdWCommand::cmShowField;
 
 QActionPtr SdWCommand::cmOption;
 

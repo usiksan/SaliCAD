@@ -101,8 +101,10 @@ class SdWMain : public QMainWindow
     void cmObjectPaste();
     void cmObjectCut();
     void cmObjectSort();
+    void cmObjectParam();
     void cmObjectEditEnable();
     void cmObjectEditDisable();
+    void cmProjectParam();
 
     void cmEditUndo();
     void cmEditRedo();
@@ -125,6 +127,7 @@ class SdWMain : public QMainWindow
     void cmViewZoomOut();
     void cmViewArea();
     void cmViewMeasurement();
+    void cmShowFields( bool st );
 
     void cmModeSelect();
 
