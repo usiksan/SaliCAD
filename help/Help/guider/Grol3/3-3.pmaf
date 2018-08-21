@@ -1,0 +1,214 @@
+
+size  774 575 
+
+rem "Очень часто при использовании фрагментов возникает необходимость редактирования схем. "
+image "pic064.gif"
+sound "sound61.snd"
+
+rem "В нашем случае регистр адреса и шины адреса и данных являются лишними. Удалим их. "
+sound "sound62.snd"
+area  271 183  339 244 
+area  254 183  266 287 
+ 
+
+rem "Для этого выделим регистр адреса и подключенные к нему цепи окном. Перемещаем мышь вне любого компонента. "
+sound "sound63.snd"
+cshow  397 340 
+cmove  272 180 
+
+rem "Нажимаем левую кнопку "
+sound "sound64.snd"
+cpress   272 180  
+pause
+
+rem "и не отпуская левую кнопку перемещаем мышь таким образом, чтобы прямоугольник выделения охватил нужный нам фрагмент. "
+sound "sound65.snd"
+cmove   343 250 
+image "pic065.gif"
+pause
+
+rem "После этого левую кнопку можно отпустить. "
+sound "sound66.snd"
+crelease  343 250 
+
+rem "Попавшие во внутрь прямоугольника элементы, становятся выделенными. "
+image "pic066.gif"
+sound "sound67.snd"
+
+rem "Для удаления выделенных элементов нажимаем кнопку Delete или на эту кнопку. "
+sound "sound68.snd"
+area  185 44  206 63 
+area  185 44  206 63 
+area  185 44  206 63 
+cmove  197 56 
+cclick  197 56 
+
+rem "Элементы удаляются. "
+image "pic067.gif"
+sound "sound69.snd"
+
+rem "Аналогично выделяем шины процессора. "
+sound "sound70.snd"
+cmove  255 182 
+cpress  255 182 
+cmove  273 285 
+image "pic068.gif"
+pause
+crelease  273 285 
+
+rem "Удаляем их. "
+image "pic069.gif"
+sound "sound71.snd"
+cmove  200 57 
+cclick  200 57 
+
+rem "Буфер предназначен для усиления сигналов с процессора "
+image "pic070.gif"
+sound "sound72.snd"
+area  273 256  324 324
+ 
+rem " для вывода на индикатор."
+sound "sound73.snd"
+area  419 239  607 280 
+
+rem "Необходимо подключить его выходы "
+sound "sound74.snd"
+area  323 263  329 300 
+
+rem "к цепям сегментов индикаторов. "
+sound "sound75.snd"
+area  353 240  363 277 
+
+rem "Для этого нужно перенести буфер, чтобы он своими выводами лег на цепи. "
+image "pic071.gif"
+sound "sound76.snd"
+pause
+
+rem "Наводим на него мышь "
+sound "sound77.snd"
+cmove  293 366 
+
+rem "Нажимаем левую кнопку "
+sound "sound78.snd"
+cpress  293 366 
+
+rem "и, не отпуская кнопку, перемещаем мышь. Компонент перемещается вместе с мышью. "
+image "pic072.gif"
+sound "sound79.snd"
+cmove  432 275 
+
+rem "При совпадении ножек с цепями отпускаем кнопку мыши "
+image "pic073.gif"
+sound "sound80.snd"
+crelease  432 275 
+
+rem "Чтобы снять выделение нажмем левую кнопку мыши вне любого объекта на схеме. "
+sound "sound81.snd"
+cmove  522 398 
+cclick  522 398 
+
+rem "При этом цепи подключаются к ножкам буфера "
+image "pic074.gif"
+sound "sound82.snd"
+area  468 221  490 340 
+
+rem "Подвинем фрагмент процессора поближе к индикатору. "
+image "pic075.gif"
+sound "sound83.snd"
+area  157 160  256 318 
+area  283 229  357 296 
+
+rem "Выделим его. Нажимаем левую кнопку мыши "
+sound "sound84.snd"
+cmove  155 161 
+cpress  155 161 
+
+rem "и не отпуская ее, перемещаем мышь "
+sound "sound85.snd"
+cmove  267 321 
+
+rem "когда прямоугольник охватит весь фрагмент отпускаем левую кнопку мыши. "
+image "pic076.gif"
+sound "sound86.snd"
+crelease  267 321 
+
+rem "Фрагмент становится выделенным. "
+image "pic082.gif"
+sound "sound87.snd"
+pause
+
+rem "Перемещаем мышь на один из выделенных объектов "
+sound "sound88.snd"
+cmove  229 244 
+
+rem "Нажимаем левую кнопку и "
+sound "sound89.snd"
+cpress  229 244 
+
+rem "не отпуская кнопку, перемещаем мышь "
+sound "sound90.snd"
+cmove  267 243 
+
+rem "отпускаем левую кнопку. "
+image "pic083.gif"
+sound "sound91.snd"
+crelease  267 243 
+
+rem "Чтобы снять выделение нажимаем левую кнопку мыши вне любого объекта. "
+sound "sound92.snd"
+cmove  293 325 
+cclick  293 325 
+
+rem "Преподнимем группу транзисторов повыше, чтобы удобнее разместить цепи. Для этого выделим группу транзисторов "
+image "pic084.gif"
+sound "sound93.snd"
+cmove  357 176 
+cpress  357 176 
+cmove  617 234 
+crelease  617 234 
+image "pic085.gif"
+
+rem "Переместим ее повыше. "
+sound "sound94.snd"
+cmove  501 199 
+cpress  501 199
+cmove  503 177 
+crelease   503 177 
+
+rem "Обратите внимание, что цепи по мере перемещения транзисторов вытягиваются. "
+image "pic086.gif"
+sound "sound95.snd"
+area  434 217  614 236 
+pause
+
+
+rem "Снимем выделение, нажав мышью вне любого объекта"
+sound "sound96.snd"
+cmove  480 219 
+cclick  480 219 
+image "pic087.gif"
+
+
+rem "Удалим эти цепи"
+sound "sound97.snd"
+area  357 173  369 217 
+
+rem "Для этого выделим их"
+sound "sound98.snd"
+cmove  355 171 
+cpress  355 171 
+cmove  365 215 
+image "pic091.gif"
+crelease  365 215 
+image "pic092.gif"
+pause
+
+
+rem "и удалим"
+sound "sound99.snd"
+cmove  195 56 
+cclick  195 56 
+image "pic093.gif"
+pause
+pause
+

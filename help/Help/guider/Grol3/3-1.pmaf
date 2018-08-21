@@ -1,0 +1,66 @@
+
+size  691 545 
+
+rem "запускаем PasCAD "
+image "pic021.gif"
+sound "sound8.snd"
+cshow  390 331 
+cmove  97 194 
+cclick  97 194 
+cmove  341 486 
+cclick  341 486 
+cmove  521 449 
+cclick  521 449 
+size  776 580 
+image "pic022.gif"
+pause
+
+rem "нажимаем кнопку создания нового проекта "
+sound "sound9.snd"
+area  11 43  35 66 
+area  11 43  35 66 
+cmove  28 50 
+cclick  28 50 
+
+rem "Появилось окно проекта, в котором отображается в древовидном виде содержимое проекта "
+image "pic023.gif"
+sound "sound10.snd"
+area  11 97  267 499 
+
+rem "Создадим лист схемы, для этого нажимаем кнопку создания объекта проекта "
+sound "sound11.snd"
+pause
+area  216 44  237 66 
+area  216 44  237 66 
+cmove  231 54 
+cclick  231 54
+
+rem "Появляется диалоговое окно создания объектов проекта"
+image "pic024.gif"
+sound "sound12.snd"
+area  212 104  506 328 
+ 
+rem "В графе Имя вводим имя для листа схемы, например Часы "
+sound "sound13.snd"
+area  247 133  408 151
+image "pic025.gif" 
+
+rem "Указываем в качестве класса объекта лист схемы "
+sound "sound14.snd"
+area  226 217  296 230 
+
+rem "и нажимаем кнопку ОК "
+sound "sound15.snd"
+cmove  464 144 
+cclick  464 144 
+
+rem "В окне проекта появилась наша схема "
+image "pic026.gif"
+sound "sound16.snd"
+area  47 160  85 181 
+
+rem "а в области редакторов эта схема открылась для редактирования "
+sound "sound17.snd"
+area  284 142  739 487 
+pause
+pause

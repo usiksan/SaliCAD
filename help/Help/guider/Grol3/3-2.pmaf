@@ -1,0 +1,246 @@
+size  774 581 
+
+rem "Для начала, с помощью режима вставки компонентов и фрагментов вставим рамку формата. Для этого нажимаем на эту кнопку. "
+image "pic026.gif"
+sound "sound18.snd"
+area  11 69  33 90 
+area  11 69  33 90 
+area  11 69  33 90 
+cshow  338 255 
+cmove  24 80 
+cclick  24 80 
+
+rem "Появилось диалоговое окно вставки объектов. "
+image "pic027.gif"
+sound "sound19.snd"
+area  109 50  728 397 
+
+rem "Нажимаем левую кнопку на Библиотеки "
+sound "sound20.snd"
+cmove  159 142 
+cclick  159 142 
+
+rem "Открывается список доступных библиотек "
+image "pic031.gif"
+sound "sound21.snd"
+pause
+
+rem "В списке библиотек находим библиотеку Форматы "
+image "pic032.gif"
+sound "sound22.snd"
+area  74 346  172 364 
+
+rem "и нажимаем левую кнопку мыши "
+sound "sound23.snd"
+cmove  110 353 
+cclick  110 353 
+
+rem "Открывается содержимое библиотеки "
+image "pic033.gif"
+sound "sound24.snd"
+pause
+
+rem "На названии А2 первый лист нажимаем левую кнопку "
+sound "sound25.snd"
+cmove  124 225 
+cclick  124 225 
+
+rem "Размещаем фрагмент "
+image "pic034.gif"
+sound "sound26.snd"
+cshow  319 448 
+
+rem "Увеличение и уменьшение масштаба осуществляются с помощью этих кнопок. "
+sound "sound27.snd"
+area  370 42  392 66 
+area  370 42  392 66 
+area  370 42  392 66 
+area  395 42  417 64 
+area  395 42  417 64 
+area  395 42  417 64 
+
+rem "или с помощью кнопок + и – клавиатуры. "
+sound "sound28.snd"
+
+rem "нажимаем левую кнопку мыши и фрагмент вставляется в лист схемы "
+sound "sound29.snd"
+cclick  319 448
+image "pic035.gif"
+
+rem "Теперь будем рисовать собственно схему "
+image "pic036.gif"
+sound "sound30.snd"
+pause
+
+rem "Нажимаем правую кнопку "
+sound "sound31.snd"
+cclick  465 396 
+
+rem "система переходит к выбору следующего компонента или фрагмента "
+image "pic033.gif"
+sound "sound32.snd"
+
+
+rem "Нажмите кнопку Назад, чтобы перейти к выбору библиотек. "
+sound "sound33.snd"
+area  143 69  196 90 
+cshow  536 351 
+cmove  173 83 
+cclick  173 83 
+
+rem "В списке библиотек выбираем Типовые схемы МП и нажмите левую кнопку "
+image "pic037.gif"
+sound "sound34.snd"
+cmove  140 265 
+cclick  140 265 
+
+rem "Выбираем фрагмент на 89С51 "
+image "pic038.gif"
+sound "sound35.snd"
+cmove  116 156 
+cclick  116 156 
+
+rem "Размещаем фрагмент на схеме и нажимаем левую кнопку "
+image "pic039.gif"
+sound "sound36.snd"
+cshow  416 256 
+cclick  416 256 
+image "pic040.gif"
+
+rem "Теперь нажимаем правую кнопку и переходим к выбору следующего компонента или фрагмента "
+sound "sound37.snd"
+cclick  416 256 
+image "pic038.gif"
+
+
+rem "Нажимаем кнопку Назад, чтобы перейти к выбору библиотек. "
+sound "sound38.snd"
+cmove  173 84 
+cclick  173 84 
+
+rem "В списке библиотек выбираем Дисплеи "
+image "pic041.gif"
+sound "sound39.snd"
+cmove  109 197 
+cclick  109 197 
+
+rem "Выбираем фрагмент На 4 цифры "
+image "pic042.gif"
+sound "sound40.snd"
+cmove  222 266 
+cclick  222 266 
+
+rem "Размещаем фрагмент на схеме и нажимаем левую кнопку "
+image "pic043.gif"
+sound "sound41.snd"
+cclick  464 243
+image "pic044.gif"
+pause 
+
+rem "Теперь нажимаем правую кнопку и переходим к выбору следующего компонента или фрагмента "
+sound "sound42.snd"
+cclick  464 243 
+
+rem "Нажмите кнопку Назад, чтобы перейти к выбору библиотек. "
+image "pic042.gif"
+sound "sound43.snd"
+cmove  255 167 
+cclick  255 167 
+
+rem "В списке библиотек выбираем 1533,КР,КФ "
+image "pic045.gif"
+sound "sound44.snd"
+cmove  210 267 
+cclick  210 267 
+
+rem "В списке компонентов выбираем КР1533АП6 "
+image "pic046.gif"
+sound "sound45.snd"
+cmove  220 356 
+cclick  220 356 
+
+rem "Размещаем микросхему на схеме "
+image "pic047.gif"
+sound "sound46.snd"
+cclick  280 312 
+pause
+
+rem "Теперь нажимаем правую кнопку и переходим к выбору следующего компонента или фрагмента "
+sound "sound47.snd"
+cclick  280 312 
+image "pic048.gif"
+
+rem "Нажмите кнопку Назад, чтобы перейти к выбору библиотек. "
+sound "sound48.snd"
+cmove  247 166 
+cclick  247 166 
+
+rem "В списке библиотек выбираем Переключатели "
+image "pic058.gif"
+sound "sound49.snd"
+cmove  233 375
+cclick  233 375 
+
+rem "В списке компонентов выбираем ПКн-150 "
+image "pic050.gif"
+sound "sound50.snd"
+cmove  216 400 
+cclick  216 400 
+
+rem "Обратите внимание на панель свойств компонента "
+image "pic051.gif"
+sound "sound51.snd"
+area  6 94  245 110 
+
+rem "Здесь присутствует ориентация компонента "
+sound "sound52.snd"
+area  7 96  101 116 
+
+rem "и его зеркальность "
+sound "sound53.snd"
+area  144 94  242 112 
+
+rem "Размещаем компонент на схеме "
+sound "sound54.snd"
+cshow  159 275 
+cclick  159 275 
+
+rem "и еще три раза "
+sound "sound55.snd"
+image "pic052.gif"
+pause
+image "pic054.gif"
+pause
+image "pic055.gif"
+pause
+image "pic056.gif"
+
+rem "Теперь нажимаем правую кнопку и переходим к выбору следующего компонента или фрагмента "
+sound "sound56.snd"
+cclick  219 328 
+
+rem "Нажмите кнопку Назад, чтобы перейти к выбору библиотек. "
+image "pic050.gif"
+sound "sound57.snd"
+cmove  257 170 
+cclick  257 170 
+
+rem "В списке библиотек выбираем Источники питания "
+image "pic060.gif"
+sound "sound58.snd"
+cmove  249 374 
+cclick  249 374 
+
+rem "В списке компонентов выбираем Стабилизатор +5В на КРЕН "
+image "pic061.gif"
+sound "sound59.snd"
+cmove  247 286 
+cclick  247 286 
+
+rem "Размещаем фрагмент на схеме "
+image "pic062.gif"
+sound "sound60.snd"
+cshow  253 436 
+cclick  253 436 
+pause
+pause

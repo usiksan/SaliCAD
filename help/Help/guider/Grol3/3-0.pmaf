@@ -1,0 +1,49 @@
+
+size  777 585 
+
+rem "Этот ролик представит полный цикл проектирования электронного устройства, включая "
+image "pic023.gif"
+sound "sound0.snd"
+pause
+
+rem "создание принципиальной схемы (в качестве примера будем создавать электронные часы на базе микропроцессора) "
+image "pic168.gif"
+sound "sound1.snd"
+area  222 143  714 487 
+pause
+
+rem "оформление схемы в соответствии с действующими требованиями ГОСТ "
+sound "sound2.snd"
+pause
+
+rem "расстановку элементов на печатной плате "
+image "pic219.gif"
+sound "sound3.snd"
+area  81 144  421 480 
+pause
+
+rem "передачу платы в Specctra и автоматическую ее трассировку "
+image "pic229.gif"
+sound "sound4.snd"
+area  285 115  469 289 
+pause
+
+rem "получение результатов трассировки "
+image "pic224.gif"
+sound "sound5.snd"
+area  87 143  411 474 
+pause
+
+rem "процедуры подготовки производства "
+image "pic244.gif"
+sound "sound6.snd"
+area  526 207  743 289 
+area  355 296  593 394 
+pause
+
+rem "оформление текстовой документации "
+image "pic259.gif"
+sound "sound7.snd"
+area  165 132  608 440 
+pause
+pause

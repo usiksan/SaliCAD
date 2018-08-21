@@ -1,0 +1,66 @@
+
+size  769 594 
+
+rem "Для заключительной операции оформления схемы нужно сделать перечень элементов. "
+image "pic255.gif"
+sound "sound341.snd"
+pause
+
+rem "Для этого нажимаем кнопку создания элемента "
+sound "sound342.snd"
+cshow  378 292 
+cmove  252 60 
+cclick  252 60 
+
+rem "Появляется диалог создания объекта"
+image "pic256.gif"
+sound "sound343.snd"
+area  323 213  615 436 
+
+rem "В списке категорий выбираем Текстовый документ "
+sound "sound344.snd"
+cmove  472 361 
+cclick  472 361 
+
+rem "Имя задавать не нужно, поскольку текстовые документы сохраняются во внешнем файле. "
+sound "sound345.snd"
+area  362 243  451 257 
+
+rem "Нажимаем ОК "
+sound "sound346.snd"
+cmove  551 253 
+cclick  551 253 
+
+rem "Появляется диалоговое окно с выбором типа текстового документа. "
+image "pic257.gif"
+sound "sound347.snd"
+area  335 216  599 426 
+
+rem "Выбираем Перечень элементов "
+sound "sound348.snd"
+cmove  484 254 
+cclick  484 254 
+pause
+
+rem "и нажимаем ОК "
+sound "sound349.snd"
+cmove  359 415 
+cclick  359 415 
+
+rem "Указываем имя файла для перечня элементов "
+image "pic258.gif"
+sound "sound350.snd"
+area  240 282  306 301 
+pause
+
+rem "и нажимаем Сохранить "
+sound "sound351.snd"
+cmove  546 299 
+cclick  546 299 
+
+rem "Формируется файл перечня и запускается программа для его редактирования. Обычно это Word. "
+image "pic259.gif"
+sound "sound352.snd"
+area  154 127  618 450 
+pause
+pause
