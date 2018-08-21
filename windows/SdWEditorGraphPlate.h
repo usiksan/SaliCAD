@@ -46,6 +46,8 @@ class SdWEditorGraphPlate : public SdWEditorGraph
 
     //Sheet and pcb
     virtual void cmRenumeration() override;
+
+    virtual void cmFileExport() override;
   };
 
 

@@ -634,6 +634,7 @@ QActionPtr SdWCommand::cmFileExit;
 QActionPtr SdWCommand::cmFileImportPis;
 QActionPtr SdWCommand::cmFileImport;
 QActionPtr SdWCommand::cmFileExport;
+QActionPtr SdWCommand::cmFileExportGerber;
 QActionPtr SdWCommand::cmFileStoreToLibrary;
 QActionPtr SdWCommand::cmFileLoadFromLibrary;
 

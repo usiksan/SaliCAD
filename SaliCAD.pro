@@ -218,7 +218,9 @@ SOURCES += \
     windows/SdWHelp.cpp \
     library/SvDir.cpp \
     windows/SdWEditorHelp.cpp \
-    windows/SdDRowValue.cpp
+    windows/SdDRowValue.cpp \
+    windows/SdPMasterList.cpp \
+    windows/SdPExportPlate_Gerber.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -433,7 +435,9 @@ HEADERS  += \
     windows/SdWHelp.h \
     library/SvDir.h \
     windows/SdWEditorHelp.h \
-    windows/SdDRowValue.h
+    windows/SdDRowValue.h \
+    windows/SdPMasterList.h \
+    windows/SdPExportPlate_Gerber.h
 
 DISTFILES += \
     license.txt

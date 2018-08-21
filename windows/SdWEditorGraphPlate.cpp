@@ -14,11 +14,15 @@ Description
 #include "SdWEditorGraphPlate.h"
 #include "SdWCommand.h"
 #include "SdDPads.h"
+#include "SdPMasterList.h"
+#include "SdPExportPlate_Gerber.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
 #include "modes/SdModeCRoadEnter.h"
+
 #include <QDebug>
 #include <QProgressDialog>
+#include <QWizard>
 
 SdWEditorGraphPlate::SdWEditorGraphPlate(SdPItemPlate *pcb, QWidget *parent) :
   SdWEditorGraph( pcb, parent ),
@@ -143,4 +147,20 @@ void SdWEditorGraphPlate::cmRenumeration()
   dirtyCashe();
   dirtyProject();
   update();
+  }
+
+
+
+
+
+void SdWEditorGraphPlate::cmFileExport()
+  {
+  //Wizard
+  QWizard wizard(this);
+  //Fill it with pages
+  SdPMasterList *master = new SdPMasterList( tr("Export plate"), tr("Select export master"), &wizard );
+  wizard.setPage( 0,   master );
+  wizard.setPage( 1,   new SdPExportPlate_Gerber( mPlate, 1, master, &wizard) );
+  //wizard.setPage( SDP_NPI_MASTER, new SdPNewProjectItem_Master( &item, mProject, &wizard) );
+  wizard.exec();
   }
