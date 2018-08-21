@@ -34,7 +34,7 @@ SdPNewProjectItem_Master::SdPNewProjectItem_Master(SdProjectItemPtr *item, SdPro
   {
 
   setTitle( tr("Creation new project object") );
-  setSubTitle( tr("Select object type then object creation order") );
+  setSubTitle( tr("Select master to object creation") );
 
   QHBoxLayout *hlay = new QHBoxLayout();
   QVBoxLayout *vlay = new QVBoxLayout();

@@ -220,7 +220,8 @@ SOURCES += \
     windows/SdWEditorHelp.cpp \
     windows/SdDRowValue.cpp \
     windows/SdPMasterList.cpp \
-    windows/SdPExportPlate_Gerber.cpp
+    windows/SdPExportPlate_Gerber.cpp \
+    windows/SdPNewProjectItem_Copy.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -437,7 +438,8 @@ HEADERS  += \
     windows/SdWEditorHelp.h \
     windows/SdDRowValue.h \
     windows/SdPMasterList.h \
-    windows/SdPExportPlate_Gerber.h
+    windows/SdPExportPlate_Gerber.h \
+    windows/SdPNewProjectItem_Copy.h
 
 DISTFILES += \
     license.txt

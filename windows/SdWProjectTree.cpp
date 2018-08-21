@@ -17,6 +17,7 @@ Description
 #include "windows/SdPNewProjectItem_SelectType.h"
 #include "windows/SdPNewProjectItem_EnterName.h"
 #include "windows/SdPNewProjectItem_Master.h"
+#include "windows/SdPNewProjectItem_Copy.h"
 #include "windows/SdPNewProjectItem.h"
 #include "windows/SdWCommand.h"
 #include "SdDGetObject.h"
@@ -144,6 +145,7 @@ void SdWProjectTree::cmObjectNew()
   wizard.setPage( SDP_NPI_TYPE,   new SdPNewProjectItem_SelectType( &item, mProject, &wizard) );
   wizard.setPage( SDP_NPI_NAME,   new SdPNewProjectItem_EnterName( &item, mProject, false, &wizard) );
   wizard.setPage( SDP_NPI_MASTER, new SdPNewProjectItem_Master( &item, mProject, &wizard) );
+  wizard.setPage( SDP_NPI_COPY,   new SdPNewProjectItem_Copy( &item, mProject, &wizard) );
   if( wizard.exec() ) {
     //Append item to the project
     item->setHand();
@@ -151,6 +153,10 @@ void SdWProjectTree::cmObjectNew()
     mProject->insertChild( item, mProject->getUndo() );
     //Open window to edit item
     SdPulsar::sdPulsar->emitActivateItem( item );
+    }
+  else {
+    //Delete created item
+    if( item ) delete item;
     }
   }
 

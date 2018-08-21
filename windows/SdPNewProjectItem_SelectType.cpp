@@ -121,7 +121,7 @@ bool SdPNewProjectItem_SelectType::validatePage()
 
 int SdPNewProjectItem_SelectType::nextId() const
   {
-  if( defaultClass <= 4 ) {
+  if( defaultClass <= 5 ) {
     //Create empty object
     if( defaultOrder == 0 )
       return SDP_NPI_NAME;
@@ -149,8 +149,8 @@ void SdPNewProjectItem_SelectType::classChanged(int index)
     case 0 :
       mCreationOrder->addItem( tr("Empty sheet") );
       mDescriptions.append( tr("Creates empty schematic sheet with no any component or graphics.") );
-      mCreationOrder->addItem( tr("Copy of existing sheet") );
-      mDescriptions.append( tr("Creates copy of existing schematic sheet") );
+//      mCreationOrder->addItem( tr("Copy of existing sheet") );
+//      mDescriptions.append( tr("Creates copy of existing schematic sheet") );
       //mCreationType->addItem( tr(""));
       break;
     case 1 :

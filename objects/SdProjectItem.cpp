@@ -154,7 +154,7 @@ void SdProjectItem::getHeader(SdLibraryHeader &hdr) const
 SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle )
   {
   SdUndo *undo = getUndo();
-  if( !undoTitle.isEmpty() )
+  if( !undoTitle.isEmpty() && undo )
     undo->begin( undoTitle, this );
   if( mEditEnable ) {
     if( !edit ) {
@@ -180,7 +180,7 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
     if( edit ) {
       //Enable edit
       //Test if object is used
-      if( getProject()->isUsed( this ) || isAnotherAuthor() ) {
+      if( getProject() && (getProject()->isUsed( this ) || isAnotherAuthor()) ) {
         //Object is used. Create new one
         SdProjectItem *item = dynamic_cast<SdProjectItem*>( copy() );
         item->updateAuthor();
