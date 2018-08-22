@@ -134,12 +134,14 @@ bool SdWProjectList::cmFileClose()
   {
   SdWProjectTree *active = activeProject();
   if( active && active->cmFileClose() ) {
-    //Send signal before closing
-    SdPulsar::sdPulsar->emitCloseProject( active->getProject() );
     //Remove name from drop down box
     mProjectTitles->removeItem( mWProjectStack->currentIndex() );
     //Remove tree window
     mWProjectStack->removeWidget( active );
+    //B035 When close project incorect deleting from comboBox
+    //I move signal sending AFTER remove project from visual widgets
+    //Send signal before deleting
+    SdPulsar::sdPulsar->emitCloseProject( active->getProject() );
     active->deleteLater();
     //Activate other project
     onProjectActivated( mProjectTitles->currentIndex() );
