@@ -1,8 +1,8 @@
 
-//B038 bugs
+//B044 bugs
 //F001 fatal
 //C001 critical
-//D048 do
+//D051 do
 
 
 
@@ -25,8 +25,22 @@
 
 //TODO B038 When undo sheet insert editor not removed
 
+//TODO B039 Can't delete section when press Delete button
+
+//TODO B040 After smart net insertion no segment utilisation performed
+
+//TODO B041 In active text mode +-* buttons not supported
+
+//TODO B042 Wrong renumeration with multisection component with sections in separate sheets
+
+//TODO D050 Append component rotation by keyboard
+
 //===================================================================================
 //Fixed:
+
+//B043 Wrong size of scroll bar when zoomed
+
+//B044 Editor options not applied
 
 //B035 When close project incorect deleting from comboBox
 

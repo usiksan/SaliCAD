@@ -672,12 +672,19 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
         }
       //Update scrollbars
       //Range of scrollbars is twice of over rect existing picture
-      verticalScrollBar()->setRange( -over.getTop() * 2, -over.getBottom() * 2 );
+      SdPoint center = over.center();
+      int ow = over.width();
+      int oh = over.height();
+      over.setWidth( ow * 2 );
+      over.setHeight( oh * 2 );
+      over.moveCenter( center );
+
+      verticalScrollBar()->setRange( -over.getTop(), -over.getBottom() );
       verticalScrollBar()->setSingleStep( mGrid.y() );
       verticalScrollBar()->setPageStep( static_cast<int>(pagey) );
       verticalScrollBar()->setValue( -mOrigin.y() );
 
-      horizontalScrollBar()->setRange( over.getLeft() * 2, over.getRight() * 2 );
+      horizontalScrollBar()->setRange( over.getLeft(), over.getRight() );
       horizontalScrollBar()->setSingleStep( mGrid.x() );
       horizontalScrollBar()->setPageStep( static_cast<int>(pagex) );
       horizontalScrollBar()->setValue( mOrigin.x() );

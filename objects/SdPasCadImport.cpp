@@ -183,6 +183,7 @@ bool SdPasCadImport::import(const QString fname)
         else if( lname == QString("Нижний слой (дорожки)") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_WIRE LID1_BOT );
         else if( lname == QString("Нижний слой (площадки)") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_PAD LID1_BOT );
         else if( lname == QString("Площадки") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_PAD );
+        else if( lname == QString("Невидимые объекты") ) mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_INVISIBLE );
         else mLayerTable[i].mLayer = sdEnvir->getLayer( LID0_COMMON );
         qDebug() << "Layer " << i << mLayerTable[i].name;
         }

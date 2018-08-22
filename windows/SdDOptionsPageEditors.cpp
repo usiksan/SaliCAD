@@ -51,6 +51,7 @@ SdDOptionsPageEditors::SdDOptionsPageEditors(QWidget *parent) : QWidget(parent)
   grid->addWidget( mWireDotWidth = new QLineEdit(), 3, 1 );
   mWireDotWidth->setText( sdEnvir->toPhisSchematic(sdEnvir->mDotWidth) );
 
+  //TODO D050 Assign all other envir values to editor options
   grid->addWidget( new QLabel(tr("Via size:")), 4, 0 );
   grid->addWidget( mViaSize = new QLineEdit(), 4, 1 );
 
@@ -76,5 +77,31 @@ SdDOptionsPageEditors::SdDOptionsPageEditors(QWidget *parent) : QWidget(parent)
 
 void SdDOptionsPageEditors::accept()
   {
+  //Apply current params
+  sdEnvir->mShowRatNet        = mShowRatNet->isChecked();
+  sdEnvir->mShowRemark        = mShowRemarks->isChecked();
+  sdEnvir->mShowMessageRemark = mShowMessage->isChecked();
+  sdEnvir->mCenterCursor      = mCenterCursor->isChecked();
+
+  sdEnvir->mSymPinSize = sdEnvir->fromPhisSchematic( mSymbolPinSize->text() );
+  sdEnvir->mPartPinSize = sdEnvir->fromPhisPcb( mPartPinSize->text() );
+  sdEnvir->mDotSize     = sdEnvir->fromPhisSchematic( mWireDotSize->text() );
+  sdEnvir->mDotWidth    = sdEnvir->fromPhisSchematic( mWireDotWidth->text() );
+
+//  grid->addWidget( mViaSize = new QLineEdit(), 4, 1 );
+//  grid->addWidget( new QLabel(tr("Width step size:")), 5, 0 );
+//  grid->addWidget( mWidthStep = new QLineEdit(), 5, 1 );
+
+//  grid->addWidget( new QLabel(tr("Text step size:")), 6, 0 );
+//  grid->addWidget( mTextSizeStep = new QLineEdit(), 6, 1 );
+
+//  grid->addWidget( new QLabel(tr("Minimal view grid size:")), 7, 0 );
+//  grid->addWidget( mMinViewGridSize = new QLineEdit(), 7, 1 );
+
+//  grid->addWidget( new QLabel(tr("Cursor view size:")), 8, 0 );
+//  grid->addWidget( mCursorViewSize = new QLineEdit(), 8, 1 );
+
+//  grid->addWidget( new QLabel(tr("Trace dot size:")), 9, 0 );
+//  grid->addWidget( mTraceDotSize = new QLineEdit(), 9, 1 );
 
   }
