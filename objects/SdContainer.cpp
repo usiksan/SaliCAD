@@ -276,8 +276,16 @@ void SdContainer::cloneFrom( const SdObject *src )
   if( sour ) {
     clearChildList();
     for( SdObject *ptr : sour->mChildList )
-      if( !ptr->isDeleted() )
-        mChildList.append( ptr->copy() );
+      if( !ptr->isDeleted() ) {
+        //Create copy of object
+        SdObject *cp = ptr->copy();
+        if( cp ) {
+          //If copy is created, then set parent of copy to this container
+          cp->setParent( this );
+          //...and append to containers list
+          mChildList.append( cp );
+          }
+        }
 
     //Copy param table
     mParamTable = sour->mParamTable;

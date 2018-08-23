@@ -25,8 +25,6 @@
 
 //TODO B038 When undo sheet insert editor not removed
 
-//TODO B039 Can't delete section when press Delete button
-
 //TODO B040 After smart net insertion no segment utilisation performed
 
 //TODO B041 In active text mode +-* buttons not supported
@@ -35,6 +33,8 @@
 
 //===================================================================================
 //Fixed:
+
+//B039 Can't delete section when press Delete button
 
 //B042 Wrong renumeration with multisection component with sections in separate sheets
 
