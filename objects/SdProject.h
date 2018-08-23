@@ -66,6 +66,9 @@ class SdProject : public SdContainer
     //Renumeration implements
     void              renumeration();
 
+    //Sheet auto renumeration
+    void              sheetRenumeration();
+
     //Return dirty status
     bool              isDirty() const { return mDirty; }
     void              setDirty();

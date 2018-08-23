@@ -239,7 +239,7 @@ void SdPItemSheet::insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo,
 void SdPItemSheet::writeObject(QJsonObject &obj) const
   {
   SdProjectItem::writeObject( obj );
-  obj.insert( QStringLiteral("index"), mSheetIndex );
+  //obj.insert( QStringLiteral("index"), mSheetIndex );
   }
 
 
@@ -248,6 +248,6 @@ void SdPItemSheet::writeObject(QJsonObject &obj) const
 void SdPItemSheet::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdProjectItem::readObject( map, obj );
-  mSheetIndex = obj.value( QStringLiteral("index") ).toInt();
+  //mSheetIndex = obj.value( QStringLiteral("index") ).toInt();
   }
 

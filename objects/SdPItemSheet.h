@@ -18,6 +18,8 @@ Description
 
 #define SD_TYPE_SHEET "Sheet"
 
+#define SD_SHEET_INDEX_PARAM "{sindex}" //Sheet index in sheet parameters table
+
 class SdPItemPlate;
 class SdContainerSheetNet;
 class SdGraphNetWire;
@@ -49,10 +51,10 @@ class SdPItemSheet : public SdProjectItem
     bool                   getNetFromPoint( SdPoint p, QString &dest );
 
     //Get visual sheet index
-    int                    getSheetIndex() const { return mSheetIndex; }
+    int                    getSheetIndex() const { return paramGet( QString(SD_SHEET_INDEX_PARAM) ).toInt(); }
 
     //Set visual sheet index
-    void                   setSheetIndex( int index ) { mSheetIndex = index; }
+    void                   setSheetIndex( int index, SdUndo *undo ) { paramSet( QString(SD_SHEET_INDEX_PARAM), QString::number( index ), undo ); }
 
     //Get plate from point. Plate may be default pcb or pcb of area
     SdPItemPlate          *getPlate( SdPoint p );

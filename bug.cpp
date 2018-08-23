@@ -31,12 +31,12 @@
 
 //TODO B041 In active text mode +-* buttons not supported
 
-//TODO B042 Wrong renumeration with multisection component with sections in separate sheets
-
 //TODO D050 Append component rotation by keyboard
 
 //===================================================================================
 //Fixed:
+
+//B042 Wrong renumeration with multisection component with sections in separate sheets
 
 //B043 Wrong size of scroll bar when zoomed
 

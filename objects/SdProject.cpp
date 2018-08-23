@@ -189,6 +189,22 @@ void SdProject::renumeration()
 
 
 
+//Sheet auto renumeration
+void SdProject::sheetRenumeration()
+  {
+  //For each sheet assign continuously number
+  int index = 1;
+  forEach( dctSheet, [this,&index] (SdObject *obj) -> bool {
+    SdPItemSheet *sheet = dynamic_cast<SdPItemSheet*>(obj);
+    if( sheet )
+      sheet->setSheetIndex( index++, &mUndo );
+    return true;
+    } );
+  }
+
+
+
+
 void SdProject::setDirty()
   {
   mDirty = true;
@@ -302,6 +318,23 @@ void SdProject::cloneFrom(const SdObject *src)
 
 void SdProject::insertChild(SdObject *child, SdUndo *undo)
   {
+
+  if( child != nullptr && child->getClass() == dctSheet ) {
+    //When sheet inserting we assign it next sheet index
+    //At first count existing sheet number
+    int sheetCount = 1;
+    forEach( dctSheet, [&sheetCount] (SdObject *obj) -> bool {
+      Q_UNUSED(obj)
+      sheetCount++;
+      return true;
+      });
+    //Assign next number to be inserted sheet
+    SdPItemSheet *sheet = dynamic_cast<SdPItemSheet*>( child );
+    if( sheet )
+      sheet->setSheetIndex( sheetCount, undo );
+    }
+
+  //Common insertion
   SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
   if( item ) {
     SdContainer::insertChild( child, undo );

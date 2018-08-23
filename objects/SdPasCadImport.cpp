@@ -603,7 +603,7 @@ bool SdPasCadImport::readSheet(SdObject *obj)
   if( !readObjectTable( sheet ) ) return false;
 
 //  is.Read( &info, sizeof(DSheetInfo) );
-  sheet->mSheetIndex = readInt32();
+  sheet->setSheetIndex( readInt32(), nullptr );
   return true;
   }
 

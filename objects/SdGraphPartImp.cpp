@@ -333,7 +333,7 @@ bool SdGraphPartImp::getLowerPosAndSheet(SdPoint &dest, int &sheet) const
       SdPoint p;
       int s;
       mSections.at(i).mSymImp->getRenumSect( p, s );
-      if( sheet > s ) {
+      if( sheet < s ) {
         //This section in early sheet
         dest  = p;
         sheet = s;

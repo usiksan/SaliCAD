@@ -14,6 +14,7 @@ Description
 #include "SdWProjectTree.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdProjectItem.h"
+#include "objects/SdPItemSheet.h"
 #include "windows/SdPNewProjectItem_SelectType.h"
 #include "windows/SdPNewProjectItem_EnterName.h"
 #include "windows/SdPNewProjectItem_Master.h"
@@ -229,6 +230,10 @@ void SdWProjectTree::cmObjectSort()
     SdProjectItem *item1 = dynamic_cast<SdProjectItem*>(obj1);
     SdProjectItem *item2 = dynamic_cast<SdProjectItem*>(obj2);
     if( item1 == nullptr || item2 == nullptr ) return false;
+    //Special case for sheets
+    //We compare it by its numbers
+    if( item1->getClass() == dctSheet && item2->getClass() == dctSheet )
+      return item1->paramGet( SD_SHEET_INDEX_PARAM ).compare( item2->paramGet( SD_SHEET_INDEX_PARAM ), Qt::CaseInsensitive ) < 0;
     return item1->getTitle().compare( item2->getTitle(), Qt::CaseInsensitive ) < 0;
     } );
 
