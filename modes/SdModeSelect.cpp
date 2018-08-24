@@ -770,6 +770,7 @@ void SdModeSelect::propGetFromBar()
     return true;
     });
 
+  setDirtyCashe();
   update();
   }
 

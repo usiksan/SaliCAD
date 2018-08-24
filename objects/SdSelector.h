@@ -53,6 +53,7 @@ class SdSelector : public SdObject
     void                remove(SdGraph *graph);
     void                insert( SdGraph *graph );
     int                 count() const { return mTable.count(); }
+    SdGraph*            first() const { return *(mTable.cbegin()); }
     void                clear();
     void                operator = ( const SdSelector &sour );
 

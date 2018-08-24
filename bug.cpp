@@ -2,7 +2,7 @@
 //B044 bugs
 //F001 fatal
 //C001 critical
-//D051 do
+//D052 do
 
 
 
@@ -30,6 +30,8 @@
 //TODO B041 In active text mode +-* buttons not supported
 
 //TODO D050 Append component rotation by keyboard
+
+//TODO B045 When cancel mode part pin current step remains after cancel but must be reset
 
 //===================================================================================
 //Fixed:

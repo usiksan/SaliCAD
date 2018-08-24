@@ -149,46 +149,48 @@ class SdGraphPartImp : public SdGraphTraced
 
     // SdObject interface
   public:
-    virtual QString getType() const override { return QStringLiteral(SD_TYPE_PART_IMP); }
-    virtual quint64 getClass() const override { return dctPartImp; }
-    virtual void    attach(SdUndo *undo) override;
-    virtual void    detach(SdUndo *undo) override;
-    virtual void    cloneFrom(const SdObject *src) override;
-    virtual void    writeObject(QJsonObject &obj) const override;
-    virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
-    virtual bool    isUsed(SdObject *obj) const override;
-    virtual void    upgradeProjectItem(SdProjectItem *newItem, SdUndo *undo) override;
+    virtual QString      getType() const override { return QStringLiteral(SD_TYPE_PART_IMP); }
+    virtual quint64      getClass() const override { return dctPartImp; }
+    virtual void         attach(SdUndo *undo) override;
+    virtual void         detach(SdUndo *undo) override;
+    virtual void         cloneFrom(const SdObject *src) override;
+    virtual void         writeObject(QJsonObject &obj) const override;
+    virtual void         readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual bool         isUsed(SdObject *obj) const override;
+    virtual void         upgradeProjectItem(SdProjectItem *newItem, SdUndo *undo) override;
 
     // SdGraph interface
   public:
-    virtual void    saveState(SdUndo *undo) override;
-    virtual void    move(SdPoint offset) override;
-    virtual void    rotate(SdPoint center, SdPropAngle angle) override;
-    virtual void    mirror(SdPoint a, SdPoint b) override;
-    virtual void    setProp(SdPropSelected &prop) override;
-    virtual void    getProp(SdPropSelected &prop) override;
-    virtual void selectByPoint(const SdPoint p, SdSelector *selector) override;
-    virtual void selectByRect(const SdRect &r, SdSelector *selector) override;
-    virtual void    setLayerUsage() override;
-    virtual bool isVisible() override;
-    virtual SdRect getOverRect() const override;
-    virtual int behindCursor(SdPoint p) override;
-    virtual bool getInfo(SdPoint p, QString &info, bool extInfo) override;
-    virtual bool    snapPoint(SdSnapInfo *snap) override;
+    virtual void         saveState(SdUndo *undo) override;
+    virtual void         move(SdPoint offset) override;
+    virtual void         rotate(SdPoint center, SdPropAngle angle) override;
+    virtual void         mirror(SdPoint a, SdPoint b) override;
+    virtual void         setProp(SdPropSelected &prop) override;
+    virtual void         getProp(SdPropSelected &prop) override;
+    virtual void         selectByPoint(const SdPoint p, SdSelector *selector) override;
+    virtual void         selectByRect(const SdRect &r, SdSelector *selector) override;
+    virtual void         setLayerUsage() override;
+    virtual bool         isVisible() override;
+    virtual SdRect       getOverRect() const override;
+    virtual int          behindCursor(SdPoint p) override;
+    virtual bool         getInfo(SdPoint p, QString &info, bool extInfo) override;
+    virtual bool         snapPoint(SdSnapInfo *snap) override;
 
   private:
-    void updatePinsPositions();
+    void                 updatePinsPositions();
     //Pin connection-disconnection by index only for part (internal and undo)
-    void            partPinConnectionSet( int pinIndex, SdGraphRoadPin *roadPin );
+    void                 partPinConnectionSet( int pinIndex, SdGraphRoadPin *roadPin );
 
     friend class SdUndoRecordImpPin;
 
     // SdGraphTraced interface
   public:
-    virtual bool isPointOnNet(SdPoint p, SdStratum stratum, QString *netName, int *destStratum) override;
-    virtual void accumNetSegments( SdPlateNetList &netList ) const override;
-    virtual void drawStratum(SdContext *dc, int stratum ) override;
-    virtual void accumBarriers( SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk ) const override;
+    virtual bool         isPointOnNet(SdPoint p, SdStratum stratum, QString *netName, int *destStratum) override;
+    virtual void         accumNetSegments( SdPlateNetList &netList ) const override;
+    virtual void         drawStratum(SdContext *dc, int stratum ) override;
+    virtual void         accumBarriers( SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk ) const override;
+    //Stratum of object
+    virtual SdStratum    stratum() const override { return mProp.mSide; }
   };
 
 #endif // SDGRAPHPARTIMP_H

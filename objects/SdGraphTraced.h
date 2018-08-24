@@ -29,7 +29,10 @@ class SdGraphTraced : public SdGraph
     SdGraphTraced();
 
     //Information
+    //Rapid plate retrive
     SdPItemPlate        *getPlate() const;
+    //Stratum of object
+    virtual SdStratum    stratum() const = 0;
 
     //Set flag to update rat net. Rat net will be clear and reconstructed
     void                 setDirtyRatNet();
