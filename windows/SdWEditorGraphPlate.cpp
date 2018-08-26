@@ -19,6 +19,7 @@ Description
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
 #include "modes/SdModeCRoadEnter.h"
+#include "modes/SdModeCPartPlace.h"
 
 #include <QDebug>
 #include <QProgressDialog>
@@ -58,9 +59,15 @@ void SdWEditorGraphPlate::cmModeLink()
   {
   }
 
+
+
+
 void SdWEditorGraphPlate::cmModeMovePart()
   {
+  modeSet( new SdModeCPartPlace( this, getProjectItem() ) );
   }
+
+
 
 void SdWEditorGraphPlate::cmModePlace()
   {
@@ -70,10 +77,16 @@ void SdWEditorGraphPlate::cmModeEditWire()
   {
   }
 
+
+
+
 void SdWEditorGraphPlate::cmModeRoadEnter()
   {
   modeSet( new SdModeCRoadEnter( this, getProjectItem() )  );
   }
+
+
+
 
 void SdWEditorGraphPlate::cmModePolygon()
   {
@@ -139,10 +152,22 @@ void SdWEditorGraphPlate::cmCheckRules()
 
 
 
+void SdWEditorGraphPlate::cmModePartSelect(QStringList list)
+  {
+  if( modeGet() )
+    modeGet()->partSelect( list );
+  }
+
+
+
+
 void SdWEditorGraphPlate::cmRenumeration()
   {
   //Perform renumeration of current pcb
   mPlate->renumeration();
+  //Reset current mode
+  if( modeGet() )
+    modeGet()->reset();
 
   dirtyCashe();
   dirtyProject();

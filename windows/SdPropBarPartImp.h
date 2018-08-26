@@ -24,6 +24,7 @@ class SdPropBarPartImp : public QToolBar
   {
     Q_OBJECT
 
+  protected:
     //Part direction
     QComboBox *mDirection;
 
@@ -32,6 +33,8 @@ class SdPropBarPartImp : public QToolBar
 
     //Bottom side
     QAction   *mBottom;
+    //Top side
+    QAction   *mTop;
   public:
     SdPropBarPartImp( const QString title );
 

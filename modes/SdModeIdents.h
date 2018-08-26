@@ -77,6 +77,7 @@ Description
 #define PB_PART_IMP         6
 #define PB_ROAD             7
 #define PB_WIRE             8
-#define PB_LAST             9
+#define PB_PART_PLACE       9
+#define PB_LAST            10
 
 #endif // SDMODEIDENT_H

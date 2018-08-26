@@ -94,6 +94,8 @@ class SdMode
     virtual int     getCursor() const = 0;                  //Номер курсора для режима
     virtual int     getIndex() const = 0;                   //Номер режима в списке режимов
 
+    virtual void    partSelect( QStringList ) {}            //Select parts by list
+
   };
 
 #endif // SDMODE_H

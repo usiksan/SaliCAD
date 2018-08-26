@@ -64,9 +64,23 @@ SdPropBarPartImp::SdPropBarPartImp(const QString title) :
 //    emit propChanged();
 //    });
 
-  mBottom = addAction( QIcon(QStringLiteral(":/pic/flipSide.png")), tr("Part at bottom side") );
+  mTop = addAction( QIcon(QStringLiteral(":/pic/flipSideTop.png")), tr("Part at top side") );
+  mTop->setCheckable(true);
+  connect( mTop, &QAction::triggered, [=](bool) {
+    if( mBottom->isChecked() ) {
+      mBottom->setChecked(false);
+      mTop->setChecked(true);
+      }
+    emit propChanged();
+    });
+
+  mBottom = addAction( QIcon(QStringLiteral(":/pic/flipSideBottom.png")), tr("Part at bottom side") );
   mBottom->setCheckable(true);
   connect( mBottom, &QAction::triggered, [=](bool) {
+    if( mTop->isChecked() ) {
+      mTop->setChecked(false);
+      mBottom->setChecked(true);
+      }
     emit propChanged();
     });
   }
@@ -83,6 +97,7 @@ void SdPropBarPartImp::setPropPartImp(SdPropPartImp *propPartImp)
 
     //Set bottom side
     mBottom->setChecked( propPartImp->mSide.isBottom() );
+    mTop->setChecked( propPartImp->mSide.isTop() );
     }
   }
 
@@ -97,8 +112,8 @@ void SdPropBarPartImp::getPropPartImp(SdPropPartImp *propPartImp)
     if( !angle.isEmpty() )
       propPartImp->mAngle = SdPropAngle::fromString( angle );
 
-    if( mBottom->isChecked() ) propPartImp->mSide = stmBottom;
-    else propPartImp->mSide = stmTop;
+    if( mBottom->isChecked() && !mTop->isChecked() ) propPartImp->mSide = stmBottom;
+    if( !mBottom->isChecked() && mTop->isChecked() ) propPartImp->mSide = stmTop;
     }
   }
 

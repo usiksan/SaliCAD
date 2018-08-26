@@ -180,6 +180,7 @@ class SdWMain : public QMainWindow
     void cmModeRadiusSize();
     void cmModeMovePart();
     void cmModePlace();
+    void cmModePartSelect( QStringList list );
 
     void cmModeEditWire();
     void cmModeRoadEnter();

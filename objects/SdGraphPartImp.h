@@ -107,6 +107,8 @@ class SdGraphPartImp : public SdGraphTraced
     QString         getIdent() const;
     //Check if there free section slot. If there - setup section and return true
     bool            isSectionFree(int *section, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param, SdPItemSymbol *sym );
+    //Get origin of component
+    SdPoint         getOrigin() const { return mOrigin; }
 
 
     //Service

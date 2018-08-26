@@ -27,6 +27,7 @@ Description
 #include "SdPropBarPartImp.h"
 #include "SdPropBarRoad.h"
 #include "SdPropBarWire.h"
+#include "SdPropBarPartPlace.h"
 #include "objects/SdEnvir.h"
 #include <QMenuBar>
 #include <QSettings>
@@ -581,6 +582,13 @@ void SdWCommand::createToolBars(SdWMain *frame)
   wbar->setVisible(false);
   mbarTable[PB_WIRE] = wbar;
   wbar->connect( wbar, &SdPropBarWire::propChanged, frame, &SdWMain::cmPropertiesChange );
+
+  SdPropBarPartPlace *pbar = new SdPropBarPartPlace( QStringLiteral("Part place") );
+  frame->addToolBar( pbar );
+  pbar->setVisible(false);
+  mbarTable[PB_PART_PLACE] = pbar;
+  pbar->connect( pbar, &SdPropBarPartPlace::propChanged, frame, &SdWMain::cmPropertiesChange );
+  pbar->connect( pbar, &SdPropBarPartPlace::partSelect, frame, &SdWMain::cmModePartSelect );
 
   for( int i = 0; i < MD_LAST; i++ )
     if( cmModeTable[i] )

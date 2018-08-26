@@ -1363,6 +1363,15 @@ void SdWMain::cmModePlace()
 
 
 
+void SdWMain::cmModePartSelect(QStringList list)
+  {
+  if( activeEditor() )
+    activeEditor()->cmModePartSelect( list );
+  }
+
+
+
+
 void SdWMain::cmModeEditWire()
   {
   if( activeEditor() )

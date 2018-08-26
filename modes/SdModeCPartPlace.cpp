@@ -14,13 +14,26 @@ Description
 #include "objects/SdGraphPartImp.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
-#include "windows/SdPropBarPartImp.h"
+#include "objects/SdProject.h"
+#include "objects/SdPItemSheet.h"
+#include "objects/SdPulsar.h"
+#include "objects/SdConverterOffset.h"
+#include "windows/SdPropBarPartPlace.h"
 #include "windows/SdWCommand.h"
+#include "windows/SdWEditorGraph.h"
 
 #include <QTransform>
 
 SdModeCPartPlace::SdModeCPartPlace(SdWEditorGraph *editor, SdProjectItem *obj) :
-  SdModeCommon( editor, obj )
+  SdModeCommon( editor, obj ),
+  mShiftKey(false),
+  mBehindCursorPrt(nullptr),   //Компонент, подлежащий выделению при нажатии левой кнопки мыши
+  mInsertFlag(false),        //Автораздвижка компонентов
+  mBigCompPins(0),       //Количество выводов главного компонента
+  mBigCompIndex(-1),      //Индекс главного компонента в таблице компонентов
+  mSmartOrNextId(false),
+  //DLineProp         lineProp;          //Свойства для выделения прямоугольником
+  mBySheet(false)           //Истина, когда производится выбор из листа
   {
 
   }
@@ -28,36 +41,100 @@ SdModeCPartPlace::SdModeCPartPlace(SdWEditorGraph *editor, SdProjectItem *obj) :
 
 void SdModeCPartPlace::activate()
   {
-  if( !mBySheet ) {
-    //Установить шаг 0
-    setStep(psmNoSelect);
-    //Установить панель свойств
-    SetPropBar( GetPropBarId(), &localProp );
-    //Накопить таблицу компонентов
-    info.table.Clear();
-    GetPlate()->ForEachComp( PMAccumIterator(info.table) );
-    //Перейти к выбору следующего компонента
-    NextComp();
+  if( !mBySheet )
+    reset();
+  else {
+    //Activated after selection component from schematic sheet
+    propSetToBar();
     }
-  else GetAllProp();
   }
 
 
 
+
+void SdModeCPartPlace::reset()
+  {
+  unselect();
+  //Установить шаг 0
+  setStep(psmNoSelect);
+  //update step definite params
+  SdPulsar::sdPulsar->emitSetStatusMessage( getStepHelp() );
+  mEditor->viewport()->setCursor( loadCursor(getCursor()) );
+
+  //setup mode step properties bar
+  SdWCommand::setModeBar( getPropBarId() );
+  //setup properties in bar
+  propSetToBar();
+
+  SdPropBarPartPlace *barPartPlace = dynamic_cast<SdPropBarPartPlace*>(SdWCommand::getModeBar(getPropBarId()));
+  barPartPlace->setSmartMode( mSmartOrNextId );
+
+  //Accum existing sheet lists
+  QStringList sheetList;
+  if( mObject->getProject() )
+    mObject->getProject()->forEach( dctSheet, [&sheetList] (SdObject *obj) ->bool {
+      SdPItemSheet *sheet = dynamic_cast<SdPItemSheet*>(obj);
+      if( sheet )
+        sheetList.append( sheet->getTitle() );
+      return true;
+      });
+  //Setup sheet list and current sheet
+  barPartPlace->setSheetList( sheetList, mCurrentSheet );
+
+  //Accum component list
+  QStringList compList;
+  mObject->forEach( dctPartImp, [&compList] (SdObject *obj) -> bool {
+    SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(obj);
+    if( imp )
+      compList.append( imp->getIdent() );
+    return true;
+    });
+  //Setup component list
+  barPartPlace->setComponentList( compList );
+
+  update();
+
+  //Перейти к выбору следующего компонента
+  nextComponent();
+  }
+
+
+
+
+
 void SdModeCPartPlace::drawStatic(SdContext *ctx)
-    {
-    }
+  {
+  //Draw all object except selected
+  mObject->forEach( dctAll, [this, ctx] (SdObject *obj) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>( obj );
+    if( graph != nullptr && graph->getSelector() != &mFragment )
+      graph->draw( ctx );
+    return true;
+    });
+  }
+
+
+
 
 void SdModeCPartPlace::drawDynamic(SdContext *ctx)
-    {
+  {
+  //Draw all selected elements
+  ctx->setOverColor( sdEnvir->getSysColor(scSelected) );
+  mFragment.draw( ctx );
+
+  //On according step
+  if( getStep() == psmBeingSelRect ) {
+    ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltDotted );
+    ctx->rect( SdRect(mFirst, mPrevMove) );
     }
+  }
 
 
 
 
 int SdModeCPartPlace::getPropBarId() const
   {
-  return PB_PART_IMP;
+  return PB_PART_PLACE;
   }
 
 
@@ -67,21 +144,25 @@ void SdModeCPartPlace::propGetFromBar()
   {
   saveStateOfSelectedObjects( QObject::tr("Properties changed") );
 
-  if( mFragment.count() ) setDirty();
+  SdPropBarPartPlace *barPartPlace = dynamic_cast<SdPropBarPartPlace*>(SdWCommand::getModeBar(getPropBarId()));
 
-  //Get new props
-  mLocalProp.clear();
+  if( mFragment.count() ) {
 
-  SdPropBarPartImp *barPartImp = dynamic_cast<SdPropBarPartImp*>(SdWCommand::getModeBar(getPropBarId()));
-  barPartImp->getPropPartImp( &(mLocalProp.mPartImpProp) );
+    setDirty();
 
-  //Setup new properties
-  mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
-    SdGraph *graph = dynamic_cast<SdGraph*>( obj );
-    if( graph != nullptr )
-      graph->setProp( mLocalProp );
-    return true;
-    });
+    //Get new props
+    mLocalProp.clear();
+
+    barPartPlace->getPropPartImp( &(mLocalProp.mPartImpProp) );
+
+    //Setup new properties
+    mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
+      SdGraph *graph = dynamic_cast<SdGraph*>( obj );
+      if( graph != nullptr )
+        graph->setProp( mLocalProp );
+      return true;
+      });
+    }
 
   setDirtyCashe();
   update();
@@ -106,6 +187,34 @@ void SdModeCPartPlace::propSetToBar()
   //SdWCommand::setModeBar( PB_PART_IMP );
   SdPropBarPartImp *barPartImp = dynamic_cast<SdPropBarPartImp*>(SdWCommand::getModeBar(getPropBarId()));
   barPartImp->setPropPartImp( &(mLocalProp.mPartImpProp) );
+  }
+
+
+
+
+void SdModeCPartPlace::partSelect(QStringList list)
+  {
+  for( QString &id : list ) {
+    if( !id.isEmpty() ) {
+      //Enter component name
+      mObject->forEach( dctPartImp, [this,id] (SdObject *obj) -> bool {
+        SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(obj);
+        if( imp && imp->getIdent() == id ) {
+          imp->select( &mFragment );
+          return false;
+          }
+        return true;
+        });
+      }
+    }
+  if( mFragment.count() ) {
+    //Component found. Fix its start position
+    SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(mFragment.first());
+    if( imp ) {
+      mFirst = mPrevMove = imp->getOrigin();
+      setStep( psmMove );
+      }
+    }
   }
 
 
@@ -170,6 +279,8 @@ void SdModeCPartPlace::movePoint(SdPoint p)
     mPrevMove.move( offset );
     update();
     }
+  else if( getStep() == psmNoSelect )
+    checkPoint(p);
   }
 
 
@@ -334,8 +445,9 @@ void SdModeCPartPlace::stopDrag(SdPoint p)
 
 
 bool SdModeCPartPlace::getInfo(SdPoint p, QString &info)
-    {
-    }
+  {
+  return false;
+  }
 
 
 
@@ -416,55 +528,57 @@ int SdModeCPartPlace::getIndex() const
 
 void SdModeCPartPlace::unselect()
   {
-  //Отменить выделение резинок
-  GetPlate()->ForEachNet( DIPlateNetUnselect() );
-  //Пометить развыделенные компоненты как размещенные и обновить обнаруженную группу
-  fragment.ForEach( PMUnselectIterator( info.table, info.patSour ) );
-//  SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>( obj );
+  if( mFragment.count() )
+    mFragment.removeAll();
+//  //Отменить выделение резинок
+//  GetPlate()->ForEachNet( DIPlateNetUnselect() );
+//  //Пометить развыделенные компоненты как размещенные и обновить обнаруженную группу
+//  fragment.ForEach( PMUnselectIterator( info.table, info.patSour ) );
+////  SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>( obj );
 
-  //Расчитать следующий smart - копонент, за основу берем последний
-  SdGraphPartImp *last = dynamic_cast<SdGraphPartImp*>( mFragment.count() ? mFragment.first() : nullptr );
-  if( last )
-    mSmartName = last->getIdent();
-  else
-    mSmartName = "R1";
+//  //Расчитать следующий smart - копонент, за основу берем последний
+//  SdGraphPartImp *last = dynamic_cast<SdGraphPartImp*>( mFragment.count() ? mFragment.first() : nullptr );
+//  if( last )
+//    mSmartName = last->getIdent();
+//  else
+//    mSmartName = "R1";
 
 
-  if( sdEnvir->mPlaceMode == dpmNextNumber ) {
-    //Следующий по номеру в группе
-    DName Name( smartName );
-    CreateNextName( Name, Name );
-    smartName = Name;
-    }
-  else {
-    //Следующий ближайший не размещенный
-    if( bigCompIndex >= 0 ) {
-      int sheetIndex = info.table[bigCompIndex].sheet;
-      int target = -1;
-      DPoint from(info.table[bigCompIndex].inShem);
-      int distance = illegalRatLen;
-      for( NCount i = 0; i < info.table.GetNumber(); ++i )
-        if( info.table[i].placed || info.table[i].sheet != sheetIndex ) continue;
-        else if( from.GetDistance( info.table[i].inShem ) < distance ) {
-          distance = from.GetDistance( info.table[target = i].inShem );
-          }
-      if( target >= 0 ) smartName = info.table[target].pos;
-      else {
-        DName Name( smartName );
-        CreateNextName( Name, Name ); //В случае отсутствия варианта - следующий по порядку
-        smartName = Name;
-        }
-      }
-    else {
-      DName Name( smartName );
-      CreateNextName( Name, Name ); //В случае отсутствия варианта - следующий по порядку
-      smartName = Name;
-      }
-    }
+//  if( sdEnvir->mPlaceMode == dpmNextNumber ) {
+//    //Следующий по номеру в группе
+//    DName Name( smartName );
+//    CreateNextName( Name, Name );
+//    smartName = Name;
+//    }
+//  else {
+//    //Следующий ближайший не размещенный
+//    if( bigCompIndex >= 0 ) {
+//      int sheetIndex = info.table[bigCompIndex].sheet;
+//      int target = -1;
+//      DPoint from(info.table[bigCompIndex].inShem);
+//      int distance = illegalRatLen;
+//      for( NCount i = 0; i < info.table.GetNumber(); ++i )
+//        if( info.table[i].placed || info.table[i].sheet != sheetIndex ) continue;
+//        else if( from.GetDistance( info.table[i].inShem ) < distance ) {
+//          distance = from.GetDistance( info.table[target = i].inShem );
+//          }
+//      if( target >= 0 ) smartName = info.table[target].pos;
+//      else {
+//        DName Name( smartName );
+//        CreateNextName( Name, Name ); //В случае отсутствия варианта - следующий по порядку
+//        smartName = Name;
+//        }
+//      }
+//    else {
+//      DName Name( smartName );
+//      CreateNextName( Name, Name ); //В случае отсутствия варианта - следующий по порядку
+//      smartName = Name;
+//      }
+//    }
 
-  //Убрать компоненты из выделения
-  fragment.RemoveAll();  //Объекты становятся невыделенными
-  GetAllProp();
+//  //Убрать компоненты из выделения
+//  fragment.RemoveAll();  //Объекты становятся невыделенными
+//  GetAllProp();
   }
 
 
@@ -510,6 +624,15 @@ void SdModeCPartPlace::saveStateOfSelectedObjects( const QString undoTitle )
 
 
 
+//Perform placing
+void SdModeCPartPlace::place()
+  {
+
+  }
+
+
+
+
 //Check components behind point
 void SdModeCPartPlace::checkPoint(SdPoint p)
   {
@@ -527,6 +650,16 @@ void SdModeCPartPlace::checkPoint(SdPoint p)
   else
     mBehindCursorPrt = nullptr;
   SdPulsar::sdPulsar->setStatusMessage( getStepHelp() );
+  mEditor->viewport()->setCursor( loadCursor(getCursor()) );
+  }
+
+
+
+
+//Prepare next component to select
+void SdModeCPartPlace::nextComponent()
+  {
+
   }
 
 

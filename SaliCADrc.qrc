@@ -219,5 +219,10 @@
         <file>pic/objectCategory.png</file>
         <file>pic/renumeration.png</file>
         <file>pic/showField.png</file>
+        <file>pic/flipSideBottom.png</file>
+        <file>pic/flipSideTop.png</file>
+        <file>pic/placeNextId.png</file>
+        <file>pic/placeSmartMode.png</file>
+        <file>pic/placeSheet.png</file>
     </qresource>
 </RCC>

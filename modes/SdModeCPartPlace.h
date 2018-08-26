@@ -70,19 +70,23 @@ class SdModeCPartPlace : public SdModeCommon
     bool               mInsertFlag;        //Автораздвижка компонентов
     int                mBigCompPins;       //Количество выводов главного компонента
     int                mBigCompIndex;      //Индекс главного компонента в таблице компонентов
+    bool               mSmartOrNextId;
     //DLineProp         lineProp;          //Свойства для выделения прямоугольником
     bool               mBySheet;           //Истина, когда производится выбор из листа
+    QString            mCurrentSheet;      //Current sheet component selected from
   public:
     SdModeCPartPlace( SdWEditorGraph *editor, SdProjectItem *obj );
 
     // SdMode interface
   public:
-    virtual void activate() override;
+    virtual void    activate() override;
+    virtual void    reset() override;
     virtual void drawStatic(SdContext *ctx) override;
     virtual void drawDynamic(SdContext *ctx) override;
     virtual int     getPropBarId() const override;
     virtual void    propGetFromBar() override;
     virtual void    propSetToBar() override;
+    virtual void    partSelect(QStringList list) override;            //Select parts by list
     virtual void    enterPoint(SdPoint) override;
     virtual void    cancelPoint(SdPoint) override;
     virtual void    movePoint(SdPoint) override;
