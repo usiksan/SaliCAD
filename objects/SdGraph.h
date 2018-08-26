@@ -35,6 +35,7 @@ class SdGraph : public SdObject
 
     //Select object
     SdSelector*    getSelector() { return mSelector; }
+    bool           isSelected() const { return mSelector != nullptr; }
 
     //Save object state
     virtual void   saveState( SdUndo *undo );

@@ -16,6 +16,7 @@ Description
 #include "objects/SdEnvir.h"
 #include "objects/SdProject.h"
 #include "objects/SdPItemSheet.h"
+#include "objects/SdPItemPlate.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdConverterOffset.h"
 #include "windows/SdPropBarPartPlace.h"
@@ -43,10 +44,6 @@ void SdModeCPartPlace::activate()
   {
   if( !mBySheet )
     reset();
-  else {
-    //Activated after selection component from schematic sheet
-    propSetToBar();
-    }
   }
 
 
@@ -122,6 +119,18 @@ void SdModeCPartPlace::drawDynamic(SdContext *ctx)
   ctx->setOverColor( sdEnvir->getSysColor(scSelected) );
   mFragment.draw( ctx );
 
+  //If show rat net and selection present
+  if( sdEnvir->mShowRatNet && mFragment.count() ) {
+    //Draw rat net pairs for selected components
+    ctx->setPen( 0, sdEnvir->getSysColor(scRatNet), dltSolid );
+    mFragment.forEach( dctPartImp, [this,ctx] (SdGraph *graph) -> bool {
+      SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(graph);
+      if( imp )
+        imp->drawRatNet( ctx, mNetList );
+      return true;
+      });
+    }
+
   //On according step
   if( getStep() == psmBeingSelRect ) {
     ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltDotted );
@@ -187,6 +196,8 @@ void SdModeCPartPlace::propSetToBar()
   //SdWCommand::setModeBar( PB_PART_IMP );
   SdPropBarPartImp *barPartImp = dynamic_cast<SdPropBarPartImp*>(SdWCommand::getModeBar(getPropBarId()));
   barPartImp->setPropPartImp( &(mLocalProp.mPartImpProp) );
+
+  dirtyRatNet();
   }
 
 
@@ -212,6 +223,7 @@ void SdModeCPartPlace::partSelect(QStringList list)
     SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(mFragment.first());
     if( imp ) {
       mFirst = mPrevMove = imp->getOrigin();
+      setDirtyCashe();
       setStep( psmMove );
       }
     }
@@ -245,6 +257,7 @@ void SdModeCPartPlace::enterPoint(SdPoint p)
       nextComponent();
       break;
     }
+  dirtyRatNet();
   setDirtyCashe();
   update();
   }
@@ -383,6 +396,8 @@ SdPoint SdModeCPartPlace::enterPrev()
       propSetToBar();
       //And start move it
       setStep( psmMove );
+      dirtyRatNet();
+      setDirtyCashe();
       update();
       }
     }
@@ -435,6 +450,7 @@ void SdModeCPartPlace::stopDrag(SdPoint p)
     mFragment.setOrigin( p );
     propSetToBar();
     setStep( mFragment.count() ? psmMove : psmNoSelect );
+    dirtyRatNet();
     setDirtyCashe();
     update();
     mFirst = p;
@@ -659,6 +675,33 @@ void SdModeCPartPlace::checkPoint(SdPoint p)
 //Prepare next component to select
 void SdModeCPartPlace::nextComponent()
   {
+
+  }
+
+
+
+
+SdPItemPlate *SdModeCPartPlace::plate()
+  {
+  return dynamic_cast<SdPItemPlate*>(mObject);
+  }
+
+
+
+
+void SdModeCPartPlace::dirtyRatNet()
+  {
+  plate()->setDirtyRatNet();
+
+  //Accum current unselected nets
+  mNetList.clear();
+  //Accum points for nets
+  mObject->forEach( dctAll, [this] (SdObject *obj) -> bool {
+    SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
+    if( traced && !traced->isSelected() )
+      traced->accumNetSegments( mNetList );
+    return true;
+    });
 
   }
 

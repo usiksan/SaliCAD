@@ -148,6 +148,8 @@ class SdGraphPartImp : public SdGraphTraced
     void            drawWithoutPads( SdContext *cdx );
     //Draw pads only
     void            drawPads( SdContext *cdx, SdStratum stratum, const QString highlightNetName );
+    //Draw rat net
+    void            drawRatNet( SdContext *cdx, SdPlateNetList &netList );
 
     // SdObject interface
   public:

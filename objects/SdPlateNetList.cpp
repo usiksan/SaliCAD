@@ -24,7 +24,7 @@ SdPlateNetList::SdPlateNetList()
 
 SdPlateNetList::~SdPlateNetList()
   {
-  qDeleteAll( mNetList );
+  clear();
   }
 
 
@@ -52,6 +52,28 @@ void SdPlateNetList::buildRatNet(SdRatNet *ratNet)
   {
   for( SdPlateNet *net : mNetList )
     net->buildRatNet( ratNet );
+  }
+
+
+
+
+//Clear net list
+void SdPlateNetList::clear()
+  {
+  qDeleteAll( mNetList );
+  mNetList.clear();
+  }
+
+
+
+
+//Find nearest point for netName in net list
+SdPoint SdPlateNetList::nearestPoint(const QString netName, SdPoint p)
+  {
+  //If net with netName not contained in list, then create new one
+  if( mNetList.contains(netName) )
+    return mNetList[netName]->nearestPoint( p );
+  return p;
   }
 
 

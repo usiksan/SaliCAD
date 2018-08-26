@@ -160,7 +160,7 @@ void SdPItemPlate::buildRatNet()
   //Accum points for nets
   forEach( dctAll, [&netList] (SdObject *obj) -> bool {
     SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
-    if( traced )
+    if( traced && !traced->isSelected() )
       traced->accumNetSegments( netList );
     return true;
     });

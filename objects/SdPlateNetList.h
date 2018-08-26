@@ -29,10 +29,16 @@ class SdPlateNetList {
     ~SdPlateNetList();
 
     //Add net segment to appropriate net
-    void addNetSegment(const QString netName, SdStratum s, SdPoint p1, SdPoint p2);
+    void    addNetSegment(const QString netName, SdStratum s, SdPoint p1, SdPoint p2);
 
     //For each net build ratnet
-    void buildRatNet( SdRatNet *ratNet );
+    void    buildRatNet( SdRatNet *ratNet );
+
+    //Clear net list
+    void    clear();
+
+    //Find nearest point for netName in net list
+    SdPoint nearestPoint( const QString netName, SdPoint p );
   };
 
 

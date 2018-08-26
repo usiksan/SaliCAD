@@ -31,10 +31,13 @@ class SdPlateNet
     SdPlateNet();
 
     //Append one net segment. Check and manage subnets
-    void addNetSegment(SdStratum s, SdPoint p1, SdPoint p2);
+    void    addNetSegment(SdStratum s, SdPoint p1, SdPoint p2);
 
     //Build ratnet as pair for each-to-other subnets
-    void buildRatNet( SdRatNet *ratNet ) const;
+    void    buildRatNet( SdRatNet *ratNet ) const;
+
+    //Neares point
+    SdPoint nearestPoint( SdPoint p );
 
   private:
     //For each points if point subnet equals oldSubNet then replace on newSubNet

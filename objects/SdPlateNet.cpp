@@ -101,6 +101,39 @@ void SdPlateNet::buildRatNet(SdRatNet *ratNet) const
 
 
 
+
+//Neares point
+SdPoint SdPlateNet::nearestPoint(SdPoint p)
+  {
+  if( mSegmentList.count() == 0 )
+    return p;
+
+  //Scan all segments and find nearest point
+  SdPoint nearest = mSegmentList.at(0).mSegment.getP1();
+  double d = p.getSquareDistance( nearest );
+  for( const SdPlateNetSegment &segment : mSegmentList ) {
+    double td = p.getSquareDistance( segment.mSegment.getP1() );
+    //If new point distance is shortest then reassign
+    if( td < d ) {
+      d = td;
+      nearest = segment.mSegment.getP1();
+      }
+
+    td = p.getSquareDistance( segment.mSegment.getP2() );
+    //If new point distance is shortest then reassign
+    if( td < d ) {
+      d = td;
+      nearest = segment.mSegment.getP2();
+      }
+    }
+  return nearest;
+  }
+
+
+
+
+
+
 //For each points if point subnet equals oldSubNet then replace on newSubNet
 void SdPlateNet::replaceSubNet(int oldSubNet, int newSubNet)
   {

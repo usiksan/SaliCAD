@@ -443,6 +443,22 @@ void SdGraphPartImp::drawPads(SdContext *cdx, SdStratum stratum, const QString h
 
 
 
+
+//Draw rat net
+void SdGraphPartImp::drawRatNet(SdContext *cdx, SdPlateNetList &netList)
+  {
+  for( const SdPartImpPin &pin : mPins )
+    if( pin.isConnected() ) {
+      SdPoint p1 = pin.mPosition;
+      SdPoint p2 = netList.nearestPoint( pin.getNetName(), p1 );
+      if( p1 != p2 )
+        cdx->line( p1, p2 );
+      }
+  }
+
+
+
+
 //Check if there free section slot
 bool SdGraphPartImp::isSectionFree(int *section, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param, SdPItemSymbol *sym)
   {

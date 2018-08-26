@@ -17,6 +17,7 @@ Description
 #include "SdModeCommon.h"
 #include "objects/SdContainer.h"
 #include "objects/SdPropSelected.h"
+#include "objects/SdPlateNetList.h"
 
 //==============================================================================
 //--------------------- Режимы размещения --------------------------------------
@@ -74,6 +75,8 @@ class SdModeCPartPlace : public SdModeCommon
     //DLineProp         lineProp;          //Свойства для выделения прямоугольником
     bool               mBySheet;           //Истина, когда производится выбор из листа
     QString            mCurrentSheet;      //Current sheet component selected from
+
+    SdPlateNetList     mNetList;           //Net list for rat net creation
   public:
     SdModeCPartPlace( SdWEditorGraph *editor, SdProjectItem *obj );
 
@@ -121,6 +124,10 @@ class SdModeCPartPlace : public SdModeCommon
 
     //Prepare next component to select
     void nextComponent();
+
+    SdPItemPlate *plate();
+
+    void          dirtyRatNet();
   };
 
 #endif // SDMODECPARTPLACE_H
