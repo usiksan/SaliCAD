@@ -9,7 +9,9 @@ Web
   www.saliLab.ru
 
 Description
+  Object to send messages to visual elements
 */
+
 
 #include "SdPulsar.h"
 
@@ -53,6 +55,22 @@ void SdPulsar::emitActivateItem(SdProjectItem *item)
 void SdPulsar::emitCloseEditView(SdProjectItem *item)
   {
   emit closeEditView( item );
+  }
+
+
+
+//Browse part in sheet
+void SdPulsar::emitBrowseSheetPart(SdProjectItem *sheet, SdProjectItem *plate)
+  {
+  emit browseSheetPart( sheet, plate );
+  }
+
+
+
+//Components, selected from sheet
+void SdPulsar::emitSelectedParts(SdProjectItem *plate, QStringList list)
+  {
+  emit selectedParts( plate, list );
   }
 
 

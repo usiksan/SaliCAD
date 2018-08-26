@@ -128,6 +128,8 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   connect( SdPulsar::sdPulsar, &SdPulsar::setStatusPositions, this, &SdWMain::setStatusPositions );
   connect( SdPulsar::sdPulsar, &SdPulsar::setStatusMessage, this, &SdWMain::setStatusMessage );
   connect( SdPulsar::sdPulsar, &SdPulsar::renameItem, this, &SdWMain::onUpdateItemTitle );
+  connect( SdPulsar::sdPulsar, &SdPulsar::browseSheetPart, this, &SdWMain::onBrowseSheetPart );
+  connect( SdPulsar::sdPulsar, &SdPulsar::selectedParts, this, &SdWMain::onSelectedParts );
 
   //Clipboard notification
   connect( QGuiApplication::clipboard(), &QClipboard::changed, this, &SdWMain::onClipboardChanged );
@@ -341,6 +343,33 @@ void SdWMain::onClipboardChanged(QClipboard::Mode mode)
     if( activeEditor() ) activeEditor()->cmClipboardChange();
     else SdWCommand::cmEditPaste->setEnabled(false);
     }
+  }
+
+
+
+
+
+//Browse part in sheet
+void SdWMain::onBrowseSheetPart(SdProjectItem *sheet, SdProjectItem *plate)
+  {
+  //Brings sheet editor on top
+  onActivateProjectItem( sheet );
+  //set browse mode
+  if( activeEditor() )
+    activeEditor()->cmModeBrowse( plate );
+  }
+
+
+
+
+//Components, selected from sheet
+void SdWMain::onSelectedParts(SdProjectItem *plate, QStringList list)
+  {
+  //Brings plate editor on top
+  onActivateProjectItem( plate );
+  //Select components
+  if( activeEditor() )
+    activeEditor()->cmModePartSelect( list );
   }
 
 

@@ -41,6 +41,10 @@ class SdPulsar : public QObject
     void emitActivateItem(SdProjectItem *item);
     //Need close item edit (view)
     void emitCloseEditView( SdProjectItem *item );
+    //Browse part in sheet
+    void emitBrowseSheetPart( SdProjectItem *sheet, SdProjectItem *plate );
+    //Components, selected from sheet
+    void emitSelectedParts( SdProjectItem *plate, QStringList list );
 
     //Status bar
     void emitSetStatusLabels( const QString xlabel, const QString ylabel );
@@ -70,6 +74,10 @@ class SdPulsar : public QObject
     void activateItem( SdProjectItem *item );
     //Need close item edit (view)
     void closeEditView( SdProjectItem *item );
+    //Browse part in sheet
+    void browseSheetPart( SdProjectItem *sheet, SdProjectItem *plate );
+    //Components, selected from sheet
+    void selectedParts( SdProjectItem *plate, QStringList list );
 
     //Status bar
     void setStatusLabels( const QString xlabel, const QString ylabel );

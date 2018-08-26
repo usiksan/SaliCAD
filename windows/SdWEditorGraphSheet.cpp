@@ -22,6 +22,7 @@ Description
 #include "modes/SdModeWireDisconnect.h"
 #include "modes/SdModeCBus.h"
 #include "modes/SdModeCFragment.h"
+#include "modes/SdModeTBrowseSheetPart.h"
 #include <QDebug>
 
 SdWEditorGraphSheet::SdWEditorGraphSheet(SdPItemSheet *sch, QWidget *parent) :
@@ -111,6 +112,16 @@ void SdWEditorGraphSheet::cmModePcbArea()
 void SdWEditorGraphSheet::cmModeNetName()
   {
   modeSet( new SdModeCNetName( this, mSheet ) );
+  }
+
+
+
+
+
+//Browse part implement in sheet
+void SdWEditorGraphSheet::cmModeBrowse(SdProjectItem *plate)
+  {
+  modeCall( new SdModeTBrowseSheetPart( this, mSheet, plate ) );
   }
 
 

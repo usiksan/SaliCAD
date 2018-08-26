@@ -53,6 +53,10 @@ class SdWEditorGraphSheet : public SdWEditorGraph
     //Sheet net name insertion mode
     virtual void           cmModeNetName() override;
 
+    //Browse part implement in sheet
+    virtual void           cmModeBrowse(SdProjectItem *plate) override;
+
+
     virtual void cmModeNetList() override;
 
     virtual void           cmRenumeration() override;

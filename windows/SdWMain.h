@@ -67,6 +67,12 @@ class SdWMain : public QMainWindow
 
     void onClipboardChanged( QClipboard::Mode mode );
 
+    //Browse part in sheet
+    void onBrowseSheetPart( SdProjectItem *sheet, SdProjectItem *plate );
+    //Components, selected from sheet
+    void onSelectedParts( SdProjectItem *plate, QStringList list );
+
+
 
     //Calling when press tab of editor
     void onActivateEditor( int index );

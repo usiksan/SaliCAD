@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Part implement placement mode
 */
 #include "SdModeCPartPlace.h"
 #include "objects/SdGraphPartImp.h"
@@ -23,7 +24,7 @@ Description
 #include "windows/SdWCommand.h"
 #include "windows/SdWEditorGraph.h"
 
-#include <QTransform>
+
 
 SdModeCPartPlace::SdModeCPartPlace(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeCommon( editor, obj ),
@@ -483,6 +484,8 @@ QString SdModeCPartPlace::getStepHelp() const
       return temp.arg(str).arg(mSmartName);
       }
     }
+  if( mBySheet )
+    return QObject::tr("Press left button to go to sheet to select component, middle button: ") + mSmartName;
   //    "Наведи мышь и выбери компонент для расстановки, средняя - ",
   return QObject::tr("Press left button on component to select for placing, middle button: ") + mSmartName;
   }

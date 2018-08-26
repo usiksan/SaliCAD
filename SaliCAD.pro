@@ -223,7 +223,8 @@ SOURCES += \
     windows/SdPExportPlate_Gerber.cpp \
     windows/SdPNewProjectItem_Copy.cpp \
     windows/SdDParamEditor.cpp \
-    windows/SdPropBarPartPlace.cpp
+    windows/SdPropBarPartPlace.cpp \
+    modes/SdModeTBrowseSheetPart.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -443,7 +444,8 @@ HEADERS  += \
     windows/SdPExportPlate_Gerber.h \
     windows/SdPNewProjectItem_Copy.h \
     windows/SdDParamEditor.h \
-    windows/SdPropBarPartPlace.h
+    windows/SdPropBarPartPlace.h \
+    modes/SdModeTBrowseSheetPart.h
 
 DISTFILES += \
     license.txt
