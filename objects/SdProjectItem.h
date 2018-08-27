@@ -73,8 +73,12 @@ class SdProjectItem : public SdContainer
     SdGraphIdent          *getIdent();
     SdGraphIdent          *createIdent();
 
+    //Origin point
     SdPoint                getOrigin() const { return mOrigin; }
     void                   setOrigin( const SdPoint org, SdUndo *undo );
+
+    //Set layers usage
+    void                   setLayerUsage();
 
     //Status creation flag for project.
     void                   setHand() { mAuto = false; }

@@ -18,6 +18,7 @@ Description
 #include "SdConfig.h"
 #include "SdObjectMap.h"
 #include "SdUndo.h"
+
 #include <QJsonObject>
 
 
@@ -136,5 +137,27 @@ T* sdObjectOnly( SdObject *obj ) {
   delete obj;
   return 0;
   }
+
+
+//Helper template for dynamic type casting
+//Usage
+// fun( SdObject *obj ) {
+//   SdPtr<SdGraph> graph( obj );
+//   ...
+template <class objectType>
+class SdPtr {
+    objectType *mPtr;
+  public:
+    SdPtr( SdObject *obj ) : mPtr( dynamic_cast<objectType*>(obj) ) {}
+
+    bool isValid() const { return mPtr != nullptr; }
+
+    operator bool () const { return mPtr != nullptr; }
+
+    objectType *operator -> () { return mPtr; }
+
+    objectType *ptr() const { return mPtr; }
+  };
+
 
 #endif // SDOBJECT_H

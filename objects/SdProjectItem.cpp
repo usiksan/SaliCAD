@@ -314,6 +314,20 @@ void SdProjectItem::setOrigin(const SdPoint org, SdUndo *undo)
 
 
 
+//Set layers usage
+void SdProjectItem::setLayerUsage()
+  {
+  forEach( dctAll, [] (SdObject *obj) ->bool {
+    SdPtr<SdGraph> graph(obj);
+    if( graph )
+      graph->setLayerUsage();
+    return true;
+    });
+  }
+
+
+
+
 //Delete object if it is mAuto=true and no more reference to it
 void SdProjectItem::autoDelete(SdUndo *undo)
   {

@@ -26,8 +26,8 @@ class SdDGetBus : public QDialog
 
     QStringList mNets;
   public:
-    explicit SdDGetBus(QWidget *parent = 0);
-    ~SdDGetBus();
+    explicit SdDGetBus(QWidget *parent = nullptr);
+    ~SdDGetBus() override;
 
     QStringList busList() const { return mNets; }
 

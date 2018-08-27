@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Browse part in schematic sheet to place in plate
 */
 #ifndef SDMODETBROWSESHEETPART_H
 #define SDMODETBROWSESHEETPART_H
@@ -27,12 +28,14 @@ class SdModeTBrowseSheetPart : public SdModeTemp
 
     // SdMode interface
   public:
-    virtual SdPoint enterPrev() override;
     virtual QString getStepHelp() const override;
     virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;
-    virtual int getCursor() const override;
-    virtual int getIndex() const override;
+    virtual int     getCursor() const override;
+    virtual int     getIndex() const override;
+    virtual void    movePoint(SdPoint) override;
+    virtual void    enterPoint(SdPoint) override;
+    virtual void    cancelPoint(SdPoint) override;
   };
 
 #endif // SDMODETBROWSESHEETPART_H

@@ -164,9 +164,9 @@ QString SdProject::getUnusedNetName()
 void SdProject::accumLayerUsage()
   {
   forEach( dctAll, [] ( SdObject *obj ) -> bool {
-    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-    if( graph != nullptr )
-      graph->setLayerUsage();
+    SdPtr<SdProjectItem> pi(obj);
+    if( pi )
+      pi->setLayerUsage();
     return true;
     } );
   }
@@ -179,7 +179,7 @@ void SdProject::renumeration()
   {
   //For each plate perform renumeration
   forEach( dctPlate, [] (SdObject *obj) -> bool {
-    SdPItemPlate *plate = dynamic_cast<SdPItemPlate*>(obj);
+    SdPtr<SdPItemPlate> plate(obj);
     if( plate )
       plate->renumeration();
     return true;
@@ -195,7 +195,7 @@ void SdProject::sheetRenumeration()
   //For each sheet assign continuously number
   int index = 1;
   forEach( dctSheet, [this,&index] (SdObject *obj) -> bool {
-    SdPItemSheet *sheet = dynamic_cast<SdPItemSheet*>(obj);
+    SdPtr<SdPItemSheet> sheet(obj);
     if( sheet )
       sheet->setSheetIndex( index++, &mUndo );
     return true;
@@ -219,7 +219,7 @@ bool SdProject::isNameUsed(const QString name) const
   {
   //Find object with desired name in this project
   for( SdObjectPtr ptr : mChildList ) {
-    SdProjectItemPtr pi = dynamic_cast<SdProjectItemPtr>( ptr );
+    SdPtr<SdProjectItem> pi(ptr);
     if( pi && !pi->isDeleted() && pi->getTitle() == name && pi->getAuthor() == SdProjectItem::getDefaultAuthor() )
       return true;
     }
@@ -233,11 +233,29 @@ bool SdProject::isNameUsed(const QString name) const
 SdObjectPtr SdProject::item(QTreeWidgetItem *src) const
   {
   for( SdObjectPtr ptr : mChildList ) {
-    SdProjectItemPtr pi = dynamic_cast<SdProjectItemPtr>( ptr );
+    SdPtr<SdProjectItem> pi(ptr);
     if( pi && pi->mTreeItem == src )
       return ptr;
     }
   return nullptr;
+  }
+
+
+
+
+
+SdObjectPtr SdProject::itemByName(quint64 mask, const QString name) const
+  {
+  SdObjectPtr ptr = nullptr;
+  forEachConst( mask, [name,&ptr] (SdObject *obj ) -> bool {
+    SdPtr<SdProjectItem> item(obj);
+    if( item && item->getTitle() == name ) {
+      ptr = item.ptr();
+      return false;
+      }
+    return true;
+    });
+  return ptr;
   }
 
 
@@ -329,17 +347,17 @@ void SdProject::insertChild(SdObject *child, SdUndo *undo)
       return true;
       });
     //Assign next number to be inserted sheet
-    SdPItemSheet *sheet = dynamic_cast<SdPItemSheet*>( child );
+    SdPtr<SdPItemSheet> sheet(child);
     if( sheet )
       sheet->setSheetIndex( sheetCount, undo );
     }
 
   //Common insertion
-  SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
+  SdPtr<SdProjectItem> item(child);
   if( item ) {
     SdContainer::insertChild( child, undo );
     mDirty = true;
-    SdPulsar::sdPulsar->emitInsertItem( item );
+    SdPulsar::sdPulsar->emitInsertItem( item.ptr() );
     }
   }
 
@@ -348,9 +366,9 @@ void SdProject::insertChild(SdObject *child, SdUndo *undo)
 
 void SdProject::undoInsertChild(SdObject *child)
   {
-  SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
+  SdPtr<SdProjectItem> item(child);
   if( item && item->getParent() == this ) {
-    SdPulsar::sdPulsar->emitRemoveItem( item );
+    SdPulsar::sdPulsar->emitRemoveItem( item.ptr() );
     mDirty = true;
     SdContainer::undoInsertChild( child );
     }
@@ -360,11 +378,11 @@ void SdProject::undoInsertChild(SdObject *child)
 
 void SdProject::redoInsertChild(SdObject *child)
   {
-  SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
+  SdPtr<SdProjectItem> item(child);
   if( item ) {
     SdContainer::redoInsertChild( child );
     mDirty = true;
-    SdPulsar::sdPulsar->emitInsertItem( item );
+    SdPulsar::sdPulsar->emitInsertItem( item.ptr() );
     }
   }
 
@@ -373,9 +391,9 @@ void SdProject::redoInsertChild(SdObject *child)
 
 void SdProject::deleteChild(SdObject *child, SdUndo *undo)
   {
-  SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
+  SdPtr<SdProjectItem> item(child);
   if( item && item->getParent() == this ) {
-    SdPulsar::sdPulsar->emitRemoveItem( item );
+    SdPulsar::sdPulsar->emitRemoveItem( item.ptr() );
     mDirty = true;
     SdContainer::deleteChild( child, undo );
     }
@@ -386,11 +404,11 @@ void SdProject::deleteChild(SdObject *child, SdUndo *undo)
 
 void SdProject::undoDeleteChild(SdObject *child)
   {
-  SdProjectItem *item = dynamic_cast<SdProjectItem*>( child );
+  SdPtr<SdProjectItem> item(child);
   if( item && item->getParent() == this ) {
     SdContainer::undoDeleteChild( child );
     mDirty = true;
-    SdPulsar::sdPulsar->emitInsertItem( item );
+    SdPulsar::sdPulsar->emitInsertItem( item.ptr() );
     }
   }
 
@@ -406,8 +424,8 @@ bool SdProject::isNetNameUsed(const QString netName)
   {
   bool unused = true;
   forEach( dctSheet, [&unused,netName] (SdObject *obj) ->bool {
-    SdPItemSheet *sheet = dynamic_cast<SdPItemSheet*>(obj);
-    Q_ASSERT(sheet != nullptr);
+    SdPtr<SdPItemSheet> sheet(obj);
+    Q_ASSERT( sheet.isValid() );
     unused = !sheet->isNetPresent( netName );
     return unused;
     });

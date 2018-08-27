@@ -84,8 +84,8 @@ class SdModeCPartPlace : public SdModeCommon
   public:
     virtual void    activate() override;
     virtual void    reset() override;
-    virtual void drawStatic(SdContext *ctx) override;
-    virtual void drawDynamic(SdContext *ctx) override;
+    virtual void    drawStatic(SdContext *ctx) override;
+    virtual void    drawDynamic(SdContext *ctx) override;
     virtual int     getPropBarId() const override;
     virtual void    propGetFromBar() override;
     virtual void    propSetToBar() override;
@@ -99,7 +99,7 @@ class SdModeCPartPlace : public SdModeCommon
     virtual void    beginDrag(SdPoint p) override;
     virtual void    dragPoint(SdPoint p) override;
     virtual void    stopDrag(SdPoint p) override;
-    virtual bool getInfo(SdPoint p, QString &info) override;
+    virtual bool    getInfo(SdPoint p, QString &info) override;
     virtual QString getStepHelp() const override;
     virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;

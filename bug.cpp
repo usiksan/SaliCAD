@@ -1,5 +1,5 @@
 
-//B044 bugs
+//B046 bugs
 //F001 fatal
 //C001 critical
 //D052 do
@@ -32,6 +32,8 @@
 //TODO D050 Append component rotation by keyboard
 
 //TODO B045 When cancel mode part pin current step remains after cancel but must be reset
+
+//TODO B046 When renumeration in browse mode no rebuild component list
 
 //===================================================================================
 //Fixed:

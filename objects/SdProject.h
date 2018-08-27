@@ -17,6 +17,7 @@ Description
 #include "SdContainer.h"
 #include "SdUndo.h"
 #include "library/SdStringMap.h"
+
 #include <QMap>
 #include <QTreeWidgetItem>
 #include <QSet>
@@ -76,6 +77,7 @@ class SdProject : public SdContainer
     //Return true if object with this name present in project
     bool              isNameUsed( const QString name ) const;
     SdObjectPtr       item( QTreeWidgetItem *src ) const;
+    SdObjectPtr       itemByName( quint64 mask, const QString name ) const;
 
     virtual QString   getType() const override;
     virtual quint64   getClass() const override;
@@ -102,5 +104,6 @@ class SdProject : public SdContainer
 typedef SdProject *SdProjectPtr;
 
 extern QSet<SdProjectPtr> sdProjectList;
+
 
 #endif // SDPROJECT_H

@@ -91,9 +91,6 @@ void SdModeCPartPlace::reset()
   barPartPlace->setComponentList( compList );
 
   update();
-
-  //Перейти к выбору следующего компонента
-  nextComponent();
   }
 
 
@@ -156,6 +153,11 @@ void SdModeCPartPlace::propGetFromBar()
 
   SdPropBarPartPlace *barPartPlace = dynamic_cast<SdPropBarPartPlace*>(SdWCommand::getModeBar(getPropBarId()));
 
+  //Common assignments
+  mBySheet       = barPartPlace->isSheetSelection();
+  mCurrentSheet  = barPartPlace->sheet();
+  mSmartOrNextId = barPartPlace->isSmartMode();
+
   if( mFragment.count() ) {
 
     setDirty();
@@ -210,7 +212,7 @@ void SdModeCPartPlace::partSelect(QStringList list)
     if( !id.isEmpty() ) {
       //Enter component name
       mObject->forEach( dctPartImp, [this,id] (SdObject *obj) -> bool {
-        SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(obj);
+        SdPtr<SdGraphPartImp> imp(obj);
         if( imp && imp->getIdent() == id ) {
           imp->select( &mFragment );
           return false;
@@ -221,11 +223,13 @@ void SdModeCPartPlace::partSelect(QStringList list)
     }
   if( mFragment.count() ) {
     //Component found. Fix its start position
-    SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(mFragment.first());
+    SdPtr<SdGraphPartImp> imp(mFragment.first());
     if( imp ) {
+      SdPoint p = mPrevMove;
       mFirst = mPrevMove = imp->getOrigin();
       setDirtyCashe();
       setStep( psmMove );
+      movePoint( p );
       }
     }
   }
@@ -249,13 +253,18 @@ void SdModeCPartPlace::enterPoint(SdPoint p)
           setStep( psmMove );
           }
         }
+      else if( mBySheet ) {
+        //Get sheet
+        SdPtr<SdPItemSheet> sheet( mObject->getProject()->itemByName( dctSheet, mCurrentSheet) );
+        if( sheet.isValid() )
+          SdPulsar::sdPulsar->emitBrowseSheetPart( sheet.ptr(), mObject );
+        }
       break;
     case psmMove :
       movePoint( p );
       setStep( psmNoSelect );
       unselect();
       checkPoint( p );
-      nextComponent();
       break;
     }
   dirtyRatNet();
@@ -293,8 +302,11 @@ void SdModeCPartPlace::movePoint(SdPoint p)
     mPrevMove.move( offset );
     update();
     }
-  else if( getStep() == psmNoSelect )
-    checkPoint(p);
+  else {
+    mPrevMove = p;
+    if( getStep() == psmNoSelect )
+      checkPoint(p);
+    }
   }
 
 
@@ -381,27 +393,10 @@ SdPoint SdModeCPartPlace::enterPrev()
   {
   if( getStep() == psmNoSelect ) {
     //Component selection by smart algorithm [Выбор компонента по алгоритму Smart]
-    mObject->forEach( dctPartImp, [this] (SdObject *obj) -> bool {
-      SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>( obj );
-      //If ident of component match to search, then perform selection of component
-      if( imp && imp->getIdent() == mSmartName ) {
-        imp->select( &mFragment );
-        //Break iteration because component is found
-        return false;
-        }
-      return true;
-      } );
-    if( mFragment.count() ) {
-      //Component selected
-      //Get its properties
-      propSetToBar();
-      //And start move it
-      setStep( psmMove );
-      dirtyRatNet();
-      setDirtyCashe();
-      update();
-      }
-    }
+    partSelect( QStringList(mSmartName) );
+    return mFirst;
+    }  
+  return mPrevMove;
   }
 
 
@@ -442,7 +437,7 @@ void SdModeCPartPlace::stopDrag(SdPoint p)
     //Selection by rect completed [Выделение прямоугольником завершено]
     SdRect r(mFirst,p);
     mObject->forEach( dctPartImp, [this,r] (SdObject *obj) -> bool {
-      SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>( obj );
+      SdPtr<SdGraphPartImp> imp(obj);
       if( imp )
         imp->selectByRect( r, &mFragment );
       return true;
@@ -463,6 +458,12 @@ void SdModeCPartPlace::stopDrag(SdPoint p)
 
 bool SdModeCPartPlace::getInfo(SdPoint p, QString &info)
   {
+  mObject->forEach( dctPartImp, [p,&info] (SdObject *obj) -> bool {
+    SdPtr<SdGraphPartImp> imp(obj);
+    if( imp )
+      return !imp->getInfo( p, info, true );
+    return true;
+    });
   return false;
   }
 
@@ -547,58 +548,16 @@ int SdModeCPartPlace::getIndex() const
 
 void SdModeCPartPlace::unselect()
   {
+  nextComponent();
+
+  //Remove components selection
+  //Убрать компоненты из выделения
   if( mFragment.count() )
     mFragment.removeAll();
-//  //Отменить выделение резинок
-//  GetPlate()->ForEachNet( DIPlateNetUnselect() );
-//  //Пометить развыделенные компоненты как размещенные и обновить обнаруженную группу
-//  fragment.ForEach( PMUnselectIterator( info.table, info.patSour ) );
-////  SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>( obj );
-
-//  //Расчитать следующий smart - копонент, за основу берем последний
-//  SdGraphPartImp *last = dynamic_cast<SdGraphPartImp*>( mFragment.count() ? mFragment.first() : nullptr );
-//  if( last )
-//    mSmartName = last->getIdent();
-//  else
-//    mSmartName = "R1";
-
-
-//  if( sdEnvir->mPlaceMode == dpmNextNumber ) {
-//    //Следующий по номеру в группе
-//    DName Name( smartName );
-//    CreateNextName( Name, Name );
-//    smartName = Name;
-//    }
-//  else {
-//    //Следующий ближайший не размещенный
-//    if( bigCompIndex >= 0 ) {
-//      int sheetIndex = info.table[bigCompIndex].sheet;
-//      int target = -1;
-//      DPoint from(info.table[bigCompIndex].inShem);
-//      int distance = illegalRatLen;
-//      for( NCount i = 0; i < info.table.GetNumber(); ++i )
-//        if( info.table[i].placed || info.table[i].sheet != sheetIndex ) continue;
-//        else if( from.GetDistance( info.table[i].inShem ) < distance ) {
-//          distance = from.GetDistance( info.table[target = i].inShem );
-//          }
-//      if( target >= 0 ) smartName = info.table[target].pos;
-//      else {
-//        DName Name( smartName );
-//        CreateNextName( Name, Name ); //В случае отсутствия варианта - следующий по порядку
-//        smartName = Name;
-//        }
-//      }
-//    else {
-//      DName Name( smartName );
-//      CreateNextName( Name, Name ); //В случае отсутствия варианта - следующий по порядку
-//      smartName = Name;
-//      }
-//    }
-
-//  //Убрать компоненты из выделения
-//  fragment.RemoveAll();  //Объекты становятся невыделенными
-//  GetAllProp();
   }
+
+
+
 
 
 
@@ -678,7 +637,54 @@ void SdModeCPartPlace::checkPoint(SdPoint p)
 //Prepare next component to select
 void SdModeCPartPlace::nextComponent()
   {
+  //Select next smart component. As base we take last
+  //Расчитать следующий smart - копонент, за основу берем последний
+  SdPtr<SdGraphPartImp> last( mFragment.count() ? mFragment.first() : nullptr );
+  if( last )
+    mSmartName = last->getIdent();
+  else return;
+//    if( mSmartName.isEmpty() )
+//    mSmartName = "R1";
 
+
+  if( mSmartOrNextId ) {
+    //Next smart in group
+    }
+  else {
+    //Next by name [Следующий по номеру в группе]
+    //Separate on name and index
+    int i;
+    for( i = 0; i < mSmartName.size() && !mSmartName.at(i).isDigit(); i++ );
+    QString prefix = mSmartName.left(i);
+    int index = mSmartName.mid(i).toInt();
+    index++;
+    mSmartName = prefix + QString::number(index);
+    }
+//  else {
+//    //Следующий ближайший не размещенный
+//    if( bigCompIndex >= 0 ) {
+//      int sheetIndex = info.table[bigCompIndex].sheet;
+//      int target = -1;
+//      DPoint from(info.table[bigCompIndex].inShem);
+//      int distance = illegalRatLen;
+//      for( NCount i = 0; i < info.table.GetNumber(); ++i )
+//        if( info.table[i].placed || info.table[i].sheet != sheetIndex ) continue;
+//        else if( from.GetDistance( info.table[i].inShem ) < distance ) {
+//          distance = from.GetDistance( info.table[target = i].inShem );
+//          }
+//      if( target >= 0 ) smartName = info.table[target].pos;
+//      else {
+//        DName Name( smartName );
+//        CreateNextName( Name, Name ); //В случае отсутствия варианта - следующий по порядку
+//        smartName = Name;
+//        }
+//      }
+//    else {
+//      DName Name( smartName );
+//      CreateNextName( Name, Name ); //В случае отсутствия варианта - следующий по порядку
+//      smartName = Name;
+//      }
+//    }
   }
 
 

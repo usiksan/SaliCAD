@@ -9,14 +9,17 @@ Web
   www.saliLab.ru
 
 Description
+  Dialog for bus enter
 */
 #include "SdConfig.h"
 #include "SdDGetBus.h"
+#include "SdStringHistory.h"
 #include "ui_SdDGetBus.h"
 #include <QStringList>
 #include <QMessageBox>
 
-static QStringList previousBusList;
+//static QStringList previousBusList;
+static SdStringHistory previousBusList;
 
 SdDGetBus::SdDGetBus(QWidget *parent) :
   QDialog(parent),
@@ -39,10 +42,7 @@ void SdDGetBus::accept()
   {
   QString bus = ui->mBusEdit->text();
   if( translation( bus ) ) {
-    if( previousBusList.contains(bus) ) {
-      previousBusList.removeOne( bus );
-      }
-    previousBusList.insert( 0, bus );
+    previousBusList.addString( bus );
     done(1);
     }
   }
@@ -52,6 +52,7 @@ void SdDGetBus::accept()
 
 bool SdDGetBus::translation( const QString sour )
   {
+  //Net list parsing
   //Список цепей вида "цепь|цепь<стартовый_индекс:конечный_индекс>{,...}"
   //Трансляция списка цепей
   if( !sour.isEmpty() ) {
@@ -83,7 +84,8 @@ bool SdDGetBus::translation( const QString sour )
           start += step;
           //Form net name with index
           QString net;
-          if( nptr ) buf.mid( 0, nptr );
+          if( nptr )
+            net = buf.mid( 0, nptr );
           net.append( QString::number(start) );
           if( tptr+1 < buf.count() ) net.append( buf.mid( tptr+1 ) );
           //Append if less then limit
