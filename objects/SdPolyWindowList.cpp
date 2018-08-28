@@ -15,7 +15,7 @@ Description
 #include <QJsonArray>
 
 
-QJsonArray SdPolyWindowList::write()
+QJsonArray SdPolyWindowList::write() const
   {
   QJsonArray arr;
   for( int i = 0; i < count(); i++ )
@@ -23,10 +23,16 @@ QJsonArray SdPolyWindowList::write()
   return arr;
   }
 
-void SdPolyWindowList::write(const QString name, QJsonObject &obj)
+
+
+
+void SdPolyWindowList::write(const QString name, QJsonObject &obj) const
   {
   obj.insert( name, write() );
   }
+
+
+
 
 void SdPolyWindowList::read(const QJsonArray array)
   {

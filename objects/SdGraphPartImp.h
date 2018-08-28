@@ -50,6 +50,7 @@ struct SdPartImpPin {
   QString     getNetName() const;
   void        accumUsedPin( SdPadMap &map ) const;
   void        accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int stratum, SdRuleId ruleId, int clearance , int halfWidth, QTransform t) const;
+  void        accumWindows(SdPItemPlate *plate, SdPolyWindowList &dest, int stratum, int gap, const QString netName, const QTransform &t ) const;
 
   QJsonObject toJson(const QString pinNumber) const;
   QString     fromJson( SdObjectMap *map, const QJsonObject obj );
@@ -193,6 +194,7 @@ class SdGraphPartImp : public SdGraphTraced
     virtual void         accumNetSegments( SdPlateNetList &netList ) const override;
     virtual void         drawStratum(SdContext *dc, int stratum ) override;
     virtual void         accumBarriers( SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk ) const override;
+    virtual void         accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName ) const override;
     //Stratum of object
     virtual SdStratum    stratum() const override { return mProp.mSide; }
   };

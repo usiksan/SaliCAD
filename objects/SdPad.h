@@ -16,6 +16,7 @@ Description
 
 #include "SdStratum.h"
 #include "SdPoint.h"
+#include "SdPolyWindowList.h"
 
 #include <QJsonObject>
 #include <QPolygonF>
@@ -47,8 +48,11 @@ class SdPad
 
     void        draw(SdContext *dcx, SdPoint p, int stratum ) const;
 
+    //Return polygon of pad
+    QPolygonF   polygon( SdPoint p, int addon ) const;
 
-    QPolygonF   polygon(SdPoint p , int addon) const;
+    //Append pad as window
+    void        appendWindow( SdPolyWindowList &dest, SdPoint p, int gap, const QTransform &t) const;
 
     //Create textual pad description
     QString     description() const;

@@ -171,6 +171,22 @@ QPolygonF SdPad::polygon(SdPoint p, int addon ) const
 
 
 
+void SdPad::appendWindow(SdPolyWindowList &dest, SdPoint p, int gap, const QTransform &t) const
+  {
+  if( mIsCircle ) {
+    //Append circle pad
+    SdPoint c( t.map(QPoint(p.x() + mCenterX,p.y() + mCenterY)) );
+    dest.appendCircle( c, (mDiametrWidth >> 1) + gap );
+    }
+  else {
+    //Append as rectangle
+    dest.appendRegion( t.map(polygon(p, gap)) );
+    }
+  }
+
+
+
+
 
 //Create textual pad description
 QString SdPad::description() const

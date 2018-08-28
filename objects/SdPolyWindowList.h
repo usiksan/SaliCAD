@@ -22,8 +22,12 @@ class SdPolyWindowList : public QList<SdPolyWindow>
   public:
     SdPolyWindowList() {}
 
-    QJsonArray write();
-    void       write( const QString name, QJsonObject &obj );
+    //Appending service
+    void       appendRegion( const QPolygonF &pgn );
+    void       appendCircle( SdPoint center, int radius );
+
+    QJsonArray write() const;
+    void       write( const QString name, QJsonObject &obj ) const;
 
     void       read( const QJsonArray array );
     void       read( const QString name, const QJsonObject obj );

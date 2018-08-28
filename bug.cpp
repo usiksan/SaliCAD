@@ -1,8 +1,8 @@
 
-//B046 bugs
+//B047 bugs
 //F001 fatal
 //C001 critical
-//D052 do
+//D053 do
 
 
 
@@ -34,6 +34,10 @@
 //TODO B045 When cancel mode part pin current step remains after cancel but must be reset
 
 //TODO B046 When renumeration in browse mode no rebuild component list
+
+//TODO B047 Append layer list to all properties bars
+
+//TODO D053 Append to conext menu of project "copy selected" command
 
 //===================================================================================
 //Fixed:

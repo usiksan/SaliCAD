@@ -69,7 +69,9 @@ class SdPItemPlate : public SdProjectItem
     //Setup new map and name
     void                   setPadAssociation(const QString nm, const SdPadMap &map, SdUndo *undo );
     //Return over pad polygon
-    QPolygonF              getPadPolygon(SdPoint p, const QString pinType , int addon) const;
+    QPolygonF              getPadPolygon(SdPoint p, const QString pinType, int addon) const;
+    //Append window for pin pad
+    void                   appendPadWindow( SdPolyWindowList &dest, SdPoint p, const QString pinType, int gap, const QTransform &t );
 
     //Set flag to update rat net
     void                   setDirtyRatNet();

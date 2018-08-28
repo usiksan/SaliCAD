@@ -44,9 +44,10 @@ Description
 #define dctSelector       0x00040000ul
 #define dctPadAssociation 0x00080000ul
 #define dctTraceRoad      0x00100000ul
-#define dctTraceVia       0x00200000ul
-#define dctTextDoc        0x00400000ul
-#define dctInheritance    0x00800000ul
+#define dctTracePolygon   0x00200000ul
+#define dctTraceVia       0x00400000ul
+#define dctTextDoc        0x00800000ul
+#define dctInheritance    0x01000000ul
 
 #define dctLocal          0x80000000ul //This flag setup for objects which must not be send to global storage
 
@@ -157,6 +158,27 @@ class SdPtr {
     objectType *operator -> () { return mPtr; }
 
     objectType *ptr() const { return mPtr; }
+  };
+
+
+//Helper template for dynamic type casting
+//Usage
+// fun( SdObject *obj ) {
+//   SdPtr<SdGraph> graph( obj );
+//   ...
+template <class objectType>
+class SdPtrConst {
+    const objectType *mPtr;
+  public:
+    SdPtrConst( const SdObject *obj ) : mPtr( dynamic_cast<const objectType*>(obj) ) {}
+
+    bool isValid() const { return mPtr != nullptr; }
+
+    operator bool () const { return mPtr != nullptr; }
+
+    const objectType *operator -> () { return mPtr; }
+
+    const objectType *ptr() const { return mPtr; }
   };
 
 

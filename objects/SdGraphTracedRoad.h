@@ -80,6 +80,7 @@ class SdGraphTracedRoad : public SdGraphTraced
     virtual void       drawStratum(SdContext *dcx, int stratum) override;
     virtual void       accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const override;
     virtual bool       isMatchNetAndStratum( const QString netName, SdStratum stratum ) const override;
+    virtual void       accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName ) const override;
     //Stratum of object
     virtual SdStratum  stratum() const override { return mProp.mStratum; }
 

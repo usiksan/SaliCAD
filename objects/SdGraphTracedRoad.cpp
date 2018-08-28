@@ -424,6 +424,48 @@ bool SdGraphTracedRoad::isMatchNetAndStratum(const QString netName, SdStratum st
 
 
 
+void SdGraphTracedRoad::accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName) const
+  {
+  //Test if match to stratum and not equal to netName
+  if( mProp.mNetName == netName || (mProp.mStratum & stratum) == 0 )
+    return;
+  //We append 3 objects: over rectangle, 2 end solid filled circles
+
+  //Make around line rectangle
+  //
+  //   0  --------------  1
+  //     |              |
+  //     |a            b|
+  //     |              |
+  //   3  --------------  2
+  //
+  //Treat road as vector with "angle" and "len" and mA as start point
+  //
+  double angle = mSegment.getAngleDegree();
+  double len   = mSegment.getLenght();
+  double halfWidth = mProp.mWidth.getValue() / 2 + gap;
+  QPolygonF pgn;
+  pgn << QPointF(  0,       -halfWidth )         //0
+      << QPointF(  len,     -halfWidth ) //1
+      << QPointF(  len,      halfWidth ) //2
+      << QPointF(  0,        halfWidth );//3
+
+  //Rotate polygon on vector angle
+  QTransform t;
+  t = t.rotate(angle);
+  pgn = t.map(pgn);
+
+  //Translate polygon to start point of vector
+  pgn.translate( mSegment.getP1().x(), mSegment.getP1().y() );
+
+  dest.appendRegion( pgn );
+  dest.appendCircle( mSegment.getP1(), static_cast<int>(halfWidth) );
+  dest.appendCircle( mSegment.getP2(), static_cast<int>(halfWidth) );
+  }
+
+
+
+
 
 //Return layer for road stratum
 SdLayer *SdGraphTracedRoad::getLayer() const

@@ -126,6 +126,16 @@ QPolygonF SdPItemPlate::getPadPolygon(SdPoint p, const QString pinType, int addo
 
 
 
+//Append window for pin pad
+void SdPItemPlate::appendPadWindow(SdPolyWindowList &dest, SdPoint p, const QString pinType, int gap, const QTransform &t)
+  {
+  if( mPadAssociation.contains(pinType) )
+    return mPadAssociation.pin( pinType ).appendWindow( dest, p, gap, t );
+  }
+
+
+
+
 //Set flag to update rat net
 void SdPItemPlate::setDirtyRatNet()
   {

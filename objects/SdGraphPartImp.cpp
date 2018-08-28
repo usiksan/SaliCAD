@@ -131,6 +131,17 @@ void SdPartImpPin::accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int s
 
 
 
+void SdPartImpPin::accumWindows(SdPItemPlate *plate, SdPolyWindowList &dest, int stratum, int gap, const QString netName, const QTransform &t) const
+  {
+  //Compare on stratum
+  if( (mStratum & stratum) && netName != getNetName() )
+    //Stratum matched and net name other
+    plate->appendPadWindow( dest, mPin->getPinOrigin(), mPin->getPinType(), gap, t );
+  }
+
+
+
+
 QJsonObject SdPartImpPin::toJson( const QString pinNumber ) const
   {
   QJsonObject obj;
@@ -822,6 +833,27 @@ void SdGraphPartImp::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId to
 
   for( const SdPartImpPin &pin : mPins )
     pin.accumBarriers( plate, dest, stratum, toWhich, clearance, halfWidth, t );
+  }
+
+
+
+
+
+
+void SdGraphPartImp::accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName) const
+  {
+  //Accum windows for all pin pads
+
+  //Plate for pad association
+  SdPItemPlate *plate = getPlate();
+
+  //Component position and orientation converter
+  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
+  QTransform t( imp.getMatrix() );
+
+  //For each pin accum windows
+  for( const SdPartImpPin &pin : mPins )
+    pin.accumWindows( plate, dest, stratum, gap, netName, t );
   }
 
 
