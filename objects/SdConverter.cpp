@@ -16,7 +16,7 @@ Description
 
 
 SdConverter::SdConverter() :
-  mNext(0),
+  mNext(nullptr),
   mContext(nullptr),
   mPairLayer(false)
   {

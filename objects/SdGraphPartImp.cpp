@@ -916,18 +916,30 @@ bool SdGraphPartImp::snapPoint(SdSnapInfo *snap)
 
 
 
+
+
 void SdGraphPartImp::updatePinsPositions()
   {
+  //Converter for calculate and get conversion matrix, which convert part origin referenced coords to plate referenced coords
   SdConverterImplement impl( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
+  //Conversion matrix
   QTransform t = impl.getMatrix();
+  //For each pin perform conversion
   for( SdPartImpPin &pin : mPins ) {
+    //Convert pin position
     pin.mPosition = t.map( pin.mPin->getPinOrigin() );
-    qDebug() << "pin" << pin.mPosition;
+    //qDebug() << "pin" << pin.mPosition;
+    //Convert stratum stack for pin
     pin.mStratum  = pin.mPin->getPinStratum( mProp.mSide.isBottom() );
     }
+  //Calculate new over rect
   mOverRect.set( t.mapRect( mPart->getOverRect() ) );
+  //Calculate new pos for ident
   mIdentPos = t.map( mIdentOrigin );
   }
+
+
+
 
 
 

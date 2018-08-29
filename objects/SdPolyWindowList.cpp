@@ -13,6 +13,28 @@ Description
 
 #include "SdPolyWindowList.h"
 #include <QJsonArray>
+#include <QPolygonF>
+
+
+void SdPolyWindowList::appendRegion(const QPolygonF &pgn)
+  {
+  //We append only 4 vertex regions
+  if( pgn.count() == 4 ) {
+    SdPolyWindow win( pgn );
+    append( win );
+    }
+  }
+
+
+
+
+void SdPolyWindowList::appendCircle(SdPoint center, int radius)
+  {
+  SdPolyWindow win( center, radius );
+  append( win );
+  }
+
+
 
 
 QJsonArray SdPolyWindowList::write() const

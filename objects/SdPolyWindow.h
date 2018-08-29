@@ -19,6 +19,8 @@ Description
 #include "SdPoint.h"
 #include "SdCircle.h"
 
+#include <QPolygonF>
+
 class SdPolyWindow
   {
     int     radius;
@@ -31,6 +33,10 @@ class SdPolyWindow
 
     //From circle
     SdPolyWindow( SdCircle circle, int gap );
+    SdPolyWindow(SdPoint center, int rad );
+
+    //From region
+    SdPolyWindow( const QPolygonF &pgn );
 
     //From rect
     SdPolyWindow( SdRect r, int gap );

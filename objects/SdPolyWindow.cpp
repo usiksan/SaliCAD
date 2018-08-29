@@ -32,6 +32,27 @@ SdPolyWindow::SdPolyWindow(SdCircle circle, int gap) :
 
   }
 
+SdPolyWindow::SdPolyWindow(SdPoint center, int rad) :
+  radius( rad ),
+  p1(center),p2(),p3(),p4()
+  {
+
+  }
+
+
+
+//From region
+SdPolyWindow::SdPolyWindow(const QPolygonF &pgn) :
+  radius(-1),p1(),p2(),p3(),p4()
+  {
+  if( pgn.count() == 4 ) {
+    p1 = pgn.at(0).toPoint();
+    p2 = pgn.at(1).toPoint();
+    p3 = pgn.at(2).toPoint();
+    p4 = pgn.at(3).toPoint();
+    }
+  }
+
 
 
 
