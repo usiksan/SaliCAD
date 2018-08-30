@@ -116,8 +116,17 @@ SdProp::SdProp()
   mPartIdentProp.mVert   = dvjMiddle;
   mPartIdentProp.mMirror = 0;
 
+  //Road properties [Свойства дорожки]
+  mRoadProp.mWidth       = 300;
+  mRoadProp.mStratum     = stmTop;
+  mRoadProp.mNetName     = "";
+
+  //Polygon properties
+  mPolygonProp.mGap      = 500;
+  mPolygonProp.mStratum  = stmTop;
+  mPolygonProp.mNetName  = "";
+
   //TODO D011 setup all prop defaults
-//  SdPropRoad    mRoadProp;       //Свойства дорожки
 ////    SdViaProp    viaProp;        //Свойства переходных отверстий
 //  SdPropText    mTextDocProp;    //Свойства текста в текстовых документах
 

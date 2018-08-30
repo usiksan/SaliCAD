@@ -33,54 +33,56 @@ class SdPoint : public QPoint
     SdPoint() : QPoint() { }
     SdPoint( int xpos, int ypos ) : QPoint(xpos,ypos) { }
     SdPoint( QPoint p ) : QPoint(p) {}
-    void    operator /= (int i) { rx() /= i; ry() /= i; }
-    void    operator *= (int i) { rx() *= i; ry() *= i; }
-    void    operator -= (int i) { rx() -= i; ry() -= i; }
-    void    operator += (int i) { rx() += i; ry() += i; }
-    void    operator += ( SdPoint p ) { rx() += p.x(); ry() += p.y(); }
-    void    operator = ( QPoint p ) { setX(p.x()); setY(p.y()); }
-    void    set( int cx, int cy ) { setX(cx); setY(cy); }
-    void    rotate( SdPoint origin, SdPropAngle angle );
-    void    mirror( SdPoint origin );
-    void    mirror( SdPoint a, SdPoint b );
-    void    move( SdPoint offset ) { setX( x() + offset.x() ); setY( y() + offset.y() ); }
-    SdPoint complement() const { return SdPoint(-x(),-y()); }
-    bool    isEmpty() const { return x() == 0 && y() == 0; }
-    SdPoint sub( SdPoint b ) { return SdPoint( x() - b.x(), y() - b.y() ); }
-    SdPoint operator - ( SdPoint b ) { return sub(b); }
-    SdPoint operator + ( SdPoint b ) { return SdPoint( x() + b.x(), y() + b.y() ); }
-    SdPoint getMiddle( SdPoint b ) { return SdPoint( (x() + b.x()) / 2, (y() + b.y()) / 2 ); }
+
+    void        operator /= (int i) { rx() /= i; ry() /= i; }
+    void        operator *= (int i) { rx() *= i; ry() *= i; }
+    void        operator -= (int i) { rx() -= i; ry() -= i; }
+    void        operator += (int i) { rx() += i; ry() += i; }
+    void        operator += ( SdPoint p ) { rx() += p.x(); ry() += p.y(); }
+    void        operator = ( QPoint p ) { setX(p.x()); setY(p.y()); }
+    void        set( int cx, int cy ) { setX(cx); setY(cy); }
+    void        rotate( SdPoint origin, SdPropAngle angle );
+    void        mirror( SdPoint origin );
+    void        mirror( SdPoint a, SdPoint b );
+    void        move( SdPoint offset ) { setX( x() + offset.x() ); setY( y() + offset.y() ); }
+    SdPoint     complement() const { return SdPoint(-x(),-y()); }
+    bool        isEmpty() const { return x() == 0 && y() == 0; }
+    SdPoint     sub( SdPoint b ) { return SdPoint( x() - b.x(), y() - b.y() ); }
+    SdPoint     operator - ( SdPoint b ) { return sub(b); }
+    SdPoint     operator + ( SdPoint b ) { return SdPoint( x() + b.x(), y() + b.y() ); }
+    SdPoint     getMiddle( SdPoint b ) { return SdPoint( (x() + b.x()) / 2, (y() + b.y()) / 2 ); }
     SdPropAngle getAngle( SdPoint center = SdPoint() ) const; //Угол поворота до точки относительно центра
-    double  getAngleDegree(SdPoint center) const;
+    double      getAngleDegree(SdPoint center) const;
+    QPointF     toPointF() const { return QPointF(x(),y()); }
 
     //Return distance between two points - this and p
-    double  getDistance( SdPoint p ) const;
+    double      getDistance( SdPoint p ) const;
 
     //Return distance as int between two points - this and p
-    int     getDistanceInt( SdPoint p ) const { return static_cast<int>(getDistance(p)); }
+    int         getDistanceInt( SdPoint p ) const { return static_cast<int>(getDistance(p)); }
 
     //Return square distance between two points - this and p
-    double  getSquareDistance( SdPoint p ) const;
+    double      getSquareDistance( SdPoint p ) const;
 
-    CLS     classify( SdPoint p0, SdPoint p1 ) const;
-    double  getLenght() const;
-    bool    isEqual( SdPoint p ) const { return x() == p.x() && y() == p.y(); }
+    CLS         classify( SdPoint p0, SdPoint p1 ) const;
+    double      getLenght() const;
+    bool        isEqual( SdPoint p ) const { return x() == p.x() && y() == p.y(); }
 
     //Комплексное преобразование
-    SdPoint convertImplement( SdPoint origin, SdPoint offset, SdPropAngle angle, bool mirror );
-    SdPoint unConvertImplement( SdPoint origin, SdPoint offset, SdPropAngle angle, bool mirror );
+    SdPoint     convertImplement( SdPoint origin, SdPoint offset, SdPropAngle angle, bool mirror );
+    SdPoint     unConvertImplement( SdPoint origin, SdPoint offset, SdPropAngle angle, bool mirror );
 
     //Проверка условий для точки
-    bool    isOnCircle( SdPoint center, int radius, int delta = 0 ) const ;         //На окружности?
-    bool    isInsideCircle( SdPoint center, int radius ) const;
-    bool    isOnArc( SdPoint center, SdPoint start, SdPoint stop, int delta = 0 ) const; //На дуге?
-    bool    isLeftHigh( SdPoint a ) const;                              //Левее или выше чем a?
-    bool    isOnSegment( SdPoint a, SdPoint b ) const;
+    bool        isOnCircle( SdPoint center, int radius, int delta = 0 ) const ;         //На окружности?
+    bool        isInsideCircle( SdPoint center, int radius ) const;
+    bool        isOnArc( SdPoint center, SdPoint start, SdPoint stop, int delta = 0 ) const; //На дуге?
+    bool        isLeftHigh( SdPoint a ) const;                              //Левее или выше чем a?
+    bool        isOnSegment( SdPoint a, SdPoint b ) const;
 
-    void    write(const QString name, QJsonObject &obj ) const;
-    void    read(const QString name, const QJsonObject obj );
+    void        write(const QString name, QJsonObject &obj ) const;
+    void        read(const QString name, const QJsonObject obj );
 
-    void    swap( SdPoint *p );
+    void        swap( SdPoint *p );
 
     QJsonObject write() const;
     void        read( const QJsonObject obj );

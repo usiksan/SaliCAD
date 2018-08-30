@@ -12,16 +12,29 @@ Description
 */
 
 #include "SdPolyWindowList.h"
+#include "SdUtil.h"
+
 #include <QJsonArray>
 #include <QPolygonF>
+
+
+//Reset windows list
+void SdPolyWindowList::reset(SdPointList *poly)
+  {
+  clear();
+  mPolygon = poly;
+  }
+
 
 
 void SdPolyWindowList::appendRegion(const QPolygonF &pgn)
   {
   //We append only 4 vertex regions
   if( pgn.count() == 4 ) {
-    SdPolyWindow win( pgn );
-    append( win );
+    if( mPolygon && pgn.intersects( *mPolygon ) ) {
+      SdPolyWindow win( pgn );
+      append( win );
+      }
     }
   }
 
@@ -30,8 +43,11 @@ void SdPolyWindowList::appendRegion(const QPolygonF &pgn)
 
 void SdPolyWindowList::appendCircle(SdPoint center, int radius)
   {
-  SdPolyWindow win( center, radius );
-  append( win );
+  QPolygonF pgn = SdUtil::octagon( center.x(), center.y(), radius );
+  if( mPolygon && pgn.intersects( *mPolygon ) ) {
+    SdPolyWindow win( center, radius );
+    append( win );
+    }
   }
 
 

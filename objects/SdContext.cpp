@@ -345,6 +345,56 @@ void SdContext::region( const SdPointList &points, const SdPropLine &prop, bool 
 
 
 
+
+void SdContext::polygon(const SdPointList &points, const SdPolyWindowList &windows, SdLayer *layer)
+  {
+  //To draw polygon with windows we need intermediate picture image
+  //1. fill this image with transparent color
+  //2. we draw polygon on image
+  //3. we draw windows with transparent fill color
+  //4. image copy to painter
+  QImage intermediate( mPainter->device()->width(), mPainter->device()->height(), QImage::Format_ARGB32 );
+
+  //1. fill this image with transparent color
+  intermediate.fill( Qt::transparent );
+  QPainter image(&intermediate);
+
+  //2. we draw polygon on image
+  setPen( 0, layer, dltSolid );
+  setBrush( convertColor(layer) );
+  image.drawPolygon( mTransform.map( points ) );
+
+  //3. we draw windows with transparent fill color
+  setPen( 0, Qt::transparent, dltSolid );
+  setBrush( Qt::transparent );
+  for( const SdPolyWindow &win : windows ) {
+    if( win.getRadius() >= 0 ) {
+      //Circle window
+      SdPoint center = win.getP1();
+      int radius = win.getRadius();
+      SdRect r( SdPoint(center.x()-radius,center.y()-radius), SdPoint(center.x()+radius,center.y()+radius) );
+      image.drawEllipse( mTransform.mapRect(r) );
+      }
+    else {
+      //Rectangle window
+      QPolygonF pgn;
+      pgn.append( win.getP1().toPointF() );
+      pgn.append( win.getP2().toPointF() );
+      pgn.append( win.getP3().toPointF() );
+      pgn.append( win.getP4().toPointF() );
+      image.drawPolygon( mTransform.map( pgn ) );
+      }
+    }
+
+  //4. image copy to painter
+  mPainter->setOpacity( 0.5 );
+  mPainter->drawImage( 0, 0, intermediate );
+  mPainter->setOpacity( 1.0 );
+  }
+
+
+
+
 void SdContext::smartPoint(SdPoint a, SdSnapMask smartMask)
   {
   if( smartMask ) {

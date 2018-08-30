@@ -224,7 +224,10 @@ SOURCES += \
     windows/SdPNewProjectItem_Copy.cpp \
     windows/SdDParamEditor.cpp \
     windows/SdPropBarPartPlace.cpp \
-    modes/SdModeTBrowseSheetPart.cpp
+    modes/SdModeTBrowseSheetPart.cpp \
+    objects/SdPropPolygon.cpp \
+    modes/SdModeCPolygonEnter.cpp \
+    windows/SdPropBarPolygon.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -445,7 +448,10 @@ HEADERS  += \
     windows/SdPNewProjectItem_Copy.h \
     windows/SdDParamEditor.h \
     windows/SdPropBarPartPlace.h \
-    modes/SdModeTBrowseSheetPart.h
+    modes/SdModeTBrowseSheetPart.h \
+    objects/SdPropPolygon.h \
+    modes/SdModeCPolygonEnter.h \
+    windows/SdPropBarPolygon.h
 
 DISTFILES += \
     license.txt

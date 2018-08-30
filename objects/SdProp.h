@@ -22,6 +22,7 @@ Description
 #include "SdPropSymImp.h"
 #include "SdPropPartImp.h"
 #include "SdPropRoad.h"
+#include "SdPropPolygon.h"
 
 //
 #define dleOrtho         0
@@ -45,6 +46,7 @@ struct SdProp
     SdPropText    mSymIdentProp;   //Свойства идентификатора символа
     SdPropText    mPartIdentProp;  //Свойства идентификатора корпуса
     SdPropRoad    mRoadProp;       //Свойства дорожки
+    SdPropPolygon mPolygonProp;        //Tracing polygon properties
 //    SdViaProp    viaProp;        //Свойства переходных отверстий
     SdPropText    mTextDocProp;    //Свойства текста в текстовых документах
 
@@ -62,8 +64,6 @@ struct SdProp
 
 
     SdProp();
-
-    void Clear();
   };
 
 extern SdProp *sdGlobalProp;

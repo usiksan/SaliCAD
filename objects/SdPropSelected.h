@@ -25,6 +25,7 @@ Description
 #define spsSymImpProp  0x020
 #define spsPartImpProp 0x040
 #define spsRoadProp    0x080
+#define spsPolygonProp 0x100
 
 
 struct SdPropSelected
@@ -37,6 +38,8 @@ struct SdPropSelected
     SdPropSymImp  mSymImpProp;     //Properties for symbol implement in sheet
     SdPropPartImp mPartImpProp;    //Properties for part implement in pcb
     SdPropRoad    mRoadProp;       //Properties for road
+    SdPropPolygon mPolygonProp;    //Properties for polygon
+
 //    SdViaProp    viaProp;        //Свойства переходных отверстий
     int           mEnterType;
     SdPropString  mWireName;       //Wire name

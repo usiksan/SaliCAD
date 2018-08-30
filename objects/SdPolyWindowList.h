@@ -15,12 +15,18 @@ Description
 #define SDPOLYWINDOWLIST_H
 
 #include "SdPolyWindow.h"
+#include "SdPointList.h"
+
 #include <QList>
 
 class SdPolyWindowList : public QList<SdPolyWindow>
   {
+    SdPointList *mPolygon; //appropriate polygon
   public:
-    SdPolyWindowList() {}
+    SdPolyWindowList() : mPolygon(nullptr) {}
+
+    //Reset windows list
+    void       reset( SdPointList *poly );
 
     //Appending service
     void       appendRegion( const QPolygonF &pgn );

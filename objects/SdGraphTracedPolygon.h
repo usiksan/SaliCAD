@@ -23,8 +23,8 @@ Description
 
 class SdGraphTracedPolygon : public SdGraphTraced
   {
-    SdPropRoad       mProp;     //Road properties
-                                // - width not used
+    SdPropPolygon    mProp;     //Polygon properties
+                                // - gap for windows creation
                                 // - net name which contains this polygon
                                 // - stratum of polygon
     SdPointList      mRegion;   //Contour of polygon
@@ -33,7 +33,7 @@ class SdGraphTracedPolygon : public SdGraphTraced
     QSet<int>        mFlyIndex; //Fly vertex numbers
   public:
     SdGraphTracedPolygon();
-    SdGraphTracedPolygon( const SdPropRoad &prp, SdPointList lst, SdPolyWindowList win );
+    SdGraphTracedPolygon( const SdPropPolygon &prp, SdPointList lst, SdPolyWindowList win );
 
     // SdObject interface
   public:
@@ -41,9 +41,9 @@ class SdGraphTracedPolygon : public SdGraphTraced
     virtual SdClass getClass() const override;
     virtual void attach(SdUndo *undo) override;
     virtual void detach(SdUndo *undo) override;
-    virtual void cloneFrom(const SdObject *src) override;
-    virtual void writeObject(QJsonObject &obj) const override;
-    virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual void    cloneFrom(const SdObject *src) override;
+    virtual void    writeObject(QJsonObject &obj) const override;
+    virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
 
     // SdGraph interface
   public:
@@ -72,6 +72,11 @@ class SdGraphTracedPolygon : public SdGraphTraced
     virtual void drawStratum(SdContext *dcx, int stratum) override;
     virtual void accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const override;
     virtual bool isMatchNetAndStratum(const QString netName, SdStratum stratum) const override;
+    virtual void accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName ) const override;
+
+  private:
+    //Return layer for polygon
+    SdLayer *getLayer() const;
   };
 
 #endif // SDGRAPHTRACEDPOLYGON_H

@@ -194,7 +194,7 @@ class SdLayer
     void         resetUsage() { mUsage = false; }
     //Установить флаг использования
     //Set flag
-    void         setUsage() { mUsage = true; }
+    void         setUsage() { mUsage = true; if( pair() ) pair()->mUsage = true; }
     //Get flag
     bool         isUsage() const { return mUsage; }
 

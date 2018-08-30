@@ -145,6 +145,7 @@ void SdGraphTracedRoad::setProp(SdPropSelected &prop)
 void SdGraphTracedRoad::getProp(SdPropSelected &prop)
   {
   prop.mRoadProp.append( mProp );
+  prop.mFilledPropMask |= spsRoadProp;
   }
 
 

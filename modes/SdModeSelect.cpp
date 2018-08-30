@@ -27,6 +27,7 @@ Description
 #include "windows/SdPropBarSymPin.h"
 #include "windows/SdPropBarTextual.h"
 #include "windows/SdPropBarRoad.h"
+#include "windows/SdPropBarPolygon.h"
 #include "windows/SdPropBarWire.h"
 
 #include "windows/SdWCommand.h"
@@ -760,6 +761,11 @@ void SdModeSelect::propGetFromBar()
       barRoad->getPropRoad( &(mLocalProp.mRoadProp), &(mLocalProp.mEnterType) );
       }
       break;
+    case PB_POLYGON : {
+      SdPropBarPolygon *barPolygon = dynamic_cast<SdPropBarPolygon*>(SdWCommand::getModeBar(PB_POLYGON) );
+      barPolygon->getPropPolygon( &(mLocalProp.mPolygonProp), &(mLocalProp.mEnterType) );
+      }
+      break;
     }
 
   //Setup new properties
@@ -830,6 +836,11 @@ void SdModeSelect::propSetToBar()
     case PB_ROAD : {
       SdPropBarRoad *barRoad = dynamic_cast<SdPropBarRoad*>(SdWCommand::getModeBar(PB_ROAD) );
       barRoad->setPropRoad( &(mLocalProp.mRoadProp), getPPM(), mLocalProp.mEnterType );
+      }
+      break;
+    case PB_POLYGON : {
+      SdPropBarPolygon *barPolygon = dynamic_cast<SdPropBarPolygon*>(SdWCommand::getModeBar(PB_POLYGON) );
+      barPolygon->setPropPolygon( &(mLocalProp.mPolygonProp), getPPM(), mLocalProp.mEnterType );
       }
       break;
     }

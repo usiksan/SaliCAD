@@ -26,6 +26,7 @@ Description
 #include "SdPropBarSymImp.h"
 #include "SdPropBarPartImp.h"
 #include "SdPropBarRoad.h"
+#include "SdPropBarPolygon.h"
 #include "SdPropBarWire.h"
 #include "SdPropBarPartPlace.h"
 #include "objects/SdEnvir.h"
@@ -576,6 +577,12 @@ void SdWCommand::createToolBars(SdWMain *frame)
   rbar->setVisible(false);
   mbarTable[PB_ROAD] = rbar;
   rbar->connect( rbar, &SdPropBarRoad::propChanged, frame, &SdWMain::cmPropertiesChange );
+
+  SdPropBarPolygon *gbar = new SdPropBarPolygon( QStringLiteral("Polygon") );
+  frame->addToolBar( gbar );
+  gbar->setVisible(false);
+  mbarTable[PB_POLYGON] = gbar;
+  gbar->connect( gbar, &SdPropBarRoad::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   SdPropBarWire *wbar = new SdPropBarWire( QStringLiteral("Wire") );
   frame->addToolBar( wbar );

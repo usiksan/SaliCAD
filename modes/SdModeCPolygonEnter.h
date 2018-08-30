@@ -1,0 +1,39 @@
+#ifndef SDMODECPOLYGONENTER_H
+#define SDMODECPOLYGONENTER_H
+
+#include "SdModeCommon.h"
+#include "objects/SdPItemPlate.h"
+#include "objects/SdBarrier.h"
+#include "objects/SdPropRoad.h"
+#include "objects/SdRuleBlock.h"
+
+
+class SdModeCPolygonEnter : public SdModeCommon
+  {
+    SdPointList    mList;       //Region vertex points
+    SdPoint        mMiddle;     //Yet no entered vertex point
+    SdPoint        mPrevMove;   //Previous entered point
+    SdPropPolygon  mProp;       //Current properties for polygon
+
+    const int sFirstPoint = 0, sNextPoint = 1;
+  public:
+    SdModeCPolygonEnter();
+
+    // SdMode interface
+  public:
+    virtual void drawDynamic(SdContext *ctx) override;
+    virtual int getPropBarId() const override;
+    virtual void propGetFromBar() override;
+    virtual void propSetToBar() override;
+    virtual void    enterPoint(SdPoint enter) override;
+    virtual void    cancelPoint(SdPoint) override;
+    virtual void    movePoint(SdPoint p) override;
+    virtual SdPoint enterPrev() override;
+    virtual QString getStepHelp() const override;
+    virtual QString getModeThema() const override;
+    virtual QString getStepThema() const override;
+    virtual int     getCursor() const override;
+    virtual int     getIndex() const override;
+  };
+
+#endif // SDMODECPOLYGONENTER_H

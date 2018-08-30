@@ -33,6 +33,7 @@ void SdPropSelected::clear()
   mSymImpProp.clear();     //Properties for symbol implement in sheet
   mPartImpProp.clear();    //Properties for part implement in pcb
   mRoadProp.clear();       //Properties for road
+  mPolygonProp.clear();    //Properties for polygon
 //    SdViaProp    viaProp;        //Свойства переходных отверстий
   mEnterType = 0;
   mWireName.clear();       //Wire name
@@ -73,6 +74,9 @@ int SdPropSelected::getPropBarId()
     case PB_ROAD :
       if( mFilledPropMask & spsRoadProp ) return PB_ROAD;
       break;
+    case PB_POLYGON :
+      if( mFilledPropMask & spsPolygonProp ) return PB_POLYGON;
+      break;
     }
   //No current bar in prop, find new prop bar
   if( mFilledPropMask & spsLineProp )
@@ -91,6 +95,8 @@ int SdPropSelected::getPropBarId()
     return mPropBarId = PB_PART_IMP;
   if( mFilledPropMask & spsRoadProp )
     return mPropBarId = PB_ROAD;
+  if( mFilledPropMask & spsPolygonProp )
+    return mPropBarId = PB_POLYGON;
 
   //Return previous prop bar
   return mPropBarId;
