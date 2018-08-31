@@ -185,6 +185,72 @@ void SdPItemPlate::buildRatNet()
 
 
 
+//Draw pcb for trace
+void SdPItemPlate::drawTrace(SdContext *ctx, SdStratum curStratum, QString currentNetName)
+  {
+  //Draw graphics
+  forEach( dctPicture, [ctx] (SdObject *obj) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+    if( graph != nullptr )
+      graph->draw(ctx);
+    return true;
+    } );
+
+  //Draw components without pads
+  forEach( dctPartImp, [ctx] (SdObject *obj) -> bool {
+    SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(obj);
+    if( imp != nullptr )
+      imp->drawWithoutPads(ctx);
+    return true;
+    } );
+
+  //Draw trace elements down stratums
+  //Initially, we assume that no current stratum (throw stratum)
+  SdStratum stratum = stmThrow;
+  //If current stratum valid then exclude it from drawing
+  if( curStratum.isValid() )
+    stratum = stmThrow & (~curStratum.getValue());
+
+  //Draw component pads down stratums
+  forEach( dctPartImp, [ctx,stratum] (SdObject *obj) -> bool {
+    SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(obj);
+    if( imp != nullptr )
+      imp->drawPads( ctx, stratum, QString() );
+    return true;
+    } );
+
+  //Draw roads down stratums
+  forEach( dctTraceRoad|dctTraceVia|dctTracePolygon, [ctx,stratum] (SdObject *obj) -> bool {
+    SdGraphTraced *trace = dynamic_cast<SdGraphTraced*>(obj);
+    if( trace != nullptr )
+      trace->drawStratum( ctx, stratum );
+    return true;
+    } );
+
+  //Draw component pads for current stratum
+  if( curStratum.isValid() ) {
+    //Net name for highlighting
+    stratum = curStratum.getValue();
+    forEach( dctPartImp, [ctx,stratum,currentNetName] (SdObject *obj) -> bool {
+      SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(obj);
+      if( imp != nullptr )
+        imp->drawPads( ctx, stratum, currentNetName );
+      return true;
+      } );
+
+    forEach( dctTraceRoad|dctTraceVia|dctTracePolygon, [ctx,stratum] (SdObject *obj) -> bool {
+      SdGraphTraced *trace = dynamic_cast<SdGraphTraced*>(obj);
+      if( trace != nullptr )
+        trace->drawStratum( ctx, stratum );
+      return true;
+      } );
+    }
+  }
+
+
+
+
+
 int SdPItemPlate::ruleForNet(int stratum, const QString netName, SdRuleId ruleId )
   {
   int stratumIndex = SdStratum::stratumIndex(stratum);

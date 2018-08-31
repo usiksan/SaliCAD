@@ -15,6 +15,19 @@ Description
 #include "SdRect.h"
 #include "SdQuadrangle.h"
 
+
+
+void SdPolyWindow::buildPolygon()
+  {
+  mPolygon.clear();
+  mPolygon.append( p1.toPointF() );
+  mPolygon.append( p2.toPointF() );
+  mPolygon.append( p3.toPointF() );
+  mPolygon.append( p4.toPointF() );
+  }
+
+
+
 SdPolyWindow::SdPolyWindow() :
   radius(-2), //Empty window
   p1(),p2(),p3(),p4()
@@ -50,6 +63,7 @@ SdPolyWindow::SdPolyWindow(const QPolygonF &pgn) :
     p2 = pgn.at(1).toPoint();
     p3 = pgn.at(2).toPoint();
     p4 = pgn.at(3).toPoint();
+    mPolygon = pgn;
     }
   }
 
@@ -67,7 +81,10 @@ SdPolyWindow::SdPolyWindow(SdRect r, int gap) :
   p2.move( SdPoint(gap,-gap) );
   p3.move( SdPoint(gap,gap) );
   p4.move( SdPoint(-gap,gap) );
+  buildPolygon();
   }
+
+
 
 SdPolyWindow::SdPolyWindow(SdPoint a, SdPoint b, int gap) :
   radius(-1),p1(),p2(),p3(),p4()
@@ -78,6 +95,19 @@ SdPolyWindow::SdPolyWindow(SdPoint a, SdPoint b, int gap) :
   p2 = q.p2;
   p3 = q.p3;
   p4 = q.p4;
+  buildPolygon();
+  }
+
+
+
+
+bool SdPolyWindow::containsPoint(SdPoint p) const
+  {
+  if( radius >= 0 )
+    //Return as circle
+    return p1.getDistanceInt(p) < radius;
+  //Return as region
+  return mPolygon.containsPoint( p.toPointF(), Qt::OddEvenFill );
   }
 
 
@@ -95,6 +125,9 @@ QJsonObject SdPolyWindow::write() const
   return obj;
   }
 
+
+
+
 void SdPolyWindow::read(const QJsonObject obj)
   {
   radius = obj.value( QStringLiteral("r") ).toInt();
@@ -102,6 +135,7 @@ void SdPolyWindow::read(const QJsonObject obj)
   p2.read( QStringLiteral("p2"), obj );
   p3.read( QStringLiteral("p3"), obj );
   p4.read( QStringLiteral("p4"), obj );
+  buildPolygon();
   }
 
 

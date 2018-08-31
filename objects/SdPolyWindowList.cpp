@@ -53,6 +53,17 @@ void SdPolyWindowList::appendCircle(SdPoint center, int radius)
 
 
 
+//Test point
+bool SdPolyWindowList::containsPoint(SdPoint p) const
+  {
+  for( const SdPolyWindow &win : *this )
+    if( win.containsPoint(p) ) return true;
+  return false;
+  }
+
+
+
+
 QJsonArray SdPolyWindowList::write() const
   {
   QJsonArray arr;

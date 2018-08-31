@@ -840,7 +840,7 @@ void SdModeSelect::propSetToBar()
       break;
     case PB_POLYGON : {
       SdPropBarPolygon *barPolygon = dynamic_cast<SdPropBarPolygon*>(SdWCommand::getModeBar(PB_POLYGON) );
-      barPolygon->setPropPolygon( &(mLocalProp.mPolygonProp), getPPM(), mLocalProp.mEnterType );
+      barPolygon->setPropPolygon( &(mLocalProp.mPolygonProp), getPPM(), mLocalProp.mEnterType, mObject->getProject()->netList() );
       }
       break;
     }

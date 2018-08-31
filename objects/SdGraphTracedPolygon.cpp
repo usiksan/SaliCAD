@@ -15,6 +15,7 @@ Description
 #include "SdContext.h"
 #include "SdEnvir.h"
 #include "SdSelector.h"
+#include "SdPItemPlate.h"
 
 SdGraphTracedPolygon::SdGraphTracedPolygon()
   {
@@ -111,9 +112,25 @@ void SdGraphTracedPolygon::saveState(SdUndo *undo)
   {
   }
 
+
+
+
 void SdGraphTracedPolygon::moveComplete(SdPoint grid, SdUndo *undo)
   {
+  Q_UNUSED(grid)
+  Q_UNUSED(undo)
+  //Rebuild window list
+  mWindows.reset( &mRegion );
+  getPlate()->forEach( dctTraced, [this] (SdObject *obj) ->bool {
+    SdPtr<SdGraphTraced> traced( obj );
+    if( traced.isValid() )
+      traced->accumWindows( mWindows, mProp.mStratum.stratum(), mProp.mGap.getValue(), mProp.mNetName.str() );
+    return true;
+    });
   }
+
+
+
 
 void SdGraphTracedPolygon::move(SdPoint offset)
   {
@@ -210,31 +227,46 @@ SdRect SdGraphTracedPolygon::getOverRect() const
 
 
 
-void SdGraphTracedPolygon::draw(SdContext *dc)
-  {
-  dc->polygon( mRegion, mWindows, getLayer() );
-  }
+//void SdGraphTracedPolygon::draw(SdContext *dc)
+//  {
+//  dc->polygon( mRegion, mWindows, getLayer() );
+//  }
 
 
 
 
 int SdGraphTracedPolygon::behindCursor(SdPoint p)
   {
-
+  //Определить состояние объекта под курсором
+  if( isVisible() && mRegion.containsPoint(p, Qt::OddEvenFill) )
+    return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+  return 0;
   }
 
 
 
 bool SdGraphTracedPolygon::getInfo(SdPoint p, QString &info, bool extInfo)
   {
+  Q_UNUSED(extInfo)
+  if( behindCursor( p ) ) {
+    info = QObject::tr("Net: ") + mProp.mNetName.str();
+    return true;
+    }
+  return false;
   }
+
+
 
 bool SdGraphTracedPolygon::snapPoint(SdSnapInfo *snap)
   {
   }
 
+
+
+
 SdStratum SdGraphTracedPolygon::stratum() const
   {
+  return mProp.mStratum;
   }
 
 
@@ -242,6 +274,16 @@ SdStratum SdGraphTracedPolygon::stratum() const
 
 bool SdGraphTracedPolygon::isPointOnNet(SdPoint p, SdStratum stratum, QString *wireName, int *destStratum)
   {
+  if( mProp.mStratum & stratum ) {
+    if( mRegion.containsPoint( p, Qt::OddEvenFill ) && !mWindows.containsPoint( p ) ) {
+      if( wireName )
+        *wireName = mProp.mNetName.str();
+      if( destStratum )
+        *destStratum = mProp.mStratum & stratum;
+      return true;
+      }
+    }
+  return false;
   }
 
 
@@ -283,7 +325,7 @@ bool SdGraphTracedPolygon::isMatchNetAndStratum(const QString netName, SdStratum
 
 void SdGraphTracedPolygon::accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName) const
   {
-
+  //Polygon can't append windows to another polygon
   }
 
 

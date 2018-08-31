@@ -17,14 +17,15 @@ class SdModeCPolygonEnter : public SdModeCommon
 
     const int sFirstPoint = 0, sNextPoint = 1;
   public:
-    SdModeCPolygonEnter();
+    SdModeCPolygonEnter( SdWEditorGraph *editor, SdProjectItem *obj );
 
     // SdMode interface
   public:
-    virtual void drawDynamic(SdContext *ctx) override;
-    virtual int getPropBarId() const override;
-    virtual void propGetFromBar() override;
-    virtual void propSetToBar() override;
+    virtual void    drawStatic(SdContext *ctx) override;
+    virtual void    drawDynamic(SdContext *ctx) override;
+    virtual int     getPropBarId() const override;
+    virtual void    propGetFromBar() override;
+    virtual void    propSetToBar() override;
     virtual void    enterPoint(SdPoint enter) override;
     virtual void    cancelPoint(SdPoint) override;
     virtual void    movePoint(SdPoint p) override;
@@ -34,6 +35,9 @@ class SdModeCPolygonEnter : public SdModeCommon
     virtual QString getStepThema() const override;
     virtual int     getCursor() const override;
     virtual int     getIndex() const override;
+
+  private:
+    SdPItemPlate *plate() { return dynamic_cast<SdPItemPlate*>(mObject); }
   };
 
 #endif // SDMODECPOLYGONENTER_H

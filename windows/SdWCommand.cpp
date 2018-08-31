@@ -232,10 +232,10 @@ void SdWCommand::createMenu(SdWMain *frame)
   //  cmModeRadiusSize = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   cmModeTable[MD_MOVE_PART]  = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrtPlace.png")), frame->tr("Move part"), frame, SLOT(cmModeMovePart()) );
   cmModeTable[MD_ROAD_ENTER] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPcbWire.png")), frame->tr("Road enter"), frame, SLOT(cmModeRoadEnter()) );
+  cmModeTable[MD_POLYGON]    = menuInsertPcb->addAction( QIcon(QString(":/pic/objPcbWire.png")), frame->tr("Road enter"), frame, SLOT(cmModePolygon()) );
   //  cmModePlace      = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeEditWire   = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeWire       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmModePolygon    = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeDeleteWire = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModePad        = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
 
@@ -515,6 +515,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barPcb->insertAction( nullptr, cmPads );
   barPcb->insertAction( nullptr, cmModeTable[MD_MOVE_PART] );
   barPcb->insertAction( nullptr, cmModeTable[MD_ROAD_ENTER] );
+  barPcb->insertAction( nullptr, cmModeTable[MD_POLYGON] );
 
 
   frame->addToolBar( barPcb );

@@ -29,62 +29,7 @@ SdModeCRoadEnter::SdModeCRoadEnter(SdWEditorGraph *editor, SdProjectItem *obj) :
 
 void SdModeCRoadEnter::drawStatic(SdContext *ctx)
   {
-  //Draw graphics
-  mObject->forEach( dctPicture, [ctx] (SdObject *obj) -> bool {
-    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-    if( graph != nullptr )
-      graph->draw(ctx);
-    return true;
-    } );
-
-  //Draw components without pads
-  mObject->forEach( dctPartImp, [ctx] (SdObject *obj) -> bool {
-    SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(obj);
-    if( imp != nullptr )
-      imp->drawWithoutPads(ctx);
-    return true;
-    } );
-
-  //Draw component pads down stratums
-  SdStratum stratum = stmThrow;
-  if( mProp.mStratum.isValid() ) stratum = stmThrow & (~mProp.mStratum.getValue());
-  mObject->forEach( dctPartImp, [ctx,stratum] (SdObject *obj) -> bool {
-    SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(obj);
-    if( imp != nullptr )
-      imp->drawPads( ctx, stratum, QString() );
-    return true;
-    } );
-
-  //Draw roads down stratums
-  mObject->forEach( dctTraceRoad|dctTraceVia, [ctx,stratum] (SdObject *obj) -> bool {
-    SdGraphTraced *trace = dynamic_cast<SdGraphTraced*>(obj);
-    if( trace != nullptr )
-      trace->drawStratum( ctx, stratum );
-    return true;
-    } );
-
-  //Draw component pads for current stratum
-  if( mProp.mStratum.isValid() ) {
-    //Net name for highlighting
-    QString netName;
-    if( getStep() )
-      //If mode in tracing state then assign net name, else no highlighting
-      netName = mProp.mNetName.str();
-    stratum = mProp.mStratum.getValue();
-    mObject->forEach( dctPartImp, [ctx,stratum,netName] (SdObject *obj) -> bool {
-      SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(obj);
-      if( imp != nullptr )
-        imp->drawPads( ctx, stratum, netName );
-      return true;
-      } );
-
-    mObject->forEach( dctTraceRoad|dctTraceVia, [ctx,stratum] (SdObject *obj) -> bool {
-      SdGraphTraced *trace = dynamic_cast<SdGraphTraced*>(obj);
-      if( trace != nullptr )
-        trace->drawStratum( ctx, stratum );
-      return true;
-      } );
-    }
+  plate()->drawTrace( ctx, mProp.mStratum, getStep() ? mProp.mNetName.str() : QString() );
   }
 
 

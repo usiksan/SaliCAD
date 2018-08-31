@@ -79,6 +79,9 @@ class SdProject : public SdContainer
     SdObjectPtr       item( QTreeWidgetItem *src ) const;
     SdObjectPtr       itemByName( quint64 mask, const QString name ) const;
 
+    //Return full net list from all project sheets
+    QStringList       netList() const;
+
     virtual QString   getType() const override;
     virtual quint64   getClass() const override;
 

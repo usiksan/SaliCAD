@@ -20,6 +20,7 @@ Description
 #include "objects/SdEnvir.h"
 #include "modes/SdModeCRoadEnter.h"
 #include "modes/SdModeCPartPlace.h"
+#include "modes/SdModeCPolygonEnter.h"
 
 #include <QDebug>
 #include <QProgressDialog>
@@ -90,11 +91,18 @@ void SdWEditorGraphPlate::cmModeRoadEnter()
 
 void SdWEditorGraphPlate::cmModePolygon()
   {
+  modeSet( new SdModeCPolygonEnter( this, getProjectItem() )  );
   }
+
+
+
 
 void SdWEditorGraphPlate::cmModeDeleteWire()
   {
   }
+
+
+
 
 void SdWEditorGraphPlate::cmModePad()
   {

@@ -53,8 +53,8 @@ class SdModeCRoadEnter : public SdModeCommon
     virtual QString getStepHelp() const override;
     virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;
-    virtual int getCursor() const override;
-    virtual int getIndex() const override;
+    virtual int     getCursor() const override;
+    virtual int     getIndex() const override;
 
   private:
     SdPItemPlate *plate() { return dynamic_cast<SdPItemPlate*>(mObject); }

@@ -28,7 +28,7 @@ class SdPropBarPolygon : public SdPropBarStratum
     double     mPPM;      //Logical coord per physical
     QComboBox *mGap;      //Gap for polygon windows
 
-    QLineEdit *mWireName; //Name of net for polygon
+    QComboBox *mWireName; //Name of net for polygon
 
     //Vertex type of two lines
     QAction   *mEnterOrtho;
@@ -38,7 +38,7 @@ class SdPropBarPolygon : public SdPropBarStratum
   public:
     SdPropBarPolygon( const QString title );
 
-    void setPropPolygon( SdPropPolygon *propPolygon, double ppm, int enterType );
+    void setPropPolygon(SdPropPolygon *propPolygon, double ppm, int enterType , const QStringList list);
     void getPropPolygon( SdPropPolygon *propPolygon, int *enterType );
 
   private:

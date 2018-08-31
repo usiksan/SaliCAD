@@ -82,6 +82,9 @@ class SdPItemPlate : public SdProjectItem
     //Build rat net
     void                   buildRatNet();
 
+    //Draw pcb for trace
+    void                   drawTrace( SdContext *ctx, SdStratum curStratum, QString currentNetName );
+
 
     //Tracing rules
     //Rebuild rules map by scan all nets

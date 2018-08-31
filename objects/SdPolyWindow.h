@@ -28,6 +28,10 @@ class SdPolyWindow
     SdPoint p2;
     SdPoint p3;
     SdPoint p4;
+
+    //Not saved
+    QPolygonF mPolygon;
+    void      buildPolygon();
   public:
     SdPolyWindow();
 
@@ -49,6 +53,10 @@ class SdPolyWindow
     SdPoint     getP2() const { return p2; }
     SdPoint     getP3() const { return p3; }
     SdPoint     getP4() const { return p4; }
+
+    QPolygonF   polygon() const { return mPolygon; }
+
+    bool        containsPoint( SdPoint p ) const;
 
     QJsonObject write() const;
     void        read( const QJsonObject obj );

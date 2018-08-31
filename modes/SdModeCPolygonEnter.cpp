@@ -1,14 +1,37 @@
 #include "SdModeCPolygonEnter.h"
 #include "objects/SdGraphTracedPolygon.h"
+#include "objects/SdProp.h"
+#include "objects/SdEnvir.h"
+#include "objects/SdProject.h"
+#include "windows/SdPropBarPolygon.h"
+#include "windows/SdWCommand.h"
+#include "windows/SdWEditorGraph.h"
 
-SdModeCPolygonEnter::SdModeCPolygonEnter()
+SdModeCPolygonEnter::SdModeCPolygonEnter( SdWEditorGraph *editor, SdProjectItem *obj ) :
+  SdModeCommon( editor, obj )
   {
 
+  }
+
+void SdModeCPolygonEnter::drawStatic(SdContext *ctx)
+  {
+  plate()->drawTrace( ctx, mProp.mStratum, mProp.mNetName.str() );
   }
 
 
 void SdModeCPolygonEnter::drawDynamic(SdContext *ctx)
   {
+  if( getStep() == sNextPoint ) {
+    ctx->setPen( 0, sdEnvir->getSysColor(scEnter),
+                 sdGlobalProp->mLineProp.mType.getValue() );
+    ctx->region( mList, false );
+    ctx->line( mList.last(), mMiddle );
+    if( mMiddle != mPrevMove )
+      ctx->line( mMiddle, mPrevMove );
+
+    if( sdEnvir->mIsSmart && mList.count() > 2 )
+      ctx->smartPoint( mList.at(0), snapEndPoint );
+    }
   }
 
 
@@ -24,6 +47,14 @@ int SdModeCPolygonEnter::getPropBarId() const
 
 void SdModeCPolygonEnter::propGetFromBar()
   {
+  SdPropBarPolygon *bar = dynamic_cast<SdPropBarPolygon*>( SdWCommand::mbarTable[PB_POLYGON] );
+  if( bar ) {
+    //Retrive properties from polygon properties bar
+    bar->getPropPolygon( &mProp, &(sdGlobalProp->mWireEnterType) );
+    mEditor->setFocus();
+    setDirtyCashe();
+    update();
+    }
   }
 
 
@@ -31,6 +62,17 @@ void SdModeCPolygonEnter::propGetFromBar()
 
 void SdModeCPolygonEnter::propSetToBar()
   {
+  SdPropBarPolygon *bar = dynamic_cast<SdPropBarPolygon*>( SdWCommand::mbarTable[PB_POLYGON] );
+  if( bar ) {
+    //Accum available net names
+    QStringList netList = mObject->getProject()->netList();
+    //If net name not assigned yet for polygon then assign first one
+    if( mProp.mNetName.str().isEmpty() && netList.count() )
+      mProp.mNetName = netList.at(0);
+    //Setup tracing layer count and trace type
+    bar->setPlateAndTrace( plate(), layerTraceRoad );
+    bar->setPropPolygon( &mProp, mEditor->getPPM(), sdGlobalProp->mWireEnterType, netList );
+    }
   }
 
 

@@ -17,6 +17,7 @@ Description
 #include "SdPItemPlate.h"
 #include "SdPItemSheet.h"
 #include "SdObjectFactory.h"
+#include "SdGraphNet.h"
 #include <QJsonArray>
 #include <QFile>
 #include <QJsonDocument>
@@ -256,6 +257,31 @@ SdObjectPtr SdProject::itemByName(quint64 mask, const QString name) const
     return true;
     });
   return ptr;
+  }
+
+
+
+
+
+//Return full net list from all project sheets
+QStringList SdProject::netList() const
+  {
+  //For all sheets accum net list
+  QSet<QString> set;
+  //For each sheet accum net list
+  forEachConst( dctSheet, [&set] (SdObject *obj) -> bool {
+    SdPtr<SdPItemSheet> sheet(obj);
+    if( sheet.isValid() )
+      //In sheet for each net object append unical net name to list
+      sheet->forEach( dctNetWire | dctNetName, [&set] (SdObject *obj1) -> bool {
+        SdPtr<SdGraphNet> net(obj1);
+        if( net.isValid() )
+          set.insert( net->getNetName() );
+        return true;
+        });
+    return true;
+    });
+  return set.toList();
   }
 
 

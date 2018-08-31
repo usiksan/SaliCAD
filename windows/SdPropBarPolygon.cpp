@@ -49,10 +49,15 @@ SdPropBarPolygon::SdPropBarPolygon(const QString title) :
   addSeparator();
 
 
-  mWireName = new QLineEdit();
-  mWireName->setReadOnly(true);
-  mWireName->setMinimumWidth(80);
-  mWireName->setMaximumWidth(120);
+  mWireName = new QComboBox();
+  mWireName->setEditable(true);
+  mWireName->setMinimumWidth(120);
+  mWireName->setMaximumWidth(160);
+
+  //on select other gap
+  connect( mWireName, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int){
+    emit propChanged();
+    });
 
   addWidget( mWireName );
 
@@ -88,7 +93,7 @@ SdPropBarPolygon::SdPropBarPolygon(const QString title) :
 
 
 
-void SdPropBarPolygon::setPropPolygon(SdPropPolygon *propPolygon, double ppm, int enterType)
+void SdPropBarPolygon::setPropPolygon(SdPropPolygon *propPolygon, double ppm, int enterType, const QStringList list )
   {
   if( propPolygon ) {
     //Set current stratum
@@ -106,8 +111,10 @@ void SdPropBarPolygon::setPropPolygon(SdPropPolygon *propPolygon, double ppm, in
     //line enter type
     setVertexType( enterType );
 
+    //Fill net list
+    mWireName->addItems( list );
     //Current road name name
-    mWireName->setText( propPolygon->mNetName.str() );
+    mWireName->setCurrentText( propPolygon->mNetName.str() );
     }
   }
 
@@ -124,12 +131,25 @@ void SdPropBarPolygon::getPropPolygon(SdPropPolygon *propPolygon, int *enterType
     if( !mGap->currentText().isEmpty() )
       propPolygon->mGap.setFromPhis( mGap->currentText(), mPPM );
 
-    //Net name not used
+    //Net name
+    QString netName = mWireName->currentText();
+    if( !netName.isEmpty() )
+      propPolygon->mNetName = netName;
     }
   if( enterType ) {
     if( mEnterOrtho->isChecked() ) *enterType = dleOrtho;
     else if( mEnter45degree->isChecked() ) *enterType = dle45degree;
     else *enterType = dleAnyDegree;
     }
+  }
+
+
+
+
+void SdPropBarPolygon::setVertexType(int type)
+  {
+  mEnterOrtho->setChecked( type == dleOrtho );
+  mEnter45degree->setChecked( type == dle45degree );
+  mEnterAnyDegree->setChecked( type == dleAnyDegree );
   }
 

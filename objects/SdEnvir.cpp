@@ -144,7 +144,8 @@ void SdEnvir::loadEnvir()
        >> mGridHistory          //Previous grid history table
        >> mDefaultRules         //Default rules for pcb
        >> mShowRuleErrors       //If true then over pcb shows rule error indicators as rectangles
-       >> mShowFields;           //If true then draw fields as fields names else draw fields as values
+       >> mShowFields           //If true then draw fields as fields names else draw fields as values
+       >> mPolygonOpacity;       //Polygons draws with this opacity
     }
   else defaultEnvir();
 
@@ -217,7 +218,8 @@ void SdEnvir::saveEnvir()
      << mGridHistory          //Previous grid history table
      << mDefaultRules         //Default rules for pcb
      << mShowRuleErrors       //If true then over pcb shows rule error indicators as rectangles
-     << mShowFields;           //If true then draw fields as fields names else draw fields as values
+     << mShowFields           //If true then draw fields as fields names else draw fields as values
+     << mPolygonOpacity;       //Polygons draws with this opacity
 
   QSettings s;
   s.setValue( QString(SDK_ENVIR_VERSION), QVariant(SdEnvirVersion) );
@@ -285,6 +287,7 @@ void SdEnvir::defaultEnvir()
   mGridHistory.clear();
   mShowRuleErrors    = true;           //If true then over pcb shows rule error indicators as rectangles
   mShowFields        = true;           //If true then draw fields as fields names else draw fields as values
+  mPolygonOpacity    = 0.5;            //Polygons draws with this opacity
 
 
   mGuiderEnabled     = true;           //Флаг разрешения/запрещения путеводителя

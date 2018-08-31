@@ -360,13 +360,13 @@ void SdContext::polygon(const SdPointList &points, const SdPolyWindowList &windo
   QPainter image(&intermediate);
 
   //2. we draw polygon on image
-  setPen( 0, layer, dltSolid );
-  setBrush( convertColor(layer) );
+  image.setPen( convertColor(layer) );
+  image.setBrush( convertColor(layer) );
   image.drawPolygon( mTransform.map( points ) );
 
   //3. we draw windows with transparent fill color
-  setPen( 0, Qt::transparent, dltSolid );
-  setBrush( Qt::transparent );
+  image.setPen( Qt::transparent );
+  image.setBrush( Qt::transparent );
   for( const SdPolyWindow &win : windows ) {
     if( win.getRadius() >= 0 ) {
       //Circle window
@@ -377,17 +377,12 @@ void SdContext::polygon(const SdPointList &points, const SdPolyWindowList &windo
       }
     else {
       //Rectangle window
-      QPolygonF pgn;
-      pgn.append( win.getP1().toPointF() );
-      pgn.append( win.getP2().toPointF() );
-      pgn.append( win.getP3().toPointF() );
-      pgn.append( win.getP4().toPointF() );
-      image.drawPolygon( mTransform.map( pgn ) );
+      image.drawPolygon( mTransform.map( win.polygon() ) );
       }
     }
 
   //4. image copy to painter
-  mPainter->setOpacity( 0.5 );
+  mPainter->setOpacity( sdEnvir->mPolygonOpacity );
   mPainter->drawImage( 0, 0, intermediate );
   mPainter->setOpacity( 1.0 );
   }
