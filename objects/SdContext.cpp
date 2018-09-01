@@ -365,8 +365,10 @@ void SdContext::polygon(const SdPointList &points, const SdPolyWindowList &windo
   image.drawPolygon( mTransform.map( points ) );
 
   //3. we draw windows with transparent fill color
+  image.setCompositionMode( QPainter::CompositionMode_Source );
   image.setPen( Qt::transparent );
   image.setBrush( Qt::transparent );
+  //image.setBrush( Qt::yellow );
   for( const SdPolyWindow &win : windows ) {
     if( win.getRadius() >= 0 ) {
       //Circle window

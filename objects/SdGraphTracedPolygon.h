@@ -37,24 +37,23 @@ class SdGraphTracedPolygon : public SdGraphTraced
 
     // SdObject interface
   public:
-    virtual QString getType() const override;
-    virtual SdClass getClass() const override;
-    virtual void attach(SdUndo *undo) override;
-    virtual void detach(SdUndo *undo) override;
-    virtual void    cloneFrom(const SdObject *src) override;
-    virtual void    writeObject(QJsonObject &obj) const override;
-    virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual QString   getType() const override;
+    virtual SdClass   getClass() const override;
+    virtual void      attach(SdUndo *undo) override;
+    virtual void      cloneFrom(const SdObject *src) override;
+    virtual void      writeObject(QJsonObject &obj) const override;
+    virtual void      readObject(SdObjectMap *map, const QJsonObject obj) override;
 
     // SdGraph interface
   public:
     virtual void saveState(SdUndo *undo) override;
-    virtual void    moveComplete(SdPoint grid, SdUndo *undo) override;
-    virtual void move(SdPoint offset) override;
-    virtual void rotate(SdPoint center, SdPropAngle angle) override;
-    virtual void setProp(SdPropSelected &prop) override;
-    virtual void getProp(SdPropSelected &prop) override;
-    virtual void selectByPoint(const SdPoint p, SdSelector *selector) override;
-    virtual void selectByRect(const SdRect &r, SdSelector *selector) override;
+    virtual void      moveComplete(SdPoint grid, SdUndo *undo) override;
+    virtual void      move(SdPoint offset) override;
+    virtual void      rotate(SdPoint center, SdPropAngle angle) override;
+    virtual void      setProp(SdPropSelected &prop) override;
+    virtual void      getProp(SdPropSelected &prop) override;
+    virtual void      selectByPoint(const SdPoint p, SdSelector *selector) override;
+    virtual void      selectByRect(const SdRect &r, SdSelector *selector) override;
     virtual void      select(SdSelector *selector) override;
     virtual void      setLayerUsage() override;
     virtual bool      isVisible() override;
@@ -77,6 +76,9 @@ class SdGraphTracedPolygon : public SdGraphTraced
   private:
     //Return layer for polygon
     SdLayer *getLayer() const;
+
+    //Rebuild windows list
+    void     rebuildWindows();
   };
 
 #endif // SDGRAPHTRACEDPOLYGON_H

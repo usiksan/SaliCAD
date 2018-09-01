@@ -58,8 +58,8 @@ Description
 #define dctSymbolObjects (dctPicture | dctSymPin )
 #define dctPartObjects   (dctPicture | dctPartPin)
 #define dctSheetObjects  (dctPicture | dctSymImp | dctNetWire | dctNetName)
-#define dctPlateObjects  (dctPicture | dctPartImp | dctTraceVia | dctTraceRoad )
-#define dctTraced        (dctPartImp | dctTraceVia | dctTraceRoad )
+#define dctPlateObjects  (dctPicture | dctPartImp | dctTraceVia | dctTraceRoad | dctTracePolygon )
+#define dctTraced        (dctPartImp | dctTraceVia | dctTraceRoad | dctTracePolygon )
 
 
 #define SDKO_TYPE      "type"

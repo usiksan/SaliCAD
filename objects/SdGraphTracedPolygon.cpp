@@ -56,11 +56,10 @@ SdClass SdGraphTracedPolygon::getClass() const
 
 void SdGraphTracedPolygon::attach(SdUndo *undo)
   {
+  Q_UNUSED(undo);
+  rebuildWindows();
   }
 
-void SdGraphTracedPolygon::detach(SdUndo *undo)
-  {
-  }
 
 
 
@@ -120,13 +119,7 @@ void SdGraphTracedPolygon::moveComplete(SdPoint grid, SdUndo *undo)
   Q_UNUSED(grid)
   Q_UNUSED(undo)
   //Rebuild window list
-  mWindows.reset( &mRegion );
-  getPlate()->forEach( dctTraced, [this] (SdObject *obj) ->bool {
-    SdPtr<SdGraphTraced> traced( obj );
-    if( traced.isValid() )
-      traced->accumWindows( mWindows, mProp.mStratum.stratum(), mProp.mGap.getValue(), mProp.mNetName.str() );
-    return true;
-    });
+  rebuildWindows();
   }
 
 
@@ -134,22 +127,64 @@ void SdGraphTracedPolygon::moveComplete(SdPoint grid, SdUndo *undo)
 
 void SdGraphTracedPolygon::move(SdPoint offset)
   {
+  mRegion.move( mFlyIndex, offset );
   }
+
+
+
 
 void SdGraphTracedPolygon::rotate(SdPoint center, SdPropAngle angle)
   {
+  mRegion.rotate( center, angle );
   }
 
+
+
+
+//Properties service [Изменение свойствами]
+//Set properties of this object from prop
 void SdGraphTracedPolygon::setProp(SdPropSelected &prop)
   {
+  //From global we can set only gap
+  mProp.mGap = prop.mPolygonProp.mGap;
   }
 
+
+
+
+
+//Get (append) properties from this object to prop
 void SdGraphTracedPolygon::getProp(SdPropSelected &prop)
   {
+  prop.mPolygonProp.append( mProp );
+  prop.mFilledPropMask |= spsPolygonProp;
   }
+
+
+
+
+
 
 void SdGraphTracedPolygon::selectByPoint(const SdPoint p, SdSelector *selector)
   {
+  SdLayer *layer = getLayer();
+  if( layer != nullptr && layer->isEdited() ) {
+    //For each pair points of list check segment made by this pair
+    //and if test point p is on segment, then append two point of pair to select list
+    for( int i = 0; i < mRegion.count() - 1; ++i )
+      if( p.isOnSegment( mRegion.get(i), mRegion.get(i+1)) ) {
+        if( !getSelector() ) {
+          mFlyIndex.clear();
+          selector->insert( this );
+          }
+        if( mRegion.get(i) == p ) mFlyIndex.insert( i );
+        else if( mRegion.get(i+1) == p ) mFlyIndex.insert( i + 1 );
+        else {
+          mFlyIndex.insert( i );
+          mFlyIndex.insert( i + 1 );
+          }
+        }
+    }
   }
 
 
@@ -157,32 +192,19 @@ void SdGraphTracedPolygon::selectByPoint(const SdPoint p, SdSelector *selector)
 
 void SdGraphTracedPolygon::selectByRect(const SdRect &r, SdSelector *selector)
   {
-//  SdLayer *layer = getLayer();
-//  if( layer != nullptr && layer->isEdited() ) {
-//    if( !getSelector() ) {
-//      //Not selected yet
-//      if( r.isAccross( mSegment ) ) {
-//        if( r.isPointInside(mSegment.getP1()) && !r.isPointInside(mSegment.getP2()) ) {
-//          if( mSegment.orientation() == SdSegment::sorAny ) mFly = flyP1;
-//          else mFly = flyP1_45;
-//          }
-//        else if( r.isPointInside(mSegment.getP2()) && !r.isPointInside(mSegment.getP1()) ) {
-//          if( mSegment.orientation() == SdSegment::sorAny ) mFly = flyP2;
-//          else mFly = flyP2_45;
-//          }
-//        else mFly = flyP1P2;
-//        selector->insert( this );
-//        }
-//      }
-//    else {
-//      //Already selected
-//      if( r.isAccross( mSegment ) ) {
-//        //If inside selecting rect then check if was only one end selected then select both
-//        if( r.isPointInside(mSegment.getP1()) && (mFly == flyP2 || mFly == flyP2_45) ) mFly = flyP1P2;
-//        else if( r.isPointInside(mSegment.getP2()) && (mFly == flyP1 || mFly == flyP1_45) ) mFly = flyP1P2;
-//        }
-//      }
-//    }
+  //Ploygon selected if any vertex of polygon foll inside rectangle
+  SdLayer *layer = getLayer();
+  if( layer != nullptr && layer->isEdited() ) {
+    for( int i = 0; i < mRegion.count() - 1; ++i )
+      if( r.isAccross( mRegion.get(i), mRegion.get(i+1)) ) {
+        if( !getSelector() ) {
+          mFlyIndex.clear();
+          selector->insert( this );
+          }
+        mFlyIndex.insert( i );
+        mFlyIndex.insert( i + 1 );
+        }
+    }
   }
 
 
@@ -227,12 +249,6 @@ SdRect SdGraphTracedPolygon::getOverRect() const
 
 
 
-//void SdGraphTracedPolygon::draw(SdContext *dc)
-//  {
-//  dc->polygon( mRegion, mWindows, getLayer() );
-//  }
-
-
 
 
 int SdGraphTracedPolygon::behindCursor(SdPoint p)
@@ -259,6 +275,7 @@ bool SdGraphTracedPolygon::getInfo(SdPoint p, QString &info, bool extInfo)
 
 bool SdGraphTracedPolygon::snapPoint(SdSnapInfo *snap)
   {
+  //TODO B050 snap point for polygon
   }
 
 
@@ -291,6 +308,7 @@ bool SdGraphTracedPolygon::isPointOnNet(SdPoint p, SdStratum stratum, QString *w
 
 void SdGraphTracedPolygon::accumNetSegments(SdPlateNetList &netList) const
   {
+  //TODO B049 net segments creation for polygon
   }
 
 
@@ -311,6 +329,7 @@ void SdGraphTracedPolygon::drawStratum(SdContext *dcx, int stratum)
 
 void SdGraphTracedPolygon::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const
   {
+  //TODO B048 barriars creation for polygon
   }
 
 
@@ -323,9 +342,20 @@ bool SdGraphTracedPolygon::isMatchNetAndStratum(const QString netName, SdStratum
 
 
 
+
+
 void SdGraphTracedPolygon::accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName) const
   {
-  //Polygon can't append windows to another polygon
+  if( (mProp.mStratum & stratum) && mProp.mNetName.str() != netName ) {
+    //Find polygon intersection
+    QPolygon pgn = dest.polygon()->intersected( mRegion );
+
+    //Calc over rectangle
+    SdRect r = pgn.boundingRect();
+
+    //Append rect window
+    dest.append( SdPolyWindow( r, gap ) );
+    }
   }
 
 
@@ -335,4 +365,23 @@ void SdGraphTracedPolygon::accumWindows(SdPolyWindowList &dest, int stratum, int
 SdLayer *SdGraphTracedPolygon::getLayer() const
   {
   return sdEnvir->mCacheForPolygon.getLayer( mProp.mStratum );
+  }
+
+
+
+
+//Rebuild windows list
+void SdGraphTracedPolygon::rebuildWindows()
+  {
+  //Clear current windows list
+  mWindows.reset( &mRegion );
+
+  //Accum on plate windows
+  getParent()->forEach( dctTraced, [this] (SdObject *obj) -> bool {
+    SdPtr<SdGraphTraced> traced( obj );
+    if( traced.isValid() )
+      traced->accumWindows( mWindows, mProp.mStratum.stratum(), mProp.mGap.getValue(), mProp.mNetName.str() );
+    return true;
+    });
+
   }
