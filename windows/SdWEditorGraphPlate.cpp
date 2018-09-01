@@ -193,7 +193,7 @@ void SdWEditorGraphPlate::cmFileExport()
   //Fill it with pages
   SdPMasterList *master = new SdPMasterList( tr("Export plate"), tr("Select export master"), &wizard );
   wizard.setPage( 0,   master );
-  wizard.setPage( 1,   new SdPExportPlate_Gerber( mPlate, 1, master, &wizard) );
+  wizard.setPage( 1,   new SdPExportPlate_Gerber( this, mPlate, 1, master, &wizard) );
   //wizard.setPage( SDP_NPI_MASTER, new SdPNewProjectItem_Master( &item, mProject, &wizard) );
   wizard.exec();
   }

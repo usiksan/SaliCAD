@@ -33,6 +33,7 @@ class SdSelector;
 
 //Контекст вывода графической информации (средство рисования)
 class SdContext {
+  protected:
     QPainter       *mPainter;      //Рисовальщик
     SdConverter    *mConverter;    //Преобразователь координат
     SdPoint         mGrid;         //Сетка
@@ -48,6 +49,7 @@ class SdContext {
     bool            mZeroOn;       //True if overriding zero width line on
   public:
     SdContext(SdPoint grid, QPainter *painter);
+    virtual ~SdContext() {}
 
     //Operations with coord convertor
     SdContext*      setConverter( SdConverter *c );
@@ -76,31 +78,31 @@ class SdContext {
 
     //Draw prepare
     void            setPen(int width, SdLayer *layer, int lineStyle);
-    void            setPen(int width, QColor color, int lineStyle );
+    virtual void    setPen(int width, QColor color, int lineStyle );
     void            setBrush( QColor color );
     void            setProp(const SdPropLine &prop );
     void            setFont( const SdPropText &prop );
 
     //Примитивы рисования
-    void            line( SdPoint a, SdPoint b );
+    virtual void    line( SdPoint a, SdPoint b );
     void            line(SdPoint a, SdPoint b, const SdPropLine &prop );
     //virtual void    road( SdPoint a, SdPoint b, int clear, SdRoadProp &prop ) = 0;
     void            quadrangle( SdQuadrangle q, const SdPropLine &prop );
     void            rect( SdRect r );
     void            rect( SdRect r, const SdPropLine &prop );
-    void            fillRect( SdRect r );
+    virtual void    fillRect( SdRect r );
     void            fillRect( SdRect r, const SdPropLine &prop );
-    void            arc( SdPoint center, SdPoint start, SdPoint stop );
+    virtual void    arc( SdPoint center, SdPoint start, SdPoint stop );
     void            arc( SdPoint center, SdPoint start, SdPoint stop, const SdPropLine &prop );
-    void            circle( SdPoint center, int radius );
+    virtual void    circle( SdPoint center, int radius );
     void            circle( SdPoint center, int radius, const SdPropLine &prop );
-    void            circleFill( SdPoint center, int radius );
+    virtual void    circleFill( SdPoint center, int radius );
     void            circleFill( SdPoint center, int radius, const SdPropLine &prop );
     void            textEx(SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert, int cursor = 0, SdPoint *cp1 = nullptr, SdPoint *cp2 = nullptr, SdRect *sel = nullptr, int start = 0, int stop = 0);
     void            text( SdPoint pos, SdRect &over, const QString str, const SdPropText &prop );
     void            region( const SdPointList &points, bool autoClose = true );
     void            region( const SdPointList &points, const SdPropLine &prop, bool autoClose = true );
-    void            polygon( const SdPointList &points, const SdPolyWindowList &windows, SdLayer *layer );
+    virtual void    polygon( const SdPointList &points, const SdPolyWindowList &windows, SdLayer *layer );
     //virtual void TextBox( DTextProp &prop, int charNum );
 
     //Примитивы второго уровня
