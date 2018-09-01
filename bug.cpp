@@ -42,6 +42,8 @@
 //===================================================================================
 //Fixed:
 
+//D037 snap point for roads
+
 //B039 Can't delete section when press Delete button
 
 //B042 Wrong renumeration with multisection component with sections in separate sheets

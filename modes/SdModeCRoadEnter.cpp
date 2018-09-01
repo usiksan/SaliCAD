@@ -47,6 +47,7 @@ void SdModeCRoadEnter::drawDynamic(SdContext *ctx)
     ctx->line( mFirst, mMiddle );
     }
   else {
+    //When start enter smart point is nearest unconnected pin
     if( sdEnvir->mIsWireSmart )
       ctx->smartPoint( mFirst, snapEndPoint );
     }
@@ -162,7 +163,10 @@ void SdModeCRoadEnter::movePoint(SdPoint p)
   {
   if( getStep() == sNextPoint ) {
     mMiddle = calcMiddlePoint( mFirst, p, sdGlobalProp->mWireEnterType );
+    //mPrevMove = p;
     //Check if current point available
+    SdPoint vertex = checkRoad( mFirst, mMiddle );
+    mMiddle = vertex;
 
     }
   else {
@@ -243,15 +247,81 @@ void SdModeCRoadEnter::calcFirstSmartPoint()
     mFirst = mPrevMove;
   }
 
+
+
+
 void SdModeCRoadEnter::calcNextSmartPoint()
   {
+  SdSnapInfo info;
+  info.mSour = mPrevMove;
+  info.mSnapMask = snapNearestNetNet | snapNearestNetPin | snapExcludeSour;
+  info.mStratum = mProp.mStratum;
+  info.mNetName = mProp.mNetName.str();
+  bool res = false;
+  plate()->forEach( dctTraced, [&info,&res] (SdObject *obj) -> bool {
+    SdPtr<SdGraphTraced> traced(obj);
+    if( traced.isValid() )
+      res = traced->snapPoint( &info ) || res;
+    return true;
+    });
+  }
 
+
+
+
+//For all barriers: we check intersection point of line(p1,p2) and
+SdPoint SdModeCRoadEnter::checkRoad(SdPoint p1, SdPoint p2) const
+  {
+  //If start point inside barriers then no possible trace
+  if( isBarriersContains( mRoads, p1 ) )
+    return p1;
+
+  //Source line
+  QLineF sf(p1.toPointF(),p2.toPointF());
+  //Point for save intersection
+  QPointF d;
+  for( const SdBarrier &b : mRoads )
+    if( b.mNetName != mProp.mNetName.str() ) {
+      //For each edge of polygon we check intersection with our sf line
+      for( int i = 1; i < b.mPolygon.count(); i++ ) {
+        //Take next edge of polygon
+        QLineF df(b.mPolygon.at(i-1),b.mPolygon.at(i));
+        //If lines intersected then update sf
+        if( df.intersect( sf, &d ) == QLineF::BoundedIntersection ) {
+          p2 = d.toPoint();
+          sf.setP2( d );
+          }
+        }
+      //Complete with final edge
+      QLineF df(b.mPolygon.first(), b.mPolygon.last() );
+      //If lines intersected then update sf
+      if( df.intersect( sf, &d ) == QLineF::BoundedIntersection ) {
+        p2 = d.toPoint();
+        sf.setP2( d );
+        }
+      }
+  return p2;
+  }
+
+
+
+
+//Check if point p is inside any barrier and return true or false if not
+bool SdModeCRoadEnter::isBarriersContains(const SdBarrierList &bar, SdPoint p) const
+  {
+  QPointF pf(p.toPointF());
+  for( const SdBarrier &b : bar )
+    if( b.mNetName != mProp.mNetName.str() && b.mPolygon.containsPoint(pf, Qt::OddEvenFill) )
+      return true;
+  return false;
   }
 
 
 
 void SdModeCRoadEnter::rebuildBarriers()
   {
-  //plate()->accumBarriers( dctTraced, )
+  //Accum barriers for current segment
+  mRoads.clear();
+  plate()->accumBarriers( dctTraced, mRoads, mProp.mStratum, ruleRoadRoad, mRule );
   }
 

@@ -22,11 +22,11 @@ Description
 
 class SdModeCRoadEnter : public SdModeCommon
   {
-    SdPoint        mFirst;      //First point
+    SdPointList    mPath;       //Created path
+    SdPoint        mFirst;      //First point of segment
     SdPoint        mMiddle;     //Vertex point
     SdPoint        mPrevMove;   //Previous entered point
     SdPropRoad     mProp;       //Current properties for road
-//    QString        mNetName;    //Net name for entered road
     SdStratum      mStack;      //Available stratum stack
     SdRuleBlock    mRule;       //Rule block for segment
 
@@ -61,6 +61,8 @@ class SdModeCRoadEnter : public SdModeCommon
     void          getNetOnPoint( SdPoint p, SdStratum s, QString *netName, int *destStratum );
     void          calcFirstSmartPoint();
     void          calcNextSmartPoint();
+    SdPoint       checkRoad( SdPoint p1, SdPoint p2 ) const;
+    bool          isBarriersContains( const SdBarrierList &bar, SdPoint p ) const;
   };
 
 #endif // SDMODECROADENTER_H
