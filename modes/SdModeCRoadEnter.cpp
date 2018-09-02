@@ -20,6 +20,8 @@ Description
 #include "windows/SdWCommand.h"
 #include "windows/SdWEditorGraph.h"
 
+#include <QDebug>
+
 SdModeCRoadEnter::SdModeCRoadEnter(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeCommon( editor, obj )
   {
@@ -44,7 +46,14 @@ void SdModeCRoadEnter::drawDynamic(SdContext *ctx)
     SdLayer *layer = sdEnvir->mCacheForRoad.getLayer(mProp.mStratum);
     if( layer != nullptr ) ctx->setPen( mProp.mWidth, layer, dltSolid );
     else ctx->setPen( mProp.mWidth, sdEnvir->getSysColor(scEnter), dltSolid );
-    ctx->line( mFirst, mMiddle );
+    if( mFirst != mBarMiddle )
+      ctx->line( mFirst, mBarMiddle );
+    if( mBarMiddle != mBarLast )
+      ctx->line( mBarMiddle, mBarLast );
+
+    //When enter path smart point is nearest unconnected pin
+    if( sdEnvir->mIsWireSmart )
+      ctx->smartPoint( mSmartPoint, snapEndPoint );
     }
   else {
     //When start enter smart point is nearest unconnected pin
@@ -130,6 +139,9 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
     if( !netName.isEmpty() ) {
       //mFirst = p;
       mMiddle = mFirst;
+      mBarMiddle = mFirst;
+      mLast = mFirst;
+      mBarLast = mFirst;
       mStack = destStratum;
       mProp.mNetName = netName;
       mProp.mStratum = mStack.stratumFirst(mStack);
@@ -138,6 +150,7 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
       propSetToBar();
       setStep(sNextPoint);
       rebuildBarriers();
+      calcNextSmartPoint();
       }
     }
   setDirtyCashe();
@@ -158,16 +171,22 @@ void SdModeCRoadEnter::cancelPoint(SdPoint)
 
 
 
-
+//Catch technology. When we move cursor, we test catch point.
+//It is point where press left button is optimal case.
 void SdModeCRoadEnter::movePoint(SdPoint p)
   {
   if( getStep() == sNextPoint ) {
     mMiddle = calcMiddlePoint( mFirst, p, sdGlobalProp->mWireEnterType );
-    //mPrevMove = p;
+    mLast = p;
     //Check if current point available
-    SdPoint vertex = checkRoad( mFirst, mMiddle );
-    mMiddle = vertex;
-
+    mBarMiddle = checkRoad( mFirst, mMiddle );
+    if( mMiddle == mBarMiddle )
+      //Vertex available, check last point
+      mBarLast = checkRoad( mMiddle, mLast );
+    else
+      //Vertex not available. Last point is middle barriered
+      mBarLast = mBarMiddle;
+    calcNextSmartPoint();
     }
   else {
     mPrevMove = p;
@@ -252,9 +271,12 @@ void SdModeCRoadEnter::calcFirstSmartPoint()
 
 void SdModeCRoadEnter::calcNextSmartPoint()
   {
+  //Find nearest dest point
   SdSnapInfo info;
-  info.mSour = mPrevMove;
-  info.mSnapMask = snapNearestNetNet | snapNearestNetPin | snapExcludeSour;
+  info.mSour = mLast;
+  info.mExclude = mFirst;
+  //info.mSnapMask = snapNearestNetNet | snapNearestNetPin | snapExcludeSour;
+  info.mSnapMask = snapNearestNetPin | snapExcludeSour | snapExcludeExcl;
   info.mStratum = mProp.mStratum;
   info.mNetName = mProp.mNetName.str();
   bool res = false;
@@ -264,6 +286,18 @@ void SdModeCRoadEnter::calcNextSmartPoint()
       res = traced->snapPoint( &info ) || res;
     return true;
     });
+
+  if( res ) {
+    //Destignation pin
+    mSmartPoint = info.mDest;
+    //qDebug() << mSmartPoint;
+    //Middle point to smartPoint
+//    SdPoint delta = mSmartPoint - mMiddle;
+//    if( abs(delta.x()) < 1000 || abs(delta.y()) < 1000 ) {
+//      //Orthogonal line
+//      mSmartMiddle =
+//      }
+    }
   }
 
 

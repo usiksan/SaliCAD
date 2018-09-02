@@ -22,15 +22,21 @@ Description
 
 class SdModeCRoadEnter : public SdModeCommon
   {
-    SdPointList    mPath;       //Created path
-    SdPoint        mFirst;      //First point of segment
-    SdPoint        mMiddle;     //Vertex point
-    SdPoint        mPrevMove;   //Previous entered point
-    SdPropRoad     mProp;       //Current properties for road
-    SdStratum      mStack;      //Available stratum stack
-    SdRuleBlock    mRule;       //Rule block for segment
+    //SdPointList    mPath;        //Created path
+    SdPoint        mFirst;       //First point of segment
+    SdPoint        mMiddle;      //Vertex point
+    SdPoint        mBarMiddle;   //Vertex point with subject to barriers
+    SdPoint        mLast;        //Point of cursor
+    SdPoint        mBarLast;     //Point of cursor with subject to barriers
+    SdPoint        mPrevMove;    //Previous entered point
+    SdPropRoad     mProp;        //Current properties for road
+    SdStratum      mStack;       //Available stratum stack
+    SdRuleBlock    mRule;        //Rule block for segment
+    SdPoint        mSmartPoint;  //Smart point
+    SdPoint        mSmartMiddle; //Smart middle point near middle, from which straight to smartPoint
+    SdPointList    mSmartPath;   //Auto roaded path to smart point
 
-    bool           mShowNet;    //Show current net with enter color
+    bool           mShowNet;     //Show current net with enter color
     SdBarrierList  mPads;
     SdBarrierList  mRoads;
 

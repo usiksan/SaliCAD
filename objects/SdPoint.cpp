@@ -330,12 +330,34 @@ SdPoint get90( SdPoint a, SdPoint b ) {
 
 
 
+
+//Calculate intermediate point to path from a to b
+//We use diagonal path. When do it, we can
+// draw first diagonal part and next orthogonal part or vice versa
+//At this function we calculate most len part first
 SdPoint get45( SdPoint a, SdPoint b ) {
   int dx = b.x() - a.x();
   int dy = b.y() - a.y();
-  int len = ( abs( dx ) > abs( dy ) ) ? abs(dy) : abs(dx);
-  if( !len ) return b;
-  return SdPoint( a.x() + ( dx > 0 ? len : -len), a.y() + ( dy > 0 ? len : -len) );
+  int adx = abs(dx);
+  int ady = abs(dy);
+  int diag = qMin( adx, ady );
+  if( diag == 0 )
+    //a-b is strong orthogonal line
+    return b;
+  int ortho = qMax( adx, ady ) - diag;
+  if( ortho == 0 )
+    //a-b is strong diagonal line
+    return b;
+  if( ortho > diag ) {
+    //First is orthogonal part
+    if( adx > diag )
+      //By axiz X
+      return SdPoint( a.x() + (dx > 0 ? ortho : -ortho), a.y() );
+    //By axiz Y
+    return SdPoint( a.x(), a.y() + (dy > 0 ? ortho : - ortho) );
+    }
+  //First is diagonal part
+  return SdPoint( a.x() + ( dx > 0 ? diag : -diag), a.y() + ( dy > 0 ? diag : -diag) );
   }
 
 
