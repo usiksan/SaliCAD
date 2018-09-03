@@ -38,6 +38,8 @@ SdDOptionsPageColors::SdDOptionsPageColors(QWidget *parent) :
   addColor( scTraseNet,   tr("Trasing net color") );
   addColor( scGrid,       tr("Grid color in graph editors") );
   addColor( scRuleErrors, tr("Color for rule errors") );
+  addColor( scCatchPoint, tr("Catch point color in road enter mode") );
+
 
   mainLayout->addWidget( mTable );
   setLayout( mainLayout );

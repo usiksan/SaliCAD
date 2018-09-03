@@ -31,10 +31,13 @@ SdContext::SdContext(SdPoint grid, QPainter *painter) :
   mScaler(1.0),
   mPairLayer(false),
   mOverOn(false),      //True if overriding is on
-  mZeroOn(false)       //True if overriding zero width line on
+  mZeroOn(false)      //True if overriding zero width line on
   {
 
   }
+
+
+
 
 SdContext *SdContext::setConverter(SdConverter *c)
   {
@@ -115,6 +118,27 @@ void SdContext::cross(SdPoint a, int size, QColor color)
   setPen( 0, color, dltSolid );
   line( SdPoint(a.x()-size,a.y()-size), SdPoint(a.x()+size,a.y()+size ) );
   line( SdPoint(a.x()+size,a.y()-size), SdPoint(a.x()-size,a.y()+size ) );
+  }
+
+
+
+
+void SdContext::drawLineArrow(SdPoint p1, SdPoint p2, QColor color, int arrowSize)
+  {
+  mPainter->setOpacity( 1.0 );
+  mPainter->setPen( color );
+  line(p1,p2);
+  SdPoint mp1 = mTransform.map(p1);
+  SdPoint mp2 = mTransform.map(p2);
+  //On point2 draw arrow with arrow size
+  SdPropAngle angle = mp1.getAngle( mp2 );
+  arrowSize = mScaler.phys2pixel(arrowSize);
+  SdPoint e1( mp2.x() + arrowSize, mp2.y() - arrowSize / 2 );
+  e1.rotate( mp2, angle );
+  SdPoint e2( mp2.x() + arrowSize, mp2.y() + arrowSize / 2 );
+  e2.rotate( mp2, angle );
+  mPainter->drawLine( e1.x(), e1.y(), mp2.x(), mp2.y() );
+  mPainter->drawLine( e2.x(), e2.y(), mp2.x(), mp2.y() );
   }
 
 
@@ -580,11 +604,13 @@ void SdContext::setPen(int width, QColor color, int lineStyle)
   else if( lineStyle == dltDashed ) style = Qt::DashLine;
   else style = Qt::SolidLine;
 
+  int penWidthPix;
   if( mZeroOn && width == 0 )
     //When zero width line conversion is on, then draw zero line with setupped width
-    mPainter->setPen( QPen( QBrush( color ), mZeroWidth, style ) );
+    penWidthPix = mZeroWidth;
   else
-    mPainter->setPen( QPen( QBrush( color ), mScaler.phys2pixel(width), style ) );
+    penWidthPix = mScaler.phys2pixel(width);
+  mPainter->setPen( QPen( QBrush( color ), penWidthPix, style, Qt::RoundCap, Qt::RoundJoin ) );
   }
 
 

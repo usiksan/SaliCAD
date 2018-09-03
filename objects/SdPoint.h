@@ -30,6 +30,8 @@ class SdPoint : public QPoint
     enum CLS {LEFT,  RIGHT,  BEYOND,  BEHIND, BETWEEN, ORIGIN, DESTINATION};
     //    СЛЕВА, СПРАВА, ВПЕРЕДИ, ПОЗАДИ, МЕЖДУ,   НАЧАЛО, КОНЕЦ
 
+    static const int farCoord = 2000000000;
+
     SdPoint() : QPoint() { }
     SdPoint( int xpos, int ypos ) : QPoint(xpos,ypos) { }
     SdPoint( QPoint p ) : QPoint(p) {}
@@ -86,6 +88,12 @@ class SdPoint : public QPoint
 
     QJsonObject write() const;
     void        read( const QJsonObject obj );
+
+    //Return far point, point with big coords
+    static SdPoint far() { return SdPoint(farCoord,farCoord); }
+
+    //Test if point is far
+    bool        isFar() const { return x() == farCoord && y() == farCoord; }
   };
 
 //Вычисление интересных точек

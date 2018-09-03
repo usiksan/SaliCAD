@@ -54,6 +54,41 @@ void SdModeCRoadEnter::drawDynamic(SdContext *ctx)
     //When enter path smart point is nearest unconnected pin
     if( sdEnvir->mIsWireSmart )
       ctx->smartPoint( mSmartPoint, snapEndPoint );
+
+    //Draw catch point if present
+    int catchSize = mEditor->gridGet().x() * 2;
+    int w1_2 = mProp.mWidth.getValue() * 12 / 20;
+    int w_diag = static_cast<int>( sqrt( static_cast<double>(w1_2) * static_cast<double>(w1_2) * 2.0 )  );
+    switch( mCatch ) {
+      case catchFinish :
+        ctx->setPen( 0, sdEnvir->getSysColor(scCatchPoint), dltDashed );
+        //ctx->smartPoint( mLast, snapCenter );
+        break;
+      case catchOrthoX :
+        //Draw 3x grid line
+        ctx->setPen( 0, sdEnvir->getSysColor(scCatchPoint), dltDashed );
+        ctx->line( SdPoint( mLast.x() - catchSize, mLast.y() + w1_2 ), SdPoint( mLast.x() + catchSize, mLast.y() + w1_2 ) );
+        ctx->line( SdPoint( mLast.x() - catchSize, mLast.y() - w1_2 ), SdPoint( mLast.x() + catchSize, mLast.y() - w1_2 ) );
+        break;
+      case catchOrthoY :
+        //Draw 3x grid line
+        ctx->setPen( 0, sdEnvir->getSysColor(scCatchPoint), dltDashed );
+        ctx->line( SdPoint( mLast.x() + w1_2, mLast.y() - catchSize ), SdPoint( mLast.x() + w1_2, mLast.y() + catchSize ) );
+        ctx->line( SdPoint( mLast.x() - w1_2, mLast.y() - catchSize ), SdPoint( mLast.x() - w1_2, mLast.y() + catchSize ) );
+        break;
+      case catchDiagQuad1 :
+        ctx->setPen( 0, sdEnvir->getSysColor(scCatchPoint), dltDashed );
+        ctx->line( SdPoint( mLast.x() - catchSize, mLast.y() - catchSize + w_diag ), SdPoint( mLast.x() + catchSize, mLast.y() + catchSize + w_diag ) );
+        ctx->line( SdPoint( mLast.x() - catchSize, mLast.y() - catchSize - w_diag ), SdPoint( mLast.x() + catchSize, mLast.y() + catchSize - w_diag ) );
+        break;
+      case catchDiagQuad2 :
+        ctx->setPen( 0, sdEnvir->getSysColor(scCatchPoint), dltDashed );
+        ctx->line( SdPoint( mLast.x() + catchSize, mLast.y() - catchSize + w_diag ), SdPoint( mLast.x() - catchSize, mLast.y() + catchSize + w_diag ) );
+        ctx->line( SdPoint( mLast.x() + catchSize, mLast.y() - catchSize - w_diag ), SdPoint( mLast.x() - catchSize, mLast.y() + catchSize - w_diag ) );
+        break;
+      case catchNone :
+        break;
+      }
     }
   else {
     //When start enter smart point is nearest unconnected pin
@@ -64,10 +99,14 @@ void SdModeCRoadEnter::drawDynamic(SdContext *ctx)
 
 
 
+
+
 int SdModeCRoadEnter::getPropBarId() const
   {
   return PB_ROAD;
   }
+
+
 
 
 
@@ -116,11 +155,23 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
 
       }
     else {
-      //Append new segment
-      addPic( new SdGraphTracedRoad( mProp, mFirst, mMiddle ), QObject::tr("Insert trace road") );
+      if( mCatch == catchFinish && mBarMiddle == mMiddle && mBarLast == mLast ) {
+        //Connection complete. Append both segments and stop enter
+        if( mFirst != mMiddle )
+          addPic( new SdGraphTracedRoad( mProp, mFirst, mMiddle ), QObject::tr("Insert trace road") );
+        if( mMiddle != mLast )
+          addPic( new SdGraphTracedRoad( mProp, mMiddle, mLast ), QObject::tr("Insert trace road") );
+        setStep( sFirstPoint );
+        }
+      else {
+        //Append new segment
+        addPic( new SdGraphTracedRoad( mProp, mFirst, mBarMiddle ), QObject::tr("Insert trace road") );
+        plate()->setDirtyRatNet();
+        mFirst = mBarMiddle;
+        rebuildBarriers();
+        }
+      //Signal plate to rebuild ratNets
       plate()->setDirtyRatNet();
-      mFirst = mMiddle;
-      rebuildBarriers();
       }
     }
   else {
@@ -144,7 +195,7 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
       mBarLast = mFirst;
       mStack = destStratum;
       mProp.mNetName = netName;
-      mProp.mStratum = mStack.stratumFirst(mStack);
+      mProp.mStratum = mStack.stratumFirst(mProp.mStratum);
       plate()->ruleBlockForNet( mProp.mStratum.getValue(), mProp.mNetName.str(), mRule );
       mProp.mWidth   = mRule.mRules[ruleRoadWidth];
       propSetToBar();
@@ -176,8 +227,43 @@ void SdModeCRoadEnter::cancelPoint(SdPoint)
 void SdModeCRoadEnter::movePoint(SdPoint p)
   {
   if( getStep() == sNextPoint ) {
-    mMiddle = calcMiddlePoint( mFirst, p, sdGlobalProp->mWireEnterType );
     mLast = p;
+    SdPoint grid = mEditor->gridGet();
+    //Find destignate point
+    calcNextSmartPoint();
+    if( !mSmartPoint.isFar() ) {
+      //Calculate catch
+      SdPoint offset = mSmartPoint - p;
+      int adx = abs(offset.x());
+      int ady = abs(offset.y());
+      //Check finish
+      if( adx < grid.x() && ady < grid.y() ) {
+        mLast = mSmartPoint;
+        mCatch = catchFinish;
+        }
+      //Check orthogonal x axiz
+      else if( ady < grid.y() ) {
+        mLast.setY( mSmartPoint.y() );
+        mCatch = catchOrthoX;
+        }
+      //Check orthogonal y axiz
+      else if( adx < grid.y() ) {
+        mLast.setX( mSmartPoint.x() );
+        mCatch = catchOrthoY;
+        }
+      //Check diagonal
+      else if( abs( adx - ady ) < qMin(grid.x(),grid.y()) ) {
+        //Align throw axiz X
+        mLast.setX( mSmartPoint.x() - (offset.x() > 0 ? ady : -ady) );
+        if( (offset.x() >= 0 && offset.y() >= 0) || (offset.x() < 0 && offset.y() < 0) )
+          mCatch = catchDiagQuad1;
+        else
+          mCatch = catchDiagQuad2;
+        }
+      else
+        mCatch = catchNone;
+      }
+    mMiddle = calcMiddlePoint( mFirst, mLast, sdGlobalProp->mWireEnterType );
     //Check if current point available
     mBarMiddle = checkRoad( mFirst, mMiddle );
     if( mMiddle == mBarMiddle )
@@ -186,7 +272,6 @@ void SdModeCRoadEnter::movePoint(SdPoint p)
     else
       //Vertex not available. Last point is middle barriered
       mBarLast = mBarMiddle;
-    calcNextSmartPoint();
     }
   else {
     mPrevMove = p;
@@ -298,6 +383,10 @@ void SdModeCRoadEnter::calcNextSmartPoint()
 //      mSmartMiddle =
 //      }
     }
+  else
+    //Set illegal point as smart
+    mSmartPoint = SdPoint::far();
+
   }
 
 

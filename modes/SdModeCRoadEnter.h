@@ -28,6 +28,7 @@ class SdModeCRoadEnter : public SdModeCommon
     SdPoint        mBarMiddle;   //Vertex point with subject to barriers
     SdPoint        mLast;        //Point of cursor
     SdPoint        mBarLast;     //Point of cursor with subject to barriers
+    //bool           mCatch;       //If true, then mLast point catched
     SdPoint        mPrevMove;    //Previous entered point
     SdPropRoad     mProp;        //Current properties for road
     SdStratum      mStack;       //Available stratum stack
@@ -41,6 +42,15 @@ class SdModeCRoadEnter : public SdModeCommon
     SdBarrierList  mRoads;
 
     const int sFirstPoint = 0, sNextPoint = 1;
+
+    enum {
+      catchNone,
+      catchFinish,
+      catchOrthoX,
+      catchOrthoY,
+      catchDiagQuad1,
+      catchDiagQuad2
+      }            mCatch;       //Catch type
 
     void rebuildBarriers();
   public:

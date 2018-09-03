@@ -112,7 +112,7 @@ class SdContext {
     void            cross( SdPoint a, int size, QColor color );               //Draw cross
 //    virtual void    dotPoint( SdPoint p, SdPropLine &prop ) = 0;                  //Точка пересечения цепей
 //    virtual void    dotCircle( SdPoint p, SdPartPinProp &prop ) = 0;              //Точка подключения вывода корпуса
-//    virtual void    drawArrow( SdPoint p, SdAngle angle, SdPropLine &prop ) = 0;  //Размерная стрелка
+    void            drawLineArrow( SdPoint p1, SdPoint p2, QColor color, int arrowSize );  //Размерная стрелка
 //    virtual void    via( SdPoint p, SdRoadProp &prop ) = 0;                       //Переходное (без КП)
     void            dotTrase( SdPoint p );                                    //Точка пометки трассируемой цепи
 

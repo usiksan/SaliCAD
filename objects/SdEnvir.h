@@ -39,7 +39,8 @@ Description
 #define scTraseNet       7 //Цвет трассируемой цепи
 #define scGrid           8 //Цвет сетки
 #define scRuleErrors     9 //Rule errors color
-#define scLast          10
+#define scCatchPoint    10 //Catch point color in road enter mode. Catch point is point nearest current cursor postion for best next enter.
+#define scLast          11
 
 
 //Вид перекрестья курсора
@@ -51,7 +52,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (30 + FONT_COUNT)
+#define SdEnvirVersion  (31 + FONT_COUNT)
 
 
 class SdEnvir

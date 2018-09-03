@@ -242,6 +242,7 @@ void SdEnvir::defaultEnvir()
   mSysColors[scTraseNet]   = QColor(0,0,0);        //Цвет трассируемой цепи
   mSysColors[scGrid]       = QColor(100,100,100);  //Цвет сетки
   mSysColors[scRuleErrors] = QColor(0xff,0xd8,0);  //Color for rectangles indicator for rule errors
+  mSysColors[scCatchPoint] = QColor(200,10,50);    //Catch point color in road enter mode. Catch point is point nearest current cursor postion for best next enter.
 
   //Default fonts
   mFonts[0] = QString("FreeSerif");
