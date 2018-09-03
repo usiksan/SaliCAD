@@ -117,6 +117,9 @@ class SdPItemPlate : public SdProjectItem
     //Rule errors count
     int                    ruleErrorsCount() const { return mRuleErrors.count(); }
 
+    //Rule error area
+    SdRect                 ruleError( int i ) const { if( i < 0 || i >= mRuleErrors.count() ) return SdRect(); return mRuleErrors.at(i); }
+
     //Draw rule error indicators
     void                   drawRuleErrors( SdContext *dc );
 

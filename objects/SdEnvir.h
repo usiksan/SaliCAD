@@ -81,10 +81,10 @@ class SdEnvir
     bool            mShowMessageRemark;    //Показывать информацию в строке состояния
     int             mPlaceMode;            //Режим размещения компонентов
     int             mMinViewGrid;          //Минимальный видимый размер сетки
-    int             mUndoSize;             //Размер буфера отмены
-    int             mCursorView;           //Вид перекрестья курсора
-    int             mSmallCursorSize;      //Размер малого курсора в пикселах
-    bool            mCursorShow;           //Показывать курсор
+    int             mUndoSize;             //Undo buffer size [Размер буфера отмены]
+    int             mCursorView;           //Cursor crosshair type [Вид перекрестья курсора]
+    int             mSmallCursorSize;      //Small cursor size in pixels [Размер малого курсора в пикселах]
+    bool            mCursorShow;           //Show cursor [Показывать курсор]
     int             mTraseDotSize;         //Размер точки, показывающей цепь
                                            //PPM показывает сколько физической величины приходится на одну логическую единицу
     double          mSchPPM;               //Коэффициент преобразования в физическую величину в схемном редакторе

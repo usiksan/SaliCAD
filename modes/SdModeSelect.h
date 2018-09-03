@@ -103,6 +103,9 @@ class SdModeSelect : public SdMode
     void            insertCopy( SdPoint offset, bool next );//Вставить копии объектов
     void            activateMenu();
     void            moveComplete();
+
+    //Return current disable mask
+    quint64         mask() const;
   };
 
 #endif // SDMODESELECT_H

@@ -180,7 +180,6 @@ class SdWMain : public QMainWindow
     //Pcb
     void cmShowRatNet(bool st);
     void cmShowRuleErrors(bool st);
-    void cmCheckRules();
     void cmPads();
     void cmModeLineSize();
     void cmModeRadiusSize();
@@ -193,6 +192,9 @@ class SdWMain : public QMainWindow
     void cmModePolygon();
     void cmModeDeleteWire();
     void cmModePad();
+
+    void cmRulesCheck();
+    void cmRulesErrorNext();
 
     void cmOption();
     void cmTools();

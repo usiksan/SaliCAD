@@ -19,6 +19,7 @@ Description
 #include "SdWCommand.h"
 #include "SdWMain.h"
 #include "SdPropBar.h"
+#include "SdPropBarDefault.h"
 #include "SdPropBarLinear.h"
 #include "SdPropBarTextual.h"
 #include "SdPropBarSymPin.h"
@@ -209,17 +210,13 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
   menuInsertPcb = new QMenu( frame->tr("Plate") );
+  menuInsertPcb->insertAction( nullptr, cmRenumeration );
+  menuInsertPcb->insertSeparator(nullptr);
   cmShowRatNet = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/viewRatnet.png")), frame->tr("Show rat net") );
   cmShowRatNet->setCheckable(true);
   cmShowRatNet->setChecked( sdEnvir->mShowRatNet );
   cmShowRatNet->connect( cmShowRatNet, &QAction::toggled, frame, &SdWMain::cmShowRatNet );
-  cmShowRuleErrors = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/objShowRuleErrors.png")), frame->tr("Show rule errors") );
-  cmShowRuleErrors->setCheckable(true);
-  cmShowRuleErrors->setChecked( sdEnvir->mShowRuleErrors );
-  cmShowRuleErrors->connect( cmShowRuleErrors, &QAction::toggled, frame, &SdWMain::cmShowRuleErrors );
-  cmCheckRules = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/objRulesCheck.png")), frame->tr("Check all rules"), frame, SLOT(cmCheckRules()) );
   cmPads = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/pads.png")), frame->tr("Pads association"), frame, SLOT(cmPads()) );
-  menuInsertPcb->insertAction( nullptr, cmRenumeration );
   //cmShowRatNet->co
 //  cmNetSetup       = menuInsertPcb->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
 //  cmPads           = menuInsertPcb->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
@@ -239,6 +236,15 @@ void SdWCommand::createMenu(SdWMain *frame)
   //  cmModeDeleteWire = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModePad        = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
 
+
+
+  menuRules = new QMenu( frame->tr("Rules") );
+  cmShowRuleErrors = menuRules->addAction( QIcon(QStringLiteral(":/pic/objShowRuleErrors.png")), frame->tr("Show rule errors") );
+  cmShowRuleErrors->setCheckable(true);
+  cmShowRuleErrors->setChecked( sdEnvir->mShowRuleErrors );
+  cmShowRuleErrors->connect( cmShowRuleErrors, &QAction::toggled, frame, &SdWMain::cmShowRuleErrors );
+  cmRulesCheck = menuRules->addAction( QIcon(QStringLiteral(":/pic/objRulesCheck.png")), frame->tr("Check all rules"), frame, SLOT(cmRulesCheck()) );
+  cmRulesErrorNext = menuRules->addAction( QIcon(QStringLiteral(":/pic/objRulesCheck.png")), frame->tr("Check all rules"), frame, SLOT(cmRulesErrorNext()) );
 
 
 
@@ -286,6 +292,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmMenuInsertComp   = bar->addMenu( menuInsertComp );
   cmMenuInsertSheet  = bar->addMenu( menuInsertSheet );
   cmMenuInsertPcb    = bar->addMenu( menuInsertPcb );
+  cmMenuRules        = bar->addMenu( menuRules );
   bar->addMenu( menuInstruments );
   bar->addMenu( menuHelp );
 
@@ -511,7 +518,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   addDrawCommands( barPcb );
   barPcb->insertAction( nullptr, cmShowRatNet );
   barPcb->insertAction( nullptr, cmShowRuleErrors );
-  barPcb->insertAction( nullptr, cmCheckRules );
+  barPcb->insertAction( nullptr, cmRulesCheck );
   barPcb->insertAction( nullptr, cmPads );
   barPcb->insertAction( nullptr, cmModeTable[MD_MOVE_PART] );
   barPcb->insertAction( nullptr, cmModeTable[MD_ROAD_ENTER] );
@@ -598,6 +605,11 @@ void SdWCommand::createToolBars(SdWMain *frame)
   pbar->connect( pbar, &SdPropBarPartPlace::propChanged, frame, &SdWMain::cmPropertiesChange );
   pbar->connect( pbar, &SdPropBarPartPlace::partSelect, frame, &SdWMain::cmModePartSelect );
 
+  SdPropBarDefault *dbar = new SdPropBarDefault( QStringLiteral("No selection") );
+  frame->addToolBar( dbar );
+  dbar->setVisible(false);
+  mbarTable[PB_NO_SELECTION] = dbar;
+
   for( int i = 0; i < MD_LAST; i++ )
     if( cmModeTable[i] )
       cmModeTable[i]->setCheckable(true);
@@ -616,6 +628,7 @@ void SdWCommand::hideEditorContext()
   cmMenuInsertSymbol->setVisible(false);
   cmObjectEditEnable->setVisible(false);
   cmObjectEditDisable->setVisible(false);
+  cmMenuRules->setVisible(false);
 
   //Погасить все редакторо-зависимые toolBars
   barComp->hide();
@@ -718,9 +731,12 @@ QActionPtr SdWCommand::cmModePad;
 
 QActionPtr SdWCommand::cmShowRatNet;
 QActionPtr SdWCommand::cmShowRuleErrors;
-QActionPtr SdWCommand::cmCheckRules;
 QActionPtr SdWCommand::cmRenumeration;
 QActionPtr SdWCommand::cmShowField;
+
+QActionPtr SdWCommand::cmRulesCheck;
+QActionPtr SdWCommand::cmRulesErrorNext;
+
 
 QActionPtr SdWCommand::cmOption;
 
@@ -745,6 +761,7 @@ QMenu *SdWCommand::menuInsertPcb;
 QMenu *SdWCommand::menuInsertComp;
 QMenu *SdWCommand::menuInstruments;
 QMenu *SdWCommand::menuHelp;
+QMenu *SdWCommand::menuRules;
 
 QMenu *SdWCommand::menuSelect;
 
@@ -754,6 +771,7 @@ QActionPtr SdWCommand::cmMenuInsertPart;
 QActionPtr SdWCommand::cmMenuInsertPart3d;
 QActionPtr SdWCommand::cmMenuInsertPcb;
 QActionPtr SdWCommand::cmMenuInsertComp;
+QActionPtr SdWCommand::cmMenuRules;
 
 QToolBar *SdWCommand::barMain;
 QToolBar *SdWCommand::barSymbol;

@@ -44,6 +44,7 @@ class SdWCommand
     static QMenu *menuInsertPcb;
     static QMenu *menuInsertComp;
     static QMenu *menuInstruments;
+    static QMenu *menuRules;
     static QMenu *menuHelp;
 
     static QMenu *menuSelect;
@@ -54,6 +55,7 @@ class SdWCommand
     static QActionPtr cmMenuInsertPart3d;
     static QActionPtr cmMenuInsertPcb;
     static QActionPtr cmMenuInsertComp;
+    static QActionPtr cmMenuRules;
 
     //Tool bars for editor command
     static QToolBar *barMain;
@@ -144,9 +146,11 @@ class SdWCommand
 
     static QActionPtr  cmShowRatNet;
     static QActionPtr  cmShowRuleErrors;
-    static QActionPtr  cmCheckRules;
     static QActionPtr  cmRenumeration;
     static QActionPtr  cmShowField;
+
+    static QActionPtr  cmRulesCheck;
+    static QActionPtr  cmRulesErrorNext;
 
     static QActionPtr  cmOption;
     static QActionPtr  cmTools;

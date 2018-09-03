@@ -696,6 +696,9 @@ void SdModeSelect::drawDynamic(SdContext *ctx)
 
 int SdModeSelect::getPropBarId() const
   {
+  //If no selection return default prop bar
+  if( mFragment.count() == 0 )
+    return PB_NO_SELECTION;
   //Return prop bar according selected objects prop
   return mLocalProp.mPropBarId;
   }
@@ -795,9 +798,10 @@ void SdModeSelect::propSetToBar()
     });
 
   //Set new bar
-  SdWCommand::setModeBar( mLocalProp.getPropBarId() );
+  mLocalProp.getPropBarId();
+  SdWCommand::setModeBar( getPropBarId() );
   //Set prop into bar
-  switch( mLocalProp.getPropBarId() ) {
+  switch( getPropBarId() ) {
     case PB_LINEAR : {
       SdPropBarLinear  *barLinear  = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
       barLinear->setPropLine( &(mLocalProp.mLineProp), getPPM(), mLocalProp.mEnterType );
@@ -859,7 +863,7 @@ void SdModeSelect::enterPoint( SdPoint point )
       if( !(checkPoint(point) & SEL_ELEM) ) {
         if( !mShift ) unselect( false );
         //Пройтись по объектам и выделить точкой
-        mObject->forEach( dctAll, [point,this] (SdObject *obj) ->bool {
+        mObject->forEach( dctAll & mask(), [point,this] (SdObject *obj) ->bool {
           SdGraph *graph = dynamic_cast<SdGraph*>(obj);
           if( graph != nullptr )
             graph->selectByPoint( point, &mFragment );
@@ -888,7 +892,7 @@ void SdModeSelect::clickPoint( SdPoint point )
     //Проверить клавишу Shift, если не нажата то удалить предыдущее выделение
     if( !mShift ) unselect( false );
     //Пройтись по объектам и выделить точкой
-    mObject->forEach( dctAll, [point,this] (SdObject *obj) ->bool {
+    mObject->forEach( dctAll & mask(), [point,this] (SdObject *obj) ->bool {
       SdGraph *graph = dynamic_cast<SdGraph*>(obj);
       if( graph != nullptr ) {
         graph->selectByPoint( point, &mFragment );
@@ -1098,79 +1102,6 @@ int SdModeSelect::getIndex() const
 
 
 
-void SdModeSelect::enterPaste(SdPoint point)
-  {
-  if( mPaste.count() ) {
-    setDirty();
-    //Unselect selected objects
-    unselect(false);
-    mUndo->begin( QObject::tr("Insert from clipboard"), mObject );
-    //Insert copy of pasted elements into object without selection them
-    mObject->insertObjects( point.sub( mFirst ), &mPaste, mUndo, mEditor, &mFragment, false );
-    cancelPaste();
-    }
-  }
-
-
-
-
-void SdModeSelect::cancelPaste()
-  {
-  mPaste.clear();
-  if( mPastePrj != nullptr )
-    delete mPastePrj;
-  mPastePrj =  nullptr;
-  setStep( mFragment.count() ? smSelPresent : smNoSelect );
-  }
-
-
-
-
-void SdModeSelect::showRect(SdContext *ctx)
-  {
-  ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltDotted );
-  ctx->rect( SdRect(mFirst, mPrevMove) );
-  }
-
-
-
-
-void SdModeSelect::insertCopy(SdPoint offset, bool next)
-  {
-  setDirty();
-  setDirtyCashe();
-  mUndo->begin( QObject::tr("Copy insertion"), mObject );
-  //Произвести вставку
-  //Perform insertion
-  unselect(false);
-  mObject->insertObjects( offset, &mPaste, mUndo, mEditor, &mFragment, next );
-  cancelPaste();
-  }
-
-
-
-
-void SdModeSelect::activateMenu()
-  {
-  mEditor->contextMenu( SdWCommand::menuSelect );
-  }
-
-
-
-
-void SdModeSelect::moveComplete()
-  {
-  mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
-    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-    if( graph != nullptr )
-      graph->moveComplete( mEditor->gridGet(), mUndo );
-    return true;
-    });
-  }
-
-
-
-
 
 void SdModeSelect::keyDown(int key, QChar ch)
   {
@@ -1274,7 +1205,7 @@ void SdModeSelect::paste()
 void SdModeSelect::selectAll()
   {
   //Select all objects
-  mObject->forEach( dctAll, [this] (SdObject *obj) -> bool {
+  mObject->forEach( dctAll & mask(), [this] (SdObject *obj) -> bool {
     SdGraph *graph = dynamic_cast<SdGraph*>(obj);
     if( graph != nullptr )
       graph->select( &mFragment );
@@ -1286,6 +1217,30 @@ void SdModeSelect::selectAll()
   setStep( mFragment.count() ? smSelPresent : smNoSelect );
   //Update edit menu (copy, paste, delete)
   mEditor->setSelectionStatus( mFragment.count() != 0 );
+  }
+
+
+
+
+
+
+
+void SdModeSelect::deleteSelected()
+  {
+  if( mFragment.count() ) {
+    mUndo->begin( QObject::tr("Deletion elements"), mObject );
+    mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
+      SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+      if( graph != nullptr )
+        graph->deleteObject( mUndo );
+      return true;
+      });
+    mFragment.removeAll();
+
+    setDirty();
+    setDirtyCashe();
+    update();
+    }
   }
 
 
@@ -1337,7 +1292,7 @@ int SdModeSelect::checkPoint(SdPoint p)
   mState = 0;
 
   //Get state object behind cursor
-  mObject->forEach( dctAll, [this,p] (SdObject *obj) ->bool {
+  mObject->forEach( dctAll & mask(), [this,p] (SdObject *obj) ->bool {
     SdGraph *graph = dynamic_cast<SdGraph*>(obj);
     if( graph != nullptr )
       mState |= graph->behindCursor(p);
@@ -1500,7 +1455,7 @@ void SdModeSelect::stopRect(SdPoint p)
   if( !mShift ) mFragment.removeAll();
   //Пройтись по объектам и выделить прямоугольником
   SdRect r(mFirst,p);
-  mObject->forEach( dctAll, [this,r] (SdObject *obj) ->bool {
+  mObject->forEach( dctAll & mask(), [this,r] (SdObject *obj) ->bool {
     SdGraph *graph = dynamic_cast<SdGraph*>(obj);
     if( graph != nullptr )
       graph->selectByRect( r, &mFragment );
@@ -1521,20 +1476,85 @@ void SdModeSelect::stopRect(SdPoint p)
 
 
 
-void SdModeSelect::deleteSelected()
+void SdModeSelect::enterPaste(SdPoint point)
   {
-  if( mFragment.count() ) {
-    mUndo->begin( QObject::tr("Deletion elements"), mObject );
-    mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
-      SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-      if( graph != nullptr )
-        graph->deleteObject( mUndo );
-      return true;
-      });
-    mFragment.removeAll();
-
+  if( mPaste.count() ) {
     setDirty();
-    setDirtyCashe();
-    update();
+    //Unselect selected objects
+    unselect(false);
+    mUndo->begin( QObject::tr("Insert from clipboard"), mObject );
+    //Insert copy of pasted elements into object without selection them
+    mObject->insertObjects( point.sub( mFirst ), &mPaste, mUndo, mEditor, &mFragment, false );
+    cancelPaste();
     }
+  }
+
+
+
+
+void SdModeSelect::cancelPaste()
+  {
+  mPaste.clear();
+  if( mPastePrj != nullptr )
+    delete mPastePrj;
+  mPastePrj =  nullptr;
+  setStep( mFragment.count() ? smSelPresent : smNoSelect );
+  }
+
+
+
+
+void SdModeSelect::showRect(SdContext *ctx)
+  {
+  ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltDotted );
+  ctx->rect( SdRect(mFirst, mPrevMove) );
+  }
+
+
+
+
+void SdModeSelect::insertCopy(SdPoint offset, bool next)
+  {
+  setDirty();
+  setDirtyCashe();
+  mUndo->begin( QObject::tr("Copy insertion"), mObject );
+  //Произвести вставку
+  //Perform insertion
+  unselect(false);
+  mObject->insertObjects( offset, &mPaste, mUndo, mEditor, &mFragment, next );
+  cancelPaste();
+  }
+
+
+
+
+void SdModeSelect::activateMenu()
+  {
+  mEditor->contextMenu( SdWCommand::menuSelect );
+  }
+
+
+
+
+void SdModeSelect::moveComplete()
+  {
+  mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+    if( graph != nullptr )
+      graph->moveComplete( mEditor->gridGet(), mUndo );
+    return true;
+    });
+  }
+
+
+
+
+//Return current disable mask
+quint64 SdModeSelect::mask() const
+  {
+  quint64 msk = 0l;
+  if( !sdEnvir->mEnableComp ) msk = dctSymImp | dctPartImp;
+  if( !sdEnvir->mEnableNet ) msk |= dctNetName | dctNetWire | dctTracePolygon | dctTraceRoad | dctTraceVia;
+  if( !sdEnvir->mEnablePic ) msk |= dctPicture;
+  return ~msk;
   }

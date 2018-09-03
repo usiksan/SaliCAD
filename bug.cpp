@@ -1,5 +1,5 @@
 
-//B050 bugs
+//B052 bugs
 //F001 fatal
 //C001 critical
 //D055 do
@@ -38,6 +38,8 @@
 //TODO B047 Append layer list to all properties bars
 
 //TODO D053 Append to conext menu of project "copy selected" command
+
+//TODO B051 Over rect for part implement calculated with ident, but must be without
 
 //===================================================================================
 //Fixed:

@@ -227,7 +227,8 @@ SOURCES += \
     modes/SdModeTBrowseSheetPart.cpp \
     objects/SdPropPolygon.cpp \
     modes/SdModeCPolygonEnter.cpp \
-    windows/SdPropBarPolygon.cpp
+    windows/SdPropBarPolygon.cpp \
+    windows/SdPropBarDefault.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -451,7 +452,8 @@ HEADERS  += \
     modes/SdModeTBrowseSheetPart.h \
     objects/SdPropPolygon.h \
     modes/SdModeCPolygonEnter.h \
-    windows/SdPropBarPolygon.h
+    windows/SdPropBarPolygon.h \
+    windows/SdPropBarDefault.h
 
 DISTFILES += \
     license.txt

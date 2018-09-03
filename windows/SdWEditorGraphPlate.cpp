@@ -28,7 +28,8 @@ Description
 
 SdWEditorGraphPlate::SdWEditorGraphPlate(SdPItemPlate *pcb, QWidget *parent) :
   SdWEditorGraph( pcb, parent ),
-  mPlate(pcb)
+  mPlate(pcb),
+  mRuleErrorIndex(-1) //Current rule error index
   {
   mGrid.set( 2500, 2500 );
   mScale.scaleSet( 0.01 );
@@ -115,6 +116,7 @@ void SdWEditorGraphPlate::onActivateEditor()
   SdWEditorGraph::onActivateEditor();
 
   //Activate menu
+  SdWCommand::cmMenuRules->setVisible(true);
   SdWCommand::cmMenuInsertPcb->setVisible(true);
 
   //Activate tool bar
@@ -141,7 +143,7 @@ void SdWEditorGraphPlate::cmPads()
 
 
 
-void SdWEditorGraphPlate::cmCheckRules()
+void SdWEditorGraphPlate::cmRulesCheck()
   {
   QProgressDialog progress( tr("Checking rules..."), tr("Abort check"), 0, 10 * mPlate->stratumCount(), this );
   progress.setWindowModality(Qt::WindowModal);
@@ -155,6 +157,19 @@ void SdWEditorGraphPlate::cmCheckRules()
   SdWCommand::cmShowRuleErrors->setChecked( sdEnvir->mShowRuleErrors = true );
   //Update
   update();
+  }
+
+
+
+
+void SdWEditorGraphPlate::cmRulesErrorNext()
+  {
+  int count = mPlate->ruleErrorsCount();
+  mRuleErrorIndex++;
+  if( mRuleErrorIndex >= count )
+    mRuleErrorIndex = 0;
+  if( mRuleErrorIndex >= 0 && mRuleErrorIndex < count )
+    originSet( mPlate->ruleError(mRuleErrorIndex).center() );
   }
 
 

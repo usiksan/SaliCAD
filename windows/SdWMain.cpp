@@ -1338,14 +1338,6 @@ void SdWMain::cmShowRuleErrors(bool st)
 
 
 
-void SdWMain::cmCheckRules()
-  {
-  if( activeEditor() )
-    activeEditor()->cmCheckRules();
-  }
-
-
-
 
 void SdWMain::cmPads()
   {
@@ -1441,6 +1433,24 @@ void SdWMain::cmModePad()
   {
   if( activeEditor() )
     activeEditor()->cmModePad();
+  }
+
+
+
+
+void SdWMain::cmRulesCheck()
+  {
+  if( activeEditor() )
+    activeEditor()->cmRulesCheck();
+  }
+
+
+
+
+void SdWMain::cmRulesErrorNext()
+  {
+  if( activeEditor() )
+    activeEditor()->cmRulesErrorNext();
   }
 
 

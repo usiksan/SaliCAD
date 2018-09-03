@@ -129,7 +129,6 @@ class SdWEditor : public QAbstractScrollArea
 
     //Pcb
     virtual void cmPads() {}
-    virtual void cmCheckRules() {}
     virtual void cmModeLineSize() {}
     virtual void cmModeRadiusSize() {}
     virtual void cmModeMovePart() {}
@@ -141,6 +140,11 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmModePolygon() {}
     virtual void cmModeDeleteWire() {}
     virtual void cmModePad() {}
+
+    //Pcb rules
+    virtual void cmRules() {}
+    virtual void cmRulesCheck() {}
+    virtual void cmRulesErrorNext() {}
 
     //All
     virtual void cmOption() {}

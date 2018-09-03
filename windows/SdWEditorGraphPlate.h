@@ -22,7 +22,8 @@ class SdWEditorGraphPlate : public SdWEditorGraph
   {
     Q_OBJECT
 
-    SdPItemPlate *mPlate;
+    SdPItemPlate *mPlate;          //Edit plate
+    int           mRuleErrorIndex; //Current rule error index
   public:
     SdWEditorGraphPlate( SdPItemPlate *pcb, QWidget *parent = nullptr );
 
@@ -42,8 +43,11 @@ class SdWEditorGraphPlate : public SdWEditorGraph
     virtual void cmModePad() override;
     virtual void onActivateEditor() override;
     virtual void cmPads() override;
-    virtual void cmCheckRules() override;
     virtual void cmModePartSelect( QStringList list ) override;
+
+    //Pcb rules
+    virtual void cmRulesCheck() override;
+    virtual void cmRulesErrorNext() override;
 
     //Sheet and pcb
     virtual void cmRenumeration() override;

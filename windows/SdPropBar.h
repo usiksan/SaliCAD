@@ -24,6 +24,7 @@ class SdPropBar : public QToolBar
 
   protected:
     QComboBox *mLayer; //List of available layers
+    //QAction
 
     void     setSelectedLayer( SdLayer *layer );
     SdLayer *getSelectedLayer();

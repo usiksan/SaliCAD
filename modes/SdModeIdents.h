@@ -80,6 +80,7 @@ Description
 #define PB_WIRE             8
 #define PB_PART_PLACE       9
 #define PB_POLYGON         10
-#define PB_LAST            11
+#define PB_NO_SELECTION    11
+#define PB_LAST            12
 
 #endif // SDMODEIDENT_H
