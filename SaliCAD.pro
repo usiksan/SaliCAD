@@ -229,7 +229,8 @@ SOURCES += \
     modes/SdModeCPolygonEnter.cpp \
     windows/SdPropBarPolygon.cpp \
     windows/SdPropBarDefault.cpp \
-    objects/SdPropVia.cpp
+    objects/SdPropVia.cpp \
+    objects/SdUndoRecordVia.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -455,7 +456,8 @@ HEADERS  += \
     modes/SdModeCPolygonEnter.h \
     windows/SdPropBarPolygon.h \
     windows/SdPropBarDefault.h \
-    objects/SdPropVia.h
+    objects/SdPropVia.h \
+    objects/SdUndoRecordVia.h
 
 DISTFILES += \
     license.txt

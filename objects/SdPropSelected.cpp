@@ -34,10 +34,9 @@ void SdPropSelected::clear()
   mPartImpProp.clear();    //Properties for part implement in pcb
   mRoadProp.clear();       //Properties for road
   mPolygonProp.clear();    //Properties for polygon
-//    SdViaProp    viaProp;        //Свойства переходных отверстий
+  mViaProp.clear();        //Properties for via [Свойства переходных отверстий]
   mEnterType = 0;
   mWireName.clear();       //Wire name
-//    DTraseRules traseRules;     //Правила трассировки
 
   mFilledPropMask = 0; //Mask for filled properties types
   }

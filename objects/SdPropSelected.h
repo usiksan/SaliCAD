@@ -39,11 +39,10 @@ struct SdPropSelected
     SdPropPartImp mPartImpProp;    //Properties for part implement in pcb
     SdPropRoad    mRoadProp;       //Properties for road
     SdPropPolygon mPolygonProp;    //Properties for polygon
+    SdPropVia     mViaProp;        //Properties for via [Свойства переходных отверстий]
 
-//    SdViaProp    viaProp;        //Свойства переходных отверстий
     int           mEnterType;
     SdPropString  mWireName;       //Wire name
-//    DTraseRules traseRules;     //Правила трассировки
 
     int           mFilledPropMask; //Mask for filled properties types
     int           mPropBarId;      //Current bar id

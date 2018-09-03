@@ -45,33 +45,33 @@ class SdGraphTracedRoad : public SdGraphTraced
 
     // SdObject interface
   public:
-    virtual QString getType() const override;
-    virtual quint64 getClass() const override;
-    virtual void    cloneFrom(const SdObject *src) override;
-    virtual void    writeObject(QJsonObject &obj) const override;
-    virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual QString    getType() const override;
+    virtual quint64    getClass() const override;
+    virtual void       cloneFrom(const SdObject *src) override;
+    virtual void       writeObject(QJsonObject &obj) const override;
+    virtual void       readObject(SdObjectMap *map, const QJsonObject obj) override;
 
     // SdGraph interface
   public:
-    virtual void    saveState(SdUndo *undo) override;
-    virtual void    moveComplete(SdPoint grid, SdUndo *undo) override;
-    virtual void    move(SdPoint offset) override;
+    virtual void       saveState(SdUndo *undo) override;
+    virtual void       moveComplete(SdPoint grid, SdUndo *undo) override;
+    virtual void       move(SdPoint offset) override;
 
     //Properties service [Изменение свойствами]
     //Set properties of this object from prop
-    virtual void    setProp(SdPropSelected &prop) override;
+    virtual void       setProp(SdPropSelected &prop) override;
     //Get (append) properties from this object to prop
-    virtual void    getProp(SdPropSelected &prop) override;
-    virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;
-    virtual void    selectByRect(const SdRect &r, SdSelector *selector) override;
-    virtual void    select(SdSelector *selector) override;
-    virtual void    prepareMove(SdUndo *undo) override;
-    virtual void    setLayerUsage() override;
-    virtual bool    isVisible() override;
-    virtual SdRect  getOverRect() const override;
-    virtual int     behindCursor(SdPoint p) override;
-    virtual bool    getInfo(SdPoint p, QString &info, bool extInfo) override;
-    virtual bool snapPoint(SdSnapInfo *snap) override;
+    virtual void       getProp(SdPropSelected &prop) override;
+    virtual void       selectByPoint(const SdPoint p, SdSelector *selector) override;
+    virtual void       selectByRect(const SdRect &r, SdSelector *selector) override;
+    virtual void       select(SdSelector *selector) override;
+    virtual void       prepareMove(SdUndo *undo) override;
+    virtual void       setLayerUsage() override;
+    virtual bool       isVisible() override;
+    virtual SdRect     getOverRect() const override;
+    virtual int        behindCursor(SdPoint p) override;
+    virtual bool       getInfo(SdPoint p, QString &info, bool extInfo) override;
+    virtual bool       snapPoint(SdSnapInfo *snap) override;
 
     // SdGraphTraced interface
   public:

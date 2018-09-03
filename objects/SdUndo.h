@@ -29,6 +29,7 @@ class SdObject;
 class SdPoint;
 class SdPointList;
 class SdPropInt;
+class SdPropString;
 class SdPropLayer;
 class SdPropLine;
 class SdPropText;
@@ -87,6 +88,7 @@ class SdUndo
     void stringMap( SdStringMap *assoc );
     void padAssociation( QString *id, QString *srcName, SdPadMap *srcMap );
     void road( SdPropInt *width, SdPoint *p1, SdPoint *p2 );
+    void via( SdPropString *pad, SdPoint *pos );
 
     //do undo and redo
     void undoStep();

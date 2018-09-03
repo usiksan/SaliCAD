@@ -117,7 +117,7 @@ SdProp::SdProp()
   mPartIdentProp.mMirror = 0;
 
   //Road properties [Свойства дорожки]
-  mRoadProp.mWidth       = 300;
+  mRoadProp.mWidth       = 400;
   mRoadProp.mStratum     = stmTop;
   mRoadProp.mNetName     = "";
 
@@ -127,7 +127,10 @@ SdProp::SdProp()
   mPolygonProp.mNetName  = "";
 
   //TODO D011 setup all prop defaults
-////    SdViaProp    viaProp;        //Свойства переходных отверстий
+  //Via properties [Свойства переходных отверстий]
+  mViaProp.mStratum      = stmThrow;
+  mViaProp.mPadType      = "Via 0.3";
+  mViaProp.mNetName      = "";
 //  SdPropText    mTextDocProp;    //Свойства текста в текстовых документах
 
   mLineEnterType     = dleOrtho;       //By default orthogonal vertex line
