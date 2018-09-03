@@ -6,6 +6,8 @@
 
 class SdGraphTracedVia : public SdGraphTraced
   {
+    SdPoint mPosition; //Via position
+
   public:
     SdGraphTracedVia();
   };
