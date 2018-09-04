@@ -481,5 +481,5 @@ void SdGraphTracedRoad::accumWindows(SdPolyWindowList &dest, int stratum, int ga
 //Return layer for road stratum
 SdLayer *SdGraphTracedRoad::getLayer() const
   {
-  return sdEnvir->mCacheForRoad.getLayer( mProp.mStratum );
+  return sdEnvir->mCacheForRoad.getVisibleLayer( mProp.mStratum );
   }

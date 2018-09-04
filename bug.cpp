@@ -46,6 +46,8 @@
 //===================================================================================
 //Fixed:
 
+//B052 Not available to enter custom file name, only select
+
 //D037 snap point for roads
 
 //B039 Can't delete section when press Delete button

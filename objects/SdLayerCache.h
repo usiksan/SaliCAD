@@ -22,9 +22,10 @@ typedef QMap<int,SdLayerPtr> SdLayerPtrMap;
 
 class SdLayerCache
   {
-    SdLayerPtrMap  mMap;     //Layer map for all stratum
-    int            mStratum; //Cached stratum
-    SdLayer       *mCache;   //Cached layer for stratum
+    SdLayerPtr     mMap[stmCountMax]; //Layer map for all stratum
+    //SdLayerPtrMap  mMap;     //Layer map for all stratum
+    int            mStratum;          //Cached stratum
+    SdLayer       *mCache;            //Cached layer for stratum
   public:
     SdLayerCache();
 
@@ -32,7 +33,7 @@ class SdLayerCache
     void rebuild(const SdLayerPtrTable &tab, SdLayerTrace tr);
 
     //Return layer mapped to stratum
-    SdLayer *getLayer( int stratum );
+    SdLayer *getVisibleLayer( int stratum );
   };
 
 #endif // SDLAYERCACHE_H

@@ -358,8 +358,7 @@ SdPExportPlate_Gerber::SdPExportPlate_Gerber(SdWEditorGraphPlate *editor, SdPIte
 //On press file select button. We show file select dialog.
 void SdPExportPlate_Gerber::onFileSelect()
   {
-  //TODO B052 Not available to enter custom file name, only select
-  QString str = QFileDialog::getOpenFileName( this, tr("Enter or select gerber file name") );
+  QString str = QFileDialog::getSaveFileName( this, tr("Enter or select gerber file name") );
   if( !str.isEmpty() )
     mFile->setText( str );
   }

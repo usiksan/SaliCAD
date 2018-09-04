@@ -95,7 +95,7 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
     return;
 
   //Draw pad itself
-  SdLayer *layer = sdEnvir->mCacheForPad.getLayer(stratum);
+  SdLayer *layer = sdEnvir->mCacheForPad.getVisibleLayer(stratum);
   if( layer != nullptr && layer->isVisible() ) {
     dcx->setPen( 0, layer, 0 );
     dcx->setBrush( layer->color() );
@@ -104,7 +104,7 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
     }
 
   //Draw pad mask
-  layer = sdEnvir->mCacheForMask.getLayer(stratum);
+  layer = sdEnvir->mCacheForMask.getVisibleLayer(stratum);
   if( layer != nullptr && layer->isVisible() && mMaskThreshold > 0 ) {
     dcx->setPen( 0, layer, 0 );
     dcx->setBrush( layer->color() );
@@ -115,7 +115,7 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
     }
 
   //Draw stensil
-  layer = sdEnvir->mCacheForStensil.getLayer(stratum);
+  layer = sdEnvir->mCacheForStensil.getVisibleLayer(stratum);
   if( layer != nullptr && layer->isVisible() && mStensilThreshold > 0 ) {
     dcx->setPen( 0, layer, 0 );
     dcx->setBrush( layer->color() );
@@ -141,7 +141,7 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
     }
 
   //Draw hole
-  layer = sdEnvir->mCacheForHole.getLayer(stratum);
+  layer = sdEnvir->mCacheForHole.getVisibleLayer(stratum);
   if( layer != nullptr && layer->isVisible() && mHoleDiametr > 0 ) {
     dcx->setPen( 0, layer, 0 );
     dcx->setBrush( layer->color() );

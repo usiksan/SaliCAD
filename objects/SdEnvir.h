@@ -111,13 +111,9 @@ class SdEnvir
     int             mProjectPosition;      //Позиция разделителя проекта
     bool            mProjectRemoveEnabled; //Разрешение автоматического запрещения проекта
     int             mProjectRemoveTime;    //Время удержания проекта
-    QString         mLastFile;             //Последний файл пользователя
     double          mWidthStep;            //Шаг изменения толщины
     double          mTextSizeStep;         //Шаг изменения высоты текста
-    bool            mMaxFrame;             //Истина, если главное окно на весь экран
-    bool            mAutoPads;             //Автоматическая расстановка КП
     bool            mCreateBack;           //Создавать BAK файл при сохранении
-    double          mPolyClear;             //Зазор между дорожками и полигоном
 
     //Not saved
     //Cashed layers for stratum

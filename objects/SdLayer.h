@@ -118,10 +118,10 @@ enum SdLayerTrace {
 
 
 struct SdLayerDescr {
-  const char   *mId;
-  unsigned      mColor;
-  SdLayerTrace  mTrace;
-  int           mStratum;
+  const char   *mId;       //Layer id
+  unsigned      mColor;    //Layer color
+  SdLayerTrace  mTrace;    //Layer trace type
+  int           mStratum;  //Layer stratum
   };
 
 //#define LAYER_DESCR_ACTUAL 10 //Actual layers count

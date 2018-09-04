@@ -45,7 +45,7 @@ void SdModeCRoadEnter::drawDynamic(SdContext *ctx)
   {
   //Draw active segment
   if( getStep() ) {
-    SdLayer *layer = sdEnvir->mCacheForRoad.getLayer(mProp.mStratum);
+    SdLayer *layer = sdEnvir->mCacheForRoad.getVisibleLayer(mProp.mStratum);
     if( layer != nullptr ) ctx->setPen( mProp.mWidth, layer, dltSolid );
     else ctx->setPen( mProp.mWidth, sdEnvir->getSysColor(scEnter), dltSolid );
     if( mFirst != mBarMiddle )

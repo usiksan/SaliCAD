@@ -324,3 +324,8 @@ void SdGraphTracedVia::accumWindows(SdPolyWindowList &dest, int stratum, int gap
     }
   }
 
+SdLayer *SdGraphTracedVia::getLayer() const
+  {
+
+  }
+

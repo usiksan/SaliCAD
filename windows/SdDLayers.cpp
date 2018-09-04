@@ -25,6 +25,7 @@ Description
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QMessageBox>
+#include <QDir>
 
 
 int SdDLayers::mShow; //Define show all, actual or used layers
@@ -318,7 +319,7 @@ void SdDLayers::cmSwitchAll()
 void SdDLayers::cmLoad()
   {
   QString fname = QFileDialog::getOpenFileName( this, tr("Select file name to load layer state list"),
-                                                QString(),
+                                                sdEnvir->mPatternPath,
                                                 QString("Layers list (*%1)").arg(SD_LAYER_LIST_EXTENSION) );
   if( !fname.isEmpty() ) {
     if( !fname.endsWith( QStringLiteral(SD_LAYER_LIST_EXTENSION)) )
@@ -354,9 +355,13 @@ void SdDLayers::cmLoad()
 //Save list of edit and visible layers
 void SdDLayers::cmSave()
   {
+  //Create pattern dir for layers lists
+  QDir dir;
+  dir.mkpath( sdEnvir->mPatternPath );
+
   //Select file name to save list
   QString fname = QFileDialog::getSaveFileName( this, tr("Enter file name to save layer state list"),
-                                                QString(),
+                                                sdEnvir->mPatternPath,
                                                 QString("Layers list (*%1)").arg(SD_LAYER_LIST_EXTENSION) );
   if( !fname.isEmpty() ) {
     if( !fname.endsWith( QStringLiteral(SD_LAYER_LIST_EXTENSION)) )

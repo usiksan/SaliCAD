@@ -198,21 +198,21 @@ SdPoint SdPoint::unConvertImplement(SdPoint origin, SdPoint offset, SdPropAngle 
 bool SdPoint::isOnCircle(SdPoint center, int radius, int delta) const
   {
   //Точка на окружности, если расстояние отсюда до центра равно радиусу
-  return abs( radius - getDistance(center) ) <= delta;
+  return abs( radius - getDistanceInt(center) ) <= delta;
   }
 
 
 
 bool SdPoint::isInsideCircle(SdPoint center, int radius) const
   {
-  return radius >= getDistance(center);
+  return radius >= getDistanceInt(center);
   }
 
 
 
 bool SdPoint::isOnArc(SdPoint center, SdPoint start, SdPoint stop, int delta) const
   {
-  if( isOnCircle( center, center.getDistance(start), delta )  ) {
+  if( isOnCircle( center, center.getDistanceInt(start), delta )  ) {
     //Расстояние отсюда до центра дуги равно радиусу дуги, проверяем дальше
     SdPropAngle anStart = start.getAngle(center);
     SdPropAngle anStop  = stop.getAngle(center);

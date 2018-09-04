@@ -19,6 +19,7 @@ Description
 #include "SdPropInt.h"
 #include <QJsonObject>
 
+//Tracing layer mask (stratum)
 #define stmTop      0x00000001
 #define stmBottom   0x00000002
 #define stmThrough  0x3fffffff
@@ -26,7 +27,13 @@ Description
 #define stmInt01    0x00000008
 #define stmInt02    0x00000010
 #define stmInt03    0x00000020
+#define stmInt04    0x00000040
+#define stmInt05    0x00000080
+#define stmInt06    0x00000100
+#define stmInt07    0x00000200
 #define stmEnd      0x40000000
+
+#define stmCountMax         30 //Maximum tracing layers
 
 class SdStratum : public SdPropInt
   {

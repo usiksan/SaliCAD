@@ -372,7 +372,7 @@ void SdGraphTracedPolygon::accumWindows(SdPolyWindowList &dest, int stratum, int
 //Return layer for polygon stratum
 SdLayer *SdGraphTracedPolygon::getLayer() const
   {
-  return sdEnvir->mCacheForPolygon.getLayer( mProp.mStratum );
+  return sdEnvir->mCacheForPolygon.getVisibleLayer( mProp.mStratum );
   }
 
 
