@@ -134,7 +134,7 @@ class SdWEditorGraph : public SdWEditor
     virtual void           cmModeRegion() override;
 //    virtual void cmModeFilledRegion() {}
     virtual void           cmModeCircle() override;
-//    virtual void cmModeFilledCircle() {}
+    virtual void           cmModeFilledCircle() override;
     virtual void           cmModeArc() override;
     virtual void           cmModeText() override;
 //    virtual void cmModeField() {}

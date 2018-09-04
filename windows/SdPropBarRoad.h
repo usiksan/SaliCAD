@@ -38,6 +38,7 @@ class SdPropBarRoad : public SdPropBarStratum
     QAction     *mViaThrough;      //Via through or blind
     QComboBox   *mViaPadType;      //Via pad type
 
+
   public:
     SdPropBarRoad( const QString title );
 

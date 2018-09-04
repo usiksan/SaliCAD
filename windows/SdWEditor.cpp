@@ -41,7 +41,7 @@ SdProject *SdWEditor::getProject()
 void SdWEditor::dirtyProject()
   {
   //Set project dirty
-  getProjectItem()->getProject()->setDirty();
+  getProjectItem()->setProjectDirtyFlag();
   }
 
 

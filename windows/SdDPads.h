@@ -44,6 +44,8 @@ class SdDPads : public QDialog
     SdPadMap getPadMap() const { return mMap; }
 
     static QString selectPinType( QWidget *parent );
+
+    static QString selectPlatePinType( SdPItemPlate *plate, QWidget *parent );
   protected:
     void changeEvent(QEvent *e);
 

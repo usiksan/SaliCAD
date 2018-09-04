@@ -124,7 +124,7 @@ SdPropBarRoad::SdPropBarRoad(const QString title) :
   QToolButton *but = new QToolButton();
   but->setText( QStringLiteral("...") );
   connect( but, &QToolButton::clicked, this, [this] () {
-    QString str = SdDPads::selectPinType(this);
+    QString str = SdDPads::selectPlatePinType( mPlate, this );
     if( !str.isEmpty() ) {
       mViaPadType->setCurrentText( str );
       padTypeHistory.reorderComboBoxString( mViaPadType );

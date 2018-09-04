@@ -105,9 +105,6 @@ class SdPItemPlate : public SdProjectItem
     void                   ruleBlockForNet(int stratum, const QString netName, SdRuleBlock &blockDest );
 
 
-    //Tracing tests
-    bool                   isAvailableSegment( SdPoint start, SdPoint &stop, int stratum, const QString netName, int width );
-
     //Accum bariers
     void                   accumBarriers( quint64 mask, SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &rule );
 

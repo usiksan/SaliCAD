@@ -26,7 +26,8 @@ Description
 SdModeCRoadEnter::SdModeCRoadEnter(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeCommon( editor, obj )
   {
-
+  mProp = sdGlobalProp->mRoadProp;
+  mViaProp = sdGlobalProp->mViaProp;
   }
 
 
@@ -116,6 +117,8 @@ void SdModeCRoadEnter::propGetFromBar()
   SdPropBarRoad *bar = dynamic_cast<SdPropBarRoad*>( SdWCommand::mbarTable[PB_ROAD] );
   if( bar ) {
     bar->getPropRoad( &mProp, &mViaProp, &(sdGlobalProp->mWireEnterType) );
+    sdGlobalProp->mRoadProp = mProp;
+    sdGlobalProp->mViaProp = mViaProp;
     mEditor->setFocus();
     setDirtyCashe();
     update();

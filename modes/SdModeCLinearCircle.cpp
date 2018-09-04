@@ -1,3 +1,16 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Mode for draw circle's
+*/
 #include "SdModeCLinearCircle.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdGraphLinearCircle.h"
@@ -32,7 +45,7 @@ void SdModeCLinearCircle::enterPoint(SdPoint p)
   {
   if( getStep() == sRadius ) {
     mPreviousRadius = mRadius = mCenter.getDistanceInt( p );
-    addPic( new SdGraphLinearCircle( mCenter, mRadius, sdGlobalProp->mLineProp ), QObject::tr("Insert circle") );
+    addCircle();
     setStep( sCenter );
     mSmartType = 0;
     }
@@ -118,6 +131,14 @@ int SdModeCLinearCircle::getCursor() const
 int SdModeCLinearCircle::getIndex() const
   {
   return MD_CIRCLE;
+  }
+
+
+
+
+void SdModeCLinearCircle::addCircle()
+  {
+  addPic( new SdGraphLinearCircle( mCenter, mRadius, sdGlobalProp->mLineProp ), QObject::tr("Insert circle") );
   }
 
 

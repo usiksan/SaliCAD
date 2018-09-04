@@ -100,6 +100,25 @@ QString SdDPads::selectPinType(QWidget *parent)
 
 
 
+
+
+QString SdDPads::selectPlatePinType(SdPItemPlate *plate, QWidget *parent)
+  {
+  SdDPads pads( plate, plate->getPadAssociationName(), plate->getPadMap(), parent );
+  if( pads.exec() ) {
+    //Setup pads
+    plate->setPadAssociation( pads.getAssociationName(), pads.getPadMap(), plate->getUndo() );
+    //Set project dirty with pads changed
+    plate->setProjectDirtyFlag();
+    //Return selected pad
+    return pads.getCurrentPin();
+    }
+  return QString();
+  }
+
+
+
+
 void SdDPads::changeEvent(QEvent *e)
   {
   QDialog::changeEvent(e);

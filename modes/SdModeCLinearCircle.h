@@ -9,7 +9,7 @@ Web
   www.saliLab.ru
 
 Description
-  Mode for draw arc's
+  Mode for draw circle's
 */
 #ifndef SDMODECLINEARCIRCLE_H
 #define SDMODECLINEARCIRCLE_H
@@ -40,8 +40,11 @@ class SdModeCLinearCircle : public SdModeCLinear
     virtual QString getStepHelp() const override;
     virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;
-    virtual int getCursor() const override;
-    virtual int getIndex() const override;
+    virtual int     getCursor() const override;
+    virtual int     getIndex() const override;
+
+  protected:
+    virtual void    addCircle();
   };
 
 #endif // SDMODECLINEARCIRCLE_H

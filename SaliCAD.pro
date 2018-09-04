@@ -230,7 +230,8 @@ SOURCES += \
     windows/SdPropBarPolygon.cpp \
     windows/SdPropBarDefault.cpp \
     objects/SdPropVia.cpp \
-    objects/SdUndoRecordVia.cpp
+    objects/SdUndoRecordVia.cpp \
+    modes/SdModeCLinearCircleFilled.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -457,7 +458,8 @@ HEADERS  += \
     windows/SdPropBarPolygon.h \
     windows/SdPropBarDefault.h \
     objects/SdPropVia.h \
-    objects/SdUndoRecordVia.h
+    objects/SdUndoRecordVia.h \
+    modes/SdModeCLinearCircleFilled.h
 
 DISTFILES += \
     license.txt

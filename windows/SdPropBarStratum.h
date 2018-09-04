@@ -21,9 +21,10 @@ class SdPropBarStratum : public SdPropBar
   {
     Q_OBJECT
 
+  protected:
     SdPItemPlate *mPlate;      //Plate contains stratum count
     SdLayerTrace  mLayerTrace;
-  protected:
+
     void      setSelectedStratum( SdStratum stratum );
     SdStratum getSelectedStratum();
   public:

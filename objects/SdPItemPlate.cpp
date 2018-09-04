@@ -306,54 +306,6 @@ void SdPItemPlate::ruleBlockForNet(int stratum, const QString netName, SdRuleBlo
 
 
 
-//bool SdPItemPlate::isAvailableSegment(SdPoint start, SdPoint &stop, int stratum, const QString netName, int width)
-//  {
-//  //Fill rules block
-//  SdRuleBlock blk;
-//  ruleBlockForNet( stratum, netName, blk );
-//  //Change width with given
-//  blk.mRules[ruleWireWidth] = width;
-
-//  //Accum barriers
-//  QList<QPolygonF> barriers;
-//  accumBarriers( barriers, stratum, netName, true, blk );
-
-//  //If there intersection line(start,stop) with any polygon then segment not available
-//  //Test if segment intersects with polygon edges
-//  QPointF startf(start);
-//  QPointF stopf(stop);
-//  bool fail = false;
-//  for( QPolygonF &poly : barriers ) {
-//    if( poly.containsPoint( startf, Qt::OddEvenFill ) ) {
-//      //Start point is not available
-//      stop = start;
-//      return false;
-//      }
-
-//    //For each edges test intersection with line
-//    for( int i = 0; i < poly.count(); i++ ) {
-//      QLineF linef( startf, stopf );
-//      if( i == 0 ) {
-//        //Final edge
-//        if( linef.intersect( QLineF(poly[0],poly[poly.count()-1]), &stopf ) == QLineF::BoundedIntersection )
-//          fail = true;
-//        }
-//      else {
-//        //Internal edge
-//        if( linef.intersect( QLineF(poly[i-1],poly[i]), &stopf ) == QLineF::BoundedIntersection )
-//          fail = true;
-//        }
-//      }
-//    }
-//  if( fail )
-//    stop = stopf.toPoint();
-//  return !fail;
-//  }
-
-
-
-
-
 
 void SdPItemPlate::accumBarriers(quint64 mask, SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &rule)
   {

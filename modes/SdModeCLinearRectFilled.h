@@ -28,7 +28,7 @@ class SdModeCLinearRectFilled : public SdModeCLinearRect
     virtual int     getIndex() const override;
   protected:
     //Insert rectangle into graph object
-    virtual void    addRect();
+    virtual void    addRect() override;
   };
 
 #endif // SDMODECLINEARRECTFILLED_H
