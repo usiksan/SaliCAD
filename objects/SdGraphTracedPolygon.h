@@ -58,10 +58,9 @@ class SdGraphTracedPolygon : public SdGraphTraced
     virtual void      setLayerUsage() override;
     virtual bool      isVisible() override;
     virtual SdRect    getOverRect() const override;
-    //virtual void    draw(SdContext *dc) override;
     virtual int       behindCursor(SdPoint p) override;
     virtual bool      getInfo(SdPoint p, QString &info, bool extInfo) override;
-    virtual bool snapPoint(SdSnapInfo *snap) override;
+    virtual bool   snapPoint(SdSnapInfo *snap) override;
 
     // SdGraphTraced interface
   public:

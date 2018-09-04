@@ -1,8 +1,8 @@
 
-//B052 bugs
+//B053 bugs
 //F001 fatal
 //C001 critical
-//D055 do
+//D056 do
 
 
 
@@ -40,6 +40,8 @@
 //TODO D053 Append to conext menu of project "copy selected" command
 
 //TODO B051 Over rect for part implement calculated with ident, but must be without
+
+//TODO B053 When selected by rect then diagonal wrong roads selected
 
 //===================================================================================
 //Fixed:

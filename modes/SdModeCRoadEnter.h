@@ -31,6 +31,7 @@ class SdModeCRoadEnter : public SdModeCommon
     //bool           mCatch;       //If true, then mLast point catched
     SdPoint        mPrevMove;    //Previous entered point
     SdPropRoad     mProp;        //Current properties for road
+    SdPropVia      mViaProp;     //Current properties for vias
     SdStratum      mStack;       //Available stratum stack
     SdRuleBlock    mRule;        //Rule block for segment
     SdPoint        mSmartPoint;  //Smart point
@@ -73,12 +74,12 @@ class SdModeCRoadEnter : public SdModeCommon
     virtual int     getIndex() const override;
 
   private:
-    SdPItemPlate *plate() { return dynamic_cast<SdPItemPlate*>(mObject); }
-    void          getNetOnPoint( SdPoint p, SdStratum s, QString *netName, int *destStratum );
-    void          calcFirstSmartPoint();
-    void          calcNextSmartPoint();
-    SdPoint       checkRoad( SdPoint p1, SdPoint p2 ) const;
-    bool          isBarriersContains( const SdBarrierList &bar, SdPoint p ) const;
+    SdPItemPlate   *plate() { return dynamic_cast<SdPItemPlate*>(mObject); }
+    void            getNetOnPoint( SdPoint p, SdStratum s, QString *netName, int *destStratum );
+    void            calcFirstSmartPoint();
+    void            calcNextSmartPoint();
+    SdPoint         checkRoad( SdPoint p1, SdPoint p2 ) const;
+    bool            isBarriersContains( const SdBarrierList &bar, SdPoint p ) const;
   };
 
 #endif // SDMODECROADENTER_H

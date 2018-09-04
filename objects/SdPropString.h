@@ -45,6 +45,8 @@ class SdPropString
     void       swap( QString *src );
 
     void       assignTo( QString &dst );
+
+    bool       isValid() const { return mValue == OneValue; }
   };
 
 #endif // SDPROPSTRING_H

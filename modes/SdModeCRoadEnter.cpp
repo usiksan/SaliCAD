@@ -16,6 +16,7 @@ Description
 #include "objects/SdProp.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdGraphTracedRoad.h"
+#include "objects/SdGraphTracedVia.h"
 #include "windows/SdPropBarRoad.h"
 #include "windows/SdWCommand.h"
 #include "windows/SdWEditorGraph.h"
@@ -114,7 +115,7 @@ void SdModeCRoadEnter::propGetFromBar()
   {
   SdPropBarRoad *bar = dynamic_cast<SdPropBarRoad*>( SdWCommand::mbarTable[PB_ROAD] );
   if( bar ) {
-    bar->getPropRoad( &mProp, &(sdGlobalProp->mWireEnterType) );
+    bar->getPropRoad( &mProp, &mViaProp, &(sdGlobalProp->mWireEnterType) );
     mEditor->setFocus();
     setDirtyCashe();
     update();
@@ -130,7 +131,7 @@ void SdModeCRoadEnter::propSetToBar()
   if( bar ) {
     //Setup tracing layer count and trace type
     bar->setPlateAndTrace( plate(), layerTraceRoad );
-    bar->setPropRoad( &mProp, mEditor->getPPM(), sdGlobalProp->mWireEnterType );
+    bar->setPropRoad( &mProp, &mViaProp, mEditor->getPPM(), sdGlobalProp->mWireEnterType );
     }
   }
 
@@ -147,12 +148,32 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
       if( st == mProp.mStratum ) {
         //No stratum stack at this point
         //Try insert Via
+        if( !isBarriersContains( mPads, p) ) {
+          //Via is available at this point - insert
+          mViaProp.mNetName = mProp.mNetName;
+          qDebug() << "Via inserted" << mViaProp.mPadType.str() << mViaProp.mNetName.str();
+          addPic( new SdGraphTracedVia( p, mViaProp ), QObject::tr("Insert trace via") );
+          mMiddle = mFirst;
+          mBarMiddle = mFirst;
+          mLast = mFirst;
+          mBarLast = mFirst;
+          mStack = mViaProp.mStratum;
+          mProp.mStratum = mStack.stratumNext(mProp.mStratum);
+          plate()->ruleBlockForNet( mProp.mStratum.getValue(), mProp.mNetName.str(), mRule );
+          mProp.mWidth   = mRule.mRules[ruleRoadWidth];
+          }
         }
       else {
+        //Start point is on through pin. Therefore we simple change stratum
+        qDebug() << "Stratum change without via";
         mProp.mStratum = st;
+        plate()->ruleBlockForNet( mProp.mStratum.getValue(), mProp.mNetName.str(), mRule );
+        mProp.mWidth   = mRule.mRules[ruleRoadWidth];
         }
       //Update rules
-
+      propSetToBar();
+      rebuildBarriers();
+      calcNextSmartPoint();
       }
     else {
       if( mCatch == catchFinish && mBarMiddle == mMiddle && mBarLast == mLast ) {
@@ -446,5 +467,8 @@ void SdModeCRoadEnter::rebuildBarriers()
   //Accum barriers for current segment
   mRoads.clear();
   plate()->accumBarriers( dctTraced, mRoads, mProp.mStratum, ruleRoadRoad, mRule );
+  //Accum barriers for via
+  mPads.clear();
+  plate()->accumBarriers( dctTraced, mPads, mViaProp.mStratum, rulePadPad, mRule );
   }
 

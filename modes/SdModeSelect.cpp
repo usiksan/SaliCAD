@@ -761,7 +761,7 @@ void SdModeSelect::propGetFromBar()
       break;
     case PB_ROAD : {
       SdPropBarRoad *barRoad = dynamic_cast<SdPropBarRoad*>(SdWCommand::getModeBar(PB_ROAD) );
-      barRoad->getPropRoad( &(mLocalProp.mRoadProp), &(mLocalProp.mEnterType) );
+      barRoad->getPropRoad( &(mLocalProp.mRoadProp), &(mLocalProp.mViaProp), &(mLocalProp.mEnterType) );
       }
       break;
     case PB_POLYGON : {
@@ -839,7 +839,7 @@ void SdModeSelect::propSetToBar()
       break;
     case PB_ROAD : {
       SdPropBarRoad *barRoad = dynamic_cast<SdPropBarRoad*>(SdWCommand::getModeBar(PB_ROAD) );
-      barRoad->setPropRoad( &(mLocalProp.mRoadProp), getPPM(), mLocalProp.mEnterType );
+      barRoad->setPropRoad( &(mLocalProp.mRoadProp), &(mLocalProp.mViaProp), getPPM(), mLocalProp.mEnterType );
       }
       break;
     case PB_POLYGON : {

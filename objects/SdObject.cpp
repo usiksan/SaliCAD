@@ -33,6 +33,7 @@ Description
 #include "SdGraphLinearRegion.h"
 #include "SdGraphTracedRoad.h"
 #include "SdGraphTracedPolygon.h"
+#include "SdGraphTracedVia.h"
 #include "SdGraphText.h"
 #include "SdGraphIdent.h"
 #include "SdGraphSymPin.h"
@@ -285,6 +286,7 @@ SdObject *SdObject::build(QString type)
 
   if( type == QStringLiteral(SD_TYPE_GRAPH_TRACE_ROAD)    ) return new SdGraphTracedRoad();
   if( type == QStringLiteral(SD_TYPE_GRAPH_TRACE_POLYGON) ) return new SdGraphTracedPolygon();
+  if( type == QStringLiteral(SD_TYPE_GRAPH_TRACE_VIA)     ) return new SdGraphTracedVia();
 
   if( type == QStringLiteral(SD_TYPE_SYMBOL)              ) return new SdPItemSymbol();
   if( type == QStringLiteral(SD_TYPE_PART)                ) return new SdPItemPart();

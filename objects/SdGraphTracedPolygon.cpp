@@ -253,9 +253,17 @@ SdRect SdGraphTracedPolygon::getOverRect() const
 
 int SdGraphTracedPolygon::behindCursor(SdPoint p)
   {
+  //Check if object is behind cursor
   //Определить состояние объекта под курсором
-  if( isVisible() && mRegion.containsPoint(p, Qt::OddEvenFill) )
-    return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+  if( isVisible() ) {
+    //For each segments of region test if point is on segment
+    for( int i = 0; i < mRegion.count()-1; ++i )
+      if( p.isOnSegment( mRegion.get(i), mRegion.get(i+1)) )
+        return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+    //And at end test last (closing) segment
+    if( p.isOnSegment( mRegion.last(), mRegion.first() ) )
+      return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+    }
   return 0;
   }
 

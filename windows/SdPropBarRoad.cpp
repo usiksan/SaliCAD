@@ -13,10 +13,15 @@ Description
 */
 #include "SdPropBarRoad.h"
 #include "SdStringHistory.h"
+#include "SdDPads.h"
 #include "objects/SdUtil.h"
+
 #include <QLineEdit>
+#include <QToolButton>
 
 static SdStringHistory prevWidth;
+
+static SdStringHistory padTypeHistory;
 
 
 SdPropBarRoad::SdPropBarRoad(const QString title) :
@@ -84,14 +89,58 @@ SdPropBarRoad::SdPropBarRoad(const QString title) :
     emit propChanged();
     });
 
+
+  addSeparator();
+
+  //Vias
+  //Via through or blind
+  mViaThrough = addAction( QIcon(QString(":/pic/dleOrto.png")), tr("Via through or blind") );
+  mViaThrough->setCheckable(true);
+  connect( mViaThrough, &QAction::triggered, [=](bool checked){
+    Q_UNUSED(checked)
+    emit propChanged();
+    });
+
+  //Via pad type
+  mViaPadType = new QComboBox();
+  mViaPadType->setEditable(true);
+  for( const QString &str : padTypeHistory )
+    mViaPadType->addItem( str );
+  mViaPadType->setMinimumWidth(180);
+
+
+  //on select other pin type
+  connect( mViaPadType, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int){
+    padTypeHistory.reorderComboBoxString( mViaPadType );
+    emit propChanged();
+    });
+  connect( mViaPadType->lineEdit(), &QLineEdit::editingFinished, [=](){
+    padTypeHistory.reorderComboBoxString( mViaPadType );
+    emit propChanged();
+    });
+  addWidget( mViaPadType );
+
+  //Button to select pin type from default pad association table
+  QToolButton *but = new QToolButton();
+  but->setText( QStringLiteral("...") );
+  connect( but, &QToolButton::clicked, this, [this] () {
+    QString str = SdDPads::selectPinType(this);
+    if( !str.isEmpty() ) {
+      mViaPadType->setCurrentText( str );
+      padTypeHistory.reorderComboBoxString( mViaPadType );
+      emit propChanged();
+      }
+    } );
+  addWidget( but );
+
   }
 
 
 
 
-void SdPropBarRoad::setPropRoad(SdPropRoad *propRoad, double ppm, int enterType)
+void SdPropBarRoad::setPropRoad(SdPropRoad *propRoad, SdPropVia *propVia, double ppm, int enterType)
   {
-  if( propRoad ) {
+  if( propRoad && propVia ) {
     //Set current stratum
     setSelectedStratum( propRoad->mStratum );
 
@@ -109,6 +158,10 @@ void SdPropBarRoad::setPropRoad(SdPropRoad *propRoad, double ppm, int enterType)
 
     //Current road name name
     mWireName->setText( propRoad->mNetName.str() );
+
+    //Current via type
+    mViaPadType->setCurrentText( propVia->mPadType.str() );
+    padTypeHistory.reorderComboBoxString( mViaPadType );
     }
   }
 
@@ -116,15 +169,21 @@ void SdPropBarRoad::setPropRoad(SdPropRoad *propRoad, double ppm, int enterType)
 
 
 
-void SdPropBarRoad::getPropRoad(SdPropRoad *propRoad, int *enterType)
+void SdPropBarRoad::getPropRoad(SdPropRoad *propRoad, SdPropVia *propVia, int *enterType)
   {
-  if( propRoad ) {
+  if( propRoad && propVia ) {
     int stratum = getSelectedStratum();
     if( stratum )
       propRoad->mStratum = stratum;
 
     if( !mWidth->currentText().isEmpty() )
       propRoad->mWidth.setFromPhis( mWidth->currentText(), mPPM );
+
+    if( !mViaPadType->currentText().isEmpty() )
+      propVia->mPadType = mViaPadType->currentText();
+
+    //TODO D056 Append via through-blink support
+    propVia->mStratum = stmThrough;
 
     //Net name not used
     }
