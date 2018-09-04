@@ -24,15 +24,20 @@ class SdPropBarRoad : public SdPropBarStratum
 
   protected:
     //Width of line
-    double     mPPM;      //Logical coord per physical
-    QComboBox *mWidth;    //Width of linear objects
+    double     mPPM;               //Logical coord per physical
+    QComboBox *mWidth;             //Width of linear objects
 
-    QLineEdit *mWireName; //Name of net for road
+    QLineEdit *mWireName;          //Name of net for road
 
     //Vertex type of two lines
     QAction   *mEnterOrtho;
     QAction   *mEnter45degree;
     QAction   *mEnterAnyDegree;
+
+    //Vias
+    QAction     *mViaThrough;      //Via through or blind
+    QComboBox   *mViaPadType;      //Via pad type
+
   public:
     SdPropBarRoad( const QString title );
 

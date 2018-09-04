@@ -828,7 +828,7 @@ bool SdPasCadImport::readPartPin(SdObject *obj)
   pin->mPinProp.mPinType = QString::number( readInt32() );
   int side = readInt8();
   if( side == 2 ) pin->mPinProp.mSide = stmBottom;
-  else if( side == 3 || side == 7 ) pin->mPinProp.mSide = stmThrow;
+  else if( side == 3 || side == 7 ) pin->mPinProp.mSide = stmThrough;
   else pin->mPinProp.mSide = stmTop;
 
   if( !readTextProp( &(pin->mNumberProp), &(pin->mNumberPos) )  ) return false;

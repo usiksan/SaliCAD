@@ -160,11 +160,11 @@ void SdDRegistation::onEditAuthorName(const QString nm)
 void SdDRegistation::cmClose()
   {
   if( !sdObjectNetClient->isRegistered() ) {
-    QMessageBox::warning( this, tr("Warning!"), tr("You not registered. SaliCAD will work in autonom mode. In this mode You can not access global component database. This dialog allowed in later throw Help menu."));
+    QMessageBox::warning( this, tr("Warning!"), tr("You not registered. SaliCAD will work in autonom mode. In this mode You can not access global component database. This dialog allowed in later with Help menu."));
     }
   else {
     if( !mFromHelp )
-      QMessageBox::warning( this, tr("Warning!"), tr("This dialog allowed in later throw Help menu."));
+      QMessageBox::warning( this, tr("Warning!"), tr("This dialog allowed in later with Help menu."));
     }
   done(1);
   }

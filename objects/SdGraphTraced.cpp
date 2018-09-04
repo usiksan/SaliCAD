@@ -50,5 +50,5 @@ bool SdGraphTraced::isMatchNetAndStratum(const QString netName, SdStratum stratu
 
 void SdGraphTraced::draw(SdContext *dc)
   {
-  drawStratum( dc, stmThrow );
+  drawStratum( dc, stmThrough );
   }

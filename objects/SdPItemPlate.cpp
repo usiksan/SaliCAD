@@ -205,11 +205,11 @@ void SdPItemPlate::drawTrace(SdContext *ctx, SdStratum curStratum, QString curre
     } );
 
   //Draw trace elements down stratums
-  //Initially, we assume that no current stratum (throw stratum)
-  SdStratum stratum = stmThrow;
+  //Initially, we assume that no current stratum (through stratum)
+  SdStratum stratum = stmThrough;
   //If current stratum valid then exclude it from drawing
   if( curStratum.isValid() )
-    stratum = stmThrow & (~curStratum.getValue());
+    stratum = stmThrough & (~curStratum.getValue());
 
   //Draw component pads down stratums
   forEach( dctPartImp, [ctx,stratum] (SdObject *obj) -> bool {

@@ -11,6 +11,22 @@ SdGraphTracedVia::SdGraphTracedVia()
 
   }
 
+SdGraphTracedVia::SdGraphTracedVia(SdPoint pos, const SdPropVia &prp) :
+  SdGraphTraced(),
+  mPosition(pos),
+  mProp(prp)
+  {
+
+  }
+
+
+
+
+//SdGraphTracedVia::SdGraphTracedVia(const QString netName, SdStratum stratum, const QString padType, SdPoint pos)
+//  {
+
+//  }
+
 
 
 

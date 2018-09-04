@@ -34,12 +34,12 @@ SdDPadMaster::SdDPadMaster(SdPad pad, QWidget *parent) :
   ui->mCirclePad->setChecked(mPad.mIsCircle);
   onPadCircleToggle(mPad.mIsCircle);
   ui->mMaskThreshold->setText( sdEnvir->toPhisPcb(mPad.mMaskThreshold) );
-  onThrowPin( mPad.mHoleDiametr > 0 );
-  ui->mThrowPin->setChecked( mPad.mHoleDiametr > 0 );
+  onThroughPin( mPad.mHoleDiametr > 0 );
+  ui->mThroughPin->setChecked( mPad.mHoleDiametr > 0 );
 
   //Connect signals
   connect( ui->mCirclePad, &QCheckBox::toggled, this, &SdDPadMaster::onPadCircleToggle );
-  connect( ui->mThrowPin, &QCheckBox::toggled, this, &SdDPadMaster::onThrowPin );
+  connect( ui->mThroughPin, &QCheckBox::toggled, this, &SdDPadMaster::onThroughPin );
   connect( ui->mStensilColumns, &QLineEdit::textEdited, this, [this] (QString txt) {
     mPad.mStensilCols = txt.toInt();
     onArrayEnable(true);
@@ -240,15 +240,15 @@ void SdDPadMaster::onPadCircleToggle(bool isCircle)
 
 
 
-//Enable-disable throw pin (else planar)
-void SdDPadMaster::onThrowPin(bool isThrow)
+//Enable-disable through pin (else planar)
+void SdDPadMaster::onThroughPin(bool isThrough)
   {
-  ui->mHoleDiametr->setEnabled(isThrow);
-  ui->mStensilThreshold->setEnabled(!isThrow);
-  ui->mStensilRows->setEnabled(!isThrow);
-  ui->mStensilColumns->setEnabled(!isThrow);
-  onArrayEnable( !isThrow );
-  if( isThrow ) {
+  ui->mHoleDiametr->setEnabled(isThrough);
+  ui->mStensilThreshold->setEnabled(!isThrough);
+  ui->mStensilRows->setEnabled(!isThrough);
+  ui->mStensilColumns->setEnabled(!isThrough);
+  onArrayEnable( !isThrough );
+  if( isThrough ) {
     //Disable stensil hole
     ui->mStensilThreshold->clear();
     ui->mStensilRows->clear();

@@ -70,7 +70,7 @@ SdProp::SdProp()
   //Part pin properties
   mPartPinProp.mLayer.set( QString(LID0_PIN LID1_TOP) );    //Свойства вывода корпуса
   mPartPinProp.mPinType = QString("h1");
-  mPartPinProp.mSide    = stmThrow;
+  mPartPinProp.mSide    = stmThrough;
 
   //Part pin name properties
   mPartPinNameProp.mLayer.set( QString(LID0_PIN_NAME LID1_TOP) );    //Свойства имени вывода
@@ -128,7 +128,7 @@ SdProp::SdProp()
 
   //TODO D011 setup all prop defaults
   //Via properties [Свойства переходных отверстий]
-  mViaProp.mStratum      = stmThrow;
+  mViaProp.mStratum      = stmThrough;
   mViaProp.mPadType      = "Via 0.3";
   mViaProp.mNetName      = "";
 //  SdPropText    mTextDocProp;    //Свойства текста в текстовых документах

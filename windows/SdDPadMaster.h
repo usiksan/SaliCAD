@@ -47,8 +47,8 @@ class SdDPadMaster : public QDialog
     //Toggle between circle pad and rectangle pad
     void onPadCircleToggle( bool isCircle );
 
-    //Enable-disable throw pin (else planar)
-    void onThrowPin( bool isThrow );
+    //Enable-disable through pin (else planar)
+    void onThroughPin( bool isThrough );
 
     //Enable-disable stensil array on isEna and current settings of stensil cols and rows
     void onArrayEnable( bool isEna );

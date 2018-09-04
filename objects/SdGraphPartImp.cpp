@@ -786,14 +786,14 @@ SdRect SdGraphPartImp::getOverRect() const
 void SdGraphPartImp::drawStratum(SdContext *dc, int stratum)
   {
   //Draw ident in plate context
-  if( stratum == 0 || stratum == stmThrow )
+  if( stratum == 0 || stratum == stmThrough )
     dc->text( mIdentPos, mIdentRect, getIdent(), mIdentProp );
   //Convertor for part implementation
   SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
   dc->setConverter( &imp );
 
   //Draw part except ident and pins
-  if( stratum == 0 || stratum == stmThrow ) {
+  if( stratum == 0 || stratum == stmThrough ) {
     mPart->forEach( dctAll & ~(dctPartPin | dctIdent), [dc] (SdObject *obj) -> bool {
       SdGraph *graph = dynamic_cast<SdGraph*>( obj );
       if( graph )

@@ -185,7 +185,7 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
     if( netName.isEmpty() )
       //No net on this point at current stratum
       //Try on all stratums
-      getNetOnPoint( mFirst, stmThrow, &netName, &destStratum );
+      getNetOnPoint( mFirst, stmThrough, &netName, &destStratum );
 
     if( !netName.isEmpty() ) {
       //mFirst = p;
@@ -253,7 +253,7 @@ void SdModeCRoadEnter::movePoint(SdPoint p)
         }
       //Check diagonal
       else if( abs( adx - ady ) < qMin(grid.x(),grid.y()) ) {
-        //Align throw axiz X
+        //Align through axiz X
         mLast.setX( mSmartPoint.x() - (offset.x() > 0 ? ady : -ady) );
         if( (offset.x() >= 0 && offset.y() >= 0) || (offset.x() < 0 && offset.y() < 0) )
           mCatch = catchDiagQuad1;
@@ -336,7 +336,7 @@ void SdModeCRoadEnter::calcFirstSmartPoint()
   SdSnapInfo info;
   info.mSour = mPrevMove;
   info.mSnapMask = snapNearestNet | snapNearestPin;
-  info.mStratum = stmThrow;
+  info.mStratum = stmThrough;
   bool res = false;
   plate()->forEach( dctTraced, [&info,&res] (SdObject *obj) -> bool {
     SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);

@@ -168,7 +168,7 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
       //Write object to local library
       qDebug() << "disable edit";
       write();
-      //Upgrade item throw project
+      //Upgrade item through project
       getProject()->forEach( dctAll, [this,undo] (SdObject *obj) -> bool {
         if( obj != nullptr )
           obj->upgradeProjectItem( this, undo );

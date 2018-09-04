@@ -72,7 +72,7 @@ void SdDMasterPart::setupSmdPin()
 void SdDMasterPart::setupThrouPin()
   {
   mPinProp.mLayer.set( LID0_PIN );
-  mPinProp.mSide  = stmThrow;
+  mPinProp.mSide  = stmThrough;
   }
 
 

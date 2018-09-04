@@ -29,7 +29,7 @@ SdPropBarPartPin::SdPropBarPartPin(const QString title) :
   {
   mPinSide = new QComboBox();
   //Fill side variants
-  mPinSide->addItems( {tr("---"), tr("Top smd"), tr("Bottom smd"), tr("Throw")} );
+  mPinSide->addItems( {tr("---"), tr("Top smd"), tr("Bottom smd"), tr("Through")} );
   //on select other pin side
   connect( mPinSide, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
     Q_UNUSED(index)
@@ -83,7 +83,7 @@ void SdPropBarPartPin::setPropPartPin(SdPropPartPin *propPartPin)
     switch(side) {
       case stmTop    : mPinSide->setCurrentIndex(1); break;
       case stmBottom : mPinSide->setCurrentIndex(2); break;
-      case stmThrow  : mPinSide->setCurrentIndex(3); break;
+      case stmThrough  : mPinSide->setCurrentIndex(3); break;
       default: mPinSide->setCurrentIndex(0);
       }
 
@@ -109,7 +109,7 @@ void SdPropBarPartPin::getPropPartPin(SdPropPartPin *propPartPin)
     switch( side ) {
       case 1 : propPartPin->mSide = stmTop; break;
       case 2 : propPartPin->mSide = stmBottom; break;
-      case 3 : propPartPin->mSide = stmThrow; break;
+      case 3 : propPartPin->mSide = stmThrough; break;
       }
 
     //Get current pin type

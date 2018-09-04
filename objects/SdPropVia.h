@@ -24,7 +24,7 @@ struct SdPropVia
     SdPropString mPadType; //Pin type for pad assotiation
     SdPropString mNetName; //Net name which via is
 
-    SdPropVia() : mStratum(stmThrow), mPadType(), mNetName() {}
+    SdPropVia() : mStratum(stmThrough), mPadType(), mNetName() {}
 
     //Assign properties with pattern accordings [Назначить свойства в соответствии с шаблоном]
     void operator = ( SdPropVia const &prop );

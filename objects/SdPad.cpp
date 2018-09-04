@@ -199,8 +199,8 @@ QString SdPad::description() const
           .arg( SdUtil::log2physStr(mDiametrWidth+mMaskThreshold,ppm) )
           .arg( SdUtil::log2physStr(mDiametrWidth-mStensilThreshold,ppm) );
     else
-      //throw (no stensil)
-      return QObject::tr("Throw circle diam hole%3 pad%1 mask%2").arg( SdUtil::log2physStr(mDiametrWidth,ppm) )
+      //through (no stensil)
+      return QObject::tr("Throgh circle diam hole%3 pad%1 mask%2").arg( SdUtil::log2physStr(mDiametrWidth,ppm) )
           .arg( SdUtil::log2physStr(mDiametrWidth+mMaskThreshold,ppm) )
           .arg( SdUtil::log2physStr(mHoleDiametr,ppm) );
     }
@@ -230,9 +230,9 @@ QString SdPad::description() const
 
       }
     else {
-      //throw (no stensil)
+      //through (no stensil)
       //Single stensil aperture
-      return QObject::tr("Throw rect hole%5 pad%1x%2 mask%3x%4")
+      return QObject::tr("Through rect hole%5 pad%1x%2 mask%3x%4")
           .arg( SdUtil::log2physStr(mDiametrWidth,ppm) )
           .arg( SdUtil::log2physStr(mHeight,ppm))
           .arg( SdUtil::log2physStr(mDiametrWidth+mMaskThreshold,ppm) )

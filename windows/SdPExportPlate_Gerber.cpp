@@ -124,7 +124,7 @@ void SdGerberApertureContext::appendAperture( const QString ap ) {
 //===========================================================================================
 //              Gerber export section
 //Gerber export context
-//When we draw throw this context we creating Gerber primitive structure
+//When we draw through this context we creating Gerber primitive structure
 class SdGerberContext : public SdContext {
     QMap<QString,int> mApertureMap;
     int               mCurrentAperture;

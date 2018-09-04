@@ -22,7 +22,7 @@ SdLayerDescr sdLayerDescrActual[] = {
   { LID0_BUS,                    0xff0000ff, layerTraceNone, 0x00000000 }, //4
   { LID0_AREA,                   0x007f7fff, layerTraceNone, 0x00000000 }, //5
   //PCB specific
-  { LID0_PCB,                    0x00ffff00, layerTraceBoundary, stmThrow }, //6
+  { LID0_PCB,                    0x00ffff00, layerTraceBoundary, stmThrough }, //6
   { LID0_WIRE LID1_TOP,          0x00cf0000, layerTraceRoad, stmTop }, //7
   { LID0_WIRE LID1_BOT,          0x000000cf, layerTraceRoad, stmBottom }, //8
 
@@ -33,7 +33,7 @@ SdLayerDescr sdLayerDescrActual[] = {
   { LID0_PAD LID1_TOP,           0x00bf0000, layerTracePad, stmTop }, //12
   { LID0_PAD LID1_BOT,           0x000000bf, layerTracePad, stmBottom }, //13
 
-  { LID0_HOLE,                   0x00bf4000, layerTraceHole, stmThrow }, //14
+  { LID0_HOLE,                   0x00bf4000, layerTraceHole, stmThrough }, //14
 
   //{ LID0_CLEAR,                0x803f3f00, layerTraceNone, 0x00000000 }, //15
   { LID0_CLEAR LID1_TOP,         0x803f3f00, layerTraceKeepout, stmTop }, //16

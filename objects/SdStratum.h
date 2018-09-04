@@ -19,14 +19,14 @@ Description
 #include "SdPropInt.h"
 #include <QJsonObject>
 
-#define stmTop    0x00000001
-#define stmBottom 0x00000002
-#define stmThrow  0x3fffffff
-#define stmInt00  0x00000004
-#define stmInt01  0x00000008
-#define stmInt02  0x00000010
-#define stmInt03  0x00000020
-#define stmEnd    0x40000000
+#define stmTop      0x00000001
+#define stmBottom   0x00000002
+#define stmThrough  0x3fffffff
+#define stmInt00    0x00000004
+#define stmInt01    0x00000008
+#define stmInt02    0x00000010
+#define stmInt03    0x00000020
+#define stmEnd      0x40000000
 
 class SdStratum : public SdPropInt
   {

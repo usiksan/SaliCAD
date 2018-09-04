@@ -21,7 +21,7 @@ class SdPropBarPartPin : public SdPropBar
   {
     Q_OBJECT
 
-    QComboBox   *mPinSide;          //Part pin side (top, bottom or throw)
+    QComboBox   *mPinSide;          //Part pin side (top, bottom or through)
     QComboBox   *mPinType;          //Part pin type
   public:
     SdPropBarPartPin( const QString title );

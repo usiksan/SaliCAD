@@ -26,9 +26,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="mThrowPin">
+        <widget class="QCheckBox" name="mThroughPin">
          <property name="text">
-          <string>throw pin pad (has hole), else smd pad</string>
+          <string>through pin pad (has hole), else smd pad</string>
          </property>
         </widget>
        </item>
