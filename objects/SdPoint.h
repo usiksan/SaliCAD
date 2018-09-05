@@ -96,9 +96,29 @@ class SdPoint : public QPoint
     bool        isFar() const { return x() == farCoord && y() == farCoord; }
   };
 
-//Вычисление интересных точек
+
+
+//Interesting points calculation [Вычисление интересных точек]
+//Get intermediate point with 45 degree step vertex
+//    result  --------+ b
+//           /
+//          /
+//       a +
+SdPoint get45( SdPoint a, SdPoint b );
+
+//Get intermediate point with 90 degree step vertex
+// result  -----------+ b
+//         |
+//         |
+//       a +
+SdPoint get90( SdPoint a, SdPoint b );
+
+//Get intermediate point in according enter type
 SdPoint calcMiddlePoint(SdPoint a, SdPoint b, int enterType );
+
+//Calculate stop point of arc from sector point
 SdPoint calcArcStop( SdPoint center, SdPoint start, SdPoint sector );
+
 bool    calcFreeNearIntersect( SdPoint sour, SdPoint a, SdPoint b, SdPoint &dest );
 SdPropAngle calcDirection90( SdPoint sour, SdPoint dest );
 int     sred( int a, int b, int gridSize );

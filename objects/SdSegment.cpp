@@ -13,6 +13,8 @@ Description
 
 #include "SdSegment.h"
 #include "SdRect.h"
+
+#include <QLineF>
 #include <math.h>
 
 /*
@@ -44,19 +46,13 @@ SdPoint SdSegment::vertex45() const
 
 bool SdSegment::isCross(SdPoint a, SdPoint b, SdPoint *out ) const
   {
-  Q_UNUSED(out)
-  //special case - orthogonal segments
-  SdSegment s(a,b);
-  if( (isSectionX() || isSectionY()) && (s.isSectionX() || s.isSectionY()) ) {
-    if( isSectionY() )
-      //section Y
-      return qMin(a.x(),b.x()) <= p1.x() && qMax(a.x(),b.x()) >= p1.x() &&
-             qMin(a.y(),b.y()) <= qMax(p1.y(),p2.y()) && qMax(a.y(),b.y()) >= qMin(p1.y(),p2.y());
-    //section X
-    return qMin(a.y(),b.y()) <= p1.y() && qMax(a.y(),b.y()) >= p1.y() &&
-           qMin(a.x(),b.x()) <= qMax(p1.x(),p2.x()) && qMax(a.x(),b.x()) >= qMin(p1.x(),p2.x());
-    }
-  return !isOneSideLine( s ) && !s.isOneSideLine( *this );
+  QLineF f1( p1.toPointF(), p2.toPointF() );
+  QLineF f2( a.toPointF(), b.toPointF() );
+  QPointF of;
+  bool res = f1.intersect( f2, &of ) == QLineF::BoundedIntersection;
+  if( out )
+    *out = of.toPoint();
+  return res;
   }
 
 

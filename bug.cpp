@@ -37,8 +37,6 @@
 
 //TODO B051 Over rect for part implement calculated with ident, but must be without
 
-//TODO B053 When selected by rect then diagonal wrong roads selected
-
 //TODO B054 When enter road we setup road width, but when enter first point with restored from internal
 
 //TODO D057 Append to road properties bar cursor grid align selection
@@ -47,6 +45,8 @@
 
 //===================================================================================
 //Fixed:
+
+//B053 When selected by rect then diagonal wrong roads selected
 
 //B019 in trace mode pads shown not at place
 
