@@ -15,6 +15,7 @@ Description
 #include "SdStringHistory.h"
 #include "SdDPads.h"
 #include "objects/SdUtil.h"
+#include "objects/SdEnvir.h"
 
 #include <QLineEdit>
 #include <QToolButton>
@@ -64,6 +65,14 @@ SdPropBarRoad::SdPropBarRoad(const QString title) :
 
   addSeparator();
 
+  //Cursor align to greed or not
+  mAlignToGrid = addAction( QIcon(QString(":/pic/alignGrid.png")), tr("Align cursor to grid") );
+  mAlignToGrid->setCheckable(true);
+  connect( mAlignToGrid, &QAction::triggered, [=](bool checked){
+    sdEnvir->mCursorAlignGrid = checked;
+    });
+
+
   //Vertex type of two lines
   mEnterOrtho = addAction( QIcon(QString(":/pic/dleOrto.png")), tr("lines connects orthogonal") );
   mEnterOrtho->setCheckable(true);
@@ -100,6 +109,8 @@ SdPropBarRoad::SdPropBarRoad(const QString title) :
     Q_UNUSED(checked)
     emit propChanged();
     });
+
+  addSeparator();
 
   //Via pad type
   mViaPadType = new QComboBox();
@@ -153,6 +164,8 @@ void SdPropBarRoad::setPropRoad(SdPropRoad *propRoad, SdPropVia *propVia, double
     else
       mWidth->setCurrentText( QString()  );
 
+    mAlignToGrid->setChecked( sdEnvir->mCursorAlignGrid );
+
     //line enter type
     setVertexType( enterType );
 
@@ -162,6 +175,8 @@ void SdPropBarRoad::setPropRoad(SdPropRoad *propRoad, SdPropVia *propVia, double
     //Current via type
     mViaPadType->setCurrentText( propVia->mPadType.str() );
     padTypeHistory.reorderComboBoxString( mViaPadType );
+
+
     }
   }
 

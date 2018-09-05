@@ -29,6 +29,9 @@ class SdPropBarRoad : public SdPropBarStratum
 
     QLineEdit *mWireName;          //Name of net for road
 
+    //Cursor align to greed or not
+    QAction   *mAlignToGrid;
+
     //Vertex type of two lines
     QAction   *mEnterOrtho;
     QAction   *mEnter45degree;

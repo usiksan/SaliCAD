@@ -224,5 +224,9 @@
         <file>pic/placeNextId.png</file>
         <file>pic/placeSmartMode.png</file>
         <file>pic/placeSheet.png</file>
+        <file>pic/alignGrid.png</file>
+        <file>pic/iconDisableComp.png</file>
+        <file>pic/iconDisablePic.png</file>
+        <file>pic/iconDisableWire.png</file>
     </qresource>
 </RCC>

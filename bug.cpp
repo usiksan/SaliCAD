@@ -37,14 +37,15 @@
 
 //TODO B051 Over rect for part implement calculated with ident, but must be without
 
-//TODO B054 When enter road we setup road width, but when enter first point with restored from internal
-
-//TODO D057 Append to road properties bar cursor grid align selection
-
 //TODO B055 No road connection to middle of existing segment
 
 //===================================================================================
 //Fixed:
+
+//B054 When enter road we setup road width, but when enter first point with restored from internal
+//Road width restored from road rules.
+
+//D057 Append to road properties bar cursor grid align selection
 
 //B053 When selected by rect then diagonal wrong roads selected
 
