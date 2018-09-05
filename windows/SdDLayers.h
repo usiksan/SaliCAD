@@ -45,6 +45,8 @@ class SdDLayers : public QDialog
     void setStratumCount( int c );
     int  getStratumCount() const;
 
+    //Load layer list (enable-disable status)
+    static void loadLayerList( const QString fname );
   private:
     Ui::SdDLayers *ui;
 

@@ -1,5 +1,5 @@
 
-//B053 bugs
+//B055 bugs
 //F001 fatal
 //C001 critical
 //D056 do
@@ -10,10 +10,6 @@
 //TODO B009 3 undo's on one text properties changes
 
 //TODO B016 insertComponent mode: when select component and after select symbol part remain from component
-
-//TODO B019 in trace mode pads shown not at place
-
-//TODO B020 in trace mode show smart start point
 
 //TODO D043 Append posibility to delete object from library and also from remote library
 
@@ -37,14 +33,24 @@
 
 //TODO B047 Append layer list to all properties bars
 
-//TODO D053 Append to conext menu of project "copy selected" command
+//TODO D053 Append to context menu of project "copy selected" command
 
 //TODO B051 Over rect for part implement calculated with ident, but must be without
 
 //TODO B053 When selected by rect then diagonal wrong roads selected
 
+//TODO B054 When enter road we setup road width, but when enter first point with restored from internal
+
+//TODO D057 Append to road properties bar cursor grid align selection
+
+//TODO B055 No road connection to middle of existing segment
+
 //===================================================================================
 //Fixed:
+
+//B019 in trace mode pads shown not at place
+
+//B020 in trace mode show smart start point
 
 //B052 Not available to enter custom file name, only select
 

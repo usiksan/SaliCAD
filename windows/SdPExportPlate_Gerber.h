@@ -26,10 +26,13 @@ class SdPExportPlate_Gerber : public QWizardPage
   {
     Q_OBJECT
 
-    SdWEditorGraphPlate *mEditor; //Graphic editor widget
-    SdPItemPlate        *mPlate;  //Plate which we export to gerber
-    QLineEdit           *mFile;   //File name for single generation
-    QTableWidget        *mGroup;  //Table for multiple gerber generation
+    SdWEditorGraphPlate *mEditor;    //Graphic editor widget
+
+    SdPItemPlate        *mPlate;     //Plate which we export to gerber
+    QLineEdit           *mFile;      //File name for single generation
+
+    QLineEdit           *mGroupPath; //Path to store group fiels
+    QTableWidget        *mGroup;     //Table for multiple gerber generation
   public:
     SdPExportPlate_Gerber( SdWEditorGraphPlate *editor, SdPItemPlate *plate, int step, SdPMasterList *list, QWidget *parent = nullptr );
 
@@ -42,6 +45,19 @@ class SdPExportPlate_Gerber : public QWizardPage
 
     //On press button "Layers...". We opern layers dialog
     void onLayers();
+
+    //On press button "group generate". We generate Gerber to goupt path for each selected pattern
+    void onGroupGenerate();
+
+    //On press file group select button. We show directory select dialog
+    void onGroupPathSelect();
+
+    //On cell clicked
+    void onCellClicked( int row, int column );
+
+  private:
+    //Generate gerber for current view to file
+    void generation(const QString fileName );
   };
 
 #endif // SDPEXPORTPLATE_GERBER_H

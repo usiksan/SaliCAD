@@ -11,15 +11,19 @@ Web
 Description
   Creation gerber file on plate
 */
+#include "SdConfig.h"
 #include "SdPExportPlate_Gerber.h"
 #include "SdDLayers.h"
 #include "SdWEditorGraphPlate.h"
 #include "objects/SdContext.h"
 #include "objects/SdConverterOffset.h"
+#include "objects/SdEnvir.h"
+#include "library/SvDir.h"
 
 #include <QPushButton>
 #include <QFile>
 #include <QFileInfo>
+#include <QDir>
 #include <QTextStream>
 #include <QMessageBox>
 #include <QList>
@@ -28,6 +32,7 @@ Description
 #include <QFileDialog>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QHeaderView>
 
 
 
@@ -42,7 +47,7 @@ QString gerberMM( int x ) {
 //              Aperture section
 
 QString gerberApertureCircle( int r ) {
-  return QString("C,") + gerberMM(r);
+  return QString("C,") + gerberMM(r*2);
   }
 
 QString gerberApertureRect( int w, int h ) {
@@ -305,6 +310,7 @@ SdPExportPlate_Gerber::SdPExportPlate_Gerber(SdWEditorGraphPlate *editor, SdPIte
   mEditor(editor),
   mPlate(plate)
   {
+  setMinimumWidth(800);
   list->addMaster( tr("Gerber"), tr("Creates gerber files for plate"), step, QString(":/pic/gerberExport.png") );
 
   //Build interface
@@ -340,16 +346,82 @@ SdPExportPlate_Gerber::SdPExportPlate_Gerber(SdWEditorGraphPlate *editor, SdPIte
         connect( but, &QPushButton::clicked, this, &SdPExportPlate_Gerber::onGenerate );
       vbox->addLayout( fbox );
 
+      vbox->addStretch();
+
     hbox->addLayout( vbox );
 
     //Right side - group file creation section
     vbox = new QVBoxLayout();
       //Title
       vbox->addWidget( new QLabel( tr("Multiple file creation") ) );
+      //Title to gerber file
+      vbox->addWidget( new QLabel( tr("Gerber files path:") ) );
+      //Gerber file path and selection
+      fbox = new QHBoxLayout();
+        mGroupPath = new QLineEdit();
+        fbox->addWidget( mGroupPath );
+        but = new QPushButton( tr("Select...") );
+        fbox->addWidget( but );
+        connect( but, &QPushButton::clicked, this, &SdPExportPlate_Gerber::onGroupPathSelect );
+      vbox->addLayout( fbox );
+
+      //Table for packet generation
+      mGroup = new QTableWidget();
+      vbox->addWidget( mGroup );
+
+      //Button to group generation
+      fbox = new QHBoxLayout();
+        fbox->addWidget( new QLabel(tr("Generate gerber group:")) );
+        but = new QPushButton( tr("Generate") );
+        fbox->addWidget( but );
+        connect( but, &QPushButton::clicked, this, &SdPExportPlate_Gerber::onGroupGenerate );
+      vbox->addLayout( fbox );
 
     hbox->addLayout( vbox );
 
   setLayout( hbox );
+
+  //Fill group table
+  //We scan pattern directory for existing layers list files
+  //For each file we create one line in table
+  mGroup->setColumnCount(3);
+  mGroup->setColumnWidth( 0, 80 );
+  mGroup->setColumnWidth( 1, 130 );
+  mGroup->setColumnWidth( 2, 130 );
+
+  //Set column header
+  QStringList header;
+  header << tr("Generate") << tr("File name") << tr("Layer list");
+  mGroup->setHorizontalHeaderLabels( header );
+
+  //Hide row header
+  mGroup->verticalHeader()->hide();
+
+  //Directory with layers list files
+  QDir pat( sdEnvir->mPatternPath );
+  //Get file list of existing layers list files
+  QStringList filtr;
+  filtr << "*" SD_LAYER_LIST_EXTENSION;
+  QFileInfoList patList = pat.entryInfoList( filtr );
+  //Setup row for each file
+  mGroup->setRowCount( patList.count() );
+  int row = 0;
+  for( const QFileInfo &info : patList ) {
+    mGroup->setRowHeight( row, 25 );
+    //By default we generate none
+    mGroup->setItem( row, 0, new QTableWidgetItem(tr("No")) );
+    mGroup->item( row,0 )->setFlags(Qt::ItemIsEnabled);
+    //mGroup->item( row,0 )->setFlags(Qt::ItemIsEnabled|Qt::ItemIsUserCheckable);
+    //Construct file name
+    mGroup->setItem( row, 1, new QTableWidgetItem( info.completeBaseName() + QStringLiteral(SD_GERBER_EXTENSION)) );
+    //Layers list file name
+    mGroup->setItem( row, 2, new QTableWidgetItem( info.fileName() ) );
+    mGroup->item( row,2 )->setFlags(Qt::ItemIsEnabled);
+    //Next row
+    row++;
+    }
+  connect( mGroup,  &QTableWidget::cellClicked, this, &SdPExportPlate_Gerber::onCellClicked );
+
   }
 
 
@@ -368,8 +440,85 @@ void SdPExportPlate_Gerber::onFileSelect()
 
 void SdPExportPlate_Gerber::onGenerate()
   {
-  //Retrive output file name
-  QString fileName = mFile->text();
+  //Retrive output file name and generate
+  generation( mFile->text() );
+  }
+
+
+
+
+
+
+//On press button "Layers...". We opern layers dialog
+void SdPExportPlate_Gerber::onLayers()
+  {
+  //Create and execute layers dialog
+  SdDLayers dlg( mPlate->getProject(), this );
+  dlg.exec();
+
+  //Update editor
+  mEditor->dirtyCashe();
+  mEditor->update();
+  }
+
+
+
+
+
+//On press button "group generate". We generate Gerber to goupt path for each selected pattern
+void SdPExportPlate_Gerber::onGroupGenerate()
+  {
+  //For each row of file table we check flag of generation
+  // if setup then generate according gerber
+  SvDir pat( mGroupPath->text() );
+  for( int row = 0; row < mGroup->rowCount(); row++ )
+    if( mGroup->item(row,0)->text() == tr("Yes") ) {
+      //Load layer list
+      SvDir dir( sdEnvir->mPatternPath );
+      SdDLayers::loadLayerList( dir.slashedPath() + mGroup->item(row,2)->text() );
+
+      //Update editor
+      mEditor->dirtyCashe();
+      mEditor->update();
+
+      //Generate Gerber
+      generation( pat.slashedPath() + mGroup->item(row,1)->text() );
+      }
+  }
+
+
+
+
+//On press file group select button. We show directory select dialog
+void SdPExportPlate_Gerber::onGroupPathSelect()
+  {
+  QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"), QString(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+  if( !dir.isEmpty() )
+    mGroupPath->setText( dir );
+  }
+
+
+
+
+
+//On cell clicked
+void SdPExportPlate_Gerber::onCellClicked(int row, int column)
+  {
+  if( column == 0 ) {
+    //Switch state of "generate" column
+    if( mGroup->item(row,0)->text() == tr("Yes") )
+      mGroup->item(row,0)->setText( tr("No") );
+    else
+      mGroup->item(row,0)->setText( tr("Yes") );
+    }
+  }
+
+
+
+
+//Generate gerber for current view to file
+void SdPExportPlate_Gerber::generation(const QString fileName)
+  {
   //Attempt to file create
   QFile file(fileName);
   if( file.open(QIODevice::WriteOnly) ) {
@@ -378,7 +527,8 @@ void SdPExportPlate_Gerber::onGenerate()
     bool polarPos = true;
     //Header
     //Заголовок
-    os << "%ASAXBY*\n"     //Выбор осей
+    os << "G04 SaliCAD Gerber export. www.salilab.com *\n"
+          "%ASAXBY*\n"     //Выбор осей
           "FSLAX33Y33*\n"  //Формат, опущены лидирующие нули, абсолютные данные, 3 целых 3 дробных
           "MIA0B0*\n"      //Зеркальность 0=нет, 1=есть
           "MOMM*\n"        //Режим миллиметров
@@ -446,21 +596,4 @@ void SdPExportPlate_Gerber::onGenerate()
     }
   else
     QMessageBox::warning( this, tr("Error!"), tr("Can't create Gerber file \'%1\'").arg(fileName) );
-  }
-
-
-
-
-
-
-//On press button "Layers...". We opern layers dialog
-void SdPExportPlate_Gerber::onLayers()
-  {
-  //Create and execute layers dialog
-  SdDLayers dlg( mPlate->getProject(), this );
-  dlg.exec();
-
-  //Update editor
-  mEditor->dirtyCashe();
-  mEditor->update();
   }

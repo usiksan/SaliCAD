@@ -147,6 +147,9 @@ History
 //Layer list naming definition
 #define SD_LAYER_LIST_EXTENSION      ".layersSet"
 
+//Gerber file extension
+#define SD_GERBER_EXTENSION          ".gbr"
+
 //SaliCAD database version
 //Must be compatible with previous versions
 #define SD_BASE_VERSION_1            1

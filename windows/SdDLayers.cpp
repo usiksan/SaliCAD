@@ -118,6 +118,33 @@ int SdDLayers::getStratumCount() const
 
 
 
+
+//Load layer list (enable-disable status)
+void SdDLayers::loadLayerList(const QString fname)
+  {
+  //Load layer state list
+  QFile file( fname );
+  if( file.open(QIODevice::ReadOnly) ) {
+    QJsonDocument doc = QJsonDocument::fromJson( file.readAll() );
+    QJsonArray ar = doc.array();
+
+    //Switch off all layers
+    for( SdLayerPtr ptr : sdEnvir->mLayerTable )
+      ptr->setState( layerStateOff );
+
+    //Setup layers state
+    for( int i = 0; i < ar.count(); i++ ) {
+      QJsonObject obj = ar.at(i).toObject();
+      QString id = obj.value( QStringLiteral("id") ).toString();
+      int state = obj.value( QStringLiteral("state") ).toInt();
+      sdEnvir->getLayer(id)->setState( static_cast<SdLayerState>(state) );
+      }
+    }
+  }
+
+
+
+
 //Construct visual layer
 void SdDLayers::fillLayerList()
   {
@@ -325,27 +352,11 @@ void SdDLayers::cmLoad()
     if( !fname.endsWith( QStringLiteral(SD_LAYER_LIST_EXTENSION)) )
       fname.append( QStringLiteral(SD_LAYER_LIST_EXTENSION) );
 
-    //Load layer state list
-    QFile file( fname );
-    if( file.open(QIODevice::ReadOnly) ) {
-      QJsonDocument doc = QJsonDocument::fromJson( file.readAll() );
-      QJsonArray ar = doc.array();
+    //Load layer list from file
+    loadLayerList( fname );
 
-      //Switch off all layers
-      for( SdLayerPtr ptr : sdEnvir->mLayerTable )
-        ptr->setState( layerStateOff );
-
-      //Setup layers state
-      for( int i = 0; i < ar.count(); i++ ) {
-        QJsonObject obj = ar.at(i).toObject();
-        QString id = obj.value( QStringLiteral("id") ).toString();
-        int state = obj.value( QStringLiteral("state") ).toInt();
-        sdEnvir->getLayer(id)->setState( static_cast<SdLayerState>(state) );
-        }
-
-      //Update visula list
-      fillLayerList();
-      }
+    //Update visula list
+    fillLayerList();
     }
   }
 
