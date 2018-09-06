@@ -512,7 +512,7 @@ void SdContext::smartPoint(SdPoint a, SdSnapMask smartMask)
         }
       else {
         //Кружок
-        mPainter->drawEllipse( a, sm, sm );
+        mPainter->drawEllipse( p, sm, sm );
         }
       //mPainter->setTransform( mTransform );
       }

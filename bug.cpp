@@ -21,20 +21,20 @@
 
 //TODO D050 Append component rotation by keyboard
 
-//TODO B045 When cancel mode part pin current step remains after cancel but must be reset
-
 //TODO B046 When renumeration in browse mode no rebuild component list
 
 //TODO B047 Append layer list to all properties bars
 
 //TODO D053 Append to context menu of project "copy selected" command
 
-//TODO B051 Over rect for part implement calculated with ident, but must be without
-
 //TODO B055 No road connection to middle of existing segment
 
 //===================================================================================
 //Fixed:
+
+//B045 When cancel mode part pin current step remains after cancel but must be reset
+
+//B051 Over rect for part implement calculated with ident, but must be without
 
 //B040 After smart net insertion no segment utilisation performed
 

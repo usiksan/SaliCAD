@@ -64,7 +64,7 @@ SdGraphSymImp::SdGraphSymImp(SdPItemComponent *comp, SdPItemSymbol *sym, SdPItem
   if( sym ) {
     SdConverterImplement imp( mOrigin, sym->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue() );
     QTransform t( imp.getMatrix() );
-    mOverRect.set( t.mapRect(sym->getOverRect()) );//Over rect
+    mOverRect.set( t.mapRect(sym->getOverRect(dctAll & (~dctIdent))) );//Over rect
     mPrefix = sym->getIdent()->getText();          //Part identificator prefix
     mIdentProp = sym->getIdent()->getPropText();   //Part identificator text properties
     mIdentOrigin = sym->getIdent()->getOrigin();   //Part identificator position in symbol context
@@ -565,7 +565,7 @@ void SdGraphSymImp::updatePinsPositions()
   QTransform t = impl.getMatrix();
   for( SdSymImpPin &pin : mPins )
     pin.mPosition = t.map( pin.mPin->getPinOrigin() );
-  mOverRect.set( t.mapRect( mSymbol->getOverRect() ) );
+  mOverRect.set( t.mapRect( mSymbol->getOverRect(dctAll & (~dctIdent)) ) );
   mIdentPos = t.map( mIdentOrigin );
   //mIdentRect.set( )
   }

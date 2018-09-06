@@ -34,10 +34,13 @@ QString SdModeCSymPin::mPrevName;    //Previous name
 #define sLast        4
 
 SdModeCSymPin::SdModeCSymPin(SdWEditorGraph *editor, SdProjectItem *obj) :
-  SdModeCTextual( editor, obj )
+  SdModeCTextual( editor, obj ),
+  mSmartType(0)
   {
 
   }
+
+
 
 
 
@@ -62,6 +65,14 @@ void SdModeCSymPin::drawDynamic(SdContext *ctx)
 
     case sPlaceName :
       ctx->cross( mOrigin, sdEnvir->mSymPinSize, sdEnvir->getSysColor(scEnter) );
+    }
+
+  //Draw smart point
+  if( sdEnvir->mIsSmart ) {
+    if( (mSmartType & snapEndPoint) && (getStep() == sPlacePin) )
+      ctx->smartPoint( mSmartPoint, snapEndPoint );
+    if( (mSmartType & snapPrev) && (getStep() == sPlaceName || getStep() == sPlaceNumber) )
+      ctx->smartPoint( mSmartPoint, snapPrev );
     }
   }
 
@@ -141,7 +152,6 @@ void SdModeCSymPin::enterPoint( SdPoint enter )
       mOrigin = enter;
       //Switch to pin name place
       mSmartPoint = mOrigin + mSmartName;
-      mSmartType  = snapPrev;
       setStep( sPlaceName );
       break;
     case sPlaceName :
@@ -156,6 +166,8 @@ void SdModeCSymPin::enterPoint( SdPoint enter )
       break;
     case sEnterName :
       applyEdit();
+      //Switch to pin number place
+      mSmartPoint = mOrigin + mSmartNumber;
       break;
     case sPlaceNumber :
       //Enter pin number place is completed
@@ -166,7 +178,7 @@ void SdModeCSymPin::enterPoint( SdPoint enter )
       mSmartName   = mNamePos   - mOrigin;
       mPrevName    = mName;
       setStep( sPlacePin );
-      mSmartType = 0;
+      mSmartType  |= snapPrev;
       break;
     }
   }
@@ -176,6 +188,9 @@ void SdModeCSymPin::enterPoint( SdPoint enter )
 
 void SdModeCSymPin::cancelPoint(SdPoint)
   {
+  //Set step to start step. When mode restored - we begin from start
+  setStep(sPlacePin);
+  //Cancel mode
   cancelMode();
   }
 
@@ -186,6 +201,25 @@ void SdModeCSymPin::movePoint( SdPoint p )
   {
   if( getStep() == sPlaceNumber ) {
     mNumberPos = p;
+    update();
+    }
+  else if( getStep() == sPlacePin ) {
+    //Get smart point
+    //Find end of lines
+    SdSnapInfo info;
+    info.mSour = p;
+    info.mSnapMask = snapEndPoint;
+    mObject->forEach( dctPicture, [&info] (SdObject *obj) -> bool {
+      SdPtr<SdGraph> graph(obj);
+      if( graph.isValid() )
+        graph->snapPoint( &info );
+      return true;
+      });
+    if( info.mDestMask )
+      mSmartType |= snapEndPoint;
+    else
+      mSmartType &= ~snapEndPoint;
+    mSmartPoint = info.mDest;
     update();
     }
   }

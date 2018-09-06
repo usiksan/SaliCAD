@@ -24,7 +24,7 @@ class SdModeCPartPin : public SdModeCTextual
     SdPoint        mNumberPos;   //Number position point
     SdPoint        mNamePos;     //Name position point
     SdPoint        mSmartPoint;  //Smart mode point
-    int            mSmartType;   //Smart mode point type
+    SdSnapMask     mSmartType;   //Smart mode point type
 
     static SdPoint
       mSmartNumber,              //Offset from previous number

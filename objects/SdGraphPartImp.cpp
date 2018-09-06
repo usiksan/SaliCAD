@@ -213,7 +213,7 @@ SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *par
   if( part ) {
     SdConverterImplement imp( mOrigin, part->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
     QTransform t( imp.getMatrix() );
-    mOverRect.set( t.mapRect(part->getOverRect()) );//Over rect
+    mOverRect.set( t.mapRect(part->getOverRect(dctAll & (~dctIdent))) );//Over rect
     mPrefix = part->getIdent()->getText();          //Part identificator prefix
     mIdentProp = part->getIdent()->getPropText();   //Part identificator text properties
     mIdentOrigin = part->getIdent()->getOrigin();   //Part identificator position in symbol context
@@ -933,7 +933,7 @@ void SdGraphPartImp::updatePinsPositions()
     pin.mStratum  = pin.mPin->getPinStratum( mProp.mSide.isBottom() );
     }
   //Calculate new over rect
-  mOverRect.set( t.mapRect( mPart->getOverRect() ) );
+  mOverRect.set( t.mapRect( mPart->getOverRect(dctAll & (~dctIdent)) ) );
   //Calculate new pos for ident
   mIdentPos = t.map( mIdentOrigin );
   }

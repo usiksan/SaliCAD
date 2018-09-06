@@ -20,11 +20,10 @@ class SdModeCSymPin : public SdModeCTextual
   {
     SdPoint        mOrigin;      //Pin place point
     QString        mName;        //Pin name
-    //DSymbolPic  *symbol;      //Символ, над которым работает режим
     SdPoint        mNumberPos;   //Number position point
     SdPoint        mNamePos;     //Name position point
     SdPoint        mSmartPoint;  //Smart mode point
-    int            mSmartType;   //Smart mode point type
+    SdSnapMask     mSmartType;   //Smart mode point type
 
     static SdPoint
       mSmartNumber,              //Offset from previous number
