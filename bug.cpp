@@ -19,8 +19,6 @@
 
 //TODO B038 When undo sheet insert editor not removed
 
-//TODO B040 After smart net insertion no segment utilisation performed
-
 //TODO D050 Append component rotation by keyboard
 
 //TODO B045 When cancel mode part pin current step remains after cancel but must be reset
@@ -37,6 +35,8 @@
 
 //===================================================================================
 //Fixed:
+
+//B040 After smart net insertion no segment utilisation performed
 
 //B041 In active text mode +-* buttons not supported
 

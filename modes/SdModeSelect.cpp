@@ -1422,7 +1422,7 @@ void SdModeSelect::dragMove(SdPoint p)
 void SdModeSelect::stopMove(SdPoint p)
   {
   dragMove(p);
-  moveComplete();
+  //moveComplete();
   setStep(smSelPresent);
   }
 
