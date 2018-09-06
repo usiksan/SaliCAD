@@ -87,7 +87,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmObjectLoad        = menuObject->addAction( QIcon(QString(":/pic/download.png")), frame->tr("Load from library..."), frame, SLOT(cmObjectLoad()) );
   cmObjectRename      = menuObject->addAction( QIcon(QString(":/pic/objectRename.png")), frame->tr("Rename..."), frame, SLOT(cmObjectRename()) );
   cmObjectCategory    = menuObject->addAction( QIcon(QString(":/pic/objectCategory.png")), frame->tr("Edit category..."), frame, SLOT(cmObjectCategory()) );
-  cmObjectParam       = menuObject->addAction( QIcon(QString(":/pic/objectCategory.png")), frame->tr("Edit param..."), frame, SLOT(cmObjectParam()) );
+  cmObjectParam       = menuObject->addAction( QIcon(QString(":/pic/objectParam.png")), frame->tr("Edit param..."), frame, SLOT(cmObjectParam()) );
   cmObjectDelete      = menuObject->addAction( QIcon(QString(":/pic/objectDelete.png")), frame->tr("Delete"), frame, SLOT(cmObjectDelete()) );
   cmObjectCopy        = menuObject->addAction( QIcon(QString(":/pic/objectCopy.png")), frame->tr("Copy"), frame, SLOT(cmObjectCopy()) );
   cmObjectPaste       = menuObject->addAction( QIcon(QString(":/pic/objectPaste.png")), frame->tr("Paste"), frame, SLOT(cmObjectPaste()) );
@@ -245,7 +245,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmShowRuleErrors->setChecked( sdEnvir->mShowRuleErrors );
   cmShowRuleErrors->connect( cmShowRuleErrors, &QAction::toggled, frame, &SdWMain::cmShowRuleErrors );
   cmRulesCheck = menuRules->addAction( QIcon(QStringLiteral(":/pic/objRulesCheck.png")), frame->tr("Check all rules"), frame, SLOT(cmRulesCheck()) );
-  cmRulesErrorNext = menuRules->addAction( QIcon(QStringLiteral(":/pic/rulesNextError.png")), frame->tr("Check all rules"), frame, SLOT(cmRulesErrorNext()) );
+  cmRulesErrorNext = menuRules->addAction( QIcon(QStringLiteral(":/pic/rulesNextError.png")), frame->tr("Center next rules error"), frame, SLOT(cmRulesErrorNext()) );
 
 
 

@@ -236,5 +236,6 @@
         <file>pic/helpAbout.png</file>
         <file>pic/helpRegistration.png</file>
         <file>pic/fileCloseAll.png</file>
+        <file>pic/objectParam.png</file>
     </qresource>
 </RCC>

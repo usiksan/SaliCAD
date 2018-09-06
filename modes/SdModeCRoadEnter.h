@@ -59,6 +59,7 @@ class SdModeCRoadEnter : public SdModeCommon
 
     // SdMode interface
   public:
+    virtual void    reset() override;
     virtual void    drawStatic(SdContext *ctx) override;
     virtual void    drawDynamic(SdContext *ctx) override;
     virtual int     getPropBarId() const override;

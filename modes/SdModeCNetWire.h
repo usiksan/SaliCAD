@@ -66,7 +66,7 @@ class SdModeCNetWire : public SdModeCommon
     bool                 testFirstPoint( SdPoint p );
     bool                 testNextPoint( SdPoint p );
     void                 renameNet( const QString sour, const QString dest );
-//    void        SetSourNet( PDBasePic pic );
+    void                 calcFirstSmart();
     void                 calcSecondSmart();
     void                 calcSmartPoint();
     void                 nextNet();

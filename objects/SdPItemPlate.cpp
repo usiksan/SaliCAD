@@ -571,7 +571,7 @@ void SdPItemPlate::readObject(SdObjectMap *map, const QJsonObject obj)
   readRuleMap( obj.value(QStringLiteral("RulesMap")).toObject() );
 
   //Read pcb rules
-  mRulesPcb.read( obj.value(QStringLiteral("Rules")).toObject() );
+  mRulesPcb.read( obj.value(QStringLiteral("PcbRules")).toObject() );
   }
 
 

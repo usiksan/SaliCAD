@@ -94,6 +94,7 @@ QJsonObject SdRuleBlock::write() const
   obj.insert( QStringLiteral("PadPad"), mRules[rulePadPad] );
   obj.insert( QStringLiteral("RoadPad"), mRules[ruleRoadPad] );
   obj.insert( QStringLiteral("RoadRoad"), mRules[ruleRoadRoad] );
+  return obj;
   }
 
 

@@ -165,6 +165,8 @@ void SdModeCNetWire::enterPoint( SdPoint enter )
       setDirty();
       }
     mPrevMove = enter;
+    mMiddle = calcMiddlePoint( mFirst, mPrevMove, sdGlobalProp->mWireEnterType );
+    calcSmartPoint();
     }
   else {
     mFirst = enter;
@@ -199,7 +201,7 @@ void SdModeCNetWire::movePoint( SdPoint p )
     }
   else {
     mPrevMove = p;
-    calcSecondSmart();
+    calcFirstSmart();
     }
   update();
   }
@@ -226,9 +228,10 @@ SdPoint SdModeCNetWire::enterPrev()
     }
   nextNet();
   setDirty();
-  update();
-  calcSecondSmart();
+  calcFirstSmart();
   mFirst = mPrevMove;
+  mMiddle = mFirst;
+  update();
   return mFirst;
   }
 
@@ -373,6 +376,23 @@ void SdModeCNetWire::renameNet(const QString sour, const QString dest)
   {
   getSheet()->netRename( sour, dest, mUndo );
   mNetName = dest;
+  }
+
+
+
+
+
+
+void SdModeCNetWire::calcFirstSmart()
+  {
+  SdSnapInfo snap;
+  snap.mSour     = mPrevMove;
+  snap.mSnapMask = snapNearestNet | snapNearestPin;
+  snap.mExclude  = mPrevMove;
+  snap.mDest     = mPrevMove;
+  snap.calculate( getSheet() );
+  mFirst = snap.mDest;
+  calcSmartPoint();
   }
 
 

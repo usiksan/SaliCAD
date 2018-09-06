@@ -31,6 +31,15 @@ SdModeCRoadEnter::SdModeCRoadEnter(SdWEditorGraph *editor, SdProjectItem *obj) :
   }
 
 
+
+
+void SdModeCRoadEnter::reset()
+  {
+  setDirtyCashe();
+  setStep( sFirstPoint );
+  }
+
+
 void SdModeCRoadEnter::drawStatic(SdContext *ctx)
   {
   plate()->drawTrace( ctx, mProp.mStratum, getStep() ? mProp.mNetName.str() : QString() );
