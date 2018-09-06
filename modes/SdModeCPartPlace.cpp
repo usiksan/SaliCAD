@@ -149,7 +149,7 @@ int SdModeCPartPlace::getPropBarId() const
 
 void SdModeCPartPlace::propGetFromBar()
   {
-  saveStateOfSelectedObjects( QObject::tr("Properties changed") );
+  //saveStateOfSelectedObjects( QObject::tr("Properties changed") );
 
   SdPropBarPartPlace *barPartPlace = dynamic_cast<SdPropBarPartPlace*>(SdWCommand::getModeBar(getPropBarId()));
 
@@ -221,8 +221,12 @@ void SdModeCPartPlace::partSelect(QStringList list)
         });
       }
     }
+
   if( mFragment.count() ) {
-    //Component found. Fix its start position
+    //Component found. Save component state
+    //Save state of selected objects
+    saveStateOfSelectedObjects( QObject::tr("Moving components") );
+    //Fix its start position
     SdPtr<SdGraphPartImp> imp(mFragment.first());
     if( imp ) {
       SdPoint p = mPrevMove;
@@ -251,6 +255,8 @@ void SdModeCPartPlace::enterPoint(SdPoint p)
           mPrevMove = p;
           propSetToBar();
           setStep( psmMove );
+          //Save state of selected objects
+          saveStateOfSelectedObjects( QObject::tr("Moving components") );
           }
         }
       else if( mBySheet ) {
@@ -318,14 +324,18 @@ void SdModeCPartPlace::keyDown(int key, QChar ch)
   switch( key ) {
     case Qt::Key_F2 :
       //Component rotation [Поворот]
-      if( getStep() == psmMove ) {
+      if( mFragment.count() && getStep() == psmMove ) {
+        //Save state of selected objects
+        //saveStateOfSelectedObjects( QObject::tr("Component rotation") );
         mLocalProp.mPartImpProp.mAngle += 90000;
         setPropertiesToComponent();
         }
       break;
     case Qt::Key_F3 :
       //Flip component to other pcb side [Перенос на другую сторону платы]
-      if( getStep() == psmMove ) {
+      if( mFragment.count() && getStep() == psmMove ) {
+        //Save state of selected objects
+        //saveStateOfSelectedObjects( QObject::tr("Component flip") );
         mLocalProp.mPartImpProp.mSide = mLocalProp.mPartImpProp.mSide == stmTop ? stmBottom : stmTop;
         setPropertiesToComponent();
         }
@@ -357,7 +367,7 @@ void SdModeCPartPlace::keyDown(int key, QChar ch)
       //Component group rotation [Поворот как группы компонентов]
       if( mFragment.count() && getStep() == psmMove ) {
         //Save state of selected objects
-        saveStateOfSelectedObjects( QObject::tr("Group rotation") );
+        //saveStateOfSelectedObjects( QObject::tr("Group rotation") );
         //Perform rotation
         mFragment.forEach( dctPartImp, [this] (SdObject *obj) -> bool {
           SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>( obj );
@@ -450,6 +460,8 @@ void SdModeCPartPlace::stopDrag(SdPoint p)
     setDirtyCashe();
     update();
     mFirst = p;
+    //Save state of selected objects
+    saveStateOfSelectedObjects( QObject::tr("Moving components") );
     }
   }
 
@@ -564,7 +576,7 @@ void SdModeCPartPlace::unselect()
 //Set properties to component
 void SdModeCPartPlace::setPropertiesToComponent()
   {
-  saveStateOfSelectedObjects( QObject::tr("Properties changed") );
+  //saveStateOfSelectedObjects( QObject::tr("Properties changed") );
 
   if( mFragment.count() ) setDirty();
 

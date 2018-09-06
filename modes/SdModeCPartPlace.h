@@ -125,6 +125,7 @@ class SdModeCPartPlace : public SdModeCommon
     //Prepare next component to select
     void nextComponent();
 
+    //Return plate for mode
     SdPItemPlate *plate();
 
     void          dirtyRatNet();

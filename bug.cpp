@@ -13,8 +13,6 @@
 
 //TODO D043 Append posibility to delete object from library and also from remote library
 
-//TODO B035 When undo in plate we need to rebuild rat net
-
 //TODO D046 When try to select pin type from default pad association table and no default table offer to enter one
 
 //TODO B036 When duplicate object to edit state it not positioned in project window tree
@@ -22,8 +20,6 @@
 //TODO B038 When undo sheet insert editor not removed
 
 //TODO B040 After smart net insertion no segment utilisation performed
-
-//TODO B041 In active text mode +-* buttons not supported
 
 //TODO D050 Append component rotation by keyboard
 
@@ -41,6 +37,10 @@
 
 //===================================================================================
 //Fixed:
+
+//B041 In active text mode +-* buttons not supported
+
+//B035 When undo in plate we need to rebuild rat net
 
 //B054 When enter road we setup road width, but when enter first point with restored from internal
 //Road width restored from road rules.

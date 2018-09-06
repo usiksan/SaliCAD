@@ -41,6 +41,11 @@ SdModeCTextual::SdModeCTextual(SdWEditorGraph *editor, SdProjectItem *obj) :
 
 void SdModeCTextual::keyDown(int key, QChar ch)
   {
+  if( mPropText == nullptr ) {
+    //If no text to edit use keys by default
+    SdModeCommon::keyDown( key, ch );
+    return;
+    }
   //qDebug() << Q_FUNC_INFO << key;
   switch( key ) {
     case Qt::Key_Shift :
