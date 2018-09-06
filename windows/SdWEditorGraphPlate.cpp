@@ -46,6 +46,17 @@ SdProjectItem *SdWEditorGraphPlate::getProjectItem() const
 
 
 
+void SdWEditorGraphPlate::cmEditUndo()
+  {
+  //Perform default operations
+  SdWEditorGraph::cmEditUndo();
+
+  //Rebuild rat net
+  mPlate->setDirtyRatNet();
+  }
+
+
+
 void SdWEditorGraphPlate::cmModeComponent()
   {
   }

@@ -30,30 +30,33 @@ class SdWEditorGraphPlate : public SdWEditorGraph
     // SdWEditor interface
   public:
     virtual SdProjectItem *getProjectItem() const override;
-    virtual void cmModeComponent() override;
-    virtual void cmNetSetup() override;
-    virtual void cmModeDisconnect() override;
-    virtual void cmModeLink() override;
-    virtual void cmModeMovePart() override;
-    virtual void cmModePlace() override;
-    virtual void cmModeEditWire() override;
-    virtual void cmModeRoadEnter() override;
-    virtual void cmModePolygon() override;
-    virtual void cmModeDeleteWire() override;
-    virtual void cmModePad() override;
-    virtual void onActivateEditor() override;
-    virtual void cmPads() override;
-    virtual void cmModePartSelect( QStringList list ) override;
+
+    virtual void           cmEditUndo() override;
+
+    virtual void           cmModeComponent() override;
+    virtual void           cmNetSetup() override;
+    virtual void           cmModeDisconnect() override;
+    virtual void           cmModeLink() override;
+    virtual void           cmModeMovePart() override;
+    virtual void           cmModePlace() override;
+    virtual void           cmModeEditWire() override;
+    virtual void           cmModeRoadEnter() override;
+    virtual void           cmModePolygon() override;
+    virtual void           cmModeDeleteWire() override;
+    virtual void           cmModePad() override;
+    virtual void           onActivateEditor() override;
+    virtual void           cmPads() override;
+    virtual void           cmModePartSelect( QStringList list ) override;
 
     //Pcb rules
-    virtual void cmRulesEdit() override;
-    virtual void cmRulesCheck() override;
-    virtual void cmRulesErrorNext() override;
+    virtual void           cmRulesEdit() override;
+    virtual void           cmRulesCheck() override;
+    virtual void           cmRulesErrorNext() override;
 
     //Sheet and pcb
-    virtual void cmRenumeration() override;
+    virtual void           cmRenumeration() override;
 
-    virtual void cmFileExport() override;
+    virtual void           cmFileExport() override;
   };
 
 
