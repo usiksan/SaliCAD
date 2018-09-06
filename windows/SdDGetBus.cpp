@@ -29,6 +29,15 @@ SdDGetBus::SdDGetBus(QWidget *parent) :
 
   //Fill previous net list
   ui->mBusList->addItems( previousBusList );
+
+  //On selection bus line
+  connect( ui->mBusList, &QListWidget::currentItemChanged, this, [this] () {
+    ui->mBusEdit->setText( ui->mBusList->currentItem()->text() );
+    } );
+
+  //Setup default bus line - previous bus line
+  if( previousBusList.count() )
+    ui->mBusEdit->setText( previousBusList.first() );
   }
 
 SdDGetBus::~SdDGetBus()

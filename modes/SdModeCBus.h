@@ -21,12 +21,8 @@ Description
 class SdModeCBus : public SdModeCommon
   {
     static SdPointList mPattern; //Bus wire pattern
-    static SdPoint     mNamePos;
-    //static DTextProp namProp;   //Вид имени цепи
+    static SdPoint     mNamePos; //Net name properties
 
-    //DLineProp     prop;      //Свойства цепей
-    //DName         name;      //Очередное имя цепи
-    //int           enterType; //Тип ввода цепей
     SdPoint       mPrevMove;     //Previous cursor position point
     SdPoint       mSmartOrigin;  //Smart point when pattern enter
     int           mPrevDirection;

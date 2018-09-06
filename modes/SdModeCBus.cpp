@@ -28,7 +28,9 @@ SdPointList SdModeCBus::mPattern; //Bus wire pattern
 SdPoint     SdModeCBus::mNamePos;
 
 SdModeCBus::SdModeCBus(SdWEditorGraph *editor, SdProjectItem *obj) :
-  SdModeCommon( editor, obj )
+  SdModeCommon( editor, obj ),
+  mPrevDirection(0),
+  mIndex(0)
   {
 
   }
@@ -44,14 +46,14 @@ void SdModeCBus::drawDynamic(SdContext *ctx)
     case sFirstPoint :
       //Using previous pattern
       //Использование предыдущего шаблона
-      if( mPattern.count() == 0 ) break;
+      if( mPattern.count() == 0 || mNetList.count() == 0 ) break;
       //break absent specialy
     case sNamePlace : {
       //Enter wire name placement
       //Поиск расположения имени цепи
       drawPattern( ctx );
       SdRect r;
-      ctx->text( mPrev, r, mNetList.at(mIndex), sdGlobalProp->mWireNameProp );
+      ctx->text( mNamePos, r, mNetList.at(mIndex), sdGlobalProp->mWireNameProp );
       }
       break;
     case sNextPoint :
@@ -111,7 +113,7 @@ void SdModeCBus::propSetToBar()
       tbar->setPropText( &(sdGlobalProp->mWireNameProp), mEditor->getPPM() );
       }
     }
-  else {
+  else if( mNetList.count() && mIndex < mNetList.count() ) {
     SdPropBarWire *bar = dynamic_cast<SdPropBarWire*>( SdWCommand::mbarTable[PB_WIRE] );
     if( bar )
       bar->setPropWire( &(sdGlobalProp->mWireProp), mEditor->getPPM(), sdGlobalProp->mWireEnterType, mNetList.at(mIndex) );
@@ -221,7 +223,7 @@ void SdModeCBus::movePoint( SdPoint p )
           info.mSour    = info.mDest;
           info.reset(false);
           }
-        while( mSmartTable.count() <= mNetList.count() - mIndex );
+        while( mSmartTable.count() < mNetList.count() - mIndex );
         }
       break;
     case sNamePlace :
@@ -237,6 +239,7 @@ void SdModeCBus::movePoint( SdPoint p )
       if( info.mDest != info.mSour ) moveAll( info.mDest );
       }
     }
+  update();
   }
 
 
@@ -252,6 +255,7 @@ SdPoint SdModeCBus::enterPrev()
           moveAll( t );
           enterNet();
           getNextNet();
+          if( mIndex >= mNetList.count() ) break;
           }
         setStep( sLast );
         update();
@@ -346,6 +350,7 @@ void SdModeCBus::activate()
 
 bool SdModeCBus::getNextNet()
   {
+  mIndex++;
   if( mIndex < mNetList.count() ) {
     //setup mode step properties bar
     SdWCommand::setModeBar( getPropBarId() );
@@ -361,7 +366,8 @@ bool SdModeCBus::getNextNet()
 
 void SdModeCBus::smartDraw(SdContext *ctx)
   {
-  ctx->region( mSmartTable, false );
+  for( SdPoint p : mSmartTable )
+    ctx->smartPoint( p, snapNextPin );
   }
 
 
@@ -440,7 +446,7 @@ bool SdModeCBus::getNetList()
   mPrevDirection = -1;
   SdDGetBus dbus(mEditor);
   if( dbus.exec() ) {
-    mIndex = 0;
+    mIndex = -1;
     mNetList = dbus.busList();
     getNextNet();
     setStep( sFirstPoint );
