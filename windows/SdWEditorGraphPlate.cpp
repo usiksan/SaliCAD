@@ -16,6 +16,7 @@ Description
 #include "SdDPads.h"
 #include "SdPMasterList.h"
 #include "SdPExportPlate_Gerber.h"
+#include "SdDRuleEditor.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
 #include "modes/SdModeCRoadEnter.h"
@@ -179,6 +180,22 @@ void SdWEditorGraphPlate::cmModePartSelect(QStringList list)
   {
   if( modeGet() )
     modeGet()->partSelect( list );
+  }
+
+
+
+//Show dialog with rule editor
+void SdWEditorGraphPlate::cmRulesEdit()
+  {
+  SdDRuleEditor edit( mPlate, this );
+  if( edit.exec() ) {
+    //Reset current mode to reread rules
+    if( modeGet() )
+      modeGet()->reset();
+    dirtyCashe();
+    dirtyProject();
+    update();
+    }
   }
 
 

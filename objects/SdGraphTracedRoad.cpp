@@ -394,9 +394,9 @@ void SdGraphTracedRoad::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId
     double halfWidth = mProp.mWidth.getValue() / 2;
     //In accordings target compares we correct width of over polygon
     if( toWhich == ruleRoadPad || toWhich == rulePadPad )
-      halfWidth += blk.mRules[ruleRoadPad] + blk.mRules[ruleRoadWidth] / 2;
+      halfWidth += qMax( getPlate()->ruleForNet(mProp.mNetName.str(),ruleRoadPad), blk.mRules[ruleRoadPad]) + blk.mRules[ruleRoadWidth] / 2;
     else if( toWhich == ruleRoadRoad )
-      halfWidth += blk.mRules[ruleRoadRoad] + blk.mRules[ruleRoadWidth] / 2;
+      halfWidth += qMax( getPlate()->ruleForNet(mProp.mNetName.str(),ruleRoadRoad),blk.mRules[ruleRoadRoad]) + blk.mRules[ruleRoadWidth] / 2;
     double d = halfWidth * 0.414213562;
     QPolygonF pgn;
     pgn << QPointF( -halfWidth,       -d )         //0

@@ -162,15 +162,15 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
           mBarLast = mFirst;
           mStack = mViaProp.mStratum;
           mProp.mStratum = mStack.stratumNext(mProp.mStratum);
-          plate()->ruleBlockForNet( mProp.mStratum.getValue(), mProp.mNetName.str(), mRule );
-          mProp.mWidth   = mRule.mRules[ruleRoadWidth];
+          //plate()->ruleBlockForNet( mProp.mStratum.getValue(), mProp.mNetName.str(), mRule );
+          //mProp.mWidth   = mRule.mRules[ruleRoadWidth];
           }
         }
       else {
         //Start point is on through pin. Therefore we simple change stratum
         qDebug() << "Stratum change without via";
         mProp.mStratum = st;
-        plate()->ruleBlockForNet( mProp.mStratum.getValue(), mProp.mNetName.str(), mRule );
+        plate()->ruleBlockForNet( mProp.mNetName.str(), mRule );
         mProp.mWidth   = mRule.mRules[ruleRoadWidth];
         }
       //Update rules
@@ -220,7 +220,7 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
       mStack = destStratum;
       mProp.mNetName = netName;
       mProp.mStratum = mStack.stratumFirst(mProp.mStratum);
-      plate()->ruleBlockForNet( mProp.mStratum.getValue(), mProp.mNetName.str(), mRule );
+      plate()->ruleBlockForNet( mProp.mNetName.str(), mRule );
       mProp.mWidth   = mRule.mRules[ruleRoadWidth];
       propSetToBar();
       setStep(sNextPoint);
@@ -469,9 +469,16 @@ void SdModeCRoadEnter::rebuildBarriers()
   {
   //Accum barriers for current segment
   mRoads.clear();
+  //Update width in rule block to current from prop
+  mRule.mRules[ruleRoadWidth] = mProp.mWidth.getValue();
   plate()->accumBarriers( dctTraced, mRoads, mProp.mStratum, ruleRoadRoad, mRule );
+
   //Accum barriers for via
   mPads.clear();
+  //Update width in rule block to current from prop
+  int r = plate()->getPadOverRadius( mViaProp.mPadType.str() );
+  if( r > 0 )
+    mRule.mRules[ruleRoadWidth] = r;
   plate()->accumBarriers( dctTraced, mPads, mViaProp.mStratum, rulePadPad, mRule );
   }
 

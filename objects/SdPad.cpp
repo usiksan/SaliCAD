@@ -188,6 +188,22 @@ void SdPad::appendWindow(SdPolyWindowList &dest, SdPoint p, int gap, const QTran
 
 
 
+//Return over pad circle radius
+int SdPad::overCircleRadius() const
+  {
+  if( mIsCircle )
+    return ((mDiametrWidth >> 1) + qMax(abs(mCenterX),abs(mCenterY)));
+  //Calculate over circle for rectangle
+  double w = mDiametrWidth >> 1;
+  double h = mHeight >> 1;
+  int r = static_cast<int>( sqrt( w*w + h*h ) );
+  return r + qMax(abs(mCenterX),abs(mCenterY));
+  }
+
+
+
+
+
 //Create textual pad description
 QString SdPad::description() const
   {

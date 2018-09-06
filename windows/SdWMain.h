@@ -193,6 +193,7 @@ class SdWMain : public QMainWindow
     void cmModeDeleteWire();
     void cmModePad();
 
+    void cmRulesEdit();
     void cmRulesCheck();
     void cmRulesErrorNext();
 

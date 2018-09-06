@@ -29,8 +29,7 @@ Description
 
 #include "SdRuleBlock.h"
 
-SdRuleBlock::SdRuleBlock() :
-  mTopBlock(0)
+SdRuleBlock::SdRuleBlock()
   {
   clear();
   }
@@ -48,11 +47,11 @@ void SdRuleBlock::setAllRule(int val)
 
 
 //Set rule block to value
-void SdRuleBlock::setRuleBlock(int val, SdRuleId first, SdRuleId last)
-  {
-  for( int i = first; i <= last; i++ )
-    mRules[i] = val;
-  }
+//void SdRuleBlock::setRuleBlock(int val, SdRuleId first, SdRuleId last)
+//  {
+//  for( int i = first; i <= last; i++ )
+//    mRules[i] = val;
+//  }
 
 
 
@@ -65,11 +64,56 @@ void SdRuleBlock::clear()
 
 
 
+
+//Retrive individual rule
+int SdRuleBlock::rule(int ruleId, const SdRuleBlock &parent) const
+  {
+  Q_ASSERT( ruleId >= 0 && ruleId < ruleLast );
+  if( mRules[ruleId] >= 0 )
+    return mRules[ruleId];
+  return parent.mRules[ruleId];
+  }
+
+
+
+
+//Get actual rule block
+void SdRuleBlock::getRuleBlock(SdRuleBlock &dest, const SdRuleBlock &parent) const
+  {
+  for( int i = 0; i < ruleLast; i++ )
+    dest.mRules[i] = mRules[i] >= 0 ? mRules[i] : parent.mRules[i];
+  }
+
+
+
+
+QJsonObject SdRuleBlock::write() const
+  {
+  QJsonObject obj;
+  obj.insert( QStringLiteral("Width"), mRules[ruleRoadWidth] );
+  obj.insert( QStringLiteral("PadPad"), mRules[rulePadPad] );
+  obj.insert( QStringLiteral("RoadPad"), mRules[ruleRoadPad] );
+  obj.insert( QStringLiteral("RoadRoad"), mRules[ruleRoadRoad] );
+  }
+
+
+
+
+void SdRuleBlock::read(const QJsonObject &obj)
+  {
+  mRules[ruleRoadWidth] = obj.value( QStringLiteral("Width") ).toInt();
+  mRules[rulePadPad] = obj.value( QStringLiteral("PadPad") ).toInt();
+  mRules[ruleRoadPad] = obj.value( QStringLiteral("RoadPad") ).toInt();
+  mRules[ruleRoadRoad] = obj.value( QStringLiteral("RoadRoad") ).toInt();
+  }
+
+
+
 QDataStream &operator >>(QDataStream &is, SdRuleBlock &blk)
   {
   for( int i = 0; i < ruleLast; i++ )
     is >> blk.mRules[i];
-  is >> blk.mTopBlock;
+  //is >> blk.mTopBlock;
   return is;
   }
 
@@ -79,6 +123,6 @@ QDataStream &operator <<(QDataStream &os, const SdRuleBlock &blk)
   {
   for( int i = 0; i < ruleLast; i++ )
     os << blk.mRules[i];
-  os << blk.mTopBlock;
+  //os << blk.mTopBlock;
   return os;
   }

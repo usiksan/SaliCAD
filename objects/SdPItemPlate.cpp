@@ -31,18 +31,8 @@ SdPItemPlate::SdPItemPlate() :
   mStratumCount(2),
   mRatNetDirty(true)
   {
-  SdRuleBlock rules;
   //Default pcb rules
-  mRules.append( sdEnvir->mDefaultRules );
-  mRulesMap.insert( RULE_BLOCK_PCB, RULE_BLOCK_PCB_ID );
-  //Default layers rules
-  for( int i = 0; i < 30; i++ ) {
-    mRules.append( rules );
-    mRulesMap.insert( RULE_BLOCK_LAYER(i), RULE_BLOCK_LAYER_ID + i );
-    }
-  //Default net rules
-  mRules.append( rules );
-  mRulesMap.insert( RULE_BLOCK_DEF, RULE_BLOCK_DEF_ID );
+  mRulesPcb = sdEnvir->mDefaultRules;
   }
 
 
@@ -121,6 +111,17 @@ QPolygonF SdPItemPlate::getPadPolygon(SdPoint p, const QString pinType, int addo
   if( mPadAssociation.contains(pinType) )
     return mPadAssociation.pin( pinType ).polygon(p, addon);
   return SdPad().polygon(p, addon);
+  }
+
+
+
+
+//Return over pad circle radius
+int SdPItemPlate::getPadOverRadius(const QString pinType) const
+  {
+  if( mPadAssociation.contains(pinType) )
+    return mPadAssociation.pin( pinType ).overCircleRadius();
+  return -1;
   }
 
 
@@ -251,52 +252,31 @@ void SdPItemPlate::drawTrace(SdContext *ctx, SdStratum curStratum, QString curre
 
 
 
-int SdPItemPlate::ruleForNet(int stratum, const QString netName, SdRuleId ruleId )
+
+//Set new rules
+void SdPItemPlate::ruleSet(const SdRuleBlock &pcb, const SdRuleBlockMap &map, SdUndo *undo )
   {
-  int stratumIndex = SdStratum::stratumIndex(stratum);
-  int id;
-  if( netName.isEmpty() )
-    id = RULE_BLOCK_LAYER_ID + stratumIndex;
-  else {
-    //Test for net on stratum
-    QString netNameWithStratum = RULE_BLOCK_NET( stratumIndex, netName );
-    id = mRulesMap.value( netNameWithStratum, -1 );
-    if( id < 0 ) {
-      //Test for net only
-      id = mRulesMap.value( netName, -1 );
-      //Failed key in rules map
-      if( id < 0 )
-        //Append default net id
-        mRulesMap.insert( netName, id = RULE_BLOCK_DEF_ID );
-      //Append stratum variant
-      mRulesMap.insert( netNameWithStratum, id );
-      }
-    }
-  return ruleFromId( stratumIndex, id, ruleId );
+  //TODO D057 Append undo rules
+  mRulesPcb = pcb;
+  mRulesMap = map;
+  }
+
+
+
+
+
+int SdPItemPlate::ruleForNet(const QString netName, SdRuleId ruleId ) const
+  {
+  return mRulesMap.value( netName, mRulesPcb ).rule( ruleId, mRulesPcb );
   }
 
 
 
 
 //Build rules block for given net
-void SdPItemPlate::ruleBlockForNet(int stratum, const QString netName, SdRuleBlock &blockDest)
+void SdPItemPlate::ruleBlockForNet( const QString netName, SdRuleBlock &blockDest)
   {
-  int stratumIndex = SdStratum::stratumIndex(stratum);
-  //Test for net on stratum
-  QString netNameWithStratum = RULE_BLOCK_NET( stratumIndex, netName );
-  int id = mRulesMap.value( netNameWithStratum, -1 );
-  if( id < 0 ) {
-    //Test for net only
-    id = mRulesMap.value( netName, -1 );
-    //Failed key in rules map
-    if( id < 0 )
-      //Append default net id
-      mRulesMap.insert( netName, id = RULE_BLOCK_DEF_ID );
-    //Append stratum variant
-    mRulesMap.insert( netNameWithStratum, id );
-    }
-  for( int i = 0; i < ruleLast; i++ )
-    blockDest.mRules[i] = ruleFromId( stratumIndex, id, i );
+  mRulesMap.value( netName, mRulesPcb ).getRuleBlock( blockDest, mRulesPcb );
   }
 
 
@@ -306,7 +286,12 @@ void SdPItemPlate::ruleBlockForNet(int stratum, const QString netName, SdRuleBlo
 
 
 
-
+//Scan all trace objects and build barriers list
+// mask - scaning objects mask
+// dest - barrier list to which will accum new barriers
+// stratum - stratum list on which will be barriers
+// toWhich - destignation object type to which barriers will be builded
+// rule    - source object rules
 void SdPItemPlate::accumBarriers(quint64 mask, SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &rule)
   {
   forEach( mask, [&] (SdObject *obj) -> bool {
@@ -396,27 +381,13 @@ QJsonObject SdPItemPlate::writeRuleMap() const
   {
   QJsonObject obj;
   for( auto iter = mRulesMap.cbegin(); iter != mRulesMap.cend(); iter++ )
-    obj.insert( iter.key(), iter.value() );
+    obj.insert( iter.key(), iter.value().write() );
   return obj;
   }
 
 
 
 
-QJsonArray SdPItemPlate::writeRuleTable() const
-  {
-  QJsonArray ar;
-  for( const SdRuleBlock &blk : mRules ) {
-    QJsonObject obj;
-    obj.insert( QStringLiteral("Width"), blk.mRules[ruleRoadWidth] );
-    obj.insert( QStringLiteral("PadPad"), blk.mRules[rulePadPad] );
-    obj.insert( QStringLiteral("RoadPad"), blk.mRules[ruleRoadPad] );
-    obj.insert( QStringLiteral("RoadRoad"), blk.mRules[ruleRoadRoad] );
-    obj.insert( QStringLiteral("Top"), blk.mTopBlock );
-    ar.append( obj );
-    }
-  return ar;
-  }
 
 
 
@@ -425,27 +396,15 @@ QJsonArray SdPItemPlate::writeRuleTable() const
 void SdPItemPlate::readRuleMap(const QJsonObject obj)
   {
   mRulesMap.clear();
-  for( auto iter = obj.constBegin(); iter != obj.constEnd(); iter++ )
-    mRulesMap.insert( iter.key(), iter.value().toInt() );
-  }
-
-
-
-
-void SdPItemPlate::readRuleTable(const QJsonArray ar)
-  {
-  mRules.clear();
-  SdRuleBlock blk;
-  for( auto iter = ar.constBegin(); iter != ar.constEnd(); iter++ ) {
-    QJsonObject obj = iter->toObject();
-    blk.mRules[ruleRoadWidth] = obj.value( QStringLiteral("Width") ).toInt();
-    blk.mRules[rulePadPad] = obj.value( QStringLiteral("PadPad") ).toInt();
-    blk.mRules[ruleRoadPad] = obj.value( QStringLiteral("RoadPad") ).toInt();
-    blk.mRules[ruleRoadRoad] = obj.value( QStringLiteral("RoadRoad") ).toInt();
-    blk.mTopBlock = obj.value( QStringLiteral("Top") ).toInt();
-    mRules.append( blk );
+  for( auto iter = obj.constBegin(); iter != obj.constEnd(); iter++ ) {
+    SdRuleBlock block;
+    block.read( iter.value().toObject() );
+    mRulesMap.insert( iter.key(), block );
     }
   }
+
+
+
 
 
 
@@ -548,25 +507,6 @@ quint64 SdPItemPlate::getAcceptedObjectsMask() const
 
 
 
-//Retrive rule starting with blockId
-int SdPItemPlate::ruleFromId(int stratumIndex, int blockId, int ruleId )
-  {
-  //Retrive rule with starting block
-  int val = mRules.at(blockId).mRules[ruleId];
-  //Test, if rule default and blockId not top, then
-  // switch to top block and repeate retrive rule
-  while( val < 0 && blockId != 0 ) {
-    //Get top block id
-    int top = mRules.at(blockId).mTopBlock;
-    //For layer block use stratumIndex to get blockId, for other block - use block
-    if( top == RULE_BLOCK_LAYER_ID ) blockId = RULE_BLOCK_LAYER_ID + stratumIndex;
-    else blockId = top;
-    //Retrive rule from new block
-    val = mRules.at(blockId).mRules[ruleId];
-    }
-  return val;
-  }
-
 
 
 
@@ -611,8 +551,8 @@ void SdPItemPlate::writeObject(QJsonObject &obj) const
   //Write rules map
   obj.insert( QStringLiteral("RulesMap"), writeRuleMap() );
 
-  //Write rules array
-  obj.insert( QStringLiteral("Rules"), writeRuleTable() );
+  //Write pcb rules
+  obj.insert( QStringLiteral("PcbRules"), mRulesPcb.write() );
   }
 
 
@@ -630,8 +570,8 @@ void SdPItemPlate::readObject(SdObjectMap *map, const QJsonObject obj)
   //Read rules map
   readRuleMap( obj.value(QStringLiteral("RulesMap")).toObject() );
 
-  //Read rules table
-  readRuleTable( obj.value(QStringLiteral("Rules")).toArray() );
+  //Read pcb rules
+  mRulesPcb.read( obj.value(QStringLiteral("Rules")).toObject() );
   }
 
 

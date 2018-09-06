@@ -54,6 +54,9 @@ class SdPad
     //Append pad as window
     void        appendWindow( SdPolyWindowList &dest, SdPoint p, int gap, const QTransform &t) const;
 
+    //Return over pad circle radius
+    int         overCircleRadius() const;
+
     //Create textual pad description
     QString     description() const;
 

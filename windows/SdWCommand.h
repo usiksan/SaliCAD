@@ -149,6 +149,7 @@ class SdWCommand
     static QActionPtr  cmRenumeration;
     static QActionPtr  cmShowField;
 
+    static QActionPtr  cmRulesEdit;
     static QActionPtr  cmRulesCheck;
     static QActionPtr  cmRulesErrorNext;
 

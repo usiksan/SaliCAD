@@ -120,7 +120,7 @@ void SdPartImpPin::accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int s
     if( ruleId >= ruleLast )
       clearance = 0;
     else
-      clearance = qMax( clearance, plate->ruleForNet( stratum, getNetName(), ruleId ) );
+      clearance = qMax( clearance, plate->ruleForNet( getNetName(), ruleId ) );
     SdBarrier bar;
     bar.mNetName = getNetName();
     bar.mPolygon = t.map( plate->getPadPolygon( mPin->getPinOrigin(), mPin->getPinType(), clearance + halfWidth) );

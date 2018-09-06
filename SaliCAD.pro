@@ -231,7 +231,8 @@ SOURCES += \
     windows/SdPropBarDefault.cpp \
     objects/SdPropVia.cpp \
     objects/SdUndoRecordVia.cpp \
-    modes/SdModeCLinearCircleFilled.cpp
+    modes/SdModeCLinearCircleFilled.cpp \
+    windows/SdDRuleEditor.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -459,7 +460,8 @@ HEADERS  += \
     windows/SdPropBarDefault.h \
     objects/SdPropVia.h \
     objects/SdUndoRecordVia.h \
-    modes/SdModeCLinearCircleFilled.h
+    modes/SdModeCLinearCircleFilled.h \
+    windows/SdDRuleEditor.h
 
 DISTFILES += \
     license.txt
@@ -485,4 +487,5 @@ FORMS += \
     master/SdDMasterPartDoubleRect.ui \
     master/SdDMasterPartDoubleSide.ui \
     master/SdDMasterSymbolConnector.ui \
-    windows/SdDRowValue.ui
+    windows/SdDRowValue.ui \
+    windows/SdDRuleEditor.ui

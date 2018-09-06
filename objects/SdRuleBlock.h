@@ -30,7 +30,8 @@ Description
 #define SDRULEBLOCK_H
 
 #include <QList>
-#include <QDataStream>
+#include <QMap>
+#include <QJsonObject>
 
 //Available rules
 //When change rules list You need change also
@@ -39,28 +40,18 @@ Description
 //   QJsonArray             writeRuleTable() const;
 //   void                   readRuleTable( const QJsonArray ar);
 // in SdEnvir - default list
-enum SdRuleId {
-  ruleRoadWidth,
-  rulePadPad,
-  ruleRoadPad,
-  ruleRoadRoad,
-  ruleLast
-  };
+#define ruleRoadWidth  0x0 //Road width
+#define rulePadPad     0x1 //Gap between pads
+#define ruleRoadRoad   0x2 //Gap between roads
+#define ruleRoadPad    0x3 //Gap between pad and road
+//#define ruleViaDiam    0x4 //Via
+#define ruleLast       4
 
-#define RULE_BLOCK_PCB_ID     0
-#define RULE_BLOCK_LAYER_ID   1
-#define RULE_BLOCK_DEF_ID    31
-
-#define RULE_BLOCK_PCB                   QStringLiteral("#@pcb")
-#define RULE_BLOCK_LAYER(stratumIndex)   QStringLiteral("#@layer%1").arg(stratumIndex)
-#define RULE_BLOCK_DEF                   QStringLiteral("#$def&")
-#define RULE_BLOCK_NET(stratumIndex,net) (net + QString("#$stidx%1").arg(stratumIndex))
-
+typedef int SdRuleId;
 
 struct SdRuleBlock
   {
     qint32 mRules[ruleLast];
-    qint32 mTopBlock;
 
     SdRuleBlock();
 
@@ -68,16 +59,27 @@ struct SdRuleBlock
     void setAllRule( int val );
 
     //Set rule block to value
-    void setRuleBlock( int val, SdRuleId first = ruleRoadWidth, SdRuleId last = ruleRoadRoad );
+    //void setRuleBlock( int val, SdRuleId first = ruleRoadWidth, SdRuleId last = ruleRoadRoad );
 
     //Set all rules to -1, i.e. inherited
     void clear();
 
+    //Retrive individual rule
+    int  rule( int ruleId, const SdRuleBlock &parent ) const;
+
+    //Get actual rule block
+    void getRuleBlock( SdRuleBlock &dest, const SdRuleBlock &parent ) const;
+
+    //Write-read block
+    QJsonObject write() const;
+    void        read( const QJsonObject &obj );
   };
 
 QDataStream &operator >> ( QDataStream &is, SdRuleBlock &blk );
 QDataStream &operator << ( QDataStream &os, const SdRuleBlock &blk );
 
 typedef QList<SdRuleBlock> SdRuleBlockList;
+
+typedef QMap<QString,SdRuleBlock> SdRuleBlockMap;
 
 #endif // SDRULEBLOCK_H

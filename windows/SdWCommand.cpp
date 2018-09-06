@@ -54,7 +54,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   menuFilePrevious = menuFile->addMenu( frame->tr("Previous files") );
   menuFile->addSeparator();
   cmFileClose = menuFile->addAction( QIcon(QString(":/pic/closeFile.png")), frame->tr("Close project"), frame, SLOT(cmFileClose()) );
-  cmFileCloseAll = menuFile->addAction( frame->tr("Close all projects"), frame, SLOT(cmFileCloseAll()) );
+  cmFileCloseAll = menuFile->addAction( QIcon(QString(":/pic/fileCloseAll.png")), frame->tr("Close all projects"), frame, SLOT(cmFileCloseAll()) );
   menuFile->addSeparator();
   cmFileSave = menuFile->addAction( QIcon(QString(":/pic/save.png")),frame->tr("Save project"), frame, SLOT(cmFileSave()) );
   cmFileSaveAs = menuFile->addAction( QIcon(QString(":/pic/save_as.png")), frame->tr("Save project as..."), frame, SLOT(cmFileSaveAs()) );
@@ -95,7 +95,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmObjectSort        = menuObject->addAction( QIcon(QString(":/pic/objectSort.png")), frame->tr("Sort"), frame, SLOT(cmObjectSort()) );
   cmObjectEditEnable  = menuObject->addAction( QIcon(QString(":/pic/objectEditEnable.png")), frame->tr("Enable edit"), frame, SLOT(cmObjectEditEnable()) );
   cmObjectEditDisable = menuObject->addAction( QIcon(QString(":/pic/objectEditDisable.png")), frame->tr("Finish edit"), frame, SLOT(cmObjectEditDisable()) );
-  cmProjectParam      = menuObject->addAction( QIcon(QString(":/pic/objectCategory.png")), frame->tr("Edit project param..."), frame, SLOT(cmProjectParam()) );
+  cmProjectParam      = menuObject->addAction( QIcon(QString(":/pic/editProjectParam.png")), frame->tr("Edit project param..."), frame, SLOT(cmProjectParam()) );
 
 
 
@@ -239,27 +239,28 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
   menuRules = new QMenu( frame->tr("Rules") );
+  cmRulesEdit = menuRules->addAction( QIcon(QStringLiteral(":/pic/rules.png")), frame->tr("Edit rules dialog"), frame, SLOT(cmRulesEdit()) );
   cmShowRuleErrors = menuRules->addAction( QIcon(QStringLiteral(":/pic/objShowRuleErrors.png")), frame->tr("Show rule errors") );
   cmShowRuleErrors->setCheckable(true);
   cmShowRuleErrors->setChecked( sdEnvir->mShowRuleErrors );
   cmShowRuleErrors->connect( cmShowRuleErrors, &QAction::toggled, frame, &SdWMain::cmShowRuleErrors );
   cmRulesCheck = menuRules->addAction( QIcon(QStringLiteral(":/pic/objRulesCheck.png")), frame->tr("Check all rules"), frame, SLOT(cmRulesCheck()) );
-  cmRulesErrorNext = menuRules->addAction( QIcon(QStringLiteral(":/pic/objRulesCheck.png")), frame->tr("Check all rules"), frame, SLOT(cmRulesErrorNext()) );
+  cmRulesErrorNext = menuRules->addAction( QIcon(QStringLiteral(":/pic/rulesNextError.png")), frame->tr("Check all rules"), frame, SLOT(cmRulesErrorNext()) );
 
 
 
   menuInstruments = new QMenu( frame->tr("Instruments") );
-  cmOption = menuInstruments->addAction( frame->tr("Options"), frame, SLOT(cmOption()) );
+  cmOption = menuInstruments->addAction( QIcon(QString(":/pic/instrumOptions.png")), frame->tr("Options"), frame, SLOT(cmOption()) );
   menuInstruments->addSeparator();
-  cmTools  = menuInstruments->addAction( frame->tr("Tools"), frame, SLOT(cmTools()) );
+  cmTools  = menuInstruments->addAction( QIcon(QString(":/pic/instrumTools.png")), frame->tr("Tools"), frame, SLOT(cmTools()) );
 
 
 
   menuHelp = new QMenu( frame->tr("Help") );
   cmHelpContens      = menuHelp->addAction( QIcon(QString(":/pic/help.png")), frame->tr("Contens"), frame, SLOT(cmHelpContens()) );
   cmHelpIndex        = menuHelp->addAction( QIcon(QString(":/pic/helpContext.png")), frame->tr("Index"), frame, SLOT(cmHelpIndex()) );
-  cmHelpAbout        = menuHelp->addAction( QIcon(QString(":/pic/about.png")), frame->tr("About"), frame, SLOT(cmHelpAbout()) );
-  cmHelpRegistration = menuHelp->addAction( QIcon(QString(":/pic/about.png")), frame->tr("Registration"), frame, SLOT(cmHelpRegistration()) );
+  cmHelpAbout        = menuHelp->addAction( QIcon(QString(":/pic/helpAbout.png")), frame->tr("About"), frame, SLOT(cmHelpAbout()) );
+  cmHelpRegistration = menuHelp->addAction( QIcon(QString(":/pic/helpRegistration.png")), frame->tr("Registration"), frame, SLOT(cmHelpRegistration()) );
 
 
   menuSelect = new QMenu( frame->tr("Select") );
@@ -518,6 +519,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   addDrawCommands( barPcb );
   barPcb->insertAction( nullptr, cmShowRatNet );
   barPcb->insertAction( nullptr, cmShowRuleErrors );
+  barPcb->insertAction( nullptr, cmRulesEdit );
   barPcb->insertAction( nullptr, cmRulesCheck );
   barPcb->insertAction( nullptr, cmPads );
   barPcb->insertAction( nullptr, cmModeTable[MD_MOVE_PART] );
@@ -734,6 +736,7 @@ QActionPtr SdWCommand::cmShowRuleErrors;
 QActionPtr SdWCommand::cmRenumeration;
 QActionPtr SdWCommand::cmShowField;
 
+QActionPtr SdWCommand::cmRulesEdit;
 QActionPtr SdWCommand::cmRulesCheck;
 QActionPtr SdWCommand::cmRulesErrorNext;
 

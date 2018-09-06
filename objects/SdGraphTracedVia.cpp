@@ -282,18 +282,22 @@ void SdGraphTracedVia::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId 
     //halfWidth needed to trace road as line with null width because absent intersection
     //allow trace road
     int clearance, halfWidth;
-    if( toWhich == ruleRoadWidth )
-      clearance = halfWidth = 0;
-    else {
-      if( toWhich == ruleRoadRoad ) toWhich = ruleRoadPad;
-      clearance = blk.mRules[toWhich];
-      halfWidth = blk.mRules[ruleRoadWidth] / 2;
+    switch( toWhich ) {
+      default:
+      case ruleRoadWidth :
+        //Only pure pad without any clearance
+        clearance = halfWidth = 0;
+        break;
+      case rulePadPad :
+        clearance = qMax( plate->ruleForNet(mProp.mNetName.str(),rulePadPad), blk.mRules[rulePadPad] );
+        halfWidth = blk.mRules[ruleRoadWidth] / 2;
+        break;
+      case ruleRoadPad :
+      case ruleRoadRoad :
+        clearance = qMax( plate->ruleForNet(mProp.mNetName.str(),ruleRoadPad), blk.mRules[ruleRoadPad] );
+        halfWidth = blk.mRules[ruleRoadWidth] / 2;
+        break;
       }
-
-    if( toWhich >= ruleLast )
-      clearance = 0;
-    else
-      clearance = qMax( clearance, plate->ruleForNet( stratum, mProp.mNetName.str(), toWhich ) );
     SdBarrier bar;
     bar.mNetName = mProp.mNetName.str();
     bar.mPolygon = plate->getPadPolygon( mPosition, mProp.mPadType.str(), clearance + halfWidth );

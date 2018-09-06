@@ -1438,6 +1438,15 @@ void SdWMain::cmModePad()
 
 
 
+void SdWMain::cmRulesEdit()
+  {
+  if( activeEditor() )
+    activeEditor()->cmRulesEdit();
+  }
+
+
+
+
 void SdWMain::cmRulesCheck()
   {
   if( activeEditor() )

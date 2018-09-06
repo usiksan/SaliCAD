@@ -228,5 +228,13 @@
         <file>pic/iconDisableComp.png</file>
         <file>pic/iconDisablePic.png</file>
         <file>pic/iconDisableWire.png</file>
+        <file>pic/instrumOptions.png</file>
+        <file>pic/instrumTools.png</file>
+        <file>pic/rules.png</file>
+        <file>pic/editProjectParam.png</file>
+        <file>pic/rulesNextError.png</file>
+        <file>pic/helpAbout.png</file>
+        <file>pic/helpRegistration.png</file>
+        <file>pic/fileCloseAll.png</file>
     </qresource>
 </RCC>

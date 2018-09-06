@@ -38,16 +38,13 @@ class SdPItemPlate : public SdProjectItem
   {
     SdRect            mPartRow;           //Row for allocation autoinserted parts
     SdPadAssociation  mPadAssociation;    //Pad to pin association table
-    SdRuleBlockList   mRules;             //Rules table
-    QMap<QString,int> mRulesMap;          //Net, class names -to- rule map
+    SdRuleBlock       mRulesPcb;          //PCB rules
+    SdRuleBlockMap    mRulesMap;          //Net rule map
     qint32            mStratumCount;      //Tracing stratum (layers) count
 
     //Not saved
     SdRatNet          mRatNet;            //Rat net is unconnected pairs
     bool              mRatNetDirty;
-//    QString           mRuleCacheNetName;  //Net name cache for rule extract
-//    int               mRuleCacheStratum;  //Stratum for rule extract
-//    int               mRuleCacheBlockId;  //Block id for net name and stratum
 
     SdRectList        mRuleErrors;        //Indicator rule errors
   public:
@@ -70,6 +67,8 @@ class SdPItemPlate : public SdProjectItem
     void                   setPadAssociation(const QString nm, const SdPadMap &map, SdUndo *undo );
     //Return over pad polygon
     QPolygonF              getPadPolygon(SdPoint p, const QString pinType, int addon) const;
+    //Return over pad circle radius
+    int                    getPadOverRadius( const QString pinType ) const;
     //Append window for pin pad
     void                   appendPadWindow( SdPolyWindowList &dest, SdPoint p, const QString pinType, int gap, const QTransform &t );
 
@@ -87,22 +86,22 @@ class SdPItemPlate : public SdProjectItem
 
 
     //Tracing rules
-    //Rebuild rules map by scan all nets
-    //void                   buildRulesMap();
-    //Get rules for key
-    const SdRuleBlock     &getRuleBlock( const QString key ) const;
-    //Set rules for key
-    void                   setRuleBlock( const QString key, const SdRuleBlock &src );
-    //List of child rules
-    QStringList            childRulesList( const QString key ) const;
-    //Remove child rule
-    void                   childRuleRemove( const QString key, const QString child );
-    //Append child rule
-    void                   childRuleAppend( const QString key, const QString child );
+    //Pcb rules
+    const SdRuleBlock     &rulePcbGet() const { return mRulesPcb; }
+
+    //Net rules map
+    const SdRuleBlockMap  &ruleMapGet() const { return mRulesMap; }
+
+    //Set new rules
+    void                   ruleSet(const SdRuleBlock &pcb, const SdRuleBlockMap &map , SdUndo *undo);
+
     //Get one rule for given net
-    int                    ruleForNet(int stratum, const QString netName, SdRuleId ruleId);
+    int                    ruleForNet(const QString netName, SdRuleId ruleId) const;
+
     //Build rules block for given net
-    void                   ruleBlockForNet(int stratum, const QString netName, SdRuleBlock &blockDest );
+    void                   ruleBlockForNet(const QString netName, SdRuleBlock &blockDest );
+
+
 
 
     //Accum bariers
@@ -122,9 +121,7 @@ class SdPItemPlate : public SdProjectItem
 
     //Read-write rules
     QJsonObject            writeRuleMap() const;
-    QJsonArray             writeRuleTable() const;
     void                   readRuleMap( const QJsonObject obj);
-    void                   readRuleTable( const QJsonArray ar);
 
 
     //Renumeration implements
@@ -144,11 +141,6 @@ class SdPItemPlate : public SdProjectItem
     virtual quint64        getAcceptedObjectsMask() const override;
 
   private:
-    void clearRuleCache();
-
-    //Retrive rule starting with blockId
-    int  ruleFromId(int stratumIndex, int blockId , int ruleId);
-
     //Check intersection on barriers and form errorList
     void checkIntersection(const SdBarrierList &src, const SdBarrierList &dst, bool excludeSameIndex );
   };
