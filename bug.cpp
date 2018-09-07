@@ -32,6 +32,9 @@
 //===================================================================================
 //Fixed:
 
+
+//D057 Append undo rules
+
 //B026 When cancel close programm
 
 //D055 append circle implementation to Gerber export

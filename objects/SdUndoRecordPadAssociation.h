@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Undo record for one record in pad association table
 */
 #ifndef SDUNDORECORDPADASSOCIATION_H
 #define SDUNDORECORDPADASSOCIATION_H

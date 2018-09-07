@@ -256,7 +256,8 @@ void SdPItemPlate::drawTrace(SdContext *ctx, SdStratum curStratum, QString curre
 //Set new rules
 void SdPItemPlate::ruleSet(const SdRuleBlock &pcb, const SdRuleBlockMap &map, SdUndo *undo )
   {
-  //TODO D057 Append undo rules
+  if( undo )
+    undo->rule( &mRulesPcb, &mRulesMap );
   mRulesPcb = pcb;
   mRulesMap = map;
   }

@@ -20,6 +20,7 @@ Description
 #include "SdUndoRecord.h"
 #include "library/SdStringMap.h"
 #include "SdPad.h"
+#include "SdRuleBlock.h"
 #include <QStack>
 #include <QMap>
 
@@ -89,6 +90,7 @@ class SdUndo
     void padAssociation( QString *id, QString *srcName, SdPadMap *srcMap );
     void road( SdPropInt *width, SdPoint *p1, SdPoint *p2 );
     void via( SdPropString *pad, SdPoint *pos );
+    void rule( SdRuleBlock *pcbSrc, SdRuleBlockMap *mapSrc );
 
     //do undo and redo
     void undoStep();

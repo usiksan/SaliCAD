@@ -37,6 +37,7 @@ Description
 #include "SdUndoRecordPadAssociation.h"
 #include "SdUndoRecordRoad.h"
 #include "SdUndoRecordVia.h"
+#include "SdUndoRecordRules.h"
 #include "windows/SdWCommand.h"
 
 SdUndo::SdUndo() :
@@ -263,6 +264,14 @@ void SdUndo::road(SdPropInt *width, SdPoint *p1, SdPoint *p2)
 void SdUndo::via(SdPropString *pad, SdPoint *pos)
   {
   addUndo( new SdUndoRecordVia( pad, pos ) );
+  }
+
+
+
+
+void SdUndo::rule(SdRuleBlock *pcbSrc, SdRuleBlockMap *mapSrc)
+  {
+  addUndo( new SdUndoRecordRules( pcbSrc, mapSrc ) );
   }
 
 
