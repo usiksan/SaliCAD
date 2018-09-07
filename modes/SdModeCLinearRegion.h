@@ -18,6 +18,7 @@ Description
 
 class SdModeCLinearRegion : public SdModeCLinear
   {
+  protected:
     SdPointList    mList;       //Region vertex points
     SdPoint        mMiddle;     //Yet no entered vertex point
     SdPoint        mPrevMove;   //Previous entered point
@@ -39,6 +40,11 @@ class SdModeCLinearRegion : public SdModeCLinear
     virtual QString getStepThema() const override;
     virtual int     getCursor() const override;
     virtual int     getIndex() const override;
+    virtual void    keyDown(int key, QChar ch) override;
+
+  protected:
+    //Append region to edit object
+    virtual void    addRegion();
   };
 
 #endif // SDMODECLINEARREGION_H

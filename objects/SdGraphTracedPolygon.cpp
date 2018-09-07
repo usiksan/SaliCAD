@@ -284,6 +284,7 @@ bool SdGraphTracedPolygon::getInfo(SdPoint p, QString &info, bool extInfo)
 bool SdGraphTracedPolygon::snapPoint(SdSnapInfo *snap)
   {
   //TODO B050 snap point for polygon
+  return false;
   }
 
 

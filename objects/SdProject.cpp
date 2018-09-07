@@ -18,6 +18,8 @@ Description
 #include "SdPItemSheet.h"
 #include "SdObjectFactory.h"
 #include "SdGraphNet.h"
+#include "SdEnvir.h"
+
 #include <QJsonArray>
 #include <QFile>
 #include <QJsonDocument>

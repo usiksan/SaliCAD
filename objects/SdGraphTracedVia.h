@@ -34,7 +34,6 @@ class SdGraphTracedVia : public SdGraphTraced
     virtual void      selectByRect(const SdRect &r, SdSelector *selector) override;
     virtual void      select(SdSelector *selector) override;
     virtual void      prepareMove(SdUndo *undo) override;
-    virtual void      setLayerUsage() override;
     virtual bool      isVisible() override;
     virtual SdRect    getOverRect() const override;
     virtual int       behindCursor(SdPoint p) override;
@@ -50,9 +49,6 @@ class SdGraphTracedVia : public SdGraphTraced
     virtual void      accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const override;
     virtual bool      isMatchNetAndStratum(const QString netName, SdStratum stratum) const override;
     virtual void      accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName) const override;
-  private:
-    //Return layer for via stratum
-    SdLayer *getLayer() const;
   };
 
 #endif // SDGRAPHTRACEDVIA_H

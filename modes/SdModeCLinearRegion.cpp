@@ -54,7 +54,7 @@ void SdModeCLinearRegion::enterPoint(SdPoint enter)
     if( mPrevMove == first ) mPrevMove = enter;
     //If point is close region then append region
     if( mPrevMove == mList.first() && mList.count() > 2 ) {
-      addPic( new SdGraphLinearRegion( mList, sdGlobalProp->mLineProp ), QObject::tr("Insert region") );
+      addRegion();
       setStep( sFirstPoint );
       }
     else {
@@ -74,6 +74,7 @@ void SdModeCLinearRegion::enterPoint(SdPoint enter)
     mList.clear();
     mList.append( enter );
     mPrevMove = enter;
+    mMiddle = enter;
     setStep( sNextPoint );
     }
   update();
@@ -105,7 +106,7 @@ void SdModeCLinearRegion::movePoint(SdPoint p)
 SdPoint SdModeCLinearRegion::enterPrev()
   {
   if( getStep() == sNextPoint && mList.count() > 2 ) {
-    addPic( new SdGraphLinearRegion( mList, sdGlobalProp->mLineProp ), QObject::tr("Insert region") );
+    addRegion();
     setStep( sFirstPoint );
     return mList.at(0);
     }
@@ -151,3 +152,27 @@ int SdModeCLinearRegion::getIndex() const
   return MD_REGION;
   }
 
+
+
+
+void SdModeCLinearRegion::keyDown(int key, QChar ch)
+  {
+  if( key == Qt::Key_Backspace ) {
+    //Remove last entered point
+    if( getStep() == sNextPoint && mList.count() > 1 ) {
+      mList.removeLast();
+      mMiddle = calcMiddlePoint( mList.last(), mPrevMove, sdGlobalProp->mLineEnterType );
+      update();
+      return;
+      }
+    }
+  SdModeCLinear::keyDown( key, ch );
+  }
+
+
+
+//Append region to edit object
+void SdModeCLinearRegion::addRegion()
+  {
+  addPic( new SdGraphLinearRegion( mList, sdGlobalProp->mLineProp ), QObject::tr("Insert region") );
+  }

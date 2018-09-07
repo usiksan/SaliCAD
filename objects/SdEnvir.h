@@ -152,6 +152,8 @@ class SdEnvir
 
     //Reset "usage" layer flag for all layers
     void     resetLayerUsage();
+    //Set "usage" layer flag for stratum layers from caches
+    void     setLayerUsage( int stratumCount );
 
     //Layer id to name translation service
     QString  layerId2NameLevel0(QString lid0 );

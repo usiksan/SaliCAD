@@ -32,6 +32,7 @@ Description
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QWizard>
+#include <QtDebug>
 
 SdWProjectTree::SdWProjectTree(const QString fname, SdProject *prj, QWidget *parent) :
   QTreeWidget(parent),

@@ -32,6 +32,10 @@
 //===================================================================================
 //Fixed:
 
+//B026 When cancel close programm
+
+//D055 append circle implementation to Gerber export
+
 //B045 When cancel mode part pin current step remains after cancel but must be reset
 
 //B051 Over rect for part implement calculated with ident, but must be without

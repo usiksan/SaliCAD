@@ -166,13 +166,6 @@ void SdGraphTracedVia::prepareMove(SdUndo *undo)
 
 
 
-void SdGraphTracedVia::setLayerUsage()
-  {
-  }
-
-
-
-
 bool SdGraphTracedVia::isVisible()
   {
   return true;
@@ -328,8 +321,4 @@ void SdGraphTracedVia::accumWindows(SdPolyWindowList &dest, int stratum, int gap
     }
   }
 
-SdLayer *SdGraphTracedVia::getLayer() const
-  {
-
-  }
 

@@ -370,6 +370,21 @@ void SdContext::region( const SdPointList &points, const SdPropLine &prop, bool 
 
 
 
+
+void SdContext::regionFill(const SdPointList &points, const SdPropLine &prop)
+  {
+  if( (mSelector || prop.mLayer.layer(mPairLayer)->isVisible()) && (points.count() > 2) ) {
+    QColor color = convertColor(prop.mLayer.layer());
+    mPainter->setPen( color );
+    setBrush( color );
+    mPainter->drawPolygon( mTransform.map( points ) );
+    }
+  }
+
+
+
+
+
 void SdContext::polygon(const SdPointList &points, const SdPolyWindowList &windows, SdLayer *layer)
   {
   //To draw polygon with windows we need intermediate picture image

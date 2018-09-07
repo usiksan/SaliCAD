@@ -411,7 +411,6 @@ void SdWMain::onCloseEditor(int index)
 
 void SdWMain::closeEvent(QCloseEvent *ev)
   {
-  //TODO B026 When cancel close programm
   //Try close all files
   mWProjectList->fileCloseAll();
 
@@ -423,6 +422,7 @@ void SdWMain::closeEvent(QCloseEvent *ev)
     s.setValue( QString(SDK_MAIN_SPLITTER), mWSplitter->saveState() );
     ev->accept();
     }
+  else ev->ignore();
   }
 
 

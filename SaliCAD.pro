@@ -232,7 +232,9 @@ SOURCES += \
     objects/SdPropVia.cpp \
     objects/SdUndoRecordVia.cpp \
     modes/SdModeCLinearCircleFilled.cpp \
-    windows/SdDRuleEditor.cpp
+    windows/SdDRuleEditor.cpp \
+    objects/SdGraphLinearRegionFilled.cpp \
+    modes/SdModeCLinearRegionFilled.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -461,7 +463,9 @@ HEADERS  += \
     objects/SdPropVia.h \
     objects/SdUndoRecordVia.h \
     modes/SdModeCLinearCircleFilled.h \
-    windows/SdDRuleEditor.h
+    windows/SdDRuleEditor.h \
+    objects/SdGraphLinearRegionFilled.h \
+    modes/SdModeCLinearRegionFilled.h
 
 DISTFILES += \
     license.txt

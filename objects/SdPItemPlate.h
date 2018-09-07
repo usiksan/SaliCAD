@@ -140,6 +140,9 @@ class SdPItemPlate : public SdProjectItem
     virtual QString        getIconName() const override;
     virtual quint64        getAcceptedObjectsMask() const override;
 
+    //Set layers usage
+    virtual void           setLayerUsage() override;
+
   private:
     //Check intersection on barriers and form errorList
     void checkIntersection(const SdBarrierList &src, const SdBarrierList &dst, bool excludeSameIndex );

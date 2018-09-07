@@ -64,3 +64,17 @@ SdLayer *SdLayerCache::getVisibleLayer(int stratum)
   //Visible layer not found
   return nullptr;
   }
+
+
+
+
+//Set layer usage. Set usage flag for stratumCount layers of cache
+void SdLayerCache::setLayerUsage( int stratumCount )
+  {
+  stratumCount = qMin( stratumCount, stmCountMax );
+  for( int i = 0; i < stratumCount; i++ )
+    if( mMap[i] ) {
+      mMap[i]->setUsage();
+      mMap[i]->pair()->setUsage();
+      }
+  }

@@ -102,6 +102,7 @@ class SdContext {
     void            text( SdPoint pos, SdRect &over, const QString str, const SdPropText &prop );
     void            region( const SdPointList &points, bool autoClose = true );
     void            region( const SdPointList &points, const SdPropLine &prop, bool autoClose = true );
+    virtual void    regionFill( const SdPointList &points, const SdPropLine &prop );
     virtual void    polygon( const SdPointList &points, const SdPolyWindowList &windows, SdLayer *layer );
     //virtual void TextBox( DTextProp &prop, int charNum );
 

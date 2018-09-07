@@ -70,6 +70,7 @@ struct SdGerberApertureContext : public SdContext {
     // SdContext interface
     virtual void setPen(int width, QColor color, int lineStyle) override;
     virtual void fillRect(SdRect r) override;
+    virtual void circle(SdPoint center, int radius ) override;
     virtual void circleFill(SdPoint center, int radius) override;
     virtual void polygon(const SdPointList &points, const SdPolyWindowList &windows, SdLayer *layer) override;
 
@@ -95,6 +96,16 @@ void SdGerberApertureContext::fillRect(SdRect r)
   if( !mTransform.isRotating() )
     appendAperture( gerberApertureRect( r.width(), r.height() )  );
   }
+
+
+
+
+void SdGerberApertureContext::circle(SdPoint center, int radius)
+  {
+  circleFill( center, radius );
+  }
+
+
 
 void SdGerberApertureContext::circleFill(SdPoint center, int radius)
   {
@@ -153,6 +164,7 @@ class SdGerberContext : public SdContext {
     virtual void arc(SdPoint center, SdPoint start, SdPoint stop) override;
     virtual void circle(SdPoint center, int radius) override;
     virtual void circleFill(SdPoint center, int radius) override;
+    virtual void regionFill( const SdPointList &points, const SdPropLine &prop ) override;
     virtual void polygon(const SdPointList &points, const SdPolyWindowList &windows, SdLayer *layer) override;
 
   private:
@@ -217,7 +229,8 @@ void SdGerberContext::arc(SdPoint center, SdPoint start, SdPoint stop)
 
 void SdGerberContext::circle(SdPoint center, int radius)
   {
-  //TODO D055 append circle implementation to Gerber export
+  //Interpertate circle as filled circle
+  circleFill( center, radius );
   }
 
 
@@ -234,16 +247,32 @@ void SdGerberContext::circleFill(SdPoint cx, int radius)
 
 
 
-void SdGerberContext::polygon(const SdPointList &points, const SdPolyWindowList &windows, SdLayer *layer)
+void SdGerberContext::regionFill(const SdPointList &points, const SdPropLine &prop)
   {
-  Q_UNUSED(layer);
-  if( points.count() > 2 ) {
-    //Определить позитивный слой
+  if( (mSelector || prop.mLayer.layer(mPairLayer)->isVisible()) && (points.count() > 2) ) {
+    //Define posititve Gerber layer [Определить позитивный слой]
     mStream << "G02*\n%LPD*%\n";
     mCurrentAperture = -1;
     mPos.set(2000000000,2000000000);
 
-    //First polygon point [Начальная точка полигона]
+    //Draw polygon
+    polygonInt( mTransform.map(points) );
+    }
+  }
+
+
+
+
+void SdGerberContext::polygon(const SdPointList &points, const SdPolyWindowList &windows, SdLayer *layer)
+  {
+  Q_UNUSED(layer);
+  if( points.count() > 2 ) {
+    //Define posititve Gerber layer [Определить позитивный слой]
+    mStream << "G02*\n%LPD*%\n";
+    mCurrentAperture = -1;
+    mPos.set(2000000000,2000000000);
+
+    //Draw polygon
     polygonInt( mTransform.map(points) );
 
     //Polygon windows (only if there)

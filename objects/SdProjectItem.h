@@ -78,7 +78,7 @@ class SdProjectItem : public SdContainer
     void                   setOrigin( const SdPoint org, SdUndo *undo );
 
     //Set layers usage
-    void                   setLayerUsage();
+    virtual void           setLayerUsage();
 
     //Status creation flag for project.
     void                   setHand() { mAuto = false; }

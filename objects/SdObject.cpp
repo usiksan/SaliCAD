@@ -31,6 +31,7 @@ Description
 #include "SdGraphLinearCircle.h"
 #include "SdGraphLinearCircleFilled.h"
 #include "SdGraphLinearRegion.h"
+#include "SdGraphLinearRegionFilled.h"
 #include "SdGraphTracedRoad.h"
 #include "SdGraphTracedPolygon.h"
 #include "SdGraphTracedVia.h"
@@ -273,6 +274,7 @@ SdObject *SdObject::build(QString type)
   if( type == QStringLiteral(SD_TYPE_CIRCLE)              ) return new SdGraphLinearCircle();
   if( type == QStringLiteral(SD_TYPE_CIRCLE_FILLED)       ) return new SdGraphLinearCircleFilled();
   if( type == QStringLiteral(SD_TYPE_REGION)              ) return new SdGraphLinearRegion();
+  if( type == QStringLiteral(SD_TYPE_REGION_FILLED)       ) return new SdGraphLinearRegionFilled();
   if( type == QStringLiteral(SD_TYPE_TEXT)                ) return new SdGraphText();
   if( type == QStringLiteral(SD_TYPE_IDENT)               ) return new SdGraphIdent();
   if( type == QStringLiteral(SD_TYPE_SYM_PIN)             ) return new SdGraphSymPin();

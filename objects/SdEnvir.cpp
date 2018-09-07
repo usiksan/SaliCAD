@@ -424,6 +424,23 @@ void SdEnvir::resetLayerUsage()
 
 
 
+//Set "usage" layer flag for stratum layers from caches
+void SdEnvir::setLayerUsage(int stratumCount)
+  {
+  mCacheForPad.setLayerUsage( stratumCount );
+  mCacheForMask.setLayerUsage( stratumCount );
+  mCacheForStensil.setLayerUsage( stratumCount );
+  mCacheForHole.setLayerUsage( stratumCount );
+  mCacheForRoad.setLayerUsage( stratumCount );
+  mCacheForPolygon.setLayerUsage( stratumCount );
+  mCacheForBoundary.setLayerUsage( stratumCount );
+  mCacheForKeepout.setLayerUsage( stratumCount );
+  }
+
+
+
+
+
 //Layer id to name translation service
 QString SdEnvir::layerId2NameLevel0(QString lid0 )
   {

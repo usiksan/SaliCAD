@@ -507,6 +507,19 @@ quint64 SdPItemPlate::getAcceptedObjectsMask() const
 
 
 
+//Set layers usage
+void SdPItemPlate::setLayerUsage()
+  {
+  //Default layers usage
+  SdProjectItem::setLayerUsage();
+  //Setup usage for cached layers
+  sdEnvir->setLayerUsage( mStratumCount );
+  }
+
+
+
+
+
 
 
 

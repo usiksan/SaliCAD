@@ -117,6 +117,8 @@ History
   27.08.2018 v0.49 Complete minimal version of part place mode. Support smart mode, direct selection, incremental selection, browse in sheet.
   04.09.2018 v0.50 Complete minimal version of road enter mode and via enter mode.
                    Support smart mode, handle tracing, tracing guide.
+  07.09.2018 v0.51 Append rules editing. Reconstruct rules with two-level hierarchy.
+                   Fix errors in sheet bus mode, sheet wire mode, part and symbol pin modes.
 */
 
 #ifndef SDCONFIG
@@ -128,7 +130,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             50
+#define SD_VERSION_MINOR             51
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -188,14 +190,6 @@ History
 
 //Max default delivered limit elements
 #define SD_DEFAULT_DELIVERED_LIMIT    100
-
-#if 0
-#define SD_BASE_PATH                 QCoreApplication::applicationDirPath()
-#else
-#define SD_BASE_PATH                 QString("/home/slilab/work/SaliCAD")
-#endif
-
-#define SD_DATABASE_FILE             QString("database.sqlite")
 
 //Settings key names
 #define SDK_WMAIN_MAX                "WMainMax"
