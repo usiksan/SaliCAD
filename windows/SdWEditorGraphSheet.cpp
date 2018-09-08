@@ -12,6 +12,7 @@ Description
   Graph editor for schematic sheet
 */
 #include "SdWEditorGraphSheet.h"
+#include "SdDParamEditor.h"
 #include "SdWCommand.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
@@ -23,6 +24,9 @@ Description
 #include "modes/SdModeCBus.h"
 #include "modes/SdModeCFragment.h"
 #include "modes/SdModeTBrowseSheetPart.h"
+#include "modes/SdModeSelect.h"
+
+#include <QMessageBox>
 #include <QDebug>
 
 SdWEditorGraphSheet::SdWEditorGraphSheet(SdPItemSheet *sch, QWidget *parent) :
@@ -122,6 +126,40 @@ void SdWEditorGraphSheet::cmModeNetName()
 void SdWEditorGraphSheet::cmModeBrowse(SdProjectItem *plate)
   {
   modeCall( new SdModeTBrowseSheetPart( this, mSheet, plate ) );
+  }
+
+
+
+
+//Edit properties of selected objects
+void SdWEditorGraphSheet::cmEditProperties()
+  {
+  //Only for selecting mode
+  if( mMode == mSelect && mSelect != nullptr ) {
+    //Find first symbol implement
+    SdObject *symImp = nullptr;
+    mSelect->getFragment()->forEach( dctSymImp, [&symImp] (SdObject *obj) -> bool {
+      symImp = obj;
+      return false;
+      });
+    //Use symImp params for init param editor dialog
+    SdPtr<SdGraphSymImp> sym(symImp);
+    if( sym.isValid() ) {
+      SdDParamEditor editor( tr("Component params"), sym->paramTable(), getProject(), true, this );
+      if( editor.exec() ) {
+        //Change params for all selected items
+        SdUndo *undo = getProject()->getUndo();
+        undo->begin( tr("Param change"), getProjectItem() );
+        mSelect->getFragment()->forEach( dctSymImp, [&editor,undo] (SdObject *obj) -> bool {
+          SdPtr<SdGraphSymImp> imp(obj);
+          if( imp.isValid() )
+            imp->paramTableSet( editor.paramTable(), undo );
+          return true;
+          });
+        }
+      }
+    else QMessageBox::warning( this, tr("Error!"), tr("Parameters edit available only for component. No component selected. Select components and try again.") );
+    }
   }
 
 

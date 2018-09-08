@@ -84,6 +84,9 @@ class SdContainer : public SdObject
     //Full local param table
     SdStringMap  paramTable() const { return mParamTable; }
 
+    //Setup full param table
+    void         paramTableSet( const SdStringMap map, SdUndo *undo );
+
     //Return param value from hierarchy. We start from local table
     // if param present in local table - return it
     // If no param in local table then we look at parent container

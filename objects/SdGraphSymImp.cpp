@@ -57,7 +57,7 @@ SdGraphSymImp::SdGraphSymImp(SdPItemComponent *comp, SdPItemSymbol *sym, SdPItem
   mSymbol(sym),          //Symbol contains graph information
   mPart(part),
   mPartImp(nullptr),
-  mParam(param)
+  mParamTable(param)
   {
   //QString           mName;        //Name of component
   mProp = *prp;        //Implement properties
@@ -65,7 +65,7 @@ SdGraphSymImp::SdGraphSymImp(SdPItemComponent *comp, SdPItemSymbol *sym, SdPItem
     SdConverterImplement imp( mOrigin, sym->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue() );
     QTransform t( imp.getMatrix() );
     mOverRect.set( t.mapRect(sym->getOverRect(dctAll & (~dctIdent))) );//Over rect
-    mPrefix = sym->getIdent()->getText();          //Part identificator prefix
+    mIdentPrefix = sym->getIdent()->getText();          //Part identificator prefix
     mIdentProp = sym->getIdent()->getPropText();   //Part identificator text properties
     mIdentOrigin = sym->getIdent()->getOrigin();   //Part identificator position in symbol context
     mIdentPos = t.map( mIdentOrigin );    //Part identificator position in sheet context
@@ -82,7 +82,7 @@ QString SdGraphSymImp::getRenumSect(SdPoint &dest, int &sheetNumber) const
   {
   dest = mOverRect.getTopLeft();
   sheetNumber = getSheet()->getSheetIndex();
-  return mPrefix;
+  return mIdentPrefix;
   }
 
 
@@ -110,12 +110,19 @@ QString SdGraphSymImp::pinNetName(const QString pinName) const
 
 
 
-//Set param
-void SdGraphSymImp::setParam(const QString key, const QString val, SdUndo *undo)
+
+//Setup full param table
+void SdGraphSymImp::paramTableSet(const SdStringMap map, SdUndo *undo)
   {
-  undo->stringMapItem( &mParam, key );
-  mParam.insert( key, val );
+  if( undo != nullptr )
+    undo->stringMap( &mParamTable );
+  mParamTable = map;
   }
+
+
+
+
+
 
 
 
@@ -200,12 +207,12 @@ void SdGraphSymImp::linkAutoPart(SdUndo *undo)
 //Get BOM item line
 QString SdGraphSymImp::getBomItemLine() const
   {
-  QString bom = getParam( QStringLiteral("bom") );
+  QString bom = paramGet( QStringLiteral("bom") );
   if( bom.isEmpty() )
     return bom;
 
   //For each param key test if it present in bom line
-  for( auto iter = mParam.cbegin(); iter != mParam.cend(); iter++ ) {
+  for( auto iter = mParamTable.cbegin(); iter != mParamTable.cend(); iter++ ) {
     QString field = QString("<%1>").arg( iter.key() );
     if( bom.contains( field ) )
       bom.replace( field, iter.value() );
@@ -221,8 +228,8 @@ QString SdGraphSymImp::getBomItemLine() const
 QString SdGraphSymImp::getIdent() const
   {
   if( mLogSection )
-    return QString("%1%2.%3").arg( mPrefix ).arg( mLogNumber ).arg( mLogSection );
-  return QString("%1%2").arg( mPrefix ).arg( mLogNumber );
+    return QString("%1%2.%3").arg( mIdentPrefix ).arg( mLogNumber ).arg( mLogSection );
+  return QString("%1%2").arg( mIdentPrefix ).arg( mLogNumber );
   }
 
 
@@ -233,7 +240,7 @@ QString SdGraphSymImp::getIdentInfo(int &logNumber, int &logSection)
   {
   logNumber = mLogNumber;
   logSection = mLogSection;
-  return mPrefix;
+  return mIdentPrefix;
   }
 
 
@@ -242,7 +249,7 @@ QString SdGraphSymImp::getIdentInfo(int &logNumber, int &logSection)
 //Set ident information
 void SdGraphSymImp::setIdentInfo(const QString prefix, int logNumber, int logSection)
   {
-  mPrefix = prefix;
+  mIdentPrefix = prefix;
   mLogNumber = logNumber;
   mLogSection = logSection;
   }
@@ -342,7 +349,7 @@ void SdGraphSymImp::pinStatusSet(const QString pinName, const SdSymImpPin &pin)
 
 void SdGraphSymImp::saveState(SdUndo *undo)
   {
-  undo->symImp( &mOrigin, &mProp, &mLogSection, &mLogNumber, &mOverRect, &mPrefix, &mIdentProp, &mIdentOrigin, &mIdentPos, &mIdentRect );
+  undo->symImp( &mOrigin, &mProp, &mLogSection, &mLogNumber, &mOverRect, &mIdentPrefix, &mIdentProp, &mIdentOrigin, &mIdentPos, &mIdentRect );
   //Save state of all pins
   undo->symImpPins( &mPins );
   }
@@ -626,7 +633,7 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
   else {
     //Get part where this section resides
     int section = -1;
-    SdGraphPartImp *partImp = plate->allocPartImp( &section, mPart, mComponent, mSymbol, mParam, undo );
+    SdGraphPartImp *partImp = plate->allocPartImp( &section, mPart, mComponent, mSymbol, mParamTable, undo );
     Q_ASSERT( partImp != nullptr );
 
     //Link to part
@@ -754,7 +761,7 @@ void SdGraphSymImp::cloneFrom(const SdObject *src)
   mOrigin       = imp->mOrigin;      //Position of Implement
   mProp         = imp->mProp;        //Implement properties
   mOverRect     = imp->mOverRect;    //Over rect
-  mPrefix       = imp->mPrefix;      //Part identificator prefix
+  mIdentPrefix       = imp->mIdentPrefix;      //Part identificator prefix
   mIdentProp    = imp->mIdentProp;   //Part identificator text properties
   mIdentOrigin  = imp->mIdentOrigin; //Part identificator position in symbol context
   mIdentPos     = imp->mIdentPos;    //Part identificator position in sheet context
@@ -766,7 +773,7 @@ void SdGraphSymImp::cloneFrom(const SdObject *src)
   //PartImp and pins assigned when attached to schematic sheet
   //mPartImp      = imp->mPartImp;
   //mPins         = imp->mPins;        //Pin information table
-  mParam        = imp->mParam;       //Parameters
+  mParamTable        = imp->mParamTable;       //Parameters
   }
 
 
@@ -783,7 +790,7 @@ void SdGraphSymImp::writeObject(QJsonObject &obj) const
   mOrigin.write( QStringLiteral("Org"), obj );      //Position of Implement
   mProp.write( obj );        //Implement properties
   mOverRect.write( QStringLiteral("Over"), obj );    //Over rect
-  obj.insert( QStringLiteral("Prefix"), mPrefix );      //Part identificator prefix
+  obj.insert( QStringLiteral("Prefix"), mIdentPrefix );      //Part identificator prefix
   mIdentProp.write( QStringLiteral("Ident"), obj );   //Part identificator text properties
   mIdentOrigin.write( QStringLiteral("IdentOrg"), obj ); //Part identificator position in symbol context
   mIdentPos.write( QStringLiteral("IdentPos"), obj );    //Part identificator position in sheet context
@@ -799,7 +806,7 @@ void SdGraphSymImp::writeObject(QJsonObject &obj) const
     pins.append( i.value().toJson( i.key() ) );
   obj.insert( QStringLiteral("Pins"), pins );
   //Parameters
-  sdStringMapWrite( QStringLiteral("Param"), mParam, obj );
+  sdStringMapWrite( QStringLiteral("Param"), mParamTable, obj );
   }
 
 
@@ -816,7 +823,7 @@ void SdGraphSymImp::readObject(SdObjectMap *map, const QJsonObject obj)
   mOrigin.read( QStringLiteral("Org"), obj );
   mProp.read( obj );
   mOverRect.read( QStringLiteral("Over"), obj );
-  mPrefix = obj.value( QStringLiteral("Prefix") ).toString();
+  mIdentPrefix = obj.value( QStringLiteral("Prefix") ).toString();
   mIdentProp.read( QStringLiteral("Ident"), obj );   //Part identificator text properties
   mIdentOrigin.read( QStringLiteral("IdentOrg"), obj ); //Part identificator position in symbol context
   mIdentPos.read( QStringLiteral("IdentPos"), obj );    //Part identificator position in sheet context
@@ -835,7 +842,7 @@ void SdGraphSymImp::readObject(SdObjectMap *map, const QJsonObject obj)
     mPins.insert( pinName, pin );
     }
   //Parameters
-  sdStringMapRead( QStringLiteral("Param"), mParam, obj );
+  sdStringMapRead( QStringLiteral("Param"), mParamTable, obj );
   }
 
 

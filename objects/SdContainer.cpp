@@ -158,6 +158,19 @@ void SdContainer::paramDelete(const QString key, SdUndo *undo)
 
 
 
+//Setup full param table
+void SdContainer::paramTableSet(const SdStringMap map, SdUndo *undo)
+  {
+  if( undo != nullptr )
+    undo->stringMap( &mParamTable );
+  mParamTable = map;
+  }
+
+
+
+
+
+
 //Return param value from hierarchy. We start from local table
 // if param present in local table - return it
 // If no param in local table then we look at parent container

@@ -56,6 +56,8 @@ class SdWEditorGraphSheet : public SdWEditorGraph
     //Browse part implement in sheet
     virtual void           cmModeBrowse(SdProjectItem *plate) override;
 
+    //Edit properties of selected objects
+    virtual void           cmEditProperties() override;
 
     virtual void cmModeNetList() override;
 

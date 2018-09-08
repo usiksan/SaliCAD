@@ -249,10 +249,12 @@ void SdWProjectTree::cmObjectSort()
 void SdWProjectTree::cmObjectParam()
   {
   //Get current item and show its param
-  SdProjectItem *item = dynamic_cast<SdProjectItem*>( mProject->item( currentItem() ) );
-  if( item ) {
-    SdDParamEditor editor( tr("Edit param"), item, item->isEditEnable(), this );
-    editor.exec();
+  SdPtr<SdProjectItem> item( mProject->item( currentItem() ) );
+  if( item.isValid() ) {
+    SdDParamEditor editor( tr("Edit param"), item->paramTable(), mProject, item->isEditEnable(), this );
+    if( editor.exec() )
+      //Edit successfull. Apply changes
+      item->paramTableSet( editor.paramTable(), mProject->getUndo() );
     }
   }
 
@@ -262,8 +264,10 @@ void SdWProjectTree::cmObjectParam()
 //Edit project param
 void SdWProjectTree::cmProjectParam()
   {
-  SdDParamEditor editor( tr("Edit project param"), mProject, true, this );
-  editor.exec();
+  SdDParamEditor editor( tr("Edit project param"), mProject->paramTable(), mProject, true, this );
+  if( editor.exec() )
+    //Edit successfull. Apply changes
+    mProject->paramTableSet( editor.paramTable(), mProject->getUndo() );
   }
 
 

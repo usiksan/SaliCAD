@@ -147,6 +147,7 @@ void SdWEditorGraph::setSelectionStatus(bool status)
   SdWCommand::cmEditCopy->setEnabled( status );
   SdWCommand::cmEditCut->setEnabled( status );
   SdWCommand::cmEditDelete->setEnabled( status );
+  SdWCommand::cmEditProperties->setEnabled( status );
   }
 
 
@@ -1038,6 +1039,8 @@ void SdWEditorGraph::cmEditUnSelect()
   if( mMode == mSelect && mSelect != nullptr )
     mSelect->unselect(false);
   }
+
+
 
 
 

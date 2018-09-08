@@ -42,7 +42,7 @@ class SdGraphSymImp : public SdGraph
     SdPoint           mOrigin;       //Position of Implement
     SdPropSymImp      mProp;         //Implement properties
     SdRect            mOverRect;     //Over rect
-    QString           mPrefix;       //Part identificator prefix
+    QString           mIdentPrefix;  //Part identificator prefix
     SdPropText        mIdentProp;    //Part identificator text properties
     SdPoint           mIdentOrigin;  //Part identificator position in symbol context
     SdPoint           mIdentPos;     //Part identificator position in sheet context
@@ -54,7 +54,7 @@ class SdGraphSymImp : public SdGraph
     SdGraphPartImp   *mPartImp;      //Part implement in desired plate
                                      //If mPartImp == nullptr then symbol not linked
     SdSymImpPinTable  mPins;         //Pin information table
-    SdStringMap       mParam;        //Parameters
+    SdStringMap       mParamTable;   //Parameters
     QString           mLinkError;    //Error string, which displays when no link
   public:
     SdGraphSymImp();
@@ -81,12 +81,20 @@ class SdGraphSymImp : public SdGraph
     bool            isPinConnected( const QString pinName ) const;
     //Pin net name
     QString         pinNetName( const QString pinName ) const;
-    //Param full list
-    SdStringMap     getParamTable() const { return mParam; }
-    //Get param
-    QString         getParam( const QString key ) const { return mParam.value( key ); }
-    //Set param
-    void            setParam( const QString key, const QString val, SdUndo *undo );
+
+    //Params with local param table
+    //Test if param present in local table
+    bool            paramContains( const QString key ) const { return mParamTable.contains(key); }
+
+    //Get param value from local table
+    QString         paramGet( const QString key ) const { return mParamTable.value(key); }
+
+    //Full local param table
+    SdStringMap     paramTable() const { return mParamTable; }
+
+    //Setup full param table
+    void            paramTableSet( const SdStringMap map, SdUndo *undo );
+
     //Get BOM item line
     QString         getBomItemLine() const;
 

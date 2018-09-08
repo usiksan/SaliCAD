@@ -9,7 +9,8 @@ Web
   www.saliLab.ru
 
 Description
-  Dialog for param editing and viewing from container.
+  Dialog for param editing and viewing from given table. All changes are made in local.
+  If nessesery result param table apply manualy
 */
 #include "SdDParamEditor.h"
 #include "SdDGetObject.h"
@@ -26,23 +27,16 @@ Description
 #include <QDialogButtonBox>
 #include <QTimer>
 
-SdDParamEditor::SdDParamEditor( const QString title, SdContainer *cnt, bool editEnable, QWidget *parent ) :
+SdDParamEditor::SdDParamEditor(const QString title, const SdStringMap &map, SdProject *prj, bool editEnable, QWidget *parent ) :
   QDialog( parent ),
-  mItem(cnt),
-  mProject(nullptr),
+  mProject(prj),
+  mParam(map),
   mEditEnable(editEnable)
   {
   setWindowTitle( title );
 
-  SdProject *prj = dynamic_cast<SdProject*>( mItem->getRoot() );
-  if( prj == nullptr ) prj = mProject = dynamic_cast<SdProject*>( mItem );
-  Q_ASSERT( prj != nullptr );
-  mUndo = prj->getUndo();
-
-  // symbol preview         part preview
-  //    component name and selection
-  //                        param editor
-  //                      (param table, buttons)
+  //  param editor
+  // (param table, buttons)
   QVBoxLayout *root = new QVBoxLayout();
 
     QHBoxLayout *lay = new QHBoxLayout();
@@ -65,9 +59,10 @@ SdDParamEditor::SdDParamEditor( const QString title, SdContainer *cnt, bool edit
       lay->addLayout( vbox );
     root->addLayout( lay );
 
-    QDialogButtonBox *box = new QDialogButtonBox( QDialogButtonBox::Ok );
+    QDialogButtonBox *box = new QDialogButtonBox( QDialogButtonBox::Ok | QDialogButtonBox::Cancel );
     root->addWidget( box );
     connect( box, &QDialogButtonBox::accepted, this, &SdDParamEditor::accept );
+    connect( box, &QDialogButtonBox::rejected, this, &SdDParamEditor::reject );
   setLayout( root );
   if( mEditEnable ) {
     //Connect signals when edit enabled
@@ -102,9 +97,8 @@ void SdDParamEditor::onParamChanged(int row, int column)
   QString key = mParamTable->item(row,0)->text();
   QString value = mParamTable->item(row,1)->text();
   //qDebug() << Q_FUNC_INFO << key <<value;
-  mItem->paramSet( key, value, mUndo );
+  mParam.insert( key, value );
   connect( mParamTable, &QTableWidget::cellChanged, this, &SdDParamEditor::onParamChanged );
-  dirtyProject();
   }
 
 
@@ -114,7 +108,7 @@ void SdDParamEditor::paramAdd()
   {
   QString key = QInputDialog::getText( this, tr("Param name"), tr("Enter param name") );
   if( !key.isEmpty() ) {
-    if( mItem->paramContains(key) )
+    if( mParam.contains(key) )
       QMessageBox::warning( this, tr("Warning!"), tr("Param with this name already exist. Enter another name.") );
     else
       paramAddInt( key );
@@ -126,13 +120,13 @@ void SdDParamEditor::paramAdd()
 
 void SdDParamEditor::paramAddDefault()
   {
-  if( !mItem->paramContains(QStringLiteral("bom")) )
+  if( !mParam.contains(QStringLiteral("bom")) )
     paramAddInt( QStringLiteral("bom"), QStringLiteral("<article> <title> <value>") );
-  if( !mItem->paramContains(QStringLiteral("article")) )
+  if( !mParam.contains(QStringLiteral("article")) )
     paramAddInt( QStringLiteral("article") );
-  if( !mItem->paramContains(QStringLiteral("title")) )
+  if( !mParam.contains(QStringLiteral("title")) )
     paramAddInt( QStringLiteral("title") );
-  if( !mItem->paramContains(QStringLiteral("value")) )
+  if( !mParam.contains(QStringLiteral("value")) )
     paramAddInt( QStringLiteral("value") );
   }
 
@@ -144,9 +138,8 @@ void SdDParamEditor::paramDelete()
   int paramIndex = mParamTable->currentRow();
   if( paramIndex >= 0 ) {
     QString key = mParamTable->item( paramIndex, 0 )->text();
-    mItem->paramDelete( key, mUndo );
+    mParam.remove( key );
     mParamTable->removeRow( paramIndex );
-    dirtyProject();
     }
   else
     QMessageBox::warning( this, tr("Warning!"), tr("Select param to delete") );
@@ -162,8 +155,7 @@ void SdDParamEditor::paramCopy()
   if( comp != nullptr ) {
     //Append params
     for( auto iter = param.cbegin(); iter != param.cend(); iter++ )
-      mItem->paramSet( iter.key(), iter.value(), mUndo );
-    dirtyProject();
+      mParam.insert( iter.key(), iter.value() );
     fillParams();
     }
   }
@@ -187,8 +179,8 @@ void SdDParamEditor::paramFields()
             QString str = text->getText();
             if( str.startsWith( QChar('{')) && str.endsWith( QChar('}')) ) {
               //This text is field. Append it to table
-              if( !mItem->paramContains(str) )
-                mItem->paramSet( str, str, mUndo );
+              if( !mParam.contains(str) )
+                mParam.insert( str, str );
               }
             }
           return true;
@@ -196,7 +188,6 @@ void SdDParamEditor::paramFields()
         }
       return true;
       } );
-    dirtyProject();
     fillParams();
     }
   }
@@ -208,14 +199,13 @@ void SdDParamEditor::fillParams()
   {
   disconnect( mParamTable, &QTableWidget::cellChanged, this, &SdDParamEditor::onParamChanged );
   mParamTable->clear();
-  SdStringMap tab = mItem->paramTable();
   mParamTable->setColumnCount(2);
-  mParamTable->setRowCount( tab.count() );
+  mParamTable->setRowCount( mParam.count() );
   //Setup header
   mParamTable->setHorizontalHeaderLabels( {tr("Param name"), tr("Param value")} );
   mParamTable->setColumnWidth(1,400);
   int row = 0;
-  for( auto iter = tab.constBegin(); iter != tab.constEnd(); iter++ )
+  for( auto iter = mParam.constBegin(); iter != mParam.constEnd(); iter++ )
     paramAppend( row++, iter.key(), iter.value() );
   connect( mParamTable, &QTableWidget::cellChanged, this, &SdDParamEditor::onParamChanged );
   }
@@ -238,21 +228,18 @@ void SdDParamEditor::paramAppend(int row, const QString key, const QString value
 
 void SdDParamEditor::paramAddInt(const QString key, const QString value)
   {
-  mItem->paramSet( key, value, mUndo );
+  mParam.insert( key, value );
   int row = mParamTable->rowCount();
   mParamTable->insertRow( row );
   disconnect( mParamTable, &QTableWidget::cellChanged, this, &SdDParamEditor::onParamChanged );
   paramAppend( row, key, value );
   connect( mParamTable, &QTableWidget::cellChanged, this, &SdDParamEditor::onParamChanged );
-  dirtyProject();
   }
 
 
 
 
-void SdDParamEditor::dirtyProject()
-  {
-  //Set project dirty
-  SdProject *prj = dynamic_cast<SdProject*>( mItem->getRoot() );
-  if( prj ) prj->setDirty();
-  }
+
+
+
+
