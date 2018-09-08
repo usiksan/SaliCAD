@@ -190,7 +190,10 @@ void SdDRuleEditor::accept()
   mPcb.mRules[ruleRoadRoad]  = readFromLineEdit( ui->mPcbRoad2Road, &isEmpty );
 
   //Transfer to plate
-  mPlate->ruleSet( mPcb, mNet, mPlate->getUndo() );
+  SdUndo *undo = mPlate->getUndo();
+  if( undo )
+    undo->begin( tr("Rule setup"), mPlate );
+  mPlate->ruleSet( mPcb, mNet, undo );
 
   //Finish dialog
   QDialog::accept();

@@ -36,7 +36,7 @@ class SdDRuleEditor : public QDialog
     QStringList     mNetList; //Selected net list
   public:
     explicit SdDRuleEditor( SdPItemPlate *plate, QWidget *parent = nullptr);
-    ~SdDRuleEditor();
+    ~SdDRuleEditor() override;
 
   private:
     Ui::SdDRuleEditor *ui;
