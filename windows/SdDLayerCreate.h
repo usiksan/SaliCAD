@@ -24,10 +24,12 @@ class SdDLayerCreate : public QDialog
     Q_OBJECT
 
   public:
-    explicit SdDLayerCreate(QWidget *parent = 0);
-    ~SdDLayerCreate();
+    explicit SdDLayerCreate(QWidget *parent = nullptr);
+    ~SdDLayerCreate() override;
 
-    QString  layerId() const;
+    QString   layerId() const;
+
+    int       layerStratum() const;
 
   public slots:
     //On layer constructed

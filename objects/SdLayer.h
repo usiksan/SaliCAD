@@ -113,8 +113,6 @@ enum SdLayerTrace {
 #define LID1_INT25         ".Int25" //Внутренняя сторона 25
 #define LID1_INT26         ".Int26" //Внутренняя сторона 26
 #define LID1_INT27         ".Int27" //Внутренняя сторона 27
-#define LID1_INT28         ".Int28" //Внутренняя сторона 28
-#define LID1_INT29         ".Int29" //Внутренняя сторона 29
 
 
 struct SdLayerDescr {
@@ -133,6 +131,7 @@ extern SdLayerDescr sdLayerDescrAddon[];
 struct SdLayerLevel {
     const char *mLid;       //Level id LIDxxx
     const char *mTranslate; //Human visible name aka "Schematic net"
+    int         mStratum ;
   };
 
 extern SdLayerLevel sdLayerLevel0[];

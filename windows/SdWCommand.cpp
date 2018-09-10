@@ -239,8 +239,8 @@ void SdWCommand::createMenu(SdWMain *frame)
   //  cmModeWire       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeDeleteWire = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModePad        = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  cmModeTable[MD_PLATE_IDENT] = menuInsertSheet->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Move ident of components"), frame, SLOT(cmModeReferenceMove()) );
-  cmModeTable[MD_PLATE_VALUE] = menuInsertSheet->addAction( QIcon(QString(":/pic/objPrtValue.png")), frame->tr("Move value of components"), frame, SLOT(cmModeValueMove()) );
+  cmModeTable[MD_PLATE_IDENT] = menuInsertPcb->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Move ident of components"), frame, SLOT(cmModeReferenceMove()) );
+  cmModeTable[MD_PLATE_VALUE] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrtValue.png")), frame->tr("Move value of components"), frame, SLOT(cmModeValueMove()) );
 
 
 

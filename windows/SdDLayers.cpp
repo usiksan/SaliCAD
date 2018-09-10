@@ -71,7 +71,7 @@ SdDLayers::SdDLayers(SdProject *prj, QWidget *parent) :
 
   ui->mLayerList->setColumnCount(6);
   ui->mLayerList->setColumnWidth( 0, 200 );
-  ui->mLayerList->setColumnWidth( 1, 50 );
+  ui->mLayerList->setColumnWidth( 1, 70 );
   ui->mLayerList->setColumnWidth( 2, 50 );
   ui->mLayerList->setColumnWidth( 3, 50 );
   ui->mLayerList->setColumnWidth( 4, 50 );
@@ -185,29 +185,38 @@ void SdDLayers::fillLayerList()
 void SdDLayers::appendLyaerToVisualList(const QString id)
   {
   SdLayer *layer = sdEnvir->getLayer( id );
+
   //Append row to table
   int row = ui->mLayerList->rowCount();
   ui->mLayerList->insertRow( row );
   ui->mLayerList->setRowHeight( row, 20 );
+
   //Layer name
   QTableWidgetItem *item = new QTableWidgetItem( layer->name() );
   ui->mLayerList->setItem( row, 0, item );
+
   //Layer trace
-  //QString trace;
+  item = new QTableWidgetItem( layerTrace( layer ) );
+  item->setFlags( Qt::ItemIsEnabled );
+  ui->mLayerList->setItem( row, 1, item );
+
   //Layer edit
   item = new QTableWidgetItem( layerState(layer) );
   item->setFlags( Qt::ItemIsEnabled );
   ui->mLayerList->setItem( row, 2, item );
+
   //Layer visible
   item = new QTableWidgetItem();
   item->setFlags( Qt::ItemIsEnabled );
   item->setIcon( QIcon( layer->isVisible() ? QString(":/pic/lampEnable.png") : QString(":/pic/lampDisable.png") ) );
   ui->mLayerList->setItem( row, 3, item );
+
   //Layer color
   item = new QTableWidgetItem( "      " );
   item->setFlags( Qt::ItemIsEnabled );
   item->setBackgroundColor( layer->color() );
   ui->mLayerList->setItem( row, 4, item );
+
   //Layer pair
   if( layer != layer->pair() )
     item = new QTableWidgetItem( layer->pair()->name() );
@@ -241,6 +250,8 @@ void SdDLayers::cmCreate()
     appendLyaerToVisualList( cr.layerId() );
     //Mark as usage for visibility
     sdEnvir->getLayer( cr.layerId() )->setUsage();
+    //Setup stratum
+    sdEnvir->getLayer( cr.layerId() )->setStratum( cr.layerStratum() );
     }
   }
 
@@ -404,7 +415,37 @@ void SdDLayers::cmSave()
 void SdDLayers::onCellClicked(int row, int column)
   {
   QString id = mList.at(row);
-  if( column == 2 ) {
+  if( column == 1 ) {
+    //Layer trace
+    SdLayerTrace trace = sdEnvir->getLayer(id)->trace();
+    switch( trace ) {
+      //Layer not tracing [Слой не трассировочный]
+      case layerTraceNone : trace = layerTracePad; break;
+      //Layer for pads
+      case layerTracePad :  trace = layerTraceMask; break;
+      //Layer for mask
+      case layerTraceMask : trace = layerTraceStensil; break;
+      //Layer for stensil apertures
+      case layerTraceStensil : trace = layerTraceHole; break;
+      //Layer for holes
+      case layerTraceHole : trace = layerTraceRoad; break;
+      //Layer for wires
+      case layerTraceRoad : trace = layerTracePolygon; break;
+      //Layer for polygons
+      case layerTracePolygon : trace = layerTraceBoundary; break;
+      //Layer for tracing boundary
+      case layerTraceBoundary : trace = layerTraceKeepout; break;
+      //Layer for tracing keepout
+      case layerTraceKeepout :
+      case layerTraceLast : trace = layerTraceNone; break;
+      }
+    sdEnvir->getLayer(id)->setTrace( trace );
+    //Change in table
+    QTableWidgetItem *item = ui->mLayerList->item(row,column);
+    if( item != nullptr )
+      item->setText( layerTrace(sdEnvir->getLayer(id)) );
+    }
+  else if( column == 2 ) {
     //State field
     SdLayerState state = sdEnvir->getLayer(id)->state();
     if( state == layerStateOff ) state = layerStateOn;
@@ -496,4 +537,35 @@ QString SdDLayers::layerState(SdLayer *layer)
   if( layer->state() == layerStateOff ) return tr("Off");
   if( layer->state() == layerStateOn ) return tr("On");
   return tr("Edit");
+  }
+
+
+
+
+
+//Return textual representation of layer trace
+QString SdDLayers::layerTrace(SdLayer *layer)
+  {
+  switch( layer->trace() ) {
+    case layerTraceNone :     //Layer not tracing [Слой не трассировочный]
+      return tr("---");
+    case layerTracePad :      //Layer for pads
+      return tr("pad");
+    case layerTraceMask :     //Layer for mask
+      return tr("mask");
+    case layerTraceStensil :  //Layer for stensil apertures
+      return tr("stensil");
+    case layerTraceHole :     //Layer for holes
+      return tr("hole");
+    case layerTraceRoad :     //Layer for wires
+      return tr("road");
+    case layerTracePolygon :  //Layer for polygons
+      return tr("polygon");
+    case layerTraceBoundary : //Layer for tracing boundary
+      return tr("bound");
+    case layerTraceKeepout :  //Layer for tracing keepout
+      return tr("keepout");
+    case layerTraceLast :
+      return tr("last");
+    }
   }

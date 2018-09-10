@@ -72,6 +72,9 @@ class SdDLayers : public QDialog
   private:
     //Return textual representation of layer state
     QString layerState( SdLayer *layer );
+
+    //Return textual representation of layer trace
+    QString layerTrace( SdLayer *layer );
   };
 
 #endif // SDDLAYERS_H

@@ -57,6 +57,17 @@ QString SdDLayerCreate::layerId() const
 
 
 
+int SdDLayerCreate::layerStratum() const
+  {
+  int rowModifier = ui->mModifierList->currentRow();
+  if( rowModifier > 0 )
+    return sdLayerLevel1[rowModifier].mStratum;
+  return stmThrough;
+  }
+
+
+
+
 
 //On layer constructed
 void SdDLayerCreate::onLayerIdConstructed(int)

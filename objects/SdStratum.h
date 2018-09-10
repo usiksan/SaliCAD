@@ -31,6 +31,26 @@ Description
 #define stmInt05    0x00000080
 #define stmInt06    0x00000100
 #define stmInt07    0x00000200
+#define stmInt08    0x00000400
+#define stmInt09    0x00000800
+#define stmInt10    0x00001000
+#define stmInt11    0x00002000
+#define stmInt12    0x00004000
+#define stmInt13    0x00008000
+#define stmInt14    0x00010000
+#define stmInt15    0x00020000
+#define stmInt16    0x00040000
+#define stmInt17    0x00080000
+#define stmInt18    0x00100000
+#define stmInt19    0x00200000
+#define stmInt20    0x00400000
+#define stmInt21    0x00800000
+#define stmInt22    0x01000000
+#define stmInt23    0x02000000
+#define stmInt24    0x04000000
+#define stmInt25    0x08000000
+#define stmInt26    0x10000000
+#define stmInt27    0x20000000
 #define stmEnd      0x40000000
 
 #define stmCountMax         30 //Maximum tracing layers
