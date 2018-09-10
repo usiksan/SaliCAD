@@ -12,6 +12,7 @@ Description
   Graph editor for pcb layout
 */
 #include "SdWEditorGraphPlate.h"
+#include "SdDParamEditor.h"
 #include "SdWCommand.h"
 #include "SdDPads.h"
 #include "SdPMasterList.h"
@@ -19,13 +20,16 @@ Description
 #include "SdDRuleEditor.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
+#include "objects/SdGraphPartImp.h"
 #include "modes/SdModeCRoadEnter.h"
 #include "modes/SdModeCPartPlace.h"
 #include "modes/SdModeCPolygonEnter.h"
+#include "modes/SdModeSelect.h"
 
 #include <QDebug>
 #include <QProgressDialog>
 #include <QWizard>
+#include <QMessageBox>
 
 SdWEditorGraphPlate::SdWEditorGraphPlate(SdPItemPlate *pcb, QWidget *parent) :
   SdWEditorGraph( pcb, parent ),
@@ -182,6 +186,40 @@ void SdWEditorGraphPlate::cmRulesErrorNext()
     mRuleErrorIndex = 0;
   if( mRuleErrorIndex >= 0 && mRuleErrorIndex < count )
     originSet( mPlate->ruleError(mRuleErrorIndex).center() );
+  }
+
+
+
+
+//Edit properties of selected objects
+void SdWEditorGraphPlate::cmEditProperties()
+  {
+  //Only for selecting mode
+  if( mMode == mSelect && mSelect != nullptr ) {
+    //Find first symbol implement
+    SdObject *partImp = nullptr;
+    mSelect->getFragment()->forEach( dctPartImp, [&partImp] (SdObject *obj) -> bool {
+      partImp = obj;
+      return false;
+      });
+    //Use symImp params for init param editor dialog
+    SdPtr<SdGraphPartImp> part(partImp);
+    if( part.isValid() ) {
+      SdDParamEditor editor( tr("Component params"), part->paramTable(), getProject(), true, this );
+      if( editor.exec() ) {
+        //Change params for all selected items
+        SdUndo *undo = getProject()->getUndo();
+        undo->begin( tr("Param change"), getProjectItem() );
+        mSelect->getFragment()->forEach( dctPartImp, [&editor,undo] (SdObject *obj) -> bool {
+          SdPtr<SdGraphPartImp> imp(obj);
+          if( imp.isValid() )
+            imp->paramTableSet( editor.paramTable(), undo, nullptr );
+          return true;
+          });
+        }
+      }
+    else QMessageBox::warning( this, tr("Error!"), tr("Parameters edit available only for component. No component selected. Select components and try again.") );
+    }
   }
 
 

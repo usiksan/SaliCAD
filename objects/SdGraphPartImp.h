@@ -98,7 +98,7 @@ class SdGraphPartImp : public SdGraphTraced
     SdPartImpSectionTable  mSections;
     SdPItemPart           *mPart;        //Part for this implementation
     SdPItemComponent      *mComponent;   //Component with pack info
-    SdStringMap            mParam;        //Parameters
+    SdStringMap            mParamTable;  //Parameters
   public:
     SdGraphPartImp();
     SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param );
@@ -135,12 +135,19 @@ class SdGraphPartImp : public SdGraphTraced
     void            setIdentIndex( int index );
 
     //Parameters
-    //Param full list
-    SdStringMap     getParamTable() const { return mParam; }
-    //Get param
-    QString         getParam( const QString key ) const { return mParam.value( key ); }
-    //Set param
-    void            setParam( const QString key, const QString val, SdUndo *undo );
+    //Params with local param table
+    //Test if param present in local table
+    bool            paramContains( const QString key ) const { return mParamTable.contains(key); }
+
+    //Get param value from local table
+    QString         paramGet( const QString key ) const { return mParamTable.value(key); }
+
+    //Full local param table
+    SdStringMap     paramTable() const { return mParamTable; }
+
+    //Setup full param table
+    void            paramTableSet( const SdStringMap map, SdUndo *undo, SdGraphSymImp *symImp );
+
     //Get BOM item line
     QString         getBomItemLine() const;
 

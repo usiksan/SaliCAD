@@ -112,11 +112,18 @@ QString SdGraphSymImp::pinNetName(const QString pinName) const
 
 
 //Setup full param table
-void SdGraphSymImp::paramTableSet(const SdStringMap map, SdUndo *undo)
+void SdGraphSymImp::paramTableSet(const SdStringMap map, SdUndo *undo, SdGraphPartImp *partImp)
   {
+  //If there undo then save previous param table
   if( undo != nullptr )
     undo->stringMap( &mParamTable );
+
+  //Setup new table
   mParamTable = map;
+
+  //If called not from partImp and mPartImp present then replace table in mPartImp
+  if( partImp == nullptr && mPartImp )
+    mPartImp->paramTableSet( map, undo, this );
   }
 
 

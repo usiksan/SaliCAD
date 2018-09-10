@@ -53,6 +53,10 @@ class SdWEditorGraphPlate : public SdWEditorGraph
     virtual void           cmRulesCheck() override;
     virtual void           cmRulesErrorNext() override;
 
+
+    //Edit properties of selected objects
+    virtual void           cmEditProperties() override;
+
     //Sheet and pcb
     virtual void           cmRenumeration() override;
 

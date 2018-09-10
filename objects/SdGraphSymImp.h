@@ -93,7 +93,7 @@ class SdGraphSymImp : public SdGraph
     SdStringMap     paramTable() const { return mParamTable; }
 
     //Setup full param table
-    void            paramTableSet( const SdStringMap map, SdUndo *undo );
+    void            paramTableSet( const SdStringMap map, SdUndo *undo, SdGraphPartImp *partImp );
 
     //Get BOM item line
     QString         getBomItemLine() const;

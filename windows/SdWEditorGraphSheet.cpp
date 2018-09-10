@@ -153,7 +153,7 @@ void SdWEditorGraphSheet::cmEditProperties()
         mSelect->getFragment()->forEach( dctSymImp, [&editor,undo] (SdObject *obj) -> bool {
           SdPtr<SdGraphSymImp> imp(obj);
           if( imp.isValid() )
-            imp->paramTableSet( editor.paramTable(), undo );
+            imp->paramTableSet( editor.paramTable(), undo, nullptr );
           return true;
           });
         }

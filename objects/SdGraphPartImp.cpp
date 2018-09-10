@@ -206,7 +206,7 @@ SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *par
   mOrigin(org),           //Position of Implement
   mPart(part),            //Part for this implementation
   mComponent(comp),       //Component
-  mParam(param)           //Component params
+  mParamTable(param)           //Component params
   {
   //Implement properties
   mProp = *prp;
@@ -385,25 +385,37 @@ void SdGraphPartImp::setIdentIndex(int index)
 
 
 
-
-
-void SdGraphPartImp::setParam(const QString key, const QString val, SdUndo *undo)
+//Setup full param table
+void SdGraphPartImp::paramTableSet(const SdStringMap map, SdUndo *undo, SdGraphSymImp *symImp)
   {
-  undo->stringMapItem( &mParam, key );
-  mParam.insert( key, val );
+  //If there undo then save previous param table
+  if( undo != nullptr )
+    undo->stringMap( &mParamTable );
+
+  //Setup new table
+  mParamTable = map;
+
+  //Replace for all sections except calling section, because it already changed
+  for( int i = 0; i < mSections.count(); i++ )
+    if( mSections.at(i).mSymImp && mSections.at(i).mSymImp != symImp )
+      mSections.at(i).mSymImp->paramTableSet( map, undo, this );
   }
+
+
+
+
 
 
 
 
 QString SdGraphPartImp::getBomItemLine() const
   {
-  QString bom = getParam( QStringLiteral("bom") );
+  QString bom = paramGet( QStringLiteral("bom") );
   if( bom.isEmpty() )
     return bom;
 
   //For each param key test if it present in bom line
-  for( auto iter = mParam.cbegin(); iter != mParam.cend(); iter++ ) {
+  for( auto iter = mParamTable.cbegin(); iter != mParamTable.cend(); iter++ ) {
     QString field = QString("<%1>").arg( iter.key() );
     if( bom.contains( field ) )
       bom.replace( field, iter.value() );
@@ -473,7 +485,7 @@ void SdGraphPartImp::drawRatNet(SdContext *cdx, SdPlateNetList &netList)
 //Check if there free section slot
 bool SdGraphPartImp::isSectionFree(int *section, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param, SdPItemSymbol *sym)
   {
-  if( mPart != part || mComponent != comp || mParam != param )
+  if( mPart != part || mComponent != comp || mParamTable != param )
     return false;
   for( int index = 0; index < mSections.count(); index++ )
     if( mSections[index].isFree(sym) ) {
@@ -637,7 +649,7 @@ void SdGraphPartImp::writeObject(QJsonObject &obj) const
     pins.append( i.value().toJson( i.key() ) );
   obj.insert( QStringLiteral("Pins"), pins );
   //Parameters
-  sdStringMapWrite( QStringLiteral("Param"), mParam, obj );
+  sdStringMapWrite( QStringLiteral("Param"), mParamTable, obj );
   }
 
 
@@ -674,7 +686,7 @@ void SdGraphPartImp::readObject(SdObjectMap *map, const QJsonObject obj)
     mPins.insert( pinNumber, pin );
     }
   //Parameters
-  sdStringMapRead( QStringLiteral("Param"), mParam, obj );
+  sdStringMapRead( QStringLiteral("Param"), mParamTable, obj );
   }
 
 
