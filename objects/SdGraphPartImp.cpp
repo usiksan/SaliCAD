@@ -633,7 +633,7 @@ void SdGraphPartImp::detach(SdUndo *undo)
     }
   //Autodelete all referenced objects
   if( mComponent ) mComponent->autoDelete( undo );
-  if( mPart ) mComponent->autoDelete( undo );
+  if( mPart ) mPart->autoDelete( undo );
   }
 
 
