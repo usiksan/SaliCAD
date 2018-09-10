@@ -9,7 +9,7 @@ Web
   www.saliLab.ru
 
 Description
-  Move for ident of component moving in the schematic sheet
+  Mode for ident of component moving in the schematic sheet
 */
 #include "SdModeCSheetIdentMove.h"
 #include "objects/SdGraphSymImp.h"
@@ -91,10 +91,10 @@ void SdModeCSheetIdentMove::enterPoint(SdPoint point)
     //Fix ident position
     if( mImp ) {
       //At first restore saved
-      mImp->identSet( mPropSaved, mPositionSaved, nullptr );
+      setProp( mPropSaved, mPositionSaved, nullptr );
       //At second set new values
-      mUndo->begin( QObject::tr("Move ident"), mObject );
-      mImp->identSet( mPropText, mPosition, mUndo );
+      mUndo->begin( QObject::tr("Move ident or value"), mObject );
+      setProp( mPropText, mPosition, mUndo );
       mImp = nullptr;
       setDirty();
       }
@@ -113,8 +113,7 @@ void SdModeCSheetIdentMove::enterPoint(SdPoint point)
         //Get implement matrix
         mImpMatrix = mImp->matrix().inverted();
         //Store properties
-        mPropSaved     = mImp->identProp();
-        mPositionSaved = mImp->identPosition();
+        getProp();
         mPropText = mPropSaved;
         mPosition = mPositionSaved;
         mPrev = point;
@@ -134,10 +133,9 @@ void SdModeCSheetIdentMove::cancelPoint(SdPoint point)
   {
   if( getStep() ) {
     //Fix ident position
-    if( mImp ) {
+    if( mImp )
       //restore saved
-      mImp->identSet( mPropSaved, mPositionSaved, nullptr );
-      }
+      setProp( mPropSaved, mPositionSaved, nullptr );
     mImp = nullptr;
     setStep(sSelectComp);
     movePoint(point);
@@ -157,7 +155,7 @@ void SdModeCSheetIdentMove::movePoint(SdPoint point)
       //Calculate new ident position
       mPosition = mImpMatrix.map( point );
       //Update position in imp
-      mImp->identSet( mPropText, mPosition, nullptr );
+      setProp( mPropText, mPosition, nullptr );
       update();
       }
     }
@@ -182,7 +180,7 @@ SdPoint SdModeCSheetIdentMove::enterPrev()
   if( getStep() ) {
     mPropText = mPropSmart;
     propSetToBar();
-    mImp->identSet( mPropText, mPosition, mUndo );
+    setProp( mPropText, mPosition, nullptr );
     update();
     }
   return mPrev;
@@ -208,7 +206,7 @@ bool SdModeCSheetIdentMove::getInfo(SdPoint p, QString &info)
 QString SdModeCSheetIdentMove::getStepHelp() const
   {
   if( getStep() )
-    return QObject::tr("Enter new ident position.");
+    return QObject::tr("Enter new ident or value position.");
   else {
     if( mBehindCursorTable.count() ) {
       SdPtr<SdGraphSymImp> imp(mBehindCursorTable.at(mBehindCursorIndex));
@@ -216,14 +214,14 @@ QString SdModeCSheetIdentMove::getStepHelp() const
         return QObject::tr("Left button: %1; F6 - switch to next component behind cursor").arg(imp->ident());
       }
     }
-  return QObject::tr("Select component to move ident");
+  return QObject::tr("Select component to move ident or value");
   }
 
 
 
 QString SdModeCSheetIdentMove::getModeThema() const
   {
-  return QStringLiteral( MODE_HELP "ModeCSymIdentMove.htm" );
+  return QStringLiteral( MODE_HELP "ModeCSheetIdentMove.htm" );
   }
 
 
@@ -232,8 +230,8 @@ QString SdModeCSheetIdentMove::getModeThema() const
 QString SdModeCSheetIdentMove::getStepThema() const
   {
   if( getStep() )
-    return QStringLiteral( MODE_HELP "ModeCSymIdentMove.htm#placeIdent" );
-  return QStringLiteral( MODE_HELP "ModeCSymIdentMove.htm#selectComp" );
+    return QStringLiteral( MODE_HELP "ModeCSheetIdentMove.htm#placeIdent" );
+  return QStringLiteral( MODE_HELP "ModeCSheetIdentMove.htm#selectComp" );
   }
 
 
@@ -266,7 +264,7 @@ void SdModeCSheetIdentMove::keyDown(int key, QChar ch)
         mPropText.mDir += 90000;
         propSetToBar();
         //Update position in imp
-        mImp->identSet( mPropText, mPosition, nullptr );
+        setProp( mPropText, mPosition, nullptr );
         update();
         }
       break;
@@ -282,6 +280,23 @@ void SdModeCSheetIdentMove::keyDown(int key, QChar ch)
       break;
     }
   SdModeCommon::keyDown( key, ch );
+  }
+
+
+
+
+void SdModeCSheetIdentMove::setProp(const SdPropText &prp, SdPoint pos, SdUndo *undo)
+  {
+  mImp->identSet( prp, pos, undo );
+  }
+
+
+
+
+void SdModeCSheetIdentMove::getProp()
+  {
+  mPropSaved     = mImp->identProp();
+  mPositionSaved = mImp->identPosition();
   }
 
 

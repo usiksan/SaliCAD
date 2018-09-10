@@ -26,6 +26,7 @@ Description
 #include "modes/SdModeTBrowseSheetPart.h"
 #include "modes/SdModeSelect.h"
 #include "modes/SdModeCSheetIdentMove.h"
+#include "modes/SdModeCSheetValueMove.h"
 
 #include <QMessageBox>
 #include <QDebug>
@@ -191,6 +192,16 @@ void SdWEditorGraphSheet::cmRenumeration()
 void SdWEditorGraphSheet::cmModeReferenceMove()
   {
   modeSet( new SdModeCSheetIdentMove( this, mSheet ) );
+  }
+
+
+
+
+
+//Move component value
+void SdWEditorGraphSheet::cmModeValueMove()
+  {
+  modeSet( new SdModeCSheetValueMove( this, mSheet ) );
   }
 
 

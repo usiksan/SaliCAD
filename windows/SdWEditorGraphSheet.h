@@ -67,6 +67,9 @@ class SdWEditorGraphSheet : public SdWEditorGraph
     //Move component reference
     virtual void           cmModeReferenceMove() override;
 
+    //Move component value
+    virtual void           cmModeValueMove() override;
+
   };
 
 #endif // SDWEDITORGRAPHSHEET_H

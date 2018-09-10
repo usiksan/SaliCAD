@@ -9,7 +9,7 @@ Web
   www.saliLab.ru
 
 Description
-  Move for ident of component moving in the schematic sheet
+  Mode for ident of component moving in the schematic sheet
 */
 #ifndef SDMODECSHEETIDENTMOVE_H
 #define SDMODECSHEETIDENTMOVE_H
@@ -20,6 +20,7 @@ class SdGraphSymImp;
 
 class SdModeCSheetIdentMove : public SdModeCommon
   {
+  protected:
     SdObjectPtrList mBehindCursorTable; //Список объектов под курсором
     int             mBehindCursorIndex; //Индекс объекта среди объектов под курсором
     SdGraphSymImp  *mImp;
@@ -52,6 +53,10 @@ class SdModeCSheetIdentMove : public SdModeCommon
     virtual int     getCursor() const override;
     virtual int     getIndex() const override;
     virtual void    keyDown(int key, QChar ch) override;
+
+  protected:
+    virtual void    setProp( const SdPropText &prp, SdPoint pos, SdUndo *undo );
+    virtual void    getProp();
   };
 
 #endif // SDMODECSHEETIDENTMOVE_H
