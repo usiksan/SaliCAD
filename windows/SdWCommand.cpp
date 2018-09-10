@@ -165,6 +165,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_SYM_PIN]       = menuInsertSymbol->addAction( QIcon(QString(":/pic/objPin.png")), frame->tr("Insert pin"), frame, SLOT(cmModePin()) );
   cmModeTable[MD_SYM_IDENT]     = menuInsertSymbol->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Edit reference"), frame, SLOT(cmModeReference()) );
   cmModeTable[MD_SYM_ORIGIN]    = menuInsertSymbol->addAction( QIcon(QString(":/pic/objOrigin.png")), frame->tr("Edit origin"), frame, SLOT(cmModeOrigin()) );
+  cmModeTable[MD_SYM_VALUE]     = menuInsertSymbol->addAction( QIcon(QString(":/pic/objValue.png")), frame->tr("Edit value"), frame, SLOT(cmModeValue()) );
 
 
 
@@ -174,6 +175,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_PART_PIN]       = menuInsertPart->addAction( QIcon(QString(":/pic/objPrtPin.png")), frame->tr("Insert pin"), frame, SLOT(cmModePin()) );
   cmModeTable[MD_PART_IDENT]     = menuInsertPart->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Edit reference"), frame, SLOT(cmModeReference()) );
   cmModeTable[MD_PART_ORIGIN]    = menuInsertPart->addAction( QIcon(QString(":/pic/objOrigin.png")), frame->tr("Edit origin"), frame, SLOT(cmModeOrigin()) );
+  cmModeTable[MD_PART_VALUE]     = menuInsertPart->addAction( QIcon(QString(":/pic/objPrtValue.png")), frame->tr("Edit value"), frame, SLOT(cmModeValue()) );
 
 
 
@@ -473,6 +475,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barSymbol->insertAction( nullptr, cmModeTable[MD_SYM_PIN] );
   barSymbol->insertAction( nullptr, cmModeTable[MD_SYM_IDENT] );
   barSymbol->insertAction( nullptr, cmModeTable[MD_SYM_ORIGIN] );
+  barSymbol->insertAction( nullptr, cmModeTable[MD_SYM_VALUE] );
 
   frame->addToolBar( barSymbol );
 
@@ -485,6 +488,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barPart->insertAction( nullptr, cmModeTable[MD_PART_PIN] );
   barPart->insertAction( nullptr, cmModeTable[MD_PART_IDENT] );
   barPart->insertAction( nullptr, cmModeTable[MD_PART_ORIGIN] );
+  barPart->insertAction( nullptr, cmModeTable[MD_PART_VALUE] );
 
   frame->addToolBar( barPart );
 

@@ -15,6 +15,7 @@ Description
 #include "SdPItemSymbol.h"
 #include "SdGraphSymPin.h"
 #include "SdGraphIdent.h"
+#include "SdGraphValue.h"
 #include "SdGraphArea.h"
 #include "SdPItemPlate.h"
 #include "SdPItemSheet.h"
@@ -62,15 +63,19 @@ SdGraphSymImp::SdGraphSymImp(SdPItemComponent *comp, SdPItemSymbol *sym, SdPItem
   //QString           mName;        //Name of component
   mProp = *prp;        //Implement properties
   if( sym ) {
-    SdConverterImplement imp( mOrigin, sym->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue() );
-    QTransform t( imp.getMatrix() );
+    QTransform t( matrix() );
     mOverRect.set( t.mapRect(sym->getOverRect(dctAll & (~dctIdent))) );//Over rect
-    mIdentPrefix = sym->getIdent()->getText();          //Part identificator prefix
-    mIdentProp = sym->getIdent()->getPropText();   //Part identificator text properties
-    mIdentOrigin = sym->getIdent()->getOrigin();   //Part identificator position in symbol context
-    mIdentPos = t.map( mIdentOrigin );    //Part identificator position in sheet context
-    mIdentRect.set( t.mapRect( sym->getIdent()->getOverRect() )  );   //Part identificator over rect
+    mIdent.mProp = sym->identGet()->getPropText();   //Symbol identificator text properties
+    mIdent.mOrigin = sym->identGet()->getOrigin();   //Symbol identificator position in part context
+    mValue.mProp = sym->valueGet()->getPropText();   //Symbol value text properties
+    mValue.mOrigin = sym->valueGet()->getOrigin();   //Symbol value position in part context
     }
+  }
+
+QTransform SdGraphSymImp::matrix() const
+  {
+  SdConverterImplement imp( mOrigin, mSymbol->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue() );
+  return imp.getMatrix();
   }
 
 
@@ -82,7 +87,7 @@ QString SdGraphSymImp::getRenumSect(SdPoint &dest, int &sheetNumber) const
   {
   dest = mOverRect.getTopLeft();
   sheetNumber = getSheet()->getSheetIndex();
-  return mIdentPrefix;
+  return identPrefix();
   }
 
 
@@ -231,62 +236,85 @@ QString SdGraphSymImp::getBomItemLine() const
 
 
 
-//Get full visual ident of section aka D4.2
-QString SdGraphSymImp::getIdent() const
+//Get ident prefix
+QString SdGraphSymImp::identPrefix() const
   {
-  if( mLogSection )
-    return QString("%1%2.%3").arg( mIdentPrefix ).arg( mLogNumber ).arg( mLogSection );
-  return QString("%1%2").arg( mIdentPrefix ).arg( mLogNumber );
+  return paramGet( stdParamPrefix );
   }
 
 
 
 
+//Get full visual ident of section aka D4.2
+QString SdGraphSymImp::ident() const
+  {
+  if( mLogSection )
+    return QString("%1%2.%3").arg( identPrefix() ).arg( mLogNumber ).arg( mLogSection );
+  return QString("%1%2").arg( identPrefix() ).arg( mLogNumber );
+  }
+
+
+
+
+//Set ident text properties and position
+void SdGraphSymImp::identSet(const SdPropText &prp, SdPoint pos, SdUndo *undo)
+  {
+  if( undo )
+    undo->propTextAndText( &mIdent.mProp, &mIdent.mOrigin, nullptr, nullptr );
+  mIdent.mProp = prp;
+  mIdent.mOrigin = pos;
+  }
+
+
+
+
+
+
+
+
 //Get separated ident information
-QString SdGraphSymImp::getIdentInfo(int &logNumber, int &logSection)
+QString SdGraphSymImp::identInfoGet(int &logNumber, int &logSection)
   {
   logNumber = mLogNumber;
   logSection = mLogSection;
-  return mIdentPrefix;
+  return identPrefix();
   }
 
 
 
 
 //Set ident information
-void SdGraphSymImp::setIdentInfo(const QString prefix, int logNumber, int logSection)
+void SdGraphSymImp::identInfoSet( int logNumber, int logSection)
   {
-  mIdentPrefix = prefix;
   mLogNumber = logNumber;
   mLogSection = logSection;
   }
 
 
 
-//Move ident regarding symbol implement
-void SdGraphSymImp::moveIdent(SdPoint offset)
+
+
+//Get full visual value of part aka smt32f417vgt
+QString SdGraphSymImp::value() const
   {
-  //TODO D004 update origin regarding symbol
-  mIdentOrigin = mIdentPos.unConvertImplement( mOrigin, offset, mProp.mAngle, mProp.mMirror.getValue() );
-  mIdentPos.move( offset );
+  return paramGet( stdParamValue );
   }
 
 
 
 
-//Get ident properties
-void SdGraphSymImp::getIdentProp(SdProp &prop)
+
+//Set value text properties and position
+void SdGraphSymImp::valueSet(const SdPropText &prp, SdPoint pos, SdUndo *undo)
   {
-  prop.mSymIdentProp.append( mIdentProp );
+  if( undo )
+    undo->propTextAndText( &mValue.mProp, &mValue.mOrigin, nullptr, nullptr );
+  mValue.mProp = prp;
+  mValue.mOrigin = pos;
   }
 
 
 
-//Set ident properties
-void SdGraphSymImp::setIdentProp(const SdProp &prop)
-  {
-  mIdentProp = prop.mSymIdentProp;
-  }
 
 
 
@@ -356,7 +384,7 @@ void SdGraphSymImp::pinStatusSet(const QString pinName, const SdSymImpPin &pin)
 
 void SdGraphSymImp::saveState(SdUndo *undo)
   {
-  undo->symImp( &mOrigin, &mProp, &mLogSection, &mLogNumber, &mOverRect, &mIdentPrefix, &mIdentProp, &mIdentOrigin, &mIdentPos, &mIdentRect );
+  undo->symImp( &mOrigin, &mProp, &mLogSection, &mLogNumber, &mOverRect );
   //Save state of all pins
   undo->symImpPins( &mPins );
   }
@@ -486,14 +514,17 @@ SdRect SdGraphSymImp::getOverRect() const
 
 void SdGraphSymImp::draw(SdContext *dc)
   {
-  //Draw ident in sheet context
-  dc->text( mIdentPos, mIdentRect, getIdent(), mIdentProp );
   //Convertor for symbol implementation
   SdConverterImplement imp( mOrigin, mSymbol->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue() );
   dc->setConverter( &imp );
 
+  //Draw ident in symbol context
+  SdRect ov;
+  dc->text( mIdent.mOrigin, ov, ident(), mIdent.mProp );
+  dc->text( mValue.mOrigin, ov, value(), mValue.mProp );
+
   //Draw symbol except ident and pins
-  mSymbol->forEach( dctAll & ~(dctSymPin | dctIdent), [dc] (SdObject *obj) -> bool {
+  mSymbol->forEach( dctAll & ~(dctSymPin | dctIdent | dctValue), [dc] (SdObject *obj) -> bool {
     SdGraph *graph = dynamic_cast<SdGraph*>( obj );
     if( graph )
       graph->draw( dc );
@@ -529,11 +560,11 @@ bool SdGraphSymImp::getInfo(SdPoint p, QString &info, bool extInfo)
       else
         bom = getBomItemLine();
       if( !bom.isEmpty() ) {
-        info = getIdent() + QString("  ") + bom;
+        info = ident() + QString("  ") + bom;
         return true;
         }
       }
-    info = getIdent();
+    info = ident();
     if( mComponent )
       info.append( QString("  ") ).append( mComponent->getTitle() );
     return true;
@@ -580,8 +611,6 @@ void SdGraphSymImp::updatePinsPositions()
   for( SdSymImpPin &pin : mPins )
     pin.mPosition = t.map( pin.mPin->getPinOrigin() );
   mOverRect.set( t.mapRect( mSymbol->getOverRect(dctAll & (~dctIdent)) ) );
-  mIdentPos = t.map( mIdentOrigin );
-  //mIdentRect.set( )
   }
 
 
@@ -768,11 +797,8 @@ void SdGraphSymImp::cloneFrom(const SdObject *src)
   mOrigin       = imp->mOrigin;      //Position of Implement
   mProp         = imp->mProp;        //Implement properties
   mOverRect     = imp->mOverRect;    //Over rect
-  mIdentPrefix       = imp->mIdentPrefix;      //Part identificator prefix
-  mIdentProp    = imp->mIdentProp;   //Part identificator text properties
-  mIdentOrigin  = imp->mIdentOrigin; //Part identificator position in symbol context
-  mIdentPos     = imp->mIdentPos;    //Part identificator position in sheet context
-  mIdentRect    = imp->mIdentRect;   //Part identificator over rect
+  mIdent        = imp->mIdent;
+  mValue        = imp->mValue;
 
   mComponent    = imp->mComponent;   //Object contains section information, pin assotiation info. May be same as mSymbol.
   mSymbol       = imp->mSymbol;      //Symbol contains graph information
@@ -797,11 +823,8 @@ void SdGraphSymImp::writeObject(QJsonObject &obj) const
   mOrigin.write( QStringLiteral("Org"), obj );      //Position of Implement
   mProp.write( obj );        //Implement properties
   mOverRect.write( QStringLiteral("Over"), obj );    //Over rect
-  obj.insert( QStringLiteral("Prefix"), mIdentPrefix );      //Part identificator prefix
-  mIdentProp.write( QStringLiteral("Ident"), obj );   //Part identificator text properties
-  mIdentOrigin.write( QStringLiteral("IdentOrg"), obj ); //Part identificator position in symbol context
-  mIdentPos.write( QStringLiteral("IdentPos"), obj );    //Part identificator position in sheet context
-  mIdentRect.write( QStringLiteral("IdentOver"), obj );   //Part identificator over rect
+  mIdent.write( QStringLiteral("Ident"), obj );
+  mValue.write( QStringLiteral("Value"), obj );
 
   writePtr( mComponent, QStringLiteral("Comp"), obj );   //Object contains section information, pin assotiation info. May be same as mSymbol.
   writePtr( mSymbol, QStringLiteral("Sym"), obj );      //Symbol contains graph information
@@ -830,11 +853,8 @@ void SdGraphSymImp::readObject(SdObjectMap *map, const QJsonObject obj)
   mOrigin.read( QStringLiteral("Org"), obj );
   mProp.read( obj );
   mOverRect.read( QStringLiteral("Over"), obj );
-  mIdentPrefix = obj.value( QStringLiteral("Prefix") ).toString();
-  mIdentProp.read( QStringLiteral("Ident"), obj );   //Part identificator text properties
-  mIdentOrigin.read( QStringLiteral("IdentOrg"), obj ); //Part identificator position in symbol context
-  mIdentPos.read( QStringLiteral("IdentPos"), obj );    //Part identificator position in sheet context
-  mIdentRect.read( QStringLiteral("IdentOver"), obj );   //Part identificator over rect
+  mIdent.read( QStringLiteral("Ident"), obj );
+  mValue.read( QStringLiteral("Value"), obj );
 
   mComponent = dynamic_cast<SdPItemComponent*>( readPtr( QStringLiteral("Comp"), map, obj )  );
   mSymbol = dynamic_cast<SdPItemSymbol*>( readPtr( QStringLiteral("Sym"), map, obj )  );

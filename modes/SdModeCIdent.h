@@ -20,8 +20,8 @@ class SdGraphIdent;
 
 class SdModeCIdent : public SdModeCTextual
   {
-    SdGraphIdent *mIdent;
-    int           mIndex;
+    SdGraphIdent *mIdent; //Edited ident
+    int           mIndex; //Mode index
   public:
     SdModeCIdent( SdWEditorGraph *editor, SdProjectItem *obj, SdPropText *prp, int index );
 
@@ -45,7 +45,6 @@ class SdModeCIdent : public SdModeCTextual
     // SdModeCTextual interface
   protected:
     virtual void    cancelEdit() override;
-    virtual void    applyEdit() override;
   };
 
 #endif // SDMODECIDENT_H

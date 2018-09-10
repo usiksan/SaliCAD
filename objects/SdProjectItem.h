@@ -26,6 +26,7 @@ Description
 class SdProject;
 class QTreeWidgetItem;
 class SdGraphIdent;
+class SdGraphValue;
 class SdWEditorGraph;
 
 class SdProjectItem : public SdContainer
@@ -70,8 +71,13 @@ class SdProjectItem : public SdContainer
     bool                   isCanUpgaded( SdProjectItem *newObj );
 
     //Object visual (graphical) identificator
-    SdGraphIdent          *getIdent();
-    SdGraphIdent          *createIdent();
+    SdGraphIdent          *identGet();
+    SdGraphIdent          *identCreate();
+
+    //Object visual (graphical) value
+    SdGraphValue          *valueGet();
+    SdGraphValue          *valueCreate();
+
 
     //Origin point
     SdPoint                getOrigin() const { return mOrigin; }

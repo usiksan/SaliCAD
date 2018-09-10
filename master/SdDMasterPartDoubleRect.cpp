@@ -138,7 +138,7 @@ void SdDMasterPartDoubleRect::accept()
   //Update ident position
   //When part size greater then ident text size (1000) then place ident in center of part
   // else place ident at top of part
-  setId( SdPoint( sizeX/2, partSizeY > 1000 ? 0 : partSizeY/2+500), QString("Id") );
+  setId( SdPoint( sizeX/2, partSizeY > 1000 ? 0 : partSizeY/2+500) );
 
   //Close dialog
   SdDMasterPart::accept();

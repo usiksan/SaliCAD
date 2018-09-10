@@ -546,7 +546,7 @@ bool SdPasCadImport::readSymbol(SdObject *obj)
   // DTextProp prop
   // DIdent    ident (NConstString)
   // DRect     overRect
-  SdGraphIdent *ident = sym->getIdent();
+  SdGraphIdent *ident = sym->identGet();
   return readIdent( ident );
   }
 
@@ -574,7 +574,7 @@ bool SdPasCadImport::readPart(SdObject *obj)
   if( !readObjectTable( part ) ) return false;
 
 //  ident.Read( is );
-  SdGraphIdent *ident = part->getIdent();
+  SdGraphIdent *ident = part->identGet();
   return readIdent( ident );
   }
 

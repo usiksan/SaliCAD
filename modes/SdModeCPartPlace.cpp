@@ -84,7 +84,7 @@ void SdModeCPartPlace::reset()
   mObject->forEach( dctPartImp, [&compList] (SdObject *obj) -> bool {
     SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(obj);
     if( imp )
-      compList.append( imp->getIdent() );
+      compList.append( imp->ident() );
     return true;
     });
   //Setup component list
@@ -213,7 +213,7 @@ void SdModeCPartPlace::partSelect(QStringList list)
       //Enter component name
       mObject->forEach( dctPartImp, [this,id] (SdObject *obj) -> bool {
         SdPtr<SdGraphPartImp> imp(obj);
-        if( imp && imp->getIdent() == id ) {
+        if( imp && imp->ident() == id ) {
           imp->select( &mFragment );
           return false;
           }
@@ -492,7 +492,7 @@ QString SdModeCPartPlace::getStepHelp() const
     return QObject::tr("Place components! Left button - at cursor position, middle - smart position, right - cancel");
   if( mBehindCursorTable.count() ) {
     if( mBehindCursorPrt ) {
-      QString str = mBehindCursorPrt->getIdent();
+      QString str = mBehindCursorPrt->ident();
       QString temp( QObject::tr("Left button: %1;   Middle button: %2") );
       return temp.arg(str).arg(mSmartName);
       }
@@ -653,7 +653,7 @@ void SdModeCPartPlace::nextComponent()
   //Расчитать следующий smart - копонент, за основу берем последний
   SdPtr<SdGraphPartImp> last( mFragment.count() ? mFragment.first() : nullptr );
   if( last )
-    mSmartName = last->getIdent();
+    mSmartName = last->ident();
   else return;
 //    if( mSmartName.isEmpty() )
 //    mSmartName = "R1";

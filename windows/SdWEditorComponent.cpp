@@ -409,14 +409,16 @@ void SdWEditorComponent::paramAdd()
 //Append default param group
 void SdWEditorComponent::paramAddDefault()
   {
-  if( !mComponent->paramContains(QStringLiteral("bom")) )
-    paramAddInt( QStringLiteral("bom"), QStringLiteral("<article> <title> <value>") );
-  if( !mComponent->paramContains(QStringLiteral("article")) )
-    paramAddInt( QStringLiteral("article") );
-  if( !mComponent->paramContains(QStringLiteral("title")) )
-    paramAddInt( QStringLiteral("title"), mComponent->getTitle() );
-  if( !mComponent->paramContains(QStringLiteral("value")) )
-    paramAddInt( QStringLiteral("value") );
+  if( !mComponent->paramContains( stdParamPrefix ) )
+    paramAddInt( stdParamPrefix, QStringLiteral("id") );
+  if( !mComponent->paramContains(stdParamBom) )
+    paramAddInt( stdParamBom, QStringLiteral("<article> <title> <value>") );
+  if( !mComponent->paramContains(stdParamArticle) )
+    paramAddInt( stdParamArticle );
+  if( !mComponent->paramContains( stdParamTitle ) )
+    paramAddInt( stdParamTitle, mComponent->getTitle() );
+  if( !mComponent->paramContains( stdParamValue ) )
+    paramAddInt( stdParamValue );
   }
 
 

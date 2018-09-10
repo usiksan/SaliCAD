@@ -21,8 +21,10 @@ SdUndoRecordPropTextAndText::SdUndoRecordPropTextAndText(SdPropText *prp, SdPoin
   mSrcString(str)
   {
   mSrcProp->saveState( &mPropState );
-  mRect   = *r;
-  mOrigin = *org;
+  if( org )
+    mOrigin = *org;
+  if( r )
+    mRect   = *r;
   if( str )
     mString = *str;
   }
@@ -31,8 +33,10 @@ SdUndoRecordPropTextAndText::SdUndoRecordPropTextAndText(SdPropText *prp, SdPoin
 void SdUndoRecordPropTextAndText::undo()
   {
   mSrcProp->swapState( &mPropState );
-  mRect = mSrcRect->swap( mRect );
-  mOrigin.swap( mSrcOrigin );
+  if( mSrcOrigin )
+    mOrigin.swap( mSrcOrigin );
+  if( mSrcRect )
+    mRect = mSrcRect->swap( mRect );
   if( mSrcString )
     mSrcString->swap( mString );
   }

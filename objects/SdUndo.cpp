@@ -167,16 +167,16 @@ void SdUndo::linkSection(int section, SdGraphSymImp *sym, SdGraphPartImp *part, 
 
 
 
-void SdUndo::symImp(SdPoint *origin, SdPropSymImp *imp, int *logSection, int *logNumber, SdRect *over, QString *prefix, SdPropText *identProp, SdPoint *identOrigin, SdPoint *identPos, SdRect *identRect)
+void SdUndo::symImp(SdPoint *origin, SdPropSymImp *imp, int *logSection, int *logNumber, SdRect *over )
   {
-  addUndo( new SdUndoRecordSymImp( origin, imp, logSection, logNumber, over, prefix, identProp, identOrigin, identPos, identRect ) );
+  addUndo( new SdUndoRecordSymImp( origin, imp, logSection, logNumber, over ) );
   }
 
 
 
-void SdUndo::partImp(SdPoint *origin, SdPropPartImp *imp, int *logNumber, SdRect *over, QString *prefix, SdPropText *identProp, SdPoint *identOrigin, SdPoint *identPos, SdRect *identRect)
+void SdUndo::partImp(SdPoint *origin, SdPropPartImp *imp, int *logNumber, SdRect *over )
   {
-  addUndo( new SdUndoRecordPartImp( origin, imp, logNumber, over, prefix, identProp, identOrigin, identPos, identRect ) );
+  addUndo( new SdUndoRecordPartImp( origin, imp, logNumber, over ) );
   }
 
 

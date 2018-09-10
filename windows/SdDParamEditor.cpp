@@ -120,14 +120,16 @@ void SdDParamEditor::paramAdd()
 
 void SdDParamEditor::paramAddDefault()
   {
-  if( !mParam.contains(QStringLiteral("bom")) )
-    paramAddInt( QStringLiteral("bom"), QStringLiteral("<article> <title> <value>") );
-  if( !mParam.contains(QStringLiteral("article")) )
-    paramAddInt( QStringLiteral("article") );
-  if( !mParam.contains(QStringLiteral("title")) )
-    paramAddInt( QStringLiteral("title") );
-  if( !mParam.contains(QStringLiteral("value")) )
-    paramAddInt( QStringLiteral("value") );
+  if( !mParam.contains(stdParamBom) )
+    paramAddInt( stdParamBom, QStringLiteral("<article> <title> <value>") );
+  if( !mParam.contains( stdParamArticle ) )
+    paramAddInt( stdParamArticle );
+  if( !mParam.contains( stdParamTitle ) )
+    paramAddInt( stdParamTitle );
+  if( !mParam.contains( stdParamValue ) )
+    paramAddInt( stdParamValue );
+  if( !mParam.contains( stdParamPrefix ) )
+    paramAddInt( stdParamPrefix, QString("id") );
   }
 
 

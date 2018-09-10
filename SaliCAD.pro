@@ -235,7 +235,10 @@ SOURCES += \
     windows/SdDRuleEditor.cpp \
     objects/SdGraphLinearRegionFilled.cpp \
     modes/SdModeCLinearRegionFilled.cpp \
-    objects/SdUndoRecordRules.cpp
+    objects/SdUndoRecordRules.cpp \
+    objects/SdTextImplement.cpp \
+    objects/SdGraphValue.cpp \
+    modes/SdModeCValue.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -467,7 +470,10 @@ HEADERS  += \
     windows/SdDRuleEditor.h \
     objects/SdGraphLinearRegionFilled.h \
     modes/SdModeCLinearRegionFilled.h \
-    objects/SdUndoRecordRules.h
+    objects/SdUndoRecordRules.h \
+    objects/SdTextImplement.h \
+    objects/SdGraphValue.h \
+    modes/SdModeCValue.h
 
 DISTFILES += \
     license.txt

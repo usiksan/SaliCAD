@@ -46,13 +46,13 @@ void SdDMasterSymbol::addCircle(int cx, int cy, int r)
 
 
 //Identifier append to "id" layer
-void SdDMasterSymbol::setId(SdPoint p, const QString id, int size)
+void SdDMasterSymbol::setId(SdPoint p, int size)
   {
-  SdGraphIdent *ident = mItem->getIdent();
+  SdGraphIdent *ident = mItem->identGet();
   int half = size / 2;
   SdRect r( p.x()-half, p.y()-half, size, size );
   mIdentProp.mSize = size;
-  ident->updateIdent( p, id, r, &mIdentProp );
+  ident->updateIdent( p, r, &mIdentProp );
   }
 
 

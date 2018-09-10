@@ -237,5 +237,7 @@
         <file>pic/helpRegistration.png</file>
         <file>pic/fileCloseAll.png</file>
         <file>pic/objectParam.png</file>
+        <file>pic/objPrtValue.png</file>
+        <file>pic/objValue.png</file>
     </qresource>
 </RCC>

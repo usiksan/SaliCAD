@@ -112,9 +112,28 @@ SdProp::SdProp()
   mPartIdentProp.mFont   = 0;
   mPartIdentProp.mSize   = 1000;
   mPartIdentProp.mDir    = da0;
-  mPartIdentProp.mHorz   = dhjLeft;
+  mPartIdentProp.mHorz   = dhjCenter;
   mPartIdentProp.mVert   = dvjMiddle;
   mPartIdentProp.mMirror = 0;
+
+  //Value properties for symbol
+  mSymValueProp.mLayer.set( QString(LID0_VALUE) );
+  mSymValueProp.mFont   = 0;
+  mSymValueProp.mSize   = 350;
+  mSymValueProp.mDir    = da0;
+  mSymValueProp.mHorz   = dhjCenter;
+  mSymValueProp.mVert   = dvjMiddle;
+  mSymValueProp.mMirror = 0;
+
+  //Value properties for part
+  mPartValueProp.mLayer.set( QString(LID0_VALUE LID1_TOP) );
+  mPartValueProp.mFont   = 0;
+  mPartValueProp.mSize   = 1000;
+  mPartValueProp.mDir    = da0;
+  mPartValueProp.mHorz   = dhjCenter;
+  mPartValueProp.mVert   = dvjMiddle;
+  mPartValueProp.mMirror = 0;
+
 
   //Road properties [Свойства дорожки]
   mRoadProp.mWidth       = 400;

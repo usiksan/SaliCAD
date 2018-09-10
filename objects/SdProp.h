@@ -46,6 +46,8 @@ struct SdProp
     SdPropPartImp mPartImpProp;    //Свойства вхождения корпуса
     SdPropText    mSymIdentProp;   //Свойства идентификатора символа
     SdPropText    mPartIdentProp;  //Свойства идентификатора корпуса
+    SdPropText    mSymValueProp;   //Value properties for symbol
+    SdPropText    mPartValueProp;  //Value properties for part
     SdPropRoad    mRoadProp;       //Свойства дорожки
     SdPropPolygon mPolygonProp;        //Tracing polygon properties
     SdPropVia     mViaProp;        //Свойства переходных отверстий

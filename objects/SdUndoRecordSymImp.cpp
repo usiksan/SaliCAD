@@ -15,7 +15,7 @@ Description
 #include "SdUtil.h"
 
 
-SdUndoRecordSymImp::SdUndoRecordSymImp(SdPoint *origin, SdPropSymImp *imp, int *logSection, int *logNumber, SdRect *over, QString *prefix, SdPropText *identProp, SdPoint *identOrigin, SdPoint *identPos, SdRect *identRect) :
+SdUndoRecordSymImp::SdUndoRecordSymImp(SdPoint *origin, SdPropSymImp *imp, int *logSection, int *logNumber, SdRect *over) :
   SdUndoRecord(),
   mOriginSrc(origin),
   mOriginValue(*origin),
@@ -25,19 +25,9 @@ SdUndoRecordSymImp::SdUndoRecordSymImp(SdPoint *origin, SdPropSymImp *imp, int *
   mLogNumberSrc(logNumber),
   mLogNumberValue(*logNumber),
   mOverSrc(over),
-  mOver(*over),
-  mPrefixSrc(prefix),
-  mPrefix(*prefix),
-  mIdentPropSrc(identProp),
-  mIdentOriginSrc(identOrigin),
-  mIdentOrigin(*identOrigin),
-  mIdentPosSrc(identPos),
-  mIdentPos(*identPos),
-  mIdentRectSrc(identRect),
-  mIdentRect(*identRect)
+  mOver(*over)
   {
   imp->saveState( &mProp );
-  identProp->saveState( &mIdentProp );
   }
 
 
@@ -53,9 +43,4 @@ void SdUndoRecordSymImp::undo()
   SdUtil::swapInt( mLogNumberValue, mLogNumberSrc );
 
   mOver = mOverSrc->swap( mOver );
-  mPrefixSrc->swap( mPrefix );
-  mIdentPropSrc->swapState( &mIdentProp );
-  mIdentOrigin.swap( mIdentOriginSrc );
-  mIdentPos.swap( mIdentPosSrc );
-  mIdentRect = mIdentRectSrc->swap( mIdentRect );
   }

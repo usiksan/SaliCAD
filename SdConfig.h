@@ -219,5 +219,12 @@ History
 
 #define defNetNamePrefix "XN" //Default net name prefix
 
+//Standard param names
+#define stdParamBom     QStringLiteral("bom")
+#define stdParamArticle QStringLiteral("article")
+#define stdParamTitle   QStringLiteral("title")
+#define stdParamValue   QStringLiteral("value")
+#define stdParamPrefix  QStringLiteral("prefix")
+
 #endif // SDCONFIG
 

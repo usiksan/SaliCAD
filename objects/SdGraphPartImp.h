@@ -18,6 +18,7 @@ Description
 #include "SdStratum.h"
 #include "SdPadAssociation.h"
 #include "SdBarrier.h"
+#include "SdTextImplement.h"
 
 #include <QMap>
 
@@ -88,11 +89,12 @@ class SdGraphPartImp : public SdGraphTraced
     SdPoint                mOrigin;      //Position of Implement
     SdPropPartImp          mProp;        //Implement properties
     SdRect                 mOverRect;    //Over rect
-    QString                mPrefix;      //Part identificator prefix
-    SdPropText             mIdentProp;   //Part identificator text properties
-    SdPoint                mIdentOrigin; //Part identificator position in symbol context
-    SdPoint                mIdentPos;    //Part identificator position in sheet context
-    SdRect                 mIdentRect;   //Part identificator over rect
+
+    //Part identification
+    SdTextImplement        mIdent;       //Part identificator text properties and position
+
+    //Part value
+    SdTextImplement        mValue;       //Part value text properties and position
 
     SdPartImpPinTable      mPins;
     SdPartImpSectionTable  mSections;
@@ -104,12 +106,34 @@ class SdGraphPartImp : public SdGraphTraced
     SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param );
 
     //Information
+    //Get implement transform matrix
+    QTransform      matrix() const;
+
+    //Identificator
     //Get full visual ident of part aka D4 or R45
-    QString         getIdent() const;
+    QString         ident() const;
+    //Get ident text properties
+    SdPropText      identProp() const { return mIdent.mProp; }
+    //Get idnet text position
+    SdPoint         identPosition() const { return mIdent.mOrigin; }
+    //Set ident text properties and position
+    void            identSet( const SdPropText &prp, SdPoint pos, SdUndo *undo );
+
+    //Value
+    //Get full visual value of part aka smt32f417vgt
+    QString         value() const;
+    //Get value text properties
+    SdPropText      valueProp() const { return mValue.mProp; }
+    //Get value text position
+    SdPoint         valuePosition() const { return mValue.mOrigin; }
+    //Set value text properties and position
+    void            valueSet( const SdPropText &prp, SdPoint pos, SdUndo *undo );
+
     //Check if there free section slot. If there - setup section and return true
     bool            isSectionFree(int *section, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param, SdPItemSymbol *sym );
     //Get origin of component
     SdPoint         getOrigin() const { return mOrigin; }
+
 
 
     //Service
@@ -126,7 +150,7 @@ class SdGraphPartImp : public SdGraphTraced
 
 
     //Renumeration
-    QString         getIdentPrefix();
+    QString         getIdentPrefix() const;
     //Compare partImp's
     bool            compareRenumeration( const SdGraphPartImp *imp ) const;
     //Lower sheet

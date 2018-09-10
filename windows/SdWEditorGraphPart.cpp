@@ -18,6 +18,7 @@ Description
 #include "modes/SdModeCOriginPart.h"
 #include "modes/SdModeCPartPin.h"
 #include "modes/SdModeCIdent.h"
+#include "modes/SdModeCValue.h"
 #include <QDebug>
 
 SdWEditorGraphPart::SdWEditorGraphPart(SdPItemPart *part, QWidget *parent) :
@@ -93,6 +94,14 @@ void SdWEditorGraphPart::cmModeReference()
 void SdWEditorGraphPart::cmModeOrigin()
   {
   modeSet( new SdModeCOriginPart( this, mPart, sdEnvir->mPartPinSize ) );
+  }
+
+
+
+
+void SdWEditorGraphPart::cmModeValue()
+  {
+  modeSet( new SdModeCValue( this, mPart, &(sdGlobalProp->mPartValueProp), MD_PART_VALUE )  );
   }
 
 

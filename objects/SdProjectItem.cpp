@@ -15,6 +15,7 @@ Description
 #include "SdObjectFactory.h"
 #include "SdProjectItem.h"
 #include "SdGraphIdent.h"
+#include "SdGraphValue.h"
 #include "SdProject.h"
 #include "SdPulsar.h"
 #include "SdPoint.h"
@@ -265,7 +266,7 @@ bool SdProjectItem::isCanUpgaded(SdProjectItem *newObj)
 
 
 //Object visual (graphical) identificator
-SdGraphIdent *SdProjectItem::getIdent()
+SdGraphIdent *SdProjectItem::identGet()
   {
   //Find ident if present
   SdGraphIdent *ident = nullptr;
@@ -276,26 +277,62 @@ SdGraphIdent *SdProjectItem::getIdent()
 
   //If not found then create default
   if( ident == nullptr )
-    return createIdent();
+    return identCreate();
   return ident;
   }
 
 
 
 
-SdGraphIdent *SdProjectItem::createIdent()
+SdGraphIdent *SdProjectItem::identCreate()
   {
   SdGraphIdent *ident;
   if( getClass() & (dctPart | dctPlate) )
-    ident = new SdGraphIdent( SdPoint(), QStringLiteral("Id"), SdRect(), sdGlobalProp->mPartIdentProp );
+    ident = new SdGraphIdent( SdPoint(), SdRect(), sdGlobalProp->mPartIdentProp );
   else
-   ident = new SdGraphIdent( SdPoint(), QStringLiteral("Id"), SdRect(), sdGlobalProp->mSymIdentProp );
+    ident = new SdGraphIdent( SdPoint(), SdRect(), sdGlobalProp->mSymIdentProp );
   SdProject *prj = getProject();
   if( prj == nullptr )
     insertChild( ident, nullptr );
   else
     insertChild( ident, prj->getUndo() );
   return ident;
+  }
+
+
+
+
+SdGraphValue *SdProjectItem::valueGet()
+  {
+  //Find ident if present
+  SdGraphValue *value = nullptr;
+  forEach( dctValue, [&value] (SdObject *obj) -> bool {
+    value = dynamic_cast<SdGraphValue*>(obj);
+    return value == nullptr;
+    });
+
+  //If not found then create default
+  if( value == nullptr )
+    return valueCreate();
+  return value;
+  }
+
+
+
+
+SdGraphValue *SdProjectItem::valueCreate()
+  {
+  SdGraphValue *value;
+  if( getClass() & (dctPart | dctPlate) )
+    value = new SdGraphValue( SdPoint(), SdRect(), sdGlobalProp->mPartValueProp );
+  else
+    value = new SdGraphValue( SdPoint(), SdRect(), sdGlobalProp->mSymValueProp );
+  SdProject *prj = getProject();
+  if( prj == nullptr )
+    insertChild( value, nullptr );
+  else
+    insertChild( value, prj->getUndo() );
+  return value;
   }
 
 

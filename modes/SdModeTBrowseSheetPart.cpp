@@ -31,7 +31,7 @@ QString SdModeTBrowseSheetPart::getStepHelp() const
   {
   if( mSymImp ) {
     int logNumber, logSection;
-    QString prefix = mSymImp->getIdentInfo( logNumber, logSection );
+    QString prefix = mSymImp->identInfoGet( logNumber, logSection );
     return QObject::tr("Select part to place. On left button will selected: %1%2").arg(prefix).arg(logNumber);
     }
   return QObject::tr("Select part to place.");
@@ -105,7 +105,7 @@ void SdModeTBrowseSheetPart::enterPoint(SdPoint p)
     //Prepare component list
     QStringList list;
     int logNumber, logSection;
-    QString prefix = mSymImp->getIdentInfo( logNumber, logSection );
+    QString prefix = mSymImp->identInfoGet( logNumber, logSection );
     list.append( prefix + QString::number(logNumber) );
     SdProjectItem *plate = mPlate;
     //Stop browse mode

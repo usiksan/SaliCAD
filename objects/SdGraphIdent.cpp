@@ -20,19 +20,30 @@ SdGraphIdent::SdGraphIdent() :
 
 
 
-SdGraphIdent::SdGraphIdent(SdPoint org, const QString str, SdRect r, SdPropText &p) :
-  SdGraphText( org, str, r, p )
+SdGraphIdent::SdGraphIdent(SdPoint org, SdRect r, SdPropText &p) :
+  SdGraphText( org, "{id}", r, p )
   {
   }
 
 
 
-void SdGraphIdent::updateIdent(SdPoint org, const QString str, SdRect r, SdPropText *p)
+void SdGraphIdent::updateIdent(SdPoint org, SdRect r, SdPropText *p)
   {
   mOrigin   = org;
   mProp     = *p;
-  mString   = str;
+  mString   = QStringLiteral("{id}");
   mOverRect = r;
+  }
+
+
+
+
+void SdGraphIdent::setText(int index, QString sour, SdPropText &prop, QWidget *parent)
+  {
+  Q_UNUSED(index);
+  Q_UNUSED(sour);
+  Q_UNUSED(parent);
+  mProp   = prop;
   }
 
 

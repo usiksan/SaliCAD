@@ -23,7 +23,8 @@ Description
 SdModeCIdent::SdModeCIdent(SdWEditorGraph *editor, SdProjectItem *obj, SdPropText *prp , int index) :
   SdModeCTextual( editor, obj )
   {
-  mIdent    = obj->getIdent();
+  mIdent    = obj->identGet();
+  mString   = mIdent->getText();
   mPropText = prp;
   mIndex    = index;
   }
@@ -45,13 +46,8 @@ void SdModeCIdent::drawStatic(SdContext *ctx)
 
 void SdModeCIdent::drawDynamic(SdContext *ctx)
   {
-  if( getStep() ) {
-    drawText( ctx );
-    }
-  else {
-    SdRect r;
-    ctx->text( mPrev, r, mString, *mPropText );
-    }
+  SdRect r;
+  ctx->text( mPrev, r, mString, *mPropText );
   }
 
 
@@ -86,11 +82,13 @@ void SdModeCIdent::propSetToBar()
 
 void SdModeCIdent::enterPoint(SdPoint)
   {
-  if( getStep() ) applyEdit();
-  else {
-    setStep(1);
-    update();
-    }
+  //Save previous state of ident
+  mUndo->begin( QObject::tr("Edit ident"), mObject );
+  mIdent->saveState( mUndo );
+  mIdent->updateIdent( mPrev, mOverRect, mPropText );
+  setDirty();
+  setDirtyCashe();
+  cancelMode();
   }
 
 
@@ -115,7 +113,6 @@ void SdModeCIdent::movePoint(SdPoint p)
 
 QString SdModeCIdent::getStepHelp() const
   {
-  if( getStep() ) return QObject::tr("Edit ident prefix");
   return QObject::tr("Enter ident position");
   }
 
@@ -133,8 +130,7 @@ QString SdModeCIdent::getModeThema() const
 
 QString SdModeCIdent::getStepThema() const
   {
-  if( getStep() ) return QStringLiteral( MODE_HELP "ModeCIdent.htm#editPrefix" );
-  return QStringLiteral( MODE_HELP "ModeCIdent.htm#identPosition" );
+  return getModeThema();
   }
 
 
@@ -156,19 +152,6 @@ void SdModeCIdent::cancelEdit()
 
 
 
-void SdModeCIdent::applyEdit()
-  {
-  //Save previous state of ident
-  mUndo->begin( QObject::tr("Edit ident"), mObject );
-  mIdent->saveState( mUndo );
-  mIdent->updateIdent( mPrev, mString, mOverRect, mPropText );
-  setDirty();
-  setDirtyCashe();
-  cancelMode();
-  }
-
-
-
 
 void SdModeCIdent::activate()
   {
@@ -181,5 +164,5 @@ void SdModeCIdent::activate()
 
 int SdModeCIdent::getCursor() const
   {
-  return getStep() == 0 ? CUR_IDENT : CUR_TEXT;
+  return CUR_IDENT;
   }

@@ -244,9 +244,9 @@ void SdDMasterPartDoubleSide::accept()
   // else place ident at top of part
   if( bodySizeX <= 3000 && bodySizeY > 3000 ) {
     mIdentProp.mDir    = da90;
-    setId( SdPoint( pinSizeX/2, partTop - bodySizeY / 2 ), QString("Id") );
+    setId( SdPoint( pinSizeX/2, partTop - bodySizeY / 2 ) );
     }
-  else setId( SdPoint( pinSizeX/2, bodySizeX > 3000 ? partTop - bodySizeY / 2 : partTop+500), QString("Id") );
+  else setId( SdPoint( pinSizeX/2, bodySizeX > 3000 ? partTop - bodySizeY / 2 : partTop+500) );
 
   SdDMasterPart::accept();
   }

@@ -37,6 +37,7 @@ Description
 #include "SdGraphTracedVia.h"
 #include "SdGraphText.h"
 #include "SdGraphIdent.h"
+#include "SdGraphValue.h"
 #include "SdGraphSymPin.h"
 #include "SdGraphPartPin.h"
 #include "SdGraphIdent.h"
@@ -277,6 +278,7 @@ SdObject *SdObject::build(QString type)
   if( type == QStringLiteral(SD_TYPE_REGION_FILLED)       ) return new SdGraphLinearRegionFilled();
   if( type == QStringLiteral(SD_TYPE_TEXT)                ) return new SdGraphText();
   if( type == QStringLiteral(SD_TYPE_IDENT)               ) return new SdGraphIdent();
+  if( type == QStringLiteral(SD_TYPE_VALUE)               ) return new SdGraphValue();
   if( type == QStringLiteral(SD_TYPE_SYM_PIN)             ) return new SdGraphSymPin();
   if( type == QStringLiteral(SD_TYPE_PART_PIN)            ) return new SdGraphPartPin();
   if( type == QStringLiteral(SD_TYPE_AREA)                ) return new SdGraphArea();

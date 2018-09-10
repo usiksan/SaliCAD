@@ -48,6 +48,7 @@ Description
 #define dctTraceVia       0x00400000ul
 #define dctTextDoc        0x00800000ul
 #define dctInheritance    0x01000000ul
+#define dctValue          0x02000000ul
 
 #define dctLocal          0x80000000ul //This flag setup for objects which must not be send to global storage
 
@@ -55,8 +56,8 @@ Description
 #define dctPicture       (dctLines | dctText)
 #define dctProjectItems  (dctSymbol | dctPart | dctSheet | dctPlate | dctComponent | dctInheritance)
 #define dctAll           MAX64_MASK
-#define dctSymbolObjects (dctPicture | dctSymPin )
-#define dctPartObjects   (dctPicture | dctPartPin)
+#define dctSymbolObjects (dctPicture | dctSymPin | dctIdent | dctValue )
+#define dctPartObjects   (dctPicture | dctPartPin | dctIdent | dctValue )
 #define dctSheetObjects  (dctPicture | dctSymImp | dctNetWire | dctNetName)
 #define dctPlateObjects  (dctPicture | dctPartImp | dctTraceVia | dctTraceRoad | dctTracePolygon )
 #define dctTraced        (dctPartImp | dctTraceVia | dctTraceRoad | dctTracePolygon )

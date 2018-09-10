@@ -24,7 +24,7 @@ class SdWEditorGraphPart : public SdWEditorGraph
 
     SdPItemPart *mPart; //Editing part
   public:
-    SdWEditorGraphPart(SdPItemPart *part, QWidget *parent);
+    SdWEditorGraphPart(SdPItemPart *part, QWidget *parent = nullptr);
 
     void setPart( SdPItemPart *part );
 
@@ -35,6 +35,7 @@ class SdWEditorGraphPart : public SdWEditorGraph
     virtual void           cmModePin() override;
     virtual void           cmModeReference() override;
     virtual void           cmModeOrigin() override;
+    virtual void           cmModeValue() override;
   };
 
 #endif // SDWEDITORGRAPHPART_H

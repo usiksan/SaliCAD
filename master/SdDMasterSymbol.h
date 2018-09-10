@@ -40,7 +40,7 @@ class SdDMasterSymbol : public QDialog
     void addCircle( int cx, int cy, int r );
 
     //Identifier append to "id" layer
-    void setId( SdPoint p, const QString id, int size = 350 );
+    void setId(SdPoint p, int size = 350 );
 
     //Pin append to "pin" layer
     void addPin( SdPoint org, int type, SdPoint pinNameOrg, const QString pinName, SdPoint pinNumberOrg );

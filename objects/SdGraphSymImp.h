@@ -20,6 +20,7 @@ Description
 #include "SdSymImpPin.h"
 #include "library/SdStringMap.h"
 #include "SdPItemComponent.h"
+#include "SdTextImplement.h"
 
 
 #define SD_TYPE_SYM_IMP "SymImp"
@@ -42,11 +43,12 @@ class SdGraphSymImp : public SdGraph
     SdPoint           mOrigin;       //Position of Implement
     SdPropSymImp      mProp;         //Implement properties
     SdRect            mOverRect;     //Over rect
-    QString           mIdentPrefix;  //Part identificator prefix
-    SdPropText        mIdentProp;    //Part identificator text properties
-    SdPoint           mIdentOrigin;  //Part identificator position in symbol context
-    SdPoint           mIdentPos;     //Part identificator position in sheet context
-    SdRect            mIdentRect;    //Part identificator over rect
+
+    //Symbol identification
+    SdTextImplement   mIdent;        //Symbol identificator text properties and position
+
+    //Symbol value
+    SdTextImplement   mValue;        //Symbol value text properties and position
 
     SdPItemComponent *mComponent;    //Object contains section information, pin assotiation info. May be same as mSymbol.
     SdPItemSymbol    *mSymbol;       //Symbol contains graph information
@@ -65,8 +67,9 @@ class SdGraphSymImp : public SdGraph
     SdGraphSymImp(SdPItemComponent *comp, SdPItemSymbol *sym, SdPItemPart *part, const SdStringMap &param, SdPoint pos, SdPropSymImp *prp);
 
 
-
     //Information
+    //Get implement transform matrix
+    QTransform      matrix() const;
     //Return current plate of section
     SdPItemPlate   *currentPlate() const;
     //Retrive origin point and sheet number
@@ -100,18 +103,31 @@ class SdGraphSymImp : public SdGraph
 
 
     //Ident edit
-    //Get full visual ident of section aka D4.2
-    QString         getIdent() const;
+    //Get ident prefix
+    QString         identPrefix() const;
+    //Get full visual ident of part aka D4 or R45
+    QString         ident() const;
+    //Get ident text properties
+    SdPropText      identProp() const { return mIdent.mProp; }
+    //Get idnet text position
+    SdPoint         identPosition() const { return mIdent.mOrigin; }
+    //Set ident text properties and position
+    void            identSet( const SdPropText &prp, SdPoint pos, SdUndo *undo );
     //Get separated ident information
-    QString         getIdentInfo( int &logNumber, int &logSection );
+    QString         identInfoGet( int &logNumber, int &logSection );
     //Set ident information
-    void            setIdentInfo( const QString prefix, int logNumber, int logSection );
-    //Move ident regarding symbol implement
-    void            moveIdent( SdPoint offset );
-    //Get ident properties
-    void            getIdentProp( SdProp &prop );
-    //Set ident properties
-    void            setIdentProp( const SdProp &prop );
+    void            identInfoSet(int logNumber, int logSection );
+
+
+    //Value
+    //Get full visual value of part aka smt32f417vgt
+    QString         value() const;
+    //Get value text properties
+    SdPropText      valueProp() const { return mValue.mProp; }
+    //Get value text position
+    SdPoint         valuePosition() const { return mValue.mOrigin; }
+    //Set value text properties and position
+    void            valueSet( const SdPropText &prp, SdPoint pos, SdUndo *undo );
 
 
 

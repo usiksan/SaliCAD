@@ -24,7 +24,7 @@ class SdWEditorGraphSymbol : public SdWEditorGraph
 
     SdPItemSymbol *mSymbol;
   public:
-    SdWEditorGraphSymbol( SdPItemSymbol *sym, QWidget *parent = 0 );
+    SdWEditorGraphSymbol( SdPItemSymbol *sym, QWidget *parent = nullptr );
 
     // SdWEditor interface
   public:
@@ -33,6 +33,7 @@ class SdWEditorGraphSymbol : public SdWEditorGraph
     virtual void           cmModePin() override;
     virtual void           cmModeReference() override;
     virtual void           cmModeOrigin() override;
+    virtual void           cmModeValue() override;
 
   };
 

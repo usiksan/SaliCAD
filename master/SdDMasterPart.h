@@ -38,7 +38,7 @@ class SdDMasterPart : public QDialog
     void addCircle( int cx, int cy, int r );
 
     //Identifier append to "id" layer
-    void setId( SdPoint p, const QString id, int size = 1000 );
+    void setId(SdPoint p, int size = 1000 );
 
     //Pin append to "pin" layer
     void setupSmdPin();

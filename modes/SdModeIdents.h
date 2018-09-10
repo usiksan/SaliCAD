@@ -66,7 +66,9 @@ Description
 #define MD_ROAD_ENTER      48
 #define MD_FRAGMENT        49
 #define MD_BROWSE_PART     50
-#define MD_LAST            51
+#define MD_SYM_VALUE       51
+#define MD_PART_VALUE      52
+#define MD_LAST            53
 
 //Properties tool bar id's
 #define PB_DEFAULT          0

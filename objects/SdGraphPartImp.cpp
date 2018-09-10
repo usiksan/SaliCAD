@@ -14,6 +14,7 @@ Description
 #include "SdPItemPlate.h"
 #include "SdGraphPartPin.h"
 #include "SdGraphIdent.h"
+#include "SdGraphValue.h"
 #include "SdGraphSymImp.h"
 #include "SdConverterImplement.h"
 #include "SdPItemPart.h"
@@ -211,15 +212,19 @@ SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *par
   //Implement properties
   mProp = *prp;
   if( part ) {
-    SdConverterImplement imp( mOrigin, part->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
-    QTransform t( imp.getMatrix() );
+    QTransform t( matrix() );
     mOverRect.set( t.mapRect(part->getOverRect(dctAll & (~dctIdent))) );//Over rect
-    mPrefix = part->getIdent()->getText();          //Part identificator prefix
-    mIdentProp = part->getIdent()->getPropText();   //Part identificator text properties
-    mIdentOrigin = part->getIdent()->getOrigin();   //Part identificator position in symbol context
-    mIdentPos = t.map( mIdentOrigin );    //Part identificator position in sheet context
-    mIdentRect.set( t.mapRect( part->getIdent()->getOverRect() )  );   //Part identificator over rect
+    mIdent.mProp = part->identGet()->getPropText();   //Part identificator text properties
+    mIdent.mOrigin = part->identGet()->getOrigin();   //Part identificator position in part context
+    mValue.mProp = part->valueGet()->getPropText();   //Part value text properties
+    mValue.mOrigin = part->valueGet()->getOrigin();   //Part value position in part context
     }
+  }
+
+QTransform SdGraphPartImp::matrix() const
+  {
+  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
+  return imp.getMatrix();
   }
 
 
@@ -232,10 +237,48 @@ SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *par
 
 
 //Get full visual ident of part aka D4 or R45
-QString SdGraphPartImp::getIdent() const
+QString SdGraphPartImp::ident() const
   {
-  return mPrefix + QString::number(mLogNumber);
+  return getIdentPrefix() + QString::number(mLogNumber);
   }
+
+
+
+
+
+
+//Set ident text properties and position
+void SdGraphPartImp::identSet(const SdPropText &prp, SdPoint pos, SdUndo *undo)
+  {
+  if( undo )
+    undo->propTextAndText( &mIdent.mProp, &mIdent.mOrigin, nullptr, nullptr );
+  mIdent.mProp = prp;
+  mIdent.mOrigin = pos;
+  }
+
+
+
+
+
+//Get full visual value of part aka smt32f417vgt
+QString SdGraphPartImp::value() const
+  {
+  return paramGet(stdParamValue);
+  }
+
+
+
+
+
+//Set value text properties and position
+void SdGraphPartImp::valueSet(const SdPropText &prp, SdPoint pos, SdUndo *undo)
+  {
+  if( undo )
+    undo->propTextAndText( &mValue.mProp, &mValue.mOrigin, nullptr, nullptr );
+  mValue.mProp = prp;
+  mValue.mOrigin = pos;
+  }
+
 
 
 
@@ -286,12 +329,9 @@ void SdGraphPartImp::accumUsedPins(SdPadMap &map) const
 
 
 
-QString SdGraphPartImp::getIdentPrefix()
+QString SdGraphPartImp::getIdentPrefix() const
   {
-  if( mSections.count() && mSections.at(0).mSymbol )
-    mPrefix = mSections.at(0).mSymbol->getIdent()->getText();
-
-  return mPrefix;
+  return paramGet( stdParamPrefix );
   }
 
 
@@ -377,7 +417,7 @@ void SdGraphPartImp::setIdentIndex(int index)
   int log = mSections.count() > 1 ? 1 : 0;
   for( int i = 0; i < mSections.count(); i++ )
     if( mSections.at(i).mSymImp )
-      mSections.at(i).mSymImp->setIdentInfo( mPrefix, mLogNumber, log++ );
+      mSections.at(i).mSymImp->identInfoSet( mLogNumber, log++ );
   }
 
 
@@ -431,10 +471,13 @@ QString SdGraphPartImp::getBomItemLine() const
 //Draw part without pads
 void SdGraphPartImp::drawWithoutPads(SdContext *cdx)
   {
-  cdx->text( mIdentPos, mIdentRect, getIdent(), mIdentProp );
   //Convertor for symbol implementation
   SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
   cdx->setConverter( &imp );
+
+  SdRect ov;
+  cdx->text( mIdent.mOrigin, ov, ident(), mIdent.mProp );
+  cdx->text( mValue.mOrigin, ov, value(), mValue.mProp );
 
   //Draw symbol except ident and pins
   mPart->forEach( dctAll & ~(dctPartPin | dctIdent), [cdx] (SdObject *obj) -> bool {
@@ -490,9 +533,6 @@ bool SdGraphPartImp::isSectionFree(int *section, SdPItemPart *part, SdPItemCompo
   for( int index = 0; index < mSections.count(); index++ )
     if( mSections[index].isFree(sym) ) {
       *section = index;
-      //Assign prefix if not assigned
-      if( mPrefix.isEmpty() )
-        mPrefix = sym->getIdent()->getText();
       return true;
       }
   return false;
@@ -608,11 +648,8 @@ void SdGraphPartImp::cloneFrom(const SdObject *src)
   mOrigin      = imp->mOrigin;      //Position of Implement
   mProp        = imp->mProp;        //Implement properties
   mOverRect    = imp->mOverRect;    //Over rect
-  mPrefix      = imp->mPrefix;      //Part identificator prefix
-  mIdentProp   = imp->mIdentProp;   //Part identificator text properties
-  mIdentOrigin = imp->mIdentOrigin; //Part identificator position in symbol context
-  mIdentPos    = imp->mIdentPos;    //Part identificator position in sheet context
-  mIdentRect   = imp->mIdentRect;   //Part identificator over rect
+  mIdent       = imp->mIdent;       //Part identificator
+  mValue       = imp->mValue;       //Part value
 
 //  SdPartImpPinTable      mPins;
 //  SdPartImpSectionTable  mSections;
@@ -631,11 +668,8 @@ void SdGraphPartImp::writeObject(QJsonObject &obj) const
   mOrigin.write( QStringLiteral("Org"), obj );
   mProp.write( obj );
   mOverRect.write( QStringLiteral("Over"), obj );
-  obj.insert( QStringLiteral("Prefix"), mPrefix );
-  mIdentProp.write( QStringLiteral("IdentProp"), obj );
-  mIdentOrigin.write( QStringLiteral("IdentOrg"), obj );
-  mIdentPos.write( QStringLiteral("IdentPos"), obj );
-  mIdentRect.write( QStringLiteral("IdentRect"), obj );
+  mIdent.write( QStringLiteral("Ident"), obj );
+  mValue.write( QStringLiteral("Value"), obj );
   writePtr( mPart, QStringLiteral("Part"), obj );
   writePtr( mComponent, QStringLiteral("Comp"), obj );
   //Write sections
@@ -663,11 +697,8 @@ void SdGraphPartImp::readObject(SdObjectMap *map, const QJsonObject obj)
   mOrigin.read( QStringLiteral("Org"), obj );
   mProp.read( obj );
   mOverRect.read( QStringLiteral("Over"), obj );
-  mPrefix = obj.value( QStringLiteral("Prefix") ).toString();
-  mIdentProp.read( QStringLiteral("IdentProp"), obj );
-  mIdentOrigin.read( QStringLiteral("IdentOrg"), obj );
-  mIdentPos.read( QStringLiteral("IdentPos"), obj );
-  mIdentRect.read( QStringLiteral("IdentRect"), obj );
+  mIdent.read( QStringLiteral("Ident"), obj );
+  mValue.read( QStringLiteral("Value"), obj );
   mPart = dynamic_cast<SdPItemPart*>( readPtr( QStringLiteral("Part"), map, obj )  );
   mComponent = dynamic_cast<SdPItemComponent*>( readPtr( QStringLiteral("Comp"), map, obj )  );
   //Read sections
@@ -694,7 +725,7 @@ void SdGraphPartImp::readObject(SdObjectMap *map, const QJsonObject obj)
 
 void SdGraphPartImp::saveState(SdUndo *undo)
   {
-  undo->partImp( &mOrigin, &mProp, &mLogNumber, &mOverRect, &mPrefix, &mIdentProp, &mIdentOrigin, &mIdentPos, &mIdentRect );
+  undo->partImp( &mOrigin, &mProp, &mLogNumber, &mOverRect );
   //Save state of all pins
   undo->partImpPins( &mPins );
   }
@@ -771,7 +802,8 @@ void SdGraphPartImp::selectByRect(const SdRect &r, SdSelector *selector)
 
 void SdGraphPartImp::setLayerUsage()
   {
-  mIdentProp.mLayer.setLayerUsage();
+  mIdent.mProp.mLayer.setLayerUsage();
+  mValue.mProp.mLayer.setLayerUsage();
   }
 
 
@@ -797,16 +829,20 @@ SdRect SdGraphPartImp::getOverRect() const
 
 void SdGraphPartImp::drawStratum(SdContext *dc, int stratum)
   {
-  //Draw ident in plate context
-  if( stratum == 0 || stratum == stmThrough )
-    dc->text( mIdentPos, mIdentRect, getIdent(), mIdentProp );
   //Convertor for part implementation
   SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
   dc->setConverter( &imp );
 
+  //Draw ident in plate context
+  SdRect ov;
+  if( stratum == 0 || stratum == stmThrough ) {
+    dc->text( mIdent.mOrigin, ov, ident(), mIdent.mProp );
+    dc->text( mValue.mOrigin, ov, value(), mValue.mProp );
+    }
+
   //Draw part except ident and pins
   if( stratum == 0 || stratum == stmThrough ) {
-    mPart->forEach( dctAll & ~(dctPartPin | dctIdent), [dc] (SdObject *obj) -> bool {
+    mPart->forEach( dctAll & ~(dctPartPin | dctIdent | dctValue), [dc] (SdObject *obj) -> bool {
       SdGraph *graph = dynamic_cast<SdGraph*>( obj );
       if( graph )
         graph->draw( dc );
@@ -899,7 +935,7 @@ bool SdGraphPartImp::getInfo(SdPoint p, QString &info, bool extInfo)
       if( !info.isEmpty() )
         return true;
       }
-    info = getIdent();
+    info = ident();
     if( mComponent )
       info.append( QString("  ") ).append( mComponent->getTitle() );
     return true;
@@ -946,8 +982,6 @@ void SdGraphPartImp::updatePinsPositions()
     }
   //Calculate new over rect
   mOverRect.set( t.mapRect( mPart->getOverRect(dctAll & (~dctIdent)) ) );
-  //Calculate new pos for ident
-  mIdentPos = t.map( mIdentOrigin );
   }
 
 

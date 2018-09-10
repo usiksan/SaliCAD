@@ -155,7 +155,7 @@ void SdDMasterSymbolConnector::accept()
   addLine( delimiter, cellHeight / 2, delimiter, -(pinCount * cellHeight - cellHeight / 2) );
 
   //id
-  setId( SdPoint( (pinSizeX + (numberSizeX+cellSizeX)/2) * dir, cellHeight), QString("X") );
+  setId( SdPoint( (pinSizeX + (numberSizeX+cellSizeX)/2) * dir, cellHeight) );
 
   SdDMasterSymbol::accept();
   }

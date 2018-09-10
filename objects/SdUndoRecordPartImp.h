@@ -31,19 +31,8 @@ class SdUndoRecordPartImp : public SdUndoRecord
     int                mLogNumberValue;
     SdRect            *mOverSrc;
     SdRect             mOver;
-    QString           *mPrefixSrc;
-    QString            mPrefix;
-    SdPropText        *mIdentPropSrc;
-    SdPropTextState    mIdentProp;
-    SdPoint           *mIdentOriginSrc;
-    SdPoint            mIdentOrigin;
-    SdPoint           *mIdentPosSrc;
-    SdPoint            mIdentPos;
-    SdRect            *mIdentRectSrc;
-    SdRect             mIdentRect;
   public:
-    SdUndoRecordPartImp( SdPoint *origin, SdPropPartImp *imp, int *logNumber, SdRect *over, QString *prefix, SdPropText *identProp,
-                         SdPoint *identOrigin, SdPoint *identPos, SdRect *identRect );
+    SdUndoRecordPartImp( SdPoint *origin, SdPropPartImp *imp, int *logNumber, SdRect *over );
 
     // SdUndoRecord interface
   public:
