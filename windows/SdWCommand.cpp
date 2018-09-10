@@ -231,6 +231,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   // cmModePack       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeLineSize   = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeRadiusSize = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
+  cmModeTable[MD_PART_IMP]   = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrt.png")), frame->tr("Insert part"), frame, SLOT(cmModeComponent()) );
   cmModeTable[MD_MOVE_PART]  = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrtPlace.png")), frame->tr("Move part"), frame, SLOT(cmModeMovePart()) );
   cmModeTable[MD_ROAD_ENTER] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPcbWire.png")), frame->tr("Road enter"), frame, SLOT(cmModeRoadEnter()) );
   cmModeTable[MD_POLYGON]    = menuInsertPcb->addAction( QIcon(QString(":/pic/objPolygon.png")), frame->tr("Polygon enter"), frame, SLOT(cmModePolygon()) );
@@ -532,6 +533,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barPcb->insertAction( nullptr, cmRulesEdit );
   barPcb->insertAction( nullptr, cmRulesCheck );
   barPcb->insertAction( nullptr, cmPads );
+  barPcb->insertAction( nullptr, cmModeTable[MD_PART_IMP] );
   barPcb->insertAction( nullptr, cmModeTable[MD_MOVE_PART] );
   barPcb->insertAction( nullptr, cmModeTable[MD_ROAD_ENTER] );
   barPcb->insertAction( nullptr, cmModeTable[MD_POLYGON] );

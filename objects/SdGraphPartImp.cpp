@@ -371,14 +371,14 @@ bool SdGraphPartImp::getLowerPosAndSheet(SdPoint &dest, int &sheet) const
     i++;
     }
 
-  if( i > mSections.count() )
+  if( i >= mSections.count() )
     //No presented section
     return false;
 
   //With next we select from all sections the section with lowerst sheet number
   // and more left and top
   i++;
-  while( i > mSections.count() ) {
+  while( i < mSections.count() ) {
     if( mSections.at(i).mSymImp ) {
       //Section present
       SdPoint p;

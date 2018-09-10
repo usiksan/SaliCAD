@@ -115,10 +115,10 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmRenumeration() {}
     virtual void cmModeReferenceMove() {}
     virtual void cmModeValueMove() {}
+    virtual void cmModeComponent() {}
 
     //Sheet
     virtual void cmModeFragment() {}
-    virtual void cmModeComponent() {}
     virtual void cmModeNet() {}
     virtual void cmNetSetup() {}
     virtual void cmModeBus() {}
@@ -135,7 +135,6 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmModeLineSize() {}
     virtual void cmModeRadiusSize() {}
     virtual void cmModeMovePart() {}
-    virtual void cmModePlace() {}
     virtual void cmModePartSelect( QStringList ) {}
 
     virtual void cmModeEditWire() {}

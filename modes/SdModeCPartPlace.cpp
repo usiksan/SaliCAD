@@ -551,7 +551,7 @@ int SdModeCPartPlace::getCursor() const
 
 int SdModeCPartPlace::getIndex() const
   {
-  return MD_PLACE;
+  return MD_MOVE_PART;
   }
 
 

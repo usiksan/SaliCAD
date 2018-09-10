@@ -27,6 +27,7 @@ Description
 #include "modes/SdModeSelect.h"
 #include "modes/SdModeCPlateIdentMove.h"
 #include "modes/SdModeCPlateValueMove.h"
+#include "modes/SdModeCPartImp.h"
 
 #include <QDebug>
 #include <QProgressDialog>
@@ -65,7 +66,11 @@ void SdWEditorGraphPlate::cmEditUndo()
 
 void SdWEditorGraphPlate::cmModeComponent()
   {
+  modeSet( new SdModeCPartImp( this, getProjectItem() ) );
   }
+
+
+
 
 void SdWEditorGraphPlate::cmNetSetup()
   {
@@ -89,9 +94,8 @@ void SdWEditorGraphPlate::cmModeMovePart()
 
 
 
-void SdWEditorGraphPlate::cmModePlace()
-  {
-  }
+
+
 
 void SdWEditorGraphPlate::cmModeEditWire()
   {

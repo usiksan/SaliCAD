@@ -94,17 +94,8 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
   if( stratum == 0 )
     return;
 
-  //Draw pad itself
-  SdLayer *layer = sdEnvir->mCacheForPad.getVisibleLayer(stratum);
-  if( layer != nullptr && layer->isVisible() ) {
-    dcx->setPen( 0, layer, 0 );
-    dcx->setBrush( layer->color() );
-    if( mIsCircle ) dcx->circleFill( SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth >> 1 );
-    else dcx->fillRect( SdRect( p.x() + mCenterX - (mDiametrWidth >> 1), p.y() + mCenterY - (mHeight >> 1), mDiametrWidth, mHeight) );
-    }
-
   //Draw pad mask
-  layer = sdEnvir->mCacheForMask.getVisibleLayer(stratum);
+  SdLayer *layer = sdEnvir->mCacheForMask.getVisibleLayer(stratum);
   if( layer != nullptr && layer->isVisible() && mMaskThreshold > 0 ) {
     dcx->setPen( 0, layer, 0 );
     dcx->setBrush( layer->color() );
@@ -138,6 +129,15 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
         //Single apreture
         dcx->fillRect( SdRect( p.x() + mCenterX - (w >> 1), p.y() + mCenterY - (h >> 1), w, h) );
       }
+    }
+
+  //Draw pad itself
+  layer = sdEnvir->mCacheForPad.getVisibleLayer(stratum);
+  if( layer != nullptr && layer->isVisible() ) {
+    dcx->setPen( 0, layer, 0 );
+    dcx->setBrush( layer->color() );
+    if( mIsCircle ) dcx->circleFill( SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth >> 1 );
+    else dcx->fillRect( SdRect( p.x() + mCenterX - (mDiametrWidth >> 1), p.y() + mCenterY - (mHeight >> 1), mDiametrWidth, mHeight) );
     }
 
   //Draw hole

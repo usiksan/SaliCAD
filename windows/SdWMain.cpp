@@ -1404,15 +1404,6 @@ void SdWMain::cmModeMovePart()
 
 
 
-void SdWMain::cmModePlace()
-  {
-  if( activeEditor() )
-    activeEditor()->cmModePlace();
-  }
-
-
-
-
 void SdWMain::cmModePartSelect(QStringList list)
   {
   if( activeEditor() )

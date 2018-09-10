@@ -242,7 +242,8 @@ SOURCES += \
     modes/SdModeCSheetIdentMove.cpp \
     modes/SdModeCSheetValueMove.cpp \
     modes/SdModeCPlateIdentMove.cpp \
-    modes/SdModeCPlateValueMove.cpp
+    modes/SdModeCPlateValueMove.cpp \
+    modes/SdModeCPartImp.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -481,7 +482,8 @@ HEADERS  += \
     modes/SdModeCSheetIdentMove.h \
     modes/SdModeCSheetValueMove.h \
     modes/SdModeCPlateIdentMove.h \
-    modes/SdModeCPlateValueMove.h
+    modes/SdModeCPlateValueMove.h \
+    modes/SdModeCPartImp.h
 
 DISTFILES += \
     license.txt

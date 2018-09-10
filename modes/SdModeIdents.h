@@ -52,7 +52,7 @@ Description
 #define MD_LINE_SIZE       34
 #define MD_RADIUS_SIZE     35
 #define MD_MOVE_PART       36
-#define MD_PLACE           37
+#define MD_PART_IMP        37
 #define MD_EDIT_WIRE       38
 #define MD_WIRE            39
 #define MD_POLYGON         40
