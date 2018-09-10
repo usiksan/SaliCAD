@@ -20,11 +20,12 @@ Description
 #include "objects/SdPlateNetList.h"
 
 //==============================================================================
-//--------------------- Режимы размещения --------------------------------------
-enum {             //Шаги режима размещения
-  psmNoSelect,     //Нет выделения
-  psmBeingSelRect, //Происходит выделение прямоугольником
-  psmMove,         //Перенос одного или нескольких элементов
+//--------------------- Placing modes [Режимы размещения] ----------------------
+//Steps of placement mode [Шаги режима размещения]
+enum {
+  psmNoSelect,     //No selection [Нет выделения]
+  psmBeingSelRect, //Being selection by rect [Происходит выделение прямоугольником]
+  psmMove,         //Move one or more comps [Перенос одного или нескольких элементов]
   psmLast };
 
 enum DPlaceModes {   //Способ выбора следующего компонента для размещения
@@ -33,6 +34,8 @@ enum DPlaceModes {   //Способ выбора следующего компо
   dpmDialog,         //С помощью диалога
   dpmSheet };        //Указанием в схеме
 
+
+
 enum DPlaceEndCode { //Коды завершения диалога выбора компонентов
   placeCancel,       //Прекратить режим
   placeSelect,       //Перейти к выбору компонента заданным способом
@@ -40,21 +43,7 @@ enum DPlaceEndCode { //Коды завершения диалога выбора
   placeGroup,        //Размещать группу компонентов по шаблону
   placeSheet };      //Выбрать элементы для размещения из схемы
 
-//struct DPlaceModeInfo {
-//  //int             placeMode;  //Режим размещения
-//  DString          prev;       //Предыдущий компонент
-//  DName            shem;       //Предыдущая схема
-//  DString          patSour;    //Список идентификаторов группы компонентов
-//  DString          patDest;    //
-//  DCompPlaceTable  table;      //Таблица компонентов
-//  DPlatePic       *plate;      //Обрабатываемая плата
-//  DWName           sheetName;  //Название схемы, из которой осуществляется выбор
 
-//  DPlaceModeInfo() : table( 30, 30 ), plate(0) { }
-
-//  void FindGroupBySour();
-//  bool CheckMatch( int level, int maxLevel, int sour[], int target[] );
-//  };
 
 
 class SdModeCPartPlace : public SdModeCommon

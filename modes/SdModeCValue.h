@@ -27,20 +27,20 @@ class SdModeCValue : public SdModeCTextual
 
     // SdMode interface
   public:
-    virtual void activate() override;
-    virtual void drawStatic(SdContext *ctx) override;
-    virtual void drawDynamic(SdContext *ctx) override;
-    virtual int getPropBarId() const override;
-    virtual void propGetFromBar() override;
-    virtual void propSetToBar() override;
-    virtual void enterPoint(SdPoint) override;
-    virtual void cancelPoint(SdPoint) override;
-    virtual void movePoint(SdPoint p) override;
+    virtual void    activate() override;
+    virtual void    drawStatic(SdContext *ctx) override;
+    virtual void    drawDynamic(SdContext *ctx) override;
+    virtual int     getPropBarId() const override;
+    virtual void    propGetFromBar() override;
+    virtual void    propSetToBar() override;
+    virtual void    enterPoint(SdPoint) override;
+    virtual void    cancelPoint(SdPoint) override;
+    virtual void    movePoint(SdPoint p) override;
     virtual QString getStepHelp() const override;
     virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;
-    virtual int getCursor() const override;
-    virtual int getIndex() const override;
+    virtual int     getCursor() const override;
+    virtual int     getIndex() const override;
   };
 
 #endif // SDMODECVALUE_H

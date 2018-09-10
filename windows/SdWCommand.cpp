@@ -197,14 +197,16 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
   menuInsertSheet = new QMenu( frame->tr("Sheet") );
-  cmRenumeration             = menuInsertSheet->addAction( QIcon(QStringLiteral(":/pic/renumeration.png")), frame->tr("Renumeration"), frame, SLOT(cmRenumeration()) );
+  cmRenumeration              = menuInsertSheet->addAction( QIcon(QStringLiteral(":/pic/renumeration.png")), frame->tr("Renumeration"), frame, SLOT(cmRenumeration()) );
   menuInsertSheet->addSeparator();
-  cmModeTable[MD_FRAGMENT]   = menuInsertSheet->addAction( QIcon(QString(":/pic/iconSheet.png")), frame->tr("Insert fragment"), frame, SLOT(cmModeFragment()) );
-  cmModeTable[MD_COMPONENT]  = menuInsertSheet->addAction( QIcon(QString(":/pic/objComp.png")), frame->tr("Insert component"), frame, SLOT(cmModeComponent()) );
-  cmModeTable[MD_NET]        = menuInsertSheet->addAction( QIcon(QString(":/pic/objWire.png")), frame->tr("Insert net wire"), frame, SLOT(cmModeNet()) );
-  cmModeTable[MD_NET_NAME]   = menuInsertSheet->addAction( QIcon(QString(":/pic/objWireName.png")), frame->tr("Insert net name"), frame, SLOT(cmModeNetName()) );
-  cmModeTable[MD_BUS]        = menuInsertSheet->addAction( QIcon(QString(":/pic/objBus.png")), frame->tr("Insert bus (many net)"), frame, SLOT(cmModeBus()) );
-  cmModeTable[MD_DISCONNECT] = menuInsertSheet->addAction( QIcon(QString(":/pic/objUnConnect.png")), frame->tr("Disconnect net"), frame, SLOT(cmModeDisconnect()) );
+  cmModeTable[MD_FRAGMENT]    = menuInsertSheet->addAction( QIcon(QString(":/pic/iconSheet.png")), frame->tr("Insert fragment"), frame, SLOT(cmModeFragment()) );
+  cmModeTable[MD_COMPONENT]   = menuInsertSheet->addAction( QIcon(QString(":/pic/objComp.png")), frame->tr("Insert component"), frame, SLOT(cmModeComponent()) );
+  cmModeTable[MD_NET]         = menuInsertSheet->addAction( QIcon(QString(":/pic/objWire.png")), frame->tr("Insert net wire"), frame, SLOT(cmModeNet()) );
+  cmModeTable[MD_NET_NAME]    = menuInsertSheet->addAction( QIcon(QString(":/pic/objWireName.png")), frame->tr("Insert net name"), frame, SLOT(cmModeNetName()) );
+  cmModeTable[MD_BUS]         = menuInsertSheet->addAction( QIcon(QString(":/pic/objBus.png")), frame->tr("Insert bus (many net)"), frame, SLOT(cmModeBus()) );
+  cmModeTable[MD_DISCONNECT]  = menuInsertSheet->addAction( QIcon(QString(":/pic/objUnConnect.png")), frame->tr("Disconnect net"), frame, SLOT(cmModeDisconnect()) );
+  cmModeTable[MD_SHEET_IDENT] = menuInsertSheet->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Move ident of components"), frame, SLOT(cmModeReferenceMove()) );
+  cmModeTable[MD_SHEET_VALUE] = menuInsertSheet->addAction( QIcon(QString(":/pic/objValue.png")), frame->tr("Move value of components"), frame, SLOT(cmModeValueMove()) );
   //cmModeTable[MD_PCB_AREA]   = menuInsertSheet->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
 //  cmModeTable[MD_FIELD]      = menuInsertSheet->addAction( QIcon(QString(":/pic/objField.png")), frame->tr("Field"), frame, SLOT(cmModeF) );
 
@@ -237,6 +239,8 @@ void SdWCommand::createMenu(SdWMain *frame)
   //  cmModeWire       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModeDeleteWire = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmModePad        = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
+  cmModeTable[MD_PLATE_IDENT] = menuInsertSheet->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Move ident of components"), frame, SLOT(cmModeReferenceMove()) );
+  cmModeTable[MD_PLATE_VALUE] = menuInsertSheet->addAction( QIcon(QString(":/pic/objPrtValue.png")), frame->tr("Move value of components"), frame, SLOT(cmModeValueMove()) );
 
 
 
@@ -511,6 +515,8 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barSheet->insertAction( nullptr, cmModeTable[MD_BUS] );
   barSheet->insertAction( nullptr, cmModeTable[MD_DISCONNECT] );
   barSheet->insertAction( nullptr, cmModeTable[MD_NET_NAME] );
+  barSheet->insertAction( nullptr, cmModeTable[MD_SHEET_IDENT] );
+  barSheet->insertAction( nullptr, cmModeTable[MD_SHEET_VALUE] );
 
   frame->addToolBar( barSheet );
 
@@ -529,6 +535,8 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barPcb->insertAction( nullptr, cmModeTable[MD_MOVE_PART] );
   barPcb->insertAction( nullptr, cmModeTable[MD_ROAD_ENTER] );
   barPcb->insertAction( nullptr, cmModeTable[MD_POLYGON] );
+  barPcb->insertAction( nullptr, cmModeTable[MD_PLATE_IDENT] );
+  barPcb->insertAction( nullptr, cmModeTable[MD_PLATE_VALUE] );
 
 
   frame->addToolBar( barPcb );

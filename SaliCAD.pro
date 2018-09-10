@@ -238,7 +238,9 @@ SOURCES += \
     objects/SdUndoRecordRules.cpp \
     objects/SdTextImplement.cpp \
     objects/SdGraphValue.cpp \
-    modes/SdModeCValue.cpp
+    modes/SdModeCValue.cpp \
+    modes/SdModeCSheetIdentMove.cpp \
+    modes/SdModeCSheetValueMove.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -473,7 +475,9 @@ HEADERS  += \
     objects/SdUndoRecordRules.h \
     objects/SdTextImplement.h \
     objects/SdGraphValue.h \
-    modes/SdModeCValue.h
+    modes/SdModeCValue.h \
+    modes/SdModeCSheetIdentMove.h \
+    modes/SdModeCSheetValueMove.h
 
 DISTFILES += \
     license.txt

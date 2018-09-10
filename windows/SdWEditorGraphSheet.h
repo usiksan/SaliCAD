@@ -61,7 +61,11 @@ class SdWEditorGraphSheet : public SdWEditorGraph
 
     virtual void cmModeNetList() override;
 
+    //Perform project renumeration of component references
     virtual void           cmRenumeration() override;
+
+    //Move component reference
+    virtual void           cmModeReferenceMove() override;
 
   };
 

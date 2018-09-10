@@ -164,6 +164,8 @@ class SdWMain : public QMainWindow
 
     //Sheet and pcb
     void cmRenumeration();
+    void cmModeReferenceMove();
+    void cmModeValueMove();
 
     //Sheet
     void cmModeFragment();

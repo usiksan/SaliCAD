@@ -1227,6 +1227,26 @@ void SdWMain::cmRenumeration()
 
 
 
+void SdWMain::cmModeReferenceMove()
+  {
+  if( activeEditor() )
+    activeEditor()->cmModeReferenceMove();
+  }
+
+
+
+
+
+void SdWMain::cmModeValueMove()
+  {
+  if( activeEditor() )
+    activeEditor()->cmModeValueMove();
+  }
+
+
+
+
+
 
 
 void SdWMain::cmModeFragment()

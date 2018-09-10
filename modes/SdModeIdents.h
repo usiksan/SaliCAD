@@ -68,7 +68,11 @@ Description
 #define MD_BROWSE_PART     50
 #define MD_SYM_VALUE       51
 #define MD_PART_VALUE      52
-#define MD_LAST            53
+#define MD_SHEET_IDENT     53
+#define MD_PLATE_IDENT     54
+#define MD_SHEET_VALUE     55
+#define MD_PLATE_VALUE     56
+#define MD_LAST            57
 
 //Properties tool bar id's
 #define PB_DEFAULT          0
