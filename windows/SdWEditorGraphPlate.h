@@ -60,6 +60,12 @@ class SdWEditorGraphPlate : public SdWEditorGraph
     //Sheet and pcb
     virtual void           cmRenumeration() override;
 
+    //Move component reference
+    virtual void           cmModeReferenceMove() override;
+
+    //Move component value
+    virtual void           cmModeValueMove() override;
+
     virtual void           cmFileExport() override;
   };
 

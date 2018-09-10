@@ -240,7 +240,9 @@ SOURCES += \
     objects/SdGraphValue.cpp \
     modes/SdModeCValue.cpp \
     modes/SdModeCSheetIdentMove.cpp \
-    modes/SdModeCSheetValueMove.cpp
+    modes/SdModeCSheetValueMove.cpp \
+    modes/SdModeCPlateIdentMove.cpp \
+    modes/SdModeCPlateValueMove.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -477,7 +479,9 @@ HEADERS  += \
     objects/SdGraphValue.h \
     modes/SdModeCValue.h \
     modes/SdModeCSheetIdentMove.h \
-    modes/SdModeCSheetValueMove.h
+    modes/SdModeCSheetValueMove.h \
+    modes/SdModeCPlateIdentMove.h \
+    modes/SdModeCPlateValueMove.h
 
 DISTFILES += \
     license.txt

@@ -23,7 +23,7 @@ class SdModeCSheetIdentMove : public SdModeCommon
   protected:
     SdObjectPtrList mBehindCursorTable; //Список объектов под курсором
     int             mBehindCursorIndex; //Индекс объекта среди объектов под курсором
-    SdGraphSymImp  *mImp;
+    SdGraph        *mImp;
     QTransform      mImpMatrix;
     SdPropText      mPropSaved;
     SdPoint         mPositionSaved;
@@ -57,6 +57,7 @@ class SdModeCSheetIdentMove : public SdModeCommon
   protected:
     virtual void    setProp( const SdPropText &prp, SdPoint pos, SdUndo *undo );
     virtual void    getProp();
+    virtual quint64 getMask() const { return dctSymImp; }
   };
 
 #endif // SDMODECSHEETIDENTMOVE_H

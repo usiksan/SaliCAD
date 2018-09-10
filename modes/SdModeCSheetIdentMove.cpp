@@ -106,12 +106,10 @@ void SdModeCSheetIdentMove::enterPoint(SdPoint point)
   else {
     if( mBehindCursorTable.count() ) {
       //There are components behind cursor [Под курсором есть компоненты]
-      SdPtr<SdGraphSymImp> sym(mBehindCursorTable[mBehindCursorIndex]);
+      SdPtr<SdGraph> sym(mBehindCursorTable[mBehindCursorIndex]);
       if( sym.isValid() ) {
         //Retrive symbol impelement
         mImp = sym.ptr();
-        //Get implement matrix
-        mImpMatrix = mImp->matrix().inverted();
         //Store properties
         getProp();
         mPropText = mPropSaved;
@@ -161,8 +159,8 @@ void SdModeCSheetIdentMove::movePoint(SdPoint point)
     }
   else {
     mBehindCursorTable.clear();     //Очистить таблицу компонентов под курсором
-    mObject->forEach( dctSymImp, [this,point] (SdObject *obj) -> bool {
-      SdPtr<SdGraphSymImp> imp( obj );
+    mObject->forEach( getMask(), [this,point] (SdObject *obj) -> bool {
+      SdPtr<SdGraph> imp( obj );
       if( imp.isValid() && imp->behindCursor(point) )
         mBehindCursorTable.append( imp.ptr() );
       return true;
@@ -191,8 +189,8 @@ SdPoint SdModeCSheetIdentMove::enterPrev()
 
 bool SdModeCSheetIdentMove::getInfo(SdPoint p, QString &info)
   {
-  mObject->forEach( dctSymImp, [p,&info] (SdObject *obj) -> bool {
-    SdPtr<SdGraphSymImp> imp(obj);
+  mObject->forEach( getMask(), [p,&info] (SdObject *obj) -> bool {
+    SdPtr<SdGraph> imp(obj);
     if( imp )
       return !imp->getInfo( p, info, true );
     return true;
@@ -287,7 +285,9 @@ void SdModeCSheetIdentMove::keyDown(int key, QChar ch)
 
 void SdModeCSheetIdentMove::setProp(const SdPropText &prp, SdPoint pos, SdUndo *undo)
   {
-  mImp->identSet( prp, pos, undo );
+  SdPtr<SdGraphSymImp> imp(mImp);
+  if( imp.isValid() )
+    imp->identSet( prp, pos, undo );
   }
 
 
@@ -295,8 +295,14 @@ void SdModeCSheetIdentMove::setProp(const SdPropText &prp, SdPoint pos, SdUndo *
 
 void SdModeCSheetIdentMove::getProp()
   {
-  mPropSaved     = mImp->identProp();
-  mPositionSaved = mImp->identPosition();
+  SdPtr<SdGraphSymImp> imp(mImp);
+  if( imp.isValid() ) {
+    //Get implement matrix
+    mImpMatrix     = imp->matrix().inverted();
+    //Get properties
+    mPropSaved     = imp->identProp();
+    mPositionSaved = imp->identPosition();
+    }
   }
 
 

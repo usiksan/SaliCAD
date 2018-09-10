@@ -25,6 +25,8 @@ Description
 #include "modes/SdModeCPartPlace.h"
 #include "modes/SdModeCPolygonEnter.h"
 #include "modes/SdModeSelect.h"
+#include "modes/SdModeCPlateIdentMove.h"
+#include "modes/SdModeCPlateValueMove.h"
 
 #include <QDebug>
 #include <QProgressDialog>
@@ -261,6 +263,25 @@ void SdWEditorGraphPlate::cmRenumeration()
   dirtyCashe();
   dirtyProject();
   update();
+  }
+
+
+
+
+
+//Move component reference
+void SdWEditorGraphPlate::cmModeReferenceMove()
+  {
+  modeSet( new SdModeCPlateIdentMove( this, getProjectItem() )  );
+  }
+
+
+
+
+//Move component value
+void SdWEditorGraphPlate::cmModeValueMove()
+  {
+  modeSet( new SdModeCPlateValueMove( this, getProjectItem() )  );
   }
 
 

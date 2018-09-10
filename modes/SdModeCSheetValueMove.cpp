@@ -39,7 +39,7 @@ QString SdModeCSheetValueMove::getModeThema() const
 QString SdModeCSheetValueMove::getStepThema() const
   {
   if( getStep() )
-    return QStringLiteral( MODE_HELP "ModeCSheetValueMove.htm#placeIdent" );
+    return QStringLiteral( MODE_HELP "ModeCSheetValueMove.htm#placeValue" );
   return QStringLiteral( MODE_HELP "ModeCSheetValueMove.htm#selectComp" );
   }
 
@@ -57,7 +57,9 @@ int SdModeCSheetValueMove::getIndex() const
 
 void SdModeCSheetValueMove::setProp(const SdPropText &prp, SdPoint pos, SdUndo *undo)
   {
-  mImp->valueSet( prp, pos, undo );
+  SdPtr<SdGraphSymImp> imp(mImp);
+  if( imp.isValid() )
+    imp->valueSet( prp, pos, undo );
   }
 
 
@@ -65,8 +67,13 @@ void SdModeCSheetValueMove::setProp(const SdPropText &prp, SdPoint pos, SdUndo *
 
 void SdModeCSheetValueMove::getProp()
   {
-  mPropSaved     = mImp->valueProp();
-  mPositionSaved = mImp->valuePosition();
+  SdPtr<SdGraphSymImp> imp(mImp);
+  if( imp.isValid() ) {
+    //Get implement matrix
+    mImpMatrix     = imp->matrix().inverted();
+    mPropSaved     = imp->valueProp();
+    mPositionSaved = imp->valuePosition();
+    }
   }
 
 
