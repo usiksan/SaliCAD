@@ -43,6 +43,8 @@ class SdGraphTracedRoad : public SdGraphTraced
     SdGraphTracedRoad();
     SdGraphTracedRoad( const SdPropRoad &prp, SdPoint a, SdPoint b );
 
+    SdSegment          segment() const { return mSegment; }
+
     // SdObject interface
   public:
     virtual QString    getType() const override;

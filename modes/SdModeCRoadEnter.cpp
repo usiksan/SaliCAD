@@ -37,6 +37,7 @@ void SdModeCRoadEnter::reset()
   {
   setDirtyCashe();
   setStep( sFirstPoint );
+  mEnterPath.clear();
   }
 
 
@@ -63,8 +64,16 @@ void SdModeCRoadEnter::drawDynamic(SdContext *ctx)
       ctx->line( mBarMiddle, mBarLast );
 
     //When enter path smart point is nearest unconnected pin
-    if( sdEnvir->mIsWireSmart )
-      ctx->smartPoint( mSmartPoint, snapEndPoint );
+    if( sdEnvir->mIsWireSmart ) {
+      ctx->smartPoint( mTargetPoint, snapEndPoint );
+
+      //Show smart path if present
+      if( mSmartPath.count() > 1 ) {
+        ctx->setPen( mProp.mWidth, sdEnvir->getSysColor(scSmart), dltSolid );
+        for( int i = 1; i < mSmartPath.count(); i++ )
+          ctx->line( mSmartPath.at(i-1), mSmartPath.at(i) );
+        }
+      }
 
     //Draw catch point if present
     int catchSize = mEditor->gridGet().x() * 2;
@@ -156,49 +165,21 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
     //Entered next road path point
     if( mFirst == p ) {
       //Circle stratum change
-      SdStratum st = mStack.stratumNext( mProp.mStratum );
-      if( st == mProp.mStratum ) {
-        //No stratum stack at this point
-        //Try insert Via
-        if( !isBarriersContains( mPads, p) ) {
-          //Via is available at this point - insert
-          mViaProp.mNetName = mProp.mNetName;
-          qDebug() << "Via inserted" << mViaProp.mPadType.str() << mViaProp.mNetName.str();
-          addPic( new SdGraphTracedVia( p, mViaProp ), QObject::tr("Insert trace via") );
-          mMiddle = mFirst;
-          mBarMiddle = mFirst;
-          mLast = mFirst;
-          mBarLast = mFirst;
-          mStack = mViaProp.mStratum;
-          mProp.mStratum = mStack.stratumNext(mProp.mStratum);
-          //plate()->ruleBlockForNet( mProp.mStratum.getValue(), mProp.mNetName.str(), mRule );
-          //mProp.mWidth   = mRule.mRules[ruleRoadWidth];
-          }
-        }
-      else {
-        //Start point is on through pin. Therefore we simple change stratum
-        qDebug() << "Stratum change without via";
-        mProp.mStratum = st;
-        plate()->ruleBlockForNet( mProp.mNetName.str(), mRule );
-        mProp.mWidth   = mRule.mRules[ruleRoadWidth];
-        }
-      //Update rules
-      propSetToBar();
-      rebuildBarriers();
-      calcNextSmartPoint();
+      changeTraceLayer();
       }
     else {
       if( mCatch == catchFinish && mBarMiddle == mMiddle && mBarLast == mLast ) {
         //Connection complete. Append both segments and stop enter
         if( mFirst != mMiddle )
-          addPic( new SdGraphTracedRoad( mProp, mFirst, mMiddle ), QObject::tr("Insert trace road") );
+          addTrace( new SdGraphTracedRoad( mProp, mFirst, mMiddle ), QObject::tr("Insert trace road") );
         if( mMiddle != mLast )
-          addPic( new SdGraphTracedRoad( mProp, mMiddle, mLast ), QObject::tr("Insert trace road") );
+          addTrace( new SdGraphTracedRoad( mProp, mMiddle, mLast ), QObject::tr("Insert trace road") );
         setStep( sFirstPoint );
+        mEnterPath.clear();
         }
       else {
         //Append new segment
-        addPic( new SdGraphTracedRoad( mProp, mFirst, mBarMiddle ), QObject::tr("Insert trace road") );
+        addTrace( new SdGraphTracedRoad( mProp, mFirst, mBarMiddle ), QObject::tr("Insert trace road") );
         plate()->setDirtyRatNet();
         mFirst = mBarMiddle;
         rebuildBarriers();
@@ -221,12 +202,12 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
       getNetOnPoint( mFirst, stmThrough, &netName, &destStratum );
 
     if( !netName.isEmpty() ) {
-      //mFirst = p;
+      mSource = mFirst;
       mMiddle = mFirst;
       mBarMiddle = mFirst;
       mLast = mFirst;
       mBarLast = mFirst;
-      mStack = destStratum;
+      mStack = destStratum & plate()->stratumMask();
       mProp.mNetName = netName;
       mProp.mStratum = mStack.stratumFirst(mProp.mStratum);
       plate()->ruleBlockForNet( mProp.mNetName.str(), mRule );
@@ -234,7 +215,11 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
       propSetToBar();
       setStep(sNextPoint);
       rebuildBarriers();
+      //Find destignate point
       calcNextSmartPoint();
+      if( !mTargetPoint.isFar() )
+        //Try build smart path
+        buildSmartPath( mFirst, mTargetPoint );
       }
     }
   setDirtyCashe();
@@ -249,8 +234,34 @@ void SdModeCRoadEnter::cancelPoint(SdPoint)
   if( getStep() ) {
     setDirtyCashe();
     setStep( sFirstPoint );
+    mEnterPath.clear();
     }
   else cancelMode();
+  }
+
+
+
+
+
+SdPoint SdModeCRoadEnter::enterPrev()
+  {
+  if( mSmartPath.count() > 1 ) {
+    if( mFirst != mMiddle )
+      addTrace( new SdGraphTracedRoad( mProp, mFirst, mMiddle ), QObject::tr("Insert trace road") );
+    if( mMiddle != mLast )
+      addTrace( new SdGraphTracedRoad( mProp, mMiddle, mLast ), QObject::tr("Insert trace road") );
+    for( int i = 1; i < mSmartPath.count(); i++ )
+      if( mSmartPath.at(i-1) != mSmartPath.at(i) )
+        addTrace( new SdGraphTracedRoad( mProp, mSmartPath.at(i-1), mSmartPath.at(i) ), QObject::tr("Insert trace road") );
+    mSmartPath.clear();
+    setStep( sFirstPoint );
+    mEnterPath.clear();
+    //Signal plate to rebuild ratNets
+    plate()->setDirtyRatNet();
+    setDirtyCashe();
+    setDirty();
+    }
+  return mPrevMove;
   }
 
 
@@ -260,34 +271,35 @@ void SdModeCRoadEnter::cancelPoint(SdPoint)
 void SdModeCRoadEnter::movePoint(SdPoint p)
   {
   if( getStep() == sNextPoint ) {
+    mPrevMove = p;
     mLast = p;
     SdPoint grid = mEditor->gridGet();
     //Find destignate point
     calcNextSmartPoint();
-    if( !mSmartPoint.isFar() ) {
+    if( !mTargetPoint.isFar() ) {
       //Calculate catch
-      SdPoint offset = mSmartPoint - p;
+      SdPoint offset = mTargetPoint - p;
       int adx = abs(offset.x());
       int ady = abs(offset.y());
       //Check finish
       if( adx < grid.x() && ady < grid.y() ) {
-        mLast = mSmartPoint;
+        mLast = mTargetPoint;
         mCatch = catchFinish;
         }
       //Check orthogonal x axiz
       else if( ady < grid.y() ) {
-        mLast.setY( mSmartPoint.y() );
+        mLast.setY( mTargetPoint.y() );
         mCatch = catchOrthoX;
         }
       //Check orthogonal y axiz
       else if( adx < grid.y() ) {
-        mLast.setX( mSmartPoint.x() );
+        mLast.setX( mTargetPoint.x() );
         mCatch = catchOrthoY;
         }
       //Check diagonal
       else if( abs( adx - ady ) < qMin(grid.x(),grid.y()) ) {
         //Align through axiz X
-        mLast.setX( mSmartPoint.x() - (offset.x() > 0 ? ady : -ady) );
+        mLast.setX( mTargetPoint.x() - (offset.x() > 0 ? ady : -ady) );
         if( (offset.x() >= 0 && offset.y() >= 0) || (offset.x() < 0 && offset.y() < 0) )
           mCatch = catchDiagQuad1;
         else
@@ -305,10 +317,22 @@ void SdModeCRoadEnter::movePoint(SdPoint p)
     else
       //Vertex not available. Last point is middle barriered
       mBarLast = mBarMiddle;
+
+    if( mBarLast == mLast )
+      //Try build smart path
+      buildSmartPath( mLast, mTargetPoint );
+    else
+      //No smart path available
+      mSmartPath.clear();
     }
   else {
     mPrevMove = p;
     calcFirstSmartPoint();
+    //Find destignate point
+//    calcNextSmartPoint();
+//    if( !mTargetPoint.isFar() )
+//      //Try build smart path
+//      buildSmartPath( mFirst, mTargetPoint );
     }
   update();
   }
@@ -347,6 +371,49 @@ int SdModeCRoadEnter::getCursor() const
 int SdModeCRoadEnter::getIndex() const
   {
   return MD_ROAD_ENTER;
+  }
+
+
+
+
+void SdModeCRoadEnter::keyDown(int key, QChar ch)
+  {
+  if( key == Qt::Key_Backspace ) {
+    //Remove last segment
+    if( mEnterPath.count() ) {
+      SdPtr<SdGraphTracedRoad> road( mEnterPath.last() );
+      if( road.isValid() ) {
+        mFirst = road->segment().getP1();
+        //mStack = mViaProp.mStratum;
+        //mProp.mStratum = mStack.stratumNext(mProp.mStratum);
+        }
+      else {
+        SdPtr<SdGraphTracedVia> via( mEnterPath.last() );
+        if( via.isValid() ) {
+          mFirst = via->position();
+          }
+        }
+      mEnterPath.last()->deleteObject( mUndo );
+      mEnterPath.removeLast();
+      if( mEnterPath.count() ) {
+        //Get out properties of segment or via
+        }
+      setDirty();
+      setDirtyCashe();
+      plate()->setDirtyRatNet();
+      rebuildBarriers();
+      movePoint( mPrevMove );
+      }
+    }
+  else if( key == Qt::Key_F6 ) {
+    //Change layer. If nessesery - add via
+    if( getStep() == sNextPoint ) {
+      changeTraceLayer();
+      setDirtyCashe();
+      update();
+      }
+    }
+  SdModeCommon::keyDown( key, ch );
   }
 
 
@@ -391,8 +458,8 @@ void SdModeCRoadEnter::calcNextSmartPoint()
   {
   //Find nearest dest point
   SdSnapInfo info;
-  info.mSour = mLast;
-  info.mExclude = mFirst;
+  info.mSour = mFirst;
+  info.mExclude = mSource;
   //info.mSnapMask = snapNearestNetNet | snapNearestNetPin | snapExcludeSour;
   info.mSnapMask = snapNearestNetPin | snapExcludeSour | snapExcludeExcl;
   info.mStratum = mProp.mStratum;
@@ -407,7 +474,7 @@ void SdModeCRoadEnter::calcNextSmartPoint()
 
   if( res ) {
     //Destignation pin
-    mSmartPoint = info.mDest;
+    mTargetPoint = info.mDest;
     //qDebug() << mSmartPoint;
     //Middle point to smartPoint
 //    SdPoint delta = mSmartPoint - mMiddle;
@@ -418,7 +485,7 @@ void SdModeCRoadEnter::calcNextSmartPoint()
     }
   else
     //Set illegal point as smart
-    mSmartPoint = SdPoint::far();
+    mTargetPoint = SdPoint::far();
 
   }
 
@@ -474,6 +541,166 @@ bool SdModeCRoadEnter::isBarriersContains(const SdBarrierList &bar, SdPoint p) c
 
 
 
+
+
+//Check if mSmartPath available
+bool SdModeCRoadEnter::checkSmartPath() const
+  {
+  //Check every point pair. If any fail then all test is fail
+  for( int i = 1; i < mSmartPath.count(); i++ )
+    if( mSmartPath.at(i-1) != mSmartPath.at(i) && checkRoad( mSmartPath.at(i-1), mSmartPath.at(i) ) != mSmartPath.at(i) )
+      return false;
+  //All path corrected
+  return true;
+  }
+
+
+
+
+
+//Check if four vertex path available
+bool SdModeCRoadEnter::checkSmartPath4(SdPoint p1, SdPoint p2, SdPoint p3, SdPoint p4)
+  {
+  mSmartPath.append( p1 );
+  if( p1 != p2 )
+    mSmartPath.append( p2 );
+  if( p2 != p3 )
+    mSmartPath.append( p3 );
+  if( p3 != p4 )
+    mSmartPath.append( p4 );
+  return checkSmartPath();
+  }
+
+
+
+
+
+//Try build smart path
+void SdModeCRoadEnter::buildSmartPath(SdPoint p1, SdPoint p2)
+  {
+  mSmartPath.clear();
+  if( p1 == p2 )
+    return;
+  //Offset point p2 referenced to p1
+  int dx = p2.x() - p1.x();
+  int dy = p2.y() - p1.y();
+  //Orthogonal distance between two points p1 and p2
+  int adx = abs(dx);
+  int ady = abs(dy);
+  //First - with one vertex
+  SdPoint mp = calcMiddlePoint( p1, p2, sdGlobalProp->mWireEnterType );
+  if( checkSmartPath4( p1, mp, p2, p2 ) )
+    return;
+
+  //Fail
+  mSmartPath.clear();
+
+  if( adx == 0 || ady == 0 )
+    return;
+
+  //Try with two vertex
+  SdPoint v1,v2;
+  for( int i = 0; i < 2; i++ ) {
+    int sp = qMin(adx,ady);
+    int diag = sp / (3 + i);
+    int dsx = dx < 0 ? dx + diag : dx - diag;
+    int dsy = dy < 0 ? dy + diag : dy - diag;
+    v1 = p1;
+    v2 = p2;
+    //By X path first
+    v1.rx() += dsx;
+    v2.ry() -= dsy;
+    if( checkSmartPath4( p1, v1, v2, p2 ) )
+      return;
+
+    //Fail
+    mSmartPath.clear();
+
+    v1 = p1;
+    v2 = p2;
+    //By Y path first
+    v1.ry() += dsy;
+    v2.rx() -= dsx;
+    if( checkSmartPath4( p1, v1, v2, p2 ) )
+      return;
+
+    //Fail
+    mSmartPath.clear();
+
+    //By diagonal on middle
+    dsx = dx < 0 ? -sp : sp;
+    dsy = dy < 0 ? -sp : sp;
+    int ortho = (qMax(adx,ady) - sp) / (2 + i);
+    v1 = p1;
+    if( adx > ady )
+      v1.rx() += dx < 0 ? -ortho : ortho;
+    else
+      v1.ry() += dy < 0 ? -ortho : ortho;
+    v2 = v1;
+    v2.rx() += dsx;
+    v2.ry() += dsy;
+    if( checkSmartPath4( p1, v1, v2, p2 ) )
+      return;
+
+    //Fail
+    mSmartPath.clear();
+    }
+
+  }
+
+
+
+
+
+void SdModeCRoadEnter::addTrace(SdObject *obj , const QString msg)
+  {
+  addPic( obj, msg );
+  mEnterPath.append( obj );
+  }
+
+
+
+
+//Change trace layer
+void SdModeCRoadEnter::changeTraceLayer()
+  {
+  //Circle stratum change
+  SdStratum st = mStack.stratumNext( mProp.mStratum );
+  if( st == mProp.mStratum ) {
+    //No stratum stack at this point
+    //Try insert Via
+    if( !isBarriersContains( mPads, mFirst) ) {
+      //Via is available at this point - insert
+      mViaProp.mNetName = mProp.mNetName;
+      qDebug() << "Via inserted" << mViaProp.mPadType.str() << mViaProp.mNetName.str();
+      addTrace( new SdGraphTracedVia( mFirst, mViaProp ), QObject::tr("Insert trace via") );
+      mMiddle = mFirst;
+      mBarMiddle = mFirst;
+      mLast = mFirst;
+      mBarLast = mFirst;
+      mStack = mViaProp.mStratum;
+      mProp.mStratum = mStack.stratumNext(mProp.mStratum);
+      //plate()->ruleBlockForNet( mProp.mStratum.getValue(), mProp.mNetName.str(), mRule );
+      //mProp.mWidth   = mRule.mRules[ruleRoadWidth];
+      }
+    }
+  else {
+    //Start point is on through pin. Therefore we simple change stratum
+    qDebug() << "Stratum change without via";
+    mProp.mStratum = st;
+    plate()->ruleBlockForNet( mProp.mNetName.str(), mRule );
+    mProp.mWidth   = mRule.mRules[ruleRoadWidth];
+    }
+  //Update rules
+  propSetToBar();
+  rebuildBarriers();
+  calcNextSmartPoint();
+  }
+
+
+
+
+
 void SdModeCRoadEnter::rebuildBarriers()
   {
   //Accum barriers for current segment
@@ -490,4 +717,8 @@ void SdModeCRoadEnter::rebuildBarriers()
     mRule.mRules[ruleRoadWidth] = r;
   plate()->accumBarriers( dctTraced, mPads, mViaProp.mStratum, rulePadPad, mRule );
   }
+
+
+
+
 

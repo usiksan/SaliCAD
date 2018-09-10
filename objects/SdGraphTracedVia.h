@@ -15,6 +15,7 @@ class SdGraphTracedVia : public SdGraphTraced
     SdGraphTracedVia( SdPoint pos, const SdPropVia &prp );
     //SdGraphTracedVia( const QString netName, SdStratum stratum, const QString padType, SdPoint pos );
 
+    SdPoint           position() const { return mPosition; }
     // SdObject interface
   public:
     virtual QString   getType() const override;

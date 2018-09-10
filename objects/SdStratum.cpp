@@ -127,3 +127,14 @@ int SdStratum::stratumIndex(int stratum)
     if( stratum & (1 << i) ) return i;
   return 0;
   }
+
+
+
+
+//Build stratum stack with stratum count
+int SdStratum::stratumStack(int stratumCount)
+  {
+  if( stratumCount < 1 ) stratumCount = 1;
+  if( stratumCount > stmCountMax ) stratumCount = stmCountMax;
+  return stmThrough >> (stmCountMax - stratumCount);
+  }

@@ -94,6 +94,9 @@ class SdStratum : public SdPropInt
     //Get stratum index of first stratum in the stack
     static int stratumIndex( int stratum );
 
+    //Build stratum stack with stratum count
+    static int stratumStack( int stratumCount );
+
   };
 
 #endif // SDSTRATUM_H

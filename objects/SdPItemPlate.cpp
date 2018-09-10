@@ -20,6 +20,7 @@ Description
 #include "SdContext.h"
 #include "SdEnvir.h"
 #include "SdPlateNetList.h"
+#include "SdStratum.h"
 
 #include <QDebug>
 #include <QLineF>
@@ -33,6 +34,15 @@ SdPItemPlate::SdPItemPlate() :
   {
   //Default pcb rules
   mRulesPcb = sdEnvir->mDefaultRules;
+  }
+
+
+
+
+
+int SdPItemPlate::stratumMask() const
+  {
+  return SdStratum::stratumStack( mStratumCount );
   }
 
 
