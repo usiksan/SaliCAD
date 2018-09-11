@@ -87,7 +87,7 @@ int SdStringHistory::addDouble(double val)
 void SdStringHistory::reorderComboBoxString(QComboBox *box)
   {
   QString str = box->currentText();
-  qDebug() << "reorder" << str;
+  //qDebug() << "reorder" << str;
   int i = addString( str );
   if( i >= 0 )
     box->removeItem( i );

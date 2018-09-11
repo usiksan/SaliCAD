@@ -184,6 +184,8 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
         mFirst = mBarMiddle;
         rebuildBarriers();
         }
+      //After road enter stratum stack will equivalent to road stratum
+      mStack = mProp.mStratum;
       //Signal plate to rebuild ratNets
       plate()->setDirtyRatNet();
       }
@@ -397,6 +399,18 @@ void SdModeCRoadEnter::keyDown(int key, QChar ch)
       mEnterPath.removeLast();
       if( mEnterPath.count() ) {
         //Get out properties of segment or via
+        SdPtr<SdGraphTracedRoad> road( mEnterPath.last() );
+        if( road.isValid() ) {
+          mStack = road->stratum();
+          mProp.mStratum = mStack;
+          }
+        else {
+          SdPtr<SdGraphTracedVia> via( mEnterPath.last() );
+          if( via.isValid() ) {
+            mStack = via->stratum().getValue() & plate()->stratumMask();
+            }
+          }
+        propSetToBar();
         }
       setDirty();
       setDirtyCashe();
@@ -420,6 +434,9 @@ void SdModeCRoadEnter::keyDown(int key, QChar ch)
 
 void SdModeCRoadEnter::getNetOnPoint(SdPoint p, SdStratum s, QString *netName, int *destStratum)
   {
+  //Clear net name and stratum
+  netName->clear();
+  *destStratum = 0;
   plate()->forEach( dctTraced, [p,s,netName,destStratum] (SdObject *obj) -> bool {
     SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
     if( traced != nullptr )
@@ -678,7 +695,8 @@ void SdModeCRoadEnter::changeTraceLayer()
       mBarMiddle = mFirst;
       mLast = mFirst;
       mBarLast = mFirst;
-      mStack = mViaProp.mStratum;
+      //qDebug() << plate()->stratumMask();
+      mStack = mViaProp.mStratum.getValue() & plate()->stratumMask();
       mProp.mStratum = mStack.stratumNext(mProp.mStratum);
       //plate()->ruleBlockForNet( mProp.mStratum.getValue(), mProp.mNetName.str(), mRule );
       //mProp.mWidth   = mRule.mRules[ruleRoadWidth];

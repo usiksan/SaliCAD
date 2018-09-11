@@ -302,10 +302,12 @@ bool SdGraphTracedPolygon::isPointOnNet(SdPoint p, SdStratum stratum, QString *w
   {
   if( mProp.mStratum & stratum ) {
     if( mRegion.containsPoint( p, Qt::OddEvenFill ) && !mWindows.containsPoint( p ) ) {
-      if( wireName )
+      if( *wireName == mProp.mNetName.str() )
+        *destStratum |= mProp.mStratum.getValue();
+      else {
+        *destStratum = mProp.mStratum.getValue();
         *wireName = mProp.mNetName.str();
-      if( destStratum )
-        *destStratum = mProp.mStratum & stratum;
+        }
       return true;
       }
     }

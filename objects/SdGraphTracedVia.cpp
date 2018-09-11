@@ -234,8 +234,12 @@ SdStratum SdGraphTracedVia::stratum() const
 bool SdGraphTracedVia::isPointOnNet(SdPoint p, SdStratum stratum, QString *wireName, int *destStratum)
   {
   if( mPosition == p && mProp.mStratum.match( stratum ) ) {
-    *destStratum = mProp.mStratum.getValue();
-    *wireName = mProp.mNetName.str();
+    if( *wireName == mProp.mNetName.str() )
+      *destStratum |= mProp.mStratum.getValue();
+    else {
+      *destStratum = mProp.mStratum.getValue();
+      *wireName = mProp.mNetName.str();
+      }
     return true;
     }
   return false;

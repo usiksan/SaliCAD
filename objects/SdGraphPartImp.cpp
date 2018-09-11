@@ -994,8 +994,12 @@ bool SdGraphPartImp::isPointOnNet(SdPoint p, SdStratum stratum, QString *netName
   //Run on each pin, test stratum and pos. If match then return true and assign wireName
   for( SdPartImpPin &pin : mPins ) {
     if( pin.isConnected() && pin.mPosition == p && pin.mStratum.match( stratum ) ) {
-      *destStratum = pin.mStratum.getValue();
-      *netName = pin.getNetName();
+      if( *netName == pin.getNetName() )
+        *destStratum |= pin.mStratum.getValue();
+      else {
+        *destStratum = pin.mStratum.getValue();
+        *netName = pin.getNetName();
+        }
       return true;
       }
     }

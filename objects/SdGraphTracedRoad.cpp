@@ -330,8 +330,12 @@ bool SdGraphTracedRoad::snapPoint(SdSnapInfo *snap)
 bool SdGraphTracedRoad::isPointOnNet(SdPoint p, SdStratum stratum, QString *wireName, int *destStratum)
   {
   if( mProp.mStratum.match( stratum ) && mSegment.isPointOn( p ) ) {
-    *destStratum = mProp.mStratum.getValue();
-    *wireName = mProp.mNetName.str();
+    if( *wireName == mProp.mNetName.str() )
+      *destStratum |= mProp.mStratum.getValue();
+    else {
+      *destStratum = mProp.mStratum.getValue();
+      *wireName = mProp.mNetName.str();
+      }
     return true;
     }
   return false;
