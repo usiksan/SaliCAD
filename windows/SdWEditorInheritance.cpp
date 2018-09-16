@@ -16,6 +16,7 @@ Description
 #include "SdWEditorGraphSymbol.h"
 #include "SdWEditorGraphPart.h"
 #include "SdDGetObject.h"
+#include "SdDParamEditor.h"
 #include "SdWCommand.h"
 #include "objects/SdProject.h"
 #include "objects/SdPartVariant.h"
@@ -268,14 +269,10 @@ void SdWEditorInheritance::paramAdd()
 
 void SdWEditorInheritance::paramAddDefault()
   {
-  if( !mInheritance->paramContains(QStringLiteral("bom")) )
-    paramAddInt( QStringLiteral("bom"), QStringLiteral("<article> <title> <value>") );
-  if( !mInheritance->paramContains(QStringLiteral("article")) )
-    paramAddInt( QStringLiteral("article") );
-  if( !mInheritance->paramContains(QStringLiteral("title")) )
-    paramAddInt( QStringLiteral("title"), mComponent->getTitle() );
-  if( !mInheritance->paramContains(QStringLiteral("value")) )
-    paramAddInt( QStringLiteral("value") );
+  QStringList paramList = SdDParamEditor::defParamList();
+  for( const QString &param : paramList )
+    if( !mInheritance->paramContains(param) )
+      paramAddInt( param, SdDParamEditor::defParamValue(param, mInheritance, this) );
   }
 
 
@@ -384,8 +381,10 @@ void SdWEditorInheritance::fillParams()
 void SdWEditorInheritance::paramAppend(int row, const QString key, const QString value)
   {
   mParamTable->setRowHeight( row, 25 );
-  mParamTable->setItem( row, 0, new QTableWidgetItem(key) );
-  mParamTable->item( row, 0 )->setFlags( Qt::ItemIsEnabled );
+  QTableWidgetItem *item = new QTableWidgetItem(key);
+  mParamTable->setItem( row, 0, item );
+  item->setToolTip( SdDParamEditor::defParamDescription(key) );
+  item->setFlags( Qt::ItemIsEnabled );
   mParamTable->setItem( row, 1, new QTableWidgetItem(value) );
   }
 

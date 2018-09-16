@@ -16,6 +16,7 @@ Description
 #include "SdWEditorGraphPart.h"
 #include "SdDGetObject.h"
 #include "SdWCommand.h"
+#include "SdDParamEditor.h"
 #include "objects/SdProject.h"
 #include "objects/SdPartVariant.h"
 #include "objects/SdObjectFactory.h"
@@ -409,16 +410,10 @@ void SdWEditorComponent::paramAdd()
 //Append default param group
 void SdWEditorComponent::paramAddDefault()
   {
-  if( !mComponent->paramContains( stdParamPrefix ) )
-    paramAddInt( stdParamPrefix, QStringLiteral("id") );
-  if( !mComponent->paramContains(stdParamBom) )
-    paramAddInt( stdParamBom, QStringLiteral("<article> <title> <value>") );
-  if( !mComponent->paramContains(stdParamArticle) )
-    paramAddInt( stdParamArticle );
-  if( !mComponent->paramContains( stdParamTitle ) )
-    paramAddInt( stdParamTitle, mComponent->getTitle() );
-  if( !mComponent->paramContains( stdParamValue ) )
-    paramAddInt( stdParamValue );
+  QStringList paramList = SdDParamEditor::defParamList();
+  for( const QString &param : paramList )
+    if( !mComponent->paramContains(param) )
+      paramAddInt( param, SdDParamEditor::defParamValue(param, mComponent, this) );
   }
 
 
@@ -560,8 +555,10 @@ void SdWEditorComponent::fillUsedPins()
 void SdWEditorComponent::paramAppend( int row, const QString key, const QString value)
   {
   mParamTable->setRowHeight( row, 25 );
-  mParamTable->setItem( row, 0, new QTableWidgetItem(key) );
-  mParamTable->item( row, 0 )->setFlags( Qt::ItemIsEnabled );
+  QTableWidgetItem *item = new QTableWidgetItem(key);
+  mParamTable->setItem( row, 0, item );
+  item->setToolTip( SdDParamEditor::defParamDescription(key) );
+  item->setFlags( Qt::ItemIsEnabled );
   mParamTable->setItem( row, 1, new QTableWidgetItem(value) );
   }
 

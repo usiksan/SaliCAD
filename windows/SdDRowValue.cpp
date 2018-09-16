@@ -10,8 +10,35 @@ Web
 
 Description
 */
+#include "SdConfig.h"
 #include "SdDRowValue.h"
 #include "ui_SdDRowValue.h"
+
+const SdValueModifier sdValueModifierOm[] = {
+  { "uOm", 0.000001, 0.001, 0.000001 },
+  { "kOm",  1000.0, 1000000.0, 1000.0 },
+  { "MOm",  1000000.0, 1000000000.0, 1000000.0 },
+  { "GOm",  1000000000.0, 1000000000000.0, 1000000000.0 },
+  { "Om",   0.001, 1000.0, 1.0 },
+  { nullptr, 0.0, 0.0, 0.0 }
+};
+
+
+
+const SdValueModifier sdValueModifierFarad[] = {
+  { "pF", 0.0000000000001, 0.00000001, 0.000000000001 },
+  { "uF", 0.00000001, 0.1, 0.000001 },
+  { nullptr, 0.0, 0.0, 0.0 }
+};
+
+
+const SdValueModifier sdValueModifierHenry[] = {
+  { "nH",  0.000000001, 0.000001, 0.000000001 },
+  { "uH",  0.000001, 0.01, 0.000001 },
+  { "mH",  0.01, 1.0, 0.001 },
+  { "H",   1.0, 1000.0, 1.0 },
+  { nullptr, 0.0, 0.0, 0.0 }
+};
 
 
 //==============================================================================
@@ -53,14 +80,62 @@ double ve3[]  = { 1.0, 2.2, 4.7 },
                   8.66, 8.76, 8.87, 8.98, 9.09, 9.20, 9.31, 9.42, 9.53, 9.65, 9.76, 9.88};
 
 
-SdDRowValue::SdDRowValue(QWidget *parent) :
+SdDRowValue::SdDRowValue(SdStringMap &map, const SdValueModifier *list, QWidget *parent) :
   QDialog(parent),
+  mValueModifierList(list),
+  mMap(map),
   ui(new Ui::SdDRowValue)
   {
   ui->setupUi(this);
+
+  //Fill modifier list
+  double minv = valueToDouble( map.value(stdParamValueMin), mValueModifierList );
+  double maxv = valueToDouble( map.value(stdParamValueMax), mValueModifierList );
+  QString strVal = map.value(stdParamValue);
+  double val  = valueToDouble( strVal, mValueModifierList );
+  for( int i = 0; minv < mValueModifierList[i].mMax &&
+       maxv > mValueModifierList[i].mMin &&
+       mValueModifierList[i].mModifier; i++ )
+    ui->mModifiers->addItem( QString(mValueModifierList[i].mModifier) );
+
+  if( !strVal.isEmpty() ) {
+    //Select current modifier
+    for( int i = 0; list[i].mModifier; i++ )
+      if( strVal.contains( QString(list[i].mModifier)) ) {
+        ui->mModifiers->setCurrentRow(i);
+        break;
+        }
+    //Fill values for modifier
+    }
   }
 
 SdDRowValue::~SdDRowValue()
   {
   delete ui;
   }
+
+
+
+
+double SdDRowValue::valueToDouble(const QString &val, const SdValueModifier list[] )
+  {
+  double v = val.toDouble();
+  double factor = 1.0;
+  for( int i = 0; list[i].mModifier; i++ )
+    if( val.contains( QString(list[i].mModifier)) )
+      factor = list[i].mFactor;
+  return v * factor;
+  }
+
+
+
+
+void SdDRowValue::onModifierChanged(int row)
+  {
+  ui->mValues->clear();
+  double minv = mValueModifierList[row].mMin;
+  double maxv = mValueModifierList[row].mMax;
+  double *rowv = nullptr;
+
+  }
+

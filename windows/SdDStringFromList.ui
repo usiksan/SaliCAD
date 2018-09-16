@@ -1,48 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SdDRowValue</class>
- <widget class="QDialog" name="SdDRowValue">
+ <class>SdDStringFromList</class>
+ <widget class="QDialog" name="SdDStringFromList">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>325</width>
-    <height>414</height>
+    <width>451</width>
+    <height>267</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Modifier</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QListWidget" name="mModifiers"/>
-       </item>
-      </layout>
+      <widget class="QListWidget" name="mList"/>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Values</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QListWidget" name="mValues"/>
-       </item>
-      </layout>
+      <widget class="QTextBrowser" name="mDescription"/>
      </item>
     </layout>
    </item>
@@ -63,7 +41,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>SdDRowValue</receiver>
+   <receiver>SdDStringFromList</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -79,7 +57,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>SdDRowValue</receiver>
+   <receiver>SdDStringFromList</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

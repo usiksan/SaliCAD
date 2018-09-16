@@ -24,6 +24,7 @@ Description
 
 class SdProject;
 
+
 class SdDParamEditor : public QDialog
   {
     Q_OBJECT
@@ -37,13 +38,23 @@ class SdDParamEditor : public QDialog
     QPushButton          *mParamDelete;
     QPushButton          *mParamCopy;
     QPushButton          *mParamFields;       //Accum fields from all sheets
+    QPushButton          *mValueSelector;     //Select value
 
     bool                  mEditEnable;
   public:
-    SdDParamEditor(const QString title, const SdStringMap &map, SdProject *prj, bool editEnable, QWidget *parent = nullptr );
+    SdDParamEditor(const QString title, const SdStringMap &map, SdProject *prj, bool editEnable, bool isProject, QWidget *parent = nullptr );
     //~SdDParamEditor() override;
 
     const SdStringMap     paramTable() const { return mParam; }
+
+    //Default params
+    static QStringList defParamList();
+
+    //Default param description
+    static QString     defParamDescription( QString paramName );
+
+    //Default param value
+    static QString     defParamValue( QString paramName, SdProjectItem *item, QWidget *parent );
 
   public slots:
     void onParamChanged( int row, int column );
@@ -53,6 +64,8 @@ class SdDParamEditor : public QDialog
     void paramDelete();
     void paramCopy();
     void paramFields();
+
+    void selectValue();
 
   private:
     void fillParams();

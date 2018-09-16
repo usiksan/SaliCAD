@@ -23,6 +23,7 @@ Description
 #include "windows/SdWCommand.h"
 #include "windows/SdWEditorGraph.h"
 #include "windows/SdDGetObject.h"
+#include "windows/SdValueSelector.h"
 #include <QObject>
 #include <QMessageBox>
 
@@ -97,6 +98,9 @@ void SdModeCSymImp::propSetToBar()
 
 void SdModeCSymImp::enterPoint(SdPoint)
   {
+  //Select value if present
+  SdValueSelector::select( mParams, mEditor );
+  //Insert component with params
   addPic( new SdGraphSymImp( mComponent, mSection, mPart, mParams, mOrigin,  &(sdGlobalProp->mSymImpProp) ), QObject::tr("Insert symbol") );
   //getSection();
   }

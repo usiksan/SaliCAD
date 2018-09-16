@@ -243,7 +243,9 @@ SOURCES += \
     modes/SdModeCSheetValueMove.cpp \
     modes/SdModeCPlateIdentMove.cpp \
     modes/SdModeCPlateValueMove.cpp \
-    modes/SdModeCPartImp.cpp
+    modes/SdModeCPartImp.cpp \
+    windows/SdValueSelector.cpp \
+    windows/SdDStringFromList.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -483,7 +485,9 @@ HEADERS  += \
     modes/SdModeCSheetValueMove.h \
     modes/SdModeCPlateIdentMove.h \
     modes/SdModeCPlateValueMove.h \
-    modes/SdModeCPartImp.h
+    modes/SdModeCPartImp.h \
+    windows/SdValueSelector.h \
+    windows/SdDStringFromList.h
 
 DISTFILES += \
     license.txt
@@ -510,4 +514,5 @@ FORMS += \
     master/SdDMasterPartDoubleSide.ui \
     master/SdDMasterSymbolConnector.ui \
     windows/SdDRowValue.ui \
-    windows/SdDRuleEditor.ui
+    windows/SdDRuleEditor.ui \
+    windows/SdDStringFromList.ui

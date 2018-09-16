@@ -119,6 +119,8 @@ History
                    Support smart mode, handle tracing, tracing guide.
   07.09.2018 v0.51 Append rules editing. Reconstruct rules with two-level hierarchy.
                    Fix errors in sheet bus mode, sheet wire mode, part and symbol pin modes.
+  11.09.2018 v0.52 Improvements to RoadEnter mode
+                   Extend smart tracing
 */
 
 #ifndef SDCONFIG
@@ -130,7 +132,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             51
+#define SD_VERSION_MINOR             52
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -220,11 +222,14 @@ History
 #define defNetNamePrefix "XN" //Default net name prefix
 
 //Standard param names
-#define stdParamBom     QStringLiteral("bom")
-#define stdParamArticle QStringLiteral("article")
-#define stdParamTitle   QStringLiteral("title")
-#define stdParamValue   QStringLiteral("value")
-#define stdParamPrefix  QStringLiteral("prefix")
+#define stdParamBom           QStringLiteral("bom")
+#define stdParamArticle       QStringLiteral("article")
+#define stdParamTitle         QStringLiteral("title")
+#define stdParamValue         QStringLiteral("value")
+#define stdParamValueMin      QStringLiteral("valueMin")
+#define stdParamValueMax      QStringLiteral("valueMax")
+#define stdParamPrefix        QStringLiteral("prefix")
+#define stdParamValueSelector QStringLiteral("valueSelector")
 
 #endif // SDCONFIG
 

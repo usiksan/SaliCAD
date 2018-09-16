@@ -12,8 +12,11 @@ Description
   Dialog for param editing and viewing from given table. All changes are made in local.
   If nessesery result param table apply manualy
 */
+#include "SdConfig.h"
 #include "SdDParamEditor.h"
 #include "SdDGetObject.h"
+#include "SdDStringFromList.h"
+#include "SdValueSelector.h"
 #include "objects/SdProject.h"
 #include "objects/SdPItemComponent.h"
 #include "objects/SdPItemSheet.h"
@@ -27,7 +30,7 @@ Description
 #include <QDialogButtonBox>
 #include <QTimer>
 
-SdDParamEditor::SdDParamEditor(const QString title, const SdStringMap &map, SdProject *prj, bool editEnable, QWidget *parent ) :
+SdDParamEditor::SdDParamEditor(const QString title, const SdStringMap &map, SdProject *prj, bool editEnable, bool isProject, QWidget *parent ) :
   QDialog( parent ),
   mProject(prj),
   mParam(map),
@@ -52,7 +55,8 @@ SdDParamEditor::SdDParamEditor(const QString title, const SdStringMap &map, SdPr
         vbox->addWidget( mParamAddDefault = new QPushButton( tr("Add defaults")) );
         vbox->addWidget( mParamCopy = new QPushButton( tr("Copy param")) );
         vbox->addWidget( mParamDelete = new QPushButton( tr("Delete param")) );
-        if( mProject )
+        vbox->addWidget( mValueSelector = new QPushButton( tr("Select value...")) );
+        if( isProject )
           vbox->addWidget( mParamFields = new QPushButton( tr("Accum sheet fields")) );
         else
           mParamFields = nullptr;
@@ -70,7 +74,8 @@ SdDParamEditor::SdDParamEditor(const QString title, const SdStringMap &map, SdPr
     connect( mParamAddDefault, &QPushButton::clicked, this, &SdDParamEditor::paramAddDefault );
     connect( mParamDelete, &QPushButton::clicked, this, &SdDParamEditor::paramDelete );
     connect( mParamCopy, &QPushButton::clicked, this, &SdDParamEditor::paramCopy );
-    if( mProject )
+    connect( mValueSelector, &QPushButton::clicked, this, &SdDParamEditor::selectValue );
+    if( isProject )
       connect( mParamFields, &QPushButton::clicked, this, &SdDParamEditor::paramFields );
     }
   else {
@@ -85,6 +90,67 @@ SdDParamEditor::SdDParamEditor(const QString title, const SdStringMap &map, SdPr
   QTimer::singleShot( 300, this, [this]() {
     fillParams();
     });
+  }
+
+
+
+
+
+
+//Default params
+QStringList SdDParamEditor::defParamList()
+  {
+  static QStringList list {
+    stdParamBom,
+    stdParamArticle,
+    stdParamTitle,
+    stdParamValue,
+    stdParamPrefix,
+    stdParamValueSelector };
+  return list;
+  }
+
+
+
+
+
+//Default param description
+QString SdDParamEditor::defParamDescription(QString paramName)
+  {
+  static QMap<QString,QString> map;
+  if( map.isEmpty() ) {
+    //Create map
+    map.insert( stdParamBom, tr("This parameter define component line representation in bill of material report") );
+    map.insert( stdParamArticle, tr("Component article representation. Can be used in component name and also in bom") );
+    map.insert( stdParamTitle, tr("This parametr define component name without value for example smd 0805") );
+    map.insert( stdParamValue, tr("This parameter define concrete component value for example 1kOm") );
+    map.insert( stdParamPrefix, tr("This param define component ident prefix for example prefix DD will construct ident DD4") );
+    map.insert( stdParamValueSelector, tr("This param define used value selector for example 'resistor' will select resistor values, i.e. 1.2kOm") );
+    }
+  return map.value( paramName );
+  }
+
+
+
+
+
+//Default param value
+QString SdDParamEditor::defParamValue(QString paramName, SdProjectItem *item, QWidget *parent)
+  {
+  if( paramName == stdParamValueSelector ) {
+    //Show list with available
+    SdDStringFromList sl( SdValueSelector::availableSelectors(), [] ( QString key ) -> QString {
+      return SdValueSelector::shortSelectorDescription(key);
+      }, parent );
+    if( sl.exec() )
+      return sl.result();
+    }
+  if( paramName == stdParamPrefix ) return QStringLiteral("id");
+  if( paramName == stdParamBom ) return QStringLiteral("<article> <title> <value>");
+  if( paramName == stdParamTitle ) {
+    if( item ) return item->getTitle();
+    }
+  return QString();
   }
 
 
@@ -120,16 +186,10 @@ void SdDParamEditor::paramAdd()
 
 void SdDParamEditor::paramAddDefault()
   {
-  if( !mParam.contains(stdParamBom) )
-    paramAddInt( stdParamBom, QStringLiteral("<article> <title> <value>") );
-  if( !mParam.contains( stdParamArticle ) )
-    paramAddInt( stdParamArticle );
-  if( !mParam.contains( stdParamTitle ) )
-    paramAddInt( stdParamTitle );
-  if( !mParam.contains( stdParamValue ) )
-    paramAddInt( stdParamValue );
-  if( !mParam.contains( stdParamPrefix ) )
-    paramAddInt( stdParamPrefix, QString("id") );
+  QStringList paramList = defParamList();
+  for( const QString &param : paramList )
+    if( !mParam.contains(param) )
+      paramAddInt( param, defParamValue(param, nullptr, this) );
   }
 
 
@@ -197,6 +257,15 @@ void SdDParamEditor::paramFields()
 
 
 
+
+void SdDParamEditor::selectValue()
+  {
+  SdValueSelector::select( mParam, this );
+  }
+
+
+
+
 void SdDParamEditor::fillParams()
   {
   disconnect( mParamTable, &QTableWidget::cellChanged, this, &SdDParamEditor::onParamChanged );
@@ -221,6 +290,10 @@ void SdDParamEditor::paramAppend(int row, const QString key, const QString value
   mParamTable->setItem( row, 0, new QTableWidgetItem(key) );
   mParamTable->item( row, 0 )->setFlags( Qt::ItemIsEnabled );
   mParamTable->setItem( row, 1, new QTableWidgetItem(value) );
+
+  //Enable value selector
+  if( key == stdParamValueSelector )
+    mValueSelector->setEnabled(true);
   }
 
 
