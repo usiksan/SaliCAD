@@ -158,6 +158,7 @@ void SdWEditorGraphSheet::cmEditProperties()
             imp->paramTableSet( editor.paramTable(), undo, nullptr );
           return true;
           });
+        dirtyProject();
         }
       }
     else QMessageBox::warning( this, tr("Error!"), tr("Parameters edit available only for component. No component selected. Select components and try again.") );
