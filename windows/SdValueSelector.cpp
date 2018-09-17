@@ -54,7 +54,6 @@ static void buildSelectorTable() {
     appendDescriptor( QString("condensator"), [] (SdStringMap &map, QWidget *parent ) ->bool {
       SdDRowValue rv( map, sdValueModifierFarad, parent );
       return rv.exec();
-      return false;
       },
       QString("SelectorCondensator.htm"),
       QObject::tr("Allow select value of condensator")

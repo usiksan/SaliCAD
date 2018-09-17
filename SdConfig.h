@@ -228,6 +228,7 @@ History
 #define stdParamValue         QStringLiteral("value")
 #define stdParamValueMin      QStringLiteral("valueMin")
 #define stdParamValueMax      QStringLiteral("valueMax")
+#define stdParamValueRow      QStringLiteral("valueRow")
 #define stdParamPrefix        QStringLiteral("prefix")
 #define stdParamValueSelector QStringLiteral("valueSelector")
 

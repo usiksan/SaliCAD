@@ -41,15 +41,21 @@ class SdDRowValue : public QDialog
     SdStringMap           &mMap;
   public:
     explicit SdDRowValue(SdStringMap &map, const SdValueModifier *list, QWidget *parent = nullptr);
-    ~SdDRowValue();
+    ~SdDRowValue() override;
 
-    static double valueToDouble(const QString &val, const SdValueModifier list[] );
+    static double valueToDouble(const QString &val, const SdValueModifier list[] , QString *modifier);
 
   public slots:
     void onModifierChanged( int row );
 
   private:
     Ui::SdDRowValue *ui;
+
+    double value( const QString &key );
+
+    // QDialog interface
+  public slots:
+    virtual void accept() override;
   };
 
 #endif // SDDROWVALUE_H

@@ -15,11 +15,11 @@ Description
 #include "ui_SdDRowValue.h"
 
 const SdValueModifier sdValueModifierOm[] = {
-  { "uOm", 0.000001, 0.001, 0.000001 },
+  { "uOm",  0.000001, 0.001, 0.000001 },
+  { "Om",   0.001, 1000.0, 1.0 },
   { "kOm",  1000.0, 1000000.0, 1000.0 },
   { "MOm",  1000000.0, 1000000000.0, 1000000.0 },
   { "GOm",  1000000000.0, 1000000000000.0, 1000000000.0 },
-  { "Om",   0.001, 1000.0, 1.0 },
   { nullptr, 0.0, 0.0, 0.0 }
 };
 
@@ -89,10 +89,10 @@ SdDRowValue::SdDRowValue(SdStringMap &map, const SdValueModifier *list, QWidget 
   ui->setupUi(this);
 
   //Fill modifier list
-  double minv = valueToDouble( map.value(stdParamValueMin), mValueModifierList );
-  double maxv = valueToDouble( map.value(stdParamValueMax), mValueModifierList );
-  QString strVal = map.value(stdParamValue);
-  double val  = valueToDouble( strVal, mValueModifierList );
+  double minv = value( stdParamValueMin );
+  double maxv = value( stdParamValueMax );
+  QString strVal = map.value( stdParamValue );
+  double val  = value( stdParamValue );
   for( int i = 0; minv < mValueModifierList[i].mMax &&
        maxv > mValueModifierList[i].mMin &&
        mValueModifierList[i].mModifier; i++ )
@@ -101,13 +101,19 @@ SdDRowValue::SdDRowValue(SdStringMap &map, const SdValueModifier *list, QWidget 
   if( !strVal.isEmpty() ) {
     //Select current modifier
     for( int i = 0; list[i].mModifier; i++ )
-      if( strVal.contains( QString(list[i].mModifier)) ) {
+      if( mValueModifierList[i].mMin <= val && val <= mValueModifierList[i].mMax ) {
         ui->mModifiers->setCurrentRow(i);
+        //Fill values for modifier
+        onModifierChanged(i);
         break;
         }
-    //Fill values for modifier
     }
+
+  connect( ui->mModifiers, &QListWidget::currentRowChanged, this, &SdDRowValue::onModifierChanged );
   }
+
+
+
 
 SdDRowValue::~SdDRowValue()
   {
@@ -117,12 +123,21 @@ SdDRowValue::~SdDRowValue()
 
 
 
-double SdDRowValue::valueToDouble(const QString &val, const SdValueModifier list[] )
+double SdDRowValue::valueToDouble(const QString &val, const SdValueModifier list[], QString *modifier )
   {
   double v = val.toDouble();
   double factor = 1.0;
+  //Extract modifier
+  QString mod;
+  for( int i = 0; i < val.length(); i++ )
+    if( val.at(i).isLetter() ) {
+      mod = val.mid(i);
+      break;
+      }
+  if( modifier )
+    *modifier = mod;
   for( int i = 0; list[i].mModifier; i++ )
-    if( val.contains( QString(list[i].mModifier)) )
+    if( mod == QString(list[i].mModifier) )
       factor = list[i].mFactor;
   return v * factor;
   }
@@ -133,9 +148,89 @@ double SdDRowValue::valueToDouble(const QString &val, const SdValueModifier list
 void SdDRowValue::onModifierChanged(int row)
   {
   ui->mValues->clear();
-  double minv = mValueModifierList[row].mMin;
-  double maxv = mValueModifierList[row].mMax;
-  double *rowv = nullptr;
+  double minRow = mValueModifierList[row].mMin;
+  double maxRow = mValueModifierList[row].mMax;
+  double factorRow = mValueModifierList[row].mFactor;
 
+  //Row values ptr
+  double *rowv = ve3;
+
+  //Row values count
+  int     rowc = 3;
+
+  //Row values display precision
+  int     prec = 1;
+
+  double minv = value( stdParamValueMin );
+  double maxv = value( stdParamValueMax );
+  double curv = value( stdParamValue );
+  double delta = curv / 100.0;
+  QString rowe = mMap.value( stdParamValueRow );
+  if( rowe == QStringLiteral("E6") ) {
+    rowv = ve6;
+    rowc = 6;
+    prec = 1;
+    }
+  else if( rowe == QStringLiteral("E12") ) {
+    rowv = ve12;
+    rowc = 12;
+    prec = 1;
+    }
+  else if( rowe == QStringLiteral("E24") ) {
+    rowv = ve24;
+    rowc = 24;
+    prec = 1;
+    }
+  else if( rowe == QStringLiteral("E48") ) {
+    rowv = ve48;
+    rowc = 48;
+    prec = 2;
+    }
+  else if( rowe == QStringLiteral("E96") ) {
+    rowv = ve96;
+    rowc = 96;
+    prec = 2;
+    }
+  else if( rowe == QStringLiteral("E192") ) {
+    rowv = ve192;
+    rowc = 192;
+    prec = 2;
+    }
+  double multerNorm = static_cast<int>(factorRow / minRow);
+  double multer     = factorRow / multerNorm;
+  bool stop = false;
+  QString modifier( mValueModifierList[row].mModifier );
+  while( !stop ) {
+    for( int i = 0; i < rowc; i++ ) {
+      double val = rowv[i] * multer;
+      if( val > maxv || val > maxRow ) {
+        stop = true;
+        break;
+        }
+      if( val >= minv ) {
+        ui->mValues->addItem( QString( "%1 %2" ).arg(rowv[i] * multerNorm, 0, 'f', prec ).arg(modifier) );
+        if( fabs(val - curv) < delta )
+          ui->mValues->setCurrentRow( ui->mValues->count() - 1 );
+        }
+      }
+    multerNorm *= 10.0;
+    multer *= 10.0;
+    }
+  }
+
+
+
+
+double SdDRowValue::value(const QString &key)
+  {
+  return valueToDouble( mMap.value(key), mValueModifierList, nullptr );
+  }
+
+
+
+void SdDRowValue::accept()
+  {
+  mMap.insert( stdParamValue, ui->mValues->currentItem()->text() );
+  QDialog::accept();
   }
 
