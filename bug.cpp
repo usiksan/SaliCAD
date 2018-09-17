@@ -1,8 +1,8 @@
-
-//B055 bugs
+﻿
+//B058 bugs
 //F001 fatal
 //C001 critical
-//D057 do
+//D058 do
 
 
 
@@ -29,9 +29,16 @@
 
 //TODO B055 No road connection to middle of existing segment
 
+//TODO B056 When help window editor appended to tab it not top
+
+//TODO D058 Append copy-paste for project objects
+
+//TODO B058 Remove cursor viewing in view editor
+
 //===================================================================================
 //Fixed:
 
+//B057 Disable selectValue button when edit disable
 
 //D057 Append undo rules
 

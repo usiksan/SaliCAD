@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -84,6 +84,7 @@ SdDParamEditor::SdDParamEditor(const QString title, const SdStringMap &map, SdPr
     mParamAddDefault->setEnabled(false);
     mParamDelete->setEnabled(false);
     mParamCopy->setEnabled(false);
+    mValueSelector->setEnabled(false);
     }
 
   resize( 600, 400 );
@@ -295,7 +296,7 @@ void SdDParamEditor::paramAppend(int row, const QString key, const QString value
   mParamTable->setItem( row, 1, new QTableWidgetItem(value) );
 
   //Enable value selector
-  if( key == stdParamValueSelector )
+  if( key == stdParamValueSelector && mParamCopy->isEnabled() )
     mValueSelector->setEnabled(true);
   }
 
