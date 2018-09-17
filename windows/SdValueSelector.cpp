@@ -18,7 +18,7 @@ Description
 #include <QMap>
 #include <QMessageBox>
 
-typedef std::function<bool(SdStringMap &map, QWidget *parent)> SdSelectorFunction;
+typedef std::function<bool(SdStringMap *map, QWidget *parent)> SdSelectorFunction;
 
 struct SdSelectorDescriptor {
     SdSelectorFunction mFunction;         //Selector function
@@ -43,7 +43,7 @@ static void appendDescriptor( const QString name, SdSelectorFunction fun, const 
 //Build selector table if it not builded already
 static void buildSelectorTable() {
   if( sdSelectorDescriptorTable.count() == 0 ) {
-    appendDescriptor( QString("resistor"), [] (SdStringMap &map, QWidget *parent ) ->bool {
+    appendDescriptor( QString("resistor"), [] (SdStringMap *map, QWidget *parent ) ->bool {
       SdDRowValue rv( map, sdValueModifierOm, parent );
       return rv.exec();
       },
@@ -51,7 +51,7 @@ static void buildSelectorTable() {
       QObject::tr("Allow select value of resistors")
       );
 
-    appendDescriptor( QString("condensator"), [] (SdStringMap &map, QWidget *parent ) ->bool {
+    appendDescriptor( QString("condensator"), [] (SdStringMap *map, QWidget *parent ) ->bool {
       SdDRowValue rv( map, sdValueModifierFarad, parent );
       return rv.exec();
       },
@@ -114,20 +114,21 @@ QString SdValueSelector::selectorHelpPage(const QString selector)
 
 //Call appropriate selector if it available for this param.
 //Change params in place
-bool SdValueSelector::select(SdStringMap &map, QWidget *parent)
+bool SdValueSelector::select(SdStringMap *map, QWidget *parent)
   {
   //Build selector table if needed
   buildSelectorTable();
 
   //Test if selector setuped in map
-  if( !map.contains( stdParamValueSelector ) )
+  if( !map->contains( stdParamValueSelector ) )
     return false;
 
   //Selector setuped. Test if selector available
-  QString sel = map.value( stdParamValueSelector );
+  QString sel = map->value( stdParamValueSelector );
   if( !sdSelectorDescriptorTable.contains( sel ) )
     return false;
 
   //Selector available. Execute
   return sdSelectorDescriptorTable.value(sel).mFunction( map, parent );
   }
+

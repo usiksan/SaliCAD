@@ -80,7 +80,7 @@ double ve3[]  = { 1.0, 2.2, 4.7 },
                   8.66, 8.76, 8.87, 8.98, 9.09, 9.20, 9.31, 9.42, 9.53, 9.65, 9.76, 9.88};
 
 
-SdDRowValue::SdDRowValue(SdStringMap &map, const SdValueModifier *list, QWidget *parent) :
+SdDRowValue::SdDRowValue(SdStringMap *map, const SdValueModifier *list, QWidget *parent) :
   QDialog(parent),
   mValueModifierList(list),
   mMap(map),
@@ -91,20 +91,21 @@ SdDRowValue::SdDRowValue(SdStringMap &map, const SdValueModifier *list, QWidget 
   //Fill modifier list
   double minv = value( stdParamValueMin );
   double maxv = value( stdParamValueMax );
-  QString strVal = map.value( stdParamValue );
+  QString strVal = map->value( stdParamValue );
   double val  = value( stdParamValue );
-  for( int i = 0; minv < mValueModifierList[i].mMax &&
-       maxv > mValueModifierList[i].mMin &&
-       mValueModifierList[i].mModifier; i++ )
-    ui->mModifiers->addItem( QString(mValueModifierList[i].mModifier) );
+  //Skeep low mod's
+  for( mModStart = 0; minv > mValueModifierList[mModStart].mMax && mValueModifierList[mModStart].mModifier; mModStart++ );
+  //Display mod's
+  for( mModStop = mModStart; maxv > mValueModifierList[mModStop].mMin && mValueModifierList[mModStop].mModifier; mModStop++ )
+    ui->mModifiers->addItem( QString(mValueModifierList[mModStop].mModifier) );
 
   if( !strVal.isEmpty() ) {
     //Select current modifier
-    for( int i = 0; list[i].mModifier; i++ )
-      if( mValueModifierList[i].mMin <= val && val <= mValueModifierList[i].mMax ) {
-        ui->mModifiers->setCurrentRow(i);
+    for( int i = mModStart; i < mModStop; i++ )
+      if( mValueModifierList[i].mMin <= val && val < mValueModifierList[i].mMax ) {
+        ui->mModifiers->setCurrentRow(i - mModStart);
         //Fill values for modifier
-        onModifierChanged(i);
+        onModifierChanged(i - mModStart);
         break;
         }
     }
@@ -125,13 +126,22 @@ SdDRowValue::~SdDRowValue()
 
 double SdDRowValue::valueToDouble(const QString &val, const SdValueModifier list[], QString *modifier )
   {
-  double v = val.toDouble();
+  double v = 0;
+  QString src = val.simplified();
+  for( int i = 0; i < src.length(); i++ )
+    if( !src.at(i).isDigit() && src.at(i) != QChar('.') && src.at(i) != QChar(',') ) {
+      QString strVal = src.left(i);
+      strVal.replace( QChar(','), QChar('.') );
+      v = strVal.toDouble();
+      break;
+      }
+
   double factor = 1.0;
   //Extract modifier
   QString mod;
-  for( int i = 0; i < val.length(); i++ )
-    if( val.at(i).isLetter() ) {
-      mod = val.mid(i);
+  for( int i = 0; i < src.length(); i++ )
+    if( src.at(i).isLetter() ) {
+      mod = src.mid(i);
       break;
       }
   if( modifier )
@@ -147,6 +157,7 @@ double SdDRowValue::valueToDouble(const QString &val, const SdValueModifier list
 
 void SdDRowValue::onModifierChanged(int row)
   {
+  row += mModStart;
   ui->mValues->clear();
   double minRow = mValueModifierList[row].mMin;
   double maxRow = mValueModifierList[row].mMax;
@@ -165,7 +176,7 @@ void SdDRowValue::onModifierChanged(int row)
   double maxv = value( stdParamValueMax );
   double curv = value( stdParamValue );
   double delta = curv / 100.0;
-  QString rowe = mMap.value( stdParamValueRow );
+  QString rowe = mMap->value( stdParamValueRow );
   if( rowe == QStringLiteral("E6") ) {
     rowv = ve6;
     rowc = 6;
@@ -196,8 +207,11 @@ void SdDRowValue::onModifierChanged(int row)
     rowc = 192;
     prec = 2;
     }
-  double multerNorm = static_cast<int>(factorRow / minRow);
-  double multer     = factorRow / multerNorm;
+  double multerNorm = minRow / factorRow;
+  double multer     = factorRow * multerNorm;
+  if( multerNorm < 0.002 ) prec += 3;
+  else if( multerNorm < 0.02 ) prec += 2;
+  else if( multerNorm < 0.2 ) prec += 1;
   bool stop = false;
   QString modifier( mValueModifierList[row].mModifier );
   while( !stop ) {
@@ -207,14 +221,18 @@ void SdDRowValue::onModifierChanged(int row)
         stop = true;
         break;
         }
-      if( val >= minv ) {
-        ui->mValues->addItem( QString( "%1 %2" ).arg(rowv[i] * multerNorm, 0, 'f', prec ).arg(modifier) );
+      if( val >= minv && val >= minRow ) {
+        if( i == 0 && prec )
+          ui->mValues->addItem( QString( "%1 %2" ).arg(rowv[i] * multerNorm, 0, 'f', prec - 1 ).arg(modifier) );
+        else
+          ui->mValues->addItem( QString( "%1 %2" ).arg(rowv[i] * multerNorm, 0, 'f', prec ).arg(modifier) );
         if( fabs(val - curv) < delta )
           ui->mValues->setCurrentRow( ui->mValues->count() - 1 );
         }
       }
     multerNorm *= 10.0;
     multer *= 10.0;
+    if( prec ) prec--;
     }
   }
 
@@ -223,14 +241,14 @@ void SdDRowValue::onModifierChanged(int row)
 
 double SdDRowValue::value(const QString &key)
   {
-  return valueToDouble( mMap.value(key), mValueModifierList, nullptr );
+  return valueToDouble( mMap->value(key), mValueModifierList, nullptr );
   }
 
 
 
 void SdDRowValue::accept()
   {
-  mMap.insert( stdParamValue, ui->mValues->currentItem()->text() );
+  mMap->insert( stdParamValue, ui->mValues->currentItem()->text() );
   QDialog::accept();
   }
 

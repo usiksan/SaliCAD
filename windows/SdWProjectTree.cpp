@@ -251,7 +251,7 @@ void SdWProjectTree::cmObjectParam()
   //Get current item and show its param
   SdPtr<SdProjectItem> item( mProject->item( currentItem() ) );
   if( item.isValid() ) {
-    SdDParamEditor editor( tr("Edit param"), item->paramTable(), mProject, item->isEditEnable(), this );
+    SdDParamEditor editor( tr("Edit param"), item->paramTable(), mProject, item->isEditEnable(), false, this );
     if( editor.exec() )
       //Edit successfull. Apply changes
       item->paramTableSet( editor.paramTable(), mProject->getUndo() );
@@ -264,7 +264,7 @@ void SdWProjectTree::cmObjectParam()
 //Edit project param
 void SdWProjectTree::cmProjectParam()
   {
-  SdDParamEditor editor( tr("Edit project param"), mProject->paramTable(), mProject, true, this );
+  SdDParamEditor editor( tr("Edit project param"), mProject->paramTable(), mProject, true, true, this );
   if( editor.exec() )
     //Edit successfull. Apply changes
     mProject->paramTableSet( editor.paramTable(), mProject->getUndo() );

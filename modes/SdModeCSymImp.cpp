@@ -99,7 +99,7 @@ void SdModeCSymImp::propSetToBar()
 void SdModeCSymImp::enterPoint(SdPoint)
   {
   //Select value if present
-  SdValueSelector::select( mParams, mEditor );
+  SdValueSelector::select( &mParams, mEditor );
   //Insert component with params
   addPic( new SdGraphSymImp( mComponent, mSection, mPart, mParams, mOrigin,  &(sdGlobalProp->mSymImpProp) ), QObject::tr("Insert symbol") );
   //getSection();

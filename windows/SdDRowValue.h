@@ -38,9 +38,11 @@ class SdDRowValue : public QDialog
     Q_OBJECT
 
     const SdValueModifier *mValueModifierList;
-    SdStringMap           &mMap;
+    SdStringMap           *mMap;
+    int                    mModStart;
+    int                    mModStop;
   public:
-    explicit SdDRowValue(SdStringMap &map, const SdValueModifier *list, QWidget *parent = nullptr);
+    explicit SdDRowValue(SdStringMap *map, const SdValueModifier *list, QWidget *parent = nullptr);
     ~SdDRowValue() override;
 
     static double valueToDouble(const QString &val, const SdValueModifier list[] , QString *modifier);

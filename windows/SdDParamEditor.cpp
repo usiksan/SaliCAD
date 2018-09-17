@@ -260,7 +260,10 @@ void SdDParamEditor::paramFields()
 
 void SdDParamEditor::selectValue()
   {
-  SdValueSelector::select( mParam, this );
+  if( SdValueSelector::select( &mParam, this ) ) {
+    //Value updated
+    fillParams();
+    }
   }
 
 

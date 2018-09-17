@@ -147,7 +147,7 @@ void SdWEditorGraphSheet::cmEditProperties()
     //Use symImp params for init param editor dialog
     SdPtr<SdGraphSymImp> sym(symImp);
     if( sym.isValid() ) {
-      SdDParamEditor editor( tr("Component params"), sym->paramTable(), getProject(), true, this );
+      SdDParamEditor editor( tr("Component params"), sym->paramTable(), getProject(), true, false, this );
       if( editor.exec() ) {
         //Change params for all selected items
         SdUndo *undo = getProject()->getUndo();

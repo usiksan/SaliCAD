@@ -34,7 +34,7 @@ struct SdValueSelector
 
     //Call appropriate selector if it available for this param.
     //Change params in place
-    static bool        select( SdStringMap &map, QWidget *parent );
+    static bool        select(SdStringMap *map, QWidget *parent );
   };
 
 #endif // SDVALUESELECTOR_H
