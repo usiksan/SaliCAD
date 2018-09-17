@@ -334,8 +334,10 @@ void SdGraphPartPin::draw(SdContext *dc)
   //At first calc over rectangle
   dc->text( mNamePos, mNameRect, QStringLiteral("  "), mNameProp );
   //At second draw rectangle
-  dc->setPen( 0, mNameProp.mLayer.layer(), dltDashed );
-  dc->rect( mNameRect );
+  if( mNameProp.mLayer.layer()->isVisible() ) {
+    dc->setPen( 0, mNameProp.mLayer.layer(), dltDashed );
+    dc->rect( mNameRect );
+    }
 
   //Pin number as over rectangle.
   dc->text( mNumberPos, mNumberRect, mNumber, mNumberProp );

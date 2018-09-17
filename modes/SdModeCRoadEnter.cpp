@@ -64,7 +64,7 @@ void SdModeCRoadEnter::drawDynamic(SdContext *ctx)
       ctx->line( mBarMiddle, mBarLast );
 
     //When enter path smart point is nearest unconnected pin
-    if( sdEnvir->mIsWireSmart ) {
+    if( sdEnvir->mIsWireSmart && !mTargetPoint.isFar() ) {
       ctx->smartPoint( mTargetPoint, snapEndPoint );
 
       //Show smart path if present

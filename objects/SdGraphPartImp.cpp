@@ -480,7 +480,7 @@ void SdGraphPartImp::drawWithoutPads(SdContext *cdx)
   cdx->text( mValue.mOrigin, ov, value(), mValue.mProp );
 
   //Draw symbol except ident and pins
-  mPart->forEach( dctAll & ~(dctPartPin | dctIdent), [cdx] (SdObject *obj) -> bool {
+  mPart->forEach( dctAll & ~(dctPartPin | dctIdent | dctValue), [cdx] (SdObject *obj) -> bool {
     SdGraph *graph = dynamic_cast<SdGraph*>( obj );
     if( graph )
       graph->draw( cdx );

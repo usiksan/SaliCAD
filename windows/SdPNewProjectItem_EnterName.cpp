@@ -62,8 +62,8 @@ void SdPNewProjectItem_EnterName::onTextChanged(const QString name)
     mValid = false;
     }
   else if( mProject->isNameUsed(name) || SdObjectFactory::isContains( (*mItemPtr)->getType(), name, SdProjectItem::getDefaultAuthor() ) ) {
-    mUnical->setText( tr("<font color=\"red\">This name already exist. Enter another name.</font>") );
-    mValid = false;
+    mUnical->setText( tr("<font color=\"red\">This name already exist. Enter another name or this override existing.</font>") );
+    mValid = true;
     }
   else {
     mUnical->setText( tr("Name is correct and free.") );
