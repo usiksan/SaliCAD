@@ -326,8 +326,10 @@ void SdGraphSymPin::draw(SdContext *dc)
   //At first calc over rectangle
   dc->text( mNumberPos, mNumberRect, QString("  "), mNumberProp );
   //At second draw rectangle
-  dc->setPen( 0, mNumberProp.mLayer.layer(), dltDashed );
-  dc->rect( mNumberRect );
+  if( mNumberProp.mLayer.layer()->isVisible() ) {
+    dc->setPen( 0, mNumberProp.mLayer.layer(), dltDashed );
+    dc->rect( mNumberRect );
+    }
   }
 
 

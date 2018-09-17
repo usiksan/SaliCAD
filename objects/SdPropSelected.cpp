@@ -78,16 +78,16 @@ int SdPropSelected::getPropBarId()
       break;
     }
   //No current bar in prop, find new prop bar
+  if( mFilledPropMask & spsSymPinProp )
+    return mPropBarId = PB_SYM_PIN;
+  if( mFilledPropMask & spsPartPinProp )
+    return mPropBarId = PB_PART_PIN;
   if( mFilledPropMask & spsLineProp )
     return mPropBarId = PB_LINEAR;
   if( mFilledPropMask & spsTextProp )
     return mPropBarId = PB_TEXT;
   if( mFilledPropMask & spsWireProp )
     return mPropBarId = PB_WIRE;
-  if( mFilledPropMask & spsSymPinProp )
-    return mPropBarId = PB_SYM_PIN;
-  if( mFilledPropMask & spsPartPinProp )
-    return mPropBarId = PB_PART_PIN;
   if( mFilledPropMask & spsSymImpProp )
     return mPropBarId = PB_SYM_IMP;
   if( mFilledPropMask & spsPartImpProp )
