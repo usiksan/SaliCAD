@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -26,8 +26,8 @@ class SdDGrid : public QDialog
 
     QPointF mGrid; //Current grid
   public:
-    explicit SdDGrid( QPointF curGrid, QWidget *parent = 0);
-    ~SdDGrid();
+    explicit SdDGrid( QPointF curGrid, QWidget *parent = nullptr );
+    ~SdDGrid() override;
 
     QPointF getGrid() const { return mGrid; }
 

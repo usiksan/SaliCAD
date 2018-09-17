@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -19,6 +19,7 @@ Description
 #include <QSettings>
 #include <QFile>
 #include <QCoreApplication>
+#include <QStringList>
 
 
 //Path where resides help system files

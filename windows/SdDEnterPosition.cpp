@@ -13,6 +13,7 @@ Description
 */
 #include "SdDEnterPosition.h"
 #include "ui_SdDEnterPosition.h"
+#include "SdDHelp.h"
 
 static bool    prevRef = false;
 static QString prevX("0"),prevY("0"),prevZ("0");
@@ -28,6 +29,9 @@ SdDEnterPosition::SdDEnterPosition(QWidget *parent) :
   ui->mX->setText( prevX );
   ui->mY->setText( prevY );
   ui->mZ->setText( prevZ );
+
+  //Help system
+  connect( ui->buttonBox, &QDialogButtonBox::helpRequested, this, [this] () { SdDHelp::help( "SdDEnterPosition.htm", this ); });
   }
 
 

@@ -245,7 +245,8 @@ SOURCES += \
     modes/SdModeCPlateValueMove.cpp \
     modes/SdModeCPartImp.cpp \
     windows/SdValueSelector.cpp \
-    windows/SdDStringFromList.cpp
+    windows/SdDStringFromList.cpp \
+    windows/SdDHelp.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -487,7 +488,8 @@ HEADERS  += \
     modes/SdModeCPlateValueMove.h \
     modes/SdModeCPartImp.h \
     windows/SdValueSelector.h \
-    windows/SdDStringFromList.h
+    windows/SdDStringFromList.h \
+    windows/SdDHelp.h
 
 DISTFILES += \
     license.txt

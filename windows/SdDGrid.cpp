@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -16,6 +16,7 @@ Description
 
 #include "SdDGrid.h"
 #include "ui_SdDGrid.h"
+#include "SdDHelp.h"
 
 
 SdDGrid::SdDGrid(QPointF curGrid, QWidget *parent) :
@@ -66,6 +67,9 @@ SdDGrid::SdDGrid(QPointF curGrid, QWidget *parent) :
   ui->mCrosshairFull->setChecked( sdEnvir->mCursorView == 2 );
   ui->mCrosshairSmall45->setChecked( sdEnvir->mCursorView == 3 );
   ui->mCrosshairFull45->setChecked( sdEnvir->mCursorView == 4 );
+
+  //Help system
+  connect( ui->buttonBox, &QDialogButtonBox::helpRequested, this, [this] () { SdDHelp::help( "SdDGrid.htm", this ); });
   }
 
 SdDGrid::~SdDGrid()
