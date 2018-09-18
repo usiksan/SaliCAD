@@ -27,6 +27,7 @@ class SdGuiderWMain : public QMainWindow
     SdGuiderFile mFile;
     QTimer       mTimer;
     int          mCurrentTime;
+    //int
     QLabel      *mView;
     QListWidget *mTimeList;
     QString      mFileName;

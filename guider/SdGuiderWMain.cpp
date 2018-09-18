@@ -43,6 +43,8 @@ SdGuiderWMain::SdGuiderWMain(QWidget *parent) :
   splitter->addWidget(mTimeList);
   splitter->addWidget(mView);
   setCentralWidget( splitter );
+
+  connect( &mTimer, &QTimer::timeout, this, &SdGuiderWMain::play );
   }
 
 void SdGuiderWMain::cmFileOpen()
@@ -51,31 +53,67 @@ void SdGuiderWMain::cmFileOpen()
   if( !mFileName.isEmpty() ) {
     mFile.load( mFileName );
     mFile.play(0);
-    mView->setPixmap( QPixmap::fromImage( mFile.mBack ) );
+    for( int i = 0; i < mFile.mFile.count(); i++ )
+      mTimeList->addItem( mFile.mFile.at(i).title() );
+    mCurrentTime = 0;
+    mTimeList->setCurrentRow(0);
+    play();
     }
   }
 
+
+
+
+
 void SdGuiderWMain::cmFileSave()
   {
-
+  if( !mFileName.isEmpty() )
+    mFile.save( mFileName );
   }
+
+
+
 
 void SdGuiderWMain::cmPlayRestart()
   {
-
+  mCurrentTime = 0;
+  mTimeList->setCurrentRow(0);
+  mTimer.start(100);
   }
+
+
+
 
 void SdGuiderWMain::cmPlayStart()
   {
-
+  mTimer.start(100);
   }
+
+
 
 void SdGuiderWMain::cmPlayStop()
   {
-
+  mTimer.stop();
   }
+
+
 
 void SdGuiderWMain::play()
   {
-
+  mCurrentTime++;
+  int row = mTimeList->currentRow();
+  if( row < 0 ) row = 0;
+  bool build = false;
+  while( row < mFile.mFile.count() && mFile.mFile.at(row).mTime < mCurrentTime ) {
+    mFile.play(row++);
+    build = true;
+    }
+  if( build ) {
+    mView->clear();
+    mView->setPixmap( mFile.build() );
+    }
+  if( row >= mFile.mFile.count() )
+    cmPlayStop();
+  else
+    mTimeList->setCurrentRow( row );
   }

@@ -23,6 +23,8 @@ struct SdGuiderTime {
     QByteArray mData;
     qint32     mTime;
     qint8      mType;
+
+    QString title() const;
   };
 
 #define SD_GT_KEY_IMAGE 1

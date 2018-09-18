@@ -15,6 +15,7 @@ Description
 #include <QDataStream>
 #include <QBuffer>
 #include <QPainter>
+#include <QDebug>
 
 inline QDataStream &operator << ( QDataStream &os, const SdGuiderTime &time ) {
   os << time.mData << time.mTime << time.mType;
@@ -35,13 +36,13 @@ SdGuiderFile::SdGuiderFile()
 void SdGuiderFile::addImage(QImage img, int time)
   {
   if( mFile.count() && mBack.size() == img.size() && (time % 100) ) {
-    QImage dif(img);
+    QImage dif( img );
     int w = img.size().width();
     int h = img.size().height();
     bool eq = true;
     for( int y = 0; y < h; y++ )
       for( int x = 0; x < w; x++ )
-        if( img.pixel(x,y) == dif.pixel(x,y) )
+        if( mBack.pixel(x,y) == dif.pixel(x,y) )
           dif.setPixelColor( x, y, Qt::transparent );
         else eq = false;
     if( !eq ) {
@@ -108,6 +109,7 @@ void SdGuiderFile::play(int index)
       QImage dif;
       dif.loadFromData( mFile.at(index).mData, "PNG" );
       QPainter painter( &mBack );
+      painter.setCompositionMode( QPainter::CompositionMode_SourceOver );
       painter.drawImage( 0,0, dif );
       }
       break;
@@ -134,18 +136,22 @@ QPixmap SdGuiderFile::build()
   {
   //Current background
   QPixmap pix( QPixmap::fromImage(mBack) );
+  {
   QPainter painter( &pix );
   painter.setPen( Qt::red );
+  //qDebug() << mCursorPos;
   //Draw left button
   drawButton( painter, mCursorPos.x() - 15, mCursorPos.y() + 3, mMouseButtons & Qt::LeftButton );
   //Draw middle button
   drawButton( painter, mCursorPos.x() - 5, mCursorPos.y(), mMouseButtons & Qt::MidButton );
   //Draw right button
   drawButton( painter, mCursorPos.x() + 5, mCursorPos.y() + 3, mMouseButtons & Qt::RightButton );
-
+  //painter.drawText( 100, 100, QString("x:%1  y:%2").arg(mCursorPos.x()).arg(mCursorPos.y()) );
   if( !mTitle.isEmpty() ) {
     painter.drawText( mTitlePos, mTitle );
     }
+  }
+  //pix.save( QString("c:\\work\\t1.png") );
   return pix;
   }
 
@@ -174,3 +180,17 @@ void SdGuiderFile::load(const QString fname)
   }
 
 
+
+QString SdGuiderTime::title() const
+  {
+  QString str( "%1 %2");
+  switch( mType ) {
+    case SD_GT_KEY_IMAGE :
+      return str.arg(mTime).arg( QString("Key image") );
+    case SD_GT_DIF_IMAGE :
+      return str.arg(mTime).arg( QString("Dif image") );
+    case SD_GT_MOUSE :
+      return str.arg(mTime).arg( QString("Mouse position") );
+    }
+  return str.arg(mTime).arg( QString() );
+  }

@@ -28,9 +28,12 @@ SdGuiderCapture::SdGuiderCapture(QWidget *main, QObject *parent) :
   connect( &mTimer, &QTimer::timeout, this, [this] () {
     if( mFile ) {
       //Capture current screen and append it to file
-      QPixmap pix = QGuiApplication::primaryScreen()->grabWindow( mMainWindow->winId() );
-      mFile->addImage( pix.toImage(), mTime );
-      mFile->addCursor( QGuiApplication::mouseButtons(), QCursor::pos( QGuiApplication::primaryScreen() ), mTime );
+      QPoint p = mMainWindow->pos();
+      QSize s = mMainWindow->size();
+      QPixmap pix = QGuiApplication::primaryScreen()->grabWindow( 0, p.x(), p.y(), s.width(), s.height() );
+      mFile->addImage( pix.toImage().convertToFormat(QImage::Format_ARGB32), mTime );
+      QPoint c = QCursor::pos( QGuiApplication::primaryScreen() );
+      mFile->addCursor( QGuiApplication::mouseButtons(), QPoint( c.x() - p.x(), c.y() - p.y() ), mTime );
       //Next time
       mTime++;
       //If movie too long we automatic stop capture
