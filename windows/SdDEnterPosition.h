@@ -25,8 +25,8 @@ class SdDEnterPosition : public QDialog
     Q_OBJECT
 
   public:
-    explicit SdDEnterPosition(QWidget *parent = 0);
-    ~SdDEnterPosition();
+    explicit SdDEnterPosition(QWidget *parent = nullptr);
+    ~SdDEnterPosition() override;
 
     bool     getRef() const;
     QString  getX() const;
@@ -34,7 +34,7 @@ class SdDEnterPosition : public QDialog
     QString  getZ() const;
 
   protected:
-    void changeEvent(QEvent *e);
+    void changeEvent(QEvent *e) override;
 
   private:
     Ui::SdDEnterPosition *ui;

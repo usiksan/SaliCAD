@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -39,8 +39,13 @@ class SdDGetBus : public QDialog
     virtual void accept() override;
 
   private:
+    //Net list comma separated string parsed to string list
     bool translation(const QString sour);
+
+    //Extract number position before delimiter.
     int  checkDigit( const QString buf, int index, QChar delim );
+
+    //Display net list syntax error
     bool syntaxError();
   };
 

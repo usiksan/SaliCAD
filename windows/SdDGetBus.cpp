@@ -15,8 +15,12 @@ Description
 #include "SdDGetBus.h"
 #include "SdStringHistory.h"
 #include "ui_SdDGetBus.h"
+#include "SdDHelp.h"
+
 #include <QStringList>
 #include <QMessageBox>
+
+
 
 //static QStringList previousBusList;
 static SdStringHistory previousBusList;
@@ -38,6 +42,10 @@ SdDGetBus::SdDGetBus(QWidget *parent) :
   //Setup default bus line - previous bus line
   if( previousBusList.count() )
     ui->mBusEdit->setText( previousBusList.first() );
+
+
+  //Help system
+  connect( ui->buttonBox, &QDialogButtonBox::helpRequested, this, [this] () { SdDHelp::help( "SdDGetBus.htm", this ); });
   }
 
 SdDGetBus::~SdDGetBus()
@@ -58,7 +66,7 @@ void SdDGetBus::accept()
 
 
 
-
+//Net list comma separated string parsed to string list
 bool SdDGetBus::translation( const QString sour )
   {
   //Net list parsing
@@ -116,7 +124,7 @@ bool SdDGetBus::translation( const QString sour )
 
 
 
-
+//Extract number position before delimiter.
 int SdDGetBus::checkDigit(const QString buf, int index, QChar delim)
   {
   int last = buf.indexOf( delim, index );
@@ -127,6 +135,7 @@ int SdDGetBus::checkDigit(const QString buf, int index, QChar delim)
 
 
 
+//Display net list syntax error
 bool SdDGetBus::syntaxError()
   {
   QMessageBox::warning( this, tr("Error"), tr("Wrong net list syntax. Use: netA,netB,net<0:2>") );
