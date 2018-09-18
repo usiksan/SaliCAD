@@ -33,6 +33,7 @@ Description
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdObjectFactory.h"
+#include "guider/SdGuiderCapture.h"
 
 #include <QSettings>
 #include <QCloseEvent>
@@ -53,6 +54,9 @@ Description
 SdWMain::SdWMain(QStringList args, QWidget *parent) :
   QMainWindow(parent)
   {
+  //Setup guider capture object
+  mGuiderCapture = new SdGuiderCapture( this, this );
+
   //Set window icon
   setWindowIcon( QIcon(QStringLiteral(":/pic/iconMain.png")) );
 
@@ -457,6 +461,8 @@ SdWEditor *SdWMain::helpWidget()
     help = new SdWEditorHelp();
     //insert it into tab
     mWEditors->addTab( help, QIcon( QString(":/pic/help.png") ), tr("Help system") );
+    //Bring help tab to top
+    mWEditors->setCurrentIndex( mWEditors->count() - 1 );
     }
   return help;
   }
@@ -1536,6 +1542,17 @@ void SdWMain::cmHelpRegistration()
   {
   SdDRegistation d;
   d.exec();
+  }
+
+
+
+
+void SdWMain::cmGuiderCapture()
+  {
+  if( mGuiderCapture->isCapture() )
+    mGuiderCapture->captureStop();
+  else
+    mGuiderCapture->captureInit();
   }
 
 

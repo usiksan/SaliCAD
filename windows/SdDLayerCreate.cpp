@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -14,6 +14,7 @@ Description
 #include "ui_SdDLayerCreate.h"
 #include "objects/SdLayer.h"
 #include "objects/SdEnvir.h"
+#include "SdDHelp.h"
 
 SdDLayerCreate::SdDLayerCreate(QWidget *parent) :
   QDialog(parent),
@@ -35,6 +36,9 @@ SdDLayerCreate::SdDLayerCreate(QWidget *parent) :
 
   connect( ui->mClassList, &QListWidget::currentRowChanged, this, &SdDLayerCreate::onLayerIdConstructed );
   connect( ui->mModifierList, &QListWidget::currentRowChanged, this, &SdDLayerCreate::onLayerIdConstructed );
+
+  //Help system
+  connect( ui->buttonBox, &QDialogButtonBox::helpRequested, this, [this] () { SdDHelp::help( "SdDLayerCreate.htm", this ); });
   }
 
 

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -160,6 +160,8 @@ class SdWCommand
     static QActionPtr  cmHelpIndex;
     static QActionPtr  cmHelpAbout;
     static QActionPtr  cmHelpRegistration;
+
+    static QActionPtr  cmGuiderCapture;
 
     //Full mode action table
     static QActionPtr  cmModeTable[MD_LAST];

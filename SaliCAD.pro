@@ -246,7 +246,10 @@ SOURCES += \
     modes/SdModeCPartImp.cpp \
     windows/SdValueSelector.cpp \
     windows/SdDStringFromList.cpp \
-    windows/SdDHelp.cpp
+    windows/SdDHelp.cpp \
+    guider/SdGuiderCapture.cpp \
+    guider/SdGuiderPlayer.cpp \
+    guider/SdGuiderFile.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -489,7 +492,10 @@ HEADERS  += \
     modes/SdModeCPartImp.h \
     windows/SdValueSelector.h \
     windows/SdDStringFromList.h \
-    windows/SdDHelp.h
+    windows/SdDHelp.h \
+    guider/SdGuiderCapture.h \
+    guider/SdGuiderPlayer.h \
+    guider/SdGuiderFile.h
 
 DISTFILES += \
     license.txt

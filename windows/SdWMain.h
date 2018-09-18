@@ -30,22 +30,25 @@ Description
 
 class SdProjectItem;
 class SdWProjectTree;
+class SdGuiderCapture;
 
 class SdWMain : public QMainWindow
   {
     Q_OBJECT
 
-    QSplitter      *mWSplitter;     //Central part of programm windows - is splitter with projects and redactors
-    SdWProjectList *mWProjectList;  //Project list
-    QTabWidget     *mWEditors;      //Actived visual editors
-    SdWHelp        *mWHelp;         //Edge help
+    SdGuiderCapture *mGuiderCapture; //Object for capture guider movie
+
+    QSplitter       *mWSplitter;     //Central part of programm windows - is splitter with projects and redactors
+    SdWProjectList  *mWProjectList;  //Project list
+    QTabWidget      *mWEditors;      //Actived visual editors
+    SdWHelp         *mWHelp;         //Edge help
 
     //Status bar infos
-    SdWLabel       *mXLabel;        //X axiz title (X or col)
-    SdWLabel       *mXPos;          //X axiz position
-    SdWLabel       *mYLabel;        //Y axiz title (Y or row)
-    SdWLabel       *mYPos;          //Y axiz position
-    SdWLabel       *mMessage;       //Message
+    SdWLabel        *mXLabel;        //X axiz title (X or col)
+    SdWLabel        *mXPos;          //X axiz position
+    SdWLabel        *mYLabel;        //Y axiz title (Y or row)
+    SdWLabel        *mYPos;          //Y axiz position
+    SdWLabel        *mMessage;       //Message
   public:
     explicit SdWMain( QStringList args, QWidget *parent = nullptr );
 
@@ -206,6 +209,7 @@ class SdWMain : public QMainWindow
     void cmHelpIndex();
     void cmHelpAbout();
     void cmHelpRegistration();
+    void cmGuiderCapture();
 
     void cmClipboardChange();
     void cmPropertiesChange();

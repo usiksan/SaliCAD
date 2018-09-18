@@ -29,14 +29,14 @@
 
 //TODO B055 No road connection to middle of existing segment
 
-//TODO B056 When help window editor appended to tab it not top
-
 //TODO D058 Append copy-paste for project objects
 
 //TODO B058 Remove cursor viewing in view editor
 
 //===================================================================================
 //Fixed:
+
+//B056 When help window editor appended to tab it not top
 
 //B057 Disable selectValue button when edit disable
 
