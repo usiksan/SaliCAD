@@ -12,6 +12,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = SaliCAD
 TEMPLATE = app
 
+RC_ICONS = pic/main.ico
 
 SOURCES += \
     SdMain.cpp \

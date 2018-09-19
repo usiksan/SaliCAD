@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+    <Name>SaliCAD</Name>
+    <Version>0.52.0</Version>
+    <Title>Electronic schematic and pcb layout CAD</Title>
+    <Publisher>SaliLAB</Publisher>
+    <StartMenuDir>SaliCAD</StartMenuDir>
+    <TargetDir>@ApplicationsDirX86@/SaliLAB/SaliCAD</TargetDir>
+</Installer>

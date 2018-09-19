@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package>
+    <DisplayName>SaliCAD</DisplayName>
+    <Description>Multyfunctional electronics schematic and pcb layout CAD programm.</Description>
+    <Version>0.52</Version>
+    <ReleaseDate>2018-09-19</ReleaseDate>
+    <Default>true</Default>
+    <Script>installscript.qs</Script>
+</Package>
