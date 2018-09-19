@@ -98,6 +98,7 @@ class SdWCommand
     static QActionPtr  cmObjectCopy;
     static QActionPtr  cmObjectPaste;
     static QActionPtr  cmObjectCut;
+    static QActionPtr  cmObjectDuplicate;
     static QActionPtr  cmObjectSort;
     static QActionPtr  cmObjectParam;
     static QActionPtr  cmObjectEditEnable;

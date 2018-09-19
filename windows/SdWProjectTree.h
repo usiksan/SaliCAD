@@ -61,9 +61,18 @@ class SdWProjectTree : public QTreeWidget
 
     //Delete object
     void         cmObjectDelete();
-    virtual void cmObjectCopy() {}
-    virtual void cmObjectPaste() {}
-    virtual void cmObjectCut() {}
+
+    //Copy object to clipboard
+    void         cmObjectCopy();
+
+    //Paste object from clipboard
+    void         cmObjectPaste();
+
+    //Cut object to clipboard
+    void         cmObjectCut();
+
+    //Duplicate current object
+    void         cmObjectDuplicate();
 
     //Sort object list by alphabet
     void         cmObjectSort();
@@ -92,24 +101,28 @@ class SdWProjectTree : public QTreeWidget
     void onCurrentItemChanged( QTreeWidgetItem *cur, QTreeWidgetItem *prev );
 
   protected:
-    virtual void showEvent( QShowEvent *event ) override;
+    virtual void      showEvent( QShowEvent *event ) override;
 
   private:
-    //Создать элемент дерева проекта
-    QTreeWidgetItem* createItem( const QString sname, const QString stoolTip, const QString sstatusTip );
+    //Create object node [Создать элемент дерева проекта]
+    QTreeWidgetItem*  createItem( const QString sname, const QString stoolTip, const QString sstatusTip );
 
-    //Заполнить элемент верхнего уровня
-    void fillTopItem(QTreeWidgetItem *item, quint64 classId );
+    //Fill node of top level [Заполнить элемент верхнего уровня]
+    void              fillTopItem(QTreeWidgetItem *item, quint64 classId );
 
     //Build visual tree
-    void buildVisualTree();
+    void              buildVisualTree();
 
-    QTreeWidgetItem* classList( quint64 classId );
+    //Object class node
+    QTreeWidgetItem*  classList( quint64 classId );
+
+    //Duplicate object with id
+    void              duplicate(const QString &uid );
 
     // QWidget interface
   protected:
     //Reimplement to display context menu
-    virtual void mousePressEvent(QMouseEvent *event) override;
+    virtual void      mousePressEvent(QMouseEvent *event) override;
   };
 
 #endif // SDWPROJECTTREE_H

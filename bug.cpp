@@ -1,5 +1,5 @@
 ﻿
-//B058 bugs
+//B059 bugs
 //F001 fatal
 //C001 critical
 //D058 do
@@ -25,16 +25,18 @@
 
 //TODO B047 Append layer list to all properties bars
 
-//TODO D053 Append to context menu of project "copy selected" command
-
 //TODO B055 No road connection to middle of existing segment
 
-//TODO D058 Append copy-paste for project objects
-
-//TODO B058 Remove cursor viewing in view editor
+//FIXME B059 When change active project undo actions not updated
 
 //===================================================================================
 //Fixed:
+
+//D053 Append to context menu of project "copy selected" command
+
+//D058 Append copy-paste for project objects
+
+//B058 Remove cursor viewing in view editor
 
 //B056 When help window editor appended to tab it not top
 

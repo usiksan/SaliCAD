@@ -33,6 +33,7 @@ Description
 #include <QMessageBox>
 #include <QWizard>
 #include <QtDebug>
+#include <QJsonDocument>
 
 SdWProjectTree::SdWProjectTree(const QString fname, SdProject *prj, QWidget *parent) :
   QTreeWidget(parent),
@@ -224,6 +225,108 @@ void SdWProjectTree::cmObjectDelete()
 
 
 
+void SdWProjectTree::cmObjectCopy()
+  {
+  SdPtr<SdProjectItem> item( mProject->item( currentItem() ) );
+  if( item.isValid() && (item->getClass() & (dctComponent|dctInheritance|dctPart|dctSymbol)) ) {
+    //Prepare Json object with project and selection
+    QJsonObject obj;
+
+    //Store project to json
+    mProject->writeObject( obj );
+
+    //Store object id to json
+    obj.insert( QStringLiteral("ProjectItem UID"), item->getUid() );
+
+    //Convert to byteArray
+    QByteArray array = QJsonDocument( obj ).toBinaryData();
+
+    //Prepare mime data
+    QMimeData *mime = new QMimeData();
+    mime->setData( QStringLiteral(SD_CLIP_FORMAT_PITEM), array );
+
+    //Insert into clipboard
+    QGuiApplication::clipboard()->setMimeData( mime );
+    }
+  else
+    QMessageBox::warning( this, tr("Error!"), tr("You can copy only symbols, parts and components. Select some from that object to copy.") );
+  }
+
+
+
+
+//Paste object from clipboard
+void SdWProjectTree::cmObjectPaste()
+  {
+  const QMimeData *mime = QGuiApplication::clipboard()->mimeData();
+  if( mime != nullptr && mime->hasFormat( QStringLiteral(SD_CLIP_FORMAT_PITEM)) ) {
+    //Data with appropriate format present, read it
+
+    //Retrive Json object from clipboard
+    QJsonObject obj = QJsonDocument::fromBinaryData( mime->data(QStringLiteral(SD_CLIP_FORMAT_PITEM)) ).object();
+
+    //Create project
+    SdProject *project = new SdProject();
+    SdObjectMap map;
+
+    //Project reading
+    project->readObject( &map, obj );
+
+    //selection reading
+    QString uid = obj.value( QStringLiteral("ProjectItem UID") ).toString();
+
+    mProject->getUndo()->begin( tr("Paste from clipboard"), nullptr );
+    if( mProject->itemByUid(uid) )
+      //Same object already present in project duplicate it
+      duplicate( uid );
+
+    else
+      //Simple insert object
+      mProject->insertChild( project->itemByUid(uid)->copy(), mProject->getUndo() );
+
+
+    delete project;
+    }
+  }
+
+
+
+
+
+//Cut object to clipboard
+void SdWProjectTree::cmObjectCut()
+  {
+  SdPtr<SdProjectItem> item( mProject->item( currentItem() ) );
+  if( item.isValid() && (item->getClass() & (dctComponent|dctInheritance|dctPart|dctSymbol)) ) {
+    if( mProject->isUsed(item.ptr()) )
+      QMessageBox::warning( this, tr("Warning!"), tr("Object is used by other objects. You can not cut it until dereferenced, only copy.") );
+    else {
+      cmObjectCopy();
+      mProject->deleteChild( item.ptr(), mProject->getUndo() );
+      }
+    }
+  else
+    QMessageBox::warning( this, tr("Error!"), tr("You can copy only symbols, parts and components. Select some from that object to copy.") );
+  }
+
+
+
+
+//Duplicate current object
+void SdWProjectTree::cmObjectDuplicate()
+  {
+  SdPtr<SdProjectItem> item( mProject->item( currentItem() ) );
+  if( item.isValid() && (item->getClass() & (dctComponent|dctInheritance|dctPart|dctSymbol)) ) {
+    mProject->getUndo()->begin( tr("Duplicate object"), nullptr );
+    duplicate( item->getUid() );
+    }
+  else
+    QMessageBox::warning( this, tr("Error!"), tr("You can duplicate only symbols, parts and components. Select some from that object to copy.") );
+  }
+
+
+
+
 void SdWProjectTree::cmObjectSort()
   {
   //Sort project items by alphabet
@@ -351,6 +454,7 @@ void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem 
   SdWCommand::cmObjectDelete->setEnabled(enable);
   SdWCommand::cmObjectCopy->setEnabled(enable);
   SdWCommand::cmObjectCut->setEnabled(enable);
+  SdWCommand::cmObjectDuplicate->setEnabled(enable);
 
   SdWCommand::cmFilePrint->setEnabled(enable);
   SdWCommand::cmFileExport->setEnabled(enable);
@@ -467,6 +571,25 @@ QTreeWidgetItem *SdWProjectTree::classList(quint64 classId)
     case dctText        : return mTextList;
     }
   return nullptr;
+  }
+
+
+
+
+//Duplicate object with id
+void SdWProjectTree::duplicate(const QString &uid)
+  {
+  SdPtr<SdProjectItem> item( mProject->itemByUid( uid ) );
+  if( item.isValid() && (item->getClass() & (dctComponent|dctInheritance|dctPart|dctSymbol)) ) {
+    //Create copy of object
+    SdProjectItem *copy = dynamic_cast<SdProjectItem*>( item->copy() );
+    copy->setUnicalTitle( QString() );
+    copy->setEditEnable( true, QString() );
+    //Insert item to project
+    mProject->insertChild( copy, mProject->getUndo() );
+    }
+  else
+    QMessageBox::warning( this, tr("Error!"), tr("You can duplicate only symbols, parts and components. Select some from that object to copy.") );
   }
 
 

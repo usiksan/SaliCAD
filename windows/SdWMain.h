@@ -109,6 +109,7 @@ class SdWMain : public QMainWindow
     void cmObjectCopy();
     void cmObjectPaste();
     void cmObjectCut();
+    void cmObjectDuplicate();
     void cmObjectSort();
     void cmObjectParam();
     void cmObjectEditEnable();

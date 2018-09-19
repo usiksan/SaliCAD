@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -17,6 +17,7 @@ Description
 #include "SdContainer.h"
 #include "SdUndo.h"
 #include "library/SdStringMap.h"
+#include "SdProjectSharedPtr.h"
 
 #include <QMap>
 #include <QTreeWidgetItem>
@@ -78,6 +79,7 @@ class SdProject : public SdContainer
     bool              isNameUsed( const QString name ) const;
     SdObjectPtr       item( QTreeWidgetItem *src ) const;
     SdObjectPtr       itemByName( quint64 mask, const QString name ) const;
+    SdObjectPtr       itemByUid( const QString &uid ) const;
 
     //Return full net list from all project sheets
     QStringList       netList() const;

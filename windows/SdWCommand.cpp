@@ -92,6 +92,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmObjectCopy        = menuObject->addAction( QIcon(QString(":/pic/objectCopy.png")), frame->tr("Copy"), frame, SLOT(cmObjectCopy()) );
   cmObjectPaste       = menuObject->addAction( QIcon(QString(":/pic/objectPaste.png")), frame->tr("Paste"), frame, SLOT(cmObjectPaste()) );
   cmObjectCut         = menuObject->addAction( QIcon(QString(":/pic/objectCut.png")), frame->tr("Cut"), frame, SLOT(cmObjectCut()) );
+  cmObjectDuplicate   = menuObject->addAction( QIcon(QString(":/pic/objectCut.png")), frame->tr("Duplicate"), frame, SLOT(cmObjectDuplicate()) );
   cmObjectSort        = menuObject->addAction( QIcon(QString(":/pic/objectSort.png")), frame->tr("Sort"), frame, SLOT(cmObjectSort()) );
   cmObjectEditEnable  = menuObject->addAction( QIcon(QString(":/pic/objectEditEnable.png")), frame->tr("Enable edit"), frame, SLOT(cmObjectEditEnable()) );
   cmObjectEditDisable = menuObject->addAction( QIcon(QString(":/pic/objectEditDisable.png")), frame->tr("Finish edit"), frame, SLOT(cmObjectEditDisable()) );
@@ -373,6 +374,7 @@ void SdWCommand::projectState(bool enable)
     cmObjectDelete->setEnabled(enable);
     cmObjectCopy->setEnabled(enable);
     cmObjectCut->setEnabled(enable);
+    cmObjectDuplicate->setEnabled(enable);
 
     cmObjectPaste->setEnabled(enable);
     }
@@ -702,6 +704,7 @@ QActionPtr SdWCommand::cmObjectDelete;
 QActionPtr SdWCommand::cmObjectCopy;
 QActionPtr SdWCommand::cmObjectPaste;
 QActionPtr SdWCommand::cmObjectCut;
+QActionPtr SdWCommand::cmObjectDuplicate;
 QActionPtr SdWCommand::cmObjectSort;
 QActionPtr SdWCommand::cmObjectParam;
 QActionPtr SdWCommand::cmObjectEditEnable;

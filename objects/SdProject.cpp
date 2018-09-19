@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -253,6 +253,24 @@ SdObjectPtr SdProject::itemByName(quint64 mask, const QString name) const
   forEachConst( mask, [name,&ptr] (SdObject *obj ) -> bool {
     SdPtr<SdProjectItem> item(obj);
     if( item && item->getTitle() == name ) {
+      ptr = item.ptr();
+      return false;
+      }
+    return true;
+    });
+  return ptr;
+  }
+
+
+
+
+
+SdObjectPtr SdProject::itemByUid(const QString &uid) const
+  {
+  SdObjectPtr ptr = nullptr;
+  forEachConst( dctAll, [uid,&ptr] (SdObject *obj ) -> bool {
+    SdPtr<SdProjectItem> item(obj);
+    if( item && item->getUid() == uid ) {
       ptr = item.ptr();
       return false;
       }

@@ -117,3 +117,10 @@ void SdWEditorGraphView::onActivateEditor()
 
 
 
+
+
+void SdWEditorGraphView::paintEvent(QPaintEvent *event)
+  {
+  event->accept();
+  paintProcess( true );
+  }

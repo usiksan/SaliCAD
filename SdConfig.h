@@ -121,6 +121,8 @@ History
                    Fix errors in sheet bus mode, sheet wire mode, part and symbol pin modes.
   11.09.2018 v0.52 Improvements to RoadEnter mode
                    Extend smart tracing
+  19.09.2018 v0.53 Append object clipboard operations
+                   Append object duplicate command
 */
 
 #ifndef SDCONFIG
@@ -132,7 +134,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             52
+#define SD_VERSION_MINOR             53
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

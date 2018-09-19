@@ -591,13 +591,15 @@ void SdWEditorGraph::print(QPrinter &printer, SdRect wnd, int zeroWidth, bool co
 
 
 
-//=================================================================================================
-// Event handlers
 
-//Paint event
-void SdWEditorGraph::paintEvent(QPaintEvent *event)
+
+
+
+//=================================================================================================
+// Paint process
+//Parametrized paint process
+void SdWEditorGraph::paintProcess(bool viewer)
   {
-  event->accept();
   if( viewport() == nullptr ) return;
   QSize s = viewport()->size();
   mClientSize.set( s.width(), s.height() );
@@ -629,7 +631,7 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
     //qDebug() << "cashe" << mOrigin << mScale.scaleGet();
 
     //Draw grid
-    if( sdEnvir->mGridShow && mGrid.x() > 0 ) {
+    if( !viewer && sdEnvir->mGridShow && mGrid.x() > 0 ) {
       //We don't draw grid with cell less then minViewGrid pixels
       //Не чертить сетку менее чем в minViewGrid пикселов
       if( mScale.phys2pixel(mGrid.x()) >= sdEnvir->mMinViewGrid && mScale.phys2pixel(mGrid.y()) >= sdEnvir->mMinViewGrid ) {
@@ -730,7 +732,7 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
     }
 
   //On plate object draw rat net and rule errors
-  if( getProjectItem()->getClass() == dctPlate ) {
+  if( !viewer && getProjectItem()->getClass() == dctPlate ) {
     SdPItemPlate *plate = dynamic_cast<SdPItemPlate*>( getProjectItem() );
     Q_ASSERT( plate != nullptr );
     if( sdEnvir->mShowRatNet )
@@ -739,8 +741,19 @@ void SdWEditorGraph::paintEvent(QPaintEvent *event)
       plate->drawRuleErrors( &context );
     }
 
-  //Рисовать курсор
-  context.drawCursor( mPrevPoint );
+  //Crosshair cursor paint [Рисовать курсор]
+  if( !viewer )
+    context.drawCursor( mPrevPoint );
+  }
+
+//=================================================================================================
+// Event handlers
+
+//Paint event
+void SdWEditorGraph::paintEvent(QPaintEvent *event)
+  {
+  event->accept();
+  paintProcess( false );
   }
 
 

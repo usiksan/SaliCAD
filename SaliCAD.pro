@@ -496,7 +496,8 @@ HEADERS  += \
     windows/SdDHelp.h \
     guider/SdGuiderCapture.h \
     guider/SdGuiderPlayer.h \
-    guider/SdGuiderFile.h
+    guider/SdGuiderFile.h \
+    objects/SdProjectSharedPtr.h
 
 DISTFILES += \
     license.txt

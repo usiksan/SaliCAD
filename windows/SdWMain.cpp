@@ -749,6 +749,14 @@ void SdWMain::cmObjectCut()
 
 
 
+void SdWMain::cmObjectDuplicate()
+  {
+  if( activeProject() )
+    activeProject()->cmObjectDuplicate();
+  }
+
+
+
 
 //Сортировать объекты в активном проекте
 void SdWMain::cmObjectSort()

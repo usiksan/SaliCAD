@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -166,6 +166,8 @@ class SdWEditorGraph : public SdWEditor
     //Setup mouse pos. Where pos is pixel coord
     void    updateMousePos(QMouseEvent *event);
 
+    //Parametrized paint process
+    void    paintProcess( bool viewer );
     // QWidget interface
   protected:
     virtual void paintEvent(QPaintEvent *event) override;
