@@ -22,7 +22,8 @@ Description
 
 
 SdGuiderWMain::SdGuiderWMain(QWidget *parent) :
-  QMainWindow(parent)
+  QMainWindow(parent),
+  mLock(false)
   {
   QMenu *menuFile = new QMenu( tr("File") );
   menuFile->addAction( tr("Open..."), this, &SdGuiderWMain::cmFileOpen );
@@ -45,7 +46,11 @@ SdGuiderWMain::SdGuiderWMain(QWidget *parent) :
   setCentralWidget( splitter );
 
   connect( &mTimer, &QTimer::timeout, this, &SdGuiderWMain::play );
+  connect( mTimeList, &QListWidget::currentRowChanged, this, &SdGuiderWMain::onRowChanged );
   }
+
+
+
 
 void SdGuiderWMain::cmFileOpen()
   {
@@ -53,10 +58,13 @@ void SdGuiderWMain::cmFileOpen()
   if( !mFileName.isEmpty() ) {
     mFile.load( mFileName );
     mFile.play(0);
+    mLock = true;
+    mTimeList->clear();
     for( int i = 0; i < mFile.mFile.count(); i++ )
       mTimeList->addItem( mFile.mFile.at(i).title() );
     mCurrentTime = 0;
     mTimeList->setCurrentRow(0);
+    mLock = false;
     play();
     }
   }
@@ -100,6 +108,7 @@ void SdGuiderWMain::cmPlayStop()
 
 void SdGuiderWMain::play()
   {
+  mLock = true;
   mCurrentTime++;
   int row = mTimeList->currentRow();
   if( row < 0 ) row = 0;
@@ -116,4 +125,31 @@ void SdGuiderWMain::play()
     cmPlayStop();
   else
     mTimeList->setCurrentRow( row );
+  mLock = false;
   }
+
+
+
+
+void SdGuiderWMain::onRowChanged(int row)
+  {
+  //qDebug() << row;
+  //return;
+  if( !mLock && row >= 0 && row < mFile.mFile.count() ) {
+    mCurrentTime = mFile.mFile.at(row).mTime;
+    int lim = (mCurrentTime / 100) * 100;
+    //Find key frame
+    int i;
+    for( i = row; i > 0; i-- )
+      if( mFile.mFile.at(i).mTime < lim ) break;
+
+    while( i <= row )
+      mFile.play(i++);
+
+    mView->clear();
+    mView->setPixmap( mFile.build() );
+    }
+  }
+
+
+

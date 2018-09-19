@@ -31,6 +31,7 @@ class SdGuiderWMain : public QMainWindow
     QLabel      *mView;
     QListWidget *mTimeList;
     QString      mFileName;
+    bool         mLock;
   public:
     explicit SdGuiderWMain(QWidget *parent = nullptr);
 
@@ -45,6 +46,8 @@ class SdGuiderWMain : public QMainWindow
     void cmPlayStop();
 
     void play();
+
+    void onRowChanged( int row );
   };
 
 #endif // SDGUIDERWMAIN_H
