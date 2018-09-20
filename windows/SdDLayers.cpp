@@ -18,6 +18,7 @@ Description
 #include "ui_SdDLayers.h"
 #include "SdDLayerList.h"
 #include "SdDLayerCreate.h"
+#include "SdDHelp.h"
 
 #include <QColorDialog>
 #include <QFileDialog>
@@ -233,7 +234,7 @@ void SdDLayers::appendLyaerToVisualList(const QString id)
 //Show help
 void SdDLayers::cmHelp()
   {
-
+  SdDHelp::help( QString("SdDLayers.htm"), this );
   }
 
 
