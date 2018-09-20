@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <h1 align="center">Layers</h1>
+    <p>The system has a well-established system of layers. That is, each graphic
+      element is located in one of the registered layers. The layer is used to
+      group graphical elements. Layers differ in their identifiers. The
+      identifier consists of two parts: a class and a modifier. The identifier
+      can also be any sequence of characters. The presence of built-in classes
+      and modifiers allow you to maintain a consistent system of layers in
+      different workplaces, regardless of the number of practically used layers.<br>
+    </p>
+    <p>On the local machine, each layer (identifier) contains:</p>
+    <ul>
+      <li>Name. Any sequence of letters and signs.</li>
+      <li>Color. Any of the colors allowed in your system. If the color you
+        specify cannot be displayed by Your system, the closest of the allowed
+        colors is selected.</li>
+      <li>State. A layer can be in one of the following States:</li>
+      <ul>
+        <li>the layer is turned off. Elements drawn in this layer on the screen
+          and on the printer are not displayed and are not editable.</li>
+        <li>the layer is turned on. Elements drawn in such a layer are displayed
+          on the screen and on the printer, but access to them for editing is
+          closed, i.e. editing elements drawn in the layer which on is
+          impossible.</li>
+        <li>the layer is edited. Elements drawn in such a layer are displayed on
+          the screen and on the printer, in addition they can be edited.</li>
+      </ul>
+      <li>The type of trace elements on the layer. That is, this layer is used
+        in the tracing process and the corresponding elements are displayed on
+        it:</li>
+      <ul>
+        <li>pad - used to display pads<br>
+        </li>
+        <li>mask - used to display solder mask</li>
+        <li>stencil - used to display stencil holes for screen printers<br>
+        </li>
+        <li>hole - used to display holes in pcb</li>
+        <li>road - used to display tracing roads</li>
+        <li>polygon - used to display tracing polygons</li>
+        <li>border - used to display tracing borders</li>
+        <li>keep out - tracing keep out areas</li>
+      </ul>
+      <li>Pair layer. The paired layer is used to display elements from this
+        layer when the component is moved to the lower side of the Board.</li>
+    </ul>
+    <p>The layer system forms a stack of display layers. In addition to the
+      display layer stack, there is another layer stack - the trace stack.
+      Layers mapping in the stack trace is done automatically by setting the
+      modifier to the ID of the layer. Multiple visual layers can be mapped on a
+      single trace layer. For example, the layer "PCB pad on top" and the layer
+      "PCB polygon on top" are both mapped to the top trace layer.</p>
+    <p>There is a default layer system, but you can add, edit, and delete
+      layers. When you save a project, the used layers are saved by ID. The
+      current state of the layers is stored on the local machine. Therefore, if
+      you download someone else's project, It will be displayed in your colors,
+      not the colors of the project developer. That is, any project you have
+      downloaded will have a familiar look. If your project contains layers that
+      are not present on your system, they are automatically added with default
+      values.</p>
+    <p>Adding layers can be done manually.</p>
+    <p>Layers can be deleted only manually and only if there is no information
+      on the layers to be deleted in all loaded projects. If you load a project
+      that contains a deleted layer, it is automatically added.</p>
+    <p>See also:</p>
+    <p><a href="SdDLayers.htm">layers dialog</a></p>
+    <p><a href="SdDLayerCreate.htm">layer constructor dialog</a></p>
+    <p><br>
+    </p>
+    <p></p>
+  </body>
+</html>
