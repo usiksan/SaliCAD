@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -39,6 +39,8 @@ Description
 #include "SdUndoRecordVia.h"
 #include "SdUndoRecordRules.h"
 #include "windows/SdWCommand.h"
+
+#include <QDebug>
 
 SdUndo::SdUndo() :
   mUndoCount(0)
@@ -288,8 +290,6 @@ void SdUndo::undoStep()
     mRedo.push( mUndo.pop() );
     }
   if( mUndoCount ) mUndoCount--;
-  SdWCommand::cmEditUndo->setEnabled( isUndoPresent() );
-  SdWCommand::cmEditRedo->setEnabled( isRedoPresent() );
   }
 
 
@@ -307,10 +307,20 @@ void SdUndo::redoStep()
   while( mRedo.count() && !mRedo.top()->isStep() );
 
   mUndoCount++;
+  }
 
+
+
+
+
+//Update undo and redo commands status
+void SdUndo::undoRedoUpdate()
+  {
   SdWCommand::cmEditUndo->setEnabled( isUndoPresent() );
   SdWCommand::cmEditRedo->setEnabled( isRedoPresent() );
   }
+
+
 
 
 

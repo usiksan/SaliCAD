@@ -251,7 +251,8 @@ SOURCES += \
     guider/SdGuiderCapture.cpp \
     guider/SdGuiderPlayer.cpp \
     guider/SdGuiderFile.cpp \
-    windows/SdDParamDefault.cpp
+    windows/SdDParamDefault.cpp \
+    windows/SdWEditorProject.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -499,7 +500,8 @@ HEADERS  += \
     guider/SdGuiderPlayer.h \
     guider/SdGuiderFile.h \
     objects/SdProjectSharedPtr.h \
-    windows/SdDParamDefault.h
+    windows/SdDParamDefault.h \
+    windows/SdWEditorProject.h
 
 DISTFILES += \
     license.txt

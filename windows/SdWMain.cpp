@@ -173,15 +173,24 @@ void SdWMain::setStatusMessage(const QString msg)
 void SdWMain::activateProjectName(const QString name, bool dirty)
   {
   setWindowTitle( QString( "SaliCAD v%1.%2 [%3%4]").arg(SD_VERSION_MAJOR).arg(SD_VERSION_MINOR).arg( dirty ? QChar('*') : QChar(' ') ).arg( name ) );
+  //Update state of undo and redo commands
+  if( activeProject() )
+    activeProject()->cmUndoRedoUpdate();
   }
 
 
 
 
 
+//This signal send from project tree view
+//on it we open appropriate editor
 void SdWMain::onActivateProjectItem(SdProjectItem *item)
   {
   if( item == nullptr ) return;
+  if( activeEditor() && activeEditor()->getProjectItem() == item )
+    //Active editor already top with this item. Nothing done
+    return;
+
   //Find if item already open
   for( int i = 0; i < mWEditors->count(); i++ ) {
     SdWEditor *editor = getEditor(i);
@@ -260,6 +269,7 @@ void SdWMain::onActivateProjectItem(SdProjectItem *item)
 
 
 
+
 void SdWMain::onCloseEditView(SdProjectItem *item)
   {
   if( item == nullptr ) return;
@@ -293,19 +303,6 @@ void SdWMain::onUpdateItemTitle(SdProjectItem *item)
 
 
 
-//void SdWMain::onLockProjectItem(SdProjectItem *item)
-//  {
-//  if( item == 0 ) return;
-//  //Find if item already open
-//  for( int i = 0; i < mWEditors->count(); i++ ) {
-//    SdWEditor *editor = getEditor(i);
-//    if( editor && editor->getProjectItem() == item ) {
-//      //Item already open, update title
-//      mWEditors->setCurrentIndex( i );
-//      return;
-//      }
-//    }
-//  }
 
 
 
@@ -799,6 +796,8 @@ void SdWMain::cmObjectEditDisable()
 
 
 
+
+
 void SdWMain::cmProjectParam()
   {
   if( activeProject() )
@@ -814,8 +813,13 @@ void SdWMain::cmEditUndo()
     activeProject()->cmEditUndo();
     if( activeEditor() )
       activeEditor()->cmEditUndo();
+    //Update state of undo and redo commands
+    if( activeProject() )
+      activeProject()->cmUndoRedoUpdate();
     }
   }
+
+
 
 
 
@@ -826,6 +830,9 @@ void SdWMain::cmEditRedo()
     activeProject()->cmEditRedo();
     if( activeEditor() )
       activeEditor()->cmEditRedo();
+    //Update state of undo and redo commands
+    if( activeProject() )
+      activeProject()->cmUndoRedoUpdate();
     }
   }
 

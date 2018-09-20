@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -19,6 +19,7 @@ Description
 
 
 #include <QMessageBox>
+#include <QDebug>
 
 SdWEditor::SdWEditor(QWidget *parent) :
   QAbstractScrollArea(parent),
@@ -67,8 +68,11 @@ QString SdWEditor::getIconName()
 //Update status of undo and redo
 void SdWEditor::updateUndoRedoStatus()
   {
-  SdWCommand::cmEditUndo->setEnabled( getProject()->getUndo()->isUndoPresent() );
-  SdWCommand::cmEditRedo->setEnabled( getProject()->getUndo()->isRedoPresent() );
+  bool undo = getProject()->getUndo()->isUndoPresent();
+  bool redo = getProject()->getUndo()->isRedoPresent();
+  SdWCommand::cmEditUndo->setEnabled( undo );
+  SdWCommand::cmEditRedo->setEnabled( redo );
+  //qDebug() << "update undo" << undo << redo;
   }
 
 
@@ -80,6 +84,9 @@ void SdWEditor::onActivateEditor()
   updateUndoRedoStatus();
 
   SdWCommand::cmFilePrint->setEnabled(true);
+
+  //Highlight item
+  SdPulsar::sdPulsar->emitHighlightItem( getProjectItem() );
   }
 
 

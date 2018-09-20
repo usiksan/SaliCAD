@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -39,6 +39,8 @@ class SdPulsar : public QObject
     void emitRemoveItem( SdProjectItem *item );
     //Activate item (bring item on top) with edit status
     void emitActivateItem(SdProjectItem *item);
+    //Highlight item in tree view
+    void emitHighlightItem( SdProjectItem *item );
     //Need close item edit (view)
     void emitCloseEditView( SdProjectItem *item );
     //Browse part in sheet
@@ -72,6 +74,8 @@ class SdPulsar : public QObject
     void removeItem( SdProjectItem *item );
     //Activate item (bring item on top)
     void activateItem( SdProjectItem *item );
+    //Highlight item in tree view
+    void highlightItem( SdProjectItem *item );
     //Need close item edit (view)
     void closeEditView( SdProjectItem *item );
     //Browse part in sheet

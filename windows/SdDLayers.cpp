@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -569,4 +569,5 @@ QString SdDLayers::layerTrace(SdLayer *layer)
     case layerTraceLast :
       return tr("last");
     }
+  return tr("---");
   }

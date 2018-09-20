@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -93,6 +93,9 @@ class SdUndo
     //do undo and redo
     void undoStep();
     void redoStep();
+
+    //Update undo and redo commands status
+    void undoRedoUpdate();
   private:
     void addUndo( SdUndoRecordPtr ptr );
   };

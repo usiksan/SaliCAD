@@ -62,7 +62,10 @@ class SdWMain : public QMainWindow
 
     void activateProjectName( const QString name, bool dirty );
 
+    //This signal send from project tree view
+    //on it we open appropriate editor
     void onActivateProjectItem( SdProjectItem *item );
+
     void onCloseEditView( SdProjectItem *item );
     void onUpdateItemTitle( SdProjectItem *item );
     void onRemoveProjectItem( SdProjectItem *item );

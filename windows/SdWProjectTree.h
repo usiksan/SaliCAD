@@ -90,6 +90,9 @@ class SdWProjectTree : public QTreeWidget
     void         cmEditUndo();
     void         cmEditRedo();
 
+    //Update status undo and redo commands
+    void         cmUndoRedoUpdate();
+
   public slots:
     //AFTER rename item
     void renameItem( SdProjectItem *item );
@@ -97,6 +100,9 @@ class SdWProjectTree : public QTreeWidget
     void insertItem( SdProjectItem *item );
     //BEFORE remove item
     void removeItem( SdProjectItem *item );
+    //When editor activated send this signal
+    //on it we highlight appropriate line in project tree
+    void highlightItem( SdProjectItem *item );
 
     void onCurrentItemChanged( QTreeWidgetItem *cur, QTreeWidgetItem *prev );
 

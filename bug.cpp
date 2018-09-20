@@ -15,10 +15,6 @@
 
 //TODO D046 When try to select pin type from default pad association table and no default table offer to enter one
 
-//TODO B036 When duplicate object to edit state it not positioned in project window tree
-
-//TODO B038 When undo sheet insert editor not removed
-
 //TODO D050 Append component rotation by keyboard
 
 //TODO B046 When renumeration in browse mode no rebuild component list
@@ -27,14 +23,18 @@
 
 //TODO B055 No road connection to middle of existing segment
 
-//FIXME B059 When change active project undo actions not updated
-
-//FIXME B060 When select tab in project tree not selected appropriate item
-
 //FIXME B061 When deactivate select mode all must be unselected
 
 //===================================================================================
 //Fixed:
+
+//B036 When duplicate object to edit state it not positioned in project window tree
+
+//B038 When undo sheet insert editor not removed
+
+//B059 When change active project undo actions not updated
+
+//B060 When select tab in project tree not selected appropriate item
 
 //D053 Append to context menu of project "copy selected" command
 

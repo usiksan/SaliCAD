@@ -58,6 +58,7 @@ SdWProjectTree::SdWProjectTree(const QString fname, SdProject *prj, QWidget *par
   connect( SdPulsar::sdPulsar, &SdPulsar::insertItem, this, &SdWProjectTree::insertItem );
   connect( SdPulsar::sdPulsar, &SdPulsar::removeItem, this, &SdWProjectTree::removeItem );
   connect( SdPulsar::sdPulsar, &SdPulsar::renameItem, this, &SdWProjectTree::renameItem );
+  connect( SdPulsar::sdPulsar, &SdPulsar::highlightItem, this, &SdWProjectTree::highlightItem );
   connect( this, &SdWProjectTree::currentItemChanged, this, &SdWProjectTree::onCurrentItemChanged );
   }
 
@@ -153,10 +154,12 @@ void SdWProjectTree::cmObjectNew()
   if( wizard.exec() ) {
     //Append item to the project
     item->setHand();
-    mProject->getUndo()->begin( tr("Creating object"), item );
+    mProject->getUndo()->begin( tr("Creating object"), nullptr );
     mProject->insertChild( item, mProject->getUndo() );
     //Open window to edit item
     SdPulsar::sdPulsar->emitActivateItem( item );
+    //Update status undo and redo commands
+    cmUndoRedoUpdate();
     }
   else {
     //Delete created item
@@ -178,6 +181,8 @@ void SdWProjectTree::cmObjectLoad()
     if( it != nullptr ) it->setHand();
     //Delete source item
     delete item;
+    //Update status undo and redo commands
+    cmUndoRedoUpdate();
     }
   }
 
@@ -194,6 +199,9 @@ void SdWProjectTree::cmObjectRename( bool category )
       wizard.setPage( 1, new SdPNewProjectItem_EnterName( &item, mProject, category, &wizard) );
 
       wizard.exec();
+
+      //Update status undo and redo commands
+      cmUndoRedoUpdate();
       }
     else
       QMessageBox::warning( this, tr("Error!"), tr("To rename or category set object must be edit enable") );
@@ -215,8 +223,11 @@ void SdWProjectTree::cmObjectDelete()
   if( item ) {
     if( mProject->isUsed(item) )
       QMessageBox::warning( this, tr("Warning!"), tr("Object is used by other objects. You can not delete it until dereferenced.") );
-    else if( QMessageBox::question(this, tr("Warning!"), tr("Do You realy want to delete \'%1\'").arg(item->getTitle())) == QMessageBox::Yes )
+    else if( QMessageBox::question(this, tr("Warning!"), tr("Do You realy want to delete \'%1\'").arg(item->getTitle())) == QMessageBox::Yes ) {
       mProject->deleteChild( item, mProject->getUndo() );
+      //Update status undo and redo commands
+      cmUndoRedoUpdate();
+      }
     }
   else
     QMessageBox::warning( this, tr("Error!"), tr("This is not object. Select object to delete.") );
@@ -286,6 +297,9 @@ void SdWProjectTree::cmObjectPaste()
 
 
     delete project;
+
+    //Update status undo and redo commands
+    cmUndoRedoUpdate();
     }
   }
 
@@ -303,6 +317,8 @@ void SdWProjectTree::cmObjectCut()
     else {
       cmObjectCopy();
       mProject->deleteChild( item.ptr(), mProject->getUndo() );
+      //Update status undo and redo commands
+      cmUndoRedoUpdate();
       }
     }
   else
@@ -319,6 +335,8 @@ void SdWProjectTree::cmObjectDuplicate()
   if( item.isValid() && (item->getClass() & (dctComponent|dctInheritance|dctPart|dctSymbol)) ) {
     mProject->getUndo()->begin( tr("Duplicate object"), nullptr );
     duplicate( item->getUid() );
+    //Update status undo and redo commands
+    cmUndoRedoUpdate();
     }
   else
     QMessageBox::warning( this, tr("Error!"), tr("You can duplicate only symbols, parts and components. Select some from that object to copy.") );
@@ -355,9 +373,12 @@ void SdWProjectTree::cmObjectParam()
   SdPtr<SdProjectItem> item( mProject->item( currentItem() ) );
   if( item.isValid() ) {
     SdDParamEditor editor( tr("Edit param"), item->paramTable(), mProject, item->isEditEnable(), false, this );
-    if( editor.exec() )
+    if( editor.exec() ) {
       //Edit successfull. Apply changes
       item->paramTableSet( editor.paramTable(), mProject->getUndo() );
+      //Update status undo and redo commands
+      cmUndoRedoUpdate();
+      }
     }
   }
 
@@ -368,9 +389,12 @@ void SdWProjectTree::cmObjectParam()
 void SdWProjectTree::cmProjectParam()
   {
   SdDParamEditor editor( tr("Edit project param"), mProject->paramTable(), mProject, true, true, this );
-  if( editor.exec() )
+  if( editor.exec() ) {
     //Edit successfull. Apply changes
     mProject->paramTableSet( editor.paramTable(), mProject->getUndo() );
+    //Update status undo and redo commands
+    cmUndoRedoUpdate();
+    }
   }
 
 
@@ -395,6 +419,15 @@ void SdWProjectTree::cmEditUndo()
 void SdWProjectTree::cmEditRedo()
   {
   getProject()->getUndo()->redoStep();
+  }
+
+
+
+
+//Update status undo and redo commands
+void SdWProjectTree::cmUndoRedoUpdate()
+  {
+  getProject()->getUndo()->undoRedoUpdate();
   }
 
 
@@ -436,6 +469,17 @@ void SdWProjectTree::removeItem(SdProjectItem *item)
     QTreeWidgetItem *ch = classList( item->getClass() );
     ch->removeChild( item->mTreeItem );
     }
+  }
+
+
+
+
+//When editor activated send this signal
+//on it we highlight appropriate line in project tree
+void SdWProjectTree::highlightItem(SdProjectItem *item)
+  {
+  if( item )
+    setCurrentItem( item->mTreeItem );
   }
 
 

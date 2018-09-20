@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -51,6 +51,17 @@ void SdPulsar::emitActivateItem(SdProjectItem *item)
   {
   emit activateItem( item );
   }
+
+
+
+//Highlight item in tree view
+void SdPulsar::emitHighlightItem(SdProjectItem *item)
+  {
+  emit highlightItem( item );
+  }
+
+
+
 
 void SdPulsar::emitCloseEditView(SdProjectItem *item)
   {
