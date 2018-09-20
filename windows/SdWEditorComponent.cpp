@@ -17,10 +17,12 @@ Description
 #include "SdDGetObject.h"
 #include "SdWCommand.h"
 #include "SdDParamEditor.h"
+#include "SdDParamDefault.h"
 #include "objects/SdProject.h"
 #include "objects/SdPartVariant.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdGraphPartPin.h"
+
 #include <QSplitter>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -410,10 +412,13 @@ void SdWEditorComponent::paramAdd()
 //Append default param group
 void SdWEditorComponent::paramAddDefault()
   {
-  QStringList paramList = SdDParamEditor::defParamList();
-  for( const QString &param : paramList )
-    if( !mComponent->paramContains(param) )
-      paramAddInt( param, SdDParamEditor::defParamValue(param, mComponent, this) );
+  SdDParamDefault def( this );
+  if( def.exec() ) {
+    QStringList paramList = def.defParamList();
+    for( const QString &param : paramList )
+      if( !mComponent->paramContains(param) )
+        paramAddInt( param, SdDParamEditor::defParamValue(param, mComponent, this) );
+    }
   }
 
 

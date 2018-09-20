@@ -17,6 +17,7 @@ Description
 #include "SdWEditorGraphPart.h"
 #include "SdDGetObject.h"
 #include "SdDParamEditor.h"
+#include "SdDParamDefault.h"
 #include "SdWCommand.h"
 #include "objects/SdProject.h"
 #include "objects/SdPartVariant.h"
@@ -269,10 +270,13 @@ void SdWEditorInheritance::paramAdd()
 
 void SdWEditorInheritance::paramAddDefault()
   {
-  QStringList paramList = SdDParamEditor::defParamList();
-  for( const QString &param : paramList )
-    if( !mInheritance->paramContains(param) )
-      paramAddInt( param, SdDParamEditor::defParamValue(param, mInheritance, this) );
+  SdDParamDefault def( this );
+  if( def.exec() ) {
+    QStringList paramList = def.defParamList();
+    for( const QString &param : paramList )
+      if( !mInheritance->paramContains(param) )
+        paramAddInt( param, SdDParamEditor::defParamValue(param, mInheritance, this) );
+    }
   }
 
 

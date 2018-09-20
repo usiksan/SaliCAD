@@ -45,7 +45,7 @@ class SdDParamEditor : public QDialog
     SdDParamEditor(const QString title, const SdStringMap &map, SdProject *prj, bool editEnable, bool isProject, QWidget *parent = nullptr );
     //~SdDParamEditor() override;
 
-    const SdStringMap     paramTable() const { return mParam; }
+    const SdStringMap  paramTable() const { return mParam; }
 
     //Default params
     static QStringList defParamList();

@@ -17,6 +17,7 @@ Description
 #include "SdDGetObject.h"
 #include "SdDStringFromList.h"
 #include "SdValueSelector.h"
+#include "SdDParamDefault.h"
 #include "objects/SdProject.h"
 #include "objects/SdPItemComponent.h"
 #include "objects/SdPItemSheet.h"
@@ -106,6 +107,9 @@ QStringList SdDParamEditor::defParamList()
     stdParamArticle,
     stdParamTitle,
     stdParamValue,
+    stdParamValueMin,
+    stdParamValueMax,
+    stdParamValueRow,
     stdParamPrefix,
     stdParamValueSelector };
   return list;
@@ -125,6 +129,9 @@ QString SdDParamEditor::defParamDescription(QString paramName)
     map.insert( stdParamArticle, tr("Component article representation. Can be used in component name and also in bom") );
     map.insert( stdParamTitle, tr("This parametr define component name without value for example smd 0805") );
     map.insert( stdParamValue, tr("This parameter define concrete component value for example 1kOm") );
+    map.insert( stdParamValueMin, tr("Minimum for value parameter, for example 1 Om") );
+    map.insert( stdParamValueMax, tr("Maximum for value parameter, for example 10 MOm") );
+    map.insert( stdParamValueRow, tr("Row with which forms all intermediate values, for example E12") );
     map.insert( stdParamPrefix, tr("This param define component ident prefix for example prefix DD will construct ident DD4") );
     map.insert( stdParamValueSelector, tr("This param define used value selector for example 'resistor' will select resistor values, i.e. 1.2kOm") );
     }
@@ -187,10 +194,13 @@ void SdDParamEditor::paramAdd()
 
 void SdDParamEditor::paramAddDefault()
   {
-  QStringList paramList = defParamList();
-  for( const QString &param : paramList )
-    if( !mParam.contains(param) )
-      paramAddInt( param, defParamValue(param, nullptr, this) );
+  SdDParamDefault def( this );
+  if( def.exec() ) {
+    QStringList paramList = def.defParamList();
+    for( const QString &param : paramList )
+      if( !mParam.contains(param) )
+        paramAddInt( param, defParamValue(param, nullptr, this) );
+    }
   }
 
 

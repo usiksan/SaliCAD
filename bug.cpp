@@ -1,5 +1,5 @@
 ﻿
-//B059 bugs
+//B061 bugs
 //F001 fatal
 //C001 critical
 //D058 do
@@ -28,6 +28,10 @@
 //TODO B055 No road connection to middle of existing segment
 
 //FIXME B059 When change active project undo actions not updated
+
+//FIXME B060 When select tab in project tree not selected appropriate item
+
+//FIXME B061 When deactivate select mode all must be unselected
 
 //===================================================================================
 //Fixed:
