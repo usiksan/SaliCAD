@@ -24,14 +24,15 @@ class SdGuiderWMain : public QMainWindow
   {
     Q_OBJECT
 
-    SdGuiderFile mFile;
-    QTimer       mTimer;
-    int          mCurrentTime;
+    SdGuiderFile  mFile;
+    QTimer        mTimer;
+    int           mCurrentTime;
     //int
-    QLabel      *mView;
-    QListWidget *mTimeList;
-    QString      mFileName;
-    bool         mLock;
+    QLabel       *mView;
+    QListWidget  *mTimeList;
+    QString       mFileName;
+    bool          mLock;
+    SdGuiderTiter mTiter;
   public:
     explicit SdGuiderWMain(QWidget *parent = nullptr);
 
@@ -41,6 +42,13 @@ class SdGuiderWMain : public QMainWindow
     void cmFileOpen();
     void cmFileSave();
 
+    void cmTiterEdit();
+    void cmTiterInsert();
+    void cmTiterHide();
+    void cmTiterCopy();
+    void cmTiterCut();
+    void cmTiterPaste();
+
     void cmPlayRestart();
     void cmPlayStart();
     void cmPlayStop();
@@ -48,6 +56,9 @@ class SdGuiderWMain : public QMainWindow
     void play();
 
     void onRowChanged( int row );
+
+  private:
+    void refreshTime();
   };
 
 #endif // SDGUIDERWMAIN_H

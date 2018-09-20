@@ -17,6 +17,8 @@ Description
 #include <QList>
 #include <QMap>
 #include <QByteArray>
+#include <functional>
+
 
 
 struct SdGuiderTime {
@@ -27,10 +29,25 @@ struct SdGuiderTime {
     QString title() const;
   };
 
-#define SD_GT_KEY_IMAGE 1
-#define SD_GT_DIF_IMAGE 2
-#define SD_GT_STOP      3
-#define SD_GT_MOUSE     4
+
+struct SdGuiderTiter {
+    QPoint                mPos;
+    QMap<QString,QString> mContens;
+
+    QByteArray write() const;
+    void       read( const QByteArray &src );
+  };
+
+
+#define SD_GT_KEY_IMAGE  1
+#define SD_GT_DIF_IMAGE  2
+#define SD_GT_STOP       3
+#define SD_GT_MOUSE      4
+#define SD_GT_TITER      5
+#define SD_GT_TITER_HIDE 6
+
+
+typedef std::function<void( const QString &str)> SdSayFunc;
 
 struct SdGuiderFile
   {
@@ -41,7 +58,8 @@ struct SdGuiderFile
     quint32             mMouseButtons;
     QPoint              mCursorPos; //Current cursor position
     QString             mTitle;     //Current title if present
-    QPoint              mTitlePos;  //Current title position
+    QString             mLanguage;  //Language id
+    SdSayFunc           mSay;       //Say func
 
     SdGuiderFile();
 

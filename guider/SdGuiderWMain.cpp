@@ -11,6 +11,7 @@ Web
 Description
 */
 #include "SdGuiderWMain.h"
+#include "SdGuiderDTiterEdit.h"
 
 #include <QMenuBar>
 #include <QSettings>
@@ -19,15 +20,32 @@ Description
 #include <QFileDialog>
 #include <QSplitter>
 #include <QDebug>
+#include <QMessageBox>
+#include <QInputDialog>
+#include <QTextToSpeech>
 
+static QTextToSpeech *speech;
 
 SdGuiderWMain::SdGuiderWMain(QWidget *parent) :
   QMainWindow(parent),
   mLock(false)
   {
+  speech = new QTextToSpeech();
+  mFile.mSay = [] ( const QString &say ) { speech->say(say); };
+
   QMenu *menuFile = new QMenu( tr("File") );
   menuFile->addAction( tr("Open..."), this, &SdGuiderWMain::cmFileOpen );
   menuFile->addAction( tr("Save"), this, &SdGuiderWMain::cmFileSave );
+
+
+  QMenu *menuTiter = new QMenu( tr("Titer") );
+  menuTiter->addAction( tr("Insert"), this, &SdGuiderWMain::cmTiterInsert );
+  menuTiter->addAction( tr("Hide"), this, &SdGuiderWMain::cmTiterHide );
+  menuTiter->addAction( tr("Edit"), this, &SdGuiderWMain::cmTiterEdit );
+  menuTiter->addAction( tr("Copy"), this, &SdGuiderWMain::cmTiterCopy );
+  menuTiter->addAction( tr("Cut"), this, &SdGuiderWMain::cmTiterCut );
+  menuTiter->addAction( tr("Paste"), this, &SdGuiderWMain::cmTiterPaste );
+
 
   QMenu *menuPlay = new QMenu( tr("Play") );
   menuPlay->addAction( tr("Restart"), this, &SdGuiderWMain::cmPlayRestart );
@@ -36,6 +54,7 @@ SdGuiderWMain::SdGuiderWMain(QWidget *parent) :
 
   QMenuBar *bar = menuBar();
   bar->addMenu( menuFile );
+  bar->addMenu( menuTiter );
   bar->addMenu( menuPlay );
 
   QSplitter *splitter = new QSplitter;
@@ -77,6 +96,126 @@ void SdGuiderWMain::cmFileSave()
   {
   if( !mFileName.isEmpty() )
     mFile.save( mFileName );
+  }
+
+
+
+
+void SdGuiderWMain::cmTiterEdit()
+  {
+  int row = mTimeList->currentRow();
+  if( row < 0 ) row = 0;
+  if( row < mFile.mFile.count() ) {
+    if( mFile.mFile.at(row).mType == SD_GT_TITER ) {
+      SdGuiderTiter titer;
+      titer.read( mFile.mFile.at(row).mData );
+      //Edit dialog
+      SdGuiderDTiterEdit edit( &titer, this );
+      if( edit.exec() )
+        mFile.mFile[row].mData = titer.write();
+      }
+    else QMessageBox::warning( this, tr("Warning!"), tr("This item is not titer") );
+    }
+  }
+
+
+
+
+void SdGuiderWMain::cmTiterInsert()
+  {
+  int row = mTimeList->currentRow();
+  if( row < 0 ) row = 0;
+  if( row < mFile.mFile.count() ) {
+    int time = mFile.mFile.at(row).mTime;
+    bool ok = true;
+    time = QInputDialog::getInt( this, tr("Titer insert"), tr("Enter time to insert titer"), time, 0, 600000, 1, &ok );
+    if( ok ) {
+      QString text = QInputDialog::getText( this, tr("Titer insert"), tr("Enter english titer") );
+      SdGuiderTiter titer;
+      titer.mContens.insert( QString("en"), text );
+      SdGuiderTime tm;
+      tm.mType = SD_GT_TITER;
+      tm.mTime = time;
+      tm.mData = titer.write();
+      mFile.mFile.insert( row, tm );
+      refreshTime();
+      }
+    }
+  }
+
+
+
+
+void SdGuiderWMain::cmTiterHide()
+  {
+  int row = mTimeList->currentRow();
+  if( row < 0 ) row = 0;
+  if( row < mFile.mFile.count() ) {
+    int time = mFile.mFile.at(row).mTime;
+    bool ok = true;
+    time = QInputDialog::getInt( this, tr("Titer insert"), tr("Enter time to insert titer hide"), time, 0, 600000, 1, &ok );
+    if( ok ) {
+      SdGuiderTime tm;
+      tm.mType = SD_GT_TITER_HIDE;
+      tm.mTime = time;
+      mFile.mFile.insert( row, tm );
+      refreshTime();
+      }
+    }
+  }
+
+
+
+
+void SdGuiderWMain::cmTiterCopy()
+  {
+  int row = mTimeList->currentRow();
+  if( row < 0 ) row = 0;
+  if( row < mFile.mFile.count() ) {
+    if( mFile.mFile.at(row).mType == SD_GT_TITER )
+      mTiter.read( mFile.mFile.at(row).mData );
+    else QMessageBox::warning( this, tr("Warning!"), tr("This item is not titer") );
+    }
+  }
+
+
+
+
+
+void SdGuiderWMain::cmTiterCut()
+  {
+  int row = mTimeList->currentRow();
+  if( row < 0 ) row = 0;
+  if( row < mFile.mFile.count() ) {
+    if( mFile.mFile.at(row).mType == SD_GT_TITER ) {
+      mTiter.read( mFile.mFile.at(row).mData );
+      mFile.mFile.removeAt(row);
+      refreshTime();
+      }
+    else QMessageBox::warning( this, tr("Warning!"), tr("This item is not titer") );
+    }
+  }
+
+
+
+
+void SdGuiderWMain::cmTiterPaste()
+  {
+  int row = mTimeList->currentRow();
+  if( row < 0 ) row = 0;
+  if( row < mFile.mFile.count() ) {
+    int time = mFile.mFile.at(row).mTime;
+    bool ok = true;
+    time = QInputDialog::getInt( this, tr("Titer insert"), tr("Enter time to paste titer"), time, 0, 600000, 1, &ok );
+    if( ok ) {
+      SdGuiderTime tm;
+      tm.mType = SD_GT_TITER;
+      tm.mTime = time;
+      tm.mData = mTiter.write();
+      mFile.mFile.insert( row, tm );
+      refreshTime();
+      }
+    }
   }
 
 
@@ -149,6 +288,23 @@ void SdGuiderWMain::onRowChanged(int row)
     mView->clear();
     mView->setPixmap( mFile.build() );
     }
+  }
+
+
+
+
+void SdGuiderWMain::refreshTime()
+  {
+  mLock = true;
+  int row = mTimeList->currentRow();
+  mTimeList->clear();
+  for( int i = 0; i < mFile.mFile.count(); i++ )
+    mTimeList->addItem( mFile.mFile.at(i).title() );
+  mCurrentTime = 0;
+  mTimeList->setCurrentRow(0);
+  mTimeList->setCurrentRow(row);
+  mLock = false;
+  onRowChanged(row);
   }
 
 

@@ -5,7 +5,7 @@
 #-------------------------------------------------
 CONFIG += c++17
 
-QT       += core gui
+QT       += core gui texttospeech
 
 greaterThan(QT_MAJOR_VERSION, 4):  QT += widgets
 
@@ -18,14 +18,22 @@ SOURCES += \
     guider/SdGuiderCapture.cpp \
     guider/SdGuiderPlayer.cpp \
     guider/SdGuiderFile.cpp \
-    guider/SdGuiderWMain.cpp
+    guider/SdGuiderWMain.cpp \
+    guider/SdGuiderDTiterEdit.cpp
 
 HEADERS  += \
     guider/SdGuiderCapture.h \
     guider/SdGuiderPlayer.h \
     guider/SdGuiderFile.h \
-    guider/SdGuiderWMain.h
+    guider/SdGuiderWMain.h \
+    guider/SdGuiderDTiterEdit.h
 
 DISTFILES += \
     license.txt
+
+FORMS += \
+    guider/SdGuiderDTiterEdit.ui
+
+RESOURCES += \
+    SdGuider.qrc
 

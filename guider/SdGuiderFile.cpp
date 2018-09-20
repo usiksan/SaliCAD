@@ -17,6 +17,7 @@ Description
 #include <QPainter>
 #include <QDebug>
 
+
 inline QDataStream &operator << ( QDataStream &os, const SdGuiderTime &time ) {
   os << time.mData << time.mTime << time.mType;
   return os;
@@ -28,9 +29,23 @@ inline QDataStream &operator >> ( QDataStream &is, SdGuiderTime &time ) {
   }
 
 
+static QImage mouse[8];
+
 SdGuiderFile::SdGuiderFile()
   {
+  //By default no speach
+  mSay = [] (const QString &say) { Q_UNUSED(say);};
 
+  if( mouse[0].isNull() ) {
+    mouse[0] = QImage(QString(":/pic/mouse0.png"));
+    mouse[1] = QImage(QString(":/pic/mouse1.png"));
+    mouse[2] = QImage(QString(":/pic/mouse2.png"));
+    mouse[3] = QImage(QString(":/pic/mouse3.png"));
+    mouse[4] = QImage(QString(":/pic/mouse4.png"));
+    mouse[5] = QImage(QString(":/pic/mouse5.png"));
+    mouse[6] = QImage(QString(":/pic/mouse6.png"));
+    mouse[7] = QImage(QString(":/pic/mouse7.png"));
+    }
   }
 
 void SdGuiderFile::addImage(QImage img, int time)
@@ -118,8 +133,24 @@ void SdGuiderFile::play(int index)
       is >> mMouseButtons >> mCursorPos;
       }
       break;
+    case SD_GT_TITER : {
+      SdGuiderTiter titer;
+      titer.read( mFile.at(index).mData );
+      if( titer.mContens.contains(mLanguage) )
+        mTitle = titer.mContens.value(mLanguage);
+      else
+        mTitle = titer.mContens.value(QString("en"));
+      mSay( mTitle );
+      }
+      break;
+    case SD_GT_TITER_HIDE :
+      mTitle.clear();
+      break;
     }
   }
+
+
+
 
 
 void drawButton( QPainter &painter, int x, int y, bool press ) {
@@ -132,6 +163,9 @@ void drawButton( QPainter &painter, int x, int y, bool press ) {
   }
 
 
+
+
+
 QPixmap SdGuiderFile::build()
   {
   //Current background
@@ -140,15 +174,28 @@ QPixmap SdGuiderFile::build()
   QPainter painter( &pix );
   painter.setPen( Qt::red );
   //qDebug() << mCursorPos;
-  //Draw left button
-  drawButton( painter, mCursorPos.x() - 15, mCursorPos.y() + 3, mMouseButtons & Qt::LeftButton );
-  //Draw middle button
-  drawButton( painter, mCursorPos.x() - 5, mCursorPos.y(), mMouseButtons & Qt::MidButton );
-  //Draw right button
-  drawButton( painter, mCursorPos.x() + 5, mCursorPos.y() + 3, mMouseButtons & Qt::RightButton );
+  int mouseIndex = 0;
+  if( mMouseButtons & Qt::LeftButton ) mouseIndex |= 1;
+  if( mMouseButtons & Qt::MidButton ) mouseIndex |= 2;
+  if( mMouseButtons & Qt::RightButton ) mouseIndex |= 4;
+  //Draw mouse
+  painter.drawImage( QPoint( mCursorPos.x() - 16, mCursorPos.y() - 4 ), mouse[mouseIndex] );
+//  //Draw left button
+//  drawButton( painter, mCursorPos.x() - 15, mCursorPos.y() + 3, mMouseButtons & Qt::LeftButton );
+//  //Draw middle button
+//  drawButton( painter, mCursorPos.x() - 5, mCursorPos.y(), mMouseButtons & Qt::MidButton );
+//  //Draw right button
+//  drawButton( painter, mCursorPos.x() + 5, mCursorPos.y() + 3, mMouseButtons & Qt::RightButton );
   //painter.drawText( 100, 100, QString("x:%1  y:%2").arg(mCursorPos.x()).arg(mCursorPos.y()) );
   if( !mTitle.isEmpty() ) {
-    painter.drawText( mTitlePos, mTitle );
+    painter.setFont( QFont("Arial", 20) );
+    painter.setPen( Qt::blue );
+    QRect r( QPoint(), pix.size() );
+    r.setWidth( r.width() * 8 / 10 );
+    r = painter.boundingRect(r, Qt::AlignHCenter | Qt::TextWordWrap, mTitle );
+    r.moveTop( pix.height() - (r.height() + 30) );
+    r.moveLeft( (pix.width() - r.width()) / 2 );
+    painter.drawText( r, Qt::AlignHCenter | Qt::TextWordWrap, mTitle );
     }
   }
   //pix.save( QString("c:\\work\\t1.png") );
@@ -191,6 +238,34 @@ QString SdGuiderTime::title() const
       return str.arg(mTime).arg( QString("Dif image") );
     case SD_GT_MOUSE :
       return str.arg(mTime).arg( QString("Mouse position") );
+    case SD_GT_TITER :
+      return str.arg(mTime).arg( QString("Titer") );
+    case SD_GT_TITER_HIDE :
+      return str.arg(mTime).arg( QString("Hide titer") );
+    case SD_GT_STOP :
+      return str.arg(mTime).arg( QString("Stop file") );
     }
   return str.arg(mTime).arg( QString() );
   }
+
+
+
+
+QByteArray SdGuiderTiter::write() const
+  {
+  QByteArray ar;
+  QDataStream os( &ar, QIODevice::WriteOnly );
+  os << mPos << mContens;
+  return ar;
+  }
+
+
+
+
+void SdGuiderTiter::read(const QByteArray &src)
+  {
+  QDataStream is( src );
+  is >> mPos >> mContens;
+  }
+
+
