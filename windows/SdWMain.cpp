@@ -50,6 +50,7 @@ Description
 #include <QToolButton>
 #include <QMimeData>
 #include <QStatusBar>
+#include <QDebug>
 
 SdWMain::SdWMain(QStringList args, QWidget *parent) :
   QMainWindow(parent)
@@ -155,6 +156,9 @@ void SdWMain::setStatusPositions(const QString x, const QString y)
   mXPos->setText( x );
   mYPos->setText( y );
   }
+
+
+
 
 void SdWMain::setStatusMessage(const QString msg)
   {
@@ -383,6 +387,7 @@ void SdWMain::onSelectedParts(SdProjectItem *plate, QStringList list)
 //Calling when press tab of editor
 void SdWMain::onActivateEditor(int index)
   {
+  qDebug() << "Activate editor" << index;
   SdWEditor *editor = getEditor(index);
   SdWCommand::hideEditorContext();
   if( editor ) {

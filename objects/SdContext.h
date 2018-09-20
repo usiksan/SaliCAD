@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -67,14 +67,13 @@ class SdContext {
     void            setOverZeroWidth( int width ) { mZeroWidth = width; mZeroOn = true; }
     void            resetOverZeroWidth() { mZeroOn = false; }
 
-    //Операции с селектором
+    //Operation with selector [Операции с селектором]
     void            setSelector( SdSelector *selector );
     SdSelector     *getSelector() { return mSelector; }
 
-    //Информационные
+    //Information [Информационные]
     SdPoint         getGrid() const { return mGrid; }
     QTransform&     transform() { return mTransform; }
-    //virtual void    getViewPort( SdRect *dest ) = 0;
 
     //Draw prepare
     void            setPen(int width, SdLayer *layer, int lineStyle);
@@ -83,10 +82,9 @@ class SdContext {
     void            setProp(const SdPropLine &prop );
     void            setFont( const SdPropText &prop );
 
-    //Примитивы рисования
+    //Drawing primitives [Примитивы рисования]
     virtual void    line( SdPoint a, SdPoint b );
     void            line(SdPoint a, SdPoint b, const SdPropLine &prop );
-    //virtual void    road( SdPoint a, SdPoint b, int clear, SdRoadProp &prop ) = 0;
     void            quadrangle( SdQuadrangle q, const SdPropLine &prop );
     void            rect( SdRect r );
     void            rect( SdRect r, const SdPropLine &prop );
@@ -104,18 +102,13 @@ class SdContext {
     void            region( const SdPointList &points, const SdPropLine &prop, bool autoClose = true );
     virtual void    regionFill( const SdPointList &points, const SdPropLine &prop );
     virtual void    polygon( const SdPointList &points, const SdPolyWindowList &windows, SdLayer *layer );
-    //virtual void TextBox( DTextProp &prop, int charNum );
 
-    //Примитивы второго уровня
+    //Second level primitives [Примитивы второго уровня]
     void            smartPoint(SdPoint a, SdSnapMask smartMask = snapCommon );      //Отобразить точку привязки
     void            symPin( SdPoint a, SdLayer *layer );                      //Symbol pin cross
     void            partPin( SdPoint a, SdLayer *layer );                     //Part pin circle
     void            cross( SdPoint a, int size, QColor color );               //Draw cross
-//    virtual void    dotPoint( SdPoint p, SdPropLine &prop ) = 0;                  //Точка пересечения цепей
-//    virtual void    dotCircle( SdPoint p, SdPartPinProp &prop ) = 0;              //Точка подключения вывода корпуса
     void            drawLineArrow( SdPoint p1, SdPoint p2, QColor color, int arrowSize );  //Размерная стрелка
-//    virtual void    via( SdPoint p, SdRoadProp &prop ) = 0;                       //Переходное (без КП)
-    void            dotTrase( SdPoint p );                                    //Точка пометки трассируемой цепи
 
     //Draw cursor with current mode
     void            drawCursor( SdPoint p );

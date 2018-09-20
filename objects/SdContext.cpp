@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -535,13 +535,6 @@ void SdContext::smartPoint(SdPoint a, SdSnapMask smartMask)
   }
 
 
-
-
-void SdContext::dotTrase(SdPoint p)
-  {
-  Q_UNUSED(p)
-  //TODO D022 draw dotTrase
-  }
 
 
 
