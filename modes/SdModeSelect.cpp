@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -65,6 +65,7 @@ void SdModeSelect::activate()
 
 void SdModeSelect::reset()
   {
+  unselect(true);
   setStep(smNoSelect);
   update();
   //UpdateTools();

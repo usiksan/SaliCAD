@@ -23,10 +23,10 @@
 
 //TODO B055 No road connection to middle of existing segment
 
-//FIXME B061 When deactivate select mode all must be unselected
-
 //===================================================================================
 //Fixed:
+
+//B061 When deactivate select mode all must be unselected
 
 //B036 When duplicate object to edit state it not positioned in project window tree
 
