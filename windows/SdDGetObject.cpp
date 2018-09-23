@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Dialog for retrive object from dataBase
 */
 
 #include "SdDGetObject.h"
@@ -165,7 +166,7 @@ SdStringMap            SdDGetObject::mParam;        //Component or instance para
 
 quint64                SdDGetObject::mSort;         //Object select sort (class)
 SdLibraryHeaderList    SdDGetObject::mHeaderList;   //Header list for filtered objects
-bool                   SdDGetObject::mTitleOnly;    //Flag for find only in titles
+bool                   SdDGetObject::mTitleOnly = true;    //Flag for find only in titles
 
 SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   QDialog(parent),
@@ -213,6 +214,9 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   ui->mLoadFromCentral->setDisabled(true);
 
   connect( ui->mClearFields, &QPushButton::clicked, this, &SdDGetObject::onClearFieldFiltr );
+
+  //Default filtr only title or by fields also
+  ui->mTitleOnlyFiltr->setChecked( mTitleOnly );
 
   if( mSort == sort )
     QTimer::singleShot( 300, this, [this] () {
@@ -437,9 +441,18 @@ void SdDGetObject::onLoadFromCentral()
 
 
 //When changed field filtr
-void SdDGetObject::onFieldChanged(int, int)
+void SdDGetObject::onFieldChanged(int row, int column )
   {
-  find();
+  if( column == 2 )
+    find();
+  if( column == 0 ) {
+    //Field show flag changed
+    bool show = ui->mFieldsBox->item( row, 0 )->checkState() == Qt::Checked;
+    if( show )
+      ui->mTable->showColumn( row + 3 );
+    else
+      ui->mTable->hideColumn( row + 3 );
+    }
   }
 
 
@@ -508,7 +521,6 @@ void SdDGetObject::fillTable()
 
   //Leave in field list only fields with value
   int row = ui->mFieldsBox->rowCount();
-  qDebug() << "fillTable" << row;
   for( int i = 0; i < ui->mFieldsBox->rowCount(); )
     if( ui->mFieldsBox->item( i, 2 )->text().isEmpty() && !fields.contains(ui->mFieldsBox->item( i, 1 )->text()) )
       ui->mFieldsBox->removeRow(i);
@@ -526,9 +538,10 @@ void SdDGetObject::fillTable()
     ui->mFieldsBox->setRowHeight( row, 20 );
     //Setup field params
     //Field visibility
-    QCheckBox *box = new QCheckBox();
-    box->setChecked(true);
-    ui->mFieldsBox->setCellWidget( row, 0, box );
+    QTableWidgetItem *item = new QTableWidgetItem();
+    item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsUserCheckable );
+    item->setCheckState( Qt::Checked );
+    ui->mFieldsBox->setItem( row, 0, item );
     //Field name
     ui->mFieldsBox->setItem( row, 1, new QTableWidgetItem( *iter ) );
     //Disable edit
@@ -556,8 +569,11 @@ void SdDGetObject::fillTable()
   ui->mTable->setHorizontalHeaderItem( 1, new QTableWidgetItem( tr("Author") ) );
   ui->mTable->setHorizontalHeaderItem( 2, new QTableWidgetItem( tr("Created") ) );
   //Other columns - fields
-  for( int i = 0; i < ui->mFieldsBox->rowCount(); i++ )
+  for( int i = 0; i < ui->mFieldsBox->rowCount(); i++ ) {
     ui->mTable->setHorizontalHeaderItem(i+3, new QTableWidgetItem( ui->mFieldsBox->item(i,1)->text() ) );
+    if( ui->mFieldsBox->item( i, 0 )->checkState() != Qt::Checked )
+      ui->mTable->hideColumn( i + 3 );
+    }
 
   //Setup column width
   for( int i = 0; i < ui->mTable->columnCount(); i++ ) {
@@ -612,6 +628,7 @@ void SdDGetObject::accept()
       mCompUid = mObjUid;
     else
       mCompUid.clear();
+    //Save current dialog state
     prevDialogSize = size();
     prevFieldsBoxWidth[0] = ui->mFieldsBox->columnWidth(0);
     prevFieldsBoxWidth[1] = ui->mFieldsBox->columnWidth(1);
