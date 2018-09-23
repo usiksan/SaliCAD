@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -14,8 +14,8 @@ Description
 #include "SdDGetObject.h"
 #include "ui_SdDGetObject.h"
 #include "SdWEditorGraphView.h"
-#include "SdWCategory.h"
 #include "SdDNetClient.h"
+#include "SdDRowValue.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdProjectItem.h"
 #include "objects/SdPItemComponent.h"
@@ -29,15 +29,92 @@ Description
 
 #include <QHBoxLayout>
 #include <QMessageBox>
+#include <QMap>
 #include <QDebug>
 
+struct SdFieldMask {
+    QString mFieldName;
+    QString mFieldValue;
+    double  mMin;
+    double  mMax;
+    enum {
+      txtMatch, //Field matched by text contens
+      doubleMin, //Field matched if value less or equal than mMin
+      doubleMax, //Field matched if value great or equal than mMax
+      doubleDia  //Field matched if value is between mMin and mMax
+      }     mOper;
+
+    SdFieldMask( const QString name, const QString val );
+
+    //Match field mask and field in param map
+    bool match( const SdStringMap &map );
+  };
+
+typedef QList<SdFieldMask> SdFieldMaskList;
+
+SdFieldMask::SdFieldMask( const QString name, const QString val ) :
+  mFieldName(name),
+  mFieldValue(val),
+  mMin(0.0),
+  mMax(0.0)
+  {
+  if( val.contains(QChar('<')) ) {
+    QStringList lst = val.split(QChar('<'));
+    }
+  else if( val.contains(QChar('>')) ) {
+
+    }
+  else mOper = txtMatch;
+  }
+
+bool SdFieldMask::match(const SdStringMap &map)
+  {
+  //If no field with this name, then not matched
+  if( !map.contains(mFieldName) )
+    return false;
+
+  //Value of field
+  QString src = map.value(mFieldName);
+
+  switch( mOper ) {
+    case txtMatch :
+      return src.indexOf( mFieldValue, 0, Qt::CaseInsensitive );
+    case doubleMin :
+      return mMin <= SdDRowValue::phisToDouble( src );
+    case doubleMax :
+      return mMax >= SdDRowValue::phisToDouble( src );
+    case doubleDia : {
+      double v = SdDRowValue::phisToDouble( src );
+      return v >= mMin && v <= mMax;
+      }
+    }
+  }
+
+
+struct SdFieldDescr {
+    bool    mShow;
+    QString mFieldValue;
+
+    SdFieldDescr() : mShow(true) {}
+  };
+
+typedef QMap<QString,SdFieldDescr> SdFieldDescrMap;
+
+
+
+QString                SdDGetObject::mObjName;      //Object name
+QString                SdDGetObject::mObjUid;       //Unical object id
+QString                SdDGetObject::mCompUid;      //Unical object id for components
+int                    SdDGetObject::mSectionIndex; //Section index
+SdStringMap            SdDGetObject::mParam;        //Component or instance params
+
+quint64                SdDGetObject::mSort;         //Object select sort (class)
+SdLibraryHeaderList    SdDGetObject::mHeaderList;   //Header list for filtered objects
 
 SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   QDialog(parent),
   mComponent(nullptr),
   mProject(nullptr),
-  mSectionIndex(-1), //Section index
-  mSort(sort),
   ui(new Ui::SdDGetObject)
   {
   ui->setupUi(this);
@@ -56,13 +133,6 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   lay = new QHBoxLayout();
   ui->mPartBox->setLayout( lay );
   lay->addWidget( mPartView );
-
-  SdWCategory *category = new SdWCategory( ui->mCategoryBox );
-  lay = new QHBoxLayout();
-  ui->mCategoryBox->setLayout( lay );
-  lay->addWidget( category );
-  connect( category, &SdWCategory::tagPathSelected, this, &SdDGetObject::onTagPath );
-
 
   connect( ui->mFindButton, &QPushButton::clicked, this, &SdDGetObject::find );
   //connect( ui->mTable, &QTableWidget::cellActivated, this, &SdDGetObject::onSelectItem );
@@ -90,16 +160,33 @@ SdDGetObject::~SdDGetObject()
 void SdDGetObject::find()
   {
   QString name = ui->mFind->currentText();
+  QStringList list = name.split( QRegExp("\\s+"), QString::SkipEmptyParts );
+  bool titleOnly = ui->mTitleOnlyFiltr->isChecked();
   mHeaderList.clear();
-  SdObjectFactory::forEachHeader( [this,name] (SdLibraryHeader &hdr) -> bool {
+  SdObjectFactory::forEachHeader( [this,list,titleOnly] (SdLibraryHeader &hdr) -> bool {
     if( hdr.mClass & mSort ) {
       //Test if name match any part of object name
-      if( hdr.mName.indexOf(name, 0, Qt::CaseInsensitive) >= 0 ) {
-        //Name matched, insert header in list
-        mHeaderList.append( hdr );
-        //Prevent too much headers in find result
-        if( mHeaderList.count() > 300 )
-          return true;
+      for( const QString &flt : list ) {
+        if( hdr.mName.indexOf(flt, 0, Qt::CaseInsensitive) >= 0 ) {
+          //Name matched, insert header in list
+          mHeaderList.append( hdr );
+          //Prevent too much headers in find result
+          if( mHeaderList.count() > SD_GET_OBJECT_MAX_FIND_LIST )
+            return true;
+          return false;
+          }
+        if( !titleOnly ) {
+          //Scan fields
+          for( auto iter = hdr.mParamTable.cbegin(); iter != hdr.mParamTable.cend(); iter++ )
+            if( iter.value().indexOf( flt, 0, Qt::CaseInsensitive ) >= 0 ) {
+              //Field matched, insert header in list
+              mHeaderList.append( hdr );
+              //Prevent too much headers in find result
+              if( mHeaderList.count() > SD_GET_OBJECT_MAX_FIND_LIST )
+                return true;
+              return false;
+              }
+          }
         }
       }
     //Continue execution
@@ -190,32 +277,6 @@ void SdDGetObject::onCurrentSection(int row)
   }
 
 
-
-
-//Selected new category, apply filtr
-void SdDGetObject::onTagPath(const QString path)
-  {
-  QStringSet set;
-  SdObjectFactory::hierarchySet( path, set );
-  mHeaderList.clear();
-  SdObjectFactory::forEachHeader( [this, &set] (SdLibraryHeader &hdr) -> bool {
-    if( hdr.mClass & mSort ) {
-      //Test if tag match any part of object tag
-      if( set.contains(hdr.mTag) ) {
-        //Name matched, insert header in list
-        mHeaderList.append( hdr );
-        //Prevent too much headers in find result
-        if( mHeaderList.count() > 300 )
-          return true;
-        }
-      }
-    //Continue execution
-    return false;
-    });
-
-  //Fill visual table
-  fillTable();
-  }
 
 
 
@@ -330,7 +391,6 @@ void SdDGetObject::accept()
     //Extract name, author and id
     SdLibraryHeader hdr = mHeaderList.at(row);
     mObjName   = hdr.mName;
-    mObjAuthor = hdr.mAuthor;
     mObjUid     = hdr.uid();
     if( hdr.mClass == dctInheritance )
       mCompUid = hdr.mInherit;
@@ -344,18 +404,6 @@ void SdDGetObject::accept()
   }
 
 
-
-
-bool SdDGetObject::getObjectName(QString *name, QString *author, quint64 sort, const QString title, QWidget *parent)
-  {
-  SdDGetObject dget( sort, title, parent );
-  if( dget.exec() ) {
-    if( name ) *name = dget.getObjName();
-    if( author ) *author = dget.getObjAuthor();
-    return true;
-    }
-  return false;
-  }
 
 
 
@@ -372,7 +420,7 @@ QString SdDGetObject::getObjectUid(quint64 sort, const QString title, QWidget *p
   {
   SdDGetObject dget( sort, title, parent );
   if( dget.exec() )
-    return dget.getObjUid();
+    return mObjUid;
   return QString();
   }
 
@@ -385,11 +433,12 @@ SdPItemComponent *SdDGetObject::getComponent(int *logSectionPtr, SdStringMap *pa
   if( dget.exec() ) {
     //If available pointer to logical section then set selected section
     if( logSectionPtr )
-      *logSectionPtr = dget.getSectionIndex();
+      *logSectionPtr = mSectionIndex;
     //If available pointer to param then set component or instance params
     if( param )
-      *param = dget.getParams();
-    return sdObjectOnly<SdPItemComponent>( SdObjectFactory::extractObject( dget.getCompUid(), false, parent ) );
+      *param = mParam;
+    return sdObjectOnly<SdPItemComponent>( SdObjectFactory::extractObject( mCompUid, false, parent ) );
     }
   return nullptr;
   }
+

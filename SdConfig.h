@@ -123,6 +123,8 @@ History
                    Extend smart tracing
   19.09.2018 v0.53 Append object clipboard operations
                    Append object duplicate command
+  23.09.2018 v0.54 Rebrended GetObject dialog
+                   Remove tag field
 */
 
 #ifndef SDCONFIG
@@ -194,6 +196,9 @@ History
 
 //Max default delivered limit elements
 #define SD_DEFAULT_DELIVERED_LIMIT    100
+
+//Max object in find list of GetObject dialog
+#define SD_GET_OBJECT_MAX_FIND_LIST   300
 
 //Settings key names
 #define SDK_WMAIN_MAX                "WMainMax"
