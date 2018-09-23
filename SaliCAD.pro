@@ -154,7 +154,6 @@ SOURCES += \
     modes/SdModePrintWindow.cpp \
     bug.cpp \
     objects/SdUndoRecordInsertDelete.cpp \
-    windows/SdWCategory.cpp \
     objects/SdUndoRecordProjectItem.cpp \
     objects/SdObjectNetClient.cpp \
     windows/SdDNetClient.cpp \
@@ -398,7 +397,6 @@ HEADERS  += \
     SaliCadServer/SdNetCommand.h \
     modes/SdModePrintWindow.h \
     objects/SdUndoRecordInsertDelete.h \
-    windows/SdWCategory.h \
     objects/SdUndoRecordProjectItem.h \
     objects/SdObjectNetClient.h \
     windows/SdDNetClient.h \

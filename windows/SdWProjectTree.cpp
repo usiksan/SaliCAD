@@ -148,7 +148,7 @@ void SdWProjectTree::cmObjectNew()
   QWizard wizard(this);
   //Fill it with pages
   wizard.setPage( SDP_NPI_TYPE,   new SdPNewProjectItem_SelectType( &item, mProject, &wizard) );
-  wizard.setPage( SDP_NPI_NAME,   new SdPNewProjectItem_EnterName( &item, mProject, false, &wizard) );
+  wizard.setPage( SDP_NPI_NAME,   new SdPNewProjectItem_EnterName( &item, mProject, &wizard) );
   wizard.setPage( SDP_NPI_MASTER, new SdPNewProjectItem_Master( &item, mProject, &wizard) );
   wizard.setPage( SDP_NPI_COPY,   new SdPNewProjectItem_Copy( &item, mProject, &wizard) );
   if( wizard.exec() ) {
@@ -189,14 +189,14 @@ void SdWProjectTree::cmObjectLoad()
 
 
 
-void SdWProjectTree::cmObjectRename( bool category )
+void SdWProjectTree::cmObjectRename()
   {
   SdProjectItemPtr item = dynamic_cast<SdProjectItem*>( mProject->item( currentItem() ) );
   if( item ) {
     if( item->isEditEnable() ) {
       QWizard wizard(this);
 
-      wizard.setPage( 1, new SdPNewProjectItem_EnterName( &item, mProject, category, &wizard) );
+      wizard.setPage( 1, new SdPNewProjectItem_EnterName( &item, mProject, &wizard) );
 
       wizard.exec();
 
@@ -204,7 +204,7 @@ void SdWProjectTree::cmObjectRename( bool category )
       cmUndoRedoUpdate();
       }
     else
-      QMessageBox::warning( this, tr("Error!"), tr("To rename or category set object must be edit enable") );
+      QMessageBox::warning( this, tr("Error!"), tr("To rename object it must be edit enable") );
     }
   else
     QMessageBox::warning( this, tr("Error!"), tr("This is not object. Select object to rename.") );
@@ -493,7 +493,6 @@ void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem 
   bool enable = !disable && cur != nullptr;
 
   SdWCommand::cmObjectRename->setEnabled(enable);
-  SdWCommand::cmObjectCategory->setEnabled(enable);
   SdWCommand::cmObjectParam->setEnabled(enable);
   SdWCommand::cmObjectDelete->setEnabled(enable);
   SdWCommand::cmObjectCopy->setEnabled(enable);

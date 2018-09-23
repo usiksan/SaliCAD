@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -73,25 +73,6 @@ class SdObjectFactory
     //When function return true - iteration break and return true as indicator
     static bool         forEachHeader(std::function<bool(SdLibraryHeader&)> fun1 );
 
-
-    //Hierarchy table
-    //Append category to hierarchy
-    static void         hierarchyAddItem( const QString parent, const QString item );
-
-    //Test if category present
-    static bool         hierarchyIsPresent( const QString item );
-
-    //Fix category translation to default language
-    static void         hierarchyTranslate( const QString item, const QString translate );
-
-    //Get category translation if there or category itself if none
-    static QString      hierarchyGetTranslated( const QString item );
-
-    //Build visual hierarchy tree
-    static QTreeList    hierarchyGet( const QString parent );
-
-    //Build selected category list
-    static void         hierarchySet( const QString parent, QStringSet &set );
   };
 
 #endif // SDOBJECTFACTORY_H

@@ -136,7 +136,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             53
+#define SD_VERSION_MINOR             54
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

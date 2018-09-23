@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -9,6 +9,13 @@ Web
   www.saliLab.ru
 
 Description
+  Client for dataBase server communicate
+
+  1. Communicate to server
+  2. Login or registrate
+  3. Send request
+  4. Receiv ansver
+  5. Disconnect
 */
 #include "SdConfig.h"
 #include "SdObjectNetClient.h"
@@ -18,11 +25,6 @@ Description
 #include <QThread>
 #include <QHostAddress>
 #include <QSettings>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlField>
-#include <QSqlError>
 
 
 //Main object for remote database communication
@@ -164,26 +166,8 @@ void SdObjectNetClient::doSync()
     SdAuthorInfo info( mAuthor, mKey, mRemoteSyncIndex );
     os << info;
 
-    //Category list for last entered or edited
-    SdCategoryInfoList categoryList;
-
-    //Scan category list for last entered or edited
-    QStringList list = sdLibraryStorage.categoryGetAfter( mLocalSyncIndex );
-    //For each category create info
-    for( const QString &category : list ) {
-      //Category info
-      SdCategoryInfo cinf;
-      cinf.mCategory = category;
-      cinf.mAssociation = sdLibraryStorage.category( category );
-      //Append info to list
-      categoryList.append( cinf );
-      }
-
-    //Write list
-    os << categoryList;
-
     //Scan object list for last entered
-    list = sdLibraryStorage.getAfter( mLocalSyncIndex );
+    QStringList list = sdLibraryStorage.getAfter( mLocalSyncIndex );
     //For each object write header and object itself
     for( const QString &hash : list ) {
       SdLibraryHeader hdr;
@@ -192,8 +176,8 @@ void SdObjectNetClient::doSync()
         os << hdr << sdLibraryStorage.object(hash);
         }
       }
-    qDebug() << "sync obj, categories" << categoryList.count() << " objects " << list.count();
-    mLocalSyncCount = categoryList.count() + list.count();
+    qDebug() << "sync objects " << list.count();
+    mLocalSyncCount = list.count();
     mCommandSync = SCPI_SYNC_REQUEST;
     if( mSocket->state() != QAbstractSocket::ConnectedState ) {
       mSocket->connectToHost( QHostAddress(mHostIp), SD_DEFAULT_PORT );
@@ -269,16 +253,8 @@ void SdObjectNetClient::cmSyncList(QDataStream &is)
   if( info.isSuccessfull() ) {
     mLocalSyncIndex += mLocalSyncCount;
 
-    SdCategoryInfoList categoryList;
-    is >> categoryList;
-
-    for( const SdCategoryInfo &info : categoryList )
-      //Replace object
-      sdLibraryStorage.categoryInsert( info.mCategory, info.mAssociation, true );
-
-    int updateCount = categoryList.count();
-
     //Here is headers list (may be empty)
+    int updateCount = 0;
     while( !is.atEnd() ) {
       SdLibraryHeader hdr;
       is >> hdr;

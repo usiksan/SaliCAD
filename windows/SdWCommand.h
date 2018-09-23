@@ -93,7 +93,6 @@ class SdWCommand
     static QActionPtr  cmObjectNew;
     static QActionPtr  cmObjectLoad;
     static QActionPtr  cmObjectRename;
-    static QActionPtr  cmObjectCategory;
     static QActionPtr  cmObjectDelete;
     static QActionPtr  cmObjectCopy;
     static QActionPtr  cmObjectPaste;

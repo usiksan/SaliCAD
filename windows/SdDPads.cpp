@@ -1,4 +1,4 @@
-#include "SdDPads.h"
+﻿#include "SdDPads.h"
 #include "ui_SdDPads.h"
 
 #include "objects/SdGraphPartImp.h"
@@ -270,7 +270,6 @@ void SdDPads::cmAssociationSave()
     hdr.mName = name;
     hdr.mType = assoc.getType();
     hdr.mAuthor = SdProjectItem::getDefaultAuthor();
-    hdr.mTag = QString("pads");
     hdr.mTime = SdTime2x::current();
     hdr.mClass = assoc.getClass();
     mUid = hdr.uid();

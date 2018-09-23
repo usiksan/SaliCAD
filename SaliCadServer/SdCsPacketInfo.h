@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -94,34 +94,6 @@ inline QDataStream& operator >> ( QDataStream &is, SdCadServerVersion &version )
   return is;
   }
 
-
-
-
-
-
-
-
-
-struct SdCategoryInfo {
-    QString mCategory;
-    QString mAssociation;
-  };
-
-typedef QList<SdCategoryInfo> SdCategoryInfoList;
-
-//Serialise SdCategoryInfo object
-inline QDataStream& operator << ( QDataStream &os, const SdCategoryInfo &info ) {
-  os << info.mCategory
-     << info.mAssociation;
-  return os;
-  }
-
-//Deserialise SdCategoryInfo object
-inline QDataStream& operator >> ( QDataStream &is, SdCategoryInfo &info ) {
-  is >> info.mCategory
-     >> info.mAssociation;
-  return is;
-  }
 
 
 

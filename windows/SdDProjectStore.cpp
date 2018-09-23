@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -14,7 +14,6 @@ Description
   Allow enter project name in library and project category. On ok pressed project writting to library
 */
 #include "SdDProjectStore.h"
-#include "SdWCategory.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdProjectItem.h"
 #include "objects/SdTime2x.h"
@@ -34,12 +33,6 @@ SdDProjectStore::SdDProjectStore( const QString name, SdProject *prj, QWidget *p
   vlay->addWidget( mUnical = new QLabel() );
   vlay->addWidget( mName = new QLineEdit() );
   mName->setText( name );
-  vlay->addWidget( new QLabel(tr("Project category")) );
-  vlay->addWidget( mCategory = new QLineEdit() );
-  SdWCategory *category = new SdWCategory();
-  connect( category, &SdWCategory::categorySelected, mCategory, &QLineEdit::setText );
-  connect( category, &SdWCategory::tagPathSelected, this, [this] ( const QString path) { mTagPath = path; } );
-  vlay->addWidget( category );
 
   QDialogButtonBox *box = new QDialogButtonBox( QDialogButtonBox::Ok | QDialogButtonBox::Cancel );
   connect( box, &QDialogButtonBox::accepted, this, &SdDProjectStore::accept );
@@ -84,7 +77,6 @@ void SdDProjectStore::accept()
     }
   hdr.mType = mProject->getType();   //Type of stored object
   hdr.mAuthor = SdProjectItem::getDefaultAuthor();    //Author who create object
-  hdr.mTag    = mTagPath;               //Object's tags
   hdr.mTime   = SdTime2x::current();    //Object time creation
   hdr.mClass  = mProject->getClass();   //Object class
   hdr.mParamTable = mProject->paramTable();

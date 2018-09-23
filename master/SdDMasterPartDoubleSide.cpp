@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -9,7 +9,7 @@ Web
   www.saliLab.ru
 
 Description
-  Part master with rectangle body and two pins columns by left and right sides
+  Part master with rectangle body and two pins rows on top and on bottom sides
 */
 #include "SdDMasterPartDoubleSide.h"
 #include "ui_SdDMasterPartDoubleSide.h"
@@ -25,14 +25,14 @@ SdDMasterPartDoubleSide::SdDMasterPartDoubleSide(SdProjectItem *item, QWidget *p
   {
   ui->setupUi(this);
 
-  ui->mBodySizeX->setText("3.0");
-  ui->mBodySizeY->setText("4.6");
-  ui->mPinSizeX->setText("5.0");
+  ui->mBodySizeY->setText("3.0");
+  ui->mBodySizeX->setText("4.6");
+  ui->mPinSizeY->setText("5.0");
 
   //Left side
   ui->mLeftPinCount->setText("2");
   ui->mLeftPinDistance->setText("1.0");
-  ui->mLeftPinOffsetY->setText("0");
+  ui->mLeftPinOffsetX->setText("0");
   ui->mLeftPinType->setText("pr2.0x0.6");
 
   //Right side

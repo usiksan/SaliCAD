@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -29,8 +29,6 @@ class SdDProjectStore : public QDialog
     SdProject        *mProject;   //Project which will be stored to library
     QLabel           *mUnical;    //Message which indicate unical or not Project name
     QLineEdit        *mName;      //Project name
-    QLineEdit        *mCategory;  //Category name
-    QString           mTagPath;   //Tag path
   public:
     SdDProjectStore(const QString name, SdProject *prj, QWidget *parent = nullptr );
 

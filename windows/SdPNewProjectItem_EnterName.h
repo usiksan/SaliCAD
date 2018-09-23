@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -29,11 +29,9 @@ class SdPNewProjectItem_EnterName : public QWizardPage
     SdProject        *mProject;   //Project to which will be appended ProjectItem
     QLabel           *mUnical;    //Message which indicate unical or not ProjectItem name
     QLineEdit        *mName;      //ProjectItem name
-    QLineEdit        *mCategory;  //Category name
     bool              mValid;
-    QString           mTagPath;
   public:
-    SdPNewProjectItem_EnterName(SdProjectItemPtr *item, SdProject *prj, bool categoryOnly, QWidget *parent = nullptr );
+    SdPNewProjectItem_EnterName(SdProjectItemPtr *item, SdProject *prj, QWidget *parent );
 
     virtual bool validatePage() override;
     virtual bool isComplete() const override;

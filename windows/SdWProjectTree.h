@@ -57,7 +57,7 @@ class SdWProjectTree : public QTreeWidget
     void         cmObjectLoad();
 
     //Rename object or/and change category
-    void         cmObjectRename(bool category);
+    void         cmObjectRename();
 
     //Delete object
     void         cmObjectDelete();

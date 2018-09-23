@@ -697,16 +697,7 @@ void SdWMain::cmObjectLoad()
 void SdWMain::cmObjectRename()
   {
   if( activeProject() )
-    activeProject()->cmObjectRename( false );
-  }
-
-
-
-//Change object category
-void SdWMain::cmObjectCategory()
-  {
-  if( activeProject() )
-    activeProject()->cmObjectRename( true );
+    activeProject()->cmObjectRename();
   }
 
 

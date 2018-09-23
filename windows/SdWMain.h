@@ -107,7 +107,6 @@ class SdWMain : public QMainWindow
     void cmObjectNew();
     void cmObjectLoad();
     void cmObjectRename();
-    void cmObjectCategory();
     void cmObjectDelete();
     void cmObjectCopy();
     void cmObjectPaste();

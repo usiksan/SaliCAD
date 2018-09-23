@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -23,7 +23,6 @@ Description
 
 #include "SdLibraryReference.h"
 #include "SdLibraryHeader.h"
-#include "SdLibraryCategory.h"
 
 #include <QString>
 #include <QStringList>
@@ -35,7 +34,6 @@ Description
 
 typedef QMap<QString,SdLibraryReference> SdLibraryReferenceMap;
 
-typedef QMap<QString,SdLibraryCategory> SdLibraryCategoryMap;
 
 class SdLibraryStorage
   {
@@ -44,7 +42,6 @@ class SdLibraryStorage
     QReadWriteLock         mLock;
     qint32                 mCreationIndex;
     SdLibraryReferenceMap  mReferenceMap;
-    SdLibraryCategoryMap   mCategoryMap;
     QFile                  mHeaderFile;
     QFile                  mObjectFile;
     bool                   mDirty;
@@ -97,27 +94,6 @@ class SdLibraryStorage
 
     //Insert new object with creation reference and append header and object
     void        insert( const SdLibraryHeader &hdr, QByteArray obj );
-
-
-
-    //==================================================================
-    //Categories
-
-    //Return true if key contains in categories list
-    bool        isCategoryContains( const QString key );
-
-    //Return category association map
-    QString     category( const QString key );
-
-    //Insert new category
-    void        categoryInsert( const QString key, const QString association, bool remote = false );
-
-    //Get list of categories which inserted after index
-    QStringList categoryGetAfter(qint32 index, int limit = 100 );
-
-    //Iteration for each category
-    void        forEachCategory(std::function<void(const QString&,const QString&)> fun1 );
-
   };
 
 

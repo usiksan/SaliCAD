@@ -33,7 +33,6 @@ class SdProjectItem : public SdContainer
   {
     QString                mTitle;      //Item title
     QString                mAuthor;     //Item author (registered program copy name)
-    QString                mTag;        //Group assotiation path
     int                    mCreateTime; //Create time with sec from 2000year
     bool                   mAuto;       //True if item inserted automatic as reference from other item
     bool                   mEditEnable; //True if edit enable for this object
@@ -51,14 +50,12 @@ class SdProjectItem : public SdContainer
     QString                getAuthor() const { return mAuthor; }
     int                    getTime() const { return mCreateTime; }
     QString                getTitle() const { return mTitle; }
-    QString                getTag() const { return mTag; }
     SdProject             *getProject() const;
     SdUndo                *getUndo() const;
     virtual void           getHeader( SdLibraryHeader &hdr ) const;
     //Set information and editing status
     void                   setTitle(const QString title, const QString undoTitle );
     void                   setUnicalTitle( const QString undoTitle );
-    void                   setTag(const QString tag , const QString undoTitle);
     //Get editEnable flag
     bool                   isEditEnable() const { return mEditEnable; }
     //Set editEnable flag. When needed - creation new object perhaps
