@@ -26,48 +26,84 @@ Description
 #include "objects/SdSection.h"
 #include "objects/SdPartVariant.h"
 #include "objects/SdProject.h"
+#include "objects/SdTime2x.h"
 
 #include <QHBoxLayout>
 #include <QMessageBox>
 #include <QMap>
+#include <QSet>
+#include <QTimer>
 #include <QDebug>
 
+
+//=========================================================================================
+//Struct define individual field mask when find process
+//It used to compare with field value of filtered pretendent
 struct SdFieldMask {
-    QString mFieldName;
-    QString mFieldValue;
-    double  mMin;
-    double  mMax;
+    QString mFieldName;  //Field name on which matching executes
+    QString mFieldValue; //Text field value for field match by text contens
+    double  mMin;        //Min value for field match by great and between
+    double  mMax;        //Max value for field match by less and between
     enum {
-      txtMatch, //Field matched by text contens
-      doubleMin, //Field matched if value less or equal than mMin
-      doubleMax, //Field matched if value great or equal than mMax
-      doubleDia  //Field matched if value is between mMin and mMax
+      txtMatch  = 0x0, //Field matched by text contens
+      doubleMin = 0x1, //Field matched if value great or equal than mMin
+      doubleMax = 0x2, //Field matched if value less or equal than mMax
+      doubleDia = 0x3  //Field matched if value is between mMin and mMax
       }     mOper;
 
+    //Constructor parses value
     SdFieldMask( const QString name, const QString val );
 
     //Match field mask and field in param map
-    bool match( const SdStringMap &map );
+    bool match( const SdStringMap &map ) const;
   };
 
+
+//Field mask list
 typedef QList<SdFieldMask> SdFieldMaskList;
 
+
+
+//Constructor parses value
 SdFieldMask::SdFieldMask( const QString name, const QString val ) :
   mFieldName(name),
   mFieldValue(val),
   mMin(0.0),
   mMax(0.0)
   {
-  if( val.contains(QChar('<')) ) {
-    QStringList lst = val.split(QChar('<'));
-    }
-  else if( val.contains(QChar('>')) ) {
-
+  if( val.contains(QChar('<')) || val.contains(QChar('>')) ) {
+    //Variant for less, great or between
+    QString great;
+    QString less;
+    if( val.contains(QChar('<')) ) {
+      QStringList lst = val.split(QChar('<'));
+      great = lst.at(0);
+      less  = lst.at(1);
+      }
+    else {
+      QStringList lst = val.split(QChar('>'));
+      great = lst.at(1);
+      less  = lst.at(0);
+      }
+    mOper = doubleDia;
+    if( !great.isEmpty() ) {
+      mMin = SdDRowValue::phisToDouble( great );
+      mOper = doubleMin;
+      }
+    if( !less.isEmpty() ) {
+      mMax = SdDRowValue::phisToDouble( less );
+      if( mOper == doubleDia ) mOper = doubleMax;
+      else mOper = doubleDia;
+      }
     }
   else mOper = txtMatch;
   }
 
-bool SdFieldMask::match(const SdStringMap &map)
+
+
+
+//Match field mask and field in param map
+bool SdFieldMask::match(const SdStringMap &map) const
   {
   //If no field with this name, then not matched
   if( !map.contains(mFieldName) )
@@ -78,7 +114,7 @@ bool SdFieldMask::match(const SdStringMap &map)
 
   switch( mOper ) {
     case txtMatch :
-      return src.indexOf( mFieldValue, 0, Qt::CaseInsensitive );
+      return src.indexOf( mFieldValue, 0, Qt::CaseInsensitive ) >= 0;
     case doubleMin :
       return mMin <= SdDRowValue::phisToDouble( src );
     case doubleMax :
@@ -88,18 +124,37 @@ bool SdFieldMask::match(const SdStringMap &map)
       return v >= mMin && v <= mMax;
       }
     }
+  return false;
   }
 
 
-struct SdFieldDescr {
-    bool    mShow;
-    QString mFieldValue;
 
-    SdFieldDescr() : mShow(true) {}
-  };
 
-typedef QMap<QString,SdFieldDescr> SdFieldDescrMap;
 
+
+
+//=========================================================================================
+//A lot of static variables need because dialog must be start at axact it close point
+
+//Field mask list
+static SdFieldMaskList sdFieldMaskList;
+
+
+
+
+static bool sdFieldMaskListMatch( const SdStringMap &map ) {
+  for( const SdFieldMask &msk : sdFieldMaskList )
+    if( !msk.match(map) ) return false;
+  return true;
+  }
+
+
+
+//Fields width
+static QMap<QString,int> sdFieldWidth;
+
+static QSize prevDialogSize;
+static int   prevFieldsBoxWidth[3] = { 40, 100, 130 };
 
 
 QString                SdDGetObject::mObjName;      //Object name
@@ -110,6 +165,7 @@ SdStringMap            SdDGetObject::mParam;        //Component or instance para
 
 quint64                SdDGetObject::mSort;         //Object select sort (class)
 SdLibraryHeaderList    SdDGetObject::mHeaderList;   //Header list for filtered objects
+bool                   SdDGetObject::mTitleOnly;    //Flag for find only in titles
 
 SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   QDialog(parent),
@@ -117,8 +173,18 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   mProject(nullptr),
   ui(new Ui::SdDGetObject)
   {
+  if( !prevDialogSize.isEmpty() )
+    resize( prevDialogSize );
   ui->setupUi(this);
   setWindowTitle( title );
+
+  //Prepare field box
+  ui->mFieldsBox->setColumnCount(3);
+  ui->mFieldsBox->setHorizontalHeaderLabels( {tr("Show"), tr("Field"), tr("Filtr") } );
+  ui->mFieldsBox->setColumnWidth( 0, prevFieldsBoxWidth[0] );
+  ui->mFieldsBox->setColumnWidth( 1, prevFieldsBoxWidth[1] );
+  ui->mFieldsBox->setColumnWidth( 2, prevFieldsBoxWidth[2] );
+
 
   //Enable edit mode
   ui->mFind->setEditable(true);
@@ -145,6 +211,31 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   connect( ui->mReject, &QPushButton::clicked, this, &SdDGetObject::reject );
   connect( ui->mLoadFromCentral, &QPushButton::clicked, this, &SdDGetObject::onLoadFromCentral );
   ui->mLoadFromCentral->setDisabled(true);
+
+  connect( ui->mClearFields, &QPushButton::clicked, this, &SdDGetObject::onClearFieldFiltr );
+
+  if( mSort == sort )
+    QTimer::singleShot( 300, this, [this] () {
+      //Continue with previous filtrs
+      int activeSection = mSectionIndex;
+      int activeRow = 0;
+      for( SdLibraryHeader &hdr : mHeaderList ) {
+        if( hdr.uid() == mObjUid ) break;
+        activeRow++;
+        }
+      //Fill visual tables
+      fillTable();
+      //Select visual object
+      ui->mTable->setCurrentCell( activeRow, 0 );
+      onSelectItem( activeRow, 0 );
+      //Select visual section
+      ui->mSections->setCurrentRow( activeSection );
+      onCurrentSection( activeSection );
+      });
+  else {
+    mSectionIndex = -1;
+    mSort = sort;
+    }
   }
 
 
@@ -159,31 +250,55 @@ SdDGetObject::~SdDGetObject()
 
 void SdDGetObject::find()
   {
+  //Get fileds filtr
+  sdFieldMaskList.clear();
+  for( int i = 0; i < ui->mFieldsBox->rowCount(); i++ )
+    if( !ui->mFieldsBox->item( i, 2 )->text().isEmpty() ) {
+      SdFieldMask mask( ui->mFieldsBox->item( i, 1 )->text(), ui->mFieldsBox->item( i, 2 )->text() );
+      sdFieldMaskList.append( mask );
+      }
   QString name = ui->mFind->currentText();
   QStringList list = name.split( QRegExp("\\s+"), QString::SkipEmptyParts );
-  bool titleOnly = ui->mTitleOnlyFiltr->isChecked();
+  mTitleOnly = ui->mTitleOnlyFiltr->isChecked();
   mHeaderList.clear();
-  SdObjectFactory::forEachHeader( [this,list,titleOnly] (SdLibraryHeader &hdr) -> bool {
+  SdObjectFactory::forEachHeader( [list] (SdLibraryHeader &hdr) -> bool {
     if( hdr.mClass & mSort ) {
       //Test if name match any part of object name
-      for( const QString &flt : list ) {
-        if( hdr.mName.indexOf(flt, 0, Qt::CaseInsensitive) >= 0 ) {
-          //Name matched, insert header in list
+      if( list.count() == 0 ) {
+        //Name matched, test params
+        if( sdFieldMaskListMatch(hdr.mParamTable) ) {
+          //Params matched, insert header in list
           mHeaderList.append( hdr );
           //Prevent too much headers in find result
           if( mHeaderList.count() > SD_GET_OBJECT_MAX_FIND_LIST )
             return true;
+          }
+        return false;
+        }
+      for( const QString &flt : list ) {
+        if( hdr.mName.indexOf(flt, 0, Qt::CaseInsensitive) >= 0 ) {
+          //Name matched, test params
+          if( sdFieldMaskListMatch(hdr.mParamTable) ) {
+            //Params matched, insert header in list
+            mHeaderList.append( hdr );
+            //Prevent too much headers in find result
+            if( mHeaderList.count() > SD_GET_OBJECT_MAX_FIND_LIST )
+              return true;
+            }
           return false;
           }
-        if( !titleOnly ) {
+        if( !mTitleOnly ) {
           //Scan fields
           for( auto iter = hdr.mParamTable.cbegin(); iter != hdr.mParamTable.cend(); iter++ )
             if( iter.value().indexOf( flt, 0, Qt::CaseInsensitive ) >= 0 ) {
-              //Field matched, insert header in list
-              mHeaderList.append( hdr );
-              //Prevent too much headers in find result
-              if( mHeaderList.count() > SD_GET_OBJECT_MAX_FIND_LIST )
-                return true;
+              //Field matched, test params
+              if( sdFieldMaskListMatch(hdr.mParamTable) ) {
+                //Params matched, insert header in list
+                mHeaderList.append( hdr );
+                //Prevent too much headers in find result
+                if( mHeaderList.count() > SD_GET_OBJECT_MAX_FIND_LIST )
+                  return true;
+                }
               return false;
               }
           }
@@ -260,6 +375,11 @@ void SdDGetObject::onSelectItem(int row, int column)
     present = true;
     }
 
+  if( !present ) {
+    mSymbolView->setItem( nullptr, true );
+    mPartView->setItem( nullptr, true );
+    }
+
   ui->mAccept->setEnabled( present );
   ui->mLoadFromCentral->setDisabled( present );
   }
@@ -316,6 +436,29 @@ void SdDGetObject::onLoadFromCentral()
 
 
 
+//When changed field filtr
+void SdDGetObject::onFieldChanged(int, int)
+  {
+  find();
+  }
+
+
+
+
+
+//Clear all fields filtr
+void SdDGetObject::onClearFieldFiltr()
+  {
+  disconnect( ui->mFieldsBox, &QTableWidget::cellChanged, this, &SdDGetObject::onFieldChanged );
+  for( int i = 0; i < ui->mFieldsBox->rowCount(); i++ )
+    ui->mFieldsBox->item( i, 2 )->setText( QString() );
+  find();
+  }
+
+
+
+
+
 
 void SdDGetObject::changeEvent(QEvent *e)
   {
@@ -354,18 +497,87 @@ void SdDGetObject::clearComponent()
 //Fill visual table with mHeaderList contens
 void SdDGetObject::fillTable()
   {
+  disconnect( ui->mFieldsBox, &QTableWidget::cellChanged, this, &SdDGetObject::onFieldChanged );
+
+  //Accumulate used fields
+  QSet<QString> fields;
+  for( SdLibraryHeader &hdr : mHeaderList ) {
+    for( auto iter = hdr.mParamTable.cbegin(); iter != hdr.mParamTable.cend(); iter++ )
+      fields.insert( iter.key() );
+    }
+
+  //Leave in field list only fields with value
+  int row = ui->mFieldsBox->rowCount();
+  qDebug() << "fillTable" << row;
+  for( int i = 0; i < ui->mFieldsBox->rowCount(); )
+    if( ui->mFieldsBox->item( i, 2 )->text().isEmpty() && !fields.contains(ui->mFieldsBox->item( i, 1 )->text()) )
+      ui->mFieldsBox->removeRow(i);
+    else {
+      //Remove from accumulated fields fields with value which already in table
+      fields.remove( ui->mFieldsBox->item( i, 1 )->text() );
+      i++;
+      }
+
+  //Leaved fields append from set to visual table
+  for( auto iter = fields.cbegin(); iter != fields.cend(); iter++ ) {
+    row = ui->mFieldsBox->rowCount();
+    //Append new field row
+    ui->mFieldsBox->insertRow( row );
+    ui->mFieldsBox->setRowHeight( row, 20 );
+    //Setup field params
+    //Field visibility
+    QCheckBox *box = new QCheckBox();
+    box->setChecked(true);
+    ui->mFieldsBox->setCellWidget( row, 0, box );
+    //Field name
+    ui->mFieldsBox->setItem( row, 1, new QTableWidgetItem( *iter ) );
+    //Disable edit
+    ui->mFieldsBox->item( row, 1 )->setFlags( Qt::ItemIsEnabled );
+    //Field mask
+    ui->mFieldsBox->setItem( row, 2, new QTableWidgetItem() );
+
+    //Test if field in field width map
+    if( !sdFieldWidth.contains( *iter ) ) {
+      //Append default field width
+      sdFieldWidth.insert( *iter, 100 );
+      }
+    }
+
+  //Read current fields width
+  for( int i = 0; i < ui->mTable->columnCount(); i++ )
+    sdFieldWidth.insert( ui->mTable->horizontalHeaderItem(i)->text(), ui->mTable->columnWidth(i) );
+
+
   ui->mTable->clear();
-  ui->mTable->setColumnCount(3);
+  ui->mTable->setColumnCount(ui->mFieldsBox->rowCount() + 3);
+  //Fill column header
+  //First three columns - are name, author and time of creation
+  ui->mTable->setHorizontalHeaderItem( 0, new QTableWidgetItem( tr("Name") ) );
+  ui->mTable->setHorizontalHeaderItem( 1, new QTableWidgetItem( tr("Author") ) );
+  ui->mTable->setHorizontalHeaderItem( 2, new QTableWidgetItem( tr("Created") ) );
+  //Other columns - fields
+  for( int i = 0; i < ui->mFieldsBox->rowCount(); i++ )
+    ui->mTable->setHorizontalHeaderItem(i+3, new QTableWidgetItem( ui->mFieldsBox->item(i,1)->text() ) );
+
+  //Setup column width
+  for( int i = 0; i < ui->mTable->columnCount(); i++ ) {
+    QString name = ui->mTable->horizontalHeaderItem(i)->text();
+    ui->mTable->setColumnWidth( i, sdFieldWidth.value(name, 100) );
+    }
+
+  //Fill table
   ui->mTable->setRowCount( mHeaderList.count() );
-  QStringList header;
-  header << tr("Name") << tr("Author") << tr("Rank");
-  ui->mTable->setHorizontalHeaderLabels( header );
-  int row = 0;
+  row = 0;
   for( SdLibraryHeader &hdr : mHeaderList ) {
     ui->mTable->setRowHeight( row, 20 );
     ui->mTable->setItem( row, 0, new QTableWidgetItem(hdr.mName) );
     ui->mTable->setItem( row, 1, new QTableWidgetItem(hdr.mAuthor) );
-    ui->mTable->setItem( row, 2, new QTableWidgetItem( QString::number(hdr.mTime) ) );
+    ui->mTable->setItem( row, 2, new QTableWidgetItem(SdTime2x::toLocalString(hdr.mTime)) );
+    //Fill fields
+    for( int i = 3; i < ui->mTable->columnCount(); i++ ) {
+      QString name = ui->mTable->horizontalHeaderItem(i)->text();
+      ui->mTable->setItem( row, i, new QTableWidgetItem(hdr.mParamTable.value(name)) );
+      }
     row++;
     }
 
@@ -374,6 +586,8 @@ void SdDGetObject::fillTable()
   mPartView->setItem(nullptr,true);
   ui->mSections->clear();
   mSectionIndex = -1;
+
+  connect( ui->mFieldsBox, &QTableWidget::cellChanged, this, &SdDGetObject::onFieldChanged );
   }
 
 
@@ -398,6 +612,10 @@ void SdDGetObject::accept()
       mCompUid = mObjUid;
     else
       mCompUid.clear();
+    prevDialogSize = size();
+    prevFieldsBoxWidth[0] = ui->mFieldsBox->columnWidth(0);
+    prevFieldsBoxWidth[1] = ui->mFieldsBox->columnWidth(1);
+    prevFieldsBoxWidth[2] = ui->mFieldsBox->columnWidth(2);
     QDialog::accept();
     }
   else QMessageBox::warning( this, tr("Error"), tr("You must select element or press Cancel") );
