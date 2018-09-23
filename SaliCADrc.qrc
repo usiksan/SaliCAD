@@ -239,5 +239,6 @@
         <file>pic/objectParam.png</file>
         <file>pic/objPrtValue.png</file>
         <file>pic/objValue.png</file>
+        <file>pic/duplicate.png</file>
     </qresource>
 </RCC>
