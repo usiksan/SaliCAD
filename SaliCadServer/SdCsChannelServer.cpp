@@ -163,21 +163,10 @@ void SdCsChannelServer::cmSyncRequest(QDataStream &is)
 
   //Prepare objects with newer index
   QStringList newerObjects = sdLibraryStorage.getAfter( info.mSyncIndex );
-  QStringList newerCategories = sdLibraryStorage.categoryGetAfter( info.mSyncIndex );
-  SdCategoryInfoList categoryList;
 
   if( sdCsAuthorTable.login( info.mAuthor, info.mKey ) ) {
     //Execute sync
     info.setResult( SCPE_SUCCESSFULL );
-
-    //Setup received categories
-    is >> categoryList;
-
-
-    for( const SdCategoryInfo &info : categoryList )
-      //Replace category
-      sdLibraryStorage.categoryInsert( info.mCategory, info.mAssociation );
-
 
     //Append objects if presend
     while( !is.atEnd() ) {
@@ -195,17 +184,6 @@ void SdCsChannelServer::cmSyncRequest(QDataStream &is)
 
   os << info;
 
-  //At now prepare categories with founded interval
-  categoryList.clear();
-  for( const QString &str : newerCategories ) {
-    SdCategoryInfo cinf;
-    cinf.mCategory = str;
-    cinf.mAssociation = sdLibraryStorage.category( str );
-    categoryList.append( cinf );
-    }
-
-  os << categoryList;
-
   //At now write object headers
   for( const QString &hash : newerObjects ) {
     SdLibraryHeader hdr;
@@ -213,7 +191,7 @@ void SdCsChannelServer::cmSyncRequest(QDataStream &is)
     os << hdr;
     }
 
-  qDebug() << "For author " << info.mAuthor << " synced categories " << categoryList.count() << " headers " << newerObjects.count();
+  //qDebug() << "For author " << info.mAuthor << " headers " << newerObjects.count();
 
   //Send block
   writeBlock( SCPI_SYNC_LIST, ar );
@@ -239,16 +217,16 @@ void SdCsChannelServer::cmObjectRequest(QDataStream &is)
 
   if( sdCsAuthorTable.login( info.mAuthor, info.mKey ) ) {
     //Execute request objects
-    QString hash;
+    QString uid;
 
-    is >> hash;
+    is >> uid;
 
-    if( sdLibraryStorage.contains( hash ) ) {
+    if( sdLibraryStorage.contains( uid ) ) {
       if( sdCsAuthorTable.remainObject( info.mAuthor ) ) {
         info.mRemain = sdCsAuthorTable.decrementObject( info.mAuthor );
         //Query to select object with requested hash
-        obj = sdLibraryStorage.object(hash);
-        sdLibraryStorage.header( hash, header );
+        obj = sdLibraryStorage.object(uid);
+        sdLibraryStorage.header( uid, header );
         info.setResult( SCPE_SUCCESSFULL );
         }
       else {

@@ -64,13 +64,13 @@ class SdLibraryStorage
     //Objects
 
     //Return true if object referenced in map
-    bool        contains( const QString key );
+    bool        contains( const QString uid );
 
     //Return true if object contained in map
-    bool        isObjectContains( const QString key );
+    bool        isObjectContains( const QString uid );
 
     //Return true if newer object referenced in map
-    bool        isNewerObject( const QString key, qint32 time );
+    bool        isNewerObject( const QString uid, qint32 time );
 
     //Get list of objects which inserted after index
     QStringList getAfter( qint32 index, int limit = 100 );
@@ -80,20 +80,23 @@ class SdLibraryStorage
     bool        forEachHeader(std::function<bool(SdLibraryHeader&)> fun1 );
 
     //Get header of object
-    bool        header( const QString key, SdLibraryHeader &hdr );
+    // uid - object unical identificator
+    // hdr - place to receiv object header
+    bool        header( const QString uid, SdLibraryHeader &hdr );
 
     //Set reference to object with header
-    // key - object key
     // hdr - object header
-    // remote - if true then object referenced as received from remote
-    //          with mCreationIndex=-1, else referenced as next created
-    void        setHeader( SdLibraryHeader &hdr, bool remote = false );
+    void        setHeader( SdLibraryHeader &hdr );
 
     //Get object
-    QByteArray  object( const QString key );
+    // uid - object unical identificator
+    QByteArray  object( const QString uid );
 
     //Insert new object with creation reference and append header and object
     void        insert( const SdLibraryHeader &hdr, QByteArray obj );
+
+    //Mark object as deleted
+    void        markDeleted( const QString uid );
   };
 
 

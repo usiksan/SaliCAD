@@ -134,20 +134,20 @@ void SdLibraryStorage::setLibraryPath(const QString path)
 
 
 //Return true if object referenced in map
-bool SdLibraryStorage::contains(const QString key)
+bool SdLibraryStorage::contains(const QString uid)
   {
   QReadLocker locker( &mLock );
-  return mReferenceMap.contains( key );
+  return mReferenceMap.contains( uid );
   }
 
 
 
 
 //Return true if object contained in map
-bool SdLibraryStorage::isObjectContains(const QString key)
+bool SdLibraryStorage::isObjectContains(const QString uid)
   {
   QReadLocker locker( &mLock );
-  return mReferenceMap.contains( key ) && mReferenceMap.value(key).mObjectPtr != 0;
+  return mReferenceMap.contains( uid ) && mReferenceMap.value(uid).mObjectPtr != 0;
   }
 
 
@@ -155,10 +155,10 @@ bool SdLibraryStorage::isObjectContains(const QString key)
 
 
 //Return true if newer object referenced in map
-bool SdLibraryStorage::isNewerObject(const QString key, qint32 time)
+bool SdLibraryStorage::isNewerObject(const QString uid, qint32 time)
   {
   QReadLocker locker( &mLock );
-  return mReferenceMap.contains( key ) && mReferenceMap.value(key).isObjectNewerOrSame( time );
+  return mReferenceMap.contains( uid ) && mReferenceMap.value(uid).isObjectNewerOrSame( time );
   }
 
 
@@ -210,14 +210,14 @@ bool SdLibraryStorage::forEachHeader(std::function<bool(SdLibraryHeader&)> fun1)
 
 
 //Get header of object
-bool SdLibraryStorage::header(const QString key, SdLibraryHeader &hdr)
+bool SdLibraryStorage::header(const QString uid, SdLibraryHeader &hdr)
   {
   //For empty key return false to indicate no header
-  if( key.isEmpty() ) return false;
+  if( uid.isEmpty() ) return false;
 
   QWriteLocker locker( &mLock );
-  if( !mReferenceMap.contains(key) ) return false;
-  mHeaderFile.seek( mReferenceMap.value(key).mHeaderPtr );
+  if( !mReferenceMap.contains(uid) ) return false;
+  mHeaderFile.seek( mReferenceMap.value(uid).mHeaderPtr );
   QDataStream is( &mHeaderFile );
   hdr.read( is );
   return true;
@@ -229,7 +229,7 @@ bool SdLibraryStorage::header(const QString key, SdLibraryHeader &hdr)
 
 
 //Set reference to object with header
-void SdLibraryStorage::setHeader(SdLibraryHeader &hdr, bool remote)
+void SdLibraryStorage::setHeader(SdLibraryHeader &hdr)
   {
   QWriteLocker locker( &mLock );
 
@@ -245,7 +245,7 @@ void SdLibraryStorage::setHeader(SdLibraryHeader &hdr, bool remote)
   if( file.open(QIODevice::Append) ) {
     SdLibraryReference ref;
     ref.mHeaderPtr     = file.size();
-    ref.mCreationIndex = remote ? -1 : mCreationIndex++;
+    ref.mCreationIndex = mCreationIndex++;
     ref.mObjectPtr     = 0;
     ref.mCreationTime  = hdr.mTime;
 
@@ -264,13 +264,13 @@ void SdLibraryStorage::setHeader(SdLibraryHeader &hdr, bool remote)
 
 
 //Get object
-QByteArray SdLibraryStorage::object(const QString key)
+QByteArray SdLibraryStorage::object(const QString uid)
   {
   QReadLocker locker( &mLock );
-  if( !mReferenceMap.contains(key) || mReferenceMap.value(key).mObjectPtr == 0 )
+  if( !mReferenceMap.contains(uid) || mReferenceMap.value(uid).mObjectPtr == 0 )
     return QByteArray();
 
-  mObjectFile.seek( mReferenceMap.value(key).mObjectPtr );
+  mObjectFile.seek( mReferenceMap.value(uid).mObjectPtr );
   QDataStream is( &mObjectFile );
   QByteArray res;
   is >> res;
@@ -317,6 +317,21 @@ void SdLibraryStorage::insert(const SdLibraryHeader &hdr, QByteArray obj)
 
     mReferenceMap.insert( key, ref );
     mDirty = true;
+    }
+  }
+
+
+
+
+
+
+//Mark object as deleted
+void SdLibraryStorage::markDeleted(const QString uid)
+  {
+  SdLibraryHeader hdr;
+  if( header( uid, hdr ) ) {
+    hdr.setDeleted();
+    setHeader( hdr );
     }
   }
 

@@ -42,7 +42,7 @@ struct SdLibraryHeader
     QString     mType;       //Type of stored object
     QString     mAuthor;     //Author who create object
     qint32      mTime;       //Object time creation
-    quint64     mClass;      //Object class
+    quint64     mClass;      //Object class. When equals 0 then corresponded object is deleted
     QString     mInherit;    //Inheritance object
 
     SdStringMap mParamTable; //User defined object params
@@ -54,6 +54,10 @@ struct SdLibraryHeader
     void    read( QDataStream &is ) { is >> mName >> mType >> mAuthor >> mTime >> mClass >> mInherit >> mParamTable; }
 
     QString uid() const { return headerUid( mType, mName, mAuthor ); }
+
+    bool    isDeleted() const { return mClass == 0; }
+
+    void    setDeleted() { mClass = 0; mTime++; }
   };
 
 inline QDataStream &operator << ( QDataStream &os, const SdLibraryHeader &header ) {
