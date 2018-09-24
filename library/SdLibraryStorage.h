@@ -94,9 +94,6 @@ class SdLibraryStorage
 
     //Insert new object with creation reference and append header and object
     void        insert( const SdLibraryHeader &hdr, QByteArray obj );
-
-    //Mark object as deleted
-    void        markDeleted( const QString uid );
   };
 
 

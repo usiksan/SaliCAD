@@ -30,6 +30,8 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
   {
   ui->setupUi(this);
 
+  sdObjectNetClient->startSync(false);
+
   //Fill fields
   QSettings s;
   ui->mServerIP->setText( s.value( QStringLiteral(SDK_SERVER_IP), QString(SD_DEFAULT_IP)).toString() );
@@ -58,6 +60,7 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
 SdDRegistation::~SdDRegistation()
   {
   delete ui;
+  sdObjectNetClient->startSync(true);
   }
 
 

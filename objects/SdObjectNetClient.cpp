@@ -43,8 +43,9 @@ SdObjectNetClient::SdObjectNetClient(QObject *parent) :
   mRemoteSyncIndex = s.value( SDK_REMOTE_SYNC ).toInt();
   mHostIp          = s.value( SDK_SERVER_IP ).toString();
 
-  mTimer.setInterval( 30000 );
-  mTimer.start();
+  mTimer.setInterval( 180000 );
+  if( isRegistered() )
+    mTimer.start();
 
   connect( mSocket, &QTcpSocket::connected, this, &SdObjectNetClient::onConnected );
   connect( &mTimer, &QTimer::timeout, this, &SdObjectNetClient::doSync );
@@ -73,6 +74,7 @@ bool SdObjectNetClient::isRegistered() const
 //Begin registration process
 void SdObjectNetClient::doRegistration(const QString ip, const QString authorName, const QString email)
   {
+  mTimer.stop();
   //Prepare block for transmition
   mHostIp         = ip;
   SdAuthorInfo info;
@@ -98,6 +100,7 @@ void SdObjectNetClient::doRegistration(const QString ip, const QString authorNam
 //Begin append machine
 void SdObjectNetClient::doMachine(const QString ip, const QString authorName, quint64 key)
   {
+  mTimer.stop();
   SdAuthorInfo info( authorName, key, 0 );
   //Prepare block for transmition
   mHostIp         = ip;
@@ -190,6 +193,20 @@ void SdObjectNetClient::doSync()
 
 
 
+void SdObjectNetClient::startSync(bool start)
+  {
+  if( start ) {
+    if( isRegistered() )
+      mTimer.start();
+    }
+  else
+    mTimer.stop();
+  }
+
+
+
+
+
 
 
 
@@ -235,7 +252,11 @@ void SdObjectNetClient::cmRegistrationInfo(QDataStream &is)
     s.setValue( SDK_REMOTE_REMAIN, QString::number(info.mRemain) );
     mAuthor = info.mAuthor;
     mKey    = info.mKey;
-    doSync();
+    //Reset syncronisation process
+    mLocalSyncIndex = mLocalSyncCount = 0;
+    s.setValue( SDK_REMOTE_SYNC, mRemoteSyncIndex );
+    s.setValue( SDK_LOCAL_SYNC, mLocalSyncIndex );
+    //doSync();
     emit process( tr("Registration successfull"), false );
     }
   else emit process( tr("Failure registration. ") + error(info.result()), false );
@@ -258,7 +279,7 @@ void SdObjectNetClient::cmSyncList(QDataStream &is)
     while( !is.atEnd() ) {
       SdLibraryHeader hdr;
       is >> hdr;
-      sdLibraryStorage.setHeader( hdr, true );
+      sdLibraryStorage.setHeader( hdr );
       updateCount++;
       }
     qDebug() << "synced" << updateCount << mLocalSyncCount;

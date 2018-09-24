@@ -640,10 +640,42 @@ void SdWProjectTree::duplicate(const QString &uid)
 //Reimplement to display context menu
 void SdWProjectTree::mousePressEvent(QMouseEvent *event)
   {
-  if( event->button() == Qt::RightButton )
+  if( event->button() == Qt::RightButton ) {
+    QTreeWidget::mousePressEvent( event );
     //On right button display context menu
     SdWCommand::menuObject->exec( QCursor::pos() );
+    }
   else
     //On other buttons - default
     QTreeWidget::mousePressEvent( event );
+  }
+
+
+
+
+//Reimplement to support keys
+void SdWProjectTree::keyPressEvent(QKeyEvent *event)
+  {
+  switch( event->key() ) {
+    //Help key
+    case Qt::Key_F1 :
+      SdPulsar::sdPulsar->emitHelpTopic( QStringLiteral("SdWProjectTree.htm") );
+      break;
+
+    //Delete key
+    case Qt::Key_Delete :
+      cmObjectDelete();
+      break;
+
+    //Insert key
+    case Qt::Key_Insert :
+      cmObjectNew();
+      break;
+
+    //Enter key
+    case Qt::Key_Enter :
+      cmObjectRename();
+      break;
+    }
+  QTreeWidget::keyPressEvent( event );
   }

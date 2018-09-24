@@ -129,6 +129,9 @@ class SdWProjectTree : public QTreeWidget
   protected:
     //Reimplement to display context menu
     virtual void      mousePressEvent(QMouseEvent *event) override;
+
+    //Reimplement to support keys
+    virtual void      keyPressEvent(QKeyEvent *event) override;
   };
 
 #endif // SDWPROJECTTREE_H

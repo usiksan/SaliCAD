@@ -325,19 +325,6 @@ void SdLibraryStorage::insert(const SdLibraryHeader &hdr, QByteArray obj)
 
 
 
-//Mark object as deleted
-void SdLibraryStorage::markDeleted(const QString uid)
-  {
-  SdLibraryHeader hdr;
-  if( header( uid, hdr ) ) {
-    hdr.setDeleted();
-    setHeader( hdr );
-    }
-  }
-
-
-
-
 
 
 
