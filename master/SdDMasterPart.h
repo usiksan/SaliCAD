@@ -28,6 +28,7 @@ class SdDMasterPart : public QDialog
     SdPropLine     mLineProp;       //All graph objects append by default to "component" layer with 0-width
     SdPropPartPin  mPinProp;        //All pins
     SdPropText     mIdentProp;
+    SdPropText     mValueProp;
     SdPropText     mPinNumberProp;
     SdPropText     mPinNameProp;
 
@@ -39,6 +40,9 @@ class SdDMasterPart : public QDialog
 
     //Identifier append to "id" layer
     void setId(SdPoint p, int size = 1000 );
+
+    //Value placeholder append to "value" layer
+    void setValue(SdPoint p, int size = 1000 );
 
     //Pin append to "pin" layer
     void setupSmdPin();
