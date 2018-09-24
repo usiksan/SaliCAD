@@ -230,11 +230,13 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
       //Fill visual tables
       fillTable();
       //Select visual object
-      ui->mTable->setCurrentCell( activeRow, 0 );
-      onSelectItem( activeRow, 0 );
-      //Select visual section
-      ui->mSections->setCurrentRow( activeSection );
-      onCurrentSection( activeSection );
+      if( activeRow < mHeaderList.count() ) {
+        ui->mTable->setCurrentCell( activeRow, 0 );
+        onSelectItem( activeRow, 0 );
+        //Select visual section
+        ui->mSections->setCurrentRow( activeSection );
+        onCurrentSection( activeSection );
+        }
       });
   else {
     mSectionIndex = -1;

@@ -47,6 +47,9 @@ class SdObjectFactory
     //then nothing done. Older object is never inserted.
     static void         insertItemObject( const SdProjectItem *item, QJsonObject obj );
 
+    //Mark item object as deleted
+    static void         deleteItemObject( const SdProjectItem *item );
+
     //Extract object from database.
     //If no object in local database then loading from internet
     //Soft extract object from database.

@@ -76,6 +76,25 @@ void SdObjectFactory::insertItemObject(const SdProjectItem *item, QJsonObject ob
 
 
 
+
+//Mark item object as deleted
+void SdObjectFactory::deleteItemObject(const SdProjectItem *item)
+  {
+  if( item == nullptr )
+    return;
+  SdLibraryHeader hdr;
+  //Extract existing header and test if it corresponds to item
+  if( sdLibraryStorage.header( item->getUid(), hdr ) && item->getTime() == hdr.mTime ) {
+    //Mark header as deleted
+    hdr.setDeleted();
+    //Store "new" object
+    insertObject( hdr, QJsonObject() );
+    }
+  }
+
+
+
+
 //Extract object from database.
 //If no object in local database then loading from internet
 SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *parent )

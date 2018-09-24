@@ -673,7 +673,7 @@ void SdWProjectTree::keyPressEvent(QKeyEvent *event)
       break;
 
     //Enter key
-    case Qt::Key_Enter :
+    case Qt::Key_Return :
       cmObjectRename();
       break;
     }
