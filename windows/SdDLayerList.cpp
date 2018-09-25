@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Allows select layer pair. Show full layer list
 */
 #include "SdDLayerList.h"
 #include "ui_SdDLayerList.h"

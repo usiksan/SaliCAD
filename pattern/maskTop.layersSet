@@ -1,0 +1,182 @@
+[
+    {
+        "id": "Area",
+        "state": 0
+    },
+    {
+        "id": "Bus",
+        "state": 0
+    },
+    {
+        "id": "Clear.Bot",
+        "state": 0
+    },
+    {
+        "id": "Clear.Top",
+        "state": 0
+    },
+    {
+        "id": "Common",
+        "state": 0
+    },
+    {
+        "id": "Component",
+        "state": 0
+    },
+    {
+        "id": "Component.Bot",
+        "state": 0
+    },
+    {
+        "id": "Exclusion",
+        "state": 0
+    },
+    {
+        "id": "Hole",
+        "state": 0
+    },
+    {
+        "id": "Ident",
+        "state": 0
+    },
+    {
+        "id": "Ident.Bot",
+        "state": 0
+    },
+    {
+        "id": "Ident.Top",
+        "state": 0
+    },
+    {
+        "id": "Invisible",
+        "state": 0
+    },
+    {
+        "id": "Mask.Bot",
+        "state": 0
+    },
+    {
+        "id": "Mask.Top",
+        "state": 1
+    },
+    {
+        "id": "Net",
+        "state": 0
+    },
+    {
+        "id": "NetName",
+        "state": 0
+    },
+    {
+        "id": "PCB",
+        "state": 2
+    },
+    {
+        "id": "Pad",
+        "state": 0
+    },
+    {
+        "id": "Pad.Bot",
+        "state": 0
+    },
+    {
+        "id": "Pad.Top",
+        "state": 0
+    },
+    {
+        "id": "Picture",
+        "state": 0
+    },
+    {
+        "id": "Pin",
+        "state": 0
+    },
+    {
+        "id": "Pin.Bot",
+        "state": 0
+    },
+    {
+        "id": "Pin.Top",
+        "state": 0
+    },
+    {
+        "id": "PinName",
+        "state": 0
+    },
+    {
+        "id": "PinName.Bot",
+        "state": 0
+    },
+    {
+        "id": "PinName.Top",
+        "state": 0
+    },
+    {
+        "id": "PinNumber",
+        "state": 0
+    },
+    {
+        "id": "PinNumber.Bot",
+        "state": 0
+    },
+    {
+        "id": "PinNumber.Top",
+        "state": 0
+    },
+    {
+        "id": "Polygon.Bot",
+        "state": 0
+    },
+    {
+        "id": "Polygon.Top",
+        "state": 0
+    },
+    {
+        "id": "Remark",
+        "state": 0
+    },
+    {
+        "id": "Stensil.Top",
+        "state": 0
+    },
+    {
+        "id": "StensilReper.Top",
+        "state": 0
+    },
+    {
+        "id": "Trace",
+        "state": 0
+    },
+    {
+        "id": "TraceDefault",
+        "state": 0
+    },
+    {
+        "id": "Value",
+        "state": 0
+    },
+    {
+        "id": "Wire.Bot",
+        "state": 0
+    },
+    {
+        "id": "Wire.Int00",
+        "state": 0
+    },
+    {
+        "id": "Wire.Int01",
+        "state": 0
+    },
+    {
+        "id": "Wire.Int02",
+        "state": 0
+    },
+    {
+        "id": "Wire.Int03",
+        "state": 0
+    },
+    {
+        "id": "Wire.Top",
+        "state": 0
+    }
+]
