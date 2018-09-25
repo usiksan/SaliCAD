@@ -157,5 +157,8 @@ void SdDMasterSymbolConnector::accept()
   //id
   setId( SdPoint( (pinSizeX + (numberSizeX+cellSizeX)/2) * dir, cellHeight) );
 
+  //value
+  setValue( SdPoint( (pinSizeX + (numberSizeX+cellSizeX)/2) * dir, -pinCount * cellHeight - cellHeight ) );
+
   SdDMasterSymbol::accept();
   }

@@ -251,7 +251,8 @@ SOURCES += \
     guider/SdGuiderPlayer.cpp \
     guider/SdGuiderFile.cpp \
     windows/SdDParamDefault.cpp \
-    windows/SdWEditorProject.cpp
+    windows/SdWEditorProject.cpp \
+    master/SdDMasterPartDoubleRound.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -499,7 +500,8 @@ HEADERS  += \
     guider/SdGuiderFile.h \
     objects/SdProjectSharedPtr.h \
     windows/SdDParamDefault.h \
-    windows/SdWEditorProject.h
+    windows/SdWEditorProject.h \
+    master/SdDMasterPartDoubleRound.h
 
 DISTFILES += \
     license.txt
@@ -528,4 +530,5 @@ FORMS += \
     windows/SdDRowValue.ui \
     windows/SdDRuleEditor.ui \
     windows/SdDStringFromList.ui \
-    windows/SdDParamDefault.ui
+    windows/SdDParamDefault.ui \
+    master/SdDMasterPartDoubleRound.ui

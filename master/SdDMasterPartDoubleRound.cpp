@@ -9,29 +9,28 @@ Web
   www.saliLab.ru
 
 Description
-  Part master for rectangle part with exactly two pins
+  Part master for round part with exactly two pins
 */
-#include "SdDMasterPartDoubleRect.h"
-#include "ui_SdDMasterPartDoubleRect.h"
+#include "SdDMasterPartDoubleRound.h"
+#include "ui_SdDMasterPartDoubleRound.h"
+
 #include "windows/SdDPads.h"
 #include "objects/SdEnvir.h"
 
 #include <QToolButton>
 
-SdDMasterPartDoubleRect::SdDMasterPartDoubleRect(SdProjectItem *item, QWidget *parent) :
+SdDMasterPartDoubleRound::SdDMasterPartDoubleRound(SdProjectItem *item, QWidget *parent) :
   SdDMasterPart( item, parent),
-  ui(new Ui::SdDMasterPartDoubleRect)
+  ui(new Ui::SdDMasterPartDoubleRound)
   {
   ui->setupUi(this);
 
-  ui->mBodySizeX->setText("3.0");
-  ui->mBodySizeY->setText("1.6");
+  ui->mBodyDiameter->setText("3.0");
   ui->mBetweenPins->setText("5.0");
   onEditChanged( QString() );
 
-  connect( ui->mBodySizeX, &QLineEdit::textEdited, this, &SdDMasterPartDoubleRect::onEditChanged );
-  connect( ui->mBodySizeY, &QLineEdit::textEdited, this, &SdDMasterPartDoubleRect::onEditChanged );
-  connect( ui->mBetweenPins, &QLineEdit::textEdited, this, &SdDMasterPartDoubleRect::onEditChanged );
+  connect( ui->mBodyDiameter, &QLineEdit::textEdited, this, &SdDMasterPartDoubleRound::onEditChanged );
+  connect( ui->mBetweenPins, &QLineEdit::textEdited, this, &SdDMasterPartDoubleRound::onEditChanged );
 
   connect( ui->mLeftPinTypeSelect, &QToolButton::clicked, this, [this] () {
     QString str = SdDPads::selectPinType(this);
@@ -49,7 +48,7 @@ SdDMasterPartDoubleRect::SdDMasterPartDoubleRect(SdProjectItem *item, QWidget *p
 
 
 
-SdDMasterPartDoubleRect::~SdDMasterPartDoubleRect()
+SdDMasterPartDoubleRound::~SdDMasterPartDoubleRound()
   {
   delete ui;
   }
@@ -57,8 +56,8 @@ SdDMasterPartDoubleRect::~SdDMasterPartDoubleRect()
 
 
 
-
-void SdDMasterPartDoubleRect::onEditChanged(const QString txt)
+//Update preview on any params changed
+void SdDMasterPartDoubleRound::onEditChanged(const QString txt)
   {
   Q_UNUSED(txt)
 
@@ -73,7 +72,7 @@ void SdDMasterPartDoubleRect::onEditChanged(const QString txt)
 
 
 
-void SdDMasterPartDoubleRect::changeEvent(QEvent *e)
+void SdDMasterPartDoubleRound::changeEvent(QEvent *e)
   {
   QDialog::changeEvent(e);
   switch (e->type()) {
@@ -88,18 +87,19 @@ void SdDMasterPartDoubleRect::changeEvent(QEvent *e)
 
 
 
-void SdDMasterPartDoubleRect::drawPart(SdIllustrator &il)
+
+//Draw part preview
+void SdDMasterPartDoubleRound::drawPart(SdIllustrator &il)
   {
-  int partSizeX = sdEnvir->fromPhisPcb( ui->mBodySizeX->text() );
-  int partSizeY = sdEnvir->fromPhisPcb( ui->mBodySizeY->text() );
+  int partDiameter = sdEnvir->fromPhisPcb( ui->mBodyDiameter->text() );
   int sizeX = sdEnvir->fromPhisPcb( ui->mBetweenPins->text() );
-  int pinLen = (sizeX - partSizeX) / 2;
+  int pinLen = (sizeX - partDiameter) / 2;
 
   QColor red("red");
   QColor green("green");
 
   //Draw part
-  il.drawRect( pinLen, -partSizeY / 2, sizeX - pinLen, partSizeY / 2, red );
+  il.drawCircle( sizeX / 2, 0, partDiameter / 2, red );
 
   //Draw pins
   if( pinLen > 0 ) {
@@ -108,22 +108,20 @@ void SdDMasterPartDoubleRect::drawPart(SdIllustrator &il)
     }
 
   //Draw pin connectors
-  int crossSize = partSizeY / 20;
+  int crossSize = partDiameter / 20;
   il.drawCross( 0,0, crossSize, green );
   il.drawCross( sizeX,0, crossSize, green );
   }
 
 
 
-
-
-void SdDMasterPartDoubleRect::accept()
+//When accept we build part with current params
+void SdDMasterPartDoubleRound::accept()
   {
   //Build part
-  int partSizeX = sdEnvir->fromPhisPcb( ui->mBodySizeX->text() );
-  int partSizeY = sdEnvir->fromPhisPcb( ui->mBodySizeY->text() );
+  int partDiameter = sdEnvir->fromPhisPcb( ui->mBodyDiameter->text() );
   int sizeX = sdEnvir->fromPhisPcb( ui->mBetweenPins->text() );
-  int pinLen = (sizeX - partSizeX) / 2;
+  int pinLen = (sizeX - partDiameter) / 2;
   //Pin types
   QString leftPinType = ui->mLeftPinType->text();
   QString rightPinType = ui->mRightPinType->text();
@@ -131,7 +129,7 @@ void SdDMasterPartDoubleRect::accept()
     rightPinType = leftPinType;
 
   //Rectangle body
-  addRect( pinLen,-partSizeY/2, sizeX-pinLen,partSizeY/2 );
+  addCircle( sizeX / 2, 0, partDiameter / 2 );
 
   //If pins outside body rectangle then draw pins
   if( pinLen > 0 ) {
@@ -153,10 +151,10 @@ void SdDMasterPartDoubleRect::accept()
   //Update ident position
   //When part size greater then ident text size (1000) then place ident in center of part
   // else place ident at top of part
-  setId( SdPoint( sizeX/2, partSizeY > 1000 ? 0 : partSizeY/2+500) );
+  setId( SdPoint( sizeX/2, partDiameter > 2000 ? 0 : partDiameter/2+500) );
 
   //Update value position
-  setValue( SdPoint( sizeX/2, -partSizeY/2-500) );
+  setValue( SdPoint( sizeX/2, -partDiameter/2-500) );
 
   //Close dialog
   SdDMasterPart::accept();

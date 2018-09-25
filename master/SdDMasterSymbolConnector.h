@@ -27,7 +27,7 @@ class SdDMasterSymbolConnector : public SdDMasterSymbol
 
   public:
     explicit SdDMasterSymbolConnector( SdProjectItem *item, QWidget *parent = nullptr);
-    ~SdDMasterSymbolConnector();
+    ~SdDMasterSymbolConnector() override;
 
 
   public slots:

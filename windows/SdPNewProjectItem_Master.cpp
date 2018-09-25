@@ -15,6 +15,7 @@ Description
 
 //Master dialogs
 #include "master/SdDMasterPartDoubleRect.h"
+#include "master/SdDMasterPartDoubleRound.h"
 #include "master/SdDMasterPartDoubleSide.h"
 
 #include "master/SdDMasterSymbolConnector.h"
@@ -103,9 +104,15 @@ void SdPNewProjectItem_Master::initializePage()
     //Masters for part
     case dctPart :
 
-      addMaster( tr("Two pins part"), tr("Creates part with exact two pins and rectangle body (resistor, condensator and so on)"),
+      addMaster( tr("Two pins rectangle part"), tr("Creates part with exact two pins and rectangle body (resistor, condensator and so on)"),
                  QString(":/pic/partMasterDoubleRect.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
         SdDMasterPartDoubleRect dlg( item, p );
+        return dlg.exec();
+        });
+
+      addMaster( tr("Two pins round part"), tr("Creates part with exact two pins and round body"),
+                 QString(":/pic/partMasterDoubleRound.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
+        SdDMasterPartDoubleRound dlg( item, p );
         return dlg.exec();
         });
 

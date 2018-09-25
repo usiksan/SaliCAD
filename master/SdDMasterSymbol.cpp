@@ -20,6 +20,7 @@ Description
 #include "objects/SdGraphSymPin.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdGraphIdent.h"
+#include "objects/SdGraphValue.h"
 
 
 void SdDMasterSymbol::addLine(int x1, int y1, int x2, int y2)
@@ -53,6 +54,19 @@ void SdDMasterSymbol::setId(SdPoint p, int size)
   SdRect r( p.x()-half, p.y()-half, size, size );
   mIdentProp.mSize = size;
   ident->updateIdent( p, r, &mIdentProp );
+  }
+
+
+
+
+//Value append to "value" layer
+void SdDMasterSymbol::setValue(SdPoint p, int size)
+  {
+  SdGraphValue *value = mItem->valueGet();
+  int half = size / 2;
+  SdRect r( p.x()-half, p.y()-half, size, size );
+  mValueProp.mSize = size;
+  value->updateValue( p, r, &mValueProp );
   }
 
 
@@ -111,6 +125,14 @@ SdDMasterSymbol::SdDMasterSymbol(SdProjectItem *item, QWidget *parent) :
   mIdentProp.mHorz   = dhjCenter;
   mIdentProp.mVert   = dvjMiddle;
   mIdentProp.mMirror = 0;
+
+  mValueProp.mLayer.set( QString(LID0_VALUE) );    //Layer of value
+  mValueProp.mFont   = 0;
+  mValueProp.mSize   = 350;
+  mValueProp.mDir    = da0;
+  mValueProp.mHorz   = dhjCenter;
+  mValueProp.mVert   = dvjMiddle;
+  mValueProp.mMirror = 0;
 
   }
 

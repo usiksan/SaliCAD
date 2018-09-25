@@ -9,25 +9,25 @@ Web
   www.saliLab.ru
 
 Description
-  Part master for rectangle part with exactly two pins
+  Part master for round part with exactly two pins
 */
-#ifndef SDDMASTERPARTDOUBLERECT_H
-#define SDDMASTERPARTDOUBLERECT_H
+#ifndef SDDMASTERPARTDOUBLEROUND_H
+#define SDDMASTERPARTDOUBLEROUND_H
 
 #include "SdDMasterPart.h"
 #include "windows/SdIllustrator.h"
 
 namespace Ui {
-  class SdDMasterPartDoubleRect;
-}
+  class SdDMasterPartDoubleRound;
+  }
 
-class SdDMasterPartDoubleRect : public SdDMasterPart
+class SdDMasterPartDoubleRound : public SdDMasterPart
   {
     Q_OBJECT
 
   public:
-    explicit SdDMasterPartDoubleRect( SdProjectItem *item, QWidget *parent = nullptr);
-    ~SdDMasterPartDoubleRect() override;
+    explicit SdDMasterPartDoubleRound(SdProjectItem *item, QWidget *parent = nullptr);
+    ~SdDMasterPartDoubleRound() override;
 
   public slots:
     //Update preview on any params changed
@@ -37,7 +37,7 @@ class SdDMasterPartDoubleRect : public SdDMasterPart
     virtual void changeEvent(QEvent *e) override;
 
   private:
-    Ui::SdDMasterPartDoubleRect *ui;
+    Ui::SdDMasterPartDoubleRound *ui;
 
     //Draw part preview
     void drawPart( SdIllustrator &il );
@@ -48,4 +48,4 @@ class SdDMasterPartDoubleRect : public SdDMasterPart
     virtual void accept() override;
   };
 
-#endif // SDDMASTERPARTDOUBLERECT_H
+#endif // SDDMASTERPARTDOUBLEROUND_H
