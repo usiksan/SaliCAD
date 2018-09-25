@@ -31,7 +31,7 @@ class SdDLayerList : public QDialog
 
     QStringList mLayerIdList; //List of layers id's
   public:
-    explicit SdDLayerList( const QString currentPair, QWidget *parent = 0);
+    explicit SdDLayerList( const QString currentPair, QWidget *parent = nullptr);
     ~SdDLayerList();
 
     //Returned selected layer pair

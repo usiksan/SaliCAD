@@ -12,6 +12,7 @@ Description
 */
 #include "SdDLayerList.h"
 #include "ui_SdDLayerList.h"
+#include "SdDHelp.h"
 
 #include "objects/SdEnvir.h"
 
@@ -27,6 +28,7 @@ SdDLayerList::SdDLayerList(const QString currentPair, QWidget *parent) :
   connect( ui->mCancel, &QPushButton::clicked, this, &SdDLayerList::cmCancel );
   connect( ui->mAssign, &QPushButton::clicked, this, &SdDLayerList::cmAssign );
   connect( ui->mRemove, &QPushButton::clicked, this, &SdDLayerList::cmRemove );
+  connect( ui->mHelp, &QPushButton::clicked, this, [this] () { SdDHelp::help( QStringLiteral("SdDLayerList"), this ); });
 
   int currentPairIndex = -1, index = 0;
   //Fill layer list
@@ -47,6 +49,9 @@ SdDLayerList::SdDLayerList(const QString currentPair, QWidget *parent) :
   if( currentPairIndex >= 0 )
     ui->mList->setCurrentRow( currentPairIndex );
   }
+
+
+
 
 SdDLayerList::~SdDLayerList()
   {
