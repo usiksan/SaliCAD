@@ -212,9 +212,9 @@ void SdUndo::begin(QString title, SdProjectItem *item)
 
 
 
-void SdUndo::projectItemInfo(SdProjectItem *item, QString *title, QString *author, QString *tag, int *timeCreation, bool *editEnable)
+void SdUndo::projectItemInfo(SdProjectItem *item, QString *title, QString *author, int *timeCreation, bool *editEnable)
   {
-  addUndo( new SdUndoRecordProjectItem( item, title, author, tag, timeCreation, editEnable ) );
+  addUndo( new SdUndoRecordProjectItem( item, title, author, timeCreation, editEnable ) );
   }
 
 

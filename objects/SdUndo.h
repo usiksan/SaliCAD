@@ -81,7 +81,7 @@ class SdUndo
     void wire( SdPropLine *prop, SdPoint *p1, SdPoint *p2, bool *dot1, bool *dot2 );
     void point( SdPoint *src );
     void begin(QString title , SdProjectItem *item);
-    void projectItemInfo( SdProjectItem *item, QString *title, QString *author, QString *tag, int *timeCreation, bool *editEnable );
+    void projectItemInfo(SdProjectItem *item, QString *title, QString *author, int *timeCreation, bool *editEnable );
     void string2( QString *str1, QString *str2 );
     void stringMapItem( SdStringMap *assoc, const QString key );
     void stringMap( SdStringMap *assoc );

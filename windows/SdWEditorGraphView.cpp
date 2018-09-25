@@ -76,6 +76,7 @@ void SdWEditorGraphView::setItem( SdProjectItem *item, bool owner )
     //Fill item in view
     cmViewFit();
     }
+  else update();
   }
 
 

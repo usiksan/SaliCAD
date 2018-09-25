@@ -23,7 +23,7 @@ Description
 
 struct SdLibraryReference
   {
-    qint32 mCreationIndex;  //Index which object is registered.
+    qint32 mCreationIndex;  //Index with which object is registered.
     qint32 mCreationTime;   //Time of object creation
     qint64 mHeaderPtr;      //Header reference. It contains offset from begining headers file to header of this object
     qint64 mObjectPtr;      //Object reference. It contains offset from begining objects file to object.

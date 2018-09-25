@@ -153,6 +153,83 @@ double SdDRowValue::valueToDouble(const QString &val, const SdValueModifier list
   }
 
 
+struct SdMulter {
+    const QString mSymbol;
+    double        mMulter;
+  };
+
+
+double SdDRowValue::phisToDouble(const QString &val)
+  {
+  static SdMulter list[] = {
+    { QStringLiteral(u"y"), 1.0e-24 },
+    { QStringLiteral(u"и"), 1.0e-24 },
+    { QStringLiteral(u"z"), 1.0e-21 },
+    { QStringLiteral(u"з"), 1.0e-21 },
+    { QStringLiteral(u"a"), 1.0e-18 },
+    { QStringLiteral(u"а"), 1.0e-18 },
+    { QStringLiteral(u"f"), 1.0e-15 },
+    { QStringLiteral(u"ф"), 1.0e-15 },
+    { QStringLiteral(u"p"), 0.000000000001 },
+    { QStringLiteral(u"п"), 0.000000000001 },
+    { QStringLiteral(u"n"), 0.000000001 },
+    { QStringLiteral(u"н"), 0.000000001 },
+    { QStringLiteral(u"u"), 0.000001 },
+    { QStringLiteral(u"мк"), 0.000001 },
+    { QStringLiteral(u"m"), 0.001 },
+    { QStringLiteral(u"м"), 0.001 },
+    { QStringLiteral(u"c"), 0.01 },
+    { QStringLiteral(u"с"), 0.01 },
+    { QStringLiteral(u"da"), 10.0 },
+    { QStringLiteral(u"да"), 10.0 },
+    { QStringLiteral(u"d"), 0.1 },
+    { QStringLiteral(u"д"), 0.1 },
+    { QStringLiteral(u"h"), 100.0 },
+    { QStringLiteral(u"г"), 100.0 },
+    { QStringLiteral(u"k"), 1000.0 },
+    { QStringLiteral(u"к"), 1000.0 },
+    { QStringLiteral(u"M"), 1000000.0 },
+    { QStringLiteral(u"М"), 1000000.0 },
+    { QStringLiteral(u"G"), 1000000000.0 },
+    { QStringLiteral(u"Г"), 1000000000.0 },
+    { QStringLiteral(u"T"), 1000000000000.0 },
+    { QStringLiteral(u"Т"), 1000000000000.0 },
+    { QStringLiteral(u"P"), 1.0e15 },
+    { QStringLiteral(u"П"), 1.0e15 },
+    { QStringLiteral(u"E"), 1.0e18 },
+    { QStringLiteral(u"Э"), 1.0e18 },
+    { QStringLiteral(u"Z"), 1.0e21 },
+    { QStringLiteral(u"З"), 1.0e21 },
+    { QStringLiteral(u"Y"), 1.0e24 },
+    { QStringLiteral(u"И"), 1.0e24 },
+    { QStringLiteral(""), 0 }
+  };
+
+  double v = 0;
+  QString src = val.simplified();
+  for( int i = 0; i < src.length(); i++ )
+    if( !src.at(i).isDigit() && src.at(i) != QChar('.') && src.at(i) != QChar(',') ) {
+      QString strVal = src.left(i);
+      strVal.replace( QChar(','), QChar('.') );
+      v = strVal.toDouble();
+      break;
+      }
+
+  double factor = 1.0;
+  //Extract modifier
+  QString mod;
+  for( int i = 0; i < src.length(); i++ )
+    if( src.at(i).isLetter() ) {
+      mod = src.mid(i);
+      break;
+      }
+  for( int i = 0; !list[i].mSymbol.isEmpty(); i++ )
+    if( mod.startsWith( list[i].mSymbol ) )
+      factor = list[i].mMulter;
+  return v * factor;
+  }
+
+
 
 
 void SdDRowValue::onModifierChanged(int row)

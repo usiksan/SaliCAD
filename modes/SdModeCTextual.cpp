@@ -93,6 +93,11 @@ void SdModeCTextual::keyDown(int key, QChar ch)
     case Qt::Key_Enter :
       applyEdit();
       break;
+    case Qt::Key_F2 :
+      mPropText->mDir += 90000;
+      propSetToBar();
+      update();
+      break;
     default :
       //qDebug() << Q_FUNC_INFO << key;
       if( ch.isPrint() ) {

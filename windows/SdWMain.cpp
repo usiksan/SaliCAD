@@ -384,7 +384,7 @@ void SdWMain::onSelectedParts(SdProjectItem *plate, QStringList list)
 //Calling when press tab of editor
 void SdWMain::onActivateEditor(int index)
   {
-  qDebug() << "Activate editor" << index;
+  //qDebug() << "Activate editor" << index;
   SdWEditor *editor = getEditor(index);
   SdWCommand::hideEditorContext();
   if( editor ) {
@@ -697,16 +697,7 @@ void SdWMain::cmObjectLoad()
 void SdWMain::cmObjectRename()
   {
   if( activeProject() )
-    activeProject()->cmObjectRename( false );
-  }
-
-
-
-//Change object category
-void SdWMain::cmObjectCategory()
-  {
-  if( activeProject() )
-    activeProject()->cmObjectRename( true );
+    activeProject()->cmObjectRename();
   }
 
 

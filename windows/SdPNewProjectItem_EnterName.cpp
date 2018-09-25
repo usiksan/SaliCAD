@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -13,13 +13,12 @@ Description
 */
 
 #include "SdPNewProjectItem_EnterName.h"
-#include "SdWCategory.h"
 #include "objects/SdObjectFactory.h"
 
 #include <QVBoxLayout>
 #include <QMessageBox>
 
-SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item, SdProject *prj, bool categoryOnly, QWidget *parent) :
+SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item, SdProject *prj, QWidget *parent) :
   QWizardPage(parent),
   mItemPtr(item),
   mProject(prj),
@@ -31,23 +30,10 @@ SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item,
   QVBoxLayout *vlay = new QVBoxLayout();
   vlay->addWidget( mUnical = new QLabel() );
   vlay->addWidget( mName = new QLineEdit() );
-  vlay->addWidget( new QLabel(tr("Element category")) );
-  vlay->addWidget( mCategory = new QLineEdit() );
-  if( (*item) != nullptr ) {
-    mTagPath = (*item)->getTag();
-    mCategory->setText( mTagPath );
-    }
-  SdWCategory *category = new SdWCategory();
-  connect( category, &SdWCategory::categorySelected, mCategory, &QLineEdit::setText );
-  connect( category, &SdWCategory::tagPathSelected, this, [this] ( const QString path) { mTagPath = path; } );
-  vlay->addWidget( category );
 
   setLayout( vlay );
 
-  if( categoryOnly )
-    mName->setReadOnly(true);
-  else
-    connect( mName, &QLineEdit::textChanged, this, &SdPNewProjectItem_EnterName::onTextChanged );
+  connect( mName, &QLineEdit::textChanged, this, &SdPNewProjectItem_EnterName::onTextChanged );
   }
 
 
@@ -82,7 +68,6 @@ bool SdPNewProjectItem_EnterName::validatePage()
         return false;
       }
     (*mItemPtr)->setTitle( mName->text(), tr("Set object title") );
-    (*mItemPtr)->setTag( mTagPath, tr("Set object tag") );
     }
   return mValid;
   }

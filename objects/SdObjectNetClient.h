@@ -71,6 +71,8 @@ class SdObjectNetClient : public SdCsChannel
     //By timer do syncronisation
     void doSync();
 
+    void startSync( bool start );
+
     // SdCsChannel interface
   public:
     virtual void onBlockReceived( int cmd, QDataStream &is ) override;

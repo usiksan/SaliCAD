@@ -148,7 +148,7 @@ void SdWProjectTree::cmObjectNew()
   QWizard wizard(this);
   //Fill it with pages
   wizard.setPage( SDP_NPI_TYPE,   new SdPNewProjectItem_SelectType( &item, mProject, &wizard) );
-  wizard.setPage( SDP_NPI_NAME,   new SdPNewProjectItem_EnterName( &item, mProject, false, &wizard) );
+  wizard.setPage( SDP_NPI_NAME,   new SdPNewProjectItem_EnterName( &item, mProject, &wizard) );
   wizard.setPage( SDP_NPI_MASTER, new SdPNewProjectItem_Master( &item, mProject, &wizard) );
   wizard.setPage( SDP_NPI_COPY,   new SdPNewProjectItem_Copy( &item, mProject, &wizard) );
   if( wizard.exec() ) {
@@ -189,14 +189,14 @@ void SdWProjectTree::cmObjectLoad()
 
 
 
-void SdWProjectTree::cmObjectRename( bool category )
+void SdWProjectTree::cmObjectRename()
   {
   SdProjectItemPtr item = dynamic_cast<SdProjectItem*>( mProject->item( currentItem() ) );
   if( item ) {
     if( item->isEditEnable() ) {
       QWizard wizard(this);
 
-      wizard.setPage( 1, new SdPNewProjectItem_EnterName( &item, mProject, category, &wizard) );
+      wizard.setPage( 1, new SdPNewProjectItem_EnterName( &item, mProject, &wizard) );
 
       wizard.exec();
 
@@ -204,7 +204,7 @@ void SdWProjectTree::cmObjectRename( bool category )
       cmUndoRedoUpdate();
       }
     else
-      QMessageBox::warning( this, tr("Error!"), tr("To rename or category set object must be edit enable") );
+      QMessageBox::warning( this, tr("Error!"), tr("To rename object it must be edit enable") );
     }
   else
     QMessageBox::warning( this, tr("Error!"), tr("This is not object. Select object to rename.") );
@@ -493,7 +493,6 @@ void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem 
   bool enable = !disable && cur != nullptr;
 
   SdWCommand::cmObjectRename->setEnabled(enable);
-  SdWCommand::cmObjectCategory->setEnabled(enable);
   SdWCommand::cmObjectParam->setEnabled(enable);
   SdWCommand::cmObjectDelete->setEnabled(enable);
   SdWCommand::cmObjectCopy->setEnabled(enable);
@@ -641,10 +640,42 @@ void SdWProjectTree::duplicate(const QString &uid)
 //Reimplement to display context menu
 void SdWProjectTree::mousePressEvent(QMouseEvent *event)
   {
-  if( event->button() == Qt::RightButton )
+  if( event->button() == Qt::RightButton ) {
+    QTreeWidget::mousePressEvent( event );
     //On right button display context menu
     SdWCommand::menuObject->exec( QCursor::pos() );
+    }
   else
     //On other buttons - default
     QTreeWidget::mousePressEvent( event );
+  }
+
+
+
+
+//Reimplement to support keys
+void SdWProjectTree::keyPressEvent(QKeyEvent *event)
+  {
+  switch( event->key() ) {
+    //Help key
+    case Qt::Key_F1 :
+      SdPulsar::sdPulsar->emitHelpTopic( QStringLiteral("SdWProjectTree.htm") );
+      break;
+
+    //Delete key
+    case Qt::Key_Delete :
+      cmObjectDelete();
+      break;
+
+    //Insert key
+    case Qt::Key_Insert :
+      cmObjectNew();
+      break;
+
+    //Enter key
+    case Qt::Key_Return :
+      cmObjectRename();
+      break;
+    }
+  QTreeWidget::keyPressEvent( event );
   }

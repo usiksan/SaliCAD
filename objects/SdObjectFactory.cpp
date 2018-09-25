@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -20,11 +20,6 @@ Description
 #include "library/SdLibraryStorage.h"
 #include "windows/SdDNetClient.h"
 
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlField>
-#include <QSqlError>
 #include <QFile>
 #include <QDir>
 #include <QMessageBox>
@@ -76,6 +71,25 @@ void SdObjectFactory::insertItemObject(const SdProjectItem *item, QJsonObject ob
   item->getHeader( hdr );
 
   insertObject( hdr, obj );
+  }
+
+
+
+
+
+//Mark item object as deleted
+void SdObjectFactory::deleteItemObject(const SdProjectItem *item)
+  {
+  if( item == nullptr )
+    return;
+  SdLibraryHeader hdr;
+  //Extract existing header and test if it corresponds to item
+  if( sdLibraryStorage.header( item->getUid(), hdr ) && item->getTime() == hdr.mTime ) {
+    //Mark header as deleted
+    hdr.setDeleted();
+    //Store "new" object
+    insertObject( hdr, QJsonObject() );
+    }
   }
 
 
@@ -179,114 +193,6 @@ bool SdObjectFactory::forEachHeader(std::function<bool (SdLibraryHeader &)> fun1
 
 
 
-
-
-
-void SdObjectFactory::hierarchyAddItem(const QString parent, const QString item)
-  {
-//  if( hierarchyIsPresent(item) )
-//    //Ignore request. Nothing done
-//    return;
-
-  //Insert new item
-  sdLibraryStorage.categoryInsert( item, parent, false );
-  }
-
-
-
-//Return true if item present in hierarchy table
-bool SdObjectFactory::hierarchyIsPresent(const QString item)
-  {
-  return sdLibraryStorage.isCategoryContains( item );
-  }
-
-
-
-
-void SdObjectFactory::hierarchyTranslate(const QString item, const QString translate)
-  {
-  //Language of user
-  QSettings s;
-  QString lang = s.value( QStringLiteral(SDK_LANGUAGE) ).toString();
-
-  if( lang.isEmpty() )
-    return;
-
-  lang.append( "+_" ).append( item );
-  sdLibraryStorage.categoryInsert( lang, translate, false );
-  }
-
-
-
-
-
-
-//Hierarchy table translation
-QString SdObjectFactory::hierarchyGetTranslated(const QString item)
-  {
-  //Language of user
-  QSettings s;
-  QString lang = s.value( QStringLiteral(SDK_LANGUAGE) ).toString();
-
-  if( lang.isEmpty() )
-    return item;
-
-  lang.append( "+_" ).append( item );
-  if( sdLibraryStorage.isCategoryContains(lang) )
-    return sdLibraryStorage.category( lang );
-
-  return item;
-  }
-
-
-
-
-
-
-//Hierarchy table
-QTreeList SdObjectFactory::hierarchyGet(const QString parent)
-  {
-  QTreeList list;
-  sdLibraryStorage.forEachCategory( [&list, parent] (const QString section, const QString &assoc ) {
-    if( assoc == parent ) {
-      //Translate section to user language
-      QString text = hierarchyGetTranslated( section );
-      //Create new item
-      QTreeWidgetItem *item = new QTreeWidgetItem();
-      item->setText( 0, text );
-      item->setText( 1, section );
-
-      QTreeList childList = hierarchyGet( section );
-      if( childList.empty() )
-        //Item is leaf
-        item->setIcon( 0, QIcon(QString(":/pic/brFile.png")) );
-      else {
-        //Item is branch
-        item->setIcon( 0, QIcon(QString(":/pic/brDir.png")) );
-        item->addChildren( childList );
-        }
-
-      //Append item to list
-      list.append( item );
-      }
-    });
-
-  return list;
-  }
-
-
-
-
-void SdObjectFactory::hierarchySet(const QString parent, QStringSet &set)
-  {
-  set.insert( parent );
-  sdLibraryStorage.forEachCategory( [&set, parent] (const QString section, const QString &assoc ) {
-    if( assoc == parent ) {
-      //Append section to set
-      hierarchySet( section, set );
-      }
-    });
-  }
 
 
 

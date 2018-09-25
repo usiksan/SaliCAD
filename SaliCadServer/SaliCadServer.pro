@@ -36,5 +36,4 @@ HEADERS += \
     ../library/SdLibraryReference.h \
     ../library/SdLibraryStorage.h \
     ../library/SdStringMap.h \
-    SdCsAuthorTable.h \
-    ../library/SdLibraryCategory.h
+    SdCsAuthorTable.h

@@ -69,7 +69,7 @@ void SdProjectItem::setTitle(const QString title, const QString undoTitle)
   if( undo != nullptr ) {
     if( !undoTitle.isEmpty() )
       undo->begin( undoTitle, this );
-    undo->projectItemInfo( this, &mTitle, &mAuthor, &mTag, &mCreateTime, &mEditEnable );
+    undo->projectItemInfo( this, &mTitle, &mAuthor, &mCreateTime, &mEditEnable );
     }
 
   //Item author (registered program copy name)
@@ -99,23 +99,6 @@ void SdProjectItem::setUnicalTitle(const QString undoTitle)
 
 
 
-void SdProjectItem::setTag(const QString tag, const QString undoTitle )
-  {
-  SdUndo *undo = getUndo();
-  if( undo != nullptr ) {
-    if( !undoTitle.isEmpty() )
-      undo->begin( undoTitle, this );
-    undo->projectItemInfo( this, &mTitle, &mAuthor, &mTag, &mCreateTime, &mEditEnable );
-    }
-
-  //Item author (registered program copy name)
-  updateAuthor();
-  //Update creation time
-  updateCreationTime();
-  //Tag setup
-  mTag = tag;
-  }
-
 
 
 
@@ -142,7 +125,6 @@ void SdProjectItem::getHeader(SdLibraryHeader &hdr) const
   hdr.mName       = mTitle;
   hdr.mType       = getType();
   hdr.mAuthor     = mAuthor;
-  hdr.mTag        = mTag;
   hdr.mTime       = getTime();
   hdr.mClass      = getClass();
   hdr.mParamTable = mParamTable;
@@ -160,7 +142,7 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
   if( mEditEnable ) {
     if( !edit ) {
       //Disable edit.
-      undo->projectItemInfo( this, &mTitle, &mAuthor, &mTag, &mCreateTime, &mEditEnable );
+      undo->projectItemInfo( this, &mTitle, &mAuthor, &mCreateTime, &mEditEnable );
 
       mEditEnable = edit;
       //Update object version and author creation
@@ -415,7 +397,6 @@ void SdProjectItem::writeObject(QJsonObject &obj) const
   SdContainer::writeObject( obj );
   obj.insert( QStringLiteral("Title"),       mTitle );
   obj.insert( QStringLiteral("Author"),      mAuthor );
-  obj.insert( QStringLiteral("Tag"),         mTag );
   obj.insert( QStringLiteral("Created"),     mCreateTime );
   obj.insert( QStringLiteral("Auto"),        mAuto );
   obj.insert( QStringLiteral("Edit enable"), mEditEnable );
@@ -430,7 +411,6 @@ void SdProjectItem::readObject(SdObjectMap *map, const QJsonObject obj)
   SdContainer::readObject( map, obj );
   mTitle        = obj.value( QStringLiteral("Title") ).toString();
   mAuthor       = obj.value( QStringLiteral("Author") ).toString();
-  mTag          = obj.value( QStringLiteral("Tag") ).toString();
   mCreateTime   = obj.value( QStringLiteral("Created") ).toInt();
   mAuto         = obj.value( QStringLiteral("Auto") ).toBool();
   mEditEnable   = obj.value( QStringLiteral("Edit enable") ).toBool();

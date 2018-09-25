@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -25,14 +25,12 @@ class SdUndoRecordProjectItem : public SdUndoRecord
     QString       *mTitleSrc;
     QString        mAuthor;
     QString       *mAuthorSrc;
-    QString        mTag;
-    QString       *mTagSrc;
     int            mTimeCreation;
     int           *mTimeCreationSrc;
     bool           mEditEnable;
     bool          *mEditEnableSrc;
   public:
-    SdUndoRecordProjectItem( SdProjectItem *item, QString *title, QString *author, QString *tag, int *timeCreation, bool *editEnable );
+    SdUndoRecordProjectItem( SdProjectItem *item, QString *title, QString *author, int *timeCreation, bool *editEnable );
 
     //Undo elementary operation.
     virtual void    undo() override;

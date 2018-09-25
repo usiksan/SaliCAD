@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -14,15 +14,13 @@ Description
 #include "SdUtil.h"
 #include "SdPulsar.h"
 
-SdUndoRecordProjectItem::SdUndoRecordProjectItem(SdProjectItem *item, QString *title, QString *author, QString *tag, int *timeCreation, bool *editEnable) :
+SdUndoRecordProjectItem::SdUndoRecordProjectItem(SdProjectItem *item, QString *title, QString *author, int *timeCreation, bool *editEnable) :
   SdUndoRecord(),
   mItem(item),
   mTitle(*title),
   mTitleSrc(title),
   mAuthor(*author),
   mAuthorSrc(author),
-  mTag(*tag),
-  mTagSrc(tag),
   mTimeCreation(*timeCreation),
   mTimeCreationSrc(timeCreation),
   mEditEnable(*editEnable),
@@ -42,9 +40,7 @@ void SdUndoRecordProjectItem::undo()
   //Undo
   mTitleSrc->swap( mTitle );
   mAuthorSrc->swap( mAuthor );
-  mTagSrc->swap( mTag );
   SdUtil::swapInt( mTimeCreation, mTimeCreationSrc );
   SdUtil::swapBool( mEditEnable, mEditEnableSrc );
-
   }
 

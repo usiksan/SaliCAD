@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  The SdCsAuthor struct represents one user at global space
 */
 #ifndef SDCSAUTHORTABLE_H
 #define SDCSAUTHORTABLE_H
@@ -49,6 +50,10 @@ inline QDataStream &operator >> ( QDataStream &is, SdCsAuthor &author ) {
 
 
 
+
+/*!
+   \brief The SdCsAuthorTable class represents list of registered users
+ */
 class SdCsAuthorTable
   {
     QReadWriteLock           mLock;     //Lock semaphor

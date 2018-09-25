@@ -24,7 +24,7 @@ class SdCsServer : public QTcpServer
 
     QTimer mTimer;
   public:
-    explicit SdCsServer( QObject *parent = 0 );
+    explicit SdCsServer( QObject *parent = nullptr );
 
   signals:
     void second();

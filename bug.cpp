@@ -1,5 +1,5 @@
 ﻿
-//B061 bugs
+//B062 bugs
 //F001 fatal
 //C001 critical
 //D058 do
@@ -11,8 +11,6 @@
 
 //TODO B016 insertComponent mode: when select component and after select symbol part remain from component
 
-//TODO D043 Append posibility to delete object from library and also from remote library
-
 //TODO D046 When try to select pin type from default pad association table and no default table offer to enter one
 
 //TODO D050 Append component rotation by keyboard
@@ -23,10 +21,14 @@
 
 //TODO B055 No road connection to middle of existing segment
 
-//FIXME B061 When deactivate select mode all must be unselected
+//FIXME B062 When multiple deleting object from project undo restore it with one click
 
 //===================================================================================
 //Fixed:
+
+//D043 Append possibility to delete object from library and also from remote library
+
+//B061 When deactivate select mode all must be unselected
 
 //B036 When duplicate object to edit state it not positioned in project window tree
 

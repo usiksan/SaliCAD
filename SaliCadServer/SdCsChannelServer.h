@@ -25,7 +25,7 @@ class SdCsChannelServer : public SdCsChannel
     QString            mAuthor;  //Author name receiv when user is login or register
   public:
     explicit SdCsChannelServer( QTcpSocket *socket, QObject *parent = nullptr );
-    ~SdCsChannelServer();
+    ~SdCsChannelServer() override;
 
     // SdCsChannel interface
   public:
@@ -38,11 +38,20 @@ class SdCsChannelServer : public SdCsChannel
   private:
     //Register new user and add for it new machine
     void cmRegistrationRequest( QDataStream &is );
+
+    //Append new machine to existing user
     void cmMachineRequest( QDataStream &is );
+
+    //Syncronisation request. Objects from local to remote and header list from remote to local
     void cmSyncRequest( QDataStream &is );
+
+    //Object request. Local requests object by uid. Remote return object if available
     void cmObjectRequest( QDataStream &is );
 
+    //Object removing. Local requests deleting object by uid.
+    void cmObjectDelete( QDataStream &is );
 
+    //
   };
 
 #endif // SDCSCHANNELSERVER_H

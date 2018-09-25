@@ -86,13 +86,12 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmObjectNew         = menuObject->addAction( QIcon(QString(":/pic/objectNew.png")), frame->tr("Create..."), frame, SLOT(cmObjectNew()) );
   cmObjectLoad        = menuObject->addAction( QIcon(QString(":/pic/download.png")), frame->tr("Load from library..."), frame, SLOT(cmObjectLoad()) );
   cmObjectRename      = menuObject->addAction( QIcon(QString(":/pic/objectRename.png")), frame->tr("Rename..."), frame, SLOT(cmObjectRename()) );
-  cmObjectCategory    = menuObject->addAction( QIcon(QString(":/pic/objectCategory.png")), frame->tr("Edit object category..."), frame, SLOT(cmObjectCategory()) );
   cmObjectParam       = menuObject->addAction( QIcon(QString(":/pic/objectParam.png")), frame->tr("Edit object param..."), frame, SLOT(cmObjectParam()) );
   cmObjectDelete      = menuObject->addAction( QIcon(QString(":/pic/objectDelete.png")), frame->tr("Delete"), frame, SLOT(cmObjectDelete()) );
   cmObjectCopy        = menuObject->addAction( QIcon(QString(":/pic/objectCopy.png")), frame->tr("Copy"), frame, SLOT(cmObjectCopy()) );
   cmObjectPaste       = menuObject->addAction( QIcon(QString(":/pic/objectPaste.png")), frame->tr("Paste"), frame, SLOT(cmObjectPaste()) );
   cmObjectCut         = menuObject->addAction( QIcon(QString(":/pic/objectCut.png")), frame->tr("Cut"), frame, SLOT(cmObjectCut()) );
-  cmObjectDuplicate   = menuObject->addAction( QIcon(QString(":/pic/objectCut.png")), frame->tr("Duplicate"), frame, SLOT(cmObjectDuplicate()) );
+  cmObjectDuplicate   = menuObject->addAction( QIcon(QString(":/pic/duplicate.png")), frame->tr("Duplicate"), frame, SLOT(cmObjectDuplicate()) );
   cmObjectSort        = menuObject->addAction( QIcon(QString(":/pic/objectSort.png")), frame->tr("Sort"), frame, SLOT(cmObjectSort()) );
   cmObjectEditEnable  = menuObject->addAction( QIcon(QString(":/pic/objectEditEnable.png")), frame->tr("Enable edit"), frame, SLOT(cmObjectEditEnable()) );
   cmObjectEditDisable = menuObject->addAction( QIcon(QString(":/pic/objectEditDisable.png")), frame->tr("Finish edit"), frame, SLOT(cmObjectEditDisable()) );
@@ -369,7 +368,6 @@ void SdWCommand::projectState(bool enable)
     cmFileExport->setEnabled(enable);
 
     cmObjectRename->setEnabled(enable);
-    cmObjectCategory->setEnabled(enable);
     cmObjectParam->setEnabled(enable);
     cmObjectDelete->setEnabled(enable);
     cmObjectCopy->setEnabled(enable);
@@ -699,7 +697,6 @@ QActionPtr SdWCommand::cmFilePrevious[PREVIOUS_FILES_COUNT];
 QActionPtr SdWCommand::cmObjectNew;
 QActionPtr SdWCommand::cmObjectLoad;
 QActionPtr SdWCommand::cmObjectRename;
-QActionPtr SdWCommand::cmObjectCategory;
 QActionPtr SdWCommand::cmObjectDelete;
 QActionPtr SdWCommand::cmObjectCopy;
 QActionPtr SdWCommand::cmObjectPaste;

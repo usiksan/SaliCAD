@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -124,7 +124,7 @@ void SdLibraryStorage::setLibraryPath(const QString path)
   QFile file(FNAME_REF);
   if( file.open(QIODevice::ReadOnly) ) {
     QDataStream is( &file );
-    is >> mCreationIndex >> mReferenceMap >> mCategoryMap;
+    is >> mCreationIndex >> mReferenceMap;
     }
   else mPath.clear();
   }
@@ -134,20 +134,20 @@ void SdLibraryStorage::setLibraryPath(const QString path)
 
 
 //Return true if object referenced in map
-bool SdLibraryStorage::contains(const QString key)
+bool SdLibraryStorage::contains(const QString uid)
   {
   QReadLocker locker( &mLock );
-  return mReferenceMap.contains( key );
+  return mReferenceMap.contains( uid );
   }
 
 
 
 
 //Return true if object contained in map
-bool SdLibraryStorage::isObjectContains(const QString key)
+bool SdLibraryStorage::isObjectContains(const QString uid)
   {
   QReadLocker locker( &mLock );
-  return mReferenceMap.contains( key ) && mReferenceMap.value(key).mObjectPtr != 0;
+  return mReferenceMap.contains( uid ) && mReferenceMap.value(uid).mObjectPtr != 0;
   }
 
 
@@ -155,10 +155,10 @@ bool SdLibraryStorage::isObjectContains(const QString key)
 
 
 //Return true if newer object referenced in map
-bool SdLibraryStorage::isNewerObject(const QString key, qint32 time)
+bool SdLibraryStorage::isNewerObject(const QString uid, qint32 time)
   {
   QReadLocker locker( &mLock );
-  return mReferenceMap.contains( key ) && mReferenceMap.value(key).isObjectNewerOrSame( time );
+  return mReferenceMap.contains( uid ) && mReferenceMap.value(uid).isObjectNewerOrSame( time );
   }
 
 
@@ -210,14 +210,14 @@ bool SdLibraryStorage::forEachHeader(std::function<bool(SdLibraryHeader&)> fun1)
 
 
 //Get header of object
-bool SdLibraryStorage::header(const QString key, SdLibraryHeader &hdr)
+bool SdLibraryStorage::header(const QString uid, SdLibraryHeader &hdr)
   {
   //For empty key return false to indicate no header
-  if( key.isEmpty() ) return false;
+  if( uid.isEmpty() ) return false;
 
   QWriteLocker locker( &mLock );
-  if( !mReferenceMap.contains(key) ) return false;
-  mHeaderFile.seek( mReferenceMap.value(key).mHeaderPtr );
+  if( !mReferenceMap.contains(uid) ) return false;
+  mHeaderFile.seek( mReferenceMap.value(uid).mHeaderPtr );
   QDataStream is( &mHeaderFile );
   hdr.read( is );
   return true;
@@ -229,7 +229,7 @@ bool SdLibraryStorage::header(const QString key, SdLibraryHeader &hdr)
 
 
 //Set reference to object with header
-void SdLibraryStorage::setHeader(SdLibraryHeader &hdr, bool remote)
+void SdLibraryStorage::setHeader(SdLibraryHeader &hdr)
   {
   QWriteLocker locker( &mLock );
 
@@ -245,7 +245,7 @@ void SdLibraryStorage::setHeader(SdLibraryHeader &hdr, bool remote)
   if( file.open(QIODevice::Append) ) {
     SdLibraryReference ref;
     ref.mHeaderPtr     = file.size();
-    ref.mCreationIndex = remote ? -1 : mCreationIndex++;
+    ref.mCreationIndex = mCreationIndex++;
     ref.mObjectPtr     = 0;
     ref.mCreationTime  = hdr.mTime;
 
@@ -264,13 +264,13 @@ void SdLibraryStorage::setHeader(SdLibraryHeader &hdr, bool remote)
 
 
 //Get object
-QByteArray SdLibraryStorage::object(const QString key)
+QByteArray SdLibraryStorage::object(const QString uid)
   {
   QReadLocker locker( &mLock );
-  if( !mReferenceMap.contains(key) || mReferenceMap.value(key).mObjectPtr == 0 )
+  if( !mReferenceMap.contains(uid) || mReferenceMap.value(uid).mObjectPtr == 0 )
     return QByteArray();
 
-  mObjectFile.seek( mReferenceMap.value(key).mObjectPtr );
+  mObjectFile.seek( mReferenceMap.value(uid).mObjectPtr );
   QDataStream is( &mObjectFile );
   QByteArray res;
   is >> res;
@@ -324,72 +324,8 @@ void SdLibraryStorage::insert(const SdLibraryHeader &hdr, QByteArray obj)
 
 
 
-//Return true if key contains in categories list
-bool SdLibraryStorage::isCategoryContains(const QString key)
-  {
-  QReadLocker locker( &mLock );
-  return mCategoryMap.contains( key );
-  }
 
 
-
-
-//Return category association map
-QString SdLibraryStorage::category(const QString key)
-  {
-  QReadLocker locker( &mLock );
-  return mCategoryMap.value( key ).mAssociation;
-  }
-
-
-
-
-//Insert new category
-void SdLibraryStorage::categoryInsert(const QString key, const QString association, bool remote)
-  {
-  if( key.isEmpty() )
-    return;
-  QWriteLocker locker( &mLock );
-  SdLibraryCategory libcat;
-  libcat.mAssociation = association;
-  //For remote insertion exclude record from subsequent transmit to server
-  libcat.mCreationIndex = remote ? -1 : mCreationIndex++;
-  mCategoryMap.insert( key, libcat );
-  mDirty = true;
-  }
-
-
-
-
-//Get list of categories which inserted after index
-QStringList SdLibraryStorage::categoryGetAfter(qint32 index, int limit )
-  {
-  QReadLocker locker( &mLock );
-  QStringList result;
-  //if index greater or equal creationIndex then no objects after index
-  if( index >= mCreationIndex )
-    return result;
-  QMapIterator<QString,SdLibraryCategory> iter( mCategoryMap );
-  qint32 last = index + limit;
-  while( iter.hasNext() ) {
-    iter.next();
-    if( iter.value().mCreationIndex >= index && iter.value().mCreationIndex < last )
-      result.append( iter.key() );
-    }
-  return result;
-  }
-
-
-
-
-void SdLibraryStorage::forEachCategory(std::function<void (const QString &, const QString &)> fun1)
-  {
-  QMapIterator<QString,SdLibraryCategory> iter( mCategoryMap );
-  while( iter.hasNext() ) {
-    iter.next();
-    fun1( iter.key(), iter.value().mAssociation );
-    }
-  }
 
 
 
@@ -403,7 +339,7 @@ void SdLibraryStorage::flush()
     QSaveFile file(FNAME_REF);
     if( file.open(QIODevice::WriteOnly) ) {
       QDataStream os( &file );
-      os << mCreationIndex << mReferenceMap << mCategoryMap;
+      os << mCreationIndex << mReferenceMap;
       if( file.commit() )
         mDirty = false;
       }

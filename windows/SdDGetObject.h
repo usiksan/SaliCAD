@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -40,25 +40,18 @@ class SdDGetObject : public QDialog
     SdPItemComponent      *mComponent;    //Component if selected
     SdProject             *mProject;      //Project if selected
 
-    QString                mObjName;      //Object name
-    QString                mObjAuthor;    //Object author
-    QString                mObjUid;       //Unical object id
-    QString                mCompUid;      //Unical object id for components
-    int                    mSectionIndex; //Section index
-    SdStringMap            mParam;        //Component or instance params
+    static QString                mObjName;      //Object name
+    static QString                mObjUid;       //Unical object id
+    static QString                mCompUid;      //Unical object id for components
+    static int                    mSectionIndex; //Section index
+    static SdStringMap            mParam;        //Component or instance params
 
-    quint64                mSort;         //Object select sort (class)
-    SdLibraryHeaderList    mHeaderList;   //Header list for filtered objects
+    static quint64                mSort;         //Object select sort (class)
+    static SdLibraryHeaderList    mHeaderList;   //Header list for filtered objects
+    static bool                   mTitleOnly;    //Flag for find only in titles
   public:
     explicit SdDGetObject( quint64 sort, const QString title, QWidget *parent = nullptr);
     ~SdDGetObject() override;
-
-    QString     getObjName() const { return mObjName; }
-    QString     getObjAuthor() const { return mObjAuthor; }
-    QString     getObjUid() const { return mObjUid; }
-    QString     getCompUid() const { return mCompUid; }
-    int         getSectionIndex() const { return mSectionIndex; }
-    SdStringMap getParams() const { return mParam; }
 
   public slots:
     //Find button pressed
@@ -70,11 +63,14 @@ class SdDGetObject : public QDialog
     //On change component section selection
     void onCurrentSection( int row );
 
-    //Selected new category, apply filtr
-    void onTagPath( const QString path );
-
     //Pressed button "Load from central repository"
     void onLoadFromCentral();
+
+    //When changed field filtr
+    void onFieldChanged( int, int );
+
+    //Clear all fields filtr
+    void onClearFieldFiltr();
 
   protected:
     void changeEvent(QEvent *e) override;
@@ -88,7 +84,6 @@ class SdDGetObject : public QDialog
     void fillTable();
 
   public:
-    static bool              getObjectName( QString *name, QString *author, quint64 sort, const QString title, QWidget *parent );
     static SdObject         *getObject( quint64 sort, const QString title, QWidget *parent);
     static QString           getObjectUid( quint64 sort, const QString title, QWidget *parent );
     static SdPItemComponent *getComponent( int *logSectionPtr, SdStringMap *param, const QString title, QWidget *parent );

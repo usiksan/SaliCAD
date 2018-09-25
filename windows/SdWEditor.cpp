@@ -14,6 +14,7 @@ Description
 #include "objects/SdProjectItem.h"
 #include "objects/SdProject.h"
 #include "objects/SdPulsar.h"
+#include "objects/SdObjectFactory.h"
 #include "SdWEditor.h"
 #include "SdWCommand.h"
 
@@ -155,8 +156,14 @@ void SdWEditor::cmObjectEditEnable()
       getProjectItem()->setUnicalTitle( tr("Set unical object name") );
       item = getProjectItem()->setEditEnable( true, QString() );
       }
-    else
+    else {
+      //Request for database removing
+      int r = QMessageBox::question( this, tr("Warning"), tr("Remove '%1' from database?").arg(getProjectItem()->getTitle()) );
+      if( r == QMessageBox::Yes )
+        //Remove from database
+        SdObjectFactory::deleteItemObject( getProjectItem() );
       item = getProjectItem()->setEditEnable( true, tr("Object edit enable") );
+      }
     //Close this editor (viewer)
     SdPulsar::sdPulsar->emitCloseEditView( getProjectItem() );
     //Open new item with edit status

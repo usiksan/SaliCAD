@@ -116,7 +116,7 @@ void SdWEditorGraph::scaleSet(double scale)
   {
   mScale.scaleSet( scale );
   mCasheDirty = true;
-  qDebug() << "scale=" << mScale.scaleGet();
+  //qDebug() << "scale=" << mScale.scaleGet();
   update();
   }
 
@@ -124,7 +124,7 @@ void SdWEditorGraph::scaleStep(double step)
   {
   mScale.scaleStep(step);
   mCasheDirty = true;
-  qDebug() << "scale=" << mScale.scaleGet();
+  //qDebug() << "scale=" << mScale.scaleGet();
   update();
   }
 
@@ -157,7 +157,7 @@ void SdWEditorGraph::setSelectionStatus(bool status)
 //Window zoom
 void SdWEditorGraph::zoomWindow(SdRect r)
   {
-  qDebug() << "zoomWindow" << r;
+  //qDebug() << "zoomWindow" << r;
   originSet( r.center() );
   //Вычислить новый масштаб
   double scale = mScale.scaleGet();
@@ -251,7 +251,10 @@ void SdWEditorGraph::modeSet(SdMode *mode)
     mStack = nullptr;
     }
   //Если был режим выделения - просто затереть
-  if( mMode && mMode == mSelect ) mMode = mode;
+  if( mMode && mMode == mSelect ) {
+    mSelect->reset();
+    mMode = mode;
+    }
   else {
     if( mode == mSelect ) {
       //Если новый режим выделения - то старый передать в prevMode

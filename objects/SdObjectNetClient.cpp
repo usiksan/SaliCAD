@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -9,6 +9,13 @@ Web
   www.saliLab.ru
 
 Description
+  Client for dataBase server communicate
+
+  1. Communicate to server
+  2. Login or registrate
+  3. Send request
+  4. Receiv ansver
+  5. Disconnect
 */
 #include "SdConfig.h"
 #include "SdObjectNetClient.h"
@@ -18,11 +25,6 @@ Description
 #include <QThread>
 #include <QHostAddress>
 #include <QSettings>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlField>
-#include <QSqlError>
 
 
 //Main object for remote database communication
@@ -41,8 +43,9 @@ SdObjectNetClient::SdObjectNetClient(QObject *parent) :
   mRemoteSyncIndex = s.value( SDK_REMOTE_SYNC ).toInt();
   mHostIp          = s.value( SDK_SERVER_IP ).toString();
 
-  mTimer.setInterval( 30000 );
-  mTimer.start();
+  mTimer.setInterval( 180000 );
+  if( isRegistered() )
+    mTimer.start();
 
   connect( mSocket, &QTcpSocket::connected, this, &SdObjectNetClient::onConnected );
   connect( &mTimer, &QTimer::timeout, this, &SdObjectNetClient::doSync );
@@ -71,6 +74,7 @@ bool SdObjectNetClient::isRegistered() const
 //Begin registration process
 void SdObjectNetClient::doRegistration(const QString ip, const QString authorName, const QString email)
   {
+  mTimer.stop();
   //Prepare block for transmition
   mHostIp         = ip;
   SdAuthorInfo info;
@@ -96,6 +100,7 @@ void SdObjectNetClient::doRegistration(const QString ip, const QString authorNam
 //Begin append machine
 void SdObjectNetClient::doMachine(const QString ip, const QString authorName, quint64 key)
   {
+  mTimer.stop();
   SdAuthorInfo info( authorName, key, 0 );
   //Prepare block for transmition
   mHostIp         = ip;
@@ -164,26 +169,8 @@ void SdObjectNetClient::doSync()
     SdAuthorInfo info( mAuthor, mKey, mRemoteSyncIndex );
     os << info;
 
-    //Category list for last entered or edited
-    SdCategoryInfoList categoryList;
-
-    //Scan category list for last entered or edited
-    QStringList list = sdLibraryStorage.categoryGetAfter( mLocalSyncIndex );
-    //For each category create info
-    for( const QString &category : list ) {
-      //Category info
-      SdCategoryInfo cinf;
-      cinf.mCategory = category;
-      cinf.mAssociation = sdLibraryStorage.category( category );
-      //Append info to list
-      categoryList.append( cinf );
-      }
-
-    //Write list
-    os << categoryList;
-
     //Scan object list for last entered
-    list = sdLibraryStorage.getAfter( mLocalSyncIndex );
+    QStringList list = sdLibraryStorage.getAfter( mLocalSyncIndex );
     //For each object write header and object itself
     for( const QString &hash : list ) {
       SdLibraryHeader hdr;
@@ -192,14 +179,28 @@ void SdObjectNetClient::doSync()
         os << hdr << sdLibraryStorage.object(hash);
         }
       }
-    qDebug() << "sync obj, categories" << categoryList.count() << " objects " << list.count();
-    mLocalSyncCount = categoryList.count() + list.count();
+    qDebug() << "sync objects " << list.count();
+    mLocalSyncCount = list.count();
     mCommandSync = SCPI_SYNC_REQUEST;
     if( mSocket->state() != QAbstractSocket::ConnectedState ) {
       mSocket->connectToHost( QHostAddress(mHostIp), SD_DEFAULT_PORT );
       emit process( tr("Try connect to host %1").arg(mHostIp), false );
       }
     }
+  }
+
+
+
+
+
+void SdObjectNetClient::startSync(bool start)
+  {
+  if( start ) {
+    if( isRegistered() )
+      mTimer.start();
+    }
+  else
+    mTimer.stop();
   }
 
 
@@ -251,7 +252,11 @@ void SdObjectNetClient::cmRegistrationInfo(QDataStream &is)
     s.setValue( SDK_REMOTE_REMAIN, QString::number(info.mRemain) );
     mAuthor = info.mAuthor;
     mKey    = info.mKey;
-    doSync();
+    //Reset syncronisation process
+    mLocalSyncIndex = mLocalSyncCount = 0;
+    s.setValue( SDK_REMOTE_SYNC, mRemoteSyncIndex );
+    s.setValue( SDK_LOCAL_SYNC, mLocalSyncIndex );
+    //doSync();
     emit process( tr("Registration successfull"), false );
     }
   else emit process( tr("Failure registration. ") + error(info.result()), false );
@@ -269,20 +274,12 @@ void SdObjectNetClient::cmSyncList(QDataStream &is)
   if( info.isSuccessfull() ) {
     mLocalSyncIndex += mLocalSyncCount;
 
-    SdCategoryInfoList categoryList;
-    is >> categoryList;
-
-    for( const SdCategoryInfo &info : categoryList )
-      //Replace object
-      sdLibraryStorage.categoryInsert( info.mCategory, info.mAssociation, true );
-
-    int updateCount = categoryList.count();
-
     //Here is headers list (may be empty)
+    int updateCount = 0;
     while( !is.atEnd() ) {
       SdLibraryHeader hdr;
       is >> hdr;
-      sdLibraryStorage.setHeader( hdr, true );
+      sdLibraryStorage.setHeader( hdr );
       updateCount++;
       }
     qDebug() << "synced" << updateCount << mLocalSyncCount;

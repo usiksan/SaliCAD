@@ -41,12 +41,12 @@
        <item row="2" column="0">
         <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>Pin size X:</string>
+          <string>Pin size Y:</string>
          </property>
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QLineEdit" name="mPinSizeX"/>
+        <widget class="QLineEdit" name="mPinSizeY"/>
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_14">
@@ -71,34 +71,34 @@
           </font>
          </property>
          <property name="text">
-          <string>Left side</string>
+          <string>Top side</string>
          </property>
         </widget>
        </item>
        <item row="5" column="0">
         <widget class="QLabel" name="label_4">
          <property name="text">
-          <string>Left pin count:</string>
+          <string>Top pin count:</string>
          </property>
         </widget>
        </item>
        <item row="5" column="1">
-        <widget class="QLineEdit" name="mLeftPinCount"/>
+        <widget class="QLineEdit" name="mTopPinCount"/>
        </item>
        <item row="6" column="0">
         <widget class="QLabel" name="label_5">
          <property name="text">
-          <string>Left pin type:</string>
+          <string>Top pin type:</string>
          </property>
         </widget>
        </item>
        <item row="6" column="1">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QLineEdit" name="mLeftPinType"/>
+          <widget class="QLineEdit" name="mTopPinType"/>
          </item>
          <item>
-          <widget class="QToolButton" name="mLeftPinTypeSelect">
+          <widget class="QToolButton" name="mTopPinTypeSelect">
            <property name="text">
             <string>...</string>
            </property>
@@ -109,22 +109,22 @@
        <item row="7" column="0">
         <widget class="QLabel" name="label_6">
          <property name="text">
-          <string>Left pin distance:</string>
+          <string>Top pin distance:</string>
          </property>
         </widget>
        </item>
        <item row="7" column="1">
-        <widget class="QLineEdit" name="mLeftPinDistance"/>
+        <widget class="QLineEdit" name="mTopPinDistance"/>
        </item>
        <item row="8" column="0">
         <widget class="QLabel" name="label_7">
          <property name="text">
-          <string>Left pins offset Y:</string>
+          <string>Top pins offset X:</string>
          </property>
         </widget>
        </item>
        <item row="8" column="1">
-        <widget class="QLineEdit" name="mLeftPinOffsetY"/>
+        <widget class="QLineEdit" name="mTopPinOffsetX"/>
        </item>
        <item row="9" column="0">
         <widget class="QLabel" name="label_13">
@@ -135,34 +135,34 @@
           </font>
          </property>
          <property name="text">
-          <string>Right side</string>
+          <string>Bottom side</string>
          </property>
         </widget>
        </item>
        <item row="10" column="0">
         <widget class="QLabel" name="label_8">
          <property name="text">
-          <string>Right pin count:</string>
+          <string>Bottom pin count:</string>
          </property>
         </widget>
        </item>
        <item row="10" column="1">
-        <widget class="QLineEdit" name="mRightPinCount"/>
+        <widget class="QLineEdit" name="mBottomPinCount"/>
        </item>
        <item row="11" column="0">
         <widget class="QLabel" name="label_11">
          <property name="text">
-          <string>Right pin type:</string>
+          <string>Bottomm pin type:</string>
          </property>
         </widget>
        </item>
        <item row="11" column="1">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QLineEdit" name="mRightPinType"/>
+          <widget class="QLineEdit" name="mBottomPinType"/>
          </item>
          <item>
-          <widget class="QToolButton" name="mRightPinTypeSelect">
+          <widget class="QToolButton" name="mBottomPinTypeSelect">
            <property name="text">
             <string>...</string>
            </property>
@@ -173,22 +173,22 @@
        <item row="12" column="0">
         <widget class="QLabel" name="label_10">
          <property name="text">
-          <string>Right pin distance:</string>
+          <string>Bottom pin distance:</string>
          </property>
         </widget>
        </item>
        <item row="12" column="1">
-        <widget class="QLineEdit" name="mRightPinDistance"/>
+        <widget class="QLineEdit" name="mBottomPinDistance"/>
        </item>
        <item row="13" column="0">
         <widget class="QLabel" name="label_9">
          <property name="text">
-          <string>Right pins offset Y:</string>
+          <string>Bottom pins offset X:</string>
          </property>
         </widget>
        </item>
        <item row="13" column="1">
-        <widget class="QLineEdit" name="mRightPinOffsetY"/>
+        <widget class="QLineEdit" name="mBottomPinOffsetX"/>
        </item>
       </layout>
      </item>

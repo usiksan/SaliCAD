@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -46,6 +46,8 @@ class SdDRowValue : public QDialog
     ~SdDRowValue() override;
 
     static double valueToDouble(const QString &val, const SdValueModifier list[] , QString *modifier);
+    static bool   isPhis( const QString &val );
+    static double phisToDouble( const QString &val );
 
   public slots:
     void onModifierChanged( int row );
