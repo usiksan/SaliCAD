@@ -1,0 +1,308 @@
+{
+    "ChildList": [
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "Origin": {
+                        "x": 1000,
+                        "y": 4750
+                    },
+                    "id": "179c7d0",
+                    "over": {
+                        "h": 2266,
+                        "w": 349,
+                        "x": 816,
+                        "y": 3624
+                    },
+                    "propTextDir": 90000,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 325,
+                    "propTextVert": 1,
+                    "text": "Подпись и дата",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 800,
+                        "y": 15000
+                    },
+                    "b": {
+                        "x": 2000,
+                        "y": 15000
+                    },
+                    "id": "1a12bc0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2000,
+                        "y": 6500
+                    },
+                    "b": {
+                        "x": 800,
+                        "y": 6500
+                    },
+                    "id": "1912920",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2000,
+                        "y": 11500
+                    },
+                    "b": {
+                        "x": 800,
+                        "y": 11500
+                    },
+                    "id": "18badb0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 42000,
+                        "y": 29700
+                    },
+                    "id": "1829a60",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "Origin": {
+                        "x": 1000,
+                        "y": 10250
+                    },
+                    "id": "1887f80",
+                    "over": {
+                        "h": 1569,
+                        "w": 349,
+                        "x": 816,
+                        "y": 9480
+                    },
+                    "propTextDir": 90000,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 325,
+                    "propTextVert": 1,
+                    "text": "Инв.Nдубл",
+                    "type": "Text"
+                },
+                {
+                    "Origin": {
+                        "x": 1000,
+                        "y": 7750
+                    },
+                    "id": "17f6090",
+                    "over": {
+                        "h": 1638,
+                        "w": 349,
+                        "x": 816,
+                        "y": 6936
+                    },
+                    "propTextDir": 90000,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 325,
+                    "propTextVert": 1,
+                    "text": "Взам.инв.N",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 800,
+                        "y": 3000
+                    },
+                    "b": {
+                        "x": 2000,
+                        "y": 3000
+                    },
+                    "id": "17420a0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2000,
+                        "y": 500
+                    },
+                    "b": {
+                        "x": 41500,
+                        "y": 29200
+                    },
+                    "id": "1882910",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 75,
+                    "type": "Rect"
+                },
+                {
+                    "Origin": {
+                        "x": 1000,
+                        "y": 13250
+                    },
+                    "id": "1762780",
+                    "over": {
+                        "h": 2266,
+                        "w": 349,
+                        "x": 816,
+                        "y": 12130
+                    },
+                    "propTextDir": 90000,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 325,
+                    "propTextVert": 1,
+                    "text": "Подпись и дата",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 800,
+                        "y": 9000
+                    },
+                    "b": {
+                        "x": 2000,
+                        "y": 9000
+                    },
+                    "id": "1a83900",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2000,
+                        "y": 500
+                    },
+                    "b": {
+                        "x": 800,
+                        "y": 500
+                    },
+                    "id": "1a45550",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1300,
+                        "y": 500
+                    },
+                    "b": {
+                        "x": 1300,
+                        "y": 15000
+                    },
+                    "id": "184e180",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Origin": {
+                        "x": 37250,
+                        "y": 250
+                    },
+                    "id": "19b5a90",
+                    "over": {
+                        "h": 383,
+                        "w": 1778,
+                        "x": 37243,
+                        "y": 34
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 0,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 375,
+                    "propTextVert": 1,
+                    "text": "Формат А3",
+                    "type": "Text"
+                },
+                {
+                    "Origin": {
+                        "x": 1000,
+                        "y": 1750
+                    },
+                    "id": "189a980",
+                    "over": {
+                        "h": 1604,
+                        "w": 349,
+                        "x": 816,
+                        "y": 940
+                    },
+                    "propTextDir": 90000,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 325,
+                    "propTextVert": 1,
+                    "text": "Инв.Nподл",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 800,
+                        "y": 500
+                    },
+                    "b": {
+                        "x": 800,
+                        "y": 15000
+                    },
+                    "id": "184e000",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                }
+            ],
+            "Created": 19471405,
+            "Edit enable": true,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+            },
+            "Title": "gost a3",
+            "id": "19f53b0",
+            "index": 0,
+            "type": "Sheet"
+        }
+    ],
+    "Params": {
+    },
+    "id": "197fca0",
+    "type": "Project"
+}

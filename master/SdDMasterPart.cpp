@@ -75,7 +75,7 @@ void SdDMasterPart::setValue(SdPoint p, int size)
 
 void SdDMasterPart::setupSmdPin()
   {
-  mPinProp.mLayer.set( LID0_PIN LID1_TOP );
+  mPinProp.mLayer.set( LID0_PIN );
   mPinProp.mSide  = stmTop;
   }
 
