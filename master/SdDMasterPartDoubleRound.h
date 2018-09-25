@@ -26,7 +26,7 @@ class SdDMasterPartDoubleRound : public SdDMasterPart
     Q_OBJECT
 
   public:
-    explicit SdDMasterPartDoubleRound(SdProjectItem *item, QWidget *parent = nullptr);
+    explicit SdDMasterPartDoubleRound(SdProjectItem *item, bool noPin, QWidget *parent = nullptr);
     ~SdDMasterPartDoubleRound() override;
 
   public slots:

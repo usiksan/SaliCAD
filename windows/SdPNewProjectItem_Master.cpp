@@ -112,7 +112,13 @@ void SdPNewProjectItem_Master::initializePage()
 
       addMaster( tr("Two pins round part"), tr("Creates part with exact two pins and round body"),
                  QString(":/pic/partMasterDoubleRound.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
-        SdDMasterPartDoubleRound dlg( item, p );
+        SdDMasterPartDoubleRound dlg( item, false, p );
+        return dlg.exec();
+        });
+
+      addMaster( tr("Two through pins round part"), tr("Creates part with exact two pins and round body"),
+                 QString(":/pic/partMasterDoubleRound2.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
+        SdDMasterPartDoubleRound dlg( item, true, p );
         return dlg.exec();
         });
 

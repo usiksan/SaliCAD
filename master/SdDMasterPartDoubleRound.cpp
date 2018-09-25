@@ -19,14 +19,20 @@ Description
 
 #include <QToolButton>
 
-SdDMasterPartDoubleRound::SdDMasterPartDoubleRound(SdProjectItem *item, QWidget *parent) :
+SdDMasterPartDoubleRound::SdDMasterPartDoubleRound(SdProjectItem *item, bool noPin, QWidget *parent) :
   SdDMasterPart( item, parent),
   ui(new Ui::SdDMasterPartDoubleRound)
   {
   ui->setupUi(this);
 
-  ui->mBodyDiameter->setText("3.0");
-  ui->mBetweenPins->setText("5.0");
+  if( noPin ) {
+    ui->mBodyDiameter->setText("5.0");
+    ui->mBetweenPins->setText("3.0");
+    }
+  else {
+    ui->mBodyDiameter->setText("3.0");
+    ui->mBetweenPins->setText("5.0");
+    }
   onEditChanged( QString() );
 
   connect( ui->mBodyDiameter, &QLineEdit::textEdited, this, &SdDMasterPartDoubleRound::onEditChanged );
@@ -151,7 +157,7 @@ void SdDMasterPartDoubleRound::accept()
   //Update ident position
   //When part size greater then ident text size (1000) then place ident in center of part
   // else place ident at top of part
-  setId( SdPoint( sizeX/2, partDiameter > 2000 ? 0 : partDiameter/2+500) );
+  setId( SdPoint( sizeX/2, partDiameter > 2000 && sizeX > 4000 ? 0 : partDiameter/2+500) );
 
   //Update value position
   setValue( SdPoint( sizeX/2, -partDiameter/2-500) );
