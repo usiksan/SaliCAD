@@ -49,6 +49,7 @@ Description
 #define dctTextDoc        0x00800000ul
 #define dctInheritance    0x01000000ul
 #define dctValue          0x02000000ul
+#define dctVariant        0x04000000ul
 
 #define dctLocal          0x80000000ul //This flag setup for objects which must not be send to global storage
 

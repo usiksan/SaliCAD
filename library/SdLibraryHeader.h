@@ -38,14 +38,18 @@ inline QString headerUid( QString type, QString name, QString author )
 //Library object header
 struct SdLibraryHeader
   {
-    QString     mName;       //Name of stored object
-    QString     mType;       //Type of stored object
-    QString     mAuthor;     //Author who create object
-    qint32      mTime;       //Object time creation
-    quint64     mClass;      //Object class. When equals 0 then corresponded object is deleted
-    QString     mInherit;    //Inheritance object
+    QString     mName;               //Name of stored object
+    QString     mType;               //Type of stored object
+    QString     mAuthor;             //Author who create object
+    qint32      mTime;               //Object time creation
+    quint64     mClass;              //Object class. When equals 0 then corresponded object is deleted
+    QString     mInherit;            //Inheritance object
 
-    SdStringMap mParamTable; //User defined object params
+    SdStringMap mParamTable;         //User defined object params
+
+    //Extended param table
+    qint32      mVariantFieldCount; //Variable fields count in extended param table
+    QStringList mVariantTable;      //Variant table
 
     SdLibraryHeader() : mName(), mType(), mAuthor(), mTime(0), mClass(0), mParamTable() {}
 
@@ -58,6 +62,10 @@ struct SdLibraryHeader
     bool    isDeleted() const { return mClass == 0; }
 
     void    setDeleted() { mClass = 0; mTime++; }
+
+    //Extended param access
+    bool    variantTableExist() const { return mVariantFieldCount != 0; }
+    int
   };
 
 inline QDataStream &operator << ( QDataStream &os, const SdLibraryHeader &header ) {

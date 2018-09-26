@@ -253,7 +253,8 @@ SOURCES += \
     windows/SdDParamDefault.cpp \
     windows/SdWEditorProject.cpp \
     master/SdDMasterPartDoubleRound.cpp \
-    master/SdDMasterPartQuadSide.cpp
+    master/SdDMasterPartQuadSide.cpp \
+    objects/SdPItemVariant.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -503,7 +504,8 @@ HEADERS  += \
     windows/SdDParamDefault.h \
     windows/SdWEditorProject.h \
     master/SdDMasterPartDoubleRound.h \
-    master/SdDMasterPartQuadSide.h
+    master/SdDMasterPartQuadSide.h \
+    objects/SdPItemVariant.h
 
 DISTFILES += \
     license.txt
