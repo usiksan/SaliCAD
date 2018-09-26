@@ -24,12 +24,13 @@ SdDMasterPartQuadSide::SdDMasterPartQuadSide(SdProjectItem *item, QWidget *paren
   {
   ui->setupUi(this);
 
-  ui->mBodySizeX->setText("4.6");
-  ui->mBodySizeY->setText("3.0");
-  ui->mPinSizeX->setText("5.0");
-  ui->mPinSizeY->setText("5.0");
+  ui->mBodySizeX->setText("6");
+  ui->mBodySizeY->setText("6");
+  ui->mPinSizeX->setText("7.0");
+  ui->mPinSizeY->setText("7.0");
   ui->mPinDistance->setText("1.0");
   ui->mTotalPinCount->setText("16");
+  ui->mLeftTopPinNumber->setText("1");
 
   //Left side
   ui->mLeftPinOffsetY->setText("0");
@@ -58,15 +59,19 @@ SdDMasterPartQuadSide::SdDMasterPartQuadSide(SdProjectItem *item, QWidget *paren
 
   //Left side
   connect( ui->mLeftPinOffsetY, &QLineEdit::textEdited, this, &SdDMasterPartQuadSide::onEditChanged );
+  connect( ui->mLeftPinCount, &QLineEdit::textEdited, this, &SdDMasterPartQuadSide::onEditChanged );
 
   //Bottom side
   connect( ui->mBottomPinOffsetX, &QLineEdit::textEdited, this, &SdDMasterPartQuadSide::onEditChanged );
+  connect( ui->mBottomPinCount, &QLineEdit::textEdited, this, &SdDMasterPartQuadSide::onEditChanged );
 
   //Right side
   connect( ui->mRightPinOffsetY, &QLineEdit::textEdited, this, &SdDMasterPartQuadSide::onEditChanged );
+  connect( ui->mRightPinCount, &QLineEdit::textEdited, this, &SdDMasterPartQuadSide::onEditChanged );
 
   //Top side
   connect( ui->mTopPinOffsetX, &QLineEdit::textEdited, this, &SdDMasterPartQuadSide::onEditChanged );
+  connect( ui->mTopPinCount, &QLineEdit::textEdited, this, &SdDMasterPartQuadSide::onEditChanged );
 
   connect( ui->mLeftPinTypeSelect, &QToolButton::clicked, this, [this] () {
     QString str = SdDPads::selectPinType(this);
@@ -91,6 +96,9 @@ SdDMasterPartQuadSide::SdDMasterPartQuadSide(SdProjectItem *item, QWidget *paren
     if( !str.isEmpty() )
       ui->mTopPinType->setText( str );
     } );
+
+  connect( ui->buttonBox, &QDialogButtonBox::accepted, this, &SdDMasterPartQuadSide::accept );
+  connect( ui->buttonBox, &QDialogButtonBox::rejected, this, &SdDMasterPartQuadSide::reject );
   }
 
 
@@ -151,7 +159,7 @@ void SdDMasterPartQuadSide::drawPart(SdIllustrator &il)
 
   //Left side
   int leftPinCount    = ui->mLeftPinCount->text().toInt();
-  int leftPinOffsetX  = sdEnvir->fromPhisPcb( ui->mLeftPinOffsetY->text() );
+  int leftPinOffsetY  = sdEnvir->fromPhisPcb( ui->mLeftPinOffsetY->text() );
   if( leftPinCount < 1 ) leftPinCount = totalPinCount / 4;
 
   //Bottom side
@@ -161,7 +169,7 @@ void SdDMasterPartQuadSide::drawPart(SdIllustrator &il)
 
   //Right side
   int rightPinCount    = ui->mRightPinCount->text().toInt();
-  int rightPinOffsetX  = sdEnvir->fromPhisPcb( ui->mRightPinOffsetY->text() );
+  int rightPinOffsetY  = sdEnvir->fromPhisPcb( ui->mRightPinOffsetY->text() );
   if( rightPinCount < 1 ) rightPinCount = totalPinCount / 4;
 
   //Top side
@@ -172,45 +180,63 @@ void SdDMasterPartQuadSide::drawPart(SdIllustrator &il)
   QColor red("red");
   QColor green("green");
 
-  //Pin 1 reside at point 0,0
+  int leftPinSize   = (leftPinCount - 1) * pinDistance;
+  int bottomPinSize = (bottomPinCount - 1) * pinDistance;
+  int rightPinSize  = (rightPinCount - 1) * pinDistance;
+  int topPinSize    = (topPinCount - 1) * pinDistance;
 
-  //Bottom pins lenght
-  int bottomPinsLenght = (bottomPinCount - 1) * bottomPinDistance;
+  //Pin 1 reside at point 0,0 it is left top pin
+  int leftPin = 0;
+  int leftBody = pinLenX;
+  int rightPin = pinSizeX;
+  int rightBody = rightPin - pinLenX;
+  int topBody = (bodySizeY - leftPinSize) / 2 + leftPinOffsetY;
+  int topPin  = topBody + pinLenY;
+  int bottomPin = topPin - pinSizeY;
+  int bottomBody = bottomPin + pinLenY;
 
-  //Part left pos
-  int partLeft = -( bodySizeX - bottomPinsLenght ) / 2 + bottomPinOffsetX;
-
-  //Part right pos
-  int partRight = partLeft + bodySizeX;
-
-  //Top pins lenght
-  int topPinsLenght = (topPinCount - 1) * topPinDistance;
-
-  //Part right offset top right pin
-  int pinRtop = partLeft + ((bodySizeX - topPinsLenght) / 2 - topPinOffsetX) + topPinsLenght;
+  int rightPinY = bottomBody + (bodySizeY - rightPinSize) / 2 + rightPinOffsetY;
+  int bottomPinX = leftBody + (bodySizeX - bottomPinSize) / 2 + bottomPinOffsetX;
+  int topPinX = rightBody - (bodySizeX - topPinSize) / 2 - topPinOffsetX;
 
   //Draw part
-  il.drawRect( partLeft, pinLen, partRight, pinSizeY - pinLen, red );
+  il.drawRect( leftBody, topBody, rightBody, bottomBody, red );
 
   //Draw pins
-  if( pinLen > 0 ) {
+  if( pinLenX > 0 ) {
+    //Left pins
+    for( int i = 0; i < leftPinCount; i++ )
+      il.drawLine( leftPin,-i*pinDistance, pinLenX,-i*pinDistance, red );
+
+    //Right pins
+    for( int i = 0; i < rightPinCount; i++ )
+      il.drawLine( rightBody,rightPinY+i*pinDistance, rightPin,rightPinY+i*pinDistance, red );
+    }
+
+  if( pinLenX > 0 ) {
     //Bottom pins
     for( int i = 0; i < bottomPinCount; i++ )
-      il.drawLine( i*bottomPinDistance,0, i*bottomPinDistance,pinLen, red );
+      il.drawLine( bottomPinX+i*pinDistance,bottomBody, bottomPinX+i*pinDistance,bottomPin, red );
 
     //Top pins
     for( int i = 0; i < topPinCount; i++ )
-      il.drawLine( pinRtop - i*topPinDistance,pinSizeY,  pinRtop - i*topPinDistance,pinSizeY - pinLen, red );
+      il.drawLine( topPinX - i*pinDistance,topBody,  topPinX - i*pinDistance,topPin, red );
     }
 
   //Draw pin connectors
-  int crossSize = bodySizeY / 20;
+  int crossSize = pinDistance / 3;
   //Left pins
+  for( int i = 0; i < leftPinCount; i++ )
+    il.drawCross( leftPin,-i*pinDistance, crossSize, green );
+  //Bottom pins
   for( int i = 0; i < bottomPinCount; i++ )
-    il.drawCross( i*bottomPinDistance,0, crossSize, green );
+    il.drawCross( bottomPinX+i*pinDistance,bottomPin, crossSize, green );
   //Right pins
+  for( int i = 0; i < rightPinCount; i++ )
+    il.drawCross( rightPin,rightPinY+i*pinDistance, crossSize, green );
+  //Top pins
   for( int i = 0; i < topPinCount; i++ )
-    il.drawCross( pinRtop - i*topPinDistance,pinSizeY, crossSize, green );
+    il.drawCross( topPinX - i*pinDistance,topPin, crossSize, green );
   }
 
 
@@ -219,5 +245,171 @@ void SdDMasterPartQuadSide::drawPart(SdIllustrator &il)
 //When accept we build part with current params
 void SdDMasterPartQuadSide::accept()
   {
+  int bodySizeX = sdEnvir->fromPhisPcb( ui->mBodySizeX->text() );
+  int bodySizeY = sdEnvir->fromPhisPcb( ui->mBodySizeY->text() );
+  int pinSizeX  = sdEnvir->fromPhisPcb( ui->mPinSizeX->text() );
+  int pinSizeY  = sdEnvir->fromPhisPcb( ui->mPinSizeY->text() );
+  int pinLenY = (pinSizeY - bodySizeY) / 2;
+  int pinLenX = (pinSizeX - bodySizeX) / 2;
+  int pinDistance = sdEnvir->fromPhisPcb( ui->mPinDistance->text() );
+  int totalPinCount = ui->mTotalPinCount->text().toInt();
+  if( totalPinCount < 4 ) totalPinCount = 4;
 
+  //Left side
+  int leftPinCount    = ui->mLeftPinCount->text().toInt();
+  int leftPinOffsetY  = sdEnvir->fromPhisPcb( ui->mLeftPinOffsetY->text() );
+  if( leftPinCount < 1 ) leftPinCount = totalPinCount / 4;
+
+  //Bottom side
+  int bottomPinCount    = ui->mBottomPinCount->text().toInt();
+  int bottomPinOffsetX  = sdEnvir->fromPhisPcb( ui->mBottomPinOffsetX->text() );
+  if( bottomPinCount < 1 ) bottomPinCount = totalPinCount / 4;
+
+  //Right side
+  int rightPinCount    = ui->mRightPinCount->text().toInt();
+  int rightPinOffsetY  = sdEnvir->fromPhisPcb( ui->mRightPinOffsetY->text() );
+  if( rightPinCount < 1 ) rightPinCount = totalPinCount / 4;
+
+  //Top side
+  int topPinCount    = ui->mTopPinCount->text().toInt();
+  int topPinOffsetX  = sdEnvir->fromPhisPcb( ui->mTopPinOffsetX->text() );
+  if( topPinCount < 1 ) topPinCount = totalPinCount / 4;
+
+  totalPinCount = leftPinCount + bottomPinCount + rightPinCount + topPinCount;
+  //Pin types
+  QString bottomPinType = ui->mBottomPinType->text();
+  QString topPinType = ui->mTopPinType->text();
+  if( topPinType.isEmpty() )
+    topPinType = bottomPinType;
+  QString leftPinType = ui->mLeftPinType->text();
+  QString rightPinType = ui->mRightPinType->text();
+  if( rightPinType.isEmpty() )
+    rightPinType = leftPinType;
+
+  int leftPinSize   = (leftPinCount - 1) * pinDistance;
+  int bottomPinSize = (bottomPinCount - 1) * pinDistance;
+  int rightPinSize  = (rightPinCount - 1) * pinDistance;
+  int topPinSize    = (topPinCount - 1) * pinDistance;
+
+  //Pin 1 reside at point 0,0 it is left top pin
+  int leftPin = 0;
+  int leftBody = pinLenX;
+  int rightPin = pinSizeX;
+  int rightBody = rightPin - pinLenX;
+  int topBody = (bodySizeY - leftPinSize) / 2 + leftPinOffsetY;
+  int topPin  = topBody + pinLenY;
+  int bottomPin = topPin - pinSizeY;
+  int bottomBody = bottomPin + pinLenY;
+
+  int rightPinY = bottomBody + (bodySizeY - rightPinSize) / 2 + rightPinOffsetY;
+  int bottomPinX = leftBody + (bodySizeX - bottomPinSize) / 2 + bottomPinOffsetX;
+  int topPinX = rightBody - (bodySizeX - topPinSize) / 2 - topPinOffsetX;
+
+  //Draw part
+  addRect( leftBody, topBody, rightBody, bottomBody );
+
+  //Draw pins
+  if( pinLenX > 0 ) {
+    //Left pins
+    for( int i = 0; i < leftPinCount; i++ )
+      addLine( leftPin,-i*pinDistance, pinLenX,-i*pinDistance );
+
+    //Right pins
+    for( int i = 0; i < rightPinCount; i++ )
+      addLine( rightBody,rightPinY+i*pinDistance, rightPin,rightPinY+i*pinDistance );
+    }
+
+  if( pinLenX > 0 ) {
+    //Bottom pins
+    for( int i = 0; i < bottomPinCount; i++ )
+      addLine( bottomPinX+i*pinDistance,bottomBody, bottomPinX+i*pinDistance,bottomPin );
+
+    //Top pins
+    for( int i = 0; i < topPinCount; i++ )
+      addLine( topPinX - i*pinDistance,topBody,  topPinX - i*pinDistance,topPin );
+    }
+
+  //Add pins
+  if( ui->mPlanar->isChecked() )
+    setupSmdPin();
+  else
+    setupThrouPin();
+  //Make pin number and pin name invisible
+  mPinNameProp.mLayer.set( LID0_INVISIBLE );
+  mPinNumberProp.mLayer.set( LID0_INVISIBLE );
+
+  int pinIndex = ui->mLeftTopPinNumber->text().toInt();
+  //Left pins
+  mPinNumberProp.mHorz = dhjLeft;
+  mPinNumberProp.mDir  = da0;
+  mPinNameProp.mHorz   = dhjLeft;
+  mPinNameProp.mDir    = da0;
+  for( int i = 0; i < leftPinCount; i++ ) {
+    SdPoint pinOrg(leftPin,-i*pinDistance);
+    SdPoint numberOrg(pinOrg.x(),pinOrg.y()+250);
+    SdPoint nameOrg(pinOrg.x()+pinLenX, pinOrg.y() );
+    addPin( pinOrg, leftPinType, numberOrg, QString::number(pinIndex), nameOrg );
+    pinIndex++;
+    if( pinIndex > totalPinCount )
+      pinIndex = 1;
+    }
+  //Bottom pins
+  mPinNumberProp.mDir  = da90;
+  mPinNameProp.mDir    = da90;
+  for( int i = 0; i < bottomPinCount; i++ ) {
+    SdPoint pinOrg(bottomPinX+i*pinDistance,bottomPin);
+    SdPoint numberOrg(pinOrg.x()-250,pinOrg.y());
+    SdPoint nameOrg(pinOrg.x(), pinOrg.y()+pinLenY );
+    addPin( pinOrg, bottomPinType, numberOrg, QString::number(pinIndex), nameOrg );
+    pinIndex++;
+    if( pinIndex > totalPinCount )
+      pinIndex = 1;
+    }
+  //Right pins
+  mPinNumberProp.mHorz = dhjRight;
+  mPinNumberProp.mDir  = da0;
+  mPinNameProp.mHorz   = dhjRight;
+  mPinNameProp.mDir    = da0;
+  for( int i = 0; i < rightPinCount; i++ ) {
+    SdPoint pinOrg(rightPin,rightPinY+i*pinDistance);
+    SdPoint numberOrg(pinOrg.x(),pinOrg.y()+250);
+    SdPoint nameOrg(pinOrg.x()-pinLenX, pinOrg.y() );
+    addPin( pinOrg, rightPinType, numberOrg, QString::number(pinIndex), nameOrg );
+    pinIndex++;
+    if( pinIndex > totalPinCount )
+      pinIndex = 1;
+    }
+  //Top pins
+  mPinNumberProp.mDir  = da90;
+  mPinNameProp.mDir    = da90;
+  for( int i = 0; i < topPinCount; i++ ) {
+    SdPoint pinOrg(topPinX - i*pinDistance,topPin);
+    SdPoint numberOrg(pinOrg.x()-250,pinOrg.y());
+    SdPoint nameOrg(pinOrg.x(), pinOrg.y()-pinLenY );
+    addPin( pinOrg, topPinType, numberOrg, QString::number(pinIndex), nameOrg );
+    pinIndex++;
+    if( pinIndex > totalPinCount )
+      pinIndex = 1;
+    }
+
+  //Update ident position
+  //When part size greater then ident text size (1000) then place ident in center of part
+  // else place ident at top of part
+  mIdentProp.mDir = da0;
+  mValueProp.mDir = da0;
+  if( bodySizeX >= 3000 && bodySizeY >= 3000 )
+    //id inside part
+    setId( SdPoint( leftBody + bodySizeX / 2, (topBody - bottomBody) / 2 ) );
+  else
+    //id outside part
+    setId( SdPoint( leftBody + bodySizeX / 2, topPin + 500 ) );
+
+  if( bodySizeX >= 15000 && bodySizeY >= 3000 )
+    //value inside body
+    setValue( SdPoint( leftBody + bodySizeX / 2, bottomBody + 500 ) );
+  else
+    //value outside body
+    setValue( SdPoint( leftBody + bodySizeX / 2, bottomPin - 500 ) );
+
+  SdDMasterPart::accept();
   }

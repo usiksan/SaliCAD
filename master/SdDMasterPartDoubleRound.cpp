@@ -49,6 +49,9 @@ SdDMasterPartDoubleRound::SdDMasterPartDoubleRound(SdProjectItem *item, bool noP
     if( !str.isEmpty() )
       ui->mRightPinType->setText( str );
     } );
+
+  connect( ui->buttonBox, &QDialogButtonBox::accepted, this, &SdDMasterPartDoubleRound::accept );
+  connect( ui->buttonBox, &QDialogButtonBox::rejected, this, &SdDMasterPartDoubleRound::reject );
   }
 
 

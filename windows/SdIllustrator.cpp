@@ -94,8 +94,8 @@ void SdIllustrator::drawCircle(int cx, int cy, int r, QColor color )
 
 void SdIllustrator::drawCross(int cx, int cy, int r, QColor color)
   {
-  drawLine( cx-r, cy, cx+r, cy, color );
-  drawLine( cx, cy-r, cx, cy+r, color );
+  drawLine( cx-r, cy-r, cx+r, cy+r, color );
+  drawLine( cx-r, cy+r, cx+r, cy-r, color );
   }
 
 

@@ -17,6 +17,7 @@ Description
 #include "master/SdDMasterPartDoubleRect.h"
 #include "master/SdDMasterPartDoubleRound.h"
 #include "master/SdDMasterPartDoubleSide.h"
+#include "master/SdDMasterPartQuadSide.h"
 
 #include "master/SdDMasterSymbolConnector.h"
 
@@ -125,6 +126,12 @@ void SdPNewProjectItem_Master::initializePage()
       addMaster( tr("Two sided pins part"), tr("Creates part with rectangle body and two pins columns by left and right sides"),
                  QString(":/pic/partMasterDoubleSide.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
         SdDMasterPartDoubleSide dlg( item, p );
+        return dlg.exec();
+        });
+
+      addMaster( tr("Four sided pins part"), tr("Creates part with rectangle body and pins on all four sides"),
+                 QString(":/pic/partMasterQuadSide.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
+        SdDMasterPartQuadSide dlg( item, p );
         return dlg.exec();
         });
 
