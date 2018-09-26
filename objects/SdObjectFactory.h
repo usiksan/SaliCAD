@@ -74,7 +74,7 @@ class SdObjectFactory
 
     //Function must return false to continue iteration
     //When function return true - iteration break and return true as indicator
-    static bool         forEachHeader(std::function<bool(SdLibraryHeader&)> fun1 );
+    static bool         forEachHeader( std::function<bool(SdLibraryHeader&)> fun1 );
 
   };
 

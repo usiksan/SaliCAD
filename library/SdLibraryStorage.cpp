@@ -207,6 +207,19 @@ bool SdLibraryStorage::forEachHeader(std::function<bool(SdLibraryHeader&)> fun1)
 
 
 
+//if( (hdr.mClass & mask) && mReferenceMap.value(hdr.uid()).mCreationTime == hdr.mTime ) {
+//  if( expandVariant && hdr.variantTableExist() ) {
+//    int c = hdr.variantCount();
+//    SdLibraryHeader vhdr;
+//    for( int i = 0; i < c; i++ ) {
+//      hdr.variant( vhdr, i );
+//      if( fun1( vhdr ) )
+//        return true;
+//      }
+//    }
+
+
+
 
 
 //Get header of object

@@ -35,6 +35,21 @@ inline QString headerUid( QString type, QString name, QString author )
   return type + name + author;
   }
 
+
+//Extract variant from variant table
+inline void sdExtractVariant( int index, SdStringMap &map, int fieldCount, const QStringList &table ) {
+  //If index great than 0 then append variant params
+  if( index > 0 ) {
+    //Offset variant params for index
+    int off = index * fieldCount;
+    for( int i = 0; i < fieldCount; i++ )
+      map.insert( table.at(i), table.at( off + i ) );
+    }
+  }
+
+
+
+
 //Library object header
 struct SdLibraryHeader
   {
@@ -51,11 +66,11 @@ struct SdLibraryHeader
     qint32      mVariantFieldCount; //Variable fields count in extended param table
     QStringList mVariantTable;      //Variant table
 
-    SdLibraryHeader() : mName(), mType(), mAuthor(), mTime(0), mClass(0), mParamTable() {}
+    SdLibraryHeader() : mName(), mType(), mAuthor(), mTime(0), mClass(0), mParamTable(), mVariantFieldCount(0),mVariantTable() {}
 
-    void    write( QDataStream &os ) const { os << mName << mType << mAuthor << mTime << mClass << mInherit << mParamTable; }
+    void    write( QDataStream &os ) const { os << mName << mType << mAuthor << mTime << mClass << mInherit << mParamTable << mVariantFieldCount << mVariantTable; }
 
-    void    read( QDataStream &is ) { is >> mName >> mType >> mAuthor >> mTime >> mClass >> mInherit >> mParamTable; }
+    void    read( QDataStream &is ) { is >> mName >> mType >> mAuthor >> mTime >> mClass >> mInherit >> mParamTable >> mVariantFieldCount >> mVariantTable; }
 
     QString uid() const { return headerUid( mType, mName, mAuthor ); }
 
@@ -65,7 +80,23 @@ struct SdLibraryHeader
 
     //Extended param access
     bool    variantTableExist() const { return mVariantFieldCount != 0; }
-    int
+    int     variantCount() const { return mVariantTable.count() / mVariantFieldCount; }
+    void    variant( SdLibraryHeader &hdr, int index ) {
+      //Build variant "index" in header "hdr"
+      //When index == 0 then builded base variant, i.e. that in mParamTable
+      //Write base variant
+      hdr.mName       = mName;
+      hdr.mType       = mType;
+      hdr.mAuthor     = mAuthor;
+      hdr.mTime       = mTime;
+      hdr.mClass      = mClass;
+      hdr.mInherit    = mInherit;
+      hdr.mParamTable = mParamTable;
+      hdr.mVariantFieldCount = 0;
+      hdr.mVariantTable.clear();
+      sdExtractVariant( index, hdr.mParamTable, mVariantFieldCount, mVariantTable );
+      }
+
   };
 
 inline QDataStream &operator << ( QDataStream &os, const SdLibraryHeader &header ) {

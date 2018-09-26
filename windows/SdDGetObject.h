@@ -48,7 +48,7 @@ class SdDGetObject : public QDialog
 
     static quint64                mSort;         //Object select sort (class)
     static SdLibraryHeaderList    mHeaderList;   //Header list for filtered objects
-    static bool                   mTitleOnly;    //Flag for find only in titles
+    static bool                   mExpandVariant;    //Flag for find only in titles
   public:
     explicit SdDGetObject( quint64 sort, const QString title, QWidget *parent = nullptr);
     ~SdDGetObject() override;

@@ -166,7 +166,7 @@ SdStringMap            SdDGetObject::mParam;        //Component or instance para
 
 quint64                SdDGetObject::mSort;         //Object select sort (class)
 SdLibraryHeaderList    SdDGetObject::mHeaderList;   //Header list for filtered objects
-bool                   SdDGetObject::mTitleOnly = true;    //Flag for find only in titles
+bool                   SdDGetObject::mExpandVariant = true;    //Flag for find only in titles
 
 SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   QDialog(parent),
@@ -216,7 +216,7 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   connect( ui->mClearFields, &QPushButton::clicked, this, &SdDGetObject::onClearFieldFiltr );
 
   //Default filtr only title or by fields also
-  ui->mTitleOnlyFiltr->setChecked( mTitleOnly );
+  ui->mTitleOnlyFiltr->setChecked( mExpandVariant );
 
   if( mSort == sort )
     QTimer::singleShot( 300, this, [this] () {
@@ -265,49 +265,40 @@ void SdDGetObject::find()
       }
   QString name = ui->mFind->currentText();
   QStringList list = name.split( QRegExp("\\s+"), QString::SkipEmptyParts );
-  mTitleOnly = ui->mTitleOnlyFiltr->isChecked();
+  mExpandVariant = ui->mTitleOnlyFiltr->isChecked();
   mHeaderList.clear();
   SdObjectFactory::forEachHeader( [list] (SdLibraryHeader &hdr) -> bool {
     if( hdr.mClass & mSort ) {
-      //Test if name match any part of object name
-      if( list.count() == 0 ) {
-        //Name matched, test params
-        if( sdFieldMaskListMatch(hdr.mParamTable) ) {
-          //Params matched, insert header in list
-          mHeaderList.append( hdr );
-          //Prevent too much headers in find result
-          if( mHeaderList.count() > SD_GET_OBJECT_MAX_FIND_LIST )
-            return true;
+      //Test if all name filter sections match any part of object name
+      for( const QString &flt : list )
+        if( hdr.mName.indexOf(flt, 0, Qt::CaseInsensitive) < 0 )
+          //Name not matched, continue with another header
+          return false;
+
+      if( mExpandVariant && hdr.variantTableExist() ) {
+        int c = hdr.variantCount();
+        SdLibraryHeader vhdr;
+        for( int i = 0; i < c; i++ ) {
+          hdr.variant( vhdr, i );
+          if( sdFieldMaskListMatch(vhdr.mParamTable) ) {
+            //Params matched, insert header in list
+            mHeaderList.append( vhdr );
+            //Prevent too much headers in find result
+            if( mHeaderList.count() > SD_GET_OBJECT_MAX_FIND_LIST )
+              //Break next repetition
+              return true;
+            }
           }
         return false;
         }
-      for( const QString &flt : list ) {
-        if( hdr.mName.indexOf(flt, 0, Qt::CaseInsensitive) >= 0 ) {
-          //Name matched, test params
-          if( sdFieldMaskListMatch(hdr.mParamTable) ) {
-            //Params matched, insert header in list
-            mHeaderList.append( hdr );
-            //Prevent too much headers in find result
-            if( mHeaderList.count() > SD_GET_OBJECT_MAX_FIND_LIST )
-              return true;
-            }
-          return false;
-          }
-        if( !mTitleOnly ) {
-          //Scan fields
-          for( auto iter = hdr.mParamTable.cbegin(); iter != hdr.mParamTable.cend(); iter++ )
-            if( iter.value().indexOf( flt, 0, Qt::CaseInsensitive ) >= 0 ) {
-              //Field matched, test params
-              if( sdFieldMaskListMatch(hdr.mParamTable) ) {
-                //Params matched, insert header in list
-                mHeaderList.append( hdr );
-                //Prevent too much headers in find result
-                if( mHeaderList.count() > SD_GET_OBJECT_MAX_FIND_LIST )
-                  return true;
-                }
-              return false;
-              }
-          }
+      //Name matched, test params
+      if( sdFieldMaskListMatch(hdr.mParamTable) ) {
+        //Params matched, insert header in list
+        mHeaderList.append( hdr );
+        //Prevent too much headers in find result
+        if( mHeaderList.count() > SD_GET_OBJECT_MAX_FIND_LIST )
+          //Break next repetition
+          return true;
         }
       }
     //Continue execution
