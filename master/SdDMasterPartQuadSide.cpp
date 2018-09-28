@@ -205,18 +205,18 @@ void SdDMasterPartQuadSide::drawPart(SdIllustrator &il)
   int rightPinSize  = (rightPinCount - 1) * pinDistance;
   int topPinSize    = (topPinCount - 1) * pinDistance;
 
-  //Pin 1 reside at point 0,0 it is left top pin
-  int leftPin = 0;
-  int leftBody = pinLenX;
-  int rightPin = pinSizeX;
-  int rightBody = rightPin - pinLenX;
-  int topBody = (bodySizeY - leftPinSize) / 2 + leftPinOffsetY;
-  int topPin  = topBody + pinLenY;
-  int bottomPin = topPin - pinSizeY;
+  //Pin 1 reside at point 0,0 it is bottom left pin
+  int bottomPinX = 0;
+  int bottomPin = 0;
   int bottomBody = bottomPin + pinLenY;
-
+  int topPin = pinSizeY;
+  int topBody = topPin - pinLenY;
+  int leftBody = -(bodySizeX - bottomPinSize) / 2 - bottomPinOffsetX;
+  int leftPin = leftBody - pinLenX;
+  int rightPin = leftPin + pinSizeX;
+  int rightBody = rightPin - pinLenX;
+  int leftPinY = topBody - (bodySizeY - leftPinSize) / 2 - leftPinOffsetY;
   int rightPinY = bottomBody + (bodySizeY - rightPinSize) / 2 + rightPinOffsetY;
-  int bottomPinX = leftBody + (bodySizeX - bottomPinSize) / 2 + bottomPinOffsetX;
   int topPinX = rightBody - (bodySizeX - topPinSize) / 2 - topPinOffsetX;
 
   //Draw part
@@ -226,7 +226,7 @@ void SdDMasterPartQuadSide::drawPart(SdIllustrator &il)
   if( pinLenX > 0 ) {
     //Left pins
     for( int i = 0; i < leftPinCount; i++ )
-      il.drawLine( leftPin,-i*pinDistance, pinLenX,-i*pinDistance, red );
+      il.drawLine( leftPin,leftPinY-i*pinDistance, leftBody,leftPinY-i*pinDistance, red );
 
     //Right pins
     for( int i = 0; i < rightPinCount; i++ )
@@ -247,7 +247,7 @@ void SdDMasterPartQuadSide::drawPart(SdIllustrator &il)
   int crossSize = pinDistance / 3;
   //Left pins
   for( int i = 0; i < leftPinCount; i++ )
-    il.drawCross( leftPin,-i*pinDistance, crossSize, green );
+    il.drawCross( leftPin,leftPinY-i*pinDistance, crossSize, green );
   //Bottom pins
   for( int i = 0; i < bottomPinCount; i++ )
     il.drawCross( bottomPinX+i*pinDistance,bottomPin, crossSize, green );
@@ -312,38 +312,38 @@ void SdDMasterPartQuadSide::accept()
   int rightPinSize  = (rightPinCount - 1) * pinDistance;
   int topPinSize    = (topPinCount - 1) * pinDistance;
 
-  //Pin 1 reside at point 0,0 it is left top pin
-  int leftPin = 0;
-  int leftBody = pinLenX;
-  int rightPin = pinSizeX;
-  int rightBody = rightPin - pinLenX;
-  int topBody = (bodySizeY - leftPinSize) / 2 + leftPinOffsetY;
-  int topPin  = topBody + pinLenY;
-  int bottomPin = topPin - pinSizeY;
+  //Pin 1 reside at point 0,0 it is bottom left pin
+  int bottomPinX = 0;
+  int bottomPin = 0;
   int bottomBody = bottomPin + pinLenY;
-
+  int topPin = pinSizeY;
+  int topBody = topPin - pinLenY;
+  int leftBody = -(bodySizeX - bottomPinSize) / 2 - bottomPinOffsetX;
+  int leftPin = leftBody - pinLenX;
+  int rightPin = leftPin + pinSizeX;
+  int rightBody = rightPin - pinLenX;
+  int leftPinY = topBody - (bodySizeY - leftPinSize) / 2 - leftPinOffsetY;
   int rightPinY = bottomBody + (bodySizeY - rightPinSize) / 2 + rightPinOffsetY;
-  int bottomPinX = leftBody + (bodySizeX - bottomPinSize) / 2 + bottomPinOffsetX;
   int topPinX = rightBody - (bodySizeX - topPinSize) / 2 - topPinOffsetX;
 
   //Draw part
   addRect( leftBody, topBody, rightBody, bottomBody );
 
   //Draw inside part first pin indicator
-  addCircle( leftBody + 500, 0, 250 );
+  addCircle( leftBody + 500, bottomBody + 500, 250 );
 
   //Draw pins
   if( pinLenX > 0 ) {
     //Left pins
     for( int i = 0; i < leftPinCount; i++ )
-      addLine( leftPin,-i*pinDistance, pinLenX,-i*pinDistance );
+      addLine( leftPin,leftPinY-i*pinDistance, leftBody,leftPinY-i*pinDistance );
 
     //Right pins
     for( int i = 0; i < rightPinCount; i++ )
       addLine( rightBody,rightPinY+i*pinDistance, rightPin,rightPinY+i*pinDistance );
     }
 
-  if( pinLenX > 0 ) {
+  if( pinLenY > 0 ) {
     //Bottom pins
     for( int i = 0; i < bottomPinCount; i++ )
       addLine( bottomPinX+i*pinDistance,bottomBody, bottomPinX+i*pinDistance,bottomPin );
@@ -409,7 +409,7 @@ void SdDMasterPartQuadSide::accept()
   mPinNameProp.mHorz   = dhjLeft;
   mPinNameProp.mDir    = da0;
   for( int i = 0; i < leftPinCount; i++ ) {
-    SdPoint pinOrg(leftPin,-i*pinDistance);
+    SdPoint pinOrg(leftPin,leftPinY-i*pinDistance);
     SdPoint numberOrg(pinOrg.x(),pinOrg.y()+250);
     SdPoint nameOrg(pinOrg.x()+pinLenX, pinOrg.y() );
     addPin( pinOrg, leftPinType, numberOrg, QString::number(pinIndex), nameOrg );
@@ -425,7 +425,7 @@ void SdDMasterPartQuadSide::accept()
   mValueProp.mDir = da0;
   if( bodySizeX >= 3000 && bodySizeY >= 3000 )
     //id inside part
-    setId( SdPoint( leftBody + bodySizeX / 2, (topBody - bottomBody) / 2 ) );
+    setId( SdPoint( leftBody + bodySizeX / 2, (topBody + bottomBody) / 2 ) );
   else
     //id outside part
     setId( SdPoint( leftBody + bodySizeX / 2, topPin + 500 ) );
