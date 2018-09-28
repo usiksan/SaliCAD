@@ -23,6 +23,7 @@ Description
 #include "SdRuleBlock.h"
 #include <QStack>
 #include <QMap>
+#include <QStringList>
 
 
 class SdContainer;
@@ -89,6 +90,7 @@ class SdUndo
     void road( SdPropInt *width, SdPoint *p1, SdPoint *p2 );
     void via( SdPropString *pad, SdPoint *pos );
     void rule( SdRuleBlock *pcbSrc, SdRuleBlockMap *mapSrc );
+    void stringList( int *val, QStringList *list );
 
     //do undo and redo
     void undoStep();

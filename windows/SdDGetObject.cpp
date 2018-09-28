@@ -166,7 +166,7 @@ SdStringMap            SdDGetObject::mParam;        //Component or instance para
 
 quint64                SdDGetObject::mSort;         //Object select sort (class)
 SdLibraryHeaderList    SdDGetObject::mHeaderList;   //Header list for filtered objects
-bool                   SdDGetObject::mExpandVariant = true;    //Flag for find only in titles
+bool                   SdDGetObject::mExpandVariant = false;    //Flag for find only in titles and not show variants
 
 SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   QDialog(parent),

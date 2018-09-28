@@ -38,6 +38,7 @@ Description
 #include "SdUndoRecordRoad.h"
 #include "SdUndoRecordVia.h"
 #include "SdUndoRecordRules.h"
+#include "SdUndoRecordStringList.h"
 #include "windows/SdWCommand.h"
 
 #include <QDebug>
@@ -274,6 +275,11 @@ void SdUndo::via(SdPropString *pad, SdPoint *pos)
 void SdUndo::rule(SdRuleBlock *pcbSrc, SdRuleBlockMap *mapSrc)
   {
   addUndo( new SdUndoRecordRules( pcbSrc, mapSrc ) );
+  }
+
+void SdUndo::stringList(int *val, QStringList *list)
+  {
+  addUndo( new SdUndoRecordStringList( val, list ) );
   }
 
 

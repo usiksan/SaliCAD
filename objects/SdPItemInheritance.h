@@ -15,11 +15,11 @@ Description
 #ifndef SDPITEMINHERITANCE_H
 #define SDPITEMINHERITANCE_H
 
-#include "SdProjectItem.h"
+#include "SdPItemVariant.h"
 
 #define SD_TYPE_INHERITANCE "Inhtn"
 
-class SdPItemInheritance : public SdProjectItem
+class SdPItemInheritance : public SdPItemVariant
   {
     QString mComponentUid;   //Inherited component uid
     QString mComponentTitle; //Inherited component title

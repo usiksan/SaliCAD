@@ -17,7 +17,7 @@ Description
 #include <QDebug>
 
 SdPItemComponent::SdPItemComponent() :
-  SdProjectItem()
+  SdPItemVariant()
   {
 
   }

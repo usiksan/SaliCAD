@@ -18,6 +18,7 @@ Description
 #include "SdWCommand.h"
 #include "SdDParamEditor.h"
 #include "SdDParamDefault.h"
+#include "SdDVariantTable.h"
 #include "objects/SdProject.h"
 #include "objects/SdPartVariant.h"
 #include "objects/SdObjectFactory.h"
@@ -112,6 +113,7 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
           vbox->addWidget( mParamAddDefault = new QPushButton( tr("Add defaults")) );
           vbox->addWidget( mParamCopy = new QPushButton( tr("Copy param")) );
           vbox->addWidget( mParamDelete = new QPushButton( tr("Delete param")) );
+          vbox->addWidget( mParamVariant = new QPushButton( tr("Variant table...")) );
         hbox->addLayout( vbox );
       lay->addLayout( hbox );
 
@@ -119,6 +121,7 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
 
   setLayout( root );
   connect( mSectionList, &QListWidget::currentRowChanged, this, &SdWEditorComponent::onCurrentSection );
+  connect( mParamVariant, &QPushButton::clicked, this, &SdWEditorComponent::paramVariant );
   if( mComponent->isEditEnable() ) {
     //Connect signals when edit enabled
     connect( mSectionAdd, &QPushButton::clicked, this, &SdWEditorComponent::sectionAdd );
@@ -454,6 +457,15 @@ void SdWEditorComponent::paramCopy()
     dirtyProject();
     fillParams();
     }
+  }
+
+
+
+
+void SdWEditorComponent::paramVariant()
+  {
+  SdDVariantTable var( mComponent, mComponent->isEditEnable(), this );
+  var.exec();
   }
 
 

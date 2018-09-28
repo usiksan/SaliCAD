@@ -24,12 +24,16 @@ SdDVariantTable::SdDVariantTable(SdPItemVariant *var, bool editEna, QWidget *par
     connect( ui->mDefFields, &QTableWidget::cellChanged, this, &SdDVariantTable::defChanged );
     }
   else {
+    mVariant = nullptr;
     ui->mVariantAppendField->setEnabled(false);
     ui->mVariantFieldDelete->setEnabled(false);
     ui->mRowInsert->setEnabled(false);
     ui->mRowDelete->setEnabled(false);
     }
   }
+
+
+
 
 SdDVariantTable::~SdDVariantTable()
   {
@@ -57,11 +61,7 @@ void SdDVariantTable::variantFieldDelete()
   int column = ui->mVariantTable->currentColumn();
   if( column >= 0 ) {
     if( QMessageBox::question( this, tr("Warning!"), tr("Are You sure to delete field '%1'? This operation is not undoable").arg(mVariantTable.at(column))) == QMessageBox::Yes ) {
-      int rows = ui->mVariantTable->rowCount();
-      for( int i = rows * mVariantFieldCount + column; i >= 0; i -= mVariantFieldCount )
-        mVariantTable.removeAt(i);
       ui->mVariantTable->removeColumn( column );
-      mVariantFieldCount--;
       }
     }
   else
@@ -78,26 +78,24 @@ void SdDVariantTable::variantFieldDelete()
 void SdDVariantTable::rowInsert()
   {
   //Source row for copy. And insertion will be after this place
-  int row = ui->mVariantTable->currentRow();
-  if( row < 0 )
-    row = ui->mVariantTable->rowCount() - 1;
-  //Insert row
-  int dest = (row + 2) * mVariantFieldCount;
-  if( row >= 0 ) {
-    //Insertion with copy
-    int src = (row + 1) * mVariantFieldCount;
-    for( int i = 0; i < mVariantFieldCount; i++ )
-      mVariantTable.insert( dest + i, mVariantTable.at(src + i) );
-    }
-  else
-    //Insertion fields with default values
-    for( int i = 0; i < mVariantFieldCount; i++ )
-      mVariantTable.insert( dest + i, mDefFields.value( mVariantTable.at(i) ) );
+  int srcRow = ui->mVariantTable->currentRow();
+  if( srcRow < 0 )
+    srcRow = ui->mVariantTable->rowCount() - 1;
   //Visual row appendion
-  ui->mVariantTable->insertRow(row+1);
-  ui->mVariantTable->setRowHeight(row+1,20);
-  for( int i = 0; i < mVariantFieldCount; i++ )
-    ui->mVariantTable->setItem( row+1, i, new QTableWidgetItem( mVariantTable.at(dest+i) )   );
+  int dstRow = srcRow + 1;
+  ui->mVariantTable->insertRow(dstRow);
+  ui->mVariantTable->setRowHeight(dstRow,20);
+  int column = ui->mVariantTable->columnCount();
+  if( srcRow >= 0 ) {
+    //Insert with copy
+    for( int i = 0; i < column; i++ )
+      ui->mVariantTable->setItem( dstRow, i, new QTableWidgetItem( ui->mVariantTable->item(srcRow,i)->text() )   );
+    }
+  else {
+    //Insert with default
+    for( int i = 0; i < column; i++ )
+      ui->mVariantTable->setItem( dstRow, i, new QTableWidgetItem( mDefFields.value(ui->mVariantTable->horizontalHeaderItem(i)->text()) )   );
+    }
   }
 
 
@@ -109,12 +107,35 @@ void SdDVariantTable::rowDelete()
   {
   int row = ui->mVariantTable->currentRow();
   if( row >= 0 ) {
-    //Calculate begin for deleting
-    int start = mVariantFieldCount + mVariantFieldCount * row;
-    for( int i = 0; i < mVariantFieldCount; i++ )
-      mVariantTable.removeAt(start);
     //Remove visual row
     ui->mVariantTable->removeRow(row);
+    }
+  }
+
+
+
+
+//When edited def parameter
+void SdDVariantTable::defChanged(int row, int column)
+  {
+  if( column == 0 ) {
+    if( ui->mDefFields->item( row, column )->checkState() == Qt::Checked )
+      //Append field to variant table
+      variantFieldAppendInt( ui->mDefFields->item( row, 1)->text() );
+    if( ui->mDefFields->item( row, column )->checkState() == Qt::Unchecked ) {
+      //Remove field from variant table
+      QString name = ui->mDefFields->item( row, 2 )->text();
+      //Show query
+      if( QMessageBox::question( this, tr("Warning!"), tr("You attempting delete field '%1' from variant table. All field column contens will be loss. This is non undoing operation. Are You sure?").arg(name)) == QMessageBox::Yes ) {
+        //Find column
+        int column;
+        for( column = 0; column < ui->mVariantTable->columnCount(); column++ )
+          if( ui->mVariantTable->horizontalHeaderItem(column)->text() == name )
+            break;
+        if( column < ui->mVariantTable->columnCount() )
+          ui->mVariantTable->removeColumn( column );
+        }
+      }
     }
   }
 
@@ -160,6 +181,7 @@ void SdDVariantTable::buildDefTable()
     item->setFlags( Qt::ItemIsEnabled );
     ui->mDefFields->setItem( row, 2, item = new QTableWidgetItem( iter.value() ) );
     item->setFlags( Qt::ItemIsEnabled );
+    row++;
     //item->setToolTip(  );
     }
   }
@@ -202,19 +224,13 @@ void SdDVariantTable::buildVariantTable()
 //Append field at position pos with name
 void SdDVariantTable::variantFieldAppendInt(const QString name)
   {
-  if( mVariantFieldCount ) {
-    int rows = mVariantTable.count() / mVariantFieldCount;
-    for( int r = rows; r > 1; r-- )
-      mVariantTable.insert( r * mVariantFieldCount, QString() );
-    mVariantTable.insert( mVariantFieldCount, name );
-    }
-  else {
-    //First field appended
-    mVariantTable.clear();
-    mVariantTable.append( name );
-    }
-  mVariantFieldCount++;
-  buildVariantTable();
+  int pos = ui->mVariantTable->columnCount();
+  ui->mVariantTable->insertColumn( pos );
+  ui->mVariantTable->setColumnWidth( pos, 100 );
+  ui->mVariantTable->setHorizontalHeaderItem( pos, new QTableWidgetItem(name) );
+  int rows = ui->mVariantTable->rowCount();
+  for( int i = 0; i < rows; i++ )
+    ui->mVariantTable->setItem( i, pos, new QTableWidgetItem() );
   }
 
 
@@ -226,4 +242,29 @@ bool SdDVariantTable::isVariantField(const QString field)
   for( int i = 0; i < mVariantFieldCount; i++ )
     if( mVariantTable.at(i) == field ) return true;
   return false;
+  }
+
+
+
+
+
+
+
+void SdDVariantTable::accept()
+  {
+  if( mVariant ) {
+    //Setup field count
+    mVariantFieldCount = ui->mVariantTable->columnCount();
+    mVariantTable.clear();
+    //Scan fields name
+    for( int i = 0; i < mVariantFieldCount; i++ )
+      mVariantTable.append( ui->mVariantTable->horizontalHeaderItem(i)->text() );
+    //Scan cell
+    int row = ui->mVariantTable->rowCount();
+    for( int r = 0; r < row; r++ )
+      for( int c = 0; c < mVariantFieldCount; c++ )
+        mVariantTable.append( ui->mVariantTable->item(r,c)->text() );
+    mVariant->variantTableSet( mVariantFieldCount, mVariantTable, mVariant->getUndo() );
+    }
+  QDialog::accept();
   }

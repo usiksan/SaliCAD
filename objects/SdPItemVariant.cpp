@@ -10,6 +10,27 @@ SdPItemVariant::SdPItemVariant() :
 
 
 
+//To variant table access
+void SdPItemVariant::variantTableGet(qint32 &fieldCount, QStringList &list) const
+  {
+  fieldCount = mVariantFieldCount;
+  list       = mVariantTable;
+  }
+
+
+
+
+void SdPItemVariant::variantTableSet(qint32 fieldCount, QStringList list, SdUndo *undo)
+  {
+  if( undo )
+    undo->stringList( &mVariantFieldCount, &mVariantTable );
+  mVariantFieldCount = fieldCount;
+  mVariantTable      = list;
+  }
+
+
+
+
 QString SdPItemVariant::getType() const
   {
   return QStringLiteral(SD_TYPE_VARIANT);
@@ -69,12 +90,23 @@ void SdPItemVariant::readObject(SdObjectMap *map, const QJsonObject obj)
 
 void SdPItemVariant::getHeader(SdLibraryHeader &hdr) const
   {
+  SdProjectItem::getHeader( hdr );
+  hdr.mVariantFieldCount = mVariantFieldCount;
+  hdr.mVariantTable      = mVariantTable;
   }
+
+
+
 
 QString SdPItemVariant::getIconName() const
   {
+  return QString(":/pic/iconComp.png");
   }
+
+
+
 
 quint64 SdPItemVariant::getAcceptedObjectsMask() const
   {
+  return 0;
   }

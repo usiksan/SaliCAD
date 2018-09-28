@@ -14,14 +14,14 @@ Description
 #ifndef SDPITEMCOMPONENT_H
 #define SDPITEMCOMPONENT_H
 
-#include "SdProjectItem.h"
+#include "SdPItemVariant.h"
 #include "SdPartVariant.h"
 #include "SdSection.h"
 
 #define SD_TYPE_COMPONENT "Comp"
 
 
-class SdPItemComponent : public SdProjectItem
+class SdPItemComponent : public SdPItemVariant
   {
   public:
     SdPItemComponent();

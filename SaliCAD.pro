@@ -255,7 +255,8 @@ SOURCES += \
     master/SdDMasterPartDoubleRound.cpp \
     master/SdDMasterPartQuadSide.cpp \
     objects/SdPItemVariant.cpp \
-    windows/SdDVariantTable.cpp
+    windows/SdDVariantTable.cpp \
+    objects/SdUndoRecordStringList.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -507,7 +508,8 @@ HEADERS  += \
     master/SdDMasterPartDoubleRound.h \
     master/SdDMasterPartQuadSide.h \
     objects/SdPItemVariant.h \
-    windows/SdDVariantTable.h
+    windows/SdDVariantTable.h \
+    objects/SdUndoRecordStringList.h
 
 DISTFILES += \
     license.txt

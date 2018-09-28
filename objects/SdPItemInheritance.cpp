@@ -17,7 +17,7 @@ Description
 #include "SdTime2x.h"
 
 SdPItemInheritance::SdPItemInheritance() :
-  SdProjectItem()
+  SdPItemVariant()
   {
 
   }
@@ -75,7 +75,7 @@ quint64 SdPItemInheritance::getAcceptedObjectsMask() const
 
 void SdPItemInheritance::getHeader(SdLibraryHeader &hdr) const
   {
-  SdProjectItem::getHeader( hdr );
+  SdPItemVariant::getHeader( hdr );
   hdr.mInherit = mComponentUid;
   }
 
@@ -84,7 +84,7 @@ void SdPItemInheritance::getHeader(SdLibraryHeader &hdr) const
 
 void SdPItemInheritance::cloneFrom(const SdObject *src)
   {
-  SdProjectItem::cloneFrom( src );
+  SdPItemVariant::cloneFrom( src );
   const SdPItemInheritance *inh = dynamic_cast<const SdPItemInheritance*>(src);
   if( inh ) {
     mComponentUid   = inh->mComponentUid;
@@ -97,7 +97,7 @@ void SdPItemInheritance::cloneFrom(const SdObject *src)
 
 void SdPItemInheritance::writeObject(QJsonObject &obj) const
   {
-  SdProjectItem::writeObject( obj );
+  SdPItemVariant::writeObject( obj );
   obj.insert( QStringLiteral("CompUid"), mComponentUid );
   obj.insert( QStringLiteral("CompTitle"), mComponentTitle );
   }
@@ -107,7 +107,7 @@ void SdPItemInheritance::writeObject(QJsonObject &obj) const
 
 void SdPItemInheritance::readObject(SdObjectMap *map, const QJsonObject obj)
   {
-  SdProjectItem::readObject( map, obj );
+  SdPItemVariant::readObject( map, obj );
   mComponentUid   = obj.value( QStringLiteral("CompUid") ).toString();
   mComponentTitle = obj.value( QStringLiteral("CompTitle") ).toString();
   }

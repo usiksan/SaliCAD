@@ -72,6 +72,10 @@ class SdDVariantTable : public QDialog
 
     //Check if field present in variant table
     bool isVariantField( const QString field );
+
+    // QDialog interface
+  public slots:
+    virtual void accept() override;
   };
 
 #endif // SDDVARIANTTABLE_H

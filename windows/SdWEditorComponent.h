@@ -55,6 +55,7 @@ class SdWEditorComponent : public SdWEditor
     QPushButton          *mParamAddDefault;
     QPushButton          *mParamDelete;
     QPushButton          *mParamCopy;
+    QPushButton          *mParamVariant;
 
     SdStringMap           mPackNumbers;
     QSet<QString>         mDuplicateNumbers;
@@ -84,6 +85,7 @@ class SdWEditorComponent : public SdWEditor
     void paramAddDefault();
     void paramDelete();
     void paramCopy();
+    void paramVariant();
   private:
     void fillSections();
     void fillPart();
