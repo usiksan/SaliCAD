@@ -208,6 +208,9 @@ void SdDMasterPartDoubleSide::accept()
       addLine( pinRtop - i*topPinDistance,pinSizeY,  pinRtop - i*topPinDistance,pinSizeY - pinLen );
     }
 
+  //Draw inside part first pin indicator
+  addCircle( 0, pinLen + 500, 250 );
+
   //Add pins
   if( ui->mPlanar->isChecked() )
     setupSmdPin();

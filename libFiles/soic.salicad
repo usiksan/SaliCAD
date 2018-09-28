@@ -13,7 +13,7 @@
                         "x": 4370,
                         "y": 4905
                     },
-                    "id": "1d4b1f0",
+                    "id": "1918240",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -28,7 +28,7 @@
                         "x": 0,
                         "y": 1095
                     },
-                    "id": "1cd6130",
+                    "id": "1918370",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -43,7 +43,7 @@
                         "x": 1270,
                         "y": 1095
                     },
-                    "id": "1c31d10",
+                    "id": "1918430",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -58,7 +58,7 @@
                         "x": 2540,
                         "y": 1095
                     },
-                    "id": "1ce0ab0",
+                    "id": "1918540",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -73,7 +73,7 @@
                         "x": 3810,
                         "y": 1095
                     },
-                    "id": "1b915d0",
+                    "id": "19185d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -88,7 +88,7 @@
                         "x": 3810,
                         "y": 4905
                     },
-                    "id": "1ce16a0",
+                    "id": "1918690",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -103,7 +103,7 @@
                         "x": 2540,
                         "y": 4905
                     },
-                    "id": "1c0cf50",
+                    "id": "1918750",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -118,7 +118,7 @@
                         "x": 1270,
                         "y": 4905
                     },
-                    "id": "1829350",
+                    "id": "19188a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -133,7 +133,7 @@
                         "x": 0,
                         "y": 4905
                     },
-                    "id": "1ccaf00",
+                    "id": "1918960",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -170,7 +170,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "1c94340",
+                    "id": "1918a20",
                     "type": "PartPin"
                 },
                 {
@@ -204,7 +204,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "1d965a0",
+                    "id": "1918be0",
                     "type": "PartPin"
                 },
                 {
@@ -238,7 +238,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "1c36cf0",
+                    "id": "1918da0",
                     "type": "PartPin"
                 },
                 {
@@ -272,7 +272,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "1cefc20",
+                    "id": "1918f60",
                     "type": "PartPin"
                 },
                 {
@@ -306,7 +306,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "1cdbeb0",
+                    "id": "1919120",
                     "type": "PartPin"
                 },
                 {
@@ -340,7 +340,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "1c8bd80",
+                    "id": "19192e0",
                     "type": "PartPin"
                 },
                 {
@@ -374,7 +374,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "1c4a8b0",
+                    "id": "1919550",
                     "type": "PartPin"
                 },
                 {
@@ -408,7 +408,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "1c754b0",
+                    "id": "19196e0",
                     "type": "PartPin"
                 },
                 {
@@ -416,7 +416,7 @@
                         "x": 2000,
                         "y": 4125
                     },
-                    "id": "1cf24d0",
+                    "id": "19198a0",
                     "over": {
                         "h": 1098,
                         "w": 1637,
@@ -438,7 +438,7 @@
                         "x": 2000,
                         "y": 2375
                     },
-                    "id": "1ce18d0",
+                    "id": "19199a0",
                     "over": {
                         "h": 1098,
                         "w": 3046,
@@ -460,7 +460,7 @@
                         "x": 0,
                         "y": 1750
                     },
-                    "id": "1c9a3a0",
+                    "id": "19184f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -477,7 +477,7 @@
             "Parametrs": {
             },
             "Title": "soic-8 narrow",
-            "id": "1c94ed0",
+            "id": "19179c0",
             "type": "Part"
         },
         {
@@ -493,7 +493,7 @@
                         "x": 8155,
                         "y": 4905
                     },
-                    "id": "24beca0",
+                    "id": "1919c20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -508,7 +508,7 @@
                         "x": 0,
                         "y": 1095
                     },
-                    "id": "260df60",
+                    "id": "1919d50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -523,7 +523,7 @@
                         "x": 1270,
                         "y": 1095
                     },
-                    "id": "1cf8f70",
+                    "id": "1919e10",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -538,7 +538,7 @@
                         "x": 2540,
                         "y": 1095
                     },
-                    "id": "1cb22c0",
+                    "id": "1919f20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -553,7 +553,7 @@
                         "x": 3810,
                         "y": 1095
                     },
-                    "id": "1cd0a20",
+                    "id": "1919fb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -568,7 +568,7 @@
                         "x": 5080,
                         "y": 1095
                     },
-                    "id": "1d49c00",
+                    "id": "191a070",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -583,7 +583,7 @@
                         "x": 6350,
                         "y": 1095
                     },
-                    "id": "251cb20",
+                    "id": "191a130",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -598,7 +598,7 @@
                         "x": 7620,
                         "y": 1095
                     },
-                    "id": "2741e50",
+                    "id": "191a280",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -613,7 +613,7 @@
                         "x": 7620,
                         "y": 4905
                     },
-                    "id": "1d4ac20",
+                    "id": "191a340",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -628,7 +628,7 @@
                         "x": 6350,
                         "y": 4905
                     },
-                    "id": "268f940",
+                    "id": "191a400",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -643,7 +643,7 @@
                         "x": 5080,
                         "y": 4905
                     },
-                    "id": "1d09020",
+                    "id": "191a4c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -658,7 +658,7 @@
                         "x": 3810,
                         "y": 4905
                     },
-                    "id": "1ca5240",
+                    "id": "191a580",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -673,7 +673,7 @@
                         "x": 2540,
                         "y": 4905
                     },
-                    "id": "1cefba0",
+                    "id": "191a640",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -688,7 +688,7 @@
                         "x": 1270,
                         "y": 4905
                     },
-                    "id": "1d13340",
+                    "id": "191a700",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -703,7 +703,7 @@
                         "x": 0,
                         "y": 4905
                     },
-                    "id": "2622ae0",
+                    "id": "191a7c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -740,7 +740,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "1cfb680",
+                    "id": "191a990",
                     "type": "PartPin"
                 },
                 {
@@ -774,7 +774,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "1ccc670",
+                    "id": "191ab50",
                     "type": "PartPin"
                 },
                 {
@@ -808,7 +808,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "1cf2640",
+                    "id": "191ad10",
                     "type": "PartPin"
                 },
                 {
@@ -842,7 +842,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "1cf7520",
+                    "id": "191aed0",
                     "type": "PartPin"
                 },
                 {
@@ -876,7 +876,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "2743df0",
+                    "id": "191b090",
                     "type": "PartPin"
                 },
                 {
@@ -910,7 +910,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "1ccafc0",
+                    "id": "191b250",
                     "type": "PartPin"
                 },
                 {
@@ -944,7 +944,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "26c2e10",
+                    "id": "191b410",
                     "type": "PartPin"
                 },
                 {
@@ -978,7 +978,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "1d00560",
+                    "id": "191b5d0",
                     "type": "PartPin"
                 },
                 {
@@ -1012,7 +1012,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "26c2c50",
+                    "id": "191b790",
                     "type": "PartPin"
                 },
                 {
@@ -1046,7 +1046,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "1c5e530",
+                    "id": "191b950",
                     "type": "PartPin"
                 },
                 {
@@ -1080,7 +1080,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "1d177c0",
+                    "id": "191bb10",
                     "type": "PartPin"
                 },
                 {
@@ -1114,7 +1114,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "1ba5a80",
+                    "id": "191bcd0",
                     "type": "PartPin"
                 },
                 {
@@ -1148,7 +1148,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "1cea120",
+                    "id": "191be90",
                     "type": "PartPin"
                 },
                 {
@@ -1182,7 +1182,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "1924ce0",
+                    "id": "191c050",
                     "type": "PartPin"
                 },
                 {
@@ -1190,7 +1190,7 @@
                         "x": 3750,
                         "y": 4125
                     },
-                    "id": "1cfb340",
+                    "id": "191c210",
                     "over": {
                         "h": 1093,
                         "w": 1631,
@@ -1212,7 +1212,7 @@
                         "x": 3875,
                         "y": 2250
                     },
-                    "id": "1c9cef0",
+                    "id": "191c310",
                     "over": {
                         "h": 1093,
                         "w": 3034,
@@ -1234,7 +1234,7 @@
                         "x": 0,
                         "y": 1625
                     },
-                    "id": "2563f80",
+                    "id": "1919ed0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1251,7 +1251,7 @@
             "Parametrs": {
             },
             "Title": "soic-14 narrow (part)",
-            "id": "1d88fa0",
+            "id": "1919b60",
             "type": "Part"
         },
         {
@@ -1267,7 +1267,7 @@
                         "x": 9410,
                         "y": 4905
                     },
-                    "id": "24bbdf0",
+                    "id": "191c620",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1282,7 +1282,7 @@
                         "x": 0,
                         "y": 1095
                     },
-                    "id": "26a8760",
+                    "id": "191c710",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1297,7 +1297,7 @@
                         "x": 1270,
                         "y": 1095
                     },
-                    "id": "26b56a0",
+                    "id": "191c7d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1312,7 +1312,7 @@
                         "x": 2540,
                         "y": 1095
                     },
-                    "id": "24c09b0",
+                    "id": "191c8e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1327,7 +1327,7 @@
                         "x": 3810,
                         "y": 1095
                     },
-                    "id": "25473f0",
+                    "id": "191c970",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1342,7 +1342,7 @@
                         "x": 5080,
                         "y": 1095
                     },
-                    "id": "2547140",
+                    "id": "191ca30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1357,7 +1357,7 @@
                         "x": 6350,
                         "y": 1095
                     },
-                    "id": "1c8bb90",
+                    "id": "191caf0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1372,7 +1372,7 @@
                         "x": 7620,
                         "y": 1095
                     },
-                    "id": "25c8750",
+                    "id": "191cc40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1387,7 +1387,7 @@
                         "x": 8890,
                         "y": 1095
                     },
-                    "id": "1cee0d0",
+                    "id": "191cd00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1402,7 +1402,7 @@
                         "x": 8890,
                         "y": 4905
                     },
-                    "id": "254ed70",
+                    "id": "191cdc0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1417,7 +1417,7 @@
                         "x": 7620,
                         "y": 4905
                     },
-                    "id": "1946880",
+                    "id": "191ce80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1432,7 +1432,7 @@
                         "x": 6350,
                         "y": 4905
                     },
-                    "id": "2442f50",
+                    "id": "191cf40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1447,7 +1447,7 @@
                         "x": 5080,
                         "y": 4905
                     },
-                    "id": "263a030",
+                    "id": "191d000",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1462,7 +1462,7 @@
                         "x": 3810,
                         "y": 4905
                     },
-                    "id": "24aeff0",
+                    "id": "191d0c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1477,7 +1477,7 @@
                         "x": 2540,
                         "y": 4905
                     },
-                    "id": "26a6870",
+                    "id": "191d180",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1492,7 +1492,7 @@
                         "x": 1270,
                         "y": 4905
                     },
-                    "id": "25bfe30",
+                    "id": "191cbb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1507,7 +1507,7 @@
                         "x": 0,
                         "y": 4905
                     },
-                    "id": "19851d0",
+                    "id": "191d380",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1544,7 +1544,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "26b4710",
+                    "id": "191d440",
                     "type": "PartPin"
                 },
                 {
@@ -1578,7 +1578,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "25a2f00",
+                    "id": "191d600",
                     "type": "PartPin"
                 },
                 {
@@ -1612,7 +1612,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "273f0a0",
+                    "id": "191d7c0",
                     "type": "PartPin"
                 },
                 {
@@ -1646,7 +1646,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "2562800",
+                    "id": "191d980",
                     "type": "PartPin"
                 },
                 {
@@ -1680,7 +1680,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "24c8160",
+                    "id": "191db40",
                     "type": "PartPin"
                 },
                 {
@@ -1714,7 +1714,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "265c580",
+                    "id": "191dd00",
                     "type": "PartPin"
                 },
                 {
@@ -1748,7 +1748,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "26b2320",
+                    "id": "191dec0",
                     "type": "PartPin"
                 },
                 {
@@ -1782,7 +1782,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "26ab9a0",
+                    "id": "191e080",
                     "type": "PartPin"
                 },
                 {
@@ -1816,7 +1816,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "2671950",
+                    "id": "191e240",
                     "type": "PartPin"
                 },
                 {
@@ -1850,7 +1850,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "250c830",
+                    "id": "191e400",
                     "type": "PartPin"
                 },
                 {
@@ -1884,7 +1884,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "2741eb0",
+                    "id": "191e5c0",
                     "type": "PartPin"
                 },
                 {
@@ -1918,7 +1918,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "255c5b0",
+                    "id": "191e780",
                     "type": "PartPin"
                 },
                 {
@@ -1952,7 +1952,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "19504a0",
+                    "id": "191e940",
                     "type": "PartPin"
                 },
                 {
@@ -1986,7 +1986,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "18f12f0",
+                    "id": "191eb00",
                     "type": "PartPin"
                 },
                 {
@@ -2020,7 +2020,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "24d5800",
+                    "id": "191ee70",
                     "type": "PartPin"
                 },
                 {
@@ -2054,7 +2054,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "196d410",
+                    "id": "191f030",
                     "type": "PartPin"
                 },
                 {
@@ -2062,7 +2062,7 @@
                         "x": 4625,
                         "y": 4125
                     },
-                    "id": "25cdd00",
+                    "id": "191f1f0",
                     "over": {
                         "h": 1091,
                         "w": 1631,
@@ -2084,7 +2084,7 @@
                         "x": 4750,
                         "y": 2125
                     },
-                    "id": "2675f50",
+                    "id": "191f2f0",
                     "over": {
                         "h": 1091,
                         "w": 3041,
@@ -2106,7 +2106,7 @@
                         "x": 0,
                         "y": 1500
                     },
-                    "id": "1939000",
+                    "id": "191c890",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2123,7 +2123,7 @@
             "Parametrs": {
             },
             "Title": "soic-16 narrow (part)",
-            "id": "2511f90",
+            "id": "191a900",
             "type": "Part"
         },
         {
@@ -2139,7 +2139,7 @@
                         "x": 4545,
                         "y": 6590
                     },
-                    "id": "1d8e570",
+                    "id": "191f5b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2154,7 +2154,7 @@
                         "x": 0,
                         "y": 1310
                     },
-                    "id": "2573f90",
+                    "id": "191f6a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2169,7 +2169,7 @@
                         "x": 1270,
                         "y": 1310
                     },
-                    "id": "194cda0",
+                    "id": "191f760",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2184,7 +2184,7 @@
                         "x": 2540,
                         "y": 1310
                     },
-                    "id": "253bde0",
+                    "id": "191f870",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2199,7 +2199,7 @@
                         "x": 3810,
                         "y": 1310
                     },
-                    "id": "26617a0",
+                    "id": "191f900",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2214,7 +2214,7 @@
                         "x": 3810,
                         "y": 6590
                     },
-                    "id": "1d91c30",
+                    "id": "191f9c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2229,7 +2229,7 @@
                         "x": 2540,
                         "y": 6590
                     },
-                    "id": "251ccc0",
+                    "id": "191fa80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2244,7 +2244,7 @@
                         "x": 1270,
                         "y": 6590
                     },
-                    "id": "25ded00",
+                    "id": "191fbd0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2259,7 +2259,7 @@
                         "x": 0,
                         "y": 6590
                     },
-                    "id": "2697c50",
+                    "id": "191fc90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2296,7 +2296,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "269fe20",
+                    "id": "191fd50",
                     "type": "PartPin"
                 },
                 {
@@ -2330,7 +2330,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "193ae50",
+                    "id": "191ff10",
                     "type": "PartPin"
                 },
                 {
@@ -2364,7 +2364,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "26a9af0",
+                    "id": "19200d0",
                     "type": "PartPin"
                 },
                 {
@@ -2398,7 +2398,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4bot",
                     "Stratum": "1",
-                    "id": "267eef0",
+                    "id": "1920290",
                     "type": "PartPin"
                 },
                 {
@@ -2432,7 +2432,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "24c2330",
+                    "id": "1920450",
                     "type": "PartPin"
                 },
                 {
@@ -2466,7 +2466,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "2676580",
+                    "id": "1920610",
                     "type": "PartPin"
                 },
                 {
@@ -2500,7 +2500,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "196b360",
+                    "id": "1920880",
                     "type": "PartPin"
                 },
                 {
@@ -2534,7 +2534,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "soic0.4top",
                     "Stratum": "1",
-                    "id": "2665000",
+                    "id": "1920a10",
                     "type": "PartPin"
                 },
                 {
@@ -2542,7 +2542,7 @@
                         "x": 1875,
                         "y": 5625
                     },
-                    "id": "240a990",
+                    "id": "1920bd0",
                     "over": {
                         "h": 1094,
                         "w": 1641,
@@ -2564,7 +2564,7 @@
                         "x": 2000,
                         "y": 2500
                     },
-                    "id": "2628f00",
+                    "id": "1920cd0",
                     "over": {
                         "h": 1094,
                         "w": 3037,
@@ -2586,7 +2586,7 @@
                         "x": 0,
                         "y": 1750
                     },
-                    "id": "1a5f510",
+                    "id": "191f820",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2603,12 +2603,2922 @@
             "Parametrs": {
             },
             "Title": "soic-8 wide (part)",
-            "id": "1cb2580",
+            "id": "191f4f0",
+            "type": "Part"
+        },
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": -725,
+                        "y": 1340
+                    },
+                    "b": {
+                        "x": 9615,
+                        "y": 8960
+                    },
+                    "id": "191cd60",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 0,
+                        "y": 1340
+                    },
+                    "id": "191cb50",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1270,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 1270,
+                        "y": 1340
+                    },
+                    "id": "191bab0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2540,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 2540,
+                        "y": 1340
+                    },
+                    "id": "191fa20",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3810,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 3810,
+                        "y": 1340
+                    },
+                    "id": "1910f30",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 5080,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 5080,
+                        "y": 1340
+                    },
+                    "id": "18f9990",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 6350,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 6350,
+                        "y": 1340
+                    },
+                    "id": "18f9f00",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 7620,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 7620,
+                        "y": 1340
+                    },
+                    "id": "18a78a0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 8890,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 8890,
+                        "y": 1340
+                    },
+                    "id": "1a3b500",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 8890,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 8890,
+                        "y": 8960
+                    },
+                    "id": "1882f70",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 7620,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 7620,
+                        "y": 8960
+                    },
+                    "id": "19dd9a0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 6350,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 6350,
+                        "y": 8960
+                    },
+                    "id": "191a5e0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 5080,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 5080,
+                        "y": 8960
+                    },
+                    "id": "18a8ee0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3810,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 3810,
+                        "y": 8960
+                    },
+                    "id": "19e9740",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2540,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 2540,
+                        "y": 8960
+                    },
+                    "id": "191eaa0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1270,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 1270,
+                        "y": 8960
+                    },
+                    "id": "18a4810",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 0,
+                        "y": 8960
+                    },
+                    "id": "19e6b70",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "center": {
+                        "x": 0,
+                        "y": 1840
+                    },
+                    "id": "1a32580",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "radius": 250,
+                    "type": "Circle"
+                },
+                {
+                    "NamePos": {
+                        "x": 0,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "1",
+                    "NumberPos": {
+                        "x": -250,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "3fffffff",
+                    "id": "1678020",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 1270,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "2",
+                    "NumberPos": {
+                        "x": 1020,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 1270,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "3fffffff",
+                    "id": "18b4940",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 2540,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "3",
+                    "NumberPos": {
+                        "x": 2290,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 2540,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "3fffffff",
+                    "id": "19099f0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 3810,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "4",
+                    "NumberPos": {
+                        "x": 3560,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3810,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "3fffffff",
+                    "id": "19230f0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 5080,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "5",
+                    "NumberPos": {
+                        "x": 4830,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5080,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "3fffffff",
+                    "id": "19093a0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 6350,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "6",
+                    "NumberPos": {
+                        "x": 6100,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 6350,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "3fffffff",
+                    "id": "190a4a0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 7620,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "7",
+                    "NumberPos": {
+                        "x": 7370,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 7620,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "3fffffff",
+                    "id": "1907710",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 8890,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "8",
+                    "NumberPos": {
+                        "x": 8640,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 8890,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "3fffffff",
+                    "id": "19228b0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 8890,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "9",
+                    "NumberPos": {
+                        "x": 8640,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 8890,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "3fffffff",
+                    "id": "196c180",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 7620,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "10",
+                    "NumberPos": {
+                        "x": 7370,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 7620,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "3fffffff",
+                    "id": "198ead0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 6350,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "11",
+                    "NumberPos": {
+                        "x": 6100,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 6350,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "3fffffff",
+                    "id": "18fb450",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 5080,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "12",
+                    "NumberPos": {
+                        "x": 4830,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5080,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "3fffffff",
+                    "id": "19050c0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 3810,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "13",
+                    "NumberPos": {
+                        "x": 3560,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3810,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "3fffffff",
+                    "id": "18c2120",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 2540,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "14",
+                    "NumberPos": {
+                        "x": 2290,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 2540,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "3fffffff",
+                    "id": "18ad700",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 1270,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "15",
+                    "NumberPos": {
+                        "x": 1020,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 1270,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "3fffffff",
+                    "id": "196ebb0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 0,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "16",
+                    "NumberPos": {
+                        "x": -250,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "3fffffff",
+                    "id": "18e4bf0",
+                    "type": "PartPin"
+                },
+                {
+                    "Origin": {
+                        "x": 4375,
+                        "y": 7500
+                    },
+                    "id": "18e4ee0",
+                    "over": {
+                        "h": 1103,
+                        "w": 1631,
+                        "x": 3574,
+                        "y": 6938
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 4375,
+                        "y": 3375
+                    },
+                    "id": "1900370",
+                    "over": {
+                        "h": 1103,
+                        "w": 3044,
+                        "x": 2859,
+                        "y": 2822
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                }
+            ],
+            "Created": 23378450,
+            "Edit enable": true,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+            },
+            "Title": "soic-16 wide (part)",
+            "id": "196e7e0",
+            "type": "Part"
+        },
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": -710,
+                        "y": 1340
+                    },
+                    "b": {
+                        "x": 10870,
+                        "y": 8960
+                    },
+                    "id": "1a3b830",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 0,
+                        "y": 1340
+                    },
+                    "id": "1a248e0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1270,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 1270,
+                        "y": 1340
+                    },
+                    "id": "1a22180",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2540,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 2540,
+                        "y": 1340
+                    },
+                    "id": "1946260",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3810,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 3810,
+                        "y": 1340
+                    },
+                    "id": "193ce20",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 5080,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 5080,
+                        "y": 1340
+                    },
+                    "id": "1a3b590",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 6350,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 6350,
+                        "y": 1340
+                    },
+                    "id": "1806be0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 7620,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 7620,
+                        "y": 1340
+                    },
+                    "id": "19b6350",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 8890,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 8890,
+                        "y": 1340
+                    },
+                    "id": "18fd290",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 10160,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 10160,
+                        "y": 1340
+                    },
+                    "id": "192ce60",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 10160,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 10160,
+                        "y": 8960
+                    },
+                    "id": "18fd470",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 8890,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 8890,
+                        "y": 8960
+                    },
+                    "id": "19e7420",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 7620,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 7620,
+                        "y": 8960
+                    },
+                    "id": "18fd1f0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 6350,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 6350,
+                        "y": 8960
+                    },
+                    "id": "1998040",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 5080,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 5080,
+                        "y": 8960
+                    },
+                    "id": "19936a0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3810,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 3810,
+                        "y": 8960
+                    },
+                    "id": "197edb0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2540,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 2540,
+                        "y": 8960
+                    },
+                    "id": "16dccd0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1270,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 1270,
+                        "y": 8960
+                    },
+                    "id": "1946380",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 0,
+                        "y": 8960
+                    },
+                    "id": "19e5530",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "center": {
+                        "x": 0,
+                        "y": 1840
+                    },
+                    "id": "192cdb0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "radius": 250,
+                    "type": "Circle"
+                },
+                {
+                    "NamePos": {
+                        "x": 0,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "1",
+                    "NumberPos": {
+                        "x": -250,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "1966bf0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 1270,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "2",
+                    "NumberPos": {
+                        "x": 1020,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 1270,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "197ca40",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 2540,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "3",
+                    "NumberPos": {
+                        "x": 2290,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 2540,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "19938b0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 3810,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "4",
+                    "NumberPos": {
+                        "x": 3560,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3810,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "192b9a0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 5080,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "5",
+                    "NumberPos": {
+                        "x": 4830,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5080,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "1a557a0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 6350,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "6",
+                    "NumberPos": {
+                        "x": 6100,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 6350,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "18ada90",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 7620,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "7",
+                    "NumberPos": {
+                        "x": 7370,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 7620,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "19473d0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 8890,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "8",
+                    "NumberPos": {
+                        "x": 8640,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 8890,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "1954fa0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 10160,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "9",
+                    "NumberPos": {
+                        "x": 9910,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 10160,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "197d490",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 10160,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "10",
+                    "NumberPos": {
+                        "x": 9910,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 10160,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "1991420",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 8890,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "11",
+                    "NumberPos": {
+                        "x": 8640,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 8890,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "1966980",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 7620,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "12",
+                    "NumberPos": {
+                        "x": 7370,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 7620,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "18a5990",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 6350,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "13",
+                    "NumberPos": {
+                        "x": 6100,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 6350,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "194ad50",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 5080,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "14",
+                    "NumberPos": {
+                        "x": 4830,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5080,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "1968fa0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 3810,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "15",
+                    "NumberPos": {
+                        "x": 3560,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3810,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "1953eb0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 2540,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "16",
+                    "NumberPos": {
+                        "x": 2290,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 2540,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "19d6ab0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 1270,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "17",
+                    "NumberPos": {
+                        "x": 1020,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 1270,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "1971320",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 0,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "18",
+                    "NumberPos": {
+                        "x": -250,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "1a4fdc0",
+                    "type": "PartPin"
+                },
+                {
+                    "Origin": {
+                        "x": 5500,
+                        "y": 7500
+                    },
+                    "id": "19b8140",
+                    "over": {
+                        "h": 1102,
+                        "w": 1637,
+                        "x": 4692,
+                        "y": 6943
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 5375,
+                        "y": 3375
+                    },
+                    "id": "1905370",
+                    "over": {
+                        "h": 1102,
+                        "w": 3049,
+                        "x": 3857,
+                        "y": 2824
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                }
+            ],
+            "Created": 23378605,
+            "Edit enable": true,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+            },
+            "Title": "soic-18 wide (part)",
+            "id": "1a4a570",
+            "type": "Part"
+        },
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": -700,
+                        "y": 1340
+                    },
+                    "b": {
+                        "x": 12130,
+                        "y": 8960
+                    },
+                    "id": "19e6a50",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 0,
+                        "y": 1340
+                    },
+                    "id": "1993780",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1270,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 1270,
+                        "y": 1340
+                    },
+                    "id": "19d9ce0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2540,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 2540,
+                        "y": 1340
+                    },
+                    "id": "1a378d0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3810,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 3810,
+                        "y": 1340
+                    },
+                    "id": "19e7480",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 5080,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 5080,
+                        "y": 1340
+                    },
+                    "id": "1992200",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 6350,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 6350,
+                        "y": 1340
+                    },
+                    "id": "1998d10",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 7620,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 7620,
+                        "y": 1340
+                    },
+                    "id": "1807050",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 8890,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 8890,
+                        "y": 1340
+                    },
+                    "id": "1a223e0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 10160,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 10160,
+                        "y": 1340
+                    },
+                    "id": "1968620",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 11430,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 11430,
+                        "y": 1340
+                    },
+                    "id": "267bb50",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 11430,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 11430,
+                        "y": 8960
+                    },
+                    "id": "267b7d0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 10160,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 10160,
+                        "y": 8960
+                    },
+                    "id": "193cce0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 8890,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 8890,
+                        "y": 8960
+                    },
+                    "id": "19d6a30",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 7620,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 7620,
+                        "y": 8960
+                    },
+                    "id": "198ee50",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 6350,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 6350,
+                        "y": 8960
+                    },
+                    "id": "176a6e0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 5080,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 5080,
+                        "y": 8960
+                    },
+                    "id": "194af00",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3810,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 3810,
+                        "y": 8960
+                    },
+                    "id": "196e560",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2540,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 2540,
+                        "y": 8960
+                    },
+                    "id": "263a550",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1270,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 1270,
+                        "y": 8960
+                    },
+                    "id": "19990e0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 10300
+                    },
+                    "b": {
+                        "x": 0,
+                        "y": 8960
+                    },
+                    "id": "192d080",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "center": {
+                        "x": 0,
+                        "y": 1840
+                    },
+                    "id": "193f2a0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "radius": 250,
+                    "type": "Circle"
+                },
+                {
+                    "NamePos": {
+                        "x": 0,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "1",
+                    "NumberPos": {
+                        "x": -250,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "1933680",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 1270,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "2",
+                    "NumberPos": {
+                        "x": 1020,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 1270,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "1a27160",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 2540,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "3",
+                    "NumberPos": {
+                        "x": 2290,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 2540,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "1a28f20",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 3810,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "4",
+                    "NumberPos": {
+                        "x": 3560,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3810,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "2637cf0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 5080,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "5",
+                    "NumberPos": {
+                        "x": 4830,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5080,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "1a3b620",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 6350,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "6",
+                    "NumberPos": {
+                        "x": 6100,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 6350,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "194ed60",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 7620,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "7",
+                    "NumberPos": {
+                        "x": 7370,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 7620,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "1969140",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 8890,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "8",
+                    "NumberPos": {
+                        "x": 8640,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 8890,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "198e760",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 10160,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "9",
+                    "NumberPos": {
+                        "x": 9910,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 10160,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "18e4a40",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 11430,
+                        "y": 1340
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "10",
+                    "NumberPos": {
+                        "x": 11180,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 11430,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4bot",
+                    "Stratum": "1",
+                    "id": "1930550",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 11430,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "11",
+                    "NumberPos": {
+                        "x": 11180,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 11430,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "1a3c030",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 10160,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "12",
+                    "NumberPos": {
+                        "x": 9910,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 10160,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "26796d0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 8890,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "13",
+                    "NumberPos": {
+                        "x": 8640,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 8890,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "19d7a80",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 7620,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "14",
+                    "NumberPos": {
+                        "x": 7370,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 7620,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "194f000",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 6350,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "15",
+                    "NumberPos": {
+                        "x": 6100,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 6350,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "18efdd0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 5080,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "16",
+                    "NumberPos": {
+                        "x": 4830,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5080,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "18dd6c0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 3810,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "17",
+                    "NumberPos": {
+                        "x": 3560,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3810,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "1a52780",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 2540,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "18",
+                    "NumberPos": {
+                        "x": 2290,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 2540,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "1a3f1f0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 1270,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "19",
+                    "NumberPos": {
+                        "x": 1020,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 1270,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "18efbc0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 0,
+                        "y": 8960
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "20",
+                    "NumberPos": {
+                        "x": -250,
+                        "y": 10300
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 10300
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "soic0.4top",
+                    "Stratum": "1",
+                    "id": "19e7be0",
+                    "type": "PartPin"
+                },
+                {
+                    "Origin": {
+                        "x": 5625,
+                        "y": 7500
+                    },
+                    "id": "18f9220",
+                    "over": {
+                        "h": 1104,
+                        "w": 1628,
+                        "x": 4827,
+                        "y": 6939
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 5625,
+                        "y": 3750
+                    },
+                    "id": "18ff580",
+                    "over": {
+                        "h": 1104,
+                        "w": 3031,
+                        "x": 4116,
+                        "y": 3197
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                }
+            ],
+            "Created": 23378741,
+            "Edit enable": true,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+            },
+            "Title": "soic-20 wide (part)",
+            "id": "18ec3e0",
             "type": "Part"
         }
     ],
     "Parametrs": {
     },
-    "id": "1c891a0",
+    "id": "1916d10",
     "type": "Project"
 }

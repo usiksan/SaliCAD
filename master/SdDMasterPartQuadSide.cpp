@@ -308,6 +308,9 @@ void SdDMasterPartQuadSide::accept()
   //Draw part
   addRect( leftBody, topBody, rightBody, bottomBody );
 
+  //Draw inside part first pin indicator
+  addCircle( leftBody + 500, 0, 250 );
+
   //Draw pins
   if( pinLenX > 0 ) {
     //Left pins
