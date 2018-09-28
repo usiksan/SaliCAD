@@ -18,6 +18,7 @@ Description
 #include "SdDGetObject.h"
 #include "SdDParamEditor.h"
 #include "SdDParamDefault.h"
+#include "SdDVariantTable.h"
 #include "SdWCommand.h"
 #include "objects/SdProject.h"
 #include "objects/SdPartVariant.h"
@@ -99,10 +100,12 @@ SdWEditorInheritance::SdWEditorInheritance(SdPItemInheritance *inh, QWidget *par
         vbox->addWidget( mParamAddDefault = new QPushButton( tr("Add defaults")) );
         vbox->addWidget( mParamCopy = new QPushButton( tr("Copy param")) );
         vbox->addWidget( mParamDelete = new QPushButton( tr("Delete param")) );
+        vbox->addWidget( mParamVariant = new QPushButton( tr("Variant table...")) );
       lay->addLayout( vbox );
     root->addLayout( lay );
 
   setLayout( root );
+  connect( mParamVariant, &QPushButton::clicked, this, &SdWEditorInheritance::paramVariant );
   if( mInheritance->isEditEnable() ) {
     //Connect signals when edit enabled
     connect( mComponentSelect, &QPushButton::clicked, this, &SdWEditorInheritance::componentSelect );
@@ -310,6 +313,16 @@ void SdWEditorInheritance::paramCopy()
     dirtyProject();
     fillParams();
     }
+  }
+
+
+
+
+
+void SdWEditorInheritance::paramVariant()
+  {
+  SdDVariantTable var( mInheritance, mInheritance->isEditEnable(), this );
+  var.exec();
   }
 
 

@@ -47,6 +47,7 @@ class SdWEditorInheritance : public SdWEditor
     QPushButton          *mParamAddDefault;
     QPushButton          *mParamDelete;
     QPushButton          *mParamCopy;
+    QPushButton          *mParamVariant;
   public:
     SdWEditorInheritance(SdPItemInheritance *inh, QWidget *parent);
     ~SdWEditorInheritance() override;
@@ -70,6 +71,7 @@ class SdWEditorInheritance : public SdWEditor
     void paramAddDefault();
     void paramDelete();
     void paramCopy();
+    void paramVariant();
 
   private:
     void fillComponent();
