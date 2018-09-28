@@ -68,6 +68,9 @@ SdDMasterPartQuadSide::SdDMasterPartQuadSide(SdProjectItem *item, QWidget *paren
   ui->mTopPinOffsetX->setText( sdEnvir->toPhisPcb(sTopPinOffsetX) );
   ui->mTopPinType->setText( sTopPinType );
 
+  //By default - planar pins
+  ui->mPlanar->setChecked(true);
+
   onEditChanged( QString() );
 
   connect( ui->mBodySizeX, &QLineEdit::textEdited, this, &SdDMasterPartQuadSide::onEditChanged );
@@ -265,6 +268,7 @@ void SdDMasterPartQuadSide::drawPart(SdIllustrator &il)
 //When accept we build part with current params
 void SdDMasterPartQuadSide::accept()
   {
+  mItem->clear();
   int bodySizeX = sBodySizeX = sdEnvir->fromPhisPcb( ui->mBodySizeX->text() );
   int bodySizeY = sBodySizeY = sdEnvir->fromPhisPcb( ui->mBodySizeY->text() );
   int pinSizeX  = sPinSizeX = sdEnvir->fromPhisPcb( ui->mPinSizeX->text() );

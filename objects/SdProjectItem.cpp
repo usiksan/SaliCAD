@@ -333,6 +333,16 @@ void SdProjectItem::setOrigin(const SdPoint org, SdUndo *undo)
 
 
 
+
+//Delete all item objects
+void SdProjectItem::clear()
+  {
+  deleteAll( getUndo() );
+  }
+
+
+
+
 //Set layers usage
 void SdProjectItem::setLayerUsage()
   {

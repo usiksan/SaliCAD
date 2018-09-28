@@ -80,6 +80,9 @@ class SdProjectItem : public SdContainer
     SdPoint                getOrigin() const { return mOrigin; }
     void                   setOrigin( const SdPoint org, SdUndo *undo );
 
+    //Delete all item objects
+    void                   clear();
+
     //Set layers usage
     virtual void           setLayerUsage();
 

@@ -308,6 +308,20 @@ void SdContainer::cloneFrom( const SdObject *src )
 
 
 
+void SdContainer::deleteAll(SdUndo *undo)
+  {
+  if( undo ) {
+    forEach( dctAll, [this,undo] (SdObject *obj) -> bool {
+      deleteChild( obj, undo );
+      return true;
+      });
+    }
+  else clearChildList();
+  }
+
+
+
+
 
 void SdContainer::draw(SdContext *context)
   {

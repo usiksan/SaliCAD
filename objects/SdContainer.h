@@ -53,6 +53,8 @@ class SdContainer : public SdObject
 
     virtual void cloneFrom( const SdObject *src) override;
 
+            void deleteAll( SdUndo *undo );
+
             void draw( SdContext *context );
 /*[] (SdObject *obj) -> bool {
 
