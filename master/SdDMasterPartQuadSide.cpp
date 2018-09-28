@@ -18,35 +18,55 @@ Description
 
 #include <QToolButton>
 
+
+static int
+sBodySizeX = 6000,
+sBodySizeY = 6000,
+sPinSizeX = 7000,
+sPinSizeY = 7000,
+sPinDistance = 1000,
+sLeftPinOffsetY = 0,
+sBottomPinOffsetX = 0,
+sRightPinOffsetY = 0,
+sTopPinOffsetX = 0;
+
+static QString
+sTotalPinCount("16"),
+sBottomLeftPinNumber("1"),
+sLeftPinType("tqfp0.3left"),
+sBottomPinType("tqfp0.3bot"),
+sRightPinType("tqfp0.3right"),
+sTopPinType("tqfp0.3top");
+
 SdDMasterPartQuadSide::SdDMasterPartQuadSide(SdProjectItem *item, QWidget *parent) :
   SdDMasterPart( item, parent ),
   ui(new Ui::SdDMasterPartQuadSide)
   {
   ui->setupUi(this);
 
-  ui->mBodySizeX->setText("6");
-  ui->mBodySizeY->setText("6");
-  ui->mPinSizeX->setText("7.0");
-  ui->mPinSizeY->setText("7.0");
-  ui->mPinDistance->setText("1.0");
-  ui->mTotalPinCount->setText("16");
-  ui->mLeftTopPinNumber->setText("1");
+  ui->mBodySizeX->setText( sdEnvir->toPhisPcb(sBodySizeX) );
+  ui->mBodySizeY->setText( sdEnvir->toPhisPcb(sBodySizeY) );
+  ui->mPinSizeX->setText( sdEnvir->toPhisPcb(sPinSizeX) );
+  ui->mPinSizeY->setText( sdEnvir->toPhisPcb(sPinSizeY) );
+  ui->mPinDistance->setText( sdEnvir->toPhisPcb(sPinDistance) );
+  ui->mTotalPinCount->setText( sTotalPinCount );
+  ui->mBottomLeftPinNumber->setText( sBottomLeftPinNumber );
 
   //Left side
-  ui->mLeftPinOffsetY->setText("0");
-  ui->mLeftPinType->setText("pr2.0x0.6");
+  ui->mLeftPinOffsetY->setText( sdEnvir->toPhisPcb(sLeftPinOffsetY) );
+  ui->mLeftPinType->setText( sLeftPinType );
 
   //Bottom side
-  ui->mBottomPinOffsetX->setText("0");
-  ui->mBottomPinType->setText("pr0.6x2.0");
+  ui->mBottomPinOffsetX->setText( sdEnvir->toPhisPcb(sBottomPinOffsetX) );
+  ui->mBottomPinType->setText( sBottomPinType );
 
   //Right side
-  ui->mRightPinOffsetY->setText("0");
-  ui->mRightPinType->setText("pr2.0x0.6");
+  ui->mRightPinOffsetY->setText( sdEnvir->toPhisPcb(sRightPinOffsetY) );
+  ui->mRightPinType->setText( sRightPinType );
 
   //Top side
-  ui->mTopPinOffsetX->setText("0");
-  ui->mTopPinType->setText("pr0.6x2.0");
+  ui->mTopPinOffsetX->setText( sdEnvir->toPhisPcb(sTopPinOffsetX) );
+  ui->mTopPinType->setText( sTopPinType );
 
   onEditChanged( QString() );
 
@@ -245,44 +265,45 @@ void SdDMasterPartQuadSide::drawPart(SdIllustrator &il)
 //When accept we build part with current params
 void SdDMasterPartQuadSide::accept()
   {
-  int bodySizeX = sdEnvir->fromPhisPcb( ui->mBodySizeX->text() );
-  int bodySizeY = sdEnvir->fromPhisPcb( ui->mBodySizeY->text() );
-  int pinSizeX  = sdEnvir->fromPhisPcb( ui->mPinSizeX->text() );
-  int pinSizeY  = sdEnvir->fromPhisPcb( ui->mPinSizeY->text() );
+  int bodySizeX = sBodySizeX = sdEnvir->fromPhisPcb( ui->mBodySizeX->text() );
+  int bodySizeY = sBodySizeY = sdEnvir->fromPhisPcb( ui->mBodySizeY->text() );
+  int pinSizeX  = sPinSizeX = sdEnvir->fromPhisPcb( ui->mPinSizeX->text() );
+  int pinSizeY  = sPinSizeY = sdEnvir->fromPhisPcb( ui->mPinSizeY->text() );
   int pinLenY = (pinSizeY - bodySizeY) / 2;
   int pinLenX = (pinSizeX - bodySizeX) / 2;
-  int pinDistance = sdEnvir->fromPhisPcb( ui->mPinDistance->text() );
-  int totalPinCount = ui->mTotalPinCount->text().toInt();
+  int pinDistance = sPinDistance = sdEnvir->fromPhisPcb( ui->mPinDistance->text() );
+  sTotalPinCount = ui->mTotalPinCount->text();
+  int totalPinCount = sTotalPinCount.toInt();
   if( totalPinCount < 4 ) totalPinCount = 4;
 
   //Left side
   int leftPinCount    = ui->mLeftPinCount->text().toInt();
-  int leftPinOffsetY  = sdEnvir->fromPhisPcb( ui->mLeftPinOffsetY->text() );
+  int leftPinOffsetY  = sLeftPinOffsetY = sdEnvir->fromPhisPcb( ui->mLeftPinOffsetY->text() );
   if( leftPinCount < 1 ) leftPinCount = totalPinCount / 4;
 
   //Bottom side
   int bottomPinCount    = ui->mBottomPinCount->text().toInt();
-  int bottomPinOffsetX  = sdEnvir->fromPhisPcb( ui->mBottomPinOffsetX->text() );
+  int bottomPinOffsetX  = sBottomPinOffsetX = sdEnvir->fromPhisPcb( ui->mBottomPinOffsetX->text() );
   if( bottomPinCount < 1 ) bottomPinCount = totalPinCount / 4;
 
   //Right side
   int rightPinCount    = ui->mRightPinCount->text().toInt();
-  int rightPinOffsetY  = sdEnvir->fromPhisPcb( ui->mRightPinOffsetY->text() );
+  int rightPinOffsetY  = sRightPinOffsetY = sdEnvir->fromPhisPcb( ui->mRightPinOffsetY->text() );
   if( rightPinCount < 1 ) rightPinCount = totalPinCount / 4;
 
   //Top side
   int topPinCount    = ui->mTopPinCount->text().toInt();
-  int topPinOffsetX  = sdEnvir->fromPhisPcb( ui->mTopPinOffsetX->text() );
+  int topPinOffsetX  = sTopPinOffsetX = sdEnvir->fromPhisPcb( ui->mTopPinOffsetX->text() );
   if( topPinCount < 1 ) topPinCount = totalPinCount / 4;
 
   totalPinCount = leftPinCount + bottomPinCount + rightPinCount + topPinCount;
   //Pin types
-  QString bottomPinType = ui->mBottomPinType->text();
-  QString topPinType = ui->mTopPinType->text();
+  QString bottomPinType = sBottomPinType = ui->mBottomPinType->text();
+  QString topPinType = sTopPinType = ui->mTopPinType->text();
   if( topPinType.isEmpty() )
     topPinType = bottomPinType;
-  QString leftPinType = ui->mLeftPinType->text();
-  QString rightPinType = ui->mRightPinType->text();
+  QString leftPinType = sLeftPinType = ui->mLeftPinType->text();
+  QString rightPinType = sRightPinType = ui->mRightPinType->text();
   if( rightPinType.isEmpty() )
     rightPinType = leftPinType;
 
@@ -341,22 +362,10 @@ void SdDMasterPartQuadSide::accept()
   mPinNameProp.mLayer.set( LID0_INVISIBLE );
   mPinNumberProp.mLayer.set( LID0_INVISIBLE );
 
-  int pinIndex = ui->mLeftTopPinNumber->text().toInt();
-  //Left pins
-  mPinNumberProp.mHorz = dhjLeft;
-  mPinNumberProp.mDir  = da0;
-  mPinNameProp.mHorz   = dhjLeft;
-  mPinNameProp.mDir    = da0;
-  for( int i = 0; i < leftPinCount; i++ ) {
-    SdPoint pinOrg(leftPin,-i*pinDistance);
-    SdPoint numberOrg(pinOrg.x(),pinOrg.y()+250);
-    SdPoint nameOrg(pinOrg.x()+pinLenX, pinOrg.y() );
-    addPin( pinOrg, leftPinType, numberOrg, QString::number(pinIndex), nameOrg );
-    pinIndex++;
-    if( pinIndex > totalPinCount )
-      pinIndex = 1;
-    }
+  int pinIndex = ui->mBottomLeftPinNumber->text().toInt();
   //Bottom pins
+  mPinNumberProp.mHorz = dhjLeft;
+  mPinNameProp.mHorz   = dhjLeft;
   mPinNumberProp.mDir  = da90;
   mPinNameProp.mDir    = da90;
   for( int i = 0; i < bottomPinCount; i++ ) {
@@ -390,6 +399,20 @@ void SdDMasterPartQuadSide::accept()
     SdPoint numberOrg(pinOrg.x()-250,pinOrg.y());
     SdPoint nameOrg(pinOrg.x(), pinOrg.y()-pinLenY );
     addPin( pinOrg, topPinType, numberOrg, QString::number(pinIndex), nameOrg );
+    pinIndex++;
+    if( pinIndex > totalPinCount )
+      pinIndex = 1;
+    }
+  //Left pins
+  mPinNumberProp.mHorz = dhjLeft;
+  mPinNumberProp.mDir  = da0;
+  mPinNameProp.mHorz   = dhjLeft;
+  mPinNameProp.mDir    = da0;
+  for( int i = 0; i < leftPinCount; i++ ) {
+    SdPoint pinOrg(leftPin,-i*pinDistance);
+    SdPoint numberOrg(pinOrg.x(),pinOrg.y()+250);
+    SdPoint nameOrg(pinOrg.x()+pinLenX, pinOrg.y() );
+    addPin( pinOrg, leftPinType, numberOrg, QString::number(pinIndex), nameOrg );
     pinIndex++;
     if( pinIndex > totalPinCount )
       pinIndex = 1;

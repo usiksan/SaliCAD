@@ -18,6 +18,23 @@ Description
 
 #include <QToolButton>
 
+static int
+sBodySizeX = 4600,
+sBodySizeY = 3000,
+sPinSizeY = 5000,
+sBottomPinDistance = 1000,
+sTopPinDistance = 1000,
+sLeftPinOffsetY = 0,
+sBottomPinOffsetX = 0,
+sRightPinOffsetY = 0,
+sTopPinOffsetX = 0;
+
+static QString
+sBottomPinCount("2"),
+sTopPinCount("2"),
+sBottomPinType("soic0.4bot"),
+sTopPinType("soic0.4top");
+
 
 SdDMasterPartDoubleSide::SdDMasterPartDoubleSide(SdProjectItem *item, QWidget *parent) :
   SdDMasterPart( item, parent ),
@@ -25,21 +42,21 @@ SdDMasterPartDoubleSide::SdDMasterPartDoubleSide(SdProjectItem *item, QWidget *p
   {
   ui->setupUi(this);
 
-  ui->mBodySizeY->setText("3.0");
-  ui->mBodySizeX->setText("4.6");
-  ui->mPinSizeY->setText("5.0");
+  ui->mBodySizeY->setText( sdEnvir->toPhisPcb(sBodySizeY) );
+  ui->mBodySizeX->setText( sdEnvir->toPhisPcb(sBodySizeX) );
+  ui->mPinSizeY->setText( sdEnvir->toPhisPcb(sPinSizeY) );
 
   //Left side
-  ui->mBottomPinCount->setText("2");
-  ui->mBottomPinDistance->setText("1.0");
-  ui->mBottomPinOffsetX->setText("0");
-  ui->mBottomPinType->setText("pr2.0x0.6");
+  ui->mBottomPinCount->setText( sBottomPinCount );
+  ui->mBottomPinDistance->setText( sdEnvir->toPhisPcb(sBottomPinDistance) );
+  ui->mBottomPinOffsetX->setText( sdEnvir->toPhisPcb(sBottomPinOffsetX) );
+  ui->mBottomPinType->setText( sBottomPinType );
 
   //Right side
-  ui->mTopPinCount->setText("2");
-  ui->mTopPinDistance->setText("1.0");
-  ui->mTopPinOffsetX->setText("0");
-  ui->mTopPinType->setText("pr2.0x0.6");
+  ui->mTopPinCount->setText( sTopPinCount );
+  ui->mTopPinDistance->setText( sdEnvir->toPhisPcb(sTopPinDistance) );
+  ui->mTopPinOffsetX->setText( sdEnvir->toPhisPcb(sTopPinOffsetX) );
+  ui->mTopPinType->setText( sTopPinType );
 
   onEditChanged( QString() );
 
@@ -158,22 +175,24 @@ void SdDMasterPartDoubleSide::drawPart(SdIllustrator &il)
 
 void SdDMasterPartDoubleSide::accept()
   {
-  int bodySizeX = sdEnvir->fromPhisPcb( ui->mBodySizeX->text() );
-  int bodySizeY = sdEnvir->fromPhisPcb( ui->mBodySizeY->text() );
-  int pinSizeY  = sdEnvir->fromPhisPcb( ui->mPinSizeY->text() );
+  int bodySizeX = sBodySizeX = sdEnvir->fromPhisPcb( ui->mBodySizeX->text() );
+  int bodySizeY = sBodySizeY = sdEnvir->fromPhisPcb( ui->mBodySizeY->text() );
+  int pinSizeY  = sPinSizeY = sdEnvir->fromPhisPcb( ui->mPinSizeY->text() );
   int pinLen = (pinSizeY - bodySizeY) / 2;
 
-  int bottomPinCount    = ui->mBottomPinCount->text().toInt();
-  int bottomPinDistance = sdEnvir->fromPhisPcb( ui->mBottomPinDistance->text() );
-  int bottomPinOffsetX  = sdEnvir->fromPhisPcb( ui->mBottomPinOffsetX->text() );
+  sBottomPinCount = ui->mBottomPinCount->text();
+  int bottomPinCount    = sBottomPinCount.toInt();
+  int bottomPinDistance = sBottomPinDistance = sdEnvir->fromPhisPcb( ui->mBottomPinDistance->text() );
+  int bottomPinOffsetX  = sBottomPinOffsetX = sdEnvir->fromPhisPcb( ui->mBottomPinOffsetX->text() );
 
-  int topPinCount    = ui->mTopPinCount->text().toInt();
-  int topPinDistance = sdEnvir->fromPhisPcb( ui->mTopPinDistance->text() );
-  int topPinOffsetX  = sdEnvir->fromPhisPcb( ui->mTopPinOffsetX->text() );
+  sTopPinCount = ui->mTopPinCount->text();
+  int topPinCount    = sTopPinCount.toInt();
+  int topPinDistance = sTopPinDistance = sdEnvir->fromPhisPcb( ui->mTopPinDistance->text() );
+  int topPinOffsetX  = sTopPinOffsetX = sdEnvir->fromPhisPcb( ui->mTopPinOffsetX->text() );
 
   //Pin types
-  QString topPinType = ui->mTopPinType->text();
-  QString bottomPinType = ui->mBottomPinType->text();
+  QString topPinType = sTopPinType = ui->mTopPinType->text();
+  QString bottomPinType = sBottomPinType = ui->mBottomPinType->text();
   if( topPinType.isEmpty() )
     topPinType = bottomPinType;
 

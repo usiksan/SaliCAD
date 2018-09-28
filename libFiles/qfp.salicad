@@ -1,0 +1,1468 @@
+{
+    "ChildList": [
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": 1945,
+                        "y": 1890
+                    },
+                    "b": {
+                        "x": 13345,
+                        "y": -9510
+                    },
+                    "id": "1e0c720",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 1945,
+                        "y": 0
+                    },
+                    "id": "1f1e1d0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": -1270
+                    },
+                    "b": {
+                        "x": 1945,
+                        "y": -1270
+                    },
+                    "id": "1ea50f0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": -2540
+                    },
+                    "b": {
+                        "x": 1945,
+                        "y": -2540
+                    },
+                    "id": "1f1d4d0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": -3810
+                    },
+                    "b": {
+                        "x": 1945,
+                        "y": -3810
+                    },
+                    "id": "1eb5e50",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": -5080
+                    },
+                    "b": {
+                        "x": 1945,
+                        "y": -5080
+                    },
+                    "id": "1eb5530",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": -6350
+                    },
+                    "b": {
+                        "x": 1945,
+                        "y": -6350
+                    },
+                    "id": "1e61450",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": -7620
+                    },
+                    "b": {
+                        "x": 1945,
+                        "y": -7620
+                    },
+                    "id": "1fd0160",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 13345,
+                        "y": -7620
+                    },
+                    "b": {
+                        "x": 15290,
+                        "y": -7620
+                    },
+                    "id": "1e63ba0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 13345,
+                        "y": -6350
+                    },
+                    "b": {
+                        "x": 15290,
+                        "y": -6350
+                    },
+                    "id": "1e2ba40",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 13345,
+                        "y": -5080
+                    },
+                    "b": {
+                        "x": 15290,
+                        "y": -5080
+                    },
+                    "id": "1eb6000",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 13345,
+                        "y": -3810
+                    },
+                    "b": {
+                        "x": 15290,
+                        "y": -3810
+                    },
+                    "id": "1e33160",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 13345,
+                        "y": -2540
+                    },
+                    "b": {
+                        "x": 15290,
+                        "y": -2540
+                    },
+                    "id": "1eaa880",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 13345,
+                        "y": -1270
+                    },
+                    "b": {
+                        "x": 15290,
+                        "y": -1270
+                    },
+                    "id": "1e03830",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 13345,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 15290,
+                        "y": 0
+                    },
+                    "id": "1e04b50",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3835,
+                        "y": -9510
+                    },
+                    "b": {
+                        "x": 3835,
+                        "y": -11455
+                    },
+                    "id": "1e13490",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 5105,
+                        "y": -9510
+                    },
+                    "b": {
+                        "x": 5105,
+                        "y": -11455
+                    },
+                    "id": "1bd5c60",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 6375,
+                        "y": -9510
+                    },
+                    "b": {
+                        "x": 6375,
+                        "y": -11455
+                    },
+                    "id": "1eacb50",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 7645,
+                        "y": -9510
+                    },
+                    "b": {
+                        "x": 7645,
+                        "y": -11455
+                    },
+                    "id": "1eacbb0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 8915,
+                        "y": -9510
+                    },
+                    "b": {
+                        "x": 8915,
+                        "y": -11455
+                    },
+                    "id": "1e9fb90",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 10185,
+                        "y": -9510
+                    },
+                    "b": {
+                        "x": 10185,
+                        "y": -11455
+                    },
+                    "id": "1e9fbf0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 11455,
+                        "y": -9510
+                    },
+                    "b": {
+                        "x": 11455,
+                        "y": -11455
+                    },
+                    "id": "1e60730",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 11455,
+                        "y": 1890
+                    },
+                    "b": {
+                        "x": 11455,
+                        "y": 3835
+                    },
+                    "id": "1e60790",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 10185,
+                        "y": 1890
+                    },
+                    "b": {
+                        "x": 10185,
+                        "y": 3835
+                    },
+                    "id": "1e04740",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 8915,
+                        "y": 1890
+                    },
+                    "b": {
+                        "x": 8915,
+                        "y": 3835
+                    },
+                    "id": "1e047a0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 7645,
+                        "y": 1890
+                    },
+                    "b": {
+                        "x": 7645,
+                        "y": 3835
+                    },
+                    "id": "1e43ea0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 6375,
+                        "y": 1890
+                    },
+                    "b": {
+                        "x": 6375,
+                        "y": 3835
+                    },
+                    "id": "1e43f00",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 5105,
+                        "y": 1890
+                    },
+                    "b": {
+                        "x": 5105,
+                        "y": 3835
+                    },
+                    "id": "1e28950",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3835,
+                        "y": 1890
+                    },
+                    "b": {
+                        "x": 3835,
+                        "y": 3835
+                    },
+                    "id": "1e289b0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "NamePos": {
+                        "x": 3835,
+                        "y": -9510
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "1",
+                    "NumberPos": {
+                        "x": 3585,
+                        "y": -11455
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3835,
+                        "y": -11455
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4bot",
+                    "Stratum": "1",
+                    "id": "1fd2050",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 5105,
+                        "y": -9510
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "2",
+                    "NumberPos": {
+                        "x": 4855,
+                        "y": -11455
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5105,
+                        "y": -11455
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4bot",
+                    "Stratum": "1",
+                    "id": "1e619b0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 6375,
+                        "y": -9510
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "3",
+                    "NumberPos": {
+                        "x": 6125,
+                        "y": -11455
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 6375,
+                        "y": -11455
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4bot",
+                    "Stratum": "1",
+                    "id": "1e615e0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 7645,
+                        "y": -9510
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "4",
+                    "NumberPos": {
+                        "x": 7395,
+                        "y": -11455
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 7645,
+                        "y": -11455
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4bot",
+                    "Stratum": "1",
+                    "id": "1fc5c70",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 8915,
+                        "y": -9510
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "5",
+                    "NumberPos": {
+                        "x": 8665,
+                        "y": -11455
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 8915,
+                        "y": -11455
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4bot",
+                    "Stratum": "1",
+                    "id": "1e0c4e0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 10185,
+                        "y": -9510
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "6",
+                    "NumberPos": {
+                        "x": 9935,
+                        "y": -11455
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 10185,
+                        "y": -11455
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4bot",
+                    "Stratum": "1",
+                    "id": "1f21950",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 11455,
+                        "y": -9510
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "7",
+                    "NumberPos": {
+                        "x": 11205,
+                        "y": -11455
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 11455,
+                        "y": -11455
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4bot",
+                    "Stratum": "1",
+                    "id": "1e06880",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 13345,
+                        "y": -7620
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "8",
+                    "NumberPos": {
+                        "x": 15290,
+                        "y": -7370
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 15290,
+                        "y": -7620
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4right",
+                    "Stratum": "1",
+                    "id": "1d62dc0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 13345,
+                        "y": -6350
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "9",
+                    "NumberPos": {
+                        "x": 15290,
+                        "y": -6100
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 15290,
+                        "y": -6350
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4right",
+                    "Stratum": "1",
+                    "id": "1d62eb0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 13345,
+                        "y": -5080
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "10",
+                    "NumberPos": {
+                        "x": 15290,
+                        "y": -4830
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 15290,
+                        "y": -5080
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4right",
+                    "Stratum": "1",
+                    "id": "1fd7300",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 13345,
+                        "y": -3810
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "11",
+                    "NumberPos": {
+                        "x": 15290,
+                        "y": -3560
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 15290,
+                        "y": -3810
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4right",
+                    "Stratum": "1",
+                    "id": "1fd73f0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 13345,
+                        "y": -2540
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "12",
+                    "NumberPos": {
+                        "x": 15290,
+                        "y": -2290
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 15290,
+                        "y": -2540
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4right",
+                    "Stratum": "1",
+                    "id": "1d62fc0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 13345,
+                        "y": -1270
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "13",
+                    "NumberPos": {
+                        "x": 15290,
+                        "y": -1020
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 15290,
+                        "y": -1270
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4right",
+                    "Stratum": "1",
+                    "id": "1d630b0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 13345,
+                        "y": 0
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "14",
+                    "NumberPos": {
+                        "x": 15290,
+                        "y": 250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 15290,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4right",
+                    "Stratum": "1",
+                    "id": "1f20e20",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 11455,
+                        "y": 1890
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "15",
+                    "NumberPos": {
+                        "x": 11205,
+                        "y": 3835
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 11455,
+                        "y": 3835
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4top",
+                    "Stratum": "1",
+                    "id": "1f20f10",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 10185,
+                        "y": 1890
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "16",
+                    "NumberPos": {
+                        "x": 9935,
+                        "y": 3835
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 10185,
+                        "y": 3835
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4top",
+                    "Stratum": "1",
+                    "id": "1f21000",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 8915,
+                        "y": 1890
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "17",
+                    "NumberPos": {
+                        "x": 8665,
+                        "y": 3835
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 8915,
+                        "y": 3835
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4top",
+                    "Stratum": "1",
+                    "id": "1d652f0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 7645,
+                        "y": 1890
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "18",
+                    "NumberPos": {
+                        "x": 7395,
+                        "y": 3835
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 7645,
+                        "y": 3835
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4top",
+                    "Stratum": "1",
+                    "id": "1d653e0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 6375,
+                        "y": 1890
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "19",
+                    "NumberPos": {
+                        "x": 6125,
+                        "y": 3835
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 6375,
+                        "y": 3835
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4top",
+                    "Stratum": "1",
+                    "id": "1d654d0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 5105,
+                        "y": 1890
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "20",
+                    "NumberPos": {
+                        "x": 4855,
+                        "y": 3835
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5105,
+                        "y": 3835
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4top",
+                    "Stratum": "1",
+                    "id": "1e65500",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 3835,
+                        "y": 1890
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "21",
+                    "NumberPos": {
+                        "x": 3585,
+                        "y": 3835
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3835,
+                        "y": 3835
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4top",
+                    "Stratum": "1",
+                    "id": "1e655f0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 1945,
+                        "y": 0
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "22",
+                    "NumberPos": {
+                        "x": 0,
+                        "y": 250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4left",
+                    "Stratum": "1",
+                    "id": "1e656e0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 1945,
+                        "y": -1270
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "23",
+                    "NumberPos": {
+                        "x": 0,
+                        "y": -1020
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": -1270
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4left",
+                    "Stratum": "1",
+                    "id": "1e657d0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 1945,
+                        "y": -2540
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "24",
+                    "NumberPos": {
+                        "x": 0,
+                        "y": -2290
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": -2540
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4left",
+                    "Stratum": "1",
+                    "id": "1e658c0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 1945,
+                        "y": -3810
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "25",
+                    "NumberPos": {
+                        "x": 0,
+                        "y": -3560
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": -3810
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4left",
+                    "Stratum": "1",
+                    "id": "1e27ee0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 1945,
+                        "y": -5080
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "26",
+                    "NumberPos": {
+                        "x": 0,
+                        "y": -4830
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": -5080
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4left",
+                    "Stratum": "1",
+                    "id": "1e27fd0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 1945,
+                        "y": -6350
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "27",
+                    "NumberPos": {
+                        "x": 0,
+                        "y": -6100
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": -6350
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4left",
+                    "Stratum": "1",
+                    "id": "1e280c0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 1945,
+                        "y": -7620
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "28",
+                    "NumberPos": {
+                        "x": 0,
+                        "y": -7370
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": -7620
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "qfp0.4left",
+                    "Stratum": "1",
+                    "id": "1e281b0",
+                    "type": "PartPin"
+                },
+                {
+                    "Origin": {
+                        "x": 7645,
+                        "y": 5700
+                    },
+                    "id": "1e137f0",
+                    "over": {
+                        "h": 1083,
+                        "w": 1625,
+                        "x": 6829,
+                        "y": 5156
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 7645,
+                        "y": -11955
+                    },
+                    "id": "1e07510",
+                    "over": {
+                        "h": 1083,
+                        "w": 3017,
+                        "x": 6132,
+                        "y": -12503
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                },
+                {
+                    "center": {
+                        "x": 2500,
+                        "y": -9000
+                    },
+                    "id": "1f22450",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "radius": 250,
+                    "type": "Circle"
+                }
+            ],
+            "Created": 23382427,
+            "Edit enable": true,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+            },
+            "Title": "qfp28 ceramic (part)",
+            "id": "1eb5ae0",
+            "type": "Part"
+        }
+    ],
+    "Parametrs": {
+    },
+    "id": "1e5de10",
+    "type": "Project"
+}
