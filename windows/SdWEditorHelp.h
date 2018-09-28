@@ -17,6 +17,8 @@ Description
 #include "SdWEditor.h"
 #include "SdWHelp.h"
 
+class SdWMain;
+
 class SdWEditorHelp : public SdWEditor
   {
     Q_OBJECT
@@ -26,6 +28,8 @@ class SdWEditorHelp : public SdWEditor
     SdWEditorHelp( QWidget *parent = nullptr);
 
     void helpTopic( const QString topic ) { mHelp->helpTopic(topic); }
+
+    void helpIntro( SdWMain *main ) { mHelp->helpIntro( main ); }
 
     // SdWEditor interface
   public:

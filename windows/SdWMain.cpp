@@ -138,6 +138,9 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
 
   //Clipboard notification
   connect( QGuiApplication::clipboard(), &QClipboard::changed, this, &SdWMain::onClipboardChanged );
+
+  //Show help intro
+  cmHelpIntro();
   }
 
 
@@ -569,6 +572,16 @@ void SdWMain::cmFileCloseAll()
   SdWCommand::barComp->setVisible(false);
   SdWCommand::barSheet->setVisible(false);
   SdWCommand::barPcb->setVisible(false);
+  }
+
+
+
+
+void SdWMain::cmFileOpenFile(const QString path)
+  {
+  if( path.isEmpty() ) return;
+
+  mWProjectList->fileOpen( path );
   }
 
 
@@ -1515,6 +1528,15 @@ void SdWMain::cmOption()
 void SdWMain::cmTools()
   {
 
+  }
+
+
+
+
+void SdWMain::cmHelpIntro()
+  {
+  SdWEditorHelp *help = dynamic_cast<SdWEditorHelp*>( helpWidget() );
+  help->helpIntro( this );
   }
 
 

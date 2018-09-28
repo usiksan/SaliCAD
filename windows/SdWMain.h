@@ -92,6 +92,7 @@ class SdWMain : public QMainWindow
     void cmFilePrevious();
     void cmFileClose();
     void cmFileCloseAll();
+    void cmFileOpenFile( const QString path );
 
     void cmFileSave();
     void cmFileSaveAs();
@@ -208,6 +209,7 @@ class SdWMain : public QMainWindow
     void cmOption();
     void cmTools();
 
+    void cmHelpIntro();
     void cmHelpContens();
     void cmHelpIndex();
     void cmHelpAbout();

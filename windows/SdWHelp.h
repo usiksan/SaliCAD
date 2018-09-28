@@ -16,10 +16,13 @@ Description
 
 #include <QTextBrowser>
 
+class SdWMain;
+
 class SdWHelp : public QTextBrowser
   {
     Q_OBJECT
 
+    SdWMain *mMain; //Main window pointer
   public:
     SdWHelp( QWidget *parent = nullptr );
 
@@ -44,6 +47,9 @@ class SdWHelp : public QTextBrowser
 
     //Show help topic
     void helpTopic( const QString topic );
+
+    //Show intro topic
+    void helpIntro( SdWMain *main );
 
   private:
 

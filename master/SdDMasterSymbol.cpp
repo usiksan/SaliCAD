@@ -134,5 +134,7 @@ SdDMasterSymbol::SdDMasterSymbol(SdProjectItem *item, QWidget *parent) :
   mValueProp.mVert   = dvjMiddle;
   mValueProp.mMirror = 0;
 
+  //Clear item
+  mItem->clear();
   }
 

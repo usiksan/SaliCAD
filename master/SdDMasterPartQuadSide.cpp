@@ -268,7 +268,6 @@ void SdDMasterPartQuadSide::drawPart(SdIllustrator &il)
 //When accept we build part with current params
 void SdDMasterPartQuadSide::accept()
   {
-  mItem->clear();
   int bodySizeX = sBodySizeX = sdEnvir->fromPhisPcb( ui->mBodySizeX->text() );
   int bodySizeY = sBodySizeY = sdEnvir->fromPhisPcb( ui->mBodySizeY->text() );
   int pinSizeX  = sPinSizeX = sdEnvir->fromPhisPcb( ui->mPinSizeX->text() );

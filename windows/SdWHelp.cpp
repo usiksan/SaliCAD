@@ -13,6 +13,7 @@ Description
 */
 #include "SdConfig.h"
 #include "SdWHelp.h"
+#include "SdWMain.h"
 #include "library/SvDir.h"
 
 #include <QUrl>
@@ -20,6 +21,8 @@ Description
 #include <QFile>
 #include <QCoreApplication>
 #include <QStringList>
+#include <QFileInfo>
+#include <QDebug>
 
 
 //Path where resides help system files
@@ -27,11 +30,22 @@ QString SdWHelp::mHelpPath;
 
 
 SdWHelp::SdWHelp(QWidget *parent) :
-  QTextBrowser( parent )
+  QTextBrowser( parent ),
+  mMain(nullptr)
   {
 
+  setOpenLinks(false);
   //Replace anchor clicked
   connect( this, &SdWHelp::anchorClicked, this, [this] ( QUrl url) {
+    //Test special case for intro page
+    //In intro page we can open project, create new project or open previously file
+    if( mMain ) {
+      QString path = url.toString();
+      qDebug() << "help" << path;
+      if( path.startsWith("open:") ) { mMain->cmFileOpen(); return; }
+      else if( path.startsWith("new:") ) { mMain->cmFileNew(); return; }
+      else if( path.startsWith("load:") ) { mMain->cmFileOpenFile( path.mid(5) ); return; }
+      }
     if( url.hasFragment() )
       setSource( pageConvert( url.fileName(), url.fragment() ) );
     else
@@ -125,6 +139,52 @@ void SdWHelp::helpTopic(const QString topic)
     }
   else
     setSource( pageConvert( topic, QString() ) );
+  }
+
+
+
+
+
+//Show intro topic
+//Here we injecting into html page previous file list
+void SdWHelp::helpIntro(SdWMain *main)
+  {
+  mMain = main;
+
+  QSettings s;
+  //Interface language
+  //Язык интерфейса
+  QString lang = s.value( SDK_LANGUAGE, QVariant(QString("en")) ).toString();
+
+  QString fname;
+  //Test if file exist with language lang
+  //Проверить наличие файла с языком
+  if( QFile::exists( helpPath() + lang + "-startup.htm" ) )
+    //File exist.
+    fname = helpPath() + lang + "-intro.htm";
+  //Test if file exist with english language
+  //Проверить наличие файла с анлийским языком
+  else fname = helpPath() + "en-startup.htm";
+
+  QFile file(fname);
+  if( file.open(QIODevice::ReadOnly) ) {
+    //Load intro file contens
+    QString html = QString::fromUtf8( file.readAll() );
+
+    //Get previously file list
+    QSettings settings;
+    QStringList files = settings.value(SDK_PREVIOUS_FILES).toStringList();
+
+    //Create html view previously file list
+    QString prev;
+    for( const QString &str : files ) {
+      QFileInfo info(str);
+      prev.append("<p><a href=\"load:").append(str).append("\">").append( info.completeBaseName() ).append("</a><br>(").append(str).append(")</p>");
+      }
+
+    //Show intro with injected previously file list
+    setHtml( html.arg(prev) );
+    }
   }
 
 
