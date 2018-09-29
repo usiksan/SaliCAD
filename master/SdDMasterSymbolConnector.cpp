@@ -15,19 +15,30 @@ Description
 #include "ui_SdDMasterSymbolConnector.h"
 #include "objects/SdEnvir.h"
 
+static int
+sPinCount = 2,
+sCellHeight = 500,
+sPinSizeX = 500,
+sNumberSizeX = 1000,
+sCellSizeX = 2500;
+static bool
+sRightDirection = false;
+
+
 SdDMasterSymbolConnector::SdDMasterSymbolConnector(SdProjectItem *item, QWidget *parent) :
   SdDMasterSymbol( item, parent ),
   ui(new Ui::SdDMasterSymbolConnector)
   {
   ui->setupUi(this);
 
-  ui->mPinCount->setText("2");
+  ui->mPinCount->setText( QString::number(sPinCount) );
 
   //Connector construction defaults
-  ui->mCellHeight->setText("5.0");
-  ui->mPinSizeX->setText("5.0");
-  ui->mNumberSizeX->setText("7.5");
-  ui->mCellSizeX->setText("20.0");
+  ui->mCellHeight->setText( sdEnvir->toPhisSchematic(sCellHeight) );
+  ui->mPinSizeX->setText( sdEnvir->toPhisSchematic(sPinSizeX) );
+  ui->mNumberSizeX->setText( sdEnvir->toPhisSchematic(sNumberSizeX) );
+  ui->mCellSizeX->setText( sdEnvir->toPhisSchematic(sCellSizeX) );
+  ui->mRightDirection->setChecked(sRightDirection);
 
   onEditChanged( QString() );
 
@@ -115,20 +126,20 @@ void SdDMasterSymbolConnector::drawSymbol(SdIllustrator &il)
 
 void SdDMasterSymbolConnector::accept()
   {
-  int pinCount    = ui->mPinCount->text().toInt();
-  int cellHeight  = sdEnvir->fromPhisSchematic( ui->mCellHeight->text() );
-  int pinSizeX    = sdEnvir->fromPhisSchematic( ui->mPinSizeX->text() );
-  int numberSizeX = sdEnvir->fromPhisSchematic( ui->mNumberSizeX->text() );
-  int cellSizeX   = sdEnvir->fromPhisSchematic( ui->mCellSizeX->text() );
-  bool rightDirection = ui->mRightDirection->isChecked();
+  sPinCount    = ui->mPinCount->text().toInt();
+  sCellHeight  = sdEnvir->fromPhisSchematic( ui->mCellHeight->text() );
+  sPinSizeX    = sdEnvir->fromPhisSchematic( ui->mPinSizeX->text() );
+  sNumberSizeX = sdEnvir->fromPhisSchematic( ui->mNumberSizeX->text() );
+  sCellSizeX   = sdEnvir->fromPhisSchematic( ui->mCellSizeX->text() );
+  sRightDirection = ui->mRightDirection->isChecked();
 
-  int rightPos = pinSizeX + numberSizeX + cellSizeX;
+  int rightPos = sPinSizeX + sNumberSizeX + sCellSizeX;
 
-  if( pinCount < 1 )
-    pinCount = 1;
+  if( sPinCount < 1 )
+    sPinCount = 1;
 
   int dir = 1;
-  if( rightDirection ) {
+  if( sRightDirection ) {
     dir = -1;
     mPinNameProp.mHorz = dhjRight;
     }
@@ -136,29 +147,29 @@ void SdDMasterSymbolConnector::accept()
 
   mPinNameProp.mLayer.set( LID0_INVISIBLE );
 
-  for( int i = 0; i < pinCount; i++ ) {
+  for( int i = 0; i < sPinCount; i++ ) {
     //Pin line
-    addLine( 0, -i * cellHeight, pinSizeX * dir, -i * cellHeight );
+    addLine( 0, -i * sCellHeight, sPinSizeX * dir, -i * sCellHeight );
     //Pin down line
-    if( i < pinCount - 1 )
-      addLine( pinSizeX * dir, -(i * cellHeight + cellHeight / 2),
-               rightPos * dir, -(i * cellHeight + cellHeight / 2) );
+    if( i < sPinCount - 1 )
+      addLine( sPinSizeX * dir, -(i * sCellHeight + sCellHeight / 2),
+               rightPos * dir, -(i * sCellHeight + sCellHeight / 2) );
     //Pin
-    SdPoint pinOrg(0,-i*cellHeight);
-    addPin( pinOrg, 0, SdPoint(0,pinOrg.y()+cellHeight/2), QString::number(i+1), SdPoint((pinSizeX+numberSizeX/2)*dir,pinOrg.y()) );
+    SdPoint pinOrg(0,-i*sCellHeight);
+    addPin( pinOrg, 0, SdPoint(0,pinOrg.y()+sCellHeight/2), QString::number(i+1), SdPoint((sPinSizeX+sNumberSizeX/2)*dir,pinOrg.y()) );
     }
 
   //Body
-  addRect( pinSizeX * dir, cellHeight / 2, rightPos * dir, -(pinCount * cellHeight - cellHeight / 2) );
+  addRect( sPinSizeX * dir, sCellHeight / 2, rightPos * dir, -(sPinCount * sCellHeight - sCellHeight / 2) );
   //Vertical delimiter
-  int delimiter = (pinSizeX + numberSizeX) * dir;
-  addLine( delimiter, cellHeight / 2, delimiter, -(pinCount * cellHeight - cellHeight / 2) );
+  int delimiter = (sPinSizeX + sNumberSizeX) * dir;
+  addLine( delimiter, sCellHeight / 2, delimiter, -(sPinCount * sCellHeight - sCellHeight / 2) );
 
   //id
-  setId( SdPoint( (pinSizeX + (numberSizeX+cellSizeX)/2) * dir, cellHeight) );
+  setId( SdPoint( (sPinSizeX + (sNumberSizeX+sCellSizeX)/2) * dir, sCellHeight) );
 
   //value
-  setValue( SdPoint( (pinSizeX + (numberSizeX+cellSizeX)/2) * dir, -pinCount * cellHeight - cellHeight ) );
+  setValue( SdPoint( (sPinSizeX + (sNumberSizeX+sCellSizeX)/2) * dir, -sPinCount * sCellHeight - sCellHeight ) );
 
   SdDMasterSymbol::accept();
   }

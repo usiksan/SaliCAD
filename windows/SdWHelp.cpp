@@ -183,6 +183,7 @@ void SdWHelp::helpIntro(SdWMain *main)
       }
 
     //Show intro with injected previously file list
+    setSearchPaths( {helpPath()} );
     setHtml( html.arg(prev) );
     }
   }
