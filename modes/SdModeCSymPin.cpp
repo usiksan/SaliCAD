@@ -166,8 +166,6 @@ void SdModeCSymPin::enterPoint( SdPoint enter )
       break;
     case sEnterName :
       applyEdit();
-      //Switch to pin number place
-      mSmartPoint = mOrigin + mSmartNumber;
       break;
     case sPlaceNumber :
       //Enter pin number place is completed
@@ -296,7 +294,7 @@ int SdModeCSymPin::getIndex() const
 
 void SdModeCSymPin::cancelEdit()
   {
-  mPropText = 0;
+  mPropText = nullptr;
   setStep( sPlaceName );
   }
 
@@ -322,7 +320,9 @@ void SdModeCSymPin::applyEdit()
     QMessageBox::warning( mEditor, QObject::tr("Error"), QObject::tr("Duplicate pin name. Change name or cancel.") );
     return;
     }
-  mPropText = 0;
+  mPropText = nullptr;
   mName = mString;
   setStep( sPlaceNumber );
+  //Switch to pin number place
+  mSmartPoint = mOrigin + mSmartNumber;
   }

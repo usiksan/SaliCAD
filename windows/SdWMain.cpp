@@ -333,7 +333,7 @@ void SdWMain::onCloseProject(SdProject *prj)
   //Find if items of this project are open
   for( int i = mWEditors->count() - 1; i >= 0; i-- ) {
     SdWEditor *editor = getEditor(i);
-    if( editor && editor->getProjectItem()->getProject() == prj ) {
+    if( editor && editor->getProjectItem() && editor->getProjectItem()->getProject() == prj ) {
       //Item of this project open, close editor
       mWEditors->removeTab( i );
       }

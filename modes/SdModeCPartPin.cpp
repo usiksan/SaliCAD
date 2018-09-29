@@ -164,8 +164,6 @@ void SdModeCPartPin::enterPoint(SdPoint enter)
       break;
     case sEnterNumber :
       applyEdit();
-      //Switch to pin name place
-      mSmartPoint = mOrigin + mSmartName;
       break;
     case sPlaceName :
       //Enter pin name place is completed
@@ -294,7 +292,7 @@ int SdModeCPartPin::getIndex() const
 
 void SdModeCPartPin::cancelEdit()
   {
-  mPropText = 0;
+  mPropText = nullptr;
   setStep( sPlaceNumber );
   }
 
@@ -321,9 +319,11 @@ void SdModeCPartPin::applyEdit()
     return;
     }
 
-  mPropText = 0;
+  mPropText = nullptr;
   mNumber = mString;
   setStep( sPlaceName );
+  //Switch to pin name place
+  mSmartPoint = mOrigin + mSmartName;
   }
 
 
