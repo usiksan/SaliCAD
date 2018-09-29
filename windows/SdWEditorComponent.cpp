@@ -339,6 +339,10 @@ void SdWEditorComponent::onPackChanged(int row, int column)
       }
     else {
       //Correct assignment
+      //Check if pin was replaced
+      QString previousNumber = mComponent->getSectionPinNumber( section, name );
+      if( mPackNumbers.value(previousNumber) == packetPin(section,name) )
+        mPackNumbers.insert(previousNumber,QString());
       mPackTable->setItem(row,column, new QTableWidgetItem(number) );
       mPackNumbers.insert( number, packetPin(section,name) );
       }
