@@ -103,6 +103,9 @@ class SdContainer : public SdObject
   public:
     //Return true if used any of objects in container but exclude itself objects in container
     virtual bool isUsed(SdObject *test) const override;
+
+    //Upgrade project item on new one
+    virtual void upgradeProjectItem( SdProjectItem *newItem, SdUndo *undo ) override;
   };
 
 

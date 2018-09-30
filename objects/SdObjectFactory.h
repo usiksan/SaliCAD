@@ -65,6 +65,9 @@ class SdObjectFactory
     //Return true if object name is referenced in dataBase
     static bool         isContains( const QString type, const QString name, const QString author );
 
+    //Return true if there is newer object in dataBase
+    static bool         isThereNewer( const SdProjectItem *item );
+
     //Load object from remote server
     static bool         loadObject( const QString hash, const QString title, QWidget *parent );
 

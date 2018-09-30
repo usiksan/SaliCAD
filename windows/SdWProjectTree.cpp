@@ -52,6 +52,8 @@ SdWProjectTree::SdWProjectTree(const QString fname, SdProject *prj, QWidget *par
       //Project loaded outside. Simple assign it
       mProject = prj;
     }
+  //Check and mark newer objects
+  mProject->newerCheckAndMark();
   //If project builded then display its contens [Если проект построен, то отобразить содержимое]
   buildVisualTree();
 
@@ -435,10 +437,12 @@ void SdWProjectTree::cmUndoRedoUpdate()
 
 
 
+//AFTER rename item
 void SdWProjectTree::renameItem(SdProjectItem *item)
   {
   if( item && item->getProject() == mProject ) {
     //Item from this project
+    item->mTreeItem->setIcon( 0, QIcon(item->getIconName()) );
     item->mTreeItem->setText( 0, item->getExtendTitle() );
     item->mTreeItem->setToolTip( 0, item->getExtendTitle() );
     }

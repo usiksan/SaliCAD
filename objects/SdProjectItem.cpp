@@ -31,7 +31,8 @@ SdProjectItem::SdProjectItem() :
   mCreateTime(0),
   mAuto(true),
   mEditEnable(true),
-  mTreeItem(nullptr)
+  mTreeItem(nullptr),
+  mThereNewer(false)
   {
 
   }
@@ -136,6 +137,7 @@ void SdProjectItem::getHeader(SdLibraryHeader &hdr) const
 //Set editEnable flag. Return copy object when object editing is prohibited
 SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle )
   {
+  //mThereNewer = false;
   SdUndo *undo = getUndo();
   if( !undoTitle.isEmpty() && undo )
     undo->begin( undoTitle, this );
@@ -149,7 +151,6 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
       updateAuthor();
       updateCreationTime();
       //Write object to local library
-      qDebug() << "disable edit";
       write();
       //Upgrade item through project
       getProject()->forEach( dctAll, [this,undo] (SdObject *obj) -> bool {
@@ -158,6 +159,9 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
         return true;
         });
       }
+    //For each open projects perform check and mark newer objects
+    for( auto iter = sdProjectList.cbegin(); iter != sdProjectList.cend(); iter++ )
+      (*iter)->newerCheckAndMark();
     }
   else {
     if( edit ) {

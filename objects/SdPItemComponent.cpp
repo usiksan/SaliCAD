@@ -258,5 +258,10 @@ quint64 SdPItemComponent::getClass() const
 
 QString SdPItemComponent::getIconName() const
   {
-  return QString(":/pic/iconComp.png");
+  if( !isEditEnable() ) {
+    if( mThereNewer )
+      return QStringLiteral(":/pic/iconCompLockedNew.png");
+    return QStringLiteral(":/pic/iconCompLocked.png");
+    }
+  return QStringLiteral(":/pic/iconComp.png");
   }

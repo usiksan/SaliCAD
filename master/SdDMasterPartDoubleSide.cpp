@@ -24,9 +24,7 @@ sBodySizeY = 3000,
 sPinSizeY = 5000,
 sBottomPinDistance = 1000,
 sTopPinDistance = 1000,
-sLeftPinOffsetY = 0,
 sBottomPinOffsetX = 0,
-sRightPinOffsetY = 0,
 sTopPinOffsetX = 0;
 
 static QString

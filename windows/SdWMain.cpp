@@ -298,7 +298,8 @@ void SdWMain::onUpdateItemTitle(SdProjectItem *item)
     SdWEditor *editor = getEditor(i);
     if( editor && editor->getProjectItem() == item ) {
       //Item is open, rename tab and tool tip
-      mWEditors->setTabText( i, item->getTitle() );
+      mWEditors->setTabIcon( i, QIcon(item->getIconName()) );
+      mWEditors->setTabText( i, editor->getTitle() );
       return;
       }
     }

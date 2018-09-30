@@ -154,11 +154,22 @@ bool SdLibraryStorage::isObjectContains(const QString uid)
 
 
 
+//Return true if object referenced in map and object is newer or same or if newer reference
+bool SdLibraryStorage::isNewerOrSameObject(const QString uid, qint32 time)
+  {
+  QReadLocker locker( &mLock );
+  return mReferenceMap.contains( uid ) && mReferenceMap.value(uid).isObjectNewerOrSame( time );
+  }
+
+
+
+
+
 //Return true if newer object referenced in map
 bool SdLibraryStorage::isNewerObject(const QString uid, qint32 time)
   {
   QReadLocker locker( &mLock );
-  return mReferenceMap.contains( uid ) && mReferenceMap.value(uid).isObjectNewerOrSame( time );
+  return mReferenceMap.contains( uid ) && mReferenceMap.value(uid).isNewer( time );
   }
 
 

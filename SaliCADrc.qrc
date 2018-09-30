@@ -240,5 +240,13 @@
         <file>pic/objPrtValue.png</file>
         <file>pic/objValue.png</file>
         <file>pic/duplicate.png</file>
+        <file>pic/iconCompLocked.png</file>
+        <file>pic/iconCompLockedNew.png</file>
+        <file>pic/iconInheritanceLocked.png</file>
+        <file>pic/iconInheritanceLockedNew.png</file>
+        <file>pic/iconPartLocked.png</file>
+        <file>pic/iconPartLockedNew.png</file>
+        <file>pic/iconSymbolLocked.png</file>
+        <file>pic/iconSymbolLockedNew.png</file>
     </qresource>
 </RCC>

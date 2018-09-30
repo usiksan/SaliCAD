@@ -69,6 +69,9 @@ class SdLibraryStorage
     //Return true if object contained in map
     bool        isObjectContains( const QString uid );
 
+    //Return true if object referenced in map and object is newer or same or if newer reference
+    bool        isNewerOrSameObject( const QString uid, qint32 time );
+
     //Return true if newer object referenced in map
     bool        isNewerObject( const QString uid, qint32 time );
 

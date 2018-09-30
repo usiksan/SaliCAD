@@ -356,3 +356,16 @@ bool SdContainer::isUsed(SdObject *test) const
   return false;
   }
 
+
+
+
+//Upgrade project item on new one
+void SdContainer::upgradeProjectItem(SdProjectItem *newItem, SdUndo *undo)
+  {
+  //Upgrade all objects of container
+  forEach( dctAll, [newItem, undo] (SdObject *obj) -> bool {
+    obj->upgradeProjectItem( newItem, undo );
+    return true;
+    });
+  }
+

@@ -46,7 +46,12 @@ quint64 SdPItemSymbol::getClass() const
 
 QString SdPItemSymbol::getIconName() const
   {
-  return QString(":/pic/iconSymbol.png");
+  if( !isEditEnable() ) {
+    if( mThereNewer )
+      return QStringLiteral(":/pic/iconSymbolLockedNew.png");
+    return QStringLiteral(":/pic/iconSymbolLocked.png");
+    }
+  return QStringLiteral(":/pic/iconSymbol.png");
   }
 
 

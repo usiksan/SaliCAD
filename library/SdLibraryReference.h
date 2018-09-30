@@ -35,7 +35,7 @@ struct SdLibraryReference
     //Test if reference newer or same than time
     bool isNewerOrSame( qint32 time ) const { return mCreationTime >= time; }
 
-    //Test if object newer or same
+    //Test if object newer or same or if newer reference
     bool isObjectNewerOrSame( qint32 time ) const { return (mObjectPtr != 0 && mCreationTime >= time) || (mCreationTime > time); }
   };
 

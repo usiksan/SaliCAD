@@ -63,7 +63,7 @@ void SdObjectFactory::insertObject( const SdLibraryHeader &hdr, QJsonObject json
 //then return its id. Older object is never inserted.
 void SdObjectFactory::insertItemObject(const SdProjectItem *item, QJsonObject obj)
   {
-  if( item == nullptr || sdLibraryStorage.isNewerObject( item->getUid(), item->getTime() ) )
+  if( item == nullptr || sdLibraryStorage.isNewerOrSameObject( item->getUid(), item->getTime() ) )
     return;
 
   //Insert object
@@ -147,6 +147,16 @@ bool SdObjectFactory::isObjectPresent(const QString hash)
 bool SdObjectFactory::isContains(const QString type, const QString name, const QString author)
   {
   return sdLibraryStorage.contains( headerUid( type, name, author ) );
+  }
+
+
+
+
+
+//Return true if there is newer object in dataBase
+bool SdObjectFactory::isThereNewer(const SdProjectItem *item)
+  {
+  return sdLibraryStorage.isNewerObject( item->getUid(), item->getTime() );
   }
 
 

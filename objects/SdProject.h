@@ -84,6 +84,9 @@ class SdProject : public SdContainer
     //Return full net list from all project sheets
     QStringList       netList() const;
 
+    //Check newer object and mark for upgrading
+    void              newerCheckAndMark();
+
     virtual QString   getType() const override;
     virtual quint64   getClass() const override;
 

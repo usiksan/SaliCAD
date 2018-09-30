@@ -2,14 +2,10 @@
 //B063 bugs
 //F001 fatal
 //C001 critical
-//D064 do
+//D065 do
 
 
 
-
-//TODO B009 3 undo's on one text properties changes
-
-//TODO B016 insertComponent mode: when select component and after select symbol part remain from component
 
 //TODO D046 When try to select pin type from default pad association table and no default table offer to enter one
 
@@ -33,17 +29,19 @@
 
 //TODO D064 Helper graph objects for other graph objects positioning
 
+
 //===================================================================================
 //Fixed:
 
-<<<<<<< 6293951003732ed4cc679cd233b16c4a40b17e7b
-//Dont work cancel mode in sheet net name mode
-=======
+//D065 Append indication edit state to icon
+
+//B009 3 undo's on one text properties changes
+
+//B016 insertComponent mode: when select component and after select symbol part remain from component
+
 //B062 When multiple deleting object from project undo restore it with one click
->>>>>>> B062 When multiple deleting object from project undo restore it with one click
 
 //B063 For selected object properties layer must be common
-
 
 //D043 Append possibility to delete object from library and also from remote library
 

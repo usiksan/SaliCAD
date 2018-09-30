@@ -307,6 +307,25 @@ QStringList SdProject::netList() const
 
 
 
+
+//Check newer object and mark for upgrading
+void SdProject::newerCheckAndMark()
+  {
+  //Scan all objects and find newer in library
+  //if it there then mark object with newer uid
+  forEach( dctAll, [] (SdObject *obj) -> bool {
+    SdPtr<SdProjectItem> item(obj);
+    if( item.isValid() && item->mThereNewer != SdObjectFactory::isThereNewer(item.ptr()) ) {
+      item->mThereNewer = SdObjectFactory::isThereNewer(item.ptr());
+      SdPulsar::sdPulsar->emitRenameItem( item.ptr() );
+      }
+    return true;
+    });
+  }
+
+
+
+
 QString SdProject::getType() const
   {
   return QStringLiteral(SD_TYPE_PROJECT);

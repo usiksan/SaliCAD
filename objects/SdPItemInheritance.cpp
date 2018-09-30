@@ -59,7 +59,12 @@ SdClass SdPItemInheritance::getClass() const
 
 QString SdPItemInheritance::getIconName() const
   {
-  return QString(":/pic/iconInheritance.png");
+  if( !isEditEnable() ) {
+    if( mThereNewer )
+      return QStringLiteral(":/pic/iconInheritanceNew.png");
+    return QStringLiteral(":/pic/iconInheritanceLocked.png");
+    }
+  return QStringLiteral(":/pic/iconInheritance.png");
   }
 
 
