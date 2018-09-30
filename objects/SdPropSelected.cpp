@@ -101,3 +101,36 @@ int SdPropSelected::getPropBarId()
   return mPropBarId;
   }
 
+
+
+
+//Layer present in many properties. If selected some different objects then
+//properties bar will be only for one class of objects. But layer
+//must be changed for all selected objects
+//With this function we change layer for all properties group
+void SdPropSelected::setLayer(const SdPropLayer layer)
+  {
+  mLineProp.mLayer.assign( layer );       //Properties for linear objects
+  mTextProp.mLayer.assign( layer );       //Properties for textual objects
+  mWireProp.mLayer.assign( layer );       //Properties for wire objects
+  mSymPinProp.mLayer.assign( layer );     //Properties for symbol pin object
+  mPartPinProp.mLayer.assign( layer );    //Properties for part pin object
+  }
+
+
+
+
+//When selected different classes of objects then layer state is
+//in different preperties group. With this we union all this group
+void SdPropSelected::unionLayer()
+  {
+  SdPropLayer layer;
+  layer.clear();
+  layer.append( mLineProp.mLayer );
+  layer.append( mTextProp.mLayer );
+  layer.append( mWireProp.mLayer );
+  layer.append( mSymPinProp.mLayer );
+  layer.append( mPartPinProp.mLayer );
+  setLayer( layer );
+  }
+

@@ -134,15 +134,6 @@ class SdWCommand
     static QActionPtr  cmModeNetList;
     static QActionPtr  cmModePack;
     static QActionPtr  cmPads;
-    static QActionPtr  cmModeLineSize;
-    static QActionPtr  cmModeRadiusSize;
-    static QActionPtr  cmModeMovePart;
-    static QActionPtr  cmModePlace;
-    static QActionPtr  cmModeEditWire;
-    static QActionPtr  cmModeWire;
-    static QActionPtr  cmModePolygon;
-    static QActionPtr  cmModeDeleteWire;
-    static QActionPtr  cmModePad;
 
     static QActionPtr  cmShowRatNet;
     static QActionPtr  cmShowRuleErrors;
@@ -169,8 +160,12 @@ class SdWCommand
     //Full list mode tool bars
     static QToolBarPtr mbarTable[PB_LAST];
 
+    //Set visible properties bar for barId
     static void        setModeBar( int barId );
+    //Get properties bar for barId
     static QToolBar   *getModeBar( int barId );
+    //Get current visible barId
+    static int         getModeBarId();
 
 
     static void        createMenu( SdWMain *frame );

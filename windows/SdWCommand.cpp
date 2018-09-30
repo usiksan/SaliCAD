@@ -454,6 +454,18 @@ QToolBar *SdWCommand::getModeBar(int barId)
 
 
 
+
+//Get current visible barId
+int SdWCommand::getModeBarId()
+  {
+  for( int i = 0; i < PB_LAST; i++ )
+    if( mbarTable[i] && mbarTable[i]->isVisible() )
+      return i;
+  return PB_DEFAULT;
+  }
+
+
+
 void SdWCommand::createToolBars(SdWMain *frame)
   {
   //Main bar
@@ -734,18 +746,9 @@ QActionPtr SdWCommand::cmMode3dBodyBrick;
 QActionPtr SdWCommand::cmMode3dBodyContur;
 QActionPtr SdWCommand::cmNetSetup;
 QActionPtr SdWCommand::cmModeLink;
-QActionPtr SdWCommand::cmModeNetName;
 QActionPtr SdWCommand::cmModeNetList;
 QActionPtr SdWCommand::cmModePack;
 QActionPtr SdWCommand::cmPads;
-QActionPtr SdWCommand::cmModeLineSize;
-QActionPtr SdWCommand::cmModeRadiusSize;
-QActionPtr SdWCommand::cmModePlace;
-QActionPtr SdWCommand::cmModeEditWire;
-QActionPtr SdWCommand::cmModeWire;
-QActionPtr SdWCommand::cmModePolygon;
-QActionPtr SdWCommand::cmModeDeleteWire;
-QActionPtr SdWCommand::cmModePad;
 
 QActionPtr SdWCommand::cmShowRatNet;
 QActionPtr SdWCommand::cmShowRuleErrors;

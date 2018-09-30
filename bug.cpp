@@ -1,8 +1,8 @@
 ﻿
-//B062 bugs
+//B063 bugs
 //F001 fatal
 //C001 critical
-//D058 do
+//D064 do
 
 
 
@@ -23,10 +23,25 @@
 
 //FIXME B062 When multiple deleting object from project undo restore it with one click
 
+//TODO D059 Append file generation on every object, category selector on file hierarchy base
+
+//TODO D060 Append object replacing capability and autoreplacing
+
+//TODO D061 Append project preview editor
+
+//TODO D062 Append text item
+
+//TODO D063 Append project component list (bom) and report generator
+
+//TODO D064 Helper graph objects for other graph objects positioning
+
 //===================================================================================
 //Fixed:
 
 //Dont work cancel mode in sheet net name mode
+
+//B063 For selected object properties layer must be common
+
 
 //D043 Append possibility to delete object from library and also from remote library
 

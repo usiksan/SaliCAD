@@ -55,6 +55,15 @@ struct SdPropSelected
     //Get prop bar id for first filled prop mask
     int  getPropBarId();
 
+    //Layer present in many properties. If selected some different objects then
+    //properties bar will be only for one class of objects. But layer
+    //must be changed for all selected objects
+    //With this function we change layer for all properties group
+    void setLayer( const SdPropLayer layer );
+
+    //When selected different classes of objects then layer state is
+    //in different preperties group. With this we union all this group
+    void unionLayer();
   };
 
 #endif // SDPROPSELECTED_H

@@ -123,16 +123,18 @@ int SdModeSelect::getPropBarId() const
 
 void SdModeSelect::propGetFromBar()
   {
-  mUndo->begin( QObject::tr("Properties changed"), mObject );
-  //Сохранить состояние объектов до изменения свойств
-  mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
-    SdGraph *graph = dynamic_cast<SdGraph*>( obj );
-    if( graph != nullptr )
-      graph->saveState( mUndo );
-    return true;
-    });
 
-  if( mFragment.count() ) setDirty();
+  if( mFragment.count() ) {
+    setDirty();
+    mUndo->begin( QObject::tr("Properties changed"), mObject );
+    //Сохранить состояние объектов до изменения свойств
+    mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
+      SdGraph *graph = dynamic_cast<SdGraph*>( obj );
+      if( graph != nullptr )
+        graph->saveState( mUndo );
+      return true;
+      });
+    }
 
   //Get new props
   mLocalProp.clear();
@@ -140,17 +142,20 @@ void SdModeSelect::propGetFromBar()
     case PB_LINEAR : {
       SdPropBarLinear  *barLinear  = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
       barLinear->getPropLine( &(mLocalProp.mLineProp), &(mLocalProp.mEnterType) );
+      mLocalProp.setLayer( mLocalProp.mLineProp.mLayer );
       }
       break;
     case PB_TEXT : {
       SdPropBarTextual *barTextual = dynamic_cast<SdPropBarTextual*>(SdWCommand::getModeBar(PB_TEXT));
       barTextual->getPropText( &(mLocalProp.mTextProp) );
+      mLocalProp.setLayer( mLocalProp.mTextProp.mLayer );
       }
       break;
     case PB_WIRE : {
       SdPropBarWire    *barWire    = dynamic_cast<SdPropBarWire*>(SdWCommand::getModeBar(PB_WIRE));
       QString wireName;
       barWire->getPropWire( &(mLocalProp.mWireProp), &(mLocalProp.mEnterType), &(wireName) );
+      mLocalProp.setLayer( mLocalProp.mWireProp.mLayer );
       if( !wireName.isEmpty() )
         mLocalProp.mWireName = wireName;
       }
@@ -158,11 +163,13 @@ void SdModeSelect::propGetFromBar()
     case PB_SYM_PIN : {
       SdPropBarSymPin  *barSymPin  = dynamic_cast<SdPropBarSymPin*>(SdWCommand::getModeBar(PB_SYM_PIN));
       barSymPin->getPropSymPin( &(mLocalProp.mSymPinProp) );
+      mLocalProp.setLayer( mLocalProp.mSymPinProp.mLayer );
       }
       break;
     case PB_PART_PIN : {
       SdPropBarPartPin *barPartPin = dynamic_cast<SdPropBarPartPin*>(SdWCommand::getModeBar(PB_PART_PIN));
       barPartPin->getPropPartPin( &(mLocalProp.mPartPinProp) );
+      mLocalProp.setLayer( mLocalProp.mPartPinProp.mLayer );
       }
       break;
     case PB_SYM_IMP : {
@@ -213,6 +220,8 @@ void SdModeSelect::propSetToBar()
     return true;
     });
 
+  //Union layer of selected objects
+  mLocalProp.unionLayer();
   //Set new bar
   mLocalProp.getPropBarId();
   SdWCommand::setModeBar( getPropBarId() );

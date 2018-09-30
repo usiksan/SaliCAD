@@ -1,0 +1,382 @@
+{
+    "ChildList": [
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 1500
+                    },
+                    "b": {
+                        "x": 17000,
+                        "y": 1500
+                    },
+                    "id": "2a78bc0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 7000,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 7000,
+                        "y": 3600
+                    },
+                    "id": "2a78cf0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 9000,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 9000,
+                        "y": 1500
+                    },
+                    "id": "2a78db0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2000,
+                        "y": 1500
+                    },
+                    "b": {
+                        "x": 2000,
+                        "y": 5000
+                    },
+                    "id": "2a78ec0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 3600
+                    },
+                    "b": {
+                        "x": 17000,
+                        "y": 3600
+                    },
+                    "id": "2a78f50",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 5000
+                    },
+                    "b": {
+                        "x": 17000,
+                        "y": 5000
+                    },
+                    "id": "2a79010",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 15500,
+                        "y": 1500
+                    },
+                    "b": {
+                        "x": 15500,
+                        "y": 0
+                    },
+                    "id": "2a790d0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 15500,
+                        "y": 3600
+                    },
+                    "b": {
+                        "x": 15500,
+                        "y": 5000
+                    },
+                    "id": "2a79220",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 14000,
+                        "y": 5000
+                    },
+                    "b": {
+                        "x": 14000,
+                        "y": 1500
+                    },
+                    "id": "2a792e0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 9000,
+                        "y": 3600
+                    },
+                    "b": {
+                        "x": 9000,
+                        "y": 5000
+                    },
+                    "id": "2a793a0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 2200
+                    },
+                    "b": {
+                        "x": 7000,
+                        "y": 2200
+                    },
+                    "id": "2a79460",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 2900
+                    },
+                    "b": {
+                        "x": 7000,
+                        "y": 2900
+                    },
+                    "id": "2a79520",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Origin": {
+                        "x": 16200,
+                        "y": 4800
+                    },
+                    "id": "2a795e0",
+                    "over": {
+                        "h": 362,
+                        "w": 755,
+                        "x": 15830,
+                        "y": 4620
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "Scale",
+                    "type": "Text"
+                },
+                {
+                    "Origin": {
+                        "x": 15500,
+                        "y": 3300
+                    },
+                    "id": "2a796e0",
+                    "over": {
+                        "h": 362,
+                        "w": 544,
+                        "x": 15226,
+                        "y": 3110
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "File",
+                    "type": "Text"
+                },
+                {
+                    "Origin": {
+                        "x": 16200,
+                        "y": 1300
+                    },
+                    "id": "2a797e0",
+                    "over": {
+                        "h": 362,
+                        "w": 1087,
+                        "x": 15649,
+                        "y": 1117
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "Format",
+                    "type": "Text"
+                },
+                {
+                    "Origin": {
+                        "x": 100,
+                        "y": 3200
+                    },
+                    "id": "2a799c0",
+                    "over": {
+                        "h": 362,
+                        "w": 1057,
+                        "x": 96,
+                        "y": 3019
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 0,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "Author",
+                    "type": "Text"
+                },
+                {
+                    "Origin": {
+                        "x": 2200,
+                        "y": 3200
+                    },
+                    "id": "2a79ac0",
+                    "over": {
+                        "h": 362,
+                        "w": 1329,
+                        "x": 2210,
+                        "y": 3019
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 0,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{Author}",
+                    "type": "Text"
+                },
+                {
+                    "Origin": {
+                        "x": 100,
+                        "y": 2500
+                    },
+                    "id": "2a79b90",
+                    "over": {
+                        "h": 362,
+                        "w": 1540,
+                        "x": 96,
+                        "y": 2325
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 0,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "Controlled",
+                    "type": "Text"
+                },
+                {
+                    "Origin": {
+                        "x": 2200,
+                        "y": 2500
+                    },
+                    "id": "2a79ca0",
+                    "over": {
+                        "h": 362,
+                        "w": 1812,
+                        "x": 2210,
+                        "y": 2325
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 0,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{Controlled}",
+                    "type": "Text"
+                },
+                {
+                    "Origin": {
+                        "x": 10400,
+                        "y": 2600
+                    },
+                    "id": "2a79db0",
+                    "over": {
+                        "h": 362,
+                        "w": 876,
+                        "x": 9971,
+                        "y": 2415
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{title}",
+                    "type": "Text"
+                }
+            ],
+            "Created": 23496906,
+            "Edit enable": true,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "{sindex}": "1"
+            },
+            "Title": "iso-stamp",
+            "id": "2a78330",
+            "type": "Sheet"
+        }
+    ],
+    "Parametrs": {
+    },
+    "id": "2a77680",
+    "type": "Project"
+}

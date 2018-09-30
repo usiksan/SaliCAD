@@ -66,15 +66,31 @@ void SdPropLayer::set(const QString id)
     }
   }
 
+
+
+
+
 SdLayer *SdPropLayer::layer(bool otherSide) const
   {
-  if( otherSide ) return mLayer->pair();
-  return mLayer;
+  if( mValue == OneValue ) {
+    if( otherSide ) return mLayer->pair();
+    return mLayer;
+    }
+  return nullptr;
   }
+
+
+
+
 
 void SdPropLayer::append(SdPropLayer p)
   {
+  //If source not assigned then nothing appended
+  if( p.mValue == NoValue )
+    return;
+
   if( mValue == NoValue ) {
+    //If there yet nothing assigned then copy source
     mValue = p.mValue;
     mLayer = p.mLayer;
     }
