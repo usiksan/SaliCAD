@@ -224,6 +224,7 @@ void SdWProjectTree::cmObjectDelete()
     if( mProject->isUsed(item) )
       QMessageBox::warning( this, tr("Warning!"), tr("Object is used by other objects. You can not delete it until dereferenced.") );
     else if( QMessageBox::question(this, tr("Warning!"), tr("Do You realy want to delete \'%1\'").arg(item->getTitle())) == QMessageBox::Yes ) {
+      mProject->getUndo()->begin( tr("Deleting object"), nullptr );
       mProject->deleteChild( item, mProject->getUndo() );
       //Update status undo and redo commands
       cmUndoRedoUpdate();

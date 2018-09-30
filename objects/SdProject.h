@@ -99,6 +99,7 @@ class SdProject : public SdContainer
     virtual void      redoInsertChild(SdObject *child) override;
     virtual void      deleteChild(SdObject *child, SdUndo *undo ) override;
     virtual void      undoDeleteChild(SdObject *child) override;
+    virtual void      redoDeleteChild( SdObject *child ) override;
 
   private:
     //Test if net name already used

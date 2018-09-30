@@ -460,6 +460,18 @@ void SdProject::undoDeleteChild(SdObject *child)
 
 
 
+void SdProject::redoDeleteChild(SdObject *child)
+  {
+  SdPtr<SdProjectItem> item(child);
+  if( item && item->getParent() == this ) {
+    SdPulsar::sdPulsar->emitRemoveItem( item.ptr() );
+    mDirty = true;
+    SdContainer::redoDeleteChild( child );
+    }
+  }
+
+
+
 
 
 

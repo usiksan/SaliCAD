@@ -21,8 +21,6 @@
 
 //TODO B055 No road connection to middle of existing segment
 
-//FIXME B062 When multiple deleting object from project undo restore it with one click
-
 //TODO D059 Append file generation on every object, category selector on file hierarchy base
 
 //TODO D060 Append object replacing capability and autoreplacing
@@ -38,7 +36,11 @@
 //===================================================================================
 //Fixed:
 
+<<<<<<< 6293951003732ed4cc679cd233b16c4a40b17e7b
 //Dont work cancel mode in sheet net name mode
+=======
+//B062 When multiple deleting object from project undo restore it with one click
+>>>>>>> B062 When multiple deleting object from project undo restore it with one click
 
 //B063 For selected object properties layer must be common
 
