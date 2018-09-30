@@ -252,7 +252,7 @@ void SdPropBarTextual::setVerticalAlignment(int vert)
   {
   mVertTop->setChecked( vert == dvjTop );
   mVertMiddle->setChecked( vert == dvjMiddle );
-  mVertTop->setChecked( vert == dvjTop );
+  mVertBottom->setChecked( vert == dvjBottom );
   }
 
 

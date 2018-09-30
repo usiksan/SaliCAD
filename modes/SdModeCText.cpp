@@ -150,6 +150,8 @@ void SdModeCText::cancelEdit()
   {
   mPropText = nullptr;
   setStep( sPlace );
+  mPicAffected = nullptr;
+  mEditor->dirtyCashe();
   update();
   }
 
