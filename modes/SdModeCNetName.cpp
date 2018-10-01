@@ -135,6 +135,7 @@ void SdModeCNetName::cancelPoint(SdPoint)
     setStep( sSelectNet );
     update();
     }
+  else cancelMode();
   }
 
 

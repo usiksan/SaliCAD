@@ -26,6 +26,8 @@
 //===================================================================================
 //Fixed:
 
+//Dont work cancel mode in sheet net name mode
+
 //D043 Append possibility to delete object from library and also from remote library
 
 //B061 When deactivate select mode all must be unselected
