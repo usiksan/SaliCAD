@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Project view in editors tab workspace
 */
 #ifndef SDWEDITORPROJECT_H
 #define SDWEDITORPROJECT_H
