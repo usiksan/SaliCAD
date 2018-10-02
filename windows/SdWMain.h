@@ -71,6 +71,12 @@ class SdWMain : public QMainWindow
     void onRemoveProjectItem( SdProjectItem *item );
     void onCloseProject( SdProject *prj );
 
+    //This signal send from project tree when no item selected
+    void onActivateProject( SdProject *prj, const QString shortName );
+
+    //This signal send from project tree when project renamed
+    void onRenameProject( SdProject *prj, const QString shortName );
+
     void onClipboardChanged( QClipboard::Mode mode );
 
     //Browse part in sheet
@@ -228,12 +234,17 @@ class SdWMain : public QMainWindow
     virtual void closeEvent(QCloseEvent *ev) override;
 
   private:
+    //Insert editor to tab view
+    void            appendEditor(SdWEditor *editor);
+    //Get editor by index in tab view
     SdWEditor*      getEditor( int index );
+    //Return current active editor
     SdWEditor*      activeEditor();
     //Return help widget in editor area. If none it created
     SdWEditor*      helpWidget();
     //Find help widget in editor area. Return nullptr if none
     SdWEditor*      findHelpWidget();
+    //Return current active project view tree
     SdWProjectTree *activeProject() { return mWProjectList->activeProject(); }
     SdWProjectTree *project( int index ) { return mWProjectList->project(index); }
     void            createMenu();

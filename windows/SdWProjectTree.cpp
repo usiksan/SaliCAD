@@ -9,6 +9,8 @@ Web
   www.saliLab.ru
 
 Description
+  Project tree view. In this widget project presented as tree of projects items.
+  Allow navigate on tree with edit operations.
 */
 
 #include "SdWProjectTree.h"
@@ -132,7 +134,7 @@ bool SdWProjectTree::cmFileSaveAs()
     mFileName.append( SD_BASE_EXTENSION );
 
   SdWCommand::addToPreviousMenu( mFileName );
-  SdPulsar::sdPulsar->emitRenameProject( mProject );
+  SdPulsar::sdPulsar->emitRenameProject( mProject, fileName() );
 
   return cmFileSave();
   }
@@ -510,21 +512,39 @@ void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem 
 
   if( enable && cur ) {
     SdProjectItem *item = dynamic_cast<SdProjectItem*>( mProject->item( cur ) );
-    if( item )
+    if( item ) {
+      qDebug() << "activate item" << item->getTitle();
       emit SdPulsar::sdPulsar->emitActivateItem( item );
+      }
+//    else {
+//      qDebug() << "activate project 2" << fileName() << cur << prev;
+//      emit SdPulsar::sdPulsar->emitActivateProject( mProject, fileName() );
+//      }
+    }
+  else if( cur ) {
+    qDebug() << "activate project" << fileName() << cur << prev;
+    emit SdPulsar::sdPulsar->emitActivateProject( mProject, fileName() );
     }
   }
 
 
 
 
+
+
 void SdWProjectTree::showEvent(QShowEvent *event)
   {
-
+  qDebug() << "show event" << fileName();
   //Установить пункты меню в соответствии со своим состоянием
   SdWCommand::cmFileSave->setEnabled( true );
 
-  onCurrentItemChanged( currentItem(), nullptr );
+  if( currentItem() )
+    onCurrentItemChanged( currentItem(), nullptr );
+  else {
+    qDebug() << "activate project" << fileName();
+    emit SdPulsar::sdPulsar->emitActivateProject( mProject, fileName() );
+    }
+
 
   //Проверить доступность в Clipboard объекта
   //MainMenu::cmObjectPaste->setEnabled( QApplication::clipboard()->mimeData()->hasFormat(SALICAD_CLIP_FORMAT_OBJECT) );

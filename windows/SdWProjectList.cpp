@@ -44,6 +44,7 @@ SdWProjectList::SdWProjectList(QWidget *parent) : QWidget(parent)
   connect( mProjectTitles, SIGNAL(activated(int)), this, SLOT(onProjectActivated(int)) );
   connect( mCloseProject, SIGNAL(clicked()), this, SLOT(cmFileClose()) );
   connect( SdPulsar::sdPulsar, &SdPulsar::renameProject, this, &SdWProjectList::onRenameProject );
+  connect( SdPulsar::sdPulsar, &SdPulsar::highlightProject, this, &SdWProjectList::onProjectHighlighted );
   }
 
 
@@ -160,6 +161,7 @@ void SdWProjectList::onProjectActivated(int index)
   //New active project
   SdWProjectTree *active = activeProject();
   if( active )
+    //Send signal to change project name at programm title
     emit projectNameChanged( active->fileName(), active->getProject()->isDirty() );
   else
     emit projectNameChanged( QString(), false );
@@ -168,15 +170,15 @@ void SdWProjectList::onProjectActivated(int index)
 
 
 
-void SdWProjectList::onRenameProject(SdProject *prj)
+void SdWProjectList::onRenameProject( SdProject *prj, const QString shortName )
   {
   //Rename possible of active project
   SdWProjectTree *active = activeProject();
   if( active && active->getProject() == prj ) {
     //Replace text in combo box
-    mProjectTitles->setItemText( mWProjectStack->currentIndex(), active->fileName() );
+    mProjectTitles->setItemText( mWProjectStack->currentIndex(), shortName );
     //And send signal to change title
-    emit projectNameChanged( active->fileName(), active->getProject()->isDirty() );
+    emit projectNameChanged( shortName, active->getProject()->isDirty() );
     }
   }
 
@@ -193,6 +195,28 @@ void SdWProjectList::onItemActivated(SdProjectItem *item)
   for( int i = 0; i < mWProjectStack->count(); i++ ) {
     SdWProjectTree *prj = dynamic_cast<SdWProjectTree*>( mWProjectStack->widget(i) );
     if( prj && prj->getProject() == item->getProject() ) {
+      //Project found, bring it up
+      mProjectTitles->setCurrentIndex( i );
+      onProjectActivated( i );
+      return;
+      }
+    }
+  }
+
+
+
+
+//On project highlighted
+void SdWProjectList::onProjectHighlighted(SdProject *project)
+  {
+  if( activeProject() && activeProject()->getProject() == project )
+    //Already active project. Nothing done
+    return;
+
+  //Switch to project
+  for( int i = 0; i < mWProjectStack->count(); i++ ) {
+    SdWProjectTree *prj = dynamic_cast<SdWProjectTree*>( mWProjectStack->widget(i) );
+    if( prj && prj->getProject() == project ) {
       //Project found, bring it up
       mProjectTitles->setCurrentIndex( i );
       onProjectActivated( i );

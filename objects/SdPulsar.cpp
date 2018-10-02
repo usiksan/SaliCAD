@@ -27,9 +27,9 @@ void SdPulsar::emitCloseProject(SdProject *project)
   emit closeProject( project );
   }
 
-void SdPulsar::emitRenameProject(SdProject *project)
+void SdPulsar::emitRenameProject(SdProject *project, const QString shortName)
   {
-  emit renameProject( project );
+  emit renameProject( project, shortName );
   }
 
 void SdPulsar::emitRenameItem(SdProjectItem *item)
@@ -66,6 +66,23 @@ void SdPulsar::emitHighlightItem(SdProjectItem *item)
 void SdPulsar::emitCloseEditView(SdProjectItem *item)
   {
   emit closeEditView( item );
+  }
+
+
+
+//Activate project wihtout item selection
+void SdPulsar::emitActivateProject(SdProject *project, const QString shortName)
+  {
+  emit activateProject( project, shortName );
+  }
+
+
+
+
+//Highlight project without item highlight
+void SdPulsar::emitHighlightProject(SdProject *project)
+  {
+  emit highlightProject( project );
   }
 
 

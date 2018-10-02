@@ -60,10 +60,13 @@ class SdWProjectList : public QWidget
     void            onProjectActivated( int index );
 
     //On rename project
-    void            onRenameProject( SdProject *prj );
+    void            onRenameProject(SdProject *prj , const QString shortName);
 
     //On activate item. We brings item's project up
     void            onItemActivated( SdProjectItem *item );
+
+    //On project highlighted
+    void            onProjectHighlighted(SdProject *project );
   };
 
 #endif // SDWPROJECTLIST_H

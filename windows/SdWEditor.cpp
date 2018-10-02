@@ -34,7 +34,9 @@ SdWEditor::SdWEditor(QWidget *parent) :
 
 SdProject *SdWEditor::getProject()
   {
-  return getProjectItem()->getProject();
+  if( getProjectItem() )
+    return getProjectItem()->getProject();
+  return nullptr;
   }
 
 
@@ -43,7 +45,7 @@ SdProject *SdWEditor::getProject()
 void SdWEditor::dirtyProject()
   {
   //Set project dirty
-  getProjectItem()->setProjectDirtyFlag();
+  getProject()->setDirty();
   }
 
 

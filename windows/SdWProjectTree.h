@@ -9,6 +9,8 @@ Web
   www.saliLab.ru
 
 Description
+  Project tree view. In this widget project presented as tree of projects items.
+  Allow navigate on tree with edit operations.
 */
 
 #ifndef SDWPROJECTTREE_H

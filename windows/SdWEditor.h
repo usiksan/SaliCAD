@@ -34,14 +34,17 @@ class SdWEditor : public QAbstractScrollArea
     explicit SdWEditor( QWidget *parent = nullptr);
     virtual ~SdWEditor() {}
 
+    //Return item which edited by this editor
     virtual SdProjectItem* getProjectItem() const = 0;
 
-    SdProject*             getProject();
+    //Return project to which referenced item edited by this editor
+    virtual SdProject*     getProject();
+
     void                   dirtyProject();
 
-    QString                getTitle();
+    virtual QString        getTitle();
 
-    QString                getIconName();
+    virtual QString        getIconName();
 
     int                    getRecentlyIndex() const { return mRecentlyIndex; }
 

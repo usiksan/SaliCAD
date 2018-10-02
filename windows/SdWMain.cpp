@@ -23,6 +23,7 @@ Description
 #include "SdWEditorGraphView.h"
 #include "SdWEditorInheritance.h"
 #include "SdWEditorHelp.h"
+#include "SdWEditorProject.h"
 #include "SdWCommand.h"
 #include "SdWLabel.h"
 #include "SdDOptions.h"
@@ -135,6 +136,8 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   connect( SdPulsar::sdPulsar, &SdPulsar::renameItem, this, &SdWMain::onUpdateItemTitle );
   connect( SdPulsar::sdPulsar, &SdPulsar::browseSheetPart, this, &SdWMain::onBrowseSheetPart );
   connect( SdPulsar::sdPulsar, &SdPulsar::selectedParts, this, &SdWMain::onSelectedParts );
+  connect( SdPulsar::sdPulsar, &SdPulsar::renameProject, this, &SdWMain::onRenameProject );
+  connect( SdPulsar::sdPulsar, &SdPulsar::activateProject, this, &SdWMain::onActivateProject );
 
   //Clipboard notification
   connect( QGuiApplication::clipboard(), &QClipboard::changed, this, &SdWMain::onClipboardChanged );
@@ -239,34 +242,7 @@ void SdWMain::onActivateProjectItem(SdProjectItem *item)
       break;
     }
 
-  if( editor != nullptr ) {
-    if( mWEditors->count() >= SD_MAX_EDITORS ) {
-      //Remove last recently used editor
-      int minIndex = SD_MAX_EDITORS;
-      int minEditor = 0;
-      //Find last recently used editor
-      for( int i = 0; i < mWEditors->count(); i++ ) {
-        SdWEditor *ed = getEditor(i);
-        if( ed && ed->getRecentlyIndex() < minIndex ) {
-          minIndex = ed->getRecentlyIndex();
-          minEditor = i;
-          }
-        }
-      //Remove founded editor
-      SdWEditor *toRemove = getEditor(minEditor);
-      mWEditors->removeTab(minEditor);
-      if( toRemove )
-        toRemove->deleteLater();
-      }
-    //If editor created - insert it into tab
-    mWEditors->addTab( editor, QIcon( editor->getIconName() ), editor->getTitle() );
-
-    //Set tool tip
-    //mWEditors->setTabToolTip( mWEditors->count() - 1, item->getToolTip() );
-
-    //And make it current
-    mWEditors->setCurrentIndex( mWEditors->count() - 1 );
-    }
+  appendEditor( editor );
   }
 
 
@@ -334,9 +310,52 @@ void SdWMain::onCloseProject(SdProject *prj)
   //Find if items of this project are open
   for( int i = mWEditors->count() - 1; i >= 0; i-- ) {
     SdWEditor *editor = getEditor(i);
-    if( editor && editor->getProjectItem() && editor->getProjectItem()->getProject() == prj ) {
+    if( editor && editor->getProject() == prj ) {
       //Item of this project open, close editor
       mWEditors->removeTab( i );
+      }
+    }
+  }
+
+
+
+
+//This signal send from project tree when no item selected
+void SdWMain::onActivateProject(SdProject *prj, const QString shortName)
+  {
+  if( prj == nullptr ) return;
+  if( activeEditor() && activeEditor()->getProjectItem() == nullptr && activeEditor()->getProject() == prj )
+    //Active editor already top with this item. Nothing done
+    return;
+
+  //Find if item already open
+  for( int i = 0; i < mWEditors->count(); i++ ) {
+    SdWEditor *editor = getEditor(i);
+    if( editor && editor->getProjectItem() == nullptr && editor->getProject() == prj ) {
+      //Item already open, bring it on top
+      mWEditors->setCurrentIndex( i );
+      return;
+      }
+    }
+
+  //Create new project view
+  SdWEditor *editor = new SdWEditorProject( prj, shortName );
+  appendEditor( editor );
+  }
+
+
+
+
+//This signal send from project tree when project renamed
+void SdWMain::onRenameProject(SdProject *prj, const QString shortName)
+  {
+  //Find if there opened project view editor
+  for( int i = 0; i < mWEditors->count(); i++ ) {
+    SdWEditor *editor = getEditor(i);
+    if( editor && editor->getProjectItem() == nullptr && editor->getProject() == prj ) {
+      //Project view present - rename
+      mWEditors->setTabText( i, shortName );
+      return;
       }
     }
   }
@@ -438,6 +457,44 @@ void SdWMain::closeEvent(QCloseEvent *ev)
 
 
 
+
+//Insert editor to tab view
+void SdWMain::appendEditor(SdWEditor *editor)
+  {
+  if( editor != nullptr ) {
+    if( mWEditors->count() >= SD_MAX_EDITORS ) {
+      //Remove last recently used editor
+      int minIndex = SD_MAX_EDITORS;
+      int minEditor = 0;
+      //Find last recently used editor
+      for( int i = 0; i < mWEditors->count(); i++ ) {
+        SdWEditor *ed = getEditor(i);
+        if( ed && ed->getRecentlyIndex() < minIndex ) {
+          minIndex = ed->getRecentlyIndex();
+          minEditor = i;
+          }
+        }
+      //Remove founded editor
+      SdWEditor *toRemove = getEditor(minEditor);
+      mWEditors->removeTab(minEditor);
+      if( toRemove )
+        toRemove->deleteLater();
+      }
+    //If editor created - insert it into tab
+    mWEditors->addTab( editor, QIcon( editor->getIconName() ), editor->getTitle() );
+
+    //Set tool tip
+    //mWEditors->setTabToolTip( mWEditors->count() - 1, item->getToolTip() );
+
+    //And make it current
+    mWEditors->setCurrentIndex( mWEditors->count() - 1 );
+    }
+  }
+
+
+
+
+//Get editor by index in tab view
 SdWEditor *SdWMain::getEditor(int index)
   {
   if( index < 0 || index >= mWEditors->count() )
@@ -449,6 +506,7 @@ SdWEditor *SdWMain::getEditor(int index)
 
 
 
+//Return current active editor
 SdWEditor *SdWMain::activeEditor()
   {
   return dynamic_cast<SdWEditor*>( mWEditors->currentWidget() );

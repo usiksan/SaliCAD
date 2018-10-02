@@ -30,7 +30,7 @@ class SdPulsar : public QObject
     //BEFORE destroy project
     void emitCloseProject( SdProject *project );
     //AFTER rename project
-    void emitRenameProject( SdProject *project );
+    void emitRenameProject( SdProject *project, const QString shortName );
     //AFTER rename item
     void emitRenameItem( SdProjectItem *item );
     //AFTER insert item
@@ -43,6 +43,10 @@ class SdPulsar : public QObject
     void emitHighlightItem( SdProjectItem *item );
     //Need close item edit (view)
     void emitCloseEditView( SdProjectItem *item );
+    //Activate project wihtout item selection
+    void emitActivateProject( SdProject *project, const QString shortName );
+    //Highlight project without item highlight
+    void emitHighlightProject( SdProject *project );
     //Browse part in sheet
     void emitBrowseSheetPart( SdProjectItem *sheet, SdProjectItem *plate );
     //Components, selected from sheet
@@ -65,7 +69,7 @@ class SdPulsar : public QObject
     //BEFORE destroy project
     void closeProject( SdProject *project );
     //AFTER rename project
-    void renameProject( SdProject *project );
+    void renameProject( SdProject *project, const QString shortName );
     //AFTER rename item
     void renameItem( SdProjectItem *item );
     //AFTER insert item
@@ -78,6 +82,10 @@ class SdPulsar : public QObject
     void highlightItem( SdProjectItem *item );
     //Need close item edit (view)
     void closeEditView( SdProjectItem *item );
+    //Activate project wihtout item selection
+    void activateProject( SdProject *project, const QString shortName );
+    //Highlight project without item highlight
+    void highlightProject( SdProject *project );
     //Browse part in sheet
     void browseSheetPart( SdProjectItem *sheet, SdProjectItem *plate );
     //Components, selected from sheet
