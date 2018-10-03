@@ -106,6 +106,9 @@ class SdWProjectTree : public QTreeWidget
     //When editor activated send this signal
     //on it we highlight appropriate line in project tree
     void highlightItem( SdProjectItem *item );
+    //When project view editor activated send this signal
+    //on it we highlight sheets
+    void highlightSheets();
 
     void onCurrentItemChanged( QTreeWidgetItem *cur, QTreeWidgetItem *prev );
 

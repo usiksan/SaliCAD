@@ -217,6 +217,7 @@ void SdWProjectList::onProjectHighlighted(SdProject *project)
   for( int i = 0; i < mWProjectStack->count(); i++ ) {
     SdWProjectTree *prj = dynamic_cast<SdWProjectTree*>( mWProjectStack->widget(i) );
     if( prj && prj->getProject() == project ) {
+      prj->highlightSheets();
       //Project found, bring it up
       mProjectTitles->setCurrentIndex( i );
       onProjectActivated( i );

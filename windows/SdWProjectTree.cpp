@@ -487,8 +487,22 @@ void SdWProjectTree::removeItem(SdProjectItem *item)
 //on it we highlight appropriate line in project tree
 void SdWProjectTree::highlightItem(SdProjectItem *item)
   {
-  if( item && item->getProject() == mProject && mCurrentItem != item->mTreeItem )
+  if( item && item->getProject() == mProject && mCurrentItem != item->mTreeItem ) {
     setCurrentItem( item->mTreeItem );
+    }
+  }
+
+
+
+
+
+//When project view editor activated send this signal
+//on it we highlight sheets
+void SdWProjectTree::highlightSheets()
+  {
+  if( mCurrentItem && mProject->item(mCurrentItem) ) {
+    setCurrentItem( mSheetList );
+    }
   }
 
 

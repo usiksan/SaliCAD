@@ -57,6 +57,7 @@ QString SdWEditorProject::getIconName()
 void SdWEditorProject::onActivateEditor()
   {
   SdWEditor::onActivateEditor();
+  SdPulsar::sdPulsar->emitHighlightProject( mProject );
   }
 
 
