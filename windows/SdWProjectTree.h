@@ -34,6 +34,7 @@ class SdWProjectTree : public QTreeWidget
     QTreeWidgetItem     *mSheetList;     //Листы схем
     QTreeWidgetItem     *mPlateList;     //Печатные платы
     QTreeWidgetItem     *mTextList;      //Текстовые документы
+    QTreeWidgetItem     *mCurrentItem;   //Store current item, because currentItem() return not owned item
 
     QString              mFileName;      //Полное имя файла проекта проекта с путем
   public:

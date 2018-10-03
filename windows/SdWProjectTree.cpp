@@ -59,6 +59,8 @@ SdWProjectTree::SdWProjectTree(const QString fname, SdProject *prj, QWidget *par
   //If project builded then display its contens [Если проект построен, то отобразить содержимое]
   buildVisualTree();
 
+  mCurrentItem = mSheetList;
+
   connect( SdPulsar::sdPulsar, &SdPulsar::insertItem, this, &SdWProjectTree::insertItem );
   connect( SdPulsar::sdPulsar, &SdPulsar::removeItem, this, &SdWProjectTree::removeItem );
   connect( SdPulsar::sdPulsar, &SdPulsar::renameItem, this, &SdWProjectTree::renameItem );
@@ -195,7 +197,7 @@ void SdWProjectTree::cmObjectLoad()
 
 void SdWProjectTree::cmObjectRename()
   {
-  SdProjectItemPtr item = dynamic_cast<SdProjectItem*>( mProject->item( currentItem() ) );
+  SdProjectItemPtr item = dynamic_cast<SdProjectItem*>( mProject->item( mCurrentItem ) );
   if( item ) {
     if( item->isEditEnable() ) {
       QWizard wizard(this);
@@ -223,7 +225,7 @@ void SdWProjectTree::cmObjectRename()
 
 void SdWProjectTree::cmObjectDelete()
   {
-  SdProjectItemPtr item = dynamic_cast<SdProjectItem*>( mProject->item( currentItem() ) );
+  SdProjectItemPtr item = dynamic_cast<SdProjectItem*>( mProject->item( mCurrentItem ) );
   if( item ) {
     if( mProject->isUsed(item) )
       QMessageBox::warning( this, tr("Warning!"), tr("Object is used by other objects. You can not delete it until dereferenced.") );
@@ -243,7 +245,7 @@ void SdWProjectTree::cmObjectDelete()
 
 void SdWProjectTree::cmObjectCopy()
   {
-  SdPtr<SdProjectItem> item( mProject->item( currentItem() ) );
+  SdPtr<SdProjectItem> item( mProject->item( mCurrentItem ) );
   if( item.isValid() && (item->getClass() & (dctComponent|dctInheritance|dctPart|dctSymbol)) ) {
     //Prepare Json object with project and selection
     QJsonObject obj;
@@ -315,7 +317,7 @@ void SdWProjectTree::cmObjectPaste()
 //Cut object to clipboard
 void SdWProjectTree::cmObjectCut()
   {
-  SdPtr<SdProjectItem> item( mProject->item( currentItem() ) );
+  SdPtr<SdProjectItem> item( mProject->item( mCurrentItem ) );
   if( item.isValid() && (item->getClass() & (dctComponent|dctInheritance|dctPart|dctSymbol)) ) {
     if( mProject->isUsed(item.ptr()) )
       QMessageBox::warning( this, tr("Warning!"), tr("Object is used by other objects. You can not cut it until dereferenced, only copy.") );
@@ -336,7 +338,7 @@ void SdWProjectTree::cmObjectCut()
 //Duplicate current object
 void SdWProjectTree::cmObjectDuplicate()
   {
-  SdPtr<SdProjectItem> item( mProject->item( currentItem() ) );
+  SdPtr<SdProjectItem> item( mProject->item( mCurrentItem ) );
   if( item.isValid() && (item->getClass() & (dctComponent|dctInheritance|dctPart|dctSymbol)) ) {
     mProject->getUndo()->begin( tr("Duplicate object"), nullptr );
     duplicate( item->getUid() );
@@ -375,7 +377,7 @@ void SdWProjectTree::cmObjectSort()
 void SdWProjectTree::cmObjectParam()
   {
   //Get current item and show its param
-  SdPtr<SdProjectItem> item( mProject->item( currentItem() ) );
+  SdPtr<SdProjectItem> item( mProject->item( mCurrentItem ) );
   if( item.isValid() ) {
     SdDParamEditor editor( tr("Edit param"), item->paramTable(), mProject, item->isEditEnable(), false, this );
     if( editor.exec() ) {
@@ -485,7 +487,7 @@ void SdWProjectTree::removeItem(SdProjectItem *item)
 //on it we highlight appropriate line in project tree
 void SdWProjectTree::highlightItem(SdProjectItem *item)
   {
-  if( item )
+  if( item && item->getProject() == mProject && mCurrentItem != item->mTreeItem )
     setCurrentItem( item->mTreeItem );
   }
 
@@ -495,10 +497,12 @@ void SdWProjectTree::highlightItem(SdProjectItem *item)
 void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem *prev)
   {
   Q_UNUSED(prev)
+  mCurrentItem = cur;
   bool disable = cur == mSheetList || cur == mPlateList || cur == mSymbolList ||
                  cur == mComponentList || cur == mPartList || cur == mTextList;
   bool enable = !disable && cur != nullptr;
 
+  qDebug() << "onCurrentItem" << cur << disable << enable;
   SdWCommand::cmObjectRename->setEnabled(enable);
   SdWCommand::cmObjectParam->setEnabled(enable);
   SdWCommand::cmObjectDelete->setEnabled(enable);
@@ -535,11 +539,12 @@ void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem 
 void SdWProjectTree::showEvent(QShowEvent *event)
   {
   qDebug() << "show event" << fileName();
+
   //Установить пункты меню в соответствии со своим состоянием
   SdWCommand::cmFileSave->setEnabled( true );
 
-  if( currentItem() )
-    onCurrentItemChanged( currentItem(), nullptr );
+  if( mCurrentItem )
+    onCurrentItemChanged( mCurrentItem, nullptr );
   else {
     qDebug() << "activate project" << fileName();
     emit SdPulsar::sdPulsar->emitActivateProject( mProject, fileName() );
