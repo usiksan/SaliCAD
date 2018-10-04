@@ -206,7 +206,7 @@ bool SdLibraryStorage::forEachHeader(std::function<bool(SdLibraryHeader&)> fun1)
   SdLibraryHeader hdr;
   while( !mHeaderFile.atEnd() ) {
     hdr.read( is );
-    //qDebug() << hdr.uid() << hdr.mTime;
+    qDebug() << hdr.uid() << hdr.mTime;
     //Test if header not deleted
     if( mReferenceMap.value(hdr.uid()).mCreationTime == hdr.mTime ) {
       if( fun1( hdr) )

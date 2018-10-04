@@ -516,7 +516,7 @@ void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem 
                  cur == mComponentList || cur == mPartList || cur == mTextList;
   bool enable = !disable && cur != nullptr;
 
-  qDebug() << "onCurrentItem" << cur << disable << enable;
+  //qDebug() << "onCurrentItem" << cur << disable << enable;
   SdWCommand::cmObjectRename->setEnabled(enable);
   SdWCommand::cmObjectParam->setEnabled(enable);
   SdWCommand::cmObjectDelete->setEnabled(enable);
@@ -531,16 +531,12 @@ void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem 
   if( enable && cur ) {
     SdProjectItem *item = dynamic_cast<SdProjectItem*>( mProject->item( cur ) );
     if( item ) {
-      qDebug() << "activate item" << item->getTitle();
+      //qDebug() << "activate item" << item->getTitle();
       emit SdPulsar::sdPulsar->emitActivateItem( item );
       }
-//    else {
-//      qDebug() << "activate project 2" << fileName() << cur << prev;
-//      emit SdPulsar::sdPulsar->emitActivateProject( mProject, fileName() );
-//      }
     }
   else if( cur ) {
-    qDebug() << "activate project" << fileName() << cur << prev;
+    //qDebug() << "activate project" << fileName() << cur << prev;
     emit SdPulsar::sdPulsar->emitActivateProject( mProject, fileName() );
     }
   }

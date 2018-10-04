@@ -113,6 +113,10 @@ int main(int argc, char *argv[])
   delete sdGlobalProp;
   delete sdEnvir;
   delete SdPulsar::sdPulsar;
+
+  //Close library and store all changes
+  SdObjectFactory::closeLibrary();
+
   return res;
   }
 

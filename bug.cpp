@@ -1,5 +1,5 @@
 ﻿
-//B063 bugs
+//B064 bugs
 //F001 fatal
 //C001 critical
 //D065 do
@@ -26,6 +26,8 @@
 //TODO D063 Append project component list (bom) and report generator
 
 //TODO D064 Helper graph objects for other graph objects positioning
+
+//FIXME B064 Header list contains many objects with same time
 
 
 //===================================================================================
