@@ -17,12 +17,15 @@ Description
 #include "objects/SdProject.h"
 #include "SdWEditor.h"
 
+#include <QTextBrowser>
+
 class SdWEditorProject : public SdWEditor
   {
     Q_OBJECT
 
-    SdProject *mProject;   //Project which view
-    QString    mShortName; //Project short name - file name without extension and without path
+    SdProject     *mProject;   //Project which view
+    QString        mShortName; //Project short name - file name without extension and without path
+    QTextBrowser  *mTitle;     //Project title - visual representation
   public:
     SdWEditorProject( SdProject *prj, const QString shortName );
 

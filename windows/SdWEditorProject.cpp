@@ -13,13 +13,22 @@ Description
 */
 #include "SdWEditorProject.h"
 #include "objects/SdPulsar.h"
+#include <QVBoxLayout>
 
 SdWEditorProject::SdWEditorProject(SdProject *prj, const QString shortName) :
   SdWEditor(),
   mProject(prj),
   mShortName(shortName)
   {
+  mTitle = new QTextBrowser();
+  QVBoxLayout *box = new QVBoxLayout();
+  box->addWidget( mTitle );
+  setLayout( box );
+
   connect( SdPulsar::sdPulsar, &SdPulsar::renameProject, this, &SdWEditorProject::onProjectRename );
+
+  //Build project title
+  onProjectRename( prj, shortName );
   }
 
 
@@ -48,7 +57,7 @@ QString SdWEditorProject::getTitle()
 
 QString SdWEditorProject::getIconName()
   {
-  return QString(":/pic/drawLine.png");
+  return QString(":/pic/iconProject.png");
   }
 
 
@@ -80,8 +89,13 @@ void SdWEditorProject::cmEditRedo()
 
 void SdWEditorProject::onProjectRename(SdProject *prj, const QString shortName)
   {
-  if( mProject == prj )
+  if( mProject == prj ) {
     mShortName = shortName;
+
+    //Build visual title
+    QString htm = QString("<h1 align=\"center\">%1</h1>").arg( mShortName );
+    mTitle->setHtml( htm );
+    }
   }
 
 

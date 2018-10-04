@@ -21,8 +21,6 @@
 
 //TODO D060 Append object replacing capability and autoreplacing
 
-//TODO D061 Append project preview editor
-
 //TODO D062 Append text item
 
 //TODO D063 Append project component list (bom) and report generator
@@ -32,6 +30,8 @@
 
 //===================================================================================
 //Fixed:
+
+//D061 Append project preview editor
 
 //D065 Append indication edit state to icon
 
