@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -42,7 +42,14 @@ class SdWEditorProject : public SdWEditor
     virtual void           cmEditRedo() override;
 
   public slots:
+    //When project renamed we must rebuild project visual representation
     void onProjectRename( SdProject *prj, const QString shortName );
+
+    //Parse click in visual representation
+    void onLinkClick( QUrl url );
+
+  private:
+    void visualBuild();
   };
 
 #endif // SDWEDITORPROJECT_H

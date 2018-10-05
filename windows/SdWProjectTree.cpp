@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -401,6 +401,8 @@ void SdWProjectTree::cmProjectParam()
     mProject->paramTableSet( editor.paramTable(), mProject->getUndo() );
     //Update status undo and redo commands
     cmUndoRedoUpdate();
+    //Update visual representation
+    SdPulsar::sdPulsar->emitRenameProject( mProject, fileName() );
     }
   }
 
