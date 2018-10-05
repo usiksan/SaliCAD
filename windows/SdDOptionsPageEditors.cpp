@@ -83,7 +83,7 @@ void SdDOptionsPageEditors::accept()
   sdEnvir->mShowMessageRemark = mShowMessage->isChecked();
   sdEnvir->mCenterCursor      = mCenterCursor->isChecked();
 
-  sdEnvir->mSymPinSize = sdEnvir->fromPhisSchematic( mSymbolPinSize->text() );
+  sdEnvir->mSymPinSize  = sdEnvir->fromPhisSchematic( mSymbolPinSize->text() );
   sdEnvir->mPartPinSize = sdEnvir->fromPhisPcb( mPartPinSize->text() );
   sdEnvir->mDotSize     = sdEnvir->fromPhisSchematic( mWireDotSize->text() );
   sdEnvir->mDotWidth    = sdEnvir->fromPhisSchematic( mWireDotWidth->text() );

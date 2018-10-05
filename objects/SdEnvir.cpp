@@ -139,7 +139,8 @@ void SdEnvir::loadEnvir()
        >> mHomePath             //Каталог пользователя
        >> mLibraryPath          //Каталог библиотек
        >> mPatternPath          //Каталог шаблонов
-       >> mPadStackUid           //Файл контактных площадок
+       >> mCategoryPath         //Base path for store category hierarchy
+       >> mPadStackUid          //Файл контактных площадок
        >> mPadStackTitle        //Объект содержащий контактные площадки
        >> mGridHistory          //Previous grid history table
        >> mDefaultRules         //Default rules for pcb
@@ -213,6 +214,7 @@ void SdEnvir::saveEnvir()
      << mHomePath             //Каталог пользователя
      << mLibraryPath          //Каталог библиотек
      << mPatternPath          //Каталог шаблонов
+     << mCategoryPath         //Base path for store category hierarchy
      << mPadStackUid          //Файл контактных площадок
      << mPadStackTitle        //Объект содержащий контактные площадки
      << mGridHistory          //Previous grid history table
@@ -301,11 +303,13 @@ void SdEnvir::defaultEnvir()
   mHomePath = QDir::homePath();        //Каталог пользователя
   if( !mHomePath.endsWith( QChar('/') ) )
     mHomePath.append( QChar('/') );
-  mHomePath.append( QString("SaliLAB/SaliCAD/") );
+  mHomePath.append( QStringLiteral("SaliLAB/SaliCAD/") );
   mLibraryPath = mHomePath;            //Каталог библиотек
-  mLibraryPath.append( QString("library/") );
+  mLibraryPath.append( QStringLiteral("library/") );
   mPatternPath = mHomePath;            //Каталог шаблонов
-  mPatternPath.append( QString("pattern/") );
+  mPatternPath.append( QStringLiteral("pattern/") );
+  mCategoryPath = mLibraryPath;        //Base path for store category hierarchy
+  mCategoryPath.append( QStringLiteral("category/") );
 
   mPadStackUid.clear();  //Default SdPadAssociation uid [UID контактных площадок]
   mPadStackTitle = QString("default");//Объект содержащий контактные площадки

@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Work environment for individual user
 */
 
 #ifndef SDENVIR_H
@@ -27,17 +28,17 @@ Description
 #include <QList>
 
 
-#define scPureBlack     -2 //Чисто черный цвет
-#define scUnvisible     -1 //Всегда невидимые элементы
-#define scLocked         0 //Цвет заблокированных элементов
-#define scSelected       1 //Цвет выбранных элементов
-#define scEnter          2 //Цвет ввода
-#define scSmart          3 //Цвет разумного режима
-#define scGraphBack      4 //Цвет фона графического редактора
-#define scRatNet         5 //Цвет резинок
-#define scCursor         6 //Цвет курсора
-#define scTraseNet       7 //Цвет трассируемой цепи
-#define scGrid           8 //Цвет сетки
+#define scPureBlack     -2 //Pure black color [Чисто черный цвет]
+#define scUnvisible     -1 //Always invisible elements [Всегда невидимые элементы]
+#define scLocked         0 //Color for locked elements [Цвет заблокированных элементов]
+#define scSelected       1 //Color for selected elements [Цвет выбранных элементов]
+#define scEnter          2 //Enter color [Цвет ввода]
+#define scSmart          3 //Smart mark color [Цвет разумного режима]
+#define scGraphBack      4 //Graphics editor background color [Цвет фона графического редактора]
+#define scRatNet         5 //Rat net color [Цвет резинок]
+#define scCursor         6 //Cursor color [Цвет курсора]
+#define scTraseNet       7 //Color for currently traced net pads [Цвет трассируемой цепи]
+#define scGrid           8 //Grid color [Цвет сетки]
 #define scRuleErrors     9 //Rule errors color
 #define scCatchPoint    10 //Catch point color in road enter mode. Catch point is point nearest current cursor postion for best next enter.
 #define scLast          11
@@ -52,7 +53,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (31 + FONT_COUNT)
+#define SdEnvirVersion  (32 + FONT_COUNT)
 
 
 class SdEnvir
@@ -93,9 +94,10 @@ class SdEnvir
     bool            mGridShow;             //Включение сетки
     bool            mCursorAlignGrid;      //Включение движения курсора по сетке
     bool            mCenterCursor;         //Центровать курсор при увеличении и уменьшении
-    QString         mHomePath;             //Каталог пользователя
-    QString         mLibraryPath;          //Каталог библиотек
+    QString         mHomePath;             //Current user home path [Каталог пользователя]
+    QString         mLibraryPath;          //Library path [Каталог библиотек]
     QString         mPatternPath;          //Каталог шаблонов
+    QString         mCategoryPath;         //Base path for store category hierarchy
     QString         mPadStackUid;          //SdPadAssociation object id [Объект контактных площадок]
     QString         mPadStackTitle;        //SdPadAssociation object title [Название объекта с контактными площадками]
     QList<QPointF>  mGridHistory;          //Previous grid history
