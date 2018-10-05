@@ -17,6 +17,7 @@ Description
 #include "SdWEditorGraphView.h"
 #include "SdDNetClient.h"
 #include "SdDRowValue.h"
+#include "SdWCategoryList.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdProjectItem.h"
 #include "objects/SdPItemComponent.h"
@@ -212,6 +213,10 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   connect( ui->mReject, &QPushButton::clicked, this, &SdDGetObject::reject );
   connect( ui->mLoadFromCentral, &QPushButton::clicked, this, &SdDGetObject::onLoadFromCentral );
   ui->mLoadFromCentral->setDisabled(true);
+
+  //Category
+  mCategoryList = new SdWCategoryList(nullptr);
+  ui->mCategoryBox->addWidget( mCategoryList );
 
   connect( ui->mClearFields, &QPushButton::clicked, this, &SdDGetObject::onClearFieldFiltr );
 

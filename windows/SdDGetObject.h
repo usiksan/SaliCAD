@@ -23,6 +23,7 @@ class SdObject;
 class SdProjectItem;
 class SdPItemComponent;
 class SdWEditorGraphView;
+class SdWCategoryList;
 class SdProject;
 
 namespace Ui {
@@ -39,6 +40,7 @@ class SdDGetObject : public QDialog
     SdWEditorGraphView    *mPartView;     //Widget for part preview
     SdPItemComponent      *mComponent;    //Component if selected
     SdProject             *mProject;      //Project if selected
+    SdWCategoryList       *mCategoryList; //Hierarchy presentation of category tree
 
     static QString                mObjName;      //Object name
     static QString                mObjUid;       //Unical object id

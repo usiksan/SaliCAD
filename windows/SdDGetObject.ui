@@ -17,6 +17,17 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
+      <layout class="QVBoxLayout" name="mCategoryBox">
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Category</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -81,7 +92,7 @@
          <item>
           <widget class="QCheckBox" name="mTitleOnlyFiltr">
            <property name="text">
-            <string>Filtr only on title</string>
+            <string>Expand param table</string>
            </property>
           </widget>
          </item>
@@ -109,6 +120,13 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Find list</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QTableWidget" name="mTable"/>
@@ -161,13 +179,6 @@
       </layout>
      </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Find list</string>
-     </property>
-    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
