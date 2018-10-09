@@ -99,19 +99,26 @@ class SdWProjectTree : public QTreeWidget
   public slots:
     //AFTER rename item
     void renameItem( SdProjectItem *item );
+
     //AFTER insert item
     void insertItem( SdProjectItem *item );
+
     //BEFORE remove item
     void removeItem( SdProjectItem *item );
+
     //When editor activated send this signal
     //on it we highlight appropriate line in project tree
     void highlightItem( SdProjectItem *item );
+
     //When project view editor activated send this signal
     //on it we highlight sheets
     void highlightSheets();
 
+    //When changed current item
     void onCurrentItemChanged( QTreeWidgetItem *cur, QTreeWidgetItem *prev );
 
+    //When received new objects we update newest mark
+    void updateNewestMark();
   protected:
     virtual void      showEvent( QShowEvent *event ) override;
 

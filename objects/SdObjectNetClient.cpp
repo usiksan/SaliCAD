@@ -288,6 +288,7 @@ void SdObjectNetClient::cmSyncList(QDataStream &is)
       QSettings s;
       s.setValue( SDK_REMOTE_SYNC, mRemoteSyncIndex );
       s.setValue( SDK_LOCAL_SYNC, mLocalSyncIndex );
+      emit newObjectsReceived();
       doSync();
       }
     sdLibraryStorage.flush();

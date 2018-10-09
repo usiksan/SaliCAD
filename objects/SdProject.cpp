@@ -127,7 +127,7 @@ SdProjectItem *SdProject::getFixedProjectItem(SdProjectItem *item)
   //If object is found then return it
   if( res ) {
     res->setEditEnable( false, QString() );
-    qDebug() << "getProjectItem from project" << item << res;
+    //qDebug() << "getProjectItem from project" << item << res;
     return res;
     }
   //else insert copy
@@ -135,7 +135,7 @@ SdProjectItem *SdProject::getFixedProjectItem(SdProjectItem *item)
   Q_ASSERT( res != nullptr );
   insertChild( res, &mUndo );
   res->setEditEnable( false, QString() );
-  qDebug() << "getProjectItem copy" << item->getUid() << res->getUid() << item << res;
+  //qDebug() << "getProjectItem copy" << item->getUid() << res->getUid() << item << res;
   return res;
   }
 

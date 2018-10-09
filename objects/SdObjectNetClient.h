@@ -49,11 +49,20 @@ class SdObjectNetClient : public SdCsChannel
     bool isRegistered() const;
 
   signals:
+    //Signal on process changed. Send current process state description and completion flag
     void process( QString desr, bool complete );
 
+    //Signal send on complete object loading process
+    // with result of loading and count of remain object to may be load
     void objectComplete( int result, int remain );
 
+    //Signal send on user registration complete
+    // with accnowledges all query params
     void registrationComplete( const QString authorName, const QString email, quint64 key, int remain, int result );
+
+    //Signal send when on sync new object received
+    void newObjectsReceived();
+
   public slots:
 
     //Begin registration process

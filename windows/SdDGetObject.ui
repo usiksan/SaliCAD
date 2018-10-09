@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1005</width>
+    <width>1168</width>
     <height>634</height>
    </rect>
   </property>
@@ -19,11 +19,22 @@
      <item>
       <layout class="QVBoxLayout" name="mCategoryBox">
        <item>
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Category</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>Category</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="mOrganizer">
+           <property name="text">
+            <string>Organizer...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>
