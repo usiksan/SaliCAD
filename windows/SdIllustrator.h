@@ -29,6 +29,7 @@ class SdIllustrator
     void    drawCircle(int cx, int cy, int r, QColor color );
     void    drawCross( int cx, int cy, int r, QColor color );
     void    drawText(int x, int y, const QString str, QColor color, int size = 12 );
+    void    drawTextMapped(int x, int y, const QString str, QColor color, int size );
 
     //Filled
     void    drawFillRect( int x1, int y1, int x2, int y2, QColor color, double opacity = 1.0 );

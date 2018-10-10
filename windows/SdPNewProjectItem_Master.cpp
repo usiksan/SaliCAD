@@ -20,6 +20,7 @@ Description
 #include "master/SdDMasterPartQuadSide.h"
 
 #include "master/SdDMasterSymbolConnector.h"
+#include "master/SdDMasterSymbolIc.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -97,6 +98,12 @@ void SdPNewProjectItem_Master::initializePage()
       addMaster( tr("Connectors"), tr("Creates symbol for connector"),
                  QString(":/pic/symbolMasterConnector.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
         SdDMasterSymbolConnector dlg( item, p );
+        return dlg.exec();
+        });
+
+      addMaster( tr("Integrated circuits"), tr("Creates symbol for integrated circuit"),
+                 QString(":/pic/symbolMasterIc.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
+        SdDMasterSymbolIc dlg( item, p );
         return dlg.exec();
         });
 

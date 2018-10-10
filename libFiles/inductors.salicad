@@ -1,0 +1,378 @@
+{
+    "ChildList": [
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "Center": {
+                        "x": 250,
+                        "y": 0
+                    },
+                    "Start": {
+                        "x": 500,
+                        "y": 0
+                    },
+                    "Stop": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "id": "5815f10",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Arc"
+                },
+                {
+                    "Center": {
+                        "x": 750,
+                        "y": 0
+                    },
+                    "Start": {
+                        "x": 1000,
+                        "y": 0
+                    },
+                    "Stop": {
+                        "x": 500,
+                        "y": 0
+                    },
+                    "id": "5815e10",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Arc"
+                },
+                {
+                    "Center": {
+                        "x": 1250,
+                        "y": 0
+                    },
+                    "Start": {
+                        "x": 1500,
+                        "y": 0
+                    },
+                    "Stop": {
+                        "x": 1000,
+                        "y": 0
+                    },
+                    "id": "5815d90",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Arc"
+                },
+                {
+                    "Center": {
+                        "x": 1750,
+                        "y": 0
+                    },
+                    "Start": {
+                        "x": 2000,
+                        "y": 0
+                    },
+                    "Stop": {
+                        "x": 1500,
+                        "y": 0
+                    },
+                    "id": "5815cd0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Arc"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": -750,
+                        "y": 0
+                    },
+                    "id": "5815c90",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2000,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 2750,
+                        "y": 0
+                    },
+                    "id": "5815d50",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Origin": {
+                        "x": 1000,
+                        "y": 500
+                    },
+                    "id": "5863dd8",
+                    "over": {
+                        "h": 416,
+                        "w": 608,
+                        "x": 696,
+                        "y": 288
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 1000,
+                        "y": -250
+                    },
+                    "id": "58638b0",
+                    "over": {
+                        "h": 416,
+                        "w": 1144,
+                        "x": 432,
+                        "y": -456
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                },
+                {
+                    "Name": "p1",
+                    "NamePos": {
+                        "x": -500,
+                        "y": -250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": -750,
+                        "y": 250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": -750,
+                        "y": 0
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "f07a88",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "p2",
+                    "NamePos": {
+                        "x": 2500,
+                        "y": -250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 2500,
+                        "y": 250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 2750,
+                        "y": 0
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "f07b30",
+                    "type": "SymPin"
+                }
+            ],
+            "Created": 24410144,
+            "Edit enable": true,
+            "Origin": {
+                "x": -750,
+                "y": 0
+            },
+            "Parametrs": {
+            },
+            "Title": "inductor",
+            "id": "5816110",
+            "type": "Symbol"
+        },
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": 0,
+                        "y": -1600
+                    },
+                    "b": {
+                        "x": 0,
+                        "y": 1600
+                    },
+                    "id": "5948740",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 8000,
+                        "y": 1600
+                    },
+                    "b": {
+                        "x": 8000,
+                        "y": -1600
+                    },
+                    "id": "5948440",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2400,
+                        "y": -4000
+                    },
+                    "b": {
+                        "x": 5600,
+                        "y": -4000
+                    },
+                    "id": "5948580",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": -1600
+                    },
+                    "b": {
+                        "x": 2400,
+                        "y": -4000
+                    },
+                    "id": "5948980",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 8000,
+                        "y": -1600
+                    },
+                    "b": {
+                        "x": 5600,
+                        "y": -4000
+                    },
+                    "id": "5948900",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 1600
+                    },
+                    "b": {
+                        "x": 2400,
+                        "y": 4000
+                    },
+                    "id": "5948400",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2400,
+                        "y": 4000
+                    },
+                    "b": {
+                        "x": 5600,
+                        "y": 4000
+                    },
+                    "id": "5948840",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 5600,
+                        "y": 4000
+                    },
+                    "b": {
+                        "x": 8000,
+                        "y": 1600
+                    },
+                    "id": "5948540",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                }
+            ],
+            "Created": 24411766,
+            "Edit enable": true,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+            },
+            "Title": "su8030",
+            "id": "5948780",
+            "type": "Part"
+        }
+    ],
+    "Parametrs": {
+    },
+    "id": "5805ff8",
+    "type": "Project"
+}

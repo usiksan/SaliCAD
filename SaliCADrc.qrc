@@ -248,5 +248,6 @@
         <file>pic/iconPartLockedNew.png</file>
         <file>pic/iconSymbolLocked.png</file>
         <file>pic/iconSymbolLockedNew.png</file>
+        <file>pic/symbolMasterIc.png</file>
     </qresource>
 </RCC>

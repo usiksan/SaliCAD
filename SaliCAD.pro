@@ -257,7 +257,8 @@ SOURCES += \
     objects/SdPItemVariant.cpp \
     windows/SdDVariantTable.cpp \
     objects/SdUndoRecordStringList.cpp \
-    windows/SdWCategoryList.cpp
+    windows/SdWCategoryList.cpp \
+    master/SdDMasterSymbolIc.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -511,7 +512,8 @@ HEADERS  += \
     objects/SdPItemVariant.h \
     windows/SdDVariantTable.h \
     objects/SdUndoRecordStringList.h \
-    windows/SdWCategoryList.h
+    windows/SdWCategoryList.h \
+    master/SdDMasterSymbolIc.h
 
 DISTFILES += \
     license.txt
@@ -543,4 +545,5 @@ FORMS += \
     windows/SdDParamDefault.ui \
     master/SdDMasterPartDoubleRound.ui \
     master/SdDMasterPartQuadSide.ui \
-    windows/SdDVariantTable.ui
+    windows/SdDVariantTable.ui \
+    master/SdDMasterSymbolIc.ui

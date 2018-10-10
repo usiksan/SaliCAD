@@ -117,6 +117,14 @@ void SdIllustrator::drawText(int x, int y, const QString str, QColor color, int 
 
 
 
+void SdIllustrator::drawTextMapped(int x, int y, const QString str, QColor color, int size)
+  {
+  drawText( x, y, str, color, scale(size) );
+  }
+
+
+
+
 void SdIllustrator::drawFillRect(int x1, int y1, int x2, int y2, QColor color, double opacity)
   {
   if( mPainter.isActive() ) {
