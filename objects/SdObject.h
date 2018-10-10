@@ -138,7 +138,7 @@ T* sdObjectOnly( SdObject *obj ) {
   T *t = dynamic_cast<T*>( obj );
   if( t ) return t;
   delete obj;
-  return 0;
+  return nullptr;
   }
 
 

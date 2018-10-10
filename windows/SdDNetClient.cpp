@@ -9,12 +9,15 @@ Web
   www.saliLab.ru
 
 Description
+  Dialog which show process of load object from remote repository
 */
 #include "SdDNetClient.h"
 #include "ui_SdDNetClient.h"
 #include "objects/SdObjectNetClient.h"
 #include <QTimer>
 #include <QMessageBox>
+
+
 
 SdDNetClient::SdDNetClient(const QString id, QWidget *parent) :
   QDialog(parent),
@@ -38,6 +41,8 @@ SdDNetClient::SdDNetClient(const QString id, QWidget *parent) :
   connect( this, &SdDNetClient::requestObject, sdObjectNetClient, &SdObjectNetClient::doObject );
   connect( sdObjectNetClient, &SdObjectNetClient::objectComplete, this, &SdDNetClient::onCompleteRequestObject );
   }
+
+
 
 
 SdDNetClient::~SdDNetClient()

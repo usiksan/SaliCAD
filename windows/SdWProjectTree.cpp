@@ -17,6 +17,7 @@ Description
 #include "objects/SdPulsar.h"
 #include "objects/SdProjectItem.h"
 #include "objects/SdPItemSheet.h"
+#include "objects/SdObjectNetClient.h"
 #include "windows/SdPNewProjectItem_SelectType.h"
 #include "windows/SdPNewProjectItem_EnterName.h"
 #include "windows/SdPNewProjectItem_Master.h"
@@ -66,6 +67,7 @@ SdWProjectTree::SdWProjectTree(const QString fname, SdProject *prj, QWidget *par
   connect( SdPulsar::sdPulsar, &SdPulsar::renameItem, this, &SdWProjectTree::renameItem );
   connect( SdPulsar::sdPulsar, &SdPulsar::highlightItem, this, &SdWProjectTree::highlightItem );
   connect( this, &SdWProjectTree::currentItemChanged, this, &SdWProjectTree::onCurrentItemChanged );
+  connect( sdObjectNetClient, &SdObjectNetClient::newObjectsReceived, this, &SdWProjectTree::updateNewestMark );
   }
 
 
@@ -541,6 +543,17 @@ void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem 
     //qDebug() << "activate project" << fileName() << cur << prev;
     emit SdPulsar::sdPulsar->emitActivateProject( mProject, fileName() );
     }
+  }
+
+
+
+
+
+//When received new objects we update newest mark
+void SdWProjectTree::updateNewestMark()
+  {
+  //Check and mark newer objects
+  mProject->newerCheckAndMark();
   }
 
 

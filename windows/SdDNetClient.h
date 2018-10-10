@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Dialog which show process of load object from remote repository
 */
 #ifndef SDDNETCLIENT_H
 #define SDDNETCLIENT_H
@@ -25,7 +26,7 @@ class SdDNetClient : public QDialog
 
     QString mId;
   public:
-    explicit SdDNetClient( const QString id, QWidget *parent = 0);
+    explicit SdDNetClient( const QString id, QWidget *parent = nullptr);
     ~SdDNetClient();
 
     //Get object from remote server
