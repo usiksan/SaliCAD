@@ -153,11 +153,7 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
       //Write object to local library
       write();
       //Upgrade item through project
-      getProject()->forEach( dctAll, [this,undo] (SdObject *obj) -> bool {
-        if( obj != nullptr )
-          obj->upgradeProjectItem( this, undo );
-        return true;
-        });
+      getProject()->upgradeProjectItem( this, undo );
       }
     //For each open projects perform check and mark newer objects
     for( auto iter = sdProjectList.cbegin(); iter != sdProjectList.cend(); iter++ )

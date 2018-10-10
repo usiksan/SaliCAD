@@ -29,6 +29,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="mOrganizer">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="text">
             <string>Organizer...</string>
            </property>

@@ -1,0 +1,426 @@
+{
+    "ChildList": [
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 42000,
+                        "y": 29700
+                    },
+                    "id": "459ac00",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 2000,
+                        "y": 500
+                    },
+                    "b": {
+                        "x": 41500,
+                        "y": 29200
+                    },
+                    "id": "46abeb0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 75,
+                    "type": "Rect"
+                },
+                {
+                    "Origin": {
+                        "x": 34900,
+                        "y": 3100
+                    },
+                    "id": "29890a0",
+                    "over": {
+                        "h": 367,
+                        "w": 886,
+                        "x": 34474,
+                        "y": 2907
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{title}",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 24500,
+                        "y": 3400
+                    },
+                    "b": {
+                        "x": 31500,
+                        "y": 3400
+                    },
+                    "id": "29ecf90",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Origin": {
+                        "x": 26700,
+                        "y": 3000
+                    },
+                    "id": "2750260",
+                    "over": {
+                        "h": 367,
+                        "w": 1833,
+                        "x": 26713,
+                        "y": 2815
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 0,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{Controlled}",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 40000,
+                        "y": 4100
+                    },
+                    "b": {
+                        "x": 40000,
+                        "y": 5500
+                    },
+                    "id": "46dca70",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 26500,
+                        "y": 2000
+                    },
+                    "b": {
+                        "x": 26500,
+                        "y": 5500
+                    },
+                    "id": "2756660",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 24500,
+                        "y": 5500
+                    },
+                    "b": {
+                        "x": 41500,
+                        "y": 5500
+                    },
+                    "id": "2bacec0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 38500,
+                        "y": 5500
+                    },
+                    "b": {
+                        "x": 38500,
+                        "y": 2000
+                    },
+                    "id": "2b17780",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Origin": {
+                        "x": 24600,
+                        "y": 3700
+                    },
+                    "id": "2bb0bd0",
+                    "over": {
+                        "h": 367,
+                        "w": 1069,
+                        "x": 24605,
+                        "y": 3518
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 0,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "Author",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 24500,
+                        "y": 4100
+                    },
+                    "b": {
+                        "x": 41500,
+                        "y": 4100
+                    },
+                    "id": "45a31d0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 33500,
+                        "y": 500
+                    },
+                    "b": {
+                        "x": 33500,
+                        "y": 2000
+                    },
+                    "id": "274fbc0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Origin": {
+                        "x": 40700,
+                        "y": 1800
+                    },
+                    "id": "29f1a40",
+                    "over": {
+                        "h": 367,
+                        "w": 1100,
+                        "x": 40157,
+                        "y": 1624
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "Format",
+                    "type": "Text"
+                },
+                {
+                    "Origin": {
+                        "x": 24600,
+                        "y": 3000
+                    },
+                    "id": "4614720",
+                    "over": {
+                        "h": 367,
+                        "w": 1558,
+                        "x": 24605,
+                        "y": 2815
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 0,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "Controlled",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 24500,
+                        "y": 2000
+                    },
+                    "b": {
+                        "x": 41500,
+                        "y": 2000
+                    },
+                    "id": "29361b0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Origin": {
+                        "x": 26700,
+                        "y": 3700
+                    },
+                    "id": "2a88340",
+                    "over": {
+                        "h": 367,
+                        "w": 1344,
+                        "x": 26713,
+                        "y": 3518
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 0,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{Author}",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 24500,
+                        "y": 2700
+                    },
+                    "b": {
+                        "x": 31500,
+                        "y": 2700
+                    },
+                    "id": "2790fe0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 40000,
+                        "y": 2000
+                    },
+                    "b": {
+                        "x": 40000,
+                        "y": 500
+                    },
+                    "id": "2791040",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 33500,
+                        "y": 4100
+                    },
+                    "b": {
+                        "x": 33500,
+                        "y": 5500
+                    },
+                    "id": "27b41a0",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Origin": {
+                        "x": 40000,
+                        "y": 3800
+                    },
+                    "id": "3769d50",
+                    "over": {
+                        "h": 367,
+                        "w": 550,
+                        "x": 39730,
+                        "y": 3610
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "File",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 31500,
+                        "y": 500
+                    },
+                    "b": {
+                        "x": 31500,
+                        "y": 4100
+                    },
+                    "id": "27b4230",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Origin": {
+                        "x": 40700,
+                        "y": 5300
+                    },
+                    "id": "3769df0",
+                    "over": {
+                        "h": 367,
+                        "w": 764,
+                        "x": 40341,
+                        "y": 5107
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Remark",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "Scale",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 24500,
+                        "y": 5500
+                    },
+                    "b": {
+                        "x": 24500,
+                        "y": 500
+                    },
+                    "id": "26dbc30",
+                    "lineLayer": "Remark",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                }
+            ],
+            "Created": 24317530,
+            "Edit enable": true,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+            },
+            "Title": "iso a3",
+            "id": "376bd20",
+            "type": "Sheet"
+        }
+    ],
+    "Parametrs": {
+    },
+    "id": "2b2bfa0",
+    "type": "Project"
+}
