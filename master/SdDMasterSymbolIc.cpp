@@ -16,9 +16,17 @@ Description
 #include "objects/SdUtil.h"
 #include "objects/SdPropText.h"
 
+#include <QDebug>
+
 
 static QString strDelim("---");
 static QString strGap;
+
+static int cellHeight    = 500;
+static int pinSizeX      = 750;
+static int nameAreaX     = 1250;
+static int extendedAreaX = 3750;
+static int centralSizeX  = 1500;
 
 SdDMasterSymbolIc::SdDMasterSymbolIc( SdProjectItem *item, QWidget *parent ) :
   SdDMasterSymbol( item, parent ),
@@ -28,12 +36,12 @@ SdDMasterSymbolIc::SdDMasterSymbolIc( SdProjectItem *item, QWidget *parent ) :
 
   //Setup pin tables
   ui->mLeftTable->setColumnCount(2);
-  ui->mLeftTable->setHorizontalHeaderLabels( {tr("Pin name"), tr("Pin description")} );
+  ui->mLeftTable->setHorizontalHeaderLabels( {tr("Pin name"), tr("Alternative names")} );
   ui->mLeftTable->setColumnWidth( 0, 100 );
   ui->mLeftTable->setColumnWidth( 1, 150 );
 
   ui->mRightTable->setColumnCount(2);
-  ui->mRightTable->setHorizontalHeaderLabels( {tr("Pin name"), tr("Pin description")} );
+  ui->mRightTable->setHorizontalHeaderLabels( {tr("Pin name"), tr("Alternative names")} );
   ui->mRightTable->setColumnWidth( 0, 100 );
   ui->mRightTable->setColumnWidth( 1, 150 );
 
@@ -251,14 +259,16 @@ void SdDMasterSymbolIc::drawSymbol(SdIllustrator &il)
 
   int maxPins     = qMax(leftCellCount,rightCellCount);
   if( maxPins < 1 ) maxPins = 1;
-  int cellHeight  = 500; //sdEnvir->fromPhisSchematic( ui->mCellHeight->text() );
-  int pinSizeX    = 750; //sdEnvir->fromPhisSchematic( ui->mPinSizeX->text() );
-  int cellSizeX   = extended ? 5000 : 1250; //sdEnvir->fromPhisSchematic( ui->mCellSizeX->text() );
+  //sdEnvir->fromPhisSchematic( ui->mCellHeight->text() );
+  //sdEnvir->fromPhisSchematic( ui->mPinSizeX->text() );
+  //int nameAreaX   = 1250;
+  int cellSizeX   = nameAreaX;
+  if( extended ) cellSizeX += extendedAreaX; //sdEnvir->fromPhisSchematic( ui->mCellSizeX->text() );
   int leftPin     = 0;
   int leftBody    = pinSizeX;
-  int rightBody   = leftBody + 2 * cellSizeX + 1500;
+  int rightBody   = leftBody + 2 * cellSizeX + centralSizeX;
   int rightPin    = rightBody + pinSizeX;
-  int topBody     = 250;
+  int topBody     = cellHeight / 2;
   int bottomBody  = topBody - maxPins * cellHeight;
 
 
@@ -270,7 +280,7 @@ void SdDMasterSymbolIc::drawSymbol(SdIllustrator &il)
   //Vertical delimiter
   int leftDelimiter = leftBody + cellSizeX;
   il.drawLine( leftDelimiter, topBody,  leftDelimiter, bottomBody, red );
-  int rightDelimiter = leftDelimiter + 1500;
+  int rightDelimiter = leftDelimiter + centralSizeX;
   il.drawLine( rightDelimiter, topBody,  rightDelimiter, bottomBody, red );
 
   //Pins
@@ -316,6 +326,23 @@ void SdDMasterSymbolIc::drawSymbol(SdIllustrator &il)
   }
 
 
+static void separateStringToTwoLines( const QString &src, QString &fl, QString &sec )
+  {
+  QStringList list = src.split( QChar('/') );
+  int firstLine = 0;
+  int firstLineWidth = 0;
+  while( firstLineWidth < 36 ) {
+    if( fl.length() ) fl.append( QString("/") );
+    fl.append( list.at(firstLine) );
+    firstLineWidth += list.at(firstLine).length() + 1;
+    firstLine++;
+    }
+  //Remaining names append to second line
+  while( firstLine < list.count() ) {
+    if( sec.length() ) sec.append( QString("/") );
+    sec.append( list.at(firstLine++) );
+    }
+  }
 
 
 //Build symbol
@@ -333,17 +360,17 @@ void SdDMasterSymbolIc::accept()
 
   int maxPins     = qMax(leftCellCount,rightCellCount);
   if( maxPins < 1 ) maxPins = 1;
-  int cellHeight  = 500; //sdEnvir->fromPhisSchematic( ui->mCellHeight->text() );
-  int pinSizeX    = 750; //sdEnvir->fromPhisSchematic( ui->mPinSizeX->text() );
-  int cellSizeX   = extended ? 5000 : 1250; //sdEnvir->fromPhisSchematic( ui->mCellSizeX->text() );
-  int leftPin     = 0;
-  int leftBody    = pinSizeX;
-  int rightBody   = leftBody + 2 * cellSizeX + 1500;
-  int rightPin    = rightBody + pinSizeX;
-  int topBody     = 250;
-  int bottomBody  = topBody - maxPins * cellHeight;
-  int leftPinName = leftBody + 625;
-  int rightPinName = rightBody - 625;
+  int cellSizeX   = nameAreaX;
+  if( extended ) cellSizeX += extendedAreaX; //sdEnvir->fromPhisSchematic( ui->mCellSizeX->text() );
+  int leftPin      = 0;
+  int leftBody     = pinSizeX;
+  int rightBody    = leftBody + 2 * cellSizeX + centralSizeX;
+  int rightPin     = rightBody + pinSizeX;
+  int topBody      = cellHeight / 2;
+  int bottomBody   = topBody - maxPins * cellHeight;
+  int leftPinName  = leftBody + nameAreaX/2;
+  int rightPinName = rightBody - nameAreaX/2;
+  int leftExtended = leftBody + nameAreaX + 10;
 
 
   //Body
@@ -351,8 +378,14 @@ void SdDMasterSymbolIc::accept()
   //Vertical delimiter
   int leftDelimiter = leftBody + cellSizeX;
   addLine( leftDelimiter, topBody,  leftDelimiter, bottomBody );
-  int rightDelimiter = leftDelimiter + 1500;
+  int rightDelimiter = leftDelimiter + centralSizeX;
   addLine( rightDelimiter, topBody,  rightDelimiter, bottomBody );
+
+  //Properties for extended pin names
+  SdPropText ptn;
+  ptn = mPinNameProp;
+  ptn.mSize = ptn.mSize.getValue() / 2;
+  ptn.mHorz = dhjLeft;
 
   //Pins
   cellHeight = -cellHeight;
@@ -374,7 +407,26 @@ void SdDMasterSymbolIc::accept()
       //Pin
       SdPoint pinOrg(leftPin, i * cellHeight);
       addPin( pinOrg, 0, SdPoint(leftPinName,pinOrg.y()), pinName, SdPoint(leftPin,pinOrg.y()+250) );
-      //Pin description
+      //Addon pin names separated /
+      QString an = ui->mLeftTable->item( i, 1 )->text();
+      if( !an.isEmpty() ) {
+        if( an.length() < 36 ) {
+          //Display as single string
+          qDebug() << "one line" << an;
+          addText( leftExtended, i * cellHeight, ptn, an );
+          }
+        else {
+          //Display as two string
+          //We split line to separated names
+          // then, we append to first line names while their summarized width less then 36
+          QString fl, sec;
+          separateStringToTwoLines( an, fl, sec );
+          qDebug() << "two lines" << fl << sec;
+          //Display two lines
+          addText( leftExtended, i * cellHeight +  cellHeight / 4, ptn, fl );
+          addText( leftExtended, i * cellHeight -  cellHeight / 4, ptn, sec );
+          }
+        }
       }
     }
 
@@ -394,15 +446,41 @@ void SdDMasterSymbolIc::accept()
       //Pin
       SdPoint pinOrg(rightPin, i * cellHeight);
       addPin( pinOrg, 0, SdPoint(rightPinName,pinOrg.y()), pinName, SdPoint(rightPin,pinOrg.y()+250) );
+      //Addon pin names separated /
+      QString an = ui->mLeftTable->item( i, 1 )->text();
+      if( !an.isEmpty() ) {
+        if( an.length() < 36 ) {
+          //Display as single string
+          addText( rightDelimiter + 10, i * cellHeight, ptn, an );
+          }
+        else {
+          //Display as two string
+          //We split line to separated names
+          // then, we append to first line names while their summarized width less then 36
+          QString fl, sec;
+          separateStringToTwoLines( an, fl, sec );
+          //Display two lines
+          addText( rightDelimiter + 10, i * cellHeight +  cellHeight / 4, ptn, fl );
+          addText( rightDelimiter + 10, i * cellHeight -  cellHeight / 4, ptn, sec );
+          }
+        }
       }
     }
 
   //id
   int hcenter = (leftDelimiter + rightDelimiter) / 2;
-  setId( SdPoint( hcenter, topBody + 250 ) );
+  setId( SdPoint( hcenter, topBody + cellHeight/2 ) );
 
   //value
-  setValue( SdPoint( hcenter, bottomBody - 250 ) );
+  setValue( SdPoint( hcenter, bottomBody - cellHeight/2 ) );
+
+  //Symbol title
+  SdPropText pt;
+  pt.mHorz  = dhjCenter;
+  pt.mVert  = dvjMiddle;
+  pt.mSize  = mPinNumberProp.mSize;
+  pt.mLayer = mLineProp.mLayer;
+  addText( hcenter, topBody - cellHeight/2, pt, ui->mTitle->text() );
 
 
   SdDMasterSymbol::accept();

@@ -39,6 +39,7 @@ class SdDMasterSymbol : public QDialog
     void addLine( int x1, int y1, int x2, int y2 );
     void addRect( int x1, int y1, int x2, int y2 );
     void addCircle( int cx, int cy, int r );
+    void addText( int x, int y, const SdPropText &prp, const QString &text );
 
     //Identifier append to "id" layer
     void setId(SdPoint p, int size = 350 );

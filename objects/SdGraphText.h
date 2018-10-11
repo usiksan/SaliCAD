@@ -30,7 +30,7 @@ class SdGraphText : public SdGraph
     SdRect     mOverRect;
   public:
     SdGraphText();
-    SdGraphText( SdPoint org, const QString str, SdRect r, SdPropText &p );
+    SdGraphText( SdPoint org, const QString &str, SdRect r, const SdPropText &p );
 
     //Information
     QString         getText() const { return mString; }

@@ -17,6 +17,7 @@ Description
 #include "objects/SdGraphLinearLine.h"
 #include "objects/SdGraphLinearRect.h"
 #include "objects/SdGraphLinearCircle.h"
+#include "objects/SdGraphText.h"
 #include "objects/SdGraphSymPin.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdGraphIdent.h"
@@ -42,6 +43,15 @@ void SdDMasterSymbol::addRect(int x1, int y1, int x2, int y2)
 void SdDMasterSymbol::addCircle(int cx, int cy, int r)
   {
   mItem->insertChild( new SdGraphLinearCircle( SdPoint(cx,cy), r, mLineProp), nullptr );
+  }
+
+
+
+
+void SdDMasterSymbol::addText(int x, int y, const SdPropText &prp, const QString &text)
+  {
+  SdRect r;
+  mItem->insertChild( new SdGraphText( SdPoint(x,y), text, r, prp ), nullptr );
   }
 
 

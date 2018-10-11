@@ -24,7 +24,7 @@ SdGraphText::SdGraphText()
 
   }
 
-SdGraphText::SdGraphText(SdPoint org, const QString str, SdRect r, SdPropText &p) :
+SdGraphText::SdGraphText(SdPoint org, const QString &str, SdRect r, const SdPropText &p) :
   SdGraph(),
   mOrigin(org),
   mProp(p),
