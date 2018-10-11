@@ -285,7 +285,6 @@ void SdDMasterSymbolIc::drawSymbol(SdIllustrator &il)
 
   //Pins
   int nameSize = 300;
-  cellHeight = -cellHeight;
   for( int i = 0; i < leftCellCount; i++ ) {
     QString pinName = ui->mLeftTable->item( i, 0 )->text();
     if( pinName.isEmpty() ) {
@@ -293,15 +292,15 @@ void SdDMasterSymbolIc::drawSymbol(SdIllustrator &il)
       }
     else if( pinName == strDelim ) {
       //Delimiter
-      il.drawLine( pinSizeX, i * cellHeight, leftDelimiter, i * cellHeight, red );
+      il.drawLine( pinSizeX, i * -cellHeight, leftDelimiter, i * -cellHeight, red );
       }
     else {
       //Pin line
-      il.drawLine( leftPin, i * cellHeight, pinSizeX, i * cellHeight, red );
+      il.drawLine( leftPin, i * -cellHeight, pinSizeX, i * -cellHeight, red );
       //Pin crosshair
-      il.drawCross( leftPin, i * cellHeight, 50, green );
+      il.drawCross( leftPin, i * -cellHeight, 50, green );
       //Pin name
-      il.drawTextMapped( pinSizeX + 10, i * cellHeight - 150, pinName, red, nameSize );
+      il.drawTextMapped( pinSizeX + 10, i * -cellHeight - 150, pinName, red, nameSize );
       }
     }
 
@@ -312,15 +311,15 @@ void SdDMasterSymbolIc::drawSymbol(SdIllustrator &il)
       }
     else if( pinName == strDelim ) {
       //Delimiter
-      il.drawLine( rightBody, i * cellHeight, rightDelimiter, i * cellHeight, red );
+      il.drawLine( rightBody, i * -cellHeight, rightDelimiter, i * -cellHeight, red );
       }
     else {
       //Pin line
-      il.drawLine( rightBody, i * cellHeight, rightPin, i * cellHeight, red );
+      il.drawLine( rightBody, i * -cellHeight, rightPin, i * -cellHeight, red );
       //Pin crosshair
-      il.drawCross( rightPin, i * cellHeight, 50, green );
+      il.drawCross( rightPin, i * -cellHeight, 50, green );
       //Pin name
-      il.drawTextMapped( rightBody - 1240, i * cellHeight - 150, pinName, red, nameSize );
+      il.drawTextMapped( rightBody - 1240, i * -cellHeight - 150, pinName, red, nameSize );
       }
     }
   }
@@ -388,7 +387,6 @@ void SdDMasterSymbolIc::accept()
   ptn.mHorz = dhjLeft;
 
   //Pins
-  cellHeight = -cellHeight;
 
   mPinNumberProp.mHorz = dhjLeft;
   mPinNameProp.mHorz = dhjCenter;
@@ -399,13 +397,13 @@ void SdDMasterSymbolIc::accept()
       }
     else if( pinName == strDelim ) {
       //Delimiter
-      addLine( pinSizeX, i * cellHeight, leftDelimiter, i * cellHeight );
+      addLine( pinSizeX, i * -cellHeight, leftDelimiter, i * -cellHeight );
       }
     else {
       //Pin line
-      addLine( leftPin, i * cellHeight, pinSizeX, i * cellHeight );
+      addLine( leftPin, i * -cellHeight, pinSizeX, i * -cellHeight );
       //Pin
-      SdPoint pinOrg(leftPin, i * cellHeight);
+      SdPoint pinOrg(leftPin, i * -cellHeight);
       addPin( pinOrg, 0, SdPoint(leftPinName,pinOrg.y()), pinName, SdPoint(leftPin,pinOrg.y()+250) );
       //Addon pin names separated /
       QString an = ui->mLeftTable->item( i, 1 )->text();
@@ -413,7 +411,7 @@ void SdDMasterSymbolIc::accept()
         if( an.length() < 36 ) {
           //Display as single string
           qDebug() << "one line" << an;
-          addText( leftExtended, i * cellHeight, ptn, an );
+          addText( leftExtended, i * -cellHeight, ptn, an );
           }
         else {
           //Display as two string
@@ -423,8 +421,8 @@ void SdDMasterSymbolIc::accept()
           separateStringToTwoLines( an, fl, sec );
           qDebug() << "two lines" << fl << sec;
           //Display two lines
-          addText( leftExtended, i * cellHeight +  cellHeight / 4, ptn, fl );
-          addText( leftExtended, i * cellHeight -  cellHeight / 4, ptn, sec );
+          addText( leftExtended, i * -cellHeight +  cellHeight / 4, ptn, fl );
+          addText( leftExtended, i * -cellHeight -  cellHeight / 4, ptn, sec );
           }
         }
       }
@@ -438,20 +436,20 @@ void SdDMasterSymbolIc::accept()
       }
     else if( pinName == strDelim ) {
       //Delimiter
-      addLine( rightBody, i * cellHeight, rightDelimiter, i * cellHeight );
+      addLine( rightBody, i * -cellHeight, rightDelimiter, i * -cellHeight );
       }
     else {
       //Pin line
-      addLine( rightBody, i * cellHeight, rightPin, i * cellHeight );
+      addLine( rightBody, i * -cellHeight, rightPin, i * -cellHeight );
       //Pin
-      SdPoint pinOrg(rightPin, i * cellHeight);
+      SdPoint pinOrg(rightPin, i * -cellHeight);
       addPin( pinOrg, 0, SdPoint(rightPinName,pinOrg.y()), pinName, SdPoint(rightPin,pinOrg.y()+250) );
       //Addon pin names separated /
       QString an = ui->mLeftTable->item( i, 1 )->text();
       if( !an.isEmpty() ) {
         if( an.length() < 36 ) {
           //Display as single string
-          addText( rightDelimiter + 10, i * cellHeight, ptn, an );
+          addText( rightDelimiter + 10, i * -cellHeight, ptn, an );
           }
         else {
           //Display as two string
@@ -460,8 +458,8 @@ void SdDMasterSymbolIc::accept()
           QString fl, sec;
           separateStringToTwoLines( an, fl, sec );
           //Display two lines
-          addText( rightDelimiter + 10, i * cellHeight +  cellHeight / 4, ptn, fl );
-          addText( rightDelimiter + 10, i * cellHeight -  cellHeight / 4, ptn, sec );
+          addText( rightDelimiter + 10, i * -cellHeight +  cellHeight / 4, ptn, fl );
+          addText( rightDelimiter + 10, i * -cellHeight -  cellHeight / 4, ptn, sec );
           }
         }
       }
