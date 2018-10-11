@@ -44,8 +44,8 @@ SdObjectNetClient::SdObjectNetClient(QObject *parent) :
   mHostIp          = s.value( SDK_SERVER_IP ).toString();
 
   mTimer.setInterval( 180000 );
-//  if( isRegistered() )
-//    mTimer.start();
+  if( isRegistered() )
+    mTimer.start();
 
   connect( mSocket, &QTcpSocket::connected, this, &SdObjectNetClient::onConnected );
   connect( &mTimer, &QTimer::timeout, this, &SdObjectNetClient::doSync );

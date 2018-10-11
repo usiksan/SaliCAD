@@ -41,7 +41,7 @@ class SdWProjectList : public QWidget
 
   signals:
     //Name of active project changed or other project selected
-    void projectNameChanged( const QString name, bool dirty );
+    void projectNameChanged( SdProject *project );
 
   public slots:
     //Close all projects

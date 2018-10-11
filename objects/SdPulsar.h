@@ -51,6 +51,8 @@ class SdPulsar : public QObject
     void emitBrowseSheetPart( SdProjectItem *sheet, SdProjectItem *plate );
     //Components, selected from sheet
     void emitSelectedParts( SdProjectItem *plate, QStringList list );
+    //Project status changed (dirty)
+    void emitProjectStatusChanged( SdProject *project );
 
     //Status bar
     void emitSetStatusLabels( const QString xlabel, const QString ylabel );
@@ -90,6 +92,8 @@ class SdPulsar : public QObject
     void browseSheetPart( SdProjectItem *sheet, SdProjectItem *plate );
     //Components, selected from sheet
     void selectedParts( SdProjectItem *plate, QStringList list );
+    //Project status changed (dirty)
+    void projectStatusChanged( SdProject *project );
 
     //Status bar
     void setStatusLabels( const QString xlabel, const QString ylabel );

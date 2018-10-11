@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Class SdProject - project (file). Unit of design.
 */
 
 #include "SdProject.h"
@@ -210,7 +211,11 @@ void SdProject::sheetRenumeration()
 
 void SdProject::setDirty()
   {
-  mDirty = true;
+  if( !mDirty ) {
+    mDirty = true;
+    SdPulsar::sdPulsar->emitProjectStatusChanged( this );
+    qDebug() << "set dirty";
+    }
   }
 
 
@@ -381,6 +386,7 @@ bool SdProject::save(const QString fname)
     QJsonDocument doc( write() );
     file.write( doc.toJson() );
     mDirty = false;
+    SdPulsar::sdPulsar->emitProjectStatusChanged( this );
     return true;
     }
   return false;
@@ -392,7 +398,7 @@ bool SdProject::save(const QString fname)
 void SdProject::cloneFrom(const SdObject *src)
   {
   SdContainer::cloneFrom(src);
-  mDirty = true;
+  setDirty();
   //const SdProject *sour = dynamic_cast<const SdProject*>(src);
   }
 
@@ -421,7 +427,7 @@ void SdProject::insertChild(SdObject *child, SdUndo *undo)
   SdPtr<SdProjectItem> item(child);
   if( item ) {
     SdContainer::insertChild( child, undo );
-    mDirty = true;
+    setDirty();
     SdPulsar::sdPulsar->emitInsertItem( item.ptr() );
     }
   }
@@ -434,7 +440,7 @@ void SdProject::undoInsertChild(SdObject *child)
   SdPtr<SdProjectItem> item(child);
   if( item && item->getParent() == this ) {
     SdPulsar::sdPulsar->emitRemoveItem( item.ptr() );
-    mDirty = true;
+    setDirty();
     SdContainer::undoInsertChild( child );
     }
   }
@@ -446,7 +452,7 @@ void SdProject::redoInsertChild(SdObject *child)
   SdPtr<SdProjectItem> item(child);
   if( item ) {
     SdContainer::redoInsertChild( child );
-    mDirty = true;
+    setDirty();
     SdPulsar::sdPulsar->emitInsertItem( item.ptr() );
     }
   }
@@ -459,7 +465,7 @@ void SdProject::deleteChild(SdObject *child, SdUndo *undo)
   SdPtr<SdProjectItem> item(child);
   if( item && item->getParent() == this ) {
     SdPulsar::sdPulsar->emitRemoveItem( item.ptr() );
-    mDirty = true;
+    setDirty();
     SdContainer::deleteChild( child, undo );
     }
   }
@@ -472,7 +478,7 @@ void SdProject::undoDeleteChild(SdObject *child)
   SdPtr<SdProjectItem> item(child);
   if( item && item->getParent() == this ) {
     SdContainer::undoDeleteChild( child );
-    mDirty = true;
+    setDirty();
     SdPulsar::sdPulsar->emitInsertItem( item.ptr() );
     }
   }
@@ -484,7 +490,7 @@ void SdProject::redoDeleteChild(SdObject *child)
   SdPtr<SdProjectItem> item(child);
   if( item && item->getParent() == this ) {
     SdPulsar::sdPulsar->emitRemoveItem( item.ptr() );
-    mDirty = true;
+    setDirty();
     SdContainer::redoDeleteChild( child );
     }
   }

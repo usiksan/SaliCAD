@@ -60,7 +60,7 @@ class SdWMain : public QMainWindow
     void setStatusPositions( const QString x, const QString y );
     void setStatusMessage( const QString msg );
 
-    void activateProjectName( const QString name, bool dirty );
+    void activateProjectName( SdProject *project );
 
     //This signal send from project tree view
     //on it we open appropriate editor

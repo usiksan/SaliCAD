@@ -118,7 +118,7 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   sbar->addWidget( mMessage = new SdWLabel( QString(), tr("Short guide to current mode step or other messages"), 100 ), 1 );
   sbar->setSizeGripEnabled(true);
 
-  activateProjectName( QString(), false );
+  activateProjectName( nullptr );
 
   //Open all files from command line
   args.removeFirst(); //First is executable name
@@ -138,6 +138,7 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   connect( SdPulsar::sdPulsar, &SdPulsar::selectedParts, this, &SdWMain::onSelectedParts );
   connect( SdPulsar::sdPulsar, &SdPulsar::renameProject, this, &SdWMain::onRenameProject );
   connect( SdPulsar::sdPulsar, &SdPulsar::activateProject, this, &SdWMain::onActivateProject );
+  connect( SdPulsar::sdPulsar, &SdPulsar::projectStatusChanged, this, &SdWMain::activateProjectName );
 
   //Clipboard notification
   connect( QGuiApplication::clipboard(), &QClipboard::changed, this, &SdWMain::onClipboardChanged );
@@ -176,9 +177,12 @@ void SdWMain::setStatusMessage(const QString msg)
 
 //Activate project with name and editing dirty
 //Change title bar
-void SdWMain::activateProjectName(const QString name, bool dirty)
+void SdWMain::activateProjectName(SdProject *project)
   {
-  setWindowTitle( QString( "SaliCAD v%1.%2 [%3%4]").arg(SD_VERSION_MAJOR).arg(SD_VERSION_MINOR).arg( dirty ? QChar('*') : QChar(' ') ).arg( name ) );
+  if( activeProject() && activeProject()->getProject() == project )
+    setWindowTitle( QString( "SaliCAD v%1.%2 [%3%4]").arg(SD_VERSION_MAJOR).arg(SD_VERSION_MINOR).arg( project->isDirty() ? QChar('*') : QChar(' ') ).arg( activeProject()->fileName() ) );
+  else
+    setWindowTitle( QString( "SaliCAD v%1.%2").arg(SD_VERSION_MAJOR).arg(SD_VERSION_MINOR) );
   //Update state of undo and redo commands
   if( activeProject() )
     activeProject()->cmUndoRedoUpdate();

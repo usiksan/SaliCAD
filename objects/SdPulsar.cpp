@@ -104,6 +104,15 @@ void SdPulsar::emitSelectedParts(SdProjectItem *plate, QStringList list)
 
 
 
+//Project status changed (dirty)
+void SdPulsar::emitProjectStatusChanged(SdProject *project)
+  {
+  emit projectStatusChanged( project );
+  }
+
+
+
+
 
 void SdPulsar::emitSetStatusLabels(const QString xlabel, const QString ylabel)
   {

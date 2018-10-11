@@ -242,10 +242,10 @@ void SdWEditorComponent::sectionSelect()
 
 void SdWEditorComponent::sectionDelete()
   {
-  mUndo->begin( tr("Delete component section"), mComponent );
   int row = mSectionList->currentRow();
   if( row >= 0 ) {
     if( QMessageBox::question( this, tr("Attention!"), tr("You attempting to delete section %1. Delete?").arg(row+1) ) == QMessageBox::Yes ) {
+      mUndo->begin( tr("Delete component section"), mComponent );
       mComponent->removeSection( row, mUndo );
       dirtyProject();
       fillSections();
@@ -373,6 +373,7 @@ void SdWEditorComponent::onParamChanged(int row, int column)
   QString key = mParamTable->item(row,0)->text();
   QString value = mParamTable->item(row,1)->text();
   //qDebug() << Q_FUNC_INFO << key <<value;
+  mUndo->begin( tr("Edit param value"), mComponent );
   mComponent->paramSet( key, value, mUndo );
   connect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onParamChanged );
   updateUndoRedoStatus();
@@ -409,8 +410,10 @@ void SdWEditorComponent::paramAdd()
   if( !key.isEmpty() ) {
     if( mComponent->paramContains(key) )
       QMessageBox::warning( this, tr("Warning!"), tr("Param with this name already exist. Enter another name.") );
-    else
+    else {
+      mUndo->begin( tr("Append param"), mComponent );
       paramAddInt( key );
+      }
     }
   }
 
@@ -421,6 +424,7 @@ void SdWEditorComponent::paramAddDefault()
   {
   SdDParamDefault def( this );
   if( def.exec() ) {
+    mUndo->begin( tr("Append default params"), mComponent );
     QStringList paramList = def.defParamList();
     for( const QString &param : paramList )
       if( !mComponent->paramContains(param) )
@@ -436,6 +440,7 @@ void SdWEditorComponent::paramDelete()
   {
   int paramIndex = mParamTable->currentRow();
   if( paramIndex >= 0 ) {
+    mUndo->begin( tr("Delete param"), mComponent );
     QString key = mParamTable->item( paramIndex, 0 )->text();
     mComponent->paramDelete( key, mUndo );
     mParamTable->removeRow( paramIndex );
@@ -456,6 +461,7 @@ void SdWEditorComponent::paramCopy()
   SdPItemComponent *comp = SdDGetObject::getComponent( nullptr, &param, tr("Select component to copy param from"), this );
   if( comp != nullptr ) {
     //Append params
+    mUndo->begin( tr("Copy params from other component"), mComponent );
     for( auto iter = param.cbegin(); iter != param.cend(); iter++ )
       mComponent->paramSet( iter.key(), iter.value(), mUndo );
     dirtyProject();

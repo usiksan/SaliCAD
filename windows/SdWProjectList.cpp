@@ -162,9 +162,9 @@ void SdWProjectList::onProjectActivated(int index)
   SdWProjectTree *active = activeProject();
   if( active )
     //Send signal to change project name at programm title
-    emit projectNameChanged( active->fileName(), active->getProject()->isDirty() );
+    emit projectNameChanged( active->getProject() );
   else
-    emit projectNameChanged( QString(), false );
+    emit projectNameChanged( nullptr );
   }
 
 
@@ -178,7 +178,7 @@ void SdWProjectList::onRenameProject( SdProject *prj, const QString shortName )
     //Replace text in combo box
     mProjectTitles->setItemText( mWProjectStack->currentIndex(), shortName );
     //And send signal to change title
-    emit projectNameChanged( shortName, active->getProject()->isDirty() );
+    emit projectNameChanged( prj );
     }
   }
 

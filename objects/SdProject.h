@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Class SdProject - project (file). Unit of design.
 */
 
 #ifndef SDPROJECT_H
