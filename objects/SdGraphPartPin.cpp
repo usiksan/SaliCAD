@@ -329,6 +329,8 @@ void SdGraphPartPin::draw(SdContext *dc)
   {
   //Pin it self
   dc->partPin( mOrigin, mPinProp.mLayer.layer() );
+  if( sdEnvir->mShowPads )
+    sdEnvir->getPad( mPinProp.mPinType.str() ).draw( dc, mOrigin, stmThrough );
 
   //Pin name
   //At first calc over rectangle

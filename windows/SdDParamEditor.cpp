@@ -134,6 +134,8 @@ QString SdDParamEditor::defParamDescription(QString paramName)
     map.insert( stdParamValueRow, tr("Row with which forms all intermediate values, for example E12") );
     map.insert( stdParamPrefix, tr("This param define component ident prefix for example prefix DD will construct ident DD4") );
     map.insert( stdParamValueSelector, tr("This param define used value selector for example 'resistor' will select resistor values, i.e. 1.2kOm") );
+    map.insert( stdParamManufacturer, tr("Manufacturer of component") );
+    map.insert( stdParamToolerance, tr("Toolerance of value") );
     }
   return map.value( paramName );
   }

@@ -53,7 +53,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (32 + FONT_COUNT)
+#define SdEnvirVersion  (33 + FONT_COUNT)
 
 
 class SdEnvir
@@ -104,6 +104,7 @@ class SdEnvir
     SdRuleBlock     mDefaultRules;         //Default rules for pcb
     bool            mShowRuleErrors;       //If true then over pcb shows rule error indicators as rectangles
     bool            mShowFields;           //If true then draw fields as fields names else draw fields as values
+    bool            mShowPads;             //If true then draw pads in part editor
     double          mPolygonOpacity;       //Polygons draws with this opacity
 
 

@@ -125,6 +125,7 @@ History
                    Append object duplicate command
   23.09.2018 v0.54 Rebrended GetObject dialog
                    Remove tag field
+  12.10.2018 v0.55 Append display pad possibility to part editor
 */
 
 #ifndef SDCONFIG
@@ -136,7 +137,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             54
+#define SD_VERSION_MINOR             55
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -238,6 +239,8 @@ History
 #define stdParamValueRow      QStringLiteral("valueRow")
 #define stdParamPrefix        QStringLiteral("prefix")
 #define stdParamValueSelector QStringLiteral("valueSelector")
+#define stdParamManufacturer  QStringLiteral("manufacturer")
+#define stdParamToolerance    QStringLiteral("toolerance")
 
 #endif // SDCONFIG
 

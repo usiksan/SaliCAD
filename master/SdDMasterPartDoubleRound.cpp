@@ -19,20 +19,28 @@ Description
 
 #include <QToolButton>
 
+//Part dimensions
+static int partDiameter = 5000;
+static int sizeX = 3000;
+//Pin types
+static QString leftPinType;
+static QString rightPinType;
+
+
+
 SdDMasterPartDoubleRound::SdDMasterPartDoubleRound(SdProjectItem *item, bool noPin, QWidget *parent) :
   SdDMasterPart( item, parent),
   ui(new Ui::SdDMasterPartDoubleRound)
   {
+  Q_UNUSED(noPin);
+
   ui->setupUi(this);
 
-  if( noPin ) {
-    ui->mBodyDiameter->setText("5.0");
-    ui->mBetweenPins->setText("3.0");
-    }
-  else {
-    ui->mBodyDiameter->setText("3.0");
-    ui->mBetweenPins->setText("5.0");
-    }
+  ui->mBodyDiameter->setText( sdEnvir->toPhisPcb(partDiameter) );
+  ui->mBetweenPins->setText( sdEnvir->toPhisPcb(sizeX) );
+  ui->mLeftPinType->setText( leftPinType );
+  ui->mRightPinType->setText( rightPinType );
+
   onEditChanged( QString() );
 
   connect( ui->mBodyDiameter, &QLineEdit::textEdited, this, &SdDMasterPartDoubleRound::onEditChanged );
@@ -100,8 +108,8 @@ void SdDMasterPartDoubleRound::changeEvent(QEvent *e)
 //Draw part preview
 void SdDMasterPartDoubleRound::drawPart(SdIllustrator &il)
   {
-  int partDiameter = sdEnvir->fromPhisPcb( ui->mBodyDiameter->text() );
-  int sizeX = sdEnvir->fromPhisPcb( ui->mBetweenPins->text() );
+  partDiameter = sdEnvir->fromPhisPcb( ui->mBodyDiameter->text() );
+  sizeX = sdEnvir->fromPhisPcb( ui->mBetweenPins->text() );
   int pinLen = (sizeX - partDiameter) / 2;
 
   QColor red("red");
@@ -128,12 +136,12 @@ void SdDMasterPartDoubleRound::drawPart(SdIllustrator &il)
 void SdDMasterPartDoubleRound::accept()
   {
   //Build part
-  int partDiameter = sdEnvir->fromPhisPcb( ui->mBodyDiameter->text() );
-  int sizeX = sdEnvir->fromPhisPcb( ui->mBetweenPins->text() );
+  partDiameter = sdEnvir->fromPhisPcb( ui->mBodyDiameter->text() );
+  sizeX = sdEnvir->fromPhisPcb( ui->mBetweenPins->text() );
   int pinLen = (sizeX - partDiameter) / 2;
   //Pin types
-  QString leftPinType = ui->mLeftPinType->text();
-  QString rightPinType = ui->mRightPinType->text();
+  leftPinType = ui->mLeftPinType->text();
+  rightPinType = ui->mRightPinType->text();
   if( rightPinType.isEmpty() )
     rightPinType = leftPinType;
 

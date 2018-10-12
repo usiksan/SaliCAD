@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Graphics representation part of component
 */
 #ifndef SDPITEMPART_H
 #define SDPITEMPART_H

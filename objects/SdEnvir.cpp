@@ -146,6 +146,7 @@ void SdEnvir::loadEnvir()
        >> mDefaultRules         //Default rules for pcb
        >> mShowRuleErrors       //If true then over pcb shows rule error indicators as rectangles
        >> mShowFields           //If true then draw fields as fields names else draw fields as values
+       >> mShowPads             //If true then draw pads in part editor
        >> mPolygonOpacity;       //Polygons draws with this opacity
     }
   else defaultEnvir();
@@ -221,6 +222,7 @@ void SdEnvir::saveEnvir()
      << mDefaultRules         //Default rules for pcb
      << mShowRuleErrors       //If true then over pcb shows rule error indicators as rectangles
      << mShowFields           //If true then draw fields as fields names else draw fields as values
+     << mShowPads             //If true then draw pads in part editor
      << mPolygonOpacity;       //Polygons draws with this opacity
 
   QSettings s;
@@ -290,6 +292,7 @@ void SdEnvir::defaultEnvir()
   mGridHistory.clear();
   mShowRuleErrors    = true;           //If true then over pcb shows rule error indicators as rectangles
   mShowFields        = true;           //If true then draw fields as fields names else draw fields as values
+  mShowPads          = true;           //If true then draw pads in part editor
   mPolygonOpacity    = 0.5;            //Polygons draws with this opacity
 
 
