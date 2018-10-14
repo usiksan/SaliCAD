@@ -241,6 +241,8 @@ History
 #define stdParamValueSelector QStringLiteral("valueSelector")
 #define stdParamManufacturer  QStringLiteral("manufacturer")
 #define stdParamToolerance    QStringLiteral("toolerance")
+#define stdParamDatasheet     QStringLiteral("datasheet")
+#define stdParamWww           QStringLiteral("www")
 
 #endif // SDCONFIG
 

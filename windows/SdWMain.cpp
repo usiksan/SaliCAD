@@ -24,6 +24,7 @@ Description
 #include "SdWEditorInheritance.h"
 #include "SdWEditorHelp.h"
 #include "SdWEditorProject.h"
+#include "SdWEditorRich.h"
 #include "SdWCommand.h"
 #include "SdWLabel.h"
 #include "SdDOptions.h"
@@ -243,6 +244,9 @@ void SdWMain::onActivateProjectItem(SdProjectItem *item)
         editor = new SdWEditorGraphPlate( dynamic_cast<SdPItemPlate*>( item ), mWEditors );
       else
         editor = new SdWEditorGraphView( item, mWEditors );
+      break;
+    case dctRich :
+      editor = new SdWEditorRich( dynamic_cast<SdPItemRich*>(item), mWEditors );
       break;
     }
 
@@ -1269,6 +1273,23 @@ void SdWMain::cmBodyContur()
   {
   if( activeEditor() )
     activeEditor()->cmBodyContur();
+  }
+
+
+
+
+void SdWMain::cmShowPads(bool st)
+  {
+  //Setup new state of show pads flag
+  sdEnvir->mShowPads = st;
+  if( activeEditor() ) {
+    //For graph editor repaint with dirty cashe
+    SdWEditorGraph *graph = dynamic_cast<SdWEditorGraph*>(activeEditor());
+    if( graph ) {
+      graph->dirtyCashe();
+      graph->update();
+      }
+    }
   }
 
 

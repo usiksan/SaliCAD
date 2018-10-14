@@ -111,7 +111,9 @@ QStringList SdDParamEditor::defParamList()
     stdParamValueMax,
     stdParamValueRow,
     stdParamPrefix,
-    stdParamValueSelector };
+    stdParamValueSelector,
+    stdParamDatasheet,
+    stdParamWww };
   return list;
   }
 
@@ -136,6 +138,8 @@ QString SdDParamEditor::defParamDescription(QString paramName)
     map.insert( stdParamValueSelector, tr("This param define used value selector for example 'resistor' will select resistor values, i.e. 1.2kOm") );
     map.insert( stdParamManufacturer, tr("Manufacturer of component") );
     map.insert( stdParamToolerance, tr("Toolerance of value") );
+    map.insert( stdParamDatasheet, tr("Local path to pdf file with datasheet") );
+    map.insert( stdParamWww, tr("www page address") );
     }
   return map.value( paramName );
   }

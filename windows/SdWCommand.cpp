@@ -172,6 +172,10 @@ void SdWCommand::createMenu(SdWMain *frame)
 
   menuInsertPart = new QMenu( frame->tr("Part") );
 
+  cmShowPads                     = menuInsertPart->addAction( QIcon(QString(":/pic/objVia.png")), frame->tr("Show pads") );
+  cmShowPads->setCheckable(true);
+  cmShowPads->setChecked( sdEnvir->mShowPads );
+  cmShowPads->connect( cmShowPads, &QAction::toggled, frame, &SdWMain::cmShowPads );
   cmModeTable[MD_PART_PIN]       = menuInsertPart->addAction( QIcon(QString(":/pic/objPrtPin.png")), frame->tr("Insert pin"), frame, SLOT(cmModePin()) );
   cmModeTable[MD_PART_IDENT]     = menuInsertPart->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Edit reference"), frame, SLOT(cmModeReference()) );
   cmModeTable[MD_PART_ORIGIN]    = menuInsertPart->addAction( QIcon(QString(":/pic/objOrigin.png")), frame->tr("Edit origin"), frame, SLOT(cmModeOrigin()) );
@@ -504,6 +508,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   addEditCommands( barPart );
   addViewCommands( barPart );
   addDrawCommands( barPart );
+  barPart->insertAction( nullptr, cmShowPads );
   barPart->insertAction( nullptr, cmModeTable[MD_PART_PIN] );
   barPart->insertAction( nullptr, cmModeTable[MD_PART_IDENT] );
   barPart->insertAction( nullptr, cmModeTable[MD_PART_ORIGIN] );
@@ -754,6 +759,7 @@ QActionPtr SdWCommand::cmShowRatNet;
 QActionPtr SdWCommand::cmShowRuleErrors;
 QActionPtr SdWCommand::cmRenumeration;
 QActionPtr SdWCommand::cmShowField;
+QActionPtr SdWCommand::cmShowPads;
 
 QActionPtr SdWCommand::cmRulesEdit;
 QActionPtr SdWCommand::cmRulesCheck;

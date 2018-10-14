@@ -650,7 +650,7 @@ void SdWProjectTree::buildVisualTree()
     fillTopItem( mComponentList, dctInheritance );
     fillTopItem( mSymbolList, dctSymbol );
     fillTopItem( mPartList, dctPart );
-    fillTopItem( mTextList, dctTextDoc );
+    fillTopItem( mTextList, dctRich );
     }
   }
 
@@ -666,7 +666,7 @@ QTreeWidgetItem *SdWProjectTree::classList(quint64 classId)
     case dctPart        : return mPartList;
     case dctComponent   : return mComponentList;
     case dctInheritance : return mComponentList;
-    case dctText        : return mTextList;
+    case dctRich        : return mTextList;
     }
   return nullptr;
   }

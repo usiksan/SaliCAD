@@ -170,6 +170,7 @@ class SdWMain : public QMainWindow
     void cmBodyContur();
 
     //Symbol Part
+    void cmShowPads(bool st);
     void cmModePin();
     void cmModeReference();
     void cmModeOrigin();

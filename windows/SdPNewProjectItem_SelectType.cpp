@@ -19,6 +19,7 @@ Description
 #include "objects/SdPItemInheritance.h"
 #include "objects/SdPItemSheet.h"
 #include "objects/SdPItemPlate.h"
+#include "objects/SdPItemRich.h"
 #include "objects/SdObjectFactory.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -105,7 +106,10 @@ bool SdPNewProjectItem_SelectType::validatePage()
       *mItemPtr = new SdPItemInheritance();
       name = tr("Inheritance%1");
       break;
-      //TODO D005 text doc
+    case 6 :
+      *mItemPtr = new SdPItemRich();
+      name = tr("Text doc%1");
+      break;
     }
 
   //Pick up name
@@ -188,8 +192,9 @@ void SdPNewProjectItem_SelectType::classChanged(int index)
 //      mDescriptions.append( tr("Creates copy of existing inheritance") );
       break;
     case 6 :
-      mCreationOrder->addItem( tr("Element list") );
-      mCreationOrder->addItem( tr("Specification") );
+      mCreationOrder->addItem( tr("Empty text") );
+      //mCreationOrder->addItem( tr("Element list") );
+      //mCreationOrder->addItem( tr("Specification") );
       break;
     }
   if( mCreationOrder->count() ) {

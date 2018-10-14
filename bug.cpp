@@ -33,6 +33,8 @@
 //===================================================================================
 //Fixed:
 
+//D005 text doc
+
 //D061 Append project preview editor
 
 //D065 Append indication edit state to icon
