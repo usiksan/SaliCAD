@@ -109,6 +109,13 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QPushButton" name="mRowDeleteAll">
+           <property name="text">
+            <string>Delete All</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>

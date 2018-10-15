@@ -1,3 +1,16 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  View and edit variant param table
+*/
 #include "SdDVariantTable.h"
 #include "ui_SdDVariantTable.h"
 
@@ -21,6 +34,7 @@ SdDVariantTable::SdDVariantTable(SdPItemVariant *var, bool editEna, QWidget *par
     connect( ui->mVariantFieldDelete, &QPushButton::clicked, this, &SdDVariantTable::variantFieldDelete );
     connect( ui->mRowInsert, &QPushButton::clicked, this, &SdDVariantTable::rowInsert );
     connect( ui->mRowDelete, &QPushButton::clicked, this, &SdDVariantTable::rowDelete );
+    connect( ui->mRowDeleteAll, &QPushButton::clicked, this, &SdDVariantTable::rowDeleteAll );
     connect( ui->mDefFields, &QTableWidget::cellChanged, this, &SdDVariantTable::defChanged );
     }
   else {
@@ -115,6 +129,20 @@ void SdDVariantTable::rowDelete()
 
 
 
+
+//Delete all rows from variant table
+void SdDVariantTable::rowDeleteAll()
+  {
+  //Show query
+  if( QMessageBox::question( this, tr("Warning!"), tr("Are You sure to delete ALL rows? This is non undoing operation. Are You sure?") ) == QMessageBox::Yes ) {
+    while( ui->mVariantTable->rowCount() )
+      ui->mVariantTable->removeRow(0);
+    }
+  }
+
+
+
+
 //When edited def parameter
 void SdDVariantTable::defChanged(int row, int column)
   {
@@ -124,7 +152,7 @@ void SdDVariantTable::defChanged(int row, int column)
       variantFieldAppendInt( ui->mDefFields->item( row, 1)->text() );
     if( ui->mDefFields->item( row, column )->checkState() == Qt::Unchecked ) {
       //Remove field from variant table
-      QString name = ui->mDefFields->item( row, 2 )->text();
+      QString name = ui->mDefFields->item( row, 1 )->text();
       //Show query
       if( QMessageBox::question( this, tr("Warning!"), tr("You attempting delete field '%1' from variant table. All field column contens will be loss. This is non undoing operation. Are You sure?").arg(name)) == QMessageBox::Yes ) {
         //Find column

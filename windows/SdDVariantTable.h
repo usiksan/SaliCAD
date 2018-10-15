@@ -53,6 +53,9 @@ class SdDVariantTable : public QDialog
     //Delete row from variant table
     void rowDelete();
 
+    //Delete all rows from variant table
+    void rowDeleteAll();
+
     //When edited def parameter
     void defChanged( int row, int column );
   protected:
