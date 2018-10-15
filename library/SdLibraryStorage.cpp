@@ -218,6 +218,20 @@ bool SdLibraryStorage::forEachHeader(std::function<bool(SdLibraryHeader&)> fun1)
 
 
 
+
+
+
+//Function for iteration on all or partial uid's
+//When function return true - iteration countinued, else break
+void SdLibraryStorage::forEachUid(std::function<bool (const QString &)> fun1)
+  {
+  QReadLocker locker( &mLock );
+  for( auto iter = mReferenceMap.cbegin(); iter != mReferenceMap.cend(); iter++ )
+    if( fun1(iter.key()) ) return;
+  }
+
+
+
 //if( (hdr.mClass & mask) && mReferenceMap.value(hdr.uid()).mCreationTime == hdr.mTime ) {
 //  if( expandVariant && hdr.variantTableExist() ) {
 //    int c = hdr.variantCount();

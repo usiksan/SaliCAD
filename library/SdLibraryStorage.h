@@ -82,6 +82,10 @@ class SdLibraryStorage
     //When function return true - iteration break and return true as indicator
     bool        forEachHeader(std::function<bool(SdLibraryHeader&)> fun1 );
 
+    //Function for iteration on all or partial uid's
+    //When function return true - iteration break, else countinued
+    void        forEachUid( std::function<bool(const QString &uid)> fun1 );
+
     //Get header of object
     // uid - object unical identificator
     // hdr - place to receiv object header

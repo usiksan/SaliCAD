@@ -115,7 +115,28 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QComboBox" name="mFind"/>
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>Name:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="mNameFilter">
+           <property name="toolTip">
+            <string>Name filter. Match all text fragment delimited by space.</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Param:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="mParamFilter"/>
          </item>
          <item>
           <widget class="QPushButton" name="mFindButton">
@@ -143,7 +164,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QTableWidget" name="mTable"/>
+        <widget class="QTableWidget" name="mTable">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Table with elements matched to filters.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">

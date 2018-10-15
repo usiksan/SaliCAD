@@ -37,6 +37,10 @@ Description
 #include <QTimer>
 #include <QDebug>
 
+//Storage for previous entered name filter
+static QString sdNameFilter;
+//Storage for previous entered param filter
+static QString sdParamFilter;
 
 //=========================================================================================
 //Struct define individual field mask when find process
@@ -152,6 +156,19 @@ static bool sdFieldMaskListMatch( const SdStringMap &map ) {
 
 
 
+
+static bool sdFieldListMatch( const QStringList &list, const SdStringMap &map ) {
+  for( const QString &str : list ) {
+    bool match = false;
+    for( auto iter = map.cbegin(); iter != map.cend() && !match; iter++ )
+      match = iter.value().indexOf( str, 0, Qt::CaseInsensitive ) >= 0;
+    if( !match ) return false;
+    }
+  return true;
+  }
+
+
+
 //Fields width
 static QMap<QString,int> sdFieldWidth;
 
@@ -187,9 +204,9 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   ui->mFieldsBox->setColumnWidth( 1, prevFieldsBoxWidth[1] );
   ui->mFieldsBox->setColumnWidth( 2, prevFieldsBoxWidth[2] );
 
-
-  //Enable edit mode
-  ui->mFind->setEditable(true);
+  //Preset filter
+  ui->mNameFilter->setText( sdNameFilter );
+  ui->mParamFilter->setText( sdParamFilter );
 
   //Create symbol and part view
   mSymbolView = new SdWEditorGraphView( ui->mSymbolBox );
@@ -223,6 +240,8 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   //Default filtr only title or by fields also
   ui->mTitleOnlyFiltr->setChecked( mExpandVariant );
 
+  ui->mNameFilter->setFocus();
+
   if( mSort == sort )
     QTimer::singleShot( 300, this, [this] () {
       //Continue with previous filtrs
@@ -253,6 +272,15 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
 
 SdDGetObject::~SdDGetObject()
   {
+  //Store width of param table
+  prevFieldsBoxWidth[0] = ui->mFieldsBox->columnWidth( 0 );
+  prevFieldsBoxWidth[1] = ui->mFieldsBox->columnWidth( 1 );
+  prevFieldsBoxWidth[2] = ui->mFieldsBox->columnWidth( 2 );
+
+  //Store width of column find result table
+  for( int i = 0; i < ui->mTable->columnCount(); i++ )
+    sdFieldWidth.insert( ui->mTable->horizontalHeaderItem(i)->text(), ui->mTable->columnWidth(i) );
+
   delete ui;
   }
 
@@ -268,47 +296,76 @@ void SdDGetObject::find()
       SdFieldMask mask( ui->mFieldsBox->item( i, 1 )->text(), ui->mFieldsBox->item( i, 2 )->text() );
       sdFieldMaskList.append( mask );
       }
-  QString name = ui->mFind->currentText();
-  QStringList list = name.split( QRegExp("\\s+"), QString::SkipEmptyParts );
+  sdNameFilter = ui->mNameFilter->text();
+  QStringList list = sdNameFilter.split( QRegExp("\\s+"), QString::SkipEmptyParts );
   mExpandVariant = ui->mTitleOnlyFiltr->isChecked();
   mHeaderList.clear();
-  SdObjectFactory::forEachHeader( [list] (SdLibraryHeader &hdr) -> bool {
-    if( hdr.mClass & mSort ) {
-      //Test if all name filter sections match any part of object name
-      for( const QString &flt : list )
-        if( hdr.mName.indexOf(flt, 0, Qt::CaseInsensitive) < 0 )
-          //Name not matched, continue with another header
-          return false;
 
+  //Accumulate uid's matched to filter
+  QStringList uidList;
+  SdObjectFactory::forEachUid( [list, &uidList] (const QString &uid) -> bool {
+    //Split uid to name type and author
+    QString name = uid.contains(sdUidDelimiter) ? uid.split( sdUidDelimiter ).at(1) : uid;
+    //Test if all name filter sections match any part of object name
+    for( const QString &flt : list )
+      if( name.indexOf( flt, 0, Qt::CaseInsensitive ) < 0 )
+        //Name not matched, continue with another uid
+        return false;
+    //Name matched
+    uidList.append( uid );
+    return uidList.count() > 1000;
+    });
+
+  sdParamFilter = ui->mParamFilter->text();
+  list = sdParamFilter.split( QRegExp("\\s+"), QString::SkipEmptyParts );
+  SdLibraryHeader hdr;
+  for( const QString &str : uidList ) {
+    SdObjectFactory::extractHeader( str, hdr );
+
+    //test class
+    if( hdr.mClass & mSort ) {
+      //Match to fileds
       if( mExpandVariant && hdr.variantTableExist() ) {
         int c = hdr.variantCount();
         SdLibraryHeader vhdr;
-        for( int i = 0; i < c; i++ ) {
-          hdr.variant( vhdr, i );
-          if( sdFieldMaskListMatch(vhdr.mParamTable) ) {
-            //Params matched, insert header in list
-            mHeaderList.append( vhdr );
-            //Prevent too much headers in find result
-            if( mHeaderList.count() > SD_GET_OBJECT_MAX_FIND_LIST )
-              //Break next repetition
-              return true;
+        if( list.count() ) {
+          //Match each list item to any param
+          for( int i = 0; i < c; i++ ) {
+            hdr.variant( vhdr, i );
+            if( sdFieldListMatch( list, vhdr.mParamTable ) ) {
+              //Params matched, insert header in list
+              mHeaderList.append( vhdr );
+              }
             }
           }
-        return false;
+        else {
+          for( int i = 0; i < c; i++ ) {
+            hdr.variant( vhdr, i );
+            if( sdFieldMaskListMatch(vhdr.mParamTable) ) {
+              //Params matched, insert header in list
+              mHeaderList.append( vhdr );
+              }
+            }
+          }
         }
-      //Name matched, test params
-      if( sdFieldMaskListMatch(hdr.mParamTable) ) {
-        //Params matched, insert header in list
-        mHeaderList.append( hdr );
-        //Prevent too much headers in find result
-        if( mHeaderList.count() > SD_GET_OBJECT_MAX_FIND_LIST )
-          //Break next repetition
-          return true;
+      else {
+        if( list.count() ) {
+          if( sdFieldListMatch( list, hdr.mParamTable ) ) {
+            //Params matched, insert header in list
+            mHeaderList.append( hdr );
+            }
+          }
+        else {
+          //Name matched, test params
+          if( sdFieldMaskListMatch(hdr.mParamTable) ) {
+            //Params matched, insert header in list
+            mHeaderList.append( hdr );
+            }
+          }
         }
       }
-    //Continue execution
-    return false;
-    });
+    }
+
   //Fill visual table
   fillTable();
   }

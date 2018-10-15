@@ -29,10 +29,12 @@ Description
 #include <QDataStream>
 #include <QList>
 
+#define sdUidDelimiter QChar('\r')
+
 //Create uid from type, object name and author name
 inline QString headerUid( QString type, QString name, QString author )
   {
-  return type + name + author;
+  return type + sdUidDelimiter + name + sdUidDelimiter + author;
   }
 
 

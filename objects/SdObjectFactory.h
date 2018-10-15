@@ -79,6 +79,10 @@ class SdObjectFactory
     //When function return true - iteration break and return true as indicator
     static bool         forEachHeader( std::function<bool(SdLibraryHeader&)> fun1 );
 
+    //Function for iteration on all or partial uid's
+    //When function return true - iteration break, else countinued
+    static void         forEachUid( std::function<bool(const QString &uid)> fun1 );
+
   };
 
 #endif // SDOBJECTFACTORY_H

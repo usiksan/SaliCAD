@@ -313,8 +313,8 @@ void SdWEditorGraph::modeActivate(SdMode *mode)
   {
   mCasheDirty = true;
   if( mode ) {
-    mode->activate();
     SdWCommand::selectMode( mode->getIndex() );
+    mode->activate();
     }
 
   //Update edit status command
