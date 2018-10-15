@@ -122,6 +122,29 @@ void SdModeCPartImp::movePoint(SdPoint p)
 
 
 
+
+void SdModeCPartImp::keyDown(int key, QChar ch)
+  {
+  switch( key ) {
+    case Qt::Key_F2 :
+      //Component rotation [Поворот]
+      sdGlobalProp->mPartImpProp.mAngle += 90000;
+      propSetToBar();
+      update();
+      break;
+    case Qt::Key_F3 :
+      //Flip component to other pcb side [Перенос на другую сторону платы]
+      sdGlobalProp->mPartImpProp.mSide = sdGlobalProp->mPartImpProp.mSide == stmTop ? stmBottom : stmTop;
+      propSetToBar();
+      update();
+      break;
+    }
+  SdModeCommon::keyDown( key, ch );
+  }
+
+
+
+
 QString SdModeCPartImp::getStepHelp() const
   {
   return QObject::tr("Enter part place point");

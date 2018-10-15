@@ -38,6 +38,7 @@ class SdModeCPartImp : public SdModeCommon
     virtual void    enterPoint(SdPoint) override;
     virtual void    cancelPoint(SdPoint) override;
     virtual void    movePoint(SdPoint p) override;
+    virtual void    keyDown(int key, QChar ch) override;
     virtual QString getStepHelp() const override;
     virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;

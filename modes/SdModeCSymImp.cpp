@@ -125,6 +125,28 @@ void SdModeCSymImp::movePoint( SdPoint p )
 
 
 
+void SdModeCSymImp::keyDown(int key, QChar ch)
+  {
+  switch( key ) {
+    case Qt::Key_F2 :
+      //Component rotation [Поворот]
+      sdGlobalProp->mSymImpProp.mAngle += 90000;
+      propSetToBar();
+      update();
+      break;
+    case Qt::Key_F4 :
+      //Mirror component
+      sdGlobalProp->mSymImpProp.mMirror = sdGlobalProp->mSymImpProp.mMirror.getValue() ? 0 : 1;
+      propSetToBar();
+      update();
+      break;
+    }
+  SdModeCommon::keyDown( key, ch );
+  }
+
+
+
+
 QString SdModeCSymImp::getStepHelp() const
   {
   return QObject::tr("Enter symbol section place point");

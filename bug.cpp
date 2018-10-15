@@ -9,8 +9,6 @@
 
 //TODO D046 When try to select pin type from default pad association table and no default table offer to enter one
 
-//TODO D050 Append component rotation by keyboard
-
 //TODO B046 When renumeration in browse mode no rebuild component list
 
 //TODO B047 Append layer list to all properties bars
@@ -21,8 +19,6 @@
 
 //TODO D060 Append object replacing capability and autoreplacing
 
-//TODO D062 Append text item
-
 //TODO D063 Append project component list (bom) and report generator
 
 //TODO D064 Helper graph objects for other graph objects positioning
@@ -32,6 +28,10 @@
 
 //===================================================================================
 //Fixed:
+
+//D050 Append component rotation by keyboard
+
+//D062 Append text item
 
 //D005 text doc
 
