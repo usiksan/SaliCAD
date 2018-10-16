@@ -36,8 +36,8 @@ void SdRect::set(SdPoint a, SdPoint b)
   {
   setLeft( qMin(a.x(),b.x()) );
   setTop( qMin(a.y(),b.y()) );
-  setWidth( qMax(a.x(),b.x()) - left() );
-  setHeight( qMax(a.y(),b.y()) - top() );
+  setRight( qMax(a.x(),b.x()) );
+  setBottom( qMax(a.y(),b.y()) );
   }
 
 
@@ -48,8 +48,8 @@ void SdRect::set(QRect r)
 //  set( r.topLeft(), bottomRight() );
   setLeft( r.left() );
   setTop( r.top() );
-  setWidth( r.width() );
-  setHeight( r.height() );
+  setRight( r.right() );
+  setBottom( r.bottom() );
   }
 
 
@@ -73,8 +73,11 @@ void SdRect::grow(const SdRect &rect)
   {
   if( isEmpty() )
     set( rect );
-  else
-    set( united( rect ) );
+  else {
+    grow( rect.getTopLeft() );
+    grow( rect.getBottomRight() );
+    //set( united( rect ) );
+    }
   }
 
 

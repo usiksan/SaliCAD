@@ -610,7 +610,7 @@ void SdGraphSymImp::updatePinsPositions()
   QTransform t = impl.getMatrix();
   for( SdSymImpPin &pin : mPins )
     pin.mPosition = t.map( pin.mPin->getPinOrigin() );
-  mOverRect.set( t.mapRect( mSymbol->getOverRect(dctAll & (~dctIdent)) ) );
+  mOverRect.set( t.mapRect( mSymbol->getOverRect(dctAll & (~(dctIdent | dctValue))) ) );
   }
 
 
