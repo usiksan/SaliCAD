@@ -196,13 +196,6 @@ bool SdObjectFactory::extractHeader(const QString id, SdLibraryHeader &hdr)
 
 
 
-bool SdObjectFactory::forEachHeader(std::function<bool (SdLibraryHeader &)> fun1)
-  {
-  return sdLibraryStorage.forEachHeader( fun1 );
-  }
-
-
-
 
 
 

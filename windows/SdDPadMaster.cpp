@@ -254,7 +254,9 @@ void SdDPadMaster::onThroughPin(bool isThrough)
     ui->mStensilRows->clear();
     ui->mStensilColumns->clear();
     //Enable pin hole
-    ui->mHoleDiametr->setText( sdEnvir->toPhisPcb(mPad.mHoleDiametr = 500) );
+    if( mPad.mHoleDiametr <= 0 )
+      mPad.mHoleDiametr = 500;
+    ui->mHoleDiametr->setText( sdEnvir->toPhisPcb(mPad.mHoleDiametr) );
     }
   else {
     //Enable stensil hole

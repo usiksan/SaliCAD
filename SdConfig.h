@@ -240,7 +240,7 @@ History
 #define stdParamPrefix        QStringLiteral("prefix")
 #define stdParamValueSelector QStringLiteral("valueSelector")
 #define stdParamManufacturer  QStringLiteral("manufacturer")
-#define stdParamToolerance    QStringLiteral("toolerance")
+#define stdParamTolerance     QStringLiteral("tolerance")
 #define stdParamDatasheet     QStringLiteral("datasheet")
 #define stdParamWww           QStringLiteral("www")
 

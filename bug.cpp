@@ -23,11 +23,11 @@
 
 //TODO D064 Helper graph objects for other graph objects positioning
 
-//FIXME B064 Header list contains many objects with same time
-
 
 //===================================================================================
 //Fixed:
+
+//B064 Header list contains many objects with same time
 
 //D050 Append component rotation by keyboard
 
