@@ -59,7 +59,7 @@ struct SdSnapInfo
     SdPoint         mSour;     //Исходная точка
     SdPoint         mDest;     //Получившаяся точка
     SdPoint         mExclude;  //Точка, которую нужно исключить из просмотра
-    SdPropAngle         mDir;      //Направление поиска
+    SdPropAngle     mDir;      //Направление поиска
     SdSnapMask      mSnapMask; //Маска, которую нужно проверить
     SdSnapMask      mDestMask; //Маска сработавшая для точки dest
     double          mDistance; //Текущее расстояние от точки sour до точки dest

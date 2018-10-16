@@ -457,8 +457,8 @@ void SdModeCNetWire::calcSmartPoint()
     int stringer = getGrid().x();
     if( snap.mDest.x() == over.getTopLeft().x() ) mSmA.rx() = mStrEnd.rx() -= stringer;
     else if( snap.mDest.x() == over.getTopRight().x() ) mSmA.rx() = mStrEnd.rx() += stringer;
-    else if( snap.mDest.y() == over.getTopLeft().y() ) mSmA.ry() = mStrEnd.ry() -= stringer;
-    else if( snap.mDest.y() == over.getBottomLeft().y() ) mSmA.ry() = mStrEnd.ry() += stringer;
+    else if( snap.mDest.y() == over.getTopLeft().y() ) mSmA.ry() = mStrEnd.ry() += stringer;
+    else if( snap.mDest.y() == over.getBottomLeft().y() ) mSmA.ry() = mStrEnd.ry() -= stringer;
     else mSmA = calcMiddlePoint( mFirst, mStrEnd, sdGlobalProp->mWireEnterType );
     //Calculate vertex point
     if( mSmA.x() == mStrEnd.x() ) mSmA.ry() = mFirst.y();
