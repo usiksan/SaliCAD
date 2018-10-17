@@ -25,6 +25,7 @@ Description
 #include "SdSelector.h"
 #include "SdEnvir.h"
 #include "SdPlateNetList.h"
+#include "SdObjectFactory.h"
 
 #include <QDebug>
 
@@ -1029,9 +1030,32 @@ bool SdGraphPartImp::isUsed(SdObject *obj) const
 
 
 
-void SdGraphPartImp::upgradeProjectItem(SdProjectItem *newItem, SdUndo *undo)
+bool SdGraphPartImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
   {
+  if( SdObjectFactory::isThereNewer(mComponent) || SdObjectFactory::isThereNewer(mPart) ) {
+    //There newer objects. Upgrade.
+    if( mSections.count() )
+      return false;
 
+    //Prepare newer objects
+    SdPItemComponent *comp = sdObjectOnly<SdPItemComponent>( mComponent ? SdObjectFactory::extractObject( mComponent->getUid(), false, parent ) : nullptr );
+    SdPItemPart      *part = sdObjectOnly<SdPItemPart>( comp ? comp->extractPartFromFactory( false, parent ) : nullptr );
+
+    //Test if all newer objects prepared
+    if( comp && part ) {
+      detach(undo);
+      mComponent = comp;
+      mPart      = part;
+      attach(undo);
+      delete comp;
+      delete part;
+      return true;
+      }
+    if( comp ) delete comp;
+    if( part ) delete part;
+    return false;
+    }
+  return true;
   }
 
 

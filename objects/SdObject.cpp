@@ -138,10 +138,11 @@ bool SdObject::isUsed(SdObject *obj) const
 
 
 //Signal to replace item
-void SdObject::upgradeProjectItem(SdProjectItem *newItem, SdUndo *undo)
+bool SdObject::upgradeProjectItem(SdUndo *undo, QWidget *parent)
   {
-  Q_UNUSED(newItem)
+  Q_UNUSED(parent)
   Q_UNUSED(undo)
+  return true;
   }
 
 

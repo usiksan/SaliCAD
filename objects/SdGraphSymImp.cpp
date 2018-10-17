@@ -28,6 +28,7 @@ Description
 #include "SdContext.h"
 #include "SdUndo.h"
 #include "SdEnvir.h"
+#include "SdObjectFactory.h"
 
 #include <QDebug>
 
@@ -885,27 +886,46 @@ bool SdGraphSymImp::isUsed(SdObject *obj) const
 
 
 
-void SdGraphSymImp::upgradeProjectItem(SdProjectItem *newItem, SdUndo *undo)
+
+bool SdGraphSymImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
   {
-  if( mPart != nullptr && mPart->isCanUpgaded(newItem) ) {
-    //Part upgrade
-    detach(undo);
-    mPart = dynamic_cast<SdPItemPart*>(newItem);
-    attach(undo);
+  if( SdObjectFactory::isThereNewer(mComponent) || SdObjectFactory::isThereNewer(mSymbol) || SdObjectFactory::isThereNewer(mPart) ) {
+    //There newer objects. Upgrade.
+
+    //Prepare newer objects
+    SdPItemComponent *comp = sdObjectOnly<SdPItemComponent>( mComponent ? SdObjectFactory::extractObject( mComponent->getUid(), false, parent ) : nullptr );
+    SdPItemSymbol    *sym  = sdObjectOnly<SdPItemSymbol>( comp ? comp->extractSymbolFromFactory( mSectionIndex, false, parent ) : nullptr );
+    SdPItemPart      *part = sdObjectOnly<SdPItemPart>( comp ? comp->extractPartFromFactory( false, parent ) : nullptr );
+
+    //Test if all newer objects prepared
+    if( comp && sym && part ) {
+      //Retrive implement properties for restore position and other properties of implement because after
+      //upgrading mPartImp will be different from current
+      SdPropSelected prop;
+      prop.clear();
+      if( mPartImp ) mPartImp->getProp( prop );
+      detach(undo);
+      mComponent = comp;
+      mSymbol    = sym;
+      mPart      = part;
+      attach(undo);
+      //Restore part implement properties
+      if( mPartImp ) mPartImp->setProp( prop );
+      delete comp;
+      delete sym;
+      delete part;
+      return true;
+      }
+    if( comp ) delete comp;
+    if( sym ) delete sym;
+    if( part ) delete part;
+    return false;
     }
-  else if( mComponent->isCanUpgaded(newItem) ) {
-    //Component upgrade and may be symbol
-    detach(undo);
-    mComponent = dynamic_cast<SdPItemComponent*>(newItem);
-    if( mSymbol->isCanUpgaded(newItem) )
-      mSymbol = dynamic_cast<SdPItemSymbol*>(newItem);
-    attach(undo);
-    }
-  else if( mSymbol->isCanUpgaded(newItem) ) {
-    //Only symbol upgrade
-    detach(undo);
-    mSymbol = dynamic_cast<SdPItemSymbol*>(newItem);
-    attach(undo);
-    }
+  return true;
   }
+
+
+
+
+
 

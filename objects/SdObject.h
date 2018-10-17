@@ -105,7 +105,7 @@ class SdObject
     virtual bool      isUsed( SdObject *obj ) const;
 
     //Upgrade project item on new one
-    virtual void      upgradeProjectItem( SdProjectItem *newItem, SdUndo *undo );
+    virtual bool      upgradeProjectItem( SdUndo *undo, QWidget *parent );
 
     //Copy
     //Exact copy object

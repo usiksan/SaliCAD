@@ -360,12 +360,23 @@ bool SdContainer::isUsed(SdObject *test) const
 
 
 //Upgrade project item on new one
-void SdContainer::upgradeProjectItem(SdProjectItem *newItem, SdUndo *undo)
+bool SdContainer::upgradeProjectItem(SdUndo *undo, QWidget *parent)
+  {
+  return upgradeClassProjectItem( dctAll, undo, parent );
+  }
+
+
+
+
+
+//Upgrage only class objects with newer items
+bool SdContainer::upgradeClassProjectItem(SdClass mask, SdUndo *undo, QWidget *parent )
   {
   //Upgrade all objects of container
-  forEach( dctAll, [newItem, undo] (SdObject *obj) -> bool {
-    obj->upgradeProjectItem( newItem, undo );
-    return true;
+  bool res = true;
+  forEach( mask, [&res,undo,parent] (SdObject *obj) -> bool {
+    return res = obj->upgradeProjectItem( undo, parent );
     });
+  return res;
   }
 

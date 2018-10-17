@@ -105,7 +105,10 @@ class SdContainer : public SdObject
     virtual bool isUsed(SdObject *test) const override;
 
     //Upgrade project item on new one
-    virtual void upgradeProjectItem( SdProjectItem *newItem, SdUndo *undo ) override;
+    virtual bool upgradeProjectItem( SdUndo *undo, QWidget *parent ) override;
+
+    //Upgrage only class objects with newer items
+    bool         upgradeClassProjectItem(SdClass mask, SdUndo *undo , QWidget *parent);
   };
 
 

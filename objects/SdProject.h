@@ -104,10 +104,13 @@ class SdProject : public SdContainer
     virtual void      deleteChild(SdObject *child, SdUndo *undo ) override;
     virtual void      undoDeleteChild(SdObject *child) override;
     virtual void      redoDeleteChild( SdObject *child ) override;
+    //Upgrade newer objects
+    virtual bool      upgradeNewerItems( SdUndo *undo, QWidget *parent );
 
   private:
     //Test if net name already used
     bool              isNetNameUsed( const QString netName );
+
   };
 
 

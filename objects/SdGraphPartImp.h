@@ -193,7 +193,7 @@ class SdGraphPartImp : public SdGraphTraced
     virtual void         writeObject(QJsonObject &obj) const override;
     virtual void         readObject(SdObjectMap *map, const QJsonObject obj) override;
     virtual bool         isUsed(SdObject *obj) const override;
-    virtual void         upgradeProjectItem(SdProjectItem *newItem, SdUndo *undo) override;
+    virtual bool         upgradeProjectItem(SdUndo *undo, QWidget *parent) override;
 
     // SdGraph interface
   public:

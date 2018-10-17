@@ -331,6 +331,7 @@ void SdProject::newerCheckAndMark()
 
 
 
+
 QString SdProject::getType() const
   {
   return QStringLiteral(SD_TYPE_PROJECT);
@@ -495,6 +496,37 @@ void SdProject::redoDeleteChild(SdObject *child)
     }
   }
 
+
+
+
+
+
+//Upgrade newer objects
+bool SdProject::upgradeNewerItems(SdUndo *undo, QWidget *parent)
+  {
+  if( undo )
+    undo->begin( QObject::tr("Upgrading newer objects"), nullptr );
+  //Upgrage in schematic
+  if( !upgradeClassProjectItem( dctSheet, undo, parent ) ) return false;
+  //Upgrade in pcb
+  if( !upgradeClassProjectItem( dctPlate, undo, parent ) ) return false;
+  //Upgrade components, parts and symbols
+  bool res = true;
+  forEach( dctComponent | dctInheritance | dctSymbol | dctPart, [&res,this,undo,parent] (SdObject *obj) -> bool {
+    SdPtr<SdProjectItem> item(obj);
+    if( item.isValid() && SdObjectFactory::isThereNewer(item.ptr()) && !isUsed(obj) ) {
+      //Object may be upgraded and it is not used
+      QString uid = item->getUid();
+      SdObject *newObj = SdObjectFactory::extractObject( uid, false, parent );
+      if( newObj == nullptr )
+        return res = false;
+      obj->deleteObject( undo );
+      insertChild( newObj, undo );
+      }
+    return true;
+    });
+  return res;
+  }
 
 
 
