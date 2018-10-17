@@ -218,7 +218,7 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
       setStep(sNextPoint);
       rebuildBarriers();
       //Find destignate point
-      calcNextSmartPoint();
+      calcNextSmartPoint( mFirst );
       if( !mTargetPoint.isFar() )
         //Try build smart path
         buildSmartPath( mFirst, mTargetPoint );
@@ -277,7 +277,7 @@ void SdModeCRoadEnter::movePoint(SdPoint p)
     mLast = p;
     SdPoint grid = mEditor->gridGet();
     //Find destignate point
-    calcNextSmartPoint();
+    calcNextSmartPoint( p );
     if( !mTargetPoint.isFar() ) {
       //Calculate catch
       SdPoint offset = mTargetPoint - p;
@@ -471,11 +471,11 @@ void SdModeCRoadEnter::calcFirstSmartPoint()
 
 
 
-void SdModeCRoadEnter::calcNextSmartPoint()
+void SdModeCRoadEnter::calcNextSmartPoint( SdPoint fromPoint )
   {
   //Find nearest dest point
   SdSnapInfo info;
-  info.mSour = mFirst;
+  info.mSour = fromPoint;
   info.mExclude = mSource;
   //info.mSnapMask = snapNearestNetNet | snapNearestNetPin | snapExcludeSour;
   info.mSnapMask = snapNearestNetPin | snapExcludeSour | snapExcludeExcl;
@@ -712,7 +712,7 @@ void SdModeCRoadEnter::changeTraceLayer()
   //Update rules
   propSetToBar();
   rebuildBarriers();
-  calcNextSmartPoint();
+  calcNextSmartPoint( mFirst );
   }
 
 

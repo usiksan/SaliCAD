@@ -83,7 +83,7 @@ class SdModeCRoadEnter : public SdModeCommon
     SdPItemPlate   *plate() { return dynamic_cast<SdPItemPlate*>(mObject); }
     void            getNetOnPoint( SdPoint p, SdStratum s, QString *netName, int *destStratum );
     void            calcFirstSmartPoint();
-    void            calcNextSmartPoint();
+    void            calcNextSmartPoint(SdPoint fromPoint);
     SdPoint         checkRoad( SdPoint p1, SdPoint p2 ) const;
     bool            isBarriersContains( const SdBarrierList &bar, SdPoint p ) const;
     //Check if mSmartPath available
