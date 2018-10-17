@@ -309,6 +309,9 @@ void SdWProjectTree::cmObjectPaste()
 
     //Update status undo and redo commands
     cmUndoRedoUpdate();
+
+    //Update newest marks
+    updateNewestMark();
     }
   }
 
