@@ -9,6 +9,11 @@ Web
   www.saliLab.ru
 
 Description
+  Rect by left top and right bottom corners
+
+  Because Y axiz point to down, then "top" in fact is bottom and wise wersa
+
+  Because right() return (left pos) + width - 1, then replace all functions on correct (left pos) + width
 */
 
 #include "SdRect.h"
@@ -167,8 +172,10 @@ QJsonObject SdRect::write() const
   QJsonObject obj;
   obj.insert( QStringLiteral("x"), left() );
   obj.insert( QStringLiteral("y"), top() );
-  obj.insert( QStringLiteral("w"), width() );
-  obj.insert( QStringLiteral("h"), height() );
+  obj.insert( QStringLiteral("r"), right() );
+  obj.insert( QStringLiteral("b"), bottom() );
+//  obj.insert( QStringLiteral("w"), width() );
+//  obj.insert( QStringLiteral("h"), height() );
   return obj;
   }
 
@@ -187,8 +194,14 @@ void SdRect::read(const QJsonObject &obj)
   {
   setLeft( obj.value( QStringLiteral("x") ).toInt() );
   setTop( obj.value( QStringLiteral("y") ).toInt() );
-  setWidth( obj.value( QStringLiteral("w") ).toInt() );
-  setHeight( obj.value( QStringLiteral("h") ).toInt() );
+  if( obj.contains(QStringLiteral("w")) ) {
+    setWidth( obj.value( QStringLiteral("w") ).toInt() );
+    setHeight( obj.value( QStringLiteral("h") ).toInt() );
+    }
+  else {
+    setRight( obj.value( QStringLiteral("r") ).toInt() );
+    setBottom( obj.value( QStringLiteral("b") ).toInt() );
+    }
   }
 
 

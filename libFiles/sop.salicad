@@ -13,7 +13,7 @@
                         "x": 4405,
                         "y": 5325
                     },
-                    "id": "3e51780",
+                    "id": "118c800",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -28,7 +28,7 @@
                         "x": 0,
                         "y": 925
                     },
-                    "id": "2009a30",
+                    "id": "111f000",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -43,7 +43,7 @@
                         "x": 1270,
                         "y": 925
                     },
-                    "id": "21a4640",
+                    "id": "12e77a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -58,7 +58,7 @@
                         "x": 2540,
                         "y": 925
                     },
-                    "id": "bacfe00",
+                    "id": "f94db0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -73,7 +73,7 @@
                         "x": 3810,
                         "y": 925
                     },
-                    "id": "bacfe60",
+                    "id": "133a360",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -88,7 +88,7 @@
                         "x": 3810,
                         "y": 5325
                     },
-                    "id": "2b2c760",
+                    "id": "13f1dd0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -103,7 +103,7 @@
                         "x": 2540,
                         "y": 5325
                     },
-                    "id": "2a8be30",
+                    "id": "13dcd60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -118,7 +118,7 @@
                         "x": 1270,
                         "y": 5325
                     },
-                    "id": "2165570",
+                    "id": "13043a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -133,7 +133,7 @@
                         "x": 0,
                         "y": 5325
                     },
-                    "id": "21679e0",
+                    "id": "149a3f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -144,7 +144,7 @@
                         "x": 0,
                         "y": 1425
                     },
-                    "id": "bb250f0",
+                    "id": "13522f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -182,7 +182,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "hsop0.4bot",
                     "Stratum": "1",
-                    "id": "bacf200",
+                    "id": "11d9400",
                     "type": "PartPin"
                 },
                 {
@@ -216,7 +216,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "hsop0.4bot",
                     "Stratum": "1",
-                    "id": "baac680",
+                    "id": "1352f10",
                     "type": "PartPin"
                 },
                 {
@@ -250,7 +250,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "hsop0.4bot",
                     "Stratum": "1",
-                    "id": "210e000",
+                    "id": "11ab110",
                     "type": "PartPin"
                 },
                 {
@@ -284,7 +284,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "hsop0.4bot",
                     "Stratum": "1",
-                    "id": "39ba800",
+                    "id": "1324800",
                     "type": "PartPin"
                 },
                 {
@@ -318,7 +318,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "hsop0.4top",
                     "Stratum": "1",
-                    "id": "bb00530",
+                    "id": "13c2d40",
                     "type": "PartPin"
                 },
                 {
@@ -352,7 +352,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "hsop0.4top",
                     "Stratum": "1",
-                    "id": "213ec00",
+                    "id": "140cb00",
                     "type": "PartPin"
                 },
                 {
@@ -386,7 +386,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "hsop0.4top",
                     "Stratum": "1",
-                    "id": "7478fc0",
+                    "id": "1499d60",
                     "type": "PartPin"
                 },
                 {
@@ -420,7 +420,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "hsop0.4top",
                     "Stratum": "1",
-                    "id": "7477270",
+                    "id": "1303070",
                     "type": "PartPin"
                 },
                 {
@@ -428,10 +428,10 @@
                         "x": -95,
                         "y": 3125
                     },
-                    "id": "21654e0",
+                    "id": "141bc60",
                     "over": {
-                        "h": 1640,
-                        "w": 1102,
+                        "b": 3945,
+                        "r": 452,
                         "x": -649,
                         "y": 2306
                     },
@@ -450,10 +450,10 @@
                         "x": 4905,
                         "y": 3125
                     },
-                    "id": "39aae60",
+                    "id": "b8fc00",
                     "over": {
-                        "h": 3053,
-                        "w": 1102,
+                        "b": 4652,
+                        "r": 5456,
                         "x": 4355,
                         "y": 1600
                     },
@@ -498,7 +498,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "hsop8-center",
                     "Stratum": "3fffffff",
-                    "id": "3e90660",
+                    "id": "141b6a0",
                     "type": "PartPin"
                 }
             ],
@@ -511,12 +511,12 @@
             "Parametrs": {
             },
             "Title": "hsop8",
-            "id": "4b3d220",
+            "id": "12c5c30",
             "type": "Part"
         }
     ],
     "Parametrs": {
     },
-    "id": "4b18380",
+    "id": "1043b70",
     "type": "Project"
 }

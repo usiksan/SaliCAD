@@ -9,7 +9,7 @@ Web
   www.saliLab.ru
 
 Description
-  Rect by origin point, width and height
+  Rect by left top and right bottom corners
 
   Because Y axiz point to down, then "top" in fact is bottom and wise wersa
 
@@ -38,16 +38,16 @@ class SdRect : public QRect
     SdRect( int px, int py, int w, int h);
 
     //Because Y axiz point to down, then "top" in fact is bottom and wise wersa
-    int         getTop() const { return top() + height(); }
+    int         getTop() const { return bottom(); }
     int         getBottom() const { return top(); }
     int         getLeft() const { return left(); }
-    int         getRight() const { return left() + width(); }
+    int         getRight() const { return right(); }
 
     //Because right() return (left pos) + width - 1, then replace all functions on correct (left pos) + width
-    SdPoint     getTopLeft() const { return SdPoint( left(), top() + height() ); }
-    SdPoint     getTopRight() const { return SdPoint( left() + width(), top() + height() ); }
-    SdPoint     getBottomLeft() const { return SdPoint( left(), top() ); }
-    SdPoint     getBottomRight() const { return SdPoint( left() + width(), top() ); }
+    SdPoint     getTopLeft() const { return SdPoint( getLeft(), getTop() ); }
+    SdPoint     getTopRight() const { return SdPoint( getRight(), getTop() ); }
+    SdPoint     getBottomLeft() const { return SdPoint( getLeft(), getBottom() ); }
+    SdPoint     getBottomRight() const { return SdPoint( getRight(), getBottom() ); }
 
     void        set( SdPoint a, SdPoint b );
     void        set( QRect r );
