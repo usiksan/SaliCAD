@@ -91,7 +91,8 @@ class SdWMain : public QMainWindow
     //Calling when press close tab of editor
     void onCloseEditor( int index );
 
-    //Реакции на команды
+    //Commands [Реакции на команды]
+    //File menu commands
     void cmFileNew();
     void cmFileLoad();
     void cmFileOpen();
@@ -111,6 +112,7 @@ class SdWMain : public QMainWindow
     void cmFileImport();
     void cmFileExport();
 
+    //Object menu commands
     void cmObjectNew();
     void cmObjectLoad();
     void cmObjectRename();
@@ -124,7 +126,9 @@ class SdWMain : public QMainWindow
     void cmObjectEditEnable();
     void cmObjectEditDisable();
     void cmProjectParam();
+    void cmProjectUpgrade();
 
+    //Edit menu commands
     void cmEditUndo();
     void cmEditRedo();
     void cmEditCut();
@@ -137,6 +141,7 @@ class SdWMain : public QMainWindow
     void cmEditReplace();
     void cmEditProperties();
 
+    //View menu commands
     void cmViewProject();
     void cmViewFill();
     void cmViewNets();
@@ -148,6 +153,7 @@ class SdWMain : public QMainWindow
     void cmViewMeasurement();
     void cmShowFields( bool st );
 
+    //Common graphics modes
     void cmModeSelect();
 
     void cmModeLine();
@@ -248,9 +254,8 @@ class SdWMain : public QMainWindow
     //Return current active project view tree
     SdWProjectTree *activeProject() { return mWProjectList->activeProject(); }
     SdWProjectTree *project( int index ) { return mWProjectList->project(index); }
-    void            createMenu();
-    void            destroyProject( SdWProjectTree *prj );
-    void            setupTitle();
+    //Dirty cashe for graphics window and repaint its contens
+    void            activeEditorUpdate();
   };
 
 #endif // SBWMAIN_H

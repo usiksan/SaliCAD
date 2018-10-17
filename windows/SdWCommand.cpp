@@ -96,6 +96,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmObjectEditEnable  = menuObject->addAction( QIcon(QString(":/pic/objectEditEnable.png")), frame->tr("Enable edit"), frame, SLOT(cmObjectEditEnable()) );
   cmObjectEditDisable = menuObject->addAction( QIcon(QString(":/pic/objectEditDisable.png")), frame->tr("Finish edit"), frame, SLOT(cmObjectEditDisable()) );
   cmProjectParam      = menuObject->addAction( QIcon(QString(":/pic/editProjectParam.png")), frame->tr("Edit project param..."), frame, SLOT(cmProjectParam()) );
+  cmProjectUpgrade    = menuObject->addAction( QIcon(QString(":/pic/editProjectUpgrade.png")), frame->tr("Upgrade with new versions"), frame, SLOT(cmProjectUpgrade()) );
 
 
 
@@ -724,6 +725,7 @@ QActionPtr SdWCommand::cmObjectParam;
 QActionPtr SdWCommand::cmObjectEditEnable;
 QActionPtr SdWCommand::cmObjectEditDisable;
 QActionPtr SdWCommand::cmProjectParam;
+QActionPtr SdWCommand::cmProjectUpgrade;
 
 QActionPtr SdWCommand::cmEditUndo;
 QActionPtr SdWCommand::cmEditRedo;

@@ -903,14 +903,35 @@ bool SdGraphSymImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
       //upgrading mPartImp will be different from current
       SdPropSelected prop;
       prop.clear();
-      if( mPartImp ) mPartImp->getProp( prop );
+      SdPoint partOrigin( SdPoint::far() );
+      if( mPartImp ) {
+        mPartImp->getProp( prop );
+        partOrigin = mPartImp->getOrigin();
+        }
       detach(undo);
+      //Because "detach" perhaps without deleting symImp, then referenced object not autodeleted
+      //Perform autodeling it
+      SdPItemComponent *dcomp = mComponent;
+      SdPItemSymbol    *dsym  = mSymbol;
+      SdPItemPart      *dpart = mPart;
       mComponent = comp;
       mSymbol    = sym;
       mPart      = part;
+
+      //Autodelete all referenced objects
+      if( dcomp ) dcomp->autoDelete( undo );
+      if( dsym  ) dsym->autoDelete( undo );
+      if( dpart ) dpart->autoDelete( undo );
+
       attach(undo);
       //Restore part implement properties
-      if( mPartImp ) mPartImp->setProp( prop );
+      if( mPartImp ) {
+        mPartImp->setProp( prop );
+        if( !partOrigin.isFar() ) {
+          partOrigin = partOrigin.sub( mPartImp->getOrigin() );
+          mPartImp->move( partOrigin );
+          }
+        }
       delete comp;
       delete sym;
       delete part;

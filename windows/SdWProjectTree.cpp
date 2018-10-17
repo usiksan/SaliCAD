@@ -411,6 +411,18 @@ void SdWProjectTree::cmProjectParam()
 
 
 
+//Upgrade items with newer versions
+void SdWProjectTree::cmProjectUpgrade()
+  {
+  //Perform upgrading
+  mProject->upgradeNewerItems( mProject->getUndo(), this );
+  //Update markers
+  mProject->newerCheckAndMark();
+  }
+
+
+
+
 void SdWProjectTree::cmClipboardChange()
   {
   SdWCommand::cmObjectPaste->setEnabled( QApplication::clipboard()->mimeData()->hasFormat(SD_CLIP_FORMAT_PITEM) );

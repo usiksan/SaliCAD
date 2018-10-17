@@ -86,6 +86,8 @@ class SdWProjectTree : public QTreeWidget
     //Edit project param
     void         cmProjectParam();
 
+    //Upgrade items with newer versions
+    void         cmProjectUpgrade();
 
 
     void         cmClipboardChange();

@@ -560,6 +560,22 @@ SdWEditor *SdWMain::findHelpWidget()
 
 
 
+//Dirty cashe for graphics window and repaint its contens
+void SdWMain::activeEditorUpdate()
+  {
+  if( activeEditor() ) {
+    //For graph editor repaint with dirty cashe
+    SdWEditorGraph *graph = dynamic_cast<SdWEditorGraph*>(activeEditor());
+    if( graph )
+      graph->dirtyCashe();
+    activeEditor()->update();
+    }
+  }
+
+
+
+
+
 void SdWMain::cmFileNew()
   {
   //Create new project
@@ -878,6 +894,20 @@ void SdWMain::cmProjectParam()
 
 
 
+
+void SdWMain::cmProjectUpgrade()
+  {
+  if( activeProject() ) {
+    //Perform upgrading
+    activeProject()->cmProjectUpgrade();
+    //Update all editors of project
+    activeEditorUpdate();
+    }
+  }
+
+
+
+
 void SdWMain::cmEditUndo()
   {
   if( activeProject() ) {
@@ -1112,11 +1142,7 @@ void SdWMain::cmViewMeasurement()
 void SdWMain::cmShowFields(bool st)
   {
   sdEnvir->mShowFields = st;
-  if( activeEditor() ) {
-    SdWEditorGraph *gr = dynamic_cast<SdWEditorGraph*>( activeEditor() );
-    if( gr ) gr->dirtyCashe();
-    activeEditor()->update();
-    }
+  activeEditorUpdate();
   }
 
 
@@ -1282,14 +1308,7 @@ void SdWMain::cmShowPads(bool st)
   {
   //Setup new state of show pads flag
   sdEnvir->mShowPads = st;
-  if( activeEditor() ) {
-    //For graph editor repaint with dirty cashe
-    SdWEditorGraph *graph = dynamic_cast<SdWEditorGraph*>(activeEditor());
-    if( graph ) {
-      graph->dirtyCashe();
-      graph->update();
-      }
-    }
+  activeEditorUpdate();
   }
 
 
@@ -1697,11 +1716,14 @@ void SdWMain::cmPropertiesChange()
 
 
 
+
+
 void SdWMain::cmEnterPosition()
   {
   if( activeEditor() )
     activeEditor()->cmEnterPosition();
   }
+
 
 
 
@@ -1717,47 +1739,5 @@ void SdWMain::cmHelpTopic(const QString topic)
     }
   }
 
-
-
-
-
-
-
-
-
-
-void SdWMain::createMenu()
-  {
-
-  }
-
-
-//void SdWMain::destroyProject(SdWProjectTree *prj)
-//  {
-//  int index = mProjects->indexOf( prj );
-//  if( index >= 0 ) {
-//    mProjectTitles->removeItem( index );
-//    mProjects->removeWidget( prj );
-//    delete prj;
-
-//    if( mProjects->count() == 0 ) {
-//      //Выключить пункты меню
-//      MainMenu::projectState(false);
-//      mCloseProject->setEnabled(false);
-//      }
-//    }
-//  else
-//    qDebug() << "****** destroyProject";
-//  }
-
-
-
-
-
-//Установить заголовок
-void SdWMain::setupTitle()
-  {
-  //setWindowTitle( QString(SALICAD_NAME SALICAD_VERSION "[%1]").arg( activeProject()-> dsProject->mProjectName) );
-  }
 
 

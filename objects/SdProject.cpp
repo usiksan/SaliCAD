@@ -511,21 +511,33 @@ bool SdProject::upgradeNewerItems(SdUndo *undo, QWidget *parent)
   //Upgrade in pcb
   if( !upgradeClassProjectItem( dctPlate, undo, parent ) ) return false;
   //Upgrade components, parts and symbols
-  bool res = true;
-  forEach( dctComponent | dctInheritance | dctSymbol | dctPart, [&res,this,undo,parent] (SdObject *obj) -> bool {
+  //At first, we accumulate items to be upgraded
+  QList<SdProjectItemPtr> upgradeList;
+  forEach( dctComponent | dctInheritance | dctSymbol | dctPart, [&upgradeList,this] (SdObject *obj) -> bool {
     SdPtr<SdProjectItem> item(obj);
     if( item.isValid() && SdObjectFactory::isThereNewer(item.ptr()) && !isUsed(obj) ) {
       //Object may be upgraded and it is not used
-      QString uid = item->getUid();
-      SdObject *newObj = SdObjectFactory::extractObject( uid, false, parent );
-      if( newObj == nullptr )
-        return res = false;
-      obj->deleteObject( undo );
-      insertChild( newObj, undo );
+      upgradeList.append( item.ptr() );
       }
     return true;
     });
-  return res;
+
+  //At second, we get upgraded item, remove old item and insert new one
+  for( SdProjectItemPtr item : upgradeList ) {
+    //Get uid of item to extract newer object
+    QString uid = item->getUid();
+    //Extract newer object
+    SdProjectItem *newItem = sdObjectOnly<SdProjectItem>( SdObjectFactory::extractObject( uid, false, parent ) );
+    if( newItem == nullptr )
+      return false;
+    //Delete old item
+    item->deleteObject( undo );
+    //Insert new item
+    getFixedProjectItem( newItem );
+    //Delete intermediate object
+    delete newItem;
+    }
+  return true;
   }
 
 

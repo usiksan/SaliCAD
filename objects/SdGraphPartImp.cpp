@@ -1044,9 +1044,21 @@ bool SdGraphPartImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
     //Test if all newer objects prepared
     if( comp && part ) {
       detach(undo);
+
+      //Because "detach" perhaps without deleting symImp, then referenced object not autodeleted
+      //Perform autodeling it
+      SdPItemComponent *dcomp = mComponent;
+      SdPItemPart      *dpart = mPart;
+      //Setup newer objects
       mComponent = comp;
       mPart      = part;
+
+      //Autodelete all referenced objects
+      if( dcomp ) dcomp->autoDelete( undo );
+      if( dpart ) dpart->autoDelete( undo );
+
       attach(undo);
+
       delete comp;
       delete part;
       return true;

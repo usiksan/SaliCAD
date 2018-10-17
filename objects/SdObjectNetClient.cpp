@@ -43,7 +43,8 @@ SdObjectNetClient::SdObjectNetClient(QObject *parent) :
   mRemoteSyncIndex = s.value( SDK_REMOTE_SYNC ).toInt();
   mHostIp          = s.value( SDK_SERVER_IP ).toString();
 
-  mTimer.setInterval( 180000 );
+  mTimer.setInterval( 10000 );
+  qDebug() << "registered" << isRegistered();
   if( isRegistered() )
     mTimer.start();
 
@@ -161,6 +162,7 @@ void SdObjectNetClient::onConnected()
 //By timer do syncronisation
 void SdObjectNetClient::doSync()
   {
+  mTimer.setInterval( 180000 );
   if( !mHostIp.isEmpty() ) {
     qDebug() << "doSync";
     mCommandSync = 0;
