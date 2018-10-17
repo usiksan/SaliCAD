@@ -284,6 +284,7 @@ void SdWMain::onUpdateItemTitle(SdProjectItem *item)
       //Item is open, rename tab and tool tip
       mWEditors->setTabIcon( i, QIcon(item->getIconName()) );
       mWEditors->setTabText( i, editor->getTitle() );
+      mWEditors->setTabToolTip( i, editor->getToolTip() );
       return;
       }
     }
@@ -492,7 +493,7 @@ void SdWMain::appendEditor(SdWEditor *editor)
     mWEditors->addTab( editor, QIcon( editor->getIconName() ), editor->getTitle() );
 
     //Set tool tip
-    //mWEditors->setTabToolTip( mWEditors->count() - 1, item->getToolTip() );
+    mWEditors->setTabToolTip( mWEditors->count() - 1, editor->getToolTip() );
 
     //And make it current
     mWEditors->setCurrentIndex( mWEditors->count() - 1 );

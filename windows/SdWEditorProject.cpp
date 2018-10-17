@@ -60,6 +60,14 @@ QString SdWEditorProject::getTitle()
 
 
 
+QString SdWEditorProject::getToolTip()
+  {
+  return mShortName;
+  }
+
+
+
+
 QString SdWEditorProject::getIconName()
   {
   return QString(":/pic/iconProject.png");

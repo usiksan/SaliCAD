@@ -2,7 +2,7 @@
 //B064 bugs
 //F001 fatal
 //C001 critical
-//D065 do
+//D066 do
 
 
 
@@ -24,8 +24,11 @@
 //TODO D064 Helper graph objects for other graph objects positioning
 
 
+
 //===================================================================================
 //Fixed:
+
+//D066 Append tool tips in project tree view with status description
 
 //B064 Header list contains many objects with same time
 

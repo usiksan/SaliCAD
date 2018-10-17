@@ -42,6 +42,8 @@ SdWProjectTree::SdWProjectTree(const QString fname, SdProject *prj, QWidget *par
   QTreeWidget(parent),
   mFileName(fname)
   {
+  //setColumnCount(2);
+
   if( fname.isEmpty() ) {
     //Creating empty project [Создаем пустой проект]
     mFileName = SD_DEFAULT_FILE_NAME;
@@ -467,7 +469,7 @@ void SdWProjectTree::renameItem(SdProjectItem *item)
     //Item from this project
     item->mTreeItem->setIcon( 0, QIcon(item->getIconName()) );
     item->mTreeItem->setText( 0, item->getExtendTitle() );
-    item->mTreeItem->setToolTip( 0, item->getExtendTitle() );
+    item->mTreeItem->setToolTip( 0, item->getToolTip() );
     }
   }
 
@@ -480,7 +482,7 @@ void SdWProjectTree::insertItem(SdProjectItem *item)
     //Item from this project
     item->mTreeItem = new QTreeWidgetItem();
     item->mTreeItem->setText( 0, item->getExtendTitle() );
-    item->mTreeItem->setToolTip( 0, item->getExtendTitle() );
+    item->mTreeItem->setToolTip( 0, item->getToolTip() );
     item->mTreeItem->setIcon( 0, QIcon(item->getIconName()) );
     QTreeWidgetItem *ch = classList( item->getClass() );
     if( ch ) ch->addChild( item->mTreeItem );
@@ -621,7 +623,7 @@ void SdWProjectTree::fillTopItem(QTreeWidgetItem *item, quint64 classId)
     SdProjectItem *ctr = dynamic_cast<SdProjectItem*>( obj );
     if( ctr ) {
       it->setText( 0, ctr->getExtendTitle() );
-      it->setToolTip( 0, ctr->getExtendTitle() );
+      it->setToolTip( 0, ctr->getToolTip() );
       it->setIcon( 0, QIcon(ctr->getIconName()) );
       ctr->mTreeItem = it;
       //it->setData(0, Qt::UserRole, QVariant(ctr->getId()) );

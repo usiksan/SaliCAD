@@ -59,6 +59,14 @@ QString SdWEditor::getTitle()
 
 
 
+QString SdWEditor::getToolTip()
+  {
+  return getProjectItem()->getToolTip();
+  }
+
+
+
+
 QString SdWEditor::getIconName()
   {
   return getProjectItem()->getIconName();

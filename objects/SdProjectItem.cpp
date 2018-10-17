@@ -61,6 +61,19 @@ QString SdProjectItem::getExtendTitle() const
 
 
 
+QString SdProjectItem::getToolTip() const
+  {
+  if( !isEditEnable() ) {
+    if( mThereNewer )
+      return QObject::tr("There new object. Use upgrade menu. '%1'").arg( getExtendTitle() );
+    return QObject::tr("Object locked. Unlock to edit. '%1'").arg( getExtendTitle() );
+    }
+  return getExtendTitle();
+  }
+
+
+
+
 
 
 
@@ -234,13 +247,6 @@ SdRect SdProjectItem::getOverRect(quint64 classMask)
   }
 
 
-
-
-
-bool SdProjectItem::isCanUpgaded(SdProjectItem *newObj)
-  {
-  return newObj != nullptr && getClass() == newObj->getClass() && getTitle() == newObj->getTitle();
-  }
 
 
 

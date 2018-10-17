@@ -44,6 +44,8 @@ class SdWEditor : public QAbstractScrollArea
 
     virtual QString        getTitle();
 
+    virtual QString        getToolTip();
+
     virtual QString        getIconName();
 
     int                    getRecentlyIndex() const { return mRecentlyIndex; }

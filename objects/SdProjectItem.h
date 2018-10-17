@@ -65,8 +65,6 @@ class SdProjectItem : public SdContainer
     bool                   isAnotherAuthor() const;
     //Get over rect
     SdRect                 getOverRect( quint64 classMask = dctAll );
-    //Test if this object can be upgraded by other
-    bool                   isCanUpgaded( SdProjectItem *newObj );
 
     //Object visual (graphical) identificator
     SdGraphIdent          *identGet();

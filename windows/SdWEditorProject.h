@@ -36,6 +36,7 @@ class SdWEditorProject : public SdWEditor
     virtual SdProjectItem *getProjectItem() const override;
     virtual SdProject     *getProject() override;
     virtual QString        getTitle() override;
+    virtual QString        getToolTip() override;
     virtual QString        getIconName() override;
     virtual void           onActivateEditor() override;
     virtual void           cmEditUndo() override;
