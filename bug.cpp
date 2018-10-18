@@ -2,7 +2,7 @@
 //B064 bugs
 //F001 fatal
 //C001 critical
-//D066 do
+//D069 do
 
 
 
@@ -23,6 +23,11 @@
 
 //TODO D064 Helper graph objects for other graph objects positioning
 
+//TODO D067 Append query to upgrade when loading project if there are upgrading
+
+//TODO D068 Append query to upgrade when newer objects received from remote and possibility to off than query
+
+//TODO D069 Append to enter polygon mode smart to retrive polygon net name
 
 
 //===================================================================================
