@@ -260,7 +260,8 @@ SOURCES += \
     windows/SdWCategoryList.cpp \
     master/SdDMasterSymbolIc.cpp \
     objects/SdPItemRich.cpp \
-    windows/SdWEditorRich.cpp
+    windows/SdWEditorRich.cpp \
+    modes/SdModeCViaEnter.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -517,7 +518,8 @@ HEADERS  += \
     windows/SdWCategoryList.h \
     master/SdDMasterSymbolIc.h \
     objects/SdPItemRich.h \
-    windows/SdWEditorRich.h
+    windows/SdWEditorRich.h \
+    modes/SdModeCViaEnter.h
 
 DISTFILES += \
     license.txt

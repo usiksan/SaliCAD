@@ -41,8 +41,8 @@ class SdModeCRoadEnter : public SdModeCommon
     SdObjectPtrList mEnterPath;   //Created path
 
     bool            mShowNet;     //Show current net with enter color
-    SdBarrierList   mPads;
-    SdBarrierList   mRoads;
+    SdBarrierList   mPads;        //Barriers for pads on vias
+    SdBarrierList   mRoads;       //Barriers for roads
 
     const int sFirstPoint = 0, sNextPoint = 1;
 
