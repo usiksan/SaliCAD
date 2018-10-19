@@ -214,6 +214,7 @@ class SdWMain : public QMainWindow
     void cmModePolygon();
     void cmModeDeleteWire();
     void cmModePad();
+    void cmModeViaEnter();
 
     void cmRulesEdit();
     void cmRulesCheck();

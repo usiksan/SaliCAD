@@ -46,6 +46,7 @@ class SdWEditorGraphPlate : public SdWEditorGraph
     virtual void           onActivateEditor() override;
     virtual void           cmPads() override;
     virtual void           cmModePartSelect( QStringList list ) override;
+    virtual void           cmModeViaEnter() override;
 
     //Pcb rules
     virtual void           cmRulesEdit() override;

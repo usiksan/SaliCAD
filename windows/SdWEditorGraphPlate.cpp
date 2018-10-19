@@ -28,6 +28,7 @@ Description
 #include "modes/SdModeCPlateIdentMove.h"
 #include "modes/SdModeCPlateValueMove.h"
 #include "modes/SdModeCPartImp.h"
+#include "modes/SdModeCViaEnter.h"
 
 #include <QDebug>
 #include <QProgressDialog>
@@ -237,6 +238,15 @@ void SdWEditorGraphPlate::cmModePartSelect(QStringList list)
   if( modeGet() )
     modeGet()->partSelect( list );
   }
+
+
+
+
+void SdWEditorGraphPlate::cmModeViaEnter()
+  {
+  modeSet( new SdModeCViaEnter( this, getProjectItem() )  );
+  }
+
 
 
 

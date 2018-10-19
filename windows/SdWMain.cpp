@@ -1592,6 +1592,16 @@ void SdWMain::cmModePad()
 
 
 
+
+void SdWMain::cmModeViaEnter()
+  {
+  if( activeEditor() )
+    activeEditor()->cmModeViaEnter();
+  }
+
+
+
+
 void SdWMain::cmRulesEdit()
   {
   if( activeEditor() )

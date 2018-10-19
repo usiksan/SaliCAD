@@ -40,6 +40,10 @@ class SdModeCViaEnter : public SdModeCommon
     virtual QString getStepThema() const override;
     virtual int getCursor() const override;
     virtual int getIndex() const override;
+
+  private:
+    //Plate where road being inserted
+    SdPItemPlate   *plate() { return dynamic_cast<SdPItemPlate*>(mObject); }
   };
 
 #endif // SDMODECVIAENTER_H

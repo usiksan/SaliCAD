@@ -72,7 +72,8 @@ Description
 #define MD_PLATE_IDENT     54
 #define MD_SHEET_VALUE     55
 #define MD_PLATE_VALUE     56
-#define MD_LAST            57
+#define MD_VIA_ENTER       57
+#define MD_LAST            58
 
 //Properties tool bar id's
 #define PB_DEFAULT          0
