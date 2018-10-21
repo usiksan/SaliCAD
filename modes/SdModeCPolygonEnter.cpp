@@ -1,3 +1,16 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Mode for enter plate trace polygon
+*/
 #include "SdModeCPolygonEnter.h"
 #include "objects/SdGraphTracedPolygon.h"
 #include "objects/SdProp.h"
@@ -7,16 +20,25 @@
 #include "windows/SdWCommand.h"
 #include "windows/SdWEditorGraph.h"
 
+#include <QDebug>
+
 SdModeCPolygonEnter::SdModeCPolygonEnter( SdWEditorGraph *editor, SdProjectItem *obj ) :
-  SdModeCommon( editor, obj )
+  SdModeCommon( editor, obj ),
+  mSmart( SdPoint::far() )
   {
 
   }
+
+
+
 
 void SdModeCPolygonEnter::drawStatic(SdContext *ctx)
   {
   plate()->drawTrace( ctx, mProp.mStratum, mProp.mNetName.str() );
   }
+
+
+
 
 
 void SdModeCPolygonEnter::drawDynamic(SdContext *ctx)
@@ -32,7 +54,14 @@ void SdModeCPolygonEnter::drawDynamic(SdContext *ctx)
     if( sdEnvir->mIsSmart && mList.count() > 2 )
       ctx->smartPoint( mList.at(0), snapEndPoint );
     }
+  else {
+    //Draw snap point with which we retrieve net name for polygon
+    if( !mSmart.isFar() && sdEnvir->mIsSmart )
+      ctx->smartPoint( mSmart, snapEndPoint );
+    }
   }
+
+
 
 
 
@@ -41,6 +70,8 @@ int SdModeCPolygonEnter::getPropBarId() const
   {
   return PB_POLYGON;
   }
+
+
 
 
 
@@ -131,6 +162,24 @@ void SdModeCPolygonEnter::movePoint(SdPoint p)
   mPrevMove = p;
   if( getStep() == sNextPoint )
     mMiddle = calcMiddlePoint( mList.last(), mPrevMove, sdGlobalProp->mLineEnterType );
+  else {
+    //For first point we snap point to nearest net to retrive net name for polygon
+    SdSnapInfo info;
+    info.mSour = mPrevMove;
+    info.mSnapMask = snapNearestNet | snapNearestPin;
+    info.mStratum = stmThrough;
+    bool res = false;
+    plate()->forEach( dctTraced, [&info,&res] (SdObject *obj) -> bool {
+      SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
+      if( traced != nullptr )
+        res = traced->snapPoint( &info ) || res;
+      return true;
+      });
+    if( res )
+      mSmart = info.mDest;
+    else
+      mSmart = SdPoint::far();
+    }
   update();
   }
 
@@ -144,6 +193,24 @@ SdPoint SdModeCPolygonEnter::enterPrev()
     addPic( new SdGraphTracedPolygon( mProp, mList, SdPolyWindowList() ), QObject::tr("Insert region") );
     setStep( sFirstPoint );
     return mList.at(0);
+    }
+  else {
+    //Retrieve net name for polygon from current smart point
+    if( !mSmart.isFar() ) {
+      QString netName;
+      int     stratum = mProp.mStratum.getValue();
+      SdPoint p(mSmart);
+      plate()->forEach( dctTraced, [&netName,&stratum,p] ( SdObject *obj ) -> bool {
+        SdPtr<SdGraphTraced> traced(obj);
+        if( traced.isValid() )
+          return !traced->isPointOnNet( p, stratum, &netName, &stratum );
+        return true;
+        });
+      //qDebug() << "smart enter" << netName;
+      mProp.mNetName = netName;
+      mProp.mStratum = stratum;
+      propSetToBar();
+      }
     }
   return SdPoint();
   }

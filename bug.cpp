@@ -27,11 +27,11 @@
 
 //TODO D068 Append query to upgrade when newer objects received from remote and possibility to off than query
 
-//TODO D069 Append to enter polygon mode smart to retrive polygon net name
-
 
 //===================================================================================
 //Fixed:
+
+//D069 Append to enter polygon mode smart to retrieve polygon net name
 
 //D066 Append tool tips in project tree view with status description
 

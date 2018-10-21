@@ -19,6 +19,7 @@ Description
 #include <float.h>
 
 SdSnapInfo::SdSnapInfo() :
+  mDest( SdPoint::far() ),
   mSnapMask(0),
   mDestMask(0),
   mDistance(DBL_MAX),
@@ -63,6 +64,7 @@ void SdSnapInfo::calculate(SdContainer *object)
 
 void SdSnapInfo::reset(bool )
   {
+  mDest = SdPoint::far();
   mDistance = DBL_MAX;
   }
 

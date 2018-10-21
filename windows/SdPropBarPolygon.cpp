@@ -15,6 +15,7 @@ Description
 #include "SdStringHistory.h"
 #include "objects/SdUtil.h"
 #include <QLineEdit>
+#include <QDebug>
 
 static SdStringHistory prevGap;
 
@@ -114,6 +115,7 @@ void SdPropBarPolygon::setPropPolygon(SdPropPolygon *propPolygon, double ppm, in
     //Fill net list
     mWireName->addItems( list );
     //Current road name name
+    //qDebug() << "polygon name" << propPolygon->mNetName.str();
     mWireName->setCurrentText( propPolygon->mNetName.str() );
     }
   }

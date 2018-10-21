@@ -1,3 +1,16 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Mode for enter plate trace polygon
+*/
 #ifndef SDMODECPOLYGONENTER_H
 #define SDMODECPOLYGONENTER_H
 
@@ -14,6 +27,7 @@ class SdModeCPolygonEnter : public SdModeCommon
     SdPoint        mMiddle;     //Yet no entered vertex point
     SdPoint        mPrevMove;   //Previous entered point
     SdPropPolygon  mProp;       //Current properties for polygon
+    SdPoint        mSmart;      //Smart point with which we retrieve net name for polygon
 
     const int sFirstPoint = 0, sNextPoint = 1;
   public:
