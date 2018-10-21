@@ -29,17 +29,17 @@ class SdModeCViaEnter : public SdModeCommon
 
     // SdMode interface
   public:
-    virtual void drawStatic(SdContext *ctx) override;
-    virtual int getPropBarId() const override;
-    virtual void propGetFromBar() override;
-    virtual void propSetToBar() override;
-    virtual void enterPoint(SdPoint) override;
-    virtual void cancelPoint(SdPoint) override;
+    virtual void    drawStatic(SdContext *ctx) override;
+    virtual int     getPropBarId() const override;
+    virtual void    propGetFromBar() override;
+    virtual void    propSetToBar() override;
+    virtual void    enterPoint(SdPoint) override;
+    virtual void    cancelPoint(SdPoint) override;
     virtual QString getStepHelp() const override;
     virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;
-    virtual int getCursor() const override;
-    virtual int getIndex() const override;
+    virtual int     getCursor() const override;
+    virtual int     getIndex() const override;
 
   private:
     //Plate where road being inserted

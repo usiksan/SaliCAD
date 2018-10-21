@@ -14,6 +14,8 @@ Description
 #ifndef SDBARRIER_H
 #define SDBARRIER_H
 
+#include "SdPoint.h"
+
 #include <QString>
 #include <QPolygonF>
 #include <QList>
@@ -26,5 +28,8 @@ struct SdBarrier
   };
 
 typedef QList<SdBarrier> SdBarrierList;
+
+//Check if point p is inside any barrier and return true or false if not
+bool sdIsBarrierListContains(const SdBarrierList &list, QString netName, SdPoint p );
 
 #endif // SDBARRIER_H

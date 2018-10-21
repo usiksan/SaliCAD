@@ -549,11 +549,7 @@ SdPoint SdModeCRoadEnter::checkRoad(SdPoint p1, SdPoint p2) const
 //Check if point p is inside any barrier and return true or false if not
 bool SdModeCRoadEnter::isBarriersContains(const SdBarrierList &bar, SdPoint p) const
   {
-  QPointF pf(p.toPointF());
-  for( const SdBarrier &b : bar )
-    if( b.mNetName != mProp.mNetName.str() && b.mPolygon.containsPoint(pf, Qt::OddEvenFill) )
-      return true;
-  return false;
+  return sdIsBarrierListContains( bar, mProp.mNetName.str(), p );
   }
 
 

@@ -648,6 +648,12 @@ void SdWCommand::createToolBars(SdWMain *frame)
   dbar->setVisible(false);
   mbarTable[PB_NO_SELECTION] = dbar;
 
+  SdPropBarRoad *vbar = new SdPropBarRoad( QStringLiteral("Via"), false );
+  frame->addToolBar( vbar );
+  rbar->setVisible(false);
+  mbarTable[PB_VIA] = vbar;
+  rbar->connect( vbar, &SdPropBarRoad::propChanged, frame, &SdWMain::cmPropertiesChange );
+
   for( int i = 0; i < MD_LAST; i++ )
     if( cmModeTable[i] )
       cmModeTable[i]->setCheckable(true);

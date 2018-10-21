@@ -43,10 +43,13 @@ class SdPropBarRoad : public SdPropBarStratum
 
 
   public:
-    SdPropBarRoad( const QString title );
+    SdPropBarRoad(const QString title, bool asRoad = true );
 
     void setPropRoad( SdPropRoad *propRoad, SdPropVia *propVia, double ppm, int enterType );
     void getPropRoad( SdPropRoad *propRoad, SdPropVia *propVia, int *enterType );
+
+    void setPropVia( SdPropVia *propVia );
+    void getPropVia( SdPropVia *propVia );
 
   private:
     void setVertexType( int type );

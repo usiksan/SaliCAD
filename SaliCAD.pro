@@ -261,7 +261,8 @@ SOURCES += \
     master/SdDMasterSymbolIc.cpp \
     objects/SdPItemRich.cpp \
     windows/SdWEditorRich.cpp \
-    modes/SdModeCViaEnter.cpp
+    modes/SdModeCViaEnter.cpp \
+    objects/SdBarrier.cpp
 
 HEADERS  += \
     SdConfig.h \

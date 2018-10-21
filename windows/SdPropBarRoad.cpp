@@ -25,35 +25,37 @@ static SdStringHistory prevWidth;
 static SdStringHistory padTypeHistory;
 
 
-SdPropBarRoad::SdPropBarRoad(const QString title) :
+SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
   SdPropBarStratum( title )
   {
-  mWidth = new QComboBox();
-  mWidth->setEditable(true);
-  //Fill width list with previous values
-  if( prevWidth.count() == 0 )
-    prevWidth.addDouble( 0.0 );
-  for( const QString &str : prevWidth )
-    mWidth->addItem( str );
-  //Select first item
-  mWidth->setCurrentIndex(0);
-  mWidth->lineEdit()->setValidator( new QRegExpValidator( QRegExp("[0-9]{1,3}((\\.|\\,)[0-9]{0,3})?")) );
-  mWidth->setMinimumWidth(80);
+  if( asRoad ) {
+    mWidth = new QComboBox();
+    mWidth->setEditable(true);
+    //Fill width list with previous values
+    if( prevWidth.count() == 0 )
+      prevWidth.addDouble( 0.0 );
+    for( const QString &str : prevWidth )
+      mWidth->addItem( str );
+    //Select first item
+    mWidth->setCurrentIndex(0);
+    mWidth->lineEdit()->setValidator( new QRegExpValidator( QRegExp("[0-9]{1,3}((\\.|\\,)[0-9]{0,3})?")) );
+    mWidth->setMinimumWidth(80);
 
-  //on complete editing
-  connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [=]() {
-    prevWidth.reorderComboBoxDoubleString( mWidth );
-    emit propChanged();
-    });
-  //on select other width
-  connect( mWidth, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int){
-    prevWidth.reorderComboBoxDoubleString( mWidth );
-    emit propChanged();
-    });
+    //on complete editing
+    connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [=]() {
+      prevWidth.reorderComboBoxDoubleString( mWidth );
+      emit propChanged();
+      });
+    //on select other width
+    connect( mWidth, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int){
+      prevWidth.reorderComboBoxDoubleString( mWidth );
+      emit propChanged();
+      });
 
-  addWidget( mWidth );
+    addWidget( mWidth );
 
-  addSeparator();
+    addSeparator();
+    }
 
 
   mWireName = new QLineEdit();
@@ -72,32 +74,33 @@ SdPropBarRoad::SdPropBarRoad(const QString title) :
     sdEnvir->mCursorAlignGrid = checked;
     });
 
+  if( asRoad ) {
+    //Vertex type of two lines
+    mEnterOrtho = addAction( QIcon(QString(":/pic/dleOrto.png")), tr("lines connects orthogonal") );
+    mEnterOrtho->setCheckable(true);
+    connect( mEnterOrtho, &QAction::triggered, [=](bool checked){
+      Q_UNUSED(checked)
+      setVertexType( dleOrtho );
+      emit propChanged();
+      });
 
-  //Vertex type of two lines
-  mEnterOrtho = addAction( QIcon(QString(":/pic/dleOrto.png")), tr("lines connects orthogonal") );
-  mEnterOrtho->setCheckable(true);
-  connect( mEnterOrtho, &QAction::triggered, [=](bool checked){
-    Q_UNUSED(checked)
-    setVertexType( dleOrtho );
-    emit propChanged();
-    });
+    mEnter45degree = addAction( QIcon(QString(":/pic/dle45.png")), tr("lines connects at 45 degree") );
+    mEnter45degree->setCheckable(true);
+    connect( mEnter45degree, &QAction::triggered, [=](bool checked){
+      Q_UNUSED(checked)
+      setVertexType( dle45degree );
+      emit propChanged();
+      });
 
-  mEnter45degree = addAction( QIcon(QString(":/pic/dle45.png")), tr("lines connects at 45 degree") );
-  mEnter45degree->setCheckable(true);
-  connect( mEnter45degree, &QAction::triggered, [=](bool checked){
-    Q_UNUSED(checked)
-    setVertexType( dle45degree );
-    emit propChanged();
-    });
+    mEnterAnyDegree = addAction( QIcon(QString(":/pic/dleAngle.png")), tr("lines connects at any degree") );
+    mEnterAnyDegree->setCheckable(true);
+    connect( mEnterAnyDegree, &QAction::triggered, [=](bool checked){
+      Q_UNUSED(checked)
+      setVertexType( dleAnyDegree );
+      emit propChanged();
+      });
 
-  mEnterAnyDegree = addAction( QIcon(QString(":/pic/dleAngle.png")), tr("lines connects at any degree") );
-  mEnterAnyDegree->setCheckable(true);
-  connect( mEnterAnyDegree, &QAction::triggered, [=](bool checked){
-    Q_UNUSED(checked)
-    setVertexType( dleAnyDegree );
-    emit propChanged();
-    });
-
+    }
 
   addSeparator();
 
@@ -206,6 +209,48 @@ void SdPropBarRoad::getPropRoad(SdPropRoad *propRoad, SdPropVia *propVia, int *e
     if( mEnterOrtho->isChecked() ) *enterType = dleOrtho;
     else if( mEnter45degree->isChecked() ) *enterType = dle45degree;
     else *enterType = dleAnyDegree;
+    }
+  }
+
+
+
+
+
+void SdPropBarRoad::setPropVia(SdPropVia *propVia)
+  {
+  if( propVia ) {
+    //Set current stratum
+    setSelectedStratum( propVia->mStratum );
+
+    mAlignToGrid->setChecked( sdEnvir->mCursorAlignGrid );
+
+    //Current road name name
+    mWireName->setText( propVia->mNetName.str() );
+
+    //Current via type
+    mViaPadType->setCurrentText( propVia->mPadType.str() );
+    padTypeHistory.reorderComboBoxString( mViaPadType );
+    }
+  }
+
+
+
+
+
+void SdPropBarRoad::getPropVia(SdPropVia *propVia)
+  {
+  if( propVia ) {
+//    int stratum = getSelectedStratum();
+//    if( stratum )
+//      propVia->mStratum = stratum;
+
+    if( !mViaPadType->currentText().isEmpty() )
+      propVia->mPadType = mViaPadType->currentText();
+
+    //TODO D056 Append via through-blink support
+    propVia->mStratum = stmThrough;
+
+    //Net name not used
     }
   }
 

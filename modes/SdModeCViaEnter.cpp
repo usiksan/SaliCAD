@@ -12,6 +12,15 @@ Description
   Mode for enter via
 */
 #include "SdModeCViaEnter.h"
+#include "objects/SdProp.h"
+#include "objects/SdEnvir.h"
+#include "objects/SdGraphTracedRoad.h"
+#include "objects/SdGraphTracedVia.h"
+#include "windows/SdPropBarRoad.h"
+#include "windows/SdWCommand.h"
+#include "windows/SdWEditorGraph.h"
+
+#include <QDebug>
 
 SdModeCViaEnter::SdModeCViaEnter(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeCommon( editor, obj )
@@ -33,7 +42,7 @@ void SdModeCViaEnter::drawStatic(SdContext *ctx)
 
 int SdModeCViaEnter::getPropBarId() const
   {
-  return PB_ROAD;
+  return PB_VIA;
   }
 
 
@@ -41,6 +50,14 @@ int SdModeCViaEnter::getPropBarId() const
 
 void SdModeCViaEnter::propGetFromBar()
   {
+  SdPropBarRoad *bar = dynamic_cast<SdPropBarRoad*>( SdWCommand::mbarTable[PB_VIA] );
+  if( bar ) {
+    bar->getPropVia( &mViaProp );
+    sdGlobalProp->mViaProp = mViaProp;
+    mEditor->setFocus();
+    setDirtyCashe();
+    update();
+    }
   }
 
 
@@ -48,13 +65,51 @@ void SdModeCViaEnter::propGetFromBar()
 
 void SdModeCViaEnter::propSetToBar()
   {
+  SdPropBarRoad *bar = dynamic_cast<SdPropBarRoad*>( SdWCommand::mbarTable[PB_VIA] );
+  if( bar ) {
+    //Setup tracing layer count and trace type
+    bar->setPlateAndTrace( plate(), layerTraceRoad );
+    bar->setPropVia( &mViaProp );
+    }
   }
 
 
 
 
-void SdModeCViaEnter::enterPoint(SdPoint)
+void SdModeCViaEnter::enterPoint(SdPoint p)
   {
+  //Find net behind cursor
+  int stratum = mViaProp.mStratum.getValue();
+  QString netName;
+  plate()->forEach( dctTraced, [p,&stratum,&netName] (SdObject *obj) -> bool {
+    SdPtr<SdGraphTraced> traced(obj);
+    if( traced.isValid() )
+      return !traced->isPointOnNet( p, stratum, &netName, &stratum );
+    return true;
+    });
+
+  if( !netName.isEmpty() ) {
+    SdRuleBlock rule;
+    plate()->ruleBlockForNet( netName, rule );
+    //Accum barriers for via
+    mPads.clear();
+    //Update width in rule block to current from prop
+    int r = plate()->getPadOverRadius( mViaProp.mPadType.str() );
+    if( r > 0 )
+      rule.mRules[ruleRoadWidth] = r;
+    plate()->accumBarriers( dctTraced, mPads, mViaProp.mStratum, rulePadPad, rule );
+    //Check if current point possible
+    if( !sdIsBarrierListContains( mPads, netName, p ) ) {
+      //Via is available
+      //Via is available at this point - insert
+      mViaProp.mNetName = netName;
+      //qDebug() << "Via inserted" << mViaProp.mPadType.str() << mViaProp.mNetName.str();
+      addPic( new SdGraphTracedVia( p, mViaProp ), QObject::tr("Insert trace via") );
+      setDirtyCashe();
+      update();
+      }
+    }
+
   }
 
 

@@ -88,6 +88,7 @@ Description
 #define PB_PART_PLACE       9
 #define PB_POLYGON         10
 #define PB_NO_SELECTION    11
-#define PB_LAST            12
+#define PB_VIA             12
+#define PB_LAST            13
 
 #endif // SDMODEIDENT_H
