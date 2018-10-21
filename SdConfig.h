@@ -126,6 +126,15 @@ History
   23.09.2018 v0.54 Rebrended GetObject dialog
                    Remove tag field
   12.10.2018 v0.55 Append display pad possibility to part editor
+  21.10.2018 v0.56 Append symbol ic master
+                   Append smart mode to polygon enter mode
+                   Append via enter mode
+                   Append common text object and graphics editor
+                   Append project preview editor
+                   Append intro help editor
+                   Append tabled param to component
+                   Redesign GetObject dialog
+                   Append newer object update possibilities
 */
 
 #ifndef SDCONFIG
@@ -137,7 +146,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             55
+#define SD_VERSION_MINOR             56
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -147,7 +156,7 @@ History
 
 
 //When defined disable registration with sali name
-//#define SD_DISABLE_SALI_AUTHOR
+#define SD_DISABLE_SALI_AUTHOR
 
 //Project naming definition
 #define SD_BASE_EXTENSION            ".salicad"
