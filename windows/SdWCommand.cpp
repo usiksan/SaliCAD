@@ -650,7 +650,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
 
   SdPropBarRoad *vbar = new SdPropBarRoad( QStringLiteral("Via"), false );
   frame->addToolBar( vbar );
-  rbar->setVisible(false);
+  vbar->setVisible(false);
   mbarTable[PB_VIA] = vbar;
   rbar->connect( vbar, &SdPropBarRoad::propChanged, frame, &SdWMain::cmPropertiesChange );
 
