@@ -2,7 +2,7 @@
 //B064 bugs
 //F001 fatal
 //C001 critical
-//D069 do
+//D070 do
 
 
 
@@ -30,6 +30,8 @@
 
 //===================================================================================
 //Fixed:
+
+//B050 snap point for polygon
 
 //D069 Append to enter polygon mode smart to retrieve polygon net name
 

@@ -109,6 +109,7 @@ void SdGraphTracedPolygon::readObject(SdObjectMap *map, const QJsonObject obj)
 
 void SdGraphTracedPolygon::saveState(SdUndo *undo)
   {
+  //TODO D070 Save state of polygon
   }
 
 
@@ -283,7 +284,20 @@ bool SdGraphTracedPolygon::getInfo(SdPoint p, QString &info, bool extInfo)
 
 bool SdGraphTracedPolygon::snapPoint(SdSnapInfo *snap)
   {
-  //TODO B050 snap point for polygon
+  if( snap->mStratum.match( mProp.mStratum ) && !snap->match(snapExcludeSour) ) {
+    if( snap->match(snapNearestNet) ) {
+      if( isContains(snap->mSour) ) {
+        snap->test( snap->mSour, snapNearestNet );
+        return true;
+        }
+      }
+    if( snap->match(snapNearestNetNet) && snap->mNetName == mProp.mNetName.str() ) {
+      if( isContains(snap->mSour) ) {
+        snap->test( snap->mSour, snapNearestNetNet );
+        return true;
+        }
+      }
+    }
   return false;
   }
 
@@ -301,7 +315,7 @@ SdStratum SdGraphTracedPolygon::stratum() const
 bool SdGraphTracedPolygon::isPointOnNet(SdPoint p, SdStratum stratum, QString *wireName, int *destStratum)
   {
   if( mProp.mStratum & stratum ) {
-    if( mRegion.containsPoint( p, Qt::OddEvenFill ) && !mWindows.containsPoint( p ) ) {
+    if( isContains(p) ) {
       if( *wireName == mProp.mNetName.str() )
         *destStratum |= mProp.mStratum.getValue();
       else {
@@ -395,4 +409,13 @@ void SdGraphTracedPolygon::rebuildWindows()
     return true;
     });
 
+  }
+
+
+
+
+//Return true if point is on polygon
+bool SdGraphTracedPolygon::isContains(SdPoint p) const
+  {
+  return mRegion.containsPoint( p, Qt::OddEvenFill ) && !mWindows.containsPoint( p );
   }

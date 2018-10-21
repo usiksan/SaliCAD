@@ -60,7 +60,7 @@ class SdGraphTracedPolygon : public SdGraphTraced
     virtual SdRect    getOverRect() const override;
     virtual int       behindCursor(SdPoint p) override;
     virtual bool      getInfo(SdPoint p, QString &info, bool extInfo) override;
-    virtual bool   snapPoint(SdSnapInfo *snap) override;
+    virtual bool      snapPoint(SdSnapInfo *snap) override;
 
     // SdGraphTraced interface
   public:
@@ -78,6 +78,9 @@ class SdGraphTracedPolygon : public SdGraphTraced
 
     //Rebuild windows list
     void     rebuildWindows();
+
+    //Return true if point is on polygon
+    bool     isContains( SdPoint p ) const;
   };
 
 #endif // SDGRAPHTRACEDPOLYGON_H
