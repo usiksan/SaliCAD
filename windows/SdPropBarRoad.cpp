@@ -106,7 +106,7 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
 
   //Vias
   //Via through or blind
-  mViaThrough = addAction( QIcon(QString(":/pic/dleOrto.png")), tr("Via through or blind") );
+  mViaThrough = addAction( QIcon(QString(":/pic/iconViaThrow.png")), tr("Via through or blind") );
   mViaThrough->setCheckable(true);
   connect( mViaThrough, &QAction::triggered, [=](bool checked){
     Q_UNUSED(checked)

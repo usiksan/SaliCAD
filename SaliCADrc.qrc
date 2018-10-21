@@ -251,5 +251,6 @@
         <file>pic/symbolMasterIc.png</file>
         <file>pic/iconRich.png</file>
         <file>pic/editProjectUpgrade.png</file>
+        <file>pic/iconViaThrow.png</file>
     </qresource>
 </RCC>
