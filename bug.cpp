@@ -29,10 +29,10 @@
 
 //TODO D071 When change param to project dirtyProject do not changed
 
-//TODO D072 Text doc not saved until closed
-
 //===================================================================================
 //Fixed:
+
+//D072 Text doc not saved until closed
 
 //B050 snap point for polygon
 
