@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Selecting master for creation item
 */
 #include "SdPNewProjectItem_Master.h"
 #include "SdPNewProjectItem.h"
@@ -17,6 +18,7 @@ Description
 #include "master/SdDMasterPartDoubleRect.h"
 #include "master/SdDMasterPartDoubleRound.h"
 #include "master/SdDMasterPartDoubleSide.h"
+#include "master/SdDMasterPartDoubleSideLR.h"
 #include "master/SdDMasterPartQuadSide.h"
 
 #include "master/SdDMasterSymbolConnector.h"
@@ -130,9 +132,15 @@ void SdPNewProjectItem_Master::initializePage()
         return dlg.exec();
         });
 
-      addMaster( tr("Two sided pins part"), tr("Creates part with rectangle body and two pins columns by left and right sides"),
+      addMaster( tr("Two sided pins part"), tr("Creates part with rectangle body and two pins rows by top and bottom sides"),
                  QString(":/pic/partMasterDoubleSide.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
         SdDMasterPartDoubleSide dlg( item, p );
+        return dlg.exec();
+        });
+
+      addMaster( tr("Two sided pins part left-right"), tr("Creates part with rectangle body and two pins columns by left and right sides"),
+                 QString(":/pic/partMasterDoubleSideLR.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
+        SdDMasterPartDoubleSideLR dlg( item, p );
         return dlg.exec();
         });
 
