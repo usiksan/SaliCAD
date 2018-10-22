@@ -15,6 +15,7 @@ Description
 #include "SdDOptionsPageColors.h"
 #include "SdDOptionsPageEditors.h"
 #include "SdDOptionsPagePads.h"
+#include "SdDOptionsPagePath.h"
 #include <QVBoxLayout>
 #include <QLabel>
 
@@ -41,6 +42,11 @@ SdDOptions::SdDOptions(QWidget *parent) :
   SdDOptionsPageColors *colors = new SdDOptionsPageColors();
   connect(mButtons, &QDialogButtonBox::accepted, colors, &SdDOptionsPageColors::accept );
   mTabWidget->addTab( colors, tr("Colors") );
+
+  //Path page
+  SdDOptionsPagePath *paths = new SdDOptionsPagePath();
+  connect(mButtons, &QDialogButtonBox::accepted, paths, &SdDOptionsPagePath::accept );
+  mTabWidget->addTab( paths, tr("Paths") );
 
   //Editors page
   SdDOptionsPageEditors *editors = new SdDOptionsPageEditors();

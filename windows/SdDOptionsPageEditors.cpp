@@ -51,10 +51,11 @@ SdDOptionsPageEditors::SdDOptionsPageEditors(QWidget *parent) : QWidget(parent)
   grid->addWidget( mWireDotWidth = new QLineEdit(), 3, 1 );
   mWireDotWidth->setText( sdEnvir->toPhisSchematic(sdEnvir->mDotWidth) );
 
-  //TODO D050 Assign all other envir values to editor options
-  grid->addWidget( new QLabel(tr("Via size:")), 4, 0 );
-  grid->addWidget( mViaSize = new QLineEdit(), 4, 1 );
+  grid->addWidget( new QLabel(tr("Via default type:")), 4, 0 );
+  grid->addWidget( mViaType = new QLineEdit(), 4, 1 );
+  mViaType->setText( sdEnvir->mViaType );
 
+  //TODO D050 Assign all other envir values to editor options
   grid->addWidget( new QLabel(tr("Width step size:")), 5, 0 );
   grid->addWidget( mWidthStep = new QLineEdit(), 5, 1 );
 
@@ -87,6 +88,7 @@ void SdDOptionsPageEditors::accept()
   sdEnvir->mPartPinSize = sdEnvir->fromPhisPcb( mPartPinSize->text() );
   sdEnvir->mDotSize     = sdEnvir->fromPhisSchematic( mWireDotSize->text() );
   sdEnvir->mDotWidth    = sdEnvir->fromPhisSchematic( mWireDotWidth->text() );
+  sdEnvir->mViaType     = mViaType->text();
 
 //  grid->addWidget( mViaSize = new QLineEdit(), 4, 1 );
 //  grid->addWidget( new QLabel(tr("Width step size:")), 5, 0 );

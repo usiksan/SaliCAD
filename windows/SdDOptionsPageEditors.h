@@ -31,7 +31,7 @@ class SdDOptionsPageEditors : public QWidget
     QLineEdit *mPartPinSize;
     QLineEdit *mWireDotSize;
     QLineEdit *mWireDotWidth;
-    QLineEdit *mViaSize;
+    QLineEdit *mViaType;
     QLineEdit *mWidthStep;
     QLineEdit *mTextSizeStep;
     QLineEdit *mMinViewGridSize;

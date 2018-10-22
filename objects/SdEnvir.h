@@ -53,7 +53,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (33 + FONT_COUNT)
+#define SdEnvirVersion  (34 + FONT_COUNT)
 
 
 class SdEnvir
@@ -76,7 +76,7 @@ class SdEnvir
     bool            mEnableComp;           //Разрешить операции с компонентами или заблокировать
     bool            mEnableNet;            //Разрешить операции с цепями
     bool            mEnablePic;            //Разрешить операции с картинкой
-    int             mViaSize;              //Размер переходного отверстия по умолчанию
+    QString         mViaType;              //Default via type [Тип переходного отверстия по умолчанию]
     bool            mShowRatNet;           //Показывать резинки
     bool            mShowRemark;           //Показывать всплывающие подсказки над компонентами
     bool            mShowMessageRemark;    //Показывать информацию в строке состояния
