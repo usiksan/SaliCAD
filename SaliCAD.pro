@@ -263,7 +263,8 @@ SOURCES += \
     windows/SdWEditorRich.cpp \
     modes/SdModeCViaEnter.cpp \
     objects/SdBarrier.cpp \
-    windows/SdDOptionsPagePath.cpp
+    windows/SdDOptionsPagePath.cpp \
+    master/SdDMasterPartDoubleSideLR.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -522,7 +523,8 @@ HEADERS  += \
     objects/SdPItemRich.h \
     windows/SdWEditorRich.h \
     modes/SdModeCViaEnter.h \
-    windows/SdDOptionsPagePath.h
+    windows/SdDOptionsPagePath.h \
+    master/SdDMasterPartDoubleSideLR.h
 
 DISTFILES += \
     license.txt
@@ -555,4 +557,5 @@ FORMS += \
     master/SdDMasterPartDoubleRound.ui \
     master/SdDMasterPartQuadSide.ui \
     windows/SdDVariantTable.ui \
-    master/SdDMasterSymbolIc.ui
+    master/SdDMasterSymbolIc.ui \
+    master/SdDMasterPartDoubleSideLR.ui
