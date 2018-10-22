@@ -2,7 +2,7 @@
 //B064 bugs
 //F001 fatal
 //C001 critical
-//D070 do
+//D072 do
 
 
 
@@ -27,6 +27,9 @@
 
 //TODO D068 Append query to upgrade when newer objects received from remote and possibility to off than query
 
+//TODO D071 When change param to project dirtyProject do not changed
+
+//TODO D072 Text doc not saved until closed
 
 //===================================================================================
 //Fixed:

@@ -445,7 +445,7 @@ void SdDMasterSymbolIc::accept()
       SdPoint pinOrg(rightPin, i * -cellHeight);
       addPin( pinOrg, 0, SdPoint(rightPinName,pinOrg.y()), pinName, SdPoint(rightPin,pinOrg.y()+250) );
       //Addon pin names separated /
-      QString an = ui->mLeftTable->item( i, 1 )->text();
+      QString an = ui->mRightTable->item( i, 1 )->text();
       if( !an.isEmpty() ) {
         if( an.length() < 36 ) {
           //Display as single string
