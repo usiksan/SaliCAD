@@ -40,23 +40,31 @@ SdDHelp::SdDHelp(const QString &helpPage, QWidget *parent) :
 
   QToolButton *tool = new QToolButton();
   tool->setToolTip( tr("Help contens") );
+  tool->setIcon( QIcon(QStringLiteral(":/pic/helpHome.png")) );
   bar->addWidget( tool );
   connect( tool, &QToolButton::clicked, mWHelp, &SdWHelp::contens );
 
   tool = new QToolButton();
   tool->setToolTip( tr("Base page") );
+  tool->setIcon( QIcon(QStringLiteral(":/pic/helpFirst.png")) );
   bar->addWidget( tool );
   connect( tool, &QToolButton::clicked, this, [this,helpPage] () { mWHelp->helpTopic( helpPage ); });
 
   tool = new QToolButton();
   tool->setToolTip( tr("Previous page") );
+  tool->setIcon( QIcon(QStringLiteral(":/pic/helpPrevious.png")) );
+  tool->setEnabled(false);
   bar->addWidget( tool );
   connect( tool, &QToolButton::clicked, mWHelp, &SdWHelp::backward );
+  connect( mWHelp, &SdWHelp::backwardAvailable, tool, &QToolButton::setEnabled );
 
   tool = new QToolButton();
   tool->setToolTip( tr("Next page") );
+  tool->setIcon( QIcon(QStringLiteral(":/pic/helpNext.png")) );
+  tool->setEnabled(false);
   bar->addWidget( tool );
   connect( tool, &QToolButton::clicked, mWHelp, &SdWHelp::forward );
+  connect( mWHelp, &SdWHelp::forwardAvailable, tool, &QToolButton::setEnabled );
 
   box->addWidget( mWHelp );
   QDialogButtonBox *but = new QDialogButtonBox(QDialogButtonBox::Close);

@@ -253,5 +253,16 @@
         <file>pic/editProjectUpgrade.png</file>
         <file>pic/iconViaThrow.png</file>
         <file>pic/partMasterDoubleSideLR.png</file>
+        <file>pic/helpFirst.png</file>
+        <file>pic/helpHome.png</file>
+        <file>pic/helpNext.png</file>
+        <file>pic/helpPrevious.png</file>
+        <file>pic/guiderBackward.png</file>
+        <file>pic/guiderEject.png</file>
+        <file>pic/guiderFastBackward.png</file>
+        <file>pic/guiderFastForward.png</file>
+        <file>pic/guiderPause.png</file>
+        <file>pic/guiderStart.png</file>
+        <file>pic/guiderStop.png</file>
     </qresource>
 </RCC>
