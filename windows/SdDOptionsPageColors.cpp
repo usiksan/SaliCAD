@@ -35,7 +35,7 @@ SdDOptionsPageColors::SdDOptionsPageColors(QWidget *parent) :
   addColor( scGraphBack,  tr("Graph editor background color") );
   addColor( scRatNet,     tr("Rat net color in pcb editor") );
   addColor( scCursor,     tr("Cursor color when cross-hair mode") );
-  addColor( scTraseNet,   tr("Trasing net color") );
+  addColor( scTraseNet,   tr("Tracing net color") );
   addColor( scGrid,       tr("Grid color in graph editors") );
   addColor( scRuleErrors, tr("Color for rule errors") );
   addColor( scCatchPoint, tr("Catch point color in road enter mode") );

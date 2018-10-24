@@ -16,10 +16,15 @@ Description
 
 #include <QDialog>
 
+//Previous declaration of help widget class
+class SdWHelp;
+
 class SdDHelp : public QDialog
   {
     Q_OBJECT
 
+    //Help browser
+    SdWHelp *mWHelp;
   public:
     SdDHelp( const QString &helpPage, QWidget *parent );
 

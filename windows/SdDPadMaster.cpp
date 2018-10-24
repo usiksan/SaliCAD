@@ -15,7 +15,9 @@ Description
 #include "SdDPadMaster.h"
 #include "ui_SdDPadMaster.h"
 #include "SdIllustrator.h"
+#include "SdDHelp.h"
 
+#include <QPushButton>
 #include <QCheckBox>
 #include <QLineEdit>
 
@@ -87,7 +89,13 @@ SdDPadMaster::SdDPadMaster(SdPad pad, QWidget *parent) :
     mPad.mStensilHeight = sdEnvir->fromPhisPcb( txt );
     updatePadSchematic();
     });
+
+  connect( ui->buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, [this] () {
+    SdDHelp::help( QString("SdDNetUnion.htm"), this );
+    } );
   }
+
+
 
 SdDPadMaster::~SdDPadMaster()
   {

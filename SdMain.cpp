@@ -45,12 +45,16 @@ int main(int argc, char *argv[])
 
 
   QSettings s;
-
   if( !s.contains(SDK_LANGUAGE) ) {
     //Language is not assigned yet, assign it
 
     //Get system language
-    QString lang = QLocale::languageToString( QLocale::system().language() );
+    QStringList ui = QLocale::system().uiLanguages();
+    QString lang;
+    if( ui.count() )
+      lang = ui.at(0);
+    else
+      lang = QStringLiteral("en");
 
     //Assign default language
     s.setValue( SDK_LANGUAGE, lang );

@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Dialog with tab pages of options
 */
 
 #ifndef SDDOPTIONS_H
@@ -25,7 +26,7 @@ class SdDOptions : public QDialog
     QTabWidget       *mTabWidget;
     QDialogButtonBox *mButtons;
   public:
-    explicit SdDOptions( QWidget *parent = 0 );
+    explicit SdDOptions( QWidget *parent = nullptr );
     ~SdDOptions();
 
   };

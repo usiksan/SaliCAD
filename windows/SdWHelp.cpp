@@ -118,7 +118,7 @@ void SdWHelp::contens()
   {
   //Setup home page
   //Выдать начальную страницу
-  setSource( pageConvert( "a-head.htm", QString() ) );
+  setSource( pageConvert( "contens.htm", QString() ) );
   }
 
 

@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Dialog with tab pages of options
 */
 
 #include "SdDOptions.h"
@@ -16,18 +17,23 @@ Description
 #include "SdDOptionsPageEditors.h"
 #include "SdDOptionsPagePads.h"
 #include "SdDOptionsPagePath.h"
+#include "SdDHelp.h"
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QPushButton>
 
 SdDOptions::SdDOptions(QWidget *parent) :
   QDialog( parent, Qt::Dialog | Qt::WindowTitleHint )
   {
   QLabel *title = new QLabel( tr("Options"), this );
   mTabWidget = new QTabWidget( this );
-  mButtons = new QDialogButtonBox(QDialogButtonBox::Ok);
+  mButtons = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Help);
 
   connect(mButtons, &QDialogButtonBox::accepted, this, &SdDOptions::accept );
   connect(mButtons, &QDialogButtonBox::rejected, this, &SdDOptions::reject );
+  connect( mButtons->button(QDialogButtonBox::Help), &QPushButton::clicked, this, [this] () {
+    SdDHelp::help( QString("SdDOptions.htm"), this );
+    } );
 
   QVBoxLayout *mainLayout = new QVBoxLayout;
   mainLayout->addWidget( title );
