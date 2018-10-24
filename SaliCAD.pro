@@ -5,7 +5,7 @@
 #-------------------------------------------------
 CONFIG += c++17
 
-QT       += core gui network sql printsupport
+QT       += core gui network sql printsupport texttospeech
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -560,5 +560,4 @@ FORMS += \
     master/SdDMasterPartQuadSide.ui \
     windows/SdDVariantTable.ui \
     master/SdDMasterSymbolIc.ui \
-    master/SdDMasterPartDoubleSideLR.ui \
-    windows/SdDGuiderPlayer.ui
+    master/SdDMasterPartDoubleSideLR.ui

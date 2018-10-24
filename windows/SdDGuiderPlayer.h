@@ -9,26 +9,42 @@ Web
   www.saliLab.ru
 
 Description
+  Dialog for display guider playback
 */
 #ifndef SDDGUIDERPLAYER_H
 #define SDDGUIDERPLAYER_H
 
-#include <QDialog>
+#include "guider/SdGuiderFile.h"
 
-namespace Ui {
-  class SdDGuiderPlayer;
-}
+#include <QDialog>
+#include <QLabel>
+#include <QTimer>
 
 class SdDGuiderPlayer : public QDialog
   {
     Q_OBJECT
 
+    SdGuiderFile  mFile;
+    QTimer        mTimer;
+    int           mCurrentTime;
+    int           mCurrentFrame;
+    QLabel       *mView;
+    QString       mFileName;
+//    bool          mLock;
+//    SdGuiderTiter mTiter;
   public:
-    explicit SdDGuiderPlayer(QWidget *parent = nullptr);
-    ~SdDGuiderPlayer();
+    SdDGuiderPlayer( const QString fname, QWidget *parent = nullptr );
 
-  private:
-    Ui::SdDGuiderPlayer *ui;
+  signals:
+    void sgPlay( bool start );
+
+  public slots:
+    void cmPlayRestart();
+    void cmPlayStart();
+    void cmPlayPause();
+    void cmPlayStop();
+
+    void play();
   };
 
 #endif // SDDGUIDERPLAYER_H
