@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Dialog for selection result name when union two nets.
 */
 #ifndef SDDNETUNION_H
 #define SDDNETUNION_H
@@ -24,8 +25,8 @@ class SdDNetUnion : public QDialog
     Q_OBJECT
 
   public:
-    explicit SdDNetUnion(const QString first, const QString second, QWidget *parent = 0);
-    ~SdDNetUnion();
+    explicit SdDNetUnion(const QString first, const QString second, QWidget *parent = nullptr);
+    ~SdDNetUnion() override;
 
   private:
     Ui::SdDNetUnion *ui;

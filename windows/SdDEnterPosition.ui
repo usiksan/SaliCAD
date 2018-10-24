@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>219</width>
-    <height>153</height>
+    <width>270</width>
+    <height>167</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,9 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QCheckBox" name="mRef">
+     <property name="toolTip">
+      <string>If checked then coordinates are referenced else absolute</string>
+     </property>
      <property name="text">
       <string>Referenced position (or absolute)</string>
      </property>
@@ -29,32 +32,44 @@
      <item row="0" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Axiz X:</string>
+        <string>Axis X:</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="mX"/>
+      <widget class="QLineEdit" name="mX">
+       <property name="toolTip">
+        <string>Coordianet for axis X</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Axiz Y:</string>
+        <string>Axis Y:</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="mY"/>
+      <widget class="QLineEdit" name="mY">
+       <property name="toolTip">
+        <string>Coordianet for axis Y</string>
+       </property>
+      </widget>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Axiz Z:</string>
+        <string>Axis Z:</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="mZ"/>
+      <widget class="QLineEdit" name="mZ">
+       <property name="toolTip">
+        <string>Coordianet for axis Z</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

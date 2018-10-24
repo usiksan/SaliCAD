@@ -43,10 +43,18 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="mBusEdit"/>
+    <widget class="QLineEdit" name="mBusEdit">
+     <property name="toolTip">
+      <string>Bus net list with format above.</string>
+     </property>
+    </widget>
    </item>
    <item>
-    <widget class="QListWidget" name="mBusList"/>
+    <widget class="QListWidget" name="mBusList">
+     <property name="toolTip">
+      <string>Previously entered bus list.</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

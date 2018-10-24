@@ -9,11 +9,14 @@ Web
   www.saliLab.ru
 
 Description
+  Dialog for selection result name when union two nets.
 */
 #include "SdDNetUnion.h"
 #include "ui_SdDNetUnion.h"
 #include "modes/SdModeCNetWire.h"
+#include "SdDHelp.h"
 #include <QMessageBox>
+#include <QPushButton>
 
 SdDNetUnion::SdDNetUnion(const QString first, const QString second, QWidget *parent) :
   QDialog(parent),
@@ -23,6 +26,10 @@ SdDNetUnion::SdDNetUnion(const QString first, const QString second, QWidget *par
 
   ui->mFirst->setText( tr("Assign '%1'").arg(first) );
   ui->mSecond->setText( tr("Assign '%2'").arg(second) );
+
+  connect( ui->buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, [this] () {
+    SdDHelp::help( QString("SdDNetUnion.htm"), this );
+    } );
   }
 
 SdDNetUnion::~SdDNetUnion()

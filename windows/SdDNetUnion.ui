@@ -32,6 +32,9 @@
    </item>
    <item>
     <widget class="QRadioButton" name="mFirst">
+     <property name="toolTip">
+      <string>First variant of resul net name</string>
+     </property>
      <property name="text">
       <string>RadioButton</string>
      </property>
@@ -42,6 +45,9 @@
    </item>
    <item>
     <widget class="QRadioButton" name="mSecond">
+     <property name="toolTip">
+      <string>Second variant of result net name</string>
+     </property>
      <property name="text">
       <string>RadioButton</string>
      </property>
@@ -56,7 +62,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Help|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>

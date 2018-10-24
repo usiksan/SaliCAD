@@ -38,6 +38,9 @@
      <height>192</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string>Layer class</string>
+   </property>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -73,6 +76,9 @@
      <width>256</width>
      <height>192</height>
     </rect>
+   </property>
+   <property name="toolTip">
+    <string>Layer modifier</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -110,6 +116,9 @@
      <height>25</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string>Layer internal id on base class and modifier or user entered</string>
+   </property>
   </widget>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
@@ -132,6 +141,9 @@
      <width>251</width>
      <height>25</height>
     </rect>
+   </property>
+   <property name="toolTip">
+    <string>Visual representative of layer name</string>
    </property>
   </widget>
  </widget>

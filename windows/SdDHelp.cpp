@@ -22,7 +22,12 @@ Description
 SdDHelp::SdDHelp(const QString &helpPage, QWidget *parent) :
   QDialog( parent )
   {
-  resize( 1200, 800 );
+  resize( 600, 400 );
+  if( parent ) {
+    QPoint p = parent->pos();
+    QSize s = parent->size();
+    move(p.x()+s.width(), p.y());
+    }
   //Construct help window
   setWindowTitle( tr("Dialog help") );
   QVBoxLayout *box = new QVBoxLayout();

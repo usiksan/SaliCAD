@@ -25,7 +25,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>On axiz X:</string>
+           <string>On axis X:</string>
           </property>
          </widget>
         </item>
@@ -37,6 +37,9 @@
             <height>0</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Grid step on axis X</string>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -44,6 +47,9 @@
         </item>
         <item row="1" column="0">
          <widget class="QCheckBox" name="mSyncXY">
+          <property name="toolTip">
+           <string>If checked then axis Y grid step is same as on axis X</string>
+          </property>
           <property name="text">
            <string>Sync X and Y</string>
           </property>
@@ -52,7 +58,7 @@
         <item row="2" column="0">
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>On axiz Y:</string>
+           <string>On axis Y:</string>
           </property>
          </widget>
         </item>
@@ -63,6 +69,9 @@
             <width>60</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Grid step on axis Y</string>
           </property>
          </widget>
         </item>
@@ -89,6 +98,9 @@
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QCheckBox" name="mShowGrid">
+          <property name="toolTip">
+           <string>If checked then grid is visible</string>
+          </property>
           <property name="text">
            <string>Show grid</string>
           </property>
@@ -96,6 +108,9 @@
         </item>
         <item>
          <widget class="QCheckBox" name="mAlignCursor">
+          <property name="toolTip">
+           <string>When checked cursor movement is aligned to grid nodes</string>
+          </property>
           <property name="text">
            <string>Align cursor</string>
           </property>
@@ -103,6 +118,9 @@
         </item>
         <item>
          <widget class="QCheckBox" name="mShowCursor">
+          <property name="toolTip">
+           <string>When checked cursor is visible</string>
+          </property>
           <property name="text">
            <string>Show cursor</string>
           </property>
@@ -119,6 +137,9 @@
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QRadioButton" name="mCrosshairNone">
+          <property name="toolTip">
+           <string>Addon crosshair cursor is invisible</string>
+          </property>
           <property name="text">
            <string>None</string>
           </property>
@@ -126,6 +147,9 @@
         </item>
         <item>
          <widget class="QRadioButton" name="mCrosshairSmall">
+          <property name="toolTip">
+           <string>Addon crosshair cursor is small with size as in options defined</string>
+          </property>
           <property name="text">
            <string>Small</string>
           </property>
@@ -133,6 +157,9 @@
         </item>
         <item>
          <widget class="QRadioButton" name="mCrosshairFull">
+          <property name="toolTip">
+           <string>Addon crosshair cursor is over all graphics window</string>
+          </property>
           <property name="text">
            <string>Full</string>
           </property>
@@ -140,6 +167,9 @@
         </item>
         <item>
          <widget class="QRadioButton" name="mCrosshairSmall45">
+          <property name="toolTip">
+           <string>Addon crosshair cursor is small 45 degree cursor</string>
+          </property>
           <property name="text">
            <string>Small 45</string>
           </property>
@@ -147,6 +177,9 @@
         </item>
         <item>
          <widget class="QRadioButton" name="mCrosshairFull45">
+          <property name="toolTip">
+           <string>Addon crosshair cursor is over full graphics window 45 degree cursor</string>
+          </property>
           <property name="text">
            <string>Full 45</string>
           </property>

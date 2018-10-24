@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <h1 style="text-align: center;">Layers Dialog</h1>
+    In this dialog box, you can see a list of available layers, the state of the
+    layers, and their pairs (see <a href="layers.htm">layers</a>).<br>
+    <br>
+    In the Central part of the dialog there is a table with a list of available
+    layers. Columns allocated to the name of the layer, the destination for the
+    trace, status, visibility, color, and pairing.<br>
+    <br>
+    Clicking an <span style="color: fuchsia;">Trace</span> cell allows you to
+    cycle through the possible layer assignments for the trace.<br>
+    <br>
+    Clicking on <span style="color: fuchsia;">State</span> cell allows you to
+    cycle through the possible States of the layer.<br>
+    <br>
+    Clicking on the <span style="color: fuchsia;">Visibility</span> cell allows
+    you to turn on or off the visibility of the layer. The layer is visible in
+    the Enabled and Editable state. The layer is invisible in the Off state.
+    Visibility is a graphical representation of the state of a layer.<br>
+    <br>
+    When you click on the <span style="color: fuchsia;">Color</span> cell, a
+    dialog box for selecting a color for the layer appears. You can assign any
+    color to the layers, including the same color. The color of layers is saved
+    in Your profile on the computer. Another computer may have its own color
+    palette.<br>
+    <br>
+    When you click on the <span style="color: fuchsia;">Pair name</span> cell,
+    the <a href="SdDLayerList.htm">dialog</a> box for selecting a pair layer
+    for this one appears.<br>
+    <br>
+    <span style="color: fuchsia;">Tracing layers count in plate</span> field
+    specifies the number of trace layers for a particular Board. Therefore, this
+    field is active only when the layers dialog is called from the graphics card
+    editor.<br>
+    <br>
+    When you click <span style="color: fuchsia;">Close</span>, the dialog box
+    closes.<br>
+    <br>
+    When you click the <span style="color: fuchsia;">Create...</span>&nbsp;button
+    a dialog box for creating a <a href="SdDLayerCreate.htm">new layer</a>
+    appears.<br>
+    <br>
+    When you click <span style="color: fuchsia;">Delete</span>, the currently
+    selected layer is deleted. Deletion is possible only if there is no
+    information on this layer in any of the open projects.<br>
+    <div style="text-align: center;">
+      <h3>Buttons to limit the displayed list of layers.</h3>
+    </div>
+    <br>
+    The number of layers can be quite large, but only a limited number of these
+    layers can be used at any given time. These buttons allow you to reduce the
+    amount of information displayed. They do not affect the addition or removal
+    of layers.<br>
+    <br>
+    <ul>
+      <li><span style="color: fuchsia;">Show actual</span>. The layers that are
+        relevant for the graphical editor are shown. Ie a list of layers to
+        "default".</li>
+      <li><span style="color: fuchsia;">Show used</span>. Layers on which some
+        information is present are shown.</li>
+      <li><span style="color: fuchsia;">Show all</span>. All currently known
+        layers are shown.</li>
+    </ul>
+    <br>
+    When you click the <span style="color: fuchsia;">Hide all</span> button,
+    the state of all layers changes to Off.<br>
+    <br>
+    When you click the <span style="color: fuchsia;">Switch all</span> button
+    state of all layers switches to the next state, as if you were clicking the
+    State for all layers box.<br>
+    <h3 style="text-align: center;">Download and save the state of layers</h3>
+    Often, a specific set of layers is used for a particular type of operation.
+    For example, to arrange the positional designations on the Board need images
+    of the component, the Board and the positional designations themselves.
+    Images of trace layers will only interfere, so it is logical to turn them
+    off. To make it easier to work with such sets of enabled layers and use
+    their loading and saving.<br>
+    <br>
+    When you click <span style="color: fuchsia;">Save...</span> a dialog box
+    opens to select the path to save the current set of enabled layers.<br>
+    <br>
+    <p>When you click <span style="color: fuchsia;">Load...</span> opens a
+      dialog to select a file containing the desired set of enabled layers. When
+      you select this file, it is loaded, all layers are made invisible except
+      those visible, which are recorded in this particular file.</p>
+    <p><br>
+    </p>
+  </body>
+</html>
