@@ -8,6 +8,7 @@
 #include "objects/SdEnvir.h"
 #include "SdDGetObject.h"
 #include "SdDPadMaster.h"
+#include "SdDHelp.h"
 
 #include <QTableWidgetItem>
 #include <QMessageBox>
@@ -39,6 +40,10 @@ SdDPads::SdDPads(SdPItemPlate *plate, const QString associationName, SdPadMap ma
   connect( ui->mAssociationUse,   &QPushButton::clicked, this, &SdDPads::cmAssociationUse );
   //Connect signals from table
   connect( ui->mPadTable, &QTableWidget::cellClicked, this, &SdDPads::cmCellClicked );
+
+  connect( ui->buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, [this] () {
+    SdDHelp::help( QString("SdDPads.htm"), this );
+    } );
 
   updatePinTable();
   }

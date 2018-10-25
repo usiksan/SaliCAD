@@ -91,7 +91,7 @@ SdDPadMaster::SdDPadMaster(SdPad pad, QWidget *parent) :
     });
 
   connect( ui->buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, [this] () {
-    SdDHelp::help( QString("SdDNetUnion.htm"), this );
+    SdDHelp::help( QString("SdDPadMaster.htm"), this );
     } );
   }
 

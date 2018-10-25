@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <h1 style="text-align: center;">Pads</h1>
+    <br>
+    In SaliCAD pins of parts characterized by type. To bind to a specific pad,
+    use the Pad Association. It represents the mapping table of the pin types
+    the pads. This approach allows you to change the parameters of the pads
+    depending on the technology of the PCB, which gives flexibility.<br>
+    <br>
+    Pads is constructed by the system SaliCAD automatically based on the
+    description of the pads for each particular application. This design is
+    transparent to the developer and does not require any additional steps to do
+    so. For example, for a Via for a two-sided plate, you need to form two
+    sites: on the upper and lower layers. For a four-layer plate it is necessary
+    to form already four platforms. In SaliCAD, you describe only one site, and
+    the others are generated automatically if necessary.<br>
+    <br>
+    In addition to the actual images on the trace layers of the site contain a
+    description of the hole (if necessary), a description of the solder mask and
+    a description of the stencil for printing solder paste.<br>
+    <br>
+    In the current version of SaliCAD only circular holes are allowed.<br>
+    <br>
+    Solder mask follows the contour of the contact area with a certain gap.<br>
+    <br>
+    <p>The opening of the stencil for printing solder paste in the simplest case
+      repeats the contour of the contact pad with a certain gap. If the contact
+      area is large, it is recommended to split this large hole into an array of
+      small holes. The description of the contact area allows this possibility.</p>
+    <p><br>
+    </p>
+    See.also<br>
+    dialog <a href="SdDPadMaster.htm">Pad Master</a><br>
+    dialog <a href="SdDPads.htm">Pad Association</a>
+  </body>
+</html>
