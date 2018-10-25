@@ -9,7 +9,7 @@
                         "x": -2200,
                         "y": -2500
                     },
-                    "id": "1f64550",
+                    "id": "1a7cc40",
                     "lineLayer": "Common",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -21,7 +21,7 @@
                         "x": 2200,
                         "y": -2500
                     },
-                    "id": "19bc0c0",
+                    "id": "246c660",
                     "lineLayer": "Common",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -37,7 +37,7 @@
                         "x": 3900,
                         "y": 900
                     },
-                    "id": "2f3e740",
+                    "id": "3194240",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -52,7 +52,7 @@
                         "x": -4500,
                         "y": 500
                     },
-                    "id": "2519120",
+                    "id": "1163ab0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -67,7 +67,7 @@
                         "x": -4500,
                         "y": -500
                     },
-                    "id": "2f92800",
+                    "id": "2423f70",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -82,7 +82,7 @@
                         "x": -3900,
                         "y": -500
                     },
-                    "id": "23632e0",
+                    "id": "241e110",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -97,7 +97,7 @@
                         "x": -4500,
                         "y": -5000
                     },
-                    "id": "2ebb670",
+                    "id": "2511540",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -112,7 +112,7 @@
                         "x": -4500,
                         "y": -6000
                     },
-                    "id": "260e350",
+                    "id": "251fde0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -127,7 +127,7 @@
                         "x": -3900,
                         "y": -6000
                     },
-                    "id": "2498a20",
+                    "id": "2446b10",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -142,7 +142,7 @@
                         "x": 4500,
                         "y": -6000
                     },
-                    "id": "15528c0",
+                    "id": "1a5a410",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -157,7 +157,7 @@
                         "x": 4500,
                         "y": -5000
                     },
-                    "id": "23074d0",
+                    "id": "24494e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -172,7 +172,7 @@
                         "x": 3900,
                         "y": -5000
                     },
-                    "id": "22acd20",
+                    "id": "24d8ef0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -187,7 +187,7 @@
                         "x": 4500,
                         "y": -500
                     },
-                    "id": "1fd0140",
+                    "id": "24ec430",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -202,7 +202,7 @@
                         "x": 4500,
                         "y": 500
                     },
-                    "id": "21d62f0",
+                    "id": "12a4930",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -217,7 +217,7 @@
                         "x": 3900,
                         "y": 500
                     },
-                    "id": "1830e60",
+                    "id": "2491e00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -254,7 +254,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r0.5x2.5",
                     "Stratum": "3fffffff",
-                    "id": "1807f10",
+                    "id": "318d8a0",
                     "type": "PartPin"
                 },
                 {
@@ -288,7 +288,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r0.5x2.5",
                     "Stratum": "3fffffff",
-                    "id": "260e210",
+                    "id": "2483eb0",
                     "type": "PartPin"
                 },
                 {
@@ -322,7 +322,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r0.5x2.5",
                     "Stratum": "3fffffff",
-                    "id": "162b280",
+                    "id": "2528800",
                     "type": "PartPin"
                 },
                 {
@@ -356,7 +356,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r0.5x2.5",
                     "Stratum": "3fffffff",
-                    "id": "20941e0",
+                    "id": "b6c000",
                     "type": "PartPin"
                 },
                 {
@@ -390,7 +390,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r0.5x2.5",
                     "Stratum": "3fffffff",
-                    "id": "2e9e2e0",
+                    "id": "318cfe0",
                     "type": "PartPin"
                 },
                 {
@@ -424,7 +424,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2.0x2.5",
                     "Stratum": "3fffffff",
-                    "id": "24780b0",
+                    "id": "318d520",
                     "type": "PartPin"
                 },
                 {
@@ -458,7 +458,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2.0x2.5",
                     "Stratum": "3fffffff",
-                    "id": "1fbf510",
+                    "id": "1a97ef0",
                     "type": "PartPin"
                 },
                 {
@@ -492,7 +492,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2.0x2.5",
                     "Stratum": "3fffffff",
-                    "id": "20832f0",
+                    "id": "318b6a0",
                     "type": "PartPin"
                 },
                 {
@@ -526,7 +526,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2.0x2.5",
                     "Stratum": "3fffffff",
-                    "id": "24dd0e0",
+                    "id": "252a270",
                     "type": "PartPin"
                 },
                 {
@@ -534,7 +534,7 @@
                         "x": 0,
                         "y": -5000
                     },
-                    "id": "2010930",
+                    "id": "255d370",
                     "over": {
                         "b": -3904,
                         "r": 947,
@@ -561,7 +561,7 @@
             "Parametrs": {
             },
             "Title": "usb-m mini (part)",
-            "id": "218a620",
+            "id": "2434ec0",
             "type": "Part"
         },
         {
@@ -577,7 +577,7 @@
                         "x": -500,
                         "y": 0
                     },
-                    "id": "1f7c390",
+                    "id": "1386fa0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -592,7 +592,7 @@
                         "x": -4000,
                         "y": -250
                     },
-                    "id": "208b410",
+                    "id": "252bd80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -628,7 +628,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "22ebab0",
+                    "id": "3194c20",
                     "type": "SymPin"
                 },
                 {
@@ -640,7 +640,7 @@
                         "x": -500,
                         "y": -500
                     },
-                    "id": "2f7a820",
+                    "id": "25389a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -655,7 +655,7 @@
                         "x": -4000,
                         "y": -750
                     },
-                    "id": "2def770",
+                    "id": "24381d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -691,7 +691,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "2013800",
+                    "id": "1038170",
                     "type": "SymPin"
                 },
                 {
@@ -703,7 +703,7 @@
                         "x": -500,
                         "y": -1000
                     },
-                    "id": "1549020",
+                    "id": "241d0d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -718,7 +718,7 @@
                         "x": -4000,
                         "y": -1250
                     },
-                    "id": "2484930",
+                    "id": "2498f20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -754,7 +754,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "246dc10",
+                    "id": "2462e20",
                     "type": "SymPin"
                 },
                 {
@@ -766,7 +766,7 @@
                         "x": -500,
                         "y": -1500
                     },
-                    "id": "1fc7380",
+                    "id": "2568700",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -781,7 +781,7 @@
                         "x": -4000,
                         "y": -1750
                     },
-                    "id": "1ff3100",
+                    "id": "25685b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -817,7 +817,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "2511910",
+                    "id": "10270c0",
                     "type": "SymPin"
                 },
                 {
@@ -829,7 +829,7 @@
                         "x": -500,
                         "y": -2000
                     },
-                    "id": "222e100",
+                    "id": "2448a40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -844,7 +844,7 @@
                         "x": -4000,
                         "y": -2250
                     },
-                    "id": "1898460",
+                    "id": "12407d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -880,7 +880,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "1fcfa10",
+                    "id": "24267c0",
                     "type": "SymPin"
                 },
                 {
@@ -892,7 +892,7 @@
                         "x": -500,
                         "y": -2500
                     },
-                    "id": "235e250",
+                    "id": "2455c60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -907,7 +907,7 @@
                         "x": -4000,
                         "y": -2750
                     },
-                    "id": "1552fd0",
+                    "id": "1aadb90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -943,7 +943,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "21d79e0",
+                    "id": "252a3e0",
                     "type": "SymPin"
                 },
                 {
@@ -955,7 +955,7 @@
                         "x": -500,
                         "y": -3000
                     },
-                    "id": "21f4f30",
+                    "id": "3193cd0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -970,7 +970,7 @@
                         "x": -4000,
                         "y": -3250
                     },
-                    "id": "2e9dee0",
+                    "id": "12a40f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1006,7 +1006,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "24f0ba0",
+                    "id": "1186720",
                     "type": "SymPin"
                 },
                 {
@@ -1018,7 +1018,7 @@
                         "x": -500,
                         "y": -3500
                     },
-                    "id": "2315cc0",
+                    "id": "249f180",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1033,7 +1033,7 @@
                         "x": -4000,
                         "y": -3750
                     },
-                    "id": "2301a00",
+                    "id": "13485d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1069,7 +1069,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "2f0fe70",
+                    "id": "24ae090",
                     "type": "SymPin"
                 },
                 {
@@ -1081,7 +1081,7 @@
                         "x": -500,
                         "y": -4000
                     },
-                    "id": "21d7c40",
+                    "id": "1186b60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1117,7 +1117,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "24a9ac0",
+                    "id": "243cc00",
                     "type": "SymPin"
                 },
                 {
@@ -1129,7 +1129,7 @@
                         "x": -4000,
                         "y": -4250
                     },
-                    "id": "225a090",
+                    "id": "1a99000",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1144,7 +1144,7 @@
                         "x": -1500,
                         "y": -4250
                     },
-                    "id": "15bd9c0",
+                    "id": "2446a50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1155,7 +1155,7 @@
                         "x": -2250,
                         "y": 500
                     },
-                    "id": "25246d0",
+                    "id": "f521a0",
                     "over": {
                         "b": 691,
                         "r": -1962,
@@ -1177,7 +1177,7 @@
                         "x": -2250,
                         "y": -4500
                     },
-                    "id": "15bd830",
+                    "id": "1348790",
                     "over": {
                         "b": -4307,
                         "r": -1713,
@@ -1199,7 +1199,7 @@
                         "x": -2750,
                         "y": 0
                     },
-                    "id": "21e2c60",
+                    "id": "2421c80",
                     "over": {
                         "b": 192,
                         "r": -2339,
@@ -1221,7 +1221,7 @@
                         "x": -2750,
                         "y": -500
                     },
-                    "id": "2ea2ca0",
+                    "id": "245e9f0",
                     "over": {
                         "b": -307,
                         "r": -2560,
@@ -1243,7 +1243,7 @@
                         "x": -2750,
                         "y": -1000
                     },
-                    "id": "24a98e0",
+                    "id": "1b02430",
                     "over": {
                         "b": -805,
                         "r": -2500,
@@ -1265,7 +1265,7 @@
                         "x": -2750,
                         "y": -1500
                     },
-                    "id": "2473500",
+                    "id": "316b710",
                     "over": {
                         "b": -1309,
                         "r": -2550,
@@ -1287,7 +1287,7 @@
                         "x": -2750,
                         "y": -2000
                     },
-                    "id": "1f81ed0",
+                    "id": "ebbad0",
                     "over": {
                         "b": -1808,
                         "r": -2356,
@@ -1309,7 +1309,7 @@
                         "x": -2750,
                         "y": -2500
                     },
-                    "id": "22f5d40",
+                    "id": "15ac960",
                     "over": {
                         "b": -2307,
                         "r": -2084,
@@ -1331,7 +1331,7 @@
                         "x": -2750,
                         "y": -3000
                     },
-                    "id": "24c9ed0",
+                    "id": "1547060",
                     "over": {
                         "b": -2805,
                         "r": -2084,
@@ -1353,7 +1353,7 @@
                         "x": -2750,
                         "y": -3500
                     },
-                    "id": "247f2c0",
+                    "id": "2590880",
                     "over": {
                         "b": -3309,
                         "r": -2084,
@@ -1375,7 +1375,7 @@
                         "x": -2750,
                         "y": -4000
                     },
-                    "id": "247f390",
+                    "id": "255aa70",
                     "over": {
                         "b": -3808,
                         "r": -2084,
@@ -1402,7 +1402,7 @@
             "Parametrs": {
             },
             "Title": "usb-m mini (symbol)",
-            "id": "15244c0",
+            "id": "12d1da0",
             "type": "Symbol"
         },
         {
@@ -1418,7 +1418,7 @@
                         "x": -500,
                         "y": 0
                     },
-                    "id": "2010aa0",
+                    "id": "10e6120",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1433,7 +1433,7 @@
                         "x": -4000,
                         "y": -250
                     },
-                    "id": "20f40d0",
+                    "id": "243aa80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1469,7 +1469,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "25164c0",
+                    "id": "243cee0",
                     "type": "SymPin"
                 },
                 {
@@ -1481,7 +1481,7 @@
                         "x": -500,
                         "y": -500
                     },
-                    "id": "24809e0",
+                    "id": "24218c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1496,7 +1496,7 @@
                         "x": -4000,
                         "y": -750
                     },
-                    "id": "2480aa0",
+                    "id": "255dfa0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1532,7 +1532,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "2084660",
+                    "id": "25186a0",
                     "type": "SymPin"
                 },
                 {
@@ -1544,7 +1544,7 @@
                         "x": -500,
                         "y": -1000
                     },
-                    "id": "1fcfce0",
+                    "id": "1a83d20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1559,7 +1559,7 @@
                         "x": -4000,
                         "y": -1250
                     },
-                    "id": "24b0950",
+                    "id": "12ee800",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1595,7 +1595,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "211a120",
+                    "id": "24269b0",
                     "type": "SymPin"
                 },
                 {
@@ -1607,7 +1607,7 @@
                         "x": -500,
                         "y": -1500
                     },
-                    "id": "21e3750",
+                    "id": "1186aa0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1622,7 +1622,7 @@
                         "x": -4000,
                         "y": -1750
                     },
-                    "id": "18cc2b0",
+                    "id": "242afd0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1658,7 +1658,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "2ec0910",
+                    "id": "31944f0",
                     "type": "SymPin"
                 },
                 {
@@ -1670,7 +1670,7 @@
                         "x": -500,
                         "y": -2000
                     },
-                    "id": "1fc6c90",
+                    "id": "12e4590",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1685,7 +1685,7 @@
                         "x": -4000,
                         "y": -2250
                     },
-                    "id": "1fc6d50",
+                    "id": "12ac5a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1721,7 +1721,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "2478260",
+                    "id": "24aa1d0",
                     "type": "SymPin"
                 },
                 {
@@ -1733,7 +1733,7 @@
                         "x": -500,
                         "y": -2500
                     },
-                    "id": "24b08c0",
+                    "id": "14c5850",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1748,7 +1748,7 @@
                         "x": -4000,
                         "y": -2750
                     },
-                    "id": "23714c0",
+                    "id": "24d4770",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1784,7 +1784,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "2f90980",
+                    "id": "24e8ee0",
                     "type": "SymPin"
                 },
                 {
@@ -1796,7 +1796,7 @@
                         "x": -500,
                         "y": -3000
                     },
-                    "id": "14e94c0",
+                    "id": "3192dd0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1811,7 +1811,7 @@
                         "x": -4000,
                         "y": -3250
                     },
-                    "id": "2138eb0",
+                    "id": "3196930",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1847,7 +1847,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "2516640",
+                    "id": "24568d0",
                     "type": "SymPin"
                 },
                 {
@@ -1859,7 +1859,7 @@
                         "x": -500,
                         "y": -3500
                     },
-                    "id": "2138fa0",
+                    "id": "15b06c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1874,7 +1874,7 @@
                         "x": -4000,
                         "y": -3750
                     },
-                    "id": "2f15070",
+                    "id": "12ce670",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1910,7 +1910,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "2203a80",
+                    "id": "3196760",
                     "type": "SymPin"
                 },
                 {
@@ -1922,7 +1922,7 @@
                         "x": -500,
                         "y": -4000
                     },
-                    "id": "24ba3a0",
+                    "id": "3190cf0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1937,7 +1937,7 @@
                         "x": -4000,
                         "y": -4250
                     },
-                    "id": "24ba460",
+                    "id": "155bf50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1973,7 +1973,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "2f92900",
+                    "id": "1315c00",
                     "type": "SymPin"
                 },
                 {
@@ -1985,7 +1985,7 @@
                         "x": -500,
                         "y": -4500
                     },
-                    "id": "2384b30",
+                    "id": "24d38a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2021,7 +2021,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "155d060",
+                    "id": "24acc40",
                     "type": "SymPin"
                 },
                 {
@@ -2033,7 +2033,7 @@
                         "x": -4000,
                         "y": -4750
                     },
-                    "id": "235e0a0",
+                    "id": "1a8b9b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2048,7 +2048,7 @@
                         "x": -1500,
                         "y": -4750
                     },
-                    "id": "24ea9f0",
+                    "id": "1593670",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2059,7 +2059,7 @@
                         "x": -2250,
                         "y": 500
                     },
-                    "id": "24eaab0",
+                    "id": "2467250",
                     "over": {
                         "b": 684,
                         "r": -1965,
@@ -2081,7 +2081,7 @@
                         "x": -2250,
                         "y": -5000
                     },
-                    "id": "1ff5210",
+                    "id": "155bb30",
                     "over": {
                         "b": -4813,
                         "r": -1716,
@@ -2103,7 +2103,7 @@
                         "x": -2750,
                         "y": 0
                     },
-                    "id": "2f76ad0",
+                    "id": "1a907c0",
                     "over": {
                         "b": 188,
                         "r": -2382,
@@ -2125,7 +2125,7 @@
                         "x": -2750,
                         "y": -4500
                     },
-                    "id": "22f5ef0",
+                    "id": "24b4b90",
                     "over": {
                         "b": -4311,
                         "r": -2322,
@@ -2147,7 +2147,7 @@
                         "x": -2750,
                         "y": -1000
                     },
-                    "id": "2319250",
+                    "id": "1187440",
                     "over": {
                         "b": -811,
                         "r": -2364,
@@ -2169,7 +2169,7 @@
                         "x": -2750,
                         "y": -3500
                     },
-                    "id": "2f1bac0",
+                    "id": "24d8c00",
                     "over": {
                         "b": -3312,
                         "r": -2504,
@@ -2191,7 +2191,7 @@
                         "x": -2750,
                         "y": -2000
                     },
-                    "id": "2f1bbc0",
+                    "id": "24be100",
                     "over": {
                         "b": -1816,
                         "r": -2364,
@@ -2213,7 +2213,7 @@
                         "x": -2750,
                         "y": -500
                     },
-                    "id": "21e2e20",
+                    "id": "12f5790",
                     "over": {
                         "b": -315,
                         "r": -2152,
@@ -2235,7 +2235,7 @@
                         "x": -2750,
                         "y": -1500
                     },
-                    "id": "24be180",
+                    "id": "246eed0",
                     "over": {
                         "b": -1314,
                         "r": -2109,
@@ -2257,7 +2257,7 @@
                         "x": -2750,
                         "y": -4000
                     },
-                    "id": "23a3e60",
+                    "id": "2536f90",
                     "over": {
                         "b": -3814,
                         "r": -1922,
@@ -2279,7 +2279,7 @@
                         "x": -2750,
                         "y": -2500
                     },
-                    "id": "23a3f30",
+                    "id": "31623e0",
                     "over": {
                         "b": -2313,
                         "r": -2346,
@@ -2301,7 +2301,7 @@
                         "x": -2750,
                         "y": -3000
                     },
-                    "id": "15532f0",
+                    "id": "117daa0",
                     "over": {
                         "b": -2815,
                         "r": -2376,
@@ -2328,7 +2328,7 @@
             "Parametrs": {
             },
             "Title": "swd 10pin (symbol)",
-            "id": "22f5e10",
+            "id": "23f73a0",
             "type": "Symbol"
         },
         {
@@ -2344,7 +2344,7 @@
                         "x": -1270,
                         "y": -3810
                     },
-                    "id": "2301920",
+                    "id": "31935c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2381,7 +2381,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "pld1.0next",
                     "Stratum": "3fffffff",
-                    "id": "2138b60",
+                    "id": "1496c00",
                     "type": "PartPin"
                 },
                 {
@@ -2415,7 +2415,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "pld1.0first",
                     "Stratum": "3fffffff",
-                    "id": "1fc09f0",
+                    "id": "2447990",
                     "type": "PartPin"
                 },
                 {
@@ -2449,7 +2449,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "pld1.0next",
                     "Stratum": "3fffffff",
-                    "id": "24978b0",
+                    "id": "1a7e410",
                     "type": "PartPin"
                 },
                 {
@@ -2483,7 +2483,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "pld1.0next",
                     "Stratum": "3fffffff",
-                    "id": "249cca0",
+                    "id": "243ab40",
                     "type": "PartPin"
                 },
                 {
@@ -2517,7 +2517,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "pld1.0next",
                     "Stratum": "3fffffff",
-                    "id": "24bf2b0",
+                    "id": "25601f0",
                     "type": "PartPin"
                 },
                 {
@@ -2551,7 +2551,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "pld1.0next",
                     "Stratum": "3fffffff",
-                    "id": "24af3b0",
+                    "id": "31683f0",
                     "type": "PartPin"
                 },
                 {
@@ -2585,7 +2585,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "pld1.0next",
                     "Stratum": "3fffffff",
-                    "id": "2012cd0",
+                    "id": "318dc20",
                     "type": "PartPin"
                 },
                 {
@@ -2619,7 +2619,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "pld1.0next",
                     "Stratum": "3fffffff",
-                    "id": "208b0f0",
+                    "id": "247efe0",
                     "type": "PartPin"
                 },
                 {
@@ -2653,7 +2653,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "pld1.0next",
                     "Stratum": "3fffffff",
-                    "id": "1fc3d50",
+                    "id": "2433d30",
                     "type": "PartPin"
                 },
                 {
@@ -2687,7 +2687,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "pld1.0next",
                     "Stratum": "3fffffff",
-                    "id": "24e3ea0",
+                    "id": "318da60",
                     "type": "PartPin"
                 },
                 {
@@ -2695,7 +2695,7 @@
                         "x": 5000,
                         "y": 2500
                     },
-                    "id": "1fbd360",
+                    "id": "fd2ef0",
                     "over": {
                         "b": 3043,
                         "r": 5822,
@@ -2717,7 +2717,7 @@
                         "x": 5000,
                         "y": -5000
                     },
-                    "id": "2305de0",
+                    "id": "250ef00",
                     "over": {
                         "b": -4451,
                         "r": 6529,
@@ -2744,7 +2744,7 @@
             "Parametrs": {
             },
             "Title": "connector pld10 (part)",
-            "id": "2301860",
+            "id": "24a15b0",
             "type": "Part"
         },
         {
@@ -2782,7 +2782,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "shield2.3",
                     "Stratum": "3fffffff",
-                    "id": "1564670",
+                    "id": "24bf060",
                     "type": "PartPin"
                 },
                 {
@@ -2816,7 +2816,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "shield2.3",
                     "Stratum": "3fffffff",
-                    "id": "2f286a0",
+                    "id": "1338290",
                     "type": "PartPin"
                 },
                 {
@@ -2850,7 +2850,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "usba-planar",
                     "Stratum": "1",
-                    "id": "221faa0",
+                    "id": "318e320",
                     "type": "PartPin"
                 },
                 {
@@ -2884,7 +2884,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "usba-planar",
                     "Stratum": "1",
-                    "id": "14f9560",
+                    "id": "1a98880",
                     "type": "PartPin"
                 },
                 {
@@ -2918,7 +2918,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "usba-planar",
                     "Stratum": "1",
-                    "id": "24c7670",
+                    "id": "24ed590",
                     "type": "PartPin"
                 },
                 {
@@ -2952,7 +2952,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "usba-planar",
                     "Stratum": "1",
-                    "id": "1f95670",
+                    "id": "31972e0",
                     "type": "PartPin"
                 },
                 {
@@ -2964,7 +2964,7 @@
                         "x": 11700,
                         "y": 18800
                     },
-                    "id": "201db20",
+                    "id": "252b0a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2979,7 +2979,7 @@
                         "x": 2350,
                         "y": 0
                     },
-                    "id": "1ff6970",
+                    "id": "3195070",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2994,7 +2994,7 @@
                         "x": 4850,
                         "y": 0
                     },
-                    "id": "245b700",
+                    "id": "2500fa0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3009,7 +3009,7 @@
                         "x": 6850,
                         "y": 0
                     },
-                    "id": "245b7c0",
+                    "id": "3193820",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3024,7 +3024,7 @@
                         "x": 9350,
                         "y": 0
                     },
-                    "id": "1524b60",
+                    "id": "149b8c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3035,7 +3035,7 @@
                         "x": 3600,
                         "y": 1000
                     },
-                    "id": "22ac280",
+                    "id": "146ac20",
                     "lineLayer": "Hole",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3047,7 +3047,7 @@
                         "x": 8100,
                         "y": 1000
                     },
-                    "id": "201da70",
+                    "id": "1575b50",
                     "lineLayer": "Hole",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3064,7 +3064,7 @@
             "Parametrs": {
             },
             "Title": "usb-a pcb-mount smt (part)",
-            "id": "2305ee0",
+            "id": "24ec2b0",
             "type": "Part"
         },
         {
@@ -3080,7 +3080,7 @@
                         "x": -500,
                         "y": 0
                     },
-                    "id": "2389260",
+                    "id": "1331c60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3095,7 +3095,7 @@
                         "x": -4000,
                         "y": -250
                     },
-                    "id": "2389350",
+                    "id": "249f240",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3131,7 +3131,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "2322000",
+                    "id": "1226c90",
                     "type": "SymPin"
                 },
                 {
@@ -3143,7 +3143,7 @@
                         "x": -500,
                         "y": -500
                     },
-                    "id": "2322140",
+                    "id": "3197000",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3158,7 +3158,7 @@
                         "x": -4000,
                         "y": -750
                     },
-                    "id": "23b0870",
+                    "id": "f03e40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3194,7 +3194,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "2305fa0",
+                    "id": "2500090",
                     "type": "SymPin"
                 },
                 {
@@ -3206,7 +3206,7 @@
                         "x": -500,
                         "y": -1000
                     },
-                    "id": "24df810",
+                    "id": "3194dc0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3221,7 +3221,7 @@
                         "x": -4000,
                         "y": -1250
                     },
-                    "id": "22075f0",
+                    "id": "24790f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3257,7 +3257,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "2207680",
+                    "id": "2531570",
                     "type": "SymPin"
                 },
                 {
@@ -3269,7 +3269,7 @@
                         "x": -500,
                         "y": -1500
                     },
-                    "id": "2ea3ae0",
+                    "id": "318caa0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3284,7 +3284,7 @@
                         "x": -4000,
                         "y": -1750
                     },
-                    "id": "2ea3ba0",
+                    "id": "24484f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3320,7 +3320,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "21e1dc0",
+                    "id": "2455a10",
                     "type": "SymPin"
                 },
                 {
@@ -3332,7 +3332,7 @@
                         "x": -500,
                         "y": -2000
                     },
-                    "id": "2ebb780",
+                    "id": "243a9c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3347,7 +3347,7 @@
                         "x": -4000,
                         "y": -2250
                     },
-                    "id": "2ebb840",
+                    "id": "247d300",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3383,7 +3383,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "24b5a60",
+                    "id": "3198140",
                     "type": "SymPin"
                 },
                 {
@@ -3395,7 +3395,7 @@
                         "x": -500,
                         "y": -2500
                     },
-                    "id": "24df900",
+                    "id": "24d25e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3431,7 +3431,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "2f3eb00",
+                    "id": "245d1d0",
                     "type": "SymPin"
                 },
                 {
@@ -3443,7 +3443,7 @@
                         "x": -4000,
                         "y": -2750
                     },
-                    "id": "23c3250",
+                    "id": "116a400",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3458,7 +3458,7 @@
                         "x": -1500,
                         "y": -2750
                     },
-                    "id": "23c3310",
+                    "id": "2518520",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3469,7 +3469,7 @@
                         "x": -2500,
                         "y": 500
                     },
-                    "id": "20295c0",
+                    "id": "122e450",
                     "over": {
                         "b": 687,
                         "r": -2212,
@@ -3491,7 +3491,7 @@
                         "x": -2250,
                         "y": -3000
                     },
-                    "id": "2029690",
+                    "id": "f159f0",
                     "over": {
                         "b": -2815,
                         "r": -1721,
@@ -3513,7 +3513,7 @@
                         "x": -2750,
                         "y": 0
                     },
-                    "id": "24f1440",
+                    "id": "1186d90",
                     "over": {
                         "b": 187,
                         "r": -2365,
@@ -3535,7 +3535,7 @@
                         "x": -2750,
                         "y": -500
                     },
-                    "id": "24f1540",
+                    "id": "1358980",
                     "over": {
                         "b": -313,
                         "r": -2564,
@@ -3557,7 +3557,7 @@
                         "x": -2750,
                         "y": -1000
                     },
-                    "id": "2f2a420",
+                    "id": "1363ce0",
                     "over": {
                         "b": -812,
                         "r": -2504,
@@ -3579,7 +3579,7 @@
                         "x": -2750,
                         "y": -1500
                     },
-                    "id": "1fbdc80",
+                    "id": "24ee120",
                     "over": {
                         "b": -1312,
                         "r": -2361,
@@ -3601,7 +3601,7 @@
                         "x": -2750,
                         "y": -2000
                     },
-                    "id": "1fbdd80",
+                    "id": "1485f60",
                     "over": {
                         "b": -1812,
                         "r": -2089,
@@ -3623,7 +3623,7 @@
                         "x": -2750,
                         "y": -2500
                     },
-                    "id": "19af6f0",
+                    "id": "2564c30",
                     "over": {
                         "b": -2311,
                         "r": -2089,
@@ -3650,7 +3650,7 @@
             "Parametrs": {
             },
             "Title": "usb-a pcb-mount smt (symbol)",
-            "id": "2ec0d30",
+            "id": "1aaecd0",
             "type": "Symbol"
         },
         {
@@ -3661,7 +3661,7 @@
                     "Default": false,
                     "PartId": "Part\rusb-a pcb-mount smt (part)\rsalicad",
                     "PartTitle": "usb-a pcb-mount smt (part) (salicad)",
-                    "id": "24e53c0",
+                    "id": "255a660",
                     "type": "PartVariant"
                 },
                 {
@@ -3675,7 +3675,7 @@
                     },
                     "SymbolId": "Symbol\rusb-a pcb-mount smt (symbol)\rsalicad",
                     "SymbolTitle": "usb-a pcb-mount smt (symbol) (salicad)",
-                    "id": "2f3ec70",
+                    "id": "2483120",
                     "type": "Section"
                 }
             ],
@@ -3693,7 +3693,7 @@
                 "value": "usb-a pcb-mount"
             },
             "Title": "usb-a pcb-mount smt",
-            "id": "24088c0",
+            "id": "15b8810",
             "type": "Comp"
         },
         {
@@ -3704,7 +3704,7 @@
                     "Default": false,
                     "PartId": "Part\rconnector pld10 (part)\rsalicad",
                     "PartTitle": "connector pld10 (part) (salicad)",
-                    "id": "2207760",
+                    "id": "10d0150",
                     "type": "PartVariant"
                 },
                 {
@@ -3722,7 +3722,7 @@
                     },
                     "SymbolId": "Symbol\rswd 10pin (symbol)\rsalicad",
                     "SymbolTitle": "swd 10pin (symbol) (salicad)",
-                    "id": "21e1ed0",
+                    "id": "1030cd0",
                     "type": "Section"
                 }
             ],
@@ -3740,7 +3740,7 @@
                 "value": "PLD10"
             },
             "Title": "swd 10pin",
-            "id": "2ec3890",
+            "id": "242e3b0",
             "type": "Comp"
         },
         {
@@ -3756,7 +3756,7 @@
                         "x": 7500,
                         "y": 7500
                     },
-                    "id": "24d30d0",
+                    "id": "2535680",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3771,7 +3771,7 @@
                         "x": -2500,
                         "y": -1250
                     },
-                    "id": "2ec0700",
+                    "id": "25355c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3782,7 +3782,7 @@
                         "x": 0,
                         "y": 2500
                     },
-                    "id": "24d5d70",
+                    "id": "24a5b90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3794,7 +3794,7 @@
                         "x": 5000,
                         "y": 2500
                     },
-                    "id": "2ec07f0",
+                    "id": "122d380",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3810,7 +3810,7 @@
                         "x": -1750,
                         "y": 2750
                     },
-                    "id": "2ec0870",
+                    "id": "24840a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3825,7 +3825,7 @@
                         "x": 3250,
                         "y": 2750
                     },
-                    "id": "2eaf460",
+                    "id": "24648e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3862,7 +3862,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2.2d1.3",
                     "Stratum": "3fffffff",
-                    "id": "24783c0",
+                    "id": "1a97d30",
                     "type": "PartPin"
                 },
                 {
@@ -3896,7 +3896,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2.2d1.3",
                     "Stratum": "3fffffff",
-                    "id": "2ea9da0",
+                    "id": "31872c0",
                     "type": "PartPin"
                 },
                 {
@@ -3904,12 +3904,12 @@
                         "x": 2500,
                         "y": 6250
                     },
-                    "id": "2ea9f20",
+                    "id": "24d8e00",
                     "over": {
-                        "b": 6798,
-                        "r": 3321,
-                        "x": 1686,
-                        "y": 5708
+                        "b": 6790,
+                        "r": 3322,
+                        "x": 1687,
+                        "y": 5700
                     },
                     "propTextDir": 0,
                     "propTextFont": 0,
@@ -3926,11 +3926,11 @@
                         "x": 2500,
                         "y": -625
                     },
-                    "id": "24bf4e0",
+                    "id": "24a29e0",
                     "over": {
                         "b": -84,
-                        "r": 4031,
-                        "x": 976,
+                        "r": 4032,
+                        "x": 977,
                         "y": -1174
                     },
                     "propTextDir": 0,
@@ -3953,7 +3953,7 @@
             "Parametrs": {
             },
             "Title": "clamp 2pin",
-            "id": "24d3010",
+            "id": "248d6a0",
             "type": "Part"
         },
         {
@@ -3969,7 +3969,7 @@
                         "x": 500,
                         "y": 0
                     },
-                    "id": "1fcf500",
+                    "id": "10ce140",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3984,7 +3984,7 @@
                         "x": 4000,
                         "y": -250
                     },
-                    "id": "2f02c50",
+                    "id": "24b8260",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4020,7 +4020,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "2f02d40",
+                    "id": "14c5900",
                     "type": "SymPin"
                 },
                 {
@@ -4032,7 +4032,7 @@
                         "x": 500,
                         "y": -500
                     },
-                    "id": "1fc3b40",
+                    "id": "14e6760",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4068,7 +4068,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "2481800",
+                    "id": "1375170",
                     "type": "SymPin"
                 },
                 {
@@ -4080,7 +4080,7 @@
                         "x": 4000,
                         "y": -750
                     },
-                    "id": "2481970",
+                    "id": "1a83c60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4095,7 +4095,7 @@
                         "x": 1500,
                         "y": -750
                     },
-                    "id": "1fc3c30",
+                    "id": "24887f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4106,7 +4106,7 @@
                         "x": 2250,
                         "y": 500
                     },
-                    "id": "249a7b0",
+                    "id": "2559cb0",
                     "over": {
                         "b": 689,
                         "r": 2538,
@@ -4128,7 +4128,7 @@
                         "x": 2250,
                         "y": -1000
                     },
-                    "id": "2f1a800",
+                    "id": "24a27c0",
                     "over": {
                         "b": -809,
                         "r": 2784,
@@ -4155,7 +4155,7 @@
             "Parametrs": {
             },
             "Title": "connector 2pin",
-            "id": "1fcf410",
+            "id": "21aab90",
             "type": "Symbol"
         },
         {
@@ -4169,14 +4169,14 @@
                     },
                     "SymbolId": "Symbol\rconnector 2pin\rsalicad",
                     "SymbolTitle": "connector 2pin (salicad)",
-                    "id": "1fc3c90",
+                    "id": "1a85190",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rclamp 2pin\rsalicad",
                     "PartTitle": "clamp 2pin (salicad)",
-                    "id": "24bf630",
+                    "id": "1b08b90",
                     "type": "PartVariant"
                 }
             ],
@@ -4194,7 +4194,7 @@
                 "value": "clampX2 5mm"
             },
             "Title": "clamp 2pin connector 5mm",
-            "id": "2f1a960",
+            "id": "1a6d1e0",
             "type": "Comp"
         },
         {
@@ -4205,7 +4205,7 @@
                     "Default": false,
                     "PartId": "Part\rusb-m mini (part)\rsalicad",
                     "PartTitle": "usb-m mini (part) (salicad)",
-                    "id": "21d2100",
+                    "id": "118d3b0",
                     "type": "PartVariant"
                 },
                 {
@@ -4222,7 +4222,7 @@
                     },
                     "SymbolId": "Symbol\rusb-m mini (symbol)\rsalicad",
                     "SymbolTitle": "usb-m mini (symbol) (salicad)",
-                    "id": "2518960",
+                    "id": "14d9c60",
                     "type": "Section"
                 }
             ],
@@ -4240,12 +4240,218 @@
                 "value": "usb-m mini pcb-mount smt"
             },
             "Title": "usb-m pcb-mount smt",
-            "id": "21c7790",
+            "id": "11e7600",
+            "type": "Comp"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": -2149,
+                        "y": -1199
+                    },
+                    "b": {
+                        "x": 5650,
+                        "y": 8000
+                    },
+                    "id": "2409860",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 1750,
+                        "y": 8000
+                    },
+                    "b": {
+                        "x": 1750,
+                        "y": 6625
+                    },
+                    "id": "24098c0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1750,
+                        "y": 8000
+                    },
+                    "b": {
+                        "x": 1375,
+                        "y": 7000
+                    },
+                    "id": "2409920",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1750,
+                        "y": 8000
+                    },
+                    "b": {
+                        "x": 2125,
+                        "y": 7000
+                    },
+                    "id": "2409980",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "NamePos": {
+                        "x": 0,
+                        "y": 1625
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 2000,
+                    "NameTextVert": 1,
+                    "Number": "1",
+                    "NumberPos": {
+                        "x": 0,
+                        "y": 3500
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 1500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2.2d1.3",
+                    "Stratum": "3fffffff",
+                    "id": "24099e0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 3500,
+                        "y": 1625
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 2000,
+                    "NameTextVert": 1,
+                    "Number": "2",
+                    "NumberPos": {
+                        "x": 3500,
+                        "y": 3500
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 1500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3500,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2.2d1.3",
+                    "Stratum": "3fffffff",
+                    "id": "2409ad0",
+                    "type": "PartPin"
+                },
+                {
+                    "Origin": {
+                        "x": 2000,
+                        "y": 5250
+                    },
+                    "id": "f75800",
+                    "over": {
+                        "b": 6343,
+                        "r": 3358,
+                        "x": 643,
+                        "y": 4148
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident",
+                    "propTextMirror": 0,
+                    "propTextSize": 2000,
+                    "propTextVert": 1,
+                    "text": "XT",
+                    "type": "Ident"
+                }
+            ],
+            "Created": 25713850,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+            },
+            "Title": "clamp male 2x3.5",
+            "id": "24097d0",
+            "type": "Part"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "1": "1",
+                        "2": "2"
+                    },
+                    "SymbolId": "Symbol\rconnector 2pin\rsalicad",
+                    "SymbolTitle": "connector 2pin (salicad)",
+                    "id": "14a2be0",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rclamp male 2x3.5\rsalicad",
+                    "PartTitle": "clamp male 2x3.5 (salicad)",
+                    "id": "2431850",
+                    "type": "PartVariant"
+                }
+            ],
+            "Created": 25713973,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "article": "",
+                "bom": "<article> <value>",
+                "prefix": "X",
+                "title": "clamp 2pin connector 3.5mm",
+                "value": "clampX2 3.5mm"
+            },
+            "Title": "clamp 2pin connector 3.5mm",
+            "id": "1308e10",
             "type": "Comp"
         }
     ],
     "Parametrs": {
     },
-    "id": "21c6dc0",
+    "id": "118f180",
     "type": "Project"
 }

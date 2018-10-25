@@ -1,0 +1,52 @@
+{
+    "ChildList": [
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "A1": "1",
+                        "A2": "2",
+                        "K": "3"
+                    },
+                    "SymbolId": "Symbol\rtwo diodes common cathode\rsalicad",
+                    "SymbolTitle": "two diodes common cathode (salicad)",
+                    "id": "2e4f370",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rsot23-3\rsalicad",
+                    "PartTitle": "sot23-3 (salicad)",
+                    "id": "206f690",
+                    "type": "PartVariant"
+                }
+            ],
+            "Created": 25710720,
+            "Edit enable": true,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "article": "",
+                "bom": "<article> <value>",
+                "current": "200mA",
+                "forward voltage": "0.4V",
+                "manufacturer": "on semiconductor",
+                "prefix": "D",
+                "reverce voltage": "30V",
+                "title": "diode BAT54CLT1G",
+                "value": "BAT54CLT1G"
+            },
+            "Title": "dual common cathode schottky barrier diodes bat54clt1g",
+            "id": "302b960",
+            "type": "Comp"
+        }
+    ],
+    "Parametrs": {
+    },
+    "id": "2e1ab50",
+    "type": "Project"
+}
