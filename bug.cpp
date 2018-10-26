@@ -2,7 +2,7 @@
 //B064 bugs
 //F001 fatal
 //C001 critical
-//D072 do
+//D073 do
 
 
 
@@ -28,6 +28,10 @@
 //TODO D068 Append query to upgrade when newer objects received from remote and possibility to off than query
 
 //TODO D071 When change param to project dirtyProject do not changed
+
+//TODO D073 Remove default pad association from environment
+
+//TODO D074 Replace pad selection for vias with pad building by pad master
 
 //===================================================================================
 //Fixed:
