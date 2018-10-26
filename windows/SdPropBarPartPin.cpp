@@ -14,6 +14,7 @@ Description
 #include "SdPropBarPartPin.h"
 #include "SdStringHistory.h"
 #include "SdDPads.h"
+#include "SdDPadMaster.h"
 
 #include <QLineEdit>
 #include <QToolButton>
@@ -59,8 +60,8 @@ SdPropBarPartPin::SdPropBarPartPin(const QString title) :
   QToolButton *but = new QToolButton();
   but->setText( QStringLiteral("...") );
   connect( but, &QToolButton::clicked, this, [this] () {
-    QString str = SdDPads::selectPinType(this);
-    if( !str.isEmpty() ) {
+    QString str = SdDPadMaster::build( mPinType->currentText(), this );
+    if( str != mPinType->currentText() ) {
       mPinType->setCurrentText( str );
       pinTypeHistory.reorderComboBoxString( mPinType );
       emit propChanged();

@@ -32,11 +32,11 @@ class SdPad
     qint32 mDiametrWidth;     //Diametr of circle or rectangle dimensions
     qint32 mHeight;
     qint32 mMaskThreshold;    //Mask threshold. Calculation: maskSize = size + mMaskThreshold
-    qint32 mStensilThreshold; //Stensil threshold. Calculation: stensilSize = size + mMaskThreshold
-    qint32 mStensilRows;      //If rows or colons > 1 then stensil area divided on array of aperture with
-    qint32 mStensilCols;      // width and height
-    qint32 mStensilWidth;
-    qint32 mStensilHeight;
+    qint32 mStencilThreshold; //Stensil threshold. Calculation: stensilSize = size + mMaskThreshold
+    qint32 mStencilRows;      //If rows or colons > 1 then stensil area divided on array of aperture with
+    qint32 mStencilCols;      // width and height
+    qint32 mStencilWidth;
+    qint32 mStencilHeight;
     qint32 mHoleDiametr;
     //Not saved. Circle determine by mHeight = 0.
     bool   mIsCircle;
@@ -59,6 +59,12 @@ class SdPad
 
     //Create textual pad description
     QString     description() const;
+
+    //Create textual pad name
+    QString     name() const;
+
+    //Create pad on name base
+    void        parse( const QString nm );
 
     //Clear to create default pad
     void        clear();

@@ -37,7 +37,7 @@ enum SdLayerTrace {
   layerTraceNone,     //Layer not tracing [Слой не трассировочный]
   layerTracePad,      //Layer for pads
   layerTraceMask,     //Layer for mask
-  layerTraceStensil,  //Layer for stensil apertures
+  layerTraceStencil,  //Layer for stencil apertures
   layerTraceHole,     //Layer for holes
   layerTraceRoad,     //Layer for wires
   layerTracePolygon,  //Layer for polygons
@@ -65,8 +65,8 @@ enum SdLayerTrace {
 #define LID0_HOLE          "Hole"         //Отверстие
 #define LID0_CLEAR         "Clear"        //Зазор
 #define LID0_SOLDER_MASK   "Mask"         //Маска
-#define LID0_STENSIL       "Stensil"      //Трафарет
-#define LID0_STENSIL_REPER "StensilReper" //Репер на трафарете
+#define LID0_STENCIL       "Stencil"      //Трафарет
+#define LID0_STENCIL_REPER "StencilReper" //Репер на трафарете
 #define LID0_EXCLUSION     "Exclusion"    //Trace exclusion area
 #define LID0_TRACE         "Trace"        //Trace area
 #define LID0_TRACE_DEFAULT "TraceDefault" //Default trace layer for undefined stratum

@@ -272,7 +272,7 @@ void SdObjectNetClient::cmSyncList(QDataStream &is)
   {
   SdAuthorInfo info;
   is >> info;
-  qDebug() << "cmSyncList" << info.mAuthor << info.mKey << info.mRemain;
+  //qDebug() << "cmSyncList" << info.mAuthor << info.mKey << info.mRemain;
   if( info.isSuccessfull() ) {
     mLocalSyncIndex += mLocalSyncCount;
 
@@ -284,8 +284,8 @@ void SdObjectNetClient::cmSyncList(QDataStream &is)
       sdLibraryStorage.setHeader( hdr );
       updateCount++;
       }
-    qDebug() << "synced" << updateCount << mLocalSyncCount;
     if( updateCount != 0 || mLocalSyncCount != 0 ) {
+      qDebug() << "synced" << updateCount << mLocalSyncCount;
       mRemoteSyncIndex += updateCount;
       QSettings s;
       s.setValue( SDK_REMOTE_SYNC, mRemoteSyncIndex );

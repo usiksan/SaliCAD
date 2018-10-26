@@ -14,6 +14,7 @@ Description
 #include "SdDMasterPartDoubleSideLR.h"
 #include "ui_SdDMasterPartDoubleSideLR.h"
 #include "windows/SdDPads.h"
+#include "windows/SdDPadMaster.h"
 #include "objects/SdEnvir.h"
 
 #include <QToolButton>
@@ -30,8 +31,8 @@ sRightPinOffsetY = 0;
 static QString
 sLeftPinCount("2"),
 sRightPinCount("2"),
-sLeftPinType("soic0.4left"),
-sRightPinType("soic0.4right");
+sLeftPinType("r1.5x0.4m0.1s0.04"),
+sRightPinType("r1.5x0.4m0.1s0.04");
 
 
 SdDMasterPartDoubleSideLR::SdDMasterPartDoubleSideLR(SdProjectItem *item, QWidget *parent) :
@@ -70,17 +71,17 @@ SdDMasterPartDoubleSideLR::SdDMasterPartDoubleSideLR(SdProjectItem *item, QWidge
   connect( ui->mRightPinDistance, &QLineEdit::textEdited, this, &SdDMasterPartDoubleSideLR::onEditChanged );
   connect( ui->mRightPinOffsetY, &QLineEdit::textEdited, this, &SdDMasterPartDoubleSideLR::onEditChanged );
 
+
+  ui->mLeftPinType->setReadOnly(true);
   connect( ui->mLeftPinTypeSelect, &QToolButton::clicked, this, [this] () {
-    QString str = SdDPads::selectPinType(this);
-    if( !str.isEmpty() )
-      ui->mLeftPinType->setText( str );
+    ui->mLeftPinType->setText( SdDPadMaster::build( ui->mLeftPinType->text(), this ) );
     } );
 
+  ui->mRightPinType->setReadOnly(true);
   connect( ui->mRightPinTypeSelect, &QToolButton::clicked, this, [this] () {
-    QString str = SdDPads::selectPinType(this);
-    if( !str.isEmpty() )
-      ui->mRightPinType->setText( str );
+    ui->mRightPinType->setText( SdDPadMaster::build( ui->mRightPinType->text(), this ) );
     } );
+
 
   connect( ui->buttonBox, &QDialogButtonBox::accepted, this, &SdDMasterPartDoubleSideLR::accept );
   connect( ui->buttonBox, &QDialogButtonBox::rejected, this, &SdDMasterPartDoubleSideLR::reject );

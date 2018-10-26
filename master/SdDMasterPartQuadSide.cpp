@@ -14,6 +14,7 @@ Description
 #include "SdDMasterPartQuadSide.h"
 #include "ui_SdDMasterPartQuadSide.h"
 #include "windows/SdDPads.h"
+#include "windows/SdDPadMaster.h"
 #include "objects/SdEnvir.h"
 
 #include <QToolButton>
@@ -33,10 +34,10 @@ sTopPinOffsetX = 0;
 static QString
 sTotalPinCount("16"),
 sBottomLeftPinNumber("1"),
-sLeftPinType("tqfp0.3left"),
-sBottomPinType("tqfp0.3bot"),
-sRightPinType("tqfp0.3right"),
-sTopPinType("tqfp0.3top");
+sLeftPinType("r1.2x0.3m0.1s0.04"),
+sBottomPinType("r0.3x1.2m0.1s0.04"),
+sRightPinType("r1.2x0.3m0.1s0.04"),
+sTopPinType("r0.3x1.2m0.1s0.04");
 
 SdDMasterPartQuadSide::SdDMasterPartQuadSide(SdProjectItem *item, QWidget *parent) :
   SdDMasterPart( item, parent ),
@@ -96,28 +97,24 @@ SdDMasterPartQuadSide::SdDMasterPartQuadSide(SdProjectItem *item, QWidget *paren
   connect( ui->mTopPinOffsetX, &QLineEdit::textEdited, this, &SdDMasterPartQuadSide::onEditChanged );
   connect( ui->mTopPinCount, &QLineEdit::textEdited, this, &SdDMasterPartQuadSide::onEditChanged );
 
+  ui->mLeftPinType->setReadOnly(true);
   connect( ui->mLeftPinTypeSelect, &QToolButton::clicked, this, [this] () {
-    QString str = SdDPads::selectPinType(this);
-    if( !str.isEmpty() )
-      ui->mLeftPinType->setText( str );
+    ui->mLeftPinType->setText( SdDPadMaster::build( ui->mLeftPinType->text(), this ) );
     } );
 
+  ui->mBottomPinType->setReadOnly(true);
   connect( ui->mBottomPinTypeSelect, &QToolButton::clicked, this, [this] () {
-    QString str = SdDPads::selectPinType(this);
-    if( !str.isEmpty() )
-      ui->mBottomPinType->setText( str );
+    ui->mBottomPinType->setText( SdDPadMaster::build( ui->mBottomPinType->text(), this ) );
     } );
 
+  ui->mRightPinType->setReadOnly(true);
   connect( ui->mRightPinTypeSelect, &QToolButton::clicked, this, [this] () {
-    QString str = SdDPads::selectPinType(this);
-    if( !str.isEmpty() )
-      ui->mRightPinType->setText( str );
+    ui->mRightPinType->setText( SdDPadMaster::build( ui->mRightPinType->text(), this ) );
     } );
 
+  ui->mTopPinType->setReadOnly(true);
   connect( ui->mTopPinTypeSelect, &QToolButton::clicked, this, [this] () {
-    QString str = SdDPads::selectPinType(this);
-    if( !str.isEmpty() )
-      ui->mTopPinType->setText( str );
+    ui->mTopPinType->setText( SdDPadMaster::build( ui->mTopPinType->text(), this ) );
     } );
 
   connect( ui->buttonBox, &QDialogButtonBox::accepted, this, &SdDMasterPartQuadSide::accept );

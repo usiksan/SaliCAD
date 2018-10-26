@@ -43,12 +43,12 @@ SdDPadMaster::SdDPadMaster(SdPad pad, QWidget *parent) :
   connect( ui->mCirclePad, &QCheckBox::toggled, this, &SdDPadMaster::onPadCircleToggle );
   connect( ui->mThroughPin, &QCheckBox::toggled, this, &SdDPadMaster::onThroughPin );
   connect( ui->mStensilColumns, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mStensilCols = txt.toInt();
+    mPad.mStencilCols = txt.toInt();
     onArrayEnable(true);
     updatePadSchematic();
     });
   connect( ui->mStensilRows, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mStensilRows = txt.toInt();
+    mPad.mStencilRows = txt.toInt();
     onArrayEnable(true);
     updatePadSchematic();
     });
@@ -78,15 +78,15 @@ SdDPadMaster::SdDPadMaster(SdPad pad, QWidget *parent) :
     updatePadSchematic();
     });
   connect( ui->mStensilThreshold, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mStensilThreshold = sdEnvir->fromPhisPcb( txt );
+    mPad.mStencilThreshold = sdEnvir->fromPhisPcb( txt );
     updatePadSchematic();
     });
   connect( ui->mStensilWidth, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mStensilWidth = sdEnvir->fromPhisPcb( txt );
+    mPad.mStencilWidth = sdEnvir->fromPhisPcb( txt );
     updatePadSchematic();
     });
   connect( ui->mStensilHeight, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mStensilHeight = sdEnvir->fromPhisPcb( txt );
+    mPad.mStencilHeight = sdEnvir->fromPhisPcb( txt );
     updatePadSchematic();
     });
 
@@ -100,6 +100,25 @@ SdDPadMaster::SdDPadMaster(SdPad pad, QWidget *parent) :
 SdDPadMaster::~SdDPadMaster()
   {
   delete ui;
+  }
+
+
+
+
+//Build pad from source name, edit it and return new name
+QString SdDPadMaster::build(const QString name, QWidget *parent)
+  {
+  //Build source pad
+  SdPad pad;
+  pad.parse( name );
+  //Create master dialog
+  SdDPadMaster master( pad, parent );
+  //Edit pad
+  if( master.exec() )
+    //return new name for pad
+    return master.pad().name();
+  //Return old name
+  return name;
   }
 
 
@@ -184,7 +203,7 @@ void SdDPadMaster::drawPadSchematic(SdIllustrator &ill)
 
     //Stensil if present
     if( mPad.mHoleDiametr <= 0 )
-      ill.drawFillCircle( mPad.mCenterX, mPad.mCenterY, (mPad.mDiametrWidth - mPad.mStensilThreshold)/2, QColor(0x808080) );
+      ill.drawFillCircle( mPad.mCenterX, mPad.mCenterY, (mPad.mDiametrWidth - mPad.mStencilThreshold)/2, QColor(0x808080) );
     }
   else {
     //pad
@@ -201,24 +220,24 @@ void SdDPadMaster::drawPadSchematic(SdIllustrator &ill)
 
     //Stensil if present
     if( mPad.mHoleDiametr <= 0 ) {
-      if( mPad.mStensilCols > 1 || mPad.mStensilRows > 1 ) {
+      if( mPad.mStencilCols > 1 || mPad.mStencilRows > 1 ) {
         //Draw array of apertures
-        int rows = mPad.mStensilRows > 1 ? mPad.mStensilRows : 1;
-        int cols = mPad.mStensilCols > 1 ? mPad.mStensilCols : 1;
+        int rows = mPad.mStencilRows > 1 ? mPad.mStencilRows : 1;
+        int cols = mPad.mStencilCols > 1 ? mPad.mStencilCols : 1;
         int cellx = mPad.mDiametrWidth / cols;
         int celly = mPad.mHeight / rows;
-        int w = mPad.mDiametrWidth - mPad.mStensilThreshold * 2;
-        int h = mPad.mHeight - mPad.mStensilThreshold * 2;
+        int w = mPad.mDiametrWidth - mPad.mStencilThreshold * 2;
+        int h = mPad.mHeight - mPad.mStencilThreshold * 2;
         for( int y = 0; y < rows; y++ )
           for( int x = 0; x < cols; x++ )
             ill.drawFillRectWH( mPad.mCenterX - (w >> 1) + x * cellx,
                                 mPad.mCenterY - (h >> 1) + y * celly,
-                                mPad.mStensilWidth,
-                                mPad.mStensilHeight, QColor(0x808080) );
+                                mPad.mStencilWidth,
+                                mPad.mStencilHeight, QColor(0x808080) );
         }
       else
         ill.drawCenterFillRectWH( mPad.mCenterX,  mPad.mCenterY,
-                            mPad.mDiametrWidth-mPad.mStensilThreshold, mPad.mHeight-mPad.mStensilThreshold, QColor(0x808080) );
+                            mPad.mDiametrWidth-mPad.mStencilThreshold, mPad.mHeight-mPad.mStencilThreshold, QColor(0x808080) );
       }
     }
   }
@@ -268,9 +287,9 @@ void SdDPadMaster::onThroughPin(bool isThrough)
     }
   else {
     //Enable stensil hole
-    ui->mStensilThreshold->setText( sdEnvir->toPhisPcb(mPad.mStensilThreshold) );
-    ui->mStensilRows->setText( QString::number(mPad.mStensilRows) );
-    ui->mStensilColumns->setText( QString::number(mPad.mStensilCols) );
+    ui->mStensilThreshold->setText( sdEnvir->toPhisPcb(mPad.mStencilThreshold) );
+    ui->mStensilRows->setText( QString::number(mPad.mStencilRows) );
+    ui->mStensilColumns->setText( QString::number(mPad.mStencilCols) );
     //Disable pin hole
     ui->mHoleDiametr->clear();
     mPad.mHoleDiametr = 0;
@@ -285,12 +304,12 @@ void SdDPadMaster::onThroughPin(bool isThrough)
 //Enable-disable stensil array on isEna and current settings of stensil cols and rows
 void SdDPadMaster::onArrayEnable(bool isEna)
   {
-  isEna = isEna && (mPad.mStensilCols > 1 || mPad.mStensilRows > 1);
+  isEna = isEna && (mPad.mStencilCols > 1 || mPad.mStencilRows > 1);
   ui->mStensilWidth->setEnabled(isEna);
   ui->mStensilHeight->setEnabled(isEna);
   if( isEna ) {
-    ui->mStensilWidth->setText( sdEnvir->toPhisPcb(mPad.mStensilWidth) );
-    ui->mStensilHeight->setText( sdEnvir->toPhisPcb(mPad.mStensilHeight) );
+    ui->mStensilWidth->setText( sdEnvir->toPhisPcb(mPad.mStencilWidth) );
+    ui->mStensilHeight->setText( sdEnvir->toPhisPcb(mPad.mStencilHeight) );
     }
   else {
     ui->mStensilWidth->clear();

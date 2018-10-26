@@ -43,8 +43,8 @@ SdLayerDescr sdLayerDescrActual[] = {
   { LID0_SOLDER_MASK LID1_TOP,   0x803fff00, layerTraceMask, stmTop },
   { LID0_SOLDER_MASK LID1_BOT,   0x8040007f, layerTraceMask, stmBottom },
 
-  { LID0_STENSIL LID1_TOP,       0x003f8000, layerTraceStensil, stmTop },
-  { LID0_STENSIL_REPER LID1_TOP, 0x003f4000, layerTraceNone, 0x00000000 },
+  { LID0_STENCIL LID1_TOP,       0x003f8000, layerTraceStencil, stmTop },
+  { LID0_STENCIL_REPER LID1_TOP, 0x003f4000, layerTraceNone, 0x00000000 },
 
   { LID0_EXCLUSION,              0x00002080, layerTraceNone, 0x00000000 },
   { LID0_TRACE,                  0x00200080, layerTraceNone, 0x00000000 },
@@ -95,8 +95,8 @@ SdLayerLevel sdLayerLevel0[] = {
   { LID0_HOLE,          QT_TR_NOOP( "PCB hole" ), 0 },
   { LID0_CLEAR,         QT_TR_NOOP( "PCB trace clear" ), 0 },
   { LID0_SOLDER_MASK,   QT_TR_NOOP( "PCB solder mask" ), 0 },
-  { LID0_STENSIL,       QT_TR_NOOP( "PCB stensil aperture" ), 0 },
-  { LID0_STENSIL_REPER, QT_TR_NOOP( "PCB stensil reper" ), 0 },
+  { LID0_STENCIL,       QT_TR_NOOP( "PCB stencil aperture" ), 0 },
+  { LID0_STENCIL_REPER, QT_TR_NOOP( "PCB stencil reper" ), 0 },
   { LID0_EXCLUSION,     QT_TR_NOOP( "PCB trace exclusion area" ), 0 },
   { LID0_TRACE,         QT_TR_NOOP( "PCB trace area" ), 0 },
   { LID0_TRACE_DEFAULT, QT_TR_NOOP( "PCB trace default" ), 0 }, //Default trace layer for undefined stratum

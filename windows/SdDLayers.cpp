@@ -425,9 +425,9 @@ void SdDLayers::onCellClicked(int row, int column)
       //Layer for pads
       case layerTracePad :  trace = layerTraceMask; break;
       //Layer for mask
-      case layerTraceMask : trace = layerTraceStensil; break;
+      case layerTraceMask : trace = layerTraceStencil; break;
       //Layer for stensil apertures
-      case layerTraceStensil : trace = layerTraceHole; break;
+      case layerTraceStencil : trace = layerTraceHole; break;
       //Layer for holes
       case layerTraceHole : trace = layerTraceRoad; break;
       //Layer for wires
@@ -554,7 +554,7 @@ QString SdDLayers::layerTrace(SdLayer *layer)
       return tr("pad");
     case layerTraceMask :     //Layer for mask
       return tr("mask");
-    case layerTraceStensil :  //Layer for stensil apertures
+    case layerTraceStencil :  //Layer for stensil apertures
       return tr("stensil");
     case layerTraceHole :     //Layer for holes
       return tr("hole");

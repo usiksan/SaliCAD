@@ -101,6 +101,8 @@ void SdPItemPlate::drawPad(SdContext *dc, SdPoint p, const QString pinType, int 
   {
   if( mPadAssociation.contains(pinType) )
     mPadAssociation.pin( pinType ).draw( dc, p, stratum );
+  else
+    sdEnvir->getPad( pinType ).draw( dc, p, stratum );
   }
 
 

@@ -14,6 +14,7 @@ Description
 #include "SdDMasterPartDoubleRect.h"
 #include "ui_SdDMasterPartDoubleRect.h"
 #include "windows/SdDPads.h"
+#include "windows/SdDPadMaster.h"
 #include "objects/SdEnvir.h"
 
 #include <QToolButton>
@@ -33,16 +34,14 @@ SdDMasterPartDoubleRect::SdDMasterPartDoubleRect(SdProjectItem *item, QWidget *p
   connect( ui->mBodySizeY, &QLineEdit::textEdited, this, &SdDMasterPartDoubleRect::onEditChanged );
   connect( ui->mBetweenPins, &QLineEdit::textEdited, this, &SdDMasterPartDoubleRect::onEditChanged );
 
+  ui->mLeftPinType->setReadOnly(true);
   connect( ui->mLeftPinTypeSelect, &QToolButton::clicked, this, [this] () {
-    QString str = SdDPads::selectPinType(this);
-    if( !str.isEmpty() )
-      ui->mLeftPinType->setText( str );
+    ui->mLeftPinType->setText( SdDPadMaster::build( ui->mLeftPinType->text(), this ) );
     } );
 
+  ui->mRightPinType->setReadOnly(true);
   connect( ui->mRightPinTypeSelect, &QToolButton::clicked, this, [this] () {
-    QString str = SdDPads::selectPinType(this);
-    if( !str.isEmpty() )
-      ui->mRightPinType->setText( str );
+    ui->mRightPinType->setText( SdDPadMaster::build( ui->mRightPinType->text(), this ) );
     } );
   }
 

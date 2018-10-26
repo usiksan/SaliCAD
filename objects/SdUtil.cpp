@@ -15,11 +15,41 @@ Description
 #include <QDateTime>
 
 
+//Extract value from string
+double SdUtil::extractValueFromString(const QString str, int &start)
+  {
+  QString val;
+  while( start < str.length() ) {
+    QChar ch = str.at(start);
+    if( ch == QChar('-') ) val += ch;
+    else if( ch == QChar(',') || ch == QChar('.') ) val += QChar('.');
+    else if( ch.isDigit() ) val += ch;
+    else
+      //Extracting completed
+      break;
+    start++;
+    }
+  if( val.length() ) return val.toDouble();
+  return 0;
+  }
+
+
+
+//Extract logical value from string
+int SdUtil::extractLogFromString(const QString str, int &start, double ppm)
+  {
+  return phys2log( extractValueFromString( str, start ), ppm );
+  }
+
+
+
 //Convert textual representation of physical coords to logical int
 int SdUtil::phys2log(const QString src, double ppm)
   {
   return phys2log( str2phys(src), ppm );
   }
+
+
 
 int SdUtil::phys2log(double phys, double ppm)
   {
@@ -76,6 +106,23 @@ QPointF SdUtil::log2phys(QPoint log, double ppm)
   p.ry() = log2phys( log.y(), ppm );
   return p;
   }
+
+
+
+
+
+//Convert logical um int coord to mm minimum string
+QString SdUtil::um2mm(int log)
+  {
+  double phys = log2phys( log, 0.001 );
+  int dec = 0;
+  if( log % 10 ) dec = 3;
+  else if( log % 100 ) dec = 2;
+  else if( log % 1000 ) dec = 1;
+
+  return QString::number( phys, 'f', dec );
+  }
+
 
 
 

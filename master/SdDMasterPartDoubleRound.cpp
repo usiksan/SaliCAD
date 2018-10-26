@@ -15,6 +15,7 @@ Description
 #include "ui_SdDMasterPartDoubleRound.h"
 
 #include "windows/SdDPads.h"
+#include "windows/SdDPadMaster.h"
 #include "objects/SdEnvir.h"
 
 #include <QToolButton>
@@ -23,8 +24,8 @@ Description
 static int partDiameter = 5000;
 static int sizeX = 3000;
 //Pin types
-static QString leftPinType;
-static QString rightPinType;
+static QString leftPinType("r1.2x1.2d1.0m0.1");
+static QString rightPinType("c1.2d1.0m0.1");
 
 
 
@@ -46,17 +47,16 @@ SdDMasterPartDoubleRound::SdDMasterPartDoubleRound(SdProjectItem *item, bool noP
   connect( ui->mBodyDiameter, &QLineEdit::textEdited, this, &SdDMasterPartDoubleRound::onEditChanged );
   connect( ui->mBetweenPins, &QLineEdit::textEdited, this, &SdDMasterPartDoubleRound::onEditChanged );
 
+  ui->mLeftPinType->setReadOnly(true);
   connect( ui->mLeftPinTypeSelect, &QToolButton::clicked, this, [this] () {
-    QString str = SdDPads::selectPinType(this);
-    if( !str.isEmpty() )
-      ui->mLeftPinType->setText( str );
+    ui->mLeftPinType->setText( SdDPadMaster::build( ui->mLeftPinType->text(), this ) );
     } );
 
+  ui->mRightPinType->setReadOnly(true);
   connect( ui->mRightPinTypeSelect, &QToolButton::clicked, this, [this] () {
-    QString str = SdDPads::selectPinType(this);
-    if( !str.isEmpty() )
-      ui->mRightPinType->setText( str );
+    ui->mRightPinType->setText( SdDPadMaster::build( ui->mRightPinType->text(), this ) );
     } );
+
 
   connect( ui->buttonBox, &QDialogButtonBox::accepted, this, &SdDMasterPartDoubleRound::accept );
   connect( ui->buttonBox, &QDialogButtonBox::rejected, this, &SdDMasterPartDoubleRound::reject );

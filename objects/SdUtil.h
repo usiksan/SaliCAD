@@ -25,6 +25,12 @@ Description
 class SdUtil
   {
   public:
+    //Extract value from string
+    static double    extractValueFromString( const QString str, int &start );
+
+    //Extract logical value from string
+    static int       extractLogFromString( const QString str, int &start, double ppm );
+
     //Convert textual representation of physical coords to int
     static int       phys2log( const QString src, double ppm );
 
@@ -45,6 +51,9 @@ class SdUtil
 
     //Convert logical point to physical
     static QPointF   log2phys( QPoint log, double ppm );
+
+    //Convert logical um int coord to mm minimum string
+    static QString   um2mm(int log );
 
     //Test if string contains only english symbols
     static bool      isEnglish( const QString str );

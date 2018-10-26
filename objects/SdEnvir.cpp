@@ -381,7 +381,7 @@ void SdEnvir::resetForCache()
   {
   mCacheForPad.rebuild( mLayerTable, layerTracePad );
   mCacheForMask.rebuild( mLayerTable, layerTraceMask );
-  mCacheForStensil.rebuild( mLayerTable, layerTraceStensil );
+  mCacheForStencil.rebuild( mLayerTable, layerTraceStencil );
   mCacheForHole.rebuild( mLayerTable, layerTraceHole );
   mCacheForRoad.rebuild( mLayerTable, layerTraceRoad );
   mCacheForPolygon.rebuild( mLayerTable, layerTracePolygon );
@@ -421,7 +421,7 @@ void SdEnvir::setLayerUsage(int stratumCount)
   {
   mCacheForPad.setLayerUsage( stratumCount );
   mCacheForMask.setLayerUsage( stratumCount );
-  mCacheForStensil.setLayerUsage( stratumCount );
+  mCacheForStencil.setLayerUsage( stratumCount );
   mCacheForHole.setLayerUsage( stratumCount );
   mCacheForRoad.setLayerUsage( stratumCount );
   mCacheForPolygon.setLayerUsage( stratumCount );
@@ -458,14 +458,13 @@ QString SdEnvir::layerId2NameLevel1(QString lid1)
 
 SdPad SdEnvir::getPad(const QString pinType)
   {
-  //If pad stack not yet loaded then load it
-  if( mPadStack == nullptr )
-    mPadStack = sdObjectOnly<SdPadAssociation>( SdObjectFactory::extractObject( mPadStackUid, true, nullptr ) );
-  //If pad stack present then return pad associated with pinType
-  if( mPadStack != nullptr )
-    return mPadStack->pin(pinType);
-  //Return empty pad
-  return SdPad();
+  static SdPadMap padMap;
+  if( !padMap.contains(pinType) ) {
+    SdPad pad;
+    pad.parse( pinType );
+    padMap.insert( pinType, pad );
+    }
+  return padMap.value( pinType );
   }
 
 

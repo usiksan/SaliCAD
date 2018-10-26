@@ -14,6 +14,7 @@ Description
 #include "SdDMasterPartDoubleSide.h"
 #include "ui_SdDMasterPartDoubleSide.h"
 #include "windows/SdDPads.h"
+#include "windows/SdDPadMaster.h"
 #include "objects/SdEnvir.h"
 
 #include <QToolButton>
@@ -30,8 +31,8 @@ sTopPinOffsetX = 0;
 static QString
 sBottomPinCount("2"),
 sTopPinCount("2"),
-sBottomPinType("soic0.4bot"),
-sTopPinType("soic0.4top");
+sBottomPinType("r0.4x1.0m0.1s0.04"),
+sTopPinType("r0.4x1.0m0.1s0.04");
 
 
 SdDMasterPartDoubleSide::SdDMasterPartDoubleSide(SdProjectItem *item, QWidget *parent) :
@@ -70,17 +71,16 @@ SdDMasterPartDoubleSide::SdDMasterPartDoubleSide(SdProjectItem *item, QWidget *p
   connect( ui->mTopPinDistance, &QLineEdit::textEdited, this, &SdDMasterPartDoubleSide::onEditChanged );
   connect( ui->mTopPinOffsetX, &QLineEdit::textEdited, this, &SdDMasterPartDoubleSide::onEditChanged );
 
+  ui->mBottomPinType->setReadOnly(true);
   connect( ui->mBottomPinTypeSelect, &QToolButton::clicked, this, [this] () {
-    QString str = SdDPads::selectPinType(this);
-    if( !str.isEmpty() )
-      ui->mBottomPinType->setText( str );
+    ui->mBottomPinType->setText( SdDPadMaster::build( ui->mBottomPinType->text(), this ) );
     } );
 
+  ui->mTopPinType->setReadOnly(true);
   connect( ui->mTopPinTypeSelect, &QToolButton::clicked, this, [this] () {
-    QString str = SdDPads::selectPinType(this);
-    if( !str.isEmpty() )
-      ui->mTopPinType->setText( str );
+    ui->mTopPinType->setText( SdDPadMaster::build( ui->mTopPinType->text(), this ) );
     } );
+
   }
 
 

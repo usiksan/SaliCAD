@@ -122,7 +122,7 @@ class SdEnvir
     //Cashed layers for stratum
     SdLayerCache      mCacheForPad;
     SdLayerCache      mCacheForMask;
-    SdLayerCache      mCacheForStensil;
+    SdLayerCache      mCacheForStencil;
     SdLayerCache      mCacheForHole;
     SdLayerCache      mCacheForRoad;
     SdLayerCache      mCacheForPolygon;

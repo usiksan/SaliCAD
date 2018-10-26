@@ -34,6 +34,9 @@ class SdDPadMaster : public QDialog
 
     SdPad pad() const { return mPad; }
 
+    //Build pad from source name, edit it and return new name
+    static QString build( const QString name, QWidget *parent );
+
   private:
     Ui::SdDPadMaster *ui;
 
