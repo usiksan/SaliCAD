@@ -79,48 +79,6 @@ QString SdDPads::getCurrentPin() const
 
 
 
-QString SdDPads::selectPinType(QWidget *parent)
-  {
-  QString ass;
-  SdPadMap map;
-  //Request to load default pad association if it not loaded yet
-  sdEnvir->getPad( QString("def") );
-  if( sdEnvir->mPadStack ) {
-    //Pad association loaded. Get name and map
-    ass = sdEnvir->mPadStack->getName();
-    map = sdEnvir->mPadStack->getMap();
-    }
-  SdDPads pads( nullptr, ass, map, parent );
-  pads.exec();
-
-  //Check if need default pad association reload
-  if( !pads.getAssociationUid().isEmpty() ) {
-    //Need reload
-    sdEnvir->resetPads();
-    sdEnvir->mPadStackUid = pads.getAssociationUid();
-    }
-  return pads.getCurrentPin();
-  }
-
-
-
-
-
-
-QString SdDPads::selectPlatePinType(SdPItemPlate *plate, QWidget *parent)
-  {
-  SdDPads pads( plate, plate->getPadAssociationName(), plate->getPadMap(), parent );
-  if( pads.exec() ) {
-    //Setup pads
-    plate->setPadAssociation( pads.getAssociationName(), pads.getPadMap(), plate->getUndo() );
-    //Set project dirty with pads changed
-    plate->setProjectDirtyFlag();
-    //Return selected pad
-    return pads.getCurrentPin();
-    }
-  return QString();
-  }
-
 
 
 

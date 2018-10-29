@@ -213,7 +213,6 @@ SOURCES += \
     modes/SdModeCPartPlace.cpp \
     modes/SdModeCFragment.cpp \
     windows/SdDProjectStore.cpp \
-    windows/SdDOptionsPagePads.cpp \
     windows/SdWEditorInheritance.cpp \
     windows/SdWHelp.cpp \
     library/SvDir.cpp \

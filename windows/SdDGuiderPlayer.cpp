@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Dialog for display guider playback
 */
 #include "SdDGuiderPlayer.h"
 
@@ -24,8 +25,8 @@ SdDGuiderPlayer::SdDGuiderPlayer(const QString fname, QWidget *parent) :
   QDialog( parent ),
   mCurrentTime(0)
   {
-  mFile.load( fname );
-  mFile.play(0);
+//  mFile.load( fname );
+//  mFile.play(0);
 
   if( speech == nullptr )
     speech = new QTextToSpeech();

@@ -15,6 +15,7 @@ Description
 #include "SdWHelp.h"
 #include "SdWMain.h"
 #include "library/SvDir.h"
+#include "SdDGuiderPlayer.h"
 
 #include <QUrl>
 #include <QSettings>
@@ -39,17 +40,24 @@ SdWHelp::SdWHelp(QWidget *parent) :
   connect( this, &SdWHelp::anchorClicked, this, [this] ( QUrl url) {
     //Test special case for intro page
     //In intro page we can open project, create new project or open previously file
+    QString path = url.toString();
     if( mMain ) {
-      QString path = url.toString();
       qDebug() << "help" << path;
       if( path.startsWith("open:") ) { mMain->cmFileOpen(); return; }
       else if( path.startsWith("new:") ) { mMain->cmFileNew(); return; }
       else if( path.startsWith("load:") ) { mMain->cmFileOpenFile( path.mid(5) ); return; }
       }
-    if( url.hasFragment() )
-      setSource( pageConvert( url.fileName(), url.fragment() ) );
-    else
-      setSource( pageConvert( url.fileName(), QString() ) );
+    if( path.endsWith( QStringLiteral(".guide")) ) {
+      //Show guide player dialog
+      SdDGuiderPlayer player( path, this );
+      player.exec();
+      }
+    else {
+      if( url.hasFragment() )
+        setSource( pageConvert( url.fileName(), url.fragment() ) );
+      else
+        setSource( pageConvert( url.fileName(), QString() ) );
+      }
     });
   }
 
@@ -128,7 +136,13 @@ void SdWHelp::contens()
 //Show help topic
 void SdWHelp::helpTopic(const QString topic)
   {
-  if( topic.contains(QChar('#')) ) {
+  qDebug() << "help topic" << topic;
+  if( topic.endsWith( QStringLiteral(".guide")) ) {
+    //Show guide player dialog
+    SdDGuiderPlayer player( topic, this );
+    player.exec();
+    }
+  else if( topic.contains(QChar('#')) ) {
     //Topic contains local position
     int i = topic.indexOf( QChar('#') );
     //File part
