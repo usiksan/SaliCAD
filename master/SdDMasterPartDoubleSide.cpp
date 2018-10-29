@@ -71,12 +71,10 @@ SdDMasterPartDoubleSide::SdDMasterPartDoubleSide(SdProjectItem *item, QWidget *p
   connect( ui->mTopPinDistance, &QLineEdit::textEdited, this, &SdDMasterPartDoubleSide::onEditChanged );
   connect( ui->mTopPinOffsetX, &QLineEdit::textEdited, this, &SdDMasterPartDoubleSide::onEditChanged );
 
-  ui->mBottomPinType->setReadOnly(true);
   connect( ui->mBottomPinTypeSelect, &QToolButton::clicked, this, [this] () {
     ui->mBottomPinType->setText( SdDPadMaster::build( ui->mBottomPinType->text(), this ) );
     } );
 
-  ui->mTopPinType->setReadOnly(true);
   connect( ui->mTopPinTypeSelect, &QToolButton::clicked, this, [this] () {
     ui->mTopPinType->setText( SdDPadMaster::build( ui->mTopPinType->text(), this ) );
     } );

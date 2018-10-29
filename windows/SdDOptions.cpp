@@ -15,9 +15,9 @@ Description
 #include "SdDOptions.h"
 #include "SdDOptionsPageColors.h"
 #include "SdDOptionsPageEditors.h"
-#include "SdDOptionsPagePads.h"
 #include "SdDOptionsPagePath.h"
 #include "SdDHelp.h"
+
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QPushButton>
@@ -59,10 +59,6 @@ SdDOptions::SdDOptions(QWidget *parent) :
   connect(mButtons, &QDialogButtonBox::accepted, editors, &SdDOptionsPageEditors::accept );
   mTabWidget->addTab( editors, tr("Editors") );
 
-  //Pads page
-  SdDOptionsPagePads *pads = new SdDOptionsPagePads();
-  connect(mButtons, &QDialogButtonBox::accepted, pads, &SdDOptionsPagePads::accept );
-  mTabWidget->addTab( pads, tr("Pads") );
 
   setWindowTitle( tr("Options") );
   resize( 700, 500 );

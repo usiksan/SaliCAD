@@ -29,12 +29,12 @@
 
 //TODO D071 When change param to project dirtyProject do not changed
 
-//TODO D073 Remove default pad association from environment
-
-//TODO D074 Replace pad selection for vias with pad building by pad master
-
 //===================================================================================
 //Fixed:
+
+//D073 Remove default pad association from environment
+
+//D074 Replace pad selection for vias with pad building by pad master
 
 //D072 Text doc not saved until closed
 

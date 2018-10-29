@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 
   //Translation system
   QTranslator appTranslator;
-  if( appTranslator.load( QString( QCoreApplication::applicationDirPath() + "/lang_%1.qm").arg( s.value( SDK_LANGUAGE, QVariant(QString("English")) ).toString() ) ) )
+  if( appTranslator.load( QString( QCoreApplication::applicationDirPath() + "/lang_%1.qm").arg( s.value( SDK_LANGUAGE ).toString() ) ) )
     a.installTranslator( &appTranslator );
 
 

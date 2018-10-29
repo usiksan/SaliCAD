@@ -34,12 +34,10 @@ SdDMasterPartDoubleRect::SdDMasterPartDoubleRect(SdProjectItem *item, QWidget *p
   connect( ui->mBodySizeY, &QLineEdit::textEdited, this, &SdDMasterPartDoubleRect::onEditChanged );
   connect( ui->mBetweenPins, &QLineEdit::textEdited, this, &SdDMasterPartDoubleRect::onEditChanged );
 
-  ui->mLeftPinType->setReadOnly(true);
   connect( ui->mLeftPinTypeSelect, &QToolButton::clicked, this, [this] () {
     ui->mLeftPinType->setText( SdDPadMaster::build( ui->mLeftPinType->text(), this ) );
     } );
 
-  ui->mRightPinType->setReadOnly(true);
   connect( ui->mRightPinTypeSelect, &QToolButton::clicked, this, [this] () {
     ui->mRightPinType->setText( SdDPadMaster::build( ui->mRightPinType->text(), this ) );
     } );

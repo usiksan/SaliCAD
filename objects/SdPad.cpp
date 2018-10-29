@@ -292,13 +292,25 @@ void SdPad::parse(const QString nm)
   {
   clear();
   if( nm.length() ) {
+    //Skeep start symbols
+    //We find 'c' or 'r' with susequent digit
     int index = 1;
-    if( nm.at(0) == QChar('c') ) {
+    while( index < nm.length() ) {
+      if( (nm.at(index-1) == QChar('c') || nm.at(index-1) == QChar('r')) && nm.at(index).isDigit() )
+        break;
+      index++;
+      }
+    //We do not find available symbols
+    if( index >= nm.length() )
+      return;
+
+    //We find signature
+    if( nm.at(index-1) == QChar('c') ) {
       mDiametrWidth = SdUtil::extractLogFromString( nm, index, 0.001 );
       mHeight = -1;
       mIsCircle = true;
       }
-    else if( nm.at(0) == QChar('r') ) {
+    else if( nm.at(index-1) == QChar('r') ) {
       mDiametrWidth = SdUtil::extractLogFromString( nm, index, 0.001 );
       index++;
       mHeight = SdUtil::extractLogFromString( nm, index, 0.001 );

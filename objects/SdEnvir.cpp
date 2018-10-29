@@ -140,8 +140,6 @@ void SdEnvir::loadEnvir()
        >> mLibraryPath          //Каталог библиотек
        >> mPatternPath          //Каталог шаблонов
        >> mCategoryPath         //Base path for store category hierarchy
-       >> mPadStackUid          //Файл контактных площадок
-       >> mPadStackTitle        //Объект содержащий контактные площадки
        >> mGridHistory          //Previous grid history table
        >> mDefaultRules         //Default rules for pcb
        >> mShowRuleErrors       //If true then over pcb shows rule error indicators as rectangles
@@ -216,8 +214,6 @@ void SdEnvir::saveEnvir()
      << mLibraryPath          //Каталог библиотек
      << mPatternPath          //Каталог шаблонов
      << mCategoryPath         //Base path for store category hierarchy
-     << mPadStackUid          //Файл контактных площадок
-     << mPadStackTitle        //Объект содержащий контактные площадки
      << mGridHistory          //Previous grid history table
      << mDefaultRules         //Default rules for pcb
      << mShowRuleErrors       //If true then over pcb shows rule error indicators as rectangles
@@ -314,8 +310,6 @@ void SdEnvir::defaultEnvir()
   mCategoryPath = mLibraryPath;        //Base path for store category hierarchy
   mCategoryPath.append( QStringLiteral("category/") );
 
-  mPadStackUid.clear();  //Default SdPadAssociation uid [UID контактных площадок]
-  mPadStackTitle = QString("default");//Объект содержащий контактные площадки
 
   //Перечень слоев по умолчанию
   //Default layer list

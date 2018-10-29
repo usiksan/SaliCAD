@@ -265,7 +265,8 @@ SOURCES += \
     objects/SdBarrier.cpp \
     windows/SdDOptionsPagePath.cpp \
     master/SdDMasterPartDoubleSideLR.cpp \
-    windows/SdDGuiderPlayer.cpp
+    windows/SdDGuiderPlayer.cpp \
+    windows/SdDOptionsPageCommon.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -474,7 +475,6 @@ HEADERS  += \
     modes/SdModeCPartPlace.h \
     modes/SdModeCFragment.h \
     windows/SdDProjectStore.h \
-    windows/SdDOptionsPagePads.h \
     windows/SdWEditorInheritance.h \
     windows/SdWHelp.h \
     library/SvDir.h \
@@ -526,7 +526,8 @@ HEADERS  += \
     modes/SdModeCViaEnter.h \
     windows/SdDOptionsPagePath.h \
     master/SdDMasterPartDoubleSideLR.h \
-    windows/SdDGuiderPlayer.h
+    windows/SdDGuiderPlayer.h \
+    windows/SdDOptionsPageCommon.h
 
 DISTFILES += \
     license.txt

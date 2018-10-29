@@ -53,7 +53,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (34 + FONT_COUNT)
+#define SdEnvirVersion  (35 + FONT_COUNT)
 
 
 class SdEnvir
@@ -98,8 +98,6 @@ class SdEnvir
     QString         mLibraryPath;          //Library path [Каталог библиотек]
     QString         mPatternPath;          //Каталог шаблонов
     QString         mCategoryPath;         //Base path for store category hierarchy
-    QString         mPadStackUid;          //SdPadAssociation object id [Объект контактных площадок]
-    QString         mPadStackTitle;        //SdPadAssociation object title [Название объекта с контактными площадками]
     QList<QPointF>  mGridHistory;          //Previous grid history
     SdRuleBlock     mDefaultRules;         //Default rules for pcb
     bool            mShowRuleErrors;       //If true then over pcb shows rule error indicators as rectangles

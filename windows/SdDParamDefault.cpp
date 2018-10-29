@@ -16,6 +16,7 @@ Description
 #include "SdDParamDefault.h"
 #include "ui_SdDParamDefault.h"
 #include "SdDParamEditor.h"
+#include "SdDHelp.h"
 #include <QCheckBox>
 
 SdDParamDefault::SdDParamDefault(QWidget *parent) :
@@ -44,6 +45,10 @@ SdDParamDefault::SdDParamDefault(QWidget *parent) :
     item->setFlags( Qt::ItemIsEnabled );
     item->setToolTip(  SdDParamEditor::defParamDescription(lst.at(row)) );
     }
+
+  connect( ui->buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, [this] () {
+    SdDHelp::help( QString("SdDParamDefault.htm"), this );
+    } );
   }
 
 

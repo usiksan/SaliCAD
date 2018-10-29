@@ -97,22 +97,18 @@ SdDMasterPartQuadSide::SdDMasterPartQuadSide(SdProjectItem *item, QWidget *paren
   connect( ui->mTopPinOffsetX, &QLineEdit::textEdited, this, &SdDMasterPartQuadSide::onEditChanged );
   connect( ui->mTopPinCount, &QLineEdit::textEdited, this, &SdDMasterPartQuadSide::onEditChanged );
 
-  ui->mLeftPinType->setReadOnly(true);
   connect( ui->mLeftPinTypeSelect, &QToolButton::clicked, this, [this] () {
     ui->mLeftPinType->setText( SdDPadMaster::build( ui->mLeftPinType->text(), this ) );
     } );
 
-  ui->mBottomPinType->setReadOnly(true);
   connect( ui->mBottomPinTypeSelect, &QToolButton::clicked, this, [this] () {
     ui->mBottomPinType->setText( SdDPadMaster::build( ui->mBottomPinType->text(), this ) );
     } );
 
-  ui->mRightPinType->setReadOnly(true);
   connect( ui->mRightPinTypeSelect, &QToolButton::clicked, this, [this] () {
     ui->mRightPinType->setText( SdDPadMaster::build( ui->mRightPinType->text(), this ) );
     } );
 
-  ui->mTopPinType->setReadOnly(true);
   connect( ui->mTopPinTypeSelect, &QToolButton::clicked, this, [this] () {
     ui->mTopPinType->setText( SdDPadMaster::build( ui->mTopPinType->text(), this ) );
     } );

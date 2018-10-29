@@ -14,6 +14,7 @@ Description
 #include "SdPropBarRoad.h"
 #include "SdStringHistory.h"
 #include "SdDPads.h"
+#include "SdDPadMaster.h"
 #include "objects/SdUtil.h"
 #include "objects/SdEnvir.h"
 
@@ -138,7 +139,7 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
   QToolButton *but = new QToolButton();
   but->setText( QStringLiteral("...") );
   connect( but, &QToolButton::clicked, this, [this] () {
-    QString str = SdDPads::selectPlatePinType( mPlate, this );
+    QString str = SdDPadMaster::build( mViaPadType->currentText(), this );
     if( !str.isEmpty() ) {
       mViaPadType->setCurrentText( str );
       padTypeHistory.reorderComboBoxString( mViaPadType );

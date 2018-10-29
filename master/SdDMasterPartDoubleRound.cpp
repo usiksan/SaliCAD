@@ -47,12 +47,10 @@ SdDMasterPartDoubleRound::SdDMasterPartDoubleRound(SdProjectItem *item, bool noP
   connect( ui->mBodyDiameter, &QLineEdit::textEdited, this, &SdDMasterPartDoubleRound::onEditChanged );
   connect( ui->mBetweenPins, &QLineEdit::textEdited, this, &SdDMasterPartDoubleRound::onEditChanged );
 
-  ui->mLeftPinType->setReadOnly(true);
   connect( ui->mLeftPinTypeSelect, &QToolButton::clicked, this, [this] () {
     ui->mLeftPinType->setText( SdDPadMaster::build( ui->mLeftPinType->text(), this ) );
     } );
 
-  ui->mRightPinType->setReadOnly(true);
   connect( ui->mRightPinTypeSelect, &QToolButton::clicked, this, [this] () {
     ui->mRightPinType->setText( SdDPadMaster::build( ui->mRightPinType->text(), this ) );
     } );
