@@ -14,6 +14,7 @@ Description
 #include "SdDPrint.h"
 #include "ui_SdDPrint.h"
 #include "objects/SdUtil.h"
+#include "SdDHelp.h"
 
 #include <QtPrintSupport/QPageSetupDialog>
 #include <QtPrintSupport/QPrintDialog>
@@ -131,6 +132,11 @@ SdDPrint::SdDPrint(SdRect over, SdRect sel, SdRect wnd, double ppm, QPrinter *pr
   //Zero width line
   ui->mZeroLineWidth->setValue(0);
   ui->mZeroLineWidth->setRange(0,100);
+
+  connect( ui->buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, [this] () {
+    SdDHelp::help( QString("SdDPrint.htm"), this );
+    } );
+
   }
 
 

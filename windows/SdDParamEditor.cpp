@@ -22,6 +22,7 @@ Description
 #include "objects/SdPItemComponent.h"
 #include "objects/SdPItemSheet.h"
 #include "objects/SdGraphText.h"
+#include "SdDHelp.h"
 
 #include <QInputDialog>
 #include <QMessageBox>
@@ -64,10 +65,13 @@ SdDParamEditor::SdDParamEditor(const QString title, const SdStringMap &map, SdPr
       lay->addLayout( vbox );
     root->addLayout( lay );
 
-    QDialogButtonBox *box = new QDialogButtonBox( QDialogButtonBox::Ok | QDialogButtonBox::Cancel );
+    QDialogButtonBox *box = new QDialogButtonBox( QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help );
     root->addWidget( box );
     connect( box, &QDialogButtonBox::accepted, this, &SdDParamEditor::accept );
     connect( box, &QDialogButtonBox::rejected, this, &SdDParamEditor::reject );
+    connect( box->button(QDialogButtonBox::Help), &QPushButton::clicked, this, [this] () {
+      SdDHelp::help( QString("SdDParamEditor.htm"), this );
+      } );
   setLayout( root );
   if( mEditEnable ) {
     //Connect signals when edit enabled
