@@ -35,6 +35,11 @@ class SdDGuiderPlayer : public QDialog
   public:
     SdDGuiderPlayer( const QString fname, QWidget *parent = nullptr );
 
+    static void    setGuiderPath( const QString path );
+
+    static QString guiderPath();
+
+    static bool    guiderExist( const QString fname );
   signals:
     void sgPlay( bool start );
 
@@ -45,6 +50,10 @@ class SdDGuiderPlayer : public QDialog
     void cmPlayStop();
 
     void play();
+
+  private:
+    //Path where guider files resides
+    static QString mGuiderPath;
   };
 
 #endif // SDDGUIDERPLAYER_H

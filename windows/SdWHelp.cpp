@@ -24,6 +24,7 @@ Description
 #include <QStringList>
 #include <QFileInfo>
 #include <QDebug>
+#include <QMessageBox>
 
 
 //Path where resides help system files
@@ -48,9 +49,13 @@ SdWHelp::SdWHelp(QWidget *parent) :
       else if( path.startsWith("load:") ) { mMain->cmFileOpenFile( path.mid(5) ); return; }
       }
     if( path.endsWith( QStringLiteral(".guide")) ) {
-      //Show guide player dialog
-      SdDGuiderPlayer player( path, this );
-      player.exec();
+      if( SdDGuiderPlayer::guiderExist( path ) ) {
+        //Show guide player dialog
+        SdDGuiderPlayer player( path, this );
+        player.exec();
+        }
+      else
+        QMessageBox::warning( this, tr("Error!"), tr("Guider file '%1' not exist. Try reinstall SaliCAD").arg(path) );
       }
     else {
       if( url.hasFragment() )

@@ -12,21 +12,27 @@ Description
   Dialog for display guider playback
 */
 #include "SdDGuiderPlayer.h"
+#include "library/SvDir.h"
 
 #include <QTextToSpeech>
 #include <QVBoxLayout>
 #include <QToolBar>
 #include <QToolButton>
+#include <QCoreApplication>
+#include <QFile>
 
 static QTextToSpeech *speech;
+
+//Path where guider files resides
+QString SdDGuiderPlayer::mGuiderPath;
 
 
 SdDGuiderPlayer::SdDGuiderPlayer(const QString fname, QWidget *parent) :
   QDialog( parent ),
   mCurrentTime(0)
   {
-//  mFile.load( fname );
-//  mFile.play(0);
+  mFile.load( guiderPath() + fname );
+  mFile.play(0);
 
   if( speech == nullptr )
     speech = new QTextToSpeech();
@@ -91,6 +97,42 @@ SdDGuiderPlayer::SdDGuiderPlayer(const QString fname, QWidget *parent) :
 
   connect( &mTimer, &QTimer::timeout, this, &SdDGuiderPlayer::play );
 
+  }
+
+
+
+void SdDGuiderPlayer::setGuiderPath(const QString path)
+  {
+  SvDir hp(path);
+  mGuiderPath = hp.slashedPath();
+//  QSettings s;
+  //  s.setValue( SDK_HELP_PATH, mHelpPath );
+  }
+
+
+
+
+QString SdDGuiderPlayer::guiderPath()
+  {
+  if( mGuiderPath.isEmpty() ) {
+    //Help path not assigned yet, build
+    SvDir def( QCoreApplication::applicationDirPath() );
+    //Guider system path
+    //QSettings s;
+    //SvDir pth(s.value( SDK_HELP_PATH, QVariant( def.slashedPath() + QString("help/")) ).toString());
+    mGuiderPath = def.slashedPath() + QString("guider/");
+    }
+  return mGuiderPath;
+  }
+
+
+
+
+
+
+bool SdDGuiderPlayer::guiderExist(const QString fname)
+  {
+  return QFile::exists( guiderPath() + fname );
   }
 
 
