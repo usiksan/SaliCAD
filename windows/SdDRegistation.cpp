@@ -18,6 +18,7 @@ Description
 #include "SdDRegistation.h"
 #include "ui_SdDRegistation.h"
 #include "objects/SdObjectNetClient.h"
+#include "SdDHelp.h"
 
 #include <QSettings>
 #include <QMessageBox>
@@ -53,6 +54,9 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
     Q_UNUSED(stop)
     ui->mProcess->setText(msg);
     });
+  connect( ui->mHelp, &QPushButton::clicked, this, [this] () {
+    SdDHelp::help( QString("SdDRegistration.htm"), this );
+    } );
   }
 
 
