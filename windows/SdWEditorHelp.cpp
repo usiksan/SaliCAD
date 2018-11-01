@@ -37,6 +37,21 @@ SdWEditorHelp::SdWEditorHelp(QWidget *parent) :
   }
 
 
+
+void SdWEditorHelp::helpBackward()
+  {
+  mHelp->backward();
+  }
+
+
+
+
+void SdWEditorHelp::helpForward()
+  {
+  mHelp->forward();
+  }
+
+
 SdProjectItem *SdWEditorHelp::getProjectItem() const
   {
   return nullptr;

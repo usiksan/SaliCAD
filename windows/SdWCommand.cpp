@@ -580,8 +580,6 @@ void SdWCommand::createToolBars(SdWMain *frame)
 
   frame->addToolBar( barView );
 
-  frame->addToolBarBreak();
-
 
   //Help bar
   barHelp = new QToolBar( QString("Help") );
@@ -590,6 +588,8 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barHelp->insertAction( nullptr, cmHelpForward );
   frame->addToolBar(barHelp);
 
+
+  frame->addToolBarBreak();
 
   SdPropBar *mbar;
   mbar = new SdPropBar( QStringLiteral("Default tool bar") );
