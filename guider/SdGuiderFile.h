@@ -31,11 +31,11 @@ struct SdGuiderTime {
 
 
 struct SdGuiderTiter {
-    QPoint                mPos;
     QMap<QString,QString> mContens;
 
     QByteArray write() const;
     void       read( const QByteArray &src );
+    void       clear();
   };
 
 
@@ -47,19 +47,18 @@ struct SdGuiderTiter {
 #define SD_GT_TITER_HIDE 6
 
 
-typedef std::function<void( const QString &str)> SdSayFunc;
+typedef std::function<void()> SdTiterFunc;
 
 struct SdGuiderFile
   {
     QList<SdGuiderTime> mFile;
     //Playback-record status
-    QImage              mBack;      //Current background
-    //QImage              mCursor;    //Current cursor
-    quint32             mMouseButtons;
-    QPoint              mCursorPos; //Current cursor position
-    QString             mTitle;     //Current title if present
-    QString             mLanguage;  //Language id
-    SdSayFunc           mSay;       //Say func
+    QImage              mBack;         //Current background
+    quint32             mMouseButtons; //Current mouse button status
+    QPoint              mCursorPos;    //Current cursor position
+    int                 mTiterIndex;   //Current titer index
+    SdGuiderTiter       mTiter;        //Current titer
+    SdTiterFunc         mTiterChanged; //Calling when titer changed
 
     SdGuiderFile();
 

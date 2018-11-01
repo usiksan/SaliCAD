@@ -19,6 +19,7 @@ Description
 #include <QTimer>
 #include <QLabel>
 #include <QListWidget>
+#include <QTableWidget>
 
 class SdGuiderWMain : public QMainWindow
   {
@@ -32,7 +33,7 @@ class SdGuiderWMain : public QMainWindow
     QListWidget  *mTimeList;
     QString       mFileName;
     bool          mLock;
-    SdGuiderTiter mTiter;
+    QTableWidget *mTiterTable;
   public:
     explicit SdGuiderWMain(QWidget *parent = nullptr);
 
@@ -57,8 +58,12 @@ class SdGuiderWMain : public QMainWindow
 
     void onRowChanged( int row );
 
+    void onCellChanged( int row, int column );
+
   private:
     void refreshTime();
+
+    void titerChanged();
   };
 
 #endif // SDGUIDERWMAIN_H

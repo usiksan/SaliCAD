@@ -31,7 +31,7 @@ SdGuiderWMain::SdGuiderWMain(QWidget *parent) :
   mLock(false)
   {
   speech = new QTextToSpeech();
-  mFile.mSay = [] ( const QString &say ) { speech->say(say); };
+  mFile.mTiterChanged = [this] () { titerChanged(); };
 
   QMenu *menuFile = new QMenu( tr("File") );
   menuFile->addAction( tr("Open..."), this, &SdGuiderWMain::cmFileOpen );
