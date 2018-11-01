@@ -22,7 +22,7 @@ class SdDOptionsPageCommon : public QWidget
   {
     Q_OBJECT
 
-    QComboBox *mLanguage;
+    QComboBox   *mLanguage;    //Interface language selection
   public:
     explicit SdDOptionsPageCommon(QWidget *parent = nullptr);
 

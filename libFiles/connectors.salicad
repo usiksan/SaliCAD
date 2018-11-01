@@ -4505,10 +4505,10 @@
                     },
                     "id": "1c819c0",
                     "over": {
-                        "b": 442,
+                        "b": 443,
                         "r": 538,
-                        "x": -35,
-                        "y": 59
+                        "x": -34,
+                        "y": 60
                     },
                     "propTextDir": 0,
                     "propTextFont": 0,
@@ -4521,8 +4521,8 @@
                     "type": "Ident"
                 }
             ],
-            "Created": 26228608,
-            "Edit enable": true,
+            "Created": 26228864,
+            "Edit enable": false,
             "Origin": {
                 "x": 0,
                 "y": 0
@@ -4590,10 +4590,10 @@
                     },
                     "id": "1d15080",
                     "over": {
-                        "b": 2426,
-                        "r": 2075,
-                        "x": 432,
-                        "y": 1326
+                        "b": 2421,
+                        "r": 2069,
+                        "x": 433,
+                        "y": 1325
                     },
                     "propTextDir": 0,
                     "propTextFont": 0,
@@ -4606,8 +4606,8 @@
                     "type": "Ident"
                 }
             ],
-            "Created": 26228663,
-            "Edit enable": true,
+            "Created": 26228869,
+            "Edit enable": false,
             "Origin": {
                 "x": 0,
                 "y": 0
@@ -4622,14 +4622,31 @@
             "Author": "salicad",
             "Auto": false,
             "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "P1": "1"
+                    },
+                    "SymbolId": "Symbol\rConnect point\rsalicad",
+                    "SymbolTitle": "Connect point (salicad)",
+                    "id": "11c0950",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rConnect point d1.0\rsalicad",
+                    "PartTitle": "Connect point d1.0 (salicad)",
+                    "id": "1910d10",
+                    "type": "PartVariant"
+                }
             ],
-            "Created": 26228813,
-            "Edit enable": true,
+            "Created": 26228936,
+            "Edit enable": false,
             "Origin": {
                 "x": 0,
                 "y": 0
             },
             "Parametrs": {
+                "prefix": "KT"
             },
             "Title": "Connect point d1.0",
             "id": "1bab040",

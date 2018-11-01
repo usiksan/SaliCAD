@@ -13,6 +13,7 @@ Description
 */
 
 #include "SdDOptions.h"
+#include "SdDOptionsPageCommon.h"
 #include "SdDOptionsPageColors.h"
 #include "SdDOptionsPageEditors.h"
 #include "SdDOptionsPagePath.h"
@@ -43,6 +44,11 @@ SdDOptions::SdDOptions(QWidget *parent) :
 
   //---------------------------
   //Append option pages
+
+  //Common params
+  SdDOptionsPageCommon *common = new SdDOptionsPageCommon();
+  connect(mButtons, &QDialogButtonBox::accepted, common, &SdDOptionsPageCommon::accept );
+  mTabWidget->addTab( common, tr("Common") );
 
   //Colors page
   SdDOptionsPageColors *colors = new SdDOptionsPageColors();
