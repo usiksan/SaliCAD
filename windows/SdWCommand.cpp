@@ -276,6 +276,12 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmHelpIndex        = menuHelp->addAction( QIcon(QString(":/pic/helpContext.png")), frame->tr("Index"), frame, SLOT(cmHelpIndex()) );
   cmHelpAbout        = menuHelp->addAction( QIcon(QString(":/pic/helpAbout.png")), frame->tr("About"), frame, SLOT(cmHelpAbout()) );
   cmHelpRegistration = menuHelp->addAction( QIcon(QString(":/pic/helpRegistration.png")), frame->tr("Registration"), frame, SLOT(cmHelpRegistration()) );
+  cmHelpHome         = new QAction( QIcon(QString(":/pic/helpHome.png")), frame->tr("Home help page") );
+  frame->connect( cmHelpHome, &QAction::triggered, frame, &SdWMain::cmHelpContens );
+  cmHelpBackward     = new QAction( QIcon(QString(":/pic/helpPrevious.png")), frame->tr("Backward help page") );
+  frame->connect( cmHelpBackward, &QAction::triggered, frame, &SdWMain::cmHelpBackward );
+  cmHelpForward      = new QAction( QIcon(QString(":/pic/helpNext.png")), frame->tr("Forward help page") );
+  frame->connect( cmHelpForward, &QAction::triggered, frame, &SdWMain::cmHelpForward );
 
 
   menuSelect = new QMenu( frame->tr("Select") );
@@ -577,6 +583,14 @@ void SdWCommand::createToolBars(SdWMain *frame)
   frame->addToolBarBreak();
 
 
+  //Help bar
+  barHelp = new QToolBar( QString("Help") );
+  barHelp->insertAction( nullptr, cmHelpHome );
+  barHelp->insertAction( nullptr, cmHelpBackward );
+  barHelp->insertAction( nullptr, cmHelpForward );
+  frame->addToolBar(barHelp);
+
+
   SdPropBar *mbar;
   mbar = new SdPropBar( QStringLiteral("Default tool bar") );
   frame->addToolBar( mbar );
@@ -681,6 +695,7 @@ void SdWCommand::hideEditorContext()
   barSheet->hide();
   barSymbol->hide();
   barView->hide();
+  barHelp->hide();
   }
 
 
@@ -784,6 +799,9 @@ QActionPtr SdWCommand::cmHelpContens;
 QActionPtr SdWCommand::cmHelpIndex;
 QActionPtr SdWCommand::cmHelpAbout;
 QActionPtr SdWCommand::cmHelpRegistration;
+QActionPtr SdWCommand::cmHelpHome;
+QActionPtr SdWCommand::cmHelpBackward;
+QActionPtr SdWCommand::cmHelpForward;
 
 QActionPtr SdWCommand::cmGuiderCapture;
 
@@ -820,6 +838,7 @@ QToolBar *SdWCommand::barComp;
 QToolBar *SdWCommand::barSheet;
 QToolBar *SdWCommand::barPcb;
 QToolBar *SdWCommand::barView;
+QToolBar *SdWCommand::barHelp;
 
 
 //Full mode action table

@@ -180,9 +180,9 @@ void SdWHelp::helpIntro(SdWMain *main)
   //Проверить наличие файла с языком
   if( QFile::exists( helpPath() + lang + "-startup.htm" ) )
     //File exist.
-    fname = helpPath() + lang + "-intro.htm";
-  //Test if file exist with english language
-  //Проверить наличие файла с анлийским языком
+    fname = helpPath() + lang + "-startup.htm";
+  //Else use english language file
+  //Иначе использовать файла с анлийским языком
   else fname = helpPath() + "en-startup.htm";
 
   QFile file(fname);

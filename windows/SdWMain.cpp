@@ -1706,6 +1706,27 @@ void SdWMain::cmGuiderCapture()
 
 
 
+
+void SdWMain::cmHelpBackward()
+  {
+  SdWEditorHelp *help = dynamic_cast<SdWEditorHelp*>( helpWidget() );
+  help->helpBackward();
+  }
+
+
+
+
+
+void SdWMain::cmHelpForward()
+  {
+  SdWEditorHelp *help = dynamic_cast<SdWEditorHelp*>( helpWidget() );
+  help->helpForward();
+  }
+
+
+
+
+
 void SdWMain::cmClipboardChange()
   {
   if( activeEditor() )

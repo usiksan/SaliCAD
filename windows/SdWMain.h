@@ -229,6 +229,8 @@ class SdWMain : public QMainWindow
     void cmHelpAbout();
     void cmHelpRegistration();
     void cmGuiderCapture();
+    void cmHelpBackward();
+    void cmHelpForward();
 
     void cmClipboardChange();
     void cmPropertiesChange();

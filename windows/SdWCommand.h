@@ -65,6 +65,7 @@ class SdWCommand
     static QToolBar *barSheet;
     static QToolBar *barPcb;
     static QToolBar *barView;
+    static QToolBar *barHelp;
 
     static void addEditCommands( QToolBar *bar );
     static void addViewCommands( QToolBar *bar );
@@ -153,6 +154,9 @@ class SdWCommand
     static QActionPtr  cmHelpIndex;
     static QActionPtr  cmHelpAbout;
     static QActionPtr  cmHelpRegistration;
+    static QActionPtr  cmHelpHome;
+    static QActionPtr  cmHelpBackward;
+    static QActionPtr  cmHelpForward;
 
     static QActionPtr  cmGuiderCapture;
 

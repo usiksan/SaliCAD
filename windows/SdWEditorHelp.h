@@ -31,6 +31,10 @@ class SdWEditorHelp : public SdWEditor
 
     void helpIntro( SdWMain *main ) { mHelp->helpIntro( main ); }
 
+    void helpBackward();
+
+    void helpForward();
+
     // SdWEditor interface
   public:
     virtual SdProjectItem *getProjectItem() const override;

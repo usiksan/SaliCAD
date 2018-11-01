@@ -1,5 +1,19 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Help system in editor space
+*/
 #include "SdWEditorHelp.h"
 #include "objects/SdPulsar.h"
+#include "SdWCommand.h"
 
 #include <QVBoxLayout>
 
@@ -17,6 +31,9 @@ SdWEditorHelp::SdWEditorHelp(QWidget *parent) :
   setLayout( box );
 
   connect( SdPulsar::sdPulsar, &SdPulsar::helpTopic, mHelp, &SdWHelp::helpTopic );
+
+  connect( mHelp, &SdWHelp::backwardAvailable, SdWCommand::cmHelpBackward, &QAction::setEnabled );
+  connect( mHelp, &SdWHelp::forwardAvailable, SdWCommand::cmHelpForward, &QAction::setEnabled );
   }
 
 
@@ -28,4 +45,9 @@ SdProjectItem *SdWEditorHelp::getProjectItem() const
 
 void SdWEditorHelp::onActivateEditor()
   {
+  //SdWEditor::onActivateEditor();
+
+  SdWCommand::barHelp->show();
+  SdWCommand::cmHelpBackward->setEnabled( mHelp->isBackwardAvailable() );
+  SdWCommand::cmHelpForward->setEnabled( mHelp->isForwardAvailable() );
   }

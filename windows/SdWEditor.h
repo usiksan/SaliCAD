@@ -155,13 +155,6 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmRulesErrorNext() {}
 
     //All
-    virtual void cmOption() {}
-    virtual void cmTools() {}
-
-    virtual void cmHelpContens() {}
-    virtual void cmHelpIndex() {}
-    virtual void cmHelpAbout() {}
-
     virtual void cmClipboardChange() {}
 
     virtual void cmPropChanged() {}
