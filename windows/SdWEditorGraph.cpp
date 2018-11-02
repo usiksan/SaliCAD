@@ -540,7 +540,8 @@ void SdWEditorGraph::printDialog(SdRect wnd)
   QPrinter printer;
   //By default print whole contens
   SdRect over = getProjectItem()->getOverRect();
-  SdRect sel = mSelect->getFragmentOver();
+  SdRect sel;
+  if( mSelect ) sel = mSelect->getFragmentOver();
   SdDPrint printDlg( over, sel, wnd, getPPM(), &printer, this );
   dlgRes = printDlg.exec();
   if( dlgRes == 1 ) {
