@@ -34,7 +34,7 @@ SdDGuiderPlayer::SdDGuiderPlayer(const QString fname, QWidget *parent) :
 
   if( speech == nullptr )
     speech = new QTextToSpeech();
-  mFile.mSay = [] ( const QString &say ) { speech->say(say); };
+  //mFile.mSay = [] ( const QString &say ) { speech->say(say); };
 
   resize( 1000, 800 );
 
