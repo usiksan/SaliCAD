@@ -1705,6 +1705,17 @@ void SdWMain::cmGuiderCapture()
 
 
 
+void SdWMain::cmGuiderPause()
+  {
+  if( mGuiderCapture->isPaused() )
+    mGuiderCapture->captureResume();
+  else
+    mGuiderCapture->capturePause();
+  }
+
+
+
+
 
 
 void SdWMain::cmHelpBackward()

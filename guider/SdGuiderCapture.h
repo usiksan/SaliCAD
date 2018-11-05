@@ -31,6 +31,8 @@ class SdGuiderCapture : public QObject
 
     bool isCapture() const { return mFile != nullptr; }
 
+    bool isPaused() const { return !mTimer.isActive(); }
+
   signals:
 
   public slots:
@@ -39,6 +41,12 @@ class SdGuiderCapture : public QObject
 
     //
     void captureStop();
+
+    //Pause capture process
+    void capturePause();
+
+    //Resume capture process after pause
+    void captureResume();
   };
 
 #endif // SDGUIDERCAPTURE_H

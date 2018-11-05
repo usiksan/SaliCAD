@@ -72,6 +72,8 @@ struct SdGuiderFile
 
     QPixmap build();
 
+    void    updateTiter();
+
     void    save( const QString fname );
 
     void    load( const QString fname );

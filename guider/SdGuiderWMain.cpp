@@ -23,6 +23,7 @@ Description
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QTextToSpeech>
+#include <QVBoxLayout>
 
 static QTextToSpeech *speech;
 
@@ -58,10 +59,24 @@ SdGuiderWMain::SdGuiderWMain(QWidget *parent) :
   bar->addMenu( menuPlay );
 
   QSplitter *splitter = new QSplitter;
-  mView = new QLabel;
+
+  //Time list
   mTimeList = new QListWidget;
   splitter->addWidget(mTimeList);
-  splitter->addWidget(mView);
+
+  //View and titer table
+  QWidget *w = new QWidget();
+  QVBoxLayout *lay = new QVBoxLayout();
+  mView = new QLabel;
+  mView->setMinimumHeight( 700 );
+  lay->addWidget( mView );
+  mTiterTable = new QTableWidget();
+  lay->addWidget( mTiterTable );
+  lay->setMargin(0);
+  w->setLayout( lay );
+
+  splitter->addWidget(w);
+
   setCentralWidget( splitter );
 
   connect( &mTimer, &QTimer::timeout, this, &SdGuiderWMain::play );
@@ -166,6 +181,7 @@ void SdGuiderWMain::cmTiterHide()
 
 
 
+static SdGuiderTiter localTiter;
 
 void SdGuiderWMain::cmTiterCopy()
   {
@@ -173,7 +189,7 @@ void SdGuiderWMain::cmTiterCopy()
   if( row < 0 ) row = 0;
   if( row < mFile.mFile.count() ) {
     if( mFile.mFile.at(row).mType == SD_GT_TITER )
-      mTiter.read( mFile.mFile.at(row).mData );
+      localTiter.read( mFile.mFile.at(row).mData );
     else QMessageBox::warning( this, tr("Warning!"), tr("This item is not titer") );
     }
   }
@@ -188,7 +204,7 @@ void SdGuiderWMain::cmTiterCut()
   if( row < 0 ) row = 0;
   if( row < mFile.mFile.count() ) {
     if( mFile.mFile.at(row).mType == SD_GT_TITER ) {
-      mTiter.read( mFile.mFile.at(row).mData );
+      localTiter.read( mFile.mFile.at(row).mData );
       mFile.mFile.removeAt(row);
       refreshTime();
       }
@@ -211,7 +227,7 @@ void SdGuiderWMain::cmTiterPaste()
       SdGuiderTime tm;
       tm.mType = SD_GT_TITER;
       tm.mTime = time;
-      tm.mData = mTiter.write();
+      tm.mData = localTiter.write();
       mFile.mFile.insert( row, tm );
       refreshTime();
       }
@@ -292,6 +308,53 @@ void SdGuiderWMain::onRowChanged(int row)
 
 
 
+void SdGuiderWMain::onCellChanged(int row, int column)
+  {
+  if( mFile.mTiterIndex >= 0 ) {
+    if( row == mFile.mTiter.mContens.count() && column == 0 ) {
+      //Appended new empty row
+      QString key = mTiterTable->item( row, 0 )->text();
+      mFile.mTiter.mContens.insert( key, mTiterTable->item( row, 1 )->text() );
+      disconnect( mTiterTable, &QTableWidget::cellChanged, this, &SdGuiderWMain::onCellChanged );
+      mTiterTable->item( row, 0 )->setData( Qt::UserRole, key );
+      row++;
+      mTiterTable->insertRow( row );
+      mTiterTable->setRowHeight( row, 25 );
+      mTiterTable->setItem( row, 0, new QTableWidgetItem() );
+      mTiterTable->setItem( row, 1, new QTableWidgetItem() );
+      connect( mTiterTable, &QTableWidget::cellChanged, this, &SdGuiderWMain::onCellChanged );
+      }
+    else {
+      if( column == 0 ) {
+        //Key changed
+        QString key = mTiterTable->item( row, 0 )->data( Qt::UserRole ).toString();
+        QString newKey = mTiterTable->item( row, 0 )->text();
+        if( newKey.isEmpty() ) {
+          //Delete record
+          mTiterTable->removeRow( row );
+          mFile.mTiter.mContens.remove( key );
+          }
+        else {
+          //Replace record
+          mFile.mTiter.mContens.remove( key );
+          mFile.mTiter.mContens.insert( newKey, mTiterTable->item(row,1)->text() );
+          mTiterTable->item( row, 0 )->setData( Qt::UserRole, newKey );
+          }
+        }
+      else {
+        //Set data
+        QString key = mTiterTable->item( row, 0 )->text();
+        QString val = mTiterTable->item( row, 1 )->text();
+        mFile.mTiter.mContens.insert( key, val );
+        }
+      }
+    //Update titer
+    mFile.updateTiter();
+    }
+  }
+
+
+
 
 void SdGuiderWMain::refreshTime()
   {
@@ -305,6 +368,35 @@ void SdGuiderWMain::refreshTime()
   mTimeList->setCurrentRow(row);
   mLock = false;
   onRowChanged(row);
+  }
+
+
+
+
+void SdGuiderWMain::titerChanged()
+  {
+  disconnect( mTiterTable, &QTableWidget::cellChanged, this, &SdGuiderWMain::onCellChanged );
+  mTiterTable->clear();
+  if( mFile.mTiterIndex >= 0 ) {
+    mTiterTable->setColumnCount(2);
+    mTiterTable->setRowCount(mFile.mTiter.mContens.count() + 1);
+    mTiterTable->setHorizontalHeaderLabels( {tr("Language"), tr("Titer contents") } );
+    mTiterTable->setColumnWidth( 0, 120 );
+    mTiterTable->setColumnWidth( 1, 600 );
+    int row = 0;
+    for( auto iter = mFile.mTiter.mContens.cbegin(); iter != mFile.mTiter.mContens.cend(); iter++ ) {
+      mTiterTable->setRowHeight( row, 25 );
+      QTableWidgetItem *item = new QTableWidgetItem(iter.key());
+      item->setData( Qt::UserRole, iter.key() );
+      mTiterTable->setItem( row, 0, item );
+      mTiterTable->setItem( row, 1, new QTableWidgetItem(iter.value()) );
+      row++;
+      }
+    mTiterTable->setRowHeight( row, 25 );
+    mTiterTable->setItem( row, 0, new QTableWidgetItem() );
+    mTiterTable->setItem( row, 1, new QTableWidgetItem() );
+    }
+  connect( mTiterTable, &QTableWidget::cellChanged, this, &SdGuiderWMain::onCellChanged );
   }
 
 

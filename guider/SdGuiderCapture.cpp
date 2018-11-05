@@ -72,3 +72,21 @@ void SdGuiderCapture::captureStop()
     mFile = nullptr;
     }
   }
+
+
+
+
+//Pause capture process
+void SdGuiderCapture::capturePause()
+  {
+  mTimer.stop();
+  }
+
+
+
+
+//Resume capture process after pause
+void SdGuiderCapture::captureResume()
+  {
+  mTimer.start();
+  }

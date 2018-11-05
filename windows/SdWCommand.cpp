@@ -268,6 +268,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmTools  = menuInstruments->addAction( QIcon(QString(":/pic/instrumTools.png")), frame->tr("Tools"), frame, SLOT(cmTools()) );
   menuInstruments->addSeparator();
   cmGuiderCapture    = menuInstruments->addAction( frame->tr("Capture start-stop"), frame, SLOT(cmGuiderCapture()), QKeySequence(Qt::Key_F10) );
+  cmGuiderPause      = menuInstruments->addAction( frame->tr("Capture pause-resume"), frame, SLOT(cmGuiderPause()), QKeySequence(Qt::Key_F11) );
 
 
 
@@ -804,6 +805,7 @@ QActionPtr SdWCommand::cmHelpBackward;
 QActionPtr SdWCommand::cmHelpForward;
 
 QActionPtr SdWCommand::cmGuiderCapture;
+QActionPtr SdWCommand::cmGuiderPause;
 
 QMenu *SdWCommand::menuFile;
 QMenu *SdWCommand::menuFilePrevious;

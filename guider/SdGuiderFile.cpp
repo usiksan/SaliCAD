@@ -139,7 +139,7 @@ void SdGuiderFile::play(int index)
       mTiterChanged();
       break;
     case SD_GT_TITER_HIDE :
-      mTiter.clear();
+      mTiterIndex = -1;
       mTiterChanged();
       break;
     }
@@ -168,6 +168,16 @@ QPixmap SdGuiderFile::build()
   }
   //pix.save( QString("c:\\work\\t1.png") );
   return pix;
+  }
+
+
+
+
+void SdGuiderFile::updateTiter()
+  {
+  if( mTiterIndex >= 0 ) {
+    mFile[mTiterIndex].mData = mTiter.write();
+    }
   }
 
 

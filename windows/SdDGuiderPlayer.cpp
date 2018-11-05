@@ -21,6 +21,7 @@ Description
 #include <QToolButton>
 #include <QCoreApplication>
 #include <QFile>
+#include <QSettings>
 
 static QTextToSpeech *speech;
 
@@ -34,7 +35,7 @@ SdDGuiderPlayer::SdDGuiderPlayer(const QString fname, QWidget *parent) :
 
   if( speech == nullptr )
     speech = new QTextToSpeech();
-  //mFile.mSay = [] ( const QString &say ) { speech->say(say); };
+  mFile.mTiterChanged = [this] () { titerChanged(); };
 
   resize( 1000, 800 );
 
@@ -91,6 +92,10 @@ SdDGuiderPlayer::SdDGuiderPlayer(const QString fname, QWidget *parent) :
 
 
   box->addWidget( mView );
+  mTiter = new QLabel();
+  mTiter->setMinimumHeight( 80 );
+  mTiter->setWordWrap(true);
+  mTiter->setAlignment( Qt::AlignHCenter | Qt::AlignTop );
   setLayout( box );
 
   connect( &mTimer, &QTimer::timeout, this, &SdDGuiderPlayer::play );
@@ -164,6 +169,23 @@ void SdDGuiderPlayer::play()
   mView->setPixmap( mFile.build() );
   if( mCurrentFrame >= mFile.mFile.count() )
     cmPlayStop();
+  }
+
+
+
+
+void SdDGuiderPlayer::titerChanged()
+  {
+  if( mFile.mTiterIndex >= 0 ) {
+    QString val;
+    if( mFile.mTiter.mContens.contains(mLanguage) )
+      val = mFile.mTiter.mContens.value(mLanguage);
+    else
+      val = mFile.mTiter.mContens.value( QStringLiteral("en") );
+    speech->say( val );
+    mTiter->setText( QStringLiteral("<h1>%1</h1>").arg(val) );
+    }
+  else mTiter->clear();
   }
 
 

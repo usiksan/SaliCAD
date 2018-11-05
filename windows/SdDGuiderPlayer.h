@@ -29,7 +29,9 @@ class SdDGuiderPlayer : public QDialog
     int           mCurrentTime;
     int           mCurrentFrame;
     QLabel       *mView;
+    QLabel       *mTiter;
     QString       mFileName;
+    QString       mLanguage;
 //    bool          mLock;
 //    SdGuiderTiter mTiter;
   public:
@@ -50,8 +52,7 @@ class SdDGuiderPlayer : public QDialog
     void play();
 
   private:
-    //Path where guider files resides
-    static QString mGuiderPath;
+    void titerChanged();
   };
 
 #endif // SDDGUIDERPLAYER_H

@@ -159,6 +159,7 @@ class SdWCommand
     static QActionPtr  cmHelpForward;
 
     static QActionPtr  cmGuiderCapture;
+    static QActionPtr  cmGuiderPause;
 
     //Full mode action table
     static QActionPtr  cmModeTable[MD_LAST];
