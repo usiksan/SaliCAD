@@ -28,12 +28,12 @@ class SdGuiderWMain : public QMainWindow
     SdGuiderFile  mFile;
     QTimer        mTimer;
     int           mCurrentTime;
-    //int
     QLabel       *mView;
     QListWidget  *mTimeList;
     QString       mFileName;
     bool          mLock;
     QTableWidget *mTiterTable;
+    QString       mLanguage;
   public:
     explicit SdGuiderWMain(QWidget *parent = nullptr);
 
@@ -49,6 +49,7 @@ class SdGuiderWMain : public QMainWindow
     void cmTiterCopy();
     void cmTiterCut();
     void cmTiterPaste();
+    void cmTiterLanguage();
 
     void cmPlayRestart();
     void cmPlayStart();

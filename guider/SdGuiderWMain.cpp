@@ -32,6 +32,7 @@ SdGuiderWMain::SdGuiderWMain(QWidget *parent) :
   mLock(false)
   {
   speech = new QTextToSpeech();
+  mLanguage = QStringLiteral("en");
   mFile.mTiterChanged = [this] () { titerChanged(); };
 
   QMenu *menuFile = new QMenu( tr("File") );
@@ -46,6 +47,7 @@ SdGuiderWMain::SdGuiderWMain(QWidget *parent) :
   menuTiter->addAction( tr("Copy"), this, &SdGuiderWMain::cmTiterCopy );
   menuTiter->addAction( tr("Cut"), this, &SdGuiderWMain::cmTiterCut );
   menuTiter->addAction( tr("Paste"), this, &SdGuiderWMain::cmTiterPaste );
+  menuTiter->addAction( tr("Language"), this, &SdGuiderWMain::cmTiterLanguage );
 
 
   QMenu *menuPlay = new QMenu( tr("Play") );
@@ -237,6 +239,14 @@ void SdGuiderWMain::cmTiterPaste()
 
 
 
+void SdGuiderWMain::cmTiterLanguage()
+  {
+  mLanguage = QInputDialog::getText( this, tr("Titer insert"), tr("Enter english titer"), QLineEdit::Normal, mLanguage );
+  }
+
+
+
+
 void SdGuiderWMain::cmPlayRestart()
   {
   mCurrentTime = 0;
@@ -395,6 +405,10 @@ void SdGuiderWMain::titerChanged()
     mTiterTable->setRowHeight( row, 25 );
     mTiterTable->setItem( row, 0, new QTableWidgetItem() );
     mTiterTable->setItem( row, 1, new QTableWidgetItem() );
+
+    if( !mLanguage.isEmpty() ) {
+      speech->say( mFile.mTiter.mContens.value( mLanguage ) );
+      }
     }
   connect( mTiterTable, &QTableWidget::cellChanged, this, &SdGuiderWMain::onCellChanged );
   }

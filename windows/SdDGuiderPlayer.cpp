@@ -32,6 +32,8 @@ SdDGuiderPlayer::SdDGuiderPlayer(const QString fname, QWidget *parent) :
   {
   mFile.load( guiderPath() + fname );
   mFile.play(0);
+  mCurrentTime = 0;
+  mCurrentFrame = 0;
 
   if( speech == nullptr )
     speech = new QTextToSpeech();
@@ -96,6 +98,7 @@ SdDGuiderPlayer::SdDGuiderPlayer(const QString fname, QWidget *parent) :
   mTiter->setMinimumHeight( 80 );
   mTiter->setWordWrap(true);
   mTiter->setAlignment( Qt::AlignHCenter | Qt::AlignTop );
+  box->addWidget( mTiter );
   setLayout( box );
 
   connect( &mTimer, &QTimer::timeout, this, &SdDGuiderPlayer::play );
@@ -107,7 +110,7 @@ SdDGuiderPlayer::SdDGuiderPlayer(const QString fname, QWidget *parent) :
 
 QString SdDGuiderPlayer::guiderPath()
   {
-  return SdWHelp::helpPath() + QString("guider/");
+  return SdWHelp::helpPath() + QString("guide/");
   }
 
 
