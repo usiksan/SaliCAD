@@ -9,6 +9,8 @@ Web
   www.saliLab.ru
 
 Description
+  Row of values support.
+  Dialog for selecting value from row.
 */
 #ifndef SDDROWVALUE_H
 #define SDDROWVALUE_H
@@ -22,11 +24,12 @@ namespace Ui {
 }
 
 
+//Modifier represents modifier to base value. For example, base value is 'Om', then 'k' is modifier as 'kOm' - x1000 Om
 struct SdValueModifier {
-    const char *mModifier;
-    double      mMin;
-    double      mMax;
-    double      mFactor;
+    const char *mModifier; //Name of modifier, for example 'k'
+    double      mMin;      //Minimal value for modifier, for example 1000
+    double      mMax;      //Maximal value for modifier, for example 1000000
+    double      mFactor;   //Factor of modifier, for example 1000.0
   };
 
 extern const SdValueModifier sdValueModifierOm[];
@@ -37,8 +40,8 @@ class SdDRowValue : public QDialog
   {
     Q_OBJECT
 
-    const SdValueModifier *mValueModifierList;
-    SdStringMap           *mMap;
+    const SdValueModifier *mValueModifierList; //Modifier list
+    SdStringMap           *mMap;               //Source param map
     int                    mModStart;
     int                    mModStop;
   public:

@@ -9,10 +9,15 @@ Web
   www.saliLab.ru
 
 Description
+  Row of values support.
+  Dialog for selecting value from row.
 */
 #include "SdConfig.h"
 #include "SdDRowValue.h"
 #include "ui_SdDRowValue.h"
+#include "SdDHelp.h"
+
+#include <QPushButton>
 
 const SdValueModifier sdValueModifierOm[] = {
   { "uOm",  0.000001, 0.001, 0.000001 },
@@ -111,6 +116,10 @@ SdDRowValue::SdDRowValue(SdStringMap *map, const SdValueModifier *list, QWidget 
     }
 
   connect( ui->mModifiers, &QListWidget::currentRowChanged, this, &SdDRowValue::onModifierChanged );
+
+  connect( ui->buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, [this] () {
+    SdDHelp::help( QString("SdDRowValue.htm"), this );
+    } );
   }
 
 
