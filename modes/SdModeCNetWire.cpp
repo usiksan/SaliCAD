@@ -453,16 +453,56 @@ void SdModeCNetWire::calcSmartPoint()
   else {
     mSmEnd = snap.mDest;
     //Calculate stringer
+    //Stringer must have opposite direction with component body
+
+    //Distance to left side of body
+    int left = abs( over.getLeft() - mSmEnd.x() );
+    //Distance to right side of body
+    int right = abs( over.getRight() - mSmEnd.x() );
+    //Minimum distance with horizontal direction
+    int horz = qMin(left,right);
+
+    //Distance to top side of bidy
+    int top = abs( over.getTop() - mSmEnd.y() );
+    //Distance to bottom side of body
+    int bot = abs( over.getBottom() - mSmEnd.y() );
+    //Minimum distance with vertical direction
+    int vert = qMin( top, bot );
+
     mStrEnd = mSmEnd;
     int stringer = getGrid().x();
-    if( snap.mDest.x() == over.getTopLeft().x() ) mSmA.rx() = mStrEnd.rx() -= stringer;
-    else if( snap.mDest.x() == over.getTopRight().x() ) mSmA.rx() = mStrEnd.rx() += stringer;
-    else if( snap.mDest.y() == over.getTopLeft().y() ) mSmA.ry() = mStrEnd.ry() += stringer;
-    else if( snap.mDest.y() == over.getBottomLeft().y() ) mSmA.ry() = mStrEnd.ry() -= stringer;
-    else mSmA = calcMiddlePoint( mFirst, mStrEnd, sdGlobalProp->mWireEnterType );
-    //Calculate vertex point
-    if( mSmA.x() == mStrEnd.x() ) mSmA.ry() = mFirst.y();
-    else mSmA.rx() = mFirst.x();
+
+    if( horz < vert ) {
+      //Stringer is horizontal
+      if( left < right )
+        //Left direction
+        mStrEnd.rx() -= stringer;
+      else
+        //Right direction
+        mStrEnd.rx() += stringer;
+      mSmA.rx() = mStrEnd.x();
+      mSmA.ry() = mFirst.y();
+      }
+    else {
+      //Stringer is vertical
+      if( top < bot )
+        //Top direction
+        mStrEnd.ry() += stringer;
+      else
+        //Bottom direction
+        mStrEnd.ry() -= stringer;
+      mSmA.ry() = mStrEnd.y();
+      mSmA.rx() = mFirst.x();
+      }
+
+//    if( snap.mDest.x() == over.getTopLeft().x() ) mSmA.rx() = mStrEnd.rx() -= stringer;
+//    else if( snap.mDest.x() == over.getTopRight().x() ) mSmA.rx() = mStrEnd.rx() += stringer;
+//    else if( snap.mDest.y() == over.getTopLeft().y() ) mSmA.ry() = mStrEnd.ry() += stringer;
+//    else if( snap.mDest.y() == over.getBottomLeft().y() ) mSmA.ry() = mStrEnd.ry() -= stringer;
+//    else mSmA = calcMiddlePoint( mFirst, mStrEnd, sdGlobalProp->mWireEnterType );
+//    //Calculate vertex point
+//    if( mSmA.x() == mStrEnd.x() ) mSmA.ry() = mFirst.y();
+//    else mSmA.rx() = mFirst.x();
 
     if( mSmA != mStrEnd && mSmA != mFirst ) {
       //Dubl vertex, test position vertex point
