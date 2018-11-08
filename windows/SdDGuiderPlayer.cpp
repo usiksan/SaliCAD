@@ -61,15 +61,15 @@ SdDGuiderPlayer::SdDGuiderPlayer(const QString fname, QWidget *parent) :
   bar->addWidget( tool );
   connect( tool, &QToolButton::clicked, this, &SdDGuiderPlayer::cmPlayRestart );
 
-  tool = new QToolButton();
-  tool->setToolTip( tr("Fast backward") );
-  tool->setIcon( QIcon(QStringLiteral(":/pic/guiderFastBackward.png")) );
-  bar->addWidget( tool );
+//  tool = new QToolButton();
+//  tool->setToolTip( tr("Fast backward") );
+//  tool->setIcon( QIcon(QStringLiteral(":/pic/guiderFastBackward.png")) );
+//  bar->addWidget( tool );
 
-  tool = new QToolButton();
-  tool->setToolTip( tr("Fast forward") );
-  tool->setIcon( QIcon(QStringLiteral(":/pic/guiderFastForward.png")) );
-  bar->addWidget( tool );
+//  tool = new QToolButton();
+//  tool->setToolTip( tr("Fast forward") );
+//  tool->setIcon( QIcon(QStringLiteral(":/pic/guiderFastForward.png")) );
+//  bar->addWidget( tool );
 
   tool = new QToolButton();
   tool->setToolTip( tr("Start play") );
@@ -102,7 +102,7 @@ SdDGuiderPlayer::SdDGuiderPlayer(const QString fname, QWidget *parent) :
   setLayout( box );
 
   connect( &mTimer, &QTimer::timeout, this, &SdDGuiderPlayer::play );
-
+  cmPlayStart();
   }
 
 

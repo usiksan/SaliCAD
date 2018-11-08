@@ -208,14 +208,14 @@ bool SdGraphTracedVia::getInfo(SdPoint p, QString &info, bool extInfo)
 
 
 
-bool SdGraphTracedVia::snapPoint(SdSnapInfo *snap)
+//Find snap point on object
+void SdGraphTracedVia::snapPoint(SdSnapInfo *snap)
   {
   if( snap->match( snapNearestPin | snapNearestNetPin ) ) {
     //Perform snap
     if( (snap->match( snapNearestPin ) || snap->mNetName == mProp.mNetName.str()) && snap->mStratum.match(mProp.mStratum) )
-      return snap->test( mPosition, snapNearestPin | snapNearestNetPin );
+      snap->test( this, mPosition, snapNearestPin | snapNearestNetPin );
     }
-  return false;
   }
 
 

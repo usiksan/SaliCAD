@@ -44,7 +44,8 @@ class SdGraphLinearLine : public SdGraphLinear
     virtual void    select(SdSelector *selector) override;
     virtual SdRect  getOverRect() const override;
     virtual void    draw(SdContext *dc) override;
-    virtual bool    snapPoint(SdSnapInfo *snap) override;
+    //Find snap point on object
+    virtual void    snapPoint(SdSnapInfo *snap) override;
     virtual int     behindCursor(SdPoint p) override;
     virtual void    saveState( SdUndo *undo ) override;
 

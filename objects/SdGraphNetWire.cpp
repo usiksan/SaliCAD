@@ -598,13 +598,14 @@ bool SdGraphNetWire::getInfo(SdPoint p, QString &info, bool extInfo)
 
 
 
-bool SdGraphNetWire::snapPoint(SdSnapInfo *snap)
+//Find snap point on object
+void SdGraphNetWire::snapPoint(SdSnapInfo *snap)
   {
   if( snap->match( snapNearestNet ) ) {
     SdPoint dest;
-    return calcFreeNearIntersect( snap->mSour, mA, mB, dest ) && snap->test( dest, snapNearestNet );
+    if( calcFreeNearIntersect( snap->mSour, mA, mB, dest ) )
+      snap->test( this, dest, snapNearestNet );
     }
-  return false;
   }
 
 

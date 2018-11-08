@@ -307,20 +307,19 @@ bool SdGraphTracedRoad::getInfo(SdPoint p, QString &info, bool extInfo)
 
 
 
-bool SdGraphTracedRoad::snapPoint(SdSnapInfo *snap)
+//Find snap point on object
+void SdGraphTracedRoad::snapPoint(SdSnapInfo *snap)
   {
   if( snap->mStratum.match( mProp.mStratum ) ) {
     if( snap->match(snapNearestNet) ) {
-      snap->test( mSegment.getP1(), snapNearestNet );
-      snap->test( mSegment.getP2(), snapNearestNet );
+      snap->test( this, mSegment.getP1(), snapNearestNet );
+      snap->test( this, mSegment.getP2(), snapNearestNet );
       }
     if( snap->match(snapNearestNetNet) && snap->mNetName == mProp.mNetName.str() ) {
-      snap->test( mSegment.getP1(), snapNearestNetNet );
-      snap->test( mSegment.getP2(), snapNearestNetNet );
+      snap->test( this, mSegment.getP1(), snapNearestNetNet );
+      snap->test( this, mSegment.getP2(), snapNearestNetNet );
       }
-    return true;
     }
-  return false;
   }
 
 

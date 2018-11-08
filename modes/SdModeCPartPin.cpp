@@ -205,13 +205,8 @@ void SdModeCPartPin::movePoint(SdPoint p)
     SdSnapInfo info;
     info.mSour = p;
     info.mSnapMask = snapEndPoint;
-    mObject->forEach( dctPicture, [&info] (SdObject *obj) -> bool {
-      SdPtr<SdGraph> graph(obj);
-      if( graph.isValid() )
-        graph->snapPoint( &info );
-      return true;
-      });
-    if( info.mDestMask )
+    info.scan( mObject, dctPicture );
+    if( info.isFound() )
       mSmartType |= snapEndPoint;
     else
       mSmartType &= ~snapEndPoint;

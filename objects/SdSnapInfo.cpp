@@ -23,7 +23,8 @@ SdSnapInfo::SdSnapInfo() :
   mSnapMask(0),
   mDestMask(0),
   mDistance(DBL_MAX),
-  mNetName()
+  mNetName(),
+  mGraph(nullptr)
   {
 
   }
@@ -31,40 +32,45 @@ SdSnapInfo::SdSnapInfo() :
 
 
 
-bool SdSnapInfo::test(SdPoint p, SdSnapMask mask)
+//Test if snapped to point
+void SdSnapInfo::test(SdGraph *graph, SdPoint p, SdSnapMask mask)
   {
   if( (mSnapMask & snapExcludeExcl) && p == mExclude )
-    return false;
+    return;
   if( (mSnapMask & snapExcludeSour) && p == mSour )
-    return false;
+    return;
   double d = mSour.getSquareDistance(p);
   if( d < mDistance ) {
     mDistance = d;
     mDest     = p;
     mDestMask = mask;
-    return true;
+    mGraph    = graph;
     }
-  return false;
   }
 
 
 
 
-void SdSnapInfo::calculate(SdContainer *object)
+//Scan all graph objects of container with this snap
+bool SdSnapInfo::scan(SdContainer *object, SdClass mask )
   {
-  object->forEach( dctAll, [this](SdObject *obj) {
+  object->forEach( mask, [this](SdObject *obj) {
     SdGraph *graph = dynamic_cast<SdGraph*>(obj);
     if( graph ) graph->snapPoint( this );
     return true;
     });
+
+  return isFound();
   }
 
 
 
 
+//Reset snap to next find
 void SdSnapInfo::reset(bool )
   {
-  mDest = SdPoint::far();
+  mDest     = SdPoint::far();
   mDistance = DBL_MAX;
+  mGraph    = nullptr;
   }
 

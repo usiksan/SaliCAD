@@ -577,21 +577,21 @@ bool SdGraphSymImp::getInfo(SdPoint p, QString &info, bool extInfo)
 
 
 
-bool SdGraphSymImp::snapPoint(SdSnapInfo *snap)
+//Find snap point on object
+void SdGraphSymImp::snapPoint(SdSnapInfo *snap)
   {
-  bool res = false;
   if( snap->match(snapNextPin) ) {
     //Must be checking with direction control
     for( SdSymImpPin &pin : mPins )
-      if( !pin.isConnected() &&
-          calcDirection90( snap->mSour, pin.mPosition ) == snap->mDir &&
-          snap->test( pin.mPosition, snapNextPin ) ) res = true;
+      if( !pin.isConnected() && calcDirection90( snap->mSour, pin.mPosition ) == snap->mDir )
+        snap->test( this, pin.mPosition, snapNextPin );
     }
   if( snap->match(snapNearestPin|snapNearestNet) ) {
+    //Checked without direction control
     for( SdSymImpPin &pin : mPins )
-      if( !pin.isConnected() && snap->test( pin.mPosition, snapNearestPin ) ) res = true;
+      if( !pin.isConnected() )
+        snap->test( this, pin.mPosition, snapNearestPin );
     }
-  return res;
   }
 
 

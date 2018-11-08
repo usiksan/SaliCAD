@@ -167,15 +167,14 @@ void SdGraphLinearRegion::draw(SdContext *dc)
 
 
 
-bool SdGraphLinearRegion::snapPoint(SdSnapInfo *snap)
+//Find snap point on object
+void SdGraphLinearRegion::snapPoint(SdSnapInfo *snap)
   {
-  int res = false;
   if( snap->match(snapEndPoint) ) {
     //Test for all points of region
     for( SdPoint p : mList )
-      res = snap->test( p, snapEndPoint ) || res;
+      snap->test( this, p, snapEndPoint );
     }
-  return res;
   }
 
 

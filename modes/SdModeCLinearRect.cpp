@@ -82,7 +82,7 @@ void SdModeCLinearRect::movePoint(SdPoint p)
   snap.mSour     = mPrevMove;
   snap.mSnapMask = sdEnvir->mSmartMask | snapExcludeExcl;
   snap.mExclude  = mFirst;
-  snap.calculate( mObject );
+  snap.scan( mObject );
   mSmartType  = snap.mDestMask;
   mSmartPoint = snap.mDest;
   update();

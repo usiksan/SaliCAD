@@ -216,7 +216,7 @@ void SdModeCBus::movePoint( SdPoint p )
         info.mDir      = mPrevDirection;
         info.mSnapMask = snapNextPin | snapExcludeSour | snapExcludeExcl;
         do {
-          info.calculate( mObject );
+          info.scan( mObject );
           if( info.mDest != info.mSour ) mSmartTable.append( info.mDest );
           else break;
           info.mExclude = info.mSour;
@@ -235,7 +235,7 @@ void SdModeCBus::movePoint( SdPoint p )
       info.mSour     = mPrevMove;
       info.mExclude  = mPrevMove;
       info.mSnapMask = snapNearestPin;
-      info.calculate( mObject );
+      info.scan( mObject );
       if( info.mDest != info.mSour ) moveAll( info.mDest );
       }
     }

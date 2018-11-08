@@ -82,7 +82,8 @@ class SdGraphPartPin : public SdGraph
     virtual void      draw(SdContext *dc) override;
     virtual int       behindCursor(SdPoint p) override;
     virtual int       behindText( SdPoint p, SdPoint &org, QString &dest, SdPropText &prop ) override;
-    virtual bool      snapPoint(SdSnapInfo *snap) override;
+    //Find snap point on object
+    virtual void      snapPoint(SdSnapInfo *snap) override;
 
     friend class SdPasCadImport;
   };

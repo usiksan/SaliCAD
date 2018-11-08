@@ -390,7 +390,7 @@ void SdModeCNetWire::calcFirstSmart()
   snap.mSnapMask = snapNearestNet | snapNearestPin;
   snap.mExclude  = mPrevMove;
   snap.mDest     = mPrevMove;
-  snap.calculate( getSheet() );
+  snap.scan( getSheet() );
   mFirst = snap.mDest;
   calcSmartPoint();
   }
@@ -406,7 +406,7 @@ void SdModeCNetWire::calcSecondSmart()
   snap.mSnapMask = snapNearestNet | snapNearestPin | snapExcludeSour;
   snap.mExclude  = mPrevMove;
   snap.mDest     = mPrevMove;
-  snap.calculate( getSheet() );
+  snap.scan( getSheet() );
   mFirst = snap.mDest;
   calcSmartPoint();
   }
@@ -433,17 +433,11 @@ void SdModeCNetWire::calcSmartPoint()
   snap.mSour     = mPrevMove;
   snap.mSnapMask = snapNearestPin | snapExcludeExcl;
   snap.mExclude  = mFirst;
+  snap.scan( getSheet(), dctSymImp );
   SdRect over;
-  bool noResult = true;
-  getSheet()->forEach( dctSymImp, [&snap, &over, &noResult] (SdObject *obj) -> bool {
-    SdGraphSymImp *sym = dynamic_cast<SdGraphSymImp*>( obj );
-    Q_ASSERT( sym != nullptr );
-    if( sym->snapPoint( &snap ) ) {
-      noResult = false;
-      over = sym->getOverRect();
-      }
-    return true;
-    });
+  bool noResult = snap.mGraph == nullptr;
+  if( !noResult )
+    over = snap.mGraph->getOverRect();
 
   //qDebug() << "calcSmartPoint" << noResult << snap.mDest;
   if( noResult ) {

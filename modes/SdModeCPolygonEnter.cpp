@@ -168,14 +168,8 @@ void SdModeCPolygonEnter::movePoint(SdPoint p)
     info.mSour = mPrevMove;
     info.mSnapMask = snapNearestNet | snapNearestPin;
     info.mStratum = stmThrough;
-    bool res = false;
-    plate()->forEach( dctTraced, [&info,&res] (SdObject *obj) -> bool {
-      SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
-      if( traced != nullptr )
-        res = traced->snapPoint( &info ) || res;
-      return true;
-      });
-    if( res )
+    info.scan( plate(), dctTraced );
+    if( info.isFound() )
       mSmart = info.mDest;
     else
       mSmart = SdPoint::far();

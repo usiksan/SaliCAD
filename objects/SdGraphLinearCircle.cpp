@@ -137,21 +137,20 @@ void SdGraphLinearCircle::draw(SdContext *dc)
 
 
 
-bool SdGraphLinearCircle::snapPoint(SdSnapInfo *snap)
+//Find snap point on object
+void SdGraphLinearCircle::snapPoint(SdSnapInfo *snap)
   {
   if( isVisible() ) {
-    if( snap->match( snapCenter ) ) {
-      snap->test( mCenter, snapCenter );
-      }
+    if( snap->match( snapCenter ) )
+      snap->test( this, mCenter, snapCenter );
+
     if( snap->match( snapQuadrant ) ) {
-      snap->test( SdPoint( mCenter.x() + mRadius, mCenter.y() ), snapQuadrant );
-      snap->test( SdPoint( mCenter.x() - mRadius, mCenter.y() ), snapQuadrant );
-      snap->test( SdPoint( mCenter.x(), mCenter.y() + mRadius ), snapQuadrant );
-      snap->test( SdPoint( mCenter.x(), mCenter.y() - mRadius ), snapQuadrant );
+      snap->test( this, SdPoint( mCenter.x() + mRadius, mCenter.y() ), snapQuadrant );
+      snap->test( this, SdPoint( mCenter.x() - mRadius, mCenter.y() ), snapQuadrant );
+      snap->test( this, SdPoint( mCenter.x(), mCenter.y() + mRadius ), snapQuadrant );
+      snap->test( this, SdPoint( mCenter.x(), mCenter.y() - mRadius ), snapQuadrant );
       }
-    return true;
     }
-  return false;
   }
 
 

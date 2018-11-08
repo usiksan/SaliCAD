@@ -142,10 +142,12 @@ bool SdGraph::getInfo(SdPoint p, QString &info, bool extInfo)
   return false;
   }
 
-bool SdGraph::snapPoint(SdSnapInfo *snap)
+
+
+//Find snap point on object
+void SdGraph::snapPoint(SdSnapInfo *snap)
   {
   Q_UNUSED(snap)
-  return false;
   }
 
 

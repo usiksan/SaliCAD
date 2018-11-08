@@ -365,10 +365,10 @@ int SdGraphSymPin::behindText(SdPoint p, SdPoint &org, QString &dest, SdPropText
 
 
 
-bool SdGraphSymPin::snapPoint(SdSnapInfo *snap)
+//Find snap point on object
+void SdGraphSymPin::snapPoint(SdSnapInfo *snap)
   {
   if( snap->match(snapNearestPin) )
-    return snap->test( mOrigin, snapNearestPin );
-  return false;
+    snap->test( this, mOrigin, snapNearestPin );
   }
 

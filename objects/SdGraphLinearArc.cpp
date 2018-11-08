@@ -156,14 +156,13 @@ int SdGraphLinearArc::behindCursor(SdPoint p)
 
 
 
-bool SdGraphLinearArc::snapPoint(SdSnapInfo *snap)
+//Find snap point on object
+void SdGraphLinearArc::snapPoint(SdSnapInfo *snap)
   {
   if( isVisible() ) {
     if( snap->match(snapEndPoint) ) {
-      snap->test( mStart, snapEndPoint );
-      snap->test( mStop, snapEndPoint );
-      return true;
+      snap->test( this, mStart, snapEndPoint );
+      snap->test( this, mStop, snapEndPoint );
       }
     }
-  return false;
   }

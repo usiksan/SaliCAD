@@ -377,9 +377,9 @@ int SdGraphPartPin::behindText(SdPoint p, SdPoint &org, QString &dest, SdPropTex
 
 
 
-bool SdGraphPartPin::snapPoint(SdSnapInfo *snap)
+//Find snap point on object
+void SdGraphPartPin::snapPoint(SdSnapInfo *snap)
   {
   if( snap->match(snapNearestPin) )
-    return snap->test( mOrigin, snapNearestPin );
-  return false;
+    snap->test( this, mOrigin, snapNearestPin );
   }

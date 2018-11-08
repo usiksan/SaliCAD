@@ -79,7 +79,7 @@ void SdModeCLinearCircle::movePoint(SdPoint p)
   snap.mSour     = p;
   snap.mSnapMask = sdEnvir->mSmartMask;
   snap.mExclude  = mCenter;
-  snap.calculate( mObject );
+  snap.scan( mObject );
   mSmartType  = snap.mDestMask;
   mSmartPoint = snap.mDest;
 

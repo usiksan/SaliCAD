@@ -167,20 +167,19 @@ void SdGraphLinearLine::draw(SdContext *dc)
 
 
 
-bool SdGraphLinearLine::snapPoint(SdSnapInfo *snap)
+//Find snap point on object
+void SdGraphLinearLine::snapPoint(SdSnapInfo *snap)
   {
   if( isVisible() ) {
     if( snap->match(snapEndPoint) ) {
-      snap->test( a, snapEndPoint );
-      snap->test( b, snapEndPoint );
+      snap->test( this, a, snapEndPoint );
+      snap->test( this, b, snapEndPoint );
       }
-    if( snap->match(snapMidPoint) ) {
-      snap->test( a.getMiddle( b ), snapMidPoint );
-      }
-    return true;
+    if( snap->match(snapMidPoint) )
+      snap->test( this, a.getMiddle( b ), snapMidPoint );
     }
-  return false;
   }
+
 
 
 int SdGraphLinearLine::behindCursor(SdPoint p)

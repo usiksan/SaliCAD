@@ -528,7 +528,8 @@ HEADERS  += \
     master/SdDMasterPartDoubleSideLR.h \
     windows/SdDGuiderPlayer.h \
     windows/SdDOptionsPageCommon.h \
-    windows/SdLanguage.h
+    windows/SdLanguage.h \
+    objects/SdClass.h
 
 DISTFILES += \
     license.txt

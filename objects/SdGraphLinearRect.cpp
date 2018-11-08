@@ -203,25 +203,24 @@ int SdGraphLinearRect::behindCursor(SdPoint p)
 
 
 
-bool SdGraphLinearRect::snapPoint(SdSnapInfo *snap)
+//Find snap point on object
+void SdGraphLinearRect::snapPoint(SdSnapInfo *snap)
   {
   if( isVisible() ) {
     SdRect r(a,b);
     if( snap->match(snapEndPoint) ) {
-      snap->test( r.getTopLeft(), snapEndPoint );
-      snap->test( r.getBottomLeft(), snapEndPoint );
-      snap->test( r.getTopRight(), snapEndPoint );
-      snap->test( r.getBottomRight(), snapEndPoint );
+      snap->test( this, r.getTopLeft(), snapEndPoint );
+      snap->test( this, r.getBottomLeft(), snapEndPoint );
+      snap->test( this, r.getTopRight(), snapEndPoint );
+      snap->test( this, r.getBottomRight(), snapEndPoint );
       }
     if( snap->match(snapMidPoint) ) {
-      snap->test( SdPoint(r.getTopLeft()).getMiddle( r.getTopRight() ), snapMidPoint );
-      snap->test( SdPoint(r.getTopRight()).getMiddle( r.getBottomRight() ), snapMidPoint );
-      snap->test( SdPoint(r.getBottomRight()).getMiddle( r.getBottomLeft() ), snapMidPoint );
-      snap->test( SdPoint(r.getBottomLeft()).getMiddle( r.getTopLeft() ), snapMidPoint );
+      snap->test( this, SdPoint(r.getTopLeft()).getMiddle( r.getTopRight() ), snapMidPoint );
+      snap->test( this, SdPoint(r.getTopRight()).getMiddle( r.getBottomRight() ), snapMidPoint );
+      snap->test( this, SdPoint(r.getBottomRight()).getMiddle( r.getBottomLeft() ), snapMidPoint );
+      snap->test( this, SdPoint(r.getBottomLeft()).getMiddle( r.getTopLeft() ), snapMidPoint );
       }
-    return true;
     }
-  return false;
   }
 
 

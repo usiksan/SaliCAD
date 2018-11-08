@@ -454,15 +454,8 @@ void SdModeCRoadEnter::calcFirstSmartPoint()
   info.mSour = mPrevMove;
   info.mSnapMask = snapNearestNet | snapNearestPin;
   info.mStratum = stmThrough;
-  bool res = false;
-  plate()->forEach( dctTraced, [&info,&res] (SdObject *obj) -> bool {
-    SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
-    if( traced != nullptr )
-      res = traced->snapPoint( &info ) || res;
-    return true;
-    });
-
-  if( res )
+  info.scan( plate(), dctTraced );
+  if( info.isFound() )
     mFirst = info.mDest;
   else
     mFirst = mPrevMove;
@@ -481,15 +474,8 @@ void SdModeCRoadEnter::calcNextSmartPoint( SdPoint fromPoint )
   info.mSnapMask = snapNearestNetPin | snapExcludeSour | snapExcludeExcl;
   info.mStratum = mProp.mStratum;
   info.mNetName = mProp.mNetName.str();
-  bool res = false;
-  plate()->forEach( dctTraced, [&info,&res] (SdObject *obj) -> bool {
-    SdPtr<SdGraphTraced> traced(obj);
-    if( traced.isValid() )
-      res = traced->snapPoint( &info ) || res;
-    return true;
-    });
-
-  if( res ) {
+  info.scan( plate(), dctTraced );
+  if( info.isFound() ) {
     //Destignation pin
     mTargetPoint = info.mDest;
     //qDebug() << mSmartPoint;

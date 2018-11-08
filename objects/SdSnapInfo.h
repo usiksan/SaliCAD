@@ -19,6 +19,7 @@ Description
 #include "SdPoint.h"
 #include "SdPropAngle.h"
 #include "SdStratum.h"
+#include "SdClass.h"
 
 //Маска разумной привязки
 #define snapEndPoint          0x00000001u
@@ -51,27 +52,39 @@ Description
 
 
 class SdContainer;
+class SdGraph;
 
 typedef quint32 SdSnapMask;
 
 struct SdSnapInfo
   {
-    SdPoint         mSour;     //Исходная точка
-    SdPoint         mDest;     //Получившаяся точка
-    SdPoint         mExclude;  //Точка, которую нужно исключить из просмотра
-    SdPropAngle     mDir;      //Направление поиска
+    SdPoint         mSour;     //Source point [Исходная точка]
+    SdPoint         mDest;     //Destignated point (snapped) [Получившаяся точка]
+    SdPoint         mExclude;  //Excluding point [Точка, которую нужно исключить из просмотра]
+    SdPropAngle     mDir;      //Find direction [Направление поиска]
     SdSnapMask      mSnapMask; //Маска, которую нужно проверить
     SdSnapMask      mDestMask; //Маска сработавшая для точки dest
     double          mDistance; //Текущее расстояние от точки sour до точки dest
     QString         mNetName;  //Имя цепи для поиска
     SdStratum       mStratum;  //Stratum for tracing
+    SdGraph        *mGraph;    //Snapped graph object
 
     SdSnapInfo();
 
-    bool test( SdPoint p, SdSnapMask mask );
-    void calculate( SdContainer *object );
+    //Test if snapped to point
+    void test( SdGraph *graph, SdPoint p, SdSnapMask mask );
+
+    //Scan all graph objects of container with this snap
+    bool scan(SdContainer *object , SdClass mask = dctAll );
+
+    //Test if snap mask available to this snap
     bool match( SdSnapMask t ) const { return (mSnapMask & t) != 0; }
+
+    //Reset snap to next find
     void reset( bool resetDest = true ); //Сброс для следующего поиска
+
+    //Return true if found any snap
+    bool isFound() const { return mGraph != nullptr; }
   };
 
 #endif // SDSNAPINFO_H

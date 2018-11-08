@@ -73,7 +73,8 @@ class SdGraphTracedRoad : public SdGraphTraced
     virtual SdRect     getOverRect() const override;
     virtual int        behindCursor(SdPoint p) override;
     virtual bool       getInfo(SdPoint p, QString &info, bool extInfo) override;
-    virtual bool       snapPoint(SdSnapInfo *snap) override;
+    //Find snap point on object
+    virtual void       snapPoint(SdSnapInfo *snap) override;
 
     // SdGraphTraced interface
   public:

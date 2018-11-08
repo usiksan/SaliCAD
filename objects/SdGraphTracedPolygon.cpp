@@ -282,23 +282,21 @@ bool SdGraphTracedPolygon::getInfo(SdPoint p, QString &info, bool extInfo)
 
 
 
-bool SdGraphTracedPolygon::snapPoint(SdSnapInfo *snap)
+//Find snap point on object
+void SdGraphTracedPolygon::snapPoint(SdSnapInfo *snap)
   {
   if( snap->mStratum.match( mProp.mStratum ) && !snap->match(snapExcludeSour) ) {
     if( snap->match(snapNearestNet) ) {
       if( isContains(snap->mSour) ) {
-        snap->test( snap->mSour, snapNearestNet );
-        return true;
+        snap->test( this, snap->mSour, snapNearestNet );
         }
       }
     if( snap->match(snapNearestNetNet) && snap->mNetName == mProp.mNetName.str() ) {
       if( isContains(snap->mSour) ) {
-        snap->test( snap->mSour, snapNearestNetNet );
-        return true;
+        snap->test( this, snap->mSour, snapNearestNetNet );
         }
       }
     }
-  return false;
   }
 
 

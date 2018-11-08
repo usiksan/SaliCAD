@@ -266,6 +266,7 @@ void SdGraphArea::draw(SdContext *dc)
 
 
 
+
 int SdGraphArea::behindCursor(SdPoint p)
   {
   if( isVisible() ) {
@@ -280,13 +281,15 @@ int SdGraphArea::behindCursor(SdPoint p)
 
 
 
-bool SdGraphArea::snapPoint(SdSnapInfo *snap)
+
+
+//Find snap point on object
+void SdGraphArea::snapPoint(SdSnapInfo *snap)
   {
-  int res = false;
   if( snap->match(snapEndPoint) ) {
     //Test for all points of area region
     for( SdPoint p : mRegion )
-      res = snap->test( p, snapEndPoint ) || res;
+      snap->test( this, p, snapEndPoint );
     }
-  return res;
   }
+
