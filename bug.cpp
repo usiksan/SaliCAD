@@ -7,8 +7,6 @@
 
 
 
-//TODO D046 When try to select pin type from default pad association table and no default table offer to enter one
-
 //TODO B046 When renumeration in browse mode no rebuild component list
 
 //TODO B047 Append layer list to all properties bars
@@ -31,6 +29,8 @@
 
 //===================================================================================
 //Fixed:
+
+//D046 When try to select pin type from default pad association table and no default table offer to enter one
 
 //D073 Remove default pad association from environment
 

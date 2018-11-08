@@ -17,11 +17,11 @@ Description
 
 #include <QVBoxLayout>
 
-SdWEditorHelp::SdWEditorHelp(QWidget *parent) :
-  SdWEditor(parent)
+SdWEditorHelp::SdWEditorHelp() :
+  SdWEditor(nullptr)
   {
   //Create help widget
-  mHelp = new SdWHelp(this);
+  mHelp = new SdWHelp();
 
   //And fit it to full editor space
   QVBoxLayout *box = new QVBoxLayout;

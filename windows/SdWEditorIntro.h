@@ -9,29 +9,27 @@ Web
   www.saliLab.ru
 
 Description
-  Help system in editor space
+  Intro page with previous files list, help and guide access and some fast commands
 */
-#ifndef SDWEDITORHELP_H
-#define SDWEDITORHELP_H
+#ifndef SDWEDITORINTRO_H
+#define SDWEDITORINTRO_H
+
 
 #include "SdWEditor.h"
 #include "SdWHelp.h"
 
 class SdWMain;
 
-class SdWEditorHelp : public SdWEditor
+
+class SdWEditorIntro : public SdWEditor
   {
     Q_OBJECT
 
     SdWHelp *mHelp; //Help widget fill full editor space
   public:
-    SdWEditorHelp();
+    SdWEditorIntro( SdWMain *main, QWidget *parent = nullptr );
 
-    void helpTopic( const QString topic ) { mHelp->helpTopic(topic); }
-
-    void helpBackward();
-
-    void helpForward();
+    //void helpIntro( SdWMain *main ) { mHelp->helpIntro( main ); }
 
     // SdWEditor interface
   public:
@@ -39,4 +37,4 @@ class SdWEditorHelp : public SdWEditor
     virtual void           onActivateEditor() override;
   };
 
-#endif // SDWEDITORHELP_H
+#endif // SDWEDITORINTRO_H

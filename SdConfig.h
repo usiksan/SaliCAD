@@ -135,6 +135,8 @@ History
                    Append tabled param to component
                    Redesign GetObject dialog
                    Append newer object update possibilities
+  08.11.2018 v0.57 Redesign SdSnapInfo
+                   Append intro window to allow help display
 */
 
 #ifndef SDCONFIG
@@ -146,7 +148,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             56
+#define SD_VERSION_MINOR             57
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

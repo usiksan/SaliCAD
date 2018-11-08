@@ -266,7 +266,8 @@ SOURCES += \
     master/SdDMasterPartDoubleSideLR.cpp \
     windows/SdDGuiderPlayer.cpp \
     windows/SdDOptionsPageCommon.cpp \
-    windows/SdLanguage.cpp
+    windows/SdLanguage.cpp \
+    windows/SdWEditorIntro.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -529,7 +530,8 @@ HEADERS  += \
     windows/SdDGuiderPlayer.h \
     windows/SdDOptionsPageCommon.h \
     windows/SdLanguage.h \
-    objects/SdClass.h
+    objects/SdClass.h \
+    windows/SdWEditorIntro.h
 
 DISTFILES += \
     license.txt

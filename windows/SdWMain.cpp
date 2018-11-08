@@ -23,6 +23,7 @@ Description
 #include "SdWEditorGraphView.h"
 #include "SdWEditorInheritance.h"
 #include "SdWEditorHelp.h"
+#include "SdWEditorIntro.h"
 #include "SdWEditorProject.h"
 #include "SdWEditorRich.h"
 #include "SdWCommand.h"
@@ -1649,8 +1650,23 @@ void SdWMain::cmTools()
 
 void SdWMain::cmHelpIntro()
   {
+  //Create intro editor
+  SdWEditorIntro *intro = new SdWEditorIntro(this);
+  //insert it into tab
+  mWEditors->addTab( intro, QIcon( QString(":/pic/help.png") ), tr("Intro help page") );
+  //Bring intro tab to top
+  mWEditors->setCurrentIndex( mWEditors->count() - 1 );
+  //Show intro contents
+  //intro->helpIntro( this );
+  }
+
+
+
+
+void SdWMain::cmHelpPage(const QString topic)
+  {
   SdWEditorHelp *help = dynamic_cast<SdWEditorHelp*>( helpWidget() );
-  help->helpIntro( this );
+  help->helpTopic( topic );
   }
 
 
@@ -1658,8 +1674,7 @@ void SdWMain::cmHelpIntro()
 
 void SdWMain::cmHelpContens()
   {
-  SdWEditorHelp *help = dynamic_cast<SdWEditorHelp*>( helpWidget() );
-  help->helpTopic( QString("contens.htm") );
+  cmHelpPage( QString("contens.htm") );
   }
 
 
@@ -1667,8 +1682,7 @@ void SdWMain::cmHelpContens()
 
 void SdWMain::cmHelpIndex()
   {
-  SdWEditorHelp *help = dynamic_cast<SdWEditorHelp*>( helpWidget() );
-  help->helpTopic( QString("index.htm") );
+  cmHelpPage( QString("index.htm") );
   }
 
 

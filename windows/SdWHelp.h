@@ -24,7 +24,10 @@ class SdWHelp : public QTextBrowser
 
     SdWMain *mMain; //Main window pointer
   public:
-    SdWHelp( QWidget *parent = nullptr );
+    //Common constructor for help widgets
+    SdWHelp();
+    //Constructor for intro help page widget
+    SdWHelp( SdWMain *main );
 
 
     //Path where resides help system files
@@ -48,10 +51,10 @@ class SdWHelp : public QTextBrowser
     //Show help topic
     void helpTopic( const QString topic );
 
-    //Show intro topic
-    void helpIntro( SdWMain *main );
-
   private:
+
+    //Show intro topic
+    void helpIntro();
 
     //Path where resides help system files
     static QString mHelpPath;

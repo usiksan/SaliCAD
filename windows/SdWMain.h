@@ -224,6 +224,7 @@ class SdWMain : public QMainWindow
     void cmTools();
 
     void cmHelpIntro();
+    void cmHelpPage( const QString topic );
     void cmHelpContens();
     void cmHelpIndex();
     void cmHelpAbout();

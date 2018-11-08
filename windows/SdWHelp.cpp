@@ -16,6 +16,7 @@ Description
 #include "SdWMain.h"
 #include "library/SvDir.h"
 #include "SdDGuiderPlayer.h"
+#include "objects/SdPulsar.h"
 
 #include <QUrl>
 #include <QSettings>
@@ -31,11 +32,45 @@ Description
 QString SdWHelp::mHelpPath;
 
 
-SdWHelp::SdWHelp(QWidget *parent) :
-  QTextBrowser( parent ),
+//Common constructor for help widgets
+SdWHelp::SdWHelp() :
+  QTextBrowser( nullptr ),
   mMain(nullptr)
   {
 
+  setOpenLinks(false);
+  //Replace anchor clicked
+  connect( this, &SdWHelp::anchorClicked, this, [this] ( QUrl url) {
+    //Test special case for intro page
+    //In intro page we can open project, create new project or open previously file
+    QString path = url.toString();
+    if( path.endsWith( QStringLiteral(".guide")) ) {
+      if( SdDGuiderPlayer::guiderExist( path ) ) {
+        //Show guide player dialog
+        SdDGuiderPlayer player( path, this );
+        player.exec();
+        }
+      else
+        QMessageBox::warning( this, tr("Error!"), tr("Guider file '%1' not exist. Try reinstall SaliCAD").arg(path) );
+      }
+    else {
+      if( url.hasFragment() )
+        setSource( pageConvert( url.fileName(), url.fragment() ) );
+      else
+        setSource( pageConvert( url.fileName(), QString() ) );
+      }
+    });
+  }
+
+
+
+
+
+//Constructor for intro help page widget
+SdWHelp::SdWHelp(SdWMain *main) :
+  QTextBrowser( nullptr ),
+  mMain(main)
+  {
   setOpenLinks(false);
   //Replace anchor clicked
   connect( this, &SdWHelp::anchorClicked, this, [this] ( QUrl url) {
@@ -59,12 +94,15 @@ SdWHelp::SdWHelp(QWidget *parent) :
       }
     else {
       if( url.hasFragment() )
-        setSource( pageConvert( url.fileName(), url.fragment() ) );
+        mMain->cmHelpPage( url.fileName() + QStringLiteral("#") + url.fragment() );
       else
-        setSource( pageConvert( url.fileName(), QString() ) );
+        mMain->cmHelpPage( url.fileName() );
       }
     });
+  helpIntro();
   }
+
+
 
 
 
@@ -141,7 +179,7 @@ void SdWHelp::contens()
 //Show help topic
 void SdWHelp::helpTopic(const QString topic)
   {
-  qDebug() << "help topic" << topic;
+  //qDebug() << "help topic" << topic;
   if( topic.endsWith( QStringLiteral(".guide")) ) {
     //Show guide player dialog
     SdDGuiderPlayer player( topic, this );
@@ -166,10 +204,8 @@ void SdWHelp::helpTopic(const QString topic)
 
 //Show intro topic
 //Here we injecting into html page previous file list
-void SdWHelp::helpIntro(SdWMain *main)
+void SdWHelp::helpIntro()
   {
-  mMain = main;
-
   QSettings s;
   //Interface language
   //Язык интерфейса
