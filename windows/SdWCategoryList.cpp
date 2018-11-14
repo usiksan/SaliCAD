@@ -70,7 +70,8 @@ SdWCategoryList::~SdWCategoryList()
     removeAllChild( clipboardId );
     clipboardId = 0;
     }
-
+  if( isDirty && QMessageBox::question( this, tr("Warning!"), tr("Category tree changed. Do you want to save it?") ) == QMessageBox::Yes )
+    cmSave();
   }
 
 
@@ -397,7 +398,8 @@ void SdWCategoryList::fill()
       }
     }
   else {
-    addItemInt( true, tr("[Up]"), QString(), obj.value(CAT_PARENT).toInt() );
+    if( mCurrentId != 0 )
+      addItemInt( true, tr("[Up]"), QString(), obj.value(CAT_PARENT).toInt() );
     QJsonArray arr = obj.value( CAT_CHILD ).toArray();
     for( auto iter = arr.constBegin(); iter != arr.constEnd(); iter++ )
       addItemById( iter->toInt() );
