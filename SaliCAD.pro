@@ -267,7 +267,8 @@ SOURCES += \
     windows/SdDGuiderPlayer.cpp \
     windows/SdDOptionsPageCommon.cpp \
     windows/SdLanguage.cpp \
-    windows/SdWEditorIntro.cpp
+    windows/SdWEditorIntro.cpp \
+    windows/SdPExportPlate_Assembler.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -531,7 +532,8 @@ HEADERS  += \
     windows/SdDOptionsPageCommon.h \
     windows/SdLanguage.h \
     objects/SdClass.h \
-    windows/SdWEditorIntro.h
+    windows/SdWEditorIntro.h \
+    windows/SdPExportPlate_Assembler.h
 
 DISTFILES += \
     license.txt

@@ -77,7 +77,7 @@ class SdProject : public SdContainer
     void              setDirty();
 
     //Return true if object with this name present in project
-    bool              isNameUsed( const QString name ) const;
+    bool              isNameUsed(const QString name , SdClass mask) const;
     SdObjectPtr       item( QTreeWidgetItem *src ) const;
     SdObjectPtr       itemByName( quint64 mask, const QString name ) const;
     SdObjectPtr       itemByUid( const QString &uid ) const;

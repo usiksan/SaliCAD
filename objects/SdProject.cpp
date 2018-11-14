@@ -214,7 +214,7 @@ void SdProject::setDirty()
   if( !mDirty ) {
     mDirty = true;
     SdPulsar::sdPulsar->emitProjectStatusChanged( this );
-    qDebug() << "set dirty";
+    //qDebug() << "set dirty";
     }
   }
 
@@ -223,15 +223,17 @@ void SdProject::setDirty()
 
 
 //Return true if object with this name present in project
-bool SdProject::isNameUsed(const QString name) const
+bool SdProject::isNameUsed(const QString name, SdClass mask ) const
   {
+  bool found = false;
   //Find object with desired name in this project
-  for( SdObjectPtr ptr : mChildList ) {
-    SdPtr<SdProjectItem> pi(ptr);
-    if( pi && !pi->isDeleted() && pi->getTitle() == name && pi->getAuthor() == SdProjectItem::getDefaultAuthor() )
-      return true;
-    }
-  return false;
+  forEachConst( mask, [name,&found] (SdObject *obj) -> bool {
+    SdPtr<SdProjectItem> pi(obj);
+    if( pi.isValid() )
+      found = pi->getTitle() == name && pi->getAuthor() == SdProjectItem::getDefaultAuthor();
+    return !found;
+    });
+  return found;
   }
 
 
