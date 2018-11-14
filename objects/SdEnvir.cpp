@@ -14,12 +14,14 @@ Description
 #include "SdEnvir.h"
 #include "SdLayer.h"
 #include "SdObjectFactory.h"
+#include "library/SvDir.h"
 
 #include <QSettings>
 #include <QByteArray>
 #include <QDataStream>
 #include <QDir>
 #include <QDebug>
+#include <QCoreApplication>
 
 SdEnvir *sdEnvir;
 
@@ -307,8 +309,10 @@ void SdEnvir::defaultEnvir()
   mLibraryPath.append( QStringLiteral("library/") );
   mPatternPath = mHomePath;            //Каталог шаблонов
   mPatternPath.append( QStringLiteral("pattern/") );
-  mCategoryPath = mLibraryPath;        //Base path for store category hierarchy
-  mCategoryPath.append( QStringLiteral("category/") );
+
+  //Category file path
+  SvDir def( QCoreApplication::applicationDirPath() );
+  mCategoryPath = def.slashedPath() + QString("category/salicad.category");        //Base path for store category hierarchy
 
 
   //Перечень слоев по умолчанию

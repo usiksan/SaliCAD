@@ -167,6 +167,9 @@ History
 //Layer list naming definition
 #define SD_LAYER_LIST_EXTENSION      ".layersSet"
 
+//Category files
+#define SD_CATEGORY_EXTENSION        ".category"
+
 //Gerber file extension
 #define SD_GERBER_EXTENSION          ".gbr"
 

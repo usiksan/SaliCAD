@@ -67,7 +67,7 @@ SdDOptionsPagePath::SdDOptionsPagePath(QWidget *parent) :
   mCategoryPath->setText( sdEnvir->mCategoryPath );
   grid->addWidget( but = new QPushButton( tr("Select...") ), 3, 2 );
   connect( but, &QPushButton::clicked, this, [this] () {
-    QString str = QFileDialog::getExistingDirectory( this, tr("Category hierarchy path"), mCategoryPath->text() );
+    QString str = QFileDialog::getOpenFileName( this, tr("Category hierarchy path"), mCategoryPath->text(), QString("*" SD_CATEGORY_EXTENSION) );
     if( !str.isEmpty() )
       mCategoryPath->setText( str );
     });

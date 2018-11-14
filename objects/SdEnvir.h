@@ -97,7 +97,7 @@ class SdEnvir
     QString         mHomePath;             //Current user home path [Каталог пользователя]
     QString         mLibraryPath;          //Library path [Каталог библиотек]
     QString         mPatternPath;          //Каталог шаблонов
-    QString         mCategoryPath;         //Base path for store category hierarchy
+    QString         mCategoryPath;         //Category hierarchy file
     QList<QPointF>  mGridHistory;          //Previous grid history
     SdRuleBlock     mDefaultRules;         //Default rules for pcb
     bool            mShowRuleErrors;       //If true then over pcb shows rule error indicators as rectangles
