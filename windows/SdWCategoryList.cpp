@@ -168,6 +168,20 @@ void SdWCategoryList::cmRemove()
 
 
 
+//Delete all categories
+void SdWCategoryList::cmClear()
+  {
+  if( QMessageBox::question( this, tr("Warning!"), tr("Are You sure to delete ALL categories? This operation can not be undo!")) == QMessageBox::Yes ) {
+    mCategoryMap = QJsonObject();
+    mCurrentId = 0;
+    fill();
+    }
+  }
+
+
+
+
+
 
 //Edit category title
 void SdWCategoryList::cmEditTitle()
@@ -476,6 +490,9 @@ void SdWCategoryList::mousePressEvent(QMouseEvent *event)
       menuCategory->addAction( QIcon(QString(":/pic/fileOpen.png")), tr("Load category tree..."), this, &SdWCategoryList::cmLoad );
       menuCategory->addAction( QIcon(QString(":/pic/save.png")), tr("Save category tree"), this, &SdWCategoryList::cmSave );
       menuCategory->addAction( QIcon(QString(":/pic/save_as.png")), tr("Save category tree as..."), this, &SdWCategoryList::cmSaveAs );
+
+      menuCategory->addSeparator();
+      menuCategory->addAction( QIcon(QString(":/pic/new.png")), tr("Delete ALL categories"), this, &SdWCategoryList::cmClear );
       }
     //When no clipboard data we disabled paste cmd
     cmdPaste->setDisabled( clipboardId );

@@ -13,7 +13,7 @@ Description
 */
 #include "SdPExportPlate_Assembler.h"
 
-SdPExportPlate_Assembler::SdPExportPlate_Assembler()
-  {
+//SdPExportPlate_Assembler::SdPExportPlate_Assembler()
+//  {
 
-  }
+//  }

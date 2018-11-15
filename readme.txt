@@ -14,3 +14,19 @@ SaliCaptureEditor.pro - project SaliCAD has integrated system for screen capture
                         its translations.
 SaliCadServer/SaliCadServer.pro - project for remote repository server. This server used
                                   for creation central repository of component library
+
+
+Directory structure:
+guider - Source. SaliCAD guider player, recorder and editor
+help - Help system html and png files for SaliCAD
+help/guider - Multimedia guider files for SaliCAD help and presentation
+install - Installator build script. We use QtInstaller
+libFiles - SaliCAD library files
+library - Source. Library access subsystem. Used in SaliCAD and SaliCadServer
+master - Source. Masters for SaliCAD
+modes - Source. Modes for graphics editor of SaliCAD
+objects - Source. Object hierarchy of SaliCAD
+pattern - Layers list pattern for Gerber export and other cases
+pic - Source. Icons and pictures used in resource of SaliCAD
+SaliCadServer - Source. Project for SaliCadServer - remote library manager
+windows - Source

@@ -51,6 +51,9 @@ class SdWCategoryList : public QListWidget
     //Remove category
     void cmRemove();
 
+    //Delete all categories
+    void cmClear();
+
     //Edit category title
     void cmEditTitle();
 

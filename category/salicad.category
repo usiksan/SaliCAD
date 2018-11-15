@@ -1,0 +1,135 @@
+{
+    "0": {
+        "child": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+        ]
+    },
+    "1": {
+        "child": [
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+        ],
+        "key": "Passives",
+        "parent": 0,
+        "title": "Passives"
+    },
+    "10": {
+        "key": "Rheostats",
+        "parent": 1,
+        "title": "Rheostats"
+    },
+    "11": {
+        "key": "Antennas",
+        "parent": 1,
+        "title": "Antennas"
+    },
+    "12": {
+        "key": "Thermistors",
+        "parent": 1,
+        "title": "Thermistors"
+    },
+    "13": {
+        "child": [
+            17,
+            18
+        ],
+        "key": "Crystals",
+        "parent": 1,
+        "title": "Crystals and oscillators"
+    },
+    "14": {
+        "key": "resistor smd",
+        "parent": 7,
+        "title": "Fixed smd resistors"
+    },
+    "15": {
+        "key": "resistor variable",
+        "parent": 7,
+        "title": "Variable resistors"
+    },
+    "16": {
+        "key": "resistor trimming",
+        "parent": 7,
+        "title": "Trimming"
+    },
+    "17": {
+        "key": "Oscillators",
+        "parent": 13,
+        "title": "Oscillators"
+    },
+    "18": {
+        "key": "resonator",
+        "parent": 13,
+        "title": "Resonators"
+    },
+    "19": {
+        "key": "Fixed leaded",
+        "parent": 7,
+        "title": "Fixed leaded"
+    },
+    "2": {
+        "key": "Connectors and cables",
+        "parent": 0,
+        "title": "Connectors and cable"
+    },
+    "20": {
+        "key": "Fixed smd",
+        "parent": 8,
+        "title": "Fixed smd"
+    },
+    "3": {
+        "key": "Optoelectronic and LED",
+        "parent": 0,
+        "title": "Optoelectronics and LED"
+    },
+    "4": {
+        "key": "Semiconductors",
+        "parent": 0,
+        "title": "Semiconductors"
+    },
+    "5": {
+        "key": "Power supples",
+        "parent": 0,
+        "title": "Power supples"
+    },
+    "6": {
+        "key": "Others",
+        "parent": 0,
+        "title": "Others"
+    },
+    "7": {
+        "child": [
+            14,
+            15,
+            16,
+            19
+        ],
+        "key": "Resistor",
+        "parent": 1,
+        "title": "Resistors"
+    },
+    "8": {
+        "child": [
+            20
+        ],
+        "key": "Capacitors",
+        "parent": 1,
+        "title": "Capacitors"
+    },
+    "9": {
+        "key": "Inductors",
+        "parent": 1,
+        "title": "Inductors"
+    },
+    "idCount": 21
+}
