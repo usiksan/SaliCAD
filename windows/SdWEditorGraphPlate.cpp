@@ -17,6 +17,7 @@ Description
 #include "SdDPads.h"
 #include "SdPMasterList.h"
 #include "SdPExportPlate_Gerber.h"
+#include "SdPExportPlate_Assembler.h"
 #include "SdDRuleEditor.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
@@ -311,6 +312,7 @@ void SdWEditorGraphPlate::cmFileExport()
   SdPMasterList *master = new SdPMasterList( tr("Export plate"), tr("Select export master"), &wizard );
   wizard.setPage( 0,   master );
   wizard.setPage( 1,   new SdPExportPlate_Gerber( this, mPlate, 1, master, &wizard) );
+  wizard.setPage( 2,   new SdPExportPlate_Assembler( this, mPlate, 2, master, &wizard) );
   //wizard.setPage( SDP_NPI_MASTER, new SdPNewProjectItem_Master( &item, mProject, &wizard) );
   wizard.exec();
   }

@@ -74,6 +74,9 @@ class SdDGetObject : public QDialog
     //Clear all fields filtr
     void onClearFieldFiltr();
 
+    //On category selected
+    void onCategory( const QString str );
+
   protected:
     void changeEvent(QEvent *e) override;
 

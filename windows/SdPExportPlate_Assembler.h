@@ -26,6 +26,9 @@ class SdPExportPlate_Assembler : public QWizardPage
   {
     Q_OBJECT
 
+    SdWEditorGraphPlate *mEditor;    //Graphic editor widget
+
+    SdPItemPlate        *mPlate;     //Plate which we export to gerber
   public:
     SdPExportPlate_Assembler( SdWEditorGraphPlate *editor, SdPItemPlate *plate, int step, SdPMasterList *list, QWidget *parent = nullptr );
   };

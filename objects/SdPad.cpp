@@ -120,10 +120,12 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
         int cols = mStencilCols > 1 ? mStencilCols : 1;
         int cellx = mDiametrWidth / cols;
         int celly = mHeight / rows;
+        int offx = (cellx - mStencilWidth) / 2;
+        int offy = (celly - mStencilHeight) / 2;
         for( int y = 0; y < rows; y++ )
           for( int x = 0; x < cols; x++ )
-            dcx->fillRect( SdRect( p.x() + mCenterX - (w >> 1) + x * cellx,
-                                   p.y() + mCenterY - (h >> 1) + y * celly, mStencilWidth, mStencilHeight) );
+            dcx->fillRect( SdRect( p.x() + mCenterX - (w >> 1) + x * cellx + offx,
+                                   p.y() + mCenterY - (h >> 1) + y * celly + offy, mStencilWidth, mStencilHeight) );
         }
       else
         //Single apreture

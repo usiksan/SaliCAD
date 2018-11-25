@@ -24,17 +24,17 @@
         "title": "Passives"
     },
     "10": {
-        "key": "Rheostats",
+        "key": "rheostat",
         "parent": 1,
         "title": "Rheostats"
     },
     "11": {
-        "key": "Antennas",
+        "key": "antenna",
         "parent": 1,
         "title": "Antennas"
     },
     "12": {
-        "key": "Thermistors",
+        "key": "thermistor",
         "parent": 1,
         "title": "Thermistors"
     },
@@ -43,7 +43,7 @@
             17,
             18
         ],
-        "key": "Crystals",
+        "key": "crystal",
         "parent": 1,
         "title": "Crystals and oscillators"
     },
@@ -73,11 +73,15 @@
         "title": "Resonators"
     },
     "19": {
-        "key": "Fixed leaded",
+        "key": "resistor fixed leaded",
         "parent": 7,
         "title": "Fixed leaded"
     },
     "2": {
+        "child": [
+            21,
+            22
+        ],
         "key": "Connectors and cables",
         "parent": 0,
         "title": "Connectors and cable"
@@ -86,6 +90,16 @@
         "key": "Fixed smd",
         "parent": 8,
         "title": "Fixed smd"
+    },
+    "21": {
+        "key": "connector",
+        "parent": 2,
+        "title": "Connectors"
+    },
+    "22": {
+        "key": "cable",
+        "parent": 2,
+        "title": "Cables"
     },
     "3": {
         "key": "Optoelectronic and LED",
@@ -122,14 +136,14 @@
         "child": [
             20
         ],
-        "key": "Capacitors",
+        "key": "Capacitor",
         "parent": 1,
         "title": "Capacitors"
     },
     "9": {
-        "key": "Inductors",
+        "key": "inductor",
         "parent": 1,
         "title": "Inductors"
     },
-    "idCount": 21
+    "idCount": 23
 }

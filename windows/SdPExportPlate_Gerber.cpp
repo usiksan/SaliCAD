@@ -221,7 +221,13 @@ void SdGerberContext::fillRect(SdRect r)
 
 void SdGerberContext::arc(SdPoint center, SdPoint start, SdPoint stop)
   {
-  //TODO D054 append arc implementation to Gerber export
+  //We always roll arc from start to stop clockwise
+  //Select multiquadrant mode
+  mStream << "G75*\n";
+  //Move to start point
+  if( mPos != start ) mStream << "G01X" << start.x() << "Y" << start.y() << "D02*\n";
+  mStream << "G02X" << stop.x() << "Y" << stop.y() << "I" << (center.x() - start.x()) << "J" << (center.y() - start.y()) << "D01*\n";
+  mPos = stop;
   }
 
 

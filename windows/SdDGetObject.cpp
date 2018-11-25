@@ -234,6 +234,8 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   //Category
   mCategoryList = new SdWCategoryList(nullptr);
   ui->mCategoryBox->addWidget( mCategoryList );
+  connect( mCategoryList, &SdWCategoryList::category, this, &SdDGetObject::onCategory );
+
 
   connect( ui->mClearFields, &QPushButton::clicked, this, &SdDGetObject::onClearFieldFiltr );
 
@@ -521,6 +523,17 @@ void SdDGetObject::onClearFieldFiltr()
   for( int i = 0; i < ui->mFieldsBox->rowCount(); i++ )
     ui->mFieldsBox->item( i, 2 )->setText( QString() );
   find();
+  }
+
+
+
+
+
+
+//On category selected
+void SdDGetObject::onCategory(const QString str)
+  {
+  ui->mNameFilter->setText( str );
   }
 
 

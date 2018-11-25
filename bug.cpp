@@ -30,6 +30,8 @@
 //===================================================================================
 //Fixed:
 
+//D054 append arc implementation to Gerber export
+
 //D046 When try to select pin type from default pad association table and no default table offer to enter one
 
 //D073 Remove default pad association from environment
