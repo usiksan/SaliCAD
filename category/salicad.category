@@ -6,7 +6,8 @@
             3,
             4,
             5,
-            6
+            6,
+            23
         ]
     },
     "1": {
@@ -101,6 +102,25 @@
         "parent": 2,
         "title": "Cables"
     },
+    "23": {
+        "child": [
+            24,
+            25
+        ],
+        "key": "form",
+        "parent": 0,
+        "title": "Forms"
+    },
+    "24": {
+        "key": "iso",
+        "parent": 23,
+        "title": "iso"
+    },
+    "25": {
+        "key": "ГОСТ",
+        "parent": 23,
+        "title": "ГОСТ"
+    },
     "3": {
         "key": "Optoelectronic and LED",
         "parent": 0,
@@ -145,5 +165,5 @@
         "parent": 1,
         "title": "Inductors"
     },
-    "idCount": 23
+    "idCount": 26
 }
