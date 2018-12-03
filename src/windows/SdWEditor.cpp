@@ -15,11 +15,14 @@ Description
 #include "objects/SdProject.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdObjectFactory.h"
+#include "objects/SdPItemSymbol.h"
+#include "objects/SdPItemComponent.h"
 #include "SdWEditor.h"
 #include "SdWCommand.h"
 
 
 #include <QMessageBox>
+#include <QInputDialog>
 #include <QDebug>
 
 SdWEditor::SdWEditor(QWidget *parent) :
@@ -107,11 +110,44 @@ void SdWEditor::cmObjectEditDisable()
   {
   if( getProjectItem() ) {
     SdProjectItem *item = getProjectItem();
+    //Check if object already in library
+    bool presenceInLibrary = SdObjectFactory::isObjectPresent( item->getId() );
     getProjectItem()->setEditEnable( false, tr("Object edit disable") );
+
+
+    //For symbols which yet not in library we query for creation default component
+    SdPtr<SdPItemSymbol> sym(item);
+    SdPItemComponent *comp = nullptr;
+    if( sym.isValid() && !presenceInLibrary ) {
+      //Query for creation default component
+      QStringList items;
+      items << tr("with default part and edit it") << tr("without part and edit it");
+      QInputDialog dlg(this);
+      dlg.setOptions( QInputDialog::UseListViewForComboBoxItems );
+      dlg.setCancelButtonText( tr("No") );
+      dlg.setOkButtonText( tr("Create") );
+      dlg.setComboBoxEditable(false);
+      dlg.setComboBoxItems( items );
+      dlg.setInputMode( QInputDialog::TextInput );
+      dlg.setLabelText( tr("Do You want to create default component:") );
+      if( dlg.exec() ) {
+        if( dlg.textValue() == items.at(0) )
+          //Create default component with default part and fix it
+          comp = sdCreateDefaultComponent( sym.ptr(), true );
+        else
+          //Create default component without part and edit it
+          comp = sdCreateDefaultComponent( sym.ptr(), false );
+        }
+      }
+
     //Close this editor (viewer)
     SdPulsar::sdPulsar->emitCloseEditView( getProjectItem() );
-    //Open new item with edit status
+    //Open new item with disabled edit status
     SdPulsar::sdPulsar->emitActivateItem( item );
+
+    //If component present then open it for edit
+    if( comp )
+      SdPulsar::sdPulsar->emitActivateItem( comp );
     }
   }
 

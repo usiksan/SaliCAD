@@ -76,4 +76,8 @@ class SdPItemComponent : public SdPItemVariant
     virtual quint64 getAcceptedObjectsMask() const override { return dctPartVariant | dctSection; }
   };
 
+
+//Create default component with single section with given symbol
+SdPItemComponent *sdCreateDefaultComponent( SdPItemSymbol *symbol, bool appendDefaultPart );
+
 #endif // SDPITEMCOMPONENT_H

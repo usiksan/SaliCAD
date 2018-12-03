@@ -45,6 +45,7 @@ class SdProjectItem : public SdContainer
     SdProjectItem();
 
     //Information
+    //Unical ident of item accross world
     QString                getUid() const;
     QString                getExtendTitle() const;
     QString                getToolTip() const;

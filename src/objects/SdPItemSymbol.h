@@ -40,6 +40,7 @@ class SdPItemSymbol : public SdProjectItem
     //virtual SdGraph  *insertCopyObject( SdGraph *obj, SdPoint offset, SdUndo *undo, SdWEditorGraph *editor, bool next ) override;
     //virtual void      insertObjects( SdPoint offset, SdSelector *sel, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next ) override;
     virtual void      cloneFrom( const SdObject *src ) override;
+
   };
 
 #endif // SDPITEMSYMBOL_H

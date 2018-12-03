@@ -12,7 +12,10 @@ Description
   Component is symbol without graph bun contains symbol sections with pin (name-number) assotiation and component part
 */
 #include "SdPItemComponent.h"
+#include "SdPItemSymbol.h"
 #include "SdPartVariant.h"
+#include "SdObjectFactory.h"
+#include "SdProject.h"
 
 #include <QDebug>
 
@@ -21,6 +24,8 @@ SdPItemComponent::SdPItemComponent() :
   {
 
   }
+
+
 
 
 
@@ -264,4 +269,43 @@ QString SdPItemComponent::getIconName() const
     return QStringLiteral(":/pic/iconCompLocked.png");
     }
   return QStringLiteral(":/pic/iconComp.png");
+  }
+
+
+
+
+
+
+//Create default component with single section with given symbol
+SdPItemComponent *sdCreateDefaultComponent(SdPItemSymbol *symbol, bool appendDefaultPart)
+  {
+  //Create component
+  SdPItemComponent *comp = new SdPItemComponent();
+
+  //Set same title as symbol
+  comp->setTitle( symbol->getTitle(), QString("Component creation") );
+
+  //Insert self to project
+  symbol->getProject()->insertChild( comp, symbol->getUndo() );
+
+  //Append symbol to library
+  SdObjectFactory::insertItemObject( symbol, symbol->write() );
+  //Append section with symbol
+  comp->appendSection( symbol->getUid(), symbol->getUndo() );
+
+  if( appendDefaultPart ) {
+    //Setup default part
+    comp->setPartId( QString("Part\rplug part\rsalicad"), symbol->getUndo() );
+
+    //Setup default packing info
+    SdPinAssociation pins = comp->getSectionPins(0);
+    int pin = 1;
+    for( auto iter = pins.cbegin(); iter != pins.cend(); ++iter ) {
+      comp->setSectionPinNumber( 0, iter.key(), QString::number(pin++), symbol->getUndo() );
+      }
+
+    //Fix component
+    //comp->setEditEnable( false, QString("Component fixed") );
+    }
+  return comp;
   }
