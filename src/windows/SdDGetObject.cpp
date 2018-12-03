@@ -534,6 +534,7 @@ void SdDGetObject::onClearFieldFiltr()
 void SdDGetObject::onCategory(const QString str)
   {
   ui->mNameFilter->setText( str );
+  find();
   }
 
 
