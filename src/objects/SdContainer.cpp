@@ -167,6 +167,7 @@ void SdContainer::paramTableSet(const SdStringMap map, SdUndo *undo)
   if( undo != nullptr )
     undo->stringMap( &mParamTable );
   mParamTable = map;
+  setProjectDirtyFlag();
   }
 
 

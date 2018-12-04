@@ -69,7 +69,6 @@ QString SdObject::getId() const
 
 SdContainer *SdObject::getRoot() const
   {
-  //if( mParent == 0 ) return dynamic_cast<SdContainer*>( this );
   SdContainer *p = mParent;
   while(p) {
     if( p->mParent == nullptr ) return p;
@@ -93,7 +92,13 @@ void SdObject::setParent(SdContainer *parent)
 
 void SdObject::setProjectDirtyFlag()
   {
+  //Project may be on top hierarchy
   SdProject *project = dynamic_cast<SdProject*>( getRoot() );
+  if( project == nullptr )
+    //or project may be object itself
+    project = dynamic_cast<SdProject*>( this );
+
+  //If project accepted then set its dirty flag
   if( project )
     project->setDirty();
   }

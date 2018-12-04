@@ -7,7 +7,8 @@
             4,
             5,
             6,
-            23
+            23,
+            26
         ]
     },
     "1": {
@@ -121,6 +122,11 @@
         "parent": 23,
         "title": "ГОСТ"
     },
+    "26": {
+        "key": "electric",
+        "parent": 0,
+        "title": "Electrics"
+    },
     "3": {
         "key": "Optoelectronic and LED",
         "parent": 0,
@@ -165,5 +171,5 @@
         "parent": 1,
         "title": "Inductors"
     },
-    "idCount": 26
+    "idCount": 27
 }
