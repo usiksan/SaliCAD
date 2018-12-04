@@ -168,7 +168,7 @@ class SdGraphSymImp : public SdGraph
     virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
     virtual bool    isUsed(SdObject *obj) const override;
     //Upgrade project item on new one
-    virtual bool      upgradeProjectItem( SdUndo *undo, QWidget *parent ) override;
+    virtual bool    upgradeProjectItem( SdUndo *undo, QWidget *parent ) override;
 
     // SdGraph interface
   public:

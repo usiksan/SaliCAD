@@ -25,10 +25,10 @@
 
 //TODO D068 Append query to upgrade when newer objects received from remote and possibility to off than query
 
-//TODO D071 When change param to project dirtyProject do not changed
-
 //===================================================================================
 //Fixed:
+
+//D071 When change param to project dirtyProject do not changed
 
 //D054 append arc implementation to Gerber export
 

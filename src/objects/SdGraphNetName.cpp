@@ -37,7 +37,7 @@ SdGraphNetName::SdGraphNetName(SdPoint org, const QString netName, const SdPropT
 
 void SdGraphNetName::cloneFrom(const SdObject *src)
   {
-  SdGraph::cloneFrom( src );
+  SdGraphNet::cloneFrom( src );
   const SdGraphNetName *wname = dynamic_cast<const SdGraphNetName*>(src);
   Q_ASSERT(wname != nullptr);
   mOrigin = wname->mOrigin;
@@ -50,7 +50,7 @@ void SdGraphNetName::cloneFrom(const SdObject *src)
 
 void SdGraphNetName::writeObject(QJsonObject &obj) const
   {
-  SdGraph::writeObject(obj);
+  SdGraphNet::writeObject(obj);
   mOrigin.write( QStringLiteral("Org"), obj );
   mProp.write( QStringLiteral("Prop"), obj );
   mOver.write( QStringLiteral("Over"), obj );
@@ -61,7 +61,7 @@ void SdGraphNetName::writeObject(QJsonObject &obj) const
 
 void SdGraphNetName::readObject(SdObjectMap *map, const QJsonObject obj)
   {
-  SdGraph::readObject( map, obj );
+  SdGraphNet::readObject( map, obj );
   mOrigin.read( QStringLiteral("Org"), obj );
   mProp.read( QStringLiteral("Prop"), obj );
   mOver.read( QStringLiteral("Over"), obj );

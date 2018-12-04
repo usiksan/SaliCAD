@@ -76,13 +76,20 @@ void SdModeCNetWire::drawDynamic(SdContext *ctx)
     if( mMiddle != mPrevMove ) ctx->line( mMiddle, mPrevMove, sdGlobalProp->mWireProp );
     ctx->resetOverColor();
     }
-  if( sdEnvir->mIsWireSmart ) {
+  if( sdEnvir->mIsWireSmart && mSmartSour != mSmartDest ) {
     //Draw smart variant
     ctx->setOverColor( sdEnvir->getSysColor(scSmart) );
-    if( mSmA != mMiddle ) ctx->line( mFirst, mSmA, sdGlobalProp->mWireProp );
-    ctx->line( mSmA, mStrEnd, sdGlobalProp->mWireProp );
-    ctx->line( mStrEnd, mSmEnd, sdGlobalProp->mWireProp );
-    ctx->smartPoint( mSmEnd, snapNetPoint );
+    //Draw source stringer if present
+    if( mSmartSour != mSmartSourStr )   ctx->line( mSmartSour, mSmartSourStr, sdGlobalProp->mWireProp );
+    //Draw first intermediate vertex
+    if( mSmartSourStr != mSmartInter0 ) ctx->line( mSmartSourStr, mSmartInter0, sdGlobalProp->mWireProp );
+    //Draw second intermediate vertex
+    if( mSmartInter0 != mSmartInter1 )  ctx->line( mSmartInter0, mSmartInter1, sdGlobalProp->mWireProp );
+    //Draw destignation vertex
+    if( mSmartInter1 != mSmartDestStr ) ctx->line( mSmartInter1, mSmartDestStr, sdGlobalProp->mWireProp );
+    //Draw destignation stringer if present
+    if( mSmartDestStr != mSmartDest )   ctx->line( mSmartDestStr, mSmartDest, sdGlobalProp->mWireProp );
+    ctx->smartPoint( mSmartDest, snapNetPoint );
     ctx->resetOverColor();
     }
   }
@@ -174,9 +181,8 @@ void SdModeCNetWire::enterPoint( SdPoint enter )
     if( testFirstPoint( mFirst ) ) setStep(sNextPoint);
     //Reset smart
     mMiddle = enter;
-    mSmA = mMiddle;
-    mStrEnd = mSmA;
-    mSmEnd = mSmA;
+    mSmartSour = enter;
+    mSmartDest = enter;
     }
   update();
   }
@@ -197,6 +203,11 @@ void SdModeCNetWire::movePoint( SdPoint p )
   if( getStep() ) {
     mPrevMove = p;
     mMiddle = calcMiddlePoint( mFirst, mPrevMove, sdGlobalProp->mWireEnterType );
+    //For smart point we request is it sym imp
+    mSmartSour = mFirst;
+    int state = 0;
+    SdPtr<SdGraph> graph( getSheet()->behindPoint( dctSymImp, mFirst, &state ) );
+    mSmartSourStr = getStringer( mSmartSour.x(), mSmartSour.y(), graph.ptr() );
     calcSmartPoint();
     }
   else {
@@ -212,19 +223,13 @@ void SdModeCNetWire::movePoint( SdPoint p )
 SdPoint SdModeCNetWire::enterPrev()
   {
   mUndo->begin( QObject::tr("Insert smart net"), mObject );
-  if( getStep() ) {
+  if( getStep() )
     //Net end variant
-    if( mFirst != mSmA ) getSheet()->insertChild( new SdGraphNetWire( mFirst, mSmA, mNetName, sdGlobalProp->mWireProp ), mUndo );
-    if( mSmA != mStrEnd && mSmEnd != mSmA ) getSheet()->insertChild( new SdGraphNetWire( mSmA, mStrEnd, mNetName, sdGlobalProp->mWireProp ), mUndo );
-    if( mStrEnd != mSmEnd && mSmEnd != mSmA  ) getSheet()->insertChild( new SdGraphNetWire( mStrEnd, mSmEnd, mNetName, sdGlobalProp->mWireProp ), mUndo );
-    }
+    insertSmartNet();
   else {
     //Full routing net variant
-    if( testFirstPoint( mFirst ) ) {
-      if( mFirst != mSmA ) getSheet()->insertChild( new SdGraphNetWire( mFirst, mSmA, mNetName, sdGlobalProp->mWireProp ), mUndo );
-      if( mSmA != mStrEnd && mSmEnd != mSmA  ) getSheet()->insertChild( new SdGraphNetWire( mSmA, mStrEnd, mNetName, sdGlobalProp->mWireProp ), mUndo );
-      if( mStrEnd != mSmEnd && mSmEnd != mSmA  ) getSheet()->insertChild( new SdGraphNetWire( mStrEnd, mSmEnd, mNetName, sdGlobalProp->mWireProp ), mUndo );
-      }
+    if( testFirstPoint( mSmartSour ) )
+      insertSmartNet();
     }
   nextNet();
   setDirty();
@@ -385,13 +390,19 @@ void SdModeCNetWire::renameNet(const QString sour, const QString dest)
 
 void SdModeCNetWire::calcFirstSmart()
   {
+  //Prepare snap query
   SdSnapInfo snap;
   snap.mSour     = mPrevMove;
   snap.mSnapMask = snapNearestNet | snapNearestPin;
   snap.mExclude  = mPrevMove;
   snap.mDest     = mPrevMove;
+  //Scan snap point
   snap.scan( getSheet() );
-  mFirst = snap.mDest;
+  //Assign founded snap point
+  mSmartSour = snap.mDest;
+  //Calculate stringer for source point if need
+  mSmartSourStr = getStringer( mSmartSour.x(), mSmartSour.y(), snap.mGraph );
+  //Calculate destignation snap
   calcSmartPoint();
   }
 
@@ -399,17 +410,6 @@ void SdModeCNetWire::calcFirstSmart()
 
 
 
-void SdModeCNetWire::calcSecondSmart()
-  {
-  SdSnapInfo snap;
-  snap.mSour     = mPrevMove;
-  snap.mSnapMask = snapNearestNet | snapNearestPin | snapExcludeSour;
-  snap.mExclude  = mPrevMove;
-  snap.mDest     = mPrevMove;
-  snap.scan( getSheet() );
-  mFirst = snap.mDest;
-  calcSmartPoint();
-  }
 
 
 
@@ -427,12 +427,15 @@ static SdPoint pointToFar( SdPoint sour, SdPoint dest ) {
   }
 
 
+
+
+
 void SdModeCNetWire::calcSmartPoint()
   {
   SdSnapInfo snap;
   snap.mSour     = mPrevMove;
   snap.mSnapMask = snapNearestPin | snapExcludeExcl;
-  snap.mExclude  = mFirst;
+  snap.mExclude  = mSmartSour;
   snap.scan( getSheet(), dctSymImp );
   SdRect over;
   bool noResult = snap.mGraph == nullptr;
@@ -441,101 +444,19 @@ void SdModeCNetWire::calcSmartPoint()
 
   //qDebug() << "calcSmartPoint" << noResult << snap.mDest;
   if( noResult ) {
-    mSmEnd = mPrevMove;
-    mSmA   = mSmEnd;
+    mSmartDest = mSmartSour;
     }
   else {
-    mSmEnd = snap.mDest;
+    mSmartDest = snap.mDest;
     //Calculate stringer
     //Stringer must have opposite direction with component body
 
-    //Distance to left side of body
-    int left = abs( over.getLeft() - mSmEnd.x() );
-    //Distance to right side of body
-    int right = abs( over.getRight() - mSmEnd.x() );
-    //Minimum distance with horizontal direction
-    int horz = qMin(left,right);
+    mSmartDestStr = getStringer( mSmartDest.x(), mSmartDest.y(), snap.mGraph );
 
-    //Distance to top side of bidy
-    int top = abs( over.getTop() - mSmEnd.y() );
-    //Distance to bottom side of body
-    int bot = abs( over.getBottom() - mSmEnd.y() );
-    //Minimum distance with vertical direction
-    int vert = qMin( top, bot );
+    //Simple vertex
+    mSmartInter0 = get90( mSmartSourStr, mSmartDestStr );
+    mSmartInter1 = mSmartInter0;
 
-    mStrEnd = mSmEnd;
-    int stringer = getGrid().x();
-
-    if( horz < vert ) {
-      //Stringer is horizontal
-      if( left < right )
-        //Left direction
-        mStrEnd.rx() -= stringer;
-      else
-        //Right direction
-        mStrEnd.rx() += stringer;
-      mSmA.rx() = mStrEnd.x();
-      mSmA.ry() = mFirst.y();
-      }
-    else {
-      //Stringer is vertical
-      if( top < bot )
-        //Top direction
-        mStrEnd.ry() += stringer;
-      else
-        //Bottom direction
-        mStrEnd.ry() -= stringer;
-      mSmA.ry() = mStrEnd.y();
-      mSmA.rx() = mFirst.x();
-      }
-
-//    if( snap.mDest.x() == over.getTopLeft().x() ) mSmA.rx() = mStrEnd.rx() -= stringer;
-//    else if( snap.mDest.x() == over.getTopRight().x() ) mSmA.rx() = mStrEnd.rx() += stringer;
-//    else if( snap.mDest.y() == over.getTopLeft().y() ) mSmA.ry() = mStrEnd.ry() += stringer;
-//    else if( snap.mDest.y() == over.getBottomLeft().y() ) mSmA.ry() = mStrEnd.ry() -= stringer;
-//    else mSmA = calcMiddlePoint( mFirst, mStrEnd, sdGlobalProp->mWireEnterType );
-//    //Calculate vertex point
-//    if( mSmA.x() == mStrEnd.x() ) mSmA.ry() = mFirst.y();
-//    else mSmA.rx() = mFirst.x();
-
-    if( mSmA != mStrEnd && mSmA != mFirst ) {
-      //Dubl vertex, test position vertex point
-      int tmp = 0;
-      getSheet()->behindPoint( dctAll, pointToFar( mFirst, mSmA ), &tmp );
-      if( tmp ) {
-        //Излом пошел на объект, сделать углом
-        mSmA = mFirst;
-        if( mSmEnd.x() == mStrEnd.x() ) mStrEnd.ry() = mFirst.y();
-        else mStrEnd.rx() = mFirst.x();
-        //Снова тест нового излома
-        getSheet()->behindPoint( dctAll, pointToFar( mFirst, mStrEnd ), &tmp );
-        if( tmp ) {
-          //Снова над объектом, добавить стрингер
-          if( mSmEnd.x() == mStrEnd.x() ) {
-            //Стрингер по Y
-            if( mSmEnd.y() > mStrEnd.y() ) {
-              mStrEnd.ry() -= stringer;
-              mSmA.ry() -= stringer;
-              }
-            else {
-              mStrEnd.ry() += stringer;
-              mSmA.ry() += stringer;
-              }
-            }
-          else {
-            //Стрингер по X
-            if( mSmEnd.x() > mStrEnd.x() ) {
-              mStrEnd.rx() -= stringer;
-              mSmA.rx() -= stringer;
-              }
-            else {
-              mStrEnd.rx() += stringer;
-              mSmA.rx() += stringer;
-              }
-            }
-          }
-        }
-      }
     }
   }
 
@@ -561,6 +482,85 @@ void SdModeCNetWire::nextNet()
 SdPItemSheet *SdModeCNetWire::getSheet()
   {
   return dynamic_cast<SdPItemSheet*>(mObject);
+  }
+
+
+
+
+//Insert prepared smart path net if present
+void SdModeCNetWire::insertSmartNet()
+  {
+  //Perform insertion only if source and destignation points are not equals
+  if( mSmartSour != mSmartDest ) {
+    //Insert source stringer if present
+    if( mSmartSour != mSmartSourStr )
+      getSheet()->insertChild( new SdGraphNetWire( mSmartSour, mSmartSourStr, mNetName, sdGlobalProp->mWireProp ), mUndo );
+
+    //Insert first intermediate vertex
+    if( mSmartSourStr != mSmartInter0 )
+      getSheet()->insertChild( new SdGraphNetWire( mSmartSourStr, mSmartInter0, mNetName, sdGlobalProp->mWireProp ), mUndo );
+
+    //Insert second intermediate vertex
+    if( mSmartInter0 != mSmartInter1 )
+      getSheet()->insertChild( new SdGraphNetWire( mSmartInter0, mSmartInter1, mNetName, sdGlobalProp->mWireProp ), mUndo );
+
+    //Insert destignation vertex
+    if( mSmartInter1 != mSmartDestStr )
+      getSheet()->insertChild( new SdGraphNetWire( mSmartInter1, mSmartDestStr, mNetName, sdGlobalProp->mWireProp ), mUndo );
+
+    //Insert destignation stringer if present
+    if( mSmartDestStr != mSmartDest )
+      getSheet()->insertChild( new SdGraphNetWire( mSmartDestStr, mSmartDest, mNetName, sdGlobalProp->mWireProp ), mUndo );
+    }
+  }
+
+
+
+
+//Calculate stringer only for sym imp
+SdPoint SdModeCNetWire::getStringer(int x, int y, SdGraph *graph)
+  {
+  if( graph != nullptr && graph->getClass() == dctSymImp ) {
+    int stringer = getGrid().x();
+
+
+    SdRect over = graph->getOverRect();
+
+    //Distance to left side of body
+    int left = abs( over.getLeft() - x );
+    //Distance to right side of body
+    int right = abs( over.getRight() - x );
+    //Minimum distance with horizontal direction
+    int horz = qMin(left,right);
+
+    //Distance to top side of bidy
+    int top = abs( over.getTop() - y );
+    //Distance to bottom side of body
+    int bot = abs( over.getBottom() - y );
+    //Minimum distance with vertical direction
+    int vert = qMin( top, bot );
+
+    qDebug() << "stringer" << over.getTopLeft() << over.getBottomRight() << x << y;
+    if( horz < vert ) {
+      //Stringer is horizontal
+      if( left < right )
+        //Left direction
+        x -= stringer;
+      else
+        //Right direction
+        x += stringer;
+      }
+    else {
+      //Stringer is vertical
+      if( top < bot )
+        //Top direction
+        y += stringer;
+      else
+        //Bottom direction
+        y -= stringer;
+      }
+    }
+  return SdPoint(x,y);
   }
 
 

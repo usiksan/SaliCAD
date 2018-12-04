@@ -21,16 +21,23 @@ class SdPItemSheet;
 
 class SdModeCNetWire : public SdModeCommon
   {
-    SdPoint              mFirst;     //First wire point
-    SdPoint              mPrevMove;  //Previous move point
-    SdPoint              mMiddle;    //Vertex point
-    //int           enterType; //Режим ввода линий
-    QString              mNetName;   //Wire name
-    bool                 mShowNet;   //Show current net with enter color
+    SdPoint              mFirst;        //First wire point
+    SdPoint              mPrevMove;     //Previous move point
+    SdPoint              mMiddle;       //Vertex point
+    QString              mNetName;      //Wire name
+    bool                 mShowNet;      //Show current net with enter color
 
-    SdPoint              mStrEnd,    //Stringet of last point of autonet
-                         mSmA,       //Intermediate point of autonet
-                         mSmEnd;     //Last point of autonet
+    //Smart net
+    SdPoint              mSmartSour,    //Source of smart path net
+                         mSmartSourStr, //Source stringer if present, else equal to mSmartSour
+                         mSmartInter0,  //Intermediate point of smart path net if present, else equal to mSmartSourStr
+                         mSmartInter1,  //Intermediate point of smart path net if present, else equal to mSmartInter0
+                         mSmartDestStr, //Destignation stringer if present, else equal to mSmartDest
+                         mSmartDest;    //Destignation
+
+//    SdPoint              mStrEnd,    //Stringet of last point of autonet
+//                         mSmA,       //Intermediate point of autonet
+//                         mSmEnd;     //Last point of autonet
 
     const int sFirstPoint = 0, sNextPoint = 1;
 
@@ -71,6 +78,12 @@ class SdModeCNetWire : public SdModeCommon
     void                 calcSmartPoint();
     void                 nextNet();
     SdPItemSheet        *getSheet();
+
+    //Insert prepared smart path net if present
+    void                 insertSmartNet();
+
+    //Calculate stringer only for sym imp
+    SdPoint              getStringer( int x, int y, SdGraph *graph );
 
   };
 

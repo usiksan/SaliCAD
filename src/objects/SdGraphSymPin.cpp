@@ -141,7 +141,7 @@ void SdGraphSymPin::readObject(SdObjectMap *map, const QJsonObject obj)
 void SdGraphSymPin::saveState(SdUndo *undo)
   {
   undo->propSymPin( &mPinProp, &mOrigin );
-  undo->propTextAndText( &mNumberProp, &mNumberPos, &mNumberRect, 0 );
+  undo->propTextAndText( &mNumberProp, &mNumberPos, &mNumberRect, nullptr );
   undo->propTextAndText( &mNameProp, &mNamePos, &mNameRect, &mName );
   }
 
