@@ -30,8 +30,14 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
   SdPropBarStratum( title )
   {
   if( asRoad ) {
+    QToolButton *but;
+    addWidget( but = new QToolButton() );
+    but->setText( tr("Road width:") );
+    but->setToolTip( tr("Activate road width editor") );
+
     mWidth = new QComboBox();
     mWidth->setEditable(true);
+    mWidth->setToolTip( tr("Current road width editor") );
     //Fill width list with previous values
     if( prevWidth.count() == 0 )
       prevWidth.addDouble( 0.0 );
@@ -42,6 +48,11 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
     mWidth->lineEdit()->setValidator( new QRegExpValidator( QRegExp("[0-9]{1,3}((\\.|\\,)[0-9]{0,3})?")) );
     mWidth->setMinimumWidth(80);
 
+    //Activate road width editor
+    connect( but, &QToolButton::clicked, [=] () {
+      mWidth->lineEdit()->setFocus();
+      mWidth->lineEdit()->selectAll();
+      });
     //on complete editing
     connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [=]() {
       prevWidth.reorderComboBoxDoubleString( mWidth );
@@ -61,6 +72,7 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
 
   mWireName = new QLineEdit();
   mWireName->setReadOnly(true);
+  mWireName->setToolTip( tr("Current road net name") );
   mWireName->setMinimumWidth(80);
   mWireName->setMaximumWidth(120);
 
@@ -119,6 +131,7 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
   //Via pad type
   mViaPadType = new QComboBox();
   mViaPadType->setEditable(true);
+  mViaPadType->setToolTip( tr("Via pad type") );
   for( const QString &str : padTypeHistory )
     mViaPadType->addItem( str );
   mViaPadType->setMinimumWidth(180);
@@ -138,6 +151,7 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
   //Button to select pin type from default pad association table
   QToolButton *but = new QToolButton();
   but->setText( QStringLiteral("...") );
+  but->setToolTip( tr("Edit via pad type") );
   connect( but, &QToolButton::clicked, this, [this] () {
     QString str = SdDPadMaster::build( mViaPadType->currentText(), this );
     if( !str.isEmpty() ) {

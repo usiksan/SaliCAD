@@ -33,7 +33,7 @@ class SdModeCRoadEnter : public SdModeCommon
     SdPoint         mPrevMove;    //Previous entered point
     SdPropRoad      mProp;        //Current properties for road
     SdPropVia       mViaProp;     //Current properties for vias
-    SdStratum       mStack;       //Available stratum stack
+    SdStratum       mStack;       //Available stratum stack at current point
     SdRuleBlock     mRule;        //Rule block for segment
     SdPoint         mTargetPoint; //Target point
     QList<SdPoint>  mSmartPath;   //Auto roaded path to smart point
@@ -99,6 +99,15 @@ class SdModeCRoadEnter : public SdModeCommon
 
     //Change trace layer
     void            changeTraceLayer();
+
+    //Change to trace layer
+    void            changeToTraceLayer( SdStratum dest );
+
+    //Add via to change trace layer
+    void            addVia( SdStratum newStratum );
+
+    //First point enter
+    void            firstPointEnter( bool enter );
   };
 
 #endif // SDMODECROADENTER_H
