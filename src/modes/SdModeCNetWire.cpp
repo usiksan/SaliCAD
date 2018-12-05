@@ -540,7 +540,7 @@ SdPoint SdModeCNetWire::getStringer(int x, int y, SdGraph *graph)
     //Minimum distance with vertical direction
     int vert = qMin( top, bot );
 
-    qDebug() << "stringer" << over.getTopLeft() << over.getBottomRight() << x << y;
+    //qDebug() << "stringer" << over.getTopLeft() << over.getBottomRight() << x << y;
     if( horz < vert ) {
       //Stringer is horizontal
       if( left < right )

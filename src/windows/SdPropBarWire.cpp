@@ -14,7 +14,10 @@ Description
 #include "SdPropBarWire.h"
 #include "SdStringHistory.h"
 #include "objects/SdUtil.h"
+
 #include <QLineEdit>
+#include <QPushButton>
+#include <QToolButton>
 
 static SdStringHistory prevWidth;
 
@@ -23,8 +26,13 @@ static SdStringHistory prevWires;
 SdPropBarWire::SdPropBarWire( const QString title ) :
   SdPropBar( title )
   {
+  QToolButton *but;
+  addWidget( but = new QToolButton() );
+  but->setText( tr("Wire line width:") );
+  but->setToolTip( tr("Activate width editor") );
   mWidth = new QComboBox();
   mWidth->setEditable(true);
+  mWidth->setToolTip( tr("Wire line width editor") );
   //Fill width list with previous values
   if( prevWidth.count() == 0 )
     prevWidth.addDouble( 0.0 );
@@ -33,9 +41,13 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
   //Select first item
   mWidth->setCurrentIndex(0);
   mWidth->lineEdit()->setValidator( new QRegExpValidator( QRegExp("[0-9]{1,3}((\\.|\\,)[0-9]{0,3})?")) );
-//  mWidth->lineEdit()->setValidator( new QDoubleValidator() );
   mWidth->setMinimumWidth(80);
 
+  //on begin editing
+  connect( but, &QToolButton::clicked, [=]() {
+    mWidth->lineEdit()->setFocus();
+    mWidth->lineEdit()->selectAll();
+    });
   //on complete editing
   connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [=]() {
     prevWidth.reorderComboBoxDoubleString( mWidth );
@@ -51,9 +63,13 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
 
   addSeparator();
 
+  addWidget( but = new QToolButton() );
+  but->setText( tr("Wire name:") );
+  but->setToolTip( tr("Activate wire name editor") );
 
   mWireName = new QComboBox();
   mWireName->setEditable(true);
+  mWireName->setToolTip( tr("Wire name editor") );
   //Fill name list with previous wire names
   if( prevWires.count() == 0 )
     prevWires.addString( QStringLiteral("----") );
@@ -63,12 +79,17 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
   mWireName->setCurrentIndex(0);
   mWireName->setMinimumWidth(80);
 
+  //on begin editing
+  connect( but, &QToolButton::clicked, [=]() {
+    mWireName->lineEdit()->setFocus();
+    mWireName->lineEdit()->selectAll();
+    });
   //on complete editing
   connect( mWireName->lineEdit(), &QLineEdit::editingFinished, [=]() {
     prevWires.reorderComboBoxString( mWireName );
     emit propChanged();
     });
-  //on select other width
+  //on select other net name
   connect( mWireName, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int) {
     prevWires.reorderComboBoxString( mWireName );
     emit propChanged();
@@ -159,6 +180,7 @@ void SdPropBarWire::setPropWire(SdPropLine *propLine, double ppm, int enterType,
 
     //Current wire name
     mWireName->setCurrentText( wireName );
+    mWireName->lineEdit()->selectAll();
     prevWires.reorderComboBoxString( mWireName );
     }
   }

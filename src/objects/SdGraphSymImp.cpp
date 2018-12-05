@@ -65,7 +65,7 @@ SdGraphSymImp::SdGraphSymImp(SdPItemComponent *comp, SdPItemSymbol *sym, SdPItem
   mProp = *prp;        //Implement properties
   if( sym ) {
     QTransform t( matrix() );
-    mOverRect.set( t.mapRect(sym->getOverRect(dctAll & (~(dctIdent | dctValue)))) );//Over rect
+    mOverRect.set( t.mapRect(sym->getOverRect(dctAll & (~(dctIdent | dctValue | dctSymPin)))) );//Over rect
     mIdent.mProp = sym->identGet()->getPropText();   //Symbol identificator text properties
     mIdent.mOrigin = sym->identGet()->getOrigin();   //Symbol identificator position in part context
     mValue.mProp = sym->valueGet()->getPropText();   //Symbol value text properties
@@ -611,7 +611,7 @@ void SdGraphSymImp::updatePinsPositions()
   QTransform t = impl.getMatrix();
   for( SdSymImpPin &pin : mPins )
     pin.mPosition = t.map( pin.mPin->getPinOrigin() );
-  mOverRect.set( t.mapRect( mSymbol->getOverRect(dctAll & (~(dctIdent | dctValue))) ) );
+  mOverRect.set( t.mapRect( mSymbol->getOverRect(dctAll & (~(dctIdent | dctValue | dctSymPin))) ) );
   }
 
 

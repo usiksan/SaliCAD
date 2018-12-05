@@ -29,6 +29,7 @@ SdPropBar::SdPropBar( const QString title ) :
   mLayer->setMaxVisibleItems( 10 );
   addWidget( mLayer );
   mLayer->setMinimumWidth( 150 );
+  mLayer->setToolTip( tr("Current layer") );
 
   //fill new layers list
   updateViewedLayers();

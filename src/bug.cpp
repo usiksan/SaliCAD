@@ -2,7 +2,7 @@
 //B064 bugs
 //F001 fatal
 //C001 critical
-//D073 do
+//D075 do
 
 
 
@@ -27,6 +27,10 @@
 
 //===================================================================================
 //Fixed:
+
+//D075 When activated net name property in net properties bar select current net name
+
+//D074 When activated bus dialog select previous net list
 
 //D071 When change param to project dirtyProject do not changed
 

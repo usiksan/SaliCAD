@@ -115,6 +115,7 @@ void SdModeCNetName::enterPoint( SdPoint p )
     }
   else {
     if( getSheet()->getNetFromPoint( p, mNetName ) ) {
+      mPrev = p;
       setDirty();
       setDirtyCashe();
       setStep( sPlaceName );

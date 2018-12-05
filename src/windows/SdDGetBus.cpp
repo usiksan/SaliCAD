@@ -40,8 +40,10 @@ SdDGetBus::SdDGetBus(QWidget *parent) :
     } );
 
   //Setup default bus line - previous bus line
-  if( previousBusList.count() )
+  if( previousBusList.count() ) {
     ui->mBusEdit->setText( previousBusList.first() );
+    ui->mBusEdit->selectAll();
+    }
 
 
   //Help system
