@@ -414,17 +414,17 @@ void SdModeCNetWire::calcFirstSmart()
 
 
 
-static SdPoint pointToFar( SdPoint sour, SdPoint dest ) {
-  if( sour.x() == dest.x() ) {
-    if( sour.y() > dest.y() ) sour.ry()--;
-    else sour.ry()++;
-    }
-  else if( sour.y() == dest.y() ) {
-    if( sour.x() > dest.x() ) sour.rx()--;
-    else sour.rx()++;
-    }
-  return sour;
-  }
+//static SdPoint pointToFar( SdPoint sour, SdPoint dest ) {
+//  if( sour.x() == dest.x() ) {
+//    if( sour.y() > dest.y() ) sour.ry()--;
+//    else sour.ry()++;
+//    }
+//  else if( sour.y() == dest.y() ) {
+//    if( sour.x() > dest.x() ) sour.rx()--;
+//    else sour.rx()++;
+//    }
+//  return sour;
+//  }
 
 
 

@@ -199,7 +199,8 @@ void SdDPadMaster::drawPadSchematic(SdIllustrator &ill)
       ill.drawFillCircle( mPad.mCenterX, mPad.mCenterY, mPad.mHoleDiametr/2, QColor(0x7F6A00) );
 
     //mask
-    ill.drawFillCircle( mPad.mCenterX, mPad.mCenterY, (mPad.mDiametrWidth + mPad.mMaskThreshold)/2, QColor(0xA5FF7F), 0.5 );
+    if( mPad.mMaskThreshold > 0 )
+      ill.drawFillCircle( mPad.mCenterX, mPad.mCenterY, (mPad.mDiametrWidth + mPad.mMaskThreshold)/2, QColor(0xA5FF7F), 0.5 );
 
     //Stensil if present
     if( mPad.mHoleDiametr <= 0 )
@@ -215,7 +216,8 @@ void SdDPadMaster::drawPadSchematic(SdIllustrator &ill)
       ill.drawFillCircle( mPad.mCenterX, mPad.mCenterY, mPad.mHoleDiametr/2, QColor(0x7F6A00) );
 
     //mask
-    ill.drawCenterFillRectWH( mPad.mCenterX,  mPad.mCenterY,
+    if( mPad.mMaskThreshold > 0 )
+      ill.drawCenterFillRectWH( mPad.mCenterX,  mPad.mCenterY,
                         mPad.mDiametrWidth+mPad.mMaskThreshold, mPad.mHeight+mPad.mMaskThreshold, QColor(0xA5FF7F), 0.5 );
 
     //Stensil if present
@@ -278,6 +280,7 @@ void SdDPadMaster::onThroughPin(bool isThrough)
   if( isThrough ) {
     //Disable stensil hole
     ui->mStensilThreshold->clear();
+    mPad.mStencilThreshold = 0;
     ui->mStensilRows->clear();
     ui->mStensilColumns->clear();
     //Enable pin hole
@@ -287,6 +290,8 @@ void SdDPadMaster::onThroughPin(bool isThrough)
     }
   else {
     //Enable stensil hole
+    if( mPad.mStencilThreshold <= 0 )
+      mPad.mStencilThreshold = 50;
     ui->mStensilThreshold->setText( sdEnvir->toPhisPcb(mPad.mStencilThreshold) );
     ui->mStensilRows->setText( QString::number(mPad.mStencilRows) );
     ui->mStensilColumns->setText( QString::number(mPad.mStencilCols) );
