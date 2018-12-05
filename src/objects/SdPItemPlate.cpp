@@ -120,9 +120,11 @@ void SdPItemPlate::setPadAssociation(const QString nm, const SdPadMap &map, SdUn
 
 QPolygonF SdPItemPlate::getPadPolygon(SdPoint p, const QString pinType, int addon) const
   {
+  //If pad contained in association then create polygon from association pad
   if( mPadAssociation.contains(pinType) )
     return mPadAssociation.pin( pinType ).polygon(p, addon);
-  return SdPad().polygon(p, addon);
+  //in other cases create polygon from pad description
+  return sdEnvir->getPad( pinType ).polygon( p, addon );
   }
 
 
