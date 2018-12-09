@@ -1566,6 +1566,16 @@ void SdWMain::cmModeRoadEnter()
 
 
 
+
+void SdWMain::cmModeRoadMove()
+  {
+  if( activeEditor() )
+    activeEditor()->cmModeRoadMove();
+  }
+
+
+
+
 void SdWMain::cmModePolygon()
   {
   if( activeEditor() )

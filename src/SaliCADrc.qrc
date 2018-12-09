@@ -272,5 +272,6 @@
         <file>pic/mouse5.png</file>
         <file>pic/mouse6.png</file>
         <file>pic/mouse7.png</file>
+        <file>pic/objPcbWireMove.png</file>
     </qresource>
 </RCC>

@@ -42,7 +42,7 @@ Description
 
 void SdWCommand::createMenu(SdWMain *frame)
   {
-  //Меню Файл
+  //File menu [Меню Файл]
   menuFile = new QMenu( frame->tr("File") );
 
 
@@ -69,7 +69,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   menuFile->addSeparator();
   cmFileExit = menuFile->addAction( QIcon(QString(":/pic/exit.png")), frame->tr("Exit programm"), frame, SLOT(cmFileExit()) );
 
-  //Меню для предыдущих файлов
+  //Last previous files menu [Меню для предыдущих файлов]
   for (int i = 0; i < PREVIOUS_FILES_COUNT; ++i)
     {
     cmFilePrevious[i] = new QAction(frame);
@@ -81,7 +81,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   updatePreviousMenu();
 
 
-  //Меню Объект
+  //Object menu [Меню Объект]
   menuObject = new QMenu( frame->tr("Objects") );
   cmObjectNew         = menuObject->addAction( QIcon(QString(":/pic/objectNew.png")), frame->tr("Create..."), frame, SLOT(cmObjectNew()) );
   cmObjectLoad        = menuObject->addAction( QIcon(QString(":/pic/download.png")), frame->tr("Load from library..."), frame, SLOT(cmObjectLoad()) );
@@ -101,7 +101,7 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
 
-  //Меню Редактирование
+  //Edit menu [Меню Редактирование]
   menuEdit = new QMenu( frame->tr("Edit") );
   cmEditUndo = menuEdit->addAction( QIcon(QString(":/pic/editUndo.png")), frame->tr("Undo"), frame, SLOT(cmEditUndo()) );
   cmEditUndo->setEnabled(false);
@@ -122,7 +122,7 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
 
-
+  //View menu
   menuView = new QMenu( frame->tr("View") );
   cmViewProject = menuView->addAction( QIcon(QString(":/pic/openProjects.png")), frame->tr("Show-hide project"), frame, SLOT(cmViewProject()) );
   menuView->addSeparator();
@@ -141,7 +141,7 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
 
-
+  //Draw menu
   menuDraw = new QMenu( frame->tr("Draw") );
   cmModeTable[MD_SELECT]      = menuDraw->addAction( QIcon(QString(":/pic/select.png")), frame->tr("Select and edit"), frame, SLOT(cmModeSelect()) );
   menuDraw->addSeparator();
@@ -162,7 +162,7 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
 
-
+  //Symbol editor menu
   menuInsertSymbol = new QMenu( frame->tr("Symbol") );
 
   cmModeTable[MD_SYM_PIN]       = menuInsertSymbol->addAction( QIcon(QString(":/pic/objPin.png")), frame->tr("Insert pin"), frame, SLOT(cmModePin()) );
@@ -172,7 +172,7 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
 
-
+  //Part editor menu
   menuInsertPart = new QMenu( frame->tr("Part") );
 
   cmShowPads                     = menuInsertPart->addAction( QIcon(QString(":/pic/objVia.png")), frame->tr("Show pads") );
@@ -186,7 +186,7 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
 
-
+  //3D part editor menu
   menuInsertPart3d = new QMenu( frame->tr("Insert") );
   //  cmBall           = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   //  cmPinWired       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
@@ -202,7 +202,7 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
 
-
+  //Sheet editor menu
   menuInsertSheet = new QMenu( frame->tr("Sheet") );
   cmRenumeration              = menuInsertSheet->addAction( QIcon(QStringLiteral(":/pic/renumeration.png")), frame->tr("Renumeration"), frame, SLOT(cmRenumeration()) );
   menuInsertSheet->addSeparator();
@@ -219,7 +219,7 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
 
-
+  //PCB editor menu
   menuInsertPcb = new QMenu( frame->tr("Plate") );
   menuInsertPcb->insertAction( nullptr, cmRenumeration );
   menuInsertPcb->insertSeparator(nullptr);
@@ -241,6 +241,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_PART_IMP]   = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrt.png")), frame->tr("Insert part"), frame, SLOT(cmModeComponent()) );
   cmModeTable[MD_MOVE_PART]  = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrtPlace.png")), frame->tr("Move part"), frame, SLOT(cmModeMovePart()) );
   cmModeTable[MD_ROAD_ENTER] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPcbWire.png")), frame->tr("Road enter"), frame, SLOT(cmModeRoadEnter()) );
+  cmModeTable[MD_ROAD_MOVE]  = menuInsertPcb->addAction( QIcon(QString(":/pic/objPcbWireMove.png")), frame->tr("Road move"), frame, SLOT(cmModeRoadMove()) );
   cmModeTable[MD_POLYGON]    = menuInsertPcb->addAction( QIcon(QString(":/pic/objPolygon.png")), frame->tr("Polygon enter"), frame, SLOT(cmModePolygon()) );
   cmModeTable[MD_VIA_ENTER]  = menuInsertPcb->addAction( QIcon(QString(":/pic/objVia.png")), frame->tr("Via enter"), frame, SLOT(cmModeViaEnter()) );
   //  cmModePlace      = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
@@ -252,7 +253,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_PLATE_VALUE] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrtValue.png")), frame->tr("Move value of components"), frame, SLOT(cmModeValueMove()) );
 
 
-
+  //PCB roads rules menu
   menuRules = new QMenu( frame->tr("Rules") );
   cmRulesEdit = menuRules->addAction( QIcon(QStringLiteral(":/pic/rules.png")), frame->tr("Edit rules dialog"), frame, SLOT(cmRulesEdit()) );
   cmShowRuleErrors = menuRules->addAction( QIcon(QStringLiteral(":/pic/objShowRuleErrors.png")), frame->tr("Show rule errors") );
@@ -263,7 +264,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmRulesErrorNext = menuRules->addAction( QIcon(QStringLiteral(":/pic/rulesNextError.png")), frame->tr("Center next rules error"), frame, SLOT(cmRulesErrorNext()) );
 
 
-
+  //Instruments menu
   menuInstruments = new QMenu( frame->tr("Instruments") );
   cmOption = menuInstruments->addAction( QIcon(QString(":/pic/instrumOptions.png")), frame->tr("Options"), frame, SLOT(cmOption()) );
   menuInstruments->addSeparator();
@@ -273,7 +274,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmGuiderPause      = menuInstruments->addAction( frame->tr("Capture pause-resume"), frame, SLOT(cmGuiderPause()), QKeySequence(Qt::Key_F11) );
 
 
-
+  //Help menu
   menuHelp = new QMenu( frame->tr("Help") );
   cmHelpContens      = menuHelp->addAction( QIcon(QString(":/pic/help.png")), frame->tr("Contens"), frame, SLOT(cmHelpContens()) );
   cmHelpIndex        = menuHelp->addAction( QIcon(QString(":/pic/helpContext.png")), frame->tr("Index"), frame, SLOT(cmHelpIndex()) );
@@ -287,6 +288,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   frame->connect( cmHelpForward, &QAction::triggered, frame, &SdWMain::cmHelpForward );
 
 
+  //Select popup menu
   menuSelect = new QMenu( frame->tr("Select") );
   menuSelect->insertAction( nullptr, cmEditUndo );
   menuSelect->insertAction( nullptr, cmEditRedo );
@@ -427,6 +429,10 @@ void SdWCommand::addViewCommands(QToolBar *bar)
   bar->insertAction( nullptr, cmModeTable[MD_ZOOM_WIN] );
   bar->insertAction( nullptr, cmModeTable[MD_MEASUREMENT] );
   }
+
+
+
+
 
 void SdWCommand::addDrawCommands(QToolBar *bar)
   {

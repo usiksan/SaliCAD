@@ -37,7 +37,7 @@ SdDPadMaster::SdDPadMaster(SdPad pad, QWidget *parent) :
   onPadCircleToggle(mPad.mIsCircle);
   ui->mMaskThreshold->setText( sdEnvir->toPhisPcb(mPad.mMaskThreshold) );
   onThroughPin( mPad.mHoleDiametr > 0 );
-  ui->mThroughPin->setChecked( mPad.mHoleDiametr > 0 );
+  ui->mThroughPin->setChecked( mPad.isThrough() );
 
   //Connect signals
   connect( ui->mCirclePad, &QCheckBox::toggled, this, &SdDPadMaster::onPadCircleToggle );

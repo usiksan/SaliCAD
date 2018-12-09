@@ -46,14 +46,8 @@ SdPropBarPartPin::SdPropBarPartPin(const QString title) :
 
 
   //on select other pin type
-  connect( mPinType, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int){
-    pinTypeHistory.reorderComboBoxString( mPinType );
-    emit propChanged();
-    });
-  connect( mPinType->lineEdit(), &QLineEdit::editingFinished, [=](){
-    pinTypeHistory.reorderComboBoxString( mPinType );
-    emit propChanged();
-    });
+  connect( mPinType, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), this, &SdPropBarPartPin::setPinType );
+  connect( mPinType->lineEdit(), &QLineEdit::editingFinished, this, &SdPropBarPartPin::setPinType );
   addWidget( mPinType );
 
   //Button to select pin type from default pad association table
@@ -63,8 +57,7 @@ SdPropBarPartPin::SdPropBarPartPin(const QString title) :
     QString str = SdDPadMaster::build( mPinType->currentText(), this );
     if( str != mPinType->currentText() ) {
       mPinType->setCurrentText( str );
-      pinTypeHistory.reorderComboBoxString( mPinType );
-      emit propChanged();
+      setPinType();
       }
     } );
   addWidget( but );
@@ -89,7 +82,7 @@ void SdPropBarPartPin::setPropPartPin(SdPropPartPin *propPartPin)
       }
 
     //Set current pin type
-    qDebug() << "setPropPartPin" << propPartPin->mPinType.str();
+    //qDebug() << "setPropPartPin" << propPartPin->mPinType.str();
     mPinType->setCurrentText( propPartPin->mPinType.str() );
     pinTypeHistory.reorderComboBoxString( mPinType );
     }
@@ -118,6 +111,26 @@ void SdPropBarPartPin::getPropPartPin(SdPropPartPin *propPartPin)
     if( !pinType.isEmpty() )
       propPartPin->mPinType = pinType;
     }
+  }
+
+
+
+
+
+void SdPropBarPartPin::setPinType()
+  {
+  //When pin type changed we need update smd or throw pin flag
+  QString pinType = mPinType->currentText();
+  if( !pinType.isEmpty() ) {
+    SdPad pad;
+    pad.parse( pinType );
+    if( pad.isThrough() )
+      mPinSide->setCurrentIndex(3);
+    else
+      mPinSide->setCurrentIndex(1);
+    }
+  pinTypeHistory.reorderComboBoxString( mPinType );
+  emit propChanged();
   }
 
 

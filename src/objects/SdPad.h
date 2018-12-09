@@ -71,6 +71,8 @@ class SdPad
 
     bool        isEmpty() const { return mHeight < 0; }
 
+    bool        isThrough() const { return mHoleDiametr > 0; }
+
     friend class SdDPadMaster;
   };
 

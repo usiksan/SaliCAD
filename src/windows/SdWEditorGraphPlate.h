@@ -40,6 +40,7 @@ class SdWEditorGraphPlate : public SdWEditorGraph
     virtual void           cmModeMovePart() override;
     virtual void           cmModeEditWire() override;
     virtual void           cmModeRoadEnter() override;
+    virtual void           cmModeRoadMove() override;
     virtual void           cmModePolygon() override;
     virtual void           cmModeDeleteWire() override;
     virtual void           cmModePad() override;

@@ -23,6 +23,7 @@ Description
 #include "objects/SdEnvir.h"
 #include "objects/SdGraphPartImp.h"
 #include "modes/SdModeCRoadEnter.h"
+#include "modes/SdModeCRoadMove.h"
 #include "modes/SdModeCPartPlace.h"
 #include "modes/SdModeCPolygonEnter.h"
 #include "modes/SdModeSelect.h"
@@ -109,6 +110,14 @@ void SdWEditorGraphPlate::cmModeEditWire()
 void SdWEditorGraphPlate::cmModeRoadEnter()
   {
   modeSet( new SdModeCRoadEnter( this, getProjectItem() )  );
+  }
+
+
+
+
+void SdWEditorGraphPlate::cmModeRoadMove()
+  {
+  modeSet( new SdModeCRoadMove( this, getProjectItem() )  );
   }
 
 

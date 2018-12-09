@@ -29,7 +29,7 @@ class SdPropBarPartPin : public SdPropBar
     void setPropPartPin( SdPropPartPin *propPartPin );
     void getPropPartPin( SdPropPartPin *propPartPin );
 
-  private:
+  private slots:
     void setPinType();
   };
 
