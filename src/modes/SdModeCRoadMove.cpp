@@ -110,5 +110,5 @@ int SdModeCRoadMove::getCursor() const
 
 int SdModeCRoadMove::getIndex() const
   {
-  return MD_ROAD_ENTER;
+  return MD_ROAD_MOVE;
   }

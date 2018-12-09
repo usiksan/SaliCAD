@@ -572,6 +572,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barPcb->insertAction( nullptr, cmModeTable[MD_PART_IMP] );
   barPcb->insertAction( nullptr, cmModeTable[MD_MOVE_PART] );
   barPcb->insertAction( nullptr, cmModeTable[MD_ROAD_ENTER] );
+  barPcb->insertAction( nullptr, cmModeTable[MD_ROAD_MOVE] );
   barPcb->insertAction( nullptr, cmModeTable[MD_POLYGON] );
   barPcb->insertAction( nullptr, cmModeTable[MD_VIA_ENTER] );
   barPcb->insertAction( nullptr, cmModeTable[MD_PLATE_IDENT] );

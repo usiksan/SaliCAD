@@ -46,17 +46,18 @@ class SdModeCRoadMove : public SdModeCommon
     // SdMode interface
   public:
     virtual void reset() override;
-    virtual void drawStatic(SdContext *ctx) override;
+    virtual void    drawStatic(SdContext *ctx) override;
     virtual void drawDynamic(SdContext *ctx) override;
     virtual void movePoint(SdPoint) override;
+    virtual void    cancelPoint(SdPoint) override;
     virtual void beginDrag(SdPoint) override;
     virtual void dragPoint(SdPoint) override;
     virtual void stopDrag(SdPoint) override;
     virtual QString getStepHelp() const override;
     virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;
-    virtual int getCursor() const override;
-    virtual int getIndex() const override;
+    virtual int     getCursor() const override;
+    virtual int     getIndex() const override;
 
   private:
     //Plate where road being inserted
