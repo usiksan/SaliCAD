@@ -155,11 +155,11 @@ bool SdSegment::isOneSideLine(const SdSegment &s) const
 
 
 //Calculation segment orientation
-SdSegment::SdOrientation SdSegment::orientation() const
+SdOrientation SdSegment::orientation() const
   {
   if( p1 == p2 ) return sorNull;
-  if( isSectionX() ) return sorVertical;
-  if( isSectionY() ) return sorHorizontal;
+  if( isSectionX() ) return sorHorizontal;
+  if( isSectionY() ) return sorVertical;
   int dx = p1.x() - p2.x();
   int dy = p1.y() - p2.y();
   if( dx == dy ) return sorSlashForward;

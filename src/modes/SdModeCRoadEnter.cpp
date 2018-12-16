@@ -482,35 +482,7 @@ void SdModeCRoadEnter::calcNextSmartPoint( SdPoint fromPoint )
 //For all barriers: we check intersection point of line(p1,p2) and
 SdPoint SdModeCRoadEnter::checkRoad(SdPoint p1, SdPoint p2) const
   {
-  //If start point inside barriers then no possible trace
-  if( isBarriersContains( mRoads, p1 ) )
-    return p1;
-
-  //Source line
-  QLineF sf(p1.toPointF(),p2.toPointF());
-  //Point for save intersection
-  QPointF d;
-  for( const SdBarrier &b : mRoads )
-    if( b.mNetName != mProp.mNetName.str() ) {
-      //For each edge of polygon we check intersection with our sf line
-      for( int i = 1; i < b.mPolygon.count(); i++ ) {
-        //Take next edge of polygon
-        QLineF df(b.mPolygon.at(i-1),b.mPolygon.at(i));
-        //If lines intersected then update sf
-        if( df.intersect( sf, &d ) == QLineF::BoundedIntersection ) {
-          p2 = d.toPoint();
-          sf.setP2( d );
-          }
-        }
-      //Complete with final edge
-      QLineF df(b.mPolygon.first(), b.mPolygon.last() );
-      //If lines intersected then update sf
-      if( df.intersect( sf, &d ) == QLineF::BoundedIntersection ) {
-        p2 = d.toPoint();
-        sf.setP2( d );
-        }
-      }
-  return p2;
+  return sdCheckRoadOnBarrierList( mRoads, p1, p2, mProp.mNetName.str() );
   }
 
 

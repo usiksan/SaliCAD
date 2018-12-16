@@ -15,7 +15,7 @@ Description
 #include "SdProp.h"
 #include "SdSegment.h"
 #include <math.h>
-
+//#include <boost/geometry/geometry.hpp>
 
 
 void SdPoint::rotate(SdPoint origin, SdPropAngle angle)
@@ -42,8 +42,8 @@ void SdPoint::rotate(SdPoint origin, SdPropAngle angle)
       //Move to zero point origin
       double dx = x() - origin.x(), dy = y() - origin.y();
       double sinAngle = sin((M_PI / 180.0) * angle.getDegree()), cosAngle = cos((M_PI / 180.0) * angle.getDegree());
-      setX( (int)(origin.x() + dx*cosAngle - dy*sinAngle) );
-      setY( (int)(origin.y() + dx*sinAngle + dy*cosAngle) );
+      setX( static_cast<int>(origin.x() + dx*cosAngle - dy*sinAngle) );
+      setY( static_cast<int>(origin.y() + dx*sinAngle + dy*cosAngle) );
       return;
     }
   p.move( origin );
@@ -78,6 +78,40 @@ void SdPoint::mirror(SdPoint a, SdPoint b)
   rotate( SdPoint(), ang );
   //Перенос
   move( a );
+  }
+
+
+
+
+
+void SdPoint::moveOriented( int dx, int dy, SdOrientation orient)
+  {
+  switch( orient ) {
+    case sorNull   :
+      //For p1 == p2
+    case sorAny :
+      setX( x() + dx );
+      setY( y() + dy );
+      break;
+    case sorVertical :
+      //For p1.x == p2.x
+      setY( y() + dy );
+      break;
+    case sorHorizontal :
+      //For p1.y == p2.y
+      setX( x() + dx );
+      break;
+    case sorSlashForward :
+      //For dx == dy
+      setX( x() + dx );
+      setY( y() + dy );
+      break;
+    case sorSlashBackward :
+      //For dx == -dy
+      setX( x() + dx );
+      setY( y() - dy );
+      break;
+    }
   }
 
 
@@ -422,7 +456,41 @@ bool calcFreeNearIntersect(SdPoint sour, SdPoint a, SdPoint b, SdPoint &dest)
 SdPoint calcArcStop(SdPoint center, SdPoint start, SdPoint sector)
   {
   double radius = center.getDistance(start);
-  SdPoint stop((int)(center.x()+radius),center.y());
+  SdPoint stop( static_cast<int>(center.x()+radius), center.y() );
   stop.rotate( center, sector.getAngle(center) );
   return stop;
+  }
+
+
+
+//Get intermediate point with 45 degree step vertex
+//    result  --------+ b
+//           /
+//          /
+//       a +
+//Where orient is b-result orientation
+SdPoint get45oriented(SdPoint a, SdPoint b, SdOrientation first, SdOrientation second)
+  {
+  int dx = b.x() - a.x();
+  int dy = b.y() - a.y();
+  int adx = abs(dx);
+  int ady = abs(dy);
+  int diag = qMin( adx, ady );
+  if( diag == 0 )
+    //a-b is strong orthogonal line
+    return b;
+  int ortho = qMax( adx, ady ) - diag;
+  if( ortho == 0 )
+    //a-b is strong diagonal line
+    return b;
+  if( ortho > diag ) {
+    //First is orthogonal part
+    if( adx > diag )
+      //By axiz X
+      return SdPoint( a.x() + (dx > 0 ? ortho : -ortho), a.y() );
+    //By axiz Y
+    return SdPoint( a.x(), a.y() + (dy > 0 ? ortho : - ortho) );
+    }
+  //First is diagonal part
+  return SdPoint( a.x() + ( dx > 0 ? diag : -diag), a.y() + ( dy > 0 ? diag : -diag) );
   }

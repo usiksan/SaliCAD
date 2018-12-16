@@ -160,11 +160,11 @@ void SdGraphTracedRoad::selectByPoint(const SdPoint p, SdSelector *selector)
       if( mSegment.isPointOn( p ) ) {
         //Test fixing variant
         if( mSegment.getP1() == p ) {
-          if( mSegment.orientation() == SdSegment::sorAny ) mFly = flyP1;
+          if( mSegment.orientation() == SdOrientation::sorAny ) mFly = flyP1;
           else mFly = flyP1_45;
           }
         else if( mSegment.getP2() == p ) {
-          if( mSegment.orientation() == SdSegment::sorAny ) mFly = flyP2;
+          if( mSegment.orientation() == SdOrientation::sorAny ) mFly = flyP2;
           else mFly = flyP2_45;
           }
         else mFly = flyP1P2;
@@ -195,11 +195,11 @@ void SdGraphTracedRoad::selectByRect(const SdRect &r, SdSelector *selector)
       //Not selected yet
       if( r.isAccross( mSegment ) ) {
         if( r.isPointInside(mSegment.getP1()) && !r.isPointInside(mSegment.getP2()) ) {
-          if( mSegment.orientation() == SdSegment::sorAny ) mFly = flyP1;
+          if( mSegment.orientation() == SdOrientation::sorAny ) mFly = flyP1;
           else mFly = flyP1_45;
           }
         else if( r.isPointInside(mSegment.getP2()) && !r.isPointInside(mSegment.getP1()) ) {
-          if( mSegment.orientation() == SdSegment::sorAny ) mFly = flyP2;
+          if( mSegment.orientation() == SdOrientation::sorAny ) mFly = flyP2;
           else mFly = flyP2_45;
           }
         else mFly = flyP1P2;
@@ -319,6 +319,26 @@ void SdGraphTracedRoad::snapPoint(SdSnapInfo *snap)
       snap->test( this, mSegment.getP1(), snapNearestNetNet );
       snap->test( this, mSegment.getP2(), snapNearestNetNet );
       }
+    if( snap->match(snapMidPoint) ) {
+      snap->test( this, mSegment.middle(), snapMidPoint );
+      }
+    if( snap->match(snapEndPoint) ) {
+      double distance;
+      if( snap->isCandidate(mSegment.getP1(), distance) ) {
+        //Good candidate, check end point connections
+        SdSelector sel;
+        accumLinkedTrace( this, mSegment.getP1(), mProp.mNetName.str(), &sel );
+        if( sel.count() == 0 || (sel.count() == 1 && sel.first()->getClass() == dctTraceRoad) )
+          snap->test( this, mSegment.getP1(), snapEndPoint );
+        }
+      if( snap->isCandidate( mSegment.getP2(), distance ) ) {
+        //Good candidate, check end point connections
+        SdSelector sel;
+        accumLinkedTrace( this, mSegment.getP2(), mProp.mNetName.str(), &sel );
+        if( sel.count() == 0 || (sel.count() == 1 && sel.first()->getClass() == dctTraceRoad) )
+          snap->test( this, mSegment.getP2(), snapEndPoint );
+        }
+      }
     }
   }
 
@@ -326,14 +346,14 @@ void SdGraphTracedRoad::snapPoint(SdSnapInfo *snap)
 
 
 
-bool SdGraphTracedRoad::isPointOnNet(SdPoint p, SdStratum stratum, QString *wireName, int *destStratum)
+bool SdGraphTracedRoad::isPointOnNet(SdPoint p, SdStratum stratum, QString *netName, int *destStratum)
   {
   if( mProp.mStratum.match( stratum ) && mSegment.isPointOn( p ) ) {
-    if( *wireName == mProp.mNetName.str() )
+    if( *netName == mProp.mNetName.str() )
       *destStratum |= mProp.mStratum.getValue();
     else {
       *destStratum = mProp.mStratum.getValue();
-      *wireName = mProp.mNetName.str();
+      *netName = mProp.mNetName.str();
       }
     return true;
     }
@@ -475,6 +495,16 @@ void SdGraphTracedRoad::accumWindows(SdPolyWindowList &dest, int stratum, int ga
   dest.appendRegion( pgn );
   dest.appendCircle( mSegment.getP1(), static_cast<int>(halfWidth) );
   dest.appendCircle( mSegment.getP2(), static_cast<int>(halfWidth) );
+  }
+
+
+
+
+
+void SdGraphTracedRoad::accumLinked(SdPoint a, SdStratum stratum, QString netName, SdSelector *sel)
+  {
+  if( mProp.mNetName == netName && mProp.mStratum.match(stratum) && (mSegment.getP1() == a || mSegment.getP2() == a) )
+    sel->insert(this);
   }
 
 

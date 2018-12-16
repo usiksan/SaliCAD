@@ -44,6 +44,8 @@ Description
 #define snapCommon            0x00008000u
 #define snapNearestNetPin     0x00010000u  //Ближайший вывод принадлежащий цепи
 #define snapNearestNetNet     0x00020000u  //Ближайшая точка принадлежащая цепи и на дорожке (полигоне)
+#define snapNearestNetVia     0x00040000u  //Nearest via
+#define snapViaPoint          0x00080000u  //Via with two or less roads
 #define snapFull              0x0fffffffu
 
 //Значения для вычисления специальных точек
@@ -73,6 +75,9 @@ struct SdSnapInfo
 
     //Test if snapped to point
     void test( SdGraph *graph, SdPoint p, SdSnapMask mask );
+
+    //Test if candidate to snapped point
+    bool isCandidate(SdPoint p, double &distance);
 
     //Scan all graph objects of container with this snap
     bool scan(SdContainer *object , SdClass mask = dctAll );

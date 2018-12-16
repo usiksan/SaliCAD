@@ -36,7 +36,7 @@ SdSelector::SdSelector() :
 
 SdSelector::~SdSelector()
   {
-  clear();
+  removeAll();
   }
 
 

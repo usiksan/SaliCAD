@@ -255,7 +255,7 @@ void SdPItemPlate::drawTrace(SdContext *ctx, SdStratum curStratum, QString curre
 
     forEach( dctTraceRoad|dctTraceVia|dctTracePolygon, [ctx,stratum] (SdObject *obj) -> bool {
       SdGraphTraced *trace = dynamic_cast<SdGraphTraced*>(obj);
-      if( trace != nullptr )
+      if( trace != nullptr && trace->getSelector() == nullptr )
         trace->drawStratum( ctx, stratum );
       return true;
       } );

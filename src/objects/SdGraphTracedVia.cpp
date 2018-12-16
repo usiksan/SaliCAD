@@ -216,6 +216,19 @@ void SdGraphTracedVia::snapPoint(SdSnapInfo *snap)
     if( (snap->match( snapNearestPin ) || snap->mNetName == mProp.mNetName.str()) && snap->mStratum.match(mProp.mStratum) )
       snap->test( this, mPosition, snapNearestPin | snapNearestNetPin );
     }
+  if( snap->match( snapNearestNetVia ) )
+    snap->test( this, mPosition, snapNearestNetVia );
+  if( snap->match( snapViaPoint )  ) {
+    double distance;
+    if( snap->isCandidate( mPosition, distance ) ) {
+      //Good candidate, check end point connections
+      SdSelector sel;
+      accumLinkedTrace( this, mPosition, mProp.mNetName.str(), &sel );
+      if( sel.count() == 0 || (sel.count() == 1 && sel.first()->getClass() == dctTraceRoad) ||
+          (sel.count() == 2 && sel.first()->getClass() == dctTraceRoad && sel.last()->getClass() == dctTraceRoad ) )
+        snap->test( this, mPosition, snapViaPoint );
+      }
+    }
   }
 
 
@@ -231,14 +244,14 @@ SdStratum SdGraphTracedVia::stratum() const
 
 
 
-bool SdGraphTracedVia::isPointOnNet(SdPoint p, SdStratum stratum, QString *wireName, int *destStratum)
+bool SdGraphTracedVia::isPointOnNet(SdPoint p, SdStratum stratum, QString *netName, int *destStratum)
   {
   if( mPosition == p && mProp.mStratum.match( stratum ) ) {
-    if( *wireName == mProp.mNetName.str() )
+    if( *netName == mProp.mNetName.str() )
       *destStratum |= mProp.mStratum.getValue();
     else {
       *destStratum = mProp.mStratum.getValue();
-      *wireName = mProp.mNetName.str();
+      *netName = mProp.mNetName.str();
       }
     return true;
     }
@@ -323,6 +336,16 @@ void SdGraphTracedVia::accumWindows(SdPolyWindowList &dest, int stratum, int gap
     //Stratum matched and net name other
     getPlate()->appendPadWindow( dest, mPosition, mProp.mPadType.str(), gap, t );
     }
+  }
+
+
+
+
+
+void SdGraphTracedVia::accumLinked(SdPoint a, SdStratum stratum, QString netName, SdSelector *sel)
+  {
+  if( mProp.mNetName == netName && mProp.mStratum.match( stratum ) && mPosition == a )
+    sel->insert( this );
   }
 
 

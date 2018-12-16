@@ -45,12 +45,13 @@ class SdGraphTracedVia : public SdGraphTraced
     // SdGraphTraced interface
   public:
     virtual SdStratum stratum() const override;
-    virtual bool      isPointOnNet(SdPoint p, SdStratum stratum, QString *wireName, int *destStratum) override;
+    virtual bool      isPointOnNet(SdPoint p, SdStratum stratum, QString *netName, int *destStratum) override;
     virtual void      accumNetSegments(SdPlateNetList &netList) const override;
     virtual void      drawStratum(SdContext *dcx, int stratum) override;
     virtual void      accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const override;
     virtual bool      isMatchNetAndStratum(const QString netName, SdStratum stratum) const override;
     virtual void      accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName) const override;
+    virtual void      accumLinked( SdPoint a, SdStratum stratum, QString netName, SdSelector *sel ) override;
   };
 
 #endif // SDGRAPHTRACEDVIA_H

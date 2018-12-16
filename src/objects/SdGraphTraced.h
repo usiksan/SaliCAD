@@ -38,14 +38,17 @@ class SdGraphTraced : public SdGraph
     //Set flag to update rat net. Rat net will be clear and reconstructed
     void                 setDirtyRatNet();
 
+    //Accumulate traced linked to point
+    void                 accumLinkedTrace(SdGraphTraced *from, SdPoint a, QString netName, SdSelector *sel );
+
     //Defined here
-    virtual bool         isPointOnNet( SdPoint p, SdStratum stratum, QString *wireName, int *destStratum ) = 0;
+    virtual bool         isPointOnNet( SdPoint p, SdStratum stratum, QString *netName, int *destStratum ) = 0;
     virtual void         accumNetSegments( SdPlateNetList &netList ) const = 0;
     virtual void         drawStratum( SdContext *dcx, int stratum ) = 0;
     virtual void         accumBarriers( SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk ) const = 0;
     virtual bool         isMatchNetAndStratum( const QString netName, SdStratum stratum ) const;
     virtual void         accumWindows( SdPolyWindowList &dest, int stratum, int gap, const QString netName ) const = 0;
-    //virtual void         accumLinked( SdPoint a, SdPoint b, SdLayer *layer, SdSelector *sel ) = 0;
+    virtual void         accumLinked( SdPoint a, SdStratum stratum, QString netName, SdSelector *sel ) = 0;
 
 
     // SdGraph interface

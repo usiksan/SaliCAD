@@ -14,6 +14,8 @@ TEMPLATE = app
 
 RC_ICONS = pic/main.ico
 
+INCLUDEPATH += ../third
+
 SOURCES += \
     SdMain.cpp \
     windows/SdWMain.cpp \

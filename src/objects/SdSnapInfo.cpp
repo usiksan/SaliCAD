@@ -35,17 +35,27 @@ SdSnapInfo::SdSnapInfo() :
 //Test if snapped to point
 void SdSnapInfo::test(SdGraph *graph, SdPoint p, SdSnapMask mask)
   {
-  if( (mSnapMask & snapExcludeExcl) && p == mExclude )
-    return;
-  if( (mSnapMask & snapExcludeSour) && p == mSour )
-    return;
-  double d = mSour.getSquareDistance(p);
-  if( d < mDistance ) {
-    mDistance = d;
+  double distance;
+  if( isCandidate( p, distance ) ) {
+    mDistance = distance;
     mDest     = p;
     mDestMask = mask;
     mGraph    = graph;
     }
+  }
+
+
+
+
+//Test if candidate to snapped point
+bool SdSnapInfo::isCandidate(SdPoint p, double &distance )
+  {
+  if( (mSnapMask & snapExcludeExcl) && p == mExclude )
+    return false;
+  if( (mSnapMask & snapExcludeSour) && p == mSour )
+    return false;
+  distance = mSour.getSquareDistance(p);
+  return distance < mDistance;
   }
 
 

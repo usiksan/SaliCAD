@@ -908,6 +908,19 @@ void SdGraphPartImp::accumWindows(SdPolyWindowList &dest, int stratum, int gap, 
 
 
 
+void SdGraphPartImp::accumLinked(SdPoint a, SdStratum stratum, QString netName, SdSelector *sel)
+  {
+  //For each pin test connection
+  for( const SdPartImpPin &pin : mPins )
+    if( pin.isConnected() && pin.mStratum.match(stratum) && pin.getNetName() == netName && pin.mPosition == a ) {
+      sel->insert( this );
+      return;
+      }
+  }
+
+
+
+
 
 
 

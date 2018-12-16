@@ -310,15 +310,15 @@ SdStratum SdGraphTracedPolygon::stratum() const
 
 
 
-bool SdGraphTracedPolygon::isPointOnNet(SdPoint p, SdStratum stratum, QString *wireName, int *destStratum)
+bool SdGraphTracedPolygon::isPointOnNet(SdPoint p, SdStratum stratum, QString *netName, int *destStratum)
   {
   if( mProp.mStratum & stratum ) {
     if( isContains(p) ) {
-      if( *wireName == mProp.mNetName.str() )
+      if( *netName == mProp.mNetName.str() )
         *destStratum |= mProp.mStratum.getValue();
       else {
         *destStratum = mProp.mStratum.getValue();
-        *wireName = mProp.mNetName.str();
+        *netName = mProp.mNetName.str();
         }
       return true;
       }
@@ -379,6 +379,16 @@ void SdGraphTracedPolygon::accumWindows(SdPolyWindowList &dest, int stratum, int
     //Append rect window
     dest.append( SdPolyWindow( r, gap ) );
     }
+  }
+
+
+
+
+
+void SdGraphTracedPolygon::accumLinked(SdPoint a, SdStratum stratum, QString netName, SdSelector *sel)
+  {
+  if( mProp.mNetName == netName && mProp.mStratum.match( stratum ) && isContains(a) )
+    sel->insert( this );
   }
 
 

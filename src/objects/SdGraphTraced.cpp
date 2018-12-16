@@ -36,6 +36,26 @@ void SdGraphTraced::setDirtyRatNet()
   getPlate()->setDirtyRatNet();
   }
 
+
+
+
+
+//Accumulate traced linked to point
+void SdGraphTraced::accumLinkedTrace(SdGraphTraced *from, SdPoint a, QString netName, SdSelector *sel)
+  {
+  getPlate()->forEach( dctTraced, [from,a,netName,sel] ( SdObject *obj ) -> bool {
+    if( obj != from ) {
+      SdPtr<SdGraphTraced> traced( obj );
+      if( traced.isValid() )
+        traced->accumLinked( a, from->stratum(), netName, sel );
+      }
+    return true;
+    } );
+  }
+
+
+
+
 bool SdGraphTraced::isMatchNetAndStratum(const QString netName, SdStratum stratum) const
   {
   Q_UNUSED(netName)

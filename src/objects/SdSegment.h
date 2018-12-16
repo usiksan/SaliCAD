@@ -23,14 +23,6 @@ class SdSegment
     SdPoint p1;
     SdPoint p2;
   public:
-    enum SdOrientation {
-      sorNull,          //For p1 == p2
-      sorVertical,      //For p1.x == p2.x
-      sorHorizontal,    //For p1.y == p2.y
-      sorSlashForward,  //For dx == dy
-      sorSlashBackward, //For dx == -dy
-      sorAny
-      };
 
     SdSegment() : p1(), p2() {}
     SdSegment( SdPoint a, SdPoint b ) : p1(a), p2(b) {}

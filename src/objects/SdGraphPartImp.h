@@ -227,6 +227,7 @@ class SdGraphPartImp : public SdGraphTraced
     virtual void         drawStratum(SdContext *dc, int stratum ) override;
     virtual void         accumBarriers( SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk ) const override;
     virtual void         accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName ) const override;
+    virtual void         accumLinked( SdPoint a, SdStratum stratum, QString netName, SdSelector *sel ) override;
     //Stratum of object
     virtual SdStratum    stratum() const override { return mProp.mSide; }
   };

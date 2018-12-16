@@ -17,7 +17,7 @@ Description
 
 SdGraph::SdGraph() :
   SdObject(),
-  mSelector(0)
+  mSelector(nullptr)
   {
 
   }

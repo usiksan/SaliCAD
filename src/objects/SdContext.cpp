@@ -481,12 +481,12 @@ void SdContext::smartPoint(SdPoint a, SdSnapMask smartMask)
         //Кружок и касательная
         QPoint p1( p.x() - sm, p.y() - sm );
         QPoint p2( p.x() + sm, p.y() - sm );
-        mPainter->drawEllipse( a, sm, sm );
+        mPainter->drawEllipse( p, sm, sm );
         mPainter->drawLine( p1, p2 );
         }
       else if( smartMask & snapQuadrant ) {
         //Кружок и четыре точки по квадрантам
-        mPainter->drawEllipse( a, sm, sm );
+        mPainter->drawEllipse( p, sm, sm );
         mPainter->drawEllipse( QPoint(p.x() + sm, p.y()), 1, 1 );
         mPainter->drawEllipse( QPoint(p.x() - sm, p.y()), 1, 1 );
         mPainter->drawEllipse( QPoint(p.x(), p.y() + sm), 1, 1 );
@@ -494,7 +494,13 @@ void SdContext::smartPoint(SdPoint a, SdSnapMask smartMask)
         }
       else if( smartMask & snapCenter ) {
         //Кружок
-        mPainter->drawEllipse( a, sm, sm );
+        mPainter->drawEllipse( p, sm, sm );
+        }
+      else if( smartMask & snapViaPoint ) {
+        //Two displaced circles
+        mPainter->drawEllipse( p, sm, sm );
+        p += QPoint( sm/2, sm/2 );
+        mPainter->drawEllipse( p, sm, sm );
         }
       else if( smartMask & (snapExtension | snapEndPoint) ) {
         //Квадратик

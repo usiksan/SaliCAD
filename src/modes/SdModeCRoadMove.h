@@ -10,6 +10,18 @@ Web
 
 Description
   Mode for move plate trace road
+
+  When moving cursor we find nearest point to move from. This point is road-middle or road end.
+  Road end available only if two or less roads vertex directly or through via.
+
+  Finded point is source point. When press left button we select source point and drag.
+
+  With move can be used:
+  - 2 segments
+  - 3 segments
+  - 2 segments with via
+  When road-middle point drag
+
 */
 #ifndef SDMODECROADMOVE_H
 #define SDMODECROADMOVE_H
@@ -19,25 +31,56 @@ Description
 #include "objects/SdBarrier.h"
 #include "objects/SdPropRoad.h"
 #include "objects/SdRuleBlock.h"
+#include "objects/SdSelector.h"
 
 #include <QList>
 
 class SdGraphTracedRoad;
 class SdGraphTracedVia;
 
+//flyNone,  //Point can not fly, it is fixed position
+//flyAny,   //Point fly in any direction
+//flyHorz,  //Point fly in horizontal direction
+//flyVert,  //Point fly in vertical direction
+//flyForw,  //Point fly with 45 degree in forward direction "/"
+//flyBack   //Point fly with 45 degree in backward direction "\"
+
 class SdModeCRoadMove : public SdModeCommon
   {
-    SdPropRoad      mProp;        //Current properties for road
-    SdPropVia       mViaProp;     //Current properties for vias
-    SdRuleBlock     mRule;        //Rule block for segment
-    SdPoint         mTargetPoint; //Target point
+    SdPropRoad         mProp;         //Current properties for road moved segment
+    SdPropRoad         mProp1;        //Current properties for road first segment
+    SdPropRoad         mProp2;        //Current properties for road second segment
+    SdPropVia          mViaProp;      //Current properties for vias
 
-    SdBarrierList   mPads;        //Barriers for pads on vias
-    SdBarrierList   mRoads;       //Barriers for roads
+    SdRuleBlock        mRule;         //Rule block for net
 
-//    SdGraphTracedRoad *mSegment1;
-//    SdGraphTracedRoad *mSegment2;
+    SdBarrierList      mPads;         //Barriers for pads on vias
+    SdBarrierList      mRoads;        //Barriers for roads of moved segment
+    SdBarrierList      mRoads1;       //Barriers for roads of first segment
+    SdBarrierList      mRoads2;       //Barriers for roads of second segment
 
+    SdPoint            mSourcePoint;  //Source point for move
+    SdSnapMask         mSourceType;   //Current source point type
+    SdGraph           *mSourceObject; //Object with source point
+
+    SdGraphTracedRoad *mSegment,
+                      *mSegment1,
+                      *mSegment2;
+    SdGraphTracedVia  *mVia;
+
+    SdPoint            mSource1,
+                       mSource2,
+                       mMove1,
+                       mMove2,
+                       mMove;
+
+    int                mDirX1,
+                       mDirY1,
+                       mDirX2,
+                       mDirY2;
+
+    SdSelector         mFragment;
+    SdPoint            mPrevMove;
 
     const int sFindRoad = 0, sMoveRoad = 1;
   public:
@@ -47,12 +90,13 @@ class SdModeCRoadMove : public SdModeCommon
   public:
     virtual void reset() override;
     virtual void    drawStatic(SdContext *ctx) override;
-    virtual void drawDynamic(SdContext *ctx) override;
-    virtual void movePoint(SdPoint) override;
+    virtual void    drawDynamic(SdContext *ctx) override;
+    virtual void    enterPoint(SdPoint) override;
+    virtual void    movePoint(SdPoint p) override;
     virtual void    cancelPoint(SdPoint) override;
-    virtual void beginDrag(SdPoint) override;
-    virtual void dragPoint(SdPoint) override;
-    virtual void stopDrag(SdPoint) override;
+    virtual void    beginDrag(SdPoint p) override;
+    virtual void    dragPoint(SdPoint p) override;
+    virtual void    stopDrag(SdPoint p) override;
     virtual QString getStepHelp() const override;
     virtual QString getModeThema() const override;
     virtual QString getStepThema() const override;

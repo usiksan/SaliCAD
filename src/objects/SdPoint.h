@@ -19,10 +19,16 @@ Description
 #include <QJsonObject>
 #include <QPoint>
 
-//Line enter type
-#define SD_ENTER_ORTHO    0  //All lines orthogonal
-#define SD_ENTER_DIAGONAL 1  //Lines with angle 45 degree
-#define SD_ENTER_VARIABLE 2  //Lines with variable angle
+//Line orientation
+enum SdOrientation {
+  sorNull,          //For p1 == p2
+  sorVertical,      //For p1.x == p2.x
+  sorHorizontal,    //For p1.y == p2.y
+  sorSlashForward,  //For dx == dy
+  sorSlashBackward, //For dx == -dy
+  sorAny
+  };
+
 
 class SdPoint : public QPoint
   {
@@ -47,6 +53,7 @@ class SdPoint : public QPoint
     void        mirror( SdPoint origin );
     void        mirror( SdPoint a, SdPoint b );
     void        move( SdPoint offset ) { setX( x() + offset.x() ); setY( y() + offset.y() ); }
+    void        moveOriented(int dx, int dy, SdOrientation orient );
     SdPoint     complement() const { return SdPoint(-x(),-y()); }
     bool        isEmpty() const { return x() == 0 && y() == 0; }
     SdPoint     sub( SdPoint b ) { return SdPoint( x() - b.x(), y() - b.y() ); }
@@ -105,6 +112,14 @@ class SdPoint : public QPoint
 //          /
 //       a +
 SdPoint get45( SdPoint a, SdPoint b );
+
+//Get intermediate point with 45 degree step vertex
+//    result  --------+ b
+//           /
+//          /
+//       a +
+//Where orient is b-result orientation
+SdPoint get45oriented( SdPoint a, SdPoint b, SdOrientation first, SdOrientation second );
 
 //Get intermediate point with 90 degree step vertex
 // result  -----------+ b
