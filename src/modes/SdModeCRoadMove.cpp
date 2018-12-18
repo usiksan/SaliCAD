@@ -19,6 +19,7 @@ Description
 #include "windows/SdWEditorGraph.h"
 
 #include <QDebug>
+#include <algorithm>
 
 SdModeCRoadMove::SdModeCRoadMove(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeCommon( editor, obj )
@@ -241,44 +242,27 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
       return true;
       });
     //Mutual orientation of segments
+    SdOrientation orient1 = SdSegment( mSource1, mMove1 ).orientation();
     SdOrientation orient2 = SdSegment( mSource2, mMove2 ).orientation();
-    switch( SdSegment( mSource1, mMove1 ).orientation() ) {
+    if( (orient2 == sorVertical ) ||
+        (orient1 == sorAny) ||
+        (orient1 == sorNull) ||
+        (orient1 == sorHorizontal && orient2 == sorVertical) ||
+        (orient1 == sorSlashForward && orient2 == sorVertical) ||
+        (orient1 == sorSlashForward && orient2 == sorHorizontal) ||
+        (orient1 == sorSlashBackward) ) {
+      //Change segment1 and segment2
+      std::swap( mSegment1, mSegment2 );
+      std::swap( mSource1, mSource2 );
+      std::swap( mMove1, mMove2 );
+      std::swap( orient1, orient2 );
+      }
+    switch( orient1 ) {
       case sorNull :
         //For p1 == p2
       case sorAny :
-        switch( orient2 ) {
-          case sorNull :
-            //For p1 == p2
-          case sorAny :
-            mDirX2 = mDirX1 = 1;
-            mDirY2 = mDirY1 = 1;
-            qDebug() << "any any";
-            break;
-          case sorVertical :
-            //For p1.x == p2.x
-            mDirX1 = mDirX2 = 0;
-            mDirY1 = mDirY2 = 1;
-            qDebug() << "any vertical";
-            break;
-          case sorHorizontal :
-            //For p1.y == p2.y
-            mDirX1 = mDirX2 = mSource1.x() < mSource2.x() ? -1 : 1;
-            mDirY1 = mDirY2 = 0;
-            qDebug() << "any horizontal";
-            break;
-          case sorSlashForward :
-            //For dx == dy
-            mDirX1 = mDirX2 = 1;
-            mDirY1 = mDirY2 = 1;
-            qDebug() << "*any forward";
-            break;
-          case sorSlashBackward :
-            //For dx == -dy
-            mDirX1 = mDirX2 = -1;
-            mDirY1 = mDirY2 = 1;
-            qDebug() << "any backward";
-            break;
-          }
+        mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+        qDebug() << "not available";
         break;
       case sorVertical :
         //For p1.x == p2.x
@@ -292,24 +276,145 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
             //For p1.x == p2.x
             mDirX2 = 0;
             mDirY2 = 1;
+            if( mSource1.y() < mMove.y() && mSource2.y() <= mMove.y() ) {
+              mMinY = qMax( mSource1.y(), mSource2.y() );
+              mMaxY = INT_MAX;
+              }
+            else if( mSource1.y() > mMove.y() && mSource2.y() >= mMove.y() ) {
+              mMinY = INT_MIN;
+              mMaxY = qMin( mSource1.y(), mSource2.y() );
+              }
+            else {
+              mMinY = qMin( mSource1.y(), mSource2.y() );
+              mMaxY = qMax( mSource1.y(), mSource2.y() );
+              }
             qDebug() << "*vertical vertical";
             break;
           case sorHorizontal :
             //For p1.y == p2.y
-            mDirX2 = mSource1.x() < mSource2.x() ? -1 : 1;
-            mDirY2 = 0;
+            if( mMove1.y() > mMove2.y() || (mMove1.y() == mMove2.y() && mSource1.y() > mMove1.y()) ) {
+              //up
+              mMinY = mMove2.y();
+              mMaxY = mSource1.y();
+              if( mMove2.x() < mMove1.x() || (mMove2.x() == mMove1.x() && mSource2.x() < mMove2.x() ) ) {
+                //left
+                mDirX2 = -1;
+                mDirY2 = 0;
+                mMaxX = mSource1.x();
+                mMinX = mSource2.x();
+                }
+              else {
+                //right
+                mDirX2 = 1;
+                mDirY2 = 0;
+                mMaxX = mSource2.x();
+                mMinX = mSource1.x();
+                }
+              }
+            else {
+              //down
+              mMaxY = mMove2.y();
+              mMinY = mSource1.y();
+              if( mMove2.x() < mMove1.x() || (mMove2.x() == mMove1.x() && mSource2.x() < mMove2.x() ) ) {
+                //left
+                mDirX2 = 1;
+                mDirY2 = 0;
+                mMaxX = mSource1.x();
+                mMinX = mSource2.x();
+                }
+              else {
+                //right
+                mDirX2 = -1;
+                mDirY2 = 0;
+                mMaxX = mSource2.x();
+                mMinX = mSource1.x();
+                }
+              }
             qDebug() << "*vertical horizontal";
             break;
           case sorSlashForward :
             //For dx == dy
-            mDirX2 = 1;
-            mDirY2 = 1;
+            if( mMove1.y() == mMove2.y() ) {
+              //In this configuration we move only horizontal segments
+              mDirX2 = 1;
+              mDirY2 = 1;
+              //y - coord of intersection segment1 and segment2
+              int y = mSource1.x() - mSource2.x() + mSource2.y();
+              if( mSource1.y() > mMove1.y() ) {
+                if( mSource2.y() > mMove2.y() ) {
+                  mMaxY = qMin( mSource1.y(), mSource2.y() );
+                  mMinY = y;
+                  mMinX = mSource1.x();
+                  mMaxX = mSource2.x();
+                  }
+                else {
+                  mMaxY = mSource1.y();
+                  mMinY = mSource2.y();
+                  mMinX = mSource2.x();
+                  mMaxX = INT_MAX;
+                  }
+                }
+              else {
+                if( mSource2.y() < mMove2.y() ) {
+                  mMinY = qMax( mSource1.y(), mSource2.y() );
+                  mMaxY = y;
+                  mMinX = mSource1.x();
+                  mMaxX = mSource2.x();
+                  }
+                else {
+                  mMinY = mSource1.y();
+                  mMaxY = mSource2.y();
+                  mMaxX = mSource2.x();
+                  mMinX = INT_MIN;
+                  }
+                }
+              }
+            else {
+              //Moving disable
+              mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+              }
             qDebug() << "vertical forward";
             break;
           case sorSlashBackward :
             //For dx == -dy
-            mDirX2 = -1;
-            mDirY2 = 1;
+            if( mMove1.y() == mMove2.y() ) {
+              mDirX2 = -1;
+              mDirY2 = 1;
+              //y - coord of intersection segment1 and segment2
+              int y = mSource2.x() - mSource1.x() + mSource2.y();
+              if( mSource1.y() > mMove1.y() ) {
+                if( mSource2.y() > mMove2.y() ) {
+                  mMaxY = qMin( mSource1.y(), mSource2.y() );
+                  mMinY = y;
+                  mMinX = mSource2.x();
+                  mMaxX = mSource1.x();
+                  }
+                else {
+                  mMaxY = mSource1.y();
+                  mMinY = mSource2.y();
+                  mMinX = INT_MIN;
+                  mMaxX = mSource2.x();
+                  }
+                }
+              else {
+                if( mSource2.y() < mMove2.y() ) {
+                  mMinY = qMax( mSource1.y(), mSource2.y() );
+                  mMaxY = y;
+                  mMinX = mSource1.x();
+                  mMaxX = mSource2.x();
+                  }
+                else {
+                  mMinY = mSource1.y();
+                  mMaxY = mSource2.y();
+                  mMaxX = INT_MAX;
+                  mMinX = mSource2.x();
+                  }
+                }
+              }
+            else {
+              //Moving disable
+              mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+              }
             qDebug() << "vertical backward";
             break;
           }
@@ -319,35 +424,55 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
         mDirX1 = 1;
         mDirY1 = 0;
         switch( orient2 ) {
+          case sorVertical :
+            mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+            qDebug() << "horizontal vertical not available";
+            break;
           case sorNull :
             //For p1 == p2
           case sorAny :
-            mDirY2 = 1;
-            mDirX2 = 0;
-            qDebug() << "*horizontal any";
-            break;
-          case sorVertical :
-            //For p1.x == p2.x
-            mDirX2 = 0;
-            mDirY2 = mSource1.y() < mSource2.y() ? 1 : -1;
-            qDebug() << "*horizontal vertical";
-            break;
           case sorHorizontal :
             //For p1.y == p2.y
             mDirX2 = 1;
             mDirY2 = 0;
+            if( mSource1.x() < mMove.x() && mSource2.x() < mMove.x() ) {
+              mMinX = qMax( mSource1.x(), mSource2.x() );
+              mMaxX = INT_MAX;
+              }
+            else if( mSource1.x() > mMove.x() && mSource2.x() > mMove.x() ) {
+              mMinX = INT_MIN;
+              mMaxX = qMin( mSource1.x(), mSource2.x() );
+              }
+            else {
+              mMinX = qMin( mSource1.x(), mSource2.x() );
+              mMaxX = qMax( mSource1.x(), mSource2.x() );
+              }
             qDebug() << "*horizontal horizontal";
             break;
           case sorSlashForward :
             //For dx == dy
-            mDirX2 = 1;
-            mDirY2 = 1;
+            if( mMove1.x() == mMove2.x() ) {
+              //In this configuration we move only vertical segments
+              mDirX2 = 1;
+              mDirY2 = 1;
+              }
+            else {
+              //Moving disable
+              mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+              }
             qDebug() << "horizontal forward";
             break;
           case sorSlashBackward :
             //For dx == -dy
-            mDirX2 = -1;
-            mDirY2 = 1;
+            if( mMove1.x() == mMove2.x() ) {
+              //In this configuration we move only vertical segments
+              mDirX2 = 1;
+              mDirY2 = -1;
+              }
+            else {
+              //Moving disable
+              mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+              }
             qDebug() << "horizontal backward";
             break;
           }
@@ -366,27 +491,83 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
             break;
           case sorVertical :
             //For p1.x == p2.x
-            mDirX2 = 0;
-            mDirY2 = mSource1.y() < mSource2.y() ? -1 : 1;
-            qDebug() << "forward vertical";
+            mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+            qDebug() << "forward vertical not available";
             break;
           case sorHorizontal :
             //For p1.y == p2.y
-            mDirX2 = mSource1.x() < mSource2.x() ? -1 : 1;
-            mDirY2 = 0;
-            qDebug() << "forward horizontal";
+            mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+            qDebug() << "forward horizontal not available";
             break;
           case sorSlashForward :
             //For dx == dy
             mDirX2 = 1;
             mDirY2 = 1;
+            if( mSource1.x() < mMove.x() && mSource2.x() < mMove.x() ) {
+              mMinX = qMax( mSource1.x(), mSource2.x() );
+              mMaxX = INT_MAX;
+              mMinY = qMax( mSource1.y(), mSource2.y() );
+              mMaxY = INT_MAX;
+              }
+            else if( mSource1.x() > mMove.x() && mSource2.x() > mMove.x() ) {
+              mMinX = INT_MIN;
+              mMaxX = qMin( mSource1.x(), mSource2.x() );
+              mMinY = INT_MIN;
+              mMaxY = qMin( mSource1.y(), mSource2.y() );
+              }
+            else {
+              mMinX = qMin( mSource1.x(), mSource2.x() );
+              mMaxX = qMax( mSource1.x(), mSource2.x() );
+              mMinY = qMin( mSource1.y(), mSource2.y() );
+              mMaxY = qMax( mSource1.y(), mSource2.y() );
+              }
             qDebug() << "forward forward";
             break;
-          case sorSlashBackward :
+          case sorSlashBackward : {
             //For dx == -dy
-            mDirX2 = 1;
-            mDirY2 = -1;
+            //y = (x2 +y2 + y1 - x1) / 2
+            //x = y - y1 + x1
+            int y = (mSource2.x() + mSource2.y() + mSource1.y() - mSource1.x()) / 2;
+            int x = y - mSource1.y() + mSource1.x();
+            // \1/
+            // 4+2
+            // /3\ .
+            if( mMove1.y() > y || (mMove1.y() == y && mSource1.y() > y) ) {
+              //1 or 2
+              if( mMove2.y() > y || (mMove2.y() == y && mSource2.y() > y) ) {
+                //1
+                mDirX2 = -1;
+                mDirY2 = 1;
+                mMinX = qMin( mSource1.x(), mSource2.x() );
+                mMaxX = qMax( mSource1.x(), mSource2.x() );
+                mMinY = y;
+                mMaxY = qMin( mSource1.y(), mSource2.y() );
+                }
+              else {
+                //2
+                mDirX2 = 1;
+                mDirY2 = -1;
+                mMinX = x;
+                mMaxX = qMax( mSource1.x(), mSource2.x() );
+                mMinY = qMin( mSource1.y(), mSource2.y() );
+                mMaxY = qMax( mSource1.y(), mSource2.y() );
+                }
+              }
+            else {
+              //3 or 4
+              if( mMove2.y() > y || (mMove2.y() == y && mSource2.y() > y) ) {
+                //4
+                mDirX2 = 1;
+                mDirY2 = -1;
+                }
+              else {
+                //2
+                mDirX2 = -1;
+                mDirY2 = 1;
+                }
+              }
             qDebug() << "forward backward";
+            }
             break;
           }
         break;
@@ -404,26 +585,41 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
             break;
           case sorVertical :
             //For p1.x == p2.x
-            mDirX2 = 0;
-            mDirY2 = mSource1.y() < mSource2.y() ? -1 : 1;
-            qDebug() << "backward vertical";
+            mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+            qDebug() << "backward vertical not available";
             break;
           case sorHorizontal :
             //For p1.y == p2.y
-            mDirX2 = mSource1.x() < mSource2.x() ? -1 : 1;
-            mDirY2 = 0;
-            qDebug() << "backward horizontal";
+            mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+            qDebug() << "backward horizontal not available";
             break;
           case sorSlashForward :
             //For dx == dy
-            mDirX2 = 1;
-            mDirY2 = 1;
-            qDebug() << "*backward forward";
+            mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+            qDebug() << "backward forward not available";
             break;
           case sorSlashBackward :
             //For dx == -dy
             mDirX2 = -1;
             mDirY2 = 1;
+            if( mSource1.x() < mMove.x() && mSource2.x() < mMove.x() ) {
+              mMinX = qMax( mSource1.x(), mSource2.x() );
+              mMaxX = INT_MAX;
+              mMinY = INT_MIN;
+              mMaxY = qMin( mSource1.y(), mSource2.y() );
+              }
+            else if( mSource1.x() > mMove.x() && mSource2.x() > mMove.x() ) {
+              mMinX = INT_MIN;
+              mMaxX = qMin( mSource1.x(), mSource2.x() );
+              mMinY = qMax( mSource1.y(), mSource2.y() );
+              mMaxY = INT_MAX;
+              }
+            else {
+              mMinX = qMin( mSource1.x(), mSource2.x() );
+              mMaxX = qMax( mSource1.x(), mSource2.x() );
+              mMinY = qMin( mSource1.y(), mSource2.y() );
+              mMaxY = qMax( mSource1.y(), mSource2.y() );
+              }
             qDebug() << "*backward backward";
             break;
           }
@@ -448,6 +644,24 @@ void SdModeCRoadMove::dragPoint(SdPoint p)
     d = offset.x();
   else
     d = offset.y();
+  //Limitation
+  if( mDirX1 ) {
+    int v = SdUtil::iLimit( mMove1.x() + d*mDirX1, mMinX, mMaxX );
+    d = (v - mMove1.x()) / mDirX1;
+    }
+  if( mDirY1 ) {
+    int v = SdUtil::iLimit( mMove1.y() + d*mDirY1, mMinY, mMaxY );
+    d = (v - mMove1.y()) / mDirY1;
+    }
+  if( mDirX2 ) {
+    int v = SdUtil::iLimit( mMove2.x() + d*mDirX2, mMinX, mMaxX );
+    d = (v - mMove2.x()) / mDirX2;
+    }
+  if( mDirY2 ) {
+    int v = SdUtil::iLimit( mMove2.y() + d*mDirY2, mMinY, mMaxY );
+    d = (v - mMove2.y()) / mDirY2;
+    }
+  //Fact moving
   mMove1.move( SdPoint(d*mDirX1,d*mDirY1) );
   mMove2.move( SdPoint(d*mDirX2,d*mDirY2) );
 //  mFragment.forEach( dctAll, [offset] (SdObject *obj) ->bool {
@@ -515,3 +729,7 @@ int SdModeCRoadMove::getIndex() const
   {
   return MD_ROAD_MOVE;
   }
+
+
+
+

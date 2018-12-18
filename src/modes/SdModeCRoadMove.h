@@ -79,6 +79,11 @@ class SdModeCRoadMove : public SdModeCommon
                        mDirX2,
                        mDirY2;
 
+    int                mMaxX,
+                       mMinX,
+                       mMaxY,
+                       mMinY;
+
     SdSelector         mFragment;
     SdPoint            mPrevMove;
 
@@ -106,6 +111,9 @@ class SdModeCRoadMove : public SdModeCommon
   private:
     //Plate where road being inserted
     SdPItemPlate   *plate() { return dynamic_cast<SdPItemPlate*>(mObject); }
+
+    //Change segment1 and segment2
+    void            changeSegments();
   };
 
 #endif // SDMODECROADMOVE_H
