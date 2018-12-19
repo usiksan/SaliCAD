@@ -98,6 +98,7 @@ void SdModeCRoadMove::enterPoint(SdPoint)
         mMove1 = road->segment().getP1();
         mMove2 = road->segment().getP2();
         mProp  = road->propRoad();
+
         SdSelector sel;
         mSegment->accumLinkedTrace( mSegment, mMove1, mProp.mNetName.str(), &sel );
         if( sel.count() == 1 && sel.first()->getClass() == dctTraceRoad ) {
@@ -133,6 +134,7 @@ void SdModeCRoadMove::enterPoint(SdPoint)
           mSource2 = mMove2;
           mProp2 = mProp;
           }
+
         }
       else {
         mFragment.removeAll();
@@ -189,6 +191,27 @@ void SdModeCRoadMove::enterPoint(SdPoint)
       mFragment.removeAll();
       mSourceType = 0;
       }
+
+    //Build barriers
+    //Get rules for road
+    plate()->ruleBlockForNet( mProp.mNetName.str(), mRule );
+
+    //Barriers for central segment
+    mRoads.clear();
+    mRule.mRules[ruleRoadWidth] = mProp.mWidth.getValue();
+    plate()->accumBarriers( dctTraced, mRoads, mProp.mStratum, ruleRoadRoad, mRule );
+
+    //Rebuild barriers for segment 1
+    mRoads1.clear();
+    mRule.mRules[ruleRoadWidth] = mProp1.mWidth.getValue();
+    plate()->accumBarriers( dctTraced, mRoads1, mProp1.mStratum, ruleRoadRoad, mRule );
+
+    //Rebuild barriers for segment 2
+    mRoads2.clear();
+    mRule.mRules[ruleRoadWidth] = mProp2.mWidth.getValue();
+    plate()->accumBarriers( dctTraced, mRoads2, mProp2.mStratum, ruleRoadRoad, mRule );
+
+
     setDirtyCashe();
     update();
     }
@@ -343,7 +366,7 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               if( mSource1.y() > mMove1.y() ) {
                 if( mSource2.y() > mMove2.y() ) {
                   mMaxY = qMin( mSource1.y(), mSource2.y() );
-                  mMinY = y;
+                  mMinY = y > mMaxY ? INT_MIN : y;
                   mMinX = mSource1.x();
                   mMaxX = mSource2.x();
                   }
@@ -357,7 +380,7 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               else {
                 if( mSource2.y() < mMove2.y() ) {
                   mMinY = qMax( mSource1.y(), mSource2.y() );
-                  mMaxY = y;
+                  mMaxY = y < mMinY ? INT_MAX : y;
                   mMinX = mSource1.x();
                   mMaxX = mSource2.x();
                   }
@@ -385,7 +408,7 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               if( mSource1.y() > mMove1.y() ) {
                 if( mSource2.y() > mMove2.y() ) {
                   mMaxY = qMin( mSource1.y(), mSource2.y() );
-                  mMinY = y;
+                  mMinY = y > mMaxY ? INT_MIN : y;
                   mMinX = mSource2.x();
                   mMaxX = mSource1.x();
                   }
@@ -399,7 +422,7 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               else {
                 if( mSource2.y() < mMove2.y() ) {
                   mMinY = qMax( mSource1.y(), mSource2.y() );
-                  mMaxY = y;
+                  mMaxY = y < mMinY ? INT_MAX : y;
                   mMinX = mSource1.x();
                   mMaxX = mSource2.x();
                   }
@@ -419,6 +442,9 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
             break;
           }
         break;
+
+
+
       case sorHorizontal :
         //For p1.y == p2.y
         mDirX1 = 1;
@@ -455,6 +481,36 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               //In this configuration we move only vertical segments
               mDirX2 = 1;
               mDirY2 = 1;
+              //x - coord of intersection segment1 and segment2
+              int x = mSource1.y() - mSource2.y() + mSource2.x();
+              if( mSource1.x() > mMove1.x() ) {
+                if( mSource2.x() > mMove2.x() ) {
+                  mMaxX = qMin( mSource1.x(), mSource2.x() );
+                  mMinX = x > mMaxX ? INT_MIN : x;
+                  mMinY = mSource1.y();
+                  mMaxY = mSource2.y();
+                  }
+                else {
+                  mMaxX = mSource1.x();
+                  mMinX = mSource2.x();
+                  mMinY = mSource2.y();
+                  mMaxY = INT_MAX;
+                  }
+                }
+              else {
+                if( mSource2.x() < mMove2.x() ) {
+                  mMinX = qMax( mSource1.x(), mSource2.x() );
+                  mMaxX = x < mMinX ? INT_MAX : x;
+                  mMinY = mSource2.y();
+                  mMaxY = mSource1.y();
+                  }
+                else {
+                  mMinX = mSource1.x();
+                  mMaxX = mSource2.x();
+                  mMinY = mSource1.y();
+                  mMaxY = INT_MAX;
+                  }
+                }
               }
             else {
               //Moving disable
@@ -468,6 +524,36 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               //In this configuration we move only vertical segments
               mDirX2 = 1;
               mDirY2 = -1;
+              //x - coord of intersection segment1 and segment2
+              int x = mSource2.y() - mSource1.y() + mSource2.x();
+              if( mSource1.x() > mMove1.x() ) {
+                if( mSource2.x() > mMove2.x() ) {
+                  mMaxX = qMin( mSource1.x(), mSource2.x() );
+                  mMinY = x > mMaxX ? INT_MIN : x;
+                  mMinY = mSource2.y();
+                  mMaxY = mSource1.y();
+                  }
+                else {
+                  mMaxX = mSource1.x();
+                  mMinX = mSource2.x();
+                  mMinY = INT_MIN;
+                  mMaxY = mSource2.y();
+                  }
+                }
+              else {
+                if( mSource2.x() < mMove2.x() ) {
+                  mMinX = qMax( mSource1.x(), mSource2.x() );
+                  mMaxX = x < mMinX ? INT_MAX : x;
+                  mMinY = mSource1.y();
+                  mMaxY = mSource2.y();
+                  }
+                else {
+                  mMinX = mSource1.x();
+                  mMaxX = mSource2.x();
+                  mMaxY = INT_MAX;
+                  mMinY = mSource2.y();
+                  }
+                }
               }
             else {
               //Moving disable
@@ -477,6 +563,9 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
             break;
           }
         break;
+
+
+
       case sorSlashForward :
         //For dx == dy
         mDirX1 = 1;
@@ -661,15 +750,21 @@ void SdModeCRoadMove::dragPoint(SdPoint p)
     int v = SdUtil::iLimit( mMove2.y() + d*mDirY2, mMinY, mMaxY );
     d = (v - mMove2.y()) / mDirY2;
     }
-  //Fact moving
-  mMove1.move( SdPoint(d*mDirX1,d*mDirY1) );
-  mMove2.move( SdPoint(d*mDirX2,d*mDirY2) );
-//  mFragment.forEach( dctAll, [offset] (SdObject *obj) ->bool {
-//    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-//    if( graph != nullptr )
-//      graph->move( offset );
-//    return true;
-//    });
+  //Try moving
+  SdPoint move1(mMove1);
+  SdPoint move2(mMove2);
+  move1.move( SdPoint(d*mDirX1,d*mDirY1) );
+  move2.move( SdPoint(d*mDirX2,d*mDirY2) );
+
+  //Check if new position available
+  if( sdCheckRoadOnBarrierList( mRoads1, mSource1, mMove1, mProp.mNetName.str() ) == mMove1 &&
+      sdCheckRoadOnBarrierList( mRoads, mMove1, mMove2, mProp.mNetName.str() ) == mMove2 &&
+      sdCheckRoadOnBarrierList( mRoads2, mSource2, mMove2, mProp.mNetName.str() ) == mMove2 ) {
+    //Fact moving
+    mMove1.move( SdPoint(d*mDirX1,d*mDirY1) );
+    mMove2.move( SdPoint(d*mDirX2,d*mDirY2) );
+    }
+
   mPrevMove.move( offset );
   update();
   }
