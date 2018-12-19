@@ -17,6 +17,7 @@ Description
 #include "objects/SdPItemPlate.h"
 #include "objects/SdProject.h"
 #include "objects/SdEnvir.h"
+#include "SdDHelp.h"
 
 #include <QPushButton>
 
@@ -76,6 +77,9 @@ SdDRuleEditor::SdDRuleEditor(SdPItemPlate *plate, QWidget *parent) :
     ui->mPcbRoad2Road->setText(str);
     });
 
+  connect( ui->buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, [this] () {
+    SdDHelp::help( QString("SdDRuleEditor.htm"), this );
+    } );
   }
 
 
