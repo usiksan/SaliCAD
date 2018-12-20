@@ -62,6 +62,8 @@ class SdPItemPlate : public SdProjectItem
     SdPadMap               getPadMap() const { return mPadAssociation.getMap(); }
     //Pad association table name
     QString                getPadAssociationName() const { return mPadAssociation.getName(); }
+    //Return pad
+    SdPad                  getPad( const QString pinType ) const;
     //Draw pad
     void                   drawPad( SdContext *dc, SdPoint p, const QString pinType, int stratum ) const;
     //Setup new map and name

@@ -96,13 +96,23 @@ SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPI
 
 
 
+//Return pad
+SdPad SdPItemPlate::getPad(const QString pinType) const
+  {
+  //If pad present in pad association then take it from association
+  if( mPadAssociation.contains(pinType) )
+    return mPadAssociation.pin( pinType );
+  //else create pad from description
+  return sdEnvir->getPad( pinType );
+  }
+
+
+
+
 
 void SdPItemPlate::drawPad(SdContext *dc, SdPoint p, const QString pinType, int stratum) const
   {
-  if( mPadAssociation.contains(pinType) )
-    mPadAssociation.pin( pinType ).draw( dc, p, stratum );
-  else
-    sdEnvir->getPad( pinType ).draw( dc, p, stratum );
+  getPad( pinType ).draw( dc, p, stratum );
   }
 
 
@@ -120,11 +130,8 @@ void SdPItemPlate::setPadAssociation(const QString nm, const SdPadMap &map, SdUn
 
 QPolygonF SdPItemPlate::getPadPolygon(SdPoint p, const QString pinType, int addon) const
   {
-  //If pad contained in association then create polygon from association pad
-  if( mPadAssociation.contains(pinType) )
-    return mPadAssociation.pin( pinType ).polygon(p, addon);
-  //in other cases create polygon from pad description
-  return sdEnvir->getPad( pinType ).polygon( p, addon );
+  //create polygon from pad
+  return getPad( pinType ).polygon(p, addon);
   }
 
 
@@ -133,9 +140,7 @@ QPolygonF SdPItemPlate::getPadPolygon(SdPoint p, const QString pinType, int addo
 //Return over pad circle radius
 int SdPItemPlate::getPadOverRadius(const QString pinType) const
   {
-  if( mPadAssociation.contains(pinType) )
-    return mPadAssociation.pin( pinType ).overCircleRadius();
-  return -1;
+  return getPad( pinType ).overCircleRadius();
   }
 
 
@@ -144,8 +149,7 @@ int SdPItemPlate::getPadOverRadius(const QString pinType) const
 //Append window for pin pad
 void SdPItemPlate::appendPadWindow(SdPolyWindowList &dest, SdPoint p, const QString pinType, int gap, const QTransform &t)
   {
-  if( mPadAssociation.contains(pinType) )
-    return mPadAssociation.pin( pinType ).appendWindow( dest, p, gap, t );
+  getPad( pinType ).appendWindow( dest, p, gap, t );
   }
 
 
@@ -339,7 +343,7 @@ void SdPItemPlate::checkRules(std::function<bool()> fun1)
     //Prepare rule for pads and pads with clearance. We need all rule zero
     SdRuleBlock rule;
     rule.setAllRule( 0 );
-    accumBarriers( dctPartImp | dctTraceVia, pads, 1 << stratumIndex, ruleRoadWidth, rule );
+    accumBarriers( dctPartImp | dctTraceVia, pads, 1 << stratumIndex, ruleFree, rule );
     if( fun1() ) return;
     accumBarriers( dctPartImp | dctTraceVia, padsWithClearance, 1 << stratumIndex, rulePadPad, rule );
     if( fun1() ) return;
@@ -357,7 +361,7 @@ void SdPItemPlate::checkRules(std::function<bool()> fun1)
     SdBarrierList wires;
     SdBarrierList wiresWithPadClearance;
     SdBarrierList wiresWithWireClearance;
-    accumBarriers( dctTraceRoad, wires, 1 << stratumIndex, ruleRoadWidth, rule );
+    accumBarriers( dctTraceRoad, wires, 1 << stratumIndex, ruleFree, rule );
     if( fun1() ) return;
     accumBarriers( dctTraceRoad, wiresWithPadClearance, 1 << stratumIndex, rulePadPad, rule );
     if( fun1() ) return;

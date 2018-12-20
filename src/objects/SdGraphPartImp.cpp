@@ -869,7 +869,7 @@ void SdGraphPartImp::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId to
   //halfWidth needed to trace road as line with null width because absent intersection
   //allow trace road
   int clearance, halfWidth;
-  if( toWhich == ruleRoadWidth )
+  if( toWhich == ruleRoadWidth || toWhich == ruleFree )
     clearance = halfWidth = 0;
   else {
     if( toWhich == ruleRoadRoad ) toWhich = ruleRoadPad;

@@ -294,6 +294,7 @@ void SdGraphTracedVia::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId 
     int clearance, halfWidth;
     switch( toWhich ) {
       default:
+      case ruleFree :
       case ruleRoadWidth :
         //Only pure pad without any clearance
         clearance = halfWidth = 0;

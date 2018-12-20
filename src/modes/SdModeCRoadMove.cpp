@@ -210,20 +210,30 @@ void SdModeCRoadMove::enterPoint(SdPoint)
         //Get rules for net
         plate()->ruleBlockForNet( mViaProp.mNetName.str(), mRule );
 
+        //Barriers for via
+        SdPad viaPad = plate()->getPad( mViaProp.mPadType.str() );
+        mPads.clear();
+        //We need via pad diameter
+        mRule.mRules[ruleRoadWidth] = viaPad.overCircleRadius() * 2;
+        plate()->accumBarriers( dctTraced, mPads, mViaProp.mStratum, rulePadPad, mRule );
+
+        //Accumulate roads connected to via
+        mVia->accumLinkedTrace( mVia, mMove1, mViaProp.mNetName.str(), &mFragment );
+        int stratum;
+        mFragment.forEach( dctTraceRoad, [&stratum] (SdObject *obj) ->bool {
+          SdPtr<SdGraphTracedRoad> road(obj);
+          if( road.isValid() )
+            stratum |= road->stratum().getValue();
+          return true;
+          });
+
         //Prepare prop for building roads
         mProp.mWidth   = mRule.mRules[ruleRoadWidth];
         mProp.mNetName = mViaProp.mNetName;
-        mProp.mStratum = mViaProp.mStratum;
+        mProp.mStratum = stratum;
 
         mProp1 = mProp;
         mProp2 = mProp;
-
-        //Barriers for via
-        mPads.clear();
-        mRule.mRules[ruleRoadWidth] = plate()->getPadOverRadius( mViaProp.mPadType.str() );
-        mRule.mRules[ruleRoadRoad] = 0;
-        //mRule.mRules[ruleRoadPad] = 0;
-        plate()->accumBarriers( dctTraced, mPads, mViaProp.mStratum, rulePadPad, mRule );
         }
       else {
         mVia = nullptr;

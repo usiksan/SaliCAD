@@ -46,6 +46,7 @@ Description
 #define ruleRoadPad    0x3 //Gap between pad and road
 //#define ruleViaDiam    0x4 //Via
 #define ruleLast       4
+#define ruleFree       4   //Zero clearance, i.e. only object polygon
 
 typedef int SdRuleId;
 

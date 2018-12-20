@@ -48,6 +48,17 @@ void SdGraphTracedRoad::setSegment(SdPoint a, SdPoint b, SdUndo *undo)
 
 
 
+//Split road on two roads with p as division point
+void SdGraphTracedRoad::splitRoad(SdPoint p, SdUndo *undo)
+  {
+  SdGraphTracedRoad *road = new SdGraphTracedRoad( mProp, p, mSegment.getP2() );
+  setSegment( mSegment.getP1(), p, undo );
+  getPlate()->insertChild( road, undo );
+  }
+
+
+
+
 QString SdGraphTracedRoad::getType() const
   {
   return QStringLiteral(SD_TYPE_GRAPH_TRACE_ROAD);
@@ -428,10 +439,12 @@ void SdGraphTracedRoad::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId
     double len   = mSegment.getLenght();
     double halfWidth = mProp.mWidth.getValue() / 2;
     //In accordings target compares we correct width of over polygon
-    if( toWhich == ruleRoadPad || toWhich == rulePadPad )
-      halfWidth += qMax( getPlate()->ruleForNet(mProp.mNetName.str(),ruleRoadPad), blk.mRules[ruleRoadPad]) + blk.mRules[ruleRoadWidth] / 2;
-    else if( toWhich == ruleRoadRoad )
-      halfWidth += qMax( getPlate()->ruleForNet(mProp.mNetName.str(),ruleRoadRoad),blk.mRules[ruleRoadRoad]) + blk.mRules[ruleRoadWidth] / 2;
+    if( toWhich != ruleFree ) {
+      if( toWhich == ruleRoadPad || toWhich == rulePadPad )
+        halfWidth += qMax( getPlate()->ruleForNet(mProp.mNetName.str(),ruleRoadPad), blk.mRules[ruleRoadPad]) + blk.mRules[ruleRoadWidth] / 2;
+      else if( toWhich == ruleRoadRoad )
+        halfWidth += qMax( getPlate()->ruleForNet(mProp.mNetName.str(),ruleRoadRoad),blk.mRules[ruleRoadRoad]) + blk.mRules[ruleRoadWidth] / 2;
+      }
     double d = halfWidth * 0.414213562;
     QPolygonF pgn;
     pgn << QPointF( -halfWidth,       -d )         //0
