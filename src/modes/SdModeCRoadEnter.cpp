@@ -17,6 +17,7 @@ Description
 #include "objects/SdEnvir.h"
 #include "objects/SdGraphTracedRoad.h"
 #include "objects/SdGraphTracedVia.h"
+#include "objects/SdPulsar.h"
 #include "windows/SdPropBarRoad.h"
 #include "windows/SdWCommand.h"
 #include "windows/SdWEditorGraph.h"
@@ -148,6 +149,9 @@ void SdModeCRoadEnter::propGetFromBar()
       mEditor->setFocus();
       setDirtyCashe();
       }
+    //Rebuild all barriers
+    if( getStep() )
+      rebuildBarriers();
     update();
     }
   }
@@ -327,7 +331,7 @@ void SdModeCRoadEnter::movePoint(SdPoint p)
 
 QString SdModeCRoadEnter::getStepHelp() const
   {
-  return getStep() == sNextPoint ? QObject::tr("Enter next point of road polyline") : QObject::tr("Select point to start road");
+  return getStep() == sNextPoint ? QObject::tr("Enter next point of road polyline") : QObject::tr("Select point to start road. Left button '%1' net.").arg( mProp.mNetName.str() );
   }
 
 
@@ -439,10 +443,20 @@ void SdModeCRoadEnter::calcFirstSmartPoint()
   info.mSnapMask = snapNearestNet | snapNearestPin;
   info.mStratum = stmThrough;
   info.scan( plate(), dctTraced );
-  if( info.isFound() )
+  if( info.isFound() ) {
     mFirst = info.mDest;
-  else
+    QString netName;
+    int destStratum;
+    getNetOnPoint( mFirst, mProp.mStratum, &netName, &destStratum );
+    if( mProp.mNetName.str() != netName ) {
+      mProp.mNetName = netName;
+      SdPulsar::sdPulsar->emitSetStatusMessage( getStepHelp() );
+      }
+    }
+  else {
     mFirst = mPrevMove;
+    mProp.mNetName.clear();
+    }
   }
 
 
