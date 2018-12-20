@@ -210,6 +210,9 @@ void SdModeCRoadMove::enterPoint(SdPoint)
         //Get rules for net
         plate()->ruleBlockForNet( mViaProp.mNetName.str(), mRule );
 
+        //Prepare prop for building roads
+        mProp.mWidth   = mRule.mRules[ruleRoadWidth];
+
         //Barriers for via
         SdPad viaPad = plate()->getPad( mViaProp.mPadType.str() );
         mPads.clear();
@@ -228,7 +231,6 @@ void SdModeCRoadMove::enterPoint(SdPoint)
           });
 
         //Prepare prop for building roads
-        mProp.mWidth   = mRule.mRules[ruleRoadWidth];
         mProp.mNetName = mViaProp.mNetName;
         mProp.mStratum = stratum;
 
@@ -613,7 +615,7 @@ void SdModeCRoadMove::dragPoint(SdPoint p)
   {
   if( mVia ) {
     //Move via
-    SdPoint offset = p.sub(mPrevMove);
+    SdPoint offset = p.sub(mMove2);
     SdPoint p45 = get45( mSource1, p );
     if( sdCheckRoadOnBarrierList( mRoads, mSource1, p45, mProp.mNetName.str() ) == p45 &&
         sdCheckRoadOnBarrierList( mRoads, p45, p, mProp.mNetName.str() ) == p &&
@@ -622,7 +624,6 @@ void SdModeCRoadMove::dragPoint(SdPoint p)
       mVia->move(offset);
       mMove1 = p45;
       mMove2 = p;
-      mPrevMove.move(offset);
       }
     }
   else {
@@ -684,7 +685,15 @@ void SdModeCRoadMove::stopDrag(SdPoint p)
   mFragment.removeAll();
   if( mVia ) {
     //Move via
-    //Append segments to new via position
+    //Append segments to new via position for each stratum in mProp
+    mProp1.mStratum = mProp.mStratum.stratumFirst( mProp1.mStratum );
+    mProp2.mStratum = mProp1.mStratum;
+    do {
+      updateSegment( mProp1, nullptr, mSource1, mMove1 );
+      updateSegment( mProp1, nullptr, mMove1, mMove2 );
+      mProp1.mStratum = mProp.mStratum.stratumNext(mProp1.mStratum);
+      }
+    while( mProp2.mStratum != mProp1.mStratum );
     }
   else {
     //Move segments only

@@ -54,7 +54,7 @@ class SdSelector : public SdObject
     void                insert( SdGraph *graph );
     int                 count() const { return mTable.count(); }
     SdGraph*            first() const { return *(mTable.cbegin()); }
-    SdGraph*            last() const { return *(mTable.cend()); }
+    SdGraph*            last() const { return *(mTable.crbegin()); }
     void                clear();
     void                operator = ( const SdSelector &sour );
 
