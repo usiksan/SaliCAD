@@ -287,6 +287,10 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
         mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
         qDebug() << "not available";
         break;
+
+
+
+
       case sorVertical :
         //For p1.x == p2.x
         mDirX1 = 0;
@@ -313,48 +317,88 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               }
             qDebug() << "*vertical vertical";
             break;
+
+
           case sorHorizontal :
             //For p1.y == p2.y
             if( mMove1.y() > mMove2.y() || (mMove1.y() == mMove2.y() && mSource1.y() > mMove1.y()) ) {
               //up
-              mMinY = mMove2.y();
-              mMaxY = mSource1.y();
+              if( mSource1.y() > mMove1.y() ) {
+                mMinY = mMove2.y();
+                mMaxY = mSource1.y();
+                }
+              else {
+                mMinY = qMax( mMove2.y(), mSource1.y() );
+                mMaxY = INT_MAX;
+                }
               if( mMove2.x() < mMove1.x() || (mMove2.x() == mMove1.x() && mSource2.x() < mMove2.x() ) ) {
                 //left
                 mDirX2 = -1;
                 mDirY2 = 0;
-                mMaxX = mSource1.x();
-                mMinX = mSource2.x();
+                if( mSource2.x() < mMove2.x() ) {
+                  mMaxX = mSource1.x();
+                  mMinX = mSource2.x();
+                  }
+                else {
+                  mMinX = INT_MIN;
+                  mMaxX = qMin( mSource1.x(), mMove2.x() );
+                  }
                 }
               else {
                 //right
                 mDirX2 = 1;
                 mDirY2 = 0;
-                mMaxX = mSource2.x();
-                mMinX = mSource1.x();
+                if( mSource2.x() > mMove2.x() ) {
+                  mMaxX = mSource2.x();
+                  mMinX = mSource1.x();
+                  }
+                else {
+                  mMaxX = INT_MAX;
+                  mMinX = qMax( mSource1.x(), mMove2.x() );
+                  }
                 }
               }
             else {
               //down
-              mMaxY = mMove2.y();
-              mMinY = mSource1.y();
+              if( mSource1.y() < mMove1.y() ) {
+                mMaxY = mMove2.y();
+                mMinY = mSource1.y();
+                }
+              else {
+                mMaxY = qMin( mMove2.y(), mSource1.y() );
+                mMinY = INT_MIN;
+                }
               if( mMove2.x() < mMove1.x() || (mMove2.x() == mMove1.x() && mSource2.x() < mMove2.x() ) ) {
                 //left
                 mDirX2 = 1;
                 mDirY2 = 0;
-                mMaxX = mSource1.x();
-                mMinX = mSource2.x();
+                if( mSource2.x() < mMove2.x() ) {
+                  mMaxX = mSource1.x();
+                  mMinX = mSource2.x();
+                  }
+                else {
+                  mMinX = INT_MIN;
+                  mMaxX = qMin( mSource1.x(), mMove2.x() );
+                  }
                 }
               else {
                 //right
                 mDirX2 = -1;
                 mDirY2 = 0;
-                mMaxX = mSource2.x();
-                mMinX = mSource1.x();
+                if( mSource2.x() > mMove2.x() ) {
+                  mMaxX = mSource2.x();
+                  mMinX = mSource1.x();
+                  }
+                else {
+                  mMaxX = INT_MAX;
+                  mMinX = qMax( mSource1.x(), mMove2.x() );
+                  }
                 }
               }
             qDebug() << "*vertical horizontal";
             break;
+
+
           case sorSlashForward :
             //For dx == dy
             if( mMove1.y() == mMove2.y() ) {
@@ -363,32 +407,26 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               mDirY2 = 1;
               //y - coord of intersection segment1 and segment2
               int y = mSource1.x() - mSource2.x() + mSource2.y();
+              mMinX = INT_MIN;
+              mMaxX = INT_MAX;
               if( mSource1.y() > mMove1.y() ) {
                 if( mSource2.y() > mMove2.y() ) {
                   mMaxY = qMin( mSource1.y(), mSource2.y() );
                   mMinY = y > mMaxY ? INT_MIN : y;
-                  mMinX = mSource1.x();
-                  mMaxX = mSource2.x();
                   }
                 else {
                   mMaxY = mSource1.y();
                   mMinY = mSource2.y();
-                  mMinX = mSource2.x();
-                  mMaxX = INT_MAX;
                   }
                 }
               else {
                 if( mSource2.y() < mMove2.y() ) {
                   mMinY = qMax( mSource1.y(), mSource2.y() );
                   mMaxY = y < mMinY ? INT_MAX : y;
-                  mMinX = mSource1.x();
-                  mMaxX = mSource2.x();
                   }
                 else {
                   mMinY = mSource1.y();
                   mMaxY = mSource2.y();
-                  mMaxX = mSource2.x();
-                  mMinX = INT_MIN;
                   }
                 }
               }
@@ -398,6 +436,8 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               }
             qDebug() << "vertical forward";
             break;
+
+
           case sorSlashBackward :
             //For dx == -dy
             if( mMove1.y() == mMove2.y() ) {
@@ -405,32 +445,26 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               mDirY2 = 1;
               //y - coord of intersection segment1 and segment2
               int y = mSource2.x() - mSource1.x() + mSource2.y();
+              mMinX = INT_MIN;
+              mMaxX = INT_MAX;
               if( mSource1.y() > mMove1.y() ) {
                 if( mSource2.y() > mMove2.y() ) {
                   mMaxY = qMin( mSource1.y(), mSource2.y() );
                   mMinY = y > mMaxY ? INT_MIN : y;
-                  mMinX = mSource2.x();
-                  mMaxX = mSource1.x();
                   }
                 else {
                   mMaxY = mSource1.y();
                   mMinY = mSource2.y();
-                  mMinX = INT_MIN;
-                  mMaxX = mSource2.x();
                   }
                 }
               else {
                 if( mSource2.y() < mMove2.y() ) {
                   mMinY = qMax( mSource1.y(), mSource2.y() );
                   mMaxY = y < mMinY ? INT_MAX : y;
-                  mMinX = mSource1.x();
-                  mMaxX = mSource2.x();
                   }
                 else {
                   mMinY = mSource1.y();
                   mMaxY = mSource2.y();
-                  mMaxX = INT_MAX;
-                  mMinX = mSource2.x();
                   }
                 }
               }
@@ -442,6 +476,9 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
             break;
           }
         break;
+
+
+
 
 
 
@@ -475,6 +512,8 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               }
             qDebug() << "*horizontal horizontal";
             break;
+
+
           case sorSlashForward :
             //For dx == dy
             if( mMove1.x() == mMove2.x() ) {
@@ -483,32 +522,26 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               mDirY2 = 1;
               //x - coord of intersection segment1 and segment2
               int x = mSource1.y() - mSource2.y() + mSource2.x();
+              mMinY = INT_MIN;
+              mMaxY = INT_MAX;
               if( mSource1.x() > mMove1.x() ) {
                 if( mSource2.x() > mMove2.x() ) {
                   mMaxX = qMin( mSource1.x(), mSource2.x() );
                   mMinX = x > mMaxX ? INT_MIN : x;
-                  mMinY = mSource1.y();
-                  mMaxY = mSource2.y();
                   }
                 else {
                   mMaxX = mSource1.x();
                   mMinX = mSource2.x();
-                  mMinY = mSource2.y();
-                  mMaxY = INT_MAX;
                   }
                 }
               else {
                 if( mSource2.x() < mMove2.x() ) {
                   mMinX = qMax( mSource1.x(), mSource2.x() );
                   mMaxX = x < mMinX ? INT_MAX : x;
-                  mMinY = mSource2.y();
-                  mMaxY = mSource1.y();
                   }
                 else {
                   mMinX = mSource1.x();
                   mMaxX = mSource2.x();
-                  mMinY = mSource1.y();
-                  mMaxY = INT_MAX;
                   }
                 }
               }
@@ -518,6 +551,8 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               }
             qDebug() << "horizontal forward";
             break;
+
+
           case sorSlashBackward :
             //For dx == -dy
             if( mMove1.x() == mMove2.x() ) {
@@ -526,32 +561,26 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               mDirY2 = -1;
               //x - coord of intersection segment1 and segment2
               int x = mSource2.y() - mSource1.y() + mSource2.x();
+              mMinY = INT_MIN;
+              mMaxY = INT_MAX;
               if( mSource1.x() > mMove1.x() ) {
                 if( mSource2.x() > mMove2.x() ) {
                   mMaxX = qMin( mSource1.x(), mSource2.x() );
                   mMinY = x > mMaxX ? INT_MIN : x;
-                  mMinY = mSource2.y();
-                  mMaxY = mSource1.y();
                   }
                 else {
                   mMaxX = mSource1.x();
                   mMinX = mSource2.x();
-                  mMinY = INT_MIN;
-                  mMaxY = mSource2.y();
                   }
                 }
               else {
                 if( mSource2.x() < mMove2.x() ) {
                   mMinX = qMax( mSource1.x(), mSource2.x() );
                   mMaxX = x < mMinX ? INT_MAX : x;
-                  mMinY = mSource1.y();
-                  mMaxY = mSource2.y();
                   }
                 else {
                   mMinX = mSource1.x();
                   mMaxX = mSource2.x();
-                  mMaxY = INT_MAX;
-                  mMinY = mSource2.y();
                   }
                 }
               }
@@ -563,7 +592,6 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
             break;
           }
         break;
-
 
 
       case sorSlashForward :
@@ -578,16 +606,22 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
             mDirY2 = 1;
             qDebug() << "*forward any";
             break;
+
+
           case sorVertical :
             //For p1.x == p2.x
             mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
             qDebug() << "forward vertical not available";
             break;
+
+
           case sorHorizontal :
             //For p1.y == p2.y
             mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
             qDebug() << "forward horizontal not available";
             break;
+
+
           case sorSlashForward :
             //For dx == dy
             mDirX2 = 1;
@@ -612,8 +646,12 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               }
             qDebug() << "forward forward";
             break;
+
+
           case sorSlashBackward : {
             //For dx == -dy
+            mDirX2 = 1;
+            mDirY2 = -1;
             //y = (x2 +y2 + y1 - x1) / 2
             //x = y - y1 + x1
             int y = (mSource2.x() + mSource2.y() + mSource1.y() - mSource1.x()) / 2;
@@ -625,34 +663,58 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               //1 or 2
               if( mMove2.y() > y || (mMove2.y() == y && mSource2.y() > y) ) {
                 //1
-                mDirX2 = -1;
-                mDirY2 = 1;
-                mMinX = qMin( mSource1.x(), mSource2.x() );
-                mMaxX = qMax( mSource1.x(), mSource2.x() );
-                mMinY = y;
-                mMaxY = qMin( mSource1.y(), mSource2.y() );
+                if( mSource1.y() < mMove1.y() && mSource2.y() < mMove2.y() ) {
+                  mMaxY = INT_MAX;
+                  mMinY = qMax( y, qMax(mSource1.y(),mSource2.y()) );
+                  }
+                else {
+                  mMaxY = qMin( mSource1.y(), mSource2.y() );
+                  mMinY = y;
+                  }
+                mMinX = INT_MIN;
+                mMaxX = INT_MAX;
                 }
               else {
                 //2
-                mDirX2 = 1;
-                mDirY2 = -1;
-                mMinX = x;
-                mMaxX = qMax( mSource1.x(), mSource2.x() );
-                mMinY = qMin( mSource1.y(), mSource2.y() );
-                mMaxY = qMax( mSource1.y(), mSource2.y() );
+                if( mSource1.x() < mMove1.x() && mSource2.x() < mMove2.x() ) {
+                  mMaxX = INT_MAX;
+                  mMinX = qMax( x, qMax(mSource1.x(),mSource2.x()) );
+                  }
+                else {
+                  mMaxX = qMin( mSource1.x(), mSource2.x() );
+                  mMinX = x;
+                  }
+                mMinY = INT_MIN;
+                mMaxY = INT_MAX;
                 }
               }
             else {
               //3 or 4
-              if( mMove2.y() > y || (mMove2.y() == y && mSource2.y() > y) ) {
-                //4
-                mDirX2 = 1;
-                mDirY2 = -1;
+              if( mMove2.y() < y || (mMove2.y() == y && mSource2.y() < y) ) {
+                //3
+                if( mSource1.y() > mMove1.y() && mSource2.y() > mMove2.y() ) {
+                  mMaxY = qMin( y, qMin(mSource1.y(),mSource2.y()) );;
+                  mMinY = INT_MIN;
+                  }
+                else {
+                  mMaxY = y;
+                  mMinY = qMax( mSource1.y(), mSource2.y() );
+                  }
+                mMinX = INT_MIN;
+                mMaxX = INT_MAX;
                 }
               else {
-                //2
-                mDirX2 = -1;
-                mDirY2 = 1;
+                //4
+                if( mSource1.x() > mMove1.x() && mSource2.x() > mMove2.x() ) {
+                  mMaxX = qMin( x, qMin(mSource1.x(),mSource2.x()) );
+                  mMinX = INT_MIN;
+                  }
+                else {
+                  mMaxX = x;
+                  mMinX = qMax( mSource1.x(), mSource2.x() );
+                  }
+                mMinY = INT_MIN;
+                mMaxY = INT_MAX;
                 }
               }
             qDebug() << "forward backward";
@@ -660,6 +722,10 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
             break;
           }
         break;
+
+
+
+
       case sorSlashBackward :
         //For dx == -dy
         mDirX1 = -1;
