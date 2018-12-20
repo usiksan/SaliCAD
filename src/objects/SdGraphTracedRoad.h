@@ -47,6 +47,8 @@ class SdGraphTracedRoad : public SdGraphTraced
 
     const SdPropRoad   &propRoad() const { return mProp; }
 
+    void                setSegment( SdPoint a, SdPoint b, SdUndo *undo );
+
     // SdObject interface
   public:
     virtual QString    getType() const override;

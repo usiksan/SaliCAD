@@ -62,20 +62,34 @@ void SdModeCRoadMove::drawDynamic(SdContext *ctx)
   if( getStep() == sMoveRoad ) {
     //Draw segments
     ctx->setOverColor( sdEnvir->getSysColor(scSelected) );
-    if( mSource1 != mMove1 ) {
-      ctx->setPen( mProp1.mWidth.getValue(), sdEnvir->mCacheForRoad.getVisibleLayer( mProp1.mStratum ), dltSolid );
-      ctx->line( mSource1, mMove1 );
+    if( mVia == nullptr ) {
+      //Move segments only
+      if( mSource1 != mMove1 ) {
+        ctx->setPen( mProp1.mWidth.getValue(), sdEnvir->mCacheForRoad.getVisibleLayer( mProp1.mStratum ), dltSolid );
+        ctx->line( mSource1, mMove1 );
+        }
+      if( mMove1 != mMove2 ) {
+        ctx->setPen( mProp.mWidth.getValue(), sdEnvir->mCacheForRoad.getVisibleLayer( mProp.mStratum ), dltSolid );
+        ctx->line( mMove1, mMove2 );
+        }
+      if( mMove2 != mSource2 ) {
+        ctx->setPen( mProp2.mWidth.getValue(), sdEnvir->mCacheForRoad.getVisibleLayer( mProp2.mStratum ), dltSolid );
+        ctx->line( mSource2, mMove2 );
+        }
       }
-    if( mMove1 != mMove2 ) {
-      ctx->setPen( mProp.mWidth.getValue(), sdEnvir->mCacheForRoad.getVisibleLayer( mProp.mStratum ), dltSolid );
-      ctx->line( mMove1, mMove2 );
-      }
-    if( mMove2 != mSource2 ) {
-      ctx->setPen( mProp2.mWidth.getValue(), sdEnvir->mCacheForRoad.getVisibleLayer( mProp2.mStratum ), dltSolid );
-      ctx->line( mSource2, mMove2 );
+    else {
+      //Move via
+      mFragment.draw( ctx );
+      if( mSource1 != mMove1 ) {
+        ctx->setPen( mProp.mWidth.getValue(), sdEnvir->mCacheForRoad.getVisibleLayer( mViaProp.mStratum ), dltSolid );
+        ctx->line( mSource1, mMove1 );
+        }
+      if( mMove1 != mMove2 ) {
+        ctx->setPen( mProp.mWidth.getValue(), sdEnvir->mCacheForRoad.getVisibleLayer( mViaProp.mStratum ), dltSolid );
+        ctx->line( mMove1, mMove2 );
+        }
       }
     }
-
   }
 
 
@@ -94,7 +108,6 @@ void SdModeCRoadMove::enterPoint(SdPoint)
       SdPtr<SdGraphTracedRoad> road(mSourceObject);
       if( road.isValid() ) {
         mSegment = road.ptr();
-        mMove = mSourcePoint;
         mMove1 = road->segment().getP1();
         mMove2 = road->segment().getP2();
         mProp  = road->propRoad();
@@ -148,9 +161,8 @@ void SdModeCRoadMove::enterPoint(SdPoint)
       SdPtr<SdGraphTracedRoad> road(mSourceObject);
       if( road.isValid() ) {
         mSegment = nullptr;
-        mMove = mSourcePoint;
-        mMove1 = mMove;
-        mMove2 = mMove;
+        mMove1 = mSourcePoint;
+        mMove2 = mMove1;
         mProp  = road->propRoad();
 
         //Selected segment is first
@@ -187,9 +199,37 @@ void SdModeCRoadMove::enterPoint(SdPoint)
     else if( mSourceType == snapViaPoint ) {
       //Used via and 2 or less segments
       mSegment = mSegment1 = mSegment2 = nullptr;
-      mVia = nullptr;
-      mFragment.removeAll();
-      mSourceType = 0;
+      SdPtr<SdGraphTracedVia> via(mSourceObject);
+      if( via.isValid() ) {
+        mVia = via.ptr();
+        mViaProp = mVia->propVia();
+        mMove1 = mVia->position();
+        mSource1 = mMove1;
+        mMove2 = mMove1;
+        mSource2 = mMove2;
+        //Get rules for net
+        plate()->ruleBlockForNet( mViaProp.mNetName.str(), mRule );
+
+        //Prepare prop for building roads
+        mProp.mWidth   = mRule.mRules[ruleRoadWidth];
+        mProp.mNetName = mViaProp.mNetName;
+        mProp.mStratum = mViaProp.mStratum;
+
+        mProp1 = mProp;
+        mProp2 = mProp;
+
+        //Barriers for via
+        mPads.clear();
+        mRule.mRules[ruleRoadWidth] = plate()->getPadOverRadius( mViaProp.mPadType.str() );
+        mRule.mRules[ruleRoadRoad] = 0;
+        //mRule.mRules[ruleRoadPad] = 0;
+        plate()->accumBarriers( dctTraced, mPads, mViaProp.mStratum, rulePadPad, mRule );
+        }
+      else {
+        mVia = nullptr;
+        mFragment.removeAll();
+        mSourceType = 0;
+        }
       }
 
     //Build barriers
@@ -264,521 +304,289 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
         graph->saveState( mUndo );
       return true;
       });
-    //Mutual orientation of segments
-    SdOrientation orient1 = SdSegment( mSource1, mMove1 ).orientation();
-    SdOrientation orient2 = SdSegment( mSource2, mMove2 ).orientation();
-    if( (orient2 == sorVertical ) ||
-        (orient1 == sorAny) ||
-        (orient1 == sorNull) ||
-        (orient1 == sorHorizontal && orient2 == sorVertical) ||
-        (orient1 == sorSlashForward && orient2 == sorVertical) ||
-        (orient1 == sorSlashForward && orient2 == sorHorizontal) ||
-        (orient1 == sorSlashBackward) ) {
-      //Change segment1 and segment2
-      std::swap( mSegment1, mSegment2 );
-      std::swap( mSource1, mSource2 );
-      std::swap( mMove1, mMove2 );
-      std::swap( orient1, orient2 );
-      }
-    switch( orient1 ) {
-      case sorNull :
-        //For p1 == p2
-      case sorAny :
-        mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
-        qDebug() << "not available";
-        break;
+    if( mVia == nullptr ) {
+      //Move segments
+      //Mutual orientation of segments
+      SdOrientation orient1 = SdSegment( mSource1, mMove1 ).orientation();
+      SdOrientation orient2 = SdSegment( mSource2, mMove2 ).orientation();
+      if( (orient2 == sorVertical ) ||
+          (orient1 == sorAny) ||
+          (orient1 == sorNull) ||
+          (orient1 == sorHorizontal && orient2 == sorVertical) ||
+          (orient1 == sorSlashForward && orient2 == sorVertical) ||
+          (orient1 == sorSlashForward && orient2 == sorHorizontal) ||
+          (orient1 == sorSlashBackward) ) {
+        //Change segment1 and segment2
+        std::swap( mSegment1, mSegment2 );
+        std::swap( mSource1, mSource2 );
+        std::swap( mMove1, mMove2 );
+        std::swap( orient1, orient2 );
+        }
+      switch( orient1 ) {
+        case sorNull :
+          //For p1 == p2
+        case sorAny :
+          mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+          qDebug() << "not available";
+          break;
 
 
 
 
-      case sorVertical :
-        //For p1.x == p2.x
-        mDirX1 = 0;
-        mDirY1 = 1;
-        switch( orient2 ) {
-          case sorNull :
-            //For p1 == p2
-          case sorAny :
-          case sorVertical :
-            //For p1.x == p2.x
-            mDirX2 = 0;
-            mDirY2 = 1;
-            if( mSource1.y() < mMove.y() && mSource2.y() <= mMove.y() ) {
-              mMinY = qMax( mSource1.y(), mSource2.y() );
-              mMaxY = INT_MAX;
-              }
-            else if( mSource1.y() > mMove.y() && mSource2.y() >= mMove.y() ) {
-              mMinY = INT_MIN;
-              mMaxY = qMin( mSource1.y(), mSource2.y() );
-              }
-            else {
-              mMinY = qMin( mSource1.y(), mSource2.y() );
-              mMaxY = qMax( mSource1.y(), mSource2.y() );
-              }
-            qDebug() << "*vertical vertical";
-            break;
+        case sorVertical :
+          //For p1.x == p2.x
+          mDirX1 = 0;
+          mDirY1 = 1;
+          switch( orient2 ) {
+            case sorNull :
+              //For p1 == p2
+            case sorAny :
+            case sorVertical :
+              //For p1.x == p2.x
+              mDirX2 = 0;
+              mDirY2 = 1;
+              qDebug() << "*vertical vertical";
+              break;
 
 
-          case sorHorizontal :
-            //For p1.y == p2.y
-            if( mMove1.y() > mMove2.y() || (mMove1.y() == mMove2.y() && mSource1.y() > mMove1.y()) ) {
-              //up
-              if( mSource1.y() > mMove1.y() ) {
-                mMinY = mMove2.y();
-                mMaxY = mSource1.y();
-                }
-              else {
-                mMinY = qMax( mMove2.y(), mSource1.y() );
-                mMaxY = INT_MAX;
-                }
-              if( mMove2.x() < mMove1.x() || (mMove2.x() == mMove1.x() && mSource2.x() < mMove2.x() ) ) {
-                //left
-                mDirX2 = -1;
-                mDirY2 = 0;
-                if( mSource2.x() < mMove2.x() ) {
-                  mMaxX = mSource1.x();
-                  mMinX = mSource2.x();
+            case sorHorizontal :
+              //For p1.y == p2.y
+              if( mMove1.y() > mMove2.y() || (mMove1.y() == mMove2.y() && mSource1.y() > mMove1.y()) ) {
+                //up
+                if( mMove2.x() < mMove1.x() || (mMove2.x() == mMove1.x() && mSource2.x() < mMove2.x() ) ) {
+                  //left
+                  mDirX2 = -1;
+                  mDirY2 = 0;
                   }
                 else {
-                  mMinX = INT_MIN;
-                  mMaxX = qMin( mSource1.x(), mMove2.x() );
+                  //right
+                  mDirX2 = 1;
+                  mDirY2 = 0;
                   }
                 }
               else {
-                //right
+                //down
+                if( mMove2.x() < mMove1.x() || (mMove2.x() == mMove1.x() && mSource2.x() < mMove2.x() ) ) {
+                  //left
+                  mDirX2 = 1;
+                  mDirY2 = 0;
+                  }
+                else {
+                  //right
+                  mDirX2 = -1;
+                  mDirY2 = 0;
+                  }
+                }
+              qDebug() << "*vertical horizontal";
+              break;
+
+
+            case sorSlashForward :
+              //For dx == dy
+              if( mMove1.y() == mMove2.y() ) {
+                //In this configuration we move only horizontal segments
                 mDirX2 = 1;
-                mDirY2 = 0;
-                if( mSource2.x() > mMove2.x() ) {
-                  mMaxX = mSource2.x();
-                  mMinX = mSource1.x();
-                  }
-                else {
-                  mMaxX = INT_MAX;
-                  mMinX = qMax( mSource1.x(), mMove2.x() );
-                  }
-                }
-              }
-            else {
-              //down
-              if( mSource1.y() < mMove1.y() ) {
-                mMaxY = mMove2.y();
-                mMinY = mSource1.y();
+                mDirY2 = 1;
                 }
               else {
-                mMaxY = qMin( mMove2.y(), mSource1.y() );
-                mMinY = INT_MIN;
+                //Moving disable
+                mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
                 }
-              if( mMove2.x() < mMove1.x() || (mMove2.x() == mMove1.x() && mSource2.x() < mMove2.x() ) ) {
-                //left
-                mDirX2 = 1;
-                mDirY2 = 0;
-                if( mSource2.x() < mMove2.x() ) {
-                  mMaxX = mSource1.x();
-                  mMinX = mSource2.x();
-                  }
-                else {
-                  mMinX = INT_MIN;
-                  mMaxX = qMin( mSource1.x(), mMove2.x() );
-                  }
-                }
-              else {
-                //right
+              qDebug() << "vertical forward";
+              break;
+
+
+            case sorSlashBackward :
+              //For dx == -dy
+              if( mMove1.y() == mMove2.y() ) {
                 mDirX2 = -1;
-                mDirY2 = 0;
-                if( mSource2.x() > mMove2.x() ) {
-                  mMaxX = mSource2.x();
-                  mMinX = mSource1.x();
-                  }
-                else {
-                  mMaxX = INT_MAX;
-                  mMinX = qMax( mSource1.x(), mMove2.x() );
-                  }
+                mDirY2 = 1;
                 }
-              }
-            qDebug() << "*vertical horizontal";
-            break;
+              else {
+                //Moving disable
+                mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+                }
+              qDebug() << "vertical backward";
+              break;
+            }
+          break;
 
 
-          case sorSlashForward :
-            //For dx == dy
-            if( mMove1.y() == mMove2.y() ) {
-              //In this configuration we move only horizontal segments
+
+
+
+
+        case sorHorizontal :
+          //For p1.y == p2.y
+          mDirX1 = 1;
+          mDirY1 = 0;
+          switch( orient2 ) {
+            case sorVertical :
+              mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+              qDebug() << "horizontal vertical not available";
+              break;
+            case sorNull :
+              //For p1 == p2
+            case sorAny :
+            case sorHorizontal :
+              //For p1.y == p2.y
+              mDirX2 = 1;
+              mDirY2 = 0;
+              qDebug() << "*horizontal horizontal";
+              break;
+
+
+            case sorSlashForward :
+              //For dx == dy
+              if( mMove1.x() == mMove2.x() ) {
+                //In this configuration we move only vertical segments
+                mDirX2 = 1;
+                mDirY2 = 1;
+                }
+              else {
+                //Moving disable
+                mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+                }
+              qDebug() << "horizontal forward";
+              break;
+
+
+            case sorSlashBackward :
+              //For dx == -dy
+              if( mMove1.x() == mMove2.x() ) {
+                //In this configuration we move only vertical segments
+                mDirX2 = 1;
+                mDirY2 = -1;
+                }
+              else {
+                //Moving disable
+                mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+                }
+              qDebug() << "horizontal backward";
+              break;
+            }
+          break;
+
+
+        case sorSlashForward :
+          //For dx == dy
+          mDirX1 = 1;
+          mDirY1 = 1;
+          switch( orient2 ) {
+            case sorNull :
+              //For p1 == p2
+            case sorAny :
               mDirX2 = 1;
               mDirY2 = 1;
-              //y - coord of intersection segment1 and segment2
-              int y = mSource1.x() - mSource2.x() + mSource2.y();
-              mMinX = INT_MIN;
-              mMaxX = INT_MAX;
-              if( mSource1.y() > mMove1.y() ) {
-                if( mSource2.y() > mMove2.y() ) {
-                  mMaxY = qMin( mSource1.y(), mSource2.y() );
-                  mMinY = y > mMaxY ? INT_MIN : y;
+              qDebug() << "*forward any";
+              break;
+
+
+            case sorVertical :
+              //For p1.x == p2.x
+              mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+              qDebug() << "forward vertical not available";
+              break;
+
+
+            case sorHorizontal :
+              //For p1.y == p2.y
+              mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+              qDebug() << "forward horizontal not available";
+              break;
+
+
+            case sorSlashForward :
+              //For dx == dy
+              mDirX2 = 1;
+              mDirY2 = 1;
+              qDebug() << "forward forward";
+              break;
+
+
+            case sorSlashBackward : {
+              //For dx == -dy
+              //y = (x2 +y2 + y1 - x1) / 2
+              //x = y - y1 + x1
+              int y = (mSource2.x() + mSource2.y() + mSource1.y() - mSource1.x()) / 2;
+              //int x = y - mSource1.y() + mSource1.x();
+              // \1/
+              // 4+2
+              // /3\ .
+              if( mMove1.y() > y || (mMove1.y() == y && mSource1.y() > y) ) {
+                //1 or 2
+                if( mMove2.y() > y || (mMove2.y() == y && mSource2.y() > y) ) {
+                  //1
+                  mDirX2 = -1;
+                  mDirY2 = 1;
                   }
                 else {
-                  mMaxY = mSource1.y();
-                  mMinY = mSource2.y();
+                  //2
+                  mDirX2 = 1;
+                  mDirY2 = -1;
                   }
                 }
               else {
-                if( mSource2.y() < mMove2.y() ) {
-                  mMinY = qMax( mSource1.y(), mSource2.y() );
-                  mMaxY = y < mMinY ? INT_MAX : y;
+                //3 or 4
+                if( mMove2.y() > y || (mMove2.y() == y && mSource2.y() > y) ) {
+                  //4
+                  mDirX2 = 1;
+                  mDirY2 = -1;
                   }
                 else {
-                  mMinY = mSource1.y();
-                  mMaxY = mSource2.y();
+                  //2
+                  mDirX2 = -1;
+                  mDirY2 = 1;
                   }
                 }
+              qDebug() << "forward backward";
               }
-            else {
-              //Moving disable
-              mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
-              }
-            qDebug() << "vertical forward";
-            break;
+              break;
+            }
+          break;
 
 
-          case sorSlashBackward :
-            //For dx == -dy
-            if( mMove1.y() == mMove2.y() ) {
+
+
+        case sorSlashBackward :
+          //For dx == -dy
+          mDirX1 = -1;
+          mDirY1 = 1;
+          switch( orient2 ) {
+            case sorNull :
+              //For p1 == p2
+            case sorAny :
               mDirX2 = -1;
               mDirY2 = 1;
-              //y - coord of intersection segment1 and segment2
-              int y = mSource2.x() - mSource1.x() + mSource2.y();
-              mMinX = INT_MIN;
-              mMaxX = INT_MAX;
-              if( mSource1.y() > mMove1.y() ) {
-                if( mSource2.y() > mMove2.y() ) {
-                  mMaxY = qMin( mSource1.y(), mSource2.y() );
-                  mMinY = y > mMaxY ? INT_MIN : y;
-                  }
-                else {
-                  mMaxY = mSource1.y();
-                  mMinY = mSource2.y();
-                  }
-                }
-              else {
-                if( mSource2.y() < mMove2.y() ) {
-                  mMinY = qMax( mSource1.y(), mSource2.y() );
-                  mMaxY = y < mMinY ? INT_MAX : y;
-                  }
-                else {
-                  mMinY = mSource1.y();
-                  mMaxY = mSource2.y();
-                  }
-                }
-              }
-            else {
-              //Moving disable
+              qDebug() << "backward any";
+              break;
+            case sorVertical :
+              //For p1.x == p2.x
               mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
-              }
-            qDebug() << "vertical backward";
-            break;
-          }
-        break;
-
-
-
-
-
-
-      case sorHorizontal :
-        //For p1.y == p2.y
-        mDirX1 = 1;
-        mDirY1 = 0;
-        switch( orient2 ) {
-          case sorVertical :
-            mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
-            qDebug() << "horizontal vertical not available";
-            break;
-          case sorNull :
-            //For p1 == p2
-          case sorAny :
-          case sorHorizontal :
-            //For p1.y == p2.y
-            mDirX2 = 1;
-            mDirY2 = 0;
-            if( mSource1.x() < mMove.x() && mSource2.x() < mMove.x() ) {
-              mMinX = qMax( mSource1.x(), mSource2.x() );
-              mMaxX = INT_MAX;
-              }
-            else if( mSource1.x() > mMove.x() && mSource2.x() > mMove.x() ) {
-              mMinX = INT_MIN;
-              mMaxX = qMin( mSource1.x(), mSource2.x() );
-              }
-            else {
-              mMinX = qMin( mSource1.x(), mSource2.x() );
-              mMaxX = qMax( mSource1.x(), mSource2.x() );
-              }
-            qDebug() << "*horizontal horizontal";
-            break;
-
-
-          case sorSlashForward :
-            //For dx == dy
-            if( mMove1.x() == mMove2.x() ) {
-              //In this configuration we move only vertical segments
-              mDirX2 = 1;
+              qDebug() << "backward vertical not available";
+              break;
+            case sorHorizontal :
+              //For p1.y == p2.y
+              mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+              qDebug() << "backward horizontal not available";
+              break;
+            case sorSlashForward :
+              //For dx == dy
+              mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
+              qDebug() << "backward forward not available";
+              break;
+            case sorSlashBackward :
+              //For dx == -dy
+              mDirX2 = -1;
               mDirY2 = 1;
-              //x - coord of intersection segment1 and segment2
-              int x = mSource1.y() - mSource2.y() + mSource2.x();
-              mMinY = INT_MIN;
-              mMaxY = INT_MAX;
-              if( mSource1.x() > mMove1.x() ) {
-                if( mSource2.x() > mMove2.x() ) {
-                  mMaxX = qMin( mSource1.x(), mSource2.x() );
-                  mMinX = x > mMaxX ? INT_MIN : x;
-                  }
-                else {
-                  mMaxX = mSource1.x();
-                  mMinX = mSource2.x();
-                  }
-                }
-              else {
-                if( mSource2.x() < mMove2.x() ) {
-                  mMinX = qMax( mSource1.x(), mSource2.x() );
-                  mMaxX = x < mMinX ? INT_MAX : x;
-                  }
-                else {
-                  mMinX = mSource1.x();
-                  mMaxX = mSource2.x();
-                  }
-                }
-              }
-            else {
-              //Moving disable
-              mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
-              }
-            qDebug() << "horizontal forward";
-            break;
-
-
-          case sorSlashBackward :
-            //For dx == -dy
-            if( mMove1.x() == mMove2.x() ) {
-              //In this configuration we move only vertical segments
-              mDirX2 = 1;
-              mDirY2 = -1;
-              //x - coord of intersection segment1 and segment2
-              int x = mSource2.y() - mSource1.y() + mSource2.x();
-              mMinY = INT_MIN;
-              mMaxY = INT_MAX;
-              if( mSource1.x() > mMove1.x() ) {
-                if( mSource2.x() > mMove2.x() ) {
-                  mMaxX = qMin( mSource1.x(), mSource2.x() );
-                  mMinY = x > mMaxX ? INT_MIN : x;
-                  }
-                else {
-                  mMaxX = mSource1.x();
-                  mMinX = mSource2.x();
-                  }
-                }
-              else {
-                if( mSource2.x() < mMove2.x() ) {
-                  mMinX = qMax( mSource1.x(), mSource2.x() );
-                  mMaxX = x < mMinX ? INT_MAX : x;
-                  }
-                else {
-                  mMinX = mSource1.x();
-                  mMaxX = mSource2.x();
-                  }
-                }
-              }
-            else {
-              //Moving disable
-              mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
-              }
-            qDebug() << "horizontal backward";
-            break;
-          }
-        break;
-
-
-      case sorSlashForward :
-        //For dx == dy
-        mDirX1 = 1;
-        mDirY1 = 1;
-        switch( orient2 ) {
-          case sorNull :
-            //For p1 == p2
-          case sorAny :
-            mDirX2 = 1;
-            mDirY2 = 1;
-            qDebug() << "*forward any";
-            break;
-
-
-          case sorVertical :
-            //For p1.x == p2.x
-            mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
-            qDebug() << "forward vertical not available";
-            break;
-
-
-          case sorHorizontal :
-            //For p1.y == p2.y
-            mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
-            qDebug() << "forward horizontal not available";
-            break;
-
-
-          case sorSlashForward :
-            //For dx == dy
-            mDirX2 = 1;
-            mDirY2 = 1;
-            if( mSource1.x() < mMove.x() && mSource2.x() < mMove.x() ) {
-              mMinX = qMax( mSource1.x(), mSource2.x() );
-              mMaxX = INT_MAX;
-              mMinY = qMax( mSource1.y(), mSource2.y() );
-              mMaxY = INT_MAX;
-              }
-            else if( mSource1.x() > mMove.x() && mSource2.x() > mMove.x() ) {
-              mMinX = INT_MIN;
-              mMaxX = qMin( mSource1.x(), mSource2.x() );
-              mMinY = INT_MIN;
-              mMaxY = qMin( mSource1.y(), mSource2.y() );
-              }
-            else {
-              mMinX = qMin( mSource1.x(), mSource2.x() );
-              mMaxX = qMax( mSource1.x(), mSource2.x() );
-              mMinY = qMin( mSource1.y(), mSource2.y() );
-              mMaxY = qMax( mSource1.y(), mSource2.y() );
-              }
-            qDebug() << "forward forward";
-            break;
-
-
-          case sorSlashBackward : {
-            //For dx == -dy
-            mDirX2 = 1;
-            mDirY2 = -1;
-            //y = (x2 +y2 + y1 - x1) / 2
-            //x = y - y1 + x1
-            int y = (mSource2.x() + mSource2.y() + mSource1.y() - mSource1.x()) / 2;
-            int x = y - mSource1.y() + mSource1.x();
-            // \1/
-            // 4+2
-            // /3\ .
-            if( mMove1.y() > y || (mMove1.y() == y && mSource1.y() > y) ) {
-              //1 or 2
-              if( mMove2.y() > y || (mMove2.y() == y && mSource2.y() > y) ) {
-                //1
-                if( mSource1.y() < mMove1.y() && mSource2.y() < mMove2.y() ) {
-                  mMaxY = INT_MAX;
-                  mMinY = qMax( y, qMax(mSource1.y(),mSource2.y()) );
-                  }
-                else {
-                  mMaxY = qMin( mSource1.y(), mSource2.y() );
-                  mMinY = y;
-                  }
-                mMinX = INT_MIN;
-                mMaxX = INT_MAX;
-                }
-              else {
-                //2
-                if( mSource1.x() < mMove1.x() && mSource2.x() < mMove2.x() ) {
-                  mMaxX = INT_MAX;
-                  mMinX = qMax( x, qMax(mSource1.x(),mSource2.x()) );
-                  }
-                else {
-                  mMaxX = qMin( mSource1.x(), mSource2.x() );
-                  mMinX = x;
-                  }
-                mMinY = INT_MIN;
-                mMaxY = INT_MAX;
-                }
-              }
-            else {
-              //3 or 4
-              if( mMove2.y() < y || (mMove2.y() == y && mSource2.y() < y) ) {
-                //3
-                if( mSource1.y() > mMove1.y() && mSource2.y() > mMove2.y() ) {
-                  mMaxY = qMin( y, qMin(mSource1.y(),mSource2.y()) );;
-                  mMinY = INT_MIN;
-                  }
-                else {
-                  mMaxY = y;
-                  mMinY = qMax( mSource1.y(), mSource2.y() );
-                  }
-                mMinX = INT_MIN;
-                mMaxX = INT_MAX;
-                }
-              else {
-                //4
-                if( mSource1.x() > mMove1.x() && mSource2.x() > mMove2.x() ) {
-                  mMaxX = qMin( x, qMin(mSource1.x(),mSource2.x()) );
-                  mMinX = INT_MIN;
-                  }
-                else {
-                  mMaxX = x;
-                  mMinX = qMax( mSource1.x(), mSource2.x() );
-                  }
-                mMinY = INT_MIN;
-                mMaxY = INT_MAX;
-                }
-              }
-            qDebug() << "forward backward";
+              qDebug() << "*backward backward";
+              break;
             }
-            break;
-          }
-        break;
-
-
-
-
-      case sorSlashBackward :
-        //For dx == -dy
-        mDirX1 = -1;
-        mDirY1 = 1;
-        switch( orient2 ) {
-          case sorNull :
-            //For p1 == p2
-          case sorAny :
-            mDirX2 = -1;
-            mDirY2 = 1;
-            qDebug() << "backward any";
-            break;
-          case sorVertical :
-            //For p1.x == p2.x
-            mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
-            qDebug() << "backward vertical not available";
-            break;
-          case sorHorizontal :
-            //For p1.y == p2.y
-            mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
-            qDebug() << "backward horizontal not available";
-            break;
-          case sorSlashForward :
-            //For dx == dy
-            mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
-            qDebug() << "backward forward not available";
-            break;
-          case sorSlashBackward :
-            //For dx == -dy
-            mDirX2 = -1;
-            mDirY2 = 1;
-            if( mSource1.x() < mMove.x() && mSource2.x() < mMove.x() ) {
-              mMinX = qMax( mSource1.x(), mSource2.x() );
-              mMaxX = INT_MAX;
-              mMinY = INT_MIN;
-              mMaxY = qMin( mSource1.y(), mSource2.y() );
-              }
-            else if( mSource1.x() > mMove.x() && mSource2.x() > mMove.x() ) {
-              mMinX = INT_MIN;
-              mMaxX = qMin( mSource1.x(), mSource2.x() );
-              mMinY = qMax( mSource1.y(), mSource2.y() );
-              mMaxY = INT_MAX;
-              }
-            else {
-              mMinX = qMin( mSource1.x(), mSource2.x() );
-              mMaxX = qMax( mSource1.x(), mSource2.x() );
-              mMinY = qMin( mSource1.y(), mSource2.y() );
-              mMaxY = qMax( mSource1.y(), mSource2.y() );
-              }
-            qDebug() << "*backward backward";
-            break;
-          }
-        break;
+          break;
+        }
+      }
+    else {
+      //Move via
       }
     mPrevMove = p;
     setStep( sMoveRoad );
@@ -793,45 +601,67 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
 
 void SdModeCRoadMove::dragPoint(SdPoint p)
   {
-  SdPoint offset = p.sub(mPrevMove);
-  int d;
-  if( qAbs(offset.x()) > qAbs(offset.y()) )
-    d = offset.x();
-  else
-    d = offset.y();
-  //Limitation
-  if( mDirX1 ) {
-    int v = SdUtil::iLimit( mMove1.x() + d*mDirX1, mMinX, mMaxX );
-    d = (v - mMove1.x()) / mDirX1;
+  if( mVia ) {
+    //Move via
+    SdPoint offset = p.sub(mPrevMove);
+    SdPoint p45 = get45( mSource1, p );
+    if( sdCheckRoadOnBarrierList( mRoads, mSource1, p45, mProp.mNetName.str() ) == p45 &&
+        sdCheckRoadOnBarrierList( mRoads, p45, p, mProp.mNetName.str() ) == p &&
+        !sdIsBarrierListContains( mPads, mViaProp.mNetName.str(), p ) ) {
+      //New point available
+      mVia->move(offset);
+      mMove1 = p45;
+      mMove2 = p;
+      mPrevMove.move(offset);
+      }
     }
-  if( mDirY1 ) {
-    int v = SdUtil::iLimit( mMove1.y() + d*mDirY1, mMinY, mMaxY );
-    d = (v - mMove1.y()) / mDirY1;
-    }
-  if( mDirX2 ) {
-    int v = SdUtil::iLimit( mMove2.x() + d*mDirX2, mMinX, mMaxX );
-    d = (v - mMove2.x()) / mDirX2;
-    }
-  if( mDirY2 ) {
-    int v = SdUtil::iLimit( mMove2.y() + d*mDirY2, mMinY, mMaxY );
-    d = (v - mMove2.y()) / mDirY2;
-    }
-  //Try moving
-  SdPoint move1(mMove1);
-  SdPoint move2(mMove2);
-  move1.move( SdPoint(d*mDirX1,d*mDirY1) );
-  move2.move( SdPoint(d*mDirX2,d*mDirY2) );
+  else {
+    //Move segments only
+    SdPoint offset = p.sub(mPrevMove);
+    //Smart points
+    SdPoint sm1 = mSource1.sub(mMove1);
+    SdPoint sm2 = mSource2.sub(mMove2);
+    //SdPoint sm3 =
+    int sd = qMax(qAbs(sm1.x()),qAbs(sm1.y()));
+    int d;
+    if( qAbs(offset.x()) > qAbs(offset.y()) )
+      d = offset.x();
+    else
+      d = offset.y();
+    if( sd < 200 && qAbs(d) < 200 ) {
+      //Link to sm1
+      if( qAbs(sm1.x()) > qAbs(sm1.y()) )
+        d = sm1.x();
+      else
+        d = sm1.y();
+      }
+    else {
+      sd = qMax(qAbs(sm2.x()),qAbs(sm2.y()));
+      if( sd < 200 && qAbs(d) < 200 ) {
+        //Link to sm2
+        if( qAbs(sm2.x()) > qAbs(sm2.y()) )
+          d = sm2.x();
+        else
+          d = sm2.y();
+        }
+      }
+    //Try moving
+    SdPoint move1(mMove1);
+    SdPoint move2(mMove2);
+    move1.move( SdPoint(d*mDirX1,d*mDirY1) );
+    move2.move( SdPoint(d*mDirX2,d*mDirY2) );
 
-  //Check if new position available
-  if( sdCheckRoadOnBarrierList( mRoads1, mSource1, mMove1, mProp.mNetName.str() ) == mMove1 &&
-      sdCheckRoadOnBarrierList( mRoads, mMove1, mMove2, mProp.mNetName.str() ) == mMove2 &&
-      sdCheckRoadOnBarrierList( mRoads2, mSource2, mMove2, mProp.mNetName.str() ) == mMove2 ) {
-    //Fact moving
-    mMove1.move( SdPoint(d*mDirX1,d*mDirY1) );
-    mMove2.move( SdPoint(d*mDirX2,d*mDirY2) );
+    //Check if new position available
+    if( sdCheckRoadOnBarrierList( mRoads1, mSource1, move1, mProp.mNetName.str() ) == move1 &&
+        sdCheckRoadOnBarrierList( mRoads, move1, move2, mProp.mNetName.str() ) == move2 &&
+        sdCheckRoadOnBarrierList( mRoads2, mSource2, move2, mProp.mNetName.str() ) == move2 ) {
+      //Fact moving
+      mMove1 = move1;
+      mMove2 = move2;
+      mPrevMove.move( offset );
+      }
     }
 
-  mPrevMove.move( offset );
   update();
   }
 
@@ -842,6 +672,16 @@ void SdModeCRoadMove::stopDrag(SdPoint p)
   {
   dragPoint(p);
   mFragment.removeAll();
+  if( mVia ) {
+    //Move via
+    //Append segments to new via position
+    }
+  else {
+    //Move segments only
+    updateSegment( mProp1, mSegment1, mSource1, mMove1 );
+    updateSegment( mProp2, mSegment2, mSource2, mMove2 );
+    updateSegment( mProp,  mSegment,  mMove1, mMove2 );
+    }
   setStep(sFindRoad);
   setDirty();
   setDirtyCashe();
@@ -889,6 +729,27 @@ int SdModeCRoadMove::getCursor() const
 int SdModeCRoadMove::getIndex() const
   {
   return MD_ROAD_MOVE;
+  }
+
+
+
+//Update segment. We create or delete segment if nessesery and change its position
+void SdModeCRoadMove::updateSegment(SdPropRoad &prop, SdGraphTracedRoad *segment, SdPoint a, SdPoint b)
+  {
+  if( segment ) {
+    if( a == b ) {
+      //Segments must be removed
+      segment->deleteObject( mUndo );
+      }
+    else {
+      //Change position of segment
+      segment->setSegment( a, b, mUndo );
+      }
+    }
+  else if( a != b ) {
+    //Segment must be inserted
+    plate()->insertChild( new SdGraphTracedRoad( prop, a, b ), mUndo );
+    }
   }
 
 

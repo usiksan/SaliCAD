@@ -68,21 +68,16 @@ class SdModeCRoadMove : public SdModeCommon
                       *mSegment2;
     SdGraphTracedVia  *mVia;
 
-    SdPoint            mSource1,
+    SdPoint            mSource1,      //Source point of segment. It not moved
                        mSource2,
-                       mMove1,
-                       mMove2,
-                       mMove;
+                       mMove1,        //Moved point of segment 1
+                       mMove2,        //Moved point of segment 2 or via position
+                       mIntersect;    //Appeared intersect point of two segments segment1 and segment2
 
-    int                mDirX1,
-                       mDirY1,
-                       mDirX2,
-                       mDirY2;
-
-    int                mMaxX,
-                       mMinX,
-                       mMaxY,
-                       mMinY;
+    int                mDirX1,        //Direction of moved points of segments
+                       mDirY1,        // it may be 0 - not moved
+                       mDirX2,        //           1 - direct relation
+                       mDirY2;        //          -1 - inverse relation
 
     SdSelector         mFragment;
     SdPoint            mPrevMove;
@@ -114,6 +109,9 @@ class SdModeCRoadMove : public SdModeCommon
 
     //Change segment1 and segment2
     void            changeSegments();
+
+    //Update segment. We create or delete segment if nessesery and change its position
+    void            updateSegment(SdPropRoad &prop, SdGraphTracedRoad *segment, SdPoint a, SdPoint b );
   };
 
 #endif // SDMODECROADMOVE_H

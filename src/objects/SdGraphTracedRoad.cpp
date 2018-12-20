@@ -36,6 +36,18 @@ SdGraphTracedRoad::SdGraphTracedRoad(const SdPropRoad &prp, SdPoint a, SdPoint b
   }
 
 
+
+
+void SdGraphTracedRoad::setSegment(SdPoint a, SdPoint b, SdUndo *undo)
+  {
+  if( undo )
+    undo->road( &(mProp.mWidth), mSegment.ptrP1(), mSegment.ptrP2() );
+  mSegment.set( a, b );
+  }
+
+
+
+
 QString SdGraphTracedRoad::getType() const
   {
   return QStringLiteral(SD_TYPE_GRAPH_TRACE_ROAD);
