@@ -399,6 +399,11 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
                 //In this configuration we move only horizontal segments
                 mDirX2 = 1;
                 mDirY2 = 1;
+                mFragment.remove( mSegment1 );
+                mSegment1 = nullptr;
+                mSource1 = mMove1;
+                mDirX1 = 1;
+                mDirY1 = 0;
                 }
               else {
                 //Moving disable
@@ -413,6 +418,11 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
               if( mMove1.y() == mMove2.y() ) {
                 mDirX2 = -1;
                 mDirY2 = 1;
+                mFragment.remove( mSegment1 );
+                mSegment1 = nullptr;
+                mSource1 = mMove1;
+                mDirX1 = -1;
+                mDirY1 = 0;
                 }
               else {
                 //Moving disable
@@ -454,6 +464,11 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
                 //In this configuration we move only vertical segments
                 mDirX2 = 1;
                 mDirY2 = 1;
+                mFragment.remove( mSegment1 );
+                mSegment1 = nullptr;
+                mSource1 = mMove1;
+                mDirX1 = 0;
+                mDirY1 = 1;
                 }
               else {
                 //Moving disable
@@ -469,6 +484,11 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
                 //In this configuration we move only vertical segments
                 mDirX2 = 1;
                 mDirY2 = -1;
+                mFragment.remove( mSegment1 );
+                mSegment1 = nullptr;
+                mSource1 = mMove1;
+                mDirX1 = 0;
+                mDirY1 = -1;
                 }
               else {
                 //Moving disable
