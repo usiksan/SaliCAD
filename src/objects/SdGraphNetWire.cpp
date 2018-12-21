@@ -50,7 +50,7 @@ SdGraphNetWire::SdGraphNetWire(SdPoint a, SdPoint b, const QString netName, cons
 
 void SdGraphNetWire::accumLinked(SdPoint a, SdPoint b, SdSelector *sel, SdUndo *undo)
   {
-  if( !getSelector() ) {
+  if( !getSelector() || mFixA != mFixB ) {
     //Yet not selected, selecting
     if( mA.isOnSegment(a, b) ) selectByPoint( mA, sel );
     else if( mB.isOnSegment(a, b) ) selectByPoint( mB, sel );
@@ -196,9 +196,10 @@ void SdGraphNetWire::fragmentation(SdPoint p, SdSelector *sel, SdUndo *undo)
   //Create new segment with points p and mB
   SdGraphNetWire *wire = new SdGraphNetWire( p, mB, getNetName(), mProp );
   //Current segment cut until p
-  mB = p;
+  mB = mA;
   //Insert new segment into net
   getSheet()->insertChild( wire, undo );
+  mB = p;
   //Select current segment by point
   selectByPoint( p, sel );
   //Select created segment by point
@@ -244,9 +245,9 @@ bool SdGraphNetWire::getNeedDot(SdPoint a, SdPoint b)
 SdPoint SdGraphNetWire::getFixPoint(SdPoint a, SdPoint b)
   {
   QString netName(getNetName());
-  getSheet()->forEach( dctNetWire, [a,&b,netName] (SdObject *obj) -> bool {
+  getSheet()->forEach( dctNetWire, [a,&b,netName,this] (SdObject *obj) -> bool {
     SdGraphNetWire *wire = dynamic_cast<SdGraphNetWire*>( obj );
-    if( wire != nullptr && wire->getNetName() == netName ) {
+    if( wire != nullptr && wire->getNetName() == netName && wire != this ) {
       if( a != wire->getA() && b != wire->getA() && wire->getA().isOnSegment(a,b) ) b = wire->getA();
       if( a != wire->getB() && b != wire->getB() && wire->getB().isOnSegment(a,b) ) b = wire->getB();
       }
@@ -453,7 +454,7 @@ void SdGraphNetWire::selectByRect(const SdRect &r, SdSelector *selector)
   if( mProp.mLayer.isEdited() ) {
     if( !getSelector() ) {
       //Not selected yet
-      if( r.isAccross( mA, mB) ) {
+      if( r.isPointInside(mA) || r.isPointInside(mB) ) {
         //Test if end catch in rect
         if( r.isPointInside(mA) && !r.isPointInside(mB) ) { mFixB = true; mFixA = false; }
         //В прямоугольник захвачен другой кончик
@@ -468,7 +469,7 @@ void SdGraphNetWire::selectByRect(const SdRect &r, SdSelector *selector)
       }
     else {
       //Already selected
-      if( r.isAccross(mA,mB) ) {
+      if( r.isPointInside(mA) || r.isPointInside(mB) ) {
         //Text fixing condition
         if( mFixB && r.isPointInside(mB) ) mFixB = false;
         if( mFixA && r.isPointInside(mA) ) mFixA = false;
@@ -495,11 +496,14 @@ void SdGraphNetWire::prepareMove(SdUndo *undo)
   //prepare moving
   if( mFixB ) {
     //Calculate fix point
+    //We need stretch from nearest dot
     SdPoint b = getFixPoint( mA, mB );
     if( b != mB ) {
       //Break segment
-      getSheet()->insertChild( new SdGraphNetWire( b, mB, getNetName(), mProp ), undo );
       saveState( undo );
+      SdPoint p = mB;
+      mB = mA;
+      getSheet()->insertChild( new SdGraphNetWire( b, p, getNetName(), mProp ), undo );
       mB = b;
       }
     else {
@@ -512,8 +516,10 @@ void SdGraphNetWire::prepareMove(SdUndo *undo)
     SdPoint a = getFixPoint( mB, mA );
     if( a != mA ) {
       //Break segment
-      getSheet()->insertChild( new SdGraphNetWire( a, mA, getNetName(), mProp ), undo );
       saveState( undo );
+      SdPoint p = mA;
+      mA = mB;
+      getSheet()->insertChild( new SdGraphNetWire( a, p, getNetName(), mProp ), undo );
       mA = a;
       }
     else {
