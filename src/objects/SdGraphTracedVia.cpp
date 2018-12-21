@@ -218,17 +218,8 @@ void SdGraphTracedVia::snapPoint(SdSnapInfo *snap)
     }
   if( snap->match( snapNearestNetVia ) )
     snap->test( this, mPosition, snapNearestNetVia );
-  if( snap->match( snapViaPoint )  ) {
-    double distance;
-    if( snap->isCandidate( mPosition, distance ) ) {
-      //Good candidate, check end point connections
-      SdSelector sel;
-      accumLinkedTrace( this, mPosition, mProp.mNetName.str(), &sel );
-      if( sel.count() == 0 || (sel.count() == 1 && sel.first()->getClass() == dctTraceRoad) ||
-          (sel.count() == 2 && sel.first()->getClass() == dctTraceRoad && sel.last()->getClass() == dctTraceRoad ) )
-        snap->test( this, mPosition, snapViaPoint );
-      }
-    }
+  if( snap->match( snapViaPoint )  )
+    snap->test( this, mPosition, snapViaPoint );
   }
 
 

@@ -66,7 +66,7 @@ void SdSelector::remove(SdGraph *graph)
   {
   if( graph->mSelector == this ) {
     graph->mSelector = nullptr;
-    mTable.remove( graph );
+    mTable.removeOne( graph );
     }
   }
 
@@ -85,7 +85,7 @@ void SdSelector::insert(SdGraph *graph)
     else return;
     }
   graph->mSelector = this; //Объект принадлежит данному селектору
-  mTable.insert( graph );  //Добавить ссылку на объект в массив
+  mTable.append( graph );  //Добавить ссылку на объект в массив
   }
 
 
@@ -234,10 +234,12 @@ void SdSelector::readObject(SdObjectMap *map, const QJsonObject obj)
 
 void SdSelector::forEach(quint64 classMask, std::function<bool (SdGraph *)> fun1)
   {
-  for( SdGraph *graph : mTable )
+  for( int i = 0; i < mTable.count(); i++ ) {
+    SdGraph *graph = mTable.at(i);
     if( graph && !graph->isDeleted() && (graph->getClass() & classMask) ) {
       if( !fun1(graph) ) return;
       }
+    }
   }
 
 

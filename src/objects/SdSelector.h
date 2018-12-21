@@ -18,7 +18,7 @@ Description
 #include "SdRect.h"
 #include "SdGraph.h"
 
-#include <QSet>
+#include <QList>
 #include <functional>
 
 //Состояние объектов, соответствеено "Невыделено" и "Выделено"
@@ -27,7 +27,7 @@ const int
   UNSEL_ELEM   = 1, //Невыделенный объект
   SEL_ELEM     = 2; //Выделенный объект
 
-typedef QSet<SdGraphPtr> SdGraphPtrTable;
+typedef QList<SdGraphPtr> SdGraphPtrTable;
 
 class SdProject;
 
