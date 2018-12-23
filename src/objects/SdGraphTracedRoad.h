@@ -55,6 +55,9 @@ class SdGraphTracedRoad : public SdGraphTraced
     //Split road on two roads with p as division point
     void                splitRoad( SdPoint p, SdUndo *undo );
 
+    //Union consequent segments
+    void               utilize( SdUndo *undo );
+
     // SdObject interface
   public:
     virtual QString    getType() const override;
@@ -94,13 +97,20 @@ class SdGraphTracedRoad : public SdGraphTraced
     virtual void       accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const override;
     virtual bool       isMatchNetAndStratum( const QString netName, SdStratum stratum ) const override;
     virtual void       accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName ) const override;
-    virtual void       accumLinked( SdPoint a, SdStratum stratum, QString netName, SdSelector *sel ) override;
+    //Check if road linked to point
+    virtual bool       isLinked( SdPoint a, SdStratum stratum, QString netName ) const override;
     //Stratum of object
     virtual SdStratum  stratum() const override { return mProp.mStratum; }
 
   private:
     //Return layer for road stratum
-    SdLayer *getLayer() const;
+    SdLayer           *getLayer() const;
+
+    //Single road linked to point. If more than one road then no roads return
+    SdGraphTracedRoad *linkedRoad( SdPoint p );
+
+    //Utilize on end p
+    void               utilizeAtEnd( SdPoint p, SdUndo *undo );
   };
 
 #endif // SDGRAPHTRACEDROAD_H

@@ -140,5 +140,7 @@ int     sred( int a, int b, int gridSize );
 bool    isSegmentYAccross( int y, int x1, int x2, SdPoint p1, SdPoint p2, bool inside, int *result = nullptr );
 bool    isSegmentYAccrossA( int y, int x1, int x2, SdPoint p1, SdPoint p2, bool inside );
 
+//Check if three points are all on one line
+bool    is3PointsOnLine( SdPoint p1, SdPoint p2, SdPoint p3 );
 
 #endif // SDPOINT_H

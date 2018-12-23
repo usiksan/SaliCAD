@@ -624,6 +624,9 @@ void SdModeCRoadEnter::buildSmartPath(SdPoint p1, SdPoint p2)
 void SdModeCRoadEnter::addTrace(SdObject *obj , const QString msg)
   {
   addPic( obj, msg );
+  SdPtr<SdGraphTracedRoad> road(obj);
+  if( road.isValid() )
+    road->utilize( mUndo );
   mEnterPath.append( obj );
   }
 

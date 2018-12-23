@@ -791,11 +791,14 @@ void SdModeCRoadMove::updateSegment(SdPropRoad &prop, SdGraphTracedRoad *segment
     else {
       //Change position of segment
       segment->setSegment( a, b, mUndo );
+      segment->utilize( mUndo );
       }
     }
   else if( a != b ) {
     //Segment must be inserted
-    plate()->insertChild( new SdGraphTracedRoad( prop, a, b ), mUndo );
+    segment = new SdGraphTracedRoad( prop, a, b );
+    plate()->insertChild( segment, mUndo );
+    segment->utilize( mUndo );
     }
   }
 

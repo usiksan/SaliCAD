@@ -385,11 +385,15 @@ void SdGraphTracedPolygon::accumWindows(SdPolyWindowList &dest, int stratum, int
 
 
 
-void SdGraphTracedPolygon::accumLinked(SdPoint a, SdStratum stratum, QString netName, SdSelector *sel)
+
+//Check if polygon linked to point
+bool SdGraphTracedPolygon::isLinked(SdPoint a, SdStratum stratum, QString netName) const
   {
-  if( mProp.mNetName == netName && mProp.mStratum.match( stratum ) && isContains(a) )
-    sel->insert( this );
+  return mProp.mNetName == netName && mProp.mStratum.match( stratum ) && isContains(a);
   }
+
+
+
 
 
 

@@ -46,8 +46,8 @@ void SdGraphTraced::accumLinkedTrace(SdGraphTraced *from, SdPoint a, QString net
   getPlate()->forEach( dctTraced, [from,a,netName,sel] ( SdObject *obj ) -> bool {
     if( obj != from ) {
       SdPtr<SdGraphTraced> traced( obj );
-      if( traced.isValid() )
-        traced->accumLinked( a, from->stratum(), netName, sel );
+      if( traced.isValid() && traced->isLinked( a, from->stratum(), netName ) )
+        sel->insert( traced.ptr() );
       }
     return true;
     } );

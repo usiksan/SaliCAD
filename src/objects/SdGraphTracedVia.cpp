@@ -333,11 +333,13 @@ void SdGraphTracedVia::accumWindows(SdPolyWindowList &dest, int stratum, int gap
 
 
 
-
-void SdGraphTracedVia::accumLinked(SdPoint a, SdStratum stratum, QString netName, SdSelector *sel)
+//Check if road linked to point
+bool SdGraphTracedVia::isLinked(SdPoint a, SdStratum stratum, QString netName) const
   {
-  if( mProp.mNetName == netName && mProp.mStratum.match( stratum ) && mPosition == a )
-    sel->insert( this );
+  return mProp.mNetName == netName && mProp.mStratum.match( stratum ) && mPosition == a;
   }
+
+
+
 
 

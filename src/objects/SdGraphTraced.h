@@ -48,7 +48,7 @@ class SdGraphTraced : public SdGraph
     virtual void         accumBarriers( SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk ) const = 0;
     virtual bool         isMatchNetAndStratum( const QString netName, SdStratum stratum ) const;
     virtual void         accumWindows( SdPolyWindowList &dest, int stratum, int gap, const QString netName ) const = 0;
-    virtual void         accumLinked( SdPoint a, SdStratum stratum, QString netName, SdSelector *sel ) = 0;
+    virtual bool         isLinked( SdPoint a, SdStratum stratum, QString netName ) const = 0;
 
 
     // SdGraph interface

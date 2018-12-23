@@ -72,7 +72,8 @@ class SdGraphTracedPolygon : public SdGraphTraced
     virtual void accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const override;
     virtual bool      isMatchNetAndStratum(const QString netName, SdStratum stratum) const override;
     virtual void      accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName ) const override;
-    virtual void      accumLinked( SdPoint a, SdStratum stratum, QString netName, SdSelector *sel ) override;
+    //Check if polygon linked to point
+    virtual bool      isLinked( SdPoint a, SdStratum stratum, QString netName ) const override;
 
   private:
     //Return layer for polygon

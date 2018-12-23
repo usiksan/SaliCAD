@@ -59,6 +59,25 @@ void SdGraphTracedRoad::splitRoad(SdPoint p, SdUndo *undo)
 
 
 
+
+
+//Union consequent segments
+void SdGraphTracedRoad::utilize(SdUndo *undo)
+  {
+  //Remove zero segment
+  if( mSegment.getP1() == mSegment.getP2() )
+    deleteObject( undo );
+  else {
+    saveState( undo );
+    utilizeAtEnd( mSegment.getP1(), undo );
+    utilizeAtEnd( mSegment.getP2(), undo );
+    }
+  }
+
+
+
+
+
 QString SdGraphTracedRoad::getType() const
   {
   return QStringLiteral(SD_TYPE_GRAPH_TRACE_ROAD);
@@ -526,11 +545,12 @@ void SdGraphTracedRoad::accumWindows(SdPolyWindowList &dest, int stratum, int ga
 
 
 
-void SdGraphTracedRoad::accumLinked(SdPoint a, SdStratum stratum, QString netName, SdSelector *sel)
+//Check if road linked to point
+bool SdGraphTracedRoad::isLinked(SdPoint a, SdStratum stratum, QString netName) const
   {
-  if( mProp.mNetName == netName && mProp.mStratum.match(stratum) && (mSegment.getP1() == a || mSegment.getP2() == a) )
-    sel->insert(this);
+  return mProp.mNetName == netName && mProp.mStratum.match(stratum) && (mSegment.getP1() == a || mSegment.getP2() == a);
   }
+
 
 
 
@@ -540,4 +560,67 @@ void SdGraphTracedRoad::accumLinked(SdPoint a, SdStratum stratum, QString netNam
 SdLayer *SdGraphTracedRoad::getLayer() const
   {
   return sdEnvir->mCacheForRoad.getVisibleLayer( mProp.mStratum );
+  }
+
+
+
+
+//Single road linked to point. If more than one road then no roads return
+SdGraphTracedRoad *SdGraphTracedRoad::linkedRoad(SdPoint p)
+  {
+  SdGraphTracedRoad *road = nullptr;
+  QString netName = mProp.mNetName.str();
+  SdStratum st = mProp.mStratum;
+  getPlate()->forEach( dctTraced, [p,&road,st,netName,this] (SdObject *obj) -> bool {
+    SdPtr<SdGraphTraced> traced(obj);
+    if( traced.isValid() && traced.ptr() != this ) {
+      //Test if point linked to traced object
+      if( traced->isLinked( p, st, netName ) ) {
+        //point is linked
+        if( traced->getClass() != dctTraceRoad ) {
+          //Any linked object other than road return "no linked"
+          road = nullptr;
+          return false;
+          }
+        else if( road ) {
+          //Linked object is road. Already there is linked segment.
+          //So there is at least two linked segments, so return "no linked"
+          road = nullptr;
+          return false;
+          }
+        else {
+          //First road object. Fix it.
+          road = dynamic_cast<SdGraphTracedRoad*>(obj);
+          }
+        }
+      }
+    return true;
+    });
+  return road;
+  }
+
+
+
+
+
+//Utilize on end p
+void SdGraphTracedRoad::utilizeAtEnd(SdPoint p, SdUndo *undo)
+  {
+  SdGraphTracedRoad *road = linkedRoad( p );
+  if( road && road->segment().getP1() == road->segment().getP2() ) {
+    //Delete segemnt with zero lenght
+    road->deleteObject( undo );
+    return;
+    }
+  if( road && mProp == road->propRoad() ) {
+    //Utilize segemtns only with same properties
+    SdPoint d = p == road->segment().getP1() ? road->segment().getP2() : road->segment().getP1();
+    if( is3PointsOnLine( mSegment.getP1(), mSegment.getP2(), d ) ) {
+      //Segment can be utilized
+      if( p == mSegment.getP1() )
+        mSegment.setP2( d );
+      else
+        mSegment.setP1( d );
+      }
+    }
   }

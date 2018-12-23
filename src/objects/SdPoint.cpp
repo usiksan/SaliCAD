@@ -494,3 +494,13 @@ SdPoint get45oriented(SdPoint a, SdPoint b, SdOrientation first, SdOrientation s
   //First is diagonal part
   return SdPoint( a.x() + ( dx > 0 ? diag : -diag), a.y() + ( dy > 0 ? diag : -diag) );
   }
+
+
+
+
+
+//Check if three points are all on one line
+bool is3PointsOnLine(SdPoint p1, SdPoint p2, SdPoint p3)
+  {
+  return (p1.x() - p3.x()) * (p2.y() - p3.y()) - ((p2.x() - p3.x()) * (p1.y() - p3.y())) == 0;
+  }
