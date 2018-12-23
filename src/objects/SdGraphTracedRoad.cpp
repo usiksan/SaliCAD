@@ -573,7 +573,7 @@ SdGraphTracedRoad *SdGraphTracedRoad::linkedRoad(SdPoint p)
   SdStratum st = mProp.mStratum;
   getPlate()->forEach( dctTraced, [p,&road,st,netName,this] (SdObject *obj) -> bool {
     SdPtr<SdGraphTraced> traced(obj);
-    if( traced.isValid() && traced.ptr() != this ) {
+    if( traced.isValid() && obj != this ) {
       //Test if point linked to traced object
       if( traced->isLinked( p, st, netName ) ) {
         //point is linked
@@ -608,7 +608,7 @@ void SdGraphTracedRoad::utilizeAtEnd(SdPoint p, SdUndo *undo)
   {
   SdGraphTracedRoad *road = linkedRoad( p );
   if( road && road->segment().getP1() == road->segment().getP2() ) {
-    //Delete segemnt with zero lenght
+    //Delete segment with zero lenght
     road->deleteObject( undo );
     return;
     }

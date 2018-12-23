@@ -13,6 +13,7 @@ Description
 */
 #include "SdDVariantTable.h"
 #include "ui_SdDVariantTable.h"
+#include "SdDHelp.h"
 
 #include <QMessageBox>
 #include <QInputDialog>
@@ -44,6 +45,10 @@ SdDVariantTable::SdDVariantTable(SdPItemVariant *var, bool editEna, QWidget *par
     ui->mRowInsert->setEnabled(false);
     ui->mRowDelete->setEnabled(false);
     }
+
+  connect( ui->buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, [this] () {
+    SdDHelp::help( QString("SdDVariantTable.htm"), this );
+    } );
   }
 
 

@@ -229,7 +229,6 @@ class SdGraphPartImp : public SdGraphTraced
     virtual void         accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName ) const override;
     //Check if any pin of part linked to point
     virtual bool         isLinked( SdPoint a, SdStratum stratum, QString netName ) const override;
-    virtual void         accumLinked( SdPoint a, SdStratum stratum, QString netName, SdSelector *sel ) override;
     //Stratum of object
     virtual SdStratum    stratum() const override { return mProp.mSide; }
   };
