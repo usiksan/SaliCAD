@@ -187,7 +187,7 @@ void SdModeCRoadMove::enterPoint(SdPoint)
           }
         else {
           mSegment2 = nullptr;
-          mSource2 = mMove2;
+          mSource2 = mSource1;
           mProp2 = mProp;
           }
         }
@@ -321,6 +321,7 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
       //Mutual orientation of segments
       SdOrientation orient1 = SdSegment( mSource1, mMove1 ).orientation();
       SdOrientation orient2 = SdSegment( mSource2, mMove2 ).orientation();
+      SdOrientation orient  = SdSegment( mMove1, mMove2 ).orientation();
       if( (orient2 == sorVertical ) ||
           (orient1 == sorAny) ||
           (orient1 == sorNull) ||
@@ -338,8 +339,34 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
         case sorNull :
           //For p1 == p2
         case sorAny :
-          mDirX1 = mDirX2 = mDirY1 = mDirY2 = 0;
-          qDebug() << "not available";
+          //Second direction also is null or any
+          //Make orthogonal segments
+          switch( orient ) {
+            case sorNull :
+              //For p1 == p2
+            case sorAny :
+              //Make orthogonal segments
+              //This point move it horizontal
+            case sorVertical :
+              mDirX1 = mDirX2 = 1;
+              mDirY1 = mDirY2 = 0;
+              break;
+            case sorHorizontal :
+              //Make vertical segments
+              mDirX1 = mDirX2 = 0;
+              mDirY1 = mDirY2 = 1;
+              break;
+            case sorSlashForward :
+              //Make backward segments
+              mDirX1 = mDirX2 = 1;
+              mDirY1 = mDirY2 = -1;
+              break;
+            case sorSlashBackward :
+              //Make forward segments
+              mDirX1 = mDirX2 = 1;
+              mDirY1 = mDirY2 = -1;
+              break;
+            }
           break;
 
 
