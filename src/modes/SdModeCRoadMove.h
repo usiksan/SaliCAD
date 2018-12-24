@@ -79,6 +79,9 @@ class SdModeCRoadMove : public SdModeCommon
                        mDirX2,        //           1 - direct relation
                        mDirY2;        //          -1 - inverse relation
 
+    bool               mMoveSource1,  //Flag for source moving syncronous with mMove points
+                       mMoveSource2;
+
     SdSelector         mFragment;
     SdPoint            mPrevMove;
 

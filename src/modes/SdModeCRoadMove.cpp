@@ -98,6 +98,8 @@ void SdModeCRoadMove::drawDynamic(SdContext *ctx)
 
 void SdModeCRoadMove::enterPoint(SdPoint)
   {
+  //Preliminary disable move sources
+  mMoveSource1 = mMoveSource2 = false;
   if( mSourceType ) {
     //Select source object
     mSourceObject->selectByPoint( mSourcePoint, &mFragment );
@@ -187,8 +189,9 @@ void SdModeCRoadMove::enterPoint(SdPoint)
           }
         else {
           mSegment2 = nullptr;
-          mSource2 = mSource1;
+          mSource2 = mMove2;
           mProp2 = mProp;
+          mMoveSource2 = true;
           }
         }
       else {
@@ -716,14 +719,19 @@ void SdModeCRoadMove::dragPoint(SdPoint p)
     SdPoint move2(mMove2);
     move1.move( SdPoint(d*mDirX1,d*mDirY1) );
     move2.move( SdPoint(d*mDirX2,d*mDirY2) );
+    SdPoint source2(mSource2);
+    if( mMoveSource2 )
+      source2.move( SdPoint(d*mDirX2,d*mDirY2) );
+
 
     //Check if new position available
     if( sdCheckRoadOnBarrierList( mRoads1, mSource1, move1, mProp.mNetName.str() ) == move1 &&
         sdCheckRoadOnBarrierList( mRoads, move1, move2, mProp.mNetName.str() ) == move2 &&
-        sdCheckRoadOnBarrierList( mRoads2, mSource2, move2, mProp.mNetName.str() ) == move2 ) {
+        sdCheckRoadOnBarrierList( mRoads2, source2, move2, mProp.mNetName.str() ) == move2 ) {
       //Fact moving
       mMove1 = move1;
       mMove2 = move2;
+      mSource2 = source2;
       mPrevMove.move( offset );
       }
     }
