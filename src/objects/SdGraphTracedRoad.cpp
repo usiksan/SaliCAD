@@ -618,9 +618,10 @@ void SdGraphTracedRoad::utilizeAtEnd(SdPoint p, SdUndo *undo)
     if( is3PointsOnLine( mSegment.getP1(), mSegment.getP2(), d ) ) {
       //Segment can be utilized
       if( p == mSegment.getP1() )
-        mSegment.setP2( d );
-      else
         mSegment.setP1( d );
+      else
+        mSegment.setP2( d );
+      road->deleteObject( undo );
       }
     }
   }
