@@ -690,6 +690,7 @@ void SdModeCRoadMove::dragPoint(SdPoint p)
     //Smart points
     SdPoint sm1 = mSource1.sub(mMove1);
     SdPoint sm2 = mSource2.sub(mMove2);
+    bool link = false;
     //SdPoint sm3 =
     int sd = qMax(qAbs(sm1.x()),qAbs(sm1.y()));
     int d;
@@ -699,19 +700,21 @@ void SdModeCRoadMove::dragPoint(SdPoint p)
       d = offset.y();
     if( sd < 200 && qAbs(d) < 200 ) {
       //Link to sm1
+      link = true;
       if( qAbs(sm1.x()) > qAbs(sm1.y()) )
-        d = sm1.x();
+        d = sm1.x() * mDirX1;
       else
-        d = sm1.y();
+        d = sm1.y() * mDirY1;
       }
     else {
       sd = qMax(qAbs(sm2.x()),qAbs(sm2.y()));
-      if( sd < 200 && qAbs(d) < 200 ) {
+      if( !mMoveSource2 && sd < 200 && qAbs(d) < 200 ) {
         //Link to sm2
+        link = true;
         if( qAbs(sm2.x()) > qAbs(sm2.y()) )
-          d = sm2.x();
+          d = sm2.x() * mDirX2;
         else
-          d = sm2.y();
+          d = sm2.y() * mDirY2;
         }
       }
     //Try moving
@@ -732,7 +735,8 @@ void SdModeCRoadMove::dragPoint(SdPoint p)
       mMove1 = move1;
       mMove2 = move2;
       mSource2 = source2;
-      mPrevMove.move( offset );
+      if( !link )
+        mPrevMove.move( offset );
       }
     }
 
