@@ -282,6 +282,9 @@ void SdModeCRoadMove::movePoint(SdPoint p)
     if( mFragment.count() ) {
       mFragment.removeAll();
       setDirtyCashe();
+      if( mSegment ) mSegment->utilize( mUndo );
+      if( mSegment1 ) mSegment1->utilize( mUndo );
+      if( mSegment2 ) mSegment2->utilize( mUndo );
       }
     //Find nearest smart point
     SdSnapInfo info;
@@ -399,11 +402,13 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
                   //left
                   mDirX2 = -1;
                   mDirY2 = 0;
+                  qDebug() << "left up";
                   }
                 else {
                   //right
                   mDirX2 = 1;
                   mDirY2 = 0;
+                  qDebug() << "right up";
                   }
                 }
               else {
@@ -412,14 +417,16 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
                   //left
                   mDirX2 = 1;
                   mDirY2 = 0;
+                  qDebug() << "left down";
                   }
                 else {
                   //right
                   mDirX2 = -1;
                   mDirY2 = 0;
+                  qDebug() << "right down";
                   }
                 }
-              qDebug() << "*vertical horizontal";
+              qDebug() << "*vertical horizontal" << mMove1 << mMove2;
               break;
 
 
@@ -756,8 +763,12 @@ void SdModeCRoadMove::stopDrag(SdPoint p)
     mProp1.mStratum = mProp.mStratum.stratumFirst( mProp1.mStratum );
     mProp2.mStratum = mProp1.mStratum;
     do {
-      updateSegment( mProp1, nullptr, mSource1, mMove1 );
-      updateSegment( mProp1, nullptr, mMove1, mMove2 );
+      SdGraphTracedRoad *road1 = nullptr;
+      updateSegment( mProp1, road1, mSource1, mMove1 );
+      SdGraphTracedRoad *road2 = nullptr;
+      updateSegment( mProp1, road2, mMove1, mMove2 );
+      if( road1 ) road1->utilize( mUndo );
+      if( road2 ) road2->utilize( mUndo );
       mProp1.mStratum = mProp.mStratum.stratumNext(mProp1.mStratum);
       }
     while( mProp2.mStratum != mProp1.mStratum );
@@ -767,6 +778,9 @@ void SdModeCRoadMove::stopDrag(SdPoint p)
     updateSegment( mProp1, mSegment1, mSource1, mMove1 );
     updateSegment( mProp2, mSegment2, mSource2, mMove2 );
     updateSegment( mProp,  mSegment,  mMove1, mMove2 );
+    if( mSegment1 ) mSegment1->utilize( mUndo );
+    if( mSegment2 ) mSegment2->utilize( mUndo );
+    if( mSegment ) mSegment->utilize( mUndo );
     }
   setStep(sFindRoad);
   setDirty();
@@ -820,7 +834,7 @@ int SdModeCRoadMove::getIndex() const
 
 
 //Update segment. We create or delete segment if nessesery and change its position
-void SdModeCRoadMove::updateSegment(SdPropRoad &prop, SdGraphTracedRoad *segment, SdPoint a, SdPoint b)
+void SdModeCRoadMove::updateSegment(SdPropRoad &prop, SdGraphTracedRoadPtr &segment, SdPoint a, SdPoint b)
   {
   if( segment ) {
     if( a == b ) {
@@ -830,14 +844,12 @@ void SdModeCRoadMove::updateSegment(SdPropRoad &prop, SdGraphTracedRoad *segment
     else {
       //Change position of segment
       segment->setSegment( a, b, mUndo );
-      segment->utilize( mUndo );
       }
     }
   else if( a != b ) {
     //Segment must be inserted
     segment = new SdGraphTracedRoad( prop, a, b );
     plate()->insertChild( segment, mUndo );
-    segment->utilize( mUndo );
     }
   }
 

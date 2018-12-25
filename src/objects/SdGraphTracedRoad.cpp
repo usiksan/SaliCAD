@@ -20,6 +20,7 @@ Description
 #include "SdPItemPlate.h"
 #include "SdUndo.h"
 #include <QTransform>
+#include <QDebug>
 
 SdGraphTracedRoad::SdGraphTracedRoad()
   {
@@ -54,6 +55,8 @@ void SdGraphTracedRoad::splitRoad(SdPoint p, SdUndo *undo)
   SdGraphTracedRoad *road = new SdGraphTracedRoad( mProp, p, mSegment.getP2() );
   setSegment( mSegment.getP1(), p, undo );
   getPlate()->insertChild( road, undo );
+  road->utilize( undo );
+  utilize( undo );
   }
 
 
@@ -64,6 +67,8 @@ void SdGraphTracedRoad::splitRoad(SdPoint p, SdUndo *undo)
 //Union consequent segments
 void SdGraphTracedRoad::utilize(SdUndo *undo)
   {
+  if( isDeleted() )
+    return;
   //Remove zero segment
   if( mSegment.getP1() == mSegment.getP2() )
     deleteObject( undo );
@@ -71,7 +76,18 @@ void SdGraphTracedRoad::utilize(SdUndo *undo)
     saveState( undo );
     utilizeAtEnd( mSegment.getP1(), undo );
     utilizeAtEnd( mSegment.getP2(), undo );
+    utilizeOver( undo );
     }
+  }
+
+bool SdGraphTracedRoad::isLinkedP1(SdPoint a, SdStratum stratum, QString netName) const
+  {
+  return mProp.mNetName == netName && mProp.mStratum.match(stratum) && mSegment.getP1() == a;
+  }
+
+bool SdGraphTracedRoad::isLinkedP2(SdPoint a, SdStratum stratum, QString netName) const
+  {
+  return mProp.mNetName == netName && mProp.mStratum.match(stratum) && mSegment.getP2() == a;
   }
 
 
@@ -624,4 +640,97 @@ void SdGraphTracedRoad::utilizeAtEnd(SdPoint p, SdUndo *undo)
       road->deleteObject( undo );
       }
     }
+  }
+
+
+
+//Utilize over segment (i.e. if one segment is partial or full over another segment)
+void SdGraphTracedRoad::utilizeOver(SdUndo *undo)
+  {
+  qDebug() << "utilize over" << this;
+  //Find road over this segment
+  //SdGraphTracedRoad *road = nullptr;
+  QString netName = mProp.mNetName.str();
+  SdStratum st = mProp.mStratum;
+  getPlate()->forEach( dctTraceRoad, [st,netName,this,undo] (SdObject *obj) -> bool {
+    SdPtr<SdGraphTracedRoad> road(obj);
+    if( road.isValid() && obj != this ) {
+      //Test if point linked to traced object
+      if( road->isLinkedP1( mSegment.getP1(), st, netName ) && is3PointsOnLine( mSegment.getP1(), mSegment.getP2(), road->segment().getP2() ) ) {
+        //mSegment.p1 linked to road.p1
+        //Check if mSegment.p2 is on road
+        if( road->segment().isPointOn( mSegment.getP2() )  ) {
+          //Segment is full on road, split road
+          //and delete this segment
+          deleteObject( undo );
+          road->splitRoad( mSegment.getP2(), undo );
+          return false;
+          }
+        //Check if road.p2 is on mSegment
+        if( mSegment.isPointOn( road->segment().getP2() )  ) {
+          //Road is full on segment, split segment
+          //and delete road
+          road->deleteObject( undo );
+          splitRoad( road->segment().getP2(), undo );
+          return false;
+          }
+        }
+      if( road->isLinkedP1( mSegment.getP2(), st, netName ) && is3PointsOnLine( mSegment.getP1(), mSegment.getP2(), road->segment().getP2() ) ) {
+        //mSegment.p2 linked to road.p1
+        //Check if mSegment.p1 is on road
+        if( road->segment().isPointOn( mSegment.getP1() )  ) {
+          //Segment is full on road, split road
+          //and delete this segment
+          deleteObject( undo );
+          road->splitRoad( mSegment.getP1(), undo );
+          return false;
+          }
+        if( mSegment.isPointOn( road->segment().getP2() )  ) {
+          //Road is full on segment, split segment
+          //and delete road
+          road->deleteObject( undo );
+          splitRoad( road->segment().getP2(), undo );
+          return false;
+          }
+        }
+      if( road->isLinkedP2( mSegment.getP1(), st, netName ) && is3PointsOnLine( mSegment.getP1(), mSegment.getP2(), road->segment().getP1() ) ) {
+        //mSegment.p1 linked to road.p2
+        //Check if mSegment.p2 is on road
+        if( road->segment().isPointOn( mSegment.getP2() )  ) {
+          //Segment is full on road, split road
+          //and delete this segment
+          deleteObject( undo );
+          road->splitRoad( mSegment.getP2(), undo );
+          return false;
+          }
+        //Check if road.p1 is on mSegment
+        if( mSegment.isPointOn( road->segment().getP1() )  ) {
+          //Road is full on segment, split segment
+          //and delete road
+          road->deleteObject( undo );
+          splitRoad( road->segment().getP1(), undo );
+          return false;
+          }
+        }
+      if( road->isLinkedP2( mSegment.getP2(), st, netName ) && is3PointsOnLine( mSegment.getP1(), mSegment.getP2(), road->segment().getP1() ) ) {
+        //mSegment.p2 linked to road.p2
+        //Check if mSegment.p1 is on road
+        if( road->segment().isPointOn( mSegment.getP1() )  ) {
+          //Segment is full on road, split road
+          //and delete this segment
+          deleteObject( undo );
+          road->splitRoad( mSegment.getP1(), undo );
+          return false;
+          }
+        if( mSegment.isPointOn( road->segment().getP1() )  ) {
+          //Road is full on segment, split segment
+          //and delete road
+          road->deleteObject( undo );
+          splitRoad( road->segment().getP1(), undo );
+          return false;
+          }
+        }
+      }
+    return true;
+    });
   }

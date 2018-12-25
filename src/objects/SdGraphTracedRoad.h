@@ -58,6 +58,9 @@ class SdGraphTracedRoad : public SdGraphTraced
     //Union consequent segments
     void               utilize( SdUndo *undo );
 
+    bool               isLinkedP1( SdPoint a, SdStratum stratum, QString netName ) const;
+    bool               isLinkedP2( SdPoint a, SdStratum stratum, QString netName ) const;
+
     // SdObject interface
   public:
     virtual QString    getType() const override;
@@ -111,6 +114,11 @@ class SdGraphTracedRoad : public SdGraphTraced
 
     //Utilize on end p
     void               utilizeAtEnd( SdPoint p, SdUndo *undo );
+
+    //Utilize over segment (i.e. if one segment is partial or full over another segment)
+    void               utilizeOver( SdUndo *undo );
   };
+
+typedef SdGraphTracedRoad *SdGraphTracedRoadPtr;
 
 #endif // SDGRAPHTRACEDROAD_H

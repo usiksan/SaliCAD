@@ -32,6 +32,7 @@ Description
 #include "objects/SdPropRoad.h"
 #include "objects/SdRuleBlock.h"
 #include "objects/SdSelector.h"
+#include "objects/SdGraphTracedRoad.h"
 
 #include <QList>
 
@@ -114,7 +115,7 @@ class SdModeCRoadMove : public SdModeCommon
     void            changeSegments();
 
     //Update segment. We create or delete segment if nessesery and change its position
-    void            updateSegment(SdPropRoad &prop, SdGraphTracedRoad *segment, SdPoint a, SdPoint b );
+    void            updateSegment(SdPropRoad &prop, SdGraphTracedRoadPtr &segment, SdPoint a, SdPoint b );
   };
 
 #endif // SDMODECROADMOVE_H
