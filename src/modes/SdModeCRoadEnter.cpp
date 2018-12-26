@@ -25,7 +25,8 @@ Description
 #include <QDebug>
 
 SdModeCRoadEnter::SdModeCRoadEnter(SdWEditorGraph *editor, SdProjectItem *obj) :
-  SdModeCommon( editor, obj )
+  SdModeCommon( editor, obj ),
+  mRoadMiddle(nullptr)
   {
   mProp = sdGlobalProp->mRoadProp;
   mViaProp = sdGlobalProp->mViaProp;
@@ -235,7 +236,22 @@ void SdModeCRoadEnter::cancelPoint(SdPoint)
 
 SdPoint SdModeCRoadEnter::enterPrev()
   {
-  if( mSmartPath.count() > 1 ) {
+  if( getStep() && mCatch == catchFinish && mBarMiddle == mMiddle && mBarLast == mLast ) {
+    //Connection complete. Append both segments and stop enter
+    if( mFirst != mMiddle )
+      addTrace( new SdGraphTracedRoad( mProp, mFirst, mMiddle ), QObject::tr("Insert trace road") );
+    if( mMiddle != mLast )
+      addTrace( new SdGraphTracedRoad( mProp, mMiddle, mLast ), QObject::tr("Insert trace road") );
+    setStep( sFirstPoint );
+    mEnterPath.clear();
+    //Signal plate to rebuild ratNets
+    plate()->setDirtyRatNet();
+    setDirtyCashe();
+    setDirty();
+    //After road enter stratum stack will equivalent to road stratum
+    mStack = mProp.mStratum;
+    }
+  else if( mSmartPath.count() > 1 ) {
     if( mFirst != mMiddle )
       addTrace( new SdGraphTracedRoad( mProp, mFirst, mMiddle ), QObject::tr("Insert trace road") );
     if( mMiddle != mLast )
