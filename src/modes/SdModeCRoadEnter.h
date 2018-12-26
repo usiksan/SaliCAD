@@ -22,27 +22,33 @@ Description
 
 #include <QList>
 
+class SdGraphTracedRoad;
+
 class SdModeCRoadEnter : public SdModeCommon
   {
-    SdPoint         mSource;      //Source point of path
-    SdPoint         mFirst;       //First point of segment
-    SdPoint         mMiddle;      //Vertex point
-    SdPoint         mBarMiddle;   //Vertex point with subject to barriers
-    SdPoint         mLast;        //Point of cursor
-    SdPoint         mBarLast;     //Point of cursor with subject to barriers
-    SdPoint         mPrevMove;    //Previous entered point
-    SdPropRoad      mProp;        //Current properties for road
-    SdPropVia       mViaProp;     //Current properties for vias
-    SdStratum       mStack;       //Available stratum stack at current point
-    SdRuleBlock     mRule;        //Rule block for segment
-    SdPoint         mTargetPoint; //Target point
-    QList<SdPoint>  mSmartPath;   //Auto roaded path to smart point
+    SdPoint            mSource;      //Source point of path
+    SdPoint            mFirst;       //First point of segment
+    SdPoint            mMiddle;      //Vertex point
+    SdPoint            mBarMiddle;   //Vertex point with subject to barriers
+    SdPoint            mLast;        //Point of cursor
+    SdPoint            mBarLast;     //Point of cursor with subject to barriers
+    SdPoint            mPrevMove;    //Previous entered point
+    SdPropRoad         mProp;        //Current properties for road
+    SdPropVia          mViaProp;     //Current properties for vias
+    SdStratum          mStack;       //Available stratum stack at current point
+    SdRuleBlock        mRule;        //Rule block for segment
+    SdPoint            mTargetPoint; //Target point
+    QList<SdPoint>     mSmartPath;   //Auto roaded path to smart point
 
-    SdObjectPtrList mEnterPath;   //Created path
+    //To connect at middle of road
+    SdGraphTracedRoad *mRoadMiddle;  //Road middle position is active
+    SdPoint            mRoadMidPos;  //Position of middle point on road
 
-    bool            mShowNet;     //Show current net with enter color
-    SdBarrierList   mPads;        //Barriers for pads on vias
-    SdBarrierList   mRoads;       //Barriers for roads
+    SdObjectPtrList    mEnterPath;   //Created path
+
+    bool               mShowNet;     //Show current net with enter color
+    SdBarrierList      mPads;        //Barriers for pads on vias
+    SdBarrierList      mRoads;       //Barriers for roads
 
     const int sFirstPoint = 0, sNextPoint = 1;
 
