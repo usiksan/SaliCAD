@@ -82,12 +82,12 @@ void SdGraphTracedRoad::utilize(SdUndo *undo)
 
 bool SdGraphTracedRoad::isLinkedP1(SdPoint a, SdStratum stratum, QString netName) const
   {
-  return mProp.mNetName == netName && mProp.mStratum.match(stratum) && mSegment.getP1() == a;
+  return mProp.mNetName == netName && mProp.mStratum == stratum && mSegment.getP1() == a;
   }
 
 bool SdGraphTracedRoad::isLinkedP2(SdPoint a, SdStratum stratum, QString netName) const
   {
-  return mProp.mNetName == netName && mProp.mStratum.match(stratum) && mSegment.getP2() == a;
+  return mProp.mNetName == netName && mProp.mStratum == stratum && mSegment.getP2() == a;
   }
 
 

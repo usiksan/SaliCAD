@@ -225,7 +225,7 @@ void SdModeCRoadMove::enterPoint(SdPoint)
 
         //Accumulate roads connected to via
         mVia->accumLinkedTrace( mVia, mMove1, mViaProp.mNetName.str(), &mFragment );
-        int stratum;
+        int stratum = 0;
         mFragment.forEach( dctTraceRoad, [&stratum] (SdObject *obj) ->bool {
           SdPtr<SdGraphTracedRoad> road(obj);
           if( road.isValid() )
@@ -763,6 +763,8 @@ void SdModeCRoadMove::stopDrag(SdPoint p)
     mProp1.mStratum = mProp.mStratum.stratumFirst( mProp1.mStratum );
     mProp2.mStratum = mProp1.mStratum;
     do {
+      qDebug() << "appended segment" << mSource1 << mMove1 << "and" << mMove2;
+      qDebug() << "at stratum" << mProp1.mStratum.getValue();
       SdGraphTracedRoad *road1 = nullptr;
       updateSegment( mProp1, road1, mSource1, mMove1 );
       SdGraphTracedRoad *road2 = nullptr;
