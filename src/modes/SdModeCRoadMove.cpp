@@ -84,10 +84,10 @@ void SdModeCRoadMove::drawDynamic(SdContext *ctx)
         ctx->setPen( mProp.mWidth.getValue(), sdEnvir->mCacheForRoad.getVisibleLayer( mViaProp.mStratum ), dltSolid );
         ctx->line( mSource1, mMove1 );
         }
-      if( mMove1 != mMove2 ) {
-        ctx->setPen( mProp.mWidth.getValue(), sdEnvir->mCacheForRoad.getVisibleLayer( mViaProp.mStratum ), dltSolid );
-        ctx->line( mMove1, mMove2 );
-        }
+//      if( mMove1 != mMove2 ) {
+//        ctx->setPen( mProp.mWidth.getValue(), sdEnvir->mCacheForRoad.getVisibleLayer( mViaProp.mStratum ), dltSolid );
+//        ctx->line( mMove1, mMove2 );
+//        }
       }
     }
   }
@@ -370,7 +370,7 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
             case sorSlashBackward :
               //Make forward segments
               mDirX1 = mDirX2 = 1;
-              mDirY1 = mDirY2 = -1;
+              mDirY1 = mDirY2 = 1;
               break;
             }
           break;
@@ -553,8 +553,38 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
             case sorNull :
               //For p1 == p2
             case sorAny :
-              mDirX2 = 1;
-              mDirY2 = 1;
+              //Make orthogonal segments
+              switch( orient ) {
+                case sorNull :
+                  //For p1 == p2
+                case sorAny :
+                  //Make orthogonal segments
+                  //This point move it horizontal
+                  mDirX2 = 1;
+                  mDirY2 = 1;
+                  break;
+                case sorVertical :
+                  //Make horizontal segments
+                  mDirX2 = 1;
+                  mDirY2 = 0;
+                  break;
+                case sorHorizontal :
+                  //Make vertical segments
+                  mDirX2 = 0;
+                  mDirY2 = 1;
+                  break;
+                case sorSlashForward :
+                  //Make backward segments
+                  mDirX2 = 1;
+                  mDirY2 = -1;
+                  break;
+                case sorSlashBackward :
+                  //Make forward segments
+                  mDirX2 = 1;
+                  mDirY2 = -1;
+                  break;
+                }
+              break;
               qDebug() << "*forward any";
               break;
 
@@ -664,6 +694,7 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
       }
     else {
       //Move via
+      //mSource1 = mVia->position();
       }
     mPrevMove = p;
     setStep( sMoveRoad );
@@ -681,14 +712,33 @@ void SdModeCRoadMove::dragPoint(SdPoint p)
   if( mVia ) {
     //Move via
     SdPoint offset = p.sub(mMove2);
-    SdPoint p45 = get45( mSource1, p );
-    if( sdCheckRoadOnBarrierList( mRoads, mSource1, p45, mProp.mNetName.str() ) == p45 &&
-        sdCheckRoadOnBarrierList( mRoads, p45, p, mProp.mNetName.str() ) == p &&
-        !sdIsBarrierListContains( mPads, mViaProp.mNetName.str(), p ) ) {
+    SdPoint dest   = p.sub(mSource1);
+    int dx = qAbs(dest.x());
+    int dy = qAbs(dest.y());
+    if( dx > dy * 2 )
+      //Horizontal
+      dest.setY(0);
+
+    else if( dy > dx * 2 )
+      //Vertical
+      dest.setX(0);
+
+    else {
+      //Diagonal
+      if( dx > dy )
+        dest.setY( dest.y() < 0 ? -dx : dx );
+      else
+        dest.setX( dest.x() < 0 ? -dy : dy );
+      }
+
+    dest.move( mSource1 );
+    if( sdCheckRoadOnBarrierList( mRoads, mSource1, dest, mProp.mNetName.str() ) == dest &&
+        !sdIsBarrierListContains( mPads, mViaProp.mNetName.str(), dest ) ) {
       //New point available
+      offset = dest.sub( mVia->position() );
       mVia->move(offset);
-      mMove1 = p45;
-      mMove2 = p;
+      mMove1 = dest;
+      mMove2 = dest;
       }
     }
   else {

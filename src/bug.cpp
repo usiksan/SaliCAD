@@ -2,7 +2,7 @@
 //B064 bugs
 //F001 fatal
 //C001 critical
-//D075 do
+//D076 do
 
 
 
@@ -24,6 +24,8 @@
 //TODO D067 Append query to upgrade when loading project if there are upgrading
 
 //TODO D068 Append query to upgrade when newer objects received from remote and possibility to off than query
+
+//TODO D076 Append information with unconnected nets and rule conflict count
 
 //===================================================================================
 //Fixed:

@@ -52,6 +52,9 @@ void SdGraphTracedRoad::setSegment(SdPoint a, SdPoint b, SdUndo *undo)
 //Split road on two roads with p as division point
 void SdGraphTracedRoad::splitRoad(SdPoint p, SdUndo *undo)
   {
+  //If split point is on one of ends of segment we do nothing
+  if( p == mSegment.getP1() || p == mSegment.getP2() )
+    return;
   SdGraphTracedRoad *road = new SdGraphTracedRoad( mProp, p, mSegment.getP2() );
   setSegment( mSegment.getP1(), p, undo );
   getPlate()->insertChild( road, undo );
