@@ -585,8 +585,6 @@ void SdModeCRoadMove::beginDrag(SdPoint p)
                   break;
                 }
               break;
-              qDebug() << "*forward any";
-              break;
 
 
             case sorVertical :
