@@ -60,9 +60,11 @@ void SdModeCSymPin::drawDynamic(SdContext *ctx)
       ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltSolid );
       ctx->textEx( mNamePos, r, mName, sdGlobalProp->mSymPinNameProp.mDir, sdGlobalProp->mSymPinNameProp.mHorz, sdGlobalProp->mSymPinNameProp.mVert );
 
+      [[fallthrough]];
     case sEnterName :
       drawText( ctx );
 
+      [[fallthrough]];
     case sPlaceName :
       ctx->cross( mOrigin, sdEnvir->mSymPinSize, sdEnvir->getSysColor(scEnter) );
     }

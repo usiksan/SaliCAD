@@ -19,6 +19,7 @@ Description
 
 #include <QLineEdit>
 #include <QTableWidget>
+#include <QCheckBox>
 
 class SdWEditorGraphPlate;
 
@@ -28,7 +29,11 @@ class SdPExportPlate_Assembler : public QWizardPage
 
     SdWEditorGraphPlate *mEditor;    //Graphic editor widget
 
-    SdPItemPlate        *mPlate;     //Plate which we export to gerber
+    SdPItemPlate        *mPlate;     //Plate which we export to smt
+
+    QCheckBox           *mBottom;    //If checked then used bottom side with mirrored
+    QCheckBox           *mSolder;    //Perform solder paste dispence
+    QLineEdit           *mDelimiter; //Delimiter for export files
   public:
     SdPExportPlate_Assembler( SdWEditorGraphPlate *editor, SdPItemPlate *plate, int step, SdPMasterList *list, QWidget *parent = nullptr );
   };

@@ -18,6 +18,7 @@ Description
 #include "SdEnvir.h"
 
 #include <QJsonObject>
+#include <math.h>
 
 SdPad::SdPad() :
   mCenterX(0),           //Center of circle or rectangle

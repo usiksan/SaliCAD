@@ -48,6 +48,7 @@ class SdWMain : public QMainWindow
     SdWLabel        *mXPos;          //X axiz position
     SdWLabel        *mYLabel;        //Y axiz title (Y or row)
     SdWLabel        *mYPos;          //Y axiz position
+    SdWLabel        *mTraceStatus;   //Current trace status
     SdWLabel        *mMessage;       //Message
   public:
     explicit SdWMain( QStringList args, QWidget *parent = nullptr );
@@ -59,6 +60,12 @@ class SdWMain : public QMainWindow
     void setStatusLabels( const QString xlabel, const QString ylabel );
     void setStatusPositions( const QString x, const QString y );
     void setStatusMessage( const QString msg );
+
+    //Update tracing status information
+    void setTraceStatus( int unconnected, int errors );
+
+    //Show or hide tracing status information
+    void showTrace( bool show );
 
     void activateProjectName( SdProject *project );
 

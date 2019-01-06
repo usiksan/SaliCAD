@@ -18,6 +18,7 @@ Description
 #include "SdDHelp.h"
 
 #include <QPushButton>
+#include <math.h>
 
 const SdValueModifier sdValueModifierOm[] = {
   { "uOm",  0.000001, 0.001, 0.000001 },

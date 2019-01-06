@@ -23,6 +23,7 @@ Description
 #include "windows/SdWEditorGraph.h"
 
 #include <QDebug>
+#include <math.h>
 
 SdModeCRoadEnter::SdModeCRoadEnter(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeCommon( editor, obj ),

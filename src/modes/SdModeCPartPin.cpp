@@ -57,9 +57,11 @@ void SdModeCPartPin::drawDynamic(SdContext *ctx)
       ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltSolid );
       ctx->textEx( mNumberPos, r, mNumber, sdGlobalProp->mPartPinNumberProp.mDir, sdGlobalProp->mPartPinNumberProp.mHorz, sdGlobalProp->mPartPinNumberProp.mVert );
 
+      [[fallthrough]];
     case sEnterNumber :
       drawText( ctx );
 
+      [[fallthrough]];
     case sPlaceNumber :
       ctx->cross( mOrigin, sdEnvir->mPartPinSize, sdEnvir->getSysColor(scEnter) );
     }

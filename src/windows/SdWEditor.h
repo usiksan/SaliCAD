@@ -55,6 +55,9 @@ class SdWEditor : public QAbstractScrollArea
     //Update status of undo and redo
     void                   updateUndoRedoStatus();
 
+    //True if traced window
+    virtual bool           isTraced() const { return false; }
+
     //On activate editor window
     virtual void onActivateEditor();
 

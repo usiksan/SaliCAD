@@ -17,6 +17,8 @@ Description
 #include "objects/SdPulsar.h"
 #include "windows/SdWEditorGraph.h"
 
+#include <math.h>
+
 SdModeTRuller::SdModeTRuller(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeTemp( editor, obj )
   {

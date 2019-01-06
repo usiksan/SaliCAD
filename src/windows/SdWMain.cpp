@@ -117,6 +117,10 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   sbar->addWidget( enterPos );
   connect( enterPos, &QPushButton::pressed, this, &SdWMain::cmEnterPosition );
 
+  //Build trace status
+  sbar->addWidget( mTraceStatus = new SdWLabel( QString(), tr("Current trace status: unconnected nets and rules errors count"), 200 ) );
+  mTraceStatus->hide();
+
   sbar->addWidget( mMessage = new SdWLabel( QString(), tr("Short guide to current mode step or other messages"), 100 ), 1 );
   sbar->setSizeGripEnabled(true);
 
@@ -141,6 +145,7 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   connect( SdPulsar::sdPulsar, &SdPulsar::renameProject, this, &SdWMain::onRenameProject );
   connect( SdPulsar::sdPulsar, &SdPulsar::activateProject, this, &SdWMain::onActivateProject );
   connect( SdPulsar::sdPulsar, &SdPulsar::projectStatusChanged, this, &SdWMain::activateProjectName );
+  connect( SdPulsar::sdPulsar, &SdPulsar::setTracingStatus, this, &SdWMain::setTraceStatus );
 
   //Clipboard notification
   connect( QGuiApplication::clipboard(), &QClipboard::changed, this, &SdWMain::onClipboardChanged );
@@ -172,6 +177,24 @@ void SdWMain::setStatusPositions(const QString x, const QString y)
 void SdWMain::setStatusMessage(const QString msg)
   {
   mMessage->setText( msg );
+  }
+
+
+
+
+//Update tracing status information
+void SdWMain::setTraceStatus(int unconnected, int errors)
+  {
+  mTraceStatus->setText( tr("Unconnected: %1  Errors: %2").arg(unconnected).arg(errors) );
+  }
+
+
+
+//Show or hide tracing status information
+void SdWMain::showTrace(bool show)
+  {
+  if( show ) mTraceStatus->show();
+  else       mTraceStatus->hide();
   }
 
 

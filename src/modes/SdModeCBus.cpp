@@ -43,11 +43,13 @@ void SdModeCBus::drawDynamic(SdContext *ctx)
     case sNextNet :
       if( sdEnvir->mIsSmart ) smartDraw( ctx );
       //break absent specialy
+      [[fallthrough]];
     case sFirstPoint :
       //Using previous pattern
       //Использование предыдущего шаблона
       if( mPattern.count() == 0 || mNetList.count() == 0 ) break;
       //break absent specialy
+      [[fallthrough]];
     case sNamePlace : {
       //Enter wire name placement
       //Поиск расположения имени цепи
@@ -155,6 +157,7 @@ void SdModeCBus::enterPoint(SdPoint enter)
       //Установить панель соответствующую имени цепи
       //SetPropBar( dpWireName, 0 );
 
+      [[fallthrough]];
     case sNextNet :
       //Вводим цепь в базу данных
       enterNet();

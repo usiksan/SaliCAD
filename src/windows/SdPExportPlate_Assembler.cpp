@@ -11,7 +11,10 @@ Web
 Description
   Creation files for smt automat.
 */
+#include "SdConfig.h"
 #include "SdPExportPlate_Assembler.h"
+#include "objects/SdEnvir.h"
+#include "objects/SdGraphPartImp.h"
 
 #include <QPushButton>
 #include <QFile>

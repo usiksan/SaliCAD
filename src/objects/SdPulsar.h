@@ -58,6 +58,7 @@ class SdPulsar : public QObject
     void emitSetStatusLabels( const QString xlabel, const QString ylabel );
     void emitSetStatusPositions( const QString x, const QString y );
     void emitSetStatusMessage( const QString msg );
+    void emitSetTracingStatus( int unconnected, int errors );
 
     //Prop bar
     //Emit signal on viewed layers changed. It emited when layer dialog completed
@@ -99,6 +100,7 @@ class SdPulsar : public QObject
     void setStatusLabels( const QString xlabel, const QString ylabel );
     void setStatusPositions( const QString x, const QString y );
     void setStatusMessage( const QString msg );
+    void setTracingStatus( int unconnected, int errors );
 
     //Prop bar
     //Emit signal on viewed layers changed. It emited when layer dialog completed

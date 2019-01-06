@@ -129,6 +129,11 @@ void SdPulsar::emitSetStatusMessage(const QString msg)
   emit setStatusMessage(msg);
   }
 
+void SdPulsar::emitSetTracingStatus(int unconnected, int errors)
+  {
+  emit setTracingStatus( unconnected, errors );
+  }
+
 
 
 
