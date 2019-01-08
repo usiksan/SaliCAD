@@ -28,6 +28,7 @@ Description
 #include <QFileDialog>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QGridLayout>
 #include <QHeaderView>
 
 //SdPExportPlate_Assembler::SdPExportPlate_Assembler()
@@ -44,5 +45,10 @@ SdPExportPlate_Assembler::SdPExportPlate_Assembler(SdWEditorGraphPlate *editor, 
   setMinimumWidth(800);
   list->addMaster( tr("SMT assemble"), tr("Creates smt assemblion automat files for plate"), step, QString(":/pic/gerberExport.png") );
 
+  QVBoxLayout *vbox = new QVBoxLayout();
+  //Title
+  vbox->addWidget( new QLabel( tr("Options for SMT assemble file") ) );
+
+  vbox->addWidget( mBottom = new QCheckBox( tr("Perform for bottom side") ) );
 
   }
