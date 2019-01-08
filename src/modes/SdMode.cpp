@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Base mode for operation on objects.
 */
 
 #include "SdMode.h"
@@ -16,6 +17,7 @@ Description
 #include "objects/SdPulsar.h"
 #include "objects/SdProject.h"
 #include "objects/SdEnvir.h"
+#include "objects/SdPItemPlate.h"
 #include "windows/SdWEditorGraph.h"
 #include "windows/SdWCommand.h"
 
@@ -219,6 +221,17 @@ void SdMode::setDirty()
 void SdMode::setDirtyCashe()
   {
   mEditor->dirtyCashe();
+  }
+
+
+
+//If container is SdPlate object then set dirty rat net for its rebuild
+void SdMode::setDirtyRatNet()
+  {
+  if( mObject->getClass() == dctPlate ) {
+    SdPtr<SdPItemPlate> plate(mObject);
+    if( plate.isValid() ) plate->setDirtyRatNet();
+    }
   }
 
 

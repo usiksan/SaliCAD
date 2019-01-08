@@ -49,6 +49,15 @@ SdWEditorGraphPlate::SdWEditorGraphPlate(SdPItemPlate *pcb, QWidget *parent) :
 
 
 
+//Update tracing status info: unconnected nets and rule errors
+void SdWEditorGraphPlate::updateTracingInfo()
+  {
+  SdPulsar::sdPulsar->emitSetTracingStatus( mPlate->unconnectedNetCount(), mPlate->ruleErrorsCount() );
+  }
+
+
+
+
 SdProjectItem *SdWEditorGraphPlate::getProjectItem() const
   {
   return mPlate;
@@ -154,6 +163,9 @@ void SdWEditorGraphPlate::onActivateEditor()
 
   //Activate tool bar
   SdWCommand::barPcb->show();
+
+  //Update unconnect information
+  updateTracingInfo();
   }
 
 
@@ -188,6 +200,8 @@ void SdWEditorGraphPlate::cmRulesCheck()
                       });
   //Set show rule errors
   SdWCommand::cmShowRuleErrors->setChecked( sdEnvir->mShowRuleErrors = true );
+  //Update rat-net
+  mPlate->setDirtyRatNet();
   //Update
   update();
   }

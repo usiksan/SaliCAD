@@ -25,10 +25,10 @@
 
 //TODO D068 Append query to upgrade when newer objects received from remote and possibility to off than query
 
-//TODO D076 Append information with unconnected nets and rule conflict count
-
 //===================================================================================
 //Fixed:
+
+//D076 Append information with unconnected nets and rule conflict count
 
 //D075 When activated net name property in net properties bar select current net name
 

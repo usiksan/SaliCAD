@@ -27,6 +27,17 @@ Description
 
 class SdWEditorGraph;
 
+//Base class for mode
+//Each changes to project made through modes. With modes we append new objects, edit them and delete them.
+//Specific operation depends on mode.
+//Graphic editor - is source of events and display server
+//All events which receiv editor it sends to active mode. Mode decides how to handle this event.
+//Not all event must be handle. Not handled events processed by default with this base class.
+//Display process consist of two etaps: static draw and dynamic draw. For example, when we enter line
+// all currently existing graphics are static draw and dynamic draw is only entered line. This do for
+// accelerate paint process because not need to redraw static elements every time as changed only small count of elements.
+//For this mech mode has two memebers drawStatic and drawDynamic. Both with default implementation.
+//By default drawStatic draws all graphics of container. By default drawDynamic draws nothing.
 class SdMode
   {
     int             mStep;       //Mode step
@@ -35,25 +46,30 @@ class SdMode
     SdWEditorGraph *mEditor;     //Editor window is mode working in
     SdUndo         *mUndo;       //Undo for this project
 
-////Информационные
-//DViewer*       GetViewer() const { return viewer; }
-//DGraphTopPic*  GetBase() const { return object; }
-//PDUndo         GetUndo() const { return undo; }
-
    //Исполняемые через обозреватель
    void           update();          //Обновить изображение
    void           cancelMode();      //Прекращение режима
    SdPoint        getGrid() const;
    double         getPPM() const;
 
-   //Сервисные
+   //Service
+   //Set step to index
    void           setStep( int stp );
+
+   //Get current step. Return current step index
    int            getStep() const { return mStep; }
-   void           setDirty();                      //Объявить объект редактированным
+
+   //Declare that object is changed and project must be save
+   void           setDirty();
+
+   //Declare that static draw must be redrawed
    void           setDirtyCashe();
 
-   //Сервисные
-   void           addPic(SdObject *obj , QString title);         //Добавить объект к контейнеру
+   //If container is SdPlate object then set dirty rat net for its rebuild
+   void           setDirtyRatNet();
+
+   //Add object to container
+   void           addPic(SdObject *obj , QString title);
 
   public:
     SdMode( SdWEditorGraph *editor, SdProjectItem *obj );
@@ -64,7 +80,7 @@ class SdMode
     virtual void    activate();                             //Вызывается первой, после того как режим делается текущим
     virtual void    reset();                                //Сбрасывает режим в исходное состояние
 
-    virtual void    drawStatic( SdContext *ctx );           //Ресует постоянную часть картинки
+    virtual void    drawStatic( SdContext *ctx );           //Рисует постоянную часть картинки
     virtual void    drawDynamic( SdContext *ctx );          //Рисует переменную часть картинки
 
     virtual int     getPropBarId() const { return -1; }     //Получить идентификатор панели свойств

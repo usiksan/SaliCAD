@@ -203,6 +203,7 @@ void SdModeSelect::propGetFromBar()
     });
 
   setDirtyCashe();
+  setDirtyRatNet();
   update();
   }
 
@@ -612,6 +613,7 @@ void SdModeSelect::paste()
   {
   setDirty();
   setDirtyCashe();
+  setDirtyRatNet();
   if( mFragment.count() )
     unselect( false );
   cancelPaste();
@@ -664,6 +666,7 @@ void SdModeSelect::deleteSelected()
 
     setDirty();
     setDirtyCashe();
+    setDirtyRatNet();
     update();
     }
   }
@@ -687,6 +690,7 @@ void SdModeSelect::unselect(bool update)
     if( update ) {
       setDirty();
       setDirtyCashe();
+      setDirtyRatNet();
       }
     }
   }
@@ -942,6 +946,7 @@ void SdModeSelect::insertCopy(SdPoint offset, bool next)
   {
   setDirty();
   setDirtyCashe();
+  setDirtyRatNet();
   mUndo->begin( QObject::tr("Copy insertion"), mObject );
   //Произвести вставку
   //Perform insertion

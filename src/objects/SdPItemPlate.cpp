@@ -21,6 +21,7 @@ Description
 #include "SdEnvir.h"
 #include "SdPlateNetList.h"
 #include "SdStratum.h"
+#include "SdPulsar.h"
 
 #include <QDebug>
 #include <QLineF>
@@ -198,6 +199,8 @@ void SdPItemPlate::buildRatNet()
   netList.buildRatNet( &mRatNet );
 
   mRatNetDirty = false;
+
+  SdPulsar::sdPulsar->emitSetTracingStatus( unconnectedNetCount(), ruleErrorsCount() );
   }
 
 

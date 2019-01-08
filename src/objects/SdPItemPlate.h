@@ -87,6 +87,9 @@ class SdPItemPlate : public SdProjectItem
     //Draw pcb for trace
     void                   drawTrace( SdContext *ctx, SdStratum curStratum, QString currentNetName );
 
+    //Unconnected nets count
+    int                    unconnectedNetCount() const { return mRatNet.count(); }
+
 
     //Tracing rules
     //Pcb rules

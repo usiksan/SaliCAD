@@ -446,7 +446,9 @@ void SdWMain::onActivateEditor(int index)
   if( editor ) {
     mWProjectList->onItemActivated( editor->getProjectItem() );
     editor->onActivateEditor();
+    showTrace( editor->isTraced() );
     }
+  else showTrace( false );
 
   //For each editors decrement recently index except selected
   for( int i = 0; i < mWEditors->count(); i++ ) {

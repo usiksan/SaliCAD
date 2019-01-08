@@ -27,6 +27,9 @@ class SdWEditorGraphPlate : public SdWEditorGraph
   public:
     SdWEditorGraphPlate( SdPItemPlate *pcb, QWidget *parent = nullptr );
 
+    //Update tracing status info: unconnected nets and rule errors
+    void                   updateTracingInfo();
+
     // SdWEditor interface
   public:
     virtual SdProjectItem *getProjectItem() const override;
@@ -68,6 +71,9 @@ class SdWEditorGraphPlate : public SdWEditorGraph
     virtual void           cmModeValueMove() override;
 
     virtual void           cmFileExport() override;
+
+    //True if traced window
+    virtual bool           isTraced() const override { return true; }
   };
 
 
