@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <h1 align="center">Variant table Dialog</h1>
+    Very often, the components have the same part and the same schematic
+    diagram, but several different parameters. For example, the resistors have
+    different value and tolerance. To reduce the amount of information that is
+    entered for these components, a variant table is used. It contains a list of
+    different parameters for such components and the values of these parameters.
+    When you select components when you insert a component into a schematic
+    diagram, the component that has a table can be displayed as a single
+    component or as a set of components with different values from this table.<br>
+    <br>
+    <p>For example, for the Resistor component, the value and tolerance fields
+      can be represented in the case table. Other parameters can be name. Assume
+      that the name field is set to "smd-0201", and the case table is as
+      follows:</p>
+    <table border="1" width="100%">
+      <tbody>
+        <tr>
+          <td>value</td>
+          <td>tolerance</td>
+        </tr>
+        <tr>
+          <td>1kOm</td>
+          <td>5%</td>
+        </tr>
+        <tr>
+          <td>2kOm</td>
+          <td>10%</td>
+        </tr>
+      </tbody>
+    </table>
+    <p></p>
+    <p>Than for selection will be available two components of Resistor. First
+      component</p>
+    <p>name - "smd-0201", value - "1kOm", tolerance - "5%"</p>
+    <p>and second component</p>
+    <p>name - "smd-0201", value - "2kOm", tolerance - "10%"</p>
+    <p> </p>
+    <p> </p>
+    <p>The name field is not present in the case table, so it will be the same
+      for all components. The fields that are present in the case table will be
+      formed from the contents of the rows of this table.<br>
+      <br>
+      This dialog is used to create and edit such variant tables.</p>
+    <p>The left part of the dialog box contains a table of registered fields.
+      The right - hand side is the variant table.</p>
+    <h3>Field table</h3>
+    <p>This table lists all available registered fields for this component. You
+      can edit this list by using the component editor. You can add any of these
+      fields to the variant table. If the field is added to the variant table,
+      the value of this field may be different for different variants of this
+      component. If the field is not added to the table of variants, the value
+      set for this field by default will be used for all variants of this
+      component. The visual table consists of three columns:</p>
+    <ul>
+      <li>has variant</li>
+      <li>param name</li>
+      <li>param value</li>
+    </ul>
+    <p><br>
+      Use the <span style="color: fuchsia;">has variant</span> column to add or
+      remove fields from the variant table. To add a field to the table of
+      variants it is necessary to check for this field, and to remove a field
+      from the table of variants - to remove a check.</p>
+    <h3>Variant table</h3>
+    <p>This table has a variable number of columns depending on the number of
+      fields to be changed depending on the variant. To add or remove columns,
+      use the field table on the left. The "<span style="color: fuchsia;">has
+        variant</span>" column is responsible for the presence of a field in the
+      variant table. You can also add a field that is not in the default field
+      list. To do this, use the <span style="color: fuchsia;">Append field</span>
+      button. Use the <span style="color: fuchsia;">Delete field</span> button
+      to delete fields.<br>
+      <br>
+      To add a row to the table, click <span style="color: fuchsia;">Insert row</span>
+      button. The new row is inserted directly under the current selected row
+      and all values in the new row are copied from the current one. It remains
+      only to edit them. This approach simplifies the work, because very often
+      not all fields are changed, but only part of them.<br>
+      <br>
+      To delete a row, click the <span style="color: fuchsia;">Delete row</span>
+      button. This deletes the currently selected series.<br>
+      <br>
+      To delete all rows of the table, click the <span style="color: fuchsia;">Delete
+        all</span> button.</p>
+    <p><br>
+    </p>
+  </body>
+</html>
