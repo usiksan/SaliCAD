@@ -58,6 +58,10 @@ class SdPExportPlate_Gerber : public QWizardPage
   private:
     //Generate gerber for current view to file
     void generation(const QString fileName );
+
+    // QWizardPage interface
+  public:
+    virtual int  nextId() const override { return -1; }
   };
 
 #endif // SDPEXPORTPLATE_GERBER_H

@@ -214,7 +214,7 @@ SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *par
   mProp = *prp;
   if( part ) {
     QTransform t( matrix() );
-    mOverRect.set( t.mapRect(part->getOverRect(dctAll & (~dctIdent))) );//Over rect
+    mOverRect.set( t.mapRect(part->getOverRect(dctAll & (~(dctIdent | dctValue)))) );//Over rect
     mIdent.mProp = part->identGet()->getPropText();   //Part identificator text properties
     mIdent.mOrigin = part->identGet()->getOrigin();   //Part identificator position in part context
     mValue.mProp = part->valueGet()->getPropText();   //Part value text properties
@@ -324,6 +324,16 @@ void SdGraphPartImp::accumUsedPins(SdPadMap &map) const
   {
   for( const SdPartImpPin &pin : mPins )
     pin.accumUsedPin( map );
+  }
+
+
+
+
+//Pin iterator
+void SdGraphPartImp::forEachPin(std::function<void(const SdPartImpPin &)> fun1)
+  {
+  for( const SdPartImpPin &pin : mPins )
+    fun1( pin );
   }
 
 
@@ -989,7 +999,7 @@ void SdGraphPartImp::updatePinsPositions()
     pin.mStratum  = pin.mPin->getPinStratum( mProp.mSide.isBottom() );
     }
   //Calculate new over rect
-  mOverRect.set( t.mapRect( mPart->getOverRect(dctAll & (~dctIdent)) ) );
+  mOverRect.set( t.mapRect( mPart->getOverRect(dctAll & (~(dctIdent | dctValue))) ) );
   }
 
 

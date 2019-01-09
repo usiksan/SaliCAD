@@ -632,3 +632,5 @@ void SdPExportPlate_Gerber::generation(const QString fileName)
   else
     QMessageBox::warning( this, tr("Error!"), tr("Can't create Gerber file \'%1\'").arg(fileName) );
   }
+
+

@@ -108,6 +108,8 @@ class SdGraphPartImp : public SdGraphTraced
     //Information
     //Get implement transform matrix
     QTransform      matrix() const;
+    //Angle of component rotation
+    SdPropAngle     angle() const { return mProp.mAngle; }
 
     //Identificator
     //Get full visual ident of part aka D4 or R45
@@ -147,6 +149,8 @@ class SdGraphPartImp : public SdGraphTraced
     void            savePins( SdUndo *undo );
     //Accum used pins
     void            accumUsedPins(SdPadMap &map ) const;
+    //Pin iterator
+    void            forEachPin( std::function<void(const SdPartImpPin &pin)> fun1 );
 
 
     //Renumeration
