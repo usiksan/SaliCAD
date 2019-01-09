@@ -271,7 +271,8 @@ SOURCES += \
     windows/SdLanguage.cpp \
     windows/SdWEditorIntro.cpp \
     windows/SdPExportPlate_Assembler.cpp \
-    modes/SdModeCRoadMove.cpp
+    modes/SdModeCRoadMove.cpp \
+    modes/SdModeCOriginPlate.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -537,7 +538,8 @@ HEADERS  += \
     objects/SdClass.h \
     windows/SdWEditorIntro.h \
     windows/SdPExportPlate_Assembler.h \
-    modes/SdModeCRoadMove.h
+    modes/SdModeCRoadMove.h \
+    modes/SdModeCOriginPlate.h
 
 DISTFILES += \
     license.txt

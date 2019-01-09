@@ -31,6 +31,7 @@ Description
 #include "modes/SdModeCPlateValueMove.h"
 #include "modes/SdModeCPartImp.h"
 #include "modes/SdModeCViaEnter.h"
+#include "modes/SdModeCOriginPlate.h"
 
 #include <QDebug>
 #include <QProgressDialog>
@@ -269,6 +270,15 @@ void SdWEditorGraphPlate::cmModePartSelect(QStringList list)
 void SdWEditorGraphPlate::cmModeViaEnter()
   {
   modeSet( new SdModeCViaEnter( this, getProjectItem() )  );
+  }
+
+
+
+
+
+void SdWEditorGraphPlate::cmModeOrigin()
+  {
+  modeSet( new SdModeCOriginPlate( this, mPlate, sdEnvir->mPartPinSize ) );
   }
 
 

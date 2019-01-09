@@ -74,7 +74,8 @@ Description
 #define MD_PLATE_VALUE     56
 #define MD_VIA_ENTER       57
 #define MD_ROAD_MOVE       58
-#define MD_LAST            59
+#define MD_PLATE_ORIGIN    59
+#define MD_LAST            60
 
 //Properties tool bar id's
 #define PB_DEFAULT          0

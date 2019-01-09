@@ -251,6 +251,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   //  cmModePad        = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
   cmModeTable[MD_PLATE_IDENT] = menuInsertPcb->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Move ident of components"), frame, SLOT(cmModeReferenceMove()) );
   cmModeTable[MD_PLATE_VALUE] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrtValue.png")), frame->tr("Move value of components"), frame, SLOT(cmModeValueMove()) );
+  cmModeTable[MD_PLATE_ORIGIN]= menuInsertPcb->addAction( QIcon(QString(":/pic/objPlateOrigin.png")), frame->tr("Edit plate origin"), frame, SLOT(cmModeOrigin()) );
 
 
   //PCB roads rules menu
@@ -577,6 +578,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barPcb->insertAction( nullptr, cmModeTable[MD_VIA_ENTER] );
   barPcb->insertAction( nullptr, cmModeTable[MD_PLATE_IDENT] );
   barPcb->insertAction( nullptr, cmModeTable[MD_PLATE_VALUE] );
+  barPcb->insertAction( nullptr, cmModeTable[MD_PLATE_ORIGIN] );
 
 
   frame->addToolBar( barPcb );
