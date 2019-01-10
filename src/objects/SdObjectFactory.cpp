@@ -156,6 +156,8 @@ bool SdObjectFactory::isContains(const QString type, const QString name, const Q
 //Return true if there is newer object in dataBase
 bool SdObjectFactory::isThereNewer(const SdProjectItem *item)
   {
+  if( item == nullptr )
+    return false;
   return sdLibraryStorage.isNewerObject( item->getUid(), item->getTime() );
   }
 
