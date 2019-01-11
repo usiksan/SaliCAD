@@ -154,7 +154,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_FILL_CIRCLE] = menuDraw->addAction( QIcon(QString(":/pic/drawFCircle.png")), frame->tr("Filled circle"), frame, SLOT(cmModeFilledCircle()) );
   cmModeTable[MD_ARC]         = menuDraw->addAction( QIcon(QString(":/pic/drawArc.png")), frame->tr("Arc"), frame, SLOT(cmModeArc()) );
   cmModeTable[MD_TEXT]        = menuDraw->addAction( QIcon(QString(":/pic/drawText.png")), frame->tr("Text"), frame, SLOT(cmModeText()) );
-  cmModeTable[MD_FIELD]       = menuDraw->addAction( QIcon(QString(":/pic/drawField.png")), frame->tr("Field"), frame, SLOT(cmModeField()) );
+  //cmModeTable[MD_FIELD]       = menuDraw->addAction( QIcon(QString(":/pic/drawField.png")), frame->tr("Field"), frame, SLOT(cmModeField()) );
   cmShowField = menuDraw->addAction( QIcon(QStringLiteral(":/pic/showField.png")), frame->tr("Show fields or values") );
   cmShowField->setCheckable(true);
   cmShowField->setChecked( sdEnvir->mShowFields );
