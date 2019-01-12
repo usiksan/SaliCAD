@@ -44,7 +44,7 @@ void SdCsChannel::writeBlock(int cmd, QByteArray ar)
   SdCsPacketInfo info( cmd, ar.size() );
   //Write block header
   mSocket->write( (const char*)(&info), sizeof(SdCsPacketInfo) );
-  //If block is nonzero then write block contens
+  //If block is nonzero then write block contents
   if( ar.size() )
     mSocket->write( ar );
   }
