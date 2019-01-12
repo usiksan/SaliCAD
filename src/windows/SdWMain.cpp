@@ -587,7 +587,7 @@ SdWEditor *SdWMain::findHelpWidget()
 
 
 
-//Dirty cashe for graphics window and repaint its contens
+//Dirty cashe for graphics window and repaint its contents
 void SdWMain::activeEditorUpdate()
   {
   if( activeEditor() ) {
@@ -1707,9 +1707,9 @@ void SdWMain::cmHelpPage(const QString topic)
 
 
 
-void SdWMain::cmHelpContens()
+void SdWMain::cmHelpContents()
   {
-  cmHelpPage( QString("contens.htm") );
+  cmHelpPage( QString("contents.htm") );
   }
 
 

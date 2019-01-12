@@ -31,7 +31,7 @@ struct SdGuiderTime {
 
 
 struct SdGuiderTiter {
-    QMap<QString,QString> mContens;
+    QMap<QString,QString> mContents;
 
     QByteArray write() const;
     void       read( const QByteArray &src );

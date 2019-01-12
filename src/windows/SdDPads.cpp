@@ -102,7 +102,7 @@ void SdDPads::updatePinTable()
   disconnect( ui->mPadTable, &QTableWidget::cellChanged, this, &SdDPads::cmCellEditComplete );
   int curRow = ui->mPadTable->currentRow();
   //int curCol
-  //Clear current table contens
+  //Clear current table contents
   ui->mPadTable->clear();
   //Table dimensions
   ui->mPadTable->setColumnCount(2);

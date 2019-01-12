@@ -159,7 +159,7 @@ void SdDVariantTable::defChanged(int row, int column)
       //Remove field from variant table
       QString name = ui->mDefFields->item( row, 1 )->text();
       //Show query
-      if( QMessageBox::question( this, tr("Warning!"), tr("You attempting delete field '%1' from variant table. All field column contens will be loss. This is non undoing operation. Are You sure?").arg(name)) == QMessageBox::Yes ) {
+      if( QMessageBox::question( this, tr("Warning!"), tr("You attempting delete field '%1' from variant table. All field column contents will be loss. This is non undoing operation. Are You sure?").arg(name)) == QMessageBox::Yes ) {
         //Find column
         int column;
         for( column = 0; column < ui->mVariantTable->columnCount(); column++ )

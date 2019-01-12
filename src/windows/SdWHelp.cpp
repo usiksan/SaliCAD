@@ -164,12 +164,12 @@ QUrl SdWHelp::pageError()
 
 
 
-//Show help contens
-void SdWHelp::contens()
+//Show help contents
+void SdWHelp::contents()
   {
   //Setup home page
   //Выдать начальную страницу
-  setSource( pageConvert( "contens.htm", QString() ) );
+  setSource( pageConvert( "contents.htm", QString() ) );
   }
 
 
@@ -223,7 +223,7 @@ void SdWHelp::helpIntro()
 
   QFile file(fname);
   if( file.open(QIODevice::ReadOnly) ) {
-    //Load intro file contens
+    //Load intro file contents
     QString html = QString::fromUtf8( file.readAll() );
 
     //Get previously file list

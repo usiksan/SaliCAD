@@ -10,11 +10,11 @@ SdGuiderDTiterEdit::SdGuiderDTiterEdit( SdGuiderTiter *titer, QWidget *parent) :
 
   //Fill initial table
   ui->mTable->setColumnCount(2);
-  ui->mTable->setRowCount(mTiter->mContens.count());
-  ui->mTable->setHorizontalHeaderLabels( {tr("Language"), tr("Titer contens")} );
+  ui->mTable->setRowCount(mTiter->mContents.count());
+  ui->mTable->setHorizontalHeaderLabels( {tr("Language"), tr("Titer contents")} );
   ui->mTable->setColumnWidth(1,400);
   int row = 0;
-  for( auto iter = mTiter->mContens.cbegin(); iter != mTiter->mContens.cend(); iter++ ) {
+  for( auto iter = mTiter->mContents.cbegin(); iter != mTiter->mContents.cend(); iter++ ) {
     ui->mTable->setRowHeight( row, 25 );
     ui->mTable->setItem( row, 0, new QTableWidgetItem(iter.key()) );
     ui->mTable->setItem( row, 1, new QTableWidgetItem(iter.value()) );
@@ -43,7 +43,7 @@ void SdGuiderDTiterEdit::onChanged(int row, int column)
   QString key = ui->mTable->item(row,0)->text();
   QString value = ui->mTable->item(row,1)->text();
   if( !key.isEmpty() && !value.isEmpty() ) {
-    mTiter->mContens.insert( key, value );
+    mTiter->mContents.insert( key, value );
     }
   }
 
@@ -69,7 +69,7 @@ void SdGuiderDTiterEdit::onDelete()
   int row = ui->mTable->currentRow();
   if( row >= 0 && row < ui->mTable->rowCount() ) {
     QString key = ui->mTable->item(row,0)->text();
-    mTiter->mContens.remove( key );
+    mTiter->mContents.remove( key );
     ui->mTable->removeRow( row );
     }
   connect( ui->mTable, &QTableWidget::cellChanged, this, &SdGuiderDTiterEdit::onChanged );

@@ -277,12 +277,12 @@ void SdWCommand::createMenu(SdWMain *frame)
 
   //Help menu
   menuHelp = new QMenu( frame->tr("Help") );
-  cmHelpContens      = menuHelp->addAction( QIcon(QString(":/pic/help.png")), frame->tr("Contens"), frame, SLOT(cmHelpContens()) );
+  cmHelpContents      = menuHelp->addAction( QIcon(QString(":/pic/help.png")), frame->tr("Contents"), frame, SLOT(cmHelpContents()) );
   cmHelpIndex        = menuHelp->addAction( QIcon(QString(":/pic/helpContext.png")), frame->tr("Index"), frame, SLOT(cmHelpIndex()) );
   cmHelpAbout        = menuHelp->addAction( QIcon(QString(":/pic/helpAbout.png")), frame->tr("About"), frame, SLOT(cmHelpAbout()) );
   cmHelpRegistration = menuHelp->addAction( QIcon(QString(":/pic/helpRegistration.png")), frame->tr("Registration"), frame, SLOT(cmHelpRegistration()) );
   cmHelpHome         = new QAction( QIcon(QString(":/pic/helpHome.png")), frame->tr("Home help page") );
-  frame->connect( cmHelpHome, &QAction::triggered, frame, &SdWMain::cmHelpContens );
+  frame->connect( cmHelpHome, &QAction::triggered, frame, &SdWMain::cmHelpContents );
   cmHelpBackward     = new QAction( QIcon(QString(":/pic/helpPrevious.png")), frame->tr("Backward help page") );
   frame->connect( cmHelpBackward, &QAction::triggered, frame, &SdWMain::cmHelpBackward );
   cmHelpForward      = new QAction( QIcon(QString(":/pic/helpNext.png")), frame->tr("Forward help page") );
@@ -807,7 +807,7 @@ QActionPtr SdWCommand::cmOption;
 
 QActionPtr SdWCommand::cmTools;
 
-QActionPtr SdWCommand::cmHelpContens;
+QActionPtr SdWCommand::cmHelpContents;
 QActionPtr SdWCommand::cmHelpIndex;
 QActionPtr SdWCommand::cmHelpAbout;
 QActionPtr SdWCommand::cmHelpRegistration;

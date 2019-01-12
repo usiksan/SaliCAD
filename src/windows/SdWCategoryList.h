@@ -82,7 +82,7 @@ class SdWCategoryList : public QListWidget
     void cmEnter( QListWidgetItem *item );
 
   private:
-    //Fill list with contens of current category path
+    //Fill list with contents of current category path
     void fill();
 
     //Add item to visual category list

@@ -26,10 +26,10 @@ SdWEditorRich::SdWEditorRich(SdPItemRich *item, QWidget *parent) :
   box->addWidget( mTextEdit );
   setLayout( box );
 
-  //Register editor to item. When item will be save it will read contens from editor
+  //Register editor to item. When item will be save it will read contents from editor
   item->setEditor( mTextEdit );
 
-  mTextEdit->setHtml( mRich->contens() );
+  mTextEdit->setHtml( mRich->contents() );
 
   connect( mTextEdit, &QTextEdit::textChanged, this, &SdWEditorRich::onTextChanged );
   }
@@ -40,7 +40,7 @@ SdWEditorRich::SdWEditorRich(SdPItemRich *item, QWidget *parent) :
 SdWEditorRich::~SdWEditorRich()
   {
   if( mDirty )
-    mRich->setContens( mTextEdit->toHtml() );
+    mRich->setContents( mTextEdit->toHtml() );
   mRich->setEditor( nullptr );
   }
 

@@ -149,7 +149,7 @@ void SdGuiderWMain::cmTiterInsert()
     if( ok ) {
       QString text = QInputDialog::getText( this, tr("Titer insert"), tr("Enter english titer") );
       SdGuiderTiter titer;
-      titer.mContens.insert( QString("en"), text );
+      titer.mContents.insert( QString("en"), text );
       SdGuiderTime tm;
       tm.mType = SD_GT_TITER;
       tm.mTime = time;
@@ -321,10 +321,10 @@ void SdGuiderWMain::onRowChanged(int row)
 void SdGuiderWMain::onCellChanged(int row, int column)
   {
   if( mFile.mTiterIndex >= 0 ) {
-    if( row == mFile.mTiter.mContens.count() && column == 0 ) {
+    if( row == mFile.mTiter.mContents.count() && column == 0 ) {
       //Appended new empty row
       QString key = mTiterTable->item( row, 0 )->text();
-      mFile.mTiter.mContens.insert( key, mTiterTable->item( row, 1 )->text() );
+      mFile.mTiter.mContents.insert( key, mTiterTable->item( row, 1 )->text() );
       disconnect( mTiterTable, &QTableWidget::cellChanged, this, &SdGuiderWMain::onCellChanged );
       mTiterTable->item( row, 0 )->setData( Qt::UserRole, key );
       row++;
@@ -342,12 +342,12 @@ void SdGuiderWMain::onCellChanged(int row, int column)
         if( newKey.isEmpty() ) {
           //Delete record
           mTiterTable->removeRow( row );
-          mFile.mTiter.mContens.remove( key );
+          mFile.mTiter.mContents.remove( key );
           }
         else {
           //Replace record
-          mFile.mTiter.mContens.remove( key );
-          mFile.mTiter.mContens.insert( newKey, mTiterTable->item(row,1)->text() );
+          mFile.mTiter.mContents.remove( key );
+          mFile.mTiter.mContents.insert( newKey, mTiterTable->item(row,1)->text() );
           mTiterTable->item( row, 0 )->setData( Qt::UserRole, newKey );
           }
         }
@@ -355,7 +355,7 @@ void SdGuiderWMain::onCellChanged(int row, int column)
         //Set data
         QString key = mTiterTable->item( row, 0 )->text();
         QString val = mTiterTable->item( row, 1 )->text();
-        mFile.mTiter.mContens.insert( key, val );
+        mFile.mTiter.mContents.insert( key, val );
         }
       }
     //Update titer
@@ -389,12 +389,12 @@ void SdGuiderWMain::titerChanged()
   mTiterTable->clear();
   if( mFile.mTiterIndex >= 0 ) {
     mTiterTable->setColumnCount(2);
-    mTiterTable->setRowCount(mFile.mTiter.mContens.count() + 1);
+    mTiterTable->setRowCount(mFile.mTiter.mContents.count() + 1);
     mTiterTable->setHorizontalHeaderLabels( {tr("Language"), tr("Titer contents") } );
     mTiterTable->setColumnWidth( 0, 120 );
     mTiterTable->setColumnWidth( 1, 600 );
     int row = 0;
-    for( auto iter = mFile.mTiter.mContens.cbegin(); iter != mFile.mTiter.mContens.cend(); iter++ ) {
+    for( auto iter = mFile.mTiter.mContents.cbegin(); iter != mFile.mTiter.mContents.cend(); iter++ ) {
       mTiterTable->setRowHeight( row, 25 );
       QTableWidgetItem *item = new QTableWidgetItem(iter.key());
       item->setData( Qt::UserRole, iter.key() );
@@ -407,7 +407,7 @@ void SdGuiderWMain::titerChanged()
     mTiterTable->setItem( row, 1, new QTableWidgetItem() );
 
     if( !mLanguage.isEmpty() ) {
-      speech->say( mFile.mTiter.mContens.value( mLanguage ) );
+      speech->say( mFile.mTiter.mContents.value( mLanguage ) );
       }
     }
   connect( mTiterTable, &QTableWidget::cellChanged, this, &SdGuiderWMain::onCellChanged );

@@ -233,7 +233,7 @@ QByteArray SdGuiderTiter::write() const
   {
   QByteArray ar;
   QDataStream os( &ar, QIODevice::WriteOnly );
-  os << mContens;
+  os << mContents;
   return ar;
   }
 
@@ -243,14 +243,14 @@ QByteArray SdGuiderTiter::write() const
 void SdGuiderTiter::read(const QByteArray &src)
   {
   QDataStream is( src );
-  is >> mContens;
+  is >> mContents;
   }
 
 
 
 void SdGuiderTiter::clear()
   {
-  mContens.clear();
+  mContents.clear();
   }
 
 

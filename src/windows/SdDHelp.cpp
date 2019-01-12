@@ -39,10 +39,10 @@ SdDHelp::SdDHelp(const QString &helpPage, QWidget *parent) :
   mWHelp = new SdWHelp();
 
   QToolButton *tool = new QToolButton();
-  tool->setToolTip( tr("Help contens") );
+  tool->setToolTip( tr("Help contents") );
   tool->setIcon( QIcon(QStringLiteral(":/pic/helpHome.png")) );
   bar->addWidget( tool );
-  connect( tool, &QToolButton::clicked, mWHelp, &SdWHelp::contens );
+  connect( tool, &QToolButton::clicked, mWHelp, &SdWHelp::contents );
 
   tool = new QToolButton();
   tool->setToolTip( tr("Base page") );

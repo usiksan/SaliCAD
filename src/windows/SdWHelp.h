@@ -45,8 +45,8 @@ class SdWHelp : public QTextBrowser
   signals:
 
   public slots:
-    //Show help contens
-    void contens();
+    //Show help contents
+    void contents();
 
     //Show help topic
     void helpTopic( const QString topic );

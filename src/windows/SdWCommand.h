@@ -150,7 +150,7 @@ class SdWCommand
     static QActionPtr  cmOption;
     static QActionPtr  cmTools;
 
-    static QActionPtr  cmHelpContens;
+    static QActionPtr  cmHelpContents;
     static QActionPtr  cmHelpIndex;
     static QActionPtr  cmHelpAbout;
     static QActionPtr  cmHelpRegistration;

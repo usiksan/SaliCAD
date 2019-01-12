@@ -538,7 +538,7 @@ void SdWEditorGraph::printDialog(SdRect wnd)
   {
   int dlgRes;
   QPrinter printer;
-  //By default print whole contens
+  //By default print whole contents
   SdRect over = getProjectItem()->getOverRect();
   SdRect sel;
   if( mSelect ) sel = mSelect->getFragmentOver();
@@ -661,13 +661,13 @@ void SdWEditorGraph::paintProcess(bool viewer)
           }
         }
       }
-    //Draw contens
+    //Draw contents
     //painter.setTransform( context.transform(), false );
     if( modeGet() )
       //Thrue mode
       modeGet()->drawStatic( &context );
     else {
-      //Draw contens item
+      //Draw contents item
       getProjectItem()->draw( &context );
       }
 

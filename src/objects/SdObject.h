@@ -72,7 +72,7 @@ class SdObject
     //Copy logic next object
     virtual SdObject* copyNext() const { return copy(); }
 
-    //Clone contens object except mParent field.
+    //Clone contents object except mParent field.
     //Cloned object has no parent
     virtual void      cloneFrom( const SdObject *src );
 

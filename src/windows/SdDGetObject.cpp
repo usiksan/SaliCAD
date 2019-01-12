@@ -47,11 +47,11 @@ static QString sdParamFilter;
 //It used to compare with field value of filtered pretendent
 struct SdFieldMask {
     QString mFieldName;  //Field name on which matching executes
-    QString mFieldValue; //Text field value for field match by text contens
+    QString mFieldValue; //Text field value for field match by text contents
     double  mMin;        //Min value for field match by great and between
     double  mMax;        //Max value for field match by less and between
     enum {
-      txtMatch  = 0x0, //Field matched by text contens
+      txtMatch  = 0x0, //Field matched by text contents
       doubleMin = 0x1, //Field matched if value great or equal than mMin
       doubleMax = 0x2, //Field matched if value less or equal than mMax
       doubleDia = 0x3  //Field matched if value is between mMin and mMax
@@ -576,7 +576,7 @@ void SdDGetObject::clearComponent()
 
 
 
-//Fill visual table with mHeaderList contens
+//Fill visual table with mHeaderList contents
 void SdDGetObject::fillTable()
   {
   disconnect( ui->mFieldsBox, &QTableWidget::cellChanged, this, &SdDGetObject::onFieldChanged );

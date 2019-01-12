@@ -59,7 +59,7 @@ SdWProjectTree::SdWProjectTree(const QString fname, SdProject *prj, QWidget *par
     }
   //Check and mark newer objects
   mProject->newerCheckAndMark();
-  //If project builded then display its contens [Если проект построен, то отобразить содержимое]
+  //If project builded then display its contents [Если проект построен, то отобразить содержимое]
   buildVisualTree();
 
   mCurrentItem = mSheetList;

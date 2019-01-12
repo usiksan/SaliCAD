@@ -22,11 +22,11 @@ class QTextEdit;
 
 class SdPItemRich : public SdProjectItem
   {
-    //Text contens
-    QString    mContens;
+    //Text contents
+    QString    mContents;
 
     //Do not saved
-    //Editor which edit contens. Used to retrive string from editor when write object
+    //Editor which edit contents. Used to retrive string from editor when write object
     QTextEdit *mTextEditor;
   public:
     SdPItemRich();
@@ -34,10 +34,10 @@ class SdPItemRich : public SdProjectItem
     //Set or reset visual editor
     void setEditor( QTextEdit *ed ) { mTextEditor = ed; }
 
-    //Get current contens
-    QString contens() const { return mContens; }
-    //Set new contens
-    void    setContens( const QString &str ) { mContens = str; }
+    //Get current contents
+    QString contents() const { return mContents; }
+    //Set new contents
+    void    setContents( const QString &str ) { mContents = str; }
 
     // SdObject interface
   public:

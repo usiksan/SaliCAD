@@ -85,7 +85,7 @@ class SdDGetObject : public QDialog
     void clearComponent();
     void clearProject();
 
-    //Fill visual table with mHeaderList contens
+    //Fill visual table with mHeaderList contents
     void fillTable();
 
   public:

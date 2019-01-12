@@ -53,7 +53,7 @@ SdWCategoryList::SdWCategoryList(QWidget *parent) :
       }
     }
 
-  //Fill with contens
+  //Fill with contents
   fill();
 
   connect( this, &SdWCategoryList::itemClicked, this, &SdWCategoryList::cmCategory );
@@ -391,7 +391,7 @@ void SdWCategoryList::cmEnter(QListWidgetItem *item)
 
 
 
-//Fill list with contens of current category path
+//Fill list with contents of current category path
 void SdWCategoryList::fill()
   {
   //Remove all previous items

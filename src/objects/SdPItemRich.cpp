@@ -44,7 +44,7 @@ void SdPItemRich::cloneFrom(const SdObject *src)
   SdProjectItem::cloneFrom( src );
   SdPtrConst<SdPItemRich> rich(src);
   if( rich.isValid() )
-    mContens = rich->mContens;
+    mContents = rich->mContents;
   }
 
 
@@ -54,9 +54,9 @@ void SdPItemRich::writeObject(QJsonObject &obj) const
   {
   SdProjectItem::writeObject( obj );
   if( mTextEditor )
-    obj.insert( QStringLiteral("contens"), mTextEditor->toHtml() );
+    obj.insert( QStringLiteral("contents"), mTextEditor->toHtml() );
   else
-    obj.insert( QStringLiteral("contens"), mContens );
+    obj.insert( QStringLiteral("contents"), mContents );
   }
 
 
@@ -66,7 +66,7 @@ void SdPItemRich::writeObject(QJsonObject &obj) const
 void SdPItemRich::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdProjectItem::readObject( map, obj );
-  mContens = obj.value( QStringLiteral("contens") ).toString();
+  mContents = obj.value( QStringLiteral("contents") ).toString();
   }
 
 

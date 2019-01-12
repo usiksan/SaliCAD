@@ -233,7 +233,7 @@ class SdWMain : public QMainWindow
 
     void cmHelpIntro();
     void cmHelpPage( const QString topic );
-    void cmHelpContens();
+    void cmHelpContents();
     void cmHelpIndex();
     void cmHelpAbout();
     void cmHelpRegistration();
@@ -267,7 +267,7 @@ class SdWMain : public QMainWindow
     //Return current active project view tree
     SdWProjectTree *activeProject() { return mWProjectList->activeProject(); }
     SdWProjectTree *project( int index ) { return mWProjectList->project(index); }
-    //Dirty cashe for graphics window and repaint its contens
+    //Dirty cashe for graphics window and repaint its contents
     void            activeEditorUpdate();
   };
 

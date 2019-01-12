@@ -181,10 +181,10 @@ void SdDGuiderPlayer::titerChanged()
   {
   if( mFile.mTiterIndex >= 0 ) {
     QString val;
-    if( mFile.mTiter.mContens.contains(mLanguage) )
-      val = mFile.mTiter.mContens.value(mLanguage);
+    if( mFile.mTiter.mContents.contains(mLanguage) )
+      val = mFile.mTiter.mContents.value(mLanguage);
     else
-      val = mFile.mTiter.mContens.value( QStringLiteral("en") );
+      val = mFile.mTiter.mContents.value( QStringLiteral("en") );
     speech->say( val );
     mTiter->setText( QStringLiteral("<h1>%1</h1>").arg(val) );
     }
