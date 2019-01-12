@@ -4,46 +4,49 @@
     <title>SaliCAD Line enter mode</title>
   </head>
   <body>
-    <h1>Line enter mode</h1>
+    <h1 style="text-align: center;">Line enter mode</h1>
     <p><a href="contens.htm">Contens</a>=&gt;<a href="MModes.htm">Modes</a>=&gt;<a
         href="MDraw.htm">Draw modes</a>=&gt;Линия</p>
-    <p>Tool bar: <img src="drawLine.png" border="1" width="24" height="24"></p>
+    <p>Tool bar: <img src="drawLine.png" width="24" height="24" border="1"></p>
     <p>Menu: Draw|Line</p>
     <p>Cursor: <img src="lineIcon.png" width="30" height="30"></p>
     <p>1.Setup line attributes</p>
-    <p>2.Enter start point of segemtn</p>
-    <p>3.(Необязательно) Измените атрибуты отрезка</p>
-    <p>4.Укажите конечную точку отрезка. После указания конечной точки отрезка,
-      он вводится в проект. Автоматически конечная точка отрезка служит
-      начальной точкой следующего отрезка, позволяя, тем самым, формировать
-      ломаную линию.</p>
-    <p>5. Повторяйте шаги 2-4 для ввода всей ломаной.</p>
+    <p>2.Enter start point of segment</p>
+    <p>3.(Optional) Change segment attributes</p>
+    <p>4.Enter end point of the segment. After you specify the end point of the
+      segment, it is entered into the project. Automatically, the end point of
+      the segment serves as the starting point of the next segment, thus
+      allowing the formation of a polyline.</p>
+    <p>5.Repeat steps 2-4 to enter the entire polyline.</p>
     <ul>
-      <li>Указание точки осуществляется нажатием левой кнопки мыши или вручную.</li>
-      <li>Прекращение ввода осуществляется нажатием правой кнопки мыши.</li>
+      <li><img src="mouseBLeft.png" width="32" height="48"> You can specify a
+        point by clicking the left mouse button or manually.</li>
+      <li><img src="mouseBRight.png" width="32" height="48"> The termination of
+        the input is done by pressing the right mouse button.</li>
     </ul>
-    <p><b>"Разумный" режим.</b></p>
-    <p>Осуществляется относительный ввод предыдущего сегмента. Т.е. Вы только
-      что ввели сегмент и хотите, чтобы новый сегмент был параллелен введенному
-      и имел ту же длину. Для этого Вы указываете начало нового сегмента, а
-      разумный режим делает всю остальную работу.</p>
+    <p><b>"Smart" mode.</b></p>
+    <p>The relative input of the previous segment is performed. That is, you
+      have just entered a segment and want the new segment to be parallel to the
+      entered segment and have the same length. To do this, you specify the
+      beginning of a new segment, and smart mode does the rest of the work.</p>
     <p><img src="smartLine1.png" width="96" height="64"></p>
-    <p>Здесь A - исходный сегмент, B - сегмент формируемый разумным режимом.</p>
+    <p>Here A is the initial segment, B is the segment formed by the smart mode.</p>
     <p><br>
     </p>
-    <p>Этот "разумный" режим особенно удобен для последовательного ввода
-      одинаковых отрезков, например, ножек символа.</p>
-    <p>Если после указания первой точки сдвинуть мышь, то "разумный" режим ищет
-      конечную точку отрезка в направлении движения мыши на пересечении с уже
-      введенными линиями или прямоугольниками.</p>
+    <p>This "smart" mode is especially useful for sequential input of identical
+      segments, for example, symbol pins.</p>
+    <p>If you move the mouse after specifying the first point, the smart mode
+      looks for the end point of the segment in the direction of the mouse
+      movement at the intersection with the already entered lines or rectangles.</p>
     <p><img src="smartLine2.png" width="96" height="64"></p>
-    <p>Здесь A - исходный сегмент, B - сегмент формируемый разумным режимом.</p>
-    <p>Средняя кнопка мыши - подтверждение "разумного" ввода.</p>
-    <table border="0" width="100%">
+    <p>Here A is the initial segment, B is the segment formed by the smart mode.</p>
+    <p><img src="mouseBMiddle.png" width="32" height="48"> Middle mouse button
+      or "space" - confirmation of "smart" input.</p>
+    <table width="100%" border="0">
       <tbody>
         <tr>
-          <td width="50%"><a href="PropLine.htm">Свойства линии</a></td>
-          <td width="50%"><a href="DLine.htm">Линия</a></td>
+          <td width="50%"><a href="PropLine.htm">Line properties</a></td>
+          <td width="50%"><a href="DLine.htm">Line</a></td>
         </tr>
       </tbody>
     </table>
