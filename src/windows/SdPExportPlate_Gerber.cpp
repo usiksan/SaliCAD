@@ -47,6 +47,7 @@ QString gerberMM( int x ) {
 //              Aperture section
 
 QString gerberApertureCircle( int r ) {
+  if( r == 0 ) r = 1;
   return QString("C,") + gerberMM(r*2);
   }
 
@@ -226,7 +227,7 @@ void SdGerberContext::arc(SdPoint center, SdPoint start, SdPoint stop)
   mStream << "G75*\n";
   //Move to start point
   if( mPos != start ) mStream << "G01X" << start.x() << "Y" << start.y() << "D02*\n";
-  mStream << "G02X" << stop.x() << "Y" << stop.y() << "I" << (center.x() - start.x()) << "J" << (center.y() - start.y()) << "D01*\n";
+  mStream << "G02X" << stop.x() << "Y" << stop.y() << "I" << (center.x() - start.x()) << "J" << (center.y() - start.y()) << "D01*\nG01*";
   mPos = stop;
   }
 
@@ -257,7 +258,7 @@ void SdGerberContext::regionFill(const SdPointList &points, const SdPropLine &pr
   {
   if( (mSelector || prop.mLayer.layer(mPairLayer)->isVisible()) && (points.count() > 2) ) {
     //Define posititve Gerber layer [Определить позитивный слой]
-    mStream << "G02*\n%LPD*%\n";
+    mStream << "%LPD*%\n";
     mCurrentAperture = -1;
     mPos.set(2000000000,2000000000);
 
@@ -274,7 +275,7 @@ void SdGerberContext::polygon(const SdPointList &points, const SdPolyWindowList 
   Q_UNUSED(layer);
   if( points.count() > 2 ) {
     //Define posititve Gerber layer [Определить позитивный слой]
-    mStream << "G02*\n%LPD*%\n";
+    mStream << "%LPD*%\n";
     mCurrentAperture = -1;
     mPos.set(2000000000,2000000000);
 
@@ -283,7 +284,7 @@ void SdGerberContext::polygon(const SdPointList &points, const SdPolyWindowList 
 
     //Polygon windows (only if there)
     if( windows.count() ) {
-      mStream << "G02*\n%LPC*%\n";
+      mStream << "%LPC*%\n";
       for( const SdPolyWindow &win : windows )
         if( win.getRadius() >= 0 ) {
           //Circle window. Use flash
@@ -306,8 +307,7 @@ void SdGerberContext::selectAperture(const QString apertureName)
   if( ap != mCurrentAperture ) {
     //Selected new aperture
     mCurrentAperture = ap;
-    mStream << "G02*\n"
-            << "G54D" << ap << "*\n";
+    mStream << "G54D" << ap << "*\n";
     }
   }
 
@@ -613,7 +613,7 @@ void SdPExportPlate_Gerber::generation(const QString fileName)
       });
 
     //Positiv layer [Определить позитивный слой]
-    os << "G02*\n%LPD*%\n";
+    os << "%LPD*%\n";
 
     //At now, draw all except polygons [Теперь рисуем все кроме полигонов]
     mPlate->forEach( dctAll & ~dctTracePolygon, [&gc] (SdObject *obj) -> bool {
