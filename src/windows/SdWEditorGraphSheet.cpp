@@ -16,6 +16,9 @@ Description
 #include "SdWCommand.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
+#include "SdPMasterList.h"
+#include "SdPExport_Bom.h"
+#include "SdPExport_Dxf.h"
 #include "modes/SdModeCSymImp.h"
 #include "modes/SdModeCNetWire.h"
 #include "modes/SdModeCLinearArea.h"
@@ -203,6 +206,23 @@ void SdWEditorGraphSheet::cmModeReferenceMove()
 void SdWEditorGraphSheet::cmModeValueMove()
   {
   modeSet( new SdModeCSheetValueMove( this, mSheet ) );
+  }
+
+
+
+
+
+//Export command
+void SdWEditorGraphSheet::cmFileExport()
+  {
+  //Wizard
+  QWizard wizard(this);
+  //Fill it with pages
+  SdPMasterList *master = new SdPMasterList( tr("Export sheet"), tr("Select export master"), &wizard );
+  wizard.setPage( 0,   master );
+  wizard.setPage( 1,   new SdPExport_Bom( mSheet, 1, master, &wizard) );
+  wizard.setPage( 2,   new SdPExport_Dxf( mSheet, 2, master, &wizard) );
+  wizard.exec();
   }
 
 

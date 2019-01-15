@@ -38,6 +38,9 @@ class SdWEditorGraphView : public SdWEditorGraph
     virtual SdProjectItem *getProjectItem() const override;
     virtual void           onActivateEditor() override;
 
+    //Export command
+    virtual void           cmFileExport() override;
+
     // QWidget interface
   protected:
     virtual void paintEvent(QPaintEvent *event) override;

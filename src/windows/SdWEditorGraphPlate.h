@@ -71,6 +71,7 @@ class SdWEditorGraphPlate : public SdWEditorGraph
     //Move component value
     virtual void           cmModeValueMove() override;
 
+    //Export command
     virtual void           cmFileExport() override;
 
     //True if traced window

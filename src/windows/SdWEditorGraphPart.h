@@ -36,6 +36,9 @@ class SdWEditorGraphPart : public SdWEditorGraph
     virtual void           cmModeReference() override;
     virtual void           cmModeOrigin() override;
     virtual void           cmModeValue() override;
+
+    //Export command
+    virtual void           cmFileExport() override;
   };
 
 #endif // SDWEDITORGRAPHPART_H

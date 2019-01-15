@@ -16,6 +16,8 @@ Description
 #include "SdWCommand.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
+#include "SdPMasterList.h"
+#include "SdPExport_Dxf.h"
 #include "modes/SdModeCSymPin.h"
 #include "modes/SdModeCOrigin.h"
 #include "modes/SdModeCIdent.h"
@@ -85,3 +87,20 @@ void SdWEditorGraphSymbol::cmModeValue()
   {
   modeSet( new SdModeCValue( this, mSymbol, &(sdGlobalProp->mSymValueProp), MD_SYM_VALUE )  );
   }
+
+
+
+
+
+//Export command
+void SdWEditorGraphSymbol::cmFileExport()
+  {
+  //Wizard
+  QWizard wizard(this);
+  //Fill it with pages
+  SdPMasterList *master = new SdPMasterList( tr("Export symbol"), tr("Select export master"), &wizard );
+  wizard.setPage( 0,   master );
+  wizard.setPage( 1,   new SdPExport_Dxf( mSymbol, 1, master, &wizard) );
+  wizard.exec();
+  }
+

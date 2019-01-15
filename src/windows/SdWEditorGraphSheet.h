@@ -70,6 +70,10 @@ class SdWEditorGraphSheet : public SdWEditorGraph
     //Move component value
     virtual void           cmModeValueMove() override;
 
+
+    //Export command
+    virtual void           cmFileExport() override;
+
   };
 
 #endif // SDWEDITORGRAPHSHEET_H

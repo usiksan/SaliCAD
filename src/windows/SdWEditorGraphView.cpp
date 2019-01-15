@@ -15,6 +15,8 @@ Description
 #include "SdWCommand.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdObjectFactory.h"
+#include "SdPMasterList.h"
+#include "SdPExport_Dxf.h"
 
 #include <QDebug>
 
@@ -112,6 +114,24 @@ void SdWEditorGraphView::onActivateEditor()
 
   //Activate tool bar
   SdWCommand::barView->show();
+  }
+
+
+
+
+
+//Export command
+void SdWEditorGraphView::cmFileExport()
+  {
+  if( mItem ) {
+    //Wizard
+    QWizard wizard(this);
+    //Fill it with pages
+    SdPMasterList *master = new SdPMasterList( tr("Export object"), tr("Select export master"), &wizard );
+    wizard.setPage( 0,   master );
+    wizard.setPage( 1,   new SdPExport_Dxf( mItem, 1, master, &wizard) );
+    wizard.exec();
+    }
   }
 
 

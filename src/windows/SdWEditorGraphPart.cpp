@@ -15,6 +15,8 @@ Description
 #include "SdWCommand.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
+#include "SdPMasterList.h"
+#include "SdPExport_Dxf.h"
 #include "modes/SdModeCOriginPart.h"
 #include "modes/SdModeCPartPin.h"
 #include "modes/SdModeCIdent.h"
@@ -102,6 +104,21 @@ void SdWEditorGraphPart::cmModeOrigin()
 void SdWEditorGraphPart::cmModeValue()
   {
   modeSet( new SdModeCValue( this, mPart, &(sdGlobalProp->mPartValueProp), MD_PART_VALUE )  );
+  }
+
+
+
+
+//Export command
+void SdWEditorGraphPart::cmFileExport()
+  {
+  //Wizard
+  QWizard wizard(this);
+  //Fill it with pages
+  SdPMasterList *master = new SdPMasterList( tr("Export part"), tr("Select export master"), &wizard );
+  wizard.setPage( 0,   master );
+  wizard.setPage( 1,   new SdPExport_Dxf( mPart, 1, master, &wizard) );
+  wizard.exec();
   }
 
 
