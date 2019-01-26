@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -11,6 +11,7 @@ Web
 Description
   Dialog for display guider playback
 */
+#include "SdConfig.h"
 #include "SdDGuiderPlayer.h"
 #include "SdWHelp.h"
 #include "library/SvDir.h"
@@ -30,6 +31,10 @@ SdDGuiderPlayer::SdDGuiderPlayer(const QString fname, QWidget *parent) :
   QDialog( parent ),
   mCurrentTime(0)
   {
+  //Setup titer and speach language
+  QSettings s;
+  mLanguage = s.value( SDK_LANGUAGE, QVariant(QString("en")) ).toString();
+
   mFile.load( guiderPath() + fname );
   mFile.play(0);
   mCurrentTime = 0;

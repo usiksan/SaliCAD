@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -25,6 +25,16 @@ class SdPExport_Dxf : public QWizardPage
     SdProjectItem *mProjectItem; //Item from which will be made DXF file
   public:
     SdPExport_Dxf( SdProjectItem *item, int step, SdPMasterList *list, QWidget *parent = nullptr );
+
+    // QWizardPage interface
+  public:
+    virtual bool validatePage() override;
+    virtual int  nextId() const override { return -1; }
+
+  public slots:
+    //When press button "layers" we show layers dialog to on-off desired layers
+    void onLayers();
+
   };
 
 #endif // SDPEXPORT_DXF_H
