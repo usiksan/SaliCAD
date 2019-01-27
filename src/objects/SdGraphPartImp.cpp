@@ -478,6 +478,26 @@ QString SdGraphPartImp::getBomItemLine() const
 
 
 
+//Get param table as object
+QJsonObject SdGraphPartImp::paramTableObject() const
+  {
+  //Prepare object for result
+  QJsonObject obj;
+
+  //Fill object with all parameters
+  for( auto iter = mParamTable.cbegin(); iter != mParamTable.cend(); iter++ ) {
+    obj.insert( iter.key(), iter.value() );
+    }
+
+  //Insert special parameters
+  obj.insert( QString("bom"), getBomItemLine() );
+  obj.insert( QString("logNumber"), QString::number(mLogNumber) );
+  return obj;
+  }
+
+
+
+
 
 //Draw part without pads
 void SdGraphPartImp::drawWithoutPads(SdContext *cdx)

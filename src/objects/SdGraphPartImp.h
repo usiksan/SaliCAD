@@ -179,6 +179,9 @@ class SdGraphPartImp : public SdGraphTraced
     //Get BOM item line
     QString         getBomItemLine() const;
 
+    //Get param table as object
+    QJsonObject     paramTableObject() const;
+
     //Special drawing
     //Draw part without pads
     void            drawWithoutPads( SdContext *cdx );
