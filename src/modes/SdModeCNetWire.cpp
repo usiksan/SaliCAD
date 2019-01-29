@@ -457,6 +457,10 @@ void SdModeCNetWire::calcSmartPoint()
     mSmartInter0 = get90( mSmartSourStr, mSmartDestStr );
     mSmartInter1 = mSmartInter0;
 
+    //Remove fail stringer
+    if( mSmartInter0 == mSmartDest )
+      mSmartDestStr = mSmartDest;
+
     }
   }
 
