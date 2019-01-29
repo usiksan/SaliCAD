@@ -466,6 +466,11 @@ void SdGraphNetWire::selectByRect(const SdRect &r, SdSelector *selector)
         else mDirX = vdNone;
         selector->insert( this );
         }
+      else if( r.isAccross(mA,mB) ) {
+        //Rectangle over wire segment at middle. We select all segment
+        selector->insert( this );
+        mFixA = mFixB = false;
+        }
       }
     else {
       //Already selected

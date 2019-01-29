@@ -1,0 +1,140 @@
+{
+    "ChildList": [
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "B": "1",
+                        "C": "3",
+                        "E": "2"
+                    },
+                    "SymbolId": "Symbol\rBipolar transistor PNP\rsalicad",
+                    "SymbolTitle": "Bipolar transistor PNP (salicad)",
+                    "id": "1a95c60",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rsot23-3\rsalicad",
+                    "PartTitle": "sot23-3 (salicad)",
+                    "id": "1827c00",
+                    "type": "PartVariant"
+                }
+            ],
+            "Created": 33988054,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "Ic": "100mA",
+                "Pd": "225mW",
+                "Vcbo": "50V",
+                "Vceo": "45V",
+                "article": "",
+                "bom": "<article>",
+                "device mark": "",
+                "hFE": "",
+                "manufacturer": "ON Semiconductor",
+                "prefix": "VT",
+                "title": "bipolar pnp transistor bc857",
+                "value": ""
+            },
+            "Title": "bipolar pnp transistor bc857",
+            "VariantFC": 4,
+            "VariantTab": [
+                "value",
+                "hFE",
+                "article",
+                "device mark",
+                "BC857A",
+                "180",
+                "BC857ALT1G",
+                "3E",
+                "BC857B",
+                "290",
+                "BC857BLT1G",
+                "3F",
+                "BC857C",
+                "520",
+                "BC857CLT1G",
+                "3G"
+            ],
+            "id": "1ae2920",
+            "type": "Comp"
+        },
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "Default": false,
+                    "PartId": "Part\rsot23-3\rsalicad",
+                    "PartTitle": "sot23-3 (salicad)",
+                    "id": "1909230",
+                    "type": "PartVariant"
+                },
+                {
+                    "PinAssotiation": {
+                        "B": "1",
+                        "C": "3",
+                        "E": "2"
+                    },
+                    "SymbolId": "Symbol\rBipolar transistor NPN\rsalicad",
+                    "SymbolTitle": "Bipolar transistor NPN (salicad)",
+                    "id": "18739c0",
+                    "type": "Section"
+                }
+            ],
+            "Created": 33988155,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "Ic": "100mA",
+                "Pd": "225mW",
+                "Vcbo": "50V",
+                "Vceo": "45V",
+                "article": "",
+                "bom": "<article>",
+                "device mark": "",
+                "hFE": "",
+                "manufacturer": "ON Semiconductor",
+                "prefix": "VT",
+                "title": "bipolar npn transistor bc847",
+                "value": ""
+            },
+            "Title": "bipolar npn transistor bc847",
+            "VariantFC": 4,
+            "VariantTab": [
+                "value",
+                "hFE",
+                "article",
+                "device mark",
+                "BC847A",
+                "180",
+                "BC847ALT1G",
+                "1E",
+                "BC847B",
+                "290",
+                "BC847BLT1G",
+                "1F",
+                "BC847C",
+                "520",
+                "BC847CLT1G",
+                "1G"
+            ],
+            "id": "1930920",
+            "type": "Comp"
+        }
+    ],
+    "Parametrs": {
+    },
+    "id": "1590db0",
+    "type": "Project"
+}

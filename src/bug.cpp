@@ -1,5 +1,5 @@
 ﻿
-//B064 bugs
+//B066 bugs
 //F001 fatal
 //C001 critical
 //D077 do
@@ -25,8 +25,12 @@
 
 //TODO D068 Append query to upgrade when newer objects received from remote and possibility to off than query
 
+//TODO B065 When upgrading component don't changed ident (and perhaps - value)
+
 //===================================================================================
 //Fixed:
+
+//B066 When selected by rect and rect over wire segment on middle, then no selection
 
 //D076 Append information with unconnected nets and rule conflict count
 

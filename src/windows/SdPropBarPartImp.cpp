@@ -14,6 +14,7 @@ Description
 #include "SdStringHistory.h"
 #include "objects/SdPropAngle.h"
 #include "objects/SdPropPartImp.h"
+#include "SdWCommand.h"
 #include <QLabel>
 #include <QLineEdit>
 #include <QComboBox>
@@ -24,6 +25,8 @@ static SdStringHistory prevAngle;
 SdPropBarPartImp::SdPropBarPartImp(const QString title) :
   QToolBar(title)
   {
+  insertAction( nullptr, SdWCommand::cmViewLayers );
+
   addWidget( new QLabel(tr("Direction:")) );
   mDirection = new QComboBox();
   mDirection->setMinimumWidth(150);

@@ -1,0 +1,54 @@
+{
+    "ChildList": [
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "D": "3",
+                        "G": "1",
+                        "S": "2"
+                    },
+                    "SymbolId": "Symbol\rn-channel MOSFET enhancement\rsalicad",
+                    "SymbolTitle": "n-channel MOSFET enhancement (salicad)",
+                    "id": "1c52a90",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rsot23-3\rsalicad",
+                    "PartTitle": "sot23-3 (salicad)",
+                    "id": "1b787d0",
+                    "type": "PartVariant"
+                }
+            ],
+            "Created": 33989566,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "Id": "2.1A",
+                "Pd": "0.8W",
+                "Rds on": "116mOm",
+                "Vdss": "60V",
+                "Vgs": "+-16V",
+                "article": "IRLML0060TRPbF ",
+                "bom": "<article>",
+                "manufacturer": "Infineon",
+                "prefix": "VT",
+                "title": "N-Channel HEXFET Power MOSFET sot23",
+                "value": "IRLML0060"
+            },
+            "Title": "N-Channel HEXFET Power MOSFET IRLML0060 sot23",
+            "id": "1d14900",
+            "type": "Comp"
+        }
+    ],
+    "Parametrs": {
+    },
+    "id": "1d28fa0",
+    "type": "Project"
+}

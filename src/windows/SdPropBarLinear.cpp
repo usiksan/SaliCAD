@@ -14,6 +14,7 @@ Description
 #include "SdPropBarLinear.h"
 #include "objects/SdUtil.h"
 #include "SdStringHistory.h"
+#include "SdWCommand.h"
 #include <QList>
 #include <QLineEdit>
 #include <QDoubleValidator>
