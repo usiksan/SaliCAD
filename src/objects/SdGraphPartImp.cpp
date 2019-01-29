@@ -214,7 +214,7 @@ SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *par
   mProp = *prp;
   if( part ) {
     QTransform t( matrix() );
-    mOverRect.set( t.mapRect(part->getOverRect(dctAll & (~(dctIdent | dctValue)))) );//Over rect
+    mOverRect.set( t.mapRect(part->getOverRect(dctAll & (~(dctIdent | dctValue | dctPartPin)))) );//Over rect
     mIdent.mProp = part->identGet()->getPropText();   //Part identificator text properties
     mIdent.mOrigin = part->identGet()->getOrigin();   //Part identificator position in part context
     mValue.mProp = part->valueGet()->getPropText();   //Part value text properties
@@ -1019,7 +1019,7 @@ void SdGraphPartImp::updatePinsPositions()
     pin.mStratum  = pin.mPin->getPinStratum( mProp.mSide.isBottom() );
     }
   //Calculate new over rect
-  mOverRect.set( t.mapRect( mPart->getOverRect(dctAll & (~(dctIdent | dctValue))) ) );
+  mOverRect.set( t.mapRect( mPart->getOverRect(dctAll & (~(dctIdent | dctValue | dctPartPin))) ) );
   }
 
 
