@@ -141,6 +141,7 @@ History
   23.12.2018 v0.59 Append road move mode.
                    Changes to road enter mode.
                    Fix check tracing rules
+  03.02.2019 v0.60 Append BOM report generator
 */
 
 #ifndef SDCONFIG
@@ -152,7 +153,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             59
+#define SD_VERSION_MINOR             60
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -267,6 +268,7 @@ History
 #define stdParamCompCount      QStringLiteral("compCount")
 #define stdParamTotalPageCount QStringLiteral("totalPageCount")
 #define stdParamPageIndex      QStringLiteral("pageIndex")
+#define stdParamDeviceMark     QStringLiteral("device mark")
 //Capacitor specific
 #define stdParamDielectric     QStringLiteral("dielectric")
 #define stdParamVoltage        QStringLiteral("voltage")
@@ -274,10 +276,26 @@ History
 #define stdParamForvardVoltage QStringLiteral("forward voltage")
 #define stdParamCurent         QStringLiteral("current")
 #define stdParamReverceVoltage QStringLiteral("reverce voltage")
+//LED specific
+#define stdParamAngle          QStringLiteral("angle")
+#define stdParamBrightness     QStringLiteral("brightness")
+#define stdParamColor          QStringLiteral("color")
+#define stdParamWavelength     QStringLiteral("wavelength")
 //Inductor specific
 #define stdParamSatCurrent     QStringLiteral("saturation current")
 #define stdParamResistance     QStringLiteral("resistance")
 #define stdParamSRF            QStringLiteral("SRF")
+//MOSFET specific
+#define stdParamId             QStringLiteral("Id")
+#define stdParamPd             QStringLiteral("Pd")
+#define stdParamRdsOn          QStringLiteral("Rds on")
+#define stdParamVdss           QStringLiteral("Vdss")
+#define stdParamVgs            QStringLiteral("Vgs")
+//Transistor specific
+#define stdParamIc             QStringLiteral("Ic")
+#define stdParamVcbo           QStringLiteral("Vcbo")
+#define stdParamVceo           QStringLiteral("Vceo")
+#define stdParamHFE            QStringLiteral("hFE")
 
 
 #endif // SDCONFIG

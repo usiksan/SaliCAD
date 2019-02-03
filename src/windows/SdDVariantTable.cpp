@@ -12,6 +12,7 @@ Description
   View and edit variant param table
 */
 #include "SdDVariantTable.h"
+#include "SdDParamEditor.h"
 #include "ui_SdDVariantTable.h"
 #include "SdDHelp.h"
 
@@ -231,6 +232,7 @@ void SdDVariantTable::buildDefTable()
     ui->mDefFields->setItem( row, 0, item );
     ui->mDefFields->setItem( row, 1, item = new QTableWidgetItem( iter.key() ) );
     item->setFlags( Qt::ItemIsEnabled );
+    item->setToolTip( SdDParamEditor::defParamDescription(iter.key()) );
     ui->mDefFields->setItem( row, 2, item = new QTableWidgetItem( iter.value() ) );
     item->setFlags( Qt::ItemIsEnabled );
     row++;
@@ -252,6 +254,7 @@ void SdDVariantTable::buildVariantTable()
     for( int i = 0; i < mVariantFieldCount; i++ ) {
       ui->mVariantTable->setColumnWidth( i, 100 );
       ui->mVariantTable->setHorizontalHeaderItem(i, new QTableWidgetItem( mVariantTable.at(i) ) );
+      ui->mVariantTable->horizontalHeaderItem( i )->setToolTip( SdDParamEditor::defParamDescription(mVariantTable.at(i)) );
       }
 
 
@@ -280,6 +283,7 @@ void SdDVariantTable::variantFieldAppendInt(const QString name)
   ui->mVariantTable->insertColumn( pos );
   ui->mVariantTable->setColumnWidth( pos, 100 );
   ui->mVariantTable->setHorizontalHeaderItem( pos, new QTableWidgetItem(name) );
+  ui->mVariantTable->horizontalHeaderItem( pos )->setToolTip( SdDParamEditor::defParamDescription(name) );
   int rows = ui->mVariantTable->rowCount();
   for( int i = 0; i < rows; i++ )
     ui->mVariantTable->setItem( i, pos, new QTableWidgetItem() );

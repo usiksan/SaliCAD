@@ -119,7 +119,42 @@ QStringList SdDParamEditor::defParamList()
     stdParamManufacturer,
     stdParamTolerance,
     stdParamDatasheet,
-    stdParamWww };
+    stdParamWww,
+    stdParamLogNumber,
+    stdParamItemId,
+    stdParamItemIdList,
+    stdParamCompCount,
+    stdParamTotalPageCount,
+    stdParamPageIndex,
+    stdParamDeviceMark,
+    //Capacitor specific
+    stdParamDielectric,
+    stdParamVoltage,
+    //Diod specific
+    stdParamForvardVoltage,
+    stdParamCurent,
+    stdParamReverceVoltage,
+    //LED specific
+    stdParamAngle,
+    stdParamBrightness,
+    stdParamColor,
+    stdParamWavelength,
+    //Inductor specific
+    stdParamSatCurrent,
+    stdParamResistance,
+    stdParamSRF,
+    //MOSFET specific
+    stdParamId,
+    stdParamPd,
+    stdParamRdsOn,
+    stdParamVdss,
+    stdParamVgs,
+    //Transistor specific
+    stdParamIc,
+    stdParamVcbo,
+    stdParamVceo,
+    stdParamHFE };
+
   return list;
   }
 
@@ -146,6 +181,34 @@ QString SdDParamEditor::defParamDescription(QString paramName)
     map.insert( stdParamTolerance, tr("Tolerance of value") );
     map.insert( stdParamDatasheet, tr("Local path to pdf file with datasheet") );
     map.insert( stdParamWww, tr("www page address") );
+    map.insert( stdParamDeviceMark, tr("Device marking code") );
+    //Capacitor specific
+    map.insert( stdParamDielectric, tr("Capacitor dielectric type") );
+    map.insert( stdParamVoltage, tr("Capacitor working voltage") );
+    //Diod specific
+    map.insert( stdParamForvardVoltage, tr("Diod forvard voltage") );
+    map.insert( stdParamCurent, tr("Forvard continuous current") );
+    map.insert( stdParamReverceVoltage, tr("Diod reverce voltage") );
+    //LED specific
+    map.insert( stdParamAngle, tr("LED angle") );
+    map.insert( stdParamBrightness, tr("LED brightness") );
+    map.insert( stdParamColor, tr("LED color") );
+    map.insert( stdParamWavelength, tr("LED wavelength") );
+    //Inductor specific
+    map.insert( stdParamSatCurrent, tr("Inductor saturated current") );
+    map.insert( stdParamResistance, tr("Inductor resistance") );
+    map.insert( stdParamSRF, tr("Inductor self resonant frequency") );
+    //MOSFET specific
+    map.insert( stdParamId, tr("MOSFET dest current") );
+    map.insert( stdParamPd, tr("MOSFET dest power or transistor power") );
+    map.insert( stdParamRdsOn, tr("MOSFET source-dest resistance when ON state") );
+    map.insert( stdParamVdss, tr("MOSFET source-dest voltage when OFF") );
+    map.insert( stdParamVgs, tr("MOSFET gate-source voltage") );
+    //Transistor specific
+    map.insert( stdParamIc, tr("Transistor collector current") );
+    map.insert( stdParamVcbo, tr("Transistor maximum Voltage which it can withstand on its collector measured relative to its base with the emitter open circuit") );
+    map.insert( stdParamVceo, tr("Transistor maximum voltage which it can withstand on its collector measured relative to its emitter with the base open circuit") );
+    map.insert( stdParamHFE, tr("Transistor current-gain koef") );
     }
   return map.value( paramName );
   }
