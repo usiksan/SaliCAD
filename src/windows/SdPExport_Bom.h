@@ -44,6 +44,10 @@ class SdPExport_Bom : public QWizardPage
     QCheckBox     *mGenRegistryGroup; //If checked then components in registry grouped if consistently the same
     QListWidget   *mRegistryPattern;  //List of patterns for registry
     QPushButton   *mRegistry;         //Button to generate regirstry
+
+    int            mTotalPageCount;   //Total page count
+    int            mPageIndex;        //Current page index when generation
+    int            mLineIndex;        //Current line index
   public:
     SdPExport_Bom( SdProjectItem *item, int step, SdPMasterList *list, QWidget *parent = nullptr);
 
@@ -61,6 +65,12 @@ class SdPExport_Bom : public QWizardPage
 
   private:
     QList<QJsonObject> accumulate();
+
+    //On obj fields we build itemId aka Q2 where Q - prefix and 2 - is logNumber
+    QString            buildItemId( const QJsonObject &obj ) const;
+
+    //Retrive global param
+    QString            globalParam( const QString paramName ) const;
   };
 
 #endif // SDPEXPORT_BOM_H

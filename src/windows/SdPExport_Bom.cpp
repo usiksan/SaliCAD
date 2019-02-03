@@ -31,6 +31,8 @@ Description
 #include "objects/SdGraphPartImp.h"
 #include "objects/SdGraphSymImp.h"
 #include "objects/SdProject.h"
+#include "library/SvDir.h"
+#include "objects/SdUtil.h"
 
 #include <QPushButton>
 #include <QFile>
@@ -47,6 +49,11 @@ Description
 #include <QHeaderView>
 #include <functional>
 #include <algorithm>
+
+
+//======================================================================================================================
+// BomArticle - one article from source pattern
+// BomArticleMap - all articles pattern from source pattern
 
 //marker lenght is 22 chars
 #define BA_PROLOG       "<!--$$$ba_fldoc_prolog"
@@ -75,7 +82,11 @@ class BomArticle {
     //Build article
     QString build( std::function<QString( const QString &field)> fun1 );
 
-    static BomArticleMap parse( QString &src );
+    //Parse source string
+    static BomArticleMap parse(QString src );
+
+    //Parse pattern file
+    static BomArticleMap parsePatternFile( const QString fileName );
   private:
     void    setPattern( const QString pattern );
   };
@@ -95,7 +106,7 @@ QString BomArticle::build(std::function<QString (const QString &)> fun1)
 
 
 
-BomArticleMap BomArticle::parse(QString &src)
+BomArticleMap BomArticle::parse(QString src)
   {
   BomArticleMap map;
   BomArticle *article = new BomArticle(1);
@@ -119,6 +130,22 @@ BomArticleMap BomArticle::parse(QString &src)
     }
 
   return map;
+  }
+
+
+
+
+
+
+//Parse pattern file
+BomArticleMap BomArticle::parsePatternFile(const QString fileName)
+  {
+  QFile file(fileName);
+  if( file.open(QIODevice::ReadOnly) )
+    return parse( QString::fromUtf8( file.readAll() ) );
+
+  //When error return empty map
+  return BomArticleMap();
   }
 
 
@@ -159,6 +186,8 @@ void BomArticle::setPattern(const QString pattern)
 
 
 
+//======================================================================================================================
+// export bom dialog
 
 SdPExport_Bom::SdPExport_Bom(SdProjectItem *item, int step, SdPMasterList *list, QWidget *parent) :
   QWizardPage( parent ),
@@ -190,7 +219,7 @@ SdPExport_Bom::SdPExport_Bom(SdProjectItem *item, int step, SdPMasterList *list,
     left->addWidget( new QLabel(tr("Bom/specification patterns:")) );
     left->addWidget( mBomPatternList = new QListWidget() );
     left->addWidget( mBom = new QPushButton( tr("Generate") ) );
-    connect( mBom, &QPushButton::click, this, &SdPExport_Bom::genBom );
+    connect( mBom, &QPushButton::clicked, this, &SdPExport_Bom::genBom );
     //At start we don't generate BOM, then we disable list and button
     mBomPatternList->setEnabled(false);
     mBom->setEnabled(false);
@@ -215,9 +244,10 @@ SdPExport_Bom::SdPExport_Bom(SdProjectItem *item, int step, SdPMasterList *list,
     right->addWidget( new QLabel(tr("Registry patterns:")) );
     right->addWidget( mRegistryPattern = new QListWidget() );
     right->addWidget( mRegistry = new QPushButton( tr("Generate") ) );
-    connect( mRegistry, &QPushButton::click, this, &SdPExport_Bom::genRegistry );
+    connect( mRegistry, &QPushButton::clicked, this, &SdPExport_Bom::genRegistry );
     //At start we don't generate registry, then we disable list and button
     mGenRegistryGroup->setEnabled(false);
+    mGenRegistryGroup->setVisible(false);
     mRegistryPattern->setEnabled(false);
     mRegistry->setEnabled(false);
     //Disable-enable list and button on mGenRegistry checkBox toggled
@@ -246,20 +276,192 @@ SdPExport_Bom::SdPExport_Bom(SdProjectItem *item, int step, SdPMasterList *list,
 
 
 
+//Form itemId list
+static QString buildItemIdList( QList<int> &logNumberList, const QString prefix )
+  {
+  if( logNumberList.count() == 1 )
+    return QString("%1%2").arg( prefix ).arg( logNumberList.at(0) );
+  else if( logNumberList.count() == 0 )
+    return QString();
+
+  //Sort logNumberList with ascending order
+  std::stable_sort( logNumberList.begin(), logNumberList.end(), [] ( const int val1, const int val2 ) -> bool { return val1 < val2; } );
+  QString res;
+  int index = logNumberList.at(0);
+  res.append( prefix ).append( QString::number(index) );
+  int count = 1;
+  for( int i = 1; i < logNumberList.count(); i++ )
+    if( index + 1 == logNumberList.at(i) ) {
+      index++;
+      count++;
+      }
+    else {
+      if( count > 2 )
+        res.append( QChar('-') ).append( prefix ).append( QString::number(index) );
+      else if( count == 2 )
+        res.append( QChar(',') ).append( prefix ).append( QString::number(index) );
+      index = logNumberList.at(i);
+      res.append( QChar(',') ).append( prefix ).append( QString::number(index) );
+      }
+  if( count > 2 )
+    res.append( QChar('-') ).append( prefix ).append( QString::number(index) );
+  else if( count == 2 )
+    res.append( QChar(',') ).append( prefix ).append( QString::number(index) );
+  return res;
+  }
+
+
+
 
 //Generate BOM
 void SdPExport_Bom::genBom()
   {
   //Check if pattern selected in pattern list
-  QListWidgetItem *item = mBomPatternList->currentItem();
-  if( item ) {
+  QListWidgetItem *pattern = mBomPatternList->currentItem();
+  if( pattern ) {
     //Accumulate list
     QList<QJsonObject> ar = accumulate();
+
     //Sort by bom
     std::stable_sort( ar.begin(), ar.end(), [] ( const QJsonObject &obj1, const QJsonObject &obj2 ) -> bool {
-      return obj1.value( QString("bom") ).toString() < obj2.value( QString("bom") ).toString();
+      return obj1.value( stdParamBom ).toString() < obj2.value( stdParamBom ).toString();
       });
 
+    //Form result bom
+    QList<QJsonObject> res;
+    QJsonObject bomItem;
+    QList<int> logNumberList;
+    for( const QJsonObject &comp : ar ) {
+      if( bomItem.isEmpty() ) {
+        //bomItem not assigned yet, assign comp to it
+        bomItem = comp;
+        logNumberList.clear();
+        logNumberList.append( comp.value( stdParamLogNumber ).toInt() );
+        }
+      else if( bomItem.value( stdParamBom ).toString() == comp.value( stdParamBom ).toString() ) {
+        //Next item in bomItem series
+        logNumberList.append( comp.value( stdParamLogNumber ).toInt() );
+        }
+      else {
+        //Complete with bomItem previous series, append it to result list
+        bomItem.insert( stdParamCompCount, QString::number( logNumberList.count() ) );
+        bomItem.insert( stdParamItemIdList, buildItemIdList( logNumberList, bomItem.value( stdParamPrefix ).toString() ) );
+        //
+        res.append( bomItem );
+
+        //Assign new comp
+        bomItem = comp;
+        logNumberList.clear();
+        logNumberList.append( comp.value( stdParamLogNumber ).toInt() );
+        }
+      }
+
+    //Append last item
+    bomItem.insert( stdParamCompCount, QString::number( logNumberList.count() ) );
+    bomItem.insert( stdParamItemIdList, buildItemIdList( logNumberList, bomItem.value( stdParamPrefix ).toString() ) );
+    res.append( bomItem );
+
+    SvDir patternDir( sdEnvir->mPatternPath );
+    BomArticleMap map = BomArticle::parsePatternFile( patternDir.slashedPath() + pattern->text() );
+
+    if( map.isEmpty() )
+      QMessageBox::warning( this, tr("Error!"), tr("Can't read pattern file.") );
+    else {
+      //Destignation text
+      QString dest;
+      //Total line count
+      int lineCount = res.count();
+      //Document prolog and epilog
+      BomArticle *prolog = map.value( QString(BA_PROLOG), nullptr );
+      BomArticle *epilog = map.value( QString(BA_EPILOG), nullptr );
+      //First page prolog and epilog
+      BomArticle *page1Prolog = map.value( QString(BA_PAGE1_PROLOG), nullptr );
+      BomArticle *page1Epilog = map.value( QString(BA_PAGE1_EPILOG), nullptr );
+      //First page table line
+      BomArticle *line1 = map.value( QString(BA_LINE1), nullptr );
+
+      //Next page prolog and epilog
+      BomArticle *pageProlog = map.value( QString(BA_PAGE_PROLOG), nullptr );
+      BomArticle *pageEpilog = map.value( QString(BA_PAGE_EPILOG), nullptr );
+      //Next page table line
+      BomArticle *line = map.value( QString(BA_LINE), nullptr );
+
+      //Calculate total page count
+      if( line1 && page1Prolog ) {
+        int page1Count = SdUtil::iLimit( (lineCount + line1->maxCount() - 1) / line1->maxCount(), 1, page1Prolog->maxCount() );
+        lineCount -= line1->maxCount() * page1Count;
+        mTotalPageCount = page1Count;
+        }
+      else mTotalPageCount = 0;
+
+      if( line && pageProlog && lineCount > 0 ) {
+        int pageCount = SdUtil::iLimit( (lineCount + line->maxCount() - 1) / line->maxCount(), 1, pageProlog->maxCount() );
+        mTotalPageCount += pageCount;
+        }
+
+      //Total line count
+      lineCount = res.count();
+      //Perform generation
+      if( prolog )
+        dest = prolog->build( [this] (const QString &key) ->QString { return globalParam(key); } );
+
+      mPageIndex = 1;
+      mLineIndex = 0;
+      if( page1Prolog && line1 ) {
+        for( int i = 0; i < page1Prolog->maxCount() && mLineIndex < lineCount; i++ ) {
+
+          dest.append( page1Prolog->build( [this] (const QString &key) -> QString { return globalParam(key); }));
+
+          for( int lineIndex = 0; lineIndex < line1->maxCount() && mLineIndex < lineCount; lineIndex++ ) {
+            dest.append( line1->build( [this,res] (const QString &key) -> QString {
+              return res.at(mLineIndex).value(key).toString();
+              }));
+            mLineIndex++;
+            }
+
+          if( page1Epilog )
+            dest.append( page1Epilog->build( [this] (const QString &key) -> QString { return globalParam(key); } ));
+
+          mPageIndex++;
+          }
+        }
+
+      if( pageProlog && line ) {
+        for( int i = 0; i < pageProlog->maxCount() && mLineIndex < lineCount; i++ ) {
+
+          dest.append( pageProlog->build( [this] (const QString &key) -> QString { return globalParam(key); }));
+
+          for( int lineIndex = 0; lineIndex < line->maxCount() && mLineIndex < lineCount; lineIndex++ ) {
+            dest.append( line->build( [this,res] (const QString &key) -> QString {
+              return res.at(mLineIndex).value(key).toString();
+              }));
+            mLineIndex++;
+            }
+
+          if( pageEpilog )
+            dest.append( pageEpilog->build( [this] (const QString &key) -> QString { return globalParam(key); } ));
+
+          mPageIndex++;
+          }
+
+        }
+
+      if( epilog )
+        dest.append( epilog->build( [this] (const QString &key) ->QString { return globalParam(key); } ) );
+
+      qDeleteAll( map );
+
+      //Generation completed
+      QString destFileName = QFileDialog::getSaveFileName( this, tr("Enter file name to save report") );
+      if( !destFileName.isEmpty() ) {
+        QFile destFile(destFileName);
+        if( destFile.open( QIODevice::WriteOnly ) ) {
+          destFile.write( dest.toUtf8() );
+          destFile.close();
+          QMessageBox::warning( this, tr("Info!"), tr("Report successfully created.") );
+          }
+        }
+      }
     }
   else QMessageBox::warning( this, tr("Warning!"), tr("You not selected pattern to generation. Select pattern in list and repeate.") );
   }
@@ -271,9 +473,169 @@ void SdPExport_Bom::genBom()
 void SdPExport_Bom::genRegistry()
   {
   //Check if pattern selected in pattern list
-  QListWidgetItem *item = mRegistryPattern->currentItem();
-  if( item ) {
+  QListWidgetItem *pattern = mRegistryPattern->currentItem();
+  if( pattern ) {
     //Accumulate list
+    QList<QJsonObject> ar = accumulate();
+
+    //Sort by prefix, logNumber
+    std::stable_sort( ar.begin(), ar.end(), [] ( const QJsonObject &obj1, const QJsonObject &obj2 ) -> bool {
+      if( obj1.value( stdParamPrefix ).toString() == obj2.value( stdParamPrefix ).toString() )
+        return obj1.value( stdParamLogNumber ).toInt() < obj2.value( stdParamLogNumber ).toInt();
+      return obj1.value( stdParamPrefix ).toString() < obj2.value( stdParamPrefix ).toString();
+      });
+
+
+    //Form result registry
+    QList<QJsonObject> res;
+    QJsonObject bomItem;
+    QJsonObject emptyItem;
+    QList<int> logNumberList;
+    QString currentPrefix;
+    for( const QJsonObject &comp : ar ) {
+      if( bomItem.isEmpty() ) {
+        //bomItem not assigned yet, assign comp to it
+        bomItem = comp;
+        logNumberList.clear();
+        logNumberList.append( comp.value( stdParamLogNumber ).toInt() );
+        }
+      else if( bomItem.value( stdParamBom ).toString() == comp.value( stdParamBom ).toString() && ((logNumberList.last() + 1) == comp.value( stdParamLogNumber ).toInt()) ) {
+        //Next item in bomItem series
+        logNumberList.append( comp.value( stdParamLogNumber ).toInt() );
+        }
+      else {
+        //Complete with bomItem previous series, append it to result list
+        bomItem.insert( stdParamCompCount, QString::number( logNumberList.count() ) );
+        bomItem.insert( stdParamItemIdList, buildItemIdList( logNumberList, bomItem.value( stdParamPrefix ).toString() ) );
+        //
+        if( currentPrefix != bomItem.value( stdParamPrefix ).toString() ) {
+          //Insert two empty strings
+          res.append( emptyItem );
+          res.append( emptyItem );
+          currentPrefix = bomItem.value( stdParamPrefix ).toString();
+          }
+        res.append( bomItem );
+
+        //Assign new comp
+        bomItem = comp;
+        logNumberList.clear();
+        logNumberList.append( comp.value( stdParamLogNumber ).toInt() );
+        }
+      }
+
+    //Append last item
+    bomItem.insert( stdParamCompCount, QString::number( logNumberList.count() ) );
+    bomItem.insert( stdParamItemIdList, buildItemIdList( logNumberList, bomItem.value( stdParamPrefix ).toString() ) );
+    if( currentPrefix != bomItem.value( stdParamPrefix ).toString() ) {
+      //Insert two empty strings
+      res.append( emptyItem );
+      res.append( emptyItem );
+      currentPrefix = bomItem.value( stdParamPrefix ).toString();
+      }
+    res.append( bomItem );
+
+
+    SvDir patternDir( sdEnvir->mPatternPath );
+    BomArticleMap map = BomArticle::parsePatternFile( patternDir.slashedPath() + pattern->text() );
+
+    if( map.isEmpty() )
+      QMessageBox::warning( this, tr("Error!"), tr("Can't read pattern file.") );
+    else {
+      //Destignation text
+      QString dest;
+      //Total line count
+      int lineCount = res.count();
+      //Document prolog and epilog
+      BomArticle *prolog = map.value( QString(BA_PROLOG), nullptr );
+      BomArticle *epilog = map.value( QString(BA_EPILOG), nullptr );
+      //First page prolog and epilog
+      BomArticle *page1Prolog = map.value( QString(BA_PAGE1_PROLOG), nullptr );
+      BomArticle *page1Epilog = map.value( QString(BA_PAGE1_EPILOG), nullptr );
+      //First page table line
+      BomArticle *line1 = map.value( QString(BA_LINE1), nullptr );
+
+      //Next page prolog and epilog
+      BomArticle *pageProlog = map.value( QString(BA_PAGE_PROLOG), nullptr );
+      BomArticle *pageEpilog = map.value( QString(BA_PAGE_EPILOG), nullptr );
+      //Next page table line
+      BomArticle *line = map.value( QString(BA_LINE), nullptr );
+
+      //Calculate total page count
+      if( line1 && page1Prolog ) {
+        int page1Count = SdUtil::iLimit( (lineCount + line1->maxCount() - 1) / line1->maxCount(), 1, page1Prolog->maxCount() );
+        lineCount -= line1->maxCount() * page1Count;
+        mTotalPageCount = page1Count;
+        }
+      else mTotalPageCount = 0;
+
+      if( line && pageProlog && lineCount > 0 ) {
+        int pageCount = SdUtil::iLimit( (lineCount + line->maxCount() - 1) / line->maxCount(), 1, pageProlog->maxCount() );
+        mTotalPageCount += pageCount;
+        }
+
+      //Total line count
+      lineCount = res.count();
+      //Perform generation
+      if( prolog )
+        dest = prolog->build( [this] (const QString &key) ->QString { return globalParam(key); } );
+
+      mPageIndex = 1;
+      mLineIndex = 0;
+      if( page1Prolog && line1 ) {
+        for( int i = 0; i < page1Prolog->maxCount() && mLineIndex < lineCount; i++ ) {
+
+          dest.append( page1Prolog->build( [this] (const QString &key) -> QString { return globalParam(key); }));
+
+          for( int lineIndex = 0; lineIndex < line1->maxCount() && mLineIndex < lineCount; lineIndex++ ) {
+            dest.append( line1->build( [this,res] (const QString &key) -> QString {
+              return res.at(mLineIndex).value(key).toString();
+              }));
+            mLineIndex++;
+            }
+
+          if( page1Epilog )
+            dest.append( page1Epilog->build( [this] (const QString &key) -> QString { return globalParam(key); } ));
+
+          mPageIndex++;
+          }
+        }
+
+      if( pageProlog && line ) {
+        for( int i = 0; i < pageProlog->maxCount() && mLineIndex < lineCount; i++ ) {
+
+          dest.append( pageProlog->build( [this] (const QString &key) -> QString { return globalParam(key); }));
+
+          for( int lineIndex = 0; lineIndex < line->maxCount() && mLineIndex < lineCount; lineIndex++ ) {
+            dest.append( line->build( [this,res] (const QString &key) -> QString {
+              return res.at(mLineIndex).value(key).toString();
+              }));
+            mLineIndex++;
+            }
+
+          if( pageEpilog )
+            dest.append( pageEpilog->build( [this] (const QString &key) -> QString { return globalParam(key); } ));
+
+          mPageIndex++;
+          }
+
+        }
+
+      if( epilog )
+        dest.append( epilog->build( [this] (const QString &key) ->QString { return globalParam(key); } ) );
+
+      qDeleteAll( map );
+
+      //Generation completed
+      QString destFileName = QFileDialog::getSaveFileName( this, tr("Enter file name to save report") );
+      if( !destFileName.isEmpty() ) {
+        QFile destFile(destFileName);
+        if( destFile.open( QIODevice::WriteOnly ) ) {
+          destFile.write( dest.toUtf8() );
+          destFile.close();
+          QMessageBox::warning( this, tr("Info!"), tr("Report successfully created.") );
+          }
+        }
+      }
     }
   else QMessageBox::warning( this, tr("Warning!"), tr("You not selected pattern to generation. Select pattern in list and repeate.") );
   }
@@ -324,5 +686,22 @@ QList<QJsonObject> SdPExport_Bom::accumulate()
     }
   return ar;
   }
+
+
+
+
+//Retrive global param
+QString SdPExport_Bom::globalParam(const QString paramName) const
+  {
+  if( paramName == stdParamTotalPageCount )
+    return QString::number(mTotalPageCount);
+  if( paramName == stdParamPageIndex )
+    return QString::number(mPageIndex);
+  SdProject *project = mProjectItem->getProject();
+  return project->paramGet( paramName );
+  }
+
+
+
 
 

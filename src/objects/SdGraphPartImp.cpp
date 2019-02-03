@@ -490,8 +490,9 @@ QJsonObject SdGraphPartImp::paramTableObject() const
     }
 
   //Insert special parameters
-  obj.insert( QString("bom"), getBomItemLine() );
-  obj.insert( QString("logNumber"), QString::number(mLogNumber) );
+  obj.insert( stdParamBom, getBomItemLine() );
+  obj.insert( stdParamLogNumber, mLogNumber );
+  obj.insert( stdParamItemId, ident() );
   return obj;
   }
 

@@ -248,19 +248,26 @@ History
 #define defNetNamePrefix "XN" //Default net name prefix
 
 //Standard param names
-#define stdParamBom           QStringLiteral("bom")
-#define stdParamArticle       QStringLiteral("article")
-#define stdParamTitle         QStringLiteral("title")
-#define stdParamValue         QStringLiteral("value")
-#define stdParamValueMin      QStringLiteral("valueMin")
-#define stdParamValueMax      QStringLiteral("valueMax")
-#define stdParamValueRow      QStringLiteral("valueRow")
-#define stdParamPrefix        QStringLiteral("prefix")
-#define stdParamValueSelector QStringLiteral("valueSelector")
-#define stdParamManufacturer  QStringLiteral("manufacturer")
-#define stdParamTolerance     QStringLiteral("tolerance")
-#define stdParamDatasheet     QStringLiteral("datasheet")
-#define stdParamWww           QStringLiteral("www")
+#define stdParamBom            QStringLiteral("bom")
+#define stdParamArticle        QStringLiteral("article")
+#define stdParamTitle          QStringLiteral("title")
+#define stdParamValue          QStringLiteral("value")
+#define stdParamValueMin       QStringLiteral("valueMin")
+#define stdParamValueMax       QStringLiteral("valueMax")
+#define stdParamValueRow       QStringLiteral("valueRow")
+#define stdParamPrefix         QStringLiteral("prefix")
+#define stdParamValueSelector  QStringLiteral("valueSelector")
+#define stdParamManufacturer   QStringLiteral("manufacturer")
+#define stdParamTolerance      QStringLiteral("tolerance")
+#define stdParamDatasheet      QStringLiteral("datasheet")
+#define stdParamWww            QStringLiteral("www")
+#define stdParamLogNumber      QStringLiteral("logNumber")
+#define stdParamItemId         QStringLiteral("itemId")
+#define stdParamItemIdList     QStringLiteral("itemIdList")
+#define stdParamCompCount      QStringLiteral("compCount")
+#define stdParamTotalPageCount QStringLiteral("totalPageCount")
+#define stdParamPageIndex      QStringLiteral("pageIndex")
+
 
 #endif // SDCONFIG
 
