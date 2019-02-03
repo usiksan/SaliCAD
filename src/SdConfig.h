@@ -267,6 +267,17 @@ History
 #define stdParamCompCount      QStringLiteral("compCount")
 #define stdParamTotalPageCount QStringLiteral("totalPageCount")
 #define stdParamPageIndex      QStringLiteral("pageIndex")
+//Capacitor specific
+#define stdParamDielectric     QStringLiteral("dielectric")
+#define stdParamVoltage        QStringLiteral("voltage")
+//Diod specific
+#define stdParamForvardVoltage QStringLiteral("forward voltage")
+#define stdParamCurent         QStringLiteral("current")
+#define stdParamReverceVoltage QStringLiteral("reverce voltage")
+//Inductor specific
+#define stdParamSatCurrent     QStringLiteral("saturation current")
+#define stdParamResistance     QStringLiteral("resistance")
+#define stdParamSRF            QStringLiteral("SRF")
 
 
 #endif // SDCONFIG

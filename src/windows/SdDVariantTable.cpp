@@ -33,6 +33,7 @@ SdDVariantTable::SdDVariantTable(SdPItemVariant *var, bool editEna, QWidget *par
   if( editEna ) {
     connect( ui->mVariantAppendField, &QPushButton::clicked, this, &SdDVariantTable::variantFieldAppend );
     connect( ui->mVariantFieldDelete, &QPushButton::clicked, this, &SdDVariantTable::variantFieldDelete );
+    connect( ui->mVariantFieldRename, &QPushButton::clicked, this, &SdDVariantTable::variantFieldRename );
     connect( ui->mRowInsert, &QPushButton::clicked, this, &SdDVariantTable::rowInsert );
     connect( ui->mRowDelete, &QPushButton::clicked, this, &SdDVariantTable::rowDelete );
     connect( ui->mRowDeleteAll, &QPushButton::clicked, this, &SdDVariantTable::rowDeleteAll );
@@ -85,6 +86,24 @@ void SdDVariantTable::variantFieldDelete()
     }
   else
     QMessageBox::warning( this, tr("Warning!"), tr("No selected field for deletion. Select partial field and try again.") );
+  }
+
+
+
+
+
+
+//Rename field on variant table
+void SdDVariantTable::variantFieldRename()
+  {
+  int column = ui->mVariantTable->currentColumn();
+  if( column >= 0 ) {
+    QString name = QInputDialog::getText( this, tr("Rename field"), tr("Enter new field name") );
+    if( !name.isEmpty() )
+      ui->mVariantTable->horizontalHeaderItem( column )->setText( name );
+    }
+  else
+    QMessageBox::warning( this, tr("Warning!"), tr("No selected field for renaming. Select partial field and try again.") );
   }
 
 

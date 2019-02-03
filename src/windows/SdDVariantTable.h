@@ -47,6 +47,9 @@ class SdDVariantTable : public QDialog
     //Delete field from variant table
     void variantFieldDelete();
 
+    //Rename field on variant table
+    void variantFieldRename();
+
     //Insert row to variant table
     void rowInsert();
 
