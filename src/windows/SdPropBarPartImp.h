@@ -33,8 +33,11 @@ class SdPropBarPartImp : public QToolBar
 
     //Bottom side
     QAction   *mBottom;
+
     //Top side
     QAction   *mTop;
+
+    QAction   *mAlignToGrid;
   public:
     SdPropBarPartImp( const QString title );
 

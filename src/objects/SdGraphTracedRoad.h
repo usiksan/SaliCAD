@@ -44,16 +44,16 @@ class SdGraphTracedRoad : public SdGraphTraced
     SdGraphTracedRoad( const SdPropRoad &prp, SdPoint a, SdPoint b );
 
     //Return current segment of road
-    const SdSegment    &segment() const { return mSegment; }
+    const SdSegment   &segment() const { return mSegment; }
 
     //Return road properties
-    const SdPropRoad   &propRoad() const { return mProp; }
+    const SdPropRoad  &propRoad() const { return mProp; }
 
     //Set new points of segment
-    void                setSegment( SdPoint a, SdPoint b, SdUndo *undo );
+    void               setSegment( SdPoint a, SdPoint b, SdUndo *undo );
 
     //Split road on two roads with p as division point
-    void                splitRoad( SdPoint p, SdUndo *undo );
+    void               splitRoad( SdPoint p, SdUndo *undo );
 
     //Union consequent segments
     void               utilize( SdUndo *undo );

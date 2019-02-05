@@ -30,7 +30,7 @@ SdPropBarPartPlace::SdPropBarPartPlace(const QString title) :
     emit propChanged();
     });
 
-  mNextNumberMode = addAction( QIcon(QStringLiteral(":/pic/placeNextId.png")), tr("Smart mode on middle button") );
+  mNextNumberMode = addAction( QIcon(QStringLiteral(":/pic/placeNextId.png")), tr("Selection consistently components on middle button") );
   mNextNumberMode->setCheckable(true);
   connect( mNextNumberMode, &QAction::triggered, [=](bool) {
     if( mNextNumberMode->isChecked() )
@@ -80,6 +80,8 @@ SdPropBarPartPlace::SdPropBarPartPlace(const QString title) :
 
 
 
+
+
 //Set new state of smart mode
 void SdPropBarPartPlace::setSmartMode(bool smartOrNextNumber)
   {
@@ -89,11 +91,15 @@ void SdPropBarPartPlace::setSmartMode(bool smartOrNextNumber)
 
 
 
+
+
 //Get current state of smart mode
 bool SdPropBarPartPlace::isSmartMode() const
   {
   return mSmartMode->isChecked();
   }
+
+
 
 
 

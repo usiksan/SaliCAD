@@ -444,8 +444,9 @@ void SdModeCRoadEnter::getNetOnPoint(SdPoint p, SdStratum s, QString *netName, i
   *destStratum = 0;
   plate()->forEach( dctTraced, [p,s,netName,destStratum] (SdObject *obj) -> bool {
     SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
-    if( traced != nullptr )
+    if( traced != nullptr ) {
       traced->isPointOnNet( p, s, netName, destStratum );
+      }
     return true;
     });
   }
@@ -453,13 +454,43 @@ void SdModeCRoadEnter::getNetOnPoint(SdPoint p, SdStratum s, QString *netName, i
 
 
 
+
+//If point is on middle of same road segment we split it on point
+void SdModeCRoadEnter::splitRoadSegment(SdPoint p, SdStratum s, QString *netName, int *destStratum)
+  {
+  SdUndo *undo = mUndo;
+  plate()->forEach( dctTraceRoad, [p,s,netName,destStratum,undo] (SdObject *obj) -> bool {
+    SdPtr<SdGraphTracedRoad> road(obj);
+    if( road.isValid() && road->isMatchNetAndStratum( *netName, s ) && road->isPointOnNet( p, s, netName, destStratum ) ) {
+      //Segment with point found
+      road->splitRoad( p, undo );
+      qDebug() << "Road splitted at" << p;
+      return false;
+      }
+    return true;
+    });
+  }
+
+
+
+
+
+
 void SdModeCRoadEnter::calcFirstSmartPoint()
   {
+  //At first we find on nearest end of nets or pins
   SdSnapInfo info;
   info.mSour = mPrevMove;
-  info.mSnapMask = snapNearestNet | snapNearestPin;
+  info.mSnapMask = snapNearestNetEnd | snapNearestPin;
   info.mStratum = stmThrough;
   info.scan( plate(), dctTraced );
+  double stp = mEditor->gridGet().x();
+  if( !info.isFound() || info.mSqDistance > stp * stp  ) {
+    //If not found we try find at any point of nearest net
+    info.mSqDistance = stp * stp;
+    info.mSnapMask   = snapNearestNet;
+    info.scan( plate(), dctTraceRoad );
+    }
   if( info.isFound() ) {
     mFirst = info.mDest;
     QString netName;
@@ -737,8 +768,11 @@ void SdModeCRoadEnter::firstPointEnter(bool enter)
     plate()->ruleBlockForNet( mProp.mNetName.str(), mRule );
     mProp.mWidth   = mRule.mRules[ruleRoadWidth];
     propSetToBar();
-    if( enter )
+    if( enter ) {
+      //If mFirst is on road segment we split road
+      splitRoadSegment( mFirst, mProp.mStratum, &netName, &destStratum );
       setStep(sNextPoint);
+      }
     rebuildBarriers();
     //Find destignate point
     calcNextSmartPoint( mFirst );

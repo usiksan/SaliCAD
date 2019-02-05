@@ -14,6 +14,7 @@ Description
 #include "SdStringHistory.h"
 #include "objects/SdPropAngle.h"
 #include "objects/SdPropPartImp.h"
+#include "objects/SdEnvir.h"
 #include "SdWCommand.h"
 #include <QLabel>
 #include <QLineEdit>
@@ -66,6 +67,13 @@ SdPropBarPartImp::SdPropBarPartImp(const QString title) :
 //    Q_UNUSED(checked)
 //    emit propChanged();
 //    });
+
+  //Cursor align to greed or not
+  mAlignToGrid = addAction( QIcon(QString(":/pic/alignGrid.png")), tr("Align cursor to grid") );
+  mAlignToGrid->setCheckable(true);
+  connect( mAlignToGrid, &QAction::triggered, [=](bool checked){
+    sdEnvir->mCursorAlignGrid = checked;
+    });
 
   mTop = addAction( QIcon(QStringLiteral(":/pic/flipSideTop.png")), tr("Part at top side") );
   mTop->setCheckable(true);

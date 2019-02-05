@@ -447,7 +447,7 @@ void SdContext::smartPoint(SdPoint a, SdSnapMask smartMask)
       int sm = sdEnvir->mSmartSize;
 
       //Приступить к рисованию
-      if( smartMask & (snapNearestNet | snapNearestPin | snapNextPin | snapNetPoint) ) {
+      if( smartMask & (snapNearestNet | snapNearestNetEnd | snapNearestPin | snapNextPin | snapNetPoint) ) {
         //Ромбик
         QPoint p1( p.x() - sm, p.y() );
         QPoint p2( p.x(), p.y() - sm );
