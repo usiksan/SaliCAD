@@ -21,6 +21,8 @@ Description
 #include "library/SdStringMap.h"
 #include "SdPad.h"
 #include "SdRuleBlock.h"
+#include "SdPointList.h"
+#include "SdPolyWindowList.h"
 #include <QStack>
 #include <QMap>
 #include <QStringList>
@@ -49,6 +51,7 @@ struct SdSymImpPin;
 typedef QMap<QString,SdSymImpPin> SdSymImpPinTable;
 struct SdPartImpPin;
 typedef QMap<QString,SdPartImpPin> SdPartImpPinTable;
+struct SdPropPolygon;
 
 class SdUndo
   {
@@ -91,6 +94,7 @@ class SdUndo
     void via( SdPropString *pad, SdPoint *pos );
     void rule( SdRuleBlock *pcbSrc, SdRuleBlockMap *mapSrc );
     void stringList( int *val, QStringList *list );
+    void polygon( SdPropPolygon *propSource, SdPointList *regionSource, SdPolyWindowList *windowsSource );
 
     //do undo and redo
     void undoStep();

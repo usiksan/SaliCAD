@@ -76,3 +76,23 @@ void SdPropPolygon::read(const QJsonObject obj)
   mStratum.read( QStringLiteral("pStratum"), obj );
   mNetName.read( QStringLiteral("pNet"), obj );
   }
+
+
+
+
+void SdPropPolygon::saveState(SdPropPolygonState *dst)
+  {
+  dst->mGap     = mGap.getValue();
+  dst->mNetName = mNetName.str();
+  dst->mStratum = mStratum.getValue();
+  }
+
+
+
+
+void SdPropPolygon::swapState(SdPropPolygonState *src)
+  {
+  src->mGap     = mGap.swap( src->mGap );
+  src->mStratum = mStratum.swap( src->mStratum );
+  mNetName.swap( &(src->mNetName) );
+  }

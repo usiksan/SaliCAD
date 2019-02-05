@@ -39,6 +39,7 @@ Description
 #include "SdUndoRecordVia.h"
 #include "SdUndoRecordRules.h"
 #include "SdUndoRecordStringList.h"
+#include "SdUndoRecordPolygon.h"
 #include "windows/SdWCommand.h"
 
 #include <QDebug>
@@ -280,6 +281,15 @@ void SdUndo::rule(SdRuleBlock *pcbSrc, SdRuleBlockMap *mapSrc)
 void SdUndo::stringList(int *val, QStringList *list)
   {
   addUndo( new SdUndoRecordStringList( val, list ) );
+  }
+
+
+
+
+
+void SdUndo::polygon(SdPropPolygon *propSource, SdPointList *regionSource, SdPolyWindowList *windowsSource)
+  {
+  addUndo( new SdUndoRecordPolygon( propSource, regionSource, windowsSource ) );
   }
 
 

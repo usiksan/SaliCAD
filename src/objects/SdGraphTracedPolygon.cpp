@@ -107,9 +107,11 @@ void SdGraphTracedPolygon::readObject(SdObjectMap *map, const QJsonObject obj)
 
 
 
+//Save state of polygon
 void SdGraphTracedPolygon::saveState(SdUndo *undo)
   {
-  //TODO D070 Save state of polygon
+  if( undo )
+    undo->polygon( &mProp, &mRegion, &mWindows );
   }
 
 
@@ -286,11 +288,11 @@ bool SdGraphTracedPolygon::getInfo(SdPoint p, QString &info, bool extInfo)
 void SdGraphTracedPolygon::snapPoint(SdSnapInfo *snap)
   {
   if( snap->mStratum.match( mProp.mStratum ) && !snap->match(snapExcludeSour) ) {
-    if( snap->match(snapNearestNet) ) {
-      if( isContains(snap->mSour) ) {
-        snap->test( this, snap->mSour, snapNearestNet );
-        }
-      }
+//    if( snap->match(snapNearestNet) ) {
+//      if( isContains(snap->mSour) ) {
+//        snap->test( this, snap->mSour, snapNearestNet );
+//        }
+//      }
     if( snap->match(snapNearestNetNet) && snap->mNetName == mProp.mNetName.str() ) {
       if( isContains(snap->mSour) ) {
         snap->test( this, snap->mSour, snapNearestNetNet );

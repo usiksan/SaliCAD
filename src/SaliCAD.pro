@@ -274,7 +274,8 @@ SOURCES += \
     modes/SdModeCRoadMove.cpp \
     modes/SdModeCOriginPlate.cpp \
     windows/SdPExport_Bom.cpp \
-    windows/SdPExport_Dxf.cpp
+    windows/SdPExport_Dxf.cpp \
+    objects/SdUndoRecordPolygon.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -543,7 +544,8 @@ HEADERS  += \
     modes/SdModeCRoadMove.h \
     modes/SdModeCOriginPlate.h \
     windows/SdPExport_Bom.h \
-    windows/SdPExport_Dxf.h
+    windows/SdPExport_Dxf.h \
+    objects/SdUndoRecordPolygon.h
 
 DISTFILES += \
     license.txt

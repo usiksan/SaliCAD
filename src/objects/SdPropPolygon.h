@@ -18,6 +18,11 @@ Description
 #include "SdPropString.h"
 #include "SdStratum.h"
 
+struct SdPropPolygonState {
+    int     mGap;
+    QString mNetName;
+    int     mStratum;
+  };
 
 struct SdPropPolygon
   {
@@ -34,6 +39,8 @@ struct SdPropPolygon
 
     void write( QJsonObject &obj ) const;
     void read( const QJsonObject obj );
+    void saveState( SdPropPolygonState *dst );
+    void swapState( SdPropPolygonState *src );
   };
 
 #endif // SDPROPPOLYGON_H

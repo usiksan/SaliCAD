@@ -29,6 +29,7 @@
 
 //===================================================================================
 //Fixed:
+//D070 Save state of polygon
 
 //B066 When selected by rect and rect over wire segment on middle, then no selection
 
