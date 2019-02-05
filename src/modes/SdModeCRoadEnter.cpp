@@ -464,7 +464,7 @@ void SdModeCRoadEnter::splitRoadSegment(SdPoint p, SdStratum s, QString *netName
     if( road.isValid() && road->isMatchNetAndStratum( *netName, s ) && road->isPointOnNet( p, s, netName, destStratum ) ) {
       //Segment with point found
       road->splitRoad( p, undo );
-      qDebug() << "Road splitted at" << p;
+      //qDebug() << "Road splitted at" << p;
       return false;
       }
     return true;
@@ -521,6 +521,13 @@ void SdModeCRoadEnter::calcNextSmartPoint( SdPoint fromPoint )
   info.mStratum = mProp.mStratum;
   info.mNetName = mProp.mNetName.str();
   info.scan( plate(), dctTraced );
+  double stp = mEditor->gridGet().x();
+  if( !info.isFound() || info.mSqDistance > stp * stp  ) {
+    //If not found we try find at any point of nearest net
+    info.mSqDistance = stp * stp;
+    info.mSnapMask   = snapNearestNetNet;
+    info.scan( plate(), dctTraceRoad );
+    }
   if( info.isFound() ) {
     //Destignation pin
     mTargetPoint = info.mDest;
@@ -805,5 +812,14 @@ void SdModeCRoadEnter::rebuildBarriers()
 
 
 
+//====================================================================================================================
+//   Loop detector
+struct SdLoopEdge {
+    QList<SdGraphTracedPtr> mPath;
+  };
 
+typedef SdLoopEdge *SdLoopEdgePtr;
 
+struct SdLoopNode {
+
+  };

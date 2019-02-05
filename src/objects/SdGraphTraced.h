@@ -56,4 +56,6 @@ class SdGraphTraced : public SdGraph
     virtual void         draw(SdContext *dc) override;
   };
 
+typedef SdGraphTraced *SdGraphTracedPtr;
+
 #endif // SDGRAPHTRACED_H

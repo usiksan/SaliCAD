@@ -1,58 +1,56 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>SaliCAD Режим ввода выводов символа</title>
+    <title>SaliCAD Symbol pin enter mode</title>
   </head>
   <body>
-    <h1 align="center">Ножка символа</h1>
-    <p><a href="contents.htm">Содержание</a>=&gt;<a href="MModes.htm">Режимы</a>=&gt;<a
-        href="MSymbol.htm">Режимы редактирования символа</a>=&gt;Ножка символа</p>
-    <p>Панель инструментов: <img src="objPin.png" width="24" height="24"></p>
-    <p>Меню: Символ|Ввод ножки</p>
-    <p>Курсор: <img src="cursorSymPin.gif" width="30" height="30"></p>
-    <p>Ножка символа задает точку, к которой в схематическом изображении
-      элемента подключаются цепи.</p>
-    <p>1. Установите атрибуты ножки</p>
-    <p>2. Укажите местоположение ножки</p>
-    <p>3. Установите атрибуты имени ножки</p>
-    <p>4. Укажите точку расположения имени ножки, при вводе имени ножки курсор
-      имеет вид <img src="cursorSymPinName.png" width="31" height="31"></p>
-    <p>5. Введите имя ножки, по завершении ввода нажмите Enter или левую кнопку
-      мыши</p>
-    <p>6. Установите атрибуты номера ножки</p>
-    <p>7. Укажите точку расположения номера ножки, при вводе номера ножки курсор
-      имеет вид <img src="cursorSymPinNumber.png" width="30" height="30"></p>
-    <p>Для ввода атрибутов ножки символа служит панель ножек символа:</p>
+    <h1 align="center">Symbol pin</h1>
+    <p><a href="contents.htm">Contents</a>=&gt;<a href="MModes.htm">Modes</a>=&gt;<a
+        href="MSymbol.htm">Symbol specific modes</a>=&gt;Ножка символа</p>
+    <p>Tool bar: <img src="objPin.png" width="24" height="24"></p>
+    <p>Menu: Symbol|Pin</p>
+    <p>Cursor: <img src="cursorSymPin.png" width="30" height="30"></p>
+    <p>The symbol pin specifies the point to which the nets are connected in the
+      schematic diagram of the element.</p>
+    <p>1. Setup pin properties</p>
+    <p>2. Enter pin location point</p>
+    <p>3. Setup pin name&nbsp;properties</p>
+    <p>4. Enter pin name location point, when entering the pin name cursor is <img
+        src="cursorSymPinName.png" width="31" height="31"></p>
+    <p>5. Enter pin name and press Enter or mouse left button at end</p>
+    <p>6. Setup pin number properties</p>
+    <p>7. Enter pin number location point, when entering the pin number cursor
+      is <img src="cursorSymPinNumber.png" width="30" height="30"></p>
+    <p>For setup pin properties there is symbol pin properties bar:</p>
     <p><img src="propBarSymPin.png" width="320" height="33" border="1"></p>
     <ul>
-      <li><img src="mouseBLeft.png" width="32" height="48"> Указание точки
-        осуществляется нажатием левой кнопки мыши или вручную.</li>
-      <li><img src="mouseBRight.png" width="32" height="48"> Прекращение ввода
-        осуществляется нажатием правой кнопки мыши.</li>
+      <li><img src="mouseBLeft.png" width="32" height="48"> You can specify a
+        point by clicking the left mouse button or manually.</li>
+      <li><img src="mouseBRight.png" width="32" height="48"> The termination of
+        the input is done by pressing the right mouse button.</li>
     </ul>
-    <p><b>"Разумный" режим</b>.</p>
-    <p>При вводе точки местоположения ножки, эта точка предлагается "разумным"
-      режимом на конце ближайшего отрезка.</p>
+    <p><b>"Smart" mode.</b></p>
+    <p>When entering a pin location point, this point is suggested by the
+      "smart" mode at the end of the nearest line segment.</p>
     <p><img src="smartSymPin1.png" width="296" height="301" border="1"></p>
-    <p>При вводе точек расположения имени и номера ножки, эти точки предлагаются
-      относительно точки расположения вывода одинаково с предыдущим выводом.
-      Этот режим особенно удобен для последовательного ввода выводов, у которых
-      относительное положение имени и номера одинаково.</p>
+    <p>When you enter the pin name and pin number location points, these points
+      are suggested relative to the pin location point in the same way as the
+      previous pin. This mode is particularly useful for serial pins where the
+      relative position of the name and number is the same.</p>
     <p><img src="smartSymPin2.png" width="227" height="309" border="1"></p>
-    <p>При вводе имени ножки предлагается имя предыдущей ножки с индексом
-      большим на 1, то есть если предыдущее имя ножки было, например, А1, то
-      предлагаемое имя будет А2. Этот режим удобен для последовательного ввода
-      ножек различных шин.</p>
+    <p>When you enter the name of the pin, the name of the previous pin is
+      suggested with an index greater than 1, that is, if the previous name of
+      the pin was, for example, A1, then the proposed name will be A2. This mode
+      is convenient for sequential input of pins of different buses.</p>
     <p><img src="smartSymPin3.png" width="257" height="278" border="1"></p>
-    <p>Для ввода атрибутов имени ножки и номера ножки служит панель свойств
-      текста.</p>
-    <p><img src="mouseBMiddle.png" width="32" height="48"> Средняя кнопка мыши
-      или "пробел" - подтверждение "разумного" ввода.</p>
+    <p>To enter pin name and pin number properties there is text properties bar.</p>
+    <p><img src="mouseBMiddle.png" width="32" height="48"> Middle mouse button
+      or "space" - confirmation of "smart" input.</p>
     <table width="100%" border="0">
       <tbody>
         <tr>
-          <td width="50%"><a href="PropText.htm">Свойства текста</a></td>
-          <td width="50%"><a href="DSymPin.htm">Ножка символа</a></td>
+          <td width="50%"><a href="PropText.htm">Text properties</a></td>
+          <td width="50%"><a href="DSymPin.htm">Symbol pin</a></td>
         </tr>
       </tbody>
     </table>
