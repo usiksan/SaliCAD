@@ -1,3 +1,16 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Road net segment. Also representates vias. Used for rat net build.
+*/
 #ifndef SDPLATENETSEGMENT_H
 #define SDPLATENETSEGMENT_H
 

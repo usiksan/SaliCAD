@@ -443,10 +443,14 @@ bool SdGraphTracedRoad::isPointOnNet(SdPoint p, SdStratum stratum, QString *netN
 
 
 
-void SdGraphTracedRoad::accumNetSegments(SdPlateNetList &netList ) const
+
+void SdGraphTracedRoad::accumNetSegments(SdPlateNetContainer *netContainer)
   {
-  netList.addNetSegment( mProp.mNetName.str(), mProp.mStratum, mSegment.getP1(), mSegment.getP2() );
+  netContainer->addNetSegment( this, mProp.mNetName.str(), mProp.mStratum, mSegment.getP1(), mSegment.getP2() );
   }
+
+
+
 
 
 

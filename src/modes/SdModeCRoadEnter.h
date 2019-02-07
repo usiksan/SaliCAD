@@ -19,6 +19,7 @@ Description
 #include "objects/SdBarrier.h"
 #include "objects/SdPropRoad.h"
 #include "objects/SdRuleBlock.h"
+#include "objects/SdSelector.h"
 
 #include <QList>
 
@@ -39,6 +40,7 @@ class SdModeCRoadEnter : public SdModeCommon
     SdRuleBlock        mRule;        //Rule block for segment
     SdPoint            mTargetPoint; //Target point
     QList<SdPoint>     mSmartPath;   //Auto roaded path to smart point
+    SdSelector         mLoopPath;    //Path which will be deleted because loop detected when path will be finished
 
     //To connect at middle of road
     SdGraphTracedRoad *mRoadMiddle;  //Road middle position is active
@@ -118,6 +120,12 @@ class SdModeCRoadEnter : public SdModeCommon
 
     //First point enter
     void            firstPointEnter( bool enter );
+
+    //Find loop. If found it will be placed to mLoopPath
+    void            findLoop( SdPoint src, SdPoint dst, SdStratum st );
+
+    //Find simple loop which consist from Roads only
+    void            findSimpleLoop( SdPoint src, SdPoint dst, SdStratum st );
   };
 
 #endif // SDMODECROADENTER_H

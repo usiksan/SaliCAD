@@ -156,6 +156,24 @@ void SdPItemPlate::appendPadWindow(SdPolyWindowList &dest, SdPoint p, const QStr
 
 
 
+
+
+
+//Accumulate net segments to given net container
+void SdPItemPlate::accumNetSegments(SdPlateNetContainer *container)
+  {
+  forEach( dctAll, [container] (SdObject *obj) -> bool {
+    SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
+    if( traced && !traced->isSelected() )
+      traced->accumNetSegments( container );
+    return true;
+    });
+  }
+
+
+
+
+
 //Set flag to update rat net
 void SdPItemPlate::setDirtyRatNet()
   {
@@ -188,12 +206,7 @@ void SdPItemPlate::buildRatNet()
   SdPlateNetList netList;
 
   //Accum points for nets
-  forEach( dctAll, [&netList] (SdObject *obj) -> bool {
-    SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
-    if( traced && !traced->isSelected() )
-      traced->accumNetSegments( netList );
-    return true;
-    });
+  accumNetSegments( &netList );
 
   //Build rat net
   netList.buildRatNet( &mRatNet );

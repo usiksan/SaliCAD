@@ -75,6 +75,13 @@ class SdPItemPlate : public SdProjectItem
     //Append window for pin pad
     void                   appendPadWindow( SdPolyWindowList &dest, SdPoint p, const QString pinType, int gap, const QTransform &t );
 
+
+
+    //Accumulate net segments to given net container
+    void                   accumNetSegments( SdPlateNetContainer *container );
+
+
+
     //Set flag to update rat net
     void                   setDirtyRatNet();
 
@@ -83,6 +90,9 @@ class SdPItemPlate : public SdProjectItem
 
     //Build rat net
     void                   buildRatNet();
+
+
+
 
     //Draw pcb for trace
     void                   drawTrace( SdContext *ctx, SdStratum curStratum, QString currentNetName );

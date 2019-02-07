@@ -22,7 +22,7 @@ Description
 
 
 class SdPItemPlate;
-class SdPlateNetList;
+class SdPlateNetContainer;
 
 class SdGraphTraced : public SdGraph
   {
@@ -43,7 +43,7 @@ class SdGraphTraced : public SdGraph
 
     //Defined here
     virtual bool         isPointOnNet( SdPoint p, SdStratum stratum, QString *netName, int *destStratum ) = 0;
-    virtual void         accumNetSegments( SdPlateNetList &netList ) const = 0;
+    virtual void         accumNetSegments( SdPlateNetContainer *netContainer ) = 0;
     virtual void         drawStratum( SdContext *dcx, int stratum ) = 0;
     virtual void         accumBarriers( SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk ) const = 0;
     virtual bool         isMatchNetAndStratum( const QString netName, SdStratum stratum ) const;

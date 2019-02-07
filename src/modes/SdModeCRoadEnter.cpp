@@ -112,6 +112,12 @@ void SdModeCRoadEnter::drawDynamic(SdContext *ctx)
       case catchNone :
         break;
       }
+
+    //Overdraw loop path
+    if( mLoopPath.count() ) {
+      ctx->setOverColor( sdEnvir->getSysColor(scSelected) );
+      mLoopPath.draw( ctx );
+      }
     }
   else {
     //When start enter smart point is nearest unconnected pin
@@ -779,6 +785,7 @@ void SdModeCRoadEnter::firstPointEnter(bool enter)
       //If mFirst is on road segment we split road
       splitRoadSegment( mFirst, mProp.mStratum, &netName, &destStratum );
       setStep(sNextPoint);
+      mLoopPath.clear();
       }
     rebuildBarriers();
     //Find destignate point
@@ -787,6 +794,16 @@ void SdModeCRoadEnter::firstPointEnter(bool enter)
       //Try build smart path
       buildSmartPath( mFirst, mTargetPoint );
     }
+  }
+
+
+
+
+
+//Find loop. If found it will be placed to mLoopPath
+void SdModeCRoadEnter::findLoop(SdPoint src, SdPoint dst, SdStratum st)
+  {
+
   }
 
 

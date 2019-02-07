@@ -48,7 +48,7 @@ class SdGraphTracedVia : public SdGraphTraced
   public:
     virtual SdStratum stratum() const override;
     virtual bool      isPointOnNet(SdPoint p, SdStratum stratum, QString *netName, int *destStratum) override;
-    virtual void      accumNetSegments(SdPlateNetList &netList) const override;
+    virtual void      accumNetSegments( SdPlateNetContainer *netContainer ) override;
     virtual void      drawStratum(SdContext *dcx, int stratum) override;
     virtual void      accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const override;
     virtual bool      isMatchNetAndStratum(const QString netName, SdStratum stratum) const override;

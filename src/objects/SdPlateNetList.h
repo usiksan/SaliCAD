@@ -17,19 +17,20 @@ Description
 
 #include "SdRatNet.h"
 #include "SdPlateNet.h"
+#include "SdPlateNetContainer.h"
 
 #include <QMap>
 #include <QString>
 
 //List of plate nets
-class SdPlateNetList {
+class SdPlateNetList : public SdPlateNetContainer {
     QMap<QString,SdPlateNet*> mNetList; //Net list
   public:
     SdPlateNetList();
     ~SdPlateNetList();
 
     //Add net segment to appropriate net
-    void    addNetSegment(const QString netName, SdStratum s, SdPoint p1, SdPoint p2);
+    void    addNetSegment( SdGraphTraced *traced, const QString netName, SdStratum s, SdPoint p1, SdPoint p2);
 
     //For each net build ratnet
     void    buildRatNet( SdRatNet *ratNet );

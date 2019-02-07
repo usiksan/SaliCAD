@@ -275,7 +275,9 @@ SOURCES += \
     modes/SdModeCOriginPlate.cpp \
     windows/SdPExport_Bom.cpp \
     windows/SdPExport_Dxf.cpp \
-    objects/SdUndoRecordPolygon.cpp
+    objects/SdUndoRecordPolygon.cpp \
+    objects/SdPlateNetGraph.cpp \
+    objects/SdPlateNetContainer.cpp
 
 HEADERS  += \
     SdConfig.h \
@@ -545,7 +547,9 @@ HEADERS  += \
     modes/SdModeCOriginPlate.h \
     windows/SdPExport_Bom.h \
     windows/SdPExport_Dxf.h \
-    objects/SdUndoRecordPolygon.h
+    objects/SdUndoRecordPolygon.h \
+    objects/SdPlateNetGraph.h \
+    objects/SdPlateNetContainer.h
 
 DISTFILES += \
     license.txt

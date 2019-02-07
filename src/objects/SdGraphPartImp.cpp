@@ -1047,12 +1047,17 @@ bool SdGraphPartImp::isPointOnNet(SdPoint p, SdStratum stratum, QString *netName
 
 
 
-void SdGraphPartImp::accumNetSegments(SdPlateNetList &netList) const
+
+
+
+
+void SdGraphPartImp::accumNetSegments(SdPlateNetContainer *netContainer)
   {
   for( const SdPartImpPin &pin : mPins )
     if( pin.isConnected() )
-      netList.addNetSegment( pin.getNetName(), pin.mStratum, pin.mPosition, pin.mPosition );
+      netContainer->addNetSegment( this, pin.getNetName(), pin.mStratum, pin.mPosition, pin.mPosition );
   }
+
 
 
 

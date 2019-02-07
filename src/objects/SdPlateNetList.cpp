@@ -32,8 +32,10 @@ SdPlateNetList::~SdPlateNetList()
 
 
 //Add net segment to appropriate net
-void SdPlateNetList::addNetSegment(const QString netName, SdStratum s, SdPoint p1, SdPoint p2)
+void SdPlateNetList::addNetSegment(SdGraphTraced *traced, const QString netName, SdStratum s, SdPoint p1, SdPoint p2)
   {
+  Q_UNUSED(traced)
+
   //If net with netName not contained in list, then create new one
   if( !mNetList.contains(netName) )
     //Create new net with netName and insert it in list

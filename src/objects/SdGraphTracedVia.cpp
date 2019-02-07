@@ -253,10 +253,14 @@ bool SdGraphTracedVia::isPointOnNet(SdPoint p, SdStratum stratum, QString *netNa
 
 
 
-void SdGraphTracedVia::accumNetSegments(SdPlateNetList &netList) const
+
+void SdGraphTracedVia::accumNetSegments(SdPlateNetContainer *netContainer)
   {
-  netList.addNetSegment( mProp.mNetName.str(), mProp.mStratum, mPosition, mPosition );
+  netContainer->addNetSegment( this, mProp.mNetName.str(), mProp.mStratum, mPosition, mPosition );
   }
+
+
+
 
 
 

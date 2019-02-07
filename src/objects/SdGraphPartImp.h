@@ -19,6 +19,7 @@ Description
 #include "SdPadAssociation.h"
 #include "SdBarrier.h"
 #include "SdTextImplement.h"
+#include "SdPlateNetList.h"
 
 #include <QMap>
 
@@ -230,7 +231,7 @@ class SdGraphPartImp : public SdGraphTraced
     // SdGraphTraced interface
   public:
     virtual bool         isPointOnNet(SdPoint p, SdStratum stratum, QString *netName, int *destStratum) override;
-    virtual void         accumNetSegments( SdPlateNetList &netList ) const override;
+    virtual void         accumNetSegments( SdPlateNetContainer *netContainer ) override;
     virtual void         drawStratum(SdContext *dc, int stratum ) override;
     virtual void         accumBarriers( SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk ) const override;
     virtual void         accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName ) const override;

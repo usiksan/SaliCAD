@@ -64,6 +64,8 @@ class SdStratum : public SdPropInt
     //Return true if this stratum intersect with given stratum presented with int
     bool     operator & ( int s ) const { return mValue > 0 && s > 0 && (mValue & s); }
 
+    void     operator |= ( SdStratum s ) { mValue |= s.mValue; }
+
     //Return true if this stratum intersect with given stratum
     bool     match( SdStratum s ) const { return mValue > 0 && s.mValue > 0 && (mValue & s.mValue) != 0; }
 

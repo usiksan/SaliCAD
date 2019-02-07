@@ -16,6 +16,7 @@ Description
 #include "SdEnvir.h"
 #include "SdSelector.h"
 #include "SdPItemPlate.h"
+#include "SdPlateNetContainer.h"
 
 SdGraphTracedPolygon::SdGraphTracedPolygon()
   {
@@ -331,10 +332,17 @@ bool SdGraphTracedPolygon::isPointOnNet(SdPoint p, SdStratum stratum, QString *n
 
 
 
-void SdGraphTracedPolygon::accumNetSegments(SdPlateNetList &netList) const
+
+
+void SdGraphTracedPolygon::accumNetSegments(SdPlateNetContainer *netContainer)
   {
+  if( mRegion.count() )
+    netContainer->addNetSegment( this, mProp.mNetName.str(), mProp.mStratum, mRegion.at(0), mRegion.at(0) );
   //TODO B049 net segments creation for polygon
   }
+
+
+
 
 
 
