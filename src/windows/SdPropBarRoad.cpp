@@ -92,6 +92,7 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
   mLoopDetection->setCheckable(true);
   connect( mLoopDetection, &QAction::triggered, [=](bool checked) {
     sdEnvir->mAutoRemoveRoadLoop = checked;
+    emit propChanged();
     });
 
   if( asRoad ) {
@@ -201,8 +202,6 @@ void SdPropBarRoad::setPropRoad(SdPropRoad *propRoad, SdPropVia *propVia, double
     //Current via type
     mViaPadType->setCurrentText( propVia->mPadType.str() );
     padTypeHistory.reorderComboBoxString( mViaPadType );
-
-
     }
   }
 

@@ -160,8 +160,10 @@ void SdModeCRoadEnter::propGetFromBar()
       setDirtyCashe();
       }
     //Rebuild all barriers
-    if( getStep() )
+    if( getStep() ) {
+      findLoop( mFirst, mTargetPoint, mProp.mStratum );
       rebuildBarriers();
+      }
     update();
     }
   }
@@ -838,22 +840,24 @@ void SdModeCRoadEnter::findLoop(SdPoint src, SdPoint dst, SdStratum st)
   //Remove previous loop path
   mLoopPath.removeAll();
 
-  //Get current net graph segments
-  SdPlateNetGraph graph( mProp.mNetName.str() );
-  plate()->accumNetSegments( &graph );
+  if( sdEnvir->mAutoRemoveRoadLoop ) {
+    //Get current net graph segments
+    SdPlateNetGraph graph( mProp.mNetName.str() );
+    plate()->accumNetSegments( &graph );
 
-  //Add source and dest nodes, because it may be not node yet
-  graph.addNode( st, src );
-  graph.addNode( st, dst );
+    //Add source and dest nodes, because it may be not node yet
+    graph.addNode( st, src );
+    graph.addNode( st, dst );
 
-  //build graph
-  graph.fillPath();
+    //build graph
+    graph.fillPath();
 
-  //Find loop
-  SdGraphTracedPtrList list = graph.findLoop( src, st, dst, st );
-  if( !list.isEmpty() ) {
-    for( auto iter = list.begin(); iter != list.end(); iter++ )
-      mLoopPath.insert( *iter );
+    //Find loop
+    SdGraphTracedPtrList list = graph.findLoop( src, st, dst, st );
+    if( !list.isEmpty() ) {
+      for( auto iter = list.begin(); iter != list.end(); iter++ )
+        mLoopPath.insert( *iter );
+      }
     }
   }
 
