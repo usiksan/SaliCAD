@@ -336,9 +336,10 @@ bool SdGraphTracedPolygon::isPointOnNet(SdPoint p, SdStratum stratum, QString *n
 
 void SdGraphTracedPolygon::accumNetSegments(SdPlateNetContainer *netContainer)
   {
-  if( mRegion.count() )
-    netContainer->addNetSegment( this, mProp.mNetName.str(), mProp.mStratum, mRegion.at(0), mRegion.at(0) );
+//  if( mRegion.count() )
+//    netContainer->addNetSegment( this, mProp.mNetName.str(), mProp.mStratum, mRegion.at(0), mRegion.at(0) );
   //TODO B049 net segments creation for polygon
+  //Idea: we scan all traced object and append for each object to polygon connection segment mRegion[0]-object
   }
 
 
