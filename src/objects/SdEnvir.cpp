@@ -147,7 +147,8 @@ void SdEnvir::loadEnvir()
        >> mShowRuleErrors       //If true then over pcb shows rule error indicators as rectangles
        >> mShowFields           //If true then draw fields as fields names else draw fields as values
        >> mShowPads             //If true then draw pads in part editor
-       >> mPolygonOpacity;       //Polygons draws with this opacity
+       >> mPolygonOpacity       //Polygons draws with this opacity
+       >> mAutoRemoveRoadLoop;   //Automatic detect and remove loops when enter roads
     }
   else defaultEnvir();
 
@@ -221,7 +222,8 @@ void SdEnvir::saveEnvir()
      << mShowRuleErrors       //If true then over pcb shows rule error indicators as rectangles
      << mShowFields           //If true then draw fields as fields names else draw fields as values
      << mShowPads             //If true then draw pads in part editor
-     << mPolygonOpacity;       //Polygons draws with this opacity
+     << mPolygonOpacity       //Polygons draws with this opacity
+     << mAutoRemoveRoadLoop;   //Automatic detect and remove loops when enter roads
 
   QSettings s;
   s.setValue( QString(SDK_ENVIR_VERSION), QVariant(SdEnvirVersion) );
@@ -292,6 +294,7 @@ void SdEnvir::defaultEnvir()
   mShowFields        = true;           //If true then draw fields as fields names else draw fields as values
   mShowPads          = true;           //If true then draw pads in part editor
   mPolygonOpacity    = 0.5;            //Polygons draws with this opacity
+  mAutoRemoveRoadLoop= true;           //Automatic detect and remove loops when enter roads
 
 
   mGuiderEnabled     = true;           //Флаг разрешения/запрещения путеводителя

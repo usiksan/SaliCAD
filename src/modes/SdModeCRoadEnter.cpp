@@ -18,6 +18,7 @@ Description
 #include "objects/SdGraphTracedRoad.h"
 #include "objects/SdGraphTracedVia.h"
 #include "objects/SdPulsar.h"
+#include "objects/SdPlateNetGraph.h"
 #include "windows/SdPropBarRoad.h"
 #include "windows/SdWCommand.h"
 #include "windows/SdWEditorGraph.h"
@@ -117,6 +118,7 @@ void SdModeCRoadEnter::drawDynamic(SdContext *ctx)
     if( mLoopPath.count() ) {
       ctx->setOverColor( sdEnvir->getSysColor(scSelected) );
       mLoopPath.draw( ctx );
+      ctx->resetOverColor();
       }
     }
   else {
@@ -193,6 +195,12 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
       }
     else {
       if( mCatch == catchFinish && mBarMiddle == mMiddle && mBarLast == mLast ) {
+        //Split road if need
+        QString netName = mProp.mNetName.str();
+        int destStratum = 0;
+        splitRoadSegment( mLast, mProp.mStratum, &netName, &destStratum );
+        //Rebuild loop
+        findLoop( mFirst, mLast, mProp.mStratum );
         //Connection complete. Append both segments and stop enter
         if( mFirst != mMiddle )
           addTrace( new SdGraphTracedRoad( mProp, mFirst, mMiddle ), QObject::tr("Insert trace road") );
@@ -200,6 +208,8 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
           addTrace( new SdGraphTracedRoad( mProp, mMiddle, mLast ), QObject::tr("Insert trace road") );
         setStep( sFirstPoint );
         mEnterPath.clear();
+
+        removeLoop();
         }
       else {
         //Append new segment only if it nonzero
@@ -230,6 +240,7 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
 void SdModeCRoadEnter::cancelPoint(SdPoint)
   {
   if( getStep() ) {
+    mLoopPath.removeAll();
     setDirtyCashe();
     setStep( sFirstPoint );
     mEnterPath.clear();
@@ -245,12 +256,22 @@ SdPoint SdModeCRoadEnter::enterPrev()
   {
   if( getStep() && mCatch == catchFinish && mBarMiddle == mMiddle && mBarLast == mLast ) {
     //Connection complete. Append both segments and stop enter
+
+    //Split road if need
+    QString netName = mProp.mNetName.str();
+    int destStratum = 0;
+    splitRoadSegment( mLast, mProp.mStratum, &netName, &destStratum );
+
     if( mFirst != mMiddle )
       addTrace( new SdGraphTracedRoad( mProp, mFirst, mMiddle ), QObject::tr("Insert trace road") );
     if( mMiddle != mLast )
       addTrace( new SdGraphTracedRoad( mProp, mMiddle, mLast ), QObject::tr("Insert trace road") );
     setStep( sFirstPoint );
     mEnterPath.clear();
+
+    //Remove loop if need
+    removeLoop();
+
     //Signal plate to rebuild ratNets
     plate()->setDirtyRatNet();
     setDirtyCashe();
@@ -259,6 +280,11 @@ SdPoint SdModeCRoadEnter::enterPrev()
     mStack = mProp.mStratum;
     }
   else if( mSmartPath.count() > 1 ) {
+    //Split road if need
+    QString netName = mProp.mNetName.str();
+    int destStratum = 0;
+    splitRoadSegment( mLast, mProp.mStratum, &netName, &destStratum );
+
     if( mFirst != mMiddle )
       addTrace( new SdGraphTracedRoad( mProp, mFirst, mMiddle ), QObject::tr("Insert trace road") );
     if( mMiddle != mLast )
@@ -269,6 +295,10 @@ SdPoint SdModeCRoadEnter::enterPrev()
     mSmartPath.clear();
     setStep( sFirstPoint );
     mEnterPath.clear();
+
+    //Remove loop if need
+    removeLoop();
+
     //Signal plate to rebuild ratNets
     plate()->setDirtyRatNet();
     setDirtyCashe();
@@ -536,18 +566,20 @@ void SdModeCRoadEnter::calcNextSmartPoint( SdPoint fromPoint )
     }
   if( info.isFound() ) {
     //Destignation pin
-    mTargetPoint = info.mDest;
+    if( info.mDest != mTargetPoint ) {
+      mTargetPoint = info.mDest;
+
+      findLoop( mFirst, mTargetPoint, mProp.mStratum );
+      setDirtyCashe();
+      }
     //qDebug() << mSmartPoint;
-    //Middle point to smartPoint
-//    SdPoint delta = mSmartPoint - mMiddle;
-//    if( abs(delta.x()) < 1000 || abs(delta.y()) < 1000 ) {
-//      //Orthogonal line
-//      mSmartMiddle =
-//      }
     }
-  else
+  else {
     //Set illegal point as smart
     mTargetPoint = SdPoint::far();
+
+    mLoopPath.removeAll();
+    }
 
   }
 
@@ -803,7 +835,44 @@ void SdModeCRoadEnter::firstPointEnter(bool enter)
 //Find loop. If found it will be placed to mLoopPath
 void SdModeCRoadEnter::findLoop(SdPoint src, SdPoint dst, SdStratum st)
   {
+  //Remove previous loop path
+  mLoopPath.removeAll();
 
+  //Get current net graph segments
+  SdPlateNetGraph graph( mProp.mNetName.str() );
+  plate()->accumNetSegments( &graph );
+
+  //Add source and dest nodes, because it may be not node yet
+  graph.addNode( st, src );
+  graph.addNode( st, dst );
+
+  //build graph
+  graph.fillPath();
+
+  //Find loop
+  SdGraphTracedPtrList list = graph.findLoop( src, st, dst, st );
+  if( !list.isEmpty() ) {
+    for( auto iter = list.begin(); iter != list.end(); iter++ )
+      mLoopPath.insert( *iter );
+    }
+  }
+
+
+
+
+//Remove loop path if present
+void SdModeCRoadEnter::removeLoop()
+  {
+  if( sdEnvir->mAutoRemoveRoadLoop && mLoopPath.count() ) {
+    mUndo->begin( QObject::tr("Deletion loop"), mObject );
+    mLoopPath.forEach( dctAll, [this] (SdObject *obj) ->bool {
+      SdPtr<SdGraph> graph(obj);
+      if( graph.isValid() )
+        graph->deleteObject( mUndo );
+      return true;
+      });
+    mLoopPath.removeAll();
+    }
   }
 
 

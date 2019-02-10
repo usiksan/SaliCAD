@@ -56,10 +56,11 @@ void SdGraphTracedRoad::splitRoad(SdPoint p, SdUndo *undo)
   if( p == mSegment.getP1() || p == mSegment.getP2() )
     return;
   SdGraphTracedRoad *road = new SdGraphTracedRoad( mProp, p, mSegment.getP2() );
+  qDebug() << "Split road original " << this << " addon " << road;
   setSegment( mSegment.getP1(), p, undo );
   getPlate()->insertChild( road, undo );
-  road->utilize( undo );
-  utilize( undo );
+  //road->utilize( undo );
+  //utilize( undo );
   }
 
 
@@ -660,6 +661,7 @@ void SdGraphTracedRoad::utilizeAtEnd(SdPoint p, SdUndo *undo)
         mSegment.setP1( d );
       else
         mSegment.setP2( d );
+      qDebug() << "Utilized segment " << road;
       road->deleteObject( undo );
       }
     }

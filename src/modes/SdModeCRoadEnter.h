@@ -124,8 +124,8 @@ class SdModeCRoadEnter : public SdModeCommon
     //Find loop. If found it will be placed to mLoopPath
     void            findLoop( SdPoint src, SdPoint dst, SdStratum st );
 
-    //Find simple loop which consist from Roads only
-    void            findSimpleLoop( SdPoint src, SdPoint dst, SdStratum st );
+    //Remove loop path if present
+    void            removeLoop();
   };
 
 #endif // SDMODECROADENTER_H

@@ -87,6 +87,13 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
     sdEnvir->mCursorAlignGrid = checked;
     });
 
+  //Enable-disable automatic road loop detection and removing
+  mLoopDetection = addAction( QIcon(QString(":/pic/objRemoveLoop.png")), tr("On-off automatic road loop detection and removing") );
+  mLoopDetection->setCheckable(true);
+  connect( mLoopDetection, &QAction::triggered, [=](bool checked) {
+    sdEnvir->mAutoRemoveRoadLoop = checked;
+    });
+
   if( asRoad ) {
     //Vertex type of two lines
     mEnterOrtho = addAction( QIcon(QString(":/pic/dleOrto.png")), tr("lines connects orthogonal") );
@@ -183,6 +190,7 @@ void SdPropBarRoad::setPropRoad(SdPropRoad *propRoad, SdPropVia *propVia, double
       mWidth->setCurrentText( QString()  );
 
     mAlignToGrid->setChecked( sdEnvir->mCursorAlignGrid );
+    mLoopDetection->setChecked( sdEnvir->mAutoRemoveRoadLoop );
 
     //line enter type
     setVertexType( enterType );

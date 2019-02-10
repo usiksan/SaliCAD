@@ -53,7 +53,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (35 + FONT_COUNT)
+#define SdEnvirVersion  (36 + FONT_COUNT)
 
 
 class SdEnvir
@@ -104,6 +104,7 @@ class SdEnvir
     bool            mShowFields;           //If true then draw fields as fields names else draw fields as values
     bool            mShowPads;             //If true then draw pads in part editor
     double          mPolygonOpacity;       //Polygons draws with this opacity
+    bool            mAutoRemoveRoadLoop;   //Automatic detect and remove loops when enter roads
 
 
     bool            mGuiderEnabled;        //Флаг разрешения/запрещения путеводителя

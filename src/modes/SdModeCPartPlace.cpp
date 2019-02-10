@@ -720,7 +720,7 @@ void SdModeCPartPlace::dirtyRatNet()
   mObject->forEach( dctAll, [this] (SdObject *obj) -> bool {
     SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
     if( traced && !traced->isSelected() )
-      traced->accumNetSegments( mNetList );
+      traced->accumNetSegments( &mNetList );
     return true;
     });
 

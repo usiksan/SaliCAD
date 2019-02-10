@@ -32,6 +32,9 @@ class SdPropBarRoad : public SdPropBarStratum
     //Cursor align to greed or not
     QAction   *mAlignToGrid;
 
+    //Enable-disable automatic road loop detection and removing
+    QAction   *mLoopDetection;
+
     //Vertex type of two lines
     QAction   *mEnterOrtho;
     QAction   *mEnter45degree;

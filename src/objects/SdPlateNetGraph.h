@@ -24,14 +24,22 @@ struct SdPlateNetGraphSegment {
     SdPoint        p2;
     SdStratum      mStratum;
     SdGraphTraced *mTraced;
+    bool           mUsed;
+
+    bool isMatch1( SdPoint p, SdStratum s ) { return mStratum.match(s) && p1 == p; }
+    bool isMatch2( SdPoint p, SdStratum s ) { return mStratum.match(s) && p2 == p; }
+    bool isMatch( SdPoint p, SdStratum s ) { return mStratum.match(s) && (p1 == p || p2 == p); }
   };
 
 typedef QList<SdGraphTracedPtr> SdGraphTracedPtrList;
 
+
 struct SdPlateNetGraphPath {
     SdGraphTracedPtrList mTracedList;
+    bool                 mVisited;
     int                  mNode1;
     int                  mNode2;
+    SdPlateNetGraphPath() : mVisited(false), mNode1(-1),mNode2(-1) {}
 
     bool isConnectedToNode( int node ) const { return mNode1 == node || mNode2 == node; }
     int  getConnectedNode( int node ) const { return mNode1 == node ? mNode2 : (mNode2 == node ? mNode1 : -1); }
@@ -39,18 +47,17 @@ struct SdPlateNetGraphPath {
 
 
 
-//struct SdPlateNetGraphEdge {
-//    SdPoint        p1;
-//    SdStratum      mStratum1;
-//    SdPoint        p2;
-//    SdStratum      mStratum2;
 
-//  };
 
 struct SdPlateNetGraphNode {
     SdStratum mStratum;
     SdPoint   mOrigin;
+
+    bool isMatch( SdPoint p, SdStratum s ) const { return mStratum.match(s) && p == mOrigin; }
   };
+
+
+
 
 class SdPlateNetGraph : public SdPlateNetContainer
   {
@@ -61,18 +68,31 @@ class SdPlateNetGraph : public SdPlateNetContainer
   public:
     SdPlateNetGraph( const QString netName );
 
-    SdPlateNetGraphPath findLoop( SdPoint src, SdStratum stratumSrc, SdPoint dst, SdStratum stratumDst );
+    //From separate net segments we fill paths which connect nodes
+    //Create path list and node graph
+    void                 fillPath();
+
+    //Find presented loop from src to dst
+    SdGraphTracedPtrList findLoop( SdPoint src, SdStratum stratumSrc, SdPoint dst, SdStratum stratumDst );
+
+    //Add node to node list if it not present in list
+    int  addNode( SdStratum s, SdPoint p );
 
     // SdPlateNetContainer interface
   public:
     virtual void addNetSegment(SdGraphTraced *traced, const QString netName, SdStratum s, SdPoint p1, SdPoint p2) override;
 
   private:
-    int  addNode( SdStratum s, SdPoint p );
+
+    void buildPath( QList<SdPlateNetGraphSegment>::iterator iter );
+
+    void testViaNode( QList<SdPlateNetGraphSegment>::iterator iter );
+
+    void testTNode( QList<SdPlateNetGraphSegment>::iterator iter );
 
     int  findNode( SdStratum s, SdPoint p );
 
-    int  findLoopPath(int nodeSrc, int nodeDst , int nodeBack);
+    int  findLoopPath(int nodeSrc, int nodeDst);
 
   };
 
