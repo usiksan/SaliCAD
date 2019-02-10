@@ -11,8 +11,6 @@
 
 //TODO B047 Append layer list to all properties bars
 
-//TODO B055 No road connection to middle of existing segment
-
 //TODO D059 Append file generation on every object, category selector on file hierarchy base
 
 //TODO D060 Append object replacing capability and autoreplacing
@@ -29,6 +27,8 @@
 
 //===================================================================================
 //Fixed:
+//B055 No road connection to middle of existing segment
+
 //D070 Save state of polygon
 
 //B066 When selected by rect and rect over wire segment on middle, then no selection
