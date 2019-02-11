@@ -25,6 +25,8 @@
 
 //TODO B065 When upgrading component don't changed ident (and perhaps - value)
 
+//TODO B067 When activate part place bar grid align state not updated
+
 //===================================================================================
 //Fixed:
 //B055 No road connection to middle of existing segment

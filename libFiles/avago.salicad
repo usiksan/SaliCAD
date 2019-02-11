@@ -1,0 +1,1134 @@
+{
+    "ChildList": [
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": -1750,
+                        "y": 500
+                    },
+                    "b": {
+                        "x": -1750,
+                        "y": -500
+                    },
+                    "id": "2ffdbe0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -1750,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": -1250,
+                        "y": 750
+                    },
+                    "id": "2ffdc40",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -1750,
+                        "y": -250
+                    },
+                    "b": {
+                        "x": -1250,
+                        "y": -750
+                    },
+                    "id": "2ffdca0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -1250,
+                        "y": 750
+                    },
+                    "b": {
+                        "x": -500,
+                        "y": 750
+                    },
+                    "id": "2ffdd00",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -500,
+                        "y": -750
+                    },
+                    "b": {
+                        "x": -1250,
+                        "y": -750
+                    },
+                    "id": "2ffdd60",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -1250,
+                        "y": -750
+                    },
+                    "b": {
+                        "x": -1500,
+                        "y": -375
+                    },
+                    "id": "2ffddc0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -1250,
+                        "y": -750
+                    },
+                    "b": {
+                        "x": -1625,
+                        "y": -500
+                    },
+                    "id": "2ffde20",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -2675,
+                        "y": 100
+                    },
+                    "b": {
+                        "x": -2225,
+                        "y": 550
+                    },
+                    "id": "2ffdf10",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -2425,
+                        "y": 450
+                    },
+                    "b": {
+                        "x": -2225,
+                        "y": 550
+                    },
+                    "id": "2ffdf70",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -2225,
+                        "y": 550
+                    },
+                    "b": {
+                        "x": -2325,
+                        "y": 350
+                    },
+                    "id": "2ffdfd0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -2525,
+                        "y": -50
+                    },
+                    "b": {
+                        "x": -2075,
+                        "y": 400
+                    },
+                    "id": "2ffe030",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -2275,
+                        "y": 300
+                    },
+                    "b": {
+                        "x": -2075,
+                        "y": 400
+                    },
+                    "id": "2ffe090",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -2075,
+                        "y": 400
+                    },
+                    "b": {
+                        "x": -2175,
+                        "y": 200
+                    },
+                    "id": "6f04400",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -3250,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": -3000,
+                        "y": -250
+                    },
+                    "id": "6f04460",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -3000,
+                        "y": -250
+                    },
+                    "b": {
+                        "x": -2750,
+                        "y": 250
+                    },
+                    "id": "6f044c0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -2750,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": -3250,
+                        "y": 250
+                    },
+                    "id": "2ffde80",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -3250,
+                        "y": -250
+                    },
+                    "b": {
+                        "x": -2750,
+                        "y": -250
+                    },
+                    "id": "6f04630",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -3000,
+                        "y": 750
+                    },
+                    "b": {
+                        "x": -3000,
+                        "y": -750
+                    },
+                    "id": "6f04690",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -3000,
+                        "y": 750
+                    },
+                    "b": {
+                        "x": -4000,
+                        "y": 750
+                    },
+                    "id": "6f046f0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -3000,
+                        "y": -750
+                    },
+                    "b": {
+                        "x": -4000,
+                        "y": -750
+                    },
+                    "id": "6f04750",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -1000,
+                        "y": -1000
+                    },
+                    "b": {
+                        "x": -3500,
+                        "y": 1000
+                    },
+                    "id": "6f047b0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "Name": "C",
+                    "NamePos": {
+                        "x": -4000,
+                        "y": -1000
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": -4000,
+                        "y": -500
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": -4000,
+                        "y": -750
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "6f04810",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "A",
+                    "NamePos": {
+                        "x": -4000,
+                        "y": 500
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": -4000,
+                        "y": 1000
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": -4000,
+                        "y": 750
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "6f048f0",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "K",
+                    "NamePos": {
+                        "x": -500,
+                        "y": 500
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": -500,
+                        "y": 1000
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": -500,
+                        "y": 750
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "6f049d0",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "E",
+                    "NamePos": {
+                        "x": -500,
+                        "y": -1000
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": -500,
+                        "y": -500
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": -500,
+                        "y": -750
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "6f04ab0",
+                    "type": "SymPin"
+                },
+                {
+                    "Origin": {
+                        "x": -2250,
+                        "y": 1250
+                    },
+                    "id": "6f04b90",
+                    "over": {
+                        "b": 1441,
+                        "r": -1963,
+                        "x": -2537,
+                        "y": 1054
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": -2250,
+                        "y": -1250
+                    },
+                    "id": "3009670",
+                    "over": {
+                        "b": -1060,
+                        "r": -1714,
+                        "x": -2782,
+                        "y": -1447
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                }
+            ],
+            "Created": 35110309,
+            "Edit enable": false,
+            "Origin": {
+                "x": -4000,
+                "y": 750
+            },
+            "Parametrs": {
+            },
+            "Title": "phototransistor optocoupler",
+            "id": "4213fc0",
+            "type": "Symbol"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": -2200,
+                        "y": 1500
+                    },
+                    "b": {
+                        "x": -3500,
+                        "y": 1500
+                    },
+                    "id": "6f10090",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -3500,
+                        "y": 1500
+                    },
+                    "b": {
+                        "x": -3500,
+                        "y": 1000
+                    },
+                    "id": "6f100f0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -3500,
+                        "y": 1000
+                    },
+                    "b": {
+                        "x": -2200,
+                        "y": 1000
+                    },
+                    "id": "6f10150",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -2200,
+                        "y": -1500
+                    },
+                    "b": {
+                        "x": -3500,
+                        "y": -1500
+                    },
+                    "id": "6f101b0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -3500,
+                        "y": -1500
+                    },
+                    "b": {
+                        "x": -3500,
+                        "y": -1000
+                    },
+                    "id": "6f10210",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -3500,
+                        "y": -1000
+                    },
+                    "b": {
+                        "x": -2200,
+                        "y": -1000
+                    },
+                    "id": "6f10270",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -3000,
+                        "y": 1500
+                    },
+                    "b": {
+                        "x": -3000,
+                        "y": 1000
+                    },
+                    "id": "6f102d0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -3000,
+                        "y": -1000
+                    },
+                    "b": {
+                        "x": -3000,
+                        "y": -1500
+                    },
+                    "id": "6f103c0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2200,
+                        "y": 1500
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": 1500
+                    },
+                    "id": "6f10420",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3500,
+                        "y": 1500
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": 1000
+                    },
+                    "id": "6f10480",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3500,
+                        "y": 1000
+                    },
+                    "b": {
+                        "x": 2200,
+                        "y": 1000
+                    },
+                    "id": "6f104e0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2200,
+                        "y": -1500
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": -1500
+                    },
+                    "id": "6f10540",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3500,
+                        "y": -1500
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": -1000
+                    },
+                    "id": "6f105a0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3500,
+                        "y": -1000
+                    },
+                    "b": {
+                        "x": 2200,
+                        "y": -1000
+                    },
+                    "id": "6f10600",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3000,
+                        "y": 1500
+                    },
+                    "b": {
+                        "x": 3000,
+                        "y": 1000
+                    },
+                    "id": "6f10660",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3000,
+                        "y": -1000
+                    },
+                    "b": {
+                        "x": 3000,
+                        "y": -1500
+                    },
+                    "id": "6f107d0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "center": {
+                        "x": -1600,
+                        "y": 1200
+                    },
+                    "id": "427b320",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "radius": 400,
+                    "type": "Circle"
+                },
+                {
+                    "a": {
+                        "x": -2200,
+                        "y": 1600
+                    },
+                    "b": {
+                        "x": -2000,
+                        "y": 1800
+                    },
+                    "id": "6f10330",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -2000,
+                        "y": 1800
+                    },
+                    "b": {
+                        "x": 2000,
+                        "y": 1800
+                    },
+                    "id": "981c560",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2000,
+                        "y": 1800
+                    },
+                    "b": {
+                        "x": 2200,
+                        "y": 1600
+                    },
+                    "id": "981c5c0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2200,
+                        "y": 1600
+                    },
+                    "b": {
+                        "x": 2200,
+                        "y": -1600
+                    },
+                    "id": "981c620",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2200,
+                        "y": -1600
+                    },
+                    "b": {
+                        "x": 2000,
+                        "y": -1800
+                    },
+                    "id": "981c680",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2000,
+                        "y": -1800
+                    },
+                    "b": {
+                        "x": -2000,
+                        "y": -1800
+                    },
+                    "id": "981c6e0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -2000,
+                        "y": -1800
+                    },
+                    "b": {
+                        "x": -2200,
+                        "y": -1600
+                    },
+                    "id": "981c740",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -2200,
+                        "y": -1600
+                    },
+                    "b": {
+                        "x": -2200,
+                        "y": 1600
+                    },
+                    "id": "981c7a0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "NamePos": {
+                        "x": -2000,
+                        "y": 1500
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 1000,
+                    "NameTextVert": 1,
+                    "Number": "1",
+                    "NumberPos": {
+                        "x": -4500,
+                        "y": 1500
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 1000,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": -3500,
+                        "y": 1270
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "r2.2x0.8m0.1s0.05",
+                    "Stratum": "1",
+                    "id": "981c800",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": -2000,
+                        "y": -1000
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 1000,
+                    "NameTextVert": 1,
+                    "Number": "2",
+                    "NumberPos": {
+                        "x": -4500,
+                        "y": -1000
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 1000,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": -3500,
+                        "y": -1270
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "r2.2x0.8m0.1s0.05",
+                    "Stratum": "1",
+                    "id": "981c8f0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 2000,
+                        "y": -1000
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 1000,
+                    "NameTextVert": 1,
+                    "Number": "3",
+                    "NumberPos": {
+                        "x": 4500,
+                        "y": -1000
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 1000,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3500,
+                        "y": -1270
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "r2.2x0.8m0.1s0.05",
+                    "Stratum": "1",
+                    "id": "981c9e0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 2000,
+                        "y": 1540
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 1000,
+                    "NameTextVert": 1,
+                    "Number": "4",
+                    "NumberPos": {
+                        "x": 4500,
+                        "y": 1540
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 1000,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3500,
+                        "y": 1270
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "r2.2x0.8m0.1s0.05",
+                    "Stratum": "1",
+                    "id": "981cad0",
+                    "type": "PartPin"
+                },
+                {
+                    "Origin": {
+                        "x": 0,
+                        "y": 625
+                    },
+                    "id": "981cbc0",
+                    "over": {
+                        "b": 1166,
+                        "r": 814,
+                        "x": -816,
+                        "y": 74
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 0,
+                        "y": -1250
+                    },
+                    "id": "3f35cb0",
+                    "over": {
+                        "b": -706,
+                        "r": 1518,
+                        "x": -1520,
+                        "y": -1798
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                }
+            ],
+            "Created": 35110281,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+            },
+            "Title": "hcpl-181 (part)",
+            "id": "6f10000",
+            "type": "Part"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "A": "1",
+                        "C": "2",
+                        "E": "3",
+                        "K": "4"
+                    },
+                    "SymbolId": "Symbol\rphototransistor optocoupler\rsalicad",
+                    "SymbolTitle": "phototransistor optocoupler (salicad)",
+                    "id": "2fb6840",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rhcpl-181 (part)\rsalicad",
+                    "PartTitle": "hcpl-181 (part) (salicad)",
+                    "id": "9850bc0",
+                    "type": "PartVariant"
+                }
+            ],
+            "Created": 35110697,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "Ic": "30mA",
+                "Iceo": "100nA",
+                "article": "",
+                "bom": "<value>-000E",
+                "current": "50mA",
+                "datasheet": "",
+                "forward voltage": "1.2V",
+                "manufacturer": "",
+                "prefix": "id",
+                "reverce voltage": "6V",
+                "title": "phototransistor optocoupler hcpl-181",
+                "value": "HCPL-181",
+                "www": ""
+            },
+            "Title": "phototransistor optocoupler hcpl-181",
+            "id": "3ee1260",
+            "type": "Comp"
+        }
+    ],
+    "Parametrs": {
+    },
+    "id": "2c03610",
+    "type": "Project"
+}
