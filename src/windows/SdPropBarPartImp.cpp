@@ -101,6 +101,9 @@ SdPropBarPartImp::SdPropBarPartImp(const QString title) :
 
 void SdPropBarPartImp::setPropPartImp(SdPropPartImp *propPartImp)
   {
+  //Update grid align button
+  mAlignToGrid->setChecked( sdEnvir->mCursorAlignGrid );
+
   if( propPartImp ) {
     //Set angle
     mDirection->setCurrentText( propPartImp->mAngle.toString() );
