@@ -66,6 +66,7 @@ class SdModeCRoadEnter : public SdModeCommon
     void rebuildBarriers();
   public:
     SdModeCRoadEnter( SdWEditorGraph *editor, SdProjectItem *obj );
+    ~SdModeCRoadEnter() override;
 
     // SdMode interface
   public:

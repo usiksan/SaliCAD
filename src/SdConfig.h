@@ -142,6 +142,8 @@ History
                    Changes to road enter mode.
                    Fix check tracing rules
   03.02.2019 v0.60 Append BOM report generator
+  13.02.2019 v0.61 Append to road mode possibilities to connect to middle of road
+                   and automatic loop detection and removing
 */
 
 #ifndef SDCONFIG
@@ -153,7 +155,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             60
+#define SD_VERSION_MINOR             61
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

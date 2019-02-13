@@ -37,8 +37,17 @@ SdModeCRoadEnter::SdModeCRoadEnter(SdWEditorGraph *editor, SdProjectItem *obj) :
 
 
 
+SdModeCRoadEnter::~SdModeCRoadEnter()
+  {
+  mLoopPath.removeAll();
+  }
+
+
+
+
 void SdModeCRoadEnter::reset()
   {
+  mLoopPath.removeAll();
   setDirtyCashe();
   setStep( sFirstPoint );
   mEnterPath.clear();
