@@ -1728,7 +1728,7 @@ void SdWMain::cmHelpAbout()
   QMessageBox::about( this, tr("About %1").arg(SD_NAME), tr("<html><body><p>Version %1.%2, </p>"
                                                             "<p>Copyright SaliLAB</p>"
                                                             "<p>Author: <a href=\"http://salilab.ru\">%3</a></p>"
-                                                            "<p>Web: <a href=\"http://salicad.salilab.com\">SaliCAD.salilab.com</a><br>"
+                                                            "<p>Web:<br><a href=\"http://salicad.salilab.com\">SaliCAD.salilab.com</a><br>"
                                                             "<a href=\"http://salicad.ru\">SaliCAD.ru</a></p></body></html>").
                       arg(SD_VERSION_MAJOR).arg(SD_VERSION_MINOR).arg(SD_AUTHOR) );
   }

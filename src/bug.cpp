@@ -2,7 +2,7 @@
 //B067 bugs
 //F001 fatal
 //C001 critical
-//D085 do
+//D086 do
 
 
 
@@ -14,8 +14,6 @@
 //TODO D059 Append file generation on every object, category selector on file hierarchy base
 
 //TODO D060 Append object replacing capability and autoreplacing
-
-//TODO D063 Append project component list (bom) and report generator
 
 //TODO D064 Helper graph objects for other graph objects positioning
 
@@ -43,8 +41,12 @@
 
 //TODO D085 Append rotation command to select menu
 
+//TODO D086 Append automatic form selection when sheet creation
+
 //===================================================================================
 //Fixed:
+
+//D063 Append project component list (bom) and report generator
 
 //B067 When activate part place bar grid align state not updated
 

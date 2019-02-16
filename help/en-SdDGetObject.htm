@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD Find and get object dialog</title>
+  </head>
+  <body>
+    <h1 align="center">Find and get object dialog</h1>
+    <p>Use this dialog to find and enter an object from the library.</p>
+    <p>The <span style="color: fuchsia;">Categories</span> topic contains a
+      hierarchical list of object categories. By default, this list comes with
+      SaliCAD and is presented in English.</p>
+    <p>When you select a category in the list, the component selection is
+      filtered by that category.</p>
+    <p>The <span style="color: fuchsia;">Fields filter</span> topic contains a
+      list of all fields of the currently found objects. By specifying values in
+      the fields of this filter, you can shorter the list of found objects.</p>
+    <p>The <span style="color: fuchsia;">Name</span> field contains a set of
+      words to search for an object by name. Words in this field are separated
+      by spaces. You can use it to search for parts of words. The list of found
+      objects includes only those whose names contain ALL the words from this
+      field.</p>
+    <p><span style="color: fuchsia;">Expand param table</span> flag. If this
+      flag is not checked, only the components are included in the search
+      result. If this check box is checked, components for each row of this
+      table will be formed for components that have a table of parameters. For
+      example, for resistors, if the flag is not checked, the search will result
+      in only one resistor, and if checked, the search will result in a set of
+      resistors with all the values from the parameter table.</p>
+    <p>The <span style="color: fuchsia;">Find list</span> topic contains a list
+      of all found components that meet the search criteria.</p>
+    <p>The <span style="color: fuchsia;">Sections</span> topic contains a table
+      of sections of the currently selected component from the search Results
+      table. If you are not looking for a component, this section will be empty.</p>
+    <p>The <span style="color: fuchsia;">Symbol</span> topic contains a preview
+      of the selected section of the current component - for components. The
+      diagram image is for the fragment. The symbol image is for the symbol.
+      This section will be empty for the corpus.</p>
+    <p>The <span style="color: fuchsia;">Part</span> topic provides a preview
+      part of the current component - for components. Part view itself - for
+      component part. For other objects this section will be empty.</p>
+    <p>When you click <span style="color: fuchsia;">OK</span>, the current
+      section of the current component is selected - for the component or the
+      object itself - for other objects, and the selection dialog is closed.</p>
+    <p>When you click <span style="color: fuchsia;">Cancel</span>, the
+      selection dialog is closed and the object is considered unselected.</p>
+    <p>Objects are searched among all available objects including the remote
+      repository. If the object was found in the remote repository and has not
+      yet been loaded into the local library, its view will not be available. To
+      download an object from a remote library, click the <span style="color: fuchsia;">Load
+        from central repo</span> button.</p>
+    <p><br>
+    </p>
+  </body>
+</html>
