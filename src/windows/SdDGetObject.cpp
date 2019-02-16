@@ -29,6 +29,7 @@ Description
 #include "objects/SdPartVariant.h"
 #include "objects/SdProject.h"
 #include "objects/SdTime2x.h"
+#include "SdDHelp.h"
 
 #include <QHBoxLayout>
 #include <QMessageBox>
@@ -268,6 +269,12 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
     mSectionIndex = -1;
     mSort = sort;
     }
+
+
+  //Help system
+  connect( ui->mHelp, &QPushButton::clicked, this, [this] () {
+    SdDHelp::help( QString("SdDGetObject.htm"), this );
+    } );
   }
 
 

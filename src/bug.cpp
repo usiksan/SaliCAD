@@ -1,8 +1,8 @@
 ﻿
-//B066 bugs
+//B067 bugs
 //F001 fatal
 //C001 critical
-//D077 do
+//D085 do
 
 
 
@@ -24,6 +24,24 @@
 //TODO D068 Append query to upgrade when newer objects received from remote and possibility to off than query
 
 //TODO B065 When upgrading component don't changed ident (and perhaps - value)
+
+//TODO D078 Append automatic upgrade files from central repository
+
+//TODO D079 Append connection marker to registration dialog
+
+//TODO D080 Append registration marker to registration dialog
+
+//TODO D081 Append link and sync with repository indication to main window (with tool tip)
+
+//TODO D082 Append navigation to help window on right side
+
+//TODO D083 Append library & repository command to instruments
+
+//TODO B067 Mark as remark all uncompleted links in help files
+
+//TODO D084 Append record indicator to main window
+
+//TODO D085 Append rotation command to select menu
 
 //===================================================================================
 //Fixed:
