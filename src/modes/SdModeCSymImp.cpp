@@ -171,7 +171,7 @@ QString SdModeCSymImp::getStepThema() const
 
 int SdModeCSymImp::getCursor() const
   {
-  return CUR_PLACE;
+  return CUR_COMP;
   }
 
 

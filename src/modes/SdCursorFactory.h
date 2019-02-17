@@ -1,3 +1,16 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Cursor factory. Contains cursor images and retrive them on demand.
+*/
 #ifndef SDCURSORFACTORY_H
 #define SDCURSORFACTORY_H
 
@@ -50,6 +63,7 @@
 #define CUR_ZOOM_IN     144
 #define CUR_ZOOM_OUT    145
 #define CUR_ZOOM_WIN    146
+#define CUR_COMP        147
 
 
 QCursor loadCursor( int cursorId );
