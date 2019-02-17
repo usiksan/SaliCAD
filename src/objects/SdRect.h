@@ -57,7 +57,10 @@ class SdRect : public QRect
     void        mirror( SdPoint origin );
     void        rotate( SdPoint origin, SdPropAngle angle );
 
+    //Test if point inside rectangle or on its border
     bool        isPointInside( const SdPoint point ) const;
+
+    //Test if rectangle inside this rectangle
     bool        isRectInside( const SdRect &r ) const { return contains( r ); }
     bool        isCircleInside( SdCircle circle ) const;
     bool        isAccross( const SdSegment &s ) const;

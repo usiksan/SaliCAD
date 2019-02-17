@@ -46,6 +46,8 @@
 //===================================================================================
 //Fixed:
 
+//D044 Append possibilities to ucom set of pins by select them with rect
+
 //D063 Append project component list (bom) and report generator
 
 //B067 When activate part place bar grid align state not updated

@@ -108,6 +108,10 @@ void SdRect::rotate(SdPoint origin, SdPropAngle angle)
   set( p1, p2 );
   }
 
+
+
+
+//Test if point inside rectangle or on its border
 bool SdRect::isPointInside(const SdPoint point) const
   {
   return getTop() >= point.y() && getBottom() <= point.y() &&
