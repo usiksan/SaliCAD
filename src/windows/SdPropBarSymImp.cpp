@@ -13,11 +13,16 @@ Description
 */
 #include "SdPropBarSymImp.h"
 #include "objects/SdPropSymImp.h"
+#include "SdWCommand.h"
 
 
 SdPropBarSymImp::SdPropBarSymImp(const QString title) :
   QToolBar( title )
   {
+  //Layers management
+  insertAction( nullptr, SdWCommand::cmViewLayers );
+  addSeparator();
+
   //Symbol direction
   mDir0 = addAction( QIcon(QString(":/pic/textDirLR.png")), tr("Symbol angle 0 grad") );
   mDir0->setCheckable(true);
