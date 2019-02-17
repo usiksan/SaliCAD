@@ -255,7 +255,7 @@ QString SdModeCNetWire::getStepHelp() const
 
 QString SdModeCNetWire::getModeThema() const
   {
-  return QString( MODE_HELP "ModeCWire.htm" );
+  return QString( MODE_HELP "ModeCNetWire.htm" );
   }
 
 
@@ -263,7 +263,7 @@ QString SdModeCNetWire::getModeThema() const
 
 QString SdModeCNetWire::getStepThema() const
   {
-  return getStep() == sNextPoint ? QString( MODE_HELP "ModeCWire.htm#nextPoint" ) : QString( MODE_HELP "ModeCWire.htm#firstPoint" );
+  return getStep() == sNextPoint ? QString( MODE_HELP "ModeCNetWire.htm#nextPoint" ) : QString( MODE_HELP "ModeCNetWire.htm#firstPoint" );
   }
 
 
