@@ -163,7 +163,7 @@ QString SdModeCNetName::getStepHelp() const
 
 QString SdModeCNetName::getModeThema() const
   {
-  return QStringLiteral( MODE_HELP "ModeCWireName.htm" );
+  return QStringLiteral( MODE_HELP "ModeCNetName.htm" );
   }
 
 
@@ -171,7 +171,7 @@ QString SdModeCNetName::getModeThema() const
 
 QString SdModeCNetName::getStepThema() const
   {
-  return getStep() == sPlaceName ? QStringLiteral( MODE_HELP "ModeCWireName.htm#placeName" ) : QStringLiteral( MODE_HELP "ModeCWireName.htm#selectNet" );
+  return getStep() == sPlaceName ? QStringLiteral( MODE_HELP "ModeCNetName.htm#placeName" ) : QStringLiteral( MODE_HELP "ModeCNetName.htm#selectNet" );
   }
 
 
