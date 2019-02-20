@@ -73,6 +73,18 @@ void SdCsChannelServer::onBlockReceived( int cmd, QDataStream &is)
       cmObjectRequest( is );
       break;
 
+    case SCPI_FILE_REQUEST :
+      cmFileRequest( is );
+      break;
+
+    case SCPI_ACCESS_CHECK_REQUEST :
+      cmAccessCheckRequest( is );
+      break;
+
+    case SCPI_DELETE_REQUEST :
+      cmDeleteRequest( is );
+      break;
+
     default :
       mSocket->disconnectFromHost();
     }
@@ -253,6 +265,117 @@ void SdCsChannelServer::cmObjectRequest(QDataStream &is)
 
   //Transmit object
   writeBlock( SCPI_OBJECT, ar );
+  }
+
+
+
+
+
+//Object removing. Local requests deleting object by uid.
+void SdCsChannelServer::cmDeleteRequest(QDataStream &is)
+  {
+  SdAuthorInfo info;
+  is >> info;
+
+  //Prepare answer
+  QByteArray ar;
+  QDataStream os( &ar, QIODevice::WriteOnly );
+
+  //For object header
+  SdLibraryHeader header;
+  //For object store
+  QByteArray obj;
+
+  if( sdCsAuthorTable.login( info.mAuthor, info.mKey ) ) {
+    //Execute request objects
+    QString uid;
+    is >> uid;
+
+    //Extract existing header and test if it corresponds to item
+    if( sdLibraryStorage.header( uid, header ) ) {
+      //Mark header as deleted
+      header.setDeleted();
+      //Store "new" object
+      sdLibraryStorage.insert( header, QByteArray() );
+      info.setResult( SCPE_SUCCESSFULL );
+      }
+    else info.setResult( SCPE_OBJECT_NOT_FOUND );
+    }
+  else info.setResult( SCPE_NOT_REGISTERED );
+
+  os << mVersion << info;
+
+  //Transmit object
+  writeBlock( SCPI_DELETE_ACK, ar );
+  }
+
+
+
+
+
+
+//File request. Local requests file by fileName. Remote return file if available.
+//All files must be located in upload directory
+void SdCsChannelServer::cmFileRequest(QDataStream &is)
+  {
+  SdAuthorInfo info;
+  is >> info;
+
+  //Prepare answer
+  QByteArray ar;
+  QDataStream os( &ar, QIODevice::WriteOnly );
+
+  //For file contents
+  QByteArray obj;
+
+  if( sdCsAuthorTable.login( info.mAuthor, info.mKey ) ) {
+    //Execute request file
+    QString fileName;
+    is >> fileName;
+
+    //Requested file must not have slash
+    if( fileName.contains(QChar('/')) )
+      info.setResult( SCPE_OBJECT_NOT_FOUND );
+    else {
+      QFile file( QCoreApplication::applicationDirPath() + QString("/upload/") + fileName );
+      if( file.open( QIODevice::ReadOnly ) ) {
+        obj = file.readAll();
+        info.setResult( SCPE_SUCCESSFULL );
+        }
+      else
+        info.setResult( SCPE_OBJECT_NOT_FOUND );
+      }
+    }
+  else info.setResult( SCPE_NOT_REGISTERED );
+
+  os << mVersion << info << obj;
+
+  //Transmit object
+  writeBlock( SCPI_FILE, ar );
+  }
+
+
+
+
+//Check registration
+void SdCsChannelServer::cmAccessCheckRequest(QDataStream &is)
+  {
+  SdAuthorInfo info;
+  is >> info;
+
+  //Prepare answer
+  QByteArray ar;
+  QDataStream os( &ar, QIODevice::WriteOnly );
+
+  if( sdCsAuthorTable.login( info.mAuthor, info.mKey ) )
+    info.setResult( SCPE_SUCCESSFULL );
+  else
+    info.setResult( SCPE_NOT_REGISTERED );
+
+  os << mVersion << info;
+
+  //Transmit object
+  writeBlock( SCPI_ACCESS_CHECK_ACK, ar );
   }
 
 

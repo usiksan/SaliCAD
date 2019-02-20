@@ -18,13 +18,16 @@ History
   03.01.2018 v0.4 reconstructed interchange algorithm
   24.09.2018 v0.5 remove category from database
                   append library remote maintance
+  20.02.2019 v0.6 append file transfer capabilities
+                  append object deleting command
+                  append check registration command
 */
 #ifndef SDCSCONFIG_H
 #define SDCSCONFIG_H
 
 #define SALI_CAD_MAJOR   0
-#define SALI_CAD_MINOR   5
-#define SALI_CAD_VERSION "v0.5"
+#define SALI_CAD_MINOR   6
+#define SALI_CAD_VERSION "v0.6"
 
 #define SALI_CAD_SERVER_INFO "A.Sibilev SaliCAD library server " SALI_CAD_VERSION
 

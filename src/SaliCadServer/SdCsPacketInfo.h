@@ -24,36 +24,57 @@ Description
 #include <QList>
 
 //Commands
-#define SCPI_REGISTARTION_REQUEST 1 //Request to registration new user
-                                    //data: SdAuthorInfo
-#define SCPI_REGISTRATION_INFO    2 //Answer with registration data
-                                    //data: SdCadServerVersion
-                                    //      SdAuthorInfo
+#define SCPI_REGISTARTION_REQUEST  1 //Request to registration new user
+                                     //data: SdAuthorInfo
+#define SCPI_REGISTRATION_INFO     2 //Answer with registration data
+                                     //data: SdCadServerVersion
+                                     //      SdAuthorInfo
 
-#define SCPI_MACHINE_REQUEST      3 //Add new machine to existing user
-                                    //data: SdAuthorInfo
-#define SCPI_MACHINE_INFO         4 //Answer with registration data
-                                    //data: SdCadServerVersion
-                                    //      SdAuthorInfo
-
-
-#define SCPI_SYNC_REQUEST         5 //Request to get update data base list
-                                    //data: SdAuthorInfo
-                                    //      list of
-                                    //        SdItemInfo, SdProjectItem
-#define SCPI_SYNC_LIST            6 //Upgrade data base list
-                                    //data: SdCadServerVersion
-                                    //      SdAuthorInfo
-                                    //      SdItemInfoList - list of upgrade obects
+#define SCPI_MACHINE_REQUEST       3 //Add new machine to existing user
+                                     //data: SdAuthorInfo
+#define SCPI_MACHINE_INFO          4 //Answer with registration data
+                                     //data: SdCadServerVersion
+                                     //      SdAuthorInfo
 
 
-#define SCPI_OBJECT_REQUEST       7 //Request to get object from data base with desired hashId
-                                    //data: SdAuthorInfo
-                                    //      QString - hashId of requested object
-#define SCPI_OBJECT               8 //Object
-                                    //data: SdCadServerVersion
-                                    //      SdAuthorInfo
-                                    //      SdItemInfo, SdProjectItem
+#define SCPI_SYNC_REQUEST          5 //Request to get update data base list
+                                     //data: SdAuthorInfo
+                                     //      list of
+                                     //        SdItemInfo, SdProjectItem
+#define SCPI_SYNC_LIST             6 //Upgrade data base list
+                                     //data: SdCadServerVersion
+                                     //      SdAuthorInfo
+                                     //      SdItemInfoList - list of upgrade obects
+
+
+#define SCPI_OBJECT_REQUEST        7 //Request to get object from data base with desired hashId
+                                     //data: SdAuthorInfo
+                                     //      QString - hashId of requested object
+#define SCPI_OBJECT                8 //Object
+                                     //data: SdCadServerVersion
+                                     //      SdAuthorInfo
+                                     //      SdItemInfo, SdProjectItem
+
+#define SCPI_FILE_REQUEST          9 //Request to get file from data base with desired fileName
+                                     //data: SdAuthorInfo
+                                     //      QString - fileName of requested file
+#define SCPI_FILE                 10 //File
+                                     //data: SdCadServerVersion
+                                     //      SdAuthorInfo
+                                     //      contents of file
+
+#define SCPI_ACCESS_CHECK_REQUEST 11 //Request to check if registered.
+                                     //data: SdAuthorInfo
+#define SCPI_ACCESS_CHECK_ACK     12 //Acknowledges with registration data
+                                     //data: SdCadServerVersion
+                                     //      SdAuthorInfo
+
+#define SCPI_DELETE_REQUEST       13 //Request to remove object from data base
+                                     //data: SdAuthorInfo
+                                     //      QString - hashId of requested object
+#define SCPI_DELETE_ACK           14 //Object deleting acknowledge
+                                     //data: SdCadServerVersion
+                                     //      SdAuthorInfo
 
 
 #define SCPE_UNDEFINED              0 //Result of operation is undefined

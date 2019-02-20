@@ -49,9 +49,14 @@ class SdCsChannelServer : public SdCsChannel
     void cmObjectRequest( QDataStream &is );
 
     //Object removing. Local requests deleting object by uid.
-    void cmObjectDelete( QDataStream &is );
+    void cmDeleteRequest( QDataStream &is );
 
-    //
+    //File request. Local requests file by fileName. Remote return file if available.
+    //All files must be located in upload directory
+    void cmFileRequest( QDataStream &is );
+
+    //Check registration
+    void cmAccessCheckRequest( QDataStream &is );
   };
 
 #endif // SDCSCHANNELSERVER_H
