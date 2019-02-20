@@ -148,8 +148,8 @@ class SdGraphSymImp : public SdGraph
     void            moveToPlate( SdPItemPlate *plate, SdUndo *undo );
     //Link with partImp
     void            setLinkSection(int section, SdGraphPartImp *partImp );
-    //Unconnect pin in point
-    void            unconnectPinInPoint(SdPoint p , SdUndo *undo, const QString undoTitle);
+    //Unconnect pin over rect
+    void            unconnectPinOverRect(SdRect over , SdUndo *undo, const QString undoTitle);
     //Unlink symbol from part
     void            unLinkPart( SdUndo *undo );
     //Link auto partImp. partImp and section are selected automatic

@@ -157,7 +157,6 @@
         <file>pic/textDirLR.png</file>
         <file>pic/textDirRL.png</file>
         <file>pic/textDirTB.png</file>
-        <file>pic/Thumbs.db</file>
         <file>pic/tjBottom.png</file>
         <file>pic/tjCenter.png</file>
         <file>pic/tjLeft.png</file>
@@ -275,5 +274,6 @@
         <file>pic/objPcbWireMove.png</file>
         <file>pic/objPlateOrigin.png</file>
         <file>pic/objRemoveLoop.png</file>
+        <file>pic/cursorComp.png</file>
     </qresource>
 </RCC>

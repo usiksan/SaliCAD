@@ -44,7 +44,7 @@
             </size>
            </property>
            <property name="text">
-            <string>Fields filtr</string>
+            <string>Fields filter</string>
            </property>
           </widget>
          </item>
@@ -223,6 +223,13 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mHelp">
+       <property name="text">
+        <string>Help</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="mReject">

@@ -1,6 +1,21 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Cursor factory. Contains cursor images and retrive them on demand.
+*/
 #include "SdCursorFactory.h"
 #include <QString>
 #include <QMap>
+#include <QImage>
+#include <QPixmap>
 
 QCursor loadWindowsCursor( const QString fname );
 
@@ -55,6 +70,7 @@ static QCursor createCursor( int cursorId )
     case CUR_ZOOM_IN     : return loadWindowsCursor( QString(":/pic/zoomin.cur") );
     case CUR_ZOOM_OUT    : return loadWindowsCursor( QString(":/pic/zoomout.cur") );
     case CUR_ZOOM_WIN    : return loadWindowsCursor( QString(":/pic/zoomwin.cur") );
+    case CUR_COMP        : return QCursor( QPixmap(QStringLiteral(":/pic/cursorComp.png")), 4, 4 );
     }
   return QCursor();
   }

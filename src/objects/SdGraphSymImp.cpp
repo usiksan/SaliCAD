@@ -162,17 +162,22 @@ void SdGraphSymImp::setLinkSection(int section, SdGraphPartImp *partImp )
 
 
 
-//Unconnect pin in point
-void SdGraphSymImp::unconnectPinInPoint( SdPoint p, SdUndo *undo, const QString undoTitle )
+//Unconnect pin over rect
+void SdGraphSymImp::unconnectPinOverRect(SdRect over, SdUndo *undo, const QString undoTitle)
   {
-  for( SdSymImpPinTable::const_iterator i = mPins.constBegin(); i != mPins.constEnd(); i++ )
-    if( i.value().mPosition == p ) {
-      if( undo ) undo->begin( undoTitle, getSheet() );
+  bool first = true;
+  for( auto i = mPins.constBegin(); i != mPins.constEnd(); i++ )
+    if( over.isPointInside( i.value().mPosition ) ) {
+      if( undo && first ) {
+        first = false;
+        undo->begin( undoTitle, getSheet() );
+        }
       //Set new state of pin
       pinConnectionSet( i.key(), QString(), undo );
-      return;
       }
   }
+
+
 
 
 

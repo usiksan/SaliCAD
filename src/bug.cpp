@@ -1,8 +1,8 @@
 ﻿
-//B066 bugs
+//B067 bugs
 //F001 fatal
 //C001 critical
-//D077 do
+//D086 do
 
 
 
@@ -15,8 +15,6 @@
 
 //TODO D060 Append object replacing capability and autoreplacing
 
-//TODO D063 Append project component list (bom) and report generator
-
 //TODO D064 Helper graph objects for other graph objects positioning
 
 //TODO D067 Append query to upgrade when loading project if there are upgrading
@@ -25,8 +23,32 @@
 
 //TODO B065 When upgrading component don't changed ident (and perhaps - value)
 
+//TODO D078 Append automatic upgrade files from central repository
+
+//TODO D079 Append connection marker to registration dialog
+
+//TODO D080 Append registration marker to registration dialog
+
+//TODO D081 Append link and sync with repository indication to main window (with tool tip)
+
+//TODO D082 Append navigation to help window on right side
+
+//TODO D083 Append library & repository command to instruments
+
+//TODO B067 Mark as remark all uncompleted links in help files
+
+//TODO D084 Append record indicator to main window
+
+//TODO D085 Append rotation command to select menu
+
+//TODO D086 Append automatic form selection when sheet creation
+
 //===================================================================================
 //Fixed:
+
+//D044 Append possibilities to ucom set of pins by select them with rect
+
+//D063 Append project component list (bom) and report generator
 
 //B067 When activate part place bar grid align state not updated
 

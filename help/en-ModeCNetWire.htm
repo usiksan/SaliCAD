@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD Insert net wire mode</title>
+  </head>
+  <body>
+    <h1 align="center">Insert net wire</h1>
+    <p><a href="contents.htm">Contents</a>=&gt;<a href="MModes.htm">Modes</a>=&gt;<a
+        href="MSheet.htm">Sheet specific modes</a>=&gt;Insert net wire</p>
+    <p>Tool bar: <img src="objWire.png" width="24" height="24" border="1"></p>
+    <p>Menu: Sheet|Insert net wire</p>
+    <p>Cursor: <img src="cursorNetWire.png" width="31" height="31" border="1"></p>
+    <p>Inserts net wire into schematic sheet.</p>
+    <p>1. Setup enter net wire name</p>
+    <p>2. Setup/change net wire properties</p>
+    <p>3. Enter start point of segment</p>
+    <p>4. Enter end point of the segment. After you specify the end point of the
+      segment, it is entered into the project. Automatically, the end point of
+      the segment serves as the starting point of the next segment, thus
+      allowing the formation of a polyline.</p>
+    <p>5. Repeat steps 2-4 to enter the entire polyline.</p>
+    <p>6. To stop entering the net wire polyline, press the right mouse button.</p>
+    <p>Note: If the next point of the net wire polyline falls on a segment of
+      another net wire polyline, you will be prompted to combine the two chains
+      into one. If both net wires have names different from the default names,
+      the dialog of the option of combining net wires is additionally displayed.</p>
+    <p>Net wire name and properties set specified with net wire properties bar:</p>
+    <p><img src="propBarNetWire.png" width="788" height="36" border="1"></p>
+    <ul>
+      <li><img src="mouseBLeft.png" width="32" height="48"> You can specify a
+        point by clicking the left mouse button or manually.</li>
+      <li><img src="mouseBRight.png" width="32" height="48"> The termination of
+        the input is done by pressing the right mouse button.</li>
+    </ul>
+    <p><b>"Smart mode"</b></p>
+    <p>There are two levels of smart mode for net wire mode:</p>
+    <p>At the first level, when you enter the first point, smart mode offers a
+      full connection in the vicinity of the mouse cursor. The starting point
+      can be offered both on the unconnected pin and on the other net segment.</p>
+    <p>Net wire "smart mode" example. System offers to connect pin A to pin B. </p>
+    <p><img src="smartNetWire1.png" width="102" height="99" border="1"></p>
+    <p>Net wire "smart mode" example. System offers to connect existing net wire
+      segment A to pin B. </p>
+    <p><img src="smartNetWire2.png" width="193" height="114" border="1"></p>
+    <p>At the second level, when entering the next, but not the first point of
+      the net wire polyline, this point is offered at the nearest free pin at
+      the last movement of the cursor direction. In other words, the search for
+      free pin is in the direction of the mouse cursor movement. At the same
+      time, a polyline is proposed before this conclusion.</p>
+    <p><img src="mouseBMiddle.png" width="32" height="48"> Middle mouse button
+      or "space" - confirmation of "smart" input.</p>
+  </body>
+</html>
