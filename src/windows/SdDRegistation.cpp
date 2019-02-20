@@ -22,6 +22,7 @@ Description
 
 #include <QSettings>
 #include <QMessageBox>
+#include <QTimer>
 
 SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
   QDialog(parent),
@@ -57,6 +58,18 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
   connect( ui->mHelp, &QPushButton::clicked, this, [this] () {
     SdDHelp::help( QString("SdDRegistration.htm"), this );
     } );
+
+  //Check registration status at start
+  connect( sdObjectNetClient, &SdObjectNetClient::connectionStatus, this, [this] (const QString msg, bool ok ) {
+    ui->mServerStatus->setText(msg);
+    if( !ok )
+      ui->mRegistrationStatus->setText( tr("No information") );
+    });
+  connect( sdObjectNetClient, &SdObjectNetClient::registrationStatus, this, [this] (const QString msg, bool ok ) {
+    Q_UNUSED(ok)
+    ui->mRegistrationStatus->setText(msg);
+    });
+  QTimer::singleShot( 300, sdObjectNetClient, &SdObjectNetClient::doCheck );
   }
 
 

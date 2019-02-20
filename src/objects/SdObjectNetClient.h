@@ -63,6 +63,12 @@ class SdObjectNetClient : public SdCsChannel
     //Signal send when on sync new object received
     void newObjectsReceived();
 
+    //Signal on connection ok and fail
+    void connectionStatus( QString msg, bool ok );
+
+    //Signal on registration status
+    void registrationStatus( QString msg, bool ok );
+
   public slots:
 
     //Begin registration process
@@ -82,6 +88,9 @@ class SdObjectNetClient : public SdCsChannel
 
     void startSync( bool start );
 
+    //Check registration
+    void doCheck();
+
     // SdCsChannel interface
   public:
     virtual void onBlockReceived( int cmd, QDataStream &is ) override;
@@ -93,6 +102,7 @@ class SdObjectNetClient : public SdCsChannel
     void    cmSyncList( QDataStream &is );
     void    cmObject( QDataStream &is );
     void    startTransmit();
+    void    cmCheck( QDataStream &is );
   };
 
 //Main object for remote database communication

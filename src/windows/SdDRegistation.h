@@ -18,6 +18,7 @@ Description
 #define SDDREGISTATION_H
 
 #include <QDialog>
+//#include <QTimer>
 
 namespace Ui {
 class SdDRegistation;
@@ -27,8 +28,9 @@ class SdDRegistation : public QDialog
   {
     Q_OBJECT
 
-    bool mFromHelp;
-    int  mNameStatus; //0-empty, 1-sali, 2-other
+    //QTimer mPeriodic;   //Timer for periodic check registration status
+    bool   mFromHelp;
+    int    mNameStatus; //0-empty, 1-sali, 2-other
   public:
     explicit SdDRegistation( bool fromHelp = true, QWidget *parent = nullptr);
     ~SdDRegistation();

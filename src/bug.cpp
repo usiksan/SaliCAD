@@ -25,10 +25,6 @@
 
 //TODO D078 Append automatic upgrade files from central repository
 
-//TODO D079 Append connection marker to registration dialog
-
-//TODO D080 Append registration marker to registration dialog
-
 //TODO D081 Append link and sync with repository indication to main window (with tool tip)
 
 //TODO D082 Append navigation to help window on right side
@@ -45,6 +41,10 @@
 
 //===================================================================================
 //Fixed:
+
+//D079 Append connection marker to registration dialog
+
+//D080 Append registration marker to registration dialog
 
 //D044 Append possibilities to ucom set of pins by select them with rect
 

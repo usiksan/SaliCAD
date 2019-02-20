@@ -51,7 +51,9 @@ SdObjectNetClient::SdObjectNetClient(QObject *parent) :
   connect( mSocket, &QTcpSocket::connected, this, &SdObjectNetClient::onConnected );
   connect( &mTimer, &QTimer::timeout, this, &SdObjectNetClient::doSync );
   connect( mSocket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), [=] (QAbstractSocket::SocketError socketError) {
-    emit process( tr("Connection error: %1").arg( socketError), true );
+    auto msg = tr("Connection error: %1").arg( socketError);
+    emit process( msg, true );
+    emit connectionStatus( msg, false );
     });
   }
 
@@ -146,8 +148,10 @@ void SdObjectNetClient::doObject(const QString hashId)
 //When connected to host send to it prepared block
 void SdObjectNetClient::onConnected()
   {
-  qDebug() << "Connected to host" << mHostIp;
-  emit process( tr("Connected to host %1").arg(mHostIp), false );
+  //qDebug() << "Connected to host" << mHostIp;
+  auto msg = tr("Connected to host %1").arg(mHostIp);
+  emit process( msg, false );
+  emit connectionStatus( msg, true );
   startTransmit();
   }
 
@@ -209,6 +213,24 @@ void SdObjectNetClient::startSync(bool start)
 
 
 
+//Check registration
+void SdObjectNetClient::doCheck()
+  {
+  mBuffer.clear();
+  QDataStream os( &mBuffer, QIODevice::WriteOnly );
+  SdAuthorInfo info( mAuthor, mKey, 0 );
+  os << info;
+  mCommand = SCPI_ACCESS_CHECK_REQUEST;
+  if( mSocket->state() != QAbstractSocket::ConnectedState ) {
+    mSocket->connectToHost( QHostAddress(mHostIp), SD_DEFAULT_PORT );
+    emit process( tr("Try connect to host %1").arg(mHostIp), false );
+    }
+  }
+
+
+
+
+
 
 
 
@@ -234,6 +256,9 @@ void SdObjectNetClient::onBlockReceived(int cmd, QDataStream &is)
     case SCPI_OBJECT :
       cmObject( is );
       break;
+
+    case SCPI_ACCESS_CHECK_ACK :
+      cmCheck( is );
     }
   startTransmit();
   }
@@ -245,7 +270,7 @@ void SdObjectNetClient::cmRegistrationInfo(QDataStream &is)
   {
   SdAuthorInfo info;
   is >> info;
-  qDebug() << "cmRegistrationInfo" << info.mKey;
+  //qDebug() << "cmRegistrationInfo" << info.mKey;
   if( info.isSuccessfull() ) {
     QSettings s;
     s.setValue( SDK_GLOBAL_AUTHOR, info.mAuthor );
@@ -259,9 +284,15 @@ void SdObjectNetClient::cmRegistrationInfo(QDataStream &is)
     s.setValue( SDK_REMOTE_SYNC, mRemoteSyncIndex );
     s.setValue( SDK_LOCAL_SYNC, mLocalSyncIndex );
     //doSync();
-    emit process( tr("Registration successfull"), false );
+    auto msg = tr("Registration successfull");
+    emit process( msg, false );
+    emit registrationStatus( msg, true );
     }
-  else emit process( tr("Failure registration. ") + error(info.result()), false );
+  else {
+    auto msg = tr("Failure registration. ") + error(info.result());
+    emit process( msg, false );
+    emit registrationStatus( msg, false );
+    }
   emit registrationComplete( info.mAuthor, info.mEmail, info.mKey, info.mRemain, info.result() );
   }
 
@@ -347,6 +378,24 @@ void SdObjectNetClient::startTransmit()
   else {
     qDebug() << "Disconnect";
     mSocket->disconnectFromHost();
+    }
+  }
+
+
+
+void SdObjectNetClient::cmCheck(QDataStream &is)
+  {
+  SdAuthorInfo info;
+  is >> info;
+  if( info.isSuccessfull() ) {
+    auto msg = tr("%1 registered").arg(mAuthor);
+    emit process( msg, false );
+    emit registrationStatus( msg, true );
+    }
+  else {
+    auto msg = tr("%1 not registered").arg(mAuthor);
+    emit process( msg, false );
+    emit registrationStatus( msg, false );
     }
   }
 
