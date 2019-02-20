@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD Component editor</title>
+  </head>
+  <body>
+    <h1 align="center">Component editor</h1>
+    <p><a href="contents.htm">Contents</a>=&gt;<a href="MModes.htm">Modes</a>=&gt;Component
+      editor</p>
+    <p>The component editor is not a graphical editor, so there are no graphical
+      modes in it. The component editor is a dialog form with which you can:</p>
+    <ul>
+      <li>set and view the schematic sections that make up the component</li>
+      <li>set and view the correspondence of the pin numbers of the enclosure to
+        the pin names of each section</li>
+      <li>set and view component part</li>
+      <li>set and view component parameters</li>
+      <li>set and view component parameters table</li>
+    </ul>
+    <p>The upper topic of the form is used to work with schematic images of the
+      component sections. From left to right are the following elements:</p>
+    <ul>
+      <li>preview window for the currently selected section</li>
+      <li>the list of sections of the component. When you select a section in
+        the list, it is displayed in the preview window, and the packing
+        information is displayed in the table to the right</li>
+      <li>the packing information table of the currently selected section. In
+        this table presented correspondence of the pin numbers of the enclosure
+        to the pin names of selected section. Each section has its own packing
+        information table, which is included when you select the appropriate
+        section</li>
+      <li>buttons for working with sections</li>
+    </ul>
+    <p>The following buttons are used to work with sections:</p>
+    <ul>
+      <li>"Add section" Clicking this button enables the component section
+        search and selection dialog box. After you select a section, it is
+        inserted into the list of component sections</li>
+      <li>"Duplicate" Clicking this button duplicates the currently selected
+        section. This button is very useful when creating components with
+        several identical sections</li>
+      <li>"Select" Clicking this button enables the component section search and
+        selection dialog box. After you select a section, it replaces the
+        currently selected section of the component</li>
+      <li>"Delete section". Clicking this button deletes the currently selected
+        section</li>
+      <li>"Delete all." Clicking this button deletes all sections of the
+        component</li>
+    </ul>
+    <p>All of the sections manipulations can be undo.</p>
+    <p>The middle topic of the form is used to work with parts. From left to
+      right are the following elements:</p>
+    <ul>
+      <li>preview window of the current component part</li>
+      <li>the name of the component part</li>
+      <li>button to select the component part. When you click this button, the
+        component part search and select dialog box is enabled. After selecting
+        the part, it is set to "default" for this component</li>
+    </ul>
+    <p>The lower right topic of the form is used to work with the component
+      parameters. For this purpose serve:</p>
+    <ul>
+      <li>table of component parameters. This table is a table of the form
+        "key-value", where "key" is the name of the parameter, and "value" is
+        the value of the parameter. Parameter values can be changed directly in
+        the parameter table</li>
+      <li>to work with the parameters themselves, use the group of buttons</li>
+      <ul>
+        <li>"Add parameter" When you click this button, you are prompted to
+          enter the parameter name first and then its value. The parameter is
+          then inserted with the value into the parameter table. If the table
+          already has a parameter with the same name, it is replaced with the
+          newly entered one</li>
+        <li>"By default" When you click this button, a dialog box appears with a
+          list of <a href="SdDParamDefault.htm">default settings</a>. It allows
+          you to select a set of parameters to be inserted. This dialog box
+          eliminates errors associated with entering parameters manually</li>
+        <li>"Copy" When you click this button, the component search and select
+          dialog box is enabled. After you select a component, its parameters
+          are copied to the current component. The original component itself is
+          not changed</li>
+        <li>"Delete" Clicking this button deletes the current setting</li>
+        <li>"Variant table...". When you click this button, the dialog box for
+          viewing and editing for the component parameters table is enabled</li>
+      </ul>
+    </ul>
+    <br>
+    <p>&nbsp;</p>
+  </body>
+</html>
