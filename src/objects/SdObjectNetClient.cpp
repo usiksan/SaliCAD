@@ -231,6 +231,24 @@ void SdObjectNetClient::doCheck()
 
 
 
+//Receiv file from repository
+void SdObjectNetClient::doFile(const QString fileName)
+  {
+  mBuffer.clear();
+  QDataStream os( &mBuffer, QIODevice::WriteOnly );
+  SdAuthorInfo info( mAuthor, mKey, 0 );
+  os << info << fileName;
+  mCommand = SCPI_FILE_REQUEST;
+  if( mSocket->state() != QAbstractSocket::ConnectedState ) {
+    mSocket->connectToHost( QHostAddress(mHostIp), SD_DEFAULT_PORT );
+    emit process( tr("Try connect to host %1").arg(mHostIp), false );
+    }
+  }
+
+
+
+
+
 
 
 
@@ -255,6 +273,10 @@ void SdObjectNetClient::onBlockReceived(int cmd, QDataStream &is)
 
     case SCPI_OBJECT :
       cmObject( is );
+      break;
+
+    case SCPI_FILE :
+      cmFile( is );
       break;
 
     case SCPI_ACCESS_CHECK_ACK :
@@ -393,10 +415,22 @@ void SdObjectNetClient::cmCheck(QDataStream &is)
     emit registrationStatus( msg, true );
     }
   else {
-    auto msg = tr("%1 not registered").arg(mAuthor);
+    auto msg = tr("%1 not registered or key failure").arg(mAuthor);
     emit process( msg, false );
     emit registrationStatus( msg, false );
     }
+  }
+
+
+
+
+void SdObjectNetClient::cmFile(QDataStream &is)
+  {
+  SdAuthorInfo info;
+  QString fileName;
+  QByteArray data;
+  is >> info >> fileName >> data;
+  emit fileContents( info.result(), fileName, data );
   }
 
 

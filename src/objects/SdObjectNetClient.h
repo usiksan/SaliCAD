@@ -69,6 +69,9 @@ class SdObjectNetClient : public SdCsChannel
     //Signal on registration status
     void registrationStatus( QString msg, bool ok );
 
+    //Signal on file receiv
+    void fileContents( int result, QString fileName, QByteArray fileData );
+
   public slots:
 
     //Begin registration process
@@ -91,6 +94,9 @@ class SdObjectNetClient : public SdCsChannel
     //Check registration
     void doCheck();
 
+    //Receiv file from repository
+    void doFile( const QString fileName );
+
     // SdCsChannel interface
   public:
     virtual void onBlockReceived( int cmd, QDataStream &is ) override;
@@ -103,6 +109,7 @@ class SdObjectNetClient : public SdCsChannel
     void    cmObject( QDataStream &is );
     void    startTransmit();
     void    cmCheck( QDataStream &is );
+    void    cmFile( QDataStream &is );
   };
 
 //Main object for remote database communication

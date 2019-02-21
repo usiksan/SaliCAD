@@ -144,6 +144,7 @@ History
   03.02.2019 v0.60 Append BOM report generator
   13.02.2019 v0.61 Append to road mode possibilities to connect to middle of road
                    and automatic loop detection and removing
+  21.02.2019 v0.62 Append upgrade check
 */
 
 #ifndef SDCONFIG
@@ -155,13 +156,14 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             61
+#define SD_VERSION_MINOR             62
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
 #define SD_DEFAULT_IP                "62.109.11.83"
 //#define SD_DEFAULT_IP                "127.0.0.0"
 #define SD_DEFAULT_PORT              1970
+#define SD_UPGRADE_WEB               "http:/salicad.salilab.com/downloads/"
 
 
 //When defined disable registration with sali name

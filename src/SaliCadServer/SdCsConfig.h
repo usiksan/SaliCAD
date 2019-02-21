@@ -21,17 +21,18 @@ History
   20.02.2019 v0.6 append file transfer capabilities
                   append object deleting command
                   append check registration command
+  21.02.2019 v0.7 change file transfer protocol - append file name to answer
 */
 #ifndef SDCSCONFIG_H
 #define SDCSCONFIG_H
 
 #define SALI_CAD_MAJOR   0
-#define SALI_CAD_MINOR   6
-#define SALI_CAD_VERSION "v0.6"
+#define SALI_CAD_MINOR   7
+#define SALI_CAD_VERSION "v0.7"
 
 #define SALI_CAD_SERVER_INFO "A.Sibilev SaliCAD library server " SALI_CAD_VERSION
 
-#define UPGRADE_PATH "upgrade/"
+#define UPLOAD_PATH  "/upload/"
 #define LIBRARY_PATH "/library/"
 
 #define MACHINE_LIMIT 3

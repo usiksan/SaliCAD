@@ -98,6 +98,10 @@ class SdWMain : public QMainWindow
     //Calling when press close tab of editor
     void onCloseEditor( int index );
 
+
+    //On file received from remote repository
+    void onFileReceived(int result, QString fileName, QByteArray data );
+
     //Commands [Реакции на команды]
     //File menu commands
     void cmFileNew();

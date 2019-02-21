@@ -61,6 +61,7 @@ Description
 #define SCPI_FILE                 10 //File
                                      //data: SdCadServerVersion
                                      //      SdAuthorInfo
+                                     //      QString - fileName of file
                                      //      contents of file
 
 #define SCPI_ACCESS_CHECK_REQUEST 11 //Request to check if registered.

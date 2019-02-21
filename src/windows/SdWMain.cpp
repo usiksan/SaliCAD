@@ -36,6 +36,7 @@ Description
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdObjectFactory.h"
+#include "objects/SdObjectNetClient.h"
 #include "guider/SdGuiderCapture.h"
 
 #include <QSettings>
@@ -54,6 +55,9 @@ Description
 #include <QMimeData>
 #include <QStatusBar>
 #include <QDebug>
+#include <QJsonDocument>
+#include <QDesktopServices>
+
 
 SdWMain::SdWMain(QStringList args, QWidget *parent) :
   QMainWindow(parent)
@@ -152,6 +156,14 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
 
   //Show help intro
   cmHelpIntro();
+
+  connect( sdObjectNetClient, &SdObjectNetClient::fileContents, this, &SdWMain::onFileReceived );
+
+  //When start application we check for updating
+  QTimer::singleShot( 300, this, [] () {
+    //We send request to receiv version info file
+    sdObjectNetClient->doFile( QStringLiteral("version") );
+    });
   }
 
 
@@ -469,6 +481,38 @@ void SdWMain::onCloseEditor(int index)
   mWEditors->removeTab(index);
   if( toRemove )
     toRemove->deleteLater();
+  }
+
+
+
+
+//On file received from remote repository
+void SdWMain::onFileReceived(int result, QString fileName, QByteArray data)
+  {
+  if( result == SCPE_SUCCESSFULL ) {
+    if( fileName == QStringLiteral("version") ) {
+      QJsonObject obj = QJsonDocument::fromJson( data ).object();
+#ifdef Q_OS_LINUX
+      QJsonObject version = obj.value( QStringLiteral("linux") ).toObject();
+#endif
+#ifdef Q_OS_WIN
+      QJsonObject version = obj.value( QStringLiteral("windows") ).toObject();
+#endif
+      int major = version.value( QStringLiteral("major") ).toInt();
+      int minor = version.value( QStringLiteral("minor") ).toInt();
+      if( major > SD_VERSION_MAJOR || (major == SD_VERSION_MAJOR && minor > SD_VERSION_MINOR) ) {
+        //Need update
+        if( QMessageBox::question( this, tr("Warning!"), tr("Available new version %1.%2! And your version is %3.%4. Update?").arg(major).arg(minor).arg(SD_VERSION_MAJOR).arg(SD_VERSION_MINOR)) == QMessageBox::Yes ) {
+          //updating acknowledged
+          //start update process
+          QDesktopServices::openUrl( QUrl(SD_UPGRADE_WEB) );
+          //and exit application
+          close();
+          }
+        }
+      }
+    //qDebug() << data;
+    }
   }
 
 

@@ -327,17 +327,17 @@ void SdCsChannelServer::cmFileRequest(QDataStream &is)
 
   //For file contents
   QByteArray obj;
+  QString fileName;
 
   if( sdCsAuthorTable.login( info.mAuthor, info.mKey ) ) {
     //Execute request file
-    QString fileName;
     is >> fileName;
 
     //Requested file must not have slash
     if( fileName.contains(QChar('/')) )
       info.setResult( SCPE_OBJECT_NOT_FOUND );
     else {
-      QFile file( QCoreApplication::applicationDirPath() + QString("/upload/") + fileName );
+      QFile file( QCoreApplication::applicationDirPath() + QString(UPLOAD_PATH) + fileName );
       if( file.open( QIODevice::ReadOnly ) ) {
         obj = file.readAll();
         info.setResult( SCPE_SUCCESSFULL );
@@ -348,7 +348,7 @@ void SdCsChannelServer::cmFileRequest(QDataStream &is)
     }
   else info.setResult( SCPE_NOT_REGISTERED );
 
-  os << mVersion << info << obj;
+  os << mVersion << info << fileName << obj;
 
   //Transmit object
   writeBlock( SCPI_FILE, ar );
