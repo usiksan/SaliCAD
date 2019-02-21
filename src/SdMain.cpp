@@ -88,18 +88,6 @@ int main(int argc, char *argv[])
     }
 
 
-//Test for
-//  SdLibraryHeader hdr;
-//  hdr.mAuthor = QString("Ich haise Sasha Sibilev");
-//  hdr.mClass = dctComponent;
-//  hdr.mTime = 100;
-//  hdr.mType = QString(SD_TYPE_COMPONENT);
-//  for( int i = 0; i < 1000000; i++ ) {
-//    hdr.mName = QString("My name is boris smirnov %1").arg(i);
-//    sdLibraryStorage.setHeader( hdr );
-//    }
-
-
   //Creating application main window
   SdWMain w( a.arguments() );
   if( s.value(QString(SDK_WMAIN_MAX), QVariant(true)).toBool() )
