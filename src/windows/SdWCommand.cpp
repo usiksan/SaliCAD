@@ -43,31 +43,31 @@ Description
 void SdWCommand::createMenu(SdWMain *frame)
   {
   //File menu [Меню Файл]
-  menuFile = new QMenu( frame->tr("File") );
+  menuFile = new QMenu( QObject::tr("File") );
 
 
 
 
-  cmFileNew = menuFile->addAction( QIcon(QString(":/pic/new.png")), frame->tr("New project"), frame, SLOT(cmFileNew()) );
-  cmFileLoadFromLibrary = menuFile->addAction( QIcon(QString(":/pic/download.png")), frame->tr("Load from library..."), frame, SLOT(cmFileLoad()) );
-  cmFileOpen = menuFile->addAction( QIcon(QString(":/pic/fileOpen.png")), frame->tr("Open project ..."), frame, SLOT(cmFileOpen()) );
-  menuFilePrevious = menuFile->addMenu( frame->tr("Previous files") );
+  cmFileNew = menuFile->addAction( QIcon(QString(":/pic/new.png")), QObject::tr("New project"), frame, SLOT(cmFileNew()) );
+  cmFileLoadFromLibrary = menuFile->addAction( QIcon(QString(":/pic/download.png")), QObject::tr("Load from library..."), frame, SLOT(cmFileLoad()) );
+  cmFileOpen = menuFile->addAction( QIcon(QString(":/pic/fileOpen.png")), QObject::tr("Open project ..."), frame, SLOT(cmFileOpen()) );
+  menuFilePrevious = menuFile->addMenu( QObject::tr("Previous files") );
   menuFile->addSeparator();
-  cmFileClose = menuFile->addAction( QIcon(QString(":/pic/closeFile.png")), frame->tr("Close project"), frame, SLOT(cmFileClose()) );
-  cmFileCloseAll = menuFile->addAction( QIcon(QString(":/pic/fileCloseAll.png")), frame->tr("Close all projects"), frame, SLOT(cmFileCloseAll()) );
+  cmFileClose = menuFile->addAction( QIcon(QString(":/pic/closeFile.png")), QObject::tr("Close project"), frame, SLOT(cmFileClose()) );
+  cmFileCloseAll = menuFile->addAction( QIcon(QString(":/pic/fileCloseAll.png")), QObject::tr("Close all projects"), frame, SLOT(cmFileCloseAll()) );
   menuFile->addSeparator();
-  cmFileSave = menuFile->addAction( QIcon(QString(":/pic/save.png")),frame->tr("Save project"), frame, SLOT(cmFileSave()) );
-  cmFileSaveAs = menuFile->addAction( QIcon(QString(":/pic/save_as.png")), frame->tr("Save project as..."), frame, SLOT(cmFileSaveAs()) );
-  cmFileSaveAll = menuFile->addAction( QIcon(QString(":/pic/save_all.png")), frame->tr("Save all projects"), frame, SLOT(cmFileSaveAll()) );
-  cmFileStoreToLibrary = menuFile->addAction( QIcon(QString(":/pic/upload.png")),frame->tr("Store to library..."), frame, SLOT(cmFileStore()) );
+  cmFileSave = menuFile->addAction( QIcon(QString(":/pic/save.png")),QObject::tr("Save project"), frame, SLOT(cmFileSave()) );
+  cmFileSaveAs = menuFile->addAction( QIcon(QString(":/pic/save_as.png")), QObject::tr("Save project as..."), frame, SLOT(cmFileSaveAs()) );
+  cmFileSaveAll = menuFile->addAction( QIcon(QString(":/pic/save_all.png")), QObject::tr("Save all projects"), frame, SLOT(cmFileSaveAll()) );
+  cmFileStoreToLibrary = menuFile->addAction( QIcon(QString(":/pic/upload.png")),QObject::tr("Store to library..."), frame, SLOT(cmFileStore()) );
   menuFile->addSeparator();
-  cmFileImportPis = menuFile->addAction( frame->tr("Import PasCAD"), frame, SLOT(cmFileImportPis()) );
-  cmFileImport    = menuFile->addAction( QIcon(QString(":/pic/fileImport.png")), frame->tr("Import..."), frame, SLOT(cmFileImport()) );
-  cmFileExport    = menuFile->addAction( QIcon(QString(":/pic/fileExport.png")), frame->tr("Export..."), frame, SLOT(cmFileExport()) );
+  cmFileImportPis = menuFile->addAction( QObject::tr("Import PasCAD"), frame, SLOT(cmFileImportPis()) );
+  cmFileImport    = menuFile->addAction( QIcon(QString(":/pic/fileImport.png")), QObject::tr("Import..."), frame, SLOT(cmFileImport()) );
+  cmFileExport    = menuFile->addAction( QIcon(QString(":/pic/fileExport.png")), QObject::tr("Export..."), frame, SLOT(cmFileExport()) );
   menuFile->addSeparator();
-  cmFilePrint = menuFile->addAction( QIcon(QString(":/pic/filePrint.png")), frame->tr("Print..."), frame, SLOT(cmFilePrint()) );
+  cmFilePrint = menuFile->addAction( QIcon(QString(":/pic/filePrint.png")), QObject::tr("Print..."), frame, SLOT(cmFilePrint()) );
   menuFile->addSeparator();
-  cmFileExit = menuFile->addAction( QIcon(QString(":/pic/exit.png")), frame->tr("Exit programm"), frame, SLOT(cmFileExit()) );
+  cmFileExit = menuFile->addAction( QIcon(QString(":/pic/exit.png")), QObject::tr("Exit programm"), frame, SLOT(cmFileExit()) );
 
   //Last previous files menu [Меню для предыдущих файлов]
   for (int i = 0; i < PREVIOUS_FILES_COUNT; ++i)
@@ -82,80 +82,80 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
   //Object menu [Меню Объект]
-  menuObject = new QMenu( frame->tr("Objects") );
-  cmObjectNew         = menuObject->addAction( QIcon(QString(":/pic/objectNew.png")), frame->tr("Create..."), frame, SLOT(cmObjectNew()) );
-  cmObjectLoad        = menuObject->addAction( QIcon(QString(":/pic/download.png")), frame->tr("Load from library..."), frame, SLOT(cmObjectLoad()) );
-  cmObjectRename      = menuObject->addAction( QIcon(QString(":/pic/objectRename.png")), frame->tr("Rename..."), frame, SLOT(cmObjectRename()) );
-  cmObjectParam       = menuObject->addAction( QIcon(QString(":/pic/objectParam.png")), frame->tr("Edit object param..."), frame, SLOT(cmObjectParam()) );
-  cmObjectDelete      = menuObject->addAction( QIcon(QString(":/pic/objectDelete.png")), frame->tr("Delete"), frame, SLOT(cmObjectDelete()) );
-  cmObjectCopy        = menuObject->addAction( QIcon(QString(":/pic/objectCopy.png")), frame->tr("Copy"), frame, SLOT(cmObjectCopy()) );
-  cmObjectPaste       = menuObject->addAction( QIcon(QString(":/pic/objectPaste.png")), frame->tr("Paste"), frame, SLOT(cmObjectPaste()) );
-  cmObjectCut         = menuObject->addAction( QIcon(QString(":/pic/objectCut.png")), frame->tr("Cut"), frame, SLOT(cmObjectCut()) );
-  cmObjectDuplicate   = menuObject->addAction( QIcon(QString(":/pic/duplicate.png")), frame->tr("Duplicate"), frame, SLOT(cmObjectDuplicate()) );
-  cmObjectSort        = menuObject->addAction( QIcon(QString(":/pic/objectSort.png")), frame->tr("Sort"), frame, SLOT(cmObjectSort()) );
-  cmObjectEditEnable  = menuObject->addAction( QIcon(QString(":/pic/objectEditEnable.png")), frame->tr("Enable edit"), frame, SLOT(cmObjectEditEnable()) );
-  cmObjectEditDisable = menuObject->addAction( QIcon(QString(":/pic/objectEditDisable.png")), frame->tr("Finish edit"), frame, SLOT(cmObjectEditDisable()) );
-  cmProjectParam      = menuObject->addAction( QIcon(QString(":/pic/editProjectParam.png")), frame->tr("Edit project param..."), frame, SLOT(cmProjectParam()) );
-  cmProjectUpgrade    = menuObject->addAction( QIcon(QString(":/pic/editProjectUpgrade.png")), frame->tr("Upgrade with new versions"), frame, SLOT(cmProjectUpgrade()) );
+  menuObject = new QMenu( QObject::tr("Objects") );
+  cmObjectNew         = menuObject->addAction( QIcon(QString(":/pic/objectNew.png")), QObject::tr("Create..."), frame, SLOT(cmObjectNew()) );
+  cmObjectLoad        = menuObject->addAction( QIcon(QString(":/pic/download.png")), QObject::tr("Load from library..."), frame, SLOT(cmObjectLoad()) );
+  cmObjectRename      = menuObject->addAction( QIcon(QString(":/pic/objectRename.png")), QObject::tr("Rename..."), frame, SLOT(cmObjectRename()) );
+  cmObjectParam       = menuObject->addAction( QIcon(QString(":/pic/objectParam.png")), QObject::tr("Edit object param..."), frame, SLOT(cmObjectParam()) );
+  cmObjectDelete      = menuObject->addAction( QIcon(QString(":/pic/objectDelete.png")), QObject::tr("Delete"), frame, SLOT(cmObjectDelete()) );
+  cmObjectCopy        = menuObject->addAction( QIcon(QString(":/pic/objectCopy.png")), QObject::tr("Copy"), frame, SLOT(cmObjectCopy()) );
+  cmObjectPaste       = menuObject->addAction( QIcon(QString(":/pic/objectPaste.png")), QObject::tr("Paste"), frame, SLOT(cmObjectPaste()) );
+  cmObjectCut         = menuObject->addAction( QIcon(QString(":/pic/objectCut.png")), QObject::tr("Cut"), frame, SLOT(cmObjectCut()) );
+  cmObjectDuplicate   = menuObject->addAction( QIcon(QString(":/pic/duplicate.png")), QObject::tr("Duplicate"), frame, SLOT(cmObjectDuplicate()) );
+  cmObjectSort        = menuObject->addAction( QIcon(QString(":/pic/objectSort.png")), QObject::tr("Sort"), frame, SLOT(cmObjectSort()) );
+  cmObjectEditEnable  = menuObject->addAction( QIcon(QString(":/pic/objectEditEnable.png")), QObject::tr("Enable edit"), frame, SLOT(cmObjectEditEnable()) );
+  cmObjectEditDisable = menuObject->addAction( QIcon(QString(":/pic/objectEditDisable.png")), QObject::tr("Finish edit"), frame, SLOT(cmObjectEditDisable()) );
+  cmProjectParam      = menuObject->addAction( QIcon(QString(":/pic/editProjectParam.png")), QObject::tr("Edit project param..."), frame, SLOT(cmProjectParam()) );
+  cmProjectUpgrade    = menuObject->addAction( QIcon(QString(":/pic/editProjectUpgrade.png")), QObject::tr("Upgrade with new versions"), frame, SLOT(cmProjectUpgrade()) );
 
 
 
 
   //Edit menu [Меню Редактирование]
-  menuEdit = new QMenu( frame->tr("Edit") );
-  cmEditUndo = menuEdit->addAction( QIcon(QString(":/pic/editUndo.png")), frame->tr("Undo"), frame, SLOT(cmEditUndo()) );
+  menuEdit = new QMenu( QObject::tr("Edit") );
+  cmEditUndo = menuEdit->addAction( QIcon(QString(":/pic/editUndo.png")), QObject::tr("Undo"), frame, SLOT(cmEditUndo()) );
   cmEditUndo->setEnabled(false);
-  cmEditRedo = menuEdit->addAction( QIcon(QString(":/pic/editRedo.png")), frame->tr("Redo"), frame, SLOT(cmEditRedo()) );
+  cmEditRedo = menuEdit->addAction( QIcon(QString(":/pic/editRedo.png")), QObject::tr("Redo"), frame, SLOT(cmEditRedo()) );
   cmEditRedo->setEnabled(false);
   menuEdit->addSeparator();
-  cmEditCopy = menuEdit->addAction( QIcon(QString(":/pic/editCopy.png")), frame->tr("Copy"), frame, SLOT(cmEditCopy()) );
-  cmEditPaste = menuEdit->addAction( QIcon(QString(":/pic/editPaste.png")), frame->tr("Paste"), frame, SLOT(cmEditPaste()) );
-  cmEditCut = menuEdit->addAction( QIcon(QString(":/pic/editCut.png")), frame->tr("Cut"), frame, SLOT(cmEditCut()) );
-  cmEditDelete = menuEdit->addAction( QIcon(QString(":/pic/editDel.png")), frame->tr("Delete"), frame, SLOT(cmEditDelete()) );
+  cmEditCopy = menuEdit->addAction( QIcon(QString(":/pic/editCopy.png")), QObject::tr("Copy"), frame, SLOT(cmEditCopy()) );
+  cmEditPaste = menuEdit->addAction( QIcon(QString(":/pic/editPaste.png")), QObject::tr("Paste"), frame, SLOT(cmEditPaste()) );
+  cmEditCut = menuEdit->addAction( QIcon(QString(":/pic/editCut.png")), QObject::tr("Cut"), frame, SLOT(cmEditCut()) );
+  cmEditDelete = menuEdit->addAction( QIcon(QString(":/pic/editDel.png")), QObject::tr("Delete"), frame, SLOT(cmEditDelete()) );
   menuEdit->addSeparator();
-  cmEditSelectAll = menuEdit->addAction( QIcon(QString(":/pic/editSelectAll.png")), frame->tr("Select All"), frame, SLOT(cmEditSelectAll()) );
-  cmEditUnSelect  = menuEdit->addAction( QIcon(QString(":/pic/editSelectAll.png")), frame->tr("UnSelect"), frame, SLOT(cmEditUnSelect()) );
-  cmEditFind = menuEdit->addAction( QIcon(QString(":/pic/editFind.png")), frame->tr("Find"), frame, SLOT(cmEditFind()) );
-  cmEditReplace = menuEdit->addAction( frame->tr("Replace"), frame, SLOT(cmEditReplace()) );
+  cmEditSelectAll = menuEdit->addAction( QIcon(QString(":/pic/editSelectAll.png")), QObject::tr("Select All"), frame, SLOT(cmEditSelectAll()) );
+  cmEditUnSelect  = menuEdit->addAction( QIcon(QString(":/pic/editSelectAll.png")), QObject::tr("UnSelect"), frame, SLOT(cmEditUnSelect()) );
+  cmEditFind = menuEdit->addAction( QIcon(QString(":/pic/editFind.png")), QObject::tr("Find"), frame, SLOT(cmEditFind()) );
+  cmEditReplace = menuEdit->addAction( QObject::tr("Replace"), frame, SLOT(cmEditReplace()) );
   menuEdit->addSeparator();
-  cmEditProperties = menuEdit->addAction( QIcon(QString(":/pic/editProp.png")), frame->tr("Params..."), frame, SLOT(cmEditProperties()) );
+  cmEditProperties = menuEdit->addAction( QIcon(QString(":/pic/editProp.png")), QObject::tr("Params..."), frame, SLOT(cmEditProperties()) );
 
 
 
   //View menu
-  menuView = new QMenu( frame->tr("View") );
-  cmViewProject = menuView->addAction( QIcon(QString(":/pic/openProjects.png")), frame->tr("Show-hide project"), frame, SLOT(cmViewProject()) );
+  menuView = new QMenu( QObject::tr("View") );
+  cmViewProject = menuView->addAction( QIcon(QString(":/pic/openProjects.png")), QObject::tr("Show-hide project"), frame, SLOT(cmViewProject()) );
   menuView->addSeparator();
-  cmViewNets = menuView->addAction( QIcon(QString(":/pic/viewRatnet.png")), frame->tr("Nets"), frame, SLOT(cmViewNets()) );
-  cmViewGrid = menuView->addAction( QIcon(QString(":/pic/viewGrid.png")), frame->tr("Grid"), frame, SLOT(cmViewGrid()) );
-  cmViewGrid->setToolTip( frame->tr("Show grid tune dialog") );
-  cmViewLayers = menuView->addAction( QIcon(QString(":/pic/layers.png")), frame->tr("Layers"), frame, SLOT(cmViewLayers()) );
-  cmViewLayers->setToolTip( frame->tr("Show layers editor dialog") );
+  cmViewNets = menuView->addAction( QIcon(QString(":/pic/viewRatnet.png")), QObject::tr("Nets"), frame, SLOT(cmViewNets()) );
+  cmViewGrid = menuView->addAction( QIcon(QString(":/pic/viewGrid.png")), QObject::tr("Grid"), frame, SLOT(cmViewGrid()) );
+  cmViewGrid->setToolTip( QObject::tr("Show grid tune dialog") );
+  cmViewLayers = menuView->addAction( QIcon(QString(":/pic/layers.png")), QObject::tr("Layers"), frame, SLOT(cmViewLayers()) );
+  cmViewLayers->setToolTip( QObject::tr("Show layers editor dialog") );
   menuView->addSeparator();
-  cmViewFill = menuView->addAction( QIcon(QString(":/pic/viewFit.png")), frame->tr("Zoom to fit view"), frame, SLOT(cmViewFill()) );
-  cmModeTable[MD_ZOOM_IN]     = menuView->addAction( QIcon(QString(":/pic/viewZoomIn.png")), frame->tr("Zoom in"), frame, SLOT(cmViewZoomIn()) );
-  cmModeTable[MD_ZOOM_OUT]    = menuView->addAction( QIcon(QString(":/pic/viewZoomOut.png")), frame->tr("Zoom out"), frame, SLOT(cmViewZoomOut()) );
-  cmModeTable[MD_ZOOM_WIN]   = menuView->addAction( QIcon(QString(":/pic/viewWin.png")), frame->tr("Zoom area"), frame, SLOT(cmViewArea()) );
+  cmViewFill = menuView->addAction( QIcon(QString(":/pic/viewFit.png")), QObject::tr("Zoom to fit view"), frame, SLOT(cmViewFill()) );
+  cmModeTable[MD_ZOOM_IN]     = menuView->addAction( QIcon(QString(":/pic/viewZoomIn.png")), QObject::tr("Zoom in"), frame, SLOT(cmViewZoomIn()) );
+  cmModeTable[MD_ZOOM_OUT]    = menuView->addAction( QIcon(QString(":/pic/viewZoomOut.png")), QObject::tr("Zoom out"), frame, SLOT(cmViewZoomOut()) );
+  cmModeTable[MD_ZOOM_WIN]   = menuView->addAction( QIcon(QString(":/pic/viewWin.png")), QObject::tr("Zoom area"), frame, SLOT(cmViewArea()) );
   menuView->addSeparator();
-  cmModeTable[MD_MEASUREMENT] = menuView->addAction( QIcon(QString(":/pic/viewRuller.png")), frame->tr("Measurement"), frame, SLOT(cmViewMeasurement()) );
+  cmModeTable[MD_MEASUREMENT] = menuView->addAction( QIcon(QString(":/pic/viewRuller.png")), QObject::tr("Measurement"), frame, SLOT(cmViewMeasurement()) );
 
 
 
   //Draw menu
-  menuDraw = new QMenu( frame->tr("Draw") );
-  cmModeTable[MD_SELECT]      = menuDraw->addAction( QIcon(QString(":/pic/select.png")), frame->tr("Select and edit"), frame, SLOT(cmModeSelect()) );
+  menuDraw = new QMenu( QObject::tr("Draw") );
+  cmModeTable[MD_SELECT]      = menuDraw->addAction( QIcon(QString(":/pic/select.png")), QObject::tr("Select and edit"), frame, SLOT(cmModeSelect()) );
   menuDraw->addSeparator();
-  cmModeTable[MD_LINE]        = menuDraw->addAction( QIcon(QString(":/pic/drawLine.png")), frame->tr("Line"), frame, SLOT(cmModeLine()) );
-  cmModeTable[MD_RECT]        = menuDraw->addAction( QIcon(QString(":/pic/drawRect.png")), frame->tr("Rect"), frame, SLOT(cmModeRect()) );
-  cmModeTable[MD_FILL_RECT]   = menuDraw->addAction( QIcon(QString(":/pic/drawFRect.png")), frame->tr("Filled rect"), frame, SLOT(cmModeFilledRect()) );
-  cmModeTable[MD_REGION]      = menuDraw->addAction( QIcon(QString(":/pic/drawRegion.png")), frame->tr("Region"), frame, SLOT(cmModeRegion()) );
-  cmModeTable[MD_FILL_REGION] = menuDraw->addAction( QIcon(QString(":/pic/drawFRegion.png")), frame->tr("Filled region"), frame, SLOT(cmModeFilledRegion()) );
-  cmModeTable[MD_CIRCLE]      = menuDraw->addAction( QIcon(QString(":/pic/drawCircle.png")), frame->tr("Circle"), frame, SLOT(cmModeCircle()) );
-  cmModeTable[MD_FILL_CIRCLE] = menuDraw->addAction( QIcon(QString(":/pic/drawFCircle.png")), frame->tr("Filled circle"), frame, SLOT(cmModeFilledCircle()) );
-  cmModeTable[MD_ARC]         = menuDraw->addAction( QIcon(QString(":/pic/drawArc.png")), frame->tr("Arc"), frame, SLOT(cmModeArc()) );
-  cmModeTable[MD_TEXT]        = menuDraw->addAction( QIcon(QString(":/pic/drawText.png")), frame->tr("Text"), frame, SLOT(cmModeText()) );
-  //cmModeTable[MD_FIELD]       = menuDraw->addAction( QIcon(QString(":/pic/drawField.png")), frame->tr("Field"), frame, SLOT(cmModeField()) );
-  cmShowField = menuDraw->addAction( QIcon(QStringLiteral(":/pic/showField.png")), frame->tr("Show fields or values") );
+  cmModeTable[MD_LINE]        = menuDraw->addAction( QIcon(QString(":/pic/drawLine.png")), QObject::tr("Line"), frame, SLOT(cmModeLine()) );
+  cmModeTable[MD_RECT]        = menuDraw->addAction( QIcon(QString(":/pic/drawRect.png")), QObject::tr("Rect"), frame, SLOT(cmModeRect()) );
+  cmModeTable[MD_FILL_RECT]   = menuDraw->addAction( QIcon(QString(":/pic/drawFRect.png")), QObject::tr("Filled rect"), frame, SLOT(cmModeFilledRect()) );
+  cmModeTable[MD_REGION]      = menuDraw->addAction( QIcon(QString(":/pic/drawRegion.png")), QObject::tr("Region"), frame, SLOT(cmModeRegion()) );
+  cmModeTable[MD_FILL_REGION] = menuDraw->addAction( QIcon(QString(":/pic/drawFRegion.png")), QObject::tr("Filled region"), frame, SLOT(cmModeFilledRegion()) );
+  cmModeTable[MD_CIRCLE]      = menuDraw->addAction( QIcon(QString(":/pic/drawCircle.png")), QObject::tr("Circle"), frame, SLOT(cmModeCircle()) );
+  cmModeTable[MD_FILL_CIRCLE] = menuDraw->addAction( QIcon(QString(":/pic/drawFCircle.png")), QObject::tr("Filled circle"), frame, SLOT(cmModeFilledCircle()) );
+  cmModeTable[MD_ARC]         = menuDraw->addAction( QIcon(QString(":/pic/drawArc.png")), QObject::tr("Arc"), frame, SLOT(cmModeArc()) );
+  cmModeTable[MD_TEXT]        = menuDraw->addAction( QIcon(QString(":/pic/drawText.png")), QObject::tr("Text"), frame, SLOT(cmModeText()) );
+  //cmModeTable[MD_FIELD]       = menuDraw->addAction( QIcon(QString(":/pic/drawField.png")), QObject::tr("Field"), frame, SLOT(cmModeField()) );
+  cmShowField = menuDraw->addAction( QIcon(QStringLiteral(":/pic/showField.png")), QObject::tr("Show fields or values") );
   cmShowField->setCheckable(true);
   cmShowField->setChecked( sdEnvir->mShowFields );
   cmShowField->connect( cmShowField, &QAction::toggled, frame, &SdWMain::cmShowFields );
@@ -163,134 +163,134 @@ void SdWCommand::createMenu(SdWMain *frame)
 
 
   //Symbol editor menu
-  menuInsertSymbol = new QMenu( frame->tr("Symbol") );
+  menuInsertSymbol = new QMenu( QObject::tr("Symbol") );
 
-  cmModeTable[MD_SYM_PIN]       = menuInsertSymbol->addAction( QIcon(QString(":/pic/objPin.png")), frame->tr("Insert pin"), frame, SLOT(cmModePin()) );
-  cmModeTable[MD_SYM_IDENT]     = menuInsertSymbol->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Edit reference"), frame, SLOT(cmModeReference()) );
-  cmModeTable[MD_SYM_ORIGIN]    = menuInsertSymbol->addAction( QIcon(QString(":/pic/objOrigin.png")), frame->tr("Edit origin"), frame, SLOT(cmModeOrigin()) );
-  cmModeTable[MD_SYM_VALUE]     = menuInsertSymbol->addAction( QIcon(QString(":/pic/objValue.png")), frame->tr("Edit value"), frame, SLOT(cmModeValue()) );
+  cmModeTable[MD_SYM_PIN]       = menuInsertSymbol->addAction( QIcon(QString(":/pic/objPin.png")), QObject::tr("Insert pin"), frame, SLOT(cmModePin()) );
+  cmModeTable[MD_SYM_IDENT]     = menuInsertSymbol->addAction( QIcon(QString(":/pic/objIdent.png")), QObject::tr("Edit reference"), frame, SLOT(cmModeReference()) );
+  cmModeTable[MD_SYM_ORIGIN]    = menuInsertSymbol->addAction( QIcon(QString(":/pic/objOrigin.png")), QObject::tr("Edit origin"), frame, SLOT(cmModeOrigin()) );
+  cmModeTable[MD_SYM_VALUE]     = menuInsertSymbol->addAction( QIcon(QString(":/pic/objValue.png")), QObject::tr("Edit value"), frame, SLOT(cmModeValue()) );
 
 
 
   //Part editor menu
-  menuInsertPart = new QMenu( frame->tr("Part") );
+  menuInsertPart = new QMenu( QObject::tr("Part") );
 
-  cmShowPads                     = menuInsertPart->addAction( QIcon(QString(":/pic/objVia.png")), frame->tr("Show pads") );
+  cmShowPads                     = menuInsertPart->addAction( QIcon(QString(":/pic/objVia.png")), QObject::tr("Show pads") );
   cmShowPads->setCheckable(true);
   cmShowPads->setChecked( sdEnvir->mShowPads );
   cmShowPads->connect( cmShowPads, &QAction::toggled, frame, &SdWMain::cmShowPads );
-  cmModeTable[MD_PART_PIN]       = menuInsertPart->addAction( QIcon(QString(":/pic/objPrtPin.png")), frame->tr("Insert pin"), frame, SLOT(cmModePin()) );
-  cmModeTable[MD_PART_IDENT]     = menuInsertPart->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Edit reference"), frame, SLOT(cmModeReference()) );
-  cmModeTable[MD_PART_ORIGIN]    = menuInsertPart->addAction( QIcon(QString(":/pic/objOrigin.png")), frame->tr("Edit origin"), frame, SLOT(cmModeOrigin()) );
-  cmModeTable[MD_PART_VALUE]     = menuInsertPart->addAction( QIcon(QString(":/pic/objPrtValue.png")), frame->tr("Edit value"), frame, SLOT(cmModeValue()) );
+  cmModeTable[MD_PART_PIN]       = menuInsertPart->addAction( QIcon(QString(":/pic/objPrtPin.png")), QObject::tr("Insert pin"), frame, SLOT(cmModePin()) );
+  cmModeTable[MD_PART_IDENT]     = menuInsertPart->addAction( QIcon(QString(":/pic/objIdent.png")), QObject::tr("Edit reference"), frame, SLOT(cmModeReference()) );
+  cmModeTable[MD_PART_ORIGIN]    = menuInsertPart->addAction( QIcon(QString(":/pic/objOrigin.png")), QObject::tr("Edit origin"), frame, SLOT(cmModeOrigin()) );
+  cmModeTable[MD_PART_VALUE]     = menuInsertPart->addAction( QIcon(QString(":/pic/objPrtValue.png")), QObject::tr("Edit value"), frame, SLOT(cmModeValue()) );
 
 
 
   //3D part editor menu
-  menuInsertPart3d = new QMenu( frame->tr("Insert") );
-  //  cmBall           = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmPinWired       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmPinFlat        = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmBodyCylinder   = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmBodyBrick      = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmBodyContur     = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
+  menuInsertPart3d = new QMenu( QObject::tr("Insert") );
+  //  cmBall           = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  //  cmPinWired       = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  //  cmPinFlat        = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  //  cmBodyCylinder   = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  //  cmBodyBrick      = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  //  cmBodyContur     = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
 
 
 
 
-  menuInsertComp = new QMenu( frame->tr("Insert comp") );
+  menuInsertComp = new QMenu( QObject::tr("Insert comp") );
 
 
 
   //Sheet editor menu
-  menuInsertSheet = new QMenu( frame->tr("Sheet") );
-  cmRenumeration              = menuInsertSheet->addAction( QIcon(QStringLiteral(":/pic/renumeration.png")), frame->tr("Renumeration"), frame, SLOT(cmRenumeration()) );
+  menuInsertSheet = new QMenu( QObject::tr("Sheet") );
+  cmRenumeration              = menuInsertSheet->addAction( QIcon(QStringLiteral(":/pic/renumeration.png")), QObject::tr("Renumeration"), frame, SLOT(cmRenumeration()) );
   menuInsertSheet->addSeparator();
-  cmModeTable[MD_FRAGMENT]    = menuInsertSheet->addAction( QIcon(QString(":/pic/iconSheet.png")), frame->tr("Insert fragment"), frame, SLOT(cmModeFragment()) );
-  cmModeTable[MD_COMPONENT]   = menuInsertSheet->addAction( QIcon(QString(":/pic/objComp.png")), frame->tr("Insert component"), frame, SLOT(cmModeComponent()) );
-  cmModeTable[MD_NET]         = menuInsertSheet->addAction( QIcon(QString(":/pic/objWire.png")), frame->tr("Insert net wire"), frame, SLOT(cmModeNet()) );
-  cmModeTable[MD_NET_NAME]    = menuInsertSheet->addAction( QIcon(QString(":/pic/objWireName.png")), frame->tr("Insert net name"), frame, SLOT(cmModeNetName()) );
-  cmModeTable[MD_BUS]         = menuInsertSheet->addAction( QIcon(QString(":/pic/objBus.png")), frame->tr("Insert bus (many net)"), frame, SLOT(cmModeBus()) );
-  cmModeTable[MD_DISCONNECT]  = menuInsertSheet->addAction( QIcon(QString(":/pic/objUnConnect.png")), frame->tr("Disconnect net"), frame, SLOT(cmModeDisconnect()) );
-  cmModeTable[MD_SHEET_IDENT] = menuInsertSheet->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Move ident of components"), frame, SLOT(cmModeReferenceMove()) );
-  cmModeTable[MD_SHEET_VALUE] = menuInsertSheet->addAction( QIcon(QString(":/pic/objValue.png")), frame->tr("Move value of components"), frame, SLOT(cmModeValueMove()) );
-  //cmModeTable[MD_PCB_AREA]   = menuInsertSheet->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-//  cmModeTable[MD_FIELD]      = menuInsertSheet->addAction( QIcon(QString(":/pic/objField.png")), frame->tr("Field"), frame, SLOT(cmModeF) );
+  cmModeTable[MD_FRAGMENT]    = menuInsertSheet->addAction( QIcon(QString(":/pic/iconSheet.png")), QObject::tr("Insert fragment"), frame, SLOT(cmModeFragment()) );
+  cmModeTable[MD_COMPONENT]   = menuInsertSheet->addAction( QIcon(QString(":/pic/objComp.png")), QObject::tr("Insert component"), frame, SLOT(cmModeComponent()) );
+  cmModeTable[MD_NET]         = menuInsertSheet->addAction( QIcon(QString(":/pic/objWire.png")), QObject::tr("Insert net wire"), frame, SLOT(cmModeNet()) );
+  cmModeTable[MD_NET_NAME]    = menuInsertSheet->addAction( QIcon(QString(":/pic/objWireName.png")), QObject::tr("Insert net name"), frame, SLOT(cmModeNetName()) );
+  cmModeTable[MD_BUS]         = menuInsertSheet->addAction( QIcon(QString(":/pic/objBus.png")), QObject::tr("Insert bus (many net)"), frame, SLOT(cmModeBus()) );
+  cmModeTable[MD_DISCONNECT]  = menuInsertSheet->addAction( QIcon(QString(":/pic/objUnConnect.png")), QObject::tr("Disconnect net"), frame, SLOT(cmModeDisconnect()) );
+  cmModeTable[MD_SHEET_IDENT] = menuInsertSheet->addAction( QIcon(QString(":/pic/objIdent.png")), QObject::tr("Move ident of components"), frame, SLOT(cmModeReferenceMove()) );
+  cmModeTable[MD_SHEET_VALUE] = menuInsertSheet->addAction( QIcon(QString(":/pic/objValue.png")), QObject::tr("Move value of components"), frame, SLOT(cmModeValueMove()) );
+  //cmModeTable[MD_PCB_AREA]   = menuInsertSheet->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+//  cmModeTable[MD_FIELD]      = menuInsertSheet->addAction( QIcon(QString(":/pic/objField.png")), QObject::tr("Field"), frame, SLOT(cmModeF) );
 
 
 
   //PCB editor menu
-  menuInsertPcb = new QMenu( frame->tr("Plate") );
+  menuInsertPcb = new QMenu( QObject::tr("Plate") );
   menuInsertPcb->insertAction( nullptr, cmRenumeration );
   menuInsertPcb->insertSeparator(nullptr);
-  cmShowRatNet = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/viewRatnet.png")), frame->tr("Show rat net") );
+  cmShowRatNet = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/viewRatnet.png")), QObject::tr("Show rat net") );
   cmShowRatNet->setCheckable(true);
   cmShowRatNet->setChecked( sdEnvir->mShowRatNet );
   cmShowRatNet->connect( cmShowRatNet, &QAction::toggled, frame, &SdWMain::cmShowRatNet );
-  cmPads = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/pads.png")), frame->tr("Pads association"), frame, SLOT(cmPads()) );
+  cmPads = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/pads.png")), QObject::tr("Pads association"), frame, SLOT(cmPads()) );
   //cmShowRatNet->co
-//  cmNetSetup       = menuInsertPcb->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-//  cmPads           = menuInsertPcb->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
+//  cmNetSetup       = menuInsertPcb->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+//  cmPads           = menuInsertPcb->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
 //  menuInsertPcb->addSeparator();
-  //  cmModeLink       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmModeNetName    = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmModeNetList    = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  // cmModePack       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmModeLineSize   = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmModeRadiusSize = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  cmModeTable[MD_PART_IMP]   = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrt.png")), frame->tr("Insert part"), frame, SLOT(cmModeComponent()) );
-  cmModeTable[MD_MOVE_PART]  = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrtPlace.png")), frame->tr("Move part"), frame, SLOT(cmModeMovePart()) );
-  cmModeTable[MD_ROAD_ENTER] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPcbWire.png")), frame->tr("Road enter"), frame, SLOT(cmModeRoadEnter()) );
-  cmModeTable[MD_ROAD_MOVE]  = menuInsertPcb->addAction( QIcon(QString(":/pic/objPcbWireMove.png")), frame->tr("Road move"), frame, SLOT(cmModeRoadMove()) );
-  cmModeTable[MD_POLYGON]    = menuInsertPcb->addAction( QIcon(QString(":/pic/objPolygon.png")), frame->tr("Polygon enter"), frame, SLOT(cmModePolygon()) );
-  cmModeTable[MD_VIA_ENTER]  = menuInsertPcb->addAction( QIcon(QString(":/pic/objVia.png")), frame->tr("Via enter"), frame, SLOT(cmModeViaEnter()) );
-  //  cmModePlace      = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmModeEditWire   = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmModeWire       = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmModeDeleteWire = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  //  cmModePad        = menuInsert->addAction( QIcon(QString(":/pic/.png")), frame->tr(""), frame, SLO );
-  cmModeTable[MD_PLATE_IDENT] = menuInsertPcb->addAction( QIcon(QString(":/pic/objIdent.png")), frame->tr("Move ident of components"), frame, SLOT(cmModeReferenceMove()) );
-  cmModeTable[MD_PLATE_VALUE] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrtValue.png")), frame->tr("Move value of components"), frame, SLOT(cmModeValueMove()) );
-  cmModeTable[MD_PLATE_ORIGIN]= menuInsertPcb->addAction( QIcon(QString(":/pic/objPlateOrigin.png")), frame->tr("Edit plate origin"), frame, SLOT(cmModeOrigin()) );
+  //  cmModeLink       = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  //  cmModeNetName    = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  //  cmModeNetList    = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  // cmModePack       = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  //  cmModeLineSize   = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  //  cmModeRadiusSize = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  cmModeTable[MD_PART_IMP]   = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrt.png")), QObject::tr("Insert part"), frame, SLOT(cmModeComponent()) );
+  cmModeTable[MD_MOVE_PART]  = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrtPlace.png")), QObject::tr("Move part"), frame, SLOT(cmModeMovePart()) );
+  cmModeTable[MD_ROAD_ENTER] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPcbWire.png")), QObject::tr("Road enter"), frame, SLOT(cmModeRoadEnter()) );
+  cmModeTable[MD_ROAD_MOVE]  = menuInsertPcb->addAction( QIcon(QString(":/pic/objPcbWireMove.png")), QObject::tr("Road move"), frame, SLOT(cmModeRoadMove()) );
+  cmModeTable[MD_POLYGON]    = menuInsertPcb->addAction( QIcon(QString(":/pic/objPolygon.png")), QObject::tr("Polygon enter"), frame, SLOT(cmModePolygon()) );
+  cmModeTable[MD_VIA_ENTER]  = menuInsertPcb->addAction( QIcon(QString(":/pic/objVia.png")), QObject::tr("Via enter"), frame, SLOT(cmModeViaEnter()) );
+  //  cmModePlace      = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  //  cmModeEditWire   = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  //  cmModeWire       = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  //  cmModeDeleteWire = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  //  cmModePad        = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  cmModeTable[MD_PLATE_IDENT] = menuInsertPcb->addAction( QIcon(QString(":/pic/objIdent.png")), QObject::tr("Move ident of components"), frame, SLOT(cmModeReferenceMove()) );
+  cmModeTable[MD_PLATE_VALUE] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrtValue.png")), QObject::tr("Move value of components"), frame, SLOT(cmModeValueMove()) );
+  cmModeTable[MD_PLATE_ORIGIN]= menuInsertPcb->addAction( QIcon(QString(":/pic/objPlateOrigin.png")), QObject::tr("Edit plate origin"), frame, SLOT(cmModeOrigin()) );
 
 
   //PCB roads rules menu
-  menuRules = new QMenu( frame->tr("Rules") );
-  cmRulesEdit = menuRules->addAction( QIcon(QStringLiteral(":/pic/rules.png")), frame->tr("Edit rules dialog"), frame, SLOT(cmRulesEdit()) );
-  cmShowRuleErrors = menuRules->addAction( QIcon(QStringLiteral(":/pic/objShowRuleErrors.png")), frame->tr("Show rule errors") );
+  menuRules = new QMenu( QObject::tr("Rules") );
+  cmRulesEdit = menuRules->addAction( QIcon(QStringLiteral(":/pic/rules.png")), QObject::tr("Edit rules dialog"), frame, SLOT(cmRulesEdit()) );
+  cmShowRuleErrors = menuRules->addAction( QIcon(QStringLiteral(":/pic/objShowRuleErrors.png")), QObject::tr("Show rule errors") );
   cmShowRuleErrors->setCheckable(true);
   cmShowRuleErrors->setChecked( sdEnvir->mShowRuleErrors );
   cmShowRuleErrors->connect( cmShowRuleErrors, &QAction::toggled, frame, &SdWMain::cmShowRuleErrors );
-  cmRulesCheck = menuRules->addAction( QIcon(QStringLiteral(":/pic/objRulesCheck.png")), frame->tr("Check all rules"), frame, SLOT(cmRulesCheck()) );
-  cmRulesErrorNext = menuRules->addAction( QIcon(QStringLiteral(":/pic/rulesNextError.png")), frame->tr("Center next rules error"), frame, SLOT(cmRulesErrorNext()) );
+  cmRulesCheck = menuRules->addAction( QIcon(QStringLiteral(":/pic/objRulesCheck.png")), QObject::tr("Check all rules"), frame, SLOT(cmRulesCheck()) );
+  cmRulesErrorNext = menuRules->addAction( QIcon(QStringLiteral(":/pic/rulesNextError.png")), QObject::tr("Center next rules error"), frame, SLOT(cmRulesErrorNext()) );
 
 
   //Instruments menu
-  menuInstruments = new QMenu( frame->tr("Instruments") );
-  cmOption = menuInstruments->addAction( QIcon(QString(":/pic/instrumOptions.png")), frame->tr("Options"), frame, SLOT(cmOption()) );
+  menuInstruments = new QMenu( QObject::tr("Instruments") );
+  cmOption = menuInstruments->addAction( QIcon(QString(":/pic/instrumOptions.png")), QObject::tr("Options"), frame, SLOT(cmOption()) );
   menuInstruments->addSeparator();
-  cmTools  = menuInstruments->addAction( QIcon(QString(":/pic/instrumTools.png")), frame->tr("Tools"), frame, SLOT(cmTools()) );
+  cmTools  = menuInstruments->addAction( QIcon(QString(":/pic/instrumTools.png")), QObject::tr("Tools"), frame, SLOT(cmTools()) );
   menuInstruments->addSeparator();
-  cmGuiderCapture    = menuInstruments->addAction( frame->tr("Capture start-stop"), frame, SLOT(cmGuiderCapture()), QKeySequence(Qt::Key_F10) );
-  cmGuiderPause      = menuInstruments->addAction( frame->tr("Capture pause-resume"), frame, SLOT(cmGuiderPause()), QKeySequence(Qt::Key_F11) );
+  cmGuiderCapture    = menuInstruments->addAction( QObject::tr("Capture start-stop"), frame, SLOT(cmGuiderCapture()), QKeySequence(Qt::Key_F10) );
+  cmGuiderPause      = menuInstruments->addAction( QObject::tr("Capture pause-resume"), frame, SLOT(cmGuiderPause()), QKeySequence(Qt::Key_F11) );
 
 
   //Help menu
-  menuHelp = new QMenu( frame->tr("Help") );
-  cmHelpContents      = menuHelp->addAction( QIcon(QString(":/pic/help.png")), frame->tr("Contents"), frame, SLOT(cmHelpContents()) );
-  cmHelpIndex        = menuHelp->addAction( QIcon(QString(":/pic/helpContext.png")), frame->tr("Index"), frame, SLOT(cmHelpIndex()) );
-  cmHelpAbout        = menuHelp->addAction( QIcon(QString(":/pic/helpAbout.png")), frame->tr("About"), frame, SLOT(cmHelpAbout()) );
-  cmHelpRegistration = menuHelp->addAction( QIcon(QString(":/pic/helpRegistration.png")), frame->tr("Registration"), frame, SLOT(cmHelpRegistration()) );
-  cmHelpHome         = new QAction( QIcon(QString(":/pic/helpHome.png")), frame->tr("Home help page") );
+  menuHelp = new QMenu( QObject::tr("Help") );
+  cmHelpContents      = menuHelp->addAction( QIcon(QString(":/pic/help.png")), QObject::tr("Contents"), frame, SLOT(cmHelpContents()) );
+  cmHelpIndex        = menuHelp->addAction( QIcon(QString(":/pic/helpContext.png")), QObject::tr("Index"), frame, SLOT(cmHelpIndex()) );
+  cmHelpAbout        = menuHelp->addAction( QIcon(QString(":/pic/helpAbout.png")), QObject::tr("About"), frame, SLOT(cmHelpAbout()) );
+  cmHelpRegistration = menuHelp->addAction( QIcon(QString(":/pic/helpRegistration.png")), QObject::tr("Registration"), frame, SLOT(cmHelpRegistration()) );
+  cmHelpHome         = new QAction( QIcon(QString(":/pic/helpHome.png")), QObject::tr("Home help page") );
   frame->connect( cmHelpHome, &QAction::triggered, frame, &SdWMain::cmHelpContents );
-  cmHelpBackward     = new QAction( QIcon(QString(":/pic/helpPrevious.png")), frame->tr("Backward help page") );
+  cmHelpBackward     = new QAction( QIcon(QString(":/pic/helpPrevious.png")), QObject::tr("Backward help page") );
   frame->connect( cmHelpBackward, &QAction::triggered, frame, &SdWMain::cmHelpBackward );
-  cmHelpForward      = new QAction( QIcon(QString(":/pic/helpNext.png")), frame->tr("Forward help page") );
+  cmHelpForward      = new QAction( QIcon(QString(":/pic/helpNext.png")), QObject::tr("Forward help page") );
   frame->connect( cmHelpForward, &QAction::triggered, frame, &SdWMain::cmHelpForward );
 
 
   //Select popup menu
-  menuSelect = new QMenu( frame->tr("Select") );
+  menuSelect = new QMenu( QObject::tr("Select") );
   menuSelect->insertAction( nullptr, cmEditUndo );
   menuSelect->insertAction( nullptr, cmEditRedo );
   menuSelect->addSeparator();

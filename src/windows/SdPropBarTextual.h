@@ -20,6 +20,7 @@ Description
 
 class SdPropBarTextual : public SdPropBar
   {
+    Q_OBJECT
   protected:
     //Font list
     QComboBox *mFont;
