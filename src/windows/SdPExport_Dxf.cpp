@@ -419,7 +419,7 @@ SdPExport_Dxf::SdPExport_Dxf(SdProjectItem *item, int step, SdPMasterList *list,
   {
   //Refistration of master in master list
   setMinimumWidth(400);
-  list->addMaster( tr("DXF file"), tr("Creates DXF file from current object"), step, QString(":/pic/gerberExport.png") );
+  list->addMaster( tr("DXF file"), tr("Creates DXF file from current object"), step, QString(":/pic/exportDxf.png") );
 
   //Build interface
   QVBoxLayout *vbox = new QVBoxLayout();

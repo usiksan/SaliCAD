@@ -195,7 +195,7 @@ SdPExport_Bom::SdPExport_Bom(SdProjectItem *item, int step, SdPMasterList *list,
   {
   //Refistration of master in master list
   setMinimumWidth(800);
-  list->addMaster( tr("Reports"), tr("Creates report files:\n- BOM\n- specification\n- list of components\n- cvs\n- json"), step, QString(":/pic/gerberExport.png") );
+  list->addMaster( tr("Reports"), tr("Creates report files:\n- BOM\n- specification\n- list of components\n- cvs\n- json"), step, QString(":/pic/exportReport.png") );
 
 
   //Build interface

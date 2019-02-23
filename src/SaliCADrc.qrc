@@ -275,5 +275,8 @@
         <file>pic/objPlateOrigin.png</file>
         <file>pic/objRemoveLoop.png</file>
         <file>pic/cursorComp.png</file>
+        <file>pic/exportSmdAssembler.png</file>
+        <file>pic/exportReport.png</file>
+        <file>pic/exportDxf.png</file>
     </qresource>
 </RCC>

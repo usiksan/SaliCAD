@@ -39,7 +39,7 @@ SdPExportPlate_Assembler::SdPExportPlate_Assembler(SdWEditorGraphPlate *editor, 
   {
   //Refistration of master in master list
   setMinimumWidth(800);
-  list->addMaster( tr("SMT assemble"), tr("Creates smt assemblion automat files for plate"), step, QString(":/pic/gerberExport.png") );
+  list->addMaster( tr("SMT assemble"), tr("Creates smt assemblion automat files for plate"), step, QString(":/pic/exportSmdAssembler.png") );
 
   QVBoxLayout *vbox = new QVBoxLayout();
   //Title
