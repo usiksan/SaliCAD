@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD Polygon enter mode</title>
+  </head>
+  <body>
+    <h1 align="center">Polygon enter mode</h1>
+    <p></p>
+    <p><a href="contents.htm">Contents</a>=&gt;<a href="MModes.htm">Modes</a>=&gt;<a
+        href="MPlate.htm">Plate modes</a>=&gt;Polygon enter mode</p>
+    <p>Tool bar: <img src="objPolygon.png" width="24" height="24" border="1"></p>
+    <p>Menu: Plate|Enter polygon</p>
+    <p>Cursor: <img src="cursorPolygon.png" width="34" height="34" border="1"></p>
+    <p>1. Set the polygon properties. Select the layer for the polygon and the
+      polygon net name.</p>
+    <p>2. Specify the starting point of the polygon.</p>
+    <p>When you move the mouse, the catcher shows the possible starting point of
+      the polygon. It is searched on the component pins and at the road ends. To
+      take the starting point of the point proposed by the catcher, you must
+      press the middle mouse button or space. In this case, the net name is set
+      according to the starting point of the polygon.</p>
+    <p>3. (Optional) Change the polygon properties.</p>
+    <p>4. Specify the next vertex of the polygon outline.</p>
+    <p>5. Repeat steps 3-4 to enter the entire polygon. If the next vertex
+      coincides with the initial one, the polygon input is automatically
+      completed and the polygon is included in the project. This automatically
+      generates Windows in the polygon. Windows are formed on the basis of roads
+      and pads crossing the polygon. The gap for Windows in the polygon is set
+      in the polygon properties bar.</p>
+    <p>The properties of the polygon are specified using the polygon property
+      bar.</p>
+    <img src="propBarPolygon.png" width="538" height="35" border="1">
+    <ul>
+      <li><img src="mouseBLeft.png" width="32" height="48"> You can specify a
+        point by clicking the left mouse button or manually.</li>
+      <li><img src="mouseBRight.png" width="32" height="48"> The termination of
+        the input is done by pressing the right mouse button.</li>
+    </ul>
+    <p><b>"Smart" mode.</b></p>
+    <p>Smart mode offers automatic completion of the polygon. When you select a
+      smart mode, the polygon closes and enters into the project.</p>
+    <p><img src="mouseBMiddle.png" width="32" height="48"> Middle mouse button
+      or "space" - confirmation of "smart" input.</p>
+    <!--  <table width="100%" border="0">
+      <tbody>        <tr>          <td width="50%"><a href="PropLine.htm">Свойства линии</a></td>          <td width="50%"><a href="DFRegion.htm">Залитый регион</a></td>        </tr>      </tbody>    </table>    -->
+  </body>
+</html>
