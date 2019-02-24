@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD Road enter mode</title>
+  </head>
+  <body>
+    <h1 align="center">Road enter</h1>
+    <p><a href="contents.htm">Contents</a>=&gt;<a href="MModes.htm">Modes</a>=&gt;<a
+        href="MPlate.htm">Plate modes</a>=&gt;Road enter</p>
+    <p>Tool bar: <img src="objPcbWire.png" width="24" height="24" border="1"></p>
+    <p>Menu: Plate|Road enter</p>
+    <p>Cursor: <img src="cursorRoadEnter.png" width="31" height="31" border="1"></p>
+    <p>This mode is used to trace printed connections on the Board - i.e.
+      tracing. Tracing is done manually with extensive use of automation
+      technologies, which allows you to maintain the quality of manual tracing
+      and increase the speed to automatic tracing.</p>
+    <p>A predefined system of tracing rules is in effect during the tracing
+      process.</p>
+    <p>1. Select the beginning of the road. The beginning of a road can be
+      located on the component pin, on the via, at the end of another road, or
+      in the middle of another road. When you move the mouse, the future start
+      of the road is indicated by a marker. Automatically searches for the
+      beginning of a track at the nearest pin, via, or end of another road.</p>
+    <p>To start the road in the middle of another road you need to bring the
+      mouse close to the right place. The catcher to the middle of the road
+      works at a grid step distance. Therefore, to make the guidance more
+      accurate, you should reduce the grid step.</p>
+    <p>The name of the net shown by the catcher is displayed in the status bar.</p>
+    <p>Click left button to enter the starting point of the road.</p>
+    <p>2. The parameters of the new road and its net are displayed in the road
+      properties bar. The current road width is displayed in field C. It is
+      taken from the trace rules. The net name to which the road belongs is
+      displayed in the D field.</p>
+    <p>3. Specify the road properties and adjust the build.</p>
+    <p>The current layer is displayed in the B field of the road properties bar.
+      When you change the current layer, a via is automatically inserted at the
+      start point of the segment. Type of the via is specified using fields I.
+      You can choose the previously formed vias in the field of I. To form a
+      description of a new type of the via press K.</p>
+    <p>Switching layer and the insertion of the via is also carried out if you
+      click with the mouse exactly to the starting point of the segment. This is
+      usually possible if you use a grid to trace - the E button of the road
+      properties bar is pressed.</p>
+    <p>4. When you move the mouse, it automatically searches for the end point
+      of the road. It can be on the pin or on another end point of road of
+      current net. To the end point hit the other road of the current net you
+      need to bring the mouse close to the right place. In this case, the
+      catcher works at a grid step distance. Therefore, to make the guidance
+      more accurate, you should reduce the grid step.</p>
+    <p> If possible, the automatic tracer builds a path from the start point to
+      the end point. It works on the same layer as the current segment. He also
+      uses tracing rules and the current setting of the width of the road.</p>
+    <p>5. Specify the next point of the polyline of the road. In this case, the
+      next segment of the road is inserted into the Board.</p>
+    <p>Pressing the Backspace key cancels the last point and remove last road
+      segment. This allows you to re-trace the path.</p>
+    <p>6. Repeat steps 3-5 to form the entire polyline.</p>
+    <p>7. If the next polyline point coincides with the end point, the polyline
+      input is automatically stopped.</p>
+    <p>You can enter the entire circuit built by the automatic tracer by
+      pressing the middle mouse button or the "space".</p>
+    <p>If the active button F in the road properties bar, when you insert the
+      last point of the polyline is the automatic deletion of the loop. This
+      mode is useful for redrawing individual paths.</p>
+    <p>Road and input parameters are set using the road properties bar:</p>
+    <p><img src="propBarRoad.png" width="943" height="38" border="1"></p>
+    <ul>
+      <li><img src="mouseBLeft.png" width="32" height="48"> You can specify a
+        point by clicking the left mouse button or manually.</li>
+      <li><img src="mouseBRight.png" width="32" height="48"> The termination of
+        the input is done by pressing the right mouse button.</li>
+    </ul>
+    <p><b>"Smart" mode.</b></p>
+    <p>Intelligent mode automatically traces the circuit from the current point
+      to the end point.</p>
+    <p><img src="mouseBMiddle.png" width="32" height="48"> Middle mouse button
+      or "space" - confirmation of "smart" input.</p>
+    <p><br>
+    </p>
+  </body>
+</html>
