@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD Part placement mode</title>
+  </head>
+  <body>
+    <h1 style="text-align: center;">Part placement mode</h1>
+    <p><a href="contents.htm">Contents</a>=&gt;<a href="MModes.htm">Modes</a>=&gt;<a
+        href="MPlate.htm">Plate modes</a>=&gt;Part placement mode</p>
+    <p>Tool bar: <img src="objPrtPlace.png" width="24" height="24" border="1"></p>
+    <p>Menu: Plate|Move part</p>
+    <p>Cursors: </p>
+    <ul>
+      <li><img src="cursorOverPart.png" width="31" height="31" border="1"> when
+        cursor is over component</li>
+      <li><img src="cursorPoint.png" width="31" height="31" border="1"> when
+        cursor is outside any component</li>
+      <li><img src="cursorMove.png" width="31" height="31" border="1"> when
+        moving component</li>
+      <li><img src="cursorSelectRect.png" width="31" height="31" border="1">
+        when components group selection</li>
+    </ul>
+    <p>This mode is used to place components on the Plate, i.e. for placement.
+      The arrangement is carried out manually with extensive use of automation
+      technology, which allows you to maintain the quality of manual placement
+      and increase the speed to automatic placement.</p>
+    <p>1. Select the component or component group to place. This choice can be
+      made in several ways:</p>
+    <p style="margin-left: 40px;">1.1 Hover mouse over the component and click
+      the left button. The component is selected and moved with the mouse cursor
+      movement.</p>
+    <p style="margin-left: 40px;">1.2 To select a group of components, click the
+      left mouse button outside any component and without releasing it, cover
+      the selection rectangle with the required group. When you release the left
+      mouse button, the component group is highlighted and moved with the mouse
+      cursor movement.</p>
+    <p style="margin-left: 40px;">1.3 Enter the component ID in the I field of
+      the part properties bar. The component is selected and moved with the
+      mouse cursor movement.</p>
+    <p style="margin-left: 40px;">1.4 Select the component in the component list
+      in the box I. The component is selected and moved along with the movement
+      of the mouse cursor.</p>
+    <p style="margin-left: 40px;">1.5 <b>Select the component in the schematic
+        diagram.</b> This unique feature is only available in SaliCAD. Turn the
+      mode choice component of the scheme - the G button in the part properties
+      bar, select the sheet of the schema from which you want to choose
+      component - list H the part properties bar and pressing the mouse button
+      outside of any component will automatically open the selected sheet
+      scheme. Left - click the component in the diagram that you want to place.
+      When the sheet of the scheme closes, the component is selectedd and is
+      carried along with the movement of the cursor.</p>
+    <p>2. Set part properties.</p>
+    <p>3. Specify the part insertion point. The part is placed in the Plate.</p>
+    <p>4. Repeat steps 1-3 for the disposition of all parts.</p>
+    The part properties are set using the part properties bar:
+    <p><img src="propBarPartPlace.png" width="856" height="34" border="1"></p>
+    <ul>
+      <li><img src="mouseBLeft.png" width="32" height="48"> You can specify a
+        point by clicking the left mouse button or manually.</li>
+      <li><img src="mouseBRight.png" width="32" height="48"> The termination of
+        the input is done by pressing the right mouse button.</li>
+    </ul>
+    <p><b>"Smart" mode.</b></p>
+    <p>Use smart mode to help you select the next component to placement. When
+      the active function is a consistent choice - button F the part properties
+      bar, the smart mode offers to the next component in the component with the
+      next sequence number of the identifier, for example, if you selected the
+      component R35, reasonable regime will offer to the next component R36.</p>
+    <p>When the function of logical selection of the component is active - the E
+      button of the part properties bar, the reasonable mode offers to insert
+      the nearest local unplaced component in the schematic diagram.</p>
+    <p><img src="mouseBMiddle.png" width="32" height="48"> Middle mouse button
+      or "space" - confirmation of "smart" input.</p>
+    <p><br>
+    </p>
+  </body>
+</html>
