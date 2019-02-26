@@ -114,7 +114,7 @@ void SdPNewProjectItem_Master::initializePage()
     //Masters for part
     case dctPart :
 
-      addMaster( tr("Two pins rectangle part"), tr("Creates part with exact two pins and rectangle body (resistor, condensator and so on)"),
+      addMaster( tr("Two pins rectangle part"), tr("Creates part with exact two pins and rectangle body (resistor, capacitor and so on)"),
                  QString(":/pic/partMasterDoubleRect.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
         SdDMasterPartDoubleRect dlg( item, p );
         return dlg.exec();

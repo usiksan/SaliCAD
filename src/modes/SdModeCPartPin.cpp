@@ -235,7 +235,7 @@ QString SdModeCPartPin::getStepHelp() const
   switch( getStep() ) {
     case sPlacePin    : return QObject::tr("Enter pin place point"); // "Укажите местрасположение вывода",
     case sPlaceName   : return QObject::tr("Enter pin name place"); // "Укажите местрасположение имени вывода",
-    case sEnterNumber : return QObject::tr("Type text");  // "Набирайте текст",
+    case sEnterNumber : return QObject::tr("Type pin number text");  // "Набирайте текст",
     case sPlaceNumber : return QObject::tr("Enter pin number place"); // "Укажите местрасположение номера вывода"
     }
   return QString();

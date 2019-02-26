@@ -51,12 +51,12 @@ static void buildSelectorTable() {
       QObject::tr("Allow select value of resistors")
       );
 
-    appendDescriptor( QString("condensator"), [] (SdStringMap *map, QWidget *parent ) ->bool {
+    appendDescriptor( QString("capacitor"), [] (SdStringMap *map, QWidget *parent ) ->bool {
       SdDRowValue rv( map, sdValueModifierFarad, parent );
       return rv.exec();
       },
-      QString("SelectorCondensator.htm"),
-      QObject::tr("Allow select value of condensator")
+      QString("SelectorCapacitor.htm"),
+      QObject::tr("Allow select value of capacitor")
       );
 
     }

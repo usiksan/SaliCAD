@@ -584,3 +584,6 @@ FORMS += \
     windows/SdDVariantTable.ui \
     master/SdDMasterSymbolIc.ui \
     master/SdDMasterPartDoubleSideLR.ui
+
+TRANSLATIONS = lang_en.ts \
+               lang_ru.ts
