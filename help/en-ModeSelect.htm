@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD Edit mode</title>
+  </head>
+  <body>
+    <h1 align="center">Select and edit</h1>
+    <p><a href="contents.htm">Contents</a>=&gt;<a href="MModes.htm">Modes</a>=&gt;Select
+      and edit</p>
+    <p>Tool bar: <img src="select.png" width="24" height="24" border="1"></p>
+    <p>Menu: Draw|Select and edit</p>
+    <p>Cursor: <img src="cursorSelect2.png" width="32" height="32" border="1"></p>
+    <p>Use this mode to select, copy, move, and delete objects. When you move
+      the cursor over the surface of the graphical editor window, its appearance
+      changes depending on whether the cursor is over the object or not. If the
+      cursor is not over the object, it has the form <img src="cursorSelect2.png"
+        width="32" height="32" border="1">. If the cursor is over an object, its
+      appearance also depends on whether the object is selected or not. If the
+      cursor is over an object and the object is not selected, the cursor takes
+      the form <img src="cursorSelect4.png" width="32" height="32" border="1">.
+      If the cursor is over the selected object, it has the form <img src="cursorSelect5.png"
+        width="32" height="32" border="1">, in addition, if the cursor is over
+      the selected object and the Ctrl key is pressed, the cursor has the form <img
+        src="cursorSelect6.png" width="32" height="32" border="1">.</p>
+    <p>Object selection:</p>
+    <p>To select an object you need to click on it (the cursor has the form <img
+        src="cursorSelect4.png" width="32" height="32" border="1">) the left
+      mouse button.</p>
+    <p>To select a group of objects it is necessary not over the object (the
+      cursor has a form <img src="cursorSelect2.png" width="32" height="32" border="1">)
+      to press the left mouse button and without releasing it to cover with a
+      dashed rectangle the group of objects to be selected, thus the cursor has
+      a form <img src="cursorSelect9.png" width="32" height="32" border="1">.
+      Release the left mouse button when the coverage is complete.</p>
+    <p>To select other objects in addition to the selected objects, hold down
+      the Shift key. Additional objects are selected either individually (the
+      cursor has a form <img src="cursorSelect4.png" width="32" height="32" border="1">)
+      or as a group, and the cursor has a form <img src="cursorSelect9.png" width="32"
+        height="32" border="1">.</p>
+    <p> When objects are selected, their current properties are displayed in the
+      corresponding properties panel, which changes depending on the type of
+      selected elements. The properties of the selected elements can be changed
+      directly in the properties panel. At the same time, property changes are
+      instantly reflected on the selected objects. If objects with different
+      property bars are selected, the property bar is displayed only for the
+      same objects. At the same time, changes made from the properties panel to
+      these objects do not affect other objects.</p>
+    <p> To remove the selection of objects you need to click the mouse over the
+      object.</p>
+    <p>You can move, copy, and delete selected objects.</p>
+    <p>To delete the selected objects, press the Delete key.</p>
+    <p>To copy the selected objects, press and hold the Ctrl key, click the left
+      mouse button over the selected objects and, without releasing the left
+      mouse button, specify the new location of the copies of objects. Objects
+      can be copied both within a single window and between the Windows of one
+      or more projects. When you copy, the cursor is in the form <img src="cursorSelect6.png"
+        width="32" height="32" border="1">.</p>
+    <p>To move the selected objects, click the left mouse button above the
+      selected objects and, without releasing the left mouse button, specify the
+      new location of the objects. When you move the cursor, it looks like <img
+        src="cursorSelect7.png" width="32" height="32" border="1">.</p>
+    <p>When transferring and copying various objects, there are some features:</p>
+    <ul>
+      <li>when transferring lines, if the selection was carried out for the tip
+        of the segment, then this tip is transferred, the other tip remains in
+        place, and the segment is deformed accordingly. This allows you to
+        quickly change the length and direction of the segments;</li>
+      <li>when you move rectangles, if the selection was made at the corner of
+        the rectangle, then only this angle is transferred, and the opposite
+        remains in place, and the rectangle is deformed accordingly. This allows
+        you to quickly resize rectangles;</li>
+      <li>copying identifiers and values is not possible at all;</li>
+      <li> when you copy the legs of the character numerical indexes in the
+        names of the legs are increased by 1;</li>
+      <li>when copying the legs of the body digital indexes in the numbers of
+        the legs are increased by 1;</li>
+      <li>separate copying of the name or number of the leg is not possible;</li>
+      <li>the anchor point is not transferred or copied;</li>
+      <li>when transferring chain segments, if the selection of the chain was
+        carried out for the tip, then only this tip is transferred, the other
+        tip remains in place, and the segment is deformed in the orthogonal
+        direction; when transferring segments associated with it, the segments
+        are deformed accordingly in orthogonal directions, the associated
+        components are also transferred;</li>
+      <li>when you move components, the associated chain segments are deformed
+        in orthogonal directions accordingly.</li>
+    </ul>
+    <p> Selected objects can be rotated around a point. For rotation is a mode
+      of rotation.</p>
+    <p><br>
+    </p>
+  </body>
+</html>

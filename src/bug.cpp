@@ -1,5 +1,5 @@
 ﻿
-//B067 bugs
+//B068 bugs
 //F001 fatal
 //C001 critical
 //D086 do
@@ -38,6 +38,8 @@
 //TODO D085 Append rotation command to select menu
 
 //TODO D086 Append automatic form selection when sheet creation
+
+//TODO B068 Copy id and value not allowed
 
 //===================================================================================
 //Fixed:
