@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Integrated circuit symbol master</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
@@ -26,7 +26,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QTableWidget" name="mLeftTable"/>
+        <widget class="QTableWidget" name="mLeftTable">
+         <property name="toolTip">
+          <string>Left side pins list</string>
+         </property>
+        </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
@@ -72,7 +76,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QTableWidget" name="mRightTable"/>
+        <widget class="QTableWidget" name="mRightTable">
+         <property name="toolTip">
+          <string>Right side pins list</string>
+         </property>
+        </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -115,6 +123,9 @@
          <width>400</width>
          <height>600</height>
         </size>
+       </property>
+       <property name="toolTip">
+        <string>Builded symbol preview</string>
        </property>
        <property name="text">
         <string>TextLabel</string>

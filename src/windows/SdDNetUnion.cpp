@@ -25,7 +25,7 @@ SdDNetUnion::SdDNetUnion(const QString first, const QString second, QWidget *par
   ui->setupUi(this);
 
   ui->mFirst->setText( tr("Assign '%1'").arg(first) );
-  ui->mSecond->setText( tr("Assign '%2'").arg(second) );
+  ui->mSecond->setText( tr("Assign '%1'").arg(second) );
 
   connect( ui->buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, [this] () {
     SdDHelp::help( QString("SdDNetUnion.htm"), this );

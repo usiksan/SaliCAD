@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>631</width>
+    <width>705</width>
     <height>308</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Two pins rectangle part master</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -113,6 +113,9 @@
          <width>250</width>
          <height>250</height>
         </size>
+       </property>
+       <property name="toolTip">
+        <string>Builded part preview</string>
        </property>
        <property name="text">
         <string>Preview</string>

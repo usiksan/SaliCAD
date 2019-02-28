@@ -328,6 +328,9 @@
          <height>400</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Builded part preview</string>
+       </property>
        <property name="text">
         <string>TextLabel</string>
        </property>

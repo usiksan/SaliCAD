@@ -1430,7 +1430,8 @@
     </message>
     <message>
         <location filename="windows/SdDEnterPosition.ui" line="42"/>
-        <source>Coordianet for axis X</source>
+        <source>Coordinate for axis X</source>
+        <oldsource>Coordianet for axis X</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1440,7 +1441,8 @@
     </message>
     <message>
         <location filename="windows/SdDEnterPosition.ui" line="56"/>
-        <source>Coordianet for axis Y</source>
+        <source>Coordinate for axis Y</source>
+        <oldsource>Coordianet for axis Y</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1450,7 +1452,8 @@
     </message>
     <message>
         <location filename="windows/SdDEnterPosition.ui" line="70"/>
-        <source>Coordianet for axis Z</source>
+        <source>Coordinate for axis Z</source>
+        <oldsource>Coordianet for axis Z</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1712,7 +1715,7 @@
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="96"/>
-        <source>GroupBox</source>
+        <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2178,7 +2181,7 @@
     <name>SdDMasterPartDoubleRect</name>
     <message>
         <location filename="master/SdDMasterPartDoubleRect.ui" line="14"/>
-        <source>Dialog</source>
+        <source>Two pins rectangle part master</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2219,6 +2222,11 @@
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRect.ui" line="118"/>
+        <source>Builded part preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterPartDoubleRect.ui" line="121"/>
         <source>Preview</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2227,7 +2235,7 @@
     <name>SdDMasterPartDoubleRound</name>
     <message>
         <location filename="master/SdDMasterPartDoubleRound.ui" line="14"/>
-        <source>Dialog</source>
+        <source>Two pins round part master</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2263,6 +2271,11 @@
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRound.ui" line="108"/>
+        <source>Builded part preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterPartDoubleRound.ui" line="111"/>
         <source>Preview</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2271,7 +2284,7 @@
     <name>SdDMasterPartDoubleSide</name>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="14"/>
-        <source>Dialog</source>
+        <source>Two sided pins part master</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2337,7 +2350,8 @@
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="155"/>
-        <source>Bottomm pin type:</source>
+        <source>Bottom pin type:</source>
+        <oldsource>Bottomm pin type:</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2352,6 +2366,11 @@
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="204"/>
+        <source>Builded part preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterPartDoubleSide.ui" line="207"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2359,88 +2378,93 @@
 <context>
     <name>SdDMasterPartDoubleSideLR</name>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="16"/>
-        <source>Dialog</source>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="14"/>
+        <source>Two sided pins left-right orientation part master</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="26"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="24"/>
         <source>Body size X:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="36"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="34"/>
         <source>Body size Y:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="46"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="44"/>
         <source>Pin size X:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="56"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="54"/>
         <source>Planar pins:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="76"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="74"/>
         <source>Left side</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="83"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="81"/>
         <source>Left pin count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="93"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="91"/>
         <source>Left pin type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="105"/>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="169"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="103"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="167"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="114"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="112"/>
         <source>Left pin distance:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="124"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="122"/>
         <source>Left pins offset Y:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="140"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="138"/>
         <source>Right side</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="147"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="145"/>
         <source>Right pin count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="157"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="155"/>
         <source>Right pin type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="178"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="176"/>
         <source>Right pin distance:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="188"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="186"/>
         <source>Right pins offset Y:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="206"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="204"/>
+        <source>Builded part preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="207"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2582,6 +2606,11 @@
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="332"/>
+        <source>Builded part preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterPartQuadSide.ui" line="335"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2625,6 +2654,11 @@
     </message>
     <message>
         <location filename="master/SdDMasterSymbolConnector.ui" line="96"/>
+        <source>Builded symbol preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterSymbolConnector.ui" line="99"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2633,7 +2667,7 @@
     <name>SdDMasterSymbolIc</name>
     <message>
         <location filename="master/SdDMasterSymbolIc.ui" line="14"/>
-        <source>Dialog</source>
+        <source>Integrated circuit symbol master</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2642,41 +2676,56 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterSymbolIc.ui" line="36"/>
-        <location filename="master/SdDMasterSymbolIc.ui" line="82"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="31"/>
+        <source>Left side pins list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterSymbolIc.ui" line="40"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="90"/>
         <source>Insert pin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterSymbolIc.ui" line="43"/>
-        <location filename="master/SdDMasterSymbolIc.ui" line="89"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="47"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="97"/>
         <source>Insert gap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterSymbolIc.ui" line="50"/>
-        <location filename="master/SdDMasterSymbolIc.ui" line="96"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="54"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="104"/>
         <source>Insert delim</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterSymbolIc.ui" line="57"/>
-        <location filename="master/SdDMasterSymbolIc.ui" line="103"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="61"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="111"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterSymbolIc.ui" line="70"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="74"/>
         <source>Right pins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterSymbolIc.ui" line="120"/>
-        <source>TextLabel</source>
+        <location filename="master/SdDMasterSymbolIc.ui" line="81"/>
+        <source>Right side pins list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterSymbolIc.ui" line="128"/>
+        <source>Builded symbol preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="master/SdDMasterSymbolIc.ui" line="131"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterSymbolIc.ui" line="142"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2735,7 +2784,8 @@
     </message>
     <message>
         <location filename="windows/SdDNetUnion.ui" line="36"/>
-        <source>First variant of resul net name</source>
+        <source>First variant of result net name</source>
+        <oldsource>First variant of resul net name</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2751,12 +2801,15 @@
     </message>
     <message>
         <location filename="windows/SdDNetUnion.cpp" line="27"/>
+        <location filename="windows/SdDNetUnion.cpp" line="28"/>
         <source>Assign &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="windows/SdDNetUnion.cpp" line="27"/>
         <location filename="windows/SdDNetUnion.cpp" line="28"/>
-        <source>Assign &apos;%2&apos;</source>
+        <source>Assign &apos;%1&apos;</source>
+        <oldsource>Assign &apos;%2&apos;</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>

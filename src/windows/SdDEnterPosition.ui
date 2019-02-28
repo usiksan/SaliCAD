@@ -39,7 +39,7 @@
      <item row="0" column="1">
       <widget class="QLineEdit" name="mX">
        <property name="toolTip">
-        <string>Coordianet for axis X</string>
+        <string>Coordinate for axis X</string>
        </property>
       </widget>
      </item>
@@ -53,7 +53,7 @@
      <item row="1" column="1">
       <widget class="QLineEdit" name="mY">
        <property name="toolTip">
-        <string>Coordianet for axis Y</string>
+        <string>Coordinate for axis Y</string>
        </property>
       </widget>
      </item>
@@ -67,7 +67,7 @@
      <item row="2" column="1">
       <widget class="QLineEdit" name="mZ">
        <property name="toolTip">
-        <string>Coordianet for axis Z</string>
+        <string>Coordinate for axis Z</string>
        </property>
       </widget>
      </item>

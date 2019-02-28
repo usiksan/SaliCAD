@@ -1,19 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>SdDMasterPartDoubleSideLR</class>
  <widget class="QDialog" name="SdDMasterPartDoubleSideLR">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>527</width>
+    <width>592</width>
     <height>461</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Two sided pins left-right orientation part master</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -202,6 +200,9 @@
          <height>250</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Builded part preview</string>
+       </property>
        <property name="text">
         <string>TextLabel</string>
        </property>
@@ -222,38 +223,5 @@
   </layout>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>SdDMasterPartDoubleSide</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>SdDMasterPartDoubleSide</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

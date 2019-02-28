@@ -92,6 +92,9 @@
          <height>250</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Builded symbol preview</string>
+       </property>
        <property name="text">
         <string>TextLabel</string>
        </property>

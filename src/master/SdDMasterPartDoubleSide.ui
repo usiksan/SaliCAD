@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>527</width>
+    <width>589</width>
     <height>461</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Two sided pins part master</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -152,7 +152,7 @@
        <item row="11" column="0">
         <widget class="QLabel" name="label_11">
          <property name="text">
-          <string>Bottomm pin type:</string>
+          <string>Bottom pin type:</string>
          </property>
         </widget>
        </item>
@@ -199,6 +199,9 @@
          <width>250</width>
          <height>250</height>
         </size>
+       </property>
+       <property name="toolTip">
+        <string>Builded part preview</string>
        </property>
        <property name="text">
         <string>TextLabel</string>

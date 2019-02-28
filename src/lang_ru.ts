@@ -1430,28 +1430,31 @@
     </message>
     <message>
         <location filename="windows/SdDEnterPosition.ui" line="42"/>
-        <source>Coordianet for axis X</source>
-        <translation type="unfinished"></translation>
+        <source>Coordinate for axis X</source>
+        <oldsource>Coordianet for axis X</oldsource>
+        <translation>Координата для оси X</translation>
     </message>
     <message>
         <location filename="windows/SdDEnterPosition.ui" line="49"/>
         <source>Axis Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ось Y:</translation>
     </message>
     <message>
         <location filename="windows/SdDEnterPosition.ui" line="56"/>
-        <source>Coordianet for axis Y</source>
-        <translation type="unfinished"></translation>
+        <source>Coordinate for axis Y</source>
+        <oldsource>Coordianet for axis Y</oldsource>
+        <translation>Координата для оси Y</translation>
     </message>
     <message>
         <location filename="windows/SdDEnterPosition.ui" line="63"/>
         <source>Axis Z:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ось Z:</translation>
     </message>
     <message>
         <location filename="windows/SdDEnterPosition.ui" line="70"/>
-        <source>Coordianet for axis Z</source>
-        <translation type="unfinished"></translation>
+        <source>Coordinate for axis Z</source>
+        <oldsource>Coordianet for axis Z</oldsource>
+        <translation>Координата для оси Z</translation>
     </message>
 </context>
 <context>
@@ -1459,47 +1462,47 @@
     <message>
         <location filename="windows/SdDGetBus.ui" line="14"/>
         <source>Enter bus net list</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите список цепей для шины</translation>
     </message>
     <message>
         <location filename="windows/SdDGetBus.ui" line="20"/>
         <source>Enter bus net list. Format is: netName1,netName2...</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите список цепей шины. Формет: имяЦепи1, имяЦепи2...</translation>
     </message>
     <message>
         <location filename="windows/SdDGetBus.ui" line="27"/>
         <source>NetName can be group: netCommonName&lt;startIndex:stopIndex&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>ИмяЦепи может быть группой: общееИмяЦепи&lt;начальныйИндекс:конечныйИндекс&gt;</translation>
     </message>
     <message>
         <location filename="windows/SdDGetBus.ui" line="34"/>
         <source>Example: addr&lt;0:3&gt;,+5v,d&lt;0:2&gt;,gnd</source>
-        <translation type="unfinished"></translation>
+        <translation>Пример: addr&lt;0:3&gt;,+5v,d&lt;0:2&gt;,gnd</translation>
     </message>
     <message>
         <location filename="windows/SdDGetBus.ui" line="41"/>
         <source>will produce: addr0,addr1,addr2,addr3,+5v,d0,d1,d2,gnd</source>
-        <translation type="unfinished"></translation>
+        <translation>произведет цепи: addr0,addr1,add2,addr3,+5v,d0,d1,d2,gnd</translation>
     </message>
     <message>
         <location filename="windows/SdDGetBus.ui" line="48"/>
         <source>Bus net list with format above.</source>
-        <translation type="unfinished"></translation>
+        <translation>Список цепей шины, формат приведен выше.</translation>
     </message>
     <message>
         <location filename="windows/SdDGetBus.ui" line="55"/>
         <source>Previously entered bus list.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ранее введенные списки цепей для шин.</translation>
     </message>
     <message>
         <location filename="windows/SdDGetBus.cpp" line="143"/>
         <source>Error</source>
-        <translation type="unfinished">Ошибка!</translation>
+        <translation>Ошибка!</translation>
     </message>
     <message>
         <location filename="windows/SdDGetBus.cpp" line="143"/>
         <source>Wrong net list syntax. Use: netA,netB,net&lt;0:2&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный синтаксис списка цепей. Используйте: цепьА,цепьБ,цепь&lt;0:2&gt;</translation>
     </message>
 </context>
 <context>
@@ -1507,142 +1510,142 @@
     <message>
         <location filename="windows/SdDGetObject.ui" line="14"/>
         <source>Library object finder</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск объектов в библиотеке</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="26"/>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Категория</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="47"/>
         <source>Fields filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Фильтр по полям</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="67"/>
         <source>Clear all</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистить все</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="92"/>
         <source>Enter object to find</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите объект для поиска</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="99"/>
         <source>Expand param table</source>
-        <translation type="unfinished"></translation>
+        <translation>Расширить для таблицы параметров</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="110"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя:</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="117"/>
         <source>Name filter. Match all text fragment delimited by space.</source>
-        <translation type="unfinished"></translation>
+        <translation>Фильтр имени. Должны встречаться все фрагменты разделенные пробелами.</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="124"/>
         <source>Param:</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметры:</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="140"/>
         <source>Find</source>
-        <translation type="unfinished">Найти</translation>
+        <translation>Найти</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="152"/>
         <source>Find list</source>
-        <translation type="unfinished"></translation>
+        <translation>Список поиска</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="159"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Table with elements matched to filters.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Таблица с элементами удовлетворяющими фильтрами.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="176"/>
         <source>Sections</source>
-        <translation type="unfinished"></translation>
+        <translation>Секции</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="195"/>
         <source>Symbol</source>
-        <translation type="unfinished">Символ</translation>
+        <translation>Символ</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="202"/>
         <source>Part</source>
-        <translation type="unfinished">Корпус</translation>
+        <translation>Корпус</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="230"/>
         <source>Help</source>
-        <translation type="unfinished">Помощь</translation>
+        <translation>Помощь</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="237"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="244"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Ок</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="251"/>
         <source>Load from central repo</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить из центрального репозитория</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.cpp" line="203"/>
         <source>Show</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.cpp" line="203"/>
         <source>Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.cpp" line="203"/>
         <source>Filtr</source>
-        <translation type="unfinished"></translation>
+        <translation>Фильтр</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.cpp" line="421"/>
         <source>Section %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Секция %1:%2</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.cpp" line="644"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.cpp" line="645"/>
         <source>Author</source>
-        <translation type="unfinished"></translation>
+        <translation>Автор</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.cpp" line="646"/>
         <source>Created</source>
-        <translation type="unfinished"></translation>
+        <translation>Создан</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.cpp" line="714"/>
         <source>Error</source>
-        <translation type="unfinished">Ошибка!</translation>
+        <translation>Ошибка!</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.cpp" line="714"/>
         <source>You must select element or press Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы должны выбратиь элемент или нажмите Отмена</translation>
     </message>
 </context>
 <context>
@@ -1668,137 +1671,137 @@
     <message>
         <location filename="windows/SdDGrid.ui" line="14"/>
         <source>Grid</source>
-        <translation type="unfinished">Сетка</translation>
+        <translation>Сетка</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="22"/>
         <source>Grid step</source>
-        <translation type="unfinished"></translation>
+        <translation>Шаг сетки</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="28"/>
         <source>On axis X:</source>
-        <translation type="unfinished"></translation>
+        <translation>По оси X:</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="41"/>
         <source>Grid step on axis X</source>
-        <translation type="unfinished"></translation>
+        <translation>Шаг сетки по оси X</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="51"/>
         <source>If checked then axis Y grid step is same as on axis X</source>
-        <translation type="unfinished"></translation>
+        <translation>Если помечено, то шаг сетки по оси Y будет такой-же как и по оси X</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="54"/>
         <source>Sync X and Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Синхронизировать X и Y</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="61"/>
         <source>On axis Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>По оси Y:</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="74"/>
         <source>Grid step on axis Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Шаг сетки по оси Y</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="84"/>
         <source>Previous grids</source>
-        <translation type="unfinished"></translation>
+        <translation>Предыдущие сетки</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="96"/>
-        <source>GroupBox</source>
-        <translation type="unfinished"></translation>
+        <source>View</source>
+        <translation>Вид</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="102"/>
         <source>If checked then grid is visible</source>
-        <translation type="unfinished"></translation>
+        <translation>Если помечено, то сетка видна</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="105"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать сетку</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="112"/>
         <source>When checked cursor movement is aligned to grid nodes</source>
-        <translation type="unfinished"></translation>
+        <translation>Если помечено, то перемещение курсора выравнивается по узлам сетки</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="115"/>
         <source>Align cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Выравнивать курсор</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="122"/>
         <source>When checked cursor is visible</source>
-        <translation type="unfinished"></translation>
+        <translation>Если помечено, то курсор виден</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="125"/>
         <source>Show cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать курсор</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="135"/>
         <source>Crosshair view</source>
-        <translation type="unfinished"></translation>
+        <translation>Вид перекрестья</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="141"/>
         <source>Addon crosshair cursor is invisible</source>
-        <translation type="unfinished"></translation>
+        <translation>Дополнительное перекрестье курсора невидимо</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="144"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Отсутствует</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="151"/>
         <source>Addon crosshair cursor is small with size as in options defined</source>
-        <translation type="unfinished"></translation>
+        <translation>Дополнительное перекрестье - маленький крестик, размером определенным в настройках</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="154"/>
         <source>Small</source>
-        <translation type="unfinished"></translation>
+        <translation>Маленький</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="161"/>
         <source>Addon crosshair cursor is over all graphics window</source>
-        <translation type="unfinished"></translation>
+        <translation>Дополнительное перекрестье размером на все окно</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="164"/>
         <source>Full</source>
-        <translation type="unfinished"></translation>
+        <translation>Полный</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="171"/>
         <source>Addon crosshair cursor is small 45 degree cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Дополнительное перекрестье - маленький крестик под углом 45 градусов</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="174"/>
         <source>Small 45</source>
-        <translation type="unfinished"></translation>
+        <translation>Маленький 45</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="181"/>
         <source>Addon crosshair cursor is over full graphics window 45 degree cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Дополнительное перекрестье под углом 45 градусов и размеров во все окно</translation>
     </message>
     <message>
         <location filename="windows/SdDGrid.ui" line="184"/>
         <source>Full 45</source>
-        <translation type="unfinished"></translation>
+        <translation>Полный 45</translation>
     </message>
 </context>
 <context>
@@ -1806,32 +1809,32 @@
     <message>
         <location filename="windows/SdDGuiderPlayer.cpp" line="50"/>
         <source>Guider</source>
-        <translation type="unfinished"></translation>
+        <translation>Путеводитель</translation>
     </message>
     <message>
         <location filename="windows/SdDGuiderPlayer.cpp" line="58"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <location filename="windows/SdDGuiderPlayer.cpp" line="64"/>
         <source>Restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Рестарт</translation>
     </message>
     <message>
         <location filename="windows/SdDGuiderPlayer.cpp" line="80"/>
         <source>Start play</source>
-        <translation type="unfinished"></translation>
+        <translation>Начать проигрывать</translation>
     </message>
     <message>
         <location filename="windows/SdDGuiderPlayer.cpp" line="87"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Пауза</translation>
     </message>
     <message>
         <location filename="windows/SdDGuiderPlayer.cpp" line="94"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Стоп</translation>
     </message>
 </context>
 <context>
@@ -1839,27 +1842,27 @@
     <message>
         <location filename="windows/SdDHelp.cpp" line="34"/>
         <source>Dialog help</source>
-        <translation type="unfinished"></translation>
+        <translation>Окно помощи</translation>
     </message>
     <message>
         <location filename="windows/SdDHelp.cpp" line="42"/>
         <source>Help contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Страница помощи</translation>
     </message>
     <message>
         <location filename="windows/SdDHelp.cpp" line="48"/>
         <source>Base page</source>
-        <translation type="unfinished"></translation>
+        <translation>Базовая страница помощи</translation>
     </message>
     <message>
         <location filename="windows/SdDHelp.cpp" line="54"/>
         <source>Previous page</source>
-        <translation type="unfinished"></translation>
+        <translation>Предыдущая страница помощи</translation>
     </message>
     <message>
         <location filename="windows/SdDHelp.cpp" line="62"/>
         <source>Next page</source>
-        <translation type="unfinished"></translation>
+        <translation>Следующая страница помощи</translation>
     </message>
 </context>
 <context>
@@ -1867,53 +1870,53 @@
     <message>
         <location filename="windows/SdDLayerCreate.ui" line="14"/>
         <source>Layer constructor</source>
-        <translation type="unfinished"></translation>
+        <translation>Конструктор слоя</translation>
     </message>
     <message>
         <location filename="windows/SdDLayerCreate.ui" line="42"/>
         <source>Layer class</source>
-        <translation type="unfinished"></translation>
+        <translation>Класс слоя</translation>
     </message>
     <message>
         <location filename="windows/SdDLayerCreate.ui" line="55"/>
         <location filename="windows/SdDLayerCreate.ui" line="94"/>
         <source>Class</source>
-        <translation type="unfinished"></translation>
+        <translation>Класс</translation>
     </message>
     <message>
         <location filename="windows/SdDLayerCreate.ui" line="68"/>
         <source>Modifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Модификатор</translation>
     </message>
     <message>
         <location filename="windows/SdDLayerCreate.ui" line="81"/>
         <source>Layer modifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Модификатор слоя</translation>
     </message>
     <message>
         <location filename="windows/SdDLayerCreate.ui" line="107"/>
         <source>Layer ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Идентификатор слоя</translation>
     </message>
     <message>
         <location filename="windows/SdDLayerCreate.ui" line="120"/>
         <source>Layer internal id on base class and modifier or user entered</source>
-        <translation type="unfinished"></translation>
+        <translation>Внутренний идентификатор слоя на основе класса и модификатора или введенный пользователем</translation>
     </message>
     <message>
         <location filename="windows/SdDLayerCreate.ui" line="133"/>
         <source>Layer name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя слоя:</translation>
     </message>
     <message>
         <location filename="windows/SdDLayerCreate.ui" line="146"/>
         <source>Visual representative of layer name</source>
-        <translation type="unfinished"></translation>
+        <translation>Визуальное имя слоя</translation>
     </message>
     <message>
         <location filename="windows/SdDLayerCreate.cpp" line="28"/>
         <source>User id</source>
-        <translation type="unfinished"></translation>
+        <translation>Идентификатор пользователя</translation>
     </message>
 </context>
 <context>
@@ -1921,42 +1924,42 @@
     <message>
         <location filename="windows/SdDLayerList.ui" line="14"/>
         <source>Select layer pair</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите парный слой</translation>
     </message>
     <message>
         <location filename="windows/SdDLayerList.ui" line="20"/>
         <source>Available layer list</source>
-        <translation type="unfinished"></translation>
+        <translation>Список доступных слоев</translation>
     </message>
     <message>
         <location filename="windows/SdDLayerList.ui" line="29"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="windows/SdDLayerList.ui" line="36"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Убрать</translation>
     </message>
     <message>
         <location filename="windows/SdDLayerList.ui" line="43"/>
         <source>Assign</source>
-        <translation type="unfinished"></translation>
+        <translation>Назначить</translation>
     </message>
     <message>
         <location filename="windows/SdDLayerList.ui" line="50"/>
         <source>Help</source>
-        <translation type="unfinished">Помощь</translation>
+        <translation>Помощь</translation>
     </message>
     <message>
         <location filename="windows/SdDLayerList.cpp" line="102"/>
         <source>Error</source>
-        <translation type="unfinished">Ошибка!</translation>
+        <translation>Ошибка!</translation>
     </message>
     <message>
         <location filename="windows/SdDLayerList.cpp" line="102"/>
         <source>Pair not selected to assign. Select it and repeate assigning.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не выбран парный слой для назначения. Выберите его и повторите назначение.</translation>
     </message>
 </context>
 <context>
@@ -1964,485 +1967,506 @@
     <message>
         <location filename="windows/SdDLayers.ui" line="14"/>
         <source>Layers</source>
-        <translation type="unfinished">Слои</translation>
+        <translation>Слои</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.ui" line="24"/>
         <source>Tracing layers count in plate (1-30):</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество трассировочных слоев на плате (1-30):</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.ui" line="56"/>
         <source>Layers list</source>
-        <translation type="unfinished"></translation>
+        <translation>Список слоев</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.ui" line="76"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.ui" line="83"/>
         <source>Help</source>
-        <translation type="unfinished">Помощь</translation>
+        <translation>Помощь</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.ui" line="103"/>
         <source>Create...</source>
-        <translation type="unfinished">Создать...</translation>
+        <translation>Создать...</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.ui" line="110"/>
         <source>Delete</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.ui" line="117"/>
         <source>Show actual</source>
-        <translation type="unfinished"></translation>
+        <translation>Актуальные</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.ui" line="124"/>
         <source>Show used</source>
-        <translation type="unfinished"></translation>
+        <translation>Используемые</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.ui" line="131"/>
         <source>Show all</source>
-        <translation type="unfinished"></translation>
+        <translation>Все</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.ui" line="138"/>
         <source>Hide all</source>
-        <translation type="unfinished"></translation>
+        <translation>Скрыть все</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.ui" line="145"/>
         <source>Switch all</source>
-        <translation type="unfinished"></translation>
+        <translation>Переключить все</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.ui" line="152"/>
         <source>Layer view set</source>
-        <translation type="unfinished"></translation>
+        <translation>Набор слоев</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.ui" line="158"/>
         <source>Load...</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить...</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.ui" line="165"/>
         <source>Save...</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить...</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="83"/>
         <source>Lyaer name</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя слоя</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="83"/>
         <source>Trace</source>
-        <translation type="unfinished"></translation>
+        <translation>Трассировка</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="83"/>
         <source>State</source>
-        <translation type="unfinished"></translation>
+        <translation>Состояние</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="83"/>
         <source>Visible</source>
-        <translation type="unfinished"></translation>
+        <translation>Видимость</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="83"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="83"/>
         <source>Pair name</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя пары</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="270"/>
         <source>Warning!</source>
-        <translation type="unfinished">Внимание!</translation>
+        <translation>Внимание!</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="270"/>
         <source>Are You sure to delete layer &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы уверены, что хотите удалить слой &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="276"/>
         <location filename="windows/SdDLayers.cpp" line="287"/>
         <source>Error</source>
-        <translation type="unfinished">Ошибка!</translation>
+        <translation>Ошибка!</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="276"/>
         <source>Layer &quot;%1&quot; is used in some projects. It can&apos;t be deleted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Слой &quot;%1&quot; используется в некоторых проектах. Его нельзя удалить.</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="287"/>
         <source>Select layer to delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите слой для удаления</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="360"/>
         <source>Select file name to load layer state list</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите имя файла для загрузки списка состояния слоев</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="386"/>
         <source>Enter file name to save layer state list</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите имя файла для сохранения списка состояния слоев</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="481"/>
         <source>Select layer color</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите цвет слоя</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="538"/>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Выкл</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="539"/>
         <source>On</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкл</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="540"/>
         <source>Edit</source>
-        <translation type="unfinished">Редактирование</translation>
+        <translation>Редакт</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="552"/>
         <location filename="windows/SdDLayers.cpp" line="572"/>
         <source>---</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="554"/>
         <source>pad</source>
-        <translation type="unfinished"></translation>
+        <translation>площадки</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="556"/>
         <source>mask</source>
-        <translation type="unfinished"></translation>
+        <translation>маска</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="558"/>
         <source>stensil</source>
-        <translation type="unfinished"></translation>
+        <translation>трафарет</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="560"/>
         <source>hole</source>
-        <translation type="unfinished"></translation>
+        <translation>отверстие</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="562"/>
         <source>road</source>
-        <translation type="unfinished"></translation>
+        <translation>дорожки</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="564"/>
         <source>polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>полигон</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="566"/>
         <source>bound</source>
-        <translation type="unfinished"></translation>
+        <translation>границы</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="568"/>
         <source>keepout</source>
-        <translation type="unfinished"></translation>
+        <translation>запрет</translation>
     </message>
     <message>
         <location filename="windows/SdDLayers.cpp" line="570"/>
         <source>last</source>
-        <translation type="unfinished"></translation>
+        <translation>последний</translation>
     </message>
 </context>
 <context>
     <name>SdDMasterPartDoubleRect</name>
     <message>
         <location filename="master/SdDMasterPartDoubleRect.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <source>Two pins rectangle part master</source>
+        <translation>Мастер двухвыводных прямоугольных корпусов</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRect.ui" line="24"/>
         <source>Body size X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер корпуса X:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRect.ui" line="34"/>
         <source>Body size Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер корпуса Y:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRect.ui" line="44"/>
         <source>Between pins:</source>
-        <translation type="unfinished"></translation>
+        <translation>Между выводами:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRect.ui" line="54"/>
         <source>Left pin type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип левого вывода:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRect.ui" line="66"/>
         <location filename="master/SdDMasterPartDoubleRect.ui" line="87"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRect.ui" line="75"/>
         <source>Right pin type (if different from left):</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип правого вывода (если отличен от левого)</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRect.ui" line="96"/>
         <source>Smd pins</source>
-        <translation type="unfinished"></translation>
+        <translation>Планарные выводы</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRect.ui" line="118"/>
+        <source>Builded part preview</source>
+        <translation>Предварительный просмотр построенного корпуса</translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterPartDoubleRect.ui" line="121"/>
         <source>Preview</source>
-        <translation type="unfinished">Предварительный просмотр</translation>
+        <translation>Предварительный просмотр</translation>
     </message>
 </context>
 <context>
     <name>SdDMasterPartDoubleRound</name>
     <message>
         <location filename="master/SdDMasterPartDoubleRound.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <source>Two pins round part master</source>
+        <translation>Мастер создания круглых корпусов с двумя выводами</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRound.ui" line="24"/>
         <source>Body diameter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Диаметр корпуса:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRound.ui" line="34"/>
         <source>Between pins:</source>
-        <translation type="unfinished"></translation>
+        <translation>Между выводами:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRound.ui" line="44"/>
         <source>Left pin type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип левого вывода:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRound.ui" line="56"/>
         <location filename="master/SdDMasterPartDoubleRound.ui" line="77"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRound.ui" line="65"/>
         <source>Right pin type (if different from left):</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип правого вывода (если отличен от левого)</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRound.ui" line="86"/>
         <source>Smd pins</source>
-        <translation type="unfinished"></translation>
+        <translation>Планарные выводы</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleRound.ui" line="108"/>
+        <source>Builded part preview</source>
+        <translation>Предварительный просмотр построенного корпуса</translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterPartDoubleRound.ui" line="111"/>
         <source>Preview</source>
-        <translation type="unfinished">Предварительный просмотр</translation>
+        <translation>Предварительный просмотр</translation>
     </message>
 </context>
 <context>
     <name>SdDMasterPartDoubleSide</name>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <source>Two sided pins part master</source>
+        <translation>Мастер создания корпуса с выводами по двум сторонам</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="24"/>
         <source>Body size X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер корпуса X:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="34"/>
         <source>Body size Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер корпуса Y:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="44"/>
         <source>Pin size Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер вывода Y:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="54"/>
         <source>Planar pins:</source>
-        <translation type="unfinished"></translation>
+        <translation>Планарные выводы:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="74"/>
         <source>Top side</source>
-        <translation type="unfinished"></translation>
+        <translation>Верхняя сторона</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="81"/>
         <source>Top pin count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество выводов сверху:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="91"/>
         <source>Top pin type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип выводов сверху:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="103"/>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="167"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="112"/>
         <source>Top pin distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Между выводами сверху:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="122"/>
         <source>Top pins offset X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Смещение ряда по X:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="138"/>
         <source>Bottom side</source>
-        <translation type="unfinished"></translation>
+        <translation>Нижняя сторона</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="145"/>
         <source>Bottom pin count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество выводов снизу:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="155"/>
-        <source>Bottomm pin type:</source>
-        <translation type="unfinished"></translation>
+        <source>Bottom pin type:</source>
+        <oldsource>Bottomm pin type:</oldsource>
+        <translation>Тип выводов снизу:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="176"/>
         <source>Bottom pin distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Между выводами снизу:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="186"/>
         <source>Bottom pins offset X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Смещение ряда по X:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartDoubleSide.ui" line="204"/>
+        <source>Builded part preview</source>
+        <translation>Предварительный просмотр построенного корпуса</translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterPartDoubleSide.ui" line="207"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Предварительный просмотр</translation>
     </message>
 </context>
 <context>
     <name>SdDMasterPartDoubleSideLR</name>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="16"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="14"/>
+        <source>Two sided pins left-right orientation part master</source>
+        <translation>Мастер создания корпуса с выводами сверху и снизу</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="26"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="24"/>
         <source>Body size X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер корпуса X:</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="36"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="34"/>
         <source>Body size Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер корпуса Y:</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="46"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="44"/>
         <source>Pin size X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер вывода X:</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="56"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="54"/>
         <source>Planar pins:</source>
-        <translation type="unfinished"></translation>
+        <translation>Планарные выводы:</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="76"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="74"/>
         <source>Left side</source>
-        <translation type="unfinished"></translation>
+        <translation>Левая сторона</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="83"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="81"/>
         <source>Left pin count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество выводов слева:</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="93"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="91"/>
         <source>Left pin type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип левого вывода:</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="105"/>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="169"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="103"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="167"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="114"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="112"/>
         <source>Left pin distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Между выводами слева:</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="124"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="122"/>
         <source>Left pins offset Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Смещение слева по Y:</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="140"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="138"/>
         <source>Right side</source>
-        <translation type="unfinished"></translation>
+        <translation>Правая сторона</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="147"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="145"/>
         <source>Right pin count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество выводов справа:</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="157"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="155"/>
         <source>Right pin type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип выводов справа:</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="178"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="176"/>
         <source>Right pin distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Между выводами справа:</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="188"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="186"/>
         <source>Right pins offset Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Смещение справа по Y:</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="206"/>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="204"/>
+        <source>Builded part preview</source>
+        <translation>Предварительный просмотр построенного корпуса</translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterPartDoubleSideLR.ui" line="207"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Предварительный просмотр</translation>
     </message>
 </context>
 <context>
@@ -2450,62 +2474,62 @@
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="14"/>
         <source>Quad side pins part master</source>
-        <translation type="unfinished"></translation>
+        <translation>Мастер корпуса с выводами по четырем сторонам</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="24"/>
         <source>Body size X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер корпуса X:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="34"/>
         <source>Body size Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер корпуса Y:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="44"/>
         <source>Pin size X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер вывода X:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="54"/>
         <source>Pin size Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер вывода Y:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="64"/>
         <source>Pin distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Между выводами:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="74"/>
         <source>Total pin count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Общее количество выводов:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="84"/>
         <source>Bottom left pin number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Номер левого нижнего вывода:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="94"/>
         <source>Planar pins:</source>
-        <translation type="unfinished"></translation>
+        <translation>Планарные выводы:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="114"/>
         <source>Left side</source>
-        <translation type="unfinished"></translation>
+        <translation>Левая сторона</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="121"/>
         <source>Left pin count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество выводов слева:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="131"/>
         <source>Left pin type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип левого вывода:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="143"/>
@@ -2513,77 +2537,82 @@
         <location filename="master/SdDMasterPartQuadSide.ui" line="251"/>
         <location filename="master/SdDMasterPartQuadSide.ui" line="305"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="152"/>
         <source>Left pins offset Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Смещение слева по Y:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="168"/>
         <source>Bottom side</source>
-        <translation type="unfinished"></translation>
+        <translation>Нижняя сторона</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="175"/>
         <source>Bottom pin count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество выводов снизу:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="185"/>
         <source>Bottom pin type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип выводов снизу:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="206"/>
         <source>Bottom pins offset X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Смещение ряда по X:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="222"/>
         <source>Right side</source>
-        <translation type="unfinished"></translation>
+        <translation>Правая сторона</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="229"/>
         <source>Right pin count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество выводов справа:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="239"/>
         <source>Right pin type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип выводов справа:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="260"/>
         <source>Right pins offset Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Смещение справа по Y:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="276"/>
         <source>Top side</source>
-        <translation type="unfinished"></translation>
+        <translation>Верхняя сторона</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="283"/>
         <source>Top pin count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество выводов сверху:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="293"/>
         <source>Top pin type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип выводов сверху:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="314"/>
         <source>Top pins offset X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Смещение ряда по X:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterPartQuadSide.ui" line="332"/>
+        <source>Builded part preview</source>
+        <translation>Предварительный просмотр построенного корпуса</translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterPartQuadSide.ui" line="335"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Предварительный просмотр</translation>
     </message>
 </context>
 <context>
@@ -2591,106 +2620,126 @@
     <message>
         <location filename="master/SdDMasterSymbolConnector.ui" line="14"/>
         <source>Connector symbol master</source>
-        <translation type="unfinished"></translation>
+        <translation>Мастер создания символов разъемов</translation>
     </message>
     <message>
         <location filename="master/SdDMasterSymbolConnector.ui" line="24"/>
         <source>Count of pins:</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество выводов:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterSymbolConnector.ui" line="34"/>
         <source>Right direction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выводы справа:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterSymbolConnector.ui" line="48"/>
         <source>Cell height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Высота ячейки:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterSymbolConnector.ui" line="58"/>
         <source>Pin size X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер вывода X:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterSymbolConnector.ui" line="68"/>
         <source>Number size X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер графы номера:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterSymbolConnector.ui" line="78"/>
         <source>Cell size X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер графы цепи:</translation>
     </message>
     <message>
         <location filename="master/SdDMasterSymbolConnector.ui" line="96"/>
+        <source>Builded symbol preview</source>
+        <translation>Предварительный просмотр построенного изображения символа</translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterSymbolConnector.ui" line="99"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Предварительный просмотр</translation>
     </message>
 </context>
 <context>
     <name>SdDMasterSymbolIc</name>
     <message>
         <location filename="master/SdDMasterSymbolIc.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <source>Integrated circuit symbol master</source>
+        <translation>Мастер создания символов интегральных микросхем</translation>
     </message>
     <message>
         <location filename="master/SdDMasterSymbolIc.ui" line="24"/>
         <source>Left pins</source>
-        <translation type="unfinished"></translation>
+        <translation>Выводы слева</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterSymbolIc.ui" line="36"/>
-        <location filename="master/SdDMasterSymbolIc.ui" line="82"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="31"/>
+        <source>Left side pins list</source>
+        <translation>Список выводов для левой стороны</translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterSymbolIc.ui" line="40"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="90"/>
         <source>Insert pin</source>
-        <translation type="unfinished">Вставить вывод</translation>
+        <translation>Вставить вывод</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterSymbolIc.ui" line="43"/>
-        <location filename="master/SdDMasterSymbolIc.ui" line="89"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="47"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="97"/>
         <source>Insert gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставить промежуток</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterSymbolIc.ui" line="50"/>
-        <location filename="master/SdDMasterSymbolIc.ui" line="96"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="54"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="104"/>
         <source>Insert delim</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставить разделитель</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterSymbolIc.ui" line="57"/>
-        <location filename="master/SdDMasterSymbolIc.ui" line="103"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="61"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="111"/>
         <source>Delete</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterSymbolIc.ui" line="70"/>
+        <location filename="master/SdDMasterSymbolIc.ui" line="74"/>
         <source>Right pins</source>
-        <translation type="unfinished"></translation>
+        <translation>Выводы справа</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterSymbolIc.ui" line="120"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <location filename="master/SdDMasterSymbolIc.ui" line="81"/>
+        <source>Right side pins list</source>
+        <translation>Список выводов для правой стороны</translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterSymbolIc.ui" line="128"/>
+        <source>Builded symbol preview</source>
+        <translation>Предварительный просмотр построенного изображения символа</translation>
     </message>
     <message>
         <location filename="master/SdDMasterSymbolIc.ui" line="131"/>
+        <source>TextLabel</source>
+        <translation>Предварительный просмотр</translation>
+    </message>
+    <message>
+        <location filename="master/SdDMasterSymbolIc.ui" line="142"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Заголовк</translation>
     </message>
     <message>
         <location filename="master/SdDMasterSymbolIc.cpp" line="39"/>
         <location filename="master/SdDMasterSymbolIc.cpp" line="44"/>
         <source>Pin name</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя вывода</translation>
     </message>
     <message>
         <location filename="master/SdDMasterSymbolIc.cpp" line="39"/>
         <location filename="master/SdDMasterSymbolIc.cpp" line="44"/>
         <source>Alternative names</source>
-        <translation type="unfinished"></translation>
+        <translation>Альтернативные имена</translation>
     </message>
 </context>
 <context>
@@ -2698,27 +2747,27 @@
     <message>
         <location filename="windows/SdDNetClient.ui" line="14"/>
         <source>Net data base connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Подключение к удаленной базе данных</translation>
     </message>
     <message>
         <location filename="windows/SdDNetClient.ui" line="36"/>
         <source>Remote object reception:</source>
-        <translation type="unfinished"></translation>
+        <translation>Получение объекта из удаленного хранилища:</translation>
     </message>
     <message>
         <location filename="windows/SdDNetClient.ui" line="49"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="windows/SdDNetClient.cpp" line="71"/>
         <source>Error!</source>
-        <translation type="unfinished">Ошибка!</translation>
+        <translation>Ошибка!</translation>
     </message>
     <message>
         <location filename="windows/SdDNetClient.cpp" line="71"/>
         <source>Request result %1, objects remain %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Результат запроса %1, осталось объектов %2</translation>
     </message>
 </context>
 <context>
@@ -2726,48 +2775,45 @@
     <message>
         <location filename="windows/SdDNetUnion.ui" line="17"/>
         <source>Net union</source>
-        <translation type="unfinished"></translation>
+        <translation>Объединение цепей</translation>
     </message>
     <message>
         <location filename="windows/SdDNetUnion.ui" line="29"/>
         <source>When union net what name assign to result net?</source>
-        <translation type="unfinished"></translation>
+        <translation>При объединении цепей результирующей цепи назначить?</translation>
     </message>
     <message>
         <location filename="windows/SdDNetUnion.ui" line="36"/>
-        <source>First variant of resul net name</source>
-        <translation type="unfinished"></translation>
+        <source>First variant of result net name</source>
+        <oldsource>First variant of resul net name</oldsource>
+        <translation>Первый вариант имени результирующей цепи</translation>
     </message>
     <message>
         <location filename="windows/SdDNetUnion.ui" line="39"/>
         <location filename="windows/SdDNetUnion.ui" line="52"/>
         <source>RadioButton</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="windows/SdDNetUnion.ui" line="49"/>
         <source>Second variant of result net name</source>
-        <translation type="unfinished"></translation>
+        <translation>Второй вариант имени результирующей цепи</translation>
     </message>
     <message>
         <location filename="windows/SdDNetUnion.cpp" line="27"/>
-        <source>Assign &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="windows/SdDNetUnion.cpp" line="28"/>
-        <source>Assign &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>Assign &apos;%1&apos;</source>
+        <translation>Назначить &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="windows/SdDNetUnion.cpp" line="45"/>
         <source>Error</source>
-        <translation type="unfinished">Ошибка!</translation>
+        <translation>Ошибка!</translation>
     </message>
     <message>
         <location filename="windows/SdDNetUnion.cpp" line="45"/>
         <source>You must select one variant or cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы должны выбрать один вариант или нажать Отмена</translation>
     </message>
 </context>
 <context>
@@ -2776,27 +2822,27 @@
         <location filename="windows/SdDOptions.cpp" line="29"/>
         <location filename="windows/SdDOptions.cpp" line="69"/>
         <source>Options</source>
-        <translation type="unfinished">Опции</translation>
+        <translation>Опции</translation>
     </message>
     <message>
         <location filename="windows/SdDOptions.cpp" line="51"/>
         <source>Common</source>
-        <translation type="unfinished"></translation>
+        <translation>Общие</translation>
     </message>
     <message>
         <location filename="windows/SdDOptions.cpp" line="56"/>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвета</translation>
     </message>
     <message>
         <location filename="windows/SdDOptions.cpp" line="61"/>
         <source>Paths</source>
-        <translation type="unfinished">Пути</translation>
+        <translation>Пути</translation>
     </message>
     <message>
         <location filename="windows/SdDOptions.cpp" line="66"/>
         <source>Editors</source>
-        <translation type="unfinished"></translation>
+        <translation>Редакторы</translation>
     </message>
 </context>
 <context>
@@ -2804,67 +2850,67 @@
     <message>
         <location filename="windows/SdDOptionsPageColors.cpp" line="28"/>
         <source>Description</source>
-        <translation type="unfinished">Описание</translation>
+        <translation>Описание</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageColors.cpp" line="28"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageColors.cpp" line="31"/>
         <source>Locked objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Заблокированные объекты</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageColors.cpp" line="32"/>
         <source>Selected objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбранные объекты</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageColors.cpp" line="33"/>
         <source>Object color when entered</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет объекта при вводе</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageColors.cpp" line="34"/>
         <source>Smart mode remarks when entering</source>
-        <translation type="unfinished"></translation>
+        <translation>Пояснения разумного режима при вводе</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageColors.cpp" line="35"/>
         <source>Graph editor background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет фона графических редакторов</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageColors.cpp" line="36"/>
         <source>Rat net color in pcb editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет сетки связей в редакторе плат</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageColors.cpp" line="37"/>
         <source>Cursor color when cross-hair mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет дополнительного перекрестья курсора</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageColors.cpp" line="38"/>
         <source>Tracing net color</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет трассировки цепей</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageColors.cpp" line="39"/>
         <source>Grid color in graph editors</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет сетки графических редакторов</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageColors.cpp" line="40"/>
         <source>Color for rule errors</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет для маркеров ошибок правил трассировки</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageColors.cpp" line="41"/>
         <source>Catch point color in road enter mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет маркера ловителя в режиме ввода дорожек</translation>
     </message>
 </context>
 <context>
@@ -2888,72 +2934,72 @@
     <message>
         <location filename="windows/SdDOptionsPageEditors.cpp" line="27"/>
         <source>show rat net</source>
-        <translation type="unfinished"></translation>
+        <translation>показывать сеть связей</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageEditors.cpp" line="29"/>
         <source>show remarks</source>
-        <translation type="unfinished"></translation>
+        <translation>показывать комментарии</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageEditors.cpp" line="31"/>
         <source>show message</source>
-        <translation type="unfinished"></translation>
+        <translation>показывать сообщения</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageEditors.cpp" line="33"/>
         <source>move cursor to center when zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>перемещать курсор в центр при масштабировании</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageEditors.cpp" line="38"/>
         <source>Symbol pin size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер вывода символа:</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageEditors.cpp" line="42"/>
         <source>Part pin size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер вывода корпуса:</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageEditors.cpp" line="46"/>
         <source>Wire dot size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер точки соединений цепей:</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageEditors.cpp" line="50"/>
         <source>Wire dot width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ширина линии точки соединения:</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageEditors.cpp" line="54"/>
         <source>Via default type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип переходных отверстий по умолчанию:</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageEditors.cpp" line="59"/>
         <source>Width step size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Шаг изменения ширины:</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageEditors.cpp" line="62"/>
         <source>Text step size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Шаг изменения размера текста:</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageEditors.cpp" line="65"/>
         <source>Minimal view grid size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Минимально расстояние между узлами сетки:</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageEditors.cpp" line="68"/>
         <source>Cursor view size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер вида курсора:</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPageEditors.cpp" line="71"/>
         <source>Trace dot size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер точки трассировки:</translation>
     </message>
 </context>
 <context>
@@ -2961,12 +3007,12 @@
     <message>
         <location filename="windows/SdDOptionsPagePath.cpp" line="27"/>
         <source>Paths</source>
-        <translation type="unfinished">Пути</translation>
+        <translation>Пути</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPagePath.cpp" line="32"/>
         <source>Current user home path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Домашний каталог текущего пользователя:</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPagePath.cpp" line="35"/>
@@ -2974,42 +3020,42 @@
         <location filename="windows/SdDOptionsPagePath.cpp" line="57"/>
         <location filename="windows/SdDOptionsPagePath.cpp" line="68"/>
         <source>Select...</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор...</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPagePath.cpp" line="37"/>
         <source>Current user home path</source>
-        <translation type="unfinished"></translation>
+        <translation>Домашний каталог текущего пользователя</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPagePath.cpp" line="43"/>
         <source>Library path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Путь к библиотеке:</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPagePath.cpp" line="48"/>
         <source>Library path</source>
-        <translation type="unfinished"></translation>
+        <translation>Путь к библиотеке</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPagePath.cpp" line="54"/>
         <source>Pattern path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Путь к шаблонам:</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPagePath.cpp" line="59"/>
         <source>Pattern path</source>
-        <translation type="unfinished"></translation>
+        <translation>Путь к шаблонам</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPagePath.cpp" line="65"/>
         <source>Category hierarchy file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл с описаниями категорий:</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPagePath.cpp" line="70"/>
         <source>Category hierarchy file</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл с описаниями категорий</translation>
     </message>
 </context>
 <context>
@@ -3017,32 +3063,32 @@
     <message>
         <location filename="windows/SdDPadMaster.ui" line="14"/>
         <source>Pad master</source>
-        <translation type="unfinished"></translation>
+        <translation>Мастер площадок</translation>
     </message>
     <message>
         <location filename="windows/SdDPadMaster.ui" line="24"/>
         <source>If checked then pad is circle form else - rectangle form</source>
-        <translation type="unfinished"></translation>
+        <translation>Если отмечено, то круглая иначе - прямоугольная площадка</translation>
     </message>
     <message>
         <location filename="windows/SdDPadMaster.ui" line="27"/>
         <source>circle pad, else rectangle pad</source>
-        <translation type="unfinished"></translation>
+        <translation>круглая площадка иначе - прямоугольная</translation>
     </message>
     <message>
         <location filename="windows/SdDPadMaster.ui" line="34"/>
         <source>If checked then pad descript through pin else - planar (smd)</source>
-        <translation type="unfinished"></translation>
+        <translation>Если отмечено, то площадка штыревая (с отверстием) иначе - планарная</translation>
     </message>
     <message>
         <location filename="windows/SdDPadMaster.ui" line="37"/>
         <source>through pin pad (has hole), else smd pad</source>
-        <translation type="unfinished"></translation>
+        <translation>сквозная площадка (с отверстием), иначе - планарная</translation>
     </message>
     <message>
         <location filename="windows/SdDPadMaster.ui" line="46"/>
         <source>Pad center x</source>
-        <translation type="unfinished"></translation>
+        <translation>Центр площадки по X</translation>
     </message>
     <message>
         <location filename="windows/SdDPadMaster.ui" line="59"/>
@@ -3154,7 +3200,7 @@
         <location filename="windows/SdDPadMaster.ui" line="281"/>
         <location filename="windows/SdDPadMaster.ui" line="291"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Предварительный просмотр</translation>
     </message>
     <message>
         <location filename="windows/SdDPadMaster.ui" line="288"/>
@@ -3581,7 +3627,7 @@
     <message>
         <location filename="windows/SdDPrint.ui" line="53"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Предварительный просмотр</translation>
     </message>
     <message>
         <location filename="windows/SdDPrint.ui" line="62"/>
@@ -3735,7 +3781,7 @@
         <location filename="windows/SdDRegistation.ui" line="42"/>
         <location filename="windows/SdDRegistation.cpp" line="171"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Имя:</translation>
     </message>
     <message>
         <location filename="windows/SdDRegistation.ui" line="52"/>
@@ -3780,7 +3826,7 @@
     <message>
         <location filename="windows/SdDRegistation.ui" line="146"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрыть</translation>
     </message>
     <message>
         <location filename="windows/SdDRegistation.cpp" line="66"/>
@@ -3874,7 +3920,7 @@
     <message>
         <location filename="windows/SdDRowValue.ui" line="24"/>
         <source>Modifier</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Модификатор</translation>
     </message>
     <message>
         <location filename="windows/SdDRowValue.ui" line="38"/>
@@ -4176,7 +4222,7 @@
     <message>
         <location filename="objects/SdLayer.cpp" line="107"/>
         <source>Pin name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Имя вывода</translation>
     </message>
     <message>
         <location filename="objects/SdLayer.cpp" line="108"/>
@@ -5243,7 +5289,7 @@
     <message>
         <location filename="windows/SdPropBar.cpp" line="32"/>
         <source>Current layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Текущий слой</translation>
     </message>
 </context>
 <context>
@@ -5251,17 +5297,17 @@
     <message>
         <location filename="windows/SdPropBarDefault.cpp" line="21"/>
         <source>Do not tought components</source>
-        <translation type="unfinished"></translation>
+        <translation>Не трогать компоненты</translation>
     </message>
     <message>
         <location filename="windows/SdPropBarDefault.cpp" line="28"/>
         <source>Do not tought nets</source>
-        <translation type="unfinished"></translation>
+        <translation>Не трогать цепи</translation>
     </message>
     <message>
         <location filename="windows/SdPropBarDefault.cpp" line="35"/>
         <source>Do not tought picture elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Не трогать элементы картинки</translation>
     </message>
 </context>
 <context>
@@ -5269,12 +5315,12 @@
     <message>
         <location filename="windows/SdPropBarLinear.cpp" line="61"/>
         <source>lines connects orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>ортогональное соединение линий</translation>
     </message>
     <message>
         <location filename="windows/SdPropBarLinear.cpp" line="69"/>
         <source>lines connects at 45 degree</source>
-        <translation type="unfinished"></translation>
+        <translation>соединение линий под углом 45 градусов</translation>
     </message>
     <message>
         <location filename="windows/SdPropBarLinear.cpp" line="77"/>
@@ -5282,7 +5328,7 @@
         <location filename="windows/SdPropBarLinear.cpp" line="97"/>
         <location filename="windows/SdPropBarLinear.cpp" line="105"/>
         <source>lines connects at any degree</source>
-        <translation type="unfinished"></translation>
+        <translation>соединение линий под произвольным углом</translation>
     </message>
 </context>
 <context>
@@ -5290,22 +5336,22 @@
     <message>
         <location filename="windows/SdPropBarPartImp.cpp" line="31"/>
         <source>Direction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Направление:</translation>
     </message>
     <message>
         <location filename="windows/SdPropBarPartImp.cpp" line="72"/>
         <source>Align cursor to grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Выровнять курсор по сетке</translation>
     </message>
     <message>
         <location filename="windows/SdPropBarPartImp.cpp" line="78"/>
         <source>Part at top side</source>
-        <translation type="unfinished"></translation>
+        <translation>Корпус с верхней стороны</translation>
     </message>
     <message>
         <location filename="windows/SdPropBarPartImp.cpp" line="88"/>
         <source>Part at bottom side</source>
-        <translation type="unfinished"></translation>
+        <translation>Корпус с нижней стороны</translation>
     </message>
 </context>
 <context>
@@ -5313,22 +5359,22 @@
     <message>
         <location filename="windows/SdPropBarPartPin.cpp" line="33"/>
         <source>---</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="windows/SdPropBarPartPin.cpp" line="33"/>
         <source>Top smd</source>
-        <translation type="unfinished"></translation>
+        <translation>Планарный сверху</translation>
     </message>
     <message>
         <location filename="windows/SdPropBarPartPin.cpp" line="33"/>
         <source>Bottom smd</source>
-        <translation type="unfinished"></translation>
+        <translation>Планарный снизу</translation>
     </message>
     <message>
         <location filename="windows/SdPropBarPartPin.cpp" line="33"/>
         <source>Through</source>
-        <translation type="unfinished"></translation>
+        <translation>Штыревой</translation>
     </message>
 </context>
 <context>
@@ -5336,7 +5382,7 @@
     <message>
         <location filename="windows/SdPropBarPartPlace.cpp" line="23"/>
         <source>Smart mode on middle button</source>
-        <translation type="unfinished"></translation>
+        <translation>Разумный режим по нажатию левой кнопки</translation>
     </message>
     <message>
         <location filename="windows/SdPropBarPartPlace.cpp" line="33"/>
@@ -5730,7 +5776,7 @@
     <message>
         <location filename="windows/SdWCategoryList.cpp" line="479"/>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Категория</translation>
     </message>
     <message>
         <location filename="windows/SdWCategoryList.cpp" line="481"/>
@@ -5976,7 +6022,7 @@
     <message>
         <location filename="windows/SdWEditorComponent.cpp" line="286"/>
         <source>Pin name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Имя вывода</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorComponent.cpp" line="286"/>
@@ -6190,12 +6236,12 @@
     <message>
         <location filename="windows/SdWEditorGraphSymbol.cpp" line="101"/>
         <source>Export symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспорт символа</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorGraphSymbol.cpp" line="101"/>
         <source>Select export master</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите мастер экспорта</translation>
     </message>
 </context>
 <context>
@@ -6203,12 +6249,12 @@
     <message>
         <location filename="windows/SdWEditorGraphView.cpp" line="130"/>
         <source>Export object</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспорт объекта</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorGraphView.cpp" line="130"/>
         <source>Select export master</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите мастер экспорта</translation>
     </message>
 </context>
 <context>
@@ -6216,127 +6262,127 @@
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="54"/>
         <source>Symbol preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Просмотр символа</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="61"/>
         <source>Part preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Просмотр корпуса</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="70"/>
         <source>Component:</source>
-        <translation type="unfinished"></translation>
+        <translation>Компонент:</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="72"/>
         <source>Select component</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор компонента</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="80"/>
         <source>Component param table</source>
-        <translation type="unfinished"></translation>
+        <translation>Таблица параметров компонента</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="86"/>
         <source>Inherit param</source>
-        <translation type="unfinished"></translation>
+        <translation>Наследовать параметр</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="87"/>
         <source>Inherit all params</source>
-        <translation type="unfinished"></translation>
+        <translation>Наследовать все параметры</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="93"/>
         <source>Inheritance param table</source>
-        <translation type="unfinished"></translation>
+        <translation>Таблица наследуемых параметров</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="99"/>
         <source>Add param</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить параметр</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="100"/>
         <source>Add defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить по умолчанию</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="101"/>
         <source>Copy param</source>
-        <translation type="unfinished"></translation>
+        <translation>Копировать параметр</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="102"/>
         <source>Delete param</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить параметр</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="103"/>
         <source>Variant table...</source>
-        <translation type="unfinished"></translation>
+        <translation>Таблица вариантов...</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="210"/>
         <source>Select base component for inheritance</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите базовый компонент для наследования</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="235"/>
         <location filename="windows/SdWEditorInheritance.cpp" line="253"/>
         <source>Error!</source>
-        <translation type="unfinished">Ошибка!</translation>
+        <translation>Ошибка!</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="235"/>
         <source>No component parametr selected. Select one and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не выбрано ни одного параметра компонента. Выберите один и попробуйте снова.</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="253"/>
         <source>No component defined for this inheritance or component can&apos;t be loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Для данного наследования не задан компонент или этот компонент не может быть загружен</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="261"/>
         <location filename="windows/SdWEditorInheritance.cpp" line="354"/>
         <location filename="windows/SdWEditorInheritance.cpp" line="386"/>
         <source>Param name</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя параметра</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="261"/>
         <source>Enter param name</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите имя параметра</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="264"/>
         <location filename="windows/SdWEditorInheritance.cpp" line="299"/>
         <source>Warning!</source>
-        <translation type="unfinished">Внимание!</translation>
+        <translation>Внимание!</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="264"/>
         <source>Param with this name already exist. Enter another name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметр с таким именем уже существует. Введите другое имя.</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="299"/>
         <source>Select param to delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите параметр для удаления</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="308"/>
         <source>Select component to copy param from</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите компонент для копирования из него параметров</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorInheritance.cpp" line="354"/>
         <location filename="windows/SdWEditorInheritance.cpp" line="386"/>
         <source>Param value</source>
-        <translation type="unfinished"></translation>
+        <translation>Значение параметра</translation>
     </message>
 </context>
 <context>
@@ -6344,22 +6390,22 @@
     <message>
         <location filename="windows/SdWEditorProject.cpp" line="134"/>
         <source>Edit parameters table</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактировать таблицу параметров</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorProject.cpp" line="138"/>
         <source>Project parameters table</source>
-        <translation type="unfinished"></translation>
+        <translation>Таблица параметров проекта</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorProject.cpp" line="139"/>
         <source>Parameter name</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя параметра</translation>
     </message>
     <message>
         <location filename="windows/SdWEditorProject.cpp" line="140"/>
         <source>Parameter value</source>
-        <translation type="unfinished"></translation>
+        <translation>Значение параметра</translation>
     </message>
 </context>
 <context>
@@ -6462,12 +6508,12 @@
     <message>
         <location filename="windows/SdWMain.cpp" line="1772"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>О программе %1</translation>
     </message>
     <message>
         <location filename="windows/SdWMain.cpp" line="1772"/>
         <source>&lt;html&gt;&lt;body&gt;&lt;p&gt;Version %1.%2, &lt;/p&gt;&lt;p&gt;Copyright SaliLAB&lt;/p&gt;&lt;p&gt;Author: &lt;a href=&quot;http://salilab.ru&quot;&gt;%3&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Web:&lt;br&gt;&lt;a href=&quot;http://salicad.salilab.com&quot;&gt;SaliCAD.salilab.com&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://salicad.ru&quot;&gt;SaliCAD.ru&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -6496,37 +6542,37 @@
         <location filename="windows/SdWProjectTree.cpp" line="236"/>
         <location filename="windows/SdWProjectTree.cpp" line="330"/>
         <source>Warning!</source>
-        <translation type="unfinished">Внимание!</translation>
+        <translation>Внимание!</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="109"/>
         <source>Project &quot;%1&quot; changed! Save it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Проект &quot;%1&quot; изменен! Сохранить его?</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="134"/>
         <source>Save project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл для сохранения проекта</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="134"/>
         <source>SaliCAD Files (*%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы SaliCAD (*%1)</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="167"/>
         <source>Creating object</source>
-        <translation type="unfinished"></translation>
+        <translation>Создание объекта</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="186"/>
         <source>Select object to load</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите объект для загрузки</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="188"/>
         <source>Load object</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка объекта</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="217"/>
@@ -6537,164 +6583,164 @@
         <location filename="windows/SdWProjectTree.cpp" line="356"/>
         <location filename="windows/SdWProjectTree.cpp" line="707"/>
         <source>Error!</source>
-        <translation type="unfinished">Ошибка!</translation>
+        <translation>Ошибка!</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="217"/>
         <source>To rename object it must be edit enable</source>
-        <translation type="unfinished"></translation>
+        <translation>Чтобы переименовать объект он должен быть в состоянии редактирования</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="220"/>
         <source>This is not object. Select object to rename.</source>
-        <translation type="unfinished"></translation>
+        <translation>Это не объект. Выберите объект для переименования.</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="235"/>
         <source>Object is used by other objects. You can not delete it until dereferenced.</source>
-        <translation type="unfinished"></translation>
+        <translation>Объект используется другими объектами. Вы не можете его удалить пока на него есть ссылки.</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="236"/>
         <source>Do You realy want to delete &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы действительно хотите удалить &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="237"/>
         <source>Deleting object</source>
-        <translation type="unfinished"></translation>
+        <translation>Удаление объекта</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="244"/>
         <source>This is not object. Select object to delete.</source>
-        <translation type="unfinished"></translation>
+        <translation>Это не объект. Выберите объект для удаления.</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="274"/>
         <location filename="windows/SdWProjectTree.cpp" line="339"/>
         <source>You can copy only symbols, parts and components. Select some from that object to copy.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы можете копировать только символы, корпуса и компоненты. Выберите что-либо из этого для копирования.</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="300"/>
         <source>Paste from clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставка из буфера обмена</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="330"/>
         <source>Object is used by other objects. You can not cut it until dereferenced, only copy.</source>
-        <translation type="unfinished"></translation>
+        <translation>Объект используется другими объектами. Вы не можете его вырезать пока на него есть ссылки, можно только копировать.</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="350"/>
         <source>Duplicate object</source>
-        <translation type="unfinished"></translation>
+        <translation>Дублирование объекта</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="356"/>
         <location filename="windows/SdWProjectTree.cpp" line="707"/>
         <source>You can duplicate only symbols, parts and components. Select some from that object to copy.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы можете дублировать только символы, корпуса и компоненты. Выберите что-либо из этого для дублирования.</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="389"/>
         <source>Edit param</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактирование параметров</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="405"/>
         <source>Edit project param</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактирование параметров проекта</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="650"/>
         <source>Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Символы</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="650"/>
         <source>Project symbols list</source>
-        <translation type="unfinished"></translation>
+        <translation>Список символов проекта</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="650"/>
         <source>Contains project symbols list</source>
-        <translation type="unfinished"></translation>
+        <translation>Содержит список символов проекта</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="651"/>
         <source>Parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Корпуса</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="651"/>
         <source>Project parts list</source>
-        <translation type="unfinished"></translation>
+        <translation>Список корпусов проекта</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="651"/>
         <source>Contains project parts list</source>
-        <translation type="unfinished"></translation>
+        <translation>Содержит список корпусов проекта</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="652"/>
         <source>Components</source>
-        <translation type="unfinished"></translation>
+        <translation>Компоненты</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="652"/>
         <source>Project components list</source>
-        <translation type="unfinished"></translation>
+        <translation>Список компонентов проекта</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="652"/>
         <source>Contains project components list, each of them is agregation symbols width appropriate part</source>
-        <translation type="unfinished"></translation>
+        <translation>Содержит список компонентов проекта, каждый из которых связывает символы с соответствующим корпусом</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="653"/>
         <source>Sheets</source>
-        <translation type="unfinished"></translation>
+        <translation>Листы схем</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="653"/>
         <source>Project shematic sheets</source>
-        <translation type="unfinished"></translation>
+        <translation>Листы схем проекта</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="653"/>
         <source>Contains project shematic sheet list</source>
-        <translation type="unfinished"></translation>
+        <translation>Содержит список листов схем проекта</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="654"/>
         <source>Construct</source>
-        <translation type="unfinished"></translation>
+        <translation>Конструкция</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="654"/>
         <source>Project constructs and pcb list</source>
-        <translation type="unfinished"></translation>
+        <translation>Список конструктивов и плат проекта</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="654"/>
         <source>Contains project construct and pcb list</source>
-        <translation type="unfinished"></translation>
+        <translation>Содержит список конструктивов и плат проекта</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="655"/>
         <source>Other docs</source>
-        <translation type="unfinished"></translation>
+        <translation>Другие документы</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="655"/>
         <source>Project text and table docs list</source>
-        <translation type="unfinished"></translation>
+        <translation>Список табличных и текстовых документов проекта</translation>
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="655"/>
         <source>Contains project text, table and others docs</source>
-        <translation type="unfinished"></translation>
+        <translation>Содержит список текстовых, табличных и других документов проекта</translation>
     </message>
 </context>
 </TS>
