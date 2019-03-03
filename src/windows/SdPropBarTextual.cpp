@@ -78,7 +78,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
     emit propChanged();
     });
 
-  mVertMiddle = addAction( QIcon(QString(":/pic/tjMiddle.png")), tr("Text aligned to middle") );
+  mVertMiddle = addAction( QIcon(QString(":/pic/tjMiddle.png")), tr("Text aligned to vertical middle") );
   mVertMiddle->setCheckable(true);
   connect( mVertMiddle, &QAction::triggered, [=](bool checked){
     Q_UNUSED(checked)
@@ -86,7 +86,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
     emit propChanged();
     });
 
-  mVertBottom = addAction( QIcon(QString(":/pic/tjBottom.png")), tr("Text aligned to middle") );
+  mVertBottom = addAction( QIcon(QString(":/pic/tjBottom.png")), tr("Text aligned to bottom") );
   mVertBottom->setCheckable(true);
   connect( mVertBottom, &QAction::triggered, [=](bool checked){
     Q_UNUSED(checked)
@@ -106,7 +106,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
     emit propChanged();
     });
 
-  mHorzCenter = addAction( QIcon(QString(":/pic/tjCenter.png")), tr("Text aligned to center") );
+  mHorzCenter = addAction( QIcon(QString(":/pic/tjCenter.png")), tr("Text aligned to horizontal center") );
   mHorzCenter->setCheckable(true);
   connect( mHorzCenter, &QAction::triggered, [=](bool checked){
     Q_UNUSED(checked)

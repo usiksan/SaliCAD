@@ -2806,13 +2806,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="windows/SdDNetUnion.cpp" line="27"/>
-        <location filename="windows/SdDNetUnion.cpp" line="28"/>
-        <source>Assign &apos;%1&apos;</source>
-        <oldsource>Assign &apos;%2&apos;</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="windows/SdDNetUnion.cpp" line="45"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
@@ -3610,7 +3603,7 @@
     <name>SdDPrint</name>
     <message>
         <location filename="windows/SdDPrint.ui" line="14"/>
-        <source>Dialog</source>
+        <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3918,7 +3911,7 @@
     <name>SdDRowValue</name>
     <message>
         <location filename="windows/SdDRowValue.ui" line="14"/>
-        <source>Dialog</source>
+        <source>Row value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4000,7 +3993,7 @@
     <name>SdDStringFromList</name>
     <message>
         <location filename="windows/SdDStringFromList.ui" line="14"/>
-        <source>Dialog</source>
+        <source>Sring list</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4008,7 +4001,7 @@
     <name>SdDVariantTable</name>
     <message>
         <location filename="windows/SdDVariantTable.ui" line="14"/>
-        <source>Dialog</source>
+        <source>Param variant table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5570,8 +5563,13 @@
     </message>
     <message>
         <location filename="windows/SdPropBarTextual.cpp" line="81"/>
+        <source>Text aligned to vertical middle</source>
+        <oldsource>Text aligned to middle</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="windows/SdPropBarTextual.cpp" line="89"/>
-        <source>Text aligned to middle</source>
+        <source>Text aligned to bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5581,7 +5579,8 @@
     </message>
     <message>
         <location filename="windows/SdPropBarTextual.cpp" line="109"/>
-        <source>Text aligned to center</source>
+        <source>Text aligned to horizontal center</source>
+        <oldsource>Text aligned to center</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6174,6 +6173,7 @@
     <message>
         <location filename="windows/SdWEditorGraphPlate.cpp" line="242"/>
         <source>Component params</source>
+        <oldsource>Plate params</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6207,6 +6207,7 @@
     <message>
         <location filename="windows/SdWEditorGraphSheet.cpp" line="153"/>
         <source>Component params</source>
+        <oldsource>Sheet params</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>

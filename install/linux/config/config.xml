@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Installer>
     <Name>SaliCAD</Name>
-    <Version>0.59.0</Version>
+    <Version>0.62.0</Version>
     <Title>Electronic schematic and pcb layout CAD</Title>
     <Publisher>SaliLAB</Publisher>
     <StartMenuDir>SaliCAD</StartMenuDir>
