@@ -92,8 +92,8 @@ QCursor loadWindowsCursor( const QString fname ) {
         }
       }
     //Save cursor for help perpose
-    static int cursorIndex = 0;
-    img.save( QString("cursor%1.png").arg(cursorIndex++) );
+//    static int cursorIndex = 0;
+//    img.save( QString("cursor%1.png").arg(cursorIndex++) );
     QCursor cur( QPixmap::fromImage(img), hotspot_x, hotspot_y );
     return cur;
     }

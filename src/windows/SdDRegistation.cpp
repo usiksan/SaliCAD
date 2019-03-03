@@ -138,6 +138,8 @@ void SdDRegistation::onRegistrationComplete( const QString authorName, const QSt
     ui->mEmail->setText( email );
     ui->mMachineKey->setText( QString::number( key, 32 ) );
     ui->mRemain->setText( QString::number(remain) );
+    //Reset sync counters
+
     }
   else if( result == SCPE_AUTHOR_ALREADY_PRESENT )
     QMessageBox::warning( this, tr("Error!"), tr("This user name already present. Enter another name.") );
