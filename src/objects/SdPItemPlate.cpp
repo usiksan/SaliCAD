@@ -90,7 +90,8 @@ SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPI
   res = new SdGraphPartImp( p, &(sdGlobalProp->mPartImpProp), part, comp, param );
   insertChild( res, undo );
 
-  Q_ASSERT( res->isSectionFree( section, part, comp, param, sym ) );
+  bool isFree = res->isSectionFree( section, part, comp, param, sym );
+  Q_ASSERT( isFree );
   return res;
   }
 

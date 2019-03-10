@@ -145,6 +145,7 @@ History
   13.02.2019 v0.61 Append to road mode possibilities to connect to middle of road
                    and automatic loop detection and removing
   21.02.2019 v0.62 Append upgrade check
+  10.03.2019 v0.62 Fix: section allocate critical error
 */
 
 #ifndef SDCONFIG
@@ -167,7 +168,7 @@ History
 
 
 //When defined disable registration with sali name
-//#define SD_DISABLE_SALI_AUTHOR
+#define SD_DISABLE_SALI_AUTHOR
 
 //Project naming definition
 #define SD_BASE_EXTENSION            ".salicad"
