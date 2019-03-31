@@ -41,6 +41,7 @@ class SdWEditorComponent : public SdWEditor
     QListWidget          *mSectionList;       //Sections of component
     QTableWidget         *mPackTable;         //Packing table
     QPushButton          *mSectionAdd;
+    QPushButton          *mSectionUpdate;
     QPushButton          *mSectionDubl;
     QPushButton          *mSectionSymbol;
     QPushButton          *mSectionDelete;
@@ -75,6 +76,7 @@ class SdWEditorComponent : public SdWEditor
     void sectionDelete();
     void sectionDeleteAll();
     void onCurrentSection( int index );
+    void sectionUpdate();
 
     void onPackChanged( int row, int column );
     void onParamChanged( int row, int column );

@@ -87,6 +87,7 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
           vbox->addWidget( mSectionAdd = new QPushButton( tr("Add section") )  );
           vbox->addWidget( mSectionDubl = new QPushButton( tr("Dubl section") ) );
           vbox->addWidget( mSectionSymbol = new QPushButton( tr("Select symbol") ) );
+          vbox->addWidget( mSectionUpdate = new QPushButton( tr("Update section") ) );
           vbox->addWidget( mSectionDelete = new QPushButton( tr("Delete section") ) );
           vbox->addWidget( mSectionDeleteAll = new QPushButton( tr("Delete all sections") ) );
         hbox->addLayout( vbox );
@@ -127,6 +128,7 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
     connect( mSectionAdd, &QPushButton::clicked, this, &SdWEditorComponent::sectionAdd );
     connect( mSectionDubl, &QPushButton::clicked, this, &SdWEditorComponent::sectionDubl );
     connect( mSectionSymbol, &QPushButton::clicked, this, &SdWEditorComponent::sectionSelect );
+    connect( mSectionUpdate, &QPushButton::clicked, this, &SdWEditorComponent::sectionUpdate );
     connect( mSectionDelete, &QPushButton::clicked, this, &SdWEditorComponent::sectionDelete );
     connect( mSectionDeleteAll, &QPushButton::clicked, this, &SdWEditorComponent::sectionDeleteAll );
 
@@ -313,6 +315,23 @@ void SdWEditorComponent::onCurrentSection(int index)
     }
   if( mComponent->isEditEnable() )
     connect( mPackTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onPackChanged );
+  }
+
+
+
+void SdWEditorComponent::sectionUpdate()
+  {
+  int index = mSectionList->currentRow();
+  //Query current section id
+  QString uid = mComponent->getSectionSymbolId( index );
+  //If uid present then update it self
+  if( !uid.isEmpty() ) {
+    //Symbol selected
+    mUndo->begin( tr("Update section for component"), mComponent );
+    mComponent->getSection(index)->setSymbolId( uid, mUndo );
+    dirtyProject();
+    onCurrentSection( index );
+    }
   }
 
 

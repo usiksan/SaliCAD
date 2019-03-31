@@ -17,6 +17,7 @@ Description
 #include "objects/SdPropText.h"
 
 #include <QDebug>
+#include <QAction>
 
 
 static QString strDelim("---");
@@ -39,17 +40,25 @@ SdDMasterSymbolIc::SdDMasterSymbolIc( SdProjectItem *item, QWidget *parent ) :
   ui->mLeftTable->setHorizontalHeaderLabels( {tr("Pin name"), tr("Alternative names")} );
   ui->mLeftTable->setColumnWidth( 0, 100 );
   ui->mLeftTable->setColumnWidth( 1, 150 );
+  ui->mLeftTable->setSelectionMode( QAbstractItemView::SingleSelection );
+
+  ui->mLeftInsPin->setShortcut( QString("Ctrl+L") );
 
   ui->mRightTable->setColumnCount(2);
   ui->mRightTable->setHorizontalHeaderLabels( {tr("Pin name"), tr("Alternative names")} );
   ui->mRightTable->setColumnWidth( 0, 100 );
   ui->mRightTable->setColumnWidth( 1, 150 );
+  ui->mRightTable->setSelectionMode( QAbstractItemView::SingleSelection );
+
+  ui->mRightInsPin->setShortcut( QString("Ctrl+R") );
+
 
   //Connect button signals
   connect( ui->mLeftInsPin,   &QPushButton::clicked, this, &SdDMasterSymbolIc::leftInsertPin );
   connect( ui->mLeftInsGap,   &QPushButton::clicked, this, &SdDMasterSymbolIc::leftInsertGap );
   connect( ui->mLeftInsDelim, &QPushButton::clicked, this, &SdDMasterSymbolIc::leftInsertDelimiter );
   connect( ui->mLeftDelete,   &QPushButton::clicked, this, &SdDMasterSymbolIc::leftDelete );
+
 
   connect( ui->mRightInsPin,   &QPushButton::clicked, this, &SdDMasterSymbolIc::rightInsertPin );
   connect( ui->mRightInsGap,   &QPushButton::clicked, this, &SdDMasterSymbolIc::rightInsertGap );
@@ -116,6 +125,7 @@ void SdDMasterSymbolIc::leftInsertPin()
   ui->mLeftTable->setCurrentCell( cr, 0 );
   connect( ui->mLeftTable,  &QTableWidget::cellChanged, this, &SdDMasterSymbolIc::onPinChanged );
   onEditChanged( QString() );
+  ui->mLeftTable->setFocus();
   }
 
 
@@ -189,6 +199,7 @@ void SdDMasterSymbolIc::rightInsertPin()
   ui->mRightTable->setCurrentCell( cr, 0 );
   connect( ui->mRightTable,  &QTableWidget::cellChanged, this, &SdDMasterSymbolIc::onPinChanged );
   onEditChanged( QString() );
+  ui->mRightTable->setFocus();
   }
 
 

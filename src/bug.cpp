@@ -44,6 +44,8 @@
 //===================================================================================
 //Fixed:
 
+//Append to ic symbol master keyboard commands
+
 //D079 Append connection marker to registration dialog
 
 //D080 Append registration marker to registration dialog

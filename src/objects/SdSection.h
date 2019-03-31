@@ -42,6 +42,7 @@ class SdSection : public SdObject
     QString          getSymbolTitle() const { return mSymbolTitle; }
     QString          getSymbolId() const { return mSymbolId; }
     SdPinAssociation getPins() const { return mAssociationTable; }
+    //Set new symbol id or update previously setuped
     void             setSymbolId( const QString id, SdUndo *undo );
     SdPItemSymbol   *extractFromFactory(bool soft, QWidget *parent ) const;
     void             setPinNumber( const QString name, const QString number, SdUndo *undo );

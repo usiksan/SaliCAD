@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1084</width>
+    <width>1116</width>
     <height>657</height>
    </rect>
   </property>
@@ -37,7 +37,7 @@
          <item>
           <widget class="QPushButton" name="mLeftInsPin">
            <property name="text">
-            <string>Insert pin</string>
+            <string>Insert pin (Ctrl+L)</string>
            </property>
           </widget>
          </item>
@@ -87,7 +87,7 @@
          <item>
           <widget class="QPushButton" name="mRightInsPin">
            <property name="text">
-            <string>Insert pin</string>
+            <string>Insert pin (Ctrl+R)</string>
            </property>
           </widget>
          </item>

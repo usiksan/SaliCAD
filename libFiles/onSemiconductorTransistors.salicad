@@ -12,18 +12,18 @@
                     },
                     "SymbolId": "Symbol\rBipolar transistor PNP\rsalicad",
                     "SymbolTitle": "Bipolar transistor PNP (salicad)",
-                    "id": "1a95c60",
+                    "id": "2d80110",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rsot23-3\rsalicad",
                     "PartTitle": "sot23-3 (salicad)",
-                    "id": "1827c00",
+                    "id": "111a690",
                     "type": "PartVariant"
                 }
             ],
-            "Created": 33988054,
+            "Created": 38840957,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -34,14 +34,14 @@
                 "Pd": "225mW",
                 "Vcbo": "50V",
                 "Vceo": "45V",
-                "article": "",
+                "article": "BC857ALT1G",
                 "bom": "<article>",
-                "device mark": "",
-                "hFE": "",
+                "device mark": "3E",
+                "hFE": "180",
                 "manufacturer": "ON Semiconductor",
                 "prefix": "VT",
                 "title": "bipolar pnp transistor bc857",
-                "value": ""
+                "value": "BC857A"
             },
             "Title": "bipolar pnp transistor bc857",
             "VariantFC": 4,
@@ -63,18 +63,18 @@
                 "BC857CLT1G",
                 "3G"
             ],
-            "id": "1ae2920",
+            "id": "1c99da0",
             "type": "Comp"
         },
         {
             "Author": "salicad",
-            "Auto": false,
+            "Auto": true,
             "ChildList": [
                 {
                     "Default": false,
                     "PartId": "Part\rsot23-3\rsalicad",
                     "PartTitle": "sot23-3 (salicad)",
-                    "id": "1909230",
+                    "id": "2e022d0",
                     "type": "PartVariant"
                 },
                 {
@@ -85,11 +85,11 @@
                     },
                     "SymbolId": "Symbol\rBipolar transistor NPN\rsalicad",
                     "SymbolTitle": "Bipolar transistor NPN (salicad)",
-                    "id": "18739c0",
+                    "id": "2ce6590",
                     "type": "Section"
                 }
             ],
-            "Created": 33988155,
+            "Created": 38840764,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -107,7 +107,7 @@
                 "manufacturer": "ON Semiconductor",
                 "prefix": "VT",
                 "title": "bipolar npn transistor bc847",
-                "value": ""
+                "value": "BC847A"
             },
             "Title": "bipolar npn transistor bc847",
             "VariantFC": 4,
@@ -129,12 +129,12 @@
                 "BC847CLT1G",
                 "1G"
             ],
-            "id": "1930920",
+            "id": "113eb50",
             "type": "Comp"
         }
     ],
     "Parametrs": {
     },
-    "id": "1590db0",
+    "id": "2dcadc0",
     "type": "Project"
 }

@@ -17,6 +17,8 @@ Description
 #include "SdGraphSymPin.h"
 #include "SdObjectFactory.h"
 
+#include <memory>
+
 SdSection::SdSection() :
   SdObject()
   {
@@ -29,13 +31,14 @@ SdSection::SdSection() :
 
 
 
+//Set new symbol id or update previously setuped
 void SdSection::setSymbolId(const QString id, SdUndo *undo)
   {
   if( id.isEmpty() )
     return;
-  SdObject *obj = SdObjectFactory::extractObject( id, true, nullptr );
-  SdPItemSymbol *symbol = dynamic_cast<SdPItemSymbol*>(obj);
-  if( symbol != nullptr ) {
+  std::unique_ptr<SdObject> obj( SdObjectFactory::extractObject( id, true, nullptr ) );
+  SdPtr<SdPItemSymbol> symbol( obj.get() );
+  if( symbol.isValid() ) {
     //Store previous state
     undo->string2( &mSymbolId, &mSymbolTitle );
     undo->stringMap( &mAssociationTable );
@@ -45,16 +48,15 @@ void SdSection::setSymbolId(const QString id, SdUndo *undo)
     //Accum pins
     SdPinAssociation pins;
     symbol->forEach( dctSymPin, [&pins, this] (SdObject *obj) -> bool {
-      SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>( obj );
-      if( pin != nullptr )
+      SdPtr<SdGraphSymPin> pin( obj );
+      if( pin.isValid() )
         pins.insert( pin->getPinName(), mAssociationTable.value(pin->getPinName()) );
       return true;
       } );
     mAssociationTable = pins;
     }
-  if( obj != nullptr )
-    delete obj;
   }
+
 
 
 
