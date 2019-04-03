@@ -330,6 +330,7 @@ void SdWEditorComponent::sectionUpdate()
     mUndo->begin( tr("Update section for component"), mComponent );
     mComponent->getSection(index)->setSymbolId( uid, mUndo );
     dirtyProject();
+    fillUsedPins();
     onCurrentSection( index );
     }
   }
