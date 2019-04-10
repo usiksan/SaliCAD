@@ -85,29 +85,11 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>Enter object to find</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="mTitleOnlyFiltr">
-           <property name="text">
-            <string>Expand param table</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <widget class="QLabel" name="label_6">
            <property name="text">
-            <string>Name:</string>
+            <string>Enter object to find:</string>
            </property>
           </widget>
          </item>
@@ -117,16 +99,6 @@
             <string>Name filter. Match all text fragment delimited by space.</string>
            </property>
           </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_7">
-           <property name="text">
-            <string>Param:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="mParamFilter"/>
          </item>
          <item>
           <widget class="QPushButton" name="mFindButton">

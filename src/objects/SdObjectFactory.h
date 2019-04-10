@@ -76,8 +76,12 @@ class SdObjectFactory
     static bool         extractHeader( const QString id, SdLibraryHeader &hdr );
 
     //Function for iteration on all or partial uid's
-    //When function return true - iteration break, else countinued
+    //When function return true - iteration break, else continued
     static void         forEachUid( std::function<bool(const QString &uid)> fun1 );
+
+    //Function for iteration on all or partial headers
+    //When function return true - iteration break, else continued
+    static void         forEachHeader( std::function<bool( SdLibraryHeader &hdr )> fun1 );
 
   };
 

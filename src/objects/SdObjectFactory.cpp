@@ -211,6 +211,16 @@ void SdObjectFactory::forEachUid(std::function<bool (const QString &)> fun1)
 
 
 
+//Function for iteration on all or partial headers
+//When function return true - iteration break, else continued
+void SdObjectFactory::forEachHeader(std::function<bool (SdLibraryHeader &)> fun1)
+  {
+  sdLibraryStorage.forEachHeader( fun1 );
+  }
+
+
+
+
 
 
 

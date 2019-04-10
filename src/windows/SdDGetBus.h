@@ -20,13 +20,16 @@ namespace Ui {
 class SdDGetBus;
 }
 
+class SdProject;
+
 class SdDGetBus : public QDialog
   {
     Q_OBJECT
 
-    QStringList mNets;
+    QStringList   mNets;    //Net list of bus
+    //SdProject    *mProject; //Project from which we collect named net list
   public:
-    explicit SdDGetBus(QWidget *parent = nullptr);
+    explicit SdDGetBus( SdProject *prj, QWidget *parent = nullptr);
     ~SdDGetBus() override;
 
     QStringList busList() const { return mNets; }

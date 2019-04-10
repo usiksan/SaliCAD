@@ -158,14 +158,12 @@ static bool sdFieldMaskListMatch( const SdStringMap &map ) {
 
 
 
-static bool sdFieldListMatch( const QStringList &list, const SdStringMap &map ) {
-  for( const QString &str : list ) {
-    bool match = false;
-    for( auto iter = map.cbegin(); iter != map.cend() && !match; iter++ )
-      match = iter.value().indexOf( str, 0, Qt::CaseInsensitive ) >= 0;
-    if( !match ) return false;
-    }
-  return true;
+
+
+bool sdFieldMapMatch( const QString src, const SdStringMap &map ) {
+  for( auto iter = map.cbegin(); iter != map.cend(); iter++ )
+    if( iter.value().indexOf( src, 0, Qt::CaseInsensitive ) >= 0 ) return true;
+  return false;
   }
 
 
@@ -207,7 +205,6 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
 
   //Preset filter
   ui->mNameFilter->setText( sdNameFilter );
-  ui->mParamFilter->setText( sdParamFilter );
 
   //Create symbol and part view
   mSymbolView = new SdWEditorGraphView( ui->mSymbolBox );
@@ -239,9 +236,6 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
 
 
   connect( ui->mClearFields, &QPushButton::clicked, this, &SdDGetObject::onClearFieldFiltr );
-
-  //Default filtr only title or by fields also
-  ui->mTitleOnlyFiltr->setChecked( mExpandVariant );
 
   ui->mNameFilter->setFocus();
 
@@ -307,73 +301,50 @@ void SdDGetObject::find()
       }
   sdNameFilter = ui->mNameFilter->text();
   QStringList list = sdNameFilter.split( QRegExp("\\s+"), QString::SkipEmptyParts );
-  mExpandVariant = ui->mTitleOnlyFiltr->isChecked();
   mHeaderList.clear();
 
-  //Accumulate uid's matched to filter
-  QStringList uidList;
-  SdObjectFactory::forEachUid( [list, &uidList] (const QString &uid) -> bool {
-    //Split uid to name type and author
-    QString name = uid.contains(sdUidDelimiter) ? uid.split( sdUidDelimiter ).at(1) : uid;
-    //Test if all name filter sections match any part of object name
-    for( const QString &flt : list )
-      if( name.indexOf( flt, 0, Qt::CaseInsensitive ) < 0 )
-        //Name not matched, continue with another uid
-        return false;
-    //Name matched
-    uidList.append( uid );
-    return uidList.count() > 1000;
-    });
-
-  sdParamFilter = ui->mParamFilter->text();
-  list = sdParamFilter.split( QRegExp("\\s+"), QString::SkipEmptyParts );
-  SdLibraryHeader hdr;
-  for( const QString &str : uidList ) {
-    SdObjectFactory::extractHeader( str, hdr );
-
+  //Accumulate headers matched to filter
+  SdObjectFactory::forEachHeader( [list] ( SdLibraryHeader &hdr ) -> bool {
     //test class
     if( hdr.mClass & mSort ) {
-      //Match to fileds
-      if( mExpandVariant && hdr.variantTableExist() ) {
+      //Split uid to name type and author
+      QString uid( hdr.uid() );
+      QString name = uid.contains(sdUidDelimiter) ? uid.split( sdUidDelimiter ).at(1) : uid;
+
+      //Test for all variants
+      if( hdr.variantTableExist() ) {
+        //Header has variant table - append all variants
         int c = hdr.variantCount();
         SdLibraryHeader vhdr;
-        if( list.count() ) {
-          //Match each list item to any param
-          for( int i = 0; i < c; i++ ) {
-            hdr.variant( vhdr, i );
-            if( sdFieldListMatch( list, vhdr.mParamTable ) ) {
-              //Params matched, insert header in list
-              mHeaderList.append( vhdr );
+        for( int i = 0; i < c; i++ ) {
+          hdr.variant( vhdr, i );
+          //Test if matched to name or params
+          bool matched = true;
+          for( const QString &flt : list )
+            if( name.indexOf( flt, 0, Qt::CaseInsensitive ) < 0 && !sdFieldMapMatch( flt, vhdr.mParamTable ) ) {
+              matched = false;
+              break;
               }
-            }
-          }
-        else {
-          for( int i = 0; i < c; i++ ) {
-            hdr.variant( vhdr, i );
-            if( sdFieldMaskListMatch(vhdr.mParamTable) ) {
-              //Params matched, insert header in list
-              mHeaderList.append( vhdr );
-              }
-            }
+          if( matched && sdFieldMaskListMatch( vhdr.mParamTable ) )
+            mHeaderList.append( vhdr );
           }
         }
       else {
-        if( list.count() ) {
-          if( sdFieldListMatch( list, hdr.mParamTable ) ) {
-            //Params matched, insert header in list
-            mHeaderList.append( hdr );
+        //Header has only one param set - append header
+        //Test if matched to name or params
+        bool matched = true;
+        for( const QString &flt : list )
+          if( name.indexOf( flt, 0, Qt::CaseInsensitive ) < 0 && !sdFieldMapMatch( flt, hdr.mParamTable ) ) {
+            matched = false;
+            break;
             }
-          }
-        else {
-          //Name matched, test params
-          if( sdFieldMaskListMatch(hdr.mParamTable) ) {
-            //Params matched, insert header in list
-            mHeaderList.append( hdr );
-            }
-          }
+        if( matched && sdFieldMaskListMatch( hdr.mParamTable ) )
+          mHeaderList.append( hdr );
         }
       }
-    }
+
+    return mHeaderList.count() > 1000;
+    });
 
   //Fill visual table
   fillTable();

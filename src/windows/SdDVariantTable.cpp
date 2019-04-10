@@ -44,8 +44,10 @@ SdDVariantTable::SdDVariantTable(SdPItemVariant *var, bool editEna, QWidget *par
     mVariant = nullptr;
     ui->mVariantAppendField->setEnabled(false);
     ui->mVariantFieldDelete->setEnabled(false);
+    ui->mVariantFieldRename->setEnabled(false);
     ui->mRowInsert->setEnabled(false);
     ui->mRowDelete->setEnabled(false);
+    ui->mRowDeleteAll->setEnabled(false);
     }
 
   connect( ui->buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, [this] () {

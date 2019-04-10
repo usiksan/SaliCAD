@@ -447,7 +447,7 @@ bool SdModeCBus::getNetList()
   {
   mSmartTable.clear();
   mPrevDirection = -1;
-  SdDGetBus dbus(mEditor);
+  SdDGetBus dbus( getSheet()->getProject(), mEditor);
   if( dbus.exec() ) {
     mIndex = -1;
     mNetList = dbus.busList();

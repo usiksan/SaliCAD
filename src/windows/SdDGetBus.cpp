@@ -16,6 +16,7 @@ Description
 #include "SdStringHistory.h"
 #include "ui_SdDGetBus.h"
 #include "SdDHelp.h"
+#include "objects/SdProject.h"
 
 #include <QStringList>
 #include <QMessageBox>
@@ -25,8 +26,9 @@ Description
 //static QStringList previousBusList;
 static SdStringHistory previousBusList;
 
-SdDGetBus::SdDGetBus(QWidget *parent) :
+SdDGetBus::SdDGetBus(SdProject *prj, QWidget *parent) :
   QDialog(parent),
+  //mProject(prj),
   ui(new Ui::SdDGetBus)
   {
   ui->setupUi(this);
@@ -45,6 +47,37 @@ SdDGetBus::SdDGetBus(QWidget *parent) :
     ui->mBusEdit->selectAll();
     }
 
+  //Accumulate named nets
+  if( prj ) {
+    QStringList netList = prj->netList();
+    for( const QString &net : netList )
+      if( !net.startsWith( defNetNamePrefix ) )
+        ui->mNamedNetList->addItem( net );
+
+    //On selection changed we append selected net to the bus edit net list
+    connect( ui->mNamedNetList, &QListWidget::currentItemChanged, this, [this] ( QListWidgetItem *current, QListWidgetItem *previous ) {
+      Q_UNUSED(previous)
+      if( current ) {
+        //If bus edit is empty then we simple add net
+        // otherwise we add comma and net
+        if( ui->mBusEdit->text().isEmpty() )
+          ui->mBusEdit->setText( current->text() );
+        else
+          ui->mBusEdit->setText( ui->mBusEdit->text() + QString(",") + current->text() );
+        }
+      } );
+    }
+
+  //When click remove button we remove last net from bus edit net list
+  connect( ui->mRemove, &QPushButton::clicked, this, [this] () {
+    QString bus = ui->mBusEdit->text();
+    //We find last delimiter
+    int index = bus.lastIndexOf( QChar(',') );
+    if( index >= 0 )
+      ui->mBusEdit->setText( bus.left(index) );
+    else
+      ui->mBusEdit->clear();
+    });
 
   //Help system
   connect( ui->buttonBox, &QDialogButtonBox::helpRequested, this, [this] () { SdDHelp::help( "SdDGetBus.htm", this ); });
