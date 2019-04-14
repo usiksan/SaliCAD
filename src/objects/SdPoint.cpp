@@ -471,6 +471,8 @@ SdPoint calcArcStop(SdPoint center, SdPoint start, SdPoint sector)
 //Where orient is b-result orientation
 SdPoint get45oriented(SdPoint a, SdPoint b, SdOrientation first, SdOrientation second)
   {
+  Q_UNUSED(first);
+  Q_UNUSED(second);
   int dx = b.x() - a.x();
   int dy = b.y() - a.y();
   int adx = abs(dx);

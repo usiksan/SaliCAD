@@ -14,6 +14,8 @@ TEMPLATE = app
 
 RC_ICONS = pic/main.ico
 
+#QMAKE_CXXFLAGS += -Wc++17-extensions
+
 INCLUDEPATH += ../third
 
 SOURCES += \
@@ -211,11 +213,9 @@ SOURCES += \
     windows/SdPropBarPartImp.cpp \
     windows/SdStringHistory.cpp \
     objects/SdTime2x.cpp \
-    objects/SdPItemInheritance.cpp \
     modes/SdModeCPartPlace.cpp \
     modes/SdModeCFragment.cpp \
     windows/SdDProjectStore.cpp \
-    windows/SdWEditorInheritance.cpp \
     windows/SdWHelp.cpp \
     library/SvDir.cpp \
     windows/SdWEditorHelp.cpp \
@@ -482,11 +482,9 @@ HEADERS  += \
     windows/SdPropBarPartImp.h \
     windows/SdStringHistory.h \
     objects/SdTime2x.h \
-    objects/SdPItemInheritance.h \
     modes/SdModeCPartPlace.h \
     modes/SdModeCFragment.h \
     windows/SdDProjectStore.h \
-    windows/SdWEditorInheritance.h \
     windows/SdWHelp.h \
     library/SvDir.h \
     windows/SdWEditorHelp.h \

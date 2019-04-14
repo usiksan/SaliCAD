@@ -146,6 +146,10 @@ History
                    and automatic loop detection and removing
   21.02.2019 v0.62 Append upgrade check
   10.03.2019 v0.62 Fix: section allocate critical error
+  14.04.2019 v0.63 Remove inheritance object
+                   Fix: Set focus to plate editor window when component selected by id
+                        When delete schematic sheet and plate we remove all contents for link removing
+                   Append named net list to bus mode dialog
 */
 
 #ifndef SDCONFIG
@@ -157,7 +161,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             62
+#define SD_VERSION_MINOR             63
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

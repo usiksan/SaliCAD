@@ -515,7 +515,7 @@ bool SdProject::upgradeNewerItems(SdUndo *undo, QWidget *parent)
   //Upgrade components, parts and symbols
   //At first, we accumulate items to be upgraded
   QList<SdProjectItemPtr> upgradeList;
-  forEach( dctComponent | dctInheritance | dctSymbol | dctPart, [&upgradeList,this] (SdObject *obj) -> bool {
+  forEach( dctComponent | dctSymbol | dctPart, [&upgradeList,this] (SdObject *obj) -> bool {
     SdPtr<SdProjectItem> item(obj);
     if( item.isValid() && SdObjectFactory::isThereNewer(item.ptr()) && !isUsed(obj) ) {
       //Object may be upgraded and it is not used

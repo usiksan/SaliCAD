@@ -16,7 +16,6 @@ Description
 #include "objects/SdPItemSymbol.h"
 #include "objects/SdPItemPart.h"
 #include "objects/SdPItemComponent.h"
-#include "objects/SdPItemInheritance.h"
 #include "objects/SdPItemSheet.h"
 #include "objects/SdPItemPlate.h"
 #include "objects/SdPItemRich.h"
@@ -63,7 +62,6 @@ SdPNewProjectItem_SelectType::SdPNewProjectItem_SelectType(SdProjectItemPtr *ite
   mObjectType->addItem( tr("Symbol") );
   mObjectType->addItem( tr("Part") );
   mObjectType->addItem( tr("Component") );
-  mObjectType->addItem( tr("Inheritance") );
   mObjectType->addItem( tr("Text doc") );
 
   mObjectType->setCurrentRow( defaultClass );
@@ -103,10 +101,6 @@ bool SdPNewProjectItem_SelectType::validatePage()
       name = tr("Component%1");
       break;
     case 5 :
-      *mItemPtr = new SdPItemInheritance();
-      name = tr("Inheritance%1");
-      break;
-    case 6 :
       *mItemPtr = new SdPItemRich();
       name = tr("Text doc%1");
       break;
@@ -125,7 +119,7 @@ bool SdPNewProjectItem_SelectType::validatePage()
 
 int SdPNewProjectItem_SelectType::nextId() const
   {
-  if( defaultClass <= 5 ) {
+  if( defaultClass <= 4 ) {
     //Create empty object
     if( defaultOrder == 0 )
       return SDP_NPI_NAME;
@@ -184,14 +178,6 @@ void SdPNewProjectItem_SelectType::classChanged(int index)
       mDescriptions.append( tr("Creates copy of existing component") );
       break;
     case 5 :
-      mCreationOrder->addItem( tr("Empty inheritance") );
-      mDescriptions.append( tr("Creates empty inherited component which inherits pair schematic and part and replace params.") );
-      mCreationOrder->addItem( tr("Copy existing inheritance") );
-      mDescriptions.append( tr("Creates copy of existing inheritance or inherits existing component") );
-//      mCreationOrder->addItem( tr("Copy existing inheritance") );
-//      mDescriptions.append( tr("Creates copy of existing inheritance") );
-      break;
-    case 6 :
       mCreationOrder->addItem( tr("Empty text") );
       //mCreationOrder->addItem( tr("Element list") );
       //mCreationOrder->addItem( tr("Specification") );

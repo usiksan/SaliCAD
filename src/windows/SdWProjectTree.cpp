@@ -250,7 +250,7 @@ void SdWProjectTree::cmObjectDelete()
 void SdWProjectTree::cmObjectCopy()
   {
   SdPtr<SdProjectItem> item( mProject->item( mCurrentItem ) );
-  if( item.isValid() && (item->getClass() & (dctComponent|dctInheritance|dctPart|dctSymbol)) ) {
+  if( item.isValid() && (item->getClass() & (dctComponent | dctPart | dctSymbol) ) ) {
     //Prepare Json object with project and selection
     QJsonObject obj;
 
@@ -325,7 +325,7 @@ void SdWProjectTree::cmObjectPaste()
 void SdWProjectTree::cmObjectCut()
   {
   SdPtr<SdProjectItem> item( mProject->item( mCurrentItem ) );
-  if( item.isValid() && (item->getClass() & (dctComponent|dctInheritance|dctPart|dctSymbol)) ) {
+  if( item.isValid() && (item->getClass() & (dctComponent | dctPart | dctSymbol) ) ) {
     if( mProject->isUsed(item.ptr()) )
       QMessageBox::warning( this, tr("Warning!"), tr("Object is used by other objects. You can not cut it until dereferenced, only copy.") );
     else {
@@ -346,7 +346,7 @@ void SdWProjectTree::cmObjectCut()
 void SdWProjectTree::cmObjectDuplicate()
   {
   SdPtr<SdProjectItem> item( mProject->item( mCurrentItem ) );
-  if( item.isValid() && (item->getClass() & (dctComponent|dctInheritance|dctPart|dctSymbol)) ) {
+  if( item.isValid() && (item->getClass() & (dctComponent | dctPart | dctSymbol) ) ) {
     mProject->getUndo()->begin( tr("Duplicate object"), nullptr );
     duplicate( item->getUid() );
     //Update status undo and redo commands
@@ -664,7 +664,6 @@ void SdWProjectTree::buildVisualTree()
     fillTopItem( mSheetList, dctSheet );
     fillTopItem( mPlateList, dctPlate );
     fillTopItem( mComponentList, dctComponent );
-    fillTopItem( mComponentList, dctInheritance );
     fillTopItem( mSymbolList, dctSymbol );
     fillTopItem( mPartList, dctPart );
     fillTopItem( mTextList, dctRich );
@@ -682,7 +681,6 @@ QTreeWidgetItem *SdWProjectTree::classList(quint64 classId)
     case dctSymbol      : return mSymbolList;
     case dctPart        : return mPartList;
     case dctComponent   : return mComponentList;
-    case dctInheritance : return mComponentList;
     case dctRich        : return mTextList;
     }
   return nullptr;
@@ -695,7 +693,7 @@ QTreeWidgetItem *SdWProjectTree::classList(quint64 classId)
 void SdWProjectTree::duplicate(const QString &uid)
   {
   SdPtr<SdProjectItem> item( mProject->itemByUid( uid ) );
-  if( item.isValid() && (item->getClass() & (dctComponent|dctInheritance|dctPart|dctSymbol)) ) {
+  if( item.isValid() && (item->getClass() & (dctComponent | dctPart | dctSymbol) ) ) {
     //Create copy of object
     SdProjectItem *copy = dynamic_cast<SdProjectItem*>( item->copy() );
     copy->setUnicalTitle( QString() );

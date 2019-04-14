@@ -60,7 +60,6 @@ struct SdLibraryHeader
     QString     mAuthor;             //Author who create object
     qint32      mTime;               //Object time creation
     quint64     mClass;              //Object class. When equals 0 then corresponded object is deleted
-    QString     mInherit;            //Inheritance object
 
     SdStringMap mParamTable;         //User defined object params
 
@@ -70,9 +69,9 @@ struct SdLibraryHeader
 
     SdLibraryHeader() : mName(), mType(), mAuthor(), mTime(0), mClass(0), mParamTable(), mVariantFieldCount(0),mVariantTable() {}
 
-    void    write( QDataStream &os ) const { os << mName << mType << mAuthor << mTime << mClass << mInherit << mParamTable << mVariantFieldCount << mVariantTable; }
+    void    write( QDataStream &os ) const { os << mName << mType << mAuthor << mTime << mClass << mParamTable << mVariantFieldCount << mVariantTable; }
 
-    void    read( QDataStream &is ) { is >> mName >> mType >> mAuthor >> mTime >> mClass >> mInherit >> mParamTable >> mVariantFieldCount >> mVariantTable; }
+    void    read( QDataStream &is ) { is >> mName >> mType >> mAuthor >> mTime >> mClass >> mParamTable >> mVariantFieldCount >> mVariantTable; }
 
     QString uid() const { return headerUid( mType, mName, mAuthor ); }
 
@@ -92,7 +91,6 @@ struct SdLibraryHeader
       hdr.mAuthor     = mAuthor;
       hdr.mTime       = mTime;
       hdr.mClass      = mClass;
-      hdr.mInherit    = mInherit;
       hdr.mParamTable = mParamTable;
       hdr.mVariantFieldCount = 0;
       hdr.mVariantTable.clear();

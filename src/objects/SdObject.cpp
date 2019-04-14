@@ -21,7 +21,6 @@ Description
 #include "SdPItemComponent.h"
 #include "SdPItemSheet.h"
 #include "SdPItemPlate.h"
-#include "SdPItemInheritance.h"
 #include "SdPItemRich.h"
 #include "SdPadAssociation.h"
 #include "SdGraphArea.h"
@@ -189,7 +188,7 @@ QJsonObject SdObject::write() const
   //writePtr( mParent, QStringLiteral("Parent"), obj );
   writeObject( obj );
   const SdProjectItem *item = dynamic_cast<const SdProjectItem*>(this);
-  if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol | dctInheritance)) && !item->isEditEnable() )
+  if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol)) && !item->isEditEnable() )
     SdObjectFactory::insertItemObject( item, obj );
   return obj;
   }
@@ -230,7 +229,7 @@ SdObject *SdObject::read(SdObjectMap *map, const QJsonObject obj)
     r->readObject( map, obj );
 
     SdProjectItem *item = dynamic_cast<SdProjectItem*>(r);
-    if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol | dctInheritance)) && !item->isEditEnable() )
+    if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol)) && !item->isEditEnable() )
       SdObjectFactory::insertItemObject( item, obj );
     }
 
@@ -304,7 +303,6 @@ SdObject *SdObject::build(QString type)
   if( type == QStringLiteral(SD_TYPE_SHEET)               ) return new SdPItemSheet();
   if( type == QStringLiteral(SD_TYPE_PLATE)               ) return new SdPItemPlate();
   if( type == QStringLiteral(SD_TYPE_COMPONENT)           ) return new SdPItemComponent();
-  if( type == QStringLiteral(SD_TYPE_INHERITANCE)         ) return new SdPItemInheritance();
   if( type == QStringLiteral(SD_TYPE_RICH)                ) return new SdPItemRich();
 
   if( type == QStringLiteral(SD_TYPE_SECTION)             ) return new SdSection();

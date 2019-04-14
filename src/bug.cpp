@@ -44,6 +44,8 @@
 //===================================================================================
 //Fixed:
 
+//Remove inheritance object, instead of it we use variant table
+
 //Set focus to plate editor window when component selected by id
 
 //When delete schematic sheet and plate we remove all contents for link removing

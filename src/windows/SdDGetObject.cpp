@@ -372,9 +372,6 @@ void SdDGetObject::onSelectItem(int row, int column)
   else if( hdr.mClass == dctProject ) {
     mProject = sdObjectOnly<SdProject>( SdObjectFactory::extractObject( hdr.uid(), true, this ) );
     }
-  else if( hdr.mClass == dctInheritance ) {
-    mComponent = sdObjectOnly<SdPItemComponent>( SdObjectFactory::extractObject( hdr.mInherit, true, this ) );
-    }
 
   mParam = hdr.mParamTable;
 
@@ -669,9 +666,7 @@ void SdDGetObject::accept()
     SdLibraryHeader hdr = mHeaderList.at(row);
     mObjName   = hdr.mName;
     mObjUid     = hdr.uid();
-    if( hdr.mClass == dctInheritance )
-      mCompUid = hdr.mInherit;
-    else if( hdr.mClass == dctComponent )
+    if( hdr.mClass == dctComponent )
       mCompUid = mObjUid;
     else
       mCompUid.clear();
@@ -711,7 +706,7 @@ QString SdDGetObject::getObjectUid(quint64 sort, const QString title, QWidget *p
 
 SdPItemComponent *SdDGetObject::getComponent(int *logSectionPtr, SdStringMap *param, const QString title, QWidget *parent)
   {
-  SdDGetObject dget( dctComponent|dctInheritance, title, parent );
+  SdDGetObject dget( dctComponent, title, parent );
   if( dget.exec() ) {
     //If available pointer to logical section then set selected section
     if( logSectionPtr )

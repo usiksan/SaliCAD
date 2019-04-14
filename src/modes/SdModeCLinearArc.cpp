@@ -161,6 +161,8 @@ void SdModeCLinearArc::drawDynamic(SdContext *ctx)
       //First point selection
       ctx->arc( mCenter, mStart, mPrev );
       //break is absent purposefully
+
+      [[fallthrough]];
     case sStart :
       //
       //В том числе выбор первой точки

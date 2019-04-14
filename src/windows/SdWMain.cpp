@@ -21,7 +21,6 @@ Description
 #include "SdWEditorGraphSheet.h"
 #include "SdWEditorGraphPlate.h"
 #include "SdWEditorGraphView.h"
-#include "SdWEditorInheritance.h"
 #include "SdWEditorHelp.h"
 #include "SdWEditorIntro.h"
 #include "SdWEditorProject.h"
@@ -265,9 +264,6 @@ void SdWMain::onActivateProjectItem(SdProjectItem *item)
       break;
     case dctComponent :
       editor = new SdWEditorComponent( dynamic_cast<SdPItemComponent*>( item ), mWEditors );
-      break;
-    case dctInheritance :
-      editor = new SdWEditorInheritance( dynamic_cast<SdPItemInheritance*>( item ), mWEditors );
       break;
     case dctSheet :
       if( item->isEditEnable() )

@@ -21,7 +21,6 @@ Description
 #include "objects/SdPItemSymbol.h"
 #include "objects/SdPItemPart.h"
 #include "objects/SdPItemComponent.h"
-#include "objects/SdPItemInheritance.h"
 #include "objects/SdPItemSheet.h"
 #include "objects/SdPItemPlate.h"
 #include "objects/SdObjectFactory.h"
@@ -141,6 +140,9 @@ void SdPNewProjectItem_Copy::copyItemUpdate()
   if( mCopyItem )
     mCopyName->setText( mCopyItem->getExtendTitle() );
   }
+
+
+
 
 void SdPNewProjectItem_Copy::onCopyFromFile()
   {
