@@ -64,9 +64,9 @@ SdPropBarPartPlace::SdPropBarPartPlace(const QString title) :
   mComponent->setEditable(true);
   //on complete editing
   connect( mComponent->lineEdit(), &QLineEdit::editingFinished, [=]() {
-    QStringList list;
-    list.append( mComponent->currentText() );
-    emit partSelect( list );
+//    QStringList list;
+//    list.append( mComponent->currentText() );
+    emit partSelect( {mComponent->currentText()} );
     });
   //on select other component
   connect( mComponent, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int) {

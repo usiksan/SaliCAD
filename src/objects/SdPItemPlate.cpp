@@ -510,9 +510,18 @@ QString SdPItemPlate::getType() const
 
 
 
-quint64 SdPItemPlate::getClass() const
+SdClass SdPItemPlate::getClass() const
   {
   return dctPlate;
+  }
+
+
+
+
+void SdPItemPlate::detach(SdUndo *undo)
+  {
+  //On detach we delete all contents
+  deleteAll( undo );
   }
 
 

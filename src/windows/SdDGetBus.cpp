@@ -20,6 +20,7 @@ Description
 
 #include <QStringList>
 #include <QMessageBox>
+#include <QDebug>
 
 
 
@@ -28,7 +29,7 @@ static SdStringHistory previousBusList;
 
 SdDGetBus::SdDGetBus(SdProject *prj, QWidget *parent) :
   QDialog(parent),
-  //mProject(prj),
+  mFirst(true),
   ui(new Ui::SdDGetBus)
   {
   ui->setupUi(this);
@@ -39,6 +40,7 @@ SdDGetBus::SdDGetBus(SdProject *prj, QWidget *parent) :
   //On selection bus line
   connect( ui->mBusList, &QListWidget::currentItemChanged, this, [this] () {
     ui->mBusEdit->setText( ui->mBusList->currentItem()->text() );
+    mFirst = false;
     } );
 
   //Setup default bus line - previous bus line
@@ -54,14 +56,23 @@ SdDGetBus::SdDGetBus(SdProject *prj, QWidget *parent) :
       if( !net.startsWith( defNetNamePrefix ) )
         ui->mNamedNetList->addItem( net );
 
+    //On text changed - reset mFirst flag
+    connect( ui->mBusEdit, &QLineEdit::textChanged, this, [this] () { mFirst = false; } );
+
     //On selection changed we append selected net to the bus edit net list
     connect( ui->mNamedNetList, &QListWidget::currentItemChanged, this, [this] ( QListWidgetItem *current, QListWidgetItem *previous ) {
       Q_UNUSED(previous)
       if( current ) {
+        //Clear previously entered text
+        if( mFirst )
+          ui->mBusEdit->clear();
+        mFirst = false;
         //If bus edit is empty then we simple add net
         // otherwise we add comma and net
         if( ui->mBusEdit->text().isEmpty() )
           ui->mBusEdit->setText( current->text() );
+        else if( ui->mBusEdit->text().endsWith( QChar(',') ) )
+          ui->mBusEdit->setText( ui->mBusEdit->text() + current->text() );
         else
           ui->mBusEdit->setText( ui->mBusEdit->text() + QString(",") + current->text() );
         }
@@ -70,6 +81,7 @@ SdDGetBus::SdDGetBus(SdProject *prj, QWidget *parent) :
 
   //When click remove button we remove last net from bus edit net list
   connect( ui->mRemove, &QPushButton::clicked, this, [this] () {
+    mFirst = false;
     QString bus = ui->mBusEdit->text();
     //We find last delimiter
     int index = bus.lastIndexOf( QChar(',') );
@@ -83,10 +95,16 @@ SdDGetBus::SdDGetBus(SdProject *prj, QWidget *parent) :
   connect( ui->buttonBox, &QDialogButtonBox::helpRequested, this, [this] () { SdDHelp::help( "SdDGetBus.htm", this ); });
   }
 
+
+
+
+
 SdDGetBus::~SdDGetBus()
   {
   delete ui;
   }
+
+
 
 
 

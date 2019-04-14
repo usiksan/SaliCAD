@@ -27,7 +27,7 @@ class SdDGetBus : public QDialog
     Q_OBJECT
 
     QStringList   mNets;    //Net list of bus
-    //SdProject    *mProject; //Project from which we collect named net list
+    bool          mFirst;   //True while bus edit line not changed
   public:
     explicit SdDGetBus( SdProject *prj, QWidget *parent = nullptr);
     ~SdDGetBus() override;

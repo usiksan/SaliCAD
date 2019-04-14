@@ -44,6 +44,12 @@
 //===================================================================================
 //Fixed:
 
+//Set focus to plate editor window when component selected by id
+
+//When delete schematic sheet and plate we remove all contents for link removing
+
+//Enter bus net from named net list when first selection must delete previous net list
+
 //Append to ic symbol master keyboard commands
 
 //D079 Append connection marker to registration dialog

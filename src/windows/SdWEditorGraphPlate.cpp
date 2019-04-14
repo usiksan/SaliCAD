@@ -262,6 +262,8 @@ void SdWEditorGraphPlate::cmEditProperties()
 
 void SdWEditorGraphPlate::cmModePartSelect(QStringList list)
   {
+  //Set focus to current edit window
+  setFocus();
   if( modeGet() )
     modeGet()->partSelect( list );
   }

@@ -65,7 +65,8 @@ class SdPItemSheet : public SdProjectItem
     // SdObject interface
   public:
     virtual QString        getType() const override;
-    virtual quint64        getClass() const override;
+    virtual SdClass        getClass() const override;
+    virtual void           detach(SdUndo *undo) override;
     virtual void           cloneFrom(const SdObject *src) override;
     virtual void           writeObject(QJsonObject &obj) const override;
     virtual void           readObject(SdObjectMap *map, const QJsonObject obj) override;
@@ -78,6 +79,7 @@ class SdPItemSheet : public SdProjectItem
     virtual void           insertObjects( SdPoint offset, SdSelector *sour, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next ) override;
 
     friend class SdPasCadImport;
+
   };
 
 #endif // SDPITEMSHEET_H

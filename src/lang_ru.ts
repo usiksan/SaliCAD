@@ -703,13 +703,13 @@
     </message>
     <message>
         <location filename="objects/SdGraphSymImp.cpp" line="652"/>
-        <location filename="objects/SdGraphSymImp.cpp" line="687"/>
+        <location filename="objects/SdGraphSymImp.cpp" line="688"/>
         <source>No pack info in %1 for section %2</source>
         <translation>Нету упаковочной информации в %1 для секции %2</translation>
     </message>
     <message>
         <location filename="objects/SdGraphSymImp.cpp" line="664"/>
-        <location filename="objects/SdGraphSymImp.cpp" line="700"/>
+        <location filename="objects/SdGraphSymImp.cpp" line="701"/>
         <source>Duplicated pin name %1</source>
         <translation>Задвоенное имя выода %1</translation>
     </message>
@@ -1485,22 +1485,42 @@
         <translation>произведет цепи: addr0,addr1,add2,addr3,+5v,d0,d1,d2,gnd</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetBus.ui" line="48"/>
+        <location filename="windows/SdDGetBus.ui" line="50"/>
         <source>Bus net list with format above.</source>
         <translation>Список цепей шины, формат приведен выше.</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetBus.ui" line="55"/>
+        <location filename="windows/SdDGetBus.ui" line="57"/>
+        <source>Remove last net bus net list</source>
+        <translation>Удалить последнюю цепь из списка</translation>
+    </message>
+    <message>
+        <location filename="windows/SdDGetBus.ui" line="60"/>
+        <source>-|&lt; (Ctrl+Back)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="windows/SdDGetBus.ui" line="63"/>
+        <source>Ctrl+Backspace</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="windows/SdDGetBus.ui" line="74"/>
         <source>Previously entered bus list.</source>
         <translation>Ранее введенные списки цепей для шин.</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetBus.cpp" line="143"/>
+        <location filename="windows/SdDGetBus.ui" line="87"/>
+        <source>Named net list</source>
+        <translation>Список именованных цепей</translation>
+    </message>
+    <message>
+        <location filename="windows/SdDGetBus.cpp" line="176"/>
         <source>Error</source>
         <translation>Ошибка!</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetBus.cpp" line="143"/>
+        <location filename="windows/SdDGetBus.cpp" line="176"/>
         <source>Wrong net list syntax. Use: netA,netB,net&lt;0:2&gt;</source>
         <translation>Неверный синтаксис списка цепей. Используйте: цепьА,цепьБ,цепь&lt;0:2&gt;</translation>
     </message>
@@ -1529,121 +1549,119 @@
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="92"/>
-        <source>Enter object to find</source>
-        <translation>Введите объект для поиска</translation>
+        <source>Enter object to find:</source>
+        <oldsource>Enter object to find</oldsource>
+        <translation>Введите объект для поиска:</translation>
+    </message>
+    <message>
+        <source>Expand param table</source>
+        <translation type="vanished">Расширить для таблицы параметров</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="vanished">Имя:</translation>
     </message>
     <message>
         <location filename="windows/SdDGetObject.ui" line="99"/>
-        <source>Expand param table</source>
-        <translation>Расширить для таблицы параметров</translation>
-    </message>
-    <message>
-        <location filename="windows/SdDGetObject.ui" line="110"/>
-        <source>Name:</source>
-        <translation>Имя:</translation>
-    </message>
-    <message>
-        <location filename="windows/SdDGetObject.ui" line="117"/>
         <source>Name filter. Match all text fragment delimited by space.</source>
         <translation>Фильтр имени. Должны встречаться все фрагменты разделенные пробелами.</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.ui" line="124"/>
         <source>Param:</source>
-        <translation>Параметры:</translation>
+        <translation type="vanished">Параметры:</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.ui" line="140"/>
+        <location filename="windows/SdDGetObject.ui" line="112"/>
         <source>Find</source>
         <translation>Найти</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.ui" line="152"/>
+        <location filename="windows/SdDGetObject.ui" line="124"/>
         <source>Find list</source>
         <translation>Список поиска</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.ui" line="159"/>
+        <location filename="windows/SdDGetObject.ui" line="131"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Table with elements matched to filters.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Таблица с элементами удовлетворяющими фильтрами.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.ui" line="176"/>
+        <location filename="windows/SdDGetObject.ui" line="148"/>
         <source>Sections</source>
         <translation>Секции</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.ui" line="195"/>
+        <location filename="windows/SdDGetObject.ui" line="167"/>
         <source>Symbol</source>
         <translation>Символ</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.ui" line="202"/>
+        <location filename="windows/SdDGetObject.ui" line="174"/>
         <source>Part</source>
         <translation>Корпус</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.ui" line="230"/>
+        <location filename="windows/SdDGetObject.ui" line="202"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.ui" line="237"/>
+        <location filename="windows/SdDGetObject.ui" line="209"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.ui" line="244"/>
+        <location filename="windows/SdDGetObject.ui" line="216"/>
         <source>OK</source>
         <translation>Ок</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.ui" line="251"/>
+        <location filename="windows/SdDGetObject.ui" line="223"/>
         <source>Load from central repo</source>
         <translation>Загрузить из центрального репозитория</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="203"/>
+        <location filename="windows/SdDGetObject.cpp" line="201"/>
         <source>Show</source>
         <translation>Показать</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="203"/>
+        <location filename="windows/SdDGetObject.cpp" line="201"/>
         <source>Field</source>
         <translation>Поле</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="203"/>
+        <location filename="windows/SdDGetObject.cpp" line="201"/>
         <source>Filtr</source>
         <translation>Фильтр</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="421"/>
+        <location filename="windows/SdDGetObject.cpp" line="392"/>
         <source>Section %1: %2</source>
         <translation>Секция %1:%2</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="644"/>
+        <location filename="windows/SdDGetObject.cpp" line="615"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="645"/>
+        <location filename="windows/SdDGetObject.cpp" line="616"/>
         <source>Author</source>
         <translation>Автор</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="646"/>
+        <location filename="windows/SdDGetObject.cpp" line="617"/>
         <source>Created</source>
         <translation>Создан</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="714"/>
+        <location filename="windows/SdDGetObject.cpp" line="685"/>
         <source>Error</source>
         <translation>Ошибка!</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="714"/>
+        <location filename="windows/SdDGetObject.cpp" line="685"/>
         <source>You must select element or press Cancel</source>
         <translation>Вы должны выбратиь элемент или нажмите Отмена</translation>
     </message>
@@ -2682,9 +2700,9 @@
     </message>
     <message>
         <location filename="master/SdDMasterSymbolIc.ui" line="40"/>
-        <location filename="master/SdDMasterSymbolIc.ui" line="90"/>
-        <source>Insert pin</source>
-        <translation>Вставить вывод</translation>
+        <source>Insert pin (Ctrl+L)</source>
+        <oldsource>Insert pin</oldsource>
+        <translation>Вставить вывод (Ctrl+L)</translation>
     </message>
     <message>
         <location filename="master/SdDMasterSymbolIc.ui" line="47"/>
@@ -2715,6 +2733,11 @@
         <translation>Список выводов для правой стороны</translation>
     </message>
     <message>
+        <location filename="master/SdDMasterSymbolIc.ui" line="90"/>
+        <source>Insert pin (Ctrl+R)</source>
+        <translation>Вставить вывод (Ctrl+R)</translation>
+    </message>
+    <message>
         <location filename="master/SdDMasterSymbolIc.ui" line="128"/>
         <source>Builded symbol preview</source>
         <translation>Предварительный просмотр построенного изображения символа</translation>
@@ -2730,14 +2753,14 @@
         <translation>Заголовк</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterSymbolIc.cpp" line="39"/>
-        <location filename="master/SdDMasterSymbolIc.cpp" line="44"/>
+        <location filename="master/SdDMasterSymbolIc.cpp" line="40"/>
+        <location filename="master/SdDMasterSymbolIc.cpp" line="48"/>
         <source>Pin name</source>
         <translation>Имя вывода</translation>
     </message>
     <message>
-        <location filename="master/SdDMasterSymbolIc.cpp" line="39"/>
-        <location filename="master/SdDMasterSymbolIc.cpp" line="44"/>
+        <location filename="master/SdDMasterSymbolIc.cpp" line="40"/>
+        <location filename="master/SdDMasterSymbolIc.cpp" line="48"/>
         <source>Alternative names</source>
         <translation>Альтернативные имена</translation>
     </message>
@@ -3779,7 +3802,7 @@
     </message>
     <message>
         <location filename="windows/SdDRegistation.ui" line="42"/>
-        <location filename="windows/SdDRegistation.cpp" line="171"/>
+        <location filename="windows/SdDRegistation.cpp" line="173"/>
         <source>Name:</source>
         <translation>Имя:</translation>
     </message>
@@ -3840,8 +3863,8 @@
         <location filename="windows/SdDRegistation.cpp" line="105"/>
         <location filename="windows/SdDRegistation.cpp" line="115"/>
         <location filename="windows/SdDRegistation.cpp" line="119"/>
-        <location filename="windows/SdDRegistation.cpp" line="183"/>
-        <location filename="windows/SdDRegistation.cpp" line="187"/>
+        <location filename="windows/SdDRegistation.cpp" line="185"/>
+        <location filename="windows/SdDRegistation.cpp" line="189"/>
         <source>Warning!</source>
         <translation>Внимание!</translation>
     </message>
@@ -3869,8 +3892,8 @@
     </message>
     <message>
         <location filename="windows/SdDRegistation.cpp" line="123"/>
-        <location filename="windows/SdDRegistation.cpp" line="143"/>
         <location filename="windows/SdDRegistation.cpp" line="145"/>
+        <location filename="windows/SdDRegistation.cpp" line="147"/>
         <source>Error!</source>
         <translation>Ошибка!</translation>
     </message>
@@ -3880,32 +3903,32 @@
         <translation>Вы должны ввести существующий ключ уже зарегистрированного компьютера.</translation>
     </message>
     <message>
-        <location filename="windows/SdDRegistation.cpp" line="143"/>
+        <location filename="windows/SdDRegistation.cpp" line="145"/>
         <source>This user name already present. Enter another name.</source>
         <translation>Это имя уже существует в базе. Введите другое имя.</translation>
     </message>
     <message>
-        <location filename="windows/SdDRegistation.cpp" line="145"/>
+        <location filename="windows/SdDRegistation.cpp" line="147"/>
         <source>Undefined error %1</source>
         <translation>Неопределенная ошибка %1</translation>
     </message>
     <message>
-        <location filename="windows/SdDRegistation.cpp" line="167"/>
+        <location filename="windows/SdDRegistation.cpp" line="169"/>
         <source>Name (empty):</source>
         <translation>Имя (пустое):</translation>
     </message>
     <message>
-        <location filename="windows/SdDRegistation.cpp" line="169"/>
+        <location filename="windows/SdDRegistation.cpp" line="171"/>
         <source>Name (unavailable):</source>
         <translation>Имя (недопустимое): </translation>
     </message>
     <message>
-        <location filename="windows/SdDRegistation.cpp" line="183"/>
+        <location filename="windows/SdDRegistation.cpp" line="185"/>
         <source>You not registered. SaliCAD will work in autonom mode. In this mode You can not access global component database. This dialog allowed in later with Help menu.</source>
         <translation>Вы не зарегистрированы. SaliCAD будет работать в автономном режиме. В этом режиме у вас нету доступа к глобальное базе компонентов. Диалог регистрации доступен из меню Помощь.</translation>
     </message>
     <message>
-        <location filename="windows/SdDRegistation.cpp" line="187"/>
+        <location filename="windows/SdDRegistation.cpp" line="189"/>
         <source>This dialog allowed in later with Help menu.</source>
         <translation>Этот диалог регистрации доступен из меню Помощь.</translation>
     </message>
@@ -4019,7 +4042,7 @@
     </message>
     <message>
         <location filename="windows/SdDVariantTable.ui" line="74"/>
-        <location filename="windows/SdDVariantTable.cpp" line="70"/>
+        <location filename="windows/SdDVariantTable.cpp" line="72"/>
         <source>Append field</source>
         <translation>Добавить поле</translation>
     </message>
@@ -4030,7 +4053,7 @@
     </message>
     <message>
         <location filename="windows/SdDVariantTable.ui" line="88"/>
-        <location filename="windows/SdDVariantTable.cpp" line="102"/>
+        <location filename="windows/SdDVariantTable.cpp" line="104"/>
         <source>Rename field</source>
         <translation>Переименовать поле</translation>
     </message>
@@ -4050,61 +4073,61 @@
         <translation>Удалить все ряды</translation>
     </message>
     <message>
-        <location filename="windows/SdDVariantTable.cpp" line="70"/>
+        <location filename="windows/SdDVariantTable.cpp" line="72"/>
         <source>Enter field name for append</source>
         <translation>Введите имя поля для вставки</translation>
     </message>
     <message>
-        <location filename="windows/SdDVariantTable.cpp" line="84"/>
-        <location filename="windows/SdDVariantTable.cpp" line="89"/>
-        <location filename="windows/SdDVariantTable.cpp" line="107"/>
-        <location filename="windows/SdDVariantTable.cpp" line="162"/>
-        <location filename="windows/SdDVariantTable.cpp" line="182"/>
+        <location filename="windows/SdDVariantTable.cpp" line="86"/>
+        <location filename="windows/SdDVariantTable.cpp" line="91"/>
+        <location filename="windows/SdDVariantTable.cpp" line="109"/>
+        <location filename="windows/SdDVariantTable.cpp" line="164"/>
+        <location filename="windows/SdDVariantTable.cpp" line="184"/>
         <source>Warning!</source>
         <translation>Внимание!</translation>
     </message>
     <message>
-        <location filename="windows/SdDVariantTable.cpp" line="84"/>
+        <location filename="windows/SdDVariantTable.cpp" line="86"/>
         <source>Are You sure to delete field &apos;%1&apos;? This operation is not undoable</source>
         <translation>Вы уверены, что хотите удалить поле &apos;%1&apos;? Эта операция не отменяется</translation>
     </message>
     <message>
-        <location filename="windows/SdDVariantTable.cpp" line="89"/>
+        <location filename="windows/SdDVariantTable.cpp" line="91"/>
         <source>No selected field for deletion. Select partial field and try again.</source>
         <translation>Не выбрано поле для удаления. Выберите отдельное поле и попробуйте еще раз.</translation>
     </message>
     <message>
-        <location filename="windows/SdDVariantTable.cpp" line="102"/>
+        <location filename="windows/SdDVariantTable.cpp" line="104"/>
         <source>Enter new field name</source>
         <translation>Введите имя нового поля</translation>
     </message>
     <message>
-        <location filename="windows/SdDVariantTable.cpp" line="107"/>
+        <location filename="windows/SdDVariantTable.cpp" line="109"/>
         <source>No selected field for renaming. Select partial field and try again.</source>
         <translation>Не выбрано поле для переименования. Выберите отдельное поле и попробуйте снова.</translation>
     </message>
     <message>
-        <location filename="windows/SdDVariantTable.cpp" line="162"/>
+        <location filename="windows/SdDVariantTable.cpp" line="164"/>
         <source>Are You sure to delete ALL rows? This is non undoing operation. Are You sure?</source>
         <translation>Вы абсолютно уверены, что хотите удалить ВСЕ ряды? Эту операцию нельзя будет отменить. Вы уверены?</translation>
     </message>
     <message>
-        <location filename="windows/SdDVariantTable.cpp" line="182"/>
+        <location filename="windows/SdDVariantTable.cpp" line="184"/>
         <source>You attempting delete field &apos;%1&apos; from variant table. All field column contents will be loss. This is non undoing operation. Are You sure?</source>
         <translation>Вы пытаетесь удалить поле &apos;%1&apos; из таблицы вариантов. Все значения в колонке этого поля будут стерты. Эту операцию нельзя будет отменить. Вы уверены?</translation>
     </message>
     <message>
-        <location filename="windows/SdDVariantTable.cpp" line="221"/>
+        <location filename="windows/SdDVariantTable.cpp" line="223"/>
         <source>Has variant</source>
         <translation>Есть варианты</translation>
     </message>
     <message>
-        <location filename="windows/SdDVariantTable.cpp" line="221"/>
+        <location filename="windows/SdDVariantTable.cpp" line="223"/>
         <source>Param name</source>
         <translation>Имя параметра</translation>
     </message>
     <message>
-        <location filename="windows/SdDVariantTable.cpp" line="221"/>
+        <location filename="windows/SdDVariantTable.cpp" line="223"/>
         <source>Param value</source>
         <translation>Значение параметра</translation>
     </message>
@@ -4418,92 +4441,92 @@
         <translation>Ошибка соединения: %1</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="95"/>
-        <location filename="objects/SdObjectNetClient.cpp" line="117"/>
-        <location filename="objects/SdObjectNetClient.cpp" line="136"/>
-        <location filename="objects/SdObjectNetClient.cpp" line="193"/>
-        <location filename="objects/SdObjectNetClient.cpp" line="226"/>
-        <location filename="objects/SdObjectNetClient.cpp" line="244"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="101"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="125"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="149"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="214"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="254"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="279"/>
         <source>Try connect to host %1</source>
         <translation>Пытаюсь соединиться с сервером %1</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="152"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="167"/>
         <source>Connected to host %1</source>
         <translation>Подключен к серверу %1</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="309"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="341"/>
         <source>Registration successfull</source>
         <translation>Регистрация успешна</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="314"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="346"/>
         <source>Failure registration. </source>
         <translation>Ошибка регистрации.</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="385"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="421"/>
         <source>Syncronisation request</source>
         <translation>Запрос синхронизации</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="392"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="428"/>
         <source>Registration request</source>
         <translation>Запрос регистрации</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="393"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="429"/>
         <source>Machine appendion request</source>
         <translation>Запрос добавить компьютер</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="394"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="430"/>
         <source>Object request</source>
         <translation>Запрос загрузки объекта</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="413"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="449"/>
         <source>%1 registered</source>
         <translation>%1 зарегистирован</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="418"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="454"/>
         <source>%1 not registered or key failure</source>
         <translation>%1 не зарегистрирован или неверный ключ</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="442"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="478"/>
         <source>Author with this name already present. Select another name.</source>
         <translation>Автор с таким именем уже существует. Выберите другое имя.</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="443"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="479"/>
         <source>Author can&apos;t be empty string.</source>
         <translation>Автор не может быть пустой строкой.</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="444"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="480"/>
         <source>No more machines available. Limit reached.</source>
         <translation>Невозможно больше зарегистрировать компьютеры. Достигнут предел.</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="445"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="481"/>
         <source>Author with this name and key is not registered.</source>
         <translation>Автор с таким именем и ключом не зарегистрирован.</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="446"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="482"/>
         <source>No more object load available. Limit reached.</source>
         <translation>Не могу загрузить объект. Достигнут лимит загрузок.</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="447"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="483"/>
         <source>Object not found.</source>
         <translation>Объект не найден.</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="449"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="485"/>
         <source>Undefined code %1</source>
         <translation>Неопределенный код %1</translation>
     </message>
@@ -5938,209 +5961,219 @@
     </message>
     <message>
         <location filename="windows/SdWEditorComponent.cpp" line="90"/>
+        <source>Update section</source>
+        <translation>Обновить секцию</translation>
+    </message>
+    <message>
+        <location filename="windows/SdWEditorComponent.cpp" line="91"/>
         <source>Delete section</source>
         <translation>Удалить секцию</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="91"/>
-        <location filename="windows/SdWEditorComponent.cpp" line="262"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="92"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="264"/>
         <source>Delete all sections</source>
         <translation>Удалить все секции</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="97"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="98"/>
         <source>Part:</source>
         <translation>Корпус:</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="99"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="100"/>
         <source>Select part</source>
         <translation>Выбрать корпус</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="106"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="107"/>
         <source>Param table</source>
         <translation>Таблица параметров</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="112"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="113"/>
         <source>Add param</source>
         <translation>Добавить параметр</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="113"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="114"/>
         <source>Add defaults</source>
         <translation>Добавить по умолчанию</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="114"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="115"/>
         <source>Copy param</source>
         <translation>Копировать параметр</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="115"/>
-        <location filename="windows/SdWEditorComponent.cpp" line="443"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="116"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="463"/>
         <source>Delete param</source>
         <translation>Удалить параметр</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="116"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="117"/>
         <source>Variant table...</source>
         <translation>Таблица вариантов...</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="193"/>
-        <location filename="windows/SdWEditorComponent.cpp" line="231"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="195"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="233"/>
         <source>Select symbol for section</source>
         <translation>Выберите символ для секции</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="197"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="199"/>
         <source>Append section for component</source>
         <translation>Добавление секции к компоненту</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="213"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="215"/>
         <source>Duplicate section for component</source>
         <translation>Дублирование секции в компоненте</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="230"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="232"/>
         <source>Set section for component</source>
         <translation>Установка секции для компонента</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="247"/>
-        <location filename="windows/SdWEditorComponent.cpp" line="261"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="249"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="263"/>
         <source>Attention!</source>
         <translation>Внимание!</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="247"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="249"/>
         <source>You attempting to delete section %1. Delete?</source>
         <translation>Вы пытаетесь удалить секцию &apos;%1&apos;. Удалить?</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="248"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="250"/>
         <source>Delete component section</source>
         <translation>Удаление секции компонента</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="261"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="263"/>
         <source>Are You sure delete All sections?</source>
         <translation>Вы уверены, что хотите удалить ВСЕ секции?</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="286"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="288"/>
         <source>Pin name</source>
         <translation>Имя вывода</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="286"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="288"/>
         <source>Pin number</source>
         <translation>Номер вывода</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="305"/>
-        <location filename="windows/SdWEditorComponent.cpp" line="333"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="307"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="353"/>
         <source>No pin with this number in part</source>
         <translation>В корпусе нет вывода с таким номером</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="309"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="311"/>
         <source>Duplicate pin number assignment</source>
         <translation>Дублирование назначения номера</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="328"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="330"/>
+        <source>Update section for component</source>
+        <translation>Обновление секции компонента</translation>
+    </message>
+    <message>
+        <location filename="windows/SdWEditorComponent.cpp" line="348"/>
         <source>Edit pin pack</source>
         <translation>Редактирование упаковки вывода</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="331"/>
-        <location filename="windows/SdWEditorComponent.cpp" line="336"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="351"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="356"/>
         <source>Error</source>
         <translation>Ошибка!</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="331"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="351"/>
         <source>Component part has no pin with this number</source>
         <translation>Корпус компонента не содержит вывода с таким номером</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="336"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="356"/>
         <source>This number always assigned to %1</source>
         <translation>Этот номер уже назначен на &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="338"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="358"/>
         <source>Duplicate pin number assignition</source>
         <translation>Дублирование назначения номера</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="376"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="396"/>
         <source>Edit param value</source>
         <translation>Редактирование значения параметра</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="389"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="409"/>
         <source>Select part for component</source>
         <translation>Выберите корпус для компонента</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="392"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="412"/>
         <source>Part select for component</source>
         <translation>Выбор корпуса для компонента</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="409"/>
-        <location filename="windows/SdWEditorComponent.cpp" line="554"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="429"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="574"/>
         <source>Param name</source>
         <translation>Имя параметра</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="409"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="429"/>
         <source>Enter param name</source>
         <translation>Введите имя параметра</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="412"/>
-        <location filename="windows/SdWEditorComponent.cpp" line="450"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="432"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="470"/>
         <source>Warning!</source>
         <translation>Внимание!</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="412"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="432"/>
         <source>Param with this name already exist. Enter another name.</source>
         <translation>Параметр с таким именем уже существует. Введите другое имя.</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="414"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="434"/>
         <source>Append param</source>
         <translation>Добавить параметр</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="427"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="447"/>
         <source>Append default params</source>
         <translation>Добавить по умолчанию</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="450"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="470"/>
         <source>Select param to delete</source>
         <translation>Выберите параметр для удаления</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="461"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="481"/>
         <source>Select component to copy param from</source>
         <translation>Выберите компонент для копирования из него параметров</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="464"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="484"/>
         <source>Copy params from other component</source>
         <translation>Копирование параметров из другого компонента</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorComponent.cpp" line="554"/>
+        <location filename="windows/SdWEditorComponent.cpp" line="574"/>
         <source>Param value</source>
         <translation>Значение параметра</translation>
     </message>

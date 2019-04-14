@@ -159,9 +159,17 @@ QString SdPItemSheet::getType() const
 
 
 
-quint64 SdPItemSheet::getClass() const
+SdClass SdPItemSheet::getClass() const
   {
   return dctSheet;
+  }
+
+
+
+void SdPItemSheet::detach(SdUndo *undo)
+  {
+  //On detach we delete all contents
+  deleteAll( undo );
   }
 
 
@@ -250,4 +258,6 @@ void SdPItemSheet::readObject(SdObjectMap *map, const QJsonObject obj)
   SdProjectItem::readObject( map, obj );
   //mSheetIndex = obj.value( QStringLiteral("index") ).toInt();
   }
+
+
 
