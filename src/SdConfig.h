@@ -172,7 +172,7 @@ History
 
 
 //When defined disable registration with sali name
-#define SD_DISABLE_SALI_AUTHOR
+//#define SD_DISABLE_SALI_AUTHOR
 
 //Project naming definition
 #define SD_BASE_EXTENSION            ".salicad"

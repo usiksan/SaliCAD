@@ -411,6 +411,7 @@ bool SdGraphPartImp::getLowerPosAndSheet(SdPoint &dest, int &sheet) const
           }
         }
       }
+    i++;
     }
 
   return true;

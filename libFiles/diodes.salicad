@@ -13,7 +13,7 @@
                         "x": 4310,
                         "y": 2000
                     },
-                    "id": "23b7ac0",
+                    "id": "5613687490f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -28,7 +28,7 @@
                         "x": 110,
                         "y": 0
                     },
-                    "id": "228a660",
+                    "id": "561368b2ada0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -43,7 +43,7 @@
                         "x": 4420,
                         "y": 0
                     },
-                    "id": "238a840",
+                    "id": "56136949e060",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -80,7 +80,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2.2x2.8m0.1s0.05",
                     "Stratum": "1",
-                    "id": "1f1f200",
+                    "id": "561368d06110",
                     "type": "PartPin"
                 },
                 {
@@ -114,7 +114,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2.2x2.8m0.1s0.05",
                     "Stratum": "1",
-                    "id": "231b050",
+                    "id": "5613683f5a80",
                     "type": "PartPin"
                 },
                 {
@@ -122,7 +122,7 @@
                         "x": 2210,
                         "y": 0
                     },
-                    "id": "231a6d0",
+                    "id": "561368ce2b70",
                     "over": {
                         "b": 544,
                         "r": 3034,
@@ -144,7 +144,7 @@
                         "x": 2210,
                         "y": -2500
                     },
-                    "id": "2134030",
+                    "id": "561369557a20",
                     "over": {
                         "b": -1953,
                         "r": 3738,
@@ -170,7 +170,7 @@
                         "x": 1000,
                         "y": -1875
                     },
-                    "id": "1cae420",
+                    "id": "561368c96520",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -186,7 +186,7 @@
             "Parametrs": {
             },
             "Title": "do-214aa smb",
-            "id": "20eb290",
+            "id": "561368caa990",
             "type": "Part"
         },
         {
@@ -202,7 +202,7 @@
                         "x": 7900,
                         "y": 3000
                     },
-                    "id": "21c0b60",
+                    "id": "561368e32410",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -217,7 +217,7 @@
                         "x": 900,
                         "y": 0
                     },
-                    "id": "1e671e0",
+                    "id": "561368f0d800",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -232,7 +232,7 @@
                         "x": 8800,
                         "y": 0
                     },
-                    "id": "1eb4e20",
+                    "id": "561368b2a7a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -269,7 +269,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2.2x3.4m0.1s0.05",
                     "Stratum": "1",
-                    "id": "22f7f00",
+                    "id": "561369515ca0",
                     "type": "PartPin"
                 },
                 {
@@ -303,7 +303,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2.2x3.4m0.1s0.05",
                     "Stratum": "1",
-                    "id": "20eb110",
+                    "id": "561368bdb450",
                     "type": "PartPin"
                 },
                 {
@@ -311,7 +311,7 @@
                         "x": 4500,
                         "y": 2250
                     },
-                    "id": "230e000",
+                    "id": "561369550490",
                     "over": {
                         "b": 2794,
                         "r": 5320,
@@ -333,7 +333,7 @@
                         "x": 4625,
                         "y": -2000
                     },
-                    "id": "1f25210",
+                    "id": "561368d4bc00",
                     "over": {
                         "b": -1459,
                         "r": 6154,
@@ -359,7 +359,7 @@
                         "x": 2000,
                         "y": -2875
                     },
-                    "id": "2092140",
+                    "id": "561368e6c4e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -375,7 +375,7 @@
             "Parametrs": {
             },
             "Title": "do-214ab smc",
-            "id": "227e550",
+            "id": "561368a5f5e0",
             "type": "Part"
         },
         {
@@ -391,7 +391,7 @@
                         "x": 3900,
                         "y": 1250
                     },
-                    "id": "1cbc3a0",
+                    "id": "561368d4cac0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -406,7 +406,7 @@
                         "x": 100,
                         "y": 0
                     },
-                    "id": "1e3d940",
+                    "id": "561368f66350",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -421,7 +421,7 @@
                         "x": 4000,
                         "y": 0
                     },
-                    "id": "231dae0",
+                    "id": "5613683e28b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -458,7 +458,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.8x2m0.1s0.05",
                     "Stratum": "1",
-                    "id": "18343a0",
+                    "id": "561368d4cdc0",
                     "type": "PartPin"
                 },
                 {
@@ -492,7 +492,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.8x2m0.1s0.05",
                     "Stratum": "1",
-                    "id": "1e6a9a0",
+                    "id": "5613695422b0",
                     "type": "PartPin"
                 },
                 {
@@ -500,7 +500,7 @@
                         "x": 2000,
                         "y": 0
                     },
-                    "id": "1cdafe0",
+                    "id": "561368fb1370",
                     "over": {
                         "b": 548,
                         "r": 2819,
@@ -522,7 +522,7 @@
                         "x": 2000,
                         "y": -1750
                     },
-                    "id": "2390e10",
+                    "id": "561369563da0",
                     "over": {
                         "b": -1205,
                         "r": 3526,
@@ -548,7 +548,7 @@
                         "x": 875,
                         "y": -1125
                     },
-                    "id": "1cdb160",
+                    "id": "561368f596c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -564,7 +564,7 @@
             "Parametrs": {
             },
             "Title": "do-214ac sma",
-            "id": "2312f80",
+            "id": "56136840ff90",
             "type": "Part"
         },
         {
@@ -580,7 +580,7 @@
                         "x": -1250,
                         "y": 500
                     },
-                    "id": "2381400",
+                    "id": "561368d49920",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -595,7 +595,7 @@
                         "x": -750,
                         "y": 750
                     },
-                    "id": "224d6b0",
+                    "id": "561368d79910",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -610,7 +610,7 @@
                         "x": -1250,
                         "y": 1000
                     },
-                    "id": "224d740",
+                    "id": "56136959cdc0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -625,7 +625,7 @@
                         "x": -250,
                         "y": 750
                     },
-                    "id": "20f1550",
+                    "id": "56136894f600",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -640,7 +640,7 @@
                         "x": -750,
                         "y": 500
                     },
-                    "id": "20f15e0",
+                    "id": "561368404150",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -676,7 +676,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "2315c30",
+                    "id": "561369563ee0",
                     "type": "SymPin"
                 },
                 {
@@ -709,7 +709,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "21fec60",
+                    "id": "56136897c720",
                     "type": "SymPin"
                 },
                 {
@@ -717,7 +717,7 @@
                         "x": -1000,
                         "y": 1250
                     },
-                    "id": "2387ae0",
+                    "id": "56136899a770",
                     "over": {
                         "b": 1442,
                         "r": -715,
@@ -739,7 +739,7 @@
                         "x": -1000,
                         "y": 250
                     },
-                    "id": "2387be0",
+                    "id": "561368bac6d0",
                     "over": {
                         "b": 442,
                         "r": -468,
@@ -766,7 +766,7 @@
             "Parametrs": {
             },
             "Title": "diode",
-            "id": "1cdb220",
+            "id": "561368bd5260",
             "type": "Symbol"
         },
         {
@@ -777,7 +777,7 @@
                     "Default": false,
                     "PartId": "Part\rdo-214ac sma\rsalicad",
                     "PartTitle": "do-214ac sma (salicad)",
-                    "id": "20f1670",
+                    "id": "561368ea9ca0",
                     "type": "PartVariant"
                 },
                 {
@@ -787,7 +787,7 @@
                     },
                     "SymbolId": "Symbol\rdiode\rsalicad",
                     "SymbolTitle": "diode (salicad)",
-                    "id": "228a820",
+                    "id": "561368f5e740",
                     "type": "Section"
                 }
             ],
@@ -876,7 +876,7 @@
                 "Vishay",
                 "vishay.com"
             ],
-            "id": "216c800",
+            "id": "561368759210",
             "type": "Comp"
         },
         {
@@ -892,7 +892,7 @@
                         "x": -1250,
                         "y": 500
                     },
-                    "id": "23810d0",
+                    "id": "561368cfc000",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -907,7 +907,7 @@
                         "x": -750,
                         "y": 750
                     },
-                    "id": "1cdadc0",
+                    "id": "561368ef6030",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -922,7 +922,7 @@
                         "x": -1250,
                         "y": 1000
                     },
-                    "id": "1cdae80",
+                    "id": "5613695067b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -937,7 +937,7 @@
                         "x": 1250,
                         "y": 750
                     },
-                    "id": "1dfb860",
+                    "id": "561368c97040",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -952,7 +952,7 @@
                         "x": -750,
                         "y": 500
                     },
-                    "id": "1dfb920",
+                    "id": "561368404f50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -988,7 +988,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "2312c80",
+                    "id": "561368fbc710",
                     "type": "SymPin"
                 },
                 {
@@ -1021,7 +1021,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "231d830",
+                    "id": "561368f11120",
                     "type": "SymPin"
                 },
                 {
@@ -1029,7 +1029,7 @@
                         "x": -250,
                         "y": 1500
                     },
-                    "id": "2318ce0",
+                    "id": "5613694f97c0",
                     "over": {
                         "b": 1688,
                         "r": 36,
@@ -1051,7 +1051,7 @@
                         "x": -1250,
                         "y": 0
                     },
-                    "id": "2313090",
+                    "id": "56136959b8e0",
                     "over": {
                         "b": 189,
                         "r": -719,
@@ -1077,7 +1077,7 @@
                         "x": 250,
                         "y": 500
                     },
-                    "id": "23131c0",
+                    "id": "561368d996a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1092,7 +1092,7 @@
                         "x": 750,
                         "y": 1000
                     },
-                    "id": "22acb70",
+                    "id": "561368eb0760",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1107,7 +1107,7 @@
                         "x": 750,
                         "y": 500
                     },
-                    "id": "22acc30",
+                    "id": "561368c3a450",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1122,7 +1122,7 @@
                         "x": 250,
                         "y": 750
                     },
-                    "id": "1c69340",
+                    "id": "561368f4f950",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1137,7 +1137,7 @@
                         "x": -250,
                         "y": 750
                     },
-                    "id": "1c69400",
+                    "id": "561368c3a710",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1148,7 +1148,7 @@
                         "x": -250,
                         "y": 750
                     },
-                    "id": "2381130",
+                    "id": "561368eb5e30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1185,7 +1185,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "231a890",
+                    "id": "561368d3e570",
                     "type": "SymPin"
                 },
                 {
@@ -1197,7 +1197,7 @@
                         "x": 1000,
                         "y": 250
                     },
-                    "id": "23135c0",
+                    "id": "561368ab6a80",
                     "lineLayer": "Component",
                     "lineType": 1,
                     "lineWidth": 0,
@@ -1213,12 +1213,232 @@
             "Parametrs": {
             },
             "Title": "two diodes common cathode",
-            "id": "2301e00",
+            "id": "561368574430",
             "type": "Symbol"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": 3750,
+                        "y": 750
+                    },
+                    "b": {
+                        "x": 3750,
+                        "y": -750
+                    },
+                    "id": "561368c3fee0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 200,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4250,
+                        "y": 1000
+                    },
+                    "b": {
+                        "x": 750,
+                        "y": -1000
+                    },
+                    "id": "561368c3ff80",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "NamePos": {
+                        "x": 625,
+                        "y": -1250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 2000,
+                    "NameTextVert": 1,
+                    "Number": "1",
+                    "NumberPos": {
+                        "x": 625,
+                        "y": 1250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 2000,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 625,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "r1.6x1.6m0.1s0.04",
+                    "Stratum": "1",
+                    "id": "561368f68890",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 4375,
+                        "y": -1250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 2000,
+                    "NameTextVert": 1,
+                    "Number": "2",
+                    "NumberPos": {
+                        "x": 4375,
+                        "y": 1250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 2000,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 4375,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "r1.6x1.6m0.1s0.04",
+                    "Stratum": "1",
+                    "id": "561368f68980",
+                    "type": "PartPin"
+                },
+                {
+                    "Origin": {
+                        "x": 2500,
+                        "y": 1875
+                    },
+                    "id": "561368f68a70",
+                    "over": {
+                        "b": 2419,
+                        "r": 3368,
+                        "x": 1633,
+                        "y": 1319
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 2500,
+                        "y": -1875
+                    },
+                    "id": "5613695127a0",
+                    "over": {
+                        "b": -1327,
+                        "r": 4027,
+                        "x": 981,
+                        "y": -2427
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                },
+                {
+                    "a": {
+                        "x": 1875,
+                        "y": 625
+                    },
+                    "b": {
+                        "x": 1875,
+                        "y": -625
+                    },
+                    "id": "7fa824012590",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1875,
+                        "y": -625
+                    },
+                    "b": {
+                        "x": 3125,
+                        "y": 0
+                    },
+                    "id": "7fa82400c110",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3125,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 1875,
+                        "y": 625
+                    },
+                    "id": "561368d51500",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3125,
+                        "y": 625
+                    },
+                    "b": {
+                        "x": 3125,
+                        "y": -625
+                    },
+                    "id": "561369591030",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                }
+            ],
+            "Created": 40602903,
+            "Edit enable": false,
+            "Origin": {
+                "x": 2500,
+                "y": 0
+            },
+            "Parametrs": {
+                "Планарный": "да"
+            },
+            "Title": "minimelf sod80",
+            "id": "561368c3fe50",
+            "type": "Part"
         }
     ],
     "Parametrs": {
     },
-    "id": "2396c70",
+    "id": "561368b80320",
     "type": "Project"
 }

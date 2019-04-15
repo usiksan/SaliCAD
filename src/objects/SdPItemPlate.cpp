@@ -494,6 +494,8 @@ void SdPItemPlate::renumeration()
     for( SdGraphPartImp *imp : (*list) )
       imp->setIdentIndex( logNum++ );
     }
+
+  qDeleteAll( map );
   }
 
 
