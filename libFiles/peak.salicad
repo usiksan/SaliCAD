@@ -13,7 +13,7 @@
                         "x": 9750,
                         "y": -10160
                     },
-                    "id": "44d9a20",
+                    "id": "558605cd4a60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -28,7 +28,7 @@
                         "x": 1450,
                         "y": 0
                     },
-                    "id": "376a320",
+                    "id": "558605c8c6e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -43,7 +43,7 @@
                         "x": 1450,
                         "y": -2540
                     },
-                    "id": "31f2e40",
+                    "id": "5586052f4da0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -58,7 +58,7 @@
                         "x": 1450,
                         "y": -7620
                     },
-                    "id": "356af60",
+                    "id": "558605cc4b10",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -73,7 +73,7 @@
                         "x": 9750,
                         "y": -7620
                     },
-                    "id": "394f610",
+                    "id": "558605d65650",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -88,7 +88,7 @@
                         "x": 9750,
                         "y": 0
                     },
-                    "id": "350d330",
+                    "id": "5586062ea580",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -125,7 +125,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "r2x1m0.1s0.04",
                     "Stratum": "1",
-                    "id": "35b1190",
+                    "id": "558605bd7c00",
                     "type": "PartPin"
                 },
                 {
@@ -159,7 +159,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "r2x1m0.1s0.04",
                     "Stratum": "1",
-                    "id": "394f700",
+                    "id": "5586056408d0",
                     "type": "PartPin"
                 },
                 {
@@ -193,7 +193,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "r2x1m0.1s0.04",
                     "Stratum": "1",
-                    "id": "303a500",
+                    "id": "558606350560",
                     "type": "PartPin"
                 },
                 {
@@ -227,7 +227,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "r2x1m0.1s0.04",
                     "Stratum": "1",
-                    "id": "3916150",
+                    "id": "558605b51f10",
                     "type": "PartPin"
                 },
                 {
@@ -261,7 +261,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "r2x1m0.1s0.04",
                     "Stratum": "1",
-                    "id": "44b0e40",
+                    "id": "55860687f620",
                     "type": "PartPin"
                 },
                 {
@@ -269,7 +269,7 @@
                         "x": 5625,
                         "y": 625
                     },
-                    "id": "36cb4b0",
+                    "id": "558605d37d00",
                     "over": {
                         "b": 1162,
                         "r": 6452,
@@ -291,7 +291,7 @@
                         "x": 5625,
                         "y": -6250
                     },
-                    "id": "37a4de0",
+                    "id": "5586067f5400",
                     "over": {
                         "b": -5713,
                         "r": 7140,
@@ -318,7 +318,7 @@
             "Parametrs": {
             },
             "Title": "peak smd x8 5pins",
-            "id": "44dd0f0",
+            "id": "558605d87650",
             "type": "Part"
         },
         {
@@ -334,7 +334,7 @@
                         "x": 0,
                         "y": 3000
                     },
-                    "id": "319c9a0",
+                    "id": "558605c7b900",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -349,7 +349,7 @@
                         "x": 1250,
                         "y": 3000
                     },
-                    "id": "3798f30",
+                    "id": "558605d64790",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -364,7 +364,7 @@
                         "x": 2750,
                         "y": 3000
                     },
-                    "id": "37496f0",
+                    "id": "55860676fb00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -379,7 +379,7 @@
                         "x": 0,
                         "y": 2500
                     },
-                    "id": "37a49a0",
+                    "id": "5586062be000",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -394,7 +394,7 @@
                         "x": 0,
                         "y": 1500
                     },
-                    "id": "36d3f10",
+                    "id": "5586062a5340",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -409,7 +409,7 @@
                         "x": 4750,
                         "y": 2500
                     },
-                    "id": "356d710",
+                    "id": "55860632e180",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -424,7 +424,7 @@
                         "x": 4750,
                         "y": 1500
                     },
-                    "id": "394f4a0",
+                    "id": "558605d40470",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -435,7 +435,7 @@
                         "x": 2000,
                         "y": 2500
                     },
-                    "id": "3715a70",
+                    "id": "5586067b0ec0",
                     "over": {
                         "b": 2704,
                         "r": 2437,
@@ -482,7 +482,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "36cc4d0",
+                    "id": "55860626de30",
                     "type": "SymPin"
                 },
                 {
@@ -515,7 +515,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "3684950",
+                    "id": "5586067f1090",
                     "type": "SymPin"
                 },
                 {
@@ -548,7 +548,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "3656350",
+                    "id": "558606306560",
                     "type": "SymPin"
                 },
                 {
@@ -581,7 +581,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "3765100",
+                    "id": "55860673d460",
                     "type": "SymPin"
                 },
                 {
@@ -589,7 +589,7 @@
                         "x": 2000,
                         "y": 3250
                     },
-                    "id": "2f6cd20",
+                    "id": "558606744350",
                     "over": {
                         "b": 3440,
                         "r": 2286,
@@ -611,7 +611,7 @@
                         "x": 2000,
                         "y": 750
                     },
-                    "id": "3724400",
+                    "id": "558606883cb0",
                     "over": {
                         "b": 940,
                         "r": 2533,
@@ -638,7 +638,7 @@
             "Parametrs": {
             },
             "Title": "DC-DC 1channel (symbol)",
-            "id": "373ee40",
+            "id": "558605c9a470",
             "type": "Symbol"
         },
         {
@@ -654,14 +654,14 @@
                     },
                     "SymbolId": "Symbol\rDC-DC 1channel (symbol)\rsalicad",
                     "SymbolTitle": "DC-DC 1channel (symbol) (salicad)",
-                    "id": "3055000",
+                    "id": "558605d65480",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rpeak smd x8 5pins\rsalicad",
                     "PartTitle": "peak smd x8 5pins (salicad)",
-                    "id": "2ce96d0",
+                    "id": "558605c9f5e0",
                     "type": "PartVariant"
                 }
             ],
@@ -816,7 +816,7 @@
                 "24V",
                 "42mA"
             ],
-            "id": "3623aa0",
+            "id": "558606887f60",
             "type": "Comp"
         },
         {
@@ -832,7 +832,7 @@
                         "x": 9560,
                         "y": 4400
                     },
-                    "id": "312e6a0",
+                    "id": "558605d6b1d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -843,7 +843,7 @@
                         "x": 0,
                         "y": -1100
                     },
-                    "id": "27c11d0",
+                    "id": "558606856f90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -881,7 +881,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.4x1.4d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "35e77b0",
+                    "id": "5586062a8f10",
                     "type": "PartPin"
                 },
                 {
@@ -915,7 +915,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "35e78a0",
+                    "id": "55860674c080",
                     "type": "PartPin"
                 },
                 {
@@ -949,7 +949,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "35e7990",
+                    "id": "558605d239e0",
                     "type": "PartPin"
                 },
                 {
@@ -983,7 +983,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "35e7a80",
+                    "id": "55860629bf30",
                     "type": "PartPin"
                 },
                 {
@@ -991,7 +991,7 @@
                         "x": 3750,
                         "y": 3750
                     },
-                    "id": "35e7c30",
+                    "id": "55860633c5e0",
                     "over": {
                         "b": 4293,
                         "r": 4566,
@@ -1013,7 +1013,7 @@
                         "x": 3750,
                         "y": 1875
                     },
-                    "id": "35e7bc0",
+                    "id": "558605c89d30",
                     "over": {
                         "b": 2419,
                         "r": 5278,
@@ -1040,7 +1040,7 @@
             "Parametrs": {
             },
             "Title": "sip4 plastic case",
-            "id": "36e64c0",
+            "id": "558606332030",
             "type": "Part"
         },
         {
@@ -1056,19 +1056,19 @@
                     },
                     "SymbolId": "Symbol\rDC-DC 1channel (symbol)\rsalicad",
                     "SymbolTitle": "DC-DC 1channel (symbol) (salicad)",
-                    "id": "44e2850",
+                    "id": "5586062dffc0",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rsip4 plastic case\rsalicad",
                     "PartTitle": "sip4 plastic case (salicad)",
-                    "id": "3724910",
+                    "id": "558605cdbc60",
                     "type": "PartVariant"
                 }
             ],
-            "Created": 40164987,
-            "Edit enable": true,
+            "Created": 40685511,
+            "Edit enable": false,
             "Origin": {
                 "x": 0,
                 "y": 0
@@ -1333,12 +1333,12 @@
                 "24V",
                 "50mA"
             ],
-            "id": "2f19ee0",
+            "id": "5586063556c0",
             "type": "Comp"
         }
     ],
     "Parametrs": {
     },
-    "id": "44dd190",
+    "id": "558605c6e9e0",
     "type": "Project"
 }

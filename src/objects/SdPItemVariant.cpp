@@ -31,6 +31,18 @@ void SdPItemVariant::variantTableSet(qint32 fieldCount, QStringList list, SdUndo
 
 
 
+//Test if field name present in variant table
+bool SdPItemVariant::isFieldPresent(const QString fieldName) const
+  {
+  //Scan all fields and test
+  for( int i = 0; i < mVariantFieldCount; i++ )
+    if( mVariantTable.at(i) == fieldName ) return true;
+  return false;
+  }
+
+
+
+
 QString SdPItemVariant::getType() const
   {
   return QStringLiteral(SD_TYPE_VARIANT);

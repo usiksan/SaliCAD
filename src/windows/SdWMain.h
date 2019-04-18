@@ -27,6 +27,7 @@ Description
 #include <QStringList>
 #include <QClipboard>
 #include <QLabel>
+#include <QToolButton>
 
 class SdProjectItem;
 class SdWProjectTree;
@@ -50,6 +51,8 @@ class SdWMain : public QMainWindow
     SdWLabel        *mYPos;          //Y axiz position
     SdWLabel        *mTraceStatus;   //Current trace status
     SdWLabel        *mMessage;       //Message
+    QToolButton     *mCapture;       //Capture status
+    QToolButton     *mRemote;        //Remote status
   public:
     explicit SdWMain( QStringList args, QWidget *parent = nullptr );
 

@@ -2,7 +2,7 @@
 //B068 bugs
 //F001 fatal
 //C001 critical
-//D086 do
+//D087 do
 
 
 
@@ -10,8 +10,6 @@
 //TODO B046 When renumeration in browse mode no rebuild component list
 
 //TODO B047 Append layer list to all properties bars
-
-//TODO D059 Append file generation on every object, category selector on file hierarchy base
 
 //TODO D060 Append object replacing capability and autoreplacing
 
@@ -21,11 +19,7 @@
 
 //TODO D068 Append query to upgrade when newer objects received from remote and possibility to off than query
 
-//TODO B065 When upgrading component don't changed ident (and perhaps - value)
-
 //TODO D078 Append automatic upgrade files from central repository
-
-//TODO D081 Append link and sync with repository indication to main window (with tool tip)
 
 //TODO D082 Append navigation to help window on right side
 
@@ -42,7 +36,19 @@
 //TODO B068 Copy id and value not allowed
 
 //===================================================================================
+//There are no need:
+
+//D059 Append file generation on every object, category selector on file hierarchy base
+
+
+//===================================================================================
 //Fixed:
+
+//D081 Append link and sync with repository indication to main window (with tool tip)
+
+//B087 Prevent open same file more then one time
+
+//B065 When upgrading component don't changed ident (and perhaps - value)
 
 //Remove inheritance object, instead of it we use variant table
 

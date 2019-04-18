@@ -278,5 +278,11 @@
         <file>pic/exportSmdAssembler.png</file>
         <file>pic/exportReport.png</file>
         <file>pic/exportDxf.png</file>
+        <file>pic/iconCaptureOff.png</file>
+        <file>pic/iconCaptureOn.png</file>
+        <file>pic/iconCapturePause.png</file>
+        <file>pic/iconRemoteOff.png</file>
+        <file>pic/iconRemoteOn.png</file>
+        <file>pic/iconRemoteSync.png</file>
     </qresource>
 </RCC>

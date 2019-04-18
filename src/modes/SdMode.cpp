@@ -95,10 +95,16 @@ void SdMode::keyDown(int key, QChar ch)
   {
   if( key == Qt::Key_Asterisk )
     mEditor->cmViewFit();
-  else if( key == Qt::Key_Plus )
+  else if( key == Qt::Key_Plus ) {
+    if( sdEnvir->mCenterCursor )
+      mEditor->originSet( mEditor->cursorPosition() );
     mEditor->scaleStep( 2.0 );
-  else if( key == Qt::Key_Minus )
+    }
+  else if( key == Qt::Key_Minus ) {
+    if( sdEnvir->mCenterCursor )
+      mEditor->originSet( mEditor->cursorPosition() );
     mEditor->scaleStep( 0.5 );
+    }
   else if( key == Qt::Key_Space )
     enterPrev();
   else if( key == Qt::Key_X ) {

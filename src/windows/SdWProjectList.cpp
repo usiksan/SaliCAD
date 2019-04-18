@@ -88,6 +88,16 @@ SdWProjectTree *SdWProjectList::fileOpen(const QString fname, SdProject *project
     //Append file name to previous file list [Добавить в список предыдущих файлов]
     SdWCommand::addToPreviousMenu( fname );
 
+  //Find if file with this name already open
+  for( int i = 0; i < mWProjectStack->count(); i++ ) {
+    SdWProjectTree *prj = dynamic_cast<SdWProjectTree*>( mWProjectStack->widget(i) );
+    if( prj && prj->filePath() == fname ) {
+      //File with fname already open, bring it up
+      bringProjectUp( i );
+      return prj;
+      }
+    }
+
   //Creating project window [Создаем окно проекта]
   SdWProjectTree *prj = new SdWProjectTree( fname, project );
 
@@ -196,8 +206,7 @@ void SdWProjectList::onItemActivated(SdProjectItem *item)
     SdWProjectTree *prj = dynamic_cast<SdWProjectTree*>( mWProjectStack->widget(i) );
     if( prj && prj->getProject() == item->getProject() ) {
       //Project found, bring it up
-      mProjectTitles->setCurrentIndex( i );
-      onProjectActivated( i );
+      bringProjectUp( i );
       return;
       }
     }
@@ -219,10 +228,18 @@ void SdWProjectList::onProjectHighlighted(SdProject *project)
     if( prj && prj->getProject() == project ) {
       prj->highlightSheets();
       //Project found, bring it up
-      mProjectTitles->setCurrentIndex( i );
-      onProjectActivated( i );
+      bringProjectUp( i );
       return;
       }
     }
+  }
+
+
+
+//Bring project up
+void SdWProjectList::bringProjectUp(int index)
+  {
+  mProjectTitles->setCurrentIndex( index );
+  onProjectActivated( index );
   }
 

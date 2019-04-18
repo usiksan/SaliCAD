@@ -924,6 +924,17 @@ bool SdGraphSymImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
       mSymbol    = sym;
       mPart      = part;
 
+      //Replace params which has no variants
+      //B065 When upgrading component don't changed ident (and perhaps - value)
+      SdStringMap newMap;
+      for( auto iter = mParamTable.cbegin(); iter != mParamTable.cend(); iter++ )
+        if( mComponent->isFieldPresent( iter.key() ) || !mComponent->paramContains( iter.key() ) )
+          //If field present in variant table then leave field value
+          newMap.insert( iter.key(), iter.value() );
+        else
+          //Replace field
+          newMap.insert( iter.key(), mComponent->paramGet( iter.key() ) );
+
       //Autodelete all referenced objects
       if( dcomp ) dcomp->autoDelete( undo );
       if( dsym  ) dsym->autoDelete( undo );
@@ -938,6 +949,10 @@ bool SdGraphSymImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
           mPartImp->move( partOrigin );
           }
         }
+
+      //Setup new param table
+      paramTableSet( newMap, undo, nullptr );
+
       delete comp;
       delete sym;
       delete part;

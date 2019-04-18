@@ -33,19 +33,21 @@ class SdPItemVariant : public SdProjectItem
     void variantTableGet( qint32 &fieldCount, QStringList &list ) const;
     void variantTableSet( qint32 fieldCount, QStringList list, SdUndo *undo );
 
+    //Test if field name present in variant table
+    bool isFieldPresent( const QString fieldName ) const;
 
 
     // SdObject interface
   public:
     virtual QString getType() const override;
     virtual SdClass getClass() const override;
-    virtual void cloneFrom(const SdObject *src) override;
-    virtual void writeObject(QJsonObject &obj) const override;
-    virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual void    cloneFrom(const SdObject *src) override;
+    virtual void    writeObject(QJsonObject &obj) const override;
+    virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
 
     // SdProjectItem interface
   public:
-    virtual void getHeader(SdLibraryHeader &hdr) const override;
+    virtual void    getHeader(SdLibraryHeader &hdr) const override;
     virtual QString getIconName() const override;
     virtual quint64 getAcceptedObjectsMask() const override;
   };

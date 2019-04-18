@@ -133,6 +133,7 @@ void SdObjectNetClient::doMachine(const QString ip, const QString authorName, qu
 //Begin object receiving process
 void SdObjectNetClient::doObject(const QString hashId)
   {
+  emit remoteStatus( SdRemoteSync );
   mCommand = 0;
   mBuffer.clear();
   QDataStream os( &mBuffer, QIODevice::WriteOnly );
@@ -189,6 +190,7 @@ void SdObjectNetClient::doSync()
   int     remoteSyncIndex = s.value( SDK_REMOTE_SYNC ).toInt();
   QString hostIp          = s.value( SDK_SERVER_IP ).toString();
   if( !hostIp.isEmpty() ) {
+    remoteStatus( SdRemoteSync );
     //qDebug() << "doSync";
     mCommandSync = 0;
     mBufferSync.clear();
@@ -262,6 +264,7 @@ void SdObjectNetClient::doCheck()
 //Receiv file from repository
 void SdObjectNetClient::doFile(const QString fileName)
   {
+  emit remoteStatus( SdRemoteSync );
   QSettings s;
   QString author          = s.value( SDK_GLOBAL_AUTHOR ).toString();
   quint64 key             = s.value( SDK_MACHINE_KEY ).toString().toULongLong( nullptr, 32 );
@@ -363,6 +366,8 @@ void SdObjectNetClient::cmSyncList(QDataStream &is)
   is >> info;
   //qDebug() << "cmSyncList" << info.mAuthor << info.mKey << info.mRemain;
   if( info.isSuccessfull() ) {
+    emit remoteStatus( SdRemoteOn );
+
     localSyncIndex += mLocalSyncCount;
 
     //Here is headers list (may be empty)
@@ -384,6 +389,8 @@ void SdObjectNetClient::cmSyncList(QDataStream &is)
       }
     sdLibraryStorage.flush();
     }
+  else
+    emit remoteStatus( SdRemoteOff );
   }
 
 
@@ -397,6 +404,8 @@ void SdObjectNetClient::cmObject(QDataStream &is)
   is >> info;
   qDebug() << "cmObject" << info.mAuthor << info.mKey << info.mRemain;
   if( info.isSuccessfull() ) {
+    emit remoteStatus( SdRemoteOn );
+
     //For object header
     SdLibraryHeader header;
     //For object store
@@ -409,7 +418,10 @@ void SdObjectNetClient::cmObject(QDataStream &is)
     QSettings s;
     s.setValue( SDK_REMOTE_REMAIN, QString::number(info.mRemain) );
     }
-  else emit process( error(info.result()), false );
+  else {
+    emit process( error(info.result()), false );
+    emit remoteStatus( SdRemoteOff );
+    }
   emit objectComplete( info.result(), info.mRemain );
   }
 
@@ -462,6 +474,8 @@ void SdObjectNetClient::cmCheck(QDataStream &is)
 
 void SdObjectNetClient::cmFile(QDataStream &is)
   {
+  emit remoteStatus( SdRemoteOn );
+
   SdAuthorInfo info;
   QString fileName;
   QByteArray data;

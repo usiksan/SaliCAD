@@ -26,6 +26,8 @@ Description
 #include <QTcpSocket>
 #include <QTimer>
 
+enum SdRemoteStatus { SdRemoteOff, SdRemoteOn, SdRemoteSync };
+
 class SdObjectNetClient : public SdCsChannel
   {
     Q_OBJECT
@@ -71,6 +73,9 @@ class SdObjectNetClient : public SdCsChannel
 
     //Signal on file receiv
     void fileContents( int result, QString fileName, QByteArray fileData );
+
+    //Signal on remote status
+    void remoteStatus( SdRemoteStatus st );
 
   public slots:
 

@@ -150,6 +150,8 @@ History
                    Fix: Set focus to plate editor window when component selected by id
                         When delete schematic sheet and plate we remove all contents for link removing
                    Append named net list to bus mode dialog
+  17.04.2019 v0.64 When upgrading component don't changed ident (and perhaps - value)
+                   Prevent open same file more then one time
 */
 
 #ifndef SDCONFIG
@@ -195,11 +197,11 @@ History
 #define SD_BASE_VERSION              SD_BASE_VERSION_1
 
 //Previous file count in menu
-#define PREVIOUS_FILES_COUNT         5
+#define PREVIOUS_FILES_COUNT         10
 
 //Grid history count
 //User can enter any grid size, but only GRID_HISTORY_SIZE grid sizes save in system for fast selection
-#define GRID_HISTORY_SIZE            8
+#define GRID_HISTORY_SIZE            12
 
 //Maximum open editors
 //When open editor which index more than this maximum

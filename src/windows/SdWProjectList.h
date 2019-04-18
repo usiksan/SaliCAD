@@ -67,6 +67,10 @@ class SdWProjectList : public QWidget
 
     //On project highlighted
     void            onProjectHighlighted(SdProject *project );
+
+  private:
+    //Bring project up
+    void            bringProjectUp( int index );
   };
 
 #endif // SDWPROJECTLIST_H

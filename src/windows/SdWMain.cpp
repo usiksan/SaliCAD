@@ -127,6 +127,38 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   sbar->addWidget( mMessage = new SdWLabel( QString(), tr("Short guide to current mode step or other messages"), 100 ), 1 );
   sbar->setSizeGripEnabled(true);
 
+  mCapture = new QToolButton();
+  mCapture->setIcon( QIcon(QString(":/pic/iconCaptureOff.png")) );
+  mCapture->setToolTip( tr("Show status of guide capture video system: stopped") );
+  connect( mCapture, &QToolButton::toggle, this, &SdWMain::cmGuiderCapture );
+  sbar->addWidget( mCapture );
+
+  mRemote = new QToolButton();
+  if( sdObjectNetClient->isRegistered() ) {
+    mRemote->setIcon( QIcon(QString(":/pic/iconRemoteOn.png")) );
+    mRemote->setToolTip( tr("Remote repository status: registered and link ok") );
+    }
+  else {
+    mRemote->setIcon( QIcon(QString(":/pic/iconRemoteOff.png")) );
+    mRemote->setToolTip( tr("Remote repository status: unregistered or can't connect to repository. Check Help->Registration.") );
+    }
+
+  connect( sdObjectNetClient, &SdObjectNetClient::remoteStatus, this, [this] ( SdRemoteStatus st ) {
+    if( st == SdRemoteOn ) {
+      mRemote->setIcon( QIcon(QString(":/pic/iconRemoteOn.png")) );
+      mRemote->setToolTip( tr("Remote repository status: registered and link ok") );
+      }
+    else if( st == SdRemoteOff ) {
+      mRemote->setIcon( QIcon(QString(":/pic/iconRemoteOff.png")) );
+      mRemote->setToolTip( tr("Remote repository status: unregistered or can't connect to repository. Check Help->Registration.") );
+      }
+    else {
+      mRemote->setIcon( QIcon(QString(":/pic/iconRemoteSync.png")) );
+      mRemote->setToolTip( tr("Remote repository status: sync being processed") );
+      }
+    } );
+  sbar->addWidget( mRemote );
+
   activateProjectName( nullptr );
 
   //Open all files from command line
@@ -1790,10 +1822,16 @@ void SdWMain::cmHelpRegistration()
 
 void SdWMain::cmGuiderCapture()
   {
-  if( mGuiderCapture->isCapture() )
+  if( mGuiderCapture->isCapture() ) {
     mGuiderCapture->captureStop();
-  else
+    mCapture->setIcon( QIcon(QString(":/pic/iconCaptureOff.png")) );
+    mCapture->setToolTip( tr("Show status of guide capture video system: stopped") );
+    }
+  else {
     mGuiderCapture->captureInit();
+    mCapture->setIcon( QIcon(QString(":/pic/iconCaptureOn.png")) );
+    mCapture->setToolTip( tr("Show status of guide capture video system: running") );
+    }
   }
 
 
@@ -1801,10 +1839,16 @@ void SdWMain::cmGuiderCapture()
 
 void SdWMain::cmGuiderPause()
   {
-  if( mGuiderCapture->isPaused() )
+  if( mGuiderCapture->isPaused() ) {
     mGuiderCapture->captureResume();
-  else
+    mCapture->setIcon( QIcon(QString(":/pic/iconCaptureOn.png")) );
+    mCapture->setToolTip( tr("Show status of guide capture video system: running") );
+    }
+  else {
     mGuiderCapture->capturePause();
+    mCapture->setIcon( QIcon(QString(":/pic/iconCapturePause.png")) );
+    mCapture->setToolTip( tr("Show status of guide capture video system: paused") );
+    }
   }
 
 
