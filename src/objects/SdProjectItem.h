@@ -111,6 +111,13 @@ class SdProjectItem : public SdContainer
     //Set author as current
     void                   updateAuthor();
 
+  protected:
+    //Find ident
+    SdGraphIdent          *findIdent() const;
+
+    //Find value
+    SdGraphValue          *findValue() const;
+
   };
 
 typedef SdProjectItem *SdProjectItemPtr;

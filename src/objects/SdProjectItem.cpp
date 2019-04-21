@@ -219,6 +219,35 @@ void SdProjectItem::updateAuthor()
 
 
 
+
+//Find ident
+SdGraphIdent *SdProjectItem::findIdent() const
+  {
+  SdGraphIdent *ident = nullptr;
+  forEachConst( dctIdent, [&ident] (SdObject *obj) -> bool {
+    ident = dynamic_cast<SdGraphIdent*>(obj);
+    return ident == nullptr;
+    });
+  return ident;
+  }
+
+
+
+
+//Find value
+SdGraphValue *SdProjectItem::findValue() const
+  {
+  SdGraphValue *value = nullptr;
+  forEachConst( dctValue, [&value] (SdObject *obj) -> bool {
+    value = dynamic_cast<SdGraphValue*>(obj);
+    return value == nullptr;
+    });
+  return value;
+  }
+
+
+
+
 bool SdProjectItem::isAnotherAuthor() const
   {
   return mAuthor != getDefaultAuthor();
@@ -257,11 +286,7 @@ SdRect SdProjectItem::getOverRect(quint64 classMask)
 SdGraphIdent *SdProjectItem::identGet()
   {
   //Find ident if present
-  SdGraphIdent *ident = nullptr;
-  forEach( dctIdent, [&ident] (SdObject *obj) -> bool {
-    ident = dynamic_cast<SdGraphIdent*>(obj);
-    return ident == nullptr;
-    });
+  SdGraphIdent *ident = findIdent();
 
   //If not found then create default
   if( ident == nullptr )
@@ -293,11 +318,7 @@ SdGraphIdent *SdProjectItem::identCreate()
 SdGraphValue *SdProjectItem::valueGet()
   {
   //Find ident if present
-  SdGraphValue *value = nullptr;
-  forEach( dctValue, [&value] (SdObject *obj) -> bool {
-    value = dynamic_cast<SdGraphValue*>(obj);
-    return value == nullptr;
-    });
+  SdGraphValue *value = findValue();
 
   //If not found then create default
   if( value == nullptr )
@@ -394,6 +415,14 @@ SdGraph *SdProjectItem::insertCopyObject(const SdGraph *obj, SdPoint offset, SdU
   {
   Q_UNUSED(editor)
   if( obj != nullptr && (obj->getClass() & getAcceptedObjectsMask()) ) {
+
+    if( obj->getClass() == dctIdent && findIdent() != nullptr )
+      //Ident already present in item, preserve insertion
+      return nullptr;
+    if( obj->getClass() == dctValue && findValue() != nullptr )
+      //Value already present in item, presereve isertion
+      return nullptr;
+
     SdGraph *cp = dynamic_cast<SdGraph*>( next ? obj->copyNext() : obj->copy() );
     Q_ASSERT( cp != nullptr );
     cp->select( nullptr );

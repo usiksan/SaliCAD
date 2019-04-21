@@ -115,7 +115,7 @@ void SdModeCPolygonEnter::enterPoint(SdPoint enter)
   if( getStep() == sNextPoint ) {
     SdPoint first;
     first = mList.last();
-    mPrevMove = calcMiddlePoint( first, enter, sdGlobalProp->mLineEnterType );
+    mPrevMove = calcMiddlePoint( first, enter, sdGlobalProp->mWireEnterType );
     if( mPrevMove == first ) mPrevMove = enter;
     //If point is close region then append region
     if( mPrevMove == mList.first() && mList.count() > 2 ) {
@@ -161,7 +161,7 @@ void SdModeCPolygonEnter::movePoint(SdPoint p)
   {
   mPrevMove = p;
   if( getStep() == sNextPoint )
-    mMiddle = calcMiddlePoint( mList.last(), mPrevMove, sdGlobalProp->mLineEnterType );
+    mMiddle = calcMiddlePoint( mList.last(), mPrevMove, sdGlobalProp->mWireEnterType );
   else {
     //For first point we snap point to nearest net to retrive net name for polygon
     SdSnapInfo info;

@@ -1,8 +1,8 @@
 ﻿
-//B068 bugs
+//B070 bugs
 //F001 fatal
 //C001 critical
-//D087 do
+//D088 do
 
 
 
@@ -33,16 +33,22 @@
 
 //TODO D086 Append automatic form selection when sheet creation
 
-//TODO B068 Copy id and value not allowed
+//TODO D088 Append backspace key to region and polygon modes
+
+//TODO B070 Check empty path when gerber packet export
 
 //===================================================================================
 //There are no need:
+
+//B069 Not changed vertex mode in polygon
 
 //D059 Append file generation on every object, category selector on file hierarchy base
 
 
 //===================================================================================
 //Fixed:
+
+//B068 Copy id and value not allowed
 
 //D081 Append link and sync with repository indication to main window (with tool tip)
 
