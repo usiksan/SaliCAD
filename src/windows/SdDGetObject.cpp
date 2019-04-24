@@ -40,8 +40,6 @@ Description
 
 //Storage for previous entered name filter
 static QString sdNameFilter;
-//Storage for previous entered param filter
-static QString sdParamFilter;
 
 //=========================================================================================
 //Struct define individual field mask when find process
