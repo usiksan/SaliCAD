@@ -15,6 +15,7 @@ Description
 #include "SdDOptionsPageCommon.h"
 #include "SdLanguage.h"
 #include "SdConfig.h"
+#include "objects/SdEnvir.h"
 
 #include <QSettings>
 #include <QVBoxLayout>
@@ -26,7 +27,6 @@ Description
 SdDOptionsPageCommon::SdDOptionsPageCommon(QWidget *parent) :
   QWidget(parent)
   {
-  QSettings s;
   setWindowTitle( tr("Paths") );
 
   QGridLayout *grid = new QGridLayout();
@@ -35,7 +35,7 @@ SdDOptionsPageCommon::SdDOptionsPageCommon(QWidget *parent) :
   grid->addWidget( mLanguage = new QComboBox(), 0, 1 );
 
 
-  QString defLang = s.value( SDK_LANGUAGE ).toString();
+  QString defLang = SdEnvir::languageGet();
   QString defLangTitle;
 
   //Get supported language list and fill language table

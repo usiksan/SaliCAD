@@ -15,6 +15,7 @@ Description
 #include "SdDGuiderPlayer.h"
 #include "SdWHelp.h"
 #include "library/SvDir.h"
+#include "objects/SdEnvir.h"
 
 #include <QTextToSpeech>
 #include <QVBoxLayout>
@@ -32,8 +33,7 @@ SdDGuiderPlayer::SdDGuiderPlayer(const QString fname, QWidget *parent) :
   mCurrentTime(0)
   {
   //Setup titer and speach language
-  QSettings s;
-  mLanguage = s.value( SDK_LANGUAGE, QVariant(QString("en")) ).toString();
+  mLanguage = SdEnvir::languageGet();
 
   mFile.load( guiderPath() + fname );
   mFile.play(0);

@@ -10,6 +10,8 @@ Web
 
 Description
   Widget to display and navigate on category hierarchy
+  Category hieararchy is QJsonObject.
+  Each object contains key path for category
 
   One category is QJsonObject with
     parent - category parent id. Id is id which child contains this category
@@ -22,20 +24,20 @@ Description
 #ifndef SDWCATEGORYLIST_H
 #define SDWCATEGORYLIST_H
 
-#include <QListWidget>
+#include <QTreeWidget>
+#include <QJsonArray>
 #include <QJsonObject>
 #include <QMenu>
 #include <QAction>
+#include <QMap>
 
-class SdWCategoryList : public QListWidget
+class SdWCategoryList : public QTreeWidget
   {
     Q_OBJECT
 
-    static QJsonObject     mCategoryMap;   //List of all categories
-    static int             mCurrentId;     //Current category id
+    QMap<QString,QTreeWidgetItem*> mItemMap;
 
-    static QMenu   *menuCategory;   //Context category menu
-    static QAction *cmdPaste;       //Paste from clipboard command
+    static QJsonArray mCategoryMap;   //List of all categories
   public:
     SdWCategoryList( QWidget *parent );
     ~SdWCategoryList() override;
@@ -61,41 +63,41 @@ class SdWCategoryList : public QListWidget
     void cmEditKey();
 
     //Cut category from list
-    void cmCut();
+    //void cmCut();
 
     //Paste category to list
-    void cmPaste();
+    //void cmPaste();
 
     //Load categories from file
     void cmLoad();
 
     //Save categories to file
-    void cmSave();
+    //void cmSave();
 
     //Save categories to file with other file name
     void cmSaveAs();
 
-    //On select category in list
-    void cmCategory( QListWidgetItem *item );
+    //On select category in tree
+    void cmCategory( QTreeWidgetItem *item, int column );
+
+    //Locate category
+    void cmLocate( const QString path );
 
     //On double click category
-    void cmEnter( QListWidgetItem *item );
+    //void cmEnter( QTreeWidgetItem *item );
 
   private:
     //Fill list with contents of current category path
     void fill();
 
-    //Add item to visual category list
-    void addItemInt( bool dir, const QString title, const QString key, int id );
+    //Build item from its description
+    QTreeWidgetItem *buildItem( bool dir, const QString title, const QString key, const QString parent );
 
-    //Add item to visual category list from category object
-    void addItem(const QJsonObject &obj, int id);
+    //Build item and its children on json object
+    QTreeWidgetItem *buildItem(const QJsonObject &obj , const QString parent);
 
-    //Add item to visual category list by its id
-    void addItemById( int id );
-
-    //Remove object's child id's
-    void removeAllChild( int id );
+    //Retrive info from tree item build json object
+    QJsonObject      scanItem( QTreeWidgetItem *item );
 
     // QWidget interface
   protected:

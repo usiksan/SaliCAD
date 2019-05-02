@@ -315,7 +315,7 @@ void SdEnvir::defaultEnvir()
 
   //Category file path
   SvDir def( QCoreApplication::applicationDirPath() );
-  mCategoryPath = def.slashedPath() + QString("category/salicad.category");        //Base path for store category hierarchy
+  mCategoryPath = def.slashedPath() + QString("category/");        //Base path for store category hierarchy
 
 
   //Перечень слоев по умолчанию
@@ -475,6 +475,16 @@ void SdEnvir::resetPads()
   if( mPadStack != nullptr )
     delete mPadStack;
   mPadStack = nullptr;
+  }
+
+
+
+
+//Return current language settings
+QString SdEnvir::languageGet()
+  {
+  QSettings s;
+  return s.value( SDK_LANGUAGE, QVariant(QString("en")) ).toString();
   }
 
 

@@ -506,7 +506,15 @@ void SdDGetObject::onClearFieldFiltr()
 //On category selected
 void SdDGetObject::onCategory(const QString str)
   {
-  ui->mNameFilter->setText( str );
+  //Remove previous category
+  QStringList list = ui->mNameFilter->text().split( QChar(' '), QString::SkipEmptyParts );
+  for( int i = 0; i < list.count(); i++ )
+    if( list.at(i).startsWith( QStringLiteral(SD_CATEGORY_PREFIX) )   ) {
+      list.removeAt(i);
+      break;
+      }
+  //Append new category to current filter
+  ui->mNameFilter->setText( list.join( QChar(' ') ) + QChar(' ') + str );
   find();
   }
 

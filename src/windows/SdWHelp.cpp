@@ -17,6 +17,7 @@ Description
 #include "library/SvDir.h"
 #include "SdDGuiderPlayer.h"
 #include "objects/SdPulsar.h"
+#include "objects/SdEnvir.h"
 
 #include <QUrl>
 #include <QSettings>
@@ -108,10 +109,9 @@ SdWHelp::SdWHelp(SdWMain *main) :
 
 QUrl SdWHelp::pageConvert(const QString &page, const QString &fragment)
   {
-  QSettings s;
   //Interface language
   //Язык интерфейса
-  QString lang = s.value( SDK_LANGUAGE, QVariant(QString("en")) ).toString();
+  QString lang = SdEnvir::languageGet();
 
   //Test if file exist with language lang
   //Проверить наличие файла с языком
@@ -142,10 +142,9 @@ QUrl SdWHelp::pageConvert(const QString &page, const QString &fragment)
 
 QUrl SdWHelp::pageError()
   {
-  QSettings s;
   //Interface language
   //Язык интерфейса
-  QString lang = s.value( SDK_LANGUAGE, QVariant(QString("en")) ).toString();
+  QString lang = SdEnvir::languageGet();
   //Test if exist error page with current language
   //Проверить наличие страницы с ошибкой на языке пользователя
   if( QFile::exists( helpPath() + lang + "-errorNoPage.htm" ) )
@@ -206,10 +205,9 @@ void SdWHelp::helpTopic(const QString topic)
 //Here we injecting into html page previous file list
 void SdWHelp::helpIntro()
   {
-  QSettings s;
   //Interface language
   //Язык интерфейса
-  QString lang = s.value( SDK_LANGUAGE, QVariant(QString("en")) ).toString();
+  QString lang = SdEnvir::languageGet();
 
   QString fname;
   //Test if file exist with language lang

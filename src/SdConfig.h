@@ -152,6 +152,7 @@ History
                    Append named net list to bus mode dialog
   17.04.2019 v0.64 When upgrading component don't changed ident (and perhaps - value)
                    Prevent open same file more then one time
+  02.05.2019 v0.65 Append category param, category fixed tree, allow multiple categories
 */
 
 #ifndef SDCONFIG
@@ -163,7 +164,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             63
+#define SD_VERSION_MINOR             65
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -185,6 +186,8 @@ History
 
 //Category files
 #define SD_CATEGORY_EXTENSION        ".category"
+#define SD_CATEGORY_FILE             "-salicad.category"
+#define SD_CATEGORY_PREFIX           "{uu"
 
 //Gerber file extension
 #define SD_GERBER_EXTENSION          ".gbr"
@@ -206,7 +209,7 @@ History
 //Maximum open editors
 //When open editor which index more than this maximum
 // then last resently editor removed
-#define SD_MAX_EDITORS              10
+#define SD_MAX_EDITORS               10
 
 //Maximum font count
 //In project fonts referenced by index in system font table
@@ -280,6 +283,7 @@ History
 #define stdParamTotalPageCount QStringLiteral("totalPageCount")
 #define stdParamPageIndex      QStringLiteral("pageIndex")
 #define stdParamDeviceMark     QStringLiteral("device mark")
+#define stdParamCategory       QStringLiteral("category")
 //Capacitor specific
 #define stdParamDielectric     QStringLiteral("dielectric")
 #define stdParamVoltage        QStringLiteral("voltage")

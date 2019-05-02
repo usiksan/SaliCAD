@@ -11,8 +11,9 @@ Web
 Description
   Page of creation master with enter ProjectItem name and category selection
 */
-
+#include "SdConfig.h"
 #include "SdPNewProjectItem_EnterName.h"
+#include "SdWCategoryList.h"
 #include "objects/SdObjectFactory.h"
 
 #include <QVBoxLayout>
@@ -30,6 +31,20 @@ SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item,
   QVBoxLayout *vlay = new QVBoxLayout();
   vlay->addWidget( mUnical = new QLabel() );
   vlay->addWidget( mName = new QLineEdit() );
+  vlay->addWidget( new QLabel(tr("Element category")) );
+  vlay->addWidget( mCategory = new QLineEdit() );
+  mCategory->setReadOnly(true);
+  mCategoryList = new SdWCategoryList(nullptr);
+  vlay->addWidget( mCategoryList );
+  if( (*item) != nullptr ) {
+    QString path = (*item)->paramGet( QString(stdParamCategory) );
+    mCategoryList->cmLocate(path);
+    mCategory->setText( path );
+
+    //connect( mCategoryList, &SdWCategoryList::category, this, [this] ( const QString path) { (*mItemPtr)->paramSet( QString(stdParamCategory), path, nullptr ); } );
+    }
+
+  connect( mCategoryList, &SdWCategoryList::category, mCategory, &QLineEdit::setText );
 
   setLayout( vlay );
 
@@ -68,6 +83,7 @@ bool SdPNewProjectItem_EnterName::validatePage()
         return false;
       }
     (*mItemPtr)->setTitle( mName->text(), tr("Set object title") );
+    (*mItemPtr)->paramSet( QString(stdParamCategory), mCategory->text(), nullptr );
     }
   return mValid;
   }
@@ -93,5 +109,6 @@ void SdPNewProjectItem_EnterName::initializePage()
   {
   if( *mItemPtr ) {
     mName->setText( (*mItemPtr)->getTitle() );
+    mCategory->setText( (*mItemPtr)->paramGet(QString(stdParamCategory)) );
     }
   }

@@ -62,12 +62,12 @@ SdDOptionsPagePath::SdDOptionsPagePath(QWidget *parent) :
     });
 
 
-  grid->addWidget( new QLabel(tr("Category hierarchy file:")), 3, 0 );
+  grid->addWidget( new QLabel(tr("Category hierarchy path:")), 3, 0 );
   grid->addWidget( mCategoryPath = new QLineEdit(), 3, 1 );
   mCategoryPath->setText( sdEnvir->mCategoryPath );
   grid->addWidget( but = new QPushButton( tr("Select...") ), 3, 2 );
   connect( but, &QPushButton::clicked, this, [this] () {
-    QString str = QFileDialog::getOpenFileName( this, tr("Category hierarchy file"), mCategoryPath->text(), QString("*" SD_CATEGORY_EXTENSION) );
+    QString str = QFileDialog::getExistingDirectory( this, tr("Category hierarchy path"), mCategoryPath->text() );
     if( !str.isEmpty() )
       mCategoryPath->setText( str );
     });

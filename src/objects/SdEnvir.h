@@ -169,6 +169,9 @@ class SdEnvir
 
     SdPad    getPad( const QString pinType );
     void     resetPads();
+
+    //Return current language settings
+    static   QString languageGet();
   private:
     void deleteLayers();
     void addLayer( SdLayer *layer );
