@@ -35,8 +35,6 @@
 
 //TODO D088 Append backspace key to region and polygon modes
 
-//TODO B070 Check empty path when gerber packet export
-
 //===================================================================================
 //There are no need:
 
@@ -47,6 +45,8 @@
 
 //===================================================================================
 //Fixed:
+
+//B070 Check empty path when gerber packet export
 
 //B068 Copy id and value not allowed
 

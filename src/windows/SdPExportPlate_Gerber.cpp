@@ -476,7 +476,11 @@ void SdPExportPlate_Gerber::onFileSelect()
 void SdPExportPlate_Gerber::onGenerate()
   {
   //Retrive output file name and generate
-  generation( mFile->text() );
+  QString fn = mFile->text();
+  if( fn.isEmpty() )
+    QMessageBox::warning( this, tr("Error"), tr("File name field is empty. Enter file name gerber generate to.") );
+  else
+    generation( fn );
   }
 
 
@@ -503,9 +507,14 @@ void SdPExportPlate_Gerber::onLayers()
 //On press button "group generate". We generate Gerber to goupt path for each selected pattern
 void SdPExportPlate_Gerber::onGroupGenerate()
   {
+  QString gn = mGroupPath->text();
+  if( gn.isEmpty() ) {
+    QMessageBox::warning( this, tr("Error"), tr("Group path field is empty. Enter path to witch files will be generate.") );
+    return;
+    }
   //For each row of file table we check flag of generation
   // if setup then generate according gerber
-  SvDir pat( mGroupPath->text() );
+  SvDir pat( gn );
   for( int row = 0; row < mGroup->rowCount(); row++ )
     if( mGroup->item(row,0)->text() == tr("Yes") ) {
       //Load layer list
