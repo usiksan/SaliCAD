@@ -7,195 +7,211 @@
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Операционные усилители"
+                                "title": "Operational amplifiers"
                             },
                             {
                                 "key": "b",
-                                "title": "Инструментальные усилители"
+                                "title": "Instrumentation amplifiers"
                             },
                             {
                                 "key": "c",
-                                "title": "Усилители выборки-хранения"
+                                "title": "Sample & Hold amplifiers"
                             },
                             {
                                 "key": "d",
-                                "title": "Изолирующие усилители"
+                                "title": "Isolation amplifiers"
                             },
                             {
                                 "key": "e",
-                                "title": "Программируемые усилители"
+                                "title": "Programmable gain amplifiers"
                             },
                             {
                                 "key": "f",
-                                "title": "Буферные усилители"
+                                "title": "Buffer amplifiers"
                             },
                             {
                                 "key": "g",
-                                "title": "Логарифмические усилители"
+                                "title": "Logarithmic amplifiers"
                             },
                             {
                                 "key": "h",
-                                "title": "Усилители мощности звуковой частоты"
+                                "title": "Audio amplifiers"
                             },
                             {
                                 "key": "i",
-                                "title": "Высокочастотные усилители"
+                                "title": "Video amplifiers"
                             },
                             {
                                 "key": "j",
-                                "title": "Прочие усилители"
-                            }
-                        ],
-                        "key": "a",
-                        "title": "Усилители"
-                    },
-                    {
-                        "child": [
-                            {
-                                "key": "a",
-                                "title": "Для радиосвязи"
-                            },
-                            {
-                                "key": "b",
-                                "title": "Для телефонии"
-                            }
-                        ],
-                        "key": "b",
-                        "title": "Интегральные микросхемы для систем связи"
-                    },
-                    {
-                        "child": [
-                            {
-                                "key": "a",
-                                "title": "Линейные стабилизаторы"
-                            },
-                            {
-                                "key": "b",
-                                "title": "Генератор подкачки без индуктора"
-                            },
-                            {
-                                "key": "c",
-                                "title": "Драйверы MOSFET и IGBT"
-                            },
-                            {
-                                "key": "d",
-                                "title": "Интегральные ac-dc преобразователи"
-                            },
-                            {
-                                "key": "e",
-                                "title": "Контроллеры синхронного выпрямителя"
-                            },
-                            {
-                                "key": "f",
-                                "title": "Регуляторы для ac-dc преобразователя"
-                            },
-                            {
-                                "key": "g",
-                                "title": "Регуляторы для светодиодных ламп"
-                            },
-                            {
-                                "key": "h",
-                                "title": "Интегральные dc-dc преобразователи"
-                            },
-                            {
-                                "key": "i",
-                                "title": "ШИМ, ЧИМ контроллеры"
-                            },
-                            {
-                                "key": "j",
-                                "title": "Для зарядных устройств"
+                                "title": "Current sense amplifiers"
                             },
                             {
                                 "key": "k",
-                                "title": "Для корректоров коэффициента мощности"
+                                "title": "Differential amplifiers"
                             },
                             {
                                 "key": "l",
-                                "title": "Датчики тока"
+                                "title": "Limiting amplifiers"
                             },
                             {
                                 "key": "m",
-                                "title": "Прочие"
+                                "title": "High frequency amplifiers"
+                            },
+                            {
+                                "key": "n",
+                                "title": "Other amplifiers"
                             }
                         ],
-                        "key": "c",
-                        "title": "Интегральные микросхемы для источников питания"
+                        "key": "a",
+                        "title": "Amplifiers"
                     },
                     {
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Контроллеры ac двигателей"
+                                "title": "For telecommunication"
                             },
                             {
                                 "key": "b",
-                                "title": "Контроллеры dc двигателей"
+                                "title": "For telephony"
                             }
                         ],
-                        "key": "d",
-                        "title": "Управление электроприводом"
+                        "key": "b",
+                        "title": "IC for communication systems"
                     },
                     {
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Контроллеры горячей замены hot-swap"
+                                "title": "Linear regulators"
                             },
                             {
                                 "key": "b",
-                                "title": "Контроллеры питания"
+                                "title": "Swap generators without inductor"
                             },
                             {
                                 "key": "c",
-                                "title": "Супервизоры"
+                                "title": "MOSFET & IGBT drivers"
                             },
                             {
                                 "key": "d",
-                                "title": "Формирователи импульса сброса"
+                                "title": "AC-DC converters"
+                            },
+                            {
+                                "key": "e",
+                                "title": "Synchronous rectifier controllers"
+                            },
+                            {
+                                "key": "f",
+                                "title": "AC-DC convertor regulators"
+                            },
+                            {
+                                "key": "g",
+                                "title": "LED lamp regulators"
+                            },
+                            {
+                                "key": "h",
+                                "title": "DC-DC converters"
+                            },
+                            {
+                                "key": "i",
+                                "title": "PWM & FM controllers"
+                            },
+                            {
+                                "key": "j",
+                                "title": "Charger controllers"
+                            },
+                            {
+                                "key": "k",
+                                "title": "Power Factor Correctors - PFC"
+                            },
+                            {
+                                "key": "l",
+                                "title": "Current sensors"
+                            },
+                            {
+                                "key": "m",
+                                "title": "Others"
+                            }
+                        ],
+                        "key": "c",
+                        "title": "Power management ICs"
+                    },
+                    {
+                        "child": [
+                            {
+                                "key": "a",
+                                "title": "AC motor controllers"
+                            },
+                            {
+                                "key": "b",
+                                "title": "DC motor controllers"
+                            }
+                        ],
+                        "key": "d",
+                        "title": "Electric drive control"
+                    },
+                    {
+                        "child": [
+                            {
+                                "key": "a",
+                                "title": "Hot Swap Controllers"
+                            },
+                            {
+                                "key": "b",
+                                "title": "Multi Function Power Management ICs"
+                            },
+                            {
+                                "key": "c",
+                                "title": "Supervisors & Monitors"
+                            },
+                            {
+                                "key": "d",
+                                "title": "Reset signal generator"
                             }
                         ],
                         "key": "e",
-                        "title": "Контроль электропитания"
+                        "title": "Power monitor ICs"
                     },
                     {
                         "key": "f",
-                        "title": "Компараторы"
+                        "title": "Comparators"
                     },
                     {
                         "key": "g",
-                        "title": "Управление нагрузкой"
+                        "title": "Power Distribution Switches"
                     },
                     {
                         "key": "h",
-                        "title": "Источники опорного напряжения и тока"
+                        "title": "Voltage & Current References"
                     },
                     {
                         "key": "i",
-                        "title": "Преобразователи"
+                        "title": "Convertors"
                     },
                     {
                         "key": "j",
-                        "title": "Фильтры аналоговые"
+                        "title": "Filters"
                     },
                     {
                         "key": "k",
-                        "title": "Аналоговые ключи и мультиплексоры"
+                        "title": "Analog switches & multiplexors"
                     },
                     {
                         "key": "l",
-                        "title": "Для видеотехники"
+                        "title": "For video"
                     },
                     {
                         "key": "m",
-                        "title": "Для счетчиков электроэнергии"
+                        "title": "For electricity meters"
                     },
                     {
                         "key": "n",
-                        "title": "Прочие"
+                        "title": "Others"
                     }
                 ],
                 "key": "a",
-                "title": "Аналоговые интегральные микросхемы"
+                "title": "Analog ICs"
             },
             {
                 "child": [
@@ -203,55 +219,63 @@
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Буферы, приемопередатчики"
+                                "title": "Buffers, Transceivers & Line Drivers"
                             },
                             {
                                 "key": "b",
-                                "title": "Вентили и инверторы"
+                                "title": "Gates & Inverters"
                             },
                             {
                                 "key": "c",
-                                "title": "Кодеры-декодеры"
+                                "title": "Decoders / Encoders"
                             },
                             {
                                 "key": "d",
-                                "title": "Мультивибраторы"
+                                "title": "Multivibrators"
                             },
                             {
                                 "key": "e",
-                                "title": "Мультиплексоры-демультиплексоры"
+                                "title": "Multiplexers / Demultiplexers"
                             },
                             {
                                 "key": "f",
-                                "title": "Сдвиговые регистры"
+                                "title": "Shift Registers"
                             },
                             {
                                 "key": "g",
-                                "title": "Стандартная логика"
+                                "title": "Special Function Logic"
                             },
                             {
                                 "key": "h",
-                                "title": "Счетчики"
+                                "title": "Counters"
                             },
                             {
                                 "key": "i",
-                                "title": "Триггеры"
+                                "title": "Flip Flops"
                             },
                             {
                                 "key": "j",
-                                "title": "Триггеры-защелки"
+                                "title": "Latches"
                             },
                             {
                                 "key": "k",
-                                "title": "Умножители-делители"
+                                "title": "Multipliers / Dividers"
                             },
                             {
                                 "key": "l",
-                                "title": "Шинный переключатель"
+                                "title": "Bus Switches"
+                            },
+                            {
+                                "key": "m",
+                                "title": "Level Shifters"
+                            },
+                            {
+                                "key": "n",
+                                "title": "Others"
                             }
                         ],
                         "key": "a",
-                        "title": "Логические микросхемы"
+                        "title": "Logic"
                     },
                     {
                         "child": [
@@ -265,101 +289,93 @@
                             }
                         ],
                         "key": "b",
-                        "title": "ПЛИС и ПАИС"
+                        "title": "FPGA & CPLD"
                     },
                     {
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Генераторы тактовых импульсов"
+                                "title": "Clock Synthesizers & Generators"
                             },
                             {
                                 "key": "b",
-                                "title": "Кварцевые генераторы"
+                                "title": "Crystal oscillators"
                             },
                             {
                                 "key": "c",
-                                "title": "Кварцевые генераторы, управляемые напряжением"
+                                "title": "Voltage control Crystal oscillator"
                             },
                             {
                                 "key": "d",
-                                "title": "ФПЧ"
+                                "title": "Phase Locked Loops - PLL"
                             },
                             {
                                 "key": "e",
-                                "title": "Таймеры"
+                                "title": "Timers, Oscillators & Pulse Generators"
                             },
                             {
                                 "key": "f",
-                                "title": "Часы реального времени"
+                                "title": "Real Time Clocks"
                             },
                             {
                                 "key": "g",
-                                "title": "Прочие"
+                                "title": "Others"
                             }
                         ],
                         "key": "c",
-                        "title": "Генераторы, таймеры и RTC"
+                        "title": "Clock, Timing, RTC & Frequency management"
                     },
                     {
                         "child": [
                             {
                                 "key": "a",
-                                "title": "С программируемой задержкой"
+                                "title": "With programmable delay"
                             },
                             {
                                 "key": "b",
-                                "title": "С фиксированной задержкой"
+                                "title": "With fixed delay"
                             }
                         ],
                         "key": "d",
-                        "title": "Цифровые линии задержки"
+                        "title": "Digital Delay Lines"
                     },
                     {
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Оперативная память"
+                                "title": "RAM"
                             },
                             {
                                 "key": "b",
-                                "title": "Энергонезависимая память"
+                                "title": "Nonvolatile memory"
                             }
                         ],
                         "key": "e",
-                        "title": "Микросхемы памяти"
+                        "title": "Memory ICs"
                     },
                     {
                         "key": "f",
-                        "title": "Микроконтроллеры"
+                        "title": "Microcontrollers MCU"
                     },
                     {
                         "key": "g",
-                        "title": "Микропроцессоры"
+                        "title": "Microprocessors MCU"
                     },
                     {
                         "key": "h",
-                        "title": "Цифровые сигнальные процессоры"
+                        "title": "Digital Signal Processors - DSP"
                     },
                     {
                         "key": "i",
-                        "title": "Преобразователи уровня"
+                        "title": "Digital Potentiometers"
                     },
                     {
                         "key": "j",
-                        "title": "Цифровые термометры"
-                    },
-                    {
-                        "key": "k",
-                        "title": "Цифровые потенциометры"
-                    },
-                    {
-                        "key": "l",
-                        "title": "Цифровые конденсаторы"
+                        "title": "Digital Capasitors"
                     }
                 ],
                 "key": "b",
-                "title": "Цифровые интегральные микросхемы"
+                "title": "Digital ICs"
             },
             {
                 "child": [
@@ -371,105 +387,105 @@
                             },
                             {
                                 "key": "b",
-                                "title": "Драйверы CAN"
+                                "title": "CAN Bus Devices"
                             },
                             {
                                 "key": "c",
-                                "title": "Драйверы LVDS"
+                                "title": "LVDS Devices"
                             },
                             {
                                 "key": "d",
-                                "title": "Драйверы RS232/UART"
+                                "title": "RS232/UART Drivers & Transmitters"
                             },
                             {
                                 "key": "e",
-                                "title": "Драйверы RS485/422"
+                                "title": "RS485/422 Drivers & Transmitters"
                             },
                             {
                                 "key": "f",
-                                "title": "Драйверы интерфейса токовой петли"
+                                "title": "Current loop interface drivers"
                             },
                             {
                                 "key": "g",
-                                "title": "Изоляторы цифровых сигналов"
+                                "title": "Digital isolators"
                             },
                             {
                                 "key": "h",
-                                "title": "Контроллеры USB"
+                                "title": "USB Interfaces"
                             },
                             {
                                 "key": "i",
-                                "title": "Микросхемы PLC модемов"
+                                "title": "PLC modem ICs"
                             },
                             {
                                 "key": "j",
-                                "title": "Микросхемы линий защиты"
+                                "title": "Line protection ICs"
                             },
                             {
                                 "key": "k",
-                                "title": "Микросхемы специализированных интерфейсов"
+                                "title": "Specialised Interfaces"
                             },
                             {
                                 "key": "l",
-                                "title": "Периферийные драйверы-расширители"
+                                "title": "I/O Expanders"
                             },
                             {
                                 "key": "m",
-                                "title": "Продукты 1-Wire"
+                                "title": "1-Wire products"
                             },
                             {
                                 "key": "n",
-                                "title": "Продукты iButton"
+                                "title": "iButton products"
                             },
                             {
                                 "key": "o",
-                                "title": "Сопрягатели интерфейсов"
+                                "title": "Interface Bridges"
                             },
                             {
                                 "key": "p",
-                                "title": "Трансиверы LIN"
+                                "title": "LIN Transceivers"
                             },
                             {
                                 "key": "q",
-                                "title": "Прочие микросхемы интерфейсов"
+                                "title": "Others"
                             }
                         ],
                         "key": "a",
-                        "title": "Микросхемы интерфейсов"
+                        "title": "Drivers & Interfaces"
                     },
                     {
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Драйверы жидкокристаллических индикаторов"
+                                "title": "LCD indicator drivers"
                             },
                             {
                                 "key": "b",
-                                "title": "Драйверы светодиодных индикаторов"
+                                "title": "LED indicator drivers"
                             },
                             {
                                 "key": "c",
-                                "title": "Контроллеры tft дисплеев"
+                                "title": "TFT display controllers"
                             }
                         ],
                         "key": "b",
-                        "title": "Драйверы индикаторов"
+                        "title": "Display & Indicator drivers"
                     },
                     {
                         "key": "c",
-                        "title": "DTMF контроллеры"
+                        "title": "DTMF controllers"
                     },
                     {
                         "key": "d",
-                        "title": "Аудио кодеки"
+                        "title": "Audio Control & Processing"
                     },
                     {
                         "key": "e",
-                        "title": "Контроллеры сенсорных клавиатур"
+                        "title": "Touch Screen Controllers"
                     },
                     {
                         "key": "f",
-                        "title": "Специального назначения"
+                        "title": "Special Function"
                     },
                     {
                         "key": "g",
@@ -477,35 +493,31 @@
                     },
                     {
                         "key": "h",
-                        "title": "Цифро-аналоговые преобразователи"
+                        "title": "Digital-to-Analog Converters - DAC"
                     },
                     {
                         "key": "i",
-                        "title": "Аналого-цифровые преобразователи"
+                        "title": "Analog-to-Digital Converters - ADC"
                     },
                     {
                         "key": "j",
-                        "title": "Датчики температуры"
+                        "title": "Transsivers"
                     },
                     {
                         "key": "k",
-                        "title": "Приемопередатчики"
-                    },
-                    {
-                        "key": "l",
-                        "title": "Микросхемы сбора данных"
+                        "title": "Data accumulation ICs"
                     }
                 ],
                 "key": "c",
-                "title": "Комбинированные интегральные микросхемы"
+                "title": "Combine ICs"
             },
             {
                 "key": "d",
-                "title": "Прочие интегральные микросхемы"
+                "title": "Other ICs"
             }
         ],
         "key": "a",
-        "title": "Интегральные микросхемы"
+        "title": "ICs"
     },
     {
         "child": [
@@ -515,15 +527,15 @@
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Модули"
+                                "title": "Modules"
                             },
                             {
                                 "key": "b",
-                                "title": "Транзисторы"
+                                "title": "Transistors"
                             }
                         ],
                         "key": "a",
-                        "title": "Модули и транзисторы IGBT"
+                        "title": "IGBT modules and transistors"
                     },
                     {
                         "key": "b",
@@ -531,15 +543,19 @@
                     },
                     {
                         "key": "c",
-                        "title": "Полевые транзисторы (MOSFET)"
+                        "title": "MOSFET transistors"
                     },
                     {
                         "key": "d",
-                        "title": "Биполярные транзисторы"
+                        "title": "Bipolar transistors"
                     },
                     {
                         "key": "e",
-                        "title": "СВЧ транзисторы"
+                        "title": "RF transistors"
+                    },
+                    {
+                        "key": "f",
+                        "title": "Other transistors"
                     }
                 ],
                 "key": "a",
@@ -549,59 +565,59 @@
                 "child": [
                     {
                         "key": "a",
-                        "title": "PIN диоды"
+                        "title": "RF / Pin Diodes"
                     },
                     {
                         "key": "b",
-                        "title": "Диодные сборки и мосты"
+                        "title": "Bridge Rectifier Diodes & modules"
                     },
                     {
                         "key": "c",
-                        "title": "Стандартные выпрямительные диоды"
+                        "title": "Standard Recovery Rectifier Diodes"
                     },
                     {
                         "key": "d",
-                        "title": "ESD защита"
+                        "title": "ESD protect"
                     },
                     {
                         "key": "e",
-                        "title": "Быстровосстанавливающиеся диоды и сборки"
+                        "title": "Fast & Ultrafast Recovery Rectifier Diodes"
                     },
                     {
                         "key": "f",
-                        "title": "Диодно-тиристорные модули"
+                        "title": "Diod-Thyristor modules"
                     },
                     {
                         "key": "g",
-                        "title": "Диоды Шоттки и сборки"
+                        "title": "Schottky Diodes"
                     },
                     {
                         "key": "h",
-                        "title": "Стабилитроны и стабисторы"
+                        "title": "Small Signal Diodes"
                     },
                     {
                         "key": "i",
-                        "title": "Ограничители напряжения, TVS, защитные диоды"
+                        "title": "Zener Diodes"
                     },
                     {
                         "key": "j",
-                        "title": "Лавинные диоды и сборки"
+                        "title": "Others diodes"
                     }
                 ],
                 "key": "b",
-                "title": "Диоды"
+                "title": "Diodes"
             },
             {
                 "key": "c",
-                "title": "Тиристоры"
+                "title": "Thyristors"
             },
             {
                 "key": "d",
-                "title": "Прочие дискретные компоненты, силовые модули"
+                "title": "Others discrets and powers"
             }
         ],
         "key": "b",
-        "title": "Дискретные компоненты, силовые модули"
+        "title": "Discrets and powers"
     },
     {
         "child": [
@@ -609,131 +625,135 @@
                 "child": [
                     {
                         "key": "a",
-                        "title": "LED драйверы"
+                        "title": "LED drivers"
                     },
                     {
                         "key": "b",
-                        "title": "Бескорпусные источники питания"
+                        "title": "AC/DC Open Frame Power Supplies"
                     },
                     {
                         "key": "c",
-                        "title": "Источники питания на DIN рейку"
+                        "title": "AC/DC DIN Rail Mount Power Supplies"
                     },
                     {
                         "key": "d",
-                        "title": "Источники питания на печатную плату"
+                        "title": "AC/DC PCB Mount Power Supplies"
                     },
                     {
                         "key": "f",
-                        "title": "Сетевые адаптеры"
+                        "title": "AC/DC External Plug In Adaptor Power Supplies"
                     },
                     {
                         "key": "g",
-                        "title": "Модульные источники питания"
+                        "title": "AC/DC Enclosed Power Supplies"
                     },
                     {
                         "key": "h",
-                        "title": "Прочие"
+                        "title": "Others"
                     }
                 ],
                 "key": "a",
-                "title": "AC-DC преобразователи"
+                "title": "AC-DC converters"
             },
             {
                 "child": [
                     {
                         "key": "a",
-                        "title": "DC-DC преобразователи"
+                        "title": "DC-DC converters"
                     },
                     {
                         "key": "b",
-                        "title": "LED драйверы"
+                        "title": "LED drivers"
                     },
                     {
                         "key": "c",
-                        "title": "Стабилизаторы напряжения импульсные, POL"
+                        "title": "Pulse voltage regulators, POL"
+                    },
+                    {
+                        "key": "d",
+                        "title": "DC-DC board mount converters"
                     }
                 ],
                 "key": "b",
-                "title": "DC-DC преобразователи"
+                "title": "DC-DC converters"
             },
             {
                 "key": "c",
-                "title": "Инверторы, DC-AC преобразователи"
+                "title": "Invertors, DC-AC converters"
             },
             {
                 "key": "d",
-                "title": "Контроллеры UPS"
+                "title": "UPS - Uninterruptible Power Supplies"
             },
             {
                 "key": "e",
-                "title": "Модули резервного питания"
+                "title": "Reserved power modules"
             },
             {
                 "key": "f",
-                "title": "Прочие источники питания"
+                "title": "Others power supplies"
             },
             {
                 "key": "g",
-                "title": "Аксессуары"
+                "title": "Accessories"
             },
             {
                 "key": "h",
-                "title": "Батареи и аккумуляторы"
+                "title": "Batteries and accumulators"
             }
         ],
         "key": "c",
-        "title": "Источники питания"
+        "title": "Power supplies"
     },
     {
         "child": [
             {
                 "key": "a",
-                "title": "Компоненты для устройств радиоидентификации RFID"
+                "title": "RFID Modules"
             },
             {
                 "key": "b",
-                "title": "Элементы согласования"
+                "title": "Coherence elements"
             },
             {
                 "key": "c",
-                "title": "Компоненты систем спутниковой навигации"
+                "title": "GPS Modules & Receivers"
             },
             {
                 "key": "d",
-                "title": "Компоненты стандарта BLUETOOTH"
+                "title": "Bluetooth Modules & Adaptors"
             },
             {
                 "key": "e",
-                "title": "Компоненты стандарта Wi-Fi"
+                "title": "Wi-Fi Modules"
             },
             {
                 "key": "f",
-                "title": "Компоненты стандарта ZIGBEE"
+                "title": "Zigbee Modules / XBee"
             },
             {
                 "key": "g",
-                "title": "Модемы гражданской сотовой связи GSM/GPRS"
+                "title": "GSM, GPRS, CDMA & HSPA Modules & Modems"
             },
             {
                 "key": "h",
-                "title": "Компоненты ISM-диапазонов"
+                "title": "ISM-band components"
             },
             {
                 "key": "i",
-                "title": "Антенны"
+                "title": "Antennae"
             },
             {
                 "key": "j",
-                "title": "Антенные переходники"
+                "title": "Antenna adapters"
             },
             {
                 "key": "k",
-                "title": "Прочие"
+                "title": "Others"
             }
         ],
         "key": "d",
-        "title": "Беспроводные системы"
+        "title": "Wireless Modules & Adaptors"
     },
     {
         "child": [
@@ -741,57 +761,57 @@
                 "child": [
                     {
                         "key": "a",
-                        "title": "Аксессуары для вентиляторов"
+                        "title": "Accessories for fans"
                     },
                     {
                         "key": "b",
-                        "title": "Вентиляторы"
+                        "title": "Fans"
                     }
                 ],
                 "key": "a",
-                "title": "Вентиляторы"
+                "title": "Fans"
             },
             {
                 "child": [
                     {
                         "key": "a",
-                        "title": "Вставные клеммные колодки"
+                        "title": "Pluggable Terminal Blocks"
                     },
                     {
                         "key": "b",
-                        "title": "Вставные штекеры и гнезда"
+                        "title": "Pluggable Terminal Block Headers & Sockets"
                     },
                     {
                         "key": "c",
-                        "title": "Клеммная колодка на панель"
+                        "title": "Panel Mount Terminal Blocks"
                     },
                     {
                         "key": "d",
-                        "title": "Клеммники на DIN-рейку"
+                        "title": "DIN Rail Terminal Blocks"
                     },
                     {
                         "key": "e",
-                        "title": "Клеммные наконечники"
+                        "title": "Wire / Bootlace Ferrules"
                     },
                     {
                         "key": "f",
-                        "title": "Клеммы быстрого соединения"
+                        "title": "Quick Disconnect Crimp Terminals"
                     },
                     {
                         "key": "g",
-                        "title": "Клеммы провод-плата"
+                        "title": "Wire-To-Board Terminal Blocks"
                     },
                     {
                         "key": "h",
-                        "title": "Маркировка и аксессуары для клемм"
+                        "title": "Markers & Accessories"
                     },
                     {
                         "key": "i",
-                        "title": "Соединители проводов"
+                        "title": "Wire Splices"
                     }
                 ],
                 "key": "b",
-                "title": "Клеммы и клемники"
+                "title": "Crimp Terminals / Solder Terminals & Splices"
             },
             {
                 "child": [
@@ -799,113 +819,121 @@
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Разъемы 220В"
+                                "title": "220voltage connectors"
                             },
                             {
                                 "key": "b",
-                                "title": "Разъемы питания"
+                                "title": "Power Entry Connectors"
                             },
                             {
                                 "key": "c",
-                                "title": "Цилиндрические разъемы и аксессуары"
+                                "title": "Circular Connectors & Components"
                             },
                             {
                                 "key": "dd",
-                                "title": "Для аккумуляторных батарей"
+                                "title": "For accumulators"
                             }
                         ],
                         "key": "a",
-                        "title": "Силовые разъемы"
+                        "title": "Power connectors"
                     },
                     {
                         "key": "b",
-                        "title": "Аксессуары для разъемов"
+                        "title": "Connectors accessories"
                     },
                     {
                         "key": "c",
-                        "title": "Аудио-видео разъемы"
+                        "title": "Audio & Video Connectors & Adapters"
                     },
                     {
                         "key": "d",
-                        "title": "Оптические разъемы"
+                        "title": "Fibre Optic Attenuators & Connectors"
                     },
                     {
                         "key": "e",
-                        "title": "Разъемы D-SUB"
+                        "title": "D-Sub Connectors & Components"
                     },
                     {
                         "key": "f",
-                        "title": "Разъемы RJ"
+                        "title": "RJ connectors"
                     },
                     {
                         "key": "g",
-                        "title": "Разъемы USB"
+                        "title": "USB Connectors & Adapters"
                     },
                     {
                         "key": "h",
-                        "title": "Разъемы для FRC кабеля"
+                        "title": "FRC cable connectors"
                     },
                     {
                         "key": "i",
-                        "title": "СВЧ разъемы"
+                        "title": "RF / Coaxial Connectors & Accessories"
                     },
                     {
                         "key": "j",
-                        "title": "Краевые разъемы"
+                        "title": "Card Edge Connectors"
                     },
                     {
                         "key": "k",
-                        "title": "Промышленные разъемы"
+                        "title": "Industrial connectors"
                     },
                     {
                         "key": "l",
-                        "title": "Разъемы плата-плата"
+                        "title": "Board-To-Board Connectors"
                     },
                     {
                         "key": "m",
-                        "title": "Разъемы провод-плата"
+                        "title": "Wire-To-Board Connectors"
                     },
                     {
                         "key": "n",
-                        "title": "Соединители FFC/FPC"
+                        "title": "FFC / FPC Board Connectors"
                     },
                     {
                         "key": "o",
-                        "title": "Штекерные разъемы"
+                        "title": "Plug connectors"
                     },
                     {
                         "key": "p",
-                        "title": "Прочие разъемы"
+                        "title": "Other connectors"
                     },
                     {
                         "key": "q",
-                        "title": "Разъемы IDC или на шлейф"
+                        "title": "IDC connectors"
+                    },
+                    {
+                        "key": "r",
+                        "title": "Circular Connectors & Components"
+                    },
+                    {
+                        "key": "s",
+                        "title": "Rectangular Connectors & Components"
                     }
                 ],
                 "key": "c",
-                "title": "Разъемы"
+                "title": "Connectors"
             },
             {
                 "child": [
                     {
                         "key": "a",
-                        "title": "Разъемы и держатели для памяти"
+                        "title": "Memory Sockets"
                     },
                     {
                         "key": "b",
-                        "title": "Батарейные отсеки"
+                        "title": "Battery holders"
                     },
                     {
                         "key": "c",
-                        "title": "Держатели предохранителей"
+                        "title": "Fuse holders"
                     },
                     {
                         "key": "d",
-                        "title": "Панельки для микросхем"
+                        "title": "IC Sockets"
                     }
                 ],
                 "key": "d",
-                "title": "Держатели, слоты"
+                "title": "Sockets"
             },
             {
                 "child": [
@@ -913,93 +941,85 @@
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Движковые переключатели"
+                                "title": "Slide Switches"
                             },
                             {
                                 "key": "b",
-                                "title": "Переключатели DIP/SIP"
+                                "title": "DIP Switches & SIP Switches"
                             },
                             {
                                 "key": "c",
-                                "title": "Переключатели клавишные"
+                                "title": "Rocker Switches"
                             },
                             {
                                 "key": "d",
-                                "title": "Переключатели кнопочные"
+                                "title": "Pushbutton Switches"
                             },
                             {
                                 "key": "e",
-                                "title": "Переключатели конфигурационные на плату"
+                                "title": "Rotary Switches"
                             },
                             {
                                 "key": "f",
-                                "title": "Переключатели ножные"
-                            },
-                            {
-                                "key": "g",
-                                "title": "Переключатели поворотные"
-                            },
-                            {
-                                "key": "h",
-                                "title": "Переключатели тумблерные"
+                                "title": "Toggle Switches"
                             }
                         ],
                         "key": "a",
-                        "title": "Переключатели"
+                        "title": "Switches"
                     },
                     {
                         "key": "b",
-                        "title": "Клавиатура"
+                        "title": "Keyboard"
                     },
                     {
                         "key": "c",
-                        "title": "Концевые выключатели"
+                        "title": "Microswitch Snap Action Switches"
                     },
                     {
                         "key": "d",
-                        "title": "Микровыключатели"
+                        "title": "Microswitch"
                     },
                     {
                         "key": "e",
-                        "title": "Тактовые кнопки"
+                        "title": "Tactile Switches"
                     },
                     {
                         "key": "f",
-                        "title": "Джойстики, трекболы, навигационные диски"
+                        "title": "Joystick Switches, Trackboll"
                     },
                     {
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Актуаторы"
+                                "title": "Switch Actuators"
                             },
                             {
                                 "key": "b",
-                                "title": "Кнопки"
+                                "title": "Switch Caps"
                             },
                             {
                                 "key": "c",
-                                "title": "Контактные блоки"
+                                "title": "Switch Contact Blocks"
                             },
                             {
                                 "key": "d",
-                                "title": "Подсветка"
+                                "title": "Switch Replacement Lamps"
                             },
                             {
                                 "key": "f",
-                                "title": "Прочие"
+                                "title": "Switch others"
                             },
                             {
                                 "key": "g",
-                                "title": "Шильдики"
+                                "title": "Switch marks"
                             }
                         ],
                         "key": "g",
-                        "title": "Аксессуары для конопк и переключателей"
+                        "title": "Switch Accessories"
                     }
                 ],
                 "key": "e",
-                "title": "Кнопки, переключатели, выключатели"
+                "title": "Buttons, switches"
             },
             {
                 "child": [
