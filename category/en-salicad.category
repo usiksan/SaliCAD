@@ -1025,105 +1025,105 @@
                 "child": [
                     {
                         "key": "a",
-                        "title": "Аксессуары для кабелей"
+                        "title": "Cable accessories"
                     },
                     {
                         "key": "b",
-                        "title": "Кабель стандартный в сборе с разъемами"
+                        "title": "Standard cable with connectors"
                     },
                     {
                         "key": "c",
-                        "title": "Кабель широкого назначения под нарезку"
+                        "title": "Cable wide purpose for cutting"
                     },
                     {
                         "key": "d",
-                        "title": "Кабельная стяжка"
+                        "title": "Cable tie"
                     },
                     {
                         "key": "e",
-                        "title": "Кабельный ввод"
+                        "title": "Cable entry"
                     },
                     {
                         "key": "f",
-                        "title": "Кабельный наконечник"
+                        "title": "Cable lug"
                     },
                     {
                         "key": "g",
-                        "title": "Крепеж кабеля"
+                        "title": "Cable fastener"
                     },
                     {
                         "key": "h",
-                        "title": "Маркировка для кабеля"
+                        "title": "Cable mark"
                     },
                     {
                         "key": "i",
-                        "title": "Термоусадочная трубка"
+                        "title": "Shrink tube"
                     },
                     {
                         "key": "j",
-                        "title": "Кабели плоские FFC"
+                        "title": "FFC cable"
                     }
                 ],
                 "key": "f",
-                "title": "Кабели, фурнитура, вводы и наконечники"
+                "title": "Cables, fittings, inputs and tips"
             },
             {
                 "key": "g",
-                "title": "Звукоизлучатели"
+                "title": "Sound emitters"
             },
             {
                 "key": "h",
-                "title": "Крепеж"
+                "title": "Fastener"
             },
             {
                 "key": "i",
-                "title": "Корпуса"
+                "title": "Boxes"
             },
             {
                 "key": "j",
-                "title": "Прочие"
+                "title": "Others"
             },
             {
                 "child": [
                     {
                         "key": "a",
-                        "title": "Контакторы твердотельные"
+                        "title": "Solid state contactors"
                     },
                     {
                         "key": "b",
-                        "title": "Контакторы электромеханические"
+                        "title": "Electromechanical contactors "
                     },
                     {
                         "key": "c",
-                        "title": "Реле электромеханические"
+                        "title": "Electromechanical relays"
                     },
                     {
                         "key": "d",
-                        "title": "MOSFET реле"
+                        "title": "MOSFET relays"
                     },
                     {
                         "key": "e",
-                        "title": "Автомобильные реле"
+                        "title": "Automotive relays"
                     },
                     {
                         "key": "f",
-                        "title": "Герконовые реле"
+                        "title": "Reed relay"
                     },
                     {
                         "key": "g",
-                        "title": "Сигнальные реле"
+                        "title": "Signal relay"
                     },
                     {
                         "key": "h",
-                        "title": "Твердотельные реле"
+                        "title": "Solid state relay"
                     }
                 ],
                 "key": "k",
-                "title": "Реле и пускатели"
+                "title": "Relays & contactors"
             }
         ],
         "key": "e",
-        "title": "Реле, разъемы, электромеханика"
+        "title": "Relays, connectors, electrical engineering"
     },
     {
         "child": [
@@ -1131,107 +1131,107 @@
                 "child": [
                     {
                         "key": "a",
-                        "title": "Светодиодные лазеры"
+                        "title": "Led lasers"
                     },
                     {
                         "key": "b",
-                        "title": "Светодиодные лампы"
+                        "title": "Led lamp"
                     },
                     {
                         "key": "c",
-                        "title": "Светодиоды мощные"
+                        "title": "Power led"
                     },
                     {
                         "key": "d",
-                        "title": "Управляющие контроллеры"
+                        "title": "Master controller"
                     },
                     {
                         "key": "e",
-                        "title": "Контроллеры для электронных балластов"
+                        "title": "Controllers for electronic ballasts"
                     },
                     {
                         "key": "f",
-                        "title": "Светодиодные модули и ленты"
+                        "title": "Led modules and strips"
                     },
                     {
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Вторичная оптика"
+                                "title": "Secondary optics"
                             },
                             {
                                 "key": "b",
-                                "title": "Радиаторы"
+                                "title": "Heatsink"
                             },
                             {
                                 "key": "c",
-                                "title": "Держатели для светодиодов"
+                                "title": "Led holders"
                             }
                         ],
                         "key": "g",
-                        "title": "Аксессуары для светодиодов"
+                        "title": "Led accessories"
                     }
                 ],
                 "key": "a",
-                "title": "Освещение"
+                "title": "Lighting"
             },
             {
                 "child": [
                     {
                         "key": "a",
-                        "title": "Дисплеи IPS"
+                        "title": "IPS displays"
                     },
                     {
                         "key": "b",
-                        "title": "Дисплеи OLED, PLED и AMOLED"
+                        "title": "OLED, PLED & AMOLED displays"
                     },
                     {
                         "key": "c",
-                        "title": "Дисплеи LCD, VFD, E-Paper"
+                        "title": "LCD, VFD, E-Paper displays"
                     },
                     {
                         "key": "d",
-                        "title": "Дисплеи TFT"
+                        "title": "TFT displays"
                     },
                     {
                         "key": "e",
-                        "title": "Световоды"
+                        "title": "Fibers"
                     },
                     {
                         "key": "f",
-                        "title": "Светодиодные дисплеи"
+                        "title": "LED displays"
                     },
                     {
                         "key": "g",
-                        "title": "Светодиодные индикаторы"
+                        "title": "LED indicators"
                     },
                     {
                         "key": "h",
-                        "title": "Светодиоды"
+                        "title": "LEDs"
                     },
                     {
                         "key": "i",
-                        "title": "Сенсорные панели"
+                        "title": "Touchpads"
                     }
                 ],
                 "key": "b",
-                "title": "Устройства индикации"
+                "title": "Displays"
             },
             {
                 "key": "c",
-                "title": "Оптроны"
+                "title": "Optocouplers"
             },
             {
                 "key": "d",
-                "title": "Оптоволоконные приемники/передатчики"
+                "title": "Fiber optic receivers/transmitters"
             },
             {
                 "key": "e",
-                "title": "Оптоизоляторы для MOSFET"
+                "title": "Optocouplers for MOSFET"
             }
         ],
         "key": "f",
-        "title": "Оптоэлектроника и дисплеи"
+        "title": "Optoelectronics and displays"
     },
     {
         "child": [
@@ -1239,179 +1239,179 @@
                 "child": [
                     {
                         "key": "a",
-                        "title": "Гироскопы"
+                        "title": "Gyroscopes"
                     },
                     {
                         "key": "b",
-                        "title": "Датчики емкостные"
+                        "title": "Capacitive sensors"
                     },
                     {
                         "key": "c",
-                        "title": "Датчики индуктивные"
+                        "title": "Inductive sensors"
                     },
                     {
                         "key": "d",
-                        "title": "Датчики положения оптические"
+                        "title": "Optical position sensors"
                     },
                     {
                         "key": "e",
-                        "title": "Датчики положения ультразвуковые"
+                        "title": "Ultrasonic position sensors"
                     },
                     {
                         "key": "f",
-                        "title": "Датчики магниточувствительные"
+                        "title": "Magnet-sensitive sensors"
                     },
                     {
                         "key": "g",
-                        "title": "Электронный компас"
+                        "title": "Electronic compass"
                     }
                 ],
                 "key": "a",
-                "title": "Датчики положения"
+                "title": "Position sensors"
             },
             {
                 "child": [
                     {
                         "key": "a",
-                        "title": "Датчики тока с выходом по напряжению"
+                        "title": "Current sensors with voltage output"
                     },
                     {
                         "key": "b",
-                        "title": "Датчики тока с выходом по току"
+                        "title": "Current sensors with current output"
                     },
                     {
                         "key": "c",
-                        "title": "Датчики тока с логическим выходом"
+                        "title": "Current sensors with logic output"
                     },
                     {
                         "key": "d",
-                        "title": "Токовые измерительные шунты"
+                        "title": "Current measuring shunts"
                     },
                     {
                         "key": "e",
-                        "title": "Трансформаторы тока"
+                        "title": "Current transformers"
                     },
                     {
                         "key": "f",
-                        "title": "Прочие датчики тока"
+                        "title": "Other current sensors"
                     }
                 ],
                 "key": "b",
-                "title": "Датчики тока"
+                "title": "Current sensors"
             },
             {
                 "child": [
                     {
                         "key": "a",
-                        "title": "Видеоматрицы"
+                        "title": "Video matrix"
                     },
                     {
                         "key": "b",
-                        "title": "Датчики контраста"
+                        "title": "Contrast sensors"
                     },
                     {
                         "key": "c",
-                        "title": "Датчики освещенности"
+                        "title": "Light sensor"
                     },
                     {
                         "key": "d",
-                        "title": "Интегральные фотоприемники"
+                        "title": "Integrated photodetectors"
                     },
                     {
                         "key": "e",
-                        "title": "Линзы Френеля"
+                        "title": "Fresnel lens"
                     },
                     {
                         "key": "f",
-                        "title": "Фотодиоды"
+                        "title": "Photodiodes"
                     },
                     {
                         "key": "g",
-                        "title": "Фоторезисторы"
+                        "title": "Photoresistors"
                     },
                     {
                         "key": "h",
-                        "title": "Фототранзисторы"
+                        "title": "Phototransistors"
                     },
                     {
                         "key": "i",
-                        "title": "Инфракрасные датчики"
+                        "title": "Infrared sensor"
                     },
                     {
                         "key": "j",
-                        "title": "Прочие"
+                        "title": "Others"
                     }
                 ],
                 "key": "c",
-                "title": "Датчики фоточувствительные"
+                "title": "Photosensitive sensors"
             },
             {
                 "key": "d",
-                "title": "Датчики угла поворота"
+                "title": "Angle rotation sensors"
             },
             {
                 "key": "e",
-                "title": "Датчики движения"
+                "title": "Motion sensors"
             },
             {
                 "key": "f",
-                "title": "Датчики и детекторы газов"
+                "title": "Gas sensors and detectors"
             },
             {
                 "key": "g",
-                "title": "Датчики напряжения"
+                "title": "Voltage sensors"
             },
             {
                 "key": "h",
-                "title": "Датчики расстояния"
+                "title": "Distance sensors"
             },
             {
                 "key": "i",
-                "title": "Датчики давления"
+                "title": "Pressure sensors"
             },
             {
                 "key": "j",
-                "title": "Датчики температуры"
+                "title": "Temperature sensors"
             },
             {
                 "key": "k",
-                "title": "Датчики уровня жидкости"
+                "title": "Liquid level sensors"
             },
             {
                 "key": "l",
-                "title": "Датчики Холла"
+                "title": "Hall sensors"
             },
             {
                 "key": "m",
-                "title": "Датчики усилия"
+                "title": "Force sensors"
             },
             {
                 "key": "n",
-                "title": "Микрофоны"
+                "title": "Microphones"
             },
             {
                 "key": "o",
-                "title": "Датчики расхода газов"
+                "title": "Gas flow sensors"
             },
             {
                 "key": "p",
-                "title": "Датчики ускорения"
+                "title": "Acceleration sensors"
             },
             {
                 "key": "q",
-                "title": "Датчики влажности"
+                "title": "Humidity sensors"
             },
             {
                 "key": "r",
-                "title": "Датчики магнитного поля"
+                "title": "Magnetic field sensor"
             },
             {
                 "key": "s",
-                "title": "Прочие датчики"
+                "title": "Other sensors"
             }
         ],
         "key": "g",
-        "title": "Датчики"
+        "title": "Sensors"
     },
     {
         "child": [
@@ -1421,79 +1421,79 @@
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Высокочастотные дроссели SMD"
+                                "title": "High frequency SMD inductors"
                             },
                             {
                                 "key": "b",
-                                "title": "Высокочастотные дроссели с аксиальными выводами"
+                                "title": "High frequency inductors with axial leads"
                             },
                             {
                                 "key": "c",
-                                "title": "Высокочастотные дроссели с радиальными выводами"
+                                "title": "High frequency inductors with radial leads"
                             }
                         ],
                         "key": "a",
-                        "title": "Высокочастотные дроссели"
+                        "title": "High frequency inductors"
                     },
                     {
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Силовые дроссели SMD"
+                                "title": "Power SMD inductors"
                             },
                             {
                                 "key": "b",
-                                "title": "Силовые дроссели аксиальные"
+                                "title": "Power inductors with axial leads"
                             },
                             {
                                 "key": "c",
-                                "title": "Силовые дроссели радиальные"
+                                "title": "Power inductors with radial leads"
                             }
                         ],
                         "key": "b",
-                        "title": "Силовые дроссели"
+                        "title": "Power inductors"
                     },
                     {
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Тороидальные дроссели DIP"
+                                "title": "Toroidal DIP inductors"
                             },
                             {
                                 "key": "b",
-                                "title": "Тороидальные дроссели smd"
+                                "title": "Toroidal SMD inductors"
                             }
                         ],
                         "key": "c",
-                        "title": "Тороидальные дроссели"
+                        "title": "Toroidal inductors"
                     },
                     {
                         "key": "d",
-                        "title": "Дроссели ККМ (PFC)"
+                        "title": "PFC inductors"
                     },
                     {
                         "key": "e",
-                        "title": "Дроссели стандартные"
+                        "title": "Standard inductors"
                     },
                     {
                         "key": "f",
-                        "title": "Зарядные катушки"
+                        "title": "Charging coils"
                     },
                     {
                         "key": "g",
-                        "title": "Катушки без сердечника"
+                        "title": "Coils without core"
                     },
                     {
                         "key": "h",
-                        "title": "РЧ дроссели"
+                        "title": "RF inductors"
                     },
                     {
                         "key": "i",
-                        "title": "Сборки дросселей"
+                        "title": "Inductors pack"
                     }
                 ],
                 "key": "a",
-                "title": "Дроссели и катушки"
+                "title": "Inductors & coils"
             },
             {
                 "child": [
@@ -1501,15 +1501,15 @@
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Дуплексоры"
+                                "title": "Duplexers"
                             },
                             {
                                 "key": "b",
-                                "title": "ПАВ-фильтры"
+                                "title": "Saw filters"
                             },
                             {
                                 "key": "c",
-                                "title": "РЧ фильтры"
+                                "title": "RF filters"
                             }
                         ],
                         "key": "a",
@@ -1519,67 +1519,67 @@
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Силовые фильтры IEC"
+                                "title": "Power IEC filters"
                             },
                             {
                                 "key": "b",
-                                "title": "Силовые фильтры в корпусе"
+                                "title": "Boxed power filters"
                             },
                             {
                                 "key": "c",
-                                "title": "Силовые фильтры на плату"
+                                "title": "PCB mount power filters"
                             },
                             {
                                 "key": "d",
-                                "title": "Силовые фильтры на шасси"
+                                "title": "Box mount power filters"
                             }
                         ],
                         "key": "b",
-                        "title": "Силовые фильтры"
+                        "title": "Power filters"
                     },
                     {
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Синфазные дроссели DIP"
+                                "title": "Inphase DIP inductors"
                             },
                             {
                                 "key": "b",
-                                "title": "Синфазные дроссели SMD"
+                                "title": "Inphase SMD inductors"
                             }
                         ],
                         "key": "c",
-                        "title": "Синфазные дроссели"
+                        "title": "Inphase inductors"
                     },
                     {
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Разъемные ферритовые сердечники"
+                                "title": "Split ferrite cores"
                             },
                             {
                                 "key": "b",
-                                "title": "Ферритовые сердечники для плоского кабеля"
+                                "title": "Ferrite cores for flat cable"
                             },
                             {
                                 "key": "c",
-                                "title": "Ферритовые сердечники, бусины"
+                                "title": "Ferrite cores, beads"
                             },
                             {
                                 "key": "d",
-                                "title": "Ферриты с круглым сердечником"
+                                "title": "Ferrites with round core"
                             }
                         ],
                         "key": "d",
-                        "title": "Ферритовые фильтры"
+                        "title": "Ferrite filters"
                     },
                     {
                         "key": "e",
-                        "title": "Конденсаторы силовые"
+                        "title": "Power capasitors"
                     }
                 ],
                 "key": "b",
-                "title": "Фильтры"
+                "title": "Filters"
             },
             {
                 "child": [
@@ -1587,165 +1587,165 @@
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Конденсаторы электролитические DIP"
+                                "title": "Electrolytic DIP capacitors"
                             },
                             {
                                 "key": "b",
-                                "title": "Конденсаторы электролитические SMD"
+                                "title": "Electrolytic SMD capacitors"
                             },
                             {
                                 "key": "c",
-                                "title": "Конденсаторы электролитические винтовые, на клеммах"
+                                "title": "Electrolytic capacitors with screw terminal"
                             },
                             {
                                 "key": "d",
-                                "title": "Конденсаторы электролитические полимерные"
+                                "title": "Electrolytic polymer capacitors"
                             },
                             {
                                 "key": "e",
-                                "title": "Прочие"
+                                "title": "Others"
                             }
                         ],
                         "key": "a",
-                        "title": "Алюминиевые электролиты"
+                        "title": "Aluminum electrolytic capasitors"
                     },
                     {
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Конденсаторы полимерные"
+                                "title": "Polymer capacitors"
                             },
                             {
                                 "key": "b",
-                                "title": "Конденсаторы танталовые DIP"
+                                "title": "Tantal DIP capasitors"
                             },
                             {
                                 "key": "c",
-                                "title": "Конденсаторы танталовые SMD"
+                                "title": "Tantal SMD capasitors"
                             }
                         ],
                         "key": "b",
-                        "title": "Танталовые электролиты"
+                        "title": "Tantal capasitors"
                     },
                     {
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Конденсаторы DIP"
+                                "title": "DIP capasitors"
                             },
                             {
                                 "key": "b",
-                                "title": "Конденсаторы SMD"
+                                "title": "SMD capasitors"
                             },
                             {
                                 "key": "c",
-                                "title": "Конденсаторы дисковые"
+                                "title": "Disc capasitors"
                             },
                             {
                                 "key": "d",
-                                "title": "Помехоподавляющие керамические конденсаторы"
+                                "title": "Noise cancelling ceramic capacitors"
                             },
                             {
                                 "key": "e",
-                                "title": "Составные DIP"
+                                "title": "Packet DIP"
                             },
                             {
                                 "key": "f",
-                                "title": "Составные SMD"
+                                "title": "Packet SMD"
                             }
                         ],
                         "key": "c",
-                        "title": "Конденсаторы керамические"
+                        "title": "Ceramic capasitors"
                     },
                     {
                         "key": "d",
-                        "title": "Выскочастотные конденсаторы"
+                        "title": "High frequency capacitors"
                     },
                     {
                         "key": "e",
-                        "title": "Пленочные конденсаторы"
+                        "title": "Film capacitors"
                     },
                     {
                         "key": "f",
-                        "title": "Подстроечные конденсаторы"
+                        "title": "Trimmer capacitors"
                     },
                     {
                         "key": "g",
-                        "title": "Слюдяные конденсаторы"
+                        "title": "Mica capacitors"
                     },
                     {
                         "key": "h",
-                        "title": "Искрогасящие модули"
+                        "title": "Spark suppression modules"
                     },
                     {
                         "key": "i",
-                        "title": "Пленочные помехоподавляющие конденсаторы"
+                        "title": "Film noise cancelling capacitors"
                     },
                     {
                         "key": "j",
-                        "title": "Ионисторы, суперконденсаторы"
+                        "title": "Double-layer capacitors, supercapacitors"
                     },
                     {
                         "key": "k",
-                        "title": "Конденсаторные сборки"
+                        "title": "Packet capasitors"
                     },
                     {
                         "key": "l",
-                        "title": "Варикапы"
+                        "title": "Varicaps"
                     },
                     {
                         "key": "m",
-                        "title": "Ниобиевые конденсаторы"
+                        "title": "Niobium capacitors"
                     }
                 ],
                 "key": "c",
-                "title": "Конденсаторы"
+                "title": "Capasitors"
             },
             {
                 "child": [
                     {
                         "key": "a",
-                        "title": "Сердечники"
+                        "title": "Cores"
                     },
                     {
                         "key": "b",
-                        "title": "Аудио трансформаторы"
+                        "title": "Audio transformers"
                     },
                     {
                         "key": "c",
-                        "title": "Изолирующие трансформаторы"
+                        "title": "Isolation transformers"
                     },
                     {
                         "key": "d",
-                        "title": "Импульсные трансформаторы"
+                        "title": "Pulse transformers"
                     },
                     {
                         "key": "e",
-                        "title": "Симметричные трансформаторы"
+                        "title": "Symmetrical transformers"
                     },
                     {
                         "key": "f",
-                        "title": "Специализированные трансформаторы"
+                        "title": "Special transformers"
                     },
                     {
                         "key": "g",
-                        "title": "Токочувствительные трансформаторы"
+                        "title": "Current sense transformers"
                     },
                     {
                         "key": "h",
-                        "title": "Тороидальные трансформаторы"
+                        "title": "Toroidal transformers"
                     },
                     {
                         "key": "i",
-                        "title": "Трансформаторы тока"
+                        "title": "Current transformers"
                     },
                     {
                         "key": "j",
-                        "title": "Прочие"
+                        "title": "Others"
                     }
                 ],
                 "key": "d",
-                "title": "Трансформаторы"
+                "title": "Transformers"
             },
             {
                 "child": [
@@ -1753,73 +1753,73 @@
                         "child": [
                             {
                                 "key": "a",
-                                "title": "MELF резисторы SMD"
+                                "title": "MELF SMD resistors"
                             },
                             {
                                 "key": "b",
-                                "title": "Резисторы на панель"
+                                "title": "Panel mount resistors"
                             },
                             {
                                 "key": "c",
-                                "title": "Резисторы постоянные DIP"
+                                "title": "Fixed DIP resistors"
                             },
                             {
                                 "key": "d",
-                                "title": "Резисторы постоянные SMD"
+                                "title": "Fixed SMD resistors"
                             },
                             {
                                 "key": "e",
-                                "title": "Токовые шунты DIP"
+                                "title": "DIP current shunt"
                             },
                             {
                                 "key": "f",
-                                "title": "Токовые шунты SMD"
+                                "title": "SMD current shunt"
                             }
                         ],
                         "key": "a",
-                        "title": "Резисторы постоянные"
+                        "title": "Fixed resistors"
                     },
                     {
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Ползунковые переменные резисторы"
+                                "title": "Slider variable resistors"
                             },
                             {
                                 "key": "b",
-                                "title": "Потенциометры с цифровым дисплеем"
+                                "title": "Potentiometers with digital display"
                             },
                             {
                                 "key": "c",
-                                "title": "Резисторы переменные поворотные"
+                                "title": "Rotary variable resistors"
                             },
                             {
                                 "key": "d",
-                                "title": "Резисторы подстроечные"
+                                "title": "Trimming resistors"
                             },
                             {
                                 "key": "e",
-                                "title": "Прочие"
+                                "title": "Others"
                             }
                         ],
                         "key": "b",
-                        "title": "Резисторы подстроечные и переменные"
+                        "title": "Trimming & variable resistors"
                     },
                     {
                         "key": "c",
-                        "title": "Реостаты"
+                        "title": "Rheostats"
                     },
                     {
                         "key": "d",
-                        "title": "Сборки резисторов"
+                        "title": "Resistors pack"
                     },
                     {
                         "key": "e",
-                        "title": "Терморезисторы"
+                        "title": "Thermistors"
                     }
                 ],
                 "key": "e",
-                "title": "Резисторы"
+                "title": "Resistors"
             },
             {
                 "child": [
@@ -1827,82 +1827,82 @@
                         "child": [
                             {
                                 "key": "a",
-                                "title": "Автомобильные предохранители"
+                                "title": "Car fuses"
                             },
                             {
                                 "key": "b",
-                                "title": "Индустриальные предохранители"
+                                "title": "Industrial fuses"
                             },
                             {
                                 "key": "c",
-                                "title": "Картриджные предохранители"
+                                "title": "Cartridge fuses"
                             },
                             {
                                 "key": "d",
-                                "title": "Предохранители DIP"
+                                "title": "DIP fuses"
                             },
                             {
                                 "key": "e",
-                                "title": "Предохранители HRC"
+                                "title": "HRC fuses"
                             },
                             {
                                 "key": "f",
-                                "title": "Предохранители SMD"
+                                "title": "SMD fuses"
                             },
                             {
                                 "key": "g",
-                                "title": "Предохранители быстрые"
+                                "title": "Fast fuses"
                             },
                             {
                                 "key": "h",
-                                "title": "Предохранители с индикацией"
+                                "title": "Fuses with display"
                             }
                         ],
                         "key": "a",
-                        "title": "Предохранители плавкие"
+                        "title": "Fuses"
                     },
                     {
                         "key": "b",
-                        "title": "Варисторы"
+                        "title": "Varistors"
                     },
                     {
                         "key": "c",
-                        "title": "Газоразрядники"
+                        "title": "Gas dischargers"
                     },
                     {
                         "key": "d",
-                        "title": "Самовосстанавливающиеся предохранители"
+                        "title": "Self-healing fuses"
                     },
                     {
                         "key": "e",
-                        "title": "Тепловые выключатели"
+                        "title": "Thermal switch"
                     },
                     {
                         "key": "f",
-                        "title": "Термопредохранители"
+                        "title": "Thermal fuses"
                     }
                 ],
                 "key": "f",
-                "title": "Элементы защиты"
+                "title": "Protection elements"
             },
             {
                 "key": "g",
-                "title": "Кварцевые резонаторы"
+                "title": "Quartz resonator"
             },
             {
                 "key": "h",
-                "title": "Керамические резонаторы"
+                "title": "Ceramic resonator"
             },
             {
                 "key": "i",
-                "title": "Прочие пассивные компоненты"
+                "title": "Other passiv components"
             }
         ],
         "key": "h",
-        "title": "Пассивные компоненты"
+        "title": "Passiv components"
     },
     {
         "key": "i",
-        "title": "Автоматика"
+        "title": "Automatic"
     }
 ]
