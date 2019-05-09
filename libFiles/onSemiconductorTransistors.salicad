@@ -12,18 +12,18 @@
                     },
                     "SymbolId": "Symbol\rBipolar transistor PNP\rsalicad",
                     "SymbolTitle": "Bipolar transistor PNP (salicad)",
-                    "id": "2d80110",
+                    "id": "5608b9cf5d00",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rsot23-3\rsalicad",
                     "PartTitle": "sot23-3 (salicad)",
-                    "id": "111a690",
+                    "id": "5608b9d05580",
                     "type": "PartVariant"
                 }
             ],
-            "Created": 38840957,
+            "Created": 42625109,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -36,6 +36,7 @@
                 "Vceo": "45V",
                 "article": "BC857ALT1G",
                 "bom": "<article>",
+                "category": "{uu.b.a.d",
                 "device mark": "3E",
                 "hFE": "180",
                 "manufacturer": "ON Semiconductor",
@@ -63,7 +64,7 @@
                 "BC857CLT1G",
                 "3G"
             ],
-            "id": "1c99da0",
+            "id": "5608b9d049d0",
             "type": "Comp"
         },
         {
@@ -74,7 +75,7 @@
                     "Default": false,
                     "PartId": "Part\rsot23-3\rsalicad",
                     "PartTitle": "sot23-3 (salicad)",
-                    "id": "2e022d0",
+                    "id": "5608b239f3c0",
                     "type": "PartVariant"
                 },
                 {
@@ -85,11 +86,11 @@
                     },
                     "SymbolId": "Symbol\rBipolar transistor NPN\rsalicad",
                     "SymbolTitle": "Bipolar transistor NPN (salicad)",
-                    "id": "2ce6590",
+                    "id": "5608b9628e80",
                     "type": "Section"
                 }
             ],
-            "Created": 38840764,
+            "Created": 42625132,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -102,6 +103,7 @@
                 "Vceo": "45V",
                 "article": "",
                 "bom": "<article>",
+                "category": "{uu.b.a.d",
                 "device mark": "",
                 "hFE": "",
                 "manufacturer": "ON Semiconductor",
@@ -129,12 +131,12 @@
                 "BC847CLT1G",
                 "1G"
             ],
-            "id": "113eb50",
+            "id": "5608b8f70510",
             "type": "Comp"
         }
     ],
     "Parametrs": {
     },
-    "id": "2dcadc0",
+    "id": "5608b9d05780",
     "type": "Project"
 }

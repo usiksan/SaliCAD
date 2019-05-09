@@ -12,18 +12,18 @@
                     },
                     "SymbolId": "Symbol\rtwo diodes common cathode\rsalicad",
                     "SymbolTitle": "two diodes common cathode (salicad)",
-                    "id": "558605977820",
+                    "id": "5608b239f3c0",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rsot23-3\rsalicad",
                     "PartTitle": "sot23-3 (salicad)",
-                    "id": "5586073eba80",
+                    "id": "5608b8238420",
                     "type": "PartVariant"
                 }
             ],
-            "Created": 40685622,
+            "Created": 42625057,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -32,6 +32,7 @@
             "Parametrs": {
                 "article": "",
                 "bom": "<article> <value>",
+                "category": "{uu.b.b.b",
                 "current": "200mA",
                 "forward voltage": "0.4V",
                 "manufacturer": "on semiconductor",
@@ -41,7 +42,7 @@
                 "value": "BAT54CLT1G"
             },
             "Title": "dual common cathode schottky barrier diodes bat54clt1g",
-            "id": "5586062e83e0",
+            "id": "5608b8224410",
             "type": "Comp"
         },
         {
@@ -56,18 +57,18 @@
                     },
                     "SymbolId": "Symbol\rdouble serial diodes\rsalicad",
                     "SymbolTitle": "double serial diodes (salicad)",
-                    "id": "558605c609b0",
+                    "id": "5608b8275690",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rsot523\rsalicad",
                     "PartTitle": "sot523 (salicad)",
-                    "id": "558606cb0350",
+                    "id": "5608b88fb130",
                     "type": "PartVariant"
                 }
             ],
-            "Created": 40691637,
+            "Created": 42625079,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -76,6 +77,7 @@
             "Parametrs": {
                 "article": "",
                 "bom": "<article> <value>",
+                "category": "{uu.b.b.b",
                 "current": "150mA",
                 "forward voltage": "0.8V",
                 "manufacturer": "on semiconductor",
@@ -85,12 +87,12 @@
                 "value": "BAV99T"
             },
             "Title": "dual serial fast switching diode BAV99T",
-            "id": "558607816b00",
+            "id": "5608b8f104a0",
             "type": "Comp"
         }
     ],
     "Parametrs": {
     },
-    "id": "558606248600",
+    "id": "5608b23efd30",
     "type": "Project"
 }

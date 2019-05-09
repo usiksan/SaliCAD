@@ -2,7 +2,7 @@
 <Package>
     <DisplayName>SaliCAD</DisplayName>
     <Description>Multyfunctional electronics schematic and pcb layout CAD programm.</Description>
-    <Version>0.63</Version>
+    <Version>1.0</Version>
     <ReleaseDate>2019-04-14</ReleaseDate>
     <Default>true</Default>
     <Script>installscript.qs</Script>

@@ -1,34 +1,35 @@
 <html>
-<head>
-<meta charset="utf-8" />
-</head>
-<body>
-<h1 align="center">Enter bus nets dialog</h1>
-<p>In this dialog You define net list for fast enter bus.
-Net list can be entered or selected from previously entered list.
-You can also select one previously entered list and edit it.
-</p>
-<p>Net list format is:</p>
-<p>Net1[,...]</p>
-<p>where Net1 represents net name. When You enter net list
-with this dialog You can not use commas in net names because it used
-as net delimiter.
-If some nets have same name but different index then You can use
-short description:</p>
-<p>same_name_letters&ltstart_index:stop_index&gt</p>
-<p>For example:</p>
-<p>D&lt0:3&gt,+5V,Gnd,A&lt0:2&gt will produce next net list result</p>
-<p>D0<br>
-D1<br>
-D2<br>
-D3<br>
-+5V<br>
-Gnd<br>
-A0<br>
-A1<br>
-A2</p>
-
-<p>Common list string length can not be more than 250 symbols</p>
-
-</body>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <h1 align="center">Enter bus nets dialog</h1>
+    <p>In this dialog You define net list for fast enter bus.
+      Net list can be entered or selected from previously entered list.
+      You can also select one previously entered list and edit it.
+    </p>
+    <p>Net list format is:</p>
+    <p>Net1[,...]</p>
+    <p>where Net1 represents net name. When You enter net list
+      with this dialog You can not use commas in net names because it used
+      as net delimiter.
+      If some nets have same name but different index then You can use
+      short description:</p>
+    <p>same_name_letters&lt;start_index:stop_index&gt;</p>
+    <p>For example:</p>
+    <p>D&lt;0:3&gt;,+5V,Gnd,A&lt;0:2&gt; will produce next net list result</p>
+    <p>D0<br>
+      D1<br>
+      D2<br>
+      D3<br>
+      +5V<br>
+      Gnd<br>
+      A0<br>
+      A1<br>
+      A2</p>
+    <p>The right part of the dialog contains a list of all named nets, i.e.
+      those nets whose names were entered manually. Nets with automatic names
+      are not represented in this list. When you select a net from this list, it
+      is automatically placed in the bus list.</p>
+  </body>
 </html>

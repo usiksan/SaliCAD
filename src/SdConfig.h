@@ -153,29 +153,29 @@ History
   17.04.2019 v0.64 When upgrading component don't changed ident (and perhaps - value)
                    Prevent open same file more then one time
   02.05.2019 v0.65 Append category param, category fixed tree, allow multiple categories
+  09.05.2019 v1.0  Release
 */
 
 #ifndef SDCONFIG
 #define SDCONFIG
 
 //Do'nt change this name
-#define SD_AUTHOR                   "Alexander Sibilev"
-#define SD_NAME                     "SaliCAD"
+#define SD_AUTHOR                    "Alexander Sibilev"
+#define SD_NAME                      "SaliCAD"
 
 //Version definition
-#define SD_VERSION_MAJOR             0
-#define SD_VERSION_MINOR             65
+#define SD_VERSION_MAJOR             1
+#define SD_VERSION_MINOR             0
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
 #define SD_DEFAULT_IP                "62.109.11.83"
-//#define SD_DEFAULT_IP                "127.0.0.0"
 #define SD_DEFAULT_PORT              1970
 #define SD_UPGRADE_WEB               "http:/salicad.salilab.com/downloads/"
 
 
 //When defined disable registration with sali name
-//#define SD_DISABLE_SALI_AUTHOR
+#define SD_DISABLE_SALI_AUTHOR
 
 //Project naming definition
 #define SD_BASE_EXTENSION            ".salicad"
@@ -218,7 +218,7 @@ History
 #define FONT_COUNT                   5
 
 //Undo history count
-#define UNDO_HISTORY_SIZE            100
+#define UNDO_HISTORY_SIZE            1000
 
 //Clipboard objects format
 #define SD_CLIP_FORMAT_PITEM         "bin/salicad-SdProjectItem"    //Partial salicad SdProjectItem
@@ -229,10 +229,10 @@ History
 #define CLIP_IMAGE_HEIGHT            1280
 
 //Max default delivered limit elements
-#define SD_DEFAULT_DELIVERED_LIMIT    100
+#define SD_DEFAULT_DELIVERED_LIMIT   100
 
 //Max object in find list of GetObject dialog
-#define SD_GET_OBJECT_MAX_FIND_LIST   300
+#define SD_GET_OBJECT_MAX_FIND_LIST  300
 
 //Settings key names
 #define SDK_WMAIN_MAX                "WMainMax"
@@ -249,68 +249,68 @@ History
 #define SDK_ENVIR                    "Envir"
 #define SDK_HELP_PATH                "HelpPath"
 
-#define MODE_HELP         //Prefix to mode help files
+#define MODE_HELP                    //Prefix to mode help files
 
-#define MAX64_MASK 0xffffffffffffffffL
-#define MAX32_MASK 0xffffffff
+#define MAX64_MASK                   0xffffffffffffffffL
+#define MAX32_MASK                   0xffffffff
 
-#define defSymScale 20.0   /*Коэффициент масштаба по умолчанию для схемных изображений*/
-#define defPrtScale 200.0  /*Коэффициент масштаба по умолчанию для изобр. плат*/
-#define minScale    0.0001 /*Ограничения масштабирования*/
-#define maxScale    10000.0
-#define maxBusNumber 1000  //Max net number in bus when enter bus mode
+#define defSymScale                  20.0    //Default scale for schematic and symbol
+#define defPrtScale                  200.0   //Default scale for PCB and part
+#define minScale                     0.0001  //Minimum scale
+#define maxScale                     10000.0 //Maximum scale
+#define maxBusNumber                 1000    //Max net number in bus when enter bus mode
 
-#define defNetNamePrefix "XN" //Default net name prefix
+#define defNetNamePrefix             "XN"    //Default net name prefix
 
 //Standard param names
-#define stdParamBom            QStringLiteral("bom")
-#define stdParamArticle        QStringLiteral("article")
-#define stdParamTitle          QStringLiteral("title")
-#define stdParamValue          QStringLiteral("value")
-#define stdParamValueMin       QStringLiteral("valueMin")
-#define stdParamValueMax       QStringLiteral("valueMax")
-#define stdParamValueRow       QStringLiteral("valueRow")
-#define stdParamPrefix         QStringLiteral("prefix")
-#define stdParamValueSelector  QStringLiteral("valueSelector")
-#define stdParamManufacturer   QStringLiteral("manufacturer")
-#define stdParamTolerance      QStringLiteral("tolerance")
-#define stdParamDatasheet      QStringLiteral("datasheet")
-#define stdParamWww            QStringLiteral("www")
-#define stdParamLogNumber      QStringLiteral("logNumber")
-#define stdParamItemId         QStringLiteral("itemId")
-#define stdParamItemIdList     QStringLiteral("itemIdList")
-#define stdParamCompCount      QStringLiteral("compCount")
-#define stdParamTotalPageCount QStringLiteral("totalPageCount")
-#define stdParamPageIndex      QStringLiteral("pageIndex")
-#define stdParamDeviceMark     QStringLiteral("device mark")
-#define stdParamCategory       QStringLiteral("category")
+#define stdParamBom                  QStringLiteral("bom")
+#define stdParamArticle              QStringLiteral("article")
+#define stdParamTitle                QStringLiteral("title")
+#define stdParamValue                QStringLiteral("value")
+#define stdParamValueMin             QStringLiteral("valueMin")
+#define stdParamValueMax             QStringLiteral("valueMax")
+#define stdParamValueRow             QStringLiteral("valueRow")
+#define stdParamPrefix               QStringLiteral("prefix")
+#define stdParamValueSelector        QStringLiteral("valueSelector")
+#define stdParamManufacturer         QStringLiteral("manufacturer")
+#define stdParamTolerance            QStringLiteral("tolerance")
+#define stdParamDatasheet            QStringLiteral("datasheet")
+#define stdParamWww                  QStringLiteral("www")
+#define stdParamLogNumber            QStringLiteral("logNumber")
+#define stdParamItemId               QStringLiteral("itemId")
+#define stdParamItemIdList           QStringLiteral("itemIdList")
+#define stdParamCompCount            QStringLiteral("compCount")
+#define stdParamTotalPageCount       QStringLiteral("totalPageCount")
+#define stdParamPageIndex            QStringLiteral("pageIndex")
+#define stdParamDeviceMark           QStringLiteral("device mark")
+#define stdParamCategory             QStringLiteral("category")
 //Capacitor specific
-#define stdParamDielectric     QStringLiteral("dielectric")
-#define stdParamVoltage        QStringLiteral("voltage")
+#define stdParamDielectric           QStringLiteral("dielectric")
+#define stdParamVoltage              QStringLiteral("voltage")
 //Diod specific
-#define stdParamForvardVoltage QStringLiteral("forward voltage")
-#define stdParamCurent         QStringLiteral("current")
-#define stdParamReverceVoltage QStringLiteral("reverce voltage")
+#define stdParamForvardVoltage       QStringLiteral("forward voltage")
+#define stdParamCurent               QStringLiteral("current")
+#define stdParamReverceVoltage       QStringLiteral("reverce voltage")
 //LED specific
-#define stdParamAngle          QStringLiteral("angle")
-#define stdParamBrightness     QStringLiteral("brightness")
-#define stdParamColor          QStringLiteral("color")
-#define stdParamWavelength     QStringLiteral("wavelength")
+#define stdParamAngle                QStringLiteral("angle")
+#define stdParamBrightness           QStringLiteral("brightness")
+#define stdParamColor                QStringLiteral("color")
+#define stdParamWavelength           QStringLiteral("wavelength")
 //Inductor specific
-#define stdParamSatCurrent     QStringLiteral("saturation current")
-#define stdParamResistance     QStringLiteral("resistance")
-#define stdParamSRF            QStringLiteral("SRF")
+#define stdParamSatCurrent           QStringLiteral("saturation current")
+#define stdParamResistance           QStringLiteral("resistance")
+#define stdParamSRF                  QStringLiteral("SRF")
 //MOSFET specific
-#define stdParamId             QStringLiteral("Id")
-#define stdParamPd             QStringLiteral("Pd")
-#define stdParamRdsOn          QStringLiteral("Rds on")
-#define stdParamVdss           QStringLiteral("Vdss")
-#define stdParamVgs            QStringLiteral("Vgs")
+#define stdParamId                   QStringLiteral("Id")
+#define stdParamPd                   QStringLiteral("Pd")
+#define stdParamRdsOn                QStringLiteral("Rds on")
+#define stdParamVdss                 QStringLiteral("Vdss")
+#define stdParamVgs                  QStringLiteral("Vgs")
 //Transistor specific
-#define stdParamIc             QStringLiteral("Ic")
-#define stdParamVcbo           QStringLiteral("Vcbo")
-#define stdParamVceo           QStringLiteral("Vceo")
-#define stdParamHFE            QStringLiteral("hFE")
+#define stdParamIc                   QStringLiteral("Ic")
+#define stdParamVcbo                 QStringLiteral("Vcbo")
+#define stdParamVceo                 QStringLiteral("Vceo")
+#define stdParamHFE                  QStringLiteral("hFE")
 
 
 #endif // SDCONFIG

@@ -13,7 +13,7 @@
                         "x": 12500,
                         "y": -2500
                     },
-                    "id": "1e030f0",
+                    "id": "5608b74abe50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -50,7 +50,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "21",
                     "Stratum": "3fffffff",
-                    "id": "1e14e70",
+                    "id": "5608baa22cf0",
                     "type": "PartPin"
                 },
                 {
@@ -84,7 +84,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "21",
                     "Stratum": "3fffffff",
-                    "id": "164b450",
+                    "id": "5608b8f4f5e0",
                     "type": "PartPin"
                 },
                 {
@@ -92,7 +92,7 @@
                         "x": 5000,
                         "y": 1250
                     },
-                    "id": "1eb3990",
+                    "id": "5608bb0b8560",
                     "over": {
                         "b": 1814,
                         "r": 5827,
@@ -114,7 +114,7 @@
                         "x": 5000,
                         "y": -1250
                     },
-                    "id": "1f27580",
+                    "id": "5608bc440f90",
                     "over": {
                         "b": -711,
                         "r": 6537,
@@ -141,7 +141,7 @@
             "Parametrs": {
             },
             "Title": "NTC(КОРПУС)",
-            "id": "1688d60",
+            "id": "5608bbdc2fa0",
             "type": "Part"
         },
         {
@@ -157,7 +157,7 @@
                         "x": 1250,
                         "y": 200
                     },
-                    "id": "1da8790",
+                    "id": "5608bbe23ff0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -172,7 +172,7 @@
                         "x": 1250,
                         "y": 0
                     },
-                    "id": "1de6190",
+                    "id": "5608bbd6eef0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -187,7 +187,7 @@
                         "x": 0,
                         "y": 0
                     },
-                    "id": "15f7800",
+                    "id": "5608b5fb86f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -223,7 +223,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "16025a0",
+                    "id": "5608ba2ff950",
                     "type": "SymPin"
                 },
                 {
@@ -256,7 +256,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1e8e6a0",
+                    "id": "5608bb0a38a0",
                     "type": "SymPin"
                 },
                 {
@@ -264,7 +264,7 @@
                         "x": 750,
                         "y": 375
                     },
-                    "id": "1f05f50",
+                    "id": "5608bb726390",
                     "over": {
                         "b": 567,
                         "r": 1036,
@@ -286,7 +286,7 @@
                         "x": 750,
                         "y": -375
                     },
-                    "id": "1612c00",
+                    "id": "5608bbe05e20",
                     "over": {
                         "b": -184,
                         "r": 1284,
@@ -313,7 +313,7 @@
             "Parametrs": {
             },
             "Title": "resistor (symbol)",
-            "id": "1e1b570",
+            "id": "5608bbdfb520",
             "type": "Symbol"
         },
         {
@@ -329,7 +329,7 @@
                         "x": 7500,
                         "y": 11000
                     },
-                    "id": "1d89500",
+                    "id": "5608bc484460",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -340,7 +340,7 @@
                         "x": 0,
                         "y": 500
                     },
-                    "id": "1f21320",
+                    "id": "5608b9601a80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -378,7 +378,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2.2d1.2m0.1",
                     "Stratum": "3fffffff",
-                    "id": "168f630",
+                    "id": "5608ba34a560",
                     "type": "PartPin"
                 },
                 {
@@ -412,7 +412,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2.2d1.2m0.1",
                     "Stratum": "3fffffff",
-                    "id": "163ae00",
+                    "id": "5608bc48b7b0",
                     "type": "PartPin"
                 },
                 {
@@ -446,7 +446,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2.2d1.2m0.1",
                     "Stratum": "3fffffff",
-                    "id": "1c92600",
+                    "id": "5608bbdfba70",
                     "type": "PartPin"
                 },
                 {
@@ -454,7 +454,7 @@
                         "x": -2000,
                         "y": 5500
                     },
-                    "id": "1f2d600",
+                    "id": "5608bc45fae0",
                     "over": {
                         "b": 6325,
                         "r": -1452,
@@ -476,7 +476,7 @@
                         "x": 6875,
                         "y": 5625
                     },
-                    "id": "1f2d700",
+                    "id": "5608b1cbf250",
                     "over": {
                         "b": 7147,
                         "r": 7421,
@@ -503,7 +503,7 @@
             "Parametrs": {
             },
             "Title": "resistor ajustable 10x11",
-            "id": "1f213a0",
+            "id": "5608b4509ae0",
             "type": "Part"
         },
         {
@@ -519,7 +519,7 @@
                         "x": 1500,
                         "y": 2700
                     },
-                    "id": "15a1e60",
+                    "id": "5608bc4c7a60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -534,7 +534,7 @@
                         "x": -500,
                         "y": 2500
                     },
-                    "id": "1e4b920",
+                    "id": "5608bb09e9b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -549,7 +549,7 @@
                         "x": 1500,
                         "y": 2200
                     },
-                    "id": "1dadc50",
+                    "id": "5608ba9f2ef0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -564,7 +564,7 @@
                         "x": 1500,
                         "y": 1700
                     },
-                    "id": "1eb4b90",
+                    "id": "5608b88d8ac0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -579,7 +579,7 @@
                         "x": 1500,
                         "y": 1200
                     },
-                    "id": "1c9a930",
+                    "id": "5608ba308970",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -594,7 +594,7 @@
                         "x": 1500,
                         "y": 700
                     },
-                    "id": "1bbafd0",
+                    "id": "5608b963fbb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -609,7 +609,7 @@
                         "x": 1500,
                         "y": 200
                     },
-                    "id": "1bb6600",
+                    "id": "5608ba325400",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -624,7 +624,7 @@
                         "x": 1500,
                         "y": -300
                     },
-                    "id": "1f12bf0",
+                    "id": "5608bc44edd0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -639,7 +639,7 @@
                         "x": 1500,
                         "y": -800
                     },
-                    "id": "1e14930",
+                    "id": "5608b8904e00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -654,7 +654,7 @@
                         "x": 1500,
                         "y": -1300
                     },
-                    "id": "1f0b180",
+                    "id": "5608bbe0b620",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -669,7 +669,7 @@
                         "x": 2750,
                         "y": 2500
                     },
-                    "id": "1f4c400",
+                    "id": "5608bb0a12f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -684,7 +684,7 @@
                         "x": 1750,
                         "y": -1500
                     },
-                    "id": "1f13280",
+                    "id": "5608ba9f7ad0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -699,7 +699,7 @@
                         "x": 1500,
                         "y": -1500
                     },
-                    "id": "1e9c990",
+                    "id": "5608baa33170",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -714,7 +714,7 @@
                         "x": 1500,
                         "y": -1000
                     },
-                    "id": "1fa1790",
+                    "id": "5608ba9f33a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -729,7 +729,7 @@
                         "x": 1500,
                         "y": -500
                     },
-                    "id": "1dbfe10",
+                    "id": "5608b8888000",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -744,7 +744,7 @@
                         "x": 1500,
                         "y": 0
                     },
-                    "id": "1ea16a0",
+                    "id": "5608b8242a00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -759,7 +759,7 @@
                         "x": 1500,
                         "y": 500
                     },
-                    "id": "1b9c590",
+                    "id": "5608b8f8a1b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -774,7 +774,7 @@
                         "x": 1750,
                         "y": -1500
                     },
-                    "id": "1ec3220",
+                    "id": "5608b88a19e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -789,7 +789,7 @@
                         "x": 1500,
                         "y": 1000
                     },
-                    "id": "1e8eac0",
+                    "id": "5608bb0b2eb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -804,7 +804,7 @@
                         "x": 1500,
                         "y": 1500
                     },
-                    "id": "1642be0",
+                    "id": "5608b9c763b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -819,7 +819,7 @@
                         "x": 1500,
                         "y": 2000
                     },
-                    "id": "1e5fa00",
+                    "id": "5608b45befa0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -834,7 +834,7 @@
                         "x": 2000,
                         "y": -2000
                     },
-                    "id": "1608ca0",
+                    "id": "5608bb0e51b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -849,7 +849,7 @@
                         "x": -500,
                         "y": 2000
                     },
-                    "id": "1f16a40",
+                    "id": "5608bc498150",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -864,7 +864,7 @@
                         "x": -500,
                         "y": 1500
                     },
-                    "id": "1f19d70",
+                    "id": "5608bc41b880",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -879,7 +879,7 @@
                         "x": -500,
                         "y": 1000
                     },
-                    "id": "1c9fa50",
+                    "id": "5608b9c94220",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -894,7 +894,7 @@
                         "x": -500,
                         "y": 500
                     },
-                    "id": "1e112c0",
+                    "id": "5608ba3825b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -909,7 +909,7 @@
                         "x": -500,
                         "y": 0
                     },
-                    "id": "1dd7fd0",
+                    "id": "5608b24fd360",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -924,7 +924,7 @@
                         "x": -500,
                         "y": -500
                     },
-                    "id": "1f85f00",
+                    "id": "5608bb0861a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -939,7 +939,7 @@
                         "x": -500,
                         "y": -1000
                     },
-                    "id": "1e94f50",
+                    "id": "5608baa29bf0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -954,7 +954,7 @@
                         "x": -500,
                         "y": -1500
                     },
-                    "id": "1f971f0",
+                    "id": "5608baa09050",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -990,7 +990,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1efe590",
+                    "id": "5608b8f70580",
                     "type": "SymPin"
                 },
                 {
@@ -1023,7 +1023,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1ced680",
+                    "id": "5608bbe09ea0",
                     "type": "SymPin"
                 },
                 {
@@ -1056,7 +1056,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1608d50",
+                    "id": "5608bc4174d0",
                     "type": "SymPin"
                 },
                 {
@@ -1089,7 +1089,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1649910",
+                    "id": "5608bb080f00",
                     "type": "SymPin"
                 },
                 {
@@ -1122,7 +1122,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1ef3720",
+                    "id": "5608b95f6320",
                     "type": "SymPin"
                 },
                 {
@@ -1155,7 +1155,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1f87a80",
+                    "id": "5608bc455d30",
                     "type": "SymPin"
                 },
                 {
@@ -1188,7 +1188,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1e4d4a0",
+                    "id": "5608bb726f20",
                     "type": "SymPin"
                 },
                 {
@@ -1221,7 +1221,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1e91a70",
+                    "id": "5608bc46a160",
                     "type": "SymPin"
                 },
                 {
@@ -1254,7 +1254,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1eb4a10",
+                    "id": "5608bb727f20",
                     "type": "SymPin"
                 },
                 {
@@ -1287,7 +1287,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1d7ac00",
+                    "id": "5608b59912c0",
                     "type": "SymPin"
                 },
                 {
@@ -1295,7 +1295,7 @@
                         "x": 1000,
                         "y": 3250
                     },
-                    "id": "164ee50",
+                    "id": "5608b17ce190",
                     "over": {
                         "b": 3434,
                         "r": 1281,
@@ -1317,7 +1317,7 @@
                         "x": 1000,
                         "y": -2250
                     },
-                    "id": "1e4ed80",
+                    "id": "5608bc42df90",
                     "over": {
                         "b": -2063,
                         "r": 1530,
@@ -1344,7 +1344,7 @@
             "Parametrs": {
             },
             "Title": "resistor set x9 with common pin (symbol)",
-            "id": "1da3ba0",
+            "id": "5608baa13fd0",
             "type": "Symbol"
         },
         {
@@ -1355,7 +1355,7 @@
                     "Default": false,
                     "PartId": "Part\rsmd-0603 h0.45 (part)\rsalicad",
                     "PartTitle": "smd-0603 h0.45 (part) (salicad)",
-                    "id": "1dffc70",
+                    "id": "5608b9c7ee20",
                     "type": "PartVariant"
                 },
                 {
@@ -1365,11 +1365,11 @@
                     },
                     "SymbolId": "Symbol\rresistor (symbol)\rsalicad",
                     "SymbolTitle": "resistor (symbol) (salicad)",
-                    "id": "1dffc30",
+                    "id": "5608b8f6df90",
                     "type": "Section"
                 }
             ],
-            "Created": 24929143,
+            "Created": 42625308,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -1377,6 +1377,7 @@
             },
             "Parametrs": {
                 "bom": "smd-0603 <value> <tolerance>",
+                "category": "{uu.h.e.a.d",
                 "prefix": "R",
                 "tolerance": "5%",
                 "value": ""
@@ -1719,7 +1720,7 @@
                 "10MOm",
                 "5%"
             ],
-            "id": "1d88fb0",
+            "id": "5608b95f6590",
             "type": "Comp"
         },
         {
@@ -1730,7 +1731,7 @@
                     "Default": false,
                     "PartId": "Part\rsmd-0805 h0.5 (part)\rsalicad",
                     "PartTitle": "smd-0805 h0.5 (part) (salicad)",
-                    "id": "1f94060",
+                    "id": "5608b8915740",
                     "type": "PartVariant"
                 },
                 {
@@ -1740,11 +1741,11 @@
                     },
                     "SymbolId": "Symbol\rresistor (symbol)\rsalicad",
                     "SymbolTitle": "resistor (symbol) (salicad)",
-                    "id": "1be0a30",
+                    "id": "5608b825ba50",
                     "type": "Section"
                 }
             ],
-            "Created": 25000852,
+            "Created": 42625334,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -1752,6 +1753,7 @@
             },
             "Parametrs": {
                 "bom": "smd-0805 <value> <tolerance>",
+                "category": "{uu.h.e.a.d",
                 "prefix": "R",
                 "tolerance": "5%",
                 "value": ""
@@ -2094,7 +2096,7 @@
                 "10MOm",
                 "5%"
             ],
-            "id": "1f75080",
+            "id": "5608bc462790",
             "type": "Comp"
         },
         {
@@ -2105,7 +2107,7 @@
                     "Default": false,
                     "PartId": "Part\rsmd-1206 h0.55 (part)\rsalicad",
                     "PartTitle": "smd-1206 h0.55 (part) (salicad)",
-                    "id": "1e0f470",
+                    "id": "5608b239ac60",
                     "type": "PartVariant"
                 },
                 {
@@ -2115,11 +2117,11 @@
                     },
                     "SymbolId": "Symbol\rresistor (symbol)\rsalicad",
                     "SymbolTitle": "resistor (symbol) (salicad)",
-                    "id": "1e0f430",
+                    "id": "5608b239ac20",
                     "type": "Section"
                 }
             ],
-            "Created": 24909157,
+            "Created": 42625375,
             "Edit enable": true,
             "Origin": {
                 "x": 0,
@@ -2127,6 +2129,7 @@
             },
             "Parametrs": {
                 "bom": "smd-1206 <value> <tolerance>",
+                "category": "{uu.h.e.a.d",
                 "prefix": "R",
                 "tolerance": "5%",
                 "value": "1kOm"
@@ -2455,7 +2458,7 @@
                 "5%",
                 "5.1MOm"
             ],
-            "id": "1de7550",
+            "id": "5608bc47a390",
             "type": "Comp"
         },
         {
@@ -2469,18 +2472,18 @@
                     },
                     "SymbolId": "Symbolresistor (symbol)salicad",
                     "SymbolTitle": "resistor (symbol) (salicad)",
-                    "id": "1ecff30",
+                    "id": "5608bbe23310",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Partsmd-2512 h0.55 (part)salicad",
                     "PartTitle": "smd-2512 h0.55 (part) (salicad)",
-                    "id": "1e57a90",
+                    "id": "5608ba365b60",
                     "type": "PartVariant"
                 }
             ],
-            "Created": 23100500,
+            "Created": 42625398,
             "Edit enable": true,
             "Origin": {
                 "x": 0,
@@ -2488,6 +2491,7 @@
             },
             "Parametrs": {
                 "bom": "smd-2512 <value> 5%",
+                "category": "{uu.h.e.a.d",
                 "prefix": "R",
                 "value": "1kOm",
                 "valueMax": "10MOm",
@@ -2496,7 +2500,7 @@
                 "valueSelector": "resistor"
             },
             "Title": "resistor smd-2512 5%",
-            "id": "1ecfe60",
+            "id": "5608bbe23240",
             "type": "Comp"
         },
         {
@@ -2507,7 +2511,7 @@
                     "Default": false,
                     "PartId": "Part\rresistor ajustable 10x11\rsalicad",
                     "PartTitle": "resistor ajustable 10x11 (salicad)",
-                    "id": "1c92720",
+                    "id": "5608bc448ca0",
                     "type": "PartVariant"
                 },
                 {
@@ -2518,11 +2522,11 @@
                     },
                     "SymbolId": "Symbol\rtrimming resistor\rsalicad",
                     "SymbolTitle": "trimming resistor (salicad)",
-                    "id": "1c927c0",
+                    "id": "5608bc448c60",
                     "type": "Section"
                 }
             ],
-            "Created": 24930074,
+            "Created": 42625424,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -2530,6 +2534,7 @@
             },
             "Parametrs": {
                 "bom": "trimming resistor <value>",
+                "category": "{uu.h.e.b.d",
                 "prefix": "R",
                 "value": ""
             },
@@ -2539,7 +2544,7 @@
                 "value",
                 "1kOm"
             ],
-            "id": "165a6f0",
+            "id": "5608bc448bc0",
             "type": "Comp"
         },
         {
@@ -2555,7 +2560,7 @@
                         "x": 1500,
                         "y": 1400
                     },
-                    "id": "1c92010",
+                    "id": "5608bb75a4d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2570,7 +2575,7 @@
                         "x": 500,
                         "y": 1750
                     },
-                    "id": "1be70e0",
+                    "id": "5608bc47a0d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2585,7 +2590,7 @@
                         "x": 500,
                         "y": 1500
                     },
-                    "id": "1f86800",
+                    "id": "5608bb770730",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2600,7 +2605,7 @@
                         "x": 500,
                         "y": 1400
                     },
-                    "id": "1bb06c0",
+                    "id": "5608bb7707c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2615,7 +2620,7 @@
                         "x": 1500,
                         "y": 1750
                     },
-                    "id": "1f77c40",
+                    "id": "5608bb770850",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2630,7 +2635,7 @@
                         "x": 1500,
                         "y": 1200
                     },
-                    "id": "15f2cf0",
+                    "id": "5608ba372d90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2645,7 +2650,7 @@
                         "x": 2000,
                         "y": 1200
                     },
-                    "id": "1f7d050",
+                    "id": "5608ba372e50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2660,7 +2665,7 @@
                         "x": 0,
                         "y": 1200
                     },
-                    "id": "1f2ea20",
+                    "id": "5608bb706140",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2696,7 +2701,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "1e03310",
+                    "id": "5608bc4695d0",
                     "type": "SymPin"
                 },
                 {
@@ -2729,7 +2734,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "1efa460",
+                    "id": "5608bc464030",
                     "type": "SymPin"
                 },
                 {
@@ -2762,7 +2767,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "164b6a0",
+                    "id": "5608bc47eab0",
                     "type": "SymPin"
                 },
                 {
@@ -2795,7 +2800,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "1673100",
+                    "id": "5608bb0f5a40",
                     "type": "SymPin"
                 },
                 {
@@ -2803,7 +2808,7 @@
                         "x": 1000,
                         "y": 1625
                     },
-                    "id": "1eda000",
+                    "id": "5608bbe238c0",
                     "over": {
                         "b": 1815,
                         "r": 1286,
@@ -2825,7 +2830,7 @@
                         "x": 1000,
                         "y": 875
                     },
-                    "id": "1efc0a0",
+                    "id": "5608bbe239c0",
                     "over": {
                         "b": 1065,
                         "r": 1533,
@@ -2852,7 +2857,7 @@
             "Parametrs": {
             },
             "Title": "shunt resistor (symbol)",
-            "id": "1b4cfb0",
+            "id": "5608bb75a410",
             "type": "Symbol"
         },
         {
@@ -2868,7 +2873,7 @@
                         "x": 775,
                         "y": 400
                     },
-                    "id": "1d7f470",
+                    "id": "5608bc42da20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2905,7 +2910,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r0.9x0.8m0.1s0.04",
                     "Stratum": "1",
-                    "id": "1e96c00",
+                    "id": "5608bbd90be0",
                     "type": "PartPin"
                 },
                 {
@@ -2939,7 +2944,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r0.9x0.8m0.1s0.04",
                     "Stratum": "1",
-                    "id": "1da06b0",
+                    "id": "5608bb0fd150",
                     "type": "PartPin"
                 },
                 {
@@ -2947,7 +2952,7 @@
                         "x": 0,
                         "y": 125
                     },
-                    "id": "1f2e530",
+                    "id": "5608bb0fd2a0",
                     "over": {
                         "b": 673,
                         "r": 822,
@@ -2969,7 +2974,7 @@
                         "x": 0,
                         "y": -750
                     },
-                    "id": "1ccb530",
+                    "id": "5608bc48b930",
                     "over": {
                         "b": -205,
                         "r": 1530,
@@ -2996,7 +3001,7 @@
             "Parametrs": {
             },
             "Title": "smd-0603 h0.45 (part)",
-            "id": "1d7ef30",
+            "id": "5608bc42d960",
             "type": "Part"
         },
         {
@@ -3012,7 +3017,7 @@
                         "x": 1000,
                         "y": 625
                     },
-                    "id": "1a9b730",
+                    "id": "5608bc449d40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3049,7 +3054,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1x1.25m0.1s0.04",
                     "Stratum": "1",
-                    "id": "1efb310",
+                    "id": "5608bb0b8000",
                     "type": "PartPin"
                 },
                 {
@@ -3083,7 +3088,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1x1.25m0.1s0.04",
                     "Stratum": "1",
-                    "id": "1eb9980",
+                    "id": "5608bb732030",
                     "type": "PartPin"
                 },
                 {
@@ -3091,7 +3096,7 @@
                         "x": 0,
                         "y": 0
                     },
-                    "id": "1699930",
+                    "id": "5608bc46dc80",
                     "over": {
                         "b": 547,
                         "r": 822,
@@ -3113,7 +3118,7 @@
                         "x": 0,
                         "y": -1000
                     },
-                    "id": "16a8a90",
+                    "id": "5608bc46dd80",
                     "over": {
                         "b": -453,
                         "r": 1530,
@@ -3140,7 +3145,7 @@
             "Parametrs": {
             },
             "Title": "smd-0805 h0.5 (part)",
-            "id": "1f2e5a0",
+            "id": "5608bc449c50",
             "type": "Part"
         },
         {
@@ -3156,7 +3161,7 @@
                         "x": 1600,
                         "y": 800
                     },
-                    "id": "1608b80",
+                    "id": "5608bb0c6c60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3193,7 +3198,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1x1.6m0.1s0.04",
                     "Stratum": "1",
-                    "id": "1d59f00",
+                    "id": "5608bb0c6d50",
                     "type": "PartPin"
                 },
                 {
@@ -3227,7 +3232,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1x1.6m0.1s0.04",
                     "Stratum": "1",
-                    "id": "1d11c00",
+                    "id": "5608bb7758a0",
                     "type": "PartPin"
                 },
                 {
@@ -3235,7 +3240,7 @@
                         "x": 0,
                         "y": 0
                     },
-                    "id": "1d16290",
+                    "id": "5608b1f4ee00",
                     "over": {
                         "b": 547,
                         "r": 822,
@@ -3257,7 +3262,7 @@
                         "x": 0,
                         "y": -1250
                     },
-                    "id": "1e9ea40",
+                    "id": "5608b1f4ef00",
                     "over": {
                         "b": -705,
                         "r": 1530,
@@ -3284,7 +3289,7 @@
             "Parametrs": {
             },
             "Title": "smd-1206 h0.55 (part)",
-            "id": "16999a0",
+            "id": "5608bc47cab0",
             "type": "Part"
         },
         {
@@ -3300,7 +3305,7 @@
                         "x": 3200,
                         "y": 1600
                     },
-                    "id": "1f8dc50",
+                    "id": "5608b95f6140",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3315,7 +3320,7 @@
                         "x": 2000,
                         "y": -1500
                     },
-                    "id": "1f8dd40",
+                    "id": "5608bb084da0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3352,7 +3357,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.5x3.2m0.1s0.04",
                     "Stratum": "1",
-                    "id": "1e5d8b0",
+                    "id": "5608bb084e60",
                     "type": "PartPin"
                 },
                 {
@@ -3386,7 +3391,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.5x3.2m0.1s0.04",
                     "Stratum": "1",
-                    "id": "1676f10",
+                    "id": "5608b88a6100",
                     "type": "PartPin"
                 },
                 {
@@ -3394,7 +3399,7 @@
                         "x": 0,
                         "y": 625
                     },
-                    "id": "1ddbd00",
+                    "id": "5608bb727b70",
                     "over": {
                         "b": 1170,
                         "r": 815,
@@ -3416,7 +3421,7 @@
                         "x": 0,
                         "y": -625
                     },
-                    "id": "1e05700",
+                    "id": "5608bbdf8df0",
                     "over": {
                         "b": -80,
                         "r": 1523,
@@ -3443,7 +3448,7 @@
             "Parametrs": {
             },
             "Title": "smd-2512 h0.55 (part)",
-            "id": "1e2c3f0",
+            "id": "5608b95f6080",
             "type": "Part"
         },
         {
@@ -3459,7 +3464,7 @@
                         "x": 500,
                         "y": 200
                     },
-                    "id": "1d81370",
+                    "id": "5608bc448020",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3474,7 +3479,7 @@
                         "x": 500,
                         "y": 0
                     },
-                    "id": "1b4ed60",
+                    "id": "5608bc448110",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3489,7 +3494,7 @@
                         "x": -750,
                         "y": 0
                     },
-                    "id": "1f71730",
+                    "id": "5608bc46d470",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3504,7 +3509,7 @@
                         "x": 500,
                         "y": 500
                     },
-                    "id": "1bd7080",
+                    "id": "5608bc46d580",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3519,7 +3524,7 @@
                         "x": 750,
                         "y": 500
                     },
-                    "id": "1a5cc80",
+                    "id": "5608bc46d610",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3530,7 +3535,7 @@
                         "x": 500,
                         "y": 750
                     },
-                    "id": "1f0bac0",
+                    "id": "5608bb0dd640",
                     "over": {
                         "b": 955,
                         "r": 562,
@@ -3552,7 +3557,7 @@
                         "x": 625,
                         "y": 1000
                     },
-                    "id": "1ee48e0",
+                    "id": "5608bbdf8ef0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3589,7 +3594,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1683400",
+                    "id": "5608bbdc9d30",
                     "type": "SymPin"
                 },
                 {
@@ -3622,7 +3627,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1e99220",
+                    "id": "5608ba346ae0",
                     "type": "SymPin"
                 },
                 {
@@ -3630,7 +3635,7 @@
                         "x": -500,
                         "y": 500
                     },
-                    "id": "1e2c4e0",
+                    "id": "5608ba346c20",
                     "over": {
                         "b": 690,
                         "r": -213,
@@ -3652,7 +3657,7 @@
                         "x": 500,
                         "y": -375
                     },
-                    "id": "1e0d800",
+                    "id": "5608bb0b81d0",
                     "over": {
                         "b": -184,
                         "r": 1033,
@@ -3679,7 +3684,7 @@
             "Parametrs": {
             },
             "Title": "termoresistor (symbol)",
-            "id": "1e1f8d0",
+            "id": "5608bbdf8f70",
             "type": "Symbol"
         },
         {
@@ -3695,7 +3700,7 @@
                         "x": 0,
                         "y": 1500
                     },
-                    "id": "1e5ae10",
+                    "id": "5608bc4654d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3710,7 +3715,7 @@
                         "x": 200,
                         "y": 500
                     },
-                    "id": "1dc57a0",
+                    "id": "5608bc4655c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3725,7 +3730,7 @@
                         "x": 0,
                         "y": 500
                     },
-                    "id": "1f919c0",
+                    "id": "5608bc47b400",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3740,7 +3745,7 @@
                         "x": 200,
                         "y": 1000
                     },
-                    "id": "1678ba0",
+                    "id": "5608bc47b4e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3776,7 +3781,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1ec3a80",
+                    "id": "5608bc47b570",
                     "type": "SymPin"
                 },
                 {
@@ -3809,7 +3814,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1f87d00",
+                    "id": "5608bc469a40",
                     "type": "SymPin"
                 },
                 {
@@ -3842,7 +3847,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1e14a60",
+                    "id": "5608bc41d410",
                     "type": "SymPin"
                 },
                 {
@@ -3850,7 +3855,7 @@
                         "x": 625,
                         "y": 1500
                     },
-                    "id": "1da0610",
+                    "id": "5608bb07a060",
                     "over": {
                         "b": 1691,
                         "r": 912,
@@ -3872,7 +3877,7 @@
                         "x": -375,
                         "y": 1000
                     },
-                    "id": "1de72c0",
+                    "id": "5608bb07a160",
                     "over": {
                         "b": 1531,
                         "r": -186,
@@ -3899,7 +3904,7 @@
             "Parametrs": {
             },
             "Title": "trimming resistor",
-            "id": "1663800",
+            "id": "5608bbe228c0",
             "type": "Symbol"
         },
         {
@@ -3915,7 +3920,7 @@
                         "x": 6250,
                         "y": -1250
                     },
-                    "id": "1e4caf0",
+                    "id": "5608bc448e30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3952,7 +3957,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "13",
                     "Stratum": "3fffffff",
-                    "id": "1dfc400",
+                    "id": "5608b95f9940",
                     "type": "PartPin"
                 },
                 {
@@ -3986,7 +3991,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "13",
                     "Stratum": "3fffffff",
-                    "id": "1da3380",
+                    "id": "5608bc49bda0",
                     "type": "PartPin"
                 },
                 {
@@ -3994,7 +3999,7 @@
                         "x": -1250,
                         "y": 0
                     },
-                    "id": "1e4cbe0",
+                    "id": "5608bc49bf20",
                     "over": {
                         "b": 531,
                         "r": -416,
@@ -4016,7 +4021,7 @@
                         "x": -1250,
                         "y": -1875
                     },
-                    "id": "1d7ec80",
+                    "id": "5608bc448f20",
                     "over": {
                         "b": -1342,
                         "r": 283,
@@ -4043,7 +4048,7 @@
             "Parametrs": {
             },
             "Title": "TVR 14",
-            "id": "1f29980",
+            "id": "5608bc448da0",
             "type": "Part"
         },
         {
@@ -4059,7 +4064,7 @@
                         "x": 6000,
                         "y": 1500
                     },
-                    "id": "1dfc5e0",
+                    "id": "5608bc44e100",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4096,7 +4101,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "13",
                     "Stratum": "3fffffff",
-                    "id": "1da8590",
+                    "id": "5608bc44e890",
                     "type": "PartPin"
                 },
                 {
@@ -4130,7 +4135,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "13",
                     "Stratum": "3fffffff",
-                    "id": "1e9d310",
+                    "id": "5608bc44ea10",
                     "type": "PartPin"
                 },
                 {
@@ -4138,7 +4143,7 @@
                         "x": 2500,
                         "y": 625
                     },
-                    "id": "1dfc6d0",
+                    "id": "5608bc484600",
                     "over": {
                         "b": 1164,
                         "r": 3324,
@@ -4160,7 +4165,7 @@
                         "x": 2500,
                         "y": -625
                     },
-                    "id": "1e62750",
+                    "id": "5608bc484700",
                     "over": {
                         "b": -85,
                         "r": 4029,
@@ -4187,7 +4192,7 @@
             "Parametrs": {
             },
             "Title": "TVR07",
-            "id": "1f105a0",
+            "id": "5608bc44e040",
             "type": "Part"
         },
         {
@@ -4203,7 +4208,7 @@
                         "x": -2500,
                         "y": 2000
                     },
-                    "id": "1f93f10",
+                    "id": "5608bb726db0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4240,7 +4245,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "13",
                     "Stratum": "3fffffff",
-                    "id": "16385f0",
+                    "id": "5608bc427720",
                     "type": "PartPin"
                 },
                 {
@@ -4274,7 +4279,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "13",
                     "Stratum": "3fffffff",
-                    "id": "1be08e0",
+                    "id": "5608bbd90600",
                     "type": "PartPin"
                 },
                 {
@@ -4282,7 +4287,7 @@
                         "x": 3750,
                         "y": 1250
                     },
-                    "id": "163d070",
+                    "id": "5608bbd907d0",
                     "over": {
                         "b": 1787,
                         "r": 4586,
@@ -4304,7 +4309,7 @@
                         "x": 3750,
                         "y": -1250
                     },
-                    "id": "1d80b20",
+                    "id": "5608bb770fe0",
                     "over": {
                         "b": -705,
                         "r": 5288,
@@ -4331,7 +4336,7 @@
             "Parametrs": {
             },
             "Title": "TVR10",
-            "id": "1652530",
+            "id": "5608bb726cf0",
             "type": "Part"
         },
         {
@@ -4347,7 +4352,7 @@
                         "x": 0,
                         "y": 1500
                     },
-                    "id": "1daccb0",
+                    "id": "5608bb7711d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4362,7 +4367,7 @@
                         "x": 200,
                         "y": 500
                     },
-                    "id": "15eeb10",
+                    "id": "5608bb7668f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4377,7 +4382,7 @@
                         "x": 0,
                         "y": 500
                     },
-                    "id": "1f29760",
+                    "id": "5608bb7669b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4392,7 +4397,7 @@
                         "x": 200,
                         "y": 1000
                     },
-                    "id": "168cc00",
+                    "id": "5608bbdcc640",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4407,7 +4412,7 @@
                         "x": 200,
                         "y": 1000
                     },
-                    "id": "1e96f70",
+                    "id": "5608bbdcc6a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4422,7 +4427,7 @@
                         "x": 550,
                         "y": 900
                     },
-                    "id": "1ab5940",
+                    "id": "5608bbdcc760",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4458,7 +4463,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1f77060",
+                    "id": "5608bbd8bd50",
                     "type": "SymPin"
                 },
                 {
@@ -4491,7 +4496,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "169ac00",
+                    "id": "5608bc453000",
                     "type": "SymPin"
                 },
                 {
@@ -4524,7 +4529,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "16a5d20",
+                    "id": "5608bc453170",
                     "type": "SymPin"
                 },
                 {
@@ -4532,7 +4537,7 @@
                         "x": 750,
                         "y": 1625
                     },
-                    "id": "1e93390",
+                    "id": "5608bbdcc820",
                     "over": {
                         "b": 1815,
                         "r": 1035,
@@ -4554,7 +4559,7 @@
                         "x": -375,
                         "y": 1000
                     },
-                    "id": "16a5a60",
+                    "id": "5608bb0fde00",
                     "over": {
                         "b": 1529,
                         "r": -185,
@@ -4581,7 +4586,7 @@
             "Parametrs": {
             },
             "Title": "variable resistor (symbol)",
-            "id": "1c97f80",
+            "id": "5608bb771110",
             "type": "Symbol"
         },
         {
@@ -4597,7 +4602,7 @@
                         "x": -500,
                         "y": 200
                     },
-                    "id": "1d86f50",
+                    "id": "5608bb740bd0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4612,7 +4617,7 @@
                         "x": -500,
                         "y": 0
                     },
-                    "id": "1f75f10",
+                    "id": "5608bb740cc0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4627,7 +4632,7 @@
                         "x": -1750,
                         "y": 0
                     },
-                    "id": "1f72a60",
+                    "id": "5608bb740d80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4642,7 +4647,7 @@
                         "x": -500,
                         "y": 500
                     },
-                    "id": "1f8ea60",
+                    "id": "5608b890e880",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4657,7 +4662,7 @@
                         "x": -250,
                         "y": 500
                     },
-                    "id": "1f873e0",
+                    "id": "5608b890e910",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4668,7 +4673,7 @@
                         "x": -500,
                         "y": 750
                     },
-                    "id": "16550f0",
+                    "id": "5608b890e9d0",
                     "over": {
                         "b": 954,
                         "r": -364,
@@ -4715,7 +4720,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1675080",
+                    "id": "5608bbd8dd90",
                     "type": "SymPin"
                 },
                 {
@@ -4748,7 +4753,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1fb7a70",
+                    "id": "5608b5991000",
                     "type": "SymPin"
                 },
                 {
@@ -4756,7 +4761,7 @@
                         "x": -1500,
                         "y": 500
                     },
-                    "id": "167c620",
+                    "id": "5608bbd8df90",
                     "over": {
                         "b": 692,
                         "r": -1214,
@@ -4778,7 +4783,7 @@
                         "x": -500,
                         "y": -375
                     },
-                    "id": "1667400",
+                    "id": "5608b5991200",
                     "over": {
                         "b": -183,
                         "r": 34,
@@ -4805,7 +4810,7 @@
             "Parametrs": {
             },
             "Title": "varistor resistor",
-            "id": "1cc0c30",
+            "id": "5608bb0fdf90",
             "type": "Symbol"
         },
         {
@@ -4821,7 +4826,7 @@
                         "x": 9000,
                         "y": 6000
                     },
-                    "id": "1d43000",
+                    "id": "5608bc44c950",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4836,7 +4841,7 @@
                         "x": 7375,
                         "y": 7250
                     },
-                    "id": "16125d0",
+                    "id": "5608bc44ca40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4851,7 +4856,7 @@
                         "x": 8625,
                         "y": 7250
                     },
-                    "id": "1e99360",
+                    "id": "5608bbd9b370",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4866,7 +4871,7 @@
                         "x": 8625,
                         "y": 6000
                     },
-                    "id": "1c9b170",
+                    "id": "5608bbd9b480",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4903,7 +4908,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "130",
                     "Stratum": "3fffffff",
-                    "id": "1dbac20",
+                    "id": "5608bbe06800",
                     "type": "PartPin"
                 },
                 {
@@ -4937,7 +4942,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "130",
                     "Stratum": "3fffffff",
-                    "id": "1e47630",
+                    "id": "5608bbe069b0",
                     "type": "PartPin"
                 },
                 {
@@ -4971,7 +4976,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "130",
                     "Stratum": "3fffffff",
-                    "id": "1ec8130",
+                    "id": "5608bc4a2bd0",
                     "type": "PartPin"
                 },
                 {
@@ -4979,7 +4984,7 @@
                         "x": 3125,
                         "y": 4375
                     },
-                    "id": "1f10420",
+                    "id": "5608bb085d40",
                     "over": {
                         "b": 4924,
                         "r": 3934,
@@ -5001,7 +5006,7 @@
                         "x": 6250,
                         "y": -5000
                     },
-                    "id": "1e727a0",
+                    "id": "5608bb085e40",
                     "over": {
                         "b": -4439,
                         "r": 7767,
@@ -5028,7 +5033,7 @@
             "Parametrs": {
             },
             "Title": "Корпус СП5-2",
-            "id": "1eb6b30",
+            "id": "5608bc44c890",
             "type": "Part"
         },
         {
@@ -5044,7 +5049,7 @@
                         "x": 7500,
                         "y": 5050
                     },
-                    "id": "1699850",
+                    "id": "5608bc479940",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5055,7 +5060,7 @@
                         "x": -1250,
                         "y": 3750
                     },
-                    "id": "1ecab90",
+                    "id": "5608bbd9b430",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5071,7 +5076,7 @@
                         "x": -625,
                         "y": 3750
                     },
-                    "id": "1e1b8d0",
+                    "id": "5608bc479ac0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5108,7 +5113,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "14",
                     "Stratum": "3fffffff",
-                    "id": "1ebc6f0",
+                    "id": "5608bb72dd40",
                     "type": "PartPin"
                 },
                 {
@@ -5142,7 +5147,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "14",
                     "Stratum": "3fffffff",
-                    "id": "1ef8670",
+                    "id": "5608bb72de90",
                     "type": "PartPin"
                 },
                 {
@@ -5176,7 +5181,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "14",
                     "Stratum": "3fffffff",
-                    "id": "159f310",
+                    "id": "5608bc495290",
                     "type": "PartPin"
                 },
                 {
@@ -5184,7 +5189,7 @@
                         "x": 2500,
                         "y": 4375
                     },
-                    "id": "1f74160",
+                    "id": "5608bc495440",
                     "over": {
                         "b": 4914,
                         "r": 3306,
@@ -5206,7 +5211,7 @@
                         "x": 2500,
                         "y": 2500
                     },
-                    "id": "1e30ed0",
+                    "id": "5608bc41cbb0",
                     "over": {
                         "b": 3036,
                         "r": 4004,
@@ -5233,7 +5238,7 @@
             "Parametrs": {
             },
             "Title": "Корпус СП5-2ВБ",
-            "id": "1ed36f0",
+            "id": "5608bb085f70",
             "type": "Part"
         },
         {
@@ -5249,7 +5254,7 @@
                         "x": 25000,
                         "y": -1250
                     },
-                    "id": "1de8360",
+                    "id": "5608ba378830",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5264,7 +5269,7 @@
                         "x": -1250,
                         "y": -1250
                     },
-                    "id": "1dc3c90",
+                    "id": "5608ba378920",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5301,7 +5306,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "1",
                     "Stratum": "3fffffff",
-                    "id": "1f74be0",
+                    "id": "5608ba3789e0",
                     "type": "PartPin"
                 },
                 {
@@ -5335,7 +5340,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1c965b0",
+                    "id": "5608bb0a60f0",
                     "type": "PartPin"
                 },
                 {
@@ -5369,7 +5374,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1d59d00",
+                    "id": "5608bb0debb0",
                     "type": "PartPin"
                 },
                 {
@@ -5403,7 +5408,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1d9e470",
+                    "id": "5608bb0ded60",
                     "type": "PartPin"
                 },
                 {
@@ -5437,7 +5442,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1df5c00",
+                    "id": "5608bb0ac5b0",
                     "type": "PartPin"
                 },
                 {
@@ -5471,7 +5476,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1dab650",
+                    "id": "5608bc468480",
                     "type": "PartPin"
                 },
                 {
@@ -5505,7 +5510,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1dc9f00",
+                    "id": "5608bc468660",
                     "type": "PartPin"
                 },
                 {
@@ -5539,7 +5544,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1d0b370",
+                    "id": "5608bc46c1d0",
                     "type": "PartPin"
                 },
                 {
@@ -5573,7 +5578,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1e04ca0",
+                    "id": "5608b8235d10",
                     "type": "PartPin"
                 },
                 {
@@ -5607,7 +5612,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1e79990",
+                    "id": "5608b8235ec0",
                     "type": "PartPin"
                 },
                 {
@@ -5615,7 +5620,7 @@
                         "x": 11250,
                         "y": 2500
                     },
-                    "id": "1e95fa0",
+                    "id": "5608b9c84140",
                     "over": {
                         "b": 3025,
                         "r": 12044,
@@ -5637,7 +5642,7 @@
                         "x": 11250,
                         "y": -1875
                     },
-                    "id": "1658ab0",
+                    "id": "5608b9c84240",
                     "over": {
                         "b": -1329,
                         "r": 12756,
@@ -5664,7 +5669,7 @@
             "Parametrs": {
             },
             "Title": "НР1-4-9 (корпус)",
-            "id": "1e96780",
+            "id": "5608bc41cce0",
             "type": "Part"
         },
         {
@@ -5676,7 +5681,7 @@
                         "x": 0,
                         "y": 0
                     },
-                    "id": "1ed0600",
+                    "id": "5608bc479b80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5688,7 +5693,7 @@
                         "x": 0,
                         "y": 0
                     },
-                    "id": "1e7d090",
+                    "id": "5608bb766a70",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5700,7 +5705,7 @@
                         "x": 0,
                         "y": 0
                     },
-                    "id": "1da1b70",
+                    "id": "5608bc41d610",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5716,7 +5721,7 @@
                         "x": -12500,
                         "y": 12500
                     },
-                    "id": "1d97dc0",
+                    "id": "5608bb74c000",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5731,7 +5736,7 @@
                         "x": 0,
                         "y": 17500
                     },
-                    "id": "1d97e20",
+                    "id": "5608bb74c090",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5746,7 +5751,7 @@
                         "x": 12500,
                         "y": 12500
                     },
-                    "id": "15b4c90",
+                    "id": "5608bc4279d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5783,7 +5788,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "0",
                     "Stratum": "3fffffff",
-                    "id": "1d82c10",
+                    "id": "5608bc427a90",
                     "type": "PartPin"
                 },
                 {
@@ -5817,7 +5822,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "0",
                     "Stratum": "3fffffff",
-                    "id": "1cf0e00",
+                    "id": "5608ba9e5960",
                     "type": "PartPin"
                 },
                 {
@@ -5851,7 +5856,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "0",
                     "Stratum": "3fffffff",
-                    "id": "1de9af0",
+                    "id": "5608ba9e5b10",
                     "type": "PartPin"
                 },
                 {
@@ -5859,7 +5864,7 @@
                         "x": 0,
                         "y": 12500
                     },
-                    "id": "165f550",
+                    "id": "5608bc4408a0",
                     "over": {
                         "b": 13023,
                         "r": 807,
@@ -5881,7 +5886,7 @@
                         "x": 0,
                         "y": -12500
                     },
-                    "id": "1f86eb0",
+                    "id": "5608bc4409a0",
                     "over": {
                         "b": -11948,
                         "r": 1415,
@@ -5908,7 +5913,7 @@
             "Parametrs": {
             },
             "Title": "ППБ-15 (корпус)",
-            "id": "1d88380",
+            "id": "5608b9c84370",
             "type": "Part"
         },
         {
@@ -5924,7 +5929,7 @@
                         "x": 1250,
                         "y": 200
                     },
-                    "id": "1603fa0",
+                    "id": "5608bc440470",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5939,7 +5944,7 @@
                         "x": 1250,
                         "y": 0
                     },
-                    "id": "1fb71f0",
+                    "id": "5608bc440560",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5954,7 +5959,7 @@
                         "x": 0,
                         "y": 0
                     },
-                    "id": "159cda0",
+                    "id": "5608bc440620",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5990,7 +5995,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "162ed50",
+                    "id": "5608bc455940",
                     "type": "SymPin"
                 },
                 {
@@ -6023,7 +6028,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "161d420",
+                    "id": "5608bc455a80",
                     "type": "SymPin"
                 },
                 {
@@ -6031,7 +6036,7 @@
                         "x": 750,
                         "y": 375
                     },
-                    "id": "1c997e0",
+                    "id": "5608b5fbf150",
                     "over": {
                         "b": 567,
                         "r": 1036,
@@ -6053,7 +6058,7 @@
                         "x": 750,
                         "y": -375
                     },
-                    "id": "1f05d30",
+                    "id": "5608b5fbf250",
                     "over": {
                         "b": -184,
                         "r": 1284,
@@ -6080,7 +6085,7 @@
             "Parametrs": {
             },
             "Title": "Резистор",
-            "id": "1c867a0",
+            "id": "5608bc4403b0",
             "type": "Symbol"
         },
         {
@@ -6096,7 +6101,7 @@
                         "x": 250,
                         "y": 0
                     },
-                    "id": "1d932d0",
+                    "id": "5608bb0fca10",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6111,7 +6116,7 @@
                         "x": 1250,
                         "y": 200
                     },
-                    "id": "1f1d000",
+                    "id": "5608bb0fcb00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6126,7 +6131,7 @@
                         "x": 1250,
                         "y": 0
                     },
-                    "id": "1efbe00",
+                    "id": "5608bb0fcbc0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6141,7 +6146,7 @@
                         "x": 625,
                         "y": 125
                     },
-                    "id": "1d9b380",
+                    "id": "5608bb0ae8b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6177,7 +6182,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "161ed40",
+                    "id": "5608bb0ae940",
                     "type": "SymPin"
                 },
                 {
@@ -6210,7 +6215,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1f12460",
+                    "id": "5608bb73ba60",
                     "type": "SymPin"
                 },
                 {
@@ -6218,7 +6223,7 @@
                         "x": 750,
                         "y": 375
                     },
-                    "id": "1f21f90",
+                    "id": "5608bb0aeab0",
                     "over": {
                         "b": 567,
                         "r": 1036,
@@ -6240,7 +6245,7 @@
                         "x": 750,
                         "y": -375
                     },
-                    "id": "1ecc750",
+                    "id": "5608bb73bcf0",
                     "over": {
                         "b": -184,
                         "r": 1284,
@@ -6267,7 +6272,7 @@
             "Parametrs": {
             },
             "Title": "Резистор 0,25Вт",
-            "id": "1ea1fa0",
+            "id": "5608bb0fc950",
             "type": "Symbol"
         },
         {
@@ -6283,7 +6288,7 @@
                         "x": 1250,
                         "y": 200
                     },
-                    "id": "1f1ba00",
+                    "id": "5608ba376580",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6298,7 +6303,7 @@
                         "x": 1250,
                         "y": 0
                     },
-                    "id": "1e1d030",
+                    "id": "5608ba376670",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6313,7 +6318,7 @@
                         "x": 0,
                         "y": 0
                     },
-                    "id": "1df5780",
+                    "id": "5608bc427d10",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6328,7 +6333,7 @@
                         "x": 1000,
                         "y": 0
                     },
-                    "id": "1e4e170",
+                    "id": "5608bc427e20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6364,7 +6369,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "15ff170",
+                    "id": "5608bc427eb0",
                     "type": "SymPin"
                 },
                 {
@@ -6397,7 +6402,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1616000",
+                    "id": "5608bc41d7d0",
                     "type": "SymPin"
                 },
                 {
@@ -6405,7 +6410,7 @@
                         "x": 750,
                         "y": 375
                     },
-                    "id": "1665d90",
+                    "id": "5608bc41d940",
                     "over": {
                         "b": 567,
                         "r": 1036,
@@ -6427,7 +6432,7 @@
                         "x": 750,
                         "y": -375
                     },
-                    "id": "1634e80",
+                    "id": "5608bc47b6a0",
                     "over": {
                         "b": -184,
                         "r": 1284,
@@ -6454,7 +6459,7 @@
             "Parametrs": {
             },
             "Title": "Резистор 0,5Вт",
-            "id": "1bbba20",
+            "id": "5608ba3764c0",
             "type": "Symbol"
         },
         {
@@ -6470,7 +6475,7 @@
                         "x": 1250,
                         "y": 200
                     },
-                    "id": "1d82fa0",
+                    "id": "5608bc47b890",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6485,7 +6490,7 @@
                         "x": 1250,
                         "y": 0
                     },
-                    "id": "1dc5070",
+                    "id": "5608bc41c2e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6500,7 +6505,7 @@
                         "x": 0,
                         "y": 0
                     },
-                    "id": "1e1a770",
+                    "id": "5608bc41c370",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6515,7 +6520,7 @@
                         "x": 750,
                         "y": -150
                     },
-                    "id": "1ecec50",
+                    "id": "5608bc41c480",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6551,7 +6556,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1de3090",
+                    "id": "5608bc41c510",
                     "type": "SymPin"
                 },
                 {
@@ -6584,7 +6589,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1e284e0",
+                    "id": "5608bbdc36d0",
                     "type": "SymPin"
                 },
                 {
@@ -6592,7 +6597,7 @@
                         "x": 750,
                         "y": 375
                     },
-                    "id": "1e28400",
+                    "id": "5608bbdc3840",
                     "over": {
                         "b": 567,
                         "r": 1036,
@@ -6614,7 +6619,7 @@
                         "x": 750,
                         "y": -375
                     },
-                    "id": "165ba70",
+                    "id": "5608bc465080",
                     "over": {
                         "b": -184,
                         "r": 1284,
@@ -6641,7 +6646,7 @@
             "Parametrs": {
             },
             "Title": "Резистор 1Вт",
-            "id": "1e1be60",
+            "id": "5608bc47b7d0",
             "type": "Symbol"
         },
         {
@@ -6657,7 +6662,7 @@
                         "x": 1250,
                         "y": 200
                     },
-                    "id": "1dac160",
+                    "id": "5608bc465270",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6672,7 +6677,7 @@
                         "x": 1250,
                         "y": 0
                     },
-                    "id": "1cf1da0",
+                    "id": "5608bb771bc0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6687,7 +6692,7 @@
                         "x": 0,
                         "y": 0
                     },
-                    "id": "1ec90a0",
+                    "id": "5608bb771c80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6702,7 +6707,7 @@
                         "x": 675,
                         "y": -150
                     },
-                    "id": "1f13cd0",
+                    "id": "5608bb771d90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6717,7 +6722,7 @@
                         "x": 825,
                         "y": -150
                     },
-                    "id": "1edd860",
+                    "id": "5608bb771e20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6753,7 +6758,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "16a5e30",
+                    "id": "5608bc46ca60",
                     "type": "SymPin"
                 },
                 {
@@ -6786,7 +6791,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1658950",
+                    "id": "5608bc46cba0",
                     "type": "SymPin"
                 },
                 {
@@ -6794,7 +6799,7 @@
                         "x": 750,
                         "y": 375
                     },
-                    "id": "1f9ad00",
+                    "id": "5608bc42db60",
                     "over": {
                         "b": 567,
                         "r": 1036,
@@ -6816,7 +6821,7 @@
                         "x": 750,
                         "y": -375
                     },
-                    "id": "166da10",
+                    "id": "5608bc42dc90",
                     "over": {
                         "b": -184,
                         "r": 1284,
@@ -6843,7 +6848,7 @@
             "Parametrs": {
             },
             "Title": "Резистор 2Вт",
-            "id": "1ec6b40",
+            "id": "5608bc4651b0",
             "type": "Symbol"
         },
         {
@@ -6859,7 +6864,7 @@
                         "x": 1750,
                         "y": 0
                     },
-                    "id": "1d97ed0",
+                    "id": "5608bc49a880",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6874,7 +6879,7 @@
                         "x": 2875,
                         "y": -1150
                     },
-                    "id": "1f8e030",
+                    "id": "5608bc49a970",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6889,7 +6894,7 @@
                         "x": 10000,
                         "y": 0
                     },
-                    "id": "1f8e0f0",
+                    "id": "5608bc49aa30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6904,7 +6909,7 @@
                         "x": 7125,
                         "y": -1150
                     },
-                    "id": "1655790",
+                    "id": "5608bc49aaf0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6919,7 +6924,7 @@
                         "x": 2875,
                         "y": 875
                     },
-                    "id": "1612720",
+                    "id": "5608bc49ab80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6934,7 +6939,7 @@
                         "x": 2875,
                         "y": -875
                     },
-                    "id": "1df8be0",
+                    "id": "5608bc475cb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -6971,7 +6976,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "5",
                     "Stratum": "3fffffff",
-                    "id": "1f8d010",
+                    "id": "5608bc475d70",
                     "type": "PartPin"
                 },
                 {
@@ -7005,7 +7010,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "5",
                     "Stratum": "3fffffff",
-                    "id": "1ec89c0",
+                    "id": "5608ba315800",
                     "type": "PartPin"
                 },
                 {
@@ -7013,7 +7018,7 @@
                         "x": 5000,
                         "y": 0
                     },
-                    "id": "1e8e2c0",
+                    "id": "5608ba3159b0",
                     "over": {
                         "b": 544,
                         "r": 5814,
@@ -7035,7 +7040,7 @@
                         "x": 5000,
                         "y": -1875
                     },
-                    "id": "160f8a0",
+                    "id": "5608ba315ab0",
                     "over": {
                         "b": -1328,
                         "r": 6519,
@@ -7062,7 +7067,7 @@
             "Parametrs": {
             },
             "Title": "С2-29В-0,062Вт",
-            "id": "1e988d0",
+            "id": "5608bc42ddc0",
             "type": "Part"
         },
         {
@@ -7078,7 +7083,7 @@
                         "x": 2250,
                         "y": 0
                     },
-                    "id": "1e1b660",
+                    "id": "5608bb079ec0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7093,7 +7098,7 @@
                         "x": 4000,
                         "y": -1750
                     },
-                    "id": "1ed1e00",
+                    "id": "5608bb079fb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7108,7 +7113,7 @@
                         "x": 12500,
                         "y": 0
                     },
-                    "id": "1ed1ec0",
+                    "id": "5608bc485bf0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7123,7 +7128,7 @@
                         "x": 10250,
                         "y": -1750
                     },
-                    "id": "1e28e20",
+                    "id": "5608bc485cb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7138,7 +7143,7 @@
                         "x": 4000,
                         "y": 1500
                     },
-                    "id": "1dc3680",
+                    "id": "5608bc485d40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7153,7 +7158,7 @@
                         "x": 4000,
                         "y": -1500
                     },
-                    "id": "1dc3710",
+                    "id": "5608bc485e00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7190,7 +7195,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "5",
                     "Stratum": "3fffffff",
-                    "id": "1f12810",
+                    "id": "5608b59516b0",
                     "type": "PartPin"
                 },
                 {
@@ -7224,7 +7229,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "5",
                     "Stratum": "3fffffff",
-                    "id": "1ec3300",
+                    "id": "5608b59518f0",
                     "type": "PartPin"
                 },
                 {
@@ -7232,7 +7237,7 @@
                         "x": 6250,
                         "y": 0
                     },
-                    "id": "1f72f30",
+                    "id": "5608b8f08840",
                     "over": {
                         "b": 534,
                         "r": 7068,
@@ -7254,7 +7259,7 @@
                         "x": 6250,
                         "y": -2500
                     },
-                    "id": "1ec7700",
+                    "id": "5608b8f08940",
                     "over": {
                         "b": -1956,
                         "r": 7768,
@@ -7281,7 +7286,7 @@
             "Parametrs": {
             },
             "Title": "С2-29В-0,125Вт",
-            "id": "1df8ca0",
+            "id": "5608bb0b8320",
             "type": "Part"
         },
         {
@@ -7297,7 +7302,7 @@
                         "x": 2000,
                         "y": 0
                     },
-                    "id": "167c430",
+                    "id": "5608b8f08b30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7312,7 +7317,7 @@
                         "x": 13000,
                         "y": 0
                     },
-                    "id": "15f7940",
+                    "id": "5608bc4500e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7327,7 +7332,7 @@
                         "x": 4250,
                         "y": -2250
                     },
-                    "id": "16026d0",
+                    "id": "5608bc4501a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7342,7 +7347,7 @@
                         "x": 13000,
                         "y": -2250
                     },
-                    "id": "1602790",
+                    "id": "5608bc450260",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7357,7 +7362,7 @@
                         "x": 4250,
                         "y": 2000
                     },
-                    "id": "1e8e4f0",
+                    "id": "5608bc4502f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7372,7 +7377,7 @@
                         "x": 4250,
                         "y": -2000
                     },
-                    "id": "1de7120",
+                    "id": "5608bc4503b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7409,7 +7414,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1f1a360",
+                    "id": "5608bbd9a860",
                     "type": "PartPin"
                 },
                 {
@@ -7443,7 +7448,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1c9a750",
+                    "id": "5608bbd9aaa0",
                     "type": "PartPin"
                 },
                 {
@@ -7451,7 +7456,7 @@
                         "x": 7500,
                         "y": 0
                     },
-                    "id": "1f70a70",
+                    "id": "5608bb085080",
                     "over": {
                         "b": 546,
                         "r": 8314,
@@ -7473,7 +7478,7 @@
                         "x": 7500,
                         "y": -3125
                     },
-                    "id": "1a9e310",
+                    "id": "5608bb085180",
                     "over": {
                         "b": -2574,
                         "r": 9022,
@@ -7500,7 +7505,7 @@
             "Parametrs": {
             },
             "Title": "С2-29В-0,25Вт",
-            "id": "1658890",
+            "id": "5608b8f08a70",
             "type": "Part"
         },
         {
@@ -7516,7 +7521,7 @@
                         "x": 3000,
                         "y": 0
                     },
-                    "id": "1d93040",
+                    "id": "5608bc44c020",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7531,7 +7536,7 @@
                         "x": 20000,
                         "y": 0
                     },
-                    "id": "1d7e490",
+                    "id": "5608bc44c110",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7546,7 +7551,7 @@
                         "x": 6750,
                         "y": -3750
                     },
-                    "id": "16088f0",
+                    "id": "5608bc44c1d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7561,7 +7566,7 @@
                         "x": 17000,
                         "y": -3750
                     },
-                    "id": "1bfceb0",
+                    "id": "5608bc44c290",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7576,7 +7581,7 @@
                         "x": 6750,
                         "y": 3250
                     },
-                    "id": "1bfcf40",
+                    "id": "5608bc44c320",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7591,7 +7596,7 @@
                         "x": 6750,
                         "y": -3250
                     },
-                    "id": "1e951f0",
+                    "id": "5608bc49b800",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7628,7 +7633,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1f0ac10",
+                    "id": "5608bc49b8c0",
                     "type": "PartPin"
                 },
                 {
@@ -7662,7 +7667,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1f78820",
+                    "id": "5608bc459040",
                     "type": "PartPin"
                 },
                 {
@@ -7670,7 +7675,7 @@
                         "x": 10000,
                         "y": 0
                     },
-                    "id": "1f74310",
+                    "id": "5608bc4591f0",
                     "over": {
                         "b": 526,
                         "r": 10803,
@@ -7692,7 +7697,7 @@
                         "x": 10000,
                         "y": -4375
                     },
-                    "id": "161daa0",
+                    "id": "5608bc4592f0",
                     "over": {
                         "b": -3843,
                         "r": 11504,
@@ -7719,7 +7724,7 @@
             "Parametrs": {
             },
             "Title": "С2-29В-0,5Вт",
-            "id": "1d92fb0",
+            "id": "5608bb0852b0",
             "type": "Part"
         },
         {
@@ -7735,7 +7740,7 @@
                         "x": 3750,
                         "y": 0
                     },
-                    "id": "1e9c850",
+                    "id": "5608bb707010",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7750,7 +7755,7 @@
                         "x": 27500,
                         "y": 0
                     },
-                    "id": "1d91400",
+                    "id": "5608bb707100",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7765,7 +7770,7 @@
                         "x": 8650,
                         "y": -4900
                     },
-                    "id": "1d914c0",
+                    "id": "5608bb7071c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7780,7 +7785,7 @@
                         "x": 18850,
                         "y": -4900
                     },
-                    "id": "1dcba00",
+                    "id": "5608bb707280",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7795,7 +7800,7 @@
                         "x": 8650,
                         "y": 4500
                     },
-                    "id": "1e1d210",
+                    "id": "5608bb707310",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7810,7 +7815,7 @@
                         "x": 8650,
                         "y": -4500
                     },
-                    "id": "1e1d2d0",
+                    "id": "5608bc494230",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7847,7 +7852,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1d83bf0",
+                    "id": "5608bc4942c0",
                     "type": "PartPin"
                 },
                 {
@@ -7881,7 +7886,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1e503a0",
+                    "id": "5608bc494500",
                     "type": "PartPin"
                 },
                 {
@@ -7889,7 +7894,7 @@
                         "x": 13750,
                         "y": 0
                     },
-                    "id": "1f8edb0",
+                    "id": "5608b1d2cf10",
                     "over": {
                         "b": 488,
                         "r": 14610,
@@ -7911,7 +7916,7 @@
                         "x": 13750,
                         "y": -5625
                     },
-                    "id": "1e93200",
+                    "id": "5608b1d2d010",
                     "over": {
                         "b": -5094,
                         "r": 15270,
@@ -7938,7 +7943,7 @@
             "Parametrs": {
             },
             "Title": "С2-29В-1Вт",
-            "id": "1652950",
+            "id": "5608bc49bb00",
             "type": "Part"
         },
         {
@@ -7954,7 +7959,7 @@
                         "x": 4750,
                         "y": 0
                     },
-                    "id": "1dd8ef0",
+                    "id": "5608b1d2d200",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7969,7 +7974,7 @@
                         "x": 32750,
                         "y": 0
                     },
-                    "id": "1609ac0",
+                    "id": "5608bb0b5990",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7984,7 +7989,7 @@
                         "x": 9650,
                         "y": -4900
                     },
-                    "id": "1609b80",
+                    "id": "5608bb0b5a50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -7999,7 +8004,7 @@
                         "x": 27850,
                         "y": -4900
                     },
-                    "id": "1e5af20",
+                    "id": "5608bb0b5b10",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8014,7 +8019,7 @@
                         "x": 9650,
                         "y": 4500
                     },
-                    "id": "1f940d0",
+                    "id": "5608bb0b5ba0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8029,7 +8034,7 @@
                         "x": 9650,
                         "y": -4500
                     },
-                    "id": "1f94190",
+                    "id": "5608bb0b5c60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8066,7 +8071,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1f05b80",
+                    "id": "5608bbd8a8e0",
                     "type": "PartPin"
                 },
                 {
@@ -8100,7 +8105,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1e85610",
+                    "id": "5608bbd8ab20",
                     "type": "PartPin"
                 },
                 {
@@ -8108,7 +8113,7 @@
                         "x": 18125,
                         "y": 1875
                     },
-                    "id": "1f1e310",
+                    "id": "5608bc470430",
                     "over": {
                         "b": 2402,
                         "r": 18918,
@@ -8130,7 +8135,7 @@
                         "x": 18125,
                         "y": -2500
                     },
-                    "id": "15f2910",
+                    "id": "5608bc470530",
                     "over": {
                         "b": -2054,
                         "r": 19641,
@@ -8157,7 +8162,7 @@
             "Parametrs": {
             },
             "Title": "С2-29В-2Вт",
-            "id": "1dbff50",
+            "id": "5608b1d2d140",
             "type": "Part"
         },
         {
@@ -8173,7 +8178,7 @@
                         "x": 2000,
                         "y": 0
                     },
-                    "id": "1ea7380",
+                    "id": "5608bc470720",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8188,7 +8193,7 @@
                         "x": 3100,
                         "y": -1100
                     },
-                    "id": "1f72b20",
+                    "id": "5608bb086830",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8203,7 +8208,7 @@
                         "x": 7975,
                         "y": 1100
                     },
-                    "id": "1e03270",
+                    "id": "5608bb0868f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8218,7 +8223,7 @@
                         "x": 7975,
                         "y": 0
                     },
-                    "id": "1e13b30",
+                    "id": "5608bb0869b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8233,7 +8238,7 @@
                         "x": 3100,
                         "y": 900
                     },
-                    "id": "1e4b9e0",
+                    "id": "5608bb086a40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8248,7 +8253,7 @@
                         "x": 3100,
                         "y": -900
                     },
-                    "id": "1616160",
+                    "id": "5608bb086b00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8285,7 +8290,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "5",
                     "Stratum": "3fffffff",
-                    "id": "16659f0",
+                    "id": "5608b962b000",
                     "type": "PartPin"
                 },
                 {
@@ -8319,7 +8324,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "5",
                     "Stratum": "3fffffff",
-                    "id": "1f13010",
+                    "id": "5608b962b240",
                     "type": "PartPin"
                 },
                 {
@@ -8327,7 +8332,7 @@
                         "x": 4875,
                         "y": 0
                     },
-                    "id": "1dcbe40",
+                    "id": "5608bb0b6400",
                     "over": {
                         "b": 539,
                         "r": 5694,
@@ -8349,7 +8354,7 @@
                         "x": 5000,
                         "y": -1500
                     },
-                    "id": "1d8a1e0",
+                    "id": "5608bb0b6530",
                     "over": {
                         "b": -957,
                         "r": 6519,
@@ -8376,7 +8381,7 @@
             "Parametrs": {
             },
             "Title": "С2-33Н-0,125Вт",
-            "id": "1dd6050",
+            "id": "5608bc470660",
             "type": "Part"
         },
         {
@@ -8388,7 +8393,7 @@
                         "x": 22500,
                         "y": -12500
                     },
-                    "id": "1655740",
+                    "id": "5608bb771d40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8400,7 +8405,7 @@
                         "x": 22500,
                         "y": -12500
                     },
-                    "id": "1c03a60",
+                    "id": "5608bc41c430",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8416,7 +8421,7 @@
                         "x": 23750,
                         "y": -12500
                     },
-                    "id": "1f15020",
+                    "id": "5608bb0dc430",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8431,7 +8436,7 @@
                         "x": 23375,
                         "y": -12500
                     },
-                    "id": "1d58130",
+                    "id": "5608bb0dc4f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8446,7 +8451,7 @@
                         "x": 22500,
                         "y": -12500
                     },
-                    "id": "1d581c0",
+                    "id": "5608bb0dc580",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8483,7 +8488,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "8",
                     "Stratum": "3fffffff",
-                    "id": "1f75d30",
+                    "id": "5608bb0dc640",
                     "type": "PartPin"
                 },
                 {
@@ -8517,7 +8522,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "8",
                     "Stratum": "3fffffff",
-                    "id": "168d010",
+                    "id": "5608bb759800",
                     "type": "PartPin"
                 },
                 {
@@ -8525,7 +8530,7 @@
                         "x": 22500,
                         "y": -10625
                     },
-                    "id": "1d8c880",
+                    "id": "5608bb759a70",
                     "over": {
                         "b": -10072,
                         "r": 23336,
@@ -8547,7 +8552,7 @@
                         "x": 22500,
                         "y": -14375
                     },
-                    "id": "1c9beb0",
+                    "id": "5608bb759b70",
                     "over": {
                         "b": -13836,
                         "r": 24023,
@@ -8574,7 +8579,7 @@
             "Parametrs": {
             },
             "Title": "С2-33Н-0,125Вт(В)",
-            "id": "1cc0d40",
+            "id": "5608bb0b6660",
             "type": "Part"
         },
         {
@@ -8590,7 +8595,7 @@
                         "x": 2750,
                         "y": 0
                     },
-                    "id": "163ec00",
+                    "id": "5608b8f77980",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8605,7 +8610,7 @@
                         "x": 12500,
                         "y": 0
                     },
-                    "id": "1e1d0d0",
+                    "id": "5608b8f77a70",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8620,7 +8625,7 @@
                         "x": 4250,
                         "y": 1500
                     },
-                    "id": "1f8ba80",
+                    "id": "5608b8f77b30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8635,7 +8640,7 @@
                         "x": 8250,
                         "y": 1500
                     },
-                    "id": "1e9c710",
+                    "id": "5608ba30f480",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8650,7 +8655,7 @@
                         "x": 8250,
                         "y": 1250
                     },
-                    "id": "1df0850",
+                    "id": "5608ba30f510",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8665,7 +8670,7 @@
                         "x": 8250,
                         "y": -1250
                     },
-                    "id": "1e94e50",
+                    "id": "5608ba30f5d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8702,7 +8707,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "5",
                     "Stratum": "3fffffff",
-                    "id": "1e91e60",
+                    "id": "5608ba30f690",
                     "type": "PartPin"
                 },
                 {
@@ -8736,7 +8741,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "5",
                     "Stratum": "3fffffff",
-                    "id": "1f1a1a0",
+                    "id": "5608b74be0f0",
                     "type": "PartPin"
                 },
                 {
@@ -8744,7 +8749,7 @@
                         "x": 6250,
                         "y": 0
                     },
-                    "id": "167c6f0",
+                    "id": "5608b74be2a0",
                     "over": {
                         "b": 539,
                         "r": 7068,
@@ -8766,7 +8771,7 @@
                         "x": 6250,
                         "y": -1875
                     },
-                    "id": "1f16060",
+                    "id": "5608bb0f7800",
                     "over": {
                         "b": -1331,
                         "r": 7768,
@@ -8793,7 +8798,7 @@
             "Parametrs": {
             },
             "Title": "С2-33Н-0,25Вт",
-            "id": "1f1bae0",
+            "id": "5608b8f778c0",
             "type": "Part"
         },
         {
@@ -8805,7 +8810,7 @@
                         "x": 0,
                         "y": -15000
                     },
-                    "id": "1d8c980",
+                    "id": "5608ba30f430",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8817,7 +8822,7 @@
                         "x": 0,
                         "y": -15000
                     },
-                    "id": "1e9ece0",
+                    "id": "5608bc427dd0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8833,7 +8838,7 @@
                         "x": 0,
                         "y": -15000
                     },
-                    "id": "1e9ed90",
+                    "id": "5608bb0f7a80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8848,7 +8853,7 @@
                         "x": 2500,
                         "y": -15000
                     },
-                    "id": "1f9fcb0",
+                    "id": "5608bb0f7b90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -8885,7 +8890,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "8",
                     "Stratum": "3fffffff",
-                    "id": "1d49030",
+                    "id": "5608ba312c30",
                     "type": "PartPin"
                 },
                 {
@@ -8919,7 +8924,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "8",
                     "Stratum": "3fffffff",
-                    "id": "1c922b0",
+                    "id": "5608ba312de0",
                     "type": "PartPin"
                 },
                 {
@@ -8927,7 +8932,7 @@
                         "x": 0,
                         "y": -13125
                     },
-                    "id": "1598a50",
+                    "id": "5608ba312f90",
                     "over": {
                         "b": -12576,
                         "r": 815,
@@ -8949,7 +8954,7 @@
                         "x": 0,
                         "y": -16875
                     },
-                    "id": "1e930c0",
+                    "id": "5608b88a7120",
                     "over": {
                         "b": -16337,
                         "r": 1533,
@@ -8976,7 +8981,7 @@
             "Parametrs": {
             },
             "Title": "С2-33Н-0,25Вт(В)",
-            "id": "1e1c460",
+            "id": "5608b74be3a0",
             "type": "Part"
         },
         {
@@ -8992,7 +8997,7 @@
                         "x": 2400,
                         "y": 0
                     },
-                    "id": "169ca10",
+                    "id": "5608b88a7310",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9007,7 +9012,7 @@
                         "x": 4475,
                         "y": 2100
                     },
-                    "id": "1f24830",
+                    "id": "5608b8910400",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9022,7 +9027,7 @@
                         "x": 10525,
                         "y": 2100
                     },
-                    "id": "1f98d70",
+                    "id": "5608b89104c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9037,7 +9042,7 @@
                         "x": 15000,
                         "y": 0
                     },
-                    "id": "1ea4ef0",
+                    "id": "5608b89105d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9052,7 +9057,7 @@
                         "x": 10525,
                         "y": 1775
                     },
-                    "id": "1c98a20",
+                    "id": "5608b8910660",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9067,7 +9072,7 @@
                         "x": 10525,
                         "y": -1775
                     },
-                    "id": "1dbcaf0",
+                    "id": "5608b8910720",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9104,7 +9109,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "14",
                     "Stratum": "3fffffff",
-                    "id": "1f715d0",
+                    "id": "5608bb70c800",
                     "type": "PartPin"
                 },
                 {
@@ -9138,7 +9143,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "14",
                     "Stratum": "3fffffff",
-                    "id": "1e1d3e0",
+                    "id": "5608bb70ca40",
                     "type": "PartPin"
                 },
                 {
@@ -9146,7 +9151,7 @@
                         "x": 7500,
                         "y": 0
                     },
-                    "id": "1669be0",
+                    "id": "5608b8f68000",
                     "over": {
                         "b": 553,
                         "r": 8327,
@@ -9168,7 +9173,7 @@
                         "x": 7500,
                         "y": -2500
                     },
-                    "id": "1dc3d60",
+                    "id": "5608b8f68130",
                     "over": {
                         "b": -1952,
                         "r": 9037,
@@ -9195,7 +9200,7 @@
             "Parametrs": {
             },
             "Title": "С2-33Н-0,5Вт",
-            "id": "1b4eaf0",
+            "id": "5608b88a7250",
             "type": "Part"
         },
         {
@@ -9211,7 +9216,7 @@
                         "x": 3500,
                         "y": 0
                     },
-                    "id": "16801d0",
+                    "id": "5608b8f68320",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9226,7 +9231,7 @@
                         "x": 6825,
                         "y": 3350
                     },
-                    "id": "1f234d0",
+                    "id": "5608bc419c80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9241,7 +9246,7 @@
                         "x": 13175,
                         "y": 3350
                     },
-                    "id": "1e96480",
+                    "id": "5608bc419d40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9256,7 +9261,7 @@
                         "x": 13175,
                         "y": 3000
                     },
-                    "id": "1aa7760",
+                    "id": "5608bc419e50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9271,7 +9276,7 @@
                         "x": 13175,
                         "y": -3000
                     },
-                    "id": "1e0df70",
+                    "id": "5608bc419ee0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9286,7 +9291,7 @@
                         "x": 16500,
                         "y": 0
                     },
-                    "id": "1dab850",
+                    "id": "5608bc419fa0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9323,7 +9328,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "14",
                     "Stratum": "3fffffff",
-                    "id": "1d97c50",
+                    "id": "5608bc465c30",
                     "type": "PartPin"
                 },
                 {
@@ -9357,7 +9362,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "14",
                     "Stratum": "3fffffff",
-                    "id": "1d916b0",
+                    "id": "5608bc465e70",
                     "type": "PartPin"
                 },
                 {
@@ -9365,7 +9370,7 @@
                         "x": 10000,
                         "y": 0
                     },
-                    "id": "1f73f70",
+                    "id": "5608b4bfd430",
                     "over": {
                         "b": 531,
                         "r": 10829,
@@ -9387,7 +9392,7 @@
                         "x": 10000,
                         "y": -3750
                     },
-                    "id": "1f20b10",
+                    "id": "5608b4bfd530",
                     "over": {
                         "b": -3221,
                         "r": 11497,
@@ -9414,7 +9419,7 @@
             "Parametrs": {
             },
             "Title": "С2-33Н-1Вт",
-            "id": "169fcb0",
+            "id": "5608b8f68260",
             "type": "Part"
         },
         {
@@ -9430,7 +9435,7 @@
                         "x": 4500,
                         "y": 0
                     },
-                    "id": "1ddfdb0",
+                    "id": "5608b4bfd720",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9445,7 +9450,7 @@
                         "x": 8900,
                         "y": 4400
                     },
-                    "id": "1669d40",
+                    "id": "5608bb0bc030",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9460,7 +9465,7 @@
                         "x": 18600,
                         "y": 4400
                     },
-                    "id": "20b2b70",
+                    "id": "5608bb0bc0f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9475,7 +9480,7 @@
                         "x": 18600,
                         "y": 4000
                     },
-                    "id": "1bfce00",
+                    "id": "5608bb0bc200",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9490,7 +9495,7 @@
                         "x": 18600,
                         "y": -4000
                     },
-                    "id": "1eb22a0",
+                    "id": "5608bb0bc290",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9505,7 +9510,7 @@
                         "x": 23000,
                         "y": 0
                     },
-                    "id": "1bcb470",
+                    "id": "5608bb0bc350",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9542,7 +9547,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "21",
                     "Stratum": "3fffffff",
-                    "id": "1e0f710",
+                    "id": "5608bb0af830",
                     "type": "PartPin"
                 },
                 {
@@ -9576,7 +9581,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "21",
                     "Stratum": "3fffffff",
-                    "id": "1e0c9a0",
+                    "id": "5608bb0afa70",
                     "type": "PartPin"
                 },
                 {
@@ -9584,7 +9589,7 @@
                         "x": 13750,
                         "y": 0
                     },
-                    "id": "1f99380",
+                    "id": "5608b8f20430",
                     "over": {
                         "b": 488,
                         "r": 14593,
@@ -9606,7 +9611,7 @@
                         "x": 13750,
                         "y": -5000
                     },
-                    "id": "1f9b920",
+                    "id": "5608b8f20530",
                     "over": {
                         "b": -4525,
                         "r": 15266,
@@ -9633,7 +9638,7 @@
             "Parametrs": {
             },
             "Title": "С2-33Н-2Вт",
-            "id": "1632ed0",
+            "id": "5608b4bfd660",
             "type": "Part"
         },
         {
@@ -9649,7 +9654,7 @@
                         "x": 30000,
                         "y": -5625
                     },
-                    "id": "1e90c80",
+                    "id": "5608b8f20720",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 100,
@@ -9664,7 +9669,7 @@
                         "x": 30000,
                         "y": 0
                     },
-                    "id": "1e90d70",
+                    "id": "5608bc464c30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9679,7 +9684,7 @@
                         "x": 5000,
                         "y": 0
                     },
-                    "id": "1662c60",
+                    "id": "5608bc464cf0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9716,7 +9721,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "20",
                     "Stratum": "3fffffff",
-                    "id": "1ec1470",
+                    "id": "5608bc464e00",
                     "type": "PartPin"
                 },
                 {
@@ -9750,7 +9755,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "20",
                     "Stratum": "3fffffff",
-                    "id": "161c470",
+                    "id": "5608ba345800",
                     "type": "PartPin"
                 },
                 {
@@ -9758,7 +9763,7 @@
                         "x": 17500,
                         "y": 3750
                     },
-                    "id": "1646740",
+                    "id": "5608ba3459b0",
                     "over": {
                         "b": 4271,
                         "r": 18296,
@@ -9780,7 +9785,7 @@
                         "x": 17500,
                         "y": -3750
                     },
-                    "id": "1f29b30",
+                    "id": "5608ba345ab0",
                     "over": {
                         "b": -3205,
                         "r": 18990,
@@ -9807,7 +9812,7 @@
             "Parametrs": {
             },
             "Title": "С5-16МВ-2Вт(корпус)",
-            "id": "166dc70",
+            "id": "5608b8f20660",
             "type": "Part"
         },
         {
@@ -9823,7 +9828,7 @@
                         "x": 7500,
                         "y": 0
                     },
-                    "id": "16b3b70",
+                    "id": "5608b82585b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9842,7 +9847,7 @@
                         "x": -2475,
                         "y": 6250
                     },
-                    "id": "1f18720",
+                    "id": "5608b82586a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9857,7 +9862,7 @@
                         "x": 7500,
                         "y": 6250
                     },
-                    "id": "1ed0690",
+                    "id": "5608b8258760",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9872,7 +9877,7 @@
                         "x": -2500,
                         "y": 6250
                     },
-                    "id": "1ed0750",
+                    "id": "5608ba345b80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9883,7 +9888,7 @@
                         "x": 2500,
                         "y": 6250
                     },
-                    "id": "1a9b5d0",
+                    "id": "5608bc419e00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -9903,7 +9908,7 @@
                         "x": 500,
                         "y": 8925
                     },
-                    "id": "1ec7c40",
+                    "id": "5608b8f22c90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 200,
@@ -9918,7 +9923,7 @@
                         "x": 1875,
                         "y": 5000
                     },
-                    "id": "164d200",
+                    "id": "5608b8f22d50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 250,
@@ -9955,7 +9960,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "19",
                     "Stratum": "3fffffff",
-                    "id": "16410a0",
+                    "id": "5608b8f22ea0",
                     "type": "PartPin"
                 },
                 {
@@ -9989,7 +9994,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "19",
                     "Stratum": "3fffffff",
-                    "id": "1e1de40",
+                    "id": "5608b3ebd490",
                     "type": "PartPin"
                 },
                 {
@@ -10023,7 +10028,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "19",
                     "Stratum": "3fffffff",
-                    "id": "1e11c00",
+                    "id": "5608b3ebd640",
                     "type": "PartPin"
                 },
                 {
@@ -10031,7 +10036,7 @@
                         "x": 1250,
                         "y": 7500
                     },
-                    "id": "1c94780",
+                    "id": "5608b95f3400",
                     "over": {
                         "b": 7992,
                         "r": 2047,
@@ -10053,7 +10058,7 @@
                         "x": 2500,
                         "y": 1250
                     },
-                    "id": "1efe720",
+                    "id": "5608b95f3530",
                     "over": {
                         "b": 1733,
                         "r": 3964,
@@ -10080,7 +10085,7 @@
             "Parametrs": {
             },
             "Title": "СП3-38б (корпус)",
-            "id": "16b3ab0",
+            "id": "5608b82584f0",
             "type": "Part"
         },
         {
@@ -10092,7 +10097,7 @@
                         "x": 0,
                         "y": 0
                     },
-                    "id": "1d97d70",
+                    "id": "5608b8910580",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10130,7 +10135,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "13",
                     "Stratum": "3fffffff",
-                    "id": "1f9f8a0",
+                    "id": "5608bbd7f8b0",
                     "type": "PartPin"
                 },
                 {
@@ -10164,7 +10169,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1665800",
+                    "id": "5608bbd7fa60",
                     "type": "PartPin"
                 },
                 {
@@ -10198,7 +10203,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1f11800",
+                    "id": "5608ba9e5500",
                     "type": "PartPin"
                 },
                 {
@@ -10206,7 +10211,7 @@
                         "x": 0,
                         "y": 3750
                     },
-                    "id": "163ed20",
+                    "id": "5608ba9e56b0",
                     "over": {
                         "b": 4292,
                         "r": 810,
@@ -10228,7 +10233,7 @@
                         "x": 0,
                         "y": -3750
                     },
-                    "id": "162ec60",
+                    "id": "5608ba9e57b0",
                     "over": {
                         "b": -3229,
                         "r": 1519,
@@ -10255,7 +10260,7 @@
             "Parametrs": {
             },
             "Title": "СП5-16ВГ (корпус)",
-            "id": "1e70d30",
+            "id": "5608b95f3660",
             "type": "Part"
         },
         {
@@ -10271,7 +10276,7 @@
                         "x": 2500,
                         "y": 0
                     },
-                    "id": "20b3430",
+                    "id": "5608bb700d70",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10286,7 +10291,7 @@
                         "x": 7500,
                         "y": 0
                     },
-                    "id": "1ec7070",
+                    "id": "5608bb700e60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10301,7 +10306,7 @@
                         "x": 5000,
                         "y": 575
                     },
-                    "id": "1ec7130",
+                    "id": "5608bb700f20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10338,7 +10343,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1dadd80",
+                    "id": "5608bb700fe0",
                     "type": "PartPin"
                 },
                 {
@@ -10372,7 +10377,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "2",
                     "Stratum": "3fffffff",
-                    "id": "1e5fb50",
+                    "id": "5608b1d2d290",
                     "type": "PartPin"
                 },
                 {
@@ -10380,7 +10385,7 @@
                         "x": 3750,
                         "y": 1250
                     },
-                    "id": "1e893a0",
+                    "id": "5608b1d2d440",
                     "over": {
                         "b": 1787,
                         "r": 4569,
@@ -10402,7 +10407,7 @@
                         "x": 3750,
                         "y": -1250
                     },
-                    "id": "1b45600",
+                    "id": "5608b1d2d540",
                     "over": {
                         "b": -718,
                         "r": 5267,
@@ -10429,7 +10434,7 @@
             "Parametrs": {
             },
             "Title": "ТРА-2 (корпус)",
-            "id": "1d93200",
+            "id": "5608bbd7fbe0",
             "type": "Part"
         },
         {
@@ -10445,7 +10450,7 @@
                         "x": 10000,
                         "y": 70000
                     },
-                    "id": "162e290",
+                    "id": "5608bb74c280",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10460,7 +10465,7 @@
                         "x": 10000,
                         "y": 55000
                     },
-                    "id": "162e380",
+                    "id": "5608bb74c370",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10475,7 +10480,7 @@
                         "x": -15000,
                         "y": 35000
                     },
-                    "id": "16996f0",
+                    "id": "5608bb74c430",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10486,7 +10491,7 @@
                         "x": -2500,
                         "y": 62500
                     },
-                    "id": "1606cf0",
+                    "id": "5608bbd7fc70",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10498,7 +10503,7 @@
                         "x": -2500,
                         "y": 27500
                     },
-                    "id": "1606d70",
+                    "id": "5608bc4558f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10510,7 +10515,7 @@
                         "x": -10000,
                         "y": 30000
                     },
-                    "id": "165c000",
+                    "id": "5608bb74bfb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10522,7 +10527,7 @@
                         "x": -10000,
                         "y": 60000
                     },
-                    "id": "165c0b0",
+                    "id": "5608bb0b82a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10560,7 +10565,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "0",
                     "Stratum": "3fffffff",
-                    "id": "1eb2590",
+                    "id": "5608bc497690",
                     "type": "PartPin"
                 },
                 {
@@ -10594,7 +10599,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "0",
                     "Stratum": "3fffffff",
-                    "id": "1630c50",
+                    "id": "5608bc4519a0",
                     "type": "PartPin"
                 },
                 {
@@ -10628,7 +10633,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "0",
                     "Stratum": "3fffffff",
-                    "id": "1daf300",
+                    "id": "5608bc451b50",
                     "type": "PartPin"
                 },
                 {
@@ -10662,7 +10667,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "0",
                     "Stratum": "3fffffff",
-                    "id": "1d9dcb0",
+                    "id": "5608bc42cbd0",
                     "type": "PartPin"
                 },
                 {
@@ -10670,7 +10675,7 @@
                         "x": -2500,
                         "y": 50000
                     },
-                    "id": "1e2ee80",
+                    "id": "5608bc42cd80",
                     "over": {
                         "b": 50496,
                         "r": -1676,
@@ -10692,7 +10697,7 @@
                         "x": -2500,
                         "y": 40000
                     },
-                    "id": "1e2ef50",
+                    "id": "5608bc42ce80",
                     "over": {
                         "b": 40416,
                         "r": -1035,
@@ -10719,7 +10724,7 @@
             "Parametrs": {
             },
             "Title": "Шунт [корпус]",
-            "id": "1ea6280",
+            "id": "5608bb74c1c0",
             "type": "Part"
         },
         {
@@ -10735,7 +10740,7 @@
                         "x": 5500,
                         "y": 950
                     },
-                    "id": "1af5c30",
+                    "id": "5608bc451d00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10750,7 +10755,7 @@
                         "x": 2000,
                         "y": 0
                     },
-                    "id": "1a44cf0",
+                    "id": "5608bc475800",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10765,7 +10770,7 @@
                         "x": 7500,
                         "y": 0
                     },
-                    "id": "1ec3640",
+                    "id": "5608bc4758c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10802,7 +10807,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "1e01e80",
+                    "id": "5608bc4759d0",
                     "type": "PartPin"
                 },
                 {
@@ -10836,7 +10841,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "1b79870",
+                    "id": "5608bc475b20",
                     "type": "PartPin"
                 },
                 {
@@ -10844,7 +10849,7 @@
                         "x": 3750,
                         "y": 0
                     },
-                    "id": "169f8b0",
+                    "id": "5608bc45a370",
                     "over": {
                         "b": 546,
                         "r": 4570,
@@ -10866,7 +10871,7 @@
                         "x": 3750,
                         "y": -1450
                     },
-                    "id": "1ff1560",
+                    "id": "5608bc45a470",
                     "over": {
                         "b": -906,
                         "r": 5273,
@@ -10893,7 +10898,7 @@
             "Parametrs": {
             },
             "Title": "multicomp axial leaded fixed resistor 0.125W",
-            "id": "1a45f90",
+            "id": "5608bc497840",
             "type": "Part"
         },
         {
@@ -10909,7 +10914,7 @@
                         "x": 9650,
                         "y": 1250
                     },
-                    "id": "1dce0a0",
+                    "id": "5608bc45fbb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10924,7 +10929,7 @@
                         "x": 2850,
                         "y": 0
                     },
-                    "id": "1b0e4a0",
+                    "id": "5608bc45fca0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10939,7 +10944,7 @@
                         "x": 12500,
                         "y": 0
                     },
-                    "id": "1ad0600",
+                    "id": "5608bc45fd60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -10976,7 +10981,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.7m0.1",
                     "Stratum": "3fffffff",
-                    "id": "1f2cb80",
+                    "id": "5608bc45fe20",
                     "type": "PartPin"
                 },
                 {
@@ -11010,7 +11015,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.7m0.1",
                     "Stratum": "3fffffff",
-                    "id": "1ef8440",
+                    "id": "5608bb0fcca0",
                     "type": "PartPin"
                 },
                 {
@@ -11018,7 +11023,7 @@
                         "x": 6250,
                         "y": 0
                     },
-                    "id": "1e2dc10",
+                    "id": "5608bb0fce20",
                     "over": {
                         "b": 534,
                         "r": 7068,
@@ -11040,7 +11045,7 @@
                         "x": 6250,
                         "y": -1750
                     },
-                    "id": "19618f0",
+                    "id": "5608bb0fcf20",
                     "over": {
                         "b": -1206,
                         "r": 7768,
@@ -11067,7 +11072,7 @@
             "Parametrs": {
             },
             "Title": "multicomp axial leaded fixed resistor 0.25W",
-            "id": "1f70970",
+            "id": "5608bc45a630",
             "type": "Part"
         },
         {
@@ -11083,7 +11088,7 @@
                         "x": 12500,
                         "y": 1750
                     },
-                    "id": "1ac92a0",
+                    "id": "5608bbd93b30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -11098,7 +11103,7 @@
                         "x": 2500,
                         "y": 0
                     },
-                    "id": "183d460",
+                    "id": "5608bbd93c20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -11113,7 +11118,7 @@
                         "x": 15000,
                         "y": 0
                     },
-                    "id": "1ad0a00",
+                    "id": "5608bbd93ce0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -11150,7 +11155,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.7m0.1",
                     "Stratum": "3fffffff",
-                    "id": "1f8d990",
+                    "id": "5608bbd93da0",
                     "type": "PartPin"
                 },
                 {
@@ -11184,7 +11189,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.7m0.1",
                     "Stratum": "3fffffff",
-                    "id": "1f2ca90",
+                    "id": "5608baa10000",
                     "type": "PartPin"
                 },
                 {
@@ -11192,7 +11197,7 @@
                         "x": 7500,
                         "y": 0
                     },
-                    "id": "16a5020",
+                    "id": "5608baa10180",
                     "over": {
                         "b": 552,
                         "r": 8314,
@@ -11214,7 +11219,7 @@
                         "x": 7500,
                         "y": -2250
                     },
-                    "id": "1b9f600",
+                    "id": "5608baa10280",
                     "over": {
                         "b": -1704,
                         "r": 9022,
@@ -11241,7 +11246,7 @@
             "Parametrs": {
             },
             "Title": "multicomp axial leaded fixed resistor 0.5W",
-            "id": "1e94a10",
+            "id": "5608bc45ff70",
             "type": "Part"
         },
         {
@@ -11257,7 +11262,7 @@
                         "x": 19250,
                         "y": 2750
                     },
-                    "id": "1adee20",
+                    "id": "5608bbd93f50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -11272,7 +11277,7 @@
                         "x": 3250,
                         "y": 0
                     },
-                    "id": "1dffde0",
+                    "id": "5608bbdcc090",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -11287,7 +11292,7 @@
                         "x": 22500,
                         "y": 0
                     },
-                    "id": "1eeb920",
+                    "id": "5608bbdcc150",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -11324,7 +11329,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d0.9m0.1",
                     "Stratum": "3fffffff",
-                    "id": "1d97ac0",
+                    "id": "5608bbdcc260",
                     "type": "PartPin"
                 },
                 {
@@ -11358,7 +11363,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d0.9m0.1",
                     "Stratum": "3fffffff",
-                    "id": "1d72b10",
+                    "id": "5608bbdcc3b0",
                     "type": "PartPin"
                 },
                 {
@@ -11366,7 +11371,7 @@
                         "x": 11250,
                         "y": 0
                     },
-                    "id": "1eba900",
+                    "id": "5608bb074b10",
                     "over": {
                         "b": 540,
                         "r": 12076,
@@ -11388,7 +11393,7 @@
                         "x": 11250,
                         "y": -3250
                     },
-                    "id": "1e86920",
+                    "id": "5608bb074c10",
                     "over": {
                         "b": -2718,
                         "r": 12760,
@@ -11415,7 +11420,7 @@
             "Parametrs": {
             },
             "Title": "multicomp axial leaded fixed resistor 1W",
-            "id": "1bfacf0",
+            "id": "5608baa10440",
             "type": "Part"
         },
         {
@@ -11431,7 +11436,7 @@
                         "x": 21250,
                         "y": 3250
                     },
-                    "id": "1dee380",
+                    "id": "5608bb074e90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -11446,7 +11451,7 @@
                         "x": 3750,
                         "y": 0
                     },
-                    "id": "1ee6fa0",
+                    "id": "5608bbd7cd90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -11461,7 +11466,7 @@
                         "x": 25000,
                         "y": 0
                     },
-                    "id": "1b59740",
+                    "id": "5608bbd7ce50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -11498,7 +11503,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d0.9m0.1",
                     "Stratum": "3fffffff",
-                    "id": "1e69c30",
+                    "id": "5608bbd7cf60",
                     "type": "PartPin"
                 },
                 {
@@ -11532,7 +11537,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d0.9m0.1",
                     "Stratum": "3fffffff",
-                    "id": "1e69d20",
+                    "id": "5608bb083fb0",
                     "type": "PartPin"
                 },
                 {
@@ -11540,7 +11545,7 @@
                         "x": 12500,
                         "y": 0
                     },
-                    "id": "1e9fd50",
+                    "id": "5608bb084170",
                     "over": {
                         "b": 544,
                         "r": 13318,
@@ -11562,7 +11567,7 @@
                         "x": 12500,
                         "y": -3750
                     },
-                    "id": "1ecf900",
+                    "id": "5608bb084270",
                     "over": {
                         "b": -3216,
                         "r": 13998,
@@ -11589,7 +11594,7 @@
             "Parametrs": {
             },
             "Title": "multicomp axial leaded fixed resistor 2W",
-            "id": "1e121a0",
+            "id": "5608bb074dd0",
             "type": "Part"
         },
         {
@@ -11603,19 +11608,19 @@
                     },
                     "SymbolId": "Symbol\rresistor (symbol)\rsalicad",
                     "SymbolTitle": "resistor (symbol) (salicad)",
-                    "id": "1ba8290",
+                    "id": "5608bb0840d0",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rmulticomp axial leaded fixed resistor 0.125W\rsalicad",
                     "PartTitle": "multicomp axial leaded fixed resistor 0.125W (salicad)",
-                    "id": "1f560a0",
+                    "id": "5608bc47cf40",
                     "type": "PartVariant"
                 }
             ],
-            "Created": 35151459,
-            "Edit enable": true,
+            "Created": 42625463,
+            "Edit enable": false,
             "Origin": {
                 "x": 0,
                 "y": 0
@@ -11623,6 +11628,7 @@
             "Parametrs": {
                 "article": "",
                 "bom": "axial leaded fixed resistor <value>-<tolerance>-0.125W",
+                "category": "{uu.h.e.a.c",
                 "manufacturer": "multicomp",
                 "prefix": "R",
                 "title": "resistor axial leaded fixed multicomp 0.125W",
@@ -11806,7 +11812,7 @@
                 "MCRE000085",
                 "10MOm"
             ],
-            "id": "1eed540",
+            "id": "5608bbd7d0f0",
             "type": "Comp"
         },
         {
@@ -11820,18 +11826,18 @@
                     },
                     "SymbolId": "Symbol\rresistor (symbol)\rsalicad",
                     "SymbolTitle": "resistor (symbol) (salicad)",
-                    "id": "1e32b70",
+                    "id": "5608bc4514f0",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rmulticomp axial leaded fixed resistor 0.5W\rsalicad",
                     "PartTitle": "multicomp axial leaded fixed resistor 0.5W (salicad)",
-                    "id": "17e8cf0",
+                    "id": "5608bc4517f0",
                     "type": "PartVariant"
                 }
             ],
-            "Created": 35154350,
+            "Created": 42625491,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -11840,6 +11846,7 @@
             "Parametrs": {
                 "article": "",
                 "bom": "axial leaded fixed resistor <value>-<tolerance>-0.5W",
+                "category": "{uu.h.e.a.c",
                 "manufacturer": "multicomp",
                 "prefix": "R",
                 "title": "resistor axial leaded fixed multicomp 0.5W",
@@ -12009,12 +12016,12 @@
                 "MCF 0.5W 10M",
                 "10MOm"
             ],
-            "id": "1d69470",
+            "id": "5608bc451420",
             "type": "Comp"
         }
     ],
     "Parametrs": {
     },
-    "id": "16a5fa0",
+    "id": "5608bbda0840",
     "type": "Project"
 }
