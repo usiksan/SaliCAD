@@ -25,7 +25,7 @@ class SdWView : public QWidget
     Q_OBJECT
 
   public:
-    explicit SdWView(QWidget *parent = 0);
+    explicit SdWView(QWidget *parent = nullptr);
 
   signals:
 
