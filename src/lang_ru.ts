@@ -820,7 +820,7 @@
         <translation>Объект заблокирован. Разблокируйте объект чтобы иметь возможность редактирования. &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="objects/SdProjectItem.cpp" line="333"/>
+        <location filename="objects/SdProjectItem.cpp" line="354"/>
         <source>Origin position changed</source>
         <translation>Изменение точки привязки</translation>
     </message>
@@ -1515,12 +1515,12 @@
         <translation>Список именованных цепей</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetBus.cpp" line="176"/>
+        <location filename="windows/SdDGetBus.cpp" line="194"/>
         <source>Error</source>
         <translation>Ошибка!</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetBus.cpp" line="176"/>
+        <location filename="windows/SdDGetBus.cpp" line="194"/>
         <source>Wrong net list syntax. Use: netA,netB,net&lt;0:2&gt;</source>
         <translation>Неверный синтаксис списка цепей. Используйте: цепьА,цепьБ,цепь&lt;0:2&gt;</translation>
     </message>
@@ -1621,47 +1621,47 @@
         <translation>Загрузить из центрального репозитория</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="201"/>
+        <location filename="windows/SdDGetObject.cpp" line="199"/>
         <source>Show</source>
         <translation>Показать</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="201"/>
+        <location filename="windows/SdDGetObject.cpp" line="199"/>
         <source>Field</source>
         <translation>Поле</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="201"/>
+        <location filename="windows/SdDGetObject.cpp" line="199"/>
         <source>Filtr</source>
         <translation>Фильтр</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="392"/>
+        <location filename="windows/SdDGetObject.cpp" line="387"/>
         <source>Section %1: %2</source>
         <translation>Секция %1:%2</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="615"/>
+        <location filename="windows/SdDGetObject.cpp" line="618"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="616"/>
+        <location filename="windows/SdDGetObject.cpp" line="619"/>
         <source>Author</source>
         <translation>Автор</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="617"/>
+        <location filename="windows/SdDGetObject.cpp" line="620"/>
         <source>Created</source>
         <translation>Создан</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="685"/>
+        <location filename="windows/SdDGetObject.cpp" line="686"/>
         <source>Error</source>
         <translation>Ошибка!</translation>
     </message>
     <message>
-        <location filename="windows/SdDGetObject.cpp" line="685"/>
+        <location filename="windows/SdDGetObject.cpp" line="686"/>
         <source>You must select element or press Cancel</source>
         <translation>Вы должны выбратиь элемент или нажмите Отмена</translation>
     </message>
@@ -3072,13 +3072,15 @@
     </message>
     <message>
         <location filename="windows/SdDOptionsPagePath.cpp" line="65"/>
-        <source>Category hierarchy file:</source>
-        <translation>Файл с описаниями категорий:</translation>
+        <source>Category hierarchy path:</source>
+        <oldsource>Category hierarchy file:</oldsource>
+        <translation>Путь к файлам с описаниями категорий:</translation>
     </message>
     <message>
         <location filename="windows/SdDOptionsPagePath.cpp" line="70"/>
-        <source>Category hierarchy file</source>
-        <translation>Файл с описаниями категорий</translation>
+        <source>Category hierarchy path</source>
+        <oldsource>Category hierarchy file</oldsource>
+        <translation>Путь к файлам с описаниями категорий</translation>
     </message>
 </context>
 <context>
@@ -3413,214 +3415,219 @@
         <translation>Накопить поля из схем</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="171"/>
+        <location filename="windows/SdDParamEditor.cpp" line="172"/>
         <source>This parameter define component line representation in bill of material report</source>
         <translation>Этот параметр определяет представление компонента в отчете перечня материалов (BOM)</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="172"/>
+        <location filename="windows/SdDParamEditor.cpp" line="173"/>
         <source>Component article representation. Can be used in component name and also in bom</source>
         <translation>Представляет артикул компонента. Может быть использован в названии компонента а также в перечне материалов BOM</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="173"/>
+        <location filename="windows/SdDParamEditor.cpp" line="174"/>
         <source>This parametr define component name without value for example smd 0805</source>
         <translation>Этот параметр определяет имя компонента без значения, например smd 0805</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="174"/>
+        <location filename="windows/SdDParamEditor.cpp" line="175"/>
         <source>This parameter define concrete component value for example 1kOm</source>
         <translation>Этот параметр определяет значение компонента, например 1kOm</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="175"/>
+        <location filename="windows/SdDParamEditor.cpp" line="176"/>
         <source>Minimum for value parameter, for example 1 Om</source>
         <translation>Минимальное значение параметра, например 1Om</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="176"/>
+        <location filename="windows/SdDParamEditor.cpp" line="177"/>
         <source>Maximum for value parameter, for example 10 MOm</source>
         <translation>Максимальное значение параметра, например 10Mom</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="177"/>
+        <location filename="windows/SdDParamEditor.cpp" line="178"/>
         <source>Row with which forms all intermediate values, for example E12</source>
         <translation>Ряд, из которого формируются индивидуальные значения компонента, например E12</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="178"/>
+        <location filename="windows/SdDParamEditor.cpp" line="179"/>
         <source>This param define component ident prefix for example prefix DD will construct ident DD4</source>
         <translation>Этот параметр определяет префикс идентификатора компонента, например префикс DD создаст идентификатор DD4</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="179"/>
+        <location filename="windows/SdDParamEditor.cpp" line="180"/>
         <source>This param define used value selector for example &apos;resistor&apos; will select resistor values, i.e. 1.2kOm</source>
         <translation>Этот параметр определяет использование селектора, например &apos;resistor&apos; будет выбирать значения резисторов, т.е. 1.2kOm</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="180"/>
+        <location filename="windows/SdDParamEditor.cpp" line="181"/>
         <source>Manufacturer of component</source>
         <translation>Производитель компонента</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="181"/>
+        <location filename="windows/SdDParamEditor.cpp" line="182"/>
         <source>Tolerance of value</source>
         <translation>Допуск значения</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="182"/>
+        <location filename="windows/SdDParamEditor.cpp" line="183"/>
         <source>Local path to pdf file with datasheet</source>
         <translation>Локальный путь к файлу PDF с описанием компонента</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="183"/>
+        <location filename="windows/SdDParamEditor.cpp" line="184"/>
         <source>www page address</source>
         <translation>Адрес в сети Internet к описанию компонента</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="184"/>
+        <location filename="windows/SdDParamEditor.cpp" line="185"/>
         <source>Device marking code</source>
         <translation>Маркировка компонента на корпусе компонента</translation>
     </message>
     <message>
         <location filename="windows/SdDParamEditor.cpp" line="186"/>
+        <source>Path to element in category tree</source>
+        <translation>Путь к объекту в иерархии категорий</translation>
+    </message>
+    <message>
+        <location filename="windows/SdDParamEditor.cpp" line="188"/>
         <source>Capacitor dielectric type</source>
         <translation>Тип диэлектрика конденсатора</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="187"/>
+        <location filename="windows/SdDParamEditor.cpp" line="189"/>
         <source>Capacitor working voltage</source>
         <translation>Рабочее напряжение конденсатора</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="189"/>
+        <location filename="windows/SdDParamEditor.cpp" line="191"/>
         <source>Diod forvard voltage</source>
         <translation>Прямое напряжение диода</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="190"/>
+        <location filename="windows/SdDParamEditor.cpp" line="192"/>
         <source>Forvard continuous current</source>
         <translation>Прямой продолжительный ток</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="191"/>
+        <location filename="windows/SdDParamEditor.cpp" line="193"/>
         <source>Diod reverce voltage</source>
         <translation>Обратное напряжение диода</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="193"/>
+        <location filename="windows/SdDParamEditor.cpp" line="195"/>
         <source>LED angle</source>
         <translation>Угол светодиода</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="194"/>
+        <location filename="windows/SdDParamEditor.cpp" line="196"/>
         <source>LED brightness</source>
         <translation>Яркость светодиода</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="195"/>
+        <location filename="windows/SdDParamEditor.cpp" line="197"/>
         <source>LED color</source>
         <translation>Цвет светодиода</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="196"/>
+        <location filename="windows/SdDParamEditor.cpp" line="198"/>
         <source>LED wavelength</source>
         <translation>Длина волны светодиода</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="198"/>
+        <location filename="windows/SdDParamEditor.cpp" line="200"/>
         <source>Inductor saturated current</source>
         <translation>Ток насыщения индуктора</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="199"/>
+        <location filename="windows/SdDParamEditor.cpp" line="201"/>
         <source>Inductor resistance</source>
         <translation>Сопротивление индуктора</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="200"/>
+        <location filename="windows/SdDParamEditor.cpp" line="202"/>
         <source>Inductor self resonant frequency</source>
         <translation>Собственная резонансная частота индуктора</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="202"/>
+        <location filename="windows/SdDParamEditor.cpp" line="204"/>
         <source>MOSFET dest current</source>
         <translation>Ток стока MOSFET</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="203"/>
+        <location filename="windows/SdDParamEditor.cpp" line="205"/>
         <source>MOSFET dest power or transistor power</source>
         <translation>Мощность стока MOSFET или транзистора</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="204"/>
+        <location filename="windows/SdDParamEditor.cpp" line="206"/>
         <source>MOSFET source-dest resistance when ON state</source>
         <translation>Сопротивление исток-сток MOSFET во включенном состоянии</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="205"/>
+        <location filename="windows/SdDParamEditor.cpp" line="207"/>
         <source>MOSFET source-dest voltage when OFF</source>
         <translation>Напряжение исток-сток MOSFET в выключенном состоянии</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="206"/>
+        <location filename="windows/SdDParamEditor.cpp" line="208"/>
         <source>MOSFET gate-source voltage</source>
         <translation>Напряжение затвор исток MOSFET</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="208"/>
+        <location filename="windows/SdDParamEditor.cpp" line="210"/>
         <source>Transistor collector current</source>
         <translation>Ток коллектора транзистора</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="209"/>
+        <location filename="windows/SdDParamEditor.cpp" line="211"/>
         <source>Transistor maximum Voltage which it can withstand on its collector measured relative to its base with the emitter open circuit</source>
         <translation>Максимальное напряжение на коллекторе относительно базы в схеме с открытым эмиттером</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="210"/>
+        <location filename="windows/SdDParamEditor.cpp" line="212"/>
         <source>Transistor maximum voltage which it can withstand on its collector measured relative to its emitter with the base open circuit</source>
         <translation>Максимальное напряжение на коллекторе относительно эмиттера в схеме с открытой базой</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="211"/>
+        <location filename="windows/SdDParamEditor.cpp" line="213"/>
         <source>Transistor current-gain koef</source>
         <translation>Коэффициент усиления по току коллектора</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="258"/>
-        <location filename="windows/SdDParamEditor.cpp" line="365"/>
+        <location filename="windows/SdDParamEditor.cpp" line="260"/>
+        <location filename="windows/SdDParamEditor.cpp" line="367"/>
         <source>Param name</source>
         <translation>Имя параметра</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="258"/>
+        <location filename="windows/SdDParamEditor.cpp" line="260"/>
         <source>Enter param name</source>
         <translation>Введите имя параметра</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="261"/>
-        <location filename="windows/SdDParamEditor.cpp" line="293"/>
+        <location filename="windows/SdDParamEditor.cpp" line="263"/>
+        <location filename="windows/SdDParamEditor.cpp" line="295"/>
         <source>Warning!</source>
         <translation>Внимание!</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="261"/>
+        <location filename="windows/SdDParamEditor.cpp" line="263"/>
         <source>Param with this name already exist. Enter another name.</source>
         <translation>Параметр с таким именем уже существует. Введите другое имя.</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="293"/>
+        <location filename="windows/SdDParamEditor.cpp" line="295"/>
         <source>Select param to delete</source>
         <translation>Выберите параметр для удаления</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="302"/>
+        <location filename="windows/SdDParamEditor.cpp" line="304"/>
         <source>Select component to copy param from</source>
         <translation>Выберите компонент для копирования из него параметров</translation>
     </message>
     <message>
-        <location filename="windows/SdDParamEditor.cpp" line="365"/>
+        <location filename="windows/SdDParamEditor.cpp" line="367"/>
         <source>Param value</source>
         <translation>Значение параметра</translation>
     </message>
@@ -3964,48 +3971,48 @@
         <translation>Список цепей</translation>
     </message>
     <message>
-        <location filename="windows/SdDRuleEditor.ui" line="40"/>
+        <location filename="windows/SdDRuleEditor.ui" line="43"/>
         <source>Current net</source>
         <translation>Текущая цепь</translation>
     </message>
     <message>
-        <location filename="windows/SdDRuleEditor.ui" line="50"/>
+        <location filename="windows/SdDRuleEditor.ui" line="53"/>
         <source>All gaps</source>
         <translation>Все промежутки</translation>
     </message>
     <message>
-        <location filename="windows/SdDRuleEditor.ui" line="69"/>
-        <location filename="windows/SdDRuleEditor.ui" line="96"/>
+        <location filename="windows/SdDRuleEditor.ui" line="72"/>
+        <location filename="windows/SdDRuleEditor.ui" line="99"/>
         <source>Apply gaps</source>
         <translation>Применить промежутки</translation>
     </message>
     <message>
-        <location filename="windows/SdDRuleEditor.ui" line="76"/>
+        <location filename="windows/SdDRuleEditor.ui" line="79"/>
         <source>Pad to pad gap</source>
         <translation>Между площадками</translation>
     </message>
     <message>
-        <location filename="windows/SdDRuleEditor.ui" line="83"/>
+        <location filename="windows/SdDRuleEditor.ui" line="86"/>
         <source>Road to road gap</source>
         <translation>Между дорожками</translation>
     </message>
     <message>
-        <location filename="windows/SdDRuleEditor.ui" line="103"/>
+        <location filename="windows/SdDRuleEditor.ui" line="106"/>
         <source>Road width</source>
         <translation>Ширина дорожки</translation>
     </message>
     <message>
-        <location filename="windows/SdDRuleEditor.ui" line="113"/>
+        <location filename="windows/SdDRuleEditor.ui" line="116"/>
         <source>PCB</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="windows/SdDRuleEditor.ui" line="123"/>
+        <location filename="windows/SdDRuleEditor.ui" line="126"/>
         <source>Road to pad gap</source>
         <translation>Между площадками и дорожками</translation>
     </message>
     <message>
-        <location filename="windows/SdDRuleEditor.ui" line="130"/>
+        <location filename="windows/SdDRuleEditor.ui" line="133"/>
         <source>All inherit</source>
         <translation>Все наследовать</translation>
     </message>
@@ -4443,90 +4450,90 @@
     <message>
         <location filename="objects/SdObjectNetClient.cpp" line="101"/>
         <location filename="objects/SdObjectNetClient.cpp" line="125"/>
-        <location filename="objects/SdObjectNetClient.cpp" line="149"/>
-        <location filename="objects/SdObjectNetClient.cpp" line="214"/>
-        <location filename="objects/SdObjectNetClient.cpp" line="254"/>
-        <location filename="objects/SdObjectNetClient.cpp" line="279"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="150"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="216"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="256"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="282"/>
         <source>Try connect to host %1</source>
         <translation>Пытаюсь соединиться с сервером %1</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="167"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="168"/>
         <source>Connected to host %1</source>
         <translation>Подключен к серверу %1</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="341"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="344"/>
         <source>Registration successfull</source>
         <translation>Регистрация успешна</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="346"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="349"/>
         <source>Failure registration. </source>
         <translation>Ошибка регистрации.</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="421"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="433"/>
         <source>Syncronisation request</source>
         <translation>Запрос синхронизации</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="428"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="440"/>
         <source>Registration request</source>
         <translation>Запрос регистрации</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="429"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="441"/>
         <source>Machine appendion request</source>
         <translation>Запрос добавить компьютер</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="430"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="442"/>
         <source>Object request</source>
         <translation>Запрос загрузки объекта</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="449"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="461"/>
         <source>%1 registered</source>
         <translation>%1 зарегистирован</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="454"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="466"/>
         <source>%1 not registered or key failure</source>
         <translation>%1 не зарегистрирован или неверный ключ</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="478"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="492"/>
         <source>Author with this name already present. Select another name.</source>
         <translation>Автор с таким именем уже существует. Выберите другое имя.</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="479"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="493"/>
         <source>Author can&apos;t be empty string.</source>
         <translation>Автор не может быть пустой строкой.</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="480"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="494"/>
         <source>No more machines available. Limit reached.</source>
         <translation>Невозможно больше зарегистрировать компьютеры. Достигнут предел.</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="481"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="495"/>
         <source>Author with this name and key is not registered.</source>
         <translation>Автор с таким именем и ключом не зарегистрирован.</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="482"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="496"/>
         <source>No more object load available. Limit reached.</source>
         <translation>Не могу загрузить объект. Достигнут лимит загрузок.</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="483"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="497"/>
         <source>Object not found.</source>
         <translation>Объект не найден.</translation>
     </message>
     <message>
-        <location filename="objects/SdObjectNetClient.cpp" line="485"/>
+        <location filename="objects/SdObjectNetClient.cpp" line="499"/>
         <source>Undefined code %1</source>
         <translation>Неопределенный код %1</translation>
     </message>
@@ -4677,7 +4684,7 @@
     </message>
     <message>
         <location filename="windows/SdPExportPlate_Gerber.cpp" line="447"/>
-        <location filename="windows/SdPExportPlate_Gerber.cpp" line="545"/>
+        <location filename="windows/SdPExportPlate_Gerber.cpp" line="554"/>
         <source>No</source>
         <translation>Нет</translation>
     </message>
@@ -4687,34 +4694,50 @@
         <translation>Введите или выберите имя gerber-файла</translation>
     </message>
     <message>
-        <location filename="windows/SdPExportPlate_Gerber.cpp" line="510"/>
-        <location filename="windows/SdPExportPlate_Gerber.cpp" line="544"/>
-        <location filename="windows/SdPExportPlate_Gerber.cpp" line="547"/>
+        <location filename="windows/SdPExportPlate_Gerber.cpp" line="481"/>
+        <location filename="windows/SdPExportPlate_Gerber.cpp" line="512"/>
+        <source>Error</source>
+        <translation>Ошибка!</translation>
+    </message>
+    <message>
+        <location filename="windows/SdPExportPlate_Gerber.cpp" line="481"/>
+        <source>File name field is empty. Enter file name gerber generate to.</source>
+        <translation>Поле имени файла пустое. Введите имя gerber-файла для генерации.</translation>
+    </message>
+    <message>
+        <location filename="windows/SdPExportPlate_Gerber.cpp" line="512"/>
+        <source>Group path field is empty. Enter path to witch files will be generate.</source>
+        <translation>Поле пути к группе файлов пусто. Введите путь, по которому будут размещены сгенерированные файлы.</translation>
+    </message>
+    <message>
+        <location filename="windows/SdPExportPlate_Gerber.cpp" line="519"/>
+        <location filename="windows/SdPExportPlate_Gerber.cpp" line="553"/>
+        <location filename="windows/SdPExportPlate_Gerber.cpp" line="556"/>
         <source>Yes</source>
         <translation>Да</translation>
     </message>
     <message>
-        <location filename="windows/SdPExportPlate_Gerber.cpp" line="530"/>
+        <location filename="windows/SdPExportPlate_Gerber.cpp" line="539"/>
         <source>Open Directory</source>
         <translation>Открыть директорий</translation>
     </message>
     <message>
-        <location filename="windows/SdPExportPlate_Gerber.cpp" line="630"/>
+        <location filename="windows/SdPExportPlate_Gerber.cpp" line="639"/>
         <source>Info!</source>
         <translation>Информация!</translation>
     </message>
     <message>
-        <location filename="windows/SdPExportPlate_Gerber.cpp" line="630"/>
+        <location filename="windows/SdPExportPlate_Gerber.cpp" line="639"/>
         <source>Gerber file &apos;%1&apos; successfully created.</source>
         <translation>Gerber-файл &apos;%1&apos; успешно создан.</translation>
     </message>
     <message>
-        <location filename="windows/SdPExportPlate_Gerber.cpp" line="633"/>
+        <location filename="windows/SdPExportPlate_Gerber.cpp" line="642"/>
         <source>Error!</source>
         <translation>Ошибка!</translation>
     </message>
     <message>
-        <location filename="windows/SdPExportPlate_Gerber.cpp" line="633"/>
+        <location filename="windows/SdPExportPlate_Gerber.cpp" line="642"/>
         <source>Can&apos;t create Gerber file &apos;%1&apos;</source>
         <translation>Не могу создать Gerber-файл &apos;%1&apos;</translation>
     </message>
@@ -4836,47 +4859,47 @@
     <message>
         <location filename="windows/SdPExport_Dxf.cpp" line="422"/>
         <source>DXF file</source>
-        <translation type="unfinished"></translation>
+        <translation>DXF файл</translation>
     </message>
     <message>
         <location filename="windows/SdPExport_Dxf.cpp" line="422"/>
         <source>Creates DXF file from current object</source>
-        <translation type="unfinished"></translation>
+        <translation>Создает DXF файл из текущего объекта</translation>
     </message>
     <message>
         <location filename="windows/SdPExport_Dxf.cpp" line="428"/>
         <source>Layers for DXF:</source>
-        <translation type="unfinished"></translation>
+        <translation>Слои для DXF:</translation>
     </message>
     <message>
         <location filename="windows/SdPExport_Dxf.cpp" line="429"/>
         <source>Layers...</source>
-        <translation type="unfinished">Слои...</translation>
+        <translation>Слои...</translation>
     </message>
     <message>
         <location filename="windows/SdPExport_Dxf.cpp" line="446"/>
         <source>Enter or select DXF file name</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите или выберите имя файла DXF</translation>
     </message>
     <message>
         <location filename="windows/SdPExport_Dxf.cpp" line="452"/>
         <source>Info!</source>
-        <translation type="unfinished">Информация!</translation>
+        <translation>Информация!</translation>
     </message>
     <message>
         <location filename="windows/SdPExport_Dxf.cpp" line="452"/>
         <source>DXF file &apos;%1&apos; successfully created.</source>
-        <translation type="unfinished"></translation>
+        <translation>DXF файл &apos;%1&apos; успешно создан.</translation>
     </message>
     <message>
         <location filename="windows/SdPExport_Dxf.cpp" line="455"/>
         <source>Error!</source>
-        <translation type="unfinished">Ошибка!</translation>
+        <translation>Ошибка!</translation>
     </message>
     <message>
         <location filename="windows/SdPExport_Dxf.cpp" line="455"/>
         <source>Can&apos;t create DXF file &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Не могу создать DXF файл &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -4895,49 +4918,49 @@
 <context>
     <name>SdPNewProjectItem_Copy</name>
     <message>
-        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="46"/>
+        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="45"/>
         <source>Creation new project object</source>
         <translation>Создание нового объекта для проекта</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="47"/>
+        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="46"/>
         <source>Select object to copy new object from</source>
         <translation>Выберите объект для создания его копии</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="50"/>
+        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="49"/>
         <source>Name of object for copy:</source>
         <translation>Имя копируемого объекта:</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="57"/>
+        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="56"/>
         <source>Select from current project</source>
         <translation>Выберите из текущего проекта</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="61"/>
-        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="74"/>
-        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="154"/>
+        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="60"/>
+        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="73"/>
+        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="156"/>
         <source>Select object for copy from</source>
         <translation>Выберите объект для копирования</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="70"/>
+        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="69"/>
         <source>Select from library</source>
         <translation>Выберите из библиотеки</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="83"/>
+        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="82"/>
         <source>Select from file</source>
         <translation>Выберите из файла</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="149"/>
+        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="151"/>
         <source>File for loading</source>
         <translation>Файл для загрузки</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="149"/>
+        <location filename="windows/SdPNewProjectItem_Copy.cpp" line="151"/>
         <source>SaliCAD 3D Files (*%1)</source>
         <translation></translation>
     </message>
@@ -4945,42 +4968,47 @@
 <context>
     <name>SdPNewProjectItem_EnterName</name>
     <message>
-        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="27"/>
+        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="28"/>
         <source>Enter name for object</source>
         <translation>Введите имя для объекта</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="28"/>
+        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="29"/>
         <source>Enter unical name inside project for object</source>
         <translation>Введите имя для объекта уникальное внутри проекта</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="47"/>
+        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="34"/>
+        <source>Element category</source>
+        <translation>Категория элемента</translation>
+    </message>
+    <message>
+        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="62"/>
         <source>&lt;font color=&quot;blue&quot;&gt;Name is empty. You must enter correct name at least one symbol.&lt;/font&gt;</source>
         <translation>&lt;font color=&quot;blue&quot;&gt;Имя пустое. Вы должны ввести правильное имя хотя-бы из одной буквы-цифры.&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="51"/>
+        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="66"/>
         <source>&lt;font color=&quot;red&quot;&gt;This name already exist. Enter another name or this override existing.&lt;/font&gt;</source>
         <translation>&lt;font color=&quot;red&quot;&gt;Это имя уже существует и будет перезаписано! Если Вы не хотите этого введите другое имя.&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="55"/>
+        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="70"/>
         <source>Name is correct and free.</source>
         <translation>Имя корректное и свободное.</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="66"/>
+        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="81"/>
         <source>Warning!</source>
         <translation>Внимание!</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="66"/>
+        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="81"/>
         <source>Object with this name and author already exist in base. Overwrite existing object?</source>
         <translation>Объект с таким именем и автором уже существует в базе. Перезаписать существующий объект?</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="70"/>
+        <location filename="windows/SdPNewProjectItem_EnterName.cpp" line="85"/>
         <source>Set object title</source>
         <translation>Задание имени объекта</translation>
     </message>
@@ -5087,227 +5115,221 @@
 <context>
     <name>SdPNewProjectItem_SelectType</name>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="38"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="37"/>
         <source>Creation new project object</source>
         <translation>Создание нового объекта для проекта</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="39"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="38"/>
         <source>Select object type then object creation order</source>
         <translation>Выберите тип объекта, а затем способ создания объекта</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="43"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="42"/>
         <source>1.Select object type</source>
         <translation>1. Выберите тип объекта</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="49"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="48"/>
         <source>2.Select creation order</source>
         <translation>2. Выберите способ создания объекта</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="54"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="53"/>
         <source>Description</source>
         <translation>Описание</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="61"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="60"/>
         <source>Sheet</source>
         <translation>Схема</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="62"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="61"/>
         <source>Construction (PCB)</source>
         <translation>Конструкция, плата (PCB)</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="63"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="62"/>
         <source>Symbol</source>
         <translation>Символ</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="64"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="63"/>
         <source>Part</source>
         <translation>Корпус</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="65"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="64"/>
         <source>Component</source>
         <translation>Компонент</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="66"/>
         <source>Inheritance</source>
-        <translation>Наследник</translation>
+        <translation type="vanished">Наследник</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="67"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="65"/>
         <source>Text doc</source>
         <translation>Текстовый документ</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="87"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="85"/>
         <source>Sheet%1</source>
         <translation>Лист %1</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="91"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="89"/>
         <source>PCB%1</source>
         <translation>Плата %1</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="95"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="93"/>
         <source>Symbol%1</source>
         <translation>Символ %1</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="99"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="97"/>
         <source>Part%1</source>
         <translation>Корпус %1</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="103"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="101"/>
         <source>Component%1</source>
         <translation>Компонент %1</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="107"/>
         <source>Inheritance%1</source>
-        <translation>Наследник %1</translation>
+        <translation type="vanished">Наследник %1</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="111"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="105"/>
         <source>Text doc%1</source>
         <translation>Текстовый документ %1</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="118"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="112"/>
         <source>Set object title</source>
         <translation>Задание имени объекта</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="154"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="148"/>
         <source>Empty sheet</source>
         <translation>Пустая схема</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="155"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="149"/>
         <source>Creates empty schematic sheet with no any component or graphics.</source>
         <translation>Создает пустую схему без всяких компонентов и какой-либо графики.</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="161"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="155"/>
         <source>Empty construction</source>
         <translation>Пустая плата</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="162"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="156"/>
         <source>Creates empty construction or pcb</source>
         <translation>Создает пустую плату (PCB) или конструктив</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="165"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="159"/>
         <source>Empty symbol</source>
         <translation>Пустой схемный символ</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="166"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="160"/>
         <source>Creates empty schematic component section symbol with no any pins or graphics.</source>
         <translation>Создает пустой схемный символ секции компонента безо всяких выводов или какой-либо графики. </translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="167"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="161"/>
         <source>Copy existing symbol</source>
         <translation>Копия существующего символа</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="168"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="162"/>
         <source>Creates copy of existing schematic component section</source>
         <translation>Создает копию существующего схемного символа секции</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="169"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="163"/>
         <source>Symbol master</source>
         <translation>Мастер схемного символа</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="170"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="164"/>
         <source>Start master which guide you to create symbol</source>
         <translation>Запускает мастер, с помощью которого вы можете создать символ</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="173"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="167"/>
         <source>Empty part</source>
         <translation>Пустой корпус</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="174"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="168"/>
         <source>Creates empty component part with no any pins or graphics.</source>
         <translation>Создает пустой корпус компонента безо всяких выводов или какой-либо графики.</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="175"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="169"/>
         <source>Copy existing part</source>
         <translation>Копия существующего корпуса</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="176"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="170"/>
         <source>Creates copy of existing component part</source>
         <translation>Создает копию существующего корпуса компонента</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="177"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="171"/>
         <source>Part master</source>
         <translation>Мастер корпусов</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="178"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="172"/>
         <source>Start master which guide you to create part</source>
         <translation>Запускает мастер создания корпусов, с помощью которого вы можете создать корпус компонента</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="181"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="175"/>
         <source>Empty component</source>
         <translation>Пустой компонент</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="182"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="176"/>
         <source>Creates empty component as pair schematic and part with no any schematic or part.</source>
         <translation>Создает пустой компонент как пару схемного изображения и корпуса, но без заданных схемных изображений или корпуса.</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="183"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="177"/>
         <source>Copy existing component</source>
         <translation>Копия существующего компонента</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="184"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="178"/>
         <source>Creates copy of existing component</source>
         <translation>Создает копию существующего компонента</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="187"/>
         <source>Empty inheritance</source>
-        <translation>Пустой наследник</translation>
+        <translation type="vanished">Пустой наследник</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="188"/>
         <source>Creates empty inherited component which inherits pair schematic and part and replace params.</source>
-        <translation>Создает пустой наследник компонента который наследует схемную часть и корпус и заменяет параметры.</translation>
+        <translation type="vanished">Создает пустой наследник компонента который наследует схемную часть и корпус и заменяет параметры.</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="189"/>
         <source>Copy existing inheritance</source>
-        <translation>Копия существующего наследника</translation>
+        <translation type="vanished">Копия существующего наследника</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="190"/>
         <source>Creates copy of existing inheritance or inherits existing component</source>
-        <translation>Создает копию существующего наследника или наследует существующий компонент</translation>
+        <translation type="vanished">Создает копию существующего наследника или наследует существующий компонент</translation>
     </message>
     <message>
-        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="195"/>
+        <location filename="windows/SdPNewProjectItem_SelectType.cpp" line="181"/>
         <source>Empty text</source>
         <translation>Пустой текст</translation>
     </message>
@@ -5694,24 +5716,24 @@
 <context>
     <name>SdWCategoryList</name>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="73"/>
-        <location filename="windows/SdWCategoryList.cpp" line="174"/>
-        <location filename="windows/SdWCategoryList.cpp" line="313"/>
+        <location filename="windows/SdWCategoryList.cpp" line="74"/>
+        <location filename="windows/SdWCategoryList.cpp" line="151"/>
+        <location filename="windows/SdWCategoryList.cpp" line="218"/>
         <source>Warning!</source>
         <translation>Внимание!</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="73"/>
+        <location filename="windows/SdWCategoryList.cpp" line="74"/>
         <source>Category tree changed. Do you want to save it?</source>
         <translation>Дерево категорий изменилось. Вы хотите сохранить его?</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="85"/>
+        <location filename="windows/SdWCategoryList.cpp" line="89"/>
         <source>Append category</source>
         <translation>Добавить категорию</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="85"/>
+        <location filename="windows/SdWCategoryList.cpp" line="89"/>
         <source>Enter category title</source>
         <translation>Введите заголовок категории</translation>
     </message>
@@ -5726,139 +5748,134 @@
         <translation>Вы уверены, что хотите удалить категорию &apos;%1&apos; и все ее подкатегории</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="162"/>
-        <location filename="windows/SdWCategoryList.cpp" line="164"/>
-        <location filename="windows/SdWCategoryList.cpp" line="208"/>
-        <location filename="windows/SdWCategoryList.cpp" line="210"/>
-        <location filename="windows/SdWCategoryList.cpp" line="238"/>
-        <location filename="windows/SdWCategoryList.cpp" line="240"/>
-        <location filename="windows/SdWCategoryList.cpp" line="280"/>
-        <location filename="windows/SdWCategoryList.cpp" line="282"/>
+        <location filename="windows/SdWCategoryList.cpp" line="127"/>
+        <location filename="windows/SdWCategoryList.cpp" line="141"/>
+        <location filename="windows/SdWCategoryList.cpp" line="168"/>
+        <location filename="windows/SdWCategoryList.cpp" line="180"/>
+        <location filename="windows/SdWCategoryList.cpp" line="193"/>
+        <location filename="windows/SdWCategoryList.cpp" line="205"/>
         <source>Error</source>
         <translation>Ошибка!</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="162"/>
-        <location filename="windows/SdWCategoryList.cpp" line="280"/>
+        <location filename="windows/SdWCategoryList.cpp" line="127"/>
         <source>This item can&apos;t be deleted. Select another.</source>
         <translation>Этот элемент нельзя удалить. Выберите другой.</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="164"/>
-        <location filename="windows/SdWCategoryList.cpp" line="282"/>
+        <location filename="windows/SdWCategoryList.cpp" line="141"/>
         <source>No selected item to delete. Select and reply.</source>
         <translation>Нету выбранного элемента для удаления. Выберите и повторите.</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="174"/>
+        <location filename="windows/SdWCategoryList.cpp" line="151"/>
         <source>Are You sure to delete ALL categories? This operation can not be undo!</source>
         <translation>Вы уверены, что хотите удалить ВСЕ категории? Эту операцию нельзя будет отменить!</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="197"/>
+        <location filename="windows/SdWCategoryList.cpp" line="171"/>
         <source>Category title edit</source>
         <translation>Редактирование заголовка категории</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="197"/>
+        <location filename="windows/SdWCategoryList.cpp" line="171"/>
         <source>Enter new category title</source>
         <translation>Введите новый заголовок категории</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="208"/>
-        <location filename="windows/SdWCategoryList.cpp" line="238"/>
+        <location filename="windows/SdWCategoryList.cpp" line="168"/>
+        <location filename="windows/SdWCategoryList.cpp" line="193"/>
         <source>This item can&apos;t be edited. Select another.</source>
         <translation>Этот элемент нельзя редактировать. Выберите другой.</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="210"/>
-        <location filename="windows/SdWCategoryList.cpp" line="240"/>
+        <location filename="windows/SdWCategoryList.cpp" line="180"/>
+        <location filename="windows/SdWCategoryList.cpp" line="205"/>
         <source>No selected item to edit. Select and reply.</source>
         <translation>Не выбран элемент для редактирования. Выберите и повторите.</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="227"/>
+        <location filename="windows/SdWCategoryList.cpp" line="196"/>
         <source>Category key edit</source>
         <translation>Редактирование ключа категории</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="227"/>
+        <location filename="windows/SdWCategoryList.cpp" line="196"/>
         <source>Enter new category key</source>
         <translation>Введите новый ключ категории</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="313"/>
+        <location filename="windows/SdWCategoryList.cpp" line="218"/>
         <source>Current category list not saved. If You continue then all changed will be lost. Continue</source>
         <translation>Текущий список категорий не сохранен. Если вы продолжите, то все несохраненные данные будут потеряны. Продолжить?</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="316"/>
-        <location filename="windows/SdWCategoryList.cpp" line="354"/>
+        <location filename="windows/SdWCategoryList.cpp" line="221"/>
+        <location filename="windows/SdWCategoryList.cpp" line="245"/>
         <source>Category hierarchy file</source>
         <translation>Файл с описаниями категорий</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="402"/>
+        <location filename="windows/SdWCategoryList.cpp" line="126"/>
+        <location filename="windows/SdWCategoryList.cpp" line="167"/>
+        <location filename="windows/SdWCategoryList.cpp" line="192"/>
+        <location filename="windows/SdWCategoryList.cpp" line="313"/>
         <source>All</source>
         <translation>Все</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="416"/>
         <source>[Up]</source>
-        <translation>[Вверх]</translation>
+        <translation type="vanished">[Вверх]</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="479"/>
+        <location filename="windows/SdWCategoryList.cpp" line="395"/>
         <source>Category</source>
         <translation>Категория</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="481"/>
+        <location filename="windows/SdWCategoryList.cpp" line="397"/>
         <source>Add new category</source>
         <translation>Добавить новую категорию</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="482"/>
+        <location filename="windows/SdWCategoryList.cpp" line="398"/>
         <source>Edit title...</source>
         <translation>Редактирование заголовка...</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="483"/>
+        <location filename="windows/SdWCategoryList.cpp" line="399"/>
         <source>Edit category key...</source>
         <translation>Редактирование ключа категории...</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="484"/>
+        <location filename="windows/SdWCategoryList.cpp" line="400"/>
         <source>Delete category</source>
         <translation>Удалить категорию</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="485"/>
         <source>Cut</source>
-        <translation>Вырезать</translation>
+        <translation type="vanished">Вырезать</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="486"/>
         <source>Paste</source>
-        <translation>Вставить</translation>
+        <translation type="vanished">Вставить</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="490"/>
+        <location filename="windows/SdWCategoryList.cpp" line="406"/>
         <source>Load category tree...</source>
         <translation>Загрузить дерево категорий...</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="491"/>
         <source>Save category tree</source>
-        <translation>Сохранить дерево категорий...</translation>
+        <translation type="vanished">Сохранить дерево категорий...</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="492"/>
+        <location filename="windows/SdWCategoryList.cpp" line="408"/>
         <source>Save category tree as...</source>
         <translation>Сохранить дерево категорий как...</translation>
     </message>
     <message>
-        <location filename="windows/SdWCategoryList.cpp" line="495"/>
+        <location filename="windows/SdWCategoryList.cpp" line="411"/>
         <source>Delete ALL categories</source>
         <translation>Удалить ВСЕ категории</translation>
     </message>
@@ -6233,12 +6250,12 @@
         <translation>Редактирование параметров доступно только для компонентов. Ни один компонент не выбран. Выберите компоненты и попробуйте снова.</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorGraphPlate.cpp" line="347"/>
+        <location filename="windows/SdWEditorGraphPlate.cpp" line="349"/>
         <source>Export plate</source>
         <translation>Экспорт платы</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorGraphPlate.cpp" line="347"/>
+        <location filename="windows/SdWEditorGraphPlate.cpp" line="349"/>
         <source>Select export master</source>
         <translation>Выберите мастер экспорта</translation>
     </message>
@@ -6306,129 +6323,100 @@
 <context>
     <name>SdWEditorInheritance</name>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="54"/>
         <source>Symbol preview</source>
-        <translation>Просмотр символа</translation>
+        <translation type="vanished">Просмотр символа</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="61"/>
         <source>Part preview</source>
-        <translation>Просмотр корпуса</translation>
+        <translation type="vanished">Просмотр корпуса</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="70"/>
         <source>Component:</source>
-        <translation>Компонент:</translation>
+        <translation type="vanished">Компонент:</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="72"/>
         <source>Select component</source>
-        <translation>Выбор компонента</translation>
+        <translation type="vanished">Выбор компонента</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="80"/>
         <source>Component param table</source>
-        <translation>Таблица параметров компонента</translation>
+        <translation type="vanished">Таблица параметров компонента</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="86"/>
         <source>Inherit param</source>
-        <translation>Наследовать параметр</translation>
+        <translation type="vanished">Наследовать параметр</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="87"/>
         <source>Inherit all params</source>
-        <translation>Наследовать все параметры</translation>
+        <translation type="vanished">Наследовать все параметры</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="93"/>
         <source>Inheritance param table</source>
-        <translation>Таблица наследуемых параметров</translation>
+        <translation type="vanished">Таблица наследуемых параметров</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="99"/>
         <source>Add param</source>
-        <translation>Добавить параметр</translation>
+        <translation type="vanished">Добавить параметр</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="100"/>
         <source>Add defaults</source>
-        <translation>Добавить по умолчанию</translation>
+        <translation type="vanished">Добавить по умолчанию</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="101"/>
         <source>Copy param</source>
-        <translation>Копировать параметр</translation>
+        <translation type="vanished">Копировать параметр</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="102"/>
         <source>Delete param</source>
-        <translation>Удалить параметр</translation>
+        <translation type="vanished">Удалить параметр</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="103"/>
         <source>Variant table...</source>
-        <translation>Таблица вариантов...</translation>
+        <translation type="vanished">Таблица вариантов...</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="210"/>
         <source>Select base component for inheritance</source>
-        <translation>Выберите базовый компонент для наследования</translation>
+        <translation type="vanished">Выберите базовый компонент для наследования</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="235"/>
-        <location filename="windows/SdWEditorInheritance.cpp" line="253"/>
         <source>Error!</source>
-        <translation>Ошибка!</translation>
+        <translation type="vanished">Ошибка!</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="235"/>
         <source>No component parametr selected. Select one and try again.</source>
-        <translation>Не выбрано ни одного параметра компонента. Выберите один и попробуйте снова.</translation>
+        <translation type="vanished">Не выбрано ни одного параметра компонента. Выберите один и попробуйте снова.</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="253"/>
         <source>No component defined for this inheritance or component can&apos;t be loaded</source>
-        <translation>Для данного наследования не задан компонент или этот компонент не может быть загружен</translation>
+        <translation type="vanished">Для данного наследования не задан компонент или этот компонент не может быть загружен</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="261"/>
-        <location filename="windows/SdWEditorInheritance.cpp" line="354"/>
-        <location filename="windows/SdWEditorInheritance.cpp" line="386"/>
         <source>Param name</source>
-        <translation>Имя параметра</translation>
+        <translation type="vanished">Имя параметра</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="261"/>
         <source>Enter param name</source>
-        <translation>Введите имя параметра</translation>
+        <translation type="vanished">Введите имя параметра</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="264"/>
-        <location filename="windows/SdWEditorInheritance.cpp" line="299"/>
         <source>Warning!</source>
-        <translation>Внимание!</translation>
+        <translation type="vanished">Внимание!</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="264"/>
         <source>Param with this name already exist. Enter another name.</source>
-        <translation>Параметр с таким именем уже существует. Введите другое имя.</translation>
+        <translation type="vanished">Параметр с таким именем уже существует. Введите другое имя.</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="299"/>
         <source>Select param to delete</source>
-        <translation>Выберите параметр для удаления</translation>
+        <translation type="vanished">Выберите параметр для удаления</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="308"/>
         <source>Select component to copy param from</source>
-        <translation>Выберите компонент для копирования из него параметров</translation>
+        <translation type="vanished">Выберите компонент для копирования из него параметров</translation>
     </message>
     <message>
-        <location filename="windows/SdWEditorInheritance.cpp" line="354"/>
-        <location filename="windows/SdWEditorInheritance.cpp" line="386"/>
         <source>Param value</source>
-        <translation>Значение параметра</translation>
+        <translation type="vanished">Значение параметра</translation>
     </message>
 </context>
 <context>
@@ -6457,14 +6445,14 @@
 <context>
     <name>SdWHelp</name>
     <message>
-        <location filename="windows/SdWHelp.cpp" line="54"/>
-        <location filename="windows/SdWHelp.cpp" line="93"/>
+        <location filename="windows/SdWHelp.cpp" line="55"/>
+        <location filename="windows/SdWHelp.cpp" line="94"/>
         <source>Error!</source>
         <translation>Ошибка!</translation>
     </message>
     <message>
-        <location filename="windows/SdWHelp.cpp" line="54"/>
-        <location filename="windows/SdWHelp.cpp" line="93"/>
+        <location filename="windows/SdWHelp.cpp" line="55"/>
+        <location filename="windows/SdWHelp.cpp" line="94"/>
         <source>Guider file &apos;%1&apos; not exist. Try reinstall SaliCAD</source>
         <translation>Файл %1 путеводителя не существует. Попробуйте переустановить SaliCAD</translation>
     </message>
@@ -6472,94 +6460,128 @@
 <context>
     <name>SdWMain</name>
     <message>
-        <location filename="windows/SdWMain.cpp" line="113"/>
+        <location filename="windows/SdWMain.cpp" line="112"/>
         <source>Current cursor position X coord</source>
         <translation>Текущая позиция курсора по оси X</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="115"/>
+        <location filename="windows/SdWMain.cpp" line="114"/>
         <source>Current cursor position Y coord</source>
         <translation>Текущая позиция курсора по оси Y</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="117"/>
+        <location filename="windows/SdWMain.cpp" line="116"/>
         <source>Enter...</source>
         <translation>Ввод...</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="120"/>
+        <location filename="windows/SdWMain.cpp" line="119"/>
         <source>When press this button, You can enter cursor coord</source>
         <translation>При нажатии этой кнопки вы можете ввести координаты курсора вручную</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="125"/>
+        <location filename="windows/SdWMain.cpp" line="124"/>
         <source>Current trace status: unconnected nets and rules errors count</source>
         <translation>Текущий статус трассировки: количество неподключенных цепей и ошибок трассировки</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="128"/>
+        <location filename="windows/SdWMain.cpp" line="127"/>
         <source>Short guide to current mode step or other messages</source>
         <translation>Короткое пояснение по текущему шагу режима или другое сообщение</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="200"/>
+        <location filename="windows/SdWMain.cpp" line="132"/>
+        <location filename="windows/SdWMain.cpp" line="1828"/>
+        <source>Show status of guide capture video system: stopped</source>
+        <translation>Показывает статус системы захвата обучающего видео: остановлено</translation>
+    </message>
+    <message>
+        <location filename="windows/SdWMain.cpp" line="139"/>
+        <location filename="windows/SdWMain.cpp" line="149"/>
+        <source>Remote repository status: registered and link ok</source>
+        <translation>Состояние удаленного репозитория: зарегистрирован и связь установлена</translation>
+    </message>
+    <message>
+        <location filename="windows/SdWMain.cpp" line="143"/>
+        <location filename="windows/SdWMain.cpp" line="153"/>
+        <source>Remote repository status: unregistered or can&apos;t connect to repository. Check Help-&gt;Registration.</source>
+        <translation>Состояние удаленного репозитория: не зарегистрирован или невозможно соединиться с сервером. Проверьте в меню Помощь-&gt;Регистрация.</translation>
+    </message>
+    <message>
+        <location filename="windows/SdWMain.cpp" line="157"/>
+        <source>Remote repository status: sync being processed</source>
+        <translation>Состояние удаленного репозитория: выполняется синхронизация</translation>
+    </message>
+    <message>
+        <location filename="windows/SdWMain.cpp" line="231"/>
         <source>Unconnected: %1  Errors: %2</source>
         <translation>Неподключено: %1 Ошибок: %2</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="505"/>
+        <location filename="windows/SdWMain.cpp" line="533"/>
         <source>Warning!</source>
         <translation>Внимание!</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="505"/>
+        <location filename="windows/SdWMain.cpp" line="533"/>
         <source>Available new version %1.%2! And your version is %3.%4. Update?</source>
         <translation>Доступна новая версия %1.%2! А ваша версия - %3.%4. Обновить?</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="606"/>
+        <location filename="windows/SdWMain.cpp" line="634"/>
         <source>Help system</source>
         <translation>Система помощи</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="663"/>
+        <location filename="windows/SdWMain.cpp" line="691"/>
         <source>Select project to load</source>
         <translation>Выберите проект для загрузки</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="682"/>
+        <location filename="windows/SdWMain.cpp" line="710"/>
         <source>Open project file</source>
         <translation>Открыть файл проекта</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="682"/>
+        <location filename="windows/SdWMain.cpp" line="710"/>
         <source>SaliCAD 3D Files (*%1)</source>
         <translation>Файлы SaliCAD 3D (*%1)</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="813"/>
+        <location filename="windows/SdWMain.cpp" line="841"/>
         <source>Import PasCAD project file</source>
         <translation>Импортировать проект PasCAD</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="813"/>
+        <location filename="windows/SdWMain.cpp" line="841"/>
         <source>PasCAD Files (*%1)</source>
         <translation>Файлы PasCAD (*%1)</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="1735"/>
+        <location filename="windows/SdWMain.cpp" line="1763"/>
         <source>Intro help page</source>
         <translation>Страница введения</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="1772"/>
+        <location filename="windows/SdWMain.cpp" line="1800"/>
         <source>About %1</source>
         <translation>О программе %1</translation>
     </message>
     <message>
-        <location filename="windows/SdWMain.cpp" line="1772"/>
+        <location filename="windows/SdWMain.cpp" line="1800"/>
         <source>&lt;html&gt;&lt;body&gt;&lt;p&gt;Version %1.%2, &lt;/p&gt;&lt;p&gt;Copyright SaliLAB&lt;/p&gt;&lt;p&gt;Author: &lt;a href=&quot;http://salilab.ru&quot;&gt;%3&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Web:&lt;br&gt;&lt;a href=&quot;http://salicad.salilab.com&quot;&gt;SaliCAD.salilab.com&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://salicad.ru&quot;&gt;SaliCAD.ru&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="windows/SdWMain.cpp" line="1833"/>
+        <location filename="windows/SdWMain.cpp" line="1845"/>
+        <source>Show status of guide capture video system: running</source>
+        <translation>Показывает статус системы захвата обучающего видео: идет захват</translation>
+    </message>
+    <message>
+        <location filename="windows/SdWMain.cpp" line="1850"/>
+        <source>Show status of guide capture video system: paused</source>
+        <translation>Показывает статус системы захвата обучающего видео: пауза</translation>
     </message>
 </context>
 <context>
@@ -6570,12 +6592,12 @@
         <translation>Закрыть активный проект</translation>
     </message>
     <message>
-        <location filename="windows/SdWProjectList.cpp" line="111"/>
+        <location filename="windows/SdWProjectList.cpp" line="121"/>
         <source>Warning</source>
         <translation>Внимание</translation>
     </message>
     <message>
-        <location filename="windows/SdWProjectList.cpp" line="111"/>
+        <location filename="windows/SdWProjectList.cpp" line="121"/>
         <source>Error on file reading [%1]</source>
         <translation>Ошибка при чтении файла [%1]</translation>
     </message>
@@ -6627,7 +6649,7 @@
         <location filename="windows/SdWProjectTree.cpp" line="274"/>
         <location filename="windows/SdWProjectTree.cpp" line="339"/>
         <location filename="windows/SdWProjectTree.cpp" line="356"/>
-        <location filename="windows/SdWProjectTree.cpp" line="707"/>
+        <location filename="windows/SdWProjectTree.cpp" line="705"/>
         <source>Error!</source>
         <translation>Ошибка!</translation>
     </message>
@@ -6684,7 +6706,7 @@
     </message>
     <message>
         <location filename="windows/SdWProjectTree.cpp" line="356"/>
-        <location filename="windows/SdWProjectTree.cpp" line="707"/>
+        <location filename="windows/SdWProjectTree.cpp" line="705"/>
         <source>You can duplicate only symbols, parts and components. Select some from that object to copy.</source>
         <translation>Вы можете дублировать только символы, корпуса и компоненты. Выберите что-либо из этого для дублирования.</translation>
     </message>

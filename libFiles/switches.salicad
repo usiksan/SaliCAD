@@ -13,7 +13,7 @@
                         "x": 3500,
                         "y": -3500
                     },
-                    "id": "1a4d600",
+                    "id": "5608bc498150",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -28,7 +28,7 @@
                         "x": 5500,
                         "y": -3500
                     },
-                    "id": "1a4d660",
+                    "id": "5608c0aa1360",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -43,7 +43,7 @@
                         "x": 4550,
                         "y": -3400
                     },
-                    "id": "1a4d6c0",
+                    "id": "5608bb771e20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -58,7 +58,7 @@
                         "x": 4450,
                         "y": -3350
                     },
-                    "id": "1a4d720",
+                    "id": "5608bb0b6f20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -73,7 +73,7 @@
                         "x": 3500,
                         "y": -3000
                     },
-                    "id": "1a4d780",
+                    "id": "5608bbdab8b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -88,7 +88,7 @@
                         "x": 4250,
                         "y": -3250
                     },
-                    "id": "1a4d7e0",
+                    "id": "5608bc46dc80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -103,7 +103,7 @@
                         "x": 4700,
                         "y": -2750
                     },
-                    "id": "1a4d840",
+                    "id": "5608c0aa11f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -118,7 +118,7 @@
                         "x": 4300,
                         "y": -2850
                     },
-                    "id": "1934810",
+                    "id": "5608bb049a20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -133,7 +133,7 @@
                         "x": 4700,
                         "y": -2850
                     },
-                    "id": "1934870",
+                    "id": "5608bc451d00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -148,7 +148,7 @@
                         "x": 4150,
                         "y": -3200
                     },
-                    "id": "19348d0",
+                    "id": "5608c0a881a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -184,7 +184,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1934930",
+                    "id": "5608c0b07db0",
                     "type": "SymPin"
                 },
                 {
@@ -217,7 +217,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1934a10",
+                    "id": "5608c0b07c30",
                     "type": "SymPin"
                 },
                 {
@@ -250,7 +250,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "1934af0",
+                    "id": "5608c0b07ab0",
                     "type": "SymPin"
                 },
                 {
@@ -258,7 +258,7 @@
                         "x": 4500,
                         "y": -2500
                     },
-                    "id": "1934bd0",
+                    "id": "5608c0b1d120",
                     "over": {
                         "b": -2307,
                         "r": 4786,
@@ -280,7 +280,7 @@
                         "x": 4500,
                         "y": -3750
                     },
-                    "id": "18a45a0",
+                    "id": "5608c0a87300",
                     "over": {
                         "b": -3559,
                         "r": 5034,
@@ -307,7 +307,7 @@
             "Parametrs": {
             },
             "Title": "button 1-switch",
-            "id": "1a4d5a0",
+            "id": "5608bd1fa050",
             "type": "Symbol"
         },
         {
@@ -323,7 +323,7 @@
                         "x": 3500,
                         "y": -3500
                     },
-                    "id": "18bd490",
+                    "id": "5608bc41b940",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -338,7 +338,7 @@
                         "x": 5500,
                         "y": -3500
                     },
-                    "id": "1ca50c0",
+                    "id": "5608bb726db0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -353,7 +353,7 @@
                         "x": 4550,
                         "y": -3400
                     },
-                    "id": "1546930",
+                    "id": "5608bb6f8c20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -368,7 +368,7 @@
                         "x": 4450,
                         "y": -3350
                     },
-                    "id": "108bb70",
+                    "id": "5608bbd7ce50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -383,7 +383,7 @@
                         "x": 4700,
                         "y": -2750
                     },
-                    "id": "184d600",
+                    "id": "5608bcb992b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -398,7 +398,7 @@
                         "x": 4300,
                         "y": -2850
                     },
-                    "id": "18c1e00",
+                    "id": "5608b1d2cf10",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -413,7 +413,7 @@
                         "x": 4700,
                         "y": -2850
                     },
-                    "id": "198b6e0",
+                    "id": "5608baa33170",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -428,7 +428,7 @@
                         "x": 4150,
                         "y": -3200
                     },
-                    "id": "198b800",
+                    "id": "5608bb740bd0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -464,7 +464,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "18a3560",
+                    "id": "5608c0b07930",
                     "type": "SymPin"
                 },
                 {
@@ -497,7 +497,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "18128d0",
+                    "id": "5608c0b07750",
                     "type": "SymPin"
                 },
                 {
@@ -505,7 +505,7 @@
                         "x": 4500,
                         "y": -2500
                     },
-                    "id": "1507b10",
+                    "id": "5608c0a5c320",
                     "over": {
                         "b": -2308,
                         "r": 4784,
@@ -527,7 +527,7 @@
                         "x": 4500,
                         "y": -3750
                     },
-                    "id": "193bcb0",
+                    "id": "5608bc487970",
                     "over": {
                         "b": -3558,
                         "r": 5033,
@@ -554,7 +554,7 @@
             "Parametrs": {
             },
             "Title": "button 1-on",
-            "id": "18a5e20",
+            "id": "5608bb085080",
             "type": "Symbol"
         },
         {
@@ -592,7 +592,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2.2d1.2m0.1",
                     "Stratum": "3fffffff",
-                    "id": "1625d20",
+                    "id": "5608bc44f670",
                     "type": "PartPin"
                 },
                 {
@@ -626,7 +626,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "c2.2d1.2m0.1",
                     "Stratum": "3fffffff",
-                    "id": "1662770",
+                    "id": "5608bb759800",
                     "type": "PartPin"
                 },
                 {
@@ -660,7 +660,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "c2.2d1.4m0.1",
                     "Stratum": "3fffffff",
-                    "id": "16df9e0",
+                    "id": "5608be01a8c0",
                     "type": "PartPin"
                 },
                 {
@@ -694,7 +694,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "c2.2d1.4m0.1",
                     "Stratum": "3fffffff",
-                    "id": "14792d0",
+                    "id": "5608c0a65420",
                     "type": "PartPin"
                 },
                 {
@@ -706,7 +706,7 @@
                         "x": -1250,
                         "y": 1000
                     },
-                    "id": "1842f50",
+                    "id": "5608bc47cab0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -721,7 +721,7 @@
                         "x": -1000,
                         "y": 4000
                     },
-                    "id": "1bedb40",
+                    "id": "5608bb0a0570",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -736,7 +736,7 @@
                         "x": 5500,
                         "y": 4000
                     },
-                    "id": "147aea0",
+                    "id": "5608bc4758c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -751,7 +751,7 @@
                         "x": 3750,
                         "y": -2750
                     },
-                    "id": "1556e30",
+                    "id": "5608bbe06ad0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -766,7 +766,7 @@
                         "x": 750,
                         "y": -2600
                     },
-                    "id": "1b5a620",
+                    "id": "5608bbe22800",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -781,7 +781,7 @@
                         "x": 2250,
                         "y": -2750
                     },
-                    "id": "1533420",
+                    "id": "5608b1d2d780",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -796,7 +796,7 @@
                         "x": 3750,
                         "y": -2600
                     },
-                    "id": "157ed30",
+                    "id": "5608b88a19e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -807,7 +807,7 @@
                         "x": 2500,
                         "y": 2500
                     },
-                    "id": "1bedec0",
+                    "id": "5608c0a8a940",
                     "over": {
                         "b": 3049,
                         "r": 3320,
@@ -829,7 +829,7 @@
                         "x": 2500,
                         "y": -3750
                     },
-                    "id": "166beb0",
+                    "id": "5608c0b072f0",
                     "over": {
                         "b": -3207,
                         "r": 4027,
@@ -856,7 +856,7 @@
             "Parametrs": {
             },
             "Title": "push button switch 1825027 part",
-            "id": "18aa7a0",
+            "id": "5608bb75a640",
             "type": "Part"
         },
         {
@@ -870,19 +870,19 @@
                     },
                     "SymbolId": "Symbol\rbutton 1-on\rsalicad",
                     "SymbolTitle": "button 1-on (salicad)",
-                    "id": "15ee390",
+                    "id": "5608bf1645e0",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rpush button switch 1825027 part\rsalicad",
                     "PartTitle": "push button switch 1825027 part (salicad)",
-                    "id": "12bd970",
+                    "id": "5608b9d05580",
                     "type": "PartVariant"
                 }
             ],
-            "Created": 33998680,
-            "Edit enable": true,
+            "Created": 42625781,
+            "Edit enable": false,
             "Origin": {
                 "x": 0,
                 "y": 0
@@ -890,6 +890,7 @@
             "Parametrs": {
                 "article": "1825027-1",
                 "bom": "<value>",
+                "category": "{uu.e.e.e",
                 "color": "",
                 "manufacturer": "Te Connectivity",
                 "prefix": "SB",
@@ -912,12 +913,12 @@
                 "1825027-3",
                 "RED"
             ],
-            "id": "1b261f0",
+            "id": "5608c0b071f0",
             "type": "Comp"
         }
     ],
     "Parametrs": {
     },
-    "id": "181d880",
+    "id": "5608bb0ad990",
     "type": "Project"
 }
