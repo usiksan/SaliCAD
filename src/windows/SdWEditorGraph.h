@@ -37,8 +37,8 @@ class SdWEditorGraph : public SdWEditor
     SdMode          *mPrevMode;       //Previous mode [Предыдущий режим]
     SdMode          *mStack;          //Temporary mode [Временный режим]
     SdModeSelect    *mSelect;         //Select mode [Режим выделения]
-    SdScaler         mScale;          //Текущий масштаб изображения
-    SdPoint          mOrigin;         //Логическая точка центра изображения
+    SdScaler         mScale;          //Current scale [Текущий масштаб изображения]
+    SdPoint          mOrigin;         //Logical origin point [Логическая точка центра изображения]
     SdPoint          mClientSize;     //Размер клиентской области в пикселах
     SdPoint          mGrid;           //Размер сетки
     bool             mLeftDown;       //Флаг нажатия левой кнопки мыши

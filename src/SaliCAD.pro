@@ -20,6 +20,7 @@ INCLUDEPATH += ../third
 
 SOURCES += \
     SdMain.cpp \
+    objects/SdContext3d.cpp \
     windows/SdWEditor3d.cpp \
     windows/SdWMain.cpp \
     objects/SdObject.cpp \
@@ -283,6 +284,7 @@ SOURCES += \
 
 HEADERS  += \
     SdConfig.h \
+    objects/SdContext3d.h \
     windows/SdWEditor3d.h \
     windows/SdWMain.h \
     objects/SdObject.h \

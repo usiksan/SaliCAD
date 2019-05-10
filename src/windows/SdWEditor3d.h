@@ -12,6 +12,11 @@ class SdWEditor3d : public SdWEditor
   public:
     SdWEditor3d( SdProjectItem *item, QWidget *parent = nullptr );
 
+
+    // QWidget interface
+  protected:
+    virtual void           paintEvent(QPaintEvent *event) override;
+
     // SdWEditor interface
   public:
     virtual SdProjectItem *getProjectItem() const override;
