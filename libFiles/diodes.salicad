@@ -13,7 +13,7 @@
                         "x": 4310,
                         "y": 2000
                     },
-                    "id": "5586081813e0",
+                    "id": "1aa0fa0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -28,7 +28,7 @@
                         "x": 110,
                         "y": 0
                     },
-                    "id": "5586073fbeb0",
+                    "id": "1aee3b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -43,7 +43,7 @@
                         "x": 4420,
                         "y": 0
                     },
-                    "id": "55860589da30",
+                    "id": "1be8110",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -80,7 +80,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2.2x2.8m0.1s0.05",
                     "Stratum": "1",
-                    "id": "55860dc39000",
+                    "id": "1bd4350",
                     "type": "PartPin"
                 },
                 {
@@ -114,7 +114,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2.2x2.8m0.1s0.05",
                     "Stratum": "1",
-                    "id": "55860dbfd200",
+                    "id": "1911020",
                     "type": "PartPin"
                 },
                 {
@@ -122,11 +122,11 @@
                         "x": 2210,
                         "y": 0
                     },
-                    "id": "55860dc05150",
+                    "id": "1b79680",
                     "over": {
                         "b": 544,
-                        "r": 3034,
-                        "x": 1393,
+                        "r": 3027,
+                        "x": 1396,
                         "y": -550
                     },
                     "propTextDir": 0,
@@ -144,12 +144,12 @@
                         "x": 2210,
                         "y": -2500
                     },
-                    "id": "5586062fed90",
+                    "id": "1a37730",
                     "over": {
-                        "b": -1953,
-                        "r": 3738,
-                        "x": 683,
-                        "y": -3047
+                        "b": -1951,
+                        "r": 3733,
+                        "x": 691,
+                        "y": -3045
                     },
                     "propTextDir": 0,
                     "propTextFont": 0,
@@ -163,21 +163,21 @@
                 },
                 {
                     "a": {
-                        "x": 250,
+                        "x": 3375,
                         "y": 1875
                     },
                     "b": {
-                        "x": 1000,
+                        "x": 4125,
                         "y": -1875
                     },
-                    "id": "558605662170",
+                    "id": "1aca650",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Rect"
                 }
             ],
-            "Created": 25786287,
+            "Created": 43839808,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -186,7 +186,7 @@
             "Parametrs": {
             },
             "Title": "do-214aa smb",
-            "id": "55860dc0e630",
+            "id": "1a79250",
             "type": "Part"
         },
         {
@@ -202,7 +202,7 @@
                         "x": 7900,
                         "y": 3000
                     },
-                    "id": "558609fc5750",
+                    "id": "1bead00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -217,7 +217,7 @@
                         "x": 900,
                         "y": 0
                     },
-                    "id": "558609fd5090",
+                    "id": "10a6ab0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -232,7 +232,7 @@
                         "x": 8800,
                         "y": 0
                     },
-                    "id": "558609fd53a0",
+                    "id": "10a68d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -269,7 +269,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2.2x3.4m0.1s0.05",
                     "Stratum": "1",
-                    "id": "55860dbfd0d0",
+                    "id": "18bbb40",
                     "type": "PartPin"
                 },
                 {
@@ -303,7 +303,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2.2x3.4m0.1s0.05",
                     "Stratum": "1",
-                    "id": "55860c9c54e0",
+                    "id": "104c910",
                     "type": "PartPin"
                 },
                 {
@@ -311,12 +311,12 @@
                         "x": 4500,
                         "y": 2250
                     },
-                    "id": "55860dc36fa0",
+                    "id": "110d4d0",
                     "over": {
-                        "b": 2794,
-                        "r": 5320,
-                        "x": 3679,
-                        "y": 1698
+                        "b": 2792,
+                        "r": 5316,
+                        "x": 3682,
+                        "y": 1697
                     },
                     "propTextDir": 0,
                     "propTextFont": 0,
@@ -333,12 +333,12 @@
                         "x": 4625,
                         "y": -2000
                     },
-                    "id": "55860ce7c720",
+                    "id": "18fb9a0",
                     "over": {
-                        "b": -1459,
-                        "r": 6154,
-                        "x": 3105,
-                        "y": -2555
+                        "b": -1456,
+                        "r": 6146,
+                        "x": 3100,
+                        "y": -2551
                     },
                     "propTextDir": 0,
                     "propTextFont": 0,
@@ -352,21 +352,21 @@
                 },
                 {
                     "a": {
-                        "x": 1000,
+                        "x": 6750,
                         "y": 2875
                     },
                     "b": {
-                        "x": 2000,
+                        "x": 7750,
                         "y": -2875
                     },
-                    "id": "55860a2f7050",
+                    "id": "1987540",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Rect"
                 }
             ],
-            "Created": 25786331,
+            "Created": 43839784,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -375,7 +375,7 @@
             "Parametrs": {
             },
             "Title": "do-214ab smc",
-            "id": "55860dc07bd0",
+            "id": "1b376e0",
             "type": "Part"
         },
         {
@@ -391,7 +391,7 @@
                         "x": 3900,
                         "y": 1250
                     },
-                    "id": "55860c9c5920",
+                    "id": "1083a70",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -406,7 +406,7 @@
                         "x": 100,
                         "y": 0
                     },
-                    "id": "558605a98fa0",
+                    "id": "14bc560",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -421,7 +421,7 @@
                         "x": 4000,
                         "y": 0
                     },
-                    "id": "55860dc18790",
+                    "id": "1c1c170",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -458,7 +458,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.8x2m0.1s0.05",
                     "Stratum": "1",
-                    "id": "558609fa6f10",
+                    "id": "1083b00",
                     "type": "PartPin"
                 },
                 {
@@ -492,7 +492,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.8x2m0.1s0.05",
                     "Stratum": "1",
-                    "id": "558608175000",
+                    "id": "1acaad0",
                     "type": "PartPin"
                 },
                 {
@@ -500,12 +500,12 @@
                         "x": 2000,
                         "y": 0
                     },
-                    "id": "558607869720",
+                    "id": "1b91200",
                     "over": {
-                        "b": 548,
+                        "b": 551,
                         "r": 2819,
-                        "x": 1180,
-                        "y": -549
+                        "x": 1181,
+                        "y": -548
                     },
                     "propTextDir": 0,
                     "propTextFont": 0,
@@ -522,12 +522,12 @@
                         "x": 2000,
                         "y": -1750
                     },
-                    "id": "55860e0557e0",
+                    "id": "1106790",
                     "over": {
-                        "b": -1205,
-                        "r": 3526,
-                        "x": 474,
-                        "y": -2302
+                        "b": -1201,
+                        "r": 3523,
+                        "x": 472,
+                        "y": -2300
                     },
                     "propTextDir": 0,
                     "propTextFont": 0,
@@ -541,21 +541,21 @@
                 },
                 {
                     "a": {
-                        "x": 250,
+                        "x": 3125,
                         "y": 1125
                     },
                     "b": {
-                        "x": 875,
+                        "x": 3750,
                         "y": -1125
                     },
-                    "id": "5586067f23d0",
+                    "id": "14dc350",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Rect"
                 }
             ],
-            "Created": 25786241,
+            "Created": 43839746,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -564,7 +564,7 @@
             "Parametrs": {
             },
             "Title": "do-214ac sma",
-            "id": "558609fe5000",
+            "id": "1908460",
             "type": "Part"
         },
         {
@@ -580,7 +580,7 @@
                         "x": -1250,
                         "y": 500
                     },
-                    "id": "55860c9f2d60",
+                    "id": "1b912e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -595,7 +595,7 @@
                         "x": -750,
                         "y": 750
                     },
-                    "id": "55860dc19990",
+                    "id": "1a9d400",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -610,7 +610,7 @@
                         "x": -1250,
                         "y": 1000
                     },
-                    "id": "55860dc022b0",
+                    "id": "172e220",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -625,7 +625,7 @@
                         "x": -250,
                         "y": 750
                     },
-                    "id": "55860ca16390",
+                    "id": "18878f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -640,7 +640,7 @@
                         "x": -750,
                         "y": 500
                     },
-                    "id": "558608175150",
+                    "id": "14f1510",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -676,7 +676,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "558606268320",
+                    "id": "1029310",
                     "type": "SymPin"
                 },
                 {
@@ -709,7 +709,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "7f1a6402ab10",
+                    "id": "1ae5d50",
                     "type": "SymPin"
                 },
                 {
@@ -717,7 +717,7 @@
                         "x": -1000,
                         "y": 1250
                     },
-                    "id": "55860e055dd0",
+                    "id": "1ba7fe0",
                     "over": {
                         "b": 1441,
                         "r": -697,
@@ -739,7 +739,7 @@
                         "x": -1000,
                         "y": 250
                     },
-                    "id": "55860dc28b50",
+                    "id": "10a04f0",
                     "over": {
                         "b": 441,
                         "r": -467,
@@ -766,18 +766,1062 @@
             "Parametrs": {
             },
             "Title": "diode",
-            "id": "55860ca5a6b0",
+            "id": "1bf2950",
             "type": "Symbol"
         },
         {
             "Author": "salicad",
-            "Auto": false,
+            "Auto": true,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": -1250,
+                        "y": 1000
+                    },
+                    "b": {
+                        "x": -1250,
+                        "y": 500
+                    },
+                    "id": "1bf16a0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -1250,
+                        "y": 500
+                    },
+                    "b": {
+                        "x": -750,
+                        "y": 750
+                    },
+                    "id": "1b324f0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -750,
+                        "y": 750
+                    },
+                    "b": {
+                        "x": -1250,
+                        "y": 1000
+                    },
+                    "id": "1061a90",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -1750,
+                        "y": 750
+                    },
+                    "b": {
+                        "x": 1250,
+                        "y": 750
+                    },
+                    "id": "10fcb50",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -750,
+                        "y": 1000
+                    },
+                    "b": {
+                        "x": -750,
+                        "y": 500
+                    },
+                    "id": "10fd600",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "A1",
+                    "NamePos": {
+                        "x": -1750,
+                        "y": 1000
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": -1750,
+                        "y": 500
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": -1750,
+                        "y": 750
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "1ae3720",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "K",
+                    "NamePos": {
+                        "x": 250,
+                        "y": 0
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": -250,
+                        "y": -250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": -250,
+                        "y": 0
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "1c6f400",
+                    "type": "SymPin"
+                },
+                {
+                    "Origin": {
+                        "x": -250,
+                        "y": 1500
+                    },
+                    "id": "10a6390",
+                    "over": {
+                        "b": 1688,
+                        "r": 36,
+                        "x": -535,
+                        "y": 1307
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": -1250,
+                        "y": 0
+                    },
+                    "id": "105a9b0",
+                    "over": {
+                        "b": 189,
+                        "r": -719,
+                        "x": -1785,
+                        "y": -192
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                },
+                {
+                    "a": {
+                        "x": 250,
+                        "y": 1000
+                    },
+                    "b": {
+                        "x": 250,
+                        "y": 500
+                    },
+                    "id": "1aca9e0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 250,
+                        "y": 750
+                    },
+                    "b": {
+                        "x": 750,
+                        "y": 1000
+                    },
+                    "id": "1abd350",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 750,
+                        "y": 1000
+                    },
+                    "b": {
+                        "x": 750,
+                        "y": 500
+                    },
+                    "id": "1956000",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 750,
+                        "y": 500
+                    },
+                    "b": {
+                        "x": 250,
+                        "y": 750
+                    },
+                    "id": "1aab050",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -250,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": -250,
+                        "y": 750
+                    },
+                    "id": "1ca85d0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "center": {
+                        "x": -250,
+                        "y": 750
+                    },
+                    "id": "18bc680",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "radius": 90,
+                    "type": "CircleFilled"
+                },
+                {
+                    "Name": "A2",
+                    "NamePos": {
+                        "x": 1250,
+                        "y": 1000
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 1250,
+                        "y": 500
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 1250,
+                        "y": 750
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "1ae5b30",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": -1500,
+                        "y": 1250
+                    },
+                    "b": {
+                        "x": 1000,
+                        "y": 250
+                    },
+                    "id": "1a8cfb0",
+                    "lineLayer": "Component",
+                    "lineType": 1,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                }
+            ],
+            "Created": 25710757,
+            "Edit enable": false,
+            "Origin": {
+                "x": -1750,
+                "y": 750
+            },
+            "Parametrs": {
+            },
+            "Title": "two diodes common cathode",
+            "id": "1a8ad30",
+            "type": "Symbol"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": 3750,
+                        "y": 750
+                    },
+                    "b": {
+                        "x": 3750,
+                        "y": -750
+                    },
+                    "id": "10a2780",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 200,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4250,
+                        "y": 1000
+                    },
+                    "b": {
+                        "x": 750,
+                        "y": -1000
+                    },
+                    "id": "1bd69b0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "NamePos": {
+                        "x": 625,
+                        "y": -1250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 2000,
+                    "NameTextVert": 1,
+                    "Number": "1",
+                    "NumberPos": {
+                        "x": 625,
+                        "y": 1250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 2000,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 625,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "r1.6x1.6m0.1s0.04",
+                    "Stratum": "1",
+                    "id": "1a6de20",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 4375,
+                        "y": -1250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 2000,
+                    "NameTextVert": 1,
+                    "Number": "2",
+                    "NumberPos": {
+                        "x": 4375,
+                        "y": 1250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 2000,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 4375,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "r1.6x1.6m0.1s0.04",
+                    "Stratum": "1",
+                    "id": "1a7d800",
+                    "type": "PartPin"
+                },
+                {
+                    "Origin": {
+                        "x": 2500,
+                        "y": 1875
+                    },
+                    "id": "1bd5780",
+                    "over": {
+                        "b": 2419,
+                        "r": 3368,
+                        "x": 1633,
+                        "y": 1319
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 2500,
+                        "y": -1875
+                    },
+                    "id": "1022d00",
+                    "over": {
+                        "b": -1327,
+                        "r": 4027,
+                        "x": 981,
+                        "y": -2427
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                },
+                {
+                    "a": {
+                        "x": 1875,
+                        "y": 625
+                    },
+                    "b": {
+                        "x": 1875,
+                        "y": -625
+                    },
+                    "id": "18eee00",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1875,
+                        "y": -625
+                    },
+                    "b": {
+                        "x": 3125,
+                        "y": 0
+                    },
+                    "id": "1b734b0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3125,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 1875,
+                        "y": 625
+                    },
+                    "id": "1babbb0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3125,
+                        "y": 625
+                    },
+                    "b": {
+                        "x": 3125,
+                        "y": -625
+                    },
+                    "id": "10ef030",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                }
+            ],
+            "Created": 40602903,
+            "Edit enable": false,
+            "Origin": {
+                "x": 2500,
+                "y": 0
+            },
+            "Parametrs": {
+                "Планарный": "да"
+            },
+            "Title": "minimelf sod80",
+            "id": "1b31680",
+            "type": "Part"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": -1250,
+                        "y": 1000
+                    },
+                    "b": {
+                        "x": -1250,
+                        "y": 500
+                    },
+                    "id": "1c18370",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -1250,
+                        "y": 500
+                    },
+                    "b": {
+                        "x": -750,
+                        "y": 750
+                    },
+                    "id": "1bf2680",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -750,
+                        "y": 750
+                    },
+                    "b": {
+                        "x": -1250,
+                        "y": 1000
+                    },
+                    "id": "1ad2f40",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -750,
+                        "y": 1000
+                    },
+                    "b": {
+                        "x": -750,
+                        "y": 500
+                    },
+                    "id": "1af2df0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 250,
+                        "y": 1000
+                    },
+                    "b": {
+                        "x": 250,
+                        "y": 500
+                    },
+                    "id": "1a75e60",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 250,
+                        "y": 500
+                    },
+                    "b": {
+                        "x": 750,
+                        "y": 750
+                    },
+                    "id": "1a8eeb0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 750,
+                        "y": 750
+                    },
+                    "b": {
+                        "x": 250,
+                        "y": 1000
+                    },
+                    "id": "1858800",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -250,
+                        "y": 750
+                    },
+                    "b": {
+                        "x": 1250,
+                        "y": 750
+                    },
+                    "id": "1a9ce50",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 750,
+                        "y": 1000
+                    },
+                    "b": {
+                        "x": 750,
+                        "y": 500
+                    },
+                    "id": "1c07fd0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -1750,
+                        "y": 750
+                    },
+                    "b": {
+                        "x": -250,
+                        "y": 750
+                    },
+                    "id": "1aaa6e0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -250,
+                        "y": 750
+                    },
+                    "b": {
+                        "x": -250,
+                        "y": 0
+                    },
+                    "id": "1b6d010",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "center": {
+                        "x": -250,
+                        "y": 750
+                    },
+                    "id": "1453260",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "radius": 63,
+                    "type": "Circle"
+                },
+                {
+                    "a": {
+                        "x": -1500,
+                        "y": 1250
+                    },
+                    "b": {
+                        "x": -1500,
+                        "y": 1000
+                    },
+                    "id": "1afc3c0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -1500,
+                        "y": 500
+                    },
+                    "b": {
+                        "x": -1500,
+                        "y": 250
+                    },
+                    "id": "19d0280",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -1250,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": -750,
+                        "y": 250
+                    },
+                    "id": "1a75f60",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -500,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": 0,
+                        "y": 250
+                    },
+                    "id": "1ad5390",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 250,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": 750,
+                        "y": 250
+                    },
+                    "id": "1a666f0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1000,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": 1000,
+                        "y": 500
+                    },
+                    "id": "1ae5e50",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 750,
+                        "y": 1250
+                    },
+                    "b": {
+                        "x": 250,
+                        "y": 1250
+                    },
+                    "id": "1af9800",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 1250
+                    },
+                    "b": {
+                        "x": -500,
+                        "y": 1250
+                    },
+                    "id": "1ae2c30",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -750,
+                        "y": 1250
+                    },
+                    "b": {
+                        "x": -1250,
+                        "y": 1250
+                    },
+                    "id": "1a864c0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1000,
+                        "y": 1250
+                    },
+                    "b": {
+                        "x": 1000,
+                        "y": 1000
+                    },
+                    "id": "1a81af0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "A",
+                    "NamePos": {
+                        "x": -1750,
+                        "y": 1000
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": -1750,
+                        "y": 500
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": -1750,
+                        "y": 750
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "1ae2420",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "AK",
+                    "NamePos": {
+                        "x": -250,
+                        "y": 250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": -250,
+                        "y": -250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": -250,
+                        "y": 0
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "10d2800",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "K",
+                    "NamePos": {
+                        "x": 1250,
+                        "y": 1000
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 1250,
+                        "y": 500
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 1250,
+                        "y": 750
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "1a884e0",
+                    "type": "SymPin"
+                },
+                {
+                    "Origin": {
+                        "x": -250,
+                        "y": 1500
+                    },
+                    "id": "1bcfb60",
+                    "over": {
+                        "b": 1692,
+                        "r": 54,
+                        "x": -551,
+                        "y": 1307
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 1000,
+                        "y": 0
+                    },
+                    "id": "1c0b430",
+                    "over": {
+                        "b": 192,
+                        "r": 1531,
+                        "x": 469,
+                        "y": -193
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                }
+            ],
+            "Created": 40690854,
+            "Edit enable": false,
+            "Origin": {
+                "x": -1750,
+                "y": 750
+            },
+            "Parametrs": {
+            },
+            "Title": "double serial diodes",
+            "id": "1adf9d0",
+            "type": "Symbol"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
             "ChildList": [
                 {
                     "Default": false,
                     "PartId": "Part\rdo-214ac sma\rsalicad",
                     "PartTitle": "do-214ac sma (salicad)",
-                    "id": "55860817b530",
+                    "id": "1bfafc0",
                     "type": "PartVariant"
                 },
                 {
@@ -787,12 +1831,12 @@
                     },
                     "SymbolId": "Symbol\rdiode\rsalicad",
                     "SymbolTitle": "diode (salicad)",
-                    "id": "55860dc3fc50",
+                    "id": "1b95140",
                     "type": "Section"
                 }
             ],
-            "Created": 32619349,
-            "Edit enable": false,
+            "Created": 43839318,
+            "Edit enable": true,
             "Origin": {
                 "x": 0,
                 "y": 0
@@ -800,6 +1844,7 @@
             "Parametrs": {
                 "article": "",
                 "bom": "<article> <title> <value>",
+                "category": "{uu.b.b.g",
                 "current": "",
                 "forward voltage": "",
                 "manufacturer": "",
@@ -876,1052 +1921,8 @@
                 "Vishay",
                 "vishay.com"
             ],
-            "id": "55860ce5cc90",
+            "id": "1bd2f30",
             "type": "Comp"
-        },
-        {
-            "Author": "salicad",
-            "Auto": true,
-            "ChildList": [
-                {
-                    "a": {
-                        "x": -1250,
-                        "y": 1000
-                    },
-                    "b": {
-                        "x": -1250,
-                        "y": 500
-                    },
-                    "id": "558607c72780",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": -1250,
-                        "y": 500
-                    },
-                    "b": {
-                        "x": -750,
-                        "y": 750
-                    },
-                    "id": "55860c9e4d30",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": -750,
-                        "y": 750
-                    },
-                    "b": {
-                        "x": -1250,
-                        "y": 1000
-                    },
-                    "id": "5586073fb620",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": -1750,
-                        "y": 750
-                    },
-                    "b": {
-                        "x": 1250,
-                        "y": 750
-                    },
-                    "id": "55860c9e0000",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": -750,
-                        "y": 1000
-                    },
-                    "b": {
-                        "x": -750,
-                        "y": 500
-                    },
-                    "id": "558605d381f0",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "Name": "A1",
-                    "NamePos": {
-                        "x": -1750,
-                        "y": 1000
-                    },
-                    "NameTextDir": 0,
-                    "NameTextFont": 0,
-                    "NameTextHorz": 1,
-                    "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
-                    "NameTextSize": 375,
-                    "NameTextVert": 1,
-                    "NumberPos": {
-                        "x": -1750,
-                        "y": 500
-                    },
-                    "NumberTextDir": 0,
-                    "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
-                    "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
-                    "NumberTextSize": 375,
-                    "NumberTextVert": 1,
-                    "Origin": {
-                        "x": -1750,
-                        "y": 750
-                    },
-                    "SymPinLayer": "Pin",
-                    "SymPinType": 7,
-                    "id": "55860dc15800",
-                    "type": "SymPin"
-                },
-                {
-                    "Name": "K",
-                    "NamePos": {
-                        "x": 250,
-                        "y": 0
-                    },
-                    "NameTextDir": 0,
-                    "NameTextFont": 0,
-                    "NameTextHorz": 1,
-                    "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
-                    "NameTextSize": 375,
-                    "NameTextVert": 1,
-                    "NumberPos": {
-                        "x": -250,
-                        "y": -250
-                    },
-                    "NumberTextDir": 0,
-                    "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
-                    "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
-                    "NumberTextSize": 375,
-                    "NumberTextVert": 1,
-                    "Origin": {
-                        "x": -250,
-                        "y": 0
-                    },
-                    "SymPinLayer": "Pin",
-                    "SymPinType": 7,
-                    "id": "55860817b5c0",
-                    "type": "SymPin"
-                },
-                {
-                    "Origin": {
-                        "x": -250,
-                        "y": 1500
-                    },
-                    "id": "55860c9f2e00",
-                    "over": {
-                        "b": 1688,
-                        "r": 36,
-                        "x": -535,
-                        "y": 1307
-                    },
-                    "propTextDir": 0,
-                    "propTextFont": 0,
-                    "propTextHorz": 1,
-                    "propTextLayer": "Ident",
-                    "propTextMirror": 0,
-                    "propTextSize": 350,
-                    "propTextVert": 1,
-                    "text": "{id}",
-                    "type": "Ident"
-                },
-                {
-                    "Origin": {
-                        "x": -1250,
-                        "y": 0
-                    },
-                    "id": "55860ce60050",
-                    "over": {
-                        "b": 189,
-                        "r": -719,
-                        "x": -1785,
-                        "y": -192
-                    },
-                    "propTextDir": 0,
-                    "propTextFont": 0,
-                    "propTextHorz": 1,
-                    "propTextLayer": "Value",
-                    "propTextMirror": 0,
-                    "propTextSize": 350,
-                    "propTextVert": 1,
-                    "text": "{value}",
-                    "type": "Value"
-                },
-                {
-                    "a": {
-                        "x": 250,
-                        "y": 1000
-                    },
-                    "b": {
-                        "x": 250,
-                        "y": 500
-                    },
-                    "id": "55860dc0b9a0",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 250,
-                        "y": 750
-                    },
-                    "b": {
-                        "x": 750,
-                        "y": 1000
-                    },
-                    "id": "55860ca32a00",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 750,
-                        "y": 1000
-                    },
-                    "b": {
-                        "x": 750,
-                        "y": 500
-                    },
-                    "id": "55860c9f1780",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 750,
-                        "y": 500
-                    },
-                    "b": {
-                        "x": 250,
-                        "y": 750
-                    },
-                    "id": "55860ce74ba0",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": -250,
-                        "y": 0
-                    },
-                    "b": {
-                        "x": -250,
-                        "y": 750
-                    },
-                    "id": "558609fb4890",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "center": {
-                        "x": -250,
-                        "y": 750
-                    },
-                    "id": "558609fd5170",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "radius": 90,
-                    "type": "CircleFilled"
-                },
-                {
-                    "Name": "A2",
-                    "NamePos": {
-                        "x": 1250,
-                        "y": 1000
-                    },
-                    "NameTextDir": 0,
-                    "NameTextFont": 0,
-                    "NameTextHorz": 1,
-                    "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
-                    "NameTextSize": 375,
-                    "NameTextVert": 1,
-                    "NumberPos": {
-                        "x": 1250,
-                        "y": 500
-                    },
-                    "NumberTextDir": 0,
-                    "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
-                    "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
-                    "NumberTextSize": 375,
-                    "NumberTextVert": 1,
-                    "Origin": {
-                        "x": 1250,
-                        "y": 750
-                    },
-                    "SymPinLayer": "Pin",
-                    "SymPinType": 7,
-                    "id": "558609fc3cd0",
-                    "type": "SymPin"
-                },
-                {
-                    "a": {
-                        "x": -1500,
-                        "y": 1250
-                    },
-                    "b": {
-                        "x": 1000,
-                        "y": 250
-                    },
-                    "id": "558608181a00",
-                    "lineLayer": "Component",
-                    "lineType": 1,
-                    "lineWidth": 0,
-                    "type": "Rect"
-                }
-            ],
-            "Created": 25710757,
-            "Edit enable": false,
-            "Origin": {
-                "x": -1750,
-                "y": 750
-            },
-            "Parametrs": {
-            },
-            "Title": "two diodes common cathode",
-            "id": "55860a300e20",
-            "type": "Symbol"
-        },
-        {
-            "Author": "salicad",
-            "Auto": true,
-            "ChildList": [
-                {
-                    "a": {
-                        "x": 3750,
-                        "y": 750
-                    },
-                    "b": {
-                        "x": 3750,
-                        "y": -750
-                    },
-                    "id": "55860ca10e70",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 200,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 4250,
-                        "y": 1000
-                    },
-                    "b": {
-                        "x": 750,
-                        "y": -1000
-                    },
-                    "id": "558608175c80",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Rect"
-                },
-                {
-                    "NamePos": {
-                        "x": 625,
-                        "y": -1250
-                    },
-                    "NameTextDir": 0,
-                    "NameTextFont": 0,
-                    "NameTextHorz": 1,
-                    "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
-                    "NameTextSize": 2000,
-                    "NameTextVert": 1,
-                    "Number": "1",
-                    "NumberPos": {
-                        "x": 625,
-                        "y": 1250
-                    },
-                    "NumberTextDir": 0,
-                    "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
-                    "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
-                    "NumberTextSize": 2000,
-                    "NumberTextVert": 1,
-                    "Origin": {
-                        "x": 625,
-                        "y": 0
-                    },
-                    "PartPinLayer": "Pin",
-                    "PartPinType": "r1.6x1.6m0.1s0.04",
-                    "Stratum": "1",
-                    "id": "55860dc44f10",
-                    "type": "PartPin"
-                },
-                {
-                    "NamePos": {
-                        "x": 4375,
-                        "y": -1250
-                    },
-                    "NameTextDir": 0,
-                    "NameTextFont": 0,
-                    "NameTextHorz": 1,
-                    "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
-                    "NameTextSize": 2000,
-                    "NameTextVert": 1,
-                    "Number": "2",
-                    "NumberPos": {
-                        "x": 4375,
-                        "y": 1250
-                    },
-                    "NumberTextDir": 0,
-                    "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
-                    "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
-                    "NumberTextSize": 2000,
-                    "NumberTextVert": 1,
-                    "Origin": {
-                        "x": 4375,
-                        "y": 0
-                    },
-                    "PartPinLayer": "Pin",
-                    "PartPinType": "r1.6x1.6m0.1s0.04",
-                    "Stratum": "1",
-                    "id": "558607c346b0",
-                    "type": "PartPin"
-                },
-                {
-                    "Origin": {
-                        "x": 2500,
-                        "y": 1875
-                    },
-                    "id": "55860dc3a5d0",
-                    "over": {
-                        "b": 2419,
-                        "r": 3368,
-                        "x": 1633,
-                        "y": 1319
-                    },
-                    "propTextDir": 0,
-                    "propTextFont": 0,
-                    "propTextHorz": 1,
-                    "propTextLayer": "Ident.Top",
-                    "propTextMirror": 0,
-                    "propTextSize": 1000,
-                    "propTextVert": 1,
-                    "text": "{id}",
-                    "type": "Ident"
-                },
-                {
-                    "Origin": {
-                        "x": 2500,
-                        "y": -1875
-                    },
-                    "id": "558609fa8bf0",
-                    "over": {
-                        "b": -1327,
-                        "r": 4027,
-                        "x": 981,
-                        "y": -2427
-                    },
-                    "propTextDir": 0,
-                    "propTextFont": 0,
-                    "propTextHorz": 1,
-                    "propTextLayer": "Value.Top",
-                    "propTextMirror": 0,
-                    "propTextSize": 1000,
-                    "propTextVert": 1,
-                    "text": "{value}",
-                    "type": "Value"
-                },
-                {
-                    "a": {
-                        "x": 1875,
-                        "y": 625
-                    },
-                    "b": {
-                        "x": 1875,
-                        "y": -625
-                    },
-                    "id": "55860c9aedb0",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 1875,
-                        "y": -625
-                    },
-                    "b": {
-                        "x": 3125,
-                        "y": 0
-                    },
-                    "id": "55860dc3ef50",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 3125,
-                        "y": 0
-                    },
-                    "b": {
-                        "x": 1875,
-                        "y": 625
-                    },
-                    "id": "55860dc3b580",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 3125,
-                        "y": 625
-                    },
-                    "b": {
-                        "x": 3125,
-                        "y": -625
-                    },
-                    "id": "55860dc09400",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                }
-            ],
-            "Created": 40602903,
-            "Edit enable": false,
-            "Origin": {
-                "x": 2500,
-                "y": 0
-            },
-            "Parametrs": {
-                "Планарный": "да"
-            },
-            "Title": "minimelf sod80",
-            "id": "55860ce6fa70",
-            "type": "Part"
-        },
-        {
-            "Author": "salicad",
-            "Auto": true,
-            "ChildList": [
-                {
-                    "a": {
-                        "x": -1250,
-                        "y": 1000
-                    },
-                    "b": {
-                        "x": -1250,
-                        "y": 500
-                    },
-                    "id": "55860ca0def0",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": -1250,
-                        "y": 500
-                    },
-                    "b": {
-                        "x": -750,
-                        "y": 750
-                    },
-                    "id": "558607c4b370",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": -750,
-                        "y": 750
-                    },
-                    "b": {
-                        "x": -1250,
-                        "y": 1000
-                    },
-                    "id": "55860ce46780",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": -750,
-                        "y": 1000
-                    },
-                    "b": {
-                        "x": -750,
-                        "y": 500
-                    },
-                    "id": "55860ce7c330",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 250,
-                        "y": 1000
-                    },
-                    "b": {
-                        "x": 250,
-                        "y": 500
-                    },
-                    "id": "55860633ee50",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 250,
-                        "y": 500
-                    },
-                    "b": {
-                        "x": 750,
-                        "y": 750
-                    },
-                    "id": "55860c9fb210",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 750,
-                        "y": 750
-                    },
-                    "b": {
-                        "x": 250,
-                        "y": 1000
-                    },
-                    "id": "55860dbf7800",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": -250,
-                        "y": 750
-                    },
-                    "b": {
-                        "x": 1250,
-                        "y": 750
-                    },
-                    "id": "55860a30a970",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 750,
-                        "y": 1000
-                    },
-                    "b": {
-                        "x": 750,
-                        "y": 500
-                    },
-                    "id": "55860dc061c0",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": -1750,
-                        "y": 750
-                    },
-                    "b": {
-                        "x": -250,
-                        "y": 750
-                    },
-                    "id": "558609faa930",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": -250,
-                        "y": 750
-                    },
-                    "b": {
-                        "x": -250,
-                        "y": 0
-                    },
-                    "id": "55860ca50c00",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "center": {
-                        "x": -250,
-                        "y": 750
-                    },
-                    "id": "5586073f8fe0",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "radius": 63,
-                    "type": "Circle"
-                },
-                {
-                    "a": {
-                        "x": -1500,
-                        "y": 1250
-                    },
-                    "b": {
-                        "x": -1500,
-                        "y": 1000
-                    },
-                    "id": "558609f96910",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": -1500,
-                        "y": 500
-                    },
-                    "b": {
-                        "x": -1500,
-                        "y": 250
-                    },
-                    "id": "55860ca57000",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": -1250,
-                        "y": 250
-                    },
-                    "b": {
-                        "x": -750,
-                        "y": 250
-                    },
-                    "id": "55860dbf5e10",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": -500,
-                        "y": 250
-                    },
-                    "b": {
-                        "x": 0,
-                        "y": 250
-                    },
-                    "id": "55860dc44bb0",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 250,
-                        "y": 250
-                    },
-                    "b": {
-                        "x": 750,
-                        "y": 250
-                    },
-                    "id": "558609f76380",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 1000,
-                        "y": 250
-                    },
-                    "b": {
-                        "x": 1000,
-                        "y": 500
-                    },
-                    "id": "55860a308a90",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 750,
-                        "y": 1250
-                    },
-                    "b": {
-                        "x": 250,
-                        "y": 1250
-                    },
-                    "id": "55860c9d7900",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 0,
-                        "y": 1250
-                    },
-                    "b": {
-                        "x": -500,
-                        "y": 1250
-                    },
-                    "id": "558609fa2c90",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": -750,
-                        "y": 1250
-                    },
-                    "b": {
-                        "x": -1250,
-                        "y": 1250
-                    },
-                    "id": "55860c9e0800",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 1000,
-                        "y": 1250
-                    },
-                    "b": {
-                        "x": 1000,
-                        "y": 1000
-                    },
-                    "id": "5586078c28f0",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "Name": "A",
-                    "NamePos": {
-                        "x": -1750,
-                        "y": 1000
-                    },
-                    "NameTextDir": 0,
-                    "NameTextFont": 0,
-                    "NameTextHorz": 1,
-                    "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
-                    "NameTextSize": 375,
-                    "NameTextVert": 1,
-                    "NumberPos": {
-                        "x": -1750,
-                        "y": 500
-                    },
-                    "NumberTextDir": 0,
-                    "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
-                    "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
-                    "NumberTextSize": 375,
-                    "NumberTextVert": 1,
-                    "Origin": {
-                        "x": -1750,
-                        "y": 750
-                    },
-                    "SymPinLayer": "Pin",
-                    "SymPinType": 7,
-                    "id": "55860ce61f60",
-                    "type": "SymPin"
-                },
-                {
-                    "Name": "AK",
-                    "NamePos": {
-                        "x": -250,
-                        "y": 250
-                    },
-                    "NameTextDir": 0,
-                    "NameTextFont": 0,
-                    "NameTextHorz": 1,
-                    "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
-                    "NameTextSize": 375,
-                    "NameTextVert": 1,
-                    "NumberPos": {
-                        "x": -250,
-                        "y": -250
-                    },
-                    "NumberTextDir": 0,
-                    "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
-                    "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
-                    "NumberTextSize": 375,
-                    "NumberTextVert": 1,
-                    "Origin": {
-                        "x": -250,
-                        "y": 0
-                    },
-                    "SymPinLayer": "Pin",
-                    "SymPinType": 7,
-                    "id": "558609fb5110",
-                    "type": "SymPin"
-                },
-                {
-                    "Name": "K",
-                    "NamePos": {
-                        "x": 1250,
-                        "y": 1000
-                    },
-                    "NameTextDir": 0,
-                    "NameTextFont": 0,
-                    "NameTextHorz": 1,
-                    "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
-                    "NameTextSize": 375,
-                    "NameTextVert": 1,
-                    "NumberPos": {
-                        "x": 1250,
-                        "y": 500
-                    },
-                    "NumberTextDir": 0,
-                    "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
-                    "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
-                    "NumberTextSize": 375,
-                    "NumberTextVert": 1,
-                    "Origin": {
-                        "x": 1250,
-                        "y": 750
-                    },
-                    "SymPinLayer": "Pin",
-                    "SymPinType": 7,
-                    "id": "558609fd65b0",
-                    "type": "SymPin"
-                },
-                {
-                    "Origin": {
-                        "x": -250,
-                        "y": 1500
-                    },
-                    "id": "558607bef900",
-                    "over": {
-                        "b": 1692,
-                        "r": 54,
-                        "x": -551,
-                        "y": 1307
-                    },
-                    "propTextDir": 0,
-                    "propTextFont": 0,
-                    "propTextHorz": 1,
-                    "propTextLayer": "Ident",
-                    "propTextMirror": 0,
-                    "propTextSize": 350,
-                    "propTextVert": 1,
-                    "text": "{id}",
-                    "type": "Ident"
-                },
-                {
-                    "Origin": {
-                        "x": 1000,
-                        "y": 0
-                    },
-                    "id": "55860dc27a40",
-                    "over": {
-                        "b": 192,
-                        "r": 1531,
-                        "x": 469,
-                        "y": -193
-                    },
-                    "propTextDir": 0,
-                    "propTextFont": 0,
-                    "propTextHorz": 1,
-                    "propTextLayer": "Value",
-                    "propTextMirror": 0,
-                    "propTextSize": 350,
-                    "propTextVert": 1,
-                    "text": "{value}",
-                    "type": "Value"
-                }
-            ],
-            "Created": 40690854,
-            "Edit enable": false,
-            "Origin": {
-                "x": -1750,
-                "y": 750
-            },
-            "Parametrs": {
-            },
-            "Title": "double serial diodes",
-            "id": "55860ce61310",
-            "type": "Symbol"
         },
         {
             "Author": "salicad",
@@ -1934,18 +1935,18 @@
                     },
                     "SymbolId": "Symbol\rdiode\rsalicad",
                     "SymbolTitle": "diode (salicad)",
-                    "id": "55860bded010",
+                    "id": "1b9f1a0",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rminimelf sod80\rsalicad",
                     "PartTitle": "minimelf sod80 (salicad)",
-                    "id": "55860bded050",
+                    "id": "1c6e1d0",
                     "type": "PartVariant"
                 }
             ],
-            "Created": 40694546,
+            "Created": 42624735,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -1954,6 +1955,7 @@
             "Parametrs": {
                 "article": "",
                 "bom": "<value>",
+                "category": "{uu.b.b.h",
                 "current": "",
                 "forward voltage": "",
                 "manufacturer": "",
@@ -1978,12 +1980,12 @@
                 "75V",
                 "Hottech Semiconductor Technology(Hk)Co.,Ltd"
             ],
-            "id": "55860bdecf70",
+            "id": "1c6e130",
             "type": "Comp"
         }
     ],
     "Parametrs": {
     },
-    "id": "558609fb59b0",
+    "id": "10d2d10",
     "type": "Project"
 }
