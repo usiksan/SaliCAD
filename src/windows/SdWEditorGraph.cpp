@@ -109,6 +109,16 @@ SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
 
   }
 
+SdWEditorGraph::~SdWEditorGraph()
+  {
+  if( mPrevMode ) delete mPrevMode;
+  if( mStack ) delete mStack;
+  if( mMode && mMode != mSelect )
+    delete mMode;
+  if( mSelect )
+    delete mSelect;
+  }
+
 
 //=================================================================================================
 // Scale and origin

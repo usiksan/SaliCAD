@@ -90,6 +90,14 @@ void SdModeCPartPlace::reset()
   //Setup component list
   barPartPlace->setComponentList( compList );
 
+  SdPoint grid = plate()->mPlaceGrid;
+  if( grid.x() <= 0 || grid.y() <= 0 )
+    plate()->mPlaceGrid = mEditor->gridGet();
+  mPreviousGrid = mEditor->gridGet();
+  mEditor->gridSet( plate()->mPlaceGrid );
+
+  //mPreviousCursor =
+
   update();
   }
 

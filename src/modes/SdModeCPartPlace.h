@@ -65,6 +65,9 @@ class SdModeCPartPlace : public SdModeCommon
     bool               mBySheet;           //Истина, когда производится выбор из листа
     QString            mCurrentSheet;      //Current sheet component selected from
 
+    SdPoint            mPreviousGrid;
+    bool               mPreviousCursor;
+
     SdPlateNetList     mNetList;           //Net list for rat net creation
   public:
     SdModeCPartPlace( SdWEditorGraph *editor, SdProjectItem *obj );

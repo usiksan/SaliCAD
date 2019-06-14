@@ -613,6 +613,12 @@ void SdPItemPlate::writeObject(QJsonObject &obj) const
 
   //Write pcb rules
   obj.insert( QStringLiteral("PcbRules"), mRulesPcb.write() );
+
+  mTraceGrid.write( QStringLiteral("TraceGrid"), obj );         //Current trace grid
+  obj.insert( QStringLiteral("TraceCursorGrid"), mTraceCursorGrid );  //Enable cursor grid align when trace
+  mPlaceGrid.write( QStringLiteral("PlaceGrid"), obj );         //Current place grid
+  obj.insert( QStringLiteral("PlaceCursorGrid"), mPlaceCursorGrid);   //Enable cursor grid align when place
+
   }
 
 
@@ -632,6 +638,11 @@ void SdPItemPlate::readObject(SdObjectMap *map, const QJsonObject obj)
 
   //Read pcb rules
   mRulesPcb.read( obj.value(QStringLiteral("PcbRules")).toObject() );
+
+  mTraceGrid.read( QStringLiteral("TraceGrid"), obj );         //Current trace grid
+  mTraceCursorGrid = obj.value( QStringLiteral("TraceCursorGrid") ).toBool();  //Enable cursor grid align when trace
+  mPlaceGrid.read( QStringLiteral("PlaceGrid"), obj );         //Current place grid
+  mPlaceCursorGrid = obj.value( QStringLiteral("PlaceCursorGrid") ).toBool();   //Enable cursor grid align when place
   }
 
 

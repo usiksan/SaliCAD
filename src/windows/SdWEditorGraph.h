@@ -55,6 +55,7 @@ class SdWEditorGraph : public SdWEditor
 
   public:
     SdWEditorGraph( SdProjectItem *item, QWidget *parent = nullptr );
+    ~SdWEditorGraph() override;
 
     double  scaleGet() const { return mScale.scaleGet(); }
     void    scaleSet( double scale );
