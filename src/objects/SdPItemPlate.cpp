@@ -31,7 +31,11 @@ Description
 SdPItemPlate::SdPItemPlate() :
   SdProjectItem(),
   mStratumCount(2),
-  mRatNetDirty(true)
+  mRatNetDirty(true),
+  mTraceGrid(-1,-1),         //Current trace grid
+  mTraceCursorGrid(false),   //Enable cursor grid align when trace
+  mPlaceGrid(-1,-1),         //Current place grid
+  mPlaceCursorGrid(true)     //Enable cursor grid align when place
   {
   //Default pcb rules
   mRulesPcb = sdEnvir->mDefaultRules;

@@ -78,6 +78,7 @@ class SdMode
             void    restore();                              //Обновляет все, что касается текущего состояния режима
 
     virtual void    activate();                             //Вызывается первой, после того как режим делается текущим
+    virtual void    deactivate();                           //Calling before mode set to inactive state
     virtual void    reset();                                //Сбрасывает режим в исходное состояние
 
     virtual void    drawStatic( SdContext *ctx );           //Рисует постоянную часть картинки

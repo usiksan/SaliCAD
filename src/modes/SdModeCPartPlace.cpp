@@ -43,8 +43,29 @@ SdModeCPartPlace::SdModeCPartPlace(SdWEditorGraph *editor, SdProjectItem *obj) :
 
 void SdModeCPartPlace::activate()
   {
+
+  SdPoint grid = plate()->mPlaceGrid;
+  if( grid.x() <= 0 || grid.y() <= 0 )
+    plate()->mPlaceGrid = mEditor->gridGet();
+  mPreviousGrid = mEditor->gridGet();
+  mEditor->gridSet( plate()->mPlaceGrid );
+
+  mPreviousCursor = sdEnvir->mCursorAlignGrid;
+  sdEnvir->mCursorAlignGrid = plate()->mPlaceCursorGrid;
+
   if( !mBySheet )
     reset();
+
+  }
+
+
+
+
+
+void SdModeCPartPlace::deactivate()
+  {
+  mEditor->gridSet( mPreviousGrid );
+  sdEnvir->mCursorAlignGrid = mPreviousCursor;
   }
 
 
@@ -89,14 +110,6 @@ void SdModeCPartPlace::reset()
     });
   //Setup component list
   barPartPlace->setComponentList( compList );
-
-  SdPoint grid = plate()->mPlaceGrid;
-  if( grid.x() <= 0 || grid.y() <= 0 )
-    plate()->mPlaceGrid = mEditor->gridGet();
-  mPreviousGrid = mEditor->gridGet();
-  mEditor->gridSet( plate()->mPlaceGrid );
-
-  //mPreviousCursor =
 
   update();
   }

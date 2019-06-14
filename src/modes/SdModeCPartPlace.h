@@ -75,6 +75,7 @@ class SdModeCPartPlace : public SdModeCommon
     // SdMode interface
   public:
     virtual void    activate() override;
+    virtual void    deactivate() override;
     virtual void    reset() override;
     virtual void    drawStatic(SdContext *ctx) override;
     virtual void    drawDynamic(SdContext *ctx) override;
