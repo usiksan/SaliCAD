@@ -22,9 +22,43 @@ Description
 #include <algorithm>
 
 SdModeCRoadMove::SdModeCRoadMove(SdWEditorGraph *editor, SdProjectItem *obj) :
-  SdModeCommon( editor, obj )
+  SdModeCommon( editor, obj ),
+  mPreviousGrid(-1,-1),      //Previous grid, it restores after deactivate mode
+  mPreviousCursor(false)     //Previous cursor alignment, it restores after deactivate mode
   {
 
+  }
+
+
+
+
+void SdModeCRoadMove::activate()
+  {
+  SdPoint grid = plate()->mTraceGrid;
+  if( grid.x() <= 0 || grid.y() <= 0 )
+    plate()->mTraceGrid = mEditor->gridGet();
+  mPreviousGrid = mEditor->gridGet();
+  mEditor->gridSet( plate()->mTraceGrid );
+
+  mPreviousCursor = sdEnvir->mCursorAlignGrid;
+  sdEnvir->mCursorAlignGrid = plate()->mTraceCursorGrid;
+
+  SdModeCommon::activate();
+  }
+
+
+
+
+
+void SdModeCRoadMove::deactivate()
+  {
+  //Store to plate current grid and cursor alignment mode
+  plate()->mTraceGrid = mEditor->gridGet();
+  plate()->mTraceCursorGrid = sdEnvir->mCursorAlignGrid;
+
+  //Restore previous grid and cursor alignment mode
+  mEditor->gridSet( mPreviousGrid );
+  sdEnvir->mCursorAlignGrid = mPreviousCursor;
   }
 
 

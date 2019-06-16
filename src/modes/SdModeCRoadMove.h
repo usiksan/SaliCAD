@@ -48,43 +48,49 @@ class SdGraphTracedVia;
 
 class SdModeCRoadMove : public SdModeCommon
   {
-    SdPropRoad         mProp;         //Current properties for road moved segment
-    SdPropRoad         mProp1;        //Current properties for road first segment
-    SdPropRoad         mProp2;        //Current properties for road second segment
-    SdPropVia          mViaProp;      //Current properties for vias
+    SdPropRoad         mProp;             //Current properties for road moved segment
+    SdPropRoad         mProp1;            //Current properties for road first segment
+    SdPropRoad         mProp2;            //Current properties for road second segment
+    SdPropVia          mViaProp;          //Current properties for vias
 
-    SdRuleBlock        mRule;         //Rule block for net
+    SdRuleBlock        mRule;             //Rule block for net
 
-    SdBarrierList      mPads;         //Barriers for pads on vias
-    SdBarrierList      mRoads;        //Barriers for roads of moved segment
-    SdBarrierList      mRoads1;       //Barriers for roads of first segment
-    SdBarrierList      mRoads2;       //Barriers for roads of second segment
+    SdBarrierList      mPads;             //Barriers for pads on vias
+    SdBarrierList      mRoads;            //Barriers for roads of moved segment
+    SdBarrierList      mRoads1;           //Barriers for roads of first segment
+    SdBarrierList      mRoads2;           //Barriers for roads of second segment
 
-    SdPoint            mSourcePoint;  //Source point for move
-    SdSnapMask         mSourceType;   //Current source point type
-    SdGraph           *mSourceObject; //Object with source point
+    SdPoint            mSourcePoint;      //Source point for move
+    SdSnapMask         mSourceType;       //Current source point type
+    SdGraph           *mSourceObject;     //Object with source point
 
     SdGraphTracedRoad *mSegment,
                       *mSegment1,
                       *mSegment2;
     SdGraphTracedVia  *mVia;
 
-    SdPoint            mSource1,      //Source point of segment. It not moved
+    SdPoint            mSource1,           //Source point of segment. It not moved
                        mSource2,
-                       mMove1,        //Moved point of segment 1
-                       mMove2,        //Moved point of segment 2 or via position
-                       mIntersect;    //Appeared intersect point of two segments segment1 and segment2
+                       mMove1,             //Moved point of segment 1
+                       mMove2,             //Moved point of segment 2 or via position
+                       mIntersect;         //Appeared intersect point of two segments segment1 and segment2
 
-    int                mDirX1,        //Direction of moved points of segments
-                       mDirY1,        // it may be 0 - not moved
-                       mDirX2,        //           1 - direct relation
-                       mDirY2;        //          -1 - inverse relation
+    int                mDirX1,             //Direction of moved points of segments
+                       mDirY1,             // it may be 0 - not moved
+                       mDirX2,             //           1 - direct relation
+                       mDirY2;             //          -1 - inverse relation
 
-    bool               mMoveSource1,  //Flag for source moving syncronous with mMove points
+    bool               mMoveSource1,       //Flag for source moving syncronous with mMove points
                        mMoveSource2;
 
     SdSelector         mFragment;
     SdPoint            mPrevMove;
+
+    //Previous grid and cursor alignment mode
+    //This mode acts as stack for this properties, so changes
+    // in this mode no effect on other modes
+    SdPoint            mPreviousGrid;      //Previous grid, it restores after deactivate mode
+    bool               mPreviousCursor;    //Previous cursor alignment, it restores after deactivate mode
 
     const int sFindRoad = 0, sMoveRoad = 1;
   public:
@@ -92,7 +98,9 @@ class SdModeCRoadMove : public SdModeCommon
 
     // SdMode interface
   public:
-    virtual void reset() override;
+    virtual void    activate() override;
+    virtual void    deactivate() override;
+    virtual void    reset() override;
     virtual void    drawStatic(SdContext *ctx) override;
     virtual void    drawDynamic(SdContext *ctx) override;
     virtual void    enterPoint(SdPoint) override;

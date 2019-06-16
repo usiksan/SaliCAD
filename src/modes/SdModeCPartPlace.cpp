@@ -64,6 +64,11 @@ void SdModeCPartPlace::activate()
 
 void SdModeCPartPlace::deactivate()
   {
+  //Store to plate current grid and cursor alignment mode
+  plate()->mPlaceGrid = mEditor->gridGet();
+  plate()->mPlaceCursorGrid = sdEnvir->mCursorAlignGrid;
+
+  //Restore previous grid and cursor alignment mode
   mEditor->gridSet( mPreviousGrid );
   sdEnvir->mCursorAlignGrid = mPreviousCursor;
   }

@@ -65,8 +65,11 @@ class SdModeCPartPlace : public SdModeCommon
     bool               mBySheet;           //Истина, когда производится выбор из листа
     QString            mCurrentSheet;      //Current sheet component selected from
 
-    SdPoint            mPreviousGrid;
-    bool               mPreviousCursor;
+    //Previous grid and cursor alignment mode
+    //This mode acts as stack for this properties, so changes
+    // in this mode no effect on other modes
+    SdPoint            mPreviousGrid;      //Previous grid, it restores after deactivate mode
+    bool               mPreviousCursor;    //Previous cursor alignment, it restores after deactivate mode
 
     SdPlateNetList     mNetList;           //Net list for rat net creation
   public:
