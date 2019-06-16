@@ -43,8 +43,34 @@ SdModeCPartPlace::SdModeCPartPlace(SdWEditorGraph *editor, SdProjectItem *obj) :
 
 void SdModeCPartPlace::activate()
   {
+
+  SdPoint grid = plate()->mPlaceGrid;
+  if( grid.x() <= 0 || grid.y() <= 0 )
+    plate()->mPlaceGrid = mEditor->gridGet();
+  mPreviousGrid = mEditor->gridGet();
+  mEditor->gridSet( plate()->mPlaceGrid );
+
+  mPreviousCursor = sdEnvir->mCursorAlignGrid;
+  sdEnvir->mCursorAlignGrid = plate()->mPlaceCursorGrid;
+
   if( !mBySheet )
     reset();
+
+  }
+
+
+
+
+
+void SdModeCPartPlace::deactivate()
+  {
+  //Store to plate current grid and cursor alignment mode
+  plate()->mPlaceGrid = mEditor->gridGet();
+  plate()->mPlaceCursorGrid = sdEnvir->mCursorAlignGrid;
+
+  //Restore previous grid and cursor alignment mode
+  mEditor->gridSet( mPreviousGrid );
+  sdEnvir->mCursorAlignGrid = mPreviousCursor;
   }
 
 

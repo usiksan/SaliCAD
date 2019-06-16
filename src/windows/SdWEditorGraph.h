@@ -55,6 +55,7 @@ class SdWEditorGraph : public SdWEditor
 
   public:
     SdWEditorGraph( SdProjectItem *item, QWidget *parent = nullptr );
+    ~SdWEditorGraph() override;
 
     double  scaleGet() const { return mScale.scaleGet(); }
     void    scaleSet( double scale );
@@ -64,7 +65,7 @@ class SdWEditorGraph : public SdWEditor
     void    originSet( SdPoint org );
 
     SdPoint gridGet() const { return mGrid; }
-    void    gridSet( SdPoint grid );
+    void    gridSet( SdPoint grid ) { mGrid = grid; }
 
     SdPoint clientSize() const { return mClientSize; }
 

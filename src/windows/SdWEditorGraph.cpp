@@ -109,6 +109,16 @@ SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
 
   }
 
+SdWEditorGraph::~SdWEditorGraph()
+  {
+  if( mPrevMode ) delete mPrevMode;
+  if( mStack ) delete mStack;
+  if( mMode && mMode != mSelect )
+    delete mMode;
+  if( mSelect )
+    delete mSelect;
+  }
+
 
 //=================================================================================================
 // Scale and origin
@@ -227,7 +237,10 @@ void SdWEditorGraph::modeCall(SdModeTemp *mode)
   setFocus();
   Q_ASSERT( mode != nullptr );
   //Стековый режим. Прежний стековый режим снести
-  if( mStack ) delete mStack;
+  if( mStack ) {
+    mStack->deactivate();
+    delete mStack;
+    }
   mode->setMainMode( mMode );
   mode->reset();
   modeActivate( mStack = mode );
@@ -247,12 +260,14 @@ void SdWEditorGraph::modeSet(SdMode *mode)
   Q_ASSERT( mode != nullptr );
   if( mStack ) {
     //Стековый режим снести совсем
+    mStack->deactivate();
     delete mStack;
     mStack = nullptr;
     }
   //Если был режим выделения - просто затереть
   if( mMode && mMode == mSelect ) {
     mSelect->reset();
+    mSelect->deactivate();
     mMode = mode;
     }
   else {
@@ -260,10 +275,12 @@ void SdWEditorGraph::modeSet(SdMode *mode)
       //Если новый режим выделения - то старый передать в prevMode
       if( mPrevMode ) delete mPrevMode;
       mPrevMode = mMode;
+      mMode->deactivate();
       mMode = mode;
       }
     else {
       //Иначе - снести предыдущий режим
+      mMode->deactivate();
       delete mMode;
       mMode = mode;
       }
@@ -281,6 +298,7 @@ void SdWEditorGraph::modeCancel()
   //Завершение режима.
   if( mStack ) {
     //Если был стековый режим, то снести и реанимировать текущий режим
+    mStack->deactivate();
     delete mStack;
     mStack = nullptr;
     modeRestore( mMode );
@@ -288,6 +306,7 @@ void SdWEditorGraph::modeCancel()
   else {
     //Завершение текущего режима
     if( mMode == mSelect ) {
+      mMode->deactivate();
       //Если текущим был режим выделения, то активировать прежний, если он был
       if( mPrevMode ) {
         mMode = mPrevMode;
@@ -298,6 +317,7 @@ void SdWEditorGraph::modeCancel()
     else {
       //Если текущим был обычный режим, то перенести его в предыдущий
       if( mPrevMode ) delete mPrevMode;
+      mMode->deactivate();
       mPrevMode = mMode;
       //и установить режим выделения
       modeActivate( mMode = mSelect );

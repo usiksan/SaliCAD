@@ -27,30 +27,30 @@ class SdGraphTracedRoad;
 
 class SdModeCRoadEnter : public SdModeCommon
   {
-    SdPoint            mSource;      //Source point of path
-    SdPoint            mFirst;       //First point of segment
-    SdPoint            mMiddle;      //Vertex point
-    SdPoint            mBarMiddle;   //Vertex point with subject to barriers
-    SdPoint            mLast;        //Point of cursor
-    SdPoint            mBarLast;     //Point of cursor with subject to barriers
-    SdPoint            mPrevMove;    //Previous entered point
-    SdPropRoad         mProp;        //Current properties for road
-    SdPropVia          mViaProp;     //Current properties for vias
-    SdStratum          mStack;       //Available stratum stack at current point
-    SdRuleBlock        mRule;        //Rule block for segment
-    SdPoint            mTargetPoint; //Target point
-    QList<SdPoint>     mSmartPath;   //Auto roaded path to smart point
-    SdSelector         mLoopPath;    //Path which will be deleted because loop detected when path will be finished
+    SdPoint            mSource;            //Source point of path
+    SdPoint            mFirst;             //First point of segment
+    SdPoint            mMiddle;            //Vertex point
+    SdPoint            mBarMiddle;         //Vertex point with subject to barriers
+    SdPoint            mLast;              //Point of cursor
+    SdPoint            mBarLast;           //Point of cursor with subject to barriers
+    SdPoint            mPrevMove;          //Previous entered point
+    SdPropRoad         mProp;              //Current properties for road
+    SdPropVia          mViaProp;           //Current properties for vias
+    SdStratum          mStack;             //Available stratum stack at current point
+    SdRuleBlock        mRule;              //Rule block for segment
+    SdPoint            mTargetPoint;       //Target point
+    QList<SdPoint>     mSmartPath;         //Auto roaded path to smart point
+    SdSelector         mLoopPath;          //Path which will be deleted because loop detected when path will be finished
 
     //To connect at middle of road
-    SdGraphTracedRoad *mRoadMiddle;  //Road middle position is active
-    SdPoint            mRoadMidPos;  //Position of middle point on road
+    SdGraphTracedRoad *mRoadMiddle;        //Road middle position is active
+    SdPoint            mRoadMidPos;        //Position of middle point on road
 
-    SdObjectPtrList    mEnterPath;   //Created path
+    SdObjectPtrList    mEnterPath;         //Created path
 
-    bool               mShowNet;     //Show current net with enter color
-    SdBarrierList      mPads;        //Barriers for pads on vias
-    SdBarrierList      mRoads;       //Barriers for roads
+    bool               mShowNet;           //Show current net with enter color
+    SdBarrierList      mPads;              //Barriers for pads on vias
+    SdBarrierList      mRoads;             //Barriers for roads
 
     const int sFirstPoint = 0, sNextPoint = 1;
 
@@ -61,7 +61,13 @@ class SdModeCRoadEnter : public SdModeCommon
       catchOrthoY,
       catchDiagQuad1,
       catchDiagQuad2
-      }            mCatch;       //Catch type
+      }                mCatch;             //Catch type
+
+    //Previous grid and cursor alignment mode
+    //This mode acts as stack for this properties, so changes
+    // in this mode no effect on other modes
+    SdPoint            mPreviousGrid;      //Previous grid, it restores after deactivate mode
+    bool               mPreviousCursor;    //Previous cursor alignment, it restores after deactivate mode
 
     void rebuildBarriers();
   public:
@@ -70,6 +76,8 @@ class SdModeCRoadEnter : public SdModeCommon
 
     // SdMode interface
   public:
+    virtual void    activate() override;
+    virtual void    deactivate() override;
     virtual void    reset() override;
     virtual void    drawStatic(SdContext *ctx) override;
     virtual void    drawDynamic(SdContext *ctx) override;

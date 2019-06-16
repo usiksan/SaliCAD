@@ -48,6 +48,15 @@ class SdPItemPlate : public SdProjectItem
 
     SdRectList        mRuleErrors;        //Indicator rule errors
   public:
+    //Saved properties for modes
+    SdPoint           mTraceGrid;         //Current trace grid
+    bool              mTraceCursorGrid;   //Enable cursor grid align when trace
+    SdPoint           mPlaceGrid;         //Current place grid
+    bool              mPlaceCursorGrid;   //Enable cursor grid align when place
+
+
+
+    //Constructor. Build empty plate ready for loading or inserting child
     SdPItemPlate();
 
     //Stratum count

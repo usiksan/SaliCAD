@@ -68,6 +68,16 @@ void SdMode::activate()
 
 
 
+
+//Calling before mode set to inactive state
+void SdMode::deactivate()
+  {
+
+  }
+
+
+
+
 void SdMode::reset()
   {
 

@@ -28,7 +28,9 @@ Description
 
 SdModeCRoadEnter::SdModeCRoadEnter(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeCommon( editor, obj ),
-  mRoadMiddle(nullptr)
+  mRoadMiddle(nullptr),
+  mPreviousGrid(-1,-1),      //Previous grid, it restores after deactivate mode
+  mPreviousCursor(false)     //Previous cursor alignment, it restores after deactivate mode
   {
   mProp = sdGlobalProp->mRoadProp;
   mViaProp = sdGlobalProp->mViaProp;
@@ -40,6 +42,37 @@ SdModeCRoadEnter::SdModeCRoadEnter(SdWEditorGraph *editor, SdProjectItem *obj) :
 SdModeCRoadEnter::~SdModeCRoadEnter()
   {
   mLoopPath.removeAll();
+  }
+
+
+
+
+void SdModeCRoadEnter::activate()
+  {
+  SdPoint grid = plate()->mTraceGrid;
+  if( grid.x() <= 0 || grid.y() <= 0 )
+    plate()->mTraceGrid = mEditor->gridGet();
+  mPreviousGrid = mEditor->gridGet();
+  mEditor->gridSet( plate()->mTraceGrid );
+
+  mPreviousCursor = sdEnvir->mCursorAlignGrid;
+  sdEnvir->mCursorAlignGrid = plate()->mTraceCursorGrid;
+
+  SdModeCommon::activate();
+  }
+
+
+
+
+void SdModeCRoadEnter::deactivate()
+  {
+  //Store to plate current grid and cursor alignment mode
+  plate()->mTraceGrid = mEditor->gridGet();
+  plate()->mTraceCursorGrid = sdEnvir->mCursorAlignGrid;
+
+  //Restore previous grid and cursor alignment mode
+  mEditor->gridSet( mPreviousGrid );
+  sdEnvir->mCursorAlignGrid = mPreviousCursor;
   }
 
 

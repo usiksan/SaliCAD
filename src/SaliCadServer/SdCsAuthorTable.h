@@ -19,6 +19,7 @@ Description
 #include <QSet>
 #include <QMap>
 #include <QReadWriteLock>
+#include <QJsonObject>
 
 
 /*!
@@ -36,6 +37,9 @@ struct SdCsAuthor {
     qint32        mRemainObject;  //Object count available for loading
     qint32        mMaxMachines;   //Max available machines count for this user
     QSet<quint64> mMachineKeys;   //Author machine keys
+
+    QJsonObject write() const;
+    void        read( const QJsonObject &obj );
   };
 
 inline QDataStream &operator << ( QDataStream &os, const SdCsAuthor &author ) {

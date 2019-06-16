@@ -18,6 +18,8 @@ Description
 #include <QDataStream>
 #include <QSaveFile>
 #include <QRandomGenerator64>
+#include <QJsonArray>
+#include <QJsonDocument>
 #include <QDebug>
 
 SdCsAuthorTable::SdCsAuthorTable() :
@@ -95,8 +97,16 @@ void SdCsAuthorTable::load(const QString path)
   mPath = path;
   QFile file(path);
   if( file.open(QIODevice::ReadOnly) ) {
-    QDataStream is( &file );
-    is >> mUserList;
+    mUserList.clear();
+    QJsonObject obj = QJsonDocument::fromJson( file.readAll() ).object();
+    for( auto i = obj.constBegin(); i != obj.constEnd(); i++ ) {
+      SdCsAuthor author;
+      author.read( i.value().toObject() );
+      mUserList.insert( i.key(), author );
+      }
+
+//    QDataStream is( &file );
+//    is >> mUserList;
     mDirty = false;
     }
   }
@@ -116,8 +126,12 @@ void SdCsAuthorTable::save()
 
     QSaveFile file(mPath);
     if( file.open(QIODevice::WriteOnly) ) {
-      QDataStream os( &file );
-      os << mUserList;
+      QJsonObject obj;
+      for( auto i = mUserList.constBegin(); i != mUserList.constEnd(); i++ )
+        obj.insert( i.key(), i.value().write() );
+      file.write( QJsonDocument(obj).toJson() );
+//      QDataStream os( &file );
+//      os << mUserList;
       mDirty = false;
       file.commit();
       }
@@ -140,3 +154,32 @@ bool SdCsAuthorTable::registerMachinePrivate(const QString author, quint64 *key)
   }
 
 
+
+QJsonObject SdCsAuthor::write() const
+  {
+  QJsonObject obj;
+  obj.insert( QStringLiteral("email"), mEmail );
+  obj.insert( QStringLiteral("remain object"), mRemainObject );
+  obj.insert( QStringLiteral("max machines"), mMaxMachines );
+  QJsonArray arr;
+  for( quint64 key : mMachineKeys )
+    arr.append( QJsonValue( QString::number(key) )   );
+  obj.insert( QStringLiteral("keys"), arr );
+
+  return obj;
+  }
+
+
+
+
+void SdCsAuthor::read(const QJsonObject &obj)
+  {
+  mEmail        = obj.value( QStringLiteral("email") ).toString();
+  mRemainObject = obj.value( QStringLiteral("remain object") ).toInt();
+  mMaxMachines  = obj.value( QStringLiteral("max machines") ).toInt();
+
+  mMachineKeys.clear();
+  QJsonArray arr = obj.value( QStringLiteral("keys") ).toArray();
+  for( auto i = arr.constBegin(); i != arr.constEnd(); i++ )
+    mMachineKeys.insert( i->toString().toULong() );
+  }
