@@ -1,0 +1,680 @@
+{
+    "ChildList": [
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "CLK": "6",
+                        "DI": "5",
+                        "DO": "2",
+                        "GND": "4",
+                        "VCC": "8",
+                        "nCS": "1",
+                        "nReset": "7",
+                        "nWP": "3"
+                    },
+                    "SymbolId": "Symbol\rW25xxxx SPI nor flash\rsalicad",
+                    "SymbolTitle": "W25xxxx SPI nor flash (salicad)",
+                    "id": "109cd458",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rsoic-8 wide (part)\rsalicad",
+                    "PartTitle": "soic-8 wide (part) (salicad)",
+                    "id": "1094b290",
+                    "type": "PartVariant"
+                }
+            ],
+            "Created": 50673896,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "FLASH": "128Mb",
+                "article": "w25q128jvsiq",
+                "bom": "<article> <title> <value>",
+                "category": "{uu.a.b.e.b",
+                "manufacturer": "winbond",
+                "prefix": "DD",
+                "title": "W25xxxx SPI nor flash",
+                "value": "w25q128jvsiq",
+                "www": "winbond.com"
+            },
+            "Title": "W25xxxx SPI nor flash",
+            "id": "10a19580",
+            "type": "Comp"
+        },
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": 3500,
+                        "y": -1750
+                    },
+                    "b": {
+                        "x": 9500,
+                        "y": 250
+                    },
+                    "id": "1077ee88",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 5750,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": 5750,
+                        "y": -1750
+                    },
+                    "id": "1077f348",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 7250,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": 7250,
+                        "y": -1750
+                    },
+                    "id": "1077ef88",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2750,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": 0
+                    },
+                    "id": "1077f208",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "VCC",
+                    "NamePos": {
+                        "x": 4125,
+                        "y": 0
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 2750,
+                        "y": 250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 2750,
+                        "y": 0
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "642c640",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 2750,
+                        "y": -500
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": -500
+                    },
+                    "id": "1077f3c8",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "nReset",
+                    "NamePos": {
+                        "x": 4125,
+                        "y": -500
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 2750,
+                        "y": -250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 2750,
+                        "y": -500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "642c100",
+                    "type": "SymPin"
+                },
+                {
+                    "Origin": {
+                        "x": 4760,
+                        "y": -500
+                    },
+                    "id": "989ecf0",
+                    "over": {
+                        "b": -398,
+                        "r": 5600,
+                        "x": 4761,
+                        "y": -606
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 0,
+                    "propTextLayer": "PinName",
+                    "propTextMirror": 0,
+                    "propTextSize": 175,
+                    "propTextVert": 1,
+                    "text": "nHold, IO3",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 2750,
+                        "y": -1000
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": -1000
+                    },
+                    "id": "1077f0c8",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "nWP",
+                    "NamePos": {
+                        "x": 4125,
+                        "y": -1000
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 2750,
+                        "y": -750
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 2750,
+                        "y": -1000
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "642b338",
+                    "type": "SymPin"
+                },
+                {
+                    "Origin": {
+                        "x": 4760,
+                        "y": -1000
+                    },
+                    "id": "989efb0",
+                    "over": {
+                        "b": -895,
+                        "r": 5043,
+                        "x": 4761,
+                        "y": -1103
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 0,
+                    "propTextLayer": "PinName",
+                    "propTextMirror": 0,
+                    "propTextSize": 175,
+                    "propTextVert": 1,
+                    "text": "IO2",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 2750,
+                        "y": -1500
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": -1500
+                    },
+                    "id": "1077f2c8",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "GND",
+                    "NamePos": {
+                        "x": 4125,
+                        "y": -1500
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 2750,
+                        "y": -1250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 2750,
+                        "y": -1500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "642b3e0",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 9500,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 10250,
+                        "y": 0
+                    },
+                    "id": "1077ef08",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "nCS",
+                    "NamePos": {
+                        "x": 8875,
+                        "y": 0
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 10250,
+                        "y": 250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 10250,
+                        "y": 0
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "642bdb8",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 9500,
+                        "y": -500
+                    },
+                    "b": {
+                        "x": 10250,
+                        "y": -500
+                    },
+                    "id": "1077efc8",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "CLK",
+                    "NamePos": {
+                        "x": 8875,
+                        "y": -500
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 10250,
+                        "y": -250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 10250,
+                        "y": -500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "642b488",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 9500,
+                        "y": -1000
+                    },
+                    "b": {
+                        "x": 10250,
+                        "y": -1000
+                    },
+                    "id": "1077f248",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "DI",
+                    "NamePos": {
+                        "x": 8875,
+                        "y": -1000
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 10250,
+                        "y": -750
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 10250,
+                        "y": -1000
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "642bbc0",
+                    "type": "SymPin"
+                },
+                {
+                    "Origin": {
+                        "x": 7760,
+                        "y": -1000
+                    },
+                    "id": "989ebe8",
+                    "over": {
+                        "b": -895,
+                        "r": 8044,
+                        "x": 7762,
+                        "y": -1103
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 0,
+                    "propTextLayer": "PinName",
+                    "propTextMirror": 0,
+                    "propTextSize": 175,
+                    "propTextVert": 1,
+                    "text": "IO0",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 9500,
+                        "y": -1500
+                    },
+                    "b": {
+                        "x": 10250,
+                        "y": -1500
+                    },
+                    "id": "1077f1c8",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "DO",
+                    "NamePos": {
+                        "x": 8875,
+                        "y": -1500
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 10250,
+                        "y": -1250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 10250,
+                        "y": -1500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "642c1a8",
+                    "type": "SymPin"
+                },
+                {
+                    "Origin": {
+                        "x": 7760,
+                        "y": -1500
+                    },
+                    "id": "989f008",
+                    "over": {
+                        "b": -1397,
+                        "r": 8044,
+                        "x": 7762,
+                        "y": -1605
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 0,
+                    "propTextLayer": "PinName",
+                    "propTextMirror": 0,
+                    "propTextSize": 175,
+                    "propTextVert": 1,
+                    "text": "IO1",
+                    "type": "Text"
+                },
+                {
+                    "Origin": {
+                        "x": 6500,
+                        "y": 500
+                    },
+                    "id": "989ec98",
+                    "over": {
+                        "b": 709,
+                        "r": 6807,
+                        "x": 6197,
+                        "y": 293
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 6500,
+                        "y": -2000
+                    },
+                    "id": "989e770",
+                    "over": {
+                        "b": -1794,
+                        "r": 7075,
+                        "x": 5924,
+                        "y": -2210
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                },
+                {
+                    "Origin": {
+                        "x": 6500,
+                        "y": -500
+                    },
+                    "id": "989e610",
+                    "over": {
+                        "b": -294,
+                        "r": 6996,
+                        "x": 6003,
+                        "y": -710
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Component",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "FLASH",
+                    "type": "Text"
+                },
+                {
+                    "Origin": {
+                        "x": 6500,
+                        "y": 0
+                    },
+                    "id": "989eae0",
+                    "over": {
+                        "b": 208,
+                        "r": 6851,
+                        "x": 6152,
+                        "y": -208
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Component",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "NOR",
+                    "type": "Text"
+                }
+            ],
+            "Created": 50696736,
+            "Edit enable": false,
+            "Origin": {
+                "x": 2750,
+                "y": 0
+            },
+            "Parametrs": {
+                "category": "{uu.a.b.e.b"
+            },
+            "Title": "W25xxxx SPI nor flash",
+            "id": "1077ee48",
+            "type": "Symbol"
+        }
+    ],
+    "Parametrs": {
+    },
+    "id": "986efd8",
+    "type": "Project"
+}

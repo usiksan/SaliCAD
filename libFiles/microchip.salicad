@@ -1,0 +1,515 @@
+{
+    "ChildList": [
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": 750,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": 4750,
+                        "y": -2250
+                    },
+                    "id": "65f84c8",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 2000,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": 2000,
+                        "y": -2250
+                    },
+                    "id": "65f8748",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3500,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": -2250
+                    },
+                    "id": "65f86c8",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": -500
+                    },
+                    "b": {
+                        "x": 750,
+                        "y": -500
+                    },
+                    "id": "65f8548",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "Vin+",
+                    "NamePos": {
+                        "x": 1375,
+                        "y": -500
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 0,
+                        "y": -250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": -500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "64a03f8",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": -1500
+                    },
+                    "b": {
+                        "x": 750,
+                        "y": -1500
+                    },
+                    "id": "65f81c8",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "Vin-",
+                    "NamePos": {
+                        "x": 1375,
+                        "y": -1500
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 0,
+                        "y": -1250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": -1500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "64a1310",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 5500,
+                        "y": 0
+                    },
+                    "id": "65f8588",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "SCL",
+                    "NamePos": {
+                        "x": 4125,
+                        "y": 0
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 5500,
+                        "y": 250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5500,
+                        "y": 0
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "64a11c0",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -500
+                    },
+                    "b": {
+                        "x": 5500,
+                        "y": -500
+                    },
+                    "id": "65f85c8",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "SDA",
+                    "NamePos": {
+                        "x": 4125,
+                        "y": -500
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 5500,
+                        "y": -250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5500,
+                        "y": -500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "649ff60",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -1000
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": -1000
+                    },
+                    "id": "65f8608",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -1500
+                    },
+                    "b": {
+                        "x": 5500,
+                        "y": -1500
+                    },
+                    "id": "65f8148",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "VCC",
+                    "NamePos": {
+                        "x": 4125,
+                        "y": -1500
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 5500,
+                        "y": -1250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5500,
+                        "y": -1500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "64a0350",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -2000
+                    },
+                    "b": {
+                        "x": 5500,
+                        "y": -2000
+                    },
+                    "id": "65f8088",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "GND",
+                    "NamePos": {
+                        "x": 4125,
+                        "y": -2000
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 5500,
+                        "y": -1750
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5500,
+                        "y": -2000
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "64a1070",
+                    "type": "SymPin"
+                },
+                {
+                    "Origin": {
+                        "x": 2750,
+                        "y": 500
+                    },
+                    "id": "6a75528",
+                    "over": {
+                        "b": 28997,
+                        "r": 42749,
+                        "x": -37250,
+                        "y": -31002
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 2750,
+                        "y": -2500
+                    },
+                    "id": "6a755d8",
+                    "over": {
+                        "b": 28997,
+                        "r": 82749,
+                        "x": -77250,
+                        "y": -31002
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                },
+                {
+                    "Origin": {
+                        "x": 2750,
+                        "y": 0
+                    },
+                    "id": "6a75630",
+                    "over": {
+                        "b": 28997,
+                        "r": 52749,
+                        "x": -37250,
+                        "y": -31002
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Component",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "ADC",
+                    "type": "Text"
+                }
+            ],
+            "Created": 51045048,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": -500
+            },
+            "Parametrs": {
+                "category": "{uu.a.c.i"
+            },
+            "Title": "1ch differencial Sigma-delta ADC I2C",
+            "id": "6a6e550",
+            "type": "Symbol"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "GND": "2",
+                        "SCL": "3",
+                        "SDA": "4",
+                        "VCC": "5",
+                        "Vin+": "1",
+                        "Vin-": "6"
+                    },
+                    "SymbolId": "Symbol\r1ch differencial Sigma-delta ADC I2C\rsalicad",
+                    "SymbolTitle": "1ch differencial Sigma-delta ADC I2C (salicad)",
+                    "id": "800e400",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rsot23-6\rsalicad",
+                    "PartTitle": "sot23-6 (salicad)",
+                    "id": "6353958",
+                    "type": "PartVariant"
+                }
+            ],
+            "Created": 51045120,
+            "Edit enable": true,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "address option": "a0 (000)",
+                "article": "MCP3421A0T-E/CH",
+                "bom": "<article>",
+                "category": "{uu.a.c.i",
+                "device mark": "CANN",
+                "manufacturer": "microchip",
+                "prefix": "DA",
+                "title": "MCP3421 1ch differencial Sigma-delta ADC I2C in sot-23-6",
+                "value": "MCP3421",
+                "www": "ww1.microchip.com"
+            },
+            "Title": "MCP3421 1ch differencial Sigma-delta ADC I2C in sot-23-6",
+            "VariantFC": 3,
+            "VariantTab": [
+                "address option",
+                "device mark",
+                "article",
+                "a1 (001)",
+                "CBNN",
+                "MCP3421A1T-E/CH",
+                "a2 (010)",
+                "CCNN",
+                "MCP3421A2T-E/CH",
+                "a3 (011)",
+                "CDNN",
+                "MCP3421A3T-E/CH",
+                "a4 (100)",
+                "CENN",
+                "MCP3421A4T-E/CH",
+                "a5 (101)",
+                "CFNN",
+                "MCP3421A5T-E/CH",
+                "a6 (110)",
+                "CGNN",
+                "MCP3421A6T-E/CH",
+                "a7 (111)",
+                "CHNN",
+                "MCP3421A7T-E/CH"
+            ],
+            "id": "6df7148",
+            "type": "Comp"
+        }
+    ],
+    "Parametrs": {
+    },
+    "id": "7f4f6e0",
+    "type": "Project"
+}
