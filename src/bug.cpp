@@ -2,7 +2,7 @@
 //B070 bugs
 //F001 fatal
 //C001 critical
-//D088 do
+//D090 do
 
 
 
@@ -34,6 +34,10 @@
 //TODO D086 Append automatic form selection when sheet creation
 
 //TODO D088 Append backspace key to region and polygon modes
+
+//TODO D089 Append category selection to component editor
+
+//TODO D090 In symbol and part editors text must be display only as field and never context
 
 //===================================================================================
 //There are no need:
