@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -39,6 +39,10 @@ class SdWEditorGraphPart : public SdWEditorGraph
 
     //Export command
     virtual void           cmFileExport() override;
+
+    // SdWEditorGraph interface
+  public:
+    virtual bool           showFields() override;
   };
 
 #endif // SDWEDITORGRAPHPART_H

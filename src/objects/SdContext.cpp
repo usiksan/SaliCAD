@@ -26,14 +26,14 @@ SdContext::SdContext(SdPoint grid, QPainter *painter) :
   mGrid(grid),
   mSelector(nullptr),
   mTransform(),
-  mMirror(false),
-  mAngle(0),
   mScaler(1.0),
+  mAngle(0),
+  mMirror(false),
   mPairLayer(false),
   mOverOn(false),      //True if overriding is on
-  mZeroOn(false)      //True if overriding zero width line on
+  mZeroOn(false)       //True if overriding zero width line on
   {
-
+  mShowFields = sdEnvir->mShowFields;
   }
 
 

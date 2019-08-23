@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -57,7 +57,7 @@ void SdDOptionsPageColors::onColorSelect(int row, int column)
   if( column ) {
     QColor color = QColorDialog::getColor( sdEnvir->getSysColor(row), this, mTable->item(row,0)->text() );
     if( color.isValid() )
-      mTable->item(row,1)->setBackgroundColor( color );
+      mTable->item(row,1)->setBackground( color );
     }
   }
 
@@ -67,7 +67,7 @@ void SdDOptionsPageColors::onColorSelect(int row, int column)
 void SdDOptionsPageColors::accept()
   {
   for( int i = 0; i < mTable->rowCount(); i++ )
-    sdEnvir->setSysColor( i, mTable->item(i,1)->backgroundColor() );
+    sdEnvir->setSysColor( i, mTable->item(i,1)->background().color() );
   }
 
 
@@ -79,7 +79,7 @@ void SdDOptionsPageColors::addColor(int colorIndex, const QString descr)
   mTable->setItem( colorIndex, 0, item = new QTableWidgetItem(descr) );
   item->setFlags( Qt::ItemIsEnabled );
   mTable->setItem( colorIndex, 1, item = new QTableWidgetItem() );
-  item->setBackgroundColor( sdEnvir->getSysColor(colorIndex) );
+  item->setBackground( sdEnvir->getSysColor(colorIndex) );
   item->setFlags( Qt::ItemIsEnabled );
   }
 

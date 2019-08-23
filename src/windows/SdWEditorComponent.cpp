@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -303,11 +303,11 @@ void SdWEditorComponent::onCurrentSection(int index)
       item->setFlags(Qt::ItemIsEnabled);
     //pin number cell background indicate errors in packing
     if( !mPackNumbers.contains(iter.value()) ) {
-      item->setBackgroundColor( QColor(Qt::red).lighter() );
+      item->setBackground( QColor(Qt::red).lighter() );
       item->setToolTip( tr("No pin with this number in part") );
       }
     else if( mPackNumbers.value(iter.value()) != packetPin(index,iter.key()) ) {
-      item->setBackgroundColor( QColor(Qt::yellow).lighter() );
+      item->setBackground( QColor(Qt::yellow).lighter() );
       item->setToolTip( tr("Duplicate pin number assignment") );
       }
     mPackTable->setRowHeight( row, 20 );
@@ -349,12 +349,12 @@ void SdWEditorComponent::onPackChanged(int row, int column)
   if( !number.isEmpty() ) {
     if( !mPackNumbers.contains(number) ) {
       QMessageBox::warning( this, tr("Error"), tr("Component part has no pin with this number") );
-      mPackTable->item(row,column)->setBackgroundColor( QColor(Qt::red).lighter() );
+      mPackTable->item(row,column)->setBackground( QColor(Qt::red).lighter() );
       mPackTable->item(row,column)->setToolTip( tr("No pin with this number in part") );
       }
     else if( !mPackNumbers.value(number).isEmpty() && mPackNumbers.value(number) != packetPin(section,name) ) {
       QMessageBox::warning( this, tr("Error"), tr("This number always assigned to %1").arg(mPackNumbers.value(number)) );
-      mPackTable->item(row,column)->setBackgroundColor( QColor(Qt::yellow).lighter() );
+      mPackTable->item(row,column)->setBackground( QColor(Qt::yellow).lighter() );
       mPackTable->item(row,column)->setToolTip( tr("Duplicate pin number assignition") );
       }
     else {

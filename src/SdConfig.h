@@ -154,6 +154,7 @@ History
                    Prevent open same file more then one time
   02.05.2019 v0.65 Append category param, category fixed tree, allow multiple categories
   09.05.2019 v1.0  Release
+  23.08.2019 v1.1  In symbol and part editors text must be display only as field and never context
 */
 
 #ifndef SDCONFIG
@@ -165,7 +166,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             0
+#define SD_VERSION_MINOR             1
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

@@ -102,6 +102,9 @@ class SdWEditorGraph : public SdWEditor
     //Handle move cursor
     void    cursorMove( int dx, int dy );
 
+    //Show fields flag
+    virtual bool           showFields();
+
     //Commands
     virtual void           cmFilePrint() override;
 

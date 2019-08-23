@@ -225,6 +225,16 @@ void SdWEditorGraph::cursorMove(int dx, int dy)
 
 
 
+bool SdWEditorGraph::showFields()
+  {
+  return sdEnvir->mShowFields;
+  }
+
+
+
+
+
+
 
 
 
@@ -645,6 +655,7 @@ void SdWEditorGraph::paintProcess(bool viewer)
 
     QPainter painter( &mCashe );
     SdContext context( mGrid, &painter );
+    context.setShowFields( showFields() );
     SdConverterView cv( s, mOrigin, mScale.scaleGet() );
     context.setConverter( &cv );
 
@@ -747,6 +758,7 @@ void SdWEditorGraph::paintProcess(bool viewer)
   painter.drawImage( QPoint(), mCashe );
 
   SdContext context( mGrid, &painter );
+  context.setShowFields( showFields() );
   SdConverterView cv( s, mOrigin, mScale.scaleGet() );
   context.setConverter( &cv );
 

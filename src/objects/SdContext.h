@@ -34,19 +34,20 @@ class SdSelector;
 //Контекст вывода графической информации (средство рисования)
 class SdContext {
   protected:
-    QPainter       *mPainter;      //Рисовальщик
-    SdConverter    *mConverter;    //Преобразователь координат
-    SdPoint         mGrid;         //Сетка
-    SdSelector     *mSelector;     //Объект-селектор относительно которого выполняется рисование
-    QTransform      mTransform;    //Transform matrix
-    bool            mMirror;       //Mirror flag
-    int             mAngle;        //Rotation angle
-    SdScaler        mScaler;       //Current scale
-    bool            mPairLayer;    //True for paired layer
-    QColor          mOverColor;    //Color for overriding default layers color
-    bool            mOverOn;       //True if overriding is on
-    int             mZeroWidth;    //Width for zero width line
-    bool            mZeroOn;       //True if overriding zero width line on
+    QPainter       *mPainter;       //Painter [Рисовальщик]
+    SdConverter    *mConverter;     //Coord converter [Преобразователь координат]
+    SdPoint         mGrid;          //Grid size [Сетка]
+    SdSelector     *mSelector;      //Объект-селектор относительно которого выполняется рисование
+    QTransform      mTransform;     //Transform matrix
+    SdScaler        mScaler;        //Current scale
+    QColor          mOverColor;     //Color for overriding default layers color
+    int             mAngle;         //Rotation angle
+    int             mZeroWidth;     //Width for zero width line
+    bool            mMirror;        //Mirror flag
+    bool            mPairLayer;     //True for paired layer
+    bool            mOverOn;        //True if overriding is on
+    bool            mZeroOn;        //True if overriding zero width line on
+    bool            mShowFields;    //True if show fields contents
   public:
     SdContext(SdPoint grid, QPainter *painter);
     virtual ~SdContext() {}
@@ -74,6 +75,10 @@ class SdContext {
     //Information [Информационные]
     SdPoint         getGrid() const { return mGrid; }
     QTransform&     transform() { return mTransform; }
+
+    //For ShowFields flag
+    bool            showFields() const { return mShowFields; }
+    void            setShowFields( bool show = false ) { mShowFields = show; }
 
     //Draw prepare
     void            setPen(int width, SdLayer *layer, int lineStyle);

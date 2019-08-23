@@ -215,7 +215,7 @@ void SdDLayers::appendLyaerToVisualList(const QString id)
   //Layer color
   item = new QTableWidgetItem( "      " );
   item->setFlags( Qt::ItemIsEnabled );
-  item->setBackgroundColor( layer->color() );
+  item->setBackground( layer->color() );
   ui->mLayerList->setItem( row, 4, item );
 
   //Layer pair
@@ -484,7 +484,7 @@ void SdDLayers::onCellClicked(int row, int column)
       //Change in table
       QTableWidgetItem *item = ui->mLayerList->item(row,column);
       if( item != nullptr ) {
-        item->setBackgroundColor( color );
+        item->setBackground( color );
         }
       }
     }

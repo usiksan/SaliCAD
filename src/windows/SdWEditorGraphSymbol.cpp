@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -104,3 +104,10 @@ void SdWEditorGraphSymbol::cmFileExport()
   wizard.exec();
   }
 
+
+
+//Disable show field contents
+bool SdWEditorGraphSymbol::showFields()
+  {
+  return true;
+  }

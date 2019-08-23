@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -203,10 +203,10 @@ SdRect SdGraphText::getOverRect() const
 
 void SdGraphText::draw(SdContext *dc)
   {
-  if( !sdEnvir->mShowFields && mString.startsWith( QChar('{') ) && mString.endsWith( QChar('}') ) ) {
+  if( !dc->showFields() && mString.startsWith( QChar('{') ) && mString.endsWith( QChar('}') ) ) {
     //Draw as field
     if( getParent() ) {
-      qDebug() << mString << ":" << getParent()->paramHierarchy(mString);
+//      qDebug() << mString << ":" << getParent()->paramHierarchy(mString);
       dc->text( mOrigin, mOverRect, getParent()->paramHierarchy(mString), mProp );
       return;
       }

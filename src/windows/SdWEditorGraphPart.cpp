@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -124,3 +124,9 @@ void SdWEditorGraphPart::cmFileExport()
 
 
 
+
+//Disble show fields contents
+bool SdWEditorGraphPart::showFields()
+  {
+  return true;
+  }

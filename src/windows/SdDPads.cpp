@@ -120,7 +120,7 @@ void SdDPads::updatePinTable()
     ui->mPadTable->setItem( i, 1, item = new QTableWidgetItem(iter.value().description()) );
     item->setFlags( Qt::ItemIsEnabled );
     if( iter.value().isEmpty() )
-      item->setBackgroundColor( QColor(Qt::yellow).lighter() );
+      item->setBackground( QColor(Qt::yellow).lighter() );
     i++;
     }
 
@@ -311,7 +311,7 @@ void SdDPads::cmCellEditComplete(int row, int column)
       ui->mPadTable->item( row, 0 )->setData( ACTUAL_PIN, newPin );
       ui->mPadTable->item( row, 1 )->setText( mMap.value(newPin).description() );
       if( mMap.value(newPin).isEmpty() )
-        ui->mPadTable->item( row, 1 )->setBackgroundColor( QColor(Qt::yellow).lighter() );
+        ui->mPadTable->item( row, 1 )->setBackground( QColor(Qt::yellow).lighter() );
       }
     }
   }
@@ -333,7 +333,7 @@ void SdDPads::cmCellClicked(int row, int column)
         mMap.insert( pin, master.pad() );
         ui->mPadTable->setItem( row, 1, new QTableWidgetItem( master.pad().description() ) );
         if( master.pad().isEmpty() )
-          ui->mPadTable->item( row, 1 )->setBackgroundColor( QColor(Qt::yellow).lighter() );
+          ui->mPadTable->item( row, 1 )->setBackground( QColor(Qt::yellow).lighter() );
         }
       }
     }
