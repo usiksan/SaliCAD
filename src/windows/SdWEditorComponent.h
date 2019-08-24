@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -52,6 +52,7 @@ class SdWEditorComponent : public SdWEditor
     QPushButton          *mPartSelect;
 
     QTableWidget         *mParamTable;        //Table of user params
+    QPushButton          *mParamCategory;     //Append category if not present and select category
     QPushButton          *mParamAdd;
     QPushButton          *mParamAddDefault;
     QPushButton          *mParamDelete;
@@ -83,6 +84,7 @@ class SdWEditorComponent : public SdWEditor
 
     void partSelect();
 
+    void paramCategory();
     void paramAdd();
     void paramAddDefault();
     void paramDelete();

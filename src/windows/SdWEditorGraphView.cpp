@@ -145,3 +145,13 @@ void SdWEditorGraphView::paintEvent(QPaintEvent *event)
   event->accept();
   paintProcess( true );
   }
+
+
+
+
+
+bool SdWEditorGraphView::showFields()
+  {
+//  if( mItem && (mItem->getClass() & (dctSymbol)))
+  return true;
+  }

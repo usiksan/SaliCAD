@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -158,7 +158,7 @@ void SdWProjectTree::cmObjectNew()
   QWizard wizard(this);
   //Fill it with pages
   wizard.setPage( SDP_NPI_TYPE,   new SdPNewProjectItem_SelectType( &item, mProject, &wizard) );
-  wizard.setPage( SDP_NPI_NAME,   new SdPNewProjectItem_EnterName( &item, mProject, &wizard) );
+  wizard.setPage( SDP_NPI_NAME,   new SdPNewProjectItem_EnterName( &item, mProject, &wizard, false ) );
   wizard.setPage( SDP_NPI_MASTER, new SdPNewProjectItem_Master( &item, mProject, &wizard) );
   wizard.setPage( SDP_NPI_COPY,   new SdPNewProjectItem_Copy( &item, mProject, &wizard) );
   if( wizard.exec() ) {
@@ -204,11 +204,7 @@ void SdWProjectTree::cmObjectRename()
   SdProjectItemPtr item = dynamic_cast<SdProjectItem*>( mProject->item( mCurrentItem ) );
   if( item ) {
     if( item->isEditEnable() ) {
-      QWizard wizard(this);
-
-      wizard.setPage( 1, new SdPNewProjectItem_EnterName( &item, mProject, &wizard) );
-
-      wizard.exec();
+      SdPNewProjectItem_EnterName::nameProjectItem( &item, mProject, this, false );
 
       //Update status undo and redo commands
       cmUndoRedoUpdate();

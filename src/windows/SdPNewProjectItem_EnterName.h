@@ -35,13 +35,17 @@ class SdPNewProjectItem_EnterName : public QWizardPage
     QLineEdit        *mCategory;     //Category name
     SdWCategoryList  *mCategoryList; //Category tree
     bool              mValid;
+    quint8            padding[3];
   public:
-    SdPNewProjectItem_EnterName(SdProjectItemPtr *item, SdProject *prj, QWidget *parent );
+    SdPNewProjectItem_EnterName(SdProjectItemPtr *item, SdProject *prj, QWidget *parent, bool noRename );
 
     virtual bool validatePage() override;
     virtual bool isComplete() const override;
     virtual int  nextId() const override;
     virtual void initializePage() override;
+
+    //Enter new object name and category or category only
+    static void nameProjectItem( SdProjectItemPtr *item, SdProject *prj, QWidget *parent, bool noRename );
   public slots:
     //On changed ProjectItem name
     void onTextChanged( const QString name );

@@ -44,6 +44,10 @@ class SdWEditorGraphView : public SdWEditorGraph
     // QWidget interface
   protected:
     virtual void paintEvent(QPaintEvent *event) override;
+
+    // SdWEditorGraph interface
+  public:
+    virtual bool showFields() override;
   };
 
 #endif // SDWEDITORGRAPHVIEW_H

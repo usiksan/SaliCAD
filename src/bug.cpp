@@ -35,10 +35,6 @@
 
 //TODO D088 Append backspace key to region and polygon modes
 
-//TODO D089 Append category selection to component editor
-
-//TODO D090 In symbol and part editors text must be display only as field and never context
-
 //===================================================================================
 //There are no need:
 
@@ -49,6 +45,10 @@
 
 //===================================================================================
 //Fixed:
+
+//D089 Append category selection to component editor
+
+//D090 In symbol and part editors text must be display only as field and never context
 
 //B070 Check empty path when gerber packet export
 

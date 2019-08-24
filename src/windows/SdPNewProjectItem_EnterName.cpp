@@ -19,7 +19,7 @@ Description
 #include <QVBoxLayout>
 #include <QMessageBox>
 
-SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item, SdProject *prj, QWidget *parent) :
+SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item, SdProject *prj, QWidget *parent, bool noRename) :
   QWizardPage(parent),
   mItemPtr(item),
   mProject(prj),
@@ -31,6 +31,7 @@ SdPNewProjectItem_EnterName::SdPNewProjectItem_EnterName(SdProjectItemPtr *item,
   QVBoxLayout *vlay = new QVBoxLayout();
   vlay->addWidget( mUnical = new QLabel() );
   vlay->addWidget( mName = new QLineEdit() );
+  if( noRename ) mName->setReadOnly(true);
   vlay->addWidget( new QLabel(tr("Element category")) );
   vlay->addWidget( mCategory = new QLineEdit() );
   mCategory->setReadOnly(true);
@@ -111,4 +112,16 @@ void SdPNewProjectItem_EnterName::initializePage()
     mName->setText( (*mItemPtr)->getTitle() );
     mCategory->setText( (*mItemPtr)->paramGet(QString(stdParamCategory)) );
     }
+  }
+
+
+
+//Enter new object name and category or category only
+void SdPNewProjectItem_EnterName::nameProjectItem(SdProjectItemPtr *item, SdProject *prj, QWidget *parent, bool noRename)
+  {
+  QWizard wizard(parent);
+
+  wizard.setPage( 1, new SdPNewProjectItem_EnterName( item, prj, &wizard, noRename ) );
+
+  wizard.exec();
   }

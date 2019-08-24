@@ -19,6 +19,7 @@ Description
 #include "SdDParamEditor.h"
 #include "SdDParamDefault.h"
 #include "SdDVariantTable.h"
+#include "SdPNewProjectItem_EnterName.h"
 #include "objects/SdProject.h"
 #include "objects/SdPartVariant.h"
 #include "objects/SdObjectFactory.h"
@@ -110,6 +111,7 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
 
         //Buttons
         vbox = new QVBoxLayout();
+          vbox->addWidget( mParamCategory = new QPushButton( tr("Category...")) );
           vbox->addWidget( mParamAdd = new QPushButton( tr("Add param")) );
           vbox->addWidget( mParamAddDefault = new QPushButton( tr("Add defaults")) );
           vbox->addWidget( mParamCopy = new QPushButton( tr("Copy param")) );
@@ -134,6 +136,7 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
 
     connect( mPartSelect, &QPushButton::clicked, this, &SdWEditorComponent::partSelect );
 
+    connect( mParamCategory, &QPushButton::clicked, this, &SdWEditorComponent::paramCategory );
     connect( mParamAdd, &QPushButton::clicked, this, &SdWEditorComponent::paramAdd );
     connect( mParamAddDefault, &QPushButton::clicked, this, &SdWEditorComponent::paramAddDefault );
     connect( mParamDelete, &QPushButton::clicked, this, &SdWEditorComponent::paramDelete );
@@ -149,6 +152,7 @@ SdWEditorComponent::SdWEditorComponent(SdPItemComponent *comp, QWidget *parent) 
 
     mPartSelect->setEnabled(false);
 
+    mParamCategory->setEnabled(false);
     mParamAdd->setEnabled(false);
     mParamAddDefault->setEnabled(false);
     mParamDelete->setEnabled(false);
@@ -419,6 +423,19 @@ void SdWEditorComponent::partSelect()
     dirtyProject();
     fillPart();
     }
+  }
+
+
+
+
+
+void SdWEditorComponent::paramCategory()
+  {
+  //Show dialog for category selection
+  SdProjectItem *item = mComponent;
+  SdPNewProjectItem_EnterName::nameProjectItem( &item, mComponent->getProject(), this, true );
+  //Update param list
+  fillParams();
   }
 
 
