@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -506,6 +506,8 @@ void SdGraphPartImp::drawWithoutPads(SdContext *cdx)
   {
   //Convertor for symbol implementation
   SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
+  if( mProp.mSide.isBottom() )
+    imp.setPairedLayer( true );
   cdx->setConverter( &imp );
 
   SdRect ov;
@@ -533,6 +535,8 @@ void SdGraphPartImp::drawPads(SdContext *cdx, SdStratum stratum, const QString h
   {
   //Convertor for symbol implementation
   SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
+  if( mProp.mSide.isBottom() )
+    imp.setPairedLayer( true );
   cdx->setConverter( &imp );
   //Draw pins
   for( const SdPartImpPin &pin : mPins )
@@ -864,6 +868,8 @@ void SdGraphPartImp::drawStratum(SdContext *dc, int stratum)
   {
   //Convertor for part implementation
   SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
+  if( mProp.mSide.isBottom() )
+    imp.setPairedLayer( true );
   dc->setConverter( &imp );
 
   //Draw ident in plate context

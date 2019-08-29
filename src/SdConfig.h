@@ -156,6 +156,7 @@ History
   09.05.2019 v1.0  Release
   23.08.2019 v1.1  In symbol and part editors text must be display only as field and never context
   24.08.2019 v1.2  Append category selection to component editor
+             v1.3  Fix other side display error
 */
 
 #ifndef SDCONFIG
@@ -167,7 +168,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             2
+#define SD_VERSION_MINOR             3
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

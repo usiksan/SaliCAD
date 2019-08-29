@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -28,6 +28,9 @@ class SdConverter
   public:
     SdConverter();
     virtual ~SdConverter();
+
+    //Set need paired layer flag
+    void               setPairedLayer( bool paired ) { mPairLayer = paired; }
 
     //Convert layer flag
     bool               getFullPairLayer();
