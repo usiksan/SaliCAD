@@ -20,6 +20,7 @@ INCLUDEPATH += ../third
 
 SOURCES += \
     SdMain.cpp \
+    modes/SdModeCTraceDelete.cpp \
     windows/SdWMain.cpp \
     objects/SdObject.cpp \
     objects/SdProject.cpp \
@@ -281,6 +282,7 @@ SOURCES += \
 
 HEADERS  += \
     SdConfig.h \
+    modes/SdModeCTraceDelete.h \
     windows/SdWMain.h \
     objects/SdObject.h \
     objects/SdProject.h \

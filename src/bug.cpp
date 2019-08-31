@@ -2,7 +2,7 @@
 //B070 bugs
 //F001 fatal
 //C001 critical
-//D090 do
+//D092 do
 
 
 
@@ -33,7 +33,9 @@
 
 //TODO D086 Append automatic form selection when sheet creation
 
-//TODO D088 Append backspace key to region and polygon modes
+//TODO D091 Append mode for delete trace objects with F6 to switch object behind cursor
+
+//TODO D092 Append mode to fix component and make untouchable for moving and selecting
 
 //===================================================================================
 //There are no need:
@@ -45,6 +47,8 @@
 
 //===================================================================================
 //Fixed:
+
+//D088 Append backspace key to region and polygon modes
 
 //D089 Append category selection to component editor
 

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -56,7 +56,7 @@ Description
 #define MD_EDIT_WIRE       38
 #define MD_WIRE            39
 #define MD_POLYGON         40
-#define MD_DELETE_WIRE     41
+#define MD_TRACE_DELETE    41
 #define MD_PAD             42
 #define MD_VIEW            43
 #define MD_PART_PIN        44

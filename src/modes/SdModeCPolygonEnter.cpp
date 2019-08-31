@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -250,4 +250,21 @@ int SdModeCPolygonEnter::getCursor() const
 int SdModeCPolygonEnter::getIndex() const
   {
   return MD_POLYGON;
+  }
+
+
+
+
+void SdModeCPolygonEnter::keyDown(int key, QChar ch)
+  {
+  if( key == Qt::Key_Backspace ) {
+    //Remove last entered point
+    if( getStep() == sNextPoint && mList.count() > 1 ) {
+      mList.removeLast();
+      mMiddle = calcMiddlePoint( mList.last(), mPrevMove, sdGlobalProp->mLineEnterType );
+      update();
+      return;
+      }
+    }
+  SdModeCommon::keyDown( key, ch );
   }

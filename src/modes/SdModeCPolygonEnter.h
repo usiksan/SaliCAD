@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -49,6 +49,7 @@ class SdModeCPolygonEnter : public SdModeCommon
     virtual QString getStepThema() const override;
     virtual int     getCursor() const override;
     virtual int     getIndex() const override;
+    virtual void    keyDown( int key, QChar ch ) override;
 
   private:
     SdPItemPlate *plate() { return dynamic_cast<SdPItemPlate*>(mObject); }
