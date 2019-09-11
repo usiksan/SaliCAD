@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -9,15 +9,21 @@ Web
   www.saliLab.ru
 
 Description
+  Properties bar for part moving mode on the pcb
 */
 #ifndef SDPROPBARPARTPLACE_H
 #define SDPROPBARPARTPLACE_H
 
+#include "objects/SdStratum.h"
 #include "SdPropBarPartImp.h"
 
 class SdPropBarPartPlace : public SdPropBarPartImp
   {
     Q_OBJECT
+
+    //Set side component mask
+    QAction   *mSideMaskButton;
+    SdStratum  mSideMask;
 
     //Set smart mode selection (on middle button)
     QAction   *mSmartMode;
@@ -39,28 +45,33 @@ class SdPropBarPartPlace : public SdPropBarPartImp
     //void    setPlaceInfo( QStringList sheetList, QStri QStringList compList, bool smartOrNextNumber, bool sheetSelection );
     //void    getPlaceInfo( QString &sheet, QString &comp, bool &sm)
 
+    //Set new side mask
+    void      setSideMask( SdStratum mask );
+    //Get current side mask
+    SdStratum sideMask() const { return mSideMask; }
+
     //Set new state of smart mode
-    void    setSmartMode( bool smartOrNextNumber );
+    void      setSmartMode( bool smartOrNextNumber );
     //Get current state of smart mode
-    bool    isSmartMode() const;
+    bool      isSmartMode() const;
 
     //Set new current state of "from sheet selection" mode
-    void    setSheetSelection( bool sheetSelection );
+    void      setSheetSelection( bool sheetSelection );
     //Get current state of "from sheet selection" mode
-    bool    isSheetSelection() const;
+    bool      isSheetSelection() const;
 
     //Set new sheet list and current sheet
-    void    setSheetList( const QStringList sheetList, const QString curSheet );
+    void      setSheetList( const QStringList sheetList, const QString curSheet );
     //Get current selected sheet
-    QString sheet();
+    QString   sheet();
 
     //Set new component list
-    void    setComponentList( QStringList list );
+    void      setComponentList( QStringList list );
     //Get current component
-    QString component() const;
+    QString   component() const;
 
   signals:
-    void    partSelect( QStringList list );
+    void      partSelect( QStringList list );
   };
 
 #endif // SDPROPBARPARTPLACE_H

@@ -94,13 +94,15 @@ class SdContext {
     void            rect( SdRect r );
     void            rect( SdRect r, const SdPropLine &prop );
     virtual void    fillRect( SdRect r );
-    void            fillRect( SdRect r, const SdPropLine &prop );
+    void            fillRect( SdRect r, QColor color );
+    void            fillRect( SdRect r, SdLayerPtr layer );
     virtual void    arc( SdPoint center, SdPoint start, SdPoint stop );
     void            arc( SdPoint center, SdPoint start, SdPoint stop, const SdPropLine &prop );
     virtual void    circle( SdPoint center, int radius );
     void            circle( SdPoint center, int radius, const SdPropLine &prop );
     virtual void    circleFill( SdPoint center, int radius );
-    void            circleFill( SdPoint center, int radius, const SdPropLine &prop );
+    void            circleFill( SdPoint center, int radius, QColor color );
+    void            circleFill( SdPoint center, int radius, SdLayerPtr layer );
     void            textEx(SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert, int cursor = 0, SdPoint *cp1 = nullptr, SdPoint *cp2 = nullptr, SdRect *sel = nullptr, int start = 0, int stop = 0);
     void            text( SdPoint pos, SdRect &over, const QString str, const SdPropText &prop );
     void            region( const SdPointList &points, bool autoClose = true );

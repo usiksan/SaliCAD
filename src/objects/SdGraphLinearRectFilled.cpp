@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -74,7 +74,7 @@ void SdGraphLinearRectFilled::selectByPoint(const SdPoint p, SdSelector *selecto
 
 void SdGraphLinearRectFilled::draw(SdContext *dc)
   {
-  dc->fillRect( SdRect(a,b), mProp );
+  dc->fillRect( SdRect(a,b), mProp.mLayer.layer() );
   }
 
 

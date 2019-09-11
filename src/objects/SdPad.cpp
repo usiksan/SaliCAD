@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -98,22 +98,18 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
   //Draw pad mask
   SdLayer *layer = sdEnvir->mCacheForMask.getVisibleLayer(stratum);
   if( layer != nullptr && layer->isVisible() && mMaskThreshold > 0 ) {
-    dcx->setPen( 0, layer, 0 );
-    dcx->setBrush( layer->color() );
     int w = mDiametrWidth + mMaskThreshold * 2;
     int h = mHeight + mMaskThreshold * 2;
-    if( mIsCircle ) dcx->circleFill( SdPoint( p.x() + mCenterX, p.y() + mCenterY), w >> 1 );
-    else dcx->fillRect( SdRect( p.x() + mCenterX - (w >> 1), p.y() + mCenterY - (h >> 1), w, h) );
+    if( mIsCircle ) dcx->circleFill( SdPoint( p.x() + mCenterX, p.y() + mCenterY), w >> 1, layer->color() );
+    else dcx->fillRect( SdRect( p.x() + mCenterX - (w >> 1), p.y() + mCenterY - (h >> 1), w, h), layer->color() );
     }
 
   //Draw stencil
   layer = sdEnvir->mCacheForStencil.getVisibleLayer(stratum);
   if( layer != nullptr && layer->isVisible() && mStencilThreshold > 0 ) {
-    dcx->setPen( 0, layer, 0 );
-    dcx->setBrush( layer->color() );
     int w = mDiametrWidth - mStencilThreshold * 2;
     int h = mHeight - mStencilThreshold * 2;
-    if( mIsCircle ) dcx->circleFill( SdPoint( p.x() + mCenterX, p.y() + mCenterY), w >> 1 );
+    if( mIsCircle ) dcx->circleFill( SdPoint( p.x() + mCenterX, p.y() + mCenterY), w >> 1, layer->color() );
     else {
       if( mStencilRows > 1 || mStencilCols > 1 ) {
         //Draw array of apertures
@@ -126,29 +122,25 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
         for( int y = 0; y < rows; y++ )
           for( int x = 0; x < cols; x++ )
             dcx->fillRect( SdRect( p.x() + mCenterX - (w >> 1) + x * cellx + offx,
-                                   p.y() + mCenterY - (h >> 1) + y * celly + offy, mStencilWidth, mStencilHeight) );
+                                   p.y() + mCenterY - (h >> 1) + y * celly + offy, mStencilWidth, mStencilHeight), layer->color() );
         }
       else
         //Single apreture
-        dcx->fillRect( SdRect( p.x() + mCenterX - (w >> 1), p.y() + mCenterY - (h >> 1), w, h) );
+        dcx->fillRect( SdRect( p.x() + mCenterX - (w >> 1), p.y() + mCenterY - (h >> 1), w, h), layer->color() );
       }
     }
 
   //Draw pad itself
   layer = sdEnvir->mCacheForPad.getVisibleLayer(stratum);
   if( layer != nullptr && layer->isVisible() ) {
-    dcx->setPen( 0, layer, 0 );
-    dcx->setBrush( layer->color() );
-    if( mIsCircle ) dcx->circleFill( SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth >> 1 );
-    else dcx->fillRect( SdRect( p.x() + mCenterX - (mDiametrWidth >> 1), p.y() + mCenterY - (mHeight >> 1), mDiametrWidth, mHeight) );
+    if( mIsCircle ) dcx->circleFill( SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth >> 1, layer->color() );
+    else dcx->fillRect( SdRect( p.x() + mCenterX - (mDiametrWidth >> 1), p.y() + mCenterY - (mHeight >> 1), mDiametrWidth, mHeight), layer->color() );
     }
 
   //Draw hole
   layer = sdEnvir->mCacheForHole.getVisibleLayer(stratum);
   if( layer != nullptr && layer->isVisible() && mHoleDiametr > 0 ) {
-    dcx->setPen( 0, layer, 0 );
-    dcx->setBrush( layer->color() );
-    dcx->circleFill( p, mHoleDiametr >> 1 );
+    dcx->circleFill( p, mHoleDiametr >> 1, layer->color() );
     }
 
   }

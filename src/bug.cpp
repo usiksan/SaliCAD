@@ -48,6 +48,8 @@
 //===================================================================================
 //Fixed:
 
+//D052 mask components by side
+
 //D088 Append backspace key to region and polygon modes
 
 //D089 Append category selection to component editor

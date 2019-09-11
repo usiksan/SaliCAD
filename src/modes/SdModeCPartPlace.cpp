@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -28,14 +28,15 @@ Description
 
 SdModeCPartPlace::SdModeCPartPlace(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeCommon( editor, obj ),
-  mShiftKey(false),
   mBehindCursorPrt(nullptr),   //Компонент, подлежащий выделению при нажатии левой кнопки мыши
+  mShiftKey(false),
   mInsertFlag(false),        //Автораздвижка компонентов
+  mSmartOrNextId(false),
+  mBySheet(false),           //Истина, когда производится выбор из листа
   mBigCompPins(0),       //Количество выводов главного компонента
   mBigCompIndex(-1),      //Индекс главного компонента в таблице компонентов
-  mSmartOrNextId(false),
+  mSideMask(stmTop | stmBottom)
   //DLineProp         lineProp;          //Свойства для выделения прямоугольником
-  mBySheet(false)           //Истина, когда производится выбор из листа
   {
 
   }
@@ -92,6 +93,7 @@ void SdModeCPartPlace::reset()
 
   SdPropBarPartPlace *barPartPlace = dynamic_cast<SdPropBarPartPlace*>(SdWCommand::getModeBar(getPropBarId()));
   barPartPlace->setSmartMode( mSmartOrNextId );
+  mSideMask = barPartPlace->sideMask();
 
   //Accum existing sheet lists
   QStringList sheetList;
@@ -183,6 +185,7 @@ void SdModeCPartPlace::propGetFromBar()
   mBySheet       = barPartPlace->isSheetSelection();
   mCurrentSheet  = barPartPlace->sheet();
   mSmartOrNextId = barPartPlace->isSmartMode();
+  mSideMask      = barPartPlace->sideMask();
 
   if( mFragment.count() ) {
 
@@ -655,8 +658,7 @@ void SdModeCPartPlace::checkPoint(SdPoint p)
   mBehindCursorTable.clear();     //Очистить таблицу компонентов под курсором
   mObject->forEach( dctPartImp, [this,p] (SdObject *obj) -> bool {
     SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>( obj );
-    if( imp && imp->behindCursor(p) )
-      //TODO D052 mask components by side
+    if( imp && imp->behindCursor(p) && (imp->stratum().match( mSideMask )) )
       mBehindCursorTable.append( imp );
     return true;
     });

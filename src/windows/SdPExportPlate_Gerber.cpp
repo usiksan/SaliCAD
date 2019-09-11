@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -180,8 +180,8 @@ class SdGerberContext : public SdContext {
 
 void SdGerberContext::setPen(int width, QColor color, int lineStyle)
   {
-  Q_UNUSED(color);
-  Q_UNUSED(lineStyle);
+  Q_UNUSED(color)
+  Q_UNUSED(lineStyle)
   selectAperture( gerberApertureCircle(width/2) );
   }
 

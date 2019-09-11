@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -44,7 +44,7 @@ void SdGraphLinearCircleFilled::selectByPoint(const SdPoint p, SdSelector *selec
 
 void SdGraphLinearCircleFilled::draw(SdContext *dc)
   {
-  dc->circleFill( mCenter, mRadius, mProp );
+  dc->circleFill( mCenter, mRadius, mProp.mLayer.layer() );
   }
 
 

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -54,24 +54,25 @@ class SdModeCPartPlace : public SdModeCommon
     SdSelector         mFragment;          //Набор выделенных объектов
     SdObjectPtrList    mBehindCursorTable; //Список объектов под курсором
     int                mBehindCursorIndex; //Индекс объекта среди объектов под курсором
-    bool               mShiftKey;
     QString            mSmartName;         //Компонент, подлежащий размещению разумным режимом
     SdGraphPartImp*    mBehindCursorPrt;   //Компонент, подлежащий выделению при нажатии левой кнопки мыши
+    bool               mShiftKey;          //Shift key pressed flag
     bool               mInsertFlag;        //Автораздвижка компонентов
-    int                mBigCompPins;       //Количество выводов главного компонента
-    int                mBigCompIndex;      //Индекс главного компонента в таблице компонентов
     bool               mSmartOrNextId;
     //DLineProp         lineProp;          //Свойства для выделения прямоугольником
     bool               mBySheet;           //Истина, когда производится выбор из листа
+    int                mBigCompPins;       //Количество выводов главного компонента
+    int                mBigCompIndex;      //Индекс главного компонента в таблице компонентов
     QString            mCurrentSheet;      //Current sheet component selected from
+    SdStratum          mSideMask;          //Available side mask: only top, only bottom or both
+
+    SdPlateNetList     mNetList;           //Net list for rat net creation
 
     //Previous grid and cursor alignment mode
     //This mode acts as stack for this properties, so changes
     // in this mode no effect on other modes
     SdPoint            mPreviousGrid;      //Previous grid, it restores after deactivate mode
     bool               mPreviousCursor;    //Previous cursor alignment, it restores after deactivate mode
-
-    SdPlateNetList     mNetList;           //Net list for rat net creation
   public:
     SdModeCPartPlace( SdWEditorGraph *editor, SdProjectItem *obj );
 

@@ -187,15 +187,20 @@ void SdContext::fillRect(SdRect r)
 
 
 
-
-void SdContext::fillRect(SdRect r, const SdPropLine &prop)
+void SdContext::fillRect(SdRect r, QColor color)
   {
-  if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
-    QColor color = convertColor(prop.mLayer.layer());
-    mPainter->setPen( color );
-    setBrush( color );
-    fillRect( r );
-    }
+  mPainter->setPen( color );
+  setBrush( color );
+  fillRect( r );
+  }
+
+
+
+
+void SdContext::fillRect(SdRect r, SdLayerPtr layer)
+  {
+  if( layer != nullptr && ( mSelector || convertLayer(layer)->isVisible() ) )
+    fillRect( r, convertColor(layer) );
   }
 
 
@@ -260,14 +265,23 @@ void SdContext::circleFill(SdPoint center, int radius)
 
 
 
-void SdContext::circleFill(SdPoint center, int radius, const SdPropLine &prop)
+
+void SdContext::circleFill(SdPoint center, int radius, QColor color)
   {
-  if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
-    QColor color = convertColor(prop.mLayer.layer());
-    mPainter->setPen( color );
-    setBrush( color );
-    circleFill( center, radius );
-    }
+  mPainter->setPen( color );
+  setBrush( color );
+  circleFill( center, radius );
+  }
+
+
+
+
+
+
+void SdContext::circleFill(SdPoint center, int radius, SdLayerPtr layer)
+  {
+  if( layer != nullptr && ( mSelector || convertLayer(layer)->isVisible() ) )
+    circleFill( center, radius, convertColor(layer) );
   }
 
 

@@ -157,6 +157,9 @@ History
   23.08.2019 v1.1  In symbol and part editors text must be display only as field and never context
   24.08.2019 v1.2  Append category selection to component editor
              v1.3  Fix other side display error
+  06.09.2019 v1.4  Append command to mask component side at moving
+  11.09.2019 v1.5  Change drawing filled circle and rectangle from with prop to with layer
+                   this exclude wrong setPen call which hamper properly gerber generation
 */
 
 #ifndef SDCONFIG
@@ -168,7 +171,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             3
+#define SD_VERSION_MINOR             5
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

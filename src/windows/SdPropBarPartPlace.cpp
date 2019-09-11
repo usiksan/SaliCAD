@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -20,6 +20,18 @@ Description
 SdPropBarPartPlace::SdPropBarPartPlace(const QString title) :
   SdPropBarPartImp(title)
   {
+  mSideMaskButton = addAction( QIcon(QStringLiteral(":/pic/flipSide.png")), tr("Take component from both side top and bottom") );
+  mSideMask = stmTop | stmBottom;
+  connect( mSideMaskButton, &QAction::triggered, [=](bool) {
+    if( mSideMask == (stmTop | stmBottom) )
+      setSideMask( stmTop );
+    else if( mSideMask == stmTop )
+      setSideMask( stmBottom );
+    else
+      setSideMask( stmTop | stmBottom );
+    emit propChanged();
+    });
+
   mSmartMode = addAction( QIcon(QStringLiteral(":/pic/placeSmartMode.png")), tr("Smart mode on middle button") );
   mSmartMode->setCheckable(true);
   connect( mSmartMode, &QAction::triggered, [=](bool) {
@@ -72,6 +84,21 @@ SdPropBarPartPlace::SdPropBarPartPlace(const QString title) :
     });
 
   addWidget( mComponent );
+  }
+
+
+
+
+//Set new side mask
+void SdPropBarPartPlace::setSideMask(SdStratum mask)
+  {
+  mSideMask = mask;
+  if( mSideMask == stmTop )
+    mSideMaskButton->setIcon( QIcon(QStringLiteral(":/pic/flipSideTop.png")) );
+  else if( mSideMask == stmBottom )
+    mSideMaskButton->setIcon( QIcon(QStringLiteral(":/pic/flipSideBottom.png")) );
+  else
+    mSideMaskButton->setIcon( QIcon(QStringLiteral(":/pic/flipSide.png")) );
   }
 
 
