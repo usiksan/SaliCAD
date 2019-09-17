@@ -189,7 +189,8 @@ void SdContext::fillRect(SdRect r)
 
 void SdContext::fillRect(SdRect r, QColor color)
   {
-  mPainter->setPen( color );
+  if( mPainter->isActive() )
+    mPainter->setPen( color );
   setBrush( color );
   fillRect( r );
   }
@@ -268,7 +269,8 @@ void SdContext::circleFill(SdPoint center, int radius)
 
 void SdContext::circleFill(SdPoint center, int radius, QColor color)
   {
-  mPainter->setPen( color );
+  if( mPainter->isActive() )
+    mPainter->setPen( color );
   setBrush( color );
   circleFill( center, radius );
   }
@@ -638,7 +640,8 @@ void SdContext::setPen(int width, QColor color, int lineStyle)
     penWidthPix = mZeroWidth;
   else
     penWidthPix = mScaler.phys2pixel(width);
-  mPainter->setPen( QPen( QBrush( color ), penWidthPix, style, Qt::RoundCap, Qt::RoundJoin ) );
+  if( mPainter->isActive() )
+    mPainter->setPen( QPen( QBrush( color ), penWidthPix, style, Qt::RoundCap, Qt::RoundJoin ) );
   }
 
 
@@ -646,10 +649,12 @@ void SdContext::setPen(int width, QColor color, int lineStyle)
 
 void SdContext::setBrush(QColor color)
   {
-  if( mOverOn )
-    mPainter->setBrush( QBrush(mOverColor) );
-  else
-    mPainter->setBrush( QBrush(color) );
+  if( mPainter->isActive() ) {
+    if( mOverOn )
+      mPainter->setBrush( QBrush(mOverColor) );
+    else
+      mPainter->setBrush( QBrush(color) );
+    }
   }
 
 

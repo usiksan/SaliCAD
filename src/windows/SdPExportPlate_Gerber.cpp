@@ -33,6 +33,7 @@ Description
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QHeaderView>
+#include <QDebug>
 
 
 
@@ -272,7 +273,7 @@ void SdGerberContext::regionFill(const SdPointList &points, const SdPropLine &pr
 
 void SdGerberContext::polygon(const SdPointList &points, const SdPolyWindowList &windows, SdLayer *layer)
   {
-  Q_UNUSED(layer);
+  Q_UNUSED(layer)
   if( points.count() > 2 ) {
     //Define posititve Gerber layer [Определить позитивный слой]
     mStream << "%LPD*%\n";
@@ -605,6 +606,7 @@ void SdPExportPlate_Gerber::generation(const QString fileName)
     //Build piture [Сформировать картинку]
     //Calculate over rect [Подсчитать охватывающий прямоугольник]
     SdRect over = mPlate->getOverRect();
+    qDebug() << "Gerber over" << over;
 
     //Define context [Образовать контекст]
     SdGerberContext gc( app.mApertureMap, os );

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -17,6 +17,8 @@ Description
 #include "SdSelector.h"
 #include "SdPItemPlate.h"
 #include "SdPlateNetContainer.h"
+
+#include <QDebug>
 
 SdGraphTracedPolygon::SdGraphTracedPolygon()
   {
@@ -384,11 +386,14 @@ void SdGraphTracedPolygon::accumWindows(SdPolyWindowList &dest, int stratum, int
     //Find polygon intersection
     QPolygon pgn = dest.polygon()->intersected( mRegion );
 
-    //Calc over rectangle
-    SdRect r = pgn.boundingRect();
+    //Append window only if there intersection
+    if( pgn.count() ) {
+      //Calc over rectangle
+      SdRect r = pgn.boundingRect();
 
-    //Append rect window
-    dest.append( SdPolyWindow( r, gap ) );
+      //Append rect window
+      dest.append( SdPolyWindow( r, gap ) );
+      }
     }
   }
 

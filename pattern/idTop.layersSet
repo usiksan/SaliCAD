@@ -17,7 +17,7 @@
     },
     {
         "id": "Common",
-        "state": 2
+        "state": 0
     },
     {
         "id": "Component",
@@ -33,7 +33,7 @@
     },
     {
         "id": "Hole",
-        "state": 2
+        "state": 0
     },
     {
         "id": "Ident",
@@ -45,7 +45,7 @@
     },
     {
         "id": "Ident.Top",
-        "state": 0
+        "state": 2
     },
     {
         "id": "Invisible",
@@ -61,11 +61,11 @@
     },
     {
         "id": "Net",
-        "state": 2
+        "state": 0
     },
     {
         "id": "NetName",
-        "state": 2
+        "state": 0
     },
     {
         "id": "PCB",
@@ -77,11 +77,11 @@
     },
     {
         "id": "Pad.Bot",
-        "state": 2
+        "state": 0
     },
     {
         "id": "Pad.Top",
-        "state": 2
+        "state": 0
     },
     {
         "id": "Picture",
@@ -89,7 +89,7 @@
     },
     {
         "id": "Pin",
-        "state": 2
+        "state": 0
     },
     {
         "id": "Pin.Bot",
@@ -101,7 +101,7 @@
     },
     {
         "id": "PinName",
-        "state": 2
+        "state": 0
     },
     {
         "id": "PinName.Bot",
@@ -113,7 +113,7 @@
     },
     {
         "id": "PinNumber",
-        "state": 2
+        "state": 0
     },
     {
         "id": "PinNumber.Bot",
@@ -165,11 +165,11 @@
     },
     {
         "id": "Value.Top",
-        "state": 0
+        "state": 2
     },
     {
         "id": "Wire.Bot",
-        "state": 2
+        "state": 0
     },
     {
         "id": "Wire.Int00",
@@ -189,6 +189,6 @@
     },
     {
         "id": "Wire.Top",
-        "state": 2
+        "state": 0
     }
 ]
