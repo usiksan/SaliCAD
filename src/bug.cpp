@@ -1,8 +1,8 @@
 ﻿
-//B070 bugs
+//B071 bugs
 //F001 fatal
 //C001 critical
-//D092 do
+//D093 do
 
 
 
@@ -31,11 +31,11 @@
 
 //TODO D085 Append rotation command to select menu
 
-//TODO D086 Append automatic form selection when sheet creation
-
 //TODO D091 Append mode for delete trace objects with F6 to switch object behind cursor
 
 //TODO D092 Append mode to fix component and make untouchable for moving and selecting
+
+//TODO B071 Some time do not fit to view (in graph view) and picture too small
 
 //===================================================================================
 //There are no need:
@@ -47,6 +47,10 @@
 
 //===================================================================================
 //Fixed:
+
+//D086 Append automatic form selection when sheet creation
+
+//D093 When append default component copy to it category from symbol
 
 //D052 mask components by side
 

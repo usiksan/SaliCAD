@@ -20,6 +20,8 @@ INCLUDEPATH += ../third
 
 SOURCES += \
     SdMain.cpp \
+    master/SdDMasterPartSingleLine.cpp \
+    master/SdDMasterSheetDecorator.cpp \
     modes/SdModeCTraceDelete.cpp \
     windows/SdWMain.cpp \
     objects/SdObject.cpp \
@@ -282,6 +284,8 @@ SOURCES += \
 
 HEADERS  += \
     SdConfig.h \
+    master/SdDMasterPartSingleLine.h \
+    master/SdDMasterSheetDecorator.h \
     modes/SdModeCTraceDelete.h \
     windows/SdWMain.h \
     objects/SdObject.h \
@@ -558,6 +562,7 @@ RESOURCES += \
     SaliCADrc.qrc
 
 FORMS += \
+    master/SdDMasterPartSingleLine.ui \
     windows/SdDGetObject.ui \
     windows/SdDNetUnion.ui \
     windows/SdDGetProjectObject.ui \

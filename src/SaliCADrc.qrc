@@ -284,5 +284,6 @@
         <file>pic/iconRemoteOff.png</file>
         <file>pic/iconRemoteOn.png</file>
         <file>pic/iconRemoteSync.png</file>
+        <file>pic/sheetMasterDecorator.png</file>
     </qresource>
 </RCC>

@@ -77,6 +77,14 @@ SdDPadMaster::SdDPadMaster(SdPad pad, QWidget *parent) :
     mPad.mHoleDiametr = sdEnvir->fromPhisPcb( txt );
     updatePadSchematic();
     });
+  connect( ui->mHoleLength, &QLineEdit::textEdited, this, [this] (QString txt) {
+    mPad.mHoleLength = sdEnvir->fromPhisPcb( txt );
+    updatePadSchematic();
+    });
+  connect( ui->mSlotAngle, &QLineEdit::textEdited, this, [this] (QString txt) {
+    mPad.mSlotAngle = sdEnvir->fromPhisPcb( txt );
+    updatePadSchematic();
+    });
   connect( ui->mStensilThreshold, &QLineEdit::textEdited, this, [this] (QString txt) {
     mPad.mStencilThreshold = sdEnvir->fromPhisPcb( txt );
     updatePadSchematic();
@@ -195,8 +203,17 @@ void SdDPadMaster::drawPadSchematic(SdIllustrator &ill)
     ill.drawFillCircle( mPad.mCenterX, mPad.mCenterY, mPad.mDiametrWidth/2, QColor(0xFFE97F) );
 
     //Hole if present
-    if( mPad.mHoleDiametr > 0 )
-      ill.drawFillCircle( mPad.mCenterX, mPad.mCenterY, mPad.mHoleDiametr/2, QColor(0x7F6A00) );
+    if( mPad.mHoleDiametr > 0 ) {
+      if( mPad.mHoleLength > 0 ) {
+        SdPoint a,b;
+        mPad.slotPoints( a, b );
+        a.move( mPad.center() );
+        b.move( mPad.center() );
+        ill.drawLineWidth( mPad.mHoleDiametr, a.x(), a.y(), b.x(), b.y(), QColor(0x7F6A00) );
+        }
+      else
+        ill.drawFillCircle( mPad.mCenterX, mPad.mCenterY, mPad.mHoleDiametr/2, QColor(0x7F6A00) );
+      }
 
     //mask
     if( mPad.mMaskThreshold > 0 )
@@ -212,8 +229,17 @@ void SdDPadMaster::drawPadSchematic(SdIllustrator &ill)
                         mPad.mDiametrWidth, mPad.mHeight, QColor(0xFFE97F) );
 
     //Hole if present
-    if( mPad.mHoleDiametr > 0 )
-      ill.drawFillCircle( mPad.mCenterX, mPad.mCenterY, mPad.mHoleDiametr/2, QColor(0x7F6A00) );
+    if( mPad.mHoleDiametr > 0 ) {
+      if( mPad.mHoleLength > 0 ) {
+        SdPoint a,b;
+        mPad.slotPoints( a, b );
+        a.move( mPad.center() );
+        b.move( mPad.center() );
+        ill.drawLineWidth( mPad.mHoleDiametr, a.x(), a.y(), b.x(), b.y(), QColor(0x7F6A00) );
+        }
+      else
+        ill.drawFillCircle( mPad.mCenterX, mPad.mCenterY, mPad.mHoleDiametr/2, QColor(0x7F6A00) );
+      }
 
     //mask
     if( mPad.mMaskThreshold > 0 )
@@ -273,6 +299,8 @@ void SdDPadMaster::onPadCircleToggle(bool isCircle)
 void SdDPadMaster::onThroughPin(bool isThrough)
   {
   ui->mHoleDiametr->setEnabled(isThrough);
+  ui->mHoleLength->setEnabled(isThrough);
+  ui->mSlotAngle->setEnabled(isThrough);
   ui->mStensilThreshold->setEnabled(!isThrough);
   ui->mStensilRows->setEnabled(!isThrough);
   ui->mStensilColumns->setEnabled(!isThrough);
@@ -287,6 +315,8 @@ void SdDPadMaster::onThroughPin(bool isThrough)
     if( mPad.mHoleDiametr <= 0 )
       mPad.mHoleDiametr = 500;
     ui->mHoleDiametr->setText( sdEnvir->toPhisPcb(mPad.mHoleDiametr) );
+    ui->mHoleLength->setText( sdEnvir->toPhisPcb(mPad.mHoleLength) );
+    ui->mSlotAngle->setText( SdUtil::log2physStr(mPad.mSlotAngle,0.001) );
     }
   else {
     //Enable stensil hole
@@ -297,7 +327,9 @@ void SdDPadMaster::onThroughPin(bool isThrough)
     ui->mStensilColumns->setText( QString::number(mPad.mStencilCols) );
     //Disable pin hole
     ui->mHoleDiametr->clear();
-    mPad.mHoleDiametr = 0;
+    ui->mHoleLength->clear();
+    ui->mSlotAngle->clear();
+    mPad.mHoleDiametr = mPad.mHoleLength = mPad.mSlotAngle = 0;
     }
   updatePadProfile();
   updatePadSchematic();

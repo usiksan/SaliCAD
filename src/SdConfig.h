@@ -160,6 +160,10 @@ History
   06.09.2019 v1.4  Append command to mask component side at moving
   11.09.2019 v1.5  Change drawing filled circle and rectangle from with prop to with layer
                    this exclude wrong setPen call which hamper properly gerber generation
+  30.09.2019 v1.6  When append default component copy to it category from symbol
+  01.10.2019 v1.7  Append automatic form selection when sheet creation
+             v1.8  Append slot form holes in a pads
+                   Append single row part master
 */
 
 #ifndef SDCONFIG
@@ -171,7 +175,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             5
+#define SD_VERSION_MINOR             8
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

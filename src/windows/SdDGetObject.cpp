@@ -353,7 +353,7 @@ void SdDGetObject::find()
 
 void SdDGetObject::onSelectItem(int row, int column)
   {
-  Q_UNUSED(column);
+  Q_UNUSED(column)
   clearComponent();
   SdLibraryHeader hdr = mHeaderList.at(row);
   if( hdr.mClass == dctSymbol || hdr.mClass == dctSheet ) {
@@ -699,9 +699,13 @@ SdObject *SdDGetObject::getObject(quint64 sort, const QString title, QWidget *pa
 
 
 
-QString SdDGetObject::getObjectUid(quint64 sort, const QString title, QWidget *parent)
+QString SdDGetObject::getObjectUid(quint64 sort, const QString title, QWidget *parent, const QString defFiltr)
   {
+  if( !defFiltr.isEmpty() )
+    sdNameFilter = defFiltr;
   SdDGetObject dget( sort, title, parent );
+  if( !defFiltr.isEmpty() )
+    dget.find();
   if( dget.exec() )
     return mObjUid;
   return QString();

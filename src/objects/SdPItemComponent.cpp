@@ -16,6 +16,7 @@ Description
 #include "SdPartVariant.h"
 #include "SdObjectFactory.h"
 #include "SdProject.h"
+#include "SdConfig.h"
 
 #include <QDebug>
 
@@ -292,6 +293,10 @@ SdPItemComponent *sdCreateDefaultComponent(SdPItemSymbol *symbol, bool appendDef
   SdObjectFactory::insertItemObject( symbol, symbol->write() );
   //Append section with symbol
   comp->appendSection( symbol->getUid(), symbol->getUndo() );
+
+  //D093 Append category from symbol
+  if( symbol->paramContains( stdParamCategory ) )
+    comp->paramSet( stdParamCategory, symbol->paramGet( stdParamCategory ), symbol->getUndo()  );
 
   if( appendDefaultPart ) {
     //Setup default part

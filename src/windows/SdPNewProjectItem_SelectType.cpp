@@ -125,7 +125,7 @@ int SdPNewProjectItem_SelectType::nextId() const
       return SDP_NPI_NAME;
 
     //Create copy of existing object
-    if( defaultOrder == 1 )
+    if( defaultOrder == 1 && defaultClass != 0 )
       return SDP_NPI_COPY;
 
     //Use master
@@ -147,6 +147,10 @@ void SdPNewProjectItem_SelectType::classChanged(int index)
     case 0 :
       mCreationOrder->addItem( tr("Empty sheet") );
       mDescriptions.append( tr("Creates empty schematic sheet with no any component or graphics.") );
+      mCreationOrder->addItem( tr("Sheet master") );
+      mDescriptions.append( tr("Start master which guide you to create schematic sheet") );
+//      mCreationOrder->addItem( tr("Sheet with decoration") );
+//      mDescriptions.append( tr("Creates empty schematic sheet with inserted sheet form") );
 //      mCreationOrder->addItem( tr("Copy of existing sheet") );
 //      mDescriptions.append( tr("Creates copy of existing schematic sheet") );
       //mCreationType->addItem( tr(""));

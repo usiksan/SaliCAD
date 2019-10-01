@@ -38,6 +38,8 @@ class SdPad
     qint32 mStencilWidth;
     qint32 mStencilHeight;
     qint32 mHoleDiametr;
+    qint32 mHoleLength;       //Lenght for slot holes. If zero then holes is circle
+    qint32 mSlotAngle;        //Angle for slot. 0 degree is horizontal hole
     //Not saved. Circle determine by mHeight = 0.
     bool   mIsCircle;
   public:
@@ -68,6 +70,11 @@ class SdPad
 
     //Clear to create default pad
     void        clear();
+
+    //Calculate points of slot hole
+    void        slotPoints( SdPoint &a, SdPoint &b ) const;
+
+    SdPoint     center() const { return SdPoint(mCenterX,mCenterY); }
 
     bool        isEmpty() const { return mHeight < 0; }
 

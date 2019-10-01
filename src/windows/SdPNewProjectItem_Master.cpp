@@ -13,6 +13,9 @@ Description
 */
 #include "SdPNewProjectItem_Master.h"
 #include "SdPNewProjectItem.h"
+#include "SdDGetObject.h"
+
+#include "objects/SdObjectFactory.h"
 
 //Master dialogs
 #include "master/SdDMasterPartDoubleRect.h"
@@ -20,9 +23,12 @@ Description
 #include "master/SdDMasterPartDoubleSide.h"
 #include "master/SdDMasterPartDoubleSideLR.h"
 #include "master/SdDMasterPartQuadSide.h"
+#include "master/SdDMasterPartSingleLine.h"
 
 #include "master/SdDMasterSymbolConnector.h"
 #include "master/SdDMasterSymbolIc.h"
+
+#include "master/SdDMasterSheetDecorator.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -95,6 +101,35 @@ void SdPNewProjectItem_Master::initializePage()
   //Fill object classes
   switch( (*mItemPtr)->getClass() ) {
 
+
+
+    //Masters for sheet
+    case dctSheet :
+      addMaster( tr("Sheet decorator"), tr("Creates empty schematic sheet with inserted sheet form"),
+                 QString(":/pic/sheetMasterDecorator.png"), [this] ( SdProjectItem *item, QWidget *p ) -> bool {
+        Q_UNUSED(p)
+        SdProject *mPastePrj = sdObjectOnly<SdProject>( SdObjectFactory::extractObject( SdDGetObject::getObjectUid( dctProject, QObject::tr("Select form to insert"), this, "form"), false, this ) );
+        SdPItemSheet *sheet = mPastePrj->getFirstSheet();
+
+        if( sheet == nullptr ) return false;
+
+        SdSelector paste;
+        //Select all objects in sheet
+        sheet->forEach( dctAll, [&paste] (SdObject *obj) -> bool {
+          SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+          if( graph != nullptr )
+            graph->select( &paste );
+          return true;
+          });
+
+        item->insertObjects( SdPoint(), &paste, nullptr, nullptr, nullptr, false );
+
+        return true;
+        });
+      break;
+
+
+
     //Masters for symbol
     case dctSymbol :
       addMaster( tr("Connectors"), tr("Creates symbol for connector"),
@@ -110,6 +145,8 @@ void SdPNewProjectItem_Master::initializePage()
         });
 
       break;
+
+
 
     //Masters for part
     case dctPart :
@@ -129,6 +166,12 @@ void SdPNewProjectItem_Master::initializePage()
       addMaster( tr("Two through pins round part"), tr("Creates part with exact two pins and round body"),
                  QString(":/pic/partMasterDoubleRound2.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
         SdDMasterPartDoubleRound dlg( item, true, p );
+        return dlg.exec();
+        });
+
+      addMaster( tr("Single row pins part"), tr("Creates part with rectangle body and single row of pins at middle of part"),
+                 QString(":/pic/partMasterSingleSide.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
+        SdDMasterPartSingleLine dlg( item, p );
         return dlg.exec();
         });
 

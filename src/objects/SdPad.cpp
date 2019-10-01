@@ -32,18 +32,23 @@ SdPad::SdPad() :
   mStencilWidth(0),
   mStencilHeight(0),
   mHoleDiametr(0),
+  mHoleLength(0),
+  mSlotAngle(0),
   //Not saved. Circle determine by mHeight = 0.
   mIsCircle(true)
   {
 
   }
 
+
+
+
 QJsonObject SdPad::write() const
   {
   QJsonObject obj;
   //Center of circle or rectangle
-  obj.insert( QStringLiteral("cx"), mCenterX );
-  obj.insert( QStringLiteral("cy"), mCenterY );
+  if( mCenterX ) obj.insert( QStringLiteral("cx"), mCenterX );
+  if( mCenterY ) obj.insert( QStringLiteral("cy"), mCenterY );
   //Diametr of circle or rectangle dimensions
   obj.insert( QStringLiteral("dw"), mDiametrWidth );
   obj.insert( QStringLiteral("h"), mIsCircle ? 0 : mHeight );
@@ -53,13 +58,17 @@ QJsonObject SdPad::write() const
   obj.insert( QStringLiteral("st"), mStencilThreshold );
   //If rows or colons > 1 then stencil area divided on array of aperture with
   // width and height
-  obj.insert( QStringLiteral("sr"), mStencilRows );
-  obj.insert( QStringLiteral("sc"), mStencilCols );
-  obj.insert( QStringLiteral("sw"), mStencilWidth );
-  obj.insert( QStringLiteral("sh"), mStencilHeight );
-  obj.insert( QStringLiteral("hole"), mHoleDiametr );
+  if( mStencilRows ) obj.insert( QStringLiteral("sr"), mStencilRows );
+  if( mStencilCols ) obj.insert( QStringLiteral("sc"), mStencilCols );
+  if( mStencilWidth) obj.insert( QStringLiteral("sw"), mStencilWidth );
+  if( mStencilHeight ) obj.insert( QStringLiteral("sh"), mStencilHeight );
+  if( mHoleDiametr ) obj.insert( QStringLiteral("hole"), mHoleDiametr );
+  if( mHoleLength ) obj.insert( QStringLiteral("slotLen"), mHoleLength );
+  if( mSlotAngle ) obj.insert( QStringLiteral("slotAng"), mSlotAngle );
   return obj;
   }
+
+
 
 
 
@@ -85,7 +94,11 @@ void SdPad::read(const QJsonObject obj)
   mStencilWidth = obj.value( QStringLiteral("sw") ).toInt();
   mStencilHeight = obj.value( QStringLiteral("sh") ).toInt();
   mHoleDiametr = obj.value( QStringLiteral("hole") ).toInt();
+  mHoleLength = obj.value( QStringLiteral("slotLen") ).toInt();
+  mSlotAngle = obj.value( QStringLiteral("slotAng") ).toInt();
   }
+
+
 
 
 
@@ -140,7 +153,18 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
   //Draw hole
   layer = sdEnvir->mCacheForHole.getVisibleLayer(stratum);
   if( layer != nullptr && layer->isVisible() && mHoleDiametr > 0 ) {
-    dcx->circleFill( p, mHoleDiametr >> 1, layer->color() );
+    if( mHoleLength > 0 ) {
+      //Hole is slot type
+      SdPoint a,b;
+      slotPoints( a, b );
+      a.move(p);
+      b.move(p);
+      dcx->setPen( mHoleDiametr, layer, dltSolid );
+      dcx->line( a, b );
+      }
+    else
+      //Hole is circle type
+      dcx->circleFill( p, mHoleDiametr >> 1, layer->color() );
     }
 
   }
@@ -242,7 +266,19 @@ QString SdPad::description() const
       }
     else {
       //through (no stencil)
-      //Single stencil aperture
+      //Pad with hole
+      if( mHoleLength > 0 )
+        //Elongated hole
+        return QObject::tr("Through rect hole%5x%6a%7 pad%1x%2 mask%3x%4")
+            .arg( SdUtil::log2physStr(mDiametrWidth,ppm) )
+            .arg( SdUtil::log2physStr(mHeight,ppm))
+            .arg( SdUtil::log2physStr(mDiametrWidth+mMaskThreshold,ppm) )
+            .arg( SdUtil::log2physStr(mHeight+mMaskThreshold,ppm) )
+            .arg( SdUtil::log2physStr(mHoleDiametr,ppm) )
+            .arg( SdUtil::log2physStr(mHoleLength,ppm) )
+            .arg( SdUtil::log2physStr(mSlotAngle,0.001) );
+
+      //Simple circle hole
       return QObject::tr("Through rect hole%5 pad%1x%2 mask%3x%4")
           .arg( SdUtil::log2physStr(mDiametrWidth,ppm) )
           .arg( SdUtil::log2physStr(mHeight,ppm))
@@ -265,8 +301,11 @@ QString SdPad::name() const
   else str = QChar('r') + SdUtil::um2mm(mDiametrWidth) + QChar('x') + SdUtil::um2mm(mHeight);
   if( mCenterX || mCenterY )
     str += QChar('f') + SdUtil::um2mm(mCenterX) + QChar('x') + SdUtil::um2mm(mCenterY);
-  if( mHoleDiametr > 0 )
+  if( mHoleDiametr > 0 ) {
     str += QChar('d') + SdUtil::um2mm(mHoleDiametr);
+    if( mHoleLength > 0 )
+      str += QChar('l') + SdUtil::um2mm(mHoleLength) + QChar('a') + SdUtil::um2mm(mSlotAngle);
+    }
   if( mMaskThreshold > 0 )
     str += QChar('m') + SdUtil::um2mm(mMaskThreshold);
   if( mStencilThreshold > 0 ) {
@@ -321,11 +360,24 @@ void SdPad::parse(const QString nm)
       }
     else mCenterX = mCenterY = 0;
 
+
     if( nm.length() > index && nm.at(index) == QChar('d') ) {
       index++;
       mHoleDiametr = SdUtil::extractLogFromString( nm, index, 0.001 );
+
+      if( nm.length() > index && nm.at(index) == QChar('l') ) {
+        index++;
+        mHoleLength = SdUtil::extractLogFromString( nm, index, 0.001 );
+        if( nm.length() > index && nm.at(index) == QChar('a') ) {
+          index++;
+          mSlotAngle = SdUtil::extractLogFromString( nm, index, 0.001 );
+          }
+        else mSlotAngle = 0;
+        }
+      else mHoleLength = mSlotAngle = 0;
       }
-    else mHoleDiametr = 0;
+    else mHoleDiametr = mHoleLength = mSlotAngle = 0;
+
 
     if( nm.length() > index && nm.at(index) == QChar('m') ) {
       index++;
@@ -367,8 +419,22 @@ void SdPad::clear()
   mStencilWidth = 0;
   mStencilHeight = 0;
   mHoleDiametr = 0;
+  mHoleLength = 0;
+  mSlotAngle = 0;
   //Not saved. Circle determine by mHeight = 0.
   mIsCircle = true;
+  }
+
+
+
+
+//Calculate points of slot hole
+void SdPad::slotPoints(SdPoint &a, SdPoint &b) const
+  {
+  a.set(-mHoleLength/2,0);
+  b.set(mHoleLength/2,0);
+  a.rotate( SdPoint(), mSlotAngle );
+  b.rotate( SdPoint(), mSlotAngle );
   }
 
 

@@ -41,10 +41,11 @@ class SdObjectNetClient : public SdCsChannel
 //    QString       mHostIp;
     QTimer        mTimer;
     QByteArray    mBuffer;
-    int           mCommand;
     QByteArray    mBufferSync;
+    int           mCommand;
     int           mCommandSync;
     int           mLocalSyncCount;
+    quint8        padding[4];
   public:
     explicit SdObjectNetClient(QObject *parent = nullptr);
 

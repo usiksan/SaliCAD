@@ -23,6 +23,7 @@ class SdIllustrator
 
     //Linear
     void    drawLine( int x1, int y1, int x2, int y2, QColor color );
+    void    drawLineWidth( int width, int x1, int y1, int x2, int y2, QColor color );
     void    drawLineArrow( int x1, int y1, int x2, int y2, QColor color, int arrowSize = 10 );
     void    drawLineDoubleArrow( int x1, int y1, int x2, int y2, QColor color, int arrowSize = 10 );
     void    drawRect( int x1, int y1, int x2, int y2, QColor color );

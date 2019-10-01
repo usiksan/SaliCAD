@@ -30,6 +30,27 @@ void SdIllustrator::drawLine(int x1, int y1, int x2, int y2, QColor color)
 
 
 
+void SdIllustrator::drawLineWidth(int width, int x1, int y1, int x2, int y2, QColor color)
+  {
+  if( mPainter.isActive() ) {
+    mPainter.setOpacity( 1.0 );
+    QPen pen( color, static_cast<double>(scale(width)) );
+    pen.setCapStyle( Qt::RoundCap );
+    mPainter.setPen( pen );
+    mPainter.drawLine( mapX(x1), mapY(y1), mapX(x2), mapY(y2) );
+//    drawFillCircle( x1, y1, width / 2, color );
+//    drawFillCircle( x2, y2, width / 2, color );
+    }
+  else {
+    addPoint(x1-width,y1-width);
+    addPoint(x1+width,y1+width);
+    addPoint(x2-width,y2-width);
+    addPoint(x2+width,y2+width);
+    }
+  }
+
+
+
 
 
 void SdIllustrator::drawLineArrow(int x1, int y1, int x2, int y2, QColor color, int arrowSize)
