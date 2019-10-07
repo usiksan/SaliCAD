@@ -154,6 +154,7 @@ class SdWMain : public QMainWindow
     void cmEditFind();
     void cmEditReplace();
     void cmEditProperties();
+    void cmEditRotateGroup();
 
     //View menu commands
     void cmViewProject();

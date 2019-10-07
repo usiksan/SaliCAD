@@ -116,6 +116,7 @@ class SdWCommand
     static QActionPtr  cmEditUnSelect;
     static QActionPtr  cmEditFind;
     static QActionPtr  cmEditReplace;
+    static QActionPtr  cmEditRotateGroup;
     static QActionPtr  cmEditProperties;
 
     static QActionPtr  cmViewProject;

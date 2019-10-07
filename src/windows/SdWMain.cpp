@@ -1120,6 +1120,18 @@ void SdWMain::cmEditProperties()
 
 
 
+
+void SdWMain::cmEditRotateGroup()
+  {
+  if( activeEditor() )
+    activeEditor()->cmEditRotateGroup();
+  }
+
+
+
+
+
+
 void SdWMain::cmViewProject()
   {
   if( mWProjectList->isHidden() )

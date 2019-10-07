@@ -1091,6 +1091,15 @@ void SdWEditorGraph::cmEditUnSelect()
 
 
 
+void SdWEditorGraph::cmEditRotateGroup()
+  {
+  //Only for selecting mode
+  if( mMode == mSelect && mSelect != nullptr )
+    mSelect->keyDown( Qt::Key_F7, QChar() );
+  }
+
+
+
 
 
 

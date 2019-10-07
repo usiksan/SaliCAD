@@ -1,5 +1,5 @@
 ﻿
-//B071 bugs
+//B072 bugs
 //F001 fatal
 //C001 critical
 //D093 do
@@ -36,6 +36,8 @@
 //TODO D092 Append mode to fix component and make untouchable for moving and selecting
 
 //TODO B071 Some time do not fit to view (in graph view) and picture too small
+
+//TODO B072 In part master for double side vertical not created first pin marker
 
 //===================================================================================
 //There are no need:

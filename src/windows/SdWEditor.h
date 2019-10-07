@@ -10,6 +10,8 @@ Web
 
 Description
   Common base class for any editors.
+
+  Через интерфейс этого класса осуществляется общее
 */
 
 #ifndef SDWEDITOR_H
@@ -29,7 +31,8 @@ class SdWEditor : public QAbstractScrollArea
   {
     Q_OBJECT
 
-    int mRecentlyIndex; //Index for release last resently used mechanism
+    int    mRecentlyIndex; //Index for release last resently used mechanism
+    quint8 padding[4];
   public:
     explicit SdWEditor( QWidget *parent = nullptr);
     virtual ~SdWEditor() {}
@@ -62,14 +65,16 @@ class SdWEditor : public QAbstractScrollArea
     virtual void onActivateEditor();
 
     //Command on rections [Реакции на команды]
+    //File menu commands
     virtual void cmFilePrint() {}
-
     virtual void cmFileImport() {}
     virtual void cmFileExport() {}
 
+    //Object menu commands
     virtual void cmObjectEditEnable();
     virtual void cmObjectEditDisable();
 
+    //Edit menu commands
     virtual void cmEditUndo() {}
     virtual void cmEditRedo() {}
     virtual void cmEditCut() {}
@@ -81,6 +86,9 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmEditFind() {}
     virtual void cmEditReplace() {}
     virtual void cmEditProperties() {}
+    virtual void cmEditRotateGroup() {}
+
+    //Functional commands
 
     virtual void cmViewProject() {}
     virtual void cmViewFit() {}
