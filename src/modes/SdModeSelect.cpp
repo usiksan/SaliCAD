@@ -543,18 +543,7 @@ void SdModeSelect::keyDown(int key, QChar ch)
 //    case vkDubl     : SetDirty(); Dublicate(); break;
 //    case vkParam    : SetDirty(); Param(); break;
 //    case vkNumerate : SetDirty(); Numerate(); break;
-    case Qt::Key_F7 :
-      setDirty();
-      //Поворот как группы компонентов
-      if( mFragment.count() && getStep() == smSelPresent ) {
-        mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
-          SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-          if( graph != nullptr )
-            graph->rotate( mCurPoint, da90 );
-          return true;
-          });
-        }
-      break;
+    case Qt::Key_F7      : groupRotation(); break;
     default : SdMode::keyDown( key, ch );
     }
   mEditor->viewport()->setCursor( loadCursor(getCursor()) );
@@ -974,6 +963,32 @@ void SdModeSelect::moveComplete()
       graph->moveComplete( mEditor->gridGet(), mUndo );
     return true;
     });
+  }
+
+
+
+
+void SdModeSelect::groupRotation()
+  {
+  setDirty();
+  //Сохранить состояние перед поворотом
+  mUndo->begin( QObject::tr("Group rotation"), mObject );
+  mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
+    SdPtr<SdGraph> graph(obj);
+    if( graph.isValid() )
+      graph->saveState( mUndo );
+    return true;
+    });
+
+  //Поворот как группы компонентов
+  if( mFragment.count() && getStep() == smSelPresent ) {
+    mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
+      SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+      if( graph != nullptr )
+        graph->rotate( mCurPoint, da90 );
+      return true;
+      });
+    }
   }
 
 

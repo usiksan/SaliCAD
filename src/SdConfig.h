@@ -164,6 +164,7 @@ History
   01.10.2019 v1.7  Append automatic form selection when sheet creation
              v1.8  Append slot form holes in a pads
                    Append single row part master
+  17.10.2019 v1.9  Append undo group rotation
 */
 
 #ifndef SDCONFIG
@@ -175,7 +176,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             8
+#define SD_VERSION_MINOR             9
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
