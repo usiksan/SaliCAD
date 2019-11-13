@@ -50,9 +50,15 @@ SdWProjectTree::SdWProjectTree(const QString fname, SdProject *prj, QWidget *par
     mProject = new SdProject();
     }
   else {
-    if( prj == nullptr )
+    if( prj == nullptr ) {
       //Loading project from file [Загружаем проект из файла]
       mProject = SdProject::load( fname );
+      if( mProject == nullptr ) {
+        //Project is not loaded
+        mFileName = SD_DEFAULT_FILE_NAME;
+        mProject = new SdProject();
+        }
+      }
     else
       //Project loaded outside. Simple assign it
       mProject = prj;
