@@ -93,7 +93,7 @@ void SdDOptionsPagePath::accept()
   sdEnvir->mPatternPath = dir.slashedPath();
 
   //For category it is path to file
-  //dir.set( mCategoryPath->text() );
-  sdEnvir->mCategoryPath = mCategoryPath->text();
+  dir.set( mCategoryPath->text() );
+  sdEnvir->mCategoryPath = dir.slashedPath();
 
   }

@@ -50,6 +50,8 @@
 //===================================================================================
 //Fixed:
 
+//B072 In category path must be trailing / else no categories readed
+
 //D086 Append automatic form selection when sheet creation
 
 //D093 When append default component copy to it category from symbol
