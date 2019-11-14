@@ -216,6 +216,9 @@ void SdDMasterPartDoubleSideLR::accept()
   //Draw part
   addRect( pinLen, partTop, sPinSizeX - pinLen, partBot );
 
+  //Draw inside part first pin indicator
+  addCircle( pinLen + 500, 0, 250 );
+
   //Draw pins
   if( pinLen > 0 ) {
     //Left pins

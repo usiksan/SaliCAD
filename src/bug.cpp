@@ -1,5 +1,5 @@
 ﻿
-//B072 bugs
+//B073 bugs
 //F001 fatal
 //C001 critical
 //D093 do
@@ -37,8 +37,6 @@
 
 //TODO B071 Some time do not fit to view (in graph view) and picture too small
 
-//TODO B072 In part master for double side vertical not created first pin marker
-
 //===================================================================================
 //There are no need:
 
@@ -50,7 +48,9 @@
 //===================================================================================
 //Fixed:
 
-//B072 In category path must be trailing / else no categories readed
+//B072 In part master for double side vertical not created first pin marker
+
+//B073 In category path must be trailing / else no categories readed
 
 //D086 Append automatic form selection when sheet creation
 

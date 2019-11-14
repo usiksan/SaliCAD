@@ -177,6 +177,9 @@ void SdDMasterPartSingleLine::accept()
   //Draw part
   addRect( partLeftPos, partTop, partRightPos, partBot );
 
+  //Draw inside part first pin indicator
+  addCircle( partLeftPos + 500, partTop - 500, 250 );
+
   //Add pins
 
   //Add pins
