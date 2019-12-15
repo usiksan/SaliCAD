@@ -13,7 +13,9 @@ Description
   On list base we build ratnet.
 */
 #include "SdPlateNet.h"
+#include "SdPoint.h"
 
+#include <QMap>
 
 //======================================================================================================================================
 //     SdPlateNet

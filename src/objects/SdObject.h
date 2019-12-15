@@ -29,6 +29,7 @@ Description
 
 class SdContainer;
 class SdProjectItem;
+class QWidget;
 
 typedef QString SdId;
 typedef QString SdUid;

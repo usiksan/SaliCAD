@@ -19,6 +19,7 @@ Description
 #include "SdPExport_Dxf.h"
 
 #include <QDebug>
+#include <QPaintEvent>
 
 SdWEditorGraphView::SdWEditorGraphView(SdProjectItem *item, QWidget *parent) :
   SdWEditorGraph( item, parent ),

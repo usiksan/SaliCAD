@@ -22,6 +22,7 @@ Description
 #include <QFileDialog>
 #include <QFile>
 #include <QJsonDocument>
+#include <QMouseEvent>
 
 #define CAT_TITLE    QStringLiteral("title")
 #define CAT_KEY      QStringLiteral("key")

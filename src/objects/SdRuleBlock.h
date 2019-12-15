@@ -32,6 +32,7 @@ Description
 #include <QList>
 #include <QMap>
 #include <QJsonObject>
+#include <QDataStream>
 
 //Available rules
 //When change rules list You need change also

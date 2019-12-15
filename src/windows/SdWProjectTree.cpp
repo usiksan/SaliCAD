@@ -37,6 +37,7 @@ Description
 #include <QWizard>
 #include <QtDebug>
 #include <QJsonDocument>
+#include <QMouseEvent>
 
 SdWProjectTree::SdWProjectTree(const QString fname, SdProject *prj, QWidget *parent) :
   QTreeWidget(parent),
