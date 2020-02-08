@@ -168,6 +168,7 @@ void SdObjectNetClient::onConnected()
   auto msg = tr("Connected to host %1").arg(hostIp);
   emit process( msg, false );
   emit connectionStatus( msg, true );
+  infoAppend( msg );
   startTransmit();
   }
 
@@ -253,7 +254,9 @@ void SdObjectNetClient::doCheck()
   mCommand = SCPI_ACCESS_CHECK_REQUEST;
   if( mSocket->state() != QAbstractSocket::ConnectedState ) {
     mSocket->connectToHost( QHostAddress(hostIp), SD_DEFAULT_PORT );
-    emit process( tr("Try connect to host %1").arg(hostIp), false );
+    QString msg = tr("Try connect to host %1").arg(hostIp);
+    emit process( msg, false );
+    infoAppend( msg );
     }
   }
 
@@ -481,6 +484,21 @@ void SdObjectNetClient::cmFile(QDataStream &is)
   QByteArray data;
   is >> info >> fileName >> data;
   emit fileContents( info.result(), fileName, data );
+  }
+
+
+
+
+//Append info to info list
+void SdObjectNetClient::infoAppend(const QString info)
+  {
+  //Support count of info items in info list not more then 300 items
+  if( mInfoList.count() >= 300 )
+    mInfoList.removeFirst();
+
+  mInfoList.append( info );
+
+  emit informationAppended( info );
   }
 
 

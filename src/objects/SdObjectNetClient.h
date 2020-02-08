@@ -42,6 +42,7 @@ class SdObjectNetClient : public SdCsChannel
     QTimer        mTimer;
     QByteArray    mBuffer;
     QByteArray    mBufferSync;
+    QStringList   mInfoList;        //List for information items. When any event happens then information item appends
     int           mCommand;
     int           mCommandSync;
     int           mLocalSyncCount;
@@ -49,7 +50,9 @@ class SdObjectNetClient : public SdCsChannel
   public:
     explicit SdObjectNetClient(QObject *parent = nullptr);
 
-    bool isRegistered() const;
+    bool        isRegistered() const;
+
+    QStringList infoList() const { return mInfoList; }
 
   signals:
     //Signal on process changed. Send current process state description and completion flag
@@ -77,6 +80,9 @@ class SdObjectNetClient : public SdCsChannel
 
     //Signal on remote status
     void remoteStatus( SdRemoteStatus st );
+
+    //Append information item
+    void informationAppended( const QString info );
 
   public slots:
 
@@ -116,6 +122,9 @@ class SdObjectNetClient : public SdCsChannel
     void    startTransmit();
     void    cmCheck( QDataStream &is );
     void    cmFile( QDataStream &is );
+
+    //Append info to info list
+    void    infoAppend( const QString info );
   };
 
 //Main object for remote database communication

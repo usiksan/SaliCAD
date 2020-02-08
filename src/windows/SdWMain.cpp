@@ -25,6 +25,7 @@ Description
 #include "SdWEditorIntro.h"
 #include "SdWEditorProject.h"
 #include "SdWEditorRich.h"
+#include "SdWRemoteStatus.h"
 #include "SdWCommand.h"
 #include "SdWLabel.h"
 #include "SdDOptions.h"
@@ -130,7 +131,7 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   mCapture = new QToolButton();
   mCapture->setIcon( QIcon(QString(":/pic/iconCaptureOff.png")) );
   mCapture->setToolTip( tr("Show status of guide capture video system: stopped") );
-  connect( mCapture, &QToolButton::toggle, this, &SdWMain::cmGuiderCapture );
+  connect( mCapture, &QToolButton::toggled, this, &SdWMain::cmGuiderCapture );
   sbar->addWidget( mCapture );
 
   mRemote = new QToolButton();
@@ -157,6 +158,7 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
       mRemote->setToolTip( tr("Remote repository status: sync being processed") );
       }
     } );
+  connect( mRemote, &QToolButton::clicked, this, &SdWMain::cmRemoteStatus );
   sbar->addWidget( mRemote );
 
   activateProjectName( nullptr );
@@ -1882,6 +1884,20 @@ void SdWMain::cmHelpForward()
   {
   SdWEditorHelp *help = dynamic_cast<SdWEditorHelp*>( helpWidget() );
   help->helpForward();
+  }
+
+
+
+
+
+void SdWMain::cmRemoteStatus()
+  {
+  if( SdWRemoteStatus::mWRemoteStatus == nullptr ) {
+    new SdWRemoteStatus( this );
+    SdWRemoteStatus::mWRemoteStatus->resize( 300, 350 );
+    SdWRemoteStatus::mWRemoteStatus->move( width() - 220, height() - 400 );
+    SdWRemoteStatus::mWRemoteStatus->show();
+    }
   }
 
 

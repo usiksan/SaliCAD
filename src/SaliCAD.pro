@@ -54,6 +54,7 @@ SOURCES += \
     windows/SdDOptions.cpp \
     windows/SdDOptionsPageColors.cpp \
     objects/SdEnvir.cpp \
+    windows/SdWRemoteStatus.cpp \
     windows/SdWView.cpp \
     modes/SdMode.cpp \
     modes/SdModeCommon.cpp \
@@ -320,6 +321,7 @@ HEADERS  += \
     windows/SdDOptions.h \
     windows/SdDOptionsPageColors.h \
     objects/SdEnvir.h \
+    windows/SdWRemoteStatus.h \
     windows/SdWView.h \
     modes/SdMode.h \
     modes/SdModeCommon.h \
