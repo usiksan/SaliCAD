@@ -33,6 +33,8 @@ class SdPExportPlate_Gerber : public QWizardPage
 
     QLineEdit           *mGroupPath; //Path to store group fiels
     QTableWidget        *mGroup;     //Table for multiple gerber generation
+
+    bool                 mGenerated; //True if at least one time generation was pressed
   public:
     SdPExportPlate_Gerber( SdWEditorGraphPlate *editor, SdPItemPlate *plate, int step, SdPMasterList *list, QWidget *parent = nullptr );
 
@@ -62,6 +64,7 @@ class SdPExportPlate_Gerber : public QWizardPage
     // QWizardPage interface
   public:
     virtual int  nextId() const override { return -1; }
+    virtual bool validatePage() override;
   };
 
 #endif // SDPEXPORTPLATE_GERBER_H

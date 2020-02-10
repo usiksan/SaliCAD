@@ -344,7 +344,8 @@ void SdGerberContext::polygonInt(QPolygon pgn)
 SdPExportPlate_Gerber::SdPExportPlate_Gerber(SdWEditorGraphPlate *editor, SdPItemPlate *plate, int step, SdPMasterList *list, QWidget *parent) :
   QWizardPage( parent ),
   mEditor(editor),
-  mPlate(plate)
+  mPlate(plate),
+  mGenerated(false) //True if at least one time generation was pressed
   {
   setMinimumWidth(800);
   list->addMaster( tr("Gerber"), tr("Creates gerber files for plate"), step, QString(":/pic/gerberExport.png") );
@@ -564,6 +565,8 @@ void SdPExportPlate_Gerber::onCellClicked(int row, int column)
 //Generate gerber for current view to file
 void SdPExportPlate_Gerber::generation(const QString fileName)
   {
+  //Mark that at least one file generated
+  mGenerated = true;
   //Attempt to file create
   QFile file(fileName);
   if( file.open(QIODevice::WriteOnly) ) {
@@ -642,6 +645,18 @@ void SdPExportPlate_Gerber::generation(const QString fileName)
     }
   else
     QMessageBox::warning( this, tr("Error!"), tr("Can't create Gerber file \'%1\'").arg(fileName) );
+  }
+
+
+
+
+//Test if can finished
+bool SdPExportPlate_Gerber::validatePage()
+  {
+  //If at least one file generated we can finish
+  if( !mGenerated )
+    QMessageBox::warning( this, tr("Warning!"), tr("Press generate button to generate one or more gerber files or press Cancel") );
+  return mGenerated;
   }
 
 
