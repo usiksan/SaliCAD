@@ -43,6 +43,9 @@ class SdWEditor : public QAbstractScrollArea
     //Return project to which referenced item edited by this editor
     virtual SdProject*     getProject();
 
+    //Return true if editor represent 3d view
+    virtual bool           is3d() const { return false; }
+
     void                   dirtyProject();
 
     virtual QString        getTitle();

@@ -33,6 +33,18 @@ SdGraphLinearRect::SdGraphLinearRect(SdPoint p1, SdPoint p2, const SdPropLine &p
 
 
 
+SdPointList SdGraphLinearRect::getPointList() const
+  {
+  SdPointList list;
+  list.append( a );
+  list.append( SdPoint(b.x(),a.y()) );
+  list.append( b );
+  list.append( SdPoint(a.x(),b.y()) );
+  return list;
+  }
+
+
+
 
 QString SdGraphLinearRect::getType() const
   {

@@ -31,6 +31,8 @@ class SdGraphLinearRegion : public SdGraphLinear
     SdGraphLinearRegion();
     SdGraphLinearRegion( const SdPointList list, const SdPropLine &propLine );
 
+    SdPointList     getPointList() const { return mList; }
+
     virtual QString getType() const override { return QString(SD_TYPE_REGION); }
     virtual quint64 getClass() const override { return dctLines; }
     virtual void    cloneFrom(const SdObject *src) override;

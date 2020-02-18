@@ -31,6 +31,7 @@ class SdPItemPart : public SdProjectItem
     // SdProjectItem interface
   public:
     virtual QString        getIconName() const override;
+    virtual bool           is3dAllowed() const override { return true; }
     virtual quint64        getAcceptedObjectsMask() const override;
   };
 

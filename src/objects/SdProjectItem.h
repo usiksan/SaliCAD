@@ -20,7 +20,9 @@ Description
 #include "SdSelector.h"
 #include "library/SdStringMap.h"
 #include "library/SdLibraryHeader.h"
+
 #include <QString>
+#include <QOpenGLFunctions_2_0>
 
 
 class SdProject;
@@ -93,6 +95,8 @@ class SdProjectItem : public SdContainer
     void                   autoDelete( SdUndo *undo );
 
     virtual QString        getIconName() const = 0;
+    virtual bool           is3dAllowed() const { return false; }
+    virtual void           draw3d( QOpenGLFunctions_2_0 *f );
     virtual quint64        getAcceptedObjectsMask() const = 0;
     virtual SdGraph       *insertCopyObject( const SdGraph *obj, SdPoint offset, SdUndo *undo, SdWEditorGraph *editor, bool next );
     virtual void           insertObjects( SdPoint offset, SdSelector *sour, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next );

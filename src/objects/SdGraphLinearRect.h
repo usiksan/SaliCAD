@@ -28,6 +28,8 @@ class SdGraphLinearRect : public SdGraphLinear
     SdGraphLinearRect( SdPoint p1, SdPoint p2, const SdPropLine &propLine );
 
 
+    SdPointList     getPointList() const;
+
     // SdObject interface
     virtual QString getType() const override;
     virtual quint64 getClass() const override;

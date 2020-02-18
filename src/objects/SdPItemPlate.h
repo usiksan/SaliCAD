@@ -164,6 +164,8 @@ class SdPItemPlate : public SdProjectItem
     // SdProjectItem interface
   public:
     virtual QString        getIconName() const override;
+    virtual bool           is3dAllowed() const override { return true; }
+    virtual void           draw3d( QOpenGLFunctions_2_0 *f ) override;
     virtual quint64        getAcceptedObjectsMask() const override;
 
     //Set layers usage

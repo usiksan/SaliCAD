@@ -38,6 +38,9 @@ class SdGraphLinear : public SdGraph
 
     virtual void setLayerUsage() override;
 
+    //Compare if is layer match to object layer
+            bool isMatchLayer( SdLayer *layer ) const { return mProp.mLayer.layer() == layer; }
+
     friend class SdPasCadImport;
   };
 

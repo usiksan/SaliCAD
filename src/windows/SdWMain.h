@@ -76,6 +76,10 @@ class SdWMain : public QMainWindow
     //on it we open appropriate editor
     void onActivateProjectItem( SdProjectItem *item );
 
+    //This signal send from project tree view
+    //when user want to open 3d editor
+    void onActivateProjectItem3d( SdProjectItem *item );
+
     void onCloseEditView( SdProjectItem *item );
     void onUpdateItemTitle( SdProjectItem *item );
     void onRemoveProjectItem( SdProjectItem *item );
@@ -158,6 +162,7 @@ class SdWMain : public QMainWindow
 
     //View menu commands
     void cmViewProject();
+    void cmView3d();
     void cmViewFill();
     void cmViewNets();
     void cmViewGrid();

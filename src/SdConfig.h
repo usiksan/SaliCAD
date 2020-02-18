@@ -167,6 +167,7 @@ History
   17.10.2019 v1.9  Append undo group rotation
   14.11.2019 v1.10 In part master for double side vertical not created first pin marker
   10.02.2020 v1.11 In gerber export appended enabling finish only if gerber generated
+  18.02.2020 v1.12 Begin to insert 3d support
 */
 
 #ifndef SDCONFIG
@@ -178,7 +179,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             11
+#define SD_VERSION_MINOR             12
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

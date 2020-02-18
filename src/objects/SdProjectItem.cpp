@@ -396,6 +396,16 @@ void SdProjectItem::autoDelete(SdUndo *undo)
 
 
 
+//Draw 3d model
+void SdProjectItem::draw3d(QOpenGLFunctions_2_0 *f)
+  {
+  //Do nothing
+  Q_UNUSED(f)
+  }
+
+
+
+
 
 
 void SdProjectItem::insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)

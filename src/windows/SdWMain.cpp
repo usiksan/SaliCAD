@@ -25,6 +25,7 @@ Description
 #include "SdWEditorIntro.h"
 #include "SdWEditorProject.h"
 #include "SdWEditorRich.h"
+#include "SdWEditor3d.h"
 #include "SdWRemoteStatus.h"
 #include "SdWCommand.h"
 #include "SdWLabel.h"
@@ -267,14 +268,14 @@ void SdWMain::activateProjectName(SdProject *project)
 void SdWMain::onActivateProjectItem(SdProjectItem *item)
   {
   if( item == nullptr ) return;
-  if( activeEditor() && activeEditor()->getProjectItem() == item )
+  if( activeEditor() && !activeEditor()->is3d() && activeEditor()->getProjectItem() == item )
     //Active editor already top with this item. Nothing done
     return;
 
   //Find if item already open
   for( int i = 0; i < mWEditors->count(); i++ ) {
     SdWEditor *editor = getEditor(i);
-    if( editor && editor->getProjectItem() == item ) {
+    if( editor && !editor->is3d() && editor->getProjectItem() == item ) {
       //Item already open, bring it on top
       mWEditors->setCurrentIndex( i );
       return;
@@ -318,6 +319,66 @@ void SdWMain::onActivateProjectItem(SdProjectItem *item)
 
   appendEditor( editor );
   }
+
+
+
+
+
+//This signal send from project tree view
+//when user want to open 3d editor
+void SdWMain::onActivateProjectItem3d(SdProjectItem *item)
+  {
+  if( item == nullptr ) return;
+  if( activeEditor() && activeEditor()->is3d() && activeEditor()->getProjectItem() == item )
+    //Active editor already top with this item. Nothing done
+    return;
+
+  //Find if item already open
+  for( int i = 0; i < mWEditors->count(); i++ ) {
+    SdWEditor *editor = getEditor(i);
+    if( editor && editor->is3d() && editor->getProjectItem() == item ) {
+      //Item already open, bring it on top
+      mWEditors->setCurrentIndex( i );
+      return;
+      }
+    }
+
+  //Item not found, create and insert editor for it
+  SdWEditor *editor = nullptr;
+  switch( item->getClass() ) {
+    case dctSymbol :
+//      if( item->isEditEnable() )
+//        editor = new SdWEditorGraphSymbol( dynamic_cast<SdPItemSymbol*>( item ), mWEditors );
+//      else
+//        editor = new SdWEditorGraphView( item, mWEditors );
+      break;
+    case dctPart :
+//      if( item->isEditEnable() )
+//        editor = new SdWEditorGraphPart( dynamic_cast<SdPItemPart*>( item ), mWEditors );
+//      else
+//        editor = new SdWEditorGraphView( item, mWEditors );
+      break;
+    case dctSheet :
+//      if( item->isEditEnable() )
+//        editor = new SdWEditorGraphSheet( dynamic_cast<SdPItemSheet*>( item ), mWEditors );
+//      else
+//        editor = new SdWEditorGraphView( item, mWEditors );
+      break;
+    case dctPlate :
+      if( item->isEditEnable() )
+        editor = new SdWEditor3d( dynamic_cast<SdPItemPlate*>( item ), mWEditors );
+//      else
+//        editor = new SdWEditorGraphView( item, mWEditors );
+      break;
+    }
+
+  appendEditor( editor );
+  }
+
+
+
+
+
 
 
 
@@ -1146,6 +1207,20 @@ void SdWMain::cmViewProject()
       sizes[0] = 300;
       mWSplitter->setSizes( sizes );
       }
+    }
+  }
+
+
+
+//Switch 3d-2d view of editor
+void SdWMain::cmView3d()
+  {
+  if( activeEditor() ) {
+    //If current view is 3d, then open 2d editor
+    if( activeEditor()->is3d() )
+      onActivateProjectItem( activeEditor()->getProjectItem() );
+    else
+      onActivateProjectItem3d( activeEditor()->getProjectItem() );
     }
   }
 

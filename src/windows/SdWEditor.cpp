@@ -99,6 +99,8 @@ void SdWEditor::onActivateEditor()
 
   SdWCommand::cmFilePrint->setEnabled(true);
 
+  SdWCommand::cmView3d->setEnabled( getProjectItem() != nullptr && getProjectItem()->is3dAllowed() );
+
   //Highlight item
   SdPulsar::sdPulsar->emitHighlightItem( getProjectItem() );
   }

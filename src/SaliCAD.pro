@@ -23,6 +23,9 @@ SOURCES += \
     master/SdDMasterPartSingleLine.cpp \
     master/SdDMasterSheetDecorator.cpp \
     modes/SdModeCTraceDelete.cpp \
+    objects/Sd3dDraw.cpp \
+    objects/SdPoint3d.cpp \
+    windows/SdWEditor3d.cpp \
     windows/SdWMain.cpp \
     objects/SdObject.cpp \
     objects/SdProject.cpp \
@@ -58,6 +61,7 @@ SOURCES += \
     windows/SdWView.cpp \
     modes/SdMode.cpp \
     modes/SdModeCommon.cpp \
+    windows/SdWView3d.cpp \
     windows/windowsCursor.cpp \
     objects/SdLayer.cpp \
     objects/SdContainer.cpp \
@@ -288,6 +292,9 @@ HEADERS  += \
     master/SdDMasterPartSingleLine.h \
     master/SdDMasterSheetDecorator.h \
     modes/SdModeCTraceDelete.h \
+    objects/Sd3dDraw.h \
+    objects/SdPoint3d.h \
+    windows/SdWEditor3d.h \
     windows/SdWMain.h \
     objects/SdObject.h \
     objects/SdProject.h \
@@ -555,7 +562,8 @@ HEADERS  += \
     windows/SdPExport_Dxf.h \
     objects/SdUndoRecordPolygon.h \
     objects/SdPlateNetGraph.h \
-    objects/SdPlateNetContainer.h
+    objects/SdPlateNetContainer.h \
+    windows/SdWView3d.h
 
 DISTFILES += \
     license.txt
