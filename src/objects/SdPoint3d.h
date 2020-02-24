@@ -17,7 +17,9 @@ class SdPoint3d
     int         y() const { return mY; }
     int         z() const { return mZ; }
 
-    void        vertex( QOpenGLFunctions_2_0 *f ) { f->glVertex3i( mX, mY, mZ ); }
+    SdPoint3d   operator + ( const SdPoint3d &p ) const { return SdPoint3d( mX + p.x(), mY + p.y(), mZ + p.z() ); }
+
+    void        vertex( QOpenGLFunctions_2_0 *f ) const { f->glVertex3i( mX, mY, mZ ); }
 
     void        write(const QString name, QJsonObject &obj ) const;
     void        read(const QString name, const QJsonObject obj );
