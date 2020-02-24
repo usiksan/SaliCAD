@@ -42,7 +42,7 @@ Description
 #define dctTracePolygon   0x00200000ul
 #define dctTraceVia       0x00400000ul
 #define dctRich           0x00800000ul
-#define dctReserved3      0x01000000ul
+#define dct3D             0x01000000ul
 #define dctValue          0x02000000ul
 #define dctVariant        0x04000000ul
 

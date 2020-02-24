@@ -330,8 +330,8 @@ void SdPoint::swap(SdPoint *p)
 QJsonObject SdPoint::write() const
   {
   QJsonObject obj;
-  obj.insert( QString("x"), QJsonValue(x()) );
-  obj.insert( QString("y"), QJsonValue(y()) );
+  obj.insert( QStringLiteral("x"), QJsonValue(x()) );
+  obj.insert( QStringLiteral("y"), QJsonValue(y()) );
   return obj;
   }
 
@@ -340,8 +340,8 @@ QJsonObject SdPoint::write() const
 
 void SdPoint::read(const QJsonObject obj)
   {
-  setX( obj.value( QString("x") ).toInt() );
-  setY( obj.value( QString("y") ).toInt() );
+  setX( obj.value( QStringLiteral("x") ).toInt() );
+  setY( obj.value( QStringLiteral("y") ).toInt() );
   }
 
 

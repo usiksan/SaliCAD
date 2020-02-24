@@ -2,6 +2,8 @@
 #include "SdWView3d.h"
 
 #include <QVBoxLayout>
+#include <QPaintEvent>
+#include <QWheelEvent>
 #include <QDebug>
 
 SdWEditor3d::SdWEditor3d(SdProjectItem *item, QWidget *parent) :

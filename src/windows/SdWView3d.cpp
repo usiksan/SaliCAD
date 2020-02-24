@@ -4,6 +4,7 @@
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 #include <QOpenGLFunctions_2_0>
+#include <QWheelEvent>
 #include <QDebug>
 
 SdWView3d::SdWView3d(SdProjectItem *item, QWidget *parent) :

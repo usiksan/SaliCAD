@@ -24,6 +24,8 @@ SOURCES += \
     master/SdDMasterSheetDecorator.cpp \
     modes/SdModeCTraceDelete.cpp \
     objects/Sd3dDraw.cpp \
+    objects/Sd3dObject.cpp \
+    objects/Sd3dParallelepiped.cpp \
     objects/SdPoint3d.cpp \
     windows/SdWEditor3d.cpp \
     windows/SdWMain.cpp \
@@ -293,6 +295,8 @@ HEADERS  += \
     master/SdDMasterSheetDecorator.h \
     modes/SdModeCTraceDelete.h \
     objects/Sd3dDraw.h \
+    objects/Sd3dObject.h \
+    objects/Sd3dParallelepiped.h \
     objects/SdPoint3d.h \
     windows/SdWEditor3d.h \
     windows/SdWMain.h \
