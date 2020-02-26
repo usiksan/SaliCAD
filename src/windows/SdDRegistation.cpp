@@ -30,6 +30,7 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
   mNameStatus(-1),
   ui(new Ui::SdDRegistation)
   {
+  qDebug() << QString::number( 10292256597293707235ul, 32 );
   ui->setupUi(this);
 
   sdObjectNetClient->startSync(false);

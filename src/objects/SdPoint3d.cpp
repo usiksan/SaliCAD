@@ -3,6 +3,30 @@
 
 
 
+void SdPoint3d::write(const QString name, QJsonObject &obj) const
+  {
+  obj.insert( name, write() );
+  }
+
+
+
+void SdPoint3d::read(const QString name, const QJsonObject obj)
+  {
+  read( obj.value(name).toObject() );
+  }
+
+
+
+
+void SdPoint3d::swap(SdPoint3d *p)
+  {
+  qSwap( mX, p->mX );
+  qSwap( mY, p->mY );
+  qSwap( mZ, p->mZ );
+  }
+
+
+
 QJsonObject SdPoint3d::write() const
   {
   QJsonObject obj;

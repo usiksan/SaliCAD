@@ -81,6 +81,8 @@ int main(int argc, char *argv[])
 
   //Check if registered
   if( !s.contains(SDK_GLOBAL_AUTHOR) ) {
+    //Store default ip
+    s.setValue( QStringLiteral(SDK_SERVER_IP), QStringLiteral(SD_DEFAULT_IP) );
     //Not registered, show register dialog
     SdDRegistation rd(false);
     if( rd.exec() == 0 )

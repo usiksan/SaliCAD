@@ -255,6 +255,7 @@ void SdObjectNetClient::doCheck()
   if( mSocket->state() != QAbstractSocket::ConnectedState ) {
     mSocket->connectToHost( QHostAddress(hostIp), SD_DEFAULT_PORT );
     QString msg = tr("Try connect to host %1").arg(hostIp);
+    qDebug() << "doCheck" << msg;
     emit process( msg, false );
     infoAppend( msg );
     }
