@@ -80,9 +80,9 @@ void SdLibraryStorage::setLibraryPath(const QString path)
 
   //Check if directory present
   QDir dir(mPath);
-  if( !dir.exists() ) {
+  if( !dir.exists() || (!QFile::exists(FNAME_REF) && !QFile::exists(FNAME_HDR) && !QFile::exists(FNAME_OBJ)) ) {
     //Directory not exist, create one
-    if( !dir.mkpath( mPath ) ) {
+    if( !dir.exists() && !dir.mkpath( mPath ) ) {
       mPath.clear();
       return;
       }
@@ -267,7 +267,7 @@ bool SdLibraryStorage::header(const QString uid, SdLibraryHeader &hdr)
 
 
 //Set reference to object with header
-void SdLibraryStorage::setHeader(SdLibraryHeader &hdr)
+bool SdLibraryStorage::setHeader(SdLibraryHeader &hdr)
   {
   QWriteLocker locker( &mLock );
 
@@ -276,7 +276,7 @@ void SdLibraryStorage::setHeader(SdLibraryHeader &hdr)
   if( mReferenceMap.contains(key) && mReferenceMap.value(key).isNewerOrSame(hdr.mTime) )
     //Newer or same header already present in base
     //Nothing done
-    return;
+    return false;
 
   //Else insert record
   QFile file(FNAME_HDR);
@@ -294,6 +294,8 @@ void SdLibraryStorage::setHeader(SdLibraryHeader &hdr)
     mReferenceMap.insert( key, ref );
     mDirty = true;
     }
+
+  return true;
   }
 
 

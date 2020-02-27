@@ -13,7 +13,7 @@
                         "x": 4750,
                         "y": -2250
                     },
-                    "id": "6850498",
+                    "id": "563e6d056a30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -28,7 +28,7 @@
                         "x": 2000,
                         "y": -2250
                     },
-                    "id": "6850518",
+                    "id": "563e6da313a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -43,7 +43,7 @@
                         "x": 3500,
                         "y": -2250
                     },
-                    "id": "6850558",
+                    "id": "563e6e009b70",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -58,7 +58,7 @@
                         "x": 750,
                         "y": 0
                     },
-                    "id": "6851098",
+                    "id": "563e6e0444d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -94,7 +94,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "67bd508",
+                    "id": "563e6dfca720",
                     "type": "SymPin"
                 },
                 {
@@ -106,7 +106,7 @@
                         "x": 2000,
                         "y": -500
                     },
-                    "id": "6850b18",
+                    "id": "563e6e11db60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -121,7 +121,7 @@
                         "x": 750,
                         "y": -1000
                     },
-                    "id": "6850dd8",
+                    "id": "563e6d7c9930",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -157,7 +157,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "67bd5b0",
+                    "id": "563e6e10ddd0",
                     "type": "SymPin"
                 },
                 {
@@ -169,7 +169,7 @@
                         "x": 750,
                         "y": -1500
                     },
-                    "id": "6851198",
+                    "id": "563e6de8c4d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -205,7 +205,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "67bd310",
+                    "id": "7fa054022a00",
                     "type": "SymPin"
                 },
                 {
@@ -217,7 +217,7 @@
                         "x": 750,
                         "y": -2000
                     },
-                    "id": "6850ad8",
+                    "id": "563e6d969350",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -253,7 +253,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "67bdd90",
+                    "id": "563e6dfb3e50",
                     "type": "SymPin"
                 },
                 {
@@ -265,7 +265,7 @@
                         "x": 5500,
                         "y": 0
                     },
-                    "id": "6851058",
+                    "id": "563e6d123c00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -301,7 +301,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "67bdc40",
+                    "id": "563e6e023fb0",
                     "type": "SymPin"
                 },
                 {
@@ -313,7 +313,7 @@
                         "x": 5500,
                         "y": -500
                     },
-                    "id": "6850b58",
+                    "id": "563e6dfcb9b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -349,7 +349,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "67bde38",
+                    "id": "563e6e097720",
                     "type": "SymPin"
                 },
                 {
@@ -361,7 +361,7 @@
                         "x": 3500,
                         "y": -1000
                     },
-                    "id": "6850bd8",
+                    "id": "563e6da7eb90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -376,7 +376,7 @@
                         "x": 5500,
                         "y": -1500
                     },
-                    "id": "6850e18",
+                    "id": "563e6d824070",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -412,7 +412,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "67bd850",
+                    "id": "563e6e007430",
                     "type": "SymPin"
                 },
                 {
@@ -424,7 +424,7 @@
                         "x": 5500,
                         "y": -2000
                     },
-                    "id": "6850c58",
+                    "id": "563e6d820cb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -460,7 +460,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "67bf488",
+                    "id": "563e6df9a450",
                     "type": "SymPin"
                 },
                 {
@@ -468,7 +468,7 @@
                         "x": 2750,
                         "y": 500
                     },
-                    "id": "b96b710",
+                    "id": "563e6e0b8730",
                     "over": {
                         "b": 708,
                         "r": 3054,
@@ -490,7 +490,7 @@
                         "x": 2750,
                         "y": -2500
                     },
-                    "id": "b96b1e8",
+                    "id": "563e6e0e7b20",
                     "over": {
                         "b": -2293,
                         "r": 3326,
@@ -512,7 +512,7 @@
                         "x": 2750,
                         "y": 0
                     },
-                    "id": "b96b978",
+                    "id": "563e6dfb9e20",
                     "over": {
                         "b": 207,
                         "r": 3086,
@@ -540,7 +540,7 @@
                 "category": "{uu.a.a.a.h"
             },
             "Title": "XPT8871 audio power amplifier",
-            "id": "6850618",
+            "id": "563e6d82bfb0",
             "type": "Symbol"
         },
         {
@@ -560,18 +560,18 @@
                     },
                     "SymbolId": "Symbol\rXPT8871 audio power amplifier\rsalicad",
                     "SymbolTitle": "XPT8871 audio power amplifier (salicad)",
-                    "id": "6632be8",
+                    "id": "563e6e0f4780",
                     "type": "Section"
                 },
                 {
                     "Default": false,
-                    "PartId": "Part\rsop8 height 4.85\rsalicad",
-                    "PartTitle": "sop8 height 4.85 (salicad)",
-                    "id": "65fb808",
+                    "PartId": "Part\rsoic-8 narrow\rsalicad",
+                    "PartTitle": "soic-8 narrow (salicad)",
+                    "id": "563e6e108920",
                     "type": "PartVariant"
                 }
             ],
-            "Created": 51911944,
+            "Created": 52563058,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -588,12 +588,12 @@
                 "www": "www.xptek.cn"
             },
             "Title": "XPT8871 audio power amplifier",
-            "id": "b5fa2d8",
+            "id": "563e6e10dbe0",
             "type": "Comp"
         }
     ],
     "Parametrs": {
     },
-    "id": "6897790",
+    "id": "563e6e09bd00",
     "type": "Project"
 }

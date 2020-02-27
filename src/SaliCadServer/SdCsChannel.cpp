@@ -91,30 +91,3 @@ void SdCsChannel::onReceivBytes()
     }
   }
 
-
-
-
-
-
-
-
-#if 0
-void SdCsChannel::onConnectionClose()
-  {
-  mThread->quit();
-  mThread->deleteLater();
-  deleteLater();
-  mSocket->deleteLater();
-  }
-
-
-
-
-void SdCsChannel::sendAuthorInfo(int cmd, SdAuthorInfo &info)
-  {
-  QByteArray ar;
-  QDataStream os( &ar, QIODevice::WriteOnly );
-  os << info;
-  writeBlock( cmd, ar );
-  }
-#endif

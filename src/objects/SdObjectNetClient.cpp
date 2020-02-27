@@ -183,7 +183,13 @@ void SdObjectNetClient::onConnected()
 //By timer do syncronisation
 void SdObjectNetClient::doSync()
   {
-  mTimer.setInterval( 180000 );
+  mTimer.setInterval( 10000 );
+  if( mQueryObjects.count() ) {
+    //There are queried objects
+    doObject( mQueryObjects.first() );
+    mQueryObjects.removeFirst();
+    return;
+    }
   QSettings s;
   QString author          = s.value( SDK_GLOBAL_AUTHOR ).toString();
   quint64 key             = s.value( SDK_MACHINE_KEY ).toString().toULongLong( nullptr, 32 );
@@ -192,7 +198,8 @@ void SdObjectNetClient::doSync()
   QString hostIp          = s.value( SDK_SERVER_IP ).toString();
   if( !hostIp.isEmpty() ) {
     remoteStatus( SdRemoteSync );
-    //qDebug() << "doSync";
+    qDebug() << "doSync localSyncIndex" << localSyncIndex << "remoteSyncIndex" << remoteSyncIndex;
+    infoAppend( tr("Do sync...") );
     mCommandSync = 0;
     mBufferSync.clear();
     QDataStream os( &mBufferSync, QIODevice::WriteOnly );
@@ -207,6 +214,7 @@ void SdObjectNetClient::doSync()
       if( sdLibraryStorage.header( hash, hdr ) ) {
         //Header readed successfull, transmit header and object
         os << hdr << sdLibraryStorage.object(hash);
+        infoAppend( tr("Send: ") + hdr.mName );
         }
       }
     qDebug() << "sync objects transmited" << list.count();
@@ -379,7 +387,11 @@ void SdObjectNetClient::cmSyncList(QDataStream &is)
     while( !is.atEnd() ) {
       SdLibraryHeader hdr;
       is >> hdr;
-      sdLibraryStorage.setHeader( hdr );
+      if( sdLibraryStorage.setHeader( hdr ) ) {
+        //Header appended. Append this object to query list
+        mQueryObjects.append( hdr.uid() );
+        infoAppend( tr("Header received: ") + hdr.mName );
+        }
       updateCount++;
       }
     if( updateCount != 0 || mLocalSyncCount != 0 ) {
@@ -419,8 +431,17 @@ void SdObjectNetClient::cmObject(QDataStream &is)
 
     sdLibraryStorage.insert( header, obj );
 
+    infoAppend( tr("Object received: ") + header.mName );
+
     QSettings s;
     s.setValue( SDK_REMOTE_REMAIN, QString::number(info.mRemain) );
+
+    if( mQueryObjects.count() ) {
+      //There are queried objects
+      doObject( mQueryObjects.first() );
+      mQueryObjects.removeFirst();
+      }
+
     }
   else {
     emit process( error(info.result()), false );
@@ -501,6 +522,10 @@ void SdObjectNetClient::infoAppend(const QString info)
 
   emit informationAppended( info );
   }
+
+
+
+
 
 
 

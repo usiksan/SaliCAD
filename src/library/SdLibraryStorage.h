@@ -49,6 +49,8 @@ class SdLibraryStorage
     SdLibraryStorage();
     ~SdLibraryStorage();
 
+    qint32      objectCount() const { return mReferenceMap.count(); }
+
     //==================================================================
     //Common library properties
 
@@ -93,7 +95,7 @@ class SdLibraryStorage
 
     //Set reference to object with header
     // hdr - object header
-    void        setHeader( SdLibraryHeader &hdr );
+    bool        setHeader( SdLibraryHeader &hdr );
 
     //Get object
     // uid - object unical identificator

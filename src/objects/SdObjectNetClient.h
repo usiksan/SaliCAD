@@ -32,17 +32,11 @@ class SdObjectNetClient : public SdCsChannel
   {
     Q_OBJECT
 
-//    QString       mAuthor;          //Author name
-//    QString       mEmail;
-//    quint64       mKey;             //Author key
-//    qint32        mRemain;          //Remain object count for loading
-//    qint32        mLocalSyncIndex;  //Index of last sync in local storage
-//    qint32        mRemoteSyncIndex; //Index of last sync in remote storage
-//    QString       mHostIp;
     QTimer        mTimer;
     QByteArray    mBuffer;
     QByteArray    mBufferSync;
     QStringList   mInfoList;        //List for information items. When any event happens then information item appends
+    QStringList   mQueryObjects;    //List of queried objects
     int           mCommand;
     int           mCommandSync;
     int           mLocalSyncCount;

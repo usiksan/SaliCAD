@@ -14,6 +14,7 @@ Description
 #include "SdDOptionsPagePath.h"
 #include "objects/SdEnvir.h"
 #include "library/SvDir.h"
+#include "library/SdLibraryStorage.h"
 #include <QSettings>
 #include <QVBoxLayout>
 #include <QGridLayout>
@@ -87,7 +88,15 @@ void SdDOptionsPagePath::accept()
   sdEnvir->mHomePath = dir.slashedPath();
 
   dir.set( mLibraryPath->text() );
-  sdEnvir->mLibraryPath = dir.slashedPath();
+  if( sdEnvir->mLibraryPath != dir.slashedPath() ) {
+    //Library path changed. We change library path to libraryStorage and reset sync counts
+    QSettings s;
+    s.setValue( SDK_LOCAL_SYNC, 0 );
+    s.setValue( SDK_REMOTE_SYNC, 0 );
+
+    sdEnvir->mLibraryPath = dir.slashedPath();
+    sdLibraryStorage.setLibraryPath( sdEnvir->mLibraryPath );
+    }
 
   dir.set( mPatternPath->text() );
   sdEnvir->mPatternPath = dir.slashedPath();
