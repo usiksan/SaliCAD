@@ -13,7 +13,7 @@
                         "x": 3500,
                         "y": -3500
                     },
-                    "id": "5608bc498150",
+                    "id": "55a6bd86f630",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -28,7 +28,7 @@
                         "x": 5500,
                         "y": -3500
                     },
-                    "id": "5608c0aa1360",
+                    "id": "55a6bd7d8340",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -43,7 +43,7 @@
                         "x": 4550,
                         "y": -3400
                     },
-                    "id": "5608bb771e20",
+                    "id": "55a6bd7d83a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -58,7 +58,7 @@
                         "x": 4450,
                         "y": -3350
                     },
-                    "id": "5608bb0b6f20",
+                    "id": "55a6bd7c7800",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -73,7 +73,7 @@
                         "x": 3500,
                         "y": -3000
                     },
-                    "id": "5608bbdab8b0",
+                    "id": "55a6bd7c7860",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -88,7 +88,7 @@
                         "x": 4250,
                         "y": -3250
                     },
-                    "id": "5608bc46dc80",
+                    "id": "55a6bbe41d80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -103,7 +103,7 @@
                         "x": 4700,
                         "y": -2750
                     },
-                    "id": "5608c0aa11f0",
+                    "id": "55a6bbe41de0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -118,7 +118,7 @@
                         "x": 4300,
                         "y": -2850
                     },
-                    "id": "5608bb049a20",
+                    "id": "55a6bd888070",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -133,7 +133,7 @@
                         "x": 4700,
                         "y": -2850
                     },
-                    "id": "5608bc451d00",
+                    "id": "55a6bd8880d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -148,7 +148,7 @@
                         "x": 4150,
                         "y": -3200
                     },
-                    "id": "5608c0a881a0",
+                    "id": "55a6bc290950",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -184,7 +184,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "5608c0b07db0",
+                    "id": "55a6bc73b6c0",
                     "type": "SymPin"
                 },
                 {
@@ -217,7 +217,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "5608c0b07c30",
+                    "id": "55a6bc291320",
                     "type": "SymPin"
                 },
                 {
@@ -250,7 +250,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "5608c0b07ab0",
+                    "id": "55a6bc73b1e0",
                     "type": "SymPin"
                 },
                 {
@@ -258,12 +258,12 @@
                         "x": 4500,
                         "y": -2500
                     },
-                    "id": "5608c0b1d120",
+                    "id": "55a6bd8c6e80",
                     "over": {
-                        "b": -2307,
-                        "r": 4786,
-                        "x": 4214,
-                        "y": -2692
+                        "b": -2306,
+                        "r": 4802,
+                        "x": 4208,
+                        "y": -2697
                     },
                     "propTextDir": 0,
                     "propTextFont": 0,
@@ -280,12 +280,12 @@
                         "x": 4500,
                         "y": -3750
                     },
-                    "id": "5608c0a87300",
+                    "id": "55a6bd838390",
                     "over": {
-                        "b": -3559,
-                        "r": 5034,
-                        "x": 3965,
-                        "y": -3944
+                        "b": -3556,
+                        "r": 5028,
+                        "x": 3982,
+                        "y": -3947
                     },
                     "propTextDir": 0,
                     "propTextFont": 0,
@@ -307,254 +307,7 @@
             "Parametrs": {
             },
             "Title": "button 1-switch",
-            "id": "5608bd1fa050",
-            "type": "Symbol"
-        },
-        {
-            "Author": "salicad",
-            "Auto": true,
-            "ChildList": [
-                {
-                    "a": {
-                        "x": 4250,
-                        "y": -3500
-                    },
-                    "b": {
-                        "x": 3500,
-                        "y": -3500
-                    },
-                    "id": "5608bc41b940",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 4750,
-                        "y": -3500
-                    },
-                    "b": {
-                        "x": 5500,
-                        "y": -3500
-                    },
-                    "id": "5608bb726db0",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 4550,
-                        "y": -2750
-                    },
-                    "b": {
-                        "x": 4550,
-                        "y": -3400
-                    },
-                    "id": "5608bb6f8c20",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 4450,
-                        "y": -2750
-                    },
-                    "b": {
-                        "x": 4450,
-                        "y": -3350
-                    },
-                    "id": "5608bbd7ce50",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 4300,
-                        "y": -2750
-                    },
-                    "b": {
-                        "x": 4700,
-                        "y": -2750
-                    },
-                    "id": "5608bcb992b0",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 4300,
-                        "y": -2750
-                    },
-                    "b": {
-                        "x": 4300,
-                        "y": -2850
-                    },
-                    "id": "5608b1d2cf10",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 4700,
-                        "y": -2750
-                    },
-                    "b": {
-                        "x": 4700,
-                        "y": -2850
-                    },
-                    "id": "5608baa33170",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "a": {
-                        "x": 4750,
-                        "y": -3500
-                    },
-                    "b": {
-                        "x": 4150,
-                        "y": -3200
-                    },
-                    "id": "5608bb740bd0",
-                    "lineLayer": "Component",
-                    "lineType": 0,
-                    "lineWidth": 0,
-                    "type": "Line"
-                },
-                {
-                    "Name": "1",
-                    "NamePos": {
-                        "x": 3750,
-                        "y": -3250
-                    },
-                    "NameTextDir": 0,
-                    "NameTextFont": 0,
-                    "NameTextHorz": 1,
-                    "NameTextLayer": "PinName",
-                    "NameTextMirror": 0,
-                    "NameTextSize": 375,
-                    "NameTextVert": 1,
-                    "NumberPos": {
-                        "x": 3000,
-                        "y": -3250
-                    },
-                    "NumberTextDir": 0,
-                    "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
-                    "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
-                    "NumberTextSize": 375,
-                    "NumberTextVert": 1,
-                    "Origin": {
-                        "x": 3500,
-                        "y": -3500
-                    },
-                    "SymPinLayer": "Pin",
-                    "SymPinType": 7,
-                    "id": "5608c0b07930",
-                    "type": "SymPin"
-                },
-                {
-                    "Name": "2",
-                    "NamePos": {
-                        "x": 5250,
-                        "y": -3250
-                    },
-                    "NameTextDir": 0,
-                    "NameTextFont": 0,
-                    "NameTextHorz": 1,
-                    "NameTextLayer": "PinName",
-                    "NameTextMirror": 0,
-                    "NameTextSize": 375,
-                    "NameTextVert": 1,
-                    "NumberPos": {
-                        "x": 5750,
-                        "y": -3250
-                    },
-                    "NumberTextDir": 0,
-                    "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
-                    "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
-                    "NumberTextSize": 375,
-                    "NumberTextVert": 1,
-                    "Origin": {
-                        "x": 5500,
-                        "y": -3500
-                    },
-                    "SymPinLayer": "Pin",
-                    "SymPinType": 7,
-                    "id": "5608c0b07750",
-                    "type": "SymPin"
-                },
-                {
-                    "Origin": {
-                        "x": 4500,
-                        "y": -2500
-                    },
-                    "id": "5608c0a5c320",
-                    "over": {
-                        "b": -2308,
-                        "r": 4784,
-                        "x": 4213,
-                        "y": -2692
-                    },
-                    "propTextDir": 0,
-                    "propTextFont": 0,
-                    "propTextHorz": 1,
-                    "propTextLayer": "Ident",
-                    "propTextMirror": 0,
-                    "propTextSize": 350,
-                    "propTextVert": 1,
-                    "text": "{id}",
-                    "type": "Ident"
-                },
-                {
-                    "Origin": {
-                        "x": 4500,
-                        "y": -3750
-                    },
-                    "id": "5608bc487970",
-                    "over": {
-                        "b": -3558,
-                        "r": 5033,
-                        "x": 3965,
-                        "y": -3942
-                    },
-                    "propTextDir": 0,
-                    "propTextFont": 0,
-                    "propTextHorz": 1,
-                    "propTextLayer": "Value",
-                    "propTextMirror": 0,
-                    "propTextSize": 350,
-                    "propTextVert": 1,
-                    "text": "{value}",
-                    "type": "Value"
-                }
-            ],
-            "Created": 33998703,
-            "Edit enable": false,
-            "Origin": {
-                "x": 3500,
-                "y": -3500
-            },
-            "Parametrs": {
-            },
-            "Title": "button 1-on",
-            "id": "5608bb085080",
+            "id": "55a6bd7890f0",
             "type": "Symbol"
         },
         {
@@ -592,7 +345,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2.2d1.2m0.1",
                     "Stratum": "3fffffff",
-                    "id": "5608bc44f670",
+                    "id": "55a6bc73fae0",
                     "type": "PartPin"
                 },
                 {
@@ -626,7 +379,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "c2.2d1.2m0.1",
                     "Stratum": "3fffffff",
-                    "id": "5608bb759800",
+                    "id": "55a6bc73f960",
                     "type": "PartPin"
                 },
                 {
@@ -660,7 +413,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "c2.2d1.4m0.1",
                     "Stratum": "3fffffff",
-                    "id": "5608be01a8c0",
+                    "id": "55a6bd918a60",
                     "type": "PartPin"
                 },
                 {
@@ -694,7 +447,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "c2.2d1.4m0.1",
                     "Stratum": "3fffffff",
-                    "id": "5608c0a65420",
+                    "id": "55a6bd7c5490",
                     "type": "PartPin"
                 },
                 {
@@ -706,7 +459,7 @@
                         "x": -1250,
                         "y": 1000
                     },
-                    "id": "5608bc47cab0",
+                    "id": "55a6bd91b670",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -721,7 +474,7 @@
                         "x": -1000,
                         "y": 4000
                     },
-                    "id": "5608bb0a0570",
+                    "id": "55a6bc6abc00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -736,7 +489,7 @@
                         "x": 5500,
                         "y": 4000
                     },
-                    "id": "5608bc4758c0",
+                    "id": "55a6bd8fd890",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -751,7 +504,7 @@
                         "x": 3750,
                         "y": -2750
                     },
-                    "id": "5608bbe06ad0",
+                    "id": "55a6bd820830",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -766,7 +519,7 @@
                         "x": 750,
                         "y": -2600
                     },
-                    "id": "5608bbe22800",
+                    "id": "55a6bd76c1b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -781,7 +534,7 @@
                         "x": 2250,
                         "y": -2750
                     },
-                    "id": "5608b1d2d780",
+                    "id": "55a6bd8afae0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -796,7 +549,7 @@
                         "x": 3750,
                         "y": -2600
                     },
-                    "id": "5608b88a19e0",
+                    "id": "55a6bc6ae720",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -807,12 +560,12 @@
                         "x": 2500,
                         "y": 2500
                     },
-                    "id": "5608c0a8a940",
+                    "id": "55a6bd8a1b50",
                     "over": {
-                        "b": 3049,
-                        "r": 3320,
-                        "x": 1675,
-                        "y": 1944
+                        "b": 3058,
+                        "r": 3361,
+                        "x": 1646,
+                        "y": 1949
                     },
                     "propTextDir": 0,
                     "propTextFont": 0,
@@ -829,12 +582,12 @@
                         "x": 2500,
                         "y": -3750
                     },
-                    "id": "5608c0b072f0",
+                    "id": "55a6bd7f60b0",
                     "over": {
-                        "b": -3207,
-                        "r": 4027,
-                        "x": 967,
-                        "y": -4312
+                        "b": -3200,
+                        "r": 4017,
+                        "x": 1000,
+                        "y": -4309
                     },
                     "propTextDir": 0,
                     "propTextFont": 0,
@@ -856,7 +609,7 @@
             "Parametrs": {
             },
             "Title": "push button switch 1825027 part",
-            "id": "5608bb75a640",
+            "id": "55a6bc6ec8f0",
             "type": "Part"
         },
         {
@@ -870,14 +623,14 @@
                     },
                     "SymbolId": "Symbol\rbutton 1-on\rsalicad",
                     "SymbolTitle": "button 1-on (salicad)",
-                    "id": "5608bf1645e0",
+                    "id": "55a6bc3a9d80",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rpush button switch 1825027 part\rsalicad",
                     "PartTitle": "push button switch 1825027 part (salicad)",
-                    "id": "5608b9d05580",
+                    "id": "55a6bc1fb330",
                     "type": "PartVariant"
                 }
             ],
@@ -913,12 +666,1649 @@
                 "1825027-3",
                 "RED"
             ],
-            "id": "5608c0b071f0",
+            "id": "55a6bd788c90",
+            "type": "Comp"
+        },
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": -2000,
+                        "y": -1140
+                    },
+                    "b": {
+                        "x": 12160,
+                        "y": 8760
+                    },
+                    "id": "55a6bc26f2c0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "center": {
+                        "x": 0,
+                        "y": -640
+                    },
+                    "id": "55a6bd88ab80",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "radius": 250,
+                    "type": "Circle"
+                },
+                {
+                    "NamePos": {
+                        "x": 0,
+                        "y": -1140
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "1A",
+                    "NumberPos": {
+                        "x": -250,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "55a6bd8e2a80",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 2540,
+                        "y": -1140
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "2A",
+                    "NumberPos": {
+                        "x": 2290,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 2540,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "55a6bd8c9540",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 5080,
+                        "y": -1140
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "3A",
+                    "NumberPos": {
+                        "x": 4830,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5080,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "55a6bc6fe5e0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 7620,
+                        "y": -1140
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "4A",
+                    "NumberPos": {
+                        "x": 7370,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 7620,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "55a6bc6faea0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 10160,
+                        "y": -1140
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "5A",
+                    "NumberPos": {
+                        "x": 9910,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 10160,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "55a6bd8fb500",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 10160,
+                        "y": 8760
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "5B",
+                    "NumberPos": {
+                        "x": 9910,
+                        "y": 7620
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 10160,
+                        "y": 7620
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "55a6bd7d1c00",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 7620,
+                        "y": 8760
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "4B",
+                    "NumberPos": {
+                        "x": 7370,
+                        "y": 7620
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 7620,
+                        "y": 7620
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "55a6bd7d1cf0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 5080,
+                        "y": 8760
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "3B",
+                    "NumberPos": {
+                        "x": 4830,
+                        "y": 7620
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5080,
+                        "y": 7620
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "55a6bd88f9a0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 2540,
+                        "y": 8760
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "2B",
+                    "NumberPos": {
+                        "x": 2290,
+                        "y": 7620
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 2540,
+                        "y": 7620
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "55a6bc01cc00",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 0,
+                        "y": 8760
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "1B",
+                    "NumberPos": {
+                        "x": -250,
+                        "y": 7620
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 7620
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "55a6bd7e7b10",
+                    "type": "PartPin"
+                },
+                {
+                    "Origin": {
+                        "x": -1500,
+                        "y": 3810
+                    },
+                    "id": "55a6bd8010c0",
+                    "over": {
+                        "b": 4668,
+                        "r": -951,
+                        "x": -2046,
+                        "y": 2960
+                    },
+                    "propTextDir": 90000,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 12660,
+                        "y": 3810
+                    },
+                    "id": "55a6bd815cc0",
+                    "over": {
+                        "b": 5304,
+                        "r": 13213,
+                        "x": 12118,
+                        "y": 2312
+                    },
+                    "propTextDir": 90000,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                },
+                {
+                    "a": {
+                        "x": 635,
+                        "y": 5080
+                    },
+                    "b": {
+                        "x": -635,
+                        "y": 2540
+                    },
+                    "id": "55a6bc6a33b0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": -635,
+                        "y": 3810
+                    },
+                    "b": {
+                        "x": 635,
+                        "y": 2540
+                    },
+                    "id": "55a6bc450720",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "RectFilled"
+                },
+                {
+                    "Origin": {
+                        "x": 0,
+                        "y": 1905
+                    },
+                    "id": "55a6bd936220",
+                    "over": {
+                        "b": 2440,
+                        "r": 251,
+                        "x": -243,
+                        "y": 1345
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Component",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "1",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 3175,
+                        "y": 5080
+                    },
+                    "b": {
+                        "x": 1905,
+                        "y": 2540
+                    },
+                    "id": "55a6bd91f360",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 1905,
+                        "y": 3810
+                    },
+                    "b": {
+                        "x": 3175,
+                        "y": 2540
+                    },
+                    "id": "55a6bd880280",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "RectFilled"
+                },
+                {
+                    "Origin": {
+                        "x": 2540,
+                        "y": 1905
+                    },
+                    "id": "55a6bc73b920",
+                    "over": {
+                        "b": 2440,
+                        "r": 2785,
+                        "x": 2291,
+                        "y": 1345
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Component",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "2",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 5715,
+                        "y": 5080
+                    },
+                    "b": {
+                        "x": 4445,
+                        "y": 2540
+                    },
+                    "id": "55a6bc6f1270",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 4445,
+                        "y": 3810
+                    },
+                    "b": {
+                        "x": 5715,
+                        "y": 2540
+                    },
+                    "id": "55a6bb8e1460",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "RectFilled"
+                },
+                {
+                    "Origin": {
+                        "x": 5080,
+                        "y": 1905
+                    },
+                    "id": "55a6bd7d9c90",
+                    "over": {
+                        "b": 2440,
+                        "r": 5330,
+                        "x": 4836,
+                        "y": 1345
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Component",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "3",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 8255,
+                        "y": 5080
+                    },
+                    "b": {
+                        "x": 6985,
+                        "y": 2540
+                    },
+                    "id": "7f6a9c03cff0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 6985,
+                        "y": 3810
+                    },
+                    "b": {
+                        "x": 8255,
+                        "y": 2540
+                    },
+                    "id": "55a6bd7bd850",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "RectFilled"
+                },
+                {
+                    "Origin": {
+                        "x": 7620,
+                        "y": 1905
+                    },
+                    "id": "55a6bd791b90",
+                    "over": {
+                        "b": 2440,
+                        "r": 7863,
+                        "x": 7369,
+                        "y": 1345
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Component",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "4",
+                    "type": "Text"
+                },
+                {
+                    "a": {
+                        "x": 10795,
+                        "y": 5080
+                    },
+                    "b": {
+                        "x": 9525,
+                        "y": 2540
+                    },
+                    "id": "55a6bc700c60",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 9525,
+                        "y": 3810
+                    },
+                    "b": {
+                        "x": 10795,
+                        "y": 2540
+                    },
+                    "id": "55a6bd8a3da0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "RectFilled"
+                },
+                {
+                    "Origin": {
+                        "x": 10160,
+                        "y": 1905
+                    },
+                    "id": "55a6bc3dbd70",
+                    "over": {
+                        "b": 2440,
+                        "r": 10409,
+                        "x": 9915,
+                        "y": 1345
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Component",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "5",
+                    "type": "Text"
+                },
+                {
+                    "Origin": {
+                        "x": 0,
+                        "y": 5715
+                    },
+                    "id": "55a6bd8a3f30",
+                    "over": {
+                        "b": 6258,
+                        "r": 723,
+                        "x": -714,
+                        "y": 5163
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Component",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "ON",
+                    "type": "Text"
+                }
+            ],
+            "Created": 68150266,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "category": "{uu.e.e.a.b"
+            },
+            "Title": "DS1040",
+            "id": "55a6bc26aa10",
+            "type": "Part"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": 4250,
+                        "y": -3500
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": -3500
+                    },
+                    "id": "55a6bd90c450",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -3500
+                    },
+                    "b": {
+                        "x": 5500,
+                        "y": -3500
+                    },
+                    "id": "55a6bd8711a0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4550,
+                        "y": -2750
+                    },
+                    "b": {
+                        "x": 4550,
+                        "y": -3400
+                    },
+                    "id": "55a6bd871200",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4450,
+                        "y": -2750
+                    },
+                    "b": {
+                        "x": 4450,
+                        "y": -3350
+                    },
+                    "id": "55a6bd75c420",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4300,
+                        "y": -2750
+                    },
+                    "b": {
+                        "x": 4700,
+                        "y": -2750
+                    },
+                    "id": "55a6bd8b7b10",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4300,
+                        "y": -2750
+                    },
+                    "b": {
+                        "x": 4300,
+                        "y": -2850
+                    },
+                    "id": "55a6bd8b7b70",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4700,
+                        "y": -2750
+                    },
+                    "b": {
+                        "x": 4700,
+                        "y": -2850
+                    },
+                    "id": "55a6bd91ad60",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -3500
+                    },
+                    "b": {
+                        "x": 4150,
+                        "y": -3200
+                    },
+                    "id": "55a6bbe298a0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "1",
+                    "NamePos": {
+                        "x": 3750,
+                        "y": -3250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 3000,
+                        "y": -3250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3500,
+                        "y": -3500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "55a6bd7a3df0",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "2",
+                    "NamePos": {
+                        "x": 5250,
+                        "y": -3250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 5750,
+                        "y": -3250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5500,
+                        "y": -3500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "55a6bc703700",
+                    "type": "SymPin"
+                },
+                {
+                    "Origin": {
+                        "x": 4500,
+                        "y": -2500
+                    },
+                    "id": "55a6bc2c83a0",
+                    "over": {
+                        "b": -2306,
+                        "r": 4802,
+                        "x": 4208,
+                        "y": -2697
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 4500,
+                        "y": -3750
+                    },
+                    "id": "55a6bbe29900",
+                    "over": {
+                        "b": -3556,
+                        "r": 5028,
+                        "x": 3982,
+                        "y": -3947
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                }
+            ],
+            "Created": 38749915,
+            "Edit enable": false,
+            "Origin": {
+                "x": 3500,
+                "y": -3500
+            },
+            "Parametrs": {
+            },
+            "Title": "button 1-on",
+            "id": "55a6bd898150",
+            "type": "Symbol"
+        },
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": 4250,
+                        "y": -3500
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": -3500
+                    },
+                    "id": "55a6be7a7b00",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -3500
+                    },
+                    "b": {
+                        "x": 5500,
+                        "y": -3500
+                    },
+                    "id": "55a6be7a61f0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "1A",
+                    "NamePos": {
+                        "x": 3750,
+                        "y": -3250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 3000,
+                        "y": -3250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3500,
+                        "y": -3500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "7f6a9c043bc0",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "1B",
+                    "NamePos": {
+                        "x": 5250,
+                        "y": -3250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 5750,
+                        "y": -3250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5500,
+                        "y": -3500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "7f6a9c043ae0",
+                    "type": "SymPin"
+                },
+                {
+                    "Origin": {
+                        "x": 4500,
+                        "y": -2750
+                    },
+                    "id": "55a6be811100",
+                    "over": {
+                        "b": -2557,
+                        "r": 4796,
+                        "x": 4198,
+                        "y": -2943
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 4500,
+                        "y": -6000
+                    },
+                    "id": "55a6be816940",
+                    "over": {
+                        "b": -5809,
+                        "r": 5025,
+                        "x": 3975,
+                        "y": -6195
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                },
+                {
+                    "a": {
+                        "x": 4250,
+                        "y": -3500
+                    },
+                    "b": {
+                        "x": 4750,
+                        "y": -3250
+                    },
+                    "id": "55a6bb9da880",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4250,
+                        "y": -4000
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": -4000
+                    },
+                    "id": "55a6bb9ada40",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -4000
+                    },
+                    "b": {
+                        "x": 5500,
+                        "y": -4000
+                    },
+                    "id": "55a6bc6cf3d0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "2A",
+                    "NamePos": {
+                        "x": 3750,
+                        "y": -3750
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 3000,
+                        "y": -3750
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3500,
+                        "y": -4000
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "7f6a9c0192a0",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "2B",
+                    "NamePos": {
+                        "x": 5250,
+                        "y": -3750
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 5750,
+                        "y": -3750
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5500,
+                        "y": -4000
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "55a6bd88ff20",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 4250,
+                        "y": -4000
+                    },
+                    "b": {
+                        "x": 4750,
+                        "y": -3750
+                    },
+                    "id": "55a6bc70f440",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4250,
+                        "y": -4500
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": -4500
+                    },
+                    "id": "55a6bd8fd8f0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -4500
+                    },
+                    "b": {
+                        "x": 5500,
+                        "y": -4500
+                    },
+                    "id": "55a6bd54ade0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "3A",
+                    "NamePos": {
+                        "x": 3750,
+                        "y": -4250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 3000,
+                        "y": -4250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3500,
+                        "y": -4500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "55a6bd914320",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "3B",
+                    "NamePos": {
+                        "x": 5250,
+                        "y": -4250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 5750,
+                        "y": -4250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5500,
+                        "y": -4500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "55a6bd8715c0",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 4250,
+                        "y": -4500
+                    },
+                    "b": {
+                        "x": 4750,
+                        "y": -4250
+                    },
+                    "id": "55a6bc0be700",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4250,
+                        "y": -5000
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": -5000
+                    },
+                    "id": "55a6bbfb25d0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -5000
+                    },
+                    "b": {
+                        "x": 5500,
+                        "y": -5000
+                    },
+                    "id": "55a6bc344f20",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "4A",
+                    "NamePos": {
+                        "x": 3750,
+                        "y": -4750
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 3000,
+                        "y": -4750
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3500,
+                        "y": -5000
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "55a6bc5128c0",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "4B",
+                    "NamePos": {
+                        "x": 5250,
+                        "y": -4750
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 5750,
+                        "y": -4750
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5500,
+                        "y": -5000
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "55a6bd925400",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 4250,
+                        "y": -5000
+                    },
+                    "b": {
+                        "x": 4750,
+                        "y": -4750
+                    },
+                    "id": "55a6bbf1ab30",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4250,
+                        "y": -5500
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": -5500
+                    },
+                    "id": "55a6bd83e590",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -5500
+                    },
+                    "b": {
+                        "x": 5500,
+                        "y": -5500
+                    },
+                    "id": "55a6bc736a60",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "5A",
+                    "NamePos": {
+                        "x": 3750,
+                        "y": -5250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 3000,
+                        "y": -5250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 3500,
+                        "y": -5500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "55a6bc521750",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "5B",
+                    "NamePos": {
+                        "x": 5250,
+                        "y": -5250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 5750,
+                        "y": -5250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5500,
+                        "y": -5500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "55a6bb93ba00",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 4250,
+                        "y": -5500
+                    },
+                    "b": {
+                        "x": 4750,
+                        "y": -5250
+                    },
+                    "id": "55a6bbfab530",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4000,
+                        "y": -3000
+                    },
+                    "b": {
+                        "x": 5000,
+                        "y": -5750
+                    },
+                    "id": "7f6a9c033a10",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                }
+            ],
+            "Created": 68150272,
+            "Edit enable": false,
+            "Origin": {
+                "x": 3500,
+                "y": -3500
+            },
+            "Parametrs": {
+                "category": "{uu.e.e.a.b"
+            },
+            "Title": "dip switch x5",
+            "id": "55a6be79e7d0",
+            "type": "Symbol"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "1A": "1A",
+                        "1B": "1B",
+                        "2A": "2A",
+                        "2B": "2B",
+                        "3A": "3A",
+                        "3B": "3B",
+                        "4A": "4A",
+                        "4B": "4B",
+                        "5A": "5A",
+                        "5B": "5B"
+                    },
+                    "SymbolId": "Symbol\rdip switch x5\rsalicad",
+                    "SymbolTitle": "dip switch x5 (salicad)",
+                    "id": "55a6bbe1f100",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rDS1040\rsalicad",
+                    "PartTitle": "DS1040 (salicad)",
+                    "id": "55a6bd911080",
+                    "type": "PartVariant"
+                }
+            ],
+            "Created": 68150473,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "article": "DS1040",
+                "bom": "<article>",
+                "category": "{uu.e.e.a.b",
+                "prefix": "SW",
+                "value": "DS1040"
+            },
+            "Title": "dip switch x5 DS1040",
+            "id": "55a6bbe18020",
             "type": "Comp"
         }
     ],
     "Parametrs": {
     },
-    "id": "5608bb0ad990",
+    "id": "55a6bd9164e0",
     "type": "Project"
 }
