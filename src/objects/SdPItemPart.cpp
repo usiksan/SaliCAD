@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Graphics representation part of component
 */
 #include "SdPItemPart.h"
 #include "SdGraphIdent.h"

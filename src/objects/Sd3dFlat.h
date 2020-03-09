@@ -1,7 +1,7 @@
 #ifndef SD3DFLAT_H
 #define SD3DFLAT_H
 
-#include "SdPoint3d.h"
+#include "Sd3dPoint.h"
 #include "Sd3dObject.h"
 
 #include <QList>
@@ -9,12 +9,12 @@
 #define SD_TYPE_3D_FLAT "3dFlat"
 
 
-using SdPoint3dList = QList<SdPoint3d>;
+using SdPoint3dList = QList<Sd3dPoint>;
 
 class Sd3dFlat : public Sd3dObject
   {
     SdPoint3dList mRegion;
-    SdPoint3d     mWidthVector;
+    Sd3dPoint     mWidthVector;
     quint32       mColor;
   public:
     Sd3dFlat();
@@ -30,7 +30,7 @@ class Sd3dFlat : public Sd3dObject
 
     // Sd3dObject interface
   public:
-    virtual void    draw(QOpenGLFunctions_2_0 *f) override;
+    virtual void    draw(QOpenGLFunctions_2_0 *f) const override;
   };
 
 #endif // SD3DFLAT_H

@@ -22,6 +22,7 @@ Description
 #include "SdGraph.h"
 #include "SdUtil.h"
 #include "SdTime2x.h"
+#include "Sd3dObject.h"
 #include <QSettings>
 #include <QDateTime>
 #include <QDebug>
@@ -399,8 +400,13 @@ void SdProjectItem::autoDelete(SdUndo *undo)
 //Draw 3d model
 void SdProjectItem::draw3d(QOpenGLFunctions_2_0 *f)
   {
-  //Do nothing
-  Q_UNUSED(f)
+  //Draw all 3d objects
+  forEach( dct3D, [f] ( SdObject *obj ) ->bool {
+    SdPtrConst<Sd3dObject> obj3d(obj);
+    if( obj3d.isValid() )
+      obj3d->draw( f );
+    return true;
+    } );
   }
 
 

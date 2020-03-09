@@ -56,7 +56,7 @@ void Sd3dFlat::readObject(SdObjectMap *map, const QJsonObject obj)
   QJsonArray ar = obj.value( QStringLiteral("region") ).toArray();
   mRegion.clear();
   for( auto val : ar ) {
-    SdPoint3d p;
+    Sd3dPoint p;
     p.read( val.toObject() );
     mRegion.append( p );
     }
@@ -66,33 +66,33 @@ void Sd3dFlat::readObject(SdObjectMap *map, const QJsonObject obj)
 
 
 
-void Sd3dFlat::draw(QOpenGLFunctions_2_0 *f)
+void Sd3dFlat::draw(QOpenGLFunctions_2_0 *f) const
   {
   //1. We draw base surfase with region
   f->glColor3b( qRed(mColor) >> 1, qGreen(mColor) >> 1, qBlue(mColor) >> 1 );
   f->glBegin(GL_POLYGON);
-  for( const SdPoint3d &p : mRegion )
+  for( const Sd3dPoint &p : mRegion )
     p.vertex( f );
   f->glEnd();
 
   //2. We draw second surfase with region shifted on widthVector
   f->glBegin(GL_POLYGON);
-  for( const SdPoint3d &p : mRegion )
+  for( const Sd3dPoint &p : mRegion )
     (p + mWidthVector).vertex( f );
   f->glEnd();
 
   //3. We draw side surfases
   for( int i = 0; i < mRegion.count(); i++ ) {
-    SdPoint3d p1 = mRegion.at(0);
-    SdPoint3d p2;
+    Sd3dPoint p1 = mRegion.at(i);
+    Sd3dPoint p2;
     if( i == 0 )
       //Wrapped point
       p2 = mRegion.last();
     else
       //Previous point
       p2 = mRegion.at(i - 1);
-    SdPoint3d p3 = p2 + mWidthVector;
-    SdPoint3d p4 = p1 + mWidthVector;
+    Sd3dPoint p3 = p2 + mWidthVector;
+    Sd3dPoint p4 = p1 + mWidthVector;
     //So, p1-p2 base edge, p3-p4 second edge
     f->glBegin(GL_POLYGON);
     p1.vertex(f);

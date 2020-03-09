@@ -1,3 +1,16 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Base object for 3d graphics
+*/
 #ifndef SD3DOBJECT_H
 #define SD3DOBJECT_H
 
@@ -10,7 +23,7 @@ class Sd3dObject : public SdObject
   public:
     Sd3dObject();
 
-    virtual void draw( QOpenGLFunctions_2_0 *f );
+    virtual void draw( QOpenGLFunctions_2_0 *f ) const;
 
     // SdObject interface
   public:

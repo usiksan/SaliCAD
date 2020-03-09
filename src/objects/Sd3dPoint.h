@@ -1,3 +1,16 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  3D point object
+*/
 #ifndef SDPOINT3D_H
 #define SDPOINT3D_H
 
@@ -5,26 +18,26 @@
 
 #include <QOpenGLFunctions_2_0>
 
-class SdPoint3d
+class Sd3dPoint
   {
     int mX, mY, mZ; //3d coordiantes
   public:
-    SdPoint3d() : mX(0), mY(0), mZ(0) {}
-    SdPoint3d( const SdPoint &p, int cz = 0 ) : mX(p.x()), mY(p.y()), mZ(cz) {}
-    SdPoint3d( int cx, int cy, int cz ) : mX(cx), mY(cy), mZ(cz) {}
+    Sd3dPoint() : mX(0), mY(0), mZ(0) {}
+    Sd3dPoint( const SdPoint &p, int cz = 0 ) : mX(p.x()), mY(p.y()), mZ(cz) {}
+    Sd3dPoint( int cx, int cy, int cz ) : mX(cx), mY(cy), mZ(cz) {}
 
     int         x() const { return mX; }
     int         y() const { return mY; }
     int         z() const { return mZ; }
 
-    SdPoint3d   operator + ( const SdPoint3d &p ) const { return SdPoint3d( mX + p.x(), mY + p.y(), mZ + p.z() ); }
+    Sd3dPoint   operator + ( const Sd3dPoint &p ) const { return Sd3dPoint( mX + p.x(), mY + p.y(), mZ + p.z() ); }
 
     void        vertex( QOpenGLFunctions_2_0 *f ) const { f->glVertex3i( mX, mY, mZ ); }
 
     void        write(const QString name, QJsonObject &obj ) const;
     void        read(const QString name, const QJsonObject obj );
 
-    void        swap( SdPoint3d *p );
+    void        swap( Sd3dPoint *p );
 
     QJsonObject write() const;
     void        read( const QJsonObject obj );

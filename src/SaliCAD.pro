@@ -26,9 +26,12 @@ SOURCES += \
     objects/Sd3dDraw.cpp \
     objects/Sd3dFlat.cpp \
     objects/Sd3dObject.cpp \
-    objects/SdPoint3d.cpp \
+    objects/Sd3dPoint.cpp \
+    objects/Sd3dStl.cpp \
+    objects/Sd3dTriangle.cpp \
     windows/SdDOptionsPageLibrary.cpp \
     windows/SdWEditor3d.cpp \
+    windows/SdWEditor3dPart.cpp \
     windows/SdWMain.cpp \
     objects/SdObject.cpp \
     objects/SdProject.cpp \
@@ -298,9 +301,12 @@ HEADERS  += \
     objects/Sd3dDraw.h \
     objects/Sd3dFlat.h \
     objects/Sd3dObject.h \
-    objects/SdPoint3d.h \
+    objects/Sd3dPoint.h \
+    objects/Sd3dStl.h \
+    objects/Sd3dTriangle.h \
     windows/SdDOptionsPageLibrary.h \
     windows/SdWEditor3d.h \
+    windows/SdWEditor3dPart.h \
     windows/SdWMain.h \
     objects/SdObject.h \
     objects/SdProject.h \

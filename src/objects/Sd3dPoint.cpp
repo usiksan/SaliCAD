@@ -1,16 +1,16 @@
-#include "SdPoint3d.h"
+#include "Sd3dPoint.h"
 
 
 
 
-void SdPoint3d::write(const QString name, QJsonObject &obj) const
+void Sd3dPoint::write(const QString name, QJsonObject &obj) const
   {
   obj.insert( name, write() );
   }
 
 
 
-void SdPoint3d::read(const QString name, const QJsonObject obj)
+void Sd3dPoint::read(const QString name, const QJsonObject obj)
   {
   read( obj.value(name).toObject() );
   }
@@ -18,7 +18,7 @@ void SdPoint3d::read(const QString name, const QJsonObject obj)
 
 
 
-void SdPoint3d::swap(SdPoint3d *p)
+void Sd3dPoint::swap(Sd3dPoint *p)
   {
   qSwap( mX, p->mX );
   qSwap( mY, p->mY );
@@ -27,7 +27,7 @@ void SdPoint3d::swap(SdPoint3d *p)
 
 
 
-QJsonObject SdPoint3d::write() const
+QJsonObject Sd3dPoint::write() const
   {
   QJsonObject obj;
   obj.insert( QStringLiteral("x"), QJsonValue(mX) );
@@ -39,7 +39,7 @@ QJsonObject SdPoint3d::write() const
 
 
 
-void SdPoint3d::read(const QJsonObject obj)
+void Sd3dPoint::read(const QJsonObject obj)
   {
   mX = obj.value( QStringLiteral("x") ).toInt();
   mY = obj.value( QStringLiteral("y") ).toInt();
