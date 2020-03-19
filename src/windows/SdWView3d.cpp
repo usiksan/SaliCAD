@@ -11,6 +11,7 @@ SdWView3d::SdWView3d(SdProjectItem *item, QWidget *parent) :
   QOpenGLWidget( parent ),
   mAngleZ(13.0),
   mAngleXY(-51.0),
+  mScale(0.01),
   mItem(item)
   {
 
@@ -134,7 +135,7 @@ void SdWView3d::resizeGL(int w, int h)
 
 void SdWView3d::paintGL()
   {
-  qDebug() << "Paint 3d" << mScale.scaleGet();
+  //qDebug() << "Paint 3d" << mScale.scaleGet();
   // Draw the scene:
 //  QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
 //  f->glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
@@ -154,13 +155,13 @@ void SdWView3d::paintGL()
   //f->glLineWidth(3);
   f->glColor3d(0.0, 0.0, 1.0);
   f->glBegin( GL_LINES );
-  f->glVertex3d( -1000.0, 0, 0 );
-  f->glVertex3d( 1000.0, 0, 0 );
+  f->glVertex3d( -1000000.0, 0, 0 );
+  f->glVertex3d( 1000000.0, 0, 0 );
 //  f->glEnd();
 
 //  f->glBegin( GL_LINES );
-  f->glVertex3d( 0, -1000.0, 0 );
-  f->glVertex3d( 0, 1000.0, 0 );
+  f->glVertex3d( 0, -1000000.0, 0 );
+  f->glVertex3d( 0, 1000000.0, 0 );
   f->glEnd();
   //f->glFlush();
   }

@@ -126,6 +126,8 @@ class SdWCommand
     static QActionPtr  cmViewGrid;
     static QActionPtr  cmViewLayers;
 
+    static QActionPtr  cm3dStlImport;
+
     static QActionPtr  cmMode3dBall;
     static QActionPtr  cmMode3dPinWired;
     static QActionPtr  cmMode3dPinFlat;

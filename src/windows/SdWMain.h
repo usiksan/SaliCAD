@@ -188,6 +188,7 @@ class SdWMain : public QMainWindow
     void cmModeField();
 
     //3d
+    void cm3dStlImport();
     void cmBall();
     void cmPinWired();
     void cmPinFlat();

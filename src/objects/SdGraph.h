@@ -20,6 +20,8 @@ Description
 #include "SdRect.h"
 #include "SdPropSelected.h"
 
+#include <QOpenGLFunctions_2_0>
+
 class SdSelector;
 class SdContext;
 class SdSnapInfo;
@@ -64,8 +66,19 @@ class SdGraph : public SdObject
     virtual bool   isVisible() { return false; }
     //Get over rect for visible
     virtual SdRect getOverRect() const = 0;
-    //Drawing object
-    virtual void   draw( SdContext *dc );              //Рисование объекта на экране
+
+    //!
+    //! \brief draw Draws object in 2d space [Рисование объекта на экране]
+    //! \param dc   Display context where drawing doing
+    //!
+    virtual void   draw( SdContext *dc );
+
+    //!
+    //! \brief draw3d Draws object in 3d space
+    //! \param f      3d draw functions with predefined 3d context
+    //!
+    virtual void   draw3d( QOpenGLFunctions_2_0 *f ) const;
+
     //Get object state behind cursor
     virtual int    behindCursor( SdPoint p );
     virtual int    behindText( SdPoint p, SdPoint &org, QString &dest, SdPropText &prop );

@@ -575,6 +575,9 @@ void SdPItemPlate::draw3d(QOpenGLFunctions_2_0 *f)
       }
     return true;
     } );
+
+  //Draw all components
+  SdProjectItem::draw3d( f );
   }
 
 

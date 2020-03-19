@@ -22,7 +22,12 @@ class SdWEditor3dPart : public SdWEditor3d
   {
     Q_OBJECT
   public:
-    SdWEditor3dPart();
+    SdWEditor3dPart( SdProjectItem *item, QWidget *parent = nullptr );
+
+    // SdWEditor interface
+  public:
+//    virtual SdProjectItem *getProjectItem() const override;
+    virtual void           onActivateEditor() override;
   };
 
 #endif // SDWEDITOR3DPART_H

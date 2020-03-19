@@ -14,16 +14,13 @@ Description
 #ifndef SD3DOBJECT_H
 #define SD3DOBJECT_H
 
-#include "SdObject.h"
-#include <QOpenGLFunctions_2_0>
+#include "SdGraph.h"
 
 
-class Sd3dObject : public SdObject
+class Sd3dObject : public SdGraph
   {
   public:
     Sd3dObject();
-
-    virtual void draw( QOpenGLFunctions_2_0 *f ) const;
 
     // SdObject interface
   public:

@@ -30,7 +30,7 @@ class Sd3dFlat : public Sd3dObject
 
     // Sd3dObject interface
   public:
-    virtual void    draw(QOpenGLFunctions_2_0 *f) const override;
+    virtual void    draw3d(QOpenGLFunctions_2_0 *f) const override;
   };
 
 #endif // SD3DFLAT_H

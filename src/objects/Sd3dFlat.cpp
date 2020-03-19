@@ -66,7 +66,7 @@ void Sd3dFlat::readObject(SdObjectMap *map, const QJsonObject obj)
 
 
 
-void Sd3dFlat::draw(QOpenGLFunctions_2_0 *f) const
+void Sd3dFlat::draw3d(QOpenGLFunctions_2_0 *f) const
   {
   //1. We draw base surfase with region
   f->glColor3b( qRed(mColor) >> 1, qGreen(mColor) >> 1, qBlue(mColor) >> 1 );

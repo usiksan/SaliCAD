@@ -46,12 +46,71 @@ void Sd3dTriangle::readStl(QIODevice *file)
 //!
 void Sd3dTriangle::paint(QOpenGLFunctions_2_0 *f) const
   {
+  //Setup triangle color
+  f->glColor3b( qRed(mColor) >> 1, qGreen(mColor) >> 1, qBlue(mColor) >> 1 );
+  //Draw triangle
   f->glBegin(GL_POLYGON);
   f->glNormal3d( mNormal.x(), mNormal.y(), mNormal.z() );
   f->glVertex3d( mA.x(), mA.y(), mA.z() );
   f->glVertex3d( mB.x(), mB.y(), mB.z() );
   f->glVertex3d( mC.x(), mC.y(), mC.z() );
   f->glEnd();
+  }
+
+
+
+
+
+//!
+//! \brief write Write triangle to json file
+//! \return      JSON object with triangle
+//!
+QJsonObject Sd3dTriangle::write() const
+  {
+  QJsonObject obj;
+  mA.write( QStringLiteral("a"), obj );
+  mB.write( QStringLiteral("b"), obj );
+  mC.write( QStringLiteral("c"), obj );
+  mNormal.write( QStringLiteral("normal"), obj );
+  obj.insert( QStringLiteral("color"), static_cast<int>(mColor) );
+  return obj;
+  }
+
+
+
+
+
+
+
+//!
+//! \brief read Read triangle from json file
+//! \param obj  JSON object with triangle
+//!
+void Sd3dTriangle::read(const QJsonObject &obj)
+  {
+  mA.read( QStringLiteral("a"), obj );
+  mB.read( QStringLiteral("b"), obj );
+  mC.read( QStringLiteral("c"), obj );
+  mNormal.read( QStringLiteral("normal"), obj );
+  mColor = obj.value( QStringLiteral("color") ).toInt();
+  }
+
+
+
+
+
+
+//!
+//! \brief readStlVector3d Read 3d vector from STL file (3 values)
+//! \param file            STL file
+//! \return                Readed vector converted to mcm
+//!
+Sd3dPoint Sd3dTriangle::readStlVector3d(QIODevice *file)
+  {
+  float x = readStlFloat( file );
+  float y = readStlFloat( file );
+  float z = readStlFloat( file );
+  return Sd3dPoint( x, y, z );
   }
 
 

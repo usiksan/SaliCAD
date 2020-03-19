@@ -117,6 +117,14 @@ void SdGraph::draw(SdContext *dc)
 
 
 
+
+void SdGraph::draw3d(QOpenGLFunctions_2_0 *f) const
+  {
+  Q_UNUSED(f)
+  }
+
+
+
 int SdGraph::behindCursor(SdPoint p)
   {
   Q_UNUSED(p)

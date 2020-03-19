@@ -14,15 +14,13 @@ Description
 #include "Sd3dObject.h"
 
 Sd3dObject::Sd3dObject() :
-  SdObject()
+  SdGraph()
   {
 
   }
 
-void Sd3dObject::draw(QOpenGLFunctions_2_0 *f) const
-  {
-  Q_UNUSED(f)
-  }
+
+
 
 
 SdClass Sd3dObject::getClass() const

@@ -26,6 +26,7 @@ Description
 #include "SdWEditorProject.h"
 #include "SdWEditorRich.h"
 #include "SdWEditor3d.h"
+#include "SdWEditor3dPart.h"
 #include "SdWRemoteStatus.h"
 #include "SdWCommand.h"
 #include "SdWLabel.h"
@@ -353,8 +354,8 @@ void SdWMain::onActivateProjectItem3d(SdProjectItem *item)
 //        editor = new SdWEditorGraphView( item, mWEditors );
       break;
     case dctPart :
-//      if( item->isEditEnable() )
-//        editor = new SdWEditorGraphPart( dynamic_cast<SdPItemPart*>( item ), mWEditors );
+      if( item->isEditEnable() )
+        editor = new SdWEditor3dPart( dynamic_cast<SdPItemPart*>( item ), mWEditors );
 //      else
 //        editor = new SdWEditorGraphView( item, mWEditors );
       break;
@@ -1433,6 +1434,16 @@ void SdWMain::cmModeField()
   {
   if( activeEditor() )
     activeEditor()->cmModeField();
+  }
+
+
+
+
+
+void SdWMain::cm3dStlImport()
+  {
+  if( activeEditor() )
+    activeEditor()->cm3dStlImport();
   }
 
 
