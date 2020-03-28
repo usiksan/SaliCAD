@@ -24,6 +24,7 @@ SOURCES += \
     master/SdDMasterSheetDecorator.cpp \
     modes/SdModeCTraceDelete.cpp \
     objects/Sd3dDraw.cpp \
+    objects/Sd3dFace.cpp \
     objects/Sd3dFlat.cpp \
     objects/Sd3dObject.cpp \
     objects/Sd3dPoint.cpp \
@@ -299,6 +300,7 @@ HEADERS  += \
     master/SdDMasterSheetDecorator.h \
     modes/SdModeCTraceDelete.h \
     objects/Sd3dDraw.h \
+    objects/Sd3dFace.h \
     objects/Sd3dFlat.h \
     objects/Sd3dObject.h \
     objects/Sd3dPoint.h \
