@@ -1,0 +1,588 @@
+{
+    "ChildList": [
+        {
+            "Author": "zubr owk",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": 250,
+                        "y": -200
+                    },
+                    "b": {
+                        "x": 1250,
+                        "y": 200
+                    },
+                    "id": "7fd290012cb0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 1500,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "id": "7fd2900228d0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "P1",
+                    "NamePos": {
+                        "x": 0,
+                        "y": 250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 0,
+                        "y": -250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "7fd290025100",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "P2",
+                    "NamePos": {
+                        "x": 1500,
+                        "y": 250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 1500,
+                        "y": -250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 1500,
+                        "y": 0
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "7fd290025020",
+                    "type": "SymPin"
+                },
+                {
+                    "Origin": {
+                        "x": 750,
+                        "y": 375
+                    },
+                    "id": "7fd290013c20",
+                    "over": {
+                        "b": 567,
+                        "r": 1053,
+                        "x": 446,
+                        "y": 182
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 750,
+                        "y": -375
+                    },
+                    "id": "7fd290014ba0",
+                    "over": {
+                        "b": -183,
+                        "r": 1284,
+                        "x": 216,
+                        "y": -568
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                }
+            ],
+            "Created": 78927718,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "category": "{uu.h.f.d"
+            },
+            "Title": "fuse",
+            "id": "55877c70c6d0",
+            "type": "Symbol"
+        },
+        {
+            "Author": "zubr owk",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": 0,
+                        "y": -1175
+                    },
+                    "b": {
+                        "x": 2200,
+                        "y": 1175
+                    },
+                    "id": "558781670100",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "NamePos": {
+                        "x": 0,
+                        "y": -250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "1",
+                    "NumberPos": {
+                        "x": 0,
+                        "y": 250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "r0.6x2.5m0.1s0.04",
+                    "Stratum": "1",
+                    "id": "55877ccfe940",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 2200,
+                        "y": -250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "2",
+                    "NumberPos": {
+                        "x": 2200,
+                        "y": 250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 2200,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "r0.6x2.5m0.1s0.04",
+                    "Stratum": "1",
+                    "id": "55877cb3a450",
+                    "type": "PartPin"
+                },
+                {
+                    "Origin": {
+                        "x": 1250,
+                        "y": 0
+                    },
+                    "id": "55877c55e570",
+                    "over": {
+                        "b": 547,
+                        "r": 2117,
+                        "x": 385,
+                        "y": -551
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 1250,
+                        "y": -1875
+                    },
+                    "id": "55877cb94a10",
+                    "over": {
+                        "b": -1328,
+                        "r": 2774,
+                        "x": -273,
+                        "y": -2426
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                }
+            ],
+            "Created": 78927711,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "category": "{uu.h.f.d"
+            },
+            "Title": "fuse smd-0805 h1",
+            "id": "55877cdb2250",
+            "type": "Part"
+        },
+        {
+            "Author": "zubr owk",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "P1": "1",
+                        "P2": "2"
+                    },
+                    "SymbolId": "Symbol\rfuse\rzubr owk",
+                    "SymbolTitle": "fuse (zubr owk)",
+                    "id": "55877ba40bc0",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rfuse smd-0805 h1\rzubr owk",
+                    "PartTitle": "fuse smd-0805 h1 (zubr owk)",
+                    "id": "55877c1875c0",
+                    "type": "PartVariant"
+                }
+            ],
+            "Created": 78928046,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "article": "SMD0805P010TF",
+                "bom": "<article> <title> <value>",
+                "category": "{uu.h.f.d",
+                "current": "0.1A",
+                "prefix": "F",
+                "value": "0.1A"
+            },
+            "Title": "fuse autorecovered smd-0805",
+            "VariantFC": 3,
+            "VariantTab": [
+                "article",
+                "current",
+                "value",
+                "SMD0805P020TF",
+                "0.2A",
+                "0.2A",
+                "SMD0805P050TF",
+                "0.5A",
+                "0.5A"
+            ],
+            "id": "55877c257a00",
+            "type": "Comp"
+        },
+        {
+            "Author": "zubr owk",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": 0,
+                        "y": -1620
+                    },
+                    "b": {
+                        "x": 4550,
+                        "y": 1620
+                    },
+                    "id": "7fd290026c90",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "NamePos": {
+                        "x": 0,
+                        "y": -250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "1",
+                    "NumberPos": {
+                        "x": 0,
+                        "y": 250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "r0.6x3.4m0.1s0.04",
+                    "Stratum": "1",
+                    "id": "5587816e1a30",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 4550,
+                        "y": -250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "2",
+                    "NumberPos": {
+                        "x": 4550,
+                        "y": 250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 4550,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "r0.6x3.4m0.1s0.04",
+                    "Stratum": "1",
+                    "id": "55877ddc6e40",
+                    "type": "PartPin"
+                },
+                {
+                    "Origin": {
+                        "x": 2250,
+                        "y": 1000
+                    },
+                    "id": "55877ddc1d30",
+                    "over": {
+                        "b": 1549,
+                        "r": 3117,
+                        "x": 1381,
+                        "y": 448
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 2375,
+                        "y": -1000
+                    },
+                    "id": "55877cd4d4f0",
+                    "over": {
+                        "b": -449,
+                        "r": 3902,
+                        "x": 849,
+                        "y": -1550
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                }
+            ],
+            "Created": 78930986,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "category": "{uu.h.f.d"
+            },
+            "Title": "fuse smd-1812 h1.25",
+            "id": "7fd29001ace0",
+            "type": "Part"
+        },
+        {
+            "Author": "zubr owk",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "P1": "1",
+                        "P2": "2"
+                    },
+                    "SymbolId": "Symbol\rfuse\rzubr owk",
+                    "SymbolTitle": "fuse (zubr owk)",
+                    "id": "55877b6cdb60",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rfuse smd-1812 h1.25\rzubr owk",
+                    "PartTitle": "fuse smd-1812 h1.25 (zubr owk)",
+                    "id": "55877da6bf70",
+                    "type": "PartVariant"
+                }
+            ],
+            "Created": 78931369,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "article": "SMD1812P010TF",
+                "bom": "<article> <title> <value>",
+                "category": "{uu.h.f.d",
+                "current": "0.1A",
+                "prefix": "F",
+                "value": "0.1A",
+                "voltage": "30V"
+            },
+            "Title": "fuse autorecovered smd-1812",
+            "VariantFC": 4,
+            "VariantTab": [
+                "article",
+                "current",
+                "value",
+                "voltage",
+                "SMD1812P020TF",
+                "0.2A",
+                "0.2A",
+                "30V",
+                "SMD1812P050TF",
+                "0.5A",
+                "0.5A",
+                "15V",
+                "SMD1812P050TF/30",
+                "0.5A",
+                "0.5A",
+                "30V",
+                "SMD1812P075TF/24",
+                "0.75A",
+                "0.75A",
+                "24V",
+                "SMD1812P110TF/33",
+                "1.1A",
+                "1.1A",
+                "33V",
+                "SMD1812P125TF/16",
+                "1.25A",
+                "1.25A",
+                "16V",
+                "SMD1812P150TF/24",
+                "1.5A",
+                "1.5A",
+                "24V",
+                "SMD1812P200TF",
+                "2.0A",
+                "2.0A",
+                "8V"
+            ],
+            "id": "55877e5be1c0",
+            "type": "Comp"
+        }
+    ],
+    "Parametrs": {
+    },
+    "id": "55877ca02530",
+    "type": "Project"
+}
