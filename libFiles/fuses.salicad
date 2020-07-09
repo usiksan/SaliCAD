@@ -13,7 +13,7 @@
                         "x": 1250,
                         "y": 200
                     },
-                    "id": "7fd290012cb0",
+                    "id": "55e5779fec60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -28,7 +28,7 @@
                         "x": 0,
                         "y": 0
                     },
-                    "id": "7fd2900228d0",
+                    "id": "55e577786b20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -64,7 +64,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "7fd290025100",
+                    "id": "7ff804004d20",
                     "type": "SymPin"
                 },
                 {
@@ -97,7 +97,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "7fd290025020",
+                    "id": "55e577af3ce0",
                     "type": "SymPin"
                 },
                 {
@@ -105,7 +105,7 @@
                         "x": 750,
                         "y": 375
                     },
-                    "id": "7fd290013c20",
+                    "id": "55e577b045d0",
                     "over": {
                         "b": 567,
                         "r": 1053,
@@ -127,7 +127,7 @@
                         "x": 750,
                         "y": -375
                     },
-                    "id": "7fd290014ba0",
+                    "id": "55e577ad0c40",
                     "over": {
                         "b": -183,
                         "r": 1284,
@@ -155,7 +155,7 @@
                 "category": "{uu.h.f.d"
             },
             "Title": "fuse",
-            "id": "55877c70c6d0",
+            "id": "55e577a1baa0",
             "type": "Symbol"
         },
         {
@@ -171,7 +171,7 @@
                         "x": 2200,
                         "y": 1175
                     },
-                    "id": "558781670100",
+                    "id": "55e577a12a10",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -208,7 +208,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r0.6x2.5m0.1s0.04",
                     "Stratum": "1",
-                    "id": "55877ccfe940",
+                    "id": "55e577a9a880",
                     "type": "PartPin"
                 },
                 {
@@ -242,7 +242,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r0.6x2.5m0.1s0.04",
                     "Stratum": "1",
-                    "id": "55877cb3a450",
+                    "id": "55e577a96d20",
                     "type": "PartPin"
                 },
                 {
@@ -250,7 +250,7 @@
                         "x": 1250,
                         "y": 0
                     },
-                    "id": "55877c55e570",
+                    "id": "55e577b026a0",
                     "over": {
                         "b": 547,
                         "r": 2117,
@@ -272,7 +272,7 @@
                         "x": 1250,
                         "y": -1875
                     },
-                    "id": "55877cb94a10",
+                    "id": "55e577b01240",
                     "over": {
                         "b": -1328,
                         "r": 2774,
@@ -300,7 +300,7 @@
                 "category": "{uu.h.f.d"
             },
             "Title": "fuse smd-0805 h1",
-            "id": "55877cdb2250",
+            "id": "55e5777f1cf0",
             "type": "Part"
         },
         {
@@ -314,14 +314,14 @@
                     },
                     "SymbolId": "Symbol\rfuse\rzubr owk",
                     "SymbolTitle": "fuse (zubr owk)",
-                    "id": "55877ba40bc0",
+                    "id": "55e577515c50",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rfuse smd-0805 h1\rzubr owk",
                     "PartTitle": "fuse smd-0805 h1 (zubr owk)",
-                    "id": "55877c1875c0",
+                    "id": "55e5773fbb60",
                     "type": "PartVariant"
                 }
             ],
@@ -352,7 +352,7 @@
                 "0.5A",
                 "0.5A"
             ],
-            "id": "55877c257a00",
+            "id": "55e577a0f450",
             "type": "Comp"
         },
         {
@@ -368,7 +368,7 @@
                         "x": 4550,
                         "y": 1620
                     },
-                    "id": "7fd290026c90",
+                    "id": "55e577a0a2e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -405,7 +405,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r0.6x3.4m0.1s0.04",
                     "Stratum": "1",
-                    "id": "5587816e1a30",
+                    "id": "55e577a1a6a0",
                     "type": "PartPin"
                 },
                 {
@@ -439,7 +439,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r0.6x3.4m0.1s0.04",
                     "Stratum": "1",
-                    "id": "55877ddc6e40",
+                    "id": "55e5779ff1d0",
                     "type": "PartPin"
                 },
                 {
@@ -447,7 +447,7 @@
                         "x": 2250,
                         "y": 1000
                     },
-                    "id": "55877ddc1d30",
+                    "id": "55e577a9a240",
                     "over": {
                         "b": 1549,
                         "r": 3117,
@@ -469,7 +469,7 @@
                         "x": 2375,
                         "y": -1000
                     },
-                    "id": "55877cd4d4f0",
+                    "id": "55e577b04ed0",
                     "over": {
                         "b": -449,
                         "r": 3902,
@@ -497,7 +497,7 @@
                 "category": "{uu.h.f.d"
             },
             "Title": "fuse smd-1812 h1.25",
-            "id": "7fd29001ace0",
+            "id": "55e577ad3fa0",
             "type": "Part"
         },
         {
@@ -511,14 +511,14 @@
                     },
                     "SymbolId": "Symbol\rfuse\rzubr owk",
                     "SymbolTitle": "fuse (zubr owk)",
-                    "id": "55877b6cdb60",
+                    "id": "55e57741d8d0",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rfuse smd-1812 h1.25\rzubr owk",
                     "PartTitle": "fuse smd-1812 h1.25 (zubr owk)",
-                    "id": "55877da6bf70",
+                    "id": "55e5777e5c40",
                     "type": "PartVariant"
                 }
             ],
@@ -577,12 +577,767 @@
                 "2.0A",
                 "8V"
             ],
-            "id": "55877e5be1c0",
+            "id": "55e5794e9560",
+            "type": "Comp"
+        },
+        {
+            "Author": "zubr owk",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": -3040,
+                        "y": -1665
+                    },
+                    "b": {
+                        "x": 12960,
+                        "y": 5065
+                    },
+                    "id": "55e577b117a0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "center": {
+                        "x": 0,
+                        "y": -1165
+                    },
+                    "id": "55e577b1c870",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "radius": 250,
+                    "type": "Circle"
+                },
+                {
+                    "NamePos": {
+                        "x": 0,
+                        "y": -1665
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "2",
+                    "NumberPos": {
+                        "x": -250,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2.4d1.6m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "55e577bff490",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 9920,
+                        "y": -1665
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "4",
+                    "NumberPos": {
+                        "x": 9670,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 9920,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2.4d1.6m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "55e577b937b0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 9920,
+                        "y": 5065
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "3",
+                    "NumberPos": {
+                        "x": 9670,
+                        "y": 3400
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 9920,
+                        "y": 3400
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2.4d1.6m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "55e577c00bd0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 0,
+                        "y": 5065
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "1",
+                    "NumberPos": {
+                        "x": -250,
+                        "y": 3400
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 3400
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2.4d1.6m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "55e5774d5610",
+                    "type": "PartPin"
+                },
+                {
+                    "Origin": {
+                        "x": 5000,
+                        "y": 3125
+                    },
+                    "id": "55e577b0b940",
+                    "over": {
+                        "b": 3670,
+                        "r": 5864,
+                        "x": 4136,
+                        "y": 2573
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 5000,
+                        "y": -625
+                    },
+                    "id": "55e576e4ff30",
+                    "over": {
+                        "b": -78,
+                        "r": 6518,
+                        "x": 3476,
+                        "y": -1175
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                }
+            ],
+            "Created": 79436514,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "category": "{uu.h.f.a.c"
+            },
+            "Title": "fuse holder 3568",
+            "id": "7ff82c01a920",
+            "type": "Part"
+        },
+        {
+            "Author": "zubr owk",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": 250,
+                        "y": -450
+                    },
+                    "b": {
+                        "x": 1250,
+                        "y": -50
+                    },
+                    "id": "55e5795654e0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 1500,
+                        "y": -250
+                    },
+                    "b": {
+                        "x": 0,
+                        "y": -250
+                    },
+                    "id": "55e579562c50",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "P1A",
+                    "NamePos": {
+                        "x": -500,
+                        "y": 250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": -500,
+                        "y": -250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": -500,
+                        "y": 0
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "55e577ab4d90",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "P2A",
+                    "NamePos": {
+                        "x": 2000,
+                        "y": 250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 2000,
+                        "y": -250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 2000,
+                        "y": 0
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "55e57784f880",
+                    "type": "SymPin"
+                },
+                {
+                    "Origin": {
+                        "x": 750,
+                        "y": 125
+                    },
+                    "id": "55e5777914b0",
+                    "over": {
+                        "b": 316,
+                        "r": 1053,
+                        "x": 447,
+                        "y": -69
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 750,
+                        "y": -625
+                    },
+                    "id": "55e5773ad1d0",
+                    "over": {
+                        "b": -433,
+                        "r": 1283,
+                        "x": 218,
+                        "y": -818
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                },
+                {
+                    "Name": "P1B",
+                    "NamePos": {
+                        "x": -500,
+                        "y": -250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": -500,
+                        "y": -750
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": -500,
+                        "y": -500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "7ff82c021a40",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "P2B",
+                    "NamePos": {
+                        "x": 2000,
+                        "y": -250
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 375,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 2000,
+                        "y": -750
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 1,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 375,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 2000,
+                        "y": -500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "55e57940c520",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 2000,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 1750,
+                        "y": 0
+                    },
+                    "id": "55e577b989c0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1750,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 1750,
+                        "y": -500
+                    },
+                    "id": "55e577ad3e20",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1750,
+                        "y": -500
+                    },
+                    "b": {
+                        "x": 2000,
+                        "y": -500
+                    },
+                    "id": "55e577633c40",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -500,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": -250,
+                        "y": 0
+                    },
+                    "id": "55e577739770",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -250,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": -250,
+                        "y": -500
+                    },
+                    "id": "55e576e20850",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -250,
+                        "y": -500
+                    },
+                    "b": {
+                        "x": -500,
+                        "y": -500
+                    },
+                    "id": "55e576f7ee80",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1375,
+                        "y": -125
+                    },
+                    "b": {
+                        "x": 1500,
+                        "y": -250
+                    },
+                    "id": "55e5777360a0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1500,
+                        "y": -250
+                    },
+                    "b": {
+                        "x": 1375,
+                        "y": -375
+                    },
+                    "id": "55e5777c2610",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1500,
+                        "y": -125
+                    },
+                    "b": {
+                        "x": 1625,
+                        "y": -250
+                    },
+                    "id": "55e577887650",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1625,
+                        "y": -250
+                    },
+                    "b": {
+                        "x": 1500,
+                        "y": -375
+                    },
+                    "id": "55e57941c340",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1625,
+                        "y": -250
+                    },
+                    "b": {
+                        "x": 1750,
+                        "y": -250
+                    },
+                    "id": "55e577669c90",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 125,
+                        "y": -125
+                    },
+                    "b": {
+                        "x": 0,
+                        "y": -250
+                    },
+                    "id": "55e57772aaf0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": -250
+                    },
+                    "b": {
+                        "x": 125,
+                        "y": -375
+                    },
+                    "id": "55e579476cc0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": -125
+                    },
+                    "b": {
+                        "x": -125,
+                        "y": -250
+                    },
+                    "id": "55e577705890",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -125,
+                        "y": -250
+                    },
+                    "b": {
+                        "x": 0,
+                        "y": -375
+                    },
+                    "id": "55e5777015a0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": -125,
+                        "y": -250
+                    },
+                    "b": {
+                        "x": -250,
+                        "y": -250
+                    },
+                    "id": "55e5777378d0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "center": {
+                        "x": -250,
+                        "y": -250
+                    },
+                    "id": "7ff82c01c0b0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "radius": 50,
+                    "type": "CircleFilled"
+                },
+                {
+                    "center": {
+                        "x": 1750,
+                        "y": -250
+                    },
+                    "id": "55e5777bb0d0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "radius": 50,
+                    "type": "CircleFilled"
+                }
+            ],
+            "Created": 79437285,
+            "Edit enable": false,
+            "Origin": {
+                "x": -500,
+                "y": 0
+            },
+            "Parametrs": {
+                "category": "{uu.h.f.a.c"
+            },
+            "Title": "fuse holder",
+            "id": "55e577b17ba0",
+            "type": "Symbol"
+        },
+        {
+            "Author": "zubr owk",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "P1A": "1",
+                        "P1B": "2",
+                        "P2A": "3",
+                        "P2B": "4"
+                    },
+                    "SymbolId": "Symbol\rfuse holder\rzubr owk",
+                    "SymbolTitle": "fuse holder (zubr owk)",
+                    "id": "55e576d551e0",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rfuse holder 3568\rzubr owk",
+                    "PartTitle": "fuse holder 3568 (zubr owk)",
+                    "id": "55e5794e1d30",
+                    "type": "PartVariant"
+                }
+            ],
+            "Created": 79437237,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "article": "3568",
+                "bom": "<value>",
+                "category": "{uu.h.f.a.c",
+                "current": "0.1A",
+                "prefix": "F",
+                "value": "Keystoun 3568"
+            },
+            "Title": "fuse holder",
+            "id": "55e5794c9d90",
             "type": "Comp"
         }
     ],
     "Parametrs": {
     },
-    "id": "55877ca02530",
+    "id": "55e577795df0",
     "type": "Project"
 }
