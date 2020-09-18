@@ -193,10 +193,23 @@ void SdModeCBus::cancelPoint(SdPoint)
       mPattern.clear();
       setStep( sFirstPoint );
       break;
-    case sNextPoint :
-      //Установить панель соответствующую имени цепи
-      //setPropBar( dpWireName, 0 );
+    case sNextPoint : {
+      //Setup net name properties on base pattern orientation
+      SdSegment lastSegment( mPattern.last(), mPattern.at( mPattern.count() - 2 ) );
+      if( lastSegment.isSectionX() ) {
+        //Last segment is horizontal
+        sdGlobalProp->mWireNameProp.mDir = da0;
+        sdGlobalProp->mWireNameProp.mVert = dvjMiddle;
+        sdGlobalProp->mWireNameProp.mHorz = lastSegment.getP1().x() < lastSegment.getP2().x() ? dhjLeft : dhjRight;
+        }
+      else if( lastSegment.isSectionY() ) {
+        //Last segment is vertical
+        sdGlobalProp->mWireNameProp.mDir = da90;
+        sdGlobalProp->mWireNameProp.mVert = dvjMiddle;
+        sdGlobalProp->mWireNameProp.mHorz = lastSegment.getP1().y() > lastSegment.getP2().y() ? dhjLeft : dhjRight;
+        }
       setStep( sNamePlace );
+      }
       break;
     }
   update();
