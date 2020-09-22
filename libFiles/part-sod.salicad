@@ -1,0 +1,198 @@
+{
+    "ChildList": [
+        {
+            "Author": "zubr owk",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": -675,
+                        "y": 350
+                    },
+                    "b": {
+                        "x": 675,
+                        "y": 2150
+                    },
+                    "id": "556dba04b7c0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 0,
+                        "y": 350
+                    },
+                    "id": "556dba0563c0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 2500
+                    },
+                    "b": {
+                        "x": 0,
+                        "y": 2150
+                    },
+                    "id": "556dba045d10",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "NamePos": {
+                        "x": 0,
+                        "y": 350
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "2",
+                    "NumberPos": {
+                        "x": -250,
+                        "y": 0
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "r0.6x0.8m0.1s0.04",
+                    "Stratum": "1",
+                    "id": "7efdc800f8a0",
+                    "type": "PartPin"
+                },
+                {
+                    "NamePos": {
+                        "x": 0,
+                        "y": 2150
+                    },
+                    "NameTextDir": 90000,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 2,
+                    "NameTextLayer": "Invisible",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 500,
+                    "NameTextVert": 1,
+                    "Number": "1",
+                    "NumberPos": {
+                        "x": -250,
+                        "y": 2500
+                    },
+                    "NumberTextDir": 90000,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 500,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 2500
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "r0.6x0.8m0.1s0.04",
+                    "Stratum": "1",
+                    "id": "7efdc800e910",
+                    "type": "PartPin"
+                },
+                {
+                    "Origin": {
+                        "x": -175,
+                        "y": 1250
+                    },
+                    "id": "556dba0a8530",
+                    "over": {
+                        "b": 1750,
+                        "r": 325,
+                        "x": -675,
+                        "y": 750
+                    },
+                    "propTextDir": 90000,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 1175,
+                        "y": 1250
+                    },
+                    "id": "556dba048cf0",
+                    "over": {
+                        "b": 1750,
+                        "r": 1675,
+                        "x": 675,
+                        "y": 750
+                    },
+                    "propTextDir": 90000,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value.Top",
+                    "propTextMirror": 0,
+                    "propTextSize": 1000,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                },
+                {
+                    "a": {
+                        "x": -625,
+                        "y": 2125
+                    },
+                    "b": {
+                        "x": 625,
+                        "y": 1625
+                    },
+                    "id": "556dba09f9f0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "RectFilled"
+                }
+            ],
+            "Created": 85916158,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "category": "{uu.b.b"
+            },
+            "Title": "SOD323F (SC-90)",
+            "id": "556dba035a80",
+            "type": "Part"
+        }
+    ],
+    "Parametrs": {
+    },
+    "id": "556db9c62400",
+    "type": "Project"
+}

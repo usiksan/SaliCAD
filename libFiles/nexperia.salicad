@@ -13,7 +13,7 @@
                         "x": 4750,
                         "y": -750
                     },
-                    "id": "7f9cbc0091a0",
+                    "id": "556db9cc6890",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -28,7 +28,7 @@
                         "x": 2000,
                         "y": -750
                     },
-                    "id": "56033b953370",
+                    "id": "556dba7cd380",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -43,7 +43,7 @@
                         "x": 3500,
                         "y": -750
                     },
-                    "id": "56033b951fa0",
+                    "id": "556db9f7c0d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -58,7 +58,7 @@
                         "x": 750,
                         "y": 0
                     },
-                    "id": "56033b48edd0",
+                    "id": "556db9f8d300",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -94,7 +94,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "7f9cbc009300",
+                    "id": "556db9f36720",
                     "type": "SymPin"
                 },
                 {
@@ -106,7 +106,7 @@
                         "x": 750,
                         "y": -500
                     },
-                    "id": "56033b9575b0",
+                    "id": "556db9f7ab30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -142,7 +142,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "56033b4d3c20",
+                    "id": "556db9d19f20",
                     "type": "SymPin"
                 },
                 {
@@ -154,7 +154,7 @@
                         "x": 5500,
                         "y": -250
                     },
-                    "id": "56033b958d80",
+                    "id": "556db9d3ec60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -190,7 +190,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "56033b4996d0",
+                    "id": "556db9fd25e0",
                     "type": "SymPin"
                 },
                 {
@@ -198,7 +198,7 @@
                         "x": 2750,
                         "y": 500
                     },
-                    "id": "56033b490820",
+                    "id": "556db9465350",
                     "over": {
                         "b": 690,
                         "r": 3053,
@@ -220,7 +220,7 @@
                         "x": 2750,
                         "y": -1000
                     },
-                    "id": "56033b956580",
+                    "id": "556dba7cc5c0",
                     "over": {
                         "b": -810,
                         "r": 3284,
@@ -242,7 +242,7 @@
                         "x": 2750,
                         "y": 0
                     },
-                    "id": "56033b955440",
+                    "id": "556dba36b3c0",
                     "over": {
                         "b": 190,
                         "r": 3075,
@@ -270,7 +270,7 @@
                 "category": "{uu.b.b.d"
             },
             "Title": "pesd1can",
-            "id": "56033b630220",
+            "id": "556dba7be610",
             "type": "Symbol"
         },
         {
@@ -285,14 +285,14 @@
                     },
                     "SymbolId": "Symbol\rpesd1can\rzubr owk",
                     "SymbolTitle": "pesd1can (zubr owk)",
-                    "id": "56033b83c940",
+                    "id": "556dba37abb0",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rsot23-3\rsalicad",
                     "PartTitle": "sot23-3 (salicad)",
-                    "id": "56033b5addc0",
+                    "id": "556db98dc570",
                     "type": "PartVariant"
                 }
             ],
@@ -319,12 +319,57 @@
                 "PESD2CAN",
                 "PESD2CAN"
             ],
-            "id": "56033bbc1a30",
+            "id": "556db9fe6ac0",
+            "type": "Comp"
+        },
+        {
+            "Author": "zubr owk",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "A": "2",
+                        "K": "1"
+                    },
+                    "SymbolId": "Symbol\rdiode\rsalicad",
+                    "SymbolTitle": "diode (salicad)",
+                    "id": "556db9da4b20",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rSOD323F (SC-90)\rzubr owk",
+                    "PartTitle": "SOD323F (SC-90) (zubr owk)",
+                    "id": "556db9da4b60",
+                    "type": "PartVariant"
+                }
+            ],
+            "Created": 85916404,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "article": "PMEG6010CEJ",
+                "bom": "<value>",
+                "category": "{uu.b.b.g",
+                "current": "1A",
+                "device mark": "EQ",
+                "forward voltage": "570mV",
+                "manufacturer": "Nexperia",
+                "prefix": "VD",
+                "reverce voltage": "60V",
+                "value": "PMEG6010CEJ",
+                "www": "www.nexperia.com"
+            },
+            "Title": "PMEG6010CEJ schottky barrier rectifiers 1A",
+            "id": "556db9c47d50",
             "type": "Comp"
         }
     ],
     "Parametrs": {
     },
-    "id": "56033bd53d50",
+    "id": "556db9952b80",
     "type": "Project"
 }
