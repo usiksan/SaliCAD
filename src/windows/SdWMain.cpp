@@ -1448,6 +1448,14 @@ void SdWMain::cm3dStlImport()
 
 
 
+void SdWMain::cm3dStepImport()
+  {
+  if( activeEditor() )
+    activeEditor()->cm3dStepImport();
+  }
+
+
+
 
 void SdWMain::cmBall()
   {

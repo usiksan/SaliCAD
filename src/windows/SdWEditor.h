@@ -118,6 +118,7 @@ class SdWEditor : public QAbstractScrollArea
 
     //3d
     virtual void cm3dStlImport() {}
+    virtual void cm3dStepImport() {}
     virtual void cmBall() {}
     virtual void cmPinWired() {}
     virtual void cmPinFlat() {}

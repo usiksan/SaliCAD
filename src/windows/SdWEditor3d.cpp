@@ -17,6 +17,7 @@ Description
 #include "SdWView3d.h"
 #include "objects/SdProjectItem.h"
 #include "objects/Sd3dStl.h"
+#include "objects/Sd3dStep.h"
 
 #include <QVBoxLayout>
 #include <QPaintEvent>
@@ -79,6 +80,25 @@ void SdWEditor3d::cm3dStlImport()
   if( stl ) {
     mItem->getUndo()->begin( tr("Import STL model"), mItem );
     mItem->insertChild( stl, mItem->getUndo() );
+    dirtyProject();
+    mView->update();
+    }
+  }
+
+
+
+
+void SdWEditor3d::cm3dStepImport()
+  {
+  //Open dialog to select stl file
+  QString title = QFileDialog::getOpenFileName(this, tr("Import STEP model"), QString(), tr("STEP model files (*%1)").arg(".stp") );
+
+  if( title.isEmpty() ) return;
+
+  Sd3dStep *step = Sd3dStep::importStepFromFile( title );
+  if( step ) {
+    mItem->getUndo()->begin( tr("Import STEP model"), mItem );
+    mItem->insertChild( step, mItem->getUndo() );
     dirtyProject();
     mView->update();
     }

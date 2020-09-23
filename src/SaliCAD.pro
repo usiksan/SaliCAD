@@ -28,8 +28,10 @@ SOURCES += \
     objects/Sd3dFlat.cpp \
     objects/Sd3dObject.cpp \
     objects/Sd3dPoint.cpp \
+    objects/Sd3dStep.cpp \
     objects/Sd3dStl.cpp \
     objects/Sd3dTriangle.cpp \
+    step/SdStepReader.cpp \
     windows/SdDOptionsPageLibrary.cpp \
     windows/SdWEditor3d.cpp \
     windows/SdWEditor3dPart.cpp \
@@ -304,8 +306,10 @@ HEADERS  += \
     objects/Sd3dFlat.h \
     objects/Sd3dObject.h \
     objects/Sd3dPoint.h \
+    objects/Sd3dStep.h \
     objects/Sd3dStl.h \
     objects/Sd3dTriangle.h \
+    step/SdStepReader.h \
     windows/SdDOptionsPageLibrary.h \
     windows/SdWEditor3d.h \
     windows/SdWEditor3dPart.h \
