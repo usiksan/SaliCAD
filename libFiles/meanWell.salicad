@@ -1,0 +1,107 @@
+{
+    "ChildList": [
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "+Vin": "2",
+                        "+Vout": "4",
+                        "-Vin": "1",
+                        "COM": "3"
+                    },
+                    "SymbolId": "Symbol\rDC-DC 1channel (symbol)\rsalicad",
+                    "SymbolTitle": "DC-DC 1channel (symbol) (salicad)",
+                    "id": "559cfe9c63a0",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rsip4 plastic case\rsalicad",
+                    "PartTitle": "sip4 plastic case (salicad)",
+                    "id": "559cfda97780",
+                    "type": "PartVariant"
+                }
+            ],
+            "Created": 87647855,
+            "Edit enable": true,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "article": "",
+                "bom": "<value>",
+                "category": "{uu.c.b.d",
+                "input voltage": "",
+                "manufacturer": "Mean Well",
+                "output current": "",
+                "output voltage": "",
+                "prefix": "DD",
+                "title": "smu02 dc-dc power converter leaded",
+                "value": ""
+            },
+            "Title": "smu02 dc-dc power converter leaded ",
+            "VariantFC": 5,
+            "VariantTab": [
+                "article",
+                "value",
+                "input voltage",
+                "output voltage",
+                "output current",
+                "SMU02L-05",
+                "SMU02L-05",
+                "5V",
+                "5V",
+                "400mA",
+                "SMU02M-05",
+                "SMU02M-05",
+                "12V",
+                "5V",
+                "400mA",
+                "SMU02N-05",
+                "SMU02N-05",
+                "24V",
+                "5V",
+                "400mA",
+                "SMU02L-12",
+                "SMU02L-12",
+                "5V",
+                "12V",
+                "167mA",
+                "SMU02M-12",
+                "SMU02M-12",
+                "12V",
+                "12V",
+                "167mA",
+                "SMU02N-12",
+                "SMU02N-12",
+                "24V",
+                "12V",
+                "167mA",
+                "SMU02L-15",
+                "SMU02L-15",
+                "5V",
+                "15V",
+                "133mA",
+                "SMU02M-15",
+                "SMU02M-15",
+                "12V",
+                "15V",
+                "133mA",
+                "SMU02N-15",
+                "SMU02N-15",
+                "24V",
+                "15V",
+                "133mA"
+            ],
+            "id": "559cfe8e2f70",
+            "type": "Comp"
+        }
+    ],
+    "Parametrs": {
+    },
+    "id": "559cfe181040",
+    "type": "Project"
+}
