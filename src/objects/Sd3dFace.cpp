@@ -102,7 +102,7 @@ bool Sd3dFace::stepSurfaceStyleSide(const QString &param, const SdStepReader &re
   if( param.startsWith( QStringLiteral("SURFACE_SIDE_STYLE")) ) {
     QStringList surfaceList = reader.parseList( param );
     if( surfaceList.count() == 2 ) {
-      surfaceList = reader.parseList( );
+     // surfaceList = reader.parseList( );
       return stepSurfaceStyleSide( surfaceList.at(1), reader );
       }
     }

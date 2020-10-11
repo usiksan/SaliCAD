@@ -109,6 +109,8 @@ void SdPNewProjectItem_Master::initializePage()
                  QString(":/pic/sheetMasterDecorator.png"), [this] ( SdProjectItem *item, QWidget *p ) -> bool {
         Q_UNUSED(p)
         SdProject *mPastePrj = sdObjectOnly<SdProject>( SdObjectFactory::extractObject( SdDGetObject::getObjectUid( dctProject, QObject::tr("Select form to insert"), this, "form"), false, this ) );
+        if( mPastePrj == nullptr ) return false;
+
         SdPItemSheet *sheet = mPastePrj->getFirstSheet();
 
         if( sheet == nullptr ) return false;
