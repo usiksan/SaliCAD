@@ -20,14 +20,17 @@ Sd3dStep::Sd3dStep()
 //!
 bool Sd3dStep::importStep(QIODevice *file)
   {
+  //Reader which contains full file map
   SdStepReader reader;
+  //Read file map
   if( reader.read(file) ) {
+    //Styled items - are faces
     QStringList styledItemList = reader.styledItemList();
     for( auto styledItemId : styledItemList ) {
-      Sd3dFace face;
-      face.readStep( styledItemId, reader );
-      mFaceList.append( face );
       //qDebug() << styledItemId << reader.value(styledItemId);
+      Sd3dFace face;
+      if( face.readStep( styledItemId, reader ) )
+        mFaceList.append( face );
       }
     }
   return false;
