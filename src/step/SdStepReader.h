@@ -133,6 +133,15 @@ struct SdStepParserAsParamString : public SdStepParser {
 
 
 
+struct SdStepParserAsParamDouble : public SdStepParser {
+    double mValue;
+
+
+    // SdStepParser interface
+  public:
+    virtual bool parse(const QString &line, const SdStepReader &reader) override;
+  };
+
 
 struct SdStepParserColorRgb : public SdStepParser {
     quint32 mColor;
@@ -141,6 +150,24 @@ struct SdStepParserColorRgb : public SdStepParser {
     // SdStepParser interface
   public:
     virtual bool    parse(const QString &line, const SdStepReader &reader ) override;
+    virtual QString name() const override;
+  };
+
+
+struct SdStepParserCartesianPoint : public SdStepParser {
+    double x,y,z;
+
+    // SdStepParser interface
+  public:
+    virtual bool    parse(const QString &line, const SdStepReader &reader) override;
+    virtual QString name() const override;
+  };
+
+struct SdStepParserDirection : public SdStepParserCartesianPoint {
+
+
+    // SdStepParser interface
+  public:
     virtual QString name() const override;
   };
 

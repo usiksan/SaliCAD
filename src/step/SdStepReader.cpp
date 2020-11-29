@@ -204,6 +204,14 @@ bool SdStepParserAsParamString::parse(const QString &line, const SdStepReader &r
 
 
 
+bool SdStepParserAsParamDouble::parse(const QString &line, const SdStepReader &reader)
+  {
+  Q_UNUSED(reader)
+  bool res;
+  mValue = line.simplified().toDouble( &res );
+  return res;
+  }
+
 
 bool SdStepParserColorRgb::parse(const QString &line, const SdStepReader &reader)
   {
@@ -226,5 +234,34 @@ QString SdStepParserColorRgb::name() const
 
 
 
+
+
+
+
+bool SdStepParserCartesianPoint::parse(const QString &line, const SdStepReader &reader)
+  {
+  QStringList paramList = reader.parseList( line );
+  if( paramList.count() == 2 ) {
+    paramList = reader.parseList( paramList.at(1) );
+    if( paramList.count() == 3 ) {
+      x = paramList.at(0).simplified().toDouble();
+      y = paramList.at(1).simplified().toDouble();
+      z = paramList.at(2).simplified().toDouble();
+      return true;
+      }
+    }
+  return false;
+  }
+
+QString SdStepParserCartesianPoint::name() const
+  {
+  return QStringLiteral("CARTESIAN_POINT");
+  }
+
+
+QString SdStepParserDirection::name() const
+  {
+  return QStringLiteral("DIRECTION");
+  }
 
 
