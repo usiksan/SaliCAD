@@ -1,6 +1,7 @@
 #include "SdStepReader.h"
 
 #include <QColor>
+#include <QDebug>
 
 SdStepReader::SdStepReader()
   {
@@ -128,9 +129,85 @@ QStringList SdStepReader::itemList(const QString itemName) const
 
 
 
-bool SdStepParserColorRgb::parse(const QString &line)
+
+
+bool SdStepParserParamList::parse(const QString &line, const SdStepReader &reader)
   {
-  QStringList rgb = mReader->parseList( line );
+  QStringList paramList = reader.parseList(line);
+  if( paramList.count() != mParamHandlerList.count() ) {
+    qDebug() << "SdStepParserParamList wrong param count" << mItemName;
+    return false;
+    }
+  for( int i = 0; i < paramList.count(); i++ )
+    if( !mParamHandlerList.at(i)->parse( paramList.at(i), reader ) )
+      return false;
+
+  mAppler();
+  return true;
+  }
+
+
+bool SdStepParserParamSkeeper::parse(const QString &line, const SdStepReader &reader)
+  {
+  Q_UNUSED(line)
+  Q_UNUSED(reader)
+  return true;
+  }
+
+
+bool SdStepParserAsParamSingleId::parse(const QString &line, const SdStepReader &reader)
+  {
+  //line is id
+  QString param = reader.value( line );
+  //From list select variant which match param
+  for( auto ref : mReferenceList )
+    if( ref->matchName(param) )
+      //Matched reference found. Apply it to parse param
+      return ref->parse( param, reader );
+  return false;
+  }
+
+
+
+bool SdStepParserAsParamIdList::parse(const QString &line, const SdStepReader &reader)
+  {
+  QStringList paramIdList = reader.parseList(line);
+  for( auto const &id : paramIdList ) {
+    QString param = reader.value( id );
+    //From list select variant which match param
+    bool parsed = false;
+    for( auto ref : mReferenceList )
+      if( ref->matchName(param) ) {
+        //Matched reference found. Apply it to parse param
+        if( !ref->parse( param, reader ) ) return false;
+        parsed = true;
+        break;
+        }
+    if( !parsed ) {
+      //Param not found
+      qDebug() << "SdStepParserAsParamIdList" << param;
+      return false;
+      }
+    }
+  return true;
+  }
+
+
+
+
+bool SdStepParserAsParamString::parse(const QString &line, const SdStepReader &reader)
+  {
+  Q_UNUSED(reader)
+  mSelected = mStrings.indexOf(line);
+  return mSelected >= 0;
+  }
+
+
+
+
+bool SdStepParserColorRgb::parse(const QString &line, const SdStepReader &reader)
+  {
+  QStringList rgb = reader.parseList( line );
   if( rgb.count() == 4 ) {
     double r = rgb.at(1).simplified().toDouble() * 255;
     double g = rgb.at(2).simplified().toDouble() * 255;
@@ -147,19 +224,7 @@ QString SdStepParserColorRgb::name() const
   }
 
 
-bool SdStepParserFillAreaStyleColor::parse(const QString &line)
-  {
-  }
 
-QString SdStepParserFillAreaStyleColor::name() const
-  {
-  }
 
-bool SdStepParserStyledItem::parse(const QString &line)
-  {
 
-  }
 
-QString SdStepParserStyledItem::name() const
-  {
-  }

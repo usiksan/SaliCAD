@@ -19,21 +19,22 @@ Description
 #include <QString>
 #include <QMap>
 #include <QIODevice>
+#include <functional>
 
 class SdStepReader;
 
 
 struct SdStepParser {
-    SdStepReader *mReader;
+    virtual bool    parse( const QString &line, const SdStepReader &reader ) = 0;
 
-    SdStepParser( SdStepReader *reader ) : mReader(reader) { }
+    virtual QString name() const { return QStringLiteral("DefaultName"); }
 
-    virtual bool    parse( const QString &line ) = 0;
-
-    virtual QString name() const = 0;
+    bool            matchName( const QString &line ) const { return line.startsWith( name() ); }
   };
 
 using SdStepParserPtr = SdStepParser*;
+
+using SdStepHandlerList = QList<SdStepParserPtr>;
 
 
 class SdStepReader
@@ -59,14 +60,78 @@ class SdStepReader
   };
 
 
-struct SdStepParserStyledItem : public SdStepParser {
+
+
+
+
+struct SdStepParserParamList : public SdStepParser {
+    QString               mItemName;
+    SdStepHandlerList     mParamHandlerList;
+    std::function<void()> mAppler;
+
+    SdStepParserParamList( const QString itemName, SdStepHandlerList handlerList, std::function<void()> appler = [] () {} ) :
+      mItemName(itemName),
+      mParamHandlerList(handlerList),
+      mAppler(appler){}
+
+    // SdStepParser interface
+  public:
+    virtual bool    parse(const QString &line, const SdStepReader &reader ) override;
+    virtual QString name() const override { return mItemName; }
+  };
+
+
+
+
+struct SdStepParserParamSkeeper : public SdStepParser {
+
+    // SdStepParser interface
+  public:
+    virtual bool parse(const QString &line, const SdStepReader &reader) override;
+  };
+
+
+
+
+struct SdStepParserAsParamSingleId : public SdStepParser {
+    SdStepHandlerList mReferenceList;
+
+    SdStepParserAsParamSingleId( SdStepHandlerList referenceList ) : mReferenceList( referenceList ) {}
 
 
     // SdStepParser interface
   public:
-    virtual bool parse(const QString &line) override;
-    virtual QString name() const override;
+    virtual bool parse(const QString &line, const SdStepReader &reader) override;
   };
+
+
+
+
+struct SdStepParserAsParamIdList : public SdStepParser {
+    SdStepHandlerList mReferenceList;
+
+    SdStepParserAsParamIdList( SdStepHandlerList referenceList ) : mReferenceList( referenceList ) {}
+
+    // SdStepParser interface
+  public:
+    virtual bool parse(const QString &line, const SdStepReader &reader) override;
+  };
+
+
+
+struct SdStepParserAsParamString : public SdStepParser {
+    QStringList mStrings;
+    int         mSelected;
+
+    SdStepParserAsParamString( QStringList strList ) : mStrings(strList) {}
+
+
+    // SdStepParser interface
+  public:
+    virtual bool parse(const QString &line, const SdStepReader &reader) override;
+  };
+
+
 
 
 struct SdStepParserColorRgb : public SdStepParser {
@@ -75,35 +140,8 @@ struct SdStepParserColorRgb : public SdStepParser {
 
     // SdStepParser interface
   public:
-    virtual bool parse(const QString &line) override;
+    virtual bool    parse(const QString &line, const SdStepReader &reader ) override;
     virtual QString name() const override;
   };
-
-
-struct SdStepParserFillAreaStyleColor : public SdStepParser {
-
-
-    // SdStepParser interface
-  public:
-    virtual bool parse(const QString &line) override;
-    virtual QString name() const override;
-  };
-
-
-struct SdStepParser3dFace : public SdStepParser {
-    int mFaceMask;
-    quint32 mFaceColor;
-
-    bool faceMask( const QString &param );
-    bool faceColor( const QString &colorId );
-    bool style( const QString &id );
-  };
-
-//struct SdStepParser3dFace {
-//    QList<Sd3dPoint> mRegion;     //! Face region
-//    Sd3dPoint        mNormal;     //! Face normal vector for foregraund and background side detection
-//    quint32          mFaceColor;  //! Face color
-
-//  };
 
 #endif // SDSTEPREADER_H

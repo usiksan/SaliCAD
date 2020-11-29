@@ -53,27 +53,6 @@ class Sd3dFace
     //!
     void        read( const QJsonObject &obj );
 
-  private:
-    //Member function pointer
-    using Sd3dFaceMemberStep = bool (Sd3dFace::*)( const QString &param, const SdStepReader &reader );
-
-    bool stepParseParams( const QString &param, const SdStepReader &reader, QList<Sd3dFaceMemberStep> paramHandlers );
-
-    bool stepParseParamList( const QString &param, const SdStepReader &reader, Sd3dFaceMemberStep paramHandler );
-    bool stepParseParamIdList( const QString &param, const SdStepReader &reader, Sd3dFaceMemberStep paramHandler );
-
-    bool stepParamSkeep( const QString &param, const SdStepReader &reader );
-    bool stepPresentationStyleAssignmentList( const QString &param, const SdStepReader &reader );
-    bool stepPresentationStyleAssignment( const QString &param, const SdStepReader &reader );
-    bool stepSurfaceStyleUsageList( const QString &param, const SdStepReader &reader );
-    bool stepSurfaceStyleUsage( const QString &param, const SdStepReader &reader );
-    bool stepSurfaceSideStyle( const QString &param, const SdStepReader &reader );
-    bool stepSurfaceStyleFillAreaList( const QString &param, const SdStepReader &reader );
-    bool stepSurfaceStyleFillArea( const QString &param, const SdStepReader &reader );
-    bool stepFillAreaStyle( const QString &param, const SdStepReader &reader );
-    bool stepFillAreaStyleColorList( const QString &param, const SdStepReader &reader );
-    bool stepFillAreaStyleColor( const QString &param, const SdStepReader &reader );
-    bool stepAdvancedFace( const QString &param, const SdStepReader &reader );
   };
 
 #endif // SD3DFACE_H
