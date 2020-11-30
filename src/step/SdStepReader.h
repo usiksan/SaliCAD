@@ -157,6 +157,8 @@ struct SdStepParserColorRgb : public SdStepParser {
 struct SdStepParserCartesianPoint : public SdStepParser {
     double x,y,z;
 
+    Sd3dPoint to3dPoint() const { return Sd3dPoint( x * 1000.0, y * 1000.0, z * 1000.0 ); }
+
     // SdStepParser interface
   public:
     virtual bool    parse(const QString &line, const SdStepReader &reader) override;

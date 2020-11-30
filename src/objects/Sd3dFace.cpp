@@ -24,7 +24,7 @@ bool Sd3dFace::readStep(const QString &faceId, const SdStepReader &reader)
   SdStepParserParamSkeeper vectorParam0;
   SdStepParserAsParamSingleId vectorParam1( {&vectorDirection} );
   SdStepParserAsParamDouble vectorParam2;
-  SdStepParserParamList vector( QStringLiteral("LINE"), {&vectorParam0, &vectorParam1, &vectorParam2 } );
+  SdStepParserParamList vector( QStringLiteral("VECTOR"), {&vectorParam0, &vectorParam1, &vectorParam2 } );
 
   //#197 = CARTESIAN_POINT( '', ( 0.000000000000000, 30.0000000000000, 10.0000000000000 ) );
   SdStepParserCartesianPoint lineCartesianPoint;
@@ -65,7 +65,15 @@ bool Sd3dFace::readStep(const QString &faceId, const SdStepReader &reader)
   SdStepParserParamSkeeper orientedEdgeParam2;
   SdStepParserAsParamSingleId orientedEdgeParam3( {&edgeCurve} );
   SdStepParserAsParamString orientedEdgeParam4( {QStringLiteral(".T."), QStringLiteral(".F.") } );
-  SdStepParserParamList orientedEdge( QStringLiteral("ORIENTED_EDGE"), {&orientedEdgeParam0, &orientedEdgeParam1, &orientedEdgeParam2, &orientedEdgeParam3, &orientedEdgeParam4 } );
+  SdStepParserParamList orientedEdge( QStringLiteral("ORIENTED_EDGE"), {&orientedEdgeParam0, &orientedEdgeParam1, &orientedEdgeParam2, &orientedEdgeParam3, &orientedEdgeParam4 }, [this, &vertex0CartesianPoint, &vertex1CartesianPoint] () {
+    //Oriented edge parsed. Append vertex's to bound list
+    if( mRegion.count() == 0 ) {
+      //It's first edge. Append both vertex's
+      mRegion.append( vertex0CartesianPoint.to3dPoint() );
+      }
+    if( mRegion.last() == vertex0CartesianPoint.to3dPoint() && !(mRegion.first() == vertex1CartesianPoint.to3dPoint()) )
+      mRegion.append( vertex1CartesianPoint.to3dPoint() );
+    } );
 
   //#84 = EDGE_LOOP( '', ( #103, #104, #105, #106 ) );
   SdStepParserParamSkeeper edgeLoopParam0;
@@ -87,7 +95,9 @@ bool Sd3dFace::readStep(const QString &faceId, const SdStepReader &reader)
   SdStepParserAsParamSingleId axis2Placement3dParam1( {&cartesianPoint} );
   SdStepParserAsParamSingleId axis2Placement3dParam2( {&direction1} );
   SdStepParserAsParamSingleId axis2Placement3dParam3( {&direction2} );
-  SdStepParserParamList axis2Placement3d( QStringLiteral("AXIS2_PLACEMENT_3D"), {&axis2Placement3dParam0, &axis2Placement3dParam1, &axis2Placement3dParam2, &axis2Placement3dParam3 } );
+  SdStepParserParamList axis2Placement3d( QStringLiteral("AXIS2_PLACEMENT_3D"), {&axis2Placement3dParam0, &axis2Placement3dParam1, &axis2Placement3dParam2, &axis2Placement3dParam3 }, [this, &direction1] () {
+    mNormal = direction1.to3dPoint();
+    } );
 
   //#60 = PLANE( '', #85 );
   SdStepParserParamSkeeper planeParam0;
@@ -96,7 +106,7 @@ bool Sd3dFace::readStep(const QString &faceId, const SdStepReader &reader)
 
   //#30 = ADVANCED_FACE( '', ( #59 ), #60, .T. );
   SdStepParserParamSkeeper advancedFaceParam0;
-  SdStepParserAsParamIdList advancedFaceParam1( {&fillAreaStyleColour} );
+  SdStepParserAsParamIdList advancedFaceParam1( {&faceOuterBound} );
   SdStepParserAsParamSingleId advancedFaceParam2( {&plane} );
   SdStepParserAsParamString advancedFaceParam3( {QStringLiteral(".T."), QStringLiteral(".F.") } );
   SdStepParserParamList advancedFace( QStringLiteral("ADVANCED_FACE"), {&advancedFaceParam0, &advancedFaceParam1, &advancedFaceParam2, &advancedFaceParam3 } );
@@ -110,7 +120,9 @@ bool Sd3dFace::readStep(const QString &faceId, const SdStepReader &reader)
   //#168 = FILL_AREA_STYLE_COLOUR( '', #194 );
   SdStepParserParamSkeeper fillAreaStyleColourParam0;
   SdStepParserAsParamSingleId fillAreaStyleColourParam1( {&color} );
-  SdStepParserParamList fillAreaStyleColour( QStringLiteral("FILL_AREA_STYLE_COLOUR"), {&fillAreaStyleColourParam0, &fillAreaStyleColourParam1} );
+  SdStepParserParamList fillAreaStyleColour( QStringLiteral("FILL_AREA_STYLE_COLOUR"), {&fillAreaStyleColourParam0, &fillAreaStyleColourParam1}, [this, &color] () {
+    mFaceColor = color.mColor;
+    } );
 
   //#150 = FILL_AREA_STYLE( '', ( #168 ) );
   SdStepParserParamSkeeper fillAreaStyleParam0;
@@ -138,11 +150,15 @@ bool Sd3dFace::readStep(const QString &faceId, const SdStepReader &reader)
   //STYLED_ITEM( '', ( #29 ), #30 )
   SdStepParserParamSkeeper styledItemParam0;
   SdStepParserAsParamIdList styledItemParam1( {&presentationStyleAssignment} );
-  SdStepParserAsParamSingleId styledItemParam2( {} );
+  SdStepParserAsParamSingleId styledItemParam2( {&advancedFace} );
   SdStepParserParamList styledItem( QStringLiteral("STYLED_ITEM"), { &styledItemParam0, &styledItemParam1, &styledItemParam2 } );
 
   QString str = reader.value(faceId);
-  return styledItem.parse( str, reader );
+  bool res = styledItem.parse( str, reader );
+  if( res ) {
+    qDebug() << "STEP face parsed" << mRegion.count();
+    }
+  return res;
   }
 
 

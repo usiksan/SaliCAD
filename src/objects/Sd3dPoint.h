@@ -31,6 +31,7 @@ class Sd3dPoint
     int         z() const { return mZ; }
 
     Sd3dPoint   operator + ( const Sd3dPoint &p ) const { return Sd3dPoint( mX + p.x(), mY + p.y(), mZ + p.z() ); }
+    bool        operator == ( const Sd3dPoint &p ) const { return mX == p.x() && mY == p.y() && mZ == p.z(); }
 
     void        vertex( QOpenGLFunctions_2_0 *f ) const { f->glVertex3i( mX, mY, mZ ); }
 
