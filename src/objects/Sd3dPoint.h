@@ -26,6 +26,10 @@ class Sd3dPoint
     Sd3dPoint( const SdPoint &p, int cz = 0 ) : mX(p.x()), mY(p.y()), mZ(cz) {}
     Sd3dPoint( int cx, int cy, int cz ) : mX(cx), mY(cy), mZ(cz) {}
 
+    void        set( int cx, int cy, int cz ) { mX = cx; mY = cy; mZ = cz; }
+
+    void        clear() { mX = mY = mZ = 0; }
+
     int         x() const { return mX; }
     int         y() const { return mY; }
     int         z() const { return mZ; }

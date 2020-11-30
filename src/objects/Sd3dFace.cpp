@@ -70,9 +70,18 @@ bool Sd3dFace::readStep(const QString &faceId, const SdStepReader &reader)
     if( mRegion.count() == 0 ) {
       //It's first edge. Append both vertex's
       mRegion.append( vertex0CartesianPoint.to3dPoint() );
-      }
-    if( mRegion.last() == vertex0CartesianPoint.to3dPoint() && !(mRegion.first() == vertex1CartesianPoint.to3dPoint()) )
       mRegion.append( vertex1CartesianPoint.to3dPoint() );
+      }
+    else {
+      if( mRegion.last() == vertex0CartesianPoint.to3dPoint() && !(mRegion.first() == vertex1CartesianPoint.to3dPoint()) )
+        mRegion.append( vertex1CartesianPoint.to3dPoint() );
+      else if( mRegion.last() == vertex1CartesianPoint.to3dPoint() && !(mRegion.first() == vertex0CartesianPoint.to3dPoint()) )
+        mRegion.append( vertex0CartesianPoint.to3dPoint() );
+      else if( mRegion.first() == vertex0CartesianPoint.to3dPoint() && !(mRegion.last() == vertex1CartesianPoint.to3dPoint()) )
+        mRegion.insert( 0, vertex1CartesianPoint.to3dPoint() );
+      else if( mRegion.first() == vertex1CartesianPoint.to3dPoint() && !(mRegion.last() == vertex0CartesianPoint.to3dPoint()) )
+        mRegion.insert( 0, vertex0CartesianPoint.to3dPoint() );
+      }
     } );
 
   //#84 = EDGE_LOOP( '', ( #103, #104, #105, #106 ) );
@@ -152,6 +161,11 @@ bool Sd3dFace::readStep(const QString &faceId, const SdStepReader &reader)
   SdStepParserAsParamIdList styledItemParam1( {&presentationStyleAssignment} );
   SdStepParserAsParamSingleId styledItemParam2( {&advancedFace} );
   SdStepParserParamList styledItem( QStringLiteral("STYLED_ITEM"), { &styledItemParam0, &styledItemParam1, &styledItemParam2 } );
+
+  //Clear current face
+  mRegion.clear();
+  mNormal.clear();
+  mFaceColor = 0;
 
   QString str = reader.value(faceId);
   bool res = styledItem.parse( str, reader );
