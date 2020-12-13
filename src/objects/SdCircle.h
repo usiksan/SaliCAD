@@ -21,8 +21,8 @@ class SdRect;
 
 struct SdCircle
   {
-    SdPoint mCenter;  //Circle center point [Центр окружности]
-    int     mRadius;  //Circle radius [Радиус окружности]
+    SdPoint mCenter;  //!< Circle center point [Центр окружности]
+    int     mRadius;  //!< Circle radius [Радиус окружности]
 
     SdCircle() : mCenter(), mRadius(0) {}
     SdCircle( SdPoint c, int r ) : mCenter(c), mRadius(r) {}

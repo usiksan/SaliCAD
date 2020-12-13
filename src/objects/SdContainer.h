@@ -29,8 +29,8 @@ typedef QList<SdObjectPtr> SdObjectPtrList;
 class SdContainer : public SdObject
   {
   protected:
-    SdObjectPtrList  mChildList;  //List of child objects
-    SdStringMap      mParamTable; //Object parameters
+    SdObjectPtrList  mChildList;  //!< List of child objects
+    SdStringMap      mParamTable; //!< Object parameters
   public:
     SdContainer();
     ~SdContainer() override;

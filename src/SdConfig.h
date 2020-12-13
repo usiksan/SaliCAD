@@ -172,6 +172,7 @@ History
                    so not need to download object by user query
   18.09.2020 v1.14 In bus mode append automatic wire name orientation
   11.10.2020 v1.15 Fix error: crash when sheet master cancel
+  12.12.2020 v1.16 Continue with STEP import
 */
 
 #ifndef SDCONFIG
@@ -183,7 +184,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             15
+#define SD_VERSION_MINOR             16
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

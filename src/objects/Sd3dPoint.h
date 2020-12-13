@@ -34,6 +34,10 @@ class Sd3dPoint
     int         y() const { return mY; }
     int         z() const { return mZ; }
 
+    float       fxmm() const { return static_cast<float>(mX) / 1000.0; }
+    float       fymm() const { return static_cast<float>(mY) / 1000.0; }
+    float       fzmm() const { return static_cast<float>(mZ) / 1000.0; }
+
     Sd3dPoint   operator + ( const Sd3dPoint &p ) const { return Sd3dPoint( mX + p.x(), mY + p.y(), mZ + p.z() ); }
     bool        operator == ( const Sd3dPoint &p ) const { return mX == p.x() && mY == p.y() && mZ == p.z(); }
 

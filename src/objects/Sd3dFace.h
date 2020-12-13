@@ -22,18 +22,13 @@ Description
 
 class Sd3dFace
   {
-    QList<Sd3dPoint> mRegion;     //! Face region
-    Sd3dPoint        mNormal;     //! Face normal vector for foregraund and background side detection
-    quint32          mFaceColor;  //! Face color
+    QList<Sd3dPoint> mRegion;     //!< Face region
+    Sd3dPoint        mNormal;     //!< Face normal vector for foregraund and background side detection
+    quint32          mFaceColor;  //!< Face color
   public:
     Sd3dFace();
+    Sd3dFace( QList<Sd3dPoint> region, Sd3dPoint normal, quint32 faceColor );
 
-    //!
-    //! \brief readStep Reads one face from step file reader
-    //! \param faceId   Face id for reading
-    //! \param reader   STEP file reader
-    //!
-    bool        readStep( const QString &faceId, const SdStepReader &reader );
 
     //!
     //! \brief paint Draw triangle with OpenGL

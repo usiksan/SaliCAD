@@ -159,6 +159,8 @@ struct SdStepParserCartesianPoint : public SdStepParser {
 
     Sd3dPoint to3dPoint() const { return Sd3dPoint( x * 1000.0, y * 1000.0, z * 1000.0 ); }
 
+    SdStepParserCartesianPoint &operator += ( const SdStepParserCartesianPoint &op ) { x += op.x; y += op.y; z += op.z; return *this; }
+
     // SdStepParser interface
   public:
     virtual bool    parse(const QString &line, const SdStepReader &reader) override;

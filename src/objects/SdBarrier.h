@@ -23,8 +23,8 @@ Description
 struct SdBarrier
   {
 
-    QString   mNetName; //Name of net which have this barrier
-    QPolygonF mPolygon; //Barrier polygon
+    QString   mNetName; //!< Name of net which have this barrier
+    QPolygonF mPolygon; //!< Barrier polygon
   };
 
 typedef QList<SdBarrier> SdBarrierList;

@@ -27,7 +27,7 @@ using Sd3dFaceList = QList<Sd3dFace>;
 
 class Sd3dStep : public Sd3dObject
   {
-    Sd3dFaceList mFaceList; //! Face list of model
+    Sd3dFaceList mFaceList; //!< Face list of model
   public:
     Sd3dStep();
 
@@ -56,6 +56,13 @@ class Sd3dStep : public Sd3dObject
     virtual SdRect  getOverRect() const override;
     virtual void    draw3d(QOpenGLFunctions_2_0 *f) const override;
 
+  private:
+    //!
+    //! \brief importStepStyledFace Reads one face from step file reader
+    //! \param faceId               Face id for reading
+    //! \param reader               STEP file reader
+    //!
+    bool importStepStyledFace(const QString &faceId, const SdStepReader &reader);
   };
 
 #endif // SD3DSTEP_H

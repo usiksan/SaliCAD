@@ -36,8 +36,8 @@ typedef QString SdUid;
 
 class SdObject
   {
-    SdContainer *mParent;  //Parent object
-    bool         mDeleted; //Flag check if object deleted. Deleted objects not save
+    SdContainer *mParent;  //!< Parent object
+    bool         mDeleted; //!< Flag check if object deleted. Deleted objects not save
   public:
     SdObject();
     virtual ~SdObject() {}

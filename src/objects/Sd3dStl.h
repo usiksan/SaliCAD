@@ -27,7 +27,7 @@ using Sd3dTriangleList = QList<Sd3dTriangle>;
 
 class Sd3dStl : public Sd3dObject
   {
-    Sd3dTriangleList  mTriangleList; //! Triangle list of model
+    Sd3dTriangleList  mTriangleList; //!< Triangle list of model
   public:
     Sd3dStl();
 
