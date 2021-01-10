@@ -65,12 +65,12 @@ bool SdDNetClient::getObject(QWidget *parent, const QString id)
 
 void SdDNetClient::onCompleteRequestObject( int result, int remain )
   {
-  if( result == SCPE_SUCCESSFULL )
-    done(1);
-  else {
-    QMessageBox::warning( this, tr("Error!"), tr("Request result %1, objects remain %2").arg(result).arg(remain) );
-    done(0);
-    }
+//  if( result == SCPE_SUCCESSFULL )
+//    done(1);
+//  else {
+//    QMessageBox::warning( this, tr("Error!"), tr("Request result %1, objects remain %2").arg(result).arg(remain) );
+//    done(0);
+//    }
   }
 
 

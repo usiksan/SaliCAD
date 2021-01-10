@@ -173,6 +173,8 @@ History
   18.09.2020 v1.14 In bus mode append automatic wire name orientation
   11.10.2020 v1.15 Fix error: crash when sheet master cancel
   12.12.2020 v1.16 Continue with STEP import
+  05.01.2021 v1.17 Begin to change global repository. At now I use MySQL on server and http php queries, because
+                   some proxies block queries with socket link.
 */
 
 #ifndef SDCONFIG
@@ -184,12 +186,11 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             16
+#define SD_VERSION_MINOR             17
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
-#define SD_DEFAULT_IP                "62.109.11.83"
-#define SD_DEFAULT_PORT              1970
+#define SD_DEFAULT_REPO              "repo.salicad.com/"
 #define SD_UPGRADE_WEB               "http:/salicad.salilab.com/downloads/"
 
 
@@ -259,11 +260,11 @@ History
 #define SDK_MAIN_SPLITTER            "MainSplitter"
 #define SDK_PREVIOUS_FILES           "PreviousFiles"
 #define SDK_GLOBAL_AUTHOR            "Author global id"
-#define SDK_MACHINE_KEY              "Machine global key"
+#define SDK_GLOBAL_PASSWORD          "Author global password"
 #define SDK_LOCAL_SYNC               "Local sync"
 #define SDK_REMOTE_SYNC              "Remote sync"
 #define SDK_REMOTE_REMAIN            "Remote remain"
-#define SDK_SERVER_IP                "SaliCAD server IP"
+#define SDK_SERVER_REPO              "SaliCAD repository"
 #define SDK_ENVIR_VERSION            "Envir version"
 #define SDK_ENVIR                    "Envir"
 #define SDK_HELP_PATH                "HelpPath"

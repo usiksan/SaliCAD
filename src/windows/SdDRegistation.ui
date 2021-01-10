@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>439</width>
-    <height>316</height>
+    <height>256</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,79 +29,51 @@
      <item row="0" column="0">
       <widget class="QLabel" name="label_7">
        <property name="text">
-        <string>SaliCAD server IP:</string>
+        <string>SaliCAD server:</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="mServerIP"/>
+      <widget class="QLineEdit" name="mServerRepo"/>
      </item>
-     <item row="2" column="0">
+     <item row="1" column="0">
       <widget class="QLabel" name="mNameTitle">
        <property name="text">
         <string>Name:</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="1" column="1">
       <widget class="QLineEdit" name="mName"/>
      </item>
-     <item row="3" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
         <string>EMail:</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="2" column="1">
       <widget class="QLineEdit" name="mEmail"/>
      </item>
-     <item row="4" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>Machine key:</string>
+        <string>Password:</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="mMachineKey"/>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="mPassword"/>
      </item>
-     <item row="5" column="1">
-      <widget class="QLineEdit" name="mRemain">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>SaliCAD server status:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="mServerStatus">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Elements remain:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="label_5">
        <property name="text">
         <string>Registration status:</string>
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
+     <item row="4" column="1">
       <widget class="QLineEdit" name="mRegistrationStatus">
        <property name="readOnly">
         <bool>true</bool>
@@ -134,9 +106,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="mAddMachine">
+      <widget class="QPushButton" name="mGeneratePassword">
        <property name="text">
-        <string>Add machine</string>
+        <string>Generate password</string>
        </property>
       </widget>
      </item>

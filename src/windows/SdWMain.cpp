@@ -581,7 +581,7 @@ void SdWMain::onCloseEditor(int index)
 //On file received from remote repository
 void SdWMain::onFileReceived(int result, QString fileName, QByteArray data)
   {
-  if( result == SCPE_SUCCESSFULL ) {
+  if( result == 0 ) {
     if( fileName == QStringLiteral("version") ) {
       QJsonObject obj = QJsonDocument::fromJson( data ).object();
 #ifdef Q_OS_LINUX

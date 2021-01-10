@@ -26,8 +26,6 @@ Description
 #include <QDebug>
 #include <QFile>
 
-//#include "library/SdLibraryStorage.h"
-//#include "objects/SdPItemComponent.h"
 
 int main(int argc, char *argv[])
   {
@@ -80,9 +78,9 @@ int main(int argc, char *argv[])
   SdObjectFactory::openLibrary();
 
   //Check if registered
-  if( !s.contains(SDK_GLOBAL_AUTHOR) ) {
+  if( !s.contains(SDK_GLOBAL_AUTHOR) || !s.contains(SDK_GLOBAL_PASSWORD) || !s.contains(SDK_SERVER_REPO) ) {
     //Store default ip
-    s.setValue( QStringLiteral(SDK_SERVER_IP), QStringLiteral(SD_DEFAULT_IP) );
+    s.setValue( QStringLiteral(SDK_SERVER_REPO), QStringLiteral(SD_DEFAULT_REPO) );
     //Not registered, show register dialog
     SdDRegistation rd(false);
     if( rd.exec() == 0 )

@@ -20,19 +20,31 @@ Description
 #ifndef SDOBJECTNETCLIENT_H
 #define SDOBJECTNETCLIENT_H
 
-#include "SaliCadServer/SdCsChannel.h"
-#include "SaliCadServer/SdCsPacketInfo.h"
 #include <QObject>
-#include <QTcpSocket>
+#include <QNetworkAccessManager>
 #include <QTimer>
+#include <QJsonArray>
 
 enum SdRemoteStatus { SdRemoteOff, SdRemoteOn, SdRemoteSync };
 
-class SdObjectNetClient : public SdCsChannel
+enum SdRemoteQueryType {
+  SdRemoteQueryNone,
+  SdRemoteQueryRegister,
+  SdRemoteQueryList,
+  SdRemoteQueryOurObjects,
+  SdRemoteQueryRepoObjects,
+  SdRemoteQueryObject
+  };
+
+class SdObjectNetClient : public QObject
   {
     Q_OBJECT
 
-    QTimer        mTimer;
+    QNetworkAccessManager *mNetworkManager; //!< Network manager through witch we connect to global repository
+    QTimer                 mTimer;          //!< Timer for periodic sync with global repository
+    SdRemoteQueryType      mQueryType;      //!< Type of remote operation
+    QJsonArray             mObjectList;     //!< Object list of newest objects from remote repository
+    int                    mObjectIndex;    //!< Object index in mObjectList to receive object from remote repository
     QByteArray    mBuffer;
     QByteArray    mBufferSync;
     QStringList   mInfoList;        //List for information items. When any event happens then information item appends
@@ -56,10 +68,6 @@ class SdObjectNetClient : public SdCsChannel
     // with result of loading and count of remain object to may be load
     void objectComplete( int result, int remain );
 
-    //Signal send on user registration complete
-    // with accnowledges all query params
-    void registrationComplete( const QString authorName, const QString email, quint64 key, int remain, int result );
-
     //Signal send when on sync new object received
     void newObjectsReceived();
 
@@ -67,7 +75,7 @@ class SdObjectNetClient : public SdCsChannel
     void connectionStatus( QString msg, bool ok );
 
     //Signal on registration status
-    void registrationStatus( QString msg, bool ok );
+    void registerStatus( const QString msg, const QString email );
 
     //Signal on file receiv
     void fileContents( int result, QString fileName, QByteArray fileData );
@@ -80,11 +88,17 @@ class SdObjectNetClient : public SdCsChannel
 
   public slots:
 
-    //Begin registration process
-    void doRegistration(const QString ip, const QString authorName, const QString email );
-
-    //Begin append machine
-    void doMachine(const QString ip, const QString authorName, quint64 key );
+    //!
+    //! \brief doRegister Begin registration process or check registration status
+    //!                   If this author with this password already registered or
+    //!                   this author not registered then reply OK in other - duplicate
+    //!                   author detected and must be enter another author name
+    //! \param repo       Repository address, repo.salicad.com by default
+    //! \param authorName Author name for registration
+    //! \param password   Password for this author name
+    //! \param email      E-mail for password restore
+    //!
+    void doRegister(const QString repo, const QString authorName, const QString password, const QString email );
 
     //Begin object receiving process
     void doObject( const QString hashId );
@@ -97,25 +111,23 @@ class SdObjectNetClient : public SdCsChannel
 
     void startSync( bool start );
 
-    //Check registration
-    void doCheck();
-
     //Receiv file from repository
     void doFile( const QString fileName );
 
-    // SdCsChannel interface
-  public:
-    virtual void onBlockReceived( int cmd, QDataStream &is ) override;
+    //!
+    //! \brief finished Called when network reply finished
+    //! \param reply    Reply witch being finished
+    //!
+    void finished( QNetworkReply *reply );
 
-    //Conver error code to string description
-    static QString error( int code );
   private:
-    void    cmRegistrationInfo( QDataStream &is );
-    void    cmSyncList( QDataStream &is );
+    void    cmRegister( const QJsonObject &reply );
+    void    cmSyncList( const QJsonObject &reply );
     void    cmObject( QDataStream &is );
     void    startTransmit();
-    void    cmCheck( QDataStream &is );
     void    cmFile( QDataStream &is );
+    void    doDownloadNextObject();
+    void    doUploadNextObject();
 
     //Append info to info list
     void    infoAppend( const QString info );

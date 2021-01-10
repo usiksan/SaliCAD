@@ -179,8 +179,6 @@ SOURCES += \
     objects/SdObjectNetClient.cpp \
     windows/SdDNetClient.cpp \
     windows/SdDRegistation.cpp \
-    SaliCadServer/SdCsChannel.cpp \
-    SaliCadServer/SdCsPacketInfo.cpp \
     objects/SdPasCadImport.cpp \
     objects/SdSymImpPin.cpp \
     objects/SdUndoRecordSymImpPins.cpp \
@@ -460,8 +458,6 @@ HEADERS  += \
     objects/SdObjectNetClient.h \
     windows/SdDNetClient.h \
     windows/SdDRegistation.h \
-    SaliCadServer/SdCsChannel.h \
-    SaliCadServer/SdCsPacketInfo.h \
     objects/SdPasCadImport.h \
     objects/SdSymImpPin.h \
     objects/SdUndoRecordSymImpPins.h \

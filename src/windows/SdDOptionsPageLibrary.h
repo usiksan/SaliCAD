@@ -20,10 +20,10 @@ Description
 class SdDOptionsPageLibrary : public QWidget
   {
     Q_OBJECT
-    QLineEdit *mServerIP;             //Remote library server ip
-    QLineEdit *mAuthorName;           //Author name
-    QLineEdit *mObjectsCount;         //Objects count in library
-    QLineEdit *mLibraryPath;          //Library path [Каталог библиотек]
+    QLineEdit *mServerRepo;           //!< Remote library server ip
+    QLineEdit *mAuthorName;           //!< Author name
+    QLineEdit *mObjectsCount;         //!< Objects count in library
+    QLineEdit *mLibraryPath;          //!< Library path [Каталог библиотек]
 
   public:
     explicit SdDOptionsPageLibrary(QWidget *parent = nullptr);

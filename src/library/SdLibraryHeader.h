@@ -55,17 +55,17 @@ inline void sdExtractVariant( int index, SdStringMap &map, int fieldCount, const
 //Library object header
 struct SdLibraryHeader
   {
-    QString     mName;               //Name of stored object
-    QString     mType;               //Type of stored object
-    QString     mAuthor;             //Author who create object
-    qint32      mTime;               //Object time creation
-    quint64     mClass;              //Object class. When equals 0 then corresponded object is deleted
+    QString     mName;               //!< Name of stored object
+    QString     mType;               //!< Type of stored object
+    QString     mAuthor;             //!< Author who create object
+    qint32      mTime;               //!< Object time creation
+    quint64     mClass;              //!< Object class. When equals 0 then corresponded object is deleted
 
-    SdStringMap mParamTable;         //User defined object params
+    SdStringMap mParamTable;         //!< User defined object params
 
     //Extended param table
-    qint32      mVariantFieldCount; //Variable fields count in extended param table
-    QStringList mVariantTable;      //Variant table
+    qint32      mVariantFieldCount; //!< Variable fields count in extended param table
+    QStringList mVariantTable;      //!< Variant table
 
     SdLibraryHeader() : mName(), mType(), mAuthor(), mTime(0), mClass(0), mParamTable(), mVariantFieldCount(0),mVariantTable() {}
 

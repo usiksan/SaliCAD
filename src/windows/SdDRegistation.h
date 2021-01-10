@@ -28,7 +28,6 @@ class SdDRegistation : public QDialog
   {
     Q_OBJECT
 
-    //QTimer mPeriodic;   //Timer for periodic check registration status
     bool   mFromHelp;
     int    mNameStatus; //0-empty, 1-sali, 2-other
   public:
@@ -37,20 +36,16 @@ class SdDRegistation : public QDialog
 
   signals:
     //Signal to start registration
-    void doRegistration( const QString ip, const QString authorName, const QString email );
-
-    //Signal to add machine
-    void doMachine( const QString ip, const QString authorName, quint64 key );
+    void doRegistration( const QString repo, const QString authorName, const QString password, const QString email );
 
   public slots:
     //Registration new user
     void cmRegistration();
 
-    //Add to user new machine
-    void cmAddMachine();
-
-    //On complete registration
-    void onRegistrationComplete(const QString authorName, const QString email, quint64 key, int remain, int result);
+    //!
+    //! \brief cmGeneratePassword Generate new password
+    //!
+    void cmGeneratePassword();
 
     //On edit user name
     void onEditAuthorName( const QString nm );

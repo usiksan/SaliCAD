@@ -21,9 +21,9 @@ SdDOptionsPageLibrary::SdDOptionsPageLibrary(QWidget *parent) :
   QPushButton *but;
 
   grid->addWidget( new QLabel(tr("Remote library IP:")), 0, 0 );
-  grid->addWidget( mServerIP = new QLineEdit(), 0, 1 );
-  mServerIP->setText( s.value( QStringLiteral(SDK_SERVER_IP) ).toString() );
-  mServerIP->setReadOnly(true);
+  grid->addWidget( mServerRepo = new QLineEdit(), 0, 1 );
+  mServerRepo->setText( s.value( QStringLiteral(SDK_SERVER_REPO) ).toString() );
+  mServerRepo->setReadOnly(true);
   grid->addWidget( but = new QPushButton( tr("Resync") ), 0, 2 );
   connect( but, &QPushButton::clicked, this, [] () {
     QSettings s;
@@ -43,7 +43,7 @@ SdDOptionsPageLibrary::SdDOptionsPageLibrary(QWidget *parent) :
     d.exec();
     //After registration update ip and author name
     QSettings s;
-    mServerIP->setText( s.value( QStringLiteral(SDK_SERVER_IP) ).toString() );
+    mServerRepo->setText( s.value( QStringLiteral(SDK_SERVER_REPO) ).toString() );
     mAuthorName->setText( s.value( QStringLiteral(SDK_GLOBAL_AUTHOR), QString()).toString() );
     });
 

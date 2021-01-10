@@ -18,10 +18,12 @@ Description
 #include "SdDRegistation.h"
 #include "ui_SdDRegistation.h"
 #include "objects/SdObjectNetClient.h"
+#include "objects/SdTime2x.h"
 #include "SdDHelp.h"
 
 #include <QSettings>
 #include <QMessageBox>
+#include <QRandomGenerator64>
 #include <QTimer>
 
 SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
@@ -30,28 +32,23 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
   mNameStatus(-1),
   ui(new Ui::SdDRegistation)
   {
-  qDebug() << QString::number( 10292256597293707235ul, 32 );
   ui->setupUi(this);
 
   sdObjectNetClient->startSync(false);
 
   //Fill fields
   QSettings s;
-  ui->mServerIP->setText( s.value( QStringLiteral(SDK_SERVER_IP), QString(SD_DEFAULT_IP)).toString() );
+  ui->mServerRepo->setText( s.value( QStringLiteral(SDK_SERVER_REPO), QString(SD_DEFAULT_REPO)).toString() );
   ui->mName->setText( s.value( QStringLiteral(SDK_GLOBAL_AUTHOR), QString()).toString() );
   onEditAuthorName( ui->mName->text() );
-  ui->mMachineKey->setText( s.value( QStringLiteral(SDK_MACHINE_KEY), QString()).toString() );
-  ui->mRemain->setText( s.value( QStringLiteral(SDK_REMOTE_REMAIN), QString::number(SD_DEFAULT_DELIVERED_LIMIT) ).toString() );
-  ui->mRemain->setReadOnly(true);
+  ui->mPassword->setText( s.value( QStringLiteral(SDK_GLOBAL_PASSWORD), QString()).toString() );
 
   connect( ui->mRegistration, &QPushButton::clicked, this, &SdDRegistation::cmRegistration );
-  connect( ui->mAddMachine, &QPushButton::clicked, this, &SdDRegistation::cmAddMachine );
+  connect( ui->mGeneratePassword, &QPushButton::clicked, this, &SdDRegistation::cmGeneratePassword );
   connect( ui->mClose, &QPushButton::clicked, this, &SdDRegistation::cmClose );
   connect( ui->mName, &QLineEdit::textEdited, this, &SdDRegistation::onEditAuthorName );
 
-  connect( this, &SdDRegistation::doRegistration, sdObjectNetClient, &SdObjectNetClient::doRegistration );
-  connect( this, &SdDRegistation::doMachine, sdObjectNetClient, &SdObjectNetClient::doMachine );
-  connect( sdObjectNetClient, &SdObjectNetClient::registrationComplete, this, &SdDRegistation::onRegistrationComplete );
+  connect( this, &SdDRegistation::doRegistration, sdObjectNetClient, &SdObjectNetClient::doRegister );
   connect( sdObjectNetClient, &SdObjectNetClient::process, this, [this] (const QString msg, bool stop ) {
     Q_UNUSED(stop)
     ui->mProcess->setText(msg);
@@ -61,16 +58,18 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
     } );
 
   //Check registration status at start
-  connect( sdObjectNetClient, &SdObjectNetClient::connectionStatus, this, [this] (const QString msg, bool ok ) {
-    ui->mServerStatus->setText(msg);
-    if( !ok )
-      ui->mRegistrationStatus->setText( tr("No information") );
-    });
-  connect( sdObjectNetClient, &SdObjectNetClient::registrationStatus, this, [this] (const QString msg, bool ok ) {
-    Q_UNUSED(ok)
+  connect( sdObjectNetClient, &SdObjectNetClient::registerStatus, this, [this] (const QString msg, const QString email ) {
     ui->mRegistrationStatus->setText(msg);
+    if( !email.isEmpty() )
+      ui->mEmail->setText( email );
     });
-  QTimer::singleShot( 300, sdObjectNetClient, &SdObjectNetClient::doCheck );
+
+  if( s.contains(SDK_GLOBAL_AUTHOR) && s.contains(SDK_GLOBAL_PASSWORD) && s.contains(SDK_SERVER_REPO) ) {
+    ui->mEmail->setText( QStringLiteral("email") );
+    QTimer::singleShot( 300, this, &SdDRegistation::cmRegistration );
+    }
+  else
+    ui->mRegistrationStatus->setText( tr("Not registered!") );
   }
 
 
@@ -86,8 +85,8 @@ SdDRegistation::~SdDRegistation()
 //Registration new user
 void SdDRegistation::cmRegistration()
   {
-  if( ui->mServerIP->text().isEmpty() ) {
-    QMessageBox::warning( this, tr("Warning!"), tr("Enter server ip") );
+  if( ui->mServerRepo->text().isEmpty() ) {
+    QMessageBox::warning( this, tr("Warning!"), tr("Enter repository server") );
     return;
     }
   if( ui->mName->text().isEmpty() ) {
@@ -98,55 +97,40 @@ void SdDRegistation::cmRegistration()
     QMessageBox::warning( this, tr("Warning!"), tr("Enter your email needed to resore key at later") );
     return;
     }
-  if( ui->mMachineKey->text().isEmpty() )
-    //Registration new user
-    emit doRegistration( ui->mServerIP->text(), ui->mName->text().toLower(), ui->mEmail->text() );
-  else
+  if( ui->mPassword->text().isEmpty() )
     //Check access to existing user
-    QMessageBox::warning( this, tr("Warning!"), tr("To start new user registration clear machine key field") );
+    QMessageBox::warning( this, tr("Warning!"), tr("Enter password for your name") );
+  else {
+    //Store registration data
+    QSettings s;
+    s.setValue( QStringLiteral(SDK_SERVER_REPO), ui->mServerRepo->text() );
+    s.setValue( QStringLiteral(SDK_GLOBAL_AUTHOR), ui->mName->text() );
+    s.setValue( QStringLiteral(SDK_GLOBAL_PASSWORD), ui->mPassword->text() );
+
+    //Registration new user
+    emit doRegistration( ui->mServerRepo->text(), ui->mName->text().toLower(), ui->mPassword->text(), ui->mEmail->text() );
+    }
   }
 
 
 
 
-//Add to user new machine
-void SdDRegistation::cmAddMachine()
+//!
+//! \brief cmGeneratePassword Generate new password
+//!
+void SdDRegistation::cmGeneratePassword()
   {
-  if( ui->mServerIP->text().isEmpty() ) {
-    QMessageBox::warning( this, tr("Warning!"), tr("Enter server ip") );
-    return;
+  static QRandomGenerator64 gen;
+  static bool seed;
+  if( !seed ) {
+    gen.seed( SdTime2x::current() );
+    seed = true;
     }
-  if( ui->mName->text().isEmpty() ) {
-    QMessageBox::warning( this, tr("Warning!"), tr("Enter user name") );
-    return;
-    }
-  if( ui->mMachineKey->text().isEmpty() ) {
-    QMessageBox::warning( this, tr("Error!"), tr("You must enter existing machine key."));
-    return;
-    }
-  //Registration new machine
-  emit doMachine( ui->mServerIP->text(), ui->mName->text(), ui->mMachineKey->text().toULongLong( nullptr, 32 ) );
+  qint64 key = gen.generate();
+  ui->mPassword->setText( QString::number(key,16) );
   }
 
 
-
-
-//On complete registration
-void SdDRegistation::onRegistrationComplete( const QString authorName, const QString email, quint64 key, int remain, int result )
-  {
-  if( result == SCPE_SUCCESSFULL ) {
-    ui->mName->setText( authorName );
-    ui->mEmail->setText( email );
-    ui->mMachineKey->setText( QString::number( key, 32 ) );
-    ui->mRemain->setText( QString::number(remain) );
-    //Reset sync counters
-
-    }
-  else if( result == SCPE_AUTHOR_ALREADY_PRESENT )
-    QMessageBox::warning( this, tr("Error!"), tr("This user name already present. Enter another name.") );
-  else
-    QMessageBox::warning( this, tr("Error!"), tr("Undefined error %1").arg(result) );
-  }
 
 
 
