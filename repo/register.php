@@ -14,17 +14,20 @@
       }
     else {
       mysqli_set_charset($link, "utf8");
+      $author = mysqli_real_escape_string( $link, $_POST["author"] );
+      $password = mysqli_real_escape_string( $link, $_POST["password"] );
+      $email = mysqli_real_escape_string( $link, $_POST["email"] );
       //Проверяем наличие уже зарегистрированного пользователя
-      $result = mysqli_query( $link, 'SELECT * FROM users WHERE author = "'.$_POST["author"].'"');
+      $result = mysqli_query( $link, 'SELECT * FROM users WHERE author = "'.$author.'"');
       if( mysqli_num_rows($result) == 0 ) {
         //Пользователь еще не зарегистрирован, регистрируем
-        $sql = 'INSERT INTO users SET author = "' .$_POST["author"]. '", password = "' .$_POST["password"]. '", email = "' .$_POST["email"]. '"';
+        $sql = 'INSERT INTO users SET author = "' .$author. '", password = "' .$password. '", email = "' .$email. '"';
         $result = mysqli_query($link, $sql );
         if( $result == true ) {
           //Успешно зарегистрирован
           $array = array(
             "result" => 0,
-            "email" => $_POST["email"]
+            "email" => $email
             );
           }
         else {

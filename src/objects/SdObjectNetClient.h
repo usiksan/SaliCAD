@@ -31,9 +31,8 @@ enum SdRemoteQueryType {
   SdRemoteQueryNone,
   SdRemoteQueryRegister,
   SdRemoteQueryList,
-  SdRemoteQueryOurObjects,
-  SdRemoteQueryRepoObjects,
-  SdRemoteQueryObject
+  SdRemoteQueryUploadObject,
+  SdRemoteQueryDownloadObject
   };
 
 class SdObjectNetClient : public QObject
@@ -45,14 +44,7 @@ class SdObjectNetClient : public QObject
     SdRemoteQueryType      mQueryType;      //!< Type of remote operation
     QJsonArray             mObjectList;     //!< Object list of newest objects from remote repository
     int                    mObjectIndex;    //!< Object index in mObjectList to receive object from remote repository
-    QByteArray    mBuffer;
-    QByteArray    mBufferSync;
-    QStringList   mInfoList;        //List for information items. When any event happens then information item appends
-    QStringList   mQueryObjects;    //List of queried objects
-    int           mCommand;
-    int           mCommandSync;
-    int           mLocalSyncCount;
-    quint8        padding[4];
+    QStringList            mInfoList;       //!< List for information items. When any event happens then information item appends
   public:
     explicit SdObjectNetClient(QObject *parent = nullptr);
 
@@ -103,9 +95,6 @@ class SdObjectNetClient : public QObject
     //Begin object receiving process
     void doObject( const QString hashId );
 
-    //When connected to host send to it prepared block
-    void onConnected();
-
     //By timer do syncronisation
     void doSync();
 
@@ -123,8 +112,8 @@ class SdObjectNetClient : public QObject
   private:
     void    cmRegister( const QJsonObject &reply );
     void    cmSyncList( const QJsonObject &reply );
-    void    cmObject( QDataStream &is );
-    void    startTransmit();
+    void    cmDownloadObject( const QJsonObject &reply );
+    void    cmUploadObject( const QJsonObject &reply );
     void    cmFile( QDataStream &is );
     void    doDownloadNextObject();
     void    doUploadNextObject();
