@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -97,7 +97,7 @@ class SdPoint : public QPoint
     void        read( const QJsonObject obj );
 
     //Return far point, point with big coords
-    static SdPoint far() { return SdPoint(farCoord,farCoord); }
+    static SdPoint farPoint() { return SdPoint(farCoord,farCoord); }
 
     //Test if point is far
     bool        isFar() const { return x() == farCoord && y() == farCoord; }

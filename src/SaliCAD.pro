@@ -5,7 +5,7 @@
 #-------------------------------------------------
 CONFIG += c++17
 
-QT       += core gui network sql printsupport texttospeech
+QT       += core gui network sql printsupport texttospeech opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,6 +17,8 @@ RC_ICONS = pic/main.ico
 #QMAKE_CXXFLAGS += -Wc++17-extensions
 
 INCLUDEPATH += ../third
+
+LIBS += -lopengl32
 
 SOURCES += \
     SdMain.cpp \

@@ -24,7 +24,7 @@ Description
 
 SdModeCPolygonEnter::SdModeCPolygonEnter( SdWEditorGraph *editor, SdProjectItem *obj ) :
   SdModeCommon( editor, obj ),
-  mSmart( SdPoint::far() )
+  mSmart( SdPoint::farPoint() )
   {
 
   }
@@ -172,7 +172,7 @@ void SdModeCPolygonEnter::movePoint(SdPoint p)
     if( info.isFound() )
       mSmart = info.mDest;
     else
-      mSmart = SdPoint::far();
+      mSmart = SdPoint::farPoint();
     }
   update();
   }

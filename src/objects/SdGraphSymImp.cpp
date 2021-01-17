@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -400,7 +400,7 @@ void SdGraphSymImp::saveState(SdUndo *undo)
 
 void SdGraphSymImp::moveComplete(SdPoint grid, SdUndo *undo)
   {
-  Q_UNUSED(grid);
+  Q_UNUSED(grid)
   //Mooving is completed, check pin connection
   SdPItemSheet *sheet = getSheet();
   Q_ASSERT( sheet != nullptr );
@@ -909,7 +909,7 @@ bool SdGraphSymImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
       //upgrading mPartImp will be different from current
       SdPropSelected prop;
       prop.clear();
-      SdPoint partOrigin( SdPoint::far() );
+      SdPoint partOrigin( SdPoint::farPoint() );
       if( mPartImp ) {
         mPartImp->getProp( prop );
         partOrigin = mPartImp->getOrigin();

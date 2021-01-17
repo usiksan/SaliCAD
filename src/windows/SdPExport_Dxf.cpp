@@ -45,7 +45,7 @@ class SdDxfContext : public SdContext {
       SdContext( SdPoint(), new QPainter() ),
       mScale(1.0)
       {
-      mPos = SdPoint::far();
+      mPos = SdPoint::farPoint();
       }
     ~SdDxfContext() override { delete mPainter; }
 

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -620,7 +620,7 @@ void SdModeCRoadEnter::calcNextSmartPoint( SdPoint fromPoint )
     }
   else {
     //Set illegal point as smart
-    mTargetPoint = SdPoint::far();
+    mTargetPoint = SdPoint::farPoint();
 
     mLoopPath.removeAll();
     }

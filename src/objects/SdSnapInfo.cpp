@@ -1,4 +1,4 @@
-/*
+﻿/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -19,7 +19,7 @@ Description
 #include <float.h>
 
 SdSnapInfo::SdSnapInfo() :
-  mDest( SdPoint::far() ),
+  mDest( SdPoint::farPoint() ),
   mSnapMask(0),
   mDestMask(0),
   mSqDistance(DBL_MAX),
@@ -79,7 +79,7 @@ bool SdSnapInfo::scan(SdContainer *object, SdClass mask )
 //Reset snap to next find
 void SdSnapInfo::reset(bool )
   {
-  mDest       = SdPoint::far();
+  mDest       = SdPoint::farPoint();
   mSqDistance = DBL_MAX;
   mGraph      = nullptr;
   }
