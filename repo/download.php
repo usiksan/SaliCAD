@@ -32,7 +32,8 @@
         if( mysqli_num_rows($result) == 0 ) {
           //Запрошенного объекта нету в базе
           $array = array(
-            "result" => 3
+            "result" => 3,
+            "index"  => $_POST["index"]
             );
           }
         else {
@@ -40,6 +41,7 @@
           $row = mysqli_fetch_array($result);
           $array = array(
             "result" => 0,
+            "index"  => $_POST["index"],
             "object" => $row["object"]
             );
           }

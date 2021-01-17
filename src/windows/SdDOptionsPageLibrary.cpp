@@ -28,7 +28,7 @@ SdDOptionsPageLibrary::SdDOptionsPageLibrary(QWidget *parent) :
   connect( but, &QPushButton::clicked, this, [] () {
     QSettings s;
     s.setValue( SDK_LOCAL_SYNC, 0 );
-    s.setValue( SDK_REMOTE_SYNC, 0 );
+    s.setValue( SDK_REMOTE_SYNC, 1 );
     //s.value( SDK_SERVER_IP ).toString();
     });
 

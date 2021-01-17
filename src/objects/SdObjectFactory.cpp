@@ -53,7 +53,7 @@ void SdObjectFactory::insertObject( const SdLibraryHeader &hdr, QJsonObject json
   {
 
   //Insert object
-  sdLibraryStorage.insert( hdr, qCompress( QJsonDocument(json).toBinaryData(), -1 ) );
+  sdLibraryStorage.insert( hdr, qCompress( QJsonDocument(json).toBinaryData(), -1 ), false );
   }
 
 

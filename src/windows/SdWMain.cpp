@@ -162,6 +162,8 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
     } );
   connect( mRemote, &QToolButton::clicked, this, &SdWMain::cmRemoteStatus );
   sbar->addWidget( mRemote );
+  //Show status when sync operation happens
+  connect( sdObjectNetClient, &SdObjectNetClient::informationAppended, this, [this] ( const QString ) { cmRemoteStatus(); } );
 
   activateProjectName( nullptr );
 

@@ -49,7 +49,17 @@ class SdLibraryStorage
     SdLibraryStorage();
     ~SdLibraryStorage();
 
+    //!
+    //! \brief objectCount Return count of referenced objects in library
+    //! \return            Count of referenced objects in library
+    //!
     qint32      objectCount() const { return mReferenceMap.count(); }
+
+    //!
+    //! \brief creationIndex Return current value of creation index
+    //! \return              Current value of creation index
+    //!
+    qint32      creationIndex() const { return mCreationIndex; }
 
     //==================================================================
     //Common library properties
@@ -77,8 +87,12 @@ class SdLibraryStorage
     //Return true if newer object referenced in map
     bool        isNewerObject( const QString uid, qint32 time );
 
-    //Get list of objects which inserted after index
-    QStringList getAfter( qint32 index, int limit = 100 );
+    //!
+    //! \brief getUidByIndex Get object id with index which has not been downloaded
+    //! \param index         Index of needed object
+    //! \return              UID of object with index
+    //!
+    QString     getUidByIndex(qint32 index );
 
     //Function must return false to continue iteration
     //When function return true - iteration break and return true as indicator
@@ -93,16 +107,17 @@ class SdLibraryStorage
     // hdr - place to receiv object header
     bool        header( const QString uid, SdLibraryHeader &hdr );
 
-    //Set reference to object with header
-    // hdr - object header
-    bool        setHeader( SdLibraryHeader &hdr );
-
     //Get object
     // uid - object unical identificator
     QByteArray  object( const QString uid );
 
-    //Insert new object with creation reference and append header and object
-    void        insert( const SdLibraryHeader &hdr, QByteArray obj );
+    //!
+    //! \brief insert     Insert new object with creation reference and append header and object
+    //! \param hdr        Header of inserted object
+    //! \param obj        Inserted object
+    //! \param downloaded true if object downloaded from remote repo
+    //!
+    void        insert( const SdLibraryHeader &hdr, QByteArray obj, bool downloaded );
   };
 
 

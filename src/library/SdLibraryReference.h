@@ -21,13 +21,16 @@ Description
 
 #include <QDataStream>
 
+#define SDLR_DOWNLOADED 0x1 //Object loaded from
+
 struct SdLibraryReference
   {
-    qint32 mCreationIndex;  //Index with which object is registered.
-    qint32 mCreationTime;   //Time of object creation
-    qint64 mHeaderPtr;      //Header reference. It contains offset from begining headers file to header of this object
-    qint64 mObjectPtr;      //Object reference. It contains offset from begining objects file to object.
-                            //Object reference can be null if no object loaded. Header can not be null.
+    qint32 mCreationIndex;  //!< Index with which object is registered.
+    qint32 mCreationTime;   //!< Time of object creation
+    qint64 mHeaderPtr;      //!< Header reference. It contains offset from begining headers file to header of this object
+    qint64 mObjectPtr;      //!< Object reference. It contains offset from begining objects file to object.
+                            //!  Object reference can be null if no object loaded. Header can not be null.
+    qint8  mFlags;          //!< Flags
 
     //Test if reference newer than time
     bool isNewer( qint32 time ) const { return mCreationTime > time; }
@@ -42,7 +45,7 @@ struct SdLibraryReference
 //Write function
 inline QDataStream &operator << ( QDataStream &os, const SdLibraryReference &ref )
   {
-  os << ref.mCreationIndex << ref.mCreationTime << ref.mHeaderPtr << ref.mObjectPtr;
+  os << ref.mCreationIndex << ref.mCreationTime << ref.mHeaderPtr << ref.mObjectPtr << ref.mFlags;
   return os;
   }
 
@@ -50,7 +53,7 @@ inline QDataStream &operator << ( QDataStream &os, const SdLibraryReference &ref
 //Read function
 inline QDataStream &operator >> ( QDataStream &is, SdLibraryReference &ref )
   {
-  is >> ref.mCreationIndex >> ref.mCreationTime >> ref.mHeaderPtr >> ref.mObjectPtr;
+  is >> ref.mCreationIndex >> ref.mCreationTime >> ref.mHeaderPtr >> ref.mObjectPtr >> ref.mFlags;
   return is;
   }
 

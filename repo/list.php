@@ -14,8 +14,10 @@
       }
     else {
       mysqli_set_charset($link, "utf8");
+      $author = mysqli_real_escape_string( $link, $_POST["author"] );
+      $password = mysqli_real_escape_string( $link, $_POST["password"] );
       //Проверяем наличие уже зарегистрированного пользователя
-      $result = mysqli_query( $link, 'SELECT * FROM users WHERE author = "'.$_POST["author"].'" AND password = "'.$_POST["password"].'"');
+      $result = mysqli_query( $link, 'SELECT * FROM users WHERE author = "'.$author.'" AND password = "'.$password.'"');
       if( mysqli_num_rows($result) == 0 ) {
         //Пользователь не зарегистрирован или пароль не совпал
         $array = array(

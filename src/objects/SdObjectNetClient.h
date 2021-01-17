@@ -39,11 +39,10 @@ class SdObjectNetClient : public QObject
   {
     Q_OBJECT
 
-    QNetworkAccessManager *mNetworkManager; //!< Network manager through witch we connect to global repository
-    QTimer                 mTimer;          //!< Timer for periodic sync with global repository
-    SdRemoteQueryType      mQueryType;      //!< Type of remote operation
-    QJsonArray             mObjectList;     //!< Object list of newest objects from remote repository
-    int                    mObjectIndex;    //!< Object index in mObjectList to receive object from remote repository
+    QNetworkAccessManager *mNetworkManager;  //!< Network manager through witch we connect to global repository
+    QTimer                 mTimer;           //!< Timer for periodic sync with global repository
+    SdRemoteQueryType      mQueryType;       //!< Type of remote operation
+    QList<int>             mObjectIndexList; //!< Object index list of newest objects from remote repository
     QStringList            mInfoList;       //!< List for information items. When any event happens then information item appends
   public:
     explicit SdObjectNetClient(QObject *parent = nullptr);
@@ -110,15 +109,46 @@ class SdObjectNetClient : public QObject
     void finished( QNetworkReply *reply );
 
   private:
+    //!
+    //! \brief cmRegister Reply received on register query
+    //! \param reply      Received reply
+    //!
     void    cmRegister( const QJsonObject &reply );
+
+    //!
+    //! \brief cmSyncList Reply received on sync query. On next we download all objects from list which yet not downloaded
+    //! \param reply      Received reply
+    //!
     void    cmSyncList( const QJsonObject &reply );
+
+    //!
+    //! \brief cmDownloadObject Reply received on download object query. Downloaded object placed to local library storage
+    //! \param reply            Received reply
+    //!
     void    cmDownloadObject( const QJsonObject &reply );
+
+    //!
+    //! \brief cmUploadObject Reply received on upload object query. On next we continue upload all newest objects
+    //! \param reply          Received reply
+    //!
     void    cmUploadObject( const QJsonObject &reply );
+
     void    cmFile( QDataStream &is );
+
+    //!
+    //! \brief doDownloadNextObject Forms query to download next object from sync list
+    //!
     void    doDownloadNextObject();
+
+    //!
+    //! \brief doUploadNextObject Form query to upload next newest object to global repository
+    //!
     void    doUploadNextObject();
 
-    //Append info to info list
+    //!
+    //! \brief infoAppend Append info to local info list and send signal with info to extern objects
+    //! \param info       Appended info
+    //!
     void    infoAppend( const QString info );
   };
 

@@ -175,25 +175,31 @@ bool SdLibraryStorage::isNewerObject(const QString uid, qint32 time)
 
 
 
-//Get list of objects inserted after index
-QStringList SdLibraryStorage::getAfter(qint32 index, int limit)
+
+//!
+//! \brief getUidByIndex Get object id with index which has not been downloaded
+//! \param index         Index of needed object
+//! \return              UID of object with index
+//!
+QString SdLibraryStorage::getUidByIndex(qint32 index)
   {
   QReadLocker locker( &mLock );
-  QStringList result;
   //if index greater or equal creationIndex then no objects after index
-  if( index >= mCreationIndex )
-    return result;
   QMapIterator<QString,SdLibraryReference> iter( mReferenceMap );
-  qint32 last = index + limit;
   while( iter.hasNext() ) {
     iter.next();
     //If object inside index bound and present not only head but object itsels
     // then append such object to list
-    if( iter.value().mCreationIndex >= index && iter.value().mCreationIndex < last && iter.value().mObjectPtr )
-      result.append( iter.key() );
+    if( iter.value().mCreationIndex == index && iter.value().mObjectPtr && !(iter.value().mFlags & SDLR_DOWNLOADED) ) {
+      return iter.key();
+      }
     }
-  return result;
+  //No objects found with this index
+  return QString{};
   }
+
+
+
 
 
 
@@ -266,40 +272,6 @@ bool SdLibraryStorage::header(const QString uid, SdLibraryHeader &hdr)
 
 
 
-//Set reference to object with header
-bool SdLibraryStorage::setHeader(SdLibraryHeader &hdr)
-  {
-  QWriteLocker locker( &mLock );
-
-  QString key = hdr.uid();
-  //If object already in base then do nothing
-  if( mReferenceMap.contains(key) && mReferenceMap.value(key).isNewerOrSame(hdr.mTime) )
-    //Newer or same header already present in base
-    //Nothing done
-    return false;
-
-  //Else insert record
-  QFile file(FNAME_HDR);
-  if( file.open(QIODevice::Append) ) {
-    SdLibraryReference ref;
-    ref.mHeaderPtr     = file.size();
-    ref.mCreationIndex = mCreationIndex++;
-    ref.mObjectPtr     = 0;
-    ref.mCreationTime  = hdr.mTime;
-
-    QDataStream os( &file );
-    hdr.write( os );
-    file.close();
-
-    mReferenceMap.insert( key, ref );
-    mDirty = true;
-    }
-
-  return true;
-  }
-
-
-
 
 
 
@@ -322,7 +294,7 @@ QByteArray SdLibraryStorage::object(const QString uid)
 
 
 //Insert new object with creation reference and append header and object
-void SdLibraryStorage::insert(const SdLibraryHeader &hdr, QByteArray obj)
+void SdLibraryStorage::insert(const SdLibraryHeader &hdr, QByteArray obj, bool downloaded )
   {
   QWriteLocker locker( &mLock );
 
@@ -342,6 +314,7 @@ void SdLibraryStorage::insert(const SdLibraryHeader &hdr, QByteArray obj)
       ref.mCreationIndex = mCreationIndex++;
       ref.mHeaderPtr     = fileHdr.size();
       ref.mCreationTime  = hdr.mTime;
+      ref.mFlags         = downloaded ? SDLR_DOWNLOADED : 0;
       QDataStream os( &fileHdr );
       hdr.write( os );
       fileHdr.close();
