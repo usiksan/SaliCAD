@@ -18,7 +18,8 @@ RC_ICONS = pic/main.ico
 
 INCLUDEPATH += ../third
 
-LIBS += -lopengl32
+win32: LIBS += -lopengl32
+win64: LIBS += -lopengl32
 
 SOURCES += \
     SdMain.cpp \
