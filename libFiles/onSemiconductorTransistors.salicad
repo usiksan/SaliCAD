@@ -12,14 +12,14 @@
                     },
                     "SymbolId": "Symbol\rBipolar transistor PNP\rsalicad",
                     "SymbolTitle": "Bipolar transistor PNP (salicad)",
-                    "id": "5608b9cf5d00",
+                    "id": "5612ad2f4d00",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rsot23-3\rsalicad",
                     "PartTitle": "sot23-3 (salicad)",
-                    "id": "5608b9d05580",
+                    "id": "5612ad20eb10",
                     "type": "PartVariant"
                 }
             ],
@@ -64,7 +64,7 @@
                 "BC857CLT1G",
                 "3G"
             ],
-            "id": "5608b9d049d0",
+            "id": "5612acd069e0",
             "type": "Comp"
         },
         {
@@ -75,7 +75,7 @@
                     "Default": false,
                     "PartId": "Part\rsot23-3\rsalicad",
                     "PartTitle": "sot23-3 (salicad)",
-                    "id": "5608b239f3c0",
+                    "id": "5612ad277fe0",
                     "type": "PartVariant"
                 },
                 {
@@ -86,7 +86,7 @@
                     },
                     "SymbolId": "Symbol\rBipolar transistor NPN\rsalicad",
                     "SymbolTitle": "Bipolar transistor NPN (salicad)",
-                    "id": "5608b9628e80",
+                    "id": "5612ad57a0a0",
                     "type": "Section"
                 }
             ],
@@ -131,12 +131,64 @@
                 "BC847CLT1G",
                 "1G"
             ],
-            "id": "5608b8f70510",
+            "id": "5612ad54dca0",
+            "type": "Comp"
+        },
+        {
+            "Author": "zubr owk",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "Default": false,
+                    "PartId": "Part\rsot563\rzubr owk",
+                    "PartTitle": "sot563 (zubr owk)",
+                    "id": "5612adc90090",
+                    "type": "PartVariant"
+                },
+                {
+                    "PinAssotiation": {
+                        "D1": "6",
+                        "D2": "3",
+                        "G1": "2",
+                        "G2": "5",
+                        "S1": "1",
+                        "S2": "4"
+                    },
+                    "SymbolId": "Symbol\rcomplementary mosfet\rsalicad",
+                    "SymbolTitle": "complementary mosfet (salicad)",
+                    "id": "5612aea7c540",
+                    "type": "Section"
+                }
+            ],
+            "Created": 93167820,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "Id": "420mA",
+                "Pd": "250mW",
+                "Rds on": "0.6Om",
+                "Vdss": "20V",
+                "Vgs": "+-6V",
+                "article": "",
+                "bom": "<value>",
+                "category": "{uu.b.a.c",
+                "datasheet": "",
+                "manufacturer": "ON semiconductor",
+                "prefix": "VT",
+                "title": "Small Signal complementary MOSFET NTZD3155C",
+                "value": "NTZD3155C",
+                "www": "www.onsemi.com"
+            },
+            "Title": "NTZD3155C complementary mosfet",
+            "id": "5612ad08f170",
             "type": "Comp"
         }
     ],
     "Parametrs": {
     },
-    "id": "5608b9d05780",
+    "id": "5612ad589000",
     "type": "Project"
 }
