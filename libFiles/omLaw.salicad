@@ -1,0 +1,33 @@
+{
+    "ChildList": [
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+            ],
+            "Created": 96380239,
+            "Edit enable": true,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "category": "",
+                "{sindex}": "1"
+            },
+            "Title": "Sheet1",
+            "expression": [
+                " Om law",
+                ": U = I * R",
+                ": I = U / R",
+                ": R = U / I"
+            ],
+            "id": "5569169e4560",
+            "type": "Sheet"
+        }
+    ],
+    "Parametrs": {
+    },
+    "id": "5569169f5c70",
+    "type": "Project"
+}
