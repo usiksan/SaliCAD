@@ -1,6 +1,7 @@
 #include "SdExpression.h"
 
 #include <math.h>
+#include <QSet>
 
 
 class SdExpressBase {
@@ -107,6 +108,7 @@ class SdExpressBinariPow : public SdExpressBinari {
 
 class SdExpressionParser {
     SdExpressionPairMap &mMap;
+    QSet<QString>        mParamSet;
     QString              mSource;
     QString              mResult;
     QStringList          mParamList;
@@ -133,8 +135,8 @@ class SdExpressionParser {
 
 
 
-SdExpression::SdExpression(SdExpressionPairMap &pairMap) :
-  mMap(pairMap),
+SdExpression::SdExpression() :
+  mMap(),
   mExpression(nullptr)
   {
 
@@ -153,6 +155,11 @@ QString SdExpression::parse(const QString expressionString)
 
   if( parser.error().isEmpty() )
     return parser.error();
+
+  if( mExpression ) {
+    delete mExpression;
+    mExpression = nullptr;
+    }
   return parser.error() + QStringLiteral(" at %1").arg(parser.errorPtr());
   }
 
@@ -326,8 +333,10 @@ SdExpressBase *SdExpressionParser::exprBrackets()
     else nextToken();
     }
   else if( mToken == 'p' ) {
-    if( !mMap.contains(mTokenContents) ) {
+    if( !mMap.contains(mTokenContents) )
       mMap.insert(mTokenContents,0);
+    if( !mParamSet.contains(mTokenContents) ) {
+      mParamSet.insert( mTokenContents );
       mParamList.append( mTokenContents );
       }
     expr = new SdExpressParam(mTokenContents);

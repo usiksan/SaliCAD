@@ -10,16 +10,18 @@ class SdExpressBase;
 
 class SdExpression
   {
-    SdExpressionPairMap &mMap;
+    SdExpressionPairMap  mMap;
     QStringList          mParamList;
     QString              mResult;
     SdExpressBase       *mExpression;
     QString              mToken;
     QString              mTokenContents;
   public:
-    SdExpression( SdExpressionPairMap &pairMap );
+    SdExpression();
 
     double      value( const QString name ) const { return mMap[name]; }
+
+    void        valueSet( const QString name, double val ) { mMap[name] = val; }
 
     QStringList paramList() const { return mParamList; }
 

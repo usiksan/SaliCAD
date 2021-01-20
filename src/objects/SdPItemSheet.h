@@ -74,6 +74,12 @@ class SdPItemSheet : public SdProjectItem
     //! \param list              New expression list
     //!
     void                   expressionSetList( QStringList list ) { mExpression = list; }
+
+    //!
+    //! \brief expressionSetText Set next expression list as text. Text is set of lines separated eoln
+    //! \param text              Text as set of lines separated eoln
+    //!
+    void                   expressionSetText( QString text ) { mExpression = text.split( QChar('\n') ); }
     // SdObject interface
   public:
     virtual QString        getType() const override;

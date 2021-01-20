@@ -221,6 +221,8 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_SHEET_VALUE] = menuInsertSheet->addAction( QIcon(QString(":/pic/objValue.png")), QObject::tr("Move value of components"), frame, SLOT(cmModeValueMove()) );
   //cmModeTable[MD_PCB_AREA]   = menuInsertSheet->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
 //  cmModeTable[MD_FIELD]      = menuInsertSheet->addAction( QIcon(QString(":/pic/objField.png")), QObject::tr("Field"), frame, SLOT(cmModeF) );
+  menuInsertSheet->addSeparator();
+  cmSheetExpression           = menuInsertSheet->addAction( QObject::tr("Expression edit..."), frame, &SdWMain::cmExpressionEdit );
 
 
 
@@ -813,6 +815,7 @@ QActionPtr SdWCommand::cmRulesEdit;
 QActionPtr SdWCommand::cmRulesCheck;
 QActionPtr SdWCommand::cmRulesErrorNext;
 
+QActionPtr SdWCommand::cmSheetExpression;
 
 QActionPtr SdWCommand::cmOption;
 

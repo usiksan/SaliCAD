@@ -150,6 +150,7 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmModeNetList() {}
     virtual void cmModePack() {}
     virtual void cmModeBrowse( SdProjectItem* ) {}
+    virtual void cmExpressionEdit() {}
 
     //Pcb
     virtual void cmPads() {}

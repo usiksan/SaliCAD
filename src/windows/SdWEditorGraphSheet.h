@@ -70,6 +70,11 @@ class SdWEditorGraphSheet : public SdWEditorGraph
     //Move component value
     virtual void           cmModeValueMove() override;
 
+    //!
+    //! \brief cmExpressionEdit Shows expression edit dialog with expression test capabilities
+    //!
+    virtual void cmExpressionEdit() override;
+
 
     //Export command
     virtual void           cmFileExport() override;

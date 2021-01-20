@@ -30,6 +30,7 @@ Description
 #include "modes/SdModeSelect.h"
 #include "modes/SdModeCSheetIdentMove.h"
 #include "modes/SdModeCSheetValueMove.h"
+#include "windows/SdDExpressionEdit.h"
 
 #include <QMessageBox>
 #include <QDebug>
@@ -206,6 +207,23 @@ void SdWEditorGraphSheet::cmModeReferenceMove()
 void SdWEditorGraphSheet::cmModeValueMove()
   {
   modeSet( new SdModeCSheetValueMove( this, mSheet ) );
+  }
+
+
+
+
+//!
+//! \brief cmExpressionEdit Shows expression edit dialog with expression test capabilities
+//!
+void SdWEditorGraphSheet::cmExpressionEdit()
+  {
+  SdDExpressionEdit expressionEdit( mSheet->expressionGet(), this );
+  if( expressionEdit.exec() ) {
+    //Setup expression
+    mSheet->expressionSetText( expressionEdit.textGet() );
+    //Set project dirty with expression changes
+    dirtyProject();
+    }
   }
 
 

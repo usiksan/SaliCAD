@@ -1689,6 +1689,14 @@ void SdWMain::cmModePack()
 
 
 
+void SdWMain::cmExpressionEdit()
+  {
+  if( activeEditor() )
+    activeEditor()->cmExpressionEdit();
+  }
+
+
+
 void SdWMain::cmShowRatNet( bool st )
   {
   sdEnvir->mShowRatNet = st;

@@ -221,6 +221,7 @@ class SdWMain : public QMainWindow
     void cmModeNetName();
     void cmModeNetList();
     void cmModePack();
+    void cmExpressionEdit();
 
     //Pcb
     void cmShowRatNet(bool st);

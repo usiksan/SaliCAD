@@ -152,6 +152,8 @@ class SdWCommand
     static QActionPtr  cmRulesCheck;
     static QActionPtr  cmRulesErrorNext;
 
+    static QActionPtr  cmSheetExpression;
+
     static QActionPtr  cmOption;
     static QActionPtr  cmTools;
 

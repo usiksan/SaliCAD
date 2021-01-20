@@ -34,9 +34,10 @@ SOURCES += \
     objects/Sd3dStep.cpp \
     objects/Sd3dStl.cpp \
     objects/Sd3dTriangle.cpp \
-    objects/SdPItemExpression.cpp \
     step/SdStepReader.cpp \
+    windows/SdDExpressionEdit.cpp \
     windows/SdDOptionsPageLibrary.cpp \
+    windows/SdExpression.cpp \
     windows/SdWEditor3d.cpp \
     windows/SdWEditor3dPart.cpp \
     windows/SdWExpressor.cpp \
@@ -312,9 +313,10 @@ HEADERS  += \
     objects/Sd3dStep.h \
     objects/Sd3dStl.h \
     objects/Sd3dTriangle.h \
-    objects/SdPItemExpression.h \
     step/SdStepReader.h \
+    windows/SdDExpressionEdit.h \
     windows/SdDOptionsPageLibrary.h \
+    windows/SdExpression.h \
     windows/SdWEditor3d.h \
     windows/SdWEditor3dPart.h \
     windows/SdWExpressor.h \
@@ -594,6 +596,7 @@ RESOURCES += \
 
 FORMS += \
     master/SdDMasterPartSingleLine.ui \
+    windows/SdDExpressionEdit.ui \
     windows/SdDGetObject.ui \
     windows/SdDNetUnion.ui \
     windows/SdDGetProjectObject.ui \
