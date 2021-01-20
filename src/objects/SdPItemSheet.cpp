@@ -177,6 +177,8 @@ void SdPItemSheet::detach(SdUndo *undo)
 void SdPItemSheet::cloneFrom(const SdObject *src)
   {
   SdProjectItem::cloneFrom( src );
+  const SdPItemSheet *sour = dynamic_cast<const SdPItemSheet*>(src);
+  mExpression = sour->mExpression;
   }
 
 
@@ -247,6 +249,11 @@ void SdPItemSheet::insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo,
 void SdPItemSheet::writeObject(QJsonObject &obj) const
   {
   SdProjectItem::writeObject( obj );
+  //Store expression list
+  QJsonArray list;
+  for( auto const &str : mExpression )
+    list.append( str );
+  obj.insert( QStringLiteral("expression"), list );
   //obj.insert( QStringLiteral("index"), mSheetIndex );
   }
 
@@ -256,6 +263,11 @@ void SdPItemSheet::writeObject(QJsonObject &obj) const
 void SdPItemSheet::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdProjectItem::readObject( map, obj );
+  //Read expression list
+  mExpression.clear();
+  QJsonArray list = obj.value( QStringLiteral("expression") ).toArray();
+  for( auto const &it : list )
+    mExpression.append( it.toString() );
   //mSheetIndex = obj.value( QStringLiteral("index") ).toInt();
   }
 

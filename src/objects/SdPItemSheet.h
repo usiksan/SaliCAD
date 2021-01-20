@@ -26,7 +26,8 @@ class SdGraphNetWire;
 
 class SdPItemSheet : public SdProjectItem
   {
-    int         mSheetIndex; //Sheet index
+    int         mSheetIndex; //!< Sheet index
+    QStringList mExpression; //!< Expressions list associated with this schematic
 
     //Not saved
     SdStringMap mNetCopyMap; //When copy schematic fragment named nets copied exactly.
@@ -62,6 +63,17 @@ class SdPItemSheet : public SdProjectItem
     //Accumulate to selector element linked with point and net name
     void                   accumLinked( SdPoint a, SdPoint b, const QString netName, SdSelector *selector, SdUndo *undo );
 
+    //!
+    //! \brief expressionGet Retrive expression list associated with this schematic sheet
+    //! \return              Expression list associated with this schematic sheet
+    //!
+    QStringList            expressionGet() const { return mExpression; }
+
+    //!
+    //! \brief expressionSetList Set new expression list to this schematic sheet
+    //! \param list              New expression list
+    //!
+    void                   expressionSetList( QStringList list ) { mExpression = list; }
     // SdObject interface
   public:
     virtual QString        getType() const override;

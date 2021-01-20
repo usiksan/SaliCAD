@@ -34,10 +34,12 @@ SOURCES += \
     objects/Sd3dStep.cpp \
     objects/Sd3dStl.cpp \
     objects/Sd3dTriangle.cpp \
+    objects/SdPItemExpression.cpp \
     step/SdStepReader.cpp \
     windows/SdDOptionsPageLibrary.cpp \
     windows/SdWEditor3d.cpp \
     windows/SdWEditor3dPart.cpp \
+    windows/SdWExpressor.cpp \
     windows/SdWMain.cpp \
     objects/SdObject.cpp \
     objects/SdProject.cpp \
@@ -310,10 +312,12 @@ HEADERS  += \
     objects/Sd3dStep.h \
     objects/Sd3dStl.h \
     objects/Sd3dTriangle.h \
+    objects/SdPItemExpression.h \
     step/SdStepReader.h \
     windows/SdDOptionsPageLibrary.h \
     windows/SdWEditor3d.h \
     windows/SdWEditor3dPart.h \
+    windows/SdWExpressor.h \
     windows/SdWMain.h \
     objects/SdObject.h \
     objects/SdProject.h \
