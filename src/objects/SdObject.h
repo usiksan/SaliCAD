@@ -144,4 +144,28 @@ class SdPtrConst {
   };
 
 
+template <class objectType>
+class SdPtrOwner {
+    objectType *mPtr;
+  public:
+    SdPtrOwner() : mPtr( nullptr ) {  }
+    ~SdPtrOwner() { if( mPtr != nullptr ) delete mPtr; }
+
+    void        reset( const SdObject *obj ) { clear(); mPtr = dynamic_cast<const objectType*>(obj); if( mPtr == nullptr && obj != nullptr ) delete obj; }
+
+    void        clear() { if( mPtr != nullptr ) delete mPtr; mPtr = nullptr; }
+
+    objectType *release() { mPtr = nullptr; }
+
+    bool        isValid() const { return mPtr != nullptr; }
+
+    operator bool () const { return mPtr != nullptr; }
+
+    const objectType *operator -> () { return mPtr; }
+
+    const objectType *ptr() const { return mPtr; }
+
+  };
+
+
 #endif // SDOBJECT_H

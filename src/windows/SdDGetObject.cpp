@@ -691,9 +691,9 @@ void SdDGetObject::accept()
 
 
 
-SdObject *SdDGetObject::getObject(quint64 sort, const QString title, QWidget *parent)
+SdObject *SdDGetObject::getObject(quint64 sort, const QString title, QWidget *parent, const QString defFiltr)
   {
-  return SdObjectFactory::extractObject( getObjectUid( sort, title, parent), false, parent );
+  return SdObjectFactory::extractObject( getObjectUid( sort, title, parent, defFiltr), false, parent );
   }
 
 

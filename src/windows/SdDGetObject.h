@@ -89,7 +89,7 @@ class SdDGetObject : public QDialog
     void fillTable();
 
   public:
-    static SdObject         *getObject(quint64 sort, const QString title, QWidget *parent);
+    static SdObject         *getObject(quint64 sort, const QString title, QWidget *parent, const QString defFiltr = QString{} );
     static QString           getObjectUid( quint64 sort, const QString title, QWidget *parent, const QString defFiltr = QString() );
     static SdPItemComponent *getComponent( int *logSectionPtr, SdStringMap *param, const QString title, QWidget *parent );
 

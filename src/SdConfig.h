@@ -177,6 +177,7 @@ History
                    some proxies block queries with socket link.
   17.01.2021 v1.18 Complete with change global repository to use MySQL on server and http php queries
   20.01.2021 v1.19 Append expression list as associated list to the schematic sheet
+  21.01.2021 v1.20 Append automatic fragment finding for insertion when component inserting
 */
 
 #ifndef SDCONFIG
@@ -188,7 +189,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             19
+#define SD_VERSION_MINOR             20
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
