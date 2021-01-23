@@ -412,7 +412,7 @@ void SdObjectNetClient::cmDownloadObject(const QJsonObject &reply)
     QByteArray objectBody;
     is >> header >> objectBody;
 
-    //qDebug() << "sync downloaded successfully [" << remoteSyncIndex << "]" << header.uid();
+    qDebug() << "sync downloaded successfully [" << remoteSyncIndex << "]" << header.uid();
     infoAppend( tr("Downloaded \"%1\"").arg(header.mName) );
 
     sdLibraryStorage.insert( header, objectBody, true );
