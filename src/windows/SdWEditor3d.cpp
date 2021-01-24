@@ -16,8 +16,9 @@ Description
 #include "SdWEditor3d.h"
 #include "SdWView3d.h"
 #include "objects/SdProjectItem.h"
-#include "objects/Sd3dStl.h"
 #include "objects/Sd3dStep.h"
+#include "objects/Sd3dReaderStl.h"
+#include "objects/Sd3dReaderVrml.h"
 
 #include <QVBoxLayout>
 #include <QPaintEvent>
@@ -69,14 +70,14 @@ bool SdWEditor3d::is3d() const
 
 
 
-void SdWEditor3d::cm3dStlImport()
+void SdWEditor3d::cm3dImportStl()
   {
   //Open dialog to select stl file
   QString title = QFileDialog::getOpenFileName(this, tr("Import STL model"), QString(), tr("STL model files (*%1)").arg(".stl") );
 
   if( title.isEmpty() ) return;
 
-  Sd3dStl *stl = Sd3dStl::importStlFromFile( title );
+  Sd3dObject *stl = Sd3dReaderStl::importStlFromFile( title );
   if( stl ) {
     mItem->getUndo()->begin( tr("Import STL model"), mItem );
     mItem->insertChild( stl, mItem->getUndo() );
@@ -88,9 +89,9 @@ void SdWEditor3d::cm3dStlImport()
 
 
 
-void SdWEditor3d::cm3dStepImport()
+void SdWEditor3d::cm3dImportStep()
   {
-  //Open dialog to select stl file
+  //Open dialog to select STEP file
   QString title = QFileDialog::getOpenFileName(this, tr("Import STEP model"), QString(), tr("STEP model files (*%1)").arg(".stp") );
 
   if( title.isEmpty() ) return;
@@ -99,6 +100,25 @@ void SdWEditor3d::cm3dStepImport()
   if( step ) {
     mItem->getUndo()->begin( tr("Import STEP model"), mItem );
     mItem->insertChild( step, mItem->getUndo() );
+    dirtyProject();
+    mView->update();
+    }
+  }
+
+
+
+
+void SdWEditor3d::cm3dImportVrml()
+  {
+  //Open dialog to select VRML file
+  QString title = QFileDialog::getOpenFileName(this, tr("Import VRML model"), QString(), tr("VRML model files (*%1)").arg(".wrl") );
+
+  if( title.isEmpty() ) return;
+
+  Sd3dObject *vrml = Sd3dReaderVrml::importVrmlFromFile( title );
+  if( vrml ) {
+    mItem->getUndo()->begin( tr("Import VRML model"), mItem );
+    mItem->insertChild( vrml, mItem->getUndo() );
     dirtyProject();
     mView->update();
     }

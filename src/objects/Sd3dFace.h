@@ -14,6 +14,7 @@ Description
 #ifndef SD3DFACE_H
 #define SD3DFACE_H
 
+#include "SdRect.h"
 #include "Sd3dPoint.h"
 #include "step/SdStepReader.h"
 
@@ -47,6 +48,12 @@ class Sd3dFace
     //! \param obj  JSON object with triangle
     //!
     void        read( const QJsonObject &obj );
+
+    //!
+    //! \brief overRect Return over rect of face projected to XY surface
+    //! \return         Over rect
+    //!
+    SdRect      overRect() const;
 
   };
 

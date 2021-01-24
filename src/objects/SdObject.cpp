@@ -47,7 +47,7 @@ Description
 #include "SdGraphNetName.h"
 #include "SdSection.h"
 #include "SdPartVariant.h"
-#include "Sd3dStl.h"
+#include "Sd3dFaceSet.h"
 #include <QJsonValue>
 #include <QDebug>
 
@@ -311,7 +311,7 @@ SdObject *SdObject::build(QString type)
 
   if( type == QStringLiteral(SD_TYPE_PAD_ASSOCIATION)     ) return new SdPadAssociation();
 
-  if( type == QStringLiteral(SD_TYPE_3D_STL)              ) return new Sd3dStl();
+  if( type == QStringLiteral(SD_TYPE_3D_FACE_SET)         ) return new Sd3dFaceSet();
 
   if( type == QStringLiteral(SD_TYPE_PROJECT)             ) return new SdProject();
   return nullptr;

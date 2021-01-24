@@ -178,6 +178,8 @@ History
   17.01.2021 v1.18 Complete with change global repository to use MySQL on server and http php queries
   20.01.2021 v1.19 Append expression list as associated list to the schematic sheet
   21.01.2021 v1.20 Append automatic fragment finding for insertion when component inserting
+  25.01.2021 v1.21 Convert all 3d models to FaceSet object which consist of face set
+                   Different 3d format are reads by individual readers
 */
 
 #ifndef SDCONFIG
@@ -189,7 +191,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             20
+#define SD_VERSION_MINOR             21
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

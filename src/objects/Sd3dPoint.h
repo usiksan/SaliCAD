@@ -26,6 +26,12 @@ class Sd3dPoint
     Sd3dPoint( const SdPoint &p, int cz = 0 ) : mX(p.x()), mY(p.y()), mZ(cz) {}
     Sd3dPoint( int cx, int cy, int cz ) : mX(cx), mY(cy), mZ(cz) {}
 
+    //!
+    //! \brief projectionXY Return projection of 3d point to XY surface
+    //! \return             2d projection of 3d point to XY surface
+    //!
+    SdPoint     projectionXY() const { return SdPoint(mX,mY); }
+
     void        set( int cx, int cy, int cz ) { mX = cx; mY = cy; mZ = cz; }
 
     void        clear() { mX = mY = mZ = 0; }

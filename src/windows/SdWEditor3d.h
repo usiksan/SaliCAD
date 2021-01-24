@@ -37,8 +37,9 @@ class SdWEditor3d : public SdWEditor
     virtual SdProjectItem *getProjectItem() const override;
     virtual bool           is3d() const override;
 //    virtual void           onActivateEditor() override;
-    virtual void           cm3dStlImport() override;
-    virtual void           cm3dStepImport() override;
+    virtual void           cm3dImportStl() override;
+    virtual void           cm3dImportStep() override;
+    virtual void           cm3dImportVrml() override;
   };
 
 #endif // SDWEDITOR3D_H

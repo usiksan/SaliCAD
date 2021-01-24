@@ -1442,18 +1442,26 @@ void SdWMain::cmModeField()
 
 
 
-void SdWMain::cm3dStlImport()
+void SdWMain::cm3dImportStl()
   {
   if( activeEditor() )
-    activeEditor()->cm3dStlImport();
+    activeEditor()->cm3dImportStl();
   }
 
 
 
-void SdWMain::cm3dStepImport()
+void SdWMain::cm3dImportStep()
   {
   if( activeEditor() )
-    activeEditor()->cm3dStepImport();
+    activeEditor()->cm3dImportStep();
+  }
+
+
+
+void SdWMain::cm3dImportVrml()
+  {
+  if( activeEditor() )
+    activeEditor()->cm3dImportVrml();
   }
 
 

@@ -28,12 +28,13 @@ SOURCES += \
     modes/SdModeCTraceDelete.cpp \
     objects/Sd3dDraw.cpp \
     objects/Sd3dFace.cpp \
+    objects/Sd3dFaceSet.cpp \
     objects/Sd3dFlat.cpp \
     objects/Sd3dObject.cpp \
     objects/Sd3dPoint.cpp \
+    objects/Sd3dReaderStl.cpp \
+    objects/Sd3dReaderVrml.cpp \
     objects/Sd3dStep.cpp \
-    objects/Sd3dStl.cpp \
-    objects/Sd3dTriangle.cpp \
     step/SdStepReader.cpp \
     windows/SdDExpressionEdit.cpp \
     windows/SdDOptionsPageLibrary.cpp \
@@ -307,12 +308,13 @@ HEADERS  += \
     modes/SdModeCTraceDelete.h \
     objects/Sd3dDraw.h \
     objects/Sd3dFace.h \
+    objects/Sd3dFaceSet.h \
     objects/Sd3dFlat.h \
     objects/Sd3dObject.h \
     objects/Sd3dPoint.h \
+    objects/Sd3dReaderStl.h \
+    objects/Sd3dReaderVrml.h \
     objects/Sd3dStep.h \
-    objects/Sd3dStl.h \
-    objects/Sd3dTriangle.h \
     step/SdStepReader.h \
     windows/SdDExpressionEdit.h \
     windows/SdDOptionsPageLibrary.h \

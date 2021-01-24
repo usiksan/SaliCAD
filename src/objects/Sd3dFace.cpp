@@ -1,3 +1,16 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  3D face. Face is flat surface bounded by region
+*/
 #include "Sd3dFace.h"
 
 #include <QColor>
@@ -53,7 +66,15 @@ void Sd3dFace::paint(QOpenGLFunctions_2_0 *f) const
 //!
 QJsonObject Sd3dFace::write() const
   {
-
+  QJsonObject obj;
+  obj.insert( QStringLiteral("color"), static_cast<int>(mFaceColor) );
+  mNormal.write( QStringLiteral("normal"), obj );
+  QJsonArray region;
+  for( auto const &pt : mRegion ) {
+    region.append( pt.write() );
+    }
+  obj.insert( QStringLiteral("region"), region );
+  return obj;
   }
 
 
@@ -65,7 +86,31 @@ QJsonObject Sd3dFace::write() const
 //!
 void Sd3dFace::read(const QJsonObject &obj)
   {
+  mFaceColor = static_cast<quint32>( obj.value( QStringLiteral("color") ).toInt() );
+  mNormal.read( QStringLiteral("normal"), obj );
+  mRegion.clear();
+  QJsonArray region = obj.value( QStringLiteral("region") ).toArray();
+  Sd3dPoint pt;
+  for( auto it = region.cbegin(); it != region.cend(); it++ ) {
+    pt.read( it->toObject() );
+    mRegion.append( pt );
+    }
+  }
 
+
+
+
+//!
+//! \brief overRect Return over rect of face projected to XY surface
+//! \return         Over rect
+//!
+SdRect Sd3dFace::overRect() const
+  {
+  SdRect over;
+  for( const auto &pt : mRegion ) {
+    over.grow( pt.projectionXY() );
+    }
+  return over;
   }
 
 

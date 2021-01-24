@@ -191,8 +191,9 @@ void SdWCommand::createMenu(SdWMain *frame)
 
   //3D part editor menu
   menuInsertPart3d = new QMenu( QObject::tr("3d part") );
-  cm3dStlImport        = menuInsertPart3d->addAction( QIcon(QString(":/pic/.png")), QObject::tr("Import from stl file"), frame, SLOT(cm3dStlImport()) );
-  cm3dStepImport       = menuInsertPart3d->addAction( QIcon(QString(":/pic/.png")), QObject::tr("Import from step file"), frame, SLOT(cm3dStepImport()) );
+  cm3dImportStl        = menuInsertPart3d->addAction( QIcon(QString(":/pic/.png")), QObject::tr("Import from stl file"), frame, SLOT(cm3dImportStl()) );
+  cm3dImportStep       = menuInsertPart3d->addAction( QIcon(QString(":/pic/.png")), QObject::tr("Import from step file"), frame, SLOT(cm3dImportStep()) );
+  cm3dImportVrml       = menuInsertPart3d->addAction( QIcon(QString(":/pic/.png")), QObject::tr("Import from vrml file"), frame, SLOT(cm3dImportVrml()) );
   //  cmBall           = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
   //  cmPinWired       = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
   //  cmPinFlat        = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
@@ -790,8 +791,9 @@ QActionPtr SdWCommand::cmViewNets;
 QActionPtr SdWCommand::cmViewGrid;
 QActionPtr SdWCommand::cmViewLayers;
 
-QActionPtr SdWCommand::cm3dStlImport;
-QActionPtr SdWCommand::cm3dStepImport;
+QActionPtr SdWCommand::cm3dImportStl;
+QActionPtr SdWCommand::cm3dImportStep;
+QActionPtr SdWCommand::cm3dImportVrml;
 
 QActionPtr SdWCommand::cmMode3dBall;
 QActionPtr SdWCommand::cmMode3dPinWired;
