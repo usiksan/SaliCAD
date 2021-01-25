@@ -5,6 +5,7 @@
 
 class SdScaner
   {
+  protected:
     char    mToken;      //!< Current scanned token
     QString mLine;       //!< Input line
     int     mIndex;      //!< Current char index
@@ -13,19 +14,44 @@ class SdScaner
   public:
     SdScaner();
 
-  protected:
     virtual int  lineIndex() const = 0;
 
     virtual bool nextLine() { return false; }
 
-    void lineSet( const QString &line );
+    virtual void tokenNext() = 0;
+
+    virtual void error( const QString msg );
+
+    char         token() const { return mToken; }
+
+    QString      tokenNeedValue(char tokenVal);
+
+    int          tokenNeedValueInt(char tokenVal) { return tokenNeedValue(tokenVal).toInt(); }
+
+    float        tokenNeedValueFloat(char tokenVal) { return tokenNeedValue(tokenVal).toFloat(); }
+
+    QString      tokenValue() const { return mTokenValue; }
+
+    int          tokenValueInt() const { return mTokenValue.toInt(); }
+
+    float        tokenValueFloat() const { return mTokenValue.toFloat(); }
+
+    double       tokenValueDouble() const { return mTokenValue.toDouble(); }
+
+    bool         matchTokenValue( const QString &val );
+
+    bool         matchToken( char token );
+
+    QString      line() const { return mLine; }
+
+    void         lineSet( const QString &line );
 
     //!< Skeep spaces
-    void blank();
+    void         blank();
 
-    bool isEndOfScan() const { return mEndOfScan; }
+    bool         isEndOfScan() const { return mEndOfScan; }
 
-    void scanName();
+    void         scanName();
 
     //!
     //! \brief scanDouble Scan double digit in common format -123.345e-24
@@ -39,6 +65,8 @@ class SdScaner
     //! \param allowSign   Allow scan trailing sign
     //!
     void scanInteger( bool allowSign );
+
+    void skeepBlock( char openToken, char closeToken );
   };
 
 #endif // SDSCANER_H

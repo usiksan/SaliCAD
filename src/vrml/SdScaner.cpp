@@ -1,8 +1,51 @@
 #include "SdScaner.h"
 
+#include <QDebug>
+
 SdScaner::SdScaner()
   {
 
+  }
+
+void SdScaner::error(const QString msg)
+  {
+  qDebug() << "[" << lineIndex() << ":" << mIndex << "]" << msg;
+  }
+
+
+
+QString SdScaner::tokenNeedValue( char tokenVal )
+  {
+  if( mToken == tokenVal ) {
+    QString val = mTokenValue;
+    tokenNext();
+    return val;
+    }
+  error( QStringLiteral("Need token %1").arg(tokenVal) );
+  return QString{};
+  }
+
+
+
+
+bool SdScaner::matchTokenValue(const QString &val)
+  {
+  if( mTokenValue == val ) {
+    tokenNext();
+    return true;
+    }
+  return false;
+  }
+
+
+
+bool SdScaner::matchToken(char token)
+  {
+  if( mToken == token ) {
+    tokenNext();
+    return true;
+    }
+  return false;
   }
 
 
@@ -77,4 +120,22 @@ void SdScaner::scanInteger(bool allowSign)
   //Digits
   while( mIndex < mLine.count() && mLine.at(mIndex).isDigit() )
     mTokenValue.append( mLine.at(mIndex++) );
+  }
+
+
+
+void SdScaner::skeepBlock(char openToken, char closeToken)
+  {
+  if( mToken == openToken ) {
+    while( mToken != closeToken ) {
+      tokenNext();
+      if( mEndOfScan ) {
+        error( QStringLiteral("End of scan without token %1").arg(closeToken), lineIndex(), mIndex );
+        return;
+        }
+      if( mToken == openToken )
+        skeepBlock( openToken, closeToken );
+      }
+    tokenNext();
+    }
   }

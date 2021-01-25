@@ -14,6 +14,13 @@ class VrmlNodeTransform : public VrmlNodeGroup
     VrmlVector   mTranslation;
   public:
     VrmlNodeTransform();
+
+    static VrmlNodeTransform *parse2Transform( SdScanerVrml *scaner );
+
+    void cloneNodeTransform( VrmlNodeTransform *destNode ) const;
+    // VrmlNode interface
+  public:
+    virtual VrmlNode *copy() const override;
   };
 
 #endif // VRMLNODETRANSFORM_H

@@ -5,19 +5,31 @@
 #include <QList>
 #include <QMap>
 
-class VrmlNode
-  {
-    QString mName;
-  public:
-    VrmlNode();
-    virtual ~VrmlNode() {}
-  };
+//Forward scaner declaration
+class SdScanerVrml;
+class VrmlNode;
 
 using VrmlNodePtr = VrmlNode*;
 
 using VrmlNodePtrList = QList<VrmlNodePtr>;
 
 using VrmlNodePtrMap = QMap<QString,VrmlNodePtr>;
+
+class VrmlNode
+  {
+    QString mName;
+  public:
+
+    VrmlNode();
+    virtual ~VrmlNode() {}
+
+    virtual VrmlNode *copy() const = 0;
+    void             cloneNode( VrmlNode *destNode ) const;
+
+    static void      parse2Declaration(SdScanerVrml *scaner, VrmlNodePtrList *list);
+    static VrmlNode *parse2Node(SdScanerVrml *scaner);
+  };
+
 
 
 #endif // VRMLNODE_H

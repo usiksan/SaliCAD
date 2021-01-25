@@ -2,9 +2,16 @@
 
 #include <QFile>
 
-SdScanerMultyline::SdScanerMultyline()
+SdScanerMultyline::SdScanerMultyline() :
+  mLineIndex(0)
   {
 
+  }
+
+void SdScanerMultyline::sourceSetStringList(QStringList lines)
+  {
+  mLines = lines;
+  mLineIndex = 0;
   }
 
 

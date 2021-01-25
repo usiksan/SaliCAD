@@ -10,19 +10,23 @@ CONFIG -= app_bundle
 SOURCES += \
         Sd3dReaderVrml.cpp \
         Sd3dVrmlNode.cpp \
+        SdParserVrml2_0.cpp \
         SdScaner.cpp \
         SdScanerMultyline.cpp \
+        SdScanerVrml.cpp \
         VrmlColor.cpp \
-        VrmlMFColor.cpp \
         VrmlNode.cpp \
         VrmlNodeApperance.cpp \
         VrmlNodeColor.cpp \
         VrmlNodeCompound.cpp \
+        VrmlNodeCoordinate.cpp \
         VrmlNodeGroup.cpp \
         VrmlNodeIndexedFaceSet.cpp \
         VrmlNodeMaterial.cpp \
+        VrmlNodeNormal.cpp \
         VrmlNodeShape.cpp \
         VrmlNodeTransform.cpp \
+        VrmlParser.cpp \
         VrmlRotation.cpp \
         VrmlVector.cpp \
         main.cpp
@@ -35,19 +39,23 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
   Sd3dReaderVrml.h \
   Sd3dVrmlNode.h \
+  SdParserVrml2_0.h \
   SdScaner.h \
   SdScanerMultyline.h \
+  SdScanerVrml.h \
   VrmlColor.h \
-  VrmlMFColor.h \
   VrmlNode.h \
   VrmlNodeApperance.h \
   VrmlNodeColor.h \
   VrmlNodeCompound.h \
+  VrmlNodeCoordinate.h \
   VrmlNodeGroup.h \
   VrmlNodeIndexedFaceSet.h \
   VrmlNodeMaterial.h \
+  VrmlNodeNormal.h \
   VrmlNodeShape.h \
   VrmlNodeTransform.h \
+  VrmlParser.h \
   VrmlRotation.h \
   VrmlTypes.h \
   VrmlVector.h
