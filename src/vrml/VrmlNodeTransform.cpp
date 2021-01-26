@@ -1,24 +1,24 @@
 #include "VrmlNodeTransform.h"
 #include "SdScanerVrml.h"
 
-VrmlNodeTransform::VrmlNodeTransform()
+VrmlNodeTransform::VrmlNodeTransform() :
+  VrmlNodeGroup()
+  {
+
+  }
+
+VrmlNodeTransform::VrmlNodeTransform(const VrmlNodeTransform *transform) :
+  VrmlNodeGroup( transform ),
+  mCenter( transform->mCenter ),
+  mRotation( transform->mRotation ),
+  mScale( transform->mScale ),
+  mScaleOrientation( transform->mScaleOrientation ),
+  mTranslation( transform->mTranslation )
   {
 
   }
 
 
-VrmlNode *VrmlNodeTransform::copy() const
-  {
-  VrmlNodeTransform *transform = new VrmlNodeTransform();
-  cloneNodeGroup( transform );
-  transform->mCenter           = mCenter;
-  transform->mRotation         = mRotation;
-  transform->mScale            = mScale;
-  transform->mScaleOrientation = mScaleOrientation;
-  transform->mTranslation      = mTranslation;
-
-  return transform;
-  }
 
 
 void VrmlNodeTransform::parse(SdScanerVrml *scaner)
@@ -54,3 +54,4 @@ void VrmlNodeTransform::parse(SdScanerVrml *scaner)
       }
     }
   }
+

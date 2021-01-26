@@ -79,24 +79,66 @@ bool SdScanerVrml::parseInt32Table(VrmlInt32List &table, const QString errorMsg)
   return false;
   }
 
+bool SdScanerVrml::parseVectorTable(VrmlVectorList &table, const QString errorMsg)
+  {
+  if( !tokenNeed( '[', errorMsg ) )
+    return false;
+  while( !matchToken( ']') ) {
+    if( isEndOfScan() ) {
+      error( QStringLiteral("Uncompleted vector list") );
+      return false;
+      }
+    if( isError() )
+      return false;
+    VrmlVector vec;
+    vec.parse( this );
+    table.append( vec );
+    if( !matchToken(',') ) {
+      if( !tokenNeed(']', QStringLiteral("Need ]") ) )
+        return false;
+      break;
+      }
+    }
+  return true;
+  }
+
 
 
 
 bool SdScanerVrml::parseVrml2_0()
   {
   tokenNext();
-  while( !mEndOfScan && parse2Declaration( &mRootList ) );
+  while( !mEndOfScan ) {
+    VrmlNode *node = VrmlNode::parse2Declaration( this );
+    if( node != nullptr )
+      mRootList.append( node );
+    }
   return true;
   }
 
-
-
-bool SdScanerVrml::parse2Declaration(VrmlNodePtrList *list)
+bool SdScanerVrml::parseVrml1_0()
   {
+  return false;
   }
 
-bool SdScanerVrml::parse2Group(VrmlNodePtrList *list)
-  {
-  Vrml
-  }
 
+
+
+
+
+void SdScanerVrml::tokenNext()
+  {
+  mToken = 0;
+  blank();
+  if( !mEndOfScan ) {
+    if( mLine.at(mIndex).isLetter() ) {
+      mToken = 'n';
+      scanName();
+      }
+    else if( mLine.at(mIndex).isDigit() || mLine.at(mIndex) == QChar('-') ) {
+      scanDouble( true, false );
+      mToken = mTokenValue.contains( QChar('.') ) ? 'f' : 'd';
+      }
+    else mToken = mLine.at(mIndex++).toLatin1();
+    }
+  }

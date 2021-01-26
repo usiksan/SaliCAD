@@ -14,7 +14,7 @@ SOURCES += \
         SdScanerVrml.cpp \
         VrmlColor.cpp \
         VrmlNode.cpp \
-        VrmlNodeApperance.cpp \
+        VrmlNodeAppearance.cpp \
         VrmlNodeColor.cpp \
         VrmlNodeCompound.cpp \
         VrmlNodeCoordinate.cpp \
@@ -24,7 +24,6 @@ SOURCES += \
         VrmlNodeNormal.cpp \
         VrmlNodeShape.cpp \
         VrmlNodeTransform.cpp \
-        VrmlParser.cpp \
         VrmlRotation.cpp \
         VrmlVector.cpp \
         main.cpp
@@ -41,7 +40,7 @@ HEADERS += \
   SdScanerVrml.h \
   VrmlColor.h \
   VrmlNode.h \
-  VrmlNodeApperance.h \
+  VrmlNodeAppearance.h \
   VrmlNodeColor.h \
   VrmlNodeCompound.h \
   VrmlNodeCoordinate.h \
@@ -51,7 +50,6 @@ HEADERS += \
   VrmlNodeNormal.h \
   VrmlNodeShape.h \
   VrmlNodeTransform.h \
-  VrmlParser.h \
   VrmlRotation.h \
   VrmlTypes.h \
   VrmlVector.h

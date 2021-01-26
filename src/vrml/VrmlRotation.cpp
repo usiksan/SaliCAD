@@ -1,7 +1,11 @@
 #include "VrmlRotation.h"
 #include "SdScanerVrml.h"
 
-VrmlRotation::VrmlRotation()
+VrmlRotation::VrmlRotation(float vectorX, float vectorY, float vectorZ, float angle) :
+  mVectorX(vectorX),
+  mVectorY(vectorY),
+  mVectorZ(vectorZ),
+  mAngle(angle)
   {
 
   }

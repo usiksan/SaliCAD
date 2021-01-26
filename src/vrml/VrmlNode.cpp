@@ -1,6 +1,6 @@
 #include "VrmlNode.h"
 #include "SdScanerVrml.h"
-#include "VrmlNodeApperance.h"
+#include "VrmlNodeAppearance.h"
 #include "VrmlNodeColor.h"
 #include "VrmlNodeCoordinate.h"
 #include "VrmlNodeGroup.h"
@@ -10,11 +10,6 @@
 #include "VrmlNodeShape.h"
 #include "VrmlNodeTransform.h"
 
-
-VrmlNode::VrmlNode()
-  {
-
-  }
 
 VrmlNode *VrmlNode::parse2Declaration(SdScanerVrml *scaner)
   {
@@ -64,13 +59,14 @@ VrmlNode *VrmlNode::parse2Node(SdScanerVrml *scaner, const QString nodeType)
 
 VrmlNode *VrmlNode::buildNode(const QString nodeType)
   {
-  if( nodeType == QStringLiteral("Apperance") )               return new VrmlNodeApperance();
+  if( nodeType == QStringLiteral("Appearance") )              return new VrmlNodeAppearance();
   if( nodeType == QStringLiteral("Color") )                   return new VrmlNodeColor();
   if( nodeType == QStringLiteral("Coordinate") )              return new VrmlNodeCoordinate();
   if( nodeType == QStringLiteral("Group") )                   return new VrmlNodeGroup();
   if( nodeType == QStringLiteral("IndexedFaceSet") )          return new VrmlNodeIndexedFaceSet();
   if( nodeType == QStringLiteral("Material") )                return new VrmlNodeMaterial();
   if( nodeType == QStringLiteral("Normal") )                  return new VrmlNodeNormal();
+  if( nodeType == QStringLiteral("Shape") )                   return new VrmlNodeShape();
   if( nodeType == QStringLiteral("Transform") )               return new VrmlNodeTransform();
   return nullptr;
   }

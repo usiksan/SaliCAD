@@ -43,6 +43,14 @@ VrmlNodeIndexedFaceSet::VrmlNodeIndexedFaceSet(const VrmlNodeIndexedFaceSet *fac
 
   }
 
+VrmlNodeIndexedFaceSet::~VrmlNodeIndexedFaceSet()
+  {
+  if( mColor      != nullptr ) delete mColor;
+  if( mCoordinate != nullptr ) delete mCoordinate;
+  if( mNormal     != nullptr ) delete mNormal;
+  if( mTexCoord   != nullptr ) delete mTexCoord;
+  }
+
 
 
 

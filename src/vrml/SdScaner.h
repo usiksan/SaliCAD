@@ -49,7 +49,7 @@ class SdScaner
 
     double       tokenValueDouble() const { return mTokenValue.toDouble(); }
 
-    bool         matchTokenValue( const QString &val );
+    bool         matchTokenValue(char tokenId, const QString &val );
 
     bool         matchToken( char tokenId );
 

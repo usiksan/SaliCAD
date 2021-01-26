@@ -6,9 +6,15 @@
 
 class VrmlNodeNormal : public VrmlNode
   {
-    VrmlVectorList mVector;
+    VrmlVectorList mVectorList;
   public:
-    VrmlNodeNormal();
+    VrmlNodeNormal() : VrmlNode() {}
+    VrmlNodeNormal( const VrmlNodeNormal *normal ) : VrmlNode(normal), mVectorList( normal->mVectorList ) {}
+
+    // VrmlNode interface
+  public:
+    virtual void      parse(SdScanerVrml *scaner) override;
+    virtual VrmlNode *copy() const override { return new VrmlNodeNormal( this ); }
   };
 
 #endif // VRMLNODENORMAL_H

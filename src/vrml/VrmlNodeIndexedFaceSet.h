@@ -25,6 +25,7 @@ class VrmlNodeIndexedFaceSet : public VrmlNode
   public:
     VrmlNodeIndexedFaceSet();
     VrmlNodeIndexedFaceSet( const VrmlNodeIndexedFaceSet *faceSet );
+    virtual ~VrmlNodeIndexedFaceSet();
 
     // VrmlNode interface
   public:

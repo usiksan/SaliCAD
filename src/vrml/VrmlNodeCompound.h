@@ -9,6 +9,8 @@ class VrmlNodeCompound : public VrmlNode
     VrmlNodePtrList mChildren;
   public:
     VrmlNodeCompound();
+    VrmlNodeCompound( const VrmlNodeCompound *compound );
+    virtual ~VrmlNodeCompound();
 
     void parseChildren(SdScanerVrml *scaner);
 

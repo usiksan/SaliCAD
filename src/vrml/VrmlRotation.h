@@ -12,7 +12,7 @@ struct VrmlRotation
     //The fourth value specifies the amount of right-handed rotation about that axis in radians.
     VrmlFloat mAngle;
 
-    VrmlRotation();
+    VrmlRotation( float vectorX = 0.0, float vectorY = 0.0, float vectorZ = 0.0, float angle = 0.0 );
 
     void parse( SdScanerVrml *scaner );
   };

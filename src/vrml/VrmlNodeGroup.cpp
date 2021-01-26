@@ -6,6 +6,13 @@ VrmlNodeGroup::VrmlNodeGroup()
 
   }
 
+VrmlNodeGroup::VrmlNodeGroup(const VrmlNodeGroup *group) :
+  VrmlNodeCompound( group )
+  {
+  mBoxCenter = group->mBoxCenter;
+  mBoxSize   = group->mBoxSize;
+  }
+
 
 
 bool VrmlNodeGroup::parse2GroupComponents(SdScanerVrml *scaner, const QString nodeType )
@@ -21,21 +28,6 @@ bool VrmlNodeGroup::parse2GroupComponents(SdScanerVrml *scaner, const QString no
   }
 
 
-void VrmlNodeGroup::cloneNodeGroup(VrmlNodeGroup *destNode) const
-  {
-  cloneNodeCompound( destNode );
-  destNode->mBoxCenter = mBoxCenter;
-  destNode->mBoxSize   = mBoxSize;
-  }
-
-
-
-VrmlNode *VrmlNodeGroup::copy() const
-  {
-  VrmlNodeGroup *group = new VrmlNodeGroup();
-  cloneNodeGroup( group );
-  return group;
-  }
 
 
 

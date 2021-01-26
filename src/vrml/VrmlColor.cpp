@@ -1,10 +1,6 @@
 #include "VrmlColor.h"
 #include "SdScanerVrml.h"
 
-VrmlColor::VrmlColor()
-  {
-
-  }
 
 void VrmlColor::parse(SdScanerVrml *scaner)
   {

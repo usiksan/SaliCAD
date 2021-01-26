@@ -10,6 +10,7 @@ class VrmlNodeShape : public VrmlNode
   public:
     VrmlNodeShape();
     VrmlNodeShape( const VrmlNodeShape *shape );
+    virtual ~VrmlNodeShape();
 
     // VrmlNode interface
   public:

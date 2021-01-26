@@ -2,7 +2,13 @@
 
 #include <QDebug>
 
-SdScaner::SdScaner()
+SdScaner::SdScaner() :
+  mToken(0),         //Current scanned token
+  mLine(),           //Input line
+  mIndex(0),         //Current char index
+  mEndOfScan(true),  //Flag of scan completion
+  mError(),          //Error string
+  mTokenValue()      //Value of current token
   {
 
   }
@@ -81,9 +87,9 @@ bool SdScaner::tokenNeedValueFloat(char tokenId, float &value, const QString err
 
 
 
-bool SdScaner::matchTokenValue(const QString &val)
+bool SdScaner::matchTokenValue( char tokenId, const QString &val)
   {
-  if( mTokenValue == val ) {
+  if( mToken == tokenId && mTokenValue == val ) {
     tokenNext();
     return true;
     }
@@ -103,12 +109,41 @@ bool SdScaner::matchToken(char tokenId)
 
 
 
+void SdScaner::lineSet(const QString &line)
+  {
+  mLine = line;
+  mIndex = 0;
+  mEndOfScan = false;
+  }
+
+
+
+void SdScaner::blank()
+  {
+  while( true ) {
+    if( mIndex >= mLine.count() ) {
+      //Current string is ended, take next line
+      if( !nextLine() ) {
+        mEndOfScan = true;
+        return;
+        }
+      mIndex = 0;
+      continue;
+      }
+    if( mLine.at(mIndex).isSpace() )
+      mIndex++;
+    else return;
+    }
+  }
+
+
+
 
 void SdScaner::scanName()
   {
   mTokenValue.clear();
-  //Digits
-  while( mIndex < mLine.count() && mLine.at(mIndex).isLetterOrNumber() )
+  //Letters or numbers
+  while( mIndex < mLine.count() && (mLine.at(mIndex).isLetterOrNumber() || mLine.at(mIndex) == QChar('_')) )
     mTokenValue.append( mLine.at(mIndex++) );
   }
 
@@ -183,7 +218,7 @@ void SdScaner::skeepBlock(char openToken, char closeToken)
     while( mToken != closeToken ) {
       tokenNext();
       if( mEndOfScan ) {
-        error( QStringLiteral("End of scan without token %1").arg(closeToken), lineIndex(), mIndex );
+        error( QStringLiteral("End of scan without token %1").arg(closeToken) );
         return;
         }
       if( mToken == openToken )

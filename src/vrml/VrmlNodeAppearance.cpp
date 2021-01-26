@@ -1,7 +1,7 @@
-#include "VrmlNodeApperance.h"
+#include "VrmlNodeAppearance.h"
 #include "SdScanerVrml.h"
 
-VrmlNodeApperance::VrmlNodeApperance() :
+VrmlNodeAppearance::VrmlNodeAppearance() :
   VrmlNode(),
   mMaterial(nullptr),
   mTexture(nullptr),
@@ -10,7 +10,7 @@ VrmlNodeApperance::VrmlNodeApperance() :
 
   }
 
-VrmlNodeApperance::VrmlNodeApperance(const VrmlNodeApperance *apperance) :
+VrmlNodeAppearance::VrmlNodeAppearance(const VrmlNodeAppearance *apperance) :
   VrmlNode( apperance ),
   mMaterial(nullptr),
   mTexture(nullptr),
@@ -21,8 +21,15 @@ VrmlNodeApperance::VrmlNodeApperance(const VrmlNodeApperance *apperance) :
   mTextureTransform = makeCopy( apperance->mTextureTransform );
   }
 
+VrmlNodeAppearance::~VrmlNodeAppearance()
+  {
+  if( mMaterial != nullptr ) delete mMaterial;
+  if( mTexture != nullptr ) delete mTexture;
+  if( mTextureTransform != nullptr ) delete mTextureTransform;
+  }
 
-void VrmlNodeApperance::parse(SdScanerVrml *scaner)
+
+void VrmlNodeAppearance::parse(SdScanerVrml *scaner)
   {
   if( !scaner->tokenNeed( '{', QStringLiteral("No apperance") ) )
     return;

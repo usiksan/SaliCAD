@@ -1,9 +1,22 @@
 #include "VrmlNodeCompound.h"
 #include "SdScanerVrml.h"
 
-VrmlNodeCompound::VrmlNodeCompound()
+VrmlNodeCompound::VrmlNodeCompound() :
+  VrmlNode()
   {
 
+  }
+
+VrmlNodeCompound::VrmlNodeCompound(const VrmlNodeCompound *compound) :
+  VrmlNode( compound )
+  {
+  for( auto ptr : compound->mChildren )
+    mChildren.append( makeCopy(ptr) );
+  }
+
+VrmlNodeCompound::~VrmlNodeCompound()
+  {
+  qDeleteAll(mChildren);
   }
 
 void VrmlNodeCompound::parseChildren(SdScanerVrml *scaner)
@@ -11,14 +24,10 @@ void VrmlNodeCompound::parseChildren(SdScanerVrml *scaner)
   if( scaner->matchToken('[') ) {
     while( !scaner->matchToken(']') ) {
       if( scaner->isEndOfScan() ) return;
-      parse2Declaration( scaner, &mChildren );
+      VrmlNode *node = parse2Declaration( scaner );
+      if( node != nullptr )
+        mChildren.append( node );
       }
     }
   }
 
-void VrmlNodeCompound::cloneNodeCompound(VrmlNodeCompound *destNode) const
-  {
-  cloneNode( destNode );
-  for( auto ptr : mChildren )
-    destNode->mChildren.append( ptr->copy() );
-  }

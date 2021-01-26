@@ -18,6 +18,12 @@ VrmlNodeShape::VrmlNodeShape(const VrmlNodeShape *shape) :
   mGeometry  = makeCopy( shape->mGeometry );
   }
 
+VrmlNodeShape::~VrmlNodeShape()
+  {
+  if( mApperance != nullptr ) delete mApperance;
+  if( mGeometry  != nullptr ) delete mGeometry;
+  }
+
 
 void VrmlNodeShape::parse(SdScanerVrml *scaner)
   {
@@ -34,7 +40,7 @@ void VrmlNodeShape::parse(SdScanerVrml *scaner)
     QString nodeType;
     if( !scaner->tokenNeedValue( 'n', nodeType, QStringLiteral("Need shape node") ) )
       return;
-    if( nodeType == QStringLiteral("apperance") )
+    if( nodeType == QStringLiteral("appearance") )
       mApperance = parse2Declaration( scaner );
     else if( nodeType == QStringLiteral("geometry") )
       mGeometry = parse2Declaration( scaner );

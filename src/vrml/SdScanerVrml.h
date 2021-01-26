@@ -2,6 +2,7 @@
 #define SDSCANERVRML_H
 
 #include "VrmlTypes.h"
+#include "VrmlVector.h"
 #include "SdScanerMultyline.h"
 #include "VrmlNode.h"
 
@@ -26,16 +27,15 @@ class SdScanerVrml : public SdScanerMultyline
 
     bool      parseInt32Table( VrmlInt32List &table, const QString errorMsg );
 
+    bool      parseVectorTable( VrmlVectorList &table, const QString errorMsg );
+
   private:
-    bool parseRoot();
     bool parseVrml2_0();
     bool parseVrml1_0();
 
-    bool parse2Declaration( VrmlNodePtrList *list );
-    bool parse2DEF( VrmlNodePtrList *list );
-    bool parse2USE( VrmlNodePtrList *list );
-    bool parse2Group( VrmlNodePtrList *list );
-    bool parse2Transform( VrmlNodePtrList *list );
+    // SdScaner interface
+  public:
+    virtual void tokenNext() override;
   };
 
 #endif // SDSCANERVRML_H

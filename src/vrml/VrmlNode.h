@@ -24,7 +24,6 @@ class VrmlNode
 
     virtual void      parse( SdScanerVrml *scaner ) = 0;
     virtual VrmlNode *copy() const = 0;
-    void              cloneNode( VrmlNode *destNode ) const;
 
     static VrmlNode  *parse2Declaration(SdScanerVrml *scaner);
     static VrmlNode  *parse2Node( SdScanerVrml *scaner, const QString nodeType );

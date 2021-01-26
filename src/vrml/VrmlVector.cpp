@@ -1,10 +1,6 @@
 #include "VrmlVector.h"
 #include "SdScanerVrml.h"
 
-VrmlVector::VrmlVector()
-  {
-
-  }
 
 void VrmlVector::parse(SdScanerVrml *scaner)
   {

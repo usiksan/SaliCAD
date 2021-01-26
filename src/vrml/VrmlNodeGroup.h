@@ -10,11 +10,11 @@ class VrmlNodeGroup : public VrmlNodeCompound
     VrmlVector mBoxSize;
   public:
     VrmlNodeGroup();
+    VrmlNodeGroup( const VrmlNodeGroup *group );
 
-    void cloneNodeGroup(VrmlNodeGroup *destNode) const;
     // VrmlNode interface
   public:
-    virtual VrmlNode *copy() const override;
+    virtual VrmlNode *copy() const override { return new VrmlNodeGroup( this ); }
     virtual void      parse(SdScanerVrml *scaner) override;
     bool              parse2GroupComponents(SdScanerVrml *scaner , const QString nodeType);
   };
