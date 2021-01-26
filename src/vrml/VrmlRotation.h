@@ -13,6 +13,8 @@ struct VrmlRotation
     VrmlFloat mAngle;
 
     VrmlRotation();
+
+    void parse( SdScanerVrml *scaner );
   };
 
 #endif // VRMLROTATION_H

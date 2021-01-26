@@ -6,36 +6,51 @@ VrmlNodeTransform::VrmlNodeTransform()
 
   }
 
-VrmlNodeTransform *VrmlNodeTransform::parse2Transform(SdScanerVrml *scaner)
+
+VrmlNode *VrmlNodeTransform::copy() const
   {
-  if( scaner->matchToken('{') ) {
-    VrmlNodeTransform *transform = new VrmlNodeTransform();
-    while( !scaner->matchToken('}') ) {
-      if( scaner->isEndOfScan() ) {
-        delete transform;
-        scaner->error( QStringLiteral("Uncompleted transform") );
-        return nullptr;
-        }
-      if( scaner->matchToken('n') ) {
-        if( !parse2GroupComponents( scaner, transform ) ) {
-          delete group;
-          scaner->error( QStringLiteral("Undefined group node %1").arg(scaner->tokenValue()) );
-          return nullptr;
-          }
-        }
-      else {
-        delete transform;
-        scaner->error( QStringLiteral("Undefined token") );
-        return nullptr;
-        }
-      }
-    //Transform completed
-    return transform;
-    }
-  return nullptr;
+  VrmlNodeTransform *transform = new VrmlNodeTransform();
+  cloneNodeGroup( transform );
+  transform->mCenter           = mCenter;
+  transform->mRotation         = mRotation;
+  transform->mScale            = mScale;
+  transform->mScaleOrientation = mScaleOrientation;
+  transform->mTranslation      = mTranslation;
+
+  return transform;
   }
 
 
-VrmlNode *VrmlNodeTransform::copy() const
-    {
+void VrmlNodeTransform::parse(SdScanerVrml *scaner)
+  {
+  if( !scaner->tokenNeed( '{', QStringLiteral("No transform") ) )
+    return;
+
+  while( !scaner->matchToken('}') ) {
+    if( scaner->isEndOfScan() ) {
+      scaner->error( QStringLiteral("Uncompleted transform") );
+      return;
+      }
+    if( scaner->isError() )
+      return;
+    QString nodeType;
+    if( !scaner->tokenNeedValue( 'n', nodeType, QStringLiteral("Need group node") ) )
+      return;
+    if( parse2GroupComponents( scaner, nodeType ) )
+      continue;
+    if( nodeType == QStringLiteral("Center") )
+      mCenter.parse( scaner );
+    else if( nodeType == QStringLiteral("Rotation") )
+      mRotation.parse( scaner );
+    else if( nodeType == QStringLiteral("Scale") )
+      mScale.parse( scaner );
+    else if( nodeType == QStringLiteral("ScaleOrientation") )
+      mScaleOrientation.parse( scaner );
+    else if( nodeType == QStringLiteral("Translation") )
+      mTranslation.parse( scaner );
+    else {
+      scaner->error( QStringLiteral("Undefined transform node %1").arg(nodeType) );
+      return;
+      }
     }
+  }

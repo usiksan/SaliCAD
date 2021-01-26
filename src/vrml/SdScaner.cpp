@@ -9,7 +9,19 @@ SdScaner::SdScaner()
 
 void SdScaner::error(const QString msg)
   {
-  qDebug() << "[" << lineIndex() << ":" << mIndex << "]" << msg;
+  mError = QStringLiteral("[%1:%2] %3").arg(lineIndex()).arg(mIndex).arg(msg);
+  qDebug() << mError;
+  }
+
+bool SdScaner::tokenNeed(char tokenId, const QString errorMsg)
+  {
+  if( matchToken(tokenId) )
+    return true;
+  if( errorMsg.isEmpty() )
+    error( QStringLiteral("Need token %1").arg( tokenId ) );
+  else
+    error( errorMsg );
+  return false;
   }
 
 
@@ -27,6 +39,47 @@ QString SdScaner::tokenNeedValue( char tokenVal )
 
 
 
+bool SdScaner::tokenNeedValue(char tokenId, QString &value, const QString errorMsg)
+  {
+  if( mToken == 0 )
+    return false;
+  if( mToken == tokenId ) {
+    value = mTokenValue;
+    tokenNext();
+    return true;
+    }
+  error( errorMsg );
+  return false;
+  }
+
+
+
+bool SdScaner::tokenNeedValueInt(char tokenId, int &value, const QString errorMsg)
+  {
+  QString strVal;
+  if( tokenNeedValue( tokenId, strVal, errorMsg ) ) {
+    bool res;
+    value = strVal.toInt( &res );
+    return res;
+    }
+  return false;
+  }
+
+
+
+bool SdScaner::tokenNeedValueFloat(char tokenId, float &value, const QString errorMsg)
+  {
+  QString strVal;
+  if( tokenNeedValue( tokenId, strVal, errorMsg ) ) {
+    bool res;
+    value = strVal.toFloat( &res );
+    return res;
+    }
+  return false;
+  }
+
+
+
 
 bool SdScaner::matchTokenValue(const QString &val)
   {
@@ -39,9 +92,9 @@ bool SdScaner::matchTokenValue(const QString &val)
 
 
 
-bool SdScaner::matchToken(char token)
+bool SdScaner::matchToken(char tokenId)
   {
-  if( mToken == token ) {
+  if( mToken == tokenId ) {
     tokenNext();
     return true;
     }

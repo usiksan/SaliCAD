@@ -10,6 +10,11 @@ class VrmlNodeApperance : public VrmlNode
     VrmlNodePtr mTextureTransform;
   public:
     VrmlNodeApperance();
+
+    // VrmlNode interface
+  public:
+    virtual void      parse(SdScanerVrml *scaner) override;
+    virtual VrmlNode *copy() const override;
   };
 
 #endif // VRMLNODEAPPERANCE_H

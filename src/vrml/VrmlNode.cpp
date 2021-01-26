@@ -18,55 +18,61 @@ VrmlNode::VrmlNode()
 
 void VrmlNode::parse2Declaration(SdScanerVrml *scaner, VrmlNodePtrList *list)
   {
-  QString nodeName;
+  QString nodeName, nodeType;
 
-  if( scaner->token() != 'n' ) {
-    scaner->error( QStringLiteral("Waiting for declaration") );
+  if( !scaner->tokenNeedValue( 'n', nodeType, QStringLiteral("Waiting for declaration") ) )
     return;
-    }
 
-  if( scaner->matchTokenValue( QStringLiteral("USE") ) ) {
-    if( scaner->token() != 'n' ) {
-      scaner->error( QStringLiteral("Waiting for name of node") );
+  if( nodeType == QStringLiteral("USE") ) {
+    if( !scaner->tokenNeedValue( 'n', nodeName, QStringLiteral("Waiting for name of node") ) )
       return;
-      }
-    nodeName = scaner->tokenValue();
     VrmlNode *node = scaner->node( nodeName );
-    if( node != nullptr ) {
+    if( node != nullptr )
       list->append( node->copy() );
-      }
-    scaner->tokenNext();
     return;
     }
 
-  if( scaner->matchTokenValue( QStringLiteral("DEF") ) ) {
-    if( scaner->token() != 'n' ) {
-      scaner->error( QStringLiteral("Waiting for name of node") );
+  if( nodeType == QStringLiteral("DEF") ) {
+    if( !scaner->tokenNeedValue( 'n', nodeName, QStringLiteral("Waiting for name of node") ) )
       return;
-      }
-    nodeName = scaner->tokenValue();
-    scaner->tokenNext();
+    if( !scaner->tokenNeedValue( 'n', nodeType, QStringLiteral("Waiting for node type") ) )
+      return;
     }
 
-  VrmlNode *node = parse2Node( scaner );
+  VrmlNode *node = parse2Node( scaner, nodeType );
+
   if( node != nullptr ) {
     list->append( node );
     if( !nodeName.isEmpty() )
       scaner->insert( nodeName, node );
     }
+
+  }
+
+VrmlNode *VrmlNode::parse2Node(SdScanerVrml *scaner, const QString nodeType)
+  {
+  VrmlNode *node = buildNode( nodeType );
+  if( node != nullptr ) node->parse( scaner );
+  else {
+    //Skeep undefined node
+    if( scaner->token() == '{' ) scaner->skeepBlock( '{', '}' );
+    else scaner->error( QStringLiteral("Undefined context when skeep node %1").arg(scaner->token()) );
+    }
+  return node;
   }
 
 
 
-VrmlNode *VrmlNode::parse2Node(SdScanerVrml *scaner)
+
+VrmlNode *VrmlNode::buildNode(const QString nodeType)
   {
-  if( scaner->matchTokenValue( QStringLiteral("Group") ) )
-    return parse2Group( list );
-  if( matchTokenValue( QStringLiteral("Transform") ) )
-    return parse2Transform( list );
-
-  //Skeep undefined node
-  tokenNext();
-  if( mToken == '{' ) skeepBlock( '{', '}' );
-
+  if( nodeType == QStringLiteral("Apperance") )               return new VrmlNodeApperance();
+  if( nodeType == QStringLiteral("Color") )                   return new VrmlNodeColor();
+  if( nodeType == QStringLiteral("Coordinate") )              return new VrmlNodeCoordinate();
+  if( nodeType == QStringLiteral("Group") )                   return new VrmlNodeGroup();
+  if( nodeType == QStringLiteral("IndexedFaceSet") )          return new VrmlNodeIndexedFaceSet();
+  if( nodeType == QStringLiteral("Material") )                return new VrmlNodeMaterial();
+  if( nodeType == QStringLiteral("Normal") )                  return new VrmlNodeNormal();
+  if( nodeType == QStringLiteral("Transform") )               return new VrmlNodeTransform();
+  return nullptr;
   }

@@ -23,11 +23,13 @@ class VrmlNode
     VrmlNode();
     virtual ~VrmlNode() {}
 
+    virtual void      parse( SdScanerVrml *scaner ) = 0;
     virtual VrmlNode *copy() const = 0;
-    void             cloneNode( VrmlNode *destNode ) const;
+    void              cloneNode( VrmlNode *destNode ) const;
 
-    static void      parse2Declaration(SdScanerVrml *scaner, VrmlNodePtrList *list);
-    static VrmlNode *parse2Node(SdScanerVrml *scaner);
+    static void       parse2Declaration(SdScanerVrml *scaner, VrmlNodePtrList *list);
+    static VrmlNode  *parse2Node( SdScanerVrml *scaner, const QString nodeType );
+    static VrmlNode  *buildNode( const QString nodeType );
   };
 
 

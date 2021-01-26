@@ -8,9 +8,7 @@ VrmlVector::VrmlVector()
 
 void VrmlVector::parse(SdScanerVrml *scaner)
   {
-  mX = scaner->tokenNeedValueFloat('f');
-  if( scaner->isEndOfScan() ) return;
-  mY = scaner->tokenNeedValueFloat('f');
-  if( scaner->isEndOfScan() ) return;
-  mZ = scaner->tokenNeedValueFloat('f');
+  if( !scaner->tokenNeedValueFloat( 'f', mX, QStringLiteral("Need vector X") ) ) return;
+  if( !scaner->tokenNeedValueFloat( 'f', mY, QStringLiteral("Need vector X") ) ) return;
+  scaner->tokenNeedValueFloat( 'f', mZ, QStringLiteral("Need vector X") );
   }

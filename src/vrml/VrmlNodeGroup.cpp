@@ -6,46 +6,20 @@ VrmlNodeGroup::VrmlNodeGroup()
 
   }
 
-VrmlNodeGroup *VrmlNodeGroup::parse2Group(SdScanerVrml *scaner)
-  {
-  if( scaner->matchToken('{') ) {
-    VrmlNodeGroup *group = new VrmlNodeGroup();
-    while( !scaner->matchToken('}') ) {
-      if( scaner->isEndOfScan() ) {
-        delete group;
-        scaner->error( QStringLiteral("Uncompleted group") );
-        return nullptr;
-        }
-      if( scaner->matchToken('n') ) {
-        if( !parse2GroupComponents( scaner, group ) ) {
-          delete group;
-          scaner->error( QStringLiteral("Undefined group node %1").arg(scaner->tokenValue()) );
-          return nullptr;
-          }
-        }
-      else {
-        delete group;
-        scaner->error( QStringLiteral("Undefined token") );
-        return nullptr;
-        }
-      }
-    //Group completed
-    return group;
-    }
-  return nullptr;
-  }
 
-bool VrmlNodeGroup::parse2GroupComponents(SdScanerVrml *scaner, VrmlNodeGroup *group)
+
+bool VrmlNodeGroup::parse2GroupComponents(SdScanerVrml *scaner, const QString nodeType )
   {
-  if( scaner->matchTokenValue( QStringLiteral("children") ) )
-    group->parseChildren( scaner );
-  else if( scaner->matchTokenValue( QStringLiteral("bboxCenter") ) )
-    group->mBoxCenter.parse( scaner );
-  else if( scaner->matchTokenValue( QStringLiteral("bboxSize") ) )
-    group->mBoxSize.parse( scaner );
+  if( nodeType == QStringLiteral("children") )
+    parseChildren( scaner );
+  else if( nodeType == QStringLiteral("bboxCenter") )
+    mBoxCenter.parse( scaner );
+  else if( nodeType == QStringLiteral("bboxSize") )
+    mBoxSize.parse( scaner );
   else return false;
   return true;
   }
+
 
 void VrmlNodeGroup::cloneNodeGroup(VrmlNodeGroup *destNode) const
   {
@@ -55,6 +29,7 @@ void VrmlNodeGroup::cloneNodeGroup(VrmlNodeGroup *destNode) const
   }
 
 
+
 VrmlNode *VrmlNodeGroup::copy() const
   {
   VrmlNodeGroup *group = new VrmlNodeGroup();
@@ -62,3 +37,26 @@ VrmlNode *VrmlNodeGroup::copy() const
   return group;
   }
 
+
+
+void VrmlNodeGroup::parse(SdScanerVrml *scaner)
+  {
+  if( !scaner->tokenNeed( '{', QStringLiteral("No group") ) )
+    return;
+
+  while( !scaner->matchToken('}') ) {
+    if( scaner->isEndOfScan() ) {
+      scaner->error( QStringLiteral("Uncompleted group") );
+      return;
+      }
+    if( scaner->isError() )
+      return;
+    QString nodeType;
+    if( !scaner->tokenNeedValue( 'n', nodeType, QStringLiteral("Need group node") ) )
+      return;
+    if( !parse2GroupComponents( scaner, nodeType ) ) {
+      scaner->error( QStringLiteral("Undefined group node %1").arg(nodeType) );
+      return;
+      }
+    }
+  }

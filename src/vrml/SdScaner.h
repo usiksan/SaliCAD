@@ -10,6 +10,7 @@ class SdScaner
     QString mLine;       //!< Input line
     int     mIndex;      //!< Current char index
     bool    mEndOfScan;  //!< Flag of scan completion
+    QString mError;      //!< Error string
     QString mTokenValue; //!< Value of current token
   public:
     SdScaner();
@@ -22,13 +23,23 @@ class SdScaner
 
     virtual void error( const QString msg );
 
+    bool         isError() const { return !mError.isEmpty(); }
+
     char         token() const { return mToken; }
+
+    bool         tokenNeed( char tokenId, const QString errorMsg );
 
     QString      tokenNeedValue(char tokenVal);
 
+    bool         tokenNeedValue( char tokenId, QString &value, const QString errorMsg );
+
     int          tokenNeedValueInt(char tokenVal) { return tokenNeedValue(tokenVal).toInt(); }
 
+    bool         tokenNeedValueInt( char tokenId, int &value, const QString errorMsg );
+
     float        tokenNeedValueFloat(char tokenVal) { return tokenNeedValue(tokenVal).toFloat(); }
+
+    bool         tokenNeedValueFloat( char tokenId, float &value, const QString errorMsg );
 
     QString      tokenValue() const { return mTokenValue; }
 
@@ -40,7 +51,7 @@ class SdScaner
 
     bool         matchTokenValue( const QString &val );
 
-    bool         matchToken( char token );
+    bool         matchToken( char tokenId );
 
     QString      line() const { return mLine; }
 
@@ -50,6 +61,8 @@ class SdScaner
     void         blank();
 
     bool         isEndOfScan() const { return mEndOfScan; }
+
+    bool         isEndOfScanOrError() const { return mEndOfScan || isError();}
 
     void         scanName();
 
