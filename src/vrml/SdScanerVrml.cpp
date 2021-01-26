@@ -45,6 +45,42 @@ bool SdScanerVrml::parseFile(const QString &path)
 
 
 
+bool SdScanerVrml::tokenNeedValueBool(bool &value, const QString errorMsg)
+  {
+  QString strVal;
+  if( tokenNeedValue( 'n', strVal, errorMsg ) ) {
+    value = strVal == QStringLiteral("TRUE");
+    return true;
+    }
+  return false;
+  }
+
+
+
+
+bool SdScanerVrml::parseInt32Table(VrmlInt32List &table, const QString errorMsg)
+  {
+  table.clear();
+  if( matchToken('[') ) {
+    while( !matchToken(']') ) {
+      int val;
+      if( !tokenNeedValueInt( 'd', val, QStringLiteral("Need int value") ) )
+        return false;
+      table.append( val );
+      if( !matchToken(',') ) {
+        if( !tokenNeed(']', QStringLiteral("Need ]") ) )
+          return false;
+        break;
+        }
+      }
+    return true;
+    }
+  error( errorMsg );
+  return false;
+  }
+
+
+
 
 bool SdScanerVrml::parseVrml2_0()
   {

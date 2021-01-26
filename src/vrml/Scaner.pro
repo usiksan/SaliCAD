@@ -9,8 +9,6 @@ CONFIG -= app_bundle
 
 SOURCES += \
         Sd3dReaderVrml.cpp \
-        Sd3dVrmlNode.cpp \
-        SdParserVrml2_0.cpp \
         SdScaner.cpp \
         SdScanerMultyline.cpp \
         SdScanerVrml.cpp \
@@ -38,8 +36,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
   Sd3dReaderVrml.h \
-  Sd3dVrmlNode.h \
-  SdParserVrml2_0.h \
   SdScaner.h \
   SdScanerMultyline.h \
   SdScanerVrml.h \

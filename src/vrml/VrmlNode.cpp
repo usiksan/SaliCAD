@@ -16,37 +16,35 @@ VrmlNode::VrmlNode()
 
   }
 
-void VrmlNode::parse2Declaration(SdScanerVrml *scaner, VrmlNodePtrList *list)
+VrmlNode *VrmlNode::parse2Declaration(SdScanerVrml *scaner)
   {
   QString nodeName, nodeType;
 
   if( !scaner->tokenNeedValue( 'n', nodeType, QStringLiteral("Waiting for declaration") ) )
-    return;
+    return nullptr;
 
   if( nodeType == QStringLiteral("USE") ) {
     if( !scaner->tokenNeedValue( 'n', nodeName, QStringLiteral("Waiting for name of node") ) )
-      return;
+      return nullptr;
     VrmlNode *node = scaner->node( nodeName );
     if( node != nullptr )
-      list->append( node->copy() );
-    return;
+      return node->copy();
+    return nullptr;
     }
 
   if( nodeType == QStringLiteral("DEF") ) {
     if( !scaner->tokenNeedValue( 'n', nodeName, QStringLiteral("Waiting for name of node") ) )
-      return;
+      return nullptr;
     if( !scaner->tokenNeedValue( 'n', nodeType, QStringLiteral("Waiting for node type") ) )
-      return;
+      return nullptr;
     }
 
   VrmlNode *node = parse2Node( scaner, nodeType );
 
-  if( node != nullptr ) {
-    list->append( node );
-    if( !nodeName.isEmpty() )
-      scaner->insert( nodeName, node );
-    }
+  if( node != nullptr && !nodeName.isEmpty() )
+    scaner->insert( nodeName, node );
 
+  return node;
   }
 
 VrmlNode *VrmlNode::parse2Node(SdScanerVrml *scaner, const QString nodeType)
@@ -74,5 +72,12 @@ VrmlNode *VrmlNode::buildNode(const QString nodeType)
   if( nodeType == QStringLiteral("Material") )                return new VrmlNodeMaterial();
   if( nodeType == QStringLiteral("Normal") )                  return new VrmlNodeNormal();
   if( nodeType == QStringLiteral("Transform") )               return new VrmlNodeTransform();
+  return nullptr;
+  }
+
+VrmlNode *VrmlNode::makeCopy(const VrmlNode *node)
+  {
+  if( node != nullptr )
+    return node->copy();
   return nullptr;
   }

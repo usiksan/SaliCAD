@@ -15,6 +15,12 @@ class VrmlNodeMaterial : public VrmlNode
     VrmlFloat mTransparency;
   public:
     VrmlNodeMaterial();
+    VrmlNodeMaterial( const VrmlNodeMaterial *material );
+
+    // VrmlNode interface
+  public:
+    virtual void      parse(SdScanerVrml *scaner) override;
+    virtual VrmlNode *copy() const override { return new VrmlNodeMaterial( this ); }
   };
 
 #endif // VRMLNODEMATERIAL_H

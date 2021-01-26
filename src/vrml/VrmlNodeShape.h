@@ -9,6 +9,12 @@ class VrmlNodeShape : public VrmlNode
     VrmlNodePtr mGeometry;
   public:
     VrmlNodeShape();
+    VrmlNodeShape( const VrmlNodeShape *shape );
+
+    // VrmlNode interface
+  public:
+    virtual void      parse(SdScanerVrml *scaner) override;
+    virtual VrmlNode *copy() const override { return new VrmlNodeShape( this ); }
   };
 
 #endif // VRMLNODESHAPE_H

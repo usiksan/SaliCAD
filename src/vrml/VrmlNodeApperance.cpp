@@ -1,9 +1,24 @@
 #include "VrmlNodeApperance.h"
 #include "SdScanerVrml.h"
 
-VrmlNodeApperance::VrmlNodeApperance()
+VrmlNodeApperance::VrmlNodeApperance() :
+  VrmlNode(),
+  mMaterial(nullptr),
+  mTexture(nullptr),
+  mTextureTransform(nullptr)
   {
 
+  }
+
+VrmlNodeApperance::VrmlNodeApperance(const VrmlNodeApperance *apperance) :
+  VrmlNode( apperance ),
+  mMaterial(nullptr),
+  mTexture(nullptr),
+  mTextureTransform(nullptr)
+  {
+  mMaterial         = makeCopy( apperance->mMaterial );
+  mTexture          = makeCopy( apperance->mTexture );
+  mTextureTransform = makeCopy( apperance->mTextureTransform );
   }
 
 
@@ -22,12 +37,12 @@ void VrmlNodeApperance::parse(SdScanerVrml *scaner)
     QString nodeType;
     if( !scaner->tokenNeedValue( 'n', nodeType, QStringLiteral("Need apperance node") ) )
       return;
-    if( nodeType == QStringLiteral("Material") )
-      mMaterial = parse2Node( scaner, nodeType );
-    else if( nodeType == QStringLiteral("Texture") )
-      mTexture = parse2Node( scaner, nodeType );
-    else if( nodeType == QStringLiteral("TextureTransform") )
-      mTextureTransform = parse2Node( scaner, nodeType );
+    if( nodeType == QStringLiteral("material") )
+      mMaterial = parse2Declaration( scaner );
+    else if( nodeType == QStringLiteral("texture") )
+      mTexture = parse2Declaration( scaner );
+    else if( nodeType == QStringLiteral("textureTransform") )
+      mTextureTransform = parse2Declaration( scaner );
     else {
       scaner->error( QStringLiteral("Illegal node type for apperance %1").arg(nodeType) );
       return;
@@ -37,15 +52,3 @@ void VrmlNodeApperance::parse(SdScanerVrml *scaner)
 
 
 
-VrmlNode *VrmlNodeApperance::copy() const
-  {
-  VrmlNodeApperance *apperance = new VrmlNodeApperance();
-  cloneNode( apperance );
-  if( mMaterial )
-    apperance->mMaterial = mMaterial->copy();
-  if( mTexture )
-    apperance->mTexture = mTexture->copy();
-  if( mTextureTransform )
-    apperance->mTextureTransform = mTextureTransform->copy();
-  return apperance;
-  }

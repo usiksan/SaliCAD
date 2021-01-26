@@ -1,6 +1,7 @@
 #ifndef SDSCANERVRML_H
 #define SDSCANERVRML_H
 
+#include "VrmlTypes.h"
 #include "SdScanerMultyline.h"
 #include "VrmlNode.h"
 
@@ -19,6 +20,12 @@ class SdScanerVrml : public SdScanerMultyline
     void insert( const QString name, VrmlNodePtr node ) { mRootMap.insert( name, node ); }
 
     VrmlNode *node( const QString name ) const { return mRootMap.value(name); }
+
+
+    bool      tokenNeedValueBool( bool &value, const QString errorMsg );
+
+    bool      parseInt32Table( VrmlInt32List &table, const QString errorMsg );
+
   private:
     bool parseRoot();
     bool parseVrml2_0();

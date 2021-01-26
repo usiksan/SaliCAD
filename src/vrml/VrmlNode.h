@@ -17,19 +17,19 @@ using VrmlNodePtrMap = QMap<QString,VrmlNodePtr>;
 
 class VrmlNode
   {
-    QString mName;
   public:
-
-    VrmlNode();
+    VrmlNode() {}
+    VrmlNode( const VrmlNode* ) {}
     virtual ~VrmlNode() {}
 
     virtual void      parse( SdScanerVrml *scaner ) = 0;
     virtual VrmlNode *copy() const = 0;
     void              cloneNode( VrmlNode *destNode ) const;
 
-    static void       parse2Declaration(SdScanerVrml *scaner, VrmlNodePtrList *list);
+    static VrmlNode  *parse2Declaration(SdScanerVrml *scaner);
     static VrmlNode  *parse2Node( SdScanerVrml *scaner, const QString nodeType );
     static VrmlNode  *buildNode( const QString nodeType );
+    static VrmlNode  *makeCopy( const VrmlNode *node );
   };
 
 

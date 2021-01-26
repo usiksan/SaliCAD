@@ -8,9 +8,10 @@
 
 class VrmlNodeIndexedFaceSet : public VrmlNode
   {
-    VrmlNodeColor      *mColor;
-    VrmlNodeCoordinate *mCoordinate;
-    VrmlNodeNormal     *mNormal;
+    VrmlNode           *mColor;
+    VrmlNode           *mCoordinate;
+    VrmlNode           *mNormal;
+    VrmlNode           *mTexCoord;
     VrmlBool            mCcw;
     VrmlInt32List       mColorIndex;
     VrmlBool            mColorPerVertex;
@@ -20,8 +21,15 @@ class VrmlNodeIndexedFaceSet : public VrmlNode
     VrmlInt32List       mNormalIndex;
     VrmlBool            mNormalPerVertex;
     VrmlBool            mSolid;
+    VrmlInt32List       mTexCoordIndex;
   public:
     VrmlNodeIndexedFaceSet();
+    VrmlNodeIndexedFaceSet( const VrmlNodeIndexedFaceSet *faceSet );
+
+    // VrmlNode interface
+  public:
+    virtual void      parse(SdScanerVrml *scaner) override;
+    virtual VrmlNode *copy() const override { return new VrmlNodeIndexedFaceSet( this ); }
   };
 
 #endif // VRMLNODEINDEXEDFACESET_H

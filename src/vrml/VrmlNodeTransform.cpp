@@ -38,15 +38,15 @@ void VrmlNodeTransform::parse(SdScanerVrml *scaner)
       return;
     if( parse2GroupComponents( scaner, nodeType ) )
       continue;
-    if( nodeType == QStringLiteral("Center") )
+    if( nodeType == QStringLiteral("center") )
       mCenter.parse( scaner );
-    else if( nodeType == QStringLiteral("Rotation") )
+    else if( nodeType == QStringLiteral("rotation") )
       mRotation.parse( scaner );
-    else if( nodeType == QStringLiteral("Scale") )
+    else if( nodeType == QStringLiteral("scale") )
       mScale.parse( scaner );
-    else if( nodeType == QStringLiteral("ScaleOrientation") )
+    else if( nodeType == QStringLiteral("scaleOrientation") )
       mScaleOrientation.parse( scaner );
-    else if( nodeType == QStringLiteral("Translation") )
+    else if( nodeType == QStringLiteral("translation") )
       mTranslation.parse( scaner );
     else {
       scaner->error( QStringLiteral("Undefined transform node %1").arg(nodeType) );
