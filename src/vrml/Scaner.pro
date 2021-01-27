@@ -25,6 +25,7 @@ SOURCES += \
         VrmlNodeShape.cpp \
         VrmlNodeTransform.cpp \
         VrmlRotation.cpp \
+        VrmlSmartNodePtr.cpp \
         VrmlVector.cpp \
         main.cpp
 
@@ -51,5 +52,6 @@ HEADERS += \
   VrmlNodeShape.h \
   VrmlNodeTransform.h \
   VrmlRotation.h \
+  VrmlSmartNodePtr.h \
   VrmlTypes.h \
   VrmlVector.h

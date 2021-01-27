@@ -9,47 +9,34 @@ VrmlNodeShape::VrmlNodeShape() :
 
   }
 
+
+
 VrmlNodeShape::VrmlNodeShape(const VrmlNodeShape *shape) :
   VrmlNode(shape),
-  mApperance(nullptr),
-  mGeometry(nullptr)
+  mApperance( makeCopy( shape->mApperance ) ),
+  mGeometry( makeCopy( shape->mGeometry ) )
   {
-  mApperance = makeCopy( shape->mApperance );
-  mGeometry  = makeCopy( shape->mGeometry );
   }
+
+
 
 VrmlNodeShape::~VrmlNodeShape()
   {
-  if( mApperance != nullptr ) delete mApperance;
-  if( mGeometry  != nullptr ) delete mGeometry;
+  deleteNode( mApperance );
+  deleteNode( mGeometry );
   }
 
 
-void VrmlNodeShape::parse(SdScanerVrml *scaner)
+
+bool VrmlNodeShape::parse(SdScanerVrml *scaner, const QString &fieldType)
   {
-  if( !scaner->tokenNeed( '{', QStringLiteral("No shape") ) )
-    return;
+  if( fieldType == QStringLiteral("appearance") )
+    mApperance = parse2Declaration( scaner );
 
-  while( !scaner->matchToken('}') ) {
-    if( scaner->isEndOfScan() ) {
-      scaner->error( QStringLiteral("Uncompleted shape") );
-      return;
-      }
-    if( scaner->isError() )
-      return;
-    QString nodeType;
-    if( !scaner->tokenNeedValue( 'n', nodeType, QStringLiteral("Need shape node") ) )
-      return;
-    if( nodeType == QStringLiteral("appearance") )
-      mApperance = parse2Declaration( scaner );
-    else if( nodeType == QStringLiteral("geometry") )
-      mGeometry = parse2Declaration( scaner );
-    else {
-      scaner->error( QStringLiteral("Undefined Shape node %1").arg(nodeType) );
-      return;
-      }
-    }
+  else if( fieldType == QStringLiteral("geometry") )
+    mGeometry = parse2Declaration( scaner );
+
+  else return false;
+
+  return true;
   }
-
-
-

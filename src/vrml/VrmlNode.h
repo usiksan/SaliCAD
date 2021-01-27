@@ -22,13 +22,14 @@ class VrmlNode
     VrmlNode( const VrmlNode* ) {}
     virtual ~VrmlNode() {}
 
-    virtual void      parse( SdScanerVrml *scaner ) = 0;
+    virtual bool      parse( SdScanerVrml *scaner, const QString &fieldType ) = 0;
     virtual VrmlNode *copy() const = 0;
 
     static VrmlNode  *parse2Declaration(SdScanerVrml *scaner);
     static VrmlNode  *parse2Node( SdScanerVrml *scaner, const QString nodeType );
     static VrmlNode  *buildNode( const QString nodeType );
     static VrmlNode  *makeCopy( const VrmlNode *node );
+    static void       deleteNode( VrmlNode *node );
   };
 
 

@@ -14,8 +14,8 @@ class VrmlNodeShape : public VrmlNode
 
     // VrmlNode interface
   public:
-    virtual void      parse(SdScanerVrml *scaner) override;
     virtual VrmlNode *copy() const override { return new VrmlNodeShape( this ); }
+    virtual bool      parse(SdScanerVrml *scaner, const QString &fieldType) override;
   };
 
 #endif // VRMLNODESHAPE_H

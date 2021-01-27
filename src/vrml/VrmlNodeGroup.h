@@ -15,8 +15,7 @@ class VrmlNodeGroup : public VrmlNodeCompound
     // VrmlNode interface
   public:
     virtual VrmlNode *copy() const override { return new VrmlNodeGroup( this ); }
-    virtual void      parse(SdScanerVrml *scaner) override;
-    bool              parse2GroupComponents(SdScanerVrml *scaner , const QString nodeType);
+    virtual bool      parse(SdScanerVrml *scaner, const QString &fieldType) override;
   };
 
 #endif // VRMLNODEGROUP_H

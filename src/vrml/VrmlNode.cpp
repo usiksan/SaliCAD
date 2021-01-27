@@ -42,10 +42,39 @@ VrmlNode *VrmlNode::parse2Declaration(SdScanerVrml *scaner)
   return node;
   }
 
+
+
+
+
 VrmlNode *VrmlNode::parse2Node(SdScanerVrml *scaner, const QString nodeType)
   {
   VrmlNode *node = buildNode( nodeType );
-  if( node != nullptr ) node->parse( scaner );
+  if( node != nullptr ) {
+    //Open bracket
+    if( !scaner->tokenNeed( '{', QStringLiteral("Need open bracket for '%1'").arg(nodeType) ) )
+      return node;
+
+    //Block contents
+    while( !scaner->matchToken( '}' ) ) {
+      if( scaner->isEndOfScan() ) {
+        scaner->error( QStringLiteral("Uncompleted block for '%1'").arg(nodeType) );
+        return node;
+        }
+      if( scaner->isError() )
+        return node;
+
+      //Scan one field of block
+      QString fieldType;
+      if( !scaner->tokenNeedValue( 'n', fieldType, QStringLiteral("Need field type") ) )
+        return node;
+
+      if( !node->parse( scaner, fieldType ) ) {
+        scaner->error( QStringLiteral("Undefined field type '%1' in '%2'").arg(fieldType).arg(nodeType) );
+        return node;
+        }
+      }
+    //Successfull completion
+    }
   else {
     //Skeep undefined node
     if( scaner->token() == '{' ) scaner->skeepBlock( '{', '}' );
@@ -76,4 +105,10 @@ VrmlNode *VrmlNode::makeCopy(const VrmlNode *node)
   if( node != nullptr )
     return node->copy();
   return nullptr;
+  }
+
+void VrmlNode::deleteNode(VrmlNode *node)
+  {
+  if( node != nullptr )
+    delete node;
   }

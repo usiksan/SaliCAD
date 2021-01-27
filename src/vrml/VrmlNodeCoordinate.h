@@ -13,8 +13,8 @@ class VrmlNodeCoordinate : public VrmlNode
 
     // VrmlNode interface
   public:
-    virtual void      parse(SdScanerVrml *scaner) override;
     virtual VrmlNode *copy() const override { return new VrmlNodeCoordinate( this ); }
+    virtual bool      parse(SdScanerVrml *scaner, const QString &fieldType) override;
   };
 
 #endif // VRMLNODECOORDINATE_H

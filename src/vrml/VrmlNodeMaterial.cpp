@@ -27,38 +27,31 @@ VrmlNodeMaterial::VrmlNodeMaterial(const VrmlNodeMaterial *material) :
   }
 
 
-void VrmlNodeMaterial::parse(SdScanerVrml *scaner)
+
+
+
+
+bool VrmlNodeMaterial::parse(SdScanerVrml *scaner, const QString &fieldType)
   {
-  if( !scaner->tokenNeed( '{', QStringLiteral("No material") ) )
-    return;
+  if( fieldType == QStringLiteral("ambientIntensity") )
+    scaner->tokenNeedValueFloat( 'f', mAmbientIntensity, QStringLiteral("No ambient instensity") );
 
-  while( !scaner->matchToken('}') ) {
-    if( scaner->isEndOfScan() ) {
-      scaner->error( QStringLiteral("Uncompleted material") );
-      return;
-      }
-    if( scaner->isError() )
-      return;
-    QString fieldType;
-    if( !scaner->tokenNeedValue( 'n', fieldType, QStringLiteral("Need material field") ) )
-      return;
-    if( fieldType == QStringLiteral("ambientIntensity") )
-      scaner->tokenNeedValueFloat( 'f', mAmbientIntensity, QStringLiteral("No ambient instensity") );
-    else if( fieldType == QStringLiteral("diffuseColor") )
-      mDiffuseColor.parse( scaner );
-    else if( fieldType == QStringLiteral("emissiveColor") )
-      mEmissiveColor.parse( scaner );
-    else if( fieldType == QStringLiteral("shininess") )
-      scaner->tokenNeedValueFloat( 'f', mShininnes, QStringLiteral("No shininnes") );
-    else if( fieldType == QStringLiteral("specularColor") )
-      mSpecularColor.parse( scaner );
-    else if( fieldType == QStringLiteral("transparency") )
-      scaner->tokenNeedValueFloat( 'f', mTransparency, QStringLiteral("No transparency") );
-    else {
-      scaner->error( QStringLiteral("Undefined Material field %1").arg(fieldType) );
-      return;
-      }
-    }
+  else if( fieldType == QStringLiteral("diffuseColor") )
+    mDiffuseColor.parse( scaner );
+
+  else if( fieldType == QStringLiteral("emissiveColor") )
+    mEmissiveColor.parse( scaner );
+
+  else if( fieldType == QStringLiteral("shininess") )
+    scaner->tokenNeedValueFloat( 'f', mShininnes, QStringLiteral("No shininnes") );
+
+  else if( fieldType == QStringLiteral("specularColor") )
+    mSpecularColor.parse( scaner );
+
+  else if( fieldType == QStringLiteral("transparency") )
+    scaner->tokenNeedValueFloat( 'f', mTransparency, QStringLiteral("No transparency") );
+
+  else return false;
+
+  return true;
   }
-
-

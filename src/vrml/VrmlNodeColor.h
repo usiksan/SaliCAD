@@ -13,8 +13,8 @@ class VrmlNodeColor : public VrmlNode
 
     // VrmlNode interface
   public:
-    virtual void      parse(SdScanerVrml *scaner) override;
     virtual VrmlNode *copy() const override { return new VrmlNodeColor( this ); }
+    virtual bool      parse(SdScanerVrml *scaner, const QString &fieldType) override;
   };
 
 #endif // VRMLNODECOLOR_H

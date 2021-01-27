@@ -8,14 +8,13 @@ VrmlNodeCoordinate::VrmlNodeCoordinate() :
   }
 
 
-void VrmlNodeCoordinate::parse(SdScanerVrml *scaner)
-  {
-  mPointList.clear();
-  if( !scaner->tokenNeed( '{', QStringLiteral("Need Coordinate block") ) )
-    return;
-  if( scaner->matchTokenValue( 'n', QStringLiteral("point") ) )
-    scaner->parseVectorTable( mPointList, QStringLiteral("Waiting point list") );
-  if( !scaner->tokenNeed( '}', QStringLiteral("Need Coordinate close block") ) )
-    return;
-  }
 
+bool VrmlNodeCoordinate::parse(SdScanerVrml *scaner, const QString &fieldType)
+  {
+  if( fieldType == QStringLiteral("point") ) {
+    mPointList.clear();
+    scaner->parseVectorTable( mPointList, QStringLiteral("Waiting point list") );
+    return true;
+    }
+  return false;
+  }

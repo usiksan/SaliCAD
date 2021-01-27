@@ -3,13 +3,13 @@
 
 
 
-void VrmlNodeNormal::parse(SdScanerVrml *scaner)
-  {
-  mVectorList.clear();
-  if( !scaner->tokenNeed( '{', QStringLiteral("Need Normal block") ) )
-    return;
-  if( scaner->matchTokenValue( 'n', QStringLiteral("vector") ) )
-    scaner->parseVectorTable( mVectorList, QStringLiteral("Waiting vector list") );
-  scaner->tokenNeed( '}', QStringLiteral("Need Normal close block") );
-  }
 
+
+bool VrmlNodeNormal::parse(SdScanerVrml *scaner, const QString &fieldType)
+  {
+  if( fieldType == QStringLiteral("vector") )
+    scaner->parseVectorTable( mVectorList, QStringLiteral("Waiting vector list") );
+  else return false;
+
+  return true;
+  }

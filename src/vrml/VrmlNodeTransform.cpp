@@ -21,37 +21,29 @@ VrmlNodeTransform::VrmlNodeTransform(const VrmlNodeTransform *transform) :
 
 
 
-void VrmlNodeTransform::parse(SdScanerVrml *scaner)
+
+
+
+bool VrmlNodeTransform::parse(SdScanerVrml *scaner, const QString &fieldType)
   {
-  if( !scaner->tokenNeed( '{', QStringLiteral("No transform") ) )
-    return;
+  if( !VrmlNodeGroup::parse( scaner, fieldType ) ) {
 
-  while( !scaner->matchToken('}') ) {
-    if( scaner->isEndOfScan() ) {
-      scaner->error( QStringLiteral("Uncompleted transform") );
-      return;
-      }
-    if( scaner->isError() )
-      return;
-    QString nodeType;
-    if( !scaner->tokenNeedValue( 'n', nodeType, QStringLiteral("Need group node") ) )
-      return;
-    if( parse2GroupComponents( scaner, nodeType ) )
-      continue;
-    if( nodeType == QStringLiteral("center") )
+    if( fieldType == QStringLiteral("center") )
       mCenter.parse( scaner );
-    else if( nodeType == QStringLiteral("rotation") )
-      mRotation.parse( scaner );
-    else if( nodeType == QStringLiteral("scale") )
-      mScale.parse( scaner );
-    else if( nodeType == QStringLiteral("scaleOrientation") )
-      mScaleOrientation.parse( scaner );
-    else if( nodeType == QStringLiteral("translation") )
-      mTranslation.parse( scaner );
-    else {
-      scaner->error( QStringLiteral("Undefined transform node %1").arg(nodeType) );
-      return;
-      }
-    }
-  }
 
+    else if( fieldType == QStringLiteral("rotation") )
+      mRotation.parse( scaner );
+
+    else if( fieldType == QStringLiteral("scale") )
+      mScale.parse( scaner );
+
+    else if( fieldType == QStringLiteral("scaleOrientation") )
+      mScaleOrientation.parse( scaner );
+
+    else if( fieldType == QStringLiteral("translation") )
+      mTranslation.parse( scaner );
+
+    else return false;
+    }
+  return true;
+  }

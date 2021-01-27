@@ -13,8 +13,8 @@ class VrmlNodeNormal : public VrmlNode
 
     // VrmlNode interface
   public:
-    virtual void      parse(SdScanerVrml *scaner) override;
     virtual VrmlNode *copy() const override { return new VrmlNodeNormal( this ); }
+    virtual bool      parse(SdScanerVrml *scaner, const QString &fieldType) override;
   };
 
 #endif // VRMLNODENORMAL_H
