@@ -69,7 +69,7 @@ VrmlNode *VrmlNode::parse2Node(SdScanerVrml *scaner, const QString nodeType)
         return node;
 
       if( !node->parse( scaner, fieldType ) ) {
-        scaner->error( QStringLiteral("Undefined field type '%1' in '%2'").arg(fieldType).arg(nodeType) );
+        scaner->error( QStringLiteral("Undefined field type '%1' in '%2'").arg( fieldType, nodeType ) );
         return node;
         }
       }
