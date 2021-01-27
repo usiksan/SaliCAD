@@ -118,6 +118,10 @@ void SdScaner::lineSet(const QString &line)
 
 
 
+
+//!
+//! \brief blank Skeeps all characters act as spaces
+//!
 void SdScaner::blank()
   {
   while( true ) {
@@ -139,6 +143,9 @@ void SdScaner::blank()
 
 
 
+//!
+//! \brief scanName Scan name. Name consists of letters, digits and _ sign
+//!
 void SdScaner::scanName()
   {
   mTokenValue.clear();
@@ -198,6 +205,10 @@ void SdScaner::scanDouble(bool allowSign, bool useComma)
 
 
 
+//!
+//! \brief scanInteger Scan integer digit in format -1234
+//! \param allowSign   Allow scan trailing sign
+//!
 void SdScaner::scanInteger(bool allowSign)
   {
   mTokenValue.clear();
@@ -212,6 +223,46 @@ void SdScaner::scanInteger(bool allowSign)
 
 
 
+
+//!
+//! \brief scanString          Scan string closed with closeChar
+//! \param closeChar           Character used to close string
+//! \param guardChar           Character used as special guarding (\n)
+//! \param unclosedStringError Error line when string not closed to end of line
+//!
+void SdScaner::scanString(QChar closeChar, QChar guardChar, const QString unclosedStringError)
+  {
+  mTokenValue.clear();
+  //Skeep starting open symbol
+  mIndex++;
+  //String chars
+  while( mIndex < mLine.count() ) {
+    if( mLine.at(mIndex) == closeChar ) {
+      //String closed
+      mIndex++;
+      return;
+      }
+    if( mLine.at(mIndex) == guardChar ) {
+      //Guarding symbol
+      mIndex++;
+      if( mIndex >= mLine.count() ) {
+        error( unclosedStringError );
+        return;
+        }
+      }
+    mTokenValue.append( mLine.at(mIndex++) );
+    }
+  error( unclosedStringError );
+  }
+
+
+
+
+//!
+//! \brief skeepBlock Skeep block bounded with openToken and closeToken. Block may be nested
+//! \param openToken  Mark start of block
+//! \param closeToken Mark end of block
+//!
 void SdScaner::skeepBlock(char openToken, char closeToken)
   {
   if( mToken == openToken ) {

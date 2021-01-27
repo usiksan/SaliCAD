@@ -1,7 +1,8 @@
 #include "VrmlNodeColor.h"
 #include "SdScanerVrml.h"
 
-VrmlNodeColor::VrmlNodeColor()
+VrmlNodeColor::VrmlNodeColor() :
+  VrmlNode()
   {
 
   }
@@ -10,6 +11,8 @@ VrmlNodeColor::VrmlNodeColor()
 void VrmlNodeColor::parse(SdScanerVrml *scaner)
   {
   mColorList.clear();
+  if( !scaner->tokenNeed( '{', QStringLiteral("Need Color block") ) )
+    return;
   if( scaner->matchTokenValue( 'n', QStringLiteral("color") ) ) {
     if( !scaner->tokenNeed( '[', QStringLiteral("Waiting color list")) )
       return;
@@ -30,5 +33,6 @@ void VrmlNodeColor::parse(SdScanerVrml *scaner)
         }
       }
     }
+  scaner->tokenNeed( '}', QStringLiteral("Need Color close block") );
   }
 

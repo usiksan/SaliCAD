@@ -108,12 +108,12 @@ bool SdScanerVrml::parseVectorTable(VrmlVectorList &table, const QString errorMs
 bool SdScanerVrml::parseVrml2_0()
   {
   tokenNext();
-  while( !mEndOfScan ) {
+  while( !isEndOfScanOrError() ) {
     VrmlNode *node = VrmlNode::parse2Declaration( this );
     if( node != nullptr )
       mRootList.append( node );
     }
-  return true;
+  return !isError();
   }
 
 bool SdScanerVrml::parseVrml1_0()
@@ -129,16 +129,29 @@ bool SdScanerVrml::parseVrml1_0()
 void SdScanerVrml::tokenNext()
   {
   mToken = 0;
-  blank();
-  if( !mEndOfScan ) {
-    if( mLine.at(mIndex).isLetter() ) {
-      mToken = 'n';
-      scanName();
+  while( !isEndOfScanOrError() ) {
+    blank();
+    if( !isEndOfScanOrError() ) {
+      if( mLine.at(mIndex).isLetter() ) {
+        mToken = 'n';
+        scanName();
+        }
+      else if( mLine.at(mIndex).isDigit() || mLine.at(mIndex) == QChar('-') ) {
+        scanDouble( true, false );
+        mToken = mTokenValue.contains( QChar('.') ) ? 'f' : 'd';
+        }
+      else if( mLine.at(mIndex) == QChar('#') ) {
+        //Remark found. Skeep line
+        mIndex = mLine.count();
+        continue;
+        }
+      else if( mLine.at(mIndex) == QChar('"') ) {
+        //String detected
+        mToken = 's';
+        scanString( QChar('"'), QChar('\\'), QStringLiteral("Unclosed string") );
+        }
+      else mToken = mLine.at(mIndex++).toLatin1();
+      break;
       }
-    else if( mLine.at(mIndex).isDigit() || mLine.at(mIndex) == QChar('-') ) {
-      scanDouble( true, false );
-      mToken = mTokenValue.contains( QChar('.') ) ? 'f' : 'd';
-      }
-    else mToken = mLine.at(mIndex++).toLatin1();
     }
   }

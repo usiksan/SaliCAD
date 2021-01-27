@@ -57,13 +57,27 @@ class SdScaner
 
     void         lineSet( const QString &line );
 
-    //!< Skeep spaces
+    //!
+    //! \brief blank Skeeps all characters act as spaces
+    //!
     void         blank();
 
+    //!
+    //! \brief isEndOfScan Return status of endOfScan flag which indicate end of stream
+    //! \return            Status of endOfScan flag which indicate end of stream
+    //!
     bool         isEndOfScan() const { return mEndOfScan; }
 
+    //!
+    //! \brief isEndOfScanOrError Return status of stopping scan. Scan is stoped when error
+    //!                           happens or end of stream reached
+    //! \return                   Status of stopping scan
+    //!
     bool         isEndOfScanOrError() const { return mEndOfScan || isError();}
 
+    //!
+    //! \brief scanName Scan name. Name consists of letters, digits and _ sign
+    //!
     void         scanName();
 
     //!
@@ -71,15 +85,28 @@ class SdScaner
     //! \param allowSign  Allow scan trailing sign
     //! \param useComma   Use comma as delimiter -123,345e-24
     //!
-    void scanDouble( bool allowSign, bool useComma );
+    void         scanDouble( bool allowSign, bool useComma );
 
     //!
     //! \brief scanInteger Scan integer digit in format -1234
     //! \param allowSign   Allow scan trailing sign
     //!
-    void scanInteger( bool allowSign );
+    void         scanInteger( bool allowSign );
 
-    void skeepBlock( char openToken, char closeToken );
+    //!
+    //! \brief scanString          Scan string closed with closeChar
+    //! \param closeChar           Character used to close string
+    //! \param guardChar           Character used as special guarding (\n)
+    //! \param unclosedStringError Error line when string not closed to end of line
+    //!
+    void         scanString( QChar closeChar, QChar guardChar, const QString unclosedStringError );
+
+    //!
+    //! \brief skeepBlock Skeep block bounded with openToken and closeToken. Block may be nested
+    //! \param openToken  Mark start of block
+    //! \param closeToken Mark end of block
+    //!
+    void         skeepBlock( char openToken, char closeToken );
   };
 
 #endif // SDSCANER_H
