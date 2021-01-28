@@ -11,6 +11,23 @@
 #include "VrmlNodeTransform.h"
 
 
+VrmlColor VrmlNode::colorGet(int index, VrmlColor color)
+  {
+  Q_UNUSED(index)
+  return color;
+  }
+
+
+
+
+void VrmlNode::generateFaces(std::function<void (const QVector3DList &, QVector3D, VrmlColor)> appendFace )
+  {
+  Q_UNUSED(appendFace)
+  }
+
+
+
+
 VrmlNode *VrmlNode::parse2Declaration(SdScanerVrml *scaner)
   {
   QString nodeName, nodeType;

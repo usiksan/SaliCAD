@@ -23,6 +23,8 @@ class SdScaner
 
     virtual void error( const QString msg );
 
+    QString      errorGet() const { return mError; }
+
     bool         isError() const { return !mError.isEmpty(); }
 
     char         token() const { return mToken; }

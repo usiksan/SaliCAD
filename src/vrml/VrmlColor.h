@@ -11,7 +11,11 @@ struct VrmlColor
 
     VrmlColor( float red = 0.0, float green = 0.0, float blue = 0.0 ) : mRed(red), mGreen(green), mBlue(blue) {}
 
-    void parse( SdScanerVrml *scaner );
+    void    parse( SdScanerVrml *scaner );
+
+    bool    isValid() const { return mRed >= 0.0; }
+
+    quint32 toInt() const;
   };
 
 using VrmlColorList = QList<VrmlColor>;

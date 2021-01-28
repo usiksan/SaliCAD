@@ -17,6 +17,7 @@ class VrmlNodeMaterial : public VrmlNode
     VrmlNodeMaterial();
     VrmlNodeMaterial( const VrmlNodeMaterial *material );
 
+    VrmlColor         color() const { return mDiffuseColor; }
     // VrmlNode interface
   public:
     virtual VrmlNode *copy() const override { return new VrmlNodeMaterial( this ); }

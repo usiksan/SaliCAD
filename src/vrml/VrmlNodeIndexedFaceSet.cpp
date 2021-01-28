@@ -102,3 +102,8 @@ bool VrmlNodeIndexedFaceSet::parse(SdScanerVrml *scaner, const QString &fieldTyp
   else return false;
   return true;
   }
+
+
+void VrmlNodeIndexedFaceSet::generateFaces(std::function<void (const QVector3DList &, QVector3D, VrmlColor)> appendFace) const
+    {
+    }

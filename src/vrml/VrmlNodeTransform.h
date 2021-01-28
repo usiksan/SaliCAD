@@ -5,6 +5,7 @@
 #include "VrmlRotation.h"
 #include "VrmlNodeGroup.h"
 
+
 class VrmlNodeTransform : public VrmlNodeGroup
   {
     VrmlVector   mCenter;
@@ -20,6 +21,7 @@ class VrmlNodeTransform : public VrmlNodeGroup
   public:
     virtual VrmlNode *copy() const override { return new VrmlNodeTransform( this ); }
     virtual bool      parse(SdScanerVrml *scaner, const QString &fieldType) override;
+    virtual void      generateFaces(std::function<void (const QVector3DList &, QVector3D, VrmlColor)> appendFace) override;
   };
 
 #endif // VRMLNODETRANSFORM_H

@@ -16,9 +16,20 @@ class SdScanerVrml : public SdScanerMultyline
 
     void clear();
 
-    bool parseFile( const QString &path );
+    //!
+    //! \brief parseFile Parse source VRML file to mRootList
+    //! \param path      Path to source VRML file
+    //! \return          true if parse successfull
+    //!
+    bool      parseFile( const QString &path );
 
-    void insert( const QString name, VrmlNodePtr node ) { mRootMap.insert( name, node ); }
+    //!
+    //! \brief generateFaces Generates faces for all nodes in mRootList
+    //! \param appendFace    Functor to append generated faces
+    //!
+    void      generateFaces( std::function<void ( const VrmlVectorList &vertexList, VrmlVector normal, quint32 color )> appendFace );
+
+    void      insert( const QString name, VrmlNodePtr node ) { mRootMap.insert( name, node ); }
 
     VrmlNode *node( const QString name ) const { return mRootMap.value(name); }
 

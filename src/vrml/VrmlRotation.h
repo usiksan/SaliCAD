@@ -3,6 +3,8 @@
 
 #include "VrmlTypes.h"
 
+#include <QVector3D>
+
 struct VrmlRotation
   {
     //The first three values specify a normalized rotation axis vector about which the rotation takes place.
@@ -14,7 +16,9 @@ struct VrmlRotation
 
     VrmlRotation( float vectorX = 0.0, float vectorY = 0.0, float vectorZ = 0.0, float angle = 0.0 );
 
-    void parse( SdScanerVrml *scaner );
+    void      parse( SdScanerVrml *scaner );
+
+    QVector3D vector3d() const { return QVector3D( mVectorX, mVectorY, mVectorZ ); }
   };
 
 #endif // VRMLROTATION_H

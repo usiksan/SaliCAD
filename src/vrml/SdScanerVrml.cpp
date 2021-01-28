@@ -23,6 +23,14 @@ void SdScanerVrml::clear()
   mRootMap.clear();
   }
 
+
+
+
+//!
+//! \brief parseFile Parse source VRML file to mRootList
+//! \param path      Path to source VRML file
+//! \return          true if parse successfull
+//!
 bool SdScanerVrml::parseFile(const QString &path)
   {
   clear();
@@ -41,6 +49,18 @@ bool SdScanerVrml::parseFile(const QString &path)
     }
 
   return false;
+  }
+
+
+
+//!
+//! \brief generateFaces Generates faces for all nodes in mRootList
+//! \param appendFace    Functor to append generated faces
+//!
+void SdScanerVrml::generateFaces(std::function<void (const VrmlVectorList &, VrmlVector, quint32)> appendFace)
+  {
+  for( auto ptr : mRootList )
+    ptr->generateFaces( appendFace );
   }
 
 

@@ -36,6 +36,24 @@ SOURCES += \
     objects/Sd3dReaderVrml.cpp \
     objects/Sd3dStep.cpp \
     step/SdStepReader.cpp \
+    vrml/SdScaner.cpp \
+    vrml/SdScanerMultyline.cpp \
+    vrml/SdScanerVrml.cpp \
+    vrml/VrmlColor.cpp \
+    vrml/VrmlNode.cpp \
+    vrml/VrmlNodeAppearance.cpp \
+    vrml/VrmlNodeColor.cpp \
+    vrml/VrmlNodeCompound.cpp \
+    vrml/VrmlNodeCoordinate.cpp \
+    vrml/VrmlNodeGroup.cpp \
+    vrml/VrmlNodeIndexedFaceSet.cpp \
+    vrml/VrmlNodeMaterial.cpp \
+    vrml/VrmlNodeNormal.cpp \
+    vrml/VrmlNodeShape.cpp \
+    vrml/VrmlNodeTransform.cpp \
+    vrml/VrmlRotation.cpp \
+    vrml/VrmlSmartNodePtr.cpp \
+    vrml/VrmlVector.cpp \
     windows/SdDExpressionEdit.cpp \
     windows/SdDOptionsPageLibrary.cpp \
     windows/SdExpression.cpp \
@@ -316,6 +334,25 @@ HEADERS  += \
     objects/Sd3dReaderVrml.h \
     objects/Sd3dStep.h \
     step/SdStepReader.h \
+    vrml/SdScaner.h \
+    vrml/SdScanerMultyline.h \
+    vrml/SdScanerVrml.h \
+    vrml/VrmlColor.h \
+    vrml/VrmlNode.h \
+    vrml/VrmlNodeAppearance.h \
+    vrml/VrmlNodeColor.h \
+    vrml/VrmlNodeCompound.h \
+    vrml/VrmlNodeCoordinate.h \
+    vrml/VrmlNodeGroup.h \
+    vrml/VrmlNodeIndexedFaceSet.h \
+    vrml/VrmlNodeMaterial.h \
+    vrml/VrmlNodeNormal.h \
+    vrml/VrmlNodeShape.h \
+    vrml/VrmlNodeTransform.h \
+    vrml/VrmlRotation.h \
+    vrml/VrmlSmartNodePtr.h \
+    vrml/VrmlTypes.h \
+    vrml/VrmlVector.h \
     windows/SdDExpressionEdit.h \
     windows/SdDOptionsPageLibrary.h \
     windows/SdExpression.h \

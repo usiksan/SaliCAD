@@ -1,4 +1,5 @@
 #include "VrmlNodeAppearance.h"
+#include "VrmlNodeMaterial.h"
 #include "SdScanerVrml.h"
 
 VrmlNodeAppearance::VrmlNodeAppearance() :
@@ -30,6 +31,17 @@ VrmlNodeAppearance::~VrmlNodeAppearance()
   deleteNode( mMaterial );
   deleteNode( mTexture );
   deleteNode( mTextureTransform );
+  }
+
+
+
+
+VrmlColor VrmlNodeAppearance::color() const
+  {
+  VrmlNodeMaterial *material = dynamic_cast<VrmlNodeMaterial*>(mMaterial);
+  if( material == nullptr )
+    return VrmlColor(-1.0);
+  return material->color();
   }
 
 

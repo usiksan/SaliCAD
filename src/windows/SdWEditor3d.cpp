@@ -115,7 +115,7 @@ void SdWEditor3d::cm3dImportVrml()
 
   if( title.isEmpty() ) return;
 
-  Sd3dObject *vrml = Sd3dReaderVrml::importVrmlFromFile( title );
+  Sd3dObject *vrml = Sd3dReaderVrml::importVrmlFromFile( title, this );
   if( vrml ) {
     mItem->getUndo()->begin( tr("Import VRML model"), mItem );
     mItem->insertChild( vrml, mItem->getUndo() );

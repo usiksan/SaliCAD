@@ -14,8 +14,9 @@ class VrmlNodeCompound : public VrmlNode
 
     void parseChildren(SdScanerVrml *scaner);
 
-    void cloneNodeCompound( VrmlNodeCompound *destNode ) const;
-
+    // VrmlNode interface
+  public:
+    virtual void generateFaces(std::function<void (const QVector3DList &, QVector3D, VrmlColor)> appendFace) const override;
   };
 
 #endif // VRMLNODECOMPOUND_H

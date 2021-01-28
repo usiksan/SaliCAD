@@ -13,6 +13,7 @@ class VrmlNodeAppearance : public VrmlNode
     VrmlNodeAppearance( const VrmlNodeAppearance *apperance );
     virtual ~VrmlNodeAppearance();
 
+    VrmlColor         color() const;
     // VrmlNode interface
   public:
     virtual VrmlNode *copy() const override { return new VrmlNodeAppearance( this ); }
