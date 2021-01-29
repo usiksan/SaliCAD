@@ -104,6 +104,15 @@ bool VrmlNodeIndexedFaceSet::parse(SdScanerVrml *scaner, const QString &fieldTyp
   }
 
 
-void VrmlNodeIndexedFaceSet::generateFaces(std::function<void (const QVector3DList &, QVector3D, VrmlColor)> appendFace) const
-    {
+
+
+void VrmlNodeIndexedFaceSet::generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace) const
+  {
+  QVector3DList vertextList;
+  for( auto coordIndex : mCoordIndex ) {
+    if( coordIndex < 0 ) {
+      //Vertex accumulate complete
+      }
+    else vertextList.append( )
     }
+  }

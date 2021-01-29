@@ -2,6 +2,7 @@
 #define VRMLNODEAPPEARANCE_H
 
 #include "VrmlNode.h"
+#include "VrmlNodeMaterial.h"
 
 class VrmlNodeAppearance : public VrmlNode
   {
@@ -13,6 +14,7 @@ class VrmlNodeAppearance : public VrmlNode
     VrmlNodeAppearance( const VrmlNodeAppearance *apperance );
     virtual ~VrmlNodeAppearance();
 
+    VrmlNodeMaterial *material() const { return dynamic_cast<VrmlNodeMaterial*>(mMaterial); }
     VrmlColor         color() const;
     // VrmlNode interface
   public:

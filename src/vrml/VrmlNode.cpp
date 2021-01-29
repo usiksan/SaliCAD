@@ -20,7 +20,7 @@ VrmlColor VrmlNode::colorGet(int index, VrmlColor color)
 
 
 
-void VrmlNode::generateFaces(std::function<void (const QVector3DList &, QVector3D, VrmlColor)> appendFace )
+void VrmlNode::generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace ) const
   {
   Q_UNUSED(appendFace)
   }

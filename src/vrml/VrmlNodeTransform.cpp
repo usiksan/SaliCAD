@@ -63,7 +63,10 @@ bool VrmlNodeTransform::parse(SdScanerVrml *scaner, const QString &fieldType)
 
 
 
-void VrmlNodeTransform::generateFaces(std::function<void (const QVector3DList &, QVector3D, VrmlColor)> appendFace)
+
+
+
+void VrmlNodeTransform::generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace) const
   {
   QMatrix4x4 m;
   m.translate( mTranslation.toVector3d() );
@@ -74,16 +77,18 @@ void VrmlNodeTransform::generateFaces(std::function<void (const QVector3DList &,
   m.rotate( -mScaleOrientation.mAngle, mScaleOrientation.vector3d() );
   m.translate( mCenter.toVector3d() * -1.0 );
 
-  VrmlNodeGroup::generateFaces( [m, appendFace] ( const QVector3DList &vector3dList, QVector3D normal, VrmlColor color ) {
+  VrmlNodeGroup::generateFaces( [m, appendFace] ( const QVector3DList &vertexList, const QVector3DList &normalList, const VrmlNodeMaterial *material ) {
     //Convert each vector from source vector
-    QVector3DList dst;
-    for( auto vec : vector3dList )
-      dst.append( m.map( vec )  );
+    QVector3DList dstVertex;
+    for( auto vec : vertexList )
+      dstVertex.append( m.map( vec )  );
 
-    //Convert normal
-    normal = m.map( normal ).normalized();
+    //Convert normal list
+    QVector3DList dstNormal;
+    for( auto vec : normalList )
+      dstNormal.append( m.map( vec ).normalized() );
 
     //Append converted face
-    appendFace( dst, normal, color );
+    appendFace( dstVertex, dstNormal, material );
     } );
   }

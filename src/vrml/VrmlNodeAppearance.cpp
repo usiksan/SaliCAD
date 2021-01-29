@@ -36,17 +36,6 @@ VrmlNodeAppearance::~VrmlNodeAppearance()
 
 
 
-VrmlColor VrmlNodeAppearance::color() const
-  {
-  VrmlNodeMaterial *material = dynamic_cast<VrmlNodeMaterial*>(mMaterial);
-  if( material == nullptr )
-    return VrmlColor(-1.0);
-  return material->color();
-  }
-
-
-
-
 
 
 

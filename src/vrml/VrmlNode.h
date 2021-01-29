@@ -12,6 +12,7 @@
 //Forward scaner declaration
 class SdScanerVrml;
 class VrmlNode;
+class VrmlNodeMaterial;
 
 using VrmlNodePtr = VrmlNode*;
 
@@ -28,8 +29,7 @@ class VrmlNode
     VrmlNode( const VrmlNode* ) {}
     virtual ~VrmlNode() {}
 
-    virtual VrmlColor colorGet( int index, VrmlColor color );
-    virtual void      generateFaces( std::function<void ( const QVector3DList &vertexList, QVector3D normal, VrmlColor color )> appendFace );
+    virtual void      generateFaces( std::function<void ( const QVector3DList &vertexList, const QVector3DList &normalList, const VrmlNodeMaterial *material )> appendFace ) const;
     virtual bool      parse( SdScanerVrml *scaner, const QString &fieldType ) = 0;
     virtual VrmlNode *copy() const = 0;
 

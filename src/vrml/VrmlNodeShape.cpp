@@ -44,14 +44,16 @@ bool VrmlNodeShape::parse(SdScanerVrml *scaner, const QString &fieldType)
 
 
 
-void VrmlNodeShape::generateFaces(std::function<void (const QVector3DList &, QVector3D, VrmlColor)> appendFace) const
+
+
+void VrmlNodeShape::generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace) const
   {
   //Get apperance color
   VrmlNodeAppearance *appearance = dynamic_cast<VrmlNodeAppearance*>(mApperance);
-  VrmlColor appearanceColor = appearance == nullptr ? VrmlColor(-1.0) : appearance->color();
+  VrmlNodeMaterial *material = appearance == nullptr ? nullptr : appearance->material();
   //Generate geometry with apperance color
   if( mGeometry != nullptr )
-    mGeometry->generateFaces( [appearanceColor,appendFace] (const QVector3DList &vector3dList, QVector3D normal, VrmlColor color) {
-      appendFace( vector3dList, normal, appearanceColor.isValid() ? appearanceColor : color );
+    mGeometry->generateFaces( [material,appendFace] (const QVector3DList &vector3dList, const QVector3DList &normalList, const VrmlNodeMaterial *childMaterial ) {
+      appendFace( vector3dList, normalList, childMaterial == nullptr ? material : childMaterial );
       });
   }

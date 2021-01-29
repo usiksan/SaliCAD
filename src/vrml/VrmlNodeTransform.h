@@ -21,7 +21,7 @@ class VrmlNodeTransform : public VrmlNodeGroup
   public:
     virtual VrmlNode *copy() const override { return new VrmlNodeTransform( this ); }
     virtual bool      parse(SdScanerVrml *scaner, const QString &fieldType) override;
-    virtual void      generateFaces(std::function<void (const QVector3DList &, QVector3D, VrmlColor)> appendFace) override;
+    virtual void      generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace) const override;
   };
 
 #endif // VRMLNODETRANSFORM_H

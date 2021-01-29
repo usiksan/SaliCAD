@@ -16,7 +16,7 @@ class VrmlNodeCompound : public VrmlNode
 
     // VrmlNode interface
   public:
-    virtual void generateFaces(std::function<void (const QVector3DList &, QVector3D, VrmlColor)> appendFace) const override;
+    virtual void generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace) const override;
   };
 
 #endif // VRMLNODECOMPOUND_H

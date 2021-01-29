@@ -11,6 +11,8 @@ class VrmlNodeCoordinate : public VrmlNode
     VrmlNodeCoordinate();
     VrmlNodeCoordinate( const VrmlNodeCoordinate *coord ) : VrmlNode( coord ), mPointList( coord->mPointList ) {}
 
+    VrmlVector at( int index ) const { return mPointList.at(index); }
+
     // VrmlNode interface
   public:
     virtual VrmlNode *copy() const override { return new VrmlNodeCoordinate( this ); }
