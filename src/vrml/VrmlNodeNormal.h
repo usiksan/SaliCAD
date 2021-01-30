@@ -11,6 +11,8 @@ class VrmlNodeNormal : public VrmlNode
     VrmlNodeNormal() : VrmlNode() {}
     VrmlNodeNormal( const VrmlNodeNormal *normal ) : VrmlNode(normal), mVectorList( normal->mVectorList ) {}
 
+    VrmlVector at( int index ) const { return mVectorList.at(index); }
+
     // VrmlNode interface
   public:
     virtual VrmlNode *copy() const override { return new VrmlNodeNormal( this ); }

@@ -24,12 +24,38 @@ Sd3dFace::Sd3dFace()
 
 
 
-Sd3dFace::Sd3dFace(QList<Sd3dPoint> region, Sd3dPoint normal, quint32 faceColor) :
+Sd3dFace::Sd3dFace(const Sd3dPointList &region, const Sd3dPointList &normal, const Sd3dFaceMaterial &faceMaterial) :
   mRegion(region),
   mNormal(normal),
-  mFaceColor(faceColor)
+  mMaterial(faceMaterial)
   {
 
+  }
+
+Sd3dFace::Sd3dFace(const Sd3dPointList &region, const Sd3dPointList &normal, quint32 faceColor) :
+  mRegion(region),
+  mNormal(normal),
+  mMaterial()
+  {
+  float r = qRed(faceColor);
+  float g = qGreen(faceColor);
+  float b = qBlue(faceColor);
+  r /= 255.0;
+  g /= 255.0;
+  b /= 255.0;
+  mMaterial.setDiffuseColor( r, g, b );
+  }
+
+
+
+
+Sd3dFace::Sd3dFace(const QList<QVector3D> &region, const QList<QVector3D> &normal, const Sd3dFaceMaterial &faceMaterial) :
+  mMaterial(faceMaterial)
+  {
+  for( const auto pt : region )
+    mRegion.append( pt );
+  for( const auto pt : normal )
+    mNormal.append( pt );
   }
 
 
@@ -45,13 +71,14 @@ Sd3dFace::Sd3dFace(QList<Sd3dPoint> region, Sd3dPoint normal, quint32 faceColor)
 void Sd3dFace::paint(QOpenGLFunctions_2_0 *f) const
   {
   //Face
-  f->glColor3b( qRed(mFaceColor) >> 1, qGreen(mFaceColor) >> 1, qBlue(mFaceColor) >> 1 );
+  mMaterial.paint( f );
   f->glBegin(GL_POLYGON);
-  f->glNormal3f( mNormal.fxmm(), mNormal.fymm(), mNormal.fzmm() );
-  for( const Sd3dPoint &p : mRegion ) {
-    //qDebug() << "Sd3dFace::paint" << p.fxmm() << p.fymm() << p.fzmm();
-    //f->glVertex3f( p.fxmm(), p.fymm(), p.fzmm() );
-    p.vertex( f );
+  for( int i = 0; i < mRegion.count(); i++ ) {
+    //Apply normal
+    if( i < mNormal.count() )
+      mNormal.at(i).normal( f );
+    //Append vertex
+    mRegion.at(i).vertex( f );
     }
   f->glEnd();
   }
@@ -67,13 +94,9 @@ void Sd3dFace::paint(QOpenGLFunctions_2_0 *f) const
 QJsonObject Sd3dFace::write() const
   {
   QJsonObject obj;
-  obj.insert( QStringLiteral("color"), static_cast<int>(mFaceColor) );
-  mNormal.write( QStringLiteral("normal"), obj );
-  QJsonArray region;
-  for( auto const &pt : mRegion ) {
-    region.append( pt.write() );
-    }
-  obj.insert( QStringLiteral("region"), region );
+  mMaterial.write( obj );
+  obj.insert( QStringLiteral("region"), sd3dPointListWrite(mRegion) );
+  obj.insert( QStringLiteral("normal"), sd3dPointListWrite(mNormal) );
   return obj;
   }
 
@@ -86,15 +109,9 @@ QJsonObject Sd3dFace::write() const
 //!
 void Sd3dFace::read(const QJsonObject &obj)
   {
-  mFaceColor = static_cast<quint32>( obj.value( QStringLiteral("color") ).toInt() );
-  mNormal.read( QStringLiteral("normal"), obj );
-  mRegion.clear();
-  QJsonArray region = obj.value( QStringLiteral("region") ).toArray();
-  Sd3dPoint pt;
-  for( auto it = region.cbegin(); it != region.cend(); it++ ) {
-    pt.read( it->toObject() );
-    mRegion.append( pt );
-    }
+  mMaterial.read( obj );
+  sd3dPointListRead( mRegion, obj.value( QStringLiteral("region") ).toArray() );
+  sd3dPointListRead( mNormal, obj.value( QStringLiteral("normal") ).toArray() );
   }
 
 

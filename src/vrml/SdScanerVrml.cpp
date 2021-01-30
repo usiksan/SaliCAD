@@ -57,7 +57,7 @@ bool SdScanerVrml::parseFile(const QString &path)
 //! \brief generateFaces Generates faces for all nodes in mRootList
 //! \param appendFace    Functor to append generated faces
 //!
-void SdScanerVrml::generateFaces(std::function<void (const VrmlVectorList &, VrmlVector, quint32)> appendFace)
+void SdScanerVrml::generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace)
   {
   for( auto ptr : mRootList )
     ptr->generateFaces( appendFace );

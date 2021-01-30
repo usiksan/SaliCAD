@@ -17,7 +17,12 @@ class VrmlNodeMaterial : public VrmlNode
     VrmlNodeMaterial();
     VrmlNodeMaterial( const VrmlNodeMaterial *material );
 
-    VrmlColor         color() const { return mDiffuseColor; }
+    float ambientIntensity() const { return mAmbientIntensity; }
+    float diffuseColor( int ic ) const { return mDiffuseColor.color(ic); }
+    float emissiveColor( int ic ) const { return mEmissiveColor.color(ic); }
+    float shininnes() const { return mShininnes; }
+    float specularColor( int ic ) const { return mSpecularColor.color(ic); }
+    float transparency() const { return mTransparency; }
     // VrmlNode interface
   public:
     virtual VrmlNode *copy() const override { return new VrmlNodeMaterial( this ); }

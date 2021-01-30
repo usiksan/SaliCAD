@@ -1,7 +1,29 @@
 #include "Sd3dPoint.h"
 
+#include <QJsonArray>
 
 
+inline double intMcmToFloatM( int v )
+  {
+  //Convert to double
+  double d = v;
+  //Convert mcm to meter
+  return d / 1000000.0;
+  }
+
+void Sd3dPoint::setAsMcm(int cx, int cy, int cz)
+  {
+  setX( intMcmToFloatM( cx ) );
+  setY( intMcmToFloatM( cy ) );
+  setZ( intMcmToFloatM( cz ) );
+  }
+
+void Sd3dPoint::clear()
+  {
+  setX(0.0);
+  setY(0.0);
+  setZ(0.0);
+  }
 
 void Sd3dPoint::write(const QString name, QJsonObject &obj) const
   {
@@ -20,9 +42,9 @@ void Sd3dPoint::read(const QString name, const QJsonObject obj)
 
 void Sd3dPoint::swap(Sd3dPoint *p)
   {
-  qSwap( mX, p->mX );
-  qSwap( mY, p->mY );
-  qSwap( mZ, p->mZ );
+  Sd3dPoint tmp = (*this);
+  (*this) = (*p);
+  (*p) = tmp;
   }
 
 
@@ -30,9 +52,9 @@ void Sd3dPoint::swap(Sd3dPoint *p)
 QJsonObject Sd3dPoint::write() const
   {
   QJsonObject obj;
-  obj.insert( QStringLiteral("x"), QJsonValue(mX) );
-  obj.insert( QStringLiteral("y"), QJsonValue(mY) );
-  obj.insert( QStringLiteral("y"), QJsonValue(mZ) );
+  obj.insert( QStringLiteral("x"), QJsonValue(x()) );
+  obj.insert( QStringLiteral("y"), QJsonValue(y()) );
+  obj.insert( QStringLiteral("y"), QJsonValue(z()) );
   return obj;
   }
 
@@ -41,7 +63,31 @@ QJsonObject Sd3dPoint::write() const
 
 void Sd3dPoint::read(const QJsonObject obj)
   {
-  mX = obj.value( QStringLiteral("x") ).toInt();
-  mY = obj.value( QStringLiteral("y") ).toInt();
-  mZ = obj.value( QStringLiteral("z") ).toInt();
+  setX( obj.value( QStringLiteral("x") ).toDouble() );
+  setY( obj.value( QStringLiteral("y") ).toDouble() );
+  setZ( obj.value( QStringLiteral("z") ).toDouble() );
+  }
+
+
+
+QJsonArray sd3dPointListWrite(const Sd3dPointList &list)
+  {
+  QJsonArray array;
+  for( auto const &pt : list ) {
+    array.append( pt.write() );
+    }
+  return array;
+  }
+
+
+
+
+void sd3dPointListRead(Sd3dPointList &list, const QJsonArray &array)
+  {
+  list.clear();
+  Sd3dPoint pt;
+  for( auto it = array.cbegin(); it != array.cend(); it++ ) {
+    pt.read( it->toObject() );
+    list.append( pt );
+    }
   }

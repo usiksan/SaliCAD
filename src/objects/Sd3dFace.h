@@ -16,19 +16,20 @@ Description
 
 #include "SdRect.h"
 #include "Sd3dPoint.h"
-#include "step/SdStepReader.h"
-
+#include "Sd3dFaceMaterial.h"
 
 #include <QList>
 
 class Sd3dFace
   {
-    QList<Sd3dPoint> mRegion;     //!< Face region
-    Sd3dPoint        mNormal;     //!< Face normal vector for foregraund and background side detection
-    quint32          mFaceColor;  //!< Face color
+    Sd3dPointList    mRegion;     //!< Face region
+    Sd3dPointList    mNormal;     //!< Face normal vector for foregraund and background side detection
+    Sd3dFaceMaterial mMaterial;   //!< Face material description
   public:
     Sd3dFace();
-    Sd3dFace( QList<Sd3dPoint> region, Sd3dPoint normal, quint32 faceColor );
+    Sd3dFace( const Sd3dPointList &region, const Sd3dPointList &normal, const Sd3dFaceMaterial &faceMaterial );
+    Sd3dFace( const Sd3dPointList &region, const Sd3dPointList &normal, quint32 faceColor );
+    Sd3dFace( const QList<QVector3D> &region, const QList<QVector3D> &normal, const Sd3dFaceMaterial &faceMaterial );
 
 
     //!

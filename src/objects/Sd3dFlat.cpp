@@ -78,7 +78,7 @@ void Sd3dFlat::draw3d(QOpenGLFunctions_2_0 *f) const
   //2. We draw second surfase with region shifted on widthVector
   f->glBegin(GL_POLYGON);
   for( const Sd3dPoint &p : mRegion )
-    (p + mWidthVector).vertex( f );
+    Sd3dPoint(p + mWidthVector).vertex( f );
   f->glEnd();
 
   //3. We draw side surfases

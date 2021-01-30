@@ -28,6 +28,7 @@ SOURCES += \
     modes/SdModeCTraceDelete.cpp \
     objects/Sd3dDraw.cpp \
     objects/Sd3dFace.cpp \
+    objects/Sd3dFaceMaterial.cpp \
     objects/Sd3dFaceSet.cpp \
     objects/Sd3dFlat.cpp \
     objects/Sd3dObject.cpp \
@@ -326,6 +327,7 @@ HEADERS  += \
     modes/SdModeCTraceDelete.h \
     objects/Sd3dDraw.h \
     objects/Sd3dFace.h \
+    objects/Sd3dFaceMaterial.h \
     objects/Sd3dFaceSet.h \
     objects/Sd3dFlat.h \
     objects/Sd3dObject.h \

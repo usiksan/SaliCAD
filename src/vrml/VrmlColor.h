@@ -15,6 +15,8 @@ struct VrmlColor
 
     bool    isValid() const { return mRed >= 0.0; }
 
+    float   color( int ic ) const { return ic == 0 ? mRed : (ic == 1 ? mGreen : mBlue); }
+
     quint32 toInt() const;
   };
 

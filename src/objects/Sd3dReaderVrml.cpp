@@ -13,13 +13,10 @@ Description
 */
 #include "Sd3dReaderVrml.h"
 #include "vrml/SdScanerVrml.h"
+#include "vrml/VrmlNodeMaterial.h"
 
 #include <QMessageBox>
 
-inline Sd3dPoint fromVrmlVector( VrmlVector vec )
-  {
-  return Sd3dPoint( vec.mX * 1000000.0, vec.mY * 1000000.0, vec.mZ * 1000000.0 );
-  }
 
 //!
 //! \brief importVrmlFromFile Read model from VRML file which represented by its path
@@ -33,19 +30,25 @@ Sd3dFaceSet *Sd3dReaderVrml::importVrmlFromFile(QString fname, QWidget *parent)
     //Generate faces
 
     //3d object to put faces in
-    Sd3dFaceSet *faseSet = new Sd3dFaceSet();
+    Sd3dFaceSet *faceSet = new Sd3dFaceSet();
 
     //Generation
-    scanerVrml.generateFaces( [faseSet] ( const VrmlVectorList &vertexList, VrmlVector normal, quint32 color ) {
-      QList<Sd3dPoint> point3dList;
-      Sd3dPoint normal3d( fromVrmlVector(normal) );
-      for( auto vec : vertexList )
-        point3dList.append( fromVrmlVector(vec) );
-      faseSet->faceAdd( Sd3dFace( point3dList, normal3d, color )  );
+    scanerVrml.generateFaces( [faceSet] ( const QVector3DList &vertexList, const QVector3DList &normalList, const VrmlNodeMaterial *material ) {
+      //Convert from VrmlNodeMaterial to Sd3dFaceMaterial
+      Sd3dFaceMaterial faceMaterial;
+      if( material != nullptr ) {
+        faceMaterial.setAmbientIntensity( material->ambientIntensity() );
+        faceMaterial.setDiffuseColor( material->diffuseColor(0), material->diffuseColor(1), material->diffuseColor(2) );
+        faceMaterial.setEmissiveColor( material->emissiveColor(0), material->emissiveColor(1), material->emissiveColor(2) );
+        faceMaterial.setShininnes( material->shininnes() );
+        faceMaterial.setSpecularColor( material->specularColor(0), material->specularColor(1), material->specularColor(2) );
+        faceMaterial.setTransparency( material->transparency() );
+        }
+      faceSet->faceAdd( Sd3dFace( vertexList, normalList, faceMaterial ) );
       });
 
     //Return 3d object
-    return faseSet;
+    return faceSet;
     }
   QMessageBox::warning( parent, QObject::tr("Error happens when read VRML file!"), scanerVrml.errorGet() );
   return nullptr;

@@ -108,11 +108,28 @@ bool VrmlNodeIndexedFaceSet::parse(SdScanerVrml *scaner, const QString &fieldTyp
 
 void VrmlNodeIndexedFaceSet::generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace) const
   {
-  QVector3DList vertextList;
-  for( auto coordIndex : mCoordIndex ) {
-    if( coordIndex < 0 ) {
-      //Vertex accumulate complete
+  VrmlNodeCoordinate *coordinate = dynamic_cast<VrmlNodeCoordinate*>( mCoordinate );
+  if( coordinate != nullptr ) {
+    VrmlNodeNormal *normal = dynamic_cast<VrmlNodeNormal*>(mNormal);
+    int normalIter = 0;
+    QVector3DList vertextList;
+    for( auto coordIndex : mCoordIndex ) {
+      if( coordIndex < 0 ) {
+        //Vertex accumulate complete
+        //Accum normal
+        QVector3DList normalList;
+        if( normal != nullptr && normalIter < mNormalIndex.count() ) {
+          while( normalIter < mNormalIndex.count() && mNormalIndex.at(normalIter) >= 0 ) {
+            int normalIndex = mNormalIndex.at(normalIter++);
+            normalList.append( normal->at(normalIndex).toVector3d() );
+            }
+          normalIter++;
+          }
+        //Normal accum complete
+        appendFace( vertextList, normalList, nullptr );
+        vertextList.clear();
+        }
+      else vertextList.append( coordinate->at(coordIndex).toVector3d() );
       }
-    else vertextList.append( )
     }
   }

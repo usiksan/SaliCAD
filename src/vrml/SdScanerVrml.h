@@ -27,7 +27,7 @@ class SdScanerVrml : public SdScanerMultyline
     //! \brief generateFaces Generates faces for all nodes in mRootList
     //! \param appendFace    Functor to append generated faces
     //!
-    void      generateFaces( std::function<void ( const VrmlVectorList &vertexList, VrmlVector normal, quint32 color )> appendFace );
+    void      generateFaces( std::function<void ( const QVector3DList &vertexList, const QVector3DList &normalList, const VrmlNodeMaterial *material )> appendFace );
 
     void      insert( const QString name, VrmlNodePtr node ) { mRootMap.insert( name, node ); }
 

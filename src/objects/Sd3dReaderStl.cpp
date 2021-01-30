@@ -31,7 +31,7 @@ static float readStlFloat(QIODevice *file)
   float val;
   file->read( static_cast<char*>( static_cast<void*>(&val)), 4 );
   //Convert to mcm
-  return val * 1000.0;
+  return val;
   }
 
 
@@ -107,7 +107,7 @@ Sd3dFaceSet *Sd3dReaderStl::importStlFromFile(QString fname)
         //No color defined, setup gray color
         faceColor = qRgba( 30, 30, 30, 0xff );
         }
-      Sd3dFace triangle( {vertexA, vertexB, vertexC}, normal, faceColor );
+      Sd3dFace triangle( {vertexA, vertexB, vertexC}, {normal, normal, normal}, faceColor );
       //Append it to list
       stl->faceAdd( triangle );
       }
