@@ -1,4 +1,5 @@
 #include "SdScanerVrml.h"
+#include "VrmlNode1.h"
 
 SdScanerVrml::SdScanerVrml()
   {
@@ -57,7 +58,7 @@ bool SdScanerVrml::parseFile(const QString &path)
 //! \brief generateFaces Generates faces for all nodes in mRootList
 //! \param appendFace    Functor to append generated faces
 //!
-void SdScanerVrml::generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace)
+void SdScanerVrml::generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace) const
   {
   for( auto ptr : mRootList )
     ptr->generateFaces( appendFace );
@@ -125,6 +126,59 @@ bool SdScanerVrml::parseVectorTable(VrmlVectorList &table, const QString errorMs
 
 
 
+bool SdScanerVrml::parseFloatTable(QList<float> &table, const QString errorMsg)
+  {
+  if( !tokenNeed( '[', errorMsg ) )
+    return false;
+  while( !matchToken( ']') ) {
+    if( isEndOfScan() ) {
+      error( QStringLiteral("Uncompleted vector list") );
+      return false;
+      }
+    if( isError() )
+      return false;
+    float val;
+    if( !tokenNeedValueFloat( 'f', val, errorMsg ) )
+      return false;
+    table.append( val );
+    if( !matchToken(',') ) {
+      if( !tokenNeed(']', QStringLiteral("Need ]") ) )
+        return false;
+      break;
+      }
+    }
+  return true;
+  }
+
+
+
+
+bool SdScanerVrml::parseColorTable(VrmlColorList &table, const QString errorMsg)
+  {
+  if( !tokenNeed( '[', errorMsg ) )
+    return false;
+  while( !matchToken( ']') ) {
+    if( isEndOfScan() ) {
+      error( QStringLiteral("Uncompleted vector list") );
+      return false;
+      }
+    if( isError() )
+      return false;
+    VrmlColor color;
+    color.parse( this );
+    table.append( color );
+    if( !matchToken(',') ) {
+      if( !tokenNeed(']', QStringLiteral("Need ]") ) )
+        return false;
+      break;
+      }
+    }
+  return true;
+  }
+
+
+
+
 bool SdScanerVrml::parseVrml2_0()
   {
   tokenNext();
@@ -136,9 +190,24 @@ bool SdScanerVrml::parseVrml2_0()
   return !isError();
   }
 
+
+
+
 bool SdScanerVrml::parseVrml1_0()
   {
-  return false;
+  tokenNext();
+  while( !isEndOfScanOrError() ) {
+    if( token() != 'n' || tokenValue() != QStringLiteral("Separator") ) {
+      error( QStringLiteral("Need Separator") );
+      return false;
+      }
+    tokenNext();
+
+    VrmlNode *node = VrmlNode1::parse1Node( this, QStringLiteral("Separator") );
+    if( node != nullptr )
+      mRootList.append( node );
+    }
+  return !isError();
   }
 
 

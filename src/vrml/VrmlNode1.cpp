@@ -14,7 +14,7 @@
 #include "VrmlNode1Translation.h"
 
 
-VrmlNode *VrmlNode1::parse1Node(SdScanerVrml *scaner, const QString nodeType)
+VrmlNode *VrmlNode1::parse1Node(SdScanerVrml *scaner, const QString &nodeType)
   {
   VrmlNode *node = build1Node( nodeType );
   if( node != nullptr ) {
@@ -52,7 +52,7 @@ VrmlNode *VrmlNode1::parse1Node(SdScanerVrml *scaner, const QString nodeType)
   }
 
 
-VrmlNode *VrmlNode1::build1Node(const QString nodeType)
+VrmlNode *VrmlNode1::build1Node(const QString &nodeType)
   {
   if( nodeType == QStringLiteral("Coordinate3") )              return new VrmlNode1Coordinate3();
   if( nodeType == QStringLiteral("IndexedFaceSet") )           return new VrmlNode1IndexedFaceSet();

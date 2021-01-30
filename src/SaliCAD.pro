@@ -42,6 +42,19 @@ SOURCES += \
     vrml/SdScanerVrml.cpp \
     vrml/VrmlColor.cpp \
     vrml/VrmlNode.cpp \
+    vrml/VrmlNode1.cpp \
+    vrml/VrmlNode1Coordinate3.cpp \
+    vrml/VrmlNode1IndexedFaceSet.cpp \
+    vrml/VrmlNode1Material.cpp \
+    vrml/VrmlNode1MaterialBinding.cpp \
+    vrml/VrmlNode1MatrixTransform.cpp \
+    vrml/VrmlNode1Normal.cpp \
+    vrml/VrmlNode1NormalBinding.cpp \
+    vrml/VrmlNode1Rotation.cpp \
+    vrml/VrmlNode1Scale.cpp \
+    vrml/VrmlNode1Separator.cpp \
+    vrml/VrmlNode1Transform.cpp \
+    vrml/VrmlNode1Translation.cpp \
     vrml/VrmlNodeAppearance.cpp \
     vrml/VrmlNodeColor.cpp \
     vrml/VrmlNodeCompound.cpp \
@@ -340,6 +353,19 @@ HEADERS  += \
     vrml/SdScanerVrml.h \
     vrml/VrmlColor.h \
     vrml/VrmlNode.h \
+    vrml/VrmlNode1.h \
+    vrml/VrmlNode1Coordinate3.h \
+    vrml/VrmlNode1IndexedFaceSet.h \
+    vrml/VrmlNode1Material.h \
+    vrml/VrmlNode1MaterialBinding.h \
+    vrml/VrmlNode1MatrixTransform.h \
+    vrml/VrmlNode1Normal.h \
+    vrml/VrmlNode1NormalBinding.h \
+    vrml/VrmlNode1Rotation.h \
+    vrml/VrmlNode1Scale.h \
+    vrml/VrmlNode1Separator.h \
+    vrml/VrmlNode1Transform.h \
+    vrml/VrmlNode1Translation.h \
     vrml/VrmlNodeAppearance.h \
     vrml/VrmlNodeColor.h \
     vrml/VrmlNodeCompound.h \

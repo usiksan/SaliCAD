@@ -1,4 +1,10 @@
 #include "VrmlNode1Separator.h"
+#include "VrmlNode1Material.h"
+#include "VrmlNode1MaterialBinding.h"
+#include "VrmlNode1Coordinate3.h"
+#include "VrmlNode1IndexedFaceSet.h"
+#include "VrmlNode1Normal.h"
+#include "VrmlNodeMaterial.h"
 
 VrmlNode1Separator::VrmlNode1Separator() :
   VrmlNode1(),
@@ -36,6 +42,51 @@ VrmlNode1Separator::~VrmlNode1Separator()
 
 void VrmlNode1Separator::generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace) const
   {
+  VrmlNode1MaterialBinding *nodeMaterialBinding = dynamic_cast<VrmlNode1MaterialBinding*>(mMaterialBinding);
+  int materialBinding = nodeMaterialBinding == nullptr ? MATERIAL_BINDING_DEFAULT : nodeMaterialBinding->binding();
+
+  VrmlNode1Material *nodeMaterial = dynamic_cast<VrmlNode1Material*>(mMaterial);
+  VrmlNode1Coordinate3 *nodeCoordinate3 = dynamic_cast<VrmlNode1Coordinate3*>(mCoordinate3);
+  VrmlNode1IndexedFaceSet *nodeIndexedFaceSet = dynamic_cast<VrmlNode1IndexedFaceSet*>(mIndexedFaceSet);
+  VrmlNode1Normal *nodeNormal = dynamic_cast<VrmlNode1Normal*>(mNormal);
+
+  if( nodeCoordinate3 != nullptr && nodeIndexedFaceSet != nullptr ) {
+    int faceIndex = 0;
+    int vertexIndex = 0;
+    int normalIndex = 0;
+    QVector3DList vertexList;
+    QVector3DList normalList;
+    VrmlNodeMaterial material;
+    while( nodeIndexedFaceSet->isCoordValid(vertexIndex) ) {
+      int pointIndex = nodeIndexedFaceSet->coordIndex(vertexIndex++);
+      if( pointIndex < 0 ) {
+        //Complete with vertex accumulate
+
+        if( nodeNormal != nullptr ) {
+          while( nodeIndexedFaceSet->isNormalValid(normalIndex) ) {
+            int normal = nodeIndexedFaceSet->normalIndex(normalIndex++);
+            if( normal < 0 )
+              break;
+            if( nodeNormal->isVectorValid(normal) )
+              normalList.append( nodeNormal->vector(normal).toVector3d().normalized() );
+            }
+          }
+
+        if( nodeIndexedFaceSet->isMaterialValid(faceIndex) ) {
+          int materialIndex = nodeIndexedFaceSet->materialIndex(faceIndex++);
+          material = nodeMaterial->material( materialIndex );
+          }
+
+        appendFace( vertexList, normalList, &material );
+        vertexList.clear();
+        normalList.clear();
+        }
+      else {
+        if( nodeCoordinate3->isPointValid(pointIndex) )
+          vertexList.append( nodeCoordinate3->point(pointIndex).toVector3d() * 1000.0 );
+        }
+      }
+    }
   }
 
 

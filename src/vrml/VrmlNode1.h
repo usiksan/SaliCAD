@@ -8,8 +8,8 @@ class VrmlNode1 : public VrmlNode
   public:
     VrmlNode1() : VrmlNode() {}
 
-    static VrmlNode  *parse1Node( SdScanerVrml *scaner, const QString nodeType );
-    static VrmlNode  *build1Node( const QString nodeType );
+    static VrmlNode  *parse1Node( SdScanerVrml *scaner, const QString &nodeType );
+    static VrmlNode  *build1Node( const QString &nodeType );
 
     // VrmlNode interface
   public:

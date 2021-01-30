@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
   QCoreApplication a(argc, argv);
 
   SdScanerVrml scaner;
-  scaner.parseFile( QStringLiteral("/home/asibilev/work/vrml/WF-02.wrl") );
+  scaner.parseFile( QStringLiteral("/home/salilab/work/SaliCAD/libFiles/User Library-SOIC-8-1.wrl") );
 
   return a.exec();
   }

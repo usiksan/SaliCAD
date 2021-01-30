@@ -28,6 +28,26 @@ VrmlNodeMaterial::VrmlNodeMaterial(const VrmlNodeMaterial *material) :
 
 
 
+void VrmlNodeMaterial::set(VrmlColor ambient, VrmlColor diffuse, VrmlColor emissive, VrmlColor specular, float shininnes, float transparency)
+  {
+  mDiffuseColor = diffuse;
+  if( diffuse.mRed != 0.0 )
+    mAmbientIntensity = ambient.mRed / diffuse.mRed;
+  else if( diffuse.mGreen != 0.0 )
+    mAmbientIntensity = ambient.mGreen / diffuse.mGreen;
+  else if( diffuse.mBlue != 0.0 )
+    mAmbientIntensity = ambient.mBlue / diffuse.mBlue;
+  else
+    mAmbientIntensity = 0.0;
+
+  mEmissiveColor = emissive;
+  mSpecularColor = specular;
+  mShininnes     = shininnes;
+  mTransparency  = transparency;
+  }
+
+
+
 
 
 

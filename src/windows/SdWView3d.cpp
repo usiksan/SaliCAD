@@ -92,7 +92,7 @@ void SdWView3d::initializeGL()
   GLfloat model_ambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
   // Set up the rendering context, load shaders and other resources, etc.:
   QOpenGLFunctions_2_0 *f = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_0>();
-  f->glClearColor(1.f, 1.0f, 1.0f, 1.0f);
+  f->glClearColor(0.8f, 0.93f, 0.93f, 1.0f);
   f->glShadeModel( GL_SMOOTH );
   f->glLightfv( GL_LIGHT0, GL_POSITION, light_position );
   f->glLightfv( GL_LIGHT0, GL_DIFFUSE, light_diffuse );
@@ -139,6 +139,7 @@ void SdWView3d::paintGL()
   // Draw the scene:
 
   QOpenGLFunctions_2_0 *f = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_0>();
+
   f->glLoadIdentity();
   f->glTranslated( mOrigin.x(), mOrigin.y(), 0 );
   f->glScaled( mScale.scaleGet(), mScale.scaleGet(), mScale.scaleGet() );

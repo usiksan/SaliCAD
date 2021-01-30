@@ -27,7 +27,7 @@ class SdScanerVrml : public SdScanerMultyline
     //! \brief generateFaces Generates faces for all nodes in mRootList
     //! \param appendFace    Functor to append generated faces
     //!
-    void      generateFaces( std::function<void ( const QVector3DList &vertexList, const QVector3DList &normalList, const VrmlNodeMaterial *material )> appendFace );
+    void      generateFaces( std::function<void ( const QVector3DList &vertexList, const QVector3DList &normalList, const VrmlNodeMaterial *material )> appendFace ) const;
 
     void      insert( const QString name, VrmlNodePtr node ) { mRootMap.insert( name, node ); }
 
@@ -39,6 +39,10 @@ class SdScanerVrml : public SdScanerMultyline
     bool      parseInt32Table( VrmlInt32List &table, const QString errorMsg );
 
     bool      parseVectorTable( VrmlVectorList &table, const QString errorMsg );
+
+    bool      parseFloatTable( QList<float> &table, const QString errorMsg );
+
+    bool      parseColorTable( VrmlColorList &table, const QString errorMsg );
 
   private:
     bool parseVrml2_0();

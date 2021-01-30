@@ -23,6 +23,9 @@ class VrmlNodeMaterial : public VrmlNode
     float shininnes() const { return mShininnes; }
     float specularColor( int ic ) const { return mSpecularColor.color(ic); }
     float transparency() const { return mTransparency; }
+
+    void  set( VrmlColor ambient, VrmlColor diffuse, VrmlColor emissive, VrmlColor specular, float shininnes, float transparency );
+
     // VrmlNode interface
   public:
     virtual VrmlNode *copy() const override { return new VrmlNodeMaterial( this ); }
