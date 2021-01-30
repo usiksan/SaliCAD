@@ -21,6 +21,8 @@ void VrmlNode::generateFaces(std::function<void (const QVector3DList &, const QV
 
 
 
+
+
 VrmlNode *VrmlNode::parse2Declaration(SdScanerVrml *scaner)
   {
   QString nodeName, nodeType;
@@ -58,7 +60,7 @@ VrmlNode *VrmlNode::parse2Declaration(SdScanerVrml *scaner)
 
 VrmlNode *VrmlNode::parse2Node(SdScanerVrml *scaner, const QString nodeType)
   {
-  VrmlNode *node = buildNode( nodeType );
+  VrmlNode *node = build2Node( nodeType );
   if( node != nullptr ) {
     //Open bracket
     if( !scaner->tokenNeed( '{', QStringLiteral("Need open bracket for '%1'").arg(nodeType) ) )
@@ -96,7 +98,7 @@ VrmlNode *VrmlNode::parse2Node(SdScanerVrml *scaner, const QString nodeType)
 
 
 
-VrmlNode *VrmlNode::buildNode(const QString nodeType)
+VrmlNode *VrmlNode::build2Node(const QString nodeType)
   {
   if( nodeType == QStringLiteral("Appearance") )              return new VrmlNodeAppearance();
   if( nodeType == QStringLiteral("Color") )                   return new VrmlNodeColor();
@@ -110,12 +112,25 @@ VrmlNode *VrmlNode::buildNode(const QString nodeType)
   return nullptr;
   }
 
+
+
+
+
+
+
+
+
+
+
 VrmlNode *VrmlNode::makeCopy(const VrmlNode *node)
   {
   if( node != nullptr )
     return node->copy();
   return nullptr;
   }
+
+
+
 
 void VrmlNode::deleteNode(VrmlNode *node)
   {

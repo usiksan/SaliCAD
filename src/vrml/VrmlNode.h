@@ -35,7 +35,7 @@ class VrmlNode
 
     static VrmlNode  *parse2Declaration(SdScanerVrml *scaner);
     static VrmlNode  *parse2Node( SdScanerVrml *scaner, const QString nodeType );
-    static VrmlNode  *buildNode( const QString nodeType );
+    static VrmlNode  *build2Node( const QString nodeType );
     static VrmlNode  *makeCopy( const VrmlNode *node );
     static void       deleteNode( VrmlNode *node );
   };

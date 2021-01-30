@@ -7,12 +7,27 @@ CONFIG -= app_bundle
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+INCLUDEPATH += ../scaner
+
 SOURCES += \
-        SdScaner.cpp \
-        SdScanerMultyline.cpp \
+        ../scaner/SdScaner.cpp \
+        ../scaner/SdScanerMultyline.cpp \
         SdScanerVrml.cpp \
         VrmlColor.cpp \
         VrmlNode.cpp \
+        VrmlNode1.cpp \
+        VrmlNode1Coordinate3.cpp \
+        VrmlNode1IndexedFaceSet.cpp \
+        VrmlNode1Material.cpp \
+        VrmlNode1MaterialBinding.cpp \
+        VrmlNode1MatrixTransform.cpp \
+        VrmlNode1Normal.cpp \
+        VrmlNode1NormalBinding.cpp \
+        VrmlNode1Rotation.cpp \
+        VrmlNode1Scale.cpp \
+        VrmlNode1Separator.cpp \
+        VrmlNode1Transform.cpp \
+        VrmlNode1Translation.cpp \
         VrmlNodeAppearance.cpp \
         VrmlNodeColor.cpp \
         VrmlNodeCompound.cpp \
@@ -34,11 +49,24 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-  SdScaner.h \
-  SdScanerMultyline.h \
+  ../scaner/SdScaner.h \
+  ../scaner/SdScanerMultyline.h \
   SdScanerVrml.h \
   VrmlColor.h \
   VrmlNode.h \
+  VrmlNode1.h \
+  VrmlNode1Coordinate3.h \
+  VrmlNode1IndexedFaceSet.h \
+  VrmlNode1Material.h \
+  VrmlNode1MaterialBinding.h \
+  VrmlNode1MatrixTransform.h \
+  VrmlNode1Normal.h \
+  VrmlNode1NormalBinding.h \
+  VrmlNode1Rotation.h \
+  VrmlNode1Scale.h \
+  VrmlNode1Separator.h \
+  VrmlNode1Transform.h \
+  VrmlNode1Translation.h \
   VrmlNodeAppearance.h \
   VrmlNodeColor.h \
   VrmlNodeCompound.h \
