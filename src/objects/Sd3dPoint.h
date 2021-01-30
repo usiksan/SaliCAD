@@ -10,6 +10,7 @@ Web
 
 Description
   3D point object
+  Assume coords in mm
 */
 #ifndef SDPOINT3D_H
 #define SDPOINT3D_H
@@ -32,7 +33,7 @@ class Sd3dPoint : public QVector3D
     //! \brief projectionXY Return projection of 3d point to XY surface
     //! \return             2d projection of 3d point to XY surface
     //!
-    SdPoint     projectionXY() const { return SdPoint(x()*1000000.0,y()*1000000.0); }
+    SdPoint     projectionXY() const { return SdPoint(x()*1000.0,y()*1000.0); }
 
     void        setAsMcm( int cx, int cy, int cz );
 
@@ -64,5 +65,18 @@ using Sd3dPointList = QList<Sd3dPoint>;
 QJsonArray sd3dPointListWrite( const Sd3dPointList &list );
 
 void       sd3dPointListRead( Sd3dPointList &list, const QJsonArray &array );
+
+inline double intMcmToFloatMm( int mcm )
+  {
+  //Convert to double
+  double d = mcm;
+  //Convert mcm to meter
+  return d / 1000.0;
+  }
+
+inline int floatMmToIntMcm( float mm )
+  {
+  return mm * 1000.0;
+  }
 
 #endif // SDPOINT3D_H

@@ -71,8 +71,8 @@ Sd3dFace::Sd3dFace(const QList<QVector3D> &region, const QList<QVector3D> &norma
 void Sd3dFace::paint(QOpenGLFunctions_2_0 *f) const
   {
   //Face
-  mMaterial.paint( f );
   f->glBegin(GL_POLYGON);
+  mMaterial.paint( f );
   for( int i = 0; i < mRegion.count(); i++ ) {
     //Apply normal
     if( i < mNormal.count() )

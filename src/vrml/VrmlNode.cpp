@@ -11,13 +11,6 @@
 #include "VrmlNodeTransform.h"
 
 
-VrmlColor VrmlNode::colorGet(int index, VrmlColor color)
-  {
-  Q_UNUSED(index)
-  return color;
-  }
-
-
 
 
 void VrmlNode::generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace ) const

@@ -1,11 +1,8 @@
 #include "Sd3dFaceMaterial.h"
+#include "Sd3dPoint.h"
 
-//mAmbientIntensity(0.2),
-//mDiffuseColor( 0.8, 0.8, 0.8 ),
-//mEmissiveColor(),
-//mShininnes(0.2),
-//mSpecularColor(),
-//mTransparency(0.0)
+#include <QColor>
+
 
 Sd3dFaceMaterial::Sd3dFaceMaterial() :
   mAmbientIntensity(0.2),
@@ -31,29 +28,31 @@ void Sd3dFaceMaterial::paint(QOpenGLFunctions_2_0 *f) const
 
 static void writeColor( QJsonObject &obj, const QString &prefix, const float *color )
   {
-  obj.insert( prefix + QStringLiteral("R"), color[0] );
-  obj.insert( prefix + QStringLiteral("G"), color[1] );
-  obj.insert( prefix + QStringLiteral("B"), color[2] );
-  obj.insert( prefix + QStringLiteral("A"), color[3] );
+  //Convert color to rgba
+  obj.insert( prefix, QString::number( qRgba(color[0]*255.0, color[1]*255.0, color[2]*255.0, color[3]*255.0), 16 ) );
   }
 
 
 static void readColor( const QJsonObject &obj, const QString &prefix, float *color )
   {
-  color[0] = obj.value( prefix + QStringLiteral("R") ).toDouble();
-  color[1] = obj.value( prefix + QStringLiteral("G") ).toDouble();
-  color[2] = obj.value( prefix + QStringLiteral("B") ).toDouble();
-  color[3] = obj.value( prefix + QStringLiteral("A") ).toDouble();
+  QRgb rgba = obj.value( prefix ).toString().toUInt( nullptr, 16 );
+  color[0] = qRed( rgba );
+  color[0] /= 255.0;
+  color[1] = qGreen( rgba );
+  color[1] /= 255.0;
+  color[2] = qBlue( rgba );
+  color[2] /= 255.0;
+  color[3] = qAlpha( rgba );
+  color[3] /= 255.0;
   }
 
 
 void Sd3dFaceMaterial::write(QJsonObject &obj) const
   {
-  obj.insert( QString("mAmInt"), mAmbientIntensity );
-  writeColor( obj, QStringLiteral("mAm"), mAmbientColor );
+  obj.insert( QString("mAmInt"), floatMmToIntMcm( mAmbientIntensity )  );
   writeColor( obj, QStringLiteral("mDf"), mDiffuseColor );
   writeColor( obj, QStringLiteral("mEm"), mEmissiveColor );
-  obj.insert( QString("mShin"), mShininnes );
+  obj.insert( QString("mShin"), floatMmToIntMcm( mShininnes )  );
   writeColor( obj, QStringLiteral("mSp"), mSpecularColor );
   }
 
@@ -61,12 +60,20 @@ void Sd3dFaceMaterial::write(QJsonObject &obj) const
 
 void Sd3dFaceMaterial::read(const QJsonObject &obj)
   {
-  mAmbientIntensity = obj.value( QString("mAmInt") ).toDouble();
-  readColor( obj, QStringLiteral("mAm"), mAmbientColor );
+  mAmbientIntensity = intMcmToFloatMm( obj.value( QString("mAmInt") ).toInt() );
   readColor( obj, QStringLiteral("mDf"), mDiffuseColor );
   readColor( obj, QStringLiteral("mEm"), mEmissiveColor );
-  mShininnes = obj.value( QString("mShin") ).toDouble();
+  mShininnes = intMcmToFloatMm( obj.value( QString("mShin") ).toInt() );
   readColor( obj, QStringLiteral("mSp"), mSpecularColor );
+  buildAmbientColor();
+  }
+
+
+
+void Sd3dFaceMaterial::buildAmbientColor()
+  {
+  for( int i = 0; i < 3; i++ )
+    mAmbientColor[i] = mDiffuseColor[i] * mAmbientIntensity;
   }
 
 

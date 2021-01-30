@@ -308,7 +308,7 @@ QStringList SdProject::netList() const
         });
     return true;
     });
-  return set.toList();
+  return set.values();
   }
 
 

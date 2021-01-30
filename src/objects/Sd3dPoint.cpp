@@ -3,19 +3,12 @@
 #include <QJsonArray>
 
 
-inline double intMcmToFloatM( int v )
-  {
-  //Convert to double
-  double d = v;
-  //Convert mcm to meter
-  return d / 1000000.0;
-  }
 
 void Sd3dPoint::setAsMcm(int cx, int cy, int cz)
   {
-  setX( intMcmToFloatM( cx ) );
-  setY( intMcmToFloatM( cy ) );
-  setZ( intMcmToFloatM( cz ) );
+  setX( intMcmToFloatMm( cx ) );
+  setY( intMcmToFloatMm( cy ) );
+  setZ( intMcmToFloatMm( cz ) );
   }
 
 void Sd3dPoint::clear()
@@ -54,7 +47,7 @@ QJsonObject Sd3dPoint::write() const
   QJsonObject obj;
   obj.insert( QStringLiteral("x"), QJsonValue(x()) );
   obj.insert( QStringLiteral("y"), QJsonValue(y()) );
-  obj.insert( QStringLiteral("y"), QJsonValue(z()) );
+  obj.insert( QStringLiteral("z"), QJsonValue(z()) );
   return obj;
   }
 
@@ -74,7 +67,10 @@ QJsonArray sd3dPointListWrite(const Sd3dPointList &list)
   {
   QJsonArray array;
   for( auto const &pt : list ) {
-    array.append( pt.write() );
+    array.append( floatMmToIntMcm(pt.x()) );
+    array.append( floatMmToIntMcm(pt.y()) );
+    array.append( floatMmToIntMcm(pt.z()) );
+    //array.append( pt.write() );
     }
   return array;
   }
@@ -86,8 +82,17 @@ void sd3dPointListRead(Sd3dPointList &list, const QJsonArray &array)
   {
   list.clear();
   Sd3dPoint pt;
+  int i = 0;
   for( auto it = array.cbegin(); it != array.cend(); it++ ) {
-    pt.read( it->toObject() );
-    list.append( pt );
+    switch(i) {
+      case 0 : pt.setX( intMcmToFloatMm(it->toInt()) ); break;
+      case 1 : pt.setY( intMcmToFloatMm(it->toInt()) ); break;
+      case 2 : pt.setZ( intMcmToFloatMm(it->toInt()) ); break;
+      }
+    i++;
+    if( i > 2 ) {
+      list.append( pt );
+      i = 0;
+      }
     }
   }

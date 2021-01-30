@@ -62,7 +62,7 @@ class Sd3dStep : public Sd3dObject
     //! \param faceId               Face id for reading
     //! \param reader               STEP file reader
     //!
-    bool importStepStyledFace(const QString &faceId, const SdStepReader &reader);
+    //bool importStepStyledFace(const QString &faceId, const SdStepReader &reader);
   };
 
 #endif // SD3DSTEP_H

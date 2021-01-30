@@ -180,6 +180,8 @@ History
   21.01.2021 v1.20 Append automatic fragment finding for insertion when component inserting
   25.01.2021 v1.21 Convert all 3d models to FaceSet object which consist of face set
                    Different 3d format are reads by individual readers
+  30.01.2021 v1.22 Replace face color in Sd3dFace with face material
+                   Reorganize directories: outstand SdScaner... to scaner directory
 */
 
 #ifndef SDCONFIG
@@ -191,7 +193,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             21
+#define SD_VERSION_MINOR             22
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

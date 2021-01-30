@@ -1,5 +1,6 @@
 #include "SdWView3d.h"
 #include "objects/SdProjectItem.h"
+#include "objects/Sd3dFaceMaterial.h"
 
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
@@ -97,13 +98,13 @@ void SdWView3d::initializeGL()
   f->glLightfv( GL_LIGHT0, GL_DIFFUSE, light_diffuse );
   f->glMaterialfv( GL_LIGHT0, GL_AMBIENT, light_ambient );
   //f->glMaterialfv( GL_FRONT, GL_SHININESS, mat_shininess );
-  f->glColorMaterial( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE );
+  //f->glColorMaterial( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE );
   f->glLightModelfv( GL_LIGHT_MODEL_AMBIENT, model_ambient );
 
   f->glEnable( GL_LIGHTING );
   f->glEnable( GL_LIGHT0 );
   f->glEnable( GL_DEPTH_TEST );
-  f->glEnable( GL_COLOR_MATERIAL );
+  //f->glEnable( GL_COLOR_MATERIAL );
 
   f->glEnable(GL_MULTISAMPLE);
 
@@ -125,7 +126,7 @@ void SdWView3d::resizeGL(int w, int h)
   f->glViewport( 0, 0, w, h );
   f->glMatrixMode( GL_PROJECTION );
   f->glLoadIdentity();
-  f->glOrtho(-100.0, 100.0, -100.0, 100.0, -1000.0, 1000.0);
+  f->glOrtho(-1.0, 1.0, -1.0, 1.0, -10.0, 10.0);
 
   f->glMatrixMode( GL_MODELVIEW );
   }
@@ -135,11 +136,7 @@ void SdWView3d::resizeGL(int w, int h)
 
 void SdWView3d::paintGL()
   {
-  //qDebug() << "Paint 3d" << mScale.scaleGet();
   // Draw the scene:
-//  QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-//  f->glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
-//  f->glClear(GL_COLOR_BUFFER_BIT);
 
   QOpenGLFunctions_2_0 *f = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_0>();
   f->glLoadIdentity();
@@ -152,16 +149,17 @@ void SdWView3d::paintGL()
 
   mItem->draw3d( f );
 
+  //Axis
+  Sd3dFaceMaterial axisMaterial;
+  axisMaterial.setDiffuseColor( 1.0, 0.0, 0.0 );
+  axisMaterial.paint( f );
   //f->glLineWidth(3);
-  f->glColor3d(0.0, 0.0, 1.0);
   f->glBegin( GL_LINES );
-  f->glVertex3d( -1000000.0, 0, 0 );
-  f->glVertex3d( 1000000.0, 0, 0 );
-//  f->glEnd();
+  f->glVertex3d( -1000.0, 0, 0 );
+  f->glVertex3d( 1000.0, 0, 0 );
 
-//  f->glBegin( GL_LINES );
-  f->glVertex3d( 0, -1000000.0, 0 );
-  f->glVertex3d( 0, 1000000.0, 0 );
+  f->glVertex3d( 0, -1000.0, 0 );
+  f->glVertex3d( 0, 1000.0, 0 );
   f->glEnd();
   //f->glFlush();
   }

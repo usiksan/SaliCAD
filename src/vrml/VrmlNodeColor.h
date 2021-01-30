@@ -11,11 +11,12 @@ class VrmlNodeColor : public VrmlNode
     VrmlNodeColor();
     VrmlNodeColor( const VrmlNodeColor *color ) : VrmlNode(color), mColorList(color->mColorList) {}
 
+    VrmlColor at( int index ) const { return mColorList.at(index); }
+
     // VrmlNode interface
   public:
     virtual VrmlNode *copy() const override { return new VrmlNodeColor( this ); }
     virtual bool      parse(SdScanerVrml *scaner, const QString &fieldType) override;
-    virtual quint32   colorGet(int index, quint32 color) override;
   };
 
 #endif // VRMLNODECOLOR_H

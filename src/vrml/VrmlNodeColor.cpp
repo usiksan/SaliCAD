@@ -37,9 +37,3 @@ bool VrmlNodeColor::parse(SdScanerVrml *scaner, const QString &fieldType)
   }
 
 
-quint32 VrmlNodeColor::colorGet(int index, quint32 color)
-  {
-  Q_UNUSED(color)
-  if( index >= 0 && index < mColorList.count() )
-    return mColorList.at();
-  }

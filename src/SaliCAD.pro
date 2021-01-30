@@ -36,9 +36,9 @@ SOURCES += \
     objects/Sd3dReaderStl.cpp \
     objects/Sd3dReaderVrml.cpp \
     objects/Sd3dStep.cpp \
+    scaner/SdScaner.cpp \
+    scaner/SdScanerMultyline.cpp \
     step/SdStepReader.cpp \
-    vrml/SdScaner.cpp \
-    vrml/SdScanerMultyline.cpp \
     vrml/SdScanerVrml.cpp \
     vrml/VrmlColor.cpp \
     vrml/VrmlNode.cpp \
@@ -53,7 +53,6 @@ SOURCES += \
     vrml/VrmlNodeShape.cpp \
     vrml/VrmlNodeTransform.cpp \
     vrml/VrmlRotation.cpp \
-    vrml/VrmlSmartNodePtr.cpp \
     vrml/VrmlVector.cpp \
     windows/SdDExpressionEdit.cpp \
     windows/SdDOptionsPageLibrary.cpp \
@@ -335,9 +334,9 @@ HEADERS  += \
     objects/Sd3dReaderStl.h \
     objects/Sd3dReaderVrml.h \
     objects/Sd3dStep.h \
+    scaner/SdScaner.h \
+    scaner/SdScanerMultyline.h \
     step/SdStepReader.h \
-    vrml/SdScaner.h \
-    vrml/SdScanerMultyline.h \
     vrml/SdScanerVrml.h \
     vrml/VrmlColor.h \
     vrml/VrmlNode.h \
@@ -352,7 +351,6 @@ HEADERS  += \
     vrml/VrmlNodeShape.h \
     vrml/VrmlNodeTransform.h \
     vrml/VrmlRotation.h \
-    vrml/VrmlSmartNodePtr.h \
     vrml/VrmlTypes.h \
     vrml/VrmlVector.h \
     windows/SdDExpressionEdit.h \
