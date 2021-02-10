@@ -26,20 +26,43 @@ SdWView3d::SdWView3d(SdProjectItem *item, QWidget *parent) :
   setFormat( format );
   }
 
+bool isPressed;
+QPoint startPos;
+double prevAngleXY;
+double prevAngleZ;
+
+
+
 void SdWView3d::mousePressEvent(QMouseEvent *event)
   {
-
+  if( event->button() == Qt::LeftButton ) {
+    isPressed = true;
+    startPos = event->pos();
+    prevAngleXY = mAngleXY;
+    prevAngleZ = mAngleZ;
+    }
   }
+
+
 
 void SdWView3d::mouseReleaseEvent(QMouseEvent *event)
   {
-
+  if( event->button() == Qt::LeftButton )
+    isPressed = false;
   }
+
+
 
 void SdWView3d::mouseMoveEvent(QMouseEvent *event)
   {
-
+  if( isPressed ) {
+    mAngleXY = prevAngleXY - (startPos.y() - event->pos().y()) / 4;
+    mAngleZ = prevAngleZ - (startPos.x() - event->pos().x()) / 4;
+    update();
+    }
   }
+
+
 
 void SdWView3d::wheelEvent(QWheelEvent *event)
   {

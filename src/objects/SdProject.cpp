@@ -387,6 +387,7 @@ bool SdProject::save(const QString fname)
   QFile file(fname);
   if( file.open(QIODevice::WriteOnly) ) {
     QJsonDocument doc( write() );
+//    file.write( doc.toJson(QJsonDocument::Compact) );
     file.write( doc.toJson() );
     mDirty = false;
     SdPulsar::sdPulsar->emitProjectStatusChanged( this );
