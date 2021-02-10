@@ -11,4 +11,6 @@ class SdM3dOperator
     virtual void execute() = 0;
   };
 
+using SdM3dOperatorPtr = SdM3dOperator*;
+
 #endif // SDM3DOPERATOR_H

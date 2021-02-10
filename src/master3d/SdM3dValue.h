@@ -9,9 +9,11 @@ class SdM3dValue
     SdM3dValue() {}
     virtual ~SdM3dValue() {}
 
+    virtual char         type() const = 0;
+
     virtual float        toFloat() const { return 0.0; }
 
-    virtual int          toInt() const { return 0; }
+    virtual QColor       toColor() const { return QColor(); }
 
     virtual QString      toString() const { return QString(); }
 
@@ -23,9 +25,11 @@ class SdM3dValue
 
     virtual SdM3dPath    toPath() const { return SdM3dPath(); }
 
+    virtual SdM3dRegion  toRegion() const { return SdM3dRegion(); }
+
     virtual SdM3dFace    toFace() const { return SdM3dFace(); }
 
-    virtual SdM3dFaceSet toFaceSet() const { return SdM3dFaceSet(); }
+    virtual SdM3dModel   toModel() const { return SdM3dModel(); }
   };
 
 using SdM3dValuePtr = SdM3dValue*;

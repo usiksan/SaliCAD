@@ -11,8 +11,8 @@ class SdM3dVariableString : public SdM3dVariable
 
     // SdM3dValue interface
   public:
-    virtual float   toFloat() const override { return mValue.toFloat(); }
-    virtual int     toInt() const override { return mValue.toInt();}
+    virtual char    type() const override { return SDM3D_TYPE_STRING; }
+    //virtual float   toFloat() const override { return mValue.toFloat(); }
     virtual QString toString() const override { return mValue; }
 
     // SdM3dVariable interface
