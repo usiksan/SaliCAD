@@ -34,4 +34,6 @@ class SdM3dValue
 
 using SdM3dValuePtr = SdM3dValue*;
 
+using SdM3dValuePtrList = QList<SdM3dValuePtr>;
+
 #endif // SDM3DVALUE_H

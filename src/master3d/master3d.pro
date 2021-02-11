@@ -10,8 +10,13 @@ CONFIG -= app_bundle
 SOURCES += \
         ../scaner/SdScaner.cpp \
         ../scaner/SdScanerMultyline.cpp \
+        SdM3dArray.cpp \
+        SdM3dArrayVertex.cpp \
         SdM3dBinary.cpp \
+        SdM3dBinaryFloatDiv.cpp \
+        SdM3dBinaryFloatMult.cpp \
         SdM3dBuildSegment.cpp \
+        SdM3dFloat.cpp \
         SdM3dFloatSumm.cpp \
         SdM3dFunBuildBox.cpp \
         SdM3dFunBuildRect.cpp \
@@ -42,8 +47,13 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
   ../scaner/SdScaner.h \
   ../scaner/SdScanerMultyline.h \
+  SdM3dArray.h \
+  SdM3dArrayVertex.h \
   SdM3dBinary.h \
+  SdM3dBinaryFloatDiv.h \
+  SdM3dBinaryFloatMult.h \
   SdM3dBuildSegment.h \
+  SdM3dFloat.h \
   SdM3dFloatSumm.h \
   SdM3dFunBuildBox.h \
   SdM3dFunBuildRect.h \
