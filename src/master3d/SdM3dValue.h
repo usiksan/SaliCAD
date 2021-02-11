@@ -9,7 +9,7 @@ class SdM3dValue
     SdM3dValue() {}
     virtual ~SdM3dValue() {}
 
-    virtual char         type() const = 0;
+    virtual char         type() const { return SDM3D_TYPE_NONE; }
 
     virtual float        toFloat() const { return 0.0; }
 

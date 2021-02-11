@@ -13,3 +13,8 @@ SdM3dFunction::~SdM3dFunction()
     else delete mParamList[i];
   }
 
+void SdM3dFunction::paramSet(int index, SdM3dValuePtr param)
+  {
+  mParamList[index] = param;
+  }
+

@@ -10,6 +10,8 @@ CONFIG -= app_bundle
 SOURCES += \
         ../scaner/SdScaner.cpp \
         ../scaner/SdScanerMultyline.cpp \
+        SdM3dArrayFace.cpp \
+        SdM3dArraySegment.cpp \
         SdM3dArrayVertex.cpp \
         SdM3dBinaryFloatAdd.cpp \
         SdM3dBinaryFloatSub.cpp \
@@ -48,6 +50,8 @@ HEADERS += \
   ../scaner/SdScaner.h \
   ../scaner/SdScanerMultyline.h \
   SdM3dArray.h \
+  SdM3dArrayFace.h \
+  SdM3dArraySegment.h \
   SdM3dArrayVertex.h \
   SdM3dBinary.h \
   SdM3dBinaryFloatAdd.h \

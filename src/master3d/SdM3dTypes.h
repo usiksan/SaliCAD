@@ -7,6 +7,7 @@
 #include <QList>
 #include <QColor>
 
+#define SDM3D_TYPE_NONE    'n'
 #define SDM3D_TYPE_FLOAT   'd'
 #define SDM3D_TYPE_COLOR   'c'
 #define SDM3D_TYPE_STRING  's'

@@ -31,6 +31,7 @@ class SdM3dParser
     SdM3dValue    *parseMinus();
     SdM3dValue    *parseVar();
     SdM3dValue    *parseFunction( const QString &functionName );
+    SdM3dValue    *failValue() const;
     //parenthesis
   };
 
