@@ -5,25 +5,32 @@
 #include "SdM3dOperator.h"
 #include "SdM3dScaner.h"
 #include "SdM3dVariable.h"
+#include "SdM3dFunction.h"
 
 #include <QMap>
+#include <functional>
+
+using SdM3dFunctionBuilder = std::function<SdM3dFunction* ()>;
 
 class SdM3dParser
   {
-    SdM3dScaner                  mScaner;
-    QMap<QString,SdM3dVariable*> mVaribales;
+    SdM3dScaner                        mScaner;
+    QMap<QString,SdM3dVariable*>       mVaribales;
+    QMap<QString,SdM3dFunctionBuilder> mFunctions;
   public:
     SdM3dParser();
 
     SdM3dOperator *parse( const QString src );
 
+    void addFunction( const QString functionName, SdM3dFunctionBuilder functionBuilder ) { mFunctions.insert( functionName, functionBuilder ); }
   private:
     SdM3dOperator *parseOperator();
     SdM3dValue    *parseExpression();
     SdM3dValue    *parseMultDiv();
     SdM3dValue    *parsePlusMinus();
-    //SdM3dValue    *parseMult();
+    SdM3dValue    *parseMinus();
     SdM3dValue    *parseVar();
+    SdM3dValue    *parseFunction( const QString &functionName );
     //parenthesis
   };
 

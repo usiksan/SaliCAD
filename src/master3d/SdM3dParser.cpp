@@ -6,6 +6,11 @@
 #include "SdM3dFloat.h"
 #include "SdM3dArrayVertex.h"
 #include "SdM3dBinaryFloatMult.h"
+#include "SdM3dBinaryFloatDiv.h"
+#include "SdM3dBinaryFloatAdd.h"
+#include "SdM3dBinaryFloatSub.h"
+#include "SdM3dUnaryFloatMinus.h"
+#include "SdM3dReference.h"
 
 SdM3dParser::SdM3dParser()
   {
@@ -77,7 +82,32 @@ SdM3dValue *SdM3dParser::parsePlusMinus()
   {
   SdM3dValue *val = parseMultDiv();
 
+  while( !mScaner.isEndOfScanOrError() ) {
+    if( mScaner.matchToken('+') ) {
+      SdM3dValue *val2 = parseVar();
+      if( val->type() != SDM3D_TYPE_FLOAT || val2 == nullptr || val2->type() != SDM3D_TYPE_FLOAT ) {
+        mScaner.error( QStringLiteral("Invalid types of add operation. Both must be float.") );
+        delete val;
+        return val2;
+        }
+      val = new SdM3dBinaryFloatAdd( val, val2 );
+      }
+    else if( mScaner.matchToken('-') ) {
+      SdM3dValue *val2 = parseVar();
+      if( val->type() != SDM3D_TYPE_FLOAT || val2 == nullptr || val2->type() != SDM3D_TYPE_FLOAT ) {
+        mScaner.error( QStringLiteral("Invalid types of sub operation. Both must be float.") );
+        delete val;
+        return val2;
+        }
+      val = new SdM3dBinaryFloatSub( val, val2 );
+      }
+    else break;
+    }
+  return val;
   }
+
+
+
 
 
 SdM3dValue *SdM3dParser::parseMultDiv()
@@ -97,10 +127,11 @@ SdM3dValue *SdM3dParser::parseMultDiv()
     else if( mScaner.matchToken('/') ) {
       SdM3dValue *val2 = parseVar();
       if( val->type() != SDM3D_TYPE_FLOAT || val2 == nullptr || val2->type() != SDM3D_TYPE_FLOAT ) {
-        mScaner.error( QStringLiteral("Invalid types of multiply operation. Both must be float.") );
+        mScaner.error( QStringLiteral("Invalid types of divide operation. Both must be float.") );
         delete val;
         return val2;
         }
+      val = new SdM3dBinaryFloatDiv( val, val2 );
       }
     else break;
     }
@@ -108,10 +139,42 @@ SdM3dValue *SdM3dParser::parseMultDiv()
   }
 
 
+
+
+
+SdM3dValue *SdM3dParser::parseMinus()
+  {
+  if( mScaner.matchToken( '-' ) ) {
+    SdM3dValue *val = parseMinus();
+    if( val == nullptr || val->type() != SDM3D_TYPE_FLOAT ) {
+      mScaner.error( QStringLiteral("Invalid type of unary minus operation. Must be float.") );
+      return val;
+      }
+    return new SdM3dUnaryFloatMinus( val );
+    }
+  return parseVar();
+  }
+
+
+
+
+
+
+
 SdM3dValue *SdM3dParser::parseVar()
   {
   if( mScaner.token() == 'n' ) {
     //Variable or function
+    QString name = mScaner.tokenValue();
+    mScaner.tokenNext();
+    if( mScaner.matchToken('(') )
+      return parseFunction( name );
+
+    if( mVaribales.contains(name) )
+      return new SdM3dReference( mVaribales.value(name) );
+
+    mScaner.error( QStringLiteral("Undefined variable '%1'").arg(name) );
+    return nullptr;
     }
 
   else if( mScaner.token() == 'd' ) {
@@ -152,6 +215,47 @@ SdM3dValue *SdM3dParser::parseVar()
     return val;
     }
 
+  return nullptr;
+  }
+
+
+
+
+SdM3dValue *SdM3dParser::parseFunction(const QString &functionName)
+  {
+  if( mFunctions.contains(functionName) ) {
+    SdM3dFunction *function = mFunctions.value(functionName) ();
+    for( int i = 0; i < function->paramCount(); i++ ) {
+      SdM3dValue *param = parseExpression();
+      if( param == nullptr ) {
+        delete function;
+        return nullptr;
+        }
+      if( param->type() != function->paramType(i) ) {
+        mScaner.error( QStringLiteral("Invalid function param %1").arg(i) );
+        delete param;
+        delete function;
+        return nullptr;
+        }
+      function->paramSet( i, param );
+
+      if( i + 1 < function->paramCount() ) {
+        if( !mScaner.tokenNeed( ',', QStringLiteral("Need comma") ) ) {
+          delete function;
+          return nullptr;
+          }
+        }
+      else {
+        if( !mScaner.tokenNeed( ')', QStringLiteral("Need closing )") ) ) {
+          delete function;
+          return nullptr;
+          }
+        }
+      }
+    return function;
+    }
+
+  mScaner.error( QStringLiteral("No function '%1'").arg(functionName) );
   return nullptr;
   }
 

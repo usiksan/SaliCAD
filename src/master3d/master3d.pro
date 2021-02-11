@@ -10,11 +10,9 @@ CONFIG -= app_bundle
 SOURCES += \
         ../scaner/SdScaner.cpp \
         ../scaner/SdScanerMultyline.cpp \
-        SdM3dArray.cpp \
         SdM3dArrayVertex.cpp \
-        SdM3dBinary.cpp \
-        SdM3dBinaryFloatDiv.cpp \
-        SdM3dBinaryFloatMult.cpp \
+        SdM3dBinaryFloatAdd.cpp \
+        SdM3dBinaryFloatSub.cpp \
         SdM3dBuildSegment.cpp \
         SdM3dFloat.cpp \
         SdM3dFloatSumm.cpp \
@@ -29,9 +27,11 @@ SOURCES += \
         SdM3dOperatorAssign.cpp \
         SdM3dOperatorBlock.cpp \
         SdM3dParser.cpp \
+        SdM3dReference.cpp \
         SdM3dScaner.cpp \
         SdM3dSumm.cpp \
         SdM3dUnary.cpp \
+        SdM3dUnaryFloatMinus.cpp \
         SdM3dValue.cpp \
         SdM3dVariable.cpp \
         SdM3dVariableFloat.cpp \
@@ -50,8 +50,10 @@ HEADERS += \
   SdM3dArray.h \
   SdM3dArrayVertex.h \
   SdM3dBinary.h \
+  SdM3dBinaryFloatAdd.h \
   SdM3dBinaryFloatDiv.h \
   SdM3dBinaryFloatMult.h \
+  SdM3dBinaryFloatSub.h \
   SdM3dBuildSegment.h \
   SdM3dFloat.h \
   SdM3dFloatSumm.h \
@@ -66,10 +68,12 @@ HEADERS += \
   SdM3dOperatorAssign.h \
   SdM3dOperatorBlock.h \
   SdM3dParser.h \
+  SdM3dReference.h \
   SdM3dScaner.h \
   SdM3dSumm.h \
   SdM3dTypes.h \
   SdM3dUnary.h \
+  SdM3dUnaryFloatMinus.h \
   SdM3dValue.h \
   SdM3dVariable.h \
   SdM3dVariableFloat.h \

@@ -5,9 +5,11 @@
 
 class SdM3dUnary : public SdM3dValue
   {
+  protected:
     SdM3dValuePtr mOperand;
   public:
-    SdM3dUnary();
+    SdM3dUnary( SdM3dValuePtr op ) : SdM3dValue(), mOperand(op) {}
+    ~SdM3dUnary() { delete mOperand; }
   };
 
 #endif // SDM3DUNARY_H
