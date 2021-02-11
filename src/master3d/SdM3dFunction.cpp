@@ -1,10 +1,17 @@
 #include "SdM3dFunction.h"
 
-SdM3dFunction::SdM3dFunction()
+
+
+SdM3dFunction::SdM3dFunction(char resultType, int paramCount, std::initializer_list<char> paramTypes) :
+  mResultType(resultType),
+  mParamCount(paramCount),
+  mParamTypes(paramTypes.begin())
   {
   for( int i = 0; i < SDM3D_MAX_PARAM; i++ )
     mParamList[i] = nullptr;
   }
+
+
 
 SdM3dFunction::~SdM3dFunction()
   {
@@ -13,8 +20,7 @@ SdM3dFunction::~SdM3dFunction()
     else delete mParamList[i];
   }
 
-void SdM3dFunction::paramSet(int index, SdM3dValuePtr param)
-  {
-  mParamList[index] = param;
-  }
+
+
+
 

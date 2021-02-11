@@ -1,27 +1,19 @@
 #include "SdM3dFunBuildRect.h"
 
-SdM3dFunBuildRect::SdM3dFunBuildRect()
+SdM3dFunBuildRect::SdM3dFunBuildRect() :
+  SdM3dFunction( SDM3D_TYPE_REGION, 2, { SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT } )
   {
 
   }
 
 
-char SdM3dFunBuildRect::type() const
-  {
-  }
 
 SdM3dRegion SdM3dFunBuildRect::toRegion() const
   {
   return rectXY( mParamList[0]->toFloat(), mParamList[1]->toFloat() );
   }
 
-int SdM3dFunBuildRect::paramCount() const
-  {
-  }
 
-char SdM3dFunBuildRect::paramType(int index) const
-  {
-  }
 
 
 

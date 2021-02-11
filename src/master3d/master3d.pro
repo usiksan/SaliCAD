@@ -13,8 +13,6 @@ SOURCES += \
         SdM3dArrayFace.cpp \
         SdM3dArraySegment.cpp \
         SdM3dArrayVertex.cpp \
-        SdM3dBinaryFloatAdd.cpp \
-        SdM3dBinaryFloatSub.cpp \
         SdM3dBuildSegment.cpp \
         SdM3dFloat.cpp \
         SdM3dFloatSumm.cpp \

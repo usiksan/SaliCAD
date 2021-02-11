@@ -14,9 +14,13 @@
 #include "SdM3dUnaryFloatMinus.h"
 #include "SdM3dReference.h"
 
+//Functions
+#include "SdM3dFunBuildVertex.h"
+
 SdM3dParser::SdM3dParser()
   {
-
+  //Fill functions
+  addFunction( QStringLiteral("vertex"), [] () -> SdM3dFunction* { return new SdM3dFunBuildVertex(); } );
   }
 
 SdM3dOperator *SdM3dParser::parse(const QString src)
@@ -35,6 +39,9 @@ SdM3dOperator *SdM3dParser::parse(const QString src)
   return block;
   }
 
+
+
+
 SdM3dOperator *SdM3dParser::parseOperator()
   {
   QString variableName = mScaner.tokenNeedValue('n');
@@ -46,13 +53,11 @@ SdM3dOperator *SdM3dParser::parseOperator()
 
   SdM3dValue *val = parseExpression();
 
-  if( val == nullptr )
-    return nullptr;
-
   if( mVaribales.contains(variableName) ) {
     SdM3dVariable *var = mVaribales.value(variableName);
     if( var->type() != val->type() ) {
       //Illegal type
+      mScaner.error( QStringLiteral("Illegal type of assignment") );
       delete val;
       return nullptr;
       }
@@ -64,19 +69,23 @@ SdM3dOperator *SdM3dParser::parseOperator()
   SdM3dVariable *var = nullptr;
   switch( val->type() ) {
     case SDM3D_TYPE_FLOAT  : var = new SdM3dVariableFloat(); break;
+    default:
+      mScaner.error( QStringLiteral("Can't create variable with this type") );
+      //Can't create variable
+      delete val;
+      return nullptr;
     }
-  if( var == nullptr ) {
-    //Can't create variable
-    delete val;
-    return nullptr;
-    }
+
   mVaribales.insert( variableName, var );
   return new SdM3dOperatorAssign( var, val );
   }
 
+
+
+
 SdM3dValue *SdM3dParser::parseExpression()
   {
-  SdM3dValue *val = parsePlusMinus();
+  return parsePlusMinus();
   }
 
 
@@ -87,19 +96,21 @@ SdM3dValue *SdM3dParser::parsePlusMinus()
   while( !mScaner.isEndOfScanOrError() ) {
     if( mScaner.matchToken('+') ) {
       SdM3dValue *val2 = parseVar();
-      if( val->type() != SDM3D_TYPE_FLOAT || val2 == nullptr || val2->type() != SDM3D_TYPE_FLOAT ) {
+      if( val->type() != SDM3D_TYPE_FLOAT || val2->type() != SDM3D_TYPE_FLOAT ) {
         mScaner.error( QStringLiteral("Invalid types of add operation. Both must be float.") );
         delete val;
-        return val2;
+        delete val2;
+        return failValue();
         }
       val = new SdM3dBinaryFloatAdd( val, val2 );
       }
     else if( mScaner.matchToken('-') ) {
       SdM3dValue *val2 = parseVar();
-      if( val->type() != SDM3D_TYPE_FLOAT || val2 == nullptr || val2->type() != SDM3D_TYPE_FLOAT ) {
+      if( val->type() != SDM3D_TYPE_FLOAT || val2->type() != SDM3D_TYPE_FLOAT ) {
         mScaner.error( QStringLiteral("Invalid types of sub operation. Both must be float.") );
         delete val;
-        return val2;
+        delete val2;
+        return failValue();
         }
       val = new SdM3dBinaryFloatSub( val, val2 );
       }
