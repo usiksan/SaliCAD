@@ -11,6 +11,8 @@ class SdM3dValue
 
     virtual char         type() const { return SDM3D_TYPE_NONE; }
 
+    virtual bool         toBool() const { return false; }
+
     virtual float        toFloat() const { return 0.0; }
 
     virtual QColor       toColor() const { return QColor(); }

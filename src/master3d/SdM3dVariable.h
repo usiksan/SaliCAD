@@ -11,4 +11,6 @@ class SdM3dVariable : public SdM3dValue
     virtual void assign( SdM3dValuePtr src ) = 0;
   };
 
+using SdM3dVariablePtr = SdM3dVariable*;
+
 #endif // SDM3DVARIABLE_H

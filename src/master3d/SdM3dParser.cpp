@@ -23,20 +23,29 @@ SdM3dParser::SdM3dParser()
   addFunction( QStringLiteral("vertex"), [] () -> SdM3dFunction* { return new SdM3dFunBuildVertex(); } );
   }
 
-SdM3dOperator *SdM3dParser::parse(const QString src)
+
+
+
+SdM3dProgramm *SdM3dParser::parse(const QString src)
   {
+  //Init scaner with programm source
   mScaner.sourceSetString( src );
   mScaner.tokenNext();
 
-  SdM3dOperatorBlock *block = new SdM3dOperatorBlock();
+  SdM3dProgramm *prog = new SdM3dProgramm();
 
+  //Scan and append all operators of programm
   while( !mScaner.isEndOfScanOrError() ) {
     SdM3dOperator *op = parseOperator();
     if( op != nullptr )
-      block->append( op );
+      prog->append( op );
     }
 
-  return block;
+  //Append variables
+  prog->setVariables( mVaribales.values() );
+  mVaribales.clear();
+
+  return prog;
   }
 
 

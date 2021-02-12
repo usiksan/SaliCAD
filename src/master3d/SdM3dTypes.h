@@ -8,16 +8,17 @@
 #include <QColor>
 
 #define SDM3D_TYPE_NONE    'n'
+#define SDM3D_TYPE_BOOL    'b'
 #define SDM3D_TYPE_FLOAT   'd'
 #define SDM3D_TYPE_COLOR   'c'
 #define SDM3D_TYPE_STRING  's'
 #define SDM3D_TYPE_VERTEX  'v'
-#define SDM3D_TYPE_MATRIX  'm'
+#define SDM3D_TYPE_MATRIX  'x'
 #define SDM3D_TYPE_SEGMENT 'l'
 #define SDM3D_TYPE_PATH    'p'
 #define SDM3D_TYPE_REGION  'r'
 #define SDM3D_TYPE_FACE    'f'
-#define SDM3D_TYPE_MODEL   'b'
+#define SDM3D_TYPE_MODEL   'm'
 
 struct SdM3dSegment {
     QVector3D mStart;  //!< Start vertex of segment

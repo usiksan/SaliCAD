@@ -13,6 +13,10 @@ SOURCES += \
         SdM3dArrayFace.cpp \
         SdM3dArraySegment.cpp \
         SdM3dArrayVertex.cpp \
+        SdM3dBinaryBool.cpp \
+        SdM3dBinaryBoolAnd.cpp \
+        SdM3dBinaryBoolOr.cpp \
+        SdM3dBinaryFloatLess.cpp \
         SdM3dBuildSegment.cpp \
         SdM3dFloat.cpp \
         SdM3dFloatSumm.cpp \
@@ -26,7 +30,9 @@ SOURCES += \
         SdM3dOperator.cpp \
         SdM3dOperatorAssign.cpp \
         SdM3dOperatorBlock.cpp \
+        SdM3dOperatorIf.cpp \
         SdM3dParser.cpp \
+        SdM3dProgramm.cpp \
         SdM3dReference.cpp \
         SdM3dScaner.cpp \
         SdM3dSumm.cpp \
@@ -52,8 +58,12 @@ HEADERS += \
   SdM3dArraySegment.h \
   SdM3dArrayVertex.h \
   SdM3dBinary.h \
+  SdM3dBinaryBool.h \
+  SdM3dBinaryBoolAnd.h \
+  SdM3dBinaryBoolOr.h \
   SdM3dBinaryFloatAdd.h \
   SdM3dBinaryFloatDiv.h \
+  SdM3dBinaryFloatLess.h \
   SdM3dBinaryFloatMult.h \
   SdM3dBinaryFloatSub.h \
   SdM3dBuildSegment.h \
@@ -69,7 +79,9 @@ HEADERS += \
   SdM3dOperator.h \
   SdM3dOperatorAssign.h \
   SdM3dOperatorBlock.h \
+  SdM3dOperatorIf.h \
   SdM3dParser.h \
+  SdM3dProgramm.h \
   SdM3dReference.h \
   SdM3dScaner.h \
   SdM3dSumm.h \
