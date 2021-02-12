@@ -74,7 +74,15 @@ HEADERS += \
   SdM3dVariable.h \
   SdM3dVariableBool.h \
   SdM3dVariableColor.h \
+  SdM3dVariableFace.h \
   SdM3dVariableFloat.h \
+  SdM3dVariableGraph.h \
   SdM3dVariableMatrix.h \
+  SdM3dVariableModel.h \
+  SdM3dVariablePath.h \
+  SdM3dVariablePin.h \
+  SdM3dVariableRegion.h \
+  SdM3dVariableSegment.h \
   SdM3dVariableString.h \
+  SdM3dVariableText.h \
   SdM3dVariableVertex.h

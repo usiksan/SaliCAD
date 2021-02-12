@@ -1,23 +1,42 @@
+
 #include "SdM3dParser.h"
 #include "SdM3dOperatorBlock.h"
 #include "SdM3dOperatorAssign.h"
+#include "SdM3dOperatorIf.h"
+#include "SdM3dOperatorWhile.h"
+
 #include "SdM3dVariableBool.h"
 #include "SdM3dVariableFloat.h"
 #include "SdM3dVariableColor.h"
 #include "SdM3dVariableString.h"
 #include "SdM3dVariableVertex.h"
 #include "SdM3dVariableMatrix.h"
+#include "SdM3dVariableSegment.h"
+#include "SdM3dVariablePath.h"
+#include "SdM3dVariableRegion.h"
+#include "SdM3dVariableFace.h"
+#include "SdM3dVariableModel.h"
+#include "SdM3dVariableGraph.h"
+#include "SdM3dVariableText.h"
+#include "SdM3dVariablePin.h"
+
 #include "SdM3dValue.h"
 #include "SdM3dFloat.h"
+
 #include "SdM3dArrayVertex.h"
 #include "SdM3dArraySegment.h"
 #include "SdM3dArrayFace.h"
+
 #include "SdM3dBinaryFloatMult.h"
 #include "SdM3dBinaryFloatDiv.h"
 #include "SdM3dBinaryFloatAdd.h"
 #include "SdM3dBinaryFloatSub.h"
 #include "SdM3dUnaryFloatMinus.h"
 #include "SdM3dReference.h"
+
+#include "SdM3dBinaryBoolAnd.h"
+#include "SdM3dBinaryBoolOr.h"
+#include "SdM3dBinaryBoolFloatLess.h"
 
 //Functions
 #include "SdM3dFunBuildVertex.h"
@@ -58,9 +77,32 @@ SdM3dProgramm *SdM3dParser::parse(const QString src)
 
 SdM3dOperator *SdM3dParser::parseOperator()
   {
+  if( mScaner.matchToken('{') ) {
+    //Block operator
+    SdM3dOperatorBlock *block = new SdM3dOperatorBlock();
+    while( !mScaner.matchToken('}') && !mScaner.isEndOfScanOrError() ) {
+      SdM3dOperator *op = parseOperator();
+      if( op != nullptr )
+        block->append( op );
+      }
+    return block;
+    }
+
   QString variableName = mScaner.tokenNeedValue('n');
   if( variableName.isEmpty() )
     return nullptr;
+
+  //Keywords
+  if( variableName == QStringLiteral("if") )
+    return parseOperatorIf();
+
+  if( variableName == QStringLiteral("while") )
+    return parseOperatorWhile();
+
+  if( variableName == QStringLiteral("for") ) {
+    mScaner.error( QStringLiteral("Reserved keyword") );
+    return nullptr;
+    }
 
   if( !mScaner.tokenNeed('=', QStringLiteral("Need assign =") )  )
     return nullptr;
@@ -82,12 +124,20 @@ SdM3dOperator *SdM3dParser::parseOperator()
   //Depending on the type of expression, build a variable
   SdM3dVariable *var = nullptr;
   switch( val->type() ) {
-    case SDM3D_TYPE_BOOL   : var = new SdM3dVariableBool(); break;
-    case SDM3D_TYPE_FLOAT  : var = new SdM3dVariableFloat(); break;
-    case SDM3D_TYPE_COLOR  : var = new SdM3dVariableColor(); break;
-    case SDM3D_TYPE_STRING : var = new SdM3dVariableString(); break;
-    case SDM3D_TYPE_VERTEX : var = new SdM3dVariableVertex(); break;
-    case SDM3D_TYPE_MATRIX : var = new SdM3dVariableMatrix(); break;
+    case SDM3D_TYPE_BOOL    : var = new SdM3dVariableBool(); break;
+    case SDM3D_TYPE_FLOAT   : var = new SdM3dVariableFloat(); break;
+    case SDM3D_TYPE_COLOR   : var = new SdM3dVariableColor(); break;
+    case SDM3D_TYPE_STRING  : var = new SdM3dVariableString(); break;
+    case SDM3D_TYPE_VERTEX  : var = new SdM3dVariableVertex(); break;
+    case SDM3D_TYPE_MATRIX  : var = new SdM3dVariableMatrix(); break;
+    case SDM3D_TYPE_SEGMENT : var = new SdM3dVariableSegment(); break;
+    case SDM3D_TYPE_PATH    : var = new SdM3dVariablePath(); break;
+    case SDM3D_TYPE_REGION  : var = new SdM3dVariableRegion(); break;
+    case SDM3D_TYPE_FACE    : var = new SdM3dVariableFace(); break;
+    case SDM3D_TYPE_MODEL   : var = new SdM3dVariableModel(); break;
+    case SDM3D_TYPE_GRAPH   : var = new SdM3dVariableGraph(); break;
+    case SDM3D_TYPE_TEXT    : var = new SdM3dVariableText(); break;
+    case SDM3D_TYPE_PIN     : var = new SdM3dVariablePin(); break;
     default:
       mScaner.error( QStringLiteral("Can't create variable with this type") );
       //Can't create variable
@@ -97,6 +147,68 @@ SdM3dOperator *SdM3dParser::parseOperator()
 
   mVaribales.insert( variableName, var );
   return new SdM3dOperatorAssign( var, val );
+  }
+
+SdM3dOperator *SdM3dParser::parseOperatorIf()
+  {
+  if( !mScaner.tokenNeed('(', QStringLiteral("Need assign (") )  )
+    return nullptr;
+
+  SdM3dValue *condition = parseExpression();
+  if( condition->type() != SDM3D_TYPE_BOOL ) {
+    mScaner.error( "Condition must be bool expression" );
+    delete condition;
+    return nullptr;
+    }
+
+  if( !mScaner.tokenNeed( ')', QStringLiteral("No closing )") ) ) {
+    delete condition;
+    return nullptr;
+    }
+
+  SdM3dOperator *opTrue = parseOperator();
+  if( opTrue == nullptr ) {
+    mScaner.error( QStringLiteral("Need if-else operator") );
+    delete condition;
+    return nullptr;
+    }
+  SdM3dOperator *opFalse = nullptr;
+
+  if( mScaner.token() == 'n' && mScaner.tokenValue() == QStringLiteral("else") ) {
+    mScaner.tokenNext();
+    opFalse = parseOperator();
+    }
+
+  return new SdM3dOperatorIf( condition, opTrue, opFalse );
+  }
+
+
+
+SdM3dOperator *SdM3dParser::parseOperatorWhile()
+  {
+  if( !mScaner.tokenNeed('(', QStringLiteral("Need assign (") )  )
+    return nullptr;
+
+  SdM3dValue *condition = parseExpression();
+  if( condition->type() != SDM3D_TYPE_BOOL ) {
+    mScaner.error( "Condition must be bool expression" );
+    delete condition;
+    return nullptr;
+    }
+
+  if( !mScaner.tokenNeed( ')', QStringLiteral("No closing )") ) ) {
+    delete condition;
+    return nullptr;
+    }
+
+  SdM3dOperator *opTrue = parseOperator();
+  if( opTrue == nullptr ) {
+    mScaner.error( QStringLiteral("Need while operator") );
+    delete condition;
+    return nullptr;
+    }
+
+  return new SdM3dOperatorWhile( condition, opTrue );
   }
 
 

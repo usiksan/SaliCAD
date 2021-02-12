@@ -26,6 +26,8 @@ class SdM3dParser
     void addFunction( const QString functionName, SdM3dFunctionBuilder functionBuilder ) { mFunctions.insert( functionName, functionBuilder ); }
   private:
     SdM3dOperator *parseOperator();
+    SdM3dOperator *parseOperatorIf();
+    SdM3dOperator *parseOperatorWhile();
     SdM3dValue    *parseExpression();
     SdM3dValue    *parseMultDiv();
     SdM3dValue    *parsePlusMinus();
