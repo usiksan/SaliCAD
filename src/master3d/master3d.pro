@@ -13,38 +13,19 @@ SOURCES += \
         SdM3dArrayFace.cpp \
         SdM3dArraySegment.cpp \
         SdM3dArrayVertex.cpp \
-        SdM3dBinaryBool.cpp \
-        SdM3dBinaryBoolAnd.cpp \
-        SdM3dBinaryBoolFloatLess.cpp \
-        SdM3dBinaryBoolOr.cpp \
-        SdM3dBinaryFloat.cpp \
-        SdM3dBuildSegment.cpp \
         SdM3dFloat.cpp \
-        SdM3dFloatSumm.cpp \
         SdM3dFunBuildBox.cpp \
         SdM3dFunBuildRect.cpp \
         SdM3dFunBuildVertex.cpp \
         SdM3dFunExtrudeModel.cpp \
         SdM3dFunTransferRegion.cpp \
         SdM3dFunction.cpp \
-        SdM3dOperation.cpp \
-        SdM3dOperator.cpp \
-        SdM3dOperatorAssign.cpp \
         SdM3dOperatorBlock.cpp \
         SdM3dOperatorIf.cpp \
+        SdM3dOperatorWhile.cpp \
         SdM3dParser.cpp \
         SdM3dProgramm.cpp \
-        SdM3dReference.cpp \
         SdM3dScaner.cpp \
-        SdM3dSumm.cpp \
-        SdM3dUnary.cpp \
-        SdM3dUnaryBoolNeg.cpp \
-        SdM3dUnaryFloatMinus.cpp \
-        SdM3dValue.cpp \
-        SdM3dVariable.cpp \
-        SdM3dVariableFloat.cpp \
-        SdM3dVariableString.cpp \
-        SdM3dVariableVertex.cpp \
         main.cpp
 
 # Default rules for deployment.
@@ -69,31 +50,31 @@ HEADERS += \
   SdM3dBinaryFloatDiv.h \
   SdM3dBinaryFloatMult.h \
   SdM3dBinaryFloatSub.h \
-  SdM3dBuildSegment.h \
   SdM3dFloat.h \
-  SdM3dFloatSumm.h \
   SdM3dFunBuildBox.h \
   SdM3dFunBuildRect.h \
   SdM3dFunBuildVertex.h \
   SdM3dFunExtrudeModel.h \
   SdM3dFunTransferRegion.h \
   SdM3dFunction.h \
-  SdM3dOperation.h \
   SdM3dOperator.h \
   SdM3dOperatorAssign.h \
   SdM3dOperatorBlock.h \
   SdM3dOperatorIf.h \
+  SdM3dOperatorWhile.h \
   SdM3dParser.h \
   SdM3dProgramm.h \
   SdM3dReference.h \
   SdM3dScaner.h \
-  SdM3dSumm.h \
   SdM3dTypes.h \
   SdM3dUnary.h \
   SdM3dUnaryBoolNeg.h \
   SdM3dUnaryFloatMinus.h \
   SdM3dValue.h \
   SdM3dVariable.h \
+  SdM3dVariableBool.h \
+  SdM3dVariableColor.h \
   SdM3dVariableFloat.h \
+  SdM3dVariableMatrix.h \
   SdM3dVariableString.h \
   SdM3dVariableVertex.h

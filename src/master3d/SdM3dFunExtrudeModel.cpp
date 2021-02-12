@@ -1,36 +1,22 @@
 #include "SdM3dFunExtrudeModel.h"
 #include "SdM3dFunTransferRegion.h"
 
-SdM3dFunExtrudeModel::SdM3dFunExtrudeModel()
+SdM3dFunExtrudeModel::SdM3dFunExtrudeModel() :
+  SdM3dFunction( SDM3D_TYPE_MODEL, 3, { SDM3D_TYPE_REGION,
+                 SDM3D_TYPE_VERTEX,
+                 SDM3D_TYPE_COLOR} )
   {
 
   }
 
 
-char SdM3dFunExtrudeModel::type() const
-  {
-  return SDM3D_TYPE_MODEL;
-  }
+
 
 SdM3dModel SdM3dFunExtrudeModel::toModel() const
   {
   return model( mParamList[0]->toRegion(), mParamList[1]->toVertex(), mParamList[2]->toColor() );
   }
 
-int SdM3dFunExtrudeModel::paramCount() const
-  {
-  return 3;
-  }
-
-char SdM3dFunExtrudeModel::paramType(int index) const
-  {
-  static const char pt[] = {
-    SDM3D_TYPE_REGION,
-    SDM3D_TYPE_VERTEX,
-    SDM3D_TYPE_COLOR
-  };
-  return pt[index];
-  }
 
 
 

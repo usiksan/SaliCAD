@@ -18,7 +18,7 @@ void SdM3dScaner::tokenNext()
         }
       else if( mLine.at(mIndex).isDigit() ) {
         scanDouble( true, false );
-        mToken = 'f';
+        mToken = 'd';
         }
       else if( mLine.at(mIndex) == QChar('#') ) {
         //Remark found. Skeep line

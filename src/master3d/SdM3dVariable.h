@@ -6,7 +6,7 @@
 class SdM3dVariable : public SdM3dValue
   {
   public:
-    SdM3dVariable();
+    SdM3dVariable() : SdM3dValue() {}
 
     virtual void assign( SdM3dValuePtr src ) = 0;
   };

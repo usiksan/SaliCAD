@@ -5,7 +5,7 @@
 class SdM3dOperator
   {
   public:
-    SdM3dOperator();
+    SdM3dOperator() {}
     virtual ~SdM3dOperator() {}
 
     virtual void execute() = 0;

@@ -13,6 +13,6 @@ SdM3dOperatorBlock::~SdM3dOperatorBlock()
 
 void SdM3dOperatorBlock::execute()
   {
-  for( auto ptr : mOperatorList )
+  for( auto ptr : qAsConst(mOperatorList) )
     ptr->execute();
   }

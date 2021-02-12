@@ -12,6 +12,7 @@ void SdScanerMultyline::sourceSetStringList(QStringList lines)
   {
   mLines = lines;
   mLineIndex = 0;
+  mEndOfScan = false;
   }
 
 

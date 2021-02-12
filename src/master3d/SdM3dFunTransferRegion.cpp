@@ -1,26 +1,19 @@
 #include "SdM3dFunTransferRegion.h"
 
-SdM3dFunTransferRegion::SdM3dFunTransferRegion()
+SdM3dFunTransferRegion::SdM3dFunTransferRegion() :
+  SdM3dFunction( SDM3D_TYPE_REGION, 2, { SDM3D_TYPE_REGION, SDM3D_TYPE_VERTEX } )
   {
 
   }
 
 
-char SdM3dFunTransferRegion::type() const
-  {
-  }
 
 SdM3dRegion SdM3dFunTransferRegion::toRegion() const
   {
+  return transfer( mParamList[0]->toRegion(), mParamList[1]->toVertex() );
   }
 
-int SdM3dFunTransferRegion::paramCount() const
-  {
-  }
 
-char SdM3dFunTransferRegion::paramType(int index) const
-  {
-  }
 
 SdM3dRegion SdM3dFunTransferRegion::transfer(SdM3dRegion r, QVector3D vertex)
   {

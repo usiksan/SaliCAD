@@ -1,7 +1,12 @@
 #include "SdM3dParser.h"
 #include "SdM3dOperatorBlock.h"
 #include "SdM3dOperatorAssign.h"
+#include "SdM3dVariableBool.h"
 #include "SdM3dVariableFloat.h"
+#include "SdM3dVariableColor.h"
+#include "SdM3dVariableString.h"
+#include "SdM3dVariableVertex.h"
+#include "SdM3dVariableMatrix.h"
 #include "SdM3dValue.h"
 #include "SdM3dFloat.h"
 #include "SdM3dArrayVertex.h"
@@ -77,7 +82,12 @@ SdM3dOperator *SdM3dParser::parseOperator()
   //Depending on the type of expression, build a variable
   SdM3dVariable *var = nullptr;
   switch( val->type() ) {
+    case SDM3D_TYPE_BOOL   : var = new SdM3dVariableBool(); break;
     case SDM3D_TYPE_FLOAT  : var = new SdM3dVariableFloat(); break;
+    case SDM3D_TYPE_COLOR  : var = new SdM3dVariableColor(); break;
+    case SDM3D_TYPE_STRING : var = new SdM3dVariableString(); break;
+    case SDM3D_TYPE_VERTEX : var = new SdM3dVariableVertex(); break;
+    case SDM3D_TYPE_MATRIX : var = new SdM3dVariableMatrix(); break;
     default:
       mScaner.error( QStringLiteral("Can't create variable with this type") );
       //Can't create variable
