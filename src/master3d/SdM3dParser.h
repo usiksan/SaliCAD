@@ -29,8 +29,11 @@ class SdM3dParser
     SdM3dOperator *parseOperatorIf();
     SdM3dOperator *parseOperatorWhile();
     SdM3dValue    *parseExpression();
-    SdM3dValue    *parseMultDiv();
+    SdM3dValue    *parseAnd();
+    SdM3dValue    *parseOr();
+    SdM3dValue    *parseNot();
     SdM3dValue    *parsePlusMinus();
+    SdM3dValue    *parseMultDiv();
     SdM3dValue    *parseMinus();
     SdM3dValue    *parseVar();
     SdM3dValue    *parseFunction( const QString &functionName );

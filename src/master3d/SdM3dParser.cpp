@@ -37,6 +37,7 @@
 #include "SdM3dBinaryBoolAnd.h"
 #include "SdM3dBinaryBoolOr.h"
 #include "SdM3dBinaryBoolFloatLess.h"
+#include "SdM3dUnaryBoolNot.h"
 
 //Functions
 #include "SdM3dFunBuildVertex.h"
@@ -216,8 +217,72 @@ SdM3dOperator *SdM3dParser::parseOperatorWhile()
 
 SdM3dValue *SdM3dParser::parseExpression()
   {
+  return parseAnd();
+  }
+
+
+
+
+SdM3dValue *SdM3dParser::parseAnd()
+  {
+  SdM3dValue *val = parseOr();
+
+  while( !mScaner.isEndOfScanOrError() ) {
+    if( mScaner.matchToken('&') ) {
+      SdM3dValue *val2 = parseVar();
+      if( val->type() != SDM3D_TYPE_BOOL || val2->type() != SDM3D_TYPE_BOOL ) {
+        mScaner.error( QStringLiteral("Invalid types of AND operation. Both must be bool.") );
+        delete val;
+        delete val2;
+        return failValue();
+        }
+      val = new SdM3dBinaryBoolAnd( val, val2 );
+      }
+    else break;
+    }
+  return val;
+  }
+
+
+
+
+SdM3dValue *SdM3dParser::parseOr()
+  {
+  SdM3dValue *val = parsePlusMinus();
+
+  while( !mScaner.isEndOfScanOrError() ) {
+    if( mScaner.matchToken('|') ) {
+      SdM3dValue *val2 = parseVar();
+      if( val->type() != SDM3D_TYPE_BOOL || val2->type() != SDM3D_TYPE_BOOL ) {
+        mScaner.error( QStringLiteral("Invalid types of OR operation. Both must be bool.") );
+        delete val;
+        delete val2;
+        return failValue();
+        }
+      val = new SdM3dBinaryBoolOr( val, val2 );
+      }
+    else break;
+    }
+  return val;
+  }
+
+
+
+
+SdM3dValue *SdM3dParser::parseNot()
+  {
+  if( mScaner.matchToken( '!' ) ) {
+    SdM3dValue *val = parseNot();
+    if( val->type() != SDM3D_TYPE_BOOL ) {
+      mScaner.error( QStringLiteral("Invalid type of unary not operation. Must be bool.") );
+      delete val;
+      return failValue();
+      }
+    return new SdM3dUnaryBoolNot( val );
+    }
   return parsePlusMinus();
   }
+
 
 
 SdM3dValue *SdM3dParser::parsePlusMinus()

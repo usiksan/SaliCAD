@@ -68,7 +68,7 @@ HEADERS += \
   SdM3dScaner.h \
   SdM3dTypes.h \
   SdM3dUnary.h \
-  SdM3dUnaryBoolNeg.h \
+  SdM3dUnaryBoolNot.h \
   SdM3dUnaryFloatMinus.h \
   SdM3dValue.h \
   SdM3dVariable.h \
