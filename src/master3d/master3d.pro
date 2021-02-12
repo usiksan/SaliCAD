@@ -15,8 +15,9 @@ SOURCES += \
         SdM3dArrayVertex.cpp \
         SdM3dBinaryBool.cpp \
         SdM3dBinaryBoolAnd.cpp \
+        SdM3dBinaryBoolFloatLess.cpp \
         SdM3dBinaryBoolOr.cpp \
-        SdM3dBinaryFloatLess.cpp \
+        SdM3dBinaryFloat.cpp \
         SdM3dBuildSegment.cpp \
         SdM3dFloat.cpp \
         SdM3dFloatSumm.cpp \
@@ -37,6 +38,7 @@ SOURCES += \
         SdM3dScaner.cpp \
         SdM3dSumm.cpp \
         SdM3dUnary.cpp \
+        SdM3dUnaryBoolNeg.cpp \
         SdM3dUnaryFloatMinus.cpp \
         SdM3dValue.cpp \
         SdM3dVariable.cpp \
@@ -60,10 +62,11 @@ HEADERS += \
   SdM3dBinary.h \
   SdM3dBinaryBool.h \
   SdM3dBinaryBoolAnd.h \
+  SdM3dBinaryBoolFloatLess.h \
   SdM3dBinaryBoolOr.h \
+  SdM3dBinaryFloat.h \
   SdM3dBinaryFloatAdd.h \
   SdM3dBinaryFloatDiv.h \
-  SdM3dBinaryFloatLess.h \
   SdM3dBinaryFloatMult.h \
   SdM3dBinaryFloatSub.h \
   SdM3dBuildSegment.h \
@@ -87,6 +90,7 @@ HEADERS += \
   SdM3dSumm.h \
   SdM3dTypes.h \
   SdM3dUnary.h \
+  SdM3dUnaryBoolNeg.h \
   SdM3dUnaryFloatMinus.h \
   SdM3dValue.h \
   SdM3dVariable.h \

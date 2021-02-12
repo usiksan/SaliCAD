@@ -1,16 +1,15 @@
 #ifndef SDM3DBINARYFLOATDIV_H
 #define SDM3DBINARYFLOATDIV_H
 
-#include "SdM3dBinary.h"
+#include "SdM3dBinaryFloat.h"
 
-class SdM3dBinaryFloatDiv : public SdM3dBinary
+class SdM3dBinaryFloatDiv : public SdM3dBinaryFloat
   {
   public:
-    SdM3dBinaryFloatDiv( SdM3dValue *first, SdM3dValue *second ) : SdM3dBinary( first, second ) {}
+    SdM3dBinaryFloatDiv( SdM3dValue *first, SdM3dValue *second ) : SdM3dBinaryFloat( first, second ) {}
 
     // SdM3dValue interface
   public:
-    virtual char  type() const override { return SDM3D_TYPE_FLOAT; }
     virtual float toFloat() const override {
       float second = mSecondOperand->toFloat();
       if( second == 0 ) second = 0.001;
