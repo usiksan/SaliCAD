@@ -21,6 +21,7 @@ Description
 #include "windows/SdPNewProjectItem_SelectType.h"
 #include "windows/SdPNewProjectItem_EnterName.h"
 #include "windows/SdPNewProjectItem_Master.h"
+#include "windows/SdPNewProjectItem_3dMaster.h"
 #include "windows/SdPNewProjectItem_Copy.h"
 #include "windows/SdPNewProjectItem.h"
 #include "windows/SdWCommand.h"
@@ -164,10 +165,11 @@ void SdWProjectTree::cmObjectNew()
   //Wizard
   QWizard wizard(this);
   //Fill it with pages
-  wizard.setPage( SDP_NPI_TYPE,   new SdPNewProjectItem_SelectType( &item, mProject, &wizard) );
-  wizard.setPage( SDP_NPI_NAME,   new SdPNewProjectItem_EnterName( &item, mProject, &wizard, false ) );
-  wizard.setPage( SDP_NPI_MASTER, new SdPNewProjectItem_Master( &item, mProject, &wizard) );
-  wizard.setPage( SDP_NPI_COPY,   new SdPNewProjectItem_Copy( &item, mProject, &wizard) );
+  wizard.setPage( SDP_NPI_TYPE,      new SdPNewProjectItem_SelectType( &item, mProject, &wizard) );
+  wizard.setPage( SDP_NPI_NAME,      new SdPNewProjectItem_EnterName( &item, mProject, &wizard, false ) );
+  wizard.setPage( SDP_NPI_MASTER,    new SdPNewProjectItem_Master( &item, mProject, &wizard) );
+  wizard.setPage( SDP_NPI_3D_MASTER, new SdPNewProjectItem_3dMaster( &item, mProject, &wizard ) );
+  wizard.setPage( SDP_NPI_COPY,      new SdPNewProjectItem_Copy( &item, mProject, &wizard) );
   if( wizard.exec() ) {
     //Append item to the project
     item->setHand();

@@ -338,7 +338,9 @@ History
 #define stdParamVcbo                 QStringLiteral("Vcbo")
 #define stdParamVceo                 QStringLiteral("Vceo")
 #define stdParamHFE                  QStringLiteral("hFE")
-
+//3d model programm
+#define stdParam3dModelProgramm      QStringLiteral("3dModelProgramm")
+#define stdParam3dModelDescription   QStringLiteral("3dModelDescription")
 
 #endif // SDCONFIG
 

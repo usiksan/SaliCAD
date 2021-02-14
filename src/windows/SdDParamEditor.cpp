@@ -154,7 +154,10 @@ QStringList SdDParamEditor::defParamList()
     stdParamIc,
     stdParamVcbo,
     stdParamVceo,
-    stdParamHFE };
+    stdParamHFE,
+    //3d model
+    stdParam3dModelProgramm
+    };
 
   return list;
   }
@@ -211,6 +214,8 @@ QString SdDParamEditor::defParamDescription(QString paramName)
     map.insert( stdParamVcbo, tr("Transistor maximum Voltage which it can withstand on its collector measured relative to its base with the emitter open circuit") );
     map.insert( stdParamVceo, tr("Transistor maximum voltage which it can withstand on its collector measured relative to its emitter with the base open circuit") );
     map.insert( stdParamHFE, tr("Transistor current-gain koef") );
+    //3d model
+    map.insert( stdParam3dModelProgramm, tr("Description for 3d model programm") );
     }
   return map.value( paramName );
   }

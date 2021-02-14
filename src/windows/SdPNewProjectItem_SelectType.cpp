@@ -128,6 +128,10 @@ int SdPNewProjectItem_SelectType::nextId() const
     if( defaultOrder == 1 && defaultClass != 0 )
       return SDP_NPI_COPY;
 
+    //Use 3d part master
+    if( defaultOrder == 4 && defaultClass == 3 )
+      return SDP_NPI_3D_MASTER;
+
     //Use master
     return SDP_NPI_MASTER;
     }
@@ -145,6 +149,7 @@ void SdPNewProjectItem_SelectType::classChanged(int index)
   mDescriptions.clear();
   switch(index) {
     case 0 :
+      //Schematic sheet
       mCreationOrder->addItem( tr("Empty sheet") );
       mDescriptions.append( tr("Creates empty schematic sheet with no any component or graphics.") );
       mCreationOrder->addItem( tr("Sheet master") );
@@ -155,11 +160,15 @@ void SdPNewProjectItem_SelectType::classChanged(int index)
 //      mDescriptions.append( tr("Creates copy of existing schematic sheet") );
       //mCreationType->addItem( tr(""));
       break;
+
     case 1 :
+      //PCB
       mCreationOrder->addItem( tr("Empty construction") );
       mDescriptions.append( tr("Creates empty construction or pcb") );
       break;
+
     case 2 :
+      //Schematic symbol
       mCreationOrder->addItem( tr("Empty symbol") );
       mDescriptions.append( tr("Creates empty schematic component section symbol with no any pins or graphics.") );
       mCreationOrder->addItem( tr("Copy existing symbol") );
@@ -167,25 +176,34 @@ void SdPNewProjectItem_SelectType::classChanged(int index)
       mCreationOrder->addItem( tr("Symbol master") );
       mDescriptions.append( tr("Start master which guide you to create symbol") );
       break;
+
     case 3 :
+      //Part
       mCreationOrder->addItem( tr("Empty part") );
       mDescriptions.append( tr("Creates empty component part with no any pins or graphics.") );
       mCreationOrder->addItem( tr("Copy existing part") );
       mDescriptions.append( tr("Creates copy of existing component part") );
       mCreationOrder->addItem( tr("Part master") );
       mDescriptions.append( tr("Start master which guide you to create part") );
+      mCreationOrder->addItem( tr("3D part master") );
+      mDescriptions.append( tr("Start master which guide you to create part and its 3d model") );
       break;
+
     case 4 :
+      //Component as combination schematic symbol and part with some param
       mCreationOrder->addItem( tr("Empty component") );
       mDescriptions.append( tr("Creates empty component as pair schematic and part with no any schematic or part.") );
       mCreationOrder->addItem( tr("Copy existing component") );
       mDescriptions.append( tr("Creates copy of existing component") );
       break;
+
     case 5 :
+      //Simple text
       mCreationOrder->addItem( tr("Empty text") );
       //mCreationOrder->addItem( tr("Element list") );
       //mCreationOrder->addItem( tr("Specification") );
       break;
+
     }
   if( mCreationOrder->count() ) {
     mCreationOrder->setCurrentRow( 0 );

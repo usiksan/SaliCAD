@@ -70,6 +70,7 @@ SOURCES += \
     windows/SdDExpressionEdit.cpp \
     windows/SdDOptionsPageLibrary.cpp \
     windows/SdExpression.cpp \
+    windows/SdPNewProjectItem_3dMaster.cpp \
     windows/SdWEditor3d.cpp \
     windows/SdWEditor3dPart.cpp \
     windows/SdWExpressor.cpp \
@@ -382,6 +383,7 @@ HEADERS  += \
     windows/SdDExpressionEdit.h \
     windows/SdDOptionsPageLibrary.h \
     windows/SdExpression.h \
+    windows/SdPNewProjectItem_3dMaster.h \
     windows/SdWEditor3d.h \
     windows/SdWEditor3dPart.h \
     windows/SdWExpressor.h \

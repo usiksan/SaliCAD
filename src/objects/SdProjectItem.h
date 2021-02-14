@@ -33,16 +33,16 @@ class SdWEditorGraph;
 
 class SdProjectItem : public SdContainer
   {
-    QString                mTitle;      //Item title
-    QString                mAuthor;     //Item author (registered program copy name)
-    int                    mCreateTime; //Create time with sec from 2000year
-    bool                   mAuto;       //True if item inserted automatic as reference from other item
-    bool                   mEditEnable; //True if edit enable for this object
+    QString                mTitle;      //!< Item title
+    QString                mAuthor;     //!< Item author (registered program copy name)
+    int                    mCreateTime; //!< Create time with sec from 2000year
+    bool                   mAuto;       //!< True if item inserted automatic as reference from other item
+    bool                   mEditEnable; //!< True if edit enable for this object
   protected:
-    SdPoint                mOrigin;     //Origin for object
+    SdPoint                mOrigin;     //!< Origin for object
   public:
-    QTreeWidgetItem       *mTreeItem;   //Correspond visual tree item
-    bool                   mThereNewer; //In library present newer object
+    QTreeWidgetItem       *mTreeItem;   //!< Correspond visual tree item
+    bool                   mThereNewer; //!< In library present newer object
 
     SdProjectItem();
 
