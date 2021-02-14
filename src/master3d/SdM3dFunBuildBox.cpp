@@ -2,13 +2,15 @@
 #include "SdM3dFunBuildRect.h"
 #include "SdM3dFunExtrudeModel.h"
 
+static const char paramList[4] = {
+  SDM3D_TYPE_FLOAT,
+  SDM3D_TYPE_FLOAT,
+  SDM3D_TYPE_FLOAT,
+  SDM3D_TYPE_COLOR
+  };
+
 SdM3dFunBuildBox::SdM3dFunBuildBox() :
-  SdM3dFunction( SDM3D_TYPE_MODEL, 4, {
-                 SDM3D_TYPE_FLOAT,
-                 SDM3D_TYPE_FLOAT,
-                 SDM3D_TYPE_FLOAT,
-                 SDM3D_TYPE_COLOR
-                 } )
+  SdM3dFunction( SDM3D_TYPE_MODEL, 4, paramList )
   {
 
   }

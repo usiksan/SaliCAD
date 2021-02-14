@@ -15,7 +15,7 @@ class SdM3dFunction : public SdM3dValue
   protected:
     SdM3dValuePtr mParamList[SDM3D_MAX_PARAM];
   public:
-    SdM3dFunction( char resultType, int paramCount, std::initializer_list<char> paramTypes );
+    SdM3dFunction( char resultType, int paramCount, const char *paramTypes );
     ~SdM3dFunction();
 
     void paramSet( int index, SdM3dValuePtr param ) { mParamList[index] = param; }

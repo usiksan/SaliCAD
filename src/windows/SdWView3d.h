@@ -26,10 +26,10 @@ class SdWView3d : public QOpenGLWidget
   {
     Q_OBJECT
 
-    double           mAngleZ;
-    double           mAngleXY;
-    SdScaler         mScale;          //Current scale [Текущий масштаб изображения]
-    SdPoint          mOrigin;         //Logical origin point [Логическая точка центра изображения]
+    double           mAngleZ;         //!< Angle view vector over Z axiz
+    double           mAngleXY;        //!< Angle view vector over XY area
+    SdScaler         mScale;          //!< Current scale [Текущий масштаб изображения]
+    SdPoint          mOrigin;         //!< Logical origin point [Логическая точка центра изображения]
     SdProjectItem   *mItem;
   public:
     SdWView3d( SdProjectItem *item, QWidget *parent );

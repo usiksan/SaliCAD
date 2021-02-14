@@ -2,10 +2,10 @@
 
 
 
-SdM3dFunction::SdM3dFunction(char resultType, int paramCount, std::initializer_list<char> paramTypes) :
+SdM3dFunction::SdM3dFunction(char resultType, int paramCount, const char *paramTypes) :
   mResultType(resultType),
   mParamCount(paramCount),
-  mParamTypes(paramTypes.begin())
+  mParamTypes(paramTypes)
   {
   for( int i = 0; i < SDM3D_MAX_PARAM; i++ )
     mParamList[i] = nullptr;

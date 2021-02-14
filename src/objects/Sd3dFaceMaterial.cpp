@@ -16,6 +16,14 @@ Sd3dFaceMaterial::Sd3dFaceMaterial() :
 
 
 
+void Sd3dFaceMaterial::setColor(QColor color)
+  {
+  setDiffuseColor( color.redF(), color.greenF(), color.blueF() );
+  //setTransparency( color.alphaF() );
+  }
+
+
+
 void Sd3dFaceMaterial::paint(QOpenGLFunctions_2_0 *f) const
   {
   f->glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, mAmbientColor );

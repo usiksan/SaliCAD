@@ -36,8 +36,7 @@ class SdPNewProjectItem_3dMaster : public QWizardPage
     QListWidget        *mMasterType;   //!< Available programm list
     SdWView3d          *mPreview;
     QTextEdit          *mDescription;  //!< Description widget
-    QStringList         mDescriptions; //!< Master programm description list
-    QStringList         mProgramms;    //!< Programm sources list
+    QStringList         mIdList;       //!< Master programm id list
   public:
     SdPNewProjectItem_3dMaster( SdProjectItemPtr *item, SdProject *prj, QWidget *parent = nullptr );
 

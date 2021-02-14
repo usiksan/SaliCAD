@@ -13,6 +13,7 @@ class SdM3dVariableSegment : public SdM3dVariable
 
     // SdM3dValue interface
   public:
+    virtual char         type() const override { return SDM3D_TYPE_SEGMENT; }
     virtual SdM3dSegment toSegment() const override { return mValue; }
 
     // SdM3dVariable interface

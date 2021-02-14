@@ -40,6 +40,8 @@ class Sd3dFaceMaterial
 
     void setTransparency( float t ) { mAmbientColor[3] = mDiffuseColor[3] = mEmissiveColor[3] = mSpecularColor[3] = 1.0 - t; }
 
+    void setColor( QColor color );
+
     void paint( QOpenGLFunctions_2_0 *f ) const;
 
     void write( QJsonObject &obj ) const;

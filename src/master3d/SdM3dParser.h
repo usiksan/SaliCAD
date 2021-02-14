@@ -13,6 +13,8 @@
 
 using SdM3dFunctionBuilder = std::function<SdM3dFunction* ()>;
 
+class SdPItemPart;
+
 class SdM3dParser
   {
     SdM3dScaner                        mScaner;
@@ -21,9 +23,11 @@ class SdM3dParser
   public:
     SdM3dParser();
 
-    SdM3dProgramm *parse( const QString src );
+    SdM3dProgramm *parse( const QString src, SdPItemPart *part );
 
-    void addFunction( const QString functionName, SdM3dFunctionBuilder functionBuilder ) { mFunctions.insert( functionName, functionBuilder ); }
+    QString error() const { return mScaner.errorGet(); }
+
+    void    addFunction( const QString functionName, SdM3dFunctionBuilder functionBuilder ) { mFunctions.insert( functionName, functionBuilder ); }
   private:
     SdM3dOperator *parseOperator();
     SdM3dOperator *parseOperatorIf();

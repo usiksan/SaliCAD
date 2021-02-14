@@ -20,6 +20,9 @@
 #include "SdM3dVariableText.h"
 #include "SdM3dVariablePin.h"
 
+//Predefined variable to insert faces into part
+#include "SdM3dPartModel.h"
+
 #include "SdM3dValue.h"
 #include "SdM3dFloat.h"
 
@@ -41,18 +44,25 @@
 
 //Functions
 #include "SdM3dFunBuildVertex.h"
+#include "SdM3dFunFaceBuild.h"
+#include "SdM3dFunColorBuild.h"
 
 SdM3dParser::SdM3dParser()
   {
   //Fill functions
   addFunction( QStringLiteral("vertex"), [] () -> SdM3dFunction* { return new SdM3dFunBuildVertex(); } );
+  addFunction( QStringLiteral("face"), [] () -> SdM3dFunction* { return new SdM3dFunFaceBuild(); } );
+  addFunction( QStringLiteral("color"), [] () -> SdM3dFunction* { return new SdM3dFunColorBuild(); } );
   }
 
 
 
 
-SdM3dProgramm *SdM3dParser::parse(const QString src)
+SdM3dProgramm *SdM3dParser::parse(const QString src, SdPItemPart *part)
   {
+  //Insert predefined variables
+  mVaribales.insert( QStringLiteral("partModel"), new SdM3dPartModel(part) );
+
   //Init scaner with programm source
   mScaner.sourceSetString( src );
   mScaner.tokenNext();
@@ -140,7 +150,7 @@ SdM3dOperator *SdM3dParser::parseOperator()
     case SDM3D_TYPE_TEXT    : var = new SdM3dVariableText(); break;
     case SDM3D_TYPE_PIN     : var = new SdM3dVariablePin(); break;
     default:
-      mScaner.error( QStringLiteral("Can't create variable with this type") );
+      mScaner.error( QStringLiteral("Can't create variable with this type %1").arg(val->type()) );
       //Can't create variable
       delete val;
       return nullptr;

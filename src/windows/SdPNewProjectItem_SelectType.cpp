@@ -129,7 +129,7 @@ int SdPNewProjectItem_SelectType::nextId() const
       return SDP_NPI_COPY;
 
     //Use 3d part master
-    if( defaultOrder == 4 && defaultClass == 3 )
+    if( defaultOrder == 3 && defaultClass == 3 )
       return SDP_NPI_3D_MASTER;
 
     //Use master

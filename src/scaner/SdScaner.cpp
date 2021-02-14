@@ -15,7 +15,8 @@ SdScaner::SdScaner() :
 
 void SdScaner::error(const QString msg)
   {
-  mError = QStringLiteral("[%1:%2] %3").arg(lineIndex()).arg(mIndex).arg(msg);
+  if( mError.isEmpty() )
+    mError = QStringLiteral("[%1:%2] %3").arg(lineIndex()).arg(mIndex).arg(msg);
   qDebug() << mError;
   }
 

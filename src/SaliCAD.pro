@@ -25,6 +25,25 @@ SOURCES += \
     SdMain.cpp \
     master/SdDMasterPartSingleLine.cpp \
     master/SdDMasterSheetDecorator.cpp \
+    master3d/SdM3dArrayFace.cpp \
+    master3d/SdM3dArraySegment.cpp \
+    master3d/SdM3dArrayVertex.cpp \
+    master3d/SdM3dFloat.cpp \
+    master3d/SdM3dFunBuildBox.cpp \
+    master3d/SdM3dFunBuildRect.cpp \
+    master3d/SdM3dFunBuildVertex.cpp \
+    master3d/SdM3dFunColorBuild.cpp \
+    master3d/SdM3dFunExtrudeModel.cpp \
+    master3d/SdM3dFunFaceBuild.cpp \
+    master3d/SdM3dFunTransferRegion.cpp \
+    master3d/SdM3dFunction.cpp \
+    master3d/SdM3dOperatorBlock.cpp \
+    master3d/SdM3dOperatorIf.cpp \
+    master3d/SdM3dOperatorWhile.cpp \
+    master3d/SdM3dParser.cpp \
+    master3d/SdM3dPartModel.cpp \
+    master3d/SdM3dProgramm.cpp \
+    master3d/SdM3dScaner.cpp \
     modes/SdModeCTraceDelete.cpp \
     objects/Sd3dDraw.cpp \
     objects/Sd3dFace.cpp \
@@ -67,6 +86,7 @@ SOURCES += \
     vrml/VrmlNodeTransform.cpp \
     vrml/VrmlRotation.cpp \
     vrml/VrmlVector.cpp \
+    windows/SdD3dModelProgrammEditor.cpp \
     windows/SdDExpressionEdit.cpp \
     windows/SdDOptionsPageLibrary.cpp \
     windows/SdExpression.cpp \
@@ -337,6 +357,59 @@ HEADERS  += \
     SdConfig.h \
     master/SdDMasterPartSingleLine.h \
     master/SdDMasterSheetDecorator.h \
+    master3d/SdM3dArray.h \
+    master3d/SdM3dArrayFace.h \
+    master3d/SdM3dArraySegment.h \
+    master3d/SdM3dArrayVertex.h \
+    master3d/SdM3dBinary.h \
+    master3d/SdM3dBinaryBool.h \
+    master3d/SdM3dBinaryBoolAnd.h \
+    master3d/SdM3dBinaryBoolFloatLess.h \
+    master3d/SdM3dBinaryBoolOr.h \
+    master3d/SdM3dBinaryFloat.h \
+    master3d/SdM3dBinaryFloatAdd.h \
+    master3d/SdM3dBinaryFloatDiv.h \
+    master3d/SdM3dBinaryFloatMult.h \
+    master3d/SdM3dBinaryFloatSub.h \
+    master3d/SdM3dFloat.h \
+    master3d/SdM3dFunBuildBox.h \
+    master3d/SdM3dFunBuildRect.h \
+    master3d/SdM3dFunBuildVertex.h \
+    master3d/SdM3dFunColorBuild.h \
+    master3d/SdM3dFunExtrudeModel.h \
+    master3d/SdM3dFunFaceBuild.h \
+    master3d/SdM3dFunTransferRegion.h \
+    master3d/SdM3dFunction.h \
+    master3d/SdM3dOperator.h \
+    master3d/SdM3dOperatorAssign.h \
+    master3d/SdM3dOperatorBlock.h \
+    master3d/SdM3dOperatorIf.h \
+    master3d/SdM3dOperatorWhile.h \
+    master3d/SdM3dParser.h \
+    master3d/SdM3dPartModel.h \
+    master3d/SdM3dProgramm.h \
+    master3d/SdM3dReference.h \
+    master3d/SdM3dScaner.h \
+    master3d/SdM3dTypes.h \
+    master3d/SdM3dUnary.h \
+    master3d/SdM3dUnaryBoolNot.h \
+    master3d/SdM3dUnaryFloatMinus.h \
+    master3d/SdM3dValue.h \
+    master3d/SdM3dVariable.h \
+    master3d/SdM3dVariableBool.h \
+    master3d/SdM3dVariableColor.h \
+    master3d/SdM3dVariableFace.h \
+    master3d/SdM3dVariableFloat.h \
+    master3d/SdM3dVariableGraph.h \
+    master3d/SdM3dVariableMatrix.h \
+    master3d/SdM3dVariableModel.h \
+    master3d/SdM3dVariablePath.h \
+    master3d/SdM3dVariablePin.h \
+    master3d/SdM3dVariableRegion.h \
+    master3d/SdM3dVariableSegment.h \
+    master3d/SdM3dVariableString.h \
+    master3d/SdM3dVariableText.h \
+    master3d/SdM3dVariableVertex.h \
     modes/SdModeCTraceDelete.h \
     objects/Sd3dDraw.h \
     objects/Sd3dFace.h \
@@ -380,6 +453,7 @@ HEADERS  += \
     vrml/VrmlRotation.h \
     vrml/VrmlTypes.h \
     vrml/VrmlVector.h \
+    windows/SdD3dModelProgrammEditor.h \
     windows/SdDExpressionEdit.h \
     windows/SdDOptionsPageLibrary.h \
     windows/SdExpression.h \

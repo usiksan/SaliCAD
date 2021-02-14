@@ -1,7 +1,9 @@
 #include "SdM3dFunTransferRegion.h"
 
+static const char paramList[2] = { SDM3D_TYPE_REGION, SDM3D_TYPE_VERTEX };
+
 SdM3dFunTransferRegion::SdM3dFunTransferRegion() :
-  SdM3dFunction( SDM3D_TYPE_REGION, 2, { SDM3D_TYPE_REGION, SDM3D_TYPE_VERTEX } )
+  SdM3dFunction( SDM3D_TYPE_REGION, 2, paramList )
   {
 
   }

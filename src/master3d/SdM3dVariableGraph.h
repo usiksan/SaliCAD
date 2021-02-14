@@ -13,6 +13,7 @@ class SdM3dVariableGraph : public SdM3dVariable
 
     // SdM3dValue interface
   public:
+    virtual char       type() const override { return SDM3D_TYPE_GRAPH; }
     virtual SdM3dGraph toGraph() const override { return mValue; }
 
     // SdM3dVariable interface

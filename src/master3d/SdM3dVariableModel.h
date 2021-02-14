@@ -13,6 +13,7 @@ class SdM3dVariableModel : public SdM3dVariable
 
     // SdM3dValue interface
   public:
+    virtual char       type() const override { return SDM3D_TYPE_MODEL; }
     virtual SdM3dModel toModel() const override { return mValue; }
 
     // SdM3dVariable interface

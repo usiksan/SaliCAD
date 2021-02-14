@@ -13,6 +13,7 @@ class SdM3dVariableRegion : public SdM3dVariable
 
     // SdM3dValue interface
   public:
+    virtual char        type() const override { return SDM3D_TYPE_REGION; }
     virtual SdM3dRegion toRegion() const override { return mValue; }
 
     // SdM3dVariable interface

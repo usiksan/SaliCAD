@@ -18,12 +18,14 @@ SOURCES += \
         SdM3dFunBuildRect.cpp \
         SdM3dFunBuildVertex.cpp \
         SdM3dFunExtrudeModel.cpp \
+        SdM3dFunFaceBuild.cpp \
         SdM3dFunTransferRegion.cpp \
         SdM3dFunction.cpp \
         SdM3dOperatorBlock.cpp \
         SdM3dOperatorIf.cpp \
         SdM3dOperatorWhile.cpp \
         SdM3dParser.cpp \
+        SdM3dPartModel.cpp \
         SdM3dProgramm.cpp \
         SdM3dScaner.cpp \
         main.cpp
@@ -55,6 +57,7 @@ HEADERS += \
   SdM3dFunBuildRect.h \
   SdM3dFunBuildVertex.h \
   SdM3dFunExtrudeModel.h \
+  SdM3dFunFaceBuild.h \
   SdM3dFunTransferRegion.h \
   SdM3dFunction.h \
   SdM3dOperator.h \
@@ -63,6 +66,7 @@ HEADERS += \
   SdM3dOperatorIf.h \
   SdM3dOperatorWhile.h \
   SdM3dParser.h \
+  SdM3dPartModel.h \
   SdM3dProgramm.h \
   SdM3dReference.h \
   SdM3dScaner.h \
