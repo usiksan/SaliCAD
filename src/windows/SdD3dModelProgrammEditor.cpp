@@ -14,6 +14,8 @@ Description
   It allow enter, edit and test 3d model programm
 */
 #include "SdD3dModelProgrammEditor.h"
+#include "SdW3dModelProgrammEditor.h"
+#include "SdW3dModelProgrammHighlighter.h"
 #include "master3d/SdM3dParser.h"
 #include "master3d/SdM3dProgramm.h"
 
@@ -23,6 +25,7 @@ Description
 #include <QLabel>
 #include <QSplitter>
 #include <QDialogButtonBox>
+#include <QFont>
 
 SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *parent) :
   QDialog(parent),
@@ -46,7 +49,20 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
   vlay->addWidget( splitter );
 
   QVBoxLayout *tlay = new QVBoxLayout();
-  tlay->addWidget( mTextEdit = new QTextEdit() );
+  QFont font;
+  font.setFamily("Courier");
+  font.setFixedPitch(true);
+  font.setPointSize(10);
+
+  mTextEdit = new SdW3dModelProgrammEditor();
+  mTextEdit->setAutoCompleteParenthesis(true);
+  mTextEdit->setAutoIndentSpaceCount(2);
+  mTextEdit->setFont( font );
+
+  SdW3dModelProgrammHighlighter *hl = new SdW3dModelProgrammHighlighter( mTextEdit->document() );
+  connect( mTextEdit, SIGNAL(rehighlightBlock(QTextBlock)), hl, SLOT(rehighlightBlock(QTextBlock)) );
+
+  tlay->addWidget( mTextEdit );
 
   hlay = new QHBoxLayout();
   hlay->addWidget( new QLabel(tr("Error:")) );

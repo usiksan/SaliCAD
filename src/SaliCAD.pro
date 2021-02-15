@@ -91,6 +91,8 @@ SOURCES += \
     windows/SdDOptionsPageLibrary.cpp \
     windows/SdExpression.cpp \
     windows/SdPNewProjectItem_3dMaster.cpp \
+    windows/SdW3dModelProgrammEditor.cpp \
+    windows/SdW3dModelProgrammHighlighter.cpp \
     windows/SdWEditor3d.cpp \
     windows/SdWEditor3dPart.cpp \
     windows/SdWExpressor.cpp \
@@ -458,6 +460,8 @@ HEADERS  += \
     windows/SdDOptionsPageLibrary.h \
     windows/SdExpression.h \
     windows/SdPNewProjectItem_3dMaster.h \
+    windows/SdW3dModelProgrammEditor.h \
+    windows/SdW3dModelProgrammHighlighter.h \
     windows/SdWEditor3d.h \
     windows/SdWEditor3dPart.h \
     windows/SdWExpressor.h \

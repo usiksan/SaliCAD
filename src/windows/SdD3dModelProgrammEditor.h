@@ -26,21 +26,22 @@ Description
 #include <QLineEdit>
 
 class SdM3dProgramm;
+class SdW3dModelProgrammEditor;
 
 class SdD3dModelProgrammEditor : public QDialog
   {
     Q_OBJECT
 
-    SdPItemPart    mPart;
-    SdM3dProgramm *mProgramm;
-    SdPItemRich   *mRich;
-    QTextEdit     *mTextEdit;
-    QLineEdit     *mError;
-    QLineEdit     *mTitle;
-    QLineEdit     *mDescription;
-    QTableWidget  *mParamWidget;
-    SdWView3d     *mPreview;
-    bool           mDirty;
+    SdPItemPart               mPart;
+    SdM3dProgramm            *mProgramm;
+    SdPItemRich              *mRich;
+    SdW3dModelProgrammEditor *mTextEdit;
+    QLineEdit                *mError;
+    QLineEdit                *mTitle;
+    QLineEdit                *mDescription;
+    QTableWidget             *mParamWidget;
+    SdWView3d                *mPreview;
+    bool                      mDirty;
   public:
     SdD3dModelProgrammEditor( const QString id, QWidget *parent );
 
