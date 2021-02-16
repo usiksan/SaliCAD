@@ -58,10 +58,16 @@ SdM3dParser::SdM3dParser()
 
 
 
+//!
+//! \brief parse Execute parsing of programm source text and generates tree of programm
+//! \param src   Programm source text
+//! \param part  Part to which will be placed generated faces
+//! \return      Programm tree
+//!
 SdM3dProgramm *SdM3dParser::parse(const QString src, SdPItemPart *part)
   {
   //Insert predefined variables
-  mVaribales.insert( QStringLiteral("partModel"), new SdM3dPartModel(part) );
+  mVariables.insert( QStringLiteral("partModel"), new SdM3dPartModel(part) );
 
   //Init scaner with programm source
   mScaner.sourceSetString( src );
@@ -76,9 +82,12 @@ SdM3dProgramm *SdM3dParser::parse(const QString src, SdPItemPart *part)
       prog->append( op );
     }
 
+  //Extract variables name
+  mVariableNameList = mVariables.keys();
+
   //Append variables
-  prog->setVariables( mVaribales.values() );
-  mVaribales.clear();
+  prog->setVariables( mVariables.values() );
+  mVariables.clear();
 
   return prog;
   }
@@ -120,8 +129,8 @@ SdM3dOperator *SdM3dParser::parseOperator()
 
   SdM3dValue *val = parseExpression();
 
-  if( mVaribales.contains(variableName) ) {
-    SdM3dVariable *var = mVaribales.value(variableName);
+  if( mVariables.contains(variableName) ) {
+    SdM3dVariable *var = mVariables.value(variableName);
     if( var->type() != val->type() ) {
       //Illegal type
       mScaner.error( QStringLiteral("Illegal type of assignment") );
@@ -156,7 +165,7 @@ SdM3dOperator *SdM3dParser::parseOperator()
       return nullptr;
     }
 
-  mVaribales.insert( variableName, var );
+  mVariables.insert( variableName, var );
   return new SdM3dOperatorAssign( var, val );
   }
 
@@ -392,8 +401,8 @@ SdM3dValue *SdM3dParser::parseVar()
     if( mScaner.matchToken('(') )
       return parseFunction( name );
 
-    if( mVaribales.contains(name) )
-      return new SdM3dReference( mVaribales.value(name) );
+    if( mVariables.contains(name) )
+      return new SdM3dReference( mVariables.value(name) );
 
     mScaner.error( QStringLiteral("Undefined variable '%1'").arg(name) );
     return failValue();

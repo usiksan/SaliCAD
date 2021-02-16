@@ -81,7 +81,8 @@ SdW3dModelProgrammEditor::SdW3dModelProgrammEditor(QWidget *parent) :
   mIsRedoAvailable(false),
   mIsSelectPresent(false),
   mControlPress(false),
-  mHelpPopUp(nullptr)
+  mHelpPopUp(nullptr),
+  mHighlighter(nullptr)
   {
 
   mScrollBarMarker = new ScrollBarWithMarkers(nullptr);
@@ -481,19 +482,8 @@ void SdW3dModelProgrammEditor::refillAutoComplete()
   //Текущая строка
   int pos;
   QString line = cursorLine( textCursor(), &pos );
-  //Обычный идентификатор
-  if( SdW3dModelProgrammHighlighter::mCompiler ) {
-    //Types
-    srcList.append( SdW3dModelProgrammHighlighter::mCompiler->mTypeList.keys() );
-    //Variables
-    srcList.append( SdW3dModelProgrammHighlighter::mCompiler->mVarGlobal.mHash.keys() );
-    //Functions
-    srcList.append( SdW3dModelProgrammHighlighter::mCompiler->mFunGlobal.mHash.keys() );
-    //Macro names
-    srcList.append( SdW3dModelProgrammHighlighter::mCompiler->mMacroTable.keys() );
-    //Key words
-    srcList.append( SdW3dModelProgrammHighlighter::mCompiler->mKeyWords.keys() );
-    }
+  if( mHighlighter )
+    srcList = mHighlighter->names();
 
   //Проверить наличие предварительно определенного идентификатора
   QTextCursor cr = textCursor();
@@ -625,6 +615,7 @@ void SdW3dModelProgrammEditor::toggleF2()
   {
   //При нажатии над идентификатором осуществлять переключение к месту определения-объявления
   //Возможно, стоим над идентификатором
+#if 0
   QString ident = getWordCursorOver();
   if( !ident.isEmpty() && SdW3dModelProgrammHighlighter::mCompiler ) {
     QString fname;
@@ -657,6 +648,7 @@ void SdW3dModelProgrammEditor::toggleF2()
         }
       }
     }
+#endif
   }
 
 
@@ -1004,6 +996,7 @@ void SdW3dModelProgrammEditor::keyReleaseEvent(QKeyEvent *e)
 
 void SdW3dModelProgrammEditor::mouseMoveEvent(QMouseEvent *ev)
   {
+#if 0
   //Выполнять всякую херь только если есть фоновый компилятор
   if( SdW3dModelProgrammHighlighter::mCompiler ) {
     QTextCursor c = cursorForPosition( ev->pos() );
@@ -1058,7 +1051,7 @@ void SdW3dModelProgrammEditor::mouseMoveEvent(QMouseEvent *ev)
       else mHelpPopUp->hide();
       }
     }
-
+#endif
   QPlainTextEdit::mouseMoveEvent( ev );
   }
 

@@ -83,7 +83,7 @@ void sd3dPointListRead(Sd3dPointList &list, const QJsonArray &array)
   list.clear();
   Sd3dPoint pt;
   int i = 0;
-  for( auto it = array.cbegin(); it != array.cend(); it++ ) {
+  for( auto it = array.constBegin(); it != array.constEnd(); it++ ) {
     switch(i) {
       case 0 : pt.setX( intMcmToFloatMm(it->toInt()) ); break;
       case 1 : pt.setY( intMcmToFloatMm(it->toInt()) ); break;

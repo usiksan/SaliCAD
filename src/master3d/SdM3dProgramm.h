@@ -13,7 +13,12 @@ class SdM3dProgramm : public SdM3dOperatorBlock
     SdM3dProgramm();
     ~SdM3dProgramm();
 
+    //!
+    //! \brief setVariables Set variables associated with this programm
+    //! \param varList      Variable list
+    //!
     void setVariables( SdM3dVariablePtrList varList );
+
   };
 
 #endif // SDM3DPROGRAMM_H

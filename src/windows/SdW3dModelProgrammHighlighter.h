@@ -7,11 +7,22 @@
 class SdW3dModelProgrammHighlighter : public QSyntaxHighlighter {
     Q_OBJECT
 
+    QStringList mKeyWords;
+    QStringList mVariableNameList;
+    QStringList mFunctionNameList;
+
     QString mLink; //Идентификатор для перехода по линку
   public:
 
     SdW3dModelProgrammHighlighter(QTextDocument *parent = nullptr);
 
+    void setNameLists( const QStringList &variableNameList, const QStringList &functionNameList )
+      {
+      mVariableNameList = variableNameList;
+      mFunctionNameList = functionNameList;
+      }
+
+    QStringList names() const { return mKeyWords + mVariableNameList + mFunctionNameList; }
 
   protected:
     void highlightBlock(const QString &text);

@@ -18,6 +18,7 @@ Description
 #include "SdW3dModelProgrammHighlighter.h"
 #include "master3d/SdM3dParser.h"
 #include "master3d/SdM3dProgramm.h"
+#include "objects/SdObjectFactory.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -59,8 +60,10 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
   mTextEdit->setAutoIndentSpaceCount(2);
   mTextEdit->setFont( font );
 
-  SdW3dModelProgrammHighlighter *hl = new SdW3dModelProgrammHighlighter( mTextEdit->document() );
-  connect( mTextEdit, SIGNAL(rehighlightBlock(QTextBlock)), hl, SLOT(rehighlightBlock(QTextBlock)) );
+  mHighlighter = new SdW3dModelProgrammHighlighter( mTextEdit->document() );
+  mTextEdit->setHighlighter( mHighlighter );
+  connect( mTextEdit, SIGNAL(rehighlightBlock(QTextBlock)), mHighlighter, SLOT(rehighlightBlock(QTextBlock)) );
+  connect( mTextEdit, &SdW3dModelProgrammEditor::textChanged, this, &SdD3dModelProgrammEditor::parse );
 
   tlay->addWidget( mTextEdit );
 
@@ -90,6 +93,19 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
   vlay->addWidget( dialogButtonBox );
 
   setLayout( vlay );
+
+  //Extract programm source
+  if( !id.isEmpty() )
+    mRich = sdObjectOnly<SdPItemRich>( SdObjectFactory::extractObject( id, false, parent ) );
+  if( mRich == nullptr ) {
+    //Create new empty programm
+    mRich = new SdPItemRich();
+    }
+  else {
+    mTitle->setText( mRich->getTitle() );
+    mDescription->setText( mRich->paramGet(stdParam3dModelProgramm) );
+    mTextEdit->setPlainText( mRich->contents() );
+    }
   }
 
 
@@ -123,4 +139,17 @@ void SdD3dModelProgrammEditor::rebuild()
     //Build new part
     mProgramm->execute();
     }
+  }
+
+
+
+
+void SdD3dModelProgrammEditor::parse()
+  {
+  SdM3dParser parser;
+  auto ptr = parser.parse( mTextEdit->toPlainText(), nullptr );
+  delete ptr;
+  mHighlighter->setNameLists( parser.variableNameList(), parser.functionNameList() );
+  mTextEdit->update();
+  //mHighlighter->rehighlight();
   }

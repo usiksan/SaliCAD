@@ -1,10 +1,5 @@
 ﻿#include "SdW3dModelProgrammHighlighter.h"
 
-//QHash<QString,QString>   Highlighter::mMacroTable;     //Таблица макроимен
-//QHash<QString,int>       Highlighter::mKeyWords;       //Список ключевых слов с токенами
-//QHash<QString,int>       Highlighter::mSymbols;        //Список переменных
-//QHash<QString,TFileLine> Highlighter::mSymSources;     //Список ссылок на места определения
-
 
 SdW3dModelProgrammHighlighter::SdW3dModelProgrammHighlighter(QTextDocument *parent)
   : QSyntaxHighlighter(parent)
@@ -19,7 +14,8 @@ SdW3dModelProgrammHighlighter::SdW3dModelProgrammHighlighter(QTextDocument *pare
   mQuotationFormat.setForeground(Qt::darkGreen);         //!< Строки и символы
   mQuotationFormat.setFontWeight(QFont::Bold);
 
-  mIdentFormat.setForeground(Qt::darkMagenta);          //!< Вызов функции
+  mIdentFormat.setForeground(Qt::darkMagenta);          //!< Ident
+  mFuncFormat.setForeground(Qt::darkYellow);            //!< Func
 
   mDecimalFormat.setForeground(Qt::darkCyan);           //!< Десятичные числа
 
@@ -36,6 +32,7 @@ SdW3dModelProgrammHighlighter::SdW3dModelProgrammHighlighter(QTextDocument *pare
   mLinkFormat.setForeground( Qt::magenta );
   mLinkFormat.setFontUnderline(true);
 
+  mKeyWords = QStringList( { QStringLiteral("if"), QStringLiteral("while") } );
   }
 
 
@@ -152,21 +149,21 @@ SdW3dModelProgrammHighlighter::highlightBlock(const QString &text) {
       QString name = text.mid( startIndex, index - startIndex );
 
       //Выполнить поиск ключевых слов
-      if( mCompiler && mCompiler->mKeyWords.contains( name ) ) {
+      if( mKeyWords.contains( name ) ) {
         //Это ключевое слово
         setFormat( startIndex, index - startIndex, mKeywordFormat );
         continue;
         }
 
-      //Выполнить поиск макросов
-      if( mCompiler && mCompiler->mMacroTable.contains( name ) ) {
-        //Это макрос
-        setFormat( startIndex, index - startIndex, mMacroFormat );
+      //Do find function names
+      if( mFunctionNameList.contains( name ) ) {
+        //This is function
+        setFormat( startIndex, index - startIndex, mFuncFormat );
         continue;
         }
 
       //Выполнить поиск идентификатора
-      if( mCompiler && mCompiler->isGlobalSymbol(name) ) {
+      if( mVariableNameList.contains( name ) ) {
         //Это переменная
         //Проверить необходимость линковки
         if( !mLink.isEmpty() && mLink == name )

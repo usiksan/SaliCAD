@@ -18,16 +18,35 @@ class SdPItemPart;
 class SdM3dParser
   {
     SdM3dScaner                        mScaner;
-    QMap<QString,SdM3dVariablePtr>     mVaribales;
+    QMap<QString,SdM3dVariablePtr>     mVariables;
+    QStringList                        mVariableNameList; //!< Variable name list generated at and of parsing
     QMap<QString,SdM3dFunctionBuilder> mFunctions;
   public:
     SdM3dParser();
 
+    //!
+    //! \brief parse Execute parsing of programm source text and generates tree of programm
+    //! \param src   Programm source text
+    //! \param part  Part to which will be placed generated faces
+    //! \return      Programm tree
+    //!
     SdM3dProgramm *parse( const QString src, SdPItemPart *part );
 
-    QString error() const { return mScaner.errorGet(); }
+    //!
+    //! \brief variableNameList Returns parsed programm variable name list
+    //! \return                 Variable name list
+    //!
+    QStringList    variableNameList() const { return mVariableNameList; }
 
-    void    addFunction( const QString functionName, SdM3dFunctionBuilder functionBuilder ) { mFunctions.insert( functionName, functionBuilder ); }
+    //!
+    //! \brief functionNameList Returns defined function name list
+    //! \return                 Function name list
+    //!
+    QStringList    functionNameList() const { return mFunctions.keys(); }
+
+    QString        error() const { return mScaner.errorGet(); }
+
+    void           addFunction( const QString functionName, SdM3dFunctionBuilder functionBuilder ) { mFunctions.insert( functionName, functionBuilder ); }
   private:
     SdM3dOperator *parseOperator();
     SdM3dOperator *parseOperatorIf();

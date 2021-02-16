@@ -382,7 +382,7 @@ void SdGraphTracedRoad::snapPoint(SdSnapInfo *snap)
       QLineF perp = line.normalVector();
       QPointF center = perp.center();
       perp.translate( snap->mSour.x() - center.x(), snap->mSour.y() - center.y() );
-      if( line.intersects( perp, &center ) == QLineF::BoundedIntersection ) {
+      if( line.intersect( perp, &center ) == QLineF::BoundedIntersection ) {
         snap->test( this, center.toPoint(), snapNearestNet );
         }
       }
@@ -391,7 +391,7 @@ void SdGraphTracedRoad::snapPoint(SdSnapInfo *snap)
       QLineF perp = line.normalVector();
       QPointF center = perp.center();
       perp.translate( snap->mSour.x() - center.x(), snap->mSour.y() - center.y() );
-      if( line.intersects( perp, &center ) == QLineF::BoundedIntersection ) {
+      if( line.intersect( perp, &center ) == QLineF::BoundedIntersection ) {
         snap->test( this, center.toPoint(), snapNearestNetNet );
         }
 //      snap->test( this, mSegment.getP1(), snapNearestNetNet );

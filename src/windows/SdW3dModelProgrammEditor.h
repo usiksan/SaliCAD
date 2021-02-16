@@ -8,6 +8,7 @@
 #include <QTimer>
 #include <QScrollBar>
 
+class SdW3dModelProgrammHighlighter;
 class LineNumberArea;
 
 ///
@@ -92,7 +93,7 @@ class SdW3dModelProgrammEditor : public QPlainTextEdit {
 
     QTextEdit::ExtraSelection        mCurrentLineHighlight; //!< подстветка текущей строки
 
-
+    SdW3dModelProgrammHighlighter   *mHighlighter;
   public:
 
     explicit SdW3dModelProgrammEditor(QWidget *parent = 0);
@@ -117,6 +118,8 @@ class SdW3dModelProgrammEditor : public QPlainTextEdit {
     void    setAutoIndentSpaceCount(int count);
     bool    autoCompleteParenthesis()const;
     void    setAutoCompleteParenthesis(bool autoComplete);
+
+    void    setHighlighter( SdW3dModelProgrammHighlighter *highlighter ) { mHighlighter = highlighter; }
 
   private:
     //обновить подсветку

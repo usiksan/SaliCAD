@@ -27,21 +27,23 @@ Description
 
 class SdM3dProgramm;
 class SdW3dModelProgrammEditor;
+class SdW3dModelProgrammHighlighter;
 
 class SdD3dModelProgrammEditor : public QDialog
   {
     Q_OBJECT
 
-    SdPItemPart               mPart;
-    SdM3dProgramm            *mProgramm;
-    SdPItemRich              *mRich;
-    SdW3dModelProgrammEditor *mTextEdit;
-    QLineEdit                *mError;
-    QLineEdit                *mTitle;
-    QLineEdit                *mDescription;
-    QTableWidget             *mParamWidget;
-    SdWView3d                *mPreview;
-    bool                      mDirty;
+    SdPItemPart                    mPart;
+    SdM3dProgramm                 *mProgramm;
+    SdPItemRich                   *mRich;
+    SdW3dModelProgrammEditor      *mTextEdit;
+    SdW3dModelProgrammHighlighter *mHighlighter;
+    QLineEdit                     *mError;
+    QLineEdit                     *mTitle;
+    QLineEdit                     *mDescription;
+    QTableWidget                  *mParamWidget;
+    SdWView3d                     *mPreview;
+    bool                           mDirty;
   public:
     SdD3dModelProgrammEditor( const QString id, QWidget *parent );
 
@@ -49,6 +51,8 @@ class SdD3dModelProgrammEditor : public QDialog
     void compile();
 
     void rebuild();
+
+    void parse();
   };
 
 #endif // SDD3DMODELPROGRAMMEDITOR_H
