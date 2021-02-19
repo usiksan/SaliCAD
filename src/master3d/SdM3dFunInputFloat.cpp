@@ -13,10 +13,11 @@ float SdM3dFunInputFloat::toFloat() const
   if( mTableWidget == nullptr )
     return mParamList[1]->toFloat();
 
-  //Setup input title
-  mTableWidget->item( mRow, 0 )->setText( mParamList[0]->toString() );
   //Setup default value
   if( mTableWidget->item( mRow, 1 )->text().isEmpty() ) {
+    //Setup input title
+    mTableWidget->item( mRow, 0 )->setText( mParamList[0]->toString() );
+    //Setup default value
     mTableWidget->item( mRow, 1 )->setText( QString::number( mParamList[1]->toFloat() ) );
     return mParamList[1]->toFloat();
     }

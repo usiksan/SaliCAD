@@ -25,6 +25,7 @@
 
 #include "SdM3dValue.h"
 #include "SdM3dFloat.h"
+#include "SdM3dString.h"
 
 #include "SdM3dArrayVertex.h"
 #include "SdM3dArraySegment.h"
@@ -47,6 +48,7 @@
 #include "SdM3dFunFaceBuild.h"
 #include "SdM3dFunColorBuild.h"
 #include "SdM3dFunInputFloat.h"
+#include "SdM3dFunRegionRect.h"
 
 SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   {
@@ -54,7 +56,11 @@ SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   addFunction( QStringLiteral("vertex"), [] () -> SdM3dFunction* { return new SdM3dFunBuildVertex(); } );
   addFunction( QStringLiteral("face"), [] () -> SdM3dFunction* { return new SdM3dFunFaceBuild(); } );
   addFunction( QStringLiteral("color"), [] () -> SdM3dFunction* { return new SdM3dFunColorBuild(); } );
+
   addFunction( QStringLiteral("inputFloat"), [tableWidget] () -> SdM3dFunction* { return new SdM3dFunInputFloat( tableWidget ); } );
+
+  addFunction( QStringLiteral("regionRect"), [] () -> SdM3dFunction* { return new SdM3dFunRegionRect(); } );
+
   }
 
 
@@ -413,6 +419,13 @@ SdM3dValue *SdM3dParser::parseVar()
   else if( mScaner.token() == 'd' ) {
     //float
     SdM3dValue *val = new SdM3dFloat( mScaner.tokenValueFloat() );
+    mScaner.tokenNext();
+    return val;
+    }
+
+  else if( mScaner.token() == 's' ) {
+    //String
+    SdM3dValue *val = new SdM3dString( mScaner.tokenValue() );
     mScaner.tokenNext();
     return val;
     }

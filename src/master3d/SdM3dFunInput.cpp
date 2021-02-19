@@ -12,6 +12,8 @@ SdM3dFunInput::SdM3dFunInput(char resultType, QTableWidget *tableWidget) :
     mRow = mTableWidget->rowCount();
     //Insert row for this input function
     mTableWidget->insertRow(mRow);
+    //Setup row height
+    mTableWidget->setRowHeight( mRow, 25 );
     //Append title function cell
     mTableWidget->setItem( mRow, 0, new QTableWidgetItem() );
     //Append value function cell

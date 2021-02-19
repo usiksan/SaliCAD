@@ -123,6 +123,7 @@ void SdPNewProjectItem_3dMaster::initializePage()
     return false;
     });
 
+  mMasterType->clear();
   for( const auto &id : qAsConst(mIdList) ) {
     SdPItemRich *rich = sdObjectOnly<SdPItemRich>( SdObjectFactory::extractObject( id, false, this ) );
     if( rich != nullptr ) {
@@ -153,5 +154,6 @@ void SdPNewProjectItem_3dMaster::onCurrentRowChanged(int row)
     }
   //Clear description and 3d object preview
   mDescription->clear();
-  mPreview->item()->clear();
+  if( mPreview->item() != nullptr )
+    mPreview->item()->clear();
   }

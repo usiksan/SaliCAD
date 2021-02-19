@@ -144,6 +144,7 @@ void SdD3dModelProgrammEditor::compile()
 
   mParamWidget->clear();
   mParamWidget->setColumnCount(2);
+  mParamWidget->setRowCount(0);
   mParamWidget->setHorizontalHeaderLabels( {tr("Parametr name"), tr("Parametr value") } );
   SdM3dParser parser(mParamWidget);
 
@@ -170,6 +171,9 @@ void SdD3dModelProgrammEditor::rebuild()
 
     //Build new part
     mProgramm->execute();
+
+    //Update preview
+    mPreview->update();
     }
   }
 
@@ -221,6 +225,7 @@ void SdD3dModelProgrammEditor::save()
   mRich->setContents( mTextEdit->toPlainText() );
   //Push to library
   SdObjectFactory::insertItemObject( mRich, mRich->write() );
+  mDirty = false;
   }
 
 

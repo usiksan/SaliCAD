@@ -35,9 +35,10 @@ SOURCES += \
     master3d/SdM3dFunColorBuild.cpp \
     master3d/SdM3dFunExtrudeModel.cpp \
     master3d/SdM3dFunFaceBuild.cpp \
-    master3d/SdM3dFunFloatInput.cpp \
     master3d/SdM3dFunInput.cpp \
+    master3d/SdM3dFunInputColor.cpp \
     master3d/SdM3dFunInputFloat.cpp \
+    master3d/SdM3dFunRegionRect.cpp \
     master3d/SdM3dFunTransferRegion.cpp \
     master3d/SdM3dFunction.cpp \
     master3d/SdM3dOperatorBlock.cpp \
@@ -47,6 +48,7 @@ SOURCES += \
     master3d/SdM3dPartModel.cpp \
     master3d/SdM3dProgramm.cpp \
     master3d/SdM3dScaner.cpp \
+    master3d/SdM3dString.cpp \
     modes/SdModeCTraceDelete.cpp \
     objects/Sd3dDraw.cpp \
     objects/Sd3dFace.cpp \
@@ -383,9 +385,10 @@ HEADERS  += \
     master3d/SdM3dFunColorBuild.h \
     master3d/SdM3dFunExtrudeModel.h \
     master3d/SdM3dFunFaceBuild.h \
-    master3d/SdM3dFunFloatInput.h \
     master3d/SdM3dFunInput.h \
+    master3d/SdM3dFunInputColor.h \
     master3d/SdM3dFunInputFloat.h \
+    master3d/SdM3dFunRegionRect.h \
     master3d/SdM3dFunTransferRegion.h \
     master3d/SdM3dFunction.h \
     master3d/SdM3dOperator.h \
@@ -398,6 +401,7 @@ HEADERS  += \
     master3d/SdM3dProgramm.h \
     master3d/SdM3dReference.h \
     master3d/SdM3dScaner.h \
+    master3d/SdM3dString.h \
     master3d/SdM3dTypes.h \
     master3d/SdM3dUnary.h \
     master3d/SdM3dUnaryBoolNot.h \
