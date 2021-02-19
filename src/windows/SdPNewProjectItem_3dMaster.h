@@ -44,6 +44,12 @@ class SdPNewProjectItem_3dMaster : public QWizardPage
     virtual int  nextId() const override;
     virtual void initializePage() override;
 
+  private slots:
+    //!
+    //! \brief onCurrentRowChanged Called on current row in model master list
+    //! \param row                 Selected row index
+    //!
+    void onCurrentRowChanged( int row );
   };
 
 #endif // SDPNEWPROJECTITEM_3DMASTER_H

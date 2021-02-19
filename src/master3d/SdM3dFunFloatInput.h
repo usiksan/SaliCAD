@@ -1,0 +1,7 @@
+#ifndef SDM3DFUNFLOATINPUT_H
+#define SDM3DFUNFLOATINPUT_H
+
+#include "SdM3dFunInput.h"
+
+
+#endif // SDM3DFUNFLOATINPUT_H

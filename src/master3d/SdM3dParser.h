@@ -9,6 +9,7 @@
 #include "SdM3dProgramm.h"
 
 #include <QMap>
+#include <QTableWidget>
 #include <functional>
 
 using SdM3dFunctionBuilder = std::function<SdM3dFunction* ()>;
@@ -22,7 +23,7 @@ class SdM3dParser
     QStringList                        mVariableNameList; //!< Variable name list generated at and of parsing
     QMap<QString,SdM3dFunctionBuilder> mFunctions;
   public:
-    SdM3dParser();
+    SdM3dParser( QTableWidget *tableWidget );
 
     //!
     //! \brief parse Execute parsing of programm source text and generates tree of programm
@@ -30,7 +31,7 @@ class SdM3dParser
     //! \param part  Part to which will be placed generated faces
     //! \return      Programm tree
     //!
-    SdM3dProgramm *parse( const QString src, SdPItemPart *part );
+    SdM3dProgramm *parse(const QString src, SdPItemPart *part);
 
     //!
     //! \brief variableNameList Returns parsed programm variable name list

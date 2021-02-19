@@ -44,15 +44,37 @@ class SdD3dModelProgrammEditor : public QDialog
     QTableWidget                  *mParamWidget;
     SdWView3d                     *mPreview;
     bool                           mDirty;
+    bool                           mActive;
   public:
     SdD3dModelProgrammEditor( const QString id, QWidget *parent );
+    ~SdD3dModelProgrammEditor();
 
   private slots:
+    //!
+    //! \brief compile Compile 3d model programm and receiv compilation errors
+    //!
     void compile();
 
+    //!
+    //! \brief rebuild Rebuild resultat model on model param changed
+    //!
     void rebuild();
 
+    //!
+    //! \brief parse Parse programm when programm text changed. It need for
+    //!              programm color highlighting and autocompletion function
+    //!
     void parse();
+
+    //!
+    //! \brief save Save editing programm to library
+    //!
+    void save();
+
+  protected:
+    //We test if programm not saved
+    virtual void closeEvent( QCloseEvent *event ) override;
+
   };
 
 #endif // SDD3DMODELPROGRAMMEDITOR_H

@@ -15,7 +15,8 @@ Description
 
 #include <QTextEdit>
 
-SdPItemRich::SdPItemRich()
+SdPItemRich::SdPItemRich() :
+  mTextEditor(nullptr)
   {
 
   }

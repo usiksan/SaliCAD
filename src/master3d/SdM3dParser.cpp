@@ -46,13 +46,15 @@
 #include "SdM3dFunBuildVertex.h"
 #include "SdM3dFunFaceBuild.h"
 #include "SdM3dFunColorBuild.h"
+#include "SdM3dFunInputFloat.h"
 
-SdM3dParser::SdM3dParser()
+SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   {
   //Fill functions
   addFunction( QStringLiteral("vertex"), [] () -> SdM3dFunction* { return new SdM3dFunBuildVertex(); } );
   addFunction( QStringLiteral("face"), [] () -> SdM3dFunction* { return new SdM3dFunFaceBuild(); } );
   addFunction( QStringLiteral("color"), [] () -> SdM3dFunction* { return new SdM3dFunColorBuild(); } );
+  addFunction( QStringLiteral("inputFloat"), [tableWidget] () -> SdM3dFunction* { return new SdM3dFunInputFloat( tableWidget ); } );
   }
 
 
@@ -64,7 +66,7 @@ SdM3dParser::SdM3dParser()
 //! \param part  Part to which will be placed generated faces
 //! \return      Programm tree
 //!
-SdM3dProgramm *SdM3dParser::parse(const QString src, SdPItemPart *part)
+SdM3dProgramm *SdM3dParser::parse(const QString src, SdPItemPart *part )
   {
   //Insert predefined variables
   mVariables.insert( QStringLiteral("partModel"), new SdM3dPartModel(part) );

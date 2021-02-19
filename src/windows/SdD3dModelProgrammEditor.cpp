@@ -27,10 +27,13 @@ Description
 #include <QSplitter>
 #include <QDialogButtonBox>
 #include <QFont>
+#include <QMessageBox>
 
 SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *parent) :
   QDialog(parent),
-  mProgramm(nullptr)
+  mProgramm(nullptr),
+  mDirty(false),
+  mActive(false)
   {
   QVBoxLayout *vlay = new QVBoxLayout();
 
@@ -87,16 +90,22 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
 
   splitter->addWidget( editor );
   splitter->addWidget( mParamWidget = new QTableWidget() );
+  connect( mParamWidget, &QTableWidget::cellChanged, this, &SdD3dModelProgrammEditor::rebuild );
+
   splitter->addWidget( mPreview = new SdWView3d( &mPart, this ) );
 
   QDialogButtonBox *dialogButtonBox = new QDialogButtonBox( QDialogButtonBox::Save | QDialogButtonBox::Close );
   vlay->addWidget( dialogButtonBox );
+  connect( dialogButtonBox->button(QDialogButtonBox::Save), &QPushButton::clicked, this, &SdD3dModelProgrammEditor::save );
+  connect( dialogButtonBox->button(QDialogButtonBox::Close), &QPushButton::clicked, this, &SdD3dModelProgrammEditor::close );
 
   setLayout( vlay );
 
   //Extract programm source
   if( !id.isEmpty() )
+    //Retrive rich object with id from local libary
     mRich = sdObjectOnly<SdPItemRich>( SdObjectFactory::extractObject( id, false, parent ) );
+
   if( mRich == nullptr ) {
     //Create new empty programm
     mRich = new SdPItemRich();
@@ -105,12 +114,25 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
     mTitle->setText( mRich->getTitle() );
     mDescription->setText( mRich->paramGet(stdParam3dModelProgramm) );
     mTextEdit->setPlainText( mRich->contents() );
+    compile();
     }
   }
 
 
 
 
+SdD3dModelProgrammEditor::~SdD3dModelProgrammEditor()
+  {
+  if( mRich ) delete mRich;
+  if( mProgramm ) delete mProgramm;
+  }
+
+
+
+
+//!
+//! \brief compile Compile 3d model programm and receiv compilation errors
+//!
 void SdD3dModelProgrammEditor::compile()
   {
   if( mProgramm != nullptr ) {
@@ -118,11 +140,18 @@ void SdD3dModelProgrammEditor::compile()
     mProgramm = nullptr;
     }
 
-  SdM3dParser parser;
+  mActive = true;
+
+  mParamWidget->clear();
+  mParamWidget->setColumnCount(2);
+  mParamWidget->setHorizontalHeaderLabels( {tr("Parametr name"), tr("Parametr value") } );
+  SdM3dParser parser(mParamWidget);
 
   mProgramm = parser.parse( mTextEdit->toPlainText(), &mPart );
 
   mError->setText( parser.error() );
+
+  mActive = false;
 
   rebuild();
   }
@@ -130,9 +159,12 @@ void SdD3dModelProgrammEditor::compile()
 
 
 
+//!
+//! \brief rebuild Rebuild resultat model on model param changed
+//!
 void SdD3dModelProgrammEditor::rebuild()
   {
-  if( mProgramm != nullptr ) {
+  if( mProgramm != nullptr && !mActive ) {
     //Clear previously builded part
     mPart.clear();
 
@@ -144,12 +176,68 @@ void SdD3dModelProgrammEditor::rebuild()
 
 
 
+//!
+//! \brief parse Parse programm when programm text changed. It need for
+//!              programm color highlighting and autocompletion function
+//!
 void SdD3dModelProgrammEditor::parse()
   {
-  SdM3dParser parser;
+  //Set flag that programm text changed
+  mDirty = true;
+  SdM3dParser parser(nullptr);
   auto ptr = parser.parse( mTextEdit->toPlainText(), nullptr );
   delete ptr;
   mHighlighter->setNameLists( parser.variableNameList(), parser.functionNameList() );
   mTextEdit->update();
   //mHighlighter->rehighlight();
   }
+
+
+
+
+//!
+//! \brief save Save editing programm to library
+//!
+void SdD3dModelProgrammEditor::save()
+  {
+  //Check if programm name and programm description filled
+  if( mTitle->text().isEmpty() ) {
+    QMessageBox::warning( this, tr("Warning!"), tr("Programm title not defined! Enter programm title and repeate saving") );
+    return;
+    }
+
+  if( mDescription->text().isEmpty() ) {
+    QMessageBox::warning( this, tr("Warning!"), tr("Programm description not defined! Enter programm description and repeate saving") );
+    return;
+    }
+
+  //Build new rich if not builded yet
+  if( mRich == nullptr )
+    mRich = new SdPItemRich();
+
+  //Update RichText
+  mRich->setTitle( mTitle->text(), tr("Update 3d programm") );
+  mRich->paramSet( stdParam3dModelProgramm, mDescription->text(), nullptr );
+  mRich->setContents( mTextEdit->toPlainText() );
+  //Push to library
+  SdObjectFactory::insertItemObject( mRich, mRich->write() );
+  }
+
+
+
+
+//We test if programm not saved
+void SdD3dModelProgrammEditor::closeEvent(QCloseEvent *event)
+  {
+  if( mDirty ) {
+    //Programm text changed, query for close without saving
+    if( QMessageBox::question( this, tr("Warning!"), tr("Programm text changed! Do You want close editor without saving it?") ) != QMessageBox::Yes ) {
+      //User want not close without saving
+      event->ignore();
+      return;
+      }
+    }
+  QDialog::closeEvent( event );
+  }
+
+

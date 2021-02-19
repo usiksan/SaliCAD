@@ -35,6 +35,9 @@ SOURCES += \
     master3d/SdM3dFunColorBuild.cpp \
     master3d/SdM3dFunExtrudeModel.cpp \
     master3d/SdM3dFunFaceBuild.cpp \
+    master3d/SdM3dFunFloatInput.cpp \
+    master3d/SdM3dFunInput.cpp \
+    master3d/SdM3dFunInputFloat.cpp \
     master3d/SdM3dFunTransferRegion.cpp \
     master3d/SdM3dFunction.cpp \
     master3d/SdM3dOperatorBlock.cpp \
@@ -380,6 +383,9 @@ HEADERS  += \
     master3d/SdM3dFunColorBuild.h \
     master3d/SdM3dFunExtrudeModel.h \
     master3d/SdM3dFunFaceBuild.h \
+    master3d/SdM3dFunFloatInput.h \
+    master3d/SdM3dFunInput.h \
+    master3d/SdM3dFunInputFloat.h \
     master3d/SdM3dFunTransferRegion.h \
     master3d/SdM3dFunction.h \
     master3d/SdM3dOperator.h \

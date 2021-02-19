@@ -54,6 +54,15 @@ SdPNewProjectItem_3dMaster::SdPNewProjectItem_3dMaster(SdProjectItemPtr *item, S
   QPushButton *editProg = new QPushButton( tr("Edit programm") );
   editProg->setToolTip( tr("Open dialog to edit selected 3d model programm") );
   boxLay->addWidget( editProg );
+  connect( editProg, &QPushButton::clicked, this, [this] () {
+    int row = mMasterType->currentRow();
+    if( row >= 0 && row < mIdList.count() ) {
+      SdD3dModelProgrammEditor editor( mIdList.at(row), this );
+      editor.exec();
+      initializePage();
+      }
+    });
+
 
   boxLay->addStretch(1);
 
@@ -75,12 +84,7 @@ SdPNewProjectItem_3dMaster::SdPNewProjectItem_3dMaster(SdProjectItemPtr *item, S
 
   setLayout( hlay );
 
-  connect( mMasterType, &QListWidget::currentRowChanged, this, [this] ( int row ) {
-    if( row >= 0 ) {
-      //mDescription->setText( mDescriptions.at(row) );
-      //mImage->setPixmap( QPixmap(mImages.at(row)) );
-      }
-    } );
+  connect( mMasterType, &QListWidget::currentRowChanged, this, &SdPNewProjectItem_3dMaster::onCurrentRowChanged );
   }
 
 
@@ -119,13 +123,35 @@ void SdPNewProjectItem_3dMaster::initializePage()
     return false;
     });
 
-//  for( auto id : qAsConst(idList) ) {
-//    SdPItemRich *rich = sdObjectOnly<SdPItemRich>( SdObjectFactory::extractObject( id, false, this ) );
-//    if( rich != nullptr ) {
-//      mMasterType->addItem( rich->getTitle() );
-//      mDescriptions.append( rich->paramGet( stdParam3dModelProgramm ) );
-//      mProgramms.append( rich->contents() );
-//      }
-//    }
+  for( const auto &id : qAsConst(mIdList) ) {
+    SdPItemRich *rich = sdObjectOnly<SdPItemRich>( SdObjectFactory::extractObject( id, false, this ) );
+    if( rich != nullptr ) {
+      mMasterType->addItem( rich->getTitle() );
+      delete rich;
+      }
+    }
+  onCurrentRowChanged(0);
+  }
 
+
+
+
+//!
+//! \brief onCurrentRowChanged Called on current row in model master list
+//! \param row                 Selected row index
+//!
+void SdPNewProjectItem_3dMaster::onCurrentRowChanged(int row)
+  {
+  if( row >= 0 && row < mIdList.count() ) {
+    SdPItemRich *rich = sdObjectOnly<SdPItemRich>( SdObjectFactory::extractObject( mIdList.at(row), false, this ) );
+    if( rich != nullptr ) {
+      mDescription->setText( rich->paramGet(stdParam3dModelProgramm) );
+      //TODO append 3d preview
+
+      return;
+      }
+    }
+  //Clear description and 3d object preview
+  mDescription->clear();
+  mPreview->item()->clear();
   }
