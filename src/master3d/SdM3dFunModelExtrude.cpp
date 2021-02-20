@@ -1,8 +1,8 @@
-#include "SdM3dFunExtrudeModel.h"
-#include "SdM3dFunTransferRegion.h"
+#include "SdM3dFunModelExtrude.h"
+#include "SdM3dFunRegionTranslate.h"
 
 
-SdM3dFunExtrudeModel::SdM3dFunExtrudeModel() :
+SdM3dFunModelExtrude::SdM3dFunModelExtrude() :
   SdM3dFunction( SDM3D_TYPE_MODEL, SDM3D_TYPE_REGION, SDM3D_TYPE_VERTEX, SDM3D_TYPE_COLOR )
   {
 
@@ -11,15 +11,15 @@ SdM3dFunExtrudeModel::SdM3dFunExtrudeModel() :
 
 
 
-SdM3dModel SdM3dFunExtrudeModel::toModel() const
+SdM3dModel SdM3dFunModelExtrude::toModel() const
   {
-  return model( mParamList[0]->toRegion(), mParamList[1]->toVertex(), mParamList[2]->toColor() );
+  return modelExtrude( mParamList[0]->toRegion(), mParamList[1]->toVertex(), mParamList[2]->toColor() );
   }
 
 
 
 
-SdM3dModel SdM3dFunExtrudeModel::model(SdM3dRegion region, QVector3D vector, QColor color )
+SdM3dModel SdM3dFunModelExtrude::modelExtrude(SdM3dRegion region, QVector3D vector, QColor color )
   {
   SdM3dModel md;
   SdM3dFace bot;
@@ -28,7 +28,7 @@ SdM3dModel SdM3dFunExtrudeModel::model(SdM3dRegion region, QVector3D vector, QCo
   md.append( bot );
 
   SdM3dFace top;
-  top.mContour = SdM3dFunTransferRegion::transfer( region, vector );
+  top.mContour = SdM3dFunRegionTranslate::regionTranslate( region, vector );
   top.mColor   = color;
   md.append( top );
 

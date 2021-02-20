@@ -44,34 +44,45 @@
 #include "SdM3dUnaryBoolNot.h"
 
 //Functions
-#include "SdM3dFunBuildVertex.h"
+#include "SdM3dFunInputFloat.h"
+#include "SdM3dFunInputColor.h"
 #include "SdM3dFunFaceBuild.h"
 #include "SdM3dFunColorBuild.h"
 #include "SdM3dFunColorFromString.h"
-#include "SdM3dFunInputFloat.h"
-#include "SdM3dFunInputColor.h"
-#include "SdM3dFunRegionRect.h"
+#include "SdM3dFunVertexBuild.h"
 #include "SdM3dFunVertexOffset.h"
 #include "SdM3dFunVertexTranslate.h"
+#include "SdM3dFunVertexCenterOfRegion.h"
+#include "SdM3dFunRegionRect.h"
+#include "SdM3dFunRegionTranslate.h"
+#include "SdM3dFunFaceTranslate.h"
+#include "SdM3dFunModelWall.h"
+#include "SdM3dFunModelWallEven.h"
+#include "SdM3dFunModelExtrude.h"
 
 SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   {
   //Fill functions
-
-  addFunction( QStringLiteral("vertex"), [] () -> SdM3dFunction* { return new SdM3dFunBuildVertex(); } );
-  addFunction( QStringLiteral("face"), [] () -> SdM3dFunction* { return new SdM3dFunFaceBuild(); } );
-  addFunction( QStringLiteral("color"), [] () -> SdM3dFunction* { return new SdM3dFunColorBuild(); } );
-
   addFunction( QStringLiteral("inputFloat"), [tableWidget] () -> SdM3dFunction* { return new SdM3dFunInputFloat( tableWidget ); } );
   addFunction( QStringLiteral("inputColor"), [tableWidget] () -> SdM3dFunction* { return new SdM3dFunInputColor( tableWidget ); } );
 
+  addFunction( QStringLiteral("color"), [] () -> SdM3dFunction* { return new SdM3dFunColorBuild(); } );
   addFunction( QStringLiteral("colorFromString"), [] () -> SdM3dFunction* { return new SdM3dFunColorFromString(); } );
 
+  addFunction( QStringLiteral("vertex"), [] () -> SdM3dFunction* { return new SdM3dFunVertexBuild(); } );
   addFunction( QStringLiteral("vertexOffset"), [] () -> SdM3dFunction* { return new SdM3dFunVertexOffset(); } );
   addFunction( QStringLiteral("vertexTranslate"), [] () -> SdM3dFunction* { return new SdM3dFunVertexTranslate(); } );
+  addFunction( QStringLiteral("vertexCenterOfRegion"), [] () -> SdM3dFunction* { return new SdM3dFunVertexCenterOfRegion(); } );
 
   addFunction( QStringLiteral("regionRect"), [] () -> SdM3dFunction* { return new SdM3dFunRegionRect(); } );
+  addFunction( QStringLiteral("regionTranslate"), [] () -> SdM3dFunction* { return new SdM3dFunRegionTranslate(); } );
 
+  addFunction( QStringLiteral("face"), [] () -> SdM3dFunction* { return new SdM3dFunFaceBuild(); } );
+  addFunction( QStringLiteral("faceTranslate"), [] () -> SdM3dFunction* { return new SdM3dFunFaceTranslate(); } );
+
+  addFunction( QStringLiteral("modelWall"), [] () -> SdM3dFunction* { return new SdM3dFunModelWall(); } );
+  addFunction( QStringLiteral("modelWallEven"), [] () -> SdM3dFunction* { return new SdM3dFunModelWallEven(); } );
+  addFunction( QStringLiteral("modelExtrude"), [] () -> SdM3dFunction* { return new SdM3dFunModelExtrude(); } );
   }
 
 

@@ -1,6 +1,6 @@
 #include "SdM3dFunBuildBox.h"
 #include "SdM3dFunBuildRect.h"
-#include "SdM3dFunExtrudeModel.h"
+#include "SdM3dFunModelExtrude.h"
 
 SdM3dFunBuildBox::SdM3dFunBuildBox() :
   SdM3dFunction( SDM3D_TYPE_MODEL, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT, SDM3D_TYPE_COLOR )
@@ -18,5 +18,5 @@ SdM3dModel SdM3dFunBuildBox::toModel() const
 
 SdM3dModel SdM3dFunBuildBox::box(float w, float h, float z, QColor color )
   {
-  return SdM3dFunExtrudeModel::model( SdM3dFunBuildRect::rectXY( w, h ), QVector3D(0,0,z), color );
+  return SdM3dFunModelExtrude::modelExtrude( SdM3dFunBuildRect::rectXY( w, h ), QVector3D(0,0,z), color );
   }
