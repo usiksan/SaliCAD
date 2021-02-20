@@ -16,6 +16,7 @@ Description
 #include "SdD3dModelProgrammEditor.h"
 #include "SdW3dModelProgrammEditor.h"
 #include "SdW3dModelProgrammHighlighter.h"
+#include "SdDPadMaster.h"
 #include "master3d/SdM3dParser.h"
 #include "master3d/SdM3dProgramm.h"
 #include "objects/SdObjectFactory.h"
@@ -28,6 +29,7 @@ Description
 #include <QDialogButtonBox>
 #include <QFont>
 #include <QMessageBox>
+#include <QColorDialog>
 
 SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *parent) :
   QDialog(parent),
@@ -35,65 +37,84 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
   mDirty(false),
   mActive(false)
   {
+  //Main layout of dialog is vertical
   QVBoxLayout *vlay = new QVBoxLayout();
 
-  QHBoxLayout *hlay = new QHBoxLayout();
-  hlay->addWidget( new QLabel(tr("Programm title:")) );
-  hlay->addWidget( mTitle = new QLineEdit() );
+   //Programm title with lable
+   QHBoxLayout *hlay = new QHBoxLayout();
+   hlay->addWidget( new QLabel(tr("Programm title:")) );
+   hlay->addWidget( mTitle = new QLineEdit() );
 
   vlay->addLayout( hlay );
 
-  hlay = new QHBoxLayout();
-  hlay->addWidget( new QLabel(tr("Programm description:")) );
-  hlay->addWidget( mDescription = new QLineEdit() );
+   //Programm description with label
+   hlay = new QHBoxLayout();
+   hlay->addWidget( new QLabel(tr("Programm description:")) );
+   hlay->addWidget( mDescription = new QLineEdit() );
 
   vlay->addLayout( hlay );
 
+  //Central part of dialog is splitter
   QSplitter *splitter = new QSplitter();
   vlay->addWidget( splitter );
 
-  QVBoxLayout *tlay = new QVBoxLayout();
-  QFont font;
-  font.setFamily("Courier");
-  font.setFixedPitch(true);
-  font.setPointSize(10);
+    //Programm text editor
+    QVBoxLayout *tlay = new QVBoxLayout();
+    QFont font;
+    font.setFamily("Courier");
+    font.setFixedPitch(true);
+    font.setPointSize(10);
 
-  mTextEdit = new SdW3dModelProgrammEditor();
-  mTextEdit->setAutoCompleteParenthesis(true);
-  mTextEdit->setAutoIndentSpaceCount(2);
-  mTextEdit->setFont( font );
+    //Editor himself
+    mTextEdit = new SdW3dModelProgrammEditor();
+    mTextEdit->setAutoCompleteParenthesis(true);
+    mTextEdit->setAutoIndentSpaceCount(2);
+    mTextEdit->setFont( font );
 
-  mHighlighter = new SdW3dModelProgrammHighlighter( mTextEdit->document() );
-  mTextEdit->setHighlighter( mHighlighter );
-  connect( mTextEdit, SIGNAL(rehighlightBlock(QTextBlock)), mHighlighter, SLOT(rehighlightBlock(QTextBlock)) );
-  connect( mTextEdit, &SdW3dModelProgrammEditor::textChanged, this, &SdD3dModelProgrammEditor::parse );
+    //Highlighter for editor
+    mHighlighter = new SdW3dModelProgrammHighlighter( mTextEdit->document() );
+    mTextEdit->setHighlighter( mHighlighter );
+    connect( mTextEdit, SIGNAL(rehighlightBlock(QTextBlock)), mHighlighter, SLOT(rehighlightBlock(QTextBlock)) );
+    connect( mTextEdit, &SdW3dModelProgrammEditor::textChanged, this, &SdD3dModelProgrammEditor::parse );
 
-  tlay->addWidget( mTextEdit );
+    tlay->addWidget( mTextEdit );
 
-  hlay = new QHBoxLayout();
-  hlay->addWidget( new QLabel(tr("Error:")) );
-  hlay->addWidget( mError = new QLineEdit() );
+     //Error line with label (result of programm compile)
+     hlay = new QHBoxLayout();
+     hlay->addWidget( new QLabel(tr("Error:")) );
+     hlay->addWidget( mError = new QLineEdit() );
 
-  tlay->addLayout( hlay );
+    tlay->addLayout( hlay );
 
-  hlay = new QHBoxLayout();
-  QPushButton *build = new QPushButton(tr("Build"));
-  build->setToolTip( tr("Compile source text 3d model programm") );
-  connect( build, &QPushButton::clicked, this, &SdD3dModelProgrammEditor::compile );
-  hlay->addWidget( build );
-  hlay->addStretch(1);
+     //Buttons for compile text programm
+     hlay = new QHBoxLayout();
+     QPushButton *build = new QPushButton(tr("Build"));
+     build->setToolTip( tr("Compile source text 3d model programm") );
+     connect( build, &QPushButton::clicked, this, &SdD3dModelProgrammEditor::compile );
+     hlay->addWidget( build );
+     hlay->addStretch(1);
 
-  tlay->addLayout( hlay );
+    tlay->addLayout( hlay );
 
-  QWidget *editor = new QWidget();
-  editor->setLayout( tlay );
+   QWidget *editor = new QWidget();
+   editor->setLayout( tlay );
 
-  splitter->addWidget( editor );
-  splitter->addWidget( mParamWidget = new QTableWidget() );
-  connect( mParamWidget, &QTableWidget::cellChanged, this, &SdD3dModelProgrammEditor::rebuild );
+   //Help widget
+   splitter->addWidget( mHelp = new SdWHelp() );
+   connect( mTextEdit, &SdW3dModelProgrammEditor::help, mHelp, &SdWHelp::helpTopic );
 
-  splitter->addWidget( mPreview = new SdWView3d( &mPart, this ) );
+   //Text editor widget with buttons
+   splitter->addWidget( editor );
 
+   //Param table widget
+   splitter->addWidget( mParamWidget = new QTableWidget() );
+   connect( mParamWidget, &QTableWidget::cellChanged, this, &SdD3dModelProgrammEditor::rebuild );
+   connect( mParamWidget, &QTableWidget::cellClicked, this, &SdD3dModelProgrammEditor::onCellClicked );
+
+   //Part preview widget
+   splitter->addWidget( mPreview = new SdWView3d( &mPart, this ) );
+
+  //Buttons at dialog bottom
   QDialogButtonBox *dialogButtonBox = new QDialogButtonBox( QDialogButtonBox::Save | QDialogButtonBox::Close );
   vlay->addWidget( dialogButtonBox );
   connect( dialogButtonBox->button(QDialogButtonBox::Save), &QPushButton::clicked, this, &SdD3dModelProgrammEditor::save );
@@ -226,6 +247,35 @@ void SdD3dModelProgrammEditor::save()
   //Push to library
   SdObjectFactory::insertItemObject( mRich, mRich->write() );
   mDirty = false;
+  }
+
+
+
+
+//!
+//! \brief onCellClicked Called when user clicked on mParamWidget cell
+//! \param row           Row on which was clicked
+//! \param column        Column on which was clicked
+//!
+void SdD3dModelProgrammEditor::onCellClicked(int row, int column)
+  {
+  if( column == 1 ) {
+    QTableWidgetItem *item = mParamWidget->item( row, column );
+    if( item != nullptr ) {
+      if( item->type() == SDM3D_INPUT_COLOR ) {
+        //Show color selection dialog
+        QColor color = QColorDialog::getColor( QColor(item->text()), this, mParamWidget->item(row,0)->text() );
+        if( color.isValid() )
+          item->setText( color.name() );
+        return;
+        }
+      else if( item->type() == SDM3D_INPUT_PIN ) {
+        //Show pad master dialog
+        item->setText( SdDPadMaster::build( item->text(), this ) );
+        return;
+        }
+      }
+    }
   }
 
 

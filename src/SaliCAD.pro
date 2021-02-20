@@ -33,13 +33,17 @@ SOURCES += \
     master3d/SdM3dFunBuildRect.cpp \
     master3d/SdM3dFunBuildVertex.cpp \
     master3d/SdM3dFunColorBuild.cpp \
+    master3d/SdM3dFunColorFromString.cpp \
     master3d/SdM3dFunExtrudeModel.cpp \
     master3d/SdM3dFunFaceBuild.cpp \
     master3d/SdM3dFunInput.cpp \
     master3d/SdM3dFunInputColor.cpp \
     master3d/SdM3dFunInputFloat.cpp \
+    master3d/SdM3dFunModelWall.cpp \
     master3d/SdM3dFunRegionRect.cpp \
     master3d/SdM3dFunTransferRegion.cpp \
+    master3d/SdM3dFunVertexOffset.cpp \
+    master3d/SdM3dFunVertexTranslate.cpp \
     master3d/SdM3dFunction.cpp \
     master3d/SdM3dOperatorBlock.cpp \
     master3d/SdM3dOperatorIf.cpp \
@@ -383,13 +387,17 @@ HEADERS  += \
     master3d/SdM3dFunBuildRect.h \
     master3d/SdM3dFunBuildVertex.h \
     master3d/SdM3dFunColorBuild.h \
+    master3d/SdM3dFunColorFromString.h \
     master3d/SdM3dFunExtrudeModel.h \
     master3d/SdM3dFunFaceBuild.h \
     master3d/SdM3dFunInput.h \
     master3d/SdM3dFunInputColor.h \
     master3d/SdM3dFunInputFloat.h \
+    master3d/SdM3dFunModelWall.h \
     master3d/SdM3dFunRegionRect.h \
     master3d/SdM3dFunTransferRegion.h \
+    master3d/SdM3dFunVertexOffset.h \
+    master3d/SdM3dFunVertexTranslate.h \
     master3d/SdM3dFunction.h \
     master3d/SdM3dOperator.h \
     master3d/SdM3dOperatorAssign.h \

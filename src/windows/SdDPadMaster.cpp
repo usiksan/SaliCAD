@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Pad master dialog
 */
 #include "objects/SdEnvir.h"
 

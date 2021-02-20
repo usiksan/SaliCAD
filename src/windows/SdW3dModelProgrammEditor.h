@@ -196,6 +196,7 @@ class SdW3dModelProgrammEditor : public QPlainTextEdit {
     void fileOpen( const QString &fname );
     void setLink( const QString link );
     void jump( const QString fname, int line );
+    void help( const QString &topic );
 
  public slots:
     void onCursorPositionChanged();

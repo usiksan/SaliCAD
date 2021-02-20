@@ -9,13 +9,20 @@
 
 class SdM3dFunction : public SdM3dValue
   {
-    char          mResultType;
-    int           mParamCount;
-    const char   *mParamTypes;
+    char mResultType;
+    int  mParamCount;
+    char mParamTypes[SDM3D_MAX_PARAM];
   protected:
     SdM3dValuePtr mParamList[SDM3D_MAX_PARAM];
   public:
-    SdM3dFunction( char resultType, int paramCount, const char *paramTypes );
+    SdM3dFunction( char resultType, char paramType0 );
+    SdM3dFunction( char resultType, char paramType0, char paramType1 );
+    SdM3dFunction( char resultType, char paramType0, char paramType1, char paramType2 );
+    SdM3dFunction( char resultType, char paramType0, char paramType1, char paramType2, char paramType3 );
+    SdM3dFunction( char resultType, char paramType0, char paramType1, char paramType2, char paramType3, char paramType4 );
+    SdM3dFunction( char resultType, char paramType0, char paramType1, char paramType2, char paramType3, char paramType4, char paramType5 );
+    SdM3dFunction( char resultType, char paramType0, char paramType1, char paramType2, char paramType3, char paramType4, char paramType5, char paramType6 );
+    SdM3dFunction( char resultType, char paramType0, char paramType1, char paramType2, char paramType3, char paramType4, char paramType5, char paramType6, char paramType7 );
     ~SdM3dFunction();
 
     void paramSet( int index, SdM3dValuePtr param ) { mParamList[index] = param; }
@@ -28,6 +35,9 @@ class SdM3dFunction : public SdM3dValue
     // SdM3dValue interface
   public:
     virtual char type() const override { return mResultType; }
+
+  private:
+    void clearParamList();
   };
 
 #endif // SDM3DFUNCTION_H

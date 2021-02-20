@@ -1,7 +1,8 @@
 #include "SdM3dFunInputFloat.h"
+#include "SdM3dParser.h"
 
 SdM3dFunInputFloat::SdM3dFunInputFloat( QTableWidget *tableWidget ) :
-  SdM3dFunInput( SDM3D_TYPE_FLOAT, tableWidget )
+  SdM3dFunInput( SDM3D_TYPE_FLOAT, tableWidget, SDM3D_INPUT_STRING )
   {
 
   }

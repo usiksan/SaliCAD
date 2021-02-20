@@ -1,12 +1,9 @@
 #include "SdM3dFunExtrudeModel.h"
 #include "SdM3dFunTransferRegion.h"
 
-static const char paramList[3] = { SDM3D_TYPE_REGION,
-                                   SDM3D_TYPE_VERTEX,
-                                   SDM3D_TYPE_COLOR};
 
 SdM3dFunExtrudeModel::SdM3dFunExtrudeModel() :
-  SdM3dFunction( SDM3D_TYPE_MODEL, 3, paramList )
+  SdM3dFunction( SDM3D_TYPE_MODEL, SDM3D_TYPE_REGION, SDM3D_TYPE_VERTEX, SDM3D_TYPE_COLOR )
   {
 
   }

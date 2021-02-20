@@ -24,6 +24,8 @@ class SdW3dModelProgrammHighlighter : public QSyntaxHighlighter {
 
     QStringList names() const { return mKeyWords + mVariableNameList + mFunctionNameList; }
 
+    bool        isFunction( const QString &id ) const { return mFunctionNameList.contains(id); }
+
   protected:
     void highlightBlock(const QString &text);
 

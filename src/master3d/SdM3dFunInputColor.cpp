@@ -1,7 +1,8 @@
 #include "SdM3dFunInputColor.h"
+#include "SdM3dParser.h"
 
 SdM3dFunInputColor::SdM3dFunInputColor(QTableWidget *tableWidget) :
-  SdM3dFunInput( SDM3D_TYPE_COLOR, tableWidget )
+  SdM3dFunInput( SDM3D_TYPE_COLOR, tableWidget, SDM3D_INPUT_COLOR )
   {
 
   }

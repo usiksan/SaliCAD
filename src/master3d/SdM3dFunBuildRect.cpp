@@ -1,9 +1,8 @@
 #include "SdM3dFunBuildRect.h"
 
-static const char paramList[2] = { SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT };
 
 SdM3dFunBuildRect::SdM3dFunBuildRect() :
-  SdM3dFunction( SDM3D_TYPE_REGION, 2, paramList )
+  SdM3dFunction( SDM3D_TYPE_REGION, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT )
   {
 
   }

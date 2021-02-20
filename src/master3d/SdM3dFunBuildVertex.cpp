@@ -1,11 +1,8 @@
 #include "SdM3dFunBuildVertex.h"
 
-static const char paramList[3] = { SDM3D_TYPE_FLOAT,
-                                   SDM3D_TYPE_FLOAT,
-                                   SDM3D_TYPE_FLOAT };
 
 SdM3dFunBuildVertex::SdM3dFunBuildVertex() :
-  SdM3dFunction( SDM3D_TYPE_VERTEX, 3, paramList )
+  SdM3dFunction( SDM3D_TYPE_VERTEX, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT )
   {
 
   }

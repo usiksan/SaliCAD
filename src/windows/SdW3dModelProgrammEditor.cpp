@@ -823,6 +823,21 @@ SdW3dModelProgrammEditor::keyPressEvent(QKeyEvent *e)
 
 
 
+  //При нажатии клавиши F1 над функцией отправляем сигнал показать помощь по ней
+  else if( e->key() == Qt::Key_F1 ) {
+    QString ident = getWordCursorOver();
+    if( !ident.isEmpty() ) {
+      if( mHighlighter != nullptr && mHighlighter->isFunction(ident) ) {
+        //Начать имя функции с большой буквы
+        ident[0] = ident.at(0).toUpper();
+        emit help( QStringLiteral("3dFun") + ident + QStringLiteral(".htm") );
+        }
+      }
+    return;
+    }
+
+
+
 
   //Return (Enter)
   else if( e->key() == Qt::Key_Return ) {

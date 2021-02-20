@@ -10,9 +10,8 @@ class SdM3dFunInput : public SdM3dFunction
   protected:
     QTableWidget *mTableWidget;
     int           mRow;
-    char          mInputParamTypes[2];
   public:
-    SdM3dFunInput( char resultType, QTableWidget *tableWidget );
+    SdM3dFunInput(char resultType, QTableWidget *tableWidget, int itemType );
   };
 
 #endif // SDM3DFUNINPUT_H

@@ -93,7 +93,7 @@ SdWHelp::SdWHelp(SdWMain *main) :
       else
         QMessageBox::warning( this, tr("Error!"), tr("Guider file '%1' not exist. Try reinstall SaliCAD").arg(path) );
       }
-    else {
+    else if( mMain != nullptr ) {
       if( url.hasFragment() )
         mMain->cmHelpPage( url.fileName() + QStringLiteral("#") + url.fragment() );
       else
@@ -125,6 +125,7 @@ QUrl SdWHelp::pageConvert(const QString &page, const QString &fragment)
   //Test if file exist with english language
   //Проверить наличие файла с анлийским языком
   else if( QFile::exists( helpPath() + "en-" + page ) ) {
+    //qDebug() << "Help on" << (helpPath() + "en-" + page);
     //File exist. Build url
     QUrl url = QUrl::fromLocalFile(helpPath() + "en-" + page);
     if( !fragment.isEmpty() )

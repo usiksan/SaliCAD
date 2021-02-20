@@ -12,6 +12,14 @@
 #include <QTableWidget>
 #include <functional>
 
+enum {
+  SDM3D_INPUT_STRING = Qt::UserRole + 1,
+  SDM3D_INPUT_BOOL,
+  SDM3D_INPUT_COLOR,
+  SDM3D_INPUT_PIN
+};
+
+
 using SdM3dFunctionBuilder = std::function<SdM3dFunction* ()>;
 
 class SdPItemPart;

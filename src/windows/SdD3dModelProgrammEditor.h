@@ -19,6 +19,7 @@ Description
 #include "objects/SdPItemRich.h"
 #include "objects/SdPItemPart.h"
 #include "SdWView3d.h"
+#include "SdWHelp.h"
 
 #include <QDialog>
 #include <QTextEdit>
@@ -43,6 +44,7 @@ class SdD3dModelProgrammEditor : public QDialog
     QLineEdit                     *mDescription;
     QTableWidget                  *mParamWidget;
     SdWView3d                     *mPreview;
+    SdWHelp                       *mHelp;
     bool                           mDirty;
     bool                           mActive;
   public:
@@ -70,6 +72,13 @@ class SdD3dModelProgrammEditor : public QDialog
     //! \brief save Save editing programm to library
     //!
     void save();
+
+    //!
+    //! \brief onCellClicked Called when user clicked on mParamWidget cell
+    //! \param row           Row on which was clicked
+    //! \param column        Column on which was clicked
+    //!
+    void onCellClicked( int row, int column );
 
   protected:
     //We test if programm not saved

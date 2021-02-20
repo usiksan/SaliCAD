@@ -47,17 +47,28 @@
 #include "SdM3dFunBuildVertex.h"
 #include "SdM3dFunFaceBuild.h"
 #include "SdM3dFunColorBuild.h"
+#include "SdM3dFunColorFromString.h"
 #include "SdM3dFunInputFloat.h"
+#include "SdM3dFunInputColor.h"
 #include "SdM3dFunRegionRect.h"
+#include "SdM3dFunVertexOffset.h"
+#include "SdM3dFunVertexTranslate.h"
 
 SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   {
   //Fill functions
+
   addFunction( QStringLiteral("vertex"), [] () -> SdM3dFunction* { return new SdM3dFunBuildVertex(); } );
   addFunction( QStringLiteral("face"), [] () -> SdM3dFunction* { return new SdM3dFunFaceBuild(); } );
   addFunction( QStringLiteral("color"), [] () -> SdM3dFunction* { return new SdM3dFunColorBuild(); } );
 
   addFunction( QStringLiteral("inputFloat"), [tableWidget] () -> SdM3dFunction* { return new SdM3dFunInputFloat( tableWidget ); } );
+  addFunction( QStringLiteral("inputColor"), [tableWidget] () -> SdM3dFunction* { return new SdM3dFunInputColor( tableWidget ); } );
+
+  addFunction( QStringLiteral("colorFromString"), [] () -> SdM3dFunction* { return new SdM3dFunColorFromString(); } );
+
+  addFunction( QStringLiteral("vertexOffset"), [] () -> SdM3dFunction* { return new SdM3dFunVertexOffset(); } );
+  addFunction( QStringLiteral("vertexTranslate"), [] () -> SdM3dFunction* { return new SdM3dFunVertexTranslate(); } );
 
   addFunction( QStringLiteral("regionRect"), [] () -> SdM3dFunction* { return new SdM3dFunRegionRect(); } );
 
@@ -256,7 +267,7 @@ SdM3dValue *SdM3dParser::parseAnd()
 
   while( !mScaner.isEndOfScanOrError() ) {
     if( mScaner.matchToken('&') ) {
-      SdM3dValue *val2 = parseVar();
+      SdM3dValue *val2 = parseOr();
       if( val->type() != SDM3D_TYPE_BOOL || val2->type() != SDM3D_TYPE_BOOL ) {
         mScaner.error( QStringLiteral("Invalid types of AND operation. Both must be bool.") );
         delete val;
@@ -275,11 +286,11 @@ SdM3dValue *SdM3dParser::parseAnd()
 
 SdM3dValue *SdM3dParser::parseOr()
   {
-  SdM3dValue *val = parsePlusMinus();
+  SdM3dValue *val = parseNot();
 
   while( !mScaner.isEndOfScanOrError() ) {
     if( mScaner.matchToken('|') ) {
-      SdM3dValue *val2 = parseVar();
+      SdM3dValue *val2 = parseNot();
       if( val->type() != SDM3D_TYPE_BOOL || val2->type() != SDM3D_TYPE_BOOL ) {
         mScaner.error( QStringLiteral("Invalid types of OR operation. Both must be bool.") );
         delete val;
@@ -318,7 +329,7 @@ SdM3dValue *SdM3dParser::parsePlusMinus()
 
   while( !mScaner.isEndOfScanOrError() ) {
     if( mScaner.matchToken('+') ) {
-      SdM3dValue *val2 = parseVar();
+      SdM3dValue *val2 = parseMultDiv();
       if( val->type() != SDM3D_TYPE_FLOAT || val2->type() != SDM3D_TYPE_FLOAT ) {
         mScaner.error( QStringLiteral("Invalid types of add operation. Both must be float.") );
         delete val;
@@ -328,7 +339,7 @@ SdM3dValue *SdM3dParser::parsePlusMinus()
       val = new SdM3dBinaryFloatAdd( val, val2 );
       }
     else if( mScaner.matchToken('-') ) {
-      SdM3dValue *val2 = parseVar();
+      SdM3dValue *val2 = parseMultDiv();
       if( val->type() != SDM3D_TYPE_FLOAT || val2->type() != SDM3D_TYPE_FLOAT ) {
         mScaner.error( QStringLiteral("Invalid types of sub operation. Both must be float.") );
         delete val;
@@ -348,11 +359,11 @@ SdM3dValue *SdM3dParser::parsePlusMinus()
 
 SdM3dValue *SdM3dParser::parseMultDiv()
   {
-  SdM3dValue *val = parseVar();
+  SdM3dValue *val = parseMinus();
 
   while( !mScaner.isEndOfScanOrError() ) {
     if( mScaner.matchToken('*') ) {
-      SdM3dValue *val2 = parseVar();
+      SdM3dValue *val2 = parseMinus();
       if( val->type() != SDM3D_TYPE_FLOAT || val2->type() != SDM3D_TYPE_FLOAT ) {
         mScaner.error( QStringLiteral("Invalid types of multiply operation. Both must be float.") );
         delete val;
@@ -362,7 +373,7 @@ SdM3dValue *SdM3dParser::parseMultDiv()
       val = new SdM3dBinaryFloatMult( val, val2 );
       }
     else if( mScaner.matchToken('/') ) {
-      SdM3dValue *val2 = parseVar();
+      SdM3dValue *val2 = parseMinus();
       if( val->type() != SDM3D_TYPE_FLOAT || val2->type() != SDM3D_TYPE_FLOAT ) {
         mScaner.error( QStringLiteral("Invalid types of divide operation. Both must be float.") );
         delete val;

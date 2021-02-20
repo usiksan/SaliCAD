@@ -1,9 +1,8 @@
 #include "SdM3dFunFaceBuild.h"
 
-static const char paramList[2] = { SDM3D_TYPE_REGION, SDM3D_TYPE_COLOR };
 
 SdM3dFunFaceBuild::SdM3dFunFaceBuild() :
-  SdM3dFunction( SDM3D_TYPE_FACE, 2, paramList )
+  SdM3dFunction( SDM3D_TYPE_FACE, SDM3D_TYPE_REGION, SDM3D_TYPE_COLOR )
   {
 
   }

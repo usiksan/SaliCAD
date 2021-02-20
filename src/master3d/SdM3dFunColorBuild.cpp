@@ -1,9 +1,8 @@
 #include "SdM3dFunColorBuild.h"
 
-static const char paramList[4] = { SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT };
 
 SdM3dFunColorBuild::SdM3dFunColorBuild() :
-  SdM3dFunction( SDM3D_TYPE_COLOR, 4, paramList )
+  SdM3dFunction( SDM3D_TYPE_COLOR, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT )
   {
   }
 
