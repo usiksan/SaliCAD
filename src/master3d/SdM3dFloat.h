@@ -1,3 +1,18 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  3d model programming language
+
+  Float value
+*/
 #ifndef SDM3DFLOAT_H
 #define SDM3DFLOAT_H
 
@@ -5,7 +20,7 @@
 
 class SdM3dFloat : public SdM3dValue
   {
-    float mValue;
+    float mValue; //!< Float value
   public:
     SdM3dFloat( float val ) : SdM3dValue(), mValue(val) {}
 

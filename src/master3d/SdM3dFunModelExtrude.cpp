@@ -1,5 +1,21 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  3d model programming language
+
+  The function extrudes the model from the region in the direction of the vector
+*/
 #include "SdM3dFunModelExtrude.h"
 #include "SdM3dFunRegionTranslate.h"
+#include "SdM3dFunModelWall.h"
 
 
 SdM3dFunModelExtrude::SdM3dFunModelExtrude() :
@@ -19,29 +35,34 @@ SdM3dModel SdM3dFunModelExtrude::toModel() const
 
 
 
+//!
+//! \brief modelExtrude Extrudes model from region in the direction of the vector with color faces.
+//!                     First face is bottom (begin of vector), last face is top (end of vector),
+//!                     Middle faces are walls.
+//! \param region       Region of bottom of model
+//! \param vector       Vector of extrude direction
+//! \param color        Face model color
+//! \return             Model extruded from region in the direction of the vector
+//!
 SdM3dModel SdM3dFunModelExtrude::modelExtrude(SdM3dRegion region, QVector3D vector, QColor color )
   {
   SdM3dModel md;
   SdM3dFace bot;
   bot.mContour = region;
   bot.mColor   = color;
+
+  //Bottom side
   md.append( bot );
 
   SdM3dFace top;
   top.mContour = SdM3dFunRegionTranslate::regionTranslate( region, vector );
   top.mColor   = color;
-  md.append( top );
 
   //Side walls
-  for( int i = 0; i < region.count(); i++ ) {
-    SdM3dFace side;
-    int j = i < region.count() - 1 ? i + 1 : 0;
-    side.mContour.append( bot.mContour.at(i) );
-    side.mContour.append( bot.mContour.at(j) );
-    side.mContour.append( top.mContour.at(j) );
-    side.mContour.append( top.mContour.at(i) );
-    md.append( side );
-    }
+  md.append( SdM3dFunModelWall::modelWalls( region, top.mContour, color, true ) );
+
+  //Top side
+  md.append( top );
 
   return md;
   }

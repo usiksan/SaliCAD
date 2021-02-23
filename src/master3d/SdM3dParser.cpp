@@ -26,6 +26,7 @@
 #include "SdM3dValue.h"
 #include "SdM3dFloat.h"
 #include "SdM3dString.h"
+#include "SdM3dBool.h"
 
 #include "SdM3dArrayVertex.h"
 #include "SdM3dArraySegment.h"
@@ -46,19 +47,27 @@
 //Functions
 #include "SdM3dFunInputFloat.h"
 #include "SdM3dFunInputColor.h"
-#include "SdM3dFunFaceBuild.h"
+
 #include "SdM3dFunColorBuild.h"
 #include "SdM3dFunColorFromString.h"
+
 #include "SdM3dFunVertexBuild.h"
 #include "SdM3dFunVertexOffset.h"
 #include "SdM3dFunVertexTranslate.h"
 #include "SdM3dFunVertexCenterOfRegion.h"
+
 #include "SdM3dFunRegionRect.h"
+#include "SdM3dFunRegionCircle.h"
 #include "SdM3dFunRegionTranslate.h"
+
+#include "SdM3dFunFaceBuild.h"
 #include "SdM3dFunFaceTranslate.h"
+
 #include "SdM3dFunModelWall.h"
 #include "SdM3dFunModelWallEven.h"
 #include "SdM3dFunModelExtrude.h"
+#include "SdM3dFunModelBox.h"
+#include "SdM3dFunModelCylinder.h"
 
 SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   {
@@ -75,6 +84,7 @@ SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   addFunction( QStringLiteral("vertexCenterOfRegion"), [] () -> SdM3dFunction* { return new SdM3dFunVertexCenterOfRegion(); } );
 
   addFunction( QStringLiteral("regionRect"), [] () -> SdM3dFunction* { return new SdM3dFunRegionRect(); } );
+  addFunction( QStringLiteral("regionCircle"), [] () -> SdM3dFunction* { return new SdM3dFunRegionCircle(); } );
   addFunction( QStringLiteral("regionTranslate"), [] () -> SdM3dFunction* { return new SdM3dFunRegionTranslate(); } );
 
   addFunction( QStringLiteral("face"), [] () -> SdM3dFunction* { return new SdM3dFunFaceBuild(); } );
@@ -83,6 +93,8 @@ SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   addFunction( QStringLiteral("modelWall"), [] () -> SdM3dFunction* { return new SdM3dFunModelWall(); } );
   addFunction( QStringLiteral("modelWallEven"), [] () -> SdM3dFunction* { return new SdM3dFunModelWallEven(); } );
   addFunction( QStringLiteral("modelExtrude"), [] () -> SdM3dFunction* { return new SdM3dFunModelExtrude(); } );
+  addFunction( QStringLiteral("modelBox"), [] () -> SdM3dFunction* { return new SdM3dFunModelBox(); } );
+  addFunction( QStringLiteral("modelCylinder"), [] () -> SdM3dFunction* { return new SdM3dFunModelCylinder(); } );
   }
 
 
@@ -428,6 +440,12 @@ SdM3dValue *SdM3dParser::parseVar()
     //Variable or function
     QString name = mScaner.tokenValue();
     mScaner.tokenNext();
+
+    if( name == QStringLiteral("true") )
+      return new SdM3dBool( true );
+    if( name == QStringLiteral("false") )
+      return new SdM3dBool( false );
+
     if( mScaner.matchToken('(') )
       return parseFunction( name );
 

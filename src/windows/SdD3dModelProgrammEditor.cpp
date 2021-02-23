@@ -34,6 +34,7 @@ Description
 SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *parent) :
   QDialog(parent),
   mProgramm(nullptr),
+  mRich(nullptr),
   mDirty(false),
   mActive(false)
   {

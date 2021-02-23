@@ -1,7 +1,7 @@
-#include "SdM3dFunBuildVertex.h"
+#include "SdM3dFunVertexBuild.h"
 
 
-SdM3dFunBuildVertex::SdM3dFunBuildVertex() :
+SdM3dFunVertexBuild::SdM3dFunVertexBuild() :
   SdM3dFunction( SDM3D_TYPE_VERTEX, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT )
   {
 
@@ -9,7 +9,7 @@ SdM3dFunBuildVertex::SdM3dFunBuildVertex() :
 
 
 
-QVector3D SdM3dFunBuildVertex::toVertex() const
+QVector3D SdM3dFunVertexBuild::toVertex() const
   {
   return QVector3D( mParamList[0]->toFloat(), mParamList[1]->toFloat(), mParamList[2]->toFloat() );
   }

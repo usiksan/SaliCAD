@@ -28,8 +28,7 @@ SOURCES += \
     master3d/SdM3dArrayFace.cpp \
     master3d/SdM3dArraySegment.cpp \
     master3d/SdM3dArrayVertex.cpp \
-    master3d/SdM3dFloat.cpp \
-    master3d/SdM3dFunBuildBox.cpp \
+    master3d/SdM3dBool.cpp \
     master3d/SdM3dFunBuildRect.cpp \
     master3d/SdM3dFunColorBuild.cpp \
     master3d/SdM3dFunColorFromString.cpp \
@@ -38,9 +37,14 @@ SOURCES += \
     master3d/SdM3dFunInput.cpp \
     master3d/SdM3dFunInputColor.cpp \
     master3d/SdM3dFunInputFloat.cpp \
+    master3d/SdM3dFunModelAddExtrude.cpp \
+    master3d/SdM3dFunModelBox.cpp \
+    master3d/SdM3dFunModelCurve.cpp \
+    master3d/SdM3dFunModelCylinder.cpp \
     master3d/SdM3dFunModelExtrude.cpp \
     master3d/SdM3dFunModelWall.cpp \
     master3d/SdM3dFunModelWallEven.cpp \
+    master3d/SdM3dFunRegionCircle.cpp \
     master3d/SdM3dFunRegionRect.cpp \
     master3d/SdM3dFunRegionTranslate.cpp \
     master3d/SdM3dFunVertexBuild.cpp \
@@ -385,8 +389,8 @@ HEADERS  += \
     master3d/SdM3dBinaryFloatDiv.h \
     master3d/SdM3dBinaryFloatMult.h \
     master3d/SdM3dBinaryFloatSub.h \
+    master3d/SdM3dBool.h \
     master3d/SdM3dFloat.h \
-    master3d/SdM3dFunBuildBox.h \
     master3d/SdM3dFunBuildRect.h \
     master3d/SdM3dFunColorBuild.h \
     master3d/SdM3dFunColorFromString.h \
@@ -395,9 +399,14 @@ HEADERS  += \
     master3d/SdM3dFunInput.h \
     master3d/SdM3dFunInputColor.h \
     master3d/SdM3dFunInputFloat.h \
+    master3d/SdM3dFunModelAddExtrude.h \
+    master3d/SdM3dFunModelBox.h \
+    master3d/SdM3dFunModelCurve.h \
+    master3d/SdM3dFunModelCylinder.h \
     master3d/SdM3dFunModelExtrude.h \
     master3d/SdM3dFunModelWall.h \
     master3d/SdM3dFunModelWallEven.h \
+    master3d/SdM3dFunRegionCircle.h \
     master3d/SdM3dFunRegionRect.h \
     master3d/SdM3dFunRegionTranslate.h \
     master3d/SdM3dFunVertexBuild.h \

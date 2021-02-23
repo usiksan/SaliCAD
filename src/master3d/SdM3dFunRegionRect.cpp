@@ -18,10 +18,12 @@ SdM3dRegion SdM3dFunRegionRect::toRegion() const
 
 SdM3dRegion SdM3dFunRegionRect::regionRect(float w, float h)
   {
+  w /= 2.0;
+  h /= 2.0;
   SdM3dRegion region;
-  region.append( QVector3D(0,0,0) );
-  region.append( QVector3D(w,0,0) );
+  region.append( QVector3D(-w,-h,0) );
+  region.append( QVector3D(w,-h,0) );
   region.append( QVector3D(w,h,0) );
-  region.append( QVector3D(0,h,0) );
+  region.append( QVector3D(-w,h,0) );
   return region;
   }
