@@ -28,7 +28,6 @@ SOURCES += \
     master3d/SdM3dArrayFace.cpp \
     master3d/SdM3dArraySegment.cpp \
     master3d/SdM3dArrayVertex.cpp \
-    master3d/SdM3dBool.cpp \
     master3d/SdM3dFunBuildRect.cpp \
     master3d/SdM3dFunColorBuild.cpp \
     master3d/SdM3dFunColorFromString.cpp \
@@ -42,6 +41,7 @@ SOURCES += \
     master3d/SdM3dFunModelCurve.cpp \
     master3d/SdM3dFunModelCylinder.cpp \
     master3d/SdM3dFunModelExtrude.cpp \
+    master3d/SdM3dFunModelTranslate.cpp \
     master3d/SdM3dFunModelWall.cpp \
     master3d/SdM3dFunModelWallEven.cpp \
     master3d/SdM3dFunRegionCircle.cpp \
@@ -404,6 +404,7 @@ HEADERS  += \
     master3d/SdM3dFunModelCurve.h \
     master3d/SdM3dFunModelCylinder.h \
     master3d/SdM3dFunModelExtrude.h \
+    master3d/SdM3dFunModelTranslate.h \
     master3d/SdM3dFunModelWall.h \
     master3d/SdM3dFunModelWallEven.h \
     master3d/SdM3dFunRegionCircle.h \

@@ -37,7 +37,7 @@ SdM3dModel SdM3dFunModelWall::modelWalls(SdM3dRegion bottom, SdM3dRegion top, QC
   SdM3dModel model;
   SdM3dFace face;
   face.mColor = color;
-  for( int i = 0; bottom.count() - 1; i++ ) {
+  for( int i = 0; i < bottom.count() - 1; i++ ) {
     face.mContour.clear();
     face.mContour.append( bottom.at(i) );
     face.mContour.append( bottom.at(i+1) );

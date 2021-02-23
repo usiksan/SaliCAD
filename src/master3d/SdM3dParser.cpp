@@ -68,6 +68,7 @@
 #include "SdM3dFunModelExtrude.h"
 #include "SdM3dFunModelBox.h"
 #include "SdM3dFunModelCylinder.h"
+#include "SdM3dFunModelTranslate.h"
 
 SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   {
@@ -95,6 +96,7 @@ SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   addFunction( QStringLiteral("modelExtrude"), [] () -> SdM3dFunction* { return new SdM3dFunModelExtrude(); } );
   addFunction( QStringLiteral("modelBox"), [] () -> SdM3dFunction* { return new SdM3dFunModelBox(); } );
   addFunction( QStringLiteral("modelCylinder"), [] () -> SdM3dFunction* { return new SdM3dFunModelCylinder(); } );
+  addFunction( QStringLiteral("modelTranslate"), [] () -> SdM3dFunction* { return new SdM3dFunModelTranslate(); } );
   }
 
 
