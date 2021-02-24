@@ -107,7 +107,7 @@ void SdWView3d::keyReleaseEvent(QKeyEvent *event)
 
 void SdWView3d::initializeGL()
   {
-  GLfloat light_position[] = { 0.0, -1000.0, 0.0, 0.0 };
+  GLfloat light_position[] = { 0.0, 0.0, -500.0, 0.0 };
   GLfloat light_diffuse[] = { 0.9f, 0.9f, 0.9f, 1.0f };
   GLfloat light_ambient[] = { 0.9f, 0.9f, 0.9f, 1.0f };
   GLfloat mat_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -133,10 +133,20 @@ void SdWView3d::initializeGL()
   f->glEnable(GL_NORMALIZE);
 
   GLfloat light1_diffuse[] = {0.7, 0.7, 0.7, 1.0 };
-  GLfloat light1_position[] = {0.0, 0.0, 1000.0, 1.0};
+  GLfloat light1_position[] = {0.0, -1000.0, 1000.0, 1.0};
+  GLfloat light2_position[] = {-1000.0, 1000.0, -1000.0, 1.0};
+  GLfloat light3_position[] = { 1000.0, 1000.0, -1000.0, 1.0};
   f->glEnable(GL_LIGHT1);
   f->glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
   f->glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
+
+  f->glEnable(GL_LIGHT2);
+  f->glLightfv(GL_LIGHT2, GL_DIFFUSE, light1_diffuse);
+  f->glLightfv(GL_LIGHT2, GL_POSITION, light2_position);
+
+  f->glEnable(GL_LIGHT3);
+  f->glLightfv(GL_LIGHT3, GL_DIFFUSE, light1_diffuse);
+  f->glLightfv(GL_LIGHT3, GL_POSITION, light3_position);
   }
 
 void SdWView3d::resizeGL(int w, int h)
