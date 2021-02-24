@@ -38,7 +38,7 @@ SdM3dModel SdM3dFunModelCurve::modelCurve(SdM3dRegion region, QVector3D rotation
 
       //Build rotated redion
       SdM3dRegion top;
-      for( auto const &v : region )
+      for( auto const &v : qAsConst(region) )
         top.append( matrix.map( v ) );
 
       //Append walls

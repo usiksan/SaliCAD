@@ -11,7 +11,8 @@ Web
 Description
   3d model programming language
 
-  The function add extrudes the model from the top side of source model in the direction of the vector
+  The function add extrudes the model from the top side of source model in the direction of the normal vector
+  with shift amount
 */
 #ifndef SDM3DFUNMODELADDEXTRUDE_H
 #define SDM3DFUNMODELADDEXTRUDE_H
@@ -27,7 +28,15 @@ class SdM3dFunModelAddExtrude : public SdM3dFunction
   public:
     virtual SdM3dModel toModel() const override;
 
-    static  SdM3dModel modelAddExtrude( SdM3dModel src, QVector3D vector, QColor color );
+    //!
+    //! \brief modelAddExtrude The function add extrudes the model from the top side of source model in the
+    //!                        direction of the normal vector with shift amount
+    //! \param src             Source model to add extrusion
+    //! \param shift           Shift amount
+    //! \param color           Faces color
+    //! \return                Model with added extrusion
+    //!
+    static  SdM3dModel modelAddExtrude( SdM3dModel src, float shift, QColor color );
   };
 
 #endif // SDM3DFUNMODELADDEXTRUDE_H

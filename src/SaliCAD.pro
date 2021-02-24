@@ -45,7 +45,9 @@ SOURCES += \
     master3d/SdM3dFunModelWall.cpp \
     master3d/SdM3dFunModelWallEven.cpp \
     master3d/SdM3dFunRegionCircle.cpp \
+    master3d/SdM3dFunRegionParallel.cpp \
     master3d/SdM3dFunRegionRect.cpp \
+    master3d/SdM3dFunRegionShift.cpp \
     master3d/SdM3dFunRegionTranslate.cpp \
     master3d/SdM3dFunVertexBuild.cpp \
     master3d/SdM3dFunVertexCenterOfRegion.cpp \
@@ -408,7 +410,9 @@ HEADERS  += \
     master3d/SdM3dFunModelWall.h \
     master3d/SdM3dFunModelWallEven.h \
     master3d/SdM3dFunRegionCircle.h \
+    master3d/SdM3dFunRegionParallel.h \
     master3d/SdM3dFunRegionRect.h \
+    master3d/SdM3dFunRegionShift.h \
     master3d/SdM3dFunRegionTranslate.h \
     master3d/SdM3dFunVertexBuild.h \
     master3d/SdM3dFunVertexCenterOfRegion.h \

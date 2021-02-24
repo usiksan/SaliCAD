@@ -107,7 +107,7 @@ void SdWView3d::keyReleaseEvent(QKeyEvent *event)
 
 void SdWView3d::initializeGL()
   {
-  GLfloat light_position[] = { 0.0, 1.0, 0.0, 0.0 };
+  GLfloat light_position[] = { 0.0, -1000.0, 0.0, 0.0 };
   GLfloat light_diffuse[] = { 0.9f, 0.9f, 0.9f, 1.0f };
   GLfloat light_ambient[] = { 0.9f, 0.9f, 0.9f, 1.0f };
   GLfloat mat_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -120,26 +120,23 @@ void SdWView3d::initializeGL()
   f->glLightfv( GL_LIGHT0, GL_POSITION, light_position );
   f->glLightfv( GL_LIGHT0, GL_DIFFUSE, light_diffuse );
   f->glMaterialfv( GL_LIGHT0, GL_AMBIENT, light_ambient );
-  //f->glMaterialfv( GL_FRONT, GL_SHININESS, mat_shininess );
-  //f->glColorMaterial( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE );
   f->glLightModelfv( GL_LIGHT_MODEL_AMBIENT, model_ambient );
 
   f->glEnable( GL_LIGHTING );
   f->glEnable( GL_LIGHT0 );
   f->glEnable( GL_DEPTH_TEST );
-  //f->glEnable( GL_COLOR_MATERIAL );
 
   f->glEnable(GL_MULTISAMPLE);
 
   // автоматическое приведение нормалей к
   // единичной длине
-  glEnable(GL_NORMALIZE);
+  f->glEnable(GL_NORMALIZE);
 
-  GLfloat light1_diffuse[] = {0.7, 0.7, 0.7};
+  GLfloat light1_diffuse[] = {0.7, 0.7, 0.7, 1.0 };
   GLfloat light1_position[] = {0.0, 0.0, 1000.0, 1.0};
-  glEnable(GL_LIGHT1);
-  glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
-  glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
+  f->glEnable(GL_LIGHT1);
+  f->glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
+  f->glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
   }
 
 void SdWView3d::resizeGL(int w, int h)
@@ -147,9 +144,10 @@ void SdWView3d::resizeGL(int w, int h)
   //qDebug() << "resize 3d";
   QOpenGLFunctions_2_0 *f = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_0>();
   f->glViewport( 0, 0, w, h );
+  double k = ((double)w) / ((double)h);
   f->glMatrixMode( GL_PROJECTION );
   f->glLoadIdentity();
-  f->glOrtho(-1.0, 1.0, -1.0, 1.0, -10.0, 10.0);
+  f->glOrtho(-50.0 * k, 50.0 * k, -50.0, 50.0, -1000.0, 1000.0);
 
   f->glMatrixMode( GL_MODELVIEW );
   }

@@ -15,10 +15,10 @@ Description
 */
 #include "SdM3dFunModelAddExtrude.h"
 #include "SdM3dFunModelWall.h"
-#include "SdM3dFunRegionTranslate.h"
+#include "SdM3dFunRegionShift.h"
 
 SdM3dFunModelAddExtrude::SdM3dFunModelAddExtrude() :
-  SdM3dFunction( SDM3D_TYPE_MODEL, SDM3D_TYPE_MODEL, SDM3D_TYPE_VERTEX, SDM3D_TYPE_COLOR )
+  SdM3dFunction( SDM3D_TYPE_MODEL, SDM3D_TYPE_MODEL, SDM3D_TYPE_FLOAT, SDM3D_TYPE_COLOR )
   {
 
   }
@@ -26,12 +26,20 @@ SdM3dFunModelAddExtrude::SdM3dFunModelAddExtrude() :
 
 SdM3dModel SdM3dFunModelAddExtrude::toModel() const
   {
-  return modelAddExtrude( mParamList[0]->toModel(), mParamList[1]->toVertex(), mParamList[2]->toColor() );
+  return modelAddExtrude( mParamList[0]->toModel(), mParamList[1]->toFloat(), mParamList[2]->toColor() );
   }
 
 
 
-SdM3dModel SdM3dFunModelAddExtrude::modelAddExtrude(SdM3dModel src, QVector3D vector, QColor color)
+//!
+//! \brief modelAddExtrude The function add extrudes the model from the top side of source model in the
+//!                        direction of the normal vector with shift amount
+//! \param src             Source model to add extrusion
+//! \param shift           Shift amount
+//! \param color           Faces color
+//! \return                Model with added extrusion
+//!
+SdM3dModel SdM3dFunModelAddExtrude::modelAddExtrude(SdM3dModel src, float shift, QColor color)
   {
   SdM3dModel md(src);
 
@@ -39,7 +47,7 @@ SdM3dModel SdM3dFunModelAddExtrude::modelAddExtrude(SdM3dModel src, QVector3D ve
   SdM3dFace bot = md.takeLast();
 
   SdM3dFace top;
-  top.mContour = SdM3dFunRegionTranslate::regionTranslate( bot.mContour, vector );
+  top.mContour = SdM3dFunRegionShift::regionShift( bot.mContour, shift );
   top.mColor   = color;
 
   //Side walls

@@ -40,5 +40,5 @@ SdM3dModel SdM3dFunModelCylinder::toModel() const
 //!
 SdM3dModel SdM3dFunModelCylinder::modelCylinder(float radius, float height, QColor color)
   {
-  return SdM3dFunModelExtrude::modelExtrude( SdM3dFunRegionCircle::regionCircle( radius ), QVector3D(0,0,height), color );
+  return SdM3dFunModelExtrude::modelExtrude( SdM3dFunRegionCircle::regionCircle( radius ), height, color );
   }

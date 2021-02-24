@@ -43,5 +43,5 @@ SdM3dModel SdM3dFunModelBox::toModel() const
 //!
 SdM3dModel SdM3dFunModelBox::modelBox(float lenght, float width, float height, QColor color )
   {
-  return SdM3dFunModelExtrude::modelExtrude( SdM3dFunRegionRect::regionRect( lenght, width ), QVector3D(0,0,height), color );
+  return SdM3dFunModelExtrude::modelExtrude( SdM3dFunRegionRect::regionRect( lenght, width ), height, color );
   }

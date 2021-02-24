@@ -22,7 +22,14 @@ void SdM3dPartModel::assign(SdM3dValuePtr src)
       //Convert srcFace to Sd3dFace
       Sd3dFaceMaterial material;
       material.setColor( srcFace.mColor );
-      faseSet->faceAdd( Sd3dFace( srcFace.mContour, SdM3dRegion(), material ) );
+      //Build normals
+      SdM3dRegion normals;
+      if( srcFace.mContour.count() >= 3 ) {
+        QVector3D normal = QVector3D::normal( srcFace.mContour.at(0), srcFace.mContour.at(1), srcFace.mContour.at(2) );
+        for( int i = 0; i < srcFace.mContour.count(); i++ )
+          normals.append( normal );
+        }
+      faseSet->faceAdd( Sd3dFace( srcFace.mContour, normals, material ) );
       qDebug() << srcFace.mContour;
       }
     mPart->insertChild( faseSet, nullptr );

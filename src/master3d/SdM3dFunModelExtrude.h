@@ -29,15 +29,16 @@ class SdM3dFunModelExtrude : public SdM3dFunction
     virtual SdM3dModel toModel() const override;
 
     //!
-    //! \brief modelExtrude Extrudes model from region in the direction of the vector with color faces.
+    //! \brief modelExtrude Extrudes model from region in the direction of the normal vector with
+    //!                     specified shift amount color faces.
     //!                     First face is bottom (begin of vector), last face is top (end of vector),
     //!                     Middle faces are walls.
     //! \param region       Region of bottom of model
-    //! \param vector       Vector of extrude direction
+    //! \param shift        Shift amount of extrude
     //! \param color        Face model color
-    //! \return             Model extruded from region in the direction of the vector
+    //! \return             Model extruded from region in the direction of the normal vector
     //!
-    static  SdM3dModel modelExtrude(SdM3dRegion region, QVector3D vector, QColor color);
+    static  SdM3dModel modelExtrude(SdM3dRegion region, float shift, QColor color);
 
   };
 
