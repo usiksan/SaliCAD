@@ -7,7 +7,7 @@ class SdM3dVariableGraph : public SdM3dVariable
   {
     SdM3dGraph mValue;
   public:
-    SdM3dVariableGraph() : mValue() {}
+    SdM3dVariableGraph() : mValue(QVector3D(), QVector3D()) {}
 
 
 

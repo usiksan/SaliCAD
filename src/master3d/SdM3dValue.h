@@ -21,7 +21,7 @@ class SdM3dValue
     virtual QString      toString() const { return QString(); }
 
 
-    virtual SdM3dFlat    toFlat() const { return SdM3dFlat(); }
+    virtual SdM3dGraph   toGraph() const { return SdM3dGraph( QVector3D(), QVector3D() ); }
 
 
     virtual QVector3D    toVertex() const { return QVector3D(); }

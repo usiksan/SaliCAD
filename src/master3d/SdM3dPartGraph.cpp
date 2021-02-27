@@ -13,10 +13,10 @@ Description
 
   Special variable. When we assign to it then 2d elements appended to the PartItem.
 */
-#include "SdM3dPartFlat.h"
+#include "SdM3dPartGraph.h"
 #include "objects/SdPItemPart.h"
 
-SdM3dPartFlat::SdM3dPartFlat(SdPItemPart *part) :
+SdM3dPartGraph::SdM3dPartGraph(SdPItemPart *part) :
   SdM3dVariable(),
   mMasterPart(part)
   {
@@ -25,28 +25,28 @@ SdM3dPartFlat::SdM3dPartFlat(SdPItemPart *part) :
 
 
 
-void SdM3dPartFlat::assign(SdM3dValuePtr src)
+void SdM3dPartGraph::assign(SdM3dValuePtr src)
   {
-  SdM3dFlat flat = src->toFlat();
+  SdM3dGraph flat = src->toGraph();
   switch( flat.mType ) {
-    case SdM3dFlat::sdm2dLine :
+    case SdM3dGraph::sdm2dLine :
       mMasterPart.addLine( flat.pointA().x(), flat.pointA().y(), flat.pointB().x(), flat.pointB().y() );
       break;
-    case SdM3dFlat::sdm2dRect :
+    case SdM3dGraph::sdm2dRect :
       mMasterPart.addRect( flat.pointA().x(), flat.pointA().y(), flat.pointB().x(), flat.pointB().y() );
       break;
-    case SdM3dFlat::sdm2dCircle :
+    case SdM3dGraph::sdm2dCircle :
       mMasterPart.addCircle( flat.circleCenter().x(), flat.circleCenter().y(), flat.circleRadius() );
       break;
-    case SdM3dFlat::sdm2dFRect :
+    case SdM3dGraph::sdm2dFRect :
       mMasterPart.addFRect( flat.pointA().x(), flat.pointA().y(), flat.pointB().x(), flat.pointB().y() );
       break;
-    case SdM3dFlat::sdm2dPin :
+    case SdM3dGraph::sdm2dPin :
       break;
-    case SdM3dFlat::sdm2dIdent :
+    case SdM3dGraph::sdm2dIdent :
       mMasterPart.setId( SdPoint(flat.identPos()) );
       break;
-    case SdM3dFlat::sdm2dValue :
+    case SdM3dGraph::sdm2dValue :
       mMasterPart.setValue( SdPoint(flat.valuePos()) );
       break;
     }

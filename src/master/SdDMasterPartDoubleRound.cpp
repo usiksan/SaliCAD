@@ -158,8 +158,8 @@ void SdDMasterPartDoubleRound::accept()
   else
     setupThrouPin();
   //Make pin number and pin name invisible
-  mPinNameProp.mLayer.set( LID0_INVISIBLE );
-  mPinNumberProp.mLayer.set( LID0_INVISIBLE );
+  mMasterPart.mPinNameProp.mLayer.set( LID0_INVISIBLE );
+  mMasterPart.mPinNumberProp.mLayer.set( LID0_INVISIBLE );
   addPin( SdPoint(0,0), leftPinType, SdPoint(0,250), QString("1"), SdPoint(0,-250) );
   addPin( SdPoint(sizeX,0), rightPinType, SdPoint(sizeX,250), QString("2"), SdPoint(sizeX,-250) );
 

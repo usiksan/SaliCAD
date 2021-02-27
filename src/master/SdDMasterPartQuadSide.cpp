@@ -355,15 +355,15 @@ void SdDMasterPartQuadSide::accept()
   else
     setupThrouPin();
   //Make pin number and pin name invisible
-  mPinNameProp.mLayer.set( LID0_INVISIBLE );
-  mPinNumberProp.mLayer.set( LID0_INVISIBLE );
+  mMasterPart.mPinNameProp.mLayer.set( LID0_INVISIBLE );
+  mMasterPart.mPinNumberProp.mLayer.set( LID0_INVISIBLE );
 
   int pinIndex = ui->mBottomLeftPinNumber->text().toInt();
   //Bottom pins
-  mPinNumberProp.mHorz = dhjLeft;
-  mPinNameProp.mHorz   = dhjLeft;
-  mPinNumberProp.mDir  = da90;
-  mPinNameProp.mDir    = da90;
+  mMasterPart.mPinNumberProp.mHorz = dhjLeft;
+  mMasterPart.mPinNameProp.mHorz   = dhjLeft;
+  mMasterPart.mPinNumberProp.mDir  = da90;
+  mMasterPart.mPinNameProp.mDir    = da90;
   for( int i = 0; i < bottomPinCount; i++ ) {
     SdPoint pinOrg(bottomPinX+i*pinDistance,bottomPin);
     SdPoint numberOrg(pinOrg.x()-250,pinOrg.y());
@@ -374,10 +374,10 @@ void SdDMasterPartQuadSide::accept()
       pinIndex = 1;
     }
   //Right pins
-  mPinNumberProp.mHorz = dhjRight;
-  mPinNumberProp.mDir  = da0;
-  mPinNameProp.mHorz   = dhjRight;
-  mPinNameProp.mDir    = da0;
+  mMasterPart.mPinNumberProp.mHorz = dhjRight;
+  mMasterPart.mPinNumberProp.mDir  = da0;
+  mMasterPart.mPinNameProp.mHorz   = dhjRight;
+  mMasterPart.mPinNameProp.mDir    = da0;
   for( int i = 0; i < rightPinCount; i++ ) {
     SdPoint pinOrg(rightPin,rightPinY+i*pinDistance);
     SdPoint numberOrg(pinOrg.x(),pinOrg.y()+250);
@@ -388,8 +388,8 @@ void SdDMasterPartQuadSide::accept()
       pinIndex = 1;
     }
   //Top pins
-  mPinNumberProp.mDir  = da90;
-  mPinNameProp.mDir    = da90;
+  mMasterPart.mPinNumberProp.mDir  = da90;
+  mMasterPart.mPinNameProp.mDir    = da90;
   for( int i = 0; i < topPinCount; i++ ) {
     SdPoint pinOrg(topPinX - i*pinDistance,topPin);
     SdPoint numberOrg(pinOrg.x()-250,pinOrg.y());
@@ -400,10 +400,10 @@ void SdDMasterPartQuadSide::accept()
       pinIndex = 1;
     }
   //Left pins
-  mPinNumberProp.mHorz = dhjLeft;
-  mPinNumberProp.mDir  = da0;
-  mPinNameProp.mHorz   = dhjLeft;
-  mPinNameProp.mDir    = da0;
+  mMasterPart.mPinNumberProp.mHorz = dhjLeft;
+  mMasterPart.mPinNumberProp.mDir  = da0;
+  mMasterPart.mPinNameProp.mHorz   = dhjLeft;
+  mMasterPart.mPinNameProp.mDir    = da0;
   for( int i = 0; i < leftPinCount; i++ ) {
     SdPoint pinOrg(leftPin,leftPinY-i*pinDistance);
     SdPoint numberOrg(pinOrg.x(),pinOrg.y()+250);
@@ -417,8 +417,8 @@ void SdDMasterPartQuadSide::accept()
   //Update ident position
   //When part size greater then ident text size (1000) then place ident in center of part
   // else place ident at top of part
-  mIdentProp.mDir = da0;
-  mValueProp.mDir = da0;
+  mMasterPart.mIdentProp.mDir = da0;
+  mMasterPart.mValueProp.mDir = da0;
   if( bodySizeX >= 3000 && bodySizeY >= 3000 )
     //id inside part
     setId( SdPoint( leftBody + bodySizeX / 2, (topBody + bottomBody) / 2 ) );

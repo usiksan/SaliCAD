@@ -188,12 +188,12 @@ void SdDMasterPartSingleLine::accept()
   else
     setupThrouPin();
   //Make pin number and pin name invisible
-  mPinNameProp.mLayer.set( LID0_INVISIBLE );
-  mPinNumberProp.mLayer.set( LID0_INVISIBLE );
+  mMasterPart.mPinNameProp.mLayer.set( LID0_INVISIBLE );
+  mMasterPart.mPinNumberProp.mLayer.set( LID0_INVISIBLE );
 
   //Pins
-  mPinNumberProp.mHorz = dhjLeft;
-  mPinNameProp.mHorz   = dhjLeft;
+  mMasterPart.mPinNumberProp.mHorz = dhjLeft;
+  mMasterPart.mPinNameProp.mHorz   = dhjLeft;
   for( int i = 0; i < pinCount; i++ ) {
     SdPoint pinOrg( i * sPinDistance, 0 );
     SdPoint numberOrg( pinOrg.x(), 250 );
@@ -206,7 +206,7 @@ void SdDMasterPartSingleLine::accept()
   //Place ident at top of part
   setId( SdPoint( pinsLenght / 2, partTop+500 ) );
 
-  mValueProp.mDir = da0;
+  mMasterPart.mValueProp.mDir = da0;
   setValue( SdPoint( pinsLenght / 2, partBot - 500 ) );
 
   SdDMasterPart::accept();

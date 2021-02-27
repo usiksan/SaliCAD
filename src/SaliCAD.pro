@@ -34,7 +34,6 @@ SOURCES += \
     master3d/SdM3dFunColorFromString.cpp \
     master3d/SdM3dFunFaceBuild.cpp \
     master3d/SdM3dFunFaceTranslate.cpp \
-    master3d/SdM3dFunFlatLine.cpp \
     master3d/SdM3dFunInput.cpp \
     master3d/SdM3dFunInputColor.cpp \
     master3d/SdM3dFunInputFloat.cpp \
@@ -60,7 +59,7 @@ SOURCES += \
     master3d/SdM3dOperatorIf.cpp \
     master3d/SdM3dOperatorWhile.cpp \
     master3d/SdM3dParser.cpp \
-    master3d/SdM3dPartFlat.cpp \
+    master3d/SdM3dPartGraph.cpp \
     master3d/SdM3dPartModel.cpp \
     master3d/SdM3dProgramm.cpp \
     master3d/SdM3dScaner.cpp \
@@ -402,7 +401,7 @@ HEADERS  += \
     master3d/SdM3dFunColorFromString.h \
     master3d/SdM3dFunFaceBuild.h \
     master3d/SdM3dFunFaceTranslate.h \
-    master3d/SdM3dFunFlatLine.h \
+    master3d/SdM3dFunGraphLine.h \
     master3d/SdM3dFunInput.h \
     master3d/SdM3dFunInputColor.h \
     master3d/SdM3dFunInputFloat.h \
@@ -430,7 +429,7 @@ HEADERS  += \
     master3d/SdM3dOperatorIf.h \
     master3d/SdM3dOperatorWhile.h \
     master3d/SdM3dParser.h \
-    master3d/SdM3dPartFlat.h \
+    master3d/SdM3dPartGraph.h \
     master3d/SdM3dPartModel.h \
     master3d/SdM3dProgramm.h \
     master3d/SdM3dReference.h \
@@ -450,11 +449,9 @@ HEADERS  += \
     master3d/SdM3dVariableMatrix.h \
     master3d/SdM3dVariableModel.h \
     master3d/SdM3dVariablePath.h \
-    master3d/SdM3dVariablePin.h \
     master3d/SdM3dVariableRegion.h \
     master3d/SdM3dVariableSegment.h \
     master3d/SdM3dVariableString.h \
-    master3d/SdM3dVariableText.h \
     master3d/SdM3dVariableVertex.h \
     modes/SdModeCTraceDelete.h \
     objects/Sd3dDraw.h \

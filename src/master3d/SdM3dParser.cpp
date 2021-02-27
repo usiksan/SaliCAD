@@ -17,13 +17,11 @@
 #include "SdM3dVariableFace.h"
 #include "SdM3dVariableModel.h"
 #include "SdM3dVariableGraph.h"
-#include "SdM3dVariableText.h"
-#include "SdM3dVariablePin.h"
 
 //Predefined variable to insert faces into part
 #include "SdM3dPartModel.h"
 //Predefined variable to insert 2d graphics into part
-#include "SdM3dPartFlat.h"
+#include "SdM3dPartGraph.h"
 
 #include "SdM3dValue.h"
 #include "SdM3dFloat.h"
@@ -114,7 +112,7 @@ SdM3dProgramm *SdM3dParser::parse(const QString src, SdPItemPart *part )
   {
   //Insert predefined variables
   mVariables.insert( QStringLiteral("partModel"), new SdM3dPartModel(part) );
-  mVariables.insert( QStringLiteral("partFlat"), new SdM3dPartFlat(part) );
+  mVariables.insert( QStringLiteral("partFlat"), new SdM3dPartGraph(part) );
 
   //Init scaner with programm source
   mScaner.sourceSetString( src );
@@ -203,8 +201,6 @@ SdM3dOperator *SdM3dParser::parseOperator()
     case SDM3D_TYPE_FACE    : var = new SdM3dVariableFace(); break;
     case SDM3D_TYPE_MODEL   : var = new SdM3dVariableModel(); break;
     case SDM3D_TYPE_GRAPH   : var = new SdM3dVariableGraph(); break;
-    case SDM3D_TYPE_TEXT    : var = new SdM3dVariableText(); break;
-    case SDM3D_TYPE_PIN     : var = new SdM3dVariablePin(); break;
     default:
       mScaner.error( QStringLiteral("Can't create variable with this type %1").arg(val->type()) );
       //Can't create variable

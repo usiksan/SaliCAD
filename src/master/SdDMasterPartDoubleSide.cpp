@@ -232,14 +232,14 @@ void SdDMasterPartDoubleSide::accept()
   else
     setupThrouPin();
   //Make pin number and pin name invisible
-  mPinNameProp.mLayer.set( LID0_INVISIBLE );
-  mPinNumberProp.mLayer.set( LID0_INVISIBLE );
+  mMasterPart.mPinNameProp.mLayer.set( LID0_INVISIBLE );
+  mMasterPart.mPinNumberProp.mLayer.set( LID0_INVISIBLE );
 
   //Bottom pins
-  mPinNumberProp.mHorz = dhjLeft;
-  mPinNumberProp.mDir  = da90;
-  mPinNameProp.mHorz   = dhjLeft;
-  mPinNameProp.mDir    = da90;
+  mMasterPart.mPinNumberProp.mHorz = dhjLeft;
+  mMasterPart.mPinNumberProp.mDir  = da90;
+  mMasterPart.mPinNameProp.mHorz   = dhjLeft;
+  mMasterPart.mPinNameProp.mDir    = da90;
   for( int i = 0; i < bottomPinCount; i++ ) {
     SdPoint pinOrg(i*bottomPinDistance,0);
     SdPoint numberOrg(pinOrg.x()-250,0);
@@ -248,8 +248,8 @@ void SdDMasterPartDoubleSide::accept()
     }
 
   //Top pins
-  mPinNumberProp.mHorz = dhjRight;
-  mPinNameProp.mHorz   = dhjRight;
+  mMasterPart.mPinNumberProp.mHorz = dhjRight;
+  mMasterPart.mPinNameProp.mHorz   = dhjRight;
   for( int i = 0; i < topPinCount; i++ ) {
     SdPoint pinOrg(pinRtop - i*topPinDistance,pinSizeY);
     SdPoint numberOrg(pinOrg.x()-250,pinSizeY);
@@ -261,16 +261,16 @@ void SdDMasterPartDoubleSide::accept()
   //When part size greater then ident text size (1000) then place ident in center of part
   // else place ident at top of part
   if( bodySizeY <= 3000 && bodySizeX > 3000 ) {
-    mIdentProp.mDir = da0;
+    mMasterPart.mIdentProp.mDir = da0;
     setId( SdPoint( partLeft + bodySizeX / 2, pinSizeY/2 + 500 ) );
-    mValueProp.mDir = da0;
+    mMasterPart.mValueProp.mDir = da0;
     setValue( SdPoint( partLeft + bodySizeX / 2, pinSizeY/2 - 500 ) );
     }
   else {
-    mIdentProp.mDir = da90;
+    mMasterPart.mIdentProp.mDir = da90;
     setId( SdPoint( partLeft+500, pinSizeY/2) );
 //    setId( SdPoint( bodySizeY > 3000 ? partLeft - bodySizeX / 2 : partLeft+500, pinSizeY/2) );
-    mValueProp.mDir = da90;
+    mMasterPart.mValueProp.mDir = da90;
     setValue( SdPoint( partLeft + bodySizeX + 500, pinSizeY/2) );
     }
 

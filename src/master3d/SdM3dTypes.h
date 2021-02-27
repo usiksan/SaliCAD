@@ -14,7 +14,7 @@
 #define SDM3D_TYPE_COLOR   'c'
 #define SDM3D_TYPE_STRING  's'
 //2d
-#define SDM3D_TYPE_FLAT    't'
+#define SDM3D_TYPE_GRAPH   'g'
 //3d
 #define SDM3D_TYPE_VERTEX  'v'
 #define SDM3D_TYPE_MATRIX  'x'
@@ -25,7 +25,7 @@
 #define SDM3D_TYPE_MODEL   'm'
 
 
-class SdM3dFlat {
+class SdM3dGraph {
     QPoint  mPos;
     QPoint  mPosB;
     QPoint  mPosName;
@@ -67,16 +67,16 @@ class SdM3dFlat {
     QPoint  vectorToPoint( QVector3D p ) const { p *= 1000.0; return p.toPoint(); }
 
     //Build line
-    SdM3dFlat( QVector3D p1, QVector3D p2 ) { mType = sdm2dLine; mPos = vectorToPoint(p1); mPosB = vectorToPoint(p2); }
+    SdM3dGraph( QVector3D p1, QVector3D p2 ) { mType = sdm2dLine; mPos = vectorToPoint(p1); mPosB = vectorToPoint(p2); }
 
     //Build rect or frect
-    SdM3dFlat( QVector3D p1, QVector3D p2, bool filled ) { mType = filled ? sdm2dFRect : sdm2dRect; mPos = vectorToPoint(p1); mPosB = vectorToPoint(p2); }
+    SdM3dGraph( QVector3D p1, QVector3D p2, bool filled ) { mType = filled ? sdm2dFRect : sdm2dRect; mPos = vectorToPoint(p1); mPosB = vectorToPoint(p2); }
 
     //Build circle
-    SdM3dFlat( QVector3D center, float radius ) { mType = sdm2dCircle; mPos = vectorToPoint(center); mPosB.setX( radius * 1000.0 ); }
+    SdM3dGraph( QVector3D center, float radius ) { mType = sdm2dCircle; mPos = vectorToPoint(center); mPosB.setX( radius * 1000.0 ); }
 
     //Build pin
-    SdM3dFlat( QVector3D pinPos, QString pad, QVector3D numberPos, QString number, QString numberAttr, QVector3D namePos, QString nameAttr ) {
+    SdM3dGraph( QVector3D pinPos, QString pad, QVector3D numberPos, QString number, QString numberAttr, QVector3D namePos, QString nameAttr ) {
       mType = sdm2dPin;
       mPos = vectorToPoint(pinPos);
       mPad = pad;
@@ -88,7 +88,7 @@ class SdM3dFlat {
       }
 
     //Build ident or value place
-    SdM3dFlat( QVector3D pos, QString attr, bool isIdent ) {
+    SdM3dGraph( QVector3D pos, QString attr, bool isIdent ) {
       mType = isIdent ? sdm2dIdent : sdm2dValue;
       mPos = vectorToPoint(pos);
       mPinNameAttr = attr;

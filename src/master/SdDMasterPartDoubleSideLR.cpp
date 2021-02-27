@@ -238,12 +238,12 @@ void SdDMasterPartDoubleSideLR::accept()
   else
     setupThrouPin();
   //Make pin number and pin name invisible
-  mPinNameProp.mLayer.set( LID0_INVISIBLE );
-  mPinNumberProp.mLayer.set( LID0_INVISIBLE );
+  mMasterPart.mPinNameProp.mLayer.set( LID0_INVISIBLE );
+  mMasterPart.mPinNumberProp.mLayer.set( LID0_INVISIBLE );
 
   //Left pins
-  mPinNumberProp.mHorz = dhjLeft;
-  mPinNameProp.mHorz   = dhjLeft;
+  mMasterPart.mPinNumberProp.mHorz = dhjLeft;
+  mMasterPart.mPinNameProp.mHorz   = dhjLeft;
   for( int i = 0; i < leftPinCount; i++ ) {
     SdPoint pinOrg(0,-i*sLeftPinDistance);
     SdPoint numberOrg(0,pinOrg.y()+250);
@@ -252,8 +252,8 @@ void SdDMasterPartDoubleSideLR::accept()
     }
 
   //Right pins
-  mPinNumberProp.mHorz = dhjRight;
-  mPinNameProp.mHorz   = dhjRight;
+  mMasterPart.mPinNumberProp.mHorz = dhjRight;
+  mMasterPart.mPinNameProp.mHorz   = dhjRight;
   for( int i = 0; i < rightPinCount; i++ ) {
     SdPoint pinOrg(sPinSizeX, pinRbot + i*sRightPinDistance);
     SdPoint numberOrg(sPinSizeX,pinOrg.y()+250);
@@ -265,12 +265,12 @@ void SdDMasterPartDoubleSideLR::accept()
   //When part size greater then ident text size (1000) then place ident in center of part
   // else place ident at top of part
   if( sBodySizeX <= 3000 && sBodySizeY > 3000 ) {
-    mIdentProp.mDir    = da90;
+    mMasterPart.mIdentProp.mDir    = da90;
     setId( SdPoint( sPinSizeX/2, partTop - sBodySizeY / 2 ) );
     }
   else setId( SdPoint( sPinSizeX/2, sBodySizeX > 3000 ? partTop - sBodySizeY / 2 : partTop+500) );
 
-  mValueProp.mDir = da0;
+  mMasterPart.mValueProp.mDir = da0;
   setValue( SdPoint( sPinSizeX / 2, partBot - 500 ) );
 
   SdDMasterPart::accept();
