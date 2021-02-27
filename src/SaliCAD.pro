@@ -25,6 +25,7 @@ SOURCES += \
     SdMain.cpp \
     master/SdDMasterPartSingleLine.cpp \
     master/SdDMasterSheetDecorator.cpp \
+    master/SdMasterPart.cpp \
     master3d/SdM3dArrayFace.cpp \
     master3d/SdM3dArraySegment.cpp \
     master3d/SdM3dArrayVertex.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
     master3d/SdM3dFunColorFromString.cpp \
     master3d/SdM3dFunFaceBuild.cpp \
     master3d/SdM3dFunFaceTranslate.cpp \
+    master3d/SdM3dFunFlatLine.cpp \
     master3d/SdM3dFunInput.cpp \
     master3d/SdM3dFunInputColor.cpp \
     master3d/SdM3dFunInputFloat.cpp \
@@ -58,6 +60,7 @@ SOURCES += \
     master3d/SdM3dOperatorIf.cpp \
     master3d/SdM3dOperatorWhile.cpp \
     master3d/SdM3dParser.cpp \
+    master3d/SdM3dPartFlat.cpp \
     master3d/SdM3dPartModel.cpp \
     master3d/SdM3dProgramm.cpp \
     master3d/SdM3dScaner.cpp \
@@ -377,6 +380,7 @@ HEADERS  += \
     SdConfig.h \
     master/SdDMasterPartSingleLine.h \
     master/SdDMasterSheetDecorator.h \
+    master/SdMasterPart.h \
     master3d/SdM3dArray.h \
     master3d/SdM3dArrayFace.h \
     master3d/SdM3dArraySegment.h \
@@ -398,6 +402,7 @@ HEADERS  += \
     master3d/SdM3dFunColorFromString.h \
     master3d/SdM3dFunFaceBuild.h \
     master3d/SdM3dFunFaceTranslate.h \
+    master3d/SdM3dFunFlatLine.h \
     master3d/SdM3dFunInput.h \
     master3d/SdM3dFunInputColor.h \
     master3d/SdM3dFunInputFloat.h \
@@ -425,6 +430,7 @@ HEADERS  += \
     master3d/SdM3dOperatorIf.h \
     master3d/SdM3dOperatorWhile.h \
     master3d/SdM3dParser.h \
+    master3d/SdM3dPartFlat.h \
     master3d/SdM3dPartModel.h \
     master3d/SdM3dProgramm.h \
     master3d/SdM3dReference.h \

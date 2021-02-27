@@ -22,6 +22,8 @@
 
 //Predefined variable to insert faces into part
 #include "SdM3dPartModel.h"
+//Predefined variable to insert 2d graphics into part
+#include "SdM3dPartFlat.h"
 
 #include "SdM3dValue.h"
 #include "SdM3dFloat.h"
@@ -112,6 +114,7 @@ SdM3dProgramm *SdM3dParser::parse(const QString src, SdPItemPart *part )
   {
   //Insert predefined variables
   mVariables.insert( QStringLiteral("partModel"), new SdM3dPartModel(part) );
+  mVariables.insert( QStringLiteral("partFlat"), new SdM3dPartFlat(part) );
 
   //Init scaner with programm source
   mScaner.sourceSetString( src );

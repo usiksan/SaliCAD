@@ -1,3 +1,18 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  3d model programming language
+
+  Special variable. When we assign to it then model appended to the PartItem.
+*/
 #ifndef SDM3DPARTMODEL_H
 #define SDM3DPARTMODEL_H
 
