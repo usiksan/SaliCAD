@@ -24,15 +24,17 @@ SdM3dRegion SdM3dFunRegionCircle::toRegion() const
 //! \param radius       Radius of builded circle
 //! \return             Circle region on XY plane
 //!
-SdM3dRegion SdM3dFunRegionCircle::regionCircle(float radius)
+SdM3dRegion SdM3dFunRegionCircle::regionCircle(float radius, float stepDegree , QVector3D offset)
   {
   SdM3dRegion region;
   //Build circle with step 10 degree
-  for( int angleDegree = 0; angleDegree < 360; angleDegree += 10 ) {
-    float angle = angleDegree;
-    angle = angle * M_PI / 180.0;
+  for( float angleDegree = 0; angleDegree < 360.0; angleDegree += stepDegree ) {
+    //Convert degree to radians
+    float angle = angleDegree * M_PI / 180.0;
+    //Build next corner
     QVector3D v( sin(angle) * radius, cos(angle) * radius, 0 );
-    region.append( v );
+    //Append corner to region
+    region.append( v + offset );
     }
   return region;
   }

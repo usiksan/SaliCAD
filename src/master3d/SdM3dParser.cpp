@@ -70,6 +70,10 @@
 #include "SdM3dFunModelCylinder.h"
 #include "SdM3dFunModelTranslate.h"
 
+#include "SdM3dFunGraphLine.h"
+#include "SdM3dFunGraphRect.h"
+#include "SdM3dFunGraphRectFilled.h"
+
 SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   {
   //Fill functions
@@ -97,6 +101,11 @@ SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   addFunction( QStringLiteral("modelBox"), [] () -> SdM3dFunction* { return new SdM3dFunModelBox(); } );
   addFunction( QStringLiteral("modelCylinder"), [] () -> SdM3dFunction* { return new SdM3dFunModelCylinder(); } );
   addFunction( QStringLiteral("modelTranslate"), [] () -> SdM3dFunction* { return new SdM3dFunModelTranslate(); } );
+
+  addFunction( QStringLiteral("graphLine"), [] () -> SdM3dFunction* { return new SdM3dFunGraphLine(); } );
+  addFunction( QStringLiteral("graphRect"), [] () -> SdM3dFunction* { return new SdM3dFunGraphRect(); } );
+  addFunction( QStringLiteral("graphRectFilled"), [] () -> SdM3dFunction* { return new SdM3dFunGraphRectFilled(); } );
+
   }
 
 

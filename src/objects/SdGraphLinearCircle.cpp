@@ -16,6 +16,7 @@ Description
 #include "SdSelector.h"
 #include "SdRect.h"
 #include "SdSnapInfo.h"
+#include "Sd3dDraw.h"
 
 SdGraphLinearCircle::SdGraphLinearCircle() :
   SdGraphLinear(),
@@ -132,6 +133,20 @@ SdRect SdGraphLinearCircle::getOverRect() const
 void SdGraphLinearCircle::draw(SdContext *dc)
   {
   dc->circle( mCenter, mRadius, mProp );
+  }
+
+
+
+
+
+
+//!
+//! \brief draw3d Draws object in 3d space
+//! \param f      3d draw functions with predefined 3d context
+//!
+void SdGraphLinearCircle::draw3d(QOpenGLFunctions_2_0 *f) const
+  {
+  Sd3dDraw::circle( f, mCenter, mRadius, -0.1 );
   }
 
 

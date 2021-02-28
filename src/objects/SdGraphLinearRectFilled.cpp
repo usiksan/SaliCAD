@@ -15,6 +15,7 @@ Description
 #include "SdSelector.h"
 #include "SdSnapInfo.h"
 #include "SdContext.h"
+#include "Sd3dDraw.h"
 
 SdGraphLinearRectFilled::SdGraphLinearRectFilled() :
   SdGraphLinearRect()
@@ -75,6 +76,18 @@ void SdGraphLinearRectFilled::selectByPoint(const SdPoint p, SdSelector *selecto
 void SdGraphLinearRectFilled::draw(SdContext *dc)
   {
   dc->fillRect( SdRect(a,b), mProp.mLayer.layer() );
+  }
+
+
+
+
+//!
+//! \brief draw3d Draws object in 3d space
+//! \param f      3d draw functions with predefined 3d context
+//!
+void SdGraphLinearRectFilled::draw3d(QOpenGLFunctions_2_0 *f) const
+  {
+  Sd3dDraw::rectFilled( f, a, b, -0.1 );
   }
 
 

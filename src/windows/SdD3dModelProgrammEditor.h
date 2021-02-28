@@ -51,6 +51,12 @@ class SdD3dModelProgrammEditor : public QDialog
     SdD3dModelProgrammEditor( const QString id, QWidget *parent );
     ~SdD3dModelProgrammEditor();
 
+  signals:
+    //!
+    //! \brief parseCompleted Emited when parse compelete
+    //!
+    void parseCompleted();
+
   private slots:
     //!
     //! \brief compile Compile 3d model programm and receiv compilation errors

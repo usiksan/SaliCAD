@@ -31,6 +31,8 @@ class SdWView3d : public QOpenGLWidget
     SdScaler         mScale;          //!< Current scale [Текущий масштаб изображения]
     SdPoint          mOrigin;         //!< Logical origin point [Логическая точка центра изображения]
     SdProjectItem   *mItem;           //!< Current viewed item
+    bool             mEnable2d;       //!< If enabled then 2d graphics draw with 3d
+    bool             mEnablePad;      //!< If enabled then pad stack draws with 3d
   public:
     SdWView3d( SdProjectItem *item, QWidget *parent );
 
@@ -49,6 +51,10 @@ class SdWView3d : public QOpenGLWidget
     virtual void initializeGL() override;
     virtual void resizeGL(int w, int h) override;
     virtual void paintGL() override;
+
+  public slots:
+    void setEnable2d( bool ena );
+    void setEnablePad( bool ena );
   };
 
 #endif // SDWVIEW3D_H

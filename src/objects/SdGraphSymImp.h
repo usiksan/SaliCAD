@@ -36,28 +36,28 @@ class SdGraphNetWire;
 
 class SdGraphSymImp : public SdGraph
   {
-    SdGraphArea      *mArea;         //PCB where this symbol implement contains in
-    int               mSectionIndex; //Section index (from 0)
-    int               mLogSection;   //Logical symbol section number (from 1, 0 - not assigned)
-    int               mLogNumber;    //Logical part number (from 1, 0 - not assigned)
-    SdPoint           mOrigin;       //Position of Implement
-    SdPropSymImp      mProp;         //Implement properties
-    SdRect            mOverRect;     //Over rect
+    SdGraphArea      *mArea;         //!< PCB where this symbol implement contains in
+    int               mSectionIndex; //!< Section index (from 0)
+    int               mLogSection;   //!< Logical symbol section number (from 1, 0 - not assigned)
+    int               mLogNumber;    //!< Logical part number (from 1, 0 - not assigned)
+    SdPoint           mOrigin;       //!< Position of Implement
+    SdPropSymImp      mProp;         //!< Implement properties
+    SdRect            mOverRect;     //!< Over rect
 
     //Symbol identification
-    SdTextImplement   mIdent;        //Symbol identificator text properties and position
+    SdTextImplement   mIdent;        //!< Symbol identificator text properties and position
 
     //Symbol value
-    SdTextImplement   mValue;        //Symbol value text properties and position
+    SdTextImplement   mValue;        //!< Symbol value text properties and position
 
-    SdPItemComponent *mComponent;    //Object contains section information, pin assotiation info. May be same as mSymbol.
-    SdPItemSymbol    *mSymbol;       //Symbol contains graph information
-    SdPItemPart      *mPart;         //Part for partImp construction
-    SdGraphPartImp   *mPartImp;      //Part implement in desired plate
-                                     //If mPartImp == nullptr then symbol not linked
-    SdSymImpPinTable  mPins;         //Pin information table
-    SdStringMap       mParamTable;   //Parameters
-    QString           mLinkError;    //Error string, which displays when no link
+    SdPItemComponent *mComponent;    //!< Object contains section information, pin assotiation info. May be same as mSymbol.
+    SdPItemSymbol    *mSymbol;       //!< Symbol contains graph information
+    SdPItemPart      *mPart;         //!< Part for partImp construction
+    SdGraphPartImp   *mPartImp;      //!< Part implement in desired plate
+                                     //!  If mPartImp == nullptr then symbol not linked
+    SdSymImpPinTable  mPins;         //!< Pin information table
+    SdStringMap       mParamTable;   //!< Parameters
+    QString           mLinkError;    //!< Error string, which displays when no link
   public:
     SdGraphSymImp();
 
@@ -69,138 +69,138 @@ class SdGraphSymImp : public SdGraph
 
     //Information
     //Get implement transform matrix
-    QTransform      matrix() const;
+    QTransform        matrix() const;
     //Return current plate of section
-    SdPItemPlate   *currentPlate() const;
+    SdPItemPlate     *currentPlate() const;
     //Retrive origin point and sheet number
-    QString         getRenumSect( SdPoint &dest, int &sheetNumber ) const;
+    QString           getRenumSect( SdPoint &dest, int &sheetNumber ) const;
     //Return part implement
-    SdGraphPartImp *getPartImp() const { return mPartImp; }
+    SdGraphPartImp   *getPartImp() const { return mPartImp; }
 
     //Pin information
     //Pin presention
-    bool            isPinPresent( const QString pinName ) const { return mPins.contains(pinName); }
+    bool              isPinPresent( const QString pinName ) const { return mPins.contains(pinName); }
     //Pin connection status
-    bool            isPinConnected( const QString pinName ) const;
+    bool              isPinConnected( const QString pinName ) const;
     //Pin net name
-    QString         pinNetName( const QString pinName ) const;
+    QString           pinNetName( const QString pinName ) const;
 
     //Params with local param table
     //Test if param present in local table
-    bool            paramContains( const QString key ) const { return mParamTable.contains(key); }
+    bool              paramContains( const QString key ) const { return mParamTable.contains(key); }
 
     //Get param value from local table
-    QString         paramGet( const QString key ) const { return mParamTable.value(key); }
+    QString           paramGet( const QString key ) const { return mParamTable.value(key); }
 
     //Full local param table
-    SdStringMap     paramTable() const { return mParamTable; }
+    SdStringMap       paramTable() const { return mParamTable; }
 
     //Setup full param table
-    void            paramTableSet( const SdStringMap map, SdUndo *undo, SdGraphPartImp *partImp );
+    void              paramTableSet( const SdStringMap map, SdUndo *undo, SdGraphPartImp *partImp );
 
     //Get BOM item line
-    QString         getBomItemLine() const;
+    QString           getBomItemLine() const;
 
 
     //Ident edit
     //Get ident prefix
-    QString         identPrefix() const;
+    QString           identPrefix() const;
     //Get full visual ident of part aka D4 or R45
-    QString         ident() const;
+    QString           ident() const;
     //Get ident text properties
-    SdPropText      identProp() const { return mIdent.mProp; }
+    const SdPropText& identProp() const { return mIdent.mProp; }
     //Get idnet text position
-    SdPoint         identPosition() const { return mIdent.mOrigin; }
+    SdPoint           identPosition() const { return mIdent.mOrigin; }
     //Set ident text properties and position
-    void            identSet( const SdPropText &prp, SdPoint pos, SdUndo *undo );
+    void              identSet( const SdPropText &prp, SdPoint pos, SdUndo *undo );
     //Get separated ident information
-    QString         identInfoGet( int &logNumber, int &logSection );
+    QString           identInfoGet( int &logNumber, int &logSection );
     //Set ident information
-    void            identInfoSet(int logNumber, int logSection );
+    void              identInfoSet(int logNumber, int logSection );
 
 
     //Value
     //Get full visual value of part aka smt32f417vgt
-    QString         value() const;
+    QString           value() const;
     //Get value text properties
-    SdPropText      valueProp() const { return mValue.mProp; }
+    const SdPropText& valueProp() const { return mValue.mProp; }
     //Get value text position
-    SdPoint         valuePosition() const { return mValue.mOrigin; }
+    SdPoint           valuePosition() const { return mValue.mOrigin; }
     //Set value text properties and position
-    void            valueSet( const SdPropText &prp, SdPoint pos, SdUndo *undo );
+    void              valueSet( const SdPropText &prp, SdPoint pos, SdUndo *undo );
 
 
 
     //Notifications about segment operation
     //Notification about wire segment position changed
-    void            netWirePlace( SdGraphNetWire *wire, SdUndo *undo );
+    void              netWirePlace( SdGraphNetWire *wire, SdUndo *undo );
     //Notification about wire segment deletion [Извещение об удалении сегмента]
-    void            netWireDelete(SdGraphNetWire *wire, SdUndo *undo );
+    void              netWireDelete(SdGraphNetWire *wire, SdUndo *undo );
     //Accumulate segments connected to component
-    void            accumLinked(SdPoint a, SdPoint b, const QString netName, SdSelector *sel );
+    void              accumLinked(SdPoint a, SdPoint b, const QString netName, SdSelector *sel );
 
     //Service
     //Pin status get
-    void            pinStatusGet( const QString pinName, SdSymImpPin &pin ) const;
+    void              pinStatusGet( const QString pinName, SdSymImpPin &pin ) const;
     //Pin status set
-    void            pinStatusSet( const QString pinName, const SdSymImpPin &pin );
+    void              pinStatusSet( const QString pinName, const SdSymImpPin &pin );
     //Move section to plate
-    void            moveToPlate( SdPItemPlate *plate, SdUndo *undo );
+    void              moveToPlate( SdPItemPlate *plate, SdUndo *undo );
     //Link with partImp
-    void            setLinkSection(int section, SdGraphPartImp *partImp );
+    void              setLinkSection(int section, SdGraphPartImp *partImp );
     //Unconnect pin over rect
-    void            unconnectPinOverRect(SdRect over , SdUndo *undo, const QString undoTitle);
+    void              unconnectPinOverRect(SdRect over , SdUndo *undo, const QString undoTitle);
     //Unlink symbol from part
-    void            unLinkPart( SdUndo *undo );
+    void              unLinkPart( SdUndo *undo );
     //Link auto partImp. partImp and section are selected automatic
-    void            linkAutoPart( SdUndo *undo );
+    void              linkAutoPart( SdUndo *undo );
     //TODO D017 Accum auto net
     //void          autoNet( DNetListTable &table );         //Накопить цепи в текстовый список цепей
 
     // SdObject interface
   public:
-    virtual QString getType() const override { return QStringLiteral( SD_TYPE_SYM_IMP ); }
-    virtual quint64 getClass() const override { return dctSymImp; }
-    virtual void    attach(SdUndo *undo) override;
-    virtual void    detach(SdUndo *undo) override;
-    virtual void    cloneFrom(const SdObject *src) override;
-    virtual void    writeObject(QJsonObject &obj) const override;
-    virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
-    virtual bool    isUsed(SdObject *obj) const override;
+    virtual QString   getType() const override { return QStringLiteral( SD_TYPE_SYM_IMP ); }
+    virtual quint64   getClass() const override { return dctSymImp; }
+    virtual void      attach(SdUndo *undo) override;
+    virtual void      detach(SdUndo *undo) override;
+    virtual void      cloneFrom(const SdObject *src) override;
+    virtual void      writeObject(QJsonObject &obj) const override;
+    virtual void      readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual bool      isUsed(SdObject *obj) const override;
     //Upgrade project item on new one
-    virtual bool    upgradeProjectItem( SdUndo *undo, QWidget *parent ) override;
+    virtual bool      upgradeProjectItem( SdUndo *undo, QWidget *parent ) override;
 
     // SdGraph interface
   public:
-    virtual void    saveState(SdUndo *undo) override;
-    virtual void    moveComplete( SdPoint grid, SdUndo *undo ) override;
-    virtual void    prepareMove( SdUndo *undo ) override;
-    virtual void    move(SdPoint offset) override;
-    virtual void    rotate(SdPoint center, SdPropAngle angle) override;
-    virtual void    mirror(SdPoint a, SdPoint b) override;
-    virtual void    setProp(SdPropSelected &prop) override;
-    virtual void    getProp(SdPropSelected &prop) override;
-    virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;
-    virtual void    selectByRect(const SdRect &r, SdSelector *selector) override;
-    virtual bool    isVisible() override;
-    virtual SdRect  getOverRect() const override;
-    virtual void    draw(SdContext *dc) override;
-    virtual int     behindCursor(SdPoint p) override;
-    virtual bool    getInfo(SdPoint p, QString &info, bool extInfo) override;
+    virtual void      saveState(SdUndo *undo) override;
+    virtual void      moveComplete( SdPoint grid, SdUndo *undo ) override;
+    virtual void      prepareMove( SdUndo *undo ) override;
+    virtual void      move(SdPoint offset) override;
+    virtual void      rotate(SdPoint center, SdPropAngle angle) override;
+    virtual void      mirror(SdPoint a, SdPoint b) override;
+    virtual void      setProp(SdPropSelected &prop) override;
+    virtual void      getProp(SdPropSelected &prop) override;
+    virtual void      selectByPoint(const SdPoint p, SdSelector *selector) override;
+    virtual void      selectByRect(const SdRect &r, SdSelector *selector) override;
+    virtual bool      isVisible() override;
+    virtual SdRect    getOverRect() const override;
+    virtual void      draw(SdContext *dc) override;
+    virtual int       behindCursor(SdPoint p) override;
+    virtual bool      getInfo(SdPoint p, QString &info, bool extInfo) override;
     //Find snap point on object
-    virtual void    snapPoint(SdSnapInfo *snap) override;
+    virtual void      snapPoint(SdSnapInfo *snap) override;
 
 
   private:
-    SdPItemSheet *getSheet() const;
+    SdPItemSheet     *getSheet() const;
     //Update pins positions upon position and props of symbol implement
-    void          updatePinsPositions();
+    void              updatePinsPositions();
     //Link auto partImp in given plate. partImp and section are selected automatic
-    void          linkAutoPartInPlate( SdPItemPlate *plate, SdUndo *undo );
+    void              linkAutoPartInPlate( SdPItemPlate *plate, SdUndo *undo );
     //Pin connection-disconnection by name for symbol and part implements
-    void          pinConnectionSet(const QString pinName, const QString netName, SdUndo *undo );
+    void              pinConnectionSet(const QString pinName, const QString netName, SdUndo *undo );
     //Update connection status for all pins
-    void          updatePinsConnectionStatus( SdUndo *undo );
+    void              updatePinsConnectionStatus( SdUndo *undo );
 
   };
 

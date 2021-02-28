@@ -16,6 +16,7 @@ Description
 #include "SdPItemPlate.h"
 #include "SdUtil.h"
 #include "SdEnvir.h"
+#include "Sd3dDraw.h"
 
 #include <QJsonObject>
 #include <math.h>
@@ -167,6 +168,36 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
       dcx->circleFill( p, mHoleDiametr >> 1, layer->color() );
     }
 
+  }
+
+
+
+
+//!
+//! \brief draw3d Draws object in 3d space
+//! \param f      3d draw functions with predefined 3d context
+//! \param p      Point of center of pad
+//!
+void SdPad::draw3d(QOpenGLFunctions_2_0 *f, SdPoint p) const
+  {
+  //3d drawing mach different for hole or without hole
+  if( mHoleDiametr > 0 ) {
+    //Hole present
+    }
+  else {
+    //Smd pad
+    SdLayer *layer = sdEnvir->mCacheForPad.getVisibleLayer(stmThrough);
+    if( layer != nullptr ) {
+      Sd3dDraw::color( f, layer->color() );
+      if( mIsCircle )
+        Sd3dDraw::circleFill( f, SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth >> 1, -0.01 );
+      else {
+        SdPoint a(p.x() + mCenterX - (mDiametrWidth >> 1), p.y() + mCenterY - (mHeight >> 1));
+        SdPoint b(a.x() + mDiametrWidth, a.y() + mHeight);
+        Sd3dDraw::rectFilled( f, a, b, -0.01 );
+        }
+      }
+    }
   }
 
 

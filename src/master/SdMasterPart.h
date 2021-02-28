@@ -20,13 +20,13 @@ Description
 
 struct SdMasterPart
   {
-    SdProjectItem *mItem;
-    SdPropLine     mLineProp;       //All graph objects append by default to "component" layer with 0-width
-    SdPropPartPin  mPinProp;        //All pins
-    SdPropText     mIdentProp;
-    SdPropText     mValueProp;
-    SdPropText     mPinNumberProp;
-    SdPropText     mPinNameProp;
+    SdProjectItem *mItem;           //!< Item to which graph elements will be appended
+    SdPropLine     mLineProp;       //!< All graph objects append by default to "component" layer with 0-width
+    SdPropPartPin  mPinProp;        //!< All pins
+    SdPropText     mIdentProp;      //!< Ident properties
+    SdPropText     mValueProp;      //!< Value properties
+    SdPropText     mPinNumberProp;  //!< All pin number properties
+    SdPropText     mPinNameProp;    //!< All pin name properties
 
 
     //Add common graphics to part

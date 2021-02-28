@@ -30,30 +30,68 @@ SdModeCTraceDelete::SdModeCTraceDelete(SdWEditorGraph *editor, SdProjectItem *ob
 
   }
 
+
+
+
 void SdModeCTraceDelete::drawStatic(SdContext *ctx)
   {
-
+  //Draw all object except selected
+  mObject->forEach( dctAll, [this, ctx] (SdObject *obj) -> bool {
+    SdGraph *graph = dynamic_cast<SdGraph*>( obj );
+    if( graph != nullptr && graph->getSelector() != &mFragment )
+      graph->draw( ctx );
+    return true;
+    });
   }
+
+
+
 
 void SdModeCTraceDelete::drawDynamic(SdContext *ctx)
   {
-
+  //Draw all selected elements
+  ctx->setOverColor( sdEnvir->getSysColor(scSelected) );
+  mFragment.draw( ctx );
   }
+
+
 
 void SdModeCTraceDelete::enterPoint(SdPoint)
   {
+  if( mFragment.count() ) {
+    mUndo->begin( QObject::tr("Deletion elements"), mObject );
+    mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
+      SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+      if( graph != nullptr )
+        graph->deleteObject( mUndo );
+      return true;
+      });
+    mFragment.removeAll();
 
+    setDirty();
+    setDirtyCashe();
+    setDirtyRatNet();
+    update();
+    }
   }
+
+
+
+
 
 void SdModeCTraceDelete::movePoint(SdPoint p)
   {
 
   }
 
+
+
 void SdModeCTraceDelete::cancelPoint(SdPoint)
   {
 
   }
+
+
 
 void SdModeCTraceDelete::beginDrag(SdPoint p)
   {
@@ -89,7 +127,7 @@ QString SdModeCTraceDelete::getStepThema() const
 
 int SdModeCTraceDelete::getCursor() const
   {
-
+  return CUR_CUT;
   }
 
 

@@ -108,7 +108,7 @@ int SdPropSelected::getPropBarId()
 //properties bar will be only for one class of objects. But layer
 //must be changed for all selected objects
 //With this function we change layer for all properties group
-void SdPropSelected::setLayer(const SdPropLayer layer)
+void SdPropSelected::setLayer(const SdPropLayer &layer)
   {
   mLineProp.mLayer.assign( layer );       //Properties for linear objects
   mTextProp.mLayer.assign( layer );       //Properties for textual objects

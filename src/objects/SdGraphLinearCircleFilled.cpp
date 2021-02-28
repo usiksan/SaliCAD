@@ -16,6 +16,7 @@ Description
 #include "SdSelector.h"
 #include "SdRect.h"
 #include "SdSnapInfo.h"
+#include "Sd3dDraw.h"
 
 SdGraphLinearCircleFilled::SdGraphLinearCircleFilled() :
   SdGraphLinearCircle()
@@ -45,6 +46,20 @@ void SdGraphLinearCircleFilled::selectByPoint(const SdPoint p, SdSelector *selec
 void SdGraphLinearCircleFilled::draw(SdContext *dc)
   {
   dc->circleFill( mCenter, mRadius, mProp.mLayer.layer() );
+  }
+
+
+
+
+
+
+//!
+//! \brief draw3d Draws object in 3d space
+//! \param f      3d draw functions with predefined 3d context
+//!
+void SdGraphLinearCircleFilled::draw3d(QOpenGLFunctions_2_0 *f) const
+  {
+  Sd3dDraw::circleFill( f, mCenter, mRadius, -0.1 );
   }
 
 

@@ -21,6 +21,7 @@ Description
 #include <QJsonObject>
 #include <QPolygonF>
 #include <QMap>
+#include <QOpenGLFunctions_2_0>
 
 class SdPItemPlate;
 class SdContext;
@@ -49,6 +50,13 @@ class SdPad
     void        read( const QJsonObject obj);
 
     void        draw(SdContext *dcx, SdPoint p, int stratum ) const;
+
+    //!
+    //! \brief draw3d Draws object in 3d space
+    //! \param f      3d draw functions with predefined 3d context
+    //! \param p      Point of center of pad
+    //!
+    void        draw3d( QOpenGLFunctions_2_0 *f, SdPoint p ) const;
 
     //Return polygon of pad
     QPolygonF   polygon( SdPoint p, int addon ) const;

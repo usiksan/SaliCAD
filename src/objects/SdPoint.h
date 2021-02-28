@@ -64,6 +64,9 @@ class SdPoint : public QPoint
     double      getAngleDegree(SdPoint center) const;
     QPointF     toPointF() const { return QPointF(x(),y()); }
 
+    float       xmm() const { return static_cast<float>(x()) / 1000.0; }
+    float       ymm() const { return static_cast<float>(y()) / 1000.0; }
+
     //Return distance between two points - this and p
     double      getDistance( SdPoint p ) const;
 

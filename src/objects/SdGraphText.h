@@ -33,9 +33,9 @@ class SdGraphText : public SdGraph
     SdGraphText( SdPoint org, const QString &str, SdRect r, const SdPropText &p );
 
     //Information
-    QString         getText() const { return mString; }
-    SdPoint         getOrigin() const { return mOrigin; }
-    SdPropText      getPropText() const { return mProp; }
+    QString           getText() const { return mString; }
+    SdPoint           getOrigin() const { return mOrigin; }
+    const SdPropText& getPropText() const { return mProp; }
 
     // SdObject interface
   public:

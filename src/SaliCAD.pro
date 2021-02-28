@@ -34,6 +34,8 @@ SOURCES += \
     master3d/SdM3dFunColorFromString.cpp \
     master3d/SdM3dFunFaceBuild.cpp \
     master3d/SdM3dFunFaceTranslate.cpp \
+    master3d/SdM3dFunGraphRect.cpp \
+    master3d/SdM3dFunGraphRectFilled.cpp \
     master3d/SdM3dFunInput.cpp \
     master3d/SdM3dFunInputColor.cpp \
     master3d/SdM3dFunInputFloat.cpp \
@@ -70,6 +72,7 @@ SOURCES += \
     objects/Sd3dFaceMaterial.cpp \
     objects/Sd3dFaceSet.cpp \
     objects/Sd3dFlat.cpp \
+    objects/Sd3dModel.cpp \
     objects/Sd3dObject.cpp \
     objects/Sd3dPoint.cpp \
     objects/Sd3dReaderStl.cpp \
@@ -402,6 +405,8 @@ HEADERS  += \
     master3d/SdM3dFunFaceBuild.h \
     master3d/SdM3dFunFaceTranslate.h \
     master3d/SdM3dFunGraphLine.h \
+    master3d/SdM3dFunGraphRect.h \
+    master3d/SdM3dFunGraphRectFilled.h \
     master3d/SdM3dFunInput.h \
     master3d/SdM3dFunInputColor.h \
     master3d/SdM3dFunInputFloat.h \
@@ -459,6 +464,7 @@ HEADERS  += \
     objects/Sd3dFaceMaterial.h \
     objects/Sd3dFaceSet.h \
     objects/Sd3dFlat.h \
+    objects/Sd3dModel.h \
     objects/Sd3dObject.h \
     objects/Sd3dPoint.h \
     objects/Sd3dReaderStl.h \

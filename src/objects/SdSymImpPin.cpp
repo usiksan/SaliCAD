@@ -26,13 +26,14 @@ SdSymImpPin::SdSymImpPin() :
 
 
 
-void SdSymImpPin::operator =(const SdSymImpPin &pin)
-  {
-  mPin       = pin.mPin;       //Pin
-  mPinNumber = pin.mPinNumber; //Pin number in part
-  mPosition  = pin.mPosition;  //Pin position in sheet context
-  mNetName  = pin.mNetName;  //Net, which pin connected to
-  }
+//SdSymImpPin &SdSymImpPin::operator =(const SdSymImpPin &pin)
+//  {
+//  mPin       = pin.mPin;       //Pin
+//  mPinNumber = pin.mPinNumber; //Pin number in part
+//  mPosition  = pin.mPosition;  //Pin position in sheet context
+//  mNetName   = pin.mNetName;  //Net, which pin connected to
+//  return *this;
+//  }
 
 
 

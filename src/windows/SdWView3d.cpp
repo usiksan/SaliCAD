@@ -13,7 +13,9 @@ SdWView3d::SdWView3d(SdProjectItem *item, QWidget *parent) :
   mAngleZ(13.0),
   mAngleXY(-51.0),
   mScale(0.01),
-  mItem(item)
+  mItem(item),
+  mEnable2d(true),
+  mEnablePad(true)
   {
 
   QSurfaceFormat format;
@@ -107,7 +109,7 @@ void SdWView3d::keyReleaseEvent(QKeyEvent *event)
 
 void SdWView3d::initializeGL()
   {
-  GLfloat light_position[] = { 0.0, 0.0, -500.0, 0.0 };
+  GLfloat light_position[] = { 0.0, 0.0, 500.0, 0.0 };
   GLfloat light_diffuse[] = { 0.9f, 0.9f, 0.9f, 1.0f };
   GLfloat light_ambient[] = { 0.9f, 0.9f, 0.9f, 1.0f };
   GLfloat mat_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -133,9 +135,9 @@ void SdWView3d::initializeGL()
   f->glEnable(GL_NORMALIZE);
 
   GLfloat light1_diffuse[] = {0.7, 0.7, 0.7, 1.0 };
-  GLfloat light1_position[] = {0.0, -1000.0, 1000.0, 1.0};
-  GLfloat light2_position[] = {-1000.0, 1000.0, -1000.0, 1.0};
-  GLfloat light3_position[] = { 1000.0, 1000.0, -1000.0, 1.0};
+  GLfloat light1_position[] = {0.0, -1000.0, -1000.0, 1.0};
+  GLfloat light2_position[] = {-1000.0, 1000.0, 1000.0, 1.0};
+  GLfloat light3_position[] = { 1000.0, 1000.0, 1000.0, 1.0};
   f->glEnable(GL_LIGHT1);
   f->glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
   f->glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
@@ -148,6 +150,10 @@ void SdWView3d::initializeGL()
   f->glLightfv(GL_LIGHT3, GL_DIFFUSE, light1_diffuse);
   f->glLightfv(GL_LIGHT3, GL_POSITION, light3_position);
   }
+
+
+
+
 
 void SdWView3d::resizeGL(int w, int h)
   {
@@ -178,12 +184,24 @@ void SdWView3d::paintGL()
   //f->glRotated( mAngleXY, 0, 1, 0.0 );
   f->glRotated( mAngleZ, 0, 0, 1 );
   f->glClear(GL_COLOR_BUFFER_BIT);
+  Sd3dFaceMaterial axisMaterial;
+
+  //2d graphics
+  if( mEnable2d ) {
+    axisMaterial.setDiffuseColor( 1.0, 0.0, 0.0 );
+    axisMaterial.paint( f );
+    mItem->forEachConst( dctLines, [f] (SdObject *obj) -> bool {
+      SdPtrConst<SdGraph> obj2d(obj);
+      if( obj2d.isValid() )
+        obj2d->draw3d( f );
+      return true;
+      });
+    }
 
   mItem->draw3d( f );
 
   //Axis
-  Sd3dFaceMaterial axisMaterial;
-  axisMaterial.setDiffuseColor( 1.0, 0.0, 0.0 );
+  axisMaterial.setDiffuseColor( 1.0, 1.0, 0.0 );
   axisMaterial.paint( f );
   //f->glLineWidth(3);
   f->glBegin( GL_LINES );
@@ -194,4 +212,22 @@ void SdWView3d::paintGL()
   f->glVertex3d( 0, 1000.0, 0 );
   f->glEnd();
   //f->glFlush();
+  }
+
+
+
+
+void SdWView3d::setEnable2d(bool ena)
+  {
+  mEnable2d = ena;
+  update();
+  }
+
+
+
+
+void SdWView3d::setEnablePad(bool ena)
+  {
+  mEnablePad = ena;
+  update();
   }

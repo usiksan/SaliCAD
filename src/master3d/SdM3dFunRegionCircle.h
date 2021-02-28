@@ -30,9 +30,10 @@ class SdM3dFunRegionCircle : public SdM3dFunction
     //!
     //! \brief regionCircle This function builds circle region on base radius with center at 0
     //! \param radius       Radius of builded circle
+    //! \param stepDegree   Step with which need to create multicorner circle region
     //! \return             Circle region on XY plane
     //!
-    static  SdM3dRegion regionCircle( float radius );
+    static  SdM3dRegion regionCircle(float radius , float stepDegree = 10.0, QVector3D offset = QVector3D(0.0,0.0,0.0) );
   };
 
 #endif // SDM3DFUNREGIONCIRCLE_H

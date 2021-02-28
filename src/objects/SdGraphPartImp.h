@@ -108,88 +108,88 @@ class SdGraphPartImp : public SdGraphTraced
 
     //Information
     //Get implement transform matrix
-    QTransform      matrix() const;
+    QTransform        matrix() const;
     //Angle of component rotation
-    SdPropAngle     angle() const { return mProp.mAngle; }
+    SdPropAngle       angle() const { return mProp.mAngle; }
 
     //Identificator
     //Get full visual ident of part aka D4 or R45
-    QString         ident() const;
+    QString           ident() const;
     //Get ident text properties
-    SdPropText      identProp() const { return mIdent.mProp; }
+    const SdPropText& identProp() const { return mIdent.mProp; }
     //Get idnet text position
-    SdPoint         identPosition() const { return mIdent.mOrigin; }
+    SdPoint           identPosition() const { return mIdent.mOrigin; }
     //Set ident text properties and position
-    void            identSet( const SdPropText &prp, SdPoint pos, SdUndo *undo );
+    void              identSet( const SdPropText &prp, SdPoint pos, SdUndo *undo );
 
     //Value
     //Get full visual value of part aka smt32f417vgt
-    QString         value() const;
+    QString           value() const;
     //Get value text properties
-    SdPropText      valueProp() const { return mValue.mProp; }
+    const SdPropText& valueProp() const { return mValue.mProp; }
     //Get value text position
-    SdPoint         valuePosition() const { return mValue.mOrigin; }
+    SdPoint           valuePosition() const { return mValue.mOrigin; }
     //Set value text properties and position
-    void            valueSet( const SdPropText &prp, SdPoint pos, SdUndo *undo );
+    void              valueSet( const SdPropText &prp, SdPoint pos, SdUndo *undo );
 
     //Check if there free section slot. If there - setup section and return true
-    bool            isSectionFree(int *section, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param, SdPItemSymbol *sym );
+    bool              isSectionFree(int *section, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param, SdPItemSymbol *sym );
     //Get origin of component
-    SdPoint         getOrigin() const { return mOrigin; }
+    SdPoint           getOrigin() const { return mOrigin; }
 
 
 
     //Service
     //Pin link-unlink
-    bool            partPinLink(const QString pinNumber, SdGraphSymImp *imp, const QString pinName, bool link );
+    bool              partPinLink(const QString pinNumber, SdGraphSymImp *imp, const QString pinName, bool link );
     //link-unlink section
-    void            setLinkSection( int section, SdGraphSymImp *symImp );
+    void              setLinkSection( int section, SdGraphSymImp *symImp );
     //Check if all section removed, then autodeleted
-    void            autoDelete( SdUndo *undo );
+    void              autoDelete( SdUndo *undo );
     //Save to undo state of all pins
-    void            savePins( SdUndo *undo );
+    void              savePins( SdUndo *undo );
     //Accum used pins
-    void            accumUsedPins(SdPadMap &map ) const;
+    void              accumUsedPins(SdPadMap &map ) const;
     //Pin iterator
-    void            forEachPin( std::function<void(const SdPartImpPin &pin)> fun1 );
+    void              forEachPin( std::function<void(const SdPartImpPin &pin)> fun1 );
 
 
     //Renumeration
-    QString         getIdentPrefix() const;
+    QString           getIdentPrefix() const;
     //Compare partImp's
-    bool            compareRenumeration( const SdGraphPartImp *imp ) const;
+    bool              compareRenumeration( const SdGraphPartImp *imp ) const;
     //Lower sheet
-    bool            getLowerPosAndSheet( SdPoint &dest, int &sheet ) const;
+    bool              getLowerPosAndSheet( SdPoint &dest, int &sheet ) const;
     //Set index
-    void            setIdentIndex( int index );
+    void              setIdentIndex( int index );
 
     //Parameters
     //Params with local param table
     //Test if param present in local table
-    bool            paramContains( const QString key ) const { return mParamTable.contains(key); }
+    bool              paramContains( const QString key ) const { return mParamTable.contains(key); }
 
     //Get param value from local table
-    QString         paramGet( const QString key ) const { return mParamTable.value(key); }
+    QString           paramGet( const QString key ) const { return mParamTable.value(key); }
 
     //Full local param table
-    SdStringMap     paramTable() const { return mParamTable; }
+    SdStringMap       paramTable() const { return mParamTable; }
 
     //Setup full param table
-    void            paramTableSet( const SdStringMap map, SdUndo *undo, SdGraphSymImp *symImp );
+    void              paramTableSet( const SdStringMap map, SdUndo *undo, SdGraphSymImp *symImp );
 
     //Get BOM item line
-    QString         getBomItemLine() const;
+    QString           getBomItemLine() const;
 
     //Get param table as object
-    QJsonObject     paramTableObject() const;
+    QJsonObject       paramTableObject() const;
 
     //Special drawing
     //Draw part without pads
-    void            drawWithoutPads( SdContext *cdx );
+    void              drawWithoutPads( SdContext *cdx );
     //Draw pads only
-    void            drawPads( SdContext *cdx, SdStratum stratum, const QString highlightNetName );
+    void              drawPads( SdContext *cdx, SdStratum stratum, const QString highlightNetName );
     //Draw rat net
-    void            drawRatNet( SdContext *cdx, SdPlateNetList &netList );
+    void              drawRatNet( SdContext *cdx, SdPlateNetList &netList );
 
     // SdObject interface
   public:

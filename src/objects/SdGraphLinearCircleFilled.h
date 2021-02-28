@@ -32,6 +32,13 @@ class SdGraphLinearCircleFilled : public SdGraphLinearCircle
     // SdGraph interface
     virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;
     virtual void    draw(SdContext *dc) override;
+
+    //!
+    //! \brief draw3d Draws object in 3d space
+    //! \param f      3d draw functions with predefined 3d context
+    //!
+    virtual void    draw3d( QOpenGLFunctions_2_0 *f ) const override;
+
     virtual int     behindCursor(SdPoint p) override;
   };
 

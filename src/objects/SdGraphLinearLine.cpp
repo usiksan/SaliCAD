@@ -15,6 +15,7 @@ Description
 #include "SdSegment.h"
 #include "SdContext.h"
 #include "SdSelector.h"
+#include "Sd3dDraw.h"
 
 SdGraphLinearLine::SdGraphLinearLine() :
   SdGraphLinear(),
@@ -163,6 +164,18 @@ SdRect SdGraphLinearLine::getOverRect() const
 void SdGraphLinearLine::draw(SdContext *dc)
   {
   dc->line( a, b, mProp );
+  }
+
+
+
+
+//!
+//! \brief draw3d Draws object in 3d space
+//! \param f      3d draw functions with predefined 3d context
+//!
+void SdGraphLinearLine::draw3d(QOpenGLFunctions_2_0 *f) const
+  {
+  Sd3dDraw::line( f, a, b, -0.1 );
   }
 
 

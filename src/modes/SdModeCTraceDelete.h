@@ -30,8 +30,8 @@ Description
 
 class SdModeCTraceDelete : public SdModeCommon
   {
-    SdGraphTraced  *mToDelete; //Traced object appear to delete
-    SdSelector      mFragment; //Traced objects found near current point
+    SdGraphTraced  *mToDelete; //!< Traced object appear to delete
+    SdSelector      mFragment; //!< Traced objects found near current point
   public:
     SdModeCTraceDelete( SdWEditorGraph *editor, SdProjectItem *obj );
 

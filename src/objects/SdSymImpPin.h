@@ -26,22 +26,22 @@ class SdPItemSheet;
 
 //Pin for symbol implementation
 struct SdSymImpPin {
-  SdGraphSymPin  *mPin;       //Pin
-  QString         mPinNumber; //Pin number in part
-  SdPoint         mPosition;  //Pin position in sheet context
-  QString         mNetName;  //Net, which pin connected to
+  SdGraphSymPin  *mPin;       //!< Pin
+  QString         mPinNumber; //!< Pin number in part
+  SdPoint         mPosition;  //!< Pin position in sheet context
+  QString         mNetName;   //!< Net, which pin connected to
 
   SdSymImpPin();
 
-  void        operator = (const SdSymImpPin &pin );
-  void        draw( SdContext *dc ) const;
-  bool        isCanConnect( SdPoint a, SdPoint b ) const;
-  bool        isCanDisconnect( SdPoint a, SdPoint b, const QString wireName ) const;
-  void        prepareMove(SdPItemSheet *sheet, SdSelector *selector , SdUndo *undo);
-  bool        isConnected() const { return !mNetName.isEmpty(); }
+  //SdSymImpPin &operator = (const SdSymImpPin &pin );
+  void         draw( SdContext *dc ) const;
+  bool         isCanConnect( SdPoint a, SdPoint b ) const;
+  bool         isCanDisconnect( SdPoint a, SdPoint b, const QString wireName ) const;
+  void         prepareMove(SdPItemSheet *sheet, SdSelector *selector , SdUndo *undo);
+  bool         isConnected() const { return !mNetName.isEmpty(); }
 
-  QJsonObject toJson(const QString pinName) const;
-  QString     fromJson( SdObjectMap *map, const QJsonObject obj );
+  QJsonObject  toJson(const QString pinName) const;
+  QString      fromJson( SdObjectMap *map, const QJsonObject obj );
 
   };
 
