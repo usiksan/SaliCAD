@@ -44,6 +44,7 @@ SOURCES += \
     master3d/SdM3dFunModelCurve.cpp \
     master3d/SdM3dFunModelCylinder.cpp \
     master3d/SdM3dFunModelExtrude.cpp \
+    master3d/SdM3dFunModelHole.cpp \
     master3d/SdM3dFunModelTranslate.cpp \
     master3d/SdM3dFunModelWall.cpp \
     master3d/SdM3dFunModelWallEven.cpp \
@@ -415,6 +416,7 @@ HEADERS  += \
     master3d/SdM3dFunModelCurve.h \
     master3d/SdM3dFunModelCylinder.h \
     master3d/SdM3dFunModelExtrude.h \
+    master3d/SdM3dFunModelHole.h \
     master3d/SdM3dFunModelTranslate.h \
     master3d/SdM3dFunModelWall.h \
     master3d/SdM3dFunModelWallEven.h \

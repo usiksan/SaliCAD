@@ -75,6 +75,8 @@ class Sd3dDraw
     //!
     static void color( QOpenGLFunctions_2_0 *f, QColor col );
 
+    static void padCircle(QOpenGLFunctions_2_0 *f, SdPoint padCenter, int padRadius, QColor padColor, SdPoint holeCenter, int holeDiametr, int holeLenght, QColor holeColor , float z);
+
     static void flatPanel( QOpenGLFunctions_2_0 *f, SdPointList list, int z, unsigned color );
 
     static void qube( QOpenGLFunctions_2_0 *f, SdRect rect, int z, unsigned color );

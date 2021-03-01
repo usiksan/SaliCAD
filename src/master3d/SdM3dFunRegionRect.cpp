@@ -1,3 +1,18 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  3d model programming language
+
+  The function builds rectangle region with center in 0
+*/
 #include "SdM3dFunRegionRect.h"
 
 
@@ -16,14 +31,20 @@ SdM3dRegion SdM3dFunRegionRect::toRegion() const
 
 
 
-SdM3dRegion SdM3dFunRegionRect::regionRect(float w, float h)
+//!
+//! \brief regionRect Builds rectangle region with center in 0
+//! \param width      Width (X) of rectangle (in flat view)
+//! \param height     Height (Y) of rectangle (in flat view)
+//! \return           Rectangle region with center in 0
+//!
+SdM3dRegion SdM3dFunRegionRect::regionRect(float width, float height, QVector3D offset)
   {
-  w /= 2.0;
-  h /= 2.0;
+  width /= 2.0;
+  height /= 2.0;
   SdM3dRegion region;
-  region.append( QVector3D(-w,-h,0) );
-  region.append( QVector3D(w,-h,0) );
-  region.append( QVector3D(w,h,0) );
-  region.append( QVector3D(-w,h,0) );
+  region.append( QVector3D(-width + offset.x(), -height + offset.y(), offset.z() ) );
+  region.append( QVector3D(width + offset.x(), -height + offset.y(), offset.z() ) );
+  region.append( QVector3D(width + offset.x(), height + offset.y(), offset.z() ) );
+  region.append( QVector3D(-width + offset.x(), height + offset.y(), offset.z() ) );
   return region;
   }
