@@ -34,11 +34,13 @@ SOURCES += \
     master3d/SdM3dFunColorFromString.cpp \
     master3d/SdM3dFunFaceBuild.cpp \
     master3d/SdM3dFunFaceTranslate.cpp \
+    master3d/SdM3dFunGraphPin.cpp \
     master3d/SdM3dFunGraphRect.cpp \
     master3d/SdM3dFunGraphRectFilled.cpp \
     master3d/SdM3dFunInput.cpp \
     master3d/SdM3dFunInputColor.cpp \
     master3d/SdM3dFunInputFloat.cpp \
+    master3d/SdM3dFunInputPad.cpp \
     master3d/SdM3dFunModelAddExtrude.cpp \
     master3d/SdM3dFunModelBox.cpp \
     master3d/SdM3dFunModelCurve.cpp \
@@ -406,11 +408,13 @@ HEADERS  += \
     master3d/SdM3dFunFaceBuild.h \
     master3d/SdM3dFunFaceTranslate.h \
     master3d/SdM3dFunGraphLine.h \
+    master3d/SdM3dFunGraphPin.h \
     master3d/SdM3dFunGraphRect.h \
     master3d/SdM3dFunGraphRectFilled.h \
     master3d/SdM3dFunInput.h \
     master3d/SdM3dFunInputColor.h \
     master3d/SdM3dFunInputFloat.h \
+    master3d/SdM3dFunInputPad.h \
     master3d/SdM3dFunModelAddExtrude.h \
     master3d/SdM3dFunModelBox.h \
     master3d/SdM3dFunModelCurve.h \

@@ -278,7 +278,7 @@ void SdD3dModelProgrammEditor::onCellClicked(int row, int column)
           item->setText( color.name() );
         return;
         }
-      else if( item->type() == SDM3D_INPUT_PIN ) {
+      else if( item->type() == SDM3D_INPUT_PAD ) {
         //Show pad master dialog
         item->setText( SdDPadMaster::build( item->text(), this ) );
         return;

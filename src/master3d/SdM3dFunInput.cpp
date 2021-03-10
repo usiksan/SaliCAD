@@ -28,7 +28,7 @@ SdM3dFunInput::SdM3dFunInput(char resultType, QTableWidget *tableWidget, int ite
         item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsUserCheckable );
         break;
 
-      case SDM3D_INPUT_PIN :
+      case SDM3D_INPUT_PAD :
       case SDM3D_INPUT_COLOR :
         item->setFlags( Qt::ItemIsEnabled );
         break;

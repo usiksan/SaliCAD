@@ -1,3 +1,18 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  3d model programming language
+
+  The function builds and binds input field for color
+*/
 #ifndef SDM3DFUNINPUTCOLOR_H
 #define SDM3DFUNINPUTCOLOR_H
 

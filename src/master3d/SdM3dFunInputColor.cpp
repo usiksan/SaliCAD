@@ -1,3 +1,18 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  3d model programming language
+
+  The function builds and binds input field for color
+*/
 #include "SdM3dFunInputColor.h"
 #include "SdM3dParser.h"
 

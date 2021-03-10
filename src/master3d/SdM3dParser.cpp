@@ -47,6 +47,7 @@
 //Functions
 #include "SdM3dFunInputFloat.h"
 #include "SdM3dFunInputColor.h"
+#include "SdM3dFunInputPad.h"
 
 #include "SdM3dFunColorBuild.h"
 #include "SdM3dFunColorFromString.h"
@@ -73,12 +74,14 @@
 #include "SdM3dFunGraphLine.h"
 #include "SdM3dFunGraphRect.h"
 #include "SdM3dFunGraphRectFilled.h"
+#include "SdM3dFunGraphPin.h"
 
 SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   {
   //Fill functions
   addFunction( QStringLiteral("inputFloat"), [tableWidget] () -> SdM3dFunction* { return new SdM3dFunInputFloat( tableWidget ); } );
   addFunction( QStringLiteral("inputColor"), [tableWidget] () -> SdM3dFunction* { return new SdM3dFunInputColor( tableWidget ); } );
+  addFunction( QStringLiteral("inputPad"), [tableWidget] () -> SdM3dFunction* { return new SdM3dFunInputPad( tableWidget ); } );
 
   addFunction( QStringLiteral("color"), [] () -> SdM3dFunction* { return new SdM3dFunColorBuild(); } );
   addFunction( QStringLiteral("colorFromString"), [] () -> SdM3dFunction* { return new SdM3dFunColorFromString(); } );
@@ -105,6 +108,7 @@ SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   addFunction( QStringLiteral("graphLine"), [] () -> SdM3dFunction* { return new SdM3dFunGraphLine(); } );
   addFunction( QStringLiteral("graphRect"), [] () -> SdM3dFunction* { return new SdM3dFunGraphRect(); } );
   addFunction( QStringLiteral("graphRectFilled"), [] () -> SdM3dFunction* { return new SdM3dFunGraphRectFilled(); } );
+  addFunction( QStringLiteral("graphPin"), [] () -> SdM3dFunction* { return new SdM3dFunGraphPin(); } );
 
   }
 
