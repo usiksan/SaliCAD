@@ -577,7 +577,14 @@ void SdPItemPlate::draw3d(QOpenGLFunctions_2_0 *f)
     } );
 
   //Draw all components
-  SdProjectItem::draw3d( f );
+  forEach( dctPartImp, [f] (SdObject *obj) -> bool {
+    SdPtr<SdGraphPartImp> part(obj);
+    if( part.isValid() )
+      part->draw3d( f );
+    return true;
+    });
+
+  //SdProjectItem::draw3d( f );
   }
 
 

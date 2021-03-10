@@ -221,6 +221,12 @@ class SdGraphPartImp : public SdGraphTraced
     //Find snap point on object
     virtual void         snapPoint(SdSnapInfo *snap) override;
 
+    //!
+    //! \brief draw3d Draws object in 3d space
+    //! \param f      3d draw functions with predefined 3d context
+    //!
+    virtual void         draw3d( QOpenGLFunctions_2_0 *f ) const override;
+
   private:
     void                 updatePinsPositions();
     //Pin connection-disconnection by index only for part (internal and undo)

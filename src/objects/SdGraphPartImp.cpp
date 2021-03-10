@@ -890,7 +890,7 @@ void SdGraphPartImp::drawStratum(SdContext *dc, int stratum)
     }
 
   //Draw pins
-  for( const SdPartImpPin &pin : mPins )
+  for( const SdPartImpPin &pin : qAsConst(mPins) )
     pin.draw( dc, getPlate(), stratum );
   }
 
@@ -1005,6 +1005,27 @@ void SdGraphPartImp::snapPoint(SdSnapInfo *snap)
           snap->test( this, pin.mPosition, snapNearestPin | snapNearestNetPin );
         }
     }
+  }
+
+
+
+
+//!
+//! \brief draw3d Draws object in 3d space
+//! \param f      3d draw functions with predefined 3d context
+//!
+void SdGraphPartImp::draw3d(QOpenGLFunctions_2_0 *f) const
+  {
+  f->glPushMatrix();
+  //Part placement conversion
+  f->glTranslatef( -mPart->getOrigin().xmm(), -mPart->getOrigin().ymm(), 0 );
+  f->glRotated( mProp.mAngle.getDegree(), 0, 0, 1 );
+  f->glTranslatef( mOrigin.xmm(), mOrigin.ymm(), 0 );
+  //TODO bottom side conversion
+
+  mPart->draw3d( f );
+
+  f->glPopMatrix();
   }
 
 
