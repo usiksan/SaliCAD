@@ -348,6 +348,19 @@ void SdGraphPartPin::draw(SdContext *dc)
 
 
 
+//!
+//! \brief draw3d Draws object in 3d space
+//! \param f      3d draw functions with predefined 3d context
+//!
+void SdGraphPartPin::draw3d(QOpenGLFunctions_2_0 *f) const
+  {
+  //Draw pad only
+  sdEnvir->getPad( mPinProp.mPinType.str() ).draw3d( f, mOrigin );
+  }
+
+
+
+
 int SdGraphPartPin::behindCursor(SdPoint p)
   {
   //Test pin point

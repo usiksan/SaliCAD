@@ -111,7 +111,7 @@ SdM3dModel SdM3dFunModelHole::modelHoleSquareCircle(SdM3dRegion square, SdM3dReg
   model.append( face );
 
   face.mContour.clear();
-  face.mContour << circle.at(a360) << square.at(1) << square.at(0);
+  face.mContour << circle.at(a270) << square.at(1) << square.at(0);
   model.append( face );
 
   return model;

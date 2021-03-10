@@ -92,6 +92,44 @@ void SdMasterPart::addPin(SdPoint org, const QString type, SdPoint pinNumberOrg,
 
 
 
+void SdMasterPart::addPinEx(SdPoint org, const QString type, SdPoint pinNumberOrg, const QString pinNumber, const QString pinNumberAttr, SdPoint pinNameOrg, const QString pinNameAttr)
+  {
+  mPinProp.mPinType = type;
+  if( type.contains(QChar('d')) )
+    mPinProp.mSide = stmThrough;
+  else
+    mPinProp.mSide = stmTop;
+  parseAttr( mPinNumberProp, pinNumberAttr );
+  parseAttr( mPinNameProp, pinNameAttr );
+  mItem->insertChild( new SdGraphPartPin( org, mPinProp, pinNumberOrg, mPinNumberProp, pinNameOrg, mPinNameProp, pinNumber), nullptr );
+  }
+
+
+
+
+void SdMasterPart::parseAttr(SdPropText &prop, const QString attr)
+  {
+  if( attr.length() >= 3 ) {
+    //Horizontal alignment
+    if( attr.at(0) == QChar('R') ) prop.mHorz = dhjRight;
+    else if( attr.at(0) == QChar('C') ) prop.mHorz = dhjCenter;
+    else prop.mHorz = dhjLeft;
+
+    //Vertical alignment
+    if( attr.at(1) == QChar('T') ) prop.mVert = dvjTop;
+    else if( attr.at(1) == QChar('M') ) prop.mVert = dvjMiddle;
+    else prop.mVert = dvjBottom;
+
+    //Direction
+    if( attr.at(2) == QChar('0') ) prop.mDir = da0;
+    else if( attr.at(2) == QChar('9') ) prop.mDir = da90;
+    else if( attr.at(2) == QChar('1') ) prop.mDir = da180;
+    else prop.mDir = da270;
+    }
+  }
+
+
+
 
 SdMasterPart::SdMasterPart(SdProjectItem *item) :
   mItem(item)

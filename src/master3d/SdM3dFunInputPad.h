@@ -20,6 +20,7 @@ Description
 
 class SdM3dFunInputPad : public SdM3dFunInput
   {
+    QString mPreviousPad;
   public:
     SdM3dFunInputPad(QTableWidget *tableWidget);
 

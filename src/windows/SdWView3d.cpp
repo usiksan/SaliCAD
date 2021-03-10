@@ -190,7 +190,9 @@ void SdWView3d::paintGL()
   if( mEnable2d ) {
     axisMaterial.setDiffuseColor( 1.0, 0.0, 0.0 );
     axisMaterial.paint( f );
-    mItem->forEachConst( dctLines, [f] (SdObject *obj) -> bool {
+    quint64 mask = dctLines;
+    if( mEnablePad ) mask |= dctPartPin;
+    mItem->forEachConst( mask, [f] (SdObject *obj) -> bool {
       SdPtrConst<SdGraph> obj2d(obj);
       if( obj2d.isValid() )
         obj2d->draw3d( f );

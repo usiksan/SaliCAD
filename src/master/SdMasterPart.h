@@ -45,6 +45,8 @@ struct SdMasterPart
     void setupSmdPin();
     void setupThrouPin();
     void addPin( SdPoint org, const QString type, SdPoint pinNumberOrg, const QString pinNumber, SdPoint pinNameOrg );
+    void addPinEx( SdPoint org, const QString type, SdPoint pinNumberOrg, const QString pinNumber, const QString pinNumberAttr, SdPoint pinNameOrg, const QString pinNameAttr );
+    void parseAttr( SdPropText &prop, const QString attr );
 
     SdMasterPart(SdProjectItem *item);
   };

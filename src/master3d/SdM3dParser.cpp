@@ -52,6 +52,9 @@
 #include "SdM3dFunColorBuild.h"
 #include "SdM3dFunColorFromString.h"
 
+#include "SdM3dFunStringPadRectThrou.h"
+#include "SdM3dFunStringPadCircleThrou.h"
+
 #include "SdM3dFunVertexBuild.h"
 #include "SdM3dFunVertexOffset.h"
 #include "SdM3dFunVertexTranslate.h"
@@ -72,6 +75,7 @@
 #include "SdM3dFunModelTranslate.h"
 
 #include "SdM3dFunGraphLine.h"
+#include "SdM3dFunGraphCircle.h"
 #include "SdM3dFunGraphRect.h"
 #include "SdM3dFunGraphRectFilled.h"
 #include "SdM3dFunGraphPin.h"
@@ -85,6 +89,9 @@ SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
 
   addFunction( QStringLiteral("color"), [] () -> SdM3dFunction* { return new SdM3dFunColorBuild(); } );
   addFunction( QStringLiteral("colorFromString"), [] () -> SdM3dFunction* { return new SdM3dFunColorFromString(); } );
+
+  addFunction( QStringLiteral("stringPadRectThrough"), [] () -> SdM3dFunction* { return new SdM3dFunStringPadRectThrou(); } );
+  addFunction( QStringLiteral("stringPadCircleThrough"), [] () -> SdM3dFunction* { return new SdM3dFunStringPadCircleThrou(); } );
 
   addFunction( QStringLiteral("vertex"), [] () -> SdM3dFunction* { return new SdM3dFunVertexBuild(); } );
   addFunction( QStringLiteral("vertexOffset"), [] () -> SdM3dFunction* { return new SdM3dFunVertexOffset(); } );
@@ -106,6 +113,7 @@ SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   addFunction( QStringLiteral("modelTranslate"), [] () -> SdM3dFunction* { return new SdM3dFunModelTranslate(); } );
 
   addFunction( QStringLiteral("graphLine"), [] () -> SdM3dFunction* { return new SdM3dFunGraphLine(); } );
+  addFunction( QStringLiteral("graphCircle"), [] () -> SdM3dFunction* { return new SdM3dFunGraphCircle(); } );
   addFunction( QStringLiteral("graphRect"), [] () -> SdM3dFunction* { return new SdM3dFunGraphRect(); } );
   addFunction( QStringLiteral("graphRectFilled"), [] () -> SdM3dFunction* { return new SdM3dFunGraphRectFilled(); } );
   addFunction( QStringLiteral("graphPin"), [] () -> SdM3dFunction* { return new SdM3dFunGraphPin(); } );

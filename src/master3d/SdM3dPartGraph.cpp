@@ -42,6 +42,7 @@ void SdM3dPartGraph::assign(SdM3dValuePtr src)
       mMasterPart.addFRect( flat.pointA().x(), flat.pointA().y(), flat.pointB().x(), flat.pointB().y() );
       break;
     case SdM3dGraph::sdm2dPin :
+      mMasterPart.addPinEx( flat.pinPos(), flat.pinPad(), flat.pinNumberPos(), flat.pinNumber(), flat.pinNumberAttr(), flat.pinNamePos(), flat.pinNameAttr() );
       break;
     case SdM3dGraph::sdm2dIdent :
       mMasterPart.setId( SdPoint(flat.identPos()) );

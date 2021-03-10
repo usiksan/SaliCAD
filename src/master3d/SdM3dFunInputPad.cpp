@@ -35,6 +35,15 @@ QString SdM3dFunInputPad::toString() const
     //Setup input title
     mTableWidget->item( mRow, 0 )->setText( mParamList[0]->toString() );
     //Setup default value
+    mTableWidget->item( mRow, 1 )->setStatusTip( mParamList[1]->toString() );
+    mTableWidget->item( mRow, 1 )->setText( mParamList[1]->toString() );
+    return mParamList[1]->toString();
+    }
+
+  //If value not edited then return default value
+  if( mTableWidget->item( mRow, 1 )->text() == mTableWidget->item( mRow, 1 )->statusTip() ) {
+    //Value not edited, replace default value
+    mTableWidget->item( mRow, 1 )->setStatusTip( mParamList[1]->toString() );
     mTableWidget->item( mRow, 1 )->setText( mParamList[1]->toString() );
     return mParamList[1]->toString();
     }

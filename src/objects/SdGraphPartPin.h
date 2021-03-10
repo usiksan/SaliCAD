@@ -80,6 +80,13 @@ class SdGraphPartPin : public SdGraph
     virtual bool      isVisible() override;
     virtual SdRect    getOverRect() const override;
     virtual void      draw(SdContext *dc) override;
+
+    //!
+    //! \brief draw3d Draws object in 3d space
+    //! \param f      3d draw functions with predefined 3d context
+    //!
+    virtual void      draw3d( QOpenGLFunctions_2_0 *f ) const override;
+
     virtual int       behindCursor(SdPoint p) override;
     virtual int       behindText( SdPoint p, SdPoint &org, QString &dest, SdPropText &prop ) override;
     //Find snap point on object
