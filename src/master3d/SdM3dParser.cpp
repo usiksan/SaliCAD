@@ -54,6 +54,8 @@
 
 #include "SdM3dFunStringPadRectThrou.h"
 #include "SdM3dFunStringPadCircleThrou.h"
+#include "SdM3dFunStringPinIndex.h"
+#include "SdM3dFunStringPinMatrix.h"
 
 #include "SdM3dFunVertexBuild.h"
 #include "SdM3dFunVertexOffset.h"
@@ -92,6 +94,8 @@ SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
 
   addFunction( QStringLiteral("stringPadRectThrough"), [] () -> SdM3dFunction* { return new SdM3dFunStringPadRectThrou(); } );
   addFunction( QStringLiteral("stringPadCircleThrough"), [] () -> SdM3dFunction* { return new SdM3dFunStringPadCircleThrou(); } );
+  addFunction( QStringLiteral("stringPinIndex"), [] () -> SdM3dFunction* { return new SdM3dFunStringPinIndex(); } );
+  addFunction( QStringLiteral("stringPinMatrix"), [] () -> SdM3dFunction* { return new SdM3dFunStringPinMatrix(); } );
 
   addFunction( QStringLiteral("vertex"), [] () -> SdM3dFunction* { return new SdM3dFunVertexBuild(); } );
   addFunction( QStringLiteral("vertexOffset"), [] () -> SdM3dFunction* { return new SdM3dFunVertexOffset(); } );

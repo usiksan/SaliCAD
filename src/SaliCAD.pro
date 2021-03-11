@@ -52,6 +52,8 @@ SOURCES += \
     master3d/SdM3dFunRegionRect.cpp \
     master3d/SdM3dFunRegionShift.cpp \
     master3d/SdM3dFunRegionTranslate.cpp \
+    master3d/SdM3dFunStringPinIndex.cpp \
+    master3d/SdM3dFunStringPinMatrix.cpp \
     master3d/SdM3dFunVertexBuild.cpp \
     master3d/SdM3dFunVertexCenterOfRegion.cpp \
     master3d/SdM3dFunVertexOffset.cpp \
@@ -429,6 +431,8 @@ HEADERS  += \
     master3d/SdM3dFunRegionTranslate.h \
     master3d/SdM3dFunStringPadCircleThrou.h \
     master3d/SdM3dFunStringPadRectThrou.h \
+    master3d/SdM3dFunStringPinIndex.h \
+    master3d/SdM3dFunStringPinMatrix.h \
     master3d/SdM3dFunVertexBuild.h \
     master3d/SdM3dFunVertexCenterOfRegion.h \
     master3d/SdM3dFunVertexOffset.h \
