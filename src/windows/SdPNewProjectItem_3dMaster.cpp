@@ -20,6 +20,7 @@ Description
 #include "SdD3dModelProgrammEditor.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdPItemRich.h"
+#include "master3d/SdM3dParser.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -71,6 +72,7 @@ SdPNewProjectItem_3dMaster::SdPNewProjectItem_3dMaster(SdProjectItemPtr *item, S
   hlay->addLayout( vlay );
 
   vlay = new QVBoxLayout();
+  vlay->addWidget( new QLabel( tr("Preview")) );
   vlay->addWidget( mPreview = new SdWView3d( *item, this ) );
   hlay->addLayout( vlay );
 
@@ -148,7 +150,13 @@ void SdPNewProjectItem_3dMaster::onCurrentRowChanged(int row)
     if( rich != nullptr ) {
       mDescription->setText( rich->paramGet(stdParam3dModelProgramm) );
       //TODO append 3d preview
-
+      SdM3dParser parser(nullptr);
+      static SdPItemPart previewPart;
+      SdM3dProgramm *programm = parser.parse( rich->contents(), &previewPart );
+      previewPart.clear();
+      programm->execute();
+      delete programm;
+      mPreview->setItem( &previewPart );
       return;
       }
     }

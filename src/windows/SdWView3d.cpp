@@ -28,6 +28,16 @@ SdWView3d::SdWView3d(SdProjectItem *item, QWidget *parent) :
   setFormat( format );
   }
 
+
+
+void SdWView3d::setItem(SdProjectItem *it)
+  {
+  mItem = it;
+  update();
+  }
+
+
+
 bool isPressed;
 QPoint startPos;
 double prevAngleXY;

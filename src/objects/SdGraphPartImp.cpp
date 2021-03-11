@@ -1018,9 +1018,9 @@ void SdGraphPartImp::draw3d(QOpenGLFunctions_2_0 *f) const
   {
   f->glPushMatrix();
   //Part placement conversion
-  f->glTranslatef( -mPart->getOrigin().xmm(), -mPart->getOrigin().ymm(), 0 );
-  f->glRotated( mProp.mAngle.getDegree(), 0, 0, 1 );
-  f->glTranslatef( mOrigin.xmm(), mOrigin.ymm(), 0 );
+//  f->glTranslatef( -mPart->getOrigin().xmm(), -mPart->getOrigin().ymm(), 0 );
+//  f->glRotated( mProp.mAngle.getDegree(), 0, 0, 1 );
+//  f->glTranslatef( mOrigin.xmm(), mOrigin.ymm(), 0 );
   //TODO bottom side conversion
 
   mPart->draw3d( f );

@@ -11,7 +11,7 @@ Web
 Description
   3d object which represents face set model (Model which consists of face set)
   Each face is flate surface bounded polyline
-  With comparison Sd3dFaceSet this object contains simplified
+  With comparison Sd3dFaceSet this object contains simplified faces (no normal, single face color)
 */
 #ifndef SD3DMODEL_H
 #define SD3DMODEL_H

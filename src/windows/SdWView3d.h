@@ -37,6 +37,8 @@ class SdWView3d : public QOpenGLWidget
     SdWView3d( SdProjectItem *item, QWidget *parent );
 
     SdProjectItem   *item() { return mItem; }
+
+    void             setItem( SdProjectItem *it );
     // QWidget interface
   protected:
     virtual void mousePressEvent(QMouseEvent *event) override;
