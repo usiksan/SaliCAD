@@ -38,8 +38,10 @@ void SdWView3d::setItem(SdProjectItem *it)
 
 
 
-bool isPressed;
+bool isLeftPressed;
+bool isMiddlePressed;
 QPoint startPos;
+QPoint prevOrigin;
 double prevAngleXY;
 double prevAngleZ;
 
@@ -48,10 +50,15 @@ double prevAngleZ;
 void SdWView3d::mousePressEvent(QMouseEvent *event)
   {
   if( event->button() == Qt::LeftButton ) {
-    isPressed = true;
+    isLeftPressed = true;
     startPos = event->pos();
     prevAngleXY = mAngleXY;
     prevAngleZ = mAngleZ;
+    }
+  else if( event->button() == Qt::MiddleButton ) {
+    isMiddlePressed = true;
+    startPos = event->pos();
+    prevOrigin = mOrigin;
     }
   }
 
@@ -60,16 +67,22 @@ void SdWView3d::mousePressEvent(QMouseEvent *event)
 void SdWView3d::mouseReleaseEvent(QMouseEvent *event)
   {
   if( event->button() == Qt::LeftButton )
-    isPressed = false;
+    isLeftPressed = false;
+  else if( event->button() == Qt::MiddleButton )
+    isMiddlePressed = false;
   }
 
 
 
 void SdWView3d::mouseMoveEvent(QMouseEvent *event)
   {
-  if( isPressed ) {
+  if( isLeftPressed ) {
     mAngleXY = prevAngleXY - (startPos.y() - event->pos().y()) / 4;
     mAngleZ = prevAngleZ - (startPos.x() - event->pos().x()) / 4;
+    update();
+    }
+  else if( isMiddlePressed ) {
+    mOrigin = prevOrigin + QPoint( event->pos().x() - startPos.x(), startPos.y() - event->pos().y() ) / 2;
     update();
     }
   }
