@@ -109,6 +109,7 @@ SOURCES += \
     vrml/VrmlNodeTransform.cpp \
     vrml/VrmlRotation.cpp \
     vrml/VrmlVector.cpp \
+    windows/SdD3dModelMaster.cpp \
     windows/SdD3dModelProgrammEditor.cpp \
     windows/SdDExpressionEdit.cpp \
     windows/SdDOptionsPageLibrary.cpp \
@@ -510,6 +511,7 @@ HEADERS  += \
     vrml/VrmlRotation.h \
     vrml/VrmlTypes.h \
     vrml/VrmlVector.h \
+    windows/SdD3dModelMaster.h \
     windows/SdD3dModelProgrammEditor.h \
     windows/SdDExpressionEdit.h \
     windows/SdDOptionsPageLibrary.h \

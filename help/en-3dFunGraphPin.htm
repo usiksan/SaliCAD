@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD 3d model</title>
+  </head>
+  <body>
+    <h1 align="center">graphPin</h1>
+    <p><a href="3dModel.htm">Contents</a>=&gt;<a href="3dFunctions.htm">Functions</a>=&gt;graphPin</p>
+    <hr>
+    <h3>Prototype</h3>
+    <p><a href="3dTypeGraph.htm">Graph</a> graphPin( <a href="3dTypeVertex.htm">Vertex</a>
+      pinPosition, <a href="3dTypeString.htm">String</a> pinPadDescription, <a
+        href="3dTypeVertex.htm">Vertex</a> pinNumberPosition, <a href="3dTypeString.htm">String</a>
+      pinNumber, <a href="3dTypeString.htm">String</a> pinNumberAttributes, <a
+        href="3dTypeVertex.htm">Vertex</a> pinNamePosition, <a href="3dTypeString.htm">String</a>
+      pinNameAttributes) </p>
+    <h3>Description</h3>
+    <p> This function builds <a href="3dTypeGraph.htm">Graph</a> pin from its
+      params.</p>
+    <h3>Parameters</h3>
+    <ul>
+      <li>pinPosition - pin position vertex</li>
+      <li>pinPadDescription - pin pad description</li>
+      <li> pinNumberPosition - pin number position vertex</li>
+      <li>pinNumber - pin number</li>
+      <li>pinNumberAttributes - pin number attributes, see text attributes</li>
+      <li>pinNamePosition - pin name position</li>
+      <li>pinNameAttributes - pin name attributes, see text attributes</li>
+    </ul>
+    <h3>Text attributes</h3>
+    <p>Text attributes are used to set the horizontal and vertical alignment of
+      the text, as well as to set the angle of rotation of the text.</p>
+    <p>"LT90"</p>
+    <p>where</p>
+    <ul>
+      <li>L - horizontal alignment, may be one of L-left, C-center, R-right</li>
+      <li>T - vertical alignment, may be one of T-top, M-middle, B-bottom</li>
+      <li>90 - angle of text rotation in degree, may be one of 0, 90, 180 and
+        270</li>
+    </ul>
+  </body>
+</html>

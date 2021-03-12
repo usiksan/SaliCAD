@@ -18,6 +18,7 @@ Description
 #include "SdPNewProjectItem.h"
 #include "SdWView3d.h"
 #include "SdD3dModelProgrammEditor.h"
+#include "SdD3dModelMaster.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdPItemRich.h"
 #include "master3d/SdM3dParser.h"
@@ -95,8 +96,13 @@ SdPNewProjectItem_3dMaster::SdPNewProjectItem_3dMaster(SdProjectItemPtr *item, S
 bool SdPNewProjectItem_3dMaster::validatePage()
   {
   int index = mMasterType->currentRow();
-  if( index >= 0 )
-    return true;
+  if( index >= 0 ) {
+    SdPtr<SdPItemPart> part(*mItemPtr);
+    if( part.isValid() ) {
+      SdD3dModelMaster dlg( mIdList.at(index), part.ptr(), this );
+      return dlg.exec() != 0;
+      }
+    }
   return false;
   }
 
