@@ -69,18 +69,18 @@ SdPNewProjectItem_3dMaster::SdPNewProjectItem_3dMaster(SdProjectItemPtr *item, S
 
   vlay->addLayout( boxLay );
 
-  hlay->addLayout( vlay );
+  hlay->addLayout( vlay, 3 );
 
   vlay = new QVBoxLayout();
   vlay->addWidget( new QLabel( tr("Preview")) );
-  vlay->addWidget( mPreview = new SdWView3d( *item, this ) );
-  hlay->addLayout( vlay );
+  vlay->addWidget( mPreview = new SdWView3d( *item, this ), 1 );
+  hlay->addLayout( vlay, 5 );
 
   vlay = new QVBoxLayout();
   vlay->addWidget( new QLabel( tr("Description")) );
   vlay->addWidget( mDescription = new QTextEdit() );
   mDescription->setReadOnly(true);
-  hlay->addLayout( vlay );
+  hlay->addLayout( vlay, 2 );
 
 
 
