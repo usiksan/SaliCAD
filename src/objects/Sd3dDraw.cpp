@@ -1,13 +1,8 @@
 #include "Sd3dDraw.h"
-#include "master3d/SdM3dFunRegionCircle.h"
-#include "master3d/SdM3dFunRegionRect.h"
-#include "master3d/SdM3dFunModelHole.h"
-#include "master3d/SdM3dFunModelTranslate.h"
-#include "master3d/SdM3dFunModelExtrude.h"
 #include <QColor>
 
 
-static void drawPolygon( QOpenGLFunctions_2_0 *f, SdM3dRegion region )
+static void drawPolygon( QOpenGLFunctions_2_0 *f, Sd3dRegion region )
   {
   QVector3D normal = QVector3D::normal( region.at(0), region.at(1), region.at(2) );
   f->glBegin(GL_POLYGON);
@@ -93,7 +88,7 @@ void Sd3dDraw::rectFilled(QOpenGLFunctions_2_0 *f, SdPoint a, SdPoint b, float z
 //!
 void Sd3dDraw::circle(QOpenGLFunctions_2_0 *f, SdPoint center, int radius, float z)
   {
-  SdM3dRegion region = SdM3dFunRegionCircle::regionCircle( static_cast<float>(radius) / 1000.0, 2.0, QVector3D( center.xmm(), center.ymm(), z ) );
+  Sd3dRegion region = sd3dRegionCircle( static_cast<float>(radius) / 1000.0, 2.0, QVector3D( center.xmm(), center.ymm(), z ) );
   f->glBegin( GL_LINES );
   for( int i = 0; i < region.count(); i++ ) {
     QVector3D start = region.at(i);
@@ -115,7 +110,7 @@ void Sd3dDraw::circle(QOpenGLFunctions_2_0 *f, SdPoint center, int radius, float
 //!
 void Sd3dDraw::circleFill(QOpenGLFunctions_2_0 *f, SdPoint center, int radius, float z)
   {
-  SdM3dRegion region = SdM3dFunRegionCircle::regionCircle( static_cast<float>(radius) / 1000.0, 2.0, QVector3D( center.xmm(), center.ymm(), z ) );
+  Sd3dRegion region = sd3dRegionCircle( static_cast<float>(radius) / 1000.0, 2.0, QVector3D( center.xmm(), center.ymm(), z ) );
   drawPolygon( f, region );
   }
 
@@ -138,21 +133,21 @@ void Sd3dDraw::color(QOpenGLFunctions_2_0 *f, QColor col)
 
 
 
-static void pad( QOpenGLFunctions_2_0 *f, SdM3dRegion padRegion, QColor padColor, SdPoint holeCenter, int holeDiametr, int holeLenght, QColor holeColor , float z )
+static void pad( QOpenGLFunctions_2_0 *f, Sd3dRegion padRegion, QColor padColor, SdPoint holeCenter, int holeDiametr, int holeLenght, QColor holeColor , float z )
   {
-  SdM3dRegion holeRegion;
+  Sd3dRegion holeRegion;
   if( holeLenght > 0 )
     //Rectangle hole
-    holeRegion = SdM3dFunRegionRect::regionRect( static_cast<float>(holeLenght) / 1000.0, static_cast<float>(holeDiametr) / 1000.0, QVector3D( holeCenter.xmm(), holeCenter.ymm(), z ) );
+    holeRegion = sd3dRegionRectangleSideCount( static_cast<float>(holeLenght) / 1000.0, static_cast<float>(holeDiametr) / 1000.0, 36, QVector3D( holeCenter.xmm(), holeCenter.ymm(), z ) );
   else
     //Circle hole
-    holeRegion = SdM3dFunRegionCircle::regionCircle( static_cast<float>(holeDiametr) / 2000.0, 2.0, QVector3D( holeCenter.xmm(), holeCenter.ymm(), z ) );
+    holeRegion = sd3dRegionCircleSideCount( static_cast<float>(holeDiametr) / 2000.0, 2.0, QVector3D( holeCenter.xmm(), holeCenter.ymm(), z ) );
   //Top pad
-  Sd3dModel topPad = SdM3dFunModelHole::modelHole( padRegion, holeRegion, padColor );
+  Sd3dModel topPad = sd3dModelFlatHole( padRegion, holeRegion, padColor );
   //Bottom pad
-  Sd3dModel botPad = SdM3dFunModelTranslate::modelTranslate( topPad, QVector3D(0,0,z-1.6) );
+  Sd3dModel botPad = sd3dModelTranslate( topPad, QVector3D(0,0,-1.5) );
   //Hole tube
-  Sd3dModel hole = SdM3dFunModelExtrude::modelExtrude( holeRegion, -1.6, holeColor );
+  Sd3dModel hole = sd3dModelWall( holeRegion, QVector3D(0,0,-1.5), holeColor, true );
   Sd3dDraw::drawModel( f, topPad );
   Sd3dDraw::drawModel( f, botPad );
   Sd3dDraw::drawModel( f, hole );
@@ -162,21 +157,16 @@ static void pad( QOpenGLFunctions_2_0 *f, SdM3dRegion padRegion, QColor padColor
 
 void Sd3dDraw::padCircle(QOpenGLFunctions_2_0 *f, SdPoint padCenter, int padRadius, QColor padColor, SdPoint holeCenter, int holeDiametr, int holeLenght, QColor holeColor, float z )
   {
-  SdM3dRegion padRegion = SdM3dFunRegionCircle::regionCircle( static_cast<float>(padRadius) / 1000.0, 2.0, QVector3D( padCenter.xmm(), padCenter.ymm(), z ) );
+  Sd3dRegion padRegion( sd3dRegionCircleSideCount( static_cast<float>(padRadius) / 1000.0, 36, QVector3D( padCenter.xmm(), padCenter.ymm(), z ) )  );
   pad( f, padRegion, padColor, holeCenter, holeDiametr, holeLenght, holeColor, z );
   }
 
 
 
 
-void Sd3dDraw::padRect(QOpenGLFunctions_2_0 *f, SdPoint padA, SdPoint padB, QColor padColor, SdPoint holeCenter, int holeDiametr, int holeLenght, QColor holeColor, float z)
+void Sd3dDraw::padRect(QOpenGLFunctions_2_0 *f, SdPoint padCenter, int padWidth, int padHeight, QColor padColor, SdPoint holeCenter, int holeDiametr, int holeLenght, QColor holeColor, float z)
   {
-  SdM3dRegion padRegion;
-  padRegion.reserve(4);
-  padRegion << QVector3D( padA.xmm(), padA.ymm(), z ) <<
-               QVector3D( padB.xmm(), padA.ymm(), z ) <<
-               QVector3D( padB.xmm(), padB.ymm(), z ) <<
-               QVector3D( padA.xmm(), padB.ymm(), z );
+  Sd3dRegion padRegion( sd3dRegionRectangleSideCount( static_cast<float>(padWidth) / 1000.0, static_cast<float>(padHeight) / 1000.0, 36, QVector3D( padCenter.xmm(), padCenter.ymm(), z ) ) );
   pad( f, padRegion, padColor, holeCenter, holeDiametr, holeLenght, holeColor, z );
   }
 
@@ -184,7 +174,7 @@ void Sd3dDraw::padRect(QOpenGLFunctions_2_0 *f, SdPoint padA, SdPoint padB, QCol
 
 void Sd3dDraw::flatPanel(QOpenGLFunctions_2_0 *f, SdPointList list, int z, unsigned color)
   {
-  SdM3dRegion region;
+  Sd3dRegion region;
   region.reserve( list.count() );
   float fz(z);
   fz /= 1000.0;
@@ -197,7 +187,7 @@ void Sd3dDraw::flatPanel(QOpenGLFunctions_2_0 *f, SdPointList list, int z, unsig
     QVector3D v( x, y, -0.11 );
     region.append( v );
     }
-  SdM3dModel pcb = SdM3dFunModelExtrude::modelExtrude( region, -fz, QColor(color) );
+  Sd3dModel pcb = sd3dModelExtrude( region, -fz, QColor(color) );
   drawModel( f, pcb );
   }
 

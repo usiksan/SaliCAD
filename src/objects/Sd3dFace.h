@@ -45,7 +45,27 @@ struct Sd3dFace
     //! \param offset    Offset vector of translation
     //! \return          Translated face
     //!
-    Sd3dFace    translate( QVector3D offset );
+    Sd3dFace    translate( QVector3D offset ) const { return Sd3dFace( sd3dRegionTranslate( mContour, offset ), mColor ); }
+
+    //!
+    //! \brief shift  Shifts face in perpendecular direction with offset amount
+    //! \param offset Shift offset amount
+    //! \return       Shifted face
+    //!
+    Sd3dFace    shift( float offset ) const { return Sd3dFace( sd3dRegionShift( mContour, offset ), mColor ); }
+
+    //!
+    //! \brief map    Build face from this converted with matrix
+    //! \param matrix Matrix of conversion
+    //! \return       Converted face
+    //!
+    Sd3dFace    map( const QMatrix4x4 &matrix ) const { return Sd3dFace( sd3dRegionMap( mContour, matrix ), mColor ); }
+
+    //!
+    //! \brief mapInPlace Convert this face with matrix
+    //! \param matrix     Matrix of conversion
+    //!
+    void        mapInPlace( const QMatrix4x4 &matrix ) { sd3dRegionMapInPlace( mContour, matrix ); }
   };
 
 #endif // SD3DFACE_H

@@ -21,19 +21,12 @@ Description
 class SdM3dFunModelTranslate : public SdM3dFunction
   {
   public:
-    SdM3dFunModelTranslate();
+    SdM3dFunModelTranslate() : SdM3dFunction( SDM3D_TYPE_MODEL, SDM3D_TYPE_MODEL, SDM3D_TYPE_VERTEX ) { }
 
     // SdM3dValue interface
   public:
-    virtual SdM3dModel toModel() const override;
+    virtual SdM3dModel toModel() const override { return sd3dModelTranslate( mParamList[0]->toModel(), mParamList[1]->toVertex() ); }
 
-    //!
-    //! \brief modelTranslate Creates copy of source model translated with vector
-    //! \param model          Source model
-    //! \param offset         Offset vector
-    //! \return               Translated model
-    //!
-    static  SdM3dModel modelTranslate( SdM3dModel model, QVector3D offset );
   };
 
 #endif // SDM3DFUNMODELTRANSLATE_H

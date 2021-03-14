@@ -37,14 +37,7 @@ SOURCES += \
     master3d/SdM3dFunInputPad.cpp \
     master3d/SdM3dFunModelAddExtrude.cpp \
     master3d/SdM3dFunModelBox.cpp \
-    master3d/SdM3dFunModelCurve.cpp \
-    master3d/SdM3dFunModelCylinder.cpp \
-    master3d/SdM3dFunModelExtrude.cpp \
     master3d/SdM3dFunModelHole.cpp \
-    master3d/SdM3dFunModelTranslate.cpp \
-    master3d/SdM3dFunModelWall.cpp \
-    master3d/SdM3dFunModelWallEven.cpp \
-    master3d/SdM3dFunVertexTranslate.cpp \
     master3d/SdM3dFunction.cpp \
     master3d/SdM3dOperatorBlock.cpp \
     master3d/SdM3dOperatorIf.cpp \

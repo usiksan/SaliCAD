@@ -28,3 +28,7 @@ void Sd3dFace::read(const QJsonObject &obj)
   mContour = sd3dRegionRead( obj.value(QStringLiteral("contour")).toArray() );
   mColor   = QColor( obj.value(QStringLiteral("color")).toString() );
   }
+
+
+
+

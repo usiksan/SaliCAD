@@ -1,3 +1,18 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  3d model programming language
+
+  The function builds wall from bottom region and grow vector
+*/
 #ifndef SDM3DFUNMODELWALL_H
 #define SDM3DFUNMODELWALL_H
 
@@ -6,23 +21,19 @@
 class SdM3dFunModelWall : public SdM3dFunction
   {
   public:
-    SdM3dFunModelWall();
+    SdM3dFunModelWall() :
+      SdM3dFunction( SDM3D_TYPE_MODEL, SDM3D_TYPE_REGION, SDM3D_TYPE_VERTEX, SDM3D_TYPE_COLOR, SDM3D_TYPE_BOOL )
+      {
+
+      }
 
     // SdM3dValue interface
   public:
-    virtual SdM3dModel toModel() const override;
+    virtual SdM3dModel toModel() const override
+      {
+      return sd3dModelWall( mParamList[0]->toRegion(), mParamList[1]->toVertex(), mParamList[2]->toColor(), mParamList[3]->toBool() );
+      }
 
-    static  SdM3dModel modelWall(SdM3dRegion region, QVector3D grow, QColor color , bool close);
-
-    //!
-    //! \brief modelWalls Builds walls on base bottom and top regions. Walls builded with color
-    //! \param bottom     Bottom region of walls
-    //! \param top        Top region of walls
-    //! \param color      Color of faces for the walls
-    //! \param close      If true then append wall with n-1 and 0 index vertex
-    //! \return           Model of walls
-    //!
-    static  SdM3dModel modelWalls( SdM3dRegion bottom, SdM3dRegion top, QColor color, bool close );
   };
 
 #endif // SDM3DFUNMODELWALL_H

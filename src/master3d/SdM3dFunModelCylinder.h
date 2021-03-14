@@ -21,20 +21,19 @@ Description
 class SdM3dFunModelCylinder : public SdM3dFunction
   {
   public:
-    SdM3dFunModelCylinder();
+    SdM3dFunModelCylinder() :
+      SdM3dFunction( SDM3D_TYPE_MODEL, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT, SDM3D_TYPE_COLOR )
+      {
+
+      }
 
     // SdM3dValue interface
   public:
-    virtual SdM3dModel toModel() const override;
+    virtual SdM3dModel toModel() const override
+      {
+      return sd3dModelCylinder( mParamList[0]->toFloat(), mParamList[1]->toFloat(), mParamList[2]->toColor() );
+      }
 
-    //!
-    //! \brief modelCylinder Builds cylinder model from its size
-    //! \param radius        Radius of circle of footing of cylinder
-    //! \param height        Height of cylinder
-    //! \param color         Color of cylinder
-    //! \return              Cylinder model
-    //!
-    static  SdM3dModel modelCylinder( float radius, float height, QColor color );
   };
 
 #endif // SDM3DFUNMODELCYLINDER_H

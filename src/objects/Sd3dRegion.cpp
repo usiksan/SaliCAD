@@ -102,12 +102,13 @@ Sd3dRegion sd3dRegionCircle(float radius, float stepDegree, QVector3D offset)
 //! \brief sd3dRegionCircleSideCount Builds circle region interpolated polygon on base radius with center at 0 and sideCount sides
 //! \param radius                    Radius of builded circle
 //! \param sideCount                 Side count of polygon
+//! \param center                    Center of circle
 //! \return                          Circle region on XY plane
 //!
-Sd3dRegion sd3dRegionCircleSideCount(float radius, int sideCount)
+Sd3dRegion sd3dRegionCircleSideCount(float radius, int sideCount, QVector3D center)
   {
   float stepDegree = 360.0 / sideCount;
-  return sd3dRegionCircle( radius, stepDegree );
+  return sd3dRegionCircle( radius, stepDegree, center );
   }
 
 
@@ -118,14 +119,16 @@ Sd3dRegion sd3dRegionCircleSideCount(float radius, int sideCount)
 //! \param w                            Width of rectangle (X)
 //! \param h                            Height of rectangle (Y)
 //! \param sideCount                    Side count of polygon
+//! \param center                       Center of rectangle
 //! \return                             Rectangle region on XY plane
 //!
-Sd3dRegion sd3dRegionRectangleSideCount(float w, float h, int sideCount)
+Sd3dRegion sd3dRegionRectangleSideCount(float w, float h, int sideCount, QVector3D center )
   {
   float edgeOnSide = sideCount / 4;
   float stepw = w / edgeOnSide;
   float steph = h / edgeOnSide;
   QVector3D v( 0, h/2, 0);
+  v += center;
   Sd3dRegion region;
   region.append( v );
   for( int i = 0; i < edgeOnSide / 2; i++ ) {
@@ -186,6 +189,19 @@ Sd3dRegion sd3dRegionMap(const Sd3dRegion &source, const QMatrix4x4 &matrix)
   for( auto const &v : source )
     dest.append( matrix.map(v) );
   return dest;
+  }
+
+
+
+//!
+//! \brief sd3dRegionMapInPlace Map each point of region in place through matrix
+//! \param region               Region
+//! \param matrix               Matrix of conversion
+//!
+void sd3dRegionMapInPlace(Sd3dRegion &region, const QMatrix4x4 &matrix)
+  {
+  for( auto &v : region )
+    v = matrix.map(v);
   }
 
 

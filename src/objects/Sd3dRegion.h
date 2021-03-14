@@ -56,9 +56,10 @@ Sd3dRegion sd3dRegionCircle(float radius , float stepDegree = 10.0, QVector3D of
 //! \brief sd3dRegionCircleSideCount Builds circle region interpolated polygon on base radius with center at 0 and sideCount sides
 //! \param radius                    Radius of builded circle
 //! \param sideCount                 Side count of polygon
+//! \param center                    Center of circle
 //! \return                          Circle region on XY plane
 //!
-Sd3dRegion sd3dRegionCircleSideCount( float radius, int sideCount );
+Sd3dRegion sd3dRegionCircleSideCount( float radius, int sideCount, QVector3D center );
 
 
 //!
@@ -66,9 +67,10 @@ Sd3dRegion sd3dRegionCircleSideCount( float radius, int sideCount );
 //! \param w                            Width of rectangle (X)
 //! \param h                            Height of rectangle (Y)
 //! \param sideCount                    Side count of polygon
+//! \param center                       Center of rectangle
 //! \return                             Rectangle region on XY plane
 //!
-Sd3dRegion sd3dRegionRectangleSideCount( float w, float h, int sideCount );
+Sd3dRegion sd3dRegionRectangleSideCount(float w, float h, int sideCount, QVector3D center);
 
 
 //!
@@ -96,6 +98,14 @@ QVector3D  sd3dVertexCenterOfRegion( const Sd3dRegion &source );
 //! \return              Result region
 //!
 Sd3dRegion sd3dRegionMap( const Sd3dRegion &source, const QMatrix4x4 &matrix );
+
+
+//!
+//! \brief sd3dRegionMapInPlace Map each point of region in place through matrix
+//! \param region               Region
+//! \param matrix               Matrix of conversion
+//!
+void       sd3dRegionMapInPlace( Sd3dRegion &region, const QMatrix4x4 &matrix );
 
 //!
 //! \brief sd3dRegionTranslate Translate each point of source region on amount of offset and place it into destignation region
