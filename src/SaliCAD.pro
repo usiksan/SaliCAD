@@ -29,10 +29,8 @@ SOURCES += \
     master3d/SdM3dArrayFace.cpp \
     master3d/SdM3dArraySegment.cpp \
     master3d/SdM3dArrayVertex.cpp \
-    master3d/SdM3dFunBuildRect.cpp \
     master3d/SdM3dFunColorBuild.cpp \
     master3d/SdM3dFunColorFromString.cpp \
-    master3d/SdM3dFunFaceBuild.cpp \
     master3d/SdM3dFunInput.cpp \
     master3d/SdM3dFunInputColor.cpp \
     master3d/SdM3dFunInputFloat.cpp \
@@ -46,9 +44,6 @@ SOURCES += \
     master3d/SdM3dFunModelTranslate.cpp \
     master3d/SdM3dFunModelWall.cpp \
     master3d/SdM3dFunModelWallEven.cpp \
-    master3d/SdM3dFunRegionParallel.cpp \
-    master3d/SdM3dFunVertexBuild.cpp \
-    master3d/SdM3dFunVertexCenterOfRegion.cpp \
     master3d/SdM3dFunVertexOffset.cpp \
     master3d/SdM3dFunVertexTranslate.cpp \
     master3d/SdM3dFunction.cpp \
@@ -398,7 +393,6 @@ HEADERS  += \
     master3d/SdM3dBinaryFloatSub.h \
     master3d/SdM3dBool.h \
     master3d/SdM3dFloat.h \
-    master3d/SdM3dFunBuildRect.h \
     master3d/SdM3dFunColorBuild.h \
     master3d/SdM3dFunColorFromString.h \
     master3d/SdM3dFunFaceBuild.h \
@@ -422,7 +416,6 @@ HEADERS  += \
     master3d/SdM3dFunModelWall.h \
     master3d/SdM3dFunModelWallEven.h \
     master3d/SdM3dFunRegionCircle.h \
-    master3d/SdM3dFunRegionParallel.h \
     master3d/SdM3dFunRegionRect.h \
     master3d/SdM3dFunRegionShift.h \
     master3d/SdM3dFunRegionTranslate.h \
@@ -431,7 +424,6 @@ HEADERS  += \
     master3d/SdM3dFunStringPinIndex.h \
     master3d/SdM3dFunStringPinMatrix.h \
     master3d/SdM3dFunVertexBuild.h \
-    master3d/SdM3dFunVertexCenterOfRegion.h \
     master3d/SdM3dFunVertexOffset.h \
     master3d/SdM3dFunVertexTranslate.h \
     master3d/SdM3dFunction.h \
