@@ -36,7 +36,6 @@ SOURCES += \
     master3d/SdM3dFunInputFloat.cpp \
     master3d/SdM3dFunInputPad.cpp \
     master3d/SdM3dFunModelAddExtrude.cpp \
-    master3d/SdM3dFunModelBox.cpp \
     master3d/SdM3dFunModelHole.cpp \
     master3d/SdM3dFunction.cpp \
     master3d/SdM3dOperatorBlock.cpp \

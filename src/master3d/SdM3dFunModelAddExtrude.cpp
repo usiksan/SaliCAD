@@ -46,12 +46,10 @@ SdM3dModel SdM3dFunModelAddExtrude::modelAddExtrude(SdM3dModel src, float shift,
   //Remove bottom side
   SdM3dFace bot = md.takeLast();
 
-  SdM3dFace top;
-  top.mContour = SdM3dFunRegionShift::regionShift( bot.mContour, shift );
-  top.mColor   = color;
+  SdM3dFace top( sd3dRegionShift( bot.mContour, shift ), color );
 
   //Side walls
-  md.append( SdM3dFunModelWall::modelWalls( bot.mContour, top.mContour, color, true ) );
+  md.append( sd3dModelWalls( bot.mContour, top.mContour, color, true ) );
 
   //Top side
   md.append( top );

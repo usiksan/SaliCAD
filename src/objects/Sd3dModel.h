@@ -139,4 +139,16 @@ Sd3dModel  sd3dModelCurve( const Sd3dRegion &region, QVector3D rotationCenter, Q
 //!
 Sd3dModel  sd3dModelFlatHole( const Sd3dRegion &outer, const Sd3dRegion &hole, QColor color );
 
+
+//!
+//! \brief sd3dModelBox Builds box model from its size
+//! \param lenght       Lenght of box (x)
+//! \param width        Width of box (y)
+//! \param height       Height of box (z)
+//! \param color        Color faces of box
+//! \return             Box model
+//!
+Sd3dModel  sd3dModelBox( float lenght, float width, float height, QColor color );
+
+
 #endif // SD3DMODEL_H

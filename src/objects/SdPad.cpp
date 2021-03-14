@@ -191,11 +191,8 @@ void SdPad::draw3d(QOpenGLFunctions_2_0 *f, SdPoint p) const
         QColor holeColor = layer->color();
         if( mIsCircle )
           Sd3dDraw::padCircle( f, SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth >> 1, padColor, p, mHoleDiametr, mHoleLength, holeColor, -0.01 );
-        else {
-          SdPoint a(p.x() + mCenterX - (mDiametrWidth >> 1), p.y() + mCenterY - (mHeight >> 1));
-          SdPoint b(a.x() + mDiametrWidth, a.y() + mHeight);
-          Sd3dDraw::padRect( f, a, b, padColor, p, mHoleDiametr, mHoleLength, holeColor, -0.01 );
-          }
+        else
+          Sd3dDraw::padRect( f, SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth, mHeight, padColor, p, mHoleDiametr, mHoleLength, holeColor, -0.01 );
         }
 
       }

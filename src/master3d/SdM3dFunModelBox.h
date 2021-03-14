@@ -21,21 +21,18 @@ Description
 class SdM3dFunModelBox : public SdM3dFunction
   {
   public:
-    SdM3dFunModelBox();
+    SdM3dFunModelBox() :
+      SdM3dFunction( SDM3D_TYPE_MODEL, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT, SDM3D_TYPE_COLOR )
+      {
+
+      }
 
     // SdM3dValue interface
   public:
-    virtual SdM3dModel toModel() const override;
-
-    //!
-    //! \brief modelBox Builds box model from its size
-    //! \param lenght   Lenght of box (x)
-    //! \param width    Width of box (y)
-    //! \param height   Height of box (z)
-    //! \param color    Color faces of box
-    //! \return         Box model
-    //!
-    static  SdM3dModel modelBox(float lenght, float width, float height, QColor color);
+    virtual SdM3dModel toModel() const override
+      {
+      return sd3dModelBox( mParamList[0]->toFloat(), mParamList[1]->toFloat(), mParamList[2]->toFloat(), mParamList[3]->toColor() );
+      }
   };
 
 #endif // SDM3DFUNMODELBOX_H
