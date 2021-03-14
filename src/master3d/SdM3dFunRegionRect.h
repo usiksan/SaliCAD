@@ -21,19 +21,12 @@ Description
 class SdM3dFunRegionRect : public SdM3dFunction
   {
   public:
-    SdM3dFunRegionRect();
+    SdM3dFunRegionRect() : SdM3dFunction( SDM3D_TYPE_REGION, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT ) { }
 
     // SdM3dValue interface
   public:
-    virtual SdM3dRegion toRegion() const override;
+    virtual SdM3dRegion toRegion() const override { return sd3dRegionRectangle( mParamList[0]->toFloat(), mParamList[1]->toFloat() ); }
 
-    //!
-    //! \brief regionRect Builds rectangle region with center in 0
-    //! \param width      Width (X) of rectangle (in flat view)
-    //! \param height     Height (Y) of rectangle (in flat view)
-    //! \return           Rectangle region with center in 0
-    //!
-    static  SdM3dRegion regionRect( float width, float height, QVector3D offset = QVector3D(0.0,0.0,0.0) );
   };
 
 #endif // SDM3DFUNREGIONRECT_H

@@ -33,7 +33,6 @@ SOURCES += \
     master3d/SdM3dFunColorBuild.cpp \
     master3d/SdM3dFunColorFromString.cpp \
     master3d/SdM3dFunFaceBuild.cpp \
-    master3d/SdM3dFunFaceTranslate.cpp \
     master3d/SdM3dFunInput.cpp \
     master3d/SdM3dFunInputColor.cpp \
     master3d/SdM3dFunInputFloat.cpp \
@@ -48,9 +47,6 @@ SOURCES += \
     master3d/SdM3dFunModelWall.cpp \
     master3d/SdM3dFunModelWallEven.cpp \
     master3d/SdM3dFunRegionParallel.cpp \
-    master3d/SdM3dFunRegionRect.cpp \
-    master3d/SdM3dFunRegionShift.cpp \
-    master3d/SdM3dFunRegionTranslate.cpp \
     master3d/SdM3dFunVertexBuild.cpp \
     master3d/SdM3dFunVertexCenterOfRegion.cpp \
     master3d/SdM3dFunVertexOffset.cpp \

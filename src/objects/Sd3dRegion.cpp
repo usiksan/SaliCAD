@@ -155,19 +155,6 @@ Sd3dRegion sd3dRegionRectangleSideCount(float w, float h, int sideCount)
 
 
 
-//!
-//! \brief sd3dRegionEquidistant Creates region equidistant to source region on distance
-//! \param source                Source region
-//! \param distance              Distance of equidistant greater zero - outer, less zero - inner
-//! \return                      Region equidistant to source region on distance
-//!
-Sd3dRegion sd3dRegionEquidistant(const Sd3dRegion &source, float distance)
-  {
-
-  }
-
-
-
 
 //!
 //! \brief sd3dVertexCenterOfRegion Calculate center of region
@@ -181,4 +168,81 @@ QVector3D sd3dVertexCenterOfRegion(const Sd3dRegion &source)
     center += v;
   float count = source.count();
   return center / count;
+  }
+
+
+
+
+//!
+//! \brief sd3dRegionMap Map each point of source region to destignation region through matrix
+//! \param source        Source region
+//! \param matrix        Matrix of conversion
+//! \return              Result region
+//!
+Sd3dRegion sd3dRegionMap(const Sd3dRegion &source, const QMatrix4x4 &matrix)
+  {
+  Sd3dRegion dest;
+  dest.reserve( source.size() );
+  for( auto const &v : source )
+    dest.append( matrix.map(v) );
+  return dest;
+  }
+
+
+
+
+//!
+//! \brief sd3dRegionRectangle Builds rectangle region with center at 0 and four edges
+//! \param width               Width of rectangle (X)
+//! \param height              Height of rectangle (Y)
+//! \param offset              Offset of region
+//! \return                    Rectangle region on XY plane
+//!
+Sd3dRegion sd3dRegionRectangle( float width, float height, QVector3D offset )
+  {
+  width /= 2.0;
+  height /= 2.0;
+  Sd3dRegion region;
+  region.append( QVector3D(-width + offset.x(), -height + offset.y(), offset.z() ) );
+  region.append( QVector3D(width + offset.x(), -height + offset.y(), offset.z() ) );
+  region.append( QVector3D(width + offset.x(), height + offset.y(), offset.z() ) );
+  region.append( QVector3D(-width + offset.x(), height + offset.y(), offset.z() ) );
+  return region;
+  }
+
+
+
+
+
+//!
+//! \brief sd3dRegionTranslate Translate each point of source region on amount of offset and place it into destignation region
+//! \param source              Source region
+//! \param offset              Offset vector of translation
+//! \return                    Result region
+//!
+Sd3dRegion sd3dRegionTranslate(const Sd3dRegion &source, QVector3D offset)
+  {
+  Sd3dRegion region;
+  for( const auto v : source )
+    region.append( v + offset );
+  return region;
+  }
+
+
+
+
+//!
+//! \brief sd3dRegionShift The function moves the region in the direction perpendicular
+//!                        to the plane of the region by the specified shift amount
+//! \param source          Source region to move
+//! \param shift           Shift amount
+//! \return                Shifted region
+//!
+Sd3dRegion sd3dRegionShift(const Sd3dRegion &source, float shift)
+  {
+  if( source.count() < 3 ) return source;
+  //Normal vector
+  QVector3D normal = QVector3D::normal( source.at(0), source.at(1), source.at(2) );
+  normal *= -shift;
+  return sd3dRegionTranslate( source, normal );
   }

@@ -21,20 +21,12 @@ Description
 class SdM3dFunRegionShift : public SdM3dFunction
   {
   public:
-    SdM3dFunRegionShift();
+    SdM3dFunRegionShift() : SdM3dFunction( SDM3D_TYPE_REGION, SDM3D_TYPE_REGION, SDM3D_TYPE_FLOAT ) { }
 
     // SdM3dValue interface
   public:
-    virtual SdM3dRegion toRegion() const override;
+    virtual SdM3dRegion toRegion() const override { return sd3dRegionShift( mParamList[0]->toRegion(), mParamList[1]->toFloat() ); }
 
-    //!
-    //! \brief regionShift The function moves the region in the direction perpendicular
-    //!                    to the plane of the region by the specified shift amount
-    //! \param region      Source region to move
-    //! \param shift       Shift amount
-    //! \return            Moved region
-    //!
-    static  SdM3dRegion regionShift( SdM3dRegion region, float shift );
   };
 
 #endif // SDM3DFUNREGIONSHIFT_H

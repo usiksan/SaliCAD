@@ -24,6 +24,10 @@ struct Sd3dFace
     Sd3dRegion mContour; //!< Face contour
     QColor     mColor;   //!< Face color
 
+    Sd3dFace() : mContour(), mColor() {}
+    Sd3dFace( Sd3dRegion &&region, QColor color ) : mContour(region), mColor(color) {}
+    Sd3dFace( const Sd3dRegion &region, QColor color ) : mContour(region), mColor(color) {}
+
     //!
     //! \brief write Writes face to JSON object
     //! \return      JSON object with face
@@ -35,6 +39,13 @@ struct Sd3dFace
     //! \param obj  JSON object with face
     //!
     void        read( const QJsonObject &obj );
+
+    //!
+    //! \brief translate Translate this face region with offset
+    //! \param offset    Offset vector of translation
+    //! \return          Translated face
+    //!
+    Sd3dFace    translate( QVector3D offset );
   };
 
 #endif // SD3DFACE_H

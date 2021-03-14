@@ -1,3 +1,18 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  3d model programming language
+
+  The function translates face with offset vector
+*/
 #ifndef SDM3DFUNFACETRANSLATE_H
 #define SDM3DFUNFACETRANSLATE_H
 
@@ -6,13 +21,11 @@
 class SdM3dFunFaceTranslate : public SdM3dFunction
   {
   public:
-    SdM3dFunFaceTranslate();
+    SdM3dFunFaceTranslate() : SdM3dFunction( SDM3D_TYPE_FACE, SDM3D_TYPE_FACE, SDM3D_TYPE_VERTEX ) { }
 
     // SdM3dValue interface
   public:
-    virtual SdM3dFace toFace() const override;
-
-    static  SdM3dFace faceTranslate( SdM3dFace face, QVector3D offset );
+    virtual SdM3dFace toFace() const override { return mParamList[0]->toFace().translate( mParamList[1]->toVertex() ); }
   };
 
 #endif // SDM3DFUNFACETRANSLATE_H

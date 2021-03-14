@@ -72,12 +72,13 @@ Sd3dRegion sd3dRegionRectangleSideCount( float w, float h, int sideCount );
 
 
 //!
-//! \brief sd3dRegionEquidistant Creates region equidistant to source region on distance
-//! \param source                Source region
-//! \param distance              Distance of equidistant greater zero - outer, less zero - inner
-//! \return                      Region equidistant to source region on distance
+//! \brief sd3dRegionRectangle Builds rectangle region with center at 0 and four edges
+//! \param width               Width of rectangle (X)
+//! \param height              Height of rectangle (Y)
+//! \param offset              Offset of region
+//! \return                    Rectangle region on XY plane
 //!
-Sd3dRegion sd3dRegionEquidistant( const Sd3dRegion &source, float distance );
+Sd3dRegion sd3dRegionRectangle( float width, float height, QVector3D offset = QVector3D(0.0,0.0,0.0)  );
 
 
 //!
@@ -88,6 +89,29 @@ Sd3dRegion sd3dRegionEquidistant( const Sd3dRegion &source, float distance );
 QVector3D  sd3dVertexCenterOfRegion( const Sd3dRegion &source );
 
 
-Sd3dRegion sd3dRegionMap( const Sd3dRegion &source, QMatrix4)
+//!
+//! \brief sd3dRegionMap Map each point of source region to destignation region through matrix
+//! \param source        Source region
+//! \param matrix        Matrix of conversion
+//! \return              Result region
+//!
+Sd3dRegion sd3dRegionMap( const Sd3dRegion &source, const QMatrix4x4 &matrix );
+
+//!
+//! \brief sd3dRegionTranslate Translate each point of source region on amount of offset and place it into destignation region
+//! \param source              Source region
+//! \param offset              Offset vector of translation
+//! \return                    Result region
+//!
+Sd3dRegion sd3dRegionTranslate( const Sd3dRegion &source, QVector3D offset );
+
+//!
+//! \brief sd3dRegionShift The function moves the region in the direction perpendicular
+//!                        to the plane of the region by the specified shift amount
+//! \param source          Source region to move
+//! \param shift           Shift amount
+//! \return                Shifted region
+//!
+Sd3dRegion sd3dRegionShift( const Sd3dRegion &source, float shift );
 
 #endif // SD3DREGION_H
