@@ -44,7 +44,7 @@ Sd3dFaceSet *Sd3dReaderVrml::importVrmlFromFile(QString fname, QWidget *parent)
         faceMaterial.setSpecularColor( material->specularColor(0), material->specularColor(1), material->specularColor(2) );
         faceMaterial.setTransparency( material->transparency() );
         }
-      faceSet->faceAdd( Sd3dFace( vertexList, normalList, faceMaterial ) );
+      faceSet->faceAdd( Sd3dFaceEx( vertexList, normalList, faceMaterial ) );
       });
 
     //Return 3d object

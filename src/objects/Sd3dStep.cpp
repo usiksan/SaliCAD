@@ -63,7 +63,7 @@ Sd3dStep *Sd3dStep::importStepFromFile(QString fname)
 
 void Sd3dStep::writeObject(QJsonObject &obj) const
   {
-  Sd3dObject::writeObject( obj );
+  Sd3dGraph::writeObject( obj );
   QJsonArray ar;
   for( const auto &face : mFaceList ) {
     ar.append( face.write() );
@@ -76,10 +76,10 @@ void Sd3dStep::writeObject(QJsonObject &obj) const
 
 void Sd3dStep::readObject(SdObjectMap *map, const QJsonObject obj)
   {
-  Sd3dObject::readObject( map, obj );
+  Sd3dGraph::readObject( map, obj );
   QJsonArray ar = obj.value( QStringLiteral("faces") ).toArray();
   mFaceList.clear();
-  Sd3dFace face;
+  Sd3dFaceEx face;
   for( const auto value : ar ) {
     face.read( value.toObject() );
     mFaceList.append( face );

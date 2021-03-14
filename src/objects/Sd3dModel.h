@@ -16,12 +16,23 @@ Description
 #ifndef SD3DMODEL_H
 #define SD3DMODEL_H
 
-#include "Sd3dObject.h"
+#include "Sd3dFace.h"
 
-class Sd3dModel : public Sd3dObject
-  {
-  public:
-    Sd3dModel();
-  };
+using Sd3dModel = QList<Sd3dFace>;
+
+//!
+//! \brief sd3dModelWrite Writes model into JSON array object
+//! \param model          3d model
+//! \return               JSON array object with writed 3d model
+//!
+QJsonArray sd3dModelWrite( const Sd3dModel &model );
+
+
+//!
+//! \brief sd3dModelRead Reads model from JSON array object
+//! \param array         JSON array object from which will be readed 3d model
+//! \return              3d model
+//!
+Sd3dModel  sd3dModelRead( const QJsonArray &array );
 
 #endif // SD3DMODEL_H

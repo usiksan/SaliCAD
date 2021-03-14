@@ -19,10 +19,12 @@ Description
 #include "SdM3dVariable.h"
 
 class SdPItemPart;
+class Sd3dGraphModel;
 
 class SdM3dPartModel : public SdM3dVariable
   {
-    SdPItemPart *mPart;
+    SdPItemPart    *mPart;  //!< Part to which appended all new models
+    Sd3dGraphModel *mModel; //!< Model which accumulate all faces
   public:
     SdM3dPartModel( SdPItemPart *part );
 

@@ -40,7 +40,8 @@ Description
 SdD3dModelMaster::SdD3dModelMaster(const QString id, SdPItemPart *part, QWidget *parent) :
   QDialog(parent),
   mPart(part),
-  mProgramm(nullptr)
+  mProgramm(nullptr),
+  mActive(false)
   {
   //Main layout of dialog is vertical
   QVBoxLayout *vlay = new QVBoxLayout();
@@ -102,7 +103,8 @@ SdD3dModelMaster::~SdD3dModelMaster()
 
 void SdD3dModelMaster::rebuild()
   {
-  if( mProgramm != nullptr ) {
+  if( mProgramm != nullptr && !mActive ) {
+    mActive = true;
     //Clear previously builded part
     mPart->clear();
 
@@ -111,6 +113,7 @@ void SdD3dModelMaster::rebuild()
 
     //Update preview
     mPreview->update();
+    mActive = false;
     }
   }
 

@@ -53,6 +53,13 @@ class SdContainer : public SdObject
 
     virtual void cloneFrom( const SdObject *src) override;
 
+    //!
+    //! \brief isChild Test if object obj is child of this container or not
+    //! \param obj     Tested object
+    //! \return        true if object is child of this container
+    //!
+    bool         isChild( const SdObject *obj ) const;
+
             void deleteAll( SdUndo *undo );
 
             void draw( SdContext *context );

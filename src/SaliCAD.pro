@@ -47,7 +47,6 @@ SOURCES += \
     master3d/SdM3dFunModelTranslate.cpp \
     master3d/SdM3dFunModelWall.cpp \
     master3d/SdM3dFunModelWallEven.cpp \
-    master3d/SdM3dFunRegionCircle.cpp \
     master3d/SdM3dFunRegionParallel.cpp \
     master3d/SdM3dFunRegionRect.cpp \
     master3d/SdM3dFunRegionShift.cpp \
@@ -69,14 +68,17 @@ SOURCES += \
     modes/SdModeCTraceDelete.cpp \
     objects/Sd3dDraw.cpp \
     objects/Sd3dFace.cpp \
+    objects/Sd3dFaceEx.cpp \
     objects/Sd3dFaceMaterial.cpp \
     objects/Sd3dFaceSet.cpp \
     objects/Sd3dFlat.cpp \
+    objects/Sd3dGraph.cpp \
+    objects/Sd3dGraphModel.cpp \
     objects/Sd3dModel.cpp \
-    objects/Sd3dObject.cpp \
     objects/Sd3dPoint.cpp \
     objects/Sd3dReaderStl.cpp \
     objects/Sd3dReaderVrml.cpp \
+    objects/Sd3dRegion.cpp \
     objects/Sd3dStep.cpp \
     scaner/SdScaner.cpp \
     scaner/SdScanerMultyline.cpp \
@@ -470,14 +472,17 @@ HEADERS  += \
     modes/SdModeCTraceDelete.h \
     objects/Sd3dDraw.h \
     objects/Sd3dFace.h \
+    objects/Sd3dFaceEx.h \
     objects/Sd3dFaceMaterial.h \
     objects/Sd3dFaceSet.h \
     objects/Sd3dFlat.h \
+    objects/Sd3dGraph.h \
+    objects/Sd3dGraphModel.h \
     objects/Sd3dModel.h \
-    objects/Sd3dObject.h \
     objects/Sd3dPoint.h \
     objects/Sd3dReaderStl.h \
     objects/Sd3dReaderVrml.h \
+    objects/Sd3dRegion.h \
     objects/Sd3dStep.h \
     scaner/SdScaner.h \
     scaner/SdScanerMultyline.h \

@@ -15,8 +15,8 @@ Description
 #ifndef SD3DFACESET_H
 #define SD3DFACESET_H
 
-#include "Sd3dObject.h"
-#include "Sd3dFace.h"
+#include "Sd3dGraph.h"
+#include "Sd3dFaceEx.h"
 
 #include <QList>
 #include <QDataStream>
@@ -24,9 +24,9 @@ Description
 
 #define SD_TYPE_3D_FACE_SET "3dFaceSet"
 
-using Sd3dFaceList = QList<Sd3dFace>;
+using Sd3dFaceList = QList<Sd3dFaceEx>;
 
-class Sd3dFaceSet : public Sd3dObject
+class Sd3dFaceSet : public Sd3dGraph
   {
     Sd3dFaceList mFaceList; //!< Face list of model
   public:
@@ -36,7 +36,7 @@ class Sd3dFaceSet : public Sd3dObject
     //! \brief faceAdd Appends face to face list of model
     //! \param face    Appended face
     //!
-    void faceAdd( const Sd3dFace &face );
+    void faceAdd( const Sd3dFaceEx &face );
     // SdObject interface
   public:
     virtual QString getType() const override { return QStringLiteral( SD_TYPE_3D_FACE_SET ); }

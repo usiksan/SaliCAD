@@ -22,7 +22,7 @@ QString Sd3dFlat::getType() const
 
 void Sd3dFlat::cloneFrom(const SdObject *src)
   {
-  Sd3dObject::cloneFrom( src );
+  Sd3dGraph::cloneFrom( src );
   SdPtrConst<Sd3dFlat> flat(src);
   if( flat.isValid() ) {
     mRegion      = flat->mRegion;
@@ -36,7 +36,7 @@ void Sd3dFlat::cloneFrom(const SdObject *src)
 
 void Sd3dFlat::writeObject(QJsonObject &obj) const
   {
-  Sd3dObject::writeObject( obj );
+  Sd3dGraph::writeObject( obj );
   obj.insert( QStringLiteral("color"), static_cast<int>(mColor) );
   mWidthVector.write( QStringLiteral("widthVector"), obj );
   QJsonArray ar;
@@ -50,7 +50,7 @@ void Sd3dFlat::writeObject(QJsonObject &obj) const
 
 void Sd3dFlat::readObject(SdObjectMap *map, const QJsonObject obj)
   {
-  Sd3dObject::readObject( map, obj );
+  Sd3dGraph::readObject( map, obj );
   mColor = static_cast<quint32>(obj.value(QStringLiteral("color")).toInt() );
   mWidthVector.read( QStringLiteral("widthVector"), obj );
   QJsonArray ar = obj.value( QStringLiteral("region") ).toArray();

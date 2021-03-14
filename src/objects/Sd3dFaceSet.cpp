@@ -12,7 +12,7 @@ Sd3dFaceSet::Sd3dFaceSet()
 //! \brief faceAdd Appends face to face list of model
 //! \param face    Appended face
 //!
-void Sd3dFaceSet::faceAdd(const Sd3dFace &face)
+void Sd3dFaceSet::faceAdd(const Sd3dFaceEx &face)
   {
   mFaceList.append( face );
   }
@@ -22,7 +22,7 @@ void Sd3dFaceSet::faceAdd(const Sd3dFace &face)
 
 void Sd3dFaceSet::writeObject(QJsonObject &obj) const
   {
-  Sd3dObject::writeObject( obj );
+  Sd3dGraph::writeObject( obj );
   QJsonArray ar;
   for( const auto &face : mFaceList ) {
     ar.append( face.write() );
@@ -36,10 +36,10 @@ void Sd3dFaceSet::writeObject(QJsonObject &obj) const
 
 void Sd3dFaceSet::readObject(SdObjectMap *map, const QJsonObject obj)
   {
-  Sd3dObject::readObject( map, obj );
+  Sd3dGraph::readObject( map, obj );
   QJsonArray ar = obj.value( QStringLiteral("faces") ).toArray();
   mFaceList.clear();
-  Sd3dFace face;
+  Sd3dFaceEx face;
   for( const auto value : ar ) {
     face.read( value.toObject() );
     mFaceList.append( face );

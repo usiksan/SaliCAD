@@ -107,7 +107,7 @@ Sd3dFaceSet *Sd3dReaderStl::importStlFromFile(QString fname)
         //No color defined, setup gray color
         faceColor = qRgba( 30, 30, 30, 0xff );
         }
-      Sd3dFace triangle( {vertexA, vertexB, vertexC}, {normal, normal, normal}, faceColor );
+      Sd3dFaceEx triangle( {vertexA, vertexB, vertexC}, {normal, normal, normal}, faceColor );
       //Append it to list
       stl->faceAdd( triangle );
       }

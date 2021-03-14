@@ -2,7 +2,7 @@
 #define SD3DFLAT_H
 
 #include "Sd3dPoint.h"
-#include "Sd3dObject.h"
+#include "Sd3dGraph.h"
 
 #include <QList>
 
@@ -11,7 +11,7 @@
 
 using SdPoint3dList = QList<Sd3dPoint>;
 
-class Sd3dFlat : public Sd3dObject
+class Sd3dFlat : public Sd3dGraph
   {
     SdPoint3dList mRegion;
     Sd3dPoint     mWidthVector;

@@ -11,20 +11,20 @@ Web
 Description
   Base object for 3d graphics
 */
-#ifndef SD3DOBJECT_H
-#define SD3DOBJECT_H
+#ifndef SD3DGRAPH_H
+#define SD3DGRAPH_H
 
 #include "SdGraph.h"
 
 
-class Sd3dObject : public SdGraph
+class Sd3dGraph : public SdGraph
   {
   public:
-    Sd3dObject();
+    Sd3dGraph();
 
     // SdObject interface
   public:
     virtual SdClass getClass() const override;
   };
 
-#endif // SD3DOBJECT_H
+#endif // SD3DGRAPH_H

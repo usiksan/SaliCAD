@@ -311,6 +311,20 @@ void SdContainer::cloneFrom( const SdObject *src )
 
 
 
+//!
+//! \brief isChild Test if object obj is child of this container or not
+//! \param obj     Tested object
+//! \return        true if object is child of this container
+//!
+bool SdContainer::isChild(const SdObject *obj) const
+  {
+  for( auto const &ptr : mChildList )
+    if( !ptr->isDeleted() && ptr == obj ) return true;
+  return false;
+  }
+
+
+
 
 void SdContainer::deleteAll(SdUndo *undo)
   {

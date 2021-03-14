@@ -14,8 +14,8 @@ Description
 #ifndef SD3DSTEP_H
 #define SD3DSTEP_H
 
-#include "Sd3dObject.h"
-#include "Sd3dFace.h"
+#include "Sd3dGraph.h"
+#include "Sd3dFaceEx.h"
 
 #include <QList>
 #include <QDataStream>
@@ -23,9 +23,9 @@ Description
 
 #define SD_TYPE_3D_STEP "3dStep"
 
-using Sd3dFaceList = QList<Sd3dFace>;
+using Sd3dFaceList = QList<Sd3dFaceEx>;
 
-class Sd3dStep : public Sd3dObject
+class Sd3dStep : public Sd3dGraph
   {
     Sd3dFaceList mFaceList; //!< Face list of model
   public:

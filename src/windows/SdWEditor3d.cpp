@@ -77,7 +77,7 @@ void SdWEditor3d::cm3dImportStl()
 
   if( title.isEmpty() ) return;
 
-  Sd3dObject *stl = Sd3dReaderStl::importStlFromFile( title );
+  Sd3dGraph *stl = Sd3dReaderStl::importStlFromFile( title );
   if( stl ) {
     mItem->getUndo()->begin( tr("Import STL model"), mItem );
     mItem->insertChild( stl, mItem->getUndo() );
@@ -115,7 +115,7 @@ void SdWEditor3d::cm3dImportVrml()
 
   if( title.isEmpty() ) return;
 
-  Sd3dObject *vrml = Sd3dReaderVrml::importVrmlFromFile( title, this );
+  Sd3dGraph *vrml = Sd3dReaderVrml::importVrmlFromFile( title, this );
   if( vrml ) {
     mItem->getUndo()->begin( tr("Import VRML model"), mItem );
     mItem->insertChild( vrml, mItem->getUndo() );

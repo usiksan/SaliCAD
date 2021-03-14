@@ -20,15 +20,6 @@ static void drawPolygon( QOpenGLFunctions_2_0 *f, SdM3dRegion region )
 
 
 
-static void drawModel( QOpenGLFunctions_2_0 *f, SdM3dModel model )
-  {
-  for( auto const &face : model ) {
-    Sd3dDraw::color( f, face.mColor );
-    drawPolygon( f, face.mContour );
-    }
-  }
-
-
 //!
 //! \brief line Draw line segment
 //! \param f    OpenGL
@@ -157,14 +148,14 @@ static void pad( QOpenGLFunctions_2_0 *f, SdM3dRegion padRegion, QColor padColor
     //Circle hole
     holeRegion = SdM3dFunRegionCircle::regionCircle( static_cast<float>(holeDiametr) / 2000.0, 2.0, QVector3D( holeCenter.xmm(), holeCenter.ymm(), z ) );
   //Top pad
-  SdM3dModel topPad = SdM3dFunModelHole::modelHole( padRegion, holeRegion, padColor );
+  Sd3dModel topPad = SdM3dFunModelHole::modelHole( padRegion, holeRegion, padColor );
   //Bottom pad
-  SdM3dModel botPad = SdM3dFunModelTranslate::modelTranslate( topPad, QVector3D(0,0,z-1.6) );
+  Sd3dModel botPad = SdM3dFunModelTranslate::modelTranslate( topPad, QVector3D(0,0,z-1.6) );
   //Hole tube
-  SdM3dModel hole = SdM3dFunModelExtrude::modelExtrude( holeRegion, -1.6, holeColor );
-  drawModel( f, topPad );
-  drawModel( f, botPad );
-  drawModel( f, hole );
+  Sd3dModel hole = SdM3dFunModelExtrude::modelExtrude( holeRegion, -1.6, holeColor );
+  Sd3dDraw::drawModel( f, topPad );
+  Sd3dDraw::drawModel( f, botPad );
+  Sd3dDraw::drawModel( f, hole );
   }
 
 
@@ -208,5 +199,33 @@ void Sd3dDraw::flatPanel(QOpenGLFunctions_2_0 *f, SdPointList list, int z, unsig
     }
   SdM3dModel pcb = SdM3dFunModelExtrude::modelExtrude( region, -fz, QColor(color) );
   drawModel( f, pcb );
+  }
+
+
+
+
+//!
+//! \brief face Draw face in 3d world
+//! \param f    OpenGL
+//! \param face Face to draw
+//!
+void Sd3dDraw::drawFace(QOpenGLFunctions_2_0 *f, const Sd3dFace &face)
+  {
+  Sd3dDraw::color( f, face.mColor );
+  drawPolygon( f, face.mContour );
+  }
+
+
+
+
+//!
+//! \brief drawModel Draw model in 3d world
+//! \param f         OpenGL
+//! \param model     Model to draw
+//!
+void Sd3dDraw::drawModel(QOpenGLFunctions_2_0 *f, const Sd3dModel &model)
+  {
+  for( auto const &face : model )
+    drawFace( f, face );
   }
 

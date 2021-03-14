@@ -11,9 +11,9 @@ Web
 Description
   Base object for 3d graphics
 */
-#include "Sd3dObject.h"
+#include "Sd3dGraph.h"
 
-Sd3dObject::Sd3dObject() :
+Sd3dGraph::Sd3dGraph() :
   SdGraph()
   {
 
@@ -23,7 +23,7 @@ Sd3dObject::Sd3dObject() :
 
 
 
-SdClass Sd3dObject::getClass() const
+SdClass Sd3dGraph::getClass() const
   {
   return dct3D;
   }

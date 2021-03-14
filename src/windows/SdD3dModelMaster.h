@@ -33,6 +33,7 @@ class SdD3dModelMaster : public QDialog
     SdM3dProgramm                 *mProgramm;    //!< Compiled 3d model programm
     QTableWidget                  *mParamWidget; //!< Table with 3d model parameters
     SdWView3d                     *mPreview;     //!< 3d model preview
+    bool                           mActive;      //!< Flag to preserve of recursing call
   public:
     //!
     //! \brief SdD3dModelMaster Dialog constructor. It creates dialog for build new 3d and 2d projection model of part

@@ -16,6 +16,7 @@ Description
 
 #include "SdPointList.h"
 #include "SdRect.h"
+#include "Sd3dModel.h"
 
 #include <QOpenGLFunctions_2_0>
 
@@ -82,6 +83,20 @@ class Sd3dDraw
     static void flatPanel( QOpenGLFunctions_2_0 *f, SdPointList list, int z, unsigned color );
 
     static void qube( QOpenGLFunctions_2_0 *f, SdRect rect, int z, unsigned color );
+
+    //!
+    //! \brief drawFace Draw face in 3d world
+    //! \param f        OpenGL
+    //! \param face     Face to draw
+    //!
+    static void drawFace( QOpenGLFunctions_2_0 *f, const Sd3dFace &face );
+
+    //!
+    //! \brief drawModel Draw model in 3d world
+    //! \param f         OpenGL
+    //! \param model     Model to draw
+    //!
+    static void drawModel( QOpenGLFunctions_2_0 *f, const Sd3dModel &model );
   };
 
 #endif // SD3DDRAW_H

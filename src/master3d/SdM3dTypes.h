@@ -1,6 +1,10 @@
 #ifndef SDM3DTYPES_H
 #define SDM3DTYPES_H
 
+#include "objects/Sd3dRegion.h"
+#include "objects/Sd3dFace.h"
+#include "objects/Sd3dModel.h"
+
 #include <QString>
 #include <QVector3D>
 #include <QMatrix4x4>
@@ -106,13 +110,10 @@ struct SdM3dSegment {
 
 using SdM3dPath = QList<SdM3dSegment>;
 
-using SdM3dRegion = QList<QVector3D>;
+using SdM3dRegion = Sd3dRegion;
 
-struct SdM3dFace {
-    SdM3dRegion mContour;
-    QColor      mColor;
-  };
+using SdM3dFace = Sd3dFace;
 
-using SdM3dModel = QList<SdM3dFace>;
+using SdM3dModel = Sd3dModel;
 
 #endif // SDM3DTYPES_H

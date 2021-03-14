@@ -45,6 +45,7 @@ Description
 #include "SdGraphPartImp.h"
 #include "SdGraphNetWire.h"
 #include "SdGraphNetName.h"
+#include "Sd3dGraphModel.h"
 #include "SdSection.h"
 #include "SdPartVariant.h"
 #include "Sd3dFaceSet.h"
@@ -312,6 +313,7 @@ SdObject *SdObject::build(QString type)
   if( type == QStringLiteral(SD_TYPE_PAD_ASSOCIATION)     ) return new SdPadAssociation();
 
   if( type == QStringLiteral(SD_TYPE_3D_FACE_SET)         ) return new Sd3dFaceSet();
+  if( type == QStringLiteral(SD_TYPE_3D_GRAPH_MODEL)      ) return new Sd3dGraphModel();
 
   if( type == QStringLiteral(SD_TYPE_PROJECT)             ) return new SdProject();
   return nullptr;

@@ -21,19 +21,12 @@ Description
 class SdM3dFunRegionCircle : public SdM3dFunction
   {
   public:
-    SdM3dFunRegionCircle();
+    SdM3dFunRegionCircle() : SdM3dFunction( SDM3D_TYPE_REGION, SDM3D_TYPE_FLOAT ) { }
 
     // SdM3dValue interface
   public:
-    virtual SdM3dRegion toRegion() const override;
+    virtual SdM3dRegion toRegion() const override { return sd3dRegionCircle( mParamList[0]->toFloat() ); }
 
-    //!
-    //! \brief regionCircle This function builds circle region on base radius with center at 0
-    //! \param radius       Radius of builded circle
-    //! \param stepDegree   Step with which need to create multicorner circle region
-    //! \return             Circle region on XY plane
-    //!
-    static  SdM3dRegion regionCircle(float radius , float stepDegree = 10.0, QVector3D offset = QVector3D(0.0,0.0,0.0) );
   };
 
 #endif // SDM3DFUNREGIONCIRCLE_H
