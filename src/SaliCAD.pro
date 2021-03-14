@@ -44,7 +44,6 @@ SOURCES += \
     master3d/SdM3dFunModelTranslate.cpp \
     master3d/SdM3dFunModelWall.cpp \
     master3d/SdM3dFunModelWallEven.cpp \
-    master3d/SdM3dFunVertexOffset.cpp \
     master3d/SdM3dFunVertexTranslate.cpp \
     master3d/SdM3dFunction.cpp \
     master3d/SdM3dOperatorBlock.cpp \
@@ -424,6 +423,7 @@ HEADERS  += \
     master3d/SdM3dFunStringPinIndex.h \
     master3d/SdM3dFunStringPinMatrix.h \
     master3d/SdM3dFunVertexBuild.h \
+    master3d/SdM3dFunVertexCenterOfRegion.h \
     master3d/SdM3dFunVertexOffset.h \
     master3d/SdM3dFunVertexTranslate.h \
     master3d/SdM3dFunction.h \

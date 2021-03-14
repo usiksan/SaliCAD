@@ -26,8 +26,6 @@ class SdM3dFunVertexCenterOfRegion : public SdM3dFunction
     // SdM3dValue interface
   public:
     virtual QVector3D toVertex() const override { return sd3dVertexCenterOfRegion( mParamList[0]->toRegion() ); }
-
-    static  QVector3D vertexCenterOfRegion( SdM3dRegion region );
   };
 
 #endif // SDM3DFUNVERTEXCENTEROFREGION_H

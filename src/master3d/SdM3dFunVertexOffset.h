@@ -1,3 +1,18 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  3d model programming language
+
+  The function builds vertex as offset from other vertex
+*/
 #ifndef SDM3DFUNVERTEXOFFSET_H
 #define SDM3DFUNVERTEXOFFSET_H
 
@@ -6,11 +21,18 @@
 class SdM3dFunVertexOffset : public SdM3dFunction
   {
   public:
-    SdM3dFunVertexOffset();
+    SdM3dFunVertexOffset() :
+      SdM3dFunction( SDM3D_TYPE_VERTEX, SDM3D_TYPE_VERTEX, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT )
+      {
+
+      }
 
     // SdM3dValue interface
   public:
-    virtual QVector3D toVertex() const override;
+    virtual QVector3D toVertex() const override
+      {
+      return mParamList[0]->toVertex() + QVector3D( mParamList[1]->toFloat(), mParamList[2]->toFloat(), mParamList[3]->toFloat() );
+      }
   };
 
 #endif // SDM3DFUNVERTEXOFFSET_H

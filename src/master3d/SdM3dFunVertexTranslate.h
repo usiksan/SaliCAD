@@ -1,3 +1,18 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  3d model programming language
+
+  The function makes summ of two vectors
+*/
 #ifndef SDM3DFUNVERTEXTRANSLATE_H
 #define SDM3DFUNVERTEXTRANSLATE_H
 
