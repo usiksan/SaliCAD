@@ -327,3 +327,17 @@ Sd3dModel sd3dModelBox(float lenght, float width, float height, QColor color)
   {
   return sd3dModelExtrude( sd3dRegionRectangle( lenght, width ), height, color );
   }
+
+
+
+
+//!
+//! \brief sd3dModelVolume Append model volume to volume matrix
+//! \param model           Model which volume appended
+//! \param volume          Source and destignation volume
+//!
+void sd3dModelVolume( const Sd3dModel &model, QMatrix2x3 &volume)
+  {
+  for( auto const &face : model )
+    face.volume( volume );
+  }

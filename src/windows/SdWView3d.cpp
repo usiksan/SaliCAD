@@ -1,4 +1,5 @@
 #include "SdWView3d.h"
+#include "objects/Sd3dGraphModel.h"
 #include "objects/SdProjectItem.h"
 #include "objects/Sd3dFaceMaterial.h"
 
@@ -12,7 +13,7 @@ SdWView3d::SdWView3d(SdProjectItem *item, QWidget *parent) :
   QOpenGLWidget( parent ),
   mAngleZ(13.0),
   mAngleXY(-51.0),
-  mScale(0.01),
+  mScale(0.1),
   mItem(item),
   mEnable2d(true),
   mEnablePad(true)
@@ -34,6 +35,40 @@ void SdWView3d::setItem(SdProjectItem *it)
   {
   mItem = it;
   update();
+  }
+
+
+
+
+void SdWView3d::fitItem()
+  {
+  //Calculate view volume
+  if( mItem != nullptr ) {
+    //Volume for volume calculation
+    QMatrix2x3 volume;
+    //Init volume
+    volume(0,0) = volume(1,0) = volume(2,0) =  1000000.0;
+    volume(0,1) = volume(1,1) = volume(2,1) = -1000000.0;
+    //Append volume for each 3d object
+    mItem->forEachConst( dct3D, [&volume] (SdObject *obj) -> bool {
+      SdPtrConst<Sd3dGraph> obj3d(obj);
+      if( obj3d.isValid() )
+        obj3d->volumeAdd( volume );
+      return true;
+      });
+
+    //Calculate scale
+    float scalex = (volume(0,1) - volume(0,0));
+    float scaley = (volume(1,1) - volume(1,0));
+    float scalez = (volume(2,1) - volume(2,0));
+    if( scalex > 0 && scaley > 0 && scalez > 0 ) {
+      scalex = 45.0 / scalex;
+      scaley = 45.0 / scaley;
+      scalez = 45.0 / scalez;
+      mScale.scaleSet( qMin( scalex, qMin(scaley,scalez)) );
+      update();
+      }
+    }
   }
 
 
@@ -101,7 +136,7 @@ void SdWView3d::wheelEvent(QWheelEvent *event)
   if( event->modifiers() & Qt::ControlModifier ) {
     //Move by horizontal
     mAngleXY += delta;
-    qDebug() << "angle xy" << mAngleXY;
+    //qDebug() << "angle xy" << mAngleXY;
     //mOrigin.move( SdPoint(delta * 20, 0) );
     //originSet( SdPoint(originGet().x() + delta * gridGet().x(), originGet().y()) );
     }
@@ -109,11 +144,12 @@ void SdWView3d::wheelEvent(QWheelEvent *event)
     //Scale
     if( event->angleDelta().y() < 0 ) mScale.scaleStep(1.2);
     else mScale.scaleStep(0.83);
+    qDebug() << "scale" << mScale.scaleGet();
     }
   else {
     //Move by vertical
     mAngleZ += delta;
-    qDebug() << "angle z" << mAngleZ;
+    //qDebug() << "angle z" << mAngleZ;
     //mOrigin.move( SdPoint(0, delta * 20) );
     //originSet( SdPoint(originGet().x(), originGet().y() + delta * gridGet().y()) );
     }

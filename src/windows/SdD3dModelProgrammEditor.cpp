@@ -116,6 +116,12 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
    //Part preview widget
    splitter->addWidget( mPreview = new SdWView3d( &mPart, this ) );
 
+   //Stretch factor
+   splitter->setStretchFactor( 0, 1 );
+   splitter->setStretchFactor( 1, 3 );
+   splitter->setStretchFactor( 2, 1 );
+   splitter->setStretchFactor( 3, 2 );
+
   //Buttons at dialog bottom
   QDialogButtonBox *dialogButtonBox = new QDialogButtonBox( QDialogButtonBox::Save | QDialogButtonBox::Close );
   vlay->addWidget( dialogButtonBox );
@@ -138,6 +144,7 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
     mDescription->setText( mRich->paramGet(stdParam3dModelProgramm) );
     mTextEdit->setPlainText( mRich->contents() );
     compile();
+    mPreview->fitItem();
     }
   }
 
@@ -295,7 +302,7 @@ void SdD3dModelProgrammEditor::closeEvent(QCloseEvent *event)
   {
   if( mDirty ) {
     //Programm text changed, query for close without saving
-    if( QMessageBox::question( this, tr("Warning!"), tr("Programm text changed! Do You want close editor without saving it?") ) != QMessageBox::Yes ) {
+    if( QMessageBox::question( this, tr("Warning!"), tr("Programm text changed! Do You want save edited text before closing?") ) == QMessageBox::Yes ) {
       //User want not close without saving
       event->ignore();
       return;

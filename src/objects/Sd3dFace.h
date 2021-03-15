@@ -66,6 +66,12 @@ struct Sd3dFace
     //! \param matrix     Matrix of conversion
     //!
     void        mapInPlace( const QMatrix4x4 &matrix ) { sd3dRegionMapInPlace( mContour, matrix ); }
+
+    //!
+    //! \brief volume Append face to volume
+    //! \param vol    Volume source and result
+    //!
+    void        volume(QMatrix2x3 &vol ) const;
   };
 
 #endif // SD3DFACE_H

@@ -32,3 +32,25 @@ void Sd3dFace::read(const QJsonObject &obj)
 
 
 
+//!
+//! \brief volume Append face to volume
+//! \param vol    Volume source and result
+//!
+void Sd3dFace::volume(QMatrix2x3 &vol) const
+  {
+  for( auto const &v : mContour ) {
+    if( vol(0,0) > v.x() ) vol(0,0) = v.x();
+    if( vol(0,1) < v.x() ) vol(0,1) = v.x();
+
+    if( vol(1,0) > v.y() ) vol(1,0) = v.y();
+    if( vol(1,1) < v.y() ) vol(1,1) = v.y();
+
+    if( vol(2,0) > v.z() ) vol(2,0) = v.z();
+    if( vol(2,1) < v.z() ) vol(2,1) = v.z();
+
+    }
+  }
+
+
+
+

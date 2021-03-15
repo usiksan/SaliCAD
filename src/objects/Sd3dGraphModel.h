@@ -1,3 +1,18 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  3d object in object hierarchy which represents face set model (Model which consists of face set)
+  Each face is flate surface bounded polyline
+  With comparison Sd3dFaceSet this object contains simplified faces (no normal, single face color)
+*/
 #ifndef SD3DGRAPHMODEL_H
 #define SD3DGRAPHMODEL_H
 
@@ -23,6 +38,12 @@ class Sd3dGraphModel : public Sd3dGraph
     //! \param model    Appended model
     //!
     void modelAdd( const Sd3dModel &model ) { mModel.append( model ); }
+
+    //!
+    //! \brief volumeAdd Append volume of model to result volume
+    //! \param volume    Source and result volume
+    //!
+    virtual void    volumeAdd( QMatrix2x3 &volume ) const override { sd3dModelVolume( mModel, volume ); }
 
     // SdObject interface
   public:

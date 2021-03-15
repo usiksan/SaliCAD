@@ -39,6 +39,11 @@ class SdWView3d : public QOpenGLWidget
     SdProjectItem   *item() { return mItem; }
 
     void             setItem( SdProjectItem *it );
+
+    //!
+    //! \brief fitItem Calculate scale so that item fill all space of view
+    //!
+    void             fitItem();
     // QWidget interface
   protected:
     virtual void mousePressEvent(QMouseEvent *event) override;

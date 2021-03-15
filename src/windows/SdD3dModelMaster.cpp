@@ -84,6 +84,7 @@ SdD3dModelMaster::SdD3dModelMaster(const QString id, SdPItemPart *part, QWidget 
 
       mProgramm = parser.parse( rich->contents(), mPart );
       rebuild();
+      mPreview->fitItem();
       }
     }
   }

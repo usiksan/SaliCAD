@@ -151,4 +151,11 @@ Sd3dModel  sd3dModelFlatHole( const Sd3dRegion &outer, const Sd3dRegion &hole, Q
 Sd3dModel  sd3dModelBox( float lenght, float width, float height, QColor color );
 
 
+//!
+//! \brief sd3dModelVolume Append model volume to volume matrix
+//! \param model           Model which volume appended
+//! \param volume          Source and destignation volume
+//!
+void       sd3dModelVolume(const Sd3dModel &model, QMatrix2x3 &volume );
+
 #endif // SD3DMODEL_H

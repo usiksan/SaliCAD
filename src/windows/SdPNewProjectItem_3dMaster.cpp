@@ -163,6 +163,7 @@ void SdPNewProjectItem_3dMaster::onCurrentRowChanged(int row)
       programm->execute();
       delete programm;
       mPreview->setItem( &previewPart );
+      mPreview->fitItem();
       return;
       }
     }
