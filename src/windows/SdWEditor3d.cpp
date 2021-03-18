@@ -63,6 +63,9 @@ bool SdWEditor3d::is3d() const
   }
 
 
+
+
+
 //void SdWEditor3d::onActivateEditor()
 //  {
 //  }

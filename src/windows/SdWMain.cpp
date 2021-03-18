@@ -1442,6 +1442,16 @@ void SdWMain::cmModeField()
 
 
 
+void SdWMain::cm3dMaster()
+  {
+  if( activeEditor() )
+    activeEditor()->cm3dImportStl();
+  }
+
+
+
+
+
 void SdWMain::cm3dImportStl()
   {
   if( activeEditor() )

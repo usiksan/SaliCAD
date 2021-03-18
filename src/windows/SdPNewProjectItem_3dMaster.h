@@ -11,8 +11,8 @@ Web
 Description
   Listing of creation 3d masters.
 
-  Show list for object type, user select one master and dialog
-  execute selected master.
+  Show list for available 3d masters, user select one master and dialog
+  execute selected master. This master also allow to create new master and edit existing master
 */
 #ifndef SDPNEWPROJECTITEM_3DMASTER_H
 #define SDPNEWPROJECTITEM_3DMASTER_H
@@ -34,7 +34,7 @@ class SdPNewProjectItem_3dMaster : public QWizardPage
     SdProjectItemPtr   *mItemPtr;      //!< New created object
     SdProject          *mProject;      //!< Project to which will be inserted created object
     QListWidget        *mMasterType;   //!< Available programm list
-    SdWView3d          *mPreview;
+    SdWView3d          *mPreview;      //!< 3d preview of master default result
     QTextEdit          *mDescription;  //!< Description widget
     QStringList         mIdList;       //!< Master programm id list
   public:

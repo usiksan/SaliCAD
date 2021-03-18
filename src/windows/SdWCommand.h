@@ -126,6 +126,7 @@ class SdWCommand
     static QActionPtr  cmViewGrid;
     static QActionPtr  cmViewLayers;
 
+    static QActionPtr  cm3dMaster;
     static QActionPtr  cm3dImportStl;
     static QActionPtr  cm3dImportStep;
     static QActionPtr  cm3dImportVrml;

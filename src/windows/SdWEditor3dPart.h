@@ -16,18 +16,22 @@ Description
 #ifndef SDWEDITOR3DPART_H
 #define SDWEDITOR3DPART_H
 
+#include "objects/SdPItemPart.h"
 #include "SdWEditor3d.h"
 
 class SdWEditor3dPart : public SdWEditor3d
   {
     Q_OBJECT
+
+    SdPItemPart *mPartPtr; //!< Part viewed with this editor
   public:
-    SdWEditor3dPart( SdProjectItem *item, QWidget *parent = nullptr );
+    SdWEditor3dPart( SdPItemPart *item, QWidget *parent = nullptr );
 
     // SdWEditor interface
   public:
 //    virtual SdProjectItem *getProjectItem() const override;
     virtual void           onActivateEditor() override;
+    virtual void           cm3dMaster() override;
   };
 
 #endif // SDWEDITOR3DPART_H
