@@ -27,28 +27,30 @@ SdM3dPartGraph::SdM3dPartGraph(SdPItemPart *part) :
 
 void SdM3dPartGraph::assign(SdM3dValuePtr src)
   {
-  SdM3dGraph flat = src->toGraph();
-  switch( flat.mType ) {
-    case SdM3dGraph::sdm2dLine :
-      mMasterPart.addLine( flat.pointA().x(), flat.pointA().y(), flat.pointB().x(), flat.pointB().y() );
-      break;
-    case SdM3dGraph::sdm2dRect :
-      mMasterPart.addRect( flat.pointA().x(), flat.pointA().y(), flat.pointB().x(), flat.pointB().y() );
-      break;
-    case SdM3dGraph::sdm2dCircle :
-      mMasterPart.addCircle( flat.circleCenter().x(), flat.circleCenter().y(), flat.circleRadius() );
-      break;
-    case SdM3dGraph::sdm2dFRect :
-      mMasterPart.addFRect( flat.pointA().x(), flat.pointA().y(), flat.pointB().x(), flat.pointB().y() );
-      break;
-    case SdM3dGraph::sdm2dPin :
-      mMasterPart.addPinEx( flat.pinPos(), flat.pinPad(), flat.pinNumberPos(), flat.pinNumber(), flat.pinNumberAttr(), flat.pinNamePos(), flat.pinNameAttr() );
-      break;
-    case SdM3dGraph::sdm2dIdent :
-      mMasterPart.setId( SdPoint(flat.identPos()) );
-      break;
-    case SdM3dGraph::sdm2dValue :
-      mMasterPart.setValue( SdPoint(flat.valuePos()) );
-      break;
+  if( mMasterPart.mItem != nullptr ) {
+    SdM3dGraph flat = src->toGraph();
+    switch( flat.mType ) {
+      case SdM3dGraph::sdm2dLine :
+        mMasterPart.addLine( flat.pointA().x(), flat.pointA().y(), flat.pointB().x(), flat.pointB().y() );
+        break;
+      case SdM3dGraph::sdm2dRect :
+        mMasterPart.addRect( flat.pointA().x(), flat.pointA().y(), flat.pointB().x(), flat.pointB().y() );
+        break;
+      case SdM3dGraph::sdm2dCircle :
+        mMasterPart.addCircle( flat.circleCenter().x(), flat.circleCenter().y(), flat.circleRadius() );
+        break;
+      case SdM3dGraph::sdm2dFRect :
+        mMasterPart.addFRect( flat.pointA().x(), flat.pointA().y(), flat.pointB().x(), flat.pointB().y() );
+        break;
+      case SdM3dGraph::sdm2dPin :
+        mMasterPart.addPinEx( flat.pinPos(), flat.pinPad(), flat.pinNumberPos(), flat.pinNumber(), flat.pinNumberAttr(), flat.pinNamePos(), flat.pinNameAttr() );
+        break;
+      case SdM3dGraph::sdm2dIdent :
+        mMasterPart.setId( SdPoint(flat.identPos()) );
+        break;
+      case SdM3dGraph::sdm2dValue :
+        mMasterPart.setValue( SdPoint(flat.valuePos()) );
+        break;
+      }
     }
   }

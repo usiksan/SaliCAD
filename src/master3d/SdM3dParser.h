@@ -34,12 +34,13 @@ class SdM3dParser
     SdM3dParser( QTableWidget *tableWidget );
 
     //!
-    //! \brief parse Execute parsing of programm source text and generates tree of programm
-    //! \param src   Programm source text
-    //! \param part  Part to which will be placed generated faces
-    //! \return      Programm tree
+    //! \brief parse   Execute parsing of programm source text and generates tree of programm
+    //! \param src     Programm source text
+    //! \param part    Part to which will be placed generated faces
+    //! \param build2d When true then with 3d model appended 2d projection
+    //! \return        Programm tree
     //!
-    SdM3dProgramm *parse(const QString src, SdPItemPart *part);
+    SdM3dProgramm *parse(const QString src, SdPItemPart *part, bool build2d);
 
     //!
     //! \brief variableNameList Returns parsed programm variable name list

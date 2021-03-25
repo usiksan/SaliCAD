@@ -128,16 +128,17 @@ SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
 
 
 //!
-//! \brief parse Execute parsing of programm source text and generates tree of programm
-//! \param src   Programm source text
-//! \param part  Part to which will be placed generated faces
-//! \return      Programm tree
+//! \brief parse   Execute parsing of programm source text and generates tree of programm
+//! \param src     Programm source text
+//! \param part    Part to which will be placed generated faces
+//! \param build2d When true then with 3d model appended 2d projection
+//! \return        Programm tree
 //!
-SdM3dProgramm *SdM3dParser::parse(const QString src, SdPItemPart *part )
+SdM3dProgramm *SdM3dParser::parse(const QString src, SdPItemPart *part, bool build2d )
   {
   //Insert predefined variables
   mVariables.insert( QStringLiteral("partModel"), new SdM3dPartModel(part) );
-  mVariables.insert( QStringLiteral("partFlat"), new SdM3dPartGraph(part) );
+  mVariables.insert( QStringLiteral("partFlat"), new SdM3dPartGraph( build2d ? part : nullptr ) );
 
   //Init scaner with programm source
   mScaner.sourceSetString( src );
