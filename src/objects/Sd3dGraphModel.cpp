@@ -22,6 +22,17 @@ void Sd3dGraphModel::readObject(SdObjectMap *map, const QJsonObject obj)
 
 
 
+
+void Sd3dGraphModel::cloneFrom(const SdObject *src)
+  {
+  Sd3dGraph::cloneFrom( src );
+  SdPtrConst<Sd3dGraphModel> model(src);
+  if( model.isValid() )
+    mModel = model->mModel;
+  }
+
+
+
 SdRect Sd3dGraphModel::getOverRect() const
   {
   return SdRect{};

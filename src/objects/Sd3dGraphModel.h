@@ -50,11 +50,13 @@ class Sd3dGraphModel : public Sd3dGraph
     virtual QString getType() const override { return QStringLiteral( SD_TYPE_3D_GRAPH_MODEL ); }
     virtual void    writeObject(QJsonObject &obj) const override;
     virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual void    cloneFrom(const SdObject *src) override;
 
     // SdGraph interface
   public:
     virtual SdRect  getOverRect() const override;
     virtual void    draw3d(QOpenGLFunctions_2_0 *f) const override;
+
   };
 
 #endif // SD3DGRAPHMODEL_H

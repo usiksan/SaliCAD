@@ -49,4 +49,5 @@ void SdWEditor3dPart::onActivateEditor()
 void SdWEditor3dPart::cm3dMaster()
   {
   SdD3dMaster master( mPartPtr, this );
+  master.exec();
   }

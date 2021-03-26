@@ -2,6 +2,7 @@
 #include "SdWView3d.h"
 #include "SdD3dModelProgrammEditor.h"
 #include "SdD3dModelMaster.h"
+#include "SdDHelp.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdPItemRich.h"
 #include "master3d/SdM3dParser.h"
@@ -12,6 +13,7 @@
 #include <QLabel>
 #include <QSettings>
 #include <QMessageBox>
+#include <QDialogButtonBox>
 
 SdD3dMaster::SdD3dMaster(SdPItemPart *part, QWidget *parent) :
   QDialog(parent),
@@ -66,17 +68,38 @@ SdD3dMaster::SdD3dMaster(SdPItemPart *part, QWidget *parent) :
   hlay->addLayout( vlay, 2 );
 
 
+  vlay = new QVBoxLayout();
+  vlay->addLayout( hlay );
 
-  setLayout( hlay );
+  //Buttons at dialog bottom
+  QDialogButtonBox *dialogButtonBox = new QDialogButtonBox( QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help );
+  vlay->addWidget( dialogButtonBox );
+  connect( dialogButtonBox, &QDialogButtonBox::accepted, this, &SdD3dModelMaster::accept );
+  connect( dialogButtonBox, &QDialogButtonBox::rejected, this, &SdD3dModelMaster::reject );
+  //Help system
+  connect( dialogButtonBox, &QDialogButtonBox::helpRequested, this, [this] () { SdDHelp::help( "SdD3dMaster.htm", this ); });
+
+
+  setLayout( vlay );
 
   connect( mMasterType, &QListWidget::currentRowChanged, this, &SdD3dMaster::onCurrentRowChanged );
   connect( this, &SdD3dMaster::accepted, this, [this] () {
     int index = mMasterType->currentRow();
     if( index >= 0 ) {
-      SdD3dModelMaster dlg( mIdList.at(index), mPartPtr, this );
-      dlg.exec();
+      SdD3dModelMaster dlg( mIdList.at(index), mPreviewPart, this );
+      if( dlg.exec() ) {
+        //Building model is successfull. Copy 3d model to the edited part
+        mPartPtr->getUndo()->begin( tr("Append 3d model"), mPartPtr );
+        mPreviewPart->forEach( dct3D, [this] ( SdObject *obj ) -> bool {
+          mPartPtr->insertChild( obj->copy(), mPartPtr->getUndo() );
+          return false;
+          });
+        }
       }
     });
+
+  initializePage();
+  mMasterType->setCurrentRow(0);
   }
 
 
