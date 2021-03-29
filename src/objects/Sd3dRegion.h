@@ -124,4 +124,6 @@ Sd3dRegion sd3dRegionTranslate( const Sd3dRegion &source, QVector3D offset );
 //!
 Sd3dRegion sd3dRegionShift( const Sd3dRegion &source, float shift );
 
+
+
 #endif // SD3DREGION_H

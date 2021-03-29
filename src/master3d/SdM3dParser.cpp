@@ -75,6 +75,9 @@
 #include "SdM3dFunModelBox.h"
 #include "SdM3dFunModelCylinder.h"
 #include "SdM3dFunModelTranslate.h"
+#include "SdM3dFunModelPinTqfp.h"
+#include "SdM3dFunModelHexagon.h"
+#include "SdM3dFunModelCopy.h"
 
 #include "SdM3dFunGraphLine.h"
 #include "SdM3dFunGraphCircle.h"
@@ -115,6 +118,9 @@ SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   addFunction( QStringLiteral("modelBox"), [] () -> SdM3dFunction* { return new SdM3dFunModelBox(); } );
   addFunction( QStringLiteral("modelCylinder"), [] () -> SdM3dFunction* { return new SdM3dFunModelCylinder(); } );
   addFunction( QStringLiteral("modelTranslate"), [] () -> SdM3dFunction* { return new SdM3dFunModelTranslate(); } );
+  addFunction( QStringLiteral("modelPinTqfp"), [] () -> SdM3dFunction* { return new SdM3dFunModelPinTqfp(); } );
+  addFunction( QStringLiteral("modelHexagon"), [] () -> SdM3dFunction* { return new SdM3dFunModelHexagon(); } );
+  addFunction( QStringLiteral("modelCopy"), [] () -> SdM3dFunction* { return new SdM3dFunModelCopy(); } );
 
   addFunction( QStringLiteral("graphLine"), [] () -> SdM3dFunction* { return new SdM3dFunGraphLine(); } );
   addFunction( QStringLiteral("graphCircle"), [] () -> SdM3dFunction* { return new SdM3dFunGraphCircle(); } );
@@ -367,8 +373,39 @@ SdM3dValue *SdM3dParser::parseNot()
       }
     return new SdM3dUnaryBoolNot( val );
     }
-  return parsePlusMinus();
+  return parseLess();
   }
+
+
+
+
+
+SdM3dValue *SdM3dParser::parseLess()
+  {
+  SdM3dValue *val = parsePlusMinus();
+  if( !mScaner.isEndOfScanOrError() && mScaner.matchToken('<') ) {
+    SdM3dValue *val2 = parsePlusMinus();
+    if( val->type() != SDM3D_TYPE_FLOAT || val2->type() != SDM3D_TYPE_FLOAT ) {
+      mScaner.error( QStringLiteral("Invalid types of less operation. Both must be float.") );
+      delete val;
+      delete val2;
+      return failValue();
+      }
+    return new SdM3dBinaryBoolFloatLess( val, val2 );
+    }
+  if( !mScaner.isEndOfScanOrError() && mScaner.matchToken('>') ) {
+    SdM3dValue *val2 = parsePlusMinus();
+    if( val->type() != SDM3D_TYPE_FLOAT || val2->type() != SDM3D_TYPE_FLOAT ) {
+      mScaner.error( QStringLiteral("Invalid types of less operation. Both must be float.") );
+      delete val;
+      delete val2;
+      return failValue();
+      }
+    return new SdM3dBinaryBoolFloatLess( val2, val );
+    }
+  return val;
+  }
+
 
 
 

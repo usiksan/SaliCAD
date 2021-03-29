@@ -64,6 +64,7 @@ class SdM3dParser
     SdM3dValue    *parseAnd();
     SdM3dValue    *parseOr();
     SdM3dValue    *parseNot();
+    SdM3dValue    *parseLess();
     SdM3dValue    *parsePlusMinus();
     SdM3dValue    *parseMultDiv();
     SdM3dValue    *parseMinus();

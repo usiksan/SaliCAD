@@ -218,7 +218,7 @@ void sd3dModelMapInPlace(Sd3dModel &model, const QMatrix4x4 &matrix)
 //! \param bottomFace     If true then appended bottom face from source region
 //! \return               Curved solid model
 //!
-Sd3dModel sd3dModelCurve(const Sd3dRegion &region, QVector3D rotationCenter, QVector3D rotationAxis, float angle, QColor color, bool bottomFace )
+Sd3dModel sd3dModelCurve(const Sd3dRegion &region, QVector3D rotationCenter, QVector3D rotationAxis, float angle, float stepAngle, QColor color, bool bottomFace )
   {
   Sd3dModel model;
 
@@ -229,7 +229,7 @@ Sd3dModel sd3dModelCurve(const Sd3dRegion &region, QVector3D rotationCenter, QVe
   //Walls
   Sd3dRegion bot( region );
   if( angle > 0 ) {
-    float addon = 10.0;
+    float addon = stepAngle;
     do {
       //Build matrix to rotate to current angle
       QMatrix4x4 matrix;
@@ -246,12 +246,12 @@ Sd3dModel sd3dModelCurve(const Sd3dRegion &region, QVector3D rotationCenter, QVe
       model.append( sd3dModelWalls( bot, top, color, true ) );
 
       bot = top;
-      addon += 10.0;
+      addon += stepAngle;
       }
-    while( addon < angle );
+    while( addon <= angle );
     }
   else {
-    float addon = -10.0;
+    float addon = -stepAngle;
     do {
       //Build matrix to rotate to current angle
       QMatrix4x4 matrix;
@@ -268,9 +268,9 @@ Sd3dModel sd3dModelCurve(const Sd3dRegion &region, QVector3D rotationCenter, QVe
       model.append( sd3dModelWalls( bot, top, color, true ) );
 
       bot = top;
-      addon -= 10.0;
+      addon -= stepAngle;
       }
-    while( addon > angle );
+    while( addon >= angle );
     }
 
   //Top face
@@ -340,4 +340,66 @@ void sd3dModelVolume( const Sd3dModel &model, QMatrix2x3 &volume)
   {
   for( auto const &face : model )
     face.volume( volume );
+  }
+
+
+
+
+Sd3dModel sd3dModelPinTqfp(float width, float thickness, float fullLenght, float plateLenght, float height, QColor color )
+  {
+  float curveRadius = 2.0 * thickness;
+  float plateFlatLenght = plateLenght - curveRadius;
+
+  Sd3dModel pin = sd3dModelBox( thickness, width, plateFlatLenght, color );
+  Sd3dFace top = pin.takeLast();
+  pin += sd3dModelCurve( top.mContour, QVector3D( -curveRadius, 0, -plateFlatLenght ), QVector3D( 0, 1, 0), 90, 30, color, false );
+
+  top = pin.takeLast();
+  Sd3dModel a = sd3dModelExtrude( top.mContour, height - 2 * curveRadius, color );
+  a.removeFirst();
+  pin += a;
+
+  top = pin.takeLast();
+  pin += sd3dModelCurve( top.mContour, QVector3D( -height + curveRadius, 0, -plateFlatLenght - 2 * curveRadius ), QVector3D( 0, 1, 0), -90, 30, color, false );
+
+  top = pin.takeLast();
+  a = sd3dModelExtrude( top.mContour, (fullLenght - plateFlatLenght - 2 * curveRadius), color );
+  a.removeFirst();
+  pin += a;
+
+  QVector3D origin = sd3dVertexCenterOfRegion( pin.last().mContour );
+  QMatrix4x4 matrix;
+  matrix.rotate( -90, QVector3D( 0, 1, 0) );
+  matrix.translate( -origin );
+  sd3dModelMapInPlace( pin, matrix );
+
+  return pin;
+  }
+
+
+
+
+
+//!
+//! \brief sd3dModelHexagon Builds hexagonal box body of part
+//! \param lenght           Lenght of box
+//! \param topLenght        Top lenght excluding bevels
+//! \param height           Height of box
+//! \param width            Width of box
+//! \param color            Color of faces of model
+//! \return                 Model of hexagonal box body of part
+//!
+Sd3dModel sd3dModelHexagon(float lenght, float topLenght, float height, float width, QColor color)
+  {
+  //Profile of hexagon
+  float bevelLenght = (lenght - topLenght) / 2.0;
+  QVector3D v0( -topLenght / 2.0, -width / 2.0, 0 );
+  QVector3D v1 = v0 + QVector3D( -bevelLenght, 0, height / 2.0 );
+  QVector3D v2 = v1 + QVector3D(  bevelLenght, 0, height / 2.0 );
+  QVector3D v3 = v2 + QVector3D(  topLenght, 0, 0 );
+  QVector3D v4 = v3 + QVector3D(  bevelLenght, 0, -height / 2.0 );
+  QVector3D v5 = v4 + QVector3D( -bevelLenght, 0, -height / 2.0 );
+  Sd3dRegion profile;
+  profile << v0 << v1 << v2 << v3 << v4 << v5;
+  return sd3dModelExtrude( profile, -width, color );
   }

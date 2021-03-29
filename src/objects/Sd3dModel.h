@@ -127,7 +127,7 @@ void       sd3dModelMapInPlace( Sd3dModel &model, const QMatrix4x4 &matrix );
 //! \param bottomFace     If true then appended bottom face from source region
 //! \return               Curved solid model
 //!
-Sd3dModel  sd3dModelCurve( const Sd3dRegion &region, QVector3D rotationCenter, QVector3D rotationAxis, float angle , QColor color, bool bottomFace);
+Sd3dModel  sd3dModelCurve(const Sd3dRegion &region, QVector3D rotationCenter, QVector3D rotationAxis, float angle , float stepAngle, QColor color, bool bottomFace);
 
 
 //!
@@ -157,5 +157,30 @@ Sd3dModel  sd3dModelBox( float lenght, float width, float height, QColor color )
 //! \param volume          Source and destignation volume
 //!
 void       sd3dModelVolume(const Sd3dModel &model, QMatrix2x3 &volume );
+
+
+//!
+//! \brief sd3dModelPinTqfp Builds model of pin of tqfp like part
+//! \param width            Width of pin
+//! \param thickness        Thickness of pin
+//! \param fullLenght       Full lenght of pin from body to end of pin
+//! \param plateLenght      Plate lenght of pin is a part of pin which apply to plate
+//! \param height           Height of pin
+//! \param color            Color of faces of model
+//! \return                 Model of pin of tqfp like part
+//!
+Sd3dModel  sd3dModelPinTqfp(float width, float thickness, float fullLenght, float plateLenght, float height , QColor color);
+
+
+//!
+//! \brief sd3dModelHexagon Builds hexagonal box body of part
+//! \param lenght           Lenght of box
+//! \param topLenght        Top lenght excluding bevels
+//! \param height           Height of box
+//! \param width            Width of box
+//! \param color            Color of faces of model
+//! \return                 Model of hexagonal box body of part
+//!
+Sd3dModel  sd3dModelHexagon( float lenght, float topLenght, float height, float width, QColor color );
 
 #endif // SD3DMODEL_H

@@ -29,6 +29,7 @@ SOURCES += \
     master3d/SdM3dArrayFace.cpp \
     master3d/SdM3dArraySegment.cpp \
     master3d/SdM3dArrayVertex.cpp \
+    master3d/SdM3dBinaryFloatLess.cpp \
     master3d/SdM3dFunColorBuild.cpp \
     master3d/SdM3dFunColorFromString.cpp \
     master3d/SdM3dFunInput.cpp \
@@ -36,7 +37,10 @@ SOURCES += \
     master3d/SdM3dFunInputFloat.cpp \
     master3d/SdM3dFunInputPad.cpp \
     master3d/SdM3dFunModelAddExtrude.cpp \
+    master3d/SdM3dFunModelCopy.cpp \
+    master3d/SdM3dFunModelHexagon.cpp \
     master3d/SdM3dFunModelHole.cpp \
+    master3d/SdM3dFunModelPinTqfp.cpp \
     master3d/SdM3dFunction.cpp \
     master3d/SdM3dOperatorBlock.cpp \
     master3d/SdM3dOperatorIf.cpp \
@@ -381,6 +385,7 @@ HEADERS  += \
     master3d/SdM3dBinaryFloat.h \
     master3d/SdM3dBinaryFloatAdd.h \
     master3d/SdM3dBinaryFloatDiv.h \
+    master3d/SdM3dBinaryFloatLess.h \
     master3d/SdM3dBinaryFloatMult.h \
     master3d/SdM3dBinaryFloatSub.h \
     master3d/SdM3dBool.h \
@@ -400,10 +405,13 @@ HEADERS  += \
     master3d/SdM3dFunInputPad.h \
     master3d/SdM3dFunModelAddExtrude.h \
     master3d/SdM3dFunModelBox.h \
+    master3d/SdM3dFunModelCopy.h \
     master3d/SdM3dFunModelCurve.h \
     master3d/SdM3dFunModelCylinder.h \
     master3d/SdM3dFunModelExtrude.h \
+    master3d/SdM3dFunModelHexagon.h \
     master3d/SdM3dFunModelHole.h \
+    master3d/SdM3dFunModelPinTqfp.h \
     master3d/SdM3dFunModelTranslate.h \
     master3d/SdM3dFunModelWall.h \
     master3d/SdM3dFunModelWallEven.h \

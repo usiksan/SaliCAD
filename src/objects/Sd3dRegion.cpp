@@ -220,9 +220,9 @@ Sd3dRegion sd3dRegionRectangle( float width, float height, QVector3D offset )
   height /= 2.0;
   Sd3dRegion region;
   region.append( QVector3D(-width + offset.x(), -height + offset.y(), offset.z() ) );
-  region.append( QVector3D(width + offset.x(), -height + offset.y(), offset.z() ) );
-  region.append( QVector3D(width + offset.x(), height + offset.y(), offset.z() ) );
   region.append( QVector3D(-width + offset.x(), height + offset.y(), offset.z() ) );
+  region.append( QVector3D(width + offset.x(), height + offset.y(), offset.z() ) );
+  region.append( QVector3D(width + offset.x(), -height + offset.y(), offset.z() ) );
   return region;
   }
 
@@ -262,3 +262,7 @@ Sd3dRegion sd3dRegionShift(const Sd3dRegion &source, float shift)
   normal *= -shift;
   return sd3dRegionTranslate( source, normal );
   }
+
+
+
+
