@@ -29,6 +29,8 @@ Description
 #include <QFont>
 #include <QMessageBox>
 #include <QColorDialog>
+#include <QGuiApplication>
+#include <QScreen>
 
 
 //!
@@ -43,6 +45,9 @@ SdD3dModelMaster::SdD3dModelMaster(const QString id, SdPItemPart *part, QWidget 
   mProgramm(nullptr),
   mActive(false)
   {
+  //Setup editor size
+  resize( qMin( QGuiApplication::primaryScreen()->size().width(), 1600), 700 );
+
   //Main layout of dialog is vertical
   QVBoxLayout *vlay = new QVBoxLayout();
 
@@ -57,6 +62,10 @@ SdD3dModelMaster::SdD3dModelMaster(const QString id, SdPItemPart *part, QWidget 
 
    //Part preview widget
    splitter->addWidget( mPreview = new SdWView3d( mPart, this ) );
+
+   //Stretch factor
+   splitter->setStretchFactor( 0, 1 );
+   splitter->setStretchFactor( 1, 3 );
 
   //Buttons at dialog bottom
   QDialogButtonBox *dialogButtonBox = new QDialogButtonBox( QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help );
@@ -85,6 +94,7 @@ SdD3dModelMaster::SdD3dModelMaster(const QString id, SdPItemPart *part, QWidget 
       mProgramm = parser.parse( rich->contents(), mPart );
       rebuild();
       mPreview->fitItem();
+      mPreview->update();
       }
     }
   }

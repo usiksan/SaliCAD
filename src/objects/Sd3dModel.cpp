@@ -403,3 +403,57 @@ Sd3dModel sd3dModelHexagon(float lenght, float topLenght, float height, float wi
   profile << v0 << v1 << v2 << v3 << v4 << v5;
   return sd3dModelExtrude( profile, -width, color );
   }
+
+
+
+
+//!
+//! \brief sd3dModelBodyBeveled Builds beveled body of part
+//! \param bodyLenght           Full body lenght (X)
+//! \param bodyWidth            Full body width (Y)
+//! \param bodyHeight           Full body height (H)
+//! \param bevelFront           Bevel size in front of body
+//! \param bevelSide            Bevel size in other sides of body
+//! \param verticalHeight       Vertical walls height of body for pin placing
+//! \param color                Body color
+//! \return                     Model of beveled body of part
+//!
+Sd3dModel sd3dModelBodyBeveled(float bodyLenght, float bodyWidth, float bodyHeight, float bevelFront, float bevelSide, float verticalHeight, QColor color)
+  {
+  Sd3dModel body;
+  float middleHeight = (bodyHeight - verticalHeight) / 2.0;
+  //Middle profile section of body
+  QVector3D m0( -bodyLenght / 2.0, -bodyWidth / 2.0, middleHeight );
+  QVector3D m1( -bodyLenght / 2.0,  bodyWidth / 2.0, middleHeight );
+  QVector3D m2(  bodyLenght / 2.0,  bodyWidth / 2.0, middleHeight );
+  QVector3D m3(  bodyLenght / 2.0, -bodyWidth / 2.0, middleHeight );
+  Sd3dRegion middleRegion({m0,m1,m2,m3});
+
+  //Bottom side
+  QVector3D b0 = m0 + QVector3D( bevelSide, bevelFront, -middleHeight );
+  QVector3D b1 = m1 + QVector3D( bevelSide, -bevelSide, -middleHeight );
+  QVector3D b2 = m2 + QVector3D( -bevelSide, -bevelSide, -middleHeight );
+  QVector3D b3 = m3 + QVector3D( -bevelSide, bevelFront, -middleHeight );
+  Sd3dRegion bottomRegion({b0,b1,b2,b3});
+  body += Sd3dFace( bottomRegion, color );
+
+  //Bottom bevels
+  body += sd3dModelWalls( bottomRegion, middleRegion, color, true );
+
+  //Middle walls
+  body += sd3dModelWall( Sd3dRegion({m0,m1,m2,m3}), QVector3D( 0, 0, verticalHeight ), color, true );
+
+  //Top side
+  QVector3D t0 = b0 + QVector3D( 0, 0, bodyHeight );
+  QVector3D t1 = b1 + QVector3D( 0, 0, bodyHeight );
+  QVector3D t2 = b2 + QVector3D( 0, 0, bodyHeight );
+  QVector3D t3 = b3 + QVector3D( 0, 0, bodyHeight );
+  Sd3dRegion topRegion({t0,t1,t2,t3});
+
+  //Top bevels
+  body += sd3dModelWalls( sd3dRegionTranslate( middleRegion, QVector3D(0,0,verticalHeight) ), topRegion, color, true );
+
+  //Top face
+  body += Sd3dFace( topRegion, color );
+  return body;
+  }

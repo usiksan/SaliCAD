@@ -30,6 +30,8 @@ Description
 #include <QFont>
 #include <QMessageBox>
 #include <QColorDialog>
+#include <QGuiApplication>
+#include <QScreen>
 
 SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *parent) :
   QDialog(parent),
@@ -38,6 +40,9 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
   mDirty(false),
   mActive(false)
   {
+  //Setup editor size
+  resize( qMin( QGuiApplication::primaryScreen()->size().width(), 1600), 700 );
+
   //Main layout of dialog is vertical
   QVBoxLayout *vlay = new QVBoxLayout();
 
@@ -145,7 +150,10 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
     mTextEdit->setPlainText( mRich->contents() );
     compile();
     mPreview->fitItem();
+    mPreview->update();
     }
+
+  mDirty = false;
   }
 
 
@@ -312,3 +320,16 @@ void SdD3dModelProgrammEditor::closeEvent(QCloseEvent *event)
   }
 
 
+
+
+void SdD3dModelProgrammEditor::reject()
+  {
+  if( mDirty ) {
+    //Programm text changed, query for close without saving
+    if( QMessageBox::question( this, tr("Warning!"), tr("Programm text changed! Do You want save edited text before closing?") ) == QMessageBox::Yes ) {
+      //User want not close without saving
+      return;
+      }
+    }
+  QDialog::reject();
+  }

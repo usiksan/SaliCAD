@@ -90,6 +90,10 @@ class SdD3dModelProgrammEditor : public QDialog
     //We test if programm not saved
     virtual void closeEvent( QCloseEvent *event ) override;
 
+
+    // QDialog interface
+  public slots:
+    virtual void reject() override;
   };
 
 #endif // SDD3DMODELPROGRAMMEDITOR_H

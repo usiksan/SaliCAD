@@ -183,4 +183,18 @@ Sd3dModel  sd3dModelPinTqfp(float width, float thickness, float fullLenght, floa
 //!
 Sd3dModel  sd3dModelHexagon( float lenght, float topLenght, float height, float width, QColor color );
 
+
+//!
+//! \brief sd3dModelBodyBeveled Builds beveled body of part
+//! \param bodyLenght           Full body lenght (X)
+//! \param bodyWidth            Full body width (Y)
+//! \param bodyHeight           Full body height (H)
+//! \param bevelFront           Bevel size in front of body
+//! \param bevelSide            Bevel size in other sides of body
+//! \param verticalHeight       Vertical walls height of body for pin placing
+//! \param color                Body color
+//! \return                     Model of beveled body of part
+//!
+Sd3dModel  sd3dModelBodyBeveled( float bodyLenght, float bodyWidth, float bodyHeight, float bevelFront, float bevelSide, float verticalHeight, QColor color );
+
 #endif // SD3DMODEL_H

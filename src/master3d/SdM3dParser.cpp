@@ -78,6 +78,7 @@
 #include "SdM3dFunModelPinTqfp.h"
 #include "SdM3dFunModelHexagon.h"
 #include "SdM3dFunModelCopy.h"
+#include "SdM3dFunModelBodyBeveled.h"
 
 #include "SdM3dFunGraphLine.h"
 #include "SdM3dFunGraphCircle.h"
@@ -121,6 +122,7 @@ SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   addFunction( QStringLiteral("modelPinTqfp"), [] () -> SdM3dFunction* { return new SdM3dFunModelPinTqfp(); } );
   addFunction( QStringLiteral("modelHexagon"), [] () -> SdM3dFunction* { return new SdM3dFunModelHexagon(); } );
   addFunction( QStringLiteral("modelCopy"), [] () -> SdM3dFunction* { return new SdM3dFunModelCopy(); } );
+  addFunction( QStringLiteral("modelBodyBeveled"), [] () -> SdM3dFunction* { return new SdM3dFunModelBodyBeveled(); } );
 
   addFunction( QStringLiteral("graphLine"), [] () -> SdM3dFunction* { return new SdM3dFunGraphLine(); } );
   addFunction( QStringLiteral("graphCircle"), [] () -> SdM3dFunction* { return new SdM3dFunGraphCircle(); } );

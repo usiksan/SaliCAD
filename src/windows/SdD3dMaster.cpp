@@ -74,8 +74,8 @@ SdD3dMaster::SdD3dMaster(SdPItemPart *part, QWidget *parent) :
   //Buttons at dialog bottom
   QDialogButtonBox *dialogButtonBox = new QDialogButtonBox( QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help );
   vlay->addWidget( dialogButtonBox );
-  connect( dialogButtonBox, &QDialogButtonBox::accepted, this, &SdD3dModelMaster::accept );
-  connect( dialogButtonBox, &QDialogButtonBox::rejected, this, &SdD3dModelMaster::reject );
+  connect( dialogButtonBox, &QDialogButtonBox::accepted, this, &SdD3dMaster::accept );
+  connect( dialogButtonBox, &QDialogButtonBox::rejected, this, &SdD3dMaster::reject );
   //Help system
   connect( dialogButtonBox, &QDialogButtonBox::helpRequested, this, [this] () { SdDHelp::help( "SdD3dMaster.htm", this ); });
 
@@ -129,6 +129,7 @@ void SdD3dMaster::onCurrentRowChanged(int row)
       delete programm;
       mPreview->setItem( mPreviewPart );
       mPreview->fitItem();
+      mPreview->update();
       return;
       }
     }

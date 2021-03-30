@@ -37,6 +37,7 @@ SOURCES += \
     master3d/SdM3dFunInputFloat.cpp \
     master3d/SdM3dFunInputPad.cpp \
     master3d/SdM3dFunModelAddExtrude.cpp \
+    master3d/SdM3dFunModelBodyBeveled.cpp \
     master3d/SdM3dFunModelCopy.cpp \
     master3d/SdM3dFunModelHexagon.cpp \
     master3d/SdM3dFunModelHole.cpp \
@@ -404,6 +405,7 @@ HEADERS  += \
     master3d/SdM3dFunInputFloat.h \
     master3d/SdM3dFunInputPad.h \
     master3d/SdM3dFunModelAddExtrude.h \
+    master3d/SdM3dFunModelBodyBeveled.h \
     master3d/SdM3dFunModelBox.h \
     master3d/SdM3dFunModelCopy.h \
     master3d/SdM3dFunModelCurve.h \
