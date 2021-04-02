@@ -1,3 +1,16 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Real 3d view widget.
+*/
 #include "SdWView3d.h"
 #include "objects/Sd3dGraphModel.h"
 #include "objects/SdProjectItem.h"
@@ -13,8 +26,11 @@ SdWView3d::SdWView3d(SdProjectItem *item, QWidget *parent) :
   QOpenGLWidget( parent ),
   mAngleZ(13.0),
   mAngleXY(-51.0),
+  mLeftPressed(false),    //!< True if mouse left button pressed
+  mMiddlePressed(false),  //!< True if mouse middle button pressed
   mScale(0.1),
   mItem(item),
+  mMode(nullptr),
   mEnable2d(true),
   mEnablePad(true)
   {
@@ -27,6 +43,15 @@ SdWView3d::SdWView3d(SdProjectItem *item, QWidget *parent) :
   format.setSamples(2);
 
   setFormat( format );
+  }
+
+
+
+
+SdWView3d::~SdWView3d()
+  {
+  if( mMode != nullptr )
+    delete mMode;
   }
 
 
@@ -73,27 +98,26 @@ void SdWView3d::fitItem()
 
 
 
-bool isLeftPressed;
-bool isMiddlePressed;
-QPoint startPos;
-QPoint prevOrigin;
-double prevAngleXY;
-double prevAngleZ;
 
 
 
 void SdWView3d::mousePressEvent(QMouseEvent *event)
   {
+  //At first try handle event by current mode
+  if( mMode != nullptr )
+    mMode->mousePressEvent( this, event );
+
+  //If no current mode or mode does not handle event then we handle it self
   if( event->button() == Qt::LeftButton ) {
-    isLeftPressed = true;
-    startPos = event->pos();
-    prevAngleXY = mAngleXY;
-    prevAngleZ = mAngleZ;
+    mLeftPressed = true;
+    mStartPos = event->pos();
+    mPrevAngleXY = mAngleXY;
+    mPrevAngleZ = mAngleZ;
     }
   else if( event->button() == Qt::MiddleButton ) {
-    isMiddlePressed = true;
-    startPos = event->pos();
-    prevOrigin = mOrigin;
+    mMiddlePressed = true;
+    mStartPos = event->pos();
+    mPrevOrigin = mOrigin;
     }
   }
 
@@ -101,23 +125,33 @@ void SdWView3d::mousePressEvent(QMouseEvent *event)
 
 void SdWView3d::mouseReleaseEvent(QMouseEvent *event)
   {
+  //At first try handle event by current mode
+  if( mMode != nullptr )
+    mMode->mouseReleaseEvent( this, event );
+
+  //If no current mode or mode does not handle event then we handle it self
   if( event->button() == Qt::LeftButton )
-    isLeftPressed = false;
+    mLeftPressed = false;
   else if( event->button() == Qt::MiddleButton )
-    isMiddlePressed = false;
+    mMiddlePressed = false;
   }
 
 
 
 void SdWView3d::mouseMoveEvent(QMouseEvent *event)
   {
-  if( isLeftPressed ) {
-    mAngleXY = prevAngleXY - (startPos.y() - event->pos().y()) / 4;
-    mAngleZ = prevAngleZ - (startPos.x() - event->pos().x()) / 4;
+  //At first try handle event by current mode
+  if( mMode != nullptr && mMode->mouseMoveEvent( this, event ) )
+    return;
+
+  //If no current mode or mode does not handle event then we handle it self
+  if( mLeftPressed ) {
+    mAngleXY = mPrevAngleXY - (mStartPos.y() - event->pos().y()) / 4;
+    mAngleZ = mPrevAngleZ - (mStartPos.x() - event->pos().x()) / 4;
     update();
     }
-  else if( isMiddlePressed ) {
-    mOrigin = prevOrigin + QPoint( event->pos().x() - startPos.x(), startPos.y() - event->pos().y() ) / 2;
+  else if( mMiddlePressed ) {
+    mOrigin = mPrevOrigin + QPoint( event->pos().x() - mStartPos.x(), mStartPos.y() - event->pos().y() ) / 2;
     update();
     }
   }
@@ -126,44 +160,55 @@ void SdWView3d::mouseMoveEvent(QMouseEvent *event)
 
 void SdWView3d::wheelEvent(QWheelEvent *event)
   {
-  qDebug() << "wheel view";
-  //At first try handle event with mode
-  //if mode not handle event, then make defaul behavior
-//  if( modeGet() && modeGet()->wheel( event->angleDelta() ) )
-//    return;
+  //At first try handle event by current mode
+  if( mMode != nullptr && mMode->wheelEvent( this, event ) )
+    return;
+
   int delta = event->angleDelta().y() / 120;
   //qDebug() << "wheel" << event->angleDelta().y();
   if( event->modifiers() & Qt::ControlModifier ) {
-    //Move by horizontal
+    //With Control pressed we rotate over area XY
     mAngleXY += delta;
-    //qDebug() << "angle xy" << mAngleXY;
-    //mOrigin.move( SdPoint(delta * 20, 0) );
-    //originSet( SdPoint(originGet().x() + delta * gridGet().x(), originGet().y()) );
     }
   else if( event->modifiers() & Qt::ShiftModifier ) {
-    //Scale
+    //With Shift pressed we change Scale
     if( event->angleDelta().y() < 0 ) mScale.scaleStep(1.2);
     else mScale.scaleStep(0.83);
-    qDebug() << "scale" << mScale.scaleGet();
+    //qDebug() << "scale" << mScale.scaleGet();
     }
   else {
-    //Move by vertical
+    //With no modifiers pressed we rotate over Z axis
     mAngleZ += delta;
-    //qDebug() << "angle z" << mAngleZ;
-    //mOrigin.move( SdPoint(0, delta * 20) );
-    //originSet( SdPoint(originGet().x(), originGet().y() + delta * gridGet().y()) );
     }
   update();
   }
 
+
+
+
+
+
+
 void SdWView3d::keyPressEvent(QKeyEvent *event)
   {
-
+  //At first try handle event by current mode
+  if( mMode != nullptr )
+    mMode->keyPressEvent( this, event );
   }
+
+
+
+
 
 void SdWView3d::keyReleaseEvent(QKeyEvent *event)
   {
+  //At first try handle event by current mode
+  if( mMode != nullptr )
+    mMode->keyReleaseEvent( this, event );
   }
+
+
+
 
 
 void SdWView3d::initializeGL()
@@ -171,8 +216,8 @@ void SdWView3d::initializeGL()
   GLfloat light_position[] = { 0.0, 0.0, 500.0, 0.0 };
   GLfloat light_diffuse[] = { 0.9f, 0.9f, 0.9f, 1.0f };
   GLfloat light_ambient[] = { 0.9f, 0.9f, 0.9f, 1.0f };
-  GLfloat mat_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-  GLfloat mat_shininess[] = { 50.0 };
+//  GLfloat mat_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+//  GLfloat mat_shininess[] = { 50.0 };
   GLfloat model_ambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
   // Set up the rendering context, load shaders and other resources, etc.:
   QOpenGLFunctions_2_0 *f = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_0>();
@@ -243,7 +288,22 @@ void SdWView3d::paintGL()
   //f->glRotated( mAngleXY, 0, 1, 0.0 );
   f->glRotated( mAngleZ, 0, 0, 1 );
   f->glClear(GL_COLOR_BUFFER_BIT);
+
+  //Material used for draw 2d graphics and axis
   Sd3dFaceMaterial axisMaterial;
+
+  //Axis
+  axisMaterial.setDiffuseColor( 1.0, 1.0, 0.0 );
+  axisMaterial.paint( f );
+  //f->glLineWidth(3);
+  f->glBegin( GL_LINES );
+  f->glVertex3d( -1000.0, 0, 0 );
+  f->glVertex3d( 1000.0, 0, 0 );
+
+  f->glVertex3d( 0, -1000.0, 0 );
+  f->glVertex3d( 0, 1000.0, 0 );
+  f->glEnd();
+
 
   if( mItem != nullptr ) {
     //2d graphics
@@ -260,20 +320,12 @@ void SdWView3d::paintGL()
         });
       }
 
-    mItem->draw3d( f );
+    //Draw throught mode if mode present
+    if( mMode != nullptr ) mMode->draw3d( f );
+    //or use direct item draw if no mode present
+    else                   mItem->draw3d( f );
     }
 
-  //Axis
-  axisMaterial.setDiffuseColor( 1.0, 1.0, 0.0 );
-  axisMaterial.paint( f );
-  //f->glLineWidth(3);
-  f->glBegin( GL_LINES );
-  f->glVertex3d( -1000.0, 0, 0 );
-  f->glVertex3d( 1000.0, 0, 0 );
-
-  f->glVertex3d( 0, -1000.0, 0 );
-  f->glVertex3d( 0, 1000.0, 0 );
-  f->glEnd();
   //f->glFlush();
   }
 

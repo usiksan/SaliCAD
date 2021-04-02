@@ -52,6 +52,7 @@ SOURCES += \
     master3d/SdM3dProgramm.cpp \
     master3d/SdM3dScaner.cpp \
     master3d/SdM3dString.cpp \
+    modes/Sd3dMode.cpp \
     modes/SdModeCTraceDelete.cpp \
     objects/Sd3dDraw.cpp \
     objects/Sd3dFace.cpp \
@@ -460,6 +461,7 @@ HEADERS  += \
     master3d/SdM3dVariableSegment.h \
     master3d/SdM3dVariableString.h \
     master3d/SdM3dVariableVertex.h \
+    modes/Sd3dMode.h \
     modes/SdModeCTraceDelete.h \
     objects/Sd3dDraw.h \
     objects/Sd3dFace.h \
