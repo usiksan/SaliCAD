@@ -195,12 +195,11 @@ void SdWCommand::createMenu(SdWMain *frame)
   cm3dImportStl        = menuInsertPart3d->addAction( QIcon(QString(":/pic/.png")), QObject::tr("Import from stl file"), frame, SLOT(cm3dImportStl()) );
   cm3dImportStep       = menuInsertPart3d->addAction( QIcon(QString(":/pic/.png")), QObject::tr("Import from step file"), frame, SLOT(cm3dImportStep()) );
   cm3dImportVrml       = menuInsertPart3d->addAction( QIcon(QString(":/pic/.png")), QObject::tr("Import from vrml file"), frame, SLOT(cm3dImportVrml()) );
-  //  cmBall           = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
-  //  cmPinWired       = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
-  //  cmPinFlat        = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
-  //  cmBodyCylinder   = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
-  //  cmBodyBrick      = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
-  //  cmBodyContur     = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
+  menuInsertPart3d->addSeparator();
+  cm3dModeHorzMove     = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dHorzMove.png")), QObject::tr("Horizontal moving 3d object"), frame, SLOT(cm3dModeHorzMove()) );
+  cm3dModeHorzRotate   = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dHorzRotate.png")), QObject::tr("Horizontal rotation 3d object"), frame, SLOT(cm3dModeHorzRotate()) );
+  cm3dModeVertMove     = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dVertMove.png")), QObject::tr("Vertical moving 3d object"), frame, SLOT(cm3dModeVertMove()) );
+  cm3dModeVertRotate   = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dVertRotate.png")), QObject::tr("Vertical rotation 3d object"), frame, SLOT(cm3dModeVertRotate()) );
 
 
 
@@ -545,6 +544,15 @@ void SdWCommand::createToolBars(SdWMain *frame)
   frame->addToolBar( barPart );
 
 
+  //Part 3d bar
+  barPart3d = new QToolBar( QString("Part3d") );
+  barPart3d->insertAction( nullptr, cm3dModeHorzMove );
+  barPart3d->insertAction( nullptr, cm3dModeHorzRotate );
+  barPart3d->insertAction( nullptr, cm3dModeVertMove );
+  barPart3d->insertAction( nullptr, cm3dModeVertRotate );
+  frame->addToolBar( barPart3d );
+
+
   //Comp bar
   barComp = new QToolBar( QString("Component") );
 
@@ -713,6 +721,7 @@ void SdWCommand::hideEditorContext()
   //Погасить все редакторо-зависимые toolBars
   barComp->hide();
   barPart->hide();
+  barPart3d->hide();
   barPcb->hide();
   barSheet->hide();
   barSymbol->hide();
@@ -796,13 +805,12 @@ QActionPtr SdWCommand::cm3dMaster;
 QActionPtr SdWCommand::cm3dImportStl;
 QActionPtr SdWCommand::cm3dImportStep;
 QActionPtr SdWCommand::cm3dImportVrml;
+QActionPtr SdWCommand::cm3dModeHorzMove;
+QActionPtr SdWCommand::cm3dModeHorzRotate;
+QActionPtr SdWCommand::cm3dModeVertMove;
+QActionPtr SdWCommand::cm3dModeVertRotate;
+QActionPtr SdWCommand::cm3dModeFaceColor;
 
-QActionPtr SdWCommand::cmMode3dBall;
-QActionPtr SdWCommand::cmMode3dPinWired;
-QActionPtr SdWCommand::cmMode3dPinFlat;
-QActionPtr SdWCommand::cmMode3dBodyCylinder;
-QActionPtr SdWCommand::cmMode3dBodyBrick;
-QActionPtr SdWCommand::cmMode3dBodyContur;
 QActionPtr SdWCommand::cmNetSetup;
 QActionPtr SdWCommand::cmModeLink;
 QActionPtr SdWCommand::cmModeNetList;
@@ -865,6 +873,7 @@ QActionPtr SdWCommand::cmMenuRules;
 QToolBar *SdWCommand::barMain;
 QToolBar *SdWCommand::barSymbol;
 QToolBar *SdWCommand::barPart;
+QToolBar *SdWCommand::barPart3d;
 QToolBar *SdWCommand::barComp;
 QToolBar *SdWCommand::barSheet;
 QToolBar *SdWCommand::barPcb;

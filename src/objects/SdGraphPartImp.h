@@ -110,7 +110,7 @@ class SdGraphPartImp : public SdGraphTraced
     //Get implement transform matrix
     QTransform        matrix() const;
     //Angle of component rotation
-    SdPropAngle       angle() const { return mProp.mAngle; }
+    SdPropAngle       angle() const { return mProp.mAngle.getValue(); }
 
     //Identificator
     //Get full visual ident of part aka D4 or R45

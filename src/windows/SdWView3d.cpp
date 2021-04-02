@@ -245,21 +245,23 @@ void SdWView3d::paintGL()
   f->glClear(GL_COLOR_BUFFER_BIT);
   Sd3dFaceMaterial axisMaterial;
 
-  //2d graphics
-  if( mEnable2d ) {
-    axisMaterial.setDiffuseColor( 1.0, 0.0, 0.0 );
-    axisMaterial.paint( f );
-    quint64 mask = dctLines;
-    if( mEnablePad ) mask |= dctPartPin;
-    mItem->forEachConst( mask, [f] (SdObject *obj) -> bool {
-      SdPtrConst<SdGraph> obj2d(obj);
-      if( obj2d.isValid() )
-        obj2d->draw3d( f );
-      return true;
-      });
-    }
+  if( mItem != nullptr ) {
+    //2d graphics
+    if( mEnable2d ) {
+      axisMaterial.setDiffuseColor( 1.0, 0.0, 0.0 );
+      axisMaterial.paint( f );
+      quint64 mask = dctLines;
+      if( mEnablePad ) mask |= dctPartPin;
+      mItem->forEachConst( mask, [f] (SdObject *obj) -> bool {
+        SdPtrConst<SdGraph> obj2d(obj);
+        if( obj2d.isValid() )
+          obj2d->draw3d( f );
+        return true;
+        });
+      }
 
-  mItem->draw3d( f );
+    mItem->draw3d( f );
+    }
 
   //Axis
   axisMaterial.setDiffuseColor( 1.0, 1.0, 0.0 );

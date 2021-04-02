@@ -28,6 +28,7 @@ class SdPropLayer
   public:
     SdPropLayer();
     SdPropLayer( QString id );
+    SdPropLayer( const SdPropLayer &src ) = default;
 
     bool       isVisible( bool otherSide = false ) const;
     bool       isEdited() const;

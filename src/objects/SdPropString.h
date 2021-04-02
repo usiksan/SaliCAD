@@ -27,6 +27,7 @@ class SdPropString
   public:
     SdPropString();
     SdPropString( QString src );
+    SdPropString( const SdPropString &src ) = default;
 
     bool       operator == ( SdPropString p ) const { return mValue == OneValue && mString.compare( p.mString ) == 0; }
     void       operator = ( SdPropString p ) { if( p.mValue == OneValue ) { mString = p.mString; mValue = OneValue; } }

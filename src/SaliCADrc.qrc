@@ -287,5 +287,9 @@
         <file>pic/sheetMasterDecorator.png</file>
         <file>pic/view3d.png</file>
         <file>pic/3dmaster.png</file>
+        <file>pic/3dVertRotate.png</file>
+        <file>pic/3dVertMove.png</file>
+        <file>pic/3dHorzRotate.png</file>
+        <file>pic/3dHorzMove.png</file>
     </qresource>
 </RCC>

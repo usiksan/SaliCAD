@@ -67,7 +67,7 @@ class SdStratum : public SdPropInt
     void     operator |= ( SdStratum s ) { mValue |= s.mValue; }
 
     //Return true if this stratum intersect with given stratum
-    bool     match( SdStratum s ) const { return mValue > 0 && s.mValue > 0 && (mValue & s.mValue) != 0; }
+    bool     match( const SdStratum &s ) const { return mValue > 0 && s.mValue > 0 && (mValue & s.mValue) != 0; }
 
     //Write-read stratum
     void     writeStratum(QJsonObject &obj) const;

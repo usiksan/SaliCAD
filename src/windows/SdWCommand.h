@@ -61,6 +61,7 @@ class SdWCommand
     static QToolBar *barMain;
     static QToolBar *barSymbol;
     static QToolBar *barPart;
+    static QToolBar *barPart3d;
     static QToolBar *barComp;
     static QToolBar *barSheet;
     static QToolBar *barPcb;
@@ -130,13 +131,12 @@ class SdWCommand
     static QActionPtr  cm3dImportStl;
     static QActionPtr  cm3dImportStep;
     static QActionPtr  cm3dImportVrml;
+    static QActionPtr  cm3dModeHorzMove;
+    static QActionPtr  cm3dModeHorzRotate;
+    static QActionPtr  cm3dModeVertMove;
+    static QActionPtr  cm3dModeVertRotate;
+    static QActionPtr  cm3dModeFaceColor;
 
-    static QActionPtr  cmMode3dBall;
-    static QActionPtr  cmMode3dPinWired;
-    static QActionPtr  cmMode3dPinFlat;
-    static QActionPtr  cmMode3dBodyCylinder;
-    static QActionPtr  cmMode3dBodyBrick;
-    static QActionPtr  cmMode3dBodyContur;
     static QActionPtr  cmNetSetup;
     static QActionPtr  cmModeLink;
     static QActionPtr  cmModeNetName;

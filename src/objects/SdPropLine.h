@@ -36,6 +36,7 @@ struct SdPropLine {
   SdPropLayer mLayer; //Слой
 
   SdPropLine() : mWidth(0), mType(0), mLayer() { }
+  SdPropLine( const SdPropLine &src ) = default;
   void operator = ( SdPropLine const &prop ); //Назначить свойства в соответствии с шаблоном
   void append( SdPropLine const &prop );      //Добавить свойства
   bool operator == ( SdPropLine const &prop );//Сравнить свойства

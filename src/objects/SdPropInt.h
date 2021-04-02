@@ -28,6 +28,7 @@ class SdPropInt
 
     SdPropInt() : mValue(0) { }
     SdPropInt( int i ) : mValue( i ) { }
+    SdPropInt( const SdPropInt &src ) = default;
 
     bool       operator == ( int i ) const { return mValue == i; }
                operator int () const { return mValue; }

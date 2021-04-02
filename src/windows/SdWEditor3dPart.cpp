@@ -37,7 +37,7 @@ void SdWEditor3dPart::onActivateEditor()
   SdWCommand::cmMenuInsertPart3d->setVisible(true);
 
   //Activate tool bar
-  //SdWCommand::barPart->show();
+  SdWCommand::barPart3d->show();
 
   //Enable finish edit
   SdWCommand::cmObjectEditDisable->setVisible(true);

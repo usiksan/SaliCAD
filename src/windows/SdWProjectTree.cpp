@@ -266,7 +266,7 @@ void SdWProjectTree::cmObjectCopy()
     obj.insert( QStringLiteral("ProjectItem UID"), item->getUid() );
 
     //Convert to byteArray
-    QByteArray array = QJsonDocument( obj ).toBinaryData();
+    QByteArray array = QJsonDocument( obj ).toJson(QJsonDocument::Compact);
 
     //Prepare mime data
     QMimeData *mime = new QMimeData();
@@ -290,7 +290,7 @@ void SdWProjectTree::cmObjectPaste()
     //Data with appropriate format present, read it
 
     //Retrive Json object from clipboard
-    QJsonObject obj = QJsonDocument::fromBinaryData( mime->data(QStringLiteral(SD_CLIP_FORMAT_PITEM)) ).object();
+    QJsonObject obj = QJsonDocument::fromJson( mime->data(QStringLiteral(SD_CLIP_FORMAT_PITEM)) ).object();
 
     //Create project
     SdProject *project = new SdProject();

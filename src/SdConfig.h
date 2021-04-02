@@ -182,6 +182,10 @@ History
                    Different 3d format are reads by individual readers
   30.01.2021 v1.22 Replace face color in Sd3dFace with face material
                    Reorganize directories: outstand SdScaner... to scaner directory
+  02.04.2021 v1.23 Append tool bar for 3d modes in part 3d view editor
+                   Remove obsolete commands for 3d insertion. Future main stream for 3d is 3d master using
+                   which builds parametriesed 3d models for components
+                   Error: crash when no 3d model for view
 */
 
 #ifndef SDCONFIG
@@ -193,7 +197,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             22
+#define SD_VERSION_MINOR             23
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

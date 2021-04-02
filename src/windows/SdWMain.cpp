@@ -817,6 +817,7 @@ void SdWMain::cmFileCloseAll()
   SdWCommand::cmEditRedo->setEnabled(false);
   SdWCommand::barSymbol->setVisible(false);
   SdWCommand::barPart->setVisible(false);
+  SdWCommand::barPart3d->setVisible(false);
   SdWCommand::barComp->setVisible(false);
   SdWCommand::barSheet->setVisible(false);
   SdWCommand::barPcb->setVisible(false);
@@ -1477,56 +1478,50 @@ void SdWMain::cm3dImportVrml()
 
 
 
-void SdWMain::cmBall()
+void SdWMain::cm3dModeHorzMove()
   {
   if( activeEditor() )
-    activeEditor()->cmBall();
+    activeEditor()->cm3dModeHorzMove();
   }
 
 
 
 
-void SdWMain::cmPinWired()
+void SdWMain::cm3dModeHorzRotate()
   {
   if( activeEditor() )
-    activeEditor()->cmPinWired();
+    activeEditor()->cm3dModeHorzRotate();
   }
 
 
 
 
-void SdWMain::cmPinFlat()
+void SdWMain::cm3dModeVertMove()
   {
   if( activeEditor() )
-    activeEditor()->cmPinFlat();
+    activeEditor()->cm3dModeVertMove();
   }
 
 
 
 
-void SdWMain::cmBodyCylinder()
+void SdWMain::cm3dModeVertRotate()
   {
   if( activeEditor() )
-    activeEditor()->cmBodyCylinder();
+    activeEditor()->cm3dModeVertRotate();
   }
 
 
 
 
-void SdWMain::cmBodyBrick()
+void SdWMain::cm3dModeFaceColor()
   {
   if( activeEditor() )
-    activeEditor()->cmBodyBrick();
+    activeEditor()->cm3dModeFaceColor();
   }
 
 
 
-
-void SdWMain::cmBodyContur()
-  {
-  if( activeEditor() )
-    activeEditor()->cmBodyContur();
-  }
 
 
 

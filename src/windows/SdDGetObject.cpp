@@ -298,7 +298,7 @@ void SdDGetObject::find()
       sdFieldMaskList.append( mask );
       }
   sdNameFilter = ui->mNameFilter->text();
-  QStringList list = sdNameFilter.split( QRegExp("\\s+"), QString::SkipEmptyParts );
+  QStringList list = sdNameFilter.split( QRegExp("\\s+"), Qt::SkipEmptyParts );
   mHeaderList.clear();
 
   //Accumulate headers matched to filter
@@ -507,7 +507,7 @@ void SdDGetObject::onClearFieldFiltr()
 void SdDGetObject::onCategory(const QString str)
   {
   //Remove previous category
-  QStringList list = ui->mNameFilter->text().split( QChar(' '), QString::SkipEmptyParts );
+  QStringList list = ui->mNameFilter->text().split( QChar(' '), Qt::SkipEmptyParts );
   for( int i = 0; i < list.count(); i++ )
     if( list.at(i).startsWith( QStringLiteral(SD_CATEGORY_PREFIX) )   ) {
       list.removeAt(i);
