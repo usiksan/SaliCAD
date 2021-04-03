@@ -491,6 +491,12 @@ void SdWProjectTree::insertItem(SdProjectItem *item)
     item->mTreeItem->setIcon( 0, QIcon(item->getIconName()) );
     QTreeWidgetItem *ch = classList( item->getClass() );
     if( ch ) ch->addChild( item->mTreeItem );
+    if( item->is3dAllowed() ) {
+      item->m3dTreeItem = new QTreeWidgetItem();
+      item->mTreeItem->addChild( item->m3dTreeItem );
+      item->m3dTreeItem->setText( 0, tr("3d view") );
+      }
+    else item->m3dTreeItem = nullptr;
     }
   }
 
@@ -554,16 +560,24 @@ void SdWProjectTree::onCurrentItemChanged(QTreeWidgetItem *cur, QTreeWidgetItem 
   SdWCommand::cmFileExport->setEnabled(enable);
   SdWCommand::cmFileImport->setEnabled(enable);
 
-  if( enable && cur ) {
+  if( enable && cur != nullptr ) {
     SdProjectItem *item = dynamic_cast<SdProjectItem*>( mProject->item( cur ) );
-    if( item ) {
+    if( item != nullptr ) {
       //qDebug() << "activate item" << item->getTitle();
-      emit SdPulsar::sdPulsar->emitActivateItem( item );
+      SdPulsar::sdPulsar->emitActivateItem( item );
+      }
+    else {
+      //Try find in 3d
+      item = dynamic_cast<SdProjectItem*>( mProject->item3d( cur ) );
+      if( item != nullptr ) {
+        qDebug() << "activate 3d item" << item->getTitle();
+        SdPulsar::sdPulsar->emitActivateItem3d( item );
+        }
       }
     }
-  else if( cur ) {
+  else if( cur != nullptr ) {
     //qDebug() << "activate project" << fileName() << cur << prev;
-    emit SdPulsar::sdPulsar->emitActivateProject( mProject, fileName() );
+    SdPulsar::sdPulsar->emitActivateProject( mProject, fileName() );
     }
   }
 
@@ -593,8 +607,8 @@ void SdWProjectTree::showEvent(QShowEvent *event)
   if( mCurrentItem )
     onCurrentItemChanged( mCurrentItem, nullptr );
   else {
-    qDebug() << "activate project" << fileName();
-    emit SdPulsar::sdPulsar->emitActivateProject( mProject, fileName() );
+//    qDebug() << "activate project" << fileName();
+    SdPulsar::sdPulsar->emitActivateProject( mProject, fileName() );
     }
 
 
@@ -620,19 +634,32 @@ QTreeWidgetItem *SdWProjectTree::createItem(const QString sname, const QString s
 
 
 
-void SdWProjectTree::fillTopItem(QTreeWidgetItem *item, quint64 classId)
+
+//!
+//! \brief fillTopItem Fill node of top level [Заполнить элемент верхнего уровня]
+//! \param item        Top level node
+//! \param classId     Class id for this top level
+//! \param add3d       Append 3d view
+//!
+void SdWProjectTree::fillTopItem(QTreeWidgetItem *item, quint64 classId, bool add3d)
   {
-  mProject->forEach( classId, [item](SdObject *obj) -> bool {
+  mProject->forEach( classId, [item, add3d](SdObject *obj) -> bool {
     //Create list element [Образовать элемент списка]
-    QTreeWidgetItem *it = new QTreeWidgetItem();
-    SdProjectItem *ctr = dynamic_cast<SdProjectItem*>( obj );
-    if( ctr ) {
+    SdPtr<SdProjectItem> ctr( obj );
+    if( ctr.isValid() ) {
+      QTreeWidgetItem *it = new QTreeWidgetItem();
       it->setText( 0, ctr->getExtendTitle() );
       it->setToolTip( 0, ctr->getToolTip() );
       it->setIcon( 0, QIcon(ctr->getIconName()) );
       ctr->mTreeItem = it;
-      //it->setData(0, Qt::UserRole, QVariant(ctr->getId()) );
       item->addChild( it );
+      if( add3d ) {
+        //For objects which has 3d view append 3d view subitem
+        ctr->m3dTreeItem = new QTreeWidgetItem();
+        it->addChild( ctr->m3dTreeItem );
+        ctr->m3dTreeItem->setText( 0, tr("3d view") );
+        }
+      else ctr->m3dTreeItem = nullptr;
       }
     return true;
     }
@@ -666,12 +693,12 @@ void SdWProjectTree::buildVisualTree()
     addTopLevelItem( mPartList );
     addTopLevelItem( mTextList );
 
-    fillTopItem( mSheetList, dctSheet );
-    fillTopItem( mPlateList, dctPlate );
-    fillTopItem( mComponentList, dctComponent );
-    fillTopItem( mSymbolList, dctSymbol );
-    fillTopItem( mPartList, dctPart );
-    fillTopItem( mTextList, dctRich );
+    fillTopItem( mSheetList, dctSheet, false );
+    fillTopItem( mPlateList, dctPlate, true );
+    fillTopItem( mComponentList, dctComponent, false );
+    fillTopItem( mSymbolList, dctSymbol, false );
+    fillTopItem( mPartList, dctPart, true );
+    fillTopItem( mTextList, dctRich, false );
     }
   }
 

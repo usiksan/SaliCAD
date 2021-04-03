@@ -54,10 +54,26 @@ void SdPulsar::emitActivateItem(SdProjectItem *item)
 
 
 
+//Activate item 3d view (bring item on top) with edit status
+void SdPulsar::emitActivateItem3d(SdProjectItem *item)
+  {
+  emit activateItem3d( item );
+  }
+
+
+
 //Highlight item in tree view
 void SdPulsar::emitHighlightItem(SdProjectItem *item)
   {
   emit highlightItem( item );
+  }
+
+
+
+//Highlight 3d item in tree view
+void SdPulsar::emitHighlightItem3d(SdProjectItem *item)
+  {
+  emit highlightItem3d( item );
   }
 
 

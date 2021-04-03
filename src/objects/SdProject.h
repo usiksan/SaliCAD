@@ -76,9 +76,27 @@ class SdProject : public SdContainer
     bool              isDirty() const { return mDirty; }
     void              setDirty();
 
-    //Return true if object with this name present in project
+    //!
+    //! \brief isNameUsed Return true if object with this name present in project
+    //! \param name       Name for testing
+    //! \param mask       Object class mask where will be tested
+    //! \return           true if name used for given class
+    //!
     bool              isNameUsed(const QString name , SdClass mask) const;
+
+    //!
+    //! \brief item Find project item by visual tree widget item
+    //! \param src  Tree item object for item
+    //! \return     Item whose src is tree object
+    //!
     SdObjectPtr       item( QTreeWidgetItem *src ) const;
+
+    //!
+    //! \brief item3d Find project item by visual tree widget item for 3d view
+    //! \param src    Tree item object for item
+    //! \return       Item whose src is tree object
+    //!
+    SdObjectPtr       item3d( QTreeWidgetItem *src ) const;
     SdObjectPtr       itemByName( quint64 mask, const QString name ) const;
     SdObjectPtr       itemByUid( const QString &uid ) const;
 

@@ -35,9 +35,8 @@ SdWEditor3d::SdWEditor3d(SdProjectItem *item, QWidget *parent) :
   box->setMargin(0);
   box->addWidget( mView );
   mView->move( 0, 0 );
-//  mView->resize( 300, 300 );
-  //setViewport( mView );
   setLayout( box );
+  mView->fitItem();
   }
 
 

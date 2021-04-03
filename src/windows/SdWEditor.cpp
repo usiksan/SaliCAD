@@ -102,7 +102,10 @@ void SdWEditor::onActivateEditor()
   SdWCommand::cmView3d->setEnabled( getProjectItem() != nullptr && getProjectItem()->is3dAllowed() );
 
   //Highlight item
-  SdPulsar::sdPulsar->emitHighlightItem( getProjectItem() );
+  if( is3d() )
+    SdPulsar::sdPulsar->emitHighlightItem3d( getProjectItem() );
+  else
+    SdPulsar::sdPulsar->emitHighlightItem( getProjectItem() );
   }
 
 

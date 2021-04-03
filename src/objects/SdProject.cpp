@@ -222,7 +222,12 @@ void SdProject::setDirty()
 
 
 
-//Return true if object with this name present in project
+//!
+//! \brief isNameUsed Return true if object with this name present in project
+//! \param name       Name for testing
+//! \param mask       Object class mask where will be tested
+//! \return           true if name used for given class
+//!
 bool SdProject::isNameUsed(const QString name, SdClass mask ) const
   {
   bool found = false;
@@ -239,12 +244,34 @@ bool SdProject::isNameUsed(const QString name, SdClass mask ) const
 
 
 
-//Find project item by visual tree widget item
+//!
+//! \brief item Find project item by visual tree widget item
+//! \param src  Tree item object for item
+//! \return     Item whose src is tree object
+//!
 SdObjectPtr SdProject::item(QTreeWidgetItem *src) const
   {
   for( SdObjectPtr ptr : mChildList ) {
     SdPtr<SdProjectItem> pi(ptr);
     if( pi && pi->mTreeItem == src )
+      return ptr;
+    }
+  return nullptr;
+  }
+
+
+
+
+//!
+//! \brief item3d Find project item by visual tree widget item for 3d view
+//! \param src    Tree item object for item
+//! \return       Item whose src is tree object
+//!
+SdObjectPtr SdProject::item3d(QTreeWidgetItem *src) const
+  {
+  for( SdObjectPtr ptr : mChildList ) {
+    SdPtr<SdProjectItem> pi(ptr);
+    if( pi && pi->m3dTreeItem == src )
       return ptr;
     }
   return nullptr;

@@ -174,6 +174,7 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
 
   //Связать с пульсаром
   connect( SdPulsar::sdPulsar, &SdPulsar::activateItem, this, &SdWMain::onActivateProjectItem );
+  connect( SdPulsar::sdPulsar, &SdPulsar::activateItem3d, this, &SdWMain::onActivateProjectItem3d );
   connect( SdPulsar::sdPulsar, &SdPulsar::closeEditView, this, &SdWMain::onCloseEditView );
   connect( SdPulsar::sdPulsar, &SdPulsar::removeItem, this, &SdWMain::onRemoveProjectItem );
   connect( SdPulsar::sdPulsar, &SdPulsar::closeProject, this, &SdWMain::onCloseProject );
@@ -358,8 +359,8 @@ void SdWMain::onActivateProjectItem3d(SdProjectItem *item)
     case dctPart :
       if( item->isEditEnable() )
         editor = new SdWEditor3dPart( dynamic_cast<SdPItemPart*>( item ), mWEditors );
-//      else
-//        editor = new SdWEditorGraphView( item, mWEditors );
+      else
+        editor = new SdWEditor3d( dynamic_cast<SdPItemPart*>( item ), mWEditors );
       break;
     case dctSheet :
 //      if( item->isEditEnable() )
@@ -368,10 +369,7 @@ void SdWMain::onActivateProjectItem3d(SdProjectItem *item)
 //        editor = new SdWEditorGraphView( item, mWEditors );
       break;
     case dctPlate :
-      if( item->isEditEnable() )
-        editor = new SdWEditor3d( dynamic_cast<SdPItemPlate*>( item ), mWEditors );
-//      else
-//        editor = new SdWEditorGraphView( item, mWEditors );
+      editor = new SdWEditor3d( dynamic_cast<SdPItemPlate*>( item ), mWEditors );
       break;
     }
 

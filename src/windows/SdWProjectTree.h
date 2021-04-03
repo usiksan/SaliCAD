@@ -128,8 +128,13 @@ class SdWProjectTree : public QTreeWidget
     //Create object node [Создать элемент дерева проекта]
     QTreeWidgetItem*  createItem( const QString sname, const QString stoolTip, const QString sstatusTip );
 
-    //Fill node of top level [Заполнить элемент верхнего уровня]
-    void              fillTopItem(QTreeWidgetItem *item, quint64 classId );
+    //!
+    //! \brief fillTopItem Fill node of top level [Заполнить элемент верхнего уровня]
+    //! \param item        Top level node
+    //! \param classId     Class id for this top level
+    //! \param add3d       Append 3d view
+    //!
+    void              fillTopItem(QTreeWidgetItem *item, quint64 classId, bool add3d );
 
     //Build visual tree
     void              buildVisualTree();

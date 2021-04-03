@@ -42,6 +42,7 @@ class SdProjectItem : public SdContainer
     SdPoint                mOrigin;     //!< Origin for object
   public:
     QTreeWidgetItem       *mTreeItem;   //!< Correspond visual tree item
+    QTreeWidgetItem       *m3dTreeItem; //!< Correspond visual tree item for 3d view (if present)
     bool                   mThereNewer; //!< In library present newer object
 
     SdProjectItem();

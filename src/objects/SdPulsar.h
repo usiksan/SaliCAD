@@ -39,8 +39,12 @@ class SdPulsar : public QObject
     void emitRemoveItem( SdProjectItem *item );
     //Activate item (bring item on top) with edit status
     void emitActivateItem(SdProjectItem *item);
+    //Activate item 3d view (bring item on top) with edit status
+    void emitActivateItem3d( SdProjectItem *item );
     //Highlight item in tree view
     void emitHighlightItem( SdProjectItem *item );
+    //Highlight 3d item in tree view
+    void emitHighlightItem3d( SdProjectItem *item );
     //Need close item edit (view)
     void emitCloseEditView( SdProjectItem *item );
     //Activate project wihtout item selection
@@ -81,8 +85,12 @@ class SdPulsar : public QObject
     void removeItem( SdProjectItem *item );
     //Activate item (bring item on top)
     void activateItem( SdProjectItem *item );
+    //Activate item 3d view (bring item on top)
+    void activateItem3d( SdProjectItem *item );
     //Highlight item in tree view
     void highlightItem( SdProjectItem *item );
+    //Highlight 3d item in tree view
+    void highlightItem3d( SdProjectItem *item );
     //Need close item edit (view)
     void closeEditView( SdProjectItem *item );
     //Activate project wihtout item selection

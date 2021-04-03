@@ -1,8 +1,8 @@
 ﻿
-//B073 bugs
+//B078 bugs
 //F001 fatal
 //C001 critical
-//D093 do
+//D094 do
 
 
 
@@ -29,13 +29,21 @@
 
 //TODO D084 Append record indicator to main window
 
-//TODO D085 Append rotation command to select menu
-
 //TODO D091 Append mode for delete trace objects with F6 to switch object behind cursor
 
 //TODO D092 Append mode to fix component and make untouchable for moving and selecting
 
 //TODO B071 Some time do not fit to view (in graph view) and picture too small
+
+//TODO B073 In 3d editor object not fit when view starts
+
+//TODO B074 In 3d masters object not drawn in preview
+
+//TODO B075 When mode activated in 3d mode button not checked
+
+//TODO B076 When undo 3d operation then open 2d editor
+
+//TODO B077 Add deactivate 3d mode by right button
 
 //===================================================================================
 //There are no need:
@@ -47,6 +55,10 @@
 
 //===================================================================================
 //Fixed:
+
+//D093 Simplify 3d open from project tree widget, also in locked mode
+
+//D085 Append rotation command to select menu
 
 //B072 In part master for double side vertical not created first pin marker
 
