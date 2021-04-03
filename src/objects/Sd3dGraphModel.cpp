@@ -6,6 +6,20 @@ Sd3dGraphModel::Sd3dGraphModel()
 
   }
 
+
+
+
+//!
+//! \brief matrixMapInPlace Mapping all faces of model throught given matrix. Operation maked in place
+//! \param matrix           Mapping matrix
+//!
+void Sd3dGraphModel::matrixMapInPlace(QMatrix4x4 matrix)
+  {
+  sd3dModelMapInPlace( mModel, matrix );
+  }
+
+
+
 void Sd3dGraphModel::writeObject(QJsonObject &obj) const
   {
   Sd3dGraph::writeObject( obj );

@@ -23,9 +23,11 @@ Description
 #include "SdRuleBlock.h"
 #include "SdPointList.h"
 #include "SdPolyWindowList.h"
+
 #include <QStack>
 #include <QMap>
 #include <QStringList>
+#include <QMatrix4x4>
 
 
 class SdContainer;
@@ -42,6 +44,7 @@ class SdPropPartPin;
 class SdPropSymImp;
 class SdPropPartImp;
 class SdRect;
+class SdPItemPart;
 class SdPItemPlate;
 typedef SdPItemPlate *SdPItemPlatePtr;
 class SdGraphSymImp;
@@ -95,6 +98,13 @@ class SdUndo
     void rule( SdRuleBlock *pcbSrc, SdRuleBlockMap *mapSrc );
     void stringList( int *val, QStringList *list );
     void polygon( SdPropPolygon *propSource, SdPointList *regionSource, SdPolyWindowList *windowsSource );
+
+    //!
+    //! \brief matrix3d Add undo for 3d matrix conversion
+    //! \param matrix   Matrix for conversion
+    //! \param part     Part on which conversion applied
+    //!
+    void matrix3d( QMatrix4x4 matrix, SdPItemPart *part );
 
     //do undo and redo
     void undoStep();

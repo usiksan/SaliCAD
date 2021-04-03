@@ -18,12 +18,15 @@ Description
 
 #include "SdWEditor.h"
 
+class SdWView3d;
+
 class SdWEditor3d : public SdWEditor
   {
     Q_OBJECT
 
-    QWidget       *mView; //Real 3d widget
-    SdProjectItem *mItem;
+    SdProjectItem *mItem; //!< Item used by editor
+  protected:
+    SdWView3d     *mView; //!< Real 3d widget
   public:
     SdWEditor3d( SdProjectItem *item, QWidget *parent = nullptr );
 

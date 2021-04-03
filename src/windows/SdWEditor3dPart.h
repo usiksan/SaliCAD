@@ -32,6 +32,14 @@ class SdWEditor3dPart : public SdWEditor3d
 //    virtual SdProjectItem *getProjectItem() const override;
     virtual void           onActivateEditor() override;
     virtual void           cm3dMaster() override;
+
+    // SdWEditor interface
+  public:
+    virtual void cm3dModeHorzMove() override;
+    virtual void cm3dModeHorzRotate() override;
+    virtual void cm3dModeVertMove() override;
+    virtual void cm3dModeVertRotate() override;
+    virtual void cm3dModeFaceColor() override;
   };
 
 #endif // SDWEDITOR3DPART_H

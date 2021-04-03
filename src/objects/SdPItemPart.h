@@ -16,12 +16,22 @@ Description
 
 #include "SdProjectItem.h"
 
+#include <QMatrix4x4>
+
 #define SD_TYPE_PART "Part"
 
 class SdPItemPart : public SdProjectItem
   {
   public:
     SdPItemPart();
+
+    //!
+    //! \brief matrixMap Apply matrix to all 3d objects of part
+    //! \param matrix    Matrix which applied to all 3d objects
+    //! \param undo      Undo to which writed undo for this operation. If no
+    //!                  undo then no undo for this operation
+    //!
+    void matrixMap( QMatrix4x4 matrix, SdUndo *undo );
 
     // SdObject interface
   public:

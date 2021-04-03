@@ -99,6 +99,33 @@ void SdWView3d::fitItem()
 
 
 
+//!
+//! \brief modeSet Setup new active 3d mode
+//! \param mode    New active 3d mode
+//!
+void SdWView3d::modeSet(Sd3dMode *mode)
+  {
+  //Remove previous mode
+  if( mMode != nullptr )
+    delete mMode;
+  mMode = mode;
+  }
+
+
+
+
+//!
+//! \brief scale Returns scale coef used to convert screen coord to phisical coord of models
+//! \return      Scale coef
+//!
+float SdWView3d::scale() const
+  {
+  return 1.0 / mScale.scaleGet();
+  }
+
+
+
+
 
 
 void SdWView3d::mousePressEvent(QMouseEvent *event)

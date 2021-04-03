@@ -16,6 +16,8 @@ Description
 #include "SdWEditor3dPart.h"
 #include "SdWCommand.h"
 #include "SdD3dMaster.h"
+#include "SdWView3d.h"
+#include "modes/Sd3dModeHorzMove.h"
 
 SdWEditor3dPart::SdWEditor3dPart(SdPItemPart *item, QWidget *parent) :
   SdWEditor3d( item, parent ),
@@ -51,3 +53,29 @@ void SdWEditor3dPart::cm3dMaster()
   SdD3dMaster master( mPartPtr, this );
   master.exec();
   }
+
+
+
+
+void SdWEditor3dPart::cm3dModeHorzMove()
+  {
+  mView->modeSet( new Sd3dModeHorzMove(mPartPtr) );
+  }
+
+
+
+void SdWEditor3dPart::cm3dModeHorzRotate()
+    {
+    }
+
+void SdWEditor3dPart::cm3dModeVertMove()
+    {
+    }
+
+void SdWEditor3dPart::cm3dModeVertRotate()
+    {
+    }
+
+void SdWEditor3dPart::cm3dModeFaceColor()
+    {
+    }

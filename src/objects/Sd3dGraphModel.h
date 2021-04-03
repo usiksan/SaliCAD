@@ -40,6 +40,12 @@ class Sd3dGraphModel : public Sd3dGraph
     void modelAdd( const Sd3dModel &model ) { mModel.append( model ); }
 
     //!
+    //! \brief matrixMapInPlace Mapping all faces of model throught given matrix. Operation maked in place
+    //! \param matrix           Mapping matrix
+    //!
+    void matrixMapInPlace( QMatrix4x4 matrix );
+
+    //!
     //! \brief volumeAdd Append volume of model to result volume
     //! \param volume    Source and result volume
     //!

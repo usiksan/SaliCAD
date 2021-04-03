@@ -40,6 +40,8 @@ SdWEditor3d::SdWEditor3d(SdProjectItem *item, QWidget *parent) :
   setLayout( box );
   }
 
+
+
 void SdWEditor3d::paintEvent(QPaintEvent *event)
   {
 //  qDebug() << "paint event 3d";

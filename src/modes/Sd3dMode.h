@@ -17,6 +17,7 @@ Description
 #include <QMouseEvent>
 #include <QOpenGLFunctions_2_0>
 
+
 class SdWView3d;
 
 class Sd3dMode

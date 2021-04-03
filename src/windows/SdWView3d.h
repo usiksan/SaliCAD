@@ -67,6 +67,12 @@ class SdWView3d : public QOpenGLWidget
     //! \param mode    New active 3d mode
     //!
     void             modeSet( Sd3dMode *mode );
+
+    //!
+    //! \brief scale Returns scale coef used to convert screen coord to phisical coord of models
+    //! \return      Scale coef
+    //!
+    float            scale() const;
     // QWidget interface
   protected:
     virtual void mousePressEvent(QMouseEvent *event) override;

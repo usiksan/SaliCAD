@@ -40,6 +40,7 @@ Description
 #include "SdUndoRecordRules.h"
 #include "SdUndoRecordStringList.h"
 #include "SdUndoRecordPolygon.h"
+#include "SdUndoRecord3dMatrix.h"
 #include "windows/SdWCommand.h"
 
 #include <QDebug>
@@ -290,6 +291,19 @@ void SdUndo::stringList(int *val, QStringList *list)
 void SdUndo::polygon(SdPropPolygon *propSource, SdPointList *regionSource, SdPolyWindowList *windowsSource)
   {
   addUndo( new SdUndoRecordPolygon( propSource, regionSource, windowsSource ) );
+  }
+
+
+
+
+//!
+//! \brief matrix3d Add undo for 3d matrix conversion
+//! \param matrix   Matrix for conversion
+//! \param part     Part on which conversion applied
+//!
+void SdUndo::matrix3d(QMatrix4x4 matrix, SdPItemPart *part)
+  {
+  addUndo( new SdUndoRecord3dMatrix( matrix, part ) );
   }
 
 

@@ -53,6 +53,8 @@ SOURCES += \
     master3d/SdM3dScaner.cpp \
     master3d/SdM3dString.cpp \
     modes/Sd3dMode.cpp \
+    modes/Sd3dModeHorzMove.cpp \
+    modes/Sd3dModeMat.cpp \
     modes/SdModeCTraceDelete.cpp \
     objects/Sd3dDraw.cpp \
     objects/Sd3dFace.cpp \
@@ -68,6 +70,7 @@ SOURCES += \
     objects/Sd3dReaderVrml.cpp \
     objects/Sd3dRegion.cpp \
     objects/Sd3dStep.cpp \
+    objects/SdUndoRecord3dMatrix.cpp \
     scaner/SdScaner.cpp \
     scaner/SdScanerMultyline.cpp \
     step/SdStepReader.cpp \
@@ -462,6 +465,8 @@ HEADERS  += \
     master3d/SdM3dVariableString.h \
     master3d/SdM3dVariableVertex.h \
     modes/Sd3dMode.h \
+    modes/Sd3dModeHorzMove.h \
+    modes/Sd3dModeMat.h \
     modes/SdModeCTraceDelete.h \
     objects/Sd3dDraw.h \
     objects/Sd3dFace.h \
@@ -477,6 +482,8 @@ HEADERS  += \
     objects/Sd3dReaderVrml.h \
     objects/Sd3dRegion.h \
     objects/Sd3dStep.h \
+    objects/SdProperty.h \
+    objects/SdUndoRecord3dMatrix.h \
     scaner/SdScaner.h \
     scaner/SdScanerMultyline.h \
     step/SdStepReader.h \
