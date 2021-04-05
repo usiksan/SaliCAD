@@ -192,6 +192,9 @@ class SdWMain : public QMainWindow
     void cm3dImportStl();
     void cm3dImportStep();
     void cm3dImportVrml();
+    void cm3dShow2d();
+    void cm3dShowPads();
+    void cm3dModeView();
     void cm3dModeHorzMove();
     void cm3dModeHorzRotate();
     void cm3dModeVertMove();

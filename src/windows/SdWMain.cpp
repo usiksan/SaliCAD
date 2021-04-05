@@ -1476,6 +1476,33 @@ void SdWMain::cm3dImportVrml()
 
 
 
+void SdWMain::cm3dShow2d()
+  {
+  if( activeEditor() )
+    activeEditor()->cm3dShow2d();
+  }
+
+
+
+
+void SdWMain::cm3dShowPads()
+  {
+  if( activeEditor() )
+    activeEditor()->cm3dShowPads();
+  }
+
+
+
+
+void SdWMain::cm3dModeView()
+  {
+  if( activeEditor() )
+    activeEditor()->cm3dModeView();
+  }
+
+
+
+
 void SdWMain::cm3dModeHorzMove()
   {
   if( activeEditor() )

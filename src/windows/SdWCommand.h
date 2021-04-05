@@ -131,11 +131,8 @@ class SdWCommand
     static QActionPtr  cm3dImportStl;
     static QActionPtr  cm3dImportStep;
     static QActionPtr  cm3dImportVrml;
-    static QActionPtr  cm3dModeHorzMove;
-    static QActionPtr  cm3dModeHorzRotate;
-    static QActionPtr  cm3dModeVertMove;
-    static QActionPtr  cm3dModeVertRotate;
-    static QActionPtr  cm3dModeFaceColor;
+    static QActionPtr  cm3dShow2d;
+    static QActionPtr  cm3dShowPads;
 
     static QActionPtr  cmNetSetup;
     static QActionPtr  cmModeLink;
