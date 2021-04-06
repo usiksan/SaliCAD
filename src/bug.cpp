@@ -1,5 +1,5 @@
 ﻿
-//B078 bugs
+//B079 bugs
 //F001 fatal
 //C001 critical
 //D094 do
@@ -51,6 +51,8 @@
 
 //===================================================================================
 //Fixed:
+
+//B078 Appending 3d object not set project as dirty
 
 //B075 When mode activated in 3d mode button not checked
 

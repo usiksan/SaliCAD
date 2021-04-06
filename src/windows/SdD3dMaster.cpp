@@ -100,6 +100,8 @@ SdD3dMaster::SdD3dMaster(SdPItemPart *part, QWidget *parent) :
           mPartPtr->insertChild( obj->copy(), mPartPtr->getUndo() );
           return false;
           });
+        //Mark project as dirty
+        mPartPtr->setProjectDirtyFlag();
         }
       }
     });

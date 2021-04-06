@@ -32,7 +32,7 @@ void Sd3dModeHorzMove::mousePressEvent(SdWView3d *viewer, QMouseEvent *event)
     mLeftPressed = true;
     mStartPoint = event->pos();
     mOffsetX = mOffsetY = 0;
-    mScale = viewer->scale();
+    mScale = viewer->scale() / 13.0;
     }
   else if( event->button() == Qt::RightButton )
     viewer->modeCancel();
@@ -61,10 +61,10 @@ bool Sd3dModeHorzMove::mouseMoveEvent(SdWView3d *viewer, QMouseEvent *event)
   {
   if( mLeftPressed ) {
     mOffsetX = (event->pos().x() - mStartPoint.x());
-    mOffsetX *= mScale / 4.0;
+    mOffsetX *= mScale;
 
     mOffsetY = -(event->pos().y() - mStartPoint.y());
-    mOffsetY *= mScale / 4.0;
+    mOffsetY *= mScale;
     viewer->update();
     return true;
     }
