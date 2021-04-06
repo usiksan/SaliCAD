@@ -15,6 +15,7 @@ Description
 */
 #include "SdWEditor3d.h"
 #include "SdWView3d.h"
+#include "SdWCommand.h"
 #include "objects/SdProjectItem.h"
 #include "objects/Sd3dStep.h"
 #include "objects/Sd3dReaderStl.h"
@@ -127,3 +128,13 @@ void SdWEditor3d::cm3dImportVrml()
     mView->update();
     }
   }
+
+
+
+void SdWEditor3d::onActivateEditor()
+  {
+  SdWEditor::onActivateEditor();
+  //Update current mode
+  SdWCommand::selectMode( mView->mode()->modeId() );
+  }
+

@@ -12,6 +12,7 @@ Description
   3d mode used to translate model in horizontal area
 */
 #include "Sd3dModeHorzMove.h"
+#include "SdModeIdents.h"
 #include "windows/SdWView3d.h"
 
 Sd3dModeHorzMove::Sd3dModeHorzMove(SdPItemPart *part) :
@@ -33,6 +34,8 @@ void Sd3dModeHorzMove::mousePressEvent(SdWView3d *viewer, QMouseEvent *event)
     mOffsetX = mOffsetY = 0;
     mScale = viewer->scale();
     }
+  else if( event->button() == Qt::RightButton )
+    viewer->modeCancel();
   }
 
 
@@ -71,7 +74,7 @@ bool Sd3dModeHorzMove::mouseMoveEvent(SdWView3d *viewer, QMouseEvent *event)
 
 
 
-void Sd3dModeHorzMove::draw3d(QOpenGLFunctions_2_0 *f)
+bool Sd3dModeHorzMove::draw3d(QOpenGLFunctions_2_0 *f)
   {
   f->glPushMatrix();
   if( mLeftPressed )
@@ -80,4 +83,11 @@ void Sd3dModeHorzMove::draw3d(QOpenGLFunctions_2_0 *f)
   mPart->draw3d( f );
 
   f->glPopMatrix();
+  return true;
+  }
+
+
+int Sd3dModeHorzMove::modeId() const
+  {
+  return MD_3D_HORZ_MOVE;
   }

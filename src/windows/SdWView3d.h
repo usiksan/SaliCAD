@@ -69,6 +69,17 @@ class SdWView3d : public QOpenGLWidget
     void             modeSet( Sd3dMode *mode );
 
     //!
+    //! \brief modeCancel Sets modeView as current 3d mode
+    //!
+    void             modeCancel();
+
+    //!
+    //! \brief mode Returns current 3d mode
+    //! \return     Current 3d mode
+    //!
+    Sd3dMode        *mode() const { return mMode; }
+
+    //!
     //! \brief scale Returns scale coef used to convert screen coord to phisical coord of models
     //! \return      Scale coef
     //!

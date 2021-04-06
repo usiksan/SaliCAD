@@ -32,7 +32,8 @@ class Sd3dModeHorzMove : public Sd3dModeMat
     virtual void mousePressEvent(SdWView3d *viewer, QMouseEvent *event) override;
     virtual void mouseReleaseEvent(SdWView3d *viewer, QMouseEvent *event) override;
     virtual bool mouseMoveEvent(SdWView3d *viewer, QMouseEvent *event) override;
-    virtual void draw3d(QOpenGLFunctions_2_0 *f) override;
+    virtual bool draw3d(QOpenGLFunctions_2_0 *f) override;
+    virtual int  modeId() const override;
   };
 
 #endif // SD3DMODEHORZMOVE_H

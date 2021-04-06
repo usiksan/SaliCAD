@@ -196,12 +196,12 @@ void SdWCommand::createMenu(SdWMain *frame)
   cm3dImportStep       = menuInsertPart3d->addAction( QIcon(QString(":/pic/.png")), QObject::tr("Import from step file"), frame, SLOT(cm3dImportStep()) );
   cm3dImportVrml       = menuInsertPart3d->addAction( QIcon(QString(":/pic/.png")), QObject::tr("Import from vrml file"), frame, SLOT(cm3dImportVrml()) );
   menuInsertPart3d->addSeparator();
-//  cm3dShow2d     =
-//  cm3dShowPads   =
+  cm3dShow2d                     = menuInsertPart3d->addAction( QIcon(QString(":/pic/drawRect.png")), QObject::tr("Show/hide 2d graphics in 3d scene"), frame, SLOT(cm3dShow2d()) );
+  cm3dShowPads                   = menuInsertPart3d->addAction( QIcon(QString(":/pic/objVia.png")), QObject::tr("Show/hide pads"), frame, SLOT(cm3dShowPads()) );
   menuInsertPart3d->addSeparator();
   cmModeTable[MD_3D_VIEW]        = menuInsertPart3d->addAction( QIcon(QString(":/pic/select.png")), QObject::tr("View 3d scene with no edit"), frame, SLOT(cm3dModeView()) );
-  cmModeTable[MD_3D_HORZ_MOVE]   = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dHorzMove.png")), QObject::tr("Horizontal moving 3d object"), frame, SLOT(cm3dShow2d()) );
-  cmModeTable[MD_3D_HORZ_ROTATE] = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dHorzRotate.png")), QObject::tr("Horizontal rotation 3d object"), frame, SLOT(cm3dShowPads()) );
+  cmModeTable[MD_3D_HORZ_MOVE]   = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dHorzMove.png")), QObject::tr("Horizontal moving 3d object"), frame, SLOT(cm3dModeHorzMove()) );
+  cmModeTable[MD_3D_HORZ_ROTATE] = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dHorzRotate.png")), QObject::tr("Horizontal rotation 3d object"), frame, SLOT(cm3dModeHorzRotate()) );
   cmModeTable[MD_3D_VERT_MOVE]   = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dVertMove.png")), QObject::tr("Vertical moving 3d object"), frame, SLOT(cm3dModeVertMove()) );
   cmModeTable[MD_3D_VERT_ROTATE] = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dVertRotate.png")), QObject::tr("Vertical rotation 3d object"), frame, SLOT(cm3dModeVertRotate()) );
 
@@ -550,6 +550,11 @@ void SdWCommand::createToolBars(SdWMain *frame)
 
   //Part 3d bar
   barPart3d = new QToolBar( QString("Part3d") );
+  barPart3d->insertAction( nullptr, cm3dShowPads );
+  barPart3d->insertAction( nullptr, cm3dShow2d );
+  barPart3d->addSeparator();
+  barPart3d->insertAction( nullptr, cmModeTable[MD_3D_VIEW] );
+  barPart3d->addSeparator();
   barPart3d->insertAction( nullptr, cmModeTable[MD_3D_HORZ_MOVE] );
   barPart3d->insertAction( nullptr, cmModeTable[MD_3D_HORZ_ROTATE] );
   barPart3d->insertAction( nullptr, cmModeTable[MD_3D_VERT_MOVE] );

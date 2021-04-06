@@ -187,6 +187,9 @@ History
                    which builds parametriesed 3d models for components
                    Error: crash when no 3d model for view
   05.04.2021 v1.24 Refactor 3d modes
+  06.04.2021 v1.25 Add deactivate 3d mode by right button
+                   Append checking 3d mode button when select and deselect
+                   Append remove previous 3d objects when insert new model with master
 */
 
 #ifndef SDCONFIG
@@ -198,7 +201,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             24
+#define SD_VERSION_MINOR             25
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

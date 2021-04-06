@@ -35,6 +35,7 @@ class SdWEditor3dPart : public SdWEditor3d
 
     // SdWEditor interface
   public:
+    virtual void cm3dModeView() override;
     virtual void cm3dModeHorzMove() override;
     virtual void cm3dModeHorzRotate() override;
     virtual void cm3dModeVertMove() override;

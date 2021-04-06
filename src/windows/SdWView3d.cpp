@@ -12,9 +12,11 @@ Description
   Real 3d view widget.
 */
 #include "SdWView3d.h"
+#include "SdWCommand.h"
 #include "objects/Sd3dGraphModel.h"
 #include "objects/SdProjectItem.h"
 #include "objects/Sd3dFaceMaterial.h"
+#include "modes/Sd3dModeView.h"
 
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
@@ -30,7 +32,7 @@ SdWView3d::SdWView3d(SdProjectItem *item, QWidget *parent) :
   mMiddlePressed(false),  //!< True if mouse middle button pressed
   mScale(0.1),
   mItem(item),
-  mMode(nullptr),
+  mMode( new Sd3dModeView() ),
   mEnable2d(true),
   mEnablePad(true)
   {
@@ -105,10 +107,24 @@ void SdWView3d::fitItem()
 //!
 void SdWView3d::modeSet(Sd3dMode *mode)
   {
+  qDebug() << "mode set" << mode->modeId();
   //Remove previous mode
   if( mMode != nullptr )
     delete mMode;
   mMode = mode;
+  //Activate mode's command icon
+  SdWCommand::selectMode( mMode->modeId() );
+  }
+
+
+
+
+//!
+//! \brief modeCancel Sets modeView as current 3d mode
+//!
+void SdWView3d::modeCancel()
+  {
+  modeSet( new Sd3dModeView() );
   }
 
 
@@ -348,9 +364,9 @@ void SdWView3d::paintGL()
       }
 
     //Draw throught mode if mode present
-    if( mMode != nullptr ) mMode->draw3d( f );
-    //or use direct item draw if no mode present
-    else                   mItem->draw3d( f );
+    if( mMode == nullptr || !mMode->draw3d( f ) )
+      //or use direct item draw if no mode present or mode not drawn
+      mItem->draw3d( f );
     }
 
   //f->glFlush();

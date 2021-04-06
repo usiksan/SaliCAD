@@ -89,7 +89,13 @@ SdD3dMaster::SdD3dMaster(SdPItemPart *part, QWidget *parent) :
       SdD3dModelMaster dlg( mIdList.at(index), mPreviewPart, this );
       if( dlg.exec() ) {
         //Building model is successfull. Copy 3d model to the edited part
-        mPartPtr->getUndo()->begin( tr("Append 3d model"), mPartPtr );
+        mPartPtr->getUndo()->begin( tr("Replace 3d model"), mPartPtr );
+        //Remove previous 3d objects
+        mPartPtr->forEach( dct3D, [this] ( SdObject *obj ) -> bool {
+          mPartPtr->deleteChild( obj, mPartPtr->getUndo() );
+          return false;
+          });
+        //Insert new created 3d objects
         mPreviewPart->forEach( dct3D, [this] ( SdObject *obj ) -> bool {
           mPartPtr->insertChild( obj->copy(), mPartPtr->getUndo() );
           return false;

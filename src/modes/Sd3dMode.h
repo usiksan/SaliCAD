@@ -32,7 +32,8 @@ class Sd3dMode
     virtual bool wheelEvent( SdWView3d *viewer, QWheelEvent *event );
     virtual void keyPressEvent( SdWView3d *viewer, QKeyEvent *event );
     virtual void keyReleaseEvent( SdWView3d *viewer, QKeyEvent *event );
-    virtual void draw3d(QOpenGLFunctions_2_0 *f) = 0;
+    virtual bool draw3d(QOpenGLFunctions_2_0 *f) = 0;
+    virtual int  modeId() const = 0;
   };
 
 #endif // SD3DMODE_H
