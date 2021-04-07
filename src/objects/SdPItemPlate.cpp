@@ -563,14 +563,14 @@ void SdPItemPlate::draw3d(QOpenGLFunctions_2_0 *f)
     if( rect.isValid() && rect->isMatchLayer(pcbLayer) ) {
       //There we found pcb rectangle form
       //Draw it and cancel iteration
-      Sd3dDraw::flatPanel( f, rect->getPointList(), -1500, qRgba(40,100,0,255) );
+      Sd3dDraw::flatPanel( f, rect->getPointList(), -1500, sdEnvir->getSysColor( sc3dPcb ) );
       return false;
       }
     SdPtr<SdGraphLinearRegion> region(obj);
     if( region.isValid() && region->isMatchLayer(pcbLayer) ) {
       //There we found pcb region form
       //Draw it and cancel iteration
-      Sd3dDraw::flatPanel( f, region->getPointList(), -1500, qRgba(40,100,0,255) );
+      Sd3dDraw::flatPanel( f, region->getPointList(), -1500, sdEnvir->getSysColor( sc3dPcb ) );
       return false;
       }
     return true;

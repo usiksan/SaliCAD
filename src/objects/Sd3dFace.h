@@ -48,6 +48,14 @@ struct Sd3dFace
     Sd3dFace    translate( QVector3D offset ) const { return Sd3dFace( sd3dRegionTranslate( mContour, offset ), mColor ); }
 
     //!
+    //! \brief translateColor Translate this face region with offset and change face color
+    //! \param offset         Offset vector of translation
+    //! \param color          New color of face
+    //! \return               Translated and colored face
+    //!
+    Sd3dFace    translateColor( QVector3D offset, QColor color ) const { return Sd3dFace( sd3dRegionTranslate( mContour, offset ), color ); }
+
+    //!
     //! \brief shift  Shifts face in perpendecular direction with offset amount
     //! \param offset Shift offset amount
     //! \return       Shifted face

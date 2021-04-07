@@ -192,6 +192,7 @@ History
                    Append remove previous 3d objects when insert new model with master
              v1.26 Append setting project dirty when insert 3d object
                    Adjust scale of 3d object moving
+  07.04.2021 v1.27 Append colors for pads, holes and pcb to central envir
 */
 
 #ifndef SDCONFIG
@@ -203,7 +204,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             26
+#define SD_VERSION_MINOR             27
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

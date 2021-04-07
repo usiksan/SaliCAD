@@ -177,6 +177,25 @@ Sd3dModel sd3dModelTranslate(const Sd3dModel &model, QVector3D offset)
 
 
 //!
+//! \brief sd3dModelTranslateColor Translates mode to other model with offset and changes color of all faces to color
+//! \param model                   Source model to translate
+//! \param offset                  Offset of translation
+//! \param color                   New color of translated faces
+//! \return                        Translated and colored model
+//!
+Sd3dModel sd3dModelTranslateColor(const Sd3dModel &model, QVector3D offset, QColor color)
+  {
+  Sd3dModel dest;
+  dest.reserve( model.count() );
+  for( auto const &face : model )
+    dest.append( face.translateColor( offset, color ) );
+  return dest;
+  }
+
+
+
+
+//!
 //! \brief sd3dModelMap Convert source mode to destignation with matrix
 //! \param model        Source model
 //! \param matrix       Conversion matrix

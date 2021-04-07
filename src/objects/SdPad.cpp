@@ -183,32 +183,20 @@ void SdPad::draw3d(QOpenGLFunctions_2_0 *f, SdPoint p) const
   //3d drawing mach different for hole or without hole
   if( mHoleDiametr > 0 ) {
     //Hole present
-    SdLayer *layer = sdEnvir->mCacheForPad.getVisibleLayer(stmThrough);
-    if( layer != nullptr ) {
-      QColor padColor = layer->color();
-      layer = sdEnvir->mCacheForHole.getVisibleLayer(stmThrough);
-      if( layer != nullptr ) {
-        QColor holeColor = layer->color();
-        if( mIsCircle )
-          Sd3dDraw::padCircle( f, SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth >> 1, padColor, p, mHoleDiametr, mHoleLength, holeColor, -0.01 );
-        else
-          Sd3dDraw::padRect( f, SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth, mHeight, padColor, p, mHoleDiametr, mHoleLength, holeColor, -0.01 );
-        }
-
-      }
+    if( mIsCircle )
+      Sd3dDraw::padCircle( f, SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth >> 1, p, mHoleDiametr, mHoleLength, -0.01 );
+    else
+      Sd3dDraw::padRect( f, SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth, mHeight, p, mHoleDiametr, mHoleLength, -0.01 );
     }
   else {
     //Smd pad
-    SdLayer *layer = sdEnvir->mCacheForPad.getVisibleLayer(stmThrough);
-    if( layer != nullptr ) {
-      Sd3dDraw::color( f, layer->color() );
-      if( mIsCircle )
-        Sd3dDraw::circleFill( f, SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth >> 1, -0.01 );
-      else {
-        SdPoint a(p.x() + mCenterX - (mDiametrWidth >> 1), p.y() + mCenterY - (mHeight >> 1));
-        SdPoint b(a.x() + mDiametrWidth, a.y() + mHeight);
-        Sd3dDraw::rectFilled( f, a, b, -0.01 );
-        }
+    Sd3dDraw::color( f, sdEnvir->getSysColor( sc3dPadTop ) );
+    if( mIsCircle )
+      Sd3dDraw::circleFill( f, SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth >> 1, -0.01 );
+    else {
+      SdPoint a(p.x() + mCenterX - (mDiametrWidth >> 1), p.y() + mCenterY - (mHeight >> 1));
+      SdPoint b(a.x() + mDiametrWidth, a.y() + mHeight);
+      Sd3dDraw::rectFilled( f, a, b, -0.01 );
       }
     }
   }

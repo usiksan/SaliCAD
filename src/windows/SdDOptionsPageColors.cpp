@@ -39,7 +39,10 @@ SdDOptionsPageColors::SdDOptionsPageColors(QWidget *parent) :
   addColor( scGrid,       tr("Grid color in graph editors") );
   addColor( scRuleErrors, tr("Color for rule errors") );
   addColor( scCatchPoint, tr("Catch point color in road enter mode") );
-
+  addColor( sc3dPadTop,   tr("Color of top pad for 3d view") );
+  addColor( sc3dPadBot,   tr("Color of bottom pad for 3d view") );
+  addColor( sc3dPadHole,  tr("Color of pad holes for 3d view") );
+  addColor( sc3dPcb,      tr("Color of pcb for 3d view") );
 
   mainLayout->addWidget( mTable );
   setLayout( mainLayout );

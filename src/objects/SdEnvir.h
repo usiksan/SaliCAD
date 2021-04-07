@@ -41,7 +41,11 @@ Description
 #define scGrid           8 //Grid color [Цвет сетки]
 #define scRuleErrors     9 //Rule errors color
 #define scCatchPoint    10 //Catch point color in road enter mode. Catch point is point nearest current cursor postion for best next enter.
-#define scLast          11
+#define sc3dPadTop      11 //Color of top pad
+#define sc3dPadBot      12 //Color of bottom pad
+#define sc3dPadHole     13 //Color of pad holes
+#define sc3dPcb         14 //Color of pcb
+#define scLast          15
 
 
 //Вид перекрестья курсора
@@ -53,7 +57,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (36 + FONT_COUNT)
+#define SdEnvirVersion  (37 + FONT_COUNT)
 
 
 class SdEnvir
@@ -133,17 +137,60 @@ class SdEnvir
     SdEnvir();
     ~SdEnvir();
 
+    //!
+    //! \brief getSysColor Returns system color by its id
+    //! \param colorId     Id of color
+    //! \return            System color
+    //!
     QColor   getSysColor( int colorId );
+
+    //!
+    //! \brief setSysColor Sets system color
+    //! \param colorId     Id of system color
+    //! \param color       New color value
+    //!
     void     setSysColor( int colorId, QColor color );
 
+
+
+    //!
+    //! \brief getSysFont Returns name of system font by its id
+    //! \param fontId     System font id
+    //! \return           Name of system font
+    //!
     QString  getSysFont( int fontId );
+
+    //!
+    //! \brief setSysFont Setup new name of system font
+    //! \param fontId     System font id whous name is need to setup
+    //! \param fontName   New font name
+    //!
     void     setSysFont( int fontId, const QString fontName );
 
+
+
+    //!
+    //! \brief loadEnvir Loads environment from user settings
+    //!
     void     loadEnvir();
+
+    //!
+    //! \brief saveEnvir Saves environment to user settings
+    //!
     void     saveEnvir();
+
+    //!
+    //! \brief defaultEnvir Creates environment with default values
+    //!
     void     defaultEnvir();
 
-    //Get existing layer, if it is not exist - then it's created as default
+
+
+    //!
+    //! \brief getLayer Get existing layer, if it is not exist - then it's created as default
+    //! \param id       Id of needed layer
+    //! \return         Layer pointer
+    //!
     SdLayer *getLayer( QString id );
 
     //Clear stratum layer association cashe

@@ -76,11 +76,39 @@ class Sd3dDraw
     //!
     static void color( QOpenGLFunctions_2_0 *f, QColor col );
 
-    static void padCircle(QOpenGLFunctions_2_0 *f, SdPoint padCenter, int padRadius, QColor padColor, SdPoint holeCenter, int holeDiametr, int holeLenght, QColor holeColor , float z);
+    //!
+    //! \brief padCircle   Draws circle pad with hole
+    //! \param f           OpenGL
+    //! \param padCenter   Point of pad center in 3d scene
+    //! \param padRadius   Pad radius in micron
+    //! \param holeCenter  Center of pad hole aligned to center of pad
+    //! \param holeDiametr Hole diametr in micron
+    //! \param holeLenght  Lenght of hole in micron
+    //! \param z           z position of pad ahead pcb
+    //!
+    static void padCircle(QOpenGLFunctions_2_0 *f, SdPoint padCenter, int padRadius, SdPoint holeCenter, int holeDiametr, int holeLenght, float z);
 
-    static void padRect(QOpenGLFunctions_2_0 *f, SdPoint padCenter, int padWidth, int padHeight, QColor padColor, SdPoint holeCenter, int holeDiametr, int holeLenght, QColor holeColor , float z );
+    //!
+    //! \brief padRect     Draws rectangle pad with hole
+    //! \param f           OpenGL
+    //! \param padCenter   Point of pad center in 3d scene
+    //! \param padWidth    Pad width in micron
+    //! \param padHeight   Pad height in micron
+    //! \param holeCenter  Center of pad hole aligned to center of pad
+    //! \param holeDiametr Hole diametr in micron
+    //! \param holeLenght  Lenght of hole in micron
+    //! \param z           z position of pad ahead pcb
+    //!
+    static void padRect(QOpenGLFunctions_2_0 *f, SdPoint padCenter, int padWidth, int padHeight, SdPoint holeCenter, int holeDiametr, int holeLenght, float z );
 
-    static void flatPanel( QOpenGLFunctions_2_0 *f, SdPointList list, int z, unsigned color );
+    //!
+    //! \brief flatPanel Draws flat panel (often pcb) by contour point list and faces color
+    //! \param f         OpenGL
+    //! \param list      Contour point list
+    //! \param z         Thickness of flat panel in micron (negativ extruded in down)
+    //! \param color     Color of flat panel
+    //!
+    static void flatPanel(QOpenGLFunctions_2_0 *f, SdPointList list, int z, QColor color );
 
     static void qube( QOpenGLFunctions_2_0 *f, SdRect rect, int z, unsigned color );
 

@@ -38,11 +38,17 @@ SdEnvir::~SdEnvir()
   }
 
 
+
+//!
+//! \brief getSysColor Returns system color by its id
+//! \param colorId     Id of color
+//! \return            System color
+//!
 QColor SdEnvir::getSysColor(int colorId)
   {
   if( colorId == scUnvisible )
     return QColor(0,0,0,0);
-  //Если вне диапазона, то вернуть черный цвет
+  //If color is outside index bound then return true black color [Если вне диапазона, то вернуть черный цвет]
   if( colorId < 0 || colorId >= scLast )
     return QColor(0,0,0);
   return mSysColors[colorId];
@@ -51,6 +57,12 @@ QColor SdEnvir::getSysColor(int colorId)
 
 
 
+
+//!
+//! \brief setSysColor Sets system color
+//! \param colorId     Id of system color
+//! \param color       New color value
+//!
 void SdEnvir::setSysColor(int colorId, QColor color)
   {
   if( colorId >= 0 && colorId < scLast )
@@ -60,6 +72,12 @@ void SdEnvir::setSysColor(int colorId, QColor color)
 
 
 
+
+//!
+//! \brief getSysFont Returns name of system font by its id
+//! \param fontId     System font id
+//! \return           Name of system font
+//!
 QString SdEnvir::getSysFont(int fontId)
   {
   if( fontId >= 0 && fontId < FONT_COUNT )
@@ -70,6 +88,12 @@ QString SdEnvir::getSysFont(int fontId)
 
 
 
+
+//!
+//! \brief setSysFont Setup new name of system font
+//! \param fontId     System font id whous name is need to setup
+//! \param fontName   New font name
+//!
 void SdEnvir::setSysFont(int fontId, const QString fontName)
   {
   if( fontId >= 0 && fontId < FONT_COUNT )
@@ -79,6 +103,9 @@ void SdEnvir::setSysFont(int fontId, const QString fontName)
 
 
 
+//!
+//! \brief loadEnvir Load environment from user settings
+//!
 void SdEnvir::loadEnvir()
   {
   QSettings s;
@@ -159,6 +186,9 @@ void SdEnvir::loadEnvir()
 
 
 
+//!
+//! \brief saveEnvir Saves environment to user settings
+//!
 void SdEnvir::saveEnvir()
   {
   QByteArray ar;
@@ -175,7 +205,7 @@ void SdEnvir::saveEnvir()
   //Write layers [Записали слои]
   int c = mLayerTable.count();
   os << c;
-  for( SdLayer *layer : mLayerTable ) {
+  for( SdLayer *layer : qAsConst(mLayerTable) ) {
     os << layer->id();
     layer->write( os );
     }
@@ -233,6 +263,9 @@ void SdEnvir::saveEnvir()
 
 
 
+//!
+//! \brief defaultEnvir Creates environment with default values
+//!
 void SdEnvir::defaultEnvir()
   {
   //Цвета по умолчанию
@@ -247,6 +280,10 @@ void SdEnvir::defaultEnvir()
   mSysColors[scGrid]       = QColor(100,100,100);  //Цвет сетки
   mSysColors[scRuleErrors] = QColor(0xff,0xd8,0);  //Color for rectangles indicator for rule errors
   mSysColors[scCatchPoint] = QColor(200,10,50);    //Catch point color in road enter mode. Catch point is point nearest current cursor postion for best next enter.
+  mSysColors[sc3dPadTop]   = QColor(255,255,0);    //Color of top pad
+  mSysColors[sc3dPadBot]   = QColor(255,255,0);    //Color of bottom pad
+  mSysColors[sc3dPadHole]  = QColor(255,255,0);    //Color of pad holes
+  mSysColors[sc3dPcb]      = QColor(40,100,0);     //Color of pcb
 
   //Default fonts
   mFonts[0] = QString("FreeSerif");
@@ -350,7 +387,11 @@ void SdEnvir::defaultEnvir()
 
 
 
-//Get existing layer, if it is not exist - then it's created as default
+//!
+//! \brief getLayer Get existing layer, if it is not exist - then it's created as default
+//! \param id       Id of needed layer
+//! \return         Layer pointer
+//!
 SdLayer *SdEnvir::getLayer(QString id)
   {
   if( id.isEmpty() )
