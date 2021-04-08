@@ -39,8 +39,6 @@
 
 //TODO B074 In 3d masters object not drawn in preview
 
-//TODO B076 When undo 3d operation then open 2d editor
-
 //===================================================================================
 //There are no need:
 
@@ -51,6 +49,8 @@
 
 //===================================================================================
 //Fixed:
+
+//B076 When undo 3d operation then open 2d editor
 
 //B078 Appending 3d object not set project as dirty
 

@@ -410,7 +410,7 @@ bool SdModeCBus::testNextPoint(SdPoint p)
 
 void SdModeCBus::enterNet()
   {
-  mUndo->begin( QObject::tr("Insert bus wire"), mObject );
+  mUndo->begin( QObject::tr("Insert bus wire"), mObject, false );
   //Попробуем найти цепь в схеме
   QString netName = mNetList.at(mIndex);
 

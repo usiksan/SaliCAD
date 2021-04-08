@@ -201,14 +201,23 @@ void SdUndo::point(SdPoint *src)
 
 
 
-void SdUndo::begin(QString title, SdProjectItem *item)
+
+
+//!
+//! \brief begin Appends "begin" record of group of undo commands. When undo then
+//!              group undo as single unit
+//! \param title Title for undo
+//! \param item  Item on which undo executed
+//! \param is3d  When true then item used in 3d view mode
+//!
+void SdUndo::begin(QString title, SdProjectItem *item, bool is3d)
   {
   if( mUndo.count() && mUndo.top()->isStep() ) {
     //Previous record is empty. Remove it
     delete mUndo.pop();
     mUndoCount--;
     }
-  addUndo( new SdUndoRecordBegin(title, item) );
+  addUndo( new SdUndoRecordBegin(title, item, is3d) );
   }
 
 
@@ -377,7 +386,7 @@ void SdUndo::addUndo(SdUndoRecordPtr ptr)
       }
     }
 
-  //On each ondo all redo must be clear
+  //On each undo all redo must be clear
   if( mRedo.count() ) {
     qDeleteAll( mRedo );
     mRedo.clear();

@@ -20,10 +20,11 @@ class SdProjectItem;
 
 class SdUndoRecordBegin : public SdUndoRecord
   {
-    QString        mTitle;    //Undo operation title
-    SdProjectItem *mEditItem; //Foregraund edit object
+    QString        mTitle;    //!< Undo operation title
+    SdProjectItem *mEditItem; //!< Foregraund edit object
+    bool           mIs3d;     //!< When true, then mEditItem used in 3d view mode
   public:
-    SdUndoRecordBegin( const QString tit, SdProjectItem *item ) : SdUndoRecord(), mTitle(tit), mEditItem(item) {}
+    SdUndoRecordBegin( const QString tit, SdProjectItem *item, bool is3d ) : SdUndoRecord(), mTitle(tit), mEditItem(item), mIs3d(is3d) {}
 
     // SdUndoRecord interface
   public:

@@ -107,7 +107,7 @@ void SdModeCNetName::propSetToBar()
 void SdModeCNetName::enterPoint( SdPoint p )
   {
   if( getStep() == sPlaceName ) {
-    mUndo->begin( QObject::tr("Insert sheet net name"), mObject );
+    mUndo->begin( QObject::tr("Insert sheet net name"), mObject, false );
     mObject->insertChild( new SdGraphNetName( mPrev, mNetName, sdGlobalProp->mWireNameProp ), mUndo );
     setDirty();
     setDirtyCashe();

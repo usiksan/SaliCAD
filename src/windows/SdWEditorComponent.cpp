@@ -200,7 +200,7 @@ void SdWEditorComponent::sectionAdd()
   //If user selected symbol then append it as section
   if( !uid.isEmpty() ) {
     //Symbol selected
-    mUndo->begin( tr("Append section for component"), mComponent );
+    mUndo->begin( tr("Append section for component"), mComponent, false );
     mComponent->appendSection( uid, mUndo );
     dirtyProject();
     fillSections();
@@ -216,7 +216,7 @@ void SdWEditorComponent::sectionDubl()
   {
   int row = mSectionList->currentRow();
   if( row >= 0 ) {
-    mUndo->begin( tr("Duplicate section for component"), mComponent );
+    mUndo->begin( tr("Duplicate section for component"), mComponent, false );
     mComponent->appendSection( mComponent->getSectionSymbolId(row), mUndo );
     dirtyProject();
     fillSections();
@@ -233,7 +233,7 @@ void SdWEditorComponent::sectionSelect()
   {
   int row = mSectionList->currentRow();
   if( row >= 0 ) {
-    mUndo->begin( tr("Set section for component"), mComponent );
+    mUndo->begin( tr("Set section for component"), mComponent, false );
     mComponent->setSectionSymbolId( SdDGetObject::getObjectUid( dctSymbol, tr("Select symbol for section"), this ),
                                     row, mUndo );
     dirtyProject();
@@ -251,7 +251,7 @@ void SdWEditorComponent::sectionDelete()
   int row = mSectionList->currentRow();
   if( row >= 0 ) {
     if( QMessageBox::question( this, tr("Attention!"), tr("You attempting to delete section %1. Delete?").arg(row+1) ) == QMessageBox::Yes ) {
-      mUndo->begin( tr("Delete component section"), mComponent );
+      mUndo->begin( tr("Delete component section"), mComponent, false );
       mComponent->removeSection( row, mUndo );
       dirtyProject();
       fillSections();
@@ -265,7 +265,7 @@ void SdWEditorComponent::sectionDelete()
 void SdWEditorComponent::sectionDeleteAll()
   {
   if( QMessageBox::question( this, tr("Attention!"), tr("Are You sure delete All sections?") ) == QMessageBox::Yes ) {
-    mUndo->begin( tr("Delete all sections"), mComponent );
+    mUndo->begin( tr("Delete all sections"), mComponent, false );
     int count = mComponent->getSectionCount() - 1;
     while( count >= 0 )
       mComponent->removeSection( count--, mUndo );
@@ -331,7 +331,7 @@ void SdWEditorComponent::sectionUpdate()
   //If uid present then update it self
   if( !uid.isEmpty() ) {
     //Symbol selected
-    mUndo->begin( tr("Update section for component"), mComponent );
+    mUndo->begin( tr("Update section for component"), mComponent, false );
     mComponent->getSection(index)->setSymbolId( uid, mUndo );
     dirtyProject();
     fillUsedPins();
@@ -349,7 +349,7 @@ void SdWEditorComponent::onPackChanged(int row, int column)
   QString number = mPackTable->item(row,column)->text();
   QString name = mPackTable->item(row,0)->text();
   if( name.isEmpty() ) return;
-  mUndo->begin( tr("Edit pin pack"), mComponent );
+  mUndo->begin( tr("Edit pin pack"), mComponent, false );
   if( !number.isEmpty() ) {
     if( !mPackNumbers.contains(number) ) {
       QMessageBox::warning( this, tr("Error"), tr("Component part has no pin with this number") );
@@ -397,7 +397,7 @@ void SdWEditorComponent::onParamChanged(int row, int column)
   QString key = mParamTable->item(row,0)->text();
   QString value = mParamTable->item(row,1)->text();
   //qDebug() << Q_FUNC_INFO << key <<value;
-  mUndo->begin( tr("Edit param value"), mComponent );
+  mUndo->begin( tr("Edit param value"), mComponent, false );
   mComponent->paramSet( key, value, mUndo );
   connect( mParamTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onParamChanged );
   updateUndoRedoStatus();
@@ -413,7 +413,7 @@ void SdWEditorComponent::partSelect()
   QString uid = SdDGetObject::getObjectUid( dctPart, tr("Select part for component"), this );
   if( !uid.isEmpty() ) {
     //If user selected part then assign it
-    mUndo->begin( tr("Part select for component"), mComponent );
+    mUndo->begin( tr("Part select for component"), mComponent, false );
     SdPartVariant *part = mComponent->getPart();
     if( part == nullptr ) {
       part = new SdPartVariant();
@@ -448,7 +448,7 @@ void SdWEditorComponent::paramAdd()
     if( mComponent->paramContains(key) )
       QMessageBox::warning( this, tr("Warning!"), tr("Param with this name already exist. Enter another name.") );
     else {
-      mUndo->begin( tr("Append param"), mComponent );
+      mUndo->begin( tr("Append param"), mComponent, false );
       paramAddInt( key );
       }
     }
@@ -461,7 +461,7 @@ void SdWEditorComponent::paramAddDefault()
   {
   SdDParamDefault def( this );
   if( def.exec() ) {
-    mUndo->begin( tr("Append default params"), mComponent );
+    mUndo->begin( tr("Append default params"), mComponent, false );
     QStringList paramList = def.defParamList();
     for( const QString &param : paramList )
       if( !mComponent->paramContains(param) )
@@ -477,7 +477,7 @@ void SdWEditorComponent::paramDelete()
   {
   int paramIndex = mParamTable->currentRow();
   if( paramIndex >= 0 ) {
-    mUndo->begin( tr("Delete param"), mComponent );
+    mUndo->begin( tr("Delete param"), mComponent, false );
     QString key = mParamTable->item( paramIndex, 0 )->text();
     mComponent->paramDelete( key, mUndo );
     mParamTable->removeRow( paramIndex );
@@ -498,7 +498,7 @@ void SdWEditorComponent::paramCopy()
   SdPItemComponent *comp = SdDGetObject::getComponent( nullptr, &param, tr("Select component to copy param from"), this );
   if( comp != nullptr ) {
     //Append params
-    mUndo->begin( tr("Copy params from other component"), mComponent );
+    mUndo->begin( tr("Copy params from other component"), mComponent, false );
     for( auto iter = param.cbegin(); iter != param.cend(); iter++ )
       mComponent->paramSet( iter.key(), iter.value(), mUndo );
     dirtyProject();

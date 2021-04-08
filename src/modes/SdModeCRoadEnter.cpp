@@ -910,7 +910,7 @@ void SdModeCRoadEnter::findLoop(SdPoint src, SdPoint dst, SdStratum st)
 void SdModeCRoadEnter::removeLoop()
   {
   if( sdEnvir->mAutoRemoveRoadLoop && mLoopPath.count() ) {
-    mUndo->begin( QObject::tr("Deletion loop"), mObject );
+    mUndo->begin( QObject::tr("Deletion loop"), mObject, false );
     mLoopPath.forEach( dctAll, [this] (SdObject *obj) ->bool {
       SdPtr<SdGraph> graph(obj);
       if( graph.isValid() )

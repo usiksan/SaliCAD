@@ -155,7 +155,7 @@ void SdWEditorGraphSheet::cmEditProperties()
       if( editor.exec() ) {
         //Change params for all selected items
         SdUndo *undo = getProject()->getUndo();
-        undo->begin( tr("Param change"), getProjectItem() );
+        undo->begin( tr("Param change"), getProjectItem(), false );
         mSelect->getFragment()->forEach( dctSymImp, [&editor,undo] (SdObject *obj) -> bool {
           SdPtr<SdGraphSymImp> imp(obj);
           if( imp.isValid() )

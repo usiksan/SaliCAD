@@ -93,7 +93,7 @@ void SdModeCSheetIdentMove::enterPoint(SdPoint point)
       //At first restore saved
       setProp( mPropSaved, mPositionSaved, nullptr );
       //At second set new values
-      mUndo->begin( QObject::tr("Move ident or value"), mObject );
+      mUndo->begin( QObject::tr("Move ident or value"), mObject, false );
       setProp( mPropText, mPosition, mUndo );
       mImp = nullptr;
       setDirty();

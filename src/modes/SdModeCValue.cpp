@@ -101,7 +101,7 @@ void SdModeCValue::propSetToBar()
 void SdModeCValue::enterPoint(SdPoint)
   {
   //Save previous state of ident
-  mUndo->begin( QObject::tr("Edit value"), mObject );
+  mUndo->begin( QObject::tr("Edit value"), mObject, false );
   mValue->saveState( mUndo );
   mValue->updateValue( mPrev, mOverRect, mPropText );
   setDirty();

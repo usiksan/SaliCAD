@@ -164,7 +164,7 @@ void SdModeCText::applyEdit()
     addPic( new SdGraphText( mPrev, mString, mOverRect, sdGlobalProp->mTextProp ), QObject::tr("Text insertion") );
   else if( getStep() == sEdit && mPicAffected ) {
     //Store previous state of editable object
-    mUndo->begin( QObject::tr("Text edit"), mObject );
+    mUndo->begin( QObject::tr("Text edit"), mObject, false );
     mPicAffected->saveState( mUndo );
     mPicAffected->setText( mIdAffected, mString, mEditText, mEditor );
     mPicAffected = nullptr;

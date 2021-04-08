@@ -347,7 +347,7 @@ void SdModeCRoadMove::cancelPoint(SdPoint)
 void SdModeCRoadMove::beginDrag(SdPoint p)
   {
   if( mSourceType ) {
-    mUndo->begin( QObject::tr("Move begin"), mObject );
+    mUndo->begin( QObject::tr("Move begin"), mObject, false );
 
     //Save state of all object before moving
     mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {

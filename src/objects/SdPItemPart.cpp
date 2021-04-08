@@ -33,7 +33,7 @@ void SdPItemPart::matrixMap(QMatrix4x4 matrix, SdUndo *undo)
   {
   //If undo applied then append undo for this operation
   if( undo != nullptr ) {
-    undo->begin( QObject::tr("3d model position and/orientation changed"), this );
+    undo->begin( QObject::tr("3d model position and/orientation changed"), this, true );
     undo->matrix3d( matrix, this );
     }
 

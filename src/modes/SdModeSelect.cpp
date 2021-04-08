@@ -126,7 +126,7 @@ void SdModeSelect::propGetFromBar()
 
   if( mFragment.count() ) {
     setDirty();
-    mUndo->begin( QObject::tr("Properties changed"), mObject );
+    mUndo->begin( QObject::tr("Properties changed"), mObject, false );
     //Сохранить состояние объектов до изменения свойств
     mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
       SdGraph *graph = dynamic_cast<SdGraph*>( obj );
@@ -644,7 +644,7 @@ void SdModeSelect::selectAll()
 void SdModeSelect::deleteSelected()
   {
   if( mFragment.count() ) {
-    mUndo->begin( QObject::tr("Deletion elements"), mObject );
+    mUndo->begin( QObject::tr("Deletion elements"), mObject, false );
     mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
       SdGraph *graph = dynamic_cast<SdGraph*>(obj);
       if( graph != nullptr )
@@ -790,7 +790,7 @@ void SdModeSelect::stopCopy(SdPoint p)
 void SdModeSelect::beginMove(SdPoint p)
   {
   if( mFragment.count() ) {
-    mUndo->begin( QObject::tr("Move begin"), mObject );
+    mUndo->begin( QObject::tr("Move begin"), mObject, false );
 
     //Moving prepare
     mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
@@ -900,7 +900,7 @@ void SdModeSelect::enterPaste(SdPoint point)
     setDirty();
     //Unselect selected objects
     unselect(false);
-    mUndo->begin( QObject::tr("Insert from clipboard"), mObject );
+    mUndo->begin( QObject::tr("Insert from clipboard"), mObject, false );
     //Insert copy of pasted elements into object without selection them
     mObject->insertObjects( point.sub( mFirst ), &mPaste, mUndo, mEditor, &mFragment, false );
     cancelPaste();
@@ -936,7 +936,7 @@ void SdModeSelect::insertCopy(SdPoint offset, bool next)
   setDirty();
   setDirtyCashe();
   setDirtyRatNet();
-  mUndo->begin( QObject::tr("Copy insertion"), mObject );
+  mUndo->begin( QObject::tr("Copy insertion"), mObject, false );
   //Произвести вставку
   //Perform insertion
   unselect(false);
@@ -972,7 +972,7 @@ void SdModeSelect::groupRotation()
   {
   setDirty();
   //Сохранить состояние перед поворотом
-  mUndo->begin( QObject::tr("Group rotation"), mObject );
+  mUndo->begin( QObject::tr("Group rotation"), mObject, false );
   mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
     SdPtr<SdGraph> graph(obj);
     if( graph.isValid() )

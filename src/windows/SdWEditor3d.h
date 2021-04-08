@@ -44,6 +44,7 @@ class SdWEditor3d : public SdWEditor
     virtual void           cm3dImportStep() override;
     virtual void           cm3dImportVrml() override;
     virtual void           onActivateEditor() override;
+    virtual void           cmEditUndo() override;
   };
 
 #endif // SDWEDITOR3D_H

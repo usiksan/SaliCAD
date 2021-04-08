@@ -170,7 +170,7 @@ void SdGraphSymImp::unconnectPinOverRect(SdRect over, SdUndo *undo, const QStrin
     if( over.isPointInside( i.value().mPosition ) ) {
       if( undo && first ) {
         first = false;
-        undo->begin( undoTitle, getSheet() );
+        undo->begin( undoTitle, getSheet(), false );
         }
       //Set new state of pin
       pinConnectionSet( i.key(), QString(), undo );

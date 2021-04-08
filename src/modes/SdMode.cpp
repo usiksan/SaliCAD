@@ -256,7 +256,7 @@ void SdMode::setDirtyRatNet()
 void SdMode::addPic( SdObject *obj, QString title )
   {
   if( mUndo )
-    mUndo->begin( title, mObject );
+    mUndo->begin( title, mObject, false );
   mObject->insertChild( obj, mUndo );
   mEditor->dirtyCashe();
   mEditor->dirtyProject();

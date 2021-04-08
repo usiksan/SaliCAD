@@ -196,7 +196,7 @@ void SdDRuleEditor::accept()
   //Transfer to plate
   SdUndo *undo = mPlate->getUndo();
   if( undo )
-    undo->begin( tr("Rule setup"), mPlate );
+    undo->begin( tr("Rule setup"), mPlate, false );
   mPlate->ruleSet( mPcb, mNet, undo );
 
   //Finish dialog

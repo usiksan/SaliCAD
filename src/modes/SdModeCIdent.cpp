@@ -83,7 +83,7 @@ void SdModeCIdent::propSetToBar()
 void SdModeCIdent::enterPoint(SdPoint)
   {
   //Save previous state of ident
-  mUndo->begin( QObject::tr("Edit ident"), mObject );
+  mUndo->begin( QObject::tr("Edit ident"), mObject, false );
   mIdent->saveState( mUndo );
   mIdent->updateIdent( mPrev, mOverRect, mPropText );
   setDirty();

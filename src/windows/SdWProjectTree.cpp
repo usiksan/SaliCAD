@@ -173,7 +173,7 @@ void SdWProjectTree::cmObjectNew()
   if( wizard.exec() ) {
     //Append item to the project
     item->setHand();
-    mProject->getUndo()->begin( tr("Creating object"), nullptr );
+    mProject->getUndo()->begin( tr("Creating object"), nullptr, false );
     mProject->insertChild( item, mProject->getUndo() );
     //Open window to edit item
     SdPulsar::sdPulsar->emitActivateItem( item );
@@ -194,7 +194,7 @@ void SdWProjectTree::cmObjectLoad()
   {
   SdProjectItem *item = sdObjectOnly<SdProjectItem>( SdDGetObject::getObject( dctProjectItems, tr("Select object to load"), this ) );
   if( item ) {
-    mProject->getUndo()->begin( tr("Load object"), nullptr );
+    mProject->getUndo()->begin( tr("Load object"), nullptr, false );
     SdProjectItem *it = mProject->getFixedProjectItem( item );
     //Escape auto deletion
     if( it != nullptr ) it->setHand();
@@ -239,7 +239,7 @@ void SdWProjectTree::cmObjectDelete()
     if( mProject->isUsed(item) )
       QMessageBox::warning( this, tr("Warning!"), tr("Object is used by other objects. You can not delete it until dereferenced.") );
     else if( QMessageBox::question(this, tr("Warning!"), tr("Do You realy want to delete \'%1\'").arg(item->getTitle())) == QMessageBox::Yes ) {
-      mProject->getUndo()->begin( tr("Deleting object"), nullptr );
+      mProject->getUndo()->begin( tr("Deleting object"), nullptr, false );
       mProject->deleteChild( item, mProject->getUndo() );
       //Update status undo and redo commands
       cmUndoRedoUpdate();
@@ -302,7 +302,7 @@ void SdWProjectTree::cmObjectPaste()
     //selection reading
     QString uid = obj.value( QStringLiteral("ProjectItem UID") ).toString();
 
-    mProject->getUndo()->begin( tr("Paste from clipboard"), nullptr );
+    mProject->getUndo()->begin( tr("Paste from clipboard"), nullptr, false );
     if( mProject->itemByUid(uid) )
       //Same object already present in project duplicate it
       duplicate( uid );
@@ -352,7 +352,7 @@ void SdWProjectTree::cmObjectDuplicate()
   {
   SdPtr<SdProjectItem> item( mProject->item( mCurrentItem ) );
   if( item.isValid() && (item->getClass() & (dctComponent | dctPart | dctSymbol) ) ) {
-    mProject->getUndo()->begin( tr("Duplicate object"), nullptr );
+    mProject->getUndo()->begin( tr("Duplicate object"), nullptr, false );
     duplicate( item->getUid() );
     //Update status undo and redo commands
     cmUndoRedoUpdate();

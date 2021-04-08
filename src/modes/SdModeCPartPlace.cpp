@@ -629,7 +629,7 @@ void SdModeCPartPlace::setPropertiesToComponent()
 void SdModeCPartPlace::saveStateOfSelectedObjects( const QString undoTitle )
   {
   if( mFragment.count() ) {
-    mUndo->begin( undoTitle, mObject );
+    mUndo->begin( undoTitle, mObject, false );
     //Сохранить состояние объектов до изменения свойств
     mFragment.forEach( dctPartImp, [this] (SdObject *obj) -> bool {
       SdGraph *graph = dynamic_cast<SdGraph*>( obj );

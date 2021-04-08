@@ -84,7 +84,7 @@ void SdWEditor3d::cm3dImportStl()
 
   Sd3dGraph *stl = Sd3dReaderStl::importStlFromFile( title );
   if( stl ) {
-    mItem->getUndo()->begin( tr("Import STL model"), mItem );
+    mItem->getUndo()->begin( tr("Import STL model"), mItem, true );
     mItem->insertChild( stl, mItem->getUndo() );
     dirtyProject();
     mView->update();
@@ -103,7 +103,7 @@ void SdWEditor3d::cm3dImportStep()
 
   Sd3dStep *step = Sd3dStep::importStepFromFile( title );
   if( step ) {
-    mItem->getUndo()->begin( tr("Import STEP model"), mItem );
+    mItem->getUndo()->begin( tr("Import STEP model"), mItem, true );
     mItem->insertChild( step, mItem->getUndo() );
     dirtyProject();
     mView->update();
@@ -122,7 +122,7 @@ void SdWEditor3d::cm3dImportVrml()
 
   Sd3dGraph *vrml = Sd3dReaderVrml::importVrmlFromFile( title, this );
   if( vrml ) {
-    mItem->getUndo()->begin( tr("Import VRML model"), mItem );
+    mItem->getUndo()->begin( tr("Import VRML model"), mItem, true );
     mItem->insertChild( vrml, mItem->getUndo() );
     dirtyProject();
     mView->update();
@@ -136,5 +136,13 @@ void SdWEditor3d::onActivateEditor()
   SdWEditor::onActivateEditor();
   //Update current mode
   SdWCommand::selectMode( mView->mode()->modeId() );
+  }
+
+
+
+
+void SdWEditor3d::cmEditUndo()
+  {
+  mView->update();
   }
 

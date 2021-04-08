@@ -535,7 +535,7 @@ void SdProject::redoDeleteChild(SdObject *child)
 bool SdProject::upgradeNewerItems(SdUndo *undo, QWidget *parent)
   {
   if( undo )
-    undo->begin( QObject::tr("Upgrading newer objects"), nullptr );
+    undo->begin( QObject::tr("Upgrading newer objects"), nullptr, false );
   //Upgrage in schematic
   if( !upgradeClassProjectItem( dctSheet, undo, parent ) ) return false;
   //Upgrade in pcb

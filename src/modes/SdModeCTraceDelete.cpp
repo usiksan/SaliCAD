@@ -59,7 +59,7 @@ void SdModeCTraceDelete::drawDynamic(SdContext *ctx)
 void SdModeCTraceDelete::enterPoint(SdPoint)
   {
   if( mFragment.count() ) {
-    mUndo->begin( QObject::tr("Deletion elements"), mObject );
+    mUndo->begin( QObject::tr("Deletion elements"), mObject, false );
     mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
       SdGraph *graph = dynamic_cast<SdGraph*>(obj);
       if( graph != nullptr )

@@ -18,5 +18,8 @@ Description
 void SdUndoRecordBegin::undo()
   {
   //Bring to top edit object
-  SdPulsar::sdPulsar->emitActivateItem( mEditItem );
+  if( mIs3d )
+    SdPulsar::sdPulsar->emitActivateItem3d( mEditItem );
+  else
+    SdPulsar::sdPulsar->emitActivateItem( mEditItem );
   }

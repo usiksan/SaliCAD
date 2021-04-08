@@ -112,7 +112,7 @@ void SdModeCSymImp::enterPoint( SdPoint point )
   if( mPaste.count() ) {
     //There fragment
     setDirty();
-    mUndo->begin( QObject::tr("Insert fragment"), mObject );
+    mUndo->begin( QObject::tr("Insert fragment"), mObject, false );
     //Insert copy of pasted elements into object without selection them
     mObject->insertObjects( point.sub( mFirst ), &mPaste, mUndo, mEditor, nullptr, false );
     }

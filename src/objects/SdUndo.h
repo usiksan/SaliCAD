@@ -87,7 +87,16 @@ class SdUndo
     void partImp(SdPoint *origin, SdPropPartImp *imp, int *logNumber, SdRect *over);
     void wire( SdPropLine *prop, SdPoint *p1, SdPoint *p2, bool *dot1, bool *dot2 );
     void point( SdPoint *src );
-    void begin(QString title , SdProjectItem *item);
+
+    //!
+    //! \brief begin Appends "begin" record of group of undo commands. When undo then
+    //!              group undo as single unit
+    //! \param title Title for undo
+    //! \param item  Item on which undo executed
+    //! \param is3d  When true then item used in 3d view mode
+    //!
+    void begin( QString title, SdProjectItem *item, bool is3d );
+
     void projectItemInfo(SdProjectItem *item, QString *title, QString *author, int *timeCreation, bool *editEnable );
     void string2( QString *str1, QString *str2 );
     void stringMapItem( SdStringMap *assoc, const QString key );
