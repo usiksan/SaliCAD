@@ -56,6 +56,8 @@ SOURCES += \
     modes/Sd3dModeHorzMove.cpp \
     modes/Sd3dModeHorzRotate.cpp \
     modes/Sd3dModeMat.cpp \
+    modes/Sd3dModeVertMove.cpp \
+    modes/Sd3dModeVertRotate.cpp \
     modes/Sd3dModeView.cpp \
     modes/SdModeCTraceDelete.cpp \
     objects/Sd3dDraw.cpp \
@@ -470,6 +472,8 @@ HEADERS  += \
     modes/Sd3dModeHorzMove.h \
     modes/Sd3dModeHorzRotate.h \
     modes/Sd3dModeMat.h \
+    modes/Sd3dModeVertMove.h \
+    modes/Sd3dModeVertRotate.h \
     modes/Sd3dModeView.h \
     modes/SdModeCTraceDelete.h \
     objects/Sd3dDraw.h \

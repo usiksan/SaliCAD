@@ -195,6 +195,7 @@ History
   07.04.2021 v1.27 Append colors for pads, holes and pcb to central envir
   09.04.2021 v1.28 Append status help and help invocation for 3d modes
                    Append horizontal rotation mode
+             v1.29 Append vertical moving and rotation modes
 */
 
 #ifndef SDCONFIG
@@ -206,7 +207,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             28
+#define SD_VERSION_MINOR             29
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
