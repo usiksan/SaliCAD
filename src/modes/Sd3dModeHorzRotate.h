@@ -9,23 +9,21 @@ Web
   www.saliLab.ru
 
 Description
-  3d mode used to translate model in horizontal area
+  3d mode used to rotate model in horizontal area
 */
-#ifndef SD3DMODEHORZMOVE_H
-#define SD3DMODEHORZMOVE_H
+#ifndef SD3DMODEHORZROTATE_H
+#define SD3DMODEHORZROTATE_H
 
 #include "Sd3dModeMat.h"
-#include "objects/SdPItemPart.h"
 
-class Sd3dModeHorzMove : public Sd3dModeMat
+class Sd3dModeHorzRotate : public Sd3dModeMat
   {
-    float  mOffsetX;     //!< Current offset for transfer model
-    float  mOffsetY;
-    float  mScale;       //!< Conversion coef from screen mouse coord to phisical coord of model
+    float  mAngleZ;      //!< Current angle around Z axis
+    float  mAngleX;      //!< Current angle around X axis
     QPoint mStartPoint;  //!< Point where mouse button pressed
     bool   mLeftPressed; //!< Flag for left mouse button pressed
   public:
-    Sd3dModeHorzMove( SdPItemPart *part );
+    Sd3dModeHorzRotate( SdPItemPart *part );
 
     // Sd3dMode interface
   public:
@@ -38,4 +36,4 @@ class Sd3dModeHorzMove : public Sd3dModeMat
     virtual QString getModeThema() const override;
   };
 
-#endif // SD3DMODEHORZMOVE_H
+#endif // SD3DMODEHORZROTATE_H

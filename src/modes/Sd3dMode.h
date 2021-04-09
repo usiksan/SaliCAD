@@ -34,6 +34,18 @@ class Sd3dMode
     virtual void keyReleaseEvent( SdWView3d *viewer, QKeyEvent *event );
     virtual bool draw3d(QOpenGLFunctions_2_0 *f) = 0;
     virtual int  modeId() const = 0;
+
+    //!
+    //! \brief getStepHelp Return short help on current mode step
+    //! \return            Short help on current mode step
+    //!
+    virtual QString getStepHelp() const = 0;
+
+    //!
+    //! \brief getModeThema Returns Help page address [Адрес страницы помощи]
+    //! \return                     Help page address
+    //!
+    virtual QString getModeThema() const = 0;
   };
 
 #endif // SD3DMODE_H

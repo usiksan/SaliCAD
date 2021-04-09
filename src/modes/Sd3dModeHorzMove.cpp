@@ -87,7 +87,24 @@ bool Sd3dModeHorzMove::draw3d(QOpenGLFunctions_2_0 *f)
   }
 
 
+
+
 int Sd3dModeHorzMove::modeId() const
   {
   return MD_3D_HORZ_MOVE;
+  }
+
+
+
+
+QString Sd3dModeHorzMove::getStepHelp() const
+  {
+  return QObject::tr("Press Left button and move to horizontal moving model");
+  }
+
+
+
+QString Sd3dModeHorzMove::getModeThema() const
+  {
+  return  QString( MODE_HELP "3dModeHorzMove.htm" );
   }

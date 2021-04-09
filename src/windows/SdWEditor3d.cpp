@@ -20,6 +20,7 @@ Description
 #include "objects/Sd3dStep.h"
 #include "objects/Sd3dReaderStl.h"
 #include "objects/Sd3dReaderVrml.h"
+#include "objects/SdPulsar.h"
 
 #include <QVBoxLayout>
 #include <QPaintEvent>
@@ -136,6 +137,8 @@ void SdWEditor3d::onActivateEditor()
   SdWEditor::onActivateEditor();
   //Update current mode
   SdWCommand::selectMode( mView->mode()->modeId() );
+  //Set default status message for activated mode
+  SdPulsar::sdPulsar->emitSetStatusMessage( mView->mode()->getStepHelp() );
   }
 
 

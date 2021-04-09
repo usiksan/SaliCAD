@@ -23,8 +23,10 @@ class Sd3dModeView : public Sd3dMode
 
     // Sd3dMode interface
   public:
-    virtual bool draw3d(QOpenGLFunctions_2_0 *f) override;
-    virtual int  modeId() const override;
+    virtual bool    draw3d(QOpenGLFunctions_2_0 *f) override;
+    virtual int     modeId() const override;
+    virtual QString getStepHelp() const override;
+    virtual QString getModeThema() const override;
   };
 
 #endif // SD3DMODEVIEW_H

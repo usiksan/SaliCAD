@@ -19,6 +19,7 @@ Description
 #include "SdWView3d.h"
 #include "modes/Sd3dModeView.h"
 #include "modes/Sd3dModeHorzMove.h"
+#include "modes/Sd3dModeHorzRotate.h"
 
 SdWEditor3dPart::SdWEditor3dPart(SdPItemPart *item, QWidget *parent) :
   SdWEditor3d( item, parent ),
@@ -75,8 +76,9 @@ void SdWEditor3dPart::cm3dModeHorzMove()
 
 
 void SdWEditor3dPart::cm3dModeHorzRotate()
-    {
-    }
+  {
+  mView->modeSet( new Sd3dModeHorzRotate(mPartPtr) );
+  }
 
 void SdWEditor3dPart::cm3dModeVertMove()
     {

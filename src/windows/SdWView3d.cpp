@@ -16,6 +16,7 @@ Description
 #include "objects/Sd3dGraphModel.h"
 #include "objects/SdProjectItem.h"
 #include "objects/Sd3dFaceMaterial.h"
+#include "objects/SdPulsar.h"
 #include "modes/Sd3dModeView.h"
 
 #include <QOpenGLContext>
@@ -32,11 +33,10 @@ SdWView3d::SdWView3d(SdProjectItem *item, QWidget *parent) :
   mMiddlePressed(false),  //!< True if mouse middle button pressed
   mScale(0.1),
   mItem(item),
-  mMode( new Sd3dModeView() ),
+  mMode( nullptr ),
   mEnable2d(true),
   mEnablePad(true)
   {
-
   QSurfaceFormat format;
   format.setDepthBufferSize(24);
   format.setStencilBufferSize(8);
@@ -45,6 +45,8 @@ SdWView3d::SdWView3d(SdProjectItem *item, QWidget *parent) :
   format.setSamples(2);
 
   setFormat( format );
+
+  modeSet( new Sd3dModeView() );
   }
 
 
@@ -107,13 +109,15 @@ void SdWView3d::fitItem()
 //!
 void SdWView3d::modeSet(Sd3dMode *mode)
   {
-  qDebug() << "mode set" << mode->modeId();
+  //qDebug() << "mode set" << mode->modeId();
   //Remove previous mode
   if( mMode != nullptr )
     delete mMode;
   mMode = mode;
   //Activate mode's command icon
   SdWCommand::selectMode( mMode->modeId() );
+  //Set default status message for activated mode
+  SdPulsar::sdPulsar->emitSetStatusMessage( mMode->getStepHelp() );
   }
 
 
@@ -234,6 +238,11 @@ void SdWView3d::wheelEvent(QWheelEvent *event)
 
 void SdWView3d::keyPressEvent(QKeyEvent *event)
   {
+  //Help key
+  if( event->key() == Qt::Key_F1 ) {
+    if( mMode != nullptr )
+      SdPulsar::sdPulsar->emitHelpTopic( mMode->getModeThema() );
+    }
   //At first try handle event by current mode
   if( mMode != nullptr )
     mMode->keyPressEvent( this, event );

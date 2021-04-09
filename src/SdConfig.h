@@ -193,6 +193,8 @@ History
              v1.26 Append setting project dirty when insert 3d object
                    Adjust scale of 3d object moving
   07.04.2021 v1.27 Append colors for pads, holes and pcb to central envir
+  09.04.2021 v1.28 Append status help and help invocation for 3d modes
+                   Append horizontal rotation mode
 */
 
 #ifndef SDCONFIG
@@ -204,7 +206,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             27
+#define SD_VERSION_MINOR             28
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
