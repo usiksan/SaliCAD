@@ -124,6 +124,51 @@ Sd3dRegion sd3dRegionTranslate( const Sd3dRegion &source, QVector3D offset );
 //!
 Sd3dRegion sd3dRegionShift( const Sd3dRegion &source, float shift );
 
+//!
+//! \brief sd3dRegionBegin Starts creation of continuously region
+//! \param x               Start coordinates of first point of region
+//! \param y
+//! \return                Region with single point
+//!
+Sd3dRegion sd3dRegionBegin( float x, float y );
 
+//!
+//! \brief sd3dRegionAddX Appends to region vertex shifted regarding last point at x by axis X
+//! \param region         Source of region
+//! \param x              Regarding coordinate x
+//! \return               Region with appended vertex
+//!
+Sd3dRegion sd3dRegionAddX( const Sd3dRegion &region, float x );
+
+
+//!
+//! \brief sd3dRegionAddY Appends to region vertex shifted regarding last point at y by axis Y
+//! \param region         Source of region
+//! \param x              Regarding coordinate y
+//! \return               Region with appended vertex
+//!
+Sd3dRegion sd3dRegionAddY( const Sd3dRegion &region, float y );
+
+//!
+//! \brief sd3dRegionAddArc Appends arc to end of region from last point of region to stop point
+//! \param region           Source of region
+//! \param stop             Stop point of arc
+//! \param radius           Radius of arc
+//! \param direction        Direction of rotation. Positive value for CW and negative for CCW
+//! \return                 Region with appended arc
+//!
+Sd3dRegion sd3dRegionAddArc( const Sd3dRegion &region, QVector3D stop, float radius, float direction );
+
+//!
+//! \brief sd3dRegionAddArcOffset Appends arc to end of region from last point of region to stop point
+//!                               where stop point defined as last point shifted on offset
+//! \param region                 Source of region
+//! \param stopOffsetX            Stop point offset X of last point of source region
+//! \param stopOffsetY            Stop point offset Y of last point of source region
+//! \param radius                 Radius of arc
+//! \param direction              Direction of rotation. Positive value for CW and negative for CCW
+//! \return                       Region with appended arc
+//!
+Sd3dRegion sd3dRegionAddArcOffset( const Sd3dRegion &region, float stopOffsetX, float stopOffsetY, float radius, float direction );
 
 #endif // SD3DREGION_H

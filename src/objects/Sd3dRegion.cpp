@@ -266,3 +266,108 @@ Sd3dRegion sd3dRegionShift(const Sd3dRegion &source, float shift)
 
 
 
+
+//!
+//! \brief sd3dRegionBegin Starts creation of continuously region
+//! \param x               Start coordinates of first point of region
+//! \param y
+//! \return                Region with single point
+//!
+Sd3dRegion sd3dRegionBegin(float x, float y)
+  {
+  Sd3dRegion region;
+  region.append( QVector3D( x, y, 0 ) );
+  return region;
+  }
+
+
+
+//!
+//! \brief sd3dRegionAddX Append to region vertex shifted regarding last point at x by axis X
+//! \param region         Source of region
+//! \param x              Regarding coordinate x
+//! \return               Region with appended vertex
+//!
+Sd3dRegion sd3dRegionAddX(const Sd3dRegion &region, float x)
+  {
+  Sd3dRegion dest(region);
+  QVector3D v( region.last() );
+  dest.append( v + QVector3D(x,0,0) );
+  return dest;
+  }
+
+
+
+
+//!
+//! \brief sd3dRegionAddY Append to region vertex shifted regarding last point at y by axis Y
+//! \param region         Source of region
+//! \param x              Regarding coordinate y
+//! \return               Region with appended vertex
+//!
+Sd3dRegion sd3dRegionAddY(const Sd3dRegion &region, float y)
+  {
+  Sd3dRegion dest(region);
+  QVector3D v( region.last() );
+  dest.append( v + QVector3D(0, y, 0) );
+  return dest;
+  }
+
+
+
+//!
+//! \brief sd3dRegionAddArc Appends arc to end of region from last point of region to stop point
+//! \param region           Source of region
+//! \param stop             Stop point of arc
+//! \param radius           Radius of arc
+//! \param direction        Direction of rotation. Positive value for CW and negative for CCW
+//! \return                 Region with appended arc
+//!
+Sd3dRegion sd3dRegionAddArc(const Sd3dRegion &region, QVector3D stop, float radius, float direction)
+  {
+  Sd3dRegion dest(region);
+
+  QVector3D start( region.last() );
+  float dx = stop.x() - start.x();
+  float dy = stop.y() - start.y();
+
+  if( radius == 0 || direction == 0 || (dx == 0 && dy == 0)) {
+    //Invalid input params. Arc building impossible. We return simple end point
+    dest.append(stop);
+    return dest;
+    }
+
+  //Calculate center of arc
+  float d = sqrt( dx * dx + dy * dy );
+  float h = sqrt( radius * radius - (d/2.0) * (d/2.0) );
+
+  QVector3D center;
+  if( radius > 0 ) {
+    center.setX( start.x() + dx / 2.0 + h * dy / d );
+    center.setY( start.y() + dy / 2.0 - h * dx / d );
+    }
+  else {
+    center.setX( start.x() + dx / 2.0 - h * dy / d );
+    center.setY( start.y() + dy / 2.0 + h * dx / d );
+    }
+
+  float
+
+  }
+
+
+//!
+//! \brief sd3dRegionAddArcOffset Appends arc to end of region from last point of region to stop point
+//!                               where stop point defined as last point shifted on offset
+//! \param region                 Source of region
+//! \param stopOffsetX            Stop point offset X of last point of source region
+//! \param stopOffsetY            Stop point offset Y of last point of source region
+//! \param radius                 Radius of arc
+//! \param direction              Direction of rotation. Positive value for CW and negative for CCW
+//! \return                       Region with appended arc
+//!
+Sd3dRegion sd3dRegionAddArcOffset(const Sd3dRegion &region, float stopOffsetX, float stopOffsetY, float radius, float direction)
+  {
+  QVector3D v( region.last() );
+  return sd3dRegionAddArc( region, v + QVector3D( stopOffsetX, stopOffsetY, 0), radius, direction );
+  }
