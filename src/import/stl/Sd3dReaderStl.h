@@ -14,7 +14,7 @@ Description
 #ifndef SD3DREADERSTL_H
 #define SD3DREADERSTL_H
 
-#include "Sd3dFaceSet.h"
+#include "objects/Sd3dFaceSet.h"
 
 class Sd3dReaderStl
   {

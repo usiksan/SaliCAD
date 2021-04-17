@@ -1,7 +1,7 @@
 #ifndef SDM3DSCANER_H
 #define SDM3DSCANER_H
 
-#include "../scaner/SdScanerMultyline.h"
+#include "import/SdScanerMultyline.h"
 
 class SdM3dScaner : public SdScanerMultyline
   {

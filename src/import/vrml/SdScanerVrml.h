@@ -3,7 +3,7 @@
 
 #include "VrmlTypes.h"
 #include "VrmlVector.h"
-#include "../scaner/SdScanerMultyline.h"
+#include "import/SdScanerMultyline.h"
 #include "VrmlNode.h"
 
 class SdScanerVrml : public SdScanerMultyline

@@ -41,6 +41,17 @@ class SdWEditor3dPart : public SdWEditor3d
     virtual void cm3dModeVertMove() override;
     virtual void cm3dModeVertRotate() override;
     virtual void cm3dModeFaceColor() override;
+    virtual void cm3dImportStl() override;
+    virtual void cm3dImportStep() override;
+    virtual void cm3dImportVrml() override;
+
+  private:
+    //!
+    //! \brief importModel Does import 3d model into part item. Previous 3d model removed.
+    //! \param model       Model to insert into part item
+    //! \param undoTitle   Undo title text
+    //!
+    void         importModel( Sd3dGraph *model, const QString undoTitle );
   };
 
 #endif // SDWEDITOR3DPART_H

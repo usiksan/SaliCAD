@@ -18,15 +18,12 @@ Description
 #include "SdWCommand.h"
 #include "objects/SdProjectItem.h"
 #include "objects/Sd3dStep.h"
-#include "objects/Sd3dReaderStl.h"
-#include "objects/Sd3dReaderVrml.h"
 #include "objects/SdPulsar.h"
 
 #include <QVBoxLayout>
 #include <QPaintEvent>
 #include <QWheelEvent>
 #include <QDebug>
-#include <QFileDialog>
 
 SdWEditor3d::SdWEditor3d(SdProjectItem *item, QWidget *parent) :
   SdWEditor( parent ),
@@ -66,69 +63,6 @@ bool SdWEditor3d::is3d() const
   }
 
 
-
-
-
-//void SdWEditor3d::onActivateEditor()
-//  {
-//  }
-
-
-
-
-void SdWEditor3d::cm3dImportStl()
-  {
-  //Open dialog to select stl file
-  QString title = QFileDialog::getOpenFileName(this, tr("Import STL model"), QString(), tr("STL model files (*%1)").arg(".stl") );
-
-  if( title.isEmpty() ) return;
-
-  Sd3dGraph *stl = Sd3dReaderStl::importStlFromFile( title );
-  if( stl ) {
-    mItem->getUndo()->begin( tr("Import STL model"), mItem, true );
-    mItem->insertChild( stl, mItem->getUndo() );
-    dirtyProject();
-    mView->update();
-    }
-  }
-
-
-
-
-void SdWEditor3d::cm3dImportStep()
-  {
-  //Open dialog to select STEP file
-  QString title = QFileDialog::getOpenFileName(this, tr("Import STEP model"), QString(), tr("STEP model files (*%1)").arg(".stp") );
-
-  if( title.isEmpty() ) return;
-
-  Sd3dStep *step = Sd3dStep::importStepFromFile( title );
-  if( step ) {
-    mItem->getUndo()->begin( tr("Import STEP model"), mItem, true );
-    mItem->insertChild( step, mItem->getUndo() );
-    dirtyProject();
-    mView->update();
-    }
-  }
-
-
-
-
-void SdWEditor3d::cm3dImportVrml()
-  {
-  //Open dialog to select VRML file
-  QString title = QFileDialog::getOpenFileName(this, tr("Import VRML model"), QString(), tr("VRML model files (*%1)").arg(".wrl") );
-
-  if( title.isEmpty() ) return;
-
-  Sd3dGraph *vrml = Sd3dReaderVrml::importVrmlFromFile( title, this );
-  if( vrml ) {
-    mItem->getUndo()->begin( tr("Import VRML model"), mItem, true );
-    mItem->insertChild( vrml, mItem->getUndo() );
-    dirtyProject();
-    mView->update();
-    }
-  }
 
 
 

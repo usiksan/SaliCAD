@@ -14,7 +14,8 @@ Description
 #ifndef SD3DREADERVRML_H
 #define SD3DREADERVRML_H
 
-#include "Sd3dFaceSet.h"
+#include "objects/Sd3dFaceSet.h"
+#include "objects/Sd3dGraph.h"
 
 class Sd3dReaderVrml
   {
@@ -27,6 +28,14 @@ class Sd3dReaderVrml
     //! \return                   Pointer to Sd3dFaceSet object if import was successfull or nullptr in other case
     //!
     static Sd3dFaceSet *importVrmlFromFile( QString fname, QWidget *parent );
+
+    //!
+    //! \brief importVrml Read model from VRML file which represented by its path
+    //! \param fname      Full path to VRML file
+    //! \param parent     Parent widget. Is used to display messages and progress bar
+    //! \return           Pointer to Sd3dGraph object if import was successfull or nullptr in other case
+    //!
+    static Sd3dGraph   *importVrml( QString fname, QWidget *parent );
   };
 
 #endif // SD3DREADERVRML_H

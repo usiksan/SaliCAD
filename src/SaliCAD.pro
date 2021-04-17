@@ -23,6 +23,39 @@ win64: LIBS += -lopengl32
 
 SOURCES += \
     SdMain.cpp \
+    import/SdScaner.cpp \
+    import/SdScanerMultyline.cpp \
+    import/step/SdStepReader.cpp \
+    import/stl/Sd3dReaderStl.cpp \
+    import/vrml/Sd3dReaderVrml.cpp \
+    import/vrml/SdScanerVrml.cpp \
+    import/vrml/VrmlColor.cpp \
+    import/vrml/VrmlNode.cpp \
+    import/vrml/VrmlNode1.cpp \
+    import/vrml/VrmlNode1Coordinate3.cpp \
+    import/vrml/VrmlNode1IndexedFaceSet.cpp \
+    import/vrml/VrmlNode1Material.cpp \
+    import/vrml/VrmlNode1MaterialBinding.cpp \
+    import/vrml/VrmlNode1MatrixTransform.cpp \
+    import/vrml/VrmlNode1Normal.cpp \
+    import/vrml/VrmlNode1NormalBinding.cpp \
+    import/vrml/VrmlNode1Rotation.cpp \
+    import/vrml/VrmlNode1Scale.cpp \
+    import/vrml/VrmlNode1Separator.cpp \
+    import/vrml/VrmlNode1Transform.cpp \
+    import/vrml/VrmlNode1Translation.cpp \
+    import/vrml/VrmlNodeAppearance.cpp \
+    import/vrml/VrmlNodeColor.cpp \
+    import/vrml/VrmlNodeCompound.cpp \
+    import/vrml/VrmlNodeCoordinate.cpp \
+    import/vrml/VrmlNodeGroup.cpp \
+    import/vrml/VrmlNodeIndexedFaceSet.cpp \
+    import/vrml/VrmlNodeMaterial.cpp \
+    import/vrml/VrmlNodeNormal.cpp \
+    import/vrml/VrmlNodeShape.cpp \
+    import/vrml/VrmlNodeTransform.cpp \
+    import/vrml/VrmlRotation.cpp \
+    import/vrml/VrmlVector.cpp \
     master/SdDMasterPartSingleLine.cpp \
     master/SdDMasterSheetDecorator.cpp \
     master/SdMasterPart.cpp \
@@ -70,42 +103,9 @@ SOURCES += \
     objects/Sd3dGraphModel.cpp \
     objects/Sd3dModel.cpp \
     objects/Sd3dPoint.cpp \
-    objects/Sd3dReaderStl.cpp \
-    objects/Sd3dReaderVrml.cpp \
     objects/Sd3dRegion.cpp \
     objects/Sd3dStep.cpp \
     objects/SdUndoRecord3dMatrix.cpp \
-    scaner/SdScaner.cpp \
-    scaner/SdScanerMultyline.cpp \
-    step/SdStepReader.cpp \
-    vrml/SdScanerVrml.cpp \
-    vrml/VrmlColor.cpp \
-    vrml/VrmlNode.cpp \
-    vrml/VrmlNode1.cpp \
-    vrml/VrmlNode1Coordinate3.cpp \
-    vrml/VrmlNode1IndexedFaceSet.cpp \
-    vrml/VrmlNode1Material.cpp \
-    vrml/VrmlNode1MaterialBinding.cpp \
-    vrml/VrmlNode1MatrixTransform.cpp \
-    vrml/VrmlNode1Normal.cpp \
-    vrml/VrmlNode1NormalBinding.cpp \
-    vrml/VrmlNode1Rotation.cpp \
-    vrml/VrmlNode1Scale.cpp \
-    vrml/VrmlNode1Separator.cpp \
-    vrml/VrmlNode1Transform.cpp \
-    vrml/VrmlNode1Translation.cpp \
-    vrml/VrmlNodeAppearance.cpp \
-    vrml/VrmlNodeColor.cpp \
-    vrml/VrmlNodeCompound.cpp \
-    vrml/VrmlNodeCoordinate.cpp \
-    vrml/VrmlNodeGroup.cpp \
-    vrml/VrmlNodeIndexedFaceSet.cpp \
-    vrml/VrmlNodeMaterial.cpp \
-    vrml/VrmlNodeNormal.cpp \
-    vrml/VrmlNodeShape.cpp \
-    vrml/VrmlNodeTransform.cpp \
-    vrml/VrmlRotation.cpp \
-    vrml/VrmlVector.cpp \
     windows/SdD3dMaster.cpp \
     windows/SdD3dModelMaster.cpp \
     windows/SdD3dModelProgrammEditor.cpp \
@@ -379,6 +379,40 @@ SOURCES += \
 
 HEADERS  += \
     SdConfig.h \
+    import/SdScaner.h \
+    import/SdScanerMultyline.h \
+    import/step/SdStepReader.h \
+    import/stl/Sd3dReaderStl.h \
+    import/vrml/Sd3dReaderVrml.h \
+    import/vrml/SdScanerVrml.h \
+    import/vrml/VrmlColor.h \
+    import/vrml/VrmlNode.h \
+    import/vrml/VrmlNode1.h \
+    import/vrml/VrmlNode1Coordinate3.h \
+    import/vrml/VrmlNode1IndexedFaceSet.h \
+    import/vrml/VrmlNode1Material.h \
+    import/vrml/VrmlNode1MaterialBinding.h \
+    import/vrml/VrmlNode1MatrixTransform.h \
+    import/vrml/VrmlNode1Normal.h \
+    import/vrml/VrmlNode1NormalBinding.h \
+    import/vrml/VrmlNode1Rotation.h \
+    import/vrml/VrmlNode1Scale.h \
+    import/vrml/VrmlNode1Separator.h \
+    import/vrml/VrmlNode1Transform.h \
+    import/vrml/VrmlNode1Translation.h \
+    import/vrml/VrmlNodeAppearance.h \
+    import/vrml/VrmlNodeColor.h \
+    import/vrml/VrmlNodeCompound.h \
+    import/vrml/VrmlNodeCoordinate.h \
+    import/vrml/VrmlNodeGroup.h \
+    import/vrml/VrmlNodeIndexedFaceSet.h \
+    import/vrml/VrmlNodeMaterial.h \
+    import/vrml/VrmlNodeNormal.h \
+    import/vrml/VrmlNodeShape.h \
+    import/vrml/VrmlNodeTransform.h \
+    import/vrml/VrmlRotation.h \
+    import/vrml/VrmlTypes.h \
+    import/vrml/VrmlVector.h \
     master/SdDMasterPartSingleLine.h \
     master/SdDMasterSheetDecorator.h \
     master/SdMasterPart.h \
@@ -486,44 +520,10 @@ HEADERS  += \
     objects/Sd3dGraphModel.h \
     objects/Sd3dModel.h \
     objects/Sd3dPoint.h \
-    objects/Sd3dReaderStl.h \
-    objects/Sd3dReaderVrml.h \
     objects/Sd3dRegion.h \
     objects/Sd3dStep.h \
     objects/SdProperty.h \
     objects/SdUndoRecord3dMatrix.h \
-    scaner/SdScaner.h \
-    scaner/SdScanerMultyline.h \
-    step/SdStepReader.h \
-    vrml/SdScanerVrml.h \
-    vrml/VrmlColor.h \
-    vrml/VrmlNode.h \
-    vrml/VrmlNode1.h \
-    vrml/VrmlNode1Coordinate3.h \
-    vrml/VrmlNode1IndexedFaceSet.h \
-    vrml/VrmlNode1Material.h \
-    vrml/VrmlNode1MaterialBinding.h \
-    vrml/VrmlNode1MatrixTransform.h \
-    vrml/VrmlNode1Normal.h \
-    vrml/VrmlNode1NormalBinding.h \
-    vrml/VrmlNode1Rotation.h \
-    vrml/VrmlNode1Scale.h \
-    vrml/VrmlNode1Separator.h \
-    vrml/VrmlNode1Transform.h \
-    vrml/VrmlNode1Translation.h \
-    vrml/VrmlNodeAppearance.h \
-    vrml/VrmlNodeColor.h \
-    vrml/VrmlNodeCompound.h \
-    vrml/VrmlNodeCoordinate.h \
-    vrml/VrmlNodeGroup.h \
-    vrml/VrmlNodeIndexedFaceSet.h \
-    vrml/VrmlNodeMaterial.h \
-    vrml/VrmlNodeNormal.h \
-    vrml/VrmlNodeShape.h \
-    vrml/VrmlNodeTransform.h \
-    vrml/VrmlRotation.h \
-    vrml/VrmlTypes.h \
-    vrml/VrmlVector.h \
     windows/SdD3dMaster.h \
     windows/SdD3dModelMaster.h \
     windows/SdD3dModelProgrammEditor.h \

@@ -291,5 +291,8 @@
         <file>pic/3dVertMove.png</file>
         <file>pic/3dHorzRotate.png</file>
         <file>pic/3dHorzMove.png</file>
+        <file>pic/3dImportStep.png</file>
+        <file>pic/3dImportStl.png</file>
+        <file>pic/3dImportVrml.png</file>
     </qresource>
 </RCC>

@@ -19,6 +19,7 @@ Description
 #include "SdWEditor.h"
 
 class SdWView3d;
+class Sd3dGraph;
 
 class SdWEditor3d : public SdWEditor
   {
@@ -39,12 +40,9 @@ class SdWEditor3d : public SdWEditor
   public:
     virtual SdProjectItem *getProjectItem() const override;
     virtual bool           is3d() const override;
-//    virtual void           onActivateEditor() override;
-    virtual void           cm3dImportStl() override;
-    virtual void           cm3dImportStep() override;
-    virtual void           cm3dImportVrml() override;
     virtual void           onActivateEditor() override;
     virtual void           cmEditUndo() override;
+
   };
 
 #endif // SDWEDITOR3D_H

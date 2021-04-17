@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD 3d horizontal movement of the model</title>
+  </head>
+  <body>
+    <h1 align="center">3d horizontal movement of the model</h1>
+    <p><a href="contents.htm">Contents</a>=&gt;<a href="MModes.htm">Modes</a>=&gt;<a
+        href="MPart3d.htm">3d part specific modes</a>=&gt;3d horizontal movement
+      of the model</p>
+    <p>Tool bar: <img src="3dHorzMove.png" width="24" height="24" border="1"></p>
+    <p>Menu: 3d part|Horizontal movement</p>
+    <p>It is used to move the model in the XY plane.</p>
+    <p>Press the left mouse button and move the mouse without releasing it. At
+      the same time the model moves synchronously with the mouse pointer.</p>
+    <p>2. Enter the polyline of the first net. This polyline should preferably
+      (but not necessarily) start at the component pin and can have an arbitrary
+      number of segments. When you are finished entering the template,
+      right-click.</p>
+    <p>3. Set net name properties</p>
+    <p>4. Specify the relative location of the net name (relative to the
+      polyline).</p>
+    <p>5. Thus, the pattern for all bus nets is entered, if there was only one
+      net in the bus, then the transition to step 1 is automatically carried
+      out. If there is more than one net in the bus, proceed to step 6.</p>
+    <p>6. Specify the starting point of the next polyline net. In this case, the
+      rest of the polyline for this net is formed automatically, and then the
+      name of the chain is added.</p>
+    <p>Note: the name of the net to be formed is displayed in the chain
+      properties panel.</p>
+    <ul>
+      <li><img src="mouseBLeft.png" width="32" height="48"> You can specify a
+        point by clicking the left mouse button or manually.</li>
+      <li><img src="mouseBRight.png" width="32" height="48"> The termination of
+        the input is done by pressing the right mouse button.</li>
+    </ul>
+    <!--
+    <p>Атрибуты ломаной цепи задаются с помощью <a href="MWire.htm"> панели        свойств цепи</a>.</p>    <p>Атрибуты имени цепи задаются с помощью <a href="PropText.htm"> панели        свойств текста</a>.</p>    -->
+    <p><b>"Smart mode"</b></p>
+    <p>Smart mode after entering the bus nets pattern, the initial points of the
+      remaining bus nets on the free pins are searched in the direction of the
+      cursor movement. In this case, the search is carried out clearly only in
+      the horizontal or vertical direction.</p>
+    <p>Smart mode example</p>
+    <p><img src="smartNetBus1.png" width="480" height="419" border="1"></p>
+    <p>After smart mode apply</p>
+    <p><img src="smartNetBus2.png" width="486" height="436" border="1"></p>
+    <p><img src="mouseBMiddle.png" width="32" height="48"> Middle mouse button
+      or "space" - confirmation of "smart" input.</p>
+  </body>
+</html>

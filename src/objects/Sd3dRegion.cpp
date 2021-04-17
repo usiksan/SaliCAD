@@ -351,7 +351,7 @@ Sd3dRegion sd3dRegionAddArc(const Sd3dRegion &region, QVector3D stop, float radi
     center.setY( start.y() + dy / 2.0 + h * dx / d );
     }
 
-  float
+  //float
 
   }
 
