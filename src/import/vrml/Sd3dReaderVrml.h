@@ -27,7 +27,7 @@ class Sd3dReaderVrml
     //! \param parent             Parent widget. Is used to display messages and progress bar
     //! \return                   Pointer to Sd3dFaceSet object if import was successfull or nullptr in other case
     //!
-    static Sd3dFaceSet *importVrmlFromFile( QString fname, QWidget *parent );
+    //static Sd3dFaceSet *importVrmlFromFile( QString fname, QWidget *parent );
 
     //!
     //! \brief importVrml Read model from VRML file which represented by its path
@@ -35,7 +35,7 @@ class Sd3dReaderVrml
     //! \param parent     Parent widget. Is used to display messages and progress bar
     //! \return           Pointer to Sd3dGraph object if import was successfull or nullptr in other case
     //!
-    static Sd3dGraph   *importVrml( QString fname, QWidget *parent );
+    static Sd3dGraph   *importVrmlFromFile( QString fname, QWidget *parent );
   };
 
 #endif // SD3DREADERVRML_H

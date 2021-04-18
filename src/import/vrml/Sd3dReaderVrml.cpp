@@ -18,7 +18,7 @@ Description
 
 #include <QMessageBox>
 
-
+#if 0
 //!
 //! \brief importVrmlFromFile Read model from VRML file which represented by its path
 //! \param fname              Full path to VRML file
@@ -54,7 +54,7 @@ Sd3dFaceSet *Sd3dReaderVrml::importVrmlFromFile(QString fname, QWidget *parent)
   QMessageBox::warning( parent, QObject::tr("Error happens when read VRML file!"), scanerVrml.errorGet() );
   return nullptr;
   }
-
+#endif
 
 
 
@@ -65,7 +65,7 @@ Sd3dFaceSet *Sd3dReaderVrml::importVrmlFromFile(QString fname, QWidget *parent)
 //! \param parent     Parent widget. Is used to display messages and progress bar
 //! \return           Pointer to Sd3dGraph object if import was successfull or nullptr in other case
 //!
-Sd3dGraph *Sd3dReaderVrml::importVrml(QString fname, QWidget *parent)
+Sd3dGraph *Sd3dReaderVrml::importVrmlFromFile(QString fname, QWidget *parent)
   {
   SdScanerVrml scanerVrml;
   if( scanerVrml.parseFile(fname) ) {
