@@ -23,6 +23,7 @@ Description
 #include "modes/Sd3dModeHorzRotate.h"
 #include "modes/Sd3dModeVertMove.h"
 #include "modes/Sd3dModeVertRotate.h"
+#include "modes/Sd3dModeFaceColor.h"
 #include "import/stl/Sd3dReaderStl.h"
 #include "import/vrml/Sd3dReaderVrml.h"
 
@@ -109,6 +110,7 @@ void SdWEditor3dPart::cm3dModeVertRotate()
 
 void SdWEditor3dPart::cm3dModeFaceColor()
   {
+  mView->modeSet( new Sd3dModeFaceColor( mView, mPartPtr ) );
   }
 
 
@@ -150,7 +152,7 @@ void SdWEditor3dPart::cm3dImportVrml()
 
   if( title.isEmpty() ) return;
 
-  importModel( Sd3dReaderVrml::importVrml( title, this ), tr("Import VRML model") );
+  importModel( Sd3dReaderVrml::importVrmlFromFile( title, this ), tr("Import VRML model") );
   }
 
 

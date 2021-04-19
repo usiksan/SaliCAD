@@ -204,6 +204,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_3D_HORZ_ROTATE] = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dHorzRotate.png")), QObject::tr("Horizontal rotation 3d object"), frame, SLOT(cm3dModeHorzRotate()) );
   cmModeTable[MD_3D_VERT_MOVE]   = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dVertMove.png")), QObject::tr("Vertical moving 3d object"), frame, SLOT(cm3dModeVertMove()) );
   cmModeTable[MD_3D_VERT_ROTATE] = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dVertRotate.png")), QObject::tr("Vertical rotation 3d object"), frame, SLOT(cm3dModeVertRotate()) );
+  cmModeTable[MD_3D_FACE_COLOR]  = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dVertMove.png")), QObject::tr("Change face color"), frame, SLOT(cm3dModeFaceColor()) );
 
 
 

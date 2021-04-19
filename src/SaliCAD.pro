@@ -86,6 +86,7 @@ SOURCES += \
     master3d/SdM3dScaner.cpp \
     master3d/SdM3dString.cpp \
     modes/Sd3dMode.cpp \
+    modes/Sd3dModeFaceColor.cpp \
     modes/Sd3dModeHorzMove.cpp \
     modes/Sd3dModeHorzRotate.cpp \
     modes/Sd3dModeMat.cpp \
@@ -503,6 +504,7 @@ HEADERS  += \
     master3d/SdM3dVariableString.h \
     master3d/SdM3dVariableVertex.h \
     modes/Sd3dMode.h \
+    modes/Sd3dModeFaceColor.h \
     modes/Sd3dModeHorzMove.h \
     modes/Sd3dModeHorzRotate.h \
     modes/Sd3dModeMat.h \
