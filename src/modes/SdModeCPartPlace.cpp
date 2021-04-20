@@ -477,7 +477,7 @@ void SdModeCPartPlace::stopDrag(SdPoint p)
     SdRect r(mFirst,p);
     mObject->forEach( dctPartImp, [this,r] (SdObject *obj) -> bool {
       SdPtr<SdGraphPartImp> imp(obj);
-      if( imp )
+      if( imp.isValid()  && (imp->stratum().match( mSideMask )) )
         imp->selectByRect( r, &mFragment );
       return true;
       });
