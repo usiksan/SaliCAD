@@ -68,6 +68,7 @@
 
 #include "SdM3dFunFaceBuild.h"
 #include "SdM3dFunFaceTranslate.h"
+#include "SdM3dFunFaceTriangle.h"
 
 #include "SdM3dFunModelWall.h"
 #include "SdM3dFunModelWallEven.h"
@@ -112,6 +113,7 @@ SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
 
   addFunction( QStringLiteral("face"), [] () -> SdM3dFunction* { return new SdM3dFunFaceBuild(); } );
   addFunction( QStringLiteral("faceTranslate"), [] () -> SdM3dFunction* { return new SdM3dFunFaceTranslate(); } );
+  addFunction( QStringLiteral("faceTriangle"), [] () -> SdM3dFunction* { return new SdM3dFunFaceTriangle(); } );
 
   addFunction( QStringLiteral("modelWall"), [] () -> SdM3dFunction* { return new SdM3dFunModelWall(); } );
   addFunction( QStringLiteral("modelWallEven"), [] () -> SdM3dFunction* { return new SdM3dFunModelWallEven(); } );

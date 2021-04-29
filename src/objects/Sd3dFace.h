@@ -29,6 +29,13 @@ struct Sd3dFace
     Sd3dFace( const Sd3dRegion &region, QColor color ) : mContour(region), mColor(color) {}
 
     //!
+    //! \brief Sd3dFace Builds triangle face with three vertex's and face color
+    //! \param p[0,1,2] Vertexies
+    //! \param color    Face color
+    //!
+    Sd3dFace( QVector3D p0, QVector3D p1, QVector3D p2, QColor color );
+
+    //!
     //! \brief write Writes face to JSON object
     //! \return      JSON object with face
     //!

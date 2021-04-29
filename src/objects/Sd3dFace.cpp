@@ -2,6 +2,17 @@
 
 
 
+//!
+//! \brief Sd3dFace Builds triangle face with three vertex's and face color
+//! \param p[0,1,2] Vertexies
+//! \param color    Face color
+//!
+Sd3dFace::Sd3dFace(QVector3D p0, QVector3D p1, QVector3D p2, QColor color) :
+  mContour( { p0, p1, p2 } ),
+  mColor( color )
+  {
+  }
+
 
 
 //!

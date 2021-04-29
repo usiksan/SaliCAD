@@ -36,6 +36,14 @@ class Sd3dReaderVrml
     //! \return           Pointer to Sd3dGraph object if import was successfull or nullptr in other case
     //!
     static Sd3dGraph   *importVrmlFromFile( QString fname, QWidget *parent );
+
+    //!
+    //! \brief asProgramm Read model from VRML file and represents it as 3d programm
+    //! \param fname      Full path to VRML file
+    //! \param parent     Parent widget. Is used to display messages and progress bar
+    //! \return           String contains programm which represents VRML model
+    //!
+    static QString      asProgramm( QString fname, QWidget *parent );
   };
 
 #endif // SD3DREADERVRML_H

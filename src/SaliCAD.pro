@@ -65,6 +65,7 @@ SOURCES += \
     master3d/SdM3dBinaryFloatLess.cpp \
     master3d/SdM3dFunColorBuild.cpp \
     master3d/SdM3dFunColorFromString.cpp \
+    master3d/SdM3dFunFaceTriangle.cpp \
     master3d/SdM3dFunInput.cpp \
     master3d/SdM3dFunInputColor.cpp \
     master3d/SdM3dFunInputFloat.cpp \
@@ -438,6 +439,7 @@ HEADERS  += \
     master3d/SdM3dFunColorFromString.h \
     master3d/SdM3dFunFaceBuild.h \
     master3d/SdM3dFunFaceTranslate.h \
+    master3d/SdM3dFunFaceTriangle.h \
     master3d/SdM3dFunGraphCircle.h \
     master3d/SdM3dFunGraphLine.h \
     master3d/SdM3dFunGraphPin.h \

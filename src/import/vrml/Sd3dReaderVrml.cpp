@@ -88,3 +88,49 @@ Sd3dGraph *Sd3dReaderVrml::importVrmlFromFile(QString fname, QWidget *parent)
   QMessageBox::warning( parent, QObject::tr("Error happens when read VRML file!"), scanerVrml.errorGet() );
   return nullptr;
   }
+
+
+
+
+
+//!
+//! \brief asProgramm Read model from VRML file and represents it as 3d programm
+//! \param fname      Full path to VRML file
+//! \param parent     Parent widget. Is used to display messages and progress bar
+//! \return           String contains programm which represents VRML model
+//!
+QString Sd3dReaderVrml::asProgramm(QString fname, QWidget *parent)
+  {
+  SdScanerVrml scanerVrml;
+  if( scanerVrml.parseFile(fname) ) {
+    //Generate faces
+
+    //String to generate programm in
+    QString programm( QString("\n#VRML model from file %1\nvrmlModel = [").arg(fname) );
+
+    //Generation
+    bool first = true;
+    scanerVrml.generateFaces( [&programm,&first] ( const QVector3DList &vertexList, const QVector3DList &normalList, const VrmlNodeMaterial *material ) {
+      Q_UNUSED(normalList)
+      //Append only triangles
+      if( vertexList.count() == 3 ) {
+        if( !first ) programm.append( ",\n" );
+        programm.append( "faceTriangle( " );
+        for( int i = 0; i < 3; i++ ) {
+          //Take next vertex
+          QVector3D v( vertexList.at(i) );
+          //print it
+          programm.append( QString("vertex( %1, %2, %3 ), ").arg( v.x() ).arg( v.y() ).arg( v.z() ) );
+          }
+        //print color
+        programm.append( QString("color( %1, %2, %3 ) )").arg(material->diffuseColor(0)).arg(material->diffuseColor(1)).arg(material->diffuseColor(2)) );
+        }
+      });
+
+    //Complete model
+    programm.append( "]\n\n\n" );
+    return programm;
+    }
+  QMessageBox::warning( parent, QObject::tr("Error happens when read VRML file!"), scanerVrml.errorGet() );
+  return QString{};
+  }
