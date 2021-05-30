@@ -77,7 +77,7 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
     mWireName->addItem( v );
   //Select first item
   mWireName->setCurrentIndex(0);
-  mWireName->setMinimumWidth(80);
+  mWireName->setMinimumWidth(120);
 
   //on begin editing
   connect( but, &QToolButton::clicked, [=]() {

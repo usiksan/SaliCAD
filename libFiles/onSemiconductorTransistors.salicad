@@ -12,14 +12,14 @@
                     },
                     "SymbolId": "Symbol\rBipolar transistor PNP\rsalicad",
                     "SymbolTitle": "Bipolar transistor PNP (salicad)",
-                    "id": "5612ad2f4d00",
+                    "id": "55883338cf40",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rsot23-3\rsalicad",
                     "PartTitle": "sot23-3 (salicad)",
-                    "id": "5612ad20eb10",
+                    "id": "5588333d24d0",
                     "type": "PartVariant"
                 }
             ],
@@ -64,7 +64,7 @@
                 "BC857CLT1G",
                 "3G"
             ],
-            "id": "5612acd069e0",
+            "id": "55883339c4c0",
             "type": "Comp"
         },
         {
@@ -75,7 +75,7 @@
                     "Default": false,
                     "PartId": "Part\rsot23-3\rsalicad",
                     "PartTitle": "sot23-3 (salicad)",
-                    "id": "5612ad277fe0",
+                    "id": "5588333ac2f0",
                     "type": "PartVariant"
                 },
                 {
@@ -86,7 +86,7 @@
                     },
                     "SymbolId": "Symbol\rBipolar transistor NPN\rsalicad",
                     "SymbolTitle": "Bipolar transistor NPN (salicad)",
-                    "id": "5612ad57a0a0",
+                    "id": "558830cf1050",
                     "type": "Section"
                 }
             ],
@@ -131,7 +131,7 @@
                 "BC847CLT1G",
                 "1G"
             ],
-            "id": "5612ad54dca0",
+            "id": "55883273a000",
             "type": "Comp"
         },
         {
@@ -142,7 +142,7 @@
                     "Default": false,
                     "PartId": "Part\rsot563\rzubr owk",
                     "PartTitle": "sot563 (zubr owk)",
-                    "id": "5612adc90090",
+                    "id": "55883337fbe0",
                     "type": "PartVariant"
                 },
                 {
@@ -156,7 +156,7 @@
                     },
                     "SymbolId": "Symbol\rcomplementary mosfet\rsalicad",
                     "SymbolTitle": "complementary mosfet (salicad)",
-                    "id": "5612aea7c540",
+                    "id": "5588333c7cc0",
                     "type": "Section"
                 }
             ],
@@ -183,12 +183,111 @@
                 "www": "www.onsemi.com"
             },
             "Title": "NTZD3155C complementary mosfet",
-            "id": "5612ad08f170",
+            "id": "5588333cd1d0",
+            "type": "Comp"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "Default": false,
+                    "PartId": "Part\rtsop-6 318g-02\rsalicad",
+                    "PartTitle": "tsop-6 318g-02 (salicad)",
+                    "id": "55883336fe80",
+                    "type": "PartVariant"
+                },
+                {
+                    "PinAssotiation": {
+                        "D1": "6",
+                        "D2": "3",
+                        "G1": "2",
+                        "G2": "5",
+                        "S1": "1",
+                        "S2": "4"
+                    },
+                    "SymbolId": "Symbol\rcomplementary mosfet\rsalicad",
+                    "SymbolTitle": "complementary mosfet (salicad)",
+                    "id": "5588333a1c50",
+                    "type": "Section"
+                }
+            ],
+            "Created": 106856761,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "Id": "1.9A",
+                "Pd": "1W",
+                "Rds on": "0.15Om",
+                "Vdss": "30V",
+                "Vgs": "+-12V",
+                "article": "",
+                "bom": "<value>",
+                "category": "{uu.b.a.c",
+                "datasheet": "",
+                "manufacturer": "ON semiconductor",
+                "prefix": "VT",
+                "title": "Small Signal complementary MOSFET NTGD4167C",
+                "value": "NTGD4167C",
+                "www": "www.onsemi.com"
+            },
+            "Title": "NTGD4167C complementary mosfet",
+            "id": "558833263e10",
+            "type": "Comp"
+        },
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "D": "3",
+                        "G": "1",
+                        "S": "2"
+                    },
+                    "SymbolId": "Symbol\rn-channel MOSFET enhancement\rsalicad",
+                    "SymbolTitle": "n-channel MOSFET enhancement (salicad)",
+                    "id": "55883271bea0",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rsot23-3\rsalicad",
+                    "PartTitle": "sot23-3 (salicad)",
+                    "id": "5588325a0890",
+                    "type": "PartVariant"
+                }
+            ],
+            "Created": 107554793,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "Id": "0.68A",
+                "Pd": "0.35W",
+                "Rds on": "0.6Om",
+                "Vdss": "25V",
+                "Vgs": "8V",
+                "article": "FDV303N",
+                "bom": "<article>",
+                "category": "{uu.b.a.c",
+                "manufacturer": "OnSemiconductor",
+                "prefix": "VT",
+                "title": "N-Channel HEXFET Power MOSFET sot23",
+                "value": "FDV303N"
+            },
+            "Title": "N-Channel HEXFET Power MOSFET FDV303N sot23",
+            "id": "5588311b6850",
             "type": "Comp"
         }
     ],
     "Parametrs": {
     },
-    "id": "5612ad589000",
+    "id": "5588333a3180",
     "type": "Project"
 }
