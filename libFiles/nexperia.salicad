@@ -13,7 +13,7 @@
                         "x": 4750,
                         "y": -750
                     },
-                    "id": "556db9cc6890",
+                    "id": "5575f20accc0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -28,7 +28,7 @@
                         "x": 2000,
                         "y": -750
                     },
-                    "id": "556dba7cd380",
+                    "id": "5575f2250b80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -43,7 +43,7 @@
                         "x": 3500,
                         "y": -750
                     },
-                    "id": "556db9f7c0d0",
+                    "id": "5575f22f97c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -58,7 +58,7 @@
                         "x": 750,
                         "y": 0
                     },
-                    "id": "556db9f8d300",
+                    "id": "5575f18cac50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -94,7 +94,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "556db9f36720",
+                    "id": "7f13f400e820",
                     "type": "SymPin"
                 },
                 {
@@ -106,7 +106,7 @@
                         "x": 750,
                         "y": -500
                     },
-                    "id": "556db9f7ab30",
+                    "id": "5575f1d1ed30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -142,7 +142,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "556db9d19f20",
+                    "id": "5575f1f55ce0",
                     "type": "SymPin"
                 },
                 {
@@ -154,7 +154,7 @@
                         "x": 5500,
                         "y": -250
                     },
-                    "id": "556db9d3ec60",
+                    "id": "5575f5b1fa70",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -190,7 +190,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "556db9fd25e0",
+                    "id": "5575f1f47150",
                     "type": "SymPin"
                 },
                 {
@@ -198,7 +198,7 @@
                         "x": 2750,
                         "y": 500
                     },
-                    "id": "556db9465350",
+                    "id": "5575f23144d0",
                     "over": {
                         "b": 690,
                         "r": 3053,
@@ -220,7 +220,7 @@
                         "x": 2750,
                         "y": -1000
                     },
-                    "id": "556dba7cc5c0",
+                    "id": "5575f1f41a80",
                     "over": {
                         "b": -810,
                         "r": 3284,
@@ -242,7 +242,7 @@
                         "x": 2750,
                         "y": 0
                     },
-                    "id": "556dba36b3c0",
+                    "id": "5575f1d46bc0",
                     "over": {
                         "b": 190,
                         "r": 3075,
@@ -270,7 +270,7 @@
                 "category": "{uu.b.b.d"
             },
             "Title": "pesd1can",
-            "id": "556dba7be610",
+            "id": "5575f2295750",
             "type": "Symbol"
         },
         {
@@ -285,14 +285,14 @@
                     },
                     "SymbolId": "Symbol\rpesd1can\rzubr owk",
                     "SymbolTitle": "pesd1can (zubr owk)",
-                    "id": "556dba37abb0",
+                    "id": "5575f231c9d0",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rsot23-3\rsalicad",
                     "PartTitle": "sot23-3 (salicad)",
-                    "id": "556db98dc570",
+                    "id": "5575f26190d0",
                     "type": "PartVariant"
                 }
             ],
@@ -319,7 +319,7 @@
                 "PESD2CAN",
                 "PESD2CAN"
             ],
-            "id": "556db9fe6ac0",
+            "id": "5575f5b1b260",
             "type": "Comp"
         },
         {
@@ -333,18 +333,18 @@
                     },
                     "SymbolId": "Symbol\rdiode\rsalicad",
                     "SymbolTitle": "diode (salicad)",
-                    "id": "556db9da4b20",
+                    "id": "5575f2623540",
                     "type": "Section"
                 },
                 {
                     "Default": false,
                     "PartId": "Part\rSOD323F (SC-90)\rzubr owk",
                     "PartTitle": "SOD323F (SC-90) (zubr owk)",
-                    "id": "556db9da4b60",
+                    "id": "5575f26235e0",
                     "type": "PartVariant"
                 }
             ],
-            "Created": 85916404,
+            "Created": 85932194,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -352,7 +352,7 @@
             },
             "Parametrs": {
                 "article": "PMEG6010CEJ",
-                "bom": "<value>",
+                "bom": "<article>",
                 "category": "{uu.b.b.g",
                 "current": "1A",
                 "device mark": "EQ",
@@ -364,12 +364,82 @@
                 "www": "www.nexperia.com"
             },
             "Title": "PMEG6010CEJ schottky barrier rectifiers 1A",
-            "id": "556db9c47d50",
+            "id": "5575f227b270",
+            "type": "Comp"
+        },
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "Default": false,
+                    "PartId": "Part\rsot363\rsalicad",
+                    "PartTitle": "sot363 (salicad)",
+                    "id": "5575f4ddb7c0",
+                    "type": "PartVariant"
+                },
+                {
+                    "PinAssotiation": {
+                        "B0": "5",
+                        "B1": "2",
+                        "C0": "3",
+                        "C1": "6",
+                        "E0": "4",
+                        "E1": "1"
+                    },
+                    "SymbolId": "Symbol\rBipolar transistor NPN + PNP\rsalicad",
+                    "SymbolTitle": "Bipolar transistor NPN + PNP (salicad)",
+                    "id": "5575f2914d90",
+                    "type": "Section"
+                }
+            ],
+            "Created": 107422661,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "Ic": "100mA",
+                "Pd": "200mW",
+                "Vcbo": "50V",
+                "Vceo": "45V",
+                "article": "BC847BPN",
+                "bom": "<article>",
+                "category": "{uu.b.a.d",
+                "device mark": "13t",
+                "hFE": "200",
+                "manufacturer": "NXP",
+                "prefix": "VT",
+                "title": "bc847bpn bipolar npn + pnp transistor",
+                "value": "BC847BPN"
+            },
+            "Title": "bc847bpn bipolar npn + pnp transistor",
+            "VariantFC": 4,
+            "VariantTab": [
+                "value",
+                "hFE",
+                "article",
+                "device mark",
+                "BC857A",
+                "180",
+                "BC857ALT1G",
+                "3E",
+                "BC857B",
+                "290",
+                "BC857BLT1G",
+                "3F",
+                "BC857C",
+                "520",
+                "BC857CLT1G",
+                "3G"
+            ],
+            "id": "5575f2291920",
             "type": "Comp"
         }
     ],
     "Parametrs": {
     },
-    "id": "556db9952b80",
+    "id": "5575f22f9070",
     "type": "Project"
 }
