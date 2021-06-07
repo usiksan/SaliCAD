@@ -103,9 +103,11 @@ SOURCES += \
     objects/Sd3dFlat.cpp \
     objects/Sd3dGraph.cpp \
     objects/Sd3dGraphModel.cpp \
+    objects/Sd3dGraphSolid.cpp \
     objects/Sd3dModel.cpp \
     objects/Sd3dPoint.cpp \
     objects/Sd3dRegion.cpp \
+    objects/Sd3dSolid.cpp \
     objects/Sd3dStep.cpp \
     objects/SdUndoRecord3dMatrix.cpp \
     windows/SdD3dMaster.cpp \
@@ -522,9 +524,11 @@ HEADERS  += \
     objects/Sd3dFlat.h \
     objects/Sd3dGraph.h \
     objects/Sd3dGraphModel.h \
+    objects/Sd3dGraphSolid.h \
     objects/Sd3dModel.h \
     objects/Sd3dPoint.h \
     objects/Sd3dRegion.h \
+    objects/Sd3dSolid.h \
     objects/Sd3dStep.h \
     objects/SdProperty.h \
     objects/SdUndoRecord3dMatrix.h \
