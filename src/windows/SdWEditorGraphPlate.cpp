@@ -27,6 +27,7 @@ Description
 #include "modes/SdModeCRoadEnter.h"
 #include "modes/SdModeCRoadMove.h"
 #include "modes/SdModeCPartPlace.h"
+#include "modes/SdModeCPartHighlight.h"
 #include "modes/SdModeCPolygonEnter.h"
 #include "modes/SdModeSelect.h"
 #include "modes/SdModeCPlateIdentMove.h"
@@ -105,6 +106,14 @@ void SdWEditorGraphPlate::cmModeLink()
 void SdWEditorGraphPlate::cmModeMovePart()
   {
   modeSet( new SdModeCPartPlace( this, getProjectItem() ) );
+  }
+
+
+
+
+void SdWEditorGraphPlate::cmModePartHighlight()
+  {
+  modeSet( new SdModeCPartHighlight( this, getProjectItem() )  );
   }
 
 

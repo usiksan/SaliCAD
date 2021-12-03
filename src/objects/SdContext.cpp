@@ -439,9 +439,12 @@ void SdContext::polygon(const SdPointList &points, const SdPolyWindowList &windo
     }
 
   //4. image copy to painter
-  mPainter->setOpacity( sdEnvir->mPolygonOpacity );
+  //Here we store previous opacity
+  double op = mPainter->opacity();
+  mPainter->setOpacity( sdEnvir->mPolygonOpacity * op );
   mPainter->drawImage( 0, 0, intermediate );
-  mPainter->setOpacity( 1.0 );
+  //Restore previous opacity
+  mPainter->setOpacity( op );
   }
 
 

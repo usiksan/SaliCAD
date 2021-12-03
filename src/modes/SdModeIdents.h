@@ -75,13 +75,14 @@ Description
 #define MD_VIA_ENTER       57
 #define MD_ROAD_MOVE       58
 #define MD_PLATE_ORIGIN    59
-#define MD_3D_VIEW         60
-#define MD_3D_HORZ_MOVE    61
-#define MD_3D_HORZ_ROTATE  62
-#define MD_3D_VERT_MOVE    63
-#define MD_3D_VERT_ROTATE  64
-#define MD_3D_FACE_COLOR   65
-#define MD_LAST            66
+#define MD_PART_HIGHLIGHT  60
+#define MD_3D_VIEW         61
+#define MD_3D_HORZ_MOVE    62
+#define MD_3D_HORZ_ROTATE  63
+#define MD_3D_VERT_MOVE    64
+#define MD_3D_VERT_ROTATE  65
+#define MD_3D_FACE_COLOR   66
+#define MD_LAST            67
 
 //Properties tool bar id's
 #define PB_DEFAULT          0

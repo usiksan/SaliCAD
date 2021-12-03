@@ -265,6 +265,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_PLATE_IDENT] = menuInsertPcb->addAction( QIcon(QString(":/pic/objIdent.png")), QObject::tr("Move ident of components"), frame, SLOT(cmModeReferenceMove()) );
   cmModeTable[MD_PLATE_VALUE] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPrtValue.png")), QObject::tr("Move value of components"), frame, SLOT(cmModeValueMove()) );
   cmModeTable[MD_PLATE_ORIGIN]= menuInsertPcb->addAction( QIcon(QString(":/pic/objPlateOrigin.png")), QObject::tr("Edit plate origin"), frame, SLOT(cmModeOrigin()) );
+  cmModeTable[MD_PART_HIGHLIGHT] = menuInsertPcb->addAction( QIcon(QString(":/pic/objPartHighlight.png")), QObject::tr("Highlight components"), frame, SLOT(cmModePartHighlight()) );
 
 
   //PCB roads rules menu
@@ -607,7 +608,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barPcb->insertAction( nullptr, cmModeTable[MD_PLATE_IDENT] );
   barPcb->insertAction( nullptr, cmModeTable[MD_PLATE_VALUE] );
   barPcb->insertAction( nullptr, cmModeTable[MD_PLATE_ORIGIN] );
-
+  barPcb->insertAction( nullptr, cmModeTable[MD_PART_HIGHLIGHT] );
 
   frame->addToolBar( barPcb );
 

@@ -196,6 +196,7 @@ History
   09.04.2021 v1.28 Append status help and help invocation for 3d modes
                    Append horizontal rotation mode
              v1.29 Append vertical moving and rotation modes
+  02.12.2021 v1.30 Append part highlight mode
 */
 
 #ifndef SDCONFIG
@@ -207,7 +208,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             29
+#define SD_VERSION_MINOR             30
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

@@ -1801,6 +1801,15 @@ void SdWMain::cmModePartSelect(QStringList list)
 
 
 
+void SdWMain::cmModePartHighlight()
+  {
+  if( activeEditor() )
+    activeEditor()->cmModePartHighlight();
+  }
+
+
+
+
 void SdWMain::cmModeEditWire()
   {
   if( activeEditor() )

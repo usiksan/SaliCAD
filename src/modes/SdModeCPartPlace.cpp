@@ -667,7 +667,7 @@ void SdModeCPartPlace::checkPoint(SdPoint p)
     mBehindCursorPrt = dynamic_cast<SdGraphPartImp*>(mBehindCursorTable[mBehindCursorIndex]);
   else
     mBehindCursorPrt = nullptr;
-  SdPulsar::sdPulsar->setStatusMessage( getStepHelp() );
+  SdPulsar::sdPulsar->emitSetStatusMessage( getStepHelp() );
   mEditor->viewport()->setCursor( loadCursor(getCursor()) );
   }
 

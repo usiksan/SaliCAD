@@ -1,5 +1,5 @@
 #include "Sd3dStep.h"
-#include "step/SdStepReader.h"
+#include "import/step/SdStepReader.h"
 
 #include <QFile>
 #include <QDebug>

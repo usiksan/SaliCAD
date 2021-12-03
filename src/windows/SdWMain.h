@@ -235,6 +235,7 @@ class SdWMain : public QMainWindow
     void cmModeRadiusSize();
     void cmModeMovePart();
     void cmModePartSelect( QStringList list );
+    void cmModePartHighlight();
 
     void cmModeEditWire();
     void cmModeRoadEnter();

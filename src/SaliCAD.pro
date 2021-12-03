@@ -94,6 +94,7 @@ SOURCES += \
     modes/Sd3dModeVertMove.cpp \
     modes/Sd3dModeVertRotate.cpp \
     modes/Sd3dModeView.cpp \
+    modes/SdModeCPartHighlight.cpp \
     modes/SdModeCTraceDelete.cpp \
     objects/Sd3dDraw.cpp \
     objects/Sd3dFace.cpp \
@@ -515,6 +516,7 @@ HEADERS  += \
     modes/Sd3dModeVertMove.h \
     modes/Sd3dModeVertRotate.h \
     modes/Sd3dModeView.h \
+    modes/SdModeCPartHighlight.h \
     modes/SdModeCTraceDelete.h \
     objects/Sd3dDraw.h \
     objects/Sd3dFace.h \

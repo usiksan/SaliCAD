@@ -62,6 +62,9 @@ class SdContext {
     void            setOverColor( QColor color ) { mOverColor = color; mOverOn = true; }
     void            resetOverColor() { mOverOn = false; }
 
+    void            setOpacity( double op ) { mPainter->setOpacity( op ); }
+    double          opacity() const { return mPainter->opacity(); }
+
 
     //Overriding zero width line. If this width is setupedthen drawing perform with this width when draw zero width line.
     //This possibility is for print. By default over width is not defined
