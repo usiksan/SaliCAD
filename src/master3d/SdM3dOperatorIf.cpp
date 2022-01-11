@@ -1,6 +1,6 @@
 #include "SdM3dOperatorIf.h"
 
-SdM3dOperatorIf::SdM3dOperatorIf( SdM3dValue *cond, SdM3dOperator *opTrue, SdM3dOperator *opFalse ) :
+SdM3dOperatorIf::SdM3dOperatorIf( SdScriptValue *cond, SdM3dOperator *opTrue, SdM3dOperator *opFalse ) :
   mCondition(cond),
   mTrue(opTrue),
   mFalse(opFalse)

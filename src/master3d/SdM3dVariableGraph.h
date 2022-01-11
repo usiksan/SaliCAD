@@ -5,7 +5,7 @@
 
 class SdM3dVariableGraph : public SdM3dVariable
   {
-    SdM3dGraph mValue;
+    SdScriptVal2dGraph mValue;
   public:
     SdM3dVariableGraph() : mValue(QVector3D(), QVector3D()) {}
 
@@ -13,8 +13,8 @@ class SdM3dVariableGraph : public SdM3dVariable
 
     // SdM3dValue interface
   public:
-    virtual char       type() const override { return SDM3D_TYPE_GRAPH; }
-    virtual SdM3dGraph toGraph() const override { return mValue; }
+    virtual char       type() const override { return SD_SCRIPT_TYPE_GRAPH; }
+    virtual SdScriptVal2dGraph toGraph() const override { return mValue; }
 
     // SdM3dVariable interface
   public:

@@ -30,7 +30,7 @@ class SdM3dPartModel : public SdM3dVariable
 
     // SdM3dValue interface
   public:
-    virtual char type() const override { return SDM3D_TYPE_MODEL; }
+    virtual char type() const override { return SD_SCRIPT_TYPE_MODEL; }
 
     // SdM3dVariable interface
   public:

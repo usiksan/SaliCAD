@@ -1,13 +1,13 @@
 #include "SdM3dFunModelCopy.h"
 
 
-SdM3dFunModelCopy::SdM3dFunModelCopy() : SdM3dFunction( SDM3D_TYPE_MODEL, SDM3D_TYPE_MODEL, SDM3D_TYPE_VERTEX, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT )
+SdM3dFunModelCopy::SdM3dFunModelCopy() : SdM3dFunction( SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT )
   {
   }
 
 
 
-SdM3dModel SdM3dFunModelCopy::toModel() const
+SdScriptVal3dModel SdM3dFunModelCopy::toModel() const
   {
   QMatrix4x4 matrix;
   matrix.translate( mParamList[1]->toVertex() );

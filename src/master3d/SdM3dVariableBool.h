@@ -13,7 +13,7 @@ class SdM3dVariableBool : public SdM3dVariable
 
     // SdM3dValue interface
   public:
-    virtual char type() const override { return SDM3D_TYPE_BOOL; }
+    virtual char type() const override { return SD_SCRIPT_TYPE_BOOL; }
     virtual bool toBool() const override { return mValue; }
 
     // SdM3dVariable interface

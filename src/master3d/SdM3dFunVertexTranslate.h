@@ -21,7 +21,7 @@ Description
 class SdM3dFunVertexTranslate : public SdM3dFunction
   {
   public:
-    SdM3dFunVertexTranslate() : SdM3dFunction( SDM3D_TYPE_VERTEX, SDM3D_TYPE_VERTEX, SDM3D_TYPE_VERTEX ) { }
+    SdM3dFunVertexTranslate() : SdM3dFunction( SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_VERTEX ) { }
 
     // SdM3dValue interface
   public:

@@ -59,9 +59,6 @@ SOURCES += \
     master/SdDMasterPartSingleLine.cpp \
     master/SdDMasterSheetDecorator.cpp \
     master/SdMasterPart.cpp \
-    master3d/SdM3dArrayFace.cpp \
-    master3d/SdM3dArraySegment.cpp \
-    master3d/SdM3dArrayVertex.cpp \
     master3d/SdM3dBinaryFloatLess.cpp \
     master3d/SdM3dFunColorBuild.cpp \
     master3d/SdM3dFunColorFromString.cpp \
@@ -86,6 +83,9 @@ SOURCES += \
     master3d/SdM3dProgramm.cpp \
     master3d/SdM3dScaner.cpp \
     master3d/SdM3dString.cpp \
+    script/SdScriptValueArray3dVertex.cpp \
+    script/SdScriptValueArray3dSegment.cpp \
+    script/SdScriptValueArray3dFace.cpp \
     modes/Sd3dMode.cpp \
     modes/Sd3dModeFaceColor.cpp \
     modes/Sd3dModeHorzMove.cpp \
@@ -111,6 +111,7 @@ SOURCES += \
     objects/Sd3dSolid.cpp \
     objects/Sd3dStep.cpp \
     objects/SdUndoRecord3dMatrix.cpp \
+    script/SdScriptParser.cpp \
     windows/SdD3dMaster.cpp \
     windows/SdD3dModelMaster.cpp \
     windows/SdD3dModelProgrammEditor.cpp \
@@ -421,15 +422,6 @@ HEADERS  += \
     master/SdDMasterPartSingleLine.h \
     master/SdDMasterSheetDecorator.h \
     master/SdMasterPart.h \
-    master3d/SdM3dArray.h \
-    master3d/SdM3dArrayFace.h \
-    master3d/SdM3dArraySegment.h \
-    master3d/SdM3dArrayVertex.h \
-    master3d/SdM3dBinary.h \
-    master3d/SdM3dBinaryBool.h \
-    master3d/SdM3dBinaryBoolAnd.h \
-    master3d/SdM3dBinaryBoolFloatLess.h \
-    master3d/SdM3dBinaryBoolOr.h \
     master3d/SdM3dBinaryFloat.h \
     master3d/SdM3dBinaryFloatAdd.h \
     master3d/SdM3dBinaryFloatDiv.h \
@@ -490,11 +482,9 @@ HEADERS  += \
     master3d/SdM3dReference.h \
     master3d/SdM3dScaner.h \
     master3d/SdM3dString.h \
-    master3d/SdM3dTypes.h \
     master3d/SdM3dUnary.h \
     master3d/SdM3dUnaryBoolNot.h \
     master3d/SdM3dUnaryFloatMinus.h \
-    master3d/SdM3dValue.h \
     master3d/SdM3dVariable.h \
     master3d/SdM3dVariableBool.h \
     master3d/SdM3dVariableColor.h \
@@ -508,6 +498,17 @@ HEADERS  += \
     master3d/SdM3dVariableSegment.h \
     master3d/SdM3dVariableString.h \
     master3d/SdM3dVariableVertex.h \
+    script/SdScriptValueOpBinaryBoolOr.h \
+    script/SdScriptValueOpBinaryBoolFloatLess.h \
+    script/SdScriptValueOpBinaryBoolAnd.h \
+    script/SdScriptValueOpBinaryBool.h \
+    script/SdScriptValueOpBinary.h \
+    script/SdScriptValueArray3dVertex.h \
+    script/SdScriptValueArray3dSegment.h \
+    script/SdScriptValueArray3dFace.h \
+    script/SdScriptValueArray.h \
+    script/SdScriptTypes.h \
+    script/SdScriptValue.h \
     modes/Sd3dMode.h \
     modes/Sd3dModeFaceColor.h \
     modes/Sd3dModeHorzMove.h \
@@ -534,6 +535,7 @@ HEADERS  += \
     objects/Sd3dStep.h \
     objects/SdProperty.h \
     objects/SdUndoRecord3dMatrix.h \
+    script/SdScriptParser.h \
     windows/SdD3dMaster.h \
     windows/SdD3dModelMaster.h \
     windows/SdD3dModelProgrammEditor.h \

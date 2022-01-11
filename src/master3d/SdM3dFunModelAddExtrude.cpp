@@ -18,13 +18,13 @@ Description
 #include "SdM3dFunRegionShift.h"
 
 SdM3dFunModelAddExtrude::SdM3dFunModelAddExtrude() :
-  SdM3dFunction( SDM3D_TYPE_MODEL, SDM3D_TYPE_MODEL, SDM3D_TYPE_FLOAT, SDM3D_TYPE_COLOR )
+  SdM3dFunction( SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_COLOR )
   {
 
   }
 
 
-SdM3dModel SdM3dFunModelAddExtrude::toModel() const
+SdScriptVal3dModel SdM3dFunModelAddExtrude::toModel() const
   {
   return modelAddExtrude( mParamList[0]->toModel(), mParamList[1]->toFloat(), mParamList[2]->toColor() );
   }
@@ -39,14 +39,14 @@ SdM3dModel SdM3dFunModelAddExtrude::toModel() const
 //! \param color           Faces color
 //! \return                Model with added extrusion
 //!
-SdM3dModel SdM3dFunModelAddExtrude::modelAddExtrude(SdM3dModel src, float shift, QColor color)
+SdScriptVal3dModel SdM3dFunModelAddExtrude::modelAddExtrude(SdScriptVal3dModel src, float shift, QColor color)
   {
-  SdM3dModel md(src);
+  SdScriptVal3dModel md(src);
 
   //Remove bottom side
-  SdM3dFace bot = md.takeLast();
+  SdScriptVal3dFace bot = md.takeLast();
 
-  SdM3dFace top( sd3dRegionShift( bot.mContour, shift ), color );
+  SdScriptVal3dFace top( sd3dRegionShift( bot.mContour, shift ), color );
 
   //Side walls
   md.append( sd3dModelWalls( bot.mContour, top.mContour, color, true ) );

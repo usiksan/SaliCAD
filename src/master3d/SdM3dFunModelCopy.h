@@ -10,7 +10,7 @@ class SdM3dFunModelCopy : public SdM3dFunction
 
     // SdM3dValue interface
   public:
-    virtual SdM3dModel toModel() const override;
+    virtual SdScriptVal3dModel toModel() const override;
   };
 
 #endif // SDM3DFUNMODELCOPY_H

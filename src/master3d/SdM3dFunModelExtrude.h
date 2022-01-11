@@ -23,14 +23,14 @@ class SdM3dFunModelExtrude : public SdM3dFunction
   {
   public:
     SdM3dFunModelExtrude() :
-      SdM3dFunction( SDM3D_TYPE_MODEL, SDM3D_TYPE_REGION, SDM3D_TYPE_FLOAT, SDM3D_TYPE_COLOR )
+      SdM3dFunction( SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_REGION, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_COLOR )
       {
 
       }
 
     // SdM3dValue interface
   public:
-    virtual SdM3dModel toModel() const override
+    virtual SdScriptVal3dModel toModel() const override
       {
       return sd3dModelExtrude( mParamList[0]->toRegion(), mParamList[1]->toFloat(), mParamList[2]->toColor() );
       }

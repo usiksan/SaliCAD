@@ -18,7 +18,7 @@ Description
 
 
 SdM3dFunInputPad::SdM3dFunInputPad(QTableWidget *tableWidget) :
-  SdM3dFunInput( SDM3D_TYPE_STRING, tableWidget, SDM3D_INPUT_PAD )
+  SdM3dFunInput( SD_SCRIPT_TYPE_STRING, tableWidget, SDM3D_INPUT_PAD )
   {
 
   }

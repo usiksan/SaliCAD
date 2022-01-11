@@ -29,7 +29,7 @@ class SdM3dPartGraph : public SdM3dVariable
 
     // SdM3dValue interface
   public:
-    virtual char type() const override { return SDM3D_TYPE_GRAPH; }
+    virtual char type() const override { return SD_SCRIPT_TYPE_GRAPH; }
 
     // SdM3dVariable interface
   public:

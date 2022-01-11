@@ -21,11 +21,11 @@ Description
 class SdM3dFunFaceBuild : public SdM3dFunction
   {
   public:
-    SdM3dFunFaceBuild() : SdM3dFunction( SDM3D_TYPE_FACE, SDM3D_TYPE_REGION, SDM3D_TYPE_COLOR ) { }
+    SdM3dFunFaceBuild() : SdM3dFunction( SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_REGION, SD_SCRIPT_TYPE_COLOR ) { }
 
     // SdM3dValue interface
   public:
-    virtual SdM3dFace toFace() const override { return Sd3dFace( mParamList[0]->toRegion(), mParamList[1]->toColor() ); }
+    virtual SdScriptVal3dFace toFace() const override { return Sd3dFace( mParamList[0]->toRegion(), mParamList[1]->toColor() ); }
 
   };
 

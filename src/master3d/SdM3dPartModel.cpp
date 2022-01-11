@@ -16,7 +16,7 @@ SdM3dPartModel::SdM3dPartModel(SdPItemPart *part) :
 
 void SdM3dPartModel::assign(SdM3dValuePtr src)
   {
-  SdM3dModel model = src->toModel();
+  SdScriptVal3dModel model = src->toModel();
   if( model.count() ) {
     qDebug() << "add model" << model.count();
     if( mModel == nullptr || !mPart->isChild(mModel) ) {

@@ -23,14 +23,14 @@
 //Predefined variable to insert 2d graphics into part
 #include "SdM3dPartGraph.h"
 
-#include "SdM3dValue.h"
+#include "SdScriptValue.h"
 #include "SdM3dFloat.h"
 #include "SdM3dString.h"
 #include "SdM3dBool.h"
 
-#include "SdM3dArrayVertex.h"
-#include "SdM3dArraySegment.h"
-#include "SdM3dArrayFace.h"
+#include "SdScriptValueArray3dVertex.h"
+#include "SdScriptValueArray3dSegment.h"
+#include "SdScriptValueArray3dFace.h"
 
 #include "SdM3dBinaryFloatMult.h"
 #include "SdM3dBinaryFloatDiv.h"
@@ -39,9 +39,9 @@
 #include "SdM3dUnaryFloatMinus.h"
 #include "SdM3dReference.h"
 
-#include "SdM3dBinaryBoolAnd.h"
-#include "SdM3dBinaryBoolOr.h"
-#include "SdM3dBinaryBoolFloatLess.h"
+#include "SdScriptValueOpBinaryBoolAnd.h"
+#include "SdScriptValueOpBinaryBoolOr.h"
+#include "SdScriptValueOpBinaryBoolFloatLess.h"
 #include "SdM3dUnaryBoolNot.h"
 
 //Functions
@@ -207,7 +207,7 @@ SdM3dOperator *SdM3dParser::parseOperator()
   if( !mScaner.tokenNeed('=', QStringLiteral("Need assign =") )  )
     return nullptr;
 
-  SdM3dValue *val = parseExpression();
+  SdScriptValue *val = parseExpression();
 
   if( mVariables.contains(variableName) ) {
     SdM3dVariable *var = mVariables.value(variableName);
@@ -224,18 +224,18 @@ SdM3dOperator *SdM3dParser::parseOperator()
   //Depending on the type of expression, build a variable
   SdM3dVariable *var = nullptr;
   switch( val->type() ) {
-    case SDM3D_TYPE_BOOL    : var = new SdM3dVariableBool(); break;
-    case SDM3D_TYPE_FLOAT   : var = new SdM3dVariableFloat(); break;
-    case SDM3D_TYPE_COLOR   : var = new SdM3dVariableColor(); break;
-    case SDM3D_TYPE_STRING  : var = new SdM3dVariableString(); break;
-    case SDM3D_TYPE_VERTEX  : var = new SdM3dVariableVertex(); break;
-    case SDM3D_TYPE_MATRIX  : var = new SdM3dVariableMatrix(); break;
-    case SDM3D_TYPE_SEGMENT : var = new SdM3dVariableSegment(); break;
-    case SDM3D_TYPE_PATH    : var = new SdM3dVariablePath(); break;
-    case SDM3D_TYPE_REGION  : var = new SdM3dVariableRegion(); break;
-    case SDM3D_TYPE_FACE    : var = new SdM3dVariableFace(); break;
-    case SDM3D_TYPE_MODEL   : var = new SdM3dVariableModel(); break;
-    case SDM3D_TYPE_GRAPH   : var = new SdM3dVariableGraph(); break;
+    case SD_SCRIPT_TYPE_BOOL    : var = new SdM3dVariableBool(); break;
+    case SD_SCRIPT_TYPE_FLOAT   : var = new SdM3dVariableFloat(); break;
+    case SD_SCRIPT_TYPE_COLOR   : var = new SdM3dVariableColor(); break;
+    case SD_SCRIPT_TYPE_STRING  : var = new SdM3dVariableString(); break;
+    case SD_SCRIPT_TYPE_VERTEX  : var = new SdM3dVariableVertex(); break;
+    case SD_SCRIPT_TYPE_MATRIX  : var = new SdM3dVariableMatrix(); break;
+    case SD_SCRIPT_TYPE_SEGMENT : var = new SdM3dVariableSegment(); break;
+    case SD_SCRIPT_TYPE_PATH    : var = new SdM3dVariablePath(); break;
+    case SD_SCRIPT_TYPE_REGION  : var = new SdM3dVariableRegion(); break;
+    case SD_SCRIPT_TYPE_FACE    : var = new SdM3dVariableFace(); break;
+    case SD_SCRIPT_TYPE_MODEL   : var = new SdM3dVariableModel(); break;
+    case SD_SCRIPT_TYPE_GRAPH   : var = new SdM3dVariableGraph(); break;
     default:
       mScaner.error( QStringLiteral("Can't create variable with this type %1").arg(val->type()) );
       //Can't create variable
@@ -252,8 +252,8 @@ SdM3dOperator *SdM3dParser::parseOperatorIf()
   if( !mScaner.tokenNeed('(', QStringLiteral("Need assign (") )  )
     return nullptr;
 
-  SdM3dValue *condition = parseExpression();
-  if( condition->type() != SDM3D_TYPE_BOOL ) {
+  SdScriptValue *condition = parseExpression();
+  if( condition->type() != SD_SCRIPT_TYPE_BOOL ) {
     mScaner.error( "Condition must be bool expression" );
     delete condition;
     return nullptr;
@@ -287,8 +287,8 @@ SdM3dOperator *SdM3dParser::parseOperatorWhile()
   if( !mScaner.tokenNeed('(', QStringLiteral("Need assign (") )  )
     return nullptr;
 
-  SdM3dValue *condition = parseExpression();
-  if( condition->type() != SDM3D_TYPE_BOOL ) {
+  SdScriptValue *condition = parseExpression();
+  if( condition->type() != SD_SCRIPT_TYPE_BOOL ) {
     mScaner.error( "Condition must be bool expression" );
     delete condition;
     return nullptr;
@@ -312,7 +312,7 @@ SdM3dOperator *SdM3dParser::parseOperatorWhile()
 
 
 
-SdM3dValue *SdM3dParser::parseExpression()
+SdScriptValue *SdM3dParser::parseExpression()
   {
   return parseAnd();
   }
@@ -320,14 +320,14 @@ SdM3dValue *SdM3dParser::parseExpression()
 
 
 
-SdM3dValue *SdM3dParser::parseAnd()
+SdScriptValue *SdM3dParser::parseAnd()
   {
-  SdM3dValue *val = parseOr();
+  SdScriptValue *val = parseOr();
 
   while( !mScaner.isEndOfScanOrError() ) {
     if( mScaner.matchToken('&') ) {
-      SdM3dValue *val2 = parseOr();
-      if( val->type() != SDM3D_TYPE_BOOL || val2->type() != SDM3D_TYPE_BOOL ) {
+      SdScriptValue *val2 = parseOr();
+      if( val->type() != SD_SCRIPT_TYPE_BOOL || val2->type() != SD_SCRIPT_TYPE_BOOL ) {
         mScaner.error( QStringLiteral("Invalid types of AND operation. Both must be bool.") );
         delete val;
         delete val2;
@@ -343,20 +343,20 @@ SdM3dValue *SdM3dParser::parseAnd()
 
 
 
-SdM3dValue *SdM3dParser::parseOr()
+SdScriptValue *SdM3dParser::parseOr()
   {
-  SdM3dValue *val = parseNot();
+  SdScriptValue *val = parseNot();
 
   while( !mScaner.isEndOfScanOrError() ) {
     if( mScaner.matchToken('|') ) {
-      SdM3dValue *val2 = parseNot();
-      if( val->type() != SDM3D_TYPE_BOOL || val2->type() != SDM3D_TYPE_BOOL ) {
+      SdScriptValue *val2 = parseNot();
+      if( val->type() != SD_SCRIPT_TYPE_BOOL || val2->type() != SD_SCRIPT_TYPE_BOOL ) {
         mScaner.error( QStringLiteral("Invalid types of OR operation. Both must be bool.") );
         delete val;
         delete val2;
         return failValue();
         }
-      val = new SdM3dBinaryBoolOr( val, val2 );
+      val = new SdScriptValueOpBinaryBoolOr( val, val2 );
       }
     else break;
     }
@@ -366,11 +366,11 @@ SdM3dValue *SdM3dParser::parseOr()
 
 
 
-SdM3dValue *SdM3dParser::parseNot()
+SdScriptValue *SdM3dParser::parseNot()
   {
   if( mScaner.matchToken( '!' ) ) {
-    SdM3dValue *val = parseNot();
-    if( val->type() != SDM3D_TYPE_BOOL ) {
+    SdScriptValue *val = parseNot();
+    if( val->type() != SD_SCRIPT_TYPE_BOOL ) {
       mScaner.error( QStringLiteral("Invalid type of unary not operation. Must be bool.") );
       delete val;
       return failValue();
@@ -384,28 +384,28 @@ SdM3dValue *SdM3dParser::parseNot()
 
 
 
-SdM3dValue *SdM3dParser::parseLess()
+SdScriptValue *SdM3dParser::parseLess()
   {
-  SdM3dValue *val = parsePlusMinus();
+  SdScriptValue *val = parsePlusMinus();
   if( !mScaner.isEndOfScanOrError() && mScaner.matchToken('<') ) {
-    SdM3dValue *val2 = parsePlusMinus();
-    if( val->type() != SDM3D_TYPE_FLOAT || val2->type() != SDM3D_TYPE_FLOAT ) {
+    SdScriptValue *val2 = parsePlusMinus();
+    if( val->type() != SD_SCRIPT_TYPE_FLOAT || val2->type() != SD_SCRIPT_TYPE_FLOAT ) {
       mScaner.error( QStringLiteral("Invalid types of less operation. Both must be float.") );
       delete val;
       delete val2;
       return failValue();
       }
-    return new SdM3dBinaryBoolFloatLess( val, val2 );
+    return new SdScriptValueOpBinaryBoolFloatLess( val, val2 );
     }
   if( !mScaner.isEndOfScanOrError() && mScaner.matchToken('>') ) {
-    SdM3dValue *val2 = parsePlusMinus();
-    if( val->type() != SDM3D_TYPE_FLOAT || val2->type() != SDM3D_TYPE_FLOAT ) {
+    SdScriptValue *val2 = parsePlusMinus();
+    if( val->type() != SD_SCRIPT_TYPE_FLOAT || val2->type() != SD_SCRIPT_TYPE_FLOAT ) {
       mScaner.error( QStringLiteral("Invalid types of less operation. Both must be float.") );
       delete val;
       delete val2;
       return failValue();
       }
-    return new SdM3dBinaryBoolFloatLess( val2, val );
+    return new SdScriptValueOpBinaryBoolFloatLess( val2, val );
     }
   return val;
   }
@@ -413,14 +413,14 @@ SdM3dValue *SdM3dParser::parseLess()
 
 
 
-SdM3dValue *SdM3dParser::parsePlusMinus()
+SdScriptValue *SdM3dParser::parsePlusMinus()
   {
-  SdM3dValue *val = parseMultDiv();
+  SdScriptValue *val = parseMultDiv();
 
   while( !mScaner.isEndOfScanOrError() ) {
     if( mScaner.matchToken('+') ) {
-      SdM3dValue *val2 = parseMultDiv();
-      if( val->type() != SDM3D_TYPE_FLOAT || val2->type() != SDM3D_TYPE_FLOAT ) {
+      SdScriptValue *val2 = parseMultDiv();
+      if( val->type() != SD_SCRIPT_TYPE_FLOAT || val2->type() != SD_SCRIPT_TYPE_FLOAT ) {
         mScaner.error( QStringLiteral("Invalid types of add operation. Both must be float.") );
         delete val;
         delete val2;
@@ -429,8 +429,8 @@ SdM3dValue *SdM3dParser::parsePlusMinus()
       val = new SdM3dBinaryFloatAdd( val, val2 );
       }
     else if( mScaner.matchToken('-') ) {
-      SdM3dValue *val2 = parseMultDiv();
-      if( val->type() != SDM3D_TYPE_FLOAT || val2->type() != SDM3D_TYPE_FLOAT ) {
+      SdScriptValue *val2 = parseMultDiv();
+      if( val->type() != SD_SCRIPT_TYPE_FLOAT || val2->type() != SD_SCRIPT_TYPE_FLOAT ) {
         mScaner.error( QStringLiteral("Invalid types of sub operation. Both must be float.") );
         delete val;
         delete val2;
@@ -447,14 +447,14 @@ SdM3dValue *SdM3dParser::parsePlusMinus()
 
 
 
-SdM3dValue *SdM3dParser::parseMultDiv()
+SdScriptValue *SdM3dParser::parseMultDiv()
   {
-  SdM3dValue *val = parseMinus();
+  SdScriptValue *val = parseMinus();
 
   while( !mScaner.isEndOfScanOrError() ) {
     if( mScaner.matchToken('*') ) {
-      SdM3dValue *val2 = parseMinus();
-      if( val->type() != SDM3D_TYPE_FLOAT || val2->type() != SDM3D_TYPE_FLOAT ) {
+      SdScriptValue *val2 = parseMinus();
+      if( val->type() != SD_SCRIPT_TYPE_FLOAT || val2->type() != SD_SCRIPT_TYPE_FLOAT ) {
         mScaner.error( QStringLiteral("Invalid types of multiply operation. Both must be float.") );
         delete val;
         delete val2;
@@ -463,8 +463,8 @@ SdM3dValue *SdM3dParser::parseMultDiv()
       val = new SdM3dBinaryFloatMult( val, val2 );
       }
     else if( mScaner.matchToken('/') ) {
-      SdM3dValue *val2 = parseMinus();
-      if( val->type() != SDM3D_TYPE_FLOAT || val2->type() != SDM3D_TYPE_FLOAT ) {
+      SdScriptValue *val2 = parseMinus();
+      if( val->type() != SD_SCRIPT_TYPE_FLOAT || val2->type() != SD_SCRIPT_TYPE_FLOAT ) {
         mScaner.error( QStringLiteral("Invalid types of divide operation. Both must be float.") );
         delete val;
         delete val2;
@@ -481,11 +481,11 @@ SdM3dValue *SdM3dParser::parseMultDiv()
 
 
 
-SdM3dValue *SdM3dParser::parseMinus()
+SdScriptValue *SdM3dParser::parseMinus()
   {
   if( mScaner.matchToken( '-' ) ) {
-    SdM3dValue *val = parseMinus();
-    if( val->type() != SDM3D_TYPE_FLOAT ) {
+    SdScriptValue *val = parseMinus();
+    if( val->type() != SD_SCRIPT_TYPE_FLOAT ) {
       mScaner.error( QStringLiteral("Invalid type of unary minus operation. Must be float.") );
       delete val;
       return failValue();
@@ -501,7 +501,7 @@ SdM3dValue *SdM3dParser::parseMinus()
 
 
 
-SdM3dValue *SdM3dParser::parseVar()
+SdScriptValue *SdM3dParser::parseVar()
   {
   if( mScaner.token() == 'n' ) {
     //Variable or function
@@ -525,14 +525,14 @@ SdM3dValue *SdM3dParser::parseVar()
 
   else if( mScaner.token() == 'd' ) {
     //float
-    SdM3dValue *val = new SdM3dFloat( mScaner.tokenValueFloat() );
+    SdScriptValue *val = new SdM3dFloat( mScaner.tokenValueFloat() );
     mScaner.tokenNext();
     return val;
     }
 
   else if( mScaner.token() == 's' ) {
     //String
-    SdM3dValue *val = new SdM3dString( mScaner.tokenValue() );
+    SdScriptValue *val = new SdM3dString( mScaner.tokenValue() );
     mScaner.tokenNext();
     return val;
     }
@@ -540,14 +540,14 @@ SdM3dValue *SdM3dParser::parseVar()
   else if( mScaner.matchToken( '[' ) ) {
     //list object
     // [ 1, 2, 3, 4 ]
-    SdM3dValue *val = parseExpression();
-    SdM3dArray *array;
-    if( val->type() == SDM3D_TYPE_VERTEX )
-      array = new SdM3dArrayVertex();
-    else if( val->type() == SDM3D_TYPE_SEGMENT )
-      array = new SdM3dArraySegment();
-    else if( val->type() == SDM3D_TYPE_FACE )
-      array = new SdM3dArrayFace();
+    SdScriptValue *val = parseExpression();
+    SdScriptValueArray *array;
+    if( val->type() == SD_SCRIPT_TYPE_VERTEX )
+      array = new SdScriptValueArray3dVertex();
+    else if( val->type() == SD_SCRIPT_TYPE_SEGMENT )
+      array = new SdScriptValueArray3dSegment();
+    else if( val->type() == SD_SCRIPT_TYPE_FACE )
+      array = new SdScriptValueArray3dFace();
     else {
       mScaner.error( QStringLiteral("Invalid element type of array. Must be vertex, segment or face") );
       delete val;
@@ -571,7 +571,7 @@ SdM3dValue *SdM3dParser::parseVar()
 
   else if( mScaner.matchToken( '(' ) ) {
     // ( expr )
-    SdM3dValue *val = parseExpression();
+    SdScriptValue *val = parseExpression();
     mScaner.tokenNeed( ')', QStringLiteral("No closing )") );
     return val;
     }
@@ -582,12 +582,12 @@ SdM3dValue *SdM3dParser::parseVar()
 
 
 
-SdM3dValue *SdM3dParser::parseFunction(const QString &functionName)
+SdScriptValue *SdM3dParser::parseFunction(const QString &functionName)
   {
   if( mFunctions.contains(functionName) ) {
     SdM3dFunction *function = mFunctions.value(functionName) ();
     for( int i = 0; i < function->paramCount(); i++ ) {
-      SdM3dValue *param = parseExpression();
+      SdScriptValue *param = parseExpression();
       if( param->type() != function->paramType(i) ) {
         mScaner.error( QStringLiteral("Invalid function param %1").arg(i) );
         delete param;
@@ -619,9 +619,9 @@ SdM3dValue *SdM3dParser::parseFunction(const QString &functionName)
 
 
 
-SdM3dValue *SdM3dParser::failValue() const
+SdScriptValue *SdM3dParser::failValue() const
   {
-  return new SdM3dValue();
+  return new SdScriptValue();
   }
 
 

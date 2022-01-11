@@ -21,11 +21,11 @@ Description
 class SdM3dFunGraphRectFilled : public SdM3dFunction
   {
   public:
-    SdM3dFunGraphRectFilled() : SdM3dFunction( SDM3D_TYPE_GRAPH, SDM3D_TYPE_VERTEX, SDM3D_TYPE_VERTEX ) {}
+    SdM3dFunGraphRectFilled() : SdM3dFunction( SD_SCRIPT_TYPE_GRAPH, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_VERTEX ) {}
 
     // SdM3dValue interface
   public:
-    virtual SdM3dGraph toGraph() const override { return SdM3dGraph( mParamList[0]->toVertex(), mParamList[1]->toVertex(), true ); }
+    virtual SdScriptVal2dGraph toGraph() const override { return SdScriptVal2dGraph( mParamList[0]->toVertex(), mParamList[1]->toVertex(), true ); }
   };
 
 #endif // SDM3DFUNGRAPHRECTFILLED_H

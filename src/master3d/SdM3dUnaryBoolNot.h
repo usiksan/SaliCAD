@@ -10,7 +10,7 @@ class SdM3dUnaryBoolNot : public SdM3dUnary
 
     // SdM3dValue interface
   public:
-    virtual char type() const override { return SDM3D_TYPE_BOOL; }
+    virtual char type() const override { return SD_SCRIPT_TYPE_BOOL; }
     virtual bool toBool() const override { return !mOperand->toBool(); }
   };
 

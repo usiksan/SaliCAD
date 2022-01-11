@@ -5,7 +5,7 @@
 
 class SdM3dVariableSegment : public SdM3dVariable
   {
-    SdM3dSegment mValue;
+    SdScriptVal3dSegment mValue;
   public:
     SdM3dVariableSegment() : mValue() {}
 
@@ -13,8 +13,8 @@ class SdM3dVariableSegment : public SdM3dVariable
 
     // SdM3dValue interface
   public:
-    virtual char         type() const override { return SDM3D_TYPE_SEGMENT; }
-    virtual SdM3dSegment toSegment() const override { return mValue; }
+    virtual char         type() const override { return SD_SCRIPT_TYPE_SEGMENT; }
+    virtual SdScriptVal3dSegment toSegment() const override { return mValue; }
 
     // SdM3dVariable interface
   public:

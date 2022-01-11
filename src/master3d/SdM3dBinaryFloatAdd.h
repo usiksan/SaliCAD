@@ -6,7 +6,7 @@
 class SdM3dBinaryFloatAdd : public SdM3dBinaryFloat
   {
   public:
-    SdM3dBinaryFloatAdd( SdM3dValue *first, SdM3dValue *second ) : SdM3dBinaryFloat( first, second ) {}
+    SdM3dBinaryFloatAdd( SdScriptValue *first, SdScriptValue *second ) : SdM3dBinaryFloat( first, second ) {}
 
     // SdM3dValue interface
   public:

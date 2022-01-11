@@ -21,7 +21,7 @@ Description
 class SdM3dFunVertexCenterOfRegion : public SdM3dFunction
   {
   public:
-    SdM3dFunVertexCenterOfRegion() : SdM3dFunction( SDM3D_TYPE_VERTEX, SDM3D_TYPE_REGION ) { }
+    SdM3dFunVertexCenterOfRegion() : SdM3dFunction( SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_REGION ) { }
 
     // SdM3dValue interface
   public:

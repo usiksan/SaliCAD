@@ -1,13 +1,13 @@
 #ifndef SDM3DREFERENCE_H
 #define SDM3DREFERENCE_H
 
-#include "SdM3dValue.h"
+#include "SdScriptValue.h"
 
-class SdM3dReference : public SdM3dValue
+class SdM3dReference : public SdScriptValue
   {
-    SdM3dValue *mReference;
+    SdScriptValue *mReference;
   public:
-    SdM3dReference( SdM3dValue *ref ) : SdM3dValue(), mReference(ref) {}
+    SdM3dReference( SdScriptValue *ref ) : SdScriptValue(), mReference(ref) {}
 
 
 
@@ -19,11 +19,11 @@ class SdM3dReference : public SdM3dValue
     virtual QString      toString() const override  { return mReference->toString(); }
     virtual QVector3D    toVertex() const override  { return mReference->toVertex(); }
     virtual QMatrix4x4   toMatrix() const override  { return mReference->toMatrix(); }
-    virtual SdM3dSegment toSegment() const override { return mReference->toSegment(); }
-    virtual SdM3dPath    toPath() const override    { return mReference->toPath(); }
-    virtual SdM3dRegion  toRegion() const override  { return mReference->toRegion(); }
-    virtual SdM3dFace    toFace() const override    { return mReference->toFace(); }
-    virtual SdM3dModel   toModel() const override   { return mReference->toModel(); }
+    virtual SdScriptVal3dSegment toSegment() const override { return mReference->toSegment(); }
+    virtual SdScriptVal3dPath    toPath() const override    { return mReference->toPath(); }
+    virtual SdScriptVal3dRegion  toRegion() const override  { return mReference->toRegion(); }
+    virtual SdScriptVal3dFace    toFace() const override    { return mReference->toFace(); }
+    virtual SdScriptVal3dModel   toModel() const override   { return mReference->toModel(); }
   };
 
 #endif // SDM3DREFERENCE_H

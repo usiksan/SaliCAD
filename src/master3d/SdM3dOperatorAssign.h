@@ -7,9 +7,9 @@
 class SdM3dOperatorAssign : public SdM3dOperator
   {
     SdM3dVariable *mVariable;
-    SdM3dValue    *mValue;
+    SdScriptValue    *mValue;
   public:
-    SdM3dOperatorAssign( SdM3dVariable *var, SdM3dValue *val ) : mVariable(var), mValue(val) {}
+    SdM3dOperatorAssign( SdM3dVariable *var, SdScriptValue *val ) : mVariable(var), mValue(val) {}
     ~SdM3dOperatorAssign() { delete mValue; }
 
     // SdM3dOperator interface

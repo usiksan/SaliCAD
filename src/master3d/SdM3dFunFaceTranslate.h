@@ -21,11 +21,11 @@ Description
 class SdM3dFunFaceTranslate : public SdM3dFunction
   {
   public:
-    SdM3dFunFaceTranslate() : SdM3dFunction( SDM3D_TYPE_FACE, SDM3D_TYPE_FACE, SDM3D_TYPE_VERTEX ) { }
+    SdM3dFunFaceTranslate() : SdM3dFunction( SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_VERTEX ) { }
 
     // SdM3dValue interface
   public:
-    virtual SdM3dFace toFace() const override { return mParamList[0]->toFace().translate( mParamList[1]->toVertex() ); }
+    virtual SdScriptVal3dFace toFace() const override { return mParamList[0]->toFace().translate( mParamList[1]->toVertex() ); }
   };
 
 #endif // SDM3DFUNFACETRANSLATE_H

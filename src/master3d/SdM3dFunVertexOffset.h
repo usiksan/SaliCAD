@@ -22,7 +22,7 @@ class SdM3dFunVertexOffset : public SdM3dFunction
   {
   public:
     SdM3dFunVertexOffset() :
-      SdM3dFunction( SDM3D_TYPE_VERTEX, SDM3D_TYPE_VERTEX, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT )
+      SdM3dFunction( SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT )
       {
 
       }

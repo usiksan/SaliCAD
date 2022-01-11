@@ -17,7 +17,7 @@ Description
 #include "SdM3dParser.h"
 
 SdM3dFunInputFloat::SdM3dFunInputFloat( QTableWidget *tableWidget ) :
-  SdM3dFunInput( SDM3D_TYPE_FLOAT, tableWidget, SDM3D_INPUT_STRING )
+  SdM3dFunInput( SD_SCRIPT_TYPE_FLOAT, tableWidget, SDM3D_INPUT_STRING )
   {
 
   }

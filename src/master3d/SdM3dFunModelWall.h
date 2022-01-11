@@ -22,14 +22,14 @@ class SdM3dFunModelWall : public SdM3dFunction
   {
   public:
     SdM3dFunModelWall() :
-      SdM3dFunction( SDM3D_TYPE_MODEL, SDM3D_TYPE_REGION, SDM3D_TYPE_VERTEX, SDM3D_TYPE_COLOR, SDM3D_TYPE_BOOL )
+      SdM3dFunction( SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_REGION, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_COLOR, SD_SCRIPT_TYPE_BOOL )
       {
 
       }
 
     // SdM3dValue interface
   public:
-    virtual SdM3dModel toModel() const override
+    virtual SdScriptVal3dModel toModel() const override
       {
       return sd3dModelWall( mParamList[0]->toRegion(), mParamList[1]->toVertex(), mParamList[2]->toColor(), mParamList[3]->toBool() );
       }

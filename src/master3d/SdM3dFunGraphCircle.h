@@ -21,11 +21,11 @@ Description
 class SdM3dFunGraphCircle : public SdM3dFunction
   {
   public:
-    SdM3dFunGraphCircle() : SdM3dFunction( SDM3D_TYPE_GRAPH, SDM3D_TYPE_VERTEX, SDM3D_TYPE_FLOAT ) {}
+    SdM3dFunGraphCircle() : SdM3dFunction( SD_SCRIPT_TYPE_GRAPH, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_FLOAT ) {}
 
     // SdM3dValue interface
   public:
-    virtual SdM3dGraph toGraph() const override { return SdM3dGraph( mParamList[0]->toVertex(), mParamList[1]->toFloat() ); }
+    virtual SdScriptVal2dGraph toGraph() const override { return SdScriptVal2dGraph( mParamList[0]->toVertex(), mParamList[1]->toFloat() ); }
   };
 
 #endif // SDM3DFUNGRAPHCIRCLE_H

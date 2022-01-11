@@ -21,11 +21,11 @@ Description
 class SdM3dFunModelTranslate : public SdM3dFunction
   {
   public:
-    SdM3dFunModelTranslate() : SdM3dFunction( SDM3D_TYPE_MODEL, SDM3D_TYPE_MODEL, SDM3D_TYPE_VERTEX ) { }
+    SdM3dFunModelTranslate() : SdM3dFunction( SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_VERTEX ) { }
 
     // SdM3dValue interface
   public:
-    virtual SdM3dModel toModel() const override { return sd3dModelTranslate( mParamList[0]->toModel(), mParamList[1]->toVertex() ); }
+    virtual SdScriptVal3dModel toModel() const override { return sd3dModelTranslate( mParamList[0]->toModel(), mParamList[1]->toVertex() ); }
 
   };
 

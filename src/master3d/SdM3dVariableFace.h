@@ -5,7 +5,7 @@
 
 class SdM3dVariableFace : public SdM3dVariable
   {
-    SdM3dFace mValue;
+    SdScriptVal3dFace mValue;
   public:
     SdM3dVariableFace() : mValue() {}
 
@@ -13,8 +13,8 @@ class SdM3dVariableFace : public SdM3dVariable
 
     // SdM3dValue interface
   public:
-    virtual char      type() const override { return SDM3D_TYPE_FACE; }
-    virtual SdM3dFace toFace() const override { return mValue; }
+    virtual char      type() const override { return SD_SCRIPT_TYPE_FACE; }
+    virtual SdScriptVal3dFace toFace() const override { return mValue; }
 
     // SdM3dVariable interface
   public:

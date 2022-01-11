@@ -13,7 +13,7 @@ class SdM3dVariableMatrix : public SdM3dVariable
 
     // SdM3dValue interface
   public:
-    virtual char       type() const override { return SDM3D_TYPE_MATRIX; }
+    virtual char       type() const override { return SD_SCRIPT_TYPE_MATRIX; }
     virtual QMatrix4x4 toMatrix() const override { return mValue; }
 
     // SdM3dVariable interface

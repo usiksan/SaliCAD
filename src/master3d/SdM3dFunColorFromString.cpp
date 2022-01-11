@@ -2,7 +2,7 @@
 
 
 SdM3dFunColorFromString::SdM3dFunColorFromString() :
-  SdM3dFunction( SDM3D_TYPE_COLOR, SDM3D_TYPE_STRING )
+  SdM3dFunction( SD_SCRIPT_TYPE_COLOR, SD_SCRIPT_TYPE_STRING )
   {
 
   }

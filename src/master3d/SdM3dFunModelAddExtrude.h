@@ -26,7 +26,7 @@ class SdM3dFunModelAddExtrude : public SdM3dFunction
 
     // SdM3dValue interface
   public:
-    virtual SdM3dModel toModel() const override;
+    virtual SdScriptVal3dModel toModel() const override;
 
     //!
     //! \brief modelAddExtrude The function add extrudes the model from the top side of source model in the
@@ -36,7 +36,7 @@ class SdM3dFunModelAddExtrude : public SdM3dFunction
     //! \param color           Faces color
     //! \return                Model with added extrusion
     //!
-    static  SdM3dModel modelAddExtrude( SdM3dModel src, float shift, QColor color );
+    static  SdScriptVal3dModel modelAddExtrude( SdScriptVal3dModel src, float shift, QColor color );
   };
 
 #endif // SDM3DFUNMODELADDEXTRUDE_H

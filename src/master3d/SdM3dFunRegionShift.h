@@ -21,11 +21,11 @@ Description
 class SdM3dFunRegionShift : public SdM3dFunction
   {
   public:
-    SdM3dFunRegionShift() : SdM3dFunction( SDM3D_TYPE_REGION, SDM3D_TYPE_REGION, SDM3D_TYPE_FLOAT ) { }
+    SdM3dFunRegionShift() : SdM3dFunction( SD_SCRIPT_TYPE_REGION, SD_SCRIPT_TYPE_REGION, SD_SCRIPT_TYPE_FLOAT ) { }
 
     // SdM3dValue interface
   public:
-    virtual SdM3dRegion toRegion() const override { return sd3dRegionShift( mParamList[0]->toRegion(), mParamList[1]->toFloat() ); }
+    virtual SdScriptVal3dRegion toRegion() const override { return sd3dRegionShift( mParamList[0]->toRegion(), mParamList[1]->toFloat() ); }
 
   };
 

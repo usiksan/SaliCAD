@@ -1,16 +1,16 @@
 #ifndef SDM3DBINARYFLOAT_H
 #define SDM3DBINARYFLOAT_H
 
-#include "SdM3dBinary.h"
+#include "SdScriptValueOpBinary.h"
 
-class SdM3dBinaryFloat : public SdM3dBinary
+class SdM3dBinaryFloat : public SdScriptValueOpBinary
   {
   public:
-    SdM3dBinaryFloat( SdM3dValue *first, SdM3dValue *second ) : SdM3dBinary( first, second ) {}
+    SdM3dBinaryFloat( SdScriptValue *first, SdScriptValue *second ) : SdScriptValueOpBinary( first, second ) {}
 
     // SdM3dValue interface
   public:
-    virtual char  type() const override { return SDM3D_TYPE_FLOAT; }
+    virtual char  type() const override { return SD_SCRIPT_TYPE_FLOAT; }
   };
 
 #endif // SDM3DBINARYFLOAT_H

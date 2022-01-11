@@ -11,7 +11,7 @@ class SdM3dVariableString : public SdM3dVariable
 
     // SdM3dValue interface
   public:
-    virtual char    type() const override { return SDM3D_TYPE_STRING; }
+    virtual char    type() const override { return SD_SCRIPT_TYPE_STRING; }
     virtual QString toString() const override { return mValue; }
 
     // SdM3dVariable interface

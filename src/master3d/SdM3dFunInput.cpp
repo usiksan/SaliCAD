@@ -2,7 +2,7 @@
 #include "SdM3dParser.h"
 
 SdM3dFunInput::SdM3dFunInput(char resultType, QTableWidget *tableWidget, int itemType) :
-  SdM3dFunction( resultType, SDM3D_TYPE_STRING, resultType ),
+  SdM3dFunction( resultType, SD_SCRIPT_TYPE_STRING, resultType ),
   mTableWidget(tableWidget)
   {
 

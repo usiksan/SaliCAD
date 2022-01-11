@@ -11,7 +11,7 @@ class SdM3dUnaryFloatMinus : public SdM3dUnary
 
     // SdM3dValue interface
   public:
-    virtual char  type() const override { return SDM3D_TYPE_FLOAT; }
+    virtual char  type() const override { return SD_SCRIPT_TYPE_FLOAT; }
     virtual float toFloat() const override { return -mOperand->toFloat(); }
   };
 

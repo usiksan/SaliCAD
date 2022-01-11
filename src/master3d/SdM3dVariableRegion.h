@@ -5,7 +5,7 @@
 
 class SdM3dVariableRegion : public SdM3dVariable
   {
-    SdM3dRegion mValue;
+    SdScriptVal3dRegion mValue;
   public:
     SdM3dVariableRegion() : mValue() {}
 
@@ -13,8 +13,8 @@ class SdM3dVariableRegion : public SdM3dVariable
 
     // SdM3dValue interface
   public:
-    virtual char        type() const override { return SDM3D_TYPE_REGION; }
-    virtual SdM3dRegion toRegion() const override { return mValue; }
+    virtual char        type() const override { return SD_SCRIPT_TYPE_REGION; }
+    virtual SdScriptVal3dRegion toRegion() const override { return mValue; }
 
     // SdM3dVariable interface
   public:

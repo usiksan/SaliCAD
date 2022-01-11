@@ -1,13 +1,13 @@
 #ifndef SDM3DFUNCTION_H
 #define SDM3DFUNCTION_H
 
-#include "SdM3dValue.h"
+#include "SdScriptValue.h"
 
 #include <initializer_list>
 
 #define SDM3D_MAX_PARAM 8
 
-class SdM3dFunction : public SdM3dValue
+class SdM3dFunction : public SdScriptValue
   {
     char mResultType;
     int  mParamCount;

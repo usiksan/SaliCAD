@@ -21,7 +21,7 @@ Description
 class SdM3dFunStringPinMatrix : public SdM3dFunction
   {
   public:
-    SdM3dFunStringPinMatrix() : SdM3dFunction( SDM3D_TYPE_STRING, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT ) { }
+    SdM3dFunStringPinMatrix() : SdM3dFunction( SD_SCRIPT_TYPE_STRING, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT ) { }
 
     // SdM3dValue interface
   public:

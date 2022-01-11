@@ -144,18 +144,144 @@ class SdPtrConst {
   };
 
 
+
+
+
+//!
+//! \brief The SdPtrUnique class Helper template for exclusive owning of object
+//!
+//! Usage
+//!   SdPtrUnique<int> ptrToInt;
 template <class objectType>
-class SdPtrOwner {
+class SdPtrUnique {
     objectType *mPtr;
   public:
-    SdPtrOwner() : mPtr( nullptr ) {  }
-    ~SdPtrOwner() { if( mPtr != nullptr ) delete mPtr; }
+    SdPtrUnique( objectType *p = nullptr ) noexcept : mPtr( p ) {  }
+
+    SdPtrUnique( SdPtrUnique<objectType> &&pu ) noexcept : mPtr( pu.release() ) {}
+
+    template <class baseType>
+    SdPtrUnique( baseType *obj = nullptr ) noexcept : mPtr( dynamic_cast<objectType*>(obj) ) { if( mPtr == nullptr && obj != nullptr ) delete obj; }
+
+    template <class baseType>
+    SdPtrUnique( SdPtrUnique<baseType> &&pu ) noexcept : mPtr( nullptr ) { baseType *bp = pu.release(); mPtr = dynamic_cast<objectType*>(bp); if( mPtr == nullptr && bp != nullptr ) delete bp; }
+
+    ~SdPtrUnique() { if( mPtr != nullptr ) delete mPtr; }
+
+
+    void        reset( objectType *p ) { clear(); mPtr = p; }
+
+    template<class baseObject>
+    void        reset( baseObject *obj ) { clear(); mPtr = dynamic_cast<const objectType*>(obj); if( mPtr == nullptr && obj != nullptr ) delete obj; }
+
+    void        clear() { if( mPtr != nullptr ) delete mPtr; mPtr = nullptr; }
+
+    objectType *release() { objectType *p = mPtr; mPtr = nullptr; return p; }
+
+    bool        isValid() const { return mPtr != nullptr; }
+
+    void        swap( SdPtrUnique &pu ) { objectType *p = mPtr; mPtr = pu.mPtr; pu.mPtr = p; }
+
+    operator bool () const { return mPtr != nullptr; }
+
+    SdPtrUnique &operator = ( SdPtrUnique &&pu ) { reset( pu.release() ); return *this; }
+
+    template<class baseType>
+    SdPtrUnique &operator = ( SdPtrUnique<baseType> &&pu ) { reset( pu.release() ); return *this; }
+
+    const objectType *operator -> () { return mPtr; }
+
+    const objectType *ptr() const { return mPtr; }
+
+    // Disable copy from lvalue.
+    SdPtrUnique(const SdPtrUnique&) = delete;
+    SdPtrUnique& operator=(const SdPtrUnique&) = delete;
+
+  };
+
+
+template <class objectType>
+class SdPtrShared {
+    objectType *mPtr;
+    int        *mRefCount;
+  public:
+    SdPtrShared( objectType *p ) noexcept : mPtr(p), mRefCount(nullptr) { initRefCount(); }
+
+    SdPtrShared( SdPtrShared &p ) noexcept : mPtr(p.mPtr), mRefCount(nullptr) { incRefCount(p.mRefCount); }
+
+    SdPtrShared( SdPtrUnique<objectType> &&p ) noexcept : mPtr( p.release() ), mRefCount(nullptr) { initRefCount(); }
+
+    template<class baseType>
+    SdPtrShared( baseType *p ) noexcept : mPtr( dynamic_cast<objectType*>(p) ), mRefCount(nullptr) { initRefCount(); }
+
+    template<class baseType>
+    SdPtrShared( SdPtrShared<baseType> &p ) noexcept : mPtr( dynamic_cast<objectType*>(p.mPtr) ), mRefCount(nullptr) { incRefCount(p.mRefCount); }
+
+    template<class baseType>
+    SdPtrShared( SdPtrUnique<baseType> &p ) noexcept : mPtr( nullptr ), mRefCount(nullptr) { reset<baseType>( p.release() ); }
+
+    ~SdPtrShared() { clear(); }
+
+    void        reset( objectType *p ) { clear(); mPtr = p; initRefCount(); }
+
+    template<class baseObject>
+    void        reset( baseObject *obj ) { clear(); mPtr = dynamic_cast<const objectType*>(obj); if( mPtr == nullptr && obj != nullptr ) delete obj; initRefCount(); }
+
+    void        reset( SdPtrShared &p ) { clear(); mPtr = p.mPtr; incRefCount( p.mRefCount ); }
+
+    template<class baseObject>
+    void        reset( SdPtrShared<baseObject> &p ) { clear(); mPtr = dynamic_cast<const objectType*>(p.mPtr); incRefCount( p.mRefCount ); }
+
+    void        clear() { if( mRefCount != nullptr ) { (*mRefCount)--; if( *mRefCount == 0 ) { delete mPtr; delete mRefCount;} } mRefCount = nullptr; mPtr = nullptr;  }
+
+    //objectType *release() { objectType *p = mPtr; mPtr = nullptr; return p; }
+
+    bool        isValid() const { return mPtr != nullptr; }
+
+    //void        swap( SdPtrUnique &pu ) { objectType *p = mPtr; mPtr = pu.mPtr; pu.mPtr = p; }
+
+    operator bool () const { return mPtr != nullptr; }
+
+    SdPtrShared &operator = ( SdPtrShared &&pu ) { reset( pu ); return *this; }
+
+    SdPtrShared &operator = ( SdPtrShared &pu ) { reset( pu ); return *this; }
+
+    template<class baseType>
+    SdPtrShared &operator = ( SdPtrShared<baseType> &&pu ) { reset( pu ); return *this; }
+
+    template<class baseType>
+    SdPtrShared &operator = ( SdPtrShared<baseType> &pu ) { reset( pu ); return *this; }
+
+    objectType *operator -> () const { return mPtr; }
+
+    objectType *ptr() const { return mPtr; }
+
+  private:
+    void  initRefCount() { if( mPtr != nullptr ) { mRefCount = new int; *mRefCount = 1; }  }
+
+    void  incRefCount( int *refCount ) { if( mPtr != nullptr ) { mRefCount = refCount; if( mRefCount != nullptr ) (*mRefCount)++; } }
+  };
+
+
+template <class objectType>
+class SdPtrUniqueOnly {
+    objectType *mPtr;
+  public:
+    template <class baseType>
+    SdPtrUniqueOnly( baseType *obj = nullptr ) noexcept : mPtr( dynamic_cast<objectType*>(obj) ) { if( mPtr == nullptr && obj != nullptr ) delete obj; }
+
+    template <class baseType>
+    SdPtrUniqueOnly( SdPtrUnique<baseType> &&pu ) noexcept : mPtr( nullptr ) { baseType *bp = pu.release(); mPtr = dynamic_cast<objectType*>(bp); if( mPtr == nullptr && bp != nullptr ) delete bp; }
+
+    ~SdPtrUniqueOnly() { if( mPtr != nullptr ) delete mPtr; }
+
+
 
     void        reset( const SdObject *obj ) { clear(); mPtr = dynamic_cast<const objectType*>(obj); if( mPtr == nullptr && obj != nullptr ) delete obj; }
 
     void        clear() { if( mPtr != nullptr ) delete mPtr; mPtr = nullptr; }
 
-    objectType *release() { mPtr = nullptr; }
+    objectType *release() { objectType *p = mPtr; mPtr = nullptr; return p; }
 
     bool        isValid() const { return mPtr != nullptr; }
 

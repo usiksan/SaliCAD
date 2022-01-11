@@ -21,12 +21,12 @@ Description
 class SdM3dFunFaceTriangle : public SdM3dFunction
   {
   public:
-    SdM3dFunFaceTriangle() : SdM3dFunction( SDM3D_TYPE_FACE, SDM3D_TYPE_VERTEX, SDM3D_TYPE_VERTEX, SDM3D_TYPE_VERTEX, SDM3D_TYPE_COLOR ) { }
+    SdM3dFunFaceTriangle() : SdM3dFunction( SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_COLOR ) { }
 
 
     // SdM3dValue interface
   public:
-    virtual SdM3dFace toFace() const override { return Sd3dFace( mParamList[0]->toVertex(), mParamList[1]->toVertex(), mParamList[2]->toVertex(), mParamList[3]->toColor() ); }
+    virtual SdScriptVal3dFace toFace() const override { return Sd3dFace( mParamList[0]->toVertex(), mParamList[1]->toVertex(), mParamList[2]->toVertex(), mParamList[3]->toColor() ); }
 
   };
 

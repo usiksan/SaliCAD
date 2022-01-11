@@ -21,7 +21,7 @@ Description
 class SdM3dFunVertexBuild : public SdM3dFunction
   {
   public:
-    SdM3dFunVertexBuild() : SdM3dFunction( SDM3D_TYPE_VERTEX, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT, SDM3D_TYPE_FLOAT ) { }
+    SdM3dFunVertexBuild() : SdM3dFunction( SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT ) { }
 
     // SdM3dValue interface
   public:

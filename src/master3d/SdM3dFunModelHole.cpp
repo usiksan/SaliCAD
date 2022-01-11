@@ -16,13 +16,13 @@ Description
 #include "SdM3dFunModelHole.h"
 
 SdM3dFunModelHole::SdM3dFunModelHole() :
-  SdM3dFunction( SDM3D_TYPE_MODEL, SDM3D_TYPE_REGION, SDM3D_TYPE_REGION, SDM3D_TYPE_COLOR )
+  SdM3dFunction( SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_REGION, SD_SCRIPT_TYPE_REGION, SD_SCRIPT_TYPE_COLOR )
   {
 
   }
 
 
-SdM3dModel SdM3dFunModelHole::toModel() const
+SdScriptVal3dModel SdM3dFunModelHole::toModel() const
   {
   return modelHole( mParamList[0]->toRegion(), mParamList[1]->toRegion(), mParamList[2]->toColor() );
   }
@@ -30,14 +30,14 @@ SdM3dModel SdM3dFunModelHole::toModel() const
 
 
 
-SdM3dModel SdM3dFunModelHole::modelHole(SdM3dRegion outer, SdM3dRegion hole, QColor color)
+SdScriptVal3dModel SdM3dFunModelHole::modelHole(SdScriptVal3dRegion outer, SdScriptVal3dRegion hole, QColor color)
   {
   int outerCount = outer.count();
   int holeCount = hole.count();
-  SdM3dModel model;
+  SdScriptVal3dModel model;
   if( outerCount == holeCount ) {
     //Make as equivalent
-    SdM3dFace face;
+    SdScriptVal3dFace face;
     face.mColor = color;
     face.mContour.reserve(4);
     for( int i = 0; i < outerCount; i++ ) {
@@ -62,14 +62,14 @@ SdM3dModel SdM3dFunModelHole::modelHole(SdM3dRegion outer, SdM3dRegion hole, QCo
 
 
 
-SdM3dModel SdM3dFunModelHole::modelHoleSquareCircle(SdM3dRegion square, SdM3dRegion circle, QColor color)
+SdScriptVal3dModel SdM3dFunModelHole::modelHoleSquareCircle(SdScriptVal3dRegion square, SdScriptVal3dRegion circle, QColor color)
   {
   int a360 = circle.count();
   int a90 = a360 / 4;
   int a180 = a90 * 2;
   int a270 = a90 * 3;
-  SdM3dModel model;
-  SdM3dFace face;
+  SdScriptVal3dModel model;
+  SdScriptVal3dFace face;
   face.mColor = color;
 
   //Quadrant 0

@@ -1,7 +1,7 @@
 #ifndef SDM3DPARSER_H
 #define SDM3DPARSER_H
 
-#include "SdM3dValue.h"
+#include "SdScriptValue.h"
 #include "SdM3dOperator.h"
 #include "SdM3dScaner.h"
 #include "SdM3dVariable.h"
@@ -27,9 +27,9 @@ class SdPItemPart;
 class SdM3dParser
   {
     SdM3dScaner                        mScaner;
-    QMap<QString,SdM3dVariablePtr>     mVariables;
+    QMap<QString,SdM3dVariablePtr>     mVariables;        //!< Variables map. Associates variable name with variable
     QStringList                        mVariableNameList; //!< Variable name list generated at and of parsing
-    QMap<QString,SdM3dFunctionBuilder> mFunctions;
+    QMap<QString,SdM3dFunctionBuilder> mFunctions;        //!< Predefined functions
   public:
     SdM3dParser( QTableWidget *tableWidget );
 
@@ -60,17 +60,17 @@ class SdM3dParser
     SdM3dOperator *parseOperator();
     SdM3dOperator *parseOperatorIf();
     SdM3dOperator *parseOperatorWhile();
-    SdM3dValue    *parseExpression();
-    SdM3dValue    *parseAnd();
-    SdM3dValue    *parseOr();
-    SdM3dValue    *parseNot();
-    SdM3dValue    *parseLess();
-    SdM3dValue    *parsePlusMinus();
-    SdM3dValue    *parseMultDiv();
-    SdM3dValue    *parseMinus();
-    SdM3dValue    *parseVar();
-    SdM3dValue    *parseFunction( const QString &functionName );
-    SdM3dValue    *failValue() const;
+    SdScriptValue    *parseExpression();
+    SdScriptValue    *parseAnd();
+    SdScriptValue    *parseOr();
+    SdScriptValue    *parseNot();
+    SdScriptValue    *parseLess();
+    SdScriptValue    *parsePlusMinus();
+    SdScriptValue    *parseMultDiv();
+    SdScriptValue    *parseMinus();
+    SdScriptValue    *parseVar();
+    SdScriptValue    *parseFunction( const QString &functionName );
+    SdScriptValue    *failValue() const;
     //parenthesis
   };
 

@@ -21,11 +21,11 @@ Description
 class SdM3dFunRegionCircle : public SdM3dFunction
   {
   public:
-    SdM3dFunRegionCircle() : SdM3dFunction( SDM3D_TYPE_REGION, SDM3D_TYPE_FLOAT ) { }
+    SdM3dFunRegionCircle() : SdM3dFunction( SD_SCRIPT_TYPE_REGION, SD_SCRIPT_TYPE_FLOAT ) { }
 
     // SdM3dValue interface
   public:
-    virtual SdM3dRegion toRegion() const override { return sd3dRegionCircle( mParamList[0]->toFloat() ); }
+    virtual SdScriptVal3dRegion toRegion() const override { return sd3dRegionCircle( mParamList[0]->toFloat() ); }
 
   };
 

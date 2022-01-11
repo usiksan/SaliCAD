@@ -1,12 +1,12 @@
 #ifndef SDM3DVARIABLE_H
 #define SDM3DVARIABLE_H
 
-#include "SdM3dValue.h"
+#include "SdScriptValue.h"
 
-class SdM3dVariable : public SdM3dValue
+class SdM3dVariable : public SdScriptValue
   {
   public:
-    SdM3dVariable() : SdM3dValue() {}
+    SdM3dVariable() : SdScriptValue() {}
 
     virtual void assign( SdM3dValuePtr src ) = 0;
   };

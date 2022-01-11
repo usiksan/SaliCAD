@@ -25,11 +25,11 @@ class SdM3dFunModelHole : public SdM3dFunction
 
     // SdM3dValue interface
   public:
-    virtual SdM3dModel toModel() const override;
+    virtual SdScriptVal3dModel toModel() const override;
 
-    static  SdM3dModel modelHole( SdM3dRegion outer, SdM3dRegion hole, QColor color );
+    static  SdScriptVal3dModel modelHole( SdScriptVal3dRegion outer, SdScriptVal3dRegion hole, QColor color );
 
-    static  SdM3dModel modelHoleSquareCircle( SdM3dRegion square, SdM3dRegion circle, QColor color );
+    static  SdScriptVal3dModel modelHoleSquareCircle( SdScriptVal3dRegion square, SdScriptVal3dRegion circle, QColor color );
   };
 
 #endif // SDM3DFUNMODELHOLE_H
