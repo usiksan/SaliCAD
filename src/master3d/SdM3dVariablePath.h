@@ -1,9 +1,9 @@
 #ifndef SDM3DVARIABLEPATH_H
 #define SDM3DVARIABLEPATH_H
 
-#include "SdM3dVariable.h"
+#include "SdScriptValueVariable.h"
 
-class SdM3dVariablePath : public SdM3dVariable
+class SdM3dVariablePath : public SdScriptValueVariable
   {
     SdScriptVal3dPath mValue;
   public:

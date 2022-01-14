@@ -1,9 +1,9 @@
 #ifndef SDM3DVARIABLEMODEL_H
 #define SDM3DVARIABLEMODEL_H
 
-#include "SdM3dVariable.h"
+#include "SdScriptValueVariable.h"
 
-class SdM3dVariableModel : public SdM3dVariable
+class SdM3dVariableModel : public SdScriptValueVariable
   {
     SdScriptVal3dModel mValue;
   public:

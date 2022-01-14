@@ -1,9 +1,9 @@
 #ifndef SDM3DVARIABLEFACE_H
 #define SDM3DVARIABLEFACE_H
 
-#include "SdM3dVariable.h"
+#include "SdScriptValueVariable.h"
 
-class SdM3dVariableFace : public SdM3dVariable
+class SdM3dVariableFace : public SdScriptValueVariable
   {
     SdScriptVal3dFace mValue;
   public:

@@ -26,7 +26,7 @@ Description
 #include <QTableWidget>
 #include <QLineEdit>
 
-class SdM3dProgramm;
+class SdScriptProgramm;
 class SdW3dModelProgrammEditor;
 class SdW3dModelProgrammHighlighter;
 
@@ -35,7 +35,7 @@ class SdD3dModelProgrammEditor : public QDialog
     Q_OBJECT
 
     SdPItemPart                    mPart;
-    SdM3dProgramm                 *mProgramm;
+    SdScriptProgramm                 *mProgramm;
     SdPItemRich                   *mRich;
     SdW3dModelProgrammEditor      *mTextEdit;
     SdW3dModelProgrammHighlighter *mHighlighter;

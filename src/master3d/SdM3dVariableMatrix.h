@@ -1,9 +1,9 @@
 #ifndef SDM3DVARIABLEMATRIX_H
 #define SDM3DVARIABLEMATRIX_H
 
-#include "SdM3dVariable.h"
+#include "SdScriptValueVariable.h"
 
-class SdM3dVariableMatrix : public SdM3dVariable
+class SdM3dVariableMatrix : public SdScriptValueVariable
   {
     QMatrix4x4 mValue;
   public:

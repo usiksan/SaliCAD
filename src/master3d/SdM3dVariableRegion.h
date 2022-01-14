@@ -1,9 +1,9 @@
 #ifndef SDM3DVARIABLEREGION_H
 #define SDM3DVARIABLEREGION_H
 
-#include "SdM3dVariable.h"
+#include "SdScriptValueVariable.h"
 
-class SdM3dVariableRegion : public SdM3dVariable
+class SdM3dVariableRegion : public SdScriptValueVariable
   {
     SdScriptVal3dRegion mValue;
   public:

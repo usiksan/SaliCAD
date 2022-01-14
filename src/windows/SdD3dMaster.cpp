@@ -131,7 +131,7 @@ void SdD3dMaster::onCurrentRowChanged(int row)
     if( rich != nullptr ) {
       mDescription->setText( rich->paramGet(stdParam3dModelProgramm) );
       SdM3dParser parser(nullptr);
-      SdM3dProgramm *programm = parser.parse( rich->contents(), mPreviewPart );
+      SdScriptProgramm *programm = parser.parse( rich->contents(), mPreviewPart );
       mPreviewPart->clear();
       programm->execute();
       delete programm;

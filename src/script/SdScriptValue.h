@@ -37,16 +37,34 @@ class SdScriptValue
     //!
     virtual bool                 toBool() const { return false; }
 
+    //!
+    //! \brief toFloat Convert object ot float value
+    //! \return        float value
+    //!
     virtual float                toFloat() const { return 0.0; }
 
+    //!
+    //! \brief toColor Convert object to color
+    //! \return        Color
+    //!
     virtual QColor               toColor() const { return QColor(); }
 
+    //!
+    //! \brief toString Convert object to string
+    //! \return         String
+    //!
     virtual QString              toString() const { return QString(); }
 
-
+    //!
+    //! \brief toGraph Convert object to 2d graph
+    //! \return        2d graph
+    //!
     virtual SdScriptVal2dGraph   toGraph() const { return SdScriptVal2dGraph( QVector3D(), QVector3D() ); }
 
-
+    //!
+    //! \brief toVertex Convert object to 3d vertex
+    //! \return         3d vertex
+    //!
     virtual QVector3D            toVertex() const { return QVector3D(); }
 
     virtual QMatrix4x4           toMatrix() const { return QMatrix4x4(); }
@@ -65,6 +83,10 @@ class SdScriptValue
     //!
     virtual SdScriptVal3dRegion  toRegion() const { return SdScriptVal3dRegion(); }
 
+    //!
+    //! \brief toFace Convert object to 3d face which is bound region and face color
+    //! \return       3d face which is bound region and face color
+    //!
     virtual SdScriptVal3dFace    toFace() const { return SdScriptVal3dFace(); }
 
     //!

@@ -16,7 +16,7 @@ Description
 #include "SdD3dModelMaster.h"
 #include "SdDPadMaster.h"
 #include "master3d/SdM3dParser.h"
-#include "master3d/SdM3dProgramm.h"
+#include "master3d/SdScriptProgramm.h"
 #include "objects/SdObjectFactory.h"
 #include "SdDHelp.h"
 

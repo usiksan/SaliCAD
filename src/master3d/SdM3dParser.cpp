@@ -1,9 +1,9 @@
 
 #include "SdM3dParser.h"
-#include "SdM3dOperatorBlock.h"
-#include "SdM3dOperatorAssign.h"
-#include "SdM3dOperatorIf.h"
-#include "SdM3dOperatorWhile.h"
+#include "SdScriptOperatorBlock.h"
+#include "SdScriptOperatorAssign.h"
+#include "SdScriptOperatorIf.h"
+#include "SdScriptOperatorWhile.h"
 
 #include "SdM3dVariableBool.h"
 #include "SdM3dVariableFloat.h"
@@ -19,118 +19,118 @@
 #include "SdM3dVariableGraph.h"
 
 //Predefined variable to insert faces into part
-#include "SdM3dPartModel.h"
+#include "SdScriptPartModel.h"
 //Predefined variable to insert 2d graphics into part
-#include "SdM3dPartGraph.h"
+#include "SdScriptPartGraph.h"
 
 #include "SdScriptValue.h"
-#include "SdM3dFloat.h"
-#include "SdM3dString.h"
-#include "SdM3dBool.h"
+#include "SdScriptValueFloat.h"
+#include "SdScriptValueString.h"
+#include "SdScriptValueBool.h"
 
 #include "SdScriptValueArray3dVertex.h"
 #include "SdScriptValueArray3dSegment.h"
 #include "SdScriptValueArray3dFace.h"
 
-#include "SdM3dBinaryFloatMult.h"
-#include "SdM3dBinaryFloatDiv.h"
-#include "SdM3dBinaryFloatAdd.h"
-#include "SdM3dBinaryFloatSub.h"
-#include "SdM3dUnaryFloatMinus.h"
-#include "SdM3dReference.h"
+#include "SdScriptValueOpBinaryFloatMult.h"
+#include "SdScriptValueOpBinaryFloatDiv.h"
+#include "SdScriptValueOpBinaryFloatAdd.h"
+#include "SdScriptValueOpBinaryFloatSub.h"
+#include "SdScriptValueOpUnaryFloatMinus.h"
+#include "SdScriptReference.h"
 
 #include "SdScriptValueOpBinaryBoolAnd.h"
 #include "SdScriptValueOpBinaryBoolOr.h"
 #include "SdScriptValueOpBinaryBoolFloatLess.h"
-#include "SdM3dUnaryBoolNot.h"
+#include "SdScriptValueOpUnaryBoolNot.h"
 
 //Functions
-#include "SdM3dFunInputFloat.h"
-#include "SdM3dFunInputColor.h"
-#include "SdM3dFunInputPad.h"
+#include "SdScriptValueFunInputFloat.h"
+#include "SdScriptValueFunInputColor.h"
+#include "SdScriptValueFunInputPad.h"
 
-#include "SdM3dFunColorBuild.h"
-#include "SdM3dFunColorFromString.h"
+#include "SdScriptValueFunColorBuild.h"
+#include "SdScriptValueFunColorFromString.h"
 
-#include "SdM3dFunStringPadRectThrou.h"
-#include "SdM3dFunStringPadCircleThrou.h"
-#include "SdM3dFunStringPinIndex.h"
-#include "SdM3dFunStringPinMatrix.h"
+#include "SdScriptValueFunStringPadRectThrou.h"
+#include "SdScriptValueFunStringPadCircleThrou.h"
+#include "SdScriptValueFunStringPinIndex.h"
+#include "SdScriptValueFunStringPinMatrix.h"
 
-#include "SdM3dFunVertexBuild.h"
-#include "SdM3dFunVertexOffset.h"
-#include "SdM3dFunVertexTranslate.h"
-#include "SdM3dFunVertexCenterOfRegion.h"
+#include "SdScriptValueFunVertexBuild.h"
+#include "SdScriptValueFunVertexOffset.h"
+#include "SdScriptValueFunVertexTranslate.h"
+#include "SdScriptValueFunVertexCenterOfRegion.h"
 
-#include "SdM3dFunRegionRect.h"
-#include "SdM3dFunRegionCircle.h"
-#include "SdM3dFunRegionTranslate.h"
+#include "SdScriptValueFunRegionRect.h"
+#include "SdScriptValueFunRegionCircle.h"
+#include "SdScriptValueFunRegionTranslate.h"
 
-#include "SdM3dFunFaceBuild.h"
-#include "SdM3dFunFaceTranslate.h"
-#include "SdM3dFunFaceTriangle.h"
+#include "SdScriptValueFunFaceBuild.h"
+#include "SdScriptValueFunFaceTranslate.h"
+#include "SdScriptValueFunFaceTriangle.h"
 
-#include "SdM3dFunModelWall.h"
-#include "SdM3dFunModelWallEven.h"
-#include "SdM3dFunModelExtrude.h"
-#include "SdM3dFunModelBox.h"
-#include "SdM3dFunModelCylinder.h"
-#include "SdM3dFunModelTranslate.h"
-#include "SdM3dFunModelPinTqfp.h"
-#include "SdM3dFunModelHexagon.h"
-#include "SdM3dFunModelCopy.h"
-#include "SdM3dFunModelBodyBeveled.h"
+#include "SdScriptValueFunModelWall.h"
+#include "SdScriptValueFunModelWallEven.h"
+#include "SdScriptValueFunModelExtrude.h"
+#include "SdScriptValueFunModelBox.h"
+#include "SdScriptValueFunModelCylinder.h"
+#include "SdScriptValueFunModelTranslate.h"
+#include "SdScriptValueFunModelPinTqfp.h"
+#include "SdScriptValueFunModelHexagon.h"
+#include "SdScriptValueFunModelCopy.h"
+#include "SdScriptValueFunModelBodyBeveled.h"
 
-#include "SdM3dFunGraphLine.h"
-#include "SdM3dFunGraphCircle.h"
-#include "SdM3dFunGraphRect.h"
-#include "SdM3dFunGraphRectFilled.h"
-#include "SdM3dFunGraphPin.h"
+#include "SdScriptValueFunGraphLine.h"
+#include "SdScriptValueFunGraphCircle.h"
+#include "SdScriptValueFunGraphRect.h"
+#include "SdScriptValueFunGraphRectFilled.h"
+#include "SdScriptValueFunGraphPin.h"
 
 SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
   {
   //Fill functions
-  addFunction( QStringLiteral("inputFloat"), [tableWidget] () -> SdM3dFunction* { return new SdM3dFunInputFloat( tableWidget ); } );
-  addFunction( QStringLiteral("inputColor"), [tableWidget] () -> SdM3dFunction* { return new SdM3dFunInputColor( tableWidget ); } );
-  addFunction( QStringLiteral("inputPad"), [tableWidget] () -> SdM3dFunction* { return new SdM3dFunInputPad( tableWidget ); } );
+  addFunction( QStringLiteral("inputFloat"), [tableWidget] () -> SdScriptValueFunction* { return new SdScriptValueFunInputFloat( tableWidget ); } );
+  addFunction( QStringLiteral("inputColor"), [tableWidget] () -> SdScriptValueFunction* { return new SdScriptValueFunInputColor( tableWidget ); } );
+  addFunction( QStringLiteral("inputPad"), [tableWidget] () -> SdScriptValueFunction* { return new SdScriptValueFunInputPad( tableWidget ); } );
 
-  addFunction( QStringLiteral("color"), [] () -> SdM3dFunction* { return new SdM3dFunColorBuild(); } );
-  addFunction( QStringLiteral("colorFromString"), [] () -> SdM3dFunction* { return new SdM3dFunColorFromString(); } );
+  addFunction( QStringLiteral("color"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunColorBuild(); } );
+  addFunction( QStringLiteral("colorFromString"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunColorFromString(); } );
 
-  addFunction( QStringLiteral("stringPadRectThrough"), [] () -> SdM3dFunction* { return new SdM3dFunStringPadRectThrou(); } );
-  addFunction( QStringLiteral("stringPadCircleThrough"), [] () -> SdM3dFunction* { return new SdM3dFunStringPadCircleThrou(); } );
-  addFunction( QStringLiteral("stringPinIndex"), [] () -> SdM3dFunction* { return new SdM3dFunStringPinIndex(); } );
-  addFunction( QStringLiteral("stringPinMatrix"), [] () -> SdM3dFunction* { return new SdM3dFunStringPinMatrix(); } );
+  addFunction( QStringLiteral("stringPadRectThrough"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunStringPadRectThrou(); } );
+  addFunction( QStringLiteral("stringPadCircleThrough"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunStringPadCircleThrou(); } );
+  addFunction( QStringLiteral("stringPinIndex"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunStringPinIndex(); } );
+  addFunction( QStringLiteral("stringPinMatrix"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunStringPinMatrix(); } );
 
-  addFunction( QStringLiteral("vertex"), [] () -> SdM3dFunction* { return new SdM3dFunVertexBuild(); } );
-  addFunction( QStringLiteral("vertexOffset"), [] () -> SdM3dFunction* { return new SdM3dFunVertexOffset(); } );
-  addFunction( QStringLiteral("vertexTranslate"), [] () -> SdM3dFunction* { return new SdM3dFunVertexTranslate(); } );
-  addFunction( QStringLiteral("vertexCenterOfRegion"), [] () -> SdM3dFunction* { return new SdM3dFunVertexCenterOfRegion(); } );
+  addFunction( QStringLiteral("vertex"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunVertexBuild(); } );
+  addFunction( QStringLiteral("vertexOffset"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunVertexOffset(); } );
+  addFunction( QStringLiteral("vertexTranslate"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunVertexTranslate(); } );
+  addFunction( QStringLiteral("vertexCenterOfRegion"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunVertexCenterOfRegion(); } );
 
-  addFunction( QStringLiteral("regionRect"), [] () -> SdM3dFunction* { return new SdM3dFunRegionRect(); } );
-  addFunction( QStringLiteral("regionCircle"), [] () -> SdM3dFunction* { return new SdM3dFunRegionCircle(); } );
-  addFunction( QStringLiteral("regionTranslate"), [] () -> SdM3dFunction* { return new SdM3dFunRegionTranslate(); } );
+  addFunction( QStringLiteral("regionRect"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunRegionRect(); } );
+  addFunction( QStringLiteral("regionCircle"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunRegionCircle(); } );
+  addFunction( QStringLiteral("regionTranslate"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunRegionTranslate(); } );
 
-  addFunction( QStringLiteral("face"), [] () -> SdM3dFunction* { return new SdM3dFunFaceBuild(); } );
-  addFunction( QStringLiteral("faceTranslate"), [] () -> SdM3dFunction* { return new SdM3dFunFaceTranslate(); } );
-  addFunction( QStringLiteral("faceTriangle"), [] () -> SdM3dFunction* { return new SdM3dFunFaceTriangle(); } );
+  addFunction( QStringLiteral("face"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceBuild(); } );
+  addFunction( QStringLiteral("faceTranslate"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceTranslate(); } );
+  addFunction( QStringLiteral("faceTriangle"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceTriangle(); } );
 
-  addFunction( QStringLiteral("modelWall"), [] () -> SdM3dFunction* { return new SdM3dFunModelWall(); } );
-  addFunction( QStringLiteral("modelWallEven"), [] () -> SdM3dFunction* { return new SdM3dFunModelWallEven(); } );
-  addFunction( QStringLiteral("modelExtrude"), [] () -> SdM3dFunction* { return new SdM3dFunModelExtrude(); } );
-  addFunction( QStringLiteral("modelBox"), [] () -> SdM3dFunction* { return new SdM3dFunModelBox(); } );
-  addFunction( QStringLiteral("modelCylinder"), [] () -> SdM3dFunction* { return new SdM3dFunModelCylinder(); } );
-  addFunction( QStringLiteral("modelTranslate"), [] () -> SdM3dFunction* { return new SdM3dFunModelTranslate(); } );
-  addFunction( QStringLiteral("modelPinTqfp"), [] () -> SdM3dFunction* { return new SdM3dFunModelPinTqfp(); } );
-  addFunction( QStringLiteral("modelHexagon"), [] () -> SdM3dFunction* { return new SdM3dFunModelHexagon(); } );
-  addFunction( QStringLiteral("modelCopy"), [] () -> SdM3dFunction* { return new SdM3dFunModelCopy(); } );
-  addFunction( QStringLiteral("modelBodyBeveled"), [] () -> SdM3dFunction* { return new SdM3dFunModelBodyBeveled(); } );
+  addFunction( QStringLiteral("modelWall"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunModelWall(); } );
+  addFunction( QStringLiteral("modelWallEven"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunModelWallEven(); } );
+  addFunction( QStringLiteral("modelExtrude"), [] () -> SdScriptValueFunction* { return new SdM3dFunModelExtrude(); } );
+  addFunction( QStringLiteral("modelBox"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunModelBox(); } );
+  addFunction( QStringLiteral("modelCylinder"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunModelCylinder(); } );
+  addFunction( QStringLiteral("modelTranslate"), [] () -> SdScriptValueFunction* { return new SdM3dFunModelTranslate(); } );
+  addFunction( QStringLiteral("modelPinTqfp"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunModelPinTqfp(); } );
+  addFunction( QStringLiteral("modelHexagon"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunModelHexagon(); } );
+  addFunction( QStringLiteral("modelCopy"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunModelCopy(); } );
+  addFunction( QStringLiteral("modelBodyBeveled"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunModelBodyBeveled(); } );
 
-  addFunction( QStringLiteral("graphLine"), [] () -> SdM3dFunction* { return new SdM3dFunGraphLine(); } );
-  addFunction( QStringLiteral("graphCircle"), [] () -> SdM3dFunction* { return new SdM3dFunGraphCircle(); } );
-  addFunction( QStringLiteral("graphRect"), [] () -> SdM3dFunction* { return new SdM3dFunGraphRect(); } );
-  addFunction( QStringLiteral("graphRectFilled"), [] () -> SdM3dFunction* { return new SdM3dFunGraphRectFilled(); } );
-  addFunction( QStringLiteral("graphPin"), [] () -> SdM3dFunction* { return new SdM3dFunGraphPin(); } );
+  addFunction( QStringLiteral("graphLine"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunGraphLine(); } );
+  addFunction( QStringLiteral("graphCircle"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunGraphCircle(); } );
+  addFunction( QStringLiteral("graphRect"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunGraphRect(); } );
+  addFunction( QStringLiteral("graphRectFilled"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunGraphRectFilled(); } );
+  addFunction( QStringLiteral("graphPin"), [] () -> SdScriptValueFunction* { return new SdM3dFunGraphPin(); } );
 
   }
 
@@ -143,21 +143,21 @@ SdM3dParser::SdM3dParser(QTableWidget *tableWidget)
 //! \param part    Part to which will be placed generated faces
 //! \return        Programm tree
 //!
-SdM3dProgramm *SdM3dParser::parse(const QString src, SdPItemPart *part )
+SdScriptProgramm *SdM3dParser::parse(const QString src, SdPItemPart *part )
   {
   //Insert predefined variables
-  mVariables.insert( QStringLiteral("partModel"), new SdM3dPartModel( part ) );
-  mVariables.insert( QStringLiteral("partFlat"), new SdM3dPartGraph( part ) );
+  mVariables.insert( QStringLiteral("partModel"), new SdScriptPartModel( part ) );
+  mVariables.insert( QStringLiteral("partFlat"), new SdScriptPartGraph( part ) );
 
   //Init scaner with programm source
   mScaner.sourceSetString( src );
   mScaner.tokenNext();
 
-  SdM3dProgramm *prog = new SdM3dProgramm();
+  SdScriptProgramm *prog = new SdScriptProgramm();
 
   //Scan and append all operators of programm
   while( !mScaner.isEndOfScanOrError() ) {
-    SdM3dOperator *op = parseOperator();
+    SdScriptOperator *op = parseOperator();
     if( op != nullptr )
       prog->append( op );
     }
@@ -175,13 +175,13 @@ SdM3dProgramm *SdM3dParser::parse(const QString src, SdPItemPart *part )
 
 
 
-SdM3dOperator *SdM3dParser::parseOperator()
+SdScriptOperator *SdM3dParser::parseOperator()
   {
   if( mScaner.matchToken('{') ) {
     //Block operator
-    SdM3dOperatorBlock *block = new SdM3dOperatorBlock();
+    SdScriptOperatorBlock *block = new SdScriptOperatorBlock();
     while( !mScaner.matchToken('}') && !mScaner.isEndOfScanOrError() ) {
-      SdM3dOperator *op = parseOperator();
+      SdScriptOperator *op = parseOperator();
       if( op != nullptr )
         block->append( op );
       }
@@ -210,7 +210,7 @@ SdM3dOperator *SdM3dParser::parseOperator()
   SdScriptValue *val = parseExpression();
 
   if( mVariables.contains(variableName) ) {
-    SdM3dVariable *var = mVariables.value(variableName);
+    SdScriptValueVariable *var = mVariables.value(variableName);
     if( var->type() != val->type() ) {
       //Illegal type
       mScaner.error( QStringLiteral("Illegal type of assignment") );
@@ -218,11 +218,11 @@ SdM3dOperator *SdM3dParser::parseOperator()
       return nullptr;
       }
 
-    return new SdM3dOperatorAssign( var, val );
+    return new SdScriptOperatorAssign( var, val );
     }
 
   //Depending on the type of expression, build a variable
-  SdM3dVariable *var = nullptr;
+  SdScriptValueVariable *var = nullptr;
   switch( val->type() ) {
     case SD_SCRIPT_TYPE_BOOL    : var = new SdM3dVariableBool(); break;
     case SD_SCRIPT_TYPE_FLOAT   : var = new SdM3dVariableFloat(); break;
@@ -244,10 +244,10 @@ SdM3dOperator *SdM3dParser::parseOperator()
     }
 
   mVariables.insert( variableName, var );
-  return new SdM3dOperatorAssign( var, val );
+  return new SdScriptOperatorAssign( var, val );
   }
 
-SdM3dOperator *SdM3dParser::parseOperatorIf()
+SdScriptOperator *SdM3dParser::parseOperatorIf()
   {
   if( !mScaner.tokenNeed('(', QStringLiteral("Need assign (") )  )
     return nullptr;
@@ -264,13 +264,13 @@ SdM3dOperator *SdM3dParser::parseOperatorIf()
     return nullptr;
     }
 
-  SdM3dOperator *opTrue = parseOperator();
+  SdScriptOperator *opTrue = parseOperator();
   if( opTrue == nullptr ) {
     mScaner.error( QStringLiteral("Need if-else operator") );
     delete condition;
     return nullptr;
     }
-  SdM3dOperator *opFalse = nullptr;
+  SdScriptOperator *opFalse = nullptr;
 
   if( mScaner.token() == 'n' && mScaner.tokenValue() == QStringLiteral("else") ) {
     mScaner.tokenNext();
@@ -282,7 +282,7 @@ SdM3dOperator *SdM3dParser::parseOperatorIf()
 
 
 
-SdM3dOperator *SdM3dParser::parseOperatorWhile()
+SdScriptOperator *SdM3dParser::parseOperatorWhile()
   {
   if( !mScaner.tokenNeed('(', QStringLiteral("Need assign (") )  )
     return nullptr;
@@ -299,14 +299,14 @@ SdM3dOperator *SdM3dParser::parseOperatorWhile()
     return nullptr;
     }
 
-  SdM3dOperator *opTrue = parseOperator();
+  SdScriptOperator *opTrue = parseOperator();
   if( opTrue == nullptr ) {
     mScaner.error( QStringLiteral("Need while operator") );
     delete condition;
     return nullptr;
     }
 
-  return new SdM3dOperatorWhile( condition, opTrue );
+  return new SdScriptOperatorWhile( condition, opTrue );
   }
 
 
@@ -375,7 +375,7 @@ SdScriptValue *SdM3dParser::parseNot()
       delete val;
       return failValue();
       }
-    return new SdM3dUnaryBoolNot( val );
+    return new SdScriptValueOpUnaryBoolNot( val );
     }
   return parseLess();
   }
@@ -426,7 +426,7 @@ SdScriptValue *SdM3dParser::parsePlusMinus()
         delete val2;
         return failValue();
         }
-      val = new SdM3dBinaryFloatAdd( val, val2 );
+      val = new SdScriptValueOpBinaryFloatAdd( val, val2 );
       }
     else if( mScaner.matchToken('-') ) {
       SdScriptValue *val2 = parseMultDiv();
@@ -436,7 +436,7 @@ SdScriptValue *SdM3dParser::parsePlusMinus()
         delete val2;
         return failValue();
         }
-      val = new SdM3dBinaryFloatSub( val, val2 );
+      val = new SdScriptValueOpBinaryFloatSub( val, val2 );
       }
     else break;
     }
@@ -460,7 +460,7 @@ SdScriptValue *SdM3dParser::parseMultDiv()
         delete val2;
         return failValue();
         }
-      val = new SdM3dBinaryFloatMult( val, val2 );
+      val = new SdScriptValueOpBinaryFloatMult( val, val2 );
       }
     else if( mScaner.matchToken('/') ) {
       SdScriptValue *val2 = parseMinus();
@@ -470,7 +470,7 @@ SdScriptValue *SdM3dParser::parseMultDiv()
         delete val2;
         return failValue();
         }
-      val = new SdM3dBinaryFloatDiv( val, val2 );
+      val = new SdScriptValueOpBinaryFloatDiv( val, val2 );
       }
     else break;
     }
@@ -490,7 +490,7 @@ SdScriptValue *SdM3dParser::parseMinus()
       delete val;
       return failValue();
       }
-    return new SdM3dUnaryFloatMinus( val );
+    return new SdScriptValueOpUnaryFloatMinus( val );
     }
   return parseVar();
   }
@@ -509,15 +509,15 @@ SdScriptValue *SdM3dParser::parseVar()
     mScaner.tokenNext();
 
     if( name == QStringLiteral("true") )
-      return new SdM3dBool( true );
+      return new SdScriptValueBool( true );
     if( name == QStringLiteral("false") )
-      return new SdM3dBool( false );
+      return new SdScriptValueBool( false );
 
     if( mScaner.matchToken('(') )
       return parseFunction( name );
 
     if( mVariables.contains(name) )
-      return new SdM3dReference( mVariables.value(name) );
+      return new SdScriptReference( mVariables.value(name) );
 
     mScaner.error( QStringLiteral("Undefined variable '%1'").arg(name) );
     return failValue();
@@ -525,14 +525,14 @@ SdScriptValue *SdM3dParser::parseVar()
 
   else if( mScaner.token() == 'd' ) {
     //float
-    SdScriptValue *val = new SdM3dFloat( mScaner.tokenValueFloat() );
+    SdScriptValue *val = new SdScriptValueFloat( mScaner.tokenValueFloat() );
     mScaner.tokenNext();
     return val;
     }
 
   else if( mScaner.token() == 's' ) {
     //String
-    SdScriptValue *val = new SdM3dString( mScaner.tokenValue() );
+    SdScriptValue *val = new SdScriptValueString( mScaner.tokenValue() );
     mScaner.tokenNext();
     return val;
     }
@@ -585,7 +585,7 @@ SdScriptValue *SdM3dParser::parseVar()
 SdScriptValue *SdM3dParser::parseFunction(const QString &functionName)
   {
   if( mFunctions.contains(functionName) ) {
-    SdM3dFunction *function = mFunctions.value(functionName) ();
+    SdScriptValueFunction *function = mFunctions.value(functionName) ();
     for( int i = 0; i < function->paramCount(); i++ ) {
       SdScriptValue *param = parseExpression();
       if( param->type() != function->paramType(i) ) {

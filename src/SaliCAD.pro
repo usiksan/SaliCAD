@@ -16,7 +16,8 @@ RC_ICONS = pic/main.ico
 
 #QMAKE_CXXFLAGS += -Wc++17-extensions
 
-INCLUDEPATH += ../third
+INCLUDEPATH += ../third \
+               /usr/include/python3.8
 
 win32: LIBS += -lopengl32
 win64: LIBS += -lopengl32
@@ -59,30 +60,25 @@ SOURCES += \
     master/SdDMasterPartSingleLine.cpp \
     master/SdDMasterSheetDecorator.cpp \
     master/SdMasterPart.cpp \
-    master3d/SdM3dBinaryFloatLess.cpp \
-    master3d/SdM3dFunColorBuild.cpp \
-    master3d/SdM3dFunColorFromString.cpp \
-    master3d/SdM3dFunFaceTriangle.cpp \
-    master3d/SdM3dFunInput.cpp \
-    master3d/SdM3dFunInputColor.cpp \
-    master3d/SdM3dFunInputFloat.cpp \
-    master3d/SdM3dFunInputPad.cpp \
-    master3d/SdM3dFunModelAddExtrude.cpp \
-    master3d/SdM3dFunModelBodyBeveled.cpp \
-    master3d/SdM3dFunModelCopy.cpp \
-    master3d/SdM3dFunModelHexagon.cpp \
-    master3d/SdM3dFunModelHole.cpp \
-    master3d/SdM3dFunModelPinTqfp.cpp \
-    master3d/SdM3dFunction.cpp \
-    master3d/SdM3dOperatorBlock.cpp \
-    master3d/SdM3dOperatorIf.cpp \
-    master3d/SdM3dOperatorWhile.cpp \
     master3d/SdM3dParser.cpp \
-    master3d/SdM3dPartGraph.cpp \
-    master3d/SdM3dPartModel.cpp \
-    master3d/SdM3dProgramm.cpp \
-    master3d/SdM3dScaner.cpp \
-    master3d/SdM3dString.cpp \
+    master3d/SdScriptOperatorBlock.cpp \
+    master3d/SdScriptOperatorIf.cpp \
+    master3d/SdScriptOperatorWhile.cpp \
+    master3d/SdScriptPartGraph.cpp \
+    master3d/SdScriptPartModel.cpp \
+    master3d/SdScriptProgramm.cpp \
+    master3d/SdScriptScaner.cpp \
+    master3d/SdScriptValueFunColorBuild.cpp \
+    master3d/SdScriptValueFunColorFromString.cpp \
+    master3d/SdScriptValueFunFaceTriangle.cpp \
+    master3d/SdScriptValueFunInput.cpp \
+    master3d/SdScriptValueFunInputColor.cpp \
+    master3d/SdScriptValueFunInputFloat.cpp \
+    master3d/SdScriptValueFunInputPad.cpp \
+    master3d/SdScriptValueFunModelAddExtrude.cpp \
+    master3d/SdScriptValueFunModelCopy.cpp \
+    master3d/SdScriptValueFunModelHole.cpp \
+    master3d/SdScriptValueFunction.cpp \
     script/SdScriptValueArray3dVertex.cpp \
     script/SdScriptValueArray3dSegment.cpp \
     script/SdScriptValueArray3dFace.cpp \
@@ -422,70 +418,7 @@ HEADERS  += \
     master/SdDMasterPartSingleLine.h \
     master/SdDMasterSheetDecorator.h \
     master/SdMasterPart.h \
-    master3d/SdM3dBinaryFloat.h \
-    master3d/SdM3dBinaryFloatAdd.h \
-    master3d/SdM3dBinaryFloatDiv.h \
-    master3d/SdM3dBinaryFloatLess.h \
-    master3d/SdM3dBinaryFloatMult.h \
-    master3d/SdM3dBinaryFloatSub.h \
-    master3d/SdM3dBool.h \
-    master3d/SdM3dFloat.h \
-    master3d/SdM3dFunColorBuild.h \
-    master3d/SdM3dFunColorFromString.h \
-    master3d/SdM3dFunFaceBuild.h \
-    master3d/SdM3dFunFaceTranslate.h \
-    master3d/SdM3dFunFaceTriangle.h \
-    master3d/SdM3dFunGraphCircle.h \
-    master3d/SdM3dFunGraphLine.h \
-    master3d/SdM3dFunGraphPin.h \
-    master3d/SdM3dFunGraphRect.h \
-    master3d/SdM3dFunGraphRectFilled.h \
-    master3d/SdM3dFunInput.h \
-    master3d/SdM3dFunInputColor.h \
-    master3d/SdM3dFunInputFloat.h \
-    master3d/SdM3dFunInputPad.h \
-    master3d/SdM3dFunModelAddExtrude.h \
-    master3d/SdM3dFunModelBodyBeveled.h \
-    master3d/SdM3dFunModelBox.h \
-    master3d/SdM3dFunModelCopy.h \
-    master3d/SdM3dFunModelCurve.h \
-    master3d/SdM3dFunModelCylinder.h \
-    master3d/SdM3dFunModelExtrude.h \
-    master3d/SdM3dFunModelHexagon.h \
-    master3d/SdM3dFunModelHole.h \
-    master3d/SdM3dFunModelPinTqfp.h \
-    master3d/SdM3dFunModelTranslate.h \
-    master3d/SdM3dFunModelWall.h \
-    master3d/SdM3dFunModelWallEven.h \
-    master3d/SdM3dFunRegionCircle.h \
-    master3d/SdM3dFunRegionRect.h \
-    master3d/SdM3dFunRegionShift.h \
-    master3d/SdM3dFunRegionTranslate.h \
-    master3d/SdM3dFunStringPadCircleThrou.h \
-    master3d/SdM3dFunStringPadRectThrou.h \
-    master3d/SdM3dFunStringPinIndex.h \
-    master3d/SdM3dFunStringPinMatrix.h \
-    master3d/SdM3dFunVertexBuild.h \
-    master3d/SdM3dFunVertexCenterOfRegion.h \
-    master3d/SdM3dFunVertexOffset.h \
-    master3d/SdM3dFunVertexTranslate.h \
-    master3d/SdM3dFunction.h \
-    master3d/SdM3dOperator.h \
-    master3d/SdM3dOperatorAssign.h \
-    master3d/SdM3dOperatorBlock.h \
-    master3d/SdM3dOperatorIf.h \
-    master3d/SdM3dOperatorWhile.h \
     master3d/SdM3dParser.h \
-    master3d/SdM3dPartGraph.h \
-    master3d/SdM3dPartModel.h \
-    master3d/SdM3dProgramm.h \
-    master3d/SdM3dReference.h \
-    master3d/SdM3dScaner.h \
-    master3d/SdM3dString.h \
-    master3d/SdM3dUnary.h \
-    master3d/SdM3dUnaryBoolNot.h \
-    master3d/SdM3dUnaryFloatMinus.h \
-    master3d/SdM3dVariable.h \
     master3d/SdM3dVariableBool.h \
     master3d/SdM3dVariableColor.h \
     master3d/SdM3dVariableFace.h \
@@ -498,6 +431,69 @@ HEADERS  += \
     master3d/SdM3dVariableSegment.h \
     master3d/SdM3dVariableString.h \
     master3d/SdM3dVariableVertex.h \
+    master3d/SdScriptOperator.h \
+    master3d/SdScriptOperatorAssign.h \
+    master3d/SdScriptOperatorBlock.h \
+    master3d/SdScriptOperatorIf.h \
+    master3d/SdScriptOperatorWhile.h \
+    master3d/SdScriptPartGraph.h \
+    master3d/SdScriptPartModel.h \
+    master3d/SdScriptProgramm.h \
+    master3d/SdScriptReference.h \
+    master3d/SdScriptScaner.h \
+    master3d/SdScriptValueBool.h \
+    master3d/SdScriptValueFloat.h \
+    master3d/SdScriptValueFunColorBuild.h \
+    master3d/SdScriptValueFunColorFromString.h \
+    master3d/SdScriptValueFunFaceBuild.h \
+    master3d/SdScriptValueFunFaceTranslate.h \
+    master3d/SdScriptValueFunFaceTriangle.h \
+    master3d/SdScriptValueFunGraphCircle.h \
+    master3d/SdScriptValueFunGraphLine.h \
+    master3d/SdScriptValueFunGraphPin.h \
+    master3d/SdScriptValueFunGraphRect.h \
+    master3d/SdScriptValueFunGraphRectFilled.h \
+    master3d/SdScriptValueFunInput.h \
+    master3d/SdScriptValueFunInputColor.h \
+    master3d/SdScriptValueFunInputFloat.h \
+    master3d/SdScriptValueFunInputPad.h \
+    master3d/SdScriptValueFunModelAddExtrude.h \
+    master3d/SdScriptValueFunModelBodyBeveled.h \
+    master3d/SdScriptValueFunModelBox.h \
+    master3d/SdScriptValueFunModelCopy.h \
+    master3d/SdScriptValueFunModelCurve.h \
+    master3d/SdScriptValueFunModelCylinder.h \
+    master3d/SdScriptValueFunModelExtrude.h \
+    master3d/SdScriptValueFunModelHexagon.h \
+    master3d/SdScriptValueFunModelHole.h \
+    master3d/SdScriptValueFunModelPinTqfp.h \
+    master3d/SdScriptValueFunModelTranslate.h \
+    master3d/SdScriptValueFunModelWall.h \
+    master3d/SdScriptValueFunModelWallEven.h \
+    master3d/SdScriptValueFunRegionCircle.h \
+    master3d/SdScriptValueFunRegionRect.h \
+    master3d/SdScriptValueFunRegionShift.h \
+    master3d/SdScriptValueFunRegionTranslate.h \
+    master3d/SdScriptValueFunStringPadCircleThrou.h \
+    master3d/SdScriptValueFunStringPadRectThrou.h \
+    master3d/SdScriptValueFunStringPinIndex.h \
+    master3d/SdScriptValueFunStringPinMatrix.h \
+    master3d/SdScriptValueFunVertexBuild.h \
+    master3d/SdScriptValueFunVertexCenterOfRegion.h \
+    master3d/SdScriptValueFunVertexOffset.h \
+    master3d/SdScriptValueFunVertexTranslate.h \
+    master3d/SdScriptValueFunction.h \
+    master3d/SdScriptValueOpBinaryFloatDiv.h \
+    master3d/SdScriptValueOpBinaryFloatLess.h \
+    master3d/SdScriptValueOpBinaryFloatMult.h \
+    master3d/SdScriptValueOpBinaryFloatSub.h \
+    master3d/SdScriptValueOpUnary.h \
+    master3d/SdScriptValueOpUnaryBoolNot.h \
+    master3d/SdScriptValueOpUnaryFloatMinus.h \
+    master3d/SdScriptValueString.h \
+    master3d/SdScriptValueVariable.h \
+    script/SdScriptValueOpBinaryFloatAdd.h \
+    script/SdScriptValueOpBinaryFloat.h \
     script/SdScriptValueOpBinaryBoolOr.h \
     script/SdScriptValueOpBinaryBoolFloatLess.h \
     script/SdScriptValueOpBinaryBoolAnd.h \

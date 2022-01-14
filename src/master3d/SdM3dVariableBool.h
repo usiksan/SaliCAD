@@ -1,9 +1,9 @@
 #ifndef SDM3DVARIABLEBOOL_H
 #define SDM3DVARIABLEBOOL_H
 
-#include "SdM3dVariable.h"
+#include "SdScriptValueVariable.h"
 
-class SdM3dVariableBool : public SdM3dVariable
+class SdM3dVariableBool : public SdScriptValueVariable
   {
     bool mValue;
   public:

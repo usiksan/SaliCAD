@@ -158,7 +158,7 @@ void SdPNewProjectItem_3dMaster::onCurrentRowChanged(int row)
       //TODO append 3d preview
       SdM3dParser parser(nullptr);
       static SdPItemPart previewPart;
-      SdM3dProgramm *programm = parser.parse( rich->contents(), &previewPart );
+      SdScriptProgramm *programm = parser.parse( rich->contents(), &previewPart );
       previewPart.clear();
       programm->execute();
       delete programm;

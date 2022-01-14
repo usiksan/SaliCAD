@@ -1,9 +1,9 @@
 #ifndef SDM3DVARIABLECOLOR_H
 #define SDM3DVARIABLECOLOR_H
 
-#include "SdM3dVariable.h"
+#include "SdScriptValueVariable.h"
 
-class SdM3dVariableColor : public SdM3dVariable
+class SdM3dVariableColor : public SdScriptValueVariable
   {
     QColor mValue;
   public:

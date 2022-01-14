@@ -1,0 +1,45 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Script language is C-style hi-level language for programming 3d models, 2d parametric graphics and
+  schematic calculations.
+
+  Special variable. When we assign to it then model appended to the PartItem.
+*/
+#ifndef SDSCRIPTPARTMODEL_H
+#define SDSCRIPTPARTMODEL_H
+
+#include "SdScriptValueVariable.h"
+
+class SdPItemPart;
+class Sd3dGraphModel;
+
+class SdScriptPartModel : public SdScriptValueVariable
+  {
+    SdPItemPart    *mPart;  //!< Part to which appended all new models
+    Sd3dGraphModel *mModel; //!< Model which accumulate all faces
+  public:
+    SdScriptPartModel( SdPItemPart *part );
+
+    // SdM3dValue interface
+  public:
+    //!
+    //! \brief type Return type of object
+    //! \return     Type of object
+    //!
+    virtual char type() const override { return SD_SCRIPT_TYPE_MODEL; }
+
+    // SdM3dVariable interface
+  public:
+    virtual void assign(SdM3dValuePtr src) override;
+  };
+
+#endif // SDSCRIPTPARTMODEL_H

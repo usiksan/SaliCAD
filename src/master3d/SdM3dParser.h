@@ -2,11 +2,11 @@
 #define SDM3DPARSER_H
 
 #include "SdScriptValue.h"
-#include "SdM3dOperator.h"
-#include "SdM3dScaner.h"
-#include "SdM3dVariable.h"
-#include "SdM3dFunction.h"
-#include "SdM3dProgramm.h"
+#include "SdScriptOperator.h"
+#include "SdScriptScaner.h"
+#include "SdScriptValueVariable.h"
+#include "SdScriptValueFunction.h"
+#include "SdScriptProgramm.h"
 
 #include <QMap>
 #include <QTableWidget>
@@ -20,14 +20,14 @@ enum {
 };
 
 
-using SdM3dFunctionBuilder = std::function<SdM3dFunction* ()>;
+using SdM3dFunctionBuilder = std::function<SdScriptValueFunction* ()>;
 
 class SdPItemPart;
 
 class SdM3dParser
   {
-    SdM3dScaner                        mScaner;
-    QMap<QString,SdM3dVariablePtr>     mVariables;        //!< Variables map. Associates variable name with variable
+    SdScriptScaner                        mScaner;
+    QMap<QString,SdScriptValueVariablePtr>     mVariables;        //!< Variables map. Associates variable name with variable
     QStringList                        mVariableNameList; //!< Variable name list generated at and of parsing
     QMap<QString,SdM3dFunctionBuilder> mFunctions;        //!< Predefined functions
   public:
@@ -39,7 +39,7 @@ class SdM3dParser
     //! \param part    Part to which will be placed generated faces
     //! \return        Programm tree
     //!
-    SdM3dProgramm *parse(const QString src, SdPItemPart *part);
+    SdScriptProgramm *parse(const QString src, SdPItemPart *part);
 
     //!
     //! \brief variableNameList Returns parsed programm variable name list
@@ -57,9 +57,9 @@ class SdM3dParser
 
     void           addFunction( const QString functionName, SdM3dFunctionBuilder functionBuilder ) { mFunctions.insert( functionName, functionBuilder ); }
   private:
-    SdM3dOperator *parseOperator();
-    SdM3dOperator *parseOperatorIf();
-    SdM3dOperator *parseOperatorWhile();
+    SdScriptOperator *parseOperator();
+    SdScriptOperator *parseOperatorIf();
+    SdScriptOperator *parseOperatorWhile();
     SdScriptValue    *parseExpression();
     SdScriptValue    *parseAnd();
     SdScriptValue    *parseOr();

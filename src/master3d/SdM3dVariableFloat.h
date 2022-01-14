@@ -1,9 +1,9 @@
 #ifndef SDM3DVARIABLEFLOAT_H
 #define SDM3DVARIABLEFLOAT_H
 
-#include "SdM3dVariable.h"
+#include "SdScriptValueVariable.h"
 
-class SdM3dVariableFloat : public SdM3dVariable
+class SdM3dVariableFloat : public SdScriptValueVariable
   {
     float mValue;
   public:

@@ -1,9 +1,9 @@
 #ifndef SDM3DVARIABLEGRAPH_H
 #define SDM3DVARIABLEGRAPH_H
 
-#include "SdM3dVariable.h"
+#include "SdScriptValueVariable.h"
 
-class SdM3dVariableGraph : public SdM3dVariable
+class SdM3dVariableGraph : public SdScriptValueVariable
   {
     SdScriptVal2dGraph mValue;
   public:

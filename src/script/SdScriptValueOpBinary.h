@@ -19,6 +19,7 @@ Description
 
 #include "SdScriptValue.h"
 
+
 class SdScriptValueOpBinary : public SdScriptValue
   {
   protected:

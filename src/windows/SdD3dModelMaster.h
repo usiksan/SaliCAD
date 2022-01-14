@@ -23,14 +23,14 @@ Description
 #include <QDialog>
 #include <QTableWidget>
 
-class SdM3dProgramm;
+class SdScriptProgramm;
 
 class SdD3dModelMaster : public QDialog
   {
     Q_OBJECT
 
     SdPItemPart                   *mPart;        //!< Created part object. It used also for preview
-    SdM3dProgramm                 *mProgramm;    //!< Compiled 3d model programm
+    SdScriptProgramm                 *mProgramm;    //!< Compiled 3d model programm
     QTableWidget                  *mParamWidget; //!< Table with 3d model parameters
     SdWView3d                     *mPreview;     //!< 3d model preview
     bool                           mActive;      //!< Flag to preserve of recursing call

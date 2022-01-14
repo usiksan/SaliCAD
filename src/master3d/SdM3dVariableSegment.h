@@ -1,9 +1,9 @@
 #ifndef SDM3DVARIABLESEGMENT_H
 #define SDM3DVARIABLESEGMENT_H
 
-#include "SdM3dVariable.h"
+#include "SdScriptValueVariable.h"
 
-class SdM3dVariableSegment : public SdM3dVariable
+class SdM3dVariableSegment : public SdScriptValueVariable
   {
     SdScriptVal3dSegment mValue;
   public:

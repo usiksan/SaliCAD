@@ -1,9 +1,9 @@
 #ifndef SDM3DVARIABLESTRING_H
 #define SDM3DVARIABLESTRING_H
 
-#include "SdM3dVariable.h"
+#include "SdScriptValueVariable.h"
 
-class SdM3dVariableString : public SdM3dVariable
+class SdM3dVariableString : public SdScriptValueVariable
   {
     QString mValue;
   public:

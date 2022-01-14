@@ -18,7 +18,7 @@ Description
 #include "SdW3dModelProgrammHighlighter.h"
 #include "SdDPadMaster.h"
 #include "master3d/SdM3dParser.h"
-#include "master3d/SdM3dProgramm.h"
+#include "master3d/SdScriptProgramm.h"
 #include "objects/SdObjectFactory.h"
 
 #include <QVBoxLayout>
