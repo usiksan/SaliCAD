@@ -14,11 +14,11 @@ Description
   It allow enter, edit and test 3d model programm
 */
 #include "SdD3dModelProgrammEditor.h"
-#include "SdW3dModelProgrammEditor.h"
-#include "SdW3dModelProgrammHighlighter.h"
+#include "SdWScriptEditor.h"
+#include "SdWScriptHighlighter.h"
 #include "SdDPadMaster.h"
-#include "master3d/SdScriptParser.h"
-#include "master3d/SdScriptProgramm.h"
+#include "script/SdScriptParser3d.h"
+#include "script/SdScriptProgramm.h"
 #include "objects/SdObjectFactory.h"
 
 #include <QVBoxLayout>
@@ -72,16 +72,16 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
     font.setPointSize(10);
 
     //Editor himself
-    mTextEdit = new SdW3dModelProgrammEditor();
+    mTextEdit = new SdWScriptEditor();
     mTextEdit->setAutoCompleteParenthesis(true);
     mTextEdit->setAutoIndentSpaceCount(2);
     mTextEdit->setFont( font );
 
     //Highlighter for editor
-    mHighlighter = new SdW3dModelProgrammHighlighter( mTextEdit->document() );
+    mHighlighter = new SdWScriptHighlighter( mTextEdit->document() );
     mTextEdit->setHighlighter( mHighlighter );
     connect( mTextEdit, SIGNAL(rehighlightBlock(QTextBlock)), mHighlighter, SLOT(rehighlightBlock(QTextBlock)) );
-    connect( mTextEdit, &SdW3dModelProgrammEditor::textChanged, this, &SdD3dModelProgrammEditor::parse );
+    connect( mTextEdit, &SdWScriptEditor::textChanged, this, &SdD3dModelProgrammEditor::parse );
     //connect( this, &SdD3dModelProgrammEditor::parseCompleted, mHighlighter, &SdW3dModelProgrammHighlighter::rehighlight );
 
     tlay->addWidget( mTextEdit );
@@ -108,7 +108,7 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
 
    //Help widget
    splitter->addWidget( mHelp = new SdWHelp() );
-   connect( mTextEdit, &SdW3dModelProgrammEditor::help, mHelp, &SdWHelp::helpTopic );
+   connect( mTextEdit, &SdWScriptEditor::help, mHelp, &SdWHelp::helpTopic );
 
    //Text editor widget with buttons
    splitter->addWidget( editor );
@@ -162,7 +162,6 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
 SdD3dModelProgrammEditor::~SdD3dModelProgrammEditor()
   {
   if( mRich ) delete mRich;
-  if( mProgramm ) delete mProgramm;
   }
 
 
@@ -173,20 +172,15 @@ SdD3dModelProgrammEditor::~SdD3dModelProgrammEditor()
 //!
 void SdD3dModelProgrammEditor::compile()
   {
-  if( mProgramm != nullptr ) {
-    delete mProgramm;
-    mProgramm = nullptr;
-    }
-
   mActive = true;
 
   mParamWidget->clear();
   mParamWidget->setColumnCount(2);
   mParamWidget->setRowCount(0);
   mParamWidget->setHorizontalHeaderLabels( {tr("Parametr name"), tr("Parametr value") } );
-  SdM3dParser parser(mParamWidget);
+  SdScriptParser3d parser(mParamWidget);
 
-  mProgramm = parser.parse( mTextEdit->toPlainText(), &mPart );
+  mProgramm = parser.parse3d( mTextEdit->toPlainText(), &mPart );
 
   mError->setText( parser.error() );
 
@@ -203,7 +197,7 @@ void SdD3dModelProgrammEditor::compile()
 //!
 void SdD3dModelProgrammEditor::rebuild()
   {
-  if( mProgramm != nullptr && !mActive ) {
+  if( mProgramm && !mActive ) {
     //Clear previously builded part
     mPart.clear();
 
@@ -229,9 +223,8 @@ void SdD3dModelProgrammEditor::parse()
     active = true;
     //Set flag that programm text changed
     mDirty = true;
-    SdM3dParser parser(nullptr);
-    auto ptr = parser.parse( mTextEdit->toPlainText(), nullptr );
-    delete ptr;
+    SdScriptParser3d parser(nullptr);
+    auto ptr = parser.parse3d( mTextEdit->toPlainText(), nullptr );
     mHighlighter->setNameLists( parser.variableNameList(), parser.functionNameList() );
     //Rehighlight recall text changing with emit signal
     //This signal handles by this function parse and happens cycling

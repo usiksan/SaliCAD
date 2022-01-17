@@ -39,7 +39,11 @@ class SdScriptPartModel : public SdScriptValueVariable
 
     // SdM3dVariable interface
   public:
-    virtual void assign(SdM3dValuePtr src) override;
+    //!
+    //! \brief assign Assignment value to variable
+    //! \param src    source of value
+    //!
+    virtual void assign(SdScriptValuePtr src) override;
   };
 
 #endif // SDSCRIPTPARTMODEL_H

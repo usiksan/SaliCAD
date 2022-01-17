@@ -64,6 +64,7 @@ SOURCES += \
     script/SdScriptOperatorIf.cpp \
     script/SdScriptOperatorWhile.cpp \
     script/SdScriptParser.cpp \
+    script/SdScriptParser3d.cpp \
     script/SdScriptPartGraph.cpp \
     script/SdScriptPartModel.cpp \
     script/SdScriptProgramm.cpp \
@@ -107,7 +108,6 @@ SOURCES += \
     objects/Sd3dSolid.cpp \
     objects/Sd3dStep.cpp \
     objects/SdUndoRecord3dMatrix.cpp \
-    script/SdScriptParser.cpp \
     windows/SdD3dMaster.cpp \
     windows/SdD3dModelMaster.cpp \
     windows/SdD3dModelProgrammEditor.cpp \
@@ -115,8 +115,6 @@ SOURCES += \
     windows/SdDOptionsPageLibrary.cpp \
     windows/SdExpression.cpp \
     windows/SdPNewProjectItem_3dMaster.cpp \
-    windows/SdW3dModelProgrammEditor.cpp \
-    windows/SdW3dModelProgrammHighlighter.cpp \
     windows/SdWEditor3d.cpp \
     windows/SdWEditor3dPart.cpp \
     windows/SdWExpressor.cpp \
@@ -152,6 +150,8 @@ SOURCES += \
     windows/SdDOptionsPageColors.cpp \
     objects/SdEnvir.cpp \
     windows/SdWRemoteStatus.cpp \
+    windows/SdWScriptEditor.cpp \
+    windows/SdWScriptHighlighter.cpp \
     windows/SdWView.cpp \
     modes/SdMode.cpp \
     modes/SdModeCommon.cpp \
@@ -424,6 +424,7 @@ HEADERS  += \
     script/SdScriptOperatorIf.h \
     script/SdScriptOperatorWhile.h \
     script/SdScriptParser.h \
+    script/SdScriptParser3d.h \
     script/SdScriptPartGraph.h \
     script/SdScriptPartModel.h \
     script/SdScriptProgramm.h \
@@ -531,7 +532,6 @@ HEADERS  += \
     objects/Sd3dStep.h \
     objects/SdProperty.h \
     objects/SdUndoRecord3dMatrix.h \
-    script/SdScriptParser.h \
     windows/SdD3dMaster.h \
     windows/SdD3dModelMaster.h \
     windows/SdD3dModelProgrammEditor.h \
@@ -539,8 +539,6 @@ HEADERS  += \
     windows/SdDOptionsPageLibrary.h \
     windows/SdExpression.h \
     windows/SdPNewProjectItem_3dMaster.h \
-    windows/SdW3dModelProgrammEditor.h \
-    windows/SdW3dModelProgrammHighlighter.h \
     windows/SdWEditor3d.h \
     windows/SdWEditor3dPart.h \
     windows/SdWExpressor.h \
@@ -578,6 +576,8 @@ HEADERS  += \
     windows/SdDOptionsPageColors.h \
     objects/SdEnvir.h \
     windows/SdWRemoteStatus.h \
+    windows/SdWScriptEditor.h \
+    windows/SdWScriptHighlighter.h \
     windows/SdWView.h \
     modes/SdMode.h \
     modes/SdModeCommon.h \

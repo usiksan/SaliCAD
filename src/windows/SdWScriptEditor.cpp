@@ -1,6 +1,6 @@
 ﻿#include "SdConfig.h"
-#include "SdW3dModelProgrammEditor.h"
-#include "SdW3dModelProgrammHighlighter.h"
+#include "SdWScriptEditor.h"
+#include "SdWScriptHighlighter.h"
 
 #include <QKeyEvent>
 #include <QPainter>
@@ -69,7 +69,7 @@ void ScrollBarWithMarkers::setHighlights(const QList<QPair<double, double>> &pos
 //============================================================================================================
 // SdW3dModelProgrammEditor
 
-SdW3dModelProgrammEditor::SdW3dModelProgrammEditor(QWidget *parent) :
+SdWScriptEditor::SdWScriptEditor(QWidget *parent) :
   QPlainTextEdit(parent),
   mRootBlock(nullptr),
   mScrollBarMarker(nullptr),
@@ -124,7 +124,7 @@ SdW3dModelProgrammEditor::SdW3dModelProgrammEditor(QWidget *parent) :
 
 
 
-SdW3dModelProgrammEditor::~SdW3dModelProgrammEditor()
+SdWScriptEditor::~SdWScriptEditor()
   {
   if (mRootBlock != nullptr)
     mRootBlock->deleteLater();
@@ -135,7 +135,7 @@ SdW3dModelProgrammEditor::~SdW3dModelProgrammEditor()
 
 
 
-void SdW3dModelProgrammEditor::lineNumberAreaPaintEvent(QPaintEvent *event) {
+void SdWScriptEditor::lineNumberAreaPaintEvent(QPaintEvent *event) {
   QPainter painter(lineNumberArea);
   painter.fillRect(event->rect(), Qt::lightGray);
 
@@ -164,7 +164,7 @@ void SdW3dModelProgrammEditor::lineNumberAreaPaintEvent(QPaintEvent *event) {
 
 
 
-int SdW3dModelProgrammEditor::lineNumberAreaWidth() {
+int SdWScriptEditor::lineNumberAreaWidth() {
   int digits = 1;
   int max = qMax(1, blockCount());
   while (max >= 10) {
@@ -207,7 +207,7 @@ QChar cursorChar( QTextCursor c, int offset ) {
 
 
 
-QString SdW3dModelProgrammEditor::getWordCursorOver()
+QString SdWScriptEditor::getWordCursorOver()
   {
   return getWordCursorOver( textCursor() );
   }
@@ -215,7 +215,7 @@ QString SdW3dModelProgrammEditor::getWordCursorOver()
 
 
 
-QString SdW3dModelProgrammEditor::getWordCursorOver(QTextCursor cursor)
+QString SdWScriptEditor::getWordCursorOver(QTextCursor cursor)
   {
   //Текущая строка
   int pos;
@@ -241,7 +241,7 @@ QString SdW3dModelProgrammEditor::getWordCursorOver(QTextCursor cursor)
 
 
 
-QString SdW3dModelProgrammEditor::getIncludeOver()
+QString SdWScriptEditor::getIncludeOver()
   {
   //Текущая строка
   int pos;
@@ -269,7 +269,7 @@ QString SdW3dModelProgrammEditor::getIncludeOver()
 
 
 
-int SdW3dModelProgrammEditor::autoIndentSpaceCount() const
+int SdWScriptEditor::autoIndentSpaceCount() const
   {
   return mAutoIndentSpacesCount;
   }
@@ -277,7 +277,7 @@ int SdW3dModelProgrammEditor::autoIndentSpaceCount() const
 
 
 
-void SdW3dModelProgrammEditor::setAutoIndentSpaceCount(int count)
+void SdWScriptEditor::setAutoIndentSpaceCount(int count)
   {
   mAutoIndentSpacesCount = count;
   }
@@ -285,7 +285,7 @@ void SdW3dModelProgrammEditor::setAutoIndentSpaceCount(int count)
 
 
 
-bool SdW3dModelProgrammEditor::autoCompleteParenthesis() const
+bool SdWScriptEditor::autoCompleteParenthesis() const
   {
   return mAutoCompleteParenthesis;
   }
@@ -293,7 +293,7 @@ bool SdW3dModelProgrammEditor::autoCompleteParenthesis() const
 
 
 
-void SdW3dModelProgrammEditor::setAutoCompleteParenthesis(bool autoComplete)
+void SdWScriptEditor::setAutoCompleteParenthesis(bool autoComplete)
   {
   mAutoCompleteParenthesis = autoComplete;
   }
@@ -301,7 +301,7 @@ void SdW3dModelProgrammEditor::setAutoCompleteParenthesis(bool autoComplete)
 
 
 
-void SdW3dModelProgrammEditor::updateHighlights()
+void SdWScriptEditor::updateHighlights()
   {
   QList<QTextEdit::ExtraSelection> extraSelections;
 
@@ -316,7 +316,7 @@ void SdW3dModelProgrammEditor::updateHighlights()
 
 
 
-int SdW3dModelProgrammEditor::getLeadingSpaceCount(const QString &text)
+int SdWScriptEditor::getLeadingSpaceCount(const QString &text)
   {
   int i =0;
   for(i=0; i<text.length(); ++i){
@@ -329,7 +329,7 @@ int SdW3dModelProgrammEditor::getLeadingSpaceCount(const QString &text)
 
 
 
-BlockNode *SdW3dModelProgrammEditor::getBlockForLine(int lineNum) const
+BlockNode *SdWScriptEditor::getBlockForLine(int lineNum) const
   {
   auto result = mRootBlock;
   auto minRange = INT_MAX;
@@ -348,7 +348,7 @@ BlockNode *SdW3dModelProgrammEditor::getBlockForLine(int lineNum) const
 
 
 
-BlockNode *SdW3dModelProgrammEditor::getBlockForIndex(int index) const
+BlockNode *SdWScriptEditor::getBlockForIndex(int index) const
   {
   auto result = mRootBlock;
   auto minRange = INT_MAX;
@@ -373,7 +373,7 @@ BlockNode *SdW3dModelProgrammEditor::getBlockForIndex(int index) const
 
 
 
-void SdW3dModelProgrammEditor::autoIndent()
+void SdWScriptEditor::autoIndent()
   {
   auto currentLine = textCursor().blockNumber();
   if( mLastPressedReturn ) {
@@ -398,7 +398,7 @@ void SdW3dModelProgrammEditor::autoIndent()
 
 
 
-bool SdW3dModelProgrammEditor::completeParenthesis()
+bool SdWScriptEditor::completeParenthesis()
   {
   QTextCursor tc = textCursor();
   //Весь редактируемый текст
@@ -445,7 +445,7 @@ bool SdW3dModelProgrammEditor::completeParenthesis()
 
 
 
-void SdW3dModelProgrammEditor::autoComplete()
+void SdWScriptEditor::autoComplete()
   {
   //Проверить наличие текущего выбора
   if( mAutoComplete->currentItem() ) {
@@ -455,14 +455,6 @@ void SdW3dModelProgrammEditor::autoComplete()
     c.movePosition( QTextCursor::Left, QTextCursor::KeepAnchor, word.length() );
     c.removeSelectedText();
     c.insertText( mAutoComplete->currentItem()->text() );
-    //Текущая строка
-    int pos;
-    QString line = cursorLine( textCursor(), &pos );
-    //Проверить специальный случай ввода файла include
-    if( line.simplified().startsWith(QString("#include <")) )
-      c.insertText( QString(">") );
-    else if( line.simplified().startsWith(QString("#include \"")) )
-      c.insertText( QString("\"") );
     setTextCursor( c );
     mAutoComplete->hide();
     mHelpPopUp->hide();
@@ -474,7 +466,7 @@ void SdW3dModelProgrammEditor::autoComplete()
 
 
 
-void SdW3dModelProgrammEditor::refillAutoComplete()
+void SdWScriptEditor::refillAutoComplete()
   {
   QStringList srcList;
   bool checkLen = true;
@@ -521,7 +513,7 @@ void SdW3dModelProgrammEditor::refillAutoComplete()
 
 
 
-QString SdW3dModelProgrammEditor::getWordLeft()
+QString SdWScriptEditor::getWordLeft()
   {
   //Текущая строка
   int pos;
@@ -546,7 +538,7 @@ QString SdW3dModelProgrammEditor::getWordLeft()
 
 
 //Переключить комментарии в одной строке
-void SdW3dModelProgrammEditor::toggleRemarkLine(QTextCursor tc)
+void SdWScriptEditor::toggleRemarkLine(QTextCursor tc)
   {
   //Получить содержимое блока, соответствующее данному курсору
   int pos;
@@ -568,7 +560,7 @@ void SdW3dModelProgrammEditor::toggleRemarkLine(QTextCursor tc)
 
 
 //Переключить комментарий
-void SdW3dModelProgrammEditor::toggleRemark()
+void SdWScriptEditor::toggleRemark()
   {
   //Если есть выделение, то вставка-удаление коментирования для каждой строки
   QTextCursor tc = textCursor();
@@ -610,46 +602,6 @@ void SdW3dModelProgrammEditor::toggleRemark()
 
 
 
-//Реакция на нажатие F2
-void SdW3dModelProgrammEditor::toggleF2()
-  {
-  //При нажатии над идентификатором осуществлять переключение к месту определения-объявления
-  //Возможно, стоим над идентификатором
-#if 0
-  QString ident = getWordCursorOver();
-  if( !ident.isEmpty() && SdW3dModelProgrammHighlighter::mCompiler ) {
-    QString fname;
-    int line;
-
-    if( SdW3dModelProgrammHighlighter::mCompiler->mVarGlobal.isPresent(ident) ) {
-      //Выполнить переход к определению символа
-      SvCompiler6::SvVariablePtr vp = SdW3dModelProgrammHighlighter::mCompiler->mVarGlobal.getVariable(ident);
-      fname = SdW3dModelProgrammHighlighter::mCompiler->mFileTable.value(vp->mMarkDefine.mFile);
-      line = vp->mMarkDefine.mLine;
-      if( fname.compare( mFilePath, Qt::CaseInsensitive ) == 0 && line - 1 == textCursor().blockNumber() ) {
-//          fname = Highlighter::mCompiler->mFileTable.value(vp->mMarkFirstDeclare.mFile);
-//          line = vp->mMarkFirstDeclare.mLine;
-//          }
-        emit jump( fname, line );
-        }
-      else if( SdW3dModelProgrammHighlighter::mCompiler->mFunGlobal.isPresent(ident) ) {
-        SvCompiler6::SvFunctionPtr fp = SdW3dModelProgrammHighlighter::mCompiler->mFunGlobal.getFunction(ident);
-        fname = SdW3dModelProgrammHighlighter::mCompiler->mFileTable.value(fp->mMarkDefine.mFile);
-        line = fp->mMarkDefine.mLine;
-        emit jump( fname, line );
-        }
-      else if( SdW3dModelProgrammHighlighter::mCompiler->mTypeList.isPresent(ident) ) {
-        SvCompiler6::SvStruct *sp = SdW3dModelProgrammHighlighter::mCompiler->mTypeList.getType(ident)->toStruct();
-        if( sp ) {
-          fname = SdW3dModelProgrammHighlighter::mCompiler->mFileTable.value(sp->mDefine.mFile);
-          line = sp->mDefine.mLine;
-          emit jump( fname, line );
-          }
-        }
-      }
-    }
-#endif
-  }
 
 
 
@@ -662,7 +614,7 @@ const QMap<QChar, QChar> cParenthesisPairs(
     });
 
 
-QPair<int, int> SdW3dModelProgrammEditor::getParenthesisBlock(const QString &text, int pos) const
+QPair<int, int> SdWScriptEditor::getParenthesisBlock(const QString &text, int pos) const
   {
   if (pos < 0 || pos >= text.length())
     return QPair<int,int>(-1,-1);
@@ -720,7 +672,7 @@ QPair<int, int> SdW3dModelProgrammEditor::getParenthesisBlock(const QString &tex
 
 
 
-void SdW3dModelProgrammEditor::updateLineNumberAreaWidth(int newBlockCount) {
+void SdWScriptEditor::updateLineNumberAreaWidth(int newBlockCount) {
   Q_UNUSED(newBlockCount);
   setViewportMargins( mLeftViewPortMargin = lineNumberAreaWidth(), 0, 0, 0);
   }
@@ -730,7 +682,7 @@ void SdW3dModelProgrammEditor::updateLineNumberAreaWidth(int newBlockCount) {
 
 
 //подсветка текущей строки
-void SdW3dModelProgrammEditor::highlightCurrentLine() {
+void SdWScriptEditor::highlightCurrentLine() {
   if (!isReadOnly()) {
     QTextEdit::ExtraSelection selection;
 
@@ -752,7 +704,7 @@ void SdW3dModelProgrammEditor::highlightCurrentLine() {
 
 
 //подсветка текущего блока
-void SdW3dModelProgrammEditor::highlightCurrentBlock()
+void SdWScriptEditor::highlightCurrentBlock()
   {
   auto text = toPlainText();
   auto cursorPosition = textCursor().position();
@@ -793,7 +745,7 @@ void SdW3dModelProgrammEditor::highlightCurrentBlock()
 
 
 
-void SdW3dModelProgrammEditor::updateLineNumberArea(const QRect &rect, int dy) {
+void SdWScriptEditor::updateLineNumberArea(const QRect &rect, int dy) {
   if (dy)
     lineNumberArea->scroll(0, dy);
   else
@@ -809,7 +761,7 @@ void SdW3dModelProgrammEditor::updateLineNumberArea(const QRect &rect, int dy) {
 
 
 void
-SdW3dModelProgrammEditor::keyPressEvent(QKeyEvent *e)
+SdWScriptEditor::keyPressEvent(QKeyEvent *e)
   {
   mControlPress = (e->modifiers() & Qt::ControlModifier) != 0;
 
@@ -817,14 +769,8 @@ SdW3dModelProgrammEditor::keyPressEvent(QKeyEvent *e)
 
   bool returnPressed = false;
 
-  //При нажатии клавиши F2 над включаемым файлом осуществляется открытие этого файла
-  //при нажатии над идентификатором осуществлять переключение к месту определения-объявления
-  if( e->key() == Qt::Key_F2 ) toggleF2();
-
-
-
   //При нажатии клавиши F1 над функцией отправляем сигнал показать помощь по ней
-  else if( e->key() == Qt::Key_F1 ) {
+  if( e->key() == Qt::Key_F1 ) {
     QString ident = getWordCursorOver();
     if( !ident.isEmpty() ) {
       if( mHighlighter != nullptr && mHighlighter->isFunction(ident) ) {
@@ -990,14 +936,11 @@ SdW3dModelProgrammEditor::keyPressEvent(QKeyEvent *e)
 
 
 
-void SdW3dModelProgrammEditor::keyReleaseEvent(QKeyEvent *e)
+void SdWScriptEditor::keyReleaseEvent(QKeyEvent *e)
   {
   if( mControlPress && (e->modifiers() & Qt::ControlModifier) == 0 ) {
     mControlPress = false;
-    mLink.clear();
     unsetCursor();
-    emit setLink( mLink );
-    emit rehighlightBlock( mLinkBlock );
     }
   QPlainTextEdit::keyReleaseEvent( e );
   if( !e->isAutoRepeat() && !e->text().isEmpty() ) {
@@ -1009,7 +952,7 @@ void SdW3dModelProgrammEditor::keyReleaseEvent(QKeyEvent *e)
 
 
 
-void SdW3dModelProgrammEditor::mouseMoveEvent(QMouseEvent *ev)
+void SdWScriptEditor::mouseMoveEvent(QMouseEvent *ev)
   {
 #if 0
   //Выполнять всякую херь только если есть фоновый компилятор
@@ -1075,18 +1018,13 @@ void SdW3dModelProgrammEditor::mouseMoveEvent(QMouseEvent *ev)
 
 
 
-void SdW3dModelProgrammEditor::mousePressEvent(QMouseEvent *e)
+void SdWScriptEditor::mousePressEvent(QMouseEvent *e)
   {
   //Если автозавершатель не скрыть - скрыть его
   if( !mAutoComplete->isHidden() )
     mAutoComplete->hide();
-  if( mControlPress && !mLink.isEmpty() ) {
-    mControlPress = false;
-    toggleF2();
-    }
-  else
-    //Обработать нажатие мыши по умолчанию
-    QPlainTextEdit::mousePressEvent(e);
+  //Обработать нажатие мыши по умолчанию
+  QPlainTextEdit::mousePressEvent(e);
   }
 
 
@@ -1094,7 +1032,7 @@ void SdW3dModelProgrammEditor::mousePressEvent(QMouseEvent *e)
 
 
 
-void SdW3dModelProgrammEditor::resizeEvent(QResizeEvent *e) {
+void SdWScriptEditor::resizeEvent(QResizeEvent *e) {
   QPlainTextEdit::resizeEvent(e);
 
   QRect cr = contentsRect();
@@ -1110,7 +1048,7 @@ void SdW3dModelProgrammEditor::resizeEvent(QResizeEvent *e) {
 
 
 void
-SdW3dModelProgrammEditor::onCursorPositionChanged() {
+SdWScriptEditor::onCursorPositionChanged() {
   highlightCurrentBlock();
   highlightCurrentLine();
   updateHighlights();
@@ -1121,7 +1059,7 @@ SdW3dModelProgrammEditor::onCursorPositionChanged() {
 
 
 void
-SdW3dModelProgrammEditor::locateLine(int line)
+SdWScriptEditor::locateLine(int line)
   {
   if ( line > 0 ) line--;
   else return;
@@ -1155,7 +1093,7 @@ SdW3dModelProgrammEditor::locateLine(int line)
 
 
 //замена текста с индекса startIndex по endIndex
-void SdW3dModelProgrammEditor::replace(int startIndex, int endIndex, const QString &text)
+void SdWScriptEditor::replace(int startIndex, int endIndex, const QString &text)
   {
   auto currentCursor = textCursor();
   currentCursor.beginEditBlock();
@@ -1174,7 +1112,7 @@ void SdW3dModelProgrammEditor::replace(int startIndex, int endIndex, const QStri
 
 
 //автоотступ строк, содержащихся между позициями по символам startIndex и endIndex
-void SdW3dModelProgrammEditor::autoIndent(int startIndex, int endIndex, bool registerUndo)
+void SdWScriptEditor::autoIndent(int startIndex, int endIndex, bool registerUndo)
   {
   //перестроить граф блоков
   updateBlockGraph();
@@ -1199,7 +1137,7 @@ void SdW3dModelProgrammEditor::autoIndent(int startIndex, int endIndex, bool reg
 
 
 
-bool SdW3dModelProgrammEditor:: isCommented(int index) const {
+bool SdWScriptEditor:: isCommented(int index) const {
   auto cursort = textCursor();
   cursort.setPosition(index);
   return cursort.charFormat().foreground().color() == Qt::darkGreen;
@@ -1243,7 +1181,7 @@ QString foundBlockOperator(const QString & text, int j){
 
 
 //обновить граф локальных блоков
-void SdW3dModelProgrammEditor::updateBlockGraph(){
+void SdWScriptEditor::updateBlockGraph(){
   //удалить старые
   if (mRootBlock != nullptr)
     mRootBlock->deleteLater();
@@ -1385,7 +1323,7 @@ void SdW3dModelProgrammEditor::updateBlockGraph(){
 
 
 //автоотступ строки
-void SdW3dModelProgrammEditor::autoIndentLine(int lineNum, bool registerUndo)
+void SdWScriptEditor::autoIndentLine(int lineNum, bool registerUndo)
   {
   BlockNode* containerBlock = getBlockForLine(lineNum);
   indentLine(lineNum, containerBlock->mLevel*mAutoIndentSpacesCount, registerUndo);
@@ -1395,7 +1333,7 @@ void SdW3dModelProgrammEditor::autoIndentLine(int lineNum, bool registerUndo)
 
 
 //отступ строки на заданное количество пробелов
-void SdW3dModelProgrammEditor::indentLine(int lineNum, int spacesCount, bool registerUndo)
+void SdWScriptEditor::indentLine(int lineNum, int spacesCount, bool registerUndo)
   {
   auto block =  document()->findBlockByLineNumber(lineNum);
   auto blockText = block.text();

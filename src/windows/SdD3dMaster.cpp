@@ -5,7 +5,7 @@
 #include "SdDHelp.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdPItemRich.h"
-#include "master3d/SdScriptParser.h"
+#include "script/SdScriptParser3d.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -130,11 +130,10 @@ void SdD3dMaster::onCurrentRowChanged(int row)
     SdPItemRich *rich = sdObjectOnly<SdPItemRich>( SdObjectFactory::extractObject( mIdList.at(row), false, this ) );
     if( rich != nullptr ) {
       mDescription->setText( rich->paramGet(stdParam3dModelProgramm) );
-      SdM3dParser parser(nullptr);
-      SdScriptProgramm *programm = parser.parse( rich->contents(), mPreviewPart );
+      SdScriptParser3d parser(nullptr);
+      SdScriptProgrammPtr programm = parser.parse3d( rich->contents(), mPreviewPart );
       mPreviewPart->clear();
       programm->execute();
-      delete programm;
       mPreview->setItem( mPreviewPart );
       mPreview->fitItem();
       mPreview->update();

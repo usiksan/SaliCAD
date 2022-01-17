@@ -43,7 +43,8 @@ class SdPItemPart;
 
 class SdScriptParser
   {
-    SdScriptScaner                         mScaner;
+  protected:
+    SdScriptScaner                         mScaner;           //!< Scaner for source code
     QMap<QString,SdScriptValueVariablePtr> mVariables;        //!< Variables map. Associates variable name with variable
     QStringList                            mVariableNameList; //!< Variable name list generated at and of parsing
     QMap<QString,SdScriptFunctionBuilder>  mFunctions;        //!< Predefined functions
@@ -53,26 +54,34 @@ class SdScriptParser
     //!
     //! \brief parse   Execute parsing of programm source text and generates tree of programm
     //! \param src     Programm source text
-    //! \param part    Part to which will be placed generated faces
     //! \return        Programm tree
     //!
-    SdScriptProgramm *parse(const QString src, SdPItemPart *part);
+    SdScriptProgrammPtr parse(const QString src);
 
     //!
     //! \brief variableNameList Returns parsed programm variable name list
     //! \return                 Variable name list
     //!
-    QStringList    variableNameList() const { return mVariableNameList; }
+    QStringList         variableNameList() const { return mVariableNameList; }
 
     //!
     //! \brief functionNameList Returns defined function name list
     //! \return                 Function name list
     //!
-    QStringList    functionNameList() const { return mFunctions.keys(); }
+    QStringList         functionNameList() const { return mFunctions.keys(); }
 
-    QString        error() const { return mScaner.errorGet(); }
+    //!
+    //! \brief error Return error string if any
+    //! \return      Error string
+    //!
+    QString             error() const { return mScaner.errorGet(); }
 
-    void           addFunction( const QString functionName, SdScriptFunctionBuilder functionBuilder ) { mFunctions.insert( functionName, functionBuilder ); }
+    //!
+    //! \brief addFunction     Append predefined function
+    //! \param functionName    Function name
+    //! \param functionBuilder Function builder
+    //!
+    void                addFunction( const QString functionName, SdScriptFunctionBuilder functionBuilder ) { mFunctions.insert( functionName, functionBuilder ); }
   private:
     SdScriptOperator *parseOperator();
     SdScriptOperator *parseOperatorIf();

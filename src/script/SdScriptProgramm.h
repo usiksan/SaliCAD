@@ -20,6 +20,8 @@ Description
 #include "SdScriptOperatorBlock.h"
 #include "SdScriptValueVariable.h"
 
+#include <QSharedPointer>
+
 using SdScriptVariablePtrList = QList<SdScriptValueVariablePtr>;
 
 class SdScriptProgramm : public SdScriptOperatorBlock
@@ -36,5 +38,7 @@ class SdScriptProgramm : public SdScriptOperatorBlock
     void setVariables( SdScriptVariablePtrList varList );
 
   };
+
+using SdScriptProgrammPtr = QSharedPointer<SdScriptProgramm>;
 
 #endif // SDSCRIPTPROGRAMM_H

@@ -22,7 +22,7 @@ Description
 class SdScriptValueOpUnaryBoolNot : public SdScriptValueOpUnary
   {
   public:
-    SdScriptValueOpUnaryBoolNot( SdM3dValuePtr op ) : SdScriptValueOpUnary( op ) {}
+    SdScriptValueOpUnaryBoolNot( SdScriptValuePtr op ) : SdScriptValueOpUnary( op ) {}
 
     // SdM3dValue interface
   public:

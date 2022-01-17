@@ -4,7 +4,7 @@
 #include <QSyntaxHighlighter>
 
 
-class SdW3dModelProgrammHighlighter : public QSyntaxHighlighter {
+class SdWScriptHighlighter : public QSyntaxHighlighter {
     Q_OBJECT
 
     QStringList mKeyWords;
@@ -14,7 +14,7 @@ class SdW3dModelProgrammHighlighter : public QSyntaxHighlighter {
     QString mLink; //Идентификатор для перехода по линку
   public:
 
-    SdW3dModelProgrammHighlighter(QTextDocument *parent = nullptr);
+    SdWScriptHighlighter(QTextDocument *parent = nullptr);
 
     void setNameLists( const QStringList &variableNameList, const QStringList &functionNameList )
       {

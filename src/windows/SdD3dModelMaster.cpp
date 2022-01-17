@@ -15,8 +15,8 @@ Description
 */
 #include "SdD3dModelMaster.h"
 #include "SdDPadMaster.h"
-#include "master3d/SdScriptParser.h"
-#include "master3d/SdScriptProgramm.h"
+#include "script/SdScriptParser3d.h"
+#include "script/SdScriptProgramm.h"
 #include "objects/SdObjectFactory.h"
 #include "SdDHelp.h"
 
@@ -89,9 +89,9 @@ SdD3dModelMaster::SdD3dModelMaster(const QString id, SdPItemPart *part, QWidget 
       mParamWidget->setColumnCount(2);
       mParamWidget->setRowCount(0);
       mParamWidget->setHorizontalHeaderLabels( {tr("Parametr name"), tr("Parametr value") } );
-      SdM3dParser parser(mParamWidget);
+      SdScriptParser3d parser(mParamWidget);
 
-      mProgramm = parser.parse( rich->contents(), mPart );
+      mProgramm = parser.parse3d( rich->contents(), mPart );
       rebuild();
       mPreview->fitItem();
       mPreview->update();
@@ -105,7 +105,6 @@ SdD3dModelMaster::SdD3dModelMaster(const QString id, SdPItemPart *part, QWidget 
 
 SdD3dModelMaster::~SdD3dModelMaster()
   {
-  if( mProgramm != nullptr ) delete mProgramm;
   }
 
 
@@ -114,7 +113,7 @@ SdD3dModelMaster::~SdD3dModelMaster()
 
 void SdD3dModelMaster::rebuild()
   {
-  if( mProgramm != nullptr && !mActive ) {
+  if( mProgramm && !mActive ) {
     mActive = true;
     //Clear previously builded part
     mPart->clear();

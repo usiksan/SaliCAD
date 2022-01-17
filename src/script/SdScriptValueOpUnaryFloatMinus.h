@@ -22,7 +22,7 @@ Description
 class SdScriptValueOpUnaryFloatMinus : public SdScriptValueOpUnary
   {
   public:
-    SdScriptValueOpUnaryFloatMinus(SdM3dValuePtr op) : SdScriptValueOpUnary(op) {}
+    SdScriptValueOpUnaryFloatMinus(SdScriptValuePtr op) : SdScriptValueOpUnary(op) {}
 
 
     // SdM3dValue interface

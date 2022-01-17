@@ -1,7 +1,7 @@
-﻿#include "SdW3dModelProgrammHighlighter.h"
+﻿#include "SdWScriptHighlighter.h"
 
 
-SdW3dModelProgrammHighlighter::SdW3dModelProgrammHighlighter(QTextDocument *parent)
+SdWScriptHighlighter::SdWScriptHighlighter(QTextDocument *parent)
   : QSyntaxHighlighter(parent)
   {
   //Образовать подсветку
@@ -40,7 +40,7 @@ SdW3dModelProgrammHighlighter::SdW3dModelProgrammHighlighter(QTextDocument *pare
 
 
 int
-SdW3dModelProgrammHighlighter::MultiLineComment(const QString &text, int index, int count) {
+SdWScriptHighlighter::MultiLineComment(const QString &text, int index, int count) {
   int startIndex = index;
   bool closed = false;
   while( index + 1 < count ) {
@@ -71,7 +71,7 @@ SdW3dModelProgrammHighlighter::MultiLineComment(const QString &text, int index, 
 
 
 
-void SdW3dModelProgrammHighlighter::setLink(const QString link)
+void SdWScriptHighlighter::setLink(const QString link)
   {
   mLink = link;
   }
@@ -80,7 +80,7 @@ void SdW3dModelProgrammHighlighter::setLink(const QString link)
 
 
 int
-SdW3dModelProgrammHighlighter::SkipQuotation(const QString &text, int index, int count) {
+SdWScriptHighlighter::SkipQuotation(const QString &text, int index, int count) {
   index++;
   while( index < count && !(text[index] == QChar('"') && text[index - 1] != QChar('\\'))  )
     index++;
@@ -91,7 +91,7 @@ SdW3dModelProgrammHighlighter::SkipQuotation(const QString &text, int index, int
 
 
 void
-SdW3dModelProgrammHighlighter::highlightBlock(const QString &text) {
+SdWScriptHighlighter::highlightBlock(const QString &text) {
   int index = 0;
   int count = text.count();
 

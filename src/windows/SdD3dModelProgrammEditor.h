@@ -18,6 +18,7 @@ Description
 
 #include "objects/SdPItemRich.h"
 #include "objects/SdPItemPart.h"
+#include "script/SdScriptProgramm.h"
 #include "SdWView3d.h"
 #include "SdWHelp.h"
 
@@ -27,18 +28,18 @@ Description
 #include <QLineEdit>
 
 class SdScriptProgramm;
-class SdW3dModelProgrammEditor;
-class SdW3dModelProgrammHighlighter;
+class SdWScriptEditor;
+class SdWScriptHighlighter;
 
 class SdD3dModelProgrammEditor : public QDialog
   {
     Q_OBJECT
 
     SdPItemPart                    mPart;
-    SdScriptProgramm                 *mProgramm;
+    SdScriptProgrammPtr            mProgramm;
     SdPItemRich                   *mRich;
-    SdW3dModelProgrammEditor      *mTextEdit;
-    SdW3dModelProgrammHighlighter *mHighlighter;
+    SdWScriptEditor      *mTextEdit;
+    SdWScriptHighlighter *mHighlighter;
     QLineEdit                     *mError;
     QLineEdit                     *mTitle;
     QLineEdit                     *mDescription;

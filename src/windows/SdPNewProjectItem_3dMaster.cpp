@@ -21,7 +21,7 @@ Description
 #include "SdD3dModelMaster.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdPItemRich.h"
-#include "master3d/SdScriptParser.h"
+#include "script/SdScriptParser3d.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -156,12 +156,11 @@ void SdPNewProjectItem_3dMaster::onCurrentRowChanged(int row)
     if( rich != nullptr ) {
       mDescription->setText( rich->paramGet(stdParam3dModelProgramm) );
       //TODO append 3d preview
-      SdM3dParser parser(nullptr);
+      SdScriptParser3d parser(nullptr);
       static SdPItemPart previewPart;
-      SdScriptProgramm *programm = parser.parse( rich->contents(), &previewPart );
+      auto programm = parser.parse3d( rich->contents(), &previewPart );
       previewPart.clear();
       programm->execute();
-      delete programm;
       mPreview->setItem( &previewPart );
       mPreview->fitItem();
       return;

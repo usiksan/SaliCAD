@@ -18,6 +18,7 @@ Description
 
 #include "objects/SdPItemRich.h"
 #include "objects/SdPItemPart.h"
+#include "script/SdScriptProgramm.h"
 #include "SdWView3d.h"
 
 #include <QDialog>
@@ -30,7 +31,7 @@ class SdD3dModelMaster : public QDialog
     Q_OBJECT
 
     SdPItemPart                   *mPart;        //!< Created part object. It used also for preview
-    SdScriptProgramm                 *mProgramm;    //!< Compiled 3d model programm
+    SdScriptProgrammPtr            mProgramm;    //!< Compiled 3d model programm
     QTableWidget                  *mParamWidget; //!< Table with 3d model parameters
     SdWView3d                     *mPreview;     //!< 3d model preview
     bool                           mActive;      //!< Flag to preserve of recursing call
