@@ -17,7 +17,7 @@ Description
   The function builds and binds input field for float
 */
 #include "SdScriptValueFunInputFloat.h"
-#include "SdM3dParser.h"
+#include "SdScriptParser.h"
 
 SdScriptValueFunInputFloat::SdScriptValueFunInputFloat( QTableWidget *tableWidget ) :
   SdScriptValueFunInput( SD_SCRIPT_TYPE_FLOAT, tableWidget, SDM3D_INPUT_STRING )

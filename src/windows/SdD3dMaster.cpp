@@ -5,7 +5,7 @@
 #include "SdDHelp.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdPItemRich.h"
-#include "master3d/SdM3dParser.h"
+#include "master3d/SdScriptParser.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>

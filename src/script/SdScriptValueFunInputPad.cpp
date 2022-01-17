@@ -17,7 +17,7 @@ Description
   The function builds and binds input field for pad
 */
 #include "SdScriptValueFunInputPad.h"
-#include "SdM3dParser.h"
+#include "SdScriptParser.h"
 
 
 SdScriptValueFunInputPad::SdScriptValueFunInputPad(QTableWidget *tableWidget) :

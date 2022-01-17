@@ -17,7 +17,7 @@ Description
 #include "SdW3dModelProgrammEditor.h"
 #include "SdW3dModelProgrammHighlighter.h"
 #include "SdDPadMaster.h"
-#include "master3d/SdM3dParser.h"
+#include "master3d/SdScriptParser.h"
 #include "master3d/SdScriptProgramm.h"
 #include "objects/SdObjectFactory.h"
 

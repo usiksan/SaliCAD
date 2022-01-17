@@ -17,7 +17,7 @@ Description
   This function appends one field to program param table
 */
 #include "SdScriptValueFunInput.h"
-#include "SdM3dParser.h"
+#include "SdScriptParser.h"
 
 SdScriptValueFunInput::SdScriptValueFunInput(char resultType, QTableWidget *tableWidget, int itemType) :
   SdScriptValueFunction( resultType, SD_SCRIPT_TYPE_STRING, resultType ),

@@ -67,8 +67,16 @@ class SdScriptValue
     //!
     virtual QVector3D            toVertex() const { return QVector3D(); }
 
+    //!
+    //! \brief toMatrix Convert object to 4x4 matrix
+    //! \return         4x4 matrix
+    //!
     virtual QMatrix4x4           toMatrix() const { return QMatrix4x4(); }
 
+    //!
+    //! \brief toSegment Convert object to 3d segment
+    //! \return          3d segment
+    //!
     virtual SdScriptVal3dSegment toSegment() const { return SdScriptVal3dSegment(); }
 
     //!

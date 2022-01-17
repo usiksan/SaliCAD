@@ -1,5 +1,6 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
+#include <stdio.h>
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -26,12 +27,15 @@ int main(int argc, char *argv[])
   Py_Initialize();
   qDebug() << "init ok";
 
-  pModule = Py_CompileString( prog, "prog1", Py_file_input );
-  PyModule_AddFunctions()
+  PyObject *pGlobal = PyDict_New();
+  PyObject *pLocal  = PyDict_New();
+
+  pModule = PyRun_String( prog, Py_single_input, pGlobal, pLocal );
+
+  PyObject_Print( pLocal, stderr, 0 );
 
   if (pModule != NULL) {
-    qDebug() << "module ok";
-      pFunc = PyObject_GetAttrString(pModule, "multiply");
+      pFunc = PyDict_GetItemString( pLocal, "multiply" );
       /* pFunc is a new reference */
 
       if (pFunc && PyCallable_Check(pFunc)) {

@@ -17,7 +17,7 @@ Description
   The function builds and binds input field for color
 */
 #include "SdScriptValueFunInputColor.h"
-#include "SdM3dParser.h"
+#include "SdScriptParser.h"
 
 SdScriptValueFunInputColor::SdScriptValueFunInputColor(QTableWidget *tableWidget) :
   SdScriptValueFunInput( SD_SCRIPT_TYPE_COLOR, tableWidget, SDM3D_INPUT_COLOR )

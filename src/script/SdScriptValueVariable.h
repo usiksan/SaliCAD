@@ -12,7 +12,7 @@ Description
   Script language is C-style hi-level language for programming 3d models, 2d parametric graphics and
   schematic calculations.
 
-  Base class for all variables
+  Base class for all variables. Variables allow assignment
 */
 #ifndef SDSCRIPTVALUEVARIABLE_H
 #define SDSCRIPTVALUEVARIABLE_H
