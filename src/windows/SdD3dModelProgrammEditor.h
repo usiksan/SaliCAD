@@ -35,19 +35,19 @@ class SdD3dModelProgrammEditor : public QDialog
   {
     Q_OBJECT
 
-    SdPItemPart                    mPart;
-    SdScriptProgrammPtr            mProgramm;
-    SdPItemRich                   *mRich;
-    SdWScriptEditor      *mTextEdit;
-    SdWScriptHighlighter *mHighlighter;
-    QLineEdit                     *mError;
-    QLineEdit                     *mTitle;
-    QLineEdit                     *mDescription;
-    QTableWidget                  *mParamWidget;
-    SdWView3d                     *mPreview;
-    SdWHelp                       *mHelp;
-    bool                           mDirty;
-    bool                           mActive;
+    SdPItemPart           mPart;        //!< Part for preview
+    SdScriptProgrammPtr   mProgramm;    //!< Parsed programm ready for executing
+    SdPItemRich          *mRich;        //!< Programm source code object
+    SdWScriptEditor      *mTextEdit;    //!< Source code editor with highlight
+    SdWScriptHighlighter *mHighlighter; //!< Highlight for code editor
+    QLineEdit            *mError;       //!< Source code parsing error if any
+    QLineEdit            *mTitle;       //!< Source code object title (shown as master name)
+    QLineEdit            *mDescription; //!< Source code short description (shown as code description)
+    QTableWidget         *mParamWidget; //!< Table with param list for this programm. Table filled automatic when parsing source code
+    SdWView3d            *mPreview;     //!< Preview of 3d part model builded with current params
+    SdWHelp              *mHelp;        //!< Help widget with help on source code editor and its predefined functions
+    bool                  mDirty;       //!< true when source code changed
+    bool                  mActive;      //!< Lock for recursive change param table contents
   public:
     SdD3dModelProgrammEditor( const QString id, QWidget *parent );
     ~SdD3dModelProgrammEditor();

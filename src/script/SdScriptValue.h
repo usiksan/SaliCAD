@@ -35,7 +35,7 @@ class SdScriptValue
     //! \brief toBool Convert object to bool value
     //! \return       bool value
     //!
-    virtual bool                 toBool() const { return false; }
+    virtual bool                 toBool() const { return toFloat() > 0.0; }
 
     //!
     //! \brief toFloat Convert object ot float value

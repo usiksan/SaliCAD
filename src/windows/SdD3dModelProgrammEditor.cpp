@@ -35,7 +35,6 @@ Description
 
 SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *parent) :
   QDialog(parent),
-  mProgramm(nullptr),
   mRich(nullptr),
   mDirty(false),
   mActive(false)
@@ -153,6 +152,8 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
     mPreview->update();
     }
 
+  //Show beginner guide for scripting language
+  mHelp->helpTopic( QStringLiteral("script3d.htm") );
   mDirty = false;
   }
 

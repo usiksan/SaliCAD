@@ -25,7 +25,7 @@ class SdScriptValueFunModelCurve : public SdScriptValueFunction
   {
   public:
     SdScriptValueFunModelCurve() :
-      SdScriptValueFunction( SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_REGION, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_COLOR, SD_SCRIPT_TYPE_BOOL )
+      SdScriptValueFunction( SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_REGION, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_COLOR, SD_SCRIPT_TYPE_BOOL )
       {
 
       }
@@ -38,7 +38,7 @@ class SdScriptValueFunModelCurve : public SdScriptValueFunction
     //!
     virtual SdScriptVal3dModel toModel() const override
       {
-      return sd3dModelCurve( mParamList[0]->toRegion(), mParamList[1]->toVertex(), mParamList[2]->toVertex(), mParamList[3]->toFloat(), mParamList[4]->toColor(), mParamList[5]->toBool() );
+      return sd3dModelCurve( mParamList[0]->toRegion(), mParamList[1]->toVertex(), mParamList[2]->toVertex(), mParamList[3]->toFloat(), mParamList[4]->toFloat(), mParamList[5]->toColor(), mParamList[6]->toBool() );
       }
 
   };

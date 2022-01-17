@@ -1,0 +1,132 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD Скрипт для описания 3d моделей</title>
+  </head>
+  <body>
+    <h1 align="center">Скрипт для описания 3d моделей</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;Скрипт 3d</p>
+    <p>Скриптовый язык для описания 3d моделей представляет C-подобный язык
+      сценариев, предназначенный для параметрического построения 3d и 2d моделей
+      корпусов компонентов. Скрипт создает некий шаблон конструкции (модель и 2d
+      изображение компонента), который можно изменить в некоторых пределах
+      (определяемых разработчиком скрипта) с тем, чтобы получить конкретную
+      модель компонента.</p>
+    <p>См. <a href="script3dFun.htm">перечень функций</a></p>
+    <p>Скриптовый язык поддерживает следующие типы объектов:</p>
+    <ul>
+      <li>логический</li>
+      <li>числа с плавающей точкой</li>
+      <li>цвета</li>
+      <li>строки</li>
+      <li>2d объекты (линия, прямоугольник, окружность, ножка)</li>
+      <li>3d вершины</li>
+      <li>матрица 4x4</li>
+      <li>сегмент, представляющий собой отрезок между двумя 3d вершинами</li>
+      <li>путь, представляющий собой набор сегментов</li>
+      <li>регион, это ломаная, заданная 3d вершинами</li>
+      <li>поверхность</li>
+      <li>модель</li>
+    </ul>
+    <p>Любой из указанных типов может быть возвращен функцией.</p>
+    <p>Кроме того, строки и числа можно задавать непосредственно.</p>
+    <p>Логические типы получаются как результаты операций сравнения.</p>
+    <p>Остальные объекты конструируются с помощью функций из простых объектов
+      или в результате преобразования.</p>
+    <p>Скрипт выполняется последовательно оператор за оператором, начиная с
+      первой строки. </p>
+    <p>Символ # отмечает начало коментария. Все, что находится в строке после
+      данного символа - игнорируется.</p>
+    <p>Имеются следующие типы операторов:</p>
+    <ul>
+      <li>оператор присвания</li>
+      <li>условный оператор</li>
+      <li>оператор цикла</li>
+      <li>составной оператор</li>
+    </ul>
+    <p>Практически вся реальная работа осуществляется с помощью встроенных
+      функций. Различные арифметические действия используются как
+      вспомогательные в этих построениях.<br>
+    </p>
+    <p>Типичный скрипт представлен ниже:</p>
+    <code> bodyDiametr = inputFloat( "Body diametr", 4 )<br>
+      bodyHeight = inputFloat( "Body height", 4 )<br>
+      bodyColor = inputColor( "Body color", colorFromString("#4e9a06") )<br>
+      <br>
+      pinDiametr = inputFloat( "Pin diametr", 0.5 )<br>
+      pinDistance = inputFloat( "Distance between pins", 2.5 )<br>
+      pinColor = inputColor( "Pin color", colorFromString("#f0f0f0") )<br>
+      <br>
+      padPlus = inputPad( "Pad plus",
+      stringPadRectThrough(1.0,1.0,pinDiametr*1.2,0.1) )<br>
+      padMinus = inputPad( "Pad minus", "c1.2d0.6m0.1" )<br>
+      <br>
+      plusShow = inputFloat( "Show plus", 0 )<br>
+      <br>
+      bodyRadius = bodyDiametr / 2<br>
+      <br>
+      body = modelCylinder( bodyRadius, bodyHeight, bodyColor )<br>
+      <br>
+      pin = modelCylinder( pinDiametr / 2, -2.0, pinColor )<br>
+      <br>
+      partModel = body<br>
+      <br>
+      pinPlusPos = vertex( -pinDistance / 2, 0, 0 )<br>
+      pinMinusPos = vertex( pinDistance / 2, 0, 0 )<br>
+      <br>
+      partModel = modelTranslate( pin, pinPlusPos )<br>
+      <br>
+      partModel = modelTranslate( pin, pinMinusPos )<br>
+      <br>
+      partFlat = graphCircle( vertex(0,0,0), bodyRadius )<br>
+      <br>
+      partFlat = graphPin( pinPlusPos, padPlus, vertexOffset( pinPlusPos,
+      0,0,0), "1", "CM0", vertexOffset(pinPlusPos, 0,0,0), "CM0" )<br>
+      <br>
+      partFlat = graphPin( pinMinusPos, padMinus, vertexOffset( pinMinusPos,
+      0,0,0), "2", "CM0", vertexOffset(pinMinusPos, 0,0,0), "CM0" )<br>
+      if( plusShow &gt; 0 ) {<br>
+      &nbsp; #Draw plus sign<br>
+      &nbsp; plusCenter = vertex( -bodyRadius - 2, 0, 0 )<br>
+      &nbsp; plusV0 = vertexOffset( plusCenter, 0, -1, 0 )<br>
+      &nbsp; plusV1 = vertexOffset( plusCenter, 0, 1, 0 )<br>
+      &nbsp; partFlat = graphLine( plusV0, plusV1 )<br>
+      <br>
+      &nbsp; plusV0 = vertexOffset( plusCenter, -1, 0, 0 )<br>
+      &nbsp; plusV1 = vertexOffset( plusCenter, 1, 0, 0 )<br>
+      &nbsp; partFlat = graphLine( plusV0, plusV1 )<br>
+      &nbsp; }<br>
+    </code>
+    <p><br>
+    </p>
+    <p>Из листинга видно, что программа состоит из последовательности
+      операторов. Операторы присваивания присваивают значение справа от знака =
+      переменной слева от этого знака. Тип переменной определяется автоматически
+      исходя из значения справа от знака =. Знак ; после оператора присваивания
+      не обязателен.</p>
+    <p>Две специальные переменные partModel и partFlat используются для
+      размещения моделей и 2d объектов в корпусе компонента. При проведении
+      присваивания данным переменным модели и 2d объекты накапливаются в
+      корпусе.</p>
+    <p>Функции, имена которых начинаются на input служат для размещения
+      параметра в таблице параметров скрипта для ввода пользователем. Остальные
+      функции служат для различного преобразования данных. Полный список
+      доступных функции см. <a href="script3dFun.htm">перечень функций</a>.</p>
+    <p>Оператор цикла выглядит следующим образом:</p>
+    <code>while( условие_цикла ) {<br>
+      &nbsp; операторы_цикла<br>
+      &nbsp; }<br>
+    </code>
+    <p>Пока выражение условие_цикла истинно цикл будет выполнять
+      операторы_цикла.</p>
+    <p>Операция [список] формирует сложный объект из списка более простых
+      объектов:</p>
+    <ul>
+      <li>из списка точек формируется регион</li>
+      <li>из списка сегментов формируется путь</li>
+      <li>из списка поверхностей формируется модель</li>
+    </ul>
+    <p><br>
+    </p>
+  </body>
+</html>

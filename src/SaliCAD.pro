@@ -73,6 +73,7 @@ SOURCES += \
     script/SdScriptValueFunColorFromString.cpp \
     script/SdScriptValueFunFaceTriangle.cpp \
     script/SdScriptValueFunInput.cpp \
+    script/SdScriptValueFunInputBool.cpp \
     script/SdScriptValueFunInputColor.cpp \
     script/SdScriptValueFunInputFloat.cpp \
     script/SdScriptValueFunInputPad.cpp \
@@ -443,6 +444,7 @@ HEADERS  += \
     script/SdScriptValueFunGraphRect.h \
     script/SdScriptValueFunGraphRectFilled.h \
     script/SdScriptValueFunInput.h \
+    script/SdScriptValueFunInputBool.h \
     script/SdScriptValueFunInputColor.h \
     script/SdScriptValueFunInputFloat.h \
     script/SdScriptValueFunInputPad.h \
