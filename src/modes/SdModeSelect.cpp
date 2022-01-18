@@ -703,6 +703,18 @@ SdSelector *SdModeSelect::getFragment()
 
 
 
+//!
+//! \brief isOneSymbolSelected Check if selection present and selected only one symbol in sheet
+//! \return                    true if selection present and selected only one symbol in sheet
+//!
+bool SdModeSelect::isOneSymbolSelected() const
+  {
+  return mFragment.count() == 1 && mFragment.first()->getClass() == dctSymImp;
+  }
+
+
+
+
 int SdModeSelect::checkPoint(SdPoint p)
   {
   int prevStatus = mState;
@@ -999,7 +1011,7 @@ quint64 SdModeSelect::mask() const
   {
   quint64 msk = 0l;
   if( !sdEnvir->mEnableComp ) msk = dctSymImp | dctPartImp;
-  if( !sdEnvir->mEnableNet ) msk |= dctNetName | dctNetWire | dctTracePolygon | dctTraceRoad | dctTraceVia;
+  if( !sdEnvir->mEnableNet ) msk |= dctNetName | dctNetWire | dctNetParam | dctTracePolygon | dctTraceRoad | dctTraceVia;
   if( !sdEnvir->mEnablePic ) msk |= dctPicture;
   return ~msk;
   }

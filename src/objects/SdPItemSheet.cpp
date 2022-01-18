@@ -31,7 +31,7 @@ bool SdPItemSheet::isNetPresent(const QString name)
   {
   bool present = false;
   //Find net element with desired name
-  forEach( dctNetName | dctNetWire, [&present,name] (SdObject *obj) -> bool {
+  forEach( dctNetName | dctNetWire | dctNetParam, [&present,name] (SdObject *obj) -> bool {
     SdGraphNet *net = dynamic_cast<SdGraphNet*>(obj);
     if( net != nullptr && net->getNetName() == name ) {
       //Net found, break subsequent repetition
@@ -51,7 +51,7 @@ bool SdPItemSheet::isNetPresent(const QString name)
 //Rename net. Both simple rename and union two nets
 void SdPItemSheet::netRename(const QString oldName, const QString newName, SdUndo *undo)
   {
-  forEach( dctNetWire | dctNetName, [oldName, newName, undo] (SdObject *obj) -> bool {
+  forEach( dctNetWire | dctNetName | dctNetParam, [oldName, newName, undo] (SdObject *obj) -> bool {
     SdGraphNet *net = dynamic_cast<SdGraphNet*>(obj);
     if( net != nullptr && net->getNetName() == oldName )
       net->setNetName( newName, undo );
@@ -209,7 +209,7 @@ SdGraph *SdPItemSheet::insertCopyObject(const SdGraph *obj, SdPoint offset, SdUn
     cp->select( nullptr );
     cp->move( offset );
     //For nets we perform substitute new net names for default named nets
-    if( cp->getClass() & (dctNetName | dctNetWire) ) {
+    if( cp->getClass() & (dctNetName | dctNetWire | dctNetParam) ) {
       SdGraphNet *net = dynamic_cast<SdGraphNet*>(cp);
       Q_ASSERT( net != nullptr );
       //Test if this net with default name

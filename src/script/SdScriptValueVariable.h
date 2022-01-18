@@ -25,6 +25,18 @@ class SdScriptValueVariable : public SdScriptValue
     SdScriptValueVariable() : SdScriptValue() {}
 
     //!
+    //! \brief isReadOnly Return true for special read-only variables with predefined values
+    //! \return           true for special read-only variables with predefined values
+    //!
+    virtual bool isReadOnly() const { return false; }
+
+    //!
+    //! \brief isWriteOnly Return true for special write-only variables with undefined value when read
+    //! \return            true for special write-only variables with undefined value when read
+    //!
+    virtual bool isWriteOnly() const { return false; }
+
+    //!
     //! \brief assign Assignment value to variable
     //! \param src    source of value
     //!

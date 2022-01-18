@@ -92,6 +92,8 @@ class SdGraphSymImp : public SdGraph
     //Get param value from local table
     QString           paramGet( const QString key ) const { return mParamTable.value(key); }
 
+    void              paramSet( const QString key, const QString val ) { mParamTable.insert( key, val ); }
+
     //Full local param table
     SdStringMap       paramTable() const { return mParamTable; }
 

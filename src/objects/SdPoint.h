@@ -16,6 +16,8 @@ Description
 #define SDPOINT_H
 
 #include "SdPropAngle.h"
+#include "SvJsonIO.h"
+
 #include <QJsonObject>
 #include <QPoint>
 
@@ -93,6 +95,9 @@ class SdPoint : public QPoint
 
     void        write(const QString name, QJsonObject &obj ) const;
     void        read(const QString name, const QJsonObject obj );
+
+    void        jsonWrite( SvJsonWriter &js ) const;
+    void        jsonRead( SvJsonReader &js );
 
     void        swap( SdPoint *p );
 

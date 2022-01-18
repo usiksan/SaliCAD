@@ -23,7 +23,7 @@ Description
 class SdScriptOperatorAssign : public SdScriptOperator
   {
     SdScriptValueVariable *mVariable; //!< Variable to which will be assigned value calculated from expression
-    SdScriptValue    *mValue; //!< Expression
+    SdScriptValue         *mValue;    //!< Expression
   public:
     SdScriptOperatorAssign( SdScriptValueVariable *var, SdScriptValue *val ) : mVariable(var), mValue(val) {}
     ~SdScriptOperatorAssign() { delete mValue; }

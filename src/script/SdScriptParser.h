@@ -82,6 +82,9 @@ class SdScriptParser
     //! \param functionBuilder Function builder
     //!
     void                addFunction( const QString functionName, SdScriptFunctionBuilder functionBuilder ) { mFunctions.insert( functionName, functionBuilder ); }
+
+  protected:
+    virtual SdScriptValueVariablePtr buildParamVariable( SdScriptValue *expr ) { return nullptr; }
   private:
     SdScriptOperator *parseOperator();
     SdScriptOperator *parseOperatorIf();

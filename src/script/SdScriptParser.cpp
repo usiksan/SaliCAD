@@ -137,11 +137,11 @@ SdScriptOperator *SdScriptParser::parseOperator()
     return parseOperatorWhile();
 
   if( variableName == QStringLiteral("for") ) {
-    mScaner.error( QStringLiteral("Reserved keyword") );
+    mScaner.error( QObject::tr("for is reserved keyword") );
     return nullptr;
     }
 
-  if( !mScaner.tokenNeed('=', QStringLiteral("Need assign =") )  )
+  if( !mScaner.tokenNeed('=', QObject::tr("Need assign =") )  )
     return nullptr;
 
   SdScriptValue *val = parseExpression();
@@ -150,7 +150,14 @@ SdScriptOperator *SdScriptParser::parseOperator()
     SdScriptValueVariable *var = mVariables.value(variableName);
     if( var->type() != val->type() ) {
       //Illegal type
-      mScaner.error( QStringLiteral("Illegal type of assignment") );
+      mScaner.error( QObject::tr("Illegal type of assignment") );
+      delete val;
+      return nullptr;
+      }
+
+    if( var->isReadOnly() ) {
+      //Impossible to assign value to read-only variable
+      mScaner.error( QObject::tr("Unable to assign to read-only variable") );
       delete val;
       return nullptr;
       }
@@ -173,8 +180,11 @@ SdScriptOperator *SdScriptParser::parseOperator()
     case SD_SCRIPT_TYPE_FACE    : var = new SdScriptValueVariableFace(); break;
     case SD_SCRIPT_TYPE_MODEL   : var = new SdScriptValueVariableModel(); break;
     case SD_SCRIPT_TYPE_GRAPH   : var = new SdScriptValueVariableGraph(); break;
+    case SD_SCRIPT_TYPE_PARAM   :
+      var = buildParamVariable( val );
+      if( var != nullptr ) break;
     default:
-      mScaner.error( QStringLiteral("Can't create variable with this type %1").arg(val->type()) );
+      mScaner.error( QObject::tr("Can't create variable with this type %1").arg(val->type()) );
       //Can't create variable
       delete val;
       return nullptr;
@@ -186,24 +196,24 @@ SdScriptOperator *SdScriptParser::parseOperator()
 
 SdScriptOperator *SdScriptParser::parseOperatorIf()
   {
-  if( !mScaner.tokenNeed('(', QStringLiteral("Need assign (") )  )
+  if( !mScaner.tokenNeed('(', QObject::tr("Need assign (") )  )
     return nullptr;
 
   SdScriptValue *condition = parseExpression();
   if( condition->type() != SD_SCRIPT_TYPE_BOOL ) {
-    mScaner.error( "Condition must be bool expression" );
+    mScaner.error( QObject::tr("Condition must be bool expression") );
     delete condition;
     return nullptr;
     }
 
-  if( !mScaner.tokenNeed( ')', QStringLiteral("No closing )") ) ) {
+  if( !mScaner.tokenNeed( ')', QObject::tr("No closing )") ) ) {
     delete condition;
     return nullptr;
     }
 
   SdScriptOperator *opTrue = parseOperator();
   if( opTrue == nullptr ) {
-    mScaner.error( QStringLiteral("Need if-else operator") );
+    mScaner.error( QObject::tr("Need if-else operator") );
     delete condition;
     return nullptr;
     }
@@ -226,19 +236,19 @@ SdScriptOperator *SdScriptParser::parseOperatorWhile()
 
   SdScriptValue *condition = parseExpression();
   if( condition->type() != SD_SCRIPT_TYPE_BOOL ) {
-    mScaner.error( "Condition must be bool expression" );
+    mScaner.error( QObject::tr("Condition must be bool expression") );
     delete condition;
     return nullptr;
     }
 
-  if( !mScaner.tokenNeed( ')', QStringLiteral("No closing )") ) ) {
+  if( !mScaner.tokenNeed( ')', QObject::tr("No closing )") ) ) {
     delete condition;
     return nullptr;
     }
 
   SdScriptOperator *opTrue = parseOperator();
   if( opTrue == nullptr ) {
-    mScaner.error( QStringLiteral("Need while operator") );
+    mScaner.error( QObject::tr("Need while operator") );
     delete condition;
     return nullptr;
     }
@@ -265,7 +275,7 @@ SdScriptValue *SdScriptParser::parseAnd()
     if( mScaner.matchToken('&') ) {
       SdScriptValue *val2 = parseOr();
       if( val->type() != SD_SCRIPT_TYPE_BOOL || val2->type() != SD_SCRIPT_TYPE_BOOL ) {
-        mScaner.error( QStringLiteral("Invalid types of AND operation. Both must be bool.") );
+        mScaner.error( QObject::tr("Invalid types of AND operation. Both must be bool.") );
         delete val;
         delete val2;
         return failValue();
@@ -288,7 +298,7 @@ SdScriptValue *SdScriptParser::parseOr()
     if( mScaner.matchToken('|') ) {
       SdScriptValue *val2 = parseNot();
       if( val->type() != SD_SCRIPT_TYPE_BOOL || val2->type() != SD_SCRIPT_TYPE_BOOL ) {
-        mScaner.error( QStringLiteral("Invalid types of OR operation. Both must be bool.") );
+        mScaner.error( QObject::tr("Invalid types of OR operation. Both must be bool.") );
         delete val;
         delete val2;
         return failValue();
@@ -308,7 +318,7 @@ SdScriptValue *SdScriptParser::parseNot()
   if( mScaner.matchToken( '!' ) ) {
     SdScriptValue *val = parseNot();
     if( val->type() != SD_SCRIPT_TYPE_BOOL ) {
-      mScaner.error( QStringLiteral("Invalid type of unary not operation. Must be bool.") );
+      mScaner.error( QObject::tr("Invalid type of unary not operation. Must be bool.") );
       delete val;
       return failValue();
       }
@@ -327,7 +337,7 @@ SdScriptValue *SdScriptParser::parseLess()
   if( !mScaner.isEndOfScanOrError() && mScaner.matchToken('<') ) {
     SdScriptValue *val2 = parsePlusMinus();
     if( val->type() != SD_SCRIPT_TYPE_FLOAT || val2->type() != SD_SCRIPT_TYPE_FLOAT ) {
-      mScaner.error( QStringLiteral("Invalid types of less operation. Both must be float.") );
+      mScaner.error( QObject::tr("Invalid types of less operation. Both must be float.") );
       delete val;
       delete val2;
       return failValue();
@@ -337,7 +347,7 @@ SdScriptValue *SdScriptParser::parseLess()
   if( !mScaner.isEndOfScanOrError() && mScaner.matchToken('>') ) {
     SdScriptValue *val2 = parsePlusMinus();
     if( val->type() != SD_SCRIPT_TYPE_FLOAT || val2->type() != SD_SCRIPT_TYPE_FLOAT ) {
-      mScaner.error( QStringLiteral("Invalid types of less operation. Both must be float.") );
+      mScaner.error( QObject::tr("Invalid types of less operation. Both must be float.") );
       delete val;
       delete val2;
       return failValue();
@@ -358,7 +368,7 @@ SdScriptValue *SdScriptParser::parsePlusMinus()
     if( mScaner.matchToken('+') ) {
       SdScriptValue *val2 = parseMultDiv();
       if( val->type() != SD_SCRIPT_TYPE_FLOAT || val2->type() != SD_SCRIPT_TYPE_FLOAT ) {
-        mScaner.error( QStringLiteral("Invalid types of add operation. Both must be float.") );
+        mScaner.error( QObject::tr("Invalid types of add operation. Both must be float.") );
         delete val;
         delete val2;
         return failValue();
@@ -392,7 +402,7 @@ SdScriptValue *SdScriptParser::parseMultDiv()
     if( mScaner.matchToken('*') ) {
       SdScriptValue *val2 = parseMinus();
       if( val->type() != SD_SCRIPT_TYPE_FLOAT || val2->type() != SD_SCRIPT_TYPE_FLOAT ) {
-        mScaner.error( QStringLiteral("Invalid types of multiply operation. Both must be float.") );
+        mScaner.error( QObject::tr("Invalid types of multiply operation. Both must be float.") );
         delete val;
         delete val2;
         return failValue();
@@ -402,7 +412,7 @@ SdScriptValue *SdScriptParser::parseMultDiv()
     else if( mScaner.matchToken('/') ) {
       SdScriptValue *val2 = parseMinus();
       if( val->type() != SD_SCRIPT_TYPE_FLOAT || val2->type() != SD_SCRIPT_TYPE_FLOAT ) {
-        mScaner.error( QStringLiteral("Invalid types of divide operation. Both must be float.") );
+        mScaner.error( QObject::tr("Invalid types of divide operation. Both must be float.") );
         delete val;
         delete val2;
         return failValue();
@@ -423,7 +433,7 @@ SdScriptValue *SdScriptParser::parseMinus()
   if( mScaner.matchToken( '-' ) ) {
     SdScriptValue *val = parseMinus();
     if( val->type() != SD_SCRIPT_TYPE_FLOAT ) {
-      mScaner.error( QStringLiteral("Invalid type of unary minus operation. Must be float.") );
+      mScaner.error( QObject::tr("Invalid type of unary minus operation. Must be float.") );
       delete val;
       return failValue();
       }
@@ -453,10 +463,16 @@ SdScriptValue *SdScriptParser::parseVar()
     if( mScaner.matchToken('(') )
       return parseFunction( name );
 
-    if( mVariables.contains(name) )
-      return new SdScriptReference( mVariables.value(name) );
+    if( mVariables.contains(name) ) {
+      auto var = mVariables.value(name);
+      if( var->isWriteOnly() ) {
+        mScaner.error( QObject::tr("Unable read write-only variable '%1'").arg(name) );
+        return failValue();
+        }
+      return new SdScriptReference( var );
+      }
 
-    mScaner.error( QStringLiteral("Undefined variable '%1'").arg(name) );
+    mScaner.error( QObject::tr("Undefined variable '%1'").arg(name) );
     return failValue();
     }
 
@@ -486,7 +502,7 @@ SdScriptValue *SdScriptParser::parseVar()
     else if( val->type() == SD_SCRIPT_TYPE_FACE )
       array = new SdScriptValueArray3dFace();
     else {
-      mScaner.error( QStringLiteral("Invalid element type of array. Must be vertex, segment or face") );
+      mScaner.error( QObject::tr("Invalid element type of array. Must be vertex, segment or face") );
       delete val;
       return failValue();
       }
@@ -497,19 +513,19 @@ SdScriptValue *SdScriptParser::parseVar()
       if( val->type() == array->typeOfElement() )
         array->append( val );
       else {
-        mScaner.error( QStringLiteral("Illegal type of array element") );
+        mScaner.error( QObject::tr("Illegal type of array element") );
         delete val;
         break;
         }
       }
-    mScaner.tokenNeed( ']', QStringLiteral("No closing ]") );
+    mScaner.tokenNeed( ']', QObject::tr("No closing ]") );
     return array;
     }
 
   else if( mScaner.matchToken( '(' ) ) {
     // ( expr )
     SdScriptValue *val = parseExpression();
-    mScaner.tokenNeed( ')', QStringLiteral("No closing )") );
+    mScaner.tokenNeed( ')', QObject::tr("No closing )") );
     return val;
     }
 
@@ -526,7 +542,7 @@ SdScriptValue *SdScriptParser::parseFunction(const QString &functionName)
     for( int i = 0; i < function->paramCount(); i++ ) {
       SdScriptValue *param = parseExpression();
       if( param->type() != function->paramType(i) ) {
-        mScaner.error( QStringLiteral("Invalid function param %1").arg(i) );
+        mScaner.error( QObject::tr("Invalid function param %1").arg(i) );
         delete param;
         delete function;
         return failValue();
@@ -534,13 +550,13 @@ SdScriptValue *SdScriptParser::parseFunction(const QString &functionName)
       function->paramSet( i, param );
 
       if( i + 1 < function->paramCount() ) {
-        if( !mScaner.tokenNeed( ',', QStringLiteral("Need comma") ) ) {
+        if( !mScaner.tokenNeed( ',', QObject::tr("Need comma") ) ) {
           delete function;
           return failValue();
           }
         }
       else {
-        if( !mScaner.tokenNeed( ')', QStringLiteral("Need closing )") ) ) {
+        if( !mScaner.tokenNeed( ')', QObject::tr("Need closing )") ) ) {
           delete function;
           return failValue();
           }
@@ -549,7 +565,7 @@ SdScriptValue *SdScriptParser::parseFunction(const QString &functionName)
     return function;
     }
 
-  mScaner.error( QStringLiteral("No function '%1'").arg(functionName) );
+  mScaner.error( QObject::tr("No function '%1'").arg(functionName) );
   return failValue();
   }
 

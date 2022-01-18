@@ -40,6 +40,12 @@ class SdScriptPartModel : public SdScriptValueVariable
     // SdM3dVariable interface
   public:
     //!
+    //! \brief isWriteOnly Return true for special write-only variables with undefined value when read
+    //! \return            true for special write-only variables with undefined value when read
+    //!
+    virtual bool isWriteOnly() const override { return true; }
+
+    //!
     //! \brief assign Assignment value to variable
     //! \param src    source of value
     //!

@@ -60,11 +60,13 @@ SOURCES += \
     master/SdDMasterPartSingleLine.cpp \
     master/SdDMasterSheetDecorator.cpp \
     master/SdMasterPart.cpp \
+    objects/SdGraphNetParam.cpp \
     script/SdScriptOperatorBlock.cpp \
     script/SdScriptOperatorIf.cpp \
     script/SdScriptOperatorWhile.cpp \
     script/SdScriptParser.cpp \
     script/SdScriptParser3d.cpp \
+    script/SdScriptParserCalculator.cpp \
     script/SdScriptPartGraph.cpp \
     script/SdScriptPartModel.cpp \
     script/SdScriptProgramm.cpp \
@@ -109,6 +111,7 @@ SOURCES += \
     objects/Sd3dSolid.cpp \
     objects/Sd3dStep.cpp \
     objects/SdUndoRecord3dMatrix.cpp \
+    script/SdScriptValueVariableParam.cpp \
     windows/SdD3dMaster.cpp \
     windows/SdD3dModelMaster.cpp \
     windows/SdD3dModelProgrammEditor.cpp \
@@ -419,6 +422,7 @@ HEADERS  += \
     master/SdDMasterPartSingleLine.h \
     master/SdDMasterSheetDecorator.h \
     master/SdMasterPart.h \
+    objects/SdGraphNetParam.h \
     script/SdScriptOperator.h \
     script/SdScriptOperatorAssign.h \
     script/SdScriptOperatorBlock.h \
@@ -426,6 +430,7 @@ HEADERS  += \
     script/SdScriptOperatorWhile.h \
     script/SdScriptParser.h \
     script/SdScriptParser3d.h \
+    script/SdScriptParserCalculator.h \
     script/SdScriptPartGraph.h \
     script/SdScriptPartModel.h \
     script/SdScriptProgramm.h \
@@ -490,6 +495,7 @@ HEADERS  += \
     script/SdScriptValueVariableGraph.h \
     script/SdScriptValueVariableMatrix.h \
     script/SdScriptValueVariableModel.h \
+    script/SdScriptValueVariableParam.h \
     script/SdScriptValueVariablePath.h \
     script/SdScriptValueVariableRegion.h \
     script/SdScriptValueVariableSegment.h \

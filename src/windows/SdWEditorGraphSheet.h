@@ -23,7 +23,7 @@ class SdWEditorGraphSheet : public SdWEditorGraph
   {
     Q_OBJECT
 
-    SdPItemSheet *mSheet;
+    SdPItemSheet *mSheet; //!< Schematic sheet object which edited with this editor
   public:
     SdWEditorGraphSheet( SdPItemSheet *sch, QWidget *parent = nullptr );
 
@@ -31,6 +31,13 @@ class SdWEditorGraphSheet : public SdWEditorGraph
   public:
     virtual SdProjectItem *getProjectItem() const override;
     virtual void           onActivateEditor() override;
+
+    //!
+    //! \brief setSelectionStatus Update visual dependences on selection status (there selection or none).
+    //!                           In fact changes menu command enable status
+    //! \param status             New status
+    //!
+    virtual void           setSelectionStatus( bool status ) override;
 
     //Fragment insertion mode
     virtual void           cmModeFragment() override;
@@ -59,6 +66,16 @@ class SdWEditorGraphSheet : public SdWEditorGraph
     //Edit properties of selected objects
     virtual void           cmEditProperties() override;
 
+    //!
+    //! \brief cmEditCalculations Find and display possible calculations for selected component
+    //!
+    virtual void           cmEditCalculations() override;
+
+    //!
+    //! \brief cmEditFragments Find, display and enable replace possible fragments for selected component
+    //!
+    virtual void           cmEditFragments() override;
+
     virtual void cmModeNetList() override;
 
     //Perform project renumeration of component references
@@ -73,7 +90,7 @@ class SdWEditorGraphSheet : public SdWEditorGraph
     //!
     //! \brief cmExpressionEdit Shows expression edit dialog with expression test capabilities
     //!
-    virtual void cmExpressionEdit() override;
+    virtual void           cmExpressionEdit() override;
 
 
     //Export command

@@ -20,8 +20,6 @@ Description
 
 #define SD_TYPE_NET_NAME "NetName"
 
-class SdContainerSheetNet;
-
 
 class SdGraphNetName : public SdGraphNet
   {

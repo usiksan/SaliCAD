@@ -30,6 +30,8 @@ struct SdValueModifier {
     double      mMin;      //Minimal value for modifier, for example 1000
     double      mMax;      //Maximal value for modifier, for example 1000000
     double      mFactor;   //Factor of modifier, for example 1000.0
+
+    bool isHit( double val ) const { return mMin <= val && val <= mMax; }
   };
 
 extern const SdValueModifier sdValueModifierOm[];
@@ -48,9 +50,10 @@ class SdDRowValue : public QDialog
     explicit SdDRowValue(SdStringMap *map, const SdValueModifier *list, QWidget *parent = nullptr);
     ~SdDRowValue() override;
 
-    static double valueToDouble(const QString &val, const SdValueModifier list[] , QString *modifier);
-    static bool   isPhis( const QString &val );
-    static double phisToDouble( const QString &val );
+    static double  valueToDouble(const QString &val, const SdValueModifier list[] , QString *modifier);
+    static bool    isPhis( const QString &val );
+    static double  phisToDouble( const QString &val );
+    static QString doubleToPhis( double val, const QString &modifier, const QString &row );
 
   public slots:
     void onModifierChanged( int row );

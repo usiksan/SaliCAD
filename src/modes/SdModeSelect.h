@@ -86,6 +86,12 @@ class SdModeSelect : public SdMode
     void            unselect( bool update);  //Remove selection [Убрать выделение]
     SdRect          getFragmentOver();       //Return selected fragment over rect
     SdSelector     *getFragment();           //Return selected fragment
+
+    //!
+    //! \brief isOneSymbolSelected Check if selection present and selected only one symbol in sheet
+    //! \return                    true if selection present and selected only one symbol in sheet
+    //!
+    bool            isOneSymbolSelected() const;
   protected:
     int             checkPoint( SdPoint p ); //Check object behind point [Проверить объект под точкой]
     void            beginCopy( SdPoint p );  //Begin copy process [Начало копирования]

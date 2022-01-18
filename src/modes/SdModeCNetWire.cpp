@@ -54,7 +54,7 @@ void SdModeCNetWire::drawStatic(SdContext *ctx)
   //Draw if net present
   if( !mNetName.isEmpty() && mShowNet ) {
     ctx->setOverColor( sdEnvir->getSysColor(scEnter) );
-    mObject->forEach( dctNetWire | dctNetName, [this,ctx] (SdObject *obj) -> bool {
+    mObject->forEach( dctNetWire | dctNetName | dctNetParam, [this,ctx] (SdObject *obj) -> bool {
       SdGraphNet *net = dynamic_cast<SdGraphNet*>( obj );
       if( net != nullptr && net->getNetName() == mNetName )
         net->draw( ctx );

@@ -198,6 +198,7 @@ History
              v1.29 Append vertical moving and rotation modes
   02.12.2021 v1.30 Append part highlight mode
   17.01.2022 v1.31 Refactor 3d master programm into common script language
+  18.01.2022 v1.32 Begin conversion of schematic expressions into script based calculations
 */
 
 #ifndef SDCONFIG
@@ -209,7 +210,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             31
+#define SD_VERSION_MINOR             32
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

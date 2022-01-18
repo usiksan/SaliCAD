@@ -1195,6 +1195,24 @@ void SdWMain::cmEditRotateGroup()
 
 
 
+void SdWMain::cmEditCalculations()
+  {
+  if( activeEditor() )
+    activeEditor()->cmEditCalculations();
+  }
+
+
+
+
+void SdWMain::cmEditFragments()
+  {
+  if( activeEditor() )
+    activeEditor()->cmEditFragments();
+  }
+
+
+
+
 
 
 void SdWMain::cmViewProject()

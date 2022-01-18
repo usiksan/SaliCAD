@@ -315,6 +315,22 @@ void SdPoint::read(const QString name, const QJsonObject obj)
 
 
 
+void SdPoint::jsonWrite(SvJsonWriter &js) const
+  {
+  js.jsonInt( "x", x() );
+  js.jsonInt( "y", y() );
+  }
+
+void SdPoint::jsonRead(SvJsonReader &js)
+  {
+  int vx,vy;
+  js.jsonInt( "x", vx );
+  js.jsonInt( "y", vy );
+  set( vx, vy );
+  }
+
+
+
 
 void SdPoint::swap(SdPoint *p)
   {

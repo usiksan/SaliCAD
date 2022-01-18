@@ -152,18 +152,6 @@ void SdWEditorGraph::originSet(SdPoint org)
 
 
 
-void SdWEditorGraph::setSelectionStatus(bool status)
-  {
-  SdWCommand::cmEditCopy->setEnabled( status );
-  SdWCommand::cmEditCut->setEnabled( status );
-  SdWCommand::cmEditDelete->setEnabled( status );
-  SdWCommand::cmEditProperties->setEnabled( status );
-  }
-
-
-
-
-
 //Window zoom
 void SdWEditorGraph::zoomWindow(SdRect r)
   {
@@ -218,6 +206,22 @@ void SdWEditorGraph::cursorMove(int dx, int dy)
 
   //Set new cursor pos
   QCursor::setPos( mapToGlobal(pixPos) );
+  }
+
+
+
+
+
+void SdWEditorGraph::setSelectionStatus(bool status)
+  {
+  SdWCommand::cmEditCopy->setEnabled( status );
+  SdWCommand::cmEditCut->setEnabled( status );
+  SdWCommand::cmEditDelete->setEnabled( status );
+  SdWCommand::cmEditProperties->setEnabled( status );
+  if( !status ) {
+    SdWCommand::cmEditCalculations->setEnabled( false );
+    SdWCommand::cmEditFragments->setEnabled( false );
+    }
   }
 
 

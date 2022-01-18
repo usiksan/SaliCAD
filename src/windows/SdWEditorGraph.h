@@ -75,9 +75,6 @@ class SdWEditorGraph : public SdWEditor
     //Declare paint area as dirty. This rebuild static paint area when next draw
     void    dirtyCashe() { mCasheDirty = true; }
 
-    //Update selection status
-    void    setSelectionStatus( bool status );
-
     //Temporary call mode
     void    modeCall( SdModeTemp *mode );
 
@@ -101,6 +98,13 @@ class SdWEditorGraph : public SdWEditor
 
     //Handle move cursor
     void    cursorMove( int dx, int dy );
+
+    //!
+    //! \brief setSelectionStatus Update visual dependences on selection status (there selection or none).
+    //!                           In fact changes menu command enable status
+    //! \param status             New status
+    //!
+    virtual void           setSelectionStatus( bool status );
 
     //Show fields flag
     virtual bool           showFields();

@@ -67,6 +67,18 @@ void SdWEditorGraphSheet::onActivateEditor()
 
 
 
+void SdWEditorGraphSheet::setSelectionStatus(bool status)
+  {
+  SdWEditorGraph::setSelectionStatus( status );
+  //Special case for selection mode when only one component selected
+  status = status && mMode == mSelect && mSelect->isOneSymbolSelected();
+  SdWCommand::cmEditCalculations->setEnabled( status );
+  SdWCommand::cmEditFragments->setEnabled( status );
+  }
+
+
+
+
 
 //Fragment insertion mode
 void SdWEditorGraphSheet::cmModeFragment()
@@ -167,6 +179,27 @@ void SdWEditorGraphSheet::cmEditProperties()
       }
     else QMessageBox::warning( this, tr("Error!"), tr("Parameters edit available only for component. No component selected. Select components and try again.") );
     }
+  }
+
+
+
+//!
+//! \brief cmEditCalculations Find and display possible calculations for selected component
+//!
+void SdWEditorGraphSheet::cmEditCalculations()
+  {
+
+  }
+
+
+
+
+//!
+//! \brief cmEditFragments Find, display and enable replace possible fragments for selected component
+//!
+void SdWEditorGraphSheet::cmEditFragments()
+  {
+
   }
 
 

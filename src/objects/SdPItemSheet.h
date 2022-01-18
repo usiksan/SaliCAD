@@ -21,7 +21,6 @@ Description
 #define SD_SHEET_INDEX_PARAM "{sindex}" //Sheet index in sheet parameters table
 
 class SdPItemPlate;
-class SdContainerSheetNet;
 class SdGraphNetWire;
 
 class SdPItemSheet : public SdProjectItem

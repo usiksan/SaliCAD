@@ -149,6 +149,14 @@ void SdGraphText::getProp(SdPropSelected &prop)
 
 
 
+void SdGraphText::setLayerUsage()
+  {
+  mProp.mLayer.setLayerUsage();
+  }
+
+
+
+
 void SdGraphText::setText(int index, QString sour, SdPropText &prop, QWidget *parent)
   {
   Q_UNUSED(index)
@@ -220,7 +228,7 @@ void SdGraphText::draw(SdContext *dc)
 
 int SdGraphText::behindCursor(SdPoint p)
   {
-  if( isVisible() ) {
+  if( mProp.mLayer.isEdited() ) {
     if( mOverRect.isPointInside(p) )
       return getSelector() ? SEL_ELEM : UNSEL_ELEM;
     }
@@ -232,13 +240,11 @@ int SdGraphText::behindCursor(SdPoint p)
 
 int SdGraphText::behindText(SdPoint p, SdPoint &org, QString &dest, SdPropText &prop)
   {
-  if( isVisible() ) {
-    if( mOverRect.isPointInside(p) ) {
-      org  = mOrigin;
-      dest = mString;
-      prop = mProp;
-      return 1;
-      }
+  if( mProp.mLayer.isEdited() && mOverRect.isPointInside(p) ) {
+    org  = mOrigin;
+    dest = mString;
+    prop = mProp;
+    return 1;
     }
   return 0;
   }

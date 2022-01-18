@@ -120,6 +120,8 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmEditRotateGroup = menuEdit->addAction( QIcon(QString(":/pic/editRotate.png")), QObject::tr("Rotate group 90 degree [F7]"), frame, SLOT(cmEditRotateGroup()) );
   menuEdit->addSeparator();
   cmEditProperties  = menuEdit->addAction( QIcon(QString(":/pic/editProp.png")), QObject::tr("Params..."), frame, SLOT(cmEditProperties()) );
+  cmEditCalculations = menuEdit->addAction( QIcon(QString(":/pic/editCalculations.png")), QObject::tr("Calculations..."), frame, SLOT(cmEditCalculations()) );
+  cmEditFragments   = menuEdit->addAction( QIcon(QString(":/pic/editFragments.png")), QObject::tr("Fragments..."), frame, SLOT(cmEditFragments()) );
 
 
 
@@ -320,6 +322,8 @@ void SdWCommand::createMenu(SdWMain *frame)
   menuSelect->insertAction( nullptr, cmEditRotateGroup );
   menuSelect->addSeparator();
   menuSelect->insertAction( nullptr, cmEditProperties );
+  menuSelect->insertAction( nullptr, cmEditCalculations );
+  menuSelect->insertAction( nullptr, cmEditFragments );
 
 
 
@@ -804,6 +808,8 @@ QActionPtr SdWCommand::cmEditFind;
 QActionPtr SdWCommand::cmEditReplace;
 QActionPtr SdWCommand::cmEditRotateGroup;
 QActionPtr SdWCommand::cmEditProperties;
+QActionPtr SdWCommand::cmEditCalculations;
+QActionPtr SdWCommand::cmEditFragments;
 
 QActionPtr SdWCommand::cmViewProject;
 QActionPtr SdWCommand::cmView3d;

@@ -327,7 +327,7 @@ QStringList SdProject::netList() const
     SdPtr<SdPItemSheet> sheet(obj);
     if( sheet.isValid() )
       //In sheet for each net object append unical net name to list
-      sheet->forEach( dctNetWire | dctNetName, [&set] (SdObject *obj1) -> bool {
+      sheet->forEach( dctNetWire | dctNetName | dctNetParam, [&set] (SdObject *obj1) -> bool {
         SdPtr<SdGraphNet> net(obj1);
         if( net.isValid() )
           set.insert( net->getNetName() );

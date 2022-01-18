@@ -9,38 +9,42 @@ Web
   www.saliLab.ru
 
 Description
-  Text graph object
+  Net param in schematic diagram
 */
-#ifndef SDGRAPHTEXT_H
-#define SDGRAPHTEXT_H
+#ifndef SDGRAPHNETPARAM_H
+#define SDGRAPHNETPARAM_H
 
-#include "SdGraph.h"
+#include "SdGraphNet.h"
 #include "SdPropText.h"
-#include "SdRect.h"
-#include <QString>
+#include "SdPoint.h"
 
-#define SD_TYPE_TEXT "Text"
+#define SD_TYPE_NET_PARAM "NetParam"
 
-class SdGraphText : public SdGraph
+class SdGraphNetParam : public SdGraphNet
   {
-  protected:
-    SdPoint    mOrigin;
-    SdPropText mProp;
-    QString    mString;
-    SdRect     mOverRect;
+    SdPoint    mOrigin;    //!< Place of wire name
+    QString    mParam;     //!< Param in form of "ParamName = ParamValue"
+    SdPropText mProp;      //!< Text properties of name
+    SdRect     mOver;      //!< Over rect
   public:
-    SdGraphText();
-    SdGraphText( SdPoint org, const QString &str, SdRect r, const SdPropText &p );
+    SdGraphNetParam();
+    SdGraphNetParam( SdPoint org, const QString &netName, const QString &param, const SdPropText &prp );
 
-    //Information
-    QString           getText() const { return mString; }
-    SdPoint           getOrigin() const { return mOrigin; }
-    const SdPropText& getPropText() const { return mProp; }
+    QString paramName() const;
+
+    QString paramValueGet() const;
+
+    void    paramValueSet( const QString &value );
+
+    QString paramText() const { return mParam; }
+
+  private:
+    void    paramParse( const QString &param );
 
     // SdObject interface
   public:
-    virtual QString getType() const override;
-    virtual quint64 getClass() const override;
+    virtual QString getType() const override { return QStringLiteral(SD_TYPE_NET_PARAM); }
+    virtual quint64 getClass() const override { return dctNetParam; }
     virtual void    cloneFrom(const SdObject *src) override;
     virtual void    writeObject(QJsonObject &obj) const override;
     virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
@@ -62,8 +66,6 @@ class SdGraphText : public SdGraph
     virtual void    draw(SdContext *dc) override;
     virtual int     behindCursor(SdPoint p) override;
     virtual int     behindText(SdPoint p, SdPoint &org, QString &dest, SdPropText &prop) override;
-
-    friend class SdPasCadImport;
   };
 
-#endif // SDGRAPHTEXT_H
+#endif // SDGRAPHNETPARAM_H
