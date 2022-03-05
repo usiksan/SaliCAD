@@ -6,15 +6,19 @@
     Здесь два класса: писатель и читатель. Сигнатуры вызова функций чтения и записи в
     обоих классах полностью идентичны, поэтому вызовы могут быть скопированы и в функцию
     записи и чтения
+  History
+    05.02.2022 v1 Begin version support
 */
 #ifndef SVJSONIO_H
 #define SVJSONIO_H
 
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QJsonDocument>
 #include <QColor>
 #include <QMap>
 
+#define SV_JSON_VERSION 1
 
 //!
 //! \brief The SvJsonWriter class Unificate json io class, through which json written
@@ -50,6 +54,7 @@ class SvJsonWriter
     //! \param b        Bool value
     //!
     void jsonBool( const char *key, bool b ) { mObjectRef.insert( QString(key), b ); }
+    void jsonBool( const char *key, bool b, bool ) { mObjectRef.insert( QString(key), b ); }
 
 
     //!
@@ -58,6 +63,7 @@ class SvJsonWriter
     //! \param v       Int value
     //!
     void jsonInt( const char *key, int v ) { mObjectRef.insert( QString(key), v ); }
+    void jsonInt( const char *key, int v, int ) { mObjectRef.insert( QString(key), v ); }
 
 
     //!
@@ -66,6 +72,7 @@ class SvJsonWriter
     //! \param v       Int value
     //!
     void jsonColor( const char *key, QColor color ) { mObjectRef.insert( QString(key), color.name() ); }
+    void jsonColor( const char *key, QColor color, QColor ) { mObjectRef.insert( QString(key), color.name() ); }
 
 
     //!
@@ -74,6 +81,7 @@ class SvJsonWriter
     //! \param d          Double value
     //!
     void jsonDouble( const char *key, double d ) { mObjectRef.insert( QString(key), d ); }
+    void jsonDouble( const char *key, double d, double ) { mObjectRef.insert( QString(key), d ); }
 
 
     //!
@@ -82,6 +90,7 @@ class SvJsonWriter
     //! \param s          String to transfer
     //!
     void jsonString( const char *key, const QString &s ) { mObjectRef.insert( QString(key), s ); }
+    void jsonString( const char *key, const QString &s, QString ) { mObjectRef.insert( QString(key), s ); }
 
 
     //!
@@ -277,6 +286,7 @@ class SvJsonReader
     //! \param b        Bool value
     //!
     void jsonBool( const char *title, bool &b ) { b = mObject.value( QString(title) ).toBool(); }
+    void jsonBool( const char *title, bool &b, bool def ) { b = mObject.value( QString(title) ).toBool( def ); }
 
 
     //!
@@ -285,6 +295,7 @@ class SvJsonReader
     //! \param v       Int value
     //!
     void jsonInt( const char *key, int &v ) { v = mObject.value( QString(key) ).toInt(); }
+    void jsonInt( const char *key, int &v, int def ) { v = mObject.value( QString(key) ).toInt( def ); }
 
 
     //!
@@ -293,6 +304,7 @@ class SvJsonReader
     //! \param v       Int value
     //!
     void jsonColor( const char *key, QColor &color ) { color = QColor( mObject.value( QString(key) ).toString() ); }
+    void jsonColor( const char *key, QColor &color, QColor def ) { color = QColor( mObject.value( QString(key) ).toString( def.name() ) ); }
 
 
     //!
@@ -301,6 +313,7 @@ class SvJsonReader
     //! \param d          Double value
     //!
     void jsonDouble( const char *key, double &d ) { d = mObject.value( QString(key) ).toDouble(); }
+    void jsonDouble( const char *key, double &d, double def ) { d = mObject.value( QString(key) ).toDouble( def ); }
 
 
     //!
@@ -309,6 +322,7 @@ class SvJsonReader
     //! \param s          String to transfer
     //!
     void jsonString( const char *key, QString &s ) { s = mObject.value( QString(key) ).toString(); }
+    void jsonString( const char *key, QString &s, QString def ) { s = mObject.value( QString(key) ).toString( def ); }
 
 
     //!
@@ -657,5 +671,16 @@ class SvJsonReaderExt : public SvJsonReader
 //!
 using SvJsonReaderExtInt = SvJsonReaderExt<int>;
 
+
+inline QByteArray svJsonObjectToByteArray( const QJsonObject &obj )
+  {
+  return QJsonDocument(obj).toJson();
+  }
+
+
+inline QJsonObject svJsonObjectFromByteArray( const QByteArray &ar )
+  {
+  return QJsonDocument::fromJson(ar).object();
+  }
 
 #endif // SVJSONIO_H
