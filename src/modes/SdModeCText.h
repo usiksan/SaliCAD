@@ -19,6 +19,7 @@ Description
 
 class SdModeCText : public SdModeCTextual
   {
+  protected:
     SdGraph   *mPicAffected; //Элемент, содержащий редактируемый текст
     int        mIdAffected;  //Номер редактируемого текста в элементе
     SdPropText mEditText;    //Properties for edited text
