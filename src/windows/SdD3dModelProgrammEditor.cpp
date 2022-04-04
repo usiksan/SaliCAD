@@ -45,7 +45,7 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
   //Main layout of dialog is vertical
   QVBoxLayout *vlay = new QVBoxLayout();
 
-   //Programm title with lable
+   //Programm title with label
    QHBoxLayout *hlay = new QHBoxLayout();
    hlay->addWidget( new QLabel(tr("Programm title:")) );
    hlay->addWidget( mTitle = new QLineEdit() );

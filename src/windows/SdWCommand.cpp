@@ -119,7 +119,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmEditReplace   = menuEdit->addAction( QObject::tr("Replace"), frame, SLOT(cmEditReplace()) );
   cmEditRotateGroup = menuEdit->addAction( QIcon(QString(":/pic/editRotate.png")), QObject::tr("Rotate group 90 degree [F7]"), frame, SLOT(cmEditRotateGroup()) );
   menuEdit->addSeparator();
-  cmEditProperties  = menuEdit->addAction( QIcon(QString(":/pic/editProp.png")), QObject::tr("Params..."), frame, SLOT(cmEditProperties()) );
+  cmEditProperties  = menuEdit->addAction( QIcon(QString(":/pic/editProp.png")), QObject::tr("Params of selection..."), frame, SLOT(cmEditProperties()) );
   cmEditCalculations = menuEdit->addAction( QIcon(QString(":/pic/editCalculations.png")), QObject::tr("Calculations..."), frame, SLOT(cmEditCalculations()) );
   cmEditFragments   = menuEdit->addAction( QIcon(QString(":/pic/editFragments.png")), QObject::tr("Fragments..."), frame, SLOT(cmEditFragments()) );
 
@@ -159,7 +159,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_FILL_CIRCLE] = menuDraw->addAction( QIcon(QString(":/pic/drawFCircle.png")), QObject::tr("Filled circle"), frame, SLOT(cmModeFilledCircle()) );
   cmModeTable[MD_ARC]         = menuDraw->addAction( QIcon(QString(":/pic/drawArc.png")), QObject::tr("Arc"), frame, SLOT(cmModeArc()) );
   cmModeTable[MD_TEXT]        = menuDraw->addAction( QIcon(QString(":/pic/drawText.png")), QObject::tr("Text"), frame, SLOT(cmModeText()) );
-  //cmModeTable[MD_FIELD]       = menuDraw->addAction( QIcon(QString(":/pic/drawField.png")), QObject::tr("Field"), frame, SLOT(cmModeField()) );
+  cmModeTable[MD_PARAM]       = menuDraw->addAction( QIcon(QString(":/pic/drawField.png")), QObject::tr("Param"), frame, SLOT(cmModeParam()) );
   cmShowField = menuDraw->addAction( QIcon(QStringLiteral(":/pic/showField.png")), QObject::tr("Show fields or values") );
   cmShowField->setCheckable(true);
   cmShowField->setChecked( sdEnvir->mShowFields );

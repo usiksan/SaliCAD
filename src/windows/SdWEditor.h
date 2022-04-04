@@ -116,7 +116,7 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmModeFilledCircle() {}
     virtual void cmModeArc() {}
     virtual void cmModeText() {}
-    virtual void cmModeField() {}
+    virtual void cmModeParam() {}
 
     //3d
     virtual void cm3dMaster() {}

@@ -194,6 +194,13 @@ SdScriptOperator *SdScriptParser::parseOperator()
   return new SdScriptOperatorAssign( var, val );
   }
 
+
+
+
+
+
+
+
 SdScriptOperator *SdScriptParser::parseOperatorIf()
   {
   if( !mScaner.tokenNeed('(', QObject::tr("Need assign (") )  )

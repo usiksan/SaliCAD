@@ -1449,10 +1449,10 @@ void SdWMain::cmModeText()
 
 
 
-void SdWMain::cmModeField()
+void SdWMain::cmModeParam()
   {
   if( activeEditor() )
-    activeEditor()->cmModeField();
+    activeEditor()->cmModeParam();
   }
 
 

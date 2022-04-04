@@ -5,18 +5,16 @@
 
 class SdPItemSheet;
 class SdObject;
+class SdScriptValueFunParam;
 
 class SdScriptValueVariableParam : public SdScriptValueVariable
   {
-    SdPItemSheet *mSheet;     //!< Sheet which on parameter works
-    SdObject     *mComp;      //!< Component or net
-    //QString       mRefId;     //!< Component id or net name
-    QString       mParam;     //!< Parametr name
-    QString       mDimension; //!< Parametr value dimension
-    QString       mRow;       //!< Row definition for value ajust
-    float         mValue;     //!< Value of parameter
+    SdPItemSheet          *mSheet;     //!< Sheet which on parameter works
+    SdObject              *mComp;      //!< Component
+    SdScriptValueFunParam *mFunParam;  //!< Function which declares param
+    //float                  mValue;     //!< Value of parameter
   public:
-    SdScriptValueVariableParam( SdPItemSheet *sheet, const QString &refId, const QString &param, const QString &dimension );
+    SdScriptValueVariableParam( SdPItemSheet *sheet );
 
     // SdScriptValue interface
   public:
@@ -30,14 +28,11 @@ class SdScriptValueVariableParam : public SdScriptValueVariable
     //! \brief toFloat Convert object ot float value
     //! \return        float value
     //!
-    virtual float toFloat() const override { return mValue; }
+    virtual float toFloat() const override;
 
     // SdScriptValueVariable interface
   public:
     virtual void assign(SdScriptValuePtr src) override;
-
-  private:
-    float paramGet() const;
   };
 
 #endif // SDSCRIPTVALUEVARIABLEPARAM_H

@@ -30,6 +30,7 @@ Description
 #include "modes/SdModeSelect.h"
 #include "modes/SdModeCSheetIdentMove.h"
 #include "modes/SdModeCSheetValueMove.h"
+#include "modes/SdModeCParam.h"
 #include "windows/SdDExpressionEdit.h"
 
 #include <QMessageBox>
@@ -74,6 +75,15 @@ void SdWEditorGraphSheet::setSelectionStatus(bool status)
   status = status && mMode == mSelect && mSelect->isOneSymbolSelected();
   SdWCommand::cmEditCalculations->setEnabled( status );
   SdWCommand::cmEditFragments->setEnabled( status );
+  }
+
+
+
+
+//Sheet param insertion mode
+void SdWEditorGraphSheet::cmModeParam()
+  {
+  modeSet( new SdModeCParam( this, mSheet ) );
   }
 
 

@@ -39,6 +39,9 @@ class SdWEditorGraphSheet : public SdWEditorGraph
     //!
     virtual void           setSelectionStatus( bool status ) override;
 
+    //Sheet param insertion mode
+    virtual void           cmModeParam() override;
+
     //Fragment insertion mode
     virtual void           cmModeFragment() override;
 

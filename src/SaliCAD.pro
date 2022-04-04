@@ -60,7 +60,9 @@ SOURCES += \
     master/SdDMasterPartSingleLine.cpp \
     master/SdDMasterSheetDecorator.cpp \
     master/SdMasterPart.cpp \
-    objects/SdGraphNetParam.cpp \
+    modes/SdModeCParam.cpp \
+    modes/SdModeCSymHighlight.cpp \
+    objects/SdGraphParam.cpp \
     script/SdScriptOperatorBlock.cpp \
     script/SdScriptOperatorIf.cpp \
     script/SdScriptOperatorWhile.cpp \
@@ -82,6 +84,7 @@ SOURCES += \
     script/SdScriptValueFunModelAddExtrude.cpp \
     script/SdScriptValueFunModelCopy.cpp \
     script/SdScriptValueFunModelHole.cpp \
+    script/SdScriptValueFunParam.cpp \
     script/SdScriptValueFunction.cpp \
     script/SdScriptValueArray3dVertex.cpp \
     script/SdScriptValueArray3dSegment.cpp \
@@ -422,7 +425,9 @@ HEADERS  += \
     master/SdDMasterPartSingleLine.h \
     master/SdDMasterSheetDecorator.h \
     master/SdMasterPart.h \
-    objects/SdGraphNetParam.h \
+    modes/SdModeCParam.h \
+    modes/SdModeCSymHighlight.h \
+    objects/SdGraphParam.h \
     script/SdScriptOperator.h \
     script/SdScriptOperatorAssign.h \
     script/SdScriptOperatorBlock.h \
@@ -466,6 +471,7 @@ HEADERS  += \
     script/SdScriptValueFunModelTranslate.h \
     script/SdScriptValueFunModelWall.h \
     script/SdScriptValueFunModelWallEven.h \
+    script/SdScriptValueFunParam.h \
     script/SdScriptValueFunRegionCircle.h \
     script/SdScriptValueFunRegionRect.h \
     script/SdScriptValueFunRegionShift.h \

@@ -187,7 +187,7 @@ class SdWMain : public QMainWindow
     void cmModeFilledCircle();
     void cmModeArc();
     void cmModeText();
-    void cmModeField();
+    void cmModeParam();
 
     //3d
     void cm3dMaster();
