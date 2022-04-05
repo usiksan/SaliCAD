@@ -5,9 +5,17 @@ SdScriptParamRef::SdScriptParamRef()
 
   }
 
+QString SdScriptParamRef::valueGet() const
+  {
+  if( mRef == nullptr )
+    return mValue;
+
+  }
+
 void SdScriptParamRef::assign(SdObject *ref, QString param)
   {
-
+  mRef = ref;
+  mParam = param;
   }
 
 void SdScriptParamRef::jsonWrite(SvJsonWriter &js) const

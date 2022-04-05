@@ -20,13 +20,12 @@ Description
 #define SDSCRIPTVALUEFUNREF_H
 
 #include "SdScriptValueFunction.h"
+#include "SdScriptParamRef.h"
 
-class SdObject;
 
 class SdScriptValueFunRef : public SdScriptValueFunction
   {
-    SdObject *mRef;
-    QString   mParam;
+    SdScriptParamRef *mRef;
   public:
     SdScriptValueFunRef();
 
