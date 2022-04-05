@@ -9,41 +9,65 @@ Web
   www.saliLab.ru
 
 Description
-  Any param in sheet
+  Base class for child objects with param map
 */
 #ifndef SDGRAPHPARAM_H
 #define SDGRAPHPARAM_H
 
-#include "SdGraphText.h"
-#include "SdPropText.h"
-#include "SdPoint.h"
+#include "SdGraph.h"
+#include "library/SdStringMap.h"
 
-#define SD_TYPE_PARAM "Param"
 
-class SdGraphParam : public SdGraphText
+class SdGraphParam : public SdGraph
   {
+  protected:
+    SdStringMap       mParamTable;   //!< Parameters
   public:
     SdGraphParam();
-    SdGraphParam( SdPoint org, const QString &str, SdRect r, const SdPropText &p );
+    SdGraphParam( const SdStringMap &param );
 
-    QString paramName() const;
+    //Params with local param table
+    //
 
-    QString paramValueGet() const;
+    //!
+    //! \brief paramContains Test if param present in local table
+    //! \param key           Key of param
+    //! \return              true if param present in local table
+    //!
+    bool              paramContains( const QString key ) const { return mParamTable.contains(key); }
 
-    void    paramValueSet(const QString &value );
+    //!
+    //! \brief paramGet Retrive param from local table
+    //! \param key      Key of param
+    //! \return         Value of param with key
+    //!
+    QString           paramGet( const QString key ) const { return mParamTable.value(key); }
 
-    QString paramText() const;
+    //!
+    //! \brief paramSet Set single param value in local table
+    //! \param key      Key of param
+    //! \param val      Value of param
+    //!
+    void              paramSet( const QString key, const QString val ) { mParamTable.insert( key, val ); }
 
-    void    paramParse(const QString &param);
+    //!
+    //! \brief paramTable Return full local param table
+    //! \return           Full local param table
+    //!
+    SdStringMap       paramTable() const { return mParamTable; }
+
+    //!
+    //! \brief paramTableSet Setup full param table
+    //! \param map           New param table
+    //! \param undo          Undo archive
+    //!
+    void              paramTableSet( const SdStringMap map, SdUndo *undo );
 
     // SdObject interface
   public:
-    virtual QString getType() const override { return QStringLiteral(SD_TYPE_PARAM); }
-    virtual quint64 getClass() const override { return dctParam; }
-
-    // SdGraph interface
-  public:
-    virtual void    setText(int index, QString sour, SdPropText &prop, QWidget *parent) override;
+    virtual void cloneFrom(const SdObject *src) override;
+    virtual void writeObject(QJsonObject &obj) const override;
+    virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
   };
 
 #endif // SDGRAPHPARAM_H

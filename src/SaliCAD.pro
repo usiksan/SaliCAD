@@ -66,6 +66,7 @@ SOURCES += \
     script/SdScriptOperatorBlock.cpp \
     script/SdScriptOperatorIf.cpp \
     script/SdScriptOperatorWhile.cpp \
+    script/SdScriptParamRef.cpp \
     script/SdScriptParser.cpp \
     script/SdScriptParser3d.cpp \
     script/SdScriptParserCalculator.cpp \
@@ -85,6 +86,7 @@ SOURCES += \
     script/SdScriptValueFunModelCopy.cpp \
     script/SdScriptValueFunModelHole.cpp \
     script/SdScriptValueFunParam.cpp \
+    script/SdScriptValueFunRef.cpp \
     script/SdScriptValueFunction.cpp \
     script/SdScriptValueArray3dVertex.cpp \
     script/SdScriptValueArray3dSegment.cpp \
@@ -115,6 +117,7 @@ SOURCES += \
     objects/Sd3dStep.cpp \
     objects/SdUndoRecord3dMatrix.cpp \
     script/SdScriptValueVariableParam.cpp \
+    script/SdScriptValueVariableRef.cpp \
     windows/SdD3dMaster.cpp \
     windows/SdD3dModelMaster.cpp \
     windows/SdD3dModelProgrammEditor.cpp \
@@ -433,6 +436,7 @@ HEADERS  += \
     script/SdScriptOperatorBlock.h \
     script/SdScriptOperatorIf.h \
     script/SdScriptOperatorWhile.h \
+    script/SdScriptParamRef.h \
     script/SdScriptParser.h \
     script/SdScriptParser3d.h \
     script/SdScriptParserCalculator.h \
@@ -472,6 +476,7 @@ HEADERS  += \
     script/SdScriptValueFunModelWall.h \
     script/SdScriptValueFunModelWallEven.h \
     script/SdScriptValueFunParam.h \
+    script/SdScriptValueFunRef.h \
     script/SdScriptValueFunRegionCircle.h \
     script/SdScriptValueFunRegionRect.h \
     script/SdScriptValueFunRegionShift.h \
@@ -503,6 +508,7 @@ HEADERS  += \
     script/SdScriptValueVariableModel.h \
     script/SdScriptValueVariableParam.h \
     script/SdScriptValueVariablePath.h \
+    script/SdScriptValueVariableRef.h \
     script/SdScriptValueVariableRegion.h \
     script/SdScriptValueVariableSegment.h \
     script/SdScriptValueVariableString.h \

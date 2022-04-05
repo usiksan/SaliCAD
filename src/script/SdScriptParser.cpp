@@ -180,7 +180,7 @@ SdScriptOperator *SdScriptParser::parseOperator()
     case SD_SCRIPT_TYPE_FACE    : var = new SdScriptValueVariableFace(); break;
     case SD_SCRIPT_TYPE_MODEL   : var = new SdScriptValueVariableModel(); break;
     case SD_SCRIPT_TYPE_GRAPH   : var = new SdScriptValueVariableGraph(); break;
-    case SD_SCRIPT_TYPE_PARAM   :
+    case SD_SCRIPT_TYPE_REF   :
       var = buildParamVariable( val );
       if( var != nullptr ) break;
     default:

@@ -17,81 +17,43 @@ Description
 #include "SvJsonIO.h"
 
 SdGraphParam::SdGraphParam() :
-  SdGraphText()
+  SdGraph()
   {
 
   }
 
-SdGraphParam::SdGraphParam(SdPoint org, const QString &str, SdRect r, const SdPropText &p) :
-  SdGraphText( org, str, r, p )
+SdGraphParam::SdGraphParam(const SdStringMap &param) :
+  SdGraph(),
+  mParamTable(param)
   {
-  paramParse(str);
-  }
-
-
-
-
-QString SdGraphParam::paramName() const
-  {
-  QStringList lst( mString.split( QChar('=') ) );
-
-  if( lst.count() == 2 )
-    return lst.at(0).simplified();
-
-  return mString;
   }
 
 
 
 
-QString SdGraphParam::paramValueGet() const
+void SdGraphParam::cloneFrom(const SdObject *src)
   {
-  QStringList lst( mString.split( QChar('=') ) );
-
-  if( lst.count() == 2 )
-    return lst.at(1).simplified();
-
-  return QString{};
+  SdGraph::cloneFrom( src );
+  SdPtrConst<SdGraphParam> ptr(src);
+  Q_ASSERT( ptr.isValid() );
+  mParamTable = ptr->mParamTable;
   }
 
 
 
-
-
-
-
-
-
-void SdGraphParam::paramValueSet( const QString &value )
+void SdGraphParam::writeObject(QJsonObject &obj) const
   {
-  paramParse( paramName() + QStringLiteral(" = ") + value );
+  SdGraph::writeObject( obj );
+  //Parameters
+  sdStringMapWrite( QStringLiteral("Param"), mParamTable, obj );
   }
 
 
 
-
-
-
-void SdGraphParam::paramParse( const QString &param )
+void SdGraphParam::readObject(SdObjectMap *map, const QJsonObject obj)
   {
-  mString = param;
-
-  if( mString.isEmpty() )
-    mString = QStringLiteral("none = 0");
+  SdGraph::readObject( map, obj );
+  //Parameters
+  sdStringMapRead( QStringLiteral("Param"), mParamTable, obj );
   }
-
-
-
-
-
-void SdGraphParam::setText(int index, QString sour, SdPropText &prop, QWidget *parent)
-  {
-  Q_UNUSED(index)
-  Q_UNUSED(parent)
-  paramParse( sour );
-  mProp   = prop;
-  }
-
-
-
 

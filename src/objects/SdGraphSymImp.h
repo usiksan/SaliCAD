@@ -13,7 +13,7 @@ Description
 */
 #ifndef SDGRAPHSYMIMP_H
 #define SDGRAPHSYMIMP_H
-#include "SdGraph.h"
+#include "SdGraphParam.h"
 #include "SdPoint.h"
 #include "SdPropText.h"
 #include "SdPropSymImp.h"
@@ -34,7 +34,7 @@ class SdPItemPlate;
 class SdGraphNetWire;
 
 
-class SdGraphSymImp : public SdGraph
+class SdGraphSymImp : public SdGraphParam
   {
     SdGraphArea      *mArea;         //!< PCB where this symbol implement contains in
     int               mSectionIndex; //!< Section index (from 0)
@@ -56,7 +56,6 @@ class SdGraphSymImp : public SdGraph
     SdGraphPartImp   *mPartImp;      //!< Part implement in desired plate
                                      //!  If mPartImp == nullptr then symbol not linked
     SdSymImpPinTable  mPins;         //!< Pin information table
-    SdStringMap       mParamTable;   //!< Parameters
     QString           mLinkError;    //!< Error string, which displays when no link
   public:
     SdGraphSymImp();
@@ -86,17 +85,6 @@ class SdGraphSymImp : public SdGraph
     QString           pinNetName( const QString pinName ) const;
 
     //Params with local param table
-    //Test if param present in local table
-    bool              paramContains( const QString key ) const { return mParamTable.contains(key); }
-
-    //Get param value from local table
-    QString           paramGet( const QString key ) const { return mParamTable.value(key); }
-
-    void              paramSet( const QString key, const QString val ) { mParamTable.insert( key, val ); }
-
-    //Full local param table
-    SdStringMap       paramTable() const { return mParamTable; }
-
     //Setup full param table
     void              paramTableSet( const SdStringMap map, SdUndo *undo, SdGraphPartImp *partImp );
 

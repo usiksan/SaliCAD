@@ -2,7 +2,7 @@
 
 
 SdScriptValueFunParam::SdScriptValueFunParam(QTableWidget *tableWidget) :
-  SdScriptValueFunction( SD_SCRIPT_TYPE_PARAM, SD_SCRIPT_TYPE_STRING, SD_SCRIPT_TYPE_STRING, SD_SCRIPT_TYPE_STRING, SD_SCRIPT_TYPE_STRING, SD_SCRIPT_TYPE_STRING ),
+  SdScriptValueFunction( SD_SCRIPT_TYPE_REF, SD_SCRIPT_TYPE_STRING, SD_SCRIPT_TYPE_STRING, SD_SCRIPT_TYPE_STRING, SD_SCRIPT_TYPE_STRING, SD_SCRIPT_TYPE_STRING ),
   mTableWidget(tableWidget)
   {
   if( mTableWidget != nullptr ) {

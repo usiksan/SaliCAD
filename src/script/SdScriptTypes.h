@@ -34,7 +34,7 @@ Description
 #define SD_SCRIPT_TYPE_COLOR   'c'
 #define SD_SCRIPT_TYPE_STRING  's'
 //param reference
-#define SD_SCRIPT_TYPE_PARAM   't'
+#define SD_SCRIPT_TYPE_REF     't'
 //2d
 #define SD_SCRIPT_TYPE_GRAPH   'g'
 //3d

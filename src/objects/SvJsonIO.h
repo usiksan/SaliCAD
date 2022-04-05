@@ -47,6 +47,8 @@ class SvJsonWriter
     //!
     QJsonObject object() { return mObjectRef; }
 
+    QJsonObject &ref() { return mObjectRef; }
+
 
     //!
     //! \brief jsonBool Transfer bool value

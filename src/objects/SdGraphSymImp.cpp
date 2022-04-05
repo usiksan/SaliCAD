@@ -37,6 +37,7 @@ Description
 //====================================================================================
 //Symbol implementation
 SdGraphSymImp::SdGraphSymImp() :
+  SdGraphParam(),
   mArea(nullptr),        //PCB where this symbol implement contains in
   mSectionIndex(0),      //Section index (from 0)
   mLogSection(0),        //Logical symbol section number (from 1)
@@ -50,6 +51,7 @@ SdGraphSymImp::SdGraphSymImp() :
   }
 
 SdGraphSymImp::SdGraphSymImp(SdPItemComponent *comp, SdPItemSymbol *sym, SdPItemPart *part, const SdStringMap &param, SdPoint pos, SdPropSymImp *prp ) :
+  SdGraphParam(param),
   mArea(nullptr),        //PCB where this symbol implement contains in
   mSectionIndex(0),      //Section index (from 0)
   mLogSection(0),        //Logical symbol section number (from 1)
@@ -58,8 +60,7 @@ SdGraphSymImp::SdGraphSymImp(SdPItemComponent *comp, SdPItemSymbol *sym, SdPItem
   mComponent(comp),      //Object contains section information, pin assotiation info. May be same as mSymbol.
   mSymbol(sym),          //Symbol contains graph information
   mPart(part),
-  mPartImp(nullptr),
-  mParamTable(param)
+  mPartImp(nullptr)
   {
   //QString           mName;        //Name of component
   mProp = *prp;        //Implement properties
@@ -794,7 +795,7 @@ void SdGraphSymImp::detach(SdUndo *undo)
 
 void SdGraphSymImp::cloneFrom(const SdObject *src)
   {
-  SdGraph::cloneFrom( src );
+  SdGraphParam::cloneFrom( src );
   const SdGraphSymImp *imp = dynamic_cast<const SdGraphSymImp*>( src );
   Q_ASSERT( imp != nullptr );
   mArea         = imp->mArea;        //PCB where this symbol implement contains in
@@ -813,7 +814,6 @@ void SdGraphSymImp::cloneFrom(const SdObject *src)
   //PartImp and pins assigned when attached to schematic sheet
   //mPartImp      = imp->mPartImp;
   //mPins         = imp->mPins;        //Pin information table
-  mParamTable        = imp->mParamTable;       //Parameters
   }
 
 
@@ -822,7 +822,7 @@ void SdGraphSymImp::cloneFrom(const SdObject *src)
 
 void SdGraphSymImp::writeObject(QJsonObject &obj) const
   {
-  SdGraph::writeObject( obj );
+  SdGraphParam::writeObject( obj );
   writePtr( mArea, QStringLiteral("Area"), obj );        //PCB where this symbol implement contains in
   obj.insert( QStringLiteral("SectionIndex"), mSectionIndex );//Section index (from 0)
   obj.insert( QStringLiteral("LogSection"), mLogSection );    //Logical symbol section number (from 1)
@@ -842,8 +842,6 @@ void SdGraphSymImp::writeObject(QJsonObject &obj) const
   for( SdSymImpPinTable::const_iterator i = mPins.constBegin(); i != mPins.constEnd(); i++ )
     pins.append( i.value().toJson( i.key() ) );
   obj.insert( QStringLiteral("Pins"), pins );
-  //Parameters
-  sdStringMapWrite( QStringLiteral("Param"), mParamTable, obj );
   }
 
 
@@ -852,7 +850,7 @@ void SdGraphSymImp::writeObject(QJsonObject &obj) const
 
 void SdGraphSymImp::readObject(SdObjectMap *map, const QJsonObject obj)
   {
-  SdGraph::readObject( map, obj );
+  SdGraphParam::readObject( map, obj );
   mArea = dynamic_cast<SdGraphArea*>( readPtr( QStringLiteral("Area"), map, obj )  );
   mSectionIndex = obj.value( QStringLiteral("SectionIndex") ).toInt();
   mLogSection = obj.value( QStringLiteral("LogSection") ).toInt();
@@ -870,13 +868,11 @@ void SdGraphSymImp::readObject(SdObjectMap *map, const QJsonObject obj)
 
   //Pin information table
   QJsonArray pins = obj.value( QStringLiteral("Pins") ).toArray();
-  for( QJsonValue vpin : pins ) {
+  for( const QJsonValue &vpin : qAsConst(pins) ) {
     SdSymImpPin pin;
     QString pinName = pin.fromJson( map, vpin.toObject() );
     mPins.insert( pinName, pin );
     }
-  //Parameters
-  sdStringMapRead( QStringLiteral("Param"), mParamTable, obj );
   }
 
 

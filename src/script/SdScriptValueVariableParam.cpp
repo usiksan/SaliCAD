@@ -35,7 +35,7 @@ float SdScriptValueVariableParam::toFloat() const
 
 void SdScriptValueVariableParam::assign(SdScriptValuePtr src)
   {
-  if( src->type() == SD_SCRIPT_TYPE_PARAM ) {
+  if( src->type() == SD_SCRIPT_TYPE_REF ) {
     //Fill table row
     if( mFunParam == nullptr ) {
 
