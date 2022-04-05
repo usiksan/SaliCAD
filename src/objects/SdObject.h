@@ -88,6 +88,12 @@ class SdObject
     static  SdObject* readPtr( SdObjectMap *map, const QJsonObject obj );
     static  SdObject* readPtr( const QString name, SdObjectMap *map, const QJsonObject obj );
     static  SdObject* build( QString type );
+
+    template <typename SdClass>
+    static  SdClass*  readPtrClass( const QString name, SdObjectMap *map, const QJsonObject obj )
+      {
+      return dynamic_cast<SdClass*>( readPtr( name, map, obj ) );
+      }
   };
 
 typedef SdObject *SdObjectPtr;

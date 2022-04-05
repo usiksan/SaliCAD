@@ -56,13 +56,12 @@ quint64 SdGraphText::getClass() const
 void SdGraphText::cloneFrom(const SdObject *src)
   {
   SdGraph::cloneFrom( src );
-  const SdGraphText *text = dynamic_cast<const SdGraphText*>(src);
-  if( text ) {
-    mOrigin   = text->mOrigin;
-    mProp     = text->mProp;
-    mString   = text->mString;
-    mOverRect = text->mOverRect;
-    }
+  SdPtrConst<SdGraphText> text(src);
+  Q_ASSERT_X( text.isValid(), "SdGraphText::cloneFrom", "Cloned not SdGraphText" );
+  mOrigin   = text->mOrigin;
+  mProp     = text->mProp;
+  mString   = text->mString;
+  mOverRect = text->mOverRect;
   }
 
 

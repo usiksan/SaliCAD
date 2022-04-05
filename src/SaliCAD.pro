@@ -63,6 +63,7 @@ SOURCES += \
     modes/SdModeCParam.cpp \
     modes/SdModeCSymHighlight.cpp \
     objects/SdGraphParam.cpp \
+    objects/SdGraphScript.cpp \
     script/SdScriptOperatorBlock.cpp \
     script/SdScriptOperatorIf.cpp \
     script/SdScriptOperatorWhile.cpp \
@@ -431,6 +432,8 @@ HEADERS  += \
     modes/SdModeCParam.h \
     modes/SdModeCSymHighlight.h \
     objects/SdGraphParam.h \
+    objects/SdGraphScript.h \
+    objects/SdJsonIO.h \
     script/SdScriptOperator.h \
     script/SdScriptOperatorAssign.h \
     script/SdScriptOperatorBlock.h \

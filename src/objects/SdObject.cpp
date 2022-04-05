@@ -45,7 +45,7 @@ Description
 #include "SdGraphPartImp.h"
 #include "SdGraphNetWire.h"
 #include "SdGraphNetName.h"
-#include "SdGraphParam.h"
+#include "SdGraphScript.h"
 #include "Sd3dGraphModel.h"
 #include "SdSection.h"
 #include "SdPartVariant.h"
@@ -296,7 +296,7 @@ SdObject *SdObject::build(QString type)
   if( type == QStringLiteral(SD_TYPE_PART_IMP)            ) return new SdGraphPartImp();
   if( type == QStringLiteral(SD_TYPE_NET_WIRE)            ) return new SdGraphNetWire();
   if( type == QStringLiteral(SD_TYPE_NET_NAME)            ) return new SdGraphNetName();
-  if( type == QStringLiteral(SD_TYPE_PARAM)           ) return new SdGraphParam();
+  if( type == QStringLiteral(SD_TYPE_SCRIPT)              ) return new SdGraphScript();
 
   if( type == QStringLiteral(SD_TYPE_GRAPH_TRACE_ROAD)    ) return new SdGraphTracedRoad();
   if( type == QStringLiteral(SD_TYPE_GRAPH_TRACE_POLYGON) ) return new SdGraphTracedPolygon();

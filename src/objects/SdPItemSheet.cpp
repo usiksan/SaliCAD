@@ -209,7 +209,7 @@ SdGraph *SdPItemSheet::insertCopyObject(const SdGraph *obj, SdPoint offset, SdUn
     cp->select( nullptr );
     cp->move( offset );
     //For nets we perform substitute new net names for default named nets
-    if( cp->getClass() & (dctNetName | dctNetWire | dctNetParam) ) {
+    if( cp->getClass() & (dctNetName | dctNetWire) ) {
       SdGraphNet *net = dynamic_cast<SdGraphNet*>(cp);
       Q_ASSERT( net != nullptr );
       //Test if this net with default name
