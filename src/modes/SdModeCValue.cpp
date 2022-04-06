@@ -77,7 +77,7 @@ int SdModeCValue::getPropBarId() const
 
 void SdModeCValue::propGetFromBar()
   {
-  SdPropBarTextual *bar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+  auto bar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
   Q_ASSERT( bar != nullptr );
   bar->getPropText( mPropText );
   update();
@@ -90,7 +90,7 @@ void SdModeCValue::propGetFromBar()
 
 void SdModeCValue::propSetToBar()
   {
-  SdPropBarTextual *bar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+  auto bar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
   Q_ASSERT( bar != nullptr );
   bar->setPropText( mPropText, mEditor->getPPM() );
   }

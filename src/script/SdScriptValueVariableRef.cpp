@@ -1,18 +1,30 @@
 #include "SdScriptValueVariableRef.h"
-#include "objects/SdPItemSheet.h"
-#include "objects/SdGraphSymImp.h"
-#include "objects/SdGraphParam.h"
+#include "objects/SdGraphScript.h"
 #include "windows/SdDRowValue.h"
 
-SdScriptValueVariableRef::SdScriptValueVariableRef()
+SdScriptValueVariableRef::SdScriptValueVariableRef(SdGraphScript *ref, const QString &name, const QString &dimension, const QString &row ) :
+  SdScriptValueVariable(),
+  mRef(ref),
+  mName(name),
+  mDimension(dimension),
+  mRow(row)
   {
-
+  mRef->varInit( mName );
   }
+
+
 
 float SdScriptValueVariableRef::toFloat() const
   {
-  //We retrive value from visual table
-  if( mFunRef == nullptr )
-    return 0.0;
-  return SdDRowValue::phisToDouble( mFunRef->toString() );
+  //We retrive value from schematic
+  return SdDRowValue::phisToDouble( mRef->varGet( mName )  );
+  }
+
+
+
+
+void SdScriptValueVariableRef::assign(SdScriptValuePtr src)
+  {
+  if( src->type() == SD_SCRIPT_TYPE_FLOAT )
+    mRef->varSet( mName, SdDRowValue::doubleToPhis( src->toFloat(), mDimension, mRow )  );
   }

@@ -173,14 +173,15 @@ void SdRect::calcOverPolygon(SdPointList &polygon)
 
 QJsonObject SdRect::write() const
   {
-  QJsonObject obj;
-  obj.insert( QStringLiteral("x"), left() );
-  obj.insert( QStringLiteral("y"), top() );
-  obj.insert( QStringLiteral("r"), right() );
-  obj.insert( QStringLiteral("b"), bottom() );
-//  obj.insert( QStringLiteral("w"), width() );
-//  obj.insert( QStringLiteral("h"), height() );
-  return obj;
+  SdJsonWriter js;
+  jsonWrite( js );
+  return js.object();
+//  QJsonObject obj;
+//  obj.insert( QStringLiteral("x"), left() );
+//  obj.insert( QStringLiteral("y"), top() );
+//  obj.insert( QStringLiteral("r"), right() );
+//  obj.insert( QStringLiteral("b"), bottom() );
+//  return obj;
   }
 
 
@@ -214,6 +215,23 @@ void SdRect::read(const QJsonObject &obj)
 void SdRect::read(const QString name, const QJsonObject obj)
   {
   read( obj.value(name).toObject() );
+  }
+
+
+
+void SdRect::jsonWrite(SdJsonWriter &js) const
+  {
+  js.jsonInt( "x", left() );
+  js.jsonInt( "y", top() );
+  js.jsonInt( "r", right() );
+  js.jsonInt( "b", bottom() );
+  }
+
+
+
+void SdRect::jsonRead(SdJsonReader &js)
+  {
+  read( js.object() );
   }
 
 

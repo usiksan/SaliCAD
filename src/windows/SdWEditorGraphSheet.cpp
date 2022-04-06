@@ -30,7 +30,7 @@ Description
 #include "modes/SdModeSelect.h"
 #include "modes/SdModeCSheetIdentMove.h"
 #include "modes/SdModeCSheetValueMove.h"
-#include "modes/SdModeCParam.h"
+#include "modes/SdModeCScript.h"
 #include "windows/SdDExpressionEdit.h"
 
 #include <QMessageBox>
@@ -81,10 +81,10 @@ void SdWEditorGraphSheet::setSelectionStatus(bool status)
 
 
 //Sheet param insertion mode
-void SdWEditorGraphSheet::cmModeParam()
-  {
-  modeSet( new SdModeCParam( this, mSheet ) );
-  }
+//void SdWEditorGraphSheet::cmModeParam()
+//  {
+//  modeSet( new SdModeCParam( this, mSheet ) );
+//  }
 
 
 
@@ -154,6 +154,14 @@ void SdWEditorGraphSheet::cmModeNetName()
 void SdWEditorGraphSheet::cmModeBrowse(SdProjectItem *plate)
   {
   modeCall( new SdModeTBrowseSheetPart( this, mSheet, plate ) );
+  }
+
+
+
+
+void SdWEditorGraphSheet::cmModeScript()
+  {
+  modeSet( new SdModeCScript( this, mSheet )  );
   }
 
 
@@ -251,24 +259,6 @@ void SdWEditorGraphSheet::cmModeValueMove()
   {
   modeSet( new SdModeCSheetValueMove( this, mSheet ) );
   }
-
-
-
-
-//!
-//! \brief cmExpressionEdit Shows expression edit dialog with expression test capabilities
-//!
-void SdWEditorGraphSheet::cmExpressionEdit()
-  {
-  SdDExpressionEdit expressionEdit( mSheet->expressionGet(), this );
-  if( expressionEdit.exec() ) {
-    //Setup expression
-    mSheet->expressionSetText( expressionEdit.textGet() );
-    //Set project dirty with expression changes
-    dirtyProject();
-    }
-  }
-
 
 
 

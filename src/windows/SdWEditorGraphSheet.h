@@ -40,7 +40,7 @@ class SdWEditorGraphSheet : public SdWEditorGraph
     virtual void           setSelectionStatus( bool status ) override;
 
     //Sheet param insertion mode
-    virtual void           cmModeParam() override;
+    //virtual void           cmModeParam() override;
 
     //Fragment insertion mode
     virtual void           cmModeFragment() override;
@@ -66,6 +66,9 @@ class SdWEditorGraphSheet : public SdWEditorGraph
     //Browse part implement in sheet
     virtual void           cmModeBrowse(SdProjectItem *plate) override;
 
+    //Sheet script insertion-edit mode
+    virtual void           cmModeScript() override;
+
     //Edit properties of selected objects
     virtual void           cmEditProperties() override;
 
@@ -89,12 +92,6 @@ class SdWEditorGraphSheet : public SdWEditorGraph
 
     //Move component value
     virtual void           cmModeValueMove() override;
-
-    //!
-    //! \brief cmExpressionEdit Shows expression edit dialog with expression test capabilities
-    //!
-    virtual void           cmExpressionEdit() override;
-
 
     //Export command
     virtual void           cmFileExport() override;

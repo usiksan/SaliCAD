@@ -295,5 +295,7 @@
         <file>pic/3dImportStl.png</file>
         <file>pic/3dImportVrml.png</file>
         <file>pic/objPartHighlight.png</file>
+        <file>pic/objScript.png</file>
+        <file>pic/cursorScript.png</file>
     </qresource>
 </RCC>

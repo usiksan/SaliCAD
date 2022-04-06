@@ -294,7 +294,7 @@ int SdModeCTextual::getPropBarId() const
 
 void SdModeCTextual::propGetFromBar()
   {
-  SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+  auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>( PB_TEXT );
   if( tbar ) {
     if( mPropText )
       tbar->getPropText( mPropText );
@@ -310,7 +310,7 @@ void SdModeCTextual::propGetFromBar()
 
 void SdModeCTextual::propSetToBar()
   {
-  SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+  auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>( PB_TEXT );
   if( tbar ) {
     if( mPropText )
       tbar->setPropText( mPropText, mEditor->getPPM() );

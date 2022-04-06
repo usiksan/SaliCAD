@@ -83,7 +83,7 @@ int SdModeCNetName::getPropBarId() const
 
 void SdModeCNetName::propGetFromBar()
   {
-  SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+  auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
   if( tbar ) {
     tbar->getPropText( &(sdGlobalProp->mWireNameProp) );
     update();
@@ -95,7 +95,7 @@ void SdModeCNetName::propGetFromBar()
 
 void SdModeCNetName::propSetToBar()
   {
-  SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+  auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
   if( tbar ) {
     tbar->setPropText( &(sdGlobalProp->mWireNameProp), mEditor->getPPM() );
     }

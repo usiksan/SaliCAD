@@ -28,7 +28,7 @@ Description
 #define MD_FILL_CIRCLE     10
 #define MD_ARC             11
 #define MD_TEXT            12
-#define MD_PARAM           13
+#define MD_SCRIPT          13
 #define MD_SELECT          14
 #define MD_3DBALL          15
 #define MD_3DPIN_WIRED     16

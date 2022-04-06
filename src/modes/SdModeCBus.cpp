@@ -90,13 +90,13 @@ int SdModeCBus::getPropBarId() const
 void SdModeCBus::propGetFromBar()
   {
   if( getStep() == sNamePlace ) {
-    SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+    auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
     if( tbar ) {
       tbar->getPropText( &(sdGlobalProp->mWireNameProp) );
       }
     }
   else {
-    SdPropBarWire *bar = dynamic_cast<SdPropBarWire*>( SdWCommand::mbarTable[PB_WIRE] );
+    auto bar = SdWCommand::getModeToolBar<SdPropBarWire>( PB_WIRE );
     if( bar ) {
       QString wireName;
       bar->getPropWire( &(sdGlobalProp->mWireProp), &(sdGlobalProp->mWireEnterType), &wireName );
@@ -110,13 +110,13 @@ void SdModeCBus::propGetFromBar()
 void SdModeCBus::propSetToBar()
   {
   if( getStep() == sNamePlace ) {
-    SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+    auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
     if( tbar ) {
       tbar->setPropText( &(sdGlobalProp->mWireNameProp), mEditor->getPPM() );
       }
     }
   else if( mNetList.count() && mIndex < mNetList.count() ) {
-    SdPropBarWire *bar = dynamic_cast<SdPropBarWire*>( SdWCommand::mbarTable[PB_WIRE] );
+    auto bar = SdWCommand::getModeToolBar<SdPropBarWire>( PB_WIRE );
     if( bar )
       bar->setPropWire( &(sdGlobalProp->mWireProp), mEditor->getPPM(), sdGlobalProp->mWireEnterType, mNetList.at(mIndex) );
     }

@@ -64,6 +64,7 @@ Description
 #define CUR_ZOOM_OUT    145
 #define CUR_ZOOM_WIN    146
 #define CUR_COMP        147
+#define CUR_SCRIPT      148
 
 
 QCursor loadCursor( int cursorId );

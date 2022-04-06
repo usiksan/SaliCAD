@@ -1,0 +1,110 @@
+{
+    "command": [
+        {
+            "color": "#000000",
+            "id": "Line",
+            "start": {
+                "x": 4,
+                "y": 1
+            },
+            "stop": {
+                "x": 4,
+                "y": 9
+            },
+            "visible": true
+        },
+        {
+            "color": "#000000",
+            "id": "Line",
+            "start": {
+                "x": 0,
+                "y": 5
+            },
+            "stop": {
+                "x": 8,
+                "y": 5
+            },
+            "visible": true
+        },
+        {
+            "color": "#000000",
+            "first": {
+                "x": 12,
+                "y": 7
+            },
+            "id": "Rect",
+            "second": {
+                "x": 28,
+                "y": 29
+            },
+            "visible": true
+        },
+        {
+            "color": "#000000",
+            "first": {
+                "x": 15,
+                "y": 10
+            },
+            "id": "Rect",
+            "second": {
+                "x": 25,
+                "y": 14
+            },
+            "visible": true
+        },
+        {
+            "color": "#000000",
+            "first": {
+                "x": 15,
+                "y": 17
+            },
+            "id": "Rect",
+            "second": {
+                "x": 17,
+                "y": 19
+            },
+            "visible": true
+        },
+        {
+            "color": "#000000",
+            "columns": 3,
+            "delta": {
+                "x": 4,
+                "y": 4
+            },
+            "doOverride": false,
+            "id": "AreaRectArray",
+            "rows": 3,
+            "select0": {
+                "x": 15,
+                "y": 17
+            },
+            "select1": {
+                "x": 17,
+                "y": 19
+            },
+            "visible": true
+        },
+        {
+            "color": "#000000",
+            "doCopy": false,
+            "doOverride": false,
+            "id": "AreaMove",
+            "select0": {
+                "x": 0,
+                "y": 1
+            },
+            "select1": {
+                "x": 8,
+                "y": 9
+            },
+            "target": {
+                "x": 8,
+                "y": 8
+            },
+            "visible": true
+        }
+    ],
+    "height": 32,
+    "width": 32
+}

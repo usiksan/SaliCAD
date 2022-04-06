@@ -2,8 +2,7 @@
 #define SDJSONIO_H
 
 #include "SvJsonIO.h"
-
-class SdObjectMap;
+#include "SdObjectMap.h"
 
 using SdJsonWriter = SvJsonWriter;
 

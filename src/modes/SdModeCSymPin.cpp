@@ -97,7 +97,7 @@ int SdModeCSymPin::getPropBarId() const
 void SdModeCSymPin::propGetFromBar()
   {
   if( getStep() == sPlaceNumber ) {
-    SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+    auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
     if( tbar ) {
       tbar->getPropText( &(sdGlobalProp->mSymPinNumberProp) );
       mEditor->setFocus();
@@ -106,7 +106,7 @@ void SdModeCSymPin::propGetFromBar()
     }
   else if( getStep() == sEnterName ) SdModeCTextual::propGetFromBar();
   else if( getStep() == sPlaceName ) {
-    SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+    auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
     if( tbar ) {
       tbar->getPropText( &(sdGlobalProp->mSymPinNameProp) );
       mEditor->setFocus();
@@ -129,12 +129,12 @@ void SdModeCSymPin::propGetFromBar()
 void SdModeCSymPin::propSetToBar()
   {
   if( getStep() == sPlaceNumber ) {
-    SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+    auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
     if( tbar ) tbar->setPropText( &(sdGlobalProp->mSymPinNumberProp), mEditor->getPPM() );
     }
   else if( getStep() == sEnterName ) SdModeCTextual::propSetToBar();
   else if( getStep() == sPlaceName ) {
-    SdPropBarTextual *tbar = dynamic_cast<SdPropBarTextual*>( SdWCommand::getModeBar(PB_TEXT) );
+    auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
     if( tbar ) tbar->setPropText( &(sdGlobalProp->mSymPinNameProp), mEditor->getPPM() );
     }
   else if( getStep() == sPlacePin ) {

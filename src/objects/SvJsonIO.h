@@ -8,6 +8,8 @@
     записи и чтения
   History
     05.02.2022 v1 Begin version support
+    05.03.2022 v2 Append QPoint support
+    06.04.2022 v3 Append value of any class support which must be have jsonWrite and jsonRead members
 */
 #ifndef SVJSONIO_H
 #define SVJSONIO_H
@@ -17,8 +19,9 @@
 #include <QJsonDocument>
 #include <QColor>
 #include <QMap>
+#include <QPoint>
 
-#define SV_JSON_VERSION 1
+#define SV_JSON_VERSION 3
 
 //!
 //! \brief The SvJsonWriter class Unificate json io class, through which json written
@@ -47,8 +50,11 @@ class SvJsonWriter
     //!
     QJsonObject object() { return mObjectRef; }
 
+    //!
+    //! \brief ref Returns destignator json object reference to enable writing through pure QJsonObject
+    //! \return    Destignator json object reference to enable writing through pure QJsonObject
+    //!
     QJsonObject &ref() { return mObjectRef; }
-
 
     //!
     //! \brief jsonBool Transfer bool value
@@ -93,6 +99,19 @@ class SvJsonWriter
     //!
     void jsonString( const char *key, const QString &s ) { mObjectRef.insert( QString(key), s ); }
     void jsonString( const char *key, const QString &s, QString ) { mObjectRef.insert( QString(key), s ); }
+
+
+    //!
+    //! \brief jsonPoint Transfer point value
+    //! \param key       Key for value
+    //! \param p         Point to transfer
+    //!
+    void jsonPoint( const char *key, QPoint p ) {
+      SvJsonWriter js;
+      js.jsonInt("x", p.rx() );
+      js.jsonInt("y", p.ry() );
+      mObjectRef.insert( QString(key), js.object() );
+      }
 
 
     //!
@@ -276,6 +295,21 @@ class SvJsonWriter
       {
       val.jsonWrite( key, *this );
       }
+
+
+//    template<typename SvClass>
+//    //!
+//    //! \brief jsonValuePure Template transfer any value as json value
+//    //!
+//    //! \param key
+//    //! \param val
+//    //!
+//    void jsonValuePure( const char *key, const SvClass &val )
+//      {
+//      val.jsonWrite( QString(key), mObjectRef );
+//      }
+
+
   };
 
 
@@ -339,6 +373,18 @@ class SvJsonReader
     //!
     void jsonString( const char *key, QString &s ) { s = mObject.value( QString(key) ).toString(); }
     void jsonString( const char *key, QString &s, QString def ) { s = mObject.value( QString(key) ).toString( def ); }
+
+
+    //!
+    //! \brief jsonPoint Transfer point value
+    //! \param key       Key for value
+    //! \param p         Point to transfer
+    //!
+    void jsonPoint( const char *key, QPoint &p ) {
+      SvJsonReader js( mObject.value( QString(key) ).toObject() );
+      js.jsonInt("x", p.rx() );
+      js.jsonInt("y", p.ry() );
+      }
 
 
     //!
@@ -541,11 +587,10 @@ class SvJsonReader
     //! \param val       Object value to transfer
     //!
     template<typename SvClass>
-    void jsonValue( const char *key, const SvClass &val )
+    void jsonValue( const char *key, SvClass &val )
       {
       val.jsonRead( key, *this );
       }
-
   };
 
 
@@ -692,6 +737,20 @@ class SvJsonReaderExt : public SvJsonReader
       {
       SvJsonReaderExt<SvProperty> js( mObject.value( QString(key) ).toObject(), mProperty );
       objPtr->jsonRead( js );
+      }
+
+
+    //!
+    //! \brief jsonValue Template transfer any value as json value
+    //!                  Value class must contains jsonRead method which
+    //!                  reads object value from json object
+    //! \param key       Key for value
+    //! \param val       Object value to transfer
+    //!
+    template<typename SvClass>
+    void jsonValue( const char *key, SvClass &val )
+      {
+      val.jsonRead( key, *this );
       }
   };
 

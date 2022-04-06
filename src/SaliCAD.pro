@@ -60,7 +60,7 @@ SOURCES += \
     master/SdDMasterPartSingleLine.cpp \
     master/SdDMasterSheetDecorator.cpp \
     master/SdMasterPart.cpp \
-    modes/SdModeCParam.cpp \
+    modes/SdModeCScript.cpp \
     modes/SdModeCSymHighlight.cpp \
     objects/SdGraphParam.cpp \
     objects/SdGraphScript.cpp \
@@ -86,7 +86,6 @@ SOURCES += \
     script/SdScriptValueFunModelAddExtrude.cpp \
     script/SdScriptValueFunModelCopy.cpp \
     script/SdScriptValueFunModelHole.cpp \
-    script/SdScriptValueFunParam.cpp \
     script/SdScriptValueFunRef.cpp \
     script/SdScriptValueFunction.cpp \
     script/SdScriptValueArray3dVertex.cpp \
@@ -117,7 +116,6 @@ SOURCES += \
     objects/Sd3dSolid.cpp \
     objects/Sd3dStep.cpp \
     objects/SdUndoRecord3dMatrix.cpp \
-    script/SdScriptValueVariableParam.cpp \
     script/SdScriptValueVariableRef.cpp \
     windows/SdD3dMaster.cpp \
     windows/SdD3dModelMaster.cpp \
@@ -429,7 +427,7 @@ HEADERS  += \
     master/SdDMasterPartSingleLine.h \
     master/SdDMasterSheetDecorator.h \
     master/SdMasterPart.h \
-    modes/SdModeCParam.h \
+    modes/SdModeCScript.h \
     modes/SdModeCSymHighlight.h \
     objects/SdGraphParam.h \
     objects/SdGraphScript.h \
@@ -478,7 +476,6 @@ HEADERS  += \
     script/SdScriptValueFunModelTranslate.h \
     script/SdScriptValueFunModelWall.h \
     script/SdScriptValueFunModelWallEven.h \
-    script/SdScriptValueFunParam.h \
     script/SdScriptValueFunRef.h \
     script/SdScriptValueFunRegionCircle.h \
     script/SdScriptValueFunRegionRect.h \
@@ -509,7 +506,6 @@ HEADERS  += \
     script/SdScriptValueVariableGraph.h \
     script/SdScriptValueVariableMatrix.h \
     script/SdScriptValueVariableModel.h \
-    script/SdScriptValueVariableParam.h \
     script/SdScriptValueVariablePath.h \
     script/SdScriptValueVariableRef.h \
     script/SdScriptValueVariableRegion.h \

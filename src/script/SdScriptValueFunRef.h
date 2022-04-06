@@ -25,21 +25,24 @@ Description
 
 class SdScriptValueFunRef : public SdScriptValueFunction
   {
-    SdScriptParamRef *mRef;
   public:
     SdScriptValueFunRef();
 
     //!
-    //! \brief title Return variable title
-    //! \return      Variable title
+    //! \brief dimensions Returns dimensions of reference
+    //! \return           Dimensions of reference
     //!
-    QString title() const;
+    //! In schematic calculations all values are physical. For example 10kOm
+    //! Dimension will return "Om" in this case
+    QString dimension() const { return mParamList[0]->toString(); }
 
-    QString valueStr() const;
-
-    float   valueGet() const;
-
-    void    valueSet( float v );
+    //!
+    //! \brief row Returns row of reference
+    //! \return    Row of reference
+    //!
+    //! Some values of components are not any but member one of some Rows (aka E12, E24 and so on).
+    //! This function return souch row. For example "E6"
+    QString row() const { return mParamList[1]->toString(); }
   };
 
 #endif // SDSCRIPTVALUEFUNREF_H

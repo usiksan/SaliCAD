@@ -1,0 +1,187 @@
+#include "SdModeCScript.h"
+#include "objects/SdEnvir.h"
+#include "objects/SdPropLine.h"
+#include "objects/SdPropText.h"
+#include "windows/SdWCommand.h"
+#include "windows/SdPropBarTextual.h"
+#include "windows/SdWEditorGraph.h"
+
+SdModeCScript::SdModeCScript(SdWEditorGraph *editor, SdProjectItem *obj) :
+  SdMode( editor, obj )
+  {
+
+  }
+
+
+
+
+void SdModeCScript::activate()
+  {
+  }
+
+void SdModeCScript::deactivate()
+  {
+  }
+
+void SdModeCScript::reset()
+  {
+  }
+
+
+
+
+void SdModeCScript::drawStatic(SdContext *ctx)
+  {
+  mObject->forEach( dctAll, [ctx]( SdObject *obj ) {
+    SdPtr<SdGraph> graph(obj);
+    if( graph.isValid() )
+      graph->draw( ctx );
+    return true;
+    });
+  }
+
+
+
+void SdModeCScript::drawDynamic(SdContext *ctx)
+  {
+  }
+
+
+
+int SdModeCScript::getPropBarId() const
+  {
+  return PB_TEXT;
+  }
+
+
+
+void SdModeCScript::propGetFromBar()
+  {
+  auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>( PB_TEXT );
+  if( tbar ) {
+    if( mPropText )
+      tbar->getPropText( mPropText );
+    else
+      tbar->getPropText( &(sdGlobalProp->mTextProp) );
+    mEditor->setFocus();
+    update();
+    }
+  }
+
+
+
+void SdModeCScript::propSetToBar()
+  {
+  auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>( PB_TEXT );
+  if( tbar ) {
+    if( mPropText )
+      tbar->setPropText( mPropText, mEditor->getPPM() );
+    else
+      tbar->setPropText( &(sdGlobalProp->mTextProp), mEditor->getPPM() );
+    }
+  }
+
+
+
+void SdModeCScript::enterPoint(SdPoint)
+  {
+  }
+
+
+
+void SdModeCScript::clickPoint(SdPoint)
+  {
+  }
+
+
+
+void SdModeCScript::cancelPoint(SdPoint)
+  {
+  cancelMode();
+  }
+
+void SdModeCScript::movePoint(SdPoint)
+  {
+  }
+
+bool SdModeCScript::wheel(SdPoint p)
+  {
+  return SdMode::wheel(p);
+  }
+
+void SdModeCScript::keyDown(int key, QChar ch)
+  {
+  }
+
+void SdModeCScript::keyUp(int key, QChar ch)
+  {
+  }
+
+SdPoint SdModeCScript::enterPrev()
+  {
+  }
+
+void SdModeCScript::beginDrag(SdPoint)
+  {
+  }
+
+void SdModeCScript::dragPoint(SdPoint)
+  {
+  }
+
+void SdModeCScript::stopDrag(SdPoint)
+  {
+  }
+
+
+
+bool SdModeCScript::getInfo(SdPoint p, QString &info)
+  {
+  return false;
+  }
+
+
+
+
+QString SdModeCScript::getStepHelp() const
+  {
+  if( getStep() == sPlace ) return QObject::tr("Enter point to insert or edit script");
+  if( getStep() == sLink ) return QObject::tr("Select component or other script to link with");
+  if( getStep() == sOver ) return QObject::tr("Select group of components to find the right one calculation script");
+  return QString();
+  }
+
+
+
+
+QString SdModeCScript::getModeThema() const
+  {
+  return QString( MODE_HELP "ModeCScript.htm" );
+  }
+
+
+
+
+QString SdModeCScript::getStepThema() const
+  {
+  if( getStep() == sPlace ) return QString( MODE_HELP "ModeCScript.htm#place" );
+  if( getStep() == sLink ) return QString( MODE_HELP "ModeCScript.htm#link" );
+  if( getStep() == sOver ) return QString( MODE_HELP "ModeCScript.htm#over" );
+  return QString();
+  }
+
+
+
+
+int SdModeCScript::getCursor() const
+  {
+  return CUR_SCRIPT;
+  }
+
+
+
+
+int SdModeCScript::getIndex() const
+  {
+  return MD_SCRIPT;
+  }

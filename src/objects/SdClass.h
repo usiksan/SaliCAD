@@ -46,6 +46,7 @@ Description
 #define dctValue          0x02000000ul
 #define dctVariant        0x04000000ul
 #define dctGraphScript    0x08000000ul
+#define dctNetParam       0x10000000ul
 
 #define dctLocal          0x80000000ul //This flag setup for objects which must not be send to global storage
 
@@ -55,7 +56,7 @@ Description
 #define dctAll           MAX64_MASK
 #define dctSymbolObjects (dctPicture | dctSymPin | dctIdent | dctValue )
 #define dctPartObjects   (dctPicture | dctPartPin | dctIdent | dctValue )
-#define dctSheetObjects  (dctPicture | dctSymImp | dctNetWire | dctNetName | dctGraphScript)
+#define dctSheetObjects  (dctPicture | dctSymImp | dctNetWire | dctNetName | dctNetParam | dctGraphScript)
 #define dctPlateObjects  (dctPicture | dctPartImp | dctTraceVia | dctTraceRoad | dctTracePolygon )
 #define dctTraced        (dctPartImp | dctTraceVia | dctTraceRoad | dctTracePolygon )
 

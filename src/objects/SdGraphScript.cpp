@@ -41,10 +41,12 @@ void SdGraphScript::cloneFrom(const SdObject *src)
 void SdGraphScript::writeObject(QJsonObject &obj) const
   {
   SdGraphParam::writeObject( obj );
-  mProp.write( QStringLiteral("prop"), obj );
-  obj.insert( QStringLiteral("text"), mScript );
-  mOverRect.write( QStringLiteral("over"), obj );
-  mOrigin.write( QStringLiteral("Origin"), obj );
+  SdJsonWriter js( obj );
+  js.jsonValue<SdPropText>( "prop", mProp );
+  js.jsonString( "script", mScript );
+  js.jsonMap( "ref", mRefMap );
+  js.jsonPoint( "origin", mOrigin );
+  js.jsonObject<SdRect>( "over", mOverRect );
   }
 
 
@@ -54,9 +56,12 @@ void SdGraphScript::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   SdGraph::readObject( map, obj );
   mProp.read( QStringLiteral("prop"), obj );
-  mScript = obj.value( QStringLiteral("text") ).toString();
-  mOverRect.read( QStringLiteral("over"), obj );
-  mOrigin.read( QStringLiteral("Origin"), obj );
+  SdJsonReader js( obj, map );
+  js.jsonValue<SdPropText>( "prop", mProp );
+  js.jsonString( "script", mScript );
+  js.jsonMap( "ref", mRefMap );
+  js.jsonPoint( "origin", mOrigin );
+  js.jsonObject<SdRect>( "over", mOverRect );
   }
 
 

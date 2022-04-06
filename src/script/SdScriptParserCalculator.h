@@ -3,17 +3,17 @@
 
 #include "SdScriptParser.h"
 
-class SdPItemSheet;
+class SdGraphScript;
 
 class SdScriptParserCalculator : public SdScriptParser
   {
-    SdPItemSheet *mSheet; //!< Sheet which on base executed calculations
+    SdGraphScript *mGraphScript; //!< Script object in graphics editor
   public:
-    SdScriptParserCalculator( SdPItemSheet *sheet,  QTableWidget *tableWidget );
+    SdScriptParserCalculator( SdGraphScript *graphScript,  QTableWidget *tableWidget );
 
     // SdScriptParser interface
   protected:
-    virtual SdScriptValueVariablePtr buildParamVariable(SdScriptValue *expr) override;
+    virtual SdScriptValueVariablePtr buildRefVariable( const QString &name, SdScriptValue *expr ) override;
   };
 
 #endif // SDSCRIPTPARSERCALCULATOR_H

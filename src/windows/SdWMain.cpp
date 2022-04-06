@@ -1458,6 +1458,15 @@ void SdWMain::cmModeParam()
 
 
 
+void SdWMain::cmModeScript()
+  {
+  if( activeEditor() )
+    activeEditor()->cmModeScript();
+  }
+
+
+
+
 
 void SdWMain::cm3dMaster()
   {
@@ -1743,13 +1752,6 @@ void SdWMain::cmModePack()
     activeEditor()->cmModePack();
   }
 
-
-
-void SdWMain::cmExpressionEdit()
-  {
-  if( activeEditor() )
-    activeEditor()->cmExpressionEdit();
-  }
 
 
 

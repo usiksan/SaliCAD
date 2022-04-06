@@ -21,23 +21,29 @@ class SdGraphScript : public SdGraphParam
     SdGraphScript();
     SdGraphScript( const QString &script, SdPoint org, const SdPropText &prp );
 
-    void parse();
+    void    varInit( const QString &key );
+
+    QString varGet( const QString &key ) const;
+
+    void    varSet( const QString &key, const QString &val );
+
+    void    parse();
 
     // SdObject interface
   public:
     virtual QString getType() const override;
     virtual SdClass getClass() const override;
-    virtual void cloneFrom(const SdObject *src) override;
-    virtual void writeObject(QJsonObject &obj) const override;
-    virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual void    cloneFrom(const SdObject *src) override;
+    virtual void    writeObject(QJsonObject &obj) const override;
+    virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
 
     // SdGraph interface
   public:
-    virtual void saveState(SdUndo *undo) override;
-    virtual void move(SdPoint offset) override;
-    virtual void setProp(SdPropSelected &prop) override;
-    virtual void getProp(SdPropSelected &prop) override;
-    virtual void setText(int index, QString sour, SdPropText &prop, QWidget *parent) override;
+    virtual void    saveState(SdUndo *undo) override;
+    virtual void    move(SdPoint offset) override;
+    virtual void    setProp(SdPropSelected &prop) override;
+    virtual void    getProp(SdPropSelected &prop) override;
+    virtual void    setText(int index, QString sour, SdPropText &prop, QWidget *parent) override;
     virtual void selectByPoint(const SdPoint p, SdSelector *selector) override;
     virtual void selectByRect(const SdRect &r, SdSelector *selector) override;
     virtual void select(SdSelector *selector) override;

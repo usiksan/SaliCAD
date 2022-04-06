@@ -159,7 +159,6 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_FILL_CIRCLE] = menuDraw->addAction( QIcon(QString(":/pic/drawFCircle.png")), QObject::tr("Filled circle"), frame, SLOT(cmModeFilledCircle()) );
   cmModeTable[MD_ARC]         = menuDraw->addAction( QIcon(QString(":/pic/drawArc.png")), QObject::tr("Arc"), frame, SLOT(cmModeArc()) );
   cmModeTable[MD_TEXT]        = menuDraw->addAction( QIcon(QString(":/pic/drawText.png")), QObject::tr("Text"), frame, SLOT(cmModeText()) );
-  cmModeTable[MD_PARAM]       = menuDraw->addAction( QIcon(QString(":/pic/drawField.png")), QObject::tr("Param"), frame, SLOT(cmModeParam()) );
   cmShowField = menuDraw->addAction( QIcon(QStringLiteral(":/pic/showField.png")), QObject::tr("Show fields or values") );
   cmShowField->setCheckable(true);
   cmShowField->setChecked( sdEnvir->mShowFields );
@@ -227,10 +226,9 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_DISCONNECT]  = menuInsertSheet->addAction( QIcon(QString(":/pic/objUnConnect.png")), QObject::tr("Disconnect net"), frame, SLOT(cmModeDisconnect()) );
   cmModeTable[MD_SHEET_IDENT] = menuInsertSheet->addAction( QIcon(QString(":/pic/objIdent.png")), QObject::tr("Move ident of components"), frame, SLOT(cmModeReferenceMove()) );
   cmModeTable[MD_SHEET_VALUE] = menuInsertSheet->addAction( QIcon(QString(":/pic/objValue.png")), QObject::tr("Move value of components"), frame, SLOT(cmModeValueMove()) );
+  cmModeTable[MD_SCRIPT]      = menuInsertSheet->addAction( QIcon(QString(":/pic/objScript.png")), QObject::tr("Script insert and edit"), frame, SLOT(cmModeScript()) );
   //cmModeTable[MD_PCB_AREA]   = menuInsertSheet->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
 //  cmModeTable[MD_FIELD]      = menuInsertSheet->addAction( QIcon(QString(":/pic/objField.png")), QObject::tr("Field"), frame, SLOT(cmModeF) );
-  menuInsertSheet->addSeparator();
-  cmSheetExpression           = menuInsertSheet->addAction( QObject::tr("Expression edit..."), frame, &SdWMain::cmExpressionEdit );
 
 
 

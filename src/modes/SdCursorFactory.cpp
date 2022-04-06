@@ -71,6 +71,7 @@ static QCursor createCursor( int cursorId )
     case CUR_ZOOM_OUT    : return loadWindowsCursor( QString(":/pic/zoomout.cur") );
     case CUR_ZOOM_WIN    : return loadWindowsCursor( QString(":/pic/zoomwin.cur") );
     case CUR_COMP        : return QCursor( QPixmap(QStringLiteral(":/pic/cursorComp.png")), 4, 4 );
+    case CUR_SCRIPT      : return QCursor( QPixmap(QStringLiteral(":/pic/cursorScript.png")), 5, 5 );
     }
   return QCursor();
   }

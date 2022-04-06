@@ -181,7 +181,7 @@ SdScriptOperator *SdScriptParser::parseOperator()
     case SD_SCRIPT_TYPE_MODEL   : var = new SdScriptValueVariableModel(); break;
     case SD_SCRIPT_TYPE_GRAPH   : var = new SdScriptValueVariableGraph(); break;
     case SD_SCRIPT_TYPE_REF   :
-      var = buildParamVariable( val );
+      var = buildRefVariable( variableName, val );
       if( var != nullptr ) break;
     default:
       mScaner.error( QObject::tr("Can't create variable with this type %1").arg(val->type()) );

@@ -1,18 +1,20 @@
 #include "SdScriptParserCalculator.h"
-#include "SdScriptValueVariableParam.h"
-#include "SdScriptValueFunParam.h"
+#include "SdScriptValueVariableRef.h"
+#include "SdScriptValueFunRef.h"
 
-SdScriptParserCalculator::SdScriptParserCalculator(SdPItemSheet *sheet , QTableWidget *tableWidget) :
+SdScriptParserCalculator::SdScriptParserCalculator(SdGraphScript *graphScript , QTableWidget *tableWidget) :
   SdScriptParser(tableWidget),
-  mSheet(sheet)
+  mGraphScript(graphScript)
   {
-  addFunction( QStringLiteral("param"), [tableWidget] () -> SdScriptValueFunction* { return new SdScriptValueFunParam( tableWidget ); } );
+  addFunction( QStringLiteral("ref"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunRef(); } );
 
   }
 
 
-SdScriptValueVariablePtr SdScriptParserCalculator::buildParamVariable(SdScriptValue *expr)
+SdScriptValueVariablePtr SdScriptParserCalculator::buildRefVariable(const QString &name, SdScriptValue *expr)
   {
-  Q_UNUSED(expr)
-  return new SdScriptValueVariableParam( mSheet );
+  //In this call only function SdScriptValueFunRef will return SD_SCRIPT_TYPE_REF
+  SdScriptValueFunRef *ref = dynamic_cast<SdScriptValueFunRef*>(expr);
+  Q_ASSERT_X( ref != nullptr, "SdScriptParserCalculator::buildParamVariable", "Wrong expression return SD_SCRIPT_TYPE_REF" );
+  return new SdScriptValueVariableRef( mGraphScript, name, ref->dimension(), ref->row() );
   }

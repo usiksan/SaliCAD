@@ -182,6 +182,14 @@ class SdWCommand
     //Get current visible barId
     static int         getModeBarId();
 
+    //!
+    //! \brief getModeToolBar Helper function which convert QToolBar returned by getModeBar to derived class
+    //! \param barId          Ident of bar
+    //! \return               Tool bar reduced to needed type
+    //!
+    template<typename ToolBar>
+    static ToolBar    *getModeToolBar( int barId ) { return dynamic_cast<ToolBar*>( getModeBar(barId) ); }
+
 
     static void        createMenu( SdWMain *frame );
     static void        updatePreviousMenu();

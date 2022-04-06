@@ -188,6 +188,7 @@ class SdWMain : public QMainWindow
     void cmModeArc();
     void cmModeText();
     void cmModeParam();
+    void cmModeScript();
 
     //3d
     void cm3dMaster();
@@ -227,7 +228,6 @@ class SdWMain : public QMainWindow
     void cmModeNetName();
     void cmModeNetList();
     void cmModePack();
-    void cmExpressionEdit();
 
     //Pcb
     void cmShowRatNet(bool st);

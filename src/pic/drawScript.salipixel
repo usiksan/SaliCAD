@@ -1,0 +1,84 @@
+{
+    "command": [
+        {
+            "color": "#1e49f6",
+            "first": {
+                "x": 6,
+                "y": 1
+            },
+            "id": "Rect",
+            "second": {
+                "x": 26,
+                "y": 30
+            },
+            "visible": true
+        },
+        {
+            "color": "#1e49f6",
+            "first": {
+                "x": 10,
+                "y": 6
+            },
+            "id": "Rect",
+            "second": {
+                "x": 22,
+                "y": 10
+            },
+            "visible": true
+        },
+        {
+            "center": {
+                "x": 10,
+                "y": 15
+            },
+            "color": "#1e49f6",
+            "id": "Circle",
+            "radius": {
+                "x": 12,
+                "y": 13
+            },
+            "visible": true
+        },
+        {
+            "color": "#000000",
+            "doCopy": false,
+            "doOverride": false,
+            "id": "AreaMove",
+            "select0": {
+                "x": 8,
+                "y": 5
+            },
+            "select1": {
+                "x": 23,
+                "y": 17
+            },
+            "target": {
+                "x": 23,
+                "y": 15
+            },
+            "visible": true
+        },
+        {
+            "color": "#000000",
+            "columns": 3,
+            "delta": {
+                "x": -6,
+                "y": -6
+            },
+            "doOverride": false,
+            "id": "AreaRectArray",
+            "rows": 3,
+            "select0": {
+                "x": 8,
+                "y": 11
+            },
+            "select1": {
+                "x": 12,
+                "y": 15
+            },
+            "visible": true
+        }
+    ],
+    "height": 32,
+    "width": 32
+}

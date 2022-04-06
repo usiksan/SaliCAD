@@ -3,13 +3,16 @@
 
 #include "SdScriptValueVariable.h"
 
-class SdScriptValueFunRef;
+class SdGraphScript;
 
 class SdScriptValueVariableRef : public SdScriptValueVariable
   {
-    SdScriptValueFunRef *mFunRef;  //!< Reference function to access to param
+    SdGraphScript *mRef;
+    QString        mName;
+    QString        mDimension;
+    QString        mRow;
   public:
-    SdScriptValueVariableRef();
+    SdScriptValueVariableRef( SdGraphScript *ref, const QString &name, const QString &dimension, const QString &row );
 
     // SdScriptValue interface
   public:
