@@ -251,6 +251,10 @@ double SdDRowValue::phisToDouble(const QString &val)
       v = strVal.toDouble();
       break;
       }
+    else if( i == src.length() - 1 ) {
+      src.replace( QChar(','), QChar('.') );
+      v = src.toDouble();
+      }
 
   double factor = 1.0;
   //Extract modifier
@@ -290,7 +294,9 @@ QString SdDRowValue::doubleToPhis(double val, const QString &modifier, const QSt
         suffics = QString(mod->mModifier);
         divider  = mod->mFactor;
         multer   = mod->mMin;
+        break;
         }
+      mod++;
       }
     }
 

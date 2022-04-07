@@ -1,14 +1,42 @@
 #include "SdGraphScript.h"
+#include "SdContext.h"
+#include "SdSelector.h"
 
 SdGraphScript::SdGraphScript()
   {
 
   }
 
+
+
+SdGraphScript::SdGraphScript(const QString &script, SdPoint org, const SdPropText &prp) :
+  SdGraphParam(),
+  mScript(script),
+  mOrigin(org),
+  mProp(prp)
+  {
+
+  }
+
+
+
+void SdGraphScript::scriptSet(const QString &scr, SdUndo *undo)
+  {
+  if( undo != nullptr )
+    undo->string2( &mScript, nullptr );
+
+  mScript = scr;
+  parse();
+  }
+
+
+
 void SdGraphScript::parse()
   {
 
   }
+
+
 
 QString SdGraphScript::getType() const
   {
@@ -108,41 +136,77 @@ void SdGraphScript::setText(int index, QString sour, SdPropText &prop, QWidget *
 
 void SdGraphScript::selectByPoint(const SdPoint p, SdSelector *selector)
   {
+  if( mProp.mLayer.isEdited() ) {
+    if( !getSelector() && mOverRect.isPointInside(p) ) {
+      selector->insert( this );
+      }
+    }
   }
+
+
 
 
 
 void SdGraphScript::selectByRect(const SdRect &r, SdSelector *selector)
   {
+  if( mProp.mLayer.isEdited() ) {
+    if( !getSelector() && r.isAccross( mOverRect ) ) {
+      selector->insert( this );
+      }
+    }
   }
 
 
 
-void SdGraphScript::select(SdSelector *selector)
-  {
-  }
+
+
 
 void SdGraphScript::setLayerUsage()
   {
   mProp.mLayer.setLayerUsage();
   }
 
+
+
 bool SdGraphScript::isVisible()
   {
+  return mProp.mLayer.isVisible();
   }
+
+
 
 SdRect SdGraphScript::getOverRect() const
   {
+  return mOverRect;
   }
+
+
 
 void SdGraphScript::draw(SdContext *dc)
   {
+  dc->text( mOrigin, mOverRect, mScript, mProp );
   }
+
+
 
 int SdGraphScript::behindCursor(SdPoint p)
   {
+  if( mProp.mLayer.isEdited() ) {
+    if( mOverRect.isPointInside(p) )
+      return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+    }
+  return 0;
   }
+
+
 
 int SdGraphScript::behindText(SdPoint p, SdPoint &org, QString &dest, SdPropText &prop)
   {
+  if( mProp.mLayer.isEdited() && mOverRect.isPointInside(p) ) {
+    org  = mOrigin;
+    dest = mScript;
+    prop = mProp;
+    return 1;
+    }
+  return 0;
   }

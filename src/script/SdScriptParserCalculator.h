@@ -2,14 +2,14 @@
 #define SDSCRIPTPARSERCALCULATOR_H
 
 #include "SdScriptParser.h"
+#include "SdScriptRefMap.h"
 
-class SdGraphScript;
 
 class SdScriptParserCalculator : public SdScriptParser
   {
-    SdGraphScript *mGraphScript; //!< Script object in graphics editor
+    SdScriptRefMap *mRefMap; //!< Mapping variables for visual editing
   public:
-    SdScriptParserCalculator( SdGraphScript *graphScript,  QTableWidget *tableWidget );
+    SdScriptParserCalculator( SdScriptRefMap *refMap,  QTableWidget *tableWidget );
 
     // SdScriptParser interface
   protected:

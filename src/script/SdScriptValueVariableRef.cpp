@@ -1,8 +1,7 @@
 #include "SdScriptValueVariableRef.h"
-#include "objects/SdGraphScript.h"
 #include "windows/SdDRowValue.h"
 
-SdScriptValueVariableRef::SdScriptValueVariableRef(SdGraphScript *ref, const QString &name, const QString &dimension, const QString &row ) :
+SdScriptValueVariableRef::SdScriptValueVariableRef(SdScriptRefMap *ref, const QString &name, const QString &dimension, const QString &row ) :
   SdScriptValueVariable(),
   mRef(ref),
   mName(name),

@@ -122,7 +122,7 @@ SOURCES += \
     windows/SdD3dModelProgrammEditor.cpp \
     windows/SdDExpressionEdit.cpp \
     windows/SdDOptionsPageLibrary.cpp \
-    windows/SdExpression.cpp \
+    windows/SdExpressionRefMap.cpp \
     windows/SdPNewProjectItem_3dMaster.cpp \
     windows/SdWEditor3d.cpp \
     windows/SdWEditor3dPart.cpp \
@@ -444,6 +444,7 @@ HEADERS  += \
     script/SdScriptPartGraph.h \
     script/SdScriptPartModel.h \
     script/SdScriptProgramm.h \
+    script/SdScriptRefMap.h \
     script/SdScriptReference.h \
     script/SdScriptScaner.h \
     script/SdScriptValueBool.h \
@@ -556,7 +557,7 @@ HEADERS  += \
     windows/SdD3dModelProgrammEditor.h \
     windows/SdDExpressionEdit.h \
     windows/SdDOptionsPageLibrary.h \
-    windows/SdExpression.h \
+    windows/SdExpressionRefMap.h \
     windows/SdPNewProjectItem_3dMaster.h \
     windows/SdWEditor3d.h \
     windows/SdWEditor3dPart.h \
@@ -839,7 +840,6 @@ RESOURCES += \
 
 FORMS += \
     master/SdDMasterPartSingleLine.ui \
-    windows/SdDExpressionEdit.ui \
     windows/SdDGetObject.ui \
     windows/SdDNetUnion.ui \
     windows/SdDGetProjectObject.ui \

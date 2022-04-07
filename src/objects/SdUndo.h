@@ -98,6 +98,12 @@ class SdUndo
     void begin( QString title, SdProjectItem *item, bool is3d );
 
     void projectItemInfo(SdProjectItem *item, QString *title, QString *author, int *timeCreation, bool *editEnable );
+
+    //!
+    //! \brief string2 Append two string state every of them can be nullptr if none
+    //! \param str1    String 1
+    //! \param str2    String 2
+    //!
     void string2( QString *str1, QString *str2 );
     void stringMapItem( SdStringMap *assoc, const QString key );
     void stringMap( SdStringMap *assoc );

@@ -2,12 +2,15 @@
 #include "objects/SdEnvir.h"
 #include "objects/SdPropLine.h"
 #include "objects/SdPropText.h"
+#include "objects/SdGraphScript.h"
 #include "windows/SdWCommand.h"
 #include "windows/SdPropBarTextual.h"
 #include "windows/SdWEditorGraph.h"
+#include "windows/SdDExpressionEdit.h"
 
 SdModeCScript::SdModeCScript(SdWEditorGraph *editor, SdProjectItem *obj) :
-  SdMode( editor, obj )
+  SdMode( editor, obj ),
+  mPropText(nullptr)
   {
 
   }
@@ -17,7 +20,10 @@ SdModeCScript::SdModeCScript(SdWEditorGraph *editor, SdProjectItem *obj) :
 
 void SdModeCScript::activate()
   {
+  SdMode::activate();
   }
+
+
 
 void SdModeCScript::deactivate()
   {
@@ -83,8 +89,41 @@ void SdModeCScript::propSetToBar()
 
 
 
-void SdModeCScript::enterPoint(SdPoint)
+void SdModeCScript::enterPoint( SdPoint p )
   {
+  if( getStep() == sPlace ) {
+    //Here we insert new script or edit existing
+    SdGraph *pgraph = nullptr;
+    mObject->forEach( dctSymImp | dctGraphScript, [&pgraph,p]( SdObject *obj ) {
+      SdPtr<SdGraph> graph(obj);
+      if( graph.isValid() && graph->behindCursor(p) ) {
+        pgraph = graph.ptr();
+        return false;
+        }
+      return true;
+      });
+
+    if( pgraph == nullptr ) {
+      //Mouse click in empty space, so we create new script
+      SdDExpressionEdit edit( QString{}, mEditor );
+      if( edit.exec() ) {
+        //Create and insert new Script object
+        addPic( new SdGraphScript( edit.scriptGet(), p, sdGlobalProp->mTextProp ), QStringLiteral("Append new script")  );
+        }
+      }
+    else if( pgraph->getClass() == dctGraphScript ) {
+      //Mouse click on existing script, so we edit it
+      SdPtr<SdGraphScript> script(pgraph);
+      Q_ASSERT( script.isValid() );
+      SdDExpressionEdit edit( script->scriptGet(), mEditor );
+      if( edit.exec() ) {
+        //Update edited Script
+        script->scriptSet( edit.scriptGet(), mUndo );
+        setDirty();
+        update();
+        }
+      }
+    }
   }
 
 

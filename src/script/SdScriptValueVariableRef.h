@@ -2,17 +2,16 @@
 #define SDSCRIPTVALUEVARIABLEREF_H
 
 #include "SdScriptValueVariable.h"
-
-class SdGraphScript;
+#include "SdScriptRefMap.h"
 
 class SdScriptValueVariableRef : public SdScriptValueVariable
   {
-    SdGraphScript *mRef;
-    QString        mName;
-    QString        mDimension;
-    QString        mRow;
+    SdScriptRefMap *mRef;
+    QString         mName;
+    QString         mDimension;
+    QString         mRow;
   public:
-    SdScriptValueVariableRef( SdGraphScript *ref, const QString &name, const QString &dimension, const QString &row );
+    SdScriptValueVariableRef( SdScriptRefMap *ref, const QString &name, const QString &dimension, const QString &row );
 
     // SdScriptValue interface
   public:

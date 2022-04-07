@@ -21,6 +21,10 @@ class SdGraphScript : public SdGraphParam
     SdGraphScript();
     SdGraphScript( const QString &script, SdPoint org, const SdPropText &prp );
 
+    QString scriptGet() const { return mScript; }
+
+    void    scriptSet( const QString &scr, SdUndo *undo );
+
     void    varInit( const QString &key );
 
     QString varGet( const QString &key ) const;
@@ -46,7 +50,6 @@ class SdGraphScript : public SdGraphParam
     virtual void    setText(int index, QString sour, SdPropText &prop, QWidget *parent) override;
     virtual void selectByPoint(const SdPoint p, SdSelector *selector) override;
     virtual void selectByRect(const SdRect &r, SdSelector *selector) override;
-    virtual void select(SdSelector *selector) override;
     virtual void setLayerUsage() override;
     virtual bool isVisible() override;
     virtual SdRect getOverRect() const override;
