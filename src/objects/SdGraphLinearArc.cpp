@@ -148,7 +148,7 @@ int SdGraphLinearArc::behindCursor(SdPoint p)
   {
   if( isVisible() ) {
     if( p == mStart || p == mStop ) {
-      return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+      return getSelector() ? ELEM_SEL : ELEM_UNSEL;
       }
     }
   return 0;

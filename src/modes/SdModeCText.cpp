@@ -31,9 +31,13 @@ SdModeCText::SdModeCText(SdWEditorGraph *editor, SdProjectItem *obj) :
 void SdModeCText::drawStatic(SdContext *ctx)
   {
   mObject->forEach( dctAll, [=]( SdObject *obj ) {
-    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-    if( graph && graph != mPicAffected )
-      graph->draw( ctx );
+    SdPtr<SdGraph> graph(obj);
+    if( graph.isValid() ) {
+      if( obj == mPicAffected )
+        graph->drawExceptText( ctx, mIdAffected );
+      else
+        graph->draw( ctx );
+      }
     return true;
     });
   }

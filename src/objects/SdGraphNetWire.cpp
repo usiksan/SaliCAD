@@ -587,7 +587,7 @@ int SdGraphNetWire::behindCursor(SdPoint p)
   //Определить состояние объекта под курсором
   if( mProp.mLayer.isVisible() ) {
     if( p.isOnSegment( mA, mB) ) {
-      return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+      return getSelector() ? ELEM_SEL : ELEM_UNSEL;
       }
     }
   return 0;

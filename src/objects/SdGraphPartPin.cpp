@@ -364,11 +364,11 @@ void SdGraphPartPin::draw3d(QOpenGLFunctions_2_0 *f) const
 int SdGraphPartPin::behindCursor(SdPoint p)
   {
   //Test pin point
-  if( mPinProp.mLayer.isVisible() && mOrigin == p ) return getSelector() && mPinSelect ? SEL_ELEM : UNSEL_ELEM;
+  if( mPinProp.mLayer.isVisible() && mOrigin == p ) return getSelector() && mPinSelect ? ELEM_SEL : ELEM_UNSEL;
   //Test pin name
-  if( mNameProp.mLayer.isVisible() && mNameRect.isPointInside(p) ) return getSelector() && mNamSelect ? SEL_ELEM : UNSEL_ELEM;
+  if( mNameProp.mLayer.isVisible() && mNameRect.isPointInside(p) ) return getSelector() && mNamSelect ? ELEM_SEL : ELEM_UNSEL;
   //Test pin number
-  if( mNumberProp.mLayer.isVisible() && mNumberRect.isPointInside(p) ) return getSelector() && mNumSelect ? SEL_ELEM : UNSEL_ELEM;
+  if( mNumberProp.mLayer.isVisible() && mNumberRect.isPointInside(p) ) return getSelector() && mNumSelect ? ELEM_SEL : ELEM_UNSEL;
   return 0;
   }
 

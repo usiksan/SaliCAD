@@ -23,9 +23,9 @@ Description
 
 //Состояние объектов, соответствеено "Невыделено" и "Выделено"
 const int
-  OUTSIDE_ELEM = 0, //Вне какого-либо объект
-  UNSEL_ELEM   = 1, //Невыделенный объект
-  SEL_ELEM     = 2; //Выделенный объект
+  ELEM_OUTSIDE = 0, //Вне какого-либо объект
+  ELEM_UNSEL   = 1, //Невыделенный объект
+  ELEM_SEL     = 2; //Выделенный объект
 
 typedef QList<SdGraphPtr> SdGraphPtrTable;
 

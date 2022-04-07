@@ -265,10 +265,10 @@ int SdGraphTracedPolygon::behindCursor(SdPoint p)
     //For each segments of region test if point is on segment
     for( int i = 0; i < mRegion.count()-1; ++i )
       if( p.isOnSegment( mRegion.get(i), mRegion.get(i+1)) )
-        return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+        return getSelector() ? ELEM_SEL : ELEM_UNSEL;
     //And at end test last (closing) segment
     if( p.isOnSegment( mRegion.last(), mRegion.first() ) )
-      return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+      return getSelector() ? ELEM_SEL : ELEM_UNSEL;
     }
   return 0;
   }

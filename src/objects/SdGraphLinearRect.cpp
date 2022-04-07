@@ -219,7 +219,7 @@ int SdGraphLinearRect::behindCursor(SdPoint p)
         p.isOnSegment( rect.getBottomLeft(), rect.getBottomRight() ) ||
         p.isOnSegment( rect.getBottomRight(), rect.getTopRight() ) ||
         p.isOnSegment( rect.getTopRight(), rect.getTopLeft() ) ) {
-          return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+          return getSelector() ? ELEM_SEL : ELEM_UNSEL;
           }
     }
   return 0;

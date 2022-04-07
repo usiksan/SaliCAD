@@ -286,7 +286,7 @@ void SdModeSelect::enterPoint( SdPoint point )
     case smPaste : enterPaste( point ); break;
     default :
       //Проверить клавишу Shift, если не нажата то удалить предыдущее выделение
-      if( !(checkPoint(point) & SEL_ELEM) ) {
+      if( !(checkPoint(point) & ELEM_SEL) ) {
         if( !mShift ) unselect( false );
         //Пройтись по объектам и выделить точкой
         mObject->forEach( dctAll & mask(), [point,this] (SdObject *obj) ->bool {
@@ -504,8 +504,8 @@ int SdModeSelect::getCursor() const
   switch( getStep() ) {
     case smNoSelect :
     case smSelPresent :
-      if( mState & SEL_ELEM ) return mControl ? CUR_TAKE_COPY : CUR_TAKE;
-      else if( mState & UNSEL_ELEM ) return CUR_HAND;
+      if( mState & ELEM_SEL ) return mControl ? CUR_TAKE_COPY : CUR_TAKE;
+      else if( mState & ELEM_UNSEL ) return CUR_HAND;
       return CUR_POINT;
     case smSelRect    : return CUR_SEL;
     case smCopy       : return CUR_COPY;

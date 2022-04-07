@@ -74,14 +74,38 @@ class SdGraph : public SdObject
     virtual void   draw( SdContext *dc );
 
     //!
+    //! \brief drawExceptText Draws object in 2d space with exception textual component with textId
+    //! \param dc             Display context where drawing doing
+    //! \param textId         Text id which must not be drawn
+    //!
+    virtual void   drawExceptText( SdContext *dc, int textId );
+
+    //!
     //! \brief draw3d Draws object in 3d space
     //! \param f      3d draw functions with predefined 3d context
     //!
     virtual void   draw3d( QOpenGLFunctions_2_0 *f ) const;
 
     //Get object state behind cursor
+    //!
+    //! \brief behindCursor Return object status behind cursor, one of constant ELEM_xxx
+    //! \param p            Point of cursor position
+    //! \return             One of constant ELEM_xxx (outside any element, on selected element or on unselected element)
+    //!
     virtual int    behindCursor( SdPoint p );
+
+    //!
+    //! \brief behindText Return text id behind cursor of this element
+    //! \param p          Point of cursor position
+    //! \param org        Origin point of textual component
+    //! \param dest       Text of textual component
+    //! \param prop       Properties of textual component
+    //! \return           0 - if none textual components behind cursor or >0 (i.e. 1, 2 and so on) if any textual component
+    //!
+    //! Some elements may be have more than one textual component, for example pin. It has pin name and pin number
+    //! So, for enable edit such components separately we return with this function Id for particular component
     virtual int    behindText( SdPoint p, SdPoint &org, QString &dest, SdPropText &prop );
+
     virtual bool   getInfo( SdPoint p, QString &info, bool extInfo );
     //Find snap point on object
     virtual void   snapPoint( SdSnapInfo *snap );

@@ -69,7 +69,7 @@ int SdGraphLinearCircleFilled::behindCursor(SdPoint p)
   {
   if( isVisible() ) {
     if( p.isInsideCircle( mCenter, mRadius ) ) {
-      return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+      return getSelector() ? ELEM_SEL : ELEM_UNSEL;
       }
     }
   return 0;

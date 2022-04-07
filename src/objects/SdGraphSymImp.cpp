@@ -549,7 +549,7 @@ void SdGraphSymImp::draw(SdContext *dc)
 int SdGraphSymImp::behindCursor(SdPoint p)
   {
   if( mOverRect.isPointInside(p) )
-    return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+    return getSelector() ? ELEM_SEL : ELEM_UNSEL;
   return 0;
   }
 

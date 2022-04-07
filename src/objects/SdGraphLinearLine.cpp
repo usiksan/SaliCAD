@@ -199,7 +199,7 @@ int SdGraphLinearLine::behindCursor(SdPoint p)
   {
   //Определить состояние объекта под курсором
   if( isVisible() && SdSegment(a,b).isPointOn( p ) )
-    return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+    return getSelector() ? ELEM_SEL : ELEM_UNSEL;
   return 0;
   }
 

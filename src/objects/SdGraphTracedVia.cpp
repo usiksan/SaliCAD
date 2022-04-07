@@ -187,7 +187,7 @@ SdRect SdGraphTracedVia::getOverRect() const
 int SdGraphTracedVia::behindCursor(SdPoint p)
   {
   if( mPosition == p )
-    return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+    return getSelector() ? ELEM_SEL : ELEM_UNSEL;
   return 0;
   }
 

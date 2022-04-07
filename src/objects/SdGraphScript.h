@@ -2,14 +2,14 @@
 #define SDGRAPHSCRIPT_H
 
 #include "SdGraphParam.h"
-#include "script/SdScriptParamRef.h"
+#include "SdGraphScriptRefMap.h"
 #include "script/SdScriptProgramm.h"
 
 #define SD_TYPE_SCRIPT "Script"
 
 class SdGraphScript : public SdGraphParam
   {
-    SdScriptParamRefMap mRefMap;
+    SdGraphScriptRefMap mRefMap;
     QString             mScript;
     SdPoint             mOrigin;
     SdPropText          mProp;
@@ -24,12 +24,6 @@ class SdGraphScript : public SdGraphParam
     QString scriptGet() const { return mScript; }
 
     void    scriptSet( const QString &scr, SdUndo *undo );
-
-    void    varInit( const QString &key );
-
-    QString varGet( const QString &key ) const;
-
-    void    varSet( const QString &key, const QString &val );
 
     void    parse();
 

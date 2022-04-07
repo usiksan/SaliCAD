@@ -185,9 +185,9 @@ int SdGraphLinearRegion::behindCursor(SdPoint p)
   if( isVisible() ) {
     for( int i = 0; i < mList.count()-1; ++i )
       if( p.isOnSegment( mList.get(i), mList.get(i+1)) )
-        return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+        return getSelector() ? ELEM_SEL : ELEM_UNSEL;
     if( p.isOnSegment( mList.last(), mList.first() ) )
-      return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+      return getSelector() ? ELEM_SEL : ELEM_UNSEL;
     }
   return 0;
   }

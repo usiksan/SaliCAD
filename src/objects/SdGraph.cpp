@@ -117,6 +117,19 @@ void SdGraph::draw(SdContext *dc)
 
 
 
+//!
+//! \brief drawExceptText Draws object in 2d space with exception textual component with textId
+//! \param dc             Display context where drawing doing
+//! \param textId         Text id which must not be drawn
+//!
+void SdGraph::drawExceptText(SdContext *dc, int textId)
+  {
+  Q_UNUSED(dc)
+  Q_UNUSED(textId)
+  }
+
+
+
 
 void SdGraph::draw3d(QOpenGLFunctions_2_0 *f) const
   {

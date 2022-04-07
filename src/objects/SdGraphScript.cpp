@@ -193,7 +193,7 @@ int SdGraphScript::behindCursor(SdPoint p)
   {
   if( mProp.mLayer.isEdited() ) {
     if( mOverRect.isPointInside(p) )
-      return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+      return getSelector() ? ELEM_SEL : ELEM_UNSEL;
     }
   return 0;
   }

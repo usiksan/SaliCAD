@@ -348,7 +348,7 @@ int SdGraphTracedRoad::behindCursor(SdPoint p)
   {
   //Определить состояние объекта под курсором
   if( isVisible() && mSegment.isPointOn( p ) )
-    return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+    return getSelector() ? ELEM_SEL : ELEM_UNSEL;
   return 0;
   }
 

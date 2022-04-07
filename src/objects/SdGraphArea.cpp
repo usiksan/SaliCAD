@@ -272,9 +272,9 @@ int SdGraphArea::behindCursor(SdPoint p)
   if( isVisible() ) {
     for( int i = 0; i < mRegion.count()-1; ++i )
       if( p.isOnSegment( mRegion.get(i), mRegion.get(i+1) ) )
-        return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+        return getSelector() ? ELEM_SEL : ELEM_UNSEL;
     if( p.isOnSegment( mRegion.last(), mRegion.first() ) )
-      return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+      return getSelector() ? ELEM_SEL : ELEM_UNSEL;
     }
   return 0;
   }

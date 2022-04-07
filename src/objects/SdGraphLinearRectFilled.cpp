@@ -98,7 +98,7 @@ int SdGraphLinearRectFilled::behindCursor(SdPoint p)
   if( isVisible() ) {
     SdRect rect(a,b);
     if( rect.contains(p,false) ) {
-      return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+      return getSelector() ? ELEM_SEL : ELEM_UNSEL;
       }
     }
   return 0;

@@ -159,7 +159,7 @@ void SdGraphNetName::draw(SdContext *dc)
 int SdGraphNetName::behindCursor(SdPoint p)
   {
   if( mProp.mLayer.isEdited() )
-    if( mOver.isPointInside(p) ) return getSelector() ? SEL_ELEM : UNSEL_ELEM;
+    if( mOver.isPointInside(p) ) return getSelector() ? ELEM_SEL : ELEM_UNSEL;
   return 0;
   }
 
