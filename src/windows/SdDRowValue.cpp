@@ -48,8 +48,8 @@ const SdValueModifier sdValueModifierHenry[] = {
 
 const SdValueModifier sdValueModifierAmper[] = {
   { "nA",  0.000000001, 0.000001, 0.000000001 },
-  { "uA",  0.000001, 0.01, 0.000001 },
-  { "mA",  0.01, 1.0, 0.001 },
+  { "uA",  0.000001, 0.001, 0.000001 },
+  { "mA",  0.001, 1.0, 0.001 },
   { "A",   1.0, 1000000.0, 1.0 },
   { nullptr, 0.0, 0.0, 0.0 }
 };

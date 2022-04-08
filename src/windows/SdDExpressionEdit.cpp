@@ -151,7 +151,6 @@ void SdDExpressionEdit::parse()
     //Set flag that programm text changed
     mDirty = true;
     SdScriptParserCalculator parser( mRefMap, mParamWidget );
-    mRefMap->parseBegin();
     mProgramm = parser.parse( mTextEdit->toPlainText() );
     mError->setText( parser.error() );
     mRefMap->parseEnd();

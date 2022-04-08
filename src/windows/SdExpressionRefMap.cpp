@@ -9,12 +9,6 @@ SdExpressionRefMap::SdExpressionRefMap(QTableWidget *table) :
 
 
 
-void SdExpressionRefMap::parseBegin()
-  {
-  }
-
-
-
 
 void SdExpressionRefMap::parseEnd()
   {

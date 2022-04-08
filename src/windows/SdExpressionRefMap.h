@@ -13,10 +13,9 @@ class SdExpressionRefMap : public SdScriptRefMap
   public:
     SdExpressionRefMap( QTableWidget *table );
 
+    void parseEnd();
     // SdScriptRefMap interface
   public:
-    virtual void parseBegin() override;
-    virtual void parseEnd() override;
     virtual void varInit(const QString &key) override;
     virtual QString varGet(const QString &key) const override;
     virtual void varSet(const QString &key, const QString &val) override;

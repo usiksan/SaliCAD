@@ -10,7 +10,9 @@
 
 SdModeCScript::SdModeCScript(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdMode( editor, obj ),
-  mPropText(nullptr)
+  mPropText(nullptr),
+  mEditScript(nullptr),
+  mLinkItem(-1)
   {
 
   }
@@ -50,6 +52,11 @@ void SdModeCScript::drawStatic(SdContext *ctx)
 
 void SdModeCScript::drawDynamic(SdContext *ctx)
   {
+  if( mEditScript != nullptr ) {
+    //Draw selection rectangle over linking item
+    ctx->setPen(0,sdEnvir->getSysColor(scEnter), dltDotted );
+    ctx->rect( mLinkOver );
+    }
   }
 
 
@@ -112,17 +119,53 @@ void SdModeCScript::enterPoint( SdPoint p )
         }
       }
     else if( pgraph->getClass() == dctGraphScript ) {
-      //Mouse click on existing script, so we edit it
+      //Mouse click on existing script, so we edit it or link with other component
       SdPtr<SdGraphScript> script(pgraph);
       Q_ASSERT( script.isValid() );
-      SdDExpressionEdit edit( script->scriptGet(), mEditor );
-      if( edit.exec() ) {
-        //Update edited Script
-        script->scriptSet( edit.scriptGet(), mUndo );
-        setDirty();
+      mLinkItem = script->tryLink( p, mLinkOver );
+      if( mLinkItem >= 0 ) {
+        //Will be link with other component
+        mEditScript = script.ptr();
+        setStep(sLink);
         update();
         }
+      else {
+        //Edit script
+        SdDExpressionEdit edit( script->scriptGet(), mEditor );
+        if( edit.exec() ) {
+          //Update edited Script
+          script->scriptSet( edit.scriptGet(), mUndo );
+          setDirtyCashe();
+          setDirty();
+          update();
+          }
+        }
       }
+    }
+  else if( getStep() == sLink ) {
+    //We find component to which will be linked currently editing script item
+    SdGraphParam *pgraph = nullptr;
+    mObject->forEach( dctSymImp | dctGraphScript, [&pgraph,p]( SdObject *obj ) {
+      SdPtr<SdGraphParam> graph(obj);
+      if( graph.isValid() && graph->behindCursor(p) ) {
+        pgraph = graph.ptr();
+        return false;
+        }
+      return true;
+      });
+
+    if( pgraph == nullptr ) {
+      //Mouse click in empty space, delete currently existing linking
+      mEditScript->link( mLinkItem, nullptr, nullptr, QString{} );
+      }
+    else {
+      mEditScript->link( mLinkItem, mObject, pgraph, QString("value") );
+      }
+    mEditScript = nullptr;
+    setStep( sPlace );
+    setDirtyCashe();
+    setDirty();
+    update();
     }
   }
 

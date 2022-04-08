@@ -7,18 +7,64 @@ SdGraphScriptRefMap::SdGraphScriptRefMap()
 
 
 
-SdRect SdGraphScriptRefMap::draw(SdContext *dc)
+void SdGraphScriptRefMap::setText(int index, QString sour)
   {
-  drawExcept( dc, -1 );
-  //Collect Rectangle
-
+  if( index >= 0 && index < mRefList.count() )
+    mRefList[index].valueSet( sour );
   }
 
 
 
-void SdGraphScriptRefMap::parseBegin()
+int SdGraphScriptRefMap::tryLink(SdPoint p, SdRect &overRect) const
   {
+  for( int i = 0; i < mRefList.count(); i++ )
+    if( mRefList.at(i).overName().isPointInside(p) ) {
+      overRect = mRefList.at(i).overName();
+      return i;
+      }
+  return -1;
   }
+
+
+
+void SdGraphScriptRefMap::link(int index, SdContainer *owner, SdGraphParam *ref, const QString paramName)
+  {
+  if( index >= 0 && index < mRefList.count() )
+    mRefList[index].assign( owner, ref, paramName );
+  }
+
+
+
+
+void SdGraphScriptRefMap::drawExcept(SdPoint p, const SdPropText &prop, SdContext *dc, int exceptIndex)
+  {
+  //Draw ref map as table like "refName = value"
+  mOverRect = SdRect( p, p );
+  for( int i = 0; i < mRefList.count(); i++ ) {
+    mRefList[i].draw( p, prop, dc, i != exceptIndex );
+    p.ry() += mRefList.at(i).overName().height() + 5;
+    mOverRect.grow( mRefList.at(i).overName() );
+    mOverRect.grow( mRefList.at(i).overValue() );
+    }
+  }
+
+
+int SdGraphScriptRefMap::behindText(SdPoint p, SdPoint &org, QString &dest)
+  {
+  for( int i = 0; i < mRefList.count(); i++ )
+    if( mRefList.at(i).overValue().isPointInside(p) ) {
+      org = mRefList.at(i).originValue();
+      dest = mRefList.at(i).valueGet();
+      return i;
+      }
+  return -1;
+  }
+
+
+
+
+
+
 
 
 
@@ -36,6 +82,23 @@ void SdGraphScriptRefMap::parseEnd()
         break;
         }
     }
+
+  //Refill map to speeding up variable access
+  mRefMap.clear();
+  for( int i = 0; i < mRefList.count(); i++ )
+    mRefMap.insert( mRefList.at(i).name(), i );
+  }
+
+
+
+void SdGraphScriptRefMap::jsonWrite(SdJsonWriter &js) const
+  {
+  js.jsonList<SdGraphScriptRef>( "list", mRefList );
+  }
+
+void SdGraphScriptRefMap::jsonRead(SdJsonReader &js)
+  {
+  js.jsonList<SdGraphScriptRef>( "list", mRefList );
 
   //Refill map to speeding up variable access
   mRefMap.clear();

@@ -1,6 +1,7 @@
 #include "SdGraphScript.h"
 #include "SdContext.h"
 #include "SdSelector.h"
+#include "script/SdScriptParserCalculator.h"
 
 SdGraphScript::SdGraphScript()
   {
@@ -15,7 +16,8 @@ SdGraphScript::SdGraphScript(const QString &script, SdPoint org, const SdPropTex
   mOrigin(org),
   mProp(prp)
   {
-
+  ajustProp();
+  parse();
   }
 
 
@@ -33,7 +35,34 @@ void SdGraphScript::scriptSet(const QString &scr, SdUndo *undo)
 
 void SdGraphScript::parse()
   {
+  SdScriptParserCalculator parser( &mRefMap, nullptr );
+  mProgramm = parser.parse( mScript );
+  mRefMap.parseEnd();
+  mError = parser.error();
+  }
 
+
+
+
+void SdGraphScript::calculate()
+  {
+  if( mProgramm ) {
+    mProgramm->execute();
+    //mProgramm->execute();
+    }
+  }
+
+int SdGraphScript::tryLink(SdPoint p, SdRect &overRect) const
+  {
+  return mRefMap.tryLink( p, overRect );
+  }
+
+
+
+void SdGraphScript::link(int index, SdContainer *owner, SdGraphParam *ref, const QString paramName)
+  {
+  mRefMap.link( index, owner, ref, paramName );
+  calculate();
   }
 
 
@@ -72,7 +101,7 @@ void SdGraphScript::writeObject(QJsonObject &obj) const
   SdJsonWriter js( obj );
   js.jsonValue<SdPropText>( "prop", mProp );
   js.jsonString( "script", mScript );
-  js.jsonMap( "ref", mRefMap );
+  js.jsonObject<SdGraphScriptRefMap>( "ref", mRefMap );
   js.jsonPoint( "origin", mOrigin );
   js.jsonObject<SdRect>( "over", mOverRect );
   }
@@ -87,9 +116,10 @@ void SdGraphScript::readObject(SdObjectMap *map, const QJsonObject obj)
   SdJsonReader js( obj, map );
   js.jsonValue<SdPropText>( "prop", mProp );
   js.jsonString( "script", mScript );
-  js.jsonMap( "ref", mRefMap );
+  js.jsonObject<SdGraphScriptRefMap>( "ref", mRefMap );
   js.jsonPoint( "origin", mOrigin );
   js.jsonObject<SdRect>( "over", mOverRect );
+  parse();
   }
 
 
@@ -115,6 +145,7 @@ void SdGraphScript::move(SdPoint offset)
 void SdGraphScript::setProp(SdPropSelected &prop)
   {
   mProp = prop.mTextProp;
+  ajustProp();
   }
 
 
@@ -130,6 +161,11 @@ void SdGraphScript::getProp(SdPropSelected &prop)
 
 void SdGraphScript::setText(int index, QString sour, SdPropText &prop, QWidget *parent)
   {
+  Q_UNUSED(parent)
+  mProp = prop;
+  ajustProp();
+  mRefMap.setText( index - 1, sour );
+  calculate();
   }
 
 
@@ -184,7 +220,19 @@ SdRect SdGraphScript::getOverRect() const
 
 void SdGraphScript::draw(SdContext *dc)
   {
-  dc->text( mOrigin, mOverRect, mScript, mProp );
+  if( mError.isEmpty() ) {
+    mRefMap.drawExcept( mOrigin, mProp, dc, -1 );
+    mOverRect = mRefMap.getOverRect();
+    }
+  else
+    dc->text( mOrigin, mOverRect, QStringLiteral("Error: ") + mError, mProp );
+  }
+
+
+
+void SdGraphScript::drawExceptText(SdContext *dc, int textId)
+  {
+  mRefMap.drawExcept( mOrigin, mProp, dc, textId - 1 );
   }
 
 
@@ -203,10 +251,18 @@ int SdGraphScript::behindCursor(SdPoint p)
 int SdGraphScript::behindText(SdPoint p, SdPoint &org, QString &dest, SdPropText &prop)
   {
   if( mProp.mLayer.isEdited() && mOverRect.isPointInside(p) ) {
-    org  = mOrigin;
-    dest = mScript;
     prop = mProp;
-    return 1;
+    return mRefMap.behindText( p, org, dest ) + 1;
     }
   return 0;
+  }
+
+
+
+
+void SdGraphScript::ajustProp()
+  {
+  mProp.mDir    = da0;
+  mProp.mMirror = 0;
+  mProp.mHorz   = dhjLeft;
   }

@@ -9,10 +9,6 @@ class SdScriptRefMap
     SdScriptRefMap() {}
     virtual ~SdScriptRefMap() {}
 
-    virtual void    parseBegin() = 0;
-
-    virtual void    parseEnd() = 0;
-
     virtual void    varInit( const QString &key ) = 0;
 
     virtual QString varGet( const QString &key ) const = 0;

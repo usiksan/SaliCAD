@@ -3,9 +3,14 @@
 
 #include "SdMode.h"
 
+class SdGraphScript;
+
 class SdModeCScript : public SdMode
   {
-    SdPropText *mPropText;     //!< Text properties
+    SdPropText    *mPropText;   //!< Text properties
+    SdGraphScript *mEditScript; //!< Current editing script
+    SdRect         mLinkOver;   //!< Link item overRect
+    int            mLinkItem;   //!< Link index
     const int sPlace = 0, sLink = 1, sOver = 2;
   public:
     SdModeCScript( SdWEditorGraph *editor, SdProjectItem *obj );
