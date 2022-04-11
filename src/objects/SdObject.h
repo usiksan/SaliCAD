@@ -34,15 +34,21 @@ class QWidget;
 typedef QString SdId;
 typedef QString SdUid;
 
+using SdLuidMap = QMap<int,int>;
+
 class SdObject
   {
-    SdContainer *mParent;  //!< Parent object
-    bool         mDeleted; //!< Flag check if object deleted. Deleted objects not save
+    SdContainer *mParent;     //!< Parent object
+    int          mLuid;       //!< Local unical ident. Used only in session and not saved with object
+    bool         mDeleted;    //!< Flag check if object deleted. Deleted objects not save
+
+    static int   mGlobalLuid; //!< Global counter for in session luid generation
   public:
     SdObject();
     virtual ~SdObject() {}
 
     //Information
+            int       luid() const { return mLuid; }
             QString   getId() const;
     virtual QString   getType() const = 0;
     virtual SdClass   getClass() const = 0;

@@ -53,11 +53,13 @@ Description
 #include <QJsonValue>
 #include <QDebug>
 
+int SdObject::mGlobalLuid;
+
 SdObject::SdObject() :
   mParent(nullptr),
   mDeleted(false)
   {
-
+  mLuid = mGlobalLuid++;
   }
 
 
