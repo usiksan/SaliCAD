@@ -1,0 +1,581 @@
+{
+    "ChildList": [
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": 750,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": 4750,
+                        "y": -3250
+                    },
+                    "id": "557966eee550",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 2000,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": 2000,
+                        "y": -3250
+                    },
+                    "id": "557965779c00",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 3500,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": -3250
+                    },
+                    "id": "557965757ab0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 750,
+                        "y": 0
+                    },
+                    "id": "557966fb9070",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "IA",
+                    "NamePos": {
+                        "x": 1375,
+                        "y": 0
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 0,
+                        "y": 250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "557965b61c60",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": -500
+                    },
+                    "b": {
+                        "x": 750,
+                        "y": -500
+                    },
+                    "id": "557966f20690",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "IB",
+                    "NamePos": {
+                        "x": 1375,
+                        "y": -500
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 0,
+                        "y": -250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 0,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 0,
+                        "y": -500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "557965b5e750",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 5500,
+                        "y": 0
+                    },
+                    "id": "557966fd7cf0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "OA",
+                    "NamePos": {
+                        "x": 4125,
+                        "y": 0
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 5500,
+                        "y": 250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5500,
+                        "y": 0
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "7f7c8c013830",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -500
+                    },
+                    "b": {
+                        "x": 5500,
+                        "y": -500
+                    },
+                    "id": "557966f23820",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "OB",
+                    "NamePos": {
+                        "x": 4125,
+                        "y": -500
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 5500,
+                        "y": -250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5500,
+                        "y": -500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "7f7c8c013750",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -1000
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": -1000
+                    },
+                    "id": "557966ef8260",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -1500
+                    },
+                    "b": {
+                        "x": 5500,
+                        "y": -1500
+                    },
+                    "id": "557966eec4a0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "VCC1",
+                    "NamePos": {
+                        "x": 4125,
+                        "y": -1500
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 5500,
+                        "y": -1250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5500,
+                        "y": -1500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "557966fb81d0",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -2000
+                    },
+                    "b": {
+                        "x": 5500,
+                        "y": -2000
+                    },
+                    "id": "557966f22190",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "VCC2",
+                    "NamePos": {
+                        "x": 4125,
+                        "y": -2000
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 5500,
+                        "y": -1750
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5500,
+                        "y": -2000
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "7f7c8c0130a0",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -2500
+                    },
+                    "b": {
+                        "x": 5500,
+                        "y": -2500
+                    },
+                    "id": "557966f22fb0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "GND1",
+                    "NamePos": {
+                        "x": 4125,
+                        "y": -2500
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 5500,
+                        "y": -2250
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5500,
+                        "y": -2500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "557966e5d150",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 4750,
+                        "y": -3000
+                    },
+                    "b": {
+                        "x": 5500,
+                        "y": -3000
+                    },
+                    "id": "557966e72330",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "GND2",
+                    "NamePos": {
+                        "x": 4125,
+                        "y": -3000
+                    },
+                    "NameTextDir": 0,
+                    "NameTextFont": 0,
+                    "NameTextHorz": 1,
+                    "NameTextLayer": "PinName",
+                    "NameTextMirror": 0,
+                    "NameTextSize": 350,
+                    "NameTextVert": 1,
+                    "NumberPos": {
+                        "x": 5500,
+                        "y": -2750
+                    },
+                    "NumberTextDir": 0,
+                    "NumberTextFont": 0,
+                    "NumberTextHorz": 2,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextMirror": 0,
+                    "NumberTextSize": 350,
+                    "NumberTextVert": 1,
+                    "Origin": {
+                        "x": 5500,
+                        "y": -3000
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "557966ecdda0",
+                    "type": "SymPin"
+                },
+                {
+                    "Origin": {
+                        "x": 2750,
+                        "y": 500
+                    },
+                    "id": "557966ef3b00",
+                    "over": {
+                        "b": 670,
+                        "r": 3048,
+                        "x": 2451,
+                        "y": 324
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Ident",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 2750,
+                        "y": -3500
+                    },
+                    "id": "557966f20220",
+                    "over": {
+                        "b": -3329,
+                        "r": 3274,
+                        "x": 2228,
+                        "y": -3675
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Value",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "{value}",
+                    "type": "Value"
+                },
+                {
+                    "Origin": {
+                        "x": 2750,
+                        "y": 0
+                    },
+                    "id": "557966eecbf0",
+                    "over": {
+                        "b": 170,
+                        "r": 3114,
+                        "x": 2389,
+                        "y": -176
+                    },
+                    "propTextDir": 0,
+                    "propTextFont": 0,
+                    "propTextHorz": 1,
+                    "propTextLayer": "Component",
+                    "propTextMirror": 0,
+                    "propTextSize": 350,
+                    "propTextVert": 1,
+                    "text": "DRV",
+                    "type": "Text"
+                }
+            ],
+            "Created": 135180149,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "category": "{uu.a.a.d.b"
+            },
+            "Title": "L9110 DC-motor driver 12V",
+            "id": "557966e712c0",
+            "type": "Symbol"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "GND1": "5",
+                        "GND2": "8",
+                        "IA": "6",
+                        "IB": "7",
+                        "OA": "1",
+                        "OB": "4",
+                        "VCC1": "2",
+                        "VCC2": "3"
+                    },
+                    "SymbolId": "Symbol\rL9110 DC-motor driver 12V\rsalicad",
+                    "SymbolTitle": "L9110 DC-motor driver 12V (salicad)",
+                    "id": "5579662314c0",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rsoic-8 narrow\rsalicad",
+                    "PartTitle": "soic-8 narrow (salicad)",
+                    "id": "5579673b53f0",
+                    "type": "PartVariant"
+                }
+            ],
+            "Created": 135180342,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "bom": "<value>",
+                "category": "{uu.a.a.d.b",
+                "manufacturer": "HK Shan Hai Group Limited",
+                "prefix": "DA",
+                "value": "L9110S"
+            },
+            "Title": "L9110S DC-motor driver 12V",
+            "id": "557966ef2200",
+            "type": "Comp"
+        }
+    ],
+    "Parametrs": {
+    },
+    "id": "5579660e61c0",
+    "type": "Project"
+}
