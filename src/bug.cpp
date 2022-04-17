@@ -1,5 +1,5 @@
 ﻿
-//B079 bugs
+//B080 bugs
 //F001 fatal
 //C001 critical
 //D094 do
@@ -38,6 +38,8 @@
 //TODO B073 In 3d editor object not fit when view starts
 
 //TODO B074 In 3d masters object not drawn in preview
+
+//TODO B079 When update component project is broken
 
 //===================================================================================
 //There are no need:

@@ -936,6 +936,7 @@ bool SdGraphSymImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
       if( dsym  ) dsym->autoDelete( undo );
       if( dpart ) dpart->autoDelete( undo );
 
+      //At this point mComponent, mSymbol and mPart will be replaced with project owner instances
       attach(undo);
       //Restore part implement properties
       if( mPartImp ) {
