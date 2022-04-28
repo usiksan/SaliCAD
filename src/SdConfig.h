@@ -214,7 +214,7 @@ History
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
-#define SD_DEFAULT_REPO              "repo.salicad.com/"
+#define SD_DEFAULT_REPO              "cad.salilab.com/repo/"
 #define SD_UPGRADE_WEB               "http:/salicad.salilab.com/downloads/"
 
 
