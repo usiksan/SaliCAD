@@ -1,3 +1,22 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Script language is C-style hi-level language for programming 3d models, 2d parametric graphics and
+  schematic calculations.
+
+  SdExpressionRefMap derived class from SdScriptRefMap represents map which associates key and value.
+  Key is name of variable or param.  Value is value of variable or param.
+
+  SdExpressionRefMap represents map for schematic calculations
+*/
 #include "SdExpressionRefMap.h"
 
 SdExpressionRefMap::SdExpressionRefMap(QTableWidget *table) :
@@ -10,6 +29,9 @@ SdExpressionRefMap::SdExpressionRefMap(QTableWidget *table) :
 
 
 
+//!
+//! \brief parseEnd Call at end of parsing to reorganize visual table of variables
+//!
 void SdExpressionRefMap::parseEnd()
   {
   //In refMap leave variables which must be deleted from visual table
@@ -52,6 +74,11 @@ void SdExpressionRefMap::parseEnd()
 
 
 
+//!
+//! \brief varInit Appends key into map
+//! \param key     Appended key
+//!
+//! Overrided function. It append key to mRefList if it yet appended
 void SdExpressionRefMap::varInit(const QString &key)
   {
   if( mRefMap.contains(key) ) {
@@ -67,6 +94,12 @@ void SdExpressionRefMap::varInit(const QString &key)
 
 
 
+//!
+//! \brief varGet Returns value associated with this key
+//! \param key    Key for which value must be returned
+//! \return       Value associated with this key
+//!
+//! Overrided function. It extract value of key from visual table
 QString SdExpressionRefMap::varGet(const QString &key) const
   {
   if( mRefMap.contains(key) )
@@ -77,6 +110,13 @@ QString SdExpressionRefMap::varGet(const QString &key) const
 
 
 
+//!
+//! \brief varSet Replace previously value associated with key with new value
+//! \param key    Key for which value must be replaced
+//! \param val    New value associated with key
+//!
+//! Overrided function. It replace value associated with key with new value
+//! in visual table
 void SdExpressionRefMap::varSet(const QString &key, const QString &val)
   {
   if( mRefMap.contains(key) )

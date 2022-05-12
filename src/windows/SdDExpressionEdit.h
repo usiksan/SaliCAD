@@ -36,8 +36,6 @@ class SdDExpressionEdit : public QDialog
     SdWScriptEditor      *mTextEdit;    //!< Source code editor with highlight
     SdWScriptHighlighter *mHighlighter; //!< Highlight for code editor
     QLineEdit            *mError;       //!< Source code parsing error if any
-    //QLineEdit            *mTitle;       //!< Source code object title (shown as master name)
-    //QLineEdit            *mDescription; //!< Source code short description (shown as code description)
     QTableWidget         *mParamWidget; //!< Table with param and result list for this programm. Table filled automatic when parsing source code
     SdWHelp              *mHelp;        //!< Help widget with help on source code editor and its predefined functions
     bool                  mDirty;       //!< true when source code changed

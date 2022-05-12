@@ -122,7 +122,7 @@ SdDExpressionEdit::SdDExpressionEdit(const QString &script, QWidget *parent) :
     }
 
   //Show beginner guide for scripting language
-  mHelp->helpTopic( QStringLiteral("script.htm") );
+  mHelp->helpTopic( QStringLiteral("scriptSch.htm") );
   mDirty = false;
   }
 

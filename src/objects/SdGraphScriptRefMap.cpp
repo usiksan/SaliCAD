@@ -42,7 +42,7 @@ void SdGraphScriptRefMap::drawExcept(SdPoint p, const SdPropText &prop, SdContex
   mOverRect = SdRect( p, p );
   for( int i = 0; i < mRefList.count(); i++ ) {
     mRefList[i].draw( p, prop, dc, i != exceptIndex );
-    p.ry() += mRefList.at(i).overName().height() + 5;
+    p.ry() -= mRefList.at(i).overName().height() + 5;
     mOverRect.grow( mRefList.at(i).overName() );
     mOverRect.grow( mRefList.at(i).overValue() );
     }
