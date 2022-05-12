@@ -5,21 +5,23 @@
   </head>
   <body>
     <h1 align="center">ref</h1>
-    <p><a href="3dModel.htm">Contents</a>=&gt;<a href="scriptSchFunctions.htm">Schematic script functions</a>=&gt;ref</p>
+    <p><a href="3dModel.htm">Contents</a>=&gt;<a href="scriptSchFunctions.htm">Schematic
+        script functions</a>=&gt;ref</p>
     <hr>
     <h3>Prototype</h3>
-    <p><a href="scriptSchTypeFloat.htm">Float</a> ref( <a href="3dTypeFloat.htm">Float</a>
-      r, <a href="3dTypeFloat.htm">Float</a> g, <a href="3dTypeFloat.htm">Float</a>
-      b, <a href="3dTypeFloat.htm">Float</a> a ) </p>
+    <p><a href="scriptSchTypeFloat.htm">Float</a> ref( <a href="scriptSchTypeString.htm">String</a>
+      dim, <a href="scriptSchTypeString.htm">String</a> row ) </p>
     <h3>Description</h3>
-    <p> This function builds <a href="3dTypeColor.htm">Color</a> from rgb
-      components and alpha channel. All values from 0 to 1.</p>
+    <p> This function adds a variable to the visual table.</p>
     <h3>Parameters</h3>
     <ul>
-      <li>r - red component intensity of color</li>
-      <li>g - green&nbsp; component intensity of color</li>
-      <li>b - blue&nbsp; component intensity of color</li>
-      <li>a - alpha channel of color</li>
+      <li>dim - dimension for value of this variable. For example "Om", "A",
+        "V", "Hz" and so on</li>
+      <li>row - one of standard row for adjusting result value. Row must be one
+        of the values "", "E3", "E6", "E12", "E24", "E48", "E96", "E192". If row
+        equals to "" (i.e. empty string) than adjusting not performed</li>
     </ul>
+    <h3>Example</h3>
+    <p> r = ref( "Om", "E24" )</p>
   </body>
 </html>

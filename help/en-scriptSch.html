@@ -1,26 +1,26 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>SaliCAD Скрипт для схем</title>
+    <title>SaliCAD Schematic script</title>
   </head>
   <body>
-    <h1 align="center">Скрипт для схем</h1>
-    <p><a href="contents.htm">Содержание</a>=&gt;Скрипт для схем</p>
+    <h1 align="center">Schematic script</h1>
+    <p><a href="contents.htm">Contents</a>=&gt;Schematic script</p>
     <hr>
-    <p>Скрипт для схем служит для проведения вычислений непосредственно в схеме.
-      Значения, полученные в процессе вычисления могут использоваться для
-      настройки компонентов, что, в свою очередь, позволяет автоматически
-      подстроить схему под вычисленные значения.</p>
-    <p>r = ref( "Om", "" )<br>
-      u = ref( "V", "" )<br>
-      i = ref( "A", "" )<br>
+    <p>The schema script is used to perform calculations directly in the schema.
+      The values obtained during the calculation can be used to configure
+      components, which, in turn, allows you to automatically adjust the scheme
+      to the calculated values.</p>
+    <p>r = <a href="scriptFunRef.htm">ref</a>( "Om", "" )<br>
+      u = <a href="scriptFunRef.htm">ref</a>( "V", "" )<br>
+      i = <a href="scriptFunRef.htm">ref</a>( "A", "" )<br>
       i = u / r</p>
-    <p>При этом таблица значений примет вид:</p>
+    <p>In this case, the table of values will take the form:</p>
     <table border="1">
       <tbody>
         <tr>
-          <td>Имя</td>
-          <td>Значение</td>
+          <td>Name</td>
+          <td>Value</td>
         </tr>
         <tr>
           <td>r</td>
@@ -39,13 +39,13 @@
         </tr>
       </tbody>
     </table>
-    <p>Если заполнить поля r и u значениями, то значение поля i будет вычислено
-      автоматически: </p>
+    <p>If you fill in the r and u fields with values, the value of the i field
+      will be calculated automatically:</p>
     <table border="1">
       <tbody>
         <tr>
-          <td>Имя</td>
-          <td>Значение</td>
+          <td>Name</td>
+          <td>Value</td>
         </tr>
         <tr>
           <td>r</td>
@@ -61,10 +61,10 @@
         </tr>
       </tbody>
     </table>
-    <p>Функция ref добавляет переменную в визуальную таблицу. Переменные без
-      данной функции в визуальную таблицу не попадают, соответственно, увидеть
-      их значение нельзя. Такие переменные можно использовать для промежуточных
-      значений при вычислении.<br>
+    <p>The <a href="scriptFunRef.htm">ref</a> function adds a variable to the
+      visual table. Variables without this function do not get into the visual
+      table, respectively, it is impossible to see their value. Such variables
+      can be used for intermediate values in the calculation.<br>
     </p>
   </body>
 </html>
