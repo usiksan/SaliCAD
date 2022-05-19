@@ -13,6 +13,7 @@ Description
 */
 
 #include "SdObject.h"
+#include "SdCopyMap.h"
 #include "SdContainer.h"
 #include "SdProject.h"
 #include "SdObjectFactory.h"
@@ -53,13 +54,11 @@ Description
 #include <QJsonValue>
 #include <QDebug>
 
-int SdObject::mGlobalLuid;
 
 SdObject::SdObject() :
   mParent(nullptr),
   mDeleted(false)
   {
-  mLuid = mGlobalLuid++;
   }
 
 
@@ -156,22 +155,50 @@ bool SdObject::upgradeProjectItem(SdUndo *undo, QWidget *parent)
 
 
 
-SdObject *SdObject::copy() const
+
+
+//!
+//! \brief copy    Returns copy of this object. Copy is not exact but modified with copyMap
+//! \param copyMap Structure for mapping copying substitutes
+//! \param next    Make simple or next copy. Next copy available not for all objects.
+//!                For example: pin name A23 with next copy return A24
+//! \return        Copy of this object
+//!
+SdObjectPtr SdObject::copy(SdCopyMap &copyMap, bool next) const
   {
+  //Build object of current type
   SdObject *obj = build( getType() );
-  obj->cloneFrom( this );
+  //Make it as clone of this object
+  obj->cloneFrom( this, copyMap, next );
+  //Return cloned object
   return obj;
   }
 
 
 
-void SdObject::cloneFrom( const SdObject *src )
+
+
+//!
+//! \brief cloneFrom Clone contents object except mParent field. This must be overrided in all subclasses to
+//!                  generate right copy of object
+//!                  Cloned object has no parent
+//! \param src       Source of object from which copy must be made
+//! \param copyMap   Structure for mapping copying substitutes
+//! \param next      Make simple or next copy. Next copy available not for all objects.
+//!                  For example: pin name A23 with next copy return A24
+//!
+void SdObject::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
   {
+  Q_UNUSED(copyMap)
+  Q_UNUSED(next)
   if( getType() != src->getType() ) {
     qDebug() << Q_FUNC_INFO << "Illegal clone source";
     throw( QString("Illegal clone source") );
     }
   }
+
+
+
 
 
 

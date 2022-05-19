@@ -793,11 +793,18 @@ void SdGraphSymImp::detach(SdUndo *undo)
 
 
 
-void SdGraphSymImp::cloneFrom(const SdObject *src)
+//!
+//! \brief cloneFrom Overrided function. We copy object from source
+//! \param src       Source of object from which copy must be made
+//! \param copyMap   Structure for mapping copying substitutes
+//! \param next      Make simple or next copy. Next copy available not for all objects.
+//!                  For example: pin name A23 with next copy return A24
+//!
+void SdGraphSymImp::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
   {
-  SdGraphParam::cloneFrom( src );
-  const SdGraphSymImp *imp = dynamic_cast<const SdGraphSymImp*>( src );
-  Q_ASSERT( imp != nullptr );
+  SdGraphParam::cloneFrom( src, copyMap, next );
+  SdPtrConst<SdGraphSymImp> imp( src );
+  Q_ASSERT( imp.isValid() );
   mArea         = imp->mArea;        //PCB where this symbol implement contains in
   mSectionIndex = imp->mSectionIndex;//Section index (from 0)
   mLogSection   = imp->mLogSection;  //Logical symbol section number (from 1)
@@ -815,6 +822,11 @@ void SdGraphSymImp::cloneFrom(const SdObject *src)
   //mPartImp      = imp->mPartImp;
   //mPins         = imp->mPins;        //Pin information table
   }
+
+
+
+
+
 
 
 

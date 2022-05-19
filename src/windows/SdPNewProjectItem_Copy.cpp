@@ -24,6 +24,7 @@ Description
 #include "objects/SdPItemSheet.h"
 #include "objects/SdPItemPlate.h"
 #include "objects/SdObjectFactory.h"
+#include "objects/SdCopyMapProject.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -96,7 +97,8 @@ bool SdPNewProjectItem_Copy::validatePage()
   {
   //If copy item present and classes of both items are match then perform clone
   if( mCopyItem && mCopyItem->getClass() == (*mItem)->getClass() ) {
-    (*mItem)->cloneFrom( mCopyItem );
+    SdCopyMapProject copyMap( mProject );
+    (*mItem)->cloneFrom( mCopyItem, copyMap, false );
     (*mItem)->setEditEnable( true, QString() );
     return true;
     }

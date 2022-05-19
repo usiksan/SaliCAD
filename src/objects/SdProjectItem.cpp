@@ -14,6 +14,7 @@ Description
 #include "library/SdLibraryHeader.h"
 #include "SdObjectFactory.h"
 #include "SdProjectItem.h"
+#include "SdCopyMapProject.h"
 #include "SdGraphIdent.h"
 #include "SdGraphValue.h"
 #include "SdProject.h"
@@ -179,7 +180,8 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
       //Test if object is used
       if( getProject() && (getProject()->isUsed( this ) || isAnotherAuthor()) ) {
         //Object is used. Create new one
-        SdProjectItem *item = dynamic_cast<SdProjectItem*>( copy() );
+        SdCopyMapProject copyMap( getProject() );
+        SdProjectItem *item = dynamic_cast<SdProjectItem*>( copy( copyMap, false ) );
         item->updateAuthor();
         item->updateCreationTime();
         item->mEditEnable = true;
@@ -414,12 +416,25 @@ void SdProjectItem::draw3d(QOpenGLFunctions_2_0 *f)
 
 
 
-void SdProjectItem::insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)
+void SdProjectItem::insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo, SdSelector *dest, bool next)
   {
-  sour->forEach( dctAll, [this, editor, dest, undo, offset, next ] (SdGraph *obj) ->bool {
-    obj = insertCopyObject( obj, offset, undo, editor, next );
-    if( obj != nullptr && dest != nullptr )
-      obj->select( dest );
+  SdCopyMapProject copyMap( getProject() );
+  sour->forEach( dctAll, [this, dest, undo, offset, next, &copyMap ] (SdGraph *obj) ->bool {
+    if( obj != nullptr && (obj->getClass() & getAcceptedObjectsMask()) ) {
+
+      if( obj->getClass() == dctIdent && findIdent() != nullptr )
+        //Ident already present in item, preserve insertion
+        return true;
+      if( obj->getClass() == dctValue && findValue() != nullptr )
+        //Value already present in item, presereve isertion
+        return true;
+
+      SdGraph *cp = copyMap.copyClass<SdGraph>( obj, next );
+      Q_ASSERT( cp != nullptr );
+      cp->select( dest );
+      cp->move( offset );
+      insertChild( cp, undo );
+      }
     return true;
     });
   }
@@ -427,27 +442,6 @@ void SdProjectItem::insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo
 
 
 
-SdGraph *SdProjectItem::insertCopyObject(const SdGraph *obj, SdPoint offset, SdUndo *undo, SdWEditorGraph *editor, bool next)
-  {
-  Q_UNUSED(editor)
-  if( obj != nullptr && (obj->getClass() & getAcceptedObjectsMask()) ) {
-
-    if( obj->getClass() == dctIdent && findIdent() != nullptr )
-      //Ident already present in item, preserve insertion
-      return nullptr;
-    if( obj->getClass() == dctValue && findValue() != nullptr )
-      //Value already present in item, presereve isertion
-      return nullptr;
-
-    SdGraph *cp = dynamic_cast<SdGraph*>( next ? obj->copyNext() : obj->copy() );
-    Q_ASSERT( cp != nullptr );
-    cp->select( nullptr );
-    cp->move( offset );
-    insertChild( cp, undo );
-    return cp;
-    }
-  return nullptr;
-  }
 
 
 
@@ -480,18 +474,30 @@ void SdProjectItem::readObject(SdObjectMap *map, const QJsonObject obj)
 
 
 
-
-void SdProjectItem::cloneFrom( const SdObject *src )
+//!
+//! \brief cloneFrom Overrided function. We copy object from source
+//! \param src       Source of object from which copy must be made
+//! \param copyMap   Structure for mapping copying substitutes
+//! \param next      Make simple or next copy. Next copy available not for all objects.
+//!                  For example: pin name A23 with next copy return A24
+//!
+void SdProjectItem::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
   {
-  SdContainer::cloneFrom( src );
-  const SdProjectItem *sour = dynamic_cast<const SdProjectItem*>(src);
-  mTitle      = sour->mTitle;
-  mAuthor     = sour->mAuthor;
-  mCreateTime = sour->mCreateTime;
-  mAuto       = true;
-  mOrigin     = sour->mOrigin;
-  mEditEnable = sour->mEditEnable;
+  SdContainer::cloneFrom( src, copyMap, next );
+  SdPtrConst<SdProjectItem> sour(src);
+  if( sour.isValid() ) {
+    mTitle      = sour->mTitle;
+    mAuthor     = sour->mAuthor;
+    mCreateTime = sour->mCreateTime;
+    mAuto       = true;
+    mOrigin     = sour->mOrigin;
+    mEditEnable = sour->mEditEnable;
+    }
   }
+
+
+
+
 
 
 

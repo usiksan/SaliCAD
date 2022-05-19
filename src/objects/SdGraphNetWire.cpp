@@ -284,17 +284,29 @@ void SdGraphNetWire::detach(SdUndo *undo)
 
 
 
-void SdGraphNetWire::cloneFrom(const SdObject *src)
+
+
+//!
+//! \brief cloneFrom Overrided function. We copy object from source
+//! \param src       Source of object from which copy must be made
+//! \param copyMap   Structure for mapping copying substitutes
+//! \param next      Make simple or next copy. Next copy available not for all objects.
+//!                  For example: pin name A23 with next copy return A24
+//!
+void SdGraphNetWire::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
   {
-  SdGraphNet::cloneFrom( src );
-  const SdGraphNetWire *wire = dynamic_cast<const SdGraphNetWire*>(src);
-  Q_ASSERT(wire != nullptr);
+  SdGraphNet::cloneFrom( src, copyMap, next );
+  SdPtrConst<SdGraphNetWire> wire(src);
+  Q_ASSERT( wire.isValid() );
   mA    = wire->mA;
   mB    = wire->mB;       //Wire segment
   mProp = wire->mProp;    //Wire drawing properties
   mDotA = wire->mDotA;
   mDotB = wire->mDotB;    //Dots present flag
   }
+
+
+
 
 
 

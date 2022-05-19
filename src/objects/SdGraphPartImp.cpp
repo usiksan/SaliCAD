@@ -615,8 +615,8 @@ void SdGraphPartImp::attach(SdUndo *undo)
   SdProject *prj = plate->getProject();
   Q_ASSERT( prj != nullptr );
   //Realloc objects for this project
-  mComponent = dynamic_cast<SdPItemComponent*>( prj->getFixedProjectItem(mComponent) );  //Object contains section information, pin assotiation info. May be same as mSymbol.
-  mPart = dynamic_cast<SdPItemPart*>( prj->getFixedProjectItem(mPart) );
+  mComponent = prj->getFixedProjectItemClass( mComponent );  //Object contains section information, pin assotiation info. May be same as mSymbol.
+  mPart = prj->getFixedProjectItemClass( mPart );
 
   //Fill pin table
   mPins.clear();
@@ -646,7 +646,7 @@ void SdGraphPartImp::attach(SdUndo *undo)
     for( int i = 0; i < sectionCount; i++ ) {
       SdPartImpSection s;
       SdPItemSymbol *sym = mComponent->extractSymbolFromFactory( i, false, nullptr );
-      s.mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getFixedProjectItem(sym) );
+      s.mSymbol = prj->getFixedProjectItemClass(sym);
       if( sym )
         delete sym;
       mSections.append( s );
@@ -676,11 +676,20 @@ void SdGraphPartImp::detach(SdUndo *undo)
 
 
 
-void SdGraphPartImp::cloneFrom(const SdObject *src)
+
+
+//!
+//! \brief cloneFrom Overrided function. We copy object from source
+//! \param src       Source of object from which copy must be made
+//! \param copyMap   Structure for mapping copying substitutes
+//! \param next      Make simple or next copy. Next copy available not for all objects.
+//!                  For example: pin name A23 with next copy return A24
+//!
+void SdGraphPartImp::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
   {
-  SdGraph::cloneFrom( src );
-  const SdGraphPartImp *imp = dynamic_cast<const SdGraphPartImp*>( src );
-  Q_ASSERT(imp != nullptr);
+  SdGraph::cloneFrom( src, copyMap, next );
+  SdPtrConst<SdGraphPartImp> imp( src );
+  Q_ASSERT( imp.isValid() );
   mLogNumber   = imp->mLogNumber;   //Logical part number (from 1)
   mOrigin      = imp->mOrigin;      //Position of Implement
   mProp        = imp->mProp;        //Implement properties
@@ -693,6 +702,10 @@ void SdGraphPartImp::cloneFrom(const SdObject *src)
   mPart        = imp->mPart;        //Part for this implementation
   mComponent   = imp->mComponent;   //Component
   }
+
+
+
+
 
 
 

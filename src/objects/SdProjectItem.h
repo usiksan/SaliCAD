@@ -99,13 +99,19 @@ class SdProjectItem : public SdContainer
     virtual bool           is3dAllowed() const { return false; }
     virtual void           draw3d( QOpenGLFunctions_2_0 *f );
     virtual quint64        getAcceptedObjectsMask() const = 0;
-    virtual SdGraph       *insertCopyObject( const SdGraph *obj, SdPoint offset, SdUndo *undo, SdWEditorGraph *editor, bool next );
-    virtual void           insertObjects( SdPoint offset, SdSelector *sour, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next );
+    void                   insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo, SdSelector *dest, bool next );
 
     virtual void           writeObject(QJsonObject &obj) const override;
     virtual void           readObject(SdObjectMap *map, const QJsonObject obj) override;
 
-    virtual void           cloneFrom( const SdObject *src ) override;
+    //!
+    //! \brief cloneFrom Overrided function. We copy object from source
+    //! \param src       Source of object from which copy must be made
+    //! \param copyMap   Structure for mapping copying substitutes
+    //! \param next      Make simple or next copy. Next copy available not for all objects.
+    //!                  For example: pin name A23 with next copy return A24
+    //!
+    virtual void           cloneFrom( const SdObject *src, SdCopyMap &copyMap, bool next ) override;
 
     //Return current registered author
     static  QString        getDefaultAuthor();

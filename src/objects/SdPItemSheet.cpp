@@ -191,46 +191,6 @@ quint64 SdPItemSheet::getAcceptedObjectsMask() const
 
 
 
-SdGraph *SdPItemSheet::insertCopyObject(const SdGraph *obj, SdPoint offset, SdUndo *undo, SdWEditorGraph *editor, bool next)
-  {
-  Q_UNUSED(editor)
-  if( obj != nullptr && (obj->getClass() & getAcceptedObjectsMask()) ) {
-    SdGraph *cp = dynamic_cast<SdGraph*>( next ? obj->copyNext() : obj->copy() );
-    Q_ASSERT( cp != nullptr );
-    cp->select( nullptr );
-    cp->move( offset );
-    //For nets we perform substitute new net names for default named nets
-    if( cp->getClass() & (dctNetName | dctNetWire) ) {
-      SdGraphNet *net = dynamic_cast<SdGraphNet*>(cp);
-      Q_ASSERT( net != nullptr );
-      //Test if this net with default name
-      if( net->getNetName().startsWith(QString(defNetNamePrefix)) ) {
-        //This net with default name
-        //Test if this net name already in map
-        if( !mNetCopyMap.contains(net->getNetName()) )
-          //Net name not registered yet - register
-          mNetCopyMap.insert( net->getNetName(), getProject()->getUnusedNetName() );
-        //This name already registered, substitute
-        net->setNetName( mNetCopyMap.value(net->getNetName()), nullptr );
-        }
-      }
-    insertChild( cp, undo );
-    return cp;
-    }
-  return nullptr;
-  }
-
-
-
-
-
-void SdPItemSheet::insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo, SdWEditorGraph *editor, SdSelector *dest, bool next)
-  {
-  //Reset net map for new copy loop
-  mNetCopyMap.clear();
-  //Exec copy loop
-  SdProjectItem::insertObjects( offset, sour, undo, editor, dest, next );
-  }
 
 
 

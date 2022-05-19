@@ -244,6 +244,41 @@ void SdContainer::redoDeleteChild(SdObject *child)
 
 
 
+//!
+//! \brief cloneFrom Overrided function. We copy all objects of source container
+//! \param src       Source of object from which copy must be made
+//! \param copyMap   Structure for mapping copying substitutes
+//! \param next      Make simple or next copy. Next copy available not for all objects.
+//!                  For example: pin name A23 with next copy return A24
+//!
+void SdContainer::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
+  {
+  SdObject::cloneFrom( src, copyMap, next );
+  SdPtrConst<SdContainer> sour(src);
+
+  //Copy children
+  if( sour.isValid() ) {
+    clearChildList();
+    for( SdObject *ptr : sour->mChildList )
+      if( !ptr->isDeleted() ) {
+        //Create copy of object
+        SdObject *cp = ptr->copy( copyMap, next );
+        if( cp ) {
+          //If copy is created, then set parent of copy to this container
+          cp->setParent( this );
+          //...and append to containers list
+          mChildList.append( cp );
+          }
+        }
+
+    //Copy param table
+    mParamTable = sour->mParamTable;
+    }
+  }
+
+
+
+
 void SdContainer::insertChild( SdObject *child, SdUndo *undo )
   {
   Q_ASSERT_X( child->getParent() == nullptr, "insertChild", "Insertion with parent setuped" );
@@ -284,30 +319,6 @@ void SdContainer::redoInsertChild(SdObject *child)
 
 
 
-void SdContainer::cloneFrom( const SdObject *src )
-  {
-  SdObject::cloneFrom( src );
-  const SdContainer *sour = dynamic_cast<const SdContainer*>(src);
-
-  //Copy children
-  if( sour ) {
-    clearChildList();
-    for( SdObject *ptr : sour->mChildList )
-      if( !ptr->isDeleted() ) {
-        //Create copy of object
-        SdObject *cp = ptr->copy();
-        if( cp ) {
-          //If copy is created, then set parent of copy to this container
-          cp->setParent( this );
-          //...and append to containers list
-          mChildList.append( cp );
-          }
-        }
-
-    //Copy param table
-    mParamTable = sour->mParamTable;
-    }
-  }
 
 
 

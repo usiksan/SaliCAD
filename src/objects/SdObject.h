@@ -28,27 +28,25 @@ Description
 #define SDKO_ID        "id"
 
 class SdContainer;
+class SdCopyMap;
 class SdProjectItem;
 class QWidget;
+class SdObject;
 
 typedef QString SdId;
 typedef QString SdUid;
 
-using SdLuidMap = QMap<int,int>;
+using SdObjectPtr = SdObject*;
 
 class SdObject
   {
     SdContainer *mParent;     //!< Parent object
-    int          mLuid;       //!< Local unical ident. Used only in session and not saved with object
     bool         mDeleted;    //!< Flag check if object deleted. Deleted objects not save
-
-    static int   mGlobalLuid; //!< Global counter for in session luid generation
   public:
     SdObject();
     virtual ~SdObject() {}
 
     //Information
-            int       luid() const { return mLuid; }
             QString   getId() const;
     virtual QString   getType() const = 0;
     virtual SdClass   getClass() const = 0;
@@ -73,15 +71,49 @@ class SdObject
     //Upgrade project item on new one
     virtual bool      upgradeProjectItem( SdUndo *undo, QWidget *parent );
 
-    //Copy
-    //Exact copy object
-    SdObject*         copy() const;
-    //Copy logic next object
-    virtual SdObject* copyNext() const { return copy(); }
 
-    //Clone contents object except mParent field.
-    //Cloned object has no parent
-    virtual void      cloneFrom( const SdObject *src );
+
+    //=================================================
+    //                  Copy
+    //!
+    //! \brief copy    Returns copy of this object. Copy is not exact but modified with copyMap
+    //! \param copyMap Structure for mapping copying substitutes
+    //! \param next    Make simple or next copy. Next copy available not for all objects.
+    //!                For example: pin name A23 with next copy return A24
+    //! \return        Copy of this object
+    //!
+    SdObjectPtr       copy( SdCopyMap &copyMap, bool next ) const;
+
+
+
+    //!
+    //! \brief copyClass Template which is exactly as copy but on finish make conversion to target class
+    //! \param copyMap   Structure for mapping copying substitutes
+    //! \param next      Make simple or next copy. Next copy available not for all objects.
+    //!                  For example: pin name A23 with next copy return A24
+    //! \return          Copy of this object
+    //!
+    template <typename SdObjectClass>
+    SdObjectClass    *copyClass( SdCopyMap &copyMap, bool next ) const
+      {
+      SdObjectClass *obj = dynamic_cast<SdObjectClass*>( copy( copyMap, next ) );
+      Q_ASSERT( obj != nullptr );
+      return obj;
+      }
+
+
+    //!
+    //! \brief cloneFrom Clone contents object except mParent field. This must be overrided in all subclasses to
+    //!                  generate right copy of object
+    //!                  Cloned object has no parent
+    //! \param src       Source of object from which copy must be made
+    //! \param copyMap   Structure for mapping copying substitutes
+    //! \param next      Make simple or next copy. Next copy available not for all objects.
+    //!                  For example: pin name A23 with next copy return A24
+    //!
+    virtual void      cloneFrom( const SdObject *src, SdCopyMap &copyMap, bool next );
+
+
 
     //Write and read object
     virtual void      writeObject( QJsonObject &obj ) const;
@@ -101,8 +133,6 @@ class SdObject
       return dynamic_cast<SdClass*>( readPtr( name, map, obj ) );
       }
   };
-
-typedef SdObject *SdObjectPtr;
 
 //Convert object only to desired type, other way - deleted
 template <class T>

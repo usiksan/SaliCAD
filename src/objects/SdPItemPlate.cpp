@@ -536,11 +536,6 @@ void SdPItemPlate::detach(SdUndo *undo)
 
 
 
-void SdPItemPlate::cloneFrom(const SdObject *src)
-  {
-  SdProjectItem::cloneFrom( src );
-  }
-
 
 
 

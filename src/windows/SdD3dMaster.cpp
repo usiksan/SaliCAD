@@ -5,6 +5,7 @@
 #include "SdDHelp.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdPItemRich.h"
+#include "objects/SdCopyMap.h"
 #include "script/SdScriptParser3d.h"
 
 #include <QVBoxLayout>
@@ -96,8 +97,9 @@ SdD3dMaster::SdD3dMaster(SdPItemPart *part, QWidget *parent) :
           return false;
           });
         //Insert new created 3d objects
-        mPreviewPart->forEach( dct3D, [this] ( SdObject *obj ) -> bool {
-          mPartPtr->insertChild( obj->copy(), mPartPtr->getUndo() );
+        SdCopyMap copyMap;
+        mPreviewPart->forEach( dct3D, [this,&copyMap] ( SdObject *obj ) -> bool {
+          mPartPtr->insertChild( obj->copy( copyMap, false ), mPartPtr->getUndo() );
           return false;
           });
         //Mark project as dirty

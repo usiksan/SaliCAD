@@ -51,7 +51,14 @@ class SdContainer : public SdObject
     virtual void redoDeleteChild( SdObject *child );
 
 
-    virtual void cloneFrom( const SdObject *src) override;
+    //!
+    //! \brief cloneFrom Overrided function. We copy all objects of source container
+    //! \param src       Source of object from which copy must be made
+    //! \param copyMap   Structure for mapping copying substitutes
+    //! \param next      Make simple or next copy. Next copy available not for all objects.
+    //!                  For example: pin name A23 with next copy return A24
+    //!
+    virtual void cloneFrom( const SdObject *src, SdCopyMap &copyMap, bool next ) override;
 
     //!
     //! \brief isChild Test if object obj is child of this container or not

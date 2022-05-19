@@ -914,7 +914,7 @@ void SdModeSelect::enterPaste(SdPoint point)
     unselect(false);
     mUndo->begin( QObject::tr("Insert from clipboard"), mObject, false );
     //Insert copy of pasted elements into object without selection them
-    mObject->insertObjects( point.sub( mFirst ), &mPaste, mUndo, mEditor, &mFragment, false );
+    mObject->insertObjects( point.sub( mFirst ), &mPaste, mUndo, &mFragment, false );
     cancelPaste();
     }
   }
@@ -952,7 +952,7 @@ void SdModeSelect::insertCopy(SdPoint offset, bool next)
   //Произвести вставку
   //Perform insertion
   unselect(false);
-  mObject->insertObjects( offset, &mPaste, mUndo, mEditor, &mFragment, next );
+  mObject->insertObjects( offset, &mPaste, mUndo, &mFragment, next );
   cancelPaste();
   }
 

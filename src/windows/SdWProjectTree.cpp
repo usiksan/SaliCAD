@@ -18,6 +18,7 @@ Description
 #include "objects/SdProjectItem.h"
 #include "objects/SdPItemSheet.h"
 #include "objects/SdObjectNetClient.h"
+#include "objects/SdCopyMapProject.h"
 #include "windows/SdPNewProjectItem_SelectType.h"
 #include "windows/SdPNewProjectItem_EnterName.h"
 #include "windows/SdPNewProjectItem_Master.h"
@@ -307,9 +308,11 @@ void SdWProjectTree::cmObjectPaste()
       //Same object already present in project duplicate it
       duplicate( uid );
 
-    else
+    else {
       //Simple insert object
-      mProject->insertChild( project->itemByUid(uid)->copy(), mProject->getUndo() );
+      SdCopyMapProject copyMap(mProject);
+      mProject->insertChild( project->itemByUid(uid)->copy( copyMap, false ), mProject->getUndo() );
+      }
 
 
     delete project;
@@ -727,7 +730,8 @@ void SdWProjectTree::duplicate(const QString &uid)
   SdPtr<SdProjectItem> item( mProject->itemByUid( uid ) );
   if( item.isValid() && (item->getClass() & (dctComponent | dctPart | dctSymbol) ) ) {
     //Create copy of object
-    SdProjectItem *copy = dynamic_cast<SdProjectItem*>( item->copy() );
+    SdCopyMapProject copyMap(mProject);
+    SdProjectItem *copy = dynamic_cast<SdProjectItem*>( item->copy( copyMap, false ) );
     copy->setUnicalTitle( QString() );
     copy->setEditEnable( true, QString() );
     //Insert item to project

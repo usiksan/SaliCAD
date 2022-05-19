@@ -28,12 +28,24 @@ SdGraphLinear::SdGraphLinear(const SdPropLine &propLine) :
 
 
 
-void SdGraphLinear::cloneFrom(const SdObject *src)
+//!
+//! \brief cloneFrom Overrided function. We copy object from source
+//! \param src       Source of object from which copy must be made
+//! \param copyMap   Structure for mapping copying substitutes
+//! \param next      Make simple or next copy. Next copy available not for all objects.
+//!                  For example: pin name A23 with next copy return A24
+//!
+void SdGraphLinear::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
   {
-  SdGraph::cloneFrom( src );
-  const SdGraphLinear *linear = dynamic_cast<const SdGraphLinear*>(src);
-  if( linear ) mProp = linear->mProp;
+  SdGraph::cloneFrom( src, copyMap, next );
+  SdPtrConst<SdGraphLinear> linear(src);
+  if( linear.isValid() )
+    mProp = linear->mProp;
   }
+
+
+
+
 
 
 

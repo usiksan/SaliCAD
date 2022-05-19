@@ -60,8 +60,14 @@ class SdGraphPartPin : public SdGraph
   public:
     virtual QString   getType() const override { return QString( SD_TYPE_PART_PIN ); }
     virtual quint64   getClass() const override { return dctPartPin; }
-    virtual SdObject *copyNext() const override;
-    virtual void      cloneFrom(const SdObject *src) override;
+    //!
+    //! \brief cloneFrom Overrided function. We copy object from source
+    //! \param src       Source of object from which copy must be made
+    //! \param copyMap   Structure for mapping copying substitutes
+    //! \param next      Make simple or next copy. Next copy available not for all objects.
+    //!                  For example: pin name A23 with next copy return A24
+    //!
+    virtual void      cloneFrom( const SdObject *src, SdCopyMap &copyMap, bool next ) override;
     virtual void      writeObject(QJsonObject &obj) const override;
     virtual void      readObject(SdObjectMap *map, const QJsonObject obj) override;
 

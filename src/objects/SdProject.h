@@ -58,7 +58,10 @@ class SdProject : public SdContainer
 
     //Return object of project for given object. Return only newer or same object
     // not in editing state
-    SdProjectItem    *getFixedProjectItem( SdProjectItem *item );
+    SdProjectItem    *getFixedProjectItem(const SdProjectItem *item );
+
+    template <typename SdItemClass>
+    SdItemClass      *getFixedProjectItemClass( SdItemClass *item ) { return dynamic_cast<SdItemClass*>( getFixedProjectItem( item ) ); }
 
     //Return net name unused in project
     QString           getUnusedNetName();
@@ -115,7 +118,15 @@ class SdProject : public SdContainer
     static SdProject *load( const QString fname );
     bool              save( const QString fname );
 
-    virtual void      cloneFrom( const SdObject *src) override;
+    //!
+    //! \brief cloneFrom Overrided function. We copy object from source
+    //! \param src       Source of object from which copy must be made
+    //! \param copyMap   Structure for mapping copying substitutes
+    //! \param next      Make simple or next copy. Next copy available not for all objects.
+    //!                  For example: pin name A23 with next copy return A24
+    //!
+    virtual void      cloneFrom( const SdObject *src, SdCopyMap &copyMap, bool next ) override;
+
     virtual void      insertChild(SdObject *child, SdUndo *undo ) override;
     virtual void      undoInsertChild(SdObject *child) override;
     virtual void      redoInsertChild(SdObject *child) override;

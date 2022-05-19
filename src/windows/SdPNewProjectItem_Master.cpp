@@ -124,7 +124,7 @@ void SdPNewProjectItem_Master::initializePage()
           return true;
           });
 
-        item->insertObjects( SdPoint(), &paste, nullptr, nullptr, nullptr, false );
+        item->insertObjects( SdPoint(), &paste, nullptr, nullptr, false );
 
         return true;
         });

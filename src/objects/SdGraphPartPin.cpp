@@ -75,27 +75,18 @@ void SdGraphPartPin::drawImp(SdContext *dc, const QString pinName, bool com)
 
 
 
-
-SdObject *SdGraphPartPin::copyNext() const
+//!
+//! \brief cloneFrom Overrided function. We copy object from source
+//! \param src       Source of object from which copy must be made
+//! \param copyMap   Structure for mapping copying substitutes
+//! \param next      Make simple or next copy. Next copy available not for all objects.
+//!                  For example: pin name A23 with next copy return A24
+//!
+void SdGraphPartPin::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
   {
-  //Copy pin with next pinNumber
-  //At first - clone pin
-  SdGraphPartPin *pin = new SdGraphPartPin();
-  pin->cloneFrom( this );
-  //Change name on nextName
-  pin->mNumber = nextText( pin->mNumber );
-  //Return resulting pin
-  return pin;
-  }
-
-
-
-
-void SdGraphPartPin::cloneFrom(const SdObject *src)
-  {
-  SdGraph::cloneFrom( src );
-  const SdGraphPartPin *pin = dynamic_cast<const SdGraphPartPin*>(src);
-  if( pin ) {
+  SdGraph::cloneFrom( src, copyMap, next );
+  SdPtrConst<SdGraphPartPin> pin(src);
+  if( pin.isValid() ) {
     mOrigin     = pin->mOrigin;     //Pin origin
     mPinProp    = pin->mPinProp;    //Pin properties
     mNumberPos  = pin->mNumberPos;  //Pin number position
@@ -104,7 +95,7 @@ void SdGraphPartPin::cloneFrom(const SdObject *src)
     mNamePos    = pin->mNamePos;    //Pin name position
     mNameRect   = pin->mNameRect;   //Pin name over rect
     mNameProp   = pin->mNameProp;   //Pin name properties
-    mNumber     = pin->mNumber;     //Pin number
+    mNumber     = next ? nextText( pin->mNumber ) : pin->mNumber;     //Pin number
 
     //Different pin part selection
     mPinSelect = false;  //Pin selected
@@ -112,6 +103,10 @@ void SdGraphPartPin::cloneFrom(const SdObject *src)
     mNamSelect = false;  //Pin name selected
     }
   }
+
+
+
+
 
 
 

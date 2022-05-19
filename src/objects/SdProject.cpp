@@ -20,6 +20,7 @@ Description
 #include "SdObjectFactory.h"
 #include "SdGraphNet.h"
 #include "SdEnvir.h"
+#include "SdCopyMapProject.h"
 
 #include <QJsonArray>
 #include <QFile>
@@ -105,10 +106,11 @@ SdPItemPlate *SdProject::getDefaultPlate()
 
 
 //Return object of project for given object
-SdProjectItem *SdProject::getFixedProjectItem(SdProjectItem *item)
+SdProjectItem *SdProject::getFixedProjectItem( const SdProjectItem *item)
   {
   //If source is null then return null also
-  if( item == nullptr ) return item;
+  if( item == nullptr ) return nullptr;
+
   //First try find equal object
   SdClass mask = item->getClass();
   SdUid   uid  = item->getUid();
@@ -132,7 +134,8 @@ SdProjectItem *SdProject::getFixedProjectItem(SdProjectItem *item)
     return res;
     }
   //else insert copy
-  res = dynamic_cast<SdProjectItem*>( item->copy() );
+  SdCopyMapProject copyMap(this);
+  res = dynamic_cast<SdProjectItem*>( item->copy( copyMap, false ) );
   Q_ASSERT( res != nullptr );
   insertChild( res, &mUndo );
   res->setEditEnable( false, QString() );
@@ -425,13 +428,20 @@ bool SdProject::save(const QString fname)
 
 
 
-
-void SdProject::cloneFrom(const SdObject *src)
+//!
+//! \brief cloneFrom Overrided function. We copy object from source
+//! \param src       Source of object from which copy must be made
+//! \param copyMap   Structure for mapping copying substitutes
+//! \param next      Make simple or next copy. Next copy available not for all objects.
+//!                  For example: pin name A23 with next copy return A24
+//!
+void SdProject::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
   {
-  SdContainer::cloneFrom(src);
+  SdContainer::cloneFrom( src, copyMap, next );
   setDirty();
-  //const SdProject *sour = dynamic_cast<const SdProject*>(src);
   }
+
+
 
 
 

@@ -53,9 +53,16 @@ quint64 SdGraphText::getClass() const
 
 
 
-void SdGraphText::cloneFrom(const SdObject *src)
+//!
+//! \brief cloneFrom Overrided function. We copy object from source
+//! \param src       Source of object from which copy must be made
+//! \param copyMap   Structure for mapping copying substitutes
+//! \param next      Make simple or next copy. Next copy available not for all objects.
+//!                  For example: pin name A23 with next copy return A24
+//!
+void SdGraphText::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
   {
-  SdGraph::cloneFrom( src );
+  SdGraph::cloneFrom( src, copyMap, next );
   SdPtrConst<SdGraphText> text(src);
   Q_ASSERT_X( text.isValid(), "SdGraphText::cloneFrom", "Cloned not SdGraphText" );
   mOrigin   = text->mOrigin;
@@ -63,6 +70,10 @@ void SdGraphText::cloneFrom(const SdObject *src)
   mString   = text->mString;
   mOverRect = text->mOverRect;
   }
+
+
+
+
 
 
 

@@ -62,6 +62,8 @@ SOURCES += \
     master/SdMasterPart.cpp \
     modes/SdModeCScript.cpp \
     modes/SdModeCSymHighlight.cpp \
+    objects/SdCopyMap.cpp \
+    objects/SdCopyMapProject.cpp \
     objects/SdGraphParam.cpp \
     objects/SdGraphScript.cpp \
     objects/SdGraphScriptRef.cpp \
@@ -431,6 +433,8 @@ HEADERS  += \
     master/SdMasterPart.h \
     modes/SdModeCScript.h \
     modes/SdModeCSymHighlight.h \
+    objects/SdCopyMap.h \
+    objects/SdCopyMapProject.h \
     objects/SdGraphParam.h \
     objects/SdGraphScript.h \
     objects/SdGraphScriptRef.h \

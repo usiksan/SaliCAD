@@ -66,8 +66,3 @@ quint64 SdPItemSymbol::getAcceptedObjectsMask() const
 
 
 
-void SdPItemSymbol::cloneFrom( const SdObject *src )
-  {
-  SdProjectItem::cloneFrom( src );
-  }
-
