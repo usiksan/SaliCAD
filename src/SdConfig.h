@@ -218,7 +218,7 @@ History
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
 #define SD_DEFAULT_REPO              "cad.salilab.com/repo/"
-#define SD_UPGRADE_WEB               "http:/salicad.salilab.com/downloads/"
+#define SD_UPGRADE_WEB               "http:/cad.salilab.com/downloads/"
 
 
 //When defined disable registration with sali name
