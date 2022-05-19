@@ -5,7 +5,8 @@
 
 SdGraphScriptRef::SdGraphScriptRef() :
   mRefOwner(nullptr),
-  mRef(nullptr)
+  mRef(nullptr),
+  mCalculated(false)
   {
 
   }
@@ -15,7 +16,8 @@ SdGraphScriptRef::SdGraphScriptRef() :
 SdGraphScriptRef::SdGraphScriptRef(const QString &nm) :
   mRefOwner(nullptr),
   mRef(nullptr),
-  mName(nm)
+  mName(nm),
+  mCalculated(false)
   {
 
   }
@@ -35,10 +37,38 @@ QString SdGraphScriptRef::refName() const
 
 
 
+
+
+//!
+//! \brief refOffset Returns relative offset of referenced object relative org point
+//! \param org       Origin point
+//! \return          Relative offset of referenced object relative org point
+//!
+QPoint SdGraphScriptRef::refOffset(QPoint org) const
+  {
+  if( checkRef() ) {
+    SdPtrConst<SdGraph> graph(mRef);
+    if( graph.isValid() ) {
+      return graph->getOverRect().center() - org;
+      }
+    }
+  return QPoint{};
+  }
+
+
+
+
+
+
+
+
+
+
+
 void SdGraphScriptRef::draw(SdPoint p, const SdPropText &prop, SdContext *dc, bool drawValue)
   {
   //Build name part
-  QString namePart = refName() + QStringLiteral(" = ");
+  QString namePart = (mCalculated ? QStringLiteral("*") : QLatin1String("")) + refName() + QStringLiteral(" = ");
   //Draw name part
   dc->text( p, mOverName, namePart, prop );
   if( drawValue ) {
@@ -66,6 +96,7 @@ QString SdGraphScriptRef::valueGet() const
 
 void SdGraphScriptRef::valueSet(const QString &v)
   {
+  mCalculated = true;
   if( checkRef() )
     mRef->paramSet( mParam, v );
   else
@@ -74,11 +105,12 @@ void SdGraphScriptRef::valueSet(const QString &v)
 
 
 
-void SdGraphScriptRef::assign(SdContainer *refOwner, SdGraphParam *ref, QString param)
+void SdGraphScriptRef::refAssign(SdContainer *refOwner, SdGraphParam *ref, QString param)
   {
   mRefOwner = refOwner;
   mRef = ref;
-  mParam = param;
+  if( !param.isEmpty() )
+    mParam = param;
   checkRef();
   }
 

@@ -30,7 +30,7 @@ int SdGraphScriptRefMap::tryLink(SdPoint p, SdRect &overRect) const
 void SdGraphScriptRefMap::link(int index, SdContainer *owner, SdGraphParam *ref, const QString paramName)
   {
   if( index >= 0 && index < mRefList.count() )
-    mRefList[index].assign( owner, ref, paramName );
+    mRefList[index].refAssign( owner, ref, paramName );
   }
 
 
@@ -58,6 +58,45 @@ int SdGraphScriptRefMap::behindText(SdPoint p, SdPoint &org, QString &dest)
       return i;
       }
   return -1;
+  }
+
+
+
+
+void SdGraphScriptRefMap::cloneLinks(QPoint org, const SdGraphScriptRefMap &refMap)
+  {
+  for( int i = 0; i < mRefList.count(); i++ ) {
+    mRefList[i].mRefOffset = refMap.linkOffset( org, mRefList.at(i).name() );
+    mRefList[i].valueSet( refMap.varGet(mRefList.at(i).name()) );
+    mRefList[i].refAssign( nullptr, nullptr, refMap.linkParam(mRefList.at(i).name()) );
+    }
+  }
+
+
+
+
+void SdGraphScriptRefMap::updateLinks( QPoint org, SdContainer *sheet )
+  {
+  if( sheet == nullptr ) {
+    //Reset all links
+    for( int i = 0; i < mRefList.count(); i++ )
+      mRefList[i].refAssign( nullptr, nullptr, QString{} );
+    }
+  else {
+    //Update all links
+    for( int i = 0; i < mRefList.count(); i++ ) {
+      QPoint offset = mRefList.at(i).mRefOffset;
+      if( !offset.isNull() ) {
+        offset += org;
+        int state;
+        SdPtr<SdGraphParam> obj( sheet->behindPoint( dctGraphScript | dctSymImp, offset, &state ) );
+        if( obj.isValid() )
+          mRefList[i].refAssign( sheet, obj.ptr(), QString{} );
+        else
+          mRefList[i].refAssign( nullptr, nullptr, QString{} );
+        }
+      }
+    }
   }
 
 
@@ -137,4 +176,23 @@ void SdGraphScriptRefMap::varSet(const QString &key, const QString &val)
   {
   if( mRefMap.contains(key) )
     mRefList[ mRefMap.value(key) ].valueSet( val );
+  }
+
+
+
+
+QPoint SdGraphScriptRefMap::linkOffset( QPoint org, const QString &key ) const
+  {
+  if( mRefMap.contains(key) )
+    return mRefList.at( mRefMap.value(key) ).refOffset( org );
+  return QPoint{};
+  }
+
+
+
+QString SdGraphScriptRefMap::linkParam(const QString &key) const
+  {
+  if( mRefMap.contains(key) )
+    return mRefList.at( mRefMap.value(key) ).refParam();
+  return QString{};
   }

@@ -33,9 +33,11 @@ Description
 #include "SdGraphScript.h"
 #include "SdContext.h"
 #include "SdSelector.h"
+#include "SdPItemSheet.h"
 #include "script/SdScriptParserCalculator.h"
 
-SdGraphScript::SdGraphScript()
+SdGraphScript::SdGraphScript() :
+  mNeedLink(false)
   {
 
   }
@@ -46,7 +48,8 @@ SdGraphScript::SdGraphScript(const QString &script, SdPoint org, const SdPropTex
   SdGraphParam(),
   mScript(script),
   mOrigin(org),
-  mProp(prp)
+  mProp(prp),
+  mNeedLink(false)
   {
   ajustProp();
   parse();
@@ -78,6 +81,10 @@ void SdGraphScript::parse()
 
 void SdGraphScript::calculate()
   {
+  if( mNeedLink ) {
+    mRefMap.updateLinks( mOrigin, getParent() );
+    mNeedLink = false;
+    }
   if( mProgramm ) {
     mProgramm->execute();
     //mProgramm->execute();
@@ -133,6 +140,9 @@ void SdGraphScript::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next
   mOrigin = ps->mOrigin;
   mProp   = ps->mProp;
   parse();
+  //Prepare offsets
+  mRefMap.cloneLinks( mOrigin, ps->mRefMap );
+  mNeedLink = true;
   }
 
 
@@ -266,6 +276,7 @@ SdRect SdGraphScript::getOverRect() const
 void SdGraphScript::draw(SdContext *dc)
   {
   if( mError.isEmpty() ) {
+    calculate();
     mRefMap.drawExcept( mOrigin, mProp, dc, -1 );
     mOverRect = mRefMap.getOverRect();
     }
@@ -311,3 +322,4 @@ void SdGraphScript::ajustProp()
   mProp.mMirror = 0;
   mProp.mHorz   = dhjLeft;
   }
+

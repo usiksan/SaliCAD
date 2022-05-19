@@ -54,6 +54,7 @@ class SdGraphScript : public SdGraphParam
     //This fields are remain unsaved and recalculated when script object loaded
     QString             mError;    //!< Error of script parsing. If no error then this string will be empty
     SdScriptProgrammPtr mProgramm; //!< Programm which builded from script parsing
+    bool                mNeedLink;
   public:
     //!
     //! \brief SdGraphScript Default constructor
