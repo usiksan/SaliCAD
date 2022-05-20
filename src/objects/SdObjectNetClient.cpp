@@ -170,7 +170,7 @@ void SdObjectNetClient::doSync()
     QString hostRepo        = s.value( SDK_SERVER_REPO ).toString();
     if( !hostRepo.isEmpty() && !author.isEmpty() && !password.isEmpty() ) {
       remoteStatus( SdRemoteSync );
-      qDebug() << "doSync localSyncIndex" << localSyncIndex << "remoteSyncIndex" << remoteSyncIndex;
+      //qDebug() << "doSync localSyncIndex" << localSyncIndex << "remoteSyncIndex" << remoteSyncIndex;
       //infoAppend( tr("Do sync...") );
       //Prepare block for transmition
       QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);

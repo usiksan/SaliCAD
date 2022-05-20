@@ -36,6 +36,8 @@ Description
 #include "SdPItemSheet.h"
 #include "script/SdScriptParserCalculator.h"
 
+#include <QDebug>
+
 SdGraphScript::SdGraphScript() :
   mNeedLink(false)
   {
@@ -86,8 +88,8 @@ void SdGraphScript::calculate()
     mNeedLink = false;
     }
   if( mProgramm ) {
+    mRefMap.clearCalculated();
     mProgramm->execute();
-    //mProgramm->execute();
     }
   }
 
@@ -143,6 +145,7 @@ void SdGraphScript::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next
   //Prepare offsets
   mRefMap.cloneLinks( mOrigin, ps->mRefMap );
   mNeedLink = true;
+  //qDebug() << "cloned";
   }
 
 
@@ -229,7 +232,7 @@ void SdGraphScript::selectByPoint(const SdPoint p, SdSelector *selector)
   {
   if( mProp.mLayer.isEdited() ) {
     if( !getSelector() && mOverRect.isPointInside(p) ) {
-      selector->insert( this );
+      select( selector );
       }
     }
   }
@@ -242,9 +245,18 @@ void SdGraphScript::selectByRect(const SdRect &r, SdSelector *selector)
   {
   if( mProp.mLayer.isEdited() ) {
     if( !getSelector() && r.isAccross( mOverRect ) ) {
-      selector->insert( this );
+      select( selector );
       }
     }
+  }
+
+
+
+void SdGraphScript::select(SdSelector *selector)
+  {
+  SdGraphParam::select( selector );
+  if( !mNeedLink )
+    mRefMap.fillLinks( mOrigin );
   }
 
 
@@ -276,9 +288,19 @@ SdRect SdGraphScript::getOverRect() const
 void SdGraphScript::draw(SdContext *dc)
   {
   if( mError.isEmpty() ) {
-    calculate();
+    if( getSelector() == nullptr )
+      calculate();
     mRefMap.drawExcept( mOrigin, mProp, dc, -1 );
     mOverRect = mRefMap.getOverRect();
+    if( getSelector() != nullptr ) {
+      //Set property
+      SdPropLine prop;
+      prop.mType = dltDashed;
+      prop.mLayer = mProp.mLayer;
+      dc->setProp( prop );
+      //Draw all links
+      mRefMap.drawLinks( mOrigin, dc );
+      }
     }
   else
     dc->text( mOrigin, mOverRect, QStringLiteral("Error: ") + mError, mProp );

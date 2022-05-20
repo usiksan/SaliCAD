@@ -85,6 +85,26 @@ void SdGraphScriptRef::draw(SdPoint p, const SdPropText &prop, SdContext *dc, bo
 
 
 
+
+//!
+//! \brief drawLink Draws line to link object
+//! \param p        Origin of script
+//! \param dc       Drawing context
+//!
+void SdGraphScriptRef::drawLink( SdPoint org, SdContext *dc) const
+  {
+  //If no reference then nothing draw
+  if( !mRefOffset.isNull() ) {
+    SdPoint src = mOverName.center();
+    org += mRefOffset;
+
+    dc->line( src, org );
+    dc->circle( org, 5 );
+    }
+  }
+
+
+
 QString SdGraphScriptRef::valueGet() const
   {
   if( checkRef() )

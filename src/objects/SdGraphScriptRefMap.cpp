@@ -1,4 +1,5 @@
 #include "SdGraphScriptRefMap.h"
+#include "SdPropLine.h"
 
 SdGraphScriptRefMap::SdGraphScriptRefMap()
   {
@@ -46,6 +47,18 @@ void SdGraphScriptRefMap::drawExcept(SdPoint p, const SdPropText &prop, SdContex
     mOverRect.grow( mRefList.at(i).overName() );
     mOverRect.grow( mRefList.at(i).overValue() );
     }
+  }
+
+
+
+//!
+//! \brief drawLinks Draw lines connected each variable with its referenced param
+//! \param dc        Draw context
+//!
+void SdGraphScriptRefMap::drawLinks(SdPoint org, SdContext *dc)
+  {
+  for( int i = 0; i < mRefList.count(); i++ )
+    mRefList[i].drawLink( org, dc );
   }
 
 
@@ -97,6 +110,31 @@ void SdGraphScriptRefMap::updateLinks( QPoint org, SdContainer *sheet )
         }
       }
     }
+  }
+
+
+
+
+//!
+//! \brief fillLinks Fills mRefOffset fields in SdGraphScriptRef
+//!
+void SdGraphScriptRefMap::fillLinks(SdPoint org )
+  {
+  for( int i = 0; i < mRefList.count(); i++ )
+    mRefList[i].mRefOffset = mRefList.at(i).refOffset( org );
+  }
+
+
+
+
+//!
+//! \brief clearCalculations Reset mCalculated field in SdGraphScriptRef
+//!                          so that it is correctly set during the calculation
+//!
+void SdGraphScriptRefMap::clearCalculated()
+  {
+  for( int i = 0; i < mRefList.count(); i++ )
+    mRefList[i].clearCalculated();
   }
 
 

@@ -57,7 +57,6 @@ class SdPoint : public QPoint
     void        move( SdPoint offset ) { setX( x() + offset.x() ); setY( y() + offset.y() ); }
     void        moveOriented(int dx, int dy, SdOrientation orient );
     SdPoint     complement() const { return SdPoint(-x(),-y()); }
-    bool        isEmpty() const { return x() == 0 && y() == 0; }
     SdPoint     sub( SdPoint b ) { return SdPoint( x() - b.x(), y() - b.y() ); }
     SdPoint     operator - ( SdPoint b ) { return sub(b); }
     SdPoint     operator + ( SdPoint b ) { return SdPoint( x() + b.x(), y() + b.y() ); }

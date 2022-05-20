@@ -55,6 +55,7 @@ class SdGraphScriptRef
             QString       mName;         //!< Name of param in original script (key)
             QString       mParam;        //!< Name of param in referenced object (for example "value")
             QString       mValue;        //!< Internal value of param. If present referenced object then this value not used
+            //Next fields not saved in file and calculated when reference draw
             SdRect        mOverName;     //!< Visual over rectangle over name of param
             SdRect        mOverValue;    //!< Visual over rectangle over value of param
             QPoint        mOriginValue;  //!< Visual origin point of value of param
@@ -111,7 +112,16 @@ class SdGraphScriptRef
     //! This function return this rectangle
     SdRect  overValue() const { return mOverValue; }
 
+    //!
+    //! \brief originValue Return origin of visual representaion of value
+    //! \return            Origin of visual representaion of value
+    //!
     SdPoint originValue() const { return mOriginValue; }
+
+    //!
+    //! \brief clearCalculated Reset mCalculated field so that it is correctly set during the calculation by valueSet
+    //!
+    void    clearCalculated() { mCalculated = false; }
 
     //!
     //! \brief draw      Draws variable at point p with visual property prop
@@ -122,6 +132,12 @@ class SdGraphScriptRef
     //!                  false then drawing name only
     //!
     void    draw( SdPoint p, const SdPropText &prop, SdContext *dc, bool drawValue );
+
+    //!
+    //! \brief drawLink Draws line to link object
+    //! \param dc       Drawing context
+    //!
+    void    drawLink( SdPoint org, SdContext *dc ) const;
 
     //!
     //! \brief valueGet Returns current value of variable
