@@ -99,7 +99,7 @@ void SdGraphScriptRef::drawLink( SdPoint org, SdContext *dc) const
     org += mRefOffset;
 
     dc->line( src, org );
-    dc->circle( org, 5 );
+    dc->circle( org, 50 );
     }
   }
 

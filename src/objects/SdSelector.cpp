@@ -19,7 +19,7 @@ Description
 #include <QClipboard>
 #include <QByteArray>
 #include <QMimeData>
-#include <QJsonDocument>
+#include <QCborValue>
 #include <QGuiApplication>
 #include <QImage>
 #include <QPainter>
@@ -44,7 +44,7 @@ SdSelector::~SdSelector()
 
 void SdSelector::markDeleteAll()
   {
-  for( SdGraph *graph : mTable ) {
+  for( SdGraph *graph : qAsConst(mTable) ) {
     graph->markDeleted(true);
     }
   }
@@ -54,7 +54,7 @@ void SdSelector::markDeleteAll()
 
 void SdSelector::removeAll()
   {
-  for( SdGraph *graph : mTable )
+  for( SdGraph *graph : qAsConst(mTable) )
     graph->mSelector = nullptr;
   mTable.clear();
   }
@@ -122,7 +122,7 @@ void SdSelector::putToClipboard( const SdProject *project, double scale )
   writeObject( obj );
 
   //Convert to byteArray
-  QByteArray array = QJsonDocument( obj ).toBinaryData();
+  QByteArray array = QCborValue::fromJsonValue( obj ).toByteArray();
 
   //Prepare mime data
   QMimeData *mime = new QMimeData();
@@ -172,7 +172,7 @@ SdProject *SdSelector::getFromClipboard()
     //Data with appropriate format present, read it
 
     //Retrive Json object from clipboard
-    QJsonObject obj = QJsonDocument::fromBinaryData( mime->data(QStringLiteral(SD_CLIP_FORMAT_SELECTOR)) ).object();
+    QJsonObject obj = QCborValue::fromCbor( mime->data(QStringLiteral(SD_CLIP_FORMAT_SELECTOR)) ).toJsonValue().toObject();
 
     //Create project
     SdProject *project = new SdProject();
@@ -249,7 +249,7 @@ SdRect SdSelector::getOverRect()
   if( mTable.count() ) {
     SdRect r;
     bool first = true;
-    for( SdGraph *graph : mTable )
+    for( SdGraph *graph : qAsConst(mTable) )
       if( !graph->isDeleted() ) {
         if( first ) {
           r = graph->getOverRect();
@@ -267,7 +267,7 @@ SdRect SdSelector::getOverRect()
 
 void SdSelector::draw(SdContext *ctx)
   {
-  for( SdGraph *graph : mTable )
+  for( SdGraph *graph : qAsConst(mTable) )
     if( graph != nullptr && !graph->isDeleted() )
       graph->draw( ctx );
   }
