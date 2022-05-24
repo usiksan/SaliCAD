@@ -1,15 +1,19 @@
 /*
-  Проект     "Повышение наглядности ввода-вывода json"
-  Автор
-    Сибилев А.С.
-  Описание
-    Здесь два класса: писатель и читатель. Сигнатуры вызова функций чтения и записи в
-    обоих классах полностью идентичны, поэтому вызовы могут быть скопированы и в функцию
-    записи и чтения
+  Project "Improving the visibility of json io"
+  Author
+    Alexander Sibilev
+  Description
+    There are two classes here: writer and reader. Signatures of calling read and write functions in
+    both classes are completely identical, so calls can be copied to both the write and read functions.
+  www
+    www.salilab.com
   History
     05.02.2022 v1 Begin version support
     05.03.2022 v2 Append QPoint support
     06.04.2022 v3 Append value of any class support which must be have jsonWrite and jsonRead members
+    21.04.2022 v4 Append map of list of any class support
+    26.04.2022 v5 Full English remark
+    24.05.2022 v6 Replace all const char* on QString which support both using with const char* and QString
 */
 #ifndef SVJSONIO_H
 #define SVJSONIO_H
@@ -21,7 +25,7 @@
 #include <QMap>
 #include <QPoint>
 
-#define SV_JSON_VERSION 3
+#define SV_JSON_VERSION 6
 
 //!
 //! \brief The SvJsonWriter class Unificate json io class, through which json written
@@ -48,21 +52,15 @@ class SvJsonWriter
     //! \brief object Returns destignator json object
     //! \return       Destignator json object
     //!
-    QJsonObject object() { return mObjectRef; }
-
-    //!
-    //! \brief ref Returns destignator json object reference to enable writing through pure QJsonObject
-    //! \return    Destignator json object reference to enable writing through pure QJsonObject
-    //!
-    QJsonObject &ref() { return mObjectRef; }
+    QJsonObject &object() { return mObjectRef; }
 
     //!
     //! \brief jsonBool Transfer bool value
     //! \param key      Key for value
     //! \param b        Bool value
     //!
-    void jsonBool( const char *key, bool b ) { mObjectRef.insert( QString(key), b ); }
-    void jsonBool( const char *key, bool b, bool ) { mObjectRef.insert( QString(key), b ); }
+    void jsonBool( const QString &key, bool b ) { mObjectRef.insert( key, b ); }
+    void jsonBool( const QString &key, bool b, bool ) { mObjectRef.insert( key, b ); }
 
 
     //!
@@ -70,8 +68,8 @@ class SvJsonWriter
     //! \param key     Key for value
     //! \param v       Int value
     //!
-    void jsonInt( const char *key, int v ) { mObjectRef.insert( QString(key), v ); }
-    void jsonInt( const char *key, int v, int ) { mObjectRef.insert( QString(key), v ); }
+    void jsonInt( const QString &key, int v ) { mObjectRef.insert( key, v ); }
+    void jsonInt( const QString &key, int v, int ) { mObjectRef.insert( key, v ); }
 
 
     //!
@@ -79,8 +77,8 @@ class SvJsonWriter
     //! \param key     Key for value
     //! \param v       Int value
     //!
-    void jsonColor( const char *key, QColor color ) { mObjectRef.insert( QString(key), color.name() ); }
-    void jsonColor( const char *key, QColor color, QColor ) { mObjectRef.insert( QString(key), color.name() ); }
+    void jsonColor( const QString &key, QColor color ) { mObjectRef.insert( key, color.name() ); }
+    void jsonColor( const QString &key, QColor color, QColor ) { mObjectRef.insert( key, color.name() ); }
 
 
     //!
@@ -88,8 +86,8 @@ class SvJsonWriter
     //! \param key        Key for value
     //! \param d          Double value
     //!
-    void jsonDouble( const char *key, double d ) { mObjectRef.insert( QString(key), d ); }
-    void jsonDouble( const char *key, double d, double ) { mObjectRef.insert( QString(key), d ); }
+    void jsonDouble( const QString &key, double d ) { mObjectRef.insert( key, d ); }
+    void jsonDouble( const QString &key, double d, double ) { mObjectRef.insert( key, d ); }
 
 
     //!
@@ -97,8 +95,8 @@ class SvJsonWriter
     //! \param key        Key for value
     //! \param s          String to transfer
     //!
-    void jsonString( const char *key, const QString &s ) { mObjectRef.insert( QString(key), s ); }
-    void jsonString( const char *key, const QString &s, QString ) { mObjectRef.insert( QString(key), s ); }
+    void jsonString( const QString &key, const QString &s ) { mObjectRef.insert( key, s ); }
+    void jsonString( const QString &key, const QString &s, QString ) { mObjectRef.insert( key, s ); }
 
 
     //!
@@ -106,11 +104,11 @@ class SvJsonWriter
     //! \param key       Key for value
     //! \param p         Point to transfer
     //!
-    void jsonPoint( const char *key, QPoint p ) {
+    void jsonPoint( const QString &key, QPoint p ) {
       SvJsonWriter js;
       js.jsonInt("x", p.rx() );
       js.jsonInt("y", p.ry() );
-      mObjectRef.insert( QString(key), js.object() );
+      mObjectRef.insert( key, js.object() );
       }
 
 
@@ -119,12 +117,26 @@ class SvJsonWriter
     //! \param key         Key for list
     //! \param list        List to transfer
     //!
-    void jsonListInt( const char *key, const QList<int> &list )
+    void jsonListInt( const QString &key, const QList<int> &list )
       {
       QJsonArray ar;
       for( auto const &item : list )
         ar.append( item );
-      mObjectRef.insert( QString(key), ar );
+      mObjectRef.insert( key, ar );
+      }
+
+
+    //!
+    //! \brief jsonListInt Transfer list of double values
+    //! \param key         Key for list
+    //! \param list        List to transfer
+    //!
+    void jsonListDouble( const QString &key, const QList<double> &list )
+      {
+      QJsonArray ar;
+      for( auto const &item : list )
+        ar.append( item );
+      mObjectRef.insert( key, ar );
       }
 
 
@@ -133,12 +145,12 @@ class SvJsonWriter
     //! \param key            Key for list
     //! \param list           List to transfer
     //!
-    void jsonListString( const char *key, const QStringList &list )
+    void jsonListString( const QString &key, const QStringList &list )
       {
       QJsonArray ar;
       for( auto const &item : list )
         ar.append( item );
-      mObjectRef.insert( QString(key), ar );
+      mObjectRef.insert( key, ar );
       }
 
 
@@ -150,7 +162,7 @@ class SvJsonWriter
     //! \param list     List to transfer
     //!
     template<typename SvClass>
-    void jsonList( const char *key, const QList<SvClass> &list )
+    void jsonList( const QString &key, const QList<SvClass> &list )
       {
       QJsonArray ar;
       for( auto const &item : list ) {
@@ -158,7 +170,7 @@ class SvJsonWriter
         item.jsonWrite( js );
         ar.append( js.object() );
         }
-      mObjectRef.insert( QString(key), ar );
+      mObjectRef.insert( key, ar );
       }
 
 
@@ -171,7 +183,7 @@ class SvJsonWriter
     //! \param list        List to transfer
     //!
     template<typename SvClass>
-    void jsonListPtr( const char *key, const QList<SvClass*> &list )
+    void jsonListPtr( const QString &key, const QList<SvClass*> &list )
       {
       QJsonArray ar;
       for( auto const &item : list ) {
@@ -179,7 +191,7 @@ class SvJsonWriter
         item->jsonWrite( js );
         ar.append( js.object() );
         }
-      mObjectRef.insert( QString(key), ar );
+      mObjectRef.insert( key, ar );
       }
 
 
@@ -188,12 +200,12 @@ class SvJsonWriter
     //! \param key           Key for map
     //! \param map           Map to transfer
     //!
-    void jsonMapString( const char *key, const QMap<QString,QString> &map )
+    void jsonMapString( const QString &key, const QMap<QString,QString> &map )
       {
       QJsonObject obj;
       for( auto i = map.constBegin(); i != map.constEnd(); i++ )
         obj.insert( i.key(), i.value() );
-      mObjectRef.insert( QString(key), obj );
+      mObjectRef.insert( key, obj );
       }
 
 
@@ -202,12 +214,12 @@ class SvJsonWriter
     //! \param key        Key for map
     //! \param map        Map to transfer
     //!
-    void jsonMapInt( const char *key, const QMap<QString,int> &map )
+    void jsonMapInt( const QString &key, const QMap<QString,int> &map )
       {
       QJsonObject obj;
       for( auto i = map.constBegin(); i != map.constEnd(); i++ )
         obj.insert( i.key(), i.value() );
-      mObjectRef.insert( QString(key), obj );
+      mObjectRef.insert( key, obj );
       }
 
 
@@ -219,7 +231,7 @@ class SvJsonWriter
     //! \param list    Map to transfer
     //!
     template<typename SvClass>
-    void jsonMap( const char *key, const QMap<QString,SvClass> &map )
+    void jsonMap( const QString &key, const QMap<QString,SvClass> &map )
       {
       QJsonObject obj;
       for( auto i = map.constBegin(); i != map.constEnd(); i++ ) {
@@ -227,19 +239,46 @@ class SvJsonWriter
         i.value().jsonWrite( js );
         obj.insert( i.key(), js.object() );
         }
-      mObjectRef.insert( QString(key), obj );
+      mObjectRef.insert( key, obj );
       }
 
 
+
     //!
-    //! \brief jsonMap Template transfer map of any values with QString as key
-    //!                Value class must contains jsonRead method, which builds
-    //!                object from json
-    //! \param key     Key for map
-    //! \param list    Map to transfer
+    //! \brief jsonMapList Template transfer map of list of any values with QString
+    //!                    as key of map. Value class must contains jsonWrite method,
+    //!                    which do writing into SvJsonWriter object
+    //! \param key         Key for map
+    //! \param map         Map of list of object to transfer
+    //!
+    template <typename SvClass>
+    void jsonMapList( const QString &key, const QMap<QString, QList<SvClass> > &map )
+      {
+      QJsonObject obj;
+      for( auto i = map.constBegin(); i != map.constEnd(); i++ ) {
+        QJsonArray ar;
+        auto list = i.value();
+        for( auto const &item : list ) {
+          SvJsonWriter js;
+          item.jsonWrite( js );
+          ar.append( js.object() );
+          }
+        obj.insert( i.key(), ar );
+        }
+      mObjectRef.insert( key, obj );
+      }
+
+
+
+    //!
+    //! \brief jsonMapPtr Template transfer map of any values with QString as key
+    //!                   Value class must contains jsonRead method, which builds
+    //!                   object from json
+    //! \param key        Key for map
+    //! \param list       Map to transfer
     //!
     template<typename SvClass>
-    void jsonMapPtr( const char *key, const QMap<QString,SvClass*> &map )
+    void jsonMapPtr( const QString &key, const QMap<QString,SvClass*> &map )
       {
       QJsonObject obj;
       for( auto i = map.constBegin(); i != map.constEnd(); i++ ) {
@@ -247,7 +286,7 @@ class SvJsonWriter
         i.value()->jsonWrite( js );
         obj.insert( i.key(), js.object() );
         }
-      mObjectRef.insert( QString(key), obj );
+      mObjectRef.insert( key, obj );
       }
 
 
@@ -259,11 +298,11 @@ class SvJsonWriter
     //! \param obj        Object to transfer
     //!
     template<typename SvClass>
-    void jsonObject( const char *key, const SvClass &obj )
+    void jsonObject( const QString &key, const SvClass &obj )
       {
       SvJsonWriter js;
       obj.jsonWrite( js );
-      mObjectRef.insert( QString(key), js.object() );
+      mObjectRef.insert( key, js.object() );
       }
 
 
@@ -275,11 +314,11 @@ class SvJsonWriter
     //! \param objPtr        Object pointer to transfer
     //!
     template<typename SvClass>
-    void jsonObjectPtr( const char *key, const SvClass *objPtr )
+    void jsonObjectPtr( const QString &key, const SvClass *objPtr )
       {
       SvJsonWriter js;
       objPtr->jsonWrite( js );
-      mObjectRef.insert( QString(key), js.object() );
+      mObjectRef.insert( key, js.object() );
       }
 
 
@@ -291,24 +330,10 @@ class SvJsonWriter
     //! \param val       Object value to transfer
     //!
     template<typename SvClass>
-    void jsonValue( const char *key, const SvClass &val )
+    void jsonValue( const QString &key, const SvClass &val )
       {
       val.jsonWrite( key, *this );
       }
-
-
-//    template<typename SvClass>
-//    //!
-//    //! \brief jsonValuePure Template transfer any value as json value
-//    //!
-//    //! \param key
-//    //! \param val
-//    //!
-//    void jsonValuePure( const char *key, const SvClass &val )
-//      {
-//      val.jsonWrite( QString(key), mObjectRef );
-//      }
-
 
   };
 
@@ -330,49 +355,55 @@ class SvJsonReader
     SvJsonReader( const QJsonObject &obj ) : mObject(obj) {}
 
     const QJsonObject &object() const { return mObject; }
+
     //!
     //! \brief jsonBool Transfer bool value
     //! \param key      Key for value
     //! \param b        Bool value
+    //! \param def      Default value of param when error while reading occur
     //!
-    void jsonBool( const char *title, bool &b ) { b = mObject.value( QString(title) ).toBool(); }
-    void jsonBool( const char *title, bool &b, bool def ) { b = mObject.value( QString(title) ).toBool( def ); }
+    void jsonBool( const QString &key, bool &b ) { b = mObject.value( key ).toBool(); }
+    void jsonBool( const QString &key, bool &b, bool def ) { b = mObject.value( key ).toBool( def ); }
 
 
     //!
     //! \brief jsonInt Transfer int value
     //! \param key     Key for value
     //! \param v       Int value
+    //! \param def      Default value of param when error while reading occur
     //!
-    void jsonInt( const char *key, int &v ) { v = mObject.value( QString(key) ).toInt(); }
-    void jsonInt( const char *key, int &v, int def ) { v = mObject.value( QString(key) ).toInt( def ); }
+    void jsonInt( const QString &key, int &v ) { v = mObject.value( key ).toInt(); }
+    void jsonInt( const QString &key, int &v, int def ) { v = mObject.value( key ).toInt( def ); }
 
 
     //!
     //! \brief jsonInt Transfer color value
     //! \param key     Key for value
     //! \param v       Int value
+    //! \param def      Default value of param when error while reading occur
     //!
-    void jsonColor( const char *key, QColor &color ) { color = QColor( mObject.value( QString(key) ).toString() ); }
-    void jsonColor( const char *key, QColor &color, QColor def ) { color = QColor( mObject.value( QString(key) ).toString( def.name() ) ); }
+    void jsonColor( const QString &key, QColor &color ) { color = QColor( mObject.value( key ).toString() ); }
+    void jsonColor( const QString &key, QColor &color, QColor def ) { color = QColor( mObject.value( key ).toString( def.name() ) ); }
 
 
     //!
     //! \brief jsonDouble Transfer double value
     //! \param key        Key for value
     //! \param d          Double value
+    //! \param def        Default value of param when error while reading occur
     //!
-    void jsonDouble( const char *key, double &d ) { d = mObject.value( QString(key) ).toDouble(); }
-    void jsonDouble( const char *key, double &d, double def ) { d = mObject.value( QString(key) ).toDouble( def ); }
+    void jsonDouble( const QString &key, double &d ) { d = mObject.value( key ).toDouble(); }
+    void jsonDouble( const QString &key, double &d, double def ) { d = mObject.value( key ).toDouble( def ); }
 
 
     //!
     //! \brief jsonString Transfer string value
     //! \param key        Key for value
     //! \param s          String to transfer
+    //! \param def        Default value of param when error while reading occur
     //!
-    void jsonString( const char *key, QString &s ) { s = mObject.value( QString(key) ).toString(); }
-    void jsonString( const char *key, QString &s, QString def ) { s = mObject.value( QString(key) ).toString( def ); }
+    void jsonString( const QString &key, QString &s ) { s = mObject.value( key ).toString(); }
+    void jsonString( const QString &key, QString &s, QString def ) { s = mObject.value( key ).toString( def ); }
 
 
     //!
@@ -380,8 +411,8 @@ class SvJsonReader
     //! \param key       Key for value
     //! \param p         Point to transfer
     //!
-    void jsonPoint( const char *key, QPoint &p ) {
-      SvJsonReader js( mObject.value( QString(key) ).toObject() );
+    void jsonPoint( const QString &key, QPoint &p ) {
+      SvJsonReader js( mObject.value( key ).toObject() );
       js.jsonInt("x", p.rx() );
       js.jsonInt("y", p.ry() );
       }
@@ -392,10 +423,10 @@ class SvJsonReader
     //! \param key         Key for list
     //! \param list        List to transfer
     //!
-    void jsonListInt( const char *key, QList<int> &list )
+    void jsonListInt( const QString &key, QList<int> &list )
       {
       list.clear();
-      QJsonArray ar = mObject.value( QString(key) ).toArray();
+      QJsonArray ar = mObject.value( key ).toArray();
       list.reserve( ar.count() );
       for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
         int v = i->toInt();
@@ -404,15 +435,34 @@ class SvJsonReader
       }
 
 
+
+    //!
+    //! \brief jsonListInt Transfer list of double values
+    //! \param key         Key for list
+    //! \param list        List to transfer
+    //!
+    void jsonListDouble( const QString &key, QList<double> &list )
+      {
+      list.clear();
+      QJsonArray ar = mObject.value( key ).toArray();
+      list.reserve( ar.count() );
+      for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
+        double v = i->toDouble();
+        list.append( v );
+        }
+      }
+
+
+
     //!
     //! \brief jsonListString Transfer list of string values
     //! \param key            Key for list
     //! \param list           List to transfer
     //!
-    void jsonListString( const char *key, QStringList &list )
+    void jsonListString( const QString &key, QStringList &list )
       {
       list.clear();
-      QJsonArray ar = mObject.value( QString(key) ).toArray();
+      QJsonArray ar = mObject.value( key ).toArray();
       list.reserve( ar.count() );
       for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
         QString v = i->toString();
@@ -429,10 +479,10 @@ class SvJsonReader
     //! \param list     List to transfer
     //!
     template<typename SvClass>
-    void jsonList( const char *key, QList<SvClass> &list )
+    void jsonList( const QString &key, QList<SvClass> &list )
       {
       list.clear();
-      QJsonArray ar = mObject.value( QString(key) ).toArray();
+      QJsonArray ar = mObject.value( key ).toArray();
       list.reserve( ar.count() );
       for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
         SvClass item;
@@ -452,11 +502,11 @@ class SvJsonReader
     //! \param list        List to transfer
     //!
     template<typename SvClass>
-    void jsonListPtr( const char *key, QList<SvClass*> &list )
+    void jsonListPtr( const QString &key, QList<SvClass*> &list )
       {
       qDeleteAll(list);
       list.clear();
-      QJsonArray ar = mObject.value( QString(key) ).toArray();
+      QJsonArray ar = mObject.value( key ).toArray();
       list.reserve( ar.count() );
       for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
         SvJsonReader js( i->toObject() );
@@ -476,10 +526,10 @@ class SvJsonReader
     //! \param key           Key for map
     //! \param map           Map to transfer
     //!
-    void jsonMapString( const char *key, QMap<QString,QString> &map )
+    void jsonMapString( const QString &key, QMap<QString,QString> &map )
       {
       map.clear();
-      QJsonObject obj = mObject.value( QString(key) ).toObject();
+      QJsonObject obj = mObject.value( key ).toObject();
       for( auto i = obj.constBegin(); i != obj.constEnd(); i++ ) {
         QString str = i.value().toString();
         map.insert( i.key(), str );
@@ -493,10 +543,10 @@ class SvJsonReader
     //! \param key        Key for map
     //! \param map        Map to transfer
     //!
-    void jsonMapInt( const char *key, QMap<QString,int> &map )
+    void jsonMapInt( const QString &key, QMap<QString,int> &map )
       {
       map.clear();
-      QJsonObject obj = mObject.value( QString(key) ).toObject();
+      QJsonObject obj = mObject.value( key ).toObject();
       for( auto i = obj.constBegin(); i != obj.constEnd(); i++ ) {
         int v = i.value().toInt();
         map.insert( i.key(), v );
@@ -512,10 +562,10 @@ class SvJsonReader
     //! \param list    Map to transfer
     //!
     template<typename SvClass>
-    void jsonMap( const char *key, QMap<QString,SvClass> &map )
+    void jsonMap( const QString &key, QMap<QString,SvClass> &map )
       {
       map.clear();
-      QJsonObject obj = mObject.value( QString(key) ).toObject();
+      QJsonObject obj = mObject.value( key ).toObject();
       for( auto i = obj.constBegin(); i != obj.constEnd(); i++ ) {
         SvClass item;
         SvJsonReader js( i.value().toObject() );
@@ -525,19 +575,49 @@ class SvJsonReader
       }
 
 
+
+
     //!
-    //! \brief jsonMap Template transfer map of any values with QString as key
-    //!                Value class must contains jsonRead method, which builds
-    //!                object from json
-    //! \param key     Key for map
-    //! \param list    Map to transfer
+    //! \brief jsonMapList Template transfer map of list of any values with QString
+    //!                    as key of map. Value class must contains jsonWrite method,
+    //!                    which do writing into SvJsonWriter object
+    //! \param key         Key for map
+    //! \param map         Map of list of object to transfer
+    //!
+    template <typename SvClass>
+    void jsonMapList( const QString &key, const QMap<QString, QList<SvClass> > &map )
+      {
+      map.clear();
+      QJsonObject obj = mObject.value( key ).toObject();
+      for( auto i = obj.constBegin(); i != obj.constEnd(); i++ ) {
+        QJsonArray ar = i.value().toArray();
+        QList<SvClass> list;
+        list.reserve( ar.count() );
+        for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
+          SvClass item;
+          SvJsonReader js( i->toObject() );
+          item.jsonRead( js );
+          list.append( item );
+          }
+        map.insert( i.key(), list );
+        }
+      }
+
+
+
+    //!
+    //! \brief jsonMapPtr Template transfer map of any values with QString as key
+    //!                   Value class must contains jsonRead method, which builds
+    //!                   object from json
+    //! \param key        Key for map
+    //! \param list       Map to transfer
     //!
     template<typename SvClass>
-    void jsonMapPtr( const char *key, QMap<QString,SvClass*> &map )
+    void jsonMapPtr( const QString &key, QMap<QString,SvClass*> &map )
       {
       qDeleteAll(map);
       map.clear();
-      QJsonObject obj = mObject.value( QString(key) ).toObject();
+      QJsonObject obj = mObject.value( key ).toObject();
       for( auto i = obj.constBegin(); i != obj.constEnd(); i++ ) {
         SvJsonReader js( i.value().toObject() );
         SvClass *item = SvClass::build( js );
@@ -557,9 +637,9 @@ class SvJsonReader
     //! \param obj        Object to transfer
     //!
     template<typename SvClass>
-    void jsonObject( const char *key, SvClass &obj )
+    void jsonObject( const QString &key, SvClass &obj )
       {
-      SvJsonReader js( mObject.value( QString(key) ).toObject() );
+      SvJsonReader js( mObject.value( key ).toObject() );
       obj.jsonRead( js );
       }
 
@@ -572,9 +652,9 @@ class SvJsonReader
     //! \param objPtr        Object pointer to transfer
     //!
     template<typename SvClass>
-    void jsonObjectPtr( const char *key, SvClass *objPtr )
+    void jsonObjectPtr( const QString &key, SvClass *objPtr )
       {
-      SvJsonReader js( mObject.value( QString(key) ).toObject() );
+      SvJsonReader js( mObject.value( key ).toObject() );
       objPtr->jsonRead( js );
       }
 
@@ -587,7 +667,7 @@ class SvJsonReader
     //! \param val       Object value to transfer
     //!
     template<typename SvClass>
-    void jsonValue( const char *key, SvClass &val )
+    void jsonValue( const QString &key, SvClass &val )
       {
       val.jsonRead( key, *this );
       }
@@ -611,7 +691,7 @@ class SvJsonReaderExt : public SvJsonReader
     //! \brief SvJsonReader Constructor for reader
     //! \param obj          Object which json readed
     //!
-    SvJsonReaderExt( const QJsonObject &obj, SvProperty *prop = nullptr ) : SvJsonReader(obj), mProperty(prop) {}
+    SvJsonReaderExt( const QJsonObject &obj, SvProperty *prop ) : SvJsonReader(obj), mProperty(prop) {}
 
     //!
     //! \brief property Returns current property of reader
@@ -627,10 +707,10 @@ class SvJsonReaderExt : public SvJsonReader
     //! \param list     List to transfer
     //!
     template<typename SvClass>
-    void jsonList( const char *key, QList<SvClass> &list )
+    void jsonList( const QString &key, QList<SvClass> &list )
       {
       list.clear();
-      QJsonArray ar = mObject.value( QString(key) ).toArray();
+      QJsonArray ar = mObject.value( key ).toArray();
       for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
         SvClass item;
         SvJsonReaderExt<SvProperty> js( i->toObject(), mProperty );
@@ -649,11 +729,11 @@ class SvJsonReaderExt : public SvJsonReader
     //! \param list        List to transfer
     //!
     template<typename SvClass>
-    void jsonListPtr( const char *key, QList<SvClass*> &list )
+    void jsonListPtr( const QString &key, QList<SvClass*> &list )
       {
       qDeleteAll(list);
       list.clear();
-      QJsonArray ar = mObject.value( QString(key) ).toArray();
+      QJsonArray ar = mObject.value( key ).toArray();
       for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
         SvJsonReaderExt<SvProperty> js( i->toObject(), mProperty );
         SvClass *item = SvClass::build( js );
@@ -673,10 +753,10 @@ class SvJsonReaderExt : public SvJsonReader
     //! \param list    Map to transfer
     //!
     template<typename SvClass>
-    void jsonMap( const char *key, QMap<QString,SvClass> &map )
+    void jsonMap( const QString &key, QMap<QString,SvClass> &map )
       {
       map.clear();
-      QJsonObject obj = mObject.value( QString(key) ).toObject();
+      QJsonObject obj = mObject.value( key ).toObject();
       for( auto i = obj.constBegin(); i != obj.constEnd(); i++ ) {
         SvClass item;
         SvJsonReaderExt<SvProperty> js( i.value().toObject(), mProperty );
@@ -686,19 +766,48 @@ class SvJsonReaderExt : public SvJsonReader
       }
 
 
+
+
     //!
-    //! \brief jsonMap Template transfer map of any values with QString as key
-    //!                Value class must contains jsonRead method, which builds
-    //!                object from json
-    //! \param key     Key for map
-    //! \param list    Map to transfer
+    //! \brief jsonMapList Template transfer map of list of any values with QString
+    //!                    as key of map. Value class must contains jsonWrite method,
+    //!                    which do writing into SvJsonWriter object
+    //! \param key         Key for map
+    //! \param map         Map of list of object to transfer
+    //!
+    template <typename SvClass>
+    void jsonMapList( const QString &key, QMap<QString, QList<SvClass> > &map )
+      {
+      map.clear();
+      QJsonObject obj = mObject.value( key ).toObject();
+      for( auto i = obj.constBegin(); i != obj.constEnd(); i++ ) {
+        QJsonArray ar = i.value().toArray();
+        QList<SvClass> list;
+        list.reserve( ar.count() );
+        for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
+          SvClass item;
+          SvJsonReaderExt<SvProperty> js( i->toObject(), mProperty );
+          item.jsonRead( js );
+          list.append( item );
+          }
+        map.insert( i.key(), list );
+        }
+      }
+
+
+    //!
+    //! \brief jsonMapPtr Template transfer map of any values with QString as key
+    //!                   Value class must contains jsonRead method, which builds
+    //!                   object from json
+    //! \param key        Key for map
+    //! \param list       Map to transfer
     //!
     template<typename SvClass>
-    void jsonMapPtr( const char *key, QMap<QString,SvClass*> &map )
+    void jsonMapPtr( const QString &key, QMap<QString,SvClass*> &map )
       {
       qDeleteAll(map);
       map.clear();
-      QJsonObject obj = mObject.value( QString(key) ).toObject();
+      QJsonObject obj = mObject.value( key ).toObject();
       for( auto i = obj.constBegin(); i != obj.constEnd(); i++ ) {
         SvJsonReaderExt<SvProperty> js( i.value().toObject(), mProperty );
         SvClass *item = SvClass::build( js );
@@ -718,9 +827,9 @@ class SvJsonReaderExt : public SvJsonReader
     //! \param obj        Object to transfer
     //!
     template<typename SvClass>
-    void jsonObject( const char *key, SvClass &obj )
+    void jsonObject( const QString &key, SvClass &obj )
       {
-      SvJsonReaderExt<SvProperty> js( mObject.value( QString(key) ).toObject(), mProperty );
+      SvJsonReaderExt<SvProperty> js( mObject.value( key ).toObject(), mProperty );
       obj.jsonRead( js );
       }
 
@@ -733,9 +842,9 @@ class SvJsonReaderExt : public SvJsonReader
     //! \param objPtr        Object pointer to transfer
     //!
     template<typename SvClass>
-    void jsonObjectPtr( const char *key, SvClass *objPtr )
+    void jsonObjectPtr( const QString &key, SvClass *objPtr )
       {
-      SvJsonReaderExt<SvProperty> js( mObject.value( QString(key) ).toObject(), mProperty );
+      SvJsonReaderExt<SvProperty> js( mObject.value( key ).toObject(), mProperty );
       objPtr->jsonRead( js );
       }
 
@@ -748,7 +857,7 @@ class SvJsonReaderExt : public SvJsonReader
     //! \param val       Object value to transfer
     //!
     template<typename SvClass>
-    void jsonValue( const char *key, SvClass &val )
+    void jsonValue( const QString &key, SvClass &val )
       {
       val.jsonRead( key, *this );
       }

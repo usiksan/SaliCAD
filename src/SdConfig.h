@@ -247,6 +247,9 @@ History
 //Current SaliCAD database version
 #define SD_BASE_VERSION              SD_BASE_VERSION_1
 
+//Salicad json file type description
+#define SD_BASE_TYPE                 "SaliCAD file"
+
 //Previous file count in menu
 #define PREVIOUS_FILES_COUNT         10
 

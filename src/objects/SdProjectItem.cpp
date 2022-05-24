@@ -474,6 +474,33 @@ void SdProjectItem::readObject(SdObjectMap *map, const QJsonObject obj)
 
 
 
+
+void SdProjectItem::jsonWrite(SdJsonWriter &js) const
+  {
+  SdContainer::jsonWrite( js );
+  js.jsonString( QStringLiteral("Title"),     mTitle );
+  js.jsonString( QStringLiteral("Author"),    mAuthor );
+  js.jsonInt(  QStringLiteral("Created"),     mCreateTime );
+  js.jsonBool( QStringLiteral("Auto"),        mAuto );
+  js.jsonBool( QStringLiteral("Edit enable"), mEditEnable );
+  js.jsonObject( QStringLiteral("Origin"),    mOrigin );
+  }
+
+
+
+void SdProjectItem::jsonRead(SdJsonReader &js)
+  {
+  SdContainer::jsonRead( js );
+  js.jsonString( QStringLiteral("Title"),     mTitle );
+  js.jsonString( QStringLiteral("Author"),    mAuthor );
+  js.jsonInt(  QStringLiteral("Created"),     mCreateTime );
+  js.jsonBool( QStringLiteral("Auto"),        mAuto );
+  js.jsonBool( QStringLiteral("Edit enable"), mEditEnable );
+  js.jsonObject( QStringLiteral("Origin"),    mOrigin );
+  }
+
+
+
 //!
 //! \brief cloneFrom Overrided function. We copy object from source
 //! \param src       Source of object from which copy must be made

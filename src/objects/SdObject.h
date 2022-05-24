@@ -32,6 +32,8 @@ class SdCopyMap;
 class SdProjectItem;
 class QWidget;
 class SdObject;
+class SdJsonWriter;
+class SdJsonReader;
 
 typedef QString SdId;
 typedef QString SdUid;
@@ -132,6 +134,14 @@ class SdObject
       {
       return dynamic_cast<SdClass*>( readPtr( name, map, obj ) );
       }
+
+
+    //Alternate write and read object
+    QByteArray        toByteArray() const;
+    void              fromByteArray( const QByteArray &ar );
+
+    virtual void      jsonWrite( SdJsonWriter &js ) const;
+    virtual void      jsonRead( SdJsonReader &js );
   };
 
 //Convert object only to desired type, other way - deleted

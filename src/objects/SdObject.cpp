@@ -352,3 +352,48 @@ SdObject *SdObject::build(QString type)
 
 
 
+
+QByteArray SdObject::toByteArray() const
+  {
+  //Writer
+  SdJsonWriter js;
+
+  //Prepare version and type
+  int version = SD_BASE_VERSION;
+  QString jsonType(SD_BASE_TYPE);
+
+  //Store version and type
+  js.jsonInt( "A version", version, 0 );
+  js.jsonString( "A file type", jsonType );
+
+  //Store object
+  jsonWrite( js );
+
+  //Return QByteArray representation
+  return svJsonObjectToByteArray( js.object() );
+  }
+
+
+
+
+void SdObject::fromByteArray(const QByteArray &ar)
+  {
+  //Reader
+  //SdJsonReader js( );
+  }
+
+
+
+
+void SdObject::jsonWrite(SdJsonWriter &js) const
+  {
+  Q_UNUSED(js)
+  }
+
+void SdObject::jsonRead(SdJsonReader &js)
+  {
+  Q_UNUSED(js)
+  }
+
+
+
