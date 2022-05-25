@@ -28,20 +28,24 @@ SdStratum::SdStratum(int str) :
 
 
 
-
 //Write-read stratum
-void SdStratum::writeStratum(QJsonObject &obj) const
+void SdStratum::jsonStratum(SvJsonWriter &js) const
   {
-  obj.insert( QStringLiteral("Stratum"), QString::number( mValue, 16 ) );
+  js.object().insert( QStringLiteral("Stratum"), QString::number( mValue, 16 ) );
+  }
+
+
+
+void SdStratum::jsonStratum(const SvJsonReader &js)
+  {
+  mValue = js.object().value( QStringLiteral("Stratum") ).toString().toInt( nullptr, 16 );
   }
 
 
 
 
-void SdStratum::readStratum(const QJsonObject &obj)
-  {
-  mValue = obj.value( QStringLiteral("Stratum") ).toString().toInt( nullptr, 16 );
-  }
+
+
 
 
 

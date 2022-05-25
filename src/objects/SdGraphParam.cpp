@@ -14,7 +14,7 @@ Description
 #include "SdGraphParam.h"
 #include "SdContext.h"
 #include "SdSelector.h"
-#include "SvJsonIO.h"
+#include "SdJsonIO.h"
 
 SdGraphParam::SdGraphParam() :
   SdGraph()
@@ -48,23 +48,30 @@ void SdGraphParam::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
 
 
 
-
-
-
-
-void SdGraphParam::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphParam::json(SdJsonWriter &js) const
   {
-  SdGraph::writeObject( obj );
   //Parameters
-  sdStringMapWrite( QStringLiteral("Param"), mParamTable, obj );
+  js.jsonMapString( QStringLiteral("Param"), mParamTable );
+  SdGraph::json( js );
   }
 
 
 
-void SdGraphParam::readObject(SdObjectMap *map, const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphParam::json(const SdJsonReader &js)
   {
-  SdGraph::readObject( map, obj );
   //Parameters
-  sdStringMapRead( QStringLiteral("Param"), mParamTable, obj );
+  js.jsonMapString( QStringLiteral("Param"), mParamTable );
+  SdGraph::json( js );
   }
+
 

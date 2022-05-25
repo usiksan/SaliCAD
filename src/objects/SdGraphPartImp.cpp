@@ -26,6 +26,7 @@ Description
 #include "SdEnvir.h"
 #include "SdPlateNetList.h"
 #include "SdObjectFactory.h"
+#include "SdJsonIO.h"
 
 #include <QDebug>
 
@@ -144,28 +145,60 @@ void SdPartImpPin::accumWindows(SdPItemPlate *plate, SdPolyWindowList &dest, int
 
 
 
-QJsonObject SdPartImpPin::toJson( const QString pinNumber ) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
+//!
+void SdPartImpPin::json(SdJsonWriter &js) const
   {
-  QJsonObject obj;
-  SdObject::writePtr( mPin, QStringLiteral("Pin"), obj );          //Original pin
-  SdObject::writePtr( mSection, QStringLiteral("Section"), obj );  //Section
-  obj.insert( QStringLiteral("PinNum"), pinNumber );               //Part pin number
-  obj.insert( QStringLiteral("PinNam"), mPinName );                //Part pin name
-  mPosition.write( QStringLiteral("Pos"), obj );                   //Pin position in plate context
-  mStratum.writeStratum( obj );
-  return obj;
+  //Original pin
+  js.jsonObjectPtr( QStringLiteral("Pin"), mPin );
+
+  //Section
+  js.jsonObjectPtr( QStringLiteral("Section"), mSection );
+
+  //Part pin name
+  js.jsonString( QStringLiteral("PinNam"), mPinName );
+
+  //Pin position in plate context
+  js.jsonPoint( QStringLiteral("Pos"), mPosition );
+  mStratum.jsonStratum( js );
   }
+
+
+
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
+//!
+void SdPartImpPin::json(const SdJsonReader &js)
+  {
+  //Original pin
+  js.jsonObjectPtr( QStringLiteral("Pin"), mPin );
+
+  //Section
+  js.jsonObjectPtr( QStringLiteral("Section"), mSection );
+
+  //Part pin name
+  js.jsonString( QStringLiteral("PinNam"), mPinName );
+
+  //Pin position in plate context
+  js.jsonPoint( QStringLiteral("Pos"), mPosition );
+  mStratum.jsonStratum( js );
+  }
+
+
+
+
 
 
 
 
 QString SdPartImpPin::fromJson(SdObjectMap *map, const QJsonObject obj)
   {
-  mPin = dynamic_cast<SdGraphPartPin*>( SdObject::readPtr( QStringLiteral("Pin"), map, obj )  );
-  mSection = dynamic_cast<SdGraphSymImp*>( SdObject::readPtr( QStringLiteral("Section"), map, obj )  );
-  mPinName = obj.value( QStringLiteral("PinNam") ).toString();            //Part pin name
-  mPosition.read( QStringLiteral("Pos"), obj );                           //Pin position in plate context
-  mStratum.readStratum( obj );
+  SdJsonReader js( obj, map );
+  json( js );
   return obj.value( QStringLiteral("PinNum") ).toString();
   }
 
@@ -175,20 +208,29 @@ QString SdPartImpPin::fromJson(SdObjectMap *map, const QJsonObject obj)
 
 //====================================================================================
 //Section in part implementation
-QJsonObject SdPartImpSection::toJson() const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
+//!
+void SdPartImpSection::json(SdJsonWriter &js) const
   {
-  QJsonObject obj;
-  SdObject::writePtr( mSymbol, QStringLiteral("Sym"), obj );
-  SdObject::writePtr( mSymImp, QStringLiteral("Imp"), obj );
-  return obj;
+  js.jsonObjectPtr( QStringLiteral("Sym"), mSymbol );
+  js.jsonObjectPtr( QStringLiteral("Imp"), mSymImp );
   }
 
 
-void SdPartImpSection::fromJson(SdObjectMap *map, const QJsonObject obj)
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
+//!
+void SdPartImpSection::json(const SdJsonReader &js)
   {
-  mSymbol = dynamic_cast<SdPItemSymbol*>( SdObject::readPtr( QStringLiteral("Sym"), map, obj )  );
-  mSymImp = dynamic_cast<SdGraphSymImp*>( SdObject::readPtr( QStringLiteral("Imp"), map, obj )  );
+  js.jsonObjectPtr( QStringLiteral("Sym"), mSymbol );
+  js.jsonObjectPtr( QStringLiteral("Imp"), mSymImp );
   }
+
+
 
 
 
@@ -706,69 +748,81 @@ void SdGraphPartImp::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool nex
 
 
 
-
-
-
-
-
-void SdGraphPartImp::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphPartImp::json(SdJsonWriter &js) const
   {
-  SdGraphTraced::writeObject( obj );
-  obj.insert( QStringLiteral("LogNum"), mLogNumber );
-  mOrigin.write( QStringLiteral("Org"), obj );
-  mProp.write( obj );
-  mOverRect.write( QStringLiteral("Over"), obj );
-  mIdent.write( QStringLiteral("Ident"), obj );
-  mValue.write( QStringLiteral("Value"), obj );
-  writePtr( mPart, QStringLiteral("Part"), obj );
-  writePtr( mComponent, QStringLiteral("Comp"), obj );
-  //Write sections
-  QJsonArray sections;
-  for( const SdPartImpSection &sec : mSections )
-    sections.append( sec.toJson() );
-  obj.insert( QStringLiteral("Sections"), sections );
-  //Write pins
-  QJsonArray pins;
-  for( SdPartImpPinTable::const_iterator i = mPins.constBegin(); i != mPins.constEnd(); i++ )
-    pins.append( i.value().toJson( i.key() ) );
-  obj.insert( QStringLiteral("Pins"), pins );
+  js.jsonInt( QStringLiteral("LogNum"), mLogNumber );
+  js.jsonPoint( QStringLiteral("Org"), mOrigin );
+  mProp.json( js );
+  js.jsonRect( QStringLiteral("Over"), mOverRect );
+  mIdent.json( QStringLiteral("Ident"), js );
+  mValue.json( QStringLiteral("Value"), js );
+  js.jsonObjectPtr( QStringLiteral("Part"), mPart );
+  js.jsonObjectPtr( QStringLiteral("Comp"), mComponent );
+
+  //Sections
+  js.jsonList( js, QStringLiteral("Sections"), mSections );
+
+  //Pins
+  js.jsonMap( js, QStringLiteral("Pins:"), mPins );
+
   //Parameters
-  sdStringMapWrite( QStringLiteral("Param"), mParamTable, obj );
+  js.jsonMapString( QStringLiteral("Param"), mParamTable );
+  SdGraphTraced::json( js );
+  }
+
+
+
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphPartImp::json(const SdJsonReader &js)
+  {
+  js.jsonInt( QStringLiteral("LogNum"), mLogNumber );
+  js.jsonPoint( QStringLiteral("Org"), mOrigin );
+  mProp.json( js );
+  js.jsonRect( QStringLiteral("Over"), mOverRect );
+  mIdent.json( QStringLiteral("Ident"), js );
+  mValue.json( QStringLiteral("Value"), js );
+  js.jsonObjectPtr( QStringLiteral("Part"), mPart );
+  js.jsonObjectPtr( QStringLiteral("Comp"), mComponent );
+
+  //Sections
+  js.jsonList( js, QStringLiteral("Sections"), mSections );
+
+  //Pins
+  if( js.contains( QStringLiteral("Pins:") ) )
+    js.jsonMap( js, QStringLiteral("Pins:"), mPins );
+  else {
+    //Pin information table
+    QJsonArray pins = js.object().value( QStringLiteral("Pins") ).toArray();
+    for( QJsonValue vpin : pins ) {
+      SdPartImpPin pin;
+      QString pinNumber = pin.fromJson( js.property(), vpin.toObject() );
+      mPins.insert( pinNumber, pin );
+      }
+    }
+
+  //Parameters
+  js.jsonMapString( QStringLiteral("Param"), mParamTable );
+  SdGraphTraced::json( js );
   }
 
 
 
 
 
-void SdGraphPartImp::readObject(SdObjectMap *map, const QJsonObject obj)
-  {
-  SdGraphTraced::readObject( map, obj );
-  mLogNumber = obj.value( QStringLiteral("LogNum") ).toInt();
-  mOrigin.read( QStringLiteral("Org"), obj );
-  mProp.read( obj );
-  mOverRect.read( QStringLiteral("Over"), obj );
-  mIdent.read( QStringLiteral("Ident"), obj );
-  mValue.read( QStringLiteral("Value"), obj );
-  mPart = dynamic_cast<SdPItemPart*>( readPtr( QStringLiteral("Part"), map, obj )  );
-  mComponent = dynamic_cast<SdPItemComponent*>( readPtr( QStringLiteral("Comp"), map, obj )  );
-  //Read sections
-  QJsonArray sections = obj.value( QStringLiteral("Sections") ).toArray();
-  for( QJsonValue s : sections ) {
-    SdPartImpSection sec;
-    sec.fromJson( map, s.toObject() );
-    mSections.append( sec );
-    }
 
-  //Pin information table
-  QJsonArray pins = obj.value( QStringLiteral("Pins") ).toArray();
-  for( QJsonValue vpin : pins ) {
-    SdPartImpPin pin;
-    QString pinNumber = pin.fromJson( map, vpin.toObject() );
-    mPins.insert( pinNumber, pin );
-    }
-  //Parameters
-  sdStringMapRead( QStringLiteral("Param"), mParamTable, obj );
-  }
+
+
+
 
 
 
@@ -1156,6 +1210,7 @@ bool SdGraphPartImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
     }
   return true;
   }
+
 
 
 

@@ -15,6 +15,7 @@ Description
 #define SD3DFACE_H
 
 #include "Sd3dRegion.h"
+#include "SvJsonIO.h"
 
 #include <QColor>
 #include <QJsonObject>
@@ -35,17 +36,18 @@ struct Sd3dFace
     //!
     Sd3dFace( QVector3D p0, QVector3D p1, QVector3D p2, QColor color );
 
-    //!
-    //! \brief write Writes face to JSON object
-    //! \return      JSON object with face
-    //!
-    QJsonObject write() const;
 
     //!
-    //! \brief read Read face from JSON object
-    //! \param obj  JSON object with face
+    //! \brief json Overloaded function to write object content into json writer
+    //! \param js   Json writer
     //!
-    void        read( const QJsonObject &obj );
+    void        json( SvJsonWriter &js ) const;
+
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //! \param js   Json reader
+    //!
+    void        json( const SvJsonReader &js);
 
     //!
     //! \brief translate Translate this face region with offset

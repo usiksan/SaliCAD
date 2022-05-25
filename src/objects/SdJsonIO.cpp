@@ -21,7 +21,3 @@
 
 
 
-void SdJsonWriter::jsonColor3d(const QString &key, const float *color)
-  {
-
-  }

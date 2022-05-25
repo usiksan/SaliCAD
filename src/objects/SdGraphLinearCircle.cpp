@@ -17,6 +17,7 @@ Description
 #include "SdRect.h"
 #include "SdSnapInfo.h"
 #include "Sd3dDraw.h"
+#include "SdJsonIO.h"
 
 SdGraphLinearCircle::SdGraphLinearCircle() :
   SdGraphLinear(),
@@ -62,26 +63,39 @@ void SdGraphLinearCircle::cloneFrom(const SdObject *src, SdCopyMap &copyMap, boo
 
 
 
-
-
-
-
-void SdGraphLinearCircle::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphLinearCircle::json(SdJsonWriter &js) const
   {
-  SdGraphLinear::writeObject( obj );
-  mCenter.write( QString("center"), obj );
-  obj.insert( QString("radius"), mRadius );
+  js.jsonPoint( QStringLiteral("center"), mCenter );
+  js.jsonInt( QStringLiteral("radius"), mRadius );
+  SdGraphLinear::json( js );
   }
 
 
 
 
-void SdGraphLinearCircle::readObject(SdObjectMap *map, const QJsonObject obj)
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphLinearCircle::json(const SdJsonReader &js)
   {
-  SdGraphLinear::readObject( map, obj );
-  mCenter.read( QString("center"), obj );
-  mRadius = obj.value( QString("radius") ).toInt();
+  js.jsonPoint( QStringLiteral("center"), mCenter );
+  js.jsonInt( QStringLiteral("radius"), mRadius );
+  SdGraphLinear::json( js );
   }
+
+
+
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 #include "Sd3dGraphModel.h"
 #include "Sd3dDraw.h"
+#include "SdJsonIO.h"
 
 Sd3dGraphModel::Sd3dGraphModel()
   {
@@ -20,19 +21,6 @@ void Sd3dGraphModel::matrixMapInPlace(QMatrix4x4 matrix)
 
 
 
-void Sd3dGraphModel::writeObject(QJsonObject &obj) const
-  {
-  Sd3dGraph::writeObject( obj );
-  obj.insert( QStringLiteral("model"), sd3dModelWrite(mModel) );
-  }
-
-
-
-void Sd3dGraphModel::readObject(SdObjectMap *map, const QJsonObject obj)
-  {
-  Sd3dGraph::readObject( map, obj );
-  mModel = sd3dModelRead( obj.value( QStringLiteral("model") ).toArray() );
-  }
 
 
 
@@ -50,6 +38,35 @@ void Sd3dGraphModel::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool nex
   SdPtrConst<Sd3dGraphModel> model(src);
   if( model.isValid() )
     mModel = model->mModel;
+  }
+
+
+
+
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void Sd3dGraphModel::json(SdJsonWriter &js) const
+  {
+  js.jsonObject( js, QStringLiteral("model"), mModel );
+  Sd3dGraph::json( js );
+  }
+
+
+
+
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void Sd3dGraphModel::json(const SdJsonReader &js)
+  {
+  js.jsonObject( js, QStringLiteral("model"), mModel );
+  Sd3dGraph::json( js );
   }
 
 

@@ -29,6 +29,7 @@ Description
 #include "SdUndo.h"
 #include "SdEnvir.h"
 #include "SdObjectFactory.h"
+#include "SdJsonIO.h"
 
 #include <QDebug>
 
@@ -826,66 +827,95 @@ void SdGraphSymImp::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next
 
 
 
-
-
-
-
-
-
-void SdGraphSymImp::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphSymImp::json(SdJsonWriter &js) const
   {
-  SdGraphParam::writeObject( obj );
-  writePtr( mArea, QStringLiteral("Area"), obj );        //PCB where this symbol implement contains in
-  obj.insert( QStringLiteral("SectionIndex"), mSectionIndex );//Section index (from 0)
-  obj.insert( QStringLiteral("LogSection"), mLogSection );    //Logical symbol section number (from 1)
-  obj.insert( QStringLiteral("LogNumber"), mLogNumber );   //Logical part number (from 1)
-  mOrigin.write( QStringLiteral("Org"), obj );      //Position of Implement
-  mProp.write( obj );        //Implement properties
-  mOverRect.write( QStringLiteral("Over"), obj );    //Over rect
-  mIdent.write( QStringLiteral("Ident"), obj );
-  mValue.write( QStringLiteral("Value"), obj );
+  //PCB where this symbol implement contains in
+  js.jsonObjectPtr( QStringLiteral("Area"), mArea );
 
-  writePtr( mComponent, QStringLiteral("Comp"), obj );   //Object contains section information, pin assotiation info. May be same as mSymbol.
-  writePtr( mSymbol, QStringLiteral("Sym"), obj );      //Symbol contains graph information
-  writePtr( mPart, QStringLiteral("Part"), obj );
-  writePtr( mPartImp, QStringLiteral("Imp"), obj );
+  //Section index (from 0)
+  js.jsonInt( QStringLiteral("SectionIndex"), mSectionIndex );
+
+  //Logical symbol section number (from 1)
+  js.jsonInt( QStringLiteral("LogSection"), mLogSection );
+
+  //Logical part number (from 1)
+  js.jsonInt( QStringLiteral("LogNumber"), mLogNumber );
+
+  //Position of Implement
+  js.jsonPoint( QStringLiteral("Org"), mOrigin );
+
+  //Implement properties
+  mProp.json( js );
+
+  //Over rect
+  js.jsonRect( QStringLiteral("Over"), mOverRect );
+  mIdent.json( QStringLiteral("Ident"), js );
+  mValue.json( QStringLiteral("Value"), js );
+
+  //Object contains section information, pin assotiation info. May be same as mSymbol.
+  js.jsonObjectPtr( QStringLiteral("Comp"), mComponent );
+  //Symbol contains graph information
+  js.jsonObjectPtr( QStringLiteral("Sym"), mSymbol );
+  js.jsonObjectPtr( QStringLiteral("Part"), mPart );
+  js.jsonObjectPtr( QStringLiteral("Imp"), mPartImp );
+
   //Pin information table
-  QJsonArray pins;
-  for( SdSymImpPinTable::const_iterator i = mPins.constBegin(); i != mPins.constEnd(); i++ )
-    pins.append( i.value().toJson( i.key() ) );
-  obj.insert( QStringLiteral("Pins"), pins );
+  js.jsonMap( js, QStringLiteral("Pins"), mPins );
+
+  SdGraphParam::json( js );
   }
 
 
 
-
-
-void SdGraphSymImp::readObject(SdObjectMap *map, const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphSymImp::json(const SdJsonReader &js)
   {
-  SdGraphParam::readObject( map, obj );
-  mArea = dynamic_cast<SdGraphArea*>( readPtr( QStringLiteral("Area"), map, obj )  );
-  mSectionIndex = obj.value( QStringLiteral("SectionIndex") ).toInt();
-  mLogSection = obj.value( QStringLiteral("LogSection") ).toInt();
-  mLogNumber = obj.value( QStringLiteral("LogNumber") ).toInt();
-  mOrigin.read( QStringLiteral("Org"), obj );
-  mProp.read( obj );
-  mOverRect.read( QStringLiteral("Over"), obj );
-  mIdent.read( QStringLiteral("Ident"), obj );
-  mValue.read( QStringLiteral("Value"), obj );
+  //PCB where this symbol implement contains in
+  js.jsonObjectPtr( QStringLiteral("Area"), mArea );
 
-  mComponent = dynamic_cast<SdPItemComponent*>( readPtr( QStringLiteral("Comp"), map, obj )  );
-  mSymbol = dynamic_cast<SdPItemSymbol*>( readPtr( QStringLiteral("Sym"), map, obj )  );
-  mPart = dynamic_cast<SdPItemPart*>( readPtr( QStringLiteral("Part"), map, obj )  );
-  mPartImp = dynamic_cast<SdGraphPartImp*>( readPtr( QStringLiteral("Imp"), map, obj )  );
+  //Section index (from 0)
+  js.jsonInt( QStringLiteral("SectionIndex"), mSectionIndex );
+
+  //Logical symbol section number (from 1)
+  js.jsonInt( QStringLiteral("LogSection"), mLogSection );
+
+  //Logical part number (from 1)
+  js.jsonInt( QStringLiteral("LogNumber"), mLogNumber );
+
+  //Position of Implement
+  js.jsonPoint( QStringLiteral("Org"), mOrigin );
+
+  //Implement properties
+  mProp.json( js );
+
+  //Over rect
+  js.jsonRect( QStringLiteral("Over"), mOverRect );
+  mIdent.json( QStringLiteral("Ident"), js );
+  mValue.json( QStringLiteral("Value"), js );
+
+  //Object contains section information, pin assotiation info. May be same as mSymbol.
+  js.jsonObjectPtr( QStringLiteral("Comp"), mComponent );
+  //Symbol contains graph information
+  js.jsonObjectPtr( QStringLiteral("Sym"), mSymbol );
+  js.jsonObjectPtr( QStringLiteral("Part"), mPart );
+  js.jsonObjectPtr( QStringLiteral("Imp"), mPartImp );
 
   //Pin information table
-  QJsonArray pins = obj.value( QStringLiteral("Pins") ).toArray();
-  for( const QJsonValue &vpin : qAsConst(pins) ) {
-    SdSymImpPin pin;
-    QString pinName = pin.fromJson( map, vpin.toObject() );
-    mPins.insert( pinName, pin );
-    }
+  js.jsonMap( js, QStringLiteral("Pins"), mPins );
+
+  SdGraphParam::json( js );
   }
+
+
 
 
 

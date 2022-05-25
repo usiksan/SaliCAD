@@ -24,8 +24,18 @@ struct SdTextImplement
     SdPoint    mOrigin;   //Reference position in part or symbol context
 
     //Read-write
-    void write( const QString name, QJsonObject &obj ) const;
-    void read( const QString name, const QJsonObject &obj );
+
+    //!
+    //! \brief json Overloaded function to write object content into json writer
+    //! \param js   Json writer
+    //!
+    void json( const QString &prefix, SvJsonWriter &js ) const;
+
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //! \param js   Json reader
+    //!
+    void json( const QString &prefix, const SvJsonReader &js);
   };
 
 #endif // SDTEXTIMPLEMENT_H

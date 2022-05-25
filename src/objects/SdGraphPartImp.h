@@ -54,7 +54,18 @@ struct SdPartImpPin {
   void        accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int stratum, SdRuleId ruleId, int clearance , int halfWidth, QTransform t) const;
   void        accumWindows(SdPItemPlate *plate, SdPolyWindowList &dest, int stratum, int gap, const QString netName, const QTransform &t ) const;
 
-  QJsonObject toJson(const QString pinNumber) const;
+  //!
+  //! \brief json Overloaded function to write object content into json writer
+  //! \param js   Json writer
+  //!
+  void        json( SdJsonWriter &js ) const;
+
+  //!
+  //! \brief json Overloaded function to read object content from json reader
+  //! \param js   Json reader
+  //!
+  void        json( const SdJsonReader &js );
+
   QString     fromJson( SdObjectMap *map, const QJsonObject obj );
   };
 
@@ -71,13 +82,23 @@ struct SdPartImpSection {
 
   SdPartImpSection() : mSymbol(nullptr), mSymImp(nullptr) {}
 
-  QJsonObject toJson() const;
-  void        fromJson( SdObjectMap *map, const QJsonObject obj );
 
-  bool        isFree( SdPItemSymbol *symbol ) { return mSymbol == symbol && mSymImp == nullptr; }
+  //!
+  //! \brief json Overloaded function to write object content into json writer
+  //! \param js   Json writer
+  //!
+  void json( SdJsonWriter &js ) const;
+
+  //!
+  //! \brief json Overloaded function to read object content from json reader
+  //! \param js   Json reader
+  //!
+  void json( const SdJsonReader &js );
+
+  bool isFree( SdPItemSymbol *symbol ) { return mSymbol == symbol && mSymImp == nullptr; }
   };
 
-typedef QVector<SdPartImpSection> SdPartImpSectionTable;
+typedef QList<SdPartImpSection> SdPartImpSectionTable;
 
 
 
@@ -207,8 +228,21 @@ class SdGraphPartImp : public SdGraphTraced
     //!                  For example: pin name A23 with next copy return A24
     //!
     virtual void         cloneFrom( const SdObject *src, SdCopyMap &copyMap, bool next ) override;
-    virtual void         writeObject(QJsonObject &obj) const override;
-    virtual void         readObject(SdObjectMap *map, const QJsonObject obj) override;
+
+    //!
+    //! \brief json Overloaded function to write object content into json writer
+    //!             Overrided function
+    //! \param js   Json writer
+    //!
+    virtual void         json( SdJsonWriter &js ) const override;
+
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //!             Overrided function
+    //! \param js   Json reader
+    //!
+    virtual void         json( const SdJsonReader &js ) override;
+
     virtual bool         isUsed(SdObject *obj) const override;
     virtual bool         upgradeProjectItem(SdUndo *undo, QWidget *parent) override;
 

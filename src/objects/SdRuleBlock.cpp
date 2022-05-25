@@ -86,27 +86,38 @@ void SdRuleBlock::getRuleBlock(SdRuleBlock &dest, const SdRuleBlock &parent) con
 
 
 
-
-QJsonObject SdRuleBlock::write() const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
+//!
+void SdRuleBlock::json(SvJsonWriter &js) const
   {
-  QJsonObject obj;
-  obj.insert( QStringLiteral("Width"), mRules[ruleRoadWidth] );
-  obj.insert( QStringLiteral("PadPad"), mRules[rulePadPad] );
-  obj.insert( QStringLiteral("RoadPad"), mRules[ruleRoadPad] );
-  obj.insert( QStringLiteral("RoadRoad"), mRules[ruleRoadRoad] );
-  return obj;
+  js.jsonInt( QStringLiteral("Width"), mRules[ruleRoadWidth] );
+  js.jsonInt( QStringLiteral("PadPad"), mRules[rulePadPad] );
+  js.jsonInt( QStringLiteral("RoadPad"), mRules[ruleRoadPad] );
+  js.jsonInt( QStringLiteral("RoadRoad"), mRules[ruleRoadRoad] );
   }
 
 
 
 
-void SdRuleBlock::read(const QJsonObject &obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
+//!
+void SdRuleBlock::json(const SvJsonReader &js)
   {
-  mRules[ruleRoadWidth] = obj.value( QStringLiteral("Width") ).toInt();
-  mRules[rulePadPad] = obj.value( QStringLiteral("PadPad") ).toInt();
-  mRules[ruleRoadPad] = obj.value( QStringLiteral("RoadPad") ).toInt();
-  mRules[ruleRoadRoad] = obj.value( QStringLiteral("RoadRoad") ).toInt();
+  js.jsonInt( QStringLiteral("Width"), mRules[ruleRoadWidth] );
+  js.jsonInt( QStringLiteral("PadPad"), mRules[rulePadPad] );
+  js.jsonInt( QStringLiteral("RoadPad"), mRules[ruleRoadPad] );
+  js.jsonInt( QStringLiteral("RoadRoad"), mRules[ruleRoadRoad] );
   }
+
+
+
+
+
+
 
 
 

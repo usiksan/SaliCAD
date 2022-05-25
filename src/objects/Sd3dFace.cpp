@@ -16,16 +16,31 @@ Sd3dFace::Sd3dFace(QVector3D p0, QVector3D p1, QVector3D p2, QColor color) :
 
 
 //!
-//! \brief write Writes face to JSON object
-//! \return      JSON object with face
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
 //!
-QJsonObject Sd3dFace::write() const
+void Sd3dFace::json(SvJsonWriter &js) const
   {
-  QJsonObject obj;
-  obj.insert( QStringLiteral("contour"), sd3dRegionWrite(mContour) );
-  obj.insert( QStringLiteral("color"), mColor.name() );
-  return obj;
+  json3dRegion( js, QStringLiteral("contour"), mContour );
+  js.jsonColor( QStringLiteral("color"), mColor );
   }
+
+
+
+
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
+//!
+void Sd3dFace::json(const SvJsonReader &js)
+  {
+  json3dRegion( js, QStringLiteral("contour"), mContour );
+  js.jsonColor( QStringLiteral("color"), mColor );
+  }
+
+
+
 
 
 

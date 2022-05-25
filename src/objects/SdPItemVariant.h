@@ -41,6 +41,7 @@ class SdPItemVariant : public SdProjectItem
   public:
     virtual QString getType() const override;
     virtual SdClass getClass() const override;
+
     //!
     //! \brief cloneFrom Overrided function. We copy object from source
     //! \param src       Source of object from which copy must be made
@@ -49,19 +50,26 @@ class SdPItemVariant : public SdProjectItem
     //!                  For example: pin name A23 with next copy return A24
     //!
     virtual void    cloneFrom( const SdObject *src, SdCopyMap &copyMap, bool next ) override;
-    virtual void    writeObject(QJsonObject &obj) const override;
-    virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
+
+    //!
+    //! \brief json Overloaded function to write object content into json writer
+    //!             Overrided function
+    //! \param js   Json writer
+    //!
+    virtual void    json( SdJsonWriter &js ) const override;
+
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //!             Overrided function
+    //! \param js   Json reader
+    //!
+    virtual void    json( const SdJsonReader &js ) override;
 
     // SdProjectItem interface
   public:
     virtual void    getHeader(SdLibraryHeader &hdr) const override;
     virtual QString getIconName() const override;
     virtual quint64 getAcceptedObjectsMask() const override;
-
-    // SdObject interface
-  public:
-    virtual void json( SdJsonWriter &js ) const override;
-    virtual void json( const SdJsonReader &js ) override;
   };
 
 #endif // SDPITEMVARIANT_H

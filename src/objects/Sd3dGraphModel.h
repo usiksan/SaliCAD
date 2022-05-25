@@ -74,8 +74,6 @@ class Sd3dGraphModel : public Sd3dGraph
     // SdObject interface
   public:
     virtual QString getType() const override { return QStringLiteral( SD_TYPE_3D_GRAPH_MODEL ); }
-    virtual void    writeObject(QJsonObject &obj) const override;
-    virtual void    readObject(SdObjectMap *map, const QJsonObject obj) override;
 
     //!
     //! \brief cloneFrom Overrided function. We copy model from source object
@@ -85,6 +83,20 @@ class Sd3dGraphModel : public Sd3dGraph
     //!                  For example: pin name A23 with next copy return A24
     //!
     virtual void    cloneFrom( const SdObject *src, SdCopyMap &copyMap, bool next ) override;
+
+    //!
+    //! \brief json Overloaded function to write object content into json writer
+    //!             Overrided function
+    //! \param js   Json writer
+    //!
+    virtual void    json( SdJsonWriter &js ) const override;
+
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //!             Overrided function
+    //! \param js   Json reader
+    //!
+    virtual void    json( const SdJsonReader &js ) override;
 
     // SdGraph interface
   public:

@@ -25,6 +25,7 @@ Description
 #include "SdGraphLinearRect.h"
 #include "SdGraphLinearRegion.h"
 #include "Sd3dDraw.h"
+#include "SdJsonIO.h"
 
 #include <QDebug>
 #include <QLineF>
@@ -420,34 +421,6 @@ void SdPItemPlate::drawRuleErrors(SdContext *dc) {
 
 
 
-QJsonObject SdPItemPlate::writeRuleMap() const
-  {
-  QJsonObject obj;
-  for( auto iter = mRulesMap.cbegin(); iter != mRulesMap.cend(); iter++ )
-    obj.insert( iter.key(), iter.value().write() );
-  return obj;
-  }
-
-
-
-
-
-
-
-
-
-void SdPItemPlate::readRuleMap(const QJsonObject obj)
-  {
-  mRulesMap.clear();
-  for( auto iter = obj.constBegin(); iter != obj.constEnd(); iter++ ) {
-    SdRuleBlock block;
-    block.read( iter.value().toObject() );
-    mRulesMap.insert( iter.key(), block );
-    }
-  }
-
-
-
 
 
 
@@ -535,6 +508,60 @@ void SdPItemPlate::detach(SdUndo *undo)
 
 
 
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdPItemPlate::json(SdJsonWriter &js) const
+  {
+  js.jsonRect( QStringLiteral("PartRow"), mPartRow );
+
+  //Write pad assotiation
+  js.jsonObject( js, QStringLiteral("PadAssociation"), mPadAssociation );
+
+  //Write rules map
+  js.jsonMap( js, QStringLiteral("RulesMap"), mRulesMap );
+
+  //Write pcb rules
+  js.jsonObject( js, QStringLiteral("PcbRules"), mRulesPcb );
+
+  js.jsonPoint( QStringLiteral("TraceGrid"), mTraceGrid );         //Current trace grid
+  js.jsonBool( QStringLiteral("TraceCursorGrid"), mTraceCursorGrid );  //Enable cursor grid align when trace
+  js.jsonPoint( QStringLiteral("PlaceGrid"), mPlaceGrid );         //Current place grid
+  js.jsonBool( QStringLiteral("PlaceCursorGrid"), mPlaceCursorGrid);   //Enable cursor grid align when place
+
+  SdProjectItem::json( js );
+  }
+
+
+
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdPItemPlate::json(const SdJsonReader &js)
+  {
+  js.jsonRect( QStringLiteral("PartRow"), mPartRow );
+
+  //Write pad assotiation
+  js.jsonObject( js, QStringLiteral("PadAssociation"), mPadAssociation );
+
+  //Write rules map
+  js.jsonMap( js, QStringLiteral("RulesMap"), mRulesMap );
+
+  //Write pcb rules
+  js.jsonObject( js, QStringLiteral("PcbRules"), mRulesPcb );
+
+  js.jsonPoint( QStringLiteral("TraceGrid"), mTraceGrid );         //Current trace grid
+  js.jsonBool( QStringLiteral("TraceCursorGrid"), mTraceCursorGrid );  //Enable cursor grid align when trace
+  js.jsonPoint( QStringLiteral("PlaceGrid"), mPlaceGrid );         //Current place grid
+  js.jsonBool( QStringLiteral("PlaceCursorGrid"), mPlaceCursorGrid);   //Enable cursor grid align when place
+
+  SdProjectItem::json( js );
+  }
 
 
 
@@ -634,57 +661,6 @@ void SdPItemPlate::checkIntersection(const SdBarrierList &src, const SdBarrierLi
     }
 
   }
-
-
-
-
-
-
-void SdPItemPlate::writeObject(QJsonObject &obj) const
-  {
-  SdProjectItem::writeObject( obj );
-  mPartRow.write( QStringLiteral("PartRow"), obj );
-
-  //Write pad assotiation
-  obj.insert( QStringLiteral("PadAssociation"), mPadAssociation.write() );
-
-  //Write rules map
-  obj.insert( QStringLiteral("RulesMap"), writeRuleMap() );
-
-  //Write pcb rules
-  obj.insert( QStringLiteral("PcbRules"), mRulesPcb.write() );
-
-  mTraceGrid.write( QStringLiteral("TraceGrid"), obj );         //Current trace grid
-  obj.insert( QStringLiteral("TraceCursorGrid"), mTraceCursorGrid );  //Enable cursor grid align when trace
-  mPlaceGrid.write( QStringLiteral("PlaceGrid"), obj );         //Current place grid
-  obj.insert( QStringLiteral("PlaceCursorGrid"), mPlaceCursorGrid);   //Enable cursor grid align when place
-
-  }
-
-
-
-
-
-void SdPItemPlate::readObject(SdObjectMap *map, const QJsonObject obj)
-  {
-  SdProjectItem::readObject( map, obj );
-  mPartRow.read( QStringLiteral("PartRow"), obj );
-
-  //Read pad assotiation
-  mPadAssociation.readObject( map, obj.value( QStringLiteral("PadAssociation") ).toObject() );
-
-  //Read rules map
-  readRuleMap( obj.value(QStringLiteral("RulesMap")).toObject() );
-
-  //Read pcb rules
-  mRulesPcb.read( obj.value(QStringLiteral("PcbRules")).toObject() );
-
-  mTraceGrid.read( QStringLiteral("TraceGrid"), obj );         //Current trace grid
-  mTraceCursorGrid = obj.value( QStringLiteral("TraceCursorGrid") ).toBool();  //Enable cursor grid align when trace
-  mPlaceGrid.read( QStringLiteral("PlaceGrid"), obj );         //Current place grid
-  mPlaceCursorGrid = obj.value( QStringLiteral("PlaceCursorGrid") ).toBool();   //Enable cursor grid align when place
-  }
-
 
 
 

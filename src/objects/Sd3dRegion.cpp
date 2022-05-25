@@ -36,6 +36,10 @@ QJsonArray sd3dRegionWrite(const Sd3dRegion &region)
   return array;
   }
 
+void json3dRegion(SvJsonWriter &js, const QString &key, const Sd3dRegion &region)
+  {
+  js.object().insert( key, sd3dRegionWrite(region) );
+  }
 
 
 
@@ -70,6 +74,11 @@ Sd3dRegion sd3dRegionRead(const QJsonArray &array)
   return region;
   }
 
+
+void json3dRegion( const SvJsonReader &js, const QString &key, Sd3dRegion &region )
+  {
+  region = sd3dRegionRead( js.object().value(key).toArray() );
+  }
 
 
 
@@ -371,3 +380,4 @@ Sd3dRegion sd3dRegionAddArcOffset(const Sd3dRegion &region, float stopOffsetX, f
   QVector3D v( region.last() );
   return sd3dRegionAddArc( region, v + QVector3D( stopOffsetX, stopOffsetY, 0), radius, direction );
   }
+

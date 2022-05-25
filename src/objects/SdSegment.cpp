@@ -179,26 +179,29 @@ SdRect SdSegment::getOverRect() const
 
 
 
-//Write-read as segment. Coord values write immediately to obj
-void SdSegment::writeSegment(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
+//!
+void SdSegment::json(SvJsonWriter &js) const
   {
-  obj.insert( QStringLiteral("p1.x"), p1.x() );
-  obj.insert( QStringLiteral("p1.y"), p1.y() );
-  obj.insert( QStringLiteral("p2.x"), p2.x() );
-  obj.insert( QStringLiteral("p2.y"), p2.y() );
+  js.jsonInt( QStringLiteral("p1.x"), p1.x() );
+  js.jsonInt( QStringLiteral("p1.y"), p1.y() );
+  js.jsonInt( QStringLiteral("p2.x"), p2.x() );
+  js.jsonInt( QStringLiteral("p2.y"), p2.y() );
   }
 
 
 
-
-void SdSegment::readSegment(const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
+//!
+void SdSegment::json(const SvJsonReader &js)
   {
-  p1.rx() = obj.value( QStringLiteral("p1.x") ).toInt();
-  p1.ry() = obj.value( QStringLiteral("p1.y") ).toInt();
-  p2.rx() = obj.value( QStringLiteral("p2.x") ).toInt();
-  p2.ry() = obj.value( QStringLiteral("p2.y") ).toInt();
+  js.jsonInt( QStringLiteral("p1.x"), p1.rx() );
+  js.jsonInt( QStringLiteral("p1.y"), p1.ry() );
+  js.jsonInt( QStringLiteral("p2.x"), p2.rx() );
+  js.jsonInt( QStringLiteral("p2.y"), p2.ry() );
   }
-
-
-
 

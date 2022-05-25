@@ -36,8 +36,18 @@ struct SdPropSymImp
     void clear();                                 //Set properties to undefined state [Установить в неопределенное состояние]
     bool match( SdPropSymImp const &prop );       //Compare properties with etalon [Сравнить на совпадение с эталоном]
 
-    void write( QJsonObject &obj ) const;
-    void read( const QJsonObject obj );
+
+    //!
+    //! \brief json Overloaded function to write object content into json writer
+    //! \param js   Json writer
+    //!
+    void json( SvJsonWriter &js ) const;
+
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //! \param js   Json reader
+    //!
+    void json( const SvJsonReader &js);
 
     void saveState( SdPropSymImpState *dst );
     void swapState( SdPropSymImpState *src );

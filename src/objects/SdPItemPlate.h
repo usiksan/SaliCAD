@@ -144,11 +144,6 @@ class SdPItemPlate : public SdProjectItem
     //Draw rule error indicators
     void                   drawRuleErrors( SdContext *dc );
 
-    //Read-write rules
-    QJsonObject            writeRuleMap() const;
-    void                   readRuleMap( const QJsonObject obj);
-
-
     //Renumeration implements
     void                   renumeration();
 
@@ -157,8 +152,20 @@ class SdPItemPlate : public SdProjectItem
     virtual QString        getType() const override;
     virtual SdClass        getClass() const override;
     virtual void           detach(SdUndo *undo) override;
-    virtual void           writeObject(QJsonObject &obj) const override;
-    virtual void           readObject(SdObjectMap *map, const QJsonObject obj) override;
+
+    //!
+    //! \brief json Overloaded function to write object content into json writer
+    //!             Overrided function
+    //! \param js   Json writer
+    //!
+    virtual void           json( SdJsonWriter &js ) const override;
+
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //!             Overrided function
+    //! \param js   Json reader
+    //!
+    virtual void           json( const SdJsonReader &js ) override;
 
     // SdProjectItem interface
   public:

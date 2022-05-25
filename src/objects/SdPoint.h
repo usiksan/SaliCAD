@@ -92,13 +92,7 @@ class SdPoint : public QPoint
     bool        isLeftHigh( SdPoint a ) const;                              //Левее или выше чем a?
     bool        isOnSegment( SdPoint a, SdPoint b ) const;
 
-    void        write(const QString name, QJsonObject &obj ) const;
-    void        read(const QString name, const QJsonObject obj );
-
     void        swap( SdPoint *p );
-
-    QJsonObject write() const;
-    void        read( const QJsonObject obj );
 
     //Return far point, point with big coords
     static SdPoint farPoint() { return SdPoint(farCoord,farCoord); }

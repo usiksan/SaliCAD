@@ -13,17 +13,26 @@ Description
 #include "SdTextImplement.h"
 
 
-void SdTextImplement::write(const QString name, QJsonObject &obj) const
+
+//!
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
+//!
+void SdTextImplement::json(const QString &prefix, SvJsonWriter &js) const
   {
-  mProp.write( name, obj );
-  mOrigin.write( name + QString("org"), obj );
+  mProp.json( prefix, js );
+  js.jsonPoint( prefix + QString("org"), mOrigin );
   }
 
 
 
 
-void SdTextImplement::read(const QString name, const QJsonObject &obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
+//!
+void SdTextImplement::json(const QString &prefix, const SvJsonReader &js)
   {
-  mProp.read( name, obj );
-  mOrigin.read( name + QString("org"), obj );
+  mProp.json( prefix, js );
+  js.jsonPoint( prefix + QString("org"), mOrigin );
   }

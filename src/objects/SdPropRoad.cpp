@@ -57,13 +57,34 @@ bool SdPropRoad::match(const SdPropRoad &prop)
 
 
 
-
-void SdPropRoad::write(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
+//!
+void SdPropRoad::json(SvJsonWriter &js) const
   {
-  mWidth.write( QStringLiteral("rWidth"), obj );
-  mStratum.write( QStringLiteral("rStratum"), obj );
-  mNetName.write( QStringLiteral("rNet"), obj );
+  mWidth.json( QStringLiteral("rWidth"), js );
+  mStratum.json( QStringLiteral("rStratum"), js );
+  mNetName.json( QStringLiteral("rNet"), js );
   }
+
+
+
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
+//!
+void SdPropRoad::json(const SvJsonReader &js)
+  {
+  mWidth.json( QStringLiteral("rWidth"), js );
+  mStratum.json( QStringLiteral("rStratum"), js );
+  mNetName.json( QStringLiteral("rNet"), js );
+  }
+
+
+
+
 
 
 

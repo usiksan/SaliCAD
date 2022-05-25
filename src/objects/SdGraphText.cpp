@@ -16,6 +16,7 @@ Description
 #include "SdContext.h"
 #include "SdProjectItem.h"
 #include "SdEnvir.h"
+#include "SdJsonIO.h"
 
 #include <QDebug>
 
@@ -74,30 +75,45 @@ void SdGraphText::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
 
 
 
-
-
-
-
-void SdGraphText::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphText::json(SdJsonWriter &js) const
   {
-  SdGraph::writeObject( obj );
-  mProp.write( QStringLiteral("prop"), obj );
-  obj.insert( QStringLiteral("text"), mString );
-  mOverRect.write( QStringLiteral("over"), obj );
-  mOrigin.write( QStringLiteral("Origin"), obj );
+  mProp.json( QStringLiteral("prop"), js );
+  js.jsonString( QStringLiteral("text"), mString );
+  js.jsonRect( QStringLiteral("over"), mOverRect );
+  js.jsonPoint( QStringLiteral("Origin"), mOrigin );
+  SdGraph::json( js );
   }
 
 
 
 
-void SdGraphText::readObject(SdObjectMap *map, const QJsonObject obj)
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphText::json(const SdJsonReader &js)
   {
-  SdGraph::readObject( map, obj );
-  mProp.read( QStringLiteral("prop"), obj );
-  mString = obj.value( QStringLiteral("text") ).toString();
-  mOverRect.read( QStringLiteral("over"), obj );
-  mOrigin.read( QStringLiteral("Origin"), obj );
+  mProp.json( QStringLiteral("prop"), js );
+  js.jsonString( QStringLiteral("text"), mString );
+  js.jsonRect( QStringLiteral("over"), mOverRect );
+  js.jsonPoint( QStringLiteral("Origin"), mOrigin );
+  SdGraph::json( js );
   }
+
+
+
+
+
+
+
+
 
 
 

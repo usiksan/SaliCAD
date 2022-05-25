@@ -11,6 +11,7 @@ Web
 Description
 */
 #include "SdGraphNet.h"
+#include "SdJsonIO.h"
 
 SdGraphNet::SdGraphNet() :
   SdGraph(),
@@ -60,21 +61,37 @@ void SdGraphNet::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
 
 
 
-
-void SdGraphNet::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphNet::json(SdJsonWriter &js) const
   {
-  SdGraph::writeObject(obj);
-  obj.insert( QStringLiteral("netName"), mNetName );
+  js.jsonString( QStringLiteral("netName"), mNetName );
+  SdGraph::json( js );
   }
 
 
 
 
-void SdGraphNet::readObject(SdObjectMap *map, const QJsonObject obj)
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphNet::json(const SdJsonReader &js)
   {
-  SdGraph::readObject( map, obj );
-  mNetName = obj.value( QStringLiteral("netName") ).toString();
+  js.jsonString( QStringLiteral("netName"), mNetName );
+  SdGraph::json( js );
   }
+
+
+
+
+
+
 
 
 

@@ -16,6 +16,7 @@ Description
 #include "SdPItemSymbol.h"
 #include "SdGraphSymPin.h"
 #include "SdObjectFactory.h"
+#include "SdJsonIO.h"
 
 #include <memory>
 
@@ -114,18 +115,42 @@ void SdSection::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
 
 
 
-
-
-
-
-
-void SdSection::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdSection::json(SdJsonWriter &js) const
   {
-  SdObject::writeObject( obj );
-  obj.insert( QStringLiteral("SymbolTitle"), mSymbolTitle );
-  obj.insert( QStringLiteral("SymbolId"), mSymbolId );
-  sdStringMapWrite( QStringLiteral("PinAssotiation"), mAssociationTable, obj );
+  js.jsonString( QStringLiteral("SymbolTitle"), mSymbolTitle );
+  js.jsonString( QStringLiteral("SymbolId"), mSymbolId );
+  js.jsonMapString( QStringLiteral("PinAssotiation"), mAssociationTable );
+  SdObject::json( js );
   }
+
+
+
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdSection::json(const SdJsonReader &js)
+  {
+  js.jsonString( QStringLiteral("SymbolTitle"), mSymbolTitle );
+  js.jsonString( QStringLiteral("SymbolId"), mSymbolId );
+  js.jsonMapString( QStringLiteral("PinAssotiation"), mAssociationTable );
+  SdObject::json( js );
+  }
+
+
+
+
+
+
+
+
 
 
 

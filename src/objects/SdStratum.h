@@ -70,8 +70,8 @@ class SdStratum : public SdPropInt
     bool     match( const SdStratum &s ) const { return mValue > 0 && s.mValue > 0 && (mValue & s.mValue) != 0; }
 
     //Write-read stratum
-    void     writeStratum(QJsonObject &obj) const;
-    void     readStratum(const QJsonObject &obj);
+    void     jsonStratum( SvJsonWriter &js ) const;
+    void     jsonStratum( const SvJsonReader &js );
 
     //Return true if exactly top side
     bool     isTop() const { return mValue == stmTop; }

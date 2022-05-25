@@ -93,8 +93,17 @@ class SdSegment
 
 
     //Write-read as segment. Coord values write immediately to obj
-    void           writeSegment( QJsonObject &obj ) const;
-    void           readSegment( const QJsonObject obj );
+    //!
+    //! \brief json Overloaded function to write object content into json writer
+    //! \param js   Json writer
+    //!
+    void           json( SvJsonWriter &js ) const;
+
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //! \param js   Json reader
+    //!
+    void           json( const SvJsonReader &js);
 
   };
 

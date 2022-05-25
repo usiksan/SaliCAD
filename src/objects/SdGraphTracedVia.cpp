@@ -3,6 +3,7 @@
 #include "SdPlateNetList.h"
 #include "SdSnapInfo.h"
 #include "SdUndo.h"
+#include "SdJsonIO.h"
 
 #include <QTransform>
 
@@ -70,29 +71,39 @@ void SdGraphTracedVia::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool n
 
 
 
-
-
-
-void SdGraphTracedVia::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphTracedVia::json(SdJsonWriter &js) const
   {
-  //Write top
-  SdGraphTraced::writeObject( obj );
   //Members of this class
-  mPosition.write( QStringLiteral("pos"), obj );
-  mProp.write( obj );
+  js.jsonPoint( QStringLiteral("pos"), mPosition );
+  mProp.json( js );
+  //Top
+  SdGraphTraced::json( js );
   }
 
 
 
 
-void SdGraphTracedVia::readObject(SdObjectMap *map, const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphTracedVia::json(const SdJsonReader &js)
   {
-  //Read top
-  SdGraphTraced::readObject( map, obj );
   //Members of this class
-  mPosition.read( QStringLiteral("pos"), obj );
-  mProp.read( obj );
+  js.jsonPoint( QStringLiteral("pos"), mPosition );
+  mProp.json( js );
+  //Top
+  SdGraphTraced::json( js );
   }
+
+
+
 
 
 

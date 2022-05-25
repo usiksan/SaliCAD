@@ -28,7 +28,12 @@ class SdJsonWriter : public SvJsonWriter
       SdObject::writePtr( ptr, key, object() );
       }
 
-    void jsonColor3d( const QString &key, const float *color );
+    void jsonRect( const QString &key, const SdRect &r )
+      {
+      SvJsonWriter js;
+      r.json(js);
+      object().insert( key, js.object() );
+      }
 
   };
 
@@ -45,12 +50,16 @@ class SdJsonReader : public SvJsonReaderExt<SdObjectMap>
     SdJsonReader( const QJsonObject &obj, const SdJsonReader &src ) : SvJsonReaderExt<SdObjectMap>( obj, src.property() ) {}
 
     template <class SvClassPtr>
-    void jsonObjectPtr( const QString &key, SvClassPtr &ptr )
+    void jsonObjectPtr( const QString &key, SvClassPtr &ptr ) const
       {
       ptr = dynamic_cast<SvClassPtr>( SdObject::readPtr( property(), object().value(key).toObject() ) );
       }
 
-    void jsonColor3d( const QString &key, float *color );
+    void jsonRect( const QString &key, SdRect &r ) const
+      {
+      SvJsonReader js( object().value( key ).toObject() );
+      r.json(js);
+      }
   };
 
 #endif // SDJSONIO_H

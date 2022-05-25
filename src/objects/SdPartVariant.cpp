@@ -15,6 +15,7 @@ Description
 #include "SdPartVariant.h"
 #include "SdObjectFactory.h"
 #include "SdPItemPart.h"
+#include "SdJsonIO.h"
 
 SdPartVariant::SdPartVariant() :
   SdObject(),
@@ -90,29 +91,34 @@ void SdPartVariant::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next
 
 
 
-
-
-
-
-
-
-void SdPartVariant::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdPartVariant::json(SdJsonWriter &js) const
   {
-  SdObject::writeObject( obj );
-  obj.insert( QString("PartTitle"), mPartTitle );
-  obj.insert( QString("PartId"), mPartId );
-  obj.insert( QString("Default"), mDefault );
+  js.jsonString( QStringLiteral("PartTitle"), mPartTitle );
+  js.jsonString( QStringLiteral("PartId"), mPartId );
+  js.jsonBool( QString("Default"), mDefault );
+  SdObject::json( js );
   }
 
 
 
 
-void SdPartVariant::readObject(SdObjectMap *map, const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdPartVariant::json(const SdJsonReader &js)
   {
-  SdObject::readObject( map, obj );
-  mPartTitle = obj.value( QString("PartTitle") ).toString();
-  mPartId    = obj.value( QString("PartId") ).toString();
-  mDefault   = obj.value( QString("Default") ).toBool();
+  js.jsonString( QStringLiteral("PartTitle"), mPartTitle );
+  js.jsonString( QStringLiteral("PartId"), mPartId );
+  js.jsonBool( QString("Default"), mDefault );
+  SdObject::json( js );
   }
+
 
 

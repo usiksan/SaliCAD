@@ -448,34 +448,13 @@ void SdProjectItem::insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo
 
 
 
-void SdProjectItem::writeObject(QJsonObject &obj) const
-  {
-  SdContainer::writeObject( obj );
-  obj.insert( QStringLiteral("Title"),       mTitle );
-  obj.insert( QStringLiteral("Author"),      mAuthor );
-  obj.insert( QStringLiteral("Created"),     mCreateTime );
-  obj.insert( QStringLiteral("Auto"),        mAuto );
-  obj.insert( QStringLiteral("Edit enable"), mEditEnable );
-  mOrigin.write( QStringLiteral("Origin"), obj );
-  }
 
 
-
-
-void SdProjectItem::readObject(SdObjectMap *map, const QJsonObject obj)
-  {
-  SdContainer::readObject( map, obj );
-  mTitle        = obj.value( QStringLiteral("Title") ).toString();
-  mAuthor       = obj.value( QStringLiteral("Author") ).toString();
-  mCreateTime   = obj.value( QStringLiteral("Created") ).toInt();
-  mAuto         = obj.value( QStringLiteral("Auto") ).toBool();
-  mEditEnable   = obj.value( QStringLiteral("Edit enable") ).toBool();
-  mOrigin.read( QStringLiteral("Origin"), obj );
-  }
-
-
-
-
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
 void SdProjectItem::json(SdJsonWriter &js) const
   {
   js.jsonString( QStringLiteral("Title"),     mTitle );
@@ -489,6 +468,11 @@ void SdProjectItem::json(SdJsonWriter &js) const
 
 
 
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
 void SdProjectItem::json( const SdJsonReader &js )
   {
   js.jsonString( QStringLiteral("Title"),     mTitle );

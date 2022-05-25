@@ -15,6 +15,8 @@ Description
 #ifndef SD3DREGION_H
 #define SD3DREGION_H
 
+#include "SvJsonIO.h"
+
 #include <QVector3D>
 #include <QList>
 #include <QJsonArray>
@@ -23,6 +25,8 @@ Description
 using Sd3dRegion = QList<QVector3D>; //! Region of 3d points
 
 
+void json3dRegion( SvJsonWriter &js, const QString &key, const Sd3dRegion &region );
+void json3dRegion( const SvJsonReader &js, const QString &key, Sd3dRegion &region );
 
 //!
 //! \brief sd3dRegionWrite Write region of 3d points into JSON array object

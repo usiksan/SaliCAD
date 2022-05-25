@@ -16,6 +16,7 @@ Description
 #include "SdSnapInfo.h"
 #include "SdContext.h"
 #include "Sd3dDraw.h"
+#include "SdJsonIO.h"
 
 SdGraphLinearRect::SdGraphLinearRect() :
   SdGraphLinear(),
@@ -84,25 +85,38 @@ void SdGraphLinearRect::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool 
 
 
 
-
-
-
-void SdGraphLinearRect::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphLinearRect::json(SdJsonWriter &js) const
   {
-  SdGraphLinear::writeObject( obj );
-  a.write( QString("a"), obj );
-  b.write( QString("b"), obj );
+  js.jsonPoint( QStringLiteral("a"), a );
+  js.jsonPoint( QStringLiteral("b"), b );
+  SdGraphLinear::json( js );
   }
 
 
 
 
-void SdGraphLinearRect::readObject(SdObjectMap *map, const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphLinearRect::json(const SdJsonReader &js)
   {
-  SdGraphLinear::readObject( map, obj );
-  a.read( QString("a"), obj );
-  b.read( QString("b"), obj );
+  js.jsonPoint( QStringLiteral("a"), a );
+  js.jsonPoint( QStringLiteral("b"), b );
+  SdGraphLinear::json( js );
   }
+
+
+
+
+
+
 
 
 

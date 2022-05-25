@@ -19,6 +19,8 @@ Description
 #include "SdPlateNetList.h"
 #include "SdPItemPlate.h"
 #include "SdUndo.h"
+#include "SdJsonIO.h"
+
 #include <QTransform>
 #include <QDebug>
 
@@ -135,28 +137,40 @@ void SdGraphTracedRoad::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool 
 
 
 
-
-
-
-void SdGraphTracedRoad::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphTracedRoad::json(SdJsonWriter &js) const
   {
-  //Write top
-  SdGraphTraced::writeObject( obj );
   //Members of this class
-  mSegment.writeSegment( obj );
-  mProp.write( obj );
+  mSegment.json( js );
+  mProp.json( js );
+  //Top
+  SdGraphTraced::json( js );
   }
 
 
 
-void SdGraphTracedRoad::readObject(SdObjectMap *map, const QJsonObject obj)
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphTracedRoad::json(const SdJsonReader &js)
   {
-  //Read top
-  SdGraphTraced::readObject( map, obj );
   //Members of this class
-  mSegment.readSegment( obj );
-  mProp.read( obj );
+  mSegment.json( js );
+  mProp.json( js );
+  //Top
+  SdGraphTraced::json( js );
   }
+
+
+
+
 
 
 

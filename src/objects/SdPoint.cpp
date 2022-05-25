@@ -300,20 +300,6 @@ bool SdPoint::isOnSegment(SdPoint a, SdPoint b) const
 
 
 
-void SdPoint::write(const QString name, QJsonObject &obj) const
-  {
-  obj.insert( name, write() );
-  }
-
-
-
-
-void SdPoint::read(const QString name, const QJsonObject obj)
-  {
-  read( obj.value(name).toObject() );
-  }
-
-
 
 
 void SdPoint::swap(SdPoint *p)
@@ -327,22 +313,6 @@ void SdPoint::swap(SdPoint *p)
 
 
 
-QJsonObject SdPoint::write() const
-  {
-  QJsonObject obj;
-  obj.insert( QStringLiteral("x"), QJsonValue(x()) );
-  obj.insert( QStringLiteral("y"), QJsonValue(y()) );
-  return obj;
-  }
-
-
-
-
-void SdPoint::read(const QJsonObject obj)
-  {
-  setX( obj.value( QStringLiteral("x") ).toInt() );
-  setY( obj.value( QStringLiteral("y") ).toInt() );
-  }
 
 
 

@@ -81,34 +81,41 @@ void SdPItemVariant::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool nex
 
 
 
-
-
-
-
-void SdPItemVariant::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdPItemVariant::json( SdJsonWriter &js ) const
   {
-  SdProjectItem::writeObject( obj );
   //For space economy we write variant table only if it present
   if( mVariantFieldCount ) {
-    obj.insert( QStringLiteral("VariantFC"), mVariantFieldCount );
-    obj.insert( QStringLiteral("VariantTab"), QJsonArray::fromStringList(mVariantTable) );
+    js.jsonInt( QStringLiteral("VariantFC"), mVariantFieldCount );
+    js.jsonListString( QStringLiteral("VariantTab"), mVariantTable );
     }
+  SdProjectItem::json( js );
   }
 
 
 
 
-void SdPItemVariant::readObject(SdObjectMap *map, const QJsonObject obj)
+
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdPItemVariant::json( const SdJsonReader &js )
   {
-  SdProjectItem::readObject( map, obj );
-  if( obj.contains(QStringLiteral("VariantFC")) ) {
-    mVariantFieldCount = obj.value( QStringLiteral("VariantFC") ).toInt();
-    QJsonArray ar = obj.value( QStringLiteral("VariantTab") ).toArray();
-    mVariantTable.clear();
-    for( auto iter = ar.constBegin(); iter != ar.constEnd(); iter++ )
-      mVariantTable.append( iter->toString() );
+  if( js.contains(QStringLiteral("VariantFC")) ) {
+    js.jsonInt( QStringLiteral("VariantFC"), mVariantFieldCount );
+    js.jsonListString( QStringLiteral("VariantTab"), mVariantTable );
     }
+  SdProjectItem::json( js );
   }
+
+
 
 
 
@@ -137,23 +144,6 @@ quint64 SdPItemVariant::getAcceptedObjectsMask() const
   }
 
 
-void SdPItemVariant::json( SdJsonWriter &js ) const
-  {
-  //For space economy we write variant table only if it present
-  if( mVariantFieldCount ) {
-    js.jsonInt( QStringLiteral("VariantFC"), mVariantFieldCount );
-    js.jsonListString( QStringLiteral("VariantTab"), mVariantTable );
-    }
-  SdProjectItem::json( js );
-  }
 
 
 
-void SdPItemVariant::json( const SdJsonReader &js )
-  {
-  if( js.contains(QStringLiteral("VariantFC")) ) {
-    js.jsonInt( QStringLiteral("VariantFC"), mVariantFieldCount );
-    js.jsonListString( QStringLiteral("VariantTab"), mVariantTable );
-    }
-  SdProjectItem::json( js );
-  }

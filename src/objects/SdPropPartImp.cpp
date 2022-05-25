@@ -48,21 +48,31 @@ bool SdPropPartImp::match(const SdPropPartImp &prop)
 
 
 
-
-void SdPropPartImp::write(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
+//!
+void SdPropPartImp::json(SvJsonWriter &js) const
   {
-  mAngle.write( QStringLiteral("PartImpAngle"), obj );
-  mSide.write( QStringLiteral("PartImpSide"), obj );
+  mAngle.json( QStringLiteral("PartImpAngle"), js );
+  mSide.json( QStringLiteral("PartImpSide"), js );
+  }
+
+
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
+//!
+void SdPropPartImp::json(const SvJsonReader &js)
+  {
+  mAngle.json( QStringLiteral("PartImpAngle"), js );
+  mSide.json( QStringLiteral("PartImpSide"), js );
   }
 
 
 
 
-void SdPropPartImp::read(const QJsonObject obj)
-  {
-  mAngle.read( QStringLiteral("PartImpAngle"), obj );
-  mSide.read( QStringLiteral("PartImpSide"), obj );
-  }
 
 
 

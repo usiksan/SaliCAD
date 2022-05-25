@@ -66,23 +66,28 @@ bool SdPropVia::match(const SdPropVia &prop)
 
 
 
-
-//Write and read
-void SdPropVia::write(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
+//!
+void SdPropVia::json(SvJsonWriter &js) const
   {
-  mStratum.write( QStringLiteral("vStratum"), obj );
-  mNetName.write( QStringLiteral("vNet"), obj );
-  mPadType.write( QStringLiteral("vPad"), obj );
+  mStratum.json( QStringLiteral("vStratum"), js );
+  mNetName.json( QStringLiteral("vNet"), js );
+  mPadType.json( QStringLiteral("vPad"), js );
   }
 
 
 
 
-void SdPropVia::read(const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
+//!
+void SdPropVia::json(const SvJsonReader &js)
   {
-  mStratum.read( QStringLiteral("vStratum"), obj );
-  mNetName.read( QStringLiteral("vNet"), obj );
-  mPadType.read( QStringLiteral("vPad"), obj );
+  mStratum.json( QStringLiteral("vStratum"), js );
+  mNetName.json( QStringLiteral("vNet"), js );
+  mPadType.json( QStringLiteral("vPad"), js );
   }
-
 

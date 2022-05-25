@@ -51,23 +51,31 @@ bool SdPropPartPin::match(const SdPropPartPin &prop)
 
 
 
-
-void SdPropPartPin::write(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
+//!
+void SdPropPartPin::json(SvJsonWriter &js) const
   {
-  mLayer.write( QStringLiteral("PartPinLayer"), obj );
-  mPinType.write( QStringLiteral("PartPinType"), obj );
-  mSide.writeStratum( obj );
+  mLayer.json( QStringLiteral("PartPinLayer"), js );
+  mPinType.json( QStringLiteral("PartPinType"), js );
+  mSide.jsonStratum( js );
   }
 
 
 
 
-void SdPropPartPin::read(const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
+//!
+void SdPropPartPin::json(const SvJsonReader &js)
   {
-  mLayer.read( QStringLiteral("PartPinLayer"), obj );
-  mPinType.read( QStringLiteral("PartPinType"), obj );
-  mSide.readStratum( obj );
+  mLayer.json( QStringLiteral("PartPinLayer"), js );
+  mPinType.json( QStringLiteral("PartPinType"), js );
+  mSide.jsonStratum( js );
   }
+
 
 
 

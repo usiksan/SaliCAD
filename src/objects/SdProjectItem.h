@@ -101,10 +101,18 @@ class SdProjectItem : public SdContainer
     virtual quint64        getAcceptedObjectsMask() const = 0;
     void                   insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo, SdSelector *dest, bool next );
 
-    virtual void           writeObject(QJsonObject &obj) const override;
-    virtual void           readObject(SdObjectMap *map, const QJsonObject obj) override;
-
+    //!
+    //! \brief json Overloaded function to write object content into json writer
+    //!             Overrided function
+    //! \param js   Json writer
+    //!
     virtual void           json( SdJsonWriter &js ) const override;
+
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //!             Overrided function
+    //! \param js   Json reader
+    //!
     virtual void           json( const SdJsonReader &js ) override;
 
     //!

@@ -51,21 +51,33 @@ bool SdPropSymImp::match(const SdPropSymImp &prop)
 
 
 
-
-void SdPropSymImp::write(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
+//!
+void SdPropSymImp::json(SvJsonWriter &js) const
   {
-  mAngle.write( QStringLiteral("SymImpAngle"), obj );
-  mMirror.write( QStringLiteral("SymImpMirror"), obj );
+  mAngle.json( QStringLiteral("SymImpAngle"), js );
+  mMirror.json( QStringLiteral("SymImpMirror"), js );
+  }
+
+
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
+//!
+void SdPropSymImp::json(const SvJsonReader &js)
+  {
+  mAngle.json( QStringLiteral("SymImpAngle"), js );
+  mMirror.json( QStringLiteral("SymImpMirror"), js );
   }
 
 
 
 
-void SdPropSymImp::read(const QJsonObject obj)
-  {
-  mAngle.read( QStringLiteral("SymImpAngle"), obj );
-  mMirror.read( QStringLiteral("SymImpMirror"), obj );
-  }
+
+
 
 
 

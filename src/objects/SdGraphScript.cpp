@@ -151,34 +151,43 @@ void SdGraphScript::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next
 
 
 
-
-
-void SdGraphScript::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphScript::json(SdJsonWriter &js) const
   {
-  SdGraphParam::writeObject( obj );
-  SdJsonWriter js( obj );
-  js.jsonValue<SdPropText>( "prop", mProp );
-  js.jsonString( "script", mScript );
-  js.jsonObject( js, "ref", mRefMap );
-  js.jsonPoint( "origin", mOrigin );
-  js.jsonObject( js, "over", mOverRect );
+  mProp.json( QStringLiteral("prop"), js );
+  js.jsonString( QStringLiteral("script"), mScript );
+  js.jsonObject( js, QStringLiteral("ref"), mRefMap );
+  js.jsonPoint( QStringLiteral("origin"), mOrigin );
+  js.jsonObject( js, QStringLiteral("over"), mOverRect );
+  SdGraphParam::json( js );
   }
 
 
 
 
-void SdGraphScript::readObject(SdObjectMap *map, const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphScript::json(const SdJsonReader &js)
   {
-  SdGraph::readObject( map, obj );
-  mProp.read( QStringLiteral("prop"), obj );
-  SdJsonReader js( obj, map );
-  js.jsonValue<SdPropText>( "prop", mProp );
-  js.jsonString( "script", mScript );
-  js.jsonObject( js, "ref", mRefMap );
-  js.jsonPoint( "origin", mOrigin );
-  js.jsonObject( js, "over", mOverRect );
+  mProp.json( QStringLiteral("prop"), js );
+  js.jsonString( QStringLiteral("script"), mScript );
+  js.jsonObject( js, QStringLiteral("ref"), mRefMap );
+  js.jsonPoint( QStringLiteral("origin"), mOrigin );
+  js.jsonObject( js, QStringLiteral("over"), mOverRect );
+  SdGraphParam::json( js );
   parse();
   }
+
+
+
+
 
 
 
