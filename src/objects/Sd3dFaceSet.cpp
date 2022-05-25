@@ -1,4 +1,5 @@
 #include "Sd3dFaceSet.h"
+#include "SdJsonIO.h"
 
 Sd3dFaceSet::Sd3dFaceSet()
   {
@@ -20,31 +21,36 @@ void Sd3dFaceSet::faceAdd(const Sd3dFaceEx &face)
 
 
 
-void Sd3dFaceSet::writeObject(QJsonObject &obj) const
+
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void Sd3dFaceSet::json(SdJsonWriter &js) const
   {
-  Sd3dGraph::writeObject( obj );
-  QJsonArray ar;
-  for( const auto &face : mFaceList ) {
-    ar.append( face.write() );
-    }
-  obj.insert( QStringLiteral("faces"), ar );
+  js.jsonList( js, QStringLiteral("faces"), mFaceList );
+  Sd3dGraph::json( js );
   }
 
 
 
 
 
-void Sd3dFaceSet::readObject(SdObjectMap *map, const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void Sd3dFaceSet::json(const SdJsonReader &js)
   {
-  Sd3dGraph::readObject( map, obj );
-  QJsonArray ar = obj.value( QStringLiteral("faces") ).toArray();
-  mFaceList.clear();
-  Sd3dFaceEx face;
-  for( const auto value : ar ) {
-    face.read( value.toObject() );
-    mFaceList.append( face );
-    }
+  js.jsonList( js, QStringLiteral("faces"), mFaceList );
+  Sd3dGraph::json( js );
   }
+
+
+
+
 
 
 

@@ -14,8 +14,9 @@ Description
 #ifndef SDPROPSTRING_H
 #define SDPROPSTRING_H
 
+#include "SvJsonIO.h"
+
 #include <QString>
-#include <QJsonObject>
 
 class SdPropString
   {
@@ -40,8 +41,8 @@ class SdPropString
       return s.mValue == OneValue && mValue == OneValue ? mString.compare( s.mString ) == 0 : true;
       }
 
-    void       write( const QString name, QJsonObject &obj ) const { obj.insert( name, mString ); }
-    void       read( const QString name, const QJsonObject obj );
+    void       json( const QString name, SvJsonWriter &js ) const { js.jsonString( name, mString ); }
+    void       json( const QString name, const SvJsonReader &js );
 
     void       swap( QString *src );
 

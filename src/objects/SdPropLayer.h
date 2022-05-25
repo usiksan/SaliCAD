@@ -16,7 +16,6 @@ Description
 
 #include "SdLayer.h"
 #include <QString>
-#include <QJsonObject>
 
 class SdPropLayer
   {
@@ -45,8 +44,8 @@ class SdPropLayer
       return s.mValue == OneValue && mValue == OneValue ? s.mLayer == mLayer : true;
       }
 
-    void       write( const QString name, QJsonObject &obj ) const { obj.insert( name, mLayer->id() ); }
-    void       read( const QString name, const QJsonObject obj );
+    void       json( const QString name, SvJsonWriter &js ) const { js.jsonString( name, mLayer->id() ); }
+    void       json( const QString name, const SvJsonReader &js );
 
     SdLayer   *swap( SdLayer *src );
   };

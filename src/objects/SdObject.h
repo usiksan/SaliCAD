@@ -118,11 +118,9 @@ class SdObject
 
 
     //Write and read object
-    virtual void      writeObject( QJsonObject &obj ) const;
     QJsonObject       write() const;
     static  void      writePtr( const SdObject *ptr, const QString name, QJsonObject &obj );
 
-    virtual void      readObject( SdObjectMap *map, const QJsonObject obj );
 
     static  SdObject* read( SdObjectMap *map, const QJsonObject obj );
     static  SdObject* readPtr( SdObjectMap *map, const QJsonObject obj );
@@ -141,7 +139,16 @@ class SdObject
     QByteArray        toByteArray() const;
     void              fromByteArray( const QByteArray &ar );
 
+    //!
+    //! \brief json Overloaded function to write object content into json writer
+    //! \param js   Json writer
+    //!
     virtual void      json( SdJsonWriter &js ) const;
+
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //! \param js   Json reader
+    //!
     virtual void      json( const SdJsonReader &js );
   };
 

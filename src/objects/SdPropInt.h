@@ -15,8 +15,6 @@ Description
 #ifndef SDINTPROP_H
 #define SDINTPROP_H
 
-#include <QJsonObject>
-
 #include "SvJsonIO.h"
 
 class SdPropInt
@@ -51,9 +49,6 @@ class SdPropInt
     bool       match( SdPropInt const &s ) {
       return s.mValue != NoValue && s.mValue != AllValue && mValue != NoValue && mValue != AllValue ? s.mValue == mValue : true;
       }
-
-    void       write( const QString name, QJsonObject &obj ) const { obj.insert( name, mValue ); }
-    void       read( const QString name, const QJsonObject obj ) { mValue = obj.value(name).toInt(); }
 
     void       json( const QString key, SvJsonWriter &js ) const { js.jsonInt( key, mValue ); }
     void       json( const QString key, const SvJsonReader &js ) { js.jsonInt( key, mValue ); }

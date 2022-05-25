@@ -59,23 +59,25 @@ bool SdPropPolygon::match(const SdPropPolygon &prop)
 
 
 
-
-void SdPropPolygon::write(QJsonObject &obj) const
+void SdPropPolygon::json(SvJsonWriter &js) const
   {
-  mGap.write( QStringLiteral("pGap"), obj );
-  mStratum.write( QStringLiteral("pStratum"), obj );
-  mNetName.write( QStringLiteral("pNet"), obj );
+  mGap.json( QStringLiteral("pGap"), js );
+  mStratum.json( QStringLiteral("pStratum"), js );
+  mNetName.json( QStringLiteral("pNet"), js );
+  }
+
+
+
+void SdPropPolygon::json(const SvJsonReader &js)
+  {
+  mGap.json( QStringLiteral("pGap"), js );
+  mStratum.json( QStringLiteral("pStratum"), js );
+  mNetName.json( QStringLiteral("pNet"), js );
   }
 
 
 
 
-void SdPropPolygon::read(const QJsonObject obj)
-  {
-  mGap.read( QStringLiteral("pGap"), obj );
-  mStratum.read( QStringLiteral("pStratum"), obj );
-  mNetName.read( QStringLiteral("pNet"), obj );
-  }
 
 
 

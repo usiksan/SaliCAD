@@ -39,16 +39,16 @@ class Sd3dFaceEx
     void        paint( QOpenGLFunctions_2_0 *f ) const;
 
     //!
-    //! \brief write Write triangle to json file
-    //! \return      JSON object with triangle
+    //! \brief json Overloaded function to write object content into json writer
+    //! \param js   Json writer
     //!
-    QJsonObject write() const;
+    void        json( SvJsonWriter &js ) const;
 
     //!
-    //! \brief read Read triangle from json file
-    //! \param obj  JSON object with triangle
+    //! \brief json Overloaded function to read object content from json reader
+    //! \param js   Json reader
     //!
-    void        read( const QJsonObject &obj );
+    void        json( const SvJsonReader &js);
 
     //!
     //! \brief overRect Return over rect of face projected to XY surface

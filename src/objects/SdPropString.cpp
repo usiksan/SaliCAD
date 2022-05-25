@@ -54,10 +54,10 @@ void SdPropString::append(const QString str)
 
 
 
-void SdPropString::read(const QString name, const QJsonObject obj)
+void SdPropString::json(const QString name, const SvJsonReader &js)
   {
   mValue = OneValue;
-  mString = obj.value(name).toString();
+  js.jsonString( name, mString );
   }
 
 

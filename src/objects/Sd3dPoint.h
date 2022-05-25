@@ -62,9 +62,9 @@ class Sd3dPoint : public QVector3D
 
 using Sd3dPointList = QList<Sd3dPoint>;
 
-QJsonArray sd3dPointListWrite( const Sd3dPointList &list );
+void json3dPointList( SvJsonWriter &js, const QString &key, const Sd3dPointList &list );
+void json3dPointList( const SvJsonReader &js, const QString &key, Sd3dPointList &list );
 
-void       sd3dPointListRead( Sd3dPointList &list, const QJsonArray &array );
 
 inline double intMcmToFloatMm( int mcm )
   {

@@ -34,42 +34,6 @@ SdContainer::~SdContainer()
 
 
 
-void SdContainer::readObject(SdObjectMap *map, const QJsonObject obj)
-  {
-  SdObject::readObject( map, obj );
-
-  //Read list
-  clearChildList();
-  QJsonArray array = obj.value( QStringLiteral("ChildList") ).toArray();
-  for( int i = 0; i < array.count(); i++ ) {
-    SdObject *ptr = SdObject::read( map, array.at(i).toObject() );
-    if( ptr ) {
-      ptr->setParent( this );
-      mChildList.append( ptr );
-      }
-    }
-
-  //Read param table
-  sdStringMapRead( QStringLiteral("Parametrs"), mParamTable, obj );
-  }
-
-
-
-
-void SdContainer::writeObject(QJsonObject &obj) const
-  {
-  //Write list
-  QJsonArray array;
-  for( SdObject *ptr : mChildList )
-    if( ptr && !ptr->isDeleted() ) {
-      array.append( ptr->write() );
-      }
-  obj.insert( QStringLiteral("ChildList"), array );
-
-  //Write param table
-  sdStringMapWrite( QStringLiteral("Parametrs"), mParamTable, obj );
-  }
-
 
 
 
@@ -413,6 +377,7 @@ bool SdContainer::upgradeClassProjectItem(SdClass mask, SdUndo *undo, QWidget *p
 
 
 
+
 void SdContainer::json(SdJsonWriter &js) const
   {
   auto fun = [] ( const SdObject *ptr ) -> bool { return ptr && !ptr->isDeleted(); };
@@ -420,6 +385,8 @@ void SdContainer::json(SdJsonWriter &js) const
   js.jsonMapString( QStringLiteral("Parametrs"), mParamTable );
   SdObject::json( js );
   }
+
+
 
 
 void SdContainer::json( const SdJsonReader &js )

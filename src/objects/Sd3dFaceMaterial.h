@@ -14,6 +14,8 @@ Description
 #ifndef SD3DFACEMATERIAL_H
 #define SD3DFACEMATERIAL_H
 
+#include "SvJsonIO.h"
+
 #include <QJsonObject>
 #include <QOpenGLFunctions_2_0>
 
@@ -44,9 +46,17 @@ class Sd3dFaceMaterial
 
     void paint( QOpenGLFunctions_2_0 *f ) const;
 
-    void write( QJsonObject &obj ) const;
+    //!
+    //! \brief json Overloaded function to write object content into json writer
+    //! \param js   Json writer
+    //!
+    void json( SvJsonWriter &js ) const;
 
-    void read( const QJsonObject &obj );
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //! \param js   Json reader
+    //!
+    void json( const SvJsonReader &js);
 
   private:
     void buildAmbientColor();

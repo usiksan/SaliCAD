@@ -28,6 +28,8 @@ class SdJsonWriter : public SvJsonWriter
       SdObject::writePtr( ptr, key, object() );
       }
 
+    void jsonColor3d( const QString &key, const float *color );
+
   };
 
 
@@ -48,6 +50,7 @@ class SdJsonReader : public SvJsonReaderExt<SdObjectMap>
       ptr = dynamic_cast<SvClassPtr>( SdObject::readPtr( property(), object().value(key).toObject() ) );
       }
 
+    void jsonColor3d( const QString &key, float *color );
   };
 
 #endif // SDJSONIO_H

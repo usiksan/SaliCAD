@@ -41,22 +41,31 @@ bool SdPropLine::operator == ( SdPropLine const &prop ) {
 bool SdPropLine::match( SdPropLine const &prop ) {
   return mWidth.match( prop.mWidth ) &&
          mType.match( prop.mType ) &&
-         mLayer.match( prop.mLayer );
+      mLayer.match( prop.mLayer );
   }
 
-void SdPropLine::write(QJsonObject &obj) const
+
+
+
+void SdPropLine::json(SvJsonWriter &js) const
   {
-  mWidth.write( QStringLiteral("lineWidth"), obj );
-  mType.write( QStringLiteral("lineType"), obj );
-  mLayer.write( QStringLiteral("lineLayer"), obj );
+  mWidth.json( QStringLiteral("lineWidth"), js );
+  mType.json( QStringLiteral("lineType"), js );
+  mLayer.json( QStringLiteral("lineLayer"), js );
   }
 
-void SdPropLine::read(const QJsonObject obj)
+
+
+
+void SdPropLine::json(const SvJsonReader &js)
   {
-  mWidth.read( QStringLiteral("lineWidth"), obj );
-  mType.read( QStringLiteral("lineType"), obj );
-  mLayer.read( QStringLiteral("lineLayer"), obj );
+  mWidth.json( QStringLiteral("lineWidth"), js );
+  mType.json( QStringLiteral("lineType"), js );
+  mLayer.json( QStringLiteral("lineLayer"), js );
   }
+
+
+
 
 void SdPropLine::saveState(SdPropLineState *dst)
   {
@@ -64,6 +73,7 @@ void SdPropLine::saveState(SdPropLineState *dst)
   dst->mType  = mType.getValue();
   dst->mLayer = mLayer.layer();
   }
+
 
 void SdPropLine::swapState(SdPropLineState *src)
   {

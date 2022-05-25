@@ -34,16 +34,29 @@ void Sd3dFaceMaterial::paint(QOpenGLFunctions_2_0 *f) const
   }
 
 
-static void writeColor( QJsonObject &obj, const QString &prefix, const float *color )
+static void jsonFloatMcm( SvJsonWriter &js, const QString &key, float v )
   {
-  //Convert color to rgba
-  obj.insert( prefix, QString::number( qRgba(color[0]*255.0, color[1]*255.0, color[2]*255.0, color[3]*255.0), 16 ) );
+  js.jsonInt( key, floatMmToIntMcm(v) );
+  }
+
+static void jsonFloatMcm( const SvJsonReader &js, const QString &key, float &v )
+  {
+  int i;
+  js.jsonInt( key, i );
+  v = intMcmToFloatMm(i);
   }
 
 
-static void readColor( const QJsonObject &obj, const QString &prefix, float *color )
+static void jsonColor3d( SvJsonWriter &js, const QString &prefix, const float *color )
   {
-  QRgb rgba = obj.value( prefix ).toString().toUInt( nullptr, 16 );
+  //Convert color to rgba
+  js.jsonString( prefix, QString::number( qRgba(color[0]*255.0, color[1]*255.0, color[2]*255.0, color[3]*255.0), 16 ) );
+  }
+
+
+static void jsonColor3d( const SvJsonReader &js, const QString &prefix, float *color )
+  {
+  QRgb rgba = js.object().value( prefix ).toString().toUInt( nullptr, 16 );
   color[0] = qRed( rgba );
   color[0] /= 255.0;
   color[1] = qGreen( rgba );
@@ -55,26 +68,42 @@ static void readColor( const QJsonObject &obj, const QString &prefix, float *col
   }
 
 
-void Sd3dFaceMaterial::write(QJsonObject &obj) const
+
+
+
+//!
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
+//!
+void Sd3dFaceMaterial::json(SvJsonWriter &js) const
   {
-  obj.insert( QString("mAmInt"), floatMmToIntMcm( mAmbientIntensity )  );
-  writeColor( obj, QStringLiteral("mDf"), mDiffuseColor );
-  writeColor( obj, QStringLiteral("mEm"), mEmissiveColor );
-  obj.insert( QString("mShin"), floatMmToIntMcm( mShininnes )  );
-  writeColor( obj, QStringLiteral("mSp"), mSpecularColor );
+  jsonFloatMcm( js, QString("mAmInt"), mAmbientIntensity );
+  jsonColor3d( js, QStringLiteral("mDf"), mDiffuseColor );
+  jsonColor3d( js, QStringLiteral("mEm"), mEmissiveColor );
+  jsonFloatMcm( js, QString("mShin"), mShininnes );
+  jsonColor3d( js, QStringLiteral("mSp"), mSpecularColor );
   }
 
 
 
-void Sd3dFaceMaterial::read(const QJsonObject &obj)
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
+//!
+void Sd3dFaceMaterial::json(const SvJsonReader &js)
   {
-  mAmbientIntensity = intMcmToFloatMm( obj.value( QString("mAmInt") ).toInt() );
-  readColor( obj, QStringLiteral("mDf"), mDiffuseColor );
-  readColor( obj, QStringLiteral("mEm"), mEmissiveColor );
-  mShininnes = intMcmToFloatMm( obj.value( QString("mShin") ).toInt() );
-  readColor( obj, QStringLiteral("mSp"), mSpecularColor );
+  jsonFloatMcm( js, QString("mAmInt"), mAmbientIntensity );
+  jsonColor3d( js, QStringLiteral("mDf"), mDiffuseColor );
+  jsonColor3d( js, QStringLiteral("mEm"), mEmissiveColor );
+  jsonFloatMcm( js, QString("mShin"), mShininnes );
+  jsonColor3d( js, QStringLiteral("mSp"), mSpecularColor );
   buildAmbientColor();
   }
+
+
+
+
 
 
 

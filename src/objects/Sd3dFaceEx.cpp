@@ -85,34 +85,33 @@ void Sd3dFaceEx::paint(QOpenGLFunctions_2_0 *f) const
 
 
 
-
-
 //!
-//! \brief write Write triangle to json file
-//! \return      JSON object with triangle
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
 //!
-QJsonObject Sd3dFaceEx::write() const
+void Sd3dFaceEx::json(SvJsonWriter &js) const
   {
-  QJsonObject obj;
-  mMaterial.write( obj );
-  obj.insert( QStringLiteral("region"), sd3dPointListWrite(mRegion) );
-  obj.insert( QStringLiteral("normal"), sd3dPointListWrite(mNormal) );
-  return obj;
+  mMaterial.json( js );
+  json3dPointList( js, QStringLiteral("region"), mRegion );
+  json3dPointList( js, QStringLiteral("normal"), mNormal );
   }
 
 
 
 
 //!
-//! \brief read Read triangle from json file
-//! \param obj  JSON object with triangle
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
 //!
-void Sd3dFaceEx::read(const QJsonObject &obj)
+void Sd3dFaceEx::json(const SvJsonReader &js)
   {
-  mMaterial.read( obj );
-  sd3dPointListRead( mRegion, obj.value( QStringLiteral("region") ).toArray() );
-  sd3dPointListRead( mNormal, obj.value( QStringLiteral("normal") ).toArray() );
+  mMaterial.json( js );
+  json3dPointList( js, QStringLiteral("region"), mRegion );
+  json3dPointList( js, QStringLiteral("normal"), mNormal );
   }
+
+
+
 
 
 

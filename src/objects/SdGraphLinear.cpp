@@ -12,6 +12,7 @@ Description
   Graphical object with linear type (line, rect, circle and so).
 */
 #include "SdGraphLinear.h"
+#include "SdJsonIO.h"
 
 SdGraphLinear::SdGraphLinear() :
   SdGraph()
@@ -46,22 +47,24 @@ void SdGraphLinear::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next
 
 
 
-
-
-
-void SdGraphLinear::writeObject(QJsonObject &obj) const
+void SdGraphLinear::json(SdJsonWriter &js) const
   {
-  SdGraph::writeObject( obj );
-  mProp.write( obj );
+  mProp.json( js );
+  SdGraph::json( js );
   }
 
 
 
-void SdGraphLinear::readObject(SdObjectMap *map, const QJsonObject obj)
+void SdGraphLinear::json(const SdJsonReader &js)
   {
-  SdGraph::readObject( map, obj );
-  mProp.read( obj );
+  mProp.json( js );
+  SdGraph::json( js );
   }
+
+
+
+
+
 
 
 

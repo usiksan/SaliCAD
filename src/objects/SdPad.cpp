@@ -44,60 +44,6 @@ SdPad::SdPad() :
 
 
 
-QJsonObject SdPad::write() const
-  {
-  QJsonObject obj;
-  //Center of circle or rectangle
-  if( mCenterX ) obj.insert( QStringLiteral("cx"), mCenterX );
-  if( mCenterY ) obj.insert( QStringLiteral("cy"), mCenterY );
-  //Diametr of circle or rectangle dimensions
-  obj.insert( QStringLiteral("dw"), mDiametrWidth );
-  obj.insert( QStringLiteral("h"), mIsCircle ? 0 : mHeight );
-  //Mask threshold. Calculation: maskSize = size + mMaskThreshold
-  obj.insert( QStringLiteral("mt"), mMaskThreshold );
-  //Stencil threshold. Calculation: stencilSize = size - mStencilThreshold
-  obj.insert( QStringLiteral("st"), mStencilThreshold );
-  //If rows or colons > 1 then stencil area divided on array of aperture with
-  // width and height
-  if( mStencilRows ) obj.insert( QStringLiteral("sr"), mStencilRows );
-  if( mStencilCols ) obj.insert( QStringLiteral("sc"), mStencilCols );
-  if( mStencilWidth) obj.insert( QStringLiteral("sw"), mStencilWidth );
-  if( mStencilHeight ) obj.insert( QStringLiteral("sh"), mStencilHeight );
-  if( mHoleDiametr ) obj.insert( QStringLiteral("hole"), mHoleDiametr );
-  if( mHoleLength ) obj.insert( QStringLiteral("slotLen"), mHoleLength );
-  if( mSlotAngle ) obj.insert( QStringLiteral("slotAng"), mSlotAngle );
-  return obj;
-  }
-
-
-
-
-
-
-
-void SdPad::read(const QJsonObject obj)
-  {
-  //Center of circle or rectangle
-  mCenterX = obj.value( QStringLiteral("cx") ).toInt();
-  mCenterY = obj.value( QStringLiteral("cy") ).toInt();
-  //Diametr of circle or rectangle dimensions
-  mDiametrWidth = obj.value( QStringLiteral("dw") ).toInt();
-  mHeight = obj.value( QStringLiteral("h") ).toInt();
-  mIsCircle = mHeight <= 0;
-  //Mask threshold. Calculation: maskSize = size + mMaskThreshold
-  mMaskThreshold = obj.value( QStringLiteral("mt") ).toInt();
-  //Stencil threshold. Calculation: stencilSize = size - mStencilThreshold
-  mStencilThreshold = obj.value( QStringLiteral("st") ).toInt();
-  //If rows or colons > 1 then stencil area divided on array of aperture with
-  // width and height
-  mStencilRows = obj.value( QStringLiteral("sr") ).toInt();
-  mStencilCols = obj.value( QStringLiteral("sc") ).toInt();
-  mStencilWidth = obj.value( QStringLiteral("sw") ).toInt();
-  mStencilHeight = obj.value( QStringLiteral("sh") ).toInt();
-  mHoleDiametr = obj.value( QStringLiteral("hole") ).toInt();
-  mHoleLength = obj.value( QStringLiteral("slotLen") ).toInt();
-  mSlotAngle = obj.value( QStringLiteral("slotAng") ).toInt();
-  }
 
 
 
@@ -467,6 +413,57 @@ void SdPad::slotPoints(SdPoint &a, SdPoint &b) const
   b.set(mHoleLength/2,0);
   a.rotate( SdPoint(), mSlotAngle );
   b.rotate( SdPoint(), mSlotAngle );
+  }
+
+
+
+
+void SdPad::json(SvJsonWriter &js) const
+  {
+  //Center of circle or rectangle
+  if( mCenterX ) js.jsonInt( QStringLiteral("cx"), mCenterX );
+  if( mCenterY ) js.jsonInt( QStringLiteral("cy"), mCenterY );
+  //Diametr of circle or rectangle dimensions
+  js.jsonInt( QStringLiteral("dw"), mDiametrWidth );
+  js.jsonInt( QStringLiteral("h"), mIsCircle ? 0 : mHeight );
+  //Mask threshold. Calculation: maskSize = size + mMaskThreshold
+  js.jsonInt( QStringLiteral("mt"), mMaskThreshold );
+  //Stencil threshold. Calculation: stencilSize = size - mStencilThreshold
+  js.jsonInt( QStringLiteral("st"), mStencilThreshold );
+  //If rows or colons > 1 then stencil area divided on array of aperture with
+  // width and height
+  if( mStencilRows ) js.jsonInt( QStringLiteral("sr"), mStencilRows );
+  if( mStencilCols ) js.jsonInt( QStringLiteral("sc"), mStencilCols );
+  if( mStencilWidth) js.jsonInt( QStringLiteral("sw"), mStencilWidth );
+  if( mStencilHeight ) js.jsonInt( QStringLiteral("sh"), mStencilHeight );
+  if( mHoleDiametr ) js.jsonInt( QStringLiteral("hole"), mHoleDiametr );
+  if( mHoleLength ) js.jsonInt( QStringLiteral("slotLen"), mHoleLength );
+  if( mSlotAngle ) js.jsonInt( QStringLiteral("slotAng"), mSlotAngle );
+  }
+
+
+
+void SdPad::json(const SvJsonReader &js)
+  {
+  //Center of circle or rectangle
+  js.jsonInt( QStringLiteral("cx"), mCenterX, 0 );
+  js.jsonInt( QStringLiteral("cy"), mCenterY, 0 );
+  //Diametr of circle or rectangle dimensions
+  js.jsonInt( QStringLiteral("dw"), mDiametrWidth );
+  js.jsonInt( QStringLiteral("h"), mHeight );
+  //Mask threshold. Calculation: maskSize = size + mMaskThreshold
+  js.jsonInt( QStringLiteral("mt"), mMaskThreshold );
+  //Stencil threshold. Calculation: stencilSize = size - mStencilThreshold
+  js.jsonInt( QStringLiteral("st"), mStencilThreshold );
+  //If rows or colons > 1 then stencil area divided on array of aperture with
+  // width and height
+  js.jsonInt( QStringLiteral("sr"), mStencilRows, 0 );
+  js.jsonInt( QStringLiteral("sc"), mStencilCols, 0 );
+  js.jsonInt( QStringLiteral("sw"), mStencilWidth, 0 );
+  js.jsonInt( QStringLiteral("sh"), mStencilHeight, 0 );
+  js.jsonInt( QStringLiteral("hole"), mHoleDiametr, 0 );
+  js.jsonInt( QStringLiteral("slotLen"), mHoleLength, 0 );
+  js.jsonInt( QStringLiteral("slotAng"), mSlotAngle, 0 );
   }
 
 

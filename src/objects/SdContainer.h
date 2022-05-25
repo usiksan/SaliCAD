@@ -38,10 +38,6 @@ class SdContainer : public SdObject
     //Information
     virtual bool isContainer() const override { return true; }
 
-    virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
-
-    virtual void writeObject(QJsonObject &obj) const override;
-
     virtual void insertChild( SdObject *child, SdUndo *undo );
     virtual void undoInsertChild( SdObject *child );
     virtual void redoInsertChild( SdObject *child );
@@ -126,7 +122,18 @@ class SdContainer : public SdObject
 
     // SdObject interface
   public:
+    //!
+    //! \brief json Overloaded function to write object content into json writer
+    //!             Overrided function
+    //! \param js   Json writer
+    //!
     virtual void json( SdJsonWriter &js ) const override;
+
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //!             Overrided function
+    //! \param js   Json reader
+    //!
     virtual void json( const SdJsonReader &js ) override;
   };
 

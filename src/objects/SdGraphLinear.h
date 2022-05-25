@@ -33,8 +33,8 @@ class SdGraphLinear : public SdGraph
     //!                  For example: pin name A23 with next copy return A24
     //!
     virtual void cloneFrom( const SdObject *src, SdCopyMap &copyMap, bool next ) override;
-    virtual void writeObject(QJsonObject &obj) const override;
-    virtual void readObject(SdObjectMap *map, const QJsonObject obj) override;
+    virtual void json( SdJsonWriter &js) const override;
+    virtual void json(const SdJsonReader &js) override;
 
     //Properties service [Изменение свойствами]
     virtual void setProp(SdPropSelected &prop) override;

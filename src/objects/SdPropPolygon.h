@@ -37,8 +37,8 @@ struct SdPropPolygon
     void clear();                                   //Установить в неопределенное состояние
     bool match( SdPropPolygon const &prop );        //Сравнить на совпадение с эталоном
 
-    void write( QJsonObject &obj ) const;
-    void read( const QJsonObject obj );
+    void json( SvJsonWriter &js ) const;
+    void json( const SvJsonReader &js );
     void saveState( SdPropPolygonState *dst );
     void swapState( SdPropPolygonState *src );
   };

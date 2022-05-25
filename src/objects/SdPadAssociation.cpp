@@ -15,6 +15,7 @@ Description
 #include "SdPadAssociation.h"
 #include "SdProjectItem.h"
 #include "SdUtil.h"
+#include "SdJsonIO.h"
 #include "library/SdLibraryHeader.h"
 
 SdPadAssociation::SdPadAssociation()
@@ -89,37 +90,33 @@ void SdPadAssociation::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool n
 
 
 
-
-
-
-
-
-
-
-void SdPadAssociation::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdPadAssociation::json(SdJsonWriter &js) const
   {
-  SdObject::writeObject( obj );
-  obj.insert( QStringLiteral("pad association name"), mName );
-  obj.insert( QStringLiteral("pad association author"), mAuthor );
-  QJsonObject ar;
-  for( auto iter = mMap.cbegin(); iter != mMap.cend(); iter++ )
-    ar.insert( iter.key(), iter.value().write() );
-  obj.insert( QStringLiteral("association"), ar );
+  js.jsonString( QStringLiteral("pad association name"), mName );
+  js.jsonString( QStringLiteral("pad association author"), mAuthor );
+  js.jsonMap( js, QStringLiteral("association"), mMap );
+  SdObject::json( js );
   }
 
 
 
-void SdPadAssociation::readObject(SdObjectMap *map, const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdPadAssociation::json(const SdJsonReader &js)
   {
-  SdObject::readObject( map, obj );
-  mName = obj.value( QStringLiteral("pad association name") ).toString();
-  mAuthor = obj.value( QStringLiteral("pad association author") ).toString();
-  QJsonObject ar = obj.value( QStringLiteral("association") ).toObject();
-  SdPad pad;
-  for( auto iter = ar.constBegin(); iter != ar.constEnd(); iter++ ) {
-    pad.read( iter.value().toObject() );
-    mMap.insert( iter.key(), pad );
-    }
+  js.jsonString( QStringLiteral("pad association name"), mName );
+  js.jsonString( QStringLiteral("pad association author"), mAuthor );
+  js.jsonMap( js, QStringLiteral("association"), mMap );
+  SdObject::json( js );
   }
+
 
 

@@ -116,10 +116,10 @@ void SdPropLayer::setLayerUsage() const
 
 
 
-void SdPropLayer::read(const QString name, const QJsonObject obj)
+void SdPropLayer::json(const QString name, const SvJsonReader &js)
   {
   mValue = OneValue;
-  mLayer = sdEnvir->getLayer( obj.value(name).toString() );
+  mLayer = sdEnvir->getLayer( js.object().value(name).toString() );
   }
 
 

@@ -63,23 +63,30 @@ void Sd3dPoint::read(const QJsonObject obj)
 
 
 
-QJsonArray sd3dPointListWrite(const Sd3dPointList &list)
+
+
+
+
+
+
+
+void json3dPointList(SvJsonWriter &js, const QString &key, const Sd3dPointList &list)
   {
   QJsonArray array;
   for( auto const &pt : list ) {
     array.append( floatMmToIntMcm(pt.x()) );
     array.append( floatMmToIntMcm(pt.y()) );
     array.append( floatMmToIntMcm(pt.z()) );
-    //array.append( pt.write() );
     }
-  return array;
+  js.object().insert( key, array );
   }
 
 
 
 
-void sd3dPointListRead(Sd3dPointList &list, const QJsonArray &array)
+void json3dPointList(const SvJsonReader &js, const QString &key, Sd3dPointList &list)
   {
+  QJsonArray array = js.object().value( key ).toArray();
   list.clear();
   Sd3dPoint pt;
   int i = 0;

@@ -46,9 +46,6 @@ class SdPad
   public:
     SdPad();
 
-    QJsonObject write() const;
-    void        read( const QJsonObject obj);
-
     void        draw(SdContext *dcx, SdPoint p, int stratum ) const;
 
     //!
@@ -87,6 +84,18 @@ class SdPad
     bool        isEmpty() const { return mHeight < 0; }
 
     bool        isThrough() const { return mHoleDiametr > 0; }
+
+    //!
+    //! \brief json Overloaded function to write object content into json writer
+    //! \param js   Json writer
+    //!
+    void        json( SvJsonWriter &js ) const;
+
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //! \param js   Json reader
+    //!
+    void        json( const SvJsonReader &js);
 
     friend class SdDPadMaster;
   };
