@@ -4,6 +4,7 @@
 #include "SvJsonIO.h"
 #include "SdObjectMap.h"
 #include "SdObject.h"
+#include "SdRect.h"
 
 
 class SdJsonWriter : public SvJsonWriter
@@ -26,6 +27,7 @@ class SdJsonWriter : public SvJsonWriter
       {
       SdObject::writePtr( ptr, key, object() );
       }
+
   };
 
 
@@ -37,6 +39,8 @@ class SdJsonReader : public SvJsonReaderExt<SdObjectMap>
     //! \param obj          Object which json readed
     //!
     SdJsonReader( const QJsonObject &obj, SdObjectMap *prop ) : SvJsonReaderExt<SdObjectMap>( obj, prop ) {}
+
+    SdJsonReader( const QJsonObject &obj, const SdJsonReader &src ) : SvJsonReaderExt<SdObjectMap>( obj, src.property() ) {}
 
     template <class SvClassPtr>
     void jsonObjectPtr( const QString &key, SvClassPtr &ptr )

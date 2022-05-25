@@ -22,6 +22,7 @@ INCLUDEPATH += ../third \
 win32: LIBS += -lopengl32
 win64: LIBS += -lopengl32
 
+
 SOURCES += \
     SdMain.cpp \
     import/SdScaner.cpp \
@@ -68,6 +69,7 @@ SOURCES += \
     objects/SdGraphScript.cpp \
     objects/SdGraphScriptRef.cpp \
     objects/SdGraphScriptRefMap.cpp \
+    objects/SdJsonIO.cpp \
     script/SdScriptOperatorBlock.cpp \
     script/SdScriptOperatorIf.cpp \
     script/SdScriptOperatorWhile.cpp \

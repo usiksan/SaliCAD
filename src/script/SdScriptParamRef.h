@@ -2,7 +2,7 @@
 #define SDSCRIPTPARAMREF_H
 
 
-#include "objects/SvJsonIO.h"
+#include "objects/SdJsonIO.h"
 #include "objects/SdGraphParam.h"
 #include <QString>
 #include <QMap>
@@ -23,9 +23,9 @@ class SdScriptParamRef
 
     void    assign( SdContainer *refOwner, SdGraphParam *ref, QString param );
 
-    void    jsonWrite( SvJsonWriter &js ) const;
+    void    json( SdJsonWriter &js ) const;
 
-    void    jsonRead( SvJsonReaderExt<SdObjectMap> &js );
+    void    json( SdJsonReader &js );
 
   private:
     bool    checkRef();

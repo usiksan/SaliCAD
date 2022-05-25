@@ -13,6 +13,7 @@ Description
 
 #include "SdContainer.h"
 #include "SdGraph.h"
+#include "SdJsonIO.h"
 #include <QJsonArray>
 #include <QDebug>
 #include <algorithm>
@@ -409,3 +410,22 @@ bool SdContainer::upgradeClassProjectItem(SdClass mask, SdUndo *undo, QWidget *p
   return res;
   }
 
+
+
+
+void SdContainer::json(SdJsonWriter &js) const
+  {
+  auto fun = [] ( const SdObject *ptr ) -> bool { return ptr && !ptr->isDeleted(); };
+  js.jsonListPtr( js, QStringLiteral("ChildList"), mChildList, fun );
+  js.jsonMapString( QStringLiteral("Parametrs"), mParamTable );
+  SdObject::json( js );
+  }
+
+
+void SdContainer::json( const SdJsonReader &js )
+  {
+  auto fun = [this] ( SdObject *obj ) -> bool { if( obj != nullptr ) obj->setParent(this); return obj != nullptr; };
+  js.jsonListPtr( js, QStringLiteral("ChildList"), mChildList, fun );
+  js.jsonMapString( QStringLiteral("Parametrs"), mParamTable );
+  SdObject::json( js );
+  }

@@ -57,6 +57,11 @@ class SdPItemVariant : public SdProjectItem
     virtual void    getHeader(SdLibraryHeader &hdr) const override;
     virtual QString getIconName() const override;
     virtual quint64 getAcceptedObjectsMask() const override;
+
+    // SdObject interface
+  public:
+    virtual void json( SdJsonWriter &js ) const override;
+    virtual void json( const SdJsonReader &js ) override;
   };
 
 #endif // SDPITEMVARIANT_H

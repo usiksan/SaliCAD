@@ -50,8 +50,8 @@ class SdGraphScriptRefMap : public SdScriptRefMap
 
     void   parseEnd();
 
-    void   jsonWrite( SdJsonWriter &js ) const;
-    void   jsonRead( SdJsonReader &js );
+    void   json( SdJsonWriter &js ) const;
+    void   json( SdJsonReader &js );
 
     // SdScriptRefMap interface
   public:

@@ -14,6 +14,8 @@
     21.04.2022 v4 Append map of list of any class support
     26.04.2022 v5 Full English remark
     24.05.2022 v6 Replace all const char* on QString which support both using with const char* and QString
+    25.05.2022 v7 Append contains member in SvJsonWriter
+    25.05.2022 v8 Refactor compound member-functions to support deriving writer and reader from base classes
 */
 #ifndef SVJSONIO_H
 #define SVJSONIO_H
@@ -25,7 +27,7 @@
 #include <QMap>
 #include <QPoint>
 
-#define SV_JSON_VERSION 6
+#define SV_JSON_VERSION 8
 
 //!
 //! \brief The SvJsonWriter class Unificate json io class, through which json written
@@ -42,6 +44,8 @@ class SvJsonWriter
     SvJsonWriter( QJsonObject &obj ) : mObjectRef(obj) {}
 
 
+    SvJsonWriter( const SvJsonWriter& ) : mObjectRef(mObject) {}
+
     //!
     //! \brief SvJsonWriter Constructor with internal json object as destignator
     //!
@@ -53,6 +57,13 @@ class SvJsonWriter
     //! \return       Destignator json object
     //!
     QJsonObject &object() { return mObjectRef; }
+
+    //!
+    //! \brief contains Return true if key contains in SvJsonWriter object
+    //! \param key      Tested key
+    //! \return         true if key contains in SvJsonWriter object
+    //!
+    bool contains( const QString &key ) const { return mObjectRef.contains( key ); }
 
     //!
     //! \brief jsonBool Transfer bool value
@@ -156,18 +167,18 @@ class SvJsonWriter
 
     //!
     //! \brief jsonList Template Transfer list of any values
-    //!                 Value class must contains jsonWrite method, which returns
+    //!                 Value class must contains json method, which returns
     //!                 json object for value object
     //! \param key      Key for list
     //! \param list     List to transfer
     //!
-    template<typename SvClass>
-    void jsonList( const QString &key, const QList<SvClass> &list )
+    template<typename SvClass, typename SvJsonWriterImpl>
+    void jsonList( SvJsonWriterImpl &sjs, const QString &key, const QList<SvClass> &list )
       {
       QJsonArray ar;
       for( auto const &item : list ) {
-        SvJsonWriter js;
-        item.jsonWrite( js );
+        SvJsonWriterImpl js( sjs );
+        item.json( js );
         ar.append( js.object() );
         }
       mObjectRef.insert( key, ar );
@@ -176,23 +187,49 @@ class SvJsonWriter
 
     //!
     //! \brief jsonListPtr Template Transfer list of pointers to any value
-    //!                    Value class must contains jsonRead method, which builds
+    //!                    Value class must contains json method, which builds
     //!                    object from json. To build Value object Value class must
     //!                    contains static build( Sv
     //! \param key         Key for list
     //! \param list        List to transfer
     //!
-    template<typename SvClass>
-    void jsonListPtr( const QString &key, const QList<SvClass*> &list )
+    template<typename SvClass, typename SvJsonWriterImpl>
+    void jsonListPtr( SvJsonWriterImpl &sjs, const QString &key, const QList<SvClass*> &list )
       {
       QJsonArray ar;
       for( auto const &item : list ) {
-        SvJsonWriter js;
-        item->jsonWrite( js );
+        SvJsonWriterImpl js( sjs );
+        item->json( js );
         ar.append( js.object() );
         }
       mObjectRef.insert( key, ar );
       }
+
+
+    //!
+    //! \brief jsonListPtr Template Transfer list of pointers to any value
+    //!                    Value class must contains json method, which builds
+    //!                    object from json. To build Value object Value class must
+    //!                    contains static SvClass *build( SvJsonReader &js )
+    //! \param key         Key for list
+    //! \param list        List to transfer
+    //! \param prefixFun   Prefix function. It call for each item in list and if it return true then
+    //!                    item written into json in other case nothing done
+    //!
+    template<typename SvClass, typename SvJsonWriterImpl, typename SvFunctor>
+    void jsonListPtr( SvJsonWriterImpl &sjs, const QString &key, const QList<SvClass*> &list, SvFunctor prefixFun )
+      {
+      QJsonArray ar;
+      for( auto const &item : list ) {
+        if( prefixFun(item) ) {
+          SvJsonWriterImpl js( sjs );
+          item->json( js );
+          ar.append( js.object() );
+          }
+        }
+      mObjectRef.insert( key, ar );
+      }
+
 
 
     //!
@@ -225,18 +262,18 @@ class SvJsonWriter
 
     //!
     //! \brief jsonMap Template transfer map of any values with QString as key
-    //!                Value class must contains jsonWrite method, which returns
-    //!                json object for value object
+    //!                Value class must contains json method, which writes value
+    //!                to json object
     //! \param key     Key for map
     //! \param list    Map to transfer
     //!
-    template<typename SvClass>
-    void jsonMap( const QString &key, const QMap<QString,SvClass> &map )
+    template<typename SvClass, typename SvJsonWriterImpl>
+    void jsonMap( SvJsonWriterImpl &sjs, const QString &key, const QMap<QString,SvClass> &map )
       {
       QJsonObject obj;
       for( auto i = map.constBegin(); i != map.constEnd(); i++ ) {
-        SvJsonWriter js;
-        i.value().jsonWrite( js );
+        SvJsonWriterImpl js( sjs );
+        i.value().json( js );
         obj.insert( i.key(), js.object() );
         }
       mObjectRef.insert( key, obj );
@@ -246,21 +283,21 @@ class SvJsonWriter
 
     //!
     //! \brief jsonMapList Template transfer map of list of any values with QString
-    //!                    as key of map. Value class must contains jsonWrite method,
+    //!                    as key of map. Value class must contains json method,
     //!                    which do writing into SvJsonWriter object
     //! \param key         Key for map
     //! \param map         Map of list of object to transfer
     //!
-    template <typename SvClass>
-    void jsonMapList( const QString &key, const QMap<QString, QList<SvClass> > &map )
+    template<typename SvClass, typename SvJsonWriterImpl>
+    void jsonMapList( SvJsonWriterImpl &sjs, const QString &key, const QMap<QString, QList<SvClass> > &map )
       {
       QJsonObject obj;
       for( auto i = map.constBegin(); i != map.constEnd(); i++ ) {
         QJsonArray ar;
         auto list = i.value();
         for( auto const &item : list ) {
-          SvJsonWriter js;
-          item.jsonWrite( js );
+          SvJsonWriterImpl js( sjs );
+          item.json( js );
           ar.append( js.object() );
           }
         obj.insert( i.key(), ar );
@@ -272,18 +309,18 @@ class SvJsonWriter
 
     //!
     //! \brief jsonMapPtr Template transfer map of any values with QString as key
-    //!                   Value class must contains jsonRead method, which builds
+    //!                   Value class must contains json method, which builds
     //!                   object from json
     //! \param key        Key for map
     //! \param list       Map to transfer
     //!
-    template<typename SvClass>
-    void jsonMapPtr( const QString &key, const QMap<QString,SvClass*> &map )
+    template<typename SvClass, typename SvJsonWriterImpl>
+    void jsonMapPtr( SvJsonWriterImpl &sjs, const QString &key, const QMap<QString,SvClass*> &map )
       {
       QJsonObject obj;
       for( auto i = map.constBegin(); i != map.constEnd(); i++ ) {
-        SvJsonWriter js;
-        i.value()->jsonWrite( js );
+        SvJsonWriterImpl js( sjs );
+        i.value()->json( js );
         obj.insert( i.key(), js.object() );
         }
       mObjectRef.insert( key, obj );
@@ -292,39 +329,39 @@ class SvJsonWriter
 
     //!
     //! \brief jsonObject Template transfer any value as json object
-    //!                   Value class must contains jsonWrite method, which returns
+    //!                   Value class must contains json method, which returns
     //!                   json object for value object
     //! \param key        Key for object
     //! \param obj        Object to transfer
     //!
-    template<typename SvClass>
-    void jsonObject( const QString &key, const SvClass &obj )
+    template<typename SvClass, typename SvJsonWriterImpl>
+    void jsonObject( SvJsonWriterImpl &sjs, const QString &key, const SvClass &obj )
       {
-      SvJsonWriter js;
-      obj.jsonWrite( js );
+      SvJsonWriterImpl js( sjs );
+      obj.json( js );
       mObjectRef.insert( key, js.object() );
       }
 
 
     //!
     //! \brief jsonObjectPtr Template transfer any value as json object
-    //!                      Value class must contains jsonWrite method, which returns
+    //!                      Value class must contains json method, which returns
     //!                      json object for value object
     //! \param key           Key for object
     //! \param objPtr        Object pointer to transfer
     //!
-    template<typename SvClass>
-    void jsonObjectPtr( const QString &key, const SvClass *objPtr )
+    template<typename SvClass, typename SvJsonWriterImpl>
+    void jsonObjectPtr( SvJsonWriterImpl &sjs, const QString &key, const SvClass *objPtr )
       {
-      SvJsonWriter js;
-      objPtr->jsonWrite( js );
+      SvJsonWriterImpl js( sjs );
+      objPtr->json( js );
       mObjectRef.insert( key, js.object() );
       }
 
 
     //!
     //! \brief jsonValue Template transfer any value as json value
-    //!                  Value class must contains jsonWrite method which
+    //!                  Value class must contains json method which
     //!                  writes object value into json object
     //! \param key       Key for value
     //! \param val       Object value to transfer
@@ -332,7 +369,7 @@ class SvJsonWriter
     template<typename SvClass>
     void jsonValue( const QString &key, const SvClass &val )
       {
-      val.jsonWrite( key, *this );
+      val.json( key, *this );
       }
 
   };
@@ -354,7 +391,16 @@ class SvJsonReader
     //!
     SvJsonReader( const QJsonObject &obj ) : mObject(obj) {}
 
+    SvJsonReader( const QJsonObject &obj, const SvJsonReader& ) : mObject(obj) {}
+
     const QJsonObject &object() const { return mObject; }
+
+    //!
+    //! \brief contains Return true if key contains in SvJsonWriter object
+    //! \param key      Tested key
+    //! \return         true if key contains in SvJsonWriter object
+    //!
+    bool contains( const QString &key ) const { return mObject.contains( key ); }
 
     //!
     //! \brief jsonBool Transfer bool value
@@ -362,8 +408,8 @@ class SvJsonReader
     //! \param b        Bool value
     //! \param def      Default value of param when error while reading occur
     //!
-    void jsonBool( const QString &key, bool &b ) { b = mObject.value( key ).toBool(); }
-    void jsonBool( const QString &key, bool &b, bool def ) { b = mObject.value( key ).toBool( def ); }
+    void jsonBool( const QString &key, bool &b ) const { b = mObject.value( key ).toBool(); }
+    void jsonBool( const QString &key, bool &b, bool def ) const { b = mObject.value( key ).toBool( def ); }
 
 
     //!
@@ -372,8 +418,8 @@ class SvJsonReader
     //! \param v       Int value
     //! \param def      Default value of param when error while reading occur
     //!
-    void jsonInt( const QString &key, int &v ) { v = mObject.value( key ).toInt(); }
-    void jsonInt( const QString &key, int &v, int def ) { v = mObject.value( key ).toInt( def ); }
+    void jsonInt( const QString &key, int &v ) const { v = mObject.value( key ).toInt(); }
+    void jsonInt( const QString &key, int &v, int def ) const { v = mObject.value( key ).toInt( def ); }
 
 
     //!
@@ -382,8 +428,8 @@ class SvJsonReader
     //! \param v       Int value
     //! \param def      Default value of param when error while reading occur
     //!
-    void jsonColor( const QString &key, QColor &color ) { color = QColor( mObject.value( key ).toString() ); }
-    void jsonColor( const QString &key, QColor &color, QColor def ) { color = QColor( mObject.value( key ).toString( def.name() ) ); }
+    void jsonColor( const QString &key, QColor &color ) const { color = QColor( mObject.value( key ).toString() ); }
+    void jsonColor( const QString &key, QColor &color, QColor def ) const { color = QColor( mObject.value( key ).toString( def.name() ) ); }
 
 
     //!
@@ -392,8 +438,8 @@ class SvJsonReader
     //! \param d          Double value
     //! \param def        Default value of param when error while reading occur
     //!
-    void jsonDouble( const QString &key, double &d ) { d = mObject.value( key ).toDouble(); }
-    void jsonDouble( const QString &key, double &d, double def ) { d = mObject.value( key ).toDouble( def ); }
+    void jsonDouble( const QString &key, double &d ) const { d = mObject.value( key ).toDouble(); }
+    void jsonDouble( const QString &key, double &d, double def ) const { d = mObject.value( key ).toDouble( def ); }
 
 
     //!
@@ -402,8 +448,8 @@ class SvJsonReader
     //! \param s          String to transfer
     //! \param def        Default value of param when error while reading occur
     //!
-    void jsonString( const QString &key, QString &s ) { s = mObject.value( key ).toString(); }
-    void jsonString( const QString &key, QString &s, QString def ) { s = mObject.value( key ).toString( def ); }
+    void jsonString( const QString &key, QString &s ) const { s = mObject.value( key ).toString(); }
+    void jsonString( const QString &key, QString &s, QString def ) const { s = mObject.value( key ).toString( def ); }
 
 
     //!
@@ -411,7 +457,7 @@ class SvJsonReader
     //! \param key       Key for value
     //! \param p         Point to transfer
     //!
-    void jsonPoint( const QString &key, QPoint &p ) {
+    void jsonPoint( const QString &key, QPoint &p ) const {
       SvJsonReader js( mObject.value( key ).toObject() );
       js.jsonInt("x", p.rx() );
       js.jsonInt("y", p.ry() );
@@ -423,7 +469,7 @@ class SvJsonReader
     //! \param key         Key for list
     //! \param list        List to transfer
     //!
-    void jsonListInt( const QString &key, QList<int> &list )
+    void jsonListInt( const QString &key, QList<int> &list ) const
       {
       list.clear();
       QJsonArray ar = mObject.value( key ).toArray();
@@ -441,7 +487,7 @@ class SvJsonReader
     //! \param key         Key for list
     //! \param list        List to transfer
     //!
-    void jsonListDouble( const QString &key, QList<double> &list )
+    void jsonListDouble( const QString &key, QList<double> &list ) const
       {
       list.clear();
       QJsonArray ar = mObject.value( key ).toArray();
@@ -459,7 +505,7 @@ class SvJsonReader
     //! \param key            Key for list
     //! \param list           List to transfer
     //!
-    void jsonListString( const QString &key, QStringList &list )
+    void jsonListString( const QString &key, QStringList &list ) const
       {
       list.clear();
       QJsonArray ar = mObject.value( key ).toArray();
@@ -473,21 +519,21 @@ class SvJsonReader
 
     //!
     //! \brief jsonList Template Transfer list of any values
-    //!                 Value class must contains jsonRead method, which builds
+    //!                 Value class must contains json method, which builds
     //!                 object from json
     //! \param key      Key for list
     //! \param list     List to transfer
     //!
-    template<typename SvClass>
-    void jsonList( const QString &key, QList<SvClass> &list )
+    template<typename SvClass, typename SvJsonReaderImpl>
+    void jsonList( const SvJsonReaderImpl &sjs, const QString &key, QList<SvClass> &list ) const
       {
       list.clear();
       QJsonArray ar = mObject.value( key ).toArray();
       list.reserve( ar.count() );
       for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
         SvClass item;
-        SvJsonReader js( i->toObject() );
-        item.jsonRead( js );
+        SvJsonReaderImpl js( i->toObject(), sjs );
+        item.json( js );
         list.append( item );
         }
       }
@@ -495,26 +541,49 @@ class SvJsonReader
 
     //!
     //! \brief jsonListPtr Template Transfer list of pointers to any value
-    //!                    Value class must contains jsonRead method, which builds
+    //!                    Value class must contains json method, which builds
     //!                    object from json. To build Value object Value class must
     //!                    contains static build( Sv
     //! \param key         Key for list
     //! \param list        List to transfer
     //!
-    template<typename SvClass>
-    void jsonListPtr( const QString &key, QList<SvClass*> &list )
+    template<typename SvClass, typename SvJsonReaderImpl>
+    void jsonListPtr( const SvJsonReaderImpl &sjs, const QString &key, QList<SvClass*> &list ) const
       {
       qDeleteAll(list);
       list.clear();
       QJsonArray ar = mObject.value( key ).toArray();
       list.reserve( ar.count() );
       for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
-        SvJsonReader js( i->toObject() );
-        SvClass *item = SvClass::build( js );
-        if( item ) {
-          item->jsonRead( js );
+        SvJsonReaderImpl js( i->toObject(), sjs );
+        SvClass *item = SvClass::buildFromJson( sjs );
+        if( item != nullptr )
           list.append( item );
-          }
+        }
+      }
+
+
+
+    //!
+    //! \brief jsonListPtr Template Transfer list of pointers to any value
+    //!                    Value class must contains json method, which builds
+    //!                    object from json. To build Value object Value class must
+    //!                    contains static build( Sv
+    //! \param key         Key for list
+    //! \param list        List to transfer
+    //!
+    template<typename SvClass, typename SvJsonReaderImpl, typename SvFunctor>
+    void jsonListPtr( const SvJsonReaderImpl &sjs, const QString &key, QList<SvClass*> &list, SvFunctor postfixFun ) const
+      {
+      qDeleteAll(list);
+      list.clear();
+      QJsonArray ar = mObject.value( key ).toArray();
+      list.reserve( ar.count() );
+      for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
+        SvJsonReaderImpl js( i->toObject(), sjs );
+        SvClass *item = SvClass::buildFromJson( sjs );
+        if( postfixFun( item ) )
+          list.append( item );
         }
       }
 
@@ -526,7 +595,7 @@ class SvJsonReader
     //! \param key           Key for map
     //! \param map           Map to transfer
     //!
-    void jsonMapString( const QString &key, QMap<QString,QString> &map )
+    void jsonMapString( const QString &key, QMap<QString,QString> &map ) const
       {
       map.clear();
       QJsonObject obj = mObject.value( key ).toObject();
@@ -543,7 +612,7 @@ class SvJsonReader
     //! \param key        Key for map
     //! \param map        Map to transfer
     //!
-    void jsonMapInt( const QString &key, QMap<QString,int> &map )
+    void jsonMapInt( const QString &key, QMap<QString,int> &map ) const
       {
       map.clear();
       QJsonObject obj = mObject.value( key ).toObject();
@@ -556,20 +625,20 @@ class SvJsonReader
 
     //!
     //! \brief jsonMap Template transfer map of any values with QString as key
-    //!                Value class must contains jsonRead method, which builds
+    //!                Value class must contains json method, which builds
     //!                object from json
     //! \param key     Key for map
     //! \param list    Map to transfer
     //!
-    template<typename SvClass>
-    void jsonMap( const QString &key, QMap<QString,SvClass> &map )
+    template<typename SvClass, typename SvJsonReaderImpl>
+    void jsonMap( const SvJsonReaderImpl &sjs, const QString &key, QMap<QString,SvClass> &map ) const
       {
       map.clear();
       QJsonObject obj = mObject.value( key ).toObject();
       for( auto i = obj.constBegin(); i != obj.constEnd(); i++ ) {
         SvClass item;
-        SvJsonReader js( i.value().toObject() );
-        item.jsonRead( js );
+        SvJsonReaderImpl js( i.value().toObject(), sjs );
+        item.json( js );
         map.insert( i.key(), item );
         }
       }
@@ -579,13 +648,13 @@ class SvJsonReader
 
     //!
     //! \brief jsonMapList Template transfer map of list of any values with QString
-    //!                    as key of map. Value class must contains jsonWrite method,
+    //!                    as key of map. Value class must contains json method,
     //!                    which do writing into SvJsonWriter object
     //! \param key         Key for map
     //! \param map         Map of list of object to transfer
     //!
-    template <typename SvClass>
-    void jsonMapList( const QString &key, const QMap<QString, QList<SvClass> > &map )
+    template<typename SvClass, typename SvJsonReaderImpl>
+    void jsonMapList( const SvJsonReaderImpl &sjs, const QString &key, const QMap<QString, QList<SvClass> > &map ) const
       {
       map.clear();
       QJsonObject obj = mObject.value( key ).toObject();
@@ -595,8 +664,8 @@ class SvJsonReader
         list.reserve( ar.count() );
         for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
           SvClass item;
-          SvJsonReader js( i->toObject() );
-          item.jsonRead( js );
+          SvJsonReaderImpl js( i->toObject(), sjs );
+          item.json( js );
           list.append( item );
           }
         map.insert( i.key(), list );
@@ -607,61 +676,59 @@ class SvJsonReader
 
     //!
     //! \brief jsonMapPtr Template transfer map of any values with QString as key
-    //!                   Value class must contains jsonRead method, which builds
+    //!                   Value class must contains json method, which builds
     //!                   object from json
     //! \param key        Key for map
     //! \param list       Map to transfer
     //!
-    template<typename SvClass>
-    void jsonMapPtr( const QString &key, QMap<QString,SvClass*> &map )
+    template<typename SvClass, typename SvJsonReaderImpl>
+    void jsonMapPtr( const SvJsonReaderImpl &sjs, const QString &key, QMap<QString,SvClass*> &map ) const
       {
       qDeleteAll(map);
       map.clear();
       QJsonObject obj = mObject.value( key ).toObject();
       for( auto i = obj.constBegin(); i != obj.constEnd(); i++ ) {
-        SvJsonReader js( i.value().toObject() );
-        SvClass *item = SvClass::build( js );
-        if( item ) {
-          item->jsonRead( js );
+        SvJsonReaderImpl js( i.value().toObject(), sjs );
+        SvClass *item = SvClass::buildFromJson( js );
+        if( item )
           map.insert( i.key(), item );
-          }
         }
       }
 
 
     //!
     //! \brief jsonObject Template transfer any value as json object
-    //!                   Value class must contains jsonRead method, which builds
+    //!                   Value class must contains json method, which builds
     //!                   object from json
     //! \param key        Key for object
     //! \param obj        Object to transfer
     //!
-    template<typename SvClass>
-    void jsonObject( const QString &key, SvClass &obj )
+    template<typename SvClass, typename SvJsonReaderImpl>
+    void jsonObject( const SvJsonReaderImpl &sjs, const QString &key, SvClass &obj ) const
       {
-      SvJsonReader js( mObject.value( key ).toObject() );
-      obj.jsonRead( js );
+      SvJsonReaderImpl js( mObject.value( key ).toObject(), sjs );
+      obj.json( js );
       }
 
 
     //!
     //! \brief jsonObjectPtr Template transfer any value as json object
-    //!                      Value class must contains jsonRead method, which builds
+    //!                      Value class must contains json method, which builds
     //!                      object from json
     //! \param key           Key for object
     //! \param objPtr        Object pointer to transfer
     //!
-    template<typename SvClass>
-    void jsonObjectPtr( const QString &key, SvClass *objPtr )
+    template<typename SvClass, typename SvJsonReaderImpl>
+    void jsonObjectPtr( const SvJsonReaderImpl &sjs, const QString &key, SvClass* &objPtr ) const
       {
-      SvJsonReader js( mObject.value( key ).toObject() );
-      objPtr->jsonRead( js );
+      SvJsonReaderImpl js( mObject.value( key ).toObject(), sjs );
+      objPtr = SvClass::buildFromJson( js );
       }
 
 
     //!
     //! \brief jsonValue Template transfer any value as json value
-    //!                  Value class must contains jsonRead method which
+    //!                  Value class must contains json method which
     //!                  reads object value from json object
     //! \param key       Key for value
     //! \param val       Object value to transfer
@@ -669,7 +736,7 @@ class SvJsonReader
     template<typename SvClass>
     void jsonValue( const QString &key, SvClass &val )
       {
-      val.jsonRead( key, *this );
+      val.json( key, *this );
       }
   };
 
@@ -693,174 +760,14 @@ class SvJsonReaderExt : public SvJsonReader
     //!
     SvJsonReaderExt( const QJsonObject &obj, SvProperty *prop ) : SvJsonReader(obj), mProperty(prop) {}
 
+    SvJsonReaderExt( const QJsonObject &obj, const SvJsonReaderExt<SvProperty> &src ) : SvJsonReader(obj), mProperty(src.mProperty) {}
+
     //!
     //! \brief property Returns current property of reader
     //! \return         Property of reader
     //!
-    SvProperty *property() { return mProperty; }
+    SvProperty *property() const { return mProperty; }
 
-    //!
-    //! \brief jsonList Template Transfer list of any values
-    //!                 Value class must contains jsonRead method, which builds
-    //!                 object from json
-    //! \param key      Key for list
-    //! \param list     List to transfer
-    //!
-    template<typename SvClass>
-    void jsonList( const QString &key, QList<SvClass> &list )
-      {
-      list.clear();
-      QJsonArray ar = mObject.value( key ).toArray();
-      for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
-        SvClass item;
-        SvJsonReaderExt<SvProperty> js( i->toObject(), mProperty );
-        item.jsonRead( js );
-        list.append( item );
-        }
-      }
-
-
-    //!
-    //! \brief jsonListPtr Template Transfer list of pointers to any value
-    //!                    Value class must contains jsonRead method, which builds
-    //!                    object from json. To build Value object Value class must
-    //!                    contains static build( Sv
-    //! \param key         Key for list
-    //! \param list        List to transfer
-    //!
-    template<typename SvClass>
-    void jsonListPtr( const QString &key, QList<SvClass*> &list )
-      {
-      qDeleteAll(list);
-      list.clear();
-      QJsonArray ar = mObject.value( key ).toArray();
-      for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
-        SvJsonReaderExt<SvProperty> js( i->toObject(), mProperty );
-        SvClass *item = SvClass::build( js );
-        if( item ) {
-          item->jsonRead( js );
-          list.append( item );
-          }
-        }
-      }
-
-
-    //!
-    //! \brief jsonMap Template transfer map of any values with QString as key
-    //!                Value class must contains jsonRead method, which builds
-    //!                object from json
-    //! \param key     Key for map
-    //! \param list    Map to transfer
-    //!
-    template<typename SvClass>
-    void jsonMap( const QString &key, QMap<QString,SvClass> &map )
-      {
-      map.clear();
-      QJsonObject obj = mObject.value( key ).toObject();
-      for( auto i = obj.constBegin(); i != obj.constEnd(); i++ ) {
-        SvClass item;
-        SvJsonReaderExt<SvProperty> js( i.value().toObject(), mProperty );
-        item.jsonRead( js );
-        map.insert( i.key(), item );
-        }
-      }
-
-
-
-
-    //!
-    //! \brief jsonMapList Template transfer map of list of any values with QString
-    //!                    as key of map. Value class must contains jsonWrite method,
-    //!                    which do writing into SvJsonWriter object
-    //! \param key         Key for map
-    //! \param map         Map of list of object to transfer
-    //!
-    template <typename SvClass>
-    void jsonMapList( const QString &key, QMap<QString, QList<SvClass> > &map )
-      {
-      map.clear();
-      QJsonObject obj = mObject.value( key ).toObject();
-      for( auto i = obj.constBegin(); i != obj.constEnd(); i++ ) {
-        QJsonArray ar = i.value().toArray();
-        QList<SvClass> list;
-        list.reserve( ar.count() );
-        for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
-          SvClass item;
-          SvJsonReaderExt<SvProperty> js( i->toObject(), mProperty );
-          item.jsonRead( js );
-          list.append( item );
-          }
-        map.insert( i.key(), list );
-        }
-      }
-
-
-    //!
-    //! \brief jsonMapPtr Template transfer map of any values with QString as key
-    //!                   Value class must contains jsonRead method, which builds
-    //!                   object from json
-    //! \param key        Key for map
-    //! \param list       Map to transfer
-    //!
-    template<typename SvClass>
-    void jsonMapPtr( const QString &key, QMap<QString,SvClass*> &map )
-      {
-      qDeleteAll(map);
-      map.clear();
-      QJsonObject obj = mObject.value( key ).toObject();
-      for( auto i = obj.constBegin(); i != obj.constEnd(); i++ ) {
-        SvJsonReaderExt<SvProperty> js( i.value().toObject(), mProperty );
-        SvClass *item = SvClass::build( js );
-        if( item ) {
-          item->jsonRead( js );
-          map.insert( i.key(), item );
-          }
-        }
-      }
-
-
-    //!
-    //! \brief jsonObject Template transfer any value as json object
-    //!                   Value class must contains jsonRead method, which builds
-    //!                   object from json
-    //! \param key        Key for object
-    //! \param obj        Object to transfer
-    //!
-    template<typename SvClass>
-    void jsonObject( const QString &key, SvClass &obj )
-      {
-      SvJsonReaderExt<SvProperty> js( mObject.value( key ).toObject(), mProperty );
-      obj.jsonRead( js );
-      }
-
-
-    //!
-    //! \brief jsonObjectPtr Template transfer any value as json object
-    //!                      Value class must contains jsonRead method, which builds
-    //!                      object from json
-    //! \param key           Key for object
-    //! \param objPtr        Object pointer to transfer
-    //!
-    template<typename SvClass>
-    void jsonObjectPtr( const QString &key, SvClass *objPtr )
-      {
-      SvJsonReaderExt<SvProperty> js( mObject.value( key ).toObject(), mProperty );
-      objPtr->jsonRead( js );
-      }
-
-
-    //!
-    //! \brief jsonValue Template transfer any value as json value
-    //!                  Value class must contains jsonRead method which
-    //!                  reads object value from json object
-    //! \param key       Key for value
-    //! \param val       Object value to transfer
-    //!
-    template<typename SvClass>
-    void jsonValue( const QString &key, SvClass &val )
-      {
-      val.jsonRead( key, *this );
-      }
   };
 
 

@@ -104,8 +104,8 @@ class SdProjectItem : public SdContainer
     virtual void           writeObject(QJsonObject &obj) const override;
     virtual void           readObject(SdObjectMap *map, const QJsonObject obj) override;
 
-    virtual void           jsonWrite( SdJsonWriter &js ) const override;
-    virtual void           jsonRead( SdJsonReader &js ) override;
+    virtual void           json( SdJsonWriter &js ) const override;
+    virtual void           json( const SdJsonReader &js ) override;
 
     //!
     //! \brief cloneFrom Overrided function. We copy object from source

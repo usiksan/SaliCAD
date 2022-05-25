@@ -123,6 +123,11 @@ class SdContainer : public SdObject
 
     //Upgrage only class objects with newer items
     bool         upgradeClassProjectItem(SdClass mask, SdUndo *undo , QWidget *parent);
+
+    // SdObject interface
+  public:
+    virtual void json( SdJsonWriter &js ) const override;
+    virtual void json( const SdJsonReader &js ) override;
   };
 
 

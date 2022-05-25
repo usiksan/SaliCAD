@@ -380,18 +380,6 @@ quint64 SdProject::getClass() const
 
 
 
-void SdProject::writeObject(QJsonObject &obj) const
-  {
-  SdContainer::writeObject( obj );
-  }
-
-
-
-
-void SdProject::readObject(SdObjectMap *map, const QJsonObject obj)
-  {
-  SdContainer::readObject( map, obj );
-  }
 
 
 

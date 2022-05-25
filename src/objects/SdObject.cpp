@@ -243,6 +243,7 @@ void SdObject::writePtr( const SdObject *ptr, const QString name, QJsonObject &o
 
 
 
+
 void SdObject::readObject(SdObjectMap *map, const QJsonObject obj)
   {
   Q_UNUSED(map)
@@ -353,6 +354,20 @@ SdObject *SdObject::build(QString type)
 
 
 
+SdObject *SdObject::buildFromJson(const SdJsonReader &js)
+  {
+  SdObject *obj = readPtr( js.property(), js.object() );
+  if( obj != nullptr )
+    obj->json( js );
+  SdProjectItem *item = dynamic_cast<SdProjectItem*>(obj);
+  if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol)) && !item->isEditEnable() )
+    SdObjectFactory::insertItemObject( item, js.object() );
+  return obj;
+  }
+
+
+
+
 QByteArray SdObject::toByteArray() const
   {
   //Writer
@@ -367,7 +382,7 @@ QByteArray SdObject::toByteArray() const
   js.jsonString( "A file type", jsonType );
 
   //Store object
-  jsonWrite( js );
+  json( js );
 
   //Return QByteArray representation
   return svJsonObjectToByteArray( js.object() );
@@ -385,13 +400,19 @@ void SdObject::fromByteArray(const QByteArray &ar)
 
 
 
-void SdObject::jsonWrite(SdJsonWriter &js) const
+void SdObject::json(SdJsonWriter &js) const
   {
-  Q_UNUSED(js)
+  js.jsonString( QStringLiteral(SDKO_ID), getId() );
+  js.jsonString( QStringLiteral(SDKO_TYPE), getType() );
+  const SdProjectItem *item = dynamic_cast<const SdProjectItem*>(this);
+  if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol)) && !item->isEditEnable() )
+    SdObjectFactory::insertItemObject( item, js.object() );
   }
 
-void SdObject::jsonRead(SdJsonReader &js)
+
+void SdObject::json( const SdJsonReader &js )
   {
+  //At this moment object is fully readed
   Q_UNUSED(js)
   }
 

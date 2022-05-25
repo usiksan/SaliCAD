@@ -60,8 +60,8 @@ struct SdPropText {
   void write( const QString prefix, QJsonObject &obj ) const;
   void read( const QString prefix, const QJsonObject obj );
 
-  void jsonWrite( const char *prefix, SdJsonWriter &js ) const { write( QString(prefix), js.ref() ); }
-  void jsonRead( const char *prefix, const SdJsonReader &js ) { read( QString(prefix), js.object() ); }
+  void json( const QString prefix, SvJsonWriter &js ) const;
+  void json( const QString prefix, const SvJsonReader &js ) { read( prefix, js.object() ); }
 
   void saveState(SdPropTextState *dst );
   void swapState(SdPropTextState *src );

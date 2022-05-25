@@ -74,8 +74,8 @@ class SdRect : public QRect
     void        read( const QJsonObject &obj );
     void        read( const QString name, const QJsonObject obj );
 
-    void        jsonWrite( SdJsonWriter &js ) const;
-    void        jsonRead( SdJsonReader &js );
+    void        json( SvJsonWriter &js ) const;
+    void        json( SvJsonReader &js );
 
     SdRect      swap( const SdRect &r );
   };

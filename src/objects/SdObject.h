@@ -128,6 +128,7 @@ class SdObject
     static  SdObject* readPtr( SdObjectMap *map, const QJsonObject obj );
     static  SdObject* readPtr( const QString name, SdObjectMap *map, const QJsonObject obj );
     static  SdObject* build( QString type );
+    static  SdObject* buildFromJson( const SdJsonReader &js );
 
     template <typename SdClass>
     static  SdClass*  readPtrClass( const QString name, SdObjectMap *map, const QJsonObject obj )
@@ -140,9 +141,10 @@ class SdObject
     QByteArray        toByteArray() const;
     void              fromByteArray( const QByteArray &ar );
 
-    virtual void      jsonWrite( SdJsonWriter &js ) const;
-    virtual void      jsonRead( SdJsonReader &js );
+    virtual void      json( SdJsonWriter &js ) const;
+    virtual void      json( const SdJsonReader &js );
   };
+
 
 //Convert object only to desired type, other way - deleted
 template <class T>

@@ -1,4 +1,5 @@
 #include "SdPItemVariant.h"
+#include "SdJsonIO.h"
 
 SdPItemVariant::SdPItemVariant() :
   SdProjectItem(),
@@ -133,4 +134,26 @@ QString SdPItemVariant::getIconName() const
 quint64 SdPItemVariant::getAcceptedObjectsMask() const
   {
   return 0;
+  }
+
+
+void SdPItemVariant::json( SdJsonWriter &js ) const
+  {
+  //For space economy we write variant table only if it present
+  if( mVariantFieldCount ) {
+    js.jsonInt( QStringLiteral("VariantFC"), mVariantFieldCount );
+    js.jsonListString( QStringLiteral("VariantTab"), mVariantTable );
+    }
+  SdProjectItem::json( js );
+  }
+
+
+
+void SdPItemVariant::json( const SdJsonReader &js )
+  {
+  if( js.contains(QStringLiteral("VariantFC")) ) {
+    js.jsonInt( QStringLiteral("VariantFC"), mVariantFieldCount );
+    js.jsonListString( QStringLiteral("VariantTab"), mVariantTable );
+    }
+  SdProjectItem::json( js );
   }

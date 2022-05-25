@@ -112,9 +112,6 @@ class SdProject : public SdContainer
     virtual QString   getType() const override;
     virtual quint64   getClass() const override;
 
-    virtual void      writeObject(QJsonObject &obj) const override;
-    virtual void      readObject(SdObjectMap *map, const QJsonObject obj) override;
-
     static SdProject *load( const QString fname );
     bool              save( const QString fname );
 

@@ -75,6 +75,16 @@ void SdPropText::read(const QString prefix, const QJsonObject obj)
   }
 
 
+
+void SdPropText::json(const QString prefix, SvJsonWriter &js) const
+  {
+//  js.jsonValue( prefix + QStringLiteral("TextSize"), mSize );
+//  js.jsonValue( prefix + QStringLiteral("TextDir"), mDir );
+
+  write( prefix, js.object() );
+  }
+
+
 void SdPropText::assign( SdPropText const &p ) {
   operator = ( p );
   }

@@ -159,9 +159,9 @@ void SdGraphScript::writeObject(QJsonObject &obj) const
   SdJsonWriter js( obj );
   js.jsonValue<SdPropText>( "prop", mProp );
   js.jsonString( "script", mScript );
-  js.jsonObject<SdGraphScriptRefMap>( "ref", mRefMap );
+  js.jsonObject( js, "ref", mRefMap );
   js.jsonPoint( "origin", mOrigin );
-  js.jsonObject<SdRect>( "over", mOverRect );
+  js.jsonObject( js, "over", mOverRect );
   }
 
 
@@ -174,9 +174,9 @@ void SdGraphScript::readObject(SdObjectMap *map, const QJsonObject obj)
   SdJsonReader js( obj, map );
   js.jsonValue<SdPropText>( "prop", mProp );
   js.jsonString( "script", mScript );
-  js.jsonObject<SdGraphScriptRefMap>( "ref", mRefMap );
+  js.jsonObject( js, "ref", mRefMap );
   js.jsonPoint( "origin", mOrigin );
-  js.jsonObject<SdRect>( "over", mOverRect );
+  js.jsonObject( js, "over", mOverRect );
   parse();
   }
 

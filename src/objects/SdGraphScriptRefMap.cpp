@@ -168,14 +168,14 @@ void SdGraphScriptRefMap::parseEnd()
 
 
 
-void SdGraphScriptRefMap::jsonWrite(SdJsonWriter &js) const
+void SdGraphScriptRefMap::json(SdJsonWriter &js) const
   {
-  js.jsonList<SdGraphScriptRef>( "list", mRefList );
+  js.jsonList( js, "list", mRefList );
   }
 
-void SdGraphScriptRefMap::jsonRead(SdJsonReader &js)
+void SdGraphScriptRefMap::json(SdJsonReader &js)
   {
-  js.jsonList<SdGraphScriptRef>( "list", mRefList );
+  js.jsonList( js, "list", mRefList );
 
   //Refill map to speeding up variable access
   mRefMap.clear();

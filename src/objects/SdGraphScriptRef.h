@@ -163,9 +163,9 @@ class SdGraphScriptRef
     //!
     void    refAssign( SdContainer *refOwner, SdGraphParam *ref, QString param );
 
-    void    jsonWrite( SdJsonWriter &js ) const;
+    void    json( SdJsonWriter &js ) const;
 
-    void    jsonRead( SdJsonReader &js );
+    void    json( SdJsonReader &js );
 
   private:
     bool    checkRef() const;

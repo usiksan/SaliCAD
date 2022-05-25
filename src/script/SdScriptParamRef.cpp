@@ -32,20 +32,22 @@ void SdScriptParamRef::assign(SdContainer *refOwner, SdGraphParam *ref, QString 
   checkRef();
   }
 
-void SdScriptParamRef::jsonWrite(SvJsonWriter &js) const
+
+
+void SdScriptParamRef::json( SdJsonWriter &js) const
   {
-  SdObject::writePtr( mRefOwner, QStringLiteral("owner"), js.ref() );
-  SdObject::writePtr( mRef, QStringLiteral("ref"), js.ref() );
+  js.jsonObjectPtr( QStringLiteral("owner"), mRefOwner );
+  js.jsonObjectPtr( QStringLiteral("ref"), mRef );
   js.jsonString( "param", mParam );
   js.jsonString( "value", mValue );
   }
 
 
 
-void SdScriptParamRef::jsonRead(SvJsonReaderExt<SdObjectMap> &js)
+void SdScriptParamRef::json(SdJsonReader &js)
   {
-  mRefOwner = SdObject::readPtrClass<SdContainer>( QStringLiteral("owner"), js.property(), js.object() );
-  mRef = SdObject::readPtrClass<SdGraphParam>( QStringLiteral("ref"), js.property(), js.object() );
+  js.jsonObjectPtr( QStringLiteral("owner"), mRefOwner );
+  js.jsonObjectPtr( QStringLiteral("ref"), mRef );
   js.jsonString( "param", mParam );
   js.jsonString( "value", mValue );
   }

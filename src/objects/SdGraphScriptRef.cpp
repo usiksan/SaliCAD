@@ -136,10 +136,10 @@ void SdGraphScriptRef::refAssign(SdContainer *refOwner, SdGraphParam *ref, QStri
 
 
 
-void SdGraphScriptRef::jsonWrite(SdJsonWriter &js) const
+void SdGraphScriptRef::json(SdJsonWriter &js) const
   {
-  SdObject::writePtr( mRefOwner, QStringLiteral("owner"), js.ref() );
-  SdObject::writePtr( mRef, QStringLiteral("ref"), js.ref() );
+  js.jsonObjectPtr( QStringLiteral("owner"), mRefOwner );
+  js.jsonObjectPtr( QStringLiteral("ref"), mRef );
   js.jsonString( "name", mName );
   js.jsonString( "param", mParam );
   js.jsonString( "value", mValue );
@@ -148,10 +148,10 @@ void SdGraphScriptRef::jsonWrite(SdJsonWriter &js) const
 
 
 
-void SdGraphScriptRef::jsonRead(SdJsonReader &js)
+void SdGraphScriptRef::json(SdJsonReader &js)
   {
-  mRefOwner = SdObject::readPtrClass<SdContainer>( QStringLiteral("owner"), js.property(), js.object() );
-  mRef = SdObject::readPtrClass<SdGraphParam>( QStringLiteral("ref"), js.property(), js.object() );
+  js.jsonObjectPtr( QStringLiteral("owner"), mRefOwner );
+  js.jsonObjectPtr( QStringLiteral("ref"), mRef );
   js.jsonString( "name", mName );
   js.jsonString( "param", mParam );
   js.jsonString( "value", mValue );

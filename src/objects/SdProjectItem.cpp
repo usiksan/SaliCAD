@@ -24,6 +24,7 @@ Description
 #include "SdUtil.h"
 #include "SdTime2x.h"
 #include "Sd3dGraph.h"
+#include "SdJsonIO.h"
 #include <QSettings>
 #include <QDateTime>
 #include <QDebug>
@@ -475,28 +476,28 @@ void SdProjectItem::readObject(SdObjectMap *map, const QJsonObject obj)
 
 
 
-void SdProjectItem::jsonWrite(SdJsonWriter &js) const
+void SdProjectItem::json(SdJsonWriter &js) const
   {
-  SdContainer::jsonWrite( js );
   js.jsonString( QStringLiteral("Title"),     mTitle );
   js.jsonString( QStringLiteral("Author"),    mAuthor );
   js.jsonInt(  QStringLiteral("Created"),     mCreateTime );
   js.jsonBool( QStringLiteral("Auto"),        mAuto );
   js.jsonBool( QStringLiteral("Edit enable"), mEditEnable );
-  js.jsonObject( QStringLiteral("Origin"),    mOrigin );
+  js.jsonPoint( QStringLiteral("Origin"),     mOrigin );
+  SdContainer::json( js );
   }
 
 
 
-void SdProjectItem::jsonRead(SdJsonReader &js)
+void SdProjectItem::json( const SdJsonReader &js )
   {
-  SdContainer::jsonRead( js );
   js.jsonString( QStringLiteral("Title"),     mTitle );
   js.jsonString( QStringLiteral("Author"),    mAuthor );
   js.jsonInt(  QStringLiteral("Created"),     mCreateTime );
   js.jsonBool( QStringLiteral("Auto"),        mAuto );
   js.jsonBool( QStringLiteral("Edit enable"), mEditEnable );
-  js.jsonObject( QStringLiteral("Origin"),    mOrigin );
+  js.jsonPoint( QStringLiteral("Origin"),     mOrigin );
+  SdContainer::json( js );
   }
 
 

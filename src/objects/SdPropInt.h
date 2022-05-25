@@ -17,7 +17,7 @@ Description
 
 #include <QJsonObject>
 
-#include "SdJsonIO.h"
+#include "SvJsonIO.h"
 
 class SdPropInt
   {
@@ -55,8 +55,8 @@ class SdPropInt
     void       write( const QString name, QJsonObject &obj ) const { obj.insert( name, mValue ); }
     void       read( const QString name, const QJsonObject obj ) { mValue = obj.value(name).toInt(); }
 
-    void       jsonWrite( const char *key, SdJsonWriter &js ) const { js.jsonInt( key, mValue ); }
-    void       jsonRead( const char *key, SdJsonReader &js ) { js.jsonInt( key, mValue ); }
+    void       json( const QString key, SvJsonWriter &js ) const { js.jsonInt( key, mValue ); }
+    void       json( const QString key, const SvJsonReader &js ) { js.jsonInt( key, mValue ); }
 
     int        swap( int v ) { int t = mValue; mValue = v; return t; }
 
