@@ -112,31 +112,34 @@ bool SdPolyWindow::containsPoint(SdPoint p) const
 
 
 
-
-
-QJsonObject SdPolyWindow::write() const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
+//!
+void SdPolyWindow::json(SvJsonWriter &js) const
   {
-  QJsonObject obj;
-  obj.insert( QStringLiteral("r"), radius );
-  p1.write( QStringLiteral("p1"), obj );
-  p2.write( QStringLiteral("p2"), obj );
-  p3.write( QStringLiteral("p3"), obj );
-  p4.write( QStringLiteral("p4"), obj );
-  return obj;
+  js.jsonInt( QStringLiteral("r"), radius );
+  js.jsonPoint( QStringLiteral("p1"), p1 );
+  js.jsonPoint( QStringLiteral("p2"), p2 );
+  js.jsonPoint( QStringLiteral("p3"), p3 );
+  js.jsonPoint( QStringLiteral("p4"), p4 );
   }
 
 
 
 
-void SdPolyWindow::read(const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
+//!
+void SdPolyWindow::json(const SvJsonReader &js)
   {
-  radius = obj.value( QStringLiteral("r") ).toInt();
-  p1.read( QStringLiteral("p1"), obj );
-  p2.read( QStringLiteral("p2"), obj );
-  p3.read( QStringLiteral("p3"), obj );
-  p4.read( QStringLiteral("p4"), obj );
+  js.jsonInt( QStringLiteral("r"), radius );
+  js.jsonPoint( QStringLiteral("p1"), p1 );
+  js.jsonPoint( QStringLiteral("p2"), p2 );
+  js.jsonPoint( QStringLiteral("p3"), p3 );
+  js.jsonPoint( QStringLiteral("p4"), p4 );
   buildPolygon();
   }
-
 
 

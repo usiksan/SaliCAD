@@ -44,20 +44,6 @@ void Sd3dFace::json(const SvJsonReader &js)
 
 
 
-
-//!
-//! \brief read Read face from JSON object
-//! \param obj  JSON object with face
-//!
-void Sd3dFace::read(const QJsonObject &obj)
-  {
-  mContour = sd3dRegionRead( obj.value(QStringLiteral("contour")).toArray() );
-  mColor   = QColor( obj.value(QStringLiteral("color")).toString() );
-  }
-
-
-
-
 //!
 //! \brief volume Append face to volume
 //! \param vol    Volume source and result

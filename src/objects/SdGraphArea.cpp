@@ -19,6 +19,7 @@ Description
 #include "SdSelector.h"
 #include "SdPropLayer.h"
 #include "SdContext.h"
+#include "SdJsonIO.h"
 
 SdGraphArea::SdGraphArea() :
   SdGraph(),
@@ -114,28 +115,36 @@ void SdGraphArea::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
 
 
 
-
-
-
-
-void SdGraphArea::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphArea::json(SdJsonWriter &js) const
   {
-  SdGraph::writeObject( obj );
-  mRegion.write( QStringLiteral("Region"), obj );
-  mRegionProp.write( obj );
-  writePtr( mPlate, QStringLiteral("Plate"), obj );
+  mRegion.json( QStringLiteral("Region"), js );
+  mRegionProp.json( js );
+  js.jsonObjectPtr( QStringLiteral("Plate"), mPlate );
+  SdGraph::json( js );
   }
 
 
 
 
-void SdGraphArea::readObject(SdObjectMap *map, const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphArea::json(const SdJsonReader &js)
   {
-  SdGraph::readObject( map, obj );
-  mRegion.read( QStringLiteral("Region"), obj );
-  mRegionProp.read( obj );
-  mPlate = dynamic_cast<SdPItemPlate*>( readPtr( QStringLiteral("Plate"), map, obj ) );
+  mRegion.json( QStringLiteral("Region"), js );
+  mRegionProp.json( js );
+  js.jsonObjectPtr( QStringLiteral("Plate"), mPlate );
+  SdGraph::json( js );
   }
+
+
 
 
 

@@ -20,21 +20,6 @@ Description
 
 using Sd3dModel = QList<Sd3dFace>;
 
-//!
-//! \brief sd3dModelWrite Writes model into JSON array object
-//! \param model          3d model
-//! \return               JSON array object with writed 3d model
-//!
-QJsonArray sd3dModelWrite( const Sd3dModel &model );
-
-
-//!
-//! \brief sd3dModelRead Reads model from JSON array object
-//! \param array         JSON array object from which will be readed 3d model
-//! \return              3d model
-//!
-Sd3dModel  sd3dModelRead( const QJsonArray &array );
-
 
 //!
 //! \brief sd3dModelWalls Builds walls on base bottom and top regions. Walls builded with color

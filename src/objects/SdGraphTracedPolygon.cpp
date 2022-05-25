@@ -17,6 +17,7 @@ Description
 #include "SdSelector.h"
 #include "SdPItemPlate.h"
 #include "SdPlateNetContainer.h"
+#include "SdJsonIO.h"
 
 #include <QDebug>
 
@@ -90,32 +91,41 @@ void SdGraphTracedPolygon::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bo
 
 
 
-
-
-
-
-void SdGraphTracedPolygon::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphTracedPolygon::json(SdJsonWriter &js) const
   {
+  //Members of this class
+  mProp.json( js );
+  mRegion.json( QStringLiteral("region"), js );
+  js.jsonList( js, QStringLiteral("windows"), mWindows );
   //Write top
-  SdGraphTraced::writeObject( obj );
-  //Members of this class
-  mProp.write( obj );
-  mRegion.write( QStringLiteral("region"), obj );
-  mWindows.write( QStringLiteral("windows"), obj );
+  SdGraphTraced::json( js );
   }
 
 
 
 
-void SdGraphTracedPolygon::readObject(SdObjectMap *map, const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphTracedPolygon::json(const SdJsonReader &js)
   {
-  //Read top
-  SdGraphTraced::readObject( map, obj );
   //Members of this class
-  mProp.read( obj );
-  mRegion.read( QStringLiteral("region"), obj );
-  mWindows.read( QStringLiteral("windows"), obj );
+  mProp.json( js );
+  mRegion.json( QStringLiteral("region"), js );
+  js.jsonList( js, QStringLiteral("windows"), mWindows );
+  //Write top
+  SdGraphTraced::json( js );
   }
+
+
+
 
 
 

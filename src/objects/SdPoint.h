@@ -94,6 +94,18 @@ class SdPoint : public QPoint
 
     void        swap( SdPoint *p );
 
+    //!
+    //! \brief json Overloaded function to write object content into json writer
+    //! \param js   Json writer
+    //!
+    void        json( SvJsonWriter &js ) const;
+
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //! \param js   Json reader
+    //!
+    void        json( const SvJsonReader &js);
+
     //Return far point, point with big coords
     static SdPoint farPoint() { return SdPoint(farCoord,farCoord); }
 

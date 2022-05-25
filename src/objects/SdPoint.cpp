@@ -313,6 +313,32 @@ void SdPoint::swap(SdPoint *p)
 
 
 
+//!
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
+//!
+void SdPoint::json(SvJsonWriter &js) const
+  {
+  js.jsonInt( QStringLiteral("x"), x() );
+  js.jsonInt( QStringLiteral("y"), y() );
+  }
+
+
+
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
+//!
+void SdPoint::json(const SvJsonReader &js)
+  {
+  js.jsonInt( QStringLiteral("x"), rx() );
+  js.jsonInt( QStringLiteral("y"), ry() );
+  }
+
+
+
+
 
 
 

@@ -33,11 +33,18 @@ class SdPointList : public QPolygon
     void       rotate(SdPoint center, SdPropAngle angle);
     void       mirror(SdPoint a, SdPoint b);
 
-    QJsonArray write() const;
-    void       write( const QString name, QJsonObject &obj ) const;
 
-    void       read( const QJsonArray array );
-    void       read( const QString name, const QJsonObject obj );
+    //!
+    //! \brief json Overloaded function to write object content into json writer
+    //! \param js   Json writer
+    //!
+    void       json( const QString &key, SvJsonWriter &js ) const;
+
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //! \param js   Json reader
+    //!
+    void       json( const QString &key, const SvJsonReader &js);
   };
 
 #endif // SDPOINTLIST_H

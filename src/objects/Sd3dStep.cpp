@@ -1,4 +1,5 @@
 #include "Sd3dStep.h"
+#include "SdJsonIO.h"
 #include "import/step/SdStepReader.h"
 
 #include <QFile>
@@ -61,30 +62,35 @@ Sd3dStep *Sd3dStep::importStepFromFile(QString fname)
 
 
 
-void Sd3dStep::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void Sd3dStep::json(SdJsonWriter &js) const
   {
-  Sd3dGraph::writeObject( obj );
-  QJsonArray ar;
-  for( const auto &face : mFaceList ) {
-    ar.append( face.write() );
-    }
-  obj.insert( QStringLiteral("faces"), ar );
+  js.jsonList( js, QStringLiteral("faces"), mFaceList );
+  Sd3dGraph::json( js );
   }
 
 
 
 
-void Sd3dStep::readObject(SdObjectMap *map, const QJsonObject obj)
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void Sd3dStep::json(const SdJsonReader &js)
   {
-  Sd3dGraph::readObject( map, obj );
-  QJsonArray ar = obj.value( QStringLiteral("faces") ).toArray();
-  mFaceList.clear();
-  Sd3dFaceEx face;
-  for( const auto value : ar ) {
-    face.read( value.toObject() );
-    mFaceList.append( face );
-    }
+  js.jsonList( js, QStringLiteral("faces"), mFaceList );
+  Sd3dGraph::json( js );
   }
+
+
+
+
 
 
 

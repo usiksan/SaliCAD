@@ -112,7 +112,6 @@ SOURCES += \
     objects/Sd3dFaceEx.cpp \
     objects/Sd3dFaceMaterial.cpp \
     objects/Sd3dFaceSet.cpp \
-    objects/Sd3dFlat.cpp \
     objects/Sd3dGraph.cpp \
     objects/Sd3dGraphModel.cpp \
     objects/Sd3dGraphSolid.cpp \
@@ -551,7 +550,6 @@ HEADERS  += \
     objects/Sd3dFaceEx.h \
     objects/Sd3dFaceMaterial.h \
     objects/Sd3dFaceSet.h \
-    objects/Sd3dFlat.h \
     objects/Sd3dGraph.h \
     objects/Sd3dGraphModel.h \
     objects/Sd3dGraphSolid.h \

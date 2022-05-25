@@ -53,38 +53,38 @@ void SdPointList::mirror(SdPoint a, SdPoint b)
 
 
 
-QJsonArray SdPointList::write() const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
+//!
+void SdPointList::json( const QString &key, SvJsonWriter &js) const
   {
   QJsonArray array;
-  for( int i = 0; i < count(); i++ )
-    array.append( QJsonValue(get(i).write()) );
-  return array;
+  for( int i = 0; i < count(); i++ ) {
+    SvJsonWriter sjs;
+    get(i).json( sjs );
+    array.append( QJsonValue(sjs.object()) );
+    }
+  js.object().insert( key, array );
   }
 
 
 
 
-void SdPointList::write(const QString name, QJsonObject &obj) const
-  {
-  obj.insert( name, QJsonValue( write() ) );
-  }
 
-
-
-void SdPointList::read(const QJsonArray array)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
+//!
+void SdPointList::json(const QString &key, const SvJsonReader &js)
   {
   clear();
   SdPoint p;
+  QJsonArray array = js.object().value(key).toArray();
   for( int i = 0; i < array.count(); i++ ) {
-    p.read( array.at(i).toObject() );
+    SvJsonReader sjs( array.at(i).toObject() );
+    p.json( sjs );
     append(p);
     }
   }
 
-
-
-
-void SdPointList::read(const QString name, const QJsonObject obj)
-  {
-  read( obj.value(name).toArray() );
-  }

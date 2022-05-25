@@ -12,6 +12,7 @@ Description
   Rich and plain text representation
 */
 #include "SdPItemRich.h"
+#include "SdJsonIO.h"
 
 #include <QTextEdit>
 
@@ -58,27 +59,36 @@ void SdPItemRich::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
 
 
 
-
-
-
-void SdPItemRich::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdPItemRich::json(SdJsonWriter &js) const
   {
-  SdProjectItem::writeObject( obj );
   if( mTextEditor )
-    obj.insert( QStringLiteral("contents"), mTextEditor->toHtml() );
+    js.jsonString( QStringLiteral("contents"), mTextEditor->toHtml() );
   else
-    obj.insert( QStringLiteral("contents"), mContents );
+    js.jsonString( QStringLiteral("contents"), mContents );
+  SdProjectItem::json( js );
   }
 
 
 
 
-
-void SdPItemRich::readObject(SdObjectMap *map, const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdPItemRich::json(const SdJsonReader &js)
   {
-  SdProjectItem::readObject( map, obj );
-  mContents = obj.value( QStringLiteral("contents") ).toString();
+  js.jsonString( QStringLiteral("contents"), mContents );
+  SdProjectItem::json( js );
   }
+
+
+
 
 
 

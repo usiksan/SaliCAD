@@ -50,7 +50,7 @@ void Sd3dGraphModel::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool nex
 //!
 void Sd3dGraphModel::json(SdJsonWriter &js) const
   {
-  js.jsonObject( js, QStringLiteral("model"), mModel );
+  js.jsonList( js, QStringLiteral("model"), mModel );
   Sd3dGraph::json( js );
   }
 
@@ -65,7 +65,7 @@ void Sd3dGraphModel::json(SdJsonWriter &js) const
 //!
 void Sd3dGraphModel::json(const SdJsonReader &js)
   {
-  js.jsonObject( js, QStringLiteral("model"), mModel );
+  js.jsonList( js, QStringLiteral("model"), mModel );
   Sd3dGraph::json( js );
   }
 

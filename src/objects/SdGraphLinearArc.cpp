@@ -16,6 +16,7 @@ Description
 #include "SdSelector.h"
 #include "SdRect.h"
 #include "SdSnapInfo.h"
+#include "SdJsonIO.h"
 
 SdGraphLinearArc::SdGraphLinearArc() :
   SdGraphLinear()
@@ -55,28 +56,37 @@ void SdGraphLinearArc::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool n
 
 
 
-
-
-
-
-void SdGraphLinearArc::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphLinearArc::json(SdJsonWriter &js) const
   {
-  SdGraphLinear::writeObject( obj );
-  mCenter.write( QStringLiteral("Center"), obj );
-  mStart.write( QStringLiteral("Start"), obj );
-  mStop.write( QStringLiteral("Stop"), obj );
+  js.jsonPoint( QStringLiteral("Center"), mCenter );
+  js.jsonPoint( QStringLiteral("Start"), mStart );
+  js.jsonPoint( QStringLiteral("Stop"), mStop );
+  SdGraphLinear::json( js );
   }
 
 
 
 
-void SdGraphLinearArc::readObject(SdObjectMap *map, const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphLinearArc::json(const SdJsonReader &js)
   {
-  SdGraphLinear::readObject( map, obj );
-  mCenter.read( QStringLiteral("Center"), obj );
-  mStart.read( QStringLiteral("Start"), obj );
-  mStop.read( QStringLiteral("Stop"), obj );
+  js.jsonPoint( QStringLiteral("Center"), mCenter );
+  js.jsonPoint( QStringLiteral("Start"), mStart );
+  js.jsonPoint( QStringLiteral("Stop"), mStop );
+  SdGraphLinear::json( js );
   }
+
+
+
 
 
 

@@ -38,11 +38,6 @@ class SdPolyWindowList : public QList<SdPolyWindow>
     //Test point
     bool         containsPoint( SdPoint p ) const;
 
-    QJsonArray   write() const;
-    void         write( const QString name, QJsonObject &obj ) const;
-
-    void         read( const QJsonArray array );
-    void         read( const QString name, const QJsonObject obj );
   };
 
 #endif // SDPOLYWINDOWLIST_H

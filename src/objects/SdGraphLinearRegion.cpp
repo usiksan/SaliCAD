@@ -15,6 +15,7 @@ Description
 #include "SdSegment.h"
 #include "SdContext.h"
 #include "SdSelector.h"
+#include "SdJsonIO.h"
 
 SdGraphLinearRegion::SdGraphLinearRegion() :
   SdGraphLinear(),
@@ -56,28 +57,32 @@ void SdGraphLinearRegion::cloneFrom(const SdObject *src, SdCopyMap &copyMap, boo
 
 
 
-
-
-
-
-
-
-void SdGraphLinearRegion::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphLinearRegion::json(SdJsonWriter &js) const
   {
-  SdGraphLinear::writeObject( obj );
-  mList.write( QStringLiteral("Vertex"), obj );
+  mList.json( QStringLiteral("Vertex"), js );
+  SdGraphLinear::json( js );
   }
 
 
 
 
-
-void SdGraphLinearRegion::readObject(SdObjectMap *map, const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphLinearRegion::json(const SdJsonReader &js)
   {
-  SdGraphLinear::readObject( map, obj );
-  mList.read( QStringLiteral("Vertex"), obj );
+  mList.json( QStringLiteral("Vertex"), js );
+  SdGraphLinear::json( js );
   mFlyIndex.clear();
   }
+
 
 
 
