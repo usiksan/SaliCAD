@@ -87,7 +87,7 @@ void SdDProjectStore::accept()
   hdr.mParamTable = mProject->paramTable();
 
   //Store project in library
-  SdObjectFactory::insertObject( hdr, mProject->write() );
+  SdObjectFactory::insertObject( hdr, mProject->jsonObjectTo() );
 
   //Close dialog
   QDialog::accept();

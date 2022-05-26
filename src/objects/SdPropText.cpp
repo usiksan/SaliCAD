@@ -49,39 +49,31 @@ bool SdPropText::match( SdPropText const &prop ) {
       mMirror.match( prop.mMirror);
   }
 
-void SdPropText::write(const QString prefix, QJsonObject &obj) const
-  {
-  mLayer.write( prefix + QStringLiteral("TextLayer"), obj ); //Слой
-  mSize.write( prefix + QStringLiteral("TextSize"), obj );   //Размер текста
-  mDir.write( prefix + QStringLiteral("TextDir"), obj );     //Направление
-  mFont.write( prefix + QStringLiteral("TextFont"), obj );   //Идентификатор шрифта
-  mHorz.write( prefix + QStringLiteral("TextHorz"), obj );   //Выравнивание горизонтальное, вертикальное и зеркальность
-  mVert.write( prefix + QStringLiteral("TextVert"), obj );
-  mMirror.write( prefix + QStringLiteral("TextMirror"), obj );
-  }
-
-
-
-
-void SdPropText::read(const QString prefix, const QJsonObject obj)
-  {
-  mLayer.read( prefix + QStringLiteral("TextLayer"), obj ); //Слой
-  mSize.read( prefix + QStringLiteral("TextSize"), obj );   //Размер текста
-  mDir.read( prefix + QStringLiteral("TextDir"), obj );     //Направление
-  mFont.read( prefix + QStringLiteral("TextFont"), obj );   //Идентификатор шрифта
-  mHorz.read( prefix + QStringLiteral("TextHorz"), obj );   //Выравнивание горизонтальное, вертикальное и зеркальность
-  mVert.read( prefix + QStringLiteral("TextVert"), obj );
-  mMirror.read( prefix + QStringLiteral("TextMirror"), obj );
-  }
 
 
 
 void SdPropText::json(const QString prefix, SvJsonWriter &js) const
   {
-//  js.jsonValue( prefix + QStringLiteral("TextSize"), mSize );
-//  js.jsonValue( prefix + QStringLiteral("TextDir"), mDir );
+  mLayer.json( prefix + QStringLiteral("TextLayer"), js ); //Слой
+  mSize.json( prefix + QStringLiteral("TextSize"), js );   //Размер текста
+  mFont.json( prefix + QStringLiteral("TextFont"), js );   //Идентификатор шрифта
+  mDir.json( prefix + QStringLiteral("TextDir"), js );     //Направление
+  mHorz.json( prefix + QStringLiteral("TextHorz"), js );   //Выравнивание горизонтальное, вертикальное и зеркальность
+  mVert.json( prefix + QStringLiteral("TextVert"), js );
+  mMirror.json( prefix + QStringLiteral("TextMirror"), js );
+  }
 
-  write( prefix, js.object() );
+
+
+void SdPropText::json(const QString prefix, const SvJsonReader &js)
+  {
+  mLayer.json( prefix + QStringLiteral("TextLayer"), js ); //Слой
+  mSize.json( prefix + QStringLiteral("TextSize"), js );   //Размер текста
+  mFont.json( prefix + QStringLiteral("TextFont"), js );   //Идентификатор шрифта
+  mDir.json( prefix + QStringLiteral("TextDir"), js );     //Направление
+  mHorz.json( prefix + QStringLiteral("TextHorz"), js );   //Выравнивание горизонтальное, вертикальное и зеркальность
+  mVert.json( prefix + QStringLiteral("TextVert"), js );
+  mMirror.json( prefix + QStringLiteral("TextMirror"), js );
   }
 
 

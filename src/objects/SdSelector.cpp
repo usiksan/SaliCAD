@@ -15,6 +15,7 @@ Description
 #include "SdProject.h"
 #include "SdContext.h"
 #include "SdConverterView.h"
+#include "SdJsonIO.h"
 
 #include <QClipboard>
 #include <QByteArray>
@@ -113,16 +114,16 @@ void SdSelector::operator =(const SdSelector &sour)
 void SdSelector::putToClipboard( const SdProject *project, double scale )
   {
   //Prepare Json object with project and selection
-  QJsonObject obj;
+  SdJsonWriter js;
 
   //Write project
-  project->writeObject( obj );
+  js.jsonBuildPtr( js, QStringLiteral("Project"), project );
 
   //Write selection
-  writeObject( obj );
+  js.jsonLeavePtr( js, QStringLiteral("Selector"), this );
 
   //Convert to byteArray
-  QByteArray array = QCborValue::fromJsonValue( obj ).toByteArray();
+  QByteArray array = QCborValue::fromJsonValue( QJsonValue(js.object()) ).toCbor();
 
   //Prepare mime data
   QMimeData *mime = new QMimeData();
@@ -174,15 +175,17 @@ SdProject *SdSelector::getFromClipboard()
     //Retrive Json object from clipboard
     QJsonObject obj = QCborValue::fromCbor( mime->data(QStringLiteral(SD_CLIP_FORMAT_SELECTOR)) ).toJsonValue().toObject();
 
-    //Create project
-    SdProject *project = new SdProject();
     SdObjectMap map;
+    SdJsonReader js( obj, &map );
+
+    //Create project
+    SdProject *project = nullptr;
 
     //Project reading
-    project->readObject( &map, obj );
+    js.jsonBuildPtr( js, QStringLiteral("Project"), project );
 
     //selection reading
-    readObject( &map, obj );
+    js.jsonLeavePtr( js, QStringLiteral("Selector"), this );
 
     return project;
     }
@@ -193,42 +196,61 @@ SdProject *SdSelector::getFromClipboard()
 
 
 
-void SdSelector::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdSelector::json(SdJsonWriter &js) const
   {
-  //Write base object
-  SdObject::writeObject( obj );
-
   //Origin
-  mOrigin.write( QStringLiteral("FragmentOrigin"), obj );
+  js.jsonPoint( QStringLiteral("FragmentOrigin"), mOrigin );
 
   //Count of objects
   int count = mTable.count();
-  obj.insert( QStringLiteral("Count"), count );
+  js.jsonInt( QStringLiteral("Count"), count );
   count = 0;
   for( SdGraphPtr ptr : mTable )
-    writePtr( ptr, QString::number(count++), obj );
+    js.jsonObjectPtr( QString::number(count++), ptr );
+
+  //Base object
+  SdObject::json( js );
   }
 
 
 
-void SdSelector::readObject(SdObjectMap *map, const QJsonObject obj)
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdSelector::json(const SdJsonReader &js)
   {
   clear();
   mOwner = false;
 
-  //Read base object
-  SdObject::readObject( map, obj );
-
   //Origin
-  mOrigin.read( QStringLiteral("FragmentOrigin"), obj );
+  js.jsonPoint( QStringLiteral("FragmentOrigin"), mOrigin );
 
   //Count of objects
-  int count = obj.value( QStringLiteral("Count") ).toInt();
+  int count;
+  js.jsonInt( QStringLiteral("Count"), count );
+
+  SdGraphPtr ptr;
   for( int i = 0; i < count; i++ ) {
-    SdGraphPtr ptr = dynamic_cast<SdGraphPtr>( readPtr( QString::number(i), map, obj ) );
+    js.jsonObjectPtr( QString::number(i), ptr );
     ptr->select( this );
     }
+
+  //Base object
+  SdObject::json( js );
   }
+
+
+
+
+
 
 
 

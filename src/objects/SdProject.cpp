@@ -386,15 +386,7 @@ quint64 SdProject::getClass() const
 
 SdProject *SdProject::load(const QString fname)
   {
-  QFile file(fname);
-  if( file.open(QIODevice::ReadOnly) ) {
-    QJsonDocument doc = QJsonDocument::fromJson( file.readAll(), nullptr );
-    if( !doc.isEmpty() ) {
-      SdObjectMap map;
-      return sdObjectOnly<SdProject>( SdObject::read( &map, doc.object() ) );
-      }
-    }
-  return nullptr;
+  return sdObjectOnly<SdProject>( fileJsonLoad(fname) );
   }
 
 
@@ -402,11 +394,7 @@ SdProject *SdProject::load(const QString fname)
 
 bool SdProject::save(const QString fname)
   {
-  QFile file(fname);
-  if( file.open(QIODevice::WriteOnly) ) {
-    QJsonDocument doc( write() );
-//    file.write( doc.toJson(QJsonDocument::Compact) );
-    file.write( doc.toJson() );
+  if( fileJsonSave(fname) ) {
     mDirty = false;
     SdPulsar::sdPulsar->emitProjectStatusChanged( this );
     return true;

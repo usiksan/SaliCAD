@@ -45,8 +45,8 @@ class SdSelector : public SdObject
     bool                getOwner() const { return mOwner; }
     SdGraphPtrTable&    getTable() { return mTable; }
 
-    virtual QString     getType() const { return QStringLiteral("Selector"); } //Тип объекта
-    virtual quint64     getClass() const { return dctSelector; } //Получить класс объекта
+    virtual QString     getType() const override { return QStringLiteral("Selector"); } //Тип объекта
+    virtual quint64     getClass() const override { return dctSelector; } //Получить класс объекта
 
     void                markDeleteAll(); //Удалить входящие в селектор объекты
     void                removeAll(); //Убрать все сслыки на объекты
@@ -62,8 +62,20 @@ class SdSelector : public SdObject
     void                putToClipboard(const SdProject *project , double scale);
     SdProject          *getFromClipboard();
 
-    virtual void        writeObject( QJsonObject &obj ) const; //Запись объекта в файл
-    virtual void        readObject( SdObjectMap *map, const QJsonObject obj ); //Чтение объекта из файла
+
+    //!
+    //! \brief json Overloaded function to write object content into json writer
+    //!             Overrided function
+    //! \param js   Json writer
+    //!
+    virtual void        json( SdJsonWriter &js ) const override;
+
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //!             Overrided function
+    //! \param js   Json reader
+    //!
+    virtual void        json( const SdJsonReader &js ) override;
 
     //Итерация
     void                forEach( quint64 classMask, std::function<bool(SdGraph*)> fun1 );

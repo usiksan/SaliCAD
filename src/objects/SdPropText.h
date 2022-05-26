@@ -41,30 +41,28 @@ struct SdPropTextState {
   };
 
 struct SdPropText {
-  SdPropLayer mLayer;  //Layer of text [Слой]
-  SdPropInt   mSize;   //Text size [Размер текста]
-  SdPropAngle mDir;    //Direction [Направление]
-  SdPropInt   mFont;   //Font ident [Идентификатор шрифта]
-  SdPropInt   mHorz;   //Alignment [Выравнивание горизонтальное, вертикальное и зеркальность]
-  SdPropInt   mVert;
-  SdPropInt   mMirror;
+    SdPropLayer mLayer;  //Layer of text [Слой]
+    SdPropInt   mSize;   //Text size [Размер текста]
+    SdPropAngle mDir;    //Direction [Направление]
+    SdPropInt   mFont;   //Font ident [Идентификатор шрифта]
+    SdPropInt   mHorz;   //Alignment [Выравнивание горизонтальное, вертикальное и зеркальность]
+    SdPropInt   mVert;
+    SdPropInt   mMirror;
 
-  SdPropText();
+    SdPropText();
 
-  void operator = ( SdPropText const &prop ); //Назначить свойства
-  void assign( SdPropText const &prop );      //Назначить свойства
-  void append( SdPropText const &prop );      //Установить свойства
-  void clear();                               //Установить в неопределенное состояние
-  bool match( SdPropText const &prop );       //Сравнить на совпадение с эталоном
+    void operator = ( SdPropText const &prop ); //Назначить свойства
+    void assign( SdPropText const &prop );      //Назначить свойства
+    void append( SdPropText const &prop );      //Установить свойства
+    void clear();                               //Установить в неопределенное состояние
+    bool match( SdPropText const &prop );       //Сравнить на совпадение с эталоном
 
-  void write( const QString prefix, QJsonObject &obj ) const;
-  void read( const QString prefix, const QJsonObject obj );
+    void json( const QString prefix, SvJsonWriter &js ) const;
+    void json( const QString prefix, const SvJsonReader &js );
 
-  void json( const QString prefix, SvJsonWriter &js ) const;
-  void json( const QString prefix, const SvJsonReader &js ) { read( prefix, js.object() ); }
+    void saveState(SdPropTextState *dst );
+    void swapState(SdPropTextState *src );
 
-  void saveState(SdPropTextState *dst );
-  void swapState(SdPropTextState *src );
   };
 
 //Parse src string and find numeric substring. Numeric substring converted into int, int incremented

@@ -53,31 +53,31 @@ void SdQuadrangle::set(SdRect r)
   p4 = r.getBottomLeft();
   }
 
-QJsonObject SdQuadrangle::write() const
-  {
-  QJsonObject obj;
-  p1.write( QStringLiteral("p1"), obj );
-  p2.write( QStringLiteral("p2"), obj );
-  p3.write( QStringLiteral("p3"), obj );
-  p4.write( QStringLiteral("p4"), obj );
-  return obj;
-  }
+//QJsonObject SdQuadrangle::write() const
+//  {
+//  QJsonObject obj;
+//  p1.write( QStringLiteral("p1"), obj );
+//  p2.write( QStringLiteral("p2"), obj );
+//  p3.write( QStringLiteral("p3"), obj );
+//  p4.write( QStringLiteral("p4"), obj );
+//  return obj;
+//  }
 
-void SdQuadrangle::write(const QString name, QJsonObject &dest) const
-  {
-  dest.insert( name, write() );
-  }
+//void SdQuadrangle::write(const QString name, QJsonObject &dest) const
+//  {
+//  dest.insert( name, write() );
+//  }
 
-void SdQuadrangle::read(const QJsonObject obj)
-  {
-  p1.read( QStringLiteral("p1"), obj );
-  p2.read( QStringLiteral("p2"), obj );
-  p3.read( QStringLiteral("p3"), obj );
-  p4.read( QStringLiteral("p4"), obj );
-  }
+//void SdQuadrangle::read(const QJsonObject obj)
+//  {
+//  p1.read( QStringLiteral("p1"), obj );
+//  p2.read( QStringLiteral("p2"), obj );
+//  p3.read( QStringLiteral("p3"), obj );
+//  p4.read( QStringLiteral("p4"), obj );
+//  }
 
-void SdQuadrangle::read(const QString name, const QJsonObject src)
-  {
-  read( src.value(name).toObject() );
-  }
+//void SdQuadrangle::read(const QString name, const QJsonObject src)
+//  {
+//  read( src.value(name).toObject() );
+//  }
 

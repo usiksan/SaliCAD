@@ -49,20 +49,29 @@ bool SdPropSymPin::match(const SdPropSymPin &prop)
 
 
 
-void SdPropSymPin::write(QJsonObject &obj) const
+//!
+//! \brief json Function to write object content into json writer
+//! \param js   Json writer
+//!
+void SdPropSymPin::json(SvJsonWriter &js) const
   {
-  mLayer.write( QStringLiteral("SymPinLayer"), obj );
-  mPinType.write( QStringLiteral("SymPinType"), obj );
+  mLayer.json( QStringLiteral("SymPinLayer"), js );
+  mPinType.json( QStringLiteral("SymPinType"), js );
   }
 
 
 
-
-void SdPropSymPin::read(const QJsonObject obj)
+//!
+//! \brief json Function to read object content from json reader
+//! \param js   Json reader
+//!
+void SdPropSymPin::json(const SvJsonReader &js)
   {
-  mLayer.read( QStringLiteral("SymPinLayer"), obj );
-  mPinType.read( QStringLiteral("SymPinType"), obj );
+  mLayer.json( QStringLiteral("SymPinLayer"), js );
+  mPinType.json( QStringLiteral("SymPinType"), js );
   }
+
+
 
 
 

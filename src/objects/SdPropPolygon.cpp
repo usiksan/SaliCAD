@@ -59,6 +59,10 @@ bool SdPropPolygon::match(const SdPropPolygon &prop)
 
 
 
+//!
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
+//!
 void SdPropPolygon::json(SvJsonWriter &js) const
   {
   mGap.json( QStringLiteral("pGap"), js );
@@ -68,6 +72,10 @@ void SdPropPolygon::json(SvJsonWriter &js) const
 
 
 
+//!
+//! \brief json Function to read object content from json reader
+//! \param js   Json reader
+//!
 void SdPropPolygon::json(const SvJsonReader &js)
   {
   mGap.json( QStringLiteral("pGap"), js );

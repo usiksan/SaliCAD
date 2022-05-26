@@ -865,7 +865,7 @@ void SdGraphSymImp::json(SdJsonWriter &js) const
   js.jsonObjectPtr( QStringLiteral("Imp"), mPartImp );
 
   //Pin information table
-  js.jsonMap( js, QStringLiteral("Pins"), mPins );
+  js.jsonMap( js, QStringLiteral("Pins:"), mPins );
 
   SdGraphParam::json( js );
   }
@@ -910,7 +910,18 @@ void SdGraphSymImp::json(const SdJsonReader &js)
   js.jsonObjectPtr( QStringLiteral("Imp"), mPartImp );
 
   //Pin information table
-  js.jsonMap( js, QStringLiteral("Pins"), mPins );
+  if( js.contains( QStringLiteral("Pins") ) ) {
+    //Pins as array
+    QJsonArray pins = js.object().value( QStringLiteral("Pins") ).toArray();
+    for( const QJsonValue &vpin : qAsConst(pins) ) {
+      SdSymImpPin pin;
+      SdJsonReader pjs( vpin.toObject(), js );
+      QString pinName = pin.fromJson( pjs );
+      mPins.insert( pinName, pin );
+      }
+    }
+  else
+    js.jsonMap( js, QStringLiteral("Pins:"), mPins );
 
   SdGraphParam::json( js );
   }

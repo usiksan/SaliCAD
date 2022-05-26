@@ -16,6 +16,8 @@ Description
 #include "SdEnvir.h"
 #include "SdSelector.h"
 #include "SdContext.h"
+#include "SdJsonIO.h"
+
 #include <QStringRef>
 #include <QMessageBox>
 
@@ -101,35 +103,45 @@ void SdGraphSymPin::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next
 
 
 
-
-
-
-void SdGraphSymPin::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphSymPin::json(SdJsonWriter &js) const
   {
-  SdGraph::writeObject( obj );
-  mOrigin.write( QString("Origin"), obj );
-  mPinProp.write( obj );
-  mNumberPos.write( QString("NumberPos"), obj );
-  mNumberProp.write( QString("Number"), obj );
-  mNamePos.write( QString("NamePos"), obj );
-  mNameProp.write( QString("Name"), obj );
-  obj.insert( QString("Name"), mName );
+  js.jsonPoint( QStringLiteral("Origin"), mOrigin );
+  mPinProp.json( js );
+  js.jsonPoint( QStringLiteral("NumberPos"), mNumberPos );
+  mNumberProp.json( QStringLiteral("Number"), js );
+  js.jsonPoint( QStringLiteral("NamePos"), mNamePos );
+  mNameProp.json( QStringLiteral("Name"), js );
+  js.jsonString( QStringLiteral("Name"), mName );
+  SdGraph::json( js );
   }
 
 
 
 
-void SdGraphSymPin::readObject(SdObjectMap *map, const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphSymPin::json(const SdJsonReader &js)
   {
-  SdGraph::readObject( map, obj );
-  mOrigin.read( QString("Origin"), obj );
-  mPinProp.read( obj );
-  mNumberPos.read( QString("NumberPos"), obj );
-  mNumberProp.read( QString("Number"), obj );
-  mNamePos.read( QString("NamePos"), obj );
-  mNameProp.read( QString("Name"), obj );
-  mName = obj.value( QString("Name") ).toString();
+  js.jsonPoint( QStringLiteral("Origin"), mOrigin );
+  mPinProp.json( js );
+  js.jsonPoint( QStringLiteral("NumberPos"), mNumberPos );
+  mNumberProp.json( QStringLiteral("Number"), js );
+  js.jsonPoint( QStringLiteral("NamePos"), mNamePos );
+  mNameProp.json( QStringLiteral("Name"), js );
+  js.jsonString( QStringLiteral("Name"), mName );
+  SdGraph::json( js );
   }
+
+
+
 
 
 

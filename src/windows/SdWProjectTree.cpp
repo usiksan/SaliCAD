@@ -258,10 +258,7 @@ void SdWProjectTree::cmObjectCopy()
   SdPtr<SdProjectItem> item( mProject->item( mCurrentItem ) );
   if( item.isValid() && (item->getClass() & (dctComponent | dctPart | dctSymbol) ) ) {
     //Prepare Json object with project and selection
-    QJsonObject obj;
-
-    //Store project to json
-    mProject->writeObject( obj );
+    QJsonObject obj = mProject->jsonObjectTo();
 
     //Store object id to json
     obj.insert( QStringLiteral("ProjectItem UID"), item->getUid() );
@@ -294,28 +291,28 @@ void SdWProjectTree::cmObjectPaste()
     QJsonObject obj = QJsonDocument::fromJson( mime->data(QStringLiteral(SD_CLIP_FORMAT_PITEM)) ).object();
 
     //Create project
-    SdProject *project = new SdProject();
-    SdObjectMap map;
-
-    //Project reading
-    project->readObject( &map, obj );
+    SdProject *project = sdObjectOnly<SdProject>( SdObject::jsonObjectFrom(obj) );
 
     //selection reading
     QString uid = obj.value( QStringLiteral("ProjectItem UID") ).toString();
 
-    mProject->getUndo()->begin( tr("Paste from clipboard"), nullptr, false );
-    if( mProject->itemByUid(uid) )
-      //Same object already present in project duplicate it
-      duplicate( uid );
+    if( project != nullptr && !uid.isEmpty() ) {
 
-    else {
-      //Simple insert object
-      SdCopyMapProject copyMap(mProject);
-      mProject->insertChild( project->itemByUid(uid)->copy( copyMap, false ), mProject->getUndo() );
+      mProject->getUndo()->begin( tr("Paste from clipboard"), nullptr, false );
+      if( mProject->itemByUid(uid) )
+        //Same object already present in project duplicate it
+        duplicate( uid );
+
+      else {
+        //Simple insert object
+        SdCopyMapProject copyMap(mProject);
+        mProject->insertChild( project->itemByUid(uid)->copy( copyMap, false ), mProject->getUndo() );
+        }
+
+
+      delete project;
+
       }
-
-
-    delete project;
 
     //Update status undo and redo commands
     cmUndoRedoUpdate();

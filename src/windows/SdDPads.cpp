@@ -237,7 +237,7 @@ void SdDPads::cmAssociationSave()
     hdr.mClass = assoc.getClass();
     mUid = hdr.uid();
     //Store in library
-    SdObjectFactory::insertObject( hdr, assoc.write() );
+    SdObjectFactory::insertObject( hdr, assoc.jsonObjectTo() );
     QMessageBox::information( this, tr("Info"), tr("Pad association saved") );
     }
   }

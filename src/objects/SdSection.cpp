@@ -146,20 +146,3 @@ void SdSection::json(const SdJsonReader &js)
 
 
 
-
-
-
-
-
-
-
-
-
-void SdSection::readObject(SdObjectMap *map, const QJsonObject obj)
-  {
-  SdObject::readObject( map, obj );
-  mSymbolTitle = obj.value( QStringLiteral("SymbolTitle") ).toString();
-  mSymbolId    = obj.value( QStringLiteral("SymbolId") ).toString();
-  sdStringMapRead( QStringLiteral("PinAssotiation"), mAssociationTable, obj );
-  }
-

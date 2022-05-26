@@ -118,26 +118,6 @@ class SdObject
 
 
     //Write and read object
-    QJsonObject       write() const;
-    static  void      writePtr( const SdObject *ptr, const QString name, QJsonObject &obj );
-
-
-    static  SdObject* read( SdObjectMap *map, const QJsonObject obj );
-    static  SdObject* readPtr( SdObjectMap *map, const QJsonObject obj );
-    static  SdObject* readPtr( const QString name, SdObjectMap *map, const QJsonObject obj );
-    static  SdObject* build( QString type );
-    static  SdObject* buildFromJson( const SdJsonReader &js );
-
-    template <typename SdClass>
-    static  SdClass*  readPtrClass( const QString name, SdObjectMap *map, const QJsonObject obj )
-      {
-      return dynamic_cast<SdClass*>( readPtr( name, map, obj ) );
-      }
-
-
-    //Alternate write and read object
-    QByteArray        toByteArray() const;
-    void              fromByteArray( const QByteArray &ar );
 
     //!
     //! \brief json Overloaded function to write object content into json writer
@@ -150,6 +130,35 @@ class SdObject
     //! \param js   Json reader
     //!
     virtual void      json( const SdJsonReader &js );
+
+    //Convert object to-from json representation
+    QJsonObject       jsonObjectTo() const;
+    static  SdObject* jsonObjectFrom( const QJsonObject obj );
+
+    //Convert object to-from json text representation
+    QByteArray        jsonTextTo() const;
+    static SdObject*  jsonTextFrom( const QByteArray &ar );
+
+    //Convert object to-from binary cbor format
+    QByteArray        jsonCborTo() const;
+    static SdObject*  jsonCborFrom( const QByteArray &ar );
+
+    //Convert object to-from binary cbor compressed format
+    QByteArray        jsonCborCompressedTo() const;
+    static SdObject*  jsonCborCompressedFrom( const QByteArray &ar );
+
+    //Read-write to-from file
+    bool              fileJsonSave( const QString fname ) const;
+    static SdObject*  fileJsonLoad( const QString fname );
+
+    //Write and read object pointer which enable save and restore interobject referencing
+    static  void      writePtr( const SdObject *ptr, SdJsonWriter &js );
+    static  SdObject* readPtr( const SdJsonReader &js );
+
+    static  SdObject* build( QString type );
+    static  SdObject* buildFromJson( const SdJsonReader &js );
+
+
   };
 
 

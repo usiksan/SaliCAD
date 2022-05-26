@@ -40,8 +40,20 @@ struct SdSymImpPin {
   void         prepareMove(SdPItemSheet *sheet, SdSelector *selector , SdUndo *undo);
   bool         isConnected() const { return !mNetName.isEmpty(); }
 
-  QJsonObject  toJson(const QString pinName) const;
-  QString      fromJson( SdObjectMap *map, const QJsonObject obj );
+  QString      fromJson( const SdJsonReader &js );
+
+
+  //!
+  //! \brief json Function to write object content into json writer
+  //! \param js   Json writer
+  //!
+  void         json( SdJsonWriter &js ) const;
+
+  //!
+  //! \brief json Function to read object content from json reader
+  //! \param js   Json reader
+  //!
+  void         json( const SdJsonReader &js);
 
   };
 

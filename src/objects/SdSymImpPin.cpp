@@ -15,6 +15,7 @@ Description
 #include "SdGraphSymPin.h"
 #include "SdPItemSheet.h"
 #include "SdGraphNetWire.h"
+#include "SdJsonIO.h"
 
 //====================================================================================
 //Pin for symbol implementation
@@ -73,27 +74,47 @@ void SdSymImpPin::prepareMove(SdPItemSheet *sheet, SdSelector *selector, SdUndo 
 
 
 
-QJsonObject SdSymImpPin::toJson( const QString pinName ) const
+
+
+
+QString SdSymImpPin::fromJson(const SdJsonReader &js)
   {
-  QJsonObject obj;
-  obj.insert( QStringLiteral("Name"), pinName );
-  SdObject::writePtr( mPin, QStringLiteral("Pin"), obj );
-  obj.insert( QStringLiteral("Number"), mPinNumber ); //Pin number in part
-  mPosition.write( QStringLiteral("Pos"), obj );      //Pin position in sheet context
-  obj.insert( QStringLiteral("Wire"), mNetName );    //Net, which pin connected to
-  return obj;
+  json( js );
+  return js.object().value( QStringLiteral("Name") ).toString();
+  }
+
+
+//!
+//! \brief json Function to write object content into json writer
+//! \param js   Json writer
+//!
+void SdSymImpPin::json(SdJsonWriter &js) const
+  {
+  js.jsonObjectPtr( QStringLiteral("Pin"), mPin );
+  //Pin number in part
+  js.jsonString( QStringLiteral("Number"), mPinNumber );
+  //Pin position in sheet context
+  js.jsonPoint( QStringLiteral("Pos"), mPosition );
+  //Net, which pin connected to
+  js.jsonString( QStringLiteral("Wire"), mNetName );
   }
 
 
 
 
-QString SdSymImpPin::fromJson(SdObjectMap *map, const QJsonObject obj)
+//!
+//! \brief json Function to read object content from json reader
+//! \param js   Json reader
+//!
+void SdSymImpPin::json(const SdJsonReader &js)
   {
-  mPin = dynamic_cast<SdGraphSymPin*>( SdObject::readPtr( QStringLiteral("Pin"), map, obj ) );
-  mPinNumber = obj.value( QStringLiteral("Number") ).toString();
-  mPosition.read( QStringLiteral("Pos"), obj );
-  mNetName = obj.value( QStringLiteral("Wire") ).toString();
-  return obj.value( QStringLiteral("Name") ).toString();
+  js.jsonObjectPtr( QStringLiteral("Pin"), mPin );
+  //Pin number in part
+  js.jsonString( QStringLiteral("Number"), mPinNumber );
+  //Pin position in sheet context
+  js.jsonPoint( QStringLiteral("Pos"), mPosition );
+  //Net, which pin connected to
+  js.jsonString( QStringLiteral("Wire"), mNetName );
   }
 
 

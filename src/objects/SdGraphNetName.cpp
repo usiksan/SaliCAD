@@ -16,6 +16,7 @@ Description
 #include "SdContext.h"
 #include "SdEnvir.h"
 #include "SdSelector.h"
+#include "SdJsonIO.h"
 
 SdGraphNetName::SdGraphNetName() :
   SdGraphNet()
@@ -53,28 +54,39 @@ void SdGraphNetName::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool nex
 
 
 
-
-
-
-
-void SdGraphNetName::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphNetName::json(SdJsonWriter &js) const
   {
-  SdGraphNet::writeObject(obj);
-  mOrigin.write( QStringLiteral("Org"), obj );
-  mProp.write( QStringLiteral("Prop"), obj );
-  mOver.write( QStringLiteral("Over"), obj );
+  js.jsonPoint( QStringLiteral("Org"), mOrigin );
+  mProp.json( QStringLiteral("Prop"), js );
+  js.jsonRect( QStringLiteral("Over"), mOver );
+  SdGraphNet::json( js );
   }
 
 
 
 
-void SdGraphNetName::readObject(SdObjectMap *map, const QJsonObject obj)
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphNetName::json(const SdJsonReader &js)
   {
-  SdGraphNet::readObject( map, obj );
-  mOrigin.read( QStringLiteral("Org"), obj );
-  mProp.read( QStringLiteral("Prop"), obj );
-  mOver.read( QStringLiteral("Over"), obj );
+  js.jsonPoint( QStringLiteral("Org"), mOrigin );
+  mProp.json( QStringLiteral("Prop"), js );
+  js.jsonRect( QStringLiteral("Over"), mOver );
+  SdGraphNet::json( js );
   }
+
+
+
+
 
 
 

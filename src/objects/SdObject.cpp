@@ -51,7 +51,9 @@ Description
 #include "SdSection.h"
 #include "SdPartVariant.h"
 #include "Sd3dFaceSet.h"
+
 #include <QJsonValue>
+#include <QFile>
 #include <QDebug>
 
 
@@ -202,103 +204,190 @@ void SdObject::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
 
 
 
-
-void SdObject::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//! \param js   Json writer
+//!
+void SdObject::json(SdJsonWriter &js) const
   {
-  Q_UNUSED(obj)
-  }
-
-
-
-
-
-QJsonObject SdObject::write() const
-  {
-  QJsonObject obj;
-  obj.insert( QStringLiteral(SDKO_ID), QJsonValue( getId() ) );
-  obj.insert( QStringLiteral(SDKO_TYPE), QJsonValue( getType() ) );
-  //writePtr( mParent, QStringLiteral("Parent"), obj );
-  writeObject( obj );
+  js.jsonString( QStringLiteral(SDKO_ID), getId() );
+  js.jsonString( QStringLiteral(SDKO_TYPE), getType() );
   const SdProjectItem *item = dynamic_cast<const SdProjectItem*>(this);
   if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol)) && !item->isEditEnable() )
-    SdObjectFactory::insertItemObject( item, obj );
-  return obj;
+    SdObjectFactory::insertItemObject( item, js.object() );
   }
 
 
 
 
-void SdObject::writePtr( const SdObject *ptr, const QString name, QJsonObject &obj)
+
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//! \param js   Json reader
+//!
+void SdObject::json( const SdJsonReader &js )
   {
-  QJsonObject sub;
+  //At this moment object is fully readed
+  Q_UNUSED(js)
+  }
+
+
+
+
+
+
+QJsonObject SdObject::jsonObjectTo() const
+  {
+  SdJsonWriter js;
+  //Prepare version and type
+  int version = SD_BASE_VERSION;
+  QString jsonType(SD_BASE_TYPE);
+
+  //Store version and type
+  js.jsonInt( "A version", version, 0 );
+  js.jsonString( "A file type", jsonType );
+
+  json( js );
+
+  return js.object();
+  }
+
+
+
+
+
+SdObject *SdObject::jsonObjectFrom(const QJsonObject obj)
+  {
+  SdObjectMap map;
+  SdJsonReader js( obj, &map );
+  return buildFromJson( js );
+  }
+
+
+
+
+
+
+QByteArray SdObject::jsonTextTo() const
+  {
+  //Return QByteArray representation
+  return svJsonObjectToByteArray( jsonObjectTo() );
+  }
+
+
+
+
+SdObject *SdObject::jsonTextFrom(const QByteArray &ar)
+  {
+  //Build from QByteArray representation
+  QJsonDocument doc = QJsonDocument::fromJson( ar, nullptr );
+  if( !doc.isEmpty() )
+    return jsonObjectFrom( doc.object() );
+  return nullptr;
+  }
+
+
+
+
+//Convert object to-from binary cbor format
+QByteArray SdObject::jsonCborTo() const
+  {
+  return QCborValue::fromJsonValue( jsonObjectTo() ).toCbor();
+  }
+
+
+
+SdObject *SdObject::jsonCborFrom(const QByteArray &ar)
+  {
+  return jsonObjectFrom( QCborValue::fromCbor( ar ).toJsonValue().toObject() );
+  }
+
+
+
+
+
+//Convert object to-from binary cbor compressed format
+QByteArray SdObject::jsonCborCompressedTo() const
+  {
+  return qCompress( jsonCborTo() );
+  }
+
+SdObject *SdObject::jsonCborCompressedFrom(const QByteArray &ar)
+  {
+  return jsonCborFrom( qUncompress(ar) );
+  }
+
+
+
+
+
+//Read-write to-from file
+bool SdObject::fileJsonSave(const QString fname) const
+  {
+  QFile file(fname);
+  if( file.open(QIODevice::WriteOnly) ) {
+    file.write( jsonTextTo() );
+    file.close();
+    return true;
+    }
+  return false;
+  }
+
+
+
+SdObject *SdObject::fileJsonLoad(const QString fname)
+  {
+  QFile file(fname);
+  if( file.open(QIODevice::ReadOnly) )
+    return jsonTextFrom( file.readAll() );
+  return nullptr;
+  }
+
+
+
+
+
+
+
+void SdObject::writePtr(const SdObject *ptr, SdJsonWriter &js)
+  {
   if( ptr ) {
-    sub.insert( QStringLiteral(SDKO_ID), QJsonValue( ptr->getId() ) );
-    sub.insert( QStringLiteral(SDKO_TYPE), QJsonValue( ptr->getType() ) );
+    js.jsonString( QStringLiteral(SDKO_ID), ptr->getId() );
+    js.jsonString( QStringLiteral(SDKO_TYPE), ptr->getType() );
     }
   else
-    sub.insert( QStringLiteral(SDKO_ID), QJsonValue( QString() ) );
-  obj.insert( name, sub );
+    js.jsonString( QStringLiteral(SDKO_ID), QString{} );
   }
 
 
 
 
 
-void SdObject::readObject(SdObjectMap *map, const QJsonObject obj)
-  {
-  Q_UNUSED(map)
-  Q_UNUSED(obj)
-  //mParent = dynamic_cast<SdContainer*>( readPtr(QStringLiteral("Parent"), map, obj ) );
-  }
 
 
-
-
-
-SdObject *SdObject::read(SdObjectMap *map, const QJsonObject obj)
-  {
-  SdObject *r = readPtr( map, obj );
-  if( r ) {
-    r->readObject( map, obj );
-
-    SdProjectItem *item = dynamic_cast<SdProjectItem*>(r);
-    if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol)) && !item->isEditEnable() )
-      SdObjectFactory::insertItemObject( item, obj );
-    }
-
-  return r;
-  }
-
-
-
-
-SdObject *SdObject::readPtr(SdObjectMap *map, const QJsonObject obj)
+SdObject *SdObject::readPtr(const SdJsonReader &js)
   {
   //Get object id
-  QString id = obj.value( QStringLiteral(SDKO_ID) ).toString();
+  QString id;
+  js.jsonString( QStringLiteral(SDKO_ID), id );
 
   //If id equals zero then no object
   if( id.isEmpty() )
     return nullptr;
 
   //Check if object already in the map
-  if( map->contains(id) )
-    return map->value(id);
+  if( js.property()->contains(id) )
+    return js.property()->value(id);
 
   //Build new object
-  SdObject *r = build( obj.value( QStringLiteral(SDKO_TYPE) ).toString() );
+  QString type;
+  js.jsonString( QStringLiteral(SDKO_TYPE), type );
+  SdObject *r = build( type );
   //Register new object in the map
-  map->insert( id, r );
+  js.property()->insert( id, r );
   //and return new object
   return r;
-  }
-
-
-
-
-SdObject *SdObject::readPtr(const QString name, SdObjectMap *map, const QJsonObject obj)
-  {
-  return readPtr( map, obj.value(name).toObject() );
   }
 
 
@@ -356,7 +445,7 @@ SdObject *SdObject::build(QString type)
 
 SdObject *SdObject::buildFromJson(const SdJsonReader &js)
   {
-  SdObject *obj = readPtr( js.property(), js.object() );
+  SdObject *obj = readPtr( js );
   if( obj != nullptr )
     obj->json( js );
   SdProjectItem *item = dynamic_cast<SdProjectItem*>(obj);
@@ -365,56 +454,6 @@ SdObject *SdObject::buildFromJson(const SdJsonReader &js)
   return obj;
   }
 
-
-
-
-QByteArray SdObject::toByteArray() const
-  {
-  //Writer
-  SdJsonWriter js;
-
-  //Prepare version and type
-  int version = SD_BASE_VERSION;
-  QString jsonType(SD_BASE_TYPE);
-
-  //Store version and type
-  js.jsonInt( "A version", version, 0 );
-  js.jsonString( "A file type", jsonType );
-
-  //Store object
-  json( js );
-
-  //Return QByteArray representation
-  return svJsonObjectToByteArray( js.object() );
-  }
-
-
-
-
-void SdObject::fromByteArray(const QByteArray &ar)
-  {
-  //Reader
-  //SdJsonReader js( );
-  }
-
-
-
-
-void SdObject::json(SdJsonWriter &js) const
-  {
-  js.jsonString( QStringLiteral(SDKO_ID), getId() );
-  js.jsonString( QStringLiteral(SDKO_TYPE), getType() );
-  const SdProjectItem *item = dynamic_cast<const SdProjectItem*>(this);
-  if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol)) && !item->isEditEnable() )
-    SdObjectFactory::insertItemObject( item, js.object() );
-  }
-
-
-void SdObject::json( const SdJsonReader &js )
-  {
-  //At this moment object is fully readed
-  Q_UNUSED(js)
-  }
 
 
 

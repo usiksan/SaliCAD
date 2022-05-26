@@ -102,8 +102,6 @@ SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *p
   if( id.isEmpty() )
     return nullptr;
 
-  SdObjectMap map;
-
   if( !sdLibraryStorage.isObjectContains(id) ) {
     //Soft extract object from database.
     //If no object in local database then doing nothing
@@ -119,7 +117,7 @@ SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *p
   //At this point object already in local base
   if( sdLibraryStorage.isObjectContains(id) )
     //Build object
-    return SdObject::read( &map, QJsonDocument::fromBinaryData( qUncompress(sdLibraryStorage.object(id)) ).object() );
+    return SdObject::jsonObjectFrom( QJsonDocument::fromBinaryData( qUncompress(sdLibraryStorage.object(id)) ).object() );
 
   QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Id '%1' not found in database").arg(id) );
   return nullptr;

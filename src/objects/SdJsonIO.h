@@ -25,7 +25,9 @@ class SdJsonWriter : public SvJsonWriter
 
     void jsonObjectPtr( const QString &key, const SdObjectPtr ptr )
       {
-      SdObject::writePtr( ptr, key, object() );
+      SdJsonWriter js( *this );
+      SdObject::writePtr( ptr, js );
+      object().insert( key, js.object() );
       }
 
     void jsonRect( const QString &key, const SdRect &r )
@@ -52,7 +54,8 @@ class SdJsonReader : public SvJsonReaderExt<SdObjectMap>
     template <class SvClassPtr>
     void jsonObjectPtr( const QString &key, SvClassPtr &ptr ) const
       {
-      ptr = dynamic_cast<SvClassPtr>( SdObject::readPtr( property(), object().value(key).toObject() ) );
+      SdJsonReader js( object().value(key).toObject(), *this );
+      ptr = dynamic_cast<SvClassPtr>( SdObject::readPtr( js ) );
       }
 
     void jsonRect( const QString &key, SdRect &r ) const

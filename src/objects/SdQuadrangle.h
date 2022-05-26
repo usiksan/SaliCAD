@@ -31,10 +31,10 @@ struct SdQuadrangle
     void move( SdPoint offset );
     void set( SdRect r );
 
-    QJsonObject write() const;
-    void        write( const QString name, QJsonObject &dest ) const;
-    void        read( const QJsonObject obj );
-    void        read( const QString name, const QJsonObject src );
+//    QJsonObject write() const;
+//    void        write( const QString name, QJsonObject &dest ) const;
+//    void        read( const QJsonObject obj );
+//    void        read( const QString name, const QJsonObject src );
   };
 
 #endif // SDQUADRANGLE_H

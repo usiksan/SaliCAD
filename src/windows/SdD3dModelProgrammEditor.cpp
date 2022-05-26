@@ -263,7 +263,7 @@ void SdD3dModelProgrammEditor::save()
   mRich->paramSet( stdParam3dModelProgramm, mDescription->text(), nullptr );
   mRich->setContents( mTextEdit->toPlainText() );
   //Push to library
-  SdObjectFactory::insertItemObject( mRich, mRich->write() );
+  SdObjectFactory::insertItemObject( mRich, mRich->jsonObjectTo() );
   mDirty = false;
   }
 

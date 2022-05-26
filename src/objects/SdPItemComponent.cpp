@@ -290,7 +290,7 @@ SdPItemComponent *sdCreateDefaultComponent(SdPItemSymbol *symbol, bool appendDef
   symbol->getProject()->insertChild( comp, symbol->getUndo() );
 
   //Append symbol to library
-  SdObjectFactory::insertItemObject( symbol, symbol->write() );
+  SdObjectFactory::insertItemObject( symbol, symbol->jsonObjectTo() );
   //Append section with symbol
   comp->appendSection( symbol->getUid(), symbol->getUndo() );
 

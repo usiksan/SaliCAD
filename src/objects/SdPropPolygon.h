@@ -37,8 +37,20 @@ struct SdPropPolygon
     void clear();                                   //Установить в неопределенное состояние
     bool match( SdPropPolygon const &prop );        //Сравнить на совпадение с эталоном
 
+
+
+    //!
+    //! \brief json Function to write object content into json writer
+    //! \param js   Json writer
+    //!
     void json( SvJsonWriter &js ) const;
-    void json( const SvJsonReader &js );
+
+    //!
+    //! \brief json Function to read object content from json reader
+    //! \param js   Json reader
+    //!
+    void json( const SvJsonReader &js);
+
     void saveState( SdPropPolygonState *dst );
     void swapState( SdPropPolygonState *src );
   };

@@ -17,6 +17,7 @@ Description
 #include "SdEnvir.h"
 #include "SdSelector.h"
 #include "SdSegment.h"
+#include "SdJsonIO.h"
 
 SdGraphNetWire::SdGraphNetWire() :
   SdGraphNet(),
@@ -308,30 +309,54 @@ void SdGraphNetWire::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool nex
 
 
 
-
-
-void SdGraphNetWire::writeObject(QJsonObject &obj) const
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void SdGraphNetWire::json(SdJsonWriter &js) const
   {
-  SdGraphNet::writeObject(obj);
-  mA.write( QStringLiteral("a"), obj );
-  mB.write( QStringLiteral("b"), obj );        //Wire segment
-  mProp.write( obj );       //Wire drawing properties
-  obj.insert( QStringLiteral("dotA"), mDotA );
-  obj.insert( QStringLiteral("dotB"), mDotB ); //Dots present flag
+  //Wire segment
+  js.jsonPoint( QStringLiteral("a"), mA );
+  js.jsonPoint( QStringLiteral("b"), mB );
+
+  //Wire drawing properties
+  mProp.json( js );
+
+  //Dots present flag
+  js.jsonBool( QStringLiteral("dotA"), mDotA );
+  js.jsonBool( QStringLiteral("dotB"), mDotB );
+
+  SdGraphNet::json( js );
   }
 
 
 
 
-void SdGraphNetWire::readObject(SdObjectMap *map, const QJsonObject obj)
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void SdGraphNetWire::json(const SdJsonReader &js)
   {
-  SdGraphNet::readObject( map, obj );
-  mA.read( QStringLiteral("a"), obj );
-  mB.read( QStringLiteral("b"), obj );        //Wire segment
-  mProp.read( obj );       //Wire drawing properties
-  mDotA = obj.value( QStringLiteral("dotA") ).toBool();
-  mDotB = obj.value( QStringLiteral("dotB") ).toBool(); //Dots present flag
+  //Wire segment
+  js.jsonPoint( QStringLiteral("a"), mA );
+  js.jsonPoint( QStringLiteral("b"), mB );
+
+  //Wire drawing properties
+  mProp.json( js );
+
+  //Dots present flag
+  js.jsonBool( QStringLiteral("dotA"), mDotA );
+  js.jsonBool( QStringLiteral("dotB"), mDotB );
+
+  SdGraphNet::json( js );
   }
+
+
+
+
 
 
 

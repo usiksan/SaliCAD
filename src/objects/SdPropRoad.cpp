@@ -83,16 +83,3 @@ void SdPropRoad::json(const SvJsonReader &js)
   }
 
 
-
-
-
-
-
-
-void SdPropRoad::read(const QJsonObject obj)
-  {
-  mWidth.read( QStringLiteral("rWidth"), obj );
-  mStratum.read( QStringLiteral("rStratum"), obj );
-  mNetName.read( QStringLiteral("rNet"), obj );
-  }
-

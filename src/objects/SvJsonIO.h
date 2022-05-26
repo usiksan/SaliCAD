@@ -344,19 +344,37 @@ class SvJsonWriter
 
 
     //!
-    //! \brief jsonObjectPtr Template transfer any value as json object
-    //!                      Value class must contains json method, which returns
-    //!                      json object for value object
-    //! \param key           Key for object
-    //! \param objPtr        Object pointer to transfer
+    //! \brief jsonBuildPtr Template transfer any pointer to object as json object
+    //!                     Object class must contains json method, which convert object
+    //!                     into json format. When reading this method restore object
+    //!                     with buildFromJson function
+    //! \param key          Key for object
+    //! \param objPtr       Object pointer to transfer
     //!
     template<typename SvClass, typename SvJsonWriterImpl>
-    void jsonObjectPtr( SvJsonWriterImpl &sjs, const QString &key, const SvClass *objPtr )
+    void jsonBuildPtr( SvJsonWriterImpl &sjs, const QString &key, const SvClass *objPtr )
       {
       SvJsonWriterImpl js( sjs );
       objPtr->json( js );
       mObjectRef.insert( key, js.object() );
       }
+
+    //!
+    //! \brief jsonLeavePtr Template transfer any pointer to object as json object
+    //!                     Object class must contains json method, which convert object
+    //!                     into json format. When reading with this method object must
+    //!                     be already created
+    //! \param key          Key for object
+    //! \param objPtr       Object pointer to transfer
+    //!
+    template<typename SvClass, typename SvJsonWriterImpl>
+    void jsonLeavePtr( SvJsonWriterImpl &sjs, const QString &key, const SvClass *objPtr )
+      {
+      SvJsonWriterImpl js( sjs );
+      objPtr->json( js );
+      mObjectRef.insert( key, js.object() );
+      }
+
 
 
     //!
@@ -556,7 +574,7 @@ class SvJsonReader
       list.reserve( ar.count() );
       for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
         SvJsonReaderImpl js( i->toObject(), sjs );
-        SvClass *item = SvClass::buildFromJson( sjs );
+        SvClass *item = SvClass::buildFromJson( js );
         if( item != nullptr )
           list.append( item );
         }
@@ -581,7 +599,7 @@ class SvJsonReader
       list.reserve( ar.count() );
       for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
         SvJsonReaderImpl js( i->toObject(), sjs );
-        SvClass *item = SvClass::buildFromJson( sjs );
+        SvClass *item = SvClass::buildFromJson( js );
         if( postfixFun( item ) )
           list.append( item );
         }
@@ -712,18 +730,38 @@ class SvJsonReader
 
 
     //!
-    //! \brief jsonObjectPtr Template transfer any value as json object
-    //!                      Value class must contains json method, which builds
-    //!                      object from json
-    //! \param key           Key for object
-    //! \param objPtr        Object pointer to transfer
+    //! \brief jsonBuildPtr Template transfer any pointer to object as json object
+    //!                     Object class must contains json method, which convert object
+    //!                     into json format. When reading this method restore object
+    //!                     with buildFromJson function
+    //! \param key          Key for object
+    //! \param objPtr       Object pointer to transfer
     //!
     template<typename SvClass, typename SvJsonReaderImpl>
-    void jsonObjectPtr( const SvJsonReaderImpl &sjs, const QString &key, SvClass* &objPtr ) const
+    void jsonBuildPtr( const SvJsonReaderImpl &sjs, const QString &key, SvClass* &objPtr ) const
       {
       SvJsonReaderImpl js( mObject.value( key ).toObject(), sjs );
-      objPtr = SvClass::buildFromJson( js );
+      objPtr = dynamic_cast<SvClass*>( SvClass::buildFromJson( js ) );
       }
+
+
+
+    //!
+    //! \brief jsonLeavePtr Template transfer any pointer to object as json object
+    //!                     Object class must contains json method, which convert object
+    //!                     into json format. When reading with this method object must
+    //!                     be already created
+    //! \param key          Key for object
+    //! \param objPtr       Object pointer to transfer
+    //!
+    template<typename SvClass, typename SvJsonReaderImpl>
+    void jsonLeavePtr( const SvJsonReaderImpl &sjs, const QString &key, SvClass *objPtr ) const
+      {
+      SvJsonReaderImpl js( mObject.value( key ).toObject(), sjs );
+      objPtr->json( js );
+      }
+
+
 
 
     //!
