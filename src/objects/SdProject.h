@@ -17,7 +17,6 @@ Description
 
 #include "SdContainer.h"
 #include "SdUndo.h"
-#include "library/SdStringMap.h"
 #include "SdProjectSharedPtr.h"
 
 #include <QMap>

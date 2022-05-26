@@ -24,7 +24,8 @@ Description
 
 class SdContext;
 
-typedef QList<SdObjectPtr> SdObjectPtrList;
+using SdObjectPtrList = QList<SdObjectPtr>;
+using SdStringMap = QMap<QString,QString>;
 
 class SdContainer : public SdObject
   {

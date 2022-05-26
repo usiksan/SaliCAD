@@ -57,10 +57,31 @@ void SdPropText::json(const QString prefix, SvJsonWriter &js) const
   mLayer.json( prefix + QStringLiteral("TextLayer"), js ); //Слой
   mSize.json( prefix + QStringLiteral("TextSize"), js );   //Размер текста
   mFont.json( prefix + QStringLiteral("TextFont"), js );   //Идентификатор шрифта
-  mDir.json( prefix + QStringLiteral("TextDir"), js );     //Направление
-  mHorz.json( prefix + QStringLiteral("TextHorz"), js );   //Выравнивание горизонтальное, вертикальное и зеркальность
-  mVert.json( prefix + QStringLiteral("TextVert"), js );
-  mMirror.json( prefix + QStringLiteral("TextMirror"), js );
+
+  //Convert attributes to string
+  QString attr;
+  if( mDir == da270 ) attr.append( QChar('3') );
+  else if( mDir == da90 ) attr.append( QChar('1') );
+  else if( mDir == da180 ) attr.append( QChar('2') );
+  else attr.append( QChar('0') );
+
+  if( mMirror == 0 ) attr.append( QChar('S') );
+  else attr.append( QChar('M') );
+
+  if( mHorz == dhjRight ) attr.append( QChar('R') );
+  else if( mHorz == dhjCenter ) attr.append( QChar('C') );
+  else attr.append( QChar('L') );
+
+  if( mVert == dvjBottom ) attr.append( QChar('B') );
+  else if( mVert == dvjMiddle ) attr.append( QChar('M') );
+  else attr.append( QChar('T') );
+
+  js.jsonString( prefix + QStringLiteral("TextDirMirHorVer"), attr );
+
+//  mDir.json( prefix + QStringLiteral("TextDir"), js );     //Направление
+//  mHorz.json( prefix + QStringLiteral("TextHorz"), js );   //Выравнивание горизонтальное, вертикальное и зеркальность
+//  mVert.json( prefix + QStringLiteral("TextVert"), js );
+//  mMirror.json( prefix + QStringLiteral("TextMirror"), js );
   }
 
 
@@ -70,10 +91,37 @@ void SdPropText::json(const QString prefix, const SvJsonReader &js)
   mLayer.json( prefix + QStringLiteral("TextLayer"), js ); //Слой
   mSize.json( prefix + QStringLiteral("TextSize"), js );   //Размер текста
   mFont.json( prefix + QStringLiteral("TextFont"), js );   //Идентификатор шрифта
-  mDir.json( prefix + QStringLiteral("TextDir"), js );     //Направление
-  mHorz.json( prefix + QStringLiteral("TextHorz"), js );   //Выравнивание горизонтальное, вертикальное и зеркальность
-  mVert.json( prefix + QStringLiteral("TextVert"), js );
-  mMirror.json( prefix + QStringLiteral("TextMirror"), js );
+  if( js.contains( prefix + QStringLiteral("TextDirMirHorVer") ) ) {
+    //Parse attributes from string
+    QString attr;
+    js.jsonString( prefix + QStringLiteral("TextDirMirHorVer"), attr );
+
+    if( attr.length() == 4 ) {
+      if( attr.at(0) == QChar('1') ) mDir = da90;
+      else if( attr.at(0) == QChar('2') ) mDir = da180;
+      else if( attr.at(0) == QChar('3') ) mDir = da270;
+      else mDir = da0;
+
+      if( attr.at(1) == QChar('M') ) mMirror = 1;
+      else mMirror = 0;
+
+      if( attr.at(2) == QChar('C') ) mHorz = dhjCenter;
+      else if( attr.at(2) == QChar('R') ) mHorz = dhjRight;
+      else mHorz = dhjLeft;
+
+      if( attr.at(3) == QChar('M') ) mVert = dvjMiddle;
+      else if( attr.at(3) == QChar('B') ) mVert = dvjBottom;
+      else mVert = dvjTop;
+
+      }
+    }
+  else {
+    //Unpacked variant
+    mDir.json( prefix + QStringLiteral("TextDir"), js );     //Направление
+    mHorz.json( prefix + QStringLiteral("TextHorz"), js );   //Выравнивание горизонтальное, вертикальное и зеркальность
+    mVert.json( prefix + QStringLiteral("TextVert"), js );
+    mMirror.json( prefix + QStringLiteral("TextMirror"), js );
+    }
   }
 
 

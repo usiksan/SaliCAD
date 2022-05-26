@@ -22,7 +22,6 @@ INCLUDEPATH += ../third \
 win32: LIBS += -lopengl32
 win64: LIBS += -lopengl32
 
-
 SOURCES += \
     SdMain.cpp \
     import/SdScaner.cpp \
@@ -315,7 +314,6 @@ SOURCES += \
     objects/SdPropInt.cpp \
     objects/SdPlateNetList.cpp \
     objects/SdUndoRecordRoad.cpp \
-    library/SdStringMap.cpp \
     objects/SdUtil.cpp \
     windows/SdPNewProjectItem_Master.cpp \
     master/SdDMasterPart.cpp \
@@ -759,7 +757,6 @@ HEADERS  += \
     objects/SdPlateNetList.h \
     objects/SdPlateNetSegment.h \
     objects/SdUndoRecordRoad.h \
-    library/SdStringMap.h \
     objects/SdUtil.h \
     windows/SdPNewProjectItem_Master.h \
     windows/SdPNewProjectItem.h \

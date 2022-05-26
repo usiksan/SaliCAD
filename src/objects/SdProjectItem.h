@@ -18,7 +18,6 @@ Description
 #include "SdContainer.h"
 #include "SdPoint.h"
 #include "SdSelector.h"
-#include "library/SdStringMap.h"
 #include "library/SdLibraryHeader.h"
 
 #include <QString>
