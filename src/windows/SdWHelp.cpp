@@ -44,7 +44,7 @@ SdWHelp::SdWHelp() :
   connect( this, &SdWHelp::anchorClicked, this, [this] ( QUrl url) {
     //Test special case for intro page
     //In intro page we can open project, create new project or open previously file
-    QString path = url.toString();
+    QString path = url.fileName();
     if( path.endsWith( QStringLiteral(".guide")) ) {
       if( SdDGuiderPlayer::guiderExist( path ) ) {
         //Show guide player dialog
@@ -85,6 +85,7 @@ SdWHelp::SdWHelp(SdWMain *main) :
       else if( path.startsWith("load:") ) { mMain->cmFileOpenFile( path.mid(5) ); return; }
       }
     if( path.endsWith( QStringLiteral(".guide")) ) {
+      path = url.fileName();
       if( SdDGuiderPlayer::guiderExist( path ) ) {
         //Show guide player dialog
         SdDGuiderPlayer player( path, this );
