@@ -80,11 +80,8 @@ void SdDProjectStore::accept()
     QMessageBox::warning( this, tr("Warning!"), tr("Library name of project is empty. Enter name to store project or press cancel.") );
     return;
     }
-  hdr.mType = mProject->getType();   //Type of stored object
-  hdr.mAuthor = SdProjectItem::getDefaultAuthor();    //Author who create object
-  hdr.mTime   = SdTime2x::current();    //Object time creation
-  hdr.mClass  = mProject->getClass();   //Object class
-  hdr.mParamTable = mProject->paramTable();
+  mProject->titleSet( hdr.mName );
+  mProject->getHeader( hdr );
 
   //Store project in library
   SdObjectFactory::insertObject( hdr, mProject->jsonObjectTo() );

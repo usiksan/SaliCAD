@@ -25,7 +25,7 @@ Description
 #include <QList>
 #include <QSet>
 
-class SdProjectItem;
+class SdContainerFile;
 
 typedef QList<QTreeWidgetItem*> QTreeList;
 
@@ -45,10 +45,10 @@ class SdObjectFactory
 
     //Insert item object to database. If in database already present newest object,
     //then nothing done. Older object is never inserted.
-    static void         insertItemObject( const SdProjectItem *item, QJsonObject obj );
+    static void         insertItemObject( const SdContainerFile *item, QJsonObject obj );
 
     //Mark item object as deleted
-    static void         deleteItemObject( const SdProjectItem *item );
+    static void         deleteItemObject( const SdContainerFile *item );
 
     //Extract object from database.
     //If no object in local database then loading from internet
@@ -66,7 +66,7 @@ class SdObjectFactory
     static bool         isContains( const QString type, const QString name, const QString author );
 
     //Return true if there is newer object in dataBase
-    static bool         isThereNewer( const SdProjectItem *item );
+    static bool         isThereNewer( const SdContainerFile *item );
 
     //Load object from remote server
     static bool         loadObject( const QString hash, const QString title, QWidget *parent );

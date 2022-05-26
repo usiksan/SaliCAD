@@ -61,7 +61,7 @@ void SdObjectFactory::insertObject( const SdLibraryHeader &hdr, QJsonObject json
 
 //Insert object to database. If in database already present newest object,
 //then return its id. Older object is never inserted.
-void SdObjectFactory::insertItemObject(const SdProjectItem *item, QJsonObject obj)
+void SdObjectFactory::insertItemObject(const SdContainerFile *item, QJsonObject obj)
   {
   if( item == nullptr || sdLibraryStorage.isNewerOrSameObject( item->getUid(), item->getTime() ) )
     return;
@@ -78,7 +78,7 @@ void SdObjectFactory::insertItemObject(const SdProjectItem *item, QJsonObject ob
 
 
 //Mark item object as deleted
-void SdObjectFactory::deleteItemObject(const SdProjectItem *item)
+void SdObjectFactory::deleteItemObject(const SdContainerFile *item)
   {
   if( item == nullptr )
     return;
@@ -152,7 +152,7 @@ bool SdObjectFactory::isContains(const QString type, const QString name, const Q
 
 
 //Return true if there is newer object in dataBase
-bool SdObjectFactory::isThereNewer(const SdProjectItem *item)
+bool SdObjectFactory::isThereNewer(const SdContainerFile *item)
   {
   if( item == nullptr )
     return false;

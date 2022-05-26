@@ -212,8 +212,8 @@ void SdObject::json(SdJsonWriter &js) const
   {
   js.jsonString( QStringLiteral(SDKO_ID), getId() );
   js.jsonString( QStringLiteral(SDKO_TYPE), getType() );
-  const SdProjectItem *item = dynamic_cast<const SdProjectItem*>(this);
-  if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol)) && !item->isEditEnable() )
+  const SdContainerFile *item = dynamic_cast<const SdContainerFile*>(this);
+  if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol | dctProject)) && !item->isEditEnable() )
     SdObjectFactory::insertItemObject( item, js.object() );
   }
 
@@ -448,8 +448,8 @@ SdObject *SdObject::buildFromJson(const SdJsonReader &js)
   SdObject *obj = readPtr( js );
   if( obj != nullptr )
     obj->json( js );
-  SdProjectItem *item = dynamic_cast<SdProjectItem*>(obj);
-  if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol)) && !item->isEditEnable() )
+  SdContainerFile *item = dynamic_cast<SdContainerFile*>(obj);
+  if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol | dctProject)) && !item->isEditEnable() )
     SdObjectFactory::insertItemObject( item, js.object() );
   return obj;
   }

@@ -15,7 +15,7 @@ Description
 #ifndef SDPROJECT_H
 #define SDPROJECT_H
 
-#include "SdContainer.h"
+#include "SdContainerFile.h"
 #include "SdUndo.h"
 #include "SdProjectSharedPtr.h"
 
@@ -30,7 +30,7 @@ class SdProjectItem;
 class SdPItemPlate;
 class SdPItemSheet;
 
-class SdProject : public SdContainer
+class SdProject : public SdContainerFile
   {
     bool                       mDirty;                //Project dirty flag
 
@@ -50,6 +50,8 @@ class SdProject : public SdContainer
 
     //Return first plate
     SdPItemPlate     *getFirstPlate() const;
+
+    virtual void      getHeader( SdLibraryHeader &hdr ) const override;
 
 
     //Return default plate and if none - create new one

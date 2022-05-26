@@ -28,6 +28,7 @@ Description
 #include <QHttpMultiPart>
 #include <QHostAddress>
 #include <QSettings>
+#include <QJsonObject>
 #include <QJsonDocument>
 
 

@@ -25,41 +25,20 @@ Description
 #include "SdTime2x.h"
 #include "Sd3dGraph.h"
 #include "SdJsonIO.h"
-#include <QSettings>
+
 #include <QDateTime>
 #include <QDebug>
 
 
 SdProjectItem::SdProjectItem() :
-  mCreateTime(0),
+  SdContainerFile(),
   mAuto(true),
-  mEditEnable(true),
-  mTreeItem(nullptr),
-  mThereNewer(false)
+  mTreeItem(nullptr)
   {
 
   }
 
 
-
-
-QString SdProjectItem::getUid() const
-  {
-  //Id consist from name, user and time creation
-  return headerUid( getType(), mTitle, mAuthor );
-  }
-
-
-
-
-
-
-
-
-QString SdProjectItem::getExtendTitle() const
-  {
-  return QString("%1 [r%2] (%3)").arg(mTitle).arg( SdTime2x::toLocalString(getTime()) ).arg(mAuthor);
-  }
 
 
 
@@ -78,8 +57,6 @@ QString SdProjectItem::getToolTip() const
 
 
 
-
-
 void SdProjectItem::setTitle(const QString title, const QString undoTitle)
   {
   SdUndo *undo = getUndo();
@@ -89,12 +66,7 @@ void SdProjectItem::setTitle(const QString title, const QString undoTitle)
     undo->projectItemInfo( this, &mTitle, &mAuthor, &mCreateTime, &mEditEnable );
     }
 
-  //Item author (registered program copy name)
-  updateAuthor();
-  //Update creation time
-  updateCreationTime();
-  //Title setup
-  mTitle      = title;
+  titleSet( title );
   SdPulsar::sdPulsar->emitRenameItem( this );
   }
 
@@ -135,17 +107,6 @@ SdUndo *SdProjectItem::getUndo() const
   }
 
 
-
-
-void SdProjectItem::getHeader(SdLibraryHeader &hdr) const
-  {
-  hdr.mName       = mTitle;
-  hdr.mType       = getType();
-  hdr.mAuthor     = mAuthor;
-  hdr.mTime       = getTime();
-  hdr.mClass      = getClass();
-  hdr.mParamTable = mParamTable;
-  }
 
 
 
@@ -202,26 +163,6 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
 
 
 
-//On call this function time setup after previous time
-void SdProjectItem::updateCreationTime()
-  {
-  int time = SdTime2x::current();
-  if( time <= mCreateTime )
-    mCreateTime++;
-  else
-    mCreateTime = time;
-  }
-
-
-
-
-void SdProjectItem::updateAuthor()
-  {
-  mAuthor = getDefaultAuthor();
-  }
-
-
-
 
 
 //Find ident
@@ -247,14 +188,6 @@ SdGraphValue *SdProjectItem::findValue() const
     return value == nullptr;
     });
   return value;
-  }
-
-
-
-
-bool SdProjectItem::isAnotherAuthor() const
-  {
-  return mAuthor != getDefaultAuthor();
   }
 
 
@@ -457,13 +390,9 @@ void SdProjectItem::insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo
 //!
 void SdProjectItem::json(SdJsonWriter &js) const
   {
-  js.jsonString( QStringLiteral("Title"),     mTitle );
-  js.jsonString( QStringLiteral("Author"),    mAuthor );
-  js.jsonInt(  QStringLiteral("Created"),     mCreateTime );
   js.jsonBool( QStringLiteral("Auto"),        mAuto );
-  js.jsonBool( QStringLiteral("Edit enable"), mEditEnable );
   js.jsonPoint( QStringLiteral("Origin"),     mOrigin );
-  SdContainer::json( js );
+  SdContainerFile::json( js );
   }
 
 
@@ -475,13 +404,9 @@ void SdProjectItem::json(SdJsonWriter &js) const
 //!
 void SdProjectItem::json( const SdJsonReader &js )
   {
-  js.jsonString( QStringLiteral("Title"),     mTitle );
-  js.jsonString( QStringLiteral("Author"),    mAuthor );
-  js.jsonInt(  QStringLiteral("Created"),     mCreateTime );
   js.jsonBool( QStringLiteral("Auto"),        mAuto );
-  js.jsonBool( QStringLiteral("Edit enable"), mEditEnable );
   js.jsonPoint( QStringLiteral("Origin"),     mOrigin );
-  SdContainer::json( js );
+  SdContainerFile::json( js );
   }
 
 
@@ -495,27 +420,13 @@ void SdProjectItem::json( const SdJsonReader &js )
 //!
 void SdProjectItem::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
   {
-  SdContainer::cloneFrom( src, copyMap, next );
+  SdContainerFile::cloneFrom( src, copyMap, next );
   SdPtrConst<SdProjectItem> sour(src);
   if( sour.isValid() ) {
-    mTitle      = sour->mTitle;
-    mAuthor     = sour->mAuthor;
-    mCreateTime = sour->mCreateTime;
     mAuto       = true;
     mOrigin     = sour->mOrigin;
-    mEditEnable = sour->mEditEnable;
     }
   }
 
 
 
-
-
-
-
-//Return current registered author
-QString SdProjectItem::getDefaultAuthor()
-  {
-  QSettings s;
-  return s.value( SDK_GLOBAL_AUTHOR ).toString();
-  }

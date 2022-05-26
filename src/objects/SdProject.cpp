@@ -32,7 +32,7 @@ QSet<SdProjectPtr> sdProjectList;
 
 
 SdProject::SdProject() :
-  SdContainer(),
+  SdContainerFile(),
   mDirty(false),
   mNetIndex(0)
   {
@@ -79,6 +79,15 @@ SdPItemPlate *SdProject::getFirstPlate() const
     }
   //Plate not found
   return nullptr;
+  }
+
+
+
+
+void SdProject::getHeader(SdLibraryHeader &hdr) const
+  {
+  SdContainerFile::getHeader( hdr );
+  //TODO Fill header with sheet variants
   }
 
 

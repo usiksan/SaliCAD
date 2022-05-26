@@ -15,10 +15,9 @@ Description
 #ifndef SDPROJECTITEM_H
 #define SDPROJECTITEM_H
 
-#include "SdContainer.h"
+#include "SdContainerFile.h"
 #include "SdPoint.h"
 #include "SdSelector.h"
-#include "library/SdLibraryHeader.h"
 
 #include <QString>
 #include <QOpenGLFunctions_2_0>
@@ -30,42 +29,26 @@ class SdGraphIdent;
 class SdGraphValue;
 class SdWEditorGraph;
 
-class SdProjectItem : public SdContainer
+class SdProjectItem : public SdContainerFile
   {
-    QString                mTitle;      //!< Item title
-    QString                mAuthor;     //!< Item author (registered program copy name)
-    int                    mCreateTime; //!< Create time with sec from 2000year
     bool                   mAuto;       //!< True if item inserted automatic as reference from other item
-    bool                   mEditEnable; //!< True if edit enable for this object
   protected:
     SdPoint                mOrigin;     //!< Origin for object
   public:
     QTreeWidgetItem       *mTreeItem;   //!< Correspond visual tree item
     QTreeWidgetItem       *m3dTreeItem; //!< Correspond visual tree item for 3d view (if present)
-    bool                   mThereNewer; //!< In library present newer object
 
     SdProjectItem();
 
     //Information
-    //Unical ident of item accross world
-    QString                getUid() const;
-    QString                getExtendTitle() const;
     QString                getToolTip() const;
-    QString                getAuthor() const { return mAuthor; }
-    int                    getTime() const { return mCreateTime; }
-    QString                getTitle() const { return mTitle; }
     SdProject             *getProject() const;
     SdUndo                *getUndo() const;
-    virtual void           getHeader( SdLibraryHeader &hdr ) const;
     //Set information and editing status
     void                   setTitle(const QString title, const QString undoTitle );
     void                   setUnicalTitle( const QString undoTitle );
-    //Get editEnable flag
-    bool                   isEditEnable() const { return mEditEnable; }
     //Set editEnable flag. When needed - creation new object perhaps
     SdProjectItem         *setEditEnable(bool edit , const QString undoTitle);
-    //Check if another author
-    bool                   isAnotherAuthor() const;
     //Get over rect
     SdRect                 getOverRect( quint64 classMask = dctAll );
 
@@ -122,15 +105,6 @@ class SdProjectItem : public SdContainer
     //!                  For example: pin name A23 with next copy return A24
     //!
     virtual void           cloneFrom( const SdObject *src, SdCopyMap &copyMap, bool next ) override;
-
-    //Return current registered author
-    static  QString        getDefaultAuthor();
-
-  private:
-    //Set creation time as current
-    void                   updateCreationTime();
-    //Set author as current
-    void                   updateAuthor();
 
   protected:
     //Find ident

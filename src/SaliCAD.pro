@@ -62,6 +62,7 @@ SOURCES += \
     master/SdMasterPart.cpp \
     modes/SdModeCScript.cpp \
     modes/SdModeCSymHighlight.cpp \
+    objects/SdContainerFile.cpp \
     objects/SdCopyMap.cpp \
     objects/SdCopyMapProject.cpp \
     objects/SdGraphParam.cpp \
@@ -427,11 +428,13 @@ HEADERS  += \
     import/vrml/VrmlRotation.h \
     import/vrml/VrmlTypes.h \
     import/vrml/VrmlVector.h \
+    library/SdStringMap.h \
     master/SdDMasterPartSingleLine.h \
     master/SdDMasterSheetDecorator.h \
     master/SdMasterPart.h \
     modes/SdModeCScript.h \
     modes/SdModeCSymHighlight.h \
+    objects/SdContainerFile.h \
     objects/SdCopyMap.h \
     objects/SdCopyMapProject.h \
     objects/SdGraphParam.h \
