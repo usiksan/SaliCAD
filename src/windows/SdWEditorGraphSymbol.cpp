@@ -22,6 +22,7 @@ Description
 #include "modes/SdModeCOrigin.h"
 #include "modes/SdModeCIdent.h"
 #include "modes/SdModeCValue.h"
+#include "modes/SdModeSymbolFragment.h"
 #include <QDebug>
 
 SdWEditorGraphSymbol::SdWEditorGraphSymbol(SdPItemSymbol *sym, QWidget *parent) :
@@ -86,6 +87,14 @@ void SdWEditorGraphSymbol::cmModeOrigin()
 void SdWEditorGraphSymbol::cmModeValue()
   {
   modeSet( new SdModeCValue( this, mSymbol, &(sdGlobalProp->mSymValueProp), MD_SYM_VALUE )  );
+  }
+
+
+
+
+void SdWEditorGraphSymbol::cmModeSymbolFragment()
+  {
+  modeSet( new SdModeSymbolFragment( this, mSymbol ) );
   }
 
 

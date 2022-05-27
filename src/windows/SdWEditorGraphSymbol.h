@@ -34,6 +34,7 @@ class SdWEditorGraphSymbol : public SdWEditorGraph
     virtual void           cmModeReference() override;
     virtual void           cmModeOrigin() override;
     virtual void           cmModeValue() override;
+    virtual void           cmModeSymbolFragment() override;
 
 
     //Export command

@@ -21,6 +21,7 @@ Description
 
 class SdModeSelect : public SdMode
   {
+  protected:
     SdPropSelected  mLocalProp;  //Свойства выделенных объектов
     SdSelector      mFragment;   //Набор выделенных объектов
     //PDSheetNetTable netFragment;//Набор выделенных цепей

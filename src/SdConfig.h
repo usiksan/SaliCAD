@@ -204,6 +204,7 @@ History
                    Fix: draw schematic expressions from up to down
   20.05.2022 v1.34 Append showing reference when copy-paste-move schematic script
   26.05.2022 v1.35 Refactor read-write json into SvJsonIO infrastructure completed
+  27.05.2022 v1.36 Append mode for symbol fragment
 */
 
 #ifndef SDCONFIG
@@ -215,7 +216,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             35
+#define SD_VERSION_MINOR             36
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

@@ -48,6 +48,13 @@ class SdSelector : public SdObject
     virtual QString     getType() const override { return QStringLiteral("Selector"); } //Тип объекта
     virtual quint64     getClass() const override { return dctSelector; } //Получить класс объекта
 
+    //!
+    //! \brief selectAll Select into selector all object from container which match to mask
+    //! \param container Container from which need to be select all objects
+    //! \param mask      Mask for object prediction
+    //!
+    void                selectAll( SdContainer *container, quint64 mask );
+
     void                markDeleteAll(); //Удалить входящие в селектор объекты
     void                removeAll(); //Убрать все сслыки на объекты
     void                remove(SdGraph *graph);

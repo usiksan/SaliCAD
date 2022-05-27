@@ -1623,6 +1623,14 @@ void SdWMain::cmModeValue()
 
 
 
+void SdWMain::cmModeSymbolFragment()
+  {
+  if( activeEditor() )
+    activeEditor()->cmModeSymbolFragment();
+  }
+
+
+
 
 void SdWMain::cmRenumeration()
   {

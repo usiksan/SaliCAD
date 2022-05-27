@@ -621,12 +621,7 @@ void SdModeSelect::paste()
 void SdModeSelect::selectAll()
   {
   //Select all objects
-  mObject->forEach( dctAll & mask(), [this] (SdObject *obj) -> bool {
-    SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-    if( graph != nullptr )
-      graph->select( &mFragment );
-    return true;
-    });
+  mFragment.selectAll( mObject, dctAll & mask() );
   //update
   propSetToBar();
   //Go to sel or unsel step
@@ -634,6 +629,7 @@ void SdModeSelect::selectAll()
   //Update edit menu (copy, paste, delete)
   mEditor->setSelectionStatus( mFragment.count() != 0 );
   }
+
 
 
 

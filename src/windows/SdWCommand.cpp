@@ -169,10 +169,11 @@ void SdWCommand::createMenu(SdWMain *frame)
   //Symbol editor menu
   menuInsertSymbol = new QMenu( QObject::tr("Symbol") );
 
-  cmModeTable[MD_SYM_PIN]       = menuInsertSymbol->addAction( QIcon(QString(":/pic/objPin.png")), QObject::tr("Insert pin"), frame, SLOT(cmModePin()) );
-  cmModeTable[MD_SYM_IDENT]     = menuInsertSymbol->addAction( QIcon(QString(":/pic/objIdent.png")), QObject::tr("Edit reference"), frame, SLOT(cmModeReference()) );
-  cmModeTable[MD_SYM_ORIGIN]    = menuInsertSymbol->addAction( QIcon(QString(":/pic/objOrigin.png")), QObject::tr("Edit origin"), frame, SLOT(cmModeOrigin()) );
-  cmModeTable[MD_SYM_VALUE]     = menuInsertSymbol->addAction( QIcon(QString(":/pic/objValue.png")), QObject::tr("Edit value"), frame, SLOT(cmModeValue()) );
+  cmModeTable[MD_SYM_PIN]         = menuInsertSymbol->addAction( QIcon(QString(":/pic/objPin.png")), QObject::tr("Insert pin"), frame, SLOT(cmModePin()) );
+  cmModeTable[MD_SYM_IDENT]       = menuInsertSymbol->addAction( QIcon(QString(":/pic/objIdent.png")), QObject::tr("Edit reference"), frame, SLOT(cmModeReference()) );
+  cmModeTable[MD_SYM_ORIGIN]      = menuInsertSymbol->addAction( QIcon(QString(":/pic/objOrigin.png")), QObject::tr("Edit origin"), frame, SLOT(cmModeOrigin()) );
+  cmModeTable[MD_SYM_VALUE]       = menuInsertSymbol->addAction( QIcon(QString(":/pic/objValue.png")), QObject::tr("Edit value"), frame, SLOT(cmModeValue()) );
+  cmModeTable[MD_SYMBOL_FRAGMENT] = menuInsertSymbol->addAction( QIcon(QString(":/pic/objComp.png")), QObject::tr("Enter symbol fragment"), frame, SLOT(cmModeSymbolFragment()) );
 
 
 
@@ -534,6 +535,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barSymbol->insertAction( nullptr, cmModeTable[MD_SYM_IDENT] );
   barSymbol->insertAction( nullptr, cmModeTable[MD_SYM_ORIGIN] );
   barSymbol->insertAction( nullptr, cmModeTable[MD_SYM_VALUE] );
+  barSymbol->insertAction( nullptr, cmModeTable[MD_SYMBOL_FRAGMENT] );
 
   frame->addToolBar( barSymbol );
 

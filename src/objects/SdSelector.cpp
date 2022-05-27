@@ -43,6 +43,24 @@ SdSelector::~SdSelector()
 
 
 
+//!
+//! \brief selectAll Select into selector all object from container which match to mask
+//! \param container Container from which need to be select all objects
+//! \param mask      Mask for object prediction
+//!
+void SdSelector::selectAll(SdContainer *container, quint64 mask)
+  {
+  container->forEach( mask, [this] (SdObject *obj) -> bool {
+    SdPtr<SdGraph> graph(obj);
+    if( graph.isValid() )
+      graph->select( this );
+    return true;
+    });
+  }
+
+
+
+
 void SdSelector::markDeleteAll()
   {
   for( SdGraph *graph : qAsConst(mTable) ) {

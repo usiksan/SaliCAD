@@ -62,6 +62,7 @@ SOURCES += \
     master/SdMasterPart.cpp \
     modes/SdModeCScript.cpp \
     modes/SdModeCSymHighlight.cpp \
+    modes/SdModeSymbolFragment.cpp \
     objects/SdContainerFile.cpp \
     objects/SdCopyMap.cpp \
     objects/SdCopyMapProject.cpp \
@@ -434,6 +435,7 @@ HEADERS  += \
     master/SdMasterPart.h \
     modes/SdModeCScript.h \
     modes/SdModeCSymHighlight.h \
+    modes/SdModeSymbolFragment.h \
     objects/SdContainerFile.h \
     objects/SdCopyMap.h \
     objects/SdCopyMapProject.h \

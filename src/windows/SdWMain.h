@@ -210,6 +210,7 @@ class SdWMain : public QMainWindow
     void cmModeReference();
     void cmModeOrigin();
     void cmModeValue();
+    void cmModeSymbolFragment();
 
     //Sheet and pcb
     void cmRenumeration();

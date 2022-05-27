@@ -137,6 +137,7 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmModeReference() {}
     virtual void cmModeOrigin() {}
     virtual void cmModeValue() {}
+    virtual void cmModeSymbolFragment() {}
 
     //Sheet and pcb
     virtual void cmRenumeration() {}
