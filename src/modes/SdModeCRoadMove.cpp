@@ -782,11 +782,11 @@ void SdModeCRoadMove::dragPoint(SdPoint p)
     bool link = false;
     //SdPoint sm3 =
     int sd = qMax(qAbs(sm1.x()),qAbs(sm1.y()));
-    int d;
-    if( qAbs(offset.x()) > qAbs(offset.y()) )
-      d = offset.x();
-    else
-      d = offset.y();
+    int d = (offset.x() * (mDirX1 + mDirX2) + offset.y() * (mDirY1 + mDirY2)) / 2;
+//    if( qAbs(offset.x()) > qAbs(offset.y()) )
+//      d = offset.x();
+//    else
+//      d = offset.y();
     if( sd < 200 && qAbs(d) < 200 ) {
       //Link to sm1
       link = true;

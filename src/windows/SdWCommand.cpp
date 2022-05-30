@@ -173,7 +173,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_SYM_IDENT]       = menuInsertSymbol->addAction( QIcon(QString(":/pic/objIdent.png")), QObject::tr("Edit reference"), frame, SLOT(cmModeReference()) );
   cmModeTable[MD_SYM_ORIGIN]      = menuInsertSymbol->addAction( QIcon(QString(":/pic/objOrigin.png")), QObject::tr("Edit origin"), frame, SLOT(cmModeOrigin()) );
   cmModeTable[MD_SYM_VALUE]       = menuInsertSymbol->addAction( QIcon(QString(":/pic/objValue.png")), QObject::tr("Edit value"), frame, SLOT(cmModeValue()) );
-  cmModeTable[MD_SYMBOL_FRAGMENT] = menuInsertSymbol->addAction( QIcon(QString(":/pic/objComp.png")), QObject::tr("Enter symbol fragment"), frame, SLOT(cmModeSymbolFragment()) );
+  cmModeTable[MD_SYMBOL_FRAGMENT] = menuInsertSymbol->addAction( QIcon(QString(":/pic/symbolFragment.png")), QObject::tr("Enter symbol fragment"), frame, SLOT(cmModeSymbolFragment()) );
 
 
 
