@@ -297,5 +297,6 @@
         <file>pic/objPartHighlight.png</file>
         <file>pic/objScript.png</file>
         <file>pic/cursorScript.png</file>
+        <file>pic/symbolFragment.png</file>
     </qresource>
 </RCC>
