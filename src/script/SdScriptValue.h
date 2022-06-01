@@ -62,46 +62,12 @@ class SdScriptValue
     virtual SdScriptVal2dGraph   toGraph() const { return SdScriptVal2dGraph( QVector3D(), QVector3D() ); }
 
     //!
-    //! \brief toVertex Convert object to 3d vertex
-    //! \return         3d vertex
+    //! \brief toIndex Convert object to index list in reference list
+    //! \return        Index list in reference list
     //!
-    virtual QVector3D            toVertex() const { return QVector3D(); }
+    virtual QList<int>           toIndexList() const { return QList<int>(); }
 
-    //!
-    //! \brief toMatrix Convert object to 4x4 matrix
-    //! \return         4x4 matrix
-    //!
-    virtual QMatrix4x4           toMatrix() const { return QMatrix4x4(); }
-
-    //!
-    //! \brief toSegment Convert object to 3d segment
-    //! \return          3d segment
-    //!
-    virtual SdScriptVal3dSegment toSegment() const { return SdScriptVal3dSegment(); }
-
-    //!
-    //! \brief toPath Convert object to path of 3d segments which may be separated
-    //! \return       Path of 3d segments which may be separated
-    //!
-    virtual SdScriptVal3dPath    toPath() const { return SdScriptVal3dPath(); }
-
-    //!
-    //! \brief toRegion Convert object to 3d region which is closed region of 3d vertex
-    //! \return         3d region which is closed region of 3d vertex
-    //!
-    virtual SdScriptVal3dRegion  toRegion() const { return SdScriptVal3dRegion(); }
-
-    //!
-    //! \brief toFace Convert object to 3d face which is bound region and face color
-    //! \return       3d face which is bound region and face color
-    //!
-    virtual SdScriptVal3dFace    toFace() const { return SdScriptVal3dFace(); }
-
-    //!
-    //! \brief toModel Convert object to 3d model
-    //! \return        3d model
-    //!
-    virtual SdScriptVal3dModel   toModel() const { return SdScriptVal3dModel(); }
+    int                          toIndex() const { return toIndexList().at(0); }
   };
 
 using SdScriptValuePtr = SdScriptValue*;

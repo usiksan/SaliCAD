@@ -50,14 +50,7 @@ class Sd3dPoint : public QVector3D
 
     void        normal( QOpenGLFunctions_2_0 *f ) const { f->glNormal3f( x(), y(), z() ); }
 
-    void        write(const QString name, QJsonObject &obj ) const;
-    void        read(const QString name, const QJsonObject obj );
-
     void        swap( Sd3dPoint *p );
-
-    QJsonObject write() const;
-    void        read( const QJsonObject obj );
-
   };
 
 using Sd3dPointList = QList<Sd3dPoint>;

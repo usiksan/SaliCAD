@@ -39,11 +39,8 @@ Description
 #define SD_SCRIPT_TYPE_GRAPH   'g'
 //3d
 #define SD_SCRIPT_TYPE_VERTEX  'v'
-#define SD_SCRIPT_TYPE_MATRIX  'x'
-#define SD_SCRIPT_TYPE_SEGMENT 'l'
-#define SD_SCRIPT_TYPE_PATH    'p'
-#define SD_SCRIPT_TYPE_REGION  'r'
 #define SD_SCRIPT_TYPE_FACE    'f'
+#define SD_SCRIPT_TYPE_BODY    'x'
 #define SD_SCRIPT_TYPE_MODEL   'm'
 
 

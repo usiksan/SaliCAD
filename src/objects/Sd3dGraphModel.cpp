@@ -10,13 +10,37 @@ Sd3dGraphModel::Sd3dGraphModel()
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //!
 //! \brief matrixMapInPlace Mapping all faces of model throught given matrix. Operation maked in place
 //! \param matrix           Mapping matrix
 //!
 void Sd3dGraphModel::matrixMapInPlace(QMatrix4x4 matrix)
   {
-  sd3dModelMapInPlace( mModel, matrix );
+  //sd3dModelMapInPlace( mModel, matrix );
   }
 
 
@@ -50,7 +74,7 @@ void Sd3dGraphModel::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool nex
 //!
 void Sd3dGraphModel::json(SdJsonWriter &js) const
   {
-  js.jsonList( js, QStringLiteral("model"), mModel );
+  mModel.json( js );
   Sd3dGraph::json( js );
   }
 
@@ -65,7 +89,7 @@ void Sd3dGraphModel::json(SdJsonWriter &js) const
 //!
 void Sd3dGraphModel::json(const SdJsonReader &js)
   {
-  js.jsonList( js, QStringLiteral("model"), mModel );
+  mModel.json( js );
   Sd3dGraph::json( js );
   }
 
@@ -84,7 +108,7 @@ SdRect Sd3dGraphModel::getOverRect() const
 
 void Sd3dGraphModel::draw3d(QOpenGLFunctions_2_0 *f) const
   {
-  Sd3dDraw::drawModel( f, mModel );
+  mModel.draw3d( f );
   }
 
 

@@ -20,19 +20,29 @@ Description
 #define SDSCRIPTVALUEFUNVERTEXBUILD_H
 
 #include "SdScriptValueFunction.h"
+#include "objects/Sd3dModel.h"
 
 class SdScriptValueFunVertexBuild : public SdScriptValueFunction
   {
+    Sd3dModel *mModel;
   public:
-    SdScriptValueFunVertexBuild() : SdScriptValueFunction( SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT ) { }
+    SdScriptValueFunVertexBuild( Sd3dModel *model ) :
+      SdScriptValueFunction( SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT ),
+      mModel(model)
+      { }
 
     // SdM3dValue interface
   public:
     //!
-    //! \brief toVertex Convert object to 3d vertex
-    //! \return         3d vertex
+    //! \brief toIndex Convert object to index list in reference list
+    //! \return        Index list in reference list
     //!
-    virtual QVector3D toVertex() const override { return QVector3D( mParamList[0]->toFloat(), mParamList[1]->toFloat(), mParamList[2]->toFloat() ); }
+    virtual QList<int>           toIndexList() const override
+      {
+      QVector3D v( mParamList[0]->toFloat(), mParamList[1]->toFloat(), mParamList[2]->toFloat() );
+      return QList<int>( {mModel->vertexAppend(v)} );
+      }
+
   };
 
 #endif // SDSCRIPTVALUEFUNVERTEXBUILD_H

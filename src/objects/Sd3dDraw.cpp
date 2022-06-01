@@ -152,11 +152,23 @@ void Sd3dDraw::circleFill(QOpenGLFunctions_2_0 *f, SdPoint center, int radius, f
 void Sd3dDraw::color(QOpenGLFunctions_2_0 *f, QColor col)
   {
   float fcolor[4];
+  colorToFloat( col, fcolor );
+  f->glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, fcolor );
+  }
+
+
+
+//!
+//! \brief colorToFloat Convert QColor to array of four float color components
+//! \param col          Source color
+//! \param fcolor       Destignation array of float, must be at least 4 item
+//!
+void Sd3dDraw::colorToFloat(QColor col, float *fcolor)
+  {
   fcolor[0] = col.redF();
   fcolor[1] = col.greenF();
   fcolor[2] = col.blueF();
   fcolor[3] = col.alphaF();
-  f->glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, fcolor );
   }
 
 

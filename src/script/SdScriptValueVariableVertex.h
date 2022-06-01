@@ -17,13 +17,12 @@ Description
 #ifndef SDSCRIPTVALUEVARIABLEVERTEX_H
 #define SDSCRIPTVALUEVARIABLEVERTEX_H
 
-#include "SdScriptValueVariable.h"
+#include "SdScriptValueVariable3d.h"
 
-class SdScriptValueVariableVertex : public SdScriptValueVariable
+class SdScriptValueVariableVertex : public SdScriptValueVariable3d
   {
-    QVector3D mValue; //!< Vertex value of variable
   public:
-    SdScriptValueVariableVertex() : mValue() {}
+    SdScriptValueVariableVertex() {}
 
 
 
@@ -35,19 +34,8 @@ class SdScriptValueVariableVertex : public SdScriptValueVariable
     //!
     virtual char      type() const override { return SD_SCRIPT_TYPE_VERTEX; }
 
-    //!
-    //! \brief toVertex Convert object to 3d vertex
-    //! \return         3d vertex
-    //!
-    virtual QVector3D toVertex() const override { return mValue; }
-
     // SdM3dVariable interface
   public:
-    //!
-    //! \brief assign Assignment value to variable
-    //! \param src    source of value
-    //!
-    virtual void      assign(SdScriptValuePtr src) override { mValue = src->toVertex(); }
   };
 
 #endif // SDSCRIPTVALUEVARIABLEVERTEX_H

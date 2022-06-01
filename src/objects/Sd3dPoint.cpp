@@ -18,18 +18,6 @@ void Sd3dPoint::clear()
   setZ(0.0);
   }
 
-void Sd3dPoint::write(const QString name, QJsonObject &obj) const
-  {
-  obj.insert( name, write() );
-  }
-
-
-
-void Sd3dPoint::read(const QString name, const QJsonObject obj)
-  {
-  read( obj.value(name).toObject() );
-  }
-
 
 
 
@@ -38,27 +26,6 @@ void Sd3dPoint::swap(Sd3dPoint *p)
   Sd3dPoint tmp = (*this);
   (*this) = (*p);
   (*p) = tmp;
-  }
-
-
-
-QJsonObject Sd3dPoint::write() const
-  {
-  QJsonObject obj;
-  obj.insert( QStringLiteral("x"), QJsonValue(x()) );
-  obj.insert( QStringLiteral("y"), QJsonValue(y()) );
-  obj.insert( QStringLiteral("z"), QJsonValue(z()) );
-  return obj;
-  }
-
-
-
-
-void Sd3dPoint::read(const QJsonObject obj)
-  {
-  setX( obj.value( QStringLiteral("x") ).toDouble() );
-  setY( obj.value( QStringLiteral("y") ).toDouble() );
-  setZ( obj.value( QStringLiteral("z") ).toDouble() );
   }
 
 

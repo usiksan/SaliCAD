@@ -20,19 +20,28 @@ Description
 #define SDSCRIPTVALUEFUNVERTEXTRANSLATE_H
 
 #include "SdScriptValueFunction.h"
+#include "objects/Sd3dModel.h"
 
 class SdScriptValueFunVertexTranslate : public SdScriptValueFunction
   {
+    Sd3dModel *mModel;
   public:
-    SdScriptValueFunVertexTranslate() : SdScriptValueFunction( SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_VERTEX ) { }
+    SdScriptValueFunVertexTranslate( Sd3dModel *model ) :
+      SdScriptValueFunction( SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_VERTEX ),
+      mModel(model)
+      { }
 
     // SdM3dValue interface
   public:
     //!
-    //! \brief toVertex Convert object to 3d vertex
-    //! \return         3d vertex
+    //! \brief toIndex Convert object to index list in reference list
+    //! \return        Index list in reference list
     //!
-    virtual QVector3D toVertex() const override  { return mParamList[0]->toVertex() + mParamList[1]->toVertex(); }
+    virtual QList<int>           toIndexList() const override
+      {
+      QVector3D v = mModel->vertex( mParamList[0]->toIndex() ) + mModel->vertex( mParamList[1]->toIndex() );
+      return QList<int>( {mModel->vertexAppend(v)} );
+      }
   };
 
 #endif // SDSCRIPTVALUEFUNVERTEXTRANSLATE_H

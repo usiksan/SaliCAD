@@ -47,6 +47,29 @@ void SdPItemPart::matrixMap(QMatrix4x4 matrix, SdUndo *undo)
   }
 
 
+
+
+//!
+//! \brief model Return first 3d model object. If no model object, then it created and returned
+//! \return      3d model object
+//!
+Sd3dGraphModel *SdPItemPart::model()
+  {
+  Sd3dGraphModel *md = nullptr;
+  forEachConst( dct3D, [&md] (SdObject *obj) -> bool {
+    md = dynamic_cast<Sd3dGraphModel*>(obj);
+    return md == nullptr;
+    });
+
+  if( md == nullptr ) {
+    //No model object, we create new 3d model object
+    md = new Sd3dGraphModel;
+    insertChild( md, getUndo() );
+    }
+  return md;
+  }
+
+
 QString SdPItemPart::getType() const
   {
   return QString( SD_TYPE_PART );

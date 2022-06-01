@@ -77,6 +77,13 @@ class Sd3dDraw
     static void color( QOpenGLFunctions_2_0 *f, QColor col );
 
     //!
+    //! \brief colorToFloat Convert QColor to array of four float color components
+    //! \param col          Source color
+    //! \param fcolor       Destignation array of float, must be at least 4 item
+    //!
+    static void colorToFloat(QColor col, float *fcolor );
+
+    //!
     //! \brief padCircle   Draws circle pad with hole
     //! \param f           OpenGL
     //! \param padCenter   Point of pad center in 3d scene

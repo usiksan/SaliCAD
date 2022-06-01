@@ -20,6 +20,8 @@ Description
 
 #define SD_TYPE_PART "Part"
 
+class Sd3dGraphModel;
+
 class SdPItemPart : public SdProjectItem
   {
   public:
@@ -31,7 +33,13 @@ class SdPItemPart : public SdProjectItem
     //! \param undo      Undo to which writed undo for this operation. If no
     //!                  undo then no undo for this operation
     //!
-    void matrixMap( QMatrix4x4 matrix, SdUndo *undo );
+    void            matrixMap( QMatrix4x4 matrix, SdUndo *undo );
+
+    //!
+    //! \brief model Return first 3d model object. If no model object, then it created and returned
+    //! \return      3d model object
+    //!
+    Sd3dGraphModel *model();
 
     // SdObject interface
   public:

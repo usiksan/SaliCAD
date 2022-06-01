@@ -5,6 +5,7 @@
 #include "SdObjectMap.h"
 #include "SdObject.h"
 #include "SdRect.h"
+#include "Sd3dPoint.h"
 
 
 class SdJsonWriter : public SvJsonWriter
@@ -37,6 +38,17 @@ class SdJsonWriter : public SvJsonWriter
       object().insert( key, js.object() );
       }
 
+    void json3dPoint( const QString &key, const Sd3dPoint &p )
+      {
+      SvJsonWriter js;
+      js.jsonDouble( QStringLiteral("x"), p.x() );
+      js.jsonDouble( QStringLiteral("y"), p.y() );
+      js.jsonDouble( QStringLiteral("z"), p.z() );
+      object().insert( key, js.object() );
+      }
+
+
+
   };
 
 
@@ -62,6 +74,14 @@ class SdJsonReader : public SvJsonReaderExt<SdObjectMap>
       {
       SvJsonReader js( object().value( key ).toObject() );
       r.json(js);
+      }
+
+    void json3dPoint( const QString &key, Sd3dPoint &p )
+      {
+      QJsonObject obj = object().value( key ).toObject();
+      p.setX( obj.value( QStringLiteral("x") ).toDouble() );
+      p.setY( obj.value( QStringLiteral("y") ).toDouble() );
+      p.setZ( obj.value( QStringLiteral("z") ).toDouble() );
       }
   };
 

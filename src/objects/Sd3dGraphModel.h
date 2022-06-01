@@ -16,48 +16,56 @@ Description
 #ifndef SD3DGRAPHMODEL_H
 #define SD3DGRAPHMODEL_H
 
-#include "Sd3dModel.h"
 #include "Sd3dGraph.h"
+#include "Sd3dModel.h"
 
 #define SD_TYPE_3D_GRAPH_MODEL "3dGraphModel"
 
 class Sd3dGraphModel : public Sd3dGraph
   {
-    Sd3dModel mModel; //!< 3d model (face set)
+    Sd3dModel mModel;
   public:
     Sd3dGraphModel();
+    Sd3dGraphModel( const Sd3dModel &model );
 
-    //!
-    //! \brief faceCount Returns face count of model
-    //! \return          Face count of model
-    //!
-    int    faceCount() const { return mModel.count(); }
 
-    //!
-    //! \brief faceColor Returns color of face with faceIndex
-    //! \param faceIndex Index of face whose color returned
-    //! \return          Color of face
-    //!
-    QColor faceColor( int faceIndex ) const { return mModel.at(faceIndex).mColor; }
 
-    //!
-    //! \brief faceColorSet Sets color of face with faceIndex
-    //! \param faceIndex    Index of face whose color set
-    //! \param color        New color of face
-    //!
-    void   faceColorSet( int faceIndex, QColor color ) { mModel[faceIndex].mColor = color; }
 
-    //!
-    //! \brief faceAdd Appends face to 3d model
-    //! \param face    Appended face
-    //!
-    void   faceAdd( const Sd3dFace &face ) { mModel.append( face ); }
 
-    //!
-    //! \brief modelAdd Append model to 3d model
-    //! \param model    Appended model
-    //!
-    void   modelAdd( const Sd3dModel &model ) { mModel.append( model ); }
+
+
+
+//    //!
+//    //! \brief faceCount Returns face count of model
+//    //! \return          Face count of model
+//    //!
+//    int    faceCount() const { return mModel.count(); }
+
+//    //!
+//    //! \brief faceColor Returns color of face with faceIndex
+//    //! \param faceIndex Index of face whose color returned
+//    //! \return          Color of face
+//    //!
+//    QColor faceColor( int faceIndex ) const { return mModel.at(faceIndex).mColor; }
+
+//    //!
+//    //! \brief faceColorSet Sets color of face with faceIndex
+//    //! \param faceIndex    Index of face whose color set
+//    //! \param color        New color of face
+//    //!
+//    void   faceColorSet( int faceIndex, QColor color ) { mModel[faceIndex].mColor = color; }
+
+//    //!
+//    //! \brief faceAdd Appends face to 3d model
+//    //! \param face    Appended face
+//    //!
+//    void   faceAdd( const Sd3dFace &face ) { mModel.append( face ); }
+
+//    //!
+//    //! \brief modelAdd Append model to 3d model
+//    //! \param model    Appended model
+//    //!
+//    void   modelAdd( const Sd3dModel &model ) { mModel.append( model ); }
 
     //!
     //! \brief matrixMapInPlace Mapping all faces of model throught given matrix. Operation maked in place

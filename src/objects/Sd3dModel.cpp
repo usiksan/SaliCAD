@@ -444,3 +444,143 @@ Sd3dModel sd3dModelBodyBeveled(float bodyLenght, float bodyWidth, float bodyHeig
   body += Sd3dFace( topRegion, color );
   return body;
   }
+
+
+
+
+void Sd3dModel::clear()
+  {
+  mVertexList.clear();
+  mFaceList.clear();
+  mBodyList.clear();
+  mInstanceList.clear();
+  }
+
+
+
+Sd3dRegion Sd3dModel::vertexList(const QList<int> &indexList) const
+  {
+  Sd3dRegion region;
+  for( auto index : indexList )
+    region.append( vertex(index) );
+  return region;
+  }
+
+
+
+QList<int> Sd3dModel::vertexAppend(Sd3dRegion r)
+  {
+  QList<int> regionRef;
+  for( auto v : r ) {
+    int vertexIndex = vertexAppend( v );
+    regionRef.append(vertexIndex);
+    }
+  return regionRef;
+  }
+
+
+
+
+int Sd3dModel::faceAppend(Sd3dRegion r)
+  {
+  return faceAppend( Sd3drFace(vertexAppend(r)) );
+  }
+
+
+
+
+int Sd3dModel::faceCircle(float radius, float stepDegree, QVector3D offset)
+  {
+  return faceAppend( sd3dRegionCircle( radius, stepDegree, offset ) );
+  }
+
+
+
+int Sd3dModel::faceCircleSide(float radius, int sideCount, QVector3D center)
+  {
+  return faceAppend( sd3dRegionCircleSideCount( radius, sideCount, center ) );
+  }
+
+
+
+
+int Sd3dModel::faceDuplicate(int faceIndex, const QMatrix4x4 &map)
+  {
+  QList<int> region = faceVertexList(faceIndex);
+  QList<int> newRegion;
+  for( auto index : region ) {
+    newRegion.append( vertexAppend( map.map( vertex(index) )  )   );
+    }
+  return faceAppend( newRegion );
+  }
+
+
+
+
+QList<int> Sd3dModel::faceWall(int face1, int face2, bool close)
+  {
+  QList<int> region1 = faceVertexList(face1);
+  QList<int> region2 = faceVertexList(face2);
+  QList<int> walls;
+  for( int i = 0; i < region1.count() - 1; i++ ) {
+    QList<int> wall( { region1.at(i), region1.at(i+1), region2.at(i+1), region2.at(i) } );
+    walls.append( faceAppend( Sd3drFace(wall) ) );
+    }
+  if( close ) {
+    //Append wall with n-1 and 0 vertex
+    QList<int> wall( { region1.last(), region1.first(), region2.first(), region2.last() } );
+    walls.append( faceAppend( Sd3drFace(wall) ) );
+    }
+
+  return walls;
+  }
+
+
+
+
+QList<int> Sd3dModel::faceExtrude(int faceIndex, const QMatrix4x4 &map)
+  {
+  return faceWall( faceIndex, faceDuplicate( faceIndex, map ), true );
+  }
+
+
+
+
+//!
+//! \brief json Overloaded function to write object content into json writer
+//!             Overrided function
+//! \param js   Json writer
+//!
+void Sd3dModel::json(SdJsonWriter &js) const
+  {
+  json3dRegion( js, QStringLiteral("Vertex"), mVertexList );
+  js.jsonList( js, QStringLiteral("Face"), mFaceList );
+  js.jsonList( js, QStringLiteral("Body"), mBodyList );
+  js.jsonList( js, QStringLiteral("Instance"), mInstanceList );
+  }
+
+
+
+
+
+//!
+//! \brief json Overloaded function to read object content from json reader
+//!             Overrided function
+//! \param js   Json reader
+//!
+void Sd3dModel::json(const SdJsonReader &js)
+  {
+  json3dRegion( js, QStringLiteral("Vertex"), mVertexList );
+  js.jsonList( js, QStringLiteral("Face"), mFaceList );
+  js.jsonList( js, QStringLiteral("Body"), mBodyList );
+  js.jsonList( js, QStringLiteral("Instance"), mInstanceList );
+  }
+
+
+
+
+void Sd3dModel::draw3d(QOpenGLFunctions_2_0 *f) const
+  {
+  for( auto const &instance : mInstanceList )
+    instance.draw( f, mBodyList, mFaceList, mVertexList );
+  }

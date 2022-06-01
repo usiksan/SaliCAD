@@ -63,6 +63,10 @@ SOURCES += \
     modes/SdModeCScript.cpp \
     modes/SdModeCSymHighlight.cpp \
     modes/SdModeSymbolFragment.cpp \
+    objects/Sd3drBody.cpp \
+    objects/Sd3drFace.cpp \
+    objects/Sd3drInstance.cpp \
+    objects/Sd3drTransfer.cpp \
     objects/SdContainerFile.cpp \
     objects/SdCopyMap.cpp \
     objects/SdCopyMapProject.cpp \
@@ -115,13 +119,13 @@ SOURCES += \
     objects/Sd3dFaceSet.cpp \
     objects/Sd3dGraph.cpp \
     objects/Sd3dGraphModel.cpp \
-    objects/Sd3dGraphSolid.cpp \
     objects/Sd3dModel.cpp \
     objects/Sd3dPoint.cpp \
     objects/Sd3dRegion.cpp \
     objects/Sd3dSolid.cpp \
     objects/Sd3dStep.cpp \
     objects/SdUndoRecord3dMatrix.cpp \
+    script/SdScriptValueVariable3d.cpp \
     script/SdScriptValueVariableRef.cpp \
     windows/SdD3dMaster.cpp \
     windows/SdD3dModelMaster.cpp \
@@ -436,6 +440,10 @@ HEADERS  += \
     modes/SdModeCScript.h \
     modes/SdModeCSymHighlight.h \
     modes/SdModeSymbolFragment.h \
+    objects/Sd3drBody.h \
+    objects/Sd3drFace.h \
+    objects/Sd3drInstance.h \
+    objects/Sd3drTransfer.h \
     objects/SdContainerFile.h \
     objects/SdCopyMap.h \
     objects/SdCopyMapProject.h \
@@ -512,6 +520,7 @@ HEADERS  += \
     script/SdScriptValueOpUnaryFloatMinus.h \
     script/SdScriptValueString.h \
     script/SdScriptValueVariable.h \
+    script/SdScriptValueVariable3d.h \
     script/SdScriptValueVariableBool.h \
     script/SdScriptValueVariableColor.h \
     script/SdScriptValueVariableFace.h \
@@ -555,7 +564,6 @@ HEADERS  += \
     objects/Sd3dFaceSet.h \
     objects/Sd3dGraph.h \
     objects/Sd3dGraphModel.h \
-    objects/Sd3dGraphSolid.h \
     objects/Sd3dModel.h \
     objects/Sd3dPoint.h \
     objects/Sd3dRegion.h \

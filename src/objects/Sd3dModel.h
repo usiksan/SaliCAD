@@ -16,9 +16,80 @@ Description
 #ifndef SD3DMODEL_H
 #define SD3DMODEL_H
 
-#include "Sd3dFace.h"
+#include "Sd3drInstance.h"
 
-using Sd3dModel = QList<Sd3dFace>;
+class Sd3dModel
+  {
+    Sd3dRegion        mVertexList;   //!< 3d vertex list
+    Sd3drFaceList     mFaceList;     //!< 3d face list, each face consists of face region
+    Sd3drBodyList     mBodyList;     //!< 3d body list, each body consists of face list and its colors
+    Sd3drInstanceList mInstanceList; //!< 3d instance list, each instance contains one or more copy of some body list
+  public:
+    //!
+    //! \brief clear Clear model
+    //!
+    void       clear();
+
+    QVector3D  vertex( int index ) const { return mVertexList.at(index); }
+
+    Sd3dRegion vertexList( const QList<int> &indexList ) const;
+
+    int        vertexAppend( QVector3D v ) { mVertexList.append(v); return mVertexList.count() - 1; }
+
+    QList<int> vertexAppend( Sd3dRegion r );
+
+
+    Sd3drFace  face( int index ) const { return mFaceList.at(index); }
+
+    QList<int> faceVertexList( int faceIndex ) const { return mFaceList.at(faceIndex).vertexRefList(); }
+
+    int        faceAppend( Sd3drFace face ) { mFaceList.append( face ); return mFaceList.count() - 1; }
+
+    int        faceAppend( Sd3dRegion r );
+
+    int        faceCircle( float radius, float stepDegree, QVector3D offset );
+
+    int        faceCircleSide( float radius, int sideCount, QVector3D center );
+
+    int        faceDuplicate( int faceIndex, const QMatrix4x4 &map );
+
+    QList<int> faceWall(int face1, int face2 , bool close);
+
+    QList<int> faceExtrude( int faceIndex, const QMatrix4x4 &map );
+
+
+
+    Sd3drBody  body( int index ) const { return mBodyList.at(index); }
+
+    int        bodyAppend( Sd3drBody body ) { mBodyList.append( body ); return mBodyList.count() - 1; }
+
+    void       bodyColorSet( int index, QColor color ) { mBodyList[index].colorSet(color); }
+
+    QColor     bodyColor( int index ) const { return mBodyList.at(index).color(); }
+
+    void       bodyFaceAppend( int bodyIndex, const QList<int> &faceList ) { mBodyList[bodyIndex].addRef( faceList ); }
+
+
+
+    //!
+    //! \brief json Overloaded function to write object content into json writer
+    //!             Overrided function
+    //! \param js   Json writer
+    //!
+    void       json( SdJsonWriter &js ) const;
+
+    //!
+    //! \brief json Overloaded function to read object content from json reader
+    //!             Overrided function
+    //! \param js   Json reader
+    //!
+    void       json( const SdJsonReader &js );
+
+    void       draw3d(QOpenGLFunctions_2_0 *f) const;
+
+  };
+
+
 
 
 //!
