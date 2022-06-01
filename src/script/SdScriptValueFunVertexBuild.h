@@ -31,18 +31,17 @@ class SdScriptValueFunVertexBuild : public SdScriptValueFunction
       mModel(model)
       { }
 
-    // SdM3dValue interface
+    // SdScriptValue interface
   public:
     //!
-    //! \brief toIndex Convert object to index list in reference list
-    //! \return        Index list in reference list
+    //! \brief toVertexIndex Convert object to vertex index in Sd3dModel point list
+    //! \return              Vertex index in Sd3dModel point list
     //!
-    virtual QList<int>           toIndexList() const override
+    virtual int toVertexIndex() const override
       {
       QVector3D v( mParamList[0]->toFloat(), mParamList[1]->toFloat(), mParamList[2]->toFloat() );
-      return QList<int>( {mModel->vertexAppend(v)} );
+      return mModel->vertexAppend( v );
       }
-
   };
 
 #endif // SDSCRIPTVALUEFUNVERTEXBUILD_H

@@ -30,13 +30,13 @@ class SdScriptValueArray3dFace : public SdScriptValueArray
     //! \brief type Return type of object
     //! \return     Type of object
     //!
-    virtual char               type() const override  { return SD_SCRIPT_TYPE_MODEL; }
+    virtual char               type() const override  { return SD_SCRIPT_TYPE_FACE_LIST; }
 
     //!
-    //! \brief toModel Convert object to 3d model
-    //! \return        3d model
+    //! \brief toFaceList Convert object to list of face each of which is list of vertex index
+    //! \return           List of face each of which is list of vertex index
     //!
-    virtual SdScriptVal3dModel toModel() const override;
+    virtual Sd3drFaceList      toFaceList() const override;
 
     // SdM3dArray interface
   public:

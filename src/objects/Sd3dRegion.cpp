@@ -83,42 +83,9 @@ void json3dRegion( const SvJsonReader &js, const QString &key, Sd3dRegion &regio
 
 
 
-//!
-//! \brief regionCircle This function builds circle region on base radius with center at 0
-//! \param radius       Radius of builded circle
-//! \param stepDegree   Step with which need to create multicorner circle region
-//! \return             Circle region on XY plane
-//!
-Sd3dRegion sd3dRegionCircle(float radius, float stepDegree, QVector3D offset)
-  {
-  Sd3dRegion region;
-  //Build circle with step 10 degree
-  for( float angleDegree = 0; angleDegree < 360.0; angleDegree += stepDegree ) {
-    //Convert degree to radians
-    float angle = angleDegree * M_PI / 180.0;
-    //Build next corner
-    QVector3D v( sin(angle) * radius, cos(angle) * radius, 0 );
-    //Append corner to region
-    region.append( v + offset );
-    }
-  return region;
-  }
 
 
 
-
-//!
-//! \brief sd3dRegionCircleSideCount Builds circle region interpolated polygon on base radius with center at 0 and sideCount sides
-//! \param radius                    Radius of builded circle
-//! \param sideCount                 Side count of polygon
-//! \param center                    Center of circle
-//! \return                          Circle region on XY plane
-//!
-Sd3dRegion sd3dRegionCircleSideCount(float radius, int sideCount, QVector3D center)
-  {
-  float stepDegree = 360.0 / sideCount;
-  return sd3dRegionCircle( radius, stepDegree, center );
-  }
 
 
 

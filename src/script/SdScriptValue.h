@@ -62,12 +62,41 @@ class SdScriptValue
     virtual SdScriptVal2dGraph   toGraph() const { return SdScriptVal2dGraph( QVector3D(), QVector3D() ); }
 
     //!
-    //! \brief toIndex Convert object to index list in reference list
-    //! \return        Index list in reference list
+    //! \brief toMatrix Convert object to 4x4 matrix
+    //! \return         4x4 matrix
     //!
-    virtual QList<int>           toIndexList() const { return QList<int>(); }
+    virtual QMatrix4x4           toMatrix() const { return QMatrix4x4{}; }
 
-    int                          toIndex() const { return toIndexList().at(0); }
+    //!
+    //! \brief toIndex Convert object to float list
+    //! \return        Float list
+    //!
+    virtual QList<float>         toFloatList() const { return QList<float>(); }
+
+    //!
+    //! \brief toVertexIndex Convert object to vertex index in Sd3dModel point list
+    //! \return              Vertex index in Sd3dModel point list
+    //!
+    virtual int                  toVertexIndex() const { return 0; }
+
+    //!
+    //! \brief toFace Convert object to list of vertex index which is face region
+    //! \return       List of vertex index which is face region
+    //!
+    virtual Sd3drFace            toFace() const { return Sd3drFace(); }
+
+    //!
+    //! \brief toFaceList Convert object to list of face each of which is list of vertex index
+    //! \return           List of face each of which is list of vertex index
+    //!
+    virtual Sd3drFaceList        toFaceList() const { return Sd3drFaceList(); }
+
+    //!
+    //! \brief toModel Convert object to model which is compound of some bodies
+    //! \return        Model which is compound of some bodies
+    //!
+    virtual Sd3drInstance        toModel() const { return Sd3drInstance(); }
+
   };
 
 using SdScriptValuePtr = SdScriptValue*;

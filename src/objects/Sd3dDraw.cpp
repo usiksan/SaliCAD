@@ -271,11 +271,11 @@ void Sd3dDraw::flatPanel(QOpenGLFunctions_2_0 *f, SdPointList list, int z, QColo
 //! \param f    OpenGL
 //! \param face Face to draw
 //!
-void Sd3dDraw::drawFace(QOpenGLFunctions_2_0 *f, const Sd3dFace &face)
-  {
-  Sd3dDraw::color( f, face.mColor );
-  drawPolygon( f, face.mContour );
-  }
+//void Sd3dDraw::drawFace(QOpenGLFunctions_2_0 *f, const Sd3dFace &face)
+//  {
+//  Sd3dDraw::color( f, face.mColor );
+//  drawPolygon( f, face.mContour );
+//  }
 
 
 
@@ -287,7 +287,6 @@ void Sd3dDraw::drawFace(QOpenGLFunctions_2_0 *f, const Sd3dFace &face)
 //!
 void Sd3dDraw::drawModel(QOpenGLFunctions_2_0 *f, const Sd3dModel &model)
   {
-  for( auto const &face : model )
-    drawFace( f, face );
+  model.draw3d( f );
   }
 

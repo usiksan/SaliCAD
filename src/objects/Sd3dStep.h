@@ -15,19 +15,18 @@ Description
 #define SD3DSTEP_H
 
 #include "Sd3dGraph.h"
-#include "Sd3dFaceEx.h"
 
 #include <QList>
 #include <QDataStream>
 #include <QJsonObject>
 
+#if 0
 #define SD_TYPE_3D_STEP "3dStep"
 
-using Sd3dFaceList = QList<Sd3dFaceEx>;
 
 class Sd3dStep : public Sd3dGraph
   {
-    Sd3dFaceList mFaceList; //!< Face list of model
+//    Sd3dFaceList mFaceList; //!< Face list of model
   public:
     Sd3dStep();
 
@@ -76,5 +75,7 @@ class Sd3dStep : public Sd3dGraph
     //!
     //bool importStepStyledFace(const QString &faceId, const SdStepReader &reader);
   };
+
+#endif
 
 #endif // SD3DSTEP_H

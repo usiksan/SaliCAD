@@ -11,6 +11,7 @@ Web
 Description
   3d object reader for stl files
 */
+#include "SdConfig.h"
 #include "Sd3dReaderStl.h"
 
 #include <QFile>
@@ -73,12 +74,15 @@ Sd3dPoint readStlVector3d(QIODevice *file)
 //! \param fname             Full path to STL file
 //! \return                  Pointer to Sd3dFaceSet object if import was successfull or nullptr in other case
 //!
-Sd3dFaceSet *Sd3dReaderStl::importStlFromFile(QString fname)
+Sd3dGraphModel *Sd3dReaderStl::importStlFromFile(QString fname)
   {
   QFile file(fname);
 
   if( file.open( QIODevice::ReadOnly ) ) {
-    Sd3dFaceSet *stl = new Sd3dFaceSet();
+    Sd3dModel model;
+    Sd3drFaceList faceList;
+    Sd3drInstance inst;
+    inst.addCopy( QMatrix4x4() );
 
     //Skeep header
     file.seek( 80 );
@@ -88,14 +92,15 @@ Sd3dFaceSet *Sd3dReaderStl::importStlFromFile(QString fname)
     file.read( static_cast<char*>( static_cast<void*>((&triangleCount)) ), 4 );
     //qDebug() << "triangle count" << triangleCount;
 
+    quint32 currentColor = qRgba( 30, 30, 30, 0xff );
     for( int i = 0; i < triangleCount; i++ ) {
       //Read triangle
-      //Read normal vector
-      Sd3dPoint normal = readStlVector3d( &file );
+      //Read normal vector, we don't use normal vector
+      readStlVector3d( &file );
       //Read triangle vertexes
-      Sd3dPoint vertexA = readStlVector3d( &file );
-      Sd3dPoint vertexB = readStlVector3d( &file );
-      Sd3dPoint vertexC = readStlVector3d( &file );
+      int vertexA = model.vertexAppend( readStlVector3d( &file ) );
+      int vertexB = model.vertexAppend( readStlVector3d( &file ) );
+      int vertexC = model.vertexAppend( readStlVector3d( &file ) );
       //Read triangle attributes which we treat as color
       quint16 srcColor = readStlUShort( &file );
       quint32 faceColor;
@@ -107,12 +112,29 @@ Sd3dFaceSet *Sd3dReaderStl::importStlFromFile(QString fname)
         //No color defined, setup gray color
         faceColor = qRgba( 30, 30, 30, 0xff );
         }
-      Sd3dFaceEx triangle( {vertexA, vertexB, vertexC}, {normal, normal, normal}, faceColor );
+      if( faceColor != currentColor && faceList.count() ) {
+        Sd3drBody body;
+        body.faceAppend( faceList );
+        body.colorSet( currentColor );
+        inst.add( body );
+        faceList.clear();
+        }
+      currentColor = faceColor;
+      Sd3drFace face( {vertexA, vertexB, vertexC} );
       //Append it to list
-      stl->faceAdd( triangle );
+      faceList.append( face );
       }
 
-    return stl;
+    if( faceList.count() ) {
+      Sd3drBody body;
+      body.faceAppend( faceList );
+      body.colorSet( currentColor );
+      inst.add( body );
+      }
+
+    model.instanceAppend( inst );
+
+    return new Sd3dGraphModel( model );
     }
   return nullptr;
   }

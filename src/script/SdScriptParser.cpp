@@ -28,9 +28,7 @@ Description
 #include "SdScriptValueVariableString.h"
 #include "SdScriptValueVariableVertex.h"
 #include "SdScriptValueVariableMatrix.h"
-#include "SdScriptValueVariableSegment.h"
-#include "SdScriptValueVariablePath.h"
-#include "SdScriptValueVariableRegion.h"
+#include "SdScriptValueVariableFaceList.h"
 #include "SdScriptValueVariableFace.h"
 #include "SdScriptValueVariableModel.h"
 #include "SdScriptValueVariableGraph.h"
@@ -41,7 +39,7 @@ Description
 #include "SdScriptValueBool.h"
 
 #include "SdScriptValueArray3dVertex.h"
-#include "SdScriptValueArray3dSegment.h"
+#include "SdScriptValueArrayFloat.h"
 #include "SdScriptValueArray3dFace.h"
 
 #include "SdScriptValueOpBinaryFloatMult.h"
@@ -168,19 +166,17 @@ SdScriptOperator *SdScriptParser::parseOperator()
   //Depending on the type of expression, build a variable
   SdScriptValueVariable *var = nullptr;
   switch( val->type() ) {
-    case SD_SCRIPT_TYPE_BOOL    : var = new SdScriptValueVariableBool(); break;
-    case SD_SCRIPT_TYPE_FLOAT   : var = new SdScriptValueVariableFloat(); break;
-    case SD_SCRIPT_TYPE_COLOR   : var = new SdScriptValueVariableColor(); break;
-    case SD_SCRIPT_TYPE_STRING  : var = new SdScriptValueVariableString(); break;
-    case SD_SCRIPT_TYPE_VERTEX  : var = new SdScriptValueVariableVertex(); break;
-    case SD_SCRIPT_TYPE_MATRIX  : var = new SdScriptValueVariableMatrix(); break;
-    case SD_SCRIPT_TYPE_SEGMENT : var = new SdScriptValueVariableSegment(); break;
-    case SD_SCRIPT_TYPE_PATH    : var = new SdScriptValueVariablePath(); break;
-    case SD_SCRIPT_TYPE_REGION  : var = new SdScriptValueVariableRegion(); break;
-    case SD_SCRIPT_TYPE_FACE    : var = new SdScriptValueVariableFace(); break;
-    case SD_SCRIPT_TYPE_MODEL   : var = new SdScriptValueVariableModel(); break;
-    case SD_SCRIPT_TYPE_GRAPH   : var = new SdScriptValueVariableGraph(); break;
-    case SD_SCRIPT_TYPE_REF   :
+    case SD_SCRIPT_TYPE_BOOL      : var = new SdScriptValueVariableBool(); break;
+    case SD_SCRIPT_TYPE_FLOAT     : var = new SdScriptValueVariableFloat(); break;
+    case SD_SCRIPT_TYPE_COLOR     : var = new SdScriptValueVariableColor(); break;
+    case SD_SCRIPT_TYPE_STRING    : var = new SdScriptValueVariableString(); break;
+    case SD_SCRIPT_TYPE_VERTEX    : var = new SdScriptValueVariableVertex(); break;
+    case SD_SCRIPT_TYPE_MATRIX    : var = new SdScriptValueVariableMatrix(); break;
+    case SD_SCRIPT_TYPE_FACE_LIST : var = new SdScriptValueVariableFaceList(); break;
+    case SD_SCRIPT_TYPE_FACE      : var = new SdScriptValueVariableFace(); break;
+    case SD_SCRIPT_TYPE_MODEL     : var = new SdScriptValueVariableModel(); break;
+    case SD_SCRIPT_TYPE_GRAPH     : var = new SdScriptValueVariableGraph(); break;
+    case SD_SCRIPT_TYPE_REF       :
       var = buildRefVariable( variableName, val );
       if( var != nullptr ) break;
     default:
@@ -504,8 +500,8 @@ SdScriptValue *SdScriptParser::parseVar()
     SdScriptValueArray *array;
     if( val->type() == SD_SCRIPT_TYPE_VERTEX )
       array = new SdScriptValueArray3dVertex();
-    else if( val->type() == SD_SCRIPT_TYPE_SEGMENT )
-      array = new SdScriptValueArray3dSegment();
+    else if( val->type() == SD_SCRIPT_TYPE_FLOAT )
+      array = new SdScriptValueArrayFloat();
     else if( val->type() == SD_SCRIPT_TYPE_FACE )
       array = new SdScriptValueArray3dFace();
     else {

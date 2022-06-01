@@ -6,7 +6,7 @@
 class SdScriptParser3d : public SdScriptParser
   {
   public:
-    SdScriptParser3d(QTableWidget *tableWidget);
+    SdScriptParser3d(QTableWidget *tableWidget, Sd3dModel *model);
 
     //!
     //! \brief parse   Execute parsing of programm source text and generates tree of programm
@@ -14,7 +14,7 @@ class SdScriptParser3d : public SdScriptParser
     //! \param part    Part to which will be placed generated faces
     //! \return        Programm tree
     //!
-    SdScriptProgrammPtr parse3d(const QString src, SdPItemPart *part);
+    SdScriptProgrammPtr parse3d(const QString src, SdPItemPart *part, Sd3dModel *model);
   };
 
 #endif // SDSCRIPTPARSER3D_H

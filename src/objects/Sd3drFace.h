@@ -8,24 +8,26 @@
 #include <QList>
 #include <QMatrix4x4>
 
-class Sd3drFace
-  {
-    QList<int> mVertexRefList;
-  public:
-    Sd3drFace() {}
+using Sd3drFace = QList<int>;
 
-    Sd3drFace( QList<int> refList ) : mVertexRefList(refList) {}
+//class Sd3drFace
+//  {
+//    QList<int> mVertexRefList;
+//  public:
+//    Sd3drFace() {}
 
-    void       addRef( int ref ) { mVertexRefList.append( ref ); }
+//    Sd3drFace( QList<int> refList ) : mVertexRefList(refList) {}
 
-    QList<int> vertexRefList() const { return mVertexRefList; }
+//    void       addRef( int ref ) { mVertexRefList.append( ref ); }
 
-    void       json( SdJsonWriter &js ) const;
+//    QList<int> vertexRefList() const { return mVertexRefList; }
 
-    void       json( const SdJsonReader &js );
+//    void       json( SdJsonWriter &js ) const;
 
-    void       draw( QOpenGLFunctions_2_0 *f, const Sd3dRegion &vertexList, const QMatrix4x4 &map ) const;
-  };
+//    void       json( const SdJsonReader &js );
+
+//    void       draw( QOpenGLFunctions_2_0 *f, const Sd3dRegion &vertexList, const QMatrix4x4 &map ) const;
+//  };
 
 
 using Sd3drFaceList = QList<Sd3drFace>;

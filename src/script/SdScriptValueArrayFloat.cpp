@@ -12,22 +12,22 @@ Description
   Script language is C-style hi-level language for programming 3d models, 2d parametric graphics and
   schematic calculations.
 
-  Array of 3d segments.
+  Array of floats
 */
-#include "SdScriptValueArray3dSegment.h"
+#include "SdScriptValueArrayFloat.h"
+
 
 
 
 //!
-//! \brief toPath Convert object to path of 3d points
-//! \return       Path of 3d points
+//! \brief toIndex Convert object to float list
+//! \return        Float list
 //!
-SdScriptVal3dPath SdScriptValueArray3dSegment::toPath() const
+QList<float> SdScriptValueArrayFloat::toFloatList() const
   {
-  SdScriptVal3dPath path;
+  QList<float> list;
+  list.reserve( mArray.count() );
   for( auto ptr : mArray )
-    path.append( ptr->toSegment() );
-  return path;
+    list.append( ptr->toFloat() );
+  return list;
   }
-
-

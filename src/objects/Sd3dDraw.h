@@ -124,7 +124,7 @@ class Sd3dDraw
     //! \param f        OpenGL
     //! \param face     Face to draw
     //!
-    static void drawFace( QOpenGLFunctions_2_0 *f, const Sd3dFace &face );
+    //static void drawFace( QOpenGLFunctions_2_0 *f, const Sd3dFace &face );
 
     //!
     //! \brief drawModel Draw model in 3d world

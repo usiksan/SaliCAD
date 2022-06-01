@@ -17,25 +17,37 @@ Description
 #ifndef SDSCRIPTVALUEVARIABLEVERTEX_H
 #define SDSCRIPTVALUEVARIABLEVERTEX_H
 
-#include "SdScriptValueVariable3d.h"
+#include "SdScriptValueVariable.h"
 
-class SdScriptValueVariableVertex : public SdScriptValueVariable3d
+class SdScriptValueVariableVertex : public SdScriptValueVariable
   {
+    int mIndex;
   public:
     SdScriptValueVariableVertex() {}
 
 
 
-    // SdM3dValue interface
+    // SdScriptValue interface
   public:
     //!
     //! \brief type Return type of object
     //! \return     Type of object
     //!
-    virtual char      type() const override { return SD_SCRIPT_TYPE_VERTEX; }
+    virtual char type() const override { return SD_SCRIPT_TYPE_VERTEX; }
 
-    // SdM3dVariable interface
+    //!
+    //! \brief toVertexIndex Convert object to vertex index in Sd3dModel point list
+    //! \return              Vertex index in Sd3dModel point list
+    //!
+    virtual int  toVertexIndex() const override { return mIndex; }
+
+    // SdScriptValueVariable interface
   public:
+    //!
+    //! \brief assign Assignment value to variable
+    //! \param src    source of value
+    //!
+    virtual void assign(SdScriptValuePtr src) override { mIndex = src->toVertexIndex(); }
   };
 
 #endif // SDSCRIPTVALUEVARIABLEVERTEX_H

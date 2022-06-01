@@ -17,16 +17,16 @@ Description
 #include "SdScriptValueArray3dVertex.h"
 
 
+
+
 //!
-//! \brief toRegion Convert object to 3d region which is closed region of 3d vertex
-//! \return         3d region which is closed region of 3d vertex
+//! \brief toFace Convert object to list of vertex index which is face region
+//! \return       List of vertex index which is face region
 //!
-SdScriptVal3dRegion SdScriptValueArray3dVertex::toRegion() const
+Sd3drFace SdScriptValueArray3dVertex::toFace() const
   {
-  SdScriptVal3dRegion region;
+  Sd3drFace face;
   for( auto const ptr : mArray )
-    region.append( ptr->toVertex() );
-  return region;
+    face.append( ptr->toVertexIndex() );
+  return face;
   }
-
-

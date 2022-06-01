@@ -7,6 +7,12 @@ Sd3dGraphModel::Sd3dGraphModel()
 
   }
 
+Sd3dGraphModel::Sd3dGraphModel(const Sd3dModel &model) :
+  mModel(model)
+  {
+
+  }
+
 
 
 

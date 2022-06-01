@@ -19,14 +19,14 @@ Description
 
 
 //!
-//! \brief toModel Convert object to 3d model
-//! \return        3d model
+//! \brief toFaceList Convert object to list of face each of which is list of vertex index
+//! \return           List of face each of which is list of vertex index
 //!
-SdScriptVal3dModel SdScriptValueArray3dFace::toModel() const
+Sd3drFaceList SdScriptValueArray3dFace::toFaceList() const
   {
-  SdScriptVal3dModel model;
+  Sd3drFaceList faceList;
+  faceList.reserve( mArray.count() );
   for( auto ptr : mArray )
-    model.append( ptr->toFace() );
-  return model;
+    faceList.append( ptr->toFace() );
+  return faceList;
   }
-

@@ -21,54 +21,81 @@ Description
 class Sd3dModel
   {
     Sd3dRegion        mVertexList;   //!< 3d vertex list
-    Sd3drFaceList     mFaceList;     //!< 3d face list, each face consists of face region
-    Sd3drBodyList     mBodyList;     //!< 3d body list, each body consists of face list and its colors
     Sd3drInstanceList mInstanceList; //!< 3d instance list, each instance contains one or more copy of some body list
   public:
     //!
     //! \brief clear Clear model
     //!
-    void       clear();
+    void          clear();
 
-    QVector3D  vertex( int index ) const { return mVertexList.at(index); }
+    QVector3D     vertex( int index ) const { return mVertexList.at(index); }
 
-    Sd3dRegion vertexList( const QList<int> &indexList ) const;
+    Sd3dRegion    vertexList( const QList<int> &indexList ) const;
 
-    int        vertexAppend( QVector3D v ) { mVertexList.append(v); return mVertexList.count() - 1; }
-
-    QList<int> vertexAppend( Sd3dRegion r );
-
-
-    Sd3drFace  face( int index ) const { return mFaceList.at(index); }
-
-    QList<int> faceVertexList( int faceIndex ) const { return mFaceList.at(faceIndex).vertexRefList(); }
-
-    int        faceAppend( Sd3drFace face ) { mFaceList.append( face ); return mFaceList.count() - 1; }
-
-    int        faceAppend( Sd3dRegion r );
-
-    int        faceCircle( float radius, float stepDegree, QVector3D offset );
-
-    int        faceCircleSide( float radius, int sideCount, QVector3D center );
-
-    int        faceDuplicate( int faceIndex, const QMatrix4x4 &map );
-
-    QList<int> faceWall(int face1, int face2 , bool close);
-
-    QList<int> faceExtrude( int faceIndex, const QMatrix4x4 &map );
+    int           vertexAppend( QVector3D v ) { mVertexList.append(v); return mVertexList.count() - 1; }
 
 
 
-    Sd3drBody  body( int index ) const { return mBodyList.at(index); }
+    QMatrix4x4    matrixShift( const Sd3drFace &face, float shift );
 
-    int        bodyAppend( Sd3drBody body ) { mBodyList.append( body ); return mBodyList.count() - 1; }
 
-    void       bodyColorSet( int index, QColor color ) { mBodyList[index].colorSet(color); }
 
-    QColor     bodyColor( int index ) const { return mBodyList.at(index).color(); }
+    Sd3drFace     faceFromRegion( Sd3dRegion r );
 
-    void       bodyFaceAppend( int bodyIndex, const QList<int> &faceList ) { mBodyList[bodyIndex].addRef( faceList ); }
+    Sd3drFace     faceFlat( const QList<float> &pairList, int orientation );
 
+    Sd3drFace     faceCircle( float radius, float stepDegree, const QMatrix4x4 &map );
+
+    Sd3drFace     faceCircleSide( float radius, int sideCount, const QMatrix4x4 &map );
+
+    Sd3drFace     faceRectangle( float lenght, float width, const QMatrix4x4 &map );
+
+    Sd3drFace     faceRectangleRound( float width, float lenght, float radius, float stepDegree, const QMatrix4x4 &map );
+
+    Sd3drFace     faceRectangleSide( float width, float lenght, int sideCount, const QMatrix4x4 &map );
+
+    Sd3drFace     faceDuplicate( const Sd3drFace &face, const QMatrix4x4 &map );
+
+    Sd3drFace     faceDuplicateShift( const Sd3drFace &face, float shift ) { return faceDuplicate( face, matrixShift( face, shift ) ); }
+
+    Sd3drFace     faceTrapezoidZ( const Sd3drFace &face, float height, float lessX, float lessY, float topShiftX, float topShiftY );
+
+    Sd3drFaceList faceListExtrude( const Sd3drFace &face, const QMatrix4x4 &map );
+
+    Sd3drFaceList faceListExtrudeShift( const Sd3drFace &face, float shift );
+
+    //!
+    //! \brief faceListBodyBeveled  Builds beveled body of part
+    //! \param bodyLenght           Full body lenght (X)
+    //! \param bodyWidth            Full body width (Y)
+    //! \param bodyHeight           Full body height (H)
+    //! \param bevelFront           Bevel size in front of body
+    //! \param bevelSide            Bevel size in other sides of body
+    //! \param verticalHeight       Vertical walls height of body for pin placing
+    //! \return                     Model of beveled body of part
+    //!
+    Sd3drFaceList faceListBodyBeveled(float bodyLenght, float bodyWidth, float bodyHeight, float bevelFront, float bevelSide, float verticalHeight );
+
+    Sd3drFaceList faceListBox( float bodyLenght, float bodyWidth, float bodyHeight );
+
+    Sd3drFaceList faceListCylinder( float radius, float height );
+
+    //!
+    //! \brief sd3dModelHexagon Builds hexagonal box body of part
+    //! \param lenght           Lenght of box
+    //! \param topLenght        Top lenght excluding bevels
+    //! \param height           Height of box
+    //! \param width            Width of box
+    //! \param color            Color of faces of model
+    //! \return                 Model of hexagonal box body of part
+    //!
+    Sd3drFaceList faceListHexagon(float lenght, float topLenght, float height, float width);
+
+
+    static Sd3drFaceList faceListWall( const Sd3drFace &face1, const Sd3drFace &face2, bool close );
+
+
+    void          instanceAppend( const Sd3drInstance &inst ) { mInstanceList.append(inst); }
 
 
     //!

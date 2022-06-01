@@ -18,7 +18,6 @@ Description
 #define SDSCRIPTTYPES_H
 
 #include "objects/Sd3dRegion.h"
-#include "objects/Sd3dFace.h"
 #include "objects/Sd3dModel.h"
 
 #include <QString>
@@ -27,21 +26,23 @@ Description
 #include <QList>
 #include <QColor>
 
-#define SD_SCRIPT_TYPE_NONE    '_'
+#define SD_SCRIPT_TYPE_NONE      '_'
 //basis
-#define SD_SCRIPT_TYPE_BOOL    'b'
-#define SD_SCRIPT_TYPE_FLOAT   'd'
-#define SD_SCRIPT_TYPE_COLOR   'c'
-#define SD_SCRIPT_TYPE_STRING  's'
+#define SD_SCRIPT_TYPE_BOOL      'b'
+#define SD_SCRIPT_TYPE_FLOAT     'd'
+#define SD_SCRIPT_TYPE_COLOR     'c'
+#define SD_SCRIPT_TYPE_STRING    's'
+#define SD_SCRIPT_TYPE_AFLOAT    'a'
 //param reference
-#define SD_SCRIPT_TYPE_REF     't'
+#define SD_SCRIPT_TYPE_REF       't'
 //2d
-#define SD_SCRIPT_TYPE_GRAPH   'g'
+#define SD_SCRIPT_TYPE_GRAPH     'g'
 //3d
-#define SD_SCRIPT_TYPE_VERTEX  'v'
-#define SD_SCRIPT_TYPE_FACE    'f'
-#define SD_SCRIPT_TYPE_BODY    'x'
-#define SD_SCRIPT_TYPE_MODEL   'm'
+#define SD_SCRIPT_TYPE_VERTEX    'v' //Single vertex index
+#define SD_SCRIPT_TYPE_FACE      'f' //List of vertex index
+#define SD_SCRIPT_TYPE_FACE_LIST 'l' //List of list of vertex index
+#define SD_SCRIPT_TYPE_MODEL     'm' //Model, instance of body
+#define SD_SCRIPT_TYPE_MATRIX    'x'
 
 
 //!
@@ -229,21 +230,5 @@ class SdScriptVal2dGraph {
       }
   };
 
-
-
-
-
-struct SdScriptVal3dSegment {
-    QVector3D mStart;  //!< Start vertex of segment
-    QVector3D mFinish; //!< Finish vertex of segment
-  };
-
-using SdScriptVal3dPath = QList<SdScriptVal3dSegment>;
-
-using SdScriptVal3dRegion = Sd3dRegion;
-
-using SdScriptVal3dFace = Sd3dFace;
-
-using SdScriptVal3dModel = Sd3dModel;
 
 #endif // SDSCRIPTTYPES_H

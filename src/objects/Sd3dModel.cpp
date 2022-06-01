@@ -1,6 +1,9 @@
 #include "Sd3dModel.h"
 
 
+#include <math.h>
+
+
 
 
 
@@ -367,92 +370,12 @@ Sd3dModel sd3dModelPinTqfp(float width, float thickness, float fullLenght, float
 
 
 
-//!
-//! \brief sd3dModelHexagon Builds hexagonal box body of part
-//! \param lenght           Lenght of box
-//! \param topLenght        Top lenght excluding bevels
-//! \param height           Height of box
-//! \param width            Width of box
-//! \param color            Color of faces of model
-//! \return                 Model of hexagonal box body of part
-//!
-Sd3dModel sd3dModelHexagon(float lenght, float topLenght, float height, float width, QColor color)
-  {
-  //Profile of hexagon
-  float bevelLenght = (lenght - topLenght) / 2.0;
-  QVector3D v0( -topLenght / 2.0, -width / 2.0, 0 );
-  QVector3D v1 = v0 + QVector3D( -bevelLenght, 0, height / 2.0 );
-  QVector3D v2 = v1 + QVector3D(  bevelLenght, 0, height / 2.0 );
-  QVector3D v3 = v2 + QVector3D(  topLenght, 0, 0 );
-  QVector3D v4 = v3 + QVector3D(  bevelLenght, 0, -height / 2.0 );
-  QVector3D v5 = v4 + QVector3D( -bevelLenght, 0, -height / 2.0 );
-  Sd3dRegion profile;
-  profile << v0 << v1 << v2 << v3 << v4 << v5;
-  return sd3dModelExtrude( profile, -width, color );
-  }
-
-
-
-
-//!
-//! \brief sd3dModelBodyBeveled Builds beveled body of part
-//! \param bodyLenght           Full body lenght (X)
-//! \param bodyWidth            Full body width (Y)
-//! \param bodyHeight           Full body height (H)
-//! \param bevelFront           Bevel size in front of body
-//! \param bevelSide            Bevel size in other sides of body
-//! \param verticalHeight       Vertical walls height of body for pin placing
-//! \param color                Body color
-//! \return                     Model of beveled body of part
-//!
-Sd3dModel sd3dModelBodyBeveled(float bodyLenght, float bodyWidth, float bodyHeight, float bevelFront, float bevelSide, float verticalHeight, QColor color)
-  {
-  Sd3dModel body;
-  float middleHeight = (bodyHeight - verticalHeight) / 2.0;
-  //Middle profile section of body
-  QVector3D m0( -bodyLenght / 2.0, -bodyWidth / 2.0, middleHeight );
-  QVector3D m1( -bodyLenght / 2.0,  bodyWidth / 2.0, middleHeight );
-  QVector3D m2(  bodyLenght / 2.0,  bodyWidth / 2.0, middleHeight );
-  QVector3D m3(  bodyLenght / 2.0, -bodyWidth / 2.0, middleHeight );
-  Sd3dRegion middleRegion({m0,m1,m2,m3});
-
-  //Bottom side
-  QVector3D b0 = m0 + QVector3D( bevelSide, bevelFront, -middleHeight );
-  QVector3D b1 = m1 + QVector3D( bevelSide, -bevelSide, -middleHeight );
-  QVector3D b2 = m2 + QVector3D( -bevelSide, -bevelSide, -middleHeight );
-  QVector3D b3 = m3 + QVector3D( -bevelSide, bevelFront, -middleHeight );
-  Sd3dRegion bottomRegion({b0,b1,b2,b3});
-  body += Sd3dFace( bottomRegion, color );
-
-  //Bottom bevels
-  body += sd3dModelWalls( bottomRegion, middleRegion, color, true );
-
-  //Middle walls
-  body += sd3dModelWall( Sd3dRegion({m0,m1,m2,m3}), QVector3D( 0, 0, verticalHeight ), color, true );
-
-  //Top side
-  QVector3D t0 = b0 + QVector3D( 0, 0, bodyHeight );
-  QVector3D t1 = b1 + QVector3D( 0, 0, bodyHeight );
-  QVector3D t2 = b2 + QVector3D( 0, 0, bodyHeight );
-  QVector3D t3 = b3 + QVector3D( 0, 0, bodyHeight );
-  Sd3dRegion topRegion({t0,t1,t2,t3});
-
-  //Top bevels
-  body += sd3dModelWalls( sd3dRegionTranslate( middleRegion, QVector3D(0,0,verticalHeight) ), topRegion, color, true );
-
-  //Top face
-  body += Sd3dFace( topRegion, color );
-  return body;
-  }
-
 
 
 
 void Sd3dModel::clear()
   {
   mVertexList.clear();
-  mFaceList.clear();
-  mBodyList.clear();
   mInstanceList.clear();
   }
 
@@ -468,9 +391,25 @@ Sd3dRegion Sd3dModel::vertexList(const QList<int> &indexList) const
 
 
 
-QList<int> Sd3dModel::vertexAppend(Sd3dRegion r)
+
+QMatrix4x4 Sd3dModel::matrixShift(const Sd3drFace &face, float shift)
   {
-  QList<int> regionRef;
+  QMatrix4x4 map;
+  if( face.count() < 3 )
+    return map;
+  //Normal vector
+  QVector3D normal = QVector3D::normal( vertex( face.at(0) ), vertex( face.at(1) ), vertex( face.at(2) ) );
+  normal *= -shift;
+  map.translate( normal );
+  return map;
+  }
+
+
+
+
+Sd3drFace Sd3dModel::faceFromRegion(Sd3dRegion r)
+  {
+  Sd3drFace regionRef;
   for( auto v : r ) {
     int vertexIndex = vertexAppend( v );
     regionRef.append(vertexIndex);
@@ -481,55 +420,151 @@ QList<int> Sd3dModel::vertexAppend(Sd3dRegion r)
 
 
 
-int Sd3dModel::faceAppend(Sd3dRegion r)
+Sd3drFace Sd3dModel::faceFlat(const QList<float> &pairList, int orientation)
   {
-  return faceAppend( Sd3drFace(vertexAppend(r)) );
-  }
-
-
-
-
-int Sd3dModel::faceCircle(float radius, float stepDegree, QVector3D offset)
-  {
-  return faceAppend( sd3dRegionCircle( radius, stepDegree, offset ) );
-  }
-
-
-
-int Sd3dModel::faceCircleSide(float radius, int sideCount, QVector3D center)
-  {
-  return faceAppend( sd3dRegionCircleSideCount( radius, sideCount, center ) );
-  }
-
-
-
-
-int Sd3dModel::faceDuplicate(int faceIndex, const QMatrix4x4 &map)
-  {
-  QList<int> region = faceVertexList(faceIndex);
-  QList<int> newRegion;
-  for( auto index : region ) {
-    newRegion.append( vertexAppend( map.map( vertex(index) )  )   );
+  Sd3drFace face;
+  float xy( orientation == 0 ? 1.0 : 0 );
+  float yz( orientation == 1 ? 1.0 : 0 );
+  float xz( orientation == 2 ? 1.0 : 0 );
+  int count = pairList.count() / 2;
+  if( count < 3 )
+    return face;
+  count <<= 1;
+  QVector3D v;
+  for( int i = 0; i < count; i += 2 ) {
+    v += QVector3D( pairList.at(i) * xy + pairList.at(i) * xz, pairList.at(i+1) * xy + pairList.at(i) * yz, pairList.at(i+1) * yz + pairList.at(i+1) * xz );
+    face.append( vertexAppend(v) );
     }
-  return faceAppend( newRegion );
+  return face;
+  }
+
+
+
+Sd3drFace Sd3dModel::faceCircle(float radius, float stepDegree, const QMatrix4x4 &map)
+  {
+  Sd3drFace region;
+  //Build circle with step 10 degree
+  for( float angleDegree = 0; angleDegree < 360.0; angleDegree += stepDegree ) {
+    //Convert degree to radians
+    float angle = angleDegree * M_PI / 180.0;
+    //Build next corner
+    QVector3D v( sin(angle) * radius, cos(angle) * radius, 0 );
+    //Append corner to region
+    region.append( vertexAppend( map.map(v) )  );
+    }
+  return region;
+  }
+
+
+
+Sd3drFace Sd3dModel::faceCircleSide(float radius, int sideCount, const QMatrix4x4 &map)
+  {
+  float stepDegree = 360.0 / sideCount;
+  return faceCircle( radius, stepDegree, map );
+  }
+
+
+
+Sd3drFace Sd3dModel::faceRectangle(float lenght, float width, const QMatrix4x4 &map)
+  {
+  width /= 2.0;
+  lenght /= 2.0;
+  QVector3D p0( -lenght, -width, 0 );
+  QVector3D p1(  lenght, -width, 0 );
+  QVector3D p2(  lenght,  width, 0 );
+  QVector3D p3( -lenght,  width, 0 );
+
+  return Sd3drFace( { vertexAppend( map.map(p0) ), vertexAppend( map.map(p1)), vertexAppend( map.map(p2) ), vertexAppend( map.map(p3) ) } );
   }
 
 
 
 
-QList<int> Sd3dModel::faceWall(int face1, int face2, bool close)
+Sd3drFace Sd3dModel::faceRectangleSide(float width, float lenght, int sideCount, const QMatrix4x4 &map)
   {
-  QList<int> region1 = faceVertexList(face1);
-  QList<int> region2 = faceVertexList(face2);
-  QList<int> walls;
-  for( int i = 0; i < region1.count() - 1; i++ ) {
-    QList<int> wall( { region1.at(i), region1.at(i+1), region2.at(i+1), region2.at(i) } );
-    walls.append( faceAppend( Sd3drFace(wall) ) );
+  float edgeOnSide = sideCount / 4;
+  float stepw = width / edgeOnSide;
+  float steph = lenght / edgeOnSide;
+  QVector3D v( width/2.0, lenght/2.0, 0);
+  Sd3drFace face;
+  face.append( vertexAppend( map.map( v ) )   );
+  for( int i = 0; i < edgeOnSide / 2; i++ ) {
+    v += QVector3D( stepw, 0, 0 );
+    face.append( vertexAppend( map.map( v ) )   );
+    }
+  for( int i = 0; i < edgeOnSide; i++ ) {
+    v += QVector3D( 0, -steph, 0 );
+    face.append( vertexAppend( map.map( v ) )   );
+    }
+  for( int i = 0; i < edgeOnSide; i++ ) {
+    v += QVector3D( -stepw, 0, 0 );
+    face.append( vertexAppend( map.map( v ) )   );
+    }
+  for( int i = 0; i < edgeOnSide; i++ ) {
+    v += QVector3D( 0, steph, 0 );
+    face.append( vertexAppend( map.map( v ) )   );
+    }
+  for( int i = 0; i < edgeOnSide / 2; i++ ) {
+    v += QVector3D( stepw, 0, 0 );
+    face.append( vertexAppend( map.map( v ) )   );
+    }
+  return face;
+  }
+
+
+
+
+Sd3drFace Sd3dModel::faceDuplicate(const Sd3drFace &face, const QMatrix4x4 &map)
+  {
+  Sd3drFace dest;
+  dest.reserve(face.count());
+  for( auto index : face )
+    dest.append( vertexAppend( map.map(vertex(index)) )  );
+  return dest;
+  }
+
+
+
+
+
+Sd3drFace Sd3dModel::faceTrapezoidZ(const Sd3drFace &face, float height, float lessX, float lessY, float topShiftX, float topShiftY)
+  {
+  float x(0), y(0);
+  for( auto index : face ) {
+    QVector3D v = vertex( index );
+    x = qMax( x, qAbs(v.x()) );
+    y = qMax( y, qAbs(v.y()) );
+    }
+  float topX = x - lessX;
+  float topY = y - lessY;
+  if( x == 0 || y == 0 )
+    return Sd3drFace{};
+  QMatrix4x4 map;
+  map.scale( topX / x, topY / y, 1.0 );
+  map.translate( topShiftX, topShiftY, height );
+  return faceDuplicate( face, map );
+  }
+
+
+
+
+
+
+
+Sd3drFaceList Sd3dModel::faceListWall(const Sd3drFace &face1, const Sd3drFace &face2, bool close)
+  {
+  Sd3drFaceList walls;
+  if( face1.count() != face2.count() || face1.count() < 3 )
+    return walls;
+
+  for( int i = 0; i < face1.count() - 1; i++ ) {
+    Sd3drFace wall( { face1.at(i), face1.at(i+1), face2.at(i+1), face2.at(i) } );
+    walls.append( wall );
     }
   if( close ) {
     //Append wall with n-1 and 0 vertex
-    QList<int> wall( { region1.last(), region1.first(), region2.first(), region2.last() } );
-    walls.append( faceAppend( Sd3drFace(wall) ) );
+    Sd3drFace wall( { face1.last(), face1.first(), face2.first(), face2.last() } );
+    walls.append( wall );
     }
 
   return walls;
@@ -538,10 +573,115 @@ QList<int> Sd3dModel::faceWall(int face1, int face2, bool close)
 
 
 
-QList<int> Sd3dModel::faceExtrude(int faceIndex, const QMatrix4x4 &map)
+
+
+
+Sd3drFaceList Sd3dModel::faceListExtrude(const Sd3drFace &face, const QMatrix4x4 &map)
   {
-  return faceWall( faceIndex, faceDuplicate( faceIndex, map ), true );
+  Sd3drFaceList faceList;
+  //Append bottom
+  faceList.append( face );
+
+  //Create top
+  Sd3drFace other = faceDuplicate( face, map );
+
+  //Append walls
+  faceList.append( faceListWall( face, other, true ) );
+
+  //Append top
+  faceList.append( other );
+
+  return faceList;
   }
+
+
+
+
+Sd3drFaceList Sd3dModel::faceListExtrudeShift(const Sd3drFace &face, float shift)
+  {
+  return faceListExtrude( face, matrixShift( face, shift )   );
+  }
+
+
+
+//!
+//! \brief faceListBodyBeveled  Builds beveled body of part
+//! \param bodyLenght           Full body lenght (X)
+//! \param bodyWidth            Full body width (Y)
+//! \param bodyHeight           Full body height (H)
+//! \param bevelFront           Bevel size in front of body
+//! \param bevelSide            Bevel size in other sides of body
+//! \param verticalHeight       Vertical walls height of body for pin placing
+//! \return                     Model of beveled body of part
+//!
+Sd3drFaceList Sd3dModel::faceListBodyBeveled(float bodyLenght, float bodyWidth, float bodyHeight, float bevelFront, float bevelSide, float verticalHeight )
+  {
+  //Bottom rectangle
+  Sd3drFace bottom = faceRectangle( bodyLenght, bodyWidth, QMatrix4x4() );
+
+  float middleHeight = (bodyHeight - verticalHeight) / 2.0;
+  Sd3drFace middleLow = faceTrapezoidZ( bottom, middleHeight, -bevelSide, -bevelSide, 0, 0 );
+
+  Sd3drFace middleHigh = faceDuplicateShift( middleLow, verticalHeight );
+
+  float deltaBevel = (bevelFront - bevelSide) / 2.0;
+  Sd3drFace top = faceTrapezoidZ( bottom, bodyHeight, 0, deltaBevel, 0, deltaBevel );
+
+  //Build walls
+  Sd3drFaceList body;
+  body.append( bottom );
+  body.append( faceListWall( bottom, middleLow, true ) );
+  body.append( faceListWall( middleLow, middleHigh, true ) );
+  body.append( faceListWall( middleHigh, top, true ) );
+  body.append( top );
+
+  return body;
+  }
+
+
+
+
+Sd3drFaceList Sd3dModel::faceListBox(float bodyLenght, float bodyWidth, float bodyHeight)
+  {
+  return faceListExtrudeShift( faceRectangle( bodyLenght, bodyWidth, QMatrix4x4() ), bodyHeight );
+  }
+
+
+
+Sd3drFaceList Sd3dModel::faceListCylinder(float radius, float height)
+  {
+  return faceListExtrudeShift( faceCircleSide( radius, qMax( 20, static_cast<int>(radius * 6.28) ), QMatrix4x4() ), height );
+  }
+
+
+
+//!
+//! \brief sd3dModelHexagon Builds hexagonal box body of part
+//! \param lenght           Lenght of box
+//! \param topLenght        Top lenght excluding bevels
+//! \param height           Height of box
+//! \param width            Width of box
+//! \param color            Color of faces of model
+//! \return                 Model of hexagonal box body of part
+//!
+Sd3drFaceList Sd3dModel::faceListHexagon(float lenght, float topLenght, float height, float width)
+  {
+  //Profile of hexagon
+  float bevelLenght = (lenght - topLenght) / 2.0;
+  QVector3D v0( -topLenght / 2.0, -width / 2.0, 0 );
+  QVector3D v1 = v0 + QVector3D( -bevelLenght, 0, height / 2.0 );
+  QVector3D v2 = v1 + QVector3D(  bevelLenght, 0, height / 2.0 );
+  QVector3D v3 = v2 + QVector3D(  topLenght, 0, 0 );
+  QVector3D v4 = v3 + QVector3D(  bevelLenght, 0, -height / 2.0 );
+  QVector3D v5 = v4 + QVector3D( -bevelLenght, 0, -height / 2.0 );
+  Sd3drFace faceLeft;
+  faceLeft << vertexAppend(v0) << vertexAppend(v1) << vertexAppend(v2) << vertexAppend(v3) << vertexAppend(v4) << vertexAppend(v5);
+  return faceListExtrudeShift( faceLeft, width );
+  }
+
+
+
+
 
 
 
@@ -554,8 +694,6 @@ QList<int> Sd3dModel::faceExtrude(int faceIndex, const QMatrix4x4 &map)
 void Sd3dModel::json(SdJsonWriter &js) const
   {
   json3dRegion( js, QStringLiteral("Vertex"), mVertexList );
-  js.jsonList( js, QStringLiteral("Face"), mFaceList );
-  js.jsonList( js, QStringLiteral("Body"), mBodyList );
   js.jsonList( js, QStringLiteral("Instance"), mInstanceList );
   }
 
@@ -571,8 +709,6 @@ void Sd3dModel::json(SdJsonWriter &js) const
 void Sd3dModel::json(const SdJsonReader &js)
   {
   json3dRegion( js, QStringLiteral("Vertex"), mVertexList );
-  js.jsonList( js, QStringLiteral("Face"), mFaceList );
-  js.jsonList( js, QStringLiteral("Body"), mBodyList );
   js.jsonList( js, QStringLiteral("Instance"), mInstanceList );
   }
 
@@ -582,5 +718,5 @@ void Sd3dModel::json(const SdJsonReader &js)
 void Sd3dModel::draw3d(QOpenGLFunctions_2_0 *f) const
   {
   for( auto const &instance : mInstanceList )
-    instance.draw( f, mBodyList, mFaceList, mVertexList );
+    instance.draw( f, mVertexList );
   }

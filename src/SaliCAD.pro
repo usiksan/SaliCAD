@@ -66,7 +66,6 @@ SOURCES += \
     objects/Sd3drBody.cpp \
     objects/Sd3drFace.cpp \
     objects/Sd3drInstance.cpp \
-    objects/Sd3drTransfer.cpp \
     objects/SdContainerFile.cpp \
     objects/SdCopyMap.cpp \
     objects/SdCopyMapProject.cpp \
@@ -86,21 +85,18 @@ SOURCES += \
     script/SdScriptPartModel.cpp \
     script/SdScriptProgramm.cpp \
     script/SdScriptScaner.cpp \
+    script/SdScriptValueArrayFloat.cpp \
     script/SdScriptValueFunColorBuild.cpp \
     script/SdScriptValueFunColorFromString.cpp \
-    script/SdScriptValueFunFaceTriangle.cpp \
     script/SdScriptValueFunInput.cpp \
     script/SdScriptValueFunInputBool.cpp \
     script/SdScriptValueFunInputColor.cpp \
     script/SdScriptValueFunInputFloat.cpp \
     script/SdScriptValueFunInputPad.cpp \
-    script/SdScriptValueFunModelAddExtrude.cpp \
-    script/SdScriptValueFunModelCopy.cpp \
     script/SdScriptValueFunModelHole.cpp \
     script/SdScriptValueFunRef.cpp \
     script/SdScriptValueFunction.cpp \
     script/SdScriptValueArray3dVertex.cpp \
-    script/SdScriptValueArray3dSegment.cpp \
     script/SdScriptValueArray3dFace.cpp \
     modes/Sd3dMode.cpp \
     modes/Sd3dModeFaceColor.cpp \
@@ -113,19 +109,13 @@ SOURCES += \
     modes/SdModeCPartHighlight.cpp \
     modes/SdModeCTraceDelete.cpp \
     objects/Sd3dDraw.cpp \
-    objects/Sd3dFace.cpp \
-    objects/Sd3dFaceEx.cpp \
-    objects/Sd3dFaceMaterial.cpp \
-    objects/Sd3dFaceSet.cpp \
     objects/Sd3dGraph.cpp \
     objects/Sd3dGraphModel.cpp \
     objects/Sd3dModel.cpp \
     objects/Sd3dPoint.cpp \
     objects/Sd3dRegion.cpp \
-    objects/Sd3dSolid.cpp \
     objects/Sd3dStep.cpp \
     objects/SdUndoRecord3dMatrix.cpp \
-    script/SdScriptValueVariable3d.cpp \
     script/SdScriptValueVariableRef.cpp \
     windows/SdD3dMaster.cpp \
     windows/SdD3dModelMaster.cpp \
@@ -443,7 +433,6 @@ HEADERS  += \
     objects/Sd3drBody.h \
     objects/Sd3drFace.h \
     objects/Sd3drInstance.h \
-    objects/Sd3drTransfer.h \
     objects/SdContainerFile.h \
     objects/SdCopyMap.h \
     objects/SdCopyMapProject.h \
@@ -467,13 +456,15 @@ HEADERS  += \
     script/SdScriptRefMap.h \
     script/SdScriptReference.h \
     script/SdScriptScaner.h \
+    script/SdScriptValueArrayFloat.h \
     script/SdScriptValueBool.h \
     script/SdScriptValueFloat.h \
     script/SdScriptValueFunColorBuild.h \
     script/SdScriptValueFunColorFromString.h \
-    script/SdScriptValueFunFaceBuild.h \
-    script/SdScriptValueFunFaceTranslate.h \
-    script/SdScriptValueFunFaceTriangle.h \
+    script/SdScriptValueFunFaceCircle.h \
+    script/SdScriptValueFunFaceDuplicate.h \
+    script/SdScriptValueFunFaceFlat.h \
+    script/SdScriptValueFunFaceRect.h \
     script/SdScriptValueFunGraphCircle.h \
     script/SdScriptValueFunGraphLine.h \
     script/SdScriptValueFunGraphPin.h \
@@ -484,32 +475,25 @@ HEADERS  += \
     script/SdScriptValueFunInputColor.h \
     script/SdScriptValueFunInputFloat.h \
     script/SdScriptValueFunInputPad.h \
-    script/SdScriptValueFunModelAddExtrude.h \
-    script/SdScriptValueFunModelBodyBeveled.h \
-    script/SdScriptValueFunModelBox.h \
+    script/SdScriptValueFunLFaceAppend.h \
+    script/SdScriptValueFunLFaceBodyBeveled.h \
+    script/SdScriptValueFunLFaceBox.h \
+    script/SdScriptValueFunLFaceCylinder.h \
+    script/SdScriptValueFunLFaceExtrude.h \
+    script/SdScriptValueFunLFaceHexagon.h \
+    script/SdScriptValueFunLFaceUnion.h \
+    script/SdScriptValueFunLFaceWall.h \
+    script/SdScriptValueFunModelBuild.h \
     script/SdScriptValueFunModelCopy.h \
     script/SdScriptValueFunModelCurve.h \
-    script/SdScriptValueFunModelCylinder.h \
-    script/SdScriptValueFunModelExtrude.h \
-    script/SdScriptValueFunModelHexagon.h \
     script/SdScriptValueFunModelHole.h \
     script/SdScriptValueFunModelPinTqfp.h \
-    script/SdScriptValueFunModelTranslate.h \
-    script/SdScriptValueFunModelWall.h \
-    script/SdScriptValueFunModelWallEven.h \
     script/SdScriptValueFunRef.h \
-    script/SdScriptValueFunRegionCircle.h \
-    script/SdScriptValueFunRegionRect.h \
-    script/SdScriptValueFunRegionShift.h \
-    script/SdScriptValueFunRegionTranslate.h \
     script/SdScriptValueFunStringPadCircleThrou.h \
     script/SdScriptValueFunStringPadRectThrou.h \
     script/SdScriptValueFunStringPinIndex.h \
     script/SdScriptValueFunStringPinMatrix.h \
     script/SdScriptValueFunVertexBuild.h \
-    script/SdScriptValueFunVertexCenterOfRegion.h \
-    script/SdScriptValueFunVertexOffset.h \
-    script/SdScriptValueFunVertexTranslate.h \
     script/SdScriptValueFunction.h \
     script/SdScriptValueOpBinaryFloatDiv.h \
     script/SdScriptValueOpBinaryFloatLess.h \
@@ -520,18 +504,15 @@ HEADERS  += \
     script/SdScriptValueOpUnaryFloatMinus.h \
     script/SdScriptValueString.h \
     script/SdScriptValueVariable.h \
-    script/SdScriptValueVariable3d.h \
     script/SdScriptValueVariableBool.h \
     script/SdScriptValueVariableColor.h \
     script/SdScriptValueVariableFace.h \
+    script/SdScriptValueVariableFaceList.h \
     script/SdScriptValueVariableFloat.h \
     script/SdScriptValueVariableGraph.h \
     script/SdScriptValueVariableMatrix.h \
     script/SdScriptValueVariableModel.h \
-    script/SdScriptValueVariablePath.h \
     script/SdScriptValueVariableRef.h \
-    script/SdScriptValueVariableRegion.h \
-    script/SdScriptValueVariableSegment.h \
     script/SdScriptValueVariableString.h \
     script/SdScriptValueVariableVertex.h \
     script/SdScriptValueOpBinaryFloatAdd.h \
@@ -542,7 +523,6 @@ HEADERS  += \
     script/SdScriptValueOpBinaryBool.h \
     script/SdScriptValueOpBinary.h \
     script/SdScriptValueArray3dVertex.h \
-    script/SdScriptValueArray3dSegment.h \
     script/SdScriptValueArray3dFace.h \
     script/SdScriptValueArray.h \
     script/SdScriptTypes.h \
@@ -558,16 +538,11 @@ HEADERS  += \
     modes/SdModeCPartHighlight.h \
     modes/SdModeCTraceDelete.h \
     objects/Sd3dDraw.h \
-    objects/Sd3dFace.h \
-    objects/Sd3dFaceEx.h \
-    objects/Sd3dFaceMaterial.h \
-    objects/Sd3dFaceSet.h \
     objects/Sd3dGraph.h \
     objects/Sd3dGraphModel.h \
     objects/Sd3dModel.h \
     objects/Sd3dPoint.h \
     objects/Sd3dRegion.h \
-    objects/Sd3dSolid.h \
     objects/Sd3dStep.h \
     objects/SdProperty.h \
     objects/SdUndoRecord3dMatrix.h \

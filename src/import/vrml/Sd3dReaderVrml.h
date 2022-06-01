@@ -14,8 +14,7 @@ Description
 #ifndef SD3DREADERVRML_H
 #define SD3DREADERVRML_H
 
-#include "objects/Sd3dFaceSet.h"
-#include "objects/Sd3dGraph.h"
+#include "objects/Sd3dGraphModel.h"
 
 class Sd3dReaderVrml
   {

@@ -17,37 +17,38 @@ Description
 #ifndef SDSCRIPTVALUEVARIABLEFACE_H
 #define SDSCRIPTVALUEVARIABLEFACE_H
 
-#include "SdScriptValueVariable.h"
+#include "SdScriptValueVariable3d.h"
 
 class SdScriptValueVariableFace : public SdScriptValueVariable
   {
-    SdScriptVal3dFace mValue; //!< Face value of variable
+    Sd3drFace mFace;
   public:
-    SdScriptValueVariableFace() : mValue() {}
+    SdScriptValueVariableFace() {}
 
 
 
-    // SdM3dValue interface
+    // SdScriptValue interface
   public:
     //!
     //! \brief type Return type of object
     //! \return     Type of object
     //!
-    virtual char              type() const override { return SD_SCRIPT_TYPE_FACE; }
+    virtual char      type() const override { return SD_SCRIPT_TYPE_FACE; }
+
 
     //!
-    //! \brief toFace Convert object to 3d face which is bound region and face color
-    //! \return       3d face which is bound region and face color
+    //! \brief toFace Convert object to list of vertex index which is face region
+    //! \return       List of vertex index which is face region
     //!
-    virtual SdScriptVal3dFace toFace() const override { return mValue; }
+    virtual Sd3drFace toFace() const override { return mFace; }
 
-    // SdM3dVariable interface
+    // SdScriptValueVariable interface
   public:
     //!
     //! \brief assign Assignment value to variable
     //! \param src    source of value
     //!
-    virtual void              assign(SdScriptValuePtr src) override { mValue = src->toFace(); }
+    virtual void      assign(SdScriptValuePtr src) override { mFace = src->toFace(); }
   };
 
 #endif // SDSCRIPTVALUEVARIABLEFACE_H

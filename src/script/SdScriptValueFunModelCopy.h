@@ -24,15 +24,21 @@ Description
 class SdScriptValueFunModelCopy : public SdScriptValueFunction
   {
   public:
-    SdScriptValueFunModelCopy();
+    SdScriptValueFunModelCopy() : SdScriptValueFunction( SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_MATRIX )
+      {
+      }
 
-    // SdM3dValue interface
-  public:
     //!
-    //! \brief toModel Convert object to 3d model
-    //! \return        3d model
+    //! \brief toModel Convert object to model which is compound of some bodies
+    //! \return        Model which is compound of some bodies
     //!
-    virtual SdScriptVal3dModel toModel() const override;
+    virtual Sd3drInstance        toModel() const override
+      {
+      Sd3drInstance model = mParamList[0]->toModel();
+      model.addCopy( mParamList[1]->toMatrix() );
+      return model;
+      }
+
   };
 
 #endif // SDSCRIPTVALUEFUNMODELCOPY_H

@@ -14,7 +14,7 @@ Description
 #ifndef SD3DREADERSTL_H
 #define SD3DREADERSTL_H
 
-#include "objects/Sd3dFaceSet.h"
+#include "objects/Sd3dGraphModel.h"
 
 class Sd3dReaderStl
   {
@@ -24,7 +24,7 @@ class Sd3dReaderStl
     //! \param fname             Full path to STL file
     //! \return                  Pointer to Sd3dFaceSet object if import was successfull or nullptr in other case
     //!
-    static Sd3dFaceSet *importStlFromFile( QString fname );
+    static Sd3dGraphModel *importStlFromFile( QString fname );
   };
 
 #endif // SD3DREADERSTL_H

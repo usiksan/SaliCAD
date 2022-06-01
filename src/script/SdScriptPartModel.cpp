@@ -20,10 +20,9 @@ Description
 
 #include <QDebug>
 
-SdScriptPartModel::SdScriptPartModel(SdPItemPart *part) :
+SdScriptPartModel::SdScriptPartModel(Sd3dModel *model) :
   SdScriptValueVariable(),
-  mPart(part),
-  mModel(nullptr)
+  mModel(model)
   {
 
   }
@@ -36,13 +35,5 @@ SdScriptPartModel::SdScriptPartModel(SdPItemPart *part) :
 //!
 void SdScriptPartModel::assign(SdScriptValuePtr src)
   {
-  SdScriptVal3dModel model = src->toModel();
-  if( model.count() ) {
-    //qDebug() << "add model" << model.count();
-    if( mModel == nullptr || !mPart->isChild(mModel) ) {
-      mModel = new Sd3dGraphModel();
-      mPart->insertChild( mModel, nullptr );
-      }
-    mModel->modelAdd( model );
-    }
+  mModel->instanceAppend( src->toModel() );
   }

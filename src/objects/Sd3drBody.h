@@ -10,10 +10,10 @@
 
 class Sd3drBody
   {
-    QList<int> mFaceRefList;
-    QColor     mColorAmbient;
-    QColor     mColorDiffuse;
-    QColor     mColorSpecular;
+    Sd3drFaceList mFaceList;
+    QColor        mColorAmbient;
+    QColor        mColorDiffuse;
+    QColor        mColorSpecular;
   public:
     Sd3drBody();
 
@@ -27,13 +27,13 @@ class Sd3drBody
 
     void              colorSet( QColor c ) { mColorAmbient = mColorDiffuse = c; }
 
-    void              addRef( int ref ) { mFaceRefList.append( ref ); }
+    void              faceAppend( const Sd3drFace &ref ) { mFaceList.append( ref ); }
 
-    void              addRef( const QList<int> &list ) { mFaceRefList.append(list); }
+    void              faceAppend( const Sd3drFaceList &list ) { mFaceList.append(list); }
 
 //    const QList<int> &faceRefList() const { return mFaceRefList; }
 
-    void              draw( QOpenGLFunctions_2_0 *f, const Sd3drFaceList &faceList, const Sd3dRegion &vertexList, const QMatrix4x4 &map ) const;
+    void              draw( QOpenGLFunctions_2_0 *f, const Sd3dRegion &vertexList, const QMatrix4x4 &map ) const;
 
     void              json( SdJsonWriter &js ) const;
 

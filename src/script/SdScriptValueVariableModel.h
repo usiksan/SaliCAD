@@ -17,37 +17,38 @@ Description
 #ifndef SDSCRIPTVALUEVARIABLEMODEL_H
 #define SDSCRIPTVALUEVARIABLEMODEL_H
 
-#include "SdScriptValueVariable.h"
+#include "SdScriptValueVariable3d.h"
 
 class SdScriptValueVariableModel : public SdScriptValueVariable
   {
-    SdScriptVal3dModel mValue; //!< Model value of variable
+    Sd3drInstance mValue; //!< Model value of variable
   public:
     SdScriptValueVariableModel() : mValue() {}
 
 
 
-    // SdM3dValue interface
+    // SdScriptValue interface
   public:
     //!
     //! \brief type Return type of object
     //! \return     Type of object
     //!
-    virtual char               type() const override { return SD_SCRIPT_TYPE_MODEL; }
+    virtual char          type() const override { return SD_SCRIPT_TYPE_MODEL; }
+
 
     //!
-    //! \brief toModel Convert object to 3d model
-    //! \return        3d model
+    //! \brief toModel Convert object to model which is compound of some bodies
+    //! \return        Model which is compound of some bodies
     //!
-    virtual SdScriptVal3dModel toModel() const override { return mValue; }
+    virtual Sd3drInstance toModel() const override;
 
-    // SdM3dVariable interface
+    // SdScriptValueVariable interface
   public:
     //!
     //! \brief assign Assignment value to variable
     //! \param src    source of value
     //!
-    virtual void               assign(SdScriptValuePtr src) override { mValue = src->toModel(); }
+    virtual void         assign(SdScriptValuePtr src) override { mValue = src->toModel(); }
   };
 
 #endif // SDSCRIPTVALUEVARIABLEMODEL_H

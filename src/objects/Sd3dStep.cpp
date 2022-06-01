@@ -5,6 +5,8 @@
 #include <QFile>
 #include <QDebug>
 
+#if 0
+
 Sd3dStep::Sd3dStep()
   {
 
@@ -314,3 +316,6 @@ void Sd3dStep::draw3d(QOpenGLFunctions_2_0 *f) const
 //    }
 //  return res;
 //  }
+
+
+#endif

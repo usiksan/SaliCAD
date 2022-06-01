@@ -47,7 +47,28 @@ class SdJsonWriter : public SvJsonWriter
       object().insert( key, js.object() );
       }
 
+    QJsonArray matrix4x4( const QMatrix4x4 &map )
+      {
+      float val[16];
+      map.copyDataTo(val);
+      QJsonArray ar;
+      for( int i = 0; i < 16; i++ )
+        ar.append( val[i] );
+      return ar;
+      }
 
+    void jsonMatrix4x4( const QString &key, const QMatrix4x4 &map )
+      {
+      object().insert( key, matrix4x4(map) );
+      }
+
+    void jsonListMatrix4x4( const QString &key, const QList<QMatrix4x4> &list )
+      {
+      QJsonArray ar;
+      for( auto const &map : list )
+        ar.append( matrix4x4(map) );
+      object().insert( key, ar );
+      }
 
   };
 
@@ -83,6 +104,31 @@ class SdJsonReader : public SvJsonReaderExt<SdObjectMap>
       p.setY( obj.value( QStringLiteral("y") ).toDouble() );
       p.setZ( obj.value( QStringLiteral("z") ).toDouble() );
       }
+
+    QMatrix4x4 matrix4x4( const QJsonArray &ar )
+      {
+      float val[16];
+      for( int i = 0; i < 16; i++ )
+        val[i] = ar.at(i).toDouble();
+      return QMatrix4x4(val);
+      }
+
+    void jsonMatrix4x4( const QString &key, QMatrix4x4 &map )
+      {
+      map = matrix4x4( object().value(key).toArray() );
+      }
+
+    void jsonListMatrix4x4( const QString &key, QList<QMatrix4x4> &list )
+      {
+      QJsonArray ar = object().value(key).toArray();
+      list.clear();
+      list.reserve(ar.size());
+      for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
+        QMatrix4x4 v( matrix4x4(i->toArray()) );
+        list.append( v );
+        }
+      }
+
   };
 
 #endif // SDJSONIO_H

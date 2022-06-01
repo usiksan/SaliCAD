@@ -138,6 +138,24 @@ class SvJsonWriter
 
 
     //!
+    //! \brief jsonListListInt Transfer list of list of int values
+    //! \param key             Key for list
+    //! \param list            List to transfer
+    //!
+    void jsonListListInt( const QString &key, const QList< QList<int> > &list )
+      {
+      QJsonArray ar;
+      for( auto const &item : list ) {
+        QJsonArray sub;
+        for( auto v : item )
+          sub.append( v );
+        ar.append( sub );
+        }
+      object().insert( key, ar );
+      }
+
+
+    //!
     //! \brief jsonListInt Transfer list of double values
     //! \param key         Key for list
     //! \param list        List to transfer
@@ -497,6 +515,30 @@ class SvJsonReader
         list.append( v );
         }
       }
+
+
+    //!
+    //! \brief jsonListListInt Transfer list of list of int values
+    //! \param key             Key for list
+    //! \param list            List to transfer
+    //!
+    void jsonListListInt( const QString &key, QList< QList<int> > &list ) const
+      {
+      list.clear();
+      QJsonArray ar = mObject.value( key ).toArray();
+      list.reserve( ar.count() );
+      for( auto sub = ar.constBegin(); sub != ar.constEnd(); sub++ ) {
+        QList<int> subList;
+        QJsonArray sar = sub->toArray();
+        subList.reserve( sar.count() );
+        for( auto i = sar.constBegin(); i != sar.constEnd(); i++ ) {
+          int v = i->toInt();
+          subList.append( v );
+          }
+        list.append( subList );
+        }
+      }
+
 
 
 

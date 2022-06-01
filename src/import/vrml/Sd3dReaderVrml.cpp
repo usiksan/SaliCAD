@@ -79,7 +79,8 @@ Sd3dGraph *Sd3dReaderVrml::importVrmlFromFile(QString fname, QWidget *parent)
       Q_UNUSED(normalList)
       //Convert to Sd3dFace and append it to model
       Sd3dRegion region(vertexList);
-      model->faceAdd( Sd3dFace( region, QColor::fromRgbF(material->diffuseColor(0), material->diffuseColor(1), material->diffuseColor(2))));
+      //TODO fix refactor Sd3dModel parse vrml
+      //model->faceAdd( Sd3dFace( region, QColor::fromRgbF(material->diffuseColor(0), material->diffuseColor(1), material->diffuseColor(2))));
       });
 
     //Return 3d object

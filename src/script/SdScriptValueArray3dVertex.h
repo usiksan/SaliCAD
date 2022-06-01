@@ -30,13 +30,13 @@ class SdScriptValueArray3dVertex : public SdScriptValueArray
     //! \brief type Return type of object
     //! \return     Type of object
     //!
-    virtual char                type() const override { return SD_SCRIPT_TYPE_REGION; }
+    virtual char                type() const override { return SD_SCRIPT_TYPE_FACE; }
 
     //!
-    //! \brief toRegion Convert object to 3d region which is closed region of 3d vertex
-    //! \return         3d region which is closed region of 3d vertex
+    //! \brief toFace Convert object to list of vertex index which is face region
+    //! \return       List of vertex index which is face region
     //!
-    virtual SdScriptVal3dRegion toRegion() const override;
+    virtual Sd3drFace           toFace() const override;
 
     // SdM3dArray interface
   public:

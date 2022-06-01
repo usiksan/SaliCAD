@@ -12,17 +12,17 @@ Description
   Script language is C-style hi-level language for programming 3d models, 2d parametric graphics and
   schematic calculations.
 
-  Array of 3d segments.
+  Array of floats
 */
-#ifndef SDSCRIPTVALUEARRAY3DSEGMENT_H
-#define SDSCRIPTVALUEARRAY3DSEGMENT_H
+#ifndef SDSCRIPTVALUEARRAYFLOAT_H
+#define SDSCRIPTVALUEARRAYFLOAT_H
 
 #include "SdScriptValueArray.h"
 
-class SdScriptValueArray3dSegment : public SdScriptValueArray
+class SdScriptValueArrayFloat : public SdScriptValueArray
   {
   public:
-    SdScriptValueArray3dSegment() {}
+    SdScriptValueArrayFloat() {}
 
     // SdM3dValue interface
   public:
@@ -30,13 +30,13 @@ class SdScriptValueArray3dSegment : public SdScriptValueArray
     //! \brief type Return type of object
     //! \return     Type of object
     //!
-    virtual char              type() const override { return SD_SCRIPT_TYPE_PATH; }
+    virtual char              type() const override { return SD_SCRIPT_TYPE_AFLOAT; }
 
     //!
-    //! \brief toPath Convert object to path of 3d segments which may be separated
-    //! \return       Path of 3d segments which may be separated
+    //! \brief toIndex Convert object to float list
+    //! \return        Float list
     //!
-    virtual SdScriptVal3dPath toPath() const override;
+    virtual QList<float>      toFloatList() const override;
 
     // SdM3dArray interface
   public:
@@ -44,7 +44,7 @@ class SdScriptValueArray3dSegment : public SdScriptValueArray
     //! \brief typeOfElement Return type of element of array
     //! \return              Type of element of array
     //!
-    virtual char              typeOfElement() const override  { return SD_SCRIPT_TYPE_SEGMENT; }
+    virtual char              typeOfElement() const override  { return SD_SCRIPT_TYPE_FLOAT; }
   };
 
-#endif // SDSCRIPTVALUEARRAY3DSEGMENT_H
+#endif // SDSCRIPTVALUEARRAYFLOAT_H
