@@ -377,21 +377,25 @@ Sd3drFace Sd3dModel::faceCurveXZ(const Sd3drFace &face, float radius, float angl
   float count = face.count();
   center = center / count;
 
+  QVector3D rotationCenter( radius, 0.0, 0.0 );
+  QMatrix4x4 rotationMap;
+  rotationMap.rotate( angleSrc, 0.0, 1.0, 0.0 );
+  center += rotationMap.map( rotationCenter );
+
   QMatrix4x4 centerMap;
-  centerMap.rotate( angleSrc, 1.0, 0.0, 0.0 );
-  centerMap.translate( 0, radius );
+  //Reverse order of transformations
+  centerMap.translate( center );
+//  centerMap.translate( radius, 0 );
+  centerMap.rotate( angleDst, 0.0, 1.0, 0.0 );
+//  centerMap.translate( -radius, 0 );
+//  centerMap.rotate( -angleSrc, 0.0, 1.0, 0.0 );
+  centerMap.translate( -center.x(), -center.y(), -center.z() );
 
-  QMatrix4x4 destMap;
-  destMap.translate( 0, radius );
-  destMap.rotate( angleDst, 1.0, 0.0, 0.0 );
-  destMap.translate( 0, -radius );
-
-  destMap *= centerMap;
 
   Sd3drFace dest;
   dest.reserve( face.count() );
   for( auto const &v : face )
-    dest.append( vertexAppend( destMap.map(vertex(v)) )  );
+    dest.append( vertexAppend( centerMap.map(vertex(v)) )  );
 
   return dest;
   }
@@ -628,6 +632,7 @@ Sd3drFaceList Sd3dModel::faceListCurveXZ(const Sd3drFace &face, float radius, fl
   for( int i = 1; i < sideCount; i++ ) {
     second = faceCurveXZ( face, radius, angleSrc, angle );
     model.append( faceListWall( first, second, close ) );
+    angle += angleStep;
     first = second;
     }
   //Last walls

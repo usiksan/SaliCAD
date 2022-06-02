@@ -464,6 +464,7 @@ HEADERS  += \
     script/SdScriptValueFunColorBuild.h \
     script/SdScriptValueFunColorFromString.h \
     script/SdScriptValueFunFaceCircle.h \
+    script/SdScriptValueFunFaceCurveXZ.h \
     script/SdScriptValueFunFaceDuplicate.h \
     script/SdScriptValueFunFaceDuplicateShift.h \
     script/SdScriptValueFunFaceFlat.h \
@@ -482,6 +483,7 @@ HEADERS  += \
     script/SdScriptValueFunLFaceAppend.h \
     script/SdScriptValueFunLFaceBodyBeveled.h \
     script/SdScriptValueFunLFaceBox.h \
+    script/SdScriptValueFunLFaceCurveXZ.h \
     script/SdScriptValueFunLFaceCylinder.h \
     script/SdScriptValueFunLFaceExtrude.h \
     script/SdScriptValueFunLFaceHexagon.h \

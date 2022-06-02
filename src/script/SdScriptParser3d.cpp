@@ -23,6 +23,7 @@
 #include "SdScriptValueFunFaceFlat.h"
 #include "SdScriptValueFunFaceDuplicate.h"
 #include "SdScriptValueFunFaceDuplicateShift.h"
+#include "SdScriptValueFunFaceCurveXZ.h"
 
 #include "SdScriptValueFunLFaceIndexed.h"
 #include "SdScriptValueFunLFaceWall.h"
@@ -33,6 +34,7 @@
 #include "SdScriptValueFunLFaceCylinder.h"
 #include "SdScriptValueFunLFaceHexagon.h"
 #include "SdScriptValueFunLFaceBodyBeveled.h"
+#include "SdScriptValueFunLFaceCurveXZ.h"
 
 #include "SdScriptValueFunModelCopy.h"
 #include "SdScriptValueFunModelBuild.h"
@@ -66,6 +68,7 @@ SdScriptParser3d::SdScriptParser3d(QTableWidget *tableWidget, Sd3dModel *model )
   addFunction( QStringLiteral("faceFlat"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceFlat(model); } );
   addFunction( QStringLiteral("faceDuplicate"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceDuplicate(model); } );
   addFunction( QStringLiteral("faceDuplicateShift"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceDuplicateShift(model); } );
+  addFunction( QStringLiteral("faceCurveXY"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceCurveXZ(model); } );
   //addFunction( QStringLiteral("faceTriangle"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceTriangle(); } );
 
   addFunction( QStringLiteral("faceListIndexed"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunLFaceIndexed(); } );
@@ -75,6 +78,7 @@ SdScriptParser3d::SdScriptParser3d(QTableWidget *tableWidget, Sd3dModel *model )
   addFunction( QStringLiteral("faceListUnion"), [] () -> SdScriptValueFunction* { return new SdM3dFunLFaceUnion(); } );
   addFunction( QStringLiteral("faceListBox"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunLFaceBox(model); } );
   addFunction( QStringLiteral("faceListCylinder"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunLFaceCylinder(model); } );
+  addFunction( QStringLiteral("faceListCurveXZ"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunLFaceCurveXZ(model); } );
   addFunction( QStringLiteral("faceListHexagon"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunLFaceHexagon(model); } );
   addFunction( QStringLiteral("faceListBodyBeveled"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunLFaceBodyBeveled(model); } );
   addFunction( QStringLiteral("faceListPinTqfp"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunModelPinTqfp(model); } );
