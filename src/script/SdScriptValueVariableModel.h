@@ -17,7 +17,7 @@ Description
 #ifndef SDSCRIPTVALUEVARIABLEMODEL_H
 #define SDSCRIPTVALUEVARIABLEMODEL_H
 
-#include "SdScriptValueVariable3d.h"
+#include "SdScriptValueVariable.h"
 
 class SdScriptValueVariableModel : public SdScriptValueVariable
   {
@@ -40,7 +40,7 @@ class SdScriptValueVariableModel : public SdScriptValueVariable
     //! \brief toModel Convert object to model which is compound of some bodies
     //! \return        Model which is compound of some bodies
     //!
-    virtual Sd3drInstance toModel() const override;
+    virtual Sd3drInstance toModel() const override { return mValue; }
 
     // SdScriptValueVariable interface
   public:

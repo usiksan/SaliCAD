@@ -23,7 +23,7 @@ class SdScriptValueVariableGraph : public SdScriptValueVariable
   {
     SdScriptVal2dGraph mValue; //!< 2d graph value of variable
   public:
-    SdScriptValueVariableGraph() : mValue(QVector3D(), QVector3D()) {}
+    SdScriptValueVariableGraph() : mValue( QList<float>(), QList<float>() ) {}
 
 
 

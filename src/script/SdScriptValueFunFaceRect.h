@@ -21,11 +21,11 @@ Description
 
 #include "SdScriptValueFunction.h"
 
-class SdScriptValueFunRegionRect : public SdScriptValueFunction
+class SdScriptValueFunFaceRect : public SdScriptValueFunction
   {
     Sd3dModel *mModel;
   public:
-    SdScriptValueFunRegionRect( Sd3dModel *model ) : SdScriptValueFunction( SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_MATRIX ), mModel(model) { }
+    SdScriptValueFunFaceRect( Sd3dModel *model ) : SdScriptValueFunction( SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_MATRIX ), mModel(model) { }
 
     // SdM3dValue interface
   public:

@@ -97,7 +97,7 @@ class SdJsonReader : public SvJsonReaderExt<SdObjectMap>
       r.json(js);
       }
 
-    void json3dPoint( const QString &key, Sd3dPoint &p )
+    void json3dPoint( const QString &key, Sd3dPoint &p ) const
       {
       QJsonObject obj = object().value( key ).toObject();
       p.setX( obj.value( QStringLiteral("x") ).toDouble() );
@@ -105,7 +105,7 @@ class SdJsonReader : public SvJsonReaderExt<SdObjectMap>
       p.setZ( obj.value( QStringLiteral("z") ).toDouble() );
       }
 
-    QMatrix4x4 matrix4x4( const QJsonArray &ar )
+    QMatrix4x4 matrix4x4( const QJsonArray &ar ) const
       {
       float val[16];
       for( int i = 0; i < 16; i++ )
@@ -113,12 +113,12 @@ class SdJsonReader : public SvJsonReaderExt<SdObjectMap>
       return QMatrix4x4(val);
       }
 
-    void jsonMatrix4x4( const QString &key, QMatrix4x4 &map )
+    void jsonMatrix4x4( const QString &key, QMatrix4x4 &map ) const
       {
       map = matrix4x4( object().value(key).toArray() );
       }
 
-    void jsonListMatrix4x4( const QString &key, QList<QMatrix4x4> &list )
+    void jsonListMatrix4x4( const QString &key, QList<QMatrix4x4> &list ) const
       {
       QJsonArray ar = object().value(key).toArray();
       list.clear();

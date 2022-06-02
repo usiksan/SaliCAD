@@ -15,6 +15,7 @@ Description
 */
 #include "SdScriptValueFunModelHole.h"
 
+#if 0
 SdScriptValueFunModelHole::SdScriptValueFunModelHole() :
   SdScriptValueFunction( SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_REGION, SD_SCRIPT_TYPE_REGION, SD_SCRIPT_TYPE_COLOR )
   {
@@ -117,5 +118,5 @@ SdScriptVal3dModel SdScriptValueFunModelHole::modelHoleSquareCircle(SdScriptVal3
   return model;
   }
 
-
+#endif
 

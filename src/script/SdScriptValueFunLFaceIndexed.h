@@ -14,29 +14,28 @@ Description
 
   Embedded function.
 
-  The function append single face to face list
+  The function builds wall from two faces
 */
-#ifndef SDSCRIPTVALUEFUNLFACEAPPEND_H
-#define SDSCRIPTVALUEFUNLFACEAPPEND_H
+#ifndef SDSCRIPTVALUEFUNLFACEINDEXED_H
+#define SDSCRIPTVALUEFUNLFACEINDEXED_H
 
 #include "SdScriptValueFunction.h"
 
-class SdScriptValueFunLFaceAppend : public SdScriptValueFunction
+class SdScriptValueFunLFaceIndexed : public SdScriptValueFunction
   {
   public:
-    SdScriptValueFunLFaceAppend() :
-      SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FACE_LIST )
+    SdScriptValueFunLFaceIndexed() :
+      SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_AFLOAT )
       {
-
       }
-
 
     //!
     //! \brief toFaceList Convert object to list of face each of which is list of vertex index
     //! \return           List of face each of which is list of vertex index
     //!
-    virtual Sd3drFaceList toFaceList() const override { return mParamList[0]->toFaceList() + mParamList[1]->toFaceList(); }
+    virtual Sd3drFaceList  toFaceList() const override { return Sd3dModel::faceListIndexed( mParamList[0]->toFaceList(), mParamList[1]->toFloatList() ); }
 
   };
 
-#endif // SDSCRIPTVALUEFUNLFACEAPPEND_H
+
+#endif // SDSCRIPTVALUEFUNLFACEINDEXED_H

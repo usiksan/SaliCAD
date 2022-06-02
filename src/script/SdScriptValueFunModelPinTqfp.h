@@ -23,18 +23,19 @@ Description
 
 class SdScriptValueFunModelPinTqfp : public SdScriptValueFunction
   {
+    Sd3dModel *mModel;
   public:
-    SdScriptValueFunModelPinTqfp() : SdScriptValueFunction( SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_COLOR )
+    SdScriptValueFunModelPinTqfp( Sd3dModel *model ) :
+      SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT ),
+      mModel(model)
       {
       }
 
-    // SdM3dValue interface
-  public:
     //!
-    //! \brief toModel Convert object to 3d model
-    //! \return        3d model
+    //! \brief toFaceList Convert object to list of face each of which is list of vertex index
+    //! \return           List of face each of which is list of vertex index
     //!
-    virtual SdScriptVal3dModel toModel() const override { return sd3dModelPinTqfp( mParamList[0]->toFloat(), mParamList[1]->toFloat(), mParamList[2]->toFloat(), mParamList[3]->toFloat(), mParamList[4]->toFloat(), mParamList[5]->toColor() ); }
+    virtual Sd3drFaceList toFaceList() const { return mModel->faceListPinTqfp( mParamList[0]->toFloat(), mParamList[1]->toFloat(), mParamList[2]->toFloat(), mParamList[3]->toFloat(), mParamList[4]->toFloat() ); }
 
   };
 

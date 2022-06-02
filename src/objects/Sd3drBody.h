@@ -4,28 +4,28 @@
 #include "Sd3dRegion.h"
 #include "SdJsonIO.h"
 #include "Sd3drFace.h"
+#include "Sd3dMaterial.h"
 
 #include <QList>
 #include <QColor>
 
+
+
+
 class Sd3drBody
   {
-    Sd3drFaceList mFaceList;
-    QColor        mColorAmbient;
-    QColor        mColorDiffuse;
-    QColor        mColorSpecular;
+    Sd3drFaceList  mFaceList;
+    Sd3dMaterial   mColor;
   public:
     Sd3drBody();
 
-    void              setAmbient( QColor c ) { mColorAmbient = c; }
+    void              colorListGet( Sd3ColorList &dst ) const { dst.append( mColor ); }
 
-    void              setDiffuse( QColor c ) { mColorDiffuse = c; }
+    void              colorListSet( const Sd3dMaterial &src ) { mColor = src; }
 
-    void              setSpecular( QColor c ) { mColorSpecular = c; }
+   // QColor            color() const { return mColorAmbient; }
 
-    QColor            color() const { return mColorAmbient; }
-
-    void              colorSet( QColor c ) { mColorAmbient = mColorDiffuse = c; }
+    void              colorSet( QColor c ) { mColor.mAmbient = mColor.mDiffuse = c; }
 
     void              faceAppend( const Sd3drFace &ref ) { mFaceList.append( ref ); }
 

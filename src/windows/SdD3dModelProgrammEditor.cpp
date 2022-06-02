@@ -20,6 +20,7 @@ Description
 #include "script/SdScriptParser3d.h"
 #include "script/SdScriptProgramm.h"
 #include "objects/SdObjectFactory.h"
+#include "objects/Sd3dGraphModel.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -179,9 +180,9 @@ void SdD3dModelProgrammEditor::compile()
   mParamWidget->setColumnCount(2);
   mParamWidget->setRowCount(0);
   mParamWidget->setHorizontalHeaderLabels( {tr("Parametr name"), tr("Parametr value") } );
-  SdScriptParser3d parser(mParamWidget);
+  SdScriptParser3d parser( mParamWidget, &mModel );
 
-  mProgramm = parser.parse3d( mTextEdit->toPlainText(), &mPart );
+  mProgramm = parser.parse3d( mTextEdit->toPlainText(), &mPart, &mModel );
 
   mError->setText( parser.error() );
 
@@ -201,9 +202,11 @@ void SdD3dModelProgrammEditor::rebuild()
   if( mProgramm && !mActive ) {
     //Clear previously builded part
     mPart.clear();
+    mModel.clear();
 
     //Build new part
     mProgramm->execute();
+    mPart.insertChild( new Sd3dGraphModel(mModel), nullptr );
 
     //Update preview
     mPreview->update();
@@ -224,8 +227,8 @@ void SdD3dModelProgrammEditor::parse()
     active = true;
     //Set flag that programm text changed
     mDirty = true;
-    SdScriptParser3d parser(nullptr);
-    auto ptr = parser.parse3d( mTextEdit->toPlainText(), nullptr );
+    SdScriptParser3d parser( nullptr, &mModel );
+    auto ptr = parser.parse3d( mTextEdit->toPlainText(), nullptr, &mModel );
     mHighlighter->setNameLists( parser.variableNameList(), parser.functionNameList() );
     //Rehighlight recall text changing with emit signal
     //This signal handles by this function parse and happens cycling

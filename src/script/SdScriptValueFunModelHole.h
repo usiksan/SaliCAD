@@ -32,11 +32,11 @@ class SdScriptValueFunModelHole : public SdScriptValueFunction
     //! \brief toModel Convert object to 3d model
     //! \return        3d model
     //!
-    virtual SdScriptVal3dModel toModel() const override;
+//    virtual SdScriptVal3dModel toModel() const override;
 
-    static  SdScriptVal3dModel modelHole( SdScriptVal3dRegion outer, SdScriptVal3dRegion hole, QColor color );
+//    static  SdScriptVal3dModel modelHole( SdScriptVal3dRegion outer, SdScriptVal3dRegion hole, QColor color );
 
-    static  SdScriptVal3dModel modelHoleSquareCircle( SdScriptVal3dRegion square, SdScriptVal3dRegion circle, QColor color );
+//    static  SdScriptVal3dModel modelHoleSquareCircle( SdScriptVal3dRegion square, SdScriptVal3dRegion circle, QColor color );
   };
 
 #endif // SDSCRIPTVALUEFUNMODELHOLE_H

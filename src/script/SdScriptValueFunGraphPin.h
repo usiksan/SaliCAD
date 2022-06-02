@@ -27,7 +27,7 @@ class SdM3dFunGraphPin : public SdScriptValueFunction
   public:
     SdM3dFunGraphPin() :
       //                      pin                   pinPos                 pad                    numberPos              number                 numberAttr             namePos                nameAttr
-      SdScriptValueFunction( SD_SCRIPT_TYPE_GRAPH, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_STRING, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_STRING, SD_SCRIPT_TYPE_STRING, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_STRING )
+      SdScriptValueFunction( SD_SCRIPT_TYPE_GRAPH, SD_SCRIPT_TYPE_AFLOAT, SD_SCRIPT_TYPE_STRING, SD_SCRIPT_TYPE_AFLOAT, SD_SCRIPT_TYPE_STRING, SD_SCRIPT_TYPE_STRING, SD_SCRIPT_TYPE_AFLOAT, SD_SCRIPT_TYPE_STRING )
       {
 
       }
@@ -40,7 +40,7 @@ class SdM3dFunGraphPin : public SdScriptValueFunction
     //!
     virtual SdScriptVal2dGraph toGraph() const override
       {
-      return SdScriptVal2dGraph( mParamList[0]->toVertex(), mParamList[1]->toString(), mParamList[2]->toVertex(), mParamList[3]->toString(), mParamList[4]->toString(), mParamList[5]->toVertex(), mParamList[6]->toString() );
+      return SdScriptVal2dGraph( mParamList[0]->toFloatList(), mParamList[1]->toString(), mParamList[2]->toFloatList(), mParamList[3]->toString(), mParamList[4]->toString(), mParamList[5]->toFloatList(), mParamList[6]->toString() );
       }
   };
 

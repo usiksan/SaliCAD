@@ -132,8 +132,9 @@ void SdD3dMaster::onCurrentRowChanged(int row)
     SdPItemRich *rich = sdObjectOnly<SdPItemRich>( SdObjectFactory::extractObject( mIdList.at(row), false, this ) );
     if( rich != nullptr ) {
       mDescription->setText( rich->paramGet(stdParam3dModelProgramm) );
-      SdScriptParser3d parser(nullptr);
-      SdScriptProgrammPtr programm = parser.parse3d( rich->contents(), mPreviewPart );
+      Sd3dModel model;
+      SdScriptParser3d parser( nullptr, &model );
+      SdScriptProgrammPtr programm = parser.parse3d( rich->contents(), mPreviewPart, &model );
       mPreviewPart->clear();
       programm->execute();
       mPreview->setItem( mPreviewPart );

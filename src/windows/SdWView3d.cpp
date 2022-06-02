@@ -15,7 +15,6 @@ Description
 #include "SdWCommand.h"
 #include "objects/Sd3dGraphModel.h"
 #include "objects/SdProjectItem.h"
-#include "objects/Sd3dFaceMaterial.h"
 #include "objects/SdPulsar.h"
 #include "modes/Sd3dModeView.h"
 
@@ -342,11 +341,11 @@ void SdWView3d::paintGL()
   f->glClear(GL_COLOR_BUFFER_BIT);
 
   //Material used for draw 2d graphics and axis
-  Sd3dFaceMaterial axisMaterial;
+  Sd3dMaterial axisMaterial;
 
   //Axis
-  axisMaterial.setDiffuseColor( 1.0, 1.0, 0.0 );
-  axisMaterial.paint( f );
+  axisMaterial.mDiffuse = QColor( 255, 255, 0 );
+  axisMaterial.draw( f );
   //f->glLineWidth(3);
   f->glBegin( GL_LINES );
   f->glVertex3d( -1000.0, 0, 0 );
@@ -360,8 +359,8 @@ void SdWView3d::paintGL()
   if( mItem != nullptr ) {
     //2d graphics
     if( mEnable2d ) {
-      axisMaterial.setDiffuseColor( 1.0, 0.0, 0.0 );
-      axisMaterial.paint( f );
+      axisMaterial.mDiffuse = QColor( 255, 0, 0 );
+      axisMaterial.draw( f );
       quint64 mask = dctLines;
       if( mEnablePad ) mask |= dctPartPin;
       mItem->forEachConst( mask, [f] (SdObject *obj) -> bool {

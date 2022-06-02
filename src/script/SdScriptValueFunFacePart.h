@@ -16,16 +16,15 @@ Description
 
   The function builds face from face contour and face color
 */
-#ifndef SDSCRIPTVALUEFUNFACEFLAT_H
-#define SDSCRIPTVALUEFUNFACEFLAT_H
+#ifndef SDSCRIPTVALUEFUNFACEPART_H
+#define SDSCRIPTVALUEFUNFACEPART_H
 
 #include "SdScriptValueFunction.h"
 
-class SdScriptValueFunFaceFlat : public SdScriptValueFunction
+class SdScriptValueFunFacePart : public SdScriptValueFunction
   {
-    Sd3dModel *mModel;
   public:
-    SdScriptValueFunFaceFlat( Sd3dModel *model ) : SdScriptValueFunction( SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_AFLOAT ), mModel(model) { }
+    SdScriptValueFunFacePart() : SdScriptValueFunction( SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_AFLOAT ) { }
 
     // SdM3dValue interface
   public:
@@ -33,9 +32,9 @@ class SdScriptValueFunFaceFlat : public SdScriptValueFunction
     //! \brief toFace Convert object to list of vertex index which is face region
     //! \return       List of vertex index which is face region
     //!
-    virtual Sd3drFace toFace() const override { return mModel->faceFlat( mParamList[0]->toVertexIndex(), mParamList[2]->toFloatList(), mParamList[1]->toFloat() ); }
+    virtual Sd3drFace toFace() const override { return Sd3dModel::facePart( mParamList[0]->toFace(), mParamList[1]->toFloatList() ); }
 
   };
 
 
-#endif // SDSCRIPTVALUEFUNFACEFLAT_H
+#endif // SDSCRIPTVALUEFUNFACEPART_H

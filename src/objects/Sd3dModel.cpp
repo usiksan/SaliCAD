@@ -6,194 +6,7 @@
 
 
 
-
-//!
-//! \brief sd3dModelWalls Builds walls on base bottom and top regions. Walls builded with color
-//! \param bottom         Bottom region of walls
-//! \param top            Top region of walls
-//! \param color          Color of faces for the walls
-//! \param close          If true then append wall with n-1 and 0 index vertex
-//! \return               Model of walls
-//!
-Sd3dModel sd3dModelWalls(const Sd3dRegion &bottom, const Sd3dRegion &top, QColor color, bool close)
-  {
-  Sd3dModel model;
-  Sd3dFace face;
-  face.mColor = color;
-  for( int i = 0; i < bottom.count() - 1; i++ ) {
-    face.mContour.clear();
-    face.mContour.append( bottom.at(i) );
-    face.mContour.append( bottom.at(i+1) );
-    face.mContour.append( top.at(i+1) );
-    face.mContour.append( top.at(i) );
-    model.append( face );
-    }
-  if( close ) {
-    //Append wall with n-1 and 0 vertex
-    face.mContour.clear();
-    face.mContour.append( bottom.last() );
-    face.mContour.append( bottom.first() );
-    face.mContour.append( top.first() );
-    face.mContour.append( top.last() );
-    model.append( face );
-    }
-  return model;
-  }
-
-
-//!
-//! \brief sd3dModelWall Builds walls on base bottom region and vector of grow. Walls builded with color
-//! \param bottom        Bottom region of walls
-//! \param grow
-//! \param color         Color of faces for the walls
-//! \param close         If true then append wall with n-1 and 0 index vertex
-//! \return              Model of walls
-//!
-Sd3dModel sd3dModelWall( const Sd3dRegion &bottom, QVector3D grow, QColor color, bool close)
-  {
-  return sd3dModelWalls( bottom, sd3dRegionTranslate( bottom, grow ), color, close );
-  }
-
-
-//!
-//! \brief sd3dModelExtrude Extrudes model from region in the direction of the normal vector with
-//!                         specified shift amount color faces.
-//!                         First face is bottom (begin of vector), last face is top (end of vector),
-//!                         Middle faces are walls.
-//! \param region           Region of bottom of model
-//! \param shift            Shift amount of extrude
-//! \param color            Face model color
-//! \return                 Model extruded from region in the direction of the normal vector
-//!
-Sd3dModel sd3dModelExtrude(const Sd3dRegion &region, float shift, QColor color)
-  {
-  Sd3dModel md;
-  Sd3dFace bot( region, color );
-
-  //Bottom side
-  md.append( bot );
-
-  Sd3dFace top( bot.shift( shift ) );
-
-  //Side walls
-  md.append( sd3dModelWalls( region, top.mContour, color, true ) );
-
-  //Top side
-  md.append( top );
-
-  return md;
-  }
-
-
-//!
-//! \brief sd3dModelCylinder Builds cylinder model from its size
-//! \param radius            Radius of circle of footing of cylinder
-//! \param height            Height of cylinder
-//! \param color             Color of cylinder
-//! \return                  Cylinder model
-//!
-Sd3dModel sd3dModelCylinder(float radius, float height, QColor color)
-  {
-  return sd3dModelExtrude( sd3dRegionCircle( radius ), height, color );
-  }
-
-
-
-
-
-//!
-//! \brief sd3dModelWallEven Builds wall from each pair of vertexes with grow vector and face color
-//! \param regionPair        Region pair contains pair of vertexes (segments), count of vertexes must be even
-//! \param grow              Wall grow vector
-//! \param color             Face color
-//! \return                  Model of walls
-//!
-Sd3dModel sd3dModelWallEven( const Sd3dRegion &regionPair, QVector3D grow, QColor color)
-  {
-  Sd3dRegion otherRegion( sd3dRegionTranslate( regionPair, grow ) );
-  Sd3dModel model;
-  model.reserve( regionPair.count() / 2 );
-  Sd3dFace face;
-  face.mColor = color;
-  for( int i = 0; regionPair.count() - 1; i += 2 ) {
-    face.mContour.clear();
-    face.mContour.append( regionPair.at(i) );
-    face.mContour.append( regionPair.at(i+1) );
-    face.mContour.append( otherRegion.at(i+1) );
-    face.mContour.append( otherRegion.at(i) );
-    model.append( face );
-    }
-  return model;
-  }
-
-
-
-
-//!
-//! \brief sd3dModelTranslate Translates mode to other model with offset
-//! \param model              Source model to translate
-//! \param offset             Offset of translation
-//! \return                   Translated model
-//!
-Sd3dModel sd3dModelTranslate(const Sd3dModel &model, QVector3D offset)
-  {
-  Sd3dModel dest;
-  dest.reserve( model.count() );
-  for( auto const &face : model )
-    dest.append( face.translate( offset ) );
-  return dest;
-  }
-
-
-
-
-//!
-//! \brief sd3dModelTranslateColor Translates mode to other model with offset and changes color of all faces to color
-//! \param model                   Source model to translate
-//! \param offset                  Offset of translation
-//! \param color                   New color of translated faces
-//! \return                        Translated and colored model
-//!
-Sd3dModel sd3dModelTranslateColor(const Sd3dModel &model, QVector3D offset, QColor color)
-  {
-  Sd3dModel dest;
-  dest.reserve( model.count() );
-  for( auto const &face : model )
-    dest.append( face.translateColor( offset, color ) );
-  return dest;
-  }
-
-
-
-
-//!
-//! \brief sd3dModelMap Convert source mode to destignation with matrix
-//! \param model        Source model
-//! \param matrix       Conversion matrix
-//! \return             Converted model
-//!
-Sd3dModel sd3dModelMap(const Sd3dModel &model, const QMatrix4x4 &matrix)
-  {
-  Sd3dModel dest;
-  dest.reserve( model.count() );
-  for( auto const &face : model )
-    dest.append( face.map( matrix ) );
-  return dest;
-  }
-
-
-
-
-//!
-//! \brief sd3dModelMapInPlace Convert model in place using matrix
-//! \param model               Model to convert
-//! \param matrix              Conversion matrix
-//!
-void sd3dModelMapInPlace(Sd3dModel &model, const QMatrix4x4 &matrix)
-  {
-  for( auto &face : model )
-    face.mapInPlace( matrix );
-  }
+#if 0
 
 
 
@@ -305,19 +118,6 @@ Sd3dModel sd3dModelFlatHole(const Sd3dRegion &outer, const Sd3dRegion &hole, QCo
 
 
 
-//!
-//! \brief sd3dModelBox Builds box model from its size
-//! \param lenght       Lenght of box (x)
-//! \param width        Width of box (y)
-//! \param height       Height of box (z)
-//! \param color        Color faces of box
-//! \return             Box model
-//!
-Sd3dModel sd3dModelBox(float lenght, float width, float height, QColor color)
-  {
-  return sd3dModelExtrude( sd3dRegionRectangle( lenght, width ), height, color );
-  }
-
 
 
 
@@ -367,9 +167,28 @@ Sd3dModel sd3dModelPinTqfp(float width, float thickness, float fullLenght, float
   }
 
 
+#endif
 
 
 
+
+
+Sd3ColorList Sd3dModel::colorList() const
+  {
+  Sd3ColorList list;
+  for( auto const &inst : mInstanceList )
+    inst.bodyColorGet( list );
+  return list;
+  }
+
+
+
+void Sd3dModel::colorListSet(const Sd3ColorList &lst)
+  {
+  int index = 0;
+  for( int i = 0; i < mInstanceList.count(); i++ )
+    mInstanceList[i].bodyColorSet( lst, index );
+  }
 
 
 
@@ -420,7 +239,7 @@ Sd3drFace Sd3dModel::faceFromRegion(Sd3dRegion r)
 
 
 
-Sd3drFace Sd3dModel::faceFlat(const QList<float> &pairList, int orientation)
+Sd3drFace Sd3dModel::faceFlat( int firstVertexIndex, const QList<float> &pairList, int orientation)
   {
   Sd3drFace face;
   float xy( orientation == 0 ? 1.0 : 0 );
@@ -430,7 +249,8 @@ Sd3drFace Sd3dModel::faceFlat(const QList<float> &pairList, int orientation)
   if( count < 3 )
     return face;
   count <<= 1;
-  QVector3D v;
+  QVector3D v( vertex(firstVertexIndex) );
+  face.append(firstVertexIndex);
   for( int i = 0; i < count; i += 2 ) {
     v += QVector3D( pairList.at(i) * xy + pairList.at(i) * xz, pairList.at(i+1) * xy + pairList.at(i) * yz, pairList.at(i+1) * yz + pairList.at(i+1) * xz );
     face.append( vertexAppend(v) );
@@ -548,13 +368,66 @@ Sd3drFace Sd3dModel::faceTrapezoidZ(const Sd3drFace &face, float height, float l
 
 
 
+Sd3drFace Sd3dModel::faceCurveXZ(const Sd3drFace &face, float radius, float angleSrc, float angleDst)
+  {
+  //Find center of face
+  QVector3D center;
+  for( auto const &v : face )
+    center += vertex(v);
+  float count = face.count();
+  center = center / count;
+
+  QMatrix4x4 centerMap;
+  centerMap.rotate( angleSrc, 1.0, 0.0, 0.0 );
+  centerMap.translate( 0, radius );
+
+  QMatrix4x4 destMap;
+  destMap.translate( 0, radius );
+  destMap.rotate( angleDst, 1.0, 0.0, 0.0 );
+  destMap.translate( 0, -radius );
+
+  destMap *= centerMap;
+
+  Sd3drFace dest;
+  dest.reserve( face.count() );
+  for( auto const &v : face )
+    dest.append( vertexAppend( destMap.map(vertex(v)) )  );
+
+  return dest;
+  }
 
 
 
+
+
+Sd3drFace Sd3dModel::facePart(const Sd3drFace &face, const QList<float> &indexes)
+  {
+  Sd3drFace dest;
+  for( auto v : indexes ) {
+    int i = static_cast<int>(v);
+    if( i >= 0 && i < face.count() )
+      dest.append( face.at(i) );
+    }
+  return dest;
+  }
+
+
+
+
+
+
+
+//!
+//! \brief faceListWalls  Builds walls on base bottom and top regions. Walls builded with color
+//! \param face1          First bound of walls - Bottom
+//! \param face2          Second bound of walls - Top
+//! \param close          If true then append wall with n-1 and 0 index vertex
+//! \return               List of walls
+//!
 Sd3drFaceList Sd3dModel::faceListWall(const Sd3drFace &face1, const Sd3drFace &face2, bool close)
   {
   Sd3drFaceList walls;
-  if( face1.count() != face2.count() || face1.count() < 3 )
+  if( face1.count() != face2.count() || face1.count() < 2 )
     return walls;
 
   for( int i = 0; i < face1.count() - 1; i++ ) {
@@ -573,9 +446,49 @@ Sd3drFaceList Sd3dModel::faceListWall(const Sd3drFace &face1, const Sd3drFace &f
 
 
 
+Sd3drFaceList Sd3dModel::faceListWallIndexed(const Sd3drFace &face1, const Sd3drFace &face2, const QList<float> &indexes)
+  {
+  Sd3drFaceList walls;
+
+  for( auto v : indexes ) {
+    int i = static_cast<int>(v);
+    if( i < face1.count() && i < face2.count() && i >= 0 ) {
+      Sd3drFace wall( { face1.at(i), (i+1 < face1.count()) ? face1.at(i+1) : face1.first(), (i+1 < face2.count()) ? face2.at(i+1) : face2.first(), face2.at(i) } );
+      walls.append( wall );
+      }
+    }
+
+  return walls;
+  }
 
 
 
+
+Sd3drFaceList Sd3dModel::faceListIndexed(const Sd3drFaceList &faceList, const QList<float> &indexes)
+  {
+  Sd3drFaceList walls;
+
+  for( auto v : indexes ) {
+    int i = static_cast<int>(v);
+    if( i < faceList.count() && i >= 0 )
+      walls.append( faceList.at(i) );
+    }
+
+  return walls;
+  }
+
+
+
+
+
+
+
+//!
+//! \brief faceListExtrude Extrudes model from source face in direction specified by map
+//! \param face            Source face of model
+//! \param map             Direction of extruding
+//! \return                Solid model: floor, roof and walls
+//!
 Sd3drFaceList Sd3dModel::faceListExtrude(const Sd3drFace &face, const QMatrix4x4 &map)
   {
   Sd3drFaceList faceList;
@@ -597,6 +510,15 @@ Sd3drFaceList Sd3dModel::faceListExtrude(const Sd3drFace &face, const QMatrix4x4
 
 
 
+//!
+//! \brief faceListExtrudeShift Extrudes model from region in the direction of the normal vector with
+//!                             specified shift amount color faces.
+//!                             First face is bottom (begin of vector), last face is top (end of vector),
+//!                             Middle faces are walls.
+//! \param face                 Region of bottom of model
+//! \param shift                Shift amount of extrude
+//! \return                     Solid model extruded from region in the direction of the normal vector
+//!
 Sd3drFaceList Sd3dModel::faceListExtrudeShift(const Sd3drFace &face, float shift)
   {
   return faceListExtrude( face, matrixShift( face, shift )   );
@@ -641,13 +563,27 @@ Sd3drFaceList Sd3dModel::faceListBodyBeveled(float bodyLenght, float bodyWidth, 
 
 
 
-Sd3drFaceList Sd3dModel::faceListBox(float bodyLenght, float bodyWidth, float bodyHeight)
+//!
+//! \brief faceListBox  Builds box model from its size
+//! \param lenght       Lenght of box (x)
+//! \param width        Width of box (y)
+//! \param height       Height of box (z)
+//! \param color        Color faces of box
+//! \return             Box model
+//!
+Sd3drFaceList Sd3dModel::faceListBox(float lenght, float width, float height)
   {
-  return faceListExtrudeShift( faceRectangle( bodyLenght, bodyWidth, QMatrix4x4() ), bodyHeight );
+  return faceListExtrudeShift( faceRectangle( lenght, width, QMatrix4x4() ), height );
   }
 
 
 
+//!
+//! \brief faceListCylinder  Builds cylinder model from its size
+//! \param radius            Radius of circle of footing of cylinder
+//! \param height            Height of cylinder
+//! \return                  Cylinder model
+//!
 Sd3drFaceList Sd3dModel::faceListCylinder(float radius, float height)
   {
   return faceListExtrudeShift( faceCircleSide( radius, qMax( 20, static_cast<int>(radius * 6.28) ), QMatrix4x4() ), height );
@@ -677,6 +613,35 @@ Sd3drFaceList Sd3dModel::faceListHexagon(float lenght, float topLenght, float he
   Sd3drFace faceLeft;
   faceLeft << vertexAppend(v0) << vertexAppend(v1) << vertexAppend(v2) << vertexAppend(v3) << vertexAppend(v4) << vertexAppend(v5);
   return faceListExtrudeShift( faceLeft, width );
+  }
+
+
+
+
+Sd3drFaceList Sd3dModel::faceListCurveXZ(const Sd3drFace &face, float radius, float angleSrc, float angleDst, int sideCount, bool close )
+  {
+  Sd3drFaceList model;
+  Sd3drFace first(face);
+  Sd3drFace second;
+  float angleStep = (angleDst - angleSrc) / sideCount;
+  float angle = angleSrc + angleStep;
+  for( int i = 1; i < sideCount; i++ ) {
+    second = faceCurveXZ( face, radius, angleSrc, angle );
+    model.append( faceListWall( first, second, close ) );
+    first = second;
+    }
+  //Last walls
+  second = faceCurveXZ( face, radius, angleSrc, angleDst );
+  model.append( faceListWall( first, second, close ) );
+  return model;
+  }
+
+
+
+
+Sd3drFaceList Sd3dModel::faceListPinTqfp(float width, float thickness, float fullLenght, float plateLenght, float height)
+  {
+  //Sd3drFace start = faceRectangle( widt)
   }
 
 

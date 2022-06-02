@@ -29,7 +29,9 @@ class Sd3dGraphModel : public Sd3dGraph
     Sd3dGraphModel( const Sd3dModel &model );
 
 
+    Sd3ColorList bodyColorList() const { return mModel.colorList(); }
 
+    void         bodyColorListSet( const Sd3ColorList &lst ) { mModel.colorListSet( lst ); }
 
 
 
@@ -77,7 +79,7 @@ class Sd3dGraphModel : public Sd3dGraph
     //! \brief volumeAdd Append volume of model to result volume
     //! \param volume    Source and result volume
     //!
-    virtual void    volumeAdd( QMatrix2x3 &volume ) const override { sd3dModelVolume( mModel, volume ); }
+    virtual void    volumeAdd( QMatrix2x3 &volume ) const override {  }
 
     // SdObject interface
   public:

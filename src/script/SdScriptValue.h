@@ -59,7 +59,7 @@ class SdScriptValue
     //! \brief toGraph Convert object to 2d graph
     //! \return        2d graph
     //!
-    virtual SdScriptVal2dGraph   toGraph() const { return SdScriptVal2dGraph( QVector3D(), QVector3D() ); }
+    virtual SdScriptVal2dGraph   toGraph() const { return SdScriptVal2dGraph( toFloatList() ); }
 
     //!
     //! \brief toMatrix Convert object to 4x4 matrix

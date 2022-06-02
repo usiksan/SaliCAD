@@ -17,7 +17,7 @@ Description
 #ifndef SDSCRIPTVALUEVARIABLEFACE_H
 #define SDSCRIPTVALUEVARIABLEFACE_H
 
-#include "SdScriptValueVariable3d.h"
+#include "SdScriptValueVariable.h"
 
 class SdScriptValueVariableFace : public SdScriptValueVariable
   {

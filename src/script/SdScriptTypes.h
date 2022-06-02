@@ -194,38 +194,45 @@ class SdScriptVal2dGraph {
     //! \param p             3d point in mm
     //! \return              2s point in mcm
     //!
-    QPoint  vectorToPoint( QVector3D p ) const { p *= 1000.0; return p.toPoint(); }
+    //QPoint  vectorToPoint( QVector3D p ) const { p *= 1000.0; return p.toPoint(); }
 
+    //int     scale( float fv ) const { return fv * 1000.0; }
+
+    int     scale( const QList<float> &lst, int index ) const { return (lst.count() > index ? lst.at(index) : 0) * 1000.0; }
+
+    QPoint  toPoint( const QList<float> &lst, int index ) const { return QPoint( scale(lst, index), scale(lst, index+1) ); }
+
+    QPoint  toPoint( const QList<float> &lst ) const { return toPoint( lst, 0 ); }
 
 
 
     //====================================================================================
     // Consturctors for each object
     //Build line
-    SdScriptVal2dGraph( QVector3D p1, QVector3D p2 ) { mType = sdm2dLine; mPos = vectorToPoint(p1); mPosB = vectorToPoint(p2); }
+    SdScriptVal2dGraph( const QList<float> &p1, const QList<float> &p2 ) { mType = sdm2dLine; mPos = toPoint(p1); mPosB = toPoint(p2); }
 
     //Build rect or frect
-    SdScriptVal2dGraph( QVector3D p1, QVector3D p2, bool filled ) { mType = filled ? sdm2dFRect : sdm2dRect; mPos = vectorToPoint(p1); mPosB = vectorToPoint(p2); }
+    SdScriptVal2dGraph( const QList<float> &p1, const QList<float> &p2, bool filled ) { mType = filled ? sdm2dFRect : sdm2dRect; mPos = toPoint(p1); mPosB = toPoint(p2); }
 
     //Build circle
-    SdScriptVal2dGraph( QVector3D center, float radius ) { mType = sdm2dCircle; mPos = vectorToPoint(center); mPosB.setX( radius * 1000.0 ); }
+    SdScriptVal2dGraph( const QList<float> &lst ) { mType = sdm2dCircle; mPos = toPoint( lst ); mPosB.setX( scale( lst, 2 ) ); }
 
     //Build pin
-    SdScriptVal2dGraph( QVector3D pinPos, QString pad, QVector3D numberPos, QString number, QString numberAttr, QVector3D namePos, QString nameAttr ) {
+    SdScriptVal2dGraph( const QList<float> &pinPos, QString pad, const QList<float> &numberPos, QString number, QString numberAttr, const QList<float> &namePos, QString nameAttr ) {
       mType = sdm2dPin;
-      mPos = vectorToPoint(pinPos);
+      mPos = toPoint(pinPos);
       mPad = pad;
-      mPosB = vectorToPoint(numberPos);
+      mPosB = toPoint(numberPos);
       mPinNumber = number;
       mPinNumberAttr = numberAttr;
-      mPosName = vectorToPoint(namePos);
+      mPosName = toPoint(namePos);
       mPinNameAttr = nameAttr;
       }
 
     //Build ident or value place
-    SdScriptVal2dGraph( QVector3D pos, QString attr, bool isIdent ) {
+    SdScriptVal2dGraph( const QList<float> &pos, QString attr, bool isIdent ) {
       mType = isIdent ? sdm2dIdent : sdm2dValue;
-      mPos = vectorToPoint(pos);
+      mPos = toPoint(pos);
       mPinNameAttr = attr;
       }
   };

@@ -18,10 +18,10 @@ Description
 
 #include "SdScriptValueFunction.h"
 
-class SdM3dFunModelBuild : public SdScriptValueFunction
+class SdScriptValueFunModelBuild : public SdScriptValueFunction
   {
   public:
-    SdM3dFunModelBuild() : SdScriptValueFunction( SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_COLOR, SD_SCRIPT_TYPE_COLOR, SD_SCRIPT_TYPE_COLOR, SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_MATRIX ) { }
+    SdScriptValueFunModelBuild() : SdScriptValueFunction( SD_SCRIPT_TYPE_MODEL, SD_SCRIPT_TYPE_COLOR, SD_SCRIPT_TYPE_COLOR, SD_SCRIPT_TYPE_COLOR, SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_MATRIX ) { }
 
     //!
     //! \brief toModel Convert object to model which is compound of some bodies
@@ -29,9 +29,8 @@ class SdM3dFunModelBuild : public SdScriptValueFunction
     //!
     virtual Sd3drInstance toModel() const override {
       Sd3drBody body;
-      body.setAmbient( mParamList[0]->toColor() );
-      body.setDiffuse( mParamList[1]->toColor() );
-      body.setSpecular( mParamList[2]->toColor() );
+      Sd3dMaterial color( mParamList[0]->toColor(), mParamList[1]->toColor(), mParamList[2]->toColor() );
+      body.colorListSet( color );
       body.faceAppend( mParamList[3]->toFaceList() );
       Sd3drInstance inst;
       inst.add( body );

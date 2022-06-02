@@ -27,6 +27,7 @@ class Sd3dModeFaceColorPrivate : public QObject
     QWidget        *mView;      //!< View with 3d model
     QTableWidget   *mTable;     //!< Visual table of face with color for each face
     Sd3dGraphModel *mModel;     //!< Model whose faces are viewed and changed
+    Sd3ColorList    mColorList;
     int             mFaceIndex; //!< Active face index
     QColor          mFaceColor; //!< Active face color
     bool            mActive;    //!< Flag to suppress recursion

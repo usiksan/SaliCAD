@@ -6,18 +6,12 @@ Sd3drBody::Sd3drBody()
 
   }
 
+
+
 void Sd3drBody::draw(QOpenGLFunctions_2_0 *f, const Sd3dRegion &vertexList, const QMatrix4x4 &map) const
   {
   //Setup color
-  float fcolor[4];
-  Sd3dDraw::colorToFloat( mColorAmbient, fcolor );
-  f->glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, fcolor );
-
-  Sd3dDraw::colorToFloat( mColorDiffuse, fcolor );
-  f->glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, fcolor );
-
-  Sd3dDraw::colorToFloat( mColorSpecular, fcolor );
-  f->glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, fcolor );
+  mColor.draw( f );
 
   //Draw all faces
   for( auto face : qAsConst( mFaceList ) ) {
@@ -30,4 +24,19 @@ void Sd3drBody::draw(QOpenGLFunctions_2_0 *f, const Sd3dRegion &vertexList, cons
       }
     f->glEnd();
     }
+  }
+
+
+
+
+void Sd3drBody::json(SdJsonWriter &js) const
+  {
+  js.jsonListListInt( QStringLiteral("Faces"), mFaceList );
+  mColor.json( js );
+  }
+
+void Sd3drBody::json(const SdJsonReader &js)
+  {
+  js.jsonListListInt( QStringLiteral("Faces"), mFaceList );
+  mColor.json( js );
   }

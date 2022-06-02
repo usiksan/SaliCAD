@@ -89,9 +89,9 @@ SdD3dModelMaster::SdD3dModelMaster(const QString id, SdPItemPart *part, QWidget 
       mParamWidget->setColumnCount(2);
       mParamWidget->setRowCount(0);
       mParamWidget->setHorizontalHeaderLabels( {tr("Parametr name"), tr("Parametr value") } );
-      SdScriptParser3d parser(mParamWidget);
+      SdScriptParser3d parser( mParamWidget, &mModel );
 
-      mProgramm = parser.parse3d( rich->contents(), mPart );
+      mProgramm = parser.parse3d( rich->contents(), mPart, &mModel );
       rebuild();
       mPreview->fitItem();
       mPreview->update();

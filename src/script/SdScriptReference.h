@@ -29,17 +29,16 @@ class SdScriptReference : public SdScriptValue
 
     // SdM3dValue interface
   public:
-    virtual char                 type() const override      { return mReference->type(); }
-    virtual float                toFloat() const override   { return mReference->toFloat(); }
-    virtual QColor               toColor() const override   { return mReference->toColor(); }
-    virtual QString              toString() const override  { return mReference->toString(); }
-    virtual QVector3D            toVertex() const override  { return mReference->toVertex(); }
-    virtual QMatrix4x4           toMatrix() const override  { return mReference->toMatrix(); }
-    virtual SdScriptVal3dSegment toSegment() const override { return mReference->toSegment(); }
-    virtual SdScriptVal3dPath    toPath() const override    { return mReference->toPath(); }
-    virtual SdScriptVal3dRegion  toRegion() const override  { return mReference->toRegion(); }
-    virtual SdScriptVal3dFace    toFace() const override    { return mReference->toFace(); }
-    virtual SdScriptVal3dModel   toModel() const override   { return mReference->toModel(); }
+    virtual char                 type() const override          { return mReference->type(); }
+    virtual float                toFloat() const override       { return mReference->toFloat(); }
+    virtual QColor               toColor() const override       { return mReference->toColor(); }
+    virtual QString              toString() const override      { return mReference->toString(); }
+    virtual int                  toVertexIndex() const override { return mReference->toVertexIndex(); }
+    virtual QMatrix4x4           toMatrix() const override      { return mReference->toMatrix(); }
+    virtual Sd3drFaceList        toFaceList() const override    { return mReference->toFaceList(); }
+    virtual QList<float>         toFloatList() const override   { return mReference->toFloatList(); }
+    virtual Sd3drFace            toFace() const override        { return mReference->toFace(); }
+    virtual Sd3drInstance        toModel() const override       { return mReference->toModel(); }
   };
 
 #endif // SDSCRIPTREFERENCE_H

@@ -156,9 +156,10 @@ void SdPNewProjectItem_3dMaster::onCurrentRowChanged(int row)
     if( rich != nullptr ) {
       mDescription->setText( rich->paramGet(stdParam3dModelProgramm) );
       //TODO append 3d preview
-      SdScriptParser3d parser(nullptr);
+      Sd3dModel model;
+      SdScriptParser3d parser( nullptr, &model );
       static SdPItemPart previewPart;
-      auto programm = parser.parse3d( rich->contents(), &previewPart );
+      auto programm = parser.parse3d( rich->contents(), &previewPart, &model );
       previewPart.clear();
       programm->execute();
       mPreview->setItem( &previewPart );

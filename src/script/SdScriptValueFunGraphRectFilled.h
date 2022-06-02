@@ -24,7 +24,7 @@ Description
 class SdScriptValueFunGraphRectFilled : public SdScriptValueFunction
   {
   public:
-    SdScriptValueFunGraphRectFilled() : SdScriptValueFunction( SD_SCRIPT_TYPE_GRAPH, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_VERTEX ) {}
+    SdScriptValueFunGraphRectFilled() : SdScriptValueFunction( SD_SCRIPT_TYPE_GRAPH, SD_SCRIPT_TYPE_AFLOAT, SD_SCRIPT_TYPE_AFLOAT ) {}
 
     // SdM3dValue interface
   public:
@@ -32,7 +32,7 @@ class SdScriptValueFunGraphRectFilled : public SdScriptValueFunction
     //! \brief toGraph Convert object to 2d graph
     //! \return        2d graph
     //!
-    virtual SdScriptVal2dGraph toGraph() const override { return SdScriptVal2dGraph( mParamList[0]->toVertex(), mParamList[1]->toVertex(), true ); }
+    virtual SdScriptVal2dGraph toGraph() const override { return SdScriptVal2dGraph( mParamList[0]->toFloatList(), mParamList[1]->toFloatList(), true ); }
   };
 
 #endif // SDSCRIPTVALUEFUNGRAPHRECTFILLED_H

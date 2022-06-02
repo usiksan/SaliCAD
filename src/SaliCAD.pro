@@ -63,6 +63,7 @@ SOURCES += \
     modes/SdModeCScript.cpp \
     modes/SdModeCSymHighlight.cpp \
     modes/SdModeSymbolFragment.cpp \
+    objects/Sd3dMaterial.cpp \
     objects/Sd3drBody.cpp \
     objects/Sd3drFace.cpp \
     objects/Sd3drInstance.cpp \
@@ -430,6 +431,7 @@ HEADERS  += \
     modes/SdModeCScript.h \
     modes/SdModeCSymHighlight.h \
     modes/SdModeSymbolFragment.h \
+    objects/Sd3dMaterial.h \
     objects/Sd3drBody.h \
     objects/Sd3drFace.h \
     objects/Sd3drInstance.h \
@@ -463,7 +465,9 @@ HEADERS  += \
     script/SdScriptValueFunColorFromString.h \
     script/SdScriptValueFunFaceCircle.h \
     script/SdScriptValueFunFaceDuplicate.h \
+    script/SdScriptValueFunFaceDuplicateShift.h \
     script/SdScriptValueFunFaceFlat.h \
+    script/SdScriptValueFunFacePart.h \
     script/SdScriptValueFunFaceRect.h \
     script/SdScriptValueFunGraphCircle.h \
     script/SdScriptValueFunGraphLine.h \
@@ -481,8 +485,11 @@ HEADERS  += \
     script/SdScriptValueFunLFaceCylinder.h \
     script/SdScriptValueFunLFaceExtrude.h \
     script/SdScriptValueFunLFaceHexagon.h \
+    script/SdScriptValueFunLFaceIndexed.h \
     script/SdScriptValueFunLFaceUnion.h \
     script/SdScriptValueFunLFaceWall.h \
+    script/SdScriptValueFunLFaceWallIndexed.h \
+    script/SdScriptValueFunMatrix.h \
     script/SdScriptValueFunModelBuild.h \
     script/SdScriptValueFunModelCopy.h \
     script/SdScriptValueFunModelCurve.h \
@@ -494,6 +501,7 @@ HEADERS  += \
     script/SdScriptValueFunStringPinIndex.h \
     script/SdScriptValueFunStringPinMatrix.h \
     script/SdScriptValueFunVertexBuild.h \
+    script/SdScriptValueFunVertexOffset.h \
     script/SdScriptValueFunction.h \
     script/SdScriptValueOpBinaryFloatDiv.h \
     script/SdScriptValueOpBinaryFloatLess.h \

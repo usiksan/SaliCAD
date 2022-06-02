@@ -37,6 +37,7 @@ class SdD3dModelProgrammEditor : public QDialog
 
     SdPItemPart           mPart;        //!< Part for preview
     SdScriptProgrammPtr   mProgramm;    //!< Parsed programm ready for executing
+    Sd3dModel             mModel;
     SdPItemRich          *mRich;        //!< Programm source code object
     SdWScriptEditor      *mTextEdit;    //!< Source code editor with highlight
     SdWScriptHighlighter *mHighlighter; //!< Highlight for code editor
