@@ -6,7 +6,7 @@ SdScriptParserCalculator::SdScriptParserCalculator(SdScriptRefMap *refMap , QTab
   SdScriptParser(tableWidget),
   mRefMap(refMap)
   {
-  addFunction( QStringLiteral("ref"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunRef(); } );
+  addFunction( QStringLiteral("ref"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunRef(); }, QStringLiteral("ref( string dimension, string row )") );
   }
 
 

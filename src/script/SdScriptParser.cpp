@@ -65,12 +65,17 @@ Description
 SdScriptParser::SdScriptParser(QTableWidget *tableWidget)
   {
   //Fill functions
-  addFunction( QStringLiteral("inputFloat"), [tableWidget] () -> SdScriptValueFunction* { return new SdScriptValueFunInputFloat( tableWidget ); } );
-  addFunction( QStringLiteral("inputColor"), [tableWidget] () -> SdScriptValueFunction* { return new SdScriptValueFunInputColor( tableWidget ); } );
-  addFunction( QStringLiteral("inputPad"), [tableWidget] () -> SdScriptValueFunction* { return new SdScriptValueFunInputPad( tableWidget ); } );
+  addFunction( QStringLiteral("inputFloat"), [tableWidget] () -> SdScriptValueFunction* { return new SdScriptValueFunInputFloat( tableWidget ); },
+               QStringLiteral("inputFloat( string title, float default )\nAppend row to input table for input float"));
+  addFunction( QStringLiteral("inputColor"), [tableWidget] () -> SdScriptValueFunction* { return new SdScriptValueFunInputColor( tableWidget ); },
+               QStringLiteral("inputColor( string title, string default )\nAppend row to input table for input color in format \"#rrggbb\"") );
+  addFunction( QStringLiteral("inputPad"), [tableWidget] () -> SdScriptValueFunction* { return new SdScriptValueFunInputPad( tableWidget ); },
+               QStringLiteral("inputColor( string title, string default )\nAppend row to input table for input pad description") );
 
-  addFunction( QStringLiteral("color"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunColorBuild(); } );
-  addFunction( QStringLiteral("colorFromString"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunColorFromString(); } );
+  addFunction( QStringLiteral("color"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunColorBuild(); },
+               QStringLiteral("color( float red, float green, float blue, float alpha )\nBuilds color from its components (0-1.0)") );
+  addFunction( QStringLiteral("colorFromString"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunColorFromString(); },
+               QStringLiteral("colorFromString( string color )\nConvert to color from text color description in format \"#rrggbb\"") );
 
   }
 

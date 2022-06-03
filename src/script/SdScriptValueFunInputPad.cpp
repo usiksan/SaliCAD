@@ -21,7 +21,7 @@ Description
 
 
 SdScriptValueFunInputPad::SdScriptValueFunInputPad(QTableWidget *tableWidget) :
-  SdScriptValueFunInput( SD_SCRIPT_TYPE_STRING, tableWidget, SDM3D_INPUT_PAD )
+  SdScriptValueFunInput( SD_SCRIPT_TYPE_STRING, SD_SCRIPT_TYPE_STRING, tableWidget, SDM3D_INPUT_PAD )
   {
 
   }

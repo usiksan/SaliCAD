@@ -11,7 +11,8 @@ class SdWScriptHighlighter : public QSyntaxHighlighter {
     QStringList mVariableNameList;
     QStringList mFunctionNameList;
 
-    QString mLink; //Идентификатор для перехода по линку
+    QString     mLink; //Идентификатор для перехода по линку
+    int         mLinkStart;
   public:
 
     SdWScriptHighlighter(QTextDocument *parent = nullptr);
@@ -53,7 +54,7 @@ class SdWScriptHighlighter : public QSyntaxHighlighter {
   signals:
 
   public slots:
-    void setLink( const QString link );
+    void setLink( const QString link, int linkStart );
 
   };
 

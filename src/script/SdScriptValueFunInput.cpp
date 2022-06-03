@@ -19,8 +19,8 @@ Description
 #include "SdScriptValueFunInput.h"
 #include "SdScriptParser.h"
 
-SdScriptValueFunInput::SdScriptValueFunInput(char resultType, QTableWidget *tableWidget, int itemType) :
-  SdScriptValueFunction( resultType, SD_SCRIPT_TYPE_STRING, resultType ),
+SdScriptValueFunInput::SdScriptValueFunInput(char resultType, char defaultType, QTableWidget *tableWidget, int itemType) :
+  SdScriptValueFunction( resultType, SD_SCRIPT_TYPE_STRING, defaultType ),
   mTableWidget(tableWidget)
   {
 

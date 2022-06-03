@@ -1,6 +1,7 @@
 ﻿#include "SdConfig.h"
 #include "SdWScriptEditor.h"
 #include "SdWScriptHighlighter.h"
+#include "SdDPadMaster.h"
 
 #include <QKeyEvent>
 #include <QPainter>
@@ -11,6 +12,7 @@
 #include <QScrollBar>
 #include <QClipboard>
 #include <QGuiApplication>
+#include <QColorDialog>
 
 #include <QDebug>
 
@@ -100,7 +102,7 @@ SdWScriptEditor::SdWScriptEditor(QWidget *parent) :
   mHelpPopUp = new QPlainTextEdit( this );
   mHelpPopUp->hide();
   //Установить размер окна помощи
-  mHelpPopUp->resize( 450, 50 );
+  mHelpPopUp->resize( 600, 70 );
 
   connect( this, SIGNAL(cursorPositionChanged()), this, SLOT(onCursorPositionChanged()) );
 
@@ -200,6 +202,8 @@ QString cursorLine( QTextCursor c, int *posPtr ) {
 QChar cursorChar( QTextCursor c, int offset ) {
   int pos;
   QString line = cursorLine( c, &pos );
+  if( pos + offset < 0 || pos + offset >= line.count() )
+    return QChar();
   return line[ pos + offset ];
   }
 
@@ -209,13 +213,13 @@ QChar cursorChar( QTextCursor c, int offset ) {
 
 QString SdWScriptEditor::getWordCursorOver()
   {
-  return getWordCursorOver( textCursor() );
+  return getWordCursorOver( textCursor(), nullptr );
   }
 
 
 
 
-QString SdWScriptEditor::getWordCursorOver(QTextCursor cursor)
+QString SdWScriptEditor::getWordCursorOver(QTextCursor cursor, int *start)
   {
   //Текущая строка
   int pos;
@@ -230,10 +234,14 @@ QString SdWScriptEditor::getWordCursorOver(QTextCursor cursor)
     int len = 1;
     while( pos + len < line.length() && (line.at(pos + len).isLetterOrNumber() || line.at(pos + len) == QChar('.') || line.at(pos + len) == QChar('_')) )
       len++;
+    if( start != nullptr )
+      *start = pos;
     return line.mid( pos, len );
     }
   return QString();
   }
+
+
 
 
 
@@ -472,8 +480,8 @@ void SdWScriptEditor::refillAutoComplete()
   bool checkLen = true;
 
   //Текущая строка
-  int pos;
-  QString line = cursorLine( textCursor(), &pos );
+//  int pos;
+//  QString line = cursorLine( textCursor(), &pos );
   if( mHighlighter )
     srcList = mHighlighter->names();
 
@@ -931,6 +939,45 @@ SdWScriptEditor::keyPressEvent(QKeyEvent *e)
   else {
     mLastPressedReturn = false;
     }
+
+  //Проверим показ помощи
+  //Если слева открывающая скобка или запятая, то выполнить поиск помощи
+  QChar ch = cursorChar( textCursor(), -1 );
+  if( ch == QChar('(') || ch == QChar(',') ) {
+    //Справа налево ищем идент(
+    int pos;
+    QString line = cursorLine( textCursor(), &pos );
+    bool tryIdent = false;
+    //QString
+    while( pos >= 0 ) {
+      ch = line.at(pos);
+      if( ch == QChar('(') ) tryIdent = true;
+      else if( tryIdent ) {
+        if( ch.isLetter() ) {
+          while( pos > 0 && line.at(pos-1).isLetter() ) pos--;
+          //Scan ident for help
+          QString ident;
+          while( line.at(pos).isLetter() ) {
+            ident.append( line.at(pos) );
+            pos++;
+            }
+          if( mHelpMap.contains(ident) ) {
+            //Show help window
+            mHelpPopUp->setPlainText( mHelpMap.value(ident) );
+            QPoint p = cursorRect( textCursor() ).topLeft();
+            p.ry() -= mHelpPopUp->height();
+            mHelpPopUp->move( p );
+            mHelpPopUp->show();
+            }
+          else mHelpPopUp->hide();
+          break;
+          }
+        else if( ch != QChar(' ') ) tryIdent = false;
+        }
+      pos--;
+      }
+    }
+
   }
 
 
@@ -954,23 +1001,30 @@ void SdWScriptEditor::keyReleaseEvent(QKeyEvent *e)
 
 void SdWScriptEditor::mouseMoveEvent(QMouseEvent *ev)
   {
+  if( mControlPress ) {
+    QTextCursor c = cursorForPosition( ev->pos() );
+    int start;
+    QString word = getWordCursorOver( c, &start );
+    if( word != QStringLiteral("inputColor") && word != QStringLiteral("inputPad") )
+      word.clear();
+    if( word != mOverWord ) {
+      mOverWord = word;
+      emit setLink( mOverWord, start );
+      emit rehighlightBlock( mLinkBlock );
+      mLinkBlock = c.block();
+      emit rehighlightBlock( mLinkBlock );
+      }
+    if( mOverWord.isEmpty() ) unsetCursor();
+    else setCursor( Qt::ArrowCursor );
+    }
+  else if( !mOverWord.isEmpty() ) {
+    mOverWord.clear();
+    emit setLink( mOverWord, 0 );
+    emit rehighlightBlock( mLinkBlock );
+    }
 #if 0
   //Выполнять всякую херь только если есть фоновый компилятор
   if( SdW3dModelProgrammHighlighter::mCompiler ) {
-    QTextCursor c = cursorForPosition( ev->pos() );
-    QString word = getWordCursorOver( c );
-    if( mControlPress ) {
-      //if( !word.isEmpty() && Highlighter::mSymSources.contains(word) )
-      if( word != mLink ) {
-        mLink = word;
-        emit setLink( mLink );
-        emit rehighlightBlock( mLinkBlock );
-        mLinkBlock = c.block();
-        emit rehighlightBlock( mLinkBlock );
-        if( mLink.isEmpty() ) unsetCursor();
-        else setCursor( Qt::ArrowCursor );
-        }
-      }
 
     if( word != mOverWord ) {
       mOverWord = word;
@@ -1023,8 +1077,17 @@ void SdWScriptEditor::mousePressEvent(QMouseEvent *e)
   //Если автозавершатель не скрыть - скрыть его
   if( !mAutoComplete->isHidden() )
     mAutoComplete->hide();
-  //Обработать нажатие мыши по умолчанию
-  QPlainTextEdit::mousePressEvent(e);
+  if( mControlPress && !mOverWord.isEmpty() ) {
+    mControlPress = false;
+    mOverWord.clear();
+    emit setLink( mOverWord, 0 );
+    emit rehighlightBlock( mLinkBlock );
+
+    inputDialog( cursorForPosition( e->pos() ) );
+    }
+  else
+    //Обработать нажатие мыши по умолчанию
+    QPlainTextEdit::mousePressEvent(e);
   }
 
 
@@ -1141,6 +1204,46 @@ bool SdWScriptEditor:: isCommented(int index) const {
   auto cursort = textCursor();
   cursort.setPosition(index);
   return cursort.charFormat().foreground().color() == Qt::darkGreen;
+  }
+
+
+
+
+void SdWScriptEditor::inputDialog(QTextCursor c)
+  {
+  QString word = getWordCursorOver( c, nullptr );
+  if( word == QStringLiteral("inputColor") || word ==  QStringLiteral("inputPad") ) {
+    int pos;
+    QString line = cursorLine( c, &pos );
+    QStringList list = line.split( QChar('"') );
+    int funcIndex = 0;
+    for( funcIndex = 0; !list.at(funcIndex).contains(word); funcIndex++ );
+    if( funcIndex + 3 < list.count() ) {
+      if( word == QStringLiteral("inputColor") ) {
+        //Input dialog for color
+
+        //Show color selection dialog
+        QColor color = QColorDialog::getColor( QColor(list.at(funcIndex+3)), this, list.at(funcIndex+1) );
+        if( color.isValid() ) {
+          //Replace text color
+          list[funcIndex+3] = color.name();
+          }
+        else return;
+        }
+      else if( word == QStringLiteral("inputPad") ) {
+        list[funcIndex+3] = SdDPadMaster::build( list.at(funcIndex+3), this );
+        }
+      else return;
+      //Replace text
+      line = list.join( QChar('"') );
+      c.beginEditBlock();
+      c.movePosition( QTextCursor::StartOfBlock );
+      c.movePosition( QTextCursor::EndOfBlock, QTextCursor::KeepAnchor );
+      c.removeSelectedText();
+      c.insertText(line);
+      c.endEditBlock();
+      }
+    }
   }
 
 

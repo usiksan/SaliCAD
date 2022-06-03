@@ -20,7 +20,7 @@ Description
 #include "SdScriptParser.h"
 
 SdScriptValueFunInputBool::SdScriptValueFunInputBool(QTableWidget *tableWidget) :
-  SdScriptValueFunInput( SD_SCRIPT_TYPE_BOOL, tableWidget, SDM3D_INPUT_BOOL )
+  SdScriptValueFunInput( SD_SCRIPT_TYPE_BOOL, SD_SCRIPT_TYPE_BOOL, tableWidget, SDM3D_INPUT_BOOL )
   {
 
   }

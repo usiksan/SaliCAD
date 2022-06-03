@@ -103,6 +103,7 @@ class SdWScriptEditor : public QPlainTextEdit {
 
     QPlainTextEdit       *mHelpPopUp;               //!< Окно всплывающей помощи
     QTimer                mHelpTime;                //!< Таймер, обеспечивающий появление помощи к идентификатору
+    QMap<QString,QString> mHelpMap;                 //!< Карта помощи по функциям
 
 
     QList<QTextEdit::ExtraSelection> mSearchHighlight; //!< подстветка поиска
@@ -122,7 +123,7 @@ class SdWScriptEditor : public QPlainTextEdit {
 
     //Получить (идентификатор) слово под курсором
     QString getWordCursorOver();
-    QString getWordCursorOver( QTextCursor cursor );
+    QString getWordCursorOver( QTextCursor cursor, int *start );
 
     //Получить файл из include под курсором
     QString getIncludeOver();
@@ -138,6 +139,8 @@ class SdWScriptEditor : public QPlainTextEdit {
     void    setAutoCompleteParenthesis(bool autoComplete);
 
     void    setHighlighter( SdWScriptHighlighter *highlighter ) { mHighlighter = highlighter; }
+
+    void    setHelpMap( const QMap<QString,QString> &map ) { mHelpMap = map; }
 
   private:
     //обновить подсветку
@@ -180,6 +183,10 @@ class SdWScriptEditor : public QPlainTextEdit {
     //закомментирован ли символ
     bool      isCommented(int index)const;
 
+    void      inputDialog( QTextCursor c );
+    void      inputColor( QTextCursor c );
+    void      inputPad( QTextCursor c );
+
   private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
 
@@ -203,9 +210,10 @@ class SdWScriptEditor : public QPlainTextEdit {
     virtual void mouseMoveEvent(QMouseEvent *ev) override;
     virtual void mousePressEvent(QMouseEvent *e) override;
 
-     void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
+    virtual void resizeEvent(QResizeEvent *e) override;
 
   signals:
+    void setLink( const QString link, int start );
     void rehighlightBlock( const QTextBlock block );
     void contensChanged();
     void help( const QString &topic );

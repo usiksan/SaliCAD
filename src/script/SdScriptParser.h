@@ -48,6 +48,7 @@ class SdScriptParser
     QMap<QString,SdScriptValueVariablePtr> mVariables;        //!< Variables map. Associates variable name with variable
     QStringList                            mVariableNameList; //!< Variable name list generated at and of parsing
     QMap<QString,SdScriptFunctionBuilder>  mFunctions;        //!< Predefined functions
+    SdStringMap                            mFunctionsHelp;    //!< Help call signature for each function
   public:
     SdScriptParser( QTableWidget *tableWidget );
 
@@ -81,7 +82,13 @@ class SdScriptParser
     //! \param functionName    Function name
     //! \param functionBuilder Function builder
     //!
-    void                addFunction( const QString functionName, SdScriptFunctionBuilder functionBuilder ) { mFunctions.insert( functionName, functionBuilder ); }
+    void                addFunction( const QString &functionName, SdScriptFunctionBuilder functionBuilder, const QString &help ) { mFunctions.insert( functionName, functionBuilder ); mFunctionsHelp.insert( functionName, help ); }
+
+    //!
+    //! \brief functionsHelp Return help call signature for each function
+    //! \return              Help call signature for each function
+    //!
+    SdStringMap         functionsHelp() const { return mFunctionsHelp; }
 
   protected:
     virtual SdScriptValueVariablePtr buildRefVariable( const QString &name, SdScriptValue *expr ) { Q_UNUSED(name) Q_UNUSED(expr) return nullptr; }

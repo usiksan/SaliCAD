@@ -82,6 +82,7 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
     mTextEdit->setHighlighter( mHighlighter );
     connect( mTextEdit, SIGNAL(rehighlightBlock(QTextBlock)), mHighlighter, SLOT(rehighlightBlock(QTextBlock)) );
     connect( mTextEdit, &SdWScriptEditor::textChanged, this, &SdD3dModelProgrammEditor::parse );
+    connect( mTextEdit, &SdWScriptEditor::setLink, mHighlighter, &SdWScriptHighlighter::setLink );
     //connect( this, &SdD3dModelProgrammEditor::parseCompleted, mHighlighter, &SdW3dModelProgrammHighlighter::rehighlight );
 
     tlay->addWidget( mTextEdit );
@@ -230,6 +231,7 @@ void SdD3dModelProgrammEditor::parse()
     SdScriptParser3d parser( nullptr, &mModel );
     auto ptr = parser.parse3d( mTextEdit->toPlainText(), nullptr, &mModel );
     mHighlighter->setNameLists( parser.variableNameList(), parser.functionNameList() );
+    mTextEdit->setHelpMap( parser.functionsHelp() );
     //Rehighlight recall text changing with emit signal
     //This signal handles by this function parse and happens cycling
     //To eliminate this we introduce active flag

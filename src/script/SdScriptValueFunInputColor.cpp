@@ -20,7 +20,7 @@ Description
 #include "SdScriptParser.h"
 
 SdScriptValueFunInputColor::SdScriptValueFunInputColor(QTableWidget *tableWidget) :
-  SdScriptValueFunInput( SD_SCRIPT_TYPE_COLOR, tableWidget, SDM3D_INPUT_COLOR )
+  SdScriptValueFunInput( SD_SCRIPT_TYPE_COLOR, SD_SCRIPT_TYPE_STRING, tableWidget, SDM3D_INPUT_COLOR )
   {
 
   }
@@ -42,7 +42,7 @@ QColor SdScriptValueFunInputColor::toColor() const
     //Setup input title
     mTableWidget->item( mRow, 0 )->setText( mParamList[0]->toString() );
     //Setup default value
-    mTableWidget->item( mRow, 1 )->setText( mParamList[1]->toColor().name() );
+    mTableWidget->item( mRow, 1 )->setText( mParamList[1]->toString() );
     return mParamList[1]->toColor();
     }
 

@@ -29,7 +29,7 @@ class SdScriptValueFunInput : public SdScriptValueFunction
     QTableWidget *mTableWidget; //!< Param table widget
     int           mRow;         //!< Row number for this param
   public:
-    SdScriptValueFunInput(char resultType, QTableWidget *tableWidget, int itemType );
+    SdScriptValueFunInput(char resultType, char defaultType, QTableWidget *tableWidget, int itemType );
   };
 
 #endif // SDSCRIPTVALUEFUNINPUT_H

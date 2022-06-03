@@ -71,9 +71,10 @@ SdWScriptHighlighter::MultiLineComment(const QString &text, int index, int count
 
 
 
-void SdWScriptHighlighter::setLink(const QString link)
+void SdWScriptHighlighter::setLink(const QString link, int linkStart)
   {
   mLink = link;
+  mLinkStart = linkStart;
   }
 
 
@@ -158,18 +159,18 @@ SdWScriptHighlighter::highlightBlock(const QString &text) {
       //Do find function names
       if( mFunctionNameList.contains( name ) ) {
         //This is function
-        setFormat( startIndex, index - startIndex, mFuncFormat );
+        //Проверить необходимость линковки
+        if( !mLink.isEmpty() && mLink == name && startIndex == mLinkStart )
+          setFormat( startIndex, index - startIndex, mLinkFormat );
+        else
+          setFormat( startIndex, index - startIndex, mFuncFormat );
         continue;
         }
 
       //Выполнить поиск идентификатора
       if( mVariableNameList.contains( name ) ) {
         //Это переменная
-        //Проверить необходимость линковки
-        if( !mLink.isEmpty() && mLink == name )
-          setFormat( startIndex, index - startIndex, mLinkFormat );
-        else
-          setFormat( startIndex, index - startIndex, mIdentFormat );
+        setFormat( startIndex, index - startIndex, mIdentFormat );
         }
       continue;
       }
