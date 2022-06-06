@@ -35,7 +35,7 @@ QColor SdScriptValueFunInputColor::toColor() const
   {
   //If none table widget than return default value
   if( mTableWidget == nullptr )
-    return mParamList[1]->toColor();
+    return QColor( mParamList[1]->toString() );
 
   //Setup default value
   if( mTableWidget->item( mRow, 1 )->text().isEmpty() ) {
@@ -43,7 +43,7 @@ QColor SdScriptValueFunInputColor::toColor() const
     mTableWidget->item( mRow, 0 )->setText( mParamList[0]->toString() );
     //Setup default value
     mTableWidget->item( mRow, 1 )->setText( mParamList[1]->toString() );
-    return mParamList[1]->toColor();
+    return QColor( mParamList[1]->toString() );
     }
 
   //Return user entered value

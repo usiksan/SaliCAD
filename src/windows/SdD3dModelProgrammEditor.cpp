@@ -181,6 +181,8 @@ void SdD3dModelProgrammEditor::compile()
   mParamWidget->setColumnCount(2);
   mParamWidget->setRowCount(0);
   mParamWidget->setHorizontalHeaderLabels( {tr("Parametr name"), tr("Parametr value") } );
+
+  mModel.clear();
   SdScriptParser3d parser( mParamWidget, &mModel );
 
   mProgramm = parser.parse3d( mTextEdit->toPlainText(), &mPart, &mModel );
@@ -202,6 +204,7 @@ void SdD3dModelProgrammEditor::rebuild()
   {
   if( mProgramm && !mActive ) {
     //Clear previously builded part
+    mActive = true;
     mPart.clear();
     mModel.clear();
 
@@ -211,6 +214,7 @@ void SdD3dModelProgrammEditor::rebuild()
 
     //Update preview
     mPreview->update();
+    mActive = false;
     }
   }
 

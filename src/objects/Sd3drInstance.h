@@ -28,6 +28,13 @@ class Sd3drInstance
     void json( SdJsonWriter &js ) const;
 
     void json( const SdJsonReader &js );
+
+    //!
+    //! \brief volumeAdd  Append volume of model to result volume
+    //! \param volume     Source and result volume
+    //! \param vertexList Vertex list on which referenced bodies
+    //!
+    void volumeAdd( QMatrix2x3 &volume, const Sd3dRegion &vertexList ) const;
   };
 
 using Sd3drInstanceList = QList<Sd3drInstance>;

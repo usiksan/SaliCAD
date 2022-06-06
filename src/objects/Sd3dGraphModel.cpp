@@ -46,7 +46,7 @@ Sd3dGraphModel::Sd3dGraphModel(const Sd3dModel &model) :
 //!
 void Sd3dGraphModel::matrixMapInPlace(QMatrix4x4 matrix)
   {
-  //sd3dModelMapInPlace( mModel, matrix );
+  mTransform = matrix;
   }
 
 
@@ -66,8 +66,11 @@ void Sd3dGraphModel::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool nex
   {
   Sd3dGraph::cloneFrom( src, copyMap, next );
   SdPtrConst<Sd3dGraphModel> model(src);
-  if( model.isValid() )
-    mModel = model->mModel;
+  if( model.isValid() ) {
+    mModel        = model->mModel;
+    mModelScript = model->mModelScript;
+    mTransform    = model->mTransform;
+    }
   }
 
 
@@ -80,7 +83,13 @@ void Sd3dGraphModel::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool nex
 //!
 void Sd3dGraphModel::json(SdJsonWriter &js) const
   {
-  mModel.json( js );
+  js.jsonMatrix4x4( QStringLiteral("Transform"), mTransform );
+  if( mModelScript.isEmpty() )
+    //If script not assigned then we save model itself
+    mModel.json( js );
+  else
+    //If script present we save script as more compact than model
+    js.jsonString( QStringLiteral("Script"), mModelScript );
   Sd3dGraph::json( js );
   }
 
@@ -95,7 +104,15 @@ void Sd3dGraphModel::json(SdJsonWriter &js) const
 //!
 void Sd3dGraphModel::json(const SdJsonReader &js)
   {
-  mModel.json( js );
+  js.jsonMatrix4x4( QStringLiteral("Transform"), mTransform );
+  if( js.contains(QStringLiteral("Script")) ) {
+    //Script present, we read it and build model
+    js.jsonString( QStringLiteral("Script"), mModelScript );
+    mModel.build( mModelScript );
+    }
+  else
+    //Script not present, we read model
+    mModel.json( js );
   Sd3dGraph::json( js );
   }
 

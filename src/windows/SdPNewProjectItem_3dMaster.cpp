@@ -14,6 +14,7 @@ Description
   Show list for object type, user select one master and dialog
   execute selected master.
 */
+#include "SdConfig.h"
 #include "SdPNewProjectItem_3dMaster.h"
 #include "SdPNewProjectItem.h"
 #include "SdWView3d.h"
@@ -21,6 +22,7 @@ Description
 #include "SdD3dModelMaster.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdPItemRich.h"
+#include "objects/Sd3dGraphModel.h"
 #include "script/SdScriptParser3d.h"
 
 #include <QVBoxLayout>
@@ -29,6 +31,9 @@ Description
 #include <QLabel>
 #include <QSettings>
 #include <QMessageBox>
+
+
+
 
 SdPNewProjectItem_3dMaster::SdPNewProjectItem_3dMaster(SdProjectItemPtr *item, SdProject *prj, QWidget *parent) :
   QWizardPage(parent),
@@ -44,6 +49,7 @@ SdPNewProjectItem_3dMaster::SdPNewProjectItem_3dMaster(SdProjectItemPtr *item, S
   mMasterType = new QListWidget();
   vlay->addWidget( mMasterType );
   QHBoxLayout *boxLay = new QHBoxLayout();
+#ifndef SD_DISABLE_SALI_AUTHOR
   QPushButton *newProg = new QPushButton( tr("New programm") );
   newProg->setToolTip( tr("Open dialog to create new 3d model programm") );
   boxLay->addWidget( newProg );
@@ -64,7 +70,7 @@ SdPNewProjectItem_3dMaster::SdPNewProjectItem_3dMaster(SdProjectItemPtr *item, S
       initializePage();
       }
     });
-
+#endif
 
   boxLay->addStretch(1);
 
@@ -162,6 +168,7 @@ void SdPNewProjectItem_3dMaster::onCurrentRowChanged(int row)
       auto programm = parser.parse3d( rich->contents(), &previewPart, &model );
       previewPart.clear();
       programm->execute();
+      previewPart.insertChild( new Sd3dGraphModel(model), nullptr );
       mPreview->setItem( &previewPart );
       mPreview->fitItem();
       return;

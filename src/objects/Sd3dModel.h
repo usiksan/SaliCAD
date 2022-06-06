@@ -145,6 +145,11 @@ class Sd3dModel
     Sd3drFaceList faceListCurveXZ(const Sd3drFace &face, float radius, float angleSrc, float angleDst, int sideCount , bool close);
 
 
+    Sd3drFaceList faceListPinCurveOne(const Sd3drFace &face, float firstLen, float middleLen, float radius, float angle, int sideCount );
+
+    Sd3drFaceList faceListPinCurveTwo(const Sd3drFace &face, float firstLen, float middleLen, float lastLen, float radius, float angleFirst, float angleSecond, int sideCount );
+
+
     Sd3drFaceList faceListPinTqfp(float width, float thickness, float fullLenght, float plateLenght, float height );
 
 
@@ -180,6 +185,14 @@ class Sd3dModel
     void       json( const SdJsonReader &js );
 
     void       draw3d(QOpenGLFunctions_2_0 *f) const;
+
+    void       build( const QString &script );
+
+    //!
+    //! \brief volumeAdd Append volume of model to result volume
+    //! \param volume    Source and result volume
+    //!
+    void       volumeAdd( QMatrix2x3 &volume ) const;
 
   };
 

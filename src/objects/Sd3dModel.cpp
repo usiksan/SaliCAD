@@ -1,5 +1,5 @@
 #include "Sd3dModel.h"
-
+#include "script/SdScriptParser3d.h"
 
 #include <math.h>
 
@@ -246,7 +246,7 @@ Sd3drFace Sd3dModel::faceFlat( int firstVertexIndex, const QList<float> &pairLis
   float yz( orientation == 1 ? 1.0 : 0 );
   float xz( orientation == 2 ? 1.0 : 0 );
   int count = pairList.count() / 2;
-  if( count < 3 )
+  if( count < 2 )
     return face;
   count <<= 1;
   QVector3D v( vertex(firstVertexIndex) );
@@ -627,8 +627,8 @@ Sd3drFaceList Sd3dModel::faceListCurveXZ(const Sd3drFace &face, float radius, fl
   Sd3drFaceList model;
   Sd3drFace first(face);
   Sd3drFace second;
-  float angleStep = (angleDst - angleSrc) / sideCount;
-  float angle = angleSrc + angleStep;
+  float angleStep = angleDst / sideCount;
+  float angle = angleStep;
   for( int i = 1; i < sideCount; i++ ) {
     second = faceCurveXZ( face, radius, angleSrc, angle );
     model.append( faceListWall( first, second, close ) );
@@ -644,9 +644,45 @@ Sd3drFaceList Sd3dModel::faceListCurveXZ(const Sd3drFace &face, float radius, fl
 
 
 
+Sd3drFaceList Sd3dModel::faceListPinCurveOne(const Sd3drFace &face, float firstLen, float middleLen, float radius, float angle, int sideCount)
+  {
+  Sd3drFaceList pin;
+  Sd3drFace faceMiddleStart = faceDuplicateShift( face, firstLen );
+  pin = faceListWall( face, faceMiddleStart, true );
+  Sd3drFace faceMiddleStop = faceCurveXZ( faceMiddleStart, radius, 0, angle );
+  pin.append( faceListCurveXZ( faceMiddleStart, radius, 0, angle, sideCount, true ) );
+  Sd3drFace faceLast = faceDuplicateShift( faceMiddleStop, middleLen );
+  pin.append( faceListWall( faceMiddleStop, faceLast, true ) );
+  pin.append( faceLast );
+  return pin;
+  }
+
+
+
+
+Sd3drFaceList Sd3dModel::faceListPinCurveTwo(const Sd3drFace &face, float firstLen, float middleLen, float lastLen, float radius, float angleFirst, float angleSecond, int sideCount)
+  {
+  Sd3drFaceList pin;
+  Sd3drFace faceMiddleStart = faceDuplicateShift( face, firstLen );
+  pin = faceListWall( face, faceMiddleStart, true );
+  Sd3drFace faceMiddleStop = faceCurveXZ( faceMiddleStart, radius, 0, angleFirst );
+  pin.append( faceListCurveXZ( faceMiddleStart, radius, 0, angleFirst, sideCount, true ) );
+  Sd3drFace faceSecondStart = faceDuplicateShift( faceMiddleStop, middleLen );
+  pin.append( faceListWall( faceMiddleStop, faceSecondStart, true ) );
+  Sd3drFace faceSecondStop = faceCurveXZ( faceSecondStart, -radius, angleFirst, angleSecond );
+  pin.append( faceListCurveXZ( faceSecondStart, -radius, angleFirst, angleSecond, sideCount, true ) );
+  Sd3drFace faceLast = faceDuplicateShift( faceSecondStop, lastLen );
+  pin.append( faceListWall( faceSecondStop, faceLast, true ) );
+  pin.append( faceLast );
+  return pin;
+  }
+
+
+
+
 Sd3drFaceList Sd3dModel::faceListPinTqfp(float width, float thickness, float fullLenght, float plateLenght, float height)
   {
-  //Sd3drFace start = faceRectangle( widt)
+  return faceListPinCurveTwo( faceRectangle( width, thickness, QMatrix4x4()), fullLenght - plateLenght, height, plateLenght, thickness, 90, -90, 30 );
   }
 
 
@@ -689,4 +725,29 @@ void Sd3dModel::draw3d(QOpenGLFunctions_2_0 *f) const
   {
   for( auto const &instance : mInstanceList )
     instance.draw( f, mVertexList );
+  }
+
+
+
+void Sd3dModel::build(const QString &script)
+  {
+  clear();
+  SdScriptParser3d parser( nullptr, this );
+  auto prog = parser.parse3d( script, nullptr, this );
+  if( parser.error().isEmpty() )
+    prog->execute();
+  }
+
+
+
+
+//!
+//! \brief volumeAdd Append volume of model to result volume
+//! \param volume    Source and result volume
+//!
+void Sd3dModel::volumeAdd(QMatrix2x3 &volume) const
+  {
+  for( auto const &inst : qAsConst(mInstanceList) ) {
+    inst.volumeAdd( volume, mVertexList );
+    }
   }

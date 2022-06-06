@@ -950,29 +950,31 @@ SdWScriptEditor::keyPressEvent(QKeyEvent *e)
     bool tryIdent = false;
     //QString
     while( pos >= 0 ) {
-      ch = line.at(pos);
-      if( ch == QChar('(') ) tryIdent = true;
-      else if( tryIdent ) {
-        if( ch.isLetter() ) {
-          while( pos > 0 && line.at(pos-1).isLetter() ) pos--;
-          //Scan ident for help
-          QString ident;
-          while( line.at(pos).isLetter() ) {
-            ident.append( line.at(pos) );
-            pos++;
+      if( pos < line.count() ) {
+        ch = line.at(pos);
+        if( ch == QChar('(') ) tryIdent = true;
+        else if( tryIdent ) {
+          if( ch.isLetter() ) {
+            while( pos > 0 && line.at(pos-1).isLetter() ) pos--;
+            //Scan ident for help
+            QString ident;
+            while( line.at(pos).isLetter() ) {
+              ident.append( line.at(pos) );
+              pos++;
+              }
+            if( mHelpMap.contains(ident) ) {
+              //Show help window
+              mHelpPopUp->setPlainText( mHelpMap.value(ident) );
+              QPoint p = cursorRect( textCursor() ).topLeft();
+              p.ry() -= mHelpPopUp->height();
+              mHelpPopUp->move( p );
+              mHelpPopUp->show();
+              }
+            else mHelpPopUp->hide();
+            break;
             }
-          if( mHelpMap.contains(ident) ) {
-            //Show help window
-            mHelpPopUp->setPlainText( mHelpMap.value(ident) );
-            QPoint p = cursorRect( textCursor() ).topLeft();
-            p.ry() -= mHelpPopUp->height();
-            mHelpPopUp->move( p );
-            mHelpPopUp->show();
-            }
-          else mHelpPopUp->hide();
-          break;
+          else if( ch != QChar(' ') ) tryIdent = false;
           }
-        else if( ch != QChar(' ') ) tryIdent = false;
         }
       pos--;
       }

@@ -23,10 +23,13 @@ Description
 
 class Sd3dGraphModel : public Sd3dGraph
   {
-    Sd3dModel mModel;
+    Sd3dModel  mModel;       //!< Model
+    QString    mModelScript; //!< Script which described model. Usually program occupy less space than model
+    QMatrix4x4 mTransform;   //!< Transform model to part place
   public:
     Sd3dGraphModel();
     Sd3dGraphModel( const Sd3dModel &model );
+    Sd3dGraphModel( const QString &prog );
 
 
     Sd3ColorList bodyColorList() const { return mModel.colorList(); }
@@ -79,7 +82,7 @@ class Sd3dGraphModel : public Sd3dGraph
     //! \brief volumeAdd Append volume of model to result volume
     //! \param volume    Source and result volume
     //!
-    virtual void    volumeAdd( QMatrix2x3 &volume ) const override {  }
+    virtual void    volumeAdd( QMatrix2x3 &volume ) const override { mModel.volumeAdd( volume ); }
 
     // SdObject interface
   public:

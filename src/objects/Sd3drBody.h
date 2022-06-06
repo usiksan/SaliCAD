@@ -19,25 +19,30 @@ class Sd3drBody
   public:
     Sd3drBody();
 
-    void              colorListGet( Sd3ColorList &dst ) const { dst.append( mColor ); }
+    void colorListGet( Sd3ColorList &dst ) const { dst.append( mColor ); }
 
-    void              colorListSet( const Sd3dMaterial &src ) { mColor = src; }
+    void colorListSet( const Sd3dMaterial &src ) { mColor = src; }
 
-   // QColor            color() const { return mColorAmbient; }
+    void colorSet( QColor c ) { mColor.mAmbient = mColor.mDiffuse = c; }
 
-    void              colorSet( QColor c ) { mColor.mAmbient = mColor.mDiffuse = c; }
+    void faceAppend( const Sd3drFace &ref ) { mFaceList.append( ref ); }
 
-    void              faceAppend( const Sd3drFace &ref ) { mFaceList.append( ref ); }
+    void faceAppend( const Sd3drFaceList &list ) { mFaceList.append(list); }
 
-    void              faceAppend( const Sd3drFaceList &list ) { mFaceList.append(list); }
 
-//    const QList<int> &faceRefList() const { return mFaceRefList; }
+    void draw( QOpenGLFunctions_2_0 *f, const Sd3dRegion &vertexList, const QMatrix4x4 &map ) const;
 
-    void              draw( QOpenGLFunctions_2_0 *f, const Sd3dRegion &vertexList, const QMatrix4x4 &map ) const;
+    void json( SdJsonWriter &js ) const;
 
-    void              json( SdJsonWriter &js ) const;
+    void json( const SdJsonReader &js );
 
-    void              json( const SdJsonReader &js );
+    //!
+    //! \brief volumeAdd  Append volume of model to result volume
+    //! \param volume     Source and result volume
+    //! \param vertexList Vertex list on which referenced bodies
+    //! \param map        Map for body transformation
+    //!
+    void volumeAdd( QMatrix2x3 &volume, const Sd3dRegion &vertexList, const QMatrix4x4 &map ) const;
   };
 
 

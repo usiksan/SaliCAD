@@ -486,12 +486,19 @@ HEADERS  += \
     script/SdScriptValueFunLFaceCurveXZ.h \
     script/SdScriptValueFunLFaceCylinder.h \
     script/SdScriptValueFunLFaceExtrude.h \
+    script/SdScriptValueFunLFaceExtrudeShift.h \
     script/SdScriptValueFunLFaceHexagon.h \
     script/SdScriptValueFunLFaceIndexed.h \
+    script/SdScriptValueFunLFacePinCurveOne.h \
+    script/SdScriptValueFunLFacePinCurveTwo.h \
     script/SdScriptValueFunLFaceUnion.h \
     script/SdScriptValueFunLFaceWall.h \
     script/SdScriptValueFunLFaceWallIndexed.h \
     script/SdScriptValueFunMatrix.h \
+    script/SdScriptValueFunMatrixRotate.h \
+    script/SdScriptValueFunMatrixScale.h \
+    script/SdScriptValueFunMatrixTranslate.h \
+    script/SdScriptValueFunModelAppend.h \
     script/SdScriptValueFunModelBuild.h \
     script/SdScriptValueFunModelCopy.h \
     script/SdScriptValueFunModelCurve.h \

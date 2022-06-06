@@ -16,6 +16,8 @@ Description
 */
 #include "SdScriptOperatorWhile.h"
 
+#include <QDebug>
+
 SdScriptOperatorWhile::SdScriptOperatorWhile(SdScriptValue *cond, SdScriptOperator *block) :
   mCondition(cond),
   mBlock(block)
@@ -37,6 +39,9 @@ SdScriptOperatorWhile::~SdScriptOperatorWhile()
 //!
 void SdScriptOperatorWhile::execute()
   {
-  while( mCondition->toBool() )
+  //Exclude infinite loop. We limit it with 1000 iterations
+  for( int i = 0; i < 1000 && mCondition->toBool(); i++ ) {
     mBlock->execute();
+    qDebug() << "Iteration " << i;
+    }
   }

@@ -24,6 +24,7 @@ class SdScriptValueVariableFloat : public SdScriptValueVariable
     float mValue; //!< Float value of variable
   public:
     SdScriptValueVariableFloat() : mValue(0.0) {}
+    SdScriptValueVariableFloat( float f ) : mValue(f) {}
 
     // SdM3dValue interface
   public:

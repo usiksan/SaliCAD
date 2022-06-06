@@ -38,3 +38,18 @@ void Sd3drInstance::json(const SdJsonReader &js)
   js.jsonList( js, QStringLiteral("Bodies"), mBodyList );
   js.jsonListMatrix4x4( QStringLiteral("Copies"), mCopyList );
   }
+
+
+
+//!
+//! \brief volumeAdd  Append volume of model to result volume
+//! \param volume     Source and result volume
+//! \param vertexList Vertex list on which referenced bodies
+//!
+void Sd3drInstance::volumeAdd(QMatrix2x3 &volume, const Sd3dRegion &vertexList) const
+  {
+  for( auto const &map : qAsConst( mCopyList ) ) {
+    for( auto const &body : qAsConst( mBodyList ) )
+      body.volumeAdd( volume, vertexList, map );
+    }
+  }
