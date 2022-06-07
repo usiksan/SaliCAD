@@ -24,6 +24,7 @@ Description
 #include "SdScriptValueVariable.h"
 #include "SdScriptValueFunction.h"
 #include "SdScriptProgramm.h"
+#include "library/SdStringMap.h"
 
 #include <QMap>
 #include <QTableWidget>

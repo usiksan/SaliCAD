@@ -194,7 +194,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   //3D part editor menu
   menuInsertPart3d = new QMenu( QObject::tr("3d part") );
   cm3dMaster           = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dmaster.png")), QObject::tr("Master of 3d form"), frame, SLOT(cm3dMaster()) );
-  cm3dProgram          = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dmaster.png")), QObject::tr("Edit 3d model script"), frame, SLOT(cm3dProgram()) );
+  cm3dProgram          = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dProgram.png")), QObject::tr("Edit 3d model script"), frame, SLOT(cm3dProgram()) );
   cm3dImportStl        = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dImportStl.png")), QObject::tr("Import from stl file"), frame, SLOT(cm3dImportStl()) );
   //cm3dImportStep       = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dImportStep.png")), QObject::tr("Import from step file"), frame, SLOT(cm3dImportStep()) );
   cm3dImportVrml       = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dImportVrml.png")), QObject::tr("Import from vrml file"), frame, SLOT(cm3dImportVrml()) );
@@ -561,6 +561,8 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barPart3d->insertAction( nullptr, cm3dShow2d );
   barPart3d->addSeparator();
   barPart3d->insertAction( nullptr, cmModeTable[MD_3D_VIEW] );
+  barPart3d->addSeparator();
+  barPart3d->insertAction( nullptr, cm3dProgram );
   barPart3d->addSeparator();
   barPart3d->insertAction( nullptr, cmModeTable[MD_3D_HORZ_MOVE] );
   barPart3d->insertAction( nullptr, cmModeTable[MD_3D_HORZ_ROTATE] );

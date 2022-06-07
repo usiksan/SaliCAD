@@ -126,25 +126,10 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
 //!
 void SdPad::draw3d(QOpenGLFunctions_2_0 *f, SdPoint p) const
   {
-  //3d drawing mach different for hole or without hole
-  if( mHoleDiametr > 0 ) {
-    //Hole present
-    if( mIsCircle )
-      Sd3dDraw::padCircle( f, SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth >> 1, p, mHoleDiametr, mHoleLength, -0.01 );
-    else
-      Sd3dDraw::padRect( f, SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth, mHeight, p, mHoleDiametr, mHoleLength, -0.01 );
-    }
-  else {
-    //Smd pad
-    Sd3dDraw::color( f, sdEnvir->getSysColor( sc3dPadTop ) );
-    if( mIsCircle )
-      Sd3dDraw::circleFill( f, SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth >> 1, -0.01 );
-    else {
-      SdPoint a(p.x() + mCenterX - (mDiametrWidth >> 1), p.y() + mCenterY - (mHeight >> 1));
-      SdPoint b(a.x() + mDiametrWidth, a.y() + mHeight);
-      Sd3dDraw::rectFilled( f, a, b, -0.01 );
-      }
-    }
+  f->glPushMatrix();
+  f->glTranslatef( p.xmm(), p.ymm(), 0 );
+  mModel.draw3d( f );
+  f->glPopMatrix();
   }
 
 
@@ -378,8 +363,49 @@ void SdPad::parse(const QString nm)
         }
       }
     else mStencilThreshold = 0;
-
     }
+
+  mModel.clear();
+  //Build 3d model for pad
+  //3d drawing mach different for hole or without hole
+  float radius = mDiametrWidth >> 1;
+  radius /= 1000.0;
+  QMatrix4x4 t;
+  t.translate( static_cast<float>(mCenterX) / 1000.0, static_cast<float>(mCenterY) / 1000.0, -0.01 );
+  Sd3drBody body;
+  if( mHoleDiametr > 0 ) {
+    //Hole present
+    Sd3drFace hole3d = mModel.faceCircleSide( static_cast<float>(mHoleDiametr) / 2000.0, 40, t );
+    Sd3drFace pad3d;
+    if( mIsCircle )
+      pad3d = mModel.faceCircleSide( radius, 40, t );
+    else
+      pad3d = mModel.faceRectangleSide( static_cast<float>(mDiametrWidth) / 1000.0, static_cast<float>(mHeight) / 1000.0, 40, t );
+    //Top pad
+    body.faceAppend( mModel.faceListWall( pad3d, hole3d, true ) );
+    //Bottom pad
+    QMatrix4x4 shift;
+    shift.translate( 0, 0, -1.45 );
+    Sd3drFace botHole3d = mModel.faceDuplicate( hole3d, shift );
+    Sd3drFace botPad3d  = mModel.faceDuplicate( pad3d, shift );
+    body.faceAppend( mModel.faceListWall( botPad3d, botHole3d, true ) );
+    //Hole
+    body.faceAppend( mModel.faceListWall( hole3d, botHole3d, true ) );
+    }
+  else {
+    //Smd pad
+    Sd3drFace pad3d;
+    if( mIsCircle )
+      pad3d = mModel.faceCircle( radius, 10, t );
+    else
+      pad3d = mModel.faceRectangle( static_cast<float>(mDiametrWidth) / 1000.0, static_cast<float>(mHeight) / 1000.0, t );
+    body.faceAppend( pad3d );
+    }
+  body.colorSet( sdEnvir->getSysColor( sc3dPadTop ) );
+  Sd3drInstance inst;
+  inst.add( body );
+  inst.addCopy( QMatrix4x4() );
+  mModel.instanceAppend( inst );
   }
 
 

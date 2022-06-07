@@ -298,5 +298,6 @@
         <file>pic/objScript.png</file>
         <file>pic/cursorScript.png</file>
         <file>pic/symbolFragment.png</file>
+        <file>pic/3dProgram.png</file>
     </qresource>
 </RCC>

@@ -1,5 +1,6 @@
 #include "Sd3dModel.h"
 #include "script/SdScriptParser3d.h"
+#include "SdJsonIO.h"
 
 #include <math.h>
 
@@ -7,81 +8,6 @@
 
 
 #if 0
-
-
-
-
-//!
-//! \brief sd3dModelCurve Creates curve solid model from base region and rotation angle
-//! \param region         Source region which will be form curved model
-//! \param rotationCenter Center of rotation
-//! \param rotationAxis   Axis of rotation
-//! \param angle          Angle of rotation
-//! \param color          Faces color
-//! \param bottomFace     If true then appended bottom face from source region
-//! \return               Curved solid model
-//!
-Sd3dModel sd3dModelCurve(const Sd3dRegion &region, QVector3D rotationCenter, QVector3D rotationAxis, float angle, float stepAngle, QColor color, bool bottomFace )
-  {
-  Sd3dModel model;
-
-  //Bottom face
-  if( bottomFace )
-    model.append( Sd3dFace( region, color ) );
-
-  //Walls
-  Sd3dRegion bot( region );
-  if( angle > 0 ) {
-    float addon = stepAngle;
-    do {
-      //Build matrix to rotate to current angle
-      QMatrix4x4 matrix;
-      matrix.translate( -rotationCenter );
-      matrix.rotate( qMin( addon, angle ), rotationAxis );
-      matrix.translate( rotationCenter );
-
-      //Build rotated redion
-      Sd3dRegion top;
-      for( auto const &v : qAsConst(region) )
-        top.append( matrix.map( v ) );
-
-      //Append walls
-      model.append( sd3dModelWalls( bot, top, color, true ) );
-
-      bot = top;
-      addon += stepAngle;
-      }
-    while( addon <= angle );
-    }
-  else {
-    float addon = -stepAngle;
-    do {
-      //Build matrix to rotate to current angle
-      QMatrix4x4 matrix;
-      matrix.translate( -rotationCenter );
-      matrix.rotate( qMax( addon, angle ), rotationAxis );
-      matrix.translate( rotationCenter );
-
-      //Build rotated redion
-      Sd3dRegion top;
-      for( auto const &v : region )
-        top.append( matrix.map( v ) );
-
-      //Append walls
-      model.append( sd3dModelWalls( bot, top, color, true ) );
-
-      bot = top;
-      addon -= stepAngle;
-      }
-    while( addon >= angle );
-    }
-
-  //Top face
-  model.append( Sd3dFace( bot, color ) );
-
-  return model;
-  }
-
 
 
 
@@ -252,7 +178,8 @@ Sd3drFace Sd3dModel::faceFlat( int firstVertexIndex, const QList<float> &pairLis
   QVector3D v( vertex(firstVertexIndex) );
   face.append(firstVertexIndex);
   for( int i = 0; i < count; i += 2 ) {
-    v += QVector3D( pairList.at(i) * xy + pairList.at(i) * xz, pairList.at(i+1) * xy + pairList.at(i) * yz, pairList.at(i+1) * yz + pairList.at(i+1) * xz );
+    QVector3D dv( pairList.at(i) * xy + pairList.at(i) * xz, pairList.at(i+1) * xy + pairList.at(i) * yz, pairList.at(i+1) * yz + pairList.at(i+1) * xz );
+    v += dv;
     face.append( vertexAppend(v) );
     }
   return face;
@@ -305,9 +232,9 @@ Sd3drFace Sd3dModel::faceRectangleSide(float width, float lenght, int sideCount,
   float edgeOnSide = sideCount / 4;
   float stepw = width / edgeOnSide;
   float steph = lenght / edgeOnSide;
-  QVector3D v( width/2.0, lenght/2.0, 0);
+  QVector3D v( 0, lenght/2.0, 0);
   Sd3drFace face;
-  face.append( vertexAppend( map.map( v ) )   );
+  //face.append( vertexAppend( map.map( v ) )   );
   for( int i = 0; i < edgeOnSide / 2; i++ ) {
     v += QVector3D( stepw, 0, 0 );
     face.append( vertexAppend( map.map( v ) )   );

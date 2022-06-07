@@ -1,3 +1,17 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  3D instance of body. Instance consist of one or more bodies and number of matrix for its copy
+  Body is list of faces with material of all its faces.
+*/
 #ifndef SD3DRINSTANCE_H
 #define SD3DRINSTANCE_H
 

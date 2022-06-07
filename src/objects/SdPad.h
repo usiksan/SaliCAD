@@ -17,6 +17,7 @@ Description
 #include "SdStratum.h"
 #include "SdPoint.h"
 #include "SdPolyWindowList.h"
+#include "Sd3dModel.h"
 
 #include <QJsonObject>
 #include <QPolygonF>
@@ -28,21 +29,22 @@ class SdContext;
 
 class SdPad
   {
-    qint32 mCenterX;          //Center of circle or rectangle
-    qint32 mCenterY;
-    qint32 mDiametrWidth;     //Diametr of circle or rectangle dimensions
-    qint32 mHeight;
-    qint32 mMaskThreshold;    //Mask threshold. Calculation: maskSize = size + mMaskThreshold
-    qint32 mStencilThreshold; //Stensil threshold. Calculation: stensilSize = size + mMaskThreshold
-    qint32 mStencilRows;      //If rows or colons > 1 then stensil area divided on array of aperture with
-    qint32 mStencilCols;      // width and height
-    qint32 mStencilWidth;
-    qint32 mStencilHeight;
-    qint32 mHoleDiametr;
-    qint32 mHoleLength;       //Lenght for slot holes. If zero then holes is circle
-    qint32 mSlotAngle;        //Angle for slot. 0 degree is horizontal hole
+    qint32    mCenterX;          //Center of circle or rectangle
+    qint32    mCenterY;
+    qint32    mDiametrWidth;     //Diametr of circle or rectangle dimensions
+    qint32    mHeight;
+    qint32    mMaskThreshold;    //Mask threshold. Calculation: maskSize = size + mMaskThreshold
+    qint32    mStencilThreshold; //Stensil threshold. Calculation: stensilSize = size + mMaskThreshold
+    qint32    mStencilRows;      //If rows or colons > 1 then stensil area divided on array of aperture with
+    qint32    mStencilCols;      // width and height
+    qint32    mStencilWidth;
+    qint32    mStencilHeight;
+    qint32    mHoleDiametr;
+    qint32    mHoleLength;       //Lenght for slot holes. If zero then holes is circle
+    qint32    mSlotAngle;        //Angle for slot. 0 degree is horizontal hole
     //Not saved. Circle determine by mHeight = 0.
-    bool   mIsCircle;
+    bool      mIsCircle;
+    Sd3dModel mModel;
   public:
     SdPad();
 

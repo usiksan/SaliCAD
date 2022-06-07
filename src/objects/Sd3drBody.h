@@ -1,21 +1,35 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  3D body. Body is list of faces with material of all its faces.
+  So body has single material for many faces
+*/
 #ifndef SD3DRBODY_H
 #define SD3DRBODY_H
 
 #include "Sd3dRegion.h"
-#include "SdJsonIO.h"
 #include "Sd3drFace.h"
 #include "Sd3dMaterial.h"
 
 #include <QList>
 #include <QColor>
 
-
+class SdJsonWriter;
+class SdJsonReader;
 
 
 class Sd3drBody
   {
-    Sd3drFaceList  mFaceList;
-    Sd3dMaterial   mColor;
+    Sd3drFaceList  mFaceList; //!< List of faces. Each face is list of vertex of polygon in global vertex list of model
+    Sd3dMaterial   mColor;    //!< Material of all faces of this body
   public:
     Sd3drBody();
 

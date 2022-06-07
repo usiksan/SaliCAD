@@ -13,6 +13,7 @@ Description
 */
 #include "SdConfig.h"
 #include "Sd3dReaderStl.h"
+#include "objects/Sd3dPoint.h"
 
 #include <QFile>
 #include <QDebug>

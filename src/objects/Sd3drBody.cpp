@@ -1,5 +1,20 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  3D body. Body is list of faces with material of all its faces.
+  So body has single material for many faces
+*/
 #include "Sd3drBody.h"
 #include "Sd3dDraw.h"
+#include "SdJsonIO.h"
 
 Sd3drBody::Sd3drBody()
   {
