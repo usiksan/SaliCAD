@@ -17,6 +17,7 @@ Description
 #include "SdWCommand.h"
 #include "SdD3dMaster.h"
 #include "SdWView3d.h"
+#include "SdD3dModelProgrammEditor.h"
 #include "objects/Sd3dGraphModel.h"
 #include "modes/Sd3dModeView.h"
 #include "modes/Sd3dModeHorzMove.h"
@@ -63,6 +64,19 @@ void SdWEditor3dPart::cm3dMaster()
   SdD3dMaster master( mPartPtr, this );
   master.exec();
   mView->update();
+  }
+
+
+
+
+void SdWEditor3dPart::cm3dProgram()
+  {
+  SdD3dModelProgrammEditor programmEditor( mPartPtr->getTitle(), mPartPtr->model()->script(), this );
+  if( programmEditor.exec() ) {
+    //Update 3d model script
+    mPartPtr->model()->scriptSet( programmEditor.script(), mPartPtr->getUndo() );
+    mView->update();
+    }
   }
 
 

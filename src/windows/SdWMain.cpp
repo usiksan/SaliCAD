@@ -1476,6 +1476,14 @@ void SdWMain::cm3dMaster()
 
 
 
+void SdWMain::cm3dProgram()
+  {
+  if( activeEditor() )
+    activeEditor()->cm3dProgram();
+  }
+
+
+
 
 
 void SdWMain::cm3dImportStl()

@@ -108,9 +108,12 @@ class SdJsonReader : public SvJsonReaderExt<SdObjectMap>
     QMatrix4x4 matrix4x4( const QJsonArray &ar ) const
       {
       float val[16];
-      for( int i = 0; i < 16; i++ )
+      bool notNull = false;
+      for( int i = 0; i < 16; i++ ) {
         val[i] = ar.at(i).toDouble();
-      return QMatrix4x4(val);
+        notNull = notNull || val[i] != 0;
+        }
+      return notNull ? QMatrix4x4(val) : QMatrix4x4();
       }
 
     void jsonMatrix4x4( const QString &key, QMatrix4x4 &map ) const

@@ -162,9 +162,121 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
 
 
 
+SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString &title, const QString &script, QWidget *parent) :
+  QDialog(parent),
+  mRich(nullptr),
+  mParamWidget(nullptr),
+  mDirty(false),
+  mActive(false)
+  {
+  //Setup editor size
+  resize( qMin( QGuiApplication::primaryScreen()->size().width(), 1600), 700 );
+
+  setWindowTitle( tr("3d model editor") );
+
+  //Main layout of dialog is vertical
+  QVBoxLayout *vlay = new QVBoxLayout();
+
+  //Programm title with label
+  QLabel *titleLabel = new QLabel(tr("Part title: ") + title );
+  titleLabel->setMaximumHeight( 25 );
+  vlay->addWidget( titleLabel );
+
+  //Central part of dialog is splitter
+  QSplitter *splitter = new QSplitter();
+  vlay->addWidget( splitter );
+
+    //Programm text editor
+    QVBoxLayout *tlay = new QVBoxLayout();
+    QFont font;
+    font.setFamily("Courier");
+    font.setFixedPitch(true);
+    font.setPointSize(10);
+
+    //Editor himself
+    mTextEdit = new SdWScriptEditor();
+    mTextEdit->setAutoCompleteParenthesis(true);
+    mTextEdit->setAutoIndentSpaceCount(2);
+    mTextEdit->setFont( font );
+
+    //Highlighter for editor
+    mHighlighter = new SdWScriptHighlighter( mTextEdit->document() );
+    mTextEdit->setHighlighter( mHighlighter );
+    connect( mTextEdit, SIGNAL(rehighlightBlock(QTextBlock)), mHighlighter, SLOT(rehighlightBlock(QTextBlock)) );
+    connect( mTextEdit, &SdWScriptEditor::textChanged, this, &SdD3dModelProgrammEditor::parse );
+    connect( mTextEdit, &SdWScriptEditor::setLink, mHighlighter, &SdWScriptHighlighter::setLink );
+    //connect( this, &SdD3dModelProgrammEditor::parseCompleted, mHighlighter, &SdW3dModelProgrammHighlighter::rehighlight );
+
+    tlay->addWidget( mTextEdit );
+
+     //Error line with label (result of programm compile)
+     QHBoxLayout *hlay = new QHBoxLayout();
+     hlay->addWidget( new QLabel(tr("Error:")) );
+     hlay->addWidget( mError = new QLineEdit() );
+
+    tlay->addLayout( hlay );
+
+     //Buttons for compile text programm
+     hlay = new QHBoxLayout();
+     QPushButton *build = new QPushButton(tr("Build"));
+     build->setToolTip( tr("Compile source text 3d model programm") );
+     connect( build, &QPushButton::clicked, this, &SdD3dModelProgrammEditor::compile );
+     hlay->addWidget( build );
+     hlay->addStretch(1);
+
+    tlay->addLayout( hlay );
+
+   QWidget *editor = new QWidget();
+   editor->setLayout( tlay );
+
+   //Help widget
+   splitter->addWidget( mHelp = new SdWHelp() );
+   connect( mTextEdit, &SdWScriptEditor::help, mHelp, &SdWHelp::helpTopic );
+
+   //Text editor widget with buttons
+   splitter->addWidget( editor );
+
+   //Part preview widget
+   splitter->addWidget( mPreview = new SdWView3d( &mPart, this ) );
+
+   //Stretch factor
+   splitter->setStretchFactor( 0, 1 );
+   splitter->setStretchFactor( 1, 3 );
+   splitter->setStretchFactor( 2, 2 );
+
+  //Buttons at dialog bottom
+  QDialogButtonBox *dialogButtonBox = new QDialogButtonBox( QDialogButtonBox::Ok | QDialogButtonBox::Cancel );
+  vlay->addWidget( dialogButtonBox );
+  connect( dialogButtonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &SdD3dModelProgrammEditor::accept );
+  connect( dialogButtonBox->button(QDialogButtonBox::Cancel), &QPushButton::clicked, this, &SdD3dModelProgrammEditor::close );
+
+  setLayout( vlay );
+
+  //Extract programm source
+  mTextEdit->setPlainText( script );
+  compile();
+  mPreview->fitItem();
+  mPreview->update();
+
+  //Show beginner guide for scripting language
+  mHelp->helpTopic( QStringLiteral("script3d.htm") );
+  mDirty = false;
+  }
+
+
+
+
 SdD3dModelProgrammEditor::~SdD3dModelProgrammEditor()
   {
   if( mRich ) delete mRich;
+  }
+
+
+
+
+QString SdD3dModelProgrammEditor::script() const
+  {
+  return mTextEdit->toPlainText();
   }
 
 
@@ -177,10 +289,12 @@ void SdD3dModelProgrammEditor::compile()
   {
   mActive = true;
 
-  mParamWidget->clear();
-  mParamWidget->setColumnCount(2);
-  mParamWidget->setRowCount(0);
-  mParamWidget->setHorizontalHeaderLabels( {tr("Parametr name"), tr("Parametr value") } );
+  if( mParamWidget != nullptr ) {
+    mParamWidget->clear();
+    mParamWidget->setColumnCount(2);
+    mParamWidget->setRowCount(0);
+    mParamWidget->setHorizontalHeaderLabels( {tr("Parametr name"), tr("Parametr value") } );
+    }
 
   mModel.clear();
   SdScriptParser3d parser( mParamWidget, &mModel );

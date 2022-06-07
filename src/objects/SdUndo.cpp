@@ -322,6 +322,18 @@ void SdUndo::matrix3d(QMatrix4x4 matrix, SdPItemPart *part)
 
 
 
+//!
+//! \brief script      Add undo script for 3d model changed
+//! \param modelScript Changed script
+//! \param model       3d model
+//!
+void SdUndo::script(QString *modelScript, Sd3dModel *model)
+  {
+  //TODO Append undo for 3d model script
+  }
+
+
+
 
 void SdUndo::undoStep()
   {

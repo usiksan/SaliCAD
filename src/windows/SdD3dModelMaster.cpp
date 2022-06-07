@@ -18,6 +18,7 @@ Description
 #include "script/SdScriptParser3d.h"
 #include "script/SdScriptProgramm.h"
 #include "objects/SdObjectFactory.h"
+#include "objects/Sd3dGraphModel.h"
 #include "SdDHelp.h"
 
 #include <QVBoxLayout>
@@ -117,9 +118,11 @@ void SdD3dModelMaster::rebuild()
     mActive = true;
     //Clear previously builded part
     mPart->clear();
+    mModel.clear();
 
     //Build new part
     mProgramm->execute();
+    mPart->insertChild( new Sd3dGraphModel(mModel), nullptr );
 
     //Update preview
     mPreview->update();

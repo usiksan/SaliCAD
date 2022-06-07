@@ -55,6 +55,7 @@ typedef QMap<QString,SdSymImpPin> SdSymImpPinTable;
 struct SdPartImpPin;
 typedef QMap<QString,SdPartImpPin> SdPartImpPinTable;
 struct SdPropPolygon;
+class Sd3dModel;
 
 class SdUndo
   {
@@ -120,6 +121,13 @@ class SdUndo
     //! \param part     Part on which conversion applied
     //!
     void matrix3d( QMatrix4x4 matrix, SdPItemPart *part );
+
+    //!
+    //! \brief script      Add undo script for 3d model changed
+    //! \param modelScript Changed script
+    //! \param model       3d model
+    //!
+    void script( QString *modelScript, Sd3dModel *model );
 
     //do undo and redo
     void undoStep();

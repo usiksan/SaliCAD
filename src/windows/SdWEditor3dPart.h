@@ -30,8 +30,9 @@ class SdWEditor3dPart : public SdWEditor3d
     // SdWEditor interface
   public:
 //    virtual SdProjectItem *getProjectItem() const override;
-    virtual void           onActivateEditor() override;
-    virtual void           cm3dMaster() override;
+    virtual void onActivateEditor() override;
+    virtual void cm3dMaster() override;
+    virtual void cm3dProgram() override;
 
     // SdWEditor interface
   public:

@@ -51,7 +51,10 @@ class SdD3dModelProgrammEditor : public QDialog
     bool                  mActive;      //!< Lock for recursive change param table contents
   public:
     SdD3dModelProgrammEditor( const QString id, QWidget *parent );
+    SdD3dModelProgrammEditor( const QString &title, const QString &script, QWidget *parent );
     ~SdD3dModelProgrammEditor();
+
+    QString script() const;
 
   signals:
     //!

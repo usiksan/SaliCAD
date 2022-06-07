@@ -15,25 +15,13 @@ Sd3dGraphModel::Sd3dGraphModel(const Sd3dModel &model) :
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void Sd3dGraphModel::scriptSet(const QString script, SdUndo *undo)
+  {
+  if( undo )
+    undo->script( &mModelScript, &mModel );
+  mModelScript = script;
+  mModel.build( mModelScript );
+  }
 
 
 
@@ -46,7 +34,7 @@ Sd3dGraphModel::Sd3dGraphModel(const Sd3dModel &model) :
 //!
 void Sd3dGraphModel::matrixMapInPlace(QMatrix4x4 matrix)
   {
-  mTransform = matrix;
+  mTransform *= matrix;
   }
 
 
@@ -131,7 +119,10 @@ SdRect Sd3dGraphModel::getOverRect() const
 
 void Sd3dGraphModel::draw3d(QOpenGLFunctions_2_0 *f) const
   {
+  f->glPushMatrix();
+  f->glMultMatrixf( mTransform.constData() );
   mModel.draw3d( f );
+  f->glPopMatrix();
   }
 
 

@@ -32,51 +32,19 @@ class Sd3dGraphModel : public Sd3dGraph
     Sd3dGraphModel( const QString &prog );
 
 
-    Sd3ColorList bodyColorList() const { return mModel.colorList(); }
+    Sd3ColorList     bodyColorList() const { return mModel.colorList(); }
 
-    void         bodyColorListSet( const Sd3ColorList &lst ) { mModel.colorListSet( lst ); }
+    void             bodyColorListSet( const Sd3ColorList &lst ) { mModel.colorListSet( lst ); }
 
+    QString          script() const { return mModelScript; }
+    void             scriptSet( const QString script, SdUndo *undo );
 
-
-
-
-//    //!
-//    //! \brief faceCount Returns face count of model
-//    //! \return          Face count of model
-//    //!
-//    int    faceCount() const { return mModel.count(); }
-
-//    //!
-//    //! \brief faceColor Returns color of face with faceIndex
-//    //! \param faceIndex Index of face whose color returned
-//    //! \return          Color of face
-//    //!
-//    QColor faceColor( int faceIndex ) const { return mModel.at(faceIndex).mColor; }
-
-//    //!
-//    //! \brief faceColorSet Sets color of face with faceIndex
-//    //! \param faceIndex    Index of face whose color set
-//    //! \param color        New color of face
-//    //!
-//    void   faceColorSet( int faceIndex, QColor color ) { mModel[faceIndex].mColor = color; }
-
-//    //!
-//    //! \brief faceAdd Appends face to 3d model
-//    //! \param face    Appended face
-//    //!
-//    void   faceAdd( const Sd3dFace &face ) { mModel.append( face ); }
-
-//    //!
-//    //! \brief modelAdd Append model to 3d model
-//    //! \param model    Appended model
-//    //!
-//    void   modelAdd( const Sd3dModel &model ) { mModel.append( model ); }
 
     //!
     //! \brief matrixMapInPlace Mapping all faces of model throught given matrix. Operation maked in place
     //! \param matrix           Mapping matrix
     //!
-    void   matrixMapInPlace( QMatrix4x4 matrix );
+    void             matrixMapInPlace( QMatrix4x4 matrix );
 
     //!
     //! \brief volumeAdd Append volume of model to result volume

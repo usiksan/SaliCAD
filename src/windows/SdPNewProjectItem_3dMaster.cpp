@@ -161,7 +161,6 @@ void SdPNewProjectItem_3dMaster::onCurrentRowChanged(int row)
     SdPItemRich *rich = sdObjectOnly<SdPItemRich>( SdObjectFactory::extractObject( mIdList.at(row), false, this ) );
     if( rich != nullptr ) {
       mDescription->setText( rich->paramGet(stdParam3dModelProgramm) );
-      //TODO append 3d preview
       Sd3dModel model;
       SdScriptParser3d parser( nullptr, &model );
       static SdPItemPart previewPart;
