@@ -1093,6 +1093,13 @@ void SdGraphPartImp::draw3d(QOpenGLFunctions_2_0 *f) const
   f->glRotated( mProp.mAngle.getDegree(), 0, 0, 1 );
   f->glTranslatef( -mPart->getOrigin().xmm(), -mPart->getOrigin().ymm(), 0 );
 
+  mPart->forEachConst( dctPartPin, [f] (SdObject *obj) -> bool {
+    SdPtrConst<SdGraph> obj2d(obj);
+    if( obj2d.isValid() )
+      obj2d->draw3d( f );
+    return true;
+    });
+
   mPart->draw3d( f );
 
   f->glPopMatrix();

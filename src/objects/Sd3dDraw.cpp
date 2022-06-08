@@ -175,65 +175,6 @@ void Sd3dDraw::colorToFloat(QColor col, float *fcolor)
 
 
 
-static void pad( QOpenGLFunctions_2_0 *f, Sd3dRegion padRegion, SdPoint holeCenter, int holeDiametr, int holeLenght, float z )
-  {
-//  Sd3dRegion holeRegion;
-//  if( holeLenght > 0 )
-//    //Rectangle hole
-//    holeRegion = sd3dRegionRectangleSideCount( static_cast<float>(holeLenght) / 1000.0, static_cast<float>(holeDiametr) / 1000.0, 36, QVector3D( holeCenter.xmm(), holeCenter.ymm(), z ) );
-//  else
-//    //Circle hole
-//    holeRegion = sd3dRegionCircleSideCount( static_cast<float>(holeDiametr) / 2000.0, 2.0, QVector3D( holeCenter.xmm(), holeCenter.ymm(), z ) );
-  //Top pad
-//  Sd3dModel topPad = sd3dModelFlatHole( padRegion, holeRegion, sdEnvir->getSysColor( sc3dPadTop ) );
-//  //Bottom pad
-//  Sd3dModel botPad = sd3dModelTranslateColor( topPad, QVector3D(0,0,-1.5), sdEnvir->getSysColor( sc3dPadBot ) );
-//  //Hole tube
-//  Sd3dModel hole = sd3dModelWall( holeRegion, QVector3D(0,0,-1.5), sdEnvir->getSysColor( sc3dPadHole ), true );
-//  Sd3dDraw::drawModel( f, topPad );
-//  Sd3dDraw::drawModel( f, botPad );
-//  Sd3dDraw::drawModel( f, hole );
-  }
-
-
-
-//!
-//! \brief padCircle   Draws circle pad with hole
-//! \param f           OpenGL
-//! \param padCenter   Point of pad center in 3d scene
-//! \param padRadius   Pad radius in micron
-//! \param holeCenter  Center of pad hole aligned to center of pad
-//! \param holeDiametr Hole diametr in micron
-//! \param holeLenght  Lenght of hole in micron
-//! \param z           z position of pad ahead pcb
-//!
-void Sd3dDraw::padCircle(QOpenGLFunctions_2_0 *f, SdPoint padCenter, int padRadius, SdPoint holeCenter, int holeDiametr, int holeLenght, float z )
-  {
- // Sd3dRegion padRegion( sd3dRegionCircleSideCount( static_cast<float>(padRadius) / 1000.0, 36, QVector3D( padCenter.xmm(), padCenter.ymm(), z ) )  );
- // pad( f, padRegion, holeCenter, holeDiametr, holeLenght, z );
-  }
-
-
-
-
-//!
-//! \brief padRect     Draws rectangle pad with hole
-//! \param f           OpenGL
-//! \param padCenter   Point of pad center in 3d scene
-//! \param padWidth    Pad width in micron
-//! \param padHeight   Pad height in micron
-//! \param holeCenter  Center of pad hole aligned to center of pad
-//! \param holeDiametr Hole diametr in micron
-//! \param holeLenght  Lenght of hole in micron
-//! \param z           z position of pad ahead pcb
-//!
-void Sd3dDraw::padRect(QOpenGLFunctions_2_0 *f, SdPoint padCenter, int padWidth, int padHeight, SdPoint holeCenter, int holeDiametr, int holeLenght, float z)
-  {
-//  Sd3dRegion padRegion( sd3dRegionRectangleSideCount( static_cast<float>(padWidth) / 1000.0, static_cast<float>(padHeight) / 1000.0, 36, QVector3D( padCenter.xmm(), padCenter.ymm(), z ) ) );
-//  pad( f, padRegion, holeCenter, holeDiametr, holeLenght, z );
-  }
-
-
 
 
 
@@ -263,19 +204,6 @@ void Sd3dDraw::flatPanel(QOpenGLFunctions_2_0 *f, SdPointList list, int z, QColo
 //  drawModel( f, pcb );
   }
 
-
-
-
-//!
-//! \brief face Draw face in 3d world
-//! \param f    OpenGL
-//! \param face Face to draw
-//!
-//void Sd3dDraw::drawFace(QOpenGLFunctions_2_0 *f, const Sd3dFace &face)
-//  {
-//  Sd3dDraw::color( f, face.mColor );
-//  drawPolygon( f, face.mContour );
-//  }
 
 
 

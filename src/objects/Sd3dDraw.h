@@ -84,31 +84,6 @@ class Sd3dDraw
     static void colorToFloat(QColor col, float *fcolor );
 
     //!
-    //! \brief padCircle   Draws circle pad with hole
-    //! \param f           OpenGL
-    //! \param padCenter   Point of pad center in 3d scene
-    //! \param padRadius   Pad radius in micron
-    //! \param holeCenter  Center of pad hole aligned to center of pad
-    //! \param holeDiametr Hole diametr in micron
-    //! \param holeLenght  Lenght of hole in micron
-    //! \param z           z position of pad ahead pcb
-    //!
-    static void padCircle(QOpenGLFunctions_2_0 *f, SdPoint padCenter, int padRadius, SdPoint holeCenter, int holeDiametr, int holeLenght, float z);
-
-    //!
-    //! \brief padRect     Draws rectangle pad with hole
-    //! \param f           OpenGL
-    //! \param padCenter   Point of pad center in 3d scene
-    //! \param padWidth    Pad width in micron
-    //! \param padHeight   Pad height in micron
-    //! \param holeCenter  Center of pad hole aligned to center of pad
-    //! \param holeDiametr Hole diametr in micron
-    //! \param holeLenght  Lenght of hole in micron
-    //! \param z           z position of pad ahead pcb
-    //!
-    static void padRect(QOpenGLFunctions_2_0 *f, SdPoint padCenter, int padWidth, int padHeight, SdPoint holeCenter, int holeDiametr, int holeLenght, float z );
-
-    //!
     //! \brief flatPanel Draws flat panel (often pcb) by contour point list and faces color
     //! \param f         OpenGL
     //! \param list      Contour point list
