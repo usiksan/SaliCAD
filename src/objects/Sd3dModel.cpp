@@ -343,6 +343,93 @@ Sd3drFace Sd3dModel::facePart(const Sd3drFace &face, const QList<float> &indexes
   }
 
 
+struct SdTriangle
+  {
+    QPointF mLeftA;
+    QPointF mNextB;
+    QPointF mPrevC;
+
+    float dyba;
+    float dxba;
+    float dycb;
+    float dxcb;
+    float dyac;
+    float dxac;
+    void prepare()
+      {
+      dyba = mNextB.y() - mLeftA.y();
+      dxba = mNextB.x() - mLeftA.x();
+
+      dycb = mPrevC.y() - mNextB.y();
+      dxcb = mPrevC.x() - mNextB.x();
+
+      dyac = mLeftA.y() - mPrevC.y();
+      dxac = mLeftA.x() - mPrevC.x();
+      }
+
+    bool isPointInside( QPointF p )
+      {
+      float v0 = (mLeftA.x() - p.x()) * dyba - (mLeftA.y() - p.y()) * dxba;
+      float v1 = (mNextB.x() - p.x()) * dycb - (mNextB.y() - p.y()) * dxcb;
+      float v2 = (mPrevC.x() - p.x()) * dyac - (mPrevC.y() - p.y()) * dxac;
+      return (v0 >= 0 && v1 >= 0 && v2 >= 0) || (v0 < 0 && v1 < 0 && v2 < 0);
+      }
+  };
+
+
+
+Sd3drFaceList Sd3dModel::faceListSimplify( Sd3drFace face )
+  {
+  Sd3drFaceList faceList;
+  while( face.count() > 3 ) {
+    int ileft = lessLeft( face );
+    int inext = next( ileft, face );
+    int iprev = prev( ileft, face );
+    SdTriangle t;
+    t.mLeftA = point( face.at(ileft) );
+    t.mNextB = point( face.at(inext) );
+    t.mPrevC = point( face.at(iprev) );
+    t.prepare();
+
+    //Test all remain points of region
+    QPointF p;
+    int innerIndex = -1;
+    for( int index = next( inext, face ); index != iprev; index = next( index, face ) ) {
+      QPointF v = point( face.at(index) );
+      if( t.isPointInside( v ) ) {
+        if( innerIndex < 0 || isLeft( v, p ) ) {
+          p = v;
+          innerIndex = index;
+          }
+        }
+      }
+    if( innerIndex >= 0 ) {
+      //Divide source region into two regions
+      Sd3drFace faceLeft, faceRight;
+      for( int index = ileft; index != innerIndex; index = next( index, face ) )
+        faceLeft.append( face.at(index) );
+      faceLeft.append( face.at(innerIndex) );
+      for( int index = ileft; index != innerIndex; index = prev( index, face ) )
+        faceRight.append( face.at(index) );
+      faceRight.append( face.at(innerIndex) );
+      face = faceLeft;
+      faceList.append( faceListSimplify(faceRight) );
+      }
+    else {
+      //Remove triangle from face
+      Sd3drFace triangle;
+      triangle.append( face.at(ileft) );
+      triangle.append( face.at(inext) );
+      triangle.append( face.at(iprev) );
+      face.removeAt( ileft );
+      faceList.append( triangle );
+      }
+    }
+  faceList.append( face );
+  return faceList;
+  }
+
+
 
 
 
@@ -677,4 +764,40 @@ void Sd3dModel::volumeAdd(QMatrix2x3 &volume) const
   for( auto const &inst : qAsConst(mInstanceList) ) {
     inst.volumeAdd( volume, mVertexList );
     }
+  }
+
+
+int Sd3dModel::lessLeft(const Sd3drFace &face) const
+  {
+  //Scan region and find most less point
+  int less = 0;
+  QPointF p = point(face.at(0));
+  for( int i = 1; i < face.count(); i++ ) {
+    QPointF v = point( face.at(i) );
+    if( isLeft( v, p ) ) {
+      p = v;
+      less = i;
+      }
+    }
+  return less;
+  }
+
+bool Sd3dModel::isLeft(QPointF p1, QPointF p2) const
+  {
+  return p1.x() < p2.x() || ((p1.x() == p2.x()) && (p1.y() < p2.y()));
+  }
+
+
+int Sd3dModel::next(int center, const Sd3drFace &face) const
+  {
+  if( center + 1 < face.count() )
+    return center + 1;
+  return 0;
+  }
+
+int Sd3dModel::prev(int center, const Sd3drFace &face) const
+  {
+  if( center > 0 )
+    return center - 1;
+  return face.count() - 1;
   }

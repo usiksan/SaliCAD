@@ -19,6 +19,7 @@ Description
 #include "objects/SdProp.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdObjectNetClient.h"
+#include "objects/Sd3dModel.h"
 #include <QApplication>
 #include <QSettings>
 #include <QTranslator>
@@ -29,6 +30,12 @@ Description
 
 int main(int argc, char *argv[])
   {
+  Sd3dModel model;
+  Sd3drFace face = model.faceFlat( model.vertexAppend( QVector3D(0,0,0) ), { 0,1, 3,0, 0,1, 4,0, 0,-1, 3,0, 0,-1 }, 0 );
+  qDebug() << face;
+  qDebug() << model.faceListSimplify( face );
+
+
   //Setups for settings
   QCoreApplication::setOrganizationName("SaliLAB");
   QCoreApplication::setOrganizationDomain("http://salilab.com/");

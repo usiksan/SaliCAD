@@ -36,6 +36,8 @@ class Sd3dModel
 
     QVector3D     vertex( int index ) const { return mVertexList.at(index); }
 
+    QPointF       point( int index ) const { return mVertexList.at(index).toPointF(); }
+
     Sd3dRegion    vertexList( const QList<int> &indexList ) const;
 
     int           vertexAppend( QVector3D v ) { mVertexList.append(v); return mVertexList.count() - 1; }
@@ -78,6 +80,9 @@ class Sd3dModel
     static Sd3drFace     facePart( const Sd3drFace &face, const QList<float> &indexes );
 
 
+    Sd3drFaceList faceListSimplify(Sd3drFace face );
+
+    Sd3drFaceList faceListHoles( const Sd3drFace &face, const Sd3drFaceList &holeList );
 
     //!
     //! \brief faceListExtrude Extrudes model from source face in direction specified by map
@@ -193,6 +198,15 @@ class Sd3dModel
     //! \param volume    Source and result volume
     //!
     void       volumeAdd( QMatrix2x3 &volume ) const;
+
+  private:
+    int        lessLeft( const Sd3drFace &face ) const;
+
+    bool       isLeft( QPointF p1, QPointF p2 ) const;
+
+    int        next( int center, const Sd3drFace &face ) const;
+
+    int        prev( int center, const Sd3drFace &face ) const;
 
   };
 
