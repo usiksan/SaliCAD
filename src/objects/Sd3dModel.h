@@ -80,7 +80,7 @@ class Sd3dModel
     static Sd3drFace     facePart( const Sd3drFace &face, const QList<float> &indexes );
 
 
-    Sd3drFaceList faceListSimplify(Sd3drFace face );
+    Sd3drFaceList faceListSimplify(const Sd3drFace &face );
 
     Sd3drFaceList faceListHoles( const Sd3drFace &face, const Sd3drFaceList &holeList );
 
