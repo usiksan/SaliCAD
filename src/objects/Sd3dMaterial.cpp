@@ -42,13 +42,13 @@ void Sd3dMaterial::draw(QOpenGLFunctions_2_0 *f) const
   Sd3dDraw::colorToFloat( mDiffuse, fcolor );
   f->glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, fcolor );
 
-  Sd3dDraw::colorToFloat( mEmissive, fcolor );
-  f->glMaterialfv( GL_FRONT_AND_BACK, GL_EMISSION, fcolor );
+//  Sd3dDraw::colorToFloat( mEmissive, fcolor );
+//  f->glMaterialfv( GL_FRONT_AND_BACK, GL_EMISSION, fcolor );
 
-  f->glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, mShininnes );
+//  f->glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, mShininnes );
 
-  Sd3dDraw::colorToFloat( mSpecular, fcolor );
-  f->glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, fcolor );
+//  Sd3dDraw::colorToFloat( mSpecular, fcolor );
+//  f->glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, fcolor );
   }
 
 

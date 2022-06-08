@@ -204,8 +204,11 @@ void SdWView3d::mouseMoveEvent(QMouseEvent *event)
 
 
 
+int wheelDelta = 50;
+
 void SdWView3d::wheelEvent(QWheelEvent *event)
   {
+#if 1
   //At first try handle event by current mode
   if( mMode != nullptr && mMode->wheelEvent( this, event ) )
     return;
@@ -226,6 +229,10 @@ void SdWView3d::wheelEvent(QWheelEvent *event)
     //With no modifiers pressed we rotate over Z axis
     mAngleZ += delta;
     }
+#else
+  wheelDelta += event->angleDelta().y() / 120;
+  initializeGL();
+#endif
   update();
   }
 
@@ -264,46 +271,50 @@ void SdWView3d::keyReleaseEvent(QKeyEvent *event)
 
 void SdWView3d::initializeGL()
   {
-  GLfloat light_position[] = { 0.0, 0.0, 500.0, 0.0 };
-  GLfloat light_diffuse[] = { 0.9f, 0.9f, 0.9f, 1.0f };
-  GLfloat light_ambient[] = { 0.9f, 0.9f, 0.9f, 1.0f };
-//  GLfloat mat_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-//  GLfloat mat_shininess[] = { 50.0 };
-  GLfloat model_ambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+//  float light = qBound( 0, wheelDelta, 50 );
+//  qDebug() << "Wheel delta" << wheelDelta;
+
   // Set up the rendering context, load shaders and other resources, etc.:
   QOpenGLFunctions_2_0 *f = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_0>();
   f->glClearColor(0.8f, 0.93f, 0.93f, 1.0f);
   f->glShadeModel( GL_SMOOTH );
-  f->glLightfv( GL_LIGHT0, GL_POSITION, light_position );
-  f->glLightfv( GL_LIGHT0, GL_DIFFUSE, light_diffuse );
-  f->glMaterialfv( GL_LIGHT0, GL_AMBIENT, light_ambient );
-  f->glLightModelfv( GL_LIGHT_MODEL_AMBIENT, model_ambient );
 
   f->glEnable( GL_LIGHTING );
   f->glEnable( GL_LIGHT0 );
   f->glEnable( GL_DEPTH_TEST );
 
   f->glEnable(GL_MULTISAMPLE);
-
   // автоматическое приведение нормалей к
   // единичной длине
   f->glEnable(GL_NORMALIZE);
 
-  GLfloat light1_diffuse[] = {0.7, 0.7, 0.7, 1.0 };
-  GLfloat light1_position[] = {0.0, -1000.0, -1000.0, 1.0};
-  GLfloat light2_position[] = {-1000.0, 1000.0, 1000.0, 1.0};
-  GLfloat light3_position[] = { 1000.0, 1000.0, 1000.0, 1.0};
+  //GLfloat light_position[] = { 0.0, -1000.0, 1000.0, 0.0 };
+  GLfloat light_diffuse[] = { 0.9f, 0.9f, 0.9f, 1.0f };
+  GLfloat light_ambient[] = { 0.9f, 0.9f, 0.9f, 1.0f };
+  GLfloat model_ambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+
+  //First light
+  //f->glLightfv( GL_LIGHT0, GL_POSITION, light_position );
+  f->glLightfv( GL_LIGHT0, GL_DIFFUSE, light_diffuse );
+  f->glMaterialfv( GL_LIGHT0, GL_AMBIENT, light_ambient );
+  f->glLightModelfv( GL_LIGHT_MODEL_AMBIENT, model_ambient );
+
+
+  GLfloat light1_diffuse[] = {0.6, 0.6, 0.6, 1.0 };
+  //GLfloat light1_position[] = {0.0, -1000.0, -1000.0, 1.0};
+  //GLfloat light2_position[] = {-1000.0, 1000.0, 1000.0, 1.0};
+  //GLfloat light3_position[] = { 1000.0, 1000.0, 1000.0, 1.0};
   f->glEnable(GL_LIGHT1);
   f->glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
-  f->glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
+  //f->glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
 
   f->glEnable(GL_LIGHT2);
   f->glLightfv(GL_LIGHT2, GL_DIFFUSE, light1_diffuse);
-  f->glLightfv(GL_LIGHT2, GL_POSITION, light2_position);
+  //f->glLightfv(GL_LIGHT2, GL_POSITION, light2_position);
 
   f->glEnable(GL_LIGHT3);
   f->glLightfv(GL_LIGHT3, GL_DIFFUSE, light1_diffuse);
-  f->glLightfv(GL_LIGHT3, GL_POSITION, light3_position);
+  //f->glLightfv(GL_LIGHT3, GL_POSITION, light3_position);
   }
 
 
@@ -338,7 +349,24 @@ void SdWView3d::paintGL()
   f->glRotated( mAngleXY, 1, 0, 0.0 );
   //f->glRotated( mAngleXY, 0, 1, 0.0 );
   f->glRotated( mAngleZ, 0, 0, 1 );
+
+
+  //First light
+  GLfloat light_position[] = { -1000.0, 0.0, 1000.0, 1.0 };
+  f->glLightfv( GL_LIGHT0, GL_POSITION, light_position );
+
+  GLfloat light1_position[] = { 1000.0, 0.0,  1000.0, 1.0};
+  f->glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
+
+  GLfloat light2_position[] = { 0.0, -1000.0, -1000.0, 1.0};
+  f->glLightfv(GL_LIGHT2, GL_POSITION, light2_position);
+
+  GLfloat light3_position[] = { 0.0, 1000.0, -1000.0, 1.0};
+  f->glLightfv(GL_LIGHT3, GL_POSITION, light3_position);
+
   f->glClear(GL_COLOR_BUFFER_BIT);
+
+
 
   //Material used for draw 2d graphics and axis
   Sd3dMaterial axisMaterial;
