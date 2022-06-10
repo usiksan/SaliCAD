@@ -32,6 +32,7 @@
 #include "SdScriptValueFunFaceDuplicate.h"
 #include "SdScriptValueFunFaceDuplicateShift.h"
 #include "SdScriptValueFunFaceCurveXZ.h"
+#include "SdScriptValueFunFaceDuplicateScale.h"
 
 #include "SdScriptValueFunLFaceIndexed.h"
 #include "SdScriptValueFunLFaceWall.h"
@@ -90,6 +91,7 @@ SdScriptParser3d::SdScriptParser3d(QTableWidget *tableWidget, Sd3dModel *model )
   addFunction( QStringLiteral("faceDuplicate"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceDuplicate(model); }, QStringLiteral("faceDuplicate( face src, matrix transfer )") );
   addFunction( QStringLiteral("faceDuplicateShift"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceDuplicateShift(model); }, QStringLiteral("faceDuplicateShift( face src, float normalOffset )") );
   addFunction( QStringLiteral("faceCurveXY"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceCurveXZ(model); }, QStringLiteral("faceCurveXY( face src, float radius, float angleSrc, float angleDst)") );
+  addFunction( QStringLiteral("faceDuplicateScale"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceDuplicateScale(model); }, QStringLiteral("faceDuplicateScale( face src, float scalex, float scaley, float radius )") );
 
   addFunction( QStringLiteral("faceListExtrude"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunLFaceExtrude(model); }, QStringLiteral("faceListExtrude( face src, matrix transfer )") );
   addFunction( QStringLiteral("faceListExtrudeShift"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunLFaceExtrudeShift(model); }, QStringLiteral("faceListExtrude( face src, float normalHeight )") );

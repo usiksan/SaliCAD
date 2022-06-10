@@ -467,6 +467,7 @@ HEADERS  += \
     script/SdScriptValueFunFaceCircle.h \
     script/SdScriptValueFunFaceCurveXZ.h \
     script/SdScriptValueFunFaceDuplicate.h \
+    script/SdScriptValueFunFaceDuplicateScale.h \
     script/SdScriptValueFunFaceDuplicateShift.h \
     script/SdScriptValueFunFaceFlat.h \
     script/SdScriptValueFunFacePart.h \

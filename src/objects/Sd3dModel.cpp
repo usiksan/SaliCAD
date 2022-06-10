@@ -398,6 +398,62 @@ Sd3drFace Sd3dModel::faceCurveXZ(const Sd3drFace &face, float radius, float angl
 
 
 
+//!
+//! \brief faceEqudistante Calculate equidistant face of give face with distance. At last make transformation with map
+//! \param face            Source face
+//! \param distance        Distance of new face
+//! \param map             Finish translation map
+//! \return                Equidistant face
+//!
+Sd3drFace Sd3dModel::faceEqudistanteXY(const Sd3drFace &face, float distance, const QMatrix4x4 &map)
+  {
+  if( face.count() < 3 )
+    return face;
+
+  //Fill contour with segments
+  QList<QLineF> eq;
+  eq.reserve( face.count() );
+  QLineF line;
+  //First segment
+  line.setP1( point(face.last()) );
+  line.setP2( point(face.first()) );
+  eq.append( line );
+  for( int i = 1; i < face.count(); i++ ) {
+    line.setP1( point(face.at(i-1)) );
+    line.setP2( point(face.at(i)) );
+    eq.append( line );
+    }
+
+  //For each segment calculate paralled line
+  for( int i = 0; i < face.count(); i++ ) {
+    line = eq.at(i);
+    float dx = line.dx();
+    float dy = line.dy();
+    float len = line.length();
+    if( len != 0 ) {
+      float px = distance * dy / len;
+      float py = distance * dx / len;
+      eq[i].translate( px, -py );
+      }
+    }
+
+  //For each segment calculate intersection point with next segment and place point into result face
+  Sd3drFace faceEq;
+  QPointF v;
+  for( int i = 1; i < eq.count(); i++ ) {
+    if( eq[i].intersects( eq.at(i-1), &v ) == QLineF::NoIntersection )
+      v = eq.at(i).p1();
+    faceEq.append( vertexAppend( map.map( QVector3D(v))) );
+    }
+  //Last segment
+  if( eq.first().intersects( eq.last(), &v ) == QLineF::NoIntersection )
+    v = eq.first().p1();
+  faceEq.append( vertexAppend( map.map( QVector3D(v))) );
+  return faceEq;
+  }
+
+
+
 
 
 Sd3drFace Sd3dModel::facePart(const Sd3drFace &face, const QList<float> &indexes)

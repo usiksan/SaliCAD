@@ -79,6 +79,15 @@ class Sd3dModel
 
     Sd3drFace     faceCurveXZ( const Sd3drFace &face, float radius, float angleSrc, float angleDst );
 
+    //!
+    //! \brief faceEqudistante Calculate equidistant face of give face with distance. At last make transformation with map
+    //! \param face            Source face
+    //! \param distance        Distance of new face
+    //! \param map             Finish translation map
+    //! \return                Equidistant face
+    //!
+    Sd3drFace     faceEqudistanteXY( const Sd3drFace &face, float distance, const QMatrix4x4 &map );
+
     static Sd3drFace     facePart( const Sd3drFace &face, const QList<float> &indexes );
 
 
