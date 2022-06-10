@@ -386,10 +386,10 @@ void SdWView3d::paintGL()
 
   if( mItem != nullptr ) {
     //2d graphics
-    if( mEnable2d ) {
+    if( mEnable2d || mEnablePad ) {
       axisMaterial.mDiffuse = QColor( 255, 0, 0 );
       axisMaterial.draw( f );
-      quint64 mask = dctLines;
+      quint64 mask = mEnable2d ? dctLines : 0;
       if( mEnablePad ) mask |= dctPartPin;
       mItem->forEachConst( mask, [f] (SdObject *obj) -> bool {
         SdPtrConst<SdGraph> obj2d(obj);

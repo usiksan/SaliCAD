@@ -791,6 +791,13 @@ SdWScriptEditor::keyPressEvent(QKeyEvent *e)
     }
 
 
+  //Pressed F2, we call special edit functions
+  if( e->key() == Qt::Key_F2 ) {
+    selectDialog( textCursor() );
+    return;
+    }
+
+
 
 
   //Return (Enter)
@@ -1234,6 +1241,50 @@ void SdWScriptEditor::inputDialog(QTextCursor c)
         }
       else if( word == QStringLiteral("inputPad") ) {
         list[funcIndex+3] = SdDPadMaster::build( list.at(funcIndex+3), this );
+        }
+      else return;
+      //Replace text
+      line = list.join( QChar('"') );
+      c.beginEditBlock();
+      c.movePosition( QTextCursor::StartOfBlock );
+      c.movePosition( QTextCursor::EndOfBlock, QTextCursor::KeepAnchor );
+      c.removeSelectedText();
+      c.insertText(line);
+      c.endEditBlock();
+      }
+    }
+  }
+
+
+
+
+void SdWScriptEditor::selectDialog(QTextCursor c)
+  {
+  int pos;
+  QString line = cursorLine( c, &pos );
+  bool selectColor = line.contains( QStringLiteral("selectColor") );
+  bool selectPad   = line.contains( QStringLiteral("selectPad") );
+  QString word;
+  if( selectColor ) word = QStringLiteral("selectColor");
+  else              word = QStringLiteral("selectPad");
+  if( selectColor || selectPad ) {
+    QStringList list = line.split( QChar('"') );
+    int funcIndex = 0;
+    for( funcIndex = 0; !list.at(funcIndex).contains(word); funcIndex++ );
+    if( funcIndex + 2 < list.count() ) {
+      if( selectColor ) {
+        //Input dialog for color
+
+        //Show color selection dialog
+        QColor color = QColorDialog::getColor( list.at(funcIndex+1), this, tr("Select color") );
+        if( color.isValid() ) {
+          //Replace text color
+          list[funcIndex+1] = color.name();
+          }
+        else return;
+        }
+      else if( selectPad ) {
+        list[funcIndex+1] = SdDPadMaster::build( list.at(funcIndex+1), this );
         }
       else return;
       //Replace text

@@ -16,9 +16,11 @@ Description
 #include "SdWEditor3d.h"
 #include "SdWView3d.h"
 #include "SdWCommand.h"
+#include "SdD3dModelProgrammEditor.h"
 #include "objects/SdProjectItem.h"
 #include "objects/Sd3dStep.h"
 #include "objects/SdPulsar.h"
+#include "objects/Sd3dGraphModel.h"
 
 #include <QVBoxLayout>
 #include <QPaintEvent>
@@ -31,6 +33,15 @@ SdWEditor3d::SdWEditor3d(SdProjectItem *item, QWidget *parent) :
   {
   QVBoxLayout *box = new QVBoxLayout();
   mView = new SdWView3d( item, this );
+
+  //Link with 2d graphics enable-disable
+  mView->setEnable2d( SdWCommand::cm3dShow2d->isChecked() );
+  connect( SdWCommand::cm3dShow2d, &QAction::toggled, mView, &SdWView3d::setEnable2d );
+
+  //Link with pad graphics enable-disable
+  mView->setEnablePad( SdWCommand::cm3dShowPads->isChecked() );
+  connect( SdWCommand::cm3dShowPads, &QAction::toggled, mView, &SdWView3d::setEnablePad );
+
   box->setMargin(0);
   box->addWidget( mView );
   mView->move( 0, 0 );
@@ -82,4 +93,6 @@ void SdWEditor3d::cmEditUndo()
   {
   mView->update();
   }
+
+
 

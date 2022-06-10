@@ -127,6 +127,7 @@ SOURCES += \
     windows/SdPNewProjectItem_3dMaster.cpp \
     windows/SdWEditor3d.cpp \
     windows/SdWEditor3dPart.cpp \
+    windows/SdWEditor3dPartView.cpp \
     windows/SdWExpressor.cpp \
     windows/SdWMain.cpp \
     objects/SdObject.cpp \
@@ -470,6 +471,7 @@ HEADERS  += \
     script/SdScriptValueFunFaceFlat.h \
     script/SdScriptValueFunFacePart.h \
     script/SdScriptValueFunFaceRect.h \
+    script/SdScriptValueFunFaceRectRound.h \
     script/SdScriptValueFunGraphCircle.h \
     script/SdScriptValueFunGraphLine.h \
     script/SdScriptValueFunGraphPin.h \
@@ -494,6 +496,7 @@ HEADERS  += \
     script/SdScriptValueFunLFaceUnion.h \
     script/SdScriptValueFunLFaceWall.h \
     script/SdScriptValueFunLFaceWallIndexed.h \
+    script/SdScriptValueFunLFaceWallRound.h \
     script/SdScriptValueFunMatrix.h \
     script/SdScriptValueFunMatrixRotate.h \
     script/SdScriptValueFunMatrixScale.h \
@@ -505,6 +508,8 @@ HEADERS  += \
     script/SdScriptValueFunModelHole.h \
     script/SdScriptValueFunModelPinTqfp.h \
     script/SdScriptValueFunRef.h \
+    script/SdScriptValueFunSelectColor.h \
+    script/SdScriptValueFunSelectPad.h \
     script/SdScriptValueFunStringPadCircleThrou.h \
     script/SdScriptValueFunStringPadRectThrou.h \
     script/SdScriptValueFunStringPinIndex.h \
@@ -572,6 +577,7 @@ HEADERS  += \
     windows/SdPNewProjectItem_3dMaster.h \
     windows/SdWEditor3d.h \
     windows/SdWEditor3dPart.h \
+    windows/SdWEditor3dPartView.h \
     windows/SdWExpressor.h \
     windows/SdWMain.h \
     objects/SdObject.h \

@@ -41,6 +41,12 @@ class SdPItemPart : public SdProjectItem
     //!
     Sd3dGraphModel *model();
 
+    //!
+    //! \brief model Return first 3d model object. If no model object, then return nullptr
+    //! \return      3d model object or nullptr if no any 3d model
+    //!
+    Sd3dGraphModel *modelConst() const;
+
     // SdObject interface
   public:
     virtual QString        getType() const override;

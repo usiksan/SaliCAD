@@ -27,6 +27,7 @@ Description
 #include "SdWEditorRich.h"
 #include "SdWEditor3d.h"
 #include "SdWEditor3dPart.h"
+#include "SdWEditor3dPartView.h"
 #include "SdWRemoteStatus.h"
 #include "SdWCommand.h"
 #include "SdWLabel.h"
@@ -360,7 +361,7 @@ void SdWMain::onActivateProjectItem3d(SdProjectItem *item)
       if( item->isEditEnable() )
         editor = new SdWEditor3dPart( dynamic_cast<SdPItemPart*>( item ), mWEditors );
       else
-        editor = new SdWEditor3d( dynamic_cast<SdPItemPart*>( item ), mWEditors );
+        editor = new SdWEditor3dPartView( dynamic_cast<SdPItemPart*>( item ), mWEditors );
       break;
     case dctSheet :
 //      if( item->isEditEnable() )

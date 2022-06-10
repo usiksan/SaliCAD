@@ -190,7 +190,7 @@ Sd3drFace Sd3dModel::faceFlat( int firstVertexIndex, const QList<float> &pairLis
 Sd3drFace Sd3dModel::faceCircle(float radius, float stepDegree, const QMatrix4x4 &map)
   {
   Sd3drFace region;
-  //Build circle with step 10 degree
+  //Build circle with step degree
   for( float angleDegree = 0; angleDegree < 360.0; angleDegree += stepDegree ) {
     //Convert degree to radians
     float angle = angleDegree * M_PI / 180.0;
@@ -222,6 +222,67 @@ Sd3drFace Sd3dModel::faceRectangle(float lenght, float width, const QMatrix4x4 &
   QVector3D p3( -lenght,  width, 0 );
 
   return Sd3drFace( { vertexAppend( map.map(p0) ), vertexAppend( map.map(p1)), vertexAppend( map.map(p2) ), vertexAppend( map.map(p3) ) } );
+  }
+
+
+
+Sd3drFace Sd3dModel::faceRectangleRound(float lenght, float width, float radius, float stepDegree, const QMatrix4x4 &map)
+  {
+  Sd3drFace region;
+  float curX = lenght / 2 - radius;
+  float curY = width / 2 - radius;
+  //Top right corner
+  for( float angleDegree = 0; angleDegree <= 90.0; angleDegree += stepDegree ) {
+    //Convert degree to radians
+    float angle = angleDegree * M_PI / 180.0;
+    //Build next corner
+    QVector3D v( sin(angle) * radius + curX, cos(angle) * radius + curY, 0 );
+    //Append corner to region
+    region.append( vertexAppend( map.map(v) )  );
+    }
+  //Right edge
+  curY = -curY;
+  region.append( vertexAppend( map.map(QVector3D( curX + radius, curY, 0 )) )  );
+
+  //Bottom right corner
+  for( float angleDegree = 90.0 + stepDegree; angleDegree <= 180.0; angleDegree += stepDegree ) {
+    //Convert degree to radians
+    float angle = angleDegree * M_PI / 180.0;
+    //Build next corner
+    QVector3D v( sin(angle) * radius + curX, cos(angle) * radius + curY, 0 );
+    //Append corner to region
+    region.append( vertexAppend( map.map(v) )  );
+    }
+  //Bottom edge
+  curX = -curX;
+  region.append( vertexAppend( map.map(QVector3D( curX, curY - radius, 0 )) )  );
+
+  //Bottom left corner
+  for( float angleDegree = 180.0 + stepDegree; angleDegree <= 270.0; angleDegree += stepDegree ) {
+    //Convert degree to radians
+    float angle = angleDegree * M_PI / 180.0;
+    //Build next corner
+    QVector3D v( sin(angle) * radius + curX, cos(angle) * radius + curY, 0 );
+    //Append corner to region
+    region.append( vertexAppend( map.map(v) )  );
+    }
+  //Left edge
+  curY = -curY;
+  region.append( vertexAppend( map.map(QVector3D( curX - radius, curY, 0 )) )  );
+
+  //Top left corner
+  for( float angleDegree = 270.0 + stepDegree; angleDegree <= 360.0; angleDegree += stepDegree ) {
+    //Convert degree to radians
+    float angle = angleDegree * M_PI / 180.0;
+    //Build next corner
+    QVector3D v( sin(angle) * radius + curX, cos(angle) * radius + curY, 0 );
+    //Append corner to region
+    region.append( vertexAppend( map.map(v) )  );
+    }
+
+  //Top edge is automatic as closed edge
+
+  return region;
   }
 
 
@@ -268,6 +329,14 @@ Sd3drFace Sd3dModel::faceDuplicate(const Sd3drFace &face, const QMatrix4x4 &map)
   for( auto index : face )
     dest.append( vertexAppend( map.map(vertex(index)) )  );
   return dest;
+  }
+
+Sd3drFace Sd3dModel::faceDuplicateScale(const Sd3drFace &face, float scalex, float scaley, float shift)
+  {
+  QMatrix4x4 map;
+  map.translate( 0, 0, shift );
+  map.scale( scalex, scaley, 1.0 );
+  return faceDuplicate( face, map );
   }
 
 
@@ -711,6 +780,41 @@ Sd3drFaceList Sd3dModel::faceListPinCurveTwo(const Sd3drFace &face, float firstL
 Sd3drFaceList Sd3dModel::faceListPinTqfp(float width, float thickness, float fullLenght, float plateLenght, float height)
   {
   return faceListPinCurveTwo( faceRectangle( width, thickness, QMatrix4x4()), fullLenght - plateLenght, height, plateLenght, thickness, 90, -90, 30 );
+  }
+
+
+
+
+Sd3drFaceList Sd3dModel::faceListWallRound(const Sd3drFace &face1, const Sd3drFace &face2, float scaleX, float scaleY, float radius, float stepDegree)
+  {
+  if( stepDegree >= 90.0 )
+    return faceListWall( face1, face2, true );
+
+  Sd3drFaceList faceList;
+  Sd3drFace first = face1;
+  float scaleDX = scaleX - 1.0;
+  float scaleDY = scaleY - 1.0;
+  if( stepDegree < 0 ) {
+    stepDegree = -stepDegree;
+    for( float angleDegree = stepDegree; angleDegree < 90.0; angleDegree += stepDegree ) {
+      //Convert degree to radians
+      float angle = angleDegree * M_PI / 180.0;
+      Sd3drFace second = faceDuplicateScale( face1, 1.0 + scaleDX * sin(angle), 1.0 + scaleDY * sin(angle), radius - radius * cos(angle) );
+      faceList.append( faceListWall( first, second, true ) );
+      first = second;
+      }
+    }
+  else {
+    for( float angleDegree = stepDegree; angleDegree < 90.0; angleDegree += stepDegree ) {
+      //Convert degree to radians
+      float angle = angleDegree * M_PI / 180.0;
+      Sd3drFace second = faceDuplicateScale( face1, 1.0 + scaleDX * (1.0 - cos(angle)), 1.0 + scaleDY * (1.0 - cos(angle)), radius * sin(angle) );
+      faceList.append( faceListWall( first, second, true ) );
+      first = second;
+      }
+    }
+  faceList.append( faceListWall( first, face2, true ) );
+  return faceList;
   }
 
 

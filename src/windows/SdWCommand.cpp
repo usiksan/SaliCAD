@@ -200,7 +200,9 @@ void SdWCommand::createMenu(SdWMain *frame)
   cm3dImportVrml       = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dImportVrml.png")), QObject::tr("Import from vrml file"), frame, SLOT(cm3dImportVrml()) );
   menuInsertPart3d->addSeparator();
   cm3dShow2d                     = menuInsertPart3d->addAction( QIcon(QString(":/pic/drawRect.png")), QObject::tr("Show/hide 2d graphics in 3d scene"), frame, SLOT(cm3dShow2d()) );
+  cm3dShow2d->setCheckable(true);
   cm3dShowPads                   = menuInsertPart3d->addAction( QIcon(QString(":/pic/objVia.png")), QObject::tr("Show/hide pads"), frame, SLOT(cm3dShowPads()) );
+  cm3dShowPads->setCheckable(true);
   menuInsertPart3d->addSeparator();
   cmModeTable[MD_3D_VIEW]        = menuInsertPart3d->addAction( QIcon(QString(":/pic/select.png")), QObject::tr("View 3d scene with no edit"), frame, SLOT(cm3dModeView()) );
   cmModeTable[MD_3D_HORZ_MOVE]   = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dHorzMove.png")), QObject::tr("Horizontal moving 3d object"), frame, SLOT(cm3dModeHorzMove()) );
@@ -210,6 +212,12 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_3D_FACE_COLOR]  = menuInsertPart3d->addAction( QIcon(QString(":/pic/3dVertMove.png")), QObject::tr("Change face color"), frame, SLOT(cm3dModeFaceColor()) );
 
 
+  //3D part view menu
+  menuViewPart3d = new QMenu( QObject::tr("3d part view") );
+  menuViewPart3d->addAction( cm3dProgram );
+  menuViewPart3d->addSeparator();
+  menuViewPart3d->addAction( cm3dShow2d );
+  menuViewPart3d->addAction( cm3dShowPads );
 
 
   menuInsertComp = new QMenu( QObject::tr("Insert comp") );
@@ -332,6 +340,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   bar->addMenu( menuObject );
   bar->addMenu( menuEdit );
   bar->addMenu( menuView );
+  cmMenuViewPart3d   = bar->addMenu( menuViewPart3d );
   bar->addMenu( menuDraw );
   cmMenuInsertSymbol = bar->addMenu( menuInsertSymbol );
   cmMenuInsertPart   = bar->addMenu( menuInsertPart );
@@ -570,6 +579,13 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barPart3d->insertAction( nullptr, cmModeTable[MD_3D_VERT_ROTATE] );
   frame->addToolBar( barPart3d );
 
+  //Part 3d bar view
+  barPart3dView = new QToolBar( QString("Part3dView") );
+  barPart3dView->insertAction( nullptr, cm3dShowPads );
+  barPart3dView->insertAction( nullptr, cm3dShow2d );
+  barPart3dView->addSeparator();
+  barPart3dView->insertAction( nullptr, cm3dProgram );
+  frame->addToolBar( barPart3dView );
 
   //Comp bar
   barComp = new QToolBar( QString("Component") );
@@ -725,7 +741,8 @@ void SdWCommand::createToolBars(SdWMain *frame)
 
 void SdWCommand::hideEditorContext()
   {
-  //Погасить все редакторо-зависимые меню insert
+  //Hide all editor-referenced menu  [Погасить все редакторо-зависимые меню insert]
+  cmMenuViewPart3d->setVisible(false);
   cmMenuInsertComp->setVisible(false);
   cmMenuInsertPart->setVisible(false);
   cmMenuInsertPart3d->setVisible(false);
@@ -740,6 +757,7 @@ void SdWCommand::hideEditorContext()
   barComp->hide();
   barPart->hide();
   barPart3d->hide();
+  barPart3dView->hide();
   barPcb->hide();
   barSheet->hide();
   barSymbol->hide();
@@ -867,6 +885,7 @@ QMenu *SdWCommand::menuFilePrevious;
 QMenu *SdWCommand::menuObject;
 QMenu *SdWCommand::menuEdit;
 QMenu *SdWCommand::menuView;
+QMenu *SdWCommand::menuViewPart3d;
 QMenu *SdWCommand::menuDraw;
 QMenu *SdWCommand::menuInsertSymbol;
 QMenu *SdWCommand::menuInsertSheet;
@@ -887,11 +906,13 @@ QActionPtr SdWCommand::cmMenuInsertPart3d;
 QActionPtr SdWCommand::cmMenuInsertPcb;
 QActionPtr SdWCommand::cmMenuInsertComp;
 QActionPtr SdWCommand::cmMenuRules;
+QActionPtr SdWCommand::cmMenuViewPart3d;
 
 QToolBar *SdWCommand::barMain;
 QToolBar *SdWCommand::barSymbol;
 QToolBar *SdWCommand::barPart;
 QToolBar *SdWCommand::barPart3d;
+QToolBar *SdWCommand::barPart3dView;
 QToolBar *SdWCommand::barComp;
 QToolBar *SdWCommand::barSheet;
 QToolBar *SdWCommand::barPcb;

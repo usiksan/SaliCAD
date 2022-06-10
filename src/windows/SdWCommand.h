@@ -36,6 +36,7 @@ class SdWCommand
     static QMenu *menuObject;
     static QMenu *menuEdit;
     static QMenu *menuView;
+    static QMenu *menuViewPart3d;
     static QMenu *menuDraw;
     static QMenu *menuInsertSymbol;
     static QMenu *menuInsertSheet;
@@ -56,12 +57,15 @@ class SdWCommand
     static QActionPtr cmMenuInsertPcb;
     static QActionPtr cmMenuInsertComp;
     static QActionPtr cmMenuRules;
+    static QActionPtr cmMenuViewPart3d;
+
 
     //Tool bars for editor command
     static QToolBar *barMain;
     static QToolBar *barSymbol;
     static QToolBar *barPart;
     static QToolBar *barPart3d;
+    static QToolBar *barPart3dView;
     static QToolBar *barComp;
     static QToolBar *barSheet;
     static QToolBar *barPcb;

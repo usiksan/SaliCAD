@@ -65,13 +65,15 @@ class Sd3dModel
 
     Sd3drFace     faceRectangle( float lenght, float width, const QMatrix4x4 &map );
 
-    Sd3drFace     faceRectangleRound( float width, float lenght, float radius, float stepDegree, const QMatrix4x4 &map );
+    Sd3drFace     faceRectangleRound( float lenght, float width, float radius, float stepDegree, const QMatrix4x4 &map );
 
     Sd3drFace     faceRectangleSide( float width, float lenght, int sideCount, const QMatrix4x4 &map );
 
     Sd3drFace     faceDuplicate( const Sd3drFace &face, const QMatrix4x4 &map );
 
     Sd3drFace     faceDuplicateShift( const Sd3drFace &face, float shift ) { return faceDuplicate( face, matrixShift( face, shift ) ); }
+
+    Sd3drFace     faceDuplicateScale( const Sd3drFace &face, float scalex, float scaley, float shift );
 
     Sd3drFace     faceTrapezoidZ( const Sd3drFace &face, float height, float lessX, float lessY, float topShiftX, float topShiftY );
 
@@ -157,6 +159,7 @@ class Sd3dModel
 
     Sd3drFaceList faceListPinTqfp(float width, float thickness, float fullLenght, float plateLenght, float height );
 
+    Sd3drFaceList faceListWallRound(const Sd3drFace &face1, const Sd3drFace &face2, float scaleX, float scaleY, float radius, float stepDegree );
 
     //!
     //! \brief faceListWalls  Builds walls on base bottom and top regions. Walls builded with color

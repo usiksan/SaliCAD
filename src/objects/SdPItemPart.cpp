@@ -70,6 +70,22 @@ Sd3dGraphModel *SdPItemPart::model()
   }
 
 
+
+//!
+//! \brief model Return first 3d model object. If no model object, then return nullptr
+//! \return      3d model object or nullptr if no any 3d model
+//!
+Sd3dGraphModel *SdPItemPart::modelConst() const
+  {
+  Sd3dGraphModel *md = nullptr;
+  forEachConst( dct3D, [&md] (SdObject *obj) -> bool {
+    md = dynamic_cast<Sd3dGraphModel*>(obj);
+    return md == nullptr;
+    });
+  return md;
+  }
+
+
 QString SdPItemPart::getType() const
   {
   return QString( SD_TYPE_PART );

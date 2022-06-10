@@ -184,8 +184,7 @@ class SdWScriptEditor : public QPlainTextEdit {
     bool      isCommented(int index)const;
 
     void      inputDialog( QTextCursor c );
-    void      inputColor( QTextCursor c );
-    void      inputPad( QTextCursor c );
+    void      selectDialog( QTextCursor c );
 
   private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
