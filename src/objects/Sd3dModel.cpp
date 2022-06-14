@@ -1,6 +1,7 @@
 #include "Sd3dModel.h"
 #include "script/SdScriptParser3d.h"
 #include "SdJsonIO.h"
+#include "Sd3dPointLink.h"
 
 #include <math.h>
 
@@ -503,68 +504,43 @@ struct SdTriangle
 
 
 
-struct SdPointLink
-  {
-    QPointF      mPoint;
-    int          mIndex;
-    SdPointLink *mNext;
-    SdPointLink *mPrev;
-  };
-
 
 Sd3drFaceList Sd3dModel::faceListSimplify( const Sd3drFace &srcFace )
   {
   Sd3drFaceList faceList;
-  Sd3drFaceList srcList;
-  srcList.append( srcFace );
+  Sd3dPointLinkList pointPool;
+  QList<Sd3dPointLinkPtr> srcList;
+  srcList.append( pointPool.addRegion( this, srcFace, false ) );
   for( int faceIndex = 0; faceIndex < srcList.count(); faceIndex++ ) {
-    Sd3drFace face = srcList.at(faceIndex);
-    while( face.count() > 3 ) {
-      int ileft = lessLeft( face );
-      int inext = next( ileft, face );
-      int iprev = prev( ileft, face );
+    Sd3dPointLinkPtr face = srcList.at(faceIndex);
+    while( !face->isTriangle() ) {
+      face = face->lessLeft();
       SdTriangle t;
-      t.mLeftA = point( face.at(ileft) );
-      t.mNextB = point( face.at(inext) );
-      t.mPrevC = point( face.at(iprev) );
+      t.mLeftA = face->mPoint;
+      t.mNextB = face->mNext->mPoint;
+      t.mPrevC = face->mPrev->mPoint;
       t.prepare();
 
       //Test all remain points of region
-      QPointF p;
-      int innerIndex = -1;
-      for( int index = next( inext, face ); index != iprev; index = next( index, face ) ) {
-        QPointF v = point( face.at(index) );
-        if( t.isPointInside( v ) ) {
-          if( innerIndex < 0 || isLeft( v, p ) ) {
-            p = v;
-            innerIndex = index;
-            }
+      Sd3dPointLinkPtr inner = nullptr;
+      for( Sd3dPointLinkPtr ptr = face->mNext->mNext; ptr != face->mPrev; ptr = ptr->mNext ) {
+        if( t.isPointInside( ptr->mPoint ) ) {
+          if( inner == nullptr || ptr->isLeft( inner ) )
+            inner = ptr;
           }
         }
-      if( innerIndex >= 0 ) {
+      if( inner != nullptr ) {
         //Divide source region into two regions
-        Sd3drFace faceLeft, faceRight;
-        for( int index = ileft; index != innerIndex; index = next( index, face ) )
-          faceLeft.append( face.at(index) );
-        faceLeft.append( face.at(innerIndex) );
-        for( int index = ileft; index != innerIndex; index = prev( index, face ) )
-          faceRight.append( face.at(index) );
-        faceRight.append( face.at(innerIndex) );
-        face = faceLeft;
-        srcList.append( faceRight );
-        //faceList.append( faceListSimplify(faceRight) );
+        face->splitRegion( inner, &pointPool );
+        srcList.append( inner );
         }
       else {
         //Remove triangle from face
-        Sd3drFace triangle;
-        triangle.append( face.at(ileft) );
-        triangle.append( face.at(inext) );
-        triangle.append( face.at(iprev) );
-        face.removeAt( ileft );
-        faceList.append( triangle );
+        faceList.append( face->triangle() );
+        face = face->remove();
         }
       }
-    faceList.append( face );
+    faceList.append( face->triangle() );
     }
   return faceList;
   }
@@ -572,82 +548,65 @@ Sd3drFaceList Sd3dModel::faceListSimplify( const Sd3drFace &srcFace )
 
 
 
-Sd3drFaceList Sd3dModel::faceListHoles(const Sd3drFace &srcFace, Sd3drFaceList &holeList)
+Sd3drFaceList Sd3dModel::faceListHoles(const Sd3drFace &srcFace, const Sd3drFaceList &holeList)
   {
   Sd3drFaceList faceList;
-  Sd3drFaceList srcList;
-  srcList.append( srcFace );
+  Sd3dPointLinkList pointPool;
+  QList<Sd3dPointLinkPtr> srcList;
+  QList<Sd3dPointLinkPtr> srcHole;
+  srcList.append( pointPool.addRegion( this, srcFace, false ) );
+  for( auto const &hole : holeList )
+    srcHole.append( pointPool.addRegion( this, hole, true ) );
   for( int faceIndex = 0; faceIndex < srcList.count(); faceIndex++ ) {
-    Sd3drFace face = srcList.at(faceIndex);
-    while( face.count() > 3 ) {
-      int ileft = lessLeft( face );
-      int inext = next( ileft, face );
-      int iprev = prev( ileft, face );
+    Sd3dPointLinkPtr face = srcList.at(faceIndex);
+    while( !face->isTriangle() ) {
+      face = face->lessLeft();
       SdTriangle t;
-      t.mLeftA = point( face.at(ileft) );
-      t.mNextB = point( face.at(inext) );
-      t.mPrevC = point( face.at(iprev) );
+      t.mLeftA = face->mPoint;
+      t.mNextB = face->mNext->mPoint;
+      t.mPrevC = face->mPrev->mPoint;
       t.prepare();
 
       //Test all remain points of region and holes
-      QPointF p;
-      int innerIndex = -1;
-      int innerFace = -1;
-      //Test all remain points of region
-      for( int index = next( inext, face ); index != iprev; index = next( index, face ) ) {
-        QPointF v = point( face.at(index) );
-        if( t.isPointInside( v ) ) {
-          if( innerIndex < 0 || isLeft( v, p ) ) {
-            p = v;
-            innerIndex = index;
-            }
+      Sd3dPointLinkPtr inner = nullptr;
+      for( Sd3dPointLinkPtr ptr = face->mNext->mNext; ptr != face->mPrev; ptr = ptr->mNext ) {
+        if( t.isPointInside( ptr->mPoint ) ) {
+          if( inner == nullptr || ptr->isLeft( inner ) )
+            inner = ptr;
           }
         }
-      //Test all holes
-      for( int holeIndex = 0; holeIndex < holeList.count(); holeIndex++ ) {
-        auto const &hole = holeList.at(holeIndex);
-        for( int index = 0; index < hole.count(); index++ ) {
-          QPointF v = point( hole.at(index) );
-          if( t.isPointInside( v ) ) {
-            if( innerIndex < 0 || isLeft( v, p ) ) {
-              p = v;
-              innerIndex = index;
-              innerFace = holeIndex;
+      //Test holes
+      int usedHole = -1;
+      for( int holeIndex = 0; holeIndex < srcHole.count(); holeIndex++ ) {
+        //Test one hole
+        Sd3dPointLinkPtr hole = srcHole.at(holeIndex);
+        Sd3dPointLinkPtr ptr = hole;
+        do {
+          if( t.isPointInside( ptr->mPoint ) ) {
+            if( inner == nullptr || ptr->isLeft( inner ) ) {
+              inner = ptr;
+              usedHole = holeIndex;
               }
             }
+          ptr = ptr->mNext;
           }
+        while( ptr != hole );
         }
-      if( innerIndex >= 0 ) {
-        if( innerFace < 0 ) {
-          //Inner point is from current region
-          //Divide source region into two regions
-          Sd3drFace faceLeft, faceRight;
-          for( int index = ileft; index != innerIndex; index = next( index, face ) )
-            faceLeft.append( face.at(index) );
-          faceLeft.append( face.at(innerIndex) );
-          for( int index = ileft; index != innerIndex; index = prev( index, face ) )
-            faceRight.append( face.at(index) );
-          faceRight.append( face.at(innerIndex) );
-          face = faceLeft;
-          srcList.append( faceRight );
-          }
-        else {
-          //Hole need to be added
-          Sd3drFace unionFace;
-          for( int index = ileft; )
-          }
+      if( inner != nullptr ) {
+        //Divide source region into two regions or union source with hole
+        face->splitRegion( inner, &pointPool );
+        if( usedHole >= 0 )
+          srcHole.removeAt(usedHole);
+        else
+          srcList.append( inner );
         }
       else {
         //Remove triangle from face
-        Sd3drFace triangle;
-        triangle.append( face.at(ileft) );
-        triangle.append( face.at(inext) );
-        triangle.append( face.at(iprev) );
-        face.removeAt( ileft );
-        faceList.append( triangle );
+        faceList.append( face->triangle() );
+        face = face->remove();
         }
       }
-    faceList.append( face );
+    faceList.append( face->triangle() );
     }
   return faceList;
   }

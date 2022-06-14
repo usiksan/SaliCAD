@@ -31,10 +31,12 @@ Description
 int main(int argc, char *argv[])
   {
   Sd3dModel model;
-  Sd3drFace face = model.faceFlat( model.vertexAppend( QVector3D(0,0,0) ), { 0,1, 3,0, 0,1, 4,0, 0,-1, 3,0, 0,-1 }, 0 );
+  Sd3drFace face = model.faceFlat( model.vertexAppend( QVector3D(0,0,0) ), { 0,10, 30,0, 0,10, 40,0, 0,-10, 30,0, 0,-10 }, 0 );
+  Sd3drFace hole1 = model.faceFlat( model.vertexAppend( QVector3D(2,2,0) ), { 0,1, 1,0, 0,-1 }, 0 );
+  Sd3drFace hole2 = model.faceFlat( model.vertexAppend( QVector3D(2,4,0) ), { 0,1, 1,0, 0,-1 }, 0 );
   qDebug() << face;
-  qDebug() << model.faceEqudistanteXY( face, 0.1, QMatrix4x4() );
-//  qDebug() << model.faceListSimplify( face );
+  //qDebug() << model.faceEqudistanteXY( face, 0.1, QMatrix4x4() );
+  qDebug() << model.faceListHoles( face, { hole1, hole2 } );
 
 
   //Setups for settings

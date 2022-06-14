@@ -47,6 +47,8 @@ class SdPItemPlate : public SdProjectItem
     bool              mRatNetDirty;
 
     SdRectList        mRuleErrors;        //Indicator rule errors
+
+    Sd3dModel         m3dModel;
   public:
     //Saved properties for modes
     SdPoint           mTraceGrid;         //Current trace grid
@@ -146,6 +148,9 @@ class SdPItemPlate : public SdProjectItem
 
     //Renumeration implements
     void                   renumeration();
+
+
+    void                   rebuild3dModel();
 
     // SdObject interface
   public:

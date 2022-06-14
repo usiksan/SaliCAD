@@ -28,6 +28,7 @@ Description
 #include "SdWEditor3d.h"
 #include "SdWEditor3dPart.h"
 #include "SdWEditor3dPartView.h"
+#include "SdWEditor3dPlate.h"
 #include "SdWRemoteStatus.h"
 #include "SdWCommand.h"
 #include "SdWLabel.h"
@@ -370,7 +371,7 @@ void SdWMain::onActivateProjectItem3d(SdProjectItem *item)
 //        editor = new SdWEditorGraphView( item, mWEditors );
       break;
     case dctPlate :
-      editor = new SdWEditor3d( dynamic_cast<SdPItemPlate*>( item ), mWEditors );
+      editor = new SdWEditor3dPlate( dynamic_cast<SdPItemPlate*>( item ), mWEditors );
       break;
     }
 

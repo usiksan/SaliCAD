@@ -482,6 +482,54 @@ void SdPItemPlate::renumeration()
 
 
 
+void SdPItemPlate::rebuild3dModel()
+  {
+  //Build pcb
+  m3dModel.clear();
+  SdPointList pointList;
+  //At first, find pcb contour
+  SdLayer *pcbLayer = sdEnvir->getLayer( LID0_PCB );
+  forEach( dctLines, [&pointList, pcbLayer] (SdObject *obj) -> bool {
+    SdPtr<SdGraphLinearRect> rect(obj);
+    if( rect.isValid() && rect->isMatchLayer(pcbLayer) ) {
+      //There we found pcb rectangle form
+      //Draw it and cancel iteration
+      pointList = rect->getPointList();
+      return false;
+      }
+    SdPtr<SdGraphLinearRegion> region(obj);
+    if( region.isValid() && region->isMatchLayer(pcbLayer) ) {
+      //There we found pcb region form
+      //Draw it and cancel iteration
+      pointList = region->getPointList();
+      return false;
+      }
+    return true;
+    } );
+
+  Sd3drFace pcbTop;
+  for( auto p : qAsConst(pointList) ) {
+    QVector3D v( p );
+    v /= 1000.0;
+    v.setZ( -0.1 );
+    pcbTop.append( m3dModel.vertexAppend(v) );
+    }
+
+  Sd3drBody pcbBody;
+  pcbBody.faceAppend( m3dModel.faceListExtrudeShift( pcbTop, 1.2 ) );
+  pcbBody.colorSet( sdEnvir->getSysColor( sc3dPcb ) );
+
+  Sd3drInstance inst;
+  inst.add( pcbBody );
+  inst.addCopy( QMatrix4x4() );
+
+  m3dModel.instanceAppend( inst );
+  }
+
+
+
+
+
 
 
 QString SdPItemPlate::getType() const
@@ -577,26 +625,8 @@ QString SdPItemPlate::getIconName() const
 
 void SdPItemPlate::draw3d(QOpenGLFunctions_2_0 *f)
   {
-  //Draw pcb
-  //At first, find pcb contour
-  SdLayer *pcbLayer = sdEnvir->getLayer( LID0_PCB );
-  forEach( dctLines, [f, pcbLayer] (SdObject *obj) -> bool {
-    SdPtr<SdGraphLinearRect> rect(obj);
-    if( rect.isValid() && rect->isMatchLayer(pcbLayer) ) {
-      //There we found pcb rectangle form
-      //Draw it and cancel iteration
-      Sd3dDraw::flatPanel( f, rect->getPointList(), -1500, sdEnvir->getSysColor( sc3dPcb ) );
-      return false;
-      }
-    SdPtr<SdGraphLinearRegion> region(obj);
-    if( region.isValid() && region->isMatchLayer(pcbLayer) ) {
-      //There we found pcb region form
-      //Draw it and cancel iteration
-      Sd3dDraw::flatPanel( f, region->getPointList(), -1500, sdEnvir->getSysColor( sc3dPcb ) );
-      return false;
-      }
-    return true;
-    } );
+  //Draw pcb model
+  m3dModel.draw3d( f );
 
   //Draw all components
   forEach( dctPartImp, [f] (SdObject *obj) -> bool {

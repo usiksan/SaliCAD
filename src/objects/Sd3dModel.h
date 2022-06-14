@@ -95,7 +95,7 @@ class Sd3dModel
 
     Sd3drFaceList faceListSimplify(const Sd3drFace &face );
 
-    Sd3drFaceList faceListHoles(const Sd3drFace &srcFace, Sd3drFaceList &holeList );
+    Sd3drFaceList faceListHoles(const Sd3drFace &srcFace, const Sd3drFaceList &holeList );
 
     //!
     //! \brief faceListExtrude Extrudes model from source face in direction specified by map

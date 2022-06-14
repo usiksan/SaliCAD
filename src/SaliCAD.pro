@@ -64,6 +64,7 @@ SOURCES += \
     modes/SdModeCSymHighlight.cpp \
     modes/SdModeSymbolFragment.cpp \
     objects/Sd3dMaterial.cpp \
+    objects/Sd3dPointLink.cpp \
     objects/Sd3drBody.cpp \
     objects/Sd3drFace.cpp \
     objects/Sd3drInstance.cpp \
@@ -118,6 +119,7 @@ SOURCES += \
     objects/Sd3dStep.cpp \
     objects/SdUndoRecord3dMatrix.cpp \
     script/SdScriptValueVariableRef.cpp \
+    windows/Sd3dModelScript.cpp \
     windows/SdD3dMaster.cpp \
     windows/SdD3dModelMaster.cpp \
     windows/SdD3dModelProgrammEditor.cpp \
@@ -128,6 +130,7 @@ SOURCES += \
     windows/SdWEditor3d.cpp \
     windows/SdWEditor3dPart.cpp \
     windows/SdWEditor3dPartView.cpp \
+    windows/SdWEditor3dPlate.cpp \
     windows/SdWExpressor.cpp \
     windows/SdWMain.cpp \
     objects/SdObject.cpp \
@@ -433,6 +436,7 @@ HEADERS  += \
     modes/SdModeCSymHighlight.h \
     modes/SdModeSymbolFragment.h \
     objects/Sd3dMaterial.h \
+    objects/Sd3dPointLink.h \
     objects/Sd3drBody.h \
     objects/Sd3drFace.h \
     objects/Sd3drInstance.h \
@@ -569,6 +573,7 @@ HEADERS  += \
     objects/Sd3dStep.h \
     objects/SdProperty.h \
     objects/SdUndoRecord3dMatrix.h \
+    windows/Sd3dModelScript.h \
     windows/SdD3dMaster.h \
     windows/SdD3dModelMaster.h \
     windows/SdD3dModelProgrammEditor.h \
@@ -579,6 +584,7 @@ HEADERS  += \
     windows/SdWEditor3d.h \
     windows/SdWEditor3dPart.h \
     windows/SdWEditor3dPartView.h \
+    windows/SdWEditor3dPlate.h \
     windows/SdWExpressor.h \
     windows/SdWMain.h \
     objects/SdObject.h \
