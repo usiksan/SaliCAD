@@ -469,6 +469,17 @@ Sd3drFace Sd3dModel::facePart(const Sd3drFace &face, const QList<float> &indexes
   }
 
 
+
+Sd3drFaceList Sd3dModel::faceListDuplicate(const Sd3drFaceList &faceList, const QMatrix4x4 &map)
+  {
+  Sd3drFaceList dest;
+  for( auto const &face : faceList )
+    dest.append( faceDuplicate( face, map ) );
+  return dest;
+  }
+
+
+
 struct SdTriangle
   {
     QPointF mLeftA;
@@ -639,6 +650,21 @@ Sd3drFaceList Sd3dModel::faceListWall(const Sd3drFace &face1, const Sd3drFace &f
     Sd3drFace wall( { face1.last(), face1.first(), face2.first(), face2.last() } );
     walls.append( wall );
     }
+
+  return walls;
+  }
+
+
+
+
+Sd3drFaceList Sd3dModel::faceListWallList(const Sd3drFaceList &faceList1, const Sd3drFaceList &faceList2, bool close)
+  {
+  Sd3drFaceList walls;
+  if( faceList1.count() != faceList2.count() )
+    return walls;
+
+  for( int i = 0; i < faceList1.count(); i++ )
+    walls.append( faceListWall( faceList1.at(i), faceList2.at(i), close ) );
 
   return walls;
   }

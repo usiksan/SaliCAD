@@ -28,6 +28,7 @@ class SdGraphLinearCircle : public SdGraphLinear
   public:
     SdGraphLinearCircle();
     SdGraphLinearCircle( SdPoint center, int radius, const SdPropLine &propLine );
+
     // SdObject interface
   public:
     virtual QString getType() const override { return QStringLiteral(SD_TYPE_CIRCLE); }
@@ -69,6 +70,14 @@ class SdGraphLinearCircle : public SdGraphLinear
     //! \param f      3d draw functions with predefined 3d context
     //!
     virtual void    draw3d( QOpenGLFunctions_2_0 *f ) const override;
+
+    //!
+    //! \brief accumHoles Accum holes description into faceList
+    //! \param model      Model which accumulate coord vertexes
+    //! \param faceList   Face list for holding holes (single face for single hole)
+    //! \param stratum    Stratum for layers
+    //!
+    virtual void   accumHoles( Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum ) const override;
 
     //Find snap point on object
     virtual void    snapPoint(SdSnapInfo *snap) override;

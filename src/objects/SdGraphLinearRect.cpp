@@ -38,10 +38,14 @@ SdGraphLinearRect::SdGraphLinearRect(SdPoint p1, SdPoint p2, const SdPropLine &p
 SdPointList SdGraphLinearRect::getPointList() const
   {
   SdPointList list;
-  list.append( a );
-  list.append( SdPoint(b.x(),a.y()) );
-  list.append( b );
-  list.append( SdPoint(a.x(),b.y()) );
+  int left = qMin( a.x(), b.x() );
+  int right = qMax( a.x(), b.x() );
+  int top = qMax( a.y(), b.y() );
+  int bot = qMin( a.y(), b.y() );
+  list.append( SdPoint(left,bot) );
+  list.append( SdPoint(left,top) );
+  list.append( SdPoint(right,top) );
+  list.append( SdPoint(right,bot) );
   return list;
   }
 

@@ -86,6 +86,14 @@ class SdGraph : public SdObject
     //!
     virtual void   draw3d( QOpenGLFunctions_2_0 *f ) const;
 
+    //!
+    //! \brief accumHoles Accum holes description into faceList
+    //! \param model      Model which accumulate coord vertexes
+    //! \param faceList   Face list for holding holes (single face for single hole)
+    //! \param stratum    Stratum for layers
+    //!
+    virtual void   accumHoles( Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum ) const;
+
     //Get object state behind cursor
     //!
     //! \brief behindCursor Return object status behind cursor, one of constant ELEM_xxx

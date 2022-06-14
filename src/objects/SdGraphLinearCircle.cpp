@@ -179,6 +179,25 @@ void SdGraphLinearCircle::draw3d(QOpenGLFunctions_2_0 *f) const
 
 
 
+//!
+//! \brief accumHoles Accum holes description into faceList
+//! \param model      Model which accumulate coord vertexes
+//! \param faceList   Face list for holding holes (single face for single hole)
+//! \param stratum    Stratum for layers
+//!
+void SdGraphLinearCircle::accumHoles(Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum) const
+  {
+  Q_UNUSED(stratum)
+  QMatrix4x4 mat;
+  QVector3D v(mCenter);
+  v /= 1000.0;
+  mat.translate( v );
+  faceList.append( model.faceCircleSide( static_cast<float>(mRadius) / 1000.0, 32, mat ) );
+  }
+
+
+
+
 //Find snap point on object
 void SdGraphLinearCircle::snapPoint(SdSnapInfo *snap)
   {

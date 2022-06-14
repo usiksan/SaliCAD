@@ -93,6 +93,11 @@ class Sd3dModel
     static Sd3drFace     facePart( const Sd3drFace &face, const QList<float> &indexes );
 
 
+
+
+
+    Sd3drFaceList faceListDuplicate(const Sd3drFaceList &faceList, const QMatrix4x4 &map );
+
     Sd3drFaceList faceListSimplify(const Sd3drFace &face );
 
     Sd3drFaceList faceListHoles(const Sd3drFace &srcFace, const Sd3drFaceList &holeList );
@@ -180,6 +185,8 @@ class Sd3dModel
     //! \return               List of walls
     //!
     static Sd3drFaceList faceListWall( const Sd3drFace &face1, const Sd3drFace &face2, bool close );
+
+    static Sd3drFaceList faceListWallList( const Sd3drFaceList &faceList1, const Sd3drFaceList &faceList2, bool close );
 
     static Sd3drFaceList faceListWallIndexed( const Sd3drFace &face1, const Sd3drFace &face2, const QList<float> &indexes );
 

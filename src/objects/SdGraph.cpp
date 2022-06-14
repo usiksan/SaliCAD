@@ -138,6 +138,22 @@ void SdGraph::draw3d(QOpenGLFunctions_2_0 *f) const
 
 
 
+
+//!
+//! \brief accumHoles Accum holes description into faceList
+//! \param model      Model which accumulate coord vertexes
+//! \param faceList   Face list for holding holes (single face for single hole)
+//! \param stratum    Stratum for layers
+//!
+void SdGraph::accumHoles(Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum) const
+  {
+  Q_UNUSED(model)
+  Q_UNUSED(faceList)
+  Q_UNUSED(stratum)
+  }
+
+
+
 int SdGraph::behindCursor(SdPoint p)
   {
   Q_UNUSED(p)

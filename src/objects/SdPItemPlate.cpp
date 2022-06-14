@@ -24,6 +24,7 @@ Description
 #include "SdPulsar.h"
 #include "SdGraphLinearRect.h"
 #include "SdGraphLinearRegion.h"
+#include "SdGraphLinearCircle.h"
 #include "Sd3dDraw.h"
 #include "SdJsonIO.h"
 
@@ -515,9 +516,30 @@ void SdPItemPlate::rebuild3dModel()
     pcbTop.append( m3dModel.vertexAppend(v) );
     }
 
+  //At second we scan all throught holes
+  SdLayer *holeLayer = sdEnvir->getLayer( LID0_HOLE );
+  Sd3drFaceList holes;
+  forEach( dctLines, [&holes,holeLayer,this] ( SdObject *obj ) -> bool {
+    SdPtr<SdGraphLinearCircle> circle(obj);
+    if( circle.isValid() && circle->isMatchLayer(holeLayer) ) {
+      //Convert circle to point region
+      circle->accumHoles( m3dModel, holes, stmThrough );
+      }
+    return true;
+    });
+
   Sd3drBody pcbBody;
-  pcbBody.faceAppend( m3dModel.faceListExtrudeShift( pcbTop, 1.2 ) );
+  QMatrix4x4 shift;
+  shift.translate( 0, 0, -1.2 );
+  Sd3drFace pcbBot = m3dModel.faceDuplicate( pcbTop, shift );
+  pcbBody.faceAppend( m3dModel.faceListWall( pcbTop, pcbBot, true ) );
   pcbBody.colorSet( sdEnvir->getSysColor( sc3dPcb ) );
+
+  Sd3drFaceList pcbTopList = m3dModel.faceListHoles( pcbTop, holes );
+  Sd3drFaceList pcbBotList = m3dModel.faceListDuplicate( pcbTopList, shift );
+  pcbBody.faceAppend( pcbTopList );
+  //pcbBody.faceAppend( pcbBotList );
+  //pcbBody.faceAppend( holes );
 
   Sd3drInstance inst;
   inst.add( pcbBody );
