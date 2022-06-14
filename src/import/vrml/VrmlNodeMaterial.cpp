@@ -49,6 +49,20 @@ void VrmlNodeMaterial::set(VrmlColor ambient, VrmlColor diffuse, VrmlColor emiss
 
 
 
+Sd3dMaterial VrmlNodeMaterial::to3dMaterial() const
+  {
+  Sd3dMaterial mat;
+  mat.mAmbient   = mDiffuseColor.toColor( mAmbientIntensity );
+  mat.mDiffuse   = mDiffuseColor.toColor();
+  mat.mEmissive  = mEmissiveColor.toColor();
+  mat.mSpecular  = mSpecularColor.toColor();
+  mat.mShininnes = mShininnes;
+  return mat;
+  }
+
+
+
+
 
 
 bool VrmlNodeMaterial::parse(SdScanerVrml *scaner, const QString &fieldType)

@@ -13,9 +13,11 @@
 
 
 
-void VrmlNode::generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace ) const
+void VrmlNode::generateFaces(Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body ) const
   {
-  Q_UNUSED(appendFace)
+  Q_UNUSED(model)
+  Q_UNUSED(instance)
+  Q_UNUSED(body)
   }
 
 

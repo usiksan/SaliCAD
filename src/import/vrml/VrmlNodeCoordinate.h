@@ -6,12 +6,17 @@
 
 class VrmlNodeCoordinate : public VrmlNode
   {
-    VrmlVectorList mPointList;
+    VrmlVectorList     mPointList;
+    mutable QList<int> mIndexConvertor;
   public:
     VrmlNodeCoordinate();
     VrmlNodeCoordinate( const VrmlNodeCoordinate *coord ) : VrmlNode( coord ), mPointList( coord->mPointList ) {}
 
-    VrmlVector at( int index ) const { return mPointList.at(index); }
+    VrmlVector        at( int index ) const { return mPointList.at(index); }
+
+    int               modelIndex( int index ) const { return mIndexConvertor.at(index); }
+
+    virtual void      generateFaces( Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body ) const override;
 
     // VrmlNode interface
   public:

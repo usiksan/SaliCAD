@@ -22,7 +22,7 @@ class VrmlNode1Separator : public VrmlNode1
 
     // VrmlNode interface
   public:
-    virtual void generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace) const override;
+    virtual void generateFaces( Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body ) const override;
     virtual bool parse(SdScanerVrml *scaner, const QString &fieldType) override;
   };
 

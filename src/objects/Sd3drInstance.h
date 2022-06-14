@@ -29,6 +29,8 @@ class Sd3drInstance
   public:
     Sd3drInstance();
 
+    void clear();
+
     void bodyColorGet( Sd3ColorList &dst ) const;
 
     void bodyColorSet( const Sd3ColorList &src, int &index );

@@ -5,6 +5,7 @@
 #include "VrmlNode1IndexedFaceSet.h"
 #include "VrmlNode1Normal.h"
 #include "VrmlNodeMaterial.h"
+#include "objects/Sd3dModel.h"
 
 VrmlNode1Separator::VrmlNode1Separator() :
   VrmlNode1(),
@@ -40,52 +41,61 @@ VrmlNode1Separator::~VrmlNode1Separator()
 
 
 
-void VrmlNode1Separator::generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace) const
+void VrmlNode1Separator::generateFaces(Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body) const
   {
-  VrmlNode1MaterialBinding *nodeMaterialBinding = dynamic_cast<VrmlNode1MaterialBinding*>(mMaterialBinding);
-  int materialBinding = nodeMaterialBinding == nullptr ? MATERIAL_BINDING_DEFAULT : nodeMaterialBinding->binding();
-
   VrmlNode1Material *nodeMaterial = dynamic_cast<VrmlNode1Material*>(mMaterial);
   VrmlNode1Coordinate3 *nodeCoordinate3 = dynamic_cast<VrmlNode1Coordinate3*>(mCoordinate3);
   VrmlNode1IndexedFaceSet *nodeIndexedFaceSet = dynamic_cast<VrmlNode1IndexedFaceSet*>(mIndexedFaceSet);
-  VrmlNode1Normal *nodeNormal = dynamic_cast<VrmlNode1Normal*>(mNormal);
 
   if( nodeCoordinate3 != nullptr && nodeIndexedFaceSet != nullptr ) {
+    //Append all vertexes to model
+    int vertexIndexStart = model->vertexCount();
+    for( int i = 0; i < nodeCoordinate3->pointCount(); i++ )
+      model->vertexAppend( nodeCoordinate3->point(i).toVector3d() * 1000.0 );
+
     int faceIndex = 0;
     int vertexIndex = 0;
-    int normalIndex = 0;
-    QVector3DList vertexList;
-    QVector3DList normalList;
+    int materialIndexCurrent = -1;
+    Sd3drFace face;
+    Sd3drFaceList faceList;
     VrmlNodeMaterial material;
+
+    instance.clear();
+
     while( nodeIndexedFaceSet->isCoordValid(vertexIndex) ) {
       int pointIndex = nodeIndexedFaceSet->coordIndex(vertexIndex++);
       if( pointIndex < 0 ) {
         //Complete with vertex accumulate
-
-        if( nodeNormal != nullptr ) {
-          while( nodeIndexedFaceSet->isNormalValid(normalIndex) ) {
-            int normal = nodeIndexedFaceSet->normalIndex(normalIndex++);
-            if( normal < 0 )
-              break;
-            if( nodeNormal->isVectorValid(normal) )
-              normalList.append( nodeNormal->vector(normal).toVector3d().normalized() );
-            }
-          }
+        faceList.append( face );
 
         if( nodeIndexedFaceSet->isMaterialValid(faceIndex) ) {
           int materialIndex = nodeIndexedFaceSet->materialIndex(faceIndex++);
           material = nodeMaterial->material( materialIndex );
+          if( materialIndex != materialIndexCurrent ) {
+            materialIndexCurrent = materialIndex;
+            body.clear();
+            body.faceAppend( faceList );
+            body.colorListSet( material.to3dMaterial() );
+            instance.add( body );
+            faceList.clear();
+            }
           }
-
-        appendFace( vertexList, normalList, &material );
-        vertexList.clear();
-        normalList.clear();
+        face.clear();
         }
       else {
-        if( nodeCoordinate3->isPointValid(pointIndex) )
-          vertexList.append( nodeCoordinate3->point(pointIndex).toVector3d() * 1000.0 );
+        face.append( vertexIndexStart + pointIndex );
         }
       }
+    //Last face list
+    if( faceList.count() > 0 ) {
+      Sd3drBody body;
+      body.clear();
+      body.faceAppend( faceList );
+      body.colorListSet( material.to3dMaterial() );
+      instance.add( body );
+      }
+    instance.addCopy( QMatrix4x4() );
+    model->instanceAppend( instance );
     }
   }
 

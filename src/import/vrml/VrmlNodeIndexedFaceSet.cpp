@@ -1,5 +1,6 @@
 #include "VrmlNodeIndexedFaceSet.h"
 #include "SdScanerVrml.h"
+#include "objects/Sd3dModel.h"
 
 VrmlNodeIndexedFaceSet::VrmlNodeIndexedFaceSet() :
   VrmlNode(),
@@ -106,30 +107,20 @@ bool VrmlNodeIndexedFaceSet::parse(SdScanerVrml *scaner, const QString &fieldTyp
 
 
 
-void VrmlNodeIndexedFaceSet::generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace) const
+void VrmlNodeIndexedFaceSet::generateFaces(Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body) const
   {
   VrmlNodeCoordinate *coordinate = dynamic_cast<VrmlNodeCoordinate*>( mCoordinate );
   if( coordinate != nullptr ) {
-    VrmlNodeNormal *normal = dynamic_cast<VrmlNodeNormal*>(mNormal);
-    int normalIter = 0;
-    QVector3DList vertextList;
+    coordinate->generateFaces( model, instance, body );
+    Sd3drFace face;
     for( auto coordIndex : mCoordIndex ) {
       if( coordIndex < 0 ) {
         //Vertex accumulate complete
-        //Accum normal
-        QVector3DList normalList;
-        if( normal != nullptr && normalIter < mNormalIndex.count() ) {
-          while( normalIter < mNormalIndex.count() && mNormalIndex.at(normalIter) >= 0 ) {
-            int normalIndex = mNormalIndex.at(normalIter++);
-            normalList.append( normal->at(normalIndex).toVector3d() );
-            }
-          normalIter++;
-          }
         //Normal accum complete
-        appendFace( vertextList, normalList, nullptr );
-        vertextList.clear();
+        body.faceAppend( face );
+        face.clear();
         }
-      else vertextList.append( coordinate->at(coordIndex).toVector3d() );
+      else face.append( coordinate->modelIndex(coordIndex) );
       }
     }
   }

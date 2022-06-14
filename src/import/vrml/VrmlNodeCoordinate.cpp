@@ -1,10 +1,25 @@
 #include "VrmlNodeCoordinate.h"
 #include "SdScanerVrml.h"
 
+#include "objects/Sd3dModel.h"
+
 VrmlNodeCoordinate::VrmlNodeCoordinate() :
   VrmlNode()
   {
 
+  }
+
+
+
+
+void VrmlNodeCoordinate::generateFaces(Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body) const
+  {
+  Q_UNUSED(instance)
+  Q_UNUSED(body)
+  if( mIndexConvertor.count() != mPointList.count() ) {
+    for( auto p : mPointList )
+      mIndexConvertor.append( model->vertexAppend(p.toVector3d()) );
+    }
   }
 
 

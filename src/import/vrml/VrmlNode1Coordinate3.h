@@ -14,6 +14,8 @@ class VrmlNode1Coordinate3 : public VrmlNode1
 
     VrmlVector point( int index ) const { return mPointTable.at(index); }
 
+    int        pointCount() const { return mPointTable.count(); }
+
     // VrmlNode interface
   public:
     virtual bool parse(SdScanerVrml *scaner, const QString &fieldType) override;

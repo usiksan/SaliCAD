@@ -3,6 +3,8 @@
 
 #include "VrmlTypes.h"
 
+#include <QColor>
+
 struct VrmlColor
   {
     VrmlFloat mRed;
@@ -18,6 +20,8 @@ struct VrmlColor
     float   color( int ic ) const { return ic == 0 ? mRed : (ic == 1 ? mGreen : mBlue); }
 
     quint32 toInt() const;
+
+    QColor  toColor( float mult = 1.0 ) const;
   };
 
 using VrmlColorList = QList<VrmlColor>;

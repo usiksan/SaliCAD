@@ -42,6 +42,8 @@ class Sd3dModel
 
     int           vertexAppend( QVector3D v ) { mVertexList.append(v); return mVertexList.count() - 1; }
 
+    int           vertexCount() const { return mVertexList.count(); }
+
 
 
     QMatrix4x4    matrixShift( const Sd3drFace &face, float shift );
@@ -93,7 +95,7 @@ class Sd3dModel
 
     Sd3drFaceList faceListSimplify(const Sd3drFace &face );
 
-    Sd3drFaceList faceListHoles( const Sd3drFace &face, const Sd3drFaceList &holeList );
+    Sd3drFaceList faceListHoles(const Sd3drFace &srcFace, Sd3drFaceList &holeList );
 
     //!
     //! \brief faceListExtrude Extrudes model from source face in direction specified by map

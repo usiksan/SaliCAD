@@ -1,6 +1,7 @@
 #include "VrmlNodeShape.h"
 #include "VrmlNodeAppearance.h"
 #include "SdScanerVrml.h"
+#include "objects/Sd3dModel.h"
 
 VrmlNodeShape::VrmlNodeShape() :
   VrmlNode(),
@@ -46,14 +47,17 @@ bool VrmlNodeShape::parse(SdScanerVrml *scaner, const QString &fieldType)
 
 
 
-void VrmlNodeShape::generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace) const
+void VrmlNodeShape::generateFaces(Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body) const
   {
   //Get apperance color
   VrmlNodeAppearance *appearance = dynamic_cast<VrmlNodeAppearance*>(mApperance);
   VrmlNodeMaterial *material = appearance == nullptr ? nullptr : appearance->material();
+  body.clear();
+  if( material != nullptr )
+    body.colorListSet( material->to3dMaterial() );
   //Generate geometry with apperance color
-  if( mGeometry != nullptr )
-    mGeometry->generateFaces( [material,appendFace] (const QVector3DList &vector3dList, const QVector3DList &normalList, const VrmlNodeMaterial *childMaterial ) {
-      appendFace( vector3dList, normalList, childMaterial == nullptr ? material : childMaterial );
-      });
+  if( mGeometry != nullptr ) {
+    mGeometry->generateFaces( model, instance, body );
+    instance.add( body );
+    }
   }

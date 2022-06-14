@@ -13,6 +13,9 @@
 class SdScanerVrml;
 class VrmlNode;
 class VrmlNodeMaterial;
+class Sd3dModel;
+class Sd3drInstance;
+class Sd3drBody;
 
 using VrmlNodePtr = VrmlNode*;
 
@@ -29,7 +32,7 @@ class VrmlNode
     VrmlNode( const VrmlNode* ) {}
     virtual ~VrmlNode() {}
 
-    virtual void      generateFaces( std::function<void ( const QVector3DList &vertexList, const QVector3DList &normalList, const VrmlNodeMaterial *material )> appendFace ) const;
+    virtual void      generateFaces( Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body ) const;
     virtual bool      parse( SdScanerVrml *scaner, const QString &fieldType ) = 0;
     virtual VrmlNode *copy() const = 0;
 

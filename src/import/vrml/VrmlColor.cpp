@@ -16,3 +16,10 @@ quint32 VrmlColor::toInt() const
   {
   return qRgb( mRed * 255, mGreen * 255, mBlue * 255 );
   }
+
+
+
+QColor VrmlColor::toColor(float mult) const
+  {
+  return QColor::fromRgbF( mRed * mult, mGreen * mult, mBlue * mult );
+  }

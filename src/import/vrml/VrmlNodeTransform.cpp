@@ -1,5 +1,6 @@
 #include "VrmlNodeTransform.h"
 #include "SdScanerVrml.h"
+#include "objects/Sd3dModel.h"
 
 #include <QMatrix4x4>
 
@@ -66,7 +67,7 @@ bool VrmlNodeTransform::parse(SdScanerVrml *scaner, const QString &fieldType)
 
 
 
-void VrmlNodeTransform::generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace) const
+void VrmlNodeTransform::generateFaces(Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body) const
   {
   QMatrix4x4 m;
   m.translate( mTranslation.toVector3d() );
@@ -77,18 +78,9 @@ void VrmlNodeTransform::generateFaces(std::function<void (const QVector3DList &,
   m.rotate( -mScaleOrientation.mAngle, mScaleOrientation.vector3d() );
   m.translate( mCenter.toVector3d() * -1.0 );
 
-  VrmlNodeGroup::generateFaces( [m, appendFace] ( const QVector3DList &vertexList, const QVector3DList &normalList, const VrmlNodeMaterial *material ) {
-    //Convert each vector from source vector
-    QVector3DList dstVertex;
-    for( auto vec : vertexList )
-      dstVertex.append( m.map( vec )  );
+  instance.clear();
+  instance.addCopy( m );
 
-    //Convert normal list
-    QVector3DList dstNormal;
-    for( auto vec : normalList )
-      dstNormal.append( m.map( vec ).normalized() );
-
-    //Append converted face
-    appendFace( dstVertex, dstNormal, material );
-    } );
+  VrmlNodeGroup::generateFaces( model, instance, body );
+  model->instanceAppend( instance );
   }

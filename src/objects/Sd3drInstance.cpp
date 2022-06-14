@@ -20,6 +20,12 @@ Sd3drInstance::Sd3drInstance()
 
   }
 
+void Sd3drInstance::clear()
+  {
+  mBodyList.clear();
+  mCopyList.clear();
+  }
+
 void Sd3drInstance::bodyColorGet(Sd3ColorList &dst) const
   {
   for( auto const &body : qAsConst( mBodyList ) )

@@ -36,8 +36,8 @@ void VrmlNodeCompound::parseChildren(SdScanerVrml *scaner)
 
 
 
-void VrmlNodeCompound::generateFaces(std::function<void (const QVector3DList &, const QVector3DList &, const VrmlNodeMaterial *)> appendFace) const
+void VrmlNodeCompound::generateFaces(Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body) const
   {
   for( auto ptr : mChildren )
-    ptr->generateFaces( appendFace );
+    ptr->generateFaces( model, instance, body );
   }

@@ -33,6 +33,8 @@ class Sd3drBody
   public:
     Sd3drBody();
 
+    void clear() { mFaceList.clear(); }
+
     void colorListGet( Sd3ColorList &dst ) const { dst.append( mColor ); }
 
     void colorListSet( const Sd3dMaterial &src ) { mColor = src; }
