@@ -535,7 +535,7 @@ void SdPItemPlate::rebuild3dModel()
   pcbBody.faceAppend( m3dModel.faceListWall( pcbTop, pcbBot, true ) );
   pcbBody.colorSet( sdEnvir->getSysColor( sc3dPcb ) );
 
-  Sd3drFaceList pcbTopList = m3dModel.faceListHoles( pcbTop, holes );
+  Sd3drFaceList pcbTopList = m3dModel.faceListHolesXY( pcbTop, holes );
   Sd3drFaceList pcbBotList = m3dModel.faceListDuplicate( pcbTopList, shift );
   pcbBody.faceAppend( pcbTopList );
   //pcbBody.faceAppend( pcbBotList );

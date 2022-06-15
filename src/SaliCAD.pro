@@ -468,11 +468,13 @@ HEADERS  += \
     script/SdScriptValueFloat.h \
     script/SdScriptValueFunColorBuild.h \
     script/SdScriptValueFunColorFromString.h \
+    script/SdScriptValueFunFaceBevelXY.h \
     script/SdScriptValueFunFaceCircle.h \
     script/SdScriptValueFunFaceCurveXZ.h \
     script/SdScriptValueFunFaceDuplicate.h \
     script/SdScriptValueFunFaceDuplicateScale.h \
     script/SdScriptValueFunFaceDuplicateShift.h \
+    script/SdScriptValueFunFaceEquidistantXY.h \
     script/SdScriptValueFunFaceFlat.h \
     script/SdScriptValueFunFacePart.h \
     script/SdScriptValueFunFaceRect.h \
@@ -492,15 +494,21 @@ HEADERS  += \
     script/SdScriptValueFunLFaceBox.h \
     script/SdScriptValueFunLFaceCurveXZ.h \
     script/SdScriptValueFunLFaceCylinder.h \
+    script/SdScriptValueFunLFaceDuplicate.h \
     script/SdScriptValueFunLFaceExtrude.h \
     script/SdScriptValueFunLFaceExtrudeShift.h \
     script/SdScriptValueFunLFaceHexagon.h \
+    script/SdScriptValueFunLFaceHolesXY.h \
     script/SdScriptValueFunLFaceIndexed.h \
     script/SdScriptValueFunLFacePinCurveOne.h \
     script/SdScriptValueFunLFacePinCurveTwo.h \
+    script/SdScriptValueFunLFaceSimplifyXY.h \
     script/SdScriptValueFunLFaceUnion.h \
     script/SdScriptValueFunLFaceWall.h \
+    script/SdScriptValueFunLFaceWallBevelXY.h \
+    script/SdScriptValueFunLFaceWallDoubleBevelXY.h \
     script/SdScriptValueFunLFaceWallIndexed.h \
+    script/SdScriptValueFunLFaceWallList.h \
     script/SdScriptValueFunLFaceWallRound.h \
     script/SdScriptValueFunMatrix.h \
     script/SdScriptValueFunMatrixRotate.h \

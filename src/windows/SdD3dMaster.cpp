@@ -3,8 +3,7 @@
 #include "SdD3dModelProgrammEditor.h"
 #include "SdD3dModelMaster.h"
 #include "SdDHelp.h"
-#include "objects/SdObjectFactory.h"
-#include "objects/SdPItemRich.h"
+#include "objects/Sd3dGraphModel.h"
 #include "objects/SdCopyMap.h"
 #include "script/SdScriptParser3d.h"
 
@@ -21,6 +20,9 @@ SdD3dMaster::SdD3dMaster(SdPItemPart *part, QWidget *parent) :
   mPartPtr(part),
   mPreviewPart( new SdPItemPart() )
   {
+  //List of available models
+  mModelList = Sd3dModelScript::scriptList();
+
   setWindowTitle( tr("Select master to 3d model creation") );
 
   QHBoxLayout *hlay = new QHBoxLayout();
@@ -28,32 +30,6 @@ SdD3dMaster::SdD3dMaster(SdPItemPart *part, QWidget *parent) :
   vlay->addWidget( new QLabel( tr("Select master type") ) );
   mMasterType = new QListWidget();
   vlay->addWidget( mMasterType );
-  QHBoxLayout *boxLay = new QHBoxLayout();
-  QPushButton *newProg = new QPushButton( tr("New programm") );
-  newProg->setToolTip( tr("Open dialog to create new 3d model programm") );
-  boxLay->addWidget( newProg );
-  connect( newProg, &QPushButton::clicked, this, [this] () {
-    SdD3dModelProgrammEditor editor( QString{}, this );
-    editor.exec();
-    initializePage();
-    });
-
-  QPushButton *editProg = new QPushButton( tr("Edit programm") );
-  editProg->setToolTip( tr("Open dialog to edit selected 3d model programm") );
-  boxLay->addWidget( editProg );
-  connect( editProg, &QPushButton::clicked, this, [this] () {
-    int row = mMasterType->currentRow();
-    if( row >= 0 && row < mIdList.count() ) {
-      SdD3dModelProgrammEditor editor( mIdList.at(row), this );
-      editor.exec();
-      initializePage();
-      }
-    });
-
-
-  boxLay->addStretch(1);
-
-  vlay->addLayout( boxLay );
 
   hlay->addLayout( vlay, 3 );
 
@@ -87,21 +63,22 @@ SdD3dMaster::SdD3dMaster(SdPItemPart *part, QWidget *parent) :
   connect( this, &SdD3dMaster::accepted, this, [this] () {
     int index = mMasterType->currentRow();
     if( index >= 0 ) {
-      SdD3dModelMaster dlg( mIdList.at(index), mPreviewPart, this );
+      SdD3dModelMaster dlg( mModelList.at(index).mScript, mPreviewPart, this );
       if( dlg.exec() ) {
         //Building model is successfull. Copy 3d model to the edited part
         mPartPtr->getUndo()->begin( tr("Replace 3d model"), mPartPtr, true );
         //Remove previous 3d objects
-        mPartPtr->forEach( dct3D, [this] ( SdObject *obj ) -> bool {
+        mPartPtr->forEach( dctAll, [this] ( SdObject *obj ) -> bool {
           mPartPtr->deleteChild( obj, mPartPtr->getUndo() );
           return false;
           });
-        //Insert new created 3d objects
-        SdCopyMap copyMap;
-        mPreviewPart->forEach( dct3D, [this,&copyMap] ( SdObject *obj ) -> bool {
-          mPartPtr->insertChild( obj->copy( copyMap, false ), mPartPtr->getUndo() );
+        SdCopyMap map;
+        mPreviewPart->forEach( dctAll & (~dct3D), [this, &map] ( SdObject *obj ) -> bool {
+          mPartPtr->insertChild( obj->copy( map, false ), mPartPtr->getUndo() );
           return false;
           });
+        //Insert new created 3d object
+        mPartPtr->model()->scriptSet( dlg.scriptRelease(), mPartPtr->getUndo() );
         //Mark project as dirty
         mPartPtr->setProjectDirtyFlag();
         }
@@ -128,20 +105,18 @@ SdD3dMaster::~SdD3dMaster()
 //!
 void SdD3dMaster::onCurrentRowChanged(int row)
   {
-  if( row >= 0 && row < mIdList.count() ) {
-    SdPItemRich *rich = sdObjectOnly<SdPItemRich>( SdObjectFactory::extractObject( mIdList.at(row), false, this ) );
-    if( rich != nullptr ) {
-      mDescription->setText( rich->paramGet(stdParam3dModelProgramm) );
-      Sd3dModel model;
-      SdScriptParser3d parser( nullptr, &model );
-      SdScriptProgrammPtr programm = parser.parse3d( rich->contents(), mPreviewPart, &model );
-      mPreviewPart->clear();
-      programm->execute();
-      mPreview->setItem( mPreviewPart );
-      mPreview->fitItem();
-      mPreview->update();
-      return;
-      }
+  if( row >= 0 && row < mModelList.count() ) {
+    mDescription->setText( mModelList.at(row).mDescription );
+    Sd3dModel model;
+    SdScriptParser3d parser( nullptr, &model );
+    SdScriptProgrammPtr programm = parser.parse3d( mModelList.at(row).mScript, mPreviewPart, &model );
+    mPreviewPart->clear();
+    programm->execute();
+    mPreviewPart->insertChild( new Sd3dGraphModel(model), nullptr );
+    mPreview->setItem( mPreviewPart );
+    mPreview->fitItem();
+    mPreview->update();
+    return;
     }
   //Clear description and 3d object preview
   mDescription->clear();
@@ -154,23 +129,9 @@ void SdD3dMaster::onCurrentRowChanged(int row)
 
 void SdD3dMaster::initializePage()
   {
-  mIdList.clear();
-  SdObjectFactory::forEachHeader( [this] ( SdLibraryHeader &hdr ) -> bool {
-    if( hdr.mClass == dctRich && hdr.mParamTable.contains( stdParam3dModelProgramm ) ) {
-      mIdList.append( hdr.uid() );
-      }
-    if( mIdList.count() > 100 )
-      return true;
-    return false;
-    });
-
   mMasterType->clear();
-  for( const auto &id : qAsConst(mIdList) ) {
-    SdPItemRich *rich = sdObjectOnly<SdPItemRich>( SdObjectFactory::extractObject( id, false, this ) );
-    if( rich != nullptr ) {
-      mMasterType->addItem( rich->getTitle() );
-      delete rich;
-      }
+  for( const auto &model : qAsConst(mModelList) ) {
+    mMasterType->addItem( model.mName );
     }
   onCurrentRowChanged(0);
   }

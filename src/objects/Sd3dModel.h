@@ -90,6 +90,14 @@ class Sd3dModel
     //!
     Sd3drFace     faceEqudistanteXY( const Sd3drFace &face, float distance, const QMatrix4x4 &map );
 
+    //!
+    //! \brief faceBevelXY Calculate finish round face of given face with radius and with shift with given direction
+    //! \param face        Source face
+    //! \param radius      Distance of new face
+    //! \return            Shifted round face
+    //!
+    Sd3drFace     faceBevelXY(const Sd3drFace &face, float radius);
+
     static Sd3drFace     facePart( const Sd3drFace &face, const QList<float> &indexes );
 
 
@@ -98,9 +106,9 @@ class Sd3dModel
 
     Sd3drFaceList faceListDuplicate(const Sd3drFaceList &faceList, const QMatrix4x4 &map );
 
-    Sd3drFaceList faceListSimplify(const Sd3drFace &face );
+    Sd3drFaceList faceListSimplifyXY(const Sd3drFace &face );
 
-    Sd3drFaceList faceListHoles(const Sd3drFace &srcFace, const Sd3drFaceList &holeList );
+    Sd3drFaceList faceListHolesXY(const Sd3drFace &srcFace, const Sd3drFaceList &holeList );
 
     //!
     //! \brief faceListExtrude Extrudes model from source face in direction specified by map
@@ -177,6 +185,11 @@ class Sd3dModel
 
     Sd3drFaceList faceListWallRound(const Sd3drFace &face1, const Sd3drFace &face2, float scaleX, float scaleY, float radius, float stepDegree );
 
+    Sd3drFaceList faceListWallBevelXY( const Sd3drFace &face1, const Sd3drFace &face2, float radius, float stepDegree );
+
+    Sd3drFaceList faceListWallDoubleBevelXY(const Sd3drFace &face1, const Sd3drFace &face2, float radius1, float radius2, float stepDegree1, float stepDegree2, float height );
+    //Sd3drFaceList faceListBeveledCylinder( )
+
     //!
     //! \brief faceListWalls  Builds walls on base bottom and top regions. Walls builded with color
     //! \param face1          First bound of walls - Bottom
@@ -228,6 +241,8 @@ class Sd3dModel
     int        next( int center, const Sd3drFace &face ) const;
 
     int        prev( int center, const Sd3drFace &face ) const;
+
+    void       faceSizeXY( const Sd3drFace &face, float &sizex, float &sizey ) const;
 
   };
 

@@ -19,6 +19,7 @@ Description
 
 #include "objects/SdPItemPart.h"
 #include "objects/SdProject.h"
+#include "Sd3dModelScript.h"
 
 #include <QDialog>
 #include <QListWidget>
@@ -31,12 +32,12 @@ class SdD3dMaster : public QDialog
   {
     Q_OBJECT
 
-    SdPItemPart   *mPartPtr;      //!< Object to append 3d model
-    SdPItemPart   *mPreviewPart;  //!< Part object to preview model
-    QListWidget   *mMasterType;   //!< Available programm list
-    SdWView3d     *mPreview;      //!< 3d preview of master default result
-    QTextEdit     *mDescription;  //!< Description widget
-    QStringList    mIdList;       //!< Master programm id list
+    SdPItemPart        *mPartPtr;      //!< Object to append 3d model
+    SdPItemPart        *mPreviewPart;  //!< Part object to preview model
+    QListWidget        *mMasterType;   //!< Available programm list
+    SdWView3d          *mPreview;      //!< 3d preview of master default result
+    QTextEdit          *mDescription;  //!< Description widget
+    Sd3dModelScriptList mModelList;    //!< List of models
   public:
     SdD3dMaster( SdPItemPart *part, QWidget *parent );
     ~SdD3dMaster();

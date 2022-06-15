@@ -456,6 +456,26 @@ Sd3drFace Sd3dModel::faceEqudistanteXY(const Sd3drFace &face, float distance, co
 
 
 
+//!
+//! \brief faceBevelXY Calculate finish round face of given face with radius and with shift with given direction
+//! \param face        Source face
+//! \param radius      Distance of new face
+//! \return            Shifted round face
+//!
+Sd3drFace Sd3dModel::faceBevelXY(const Sd3drFace &face, float radius )
+  {
+  //Calculate dx and dy scale
+  if( face.count() < 3 )
+    return face;
+  //Calculate scale factor
+  float sizex,sizey;
+  faceSizeXY( face, sizex, sizey );
+  return faceDuplicateScale( face, (sizex + radius) / sizex, (sizey + radius) / sizey, fabs(radius) );
+  }
+
+
+
+
 
 Sd3drFace Sd3dModel::facePart(const Sd3drFace &face, const QList<float> &indexes)
   {
@@ -516,7 +536,7 @@ struct SdTriangle
 
 
 
-Sd3drFaceList Sd3dModel::faceListSimplify( const Sd3drFace &srcFace )
+Sd3drFaceList Sd3dModel::faceListSimplifyXY( const Sd3drFace &srcFace )
   {
   Sd3drFaceList faceList;
   Sd3dPointLinkList pointPool;
@@ -559,7 +579,7 @@ Sd3drFaceList Sd3dModel::faceListSimplify( const Sd3drFace &srcFace )
 
 
 
-Sd3drFaceList Sd3dModel::faceListHoles(const Sd3drFace &srcFace, const Sd3drFaceList &holeList)
+Sd3drFaceList Sd3dModel::faceListHolesXY(const Sd3drFace &srcFace, const Sd3drFaceList &holeList)
   {
   Sd3drFaceList faceList;
   Sd3dPointLinkList pointPool;
@@ -945,6 +965,36 @@ Sd3drFaceList Sd3dModel::faceListWallRound(const Sd3drFace &face1, const Sd3drFa
 
 
 
+Sd3drFaceList Sd3dModel::faceListWallBevelXY(const Sd3drFace &face1, const Sd3drFace &face2, float radius, float stepDegree)
+  {
+  float sizex,sizey;
+  faceSizeXY( face1, sizex, sizey );
+  return faceListWallRound( face1, face2, (sizex + radius) / sizex, (sizey + radius) / sizey, radius, stepDegree );
+  }
+
+
+
+
+
+Sd3drFaceList Sd3dModel::faceListWallDoubleBevelXY(const Sd3drFace &face1, const Sd3drFace &face2, float radius1, float radius2, float stepDegree1, float stepDegree2, float height)
+  {
+  Sd3drFaceList walls;
+  float midHeight = height - (fabs(radius1) + fabs(radius2));
+  Sd3drFace mid0 = faceBevelXY( face1, radius1 );
+  Sd3drFace mid1 = midHeight > 0 ? faceDuplicateShift( mid0, midHeight ) : mid0;
+  float sizex,sizey;
+  faceSizeXY( face1, sizex, sizey );
+  walls.append( faceListWallRound( face1, mid0, (sizex + radius1) / sizex, (sizey + radius1) / sizey, fabs(radius1), stepDegree1 ) );
+  if( midHeight > 0 )
+    walls.append( faceListWall( mid0, mid1, true ) );
+  faceSizeXY( mid1, sizex, sizey );
+  walls.append( faceListWallRound( mid1, face2, (sizex + radius2) / sizex, (sizey + radius2) / sizey, fabs(radius2), stepDegree2 ) );
+  return walls;
+  }
+
+
+
+
 
 
 
@@ -1043,4 +1093,23 @@ int Sd3dModel::prev(int center, const Sd3drFace &face) const
   if( center > 0 )
     return center - 1;
   return face.count() - 1;
+  }
+
+void Sd3dModel::faceSizeXY(const Sd3drFace &face, float &sizex, float &sizey) const
+  {
+  QPointF p = point( face.at(0) );
+  float minX = p.x();
+  float maxX = p.x();
+  float minY = p.y();
+  float maxY = p.y();
+  for( auto index : face ) {
+    p = point( index );
+    if( minX > p.x() ) minX = p.x();
+    if( maxX < p.x() ) maxX = p.x();
+    if( minY > p.y() ) minY = p.y();
+    if( maxY < p.y() ) maxY = p.y();
+    }
+
+  sizex = maxX - minX;
+  sizey = maxY - minY;
   }

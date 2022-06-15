@@ -16,7 +16,7 @@
                         "x": 1750,
                         "y": 0
                     },
-                    "id": "557d70ed5750",
+                    "id": "5555561338c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -31,7 +31,7 @@
                         "x": 1750,
                         "y": -2540
                     },
-                    "id": "557d70e88db0",
+                    "id": "5555561ff380",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -46,7 +46,7 @@
                         "x": 1750,
                         "y": -5080
                     },
-                    "id": "557d70ed9a00",
+                    "id": "555556201130",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -61,7 +61,7 @@
                         "x": 1750,
                         "y": -7620
                     },
-                    "id": "557d70141d20",
+                    "id": "5555563b7250",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -76,7 +76,7 @@
                         "x": 10000,
                         "y": 0
                     },
-                    "id": "557d70f28e50",
+                    "id": "555556196380",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -91,7 +91,7 @@
                         "x": 10000,
                         "y": -2540
                     },
-                    "id": "557d70f29560",
+                    "id": "5555562366c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -106,7 +106,7 @@
                         "x": 10000,
                         "y": -5080
                     },
-                    "id": "557d70f295c0",
+                    "id": "5555561750b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -121,7 +121,7 @@
                         "x": 10000,
                         "y": -7620
                     },
-                    "id": "557d70079d90",
+                    "id": "555556376450",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -136,7 +136,7 @@
                         "x": 8250,
                         "y": -8560
                     },
-                    "id": "557d70079df0",
+                    "id": "5555560792f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -167,7 +167,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2x0.7m0.1s0.04",
                     "Stratum": "1",
-                    "id": "557d70326730",
+                    "id": "555556258460",
                     "type": "PartPin"
                 },
                 {
@@ -195,7 +195,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2x0.7m0.1s0.04",
                     "Stratum": "1",
-                    "id": "557d7037d320",
+                    "id": "55555611e630",
                     "type": "PartPin"
                 },
                 {
@@ -223,7 +223,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2x0.7m0.1s0.04",
                     "Stratum": "1",
-                    "id": "557d70058290",
+                    "id": "555556079550",
                     "type": "PartPin"
                 },
                 {
@@ -251,7 +251,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2x0.7m0.1s0.04",
                     "Stratum": "1",
-                    "id": "557d70f80800",
+                    "id": "555556079720",
                     "type": "PartPin"
                 },
                 {
@@ -279,7 +279,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2x0.7m0.1s0.04",
                     "Stratum": "1",
-                    "id": "557d70e81690",
+                    "id": "5555560fbbb0",
                     "type": "PartPin"
                 },
                 {
@@ -307,7 +307,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2x0.7m0.1s0.04",
                     "Stratum": "1",
-                    "id": "557d70416850",
+                    "id": "5555560fbd80",
                     "type": "PartPin"
                 },
                 {
@@ -335,7 +335,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2x0.7m0.1s0.04",
                     "Stratum": "1",
-                    "id": "557d70dc56b0",
+                    "id": "5555560fbf50",
                     "type": "PartPin"
                 },
                 {
@@ -363,7 +363,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r2x0.7m0.1s0.04",
                     "Stratum": "1",
-                    "id": "557d70f88fd0",
+                    "id": "555556326760",
                     "type": "PartPin"
                 },
                 {
@@ -371,7 +371,7 @@
                         "x": 5000,
                         "y": -1250
                     },
-                    "id": "557d70185ed0",
+                    "id": "555556117280",
                     "over": {
                         "b": -712,
                         "r": 5823,
@@ -390,7 +390,7 @@
                         "x": 5000,
                         "y": -6250
                     },
-                    "id": "557d70f91520",
+                    "id": "5555563b19c0",
                     "over": {
                         "b": -5713,
                         "r": 6517,
@@ -414,7 +414,7 @@
             "Parametrs": {
             },
             "Title": "sop8 height 4.85",
-            "id": "557d70e8fc80",
+            "id": "55555624f2b0",
             "type": "Part"
         },
         {
@@ -430,7 +430,7 @@
                         "x": 17395,
                         "y": 6910
                     },
-                    "id": "557d70dc57a0",
+                    "id": "555556326b70",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -445,7 +445,7 @@
                         "x": 0,
                         "y": 710
                     },
-                    "id": "557d70416940",
+                    "id": "555556326c40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -460,7 +460,7 @@
                         "x": 2540,
                         "y": 710
                     },
-                    "id": "557d70e81780",
+                    "id": "5555561574c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -475,7 +475,7 @@
                         "x": 5080,
                         "y": 710
                     },
-                    "id": "557d70f808f0",
+                    "id": "555556157550",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -490,7 +490,7 @@
                         "x": 7620,
                         "y": 710
                     },
-                    "id": "557d70f890c0",
+                    "id": "555556157620",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -505,7 +505,7 @@
                         "x": 10160,
                         "y": 710
                     },
-                    "id": "557d70079e50",
+                    "id": "5555561576f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -520,7 +520,7 @@
                         "x": 12700,
                         "y": 710
                     },
-                    "id": "557d70f97080",
+                    "id": "5555561577c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -535,7 +535,7 @@
                         "x": 15240,
                         "y": 710
                     },
-                    "id": "557d70f970e0",
+                    "id": "555556157890",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -550,7 +550,7 @@
                         "x": 15240,
                         "y": 6910
                     },
-                    "id": "557d70f97140",
+                    "id": "555556157960",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -565,7 +565,7 @@
                         "x": 12700,
                         "y": 6910
                     },
-                    "id": "557d70f8f590",
+                    "id": "555556157a30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -580,7 +580,7 @@
                         "x": 10160,
                         "y": 6910
                     },
-                    "id": "557d70f8f5f0",
+                    "id": "5555562f9290",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -595,7 +595,7 @@
                         "x": 7620,
                         "y": 6910
                     },
-                    "id": "557d70f8f650",
+                    "id": "5555562f9360",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -610,7 +610,7 @@
                         "x": 5080,
                         "y": 6910
                     },
-                    "id": "557d70f943c0",
+                    "id": "5555562f9430",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -625,7 +625,7 @@
                         "x": 2540,
                         "y": 6910
                     },
-                    "id": "557d70f94420",
+                    "id": "5555562f9500",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -640,7 +640,7 @@
                         "x": 0,
                         "y": 6910
                     },
-                    "id": "557d70f94480",
+                    "id": "5555562f95d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -651,7 +651,7 @@
                         "x": 0,
                         "y": 1210
                     },
-                    "id": "557d703901d0",
+                    "id": "5555560fc120",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -683,7 +683,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.2x1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70190a00",
+                    "id": "5555562f9710",
                     "type": "PartPin"
                 },
                 {
@@ -711,7 +711,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70eef800",
+                    "id": "555556248c80",
                     "type": "PartPin"
                 },
                 {
@@ -739,7 +739,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d700681b0",
+                    "id": "555556248e50",
                     "type": "PartPin"
                 },
                 {
@@ -767,7 +767,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d701b9e00",
+                    "id": "555556249020",
                     "type": "PartPin"
                 },
                 {
@@ -795,7 +795,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d701c3540",
+                    "id": "55555633e3e0",
                     "type": "PartPin"
                 },
                 {
@@ -823,7 +823,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d7013f000",
+                    "id": "55555633e5b0",
                     "type": "PartPin"
                 },
                 {
@@ -851,7 +851,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d701b8500",
+                    "id": "55555633e780",
                     "type": "PartPin"
                 },
                 {
@@ -879,7 +879,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70fea2b0",
+                    "id": "555556249e10",
                     "type": "PartPin"
                 },
                 {
@@ -907,7 +907,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70f17640",
+                    "id": "555556249fd0",
                     "type": "PartPin"
                 },
                 {
@@ -935,7 +935,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d6ffad600",
+                    "id": "55555624a1a0",
                     "type": "PartPin"
                 },
                 {
@@ -963,7 +963,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70f8fde0",
+                    "id": "5555562dce80",
                     "type": "PartPin"
                 },
                 {
@@ -991,7 +991,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70097200",
+                    "id": "5555562dd050",
                     "type": "PartPin"
                 },
                 {
@@ -1019,7 +1019,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70126e00",
+                    "id": "5555562dd220",
                     "type": "PartPin"
                 },
                 {
@@ -1047,7 +1047,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70fa18d0",
+                    "id": "5555563017e0",
                     "type": "PartPin"
                 },
                 {
@@ -1055,7 +1055,7 @@
                         "x": -1655,
                         "y": 3810
                     },
-                    "id": "557d70ed8bd0",
+                    "id": "555556208120",
                     "over": {
                         "b": 4664,
                         "r": -1161,
@@ -1074,7 +1074,7 @@
                         "x": 17895,
                         "y": 3810
                     },
-                    "id": "557d70fb3490",
+                    "id": "5555562ec990",
                     "over": {
                         "b": 5311,
                         "r": 18393,
@@ -1089,7 +1089,7 @@
                     "type": "Value"
                 },
                 {
-                    "Script": "partWidth = 7.62\n\nbodyWidth = 6.2\nbodyHeight = 3.88\nbodyLenght = 19.55\nbodyFasca = 0.6\nbodyColor = inputColor( \"Body color\", \"#555753\" )\nmarkColor = inputColor( \"Mark color\", \"#2e3436\" )\n\npinLenght = 1.5\npinThickness = 0.25\npinWidth = 0.46\npinDistance = 2.54\npinColor = inputColor( \"Pin color\", \"#eeeeec\")\npinSideCount = 7\n\n\nbodyMiddleHeight = bodyHeight * 0.2\nbodyFaceMiddle = faceRect( bodyLenght, bodyWidth, matrix1 )\nbodyFaceMiddle2 = faceDuplicateShift( bodyFaceMiddle, -bodyHeight * 0.2 )\nscaleX = (bodyWidth - bodyFasca) / bodyWidth\nscaleY = (bodyLenght - bodyFasca) / bodyLenght\n\nconeMatrix = matrixScale( matrix1, scaleY, scaleX, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, 0, 0, bodyHeight * 0.4 )\nbodyFaceTop = faceDuplicate( bodyFaceMiddle2, coneMatrix )\n\nconeMatrix = matrixScale( matrix1, scaleY, scaleX, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, 0, 0, -bodyHeight * 0.4 )\nbodyFaceBot = faceDuplicate( bodyFaceMiddle, coneMatrix )\n\nbody = faceListWall( bodyFaceBot, bodyFaceMiddle, true )\nbody = faceListUnion( body, faceListWall( bodyFaceMiddle, bodyFaceMiddle2, true ) )\nbody = faceListUnion( body, faceListWall( bodyFaceMiddle2, bodyFaceTop, true ) )\nbody = faceListUnion( body, [bodyFaceBot,bodyFaceTop] )\n\nbodyModel = model( bodyColor, bodyColor, bodyColor, body, matrix( 0,0,0,0, 0,0,bodyHeight*0.4+0.5) )\n\n#first pin mark\nmarkDiam = bodyWidth / 7.0\nmark = faceCircle( markDiam/2.0, 10, matrix( 0,0,0,0, -bodyLenght / 2 + markDiam * 1.5, -bodyWidth / 2 + markDiam * 1.5, bodyHeight * 0.6 + 0.01) )\npartModel = modelAppend( bodyModel, markColor, markColor, markColor, [mark] )\n\n\npinFaceStart = faceRect( pinThickness, pinLenght, matrix1 )\npinFaceMiddleStart = faceDuplicateShift( pinFaceStart, (partWidth - bodyWidth) / 2 - pinThickness )\npinFaceMiddleStop = faceCurveXY( pinFaceMiddleStart, -pinThickness, 0, 90 )\npinFaceNarrowStart = faceDuplicateShift( pinFaceMiddleStop, bodyHeight/2 - pinThickness )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinWidth/pinLenght, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceNarrowStop = faceDuplicate( pinFaceNarrowStart, coneMatrix )\npinFaceStop = faceDuplicateShift( pinFaceNarrowStop, 3 )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinThickness/pinWidth, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceFinish = faceDuplicate( pinFaceStop, coneMatrix )\n\npinBody = faceListWall( pinFaceStart, pinFaceMiddleStart, true )\npinBody = faceListUnion( pinBody, faceListCurveXZ( pinFaceMiddleStart, -pinThickness, 0, 90, 30, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceMiddleStop, pinFaceNarrowStart, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStart, pinFaceNarrowStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStop, pinFaceStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceStop, pinFaceFinish, true ) )\npinBody = faceListUnion( pinBody, [pinFaceFinish] )\n\npinMatrix = matrixRotate( matrix1, -90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, -90, 0, 0, 1 )\npinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2, -bodyWidth/2 )\n\npinModel = model( pinColor, pinColor, pinColor, pinBody, pinTranslate )\n\ni = 1\nwhile( i < pinSideCount ) {\n  pinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2 + pinDistance * i, -bodyWidth/2 )\n  pinModel = modelCopy( pinModel, pinTranslate )\n  i = i + 1.0\n  }\n\npinMatrix = matrixRotate( matrix1, 90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, 90, 0, 0, 1 )\n\ni = 0\nwhile( i < pinSideCount ) {\n  pinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2 + pinDistance * i, -bodyWidth/2 )\n  pinModel = modelCopy( pinModel, pinTranslate )\n  i = i + 1.0\n  }\n\npartModel = pinModel\n",
+                    "Script": "partWidth = 7.62\n\nbodyWidth = 6.2\nbodyHeight = 3.88\nbodyLenght = 19.55\nbodyFasca = 0.6\nbodyColor = inputColor( \"Body color\", \"#555753\" )\nmarkColor = inputColor( \"Mark color\", \"#2e3436\" )\n\npinLenght = 1.5\npinThickness = 0.25\npinWidth = 0.46\npinDistance = 2.54\npinColor = inputColor( \"Pin color\", \"#eeeeec\")\npinSideCount = 7\n\n\nbodyMiddleHeight = bodyHeight * 0.2\nbodyFaceMiddle = faceRect( bodyLenght, bodyWidth, matrix1 )\nbodyFaceMiddle2 = faceDuplicateShift( bodyFaceMiddle, -bodyHeight * 0.2 )\nscaleX = (bodyWidth - bodyFasca) / bodyWidth\nscaleY = (bodyLenght - bodyFasca) / bodyLenght\n\nconeMatrix = matrixScale( matrix1, scaleY, scaleX, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, 0, 0, bodyHeight * 0.4 )\nbodyFaceTop = faceDuplicate( bodyFaceMiddle2, coneMatrix )\n\nconeMatrix = matrixScale( matrix1, scaleY, scaleX, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, 0, 0, -bodyHeight * 0.4 )\nbodyFaceBot = faceDuplicate( bodyFaceMiddle, coneMatrix )\n\nbody = faceListWall( bodyFaceBot, bodyFaceMiddle, true )\nbody = faceListUnion( body, faceListWall( bodyFaceMiddle, bodyFaceMiddle2, true ) )\nbody = faceListUnion( body, faceListWall( bodyFaceMiddle2, bodyFaceTop, true ) )\nbody = faceListUnion( body, [bodyFaceBot,bodyFaceTop] )\n\nbodyModel = model( bodyColor, bodyColor, bodyColor, body, matrix( 0,0,0,0, 0,0,bodyHeight*0.4+0.5) )\n\n#first pin mark\nmarkDiam = bodyWidth / 7.0\nmark = faceCircle( markDiam/2.0, 10, matrix( 0,0,0,0, -bodyLenght / 2 + markDiam * 1.5, -bodyWidth / 2 + markDiam * 1.5, bodyHeight * 0.6 + 0.01) )\npartModel = modelAppend( bodyModel, markColor, markColor, markColor, [mark] )\n\n\npinFaceStart = faceRect( pinThickness, pinLenght, matrix1 )\npinFaceMiddleStart = faceDuplicateShift( pinFaceStart, (partWidth - bodyWidth) / 2 - pinThickness )\npinFaceMiddleStop = faceCurveXZ( pinFaceMiddleStart, -pinThickness, 0, 90 )\npinFaceNarrowStart = faceDuplicateShift( pinFaceMiddleStop, bodyHeight/2 - pinThickness )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinWidth/pinLenght, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceNarrowStop = faceDuplicate( pinFaceNarrowStart, coneMatrix )\npinFaceStop = faceDuplicateShift( pinFaceNarrowStop, 3 )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinThickness/pinWidth, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceFinish = faceDuplicate( pinFaceStop, coneMatrix )\n\npinBody = faceListWall( pinFaceStart, pinFaceMiddleStart, true )\npinBody = faceListUnion( pinBody, faceListCurveXZ( pinFaceMiddleStart, -pinThickness, 0, 90, 30, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceMiddleStop, pinFaceNarrowStart, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStart, pinFaceNarrowStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStop, pinFaceStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceStop, pinFaceFinish, true ) )\npinBody = faceListUnion( pinBody, [pinFaceFinish] )\n\npinMatrix = matrixRotate( matrix1, -90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, -90, 0, 0, 1 )\npinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2, -bodyWidth/2 )\n\npinModel = model( pinColor, pinColor, pinColor, pinBody, pinTranslate )\n\ni = 1\nwhile( i < pinSideCount ) {\n  pinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2 + pinDistance * i, -bodyWidth/2 )\n  pinModel = modelCopy( pinModel, pinTranslate )\n  i = i + 1.0\n  }\n\npinMatrix = matrixRotate( matrix1, 90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, 90, 0, 0, 1 )\n\ni = 0\nwhile( i < pinSideCount ) {\n  pinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2 + pinDistance * i, -bodyWidth/2 )\n  pinModel = modelCopy( pinModel, pinTranslate )\n  i = i + 1.0\n  }\n\npartModel = pinModel\n",
                     "Transform": [
                         1,
                         0,
@@ -1108,11 +1108,11 @@
                         0,
                         1
                     ],
-                    "id": "7f6660014960",
+                    "id": "5555561533c0",
                     "type": "3dGraphModel"
                 }
             ],
-            "Created": 139918506,
+            "Created": 140537797,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -1121,7 +1121,7 @@
             "Parametrs": {
             },
             "Title": "dip14 dip-14p-m02",
-            "id": "557d70058380",
+            "id": "555556326a70",
             "type": "Part"
         },
         {
@@ -1137,7 +1137,7 @@
                         "x": 18665,
                         "y": 6910
                     },
-                    "id": "557d70fea3a0",
+                    "id": "555556110f10",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1152,7 +1152,7 @@
                         "x": 0,
                         "y": 710
                     },
-                    "id": "557d701b85f0",
+                    "id": "55555634bd60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1167,7 +1167,7 @@
                         "x": 2540,
                         "y": 710
                     },
-                    "id": "557d7013f0f0",
+                    "id": "555556080c50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1182,7 +1182,7 @@
                         "x": 5080,
                         "y": 710
                     },
-                    "id": "557d701c3630",
+                    "id": "555556252b80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1197,7 +1197,7 @@
                         "x": 7620,
                         "y": 710
                     },
-                    "id": "557d701b9ef0",
+                    "id": "555556252c80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1212,7 +1212,7 @@
                         "x": 10160,
                         "y": 710
                     },
-                    "id": "557d700682a0",
+                    "id": "555556252ce0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1227,7 +1227,7 @@
                         "x": 12700,
                         "y": 710
                     },
-                    "id": "557d70eef8f0",
+                    "id": "555556100800",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1242,7 +1242,7 @@
                         "x": 15240,
                         "y": 710
                     },
-                    "id": "557d70e82580",
+                    "id": "5555563c4970",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1257,7 +1257,7 @@
                         "x": 17780,
                         "y": 710
                     },
-                    "id": "557d70e82640",
+                    "id": "5555562fb0a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1272,7 +1272,7 @@
                         "x": 17780,
                         "y": 6910
                     },
-                    "id": "557d70f8a9a0",
+                    "id": "555556249850",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1287,7 +1287,7 @@
                         "x": 15240,
                         "y": 6910
                     },
-                    "id": "557d70f8aa30",
+                    "id": "5555563279b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1302,7 +1302,7 @@
                         "x": 12700,
                         "y": 6910
                     },
-                    "id": "557d70e9c220",
+                    "id": "5555562ff570",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1317,7 +1317,7 @@
                         "x": 10160,
                         "y": 6910
                     },
-                    "id": "557d70e9c2b0",
+                    "id": "555556346560",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1332,7 +1332,7 @@
                         "x": 7620,
                         "y": 6910
                     },
-                    "id": "557d70ee8110",
+                    "id": "555556100460",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1347,7 +1347,7 @@
                         "x": 5080,
                         "y": 6910
                     },
-                    "id": "557d70ee81a0",
+                    "id": "5555563c2520",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1362,7 +1362,7 @@
                         "x": 2540,
                         "y": 6910
                     },
-                    "id": "557d6ffabc30",
+                    "id": "5555560fcde0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1377,7 +1377,7 @@
                         "x": 0,
                         "y": 6910
                     },
-                    "id": "557d6ffabcc0",
+                    "id": "5555560fcfb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1388,7 +1388,7 @@
                         "x": 0,
                         "y": 1210
                     },
-                    "id": "557d70f17300",
+                    "id": "5555561fca50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1420,7 +1420,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.2x1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d701ba820",
+                    "id": "555556100710",
                     "type": "PartPin"
                 },
                 {
@@ -1448,7 +1448,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d7000b870",
+                    "id": "555556100860",
                     "type": "PartPin"
                 },
                 {
@@ -1476,7 +1476,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70908dd0",
+                    "id": "5555562ff310",
                     "type": "PartPin"
                 },
                 {
@@ -1504,7 +1504,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70102da0",
+                    "id": "55555617d680",
                     "type": "PartPin"
                 },
                 {
@@ -1532,7 +1532,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d701c0e60",
+                    "id": "55555617d7f0",
                     "type": "PartPin"
                 },
                 {
@@ -1560,7 +1560,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d7017c2a0",
+                    "id": "55555617d960",
                     "type": "PartPin"
                 },
                 {
@@ -1588,7 +1588,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70dff000",
+                    "id": "555556322410",
                     "type": "PartPin"
                 },
                 {
@@ -1616,7 +1616,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e0b940",
+                    "id": "555556322580",
                     "type": "PartPin"
                 },
                 {
@@ -1644,7 +1644,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e3bc00",
+                    "id": "5555563226f0",
                     "type": "PartPin"
                 },
                 {
@@ -1672,7 +1672,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e8eb00",
+                    "id": "5555563303c0",
                     "type": "PartPin"
                 },
                 {
@@ -1700,7 +1700,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70fb3800",
+                    "id": "555556330530",
                     "type": "PartPin"
                 },
                 {
@@ -1728,7 +1728,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70ddaaa0",
+                    "id": "5555563306a0",
                     "type": "PartPin"
                 },
                 {
@@ -1756,7 +1756,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d7039b880",
+                    "id": "555556330810",
                     "type": "PartPin"
                 },
                 {
@@ -1784,7 +1784,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e43ea0",
+                    "id": "555556320bd0",
                     "type": "PartPin"
                 },
                 {
@@ -1812,7 +1812,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70550430",
+                    "id": "555556320d40",
                     "type": "PartPin"
                 },
                 {
@@ -1840,7 +1840,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.2d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e15e30",
+                    "id": "555556320eb0",
                     "type": "PartPin"
                 },
                 {
@@ -1848,7 +1848,7 @@
                         "x": -385,
                         "y": 3810
                     },
-                    "id": "557d70f1b6c0",
+                    "id": "555556171410",
                     "over": {
                         "b": 4664,
                         "r": 109,
@@ -1867,7 +1867,7 @@
                         "x": 19165,
                         "y": 3810
                     },
-                    "id": "557d70deca30",
+                    "id": "555556372c40",
                     "over": {
                         "b": 5311,
                         "r": 19664,
@@ -1882,7 +1882,7 @@
                     "type": "Value"
                 },
                 {
-                    "Script": "partWidth = 7.62\n\nbodyWidth = 6.2\nbodyHeight = 3.88\nbodyLenght = 20\nbodyFasca = 0.6\nbodyColor = inputColor( \"Body color\", \"#555753\" )\nmarkColor = inputColor( \"Mark color\", \"#2e3436\" )\n\npinLenght = 1.5\npinThickness = 0.25\npinWidth = 0.46\npinDistance = 2.54\npinColor = inputColor( \"Pin color\", \"#eeeeec\")\npinSideCount = 8\n\n\nbodyMiddleHeight = bodyHeight * 0.2\nbodyFaceMiddle = faceRect( bodyLenght, bodyWidth, matrix1 )\nbodyFaceMiddle2 = faceDuplicateShift( bodyFaceMiddle, -bodyHeight * 0.2 )\nscaleX = (bodyWidth - bodyFasca) / bodyWidth\nscaleY = (bodyLenght - bodyFasca) / bodyLenght\n\nconeMatrix = matrixScale( matrix1, scaleY, scaleX, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, 0, 0, bodyHeight * 0.4 )\nbodyFaceTop = faceDuplicate( bodyFaceMiddle2, coneMatrix )\n\nconeMatrix = matrixScale( matrix1, scaleY, scaleX, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, 0, 0, -bodyHeight * 0.4 )\nbodyFaceBot = faceDuplicate( bodyFaceMiddle, coneMatrix )\n\nbody = faceListWall( bodyFaceBot, bodyFaceMiddle, true )\nbody = faceListUnion( body, faceListWall( bodyFaceMiddle, bodyFaceMiddle2, true ) )\nbody = faceListUnion( body, faceListWall( bodyFaceMiddle2, bodyFaceTop, true ) )\nbody = faceListUnion( body, [bodyFaceBot,bodyFaceTop] )\n\nbodyModel = model( bodyColor, bodyColor, bodyColor, body, matrix( 0,0,0,0, 0,0,bodyHeight*0.4+0.5) )\n\n#first pin mark\nmarkDiam = bodyWidth / 7.0\nmark = faceCircle( markDiam/2.0, 10, matrix( 0,0,0,0, -bodyLenght / 2 + markDiam * 1.5, -bodyWidth / 2 + markDiam * 1.5, bodyHeight * 0.6 + 0.01) )\npartModel = modelAppend( bodyModel, markColor, markColor, markColor, [mark] )\n\n\npinFaceStart = faceRect( pinThickness, pinLenght, matrix1 )\npinFaceMiddleStart = faceDuplicateShift( pinFaceStart, (partWidth - bodyWidth) / 2 - pinThickness )\npinFaceMiddleStop = faceCurveXY( pinFaceMiddleStart, -pinThickness, 0, 90 )\npinFaceNarrowStart = faceDuplicateShift( pinFaceMiddleStop, bodyHeight/2 - pinThickness )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinWidth/pinLenght, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceNarrowStop = faceDuplicate( pinFaceNarrowStart, coneMatrix )\npinFaceStop = faceDuplicateShift( pinFaceNarrowStop, 3 )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinThickness/pinWidth, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceFinish = faceDuplicate( pinFaceStop, coneMatrix )\n\npinBody = faceListWall( pinFaceStart, pinFaceMiddleStart, true )\npinBody = faceListUnion( pinBody, faceListCurveXZ( pinFaceMiddleStart, -pinThickness, 0, 90, 30, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceMiddleStop, pinFaceNarrowStart, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStart, pinFaceNarrowStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStop, pinFaceStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceStop, pinFaceFinish, true ) )\npinBody = faceListUnion( pinBody, [pinFaceFinish] )\n\npinMatrix = matrixRotate( matrix1, -90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, -90, 0, 0, 1 )\npinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2, -bodyWidth/2 )\n\npinModel = model( pinColor, pinColor, pinColor, pinBody, pinTranslate )\n\ni = 1\nwhile( i < pinSideCount ) {\n  pinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2 + pinDistance * i, -bodyWidth/2 )\n  pinModel = modelCopy( pinModel, pinTranslate )\n  i = i + 1.0\n  }\n\npinMatrix = matrixRotate( matrix1, 90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, 90, 0, 0, 1 )\n\ni = 0\nwhile( i < pinSideCount ) {\n  pinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2 + pinDistance * i, -bodyWidth/2 )\n  pinModel = modelCopy( pinModel, pinTranslate )\n  i = i + 1.0\n  }\n\npartModel = pinModel\n",
+                    "Script": "partWidth = 7.62\n\nbodyWidth = 6.2\nbodyHeight = 3.88\nbodyLenght = 20\nbodyFasca = 0.6\nbodyColor = inputColor( \"Body color\", \"#555753\" )\nmarkColor = inputColor( \"Mark color\", \"#2e3436\" )\n\npinLenght = 1.5\npinThickness = 0.25\npinWidth = 0.46\npinDistance = 2.54\npinColor = inputColor( \"Pin color\", \"#eeeeec\")\npinSideCount = 8\n\n\nbodyMiddleHeight = bodyHeight * 0.2\nbodyFaceMiddle = faceRect( bodyLenght, bodyWidth, matrix1 )\nbodyFaceMiddle2 = faceDuplicateShift( bodyFaceMiddle, -bodyHeight * 0.2 )\nscaleX = (bodyWidth - bodyFasca) / bodyWidth\nscaleY = (bodyLenght - bodyFasca) / bodyLenght\n\nconeMatrix = matrixScale( matrix1, scaleY, scaleX, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, 0, 0, bodyHeight * 0.4 )\nbodyFaceTop = faceDuplicate( bodyFaceMiddle2, coneMatrix )\n\nconeMatrix = matrixScale( matrix1, scaleY, scaleX, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, 0, 0, -bodyHeight * 0.4 )\nbodyFaceBot = faceDuplicate( bodyFaceMiddle, coneMatrix )\n\nbody = faceListWall( bodyFaceBot, bodyFaceMiddle, true )\nbody = faceListUnion( body, faceListWall( bodyFaceMiddle, bodyFaceMiddle2, true ) )\nbody = faceListUnion( body, faceListWall( bodyFaceMiddle2, bodyFaceTop, true ) )\nbody = faceListUnion( body, [bodyFaceBot,bodyFaceTop] )\n\nbodyModel = model( bodyColor, bodyColor, bodyColor, body, matrix( 0,0,0,0, 0,0,bodyHeight*0.4+0.5) )\n\n#first pin mark\nmarkDiam = bodyWidth / 7.0\nmark = faceCircle( markDiam/2.0, 10, matrix( 0,0,0,0, -bodyLenght / 2 + markDiam * 1.5, -bodyWidth / 2 + markDiam * 1.5, bodyHeight * 0.6 + 0.01) )\npartModel = modelAppend( bodyModel, markColor, markColor, markColor, [mark] )\n\n\npinFaceStart = faceRect( pinThickness, pinLenght, matrix1 )\npinFaceMiddleStart = faceDuplicateShift( pinFaceStart, (partWidth - bodyWidth) / 2 - pinThickness )\npinFaceMiddleStop = faceCurveXZ( pinFaceMiddleStart, -pinThickness, 0, 90 )\npinFaceNarrowStart = faceDuplicateShift( pinFaceMiddleStop, bodyHeight/2 - pinThickness )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinWidth/pinLenght, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceNarrowStop = faceDuplicate( pinFaceNarrowStart, coneMatrix )\npinFaceStop = faceDuplicateShift( pinFaceNarrowStop, 3 )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinThickness/pinWidth, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceFinish = faceDuplicate( pinFaceStop, coneMatrix )\n\npinBody = faceListWall( pinFaceStart, pinFaceMiddleStart, true )\npinBody = faceListUnion( pinBody, faceListCurveXZ( pinFaceMiddleStart, -pinThickness, 0, 90, 30, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceMiddleStop, pinFaceNarrowStart, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStart, pinFaceNarrowStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStop, pinFaceStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceStop, pinFaceFinish, true ) )\npinBody = faceListUnion( pinBody, [pinFaceFinish] )\n\npinMatrix = matrixRotate( matrix1, -90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, -90, 0, 0, 1 )\npinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2, -bodyWidth/2 )\n\npinModel = model( pinColor, pinColor, pinColor, pinBody, pinTranslate )\n\ni = 1\nwhile( i < pinSideCount ) {\n  pinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2 + pinDistance * i, -bodyWidth/2 )\n  pinModel = modelCopy( pinModel, pinTranslate )\n  i = i + 1.0\n  }\n\npinMatrix = matrixRotate( matrix1, 90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, 90, 0, 0, 1 )\n\ni = 0\nwhile( i < pinSideCount ) {\n  pinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2 + pinDistance * i, -bodyWidth/2 )\n  pinModel = modelCopy( pinModel, pinTranslate )\n  i = i + 1.0\n  }\n\npartModel = pinModel\n",
                     "Transform": [
                         1,
                         0,
@@ -1901,11 +1901,11 @@
                         0,
                         1
                     ],
-                    "id": "557d7051c080",
+                    "id": "5555563464a0",
                     "type": "3dGraphModel"
                 }
             ],
-            "Created": 139918793,
+            "Created": 140537825,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -1914,7 +1914,7 @@
             "Parametrs": {
             },
             "Title": "dip16 dip-16p-m03",
-            "id": "557d70190af0",
+            "id": "555556080d70",
             "type": "Part"
         },
         {
@@ -1930,7 +1930,7 @@
                         "x": 9310,
                         "y": 7310
                     },
-                    "id": "557d70dc87a0",
+                    "id": "555556079a20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1945,7 +1945,7 @@
                         "x": 0,
                         "y": 310
                     },
-                    "id": "557d70dc8830",
+                    "id": "555556249240",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1960,7 +1960,7 @@
                         "x": 2540,
                         "y": 310
                     },
-                    "id": "557d70184800",
+                    "id": "5555563398f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1975,7 +1975,7 @@
                         "x": 5080,
                         "y": 310
                     },
-                    "id": "557d70184890",
+                    "id": "55555634cd20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1990,7 +1990,7 @@
                         "x": 7620,
                         "y": 310
                     },
-                    "id": "557d70f1c1f0",
+                    "id": "55555634ce60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2005,7 +2005,7 @@
                         "x": 7620,
                         "y": 7310
                     },
-                    "id": "557d70f1c280",
+                    "id": "55555634cec0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2020,7 +2020,7 @@
                         "x": 5080,
                         "y": 7310
                     },
-                    "id": "557d70de8b90",
+                    "id": "555556187fc0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2035,7 +2035,7 @@
                         "x": 2540,
                         "y": 7310
                     },
-                    "id": "557d70de8c20",
+                    "id": "5555562525d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2050,7 +2050,7 @@
                         "x": 0,
                         "y": 7310
                     },
-                    "id": "557d70dc8400",
+                    "id": "555556252380",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2061,7 +2061,7 @@
                         "x": 0,
                         "y": 810
                     },
-                    "id": "557d70dc8720",
+                    "id": "555556079b20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2093,7 +2093,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.4x1.4d0.7m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70dc6e90",
+                    "id": "5555562ff480",
                     "type": "PartPin"
                 },
                 {
@@ -2121,7 +2121,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.7m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e41c00",
+                    "id": "555556110e20",
                     "type": "PartPin"
                 },
                 {
@@ -2149,7 +2149,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.7m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e2a220",
+                    "id": "555556372b50",
                     "type": "PartPin"
                 },
                 {
@@ -2177,7 +2177,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.7m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70dbbe00",
+                    "id": "5555563eb870",
                     "type": "PartPin"
                 },
                 {
@@ -2205,7 +2205,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.7m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e0c800",
+                    "id": "555556171260",
                     "type": "PartPin"
                 },
                 {
@@ -2233,7 +2233,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.7m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d703748b0",
+                    "id": "55555617c2c0",
                     "type": "PartPin"
                 },
                 {
@@ -2261,7 +2261,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.7m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70ee0cf0",
+                    "id": "5555561071c0",
                     "type": "PartPin"
                 },
                 {
@@ -2289,7 +2289,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.7m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e848d0",
+                    "id": "555556107330",
                     "type": "PartPin"
                 },
                 {
@@ -2297,7 +2297,7 @@
                         "x": 3750,
                         "y": 5625
                     },
-                    "id": "557d70dc84c0",
+                    "id": "55555630c8b0",
                     "over": {
                         "b": 6123,
                         "r": 4609,
@@ -2316,7 +2316,7 @@
                         "x": 3750,
                         "y": 2500
                     },
-                    "id": "557d70074180",
+                    "id": "55555617d580",
                     "over": {
                         "b": 2996,
                         "r": 5260,
@@ -2341,7 +2341,7 @@
                 "category": "{uu.a"
             },
             "Title": "8 lead pdip",
-            "id": "557d70184510",
+            "id": "5555560bcd90",
             "type": "Part"
         },
         {
@@ -2357,7 +2357,7 @@
                         "x": 22560,
                         "y": 7950
                     },
-                    "id": "557d70f93570",
+                    "id": "55555617c520",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2372,7 +2372,7 @@
                         "x": 0,
                         "y": 850
                     },
-                    "id": "557d70f93600",
+                    "id": "55555634bd00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2387,7 +2387,7 @@
                         "x": 2540,
                         "y": 850
                     },
-                    "id": "557d70f17180",
+                    "id": "5555563c2640",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2402,7 +2402,7 @@
                         "x": 5080,
                         "y": 850
                     },
-                    "id": "557d70f171e0",
+                    "id": "555556187ea0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2417,7 +2417,7 @@
                         "x": 7620,
                         "y": 850
                     },
-                    "id": "557d70f17270",
+                    "id": "555556113430",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2432,7 +2432,7 @@
                         "x": 10160,
                         "y": 850
                     },
-                    "id": "557d6ffdd510",
+                    "id": "55555624ff50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2447,7 +2447,7 @@
                         "x": 12700,
                         "y": 850
                     },
-                    "id": "557d6ffdd5a0",
+                    "id": "555556250120",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2462,7 +2462,7 @@
                         "x": 15240,
                         "y": 850
                     },
-                    "id": "557d6ffdd630",
+                    "id": "555556250410",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2477,7 +2477,7 @@
                         "x": 17780,
                         "y": 850
                     },
-                    "id": "557d70fa0600",
+                    "id": "555556333c20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2492,7 +2492,7 @@
                         "x": 20320,
                         "y": 850
                     },
-                    "id": "557d70fa0690",
+                    "id": "5555562504e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2507,7 +2507,7 @@
                         "x": 20320,
                         "y": 7950
                     },
-                    "id": "557d70fa2680",
+                    "id": "5555561131c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2522,7 +2522,7 @@
                         "x": 17780,
                         "y": 7950
                     },
-                    "id": "557d70fa26e0",
+                    "id": "555556333e90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2537,7 +2537,7 @@
                         "x": 15240,
                         "y": 7950
                     },
-                    "id": "557d70fa2770",
+                    "id": "55555636b370",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2552,7 +2552,7 @@
                         "x": 12700,
                         "y": 7950
                     },
-                    "id": "557d70373700",
+                    "id": "55555636b3d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2567,7 +2567,7 @@
                         "x": 10160,
                         "y": 7950
                     },
-                    "id": "557d70373790",
+                    "id": "555556175c30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2582,7 +2582,7 @@
                         "x": 7620,
                         "y": 7950
                     },
-                    "id": "557d70373820",
+                    "id": "555556175cd0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2597,7 +2597,7 @@
                         "x": 5080,
                         "y": 7950
                     },
-                    "id": "557d7012c830",
+                    "id": "555556175d70",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2612,7 +2612,7 @@
                         "x": 2540,
                         "y": 7950
                     },
-                    "id": "557d7012c8c0",
+                    "id": "555556175e10",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2627,7 +2627,7 @@
                         "x": 0,
                         "y": 7950
                     },
-                    "id": "557d70083c80",
+                    "id": "555556175eb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2638,7 +2638,7 @@
                         "x": 0,
                         "y": 1350
                     },
-                    "id": "557d701844c0",
+                    "id": "5555563cb7d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2670,7 +2670,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.4x1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70083d10",
+                    "id": "55555634a6a0",
                     "type": "PartPin"
                 },
                 {
@@ -2698,7 +2698,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e2d680",
+                    "id": "55555634a7d0",
                     "type": "PartPin"
                 },
                 {
@@ -2726,7 +2726,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e7e3b0",
+                    "id": "55555634a940",
                     "type": "PartPin"
                 },
                 {
@@ -2754,7 +2754,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e081d0",
+                    "id": "55555634aab0",
                     "type": "PartPin"
                 },
                 {
@@ -2782,7 +2782,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e051b0",
+                    "id": "55555624ce90",
                     "type": "PartPin"
                 },
                 {
@@ -2810,7 +2810,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d700e04b0",
+                    "id": "55555624d000",
                     "type": "PartPin"
                 },
                 {
@@ -2838,7 +2838,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70537a50",
+                    "id": "55555624d170",
                     "type": "PartPin"
                 },
                 {
@@ -2866,7 +2866,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70f0ee30",
+                    "id": "55555624d2e0",
                     "type": "PartPin"
                 },
                 {
@@ -2894,7 +2894,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70190c50",
+                    "id": "555556177f10",
                     "type": "PartPin"
                 },
                 {
@@ -2922,7 +2922,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70f73bb0",
+                    "id": "555556178080",
                     "type": "PartPin"
                 },
                 {
@@ -2950,7 +2950,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70f809b0",
+                    "id": "5555561781f0",
                     "type": "PartPin"
                 },
                 {
@@ -2978,7 +2978,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e46080",
+                    "id": "555556178360",
                     "type": "PartPin"
                 },
                 {
@@ -3006,7 +3006,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70f8f300",
+                    "id": "55555624aa30",
                     "type": "PartPin"
                 },
                 {
@@ -3034,7 +3034,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70fca1d0",
+                    "id": "55555624aba0",
                     "type": "PartPin"
                 },
                 {
@@ -3062,7 +3062,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70dfcc70",
+                    "id": "55555624ad10",
                     "type": "PartPin"
                 },
                 {
@@ -3090,7 +3090,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70096240",
+                    "id": "55555624ae80",
                     "type": "PartPin"
                 },
                 {
@@ -3118,7 +3118,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e24110",
+                    "id": "5555563ec950",
                     "type": "PartPin"
                 },
                 {
@@ -3146,7 +3146,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d701a1f70",
+                    "id": "5555563ecac0",
                     "type": "PartPin"
                 },
                 {
@@ -3154,7 +3154,7 @@
                         "x": 10000,
                         "y": 6250
                     },
-                    "id": "557d70dfff30",
+                    "id": "55555617d510",
                     "over": {
                         "b": 6747,
                         "r": 10866,
@@ -3173,7 +3173,7 @@
                         "x": 10000,
                         "y": 3125
                     },
-                    "id": "557d702bb920",
+                    "id": "55555630bfd0",
                     "over": {
                         "b": 3631,
                         "r": 11514,
@@ -3188,7 +3188,7 @@
                     "type": "Value"
                 },
                 {
-                    "Script": "partWidth = 8.7\n\nbodyWidth = 7.1\nbodyHeight = 4.59\nbodyLenght = 24.8\nbodyFasca = 0.6\nbodyColor = inputColor( \"Body color\", \"#555753\" )\nmarkColor = inputColor( \"Mark color\", \"#2e3436\" )\n\npinLenght = 1.4\npinThickness = 0.5\npinWidth = 0.5\npinDistance = 2.54\npinColor = inputColor( \"Pin color\", \"#eeeeec\")\npinSideCount = 9\n\n\nbodyMiddleHeight = bodyHeight * 0.2\nbodyFaceMiddle = faceRect( bodyLenght, bodyWidth, matrix1 )\nbodyFaceMiddle2 = faceDuplicateShift( bodyFaceMiddle, -bodyHeight * 0.2 )\nscaleX = (bodyWidth - bodyFasca) / bodyWidth\nscaleY = (bodyLenght - bodyFasca) / bodyLenght\n\nconeMatrix = matrixScale( matrix1, scaleY, scaleX, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, 0, 0, bodyHeight * 0.4 )\nbodyFaceTop = faceDuplicate( bodyFaceMiddle2, coneMatrix )\n\nconeMatrix = matrixScale( matrix1, scaleY, scaleX, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, 0, 0, -bodyHeight * 0.4 )\nbodyFaceBot = faceDuplicate( bodyFaceMiddle, coneMatrix )\n\nbody = faceListWall( bodyFaceBot, bodyFaceMiddle, true )\nbody = faceListUnion( body, faceListWall( bodyFaceMiddle, bodyFaceMiddle2, true ) )\nbody = faceListUnion( body, faceListWall( bodyFaceMiddle2, bodyFaceTop, true ) )\nbody = faceListUnion( body, [bodyFaceBot,bodyFaceTop] )\n\nbodyModel = model( bodyColor, bodyColor, bodyColor, body, matrix( 0,0,0,0, 0,0,bodyHeight*0.4+0.5) )\n\n#first pin mark\nmarkDiam = bodyWidth / 7.0\nmark = faceCircle( markDiam/2.0, 10, matrix( 0,0,0,0, -bodyLenght / 2 + markDiam * 1.5, -bodyWidth / 2 + markDiam * 1.5, bodyHeight * 0.6 + 0.01) )\npartModel = modelAppend( bodyModel, markColor, markColor, markColor, [mark] )\n\n\npinFaceStart = faceRect( pinThickness, pinLenght, matrix1 )\npinFaceMiddleStart = faceDuplicateShift( pinFaceStart, (partWidth - bodyWidth) / 2 - pinThickness )\npinFaceMiddleStop = faceCurveXY( pinFaceMiddleStart, -pinThickness, 0, 90 )\npinFaceNarrowStart = faceDuplicateShift( pinFaceMiddleStop, bodyHeight/2 - pinThickness )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinWidth/pinLenght, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceNarrowStop = faceDuplicate( pinFaceNarrowStart, coneMatrix )\npinFaceStop = faceDuplicateShift( pinFaceNarrowStop, 3 )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinThickness/pinWidth, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceFinish = faceDuplicate( pinFaceStop, coneMatrix )\n\npinBody = faceListWall( pinFaceStart, pinFaceMiddleStart, true )\npinBody = faceListUnion( pinBody, faceListCurveXZ( pinFaceMiddleStart, -pinThickness, 0, 90, 30, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceMiddleStop, pinFaceNarrowStart, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStart, pinFaceNarrowStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStop, pinFaceStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceStop, pinFaceFinish, true ) )\npinBody = faceListUnion( pinBody, [pinFaceFinish] )\n\npinMatrix = matrixRotate( matrix1, -90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, -90, 0, 0, 1 )\npinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2, -bodyWidth/2 )\n\npinModel = model( pinColor, pinColor, pinColor, pinBody, pinTranslate )\n\ni = 1\nwhile( i < pinSideCount ) {\n  pinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2 + pinDistance * i, -bodyWidth/2 )\n  pinModel = modelCopy( pinModel, pinTranslate )\n  i = i + 1.0\n  }\n\npinMatrix = matrixRotate( matrix1, 90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, 90, 0, 0, 1 )\n\ni = 0\nwhile( i < pinSideCount ) {\n  pinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2 + pinDistance * i, -bodyWidth/2 )\n  pinModel = modelCopy( pinModel, pinTranslate )\n  i = i + 1.0\n  }\n\npartModel = pinModel\n",
+                    "Script": "partWidth = 8.7\n\nbodyWidth = 7.1\nbodyHeight = 4.59\nbodyLenght = 24.8\nbodyFasca = 0.6\nbodyColor = inputColor( \"Body color\", \"#555753\" )\nmarkColor = inputColor( \"Mark color\", \"#2e3436\" )\n\npinLenght = 1.4\npinThickness = 0.5\npinWidth = 0.5\npinDistance = 2.54\npinColor = inputColor( \"Pin color\", \"#eeeeec\")\npinSideCount = 9\n\n\nbodyMiddleHeight = bodyHeight * 0.2\nbodyFaceMiddle = faceRect( bodyLenght, bodyWidth, matrix1 )\nbodyFaceMiddle2 = faceDuplicateShift( bodyFaceMiddle, -bodyHeight * 0.2 )\nscaleX = (bodyWidth - bodyFasca) / bodyWidth\nscaleY = (bodyLenght - bodyFasca) / bodyLenght\n\nconeMatrix = matrixScale( matrix1, scaleY, scaleX, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, 0, 0, bodyHeight * 0.4 )\nbodyFaceTop = faceDuplicate( bodyFaceMiddle2, coneMatrix )\n\nconeMatrix = matrixScale( matrix1, scaleY, scaleX, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, 0, 0, -bodyHeight * 0.4 )\nbodyFaceBot = faceDuplicate( bodyFaceMiddle, coneMatrix )\n\nbody = faceListWall( bodyFaceBot, bodyFaceMiddle, true )\nbody = faceListUnion( body, faceListWall( bodyFaceMiddle, bodyFaceMiddle2, true ) )\nbody = faceListUnion( body, faceListWall( bodyFaceMiddle2, bodyFaceTop, true ) )\nbody = faceListUnion( body, [bodyFaceBot,bodyFaceTop] )\n\nbodyModel = model( bodyColor, bodyColor, bodyColor, body, matrix( 0,0,0,0, 0,0,bodyHeight*0.4+0.5) )\n\n#first pin mark\nmarkDiam = bodyWidth / 7.0\nmark = faceCircle( markDiam/2.0, 10, matrix( 0,0,0,0, -bodyLenght / 2 + markDiam * 1.5, -bodyWidth / 2 + markDiam * 1.5, bodyHeight * 0.6 + 0.01) )\npartModel = modelAppend( bodyModel, markColor, markColor, markColor, [mark] )\n\n\npinFaceStart = faceRect( pinThickness, pinLenght, matrix1 )\npinFaceMiddleStart = faceDuplicateShift( pinFaceStart, (partWidth - bodyWidth) / 2 - pinThickness )\npinFaceMiddleStop = faceCurveXZ( pinFaceMiddleStart, -pinThickness, 0, 90 )\npinFaceNarrowStart = faceDuplicateShift( pinFaceMiddleStop, bodyHeight/2 - pinThickness )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinWidth/pinLenght, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceNarrowStop = faceDuplicate( pinFaceNarrowStart, coneMatrix )\npinFaceStop = faceDuplicateShift( pinFaceNarrowStop, 3 )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinThickness/pinWidth, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceFinish = faceDuplicate( pinFaceStop, coneMatrix )\n\npinBody = faceListWall( pinFaceStart, pinFaceMiddleStart, true )\npinBody = faceListUnion( pinBody, faceListCurveXZ( pinFaceMiddleStart, -pinThickness, 0, 90, 30, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceMiddleStop, pinFaceNarrowStart, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStart, pinFaceNarrowStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStop, pinFaceStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceStop, pinFaceFinish, true ) )\npinBody = faceListUnion( pinBody, [pinFaceFinish] )\n\npinMatrix = matrixRotate( matrix1, -90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, -90, 0, 0, 1 )\npinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2, -bodyWidth/2 )\n\npinModel = model( pinColor, pinColor, pinColor, pinBody, pinTranslate )\n\ni = 1\nwhile( i < pinSideCount ) {\n  pinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2 + pinDistance * i, -bodyWidth/2 )\n  pinModel = modelCopy( pinModel, pinTranslate )\n  i = i + 1.0\n  }\n\npinMatrix = matrixRotate( matrix1, 90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, 90, 0, 0, 1 )\n\ni = 0\nwhile( i < pinSideCount ) {\n  pinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2 + pinDistance * i, -bodyWidth/2 )\n  pinModel = modelCopy( pinModel, pinTranslate )\n  i = i + 1.0\n  }\n\npartModel = pinModel\n",
                     "Transform": [
                         1,
                         0,
@@ -3207,11 +3207,11 @@
                         0,
                         1
                     ],
-                    "id": "557d711c44f0",
+                    "id": "555556327920",
                     "type": "3dGraphModel"
                 }
             ],
-            "Created": 139919540,
+            "Created": 140537864,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -3221,7 +3221,7 @@
                 "category": ""
             },
             "Title": "powerdip18",
-            "id": "557d70e849f0",
+            "id": "5555562527e0",
             "type": "Part"
         },
         {
@@ -3237,7 +3237,7 @@
                         "x": 6990,
                         "y": 7110
                     },
-                    "id": "557d70e7f5c0",
+                    "id": "555556103b00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3252,7 +3252,7 @@
                         "x": 0,
                         "y": 510
                     },
-                    "id": "557d70dfdb50",
+                    "id": "5555562f6f40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3267,7 +3267,7 @@
                         "x": 2540,
                         "y": 510
                     },
-                    "id": "557d700df800",
+                    "id": "5555562f7090",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3282,7 +3282,7 @@
                         "x": 5080,
                         "y": 510
                     },
-                    "id": "557d70e95770",
+                    "id": "555556374870",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3297,7 +3297,7 @@
                         "x": 5080,
                         "y": 7110
                     },
-                    "id": "557d70dfe2a0",
+                    "id": "5555563749b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3312,7 +3312,7 @@
                         "x": 2540,
                         "y": 7110
                     },
-                    "id": "557d70079bd0",
+                    "id": "555556374a10",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3327,7 +3327,7 @@
                         "x": 0,
                         "y": 7110
                     },
-                    "id": "557d70de8850",
+                    "id": "55555632b100",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3338,7 +3338,7 @@
                         "x": 0,
                         "y": 1010
                     },
-                    "id": "557d701287a0",
+                    "id": "555556333cb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3370,7 +3370,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.6x1.6d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70096f80",
+                    "id": "5555563c3d00",
                     "type": "PartPin"
                 },
                 {
@@ -3398,7 +3398,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.6d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d702abd20",
+                    "id": "5555563cb680",
                     "type": "PartPin"
                 },
                 {
@@ -3426,7 +3426,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.6d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70ed70d0",
+                    "id": "555556171630",
                     "type": "PartPin"
                 },
                 {
@@ -3454,7 +3454,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.6d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70059ba0",
+                    "id": "555556081020",
                     "type": "PartPin"
                 },
                 {
@@ -3482,7 +3482,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.6d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e39c00",
+                    "id": "5555561fe6b0",
                     "type": "PartPin"
                 },
                 {
@@ -3510,7 +3510,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.6d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "557d70e3b4b0",
+                    "id": "555556374c90",
                     "type": "PartPin"
                 },
                 {
@@ -3518,12 +3518,12 @@
                         "x": -1410,
                         "y": 3810
                     },
-                    "id": "557d70f5d740",
+                    "id": "555556328d40",
                     "over": {
-                        "b": 4664,
-                        "r": -903,
-                        "x": -1905,
-                        "y": 2958
+                        "b": 4665,
+                        "r": -909,
+                        "x": -1912,
+                        "y": 2952
                     },
                     "propTextDirMirHorVer": "1SCM",
                     "propTextFont": 0,
@@ -3537,12 +3537,12 @@
                         "x": 7490,
                         "y": 3810
                     },
-                    "id": "557d6ffbdeb0",
+                    "id": "555556113220",
                     "over": {
-                        "b": 5320,
-                        "r": 7996,
-                        "x": 6994,
-                        "y": 2311
+                        "b": 5317,
+                        "r": 7992,
+                        "x": 6989,
+                        "y": 2300
                     },
                     "propTextDirMirHorVer": "1SCM",
                     "propTextFont": 0,
@@ -3562,7 +3562,7 @@
                 "category": ""
             },
             "Title": "dip6",
-            "id": "557d700baf00",
+            "id": "555556375b30",
             "type": "Part"
         },
         {
@@ -3570,7 +3570,7 @@
             "Auto": false,
             "ChildList": [
                 {
-                    "Script": "partWidth = 7.62\n\nbodyWidth = 6.2\nbodyHeight = 3.88\nbodyLenght = 19.55\nbodyFasca = 0.6\nbodyColor = inputColor( \"Body color\", \"#555753\" )\nmarkColor = inputColor( \"Mark color\", \"#2e3436\" )\n\npinLenght = 1.5\npinThickness = 0.25\npinWidth = 0.46\npinDistance = 2.54\npinColor = inputColor( \"Pin color\", \"#eeeeec\")\npinSideCount = 7\n\n\nbodyMiddleHeight = bodyHeight * 0.2\nbodyFaceMiddle = faceRect( bodyLenght, bodyWidth, matrix1 )\nbodyFaceMiddle2 = faceDuplicateShift( bodyFaceMiddle, -bodyHeight * 0.2 )\nscaleX = (bodyWidth - bodyFasca) / bodyWidth\nscaleY = (bodyLenght - bodyFasca) / bodyLenght\n\nconeMatrix = matrixScale( matrix1, scaleY, scaleX, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, 0, 0, bodyHeight * 0.4 )\nbodyFaceTop = faceDuplicate( bodyFaceMiddle2, coneMatrix )\n\nconeMatrix = matrixScale( matrix1, scaleY, scaleX, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, 0, 0, -bodyHeight * 0.4 )\nbodyFaceBot = faceDuplicate( bodyFaceMiddle, coneMatrix )\n\nbody = faceListWall( bodyFaceBot, bodyFaceMiddle, true )\nbody = faceListUnion( body, faceListWall( bodyFaceMiddle, bodyFaceMiddle2, true ) )\nbody = faceListUnion( body, faceListWall( bodyFaceMiddle2, bodyFaceTop, true ) )\nbody = faceListUnion( body, [bodyFaceBot,bodyFaceTop] )\n\nbodyModel = model( bodyColor, bodyColor, bodyColor, body, matrix( 0,0,0,0, 0,0,bodyHeight*0.4+0.5) )\n\n#first pin mark\nmarkDiam = bodyWidth / 7.0\nmark = faceCircle( markDiam/2.0, 10, matrix( 0,0,0,0, -bodyLenght / 2 + markDiam * 1.5, -bodyWidth / 2 + markDiam * 1.5, bodyHeight * 0.6 + 0.01) )\npartModel = modelAppend( bodyModel, markColor, markColor, markColor, [mark] )\n\n\npinFaceStart = faceRect( pinThickness, pinLenght, matrix1 )\npinFaceMiddleStart = faceDuplicateShift( pinFaceStart, (partWidth - bodyWidth) / 2 - pinThickness )\npinFaceMiddleStop = faceCurveXY( pinFaceMiddleStart, -pinThickness, 0, 90 )\npinFaceNarrowStart = faceDuplicateShift( pinFaceMiddleStop, bodyHeight/2 - pinThickness )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinWidth/pinLenght, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceNarrowStop = faceDuplicate( pinFaceNarrowStart, coneMatrix )\npinFaceStop = faceDuplicateShift( pinFaceNarrowStop, 3 )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinThickness/pinWidth, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceFinish = faceDuplicate( pinFaceStop, coneMatrix )\n\npinBody = faceListWall( pinFaceStart, pinFaceMiddleStart, true )\npinBody = faceListUnion( pinBody, faceListCurveXZ( pinFaceMiddleStart, -pinThickness, 0, 90, 30, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceMiddleStop, pinFaceNarrowStart, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStart, pinFaceNarrowStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStop, pinFaceStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceStop, pinFaceFinish, true ) )\npinBody = faceListUnion( pinBody, [pinFaceFinish] )\n\npinMatrix = matrixRotate( matrix1, -90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, -90, 0, 0, 1 )\npinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2, -bodyWidth/2 )\n\npinModel = model( pinColor, pinColor, pinColor, pinBody, pinTranslate )\n\ni = 1\nwhile( i < pinSideCount ) {\n  pinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2 + pinDistance * i, -bodyWidth/2 )\n  pinModel = modelCopy( pinModel, pinTranslate )\n  i = i + 1.0\n  }\n\npinMatrix = matrixRotate( matrix1, 90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, 90, 0, 0, 1 )\n\ni = 0\nwhile( i < pinSideCount ) {\n  pinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2 + pinDistance * i, -bodyWidth/2 )\n  pinModel = modelCopy( pinModel, pinTranslate )\n  i = i + 1.0\n  }\n\npartModel = pinModel\n",
+                    "Script": "partWidth = 7.62\n\nbodyWidth = 6.2\nbodyHeight = 3.88\nbodyLenght = 19.55\nbodyFasca = 0.6\nbodyColor = inputColor( \"Body color\", \"#555753\" )\nmarkColor = inputColor( \"Mark color\", \"#2e3436\" )\n\npinLenght = 1.5\npinThickness = 0.25\npinWidth = 0.46\npinDistance = 2.54\npinColor = inputColor( \"Pin color\", \"#eeeeec\")\npinSideCount = 7\n\n\nbodyMiddleHeight = bodyHeight * 0.2\nbodyFaceMiddle = faceRect( bodyLenght, bodyWidth, matrix1 )\nbodyFaceMiddle2 = faceDuplicateShift( bodyFaceMiddle, -bodyHeight * 0.2 )\nscaleX = (bodyWidth - bodyFasca) / bodyWidth\nscaleY = (bodyLenght - bodyFasca) / bodyLenght\n\nconeMatrix = matrixScale( matrix1, scaleY, scaleX, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, 0, 0, bodyHeight * 0.4 )\nbodyFaceTop = faceDuplicate( bodyFaceMiddle2, coneMatrix )\n\nconeMatrix = matrixScale( matrix1, scaleY, scaleX, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, 0, 0, -bodyHeight * 0.4 )\nbodyFaceBot = faceDuplicate( bodyFaceMiddle, coneMatrix )\n\nbody = faceListWall( bodyFaceBot, bodyFaceMiddle, true )\nbody = faceListUnion( body, faceListWall( bodyFaceMiddle, bodyFaceMiddle2, true ) )\nbody = faceListUnion( body, faceListWall( bodyFaceMiddle2, bodyFaceTop, true ) )\nbody = faceListUnion( body, [bodyFaceBot,bodyFaceTop] )\n\nbodyModel = model( bodyColor, bodyColor, bodyColor, body, matrix( 0,0,0,0, 0,0,bodyHeight*0.4+0.5) )\n\n#first pin mark\nmarkDiam = bodyWidth / 7.0\nmark = faceCircle( markDiam/2.0, 10, matrix( 0,0,0,0, -bodyLenght / 2 + markDiam * 1.5, -bodyWidth / 2 + markDiam * 1.5, bodyHeight * 0.6 + 0.01) )\npartModel = modelAppend( bodyModel, markColor, markColor, markColor, [mark] )\n\n\npinFaceStart = faceRect( pinThickness, pinLenght, matrix1 )\npinFaceMiddleStart = faceDuplicateShift( pinFaceStart, (partWidth - bodyWidth) / 2 - pinThickness )\npinFaceMiddleStop = faceCurveXZ( pinFaceMiddleStart, -pinThickness, 0, 90 )\npinFaceNarrowStart = faceDuplicateShift( pinFaceMiddleStop, bodyHeight/2 - pinThickness )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinWidth/pinLenght, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceNarrowStop = faceDuplicate( pinFaceNarrowStart, coneMatrix )\npinFaceStop = faceDuplicateShift( pinFaceNarrowStop, 3 )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinThickness/pinWidth, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceFinish = faceDuplicate( pinFaceStop, coneMatrix )\n\npinBody = faceListWall( pinFaceStart, pinFaceMiddleStart, true )\npinBody = faceListUnion( pinBody, faceListCurveXZ( pinFaceMiddleStart, -pinThickness, 0, 90, 30, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceMiddleStop, pinFaceNarrowStart, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStart, pinFaceNarrowStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStop, pinFaceStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceStop, pinFaceFinish, true ) )\npinBody = faceListUnion( pinBody, [pinFaceFinish] )\n\npinMatrix = matrixRotate( matrix1, -90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, -90, 0, 0, 1 )\npinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2, -bodyWidth/2 )\n\npinModel = model( pinColor, pinColor, pinColor, pinBody, pinTranslate )\n\ni = 1\nwhile( i < pinSideCount ) {\n  pinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2 + pinDistance * i, -bodyWidth/2 )\n  pinModel = modelCopy( pinModel, pinTranslate )\n  i = i + 1.0\n  }\n\npinMatrix = matrixRotate( matrix1, 90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, 90, 0, 0, 1 )\n\ni = 0\nwhile( i < pinSideCount ) {\n  pinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -(pinDistance * (pinSideCount-1) ) / 2 + pinDistance * i, -bodyWidth/2 )\n  pinModel = modelCopy( pinModel, pinTranslate )\n  i = i + 1.0\n  }\n\npartModel = pinModel\n",
                     "Transform": [
                         1,
                         0,
@@ -3589,7 +3589,7 @@
                         0,
                         1
                     ],
-                    "id": "557d7111c5f0",
+                    "id": "555556175f90",
                     "type": "3dGraphModel"
                 }
             ],
@@ -3603,7 +3603,7 @@
                 "category": ""
             },
             "Title": "dip pin",
-            "id": "7f66600078f0",
+            "id": "55555615f3f0",
             "type": "Part"
         }
     ],
@@ -3612,6 +3612,6 @@
     "Parametrs": {
     },
     "Title": "",
-    "id": "557d70e81030",
+    "id": "555556261160",
     "type": "Project"
 }

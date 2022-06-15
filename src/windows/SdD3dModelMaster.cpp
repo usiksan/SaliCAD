@@ -36,11 +36,11 @@ Description
 
 //!
 //! \brief SdD3dModelMaster Dialog constructor. It creates dialog for build new 3d and 2d projection model of part
-//! \param id               id of rich text object which conains 3d model source programm
+//! \param script           Script of 3d model
 //! \param part             Pointer to created part object
 //! \param parent           Parent widget
 //!
-SdD3dModelMaster::SdD3dModelMaster(const QString id, SdPItemPart *part, QWidget *parent) :
+SdD3dModelMaster::SdD3dModelMaster(const QString script, SdPItemPart *part, QWidget *parent) :
   QDialog(parent),
   mPart(part),
   mProgramm(nullptr),
@@ -79,25 +79,17 @@ SdD3dModelMaster::SdD3dModelMaster(const QString id, SdPItemPart *part, QWidget 
   setLayout( vlay );
 
   //Extract programm source
-  if( id.isEmpty() ) done(0);
-  else {
-    //Retrive rich object with id from local libary
-    SdPItemRich *rich = sdObjectOnly<SdPItemRich>( SdObjectFactory::extractObject( id, false, parent ) );
+  mSourceScript = script;
+  mParamWidget->clear();
+  mParamWidget->setColumnCount(2);
+  mParamWidget->setRowCount(0);
+  mParamWidget->setHorizontalHeaderLabels( {tr("Parametr name"), tr("Parametr value") } );
+  SdScriptParser3d parser( mParamWidget, &mModel );
 
-    if( rich == nullptr ) done(0);
-    else {
-      mParamWidget->clear();
-      mParamWidget->setColumnCount(2);
-      mParamWidget->setRowCount(0);
-      mParamWidget->setHorizontalHeaderLabels( {tr("Parametr name"), tr("Parametr value") } );
-      SdScriptParser3d parser( mParamWidget, &mModel );
-
-      mProgramm = parser.parse3d( rich->contents(), mPart, &mModel );
-      rebuild();
-      mPreview->fitItem();
-      mPreview->update();
-      }
-    }
+  mProgramm = parser.parse3d( script, mPart, &mModel );
+  rebuild();
+  mPreview->fitItem();
+  mPreview->update();
   }
 
 
@@ -106,6 +98,50 @@ SdD3dModelMaster::SdD3dModelMaster(const QString id, SdPItemPart *part, QWidget 
 
 SdD3dModelMaster::~SdD3dModelMaster()
   {
+  }
+
+
+
+
+//!
+//! \brief scriptRelease Return source script modified with input values
+//! \return              Modified script
+//!
+QString SdD3dModelMaster::scriptRelease() const
+  {
+  //We perform line-by-line scan and replace
+  QStringList lines = mSourceScript.split( QChar('\n') );
+  for( int i = 0; i < lines.count(); ) {
+    QString line = lines.at(i);
+    if( line.startsWith( QStringLiteral("#-") ) ) {
+      //Remove this and next line
+      lines.removeAt(i+1);
+      lines.removeAt(i);
+      continue;
+      }
+
+    if( line.startsWith( QStringLiteral("#f?") ) || line.startsWith( QStringLiteral("#c?") ) || line.startsWith( QStringLiteral("#p?") )  ) {
+      //Remove next line and current line replace with name equation
+      lines.removeAt(i+1);
+      QString variableName = line.mid( 3 );
+      SdScriptValueVariablePtr ptr = mProgramm->variable( variableName );
+      if( ptr != nullptr ) {
+        if( line.startsWith( QStringLiteral("#f?") ) )
+          line = QStringLiteral("%1 = %2").arg( variableName ).arg( ptr->toFloat() );
+        else if( line.startsWith( QStringLiteral("#c?") ) )
+          line = QStringLiteral("%1 = selectColor( \"%2\" )").arg( variableName, ptr->toColor().name() );
+        else
+          line = QStringLiteral("%1 = selectPad( \"%2\" )").arg( variableName, ptr->toString() );
+        lines[i] = line;
+        }
+      else {
+        lines.removeAt(i);
+        continue;
+        }
+      }
+    i++;
+    }
+  return lines.join( QChar('\n') );
   }
 
 
@@ -122,7 +158,8 @@ void SdD3dModelMaster::rebuild()
 
     //Build new part
     mProgramm->execute();
-    mPart->insertChild( new Sd3dGraphModel(mModel), nullptr );
+    //mPart->insertChild( new Sd3dGraphModel(mModel), nullptr );
+    mPart->model()->scriptSet( scriptRelease(), nullptr );
 
     //Update preview
     mPreview->update();

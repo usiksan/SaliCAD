@@ -47,3 +47,19 @@ void SdScriptProgramm::setVariables(SdScriptVariablePtrList varList)
 
 
 
+//!
+//! \brief variable Find and return variable by its name
+//! \param name     Name of variable to find
+//! \return         Found variable or nullptr if not found
+//!
+SdScriptValueVariable *SdScriptProgramm::variable(const QString &name) const
+  {
+  for( auto ptr : mVariables )
+    if( ptr->name() == name )
+      return ptr;
+  return nullptr;
+  }
+
+
+
+

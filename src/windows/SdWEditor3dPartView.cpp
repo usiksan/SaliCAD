@@ -27,6 +27,7 @@ void SdWEditor3dPartView::onActivateEditor()
 
 void SdWEditor3dPartView::cm3dProgram()
   {
-  SdD3dModelProgrammEditor programmEditor( mPartPtr->getTitle(), mPartPtr->modelConst()->script(), this );
+  auto model = mPartPtr->modelConst();
+  SdD3dModelProgrammEditor programmEditor( mPartPtr->getTitle(), model == nullptr ? QString{} : model->script(), this );
   programmEditor.exec();
   }

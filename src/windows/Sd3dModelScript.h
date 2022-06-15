@@ -15,4 +15,7 @@ struct Sd3dModelScript
     static Sd3dModelScriptList scriptList();
   };
 
+using Sd3dModelScriptList = Sd3dModelScript::Sd3dModelScriptList;
+
+
 #endif // SD3DMODELSCRIPT_H

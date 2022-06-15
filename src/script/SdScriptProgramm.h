@@ -37,6 +37,13 @@ class SdScriptProgramm : public SdScriptOperatorBlock
     //!
     void setVariables( SdScriptVariablePtrList varList );
 
+    //!
+    //! \brief variable Find and return variable by its name
+    //! \param name     Name of variable to find
+    //! \return         Found variable or nullptr if not found
+    //!
+    SdScriptValueVariable *variable( const QString &name ) const;
+
   };
 
 using SdScriptProgrammPtr = QSharedPointer<SdScriptProgramm>;

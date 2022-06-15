@@ -21,8 +21,21 @@ Description
 
 class SdScriptValueVariable : public SdScriptValue
   {
+    QString mName; //!< Name of variable in script
   public:
     SdScriptValueVariable() : SdScriptValue() {}
+
+    //!
+    //! \brief name Return variable name
+    //! \return     Variable name
+    //!
+    QString name() const { return mName; }
+
+    //!
+    //! \brief nameSet Set new name for variable
+    //! \param n       New name for variable
+    //!
+    void    nameSet( const QString &n ) { mName = n; }
 
     //!
     //! \brief isReadOnly Return true for special read-only variables with predefined values

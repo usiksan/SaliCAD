@@ -19,6 +19,7 @@ Description
 
 #include "objects/SdProjectItem.h"
 #include "objects/SdProject.h"
+#include "Sd3dModelScript.h"
 
 #include <QWizardPage>
 #include <QListWidget>
@@ -36,7 +37,7 @@ class SdPNewProjectItem_3dMaster : public QWizardPage
     QListWidget        *mMasterType;   //!< Available programm list
     SdWView3d          *mPreview;      //!< 3d preview of master default result
     QTextEdit          *mDescription;  //!< Description widget
-    QStringList         mIdList;       //!< Master programm id list
+    Sd3dModelScriptList mModelList;    //!< List of models
   public:
     SdPNewProjectItem_3dMaster( SdProjectItemPtr *item, SdProject *prj, QWidget *parent = nullptr );
 

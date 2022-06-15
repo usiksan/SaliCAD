@@ -1,17 +1,29 @@
 #include "Sd3dModelScript.h"
 
+#include <QObject>
+
 const char16_t *scriptSmdResistor =
 uR"VVV(
+#f?w
 w = inputFloat( "part width", 0.8 )
+#f?l
 l = inputFloat( "part lenght", 1.5 )
+#f?h
 h = inputFloat( "part height", 0.45 )
+#f?pl
 pl = inputFloat( "pin lenght", 0.2)
+#f?sh
 sh = inputFloat( "step height", 0.01 )
+#f?pdist
 pdist = inputFloat( "pin distance", 1.6 )
+#c?bodyColor
 bodyColor = inputColor( "body color", "#d3d7cf" )
+#c?topColor
 topColor = inputColor( "top color", "#3e3436" )
+#c?pinColor
 pinColor = inputColor( "pin color", "#f3f3f3" )
 
+#p?pinPad
 pinPad = inputPad( "pin pad", "r0.7x0.8m0.1s0.04" )
 
 #pin height
@@ -51,14 +63,12 @@ partModel = model( topColor, topColor, topColor, bodyTop, matrix1 )
 partModel = model( pinColor, pinColor, pinColor, pinTops, matrix1 )
 partModel = model( bodyColor, bodyColor, bodyColor, body, matrix1 )
 
-
+#-
 hl = pdist / 2
-
-partFlat = graphPin( [-hl,0], pinPad, [-hl,hw/4], "1",
-"CB0", [-hl,-hw/4], "CT0" )
-
-partFlat = graphPin( [hl,0], pinPad, [hl,hw/4], "2",
-"CB0", [hl,-hw/4], "CT0" )
+#-
+partFlat = graphPin( [-hl,0], pinPad, [-hl,hw/4], "1", "CB0", [-hl,-hw/4], "CT0" )
+#-
+partFlat = graphPin( [hl,0], pinPad, [hl,hw/4], "2", "CB0", [hl,-hw/4], "CT0" )
 
 )VVV";
 
@@ -199,5 +209,24 @@ partModel = pinModel
 
 Sd3dModelScript::Sd3dModelScriptList Sd3dModelScript::scriptList()
   {
+  static Sd3dModelScriptList list;
 
+  if( list.count() == 0 ) {
+    Sd3dModelScript ms;
+    ms.mName = QObject::tr("smd resistor 3d model");
+    ms.mDescription = QObject::tr("This master creates smd resistor 3d part model");
+    ms.mScript = QString::fromUtf16( scriptSmdResistor );
+    list.append( ms );
+
+    ms.mName = QObject::tr("leaded polar electrolytic capacitor");
+    ms.mDescription = QObject::tr("This master builds 3d model for polar electrolytic capacitor");
+    ms.mScript = QString::fromUtf16( scriptLeadedCapacitor );
+    list.append( ms );
+
+    ms.mName = QObject::tr("soic 2-row chip");
+    ms.mDescription = QObject::tr("This master builds 3d model of soic chip with 2 rows of pins");
+    ms.mScript = QString::fromUtf16( scriptSoic );
+    list.append( ms );
+    }
+  return list;
   }

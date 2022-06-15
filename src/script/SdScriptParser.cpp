@@ -191,6 +191,7 @@ SdScriptOperator *SdScriptParser::parseOperator()
       return nullptr;
     }
 
+  var->nameSet( variableName );
   mVariables.insert( variableName, var );
   return new SdScriptOperatorAssign( var, val );
   }
