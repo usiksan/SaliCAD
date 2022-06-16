@@ -15,19 +15,7 @@ Description
 #include "SdEnvir.h"
 
 #include <QColor>
-
-
-static void drawPolygon( QOpenGLFunctions_2_0 *f, Sd3dRegion region )
-  {
-  QVector3D normal = QVector3D::normal( region.at(0), region.at(1), region.at(2) );
-  f->glBegin(GL_POLYGON);
-  f->glNormal3f( normal.x(), normal.y(), normal.z() );
-  for( auto const &v : region ) {
-    f->glVertex3f( v.x(), v.y(), v.z() );
-    }
-  f->glEnd();
-  }
-
+#include <math.h>
 
 
 
@@ -112,15 +100,23 @@ void Sd3dDraw::rectFilled(QOpenGLFunctions_2_0 *f, SdPoint a, SdPoint b, float z
 //!
 void Sd3dDraw::circle(QOpenGLFunctions_2_0 *f, SdPoint center, int radius, float z)
   {
-//  Sd3dRegion region = sd3dRegionCircle( static_cast<float>(radius) / 1000.0, 2.0, QVector3D( center.xmm(), center.ymm(), z ) );
-//  f->glBegin( GL_LINES );
-//  for( int i = 0; i < region.count(); i++ ) {
-//    QVector3D start = region.at(i);
-//    QVector3D finish = i + 1 < region.count() ? region.at(i + 1) : region.first();
-//    f->glVertex3f( start.x(), start.y(), start.z() );
-//    f->glVertex3f( finish.x(), finish.y(), finish.z() );
-//    }
-//  f->glEnd();
+  QPointF centerf(center);
+  centerf /= 1000.0;
+  float radiusf( static_cast<float>(radius) / 1000.0 );
+  //Build circle with step degree
+  float startx = centerf.x();
+  float starty = centerf.y() + radiusf;
+  f->glBegin( GL_LINES );
+  for( float angleDegree = 10.0; angleDegree <= 360.0; angleDegree += 10.0 ) {
+    //Convert degree to radians
+    float angle = angleDegree * M_PI / 180.0;
+    //Build next corner
+    float stopx = centerf.x() + sin(angle) * radiusf;
+    float stopy = centerf.y() + cos(angle) * radiusf;
+    f->glVertex3f( startx, starty, z );
+    f->glVertex3f( stopx, stopy, z );
+    }
+  f->glEnd();
   }
 
 
@@ -136,8 +132,21 @@ void Sd3dDraw::circle(QOpenGLFunctions_2_0 *f, SdPoint center, int radius, float
 //!
 void Sd3dDraw::circleFill(QOpenGLFunctions_2_0 *f, SdPoint center, int radius, float z)
   {
-//  Sd3dRegion region = sd3dRegionCircle( static_cast<float>(radius) / 1000.0, 2.0, QVector3D( center.xmm(), center.ymm(), z ) );
-//  drawPolygon( f, region );
+  QPointF centerf(center);
+  centerf /= 1000.0;
+  float radiusf( static_cast<float>(radius) / 1000.0 );
+  //Build circle with step degree
+  f->glBegin( GL_POLYGON );
+  f->glNormal3f( 0, 0, 1.0 );
+  for( float angleDegree = 0; angleDegree < 360.0; angleDegree += 10.0 ) {
+    //Convert degree to radians
+    float angle = angleDegree * M_PI / 180.0;
+    //Build next corner
+    float stopx = centerf.x() + sin(angle) * radiusf;
+    float stopy = centerf.y() + cos(angle) * radiusf;
+    f->glVertex3f( stopx, stopy, z );
+    }
+  f->glEnd();
   }
 
 
@@ -170,40 +179,6 @@ void Sd3dDraw::colorToFloat(QColor col, float *fcolor)
   fcolor[2] = col.blueF();
   fcolor[3] = col.alphaF();
   }
-
-
-
-
-
-
-
-
-//!
-//! \brief flatPanel Draws flat panel (often pcb) by contour point list and faces color
-//! \param f         OpenGL
-//! \param list      Contour point list
-//! \param z         Thickness of flat panel in micron (negativ extruded in down)
-//! \param color     Color of flat panel
-//!
-void Sd3dDraw::flatPanel(QOpenGLFunctions_2_0 *f, SdPointList list, int z, QColor color)
-  {
-//  Sd3dRegion region;
-//  region.reserve( list.count() );
-//  float fz(z);
-//  fz /= 1000.0;
-//  fz -= 0.22;
-//  for( auto const &p : list ) {
-//    float x(p.x());
-//    x /= 1000.0;
-//    float y(p.y());
-//    y /= 1000.0;
-//    QVector3D v( x, y, -0.11 );
-//    region.append( v );
-//    }
-//  Sd3dModel pcb = sd3dModelExtrude( region, -fz, color );
-//  drawModel( f, pcb );
-  }
-
 
 
 

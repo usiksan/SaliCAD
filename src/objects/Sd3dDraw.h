@@ -83,23 +83,6 @@ class Sd3dDraw
     //!
     static void colorToFloat(QColor col, float *fcolor );
 
-    //!
-    //! \brief flatPanel Draws flat panel (often pcb) by contour point list and faces color
-    //! \param f         OpenGL
-    //! \param list      Contour point list
-    //! \param z         Thickness of flat panel in micron (negativ extruded in down)
-    //! \param color     Color of flat panel
-    //!
-    static void flatPanel(QOpenGLFunctions_2_0 *f, SdPointList list, int z, QColor color );
-
-    static void qube( QOpenGLFunctions_2_0 *f, SdRect rect, int z, unsigned color );
-
-    //!
-    //! \brief drawFace Draw face in 3d world
-    //! \param f        OpenGL
-    //! \param face     Face to draw
-    //!
-    //static void drawFace( QOpenGLFunctions_2_0 *f, const Sd3dFace &face );
 
     //!
     //! \brief drawModel Draw model in 3d world

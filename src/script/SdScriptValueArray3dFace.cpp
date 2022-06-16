@@ -27,6 +27,6 @@ Sd3drFaceList SdScriptValueArray3dFace::toFaceList() const
   Sd3drFaceList faceList;
   faceList.reserve( mArray.count() );
   for( auto ptr : mArray )
-    faceList.append( ptr->toFace() );
+    faceList.append( ptr->toFaceList() );
   return faceList;
   }

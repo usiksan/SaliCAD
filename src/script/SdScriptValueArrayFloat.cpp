@@ -28,6 +28,6 @@ QList<float> SdScriptValueArrayFloat::toFloatList() const
   QList<float> list;
   list.reserve( mArray.count() );
   for( auto ptr : mArray )
-    list.append( ptr->toFloat() );
+    list.append( ptr->toFloatList() );
   return list;
   }

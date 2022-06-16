@@ -188,7 +188,16 @@ class Sd3dModel
     Sd3drFaceList faceListWallBevelXY( const Sd3drFace &face1, const Sd3drFace &face2, float radius, float stepDegree );
 
     Sd3drFaceList faceListWallDoubleBevelXY(const Sd3drFace &face1, const Sd3drFace &face2, float radius1, float radius2, float stepDegree1, float stepDegree2, float height );
-    //Sd3drFaceList faceListBeveledCylinder( )
+
+    Sd3drFaceList faceListRotation(const QList<float> &pairs, float angleStart, float angleStop , int sideCount, QMatrix4x4 transfer);
+
+    //!
+    //! \brief faceListWalls Builds walls on base layers, count of element each of them is equals each other
+    //! \param layers        List of faces throught which will be builds walls
+    //! \param close         If true then append wall with n-1 and 0 index vertex on each layer
+    //! \return              List of walls
+    //!
+    static Sd3drFaceList faceListWalls( const Sd3drFaceList &layers, bool close );
 
     //!
     //! \brief faceListWalls  Builds walls on base bottom and top regions. Walls builded with color
@@ -204,6 +213,8 @@ class Sd3dModel
     static Sd3drFaceList faceListWallIndexed( const Sd3drFace &face1, const Sd3drFace &face2, const QList<float> &indexes );
 
     static Sd3drFaceList faceListIndexed( const Sd3drFaceList &faceList, const QList<float> &indexes );
+
+    static QList<float>  afloatArc(float radius, float angleStart, float angleStop, int sideCount);
 
 
     void          instanceAppend( const Sd3drInstance &inst ) { mInstanceList.append(inst); }

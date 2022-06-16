@@ -16,6 +16,7 @@ Description
   convert it to execute available tree of operations
 */
 
+#include "objects/SdObject.h"
 #include "SdScriptParser.h"
 #include "SdScriptOperatorBlock.h"
 #include "SdScriptOperatorAssign.h"
@@ -24,6 +25,7 @@ Description
 
 #include "SdScriptValueVariableBool.h"
 #include "SdScriptValueVariableFloat.h"
+#include "SdScriptValueVariableFloatList.h"
 #include "SdScriptValueVariableColor.h"
 #include "SdScriptValueVariableString.h"
 #include "SdScriptValueVariableVertex.h"
@@ -46,6 +48,7 @@ Description
 #include "SdScriptValueOpBinaryFloatDiv.h"
 #include "SdScriptValueOpBinaryFloatAdd.h"
 #include "SdScriptValueOpBinaryFloatSub.h"
+#include "SdScriptValueOpBinaryFaceListAdd.h"
 #include "SdScriptValueOpUnaryFloatMinus.h"
 #include "SdScriptReference.h"
 
@@ -173,6 +176,7 @@ SdScriptOperator *SdScriptParser::parseOperator()
   switch( val->type() ) {
     case SD_SCRIPT_TYPE_BOOL      : var = new SdScriptValueVariableBool(); break;
     case SD_SCRIPT_TYPE_FLOAT     : var = new SdScriptValueVariableFloat(); break;
+    case SD_SCRIPT_TYPE_AFLOAT    : var = new SdScriptValueVariableFloatList(); break;
     case SD_SCRIPT_TYPE_COLOR     : var = new SdScriptValueVariableColor(); break;
     case SD_SCRIPT_TYPE_STRING    : var = new SdScriptValueVariableString(); break;
     case SD_SCRIPT_TYPE_VERTEX    : var = new SdScriptValueVariableVertex(); break;
@@ -376,13 +380,18 @@ SdScriptValue *SdScriptParser::parsePlusMinus()
   while( !mScaner.isEndOfScanOrError() ) {
     if( mScaner.matchToken('+') ) {
       SdScriptValue *val2 = parseMultDiv();
-      if( val->type() != SD_SCRIPT_TYPE_FLOAT || val2->type() != SD_SCRIPT_TYPE_FLOAT ) {
-        mScaner.error( QObject::tr("Invalid types of add operation. Both must be float.") );
-        delete val;
-        delete val2;
-        return failValue();
+      if( val->type() == SD_SCRIPT_TYPE_FACE_LIST && val2->type() == SD_SCRIPT_TYPE_FACE_LIST ) {
+        val = new SdScriptValueOpBinaryFaceListAdd( val, val2 );
         }
-      val = new SdScriptValueOpBinaryFloatAdd( val, val2 );
+      else {
+        if( val->type() != SD_SCRIPT_TYPE_FLOAT || val2->type() != SD_SCRIPT_TYPE_FLOAT ) {
+          mScaner.error( QObject::tr("Invalid types of add operation. Both must be float.") );
+          delete val;
+          delete val2;
+          return failValue();
+          }
+        val = new SdScriptValueOpBinaryFloatAdd( val, val2 );
+        }
       }
     else if( mScaner.matchToken('-') ) {
       SdScriptValue *val2 = parseMultDiv();
@@ -519,7 +528,7 @@ SdScriptValue *SdScriptParser::parseVar()
     array->append( val );
     while( mScaner.matchToken( ',' )  ) {
       val = parseExpression();
-      if( val->type() == array->typeOfElement() )
+      if( val->type() == array->typeOfElement() || val->type() == array->type() )
         array->append( val );
       else {
         mScaner.error( QObject::tr("Illegal type of array element") );

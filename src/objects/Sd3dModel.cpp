@@ -716,11 +716,40 @@ Sd3drFaceList Sd3dModel::faceListIndexed(const Sd3drFaceList &faceList, const QL
 
   for( auto v : indexes ) {
     int i = static_cast<int>(v);
+    if( i < 0 ){
+      //Backward counting
+      i = faceList.count() + i;
+      }
     if( i < faceList.count() && i >= 0 )
       walls.append( faceList.at(i) );
     }
 
   return walls;
+  }
+
+
+
+
+QList<float> Sd3dModel::afloatArc(float radius, float angleStart, float angleStop, int sideCount )
+  {
+  QList<float> list;
+  if( sideCount < 2 ) sideCount = 2;
+  float angleStep = (angleStop - angleStart) / sideCount;
+  //Convert degree to radians
+  float angle = angleStart * M_PI / 180.0;
+  float startx = sin(angle) * radius;
+  float starty = cos(angle) * radius;
+  for( int i = 0; i < sideCount; i++ ) {
+    angleStart += angleStep;
+    angle = angleStart * M_PI / 180.0;
+    float stopx = sin(angle) * radius;
+    float stopy = cos(angle) * radius;
+    list.append( stopx - startx );
+    list.append( stopy - starty );
+    startx = stopx;
+    starty = stopy;
+    }
+  return list;
   }
 
 
@@ -989,6 +1018,76 @@ Sd3drFaceList Sd3dModel::faceListWallDoubleBevelXY(const Sd3drFace &face1, const
     walls.append( faceListWall( mid0, mid1, true ) );
   faceSizeXY( mid1, sizex, sizey );
   walls.append( faceListWallRound( mid1, face2, (sizex + radius2) / sizex, (sizey + radius2) / sizey, fabs(radius2), stepDegree2 ) );
+  return walls;
+  }
+
+
+
+Sd3drFaceList Sd3dModel::faceListRotation(const QList<float> &pairList, float angleStart, float angleStop, int sideCount, QMatrix4x4 transfer )
+  {
+  Sd3drFaceList faceList;
+
+  //Build source face
+  int count = pairList.count() / 2;
+  if( count < 2 )
+    return faceList;
+  count <<= 1;
+  QVector3D v;
+  QList<QVector3D> pathSrc;
+  for( int i = 0; i < count; i += 2 ) {
+    QVector3D dv( pairList.at(i), 0, pairList.at(i+1) );
+    v += dv;
+    pathSrc.append( v );
+    }
+
+  //Build rotation wires
+  QList< QList<QVector3D> > wires;
+  if( sideCount < 2 ) sideCount = 2;
+  float angleStep = (angleStop - angleStart) / static_cast<float>(sideCount);
+  for( int i = 0; i <= sideCount; i++ ) {
+    //Rotation matrix
+    QMatrix4x4 mat;
+    mat.rotate( angleStart, 0, 0, 1.0 );
+
+    //Build next path
+    QList<QVector3D> pathDst;
+    pathDst.reserve( pathSrc.count() );
+    for( auto v : pathSrc )
+      pathDst.append( mat.map( v ) );
+
+    //Append to dest wires
+    wires.append( pathDst );
+
+    //Next angle
+    angleStart += angleStep;
+    }
+
+  //Convert wires to layer faces
+  for( int layerIndex = 0; layerIndex < pathSrc.count(); layerIndex++ ) {
+    Sd3drFace face;
+    face.reserve( sideCount + 1 );
+    for( int vertexIndex = 0; vertexIndex <= sideCount; vertexIndex++ ) {
+      face.append( vertexAppend( transfer.map(wires.at(vertexIndex).at(layerIndex))) );
+      }
+    faceList.append( face );
+    }
+  return faceList;
+  }
+
+
+
+
+//!
+//! \brief faceListWalls Builds walls on base layers, count of element each of them is equals each other
+//! \param layers        List of faces throught which will be builds walls
+//! \param close         If true then append wall with n-1 and 0 index vertex on each layer
+//! \return              List of walls
+//!
+Sd3drFaceList Sd3dModel::faceListWalls(const Sd3drFaceList &layers, bool close)
+  {
+  Sd3drFaceList walls;
+  for( int i = 1; i < layers.count(); i++ )
+    walls.append( faceListWall( layers.at(i-1), layers.at(i), close ) );
   return walls;
   }
 

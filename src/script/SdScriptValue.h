@@ -71,7 +71,7 @@ class SdScriptValue
     //! \brief toIndex Convert object to float list
     //! \return        Float list
     //!
-    virtual QList<float>         toFloatList() const { return QList<float>(); }
+    virtual QList<float>         toFloatList() const { return QList<float>( { toFloat() } ); }
 
     //!
     //! \brief toVertexIndex Convert object to vertex index in Sd3dModel point list
@@ -83,13 +83,13 @@ class SdScriptValue
     //! \brief toFace Convert object to list of vertex index which is face region
     //! \return       List of vertex index which is face region
     //!
-    virtual Sd3drFace            toFace() const { return Sd3drFace(); }
+    virtual Sd3drFace            toFace() const { return Sd3drFace( { toVertexIndex() } ); }
 
     //!
     //! \brief toFaceList Convert object to list of face each of which is list of vertex index
     //! \return           List of face each of which is list of vertex index
     //!
-    virtual Sd3drFaceList        toFaceList() const { return Sd3drFaceList(); }
+    virtual Sd3drFaceList        toFaceList() const { return Sd3drFaceList( { toFace() } ); }
 
     //!
     //! \brief toModel Convert object to model which is compound of some bodies

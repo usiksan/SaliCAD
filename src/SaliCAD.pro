@@ -466,6 +466,7 @@ HEADERS  += \
     script/SdScriptValueArrayFloat.h \
     script/SdScriptValueBool.h \
     script/SdScriptValueFloat.h \
+    script/SdScriptValueFunAFloatArc.h \
     script/SdScriptValueFunColorBuild.h \
     script/SdScriptValueFunColorFromString.h \
     script/SdScriptValueFunFaceBevelXY.h \
@@ -502,6 +503,7 @@ HEADERS  += \
     script/SdScriptValueFunLFaceIndexed.h \
     script/SdScriptValueFunLFacePinCurveOne.h \
     script/SdScriptValueFunLFacePinCurveTwo.h \
+    script/SdScriptValueFunLFaceRotation.h \
     script/SdScriptValueFunLFaceSimplifyXY.h \
     script/SdScriptValueFunLFaceUnion.h \
     script/SdScriptValueFunLFaceWall.h \
@@ -510,6 +512,7 @@ HEADERS  += \
     script/SdScriptValueFunLFaceWallIndexed.h \
     script/SdScriptValueFunLFaceWallList.h \
     script/SdScriptValueFunLFaceWallRound.h \
+    script/SdScriptValueFunLFaceWalls.h \
     script/SdScriptValueFunMatrix.h \
     script/SdScriptValueFunMatrixRotate.h \
     script/SdScriptValueFunMatrixScale.h \
@@ -530,6 +533,7 @@ HEADERS  += \
     script/SdScriptValueFunVertexBuild.h \
     script/SdScriptValueFunVertexOffset.h \
     script/SdScriptValueFunction.h \
+    script/SdScriptValueOpBinaryFaceListAdd.h \
     script/SdScriptValueOpBinaryFloatDiv.h \
     script/SdScriptValueOpBinaryFloatLess.h \
     script/SdScriptValueOpBinaryFloatMult.h \
@@ -544,6 +548,7 @@ HEADERS  += \
     script/SdScriptValueVariableFace.h \
     script/SdScriptValueVariableFaceList.h \
     script/SdScriptValueVariableFloat.h \
+    script/SdScriptValueVariableFloatList.h \
     script/SdScriptValueVariableGraph.h \
     script/SdScriptValueVariableMatrix.h \
     script/SdScriptValueVariableModel.h \

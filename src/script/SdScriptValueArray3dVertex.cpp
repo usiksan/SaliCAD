@@ -27,6 +27,6 @@ Sd3drFace SdScriptValueArray3dVertex::toFace() const
   {
   Sd3drFace face;
   for( auto const ptr : mArray )
-    face.append( ptr->toVertexIndex() );
+    face.append( ptr->toFace() );
   return face;
   }
