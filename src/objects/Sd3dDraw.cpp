@@ -115,6 +115,8 @@ void Sd3dDraw::circle(QOpenGLFunctions_2_0 *f, SdPoint center, int radius, float
     float stopy = centerf.y() + cos(angle) * radiusf;
     f->glVertex3f( startx, starty, z );
     f->glVertex3f( stopx, stopy, z );
+    startx = stopx;
+    starty = stopy;
     }
   f->glEnd();
   }

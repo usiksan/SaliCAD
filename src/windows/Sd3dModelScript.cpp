@@ -76,47 +76,95 @@ partFlat = graphPin( [hl,0], pinPad, [hl,hw/4], "2", "CB0", [hl,-hw/4], "CT0" )
 
 const char16_t *scriptLeadedCapacitor =
 uR"VVV(
-bodyDiametr = inputFloat( "Body diametr", 4 )
-bodyHeight = inputFloat( "Body height", 4 )
-bodyColor = inputColor( "Body color", "#4e9a06" )
 
-pinDiametr = inputFloat( "Pin diametr", 0.5 )
-pinDistance = inputFloat( "Distance between pins", 2.5 )
-pinColor = inputColor( "Pin color", "#f0f0f0" )
+#Capasitor model
+#f?bodyDiametr
+bodyDiametr = inputFloat( "Body diametr", 16 )
+#f?bodyHeight
+bodyHeight = inputFloat( "Body height", 36 )
+#f?rubberRadius
+rubberRadius = inputFloat( "Rubber radius", 0.8 )
+#f?rubberOffsetZ
+rubberOffsetZ = inputFloat( "Rubber offset Z", 0.7 )
+bodyBevel = 0.2
+vinylThickness = 0.3
+#c?alumColor
+alumColor = inputColor( "Aluminium color", "#a0a0a0" )
+#c?bodyColor
+bodyColor = inputColor( "Body vinyl color", "#0b66b3" )
+#c?stripeColor
+stripeColor = inputColor( "Strip for minus mark color", "#9aeaf9" )
 
+#Second place source params of pins
+#f?pinDiametr
+pinDiametr = inputFloat( "Pin diametr", 0.7 )
+pinLenght = 3
+#f?pinDistance
+pinDistance = inputFloat( "Distance between pins", 7.5 )
+#c?pinColor
+pinColor = inputColor( "Pin color", "#d0d0d0" )
+
+#-
 padPlus = inputPad( "Pad plus", stringPadRectThrough(1.0,1.0,pinDiametr*1.2,0.1) )
+#-
 padMinus = inputPad( "Pad minus", "c1.2d0.6m0.1" )
 
-plusShow = inputFloat( "Show plus", 0 )
 
+#========================================================
+#Body construction
+#Construct body faces. See help on embedded functions
 bodyRadius = bodyDiametr / 2
+path = [
+  bodyRadius-vinylThickness,0,
+  arc( bodyBevel, 180, 90, 10),
+  0,rubberOffsetZ,
+#Rubber
+  arc( rubberRadius, 90, 45, 10 ),
+  arc( rubberRadius, -180+45, -45, 10 ),
+  arc( rubberRadius, 180-45, 90, 10 ),
+#Main body
+  0,bodyHeight-3*rubberRadius-2*bodyBevel,
+  arc( bodyBevel, 90, 0, 10 ),
+  -vinylThickness,0,
+  0,-vinylThickness ]
+layers = faceListRotation( 15, 345, 30, matrix1, path )
+stripe = faceListRotation( -15, 15, 10, matrix1, path )
 
-body = faceListCylinder( bodyRadius, bodyHeight )
+topbot = faceListIndexed( layers, [0, -1] ) + faceListIndexed( stripe, [0, -1] )
 
-pin = faceListCylinder( pinDiametr / 2, -2.0 )
+bodyMatrix = matrixTranslate( matrix1, pinDistance/2, 0, 0 )
+#Model is set of faces with associated with it colors
+bodyModel = model( bodyColor, bodyColor, bodyColor, faceListWalls( layers, false ), bodyMatrix )
+bodyModel = modelAppend( bodyModel, stripeColor, stripeColor, stripeColor, faceListWalls( stripe, false ) )
+bodyModel = modelAppend( bodyModel, alumColor, alumColor, alumColor, topbot )
 
-partModel = model( bodyColor, bodyColor, bodyColor, body, matrix1 )
+#Place model into destignation model. After this you can see your construction
+partModel = bodyModel
 
+#=========================================================
+#Pin construction
+pinTopFace = faceCircle( pinDiametr/2, 10, matrix1 )
+pinBotFace = faceDuplicateShift( pinTopFace, -pinLenght )
 
-pinPlusX = -pinDistance / 2
-pinMinusX = pinDistance / 2
+pin = [pinBotFace]
+pin = faceListUnion( pin, faceListWall( pinTopFace, pinBotFace, true ) )
 
-pins = model( pinColor, pinColor, pinColor, pin, matrix( 0,0,0,0, pinPlusX,0,0 ) )
-pins = modelCopy( pins, matrix( 0,0,0,0, pinMinusX,0,0 ) )
-partModel = pins
+#First pin placement
+pinModel = model( pinColor, pinColor, pinColor, pin, matrix1 )
 
-partFlat = graphCircle( [ 0, 0, bodyRadius ] )
+pinMatrix = matrixTranslate( matrix1, pinDistance, 0, 0 )
+pinModel = modelCopy( pinModel, pinMatrix )
 
-partFlat = graphPin( [pinPlusX,0], padPlus, [pinPlusX,0], "1", "CM0", [pinPlusX,0], "CM0" )
+#Place pin model into destignation model
+partModel = pinModel
 
-partFlat = graphPin( [pinMinusX,0], padMinus, [pinMinusX,0], "2", "CM0", [pinMinusX,0], "CM0" )
+#- 2D Graphics
+partFlat = graphCircle( [ pinDistance/2, 0, bodyRadius ] )
+#-
+partFlat = graphPin( [0,0], padPlus, [0,0], "1", "CM0", [0,0], "CM0" )
+#-
+partFlat = graphPin( [pinDistance,0], padMinus, [pinDistance,0], "2", "CM0", [pinDistance,0], "CM0" )
 
-if( plusShow > 0 ) {
-  #Draw plus sign
-  plusCenter = -bodyRadius - 2
-  partFlat = graphLine( [plusCenter, -1], [plusCenter, 1] )
-  partFlat = graphLine( [plusCenter - 1,0], [plusCenter + 1, 0] )
-  }
 
 )VVV";
 
