@@ -1,0 +1,357 @@
+{
+    "A file type": "SaliCAD file",
+    "A version": 1,
+    "Author": "",
+    "ChildList": [
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "a": {
+                        "x": 0,
+                        "y": -750
+                    },
+                    "b": {
+                        "x": 2500,
+                        "y": 1000
+                    },
+                    "id": "7fffec00e840",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "a": {
+                        "x": 0,
+                        "y": 500
+                    },
+                    "b": {
+                        "x": -750,
+                        "y": 500
+                    },
+                    "id": "555556bed220",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2500,
+                        "y": 500
+                    },
+                    "b": {
+                        "x": 3250,
+                        "y": 500
+                    },
+                    "id": "555556d58a60",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 1250,
+                        "y": -750
+                    },
+                    "b": {
+                        "x": 1250,
+                        "y": -1500
+                    },
+                    "id": "555556d2bed0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Name": "Vin+",
+                    "NamePos": {
+                        "x": 250,
+                        "y": 500
+                    },
+                    "NameTextDirMirHorVer": "0SLM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "PinName",
+                    "NameTextSize": 350,
+                    "NumberPos": {
+                        "x": -750,
+                        "y": 750
+                    },
+                    "NumberTextDirMirHorVer": "0SLM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextSize": 350,
+                    "Origin": {
+                        "x": -750,
+                        "y": 500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "7fffec00d840",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "Vout+",
+                    "NamePos": {
+                        "x": 2250,
+                        "y": 500
+                    },
+                    "NameTextDirMirHorVer": "0SRM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "PinName",
+                    "NameTextSize": 350,
+                    "NumberPos": {
+                        "x": 3250,
+                        "y": 750
+                    },
+                    "NumberTextDirMirHorVer": "0SRM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextSize": 350,
+                    "Origin": {
+                        "x": 3250,
+                        "y": 500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "7fffec00da60",
+                    "type": "SymPin"
+                },
+                {
+                    "Name": "GND",
+                    "NamePos": {
+                        "x": 1250,
+                        "y": -500
+                    },
+                    "NameTextDirMirHorVer": "0SCM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "PinName",
+                    "NameTextSize": 350,
+                    "NumberPos": {
+                        "x": 1500,
+                        "y": -1250
+                    },
+                    "NumberTextDirMirHorVer": "0SLM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextSize": 350,
+                    "Origin": {
+                        "x": 1250,
+                        "y": -1500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "555556d58330",
+                    "type": "SymPin"
+                },
+                {
+                    "Origin": {
+                        "x": 1250,
+                        "y": 1250
+                    },
+                    "id": "555556b884b0",
+                    "over": {
+                        "b": 1424,
+                        "r": 1550,
+                        "x": 950,
+                        "y": 1073
+                    },
+                    "propTextDirMirHorVer": "0SCM",
+                    "propTextFont": 0,
+                    "propTextLayer": "Ident",
+                    "propTextSize": 350,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Origin": {
+                        "x": 1250,
+                        "y": 0
+                    },
+                    "id": "5555569d1540",
+                    "over": {
+                        "b": 176,
+                        "r": 1776,
+                        "x": 726,
+                        "y": -175
+                    },
+                    "propTextDirMirHorVer": "0SCM",
+                    "propTextFont": 0,
+                    "propTextLayer": "Value",
+                    "propTextSize": 350,
+                    "text": "{value}",
+                    "type": "Value"
+                },
+                {
+                    "Name": "Vout+2",
+                    "NamePos": {
+                        "x": 2250,
+                        "y": 0
+                    },
+                    "NameTextDirMirHorVer": "0SRM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextSize": 350,
+                    "NumberPos": {
+                        "x": 3250,
+                        "y": 250
+                    },
+                    "NumberTextDirMirHorVer": "0SRM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextSize": 350,
+                    "Origin": {
+                        "x": 3250,
+                        "y": 0
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "555556be0210",
+                    "type": "SymPin"
+                },
+                {
+                    "a": {
+                        "x": 2750,
+                        "y": 500
+                    },
+                    "b": {
+                        "x": 2750,
+                        "y": 0
+                    },
+                    "id": "5555569b09c0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "a": {
+                        "x": 2750,
+                        "y": 0
+                    },
+                    "b": {
+                        "x": 3250,
+                        "y": 0
+                    },
+                    "id": "555556858580",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "center": {
+                        "x": 2750,
+                        "y": 500
+                    },
+                    "id": "7fffbc004420",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "radius": 50,
+                    "type": "CircleFilled"
+                }
+            ],
+            "Created": 141809017,
+            "Edit enable": false,
+            "Origin": {
+                "x": -750,
+                "y": 500
+            },
+            "Parametrs": {
+                "category": "{uu.a.a.c.a"
+            },
+            "Title": "ams1117",
+            "id": "7fffec00a4d0",
+            "type": "Symbol"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "PinAssotiation": {
+                        "GND": "1",
+                        "Vin+": "3",
+                        "Vout+": "2",
+                        "Vout+2": "4"
+                    },
+                    "SymbolId": "Symbol\rams1117\rsalicad",
+                    "SymbolTitle": "ams1117 (salicad)",
+                    "id": "5555561c6dd0",
+                    "type": "Section"
+                },
+                {
+                    "Default": false,
+                    "PartId": "Part\rsot223\rsalicad",
+                    "PartTitle": "sot223 (salicad)",
+                    "id": "555556314a70",
+                    "type": "PartVariant"
+                }
+            ],
+            "Created": 141810017,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "Imax": "1A",
+                "Vin max": "12V",
+                "Vout": "5V",
+                "article": "",
+                "bom": "<value>",
+                "category": "{uu.a.a.c.a",
+                "device mark": "AMS1117 5",
+                "prefix": "DA",
+                "value": "AMS1117-5",
+                "www": "www.ams-semitech.com"
+            },
+            "Title": "ams1117",
+            "VariantFC": 4,
+            "VariantTab": [
+                "value",
+                "device mark",
+                "Vin max",
+                "Vout",
+                "AMS1117-1.2",
+                "AMS1117 1.2",
+                "8.2V",
+                "1.2V",
+                "AMS1117-1.5",
+                "AMS1117 1.5",
+                "8.5V",
+                "1.5V",
+                "AMS1117-1.8",
+                "AMS1117 1.8",
+                "8.8V",
+                "1.8V",
+                "AMS1117-2.5",
+                "AMS1117 2.5",
+                "9.5V",
+                "2.5V",
+                "AMS1117-2.85",
+                "AMS1117 2.8",
+                "9.85V",
+                "2.85V",
+                "AMS1117-3.3",
+                "AMS1117 3.3",
+                "10.3V",
+                "3.3V"
+            ],
+            "id": "5555569e5a90",
+            "type": "Comp"
+        }
+    ],
+    "Created": 0,
+    "Edit enable": true,
+    "Parametrs": {
+    },
+    "Title": "",
+    "id": "5555569c8bd0",
+    "type": "Project"
+}
