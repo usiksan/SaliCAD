@@ -84,7 +84,18 @@ class SdPItemPlate : public SdProjectItem
     //Return over pad circle radius
     int                    getPadOverRadius( const QString pinType ) const;
     //Append window for pin pad
-    void                   appendPadWindow( SdPolyWindowList &dest, SdPoint p, const QString pinType, int gap, const QTransform &t );
+    void                   appendPadWindow( SdPolyWindowList &dest, SdPoint p, const QString pinType, int gap, const QTransform &t ) const;
+
+    //!
+    //! \brief appendPadHoles Accum holes description into faceList
+    //! \param p              Position of pad
+    //! \param pinType        Pad description
+    //! \param model          Model which accumulate coord vertexes
+    //! \param faceList       Face list for holding holes (single face for single hole)
+    //! \param stratum        Stratum for layers
+    //! \param map            Map for holes conversion
+    //!
+    void                   appendPadHoles( SdPoint p, const QString pinType, Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const;
 
 
 

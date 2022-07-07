@@ -144,12 +144,14 @@ void SdGraph::draw3d(QOpenGLFunctions_2_0 *f) const
 //! \param model      Model which accumulate coord vertexes
 //! \param faceList   Face list for holding holes (single face for single hole)
 //! \param stratum    Stratum for layers
+//! \param map        Map for holes conversion
 //!
-void SdGraph::accumHoles(Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum) const
+void SdGraph::accumHoles(Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
   {
   Q_UNUSED(model)
   Q_UNUSED(faceList)
   Q_UNUSED(stratum)
+  Q_UNUSED(map)
   }
 
 

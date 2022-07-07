@@ -313,6 +313,8 @@ History
 #define minScale                     0.0001  //Minimum scale
 #define maxScale                     10000.0 //Maximum scale
 #define maxBusNumber                 1000    //Max net number in bus when enter bus mode
+#define pcb3dZLevel                  -0.05   //Vertical offset of pcb
+#define pcb3dThickness               1.2
 
 #define defNetNamePrefix             "XN"    //Default net name prefix
 

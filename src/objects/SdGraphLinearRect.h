@@ -70,6 +70,16 @@ class SdGraphLinearRect : public SdGraphLinear
     //! \param f      3d draw functions with predefined 3d context
     //!
     virtual void    draw3d( QOpenGLFunctions_2_0 *f ) const override;
+
+    //!
+    //! \brief accumHoles Accum holes description into faceList
+    //! \param model      Model which accumulate coord vertexes
+    //! \param faceList   Face list for holding holes (single face for single hole)
+    //! \param stratum    Stratum for layers
+    //! \param map        Map for holes conversion
+    //!
+    virtual void    accumHoles( Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const override;
+
     virtual int     behindCursor(SdPoint p) override;
     //Find snap point on object
     virtual void    snapPoint(SdSnapInfo *snap) override;

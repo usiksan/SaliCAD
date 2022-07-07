@@ -16,6 +16,7 @@ Description
 #include "SdGraphIdent.h"
 #include "SdGraphValue.h"
 #include "SdGraphSymImp.h"
+#include "SdGraphLinear.h"
 #include "SdConverterImplement.h"
 #include "SdPItemPart.h"
 #include "SdPItemSymbol.h"
@@ -140,6 +141,22 @@ void SdPartImpPin::accumWindows(SdPItemPlate *plate, SdPolyWindowList &dest, int
   if( (mStratum & stratum) && netName != getNetName() )
     //Stratum matched and net name other
     plate->appendPadWindow( dest, mPin->getPinOrigin(), mPin->getPinType(), gap, t );
+  }
+
+
+
+
+//!
+//! \brief accumHoles Accum holes description into faceList
+//! \param plate      Plate throught which pads supported
+//! \param model      Model which accumulate coord vertexes
+//! \param faceList   Face list for holding holes (single face for single hole)
+//! \param stratum    Stratum for layers
+//! \param map        Map for holes conversion
+//!
+void SdPartImpPin::accumHoles(SdPItemPlate *plate, Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+  {
+  plate->appendPadHoles( mPin->getPinOrigin(), mPin->getPinType(), model, faceList, stratum, map );
   }
 
 
@@ -342,7 +359,7 @@ void SdGraphPartImp::setLinkSection(int section, SdGraphSymImp *symImp)
 //Check if all section removed, then autodeleted
 void SdGraphPartImp::autoDelete(SdUndo *undo)
   {
-  for( const SdPartImpSection &sect : mSections )
+  for( const SdPartImpSection &sect : qAsConst(mSections) )
     if( sect.mSymImp != nullptr ) return;
   deleteObject( undo );
   }
@@ -374,7 +391,7 @@ void SdGraphPartImp::accumUsedPins(SdPadMap &map) const
 //Pin iterator
 void SdGraphPartImp::forEachPin(std::function<void(const SdPartImpPin &)> fun1)
   {
-  for( const SdPartImpPin &pin : mPins )
+  for( const SdPartImpPin &pin : qAsConst(mPins) )
     fun1( pin );
   }
 
@@ -393,7 +410,7 @@ QString SdGraphPartImp::getIdentPrefix() const
 bool SdGraphPartImp::compareRenumeration(const SdGraphPartImp *imp) const
   {
   SdPoint p1,p2;
-  int sheet1,sheet2;
+  int sheet1 = 0, sheet2 = 0;
   if( getLowerPosAndSheet( p1, sheet1 ) && imp->getLowerPosAndSheet(p2, sheet2) ) {
     if( sheet2 > sheet1 ) return true;
     if( sheet2 == sheet1 ) {
@@ -565,7 +582,7 @@ void SdGraphPartImp::drawWithoutPads(SdContext *cdx)
     });
 
   //Draw pins
-  for( const SdPartImpPin &pin : mPins )
+  for( const SdPartImpPin &pin : qAsConst(mPins) )
     pin.drawWithoutPad( cdx );
   }
 
@@ -581,7 +598,7 @@ void SdGraphPartImp::drawPads(SdContext *cdx, SdStratum stratum, const QString h
     imp.setPairedLayer( true );
   cdx->setConverter( &imp );
   //Draw pins
-  for( const SdPartImpPin &pin : mPins )
+  for( const SdPartImpPin &pin : qAsConst(mPins) )
     pin.drawPad( cdx, getPlate(), stratum, highlightNetName );
   }
 
@@ -592,7 +609,7 @@ void SdGraphPartImp::drawPads(SdContext *cdx, SdStratum stratum, const QString h
 //Draw rat net
 void SdGraphPartImp::drawRatNet(SdContext *cdx, SdPlateNetList &netList)
   {
-  for( const SdPartImpPin &pin : mPins )
+  for( const SdPartImpPin &pin : qAsConst(mPins) )
     if( pin.isConnected() ) {
       SdPoint p1 = pin.mPosition;
       SdPoint p2 = netList.nearestPoint( pin.getNetName(), p1 );
@@ -803,7 +820,7 @@ void SdGraphPartImp::json(const SdJsonReader &js)
   else {
     //Pin information table
     QJsonArray pins = js.object().value( QStringLiteral("Pins") ).toArray();
-    for( QJsonValue vpin : pins ) {
+    for( const QJsonValue &vpin : pins ) {
       SdPartImpPin pin;
       QString pinNumber = pin.fromJson( js.property(), vpin.toObject() );
       mPins.insert( pinNumber, pin );
@@ -1104,6 +1121,52 @@ void SdGraphPartImp::draw3d(QOpenGLFunctions_2_0 *f) const
 
   f->glPopMatrix();
   }
+
+
+
+
+
+
+
+//!
+//! \brief accumHoles Accum holes description into faceList
+//! \param model      Model which accumulate coord vertexes
+//! \param faceList   Face list for holding holes (single face for single hole)
+//! \param stratum    Stratum for layers
+//! \param map        Map for holes conversion
+//!
+void SdGraphPartImp::accumHoles(Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+  {
+  QMatrix4x4 mp(map);
+  mp.translate( mOrigin.xmm(), mOrigin.ymm(), 0 );
+  //Bottom side conversion
+  if( mProp.mSide.isBottom() )
+    mp.rotate( 180, 0, 1, 0 );
+  mp.rotate( mProp.mAngle.getDegree(), 0, 0, 1 );
+  mp.translate( -mPart->getOrigin().xmm(), -mPart->getOrigin().ymm(), 0 );
+
+  //At first we scan all throught holes
+  SdLayer *holeLayer = sdEnvir->getLayer( LID0_HOLE );
+  mPart->forEach( dctLines, [&model,&faceList,holeLayer,mp] ( SdObject *obj ) -> bool {
+    SdPtr<SdGraphLinear> linear(obj);
+    if( linear.isValid() && linear->isMatchLayer(holeLayer) )
+      //Append figure to hole list (lines not generate holes)
+      linear->accumHoles( model, faceList, stmThrough, mp );
+    return true;
+    });
+
+  //At second we scan all pins through holes
+  //Plate for pad association
+  SdPItemPlate *plate = getPlate();
+  for( const SdPartImpPin &pin : mPins )
+    pin.accumHoles( plate, model, faceList, stratum, mp );
+
+  }
+
+
+
+
+
 
 
 

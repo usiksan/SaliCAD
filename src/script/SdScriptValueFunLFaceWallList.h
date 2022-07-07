@@ -25,6 +25,7 @@ class SdScriptValueFunLFaceWallList : public SdScriptValueFunction
   {
   public:
     SdScriptValueFunLFaceWallList() :
+      //                                                      botFaceList              topFaceList             close
       SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_BOOL )
       {
       }

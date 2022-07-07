@@ -222,17 +222,7 @@ Sd3drFace Sd3dModel::faceFlatMatrix(const QList<float> &pairList, const QMatrix4
 
 Sd3drFace Sd3dModel::faceCircle(float radius, float stepDegree, const QMatrix4x4 &map)
   {
-  Sd3drFace region;
-  //Build circle with step degree
-  for( float angleDegree = 0; angleDegree < 360.0; angleDegree += stepDegree ) {
-    //Convert degree to radians
-    float angle = angleDegree * M_PI / 180.0;
-    //Build next corner
-    QVector3D v( sin(angle) * radius, cos(angle) * radius, 0 );
-    //Append corner to region
-    region.append( vertexAppend( map.map(v) )  );
-    }
-  return region;
+  return faceEllipse( radius, radius, stepDegree, map );
   }
 
 
@@ -243,9 +233,31 @@ Sd3drFace Sd3dModel::faceCircleSide(float radius, int sideCount, const QMatrix4x
   return faceCircle( radius, stepDegree, map );
   }
 
+
+
+
 Sd3drFace Sd3dModel::faceEllipse(float radiusx, float radiusy, float stepDegree, const QMatrix4x4 &map)
   {
+  Sd3drFace region;
+  //Build circle with step degree
+  for( float angleDegree = 0; angleDegree < 360.0; angleDegree += stepDegree ) {
+    //Convert degree to radians
+    float angle = angleDegree * M_PI / 180.0;
+    //Build next corner
+    QVector3D v( sin(angle) * radiusx, cos(angle) * radiusy, 0 );
+    //Append corner to region
+    region.append( vertexAppend( map.map(v) )  );
+    }
+  return region;
+  }
 
+
+
+
+Sd3drFace Sd3dModel::faceEllipseSide(float radiusx, float radiusy, int sideCount, const QMatrix4x4 &map)
+  {
+  float stepDegree = 360.0 / sideCount;
+  return faceEllipse( radiusx, radiusy, stepDegree, map );
   }
 
 
@@ -369,12 +381,32 @@ Sd3drFace Sd3dModel::faceDuplicate(const Sd3drFace &face, const QMatrix4x4 &map)
   return dest;
   }
 
+
+
+
 Sd3drFace Sd3dModel::faceDuplicateScale(const Sd3drFace &face, float scalex, float scaley, float shift)
   {
   QMatrix4x4 map;
   map.translate( 0, 0, shift );
   map.scale( scalex, scaley, 1.0 );
   return faceDuplicate( face, map );
+  }
+
+
+
+
+Sd3drFace Sd3dModel::faceDuplicateGrow(const Sd3drFace &face, float deltax, float deltay, const QMatrix4x4 &map)
+  {
+  //Calculate lenght (x) and width (y) of face
+  //Calculate dx and dy scale
+  if( face.count() < 3 )
+    return face;
+  //Calculate scale factor
+  float sizex,sizey;
+  faceSizeXY( face, sizex, sizey );
+  QMatrix4x4 mp(map);
+  mp.scale( (sizex + deltax) / sizex, (sizey + deltay) / sizey, 1.0 );
+  return faceDuplicate( face, mp );
   }
 
 

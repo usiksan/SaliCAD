@@ -240,6 +240,20 @@ void SdGraphLinearRect::draw3d(QOpenGLFunctions_2_0 *f) const
 
 
 
+void SdGraphLinearRect::accumHoles(Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+  {
+  Q_UNUSED(stratum)
+  QMatrix4x4 mat(map);
+  SdRect r(a,b);
+  QVector3D v( r.center() );
+  v /= 1000.0;
+  mat.translate( v );
+  faceList.append( model.faceRectangle( static_cast<float>(r.width()) / 1000.0, static_cast<float>(r.height()) / 1000.0, mat ) );
+  }
+
+
+
+
 int SdGraphLinearRect::behindCursor(SdPoint p)
   {
   if( isVisible() ) {

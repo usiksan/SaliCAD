@@ -184,16 +184,21 @@ void SdGraphLinearCircle::draw3d(QOpenGLFunctions_2_0 *f) const
 //! \param model      Model which accumulate coord vertexes
 //! \param faceList   Face list for holding holes (single face for single hole)
 //! \param stratum    Stratum for layers
+//! \param map        Map for holes conversion
 //!
-void SdGraphLinearCircle::accumHoles(Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum) const
+void SdGraphLinearCircle::accumHoles(Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
   {
   Q_UNUSED(stratum)
-  QMatrix4x4 mat;
+  QMatrix4x4 mat(map);
   QVector3D v(mCenter);
   v /= 1000.0;
   mat.translate( v );
   faceList.append( model.faceCircleSide( static_cast<float>(mRadius) / 1000.0, 32, mat ) );
   }
+
+
+
+
 
 
 

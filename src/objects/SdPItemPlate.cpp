@@ -158,9 +158,26 @@ int SdPItemPlate::getPadOverRadius(const QString pinType) const
 
 
 //Append window for pin pad
-void SdPItemPlate::appendPadWindow(SdPolyWindowList &dest, SdPoint p, const QString pinType, int gap, const QTransform &t)
+void SdPItemPlate::appendPadWindow(SdPolyWindowList &dest, SdPoint p, const QString pinType, int gap, const QTransform &t) const
   {
   getPad( pinType ).appendWindow( dest, p, gap, t );
+  }
+
+
+
+
+//!
+//! \brief appendPadHoles Accum holes description into faceList
+//! \param p              Position of pad
+//! \param pinType        Pad description
+//! \param model          Model which accumulate coord vertexes
+//! \param faceList       Face list for holding holes (single face for single hole)
+//! \param stratum        Stratum for layers
+//! \param map            Map for holes conversion
+//!
+void SdPItemPlate::appendPadHoles(SdPoint p, const QString pinType, Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+  {
+  getPad( pinType ).appendPadHoles( p, model, faceList, stratum, map );
   }
 
 
@@ -512,25 +529,33 @@ void SdPItemPlate::rebuild3dModel()
   for( auto p : qAsConst(pointList) ) {
     QVector3D v( p );
     v /= 1000.0;
-    v.setZ( -0.1 );
+    v.setZ( pcb3dZLevel );
     pcbTop.append( m3dModel.vertexAppend(v) );
     }
 
   //At second we scan all throught holes
   SdLayer *holeLayer = sdEnvir->getLayer( LID0_HOLE );
   Sd3drFaceList holes;
-  forEach( dctLines, [&holes,holeLayer,this] ( SdObject *obj ) -> bool {
-    SdPtr<SdGraphLinearCircle> circle(obj);
-    if( circle.isValid() && circle->isMatchLayer(holeLayer) ) {
-      //Convert circle to point region
-      circle->accumHoles( m3dModel, holes, stmThrough );
+  QMatrix4x4 map;
+  map.translate( 0, 0, pcb3dZLevel );
+  forEach( dctLines|dctPartImp, [&holes,holeLayer,this,map] ( SdObject *obj ) -> bool {
+    SdPtr<SdGraphLinear> linear(obj);
+    if( linear.isValid() && linear->isMatchLayer(holeLayer) )
+      //Append figure to hole list (lines not generate holes)
+      linear->accumHoles( m3dModel, holes, stmThrough, map );
+    else {
+      SdPtr<SdGraphPartImp> partImp(obj);
+      if( partImp.isValid() )
+        //Convert circle to point region
+        partImp->accumHoles( m3dModel, holes, stmThrough, map );
       }
     return true;
     });
 
+
   Sd3drBody pcbBody;
   QMatrix4x4 shift;
-  shift.translate( 0, 0, -1.2 );
+  shift.translate( 0, 0, -pcb3dThickness );
   Sd3drFace pcbBot = m3dModel.faceDuplicate( pcbTop, shift );
   pcbBody.faceAppend( m3dModel.faceListWall( pcbTop, pcbBot, true ) );
   pcbBody.colorSet( sdEnvir->getSysColor( sc3dPcb ) );
@@ -538,7 +563,7 @@ void SdPItemPlate::rebuild3dModel()
   Sd3drFaceList pcbTopList = m3dModel.faceListHolesXY( pcbTop, holes );
   Sd3drFaceList pcbBotList = m3dModel.faceListDuplicate( pcbTopList, shift );
   pcbBody.faceAppend( pcbTopList );
-  //pcbBody.faceAppend( pcbBotList );
+  pcbBody.faceAppend( pcbBotList );
   //pcbBody.faceAppend( holes );
 
   Sd3drInstance inst;

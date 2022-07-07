@@ -169,6 +169,35 @@ void SdPad::appendWindow(SdPolyWindowList &dest, SdPoint p, int gap, const QTran
 
 
 
+//!
+//! \brief appendPadHoles Accum holes description into faceList
+//! \param p              Position of pad
+//! \param model          Model which accumulate coord vertexes
+//! \param faceList       Face list for holding holes (single face for single hole)
+//! \param stratum        Stratum for layers
+//! \param map            Map for holes conversion
+//!
+void SdPad::appendPadHoles(SdPoint p, Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+  {
+  Q_UNUSED(stratum)
+  if( isThrough() ) {
+    if( mHoleLength > 0 ) {
+      //TODO Append holes generation for non-circle holes
+      }
+    else {
+      QMatrix4x4 mat(map);
+      p += SdPoint(mCenterX,mCenterY);
+      QVector3D v( p );
+      v /= 1000.0;
+      mat.translate(v);
+      faceList.append( model.faceCircleSide( static_cast<float>(mDiametrWidth >> 1) / 1000.0, 32, mat ) );
+      }
+    }
+  }
+
+
+
+
 
 //Return over pad circle radius
 int SdPad::overCircleRadius() const

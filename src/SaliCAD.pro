@@ -471,16 +471,21 @@ HEADERS  += \
     script/SdScriptValueFunColorFromString.h \
     script/SdScriptValueFunFaceBevelXY.h \
     script/SdScriptValueFunFaceCircle.h \
+    script/SdScriptValueFunFaceCircleSide.h \
     script/SdScriptValueFunFaceCurveXZ.h \
     script/SdScriptValueFunFaceDuplicate.h \
+    script/SdScriptValueFunFaceDuplicateGrow.h \
     script/SdScriptValueFunFaceDuplicateScale.h \
     script/SdScriptValueFunFaceDuplicateShift.h \
+    script/SdScriptValueFunFaceEllipse.h \
+    script/SdScriptValueFunFaceEllipseSide.h \
     script/SdScriptValueFunFaceEquidistantXY.h \
     script/SdScriptValueFunFaceFlat.h \
     script/SdScriptValueFunFaceFlatMatrix.h \
     script/SdScriptValueFunFacePart.h \
     script/SdScriptValueFunFaceRect.h \
     script/SdScriptValueFunFaceRectRound.h \
+    script/SdScriptValueFunFaceRectSide.h \
     script/SdScriptValueFunGraphCircle.h \
     script/SdScriptValueFunGraphLine.h \
     script/SdScriptValueFunGraphPin.h \

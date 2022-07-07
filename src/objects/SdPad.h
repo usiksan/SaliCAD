@@ -63,6 +63,16 @@ class SdPad
     //Append pad as window
     void        appendWindow( SdPolyWindowList &dest, SdPoint p, int gap, const QTransform &t) const;
 
+    //!
+    //! \brief appendPadHoles Accum holes description into faceList
+    //! \param p              Position of pad
+    //! \param model          Model which accumulate coord vertexes
+    //! \param faceList       Face list for holding holes (single face for single hole)
+    //! \param stratum        Stratum for layers
+    //! \param map            Map for holes conversion
+    //!
+    void        appendPadHoles( SdPoint p, Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const;
+
     //Return over pad circle radius
     int         overCircleRadius() const;
 

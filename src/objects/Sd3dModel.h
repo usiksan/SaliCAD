@@ -73,6 +73,10 @@ class Sd3dModel
 
     Sd3drFace     faceCircleSide( float radius, int sideCount, const QMatrix4x4 &map );
 
+    Sd3drFace     faceEllipse( float radiusx, float radiusy, float stepDegree, const QMatrix4x4 &map );
+
+    Sd3drFace     faceEllipseSide( float radiusx, float radiusy, int sideCount, const QMatrix4x4 &map );
+
     Sd3drFace     faceRectangle( float lenght, float width, const QMatrix4x4 &map );
 
     Sd3drFace     faceRectangleRound( float lenght, float width, float radius, float stepDegree, const QMatrix4x4 &map );
@@ -84,6 +88,8 @@ class Sd3dModel
     Sd3drFace     faceDuplicateShift( const Sd3drFace &face, float shift ) { return faceDuplicate( face, matrixShift( face, shift ) ); }
 
     Sd3drFace     faceDuplicateScale( const Sd3drFace &face, float scalex, float scaley, float shift );
+
+    Sd3drFace     faceDuplicateGrow( const Sd3drFace &face, float deltax, float deltay, const QMatrix4x4 &map );
 
     Sd3drFace     faceTrapezoidZ( const Sd3drFace &face, float height, float lessX, float lessY, float topShiftX, float topShiftY );
 

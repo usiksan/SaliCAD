@@ -91,8 +91,9 @@ class SdGraph : public SdObject
     //! \param model      Model which accumulate coord vertexes
     //! \param faceList   Face list for holding holes (single face for single hole)
     //! \param stratum    Stratum for layers
+    //! \param map        Map for holes conversion
     //!
-    virtual void   accumHoles( Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum ) const;
+    virtual void   accumHoles( Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const;
 
     //Get object state behind cursor
     //!

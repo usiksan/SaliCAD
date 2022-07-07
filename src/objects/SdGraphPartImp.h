@@ -55,6 +55,16 @@ struct SdPartImpPin {
   void        accumWindows(SdPItemPlate *plate, SdPolyWindowList &dest, int stratum, int gap, const QString netName, const QTransform &t ) const;
 
   //!
+  //! \brief accumHoles Accum holes description into faceList
+  //! \param plate      Plate throught which pads supported
+  //! \param model      Model which accumulate coord vertexes
+  //! \param faceList   Face list for holding holes (single face for single hole)
+  //! \param stratum    Stratum for layers
+  //! \param map        Map for holes conversion
+  //!
+  void        accumHoles( SdPItemPlate *plate, Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const;
+
+  //!
   //! \brief json Overloaded function to write object content into json writer
   //! \param js   Json writer
   //!
@@ -269,6 +279,15 @@ class SdGraphPartImp : public SdGraphTraced
     //! \param f      3d draw functions with predefined 3d context
     //!
     virtual void         draw3d( QOpenGLFunctions_2_0 *f ) const override;
+
+    //!
+    //! \brief accumHoles Accum holes description into faceList
+    //! \param model      Model which accumulate coord vertexes
+    //! \param faceList   Face list for holding holes (single face for single hole)
+    //! \param stratum    Stratum for layers
+    //! \param map        Map for holes conversion
+    //!
+    virtual void         accumHoles( Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const override;
 
   private:
     void                 updatePinsPositions();

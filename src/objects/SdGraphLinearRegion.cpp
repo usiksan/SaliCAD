@@ -183,6 +183,28 @@ void SdGraphLinearRegion::draw(SdContext *dc)
 
 
 
+//!
+//! \brief accumHoles Accum holes description into faceList
+//! \param model      Model which accumulate coord vertexes
+//! \param faceList   Face list for holding holes (single face for single hole)
+//! \param stratum    Stratum for layers
+//! \param map        Map for holes conversion
+//!
+void SdGraphLinearRegion::accumHoles(Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+  {
+  Q_UNUSED(stratum)
+  Sd3drFace face;
+  for( auto p : qAsConst(mList) ) {
+    QVector3D v( p );
+    v /= 1000.0;
+    face.append( model.vertexAppend(map.map(v)) );
+    }
+  faceList.append( face );
+  }
+
+
+
+
 //Find snap point on object
 void SdGraphLinearRegion::snapPoint(SdSnapInfo *snap)
   {
