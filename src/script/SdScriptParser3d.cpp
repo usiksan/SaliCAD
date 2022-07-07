@@ -30,6 +30,7 @@
 #include "SdScriptValueFunFaceCircle.h"
 #include "SdScriptValueFunFacePart.h"
 #include "SdScriptValueFunFaceFlat.h"
+#include "SdScriptValueFunFaceFlatMatrix.h"
 #include "SdScriptValueFunFaceDuplicate.h"
 #include "SdScriptValueFunFaceDuplicateShift.h"
 #include "SdScriptValueFunFaceCurveXZ.h"
@@ -39,8 +40,10 @@
 
 #include "SdScriptValueFunLFaceAppend.h"
 #include "SdScriptValueFunLFaceBox.h"
+#include "SdScriptValueFunLFaceBoxMatrix.h"
 #include "SdScriptValueFunLFaceBodyBeveled.h"
 #include "SdScriptValueFunLFaceCylinder.h"
+#include "SdScriptValueFunLFaceCylinderMatrix.h"
 #include "SdScriptValueFunLFaceCurveXZ.h"
 #include "SdScriptValueFunLFaceDuplicate.h"
 #include "SdScriptValueFunLFaceExtrude.h"
@@ -102,6 +105,7 @@ SdScriptParser3d::SdScriptParser3d(QTableWidget *tableWidget, Sd3dModel *model )
   addFunction( QStringLiteral("faceCircle"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceCircle(model); }, QStringLiteral("faceCircle( float radius, float stepDegree, matrix transfer )") );
   addFunction( QStringLiteral("facePart"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunFacePart(); }, QStringLiteral("facePart( face src, float indexList[] )") );
   addFunction( QStringLiteral("faceFlat"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceFlat(model); }, QStringLiteral("faceFlat( vertex firstPoint, float orientation, float offsetPairs[] ) ") );
+  addFunction( QStringLiteral("faceFlatMatrix"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceFlatMatrix(model); }, QStringLiteral("faceFlatMatrix( float offsetPairs[], matrix transfer ) ") );
   addFunction( QStringLiteral("faceDuplicate"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceDuplicate(model); }, QStringLiteral("faceDuplicate( face src, matrix transfer )") );
   addFunction( QStringLiteral("faceDuplicateShift"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceDuplicateShift(model); }, QStringLiteral("faceDuplicateShift( face src, float normalOffset )") );
   addFunction( QStringLiteral("faceCurveXZ"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunFaceCurveXZ(model); }, QStringLiteral("faceCurveXZ( face src, float radius, float angleSrc, float angleDst)") );
@@ -117,8 +121,10 @@ SdScriptParser3d::SdScriptParser3d(QTableWidget *tableWidget, Sd3dModel *model )
   addFunction( QStringLiteral("faceListAppend"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunLFaceAppend(); }, QStringLiteral("faceListAppend( faceList src1, faceList src2 )") );
   addFunction( QStringLiteral("faceListUnion"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunLFaceAppend(); }, QStringLiteral("faceListUnion( faceList src1, faceList src2 )") );
   addFunction( QStringLiteral("faceListBox"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunLFaceBox(model); }, QStringLiteral("faceListBox( float lenght, float width, float height )") );
+  addFunction( QStringLiteral("faceListBoxMatrix"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunLFaceBoxMatrix(model); }, QStringLiteral("faceListBoxMatrix( float lenght, float width, float height, matrix transfer )") );
   addFunction( QStringLiteral("faceListSimplify"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunLFaceSimplifyXY(model); }, QStringLiteral("faceListSimplify( face src )") );
   addFunction( QStringLiteral("faceListCylinder"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunLFaceCylinder(model); }, QStringLiteral("faceListCylinder( float radius, float height )") );
+  addFunction( QStringLiteral("faceListCylinderMatrix"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunLFaceCylinderMatrix(model); }, QStringLiteral("faceListCylinderMatrix( float radius, float height, matrix transfer )") );
   addFunction( QStringLiteral("faceListCurveXZ"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunLFaceCurveXZ(model); }, QStringLiteral("faceListCurveXY( face src, float radius, float angleSrc, float angleDst)") );
   addFunction( QStringLiteral("faceListPinCurveOne"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunLFacePinCurveOne(model); }, QStringLiteral("faceListPinCurveOne( face src, float firstLen, float middleLen, float radius, float angle, float sideCount )") );
   addFunction( QStringLiteral("faceListPinCurveTwo"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunLFacePinCurveTwo(model); }, QStringLiteral("faceListPinCurveTwo( face src, float firstLen, float middleLen, float lastLen, float radius, float angleFirst, float angleSecond, float sideCount )") );

@@ -61,6 +61,14 @@ class Sd3dModel
     //!
     Sd3drFace     faceFlat(int firstVertexIndex, const QList<float> &pairList, int orientation );
 
+    //!
+    //! \brief faceFlatMatrix Builds flat face from list of pairs float. First pair is source of path and next pairs are offsets from previous pair
+    //! \param pairList       List of pairs float. First pair is source of path and next pairs are offsets from previous pair
+    //! \param map            Transfer map
+    //! \return               Face
+    //!
+    Sd3drFace     faceFlatMatrix( const QList<float> &pairList, const QMatrix4x4 &map );
+
     Sd3drFace     faceCircle( float radius, float stepDegree, const QMatrix4x4 &map );
 
     Sd3drFace     faceCircleSide( float radius, int sideCount, const QMatrix4x4 &map );
@@ -147,10 +155,10 @@ class Sd3dModel
     //! \param lenght       Lenght of box (x)
     //! \param width        Width of box (y)
     //! \param height       Height of box (z)
-    //! \param color        Color faces of box
+    //! \param map          Mapping matrix for box
     //! \return             Box model
     //!
-    Sd3drFaceList faceListBox( float lenght, float width, float height );
+    Sd3drFaceList faceListBox(float lenght, float width, float height , const QMatrix4x4 &map);
 
     //!
     //! \brief faceListCylinder  Builds cylinder model from its size
@@ -158,7 +166,7 @@ class Sd3dModel
     //! \param height            Height of cylinder
     //! \return                  Cylinder model
     //!
-    Sd3drFaceList faceListCylinder( float radius, float height );
+    Sd3drFaceList faceListCylinder( float radius, float height, const QMatrix4x4 &map );
 
     //!
     //! \brief sd3dModelHexagon Builds hexagonal box body of part

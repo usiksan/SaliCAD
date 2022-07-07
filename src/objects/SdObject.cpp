@@ -271,7 +271,8 @@ SdObject *SdObject::jsonObjectFrom(const QJsonObject obj)
 QByteArray SdObject::jsonTextTo() const
   {
   //Return QByteArray representation
-  return svJsonObjectToByteArray( jsonObjectTo() );
+  return QJsonDocument( jsonObjectTo() ).toJson( QJsonDocument::Compact );
+  //return svJsonObjectToByteArray( jsonObjectTo() );
   }
 
 

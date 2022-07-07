@@ -166,6 +166,13 @@ Sd3drFace Sd3dModel::faceFromRegion(Sd3dRegion r)
 
 
 
+//!
+//! \brief faceFlat         Builds flat face from list of pairs floats
+//! \param firstVertexIndex First vertex index from which builds face
+//! \param pairList         Pair list as offset from current point begining from firstVertexIndex
+//! \param orientation      0 - xy, 1 - yz, 2 - xz
+//! \return
+//!
 Sd3drFace Sd3dModel::faceFlat( int firstVertexIndex, const QList<float> &pairList, int orientation)
   {
   Sd3drFace face;
@@ -182,6 +189,31 @@ Sd3drFace Sd3dModel::faceFlat( int firstVertexIndex, const QList<float> &pairLis
     QVector3D dv( pairList.at(i) * xy + pairList.at(i) * xz, pairList.at(i+1) * xy + pairList.at(i) * yz, pairList.at(i+1) * yz + pairList.at(i+1) * xz );
     v += dv;
     face.append( vertexAppend(v) );
+    }
+  return face;
+  }
+
+
+
+//!
+//! \brief faceFlatMatrix Builds flat face from list of pairs float. First pair is source of path and next pairs are offsets from previous pair
+//! \param pairList       List of pairs float. First pair is source of path and next pairs are offsets from previous pair
+//! \param map            Transfer map
+//! \return               Face
+//!
+Sd3drFace Sd3dModel::faceFlatMatrix(const QList<float> &pairList, const QMatrix4x4 &map)
+  {
+  Sd3drFace face;
+  int count = pairList.count() / 2;
+  if( count < 3 )
+    return face;
+  count <<= 1;
+  QVector3D v( pairList.at(0), pairList.at(1), 0 );
+  face.append( vertexAppend( map.map(v) ) );
+  for( int i = 2; i < count; i += 2 ) {
+    QVector3D dv( pairList.at(i), pairList.at(i+1), 0 );
+    v += dv;
+    face.append( vertexAppend( map.map(v) ) );
     }
   return face;
   }
@@ -209,6 +241,11 @@ Sd3drFace Sd3dModel::faceCircleSide(float radius, int sideCount, const QMatrix4x
   {
   float stepDegree = 360.0 / sideCount;
   return faceCircle( radius, stepDegree, map );
+  }
+
+Sd3drFace Sd3dModel::faceEllipse(float radiusx, float radiusy, float stepDegree, const QMatrix4x4 &map)
+  {
+
   }
 
 
@@ -843,12 +880,12 @@ Sd3drFaceList Sd3dModel::faceListBodyBeveled(float bodyLenght, float bodyWidth, 
 //! \param lenght       Lenght of box (x)
 //! \param width        Width of box (y)
 //! \param height       Height of box (z)
-//! \param color        Color faces of box
+//! \param map          Mapping matrix for box
 //! \return             Box model
 //!
-Sd3drFaceList Sd3dModel::faceListBox(float lenght, float width, float height)
+Sd3drFaceList Sd3dModel::faceListBox(float lenght, float width, float height, const QMatrix4x4 &map )
   {
-  return faceListExtrudeShift( faceRectangle( lenght, width, QMatrix4x4() ), height );
+  return faceListExtrudeShift( faceRectangle( lenght, width, map ), height );
   }
 
 
@@ -859,9 +896,9 @@ Sd3drFaceList Sd3dModel::faceListBox(float lenght, float width, float height)
 //! \param height            Height of cylinder
 //! \return                  Cylinder model
 //!
-Sd3drFaceList Sd3dModel::faceListCylinder(float radius, float height)
+Sd3drFaceList Sd3dModel::faceListCylinder(float radius, float height, const QMatrix4x4 &map)
   {
-  return faceListExtrudeShift( faceCircleSide( radius, qMax( 20, static_cast<int>(radius * 6.28) ), QMatrix4x4() ), height );
+  return faceListExtrudeShift( faceCircleSide( radius, qMax( 20, static_cast<int>(radius * 6.28) ), map ), height );
   }
 
 

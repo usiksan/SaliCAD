@@ -16,17 +16,17 @@ Description
 
   The function builds cylinder model from its size
 */
-#ifndef SDSCRIPTVALUEFUNLFACECYLINDER_H
-#define SDSCRIPTVALUEFUNLFACECYLINDER_H
+#ifndef SDSCRIPTVALUEFUNLFACECYLINDERMATRIX_H
+#define SDSCRIPTVALUEFUNLFACECYLINDERMATRIX_H
 
 #include "SdScriptValueFunction.h"
 
-class SdScriptValueFunLFaceCylinder : public SdScriptValueFunction
+class SdScriptValueFunLFaceCylinderMatrix : public SdScriptValueFunction
   {
     Sd3dModel *mModel;
   public:
-    SdScriptValueFunLFaceCylinder( Sd3dModel *model ) :
-      SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT ),
+    SdScriptValueFunLFaceCylinderMatrix( Sd3dModel *model ) :
+      SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_MATRIX ),
       mModel(model)
       {
 
@@ -36,8 +36,8 @@ class SdScriptValueFunLFaceCylinder : public SdScriptValueFunction
     //! \brief toFaceList Convert object to list of face each of which is list of vertex index
     //! \return           List of face each of which is list of vertex index
     //!
-    virtual Sd3drFaceList toFaceList() const override { return mModel->faceListCylinder( mParamList[0]->toFloat(), mParamList[1]->toFloat(), QMatrix4x4() ); }
+    virtual Sd3drFaceList toFaceList() const override { return mModel->faceListCylinder( mParamList[0]->toFloat(), mParamList[1]->toFloat(), mParamList[2]->toMatrix() ); }
 
   };
 
-#endif // SDSCRIPTVALUEFUNLFACECYLINDER_H
+#endif // SDSCRIPTVALUEFUNLFACECYLINDERMATRIX_H

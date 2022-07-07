@@ -16,17 +16,17 @@ Description
 
   The function builds box model from its size
 */
-#ifndef SDSCRIPTVALUEFUNLFACEBOX_H
-#define SDSCRIPTVALUEFUNLFACEBOX_H
+#ifndef SDSCRIPTVALUEFUNLFACEBOXMATRIX_H
+#define SDSCRIPTVALUEFUNLFACEBOXMATRIX_H
 
 #include "SdScriptValueFunction.h"
 
-class SdScriptValueFunLFaceBox : public SdScriptValueFunction
+class SdScriptValueFunLFaceBoxMatrix : public SdScriptValueFunction
   {
     Sd3dModel *mModel;
   public:
-    SdScriptValueFunLFaceBox( Sd3dModel *model ) :
-      SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT ),
+    SdScriptValueFunLFaceBoxMatrix( Sd3dModel *model ) :
+      SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_MATRIX ),
       mModel(model)
       {
       }
@@ -35,8 +35,8 @@ class SdScriptValueFunLFaceBox : public SdScriptValueFunction
     //! \brief toFaceList Convert object to list of face each of which is list of vertex index
     //! \return           List of face each of which is list of vertex index
     //!
-    virtual Sd3drFaceList toFaceList() const override { return mModel->faceListBox( mParamList[0]->toFloat(), mParamList[1]->toFloat(), mParamList[2]->toFloat(), QMatrix4x4() ); }
+    virtual Sd3drFaceList toFaceList() const override { return mModel->faceListBox( mParamList[0]->toFloat(), mParamList[1]->toFloat(), mParamList[2]->toFloat(), mParamList[3]->toMatrix() ); }
 
   };
 
-#endif // SDSCRIPTVALUEFUNLFACEBOX_H
+#endif // SDSCRIPTVALUEFUNLFACEBOXMATRIX_H

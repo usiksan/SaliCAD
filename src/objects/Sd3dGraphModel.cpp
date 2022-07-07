@@ -34,7 +34,7 @@ void Sd3dGraphModel::scriptSet(const QString script, SdUndo *undo)
 //!
 void Sd3dGraphModel::matrixMapInPlace(QMatrix4x4 matrix)
   {
-  mTransform *= matrix;
+  mTransform = matrix * mTransform;
   }
 
 

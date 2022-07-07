@@ -1076,7 +1076,7 @@ void SdWEditorGraph::cmEditDelete()
 void SdWEditorGraph::cmEditSelectAll()
   {
   //When selecting all set Select mode to current if it is not
-  if( mMode != mSelect )
+  if( mMode != mSelect && mSelect != nullptr )
     modeSet( mSelect );
   //Only for selecting mode
   if( mMode == mSelect && mSelect != nullptr )

@@ -76,7 +76,9 @@ Sd3dModeFaceColorPrivate::Sd3dModeFaceColorPrivate(QWidget *parent, SdPItemPart 
   //Create table widget
   mTable = new QTableWidget(parent);
   mTable->setColumnCount(2);
-  mTable->setVerticalHeaderLabels( { tr("Color code"), tr("Color") } );
+  mTable->setHorizontalHeaderLabels( { tr("Color code"), tr("Color") } );
+  QString toolTip0 = tr("Press to highlight colored part");
+  QString toolTip1 = tr("Press to select color for this part");
   if( mModel != nullptr ) {
     mColorList = mModel->bodyColorList();
     int faceCount = mColorList.count();
@@ -89,11 +91,13 @@ Sd3dModeFaceColorPrivate::Sd3dModeFaceColorPrivate(QWidget *parent, SdPItemPart 
 
       //In first column - face color name
       mTable->setItem( i, 0, new QTableWidgetItem(color.name()) );
+      mTable->item( i, 0 )->setToolTip( toolTip0 );
 
       //In second column - face color itself
       QTableWidgetItem *background = new QTableWidgetItem();
       background->setBackground( color );
       mTable->setItem( i, 1, background );
+      mTable->item( i, 1 )->setToolTip( toolTip1 );
       }
 
     connect( mTable, &QTableWidget::cellActivated, this, &Sd3dModeFaceColorPrivate::onCellActivated );
@@ -115,7 +119,7 @@ void Sd3dModeFaceColorPrivate::onCellActivated(int row, int column)
   {
   if( mFaceIndex >= 0 ) {
     //Restore previous color of face
-    mColorList[mFaceIndex].mAmbient = mFaceColor;
+    mColorList[mFaceIndex].mAmbient = mColorList[mFaceIndex].mDiffuse = mFaceColor;
     mFaceIndex = -1;
     }
   mFaceIndex = row;
@@ -126,14 +130,14 @@ void Sd3dModeFaceColorPrivate::onCellActivated(int row, int column)
     int r = 255 - mFaceColor.red();
     int g = 255 - mFaceColor.green();
     int b = 255 - mFaceColor.blue();
-    mColorList[mFaceIndex].mAmbient = QColor( r, g, b );
+    mColorList[mFaceIndex].mAmbient = mColorList[mFaceIndex].mDiffuse = QColor( r, g, b );
     }
   else {
     //Call dialog to select color
     QColor color = QColorDialog::getColor( QColor( mTable->item( row, 0 )->text() ), mView );
     if( color.isValid() ) {
       mFaceColor = color;
-      mColorList[mFaceIndex].mAmbient = mFaceColor;
+      mColorList[mFaceIndex].mAmbient = mColorList[mFaceIndex].mDiffuse = mFaceColor;
       mActive = true;
       mTable->item(row,0)->setText( color.name() );
       mTable->item(row,1)->setBackground( color );

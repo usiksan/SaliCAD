@@ -477,6 +477,7 @@ HEADERS  += \
     script/SdScriptValueFunFaceDuplicateShift.h \
     script/SdScriptValueFunFaceEquidistantXY.h \
     script/SdScriptValueFunFaceFlat.h \
+    script/SdScriptValueFunFaceFlatMatrix.h \
     script/SdScriptValueFunFacePart.h \
     script/SdScriptValueFunFaceRect.h \
     script/SdScriptValueFunFaceRectRound.h \
@@ -493,8 +494,10 @@ HEADERS  += \
     script/SdScriptValueFunLFaceAppend.h \
     script/SdScriptValueFunLFaceBodyBeveled.h \
     script/SdScriptValueFunLFaceBox.h \
+    script/SdScriptValueFunLFaceBoxMatrix.h \
     script/SdScriptValueFunLFaceCurveXZ.h \
     script/SdScriptValueFunLFaceCylinder.h \
+    script/SdScriptValueFunLFaceCylinderMatrix.h \
     script/SdScriptValueFunLFaceDuplicate.h \
     script/SdScriptValueFunLFaceExtrude.h \
     script/SdScriptValueFunLFaceExtrudeShift.h \
