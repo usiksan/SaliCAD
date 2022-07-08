@@ -22,7 +22,6 @@ Description
 #include "SdPoint.h"
 #include "SdGraph.h"
 #include "SdUtil.h"
-#include "SdTime2x.h"
 #include "Sd3dGraph.h"
 #include "SdJsonIO.h"
 

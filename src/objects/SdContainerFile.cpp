@@ -1,6 +1,6 @@
 #include "SdContainerFile.h"
 #include "SdUtil.h"
-#include "SdTime2x.h"
+#include "SvLib/SvTime2x.h"
 #include "SdJsonIO.h"
 
 #include <QSettings>
@@ -31,7 +31,7 @@ QString SdContainerFile::getUid() const
 
 QString SdContainerFile::getExtendTitle() const
   {
-  return QString("%1 [r%2] (%3)").arg(mTitle).arg( SdTime2x::toLocalString(getTime()) ).arg(mAuthor);
+  return QString("%1 [r%2] (%3)").arg(mTitle).arg( SvTime2x::toLocalString(getTime()) ).arg(mAuthor);
   }
 
 
@@ -143,7 +143,7 @@ QString SdContainerFile::getDefaultAuthor()
 //On call this function time setup after previous time
 void SdContainerFile::updateCreationTime()
   {
-  int time = SdTime2x::current();
+  int time = SvTime2x::current();
   if( time <= mCreateTime )
     mCreateTime++;
   else

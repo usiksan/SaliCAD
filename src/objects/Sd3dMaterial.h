@@ -15,7 +15,7 @@ Description
 #define SD3DMATERIAL_H
 
 
-#include "SvJsonIO.h"
+#include "SvLib/SvJsonIO.h"
 
 #include <QJsonObject>
 #include <QOpenGLFunctions_2_0>

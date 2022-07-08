@@ -1,7 +1,7 @@
 #ifndef SDJSONIO_H
 #define SDJSONIO_H
 
-#include "SvJsonIO.h"
+#include "SvLib/SvJsonIO.h"
 #include "SdObjectMap.h"
 #include "SdObject.h"
 #include "SdRect.h"

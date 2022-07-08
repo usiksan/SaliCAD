@@ -29,7 +29,7 @@ Description
 #ifndef SDRULEBLOCK_H
 #define SDRULEBLOCK_H
 
-#include "SvJsonIO.h"
+#include "SvLib/SvJsonIO.h"
 
 #include <QList>
 #include <QMap>

@@ -13,8 +13,9 @@ Description
 */
 #include "SdDOptionsPagePath.h"
 #include "objects/SdEnvir.h"
-#include "library/SvDir.h"
 #include "library/SdLibraryStorage.h"
+#include "SvLib/SvDir.h"
+
 #include <QSettings>
 #include <QVBoxLayout>
 #include <QGridLayout>

@@ -14,7 +14,7 @@ Description
 #include "SdEnvir.h"
 #include "SdLayer.h"
 #include "SdObjectFactory.h"
-#include "library/SvDir.h"
+#include "SvLib/SvDir.h"
 
 #include <QSettings>
 #include <QByteArray>

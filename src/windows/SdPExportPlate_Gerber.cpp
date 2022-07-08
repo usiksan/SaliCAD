@@ -18,7 +18,7 @@ Description
 #include "objects/SdContext.h"
 #include "objects/SdConverterOffset.h"
 #include "objects/SdEnvir.h"
-#include "library/SvDir.h"
+#include "SvLib/SvDir.h"
 
 #include <QPushButton>
 #include <QFile>

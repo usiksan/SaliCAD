@@ -49,7 +49,7 @@ SdPoint sdCheckRoadOnBarrierList(const SdBarrierList &barrierList, SdPoint p1, S
         //Take next edge of polygon
         QLineF df(b.mPolygon.at(i-1),b.mPolygon.at(i));
         //If lines intersected then update sf
-        if( df.intersect( sf, &d ) == QLineF::BoundedIntersection ) {
+        if( df.intersects( sf, &d ) == QLineF::BoundedIntersection ) {
           p2 = d.toPoint();
           sf.setP2( d );
           }
@@ -57,7 +57,7 @@ SdPoint sdCheckRoadOnBarrierList(const SdBarrierList &barrierList, SdPoint p1, S
       //Complete with final edge
       QLineF df(b.mPolygon.first(), b.mPolygon.last() );
       //If lines intersected then update sf
-      if( df.intersect( sf, &d ) == QLineF::BoundedIntersection ) {
+      if( df.intersects( sf, &d ) == QLineF::BoundedIntersection ) {
         p2 = d.toPoint();
         sf.setP2( d );
         }

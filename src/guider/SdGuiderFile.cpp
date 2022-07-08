@@ -161,7 +161,7 @@ QPixmap SdGuiderFile::build()
   //qDebug() << mCursorPos;
   int mouseIndex = 0;
   if( mMouseButtons & Qt::LeftButton ) mouseIndex |= 1;
-  if( mMouseButtons & Qt::MidButton ) mouseIndex |= 2;
+  if( mMouseButtons & Qt::MiddleButton ) mouseIndex |= 2;
   if( mMouseButtons & Qt::RightButton ) mouseIndex |= 4;
   //Draw mouse
   painter.drawImage( QPoint( mCursorPos.x() - 16, mCursorPos.y() - 4 ), mouse[mouseIndex] );

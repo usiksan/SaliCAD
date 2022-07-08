@@ -14,7 +14,6 @@ Description
 #include "SdConfig.h"
 #include "SdDGuiderPlayer.h"
 #include "SdWHelp.h"
-#include "library/SvDir.h"
 #include "objects/SdEnvir.h"
 
 #include <QTextToSpeech>

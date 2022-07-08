@@ -14,10 +14,10 @@ Description
 #include "SdConfig.h"
 #include "SdWHelp.h"
 #include "SdWMain.h"
-#include "library/SvDir.h"
 #include "SdDGuiderPlayer.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
+#include "SvLib/SvDir.h"
 
 #include <QUrl>
 #include <QSettings>

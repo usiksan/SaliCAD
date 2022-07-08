@@ -14,7 +14,7 @@ Description
 #ifndef SDPROPSTRING_H
 #define SDPROPSTRING_H
 
-#include "SvJsonIO.h"
+#include "SvLib/SvJsonIO.h"
 
 #include <QString>
 

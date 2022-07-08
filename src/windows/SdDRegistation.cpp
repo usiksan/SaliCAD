@@ -18,7 +18,7 @@ Description
 #include "SdDRegistation.h"
 #include "ui_SdDRegistation.h"
 #include "objects/SdObjectNetClient.h"
-#include "objects/SdTime2x.h"
+#include "SvLib/SvTime2x.h"
 #include "SdDHelp.h"
 
 #include <QSettings>
@@ -123,7 +123,7 @@ void SdDRegistation::cmGeneratePassword()
   static QRandomGenerator64 gen;
   static bool seed;
   if( !seed ) {
-    gen.seed( SdTime2x::current() );
+    gen.seed( SvTime2x::current() );
     seed = true;
     }
   qint64 key = gen.generate();

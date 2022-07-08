@@ -1,7 +1,7 @@
 #include "SdDOptionsPageLibrary.h"
 #include "SdDRegistation.h"
 #include "objects/SdEnvir.h"
-#include "library/SvDir.h"
+#include "SvLib/SvDir.h"
 #include "library/SdLibraryStorage.h"
 
 #include <QSettings>

@@ -16,7 +16,6 @@ Description
 #include "SdDProjectStore.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdProjectItem.h"
-#include "objects/SdTime2x.h"
 #include "SdDHelp.h"
 
 #include <QVBoxLayout>

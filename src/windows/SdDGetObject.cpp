@@ -28,7 +28,7 @@ Description
 #include "objects/SdSection.h"
 #include "objects/SdPartVariant.h"
 #include "objects/SdProject.h"
-#include "objects/SdTime2x.h"
+#include "SvLib/SvTime2x.h"
 #include "SdDHelp.h"
 
 #include <QHBoxLayout>
@@ -638,7 +638,7 @@ void SdDGetObject::fillTable()
     ui->mTable->setRowHeight( row, 20 );
     ui->mTable->setItem( row, 0, new QTableWidgetItem(hdr.mName) );
     ui->mTable->setItem( row, 1, new QTableWidgetItem(hdr.mAuthor) );
-    ui->mTable->setItem( row, 2, new QTableWidgetItem(SdTime2x::toLocalString(hdr.mTime)) );
+    ui->mTable->setItem( row, 2, new QTableWidgetItem(SvTime2x::toLocalString(hdr.mTime)) );
     //Fill fields
     for( int i = 3; i < ui->mTable->columnCount(); i++ ) {
       QString name = ui->mTable->horizontalHeaderItem(i)->text();

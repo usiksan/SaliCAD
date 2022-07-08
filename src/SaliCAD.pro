@@ -24,6 +24,8 @@ win64: LIBS += -lopengl32
 
 SOURCES += \
     SdMain.cpp \
+    SvLib/SvDir.cpp \
+    SvLib/SvTime2x.cpp \
     import/SdScaner.cpp \
     import/SdScanerMultyline.cpp \
     import/step/SdStepReader.cpp \
@@ -325,12 +327,10 @@ SOURCES += \
     modes/SdModeTRuller.cpp \
     windows/SdPropBarPartImp.cpp \
     windows/SdStringHistory.cpp \
-    objects/SdTime2x.cpp \
     modes/SdModeCPartPlace.cpp \
     modes/SdModeCFragment.cpp \
     windows/SdDProjectStore.cpp \
     windows/SdWHelp.cpp \
-    library/SvDir.cpp \
     windows/SdWEditorHelp.cpp \
     windows/SdDRowValue.cpp \
     windows/SdPMasterList.cpp \
@@ -394,6 +394,10 @@ SOURCES += \
 
 HEADERS  += \
     SdConfig.h \
+    SvLib/SvDir.h \
+    SvLib/SvJsonIO.h \
+    SvLib/SvSingleton.h \
+    SvLib/SvTime2x.h \
     import/SdScaner.h \
     import/SdScanerMultyline.h \
     import/step/SdStepReader.h \
@@ -807,12 +811,10 @@ HEADERS  += \
     modes/SdModeTRuller.h \
     windows/SdPropBarPartImp.h \
     windows/SdStringHistory.h \
-    objects/SdTime2x.h \
     modes/SdModeCPartPlace.h \
     modes/SdModeCFragment.h \
     windows/SdDProjectStore.h \
     windows/SdWHelp.h \
-    library/SvDir.h \
     windows/SdWEditorHelp.h \
     windows/SdDRowValue.h \
     windows/SdPMasterList.h \

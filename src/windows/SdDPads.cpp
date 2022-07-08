@@ -4,7 +4,7 @@
 #include "objects/SdGraphPartImp.h"
 #include "objects/SdUtil.h"
 #include "objects/SdObjectFactory.h"
-#include "objects/SdTime2x.h"
+#include "SvLib/SvTime2x.h"
 #include "objects/SdEnvir.h"
 #include "SdDGetObject.h"
 #include "SdDPadMaster.h"
@@ -233,7 +233,7 @@ void SdDPads::cmAssociationSave()
     hdr.mName = name;
     hdr.mType = assoc.getType();
     hdr.mAuthor = SdProjectItem::getDefaultAuthor();
-    hdr.mTime = SdTime2x::current();
+    hdr.mTime = SvTime2x::current();
     hdr.mClass = assoc.getClass();
     mUid = hdr.uid();
     //Store in library

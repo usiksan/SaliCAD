@@ -15,7 +15,7 @@ Description
 #ifndef SD3DREGION_H
 #define SD3DREGION_H
 
-#include "SvJsonIO.h"
+#include "SvLib/SvJsonIO.h"
 
 #include <QVector3D>
 #include <QList>

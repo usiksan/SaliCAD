@@ -31,8 +31,8 @@ Description
 #include "objects/SdGraphPartImp.h"
 #include "objects/SdGraphSymImp.h"
 #include "objects/SdProject.h"
-#include "library/SvDir.h"
 #include "objects/SdUtil.h"
+#include "SvLib/SvDir.h"
 
 #include <QPushButton>
 #include <QFile>

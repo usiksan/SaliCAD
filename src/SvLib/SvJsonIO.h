@@ -1,12 +1,14 @@
 /*
-  Project "Improving the visibility of json io"
+  Project "SvLib common library."
   Author
     Alexander Sibilev
+  Internet
+    www.salilab.com
+
   Description
+    Improving the visibility of json io
     There are two classes here: writer and reader. Signatures of calling read and write functions in
     both classes are completely identical, so calls can be copied to both the write and read functions.
-  www
-    www.salilab.com
   History
     05.02.2022 v1 Begin version support
     05.03.2022 v2 Append QPoint support
@@ -16,6 +18,7 @@
     24.05.2022 v6 Replace all const char* on QString which support both using with const char* and QString
     25.05.2022 v7 Append contains member in SvJsonWriter
     25.05.2022 v8 Refactor compound member-functions to support deriving writer and reader from base classes
+    08.07.2022 v9 Append possibility to select output format for json file intended or compressed
 */
 #ifndef SVJSONIO_H
 #define SVJSONIO_H
@@ -27,7 +30,7 @@
 #include <QMap>
 #include <QPoint>
 
-#define SV_JSON_VERSION 8
+#define SV_JSON_VERSION 9
 
 //!
 //! \brief The SvJsonWriter class Unificate json io class, through which json written
@@ -799,7 +802,8 @@ class SvJsonReader
     template<typename SvClass, typename SvJsonReaderImpl>
     void jsonLeavePtr( const SvJsonReaderImpl &sjs, const QString &key, SvClass *objPtr ) const
       {
-      SvJsonReaderImpl js( mObject.value( key ).toObject(), sjs );
+      QJsonObject obj = mObject.value( key ).toObject();
+      SvJsonReaderImpl js( obj, sjs );
       objPtr->json( js );
       }
 
@@ -858,9 +862,9 @@ class SvJsonReaderExt : public SvJsonReader
 using SvJsonReaderExtInt = SvJsonReaderExt<int>;
 
 
-inline QByteArray svJsonObjectToByteArray( const QJsonObject &obj )
+inline QByteArray svJsonObjectToByteArray( const QJsonObject &obj, QJsonDocument::JsonFormat format = QJsonDocument::Indented )
   {
-  return QJsonDocument(obj).toJson();
+  return QJsonDocument(obj).toJson( format );
   }
 
 

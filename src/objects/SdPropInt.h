@@ -15,7 +15,7 @@ Description
 #ifndef SDINTPROP_H
 #define SDINTPROP_H
 
-#include "SvJsonIO.h"
+#include "SvLib/SvJsonIO.h"
 
 class SdPropInt
   {

@@ -16,7 +16,7 @@ Description
 #define SDPOINT_H
 
 #include "SdPropAngle.h"
-#include "SvJsonIO.h"
+#include "SvLib/SvJsonIO.h"
 
 #include <QJsonObject>
 #include <QPoint>
