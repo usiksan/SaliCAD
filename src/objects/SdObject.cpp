@@ -271,8 +271,8 @@ SdObject *SdObject::jsonObjectFrom(const QJsonObject obj)
 QByteArray SdObject::jsonTextTo() const
   {
   //Return QByteArray representation
-  return QJsonDocument( jsonObjectTo() ).toJson( QJsonDocument::Compact );
-  //return svJsonObjectToByteArray( jsonObjectTo() );
+  //return QJsonDocument( jsonObjectTo() ).toJson( QJsonDocument::Compact );
+  return svJsonObjectToByteArray( jsonObjectTo() );
   }
 
 
@@ -327,7 +327,10 @@ bool SdObject::fileJsonSave(const QString fname) const
   {
   QFile file(fname);
   if( file.open(QIODevice::WriteOnly) ) {
-    file.write( jsonTextTo() );
+    if( fname.endsWith( QStringLiteral(SD_BASE_EXTENSION)) )
+      file.write( jsonTextTo() );
+    else
+      file.write( jsonCborCompressedTo() );
     file.close();
     return true;
     }
@@ -339,8 +342,11 @@ bool SdObject::fileJsonSave(const QString fname) const
 SdObject *SdObject::fileJsonLoad(const QString fname)
   {
   QFile file(fname);
-  if( file.open(QIODevice::ReadOnly) )
-    return jsonTextFrom( file.readAll() );
+  if( file.open(QIODevice::ReadOnly) ) {
+    if( fname.endsWith( QStringLiteral(SD_BASE_EXTENSION)) )
+      return jsonTextFrom( file.readAll() );
+    return jsonCborCompressedFrom( file.readAll() );
+    }
   return nullptr;
   }
 

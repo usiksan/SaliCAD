@@ -51,6 +51,14 @@ SdWEditor3d::SdWEditor3d(SdProjectItem *item, QWidget *parent) :
 
 
 
+
+void SdWEditor3d::setProjectItem(SdProjectItem *itm)
+  {
+  mView->setItem( mItem = itm );
+  }
+
+
+
 void SdWEditor3d::paintEvent(QPaintEvent *event)
   {
 //  qDebug() << "paint event 3d";

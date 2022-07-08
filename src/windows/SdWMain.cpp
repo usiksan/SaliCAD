@@ -773,7 +773,7 @@ void SdWMain::cmFileLoad()
 
 void SdWMain::cmFileOpen()
   {
-  QString title = QFileDialog::getOpenFileName(this, tr("Open project file"), QString(), tr("SaliCAD 3D Files (*%1)").arg(SD_BASE_EXTENSION) );
+  QString title = QFileDialog::getOpenFileName(this, tr("Open project file"), QString(), tr("SaliCAD Files (*%1 *%2)").arg(SD_BASE_EXTENSION, SD_BINARY_EXTENSION) );
 
   if( title.isEmpty() ) return;
 

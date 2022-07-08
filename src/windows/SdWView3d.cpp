@@ -62,6 +62,7 @@ SdWView3d::~SdWView3d()
 void SdWView3d::setItem(SdProjectItem *it)
   {
   mItem = it;
+  fitItem();
   update();
   }
 

@@ -15,6 +15,7 @@ Description
 #include "SdDGetObject.h"
 #include "ui_SdDGetObject.h"
 #include "SdWEditorGraphView.h"
+#include "SdWEditor3dPartView.h"
 #include "SdDNetClient.h"
 #include "SdDRowValue.h"
 #include "SdWCategoryList.h"
@@ -32,7 +33,11 @@ Description
 #include "SdDHelp.h"
 
 #include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QGroupBox>
+#include <QSplitter>
 #include <QMessageBox>
+#include <QDialogButtonBox>
 #include <QMap>
 #include <QSet>
 #include <QTimer>
@@ -186,56 +191,116 @@ bool                   SdDGetObject::mExpandVariant = false;    //Flag for find 
 SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   QDialog(parent),
   mComponent(nullptr),
-  mProject(nullptr),
-  ui(new Ui::SdDGetObject)
+  mProject(nullptr)
   {
   if( !prevDialogSize.isEmpty() )
     resize( prevDialogSize );
-  ui->setupUi(this);
   setWindowTitle( title );
 
-  //Prepare field box
-  ui->mFieldsBox->setColumnCount(3);
-  ui->mFieldsBox->setHorizontalHeaderLabels( {tr("Show"), tr("Field"), tr("Filtr") } );
-  ui->mFieldsBox->setColumnWidth( 0, prevFieldsBoxWidth[0] );
-  ui->mFieldsBox->setColumnWidth( 1, prevFieldsBoxWidth[1] );
-  ui->mFieldsBox->setColumnWidth( 2, prevFieldsBoxWidth[2] );
 
-  //Preset filter
-  ui->mNameFilter->setText( sdNameFilter );
+  //Build dialog
+  QVBoxLayout *centralLayout = new QVBoxLayout();
+  setLayout( centralLayout );
 
-  //Create symbol and part view
-  mSymbolView = new SdWEditorGraphView( ui->mSymbolBox );
-  QHBoxLayout *lay = new QHBoxLayout();
-  ui->mSymbolBox->setLayout( lay );
-  lay->addWidget( mSymbolView );
+  mSplitCentral = new QSplitter();
+  centralLayout->addWidget( mSplitCentral );
 
-  mPartView = new SdWEditorGraphView( ui->mPartBox );
-  lay = new QHBoxLayout();
-  ui->mPartBox->setLayout( lay );
-  lay->addWidget( mPartView );
-
-  connect( ui->mFindButton, &QPushButton::clicked, this, &SdDGetObject::find );
-  //connect( ui->mTable, &QTableWidget::cellActivated, this, &SdDGetObject::onSelectItem );
-  connect( ui->mTable, &QTableWidget::cellClicked, this, &SdDGetObject::onSelectItem );
-  connect( ui->mSections, &QListWidget::currentRowChanged, this, &SdDGetObject::onCurrentSection );
-  ui->mSections->setSortingEnabled(false);
-
-  connect( ui->mAccept, &QPushButton::clicked, this, &SdDGetObject::accept );
-  ui->mAccept->setDisabled(true);
-  connect( ui->mReject, &QPushButton::clicked, this, &SdDGetObject::reject );
-  connect( ui->mLoadFromCentral, &QPushButton::clicked, this, &SdDGetObject::onLoadFromCentral );
-  ui->mLoadFromCentral->setDisabled(true);
+  mDialogButtons = new QDialogButtonBox( QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help );
+  centralLayout->addWidget( mDialogButtons, 0, Qt::AlignRight );
 
   //Category
+  QWidget *category = new QWidget();
+  QVBoxLayout *vbox = new QVBoxLayout();
+  vbox->setMargin(0);
+  vbox->setContentsMargins( 0,0,0,0 );
+  vbox->addWidget( new QLabel( tr("Category") )  );
+  category->setLayout( vbox );
+  mSplitCentral->addWidget( category );
   mCategoryList = new SdWCategoryList(nullptr);
-  ui->mCategoryBox->addWidget( mCategoryList );
+  vbox->addWidget( mCategoryList );
   connect( mCategoryList, &SdWCategoryList::category, this, &SdDGetObject::onCategory );
 
+  QWidget *fieldsBox = new QWidget();
+  vbox = new QVBoxLayout();
+  QHBoxLayout *hbox = new QHBoxLayout();
+  hbox->addWidget( new QLabel( tr("Fields filter") )  );
+  QPushButton *but = new QPushButton( tr("Clear all") );
+  hbox->addWidget( but, 0, Qt::AlignRight );
+  connect( but, &QPushButton::clicked, this, &SdDGetObject::onClearFieldFiltr );
+  vbox->addLayout( hbox );
+  vbox->addWidget( mFieldsBox = new QTableWidget() );
+  fieldsBox->setLayout( vbox );
+  mSplitCentral->addWidget( fieldsBox );
 
-  connect( ui->mClearFields, &QPushButton::clicked, this, &SdDGetObject::onClearFieldFiltr );
+  //Prepare field box
+  mFieldsBox->setColumnCount(3);
+  mFieldsBox->setHorizontalHeaderLabels( {tr("Show"), tr("Field"), tr("Filtr") } );
+  mFieldsBox->setColumnWidth( 0, prevFieldsBoxWidth[0] );
+  mFieldsBox->setColumnWidth( 1, prevFieldsBoxWidth[1] );
+  mFieldsBox->setColumnWidth( 2, prevFieldsBoxWidth[2] );
 
-  ui->mNameFilter->setFocus();
+  //Find results table
+  mSplitFinder = new QSplitter(Qt::Vertical);
+  mSplitCentral->addWidget( mSplitFinder );
+
+  QWidget *finder = new QWidget();
+  vbox = new QVBoxLayout();
+  hbox = new QHBoxLayout();
+  hbox->addWidget( new QLabel( tr("Enter object to find:") )  );
+  hbox->addWidget( mNameFilter = new QLineEdit() );
+  hbox->addWidget( but = new QPushButton( tr("Find") ) );
+  connect( but, &QPushButton::clicked, this, &SdDGetObject::find );
+  but->setDefault(true);
+  vbox->addLayout( hbox );
+  vbox->addWidget( mTable = new QTableWidget() );
+  connect( mTable, &QTableWidget::cellClicked, this, &SdDGetObject::onSelectItem );
+  finder->setLayout( vbox );
+  mSplitFinder->addWidget( finder );
+  //Preset filter
+  mNameFilter->setText( sdNameFilter );
+
+  //Section selection and preview
+  mSplitView = new QSplitter();
+  mSplitFinder->addWidget( mSplitView );
+
+  QGroupBox *gbox = new QGroupBox( tr("Sections") );
+  hbox = new QHBoxLayout();
+  gbox->setLayout( hbox );
+  hbox->addWidget( mSections = new QListWidget() );
+  mSplitView->addWidget( gbox );
+  connect( mSections, &QListWidget::currentRowChanged, this, &SdDGetObject::onCurrentSection );
+  mSections->setSortingEnabled(false);
+
+  //Create symbol and part view
+  gbox = new QGroupBox( tr("Symbol") );
+  hbox = new QHBoxLayout();
+  gbox->setLayout( hbox );
+  hbox->addWidget( mSymbolView = new SdWEditorGraphView( gbox ) );
+  mSplitView->addWidget( gbox );
+
+  gbox = new QGroupBox( tr("Part") );
+  hbox = new QHBoxLayout();
+  gbox->setLayout( hbox );
+  hbox->addWidget( mPartView = new SdWEditorGraphView( gbox ) );
+  mSplitView->addWidget( gbox );
+
+  gbox = new QGroupBox( tr("3D") );
+  hbox = new QHBoxLayout();
+  gbox->setLayout( hbox );
+  hbox->addWidget( m3dView = new SdWEditor3d( nullptr, gbox ) );
+  mSplitView->addWidget( gbox );
+
+
+  mNameFilter->setFocus();
+
+  //Help system
+  connect( mDialogButtons->button(QDialogButtonBox::Help), &QPushButton::clicked, this, [this] () {
+    SdDHelp::help( QString("SdDGetObject.htm"), this );
+    } );
+
+  connect( mDialogButtons->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &SdDGetObject::accept );
+  mDialogButtons->button(QDialogButtonBox::Ok)->setDisabled(true);
+  connect( mDialogButtons->button(QDialogButtonBox::Cancel), &QPushButton::clicked, this, &SdDGetObject::reject );
 
   if( mSort == sort )
     QTimer::singleShot( 300, this, [this] () {
@@ -250,10 +315,10 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
       fillTable();
       //Select visual object
       if( activeRow < mHeaderList.count() ) {
-        ui->mTable->setCurrentCell( activeRow, 0 );
+        mTable->setCurrentCell( activeRow, 0 );
         onSelectItem( activeRow, 0 );
         //Select visual section
-        ui->mSections->setCurrentRow( activeSection );
+        mSections->setCurrentRow( activeSection );
         onCurrentSection( activeSection );
         }
       });
@@ -263,10 +328,6 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
     }
 
 
-  //Help system
-  connect( ui->mHelp, &QPushButton::clicked, this, [this] () {
-    SdDHelp::help( QString("SdDGetObject.htm"), this );
-    } );
   }
 
 
@@ -274,15 +335,14 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
 SdDGetObject::~SdDGetObject()
   {
   //Store width of param table
-  prevFieldsBoxWidth[0] = ui->mFieldsBox->columnWidth( 0 );
-  prevFieldsBoxWidth[1] = ui->mFieldsBox->columnWidth( 1 );
-  prevFieldsBoxWidth[2] = ui->mFieldsBox->columnWidth( 2 );
+  prevFieldsBoxWidth[0] = mFieldsBox->columnWidth( 0 );
+  prevFieldsBoxWidth[1] = mFieldsBox->columnWidth( 1 );
+  prevFieldsBoxWidth[2] = mFieldsBox->columnWidth( 2 );
 
   //Store width of column find result table
-  for( int i = 0; i < ui->mTable->columnCount(); i++ )
-    sdFieldWidth.insert( ui->mTable->horizontalHeaderItem(i)->text(), ui->mTable->columnWidth(i) );
+  for( int i = 0; i < mTable->columnCount(); i++ )
+    sdFieldWidth.insert( mTable->horizontalHeaderItem(i)->text(), mTable->columnWidth(i) );
 
-  delete ui;
   }
 
 
@@ -292,12 +352,12 @@ void SdDGetObject::find()
   {
   //Get fileds filtr
   sdFieldMaskList.clear();
-  for( int i = 0; i < ui->mFieldsBox->rowCount(); i++ )
-    if( !ui->mFieldsBox->item( i, 2 )->text().isEmpty() ) {
-      SdFieldMask mask( ui->mFieldsBox->item( i, 1 )->text(), ui->mFieldsBox->item( i, 2 )->text() );
+  for( int i = 0; i < mFieldsBox->rowCount(); i++ )
+    if( !mFieldsBox->item( i, 2 )->text().isEmpty() ) {
+      SdFieldMask mask( mFieldsBox->item( i, 1 )->text(), mFieldsBox->item( i, 2 )->text() );
       sdFieldMaskList.append( mask );
       }
-  sdNameFilter = ui->mNameFilter->text();
+  sdNameFilter = mNameFilter->text();
   QStringList list = sdNameFilter.split( QRegExp("\\s+"), Qt::SkipEmptyParts );
   mHeaderList.clear();
 
@@ -373,7 +433,7 @@ void SdDGetObject::onSelectItem(int row, int column)
 
   mParam = hdr.mParamTable;
 
-  ui->mSections->clear();
+  mSections->clear();
   mSectionIndex = -1;
 
   bool present = SdObjectFactory::isObjectPresent(hdr.uid());
@@ -384,12 +444,12 @@ void SdDGetObject::onSelectItem(int row, int column)
     //If sections present, then fill visual list with sections
     if( sectionCount ) {
       for( int i = 0; i < sectionCount; i++ ) {
-        ui->mSections->addItem( tr("Section %1: %2").arg(i+1).arg(mComponent->getSection(i)->getSymbolTitle()) );
+        mSections->addItem( tr("Section %1: %2").arg(i+1).arg(mComponent->getSection(i)->getSymbolTitle()) );
         //If any section not present in library then set present to false
         if( !SdObjectFactory::isObjectPresent(mComponent->getSection(i)->getSymbolId()) )
           present = false;
         }
-      ui->mSections->setCurrentRow(0);
+      mSections->setCurrentRow(0);
       mSectionIndex = 0;
       mSymbolView->setItemById( mComponent->getSectionSymbolId(0) );
       }
@@ -414,8 +474,9 @@ void SdDGetObject::onSelectItem(int row, int column)
     mPartView->setItem( nullptr, true );
     }
 
-  ui->mAccept->setEnabled( present );
-  ui->mLoadFromCentral->setDisabled( present );
+  m3dView->setProjectItem( mPartView->getProjectItem() );
+
+  mDialogButtons->button(QDialogButtonBox::Ok)->setEnabled( present );
   }
 
 
@@ -435,39 +496,6 @@ void SdDGetObject::onCurrentSection(int row)
 
 
 
-//Pressed button "Load from central repository"
-void SdDGetObject::onLoadFromCentral()
-  {
-  //Get current row
-  int row = ui->mTable->currentRow();
-  if( row >= 0 && row < mHeaderList.count() ) {
-    //Header of selected object
-    SdLibraryHeader hdr = mHeaderList.at(row);
-
-    //If selected object not present in library then load it
-    if( !SdObjectFactory::loadObject( hdr.uid(), hdr.mName, this ) )
-      return;
-    else
-      onSelectItem( row, 0 );
-
-    if( mComponent != nullptr ) {
-      int sections = mComponent->getSectionCount();
-      for( int s = 0; s < sections; s++ ) {
-        //If selected object not present in library then load it
-        if( !SdObjectFactory::loadObject( mComponent->getSectionSymbolId(s), mComponent->getSectionSymbolTitle(s), this ) )
-          return;
-        }
-
-      if( !SdObjectFactory::loadObject( mComponent->getPartId(), mComponent->getPartTitle(), this ) )
-        return;
-
-      onSelectItem( row, 0 );
-      }
-    }
-  }
-
-
-
 
 
 //When changed field filtr
@@ -477,11 +505,11 @@ void SdDGetObject::onFieldChanged(int row, int column )
     find();
   if( column == 0 ) {
     //Field show flag changed
-    bool show = ui->mFieldsBox->item( row, 0 )->checkState() == Qt::Checked;
+    bool show = mFieldsBox->item( row, 0 )->checkState() == Qt::Checked;
     if( show )
-      ui->mTable->showColumn( row + 3 );
+      mTable->showColumn( row + 3 );
     else
-      ui->mTable->hideColumn( row + 3 );
+      mTable->hideColumn( row + 3 );
     }
   }
 
@@ -492,9 +520,9 @@ void SdDGetObject::onFieldChanged(int row, int column )
 //Clear all fields filtr
 void SdDGetObject::onClearFieldFiltr()
   {
-  disconnect( ui->mFieldsBox, &QTableWidget::cellChanged, this, &SdDGetObject::onFieldChanged );
-  for( int i = 0; i < ui->mFieldsBox->rowCount(); i++ )
-    ui->mFieldsBox->item( i, 2 )->setText( QString() );
+  disconnect( mFieldsBox, &QTableWidget::cellChanged, this, &SdDGetObject::onFieldChanged );
+  for( int i = 0; i < mFieldsBox->rowCount(); i++ )
+    mFieldsBox->item( i, 2 )->setText( QString() );
   find();
   }
 
@@ -507,14 +535,14 @@ void SdDGetObject::onClearFieldFiltr()
 void SdDGetObject::onCategory(const QString str)
   {
   //Remove previous category
-  QStringList list = ui->mNameFilter->text().split( QChar(' '), Qt::SkipEmptyParts );
+  QStringList list = mNameFilter->text().split( QChar(' '), Qt::SkipEmptyParts );
   for( int i = 0; i < list.count(); i++ )
     if( list.at(i).startsWith( QStringLiteral(SD_CATEGORY_PREFIX) )   ) {
       list.removeAt(i);
       break;
       }
   //Append new category to current filter
-  ui->mNameFilter->setText( list.join( QChar(' ') ) + QChar(' ') + str );
+  mNameFilter->setText( list.join( QChar(' ') ) + QChar(' ') + str );
   find();
   }
 
@@ -526,13 +554,13 @@ void SdDGetObject::onCategory(const QString str)
 void SdDGetObject::changeEvent(QEvent *e)
   {
   QDialog::changeEvent(e);
-  switch (e->type()) {
-    case QEvent::LanguageChange:
-      ui->retranslateUi(this);
-      break;
-    default:
-      break;
-    }
+//  switch (e->type()) {
+//    case QEvent::LanguageChange:
+//      ui->retranslateUi(this);
+//      break;
+//    default:
+//      break;
+//    }
   }
 
 
@@ -548,6 +576,7 @@ void SdDGetObject::clearComponent()
     //Remove views
     mSymbolView->setItem( nullptr, false );
     mPartView->setItem( nullptr, false );
+    m3dView->setProjectItem( nullptr );
     //At now delete project itself
     delete mProject;
     }
@@ -560,7 +589,7 @@ void SdDGetObject::clearComponent()
 //Fill visual table with mHeaderList contents
 void SdDGetObject::fillTable()
   {
-  disconnect( ui->mFieldsBox, &QTableWidget::cellChanged, this, &SdDGetObject::onFieldChanged );
+  disconnect( mFieldsBox, &QTableWidget::cellChanged, this, &SdDGetObject::onFieldChanged );
 
   //Accumulate used fields
   QSet<QString> fields;
@@ -570,34 +599,34 @@ void SdDGetObject::fillTable()
     }
 
   //Leave in field list only fields with value
-  int row = ui->mFieldsBox->rowCount();
-  for( int i = 0; i < ui->mFieldsBox->rowCount(); )
-    if( ui->mFieldsBox->item( i, 2 )->text().isEmpty() && !fields.contains(ui->mFieldsBox->item( i, 1 )->text()) )
-      ui->mFieldsBox->removeRow(i);
+  //int row = mFieldsBox->rowCount();
+  for( int i = 0; i < mFieldsBox->rowCount(); )
+    if( mFieldsBox->item( i, 2 )->text().isEmpty() && !fields.contains(mFieldsBox->item( i, 1 )->text()) )
+      mFieldsBox->removeRow(i);
     else {
       //Remove from accumulated fields fields with value which already in table
-      fields.remove( ui->mFieldsBox->item( i, 1 )->text() );
+      fields.remove( mFieldsBox->item( i, 1 )->text() );
       i++;
       }
 
   //Leaved fields append from set to visual table
   for( auto iter = fields.cbegin(); iter != fields.cend(); iter++ ) {
-    row = ui->mFieldsBox->rowCount();
+    int row = mFieldsBox->rowCount();
     //Append new field row
-    ui->mFieldsBox->insertRow( row );
-    ui->mFieldsBox->setRowHeight( row, 20 );
+    mFieldsBox->insertRow( row );
+    mFieldsBox->setRowHeight( row, 20 );
     //Setup field params
     //Field visibility
     QTableWidgetItem *item = new QTableWidgetItem();
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsUserCheckable );
     item->setCheckState( Qt::Checked );
-    ui->mFieldsBox->setItem( row, 0, item );
+    mFieldsBox->setItem( row, 0, item );
     //Field name
-    ui->mFieldsBox->setItem( row, 1, new QTableWidgetItem( *iter ) );
+    mFieldsBox->setItem( row, 1, new QTableWidgetItem( *iter ) );
     //Disable edit
-    ui->mFieldsBox->item( row, 1 )->setFlags( Qt::ItemIsEnabled );
+    mFieldsBox->item( row, 1 )->setFlags( Qt::ItemIsEnabled );
     //Field mask
-    ui->mFieldsBox->setItem( row, 2, new QTableWidgetItem() );
+    mFieldsBox->setItem( row, 2, new QTableWidgetItem() );
 
     //Test if field in field width map
     if( !sdFieldWidth.contains( *iter ) ) {
@@ -607,42 +636,42 @@ void SdDGetObject::fillTable()
     }
 
   //Read current fields width
-  for( int i = 0; i < ui->mTable->columnCount(); i++ )
-    sdFieldWidth.insert( ui->mTable->horizontalHeaderItem(i)->text(), ui->mTable->columnWidth(i) );
+  for( int i = 0; i < mTable->columnCount(); i++ )
+    sdFieldWidth.insert( mTable->horizontalHeaderItem(i)->text(), mTable->columnWidth(i) );
 
 
-  ui->mTable->clear();
-  ui->mTable->setColumnCount(ui->mFieldsBox->rowCount() + 3);
+  mTable->clear();
+  mTable->setColumnCount( mFieldsBox->rowCount() + 3);
   //Fill column header
   //First three columns - are name, author and time of creation
-  ui->mTable->setHorizontalHeaderItem( 0, new QTableWidgetItem( tr("Name") ) );
-  ui->mTable->setHorizontalHeaderItem( 1, new QTableWidgetItem( tr("Author") ) );
-  ui->mTable->setHorizontalHeaderItem( 2, new QTableWidgetItem( tr("Created") ) );
+  mTable->setHorizontalHeaderItem( 0, new QTableWidgetItem( tr("Name") ) );
+  mTable->setHorizontalHeaderItem( 1, new QTableWidgetItem( tr("Author") ) );
+  mTable->setHorizontalHeaderItem( 2, new QTableWidgetItem( tr("Created") ) );
   //Other columns - fields
-  for( int i = 0; i < ui->mFieldsBox->rowCount(); i++ ) {
-    ui->mTable->setHorizontalHeaderItem(i+3, new QTableWidgetItem( ui->mFieldsBox->item(i,1)->text() ) );
-    if( ui->mFieldsBox->item( i, 0 )->checkState() != Qt::Checked )
-      ui->mTable->hideColumn( i + 3 );
+  for( int i = 0; i < mFieldsBox->rowCount(); i++ ) {
+    mTable->setHorizontalHeaderItem( i+3, new QTableWidgetItem( mFieldsBox->item(i,1)->text() ) );
+    if( mFieldsBox->item( i, 0 )->checkState() != Qt::Checked )
+      mTable->hideColumn( i + 3 );
     }
 
   //Setup column width
-  for( int i = 0; i < ui->mTable->columnCount(); i++ ) {
-    QString name = ui->mTable->horizontalHeaderItem(i)->text();
-    ui->mTable->setColumnWidth( i, sdFieldWidth.value(name, 100) );
+  for( int i = 0; i < mTable->columnCount(); i++ ) {
+    QString name = mTable->horizontalHeaderItem(i)->text();
+    mTable->setColumnWidth( i, sdFieldWidth.value(name, 100) );
     }
 
   //Fill table
-  ui->mTable->setRowCount( mHeaderList.count() );
-  row = 0;
+  mTable->setRowCount( mHeaderList.count() );
+  int row = 0;
   for( SdLibraryHeader &hdr : mHeaderList ) {
-    ui->mTable->setRowHeight( row, 20 );
-    ui->mTable->setItem( row, 0, new QTableWidgetItem(hdr.mName) );
-    ui->mTable->setItem( row, 1, new QTableWidgetItem(hdr.mAuthor) );
-    ui->mTable->setItem( row, 2, new QTableWidgetItem(SvTime2x::toLocalString(hdr.mTime)) );
+    mTable->setRowHeight( row, 20 );
+    mTable->setItem( row, 0, new QTableWidgetItem(hdr.mName) );
+    mTable->setItem( row, 1, new QTableWidgetItem(hdr.mAuthor) );
+    mTable->setItem( row, 2, new QTableWidgetItem(SvTime2x::toLocalString(hdr.mTime)) );
     //Fill fields
-    for( int i = 3; i < ui->mTable->columnCount(); i++ ) {
-      QString name = ui->mTable->horizontalHeaderItem(i)->text();
-      ui->mTable->setItem( row, i, new QTableWidgetItem(hdr.mParamTable.value(name)) );
+    for( int i = 3; i < mTable->columnCount(); i++ ) {
+      QString name = mTable->horizontalHeaderItem(i)->text();
+      mTable->setItem( row, i, new QTableWidgetItem(hdr.mParamTable.value(name)) );
       }
     row++;
     }
@@ -650,10 +679,11 @@ void SdDGetObject::fillTable()
   clearComponent();
   mSymbolView->setItem(nullptr,true);
   mPartView->setItem(nullptr,true);
-  ui->mSections->clear();
+  m3dView->setProjectItem(nullptr);
+  mSections->clear();
   mSectionIndex = -1;
 
-  connect( ui->mFieldsBox, &QTableWidget::cellChanged, this, &SdDGetObject::onFieldChanged );
+  connect( mFieldsBox, &QTableWidget::cellChanged, this, &SdDGetObject::onFieldChanged );
   }
 
 
@@ -666,7 +696,7 @@ void SdDGetObject::fillTable()
 void SdDGetObject::accept()
   {
   //Get current row
-  int row = ui->mTable->currentRow();
+  int row = mTable->currentRow();
   if( row >= 0 && row < mHeaderList.count() ) {
     //Extract name, author and id
     SdLibraryHeader hdr = mHeaderList.at(row);
@@ -678,9 +708,9 @@ void SdDGetObject::accept()
       mCompUid.clear();
     //Save current dialog state
     prevDialogSize = size();
-    prevFieldsBoxWidth[0] = ui->mFieldsBox->columnWidth(0);
-    prevFieldsBoxWidth[1] = ui->mFieldsBox->columnWidth(1);
-    prevFieldsBoxWidth[2] = ui->mFieldsBox->columnWidth(2);
+    prevFieldsBoxWidth[0] = mFieldsBox->columnWidth(0);
+    prevFieldsBoxWidth[1] = mFieldsBox->columnWidth(1);
+    prevFieldsBoxWidth[2] = mFieldsBox->columnWidth(2);
     QDialog::accept();
     }
   else QMessageBox::warning( this, tr("Error"), tr("You must select element or press Cancel") );

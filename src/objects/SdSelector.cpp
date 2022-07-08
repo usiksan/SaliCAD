@@ -141,7 +141,7 @@ void SdSelector::putToClipboard( const SdProject *project, double scale )
   js.jsonLeavePtr( js, QStringLiteral("Selector"), this );
 
   //Convert to byteArray
-  QByteArray array = QCborValue::fromJsonValue( QJsonValue(js.object()) ).toCbor();
+  QByteArray array = svJsonObjectToCbor( js.object() );
 
   //Prepare mime data
   QMimeData *mime = new QMimeData();

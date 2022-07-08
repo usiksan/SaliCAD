@@ -31,6 +31,7 @@ class SdWEditor3d : public SdWEditor
   public:
     SdWEditor3d( SdProjectItem *item, QWidget *parent = nullptr );
 
+    void setProjectItem( SdProjectItem *itm );
 
     // QWidget interface
   protected:

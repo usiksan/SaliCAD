@@ -232,6 +232,9 @@ History
 #define SD_BASE_EXTENSION            ".salicad"
 #define SD_DEFAULT_FILE_NAME         "default"
 
+//Binary project naming definition
+#define SD_BINARY_EXTENSION          ".salicadx"
+
 //Layer list naming definition
 #define SD_LAYER_LIST_EXTENSION      ".layersSet"
 

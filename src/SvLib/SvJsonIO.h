@@ -26,6 +26,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QCborValue>
 #include <QColor>
 #include <QMap>
 #include <QPoint>
@@ -410,7 +411,6 @@ class SvJsonWriter
       {
       val.json( key, *this );
       }
-
   };
 
 
@@ -872,5 +872,30 @@ inline QJsonObject svJsonObjectFromByteArray( const QByteArray &ar )
   {
   return QJsonDocument::fromJson(ar).object();
   }
+
+
+//!
+//! \brief toCbor Convert json object to cbor binary format
+//! \return       CBOR binary format
+//!
+inline QByteArray svJsonObjectToCbor( const QJsonObject &obj )
+  {
+  return QCborValue::fromJsonValue( QJsonValue( obj ) ).toCbor();
+  }
+
+
+//!
+//! \brief svJsonObjectFromCbor Convert from cbor binary format to json object
+//! \param ar                   CBOR binary format
+//! \return                     JSON object
+//!
+inline QJsonObject svJsonObjectFromCbor( const QByteArray &ar )
+  {
+  return QCborValue::fromCbor( ar ).toJsonValue().toObject();
+  }
+
+
+
+
 
 #endif // SVJSONIO_H

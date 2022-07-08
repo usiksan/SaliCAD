@@ -140,13 +140,13 @@ bool SdWProjectTree::cmFileSave()
 
 bool SdWProjectTree::cmFileSaveAs()
   {
-  QString title = QFileDialog::getSaveFileName(this, tr("Save project file"), QString(), tr("SaliCAD Files (*%1)").arg(SD_BASE_EXTENSION) );
+  QString title = QFileDialog::getSaveFileName(this, tr("Save project file"), QString(), tr("SaliCAD binary Files (*%1);; SaliCAD text Files (%2)").arg(SD_BINARY_EXTENSION, SD_BASE_EXTENSION) );
 
   if( title.isEmpty() ) return false;
 
   mFileName = title;
-  if( !mFileName.endsWith(SD_BASE_EXTENSION) )
-    mFileName.append( SD_BASE_EXTENSION );
+  if( !mFileName.endsWith(SD_BASE_EXTENSION) && !mFileName.endsWith(SD_BINARY_EXTENSION) )
+    mFileName.append( SD_BINARY_EXTENSION );
 
   SdWCommand::addToPreviousMenu( mFileName );
   SdPulsar::sdPulsar->emitRenameProject( mProject, fileName() );

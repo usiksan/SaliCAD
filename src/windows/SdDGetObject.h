@@ -18,17 +18,19 @@ Description
 #include "library/SdLibraryHeader.h"
 
 #include <QDialog>
+#include <QSplitter>
 
 class SdObject;
 class SdProjectItem;
 class SdPItemComponent;
 class SdWEditorGraphView;
+class SdWEditor3d;
 class SdWCategoryList;
 class SdProject;
-
-namespace Ui {
-class SdDGetObject;
-}
+class QDialogButtonBox;
+class QTableWidget;
+class QLineEdit;
+class QListWidget;
 
 
 
@@ -36,11 +38,21 @@ class SdDGetObject : public QDialog
   {
     Q_OBJECT
 
+    QSplitter             *mSplitCentral;  //!< Central splitter
+    QSplitter             *mSplitFinder;   //!< Find table vertical splitter
+    QSplitter             *mSplitView;     //!< Preview windows splitter
+    QDialogButtonBox      *mDialogButtons; //!< Standard dialog buttons
+
     SdWEditorGraphView    *mSymbolView;   //Widget for schematic preview
     SdWEditorGraphView    *mPartView;     //Widget for part preview
+    SdWEditor3d           *m3dView;         //!< 3d part view window
     SdPItemComponent      *mComponent;    //Component if selected
     SdProject             *mProject;      //Project if selected
     SdWCategoryList       *mCategoryList; //Hierarchy presentation of category tree
+    QTableWidget          *mFieldsBox;      //!< Filter fields table
+    QLineEdit             *mNameFilter;     //!< Name filter edit line
+    QTableWidget          *mTable;          //!< Table with find results
+    QListWidget           *mSections;       //!< Sections list
 
     static QString                mObjName;      //Object name
     static QString                mObjUid;       //Unical object id
@@ -65,9 +77,6 @@ class SdDGetObject : public QDialog
     //On change component section selection
     void onCurrentSection( int row );
 
-    //Pressed button "Load from central repository"
-    void onLoadFromCentral();
-
     //When changed field filtr
     void onFieldChanged( int, int );
 
@@ -81,7 +90,6 @@ class SdDGetObject : public QDialog
     void changeEvent(QEvent *e) override;
 
   private:
-    Ui::SdDGetObject *ui;
     void clearComponent();
     void clearProject();
 
