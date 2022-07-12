@@ -2,7 +2,7 @@
 #define IGESPARAMETERDATA_H
 
 #include <QByteArray>
-#include <QList>
+#include <QMap>
 
 class IgesParameterData
   {
@@ -13,6 +13,6 @@ class IgesParameterData
     void appendData( const QByteArray &ar ) { mData += ar; }
   };
 
-using IgesParameterDataList = QList<IgesParameterData>;
+using IgesParameterDataMap = QMap<int,QByteArray>;
 
 #endif // IGESPARAMETERDATA_H

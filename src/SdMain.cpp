@@ -19,7 +19,8 @@ Description
 #include "objects/SdProp.h"
 #include "objects/SdObjectFactory.h"
 #include "objects/SdObjectNetClient.h"
-#include "objects/Sd3dModel.h"
+//#include "objects/Sd3dModel.h"
+#include "import/iges/IgesReader.h"
 #include <QApplication>
 #include <QSettings>
 #include <QTranslator>
@@ -30,13 +31,17 @@ Description
 
 int main(int argc, char *argv[])
   {
-  Sd3dModel model;
-  Sd3drFace face = model.faceFlat( model.vertexAppend( QVector3D(0,0,0) ), { 0,10, 30,0, 0,10, 40,0, 0,-10, 30,0, 0,-10 }, 0 );
-  Sd3drFace hole1 = model.faceFlat( model.vertexAppend( QVector3D(2,2,0) ), { 0,1, 1,0, 0,-1 }, 0 );
-  Sd3drFace hole2 = model.faceFlat( model.vertexAppend( QVector3D(2,4,0) ), { 0,1, 1,0, 0,-1 }, 0 );
-  qDebug() << face;
-  //qDebug() << model.faceEqudistanteXY( face, 0.1, QMatrix4x4() );
-  qDebug() << model.faceListHolesXY( face, { hole1, hole2 } );
+//  Sd3dModel model;
+//  Sd3drFace face = model.faceFlat( model.vertexAppend( QVector3D(0,0,0) ), { 0,10, 30,0, 0,10, 40,0, 0,-10, 30,0, 0,-10 }, 0 );
+//  Sd3drFace hole1 = model.faceFlat( model.vertexAppend( QVector3D(2,2,0) ), { 0,1, 1,0, 0,-1 }, 0 );
+//  Sd3drFace hole2 = model.faceFlat( model.vertexAppend( QVector3D(2,4,0) ), { 0,1, 1,0, 0,-1 }, 0 );
+//  qDebug() << face;
+//  //qDebug() << model.faceEqudistanteXY( face, 0.1, QMatrix4x4() );
+//  qDebug() << model.faceListHolesXY( face, { hole1, hole2 } );
+
+  IgesReader reader;
+  reader.scanFile( QStringLiteral("/home/asibilev/work/vrml/val.igs") );
+  reader.parse();
 
 
   //Setups for settings

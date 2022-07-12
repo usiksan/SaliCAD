@@ -9,19 +9,25 @@ IgesReader::IgesReader()
 
 bool IgesReader::scanFile(const QString &fname)
   {
+  //Open file
   mFile.setFileName( fname );
   if( mFile.open(QIODevice::ReadOnly) ) {
+    //Read next line
     while( nextLine() ) {
+
       //Test if it is termination
-      if( mLine.at(73) == 'T' )
+      if( mLine.at(72) == 'T' )
         break;
 
+      //Scan current line
       if( !scanLine() )
         return false;
 
       }
+    //Successfull scan complete
     return true;
     }
+  //Fail to open file
   return false;
   }
 
@@ -30,8 +36,35 @@ bool IgesReader::scanFile(const QString &fname)
 
 bool IgesReader::parse()
   {
-  for( int i = 0; i < mDirectoryEntryList.count(); i++ )
-    mDirectoryEntryList
+  for( auto it = mDirectoryEntryMap.begin(); it != mDirectoryEntryMap.end(); it++ )
+    if( !it.value()->parse( this ) ) return false;
+  return true;
+  }
+
+
+
+void IgesReader::setLine(const QByteArray &line)
+  {
+  mLine = line;
+  mIndex = 0;
+  }
+
+bool IgesReader::paramInt(int &val)
+  {
+  if( !scanInt( val, 0, false ) ) return false;
+  if( mLine.at(mIndex) != mParametrDelimiter && mLine.at(mIndex) != mRecordDelimiter ) return false;
+  mIndex++;
+  return true;
+  }
+
+
+
+bool IgesReader::paramReal(double &val)
+  {
+  if( !scanReal( val, 0.0, false ) ) return false;
+  if( mLine.at(mIndex) != mParametrDelimiter && mLine.at(mIndex) != mRecordDelimiter ) return false;
+  mIndex++;
+  return true;
   }
 
 
@@ -39,19 +72,16 @@ bool IgesReader::parse()
 
 bool IgesReader::nextLine()
   {
-  //If in file no any line we stop
-  if( !mFile.canReadLine() )
-    return false;
-
   //Get next line
   mLine = mFile.readLine();
 
   //If line size not equal 80 characters we stop
-  if( mLine.size() != 80 )
+  if( mLine.size() != 81 )
     return false;
 
   //Decode line index
-  mLineIndex = mLine.mid( 74 ).simplified().toInt();
+  mLineIndex = mLine.mid( 73 ).simplified().toInt();
+  mIndex = 0;
 
   return true;
   }
@@ -61,7 +91,7 @@ bool IgesReader::nextLine()
 bool IgesReader::scanLine()
   {
   //Scan different sections
-  switch( mLine.at(73) ) {
+  switch( mLine.at(72) ) {
     case 'S' : return scanStart();
     case 'G' : return scanGlobal();
     case 'D' : return scanDirectoryEntry();
@@ -72,11 +102,11 @@ bool IgesReader::scanLine()
 
 
 
-bool IgesReader::scanReal(double &val, double defVal, bool thereDef, int limitIndex)
+bool IgesReader::scanReal(double &val, double defVal, bool thereDef)
   {
   bool ok = true;
   QByteArray ar;
-  while( mIndex <= limitIndex && mLine.at(mIndex) != mParametrDelimiter )
+  while( mIndex < mLine.count() && mLine.at(mIndex) != mParametrDelimiter && mLine.at(mIndex) != mRecordDelimiter )
     ar.append( mLine.at(mIndex++) );
   if( ar.isEmpty() ) {
     if( !thereDef ) return false;
@@ -93,19 +123,9 @@ bool IgesReader::scanReal(double &val, double defVal, bool thereDef, int limitIn
 
 
 
-//bool IgesReader::scanString(QString &dest, int limitIndex)
-//  {
-//  QByteArray ar;
-//  if( !scanChars( ar, limitIndex ) )
-//    return false;
-//  dest = QString::fromLatin1( ar );
-//  return true;
-//  }
 
 
-
-
-bool IgesReader::scanChars(QByteArray &dest, const QByteArray &def, bool thereDef, int limitIndex)
+bool IgesReader::scanChars(QByteArray &dest, const QByteArray &def, bool thereDef)
   {
   dest.clear();
   //Test for default string (i.e.empty)
@@ -121,10 +141,7 @@ bool IgesReader::scanChars(QByteArray &dest, const QByteArray &def, bool thereDe
     mIndex += countLastPos + 1;
     dest.reserve( count );
     for( int i = 0; i < count; i++ ) {
-      if( mIndex > limitIndex ) {
-        if( !nextLine() ) return false;
-        mIndex = 0;
-        }
+      if( mIndex >= mLine.count() ) return false;
       dest.append( mLine.at(mIndex++) );
       }
     }
@@ -135,29 +152,34 @@ bool IgesReader::scanChars(QByteArray &dest, const QByteArray &def, bool thereDe
 
 
 
-bool IgesReader::scanParametrDelimiter( int limitIndex )
+
+bool IgesReader::scanParametrDelimiter()
   {
-  if( mIndex > limitIndex ) return nextLine();
   return mLine.at(mIndex++) == mParametrDelimiter;
   }
 
-bool IgesReader::scanRecordDelimiter(int limitIndex)
+
+
+bool IgesReader::scanRecordDelimiter()
   {
-  if( mIndex > limitIndex ) return nextLine();
   return mLine.at(mIndex++) == mRecordDelimiter;
   }
 
 
 
 
-bool IgesReader::scanInt(int &val, int defVal, bool thereDef, int limitIndex)
+bool IgesReader::scanInt(int &val, int defVal, bool thereDef)
   {
   bool ok = true;
   QByteArray ar;
+  //Prefix blank
+  while( mIndex < mLine.count() && mLine.at(mIndex) == ' ' ) mIndex++;
   if( mLine.at(mIndex) == '+' || mLine.at(mIndex) == '-' )
     ar.append( mLine.at(mIndex++) );
-  while( mIndex < limitIndex && QChar(mLine.at(mIndex)).isDigit() )
+  while( mIndex < mLine.count() && mLine.at(mIndex) == ' ' ) mIndex++;
+  while( mIndex < mLine.count() && QChar(mLine.at(mIndex)).isDigit() )
     ar.append( mLine.at(mIndex++) );
+  while( mIndex < mLine.count() && mLine.at(mIndex) == ' ' ) mIndex++;
   if( ar.isEmpty() ) {
     if( !thereDef ) return false;
     val = defVal;
@@ -181,6 +203,26 @@ bool IgesReader::scanStart()
 bool IgesReader::scanGlobal()
   {
   QByteArray chars;
+
+  //1 Get parametr delimiter
+  if( !scanChars( chars, ",", true ) ) return false;
+  mParametrDelimiter = chars.at(0);
+  if( !scanParametrDelimiter() ) return false;
+
+  //2 Get record delimiter
+  if( !scanChars( chars, ";", true ) ) return false;
+  mRecordDelimiter = chars.at(0);
+  if( !scanParametrDelimiter() ) return false;
+
+  //Append all Global lines
+  QByteArray line = mLine.left(72);
+  while( !line.simplified().endsWith(mRecordDelimiter) ) {
+    if( !nextLine() || mLine.at(72) != 'G' ) return false;
+    line += mLine.left(72);
+    }
+
+  //All parts of Global readed repeate scan
+  setLine( line );
 
   //1 Get parametr delimiter
   if( !scanChars( chars, ",", true ) ) return false;
@@ -300,11 +342,12 @@ bool IgesReader::scanGlobal()
 
   //25 Date and time the model was created or last modified, in same format as field 18
   if( !scanChars( chars, "", true ) ) return false;
-  if( !scanParametrDelimiter() ) return false;
+  return true;
+//  if( !scanParametrDelimiter() ) return false;
 
-  //26 Descriptor indicating application protocol, application subset, Mil-specification, or user-defined protocol or subset, if any
-  if( !scanChars( chars, "", true ) ) return false;
-  return scanRecordDelimiter();
+//  //26 Descriptor indicating application protocol, application subset, Mil-specification, or user-defined protocol or subset, if any
+//  if( !scanChars( chars, "", true ) ) return false;
+//  return scanRecordDelimiter();
   }
 
 
@@ -325,7 +368,7 @@ bool IgesReader::scanDirectoryEntry()
   if( !nextLine() )
     return false;
 
-  if( mLine.at(73) != 'D' || mLine.left(8).simplified().toInt() != type )
+  if( mLine.at(72) != 'D' || mLine.left(8).simplified().toInt() != type )
     return false;
 
   for( int i = 1; i < 9; i++ )
@@ -338,22 +381,22 @@ bool IgesReader::scanDirectoryEntry()
 
 bool IgesReader::scanParametrData()
   {
-  mParameterDataMap.insert( mLineIndex, mParameterDataList.count() );
-  IgesParameterData data;
+  QByteArray data;
+  int lineIndex = mLineIndex;
   while( !mLine.left(64).simplified().endsWith( mRecordDelimiter ) ) {
-    data.appendData( mLine.left(64) );
+    data.append( mLine.left(64) );
 
     if( !nextLine() )
       return false;
 
-    if( mLine.at(73) != 'P' )
+    if( mLine.at(72) != 'P' )
       return false;
     }
   //Finish
-  data.appendData( mLine.left(64) );
+  data.append( mLine.left(64) );
 
   //Append parameter data to list
-  mParameterDataList.append( data );
+  mParameterDataMap.insert( lineIndex, data );
 
   return true;
   }

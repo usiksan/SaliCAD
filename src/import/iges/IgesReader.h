@@ -1,7 +1,7 @@
 #ifndef IGESREADER_H
 #define IGESREADER_H
 
-#include "IgesDirectoryEntry.h"
+#include "IgesEntity.h"
 #include "IgesParameterData.h"
 
 #include <QString>
@@ -23,10 +23,8 @@ class IgesReader
     double     mMinimumResolution;
     double     mMaximumCoordinate;
 
-    IgesDirectoryEntryList mDirectoryEntryList;
     QMap<int,IgesEntity*>  mDirectoryEntryMap;
-    IgesParameterDataList  mParameterDataList;
-    QMap<int,int>          mParameterDataMap;
+    IgesParameterDataMap   mParameterDataMap;
 
     //char       m
   public:
@@ -38,16 +36,26 @@ class IgesReader
 
     IgesEntity *entity( int index ) const { return mDirectoryEntryMap.value(index); }
 
+    QByteArray  parameterData( int index ) const { return mParameterDataMap.value(index); }
+
+    void        parameterDataInit( int index ) { setLine( parameterData(index) ); }
+
+    void        setLine( const QByteArray &line );
+
+    bool        paramInt( int &val );
+
+    bool        paramReal( double &val );
+
   private:
     bool nextLine();
 
     bool scanLine();
 
-    bool scanReal( double &val, double defVal, bool thereDef, int limitIndex = 72 );
-    bool scanChars( QByteArray &dest, const QByteArray &def, bool thereDef, int limitIndex = 72 );
-    bool scanParametrDelimiter( int limitIndex = 72 );
-    bool scanRecordDelimiter( int limitIndex = 72 );
-    bool scanInt(int &val, int defVal, bool thereDef, int limitIndex = 72 );
+    bool scanReal( double &val, double defVal, bool thereDef );
+    bool scanChars( QByteArray &dest, const QByteArray &def, bool thereDef );
+    bool scanParametrDelimiter();
+    bool scanRecordDelimiter();
+    bool scanInt(int &val, int defVal, bool thereDef );
 
 
     bool scanStart();

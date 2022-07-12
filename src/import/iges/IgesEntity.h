@@ -2,6 +2,7 @@
 #define IGESENTITY_H
 
 #include <QByteArray>
+#include <QList>
 
 class IgesReader;
 
@@ -30,9 +31,13 @@ class IgesEntity
 
     void         setField( int fieldIndex, const QByteArray &ar );
 
-    virtual void parse(  const IgesReader &reader );
+    virtual bool parse(IgesReader *reader );
 
     static IgesEntity *build( int type );
   };
+
+using IgesEntityPtr = IgesEntity*;
+
+using IgesEntityPtrList = QList<IgesEntityPtr>;
 
 #endif // IGESENTITY_H

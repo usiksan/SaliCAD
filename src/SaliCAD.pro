@@ -28,12 +28,11 @@ SOURCES += \
     SvLib/SvTime2x.cpp \
     import/SdScaner.cpp \
     import/SdScanerMultyline.cpp \
-    import/iges/IgesDirectoryEntry.cpp \
     import/iges/IgesEntity.cpp \
     import/iges/IgesEntityColor.cpp \
+    import/iges/IgesEntityCompositeCurve.cpp \
     import/iges/IgesParameterData.cpp \
     import/iges/IgesReader.cpp \
-    import/iges/IgesScaner.cpp \
     import/iges/Sd3dReaderIges.cpp \
     import/step/SdStepReader.cpp \
     import/stl/Sd3dReaderStl.cpp \
@@ -407,12 +406,11 @@ HEADERS  += \
     SvLib/SvTime2x.h \
     import/SdScaner.h \
     import/SdScanerMultyline.h \
-    import/iges/IgesDirectoryEntry.h \
     import/iges/IgesEntity.h \
     import/iges/IgesEntityColor.h \
+    import/iges/IgesEntityCompositeCurve.h \
     import/iges/IgesParameterData.h \
     import/iges/IgesReader.h \
-    import/iges/IgesScaner.h \
     import/iges/Sd3dReaderIges.h \
     import/step/SdStepReader.h \
     import/stl/Sd3dReaderStl.h \
