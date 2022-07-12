@@ -305,6 +305,7 @@ History
 #define SDK_ENVIR_VERSION            "Envir version"
 #define SDK_ENVIR                    "Envir"
 #define SDK_HELP_PATH                "HelpPath"
+#define SDK_GET_OBJECT_DLG_CFG       "DlgGetObjectCfg"
 
 #define MODE_HELP                    //Prefix to mode help files
 

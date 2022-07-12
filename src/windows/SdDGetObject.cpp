@@ -41,10 +41,9 @@ Description
 #include <QMap>
 #include <QSet>
 #include <QTimer>
+#include <QSettings>
+#include <QDataStream>
 #include <QDebug>
-
-//Storage for previous entered name filter
-static QString sdNameFilter;
 
 //=========================================================================================
 //Struct define individual field mask when find process
@@ -174,8 +173,7 @@ bool sdFieldMapMatch( const QString src, const SdStringMap &map ) {
 //Fields width
 static QMap<QString,int> sdFieldWidth;
 
-static QSize prevDialogSize;
-static int   prevFieldsBoxWidth[3] = { 40, 100, 130 };
+
 
 
 QString                SdDGetObject::mObjName;      //Object name
@@ -188,13 +186,11 @@ quint64                SdDGetObject::mSort;         //Object select sort (class)
 SdLibraryHeaderList    SdDGetObject::mHeaderList;   //Header list for filtered objects
 bool                   SdDGetObject::mExpandVariant = false;    //Flag for find only in titles and not show variants
 
-SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
+SdDGetObject::SdDGetObject(quint64 sort, const QString title, const QString &defFilter, QWidget *parent) :
   QDialog(parent),
   mComponent(nullptr),
   mProject(nullptr)
   {
-  if( !prevDialogSize.isEmpty() )
-    resize( prevDialogSize );
   setWindowTitle( title );
 
 
@@ -235,9 +231,9 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   //Prepare field box
   mFieldsBox->setColumnCount(3);
   mFieldsBox->setHorizontalHeaderLabels( {tr("Show"), tr("Field"), tr("Filtr") } );
-  mFieldsBox->setColumnWidth( 0, prevFieldsBoxWidth[0] );
-  mFieldsBox->setColumnWidth( 1, prevFieldsBoxWidth[1] );
-  mFieldsBox->setColumnWidth( 2, prevFieldsBoxWidth[2] );
+  mFieldsBox->setColumnWidth( 0, 40 );
+  mFieldsBox->setColumnWidth( 1, 100 );
+  mFieldsBox->setColumnWidth( 2, 130 );
 
   //Find results table
   mSplitFinder = new QSplitter(Qt::Vertical);
@@ -256,8 +252,6 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   connect( mTable, &QTableWidget::cellClicked, this, &SdDGetObject::onSelectItem );
   finder->setLayout( vbox );
   mSplitFinder->addWidget( finder );
-  //Preset filter
-  mNameFilter->setText( sdNameFilter );
 
   //Section selection and preview
   mSplitView = new QSplitter();
@@ -302,6 +296,35 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
   mDialogButtons->button(QDialogButtonBox::Ok)->setDisabled(true);
   connect( mDialogButtons->button(QDialogButtonBox::Cancel), &QPushButton::clicked, this, &SdDGetObject::reject );
 
+  mNameFilter->setText( defFilter );
+
+  QSettings s;
+  if( s.contains( QStringLiteral(SDK_GET_OBJECT_DLG_CFG) )  ) {
+    QByteArray ar = s.value( QStringLiteral(SDK_GET_OBJECT_DLG_CFG) ).toByteArray();
+    QDataStream is(ar);
+    QSize dlgSize;
+    QString nameFilter;
+    int fieldsBoxWidth0, fieldsBoxWidth1, fieldsBoxWidth2;
+    QByteArray centralSplitter;
+    QByteArray findSplitter;
+    QByteArray viewSplitter;
+
+    is >> dlgSize >> nameFilter >> fieldsBoxWidth0 >> fieldsBoxWidth1 >> fieldsBoxWidth2 >> centralSplitter >> findSplitter >> viewSplitter;
+
+    resize( dlgSize );
+
+    mFieldsBox->setColumnWidth( 0, fieldsBoxWidth0 );
+    mFieldsBox->setColumnWidth( 1, fieldsBoxWidth1 );
+    mFieldsBox->setColumnWidth( 2, fieldsBoxWidth2 );
+    //Preset filter
+    if( defFilter.isEmpty() )
+      mNameFilter->setText( nameFilter );
+    mSplitCentral->restoreState( centralSplitter );
+    mSplitFinder->restoreState( findSplitter );
+    mSplitView->restoreState( viewSplitter );
+    }
+
+
   if( mSort == sort )
     QTimer::singleShot( 300, this, [this] () {
       //Continue with previous filtrs
@@ -334,15 +357,23 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, QWidget *parent) :
 
 SdDGetObject::~SdDGetObject()
   {
-  //Store width of param table
-  prevFieldsBoxWidth[0] = mFieldsBox->columnWidth( 0 );
-  prevFieldsBoxWidth[1] = mFieldsBox->columnWidth( 1 );
-  prevFieldsBoxWidth[2] = mFieldsBox->columnWidth( 2 );
+  QByteArray ar;
+  QDataStream os(&ar, QIODevice::WriteOnly );
+  QSize dlgSize( size() );
+  QString nameFilter( mNameFilter->text() );
+  int fieldsBoxWidth0(mFieldsBox->columnWidth(0)), fieldsBoxWidth1(mFieldsBox->columnWidth(1)), fieldsBoxWidth2(mFieldsBox->columnWidth(2));
+  QByteArray centralSplitter( mSplitCentral->saveState() );
+  QByteArray findSplitter( mSplitFinder->saveState() );
+  QByteArray viewSplitter( mSplitView->saveState() );
+
+  os << dlgSize << nameFilter << fieldsBoxWidth0 << fieldsBoxWidth1 << fieldsBoxWidth2 << centralSplitter << findSplitter << viewSplitter;
+
+  QSettings s;
+  s.setValue( QStringLiteral(SDK_GET_OBJECT_DLG_CFG), ar );
 
   //Store width of column find result table
   for( int i = 0; i < mTable->columnCount(); i++ )
     sdFieldWidth.insert( mTable->horizontalHeaderItem(i)->text(), mTable->columnWidth(i) );
-
   }
 
 
@@ -357,7 +388,7 @@ void SdDGetObject::find()
       SdFieldMask mask( mFieldsBox->item( i, 1 )->text(), mFieldsBox->item( i, 2 )->text() );
       sdFieldMaskList.append( mask );
       }
-  sdNameFilter = mNameFilter->text();
+  auto sdNameFilter = mNameFilter->text();
   QStringList list = sdNameFilter.split( QRegExp("\\s+"), Qt::SkipEmptyParts );
   mHeaderList.clear();
 
@@ -706,11 +737,6 @@ void SdDGetObject::accept()
       mCompUid = mObjUid;
     else
       mCompUid.clear();
-    //Save current dialog state
-    prevDialogSize = size();
-    prevFieldsBoxWidth[0] = mFieldsBox->columnWidth(0);
-    prevFieldsBoxWidth[1] = mFieldsBox->columnWidth(1);
-    prevFieldsBoxWidth[2] = mFieldsBox->columnWidth(2);
     QDialog::accept();
     }
   else QMessageBox::warning( this, tr("Error"), tr("You must select element or press Cancel") );
@@ -731,9 +757,7 @@ SdObject *SdDGetObject::getObject(quint64 sort, const QString title, QWidget *pa
 
 QString SdDGetObject::getObjectUid(quint64 sort, const QString title, QWidget *parent, const QString defFiltr)
   {
-  if( !defFiltr.isEmpty() )
-    sdNameFilter = defFiltr;
-  SdDGetObject dget( sort, title, parent );
+  SdDGetObject dget( sort, title, defFiltr, parent );
   if( !defFiltr.isEmpty() )
     dget.find();
   if( dget.exec() )
@@ -746,7 +770,7 @@ QString SdDGetObject::getObjectUid(quint64 sort, const QString title, QWidget *p
 
 SdPItemComponent *SdDGetObject::getComponent(int *logSectionPtr, SdStringMap *param, const QString title, QWidget *parent)
   {
-  SdDGetObject dget( dctComponent, title, parent );
+  SdDGetObject dget( dctComponent, title, QString{}, parent );
   if( dget.exec() ) {
     //If available pointer to logical section then set selected section
     if( logSectionPtr )
