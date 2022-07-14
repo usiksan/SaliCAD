@@ -23,6 +23,15 @@ win32: LIBS += -lopengl32
 win64: LIBS += -lopengl32
 
 SOURCES += \
+    import/nurbs/NurbsBasis.cpp \
+    import/nurbs/NurbsConvexHull.cpp \
+    import/nurbs/NurbsCurve.cpp \
+    import/nurbs/NurbsCurveInfo.cpp \
+    import/nurbs/NurbsFace.cpp \
+    import/nurbs/NurbsParentCurve.cpp \
+    import/nurbs/NurbsParentSurface.cpp \
+    import/nurbs/NurbsPoint4f.cpp \
+    import/nurbs/NurbsSurface.cpp \
     SdMain.cpp \
     SvLib/SvDir.cpp \
     SvLib/SvTime2x.cpp \
@@ -31,6 +40,7 @@ SOURCES += \
     import/iges/IgesEntity.cpp \
     import/iges/IgesEntityColor.cpp \
     import/iges/IgesEntityCompositeCurve.cpp \
+    import/iges/IgesEntityRationalBSplineSurface.cpp \
     import/iges/IgesParameterData.cpp \
     import/iges/IgesReader.cpp \
     import/iges/Sd3dReaderIges.cpp \
@@ -399,6 +409,16 @@ SOURCES += \
     objects/SdPlateNetContainer.cpp
 
 HEADERS  += \
+    import/nurbs/NurbsBasis.h \
+    import/nurbs/NurbsConvexHull.h \
+    import/nurbs/NurbsCurve.h \
+    import/nurbs/NurbsCurveInfo.h \
+    import/nurbs/NurbsFace.h \
+    import/nurbs/NurbsParentCurve.h \
+    import/nurbs/NurbsParentSurface.h \
+    import/nurbs/NurbsPoint4f.h \
+    import/nurbs/NurbsSurface.h \
+    import/nurbs/NurbsSurfaceInfo.h \
     SdConfig.h \
     SvLib/SvDir.h \
     SvLib/SvJsonIO.h \
@@ -409,6 +429,7 @@ HEADERS  += \
     import/iges/IgesEntity.h \
     import/iges/IgesEntityColor.h \
     import/iges/IgesEntityCompositeCurve.h \
+    import/iges/IgesEntityRationalBSplineSurface.h \
     import/iges/IgesParameterData.h \
     import/iges/IgesReader.h \
     import/iges/Sd3dReaderIges.h \
@@ -459,6 +480,7 @@ HEADERS  += \
     objects/SdContainerFile.h \
     objects/SdCopyMap.h \
     objects/SdCopyMapProject.h \
+    objects/SdDoubleVector.h \
     objects/SdGraphParam.h \
     objects/SdGraphScript.h \
     objects/SdGraphScriptRef.h \

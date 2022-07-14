@@ -1,9 +1,11 @@
 #include "IgesEntityColor.h"
 #include "IgesReader.h"
 
+#include <QDebug>
+
 IgesEntityColor::IgesEntityColor()
   {
-
+  qDebug() << "Entity color";
   }
 
 

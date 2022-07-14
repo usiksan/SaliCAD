@@ -62,7 +62,7 @@ bool IgesReader::paramInt(int &val)
 bool IgesReader::paramReal(double &val)
   {
   if( !scanReal( val, 0.0, false ) ) return false;
-  if( mLine.at(mIndex) != mParametrDelimiter && mLine.at(mIndex) != mRecordDelimiter ) return false;
+  if( mIndex > mLine.count() || (mLine.at(mIndex) != mParametrDelimiter && mLine.at(mIndex) != mRecordDelimiter) ) return false;
   mIndex++;
   return true;
   }

@@ -1,11 +1,27 @@
 #include "IgesEntity.h"
-#include "IgesEntityColor.h"
+#include "IgesEntityRationalBSplineSurface.h" //128
+#include "IgesEntityColor.h" //314
 
 #include "IgesReader.h"
 
+#include <QDebug>
+
 IgesEntity::IgesEntity()
   {
+  qDebug() << "Entity null";
+  }
 
+
+bool IgesEntity::paramDoubleVector(IgesReader *reader, SdDoubleVector &vector, int count)
+  {
+  vector.clear();
+  vector.reserve(count);
+  for( int i = 0; i < count; i++ ) {
+    double val;
+    if( !reader->paramReal(val) ) return false;
+    vector.append( val );
+    }
+  return true;
   }
 
 
@@ -25,6 +41,9 @@ void IgesEntity::setField(int fieldIndex, const QByteArray &ar)
     mFields[11] = inv ? IgesIntEmpty : ar.simplified().toInt();
   }
 
+
+
+
 bool IgesEntity::parse(IgesReader *reader)
   {
   reader->parameterDataInit( mParameterData() );
@@ -39,6 +58,8 @@ bool IgesEntity::parse(IgesReader *reader)
 IgesEntity *IgesEntity::build(int type)
   {
   switch( type ) {
+    case 0 : break;
+    case 128 : return new IgesEntityRationalBSplineSurface();
     case 314 : return new IgesEntityColor();
     }
   return new IgesEntity();

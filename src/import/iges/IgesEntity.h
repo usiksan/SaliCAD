@@ -1,12 +1,16 @@
 #ifndef IGESENTITY_H
 #define IGESENTITY_H
 
+#include "objects/SdDoubleVector.h"
+
 #include <QByteArray>
 #include <QList>
 
 class IgesReader;
 
 #define IgesIntEmpty 0x80000000
+
+using IgesDoubleList = QList<double>;
 
 class IgesEntity
   {
@@ -26,12 +30,14 @@ class IgesEntity
     int  mFormNumber() const { return mFields[10]; }        //15 [10]
     char mEntityLabel[8];     //18
     int  mEntitySupscript() const { return mFields[11]; }   //19 [11]
+    bool paramDoubleVector( IgesReader *reader, SdDoubleVector &vector, int count );
   public:
     IgesEntity();
 
     void         setField( int fieldIndex, const QByteArray &ar );
 
     virtual bool parse(IgesReader *reader );
+
 
     static IgesEntity *build( int type );
   };
