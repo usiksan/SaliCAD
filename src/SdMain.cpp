@@ -39,9 +39,9 @@ int main(int argc, char *argv[])
 //  //qDebug() << model.faceEqudistanteXY( face, 0.1, QMatrix4x4() );
 //  qDebug() << model.faceListHolesXY( face, { hole1, hole2 } );
 
-  IgesReader reader;
-  reader.scanFile( QStringLiteral("/home/asibilev/work/vrml/val.igs") );
-  reader.parse();
+//  IgesReader reader;
+//  reader.scanFile( QStringLiteral("/home/asibilev/work/vrml/val.igs") );
+//  reader.parse();
 
 
   //Setups for settings
