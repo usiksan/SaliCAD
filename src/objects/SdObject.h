@@ -167,7 +167,8 @@ template <class T>
 T* sdObjectOnly( SdObject *obj ) {
   T *t = dynamic_cast<T*>( obj );
   if( t ) return t;
-  delete obj;
+  if( obj != nullptr )
+    delete obj;
   return nullptr;
   }
 

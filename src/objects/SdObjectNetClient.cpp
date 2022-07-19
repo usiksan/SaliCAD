@@ -71,6 +71,7 @@ SdObjectNetClient::SdObjectNetClient(QObject *parent) :
 
   connect( mNetworkManager, &QNetworkAccessManager::finished, this, &SdObjectNetClient::finished );
   connect( &mTimer, &QTimer::timeout, this, &SdObjectNetClient::doSync );
+
   }
 
 
@@ -373,7 +374,7 @@ void SdObjectNetClient::cmSyncList(const QJsonObject &reply)
         int     index  = it.key().toInt();
         if( index > indexMax ) indexMax = index;
         //Test if object newer than existing
-        if( !sdLibraryStorage.isNewerOrSameObject( uid, time ) ) {
+        if( !SdLibraryStorage::instance()->isNewerOrSameObject( uid, time ) ) {
           //Object is newer than existing or no object with this uid
           //so append object index to download list
           mObjectIndexList.append( index );
@@ -416,7 +417,7 @@ void SdObjectNetClient::cmDownloadObject(const QJsonObject &reply)
     qDebug() << "sync downloaded successfully [" << remoteSyncIndex << "]" << header.uid();
     infoAppend( tr("Downloaded \"%1\"").arg(header.mName) );
 
-    sdLibraryStorage.insert( header, objectBody, true );
+    SdLibraryStorage::instance()->insert( header, objectBody, true );
 
     QSettings s;
     s.setValue( SDK_REMOTE_SYNC, remoteSyncIndex );
@@ -562,8 +563,8 @@ void SdObjectNetClient::doUploadNextObject()
   //int     remoteSyncIndex = s.value( SDK_REMOTE_SYNC ).toInt();
   QString hostRepo        = s.value( SDK_SERVER_REPO ).toString();
   if( !hostRepo.isEmpty() && !author.isEmpty() && !password.isEmpty() ) {
-    while( localSyncIndex < sdLibraryStorage.creationIndex() ) {
-      QString uid = sdLibraryStorage.getUidByIndex( localSyncIndex );
+    while( localSyncIndex < SdLibraryStorage::instance()->creationIndex() ) {
+      QString uid = SdLibraryStorage::instance()->getUidByIndex( localSyncIndex );
       if( uid.isEmpty() ) {
         //No object found with this index. Take next index
         localSyncIndex++;
@@ -571,10 +572,10 @@ void SdObjectNetClient::doUploadNextObject()
         }
       else {
         SdLibraryHeader header;
-        if( sdLibraryStorage.header( uid, header ) ) {
+        if( SdLibraryStorage::instance()->header( uid, header ) ) {
           QByteArray object;
           QDataStream os( &object, QIODevice::WriteOnly );
-          os << header << sdLibraryStorage.object(uid);
+          os << header << SdLibraryStorage::instance()->object(uid);
 
           //There object to upload to global repo
           //Prepare block for transmition

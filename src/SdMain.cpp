@@ -17,8 +17,8 @@ Description
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdProp.h"
-#include "objects/SdObjectFactory.h"
 #include "objects/SdObjectNetClient.h"
+#include "library/SdLibraryStorage.h"
 //#include "objects/Sd3dModel.h"
 #include "import/iges/IgesReader.h"
 #include <QApplication>
@@ -56,7 +56,6 @@ int main(int argc, char *argv[])
   sdObjectNetClient = new SdObjectNetClient();
 
 
-
   QSettings s;
   if( !s.contains(SDK_LANGUAGE) ) {
     //Language is not assigned yet, assign it
@@ -90,7 +89,7 @@ int main(int argc, char *argv[])
   sdGlobalProp = new SdProp();
 
   //Open library for objectFactory system
-  SdObjectFactory::openLibrary();
+  SdLibraryStorage::instance()->init();
 
   //Check if registered
   if( !s.contains(SDK_GLOBAL_AUTHOR) || !s.contains(SDK_GLOBAL_PASSWORD) || !s.contains(SDK_SERVER_REPO) ) {
@@ -122,7 +121,7 @@ int main(int argc, char *argv[])
   delete SdPulsar::sdPulsar;
 
   //Close library and store all changes
-  SdObjectFactory::closeLibrary();
+  SdLibraryStorage::instance()->flushAndDelete();
 
   return res;
   }

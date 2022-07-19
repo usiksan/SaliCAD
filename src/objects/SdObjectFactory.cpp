@@ -29,23 +29,6 @@ Description
 #include <QJsonDocument>
 #include <QSettings>
 
-SdLibraryStorage sdLibraryStorage;
-
-//Open or create library
-void SdObjectFactory::openLibrary()
-  {
-  sdLibraryStorage.setLibraryPath( sdEnvir->mLibraryPath );
-  }
-
-
-
-
-//Close library and save unsaved data
-void SdObjectFactory::closeLibrary()
-  {
-  sdLibraryStorage.flush();
-  }
-
 
 
 
@@ -53,7 +36,7 @@ void SdObjectFactory::insertObject( const SdLibraryHeader &hdr, QJsonObject json
   {
 
   //Insert object
-  sdLibraryStorage.insert( hdr, qCompress( QJsonDocument(json).toBinaryData(), -1 ), false );
+  SdLibraryStorage::instance()->insert( hdr, qCompress( QJsonDocument(json).toBinaryData(), -1 ), false );
   }
 
 
@@ -63,7 +46,7 @@ void SdObjectFactory::insertObject( const SdLibraryHeader &hdr, QJsonObject json
 //then return its id. Older object is never inserted.
 void SdObjectFactory::insertItemObject(const SdContainerFile *item, QJsonObject obj)
   {
-  if( item == nullptr || sdLibraryStorage.isNewerOrSameObject( item->getUid(), item->getTime() ) )
+  if( item == nullptr || SdLibraryStorage::instance()->isNewerOrSameObject( item->getUid(), item->getTime() ) )
     return;
 
   //Insert object
@@ -84,7 +67,7 @@ void SdObjectFactory::deleteItemObject(const SdContainerFile *item)
     return;
   SdLibraryHeader hdr;
   //Extract existing header and test if it corresponds to item
-  if( sdLibraryStorage.header( item->getUid(), hdr ) && item->getTime() == hdr.mTime ) {
+  if( SdLibraryStorage::instance()->header( item->getUid(), hdr ) && item->getTime() == hdr.mTime ) {
     //Mark header as deleted
     hdr.setDeleted();
     //Store "new" object
@@ -102,7 +85,7 @@ SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *p
   if( id.isEmpty() )
     return nullptr;
 
-  if( !sdLibraryStorage.isObjectContains(id) ) {
+  if( !SdLibraryStorage::instance()->isObjectContains(id) ) {
     //Soft extract object from database.
     //If no object in local database then doing nothing
     if( soft ) return nullptr;
@@ -115,9 +98,9 @@ SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *p
     }
 
   //At this point object already in local base
-  if( sdLibraryStorage.isObjectContains(id) )
+  if( SdLibraryStorage::instance()->isObjectContains(id) )
     //Build object
-    return SdObject::jsonObjectFrom( QJsonDocument::fromBinaryData( qUncompress(sdLibraryStorage.object(id)) ).object() );
+    return SdObject::jsonObjectFrom( QJsonDocument::fromBinaryData( qUncompress(SdLibraryStorage::instance()->object(id)) ).object() );
 
   QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Id '%1' not found in database").arg(id) );
   return nullptr;
@@ -133,7 +116,7 @@ SdObject *SdObjectFactory::extractObject(const QString id, bool soft, QWidget *p
 //Return true if object present in dataBase
 bool SdObjectFactory::isObjectPresent(const QString hash)
   {
-  return sdLibraryStorage.isObjectContains(hash);
+  return SdLibraryStorage::instance()->isObjectContains(hash);
   }
 
 
@@ -144,7 +127,7 @@ bool SdObjectFactory::isObjectPresent(const QString hash)
 //Return true if object name is referenced in dataBase
 bool SdObjectFactory::isContains(const QString type, const QString name, const QString author)
   {
-  return sdLibraryStorage.contains( headerUid( type, name, author ) );
+  return SdLibraryStorage::instance()->contains( headerUid( type, name, author ) );
   }
 
 
@@ -156,7 +139,7 @@ bool SdObjectFactory::isThereNewer(const SdContainerFile *item)
   {
   if( item == nullptr )
     return false;
-  return sdLibraryStorage.isNewerObject( item->getUid(), item->getTime() );
+  return SdLibraryStorage::instance()->isNewerObject( item->getUid(), item->getTime() );
   }
 
 
@@ -169,7 +152,7 @@ bool SdObjectFactory::loadObject(const QString hash, const QString title, QWidge
   if( hash.isEmpty() )
     return false;
 
-  if( sdLibraryStorage.isObjectContains(hash) )
+  if( SdLibraryStorage::instance()->isObjectContains(hash) )
     return true;
 
   //load object from server
@@ -189,7 +172,7 @@ bool SdObjectFactory::loadObject(const QString hash, const QString title, QWidge
 //If no object in library return false
 bool SdObjectFactory::extractHeader(const QString id, SdLibraryHeader &hdr)
   {
-  return sdLibraryStorage.header( id, hdr );
+  return SdLibraryStorage::instance()->header( id, hdr );
   }
 
 
@@ -203,7 +186,7 @@ bool SdObjectFactory::extractHeader(const QString id, SdLibraryHeader &hdr)
 //When function return true - iteration break, else countinued
 void SdObjectFactory::forEachUid(std::function<bool (const QString &)> fun1)
   {
-  sdLibraryStorage.forEachUid( fun1 );
+  SdLibraryStorage::instance()->forEachUid( fun1 );
   }
 
 
@@ -213,7 +196,7 @@ void SdObjectFactory::forEachUid(std::function<bool (const QString &)> fun1)
 //When function return true - iteration break, else continued
 void SdObjectFactory::forEachHeader(std::function<bool (SdLibraryHeader &)> fun1)
   {
-  sdLibraryStorage.forEachHeader( fun1 );
+  SdLibraryStorage::instance()->forEachHeader( fun1 );
   }
 
 

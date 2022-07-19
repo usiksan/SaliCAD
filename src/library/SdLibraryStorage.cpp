@@ -19,6 +19,9 @@ Description
   Storage complains all three files and formalized access to it.
 */
 #include "SdLibraryStorage.h"
+#include "objects/SdEnvir.h"
+#include "objects/SdContainerFile.h"
+#include "SvLib/SvDir.h"
 
 #include <QDir>
 #include <QReadLocker>
@@ -33,21 +36,23 @@ Description
 #define HDR_START 18
 
 SdLibraryStorage::SdLibraryStorage() :
+  QObject(),
   mPath(),
-  mLock(),
   mCreationIndex(0),
   mReferenceMap(),
   mHeaderFile(),
   mObjectFile(),
-  mDirty(false)
+  mDirty(false),
+  mLock()
   {
 
   }
 
-SdLibraryStorage::~SdLibraryStorage()
+void SdLibraryStorage::init()
   {
-  flush();
+  setLibraryPath( sdEnvir->mLibraryPath );
   }
+
 
 
 
@@ -358,6 +363,101 @@ void SdLibraryStorage::flush()
       }
     }
   }
+
+
+
+
+void SdLibraryStorage::flushAndDelete()
+  {
+  flush();
+
+  //Close previously opened data base
+  if( mHeaderFile.isOpen() ) {
+    mHeaderFile.close();
+    mObjectFile.close();
+    }
+
+  deleteLater();
+  }
+
+
+
+
+void SdLibraryStorage::cfObjectInsert(const SdContainerFile *item)
+  {
+  //If inserted object is older than present in library then nothing done
+  if( item == nullptr || item->isEditEnable() || cfIsOlder( item ) )
+    return;
+
+  //Insert reference and header
+  QFile fileHdr(FNAME_HDR);
+  if( fileHdr.open(QIODevice::Append) ) {
+    SdLibraryHeader hdr;
+    item->getHeader( hdr );
+    QString key = item->getUid();
+    SdLibraryReference ref;
+    //write header first
+    ref.mCreationIndex = mCreationIndex++;
+    ref.mHeaderPtr     = fileHdr.size();
+    ref.mCreationTime  = hdr.mTime;
+    QDataStream os( &fileHdr );
+    hdr.write( os );
+    fileHdr.close();
+
+    mReferenceMap.insert( key, ref );
+    mDirty = true;
+
+    //Insert in library
+    QString fname = item->getLibraryFName();
+    SvDir dir( mPath );
+    QDir().mkpath( dir.slashedPath() + fname.left(2) );
+
+    item->fileJsonSave( dir.slashedPath() + fname );
+    }
+  }
+
+
+
+
+SdContainerFile *SdLibraryStorage::cfObjectGet(const QString uid) const
+  {
+  if( mReferenceMap.contains( uid ) ) {
+    //Build file name
+    QString fname( SdContainerFile::getLibraryFName( uid, mReferenceMap.value(uid).mCreationTime ) );
+    SvDir dir( mPath );
+    return sdObjectOnly<SdContainerFile>( SdObject::fileJsonLoad( dir.slashedPath() + fname ) );
+    }
+  return nullptr;
+  }
+
+
+
+
+//!
+//! \brief cfIsOlder Test if object which represents by uid and time present in library and older than there is in library
+//! \param uid       uid of tested object
+//! \param time      time of locking of tested object
+//! \return          true if tested object present in library and it older then in library
+//!
+bool SdLibraryStorage::cfIsOlder(const QString uid, qint32 time) const
+  {
+  QReadLocker locker( &mLock );
+  return mReferenceMap.contains( uid ) && mReferenceMap.value(uid).isObjectNewerOrSame( time );
+  }
+
+
+
+//!
+//! \brief cfIsOlder Overloaded function. Test if object present in library and older than there is in library
+//! \param item      Tested object
+//! \return          true if tested object present in library and it older then in library
+//!
+bool SdLibraryStorage::cfIsOlder(const SdContainerFile *item) const
+  {
+  return cfIsOlder( item->getUid(), item->getTime() );
+  }
+
+
 
 
 

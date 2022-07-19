@@ -21,6 +21,7 @@ Description
 #include "SdGraphNet.h"
 #include "SdEnvir.h"
 #include "SdCopyMapProject.h"
+#include "library/SdLibraryStorage.h"
 
 #include <QJsonArray>
 #include <QFile>
@@ -393,22 +394,69 @@ quint64 SdProject::getClass() const
 
 
 
+//!
+//! \brief load  Load project from file
+//! \param fname File name of loaded project
+//! \return      Loaded project
+//!
 SdProject *SdProject::load(const QString fname)
   {
-  return sdObjectOnly<SdProject>( fileJsonLoad(fname) );
+  //Load project
+  auto prj = sdObjectOnly<SdProject>( fileJsonLoad(fname) );
+
+  //If project loaded successfull then update library by its content
+  if( prj != nullptr )
+    prj->libraryUpdate();
+
+  //Return loaded project
+  return prj;
   }
 
 
 
 
+//!
+//! \brief save  Save project to file
+//! \param fname File name for project save to
+//! \return      true if saving successfull
+//!
 bool SdProject::save(const QString fname)
   {
+  //Save project to file
   if( fileJsonSave(fname) ) {
+    //Update library for project content
+    libraryUpdate();
+    //Clear dirty flag
     mDirty = false;
+    //Notify project status changed
     SdPulsar::sdPulsar->emitProjectStatusChanged( this );
     return true;
     }
   return false;
+  }
+
+
+
+
+//!
+//! \brief libraryUpdate Update project in library and all its item
+//!
+void SdProject::libraryUpdate() const
+  {
+  //Append all non-editable items
+  auto lib = SdLibraryStorage::instance();
+  forEachConst( dctComponent | dctPart | dctSymbol | dctRich, [lib] ( SdObject *obj ) ->bool {
+    //Get container file object
+    SdPtrConst<SdContainerFile> cf(obj);
+    //Check if it valid and non-editable
+    if( cf.isValid() && !cf->isEditEnable() )
+      //Insert container file into library
+      lib->cfObjectInsert( cf.ptr() );
+    return false;
+    } );
+
+  if( !isEditEnable() )
+    lib->cfObjectInsert( this );
   }
 
 

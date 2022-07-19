@@ -50,7 +50,7 @@ SdDOptionsPageLibrary::SdDOptionsPageLibrary(QWidget *parent) :
 
   grid->addWidget( new QLabel(tr("Objects in library:")), 2, 0 );
   grid->addWidget( mObjectsCount = new QLineEdit(), 2, 1 );
-  mObjectsCount->setText( QString::number(sdLibraryStorage.objectCount()) );
+  mObjectsCount->setText( QString::number(SdLibraryStorage::instance()->objectCount()) );
   mObjectsCount->setReadOnly(true);
 //  grid->addWidget( but = new QPushButton( tr("Select...") ), 1, 2 );
 //  connect( but, &QPushButton::clicked, this, [this] () {

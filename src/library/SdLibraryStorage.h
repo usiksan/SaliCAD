@@ -23,7 +23,9 @@ Description
 
 #include "SdLibraryReference.h"
 #include "SdLibraryHeader.h"
+#include "SvLib/SvSingleton.h"
 
+#include <QObject>
 #include <QString>
 #include <QStringList>
 #include <QReadWriteLock>
@@ -32,22 +34,30 @@ Description
 #include <QMap>
 #include <functional>
 
+class SdContainerFile;
+
 typedef QMap<QString,SdLibraryReference> SdLibraryReferenceMap;
 
 
-class SdLibraryStorage
+class SdLibraryStorage : public QObject
   {
-  protected:
+    Q_OBJECT
+
     QString                mPath;
-    QReadWriteLock         mLock;
     qint32                 mCreationIndex;
     SdLibraryReferenceMap  mReferenceMap;
     QFile                  mHeaderFile;
     QFile                  mObjectFile;
     bool                   mDirty;
-  public:
+
+    mutable QReadWriteLock mLock;
+
     SdLibraryStorage();
-    ~SdLibraryStorage();
+  public:
+
+    friend SdLibraryStorage *svInstance<SdLibraryStorage>();
+
+    static SdLibraryStorage *instance() { return svInstance<SdLibraryStorage>(); }
 
     //!
     //! \brief objectCount Return count of referenced objects in library
@@ -64,12 +74,48 @@ class SdLibraryStorage
     //==================================================================
     //Common library properties
 
+    void        init();
+
     //With settings library path Storage creates files if yet not created, open files and load map
     void        setLibraryPath( const QString path );
 
     //Flush reference map if needed
     void        flush();
 
+    void        flushAndDelete();
+
+    //==================================================================
+    // SdContainerFile
+
+    //Insert item object to database. If in database already present newest object,
+    //then nothing done. Older object is never inserted.
+    void             cfObjectInsert( const SdContainerFile *item );
+
+    //Mark item object as deleted
+    void             cfObjectDelete( const SdContainerFile *item );
+
+    SdContainerFile *cfObjectGet( const QString uid ) const;
+
+    //!
+    //! \brief cfObjectUploaded Mark object as already uploaded. Marked object no need to be upload
+    //! \param uid
+    //!
+    void             cfObjectUploaded( const QString uid );
+
+    //!
+    //! \brief cfIsOlder Test if object which represents by uid and time present in library and older than there is in library
+    //! \param uid       uid of tested object
+    //! \param time      time of locking of tested object
+    //! \return          true if tested object present in library and it older then in library
+    //!
+    bool             cfIsOlder( const QString uid, qint32 time ) const;
+
+    //!
+    //! \brief cfIsOlder Overloaded function. Test if object present in library and older than there is in library
+    //! \param item      Tested object
+    //! \return          true if tested object present in library and it older then in library
+    //!
+    bool             cfIsOlder( const SdContainerFile *item ) const;
 
 
     //==================================================================
@@ -120,7 +166,5 @@ class SdLibraryStorage
     void        insert( const SdLibraryHeader &hdr, QByteArray obj, bool downloaded );
   };
 
-
-extern SdLibraryStorage sdLibraryStorage;
 
 #endif // SDLIBRARYSTORAGE_H

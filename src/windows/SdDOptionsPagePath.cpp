@@ -96,7 +96,7 @@ void SdDOptionsPagePath::accept()
     s.setValue( SDK_REMOTE_SYNC, 1 );
 
     sdEnvir->mLibraryPath = dir.slashedPath();
-    sdLibraryStorage.setLibraryPath( sdEnvir->mLibraryPath );
+    SdLibraryStorage::instance()->setLibraryPath( sdEnvir->mLibraryPath );
     }
 
   dir.set( mPatternPath->text() );

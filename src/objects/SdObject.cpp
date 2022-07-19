@@ -50,6 +50,7 @@ Description
 #include "Sd3dGraphModel.h"
 #include "SdSection.h"
 #include "SdPartVariant.h"
+#include "library/SdLibraryStorage.h"
 
 #include <QJsonValue>
 #include <QFile>

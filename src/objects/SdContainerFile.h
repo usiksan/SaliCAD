@@ -32,6 +32,20 @@ class SdContainerFile : public SdContainer
     void                   titleSet(const QString title );
 
     //!
+    //! \brief getLibraryFName Builds and return file name for library storage from full uid and time of contaner file
+    //! \param fullUid         Full uid of container file
+    //! \param time            Time of containter file
+    //! \return                File name for library storage
+    //!
+    static QString         getLibraryFName(const QString &fullUid , qint32 time);
+
+    //!
+    //! \brief getLibraryFName Build and return file name for library storage
+    //! \return                File name for library storage
+    //!
+    QString                getLibraryFName() const;
+
+    //!
     //! \brief json Overloaded function to write object content into json writer
     //!             Overrided function
     //! \param js   Json writer

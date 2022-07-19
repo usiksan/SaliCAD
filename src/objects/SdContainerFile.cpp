@@ -1,5 +1,7 @@
+#include "SdConfig.h"
 #include "SdContainerFile.h"
 #include "SdUtil.h"
+#include "library/SdLibraryStorage.h"
 #include "SvLib/SvTime2x.h"
 #include "SdJsonIO.h"
 
@@ -20,6 +22,39 @@ QString SdContainerFile::getUid() const
   {
   //Id consist from name, user and time creation
   return headerUid( getType(), mTitle, mAuthor );
+  }
+
+
+
+
+//!
+//! \brief getLibraryFName Builds and return file name for library storage from full uid and time of contaner file
+//! \param fullUid         Full uid of container file
+//! \param time            Time of containter file
+//! \return                File name for library storage
+//!
+QString SdContainerFile::getLibraryFName( const QString &fullUid, qint32 time )
+  {
+  QString uid( fullUid );
+  if( uid.length() > 64 )
+    uid = uid.left(64);
+  for( int i = 0; i < uid.length(); i++ )
+    if( !uid.at(i).isLetterOrNumber() )
+      uid[i] = QChar('_');
+  QString hash( QStringLiteral("%1").arg( qHash(fullUid), 8, 16, QChar('0') ) );
+  return QStringLiteral("%1/%2-%3-%4" SD_BINARY_EXTENSION ).arg( hash.left(2), hash.right(6), uid ).arg( time, 0, 16 );
+  }
+
+
+
+
+//!
+//! \brief getLibraryFName Build and return file name for library storage
+//! \return                File name for library storage
+//!
+QString SdContainerFile::getLibraryFName() const
+  {
+  return getLibraryFName( getUid(), getTime() );
   }
 
 
@@ -68,6 +103,7 @@ void SdContainerFile::titleSet(const QString title)
   //Title setup
   mTitle      = title;
   }
+
 
 
 

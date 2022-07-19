@@ -27,19 +27,13 @@ Description
 
 class SdContainerFile;
 
-typedef QList<QTreeWidgetItem*> QTreeList;
+//typedef QList<QTreeWidgetItem*> QTreeList;
 
-typedef QSet<QString> QStringSet;
+//typedef QSet<QString> QStringSet;
 
 class SdObjectFactory
   {
   public:
-    //Open or create library
-    static void         openLibrary();
-
-    //Close library and save unsaved data
-    static void         closeLibrary();
-
     //Insert object to database with externally created header
     static void         insertObject(const SdLibraryHeader &hdr, QJsonObject json );
 

@@ -113,8 +113,25 @@ class SdProject : public SdContainerFile
     virtual QString   getType() const override;
     virtual quint64   getClass() const override;
 
+
+    //!
+    //! \brief load  Load project from file
+    //! \param fname File name of loaded project
+    //! \return      Loaded project
+    //!
     static SdProject *load( const QString fname );
+
+    //!
+    //! \brief save  Save project to file
+    //! \param fname File name for project save to
+    //! \return      true if saving successfull
+    //!
     bool              save( const QString fname );
+
+    //!
+    //! \brief libraryUpdate Update project in library and all its item
+    //!
+    void              libraryUpdate() const;
 
     //!
     //! \brief cloneFrom Overrided function. We copy object from source
