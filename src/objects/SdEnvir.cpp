@@ -13,7 +13,6 @@ Description
 #include "SdConfig.h"
 #include "SdEnvir.h"
 #include "SdLayer.h"
-#include "SdObjectFactory.h"
 #include "SvLib/SvDir.h"
 
 #include <QSettings>

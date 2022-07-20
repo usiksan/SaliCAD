@@ -32,9 +32,13 @@ Description
 #include <QByteArray>
 #include <QFile>
 #include <QMap>
+#include <QSet>
+#include <QTimer>
+#include <QFileInfoList>
 #include <functional>
 
 class SdContainerFile;
+class SdNetClientLocker;
 
 typedef QMap<QString,SdLibraryReference> SdLibraryReferenceMap;
 
@@ -43,12 +47,15 @@ class SdLibraryStorage : public QObject
   {
     Q_OBJECT
 
-    QString                mPath;
-    qint32                 mCreationIndex;
+    QString                mLibraryPath;     //!< Path where library objects resides
+    QFileInfoList          mScanList;        //!< Library scan list contains list of subdirectories of library
+    QTimer                 mScanTimer;       //!< Scan timer for periodic scan library for new or deleted objects
+    QMap<QString,QString>  mExistList;       //!< Map of existing objects
     SdLibraryReferenceMap  mReferenceMap;
     QFile                  mHeaderFile;
-    QFile                  mObjectFile;
+    SdNetClientLocker     *mNetClientLocker;
     bool                   mDirty;
+    bool                   mUploadAvailable; //!< If true then there available objects to upload
 
     mutable QReadWriteLock mLock;
 
@@ -65,42 +72,64 @@ class SdLibraryStorage : public QObject
     //!
     qint32      objectCount() const { return mReferenceMap.count(); }
 
-    //!
-    //! \brief creationIndex Return current value of creation index
-    //! \return              Current value of creation index
-    //!
-    qint32      creationIndex() const { return mCreationIndex; }
 
     //==================================================================
-    //Common library properties
+    // Library common
+    //!
+    //! \brief libraryPath Return current library path
+    //! \return            Current library path
+    //!
+    QString     libraryPath() const { return mLibraryPath; }
 
-    void        init();
+    //!
+    //! \brief libraryPathSet Set new library path
+    //! \param path           New library path
+    //!
+    //! Current caches are cleared, library path changed and scan start from begin
+    void        libraryPathSet( const QString &path );
 
-    //With settings library path Storage creates files if yet not created, open files and load map
-    void        setLibraryPath( const QString path );
+    //!
+    //! \brief libraryInit Init library system
+    //!
+    void        libraryInit();
 
-    //Flush reference map if needed
-    void        flush();
+    //!
+    //! \brief libraryComplete Complete work of libraryStorage. We flush caches and delete libraryStorage
+    //!
+    void             libraryComplete();
 
-    void        flushAndDelete();
 
     //==================================================================
     // SdContainerFile
 
-    //Insert item object to database. If in database already present newest object,
-    //then nothing done. Older object is never inserted.
+    //!
+    //! \brief cfObjectInsert Insert object into library. If in library already present newest object
+    //!                       then nothing done. Older object is never inserted.
+    //! \param item           Object for inserting
+    //!
     void             cfObjectInsert( const SdContainerFile *item );
 
     //Mark item object as deleted
     void             cfObjectDelete( const SdContainerFile *item );
 
+    //!
+    //! \brief cfObjectGet Load object from library
+    //! \param uid         UID of loaded object
+    //! \return            Loaded object or nullptr
+    //!
     SdContainerFile *cfObjectGet( const QString uid ) const;
+
+    //!
+    //! \brief cfObjectUpload Return object available to uploading to remote server
+    //! \return               Object to uploading
+    //!
+    SdContainerFile *cfObjectUpload() const;
 
     //!
     //! \brief cfObjectUploaded Mark object as already uploaded. Marked object no need to be upload
     //! \param uid
     //!
-    void             cfObjectUploaded( const QString uid );
+    void             cfObjectUploaded( const QString uid ) { if( mReferenceMap.contains(uid) ) mReferenceMap[uid].uploadReset(); }
 
     //!
     //! \brief cfIsOlder Test if object which represents by uid and time present in library and older than there is in library
@@ -117,53 +146,64 @@ class SdLibraryStorage : public QObject
     //!
     bool             cfIsOlder( const SdContainerFile *item ) const;
 
+    //!
+    //! \brief cfObjectContains Return true if object contains in library
+    //! \param uid              UID of object
+    //! \return                 True if object contains in library
+    //!
+    bool             cfObjectContains( const QString uid ) const { return mReferenceMap.contains(uid) && !mReferenceMap.value(uid).isNeedDelete(); }
+
 
     //==================================================================
-    //Objects
-
-    //Return true if object referenced in map
-    bool        contains( const QString uid );
-
-    //Return true if object contained in map
-    bool        isObjectContains( const QString uid );
-
-    //Return true if object referenced in map and object is newer or same or if newer reference
-    bool        isNewerOrSameObject( const QString uid, qint32 time );
-
-    //Return true if newer object referenced in map
-    bool        isNewerObject( const QString uid, qint32 time );
+    //Headers
 
     //!
-    //! \brief getUidByIndex Get object id with index which has not been downloaded
-    //! \param index         Index of needed object
-    //! \return              UID of object with index
+    //! \brief header Get header of object
+    //! \param uid    object unical identificator
+    //! \param hdr    place to receiv object header
+    //! \return       true if header readed successfully
     //!
-    QString     getUidByIndex(qint32 index );
+    bool             header( const QString uid, SdLibraryHeader &hdr );
 
-    //Function must return false to continue iteration
-    //When function return true - iteration break and return true as indicator
-    bool        forEachHeader(std::function<bool(SdLibraryHeader&)> fun1 );
-
-    //Function for iteration on all or partial uid's
-    //When function return true - iteration break, else countinued
-    void        forEachUid( std::function<bool(const QString &uid)> fun1 );
-
-    //Get header of object
-    // uid - object unical identificator
-    // hdr - place to receiv object header
-    bool        header( const QString uid, SdLibraryHeader &hdr );
-
-    //Get object
-    // uid - object unical identificator
-    QByteArray  object( const QString uid );
 
     //!
-    //! \brief insert     Insert new object with creation reference and append header and object
-    //! \param hdr        Header of inserted object
-    //! \param obj        Inserted object
-    //! \param downloaded true if object downloaded from remote repo
+    //! \brief forEachHeader Scan all available headers and call functor fun1 for each of them
+    //! \param fun1          Functor which called for each header
+    //!                      Function must return false to continue iteration
+    //!                      When function return true - iteration break and return true as indicator
+    //! \return              true if at least one functor return true
     //!
-    void        insert( const SdLibraryHeader &hdr, QByteArray obj, bool downloaded );
+    bool             forEachHeader( std::function<bool(SdLibraryHeader&)> fun1 );
+
+
+
+
+  signals:
+
+    //Append information item
+    void             informationAppended( const QString info );
+
+  private slots:
+    //!
+    //! \brief periodicScan Perform scan step
+    //!
+    void             periodicScan();
+
+  private:
+    //!
+    //! \brief insertReferenceAndHeader Insert in cache reference to object and header of object
+    //! \param item                     Object which inserted
+    //!
+    void             insertReferenceAndHeader( const SdContainerFile *item );
+
+    //!
+    //! \brief fullPath Return full path to library file
+    //! \param fileName Library file fileName
+    //! \return         Full path to library file
+    //!
+    QString          fullPath( const QString &fileName ) const;
+
+    static QString   cachePath();
   };
 
 

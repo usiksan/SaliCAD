@@ -13,7 +13,6 @@ Description
 */
 #include "SdDGetProjectObject.h"
 #include "ui_SdDGetProjectObject.h"
-#include "objects/SdObjectFactory.h"
 #include "objects/SdProjectItem.h"
 #include "objects/SdPItemComponent.h"
 #include "objects/SdPItemSymbol.h"

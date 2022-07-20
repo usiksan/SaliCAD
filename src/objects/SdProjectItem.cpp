@@ -11,8 +11,7 @@ Web
 Description
   Base for all project items
 */
-#include "library/SdLibraryHeader.h"
-#include "SdObjectFactory.h"
+#include "library/SdLibraryStorage.h"
 #include "SdProjectItem.h"
 #include "SdCopyMapProject.h"
 #include "SdGraphIdent.h"
@@ -80,7 +79,7 @@ void SdProjectItem::setUnicalTitle(const QString undoTitle)
     title = mTitle;
     title.append( QString("(%1)").arg(test++) );
     }
-  while( SdObjectFactory::isObjectPresent( headerUid( getType(), title, getDefaultAuthor() ) ) );
+  while( SdLibraryStorage::instance()->cfObjectContains( headerUid( getType(), title, getDefaultAuthor() ) ) );
   setTitle( title, undoTitle );
   }
 

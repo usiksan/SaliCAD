@@ -17,7 +17,7 @@ Description
 #include "windows/SdDGetObject.h"
 #include "windows/SdWEditorGraph.h"
 #include "objects/SdPItemSymbol.h"
-#include "objects/SdObjectFactory.h"
+#include "library/SdLibraryStorage.h"
 
 SdModeSymbolFragment::SdModeSymbolFragment(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeSelect( editor, obj )
@@ -90,7 +90,7 @@ void SdModeSymbolFragment::getSymbolFragment()
   if( !uid.isEmpty() ) {
     //Symbol selected
     mPastePrj = new SdProject{};
-    SdPItemSymbol *symbol = sdObjectOnly<SdPItemSymbol>( SdObjectFactory::extractObject( uid, false, mEditor ) );
+    SdPItemSymbol *symbol = sdObjectOnly<SdPItemSymbol>( SdLibraryStorage::instance()->cfObjectGet( uid ) );
     if( symbol != nullptr ) {
       mPastePrj->insertChild( symbol, mPastePrj->getUndo() );
       //At now we select all content of symbol

@@ -21,15 +21,14 @@ Description
 
 #include <QDataStream>
 
-#define SDLR_DOWNLOADED 0x1 //Object loaded from
+#define SDLR_DOWNLOADED  0x1 //Object loaded from
+#define SDLR_NEED_UPLOAD 0x2 //!< Object need to be upload to remote server
+#define SDLR_NEED_DELETE 0x4 //!< Object need to be deleted from remote server
 
 struct SdLibraryReference
   {
-    qint32 mCreationIndex;  //!< Index with which object is registered.
     qint32 mCreationTime;   //!< Time of object creation
     qint64 mHeaderPtr;      //!< Header reference. It contains offset from begining headers file to header of this object
-    qint64 mObjectPtr;      //!< Object reference. It contains offset from begining objects file to object.
-                            //!  Object reference can be null if no object loaded. Header can not be null.
     qint8  mFlags;          //!< Flags
 
     //Test if reference newer than time
@@ -38,14 +37,33 @@ struct SdLibraryReference
     //Test if reference newer or same than time
     bool isNewerOrSame( qint32 time ) const { return mCreationTime >= time; }
 
-    //Test if object newer or same or if newer reference
-    bool isObjectNewerOrSame( qint32 time ) const { return (mObjectPtr != 0 && mCreationTime >= time) || (mCreationTime > time); }
+    //!
+    //! \brief isNeedUpload Returns true if object need to be upload to remote server
+    //! \return             true if object need to be upload to remote server
+    //!
+    bool isNeedUpload() const { return mFlags & SDLR_NEED_UPLOAD; }
+
+    //!
+    //! \brief uploadReset Reset flag upload
+    //!
+    void uploadReset() { mFlags &= ~SDLR_NEED_UPLOAD; }
+
+    //!
+    //! \brief isNeedDelete Return true if object need to be removed from remote server
+    //! \return             true if object need to be removed from remote server
+    //!
+    bool isNeedDelete() const { return mFlags & SDLR_NEED_DELETE; }
+
+    //!
+    //! \brief deleteSet Set flag delete
+    //!
+    void deleteSet() { mFlags |= SDLR_NEED_DELETE; }
   };
 
 //Write function
 inline QDataStream &operator << ( QDataStream &os, const SdLibraryReference &ref )
   {
-  os << ref.mCreationIndex << ref.mCreationTime << ref.mHeaderPtr << ref.mObjectPtr << ref.mFlags;
+  os << ref.mCreationTime << ref.mHeaderPtr << ref.mFlags;
   return os;
   }
 
@@ -53,7 +71,7 @@ inline QDataStream &operator << ( QDataStream &os, const SdLibraryReference &ref
 //Read function
 inline QDataStream &operator >> ( QDataStream &is, SdLibraryReference &ref )
   {
-  is >> ref.mCreationIndex >> ref.mCreationTime >> ref.mHeaderPtr >> ref.mObjectPtr >> ref.mFlags;
+  is >> ref.mCreationTime >> ref.mHeaderPtr >> ref.mFlags;
   return is;
   }
 

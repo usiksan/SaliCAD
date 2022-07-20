@@ -27,15 +27,23 @@ SdWRemoteStatus::SdWRemoteStatus(QWidget *parent) :
   setWindowTitle( tr("Remote link messages") );
 
   //Add existings info items
-  addItems( sdObjectNetClient->infoList() );
+  addItems( SdObjectNetClient::instance()->infoList() );
 
   //Track to end of list
   setCurrentRow( count() - 1 );
 
   //When appended new info item
-  connect( sdObjectNetClient, &SdObjectNetClient::informationAppended, this, [this] ( const QString info ) {
+  connect( SdObjectNetClient::instance(), &SdObjectNetClient::informationAppended, this, [this] ( const QString info ) {
     //Append info to visual list
     addItem( info );
+
+    if( count() > 300 ) {
+      //Remove first item
+      auto item = takeItem(0);
+      if( item != nullptr )
+        delete item;
+      }
+
 
     //Track to end of list
     setCurrentRow( count() - 1 );

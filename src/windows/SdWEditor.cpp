@@ -14,9 +14,9 @@ Description
 #include "objects/SdProjectItem.h"
 #include "objects/SdProject.h"
 #include "objects/SdPulsar.h"
-#include "objects/SdObjectFactory.h"
 #include "objects/SdPItemSymbol.h"
 #include "objects/SdPItemComponent.h"
+#include "library/SdLibraryStorage.h"
 #include "SdWEditor.h"
 #include "SdWCommand.h"
 
@@ -116,7 +116,7 @@ void SdWEditor::cmObjectEditDisable()
   if( getProjectItem() ) {
     SdProjectItem *item = getProjectItem();
     //Check if object already in library
-    bool presenceInLibrary = SdObjectFactory::isObjectPresent( item->getId() );
+    bool presenceInLibrary = SdLibraryStorage::instance()->cfObjectContains( item->getUid() );
     getProjectItem()->setEditEnable( false, tr("Object edit disable") );
 
 
@@ -212,7 +212,7 @@ void SdWEditor::cmObjectEditEnable()
       int r = QMessageBox::question( this, tr("Warning"), tr("Remove '%1' from database?").arg(getProjectItem()->getTitle()) );
       if( r == QMessageBox::Yes )
         //Remove from database
-        SdObjectFactory::deleteItemObject( getProjectItem() );
+        SdLibraryStorage::instance()->cfObjectDelete( getProjectItem() );
       item = getProjectItem()->setEditEnable( true, tr("Object edit enable") );
       }
     //Close this editor (viewer)

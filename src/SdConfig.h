@@ -206,6 +206,8 @@ History
   26.05.2022 v1.35 Refactor read-write json into SvJsonIO infrastructure completed
   27.05.2022 v1.36 Append mode for symbol fragment
   02.06.2022 v1.37 Append face rotation algorithm, so we can do curved pins
+
+  20.07.2022 v2.0  Global refactoring library storage system
 */
 
 #ifndef SDCONFIG
@@ -216,8 +218,8 @@ History
 #define SD_NAME                      "SaliCAD"
 
 //Version definition
-#define SD_VERSION_MAJOR             1
-#define SD_VERSION_MINOR             37
+#define SD_VERSION_MAJOR             2
+#define SD_VERSION_MINOR             0
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -237,6 +239,9 @@ History
 
 //Layer list naming definition
 #define SD_LAYER_LIST_EXTENSION      ".layersSet"
+
+//Pads association naming definition
+#define SD_PAD_ASSOCIATION_EXTENSION ".salipads"
 
 //Category files
 #define SD_CATEGORY_EXTENSION        ".category"
@@ -302,6 +307,7 @@ History
 #define SDK_REMOTE_SYNC              "Remote sync"
 #define SDK_REMOTE_REMAIN            "Remote remain"
 #define SDK_SERVER_REPO              "SaliCAD repository"
+#define SDK_UPLOAD_AUTO              "Auto upload"
 #define SDK_ENVIR_VERSION            "Envir version"
 #define SDK_ENVIR                    "Envir"
 #define SDK_HELP_PATH                "HelpPath"

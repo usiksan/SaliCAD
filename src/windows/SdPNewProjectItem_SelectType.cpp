@@ -19,7 +19,7 @@ Description
 #include "objects/SdPItemSheet.h"
 #include "objects/SdPItemPlate.h"
 #include "objects/SdPItemRich.h"
-#include "objects/SdObjectFactory.h"
+#include "library/SdLibraryStorage.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -108,7 +108,7 @@ bool SdPNewProjectItem_SelectType::validatePage()
 
   //Pick up name
   for( int i = 1; i < 10000; i++ )
-    if( !mProject->isNameUsed( name.arg(i), (*mItemPtr)->getClass() ) && !SdObjectFactory::isContains( (*mItemPtr)->getType(), name.arg(i), SdProjectItem::getDefaultAuthor() ) ) {
+    if( !mProject->isNameUsed( name.arg(i), (*mItemPtr)->getClass() ) && !SdLibraryStorage::instance()->cfObjectContains( headerUid( (*mItemPtr)->getType(), name.arg(i), SdProjectItem::getDefaultAuthor() ) ) ) {
       (*mItemPtr)->setTitle( name.arg(i), tr("Set object title") );
       break;
       }

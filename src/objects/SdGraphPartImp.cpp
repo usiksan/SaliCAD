@@ -26,7 +26,7 @@ Description
 #include "SdSelector.h"
 #include "SdEnvir.h"
 #include "SdPlateNetList.h"
-#include "SdObjectFactory.h"
+#include "library/SdLibraryStorage.h"
 #include "SdJsonIO.h"
 
 #include <QDebug>
@@ -704,7 +704,7 @@ void SdGraphPartImp::attach(SdUndo *undo)
     int sectionCount = mComponent->getSectionCount();
     for( int i = 0; i < sectionCount; i++ ) {
       SdPartImpSection s;
-      SdPItemSymbol *sym = mComponent->extractSymbolFromFactory( i, false, nullptr );
+      SdPItemSymbol *sym = mComponent->extractSymbolFromFactory( i );
       s.mSymbol = prj->getFixedProjectItemClass(sym);
       if( sym )
         delete sym;
@@ -1243,26 +1243,27 @@ bool SdGraphPartImp::isUsed(SdObject *obj) const
 
 bool SdGraphPartImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
   {
-  if( SdObjectFactory::isThereNewer(mComponent) || SdObjectFactory::isThereNewer(mPart) ) {
+  Q_UNUSED(parent)
+  if( SdLibraryStorage::instance()->cfIsOlder(mComponent) || SdLibraryStorage::instance()->cfIsOlder(mPart) ) {
     //There newer objects. Upgrade.
     if( mSections.count() )
       return false;
 
     //Prepare newer objects
-    SdPItemComponent *comp = sdObjectOnly<SdPItemComponent>( mComponent ? SdObjectFactory::extractObject( mComponent->getUid(), false, parent ) : nullptr );
-    SdPItemPart      *part = sdObjectOnly<SdPItemPart>( comp ? comp->extractPartFromFactory( false, parent ) : nullptr );
+    QScopedPointer<SdPItemComponent> comp( sdObjectOnly<SdPItemComponent>( mComponent ? SdLibraryStorage::instance()->cfObjectGet( mComponent->getUid() ) : nullptr ) );
+    QScopedPointer<SdPItemPart>      part( sdObjectOnly<SdPItemPart>( comp ? comp->extractPartFromFactory() : nullptr ) );
 
     //Test if all newer objects prepared
-    if( comp && part ) {
+    if( !comp.isNull() && !part.isNull() ) {
       detach(undo);
 
       //Because "detach" perhaps without deleting symImp, then referenced object not autodeleted
       //Perform autodeling it
       SdPItemComponent *dcomp = mComponent;
       SdPItemPart      *dpart = mPart;
-      //Setup newer objects
-      mComponent = comp;
-      mPart      = part;
+      //Setup newer objects which are temporary and will be replace to actual in attach
+      mComponent = comp.get();
+      mPart      = part.get();
 
       //Autodelete all referenced objects
       if( dcomp ) dcomp->autoDelete( undo );
@@ -1270,12 +1271,8 @@ bool SdGraphPartImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
 
       attach(undo);
 
-      delete comp;
-      delete part;
       return true;
       }
-    if( comp ) delete comp;
-    if( part ) delete part;
     return false;
     }
   return true;

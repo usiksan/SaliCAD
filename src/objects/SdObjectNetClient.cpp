@@ -19,6 +19,7 @@ Description
 */
 #include "SdConfig.h"
 #include "SdObjectNetClient.h"
+#include "SdContainerFile.h"
 #include "library/SdLibraryStorage.h"
 
 #include <QThread>
@@ -28,8 +29,7 @@ Description
 #include <QHttpMultiPart>
 #include <QHostAddress>
 #include <QSettings>
-#include <QJsonObject>
-#include <QJsonDocument>
+#include <QScopedPointer>
 
 
 
@@ -41,9 +41,6 @@ Description
 #define REPO_FIELD_UID      QStringLiteral("uid")
 #define REPO_FIELD_TIME     QStringLiteral("time")
 #define REPO_FIELD_OBJECT   QStringLiteral("object")
-
-//Main object for remote database communication
-SdObjectNetClient *sdObjectNetClient;
 
 
 static void sdHttpMultiPartAppendField( QHttpMultiPart *multiPart, const QString fieldName, const QByteArray data )
@@ -59,19 +56,17 @@ static void sdHttpMultiPartAppendField( QHttpMultiPart *multiPart, const QString
 
 SdObjectNetClient::SdObjectNetClient(QObject *parent) :
   QObject( parent ),
-  mQueryType(SdRemoteQueryNone)
+  mQueryType(SdRemoteQueryNone),
+  mLockRemote(0)
   {
 
   mTimer.setInterval( 1000 );
-  qDebug() << "registered" << isRegistered();
-  if( isRegistered() )
-    mTimer.start();
+  mTimer.start();
 
   mNetworkManager = new QNetworkAccessManager(this);
 
   connect( mNetworkManager, &QNetworkAccessManager::finished, this, &SdObjectNetClient::finished );
   connect( &mTimer, &QTimer::timeout, this, &SdObjectNetClient::doSync );
-
   }
 
 
@@ -91,6 +86,19 @@ bool SdObjectNetClient::isRegistered() const
 
 
 
+void SdObjectNetClient::remoteUnlock()
+  {
+  if( mLockRemote )
+    mLockRemote--;
+  if( mLockRemote == 0 ) {
+    mQueryType = SdRemoteQueryNone;  //Type of remote operation
+    mObjectIndexList.clear();        //Object index list of newest objects from remote repository
+    }
+  }
+
+
+
+
 
 
 
@@ -98,8 +106,6 @@ bool SdObjectNetClient::isRegistered() const
 //Begin registration process
 void SdObjectNetClient::doRegister(const QString repo, const QString authorName, const QString password, const QString email)
   {
-  mTimer.stop();
-
   QString fullRepo;
   if( repo.endsWith(QChar('/')) )
     fullRepo = repo;
@@ -130,32 +136,6 @@ void SdObjectNetClient::doRegister(const QString repo, const QString authorName,
 
 
 
-//Begin object receiving process
-void SdObjectNetClient::doObject(const QString hashId)
-  {
-//  emit remoteStatus( SdRemoteSync );
-//  mCommand = 0;
-//  mBuffer.clear();
-//  QDataStream os( &mBuffer, QIODevice::WriteOnly );
-//  QSettings s;
-//  QString author          = s.value( SDK_GLOBAL_AUTHOR ).toString();
-//  quint64 key             = s.value( SDK_MACHINE_KEY ).toString().toULongLong( nullptr, 32 );
-//  QString hostIp          = s.value( SDK_SERVER_IP ).toString();
-
-//  SdAuthorInfo info( author, key, 0 );
-//  os << info << hashId;
-//  mCommand = SCPI_OBJECT_REQUEST;
-//  if( mSocket->state() != QAbstractSocket::ConnectedState ) {
-//    mSocket->connectToHost( QHostAddress(hostIp), SD_DEFAULT_PORT );
-//    emit process( tr("Try connect to host %1").arg(hostIp), false );
-//    }
-  }
-
-
-
-
-
-
 
 
 
@@ -163,22 +143,20 @@ void SdObjectNetClient::doObject(const QString hashId)
 void SdObjectNetClient::doSync()
   {
   mTimer.setInterval(10000);
+
+  if( mLockRemote > 0 )
+    return;
+
   if( mQueryType == SdRemoteQueryNone ) {
     QSettings s;
-    QString author          = s.value( SDK_GLOBAL_AUTHOR ).toString();
-    QString password        = s.value( SDK_GLOBAL_PASSWORD ).toString();
-    int     localSyncIndex  = s.value( SDK_LOCAL_SYNC ).toInt();
     int     remoteSyncIndex = s.value( SDK_REMOTE_SYNC ).toInt();
     QString hostRepo        = s.value( SDK_SERVER_REPO ).toString();
-    if( !hostRepo.isEmpty() && !author.isEmpty() && !password.isEmpty() ) {
-      remoteStatus( SdRemoteSync );
-      //qDebug() << "doSync localSyncIndex" << localSyncIndex << "remoteSyncIndex" << remoteSyncIndex;
-      //infoAppend( tr("Do sync...") );
+    if( !hostRepo.isEmpty() ) {
+      emit remoteStatus( SdRemoteSync );
+
       //Prepare block for transmition
       QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
-      sdHttpMultiPartAppendField( multiPart, REPO_FIELD_AUTHOR, author.toUtf8() );
-      sdHttpMultiPartAppendField( multiPart, REPO_FIELD_PASSWORD, password.toUtf8() );
       sdHttpMultiPartAppendField( multiPart, REPO_FIELD_INDEX, QByteArray::number(remoteSyncIndex) );
 
       mQueryType = SdRemoteQueryList;
@@ -192,18 +170,6 @@ void SdObjectNetClient::doSync()
 
 
 
-void SdObjectNetClient::startSync(bool start)
-  {
-  if( start ) {
-    if( isRegistered() )
-      mTimer.start();
-    }
-  else
-    mTimer.stop();
-  }
-
-
-
 
 
 
@@ -212,6 +178,7 @@ void SdObjectNetClient::startSync(bool start)
 //Receiv file from repository
 void SdObjectNetClient::doFile(const QString fileName)
   {
+  Q_UNUSED(fileName)
   emit remoteStatus( SdRemoteSync );
 //  QSettings s;
 //  QString author          = s.value( SDK_GLOBAL_AUTHOR ).toString();
@@ -359,12 +326,15 @@ void SdObjectNetClient::cmRegister(const QJsonObject &reply)
 //!
 void SdObjectNetClient::cmSyncList(const QJsonObject &reply)
   {
+  if( mLockRemote > 0 )
+    return;
+
   if( reply.value( QStringLiteral("result") ).toInt() == 0 ) {
     //Retrive object list from reply
     QJsonObject list = reply.value( QStringLiteral("list") ).toObject();
     mObjectIndexList.clear();
     if( list.count() ) {
-      qDebug() << "sync list received:" << list.count();
+      //qDebug() << "sync list received:" << list.count();
       infoAppend( tr("Sync list received %1 objects").arg(list.count()) );
       int indexMax = 0;
       for( auto it = list.constBegin(); it != list.constEnd(); it++ ) {
@@ -374,11 +344,11 @@ void SdObjectNetClient::cmSyncList(const QJsonObject &reply)
         int     index  = it.key().toInt();
         if( index > indexMax ) indexMax = index;
         //Test if object newer than existing
-        if( !SdLibraryStorage::instance()->isNewerOrSameObject( uid, time ) ) {
+        if( !SdLibraryStorage::instance()->cfIsOlder( uid, time ) ) {
           //Object is newer than existing or no object with this uid
           //so append object index to download list
           mObjectIndexList.append( index );
-          qDebug() << "[" << index << "]=" << uid;
+          //qDebug() << "[" << index << "]=" << uid;
           }
         }
       //Sort list by accedence
@@ -403,30 +373,31 @@ void SdObjectNetClient::cmSyncList(const QJsonObject &reply)
 //!
 void SdObjectNetClient::cmDownloadObject(const QJsonObject &reply)
   {
+  if( mLockRemote > 0 )
+    return;
+
   if( reply.value( QStringLiteral("result") ).toInt() == 0 ) {
     //Object download successfully
     int        remoteSyncIndex = reply.value( REPO_FIELD_INDEX ).toString().toInt();
     QByteArray objectHex       = reply.value( REPO_FIELD_OBJECT ).toString().toLatin1();
-    QByteArray object = QByteArray::fromHex( objectHex );
 
-    QDataStream is( object );
-    SdLibraryHeader header;
-    QByteArray objectBody;
-    is >> header >> objectBody;
+    QScopedPointer<SdContainerFile> item( sdObjectOnly<SdContainerFile>(SdObject::jsonCborCompressedFrom(QByteArray::fromHex( objectHex ))));
 
-    qDebug() << "sync downloaded successfully [" << remoteSyncIndex << "]" << header.uid();
-    infoAppend( tr("Downloaded \"%1\"").arg(header.mName) );
+    if( !item.isNull() ) {
+      infoAppend( tr("Downloaded \"%1\"").arg( item->getTitle() ) );
 
-    SdLibraryStorage::instance()->insert( header, objectBody, true );
+      SdLibraryStorage::instance()->cfObjectInsert( item.get() );
+      //Exclude now downloaded object from upload
+      SdLibraryStorage::instance()->cfObjectUploaded( item->getUid() );
 
-    QSettings s;
-    s.setValue( SDK_REMOTE_SYNC, remoteSyncIndex );
-    mObjectIndexList.removeFirst();
+      QSettings s;
+      s.setValue( SDK_REMOTE_SYNC, remoteSyncIndex );
+      mObjectIndexList.removeFirst();
+      }
     }
   else if( reply.value( QStringLiteral("result") ).toInt() == 3 ) {
     //Запрошенный объект не найден - хрень какая-то
     mObjectIndexList.removeFirst();
-    //qDebug() << "sync download failure";
     }
   doDownloadNextObject();
   }
@@ -440,13 +411,13 @@ void SdObjectNetClient::cmDownloadObject(const QJsonObject &reply)
 //!
 void SdObjectNetClient::cmUploadObject(const QJsonObject &reply)
   {
+  if( mLockRemote > 0 )
+    return;
+
   if( reply.value( QStringLiteral("result") ).toInt() == 0 ) {
     //Object uploaded successfully
     //qDebug() << "sync uploaded successfully";
-    //Increment object counter
-    QSettings s;
-    int localSyncIndex  = s.value( SDK_LOCAL_SYNC ).toInt();
-    s.setValue( SDK_LOCAL_SYNC, ++localSyncIndex );
+    SdLibraryStorage::instance()->cfObjectUploaded( reply.value(REPO_FIELD_UID).toString() );
     doUploadNextObject();
     }
   }
@@ -456,41 +427,6 @@ void SdObjectNetClient::cmUploadObject(const QJsonObject &reply)
 
 
 
-//void SdObjectNetClient::cmObject(QDataStream &is)
-//  {
-//  SdAuthorInfo info;
-//  is >> info;
-//  qDebug() << "cmObject" << info.mAuthor << info.mKey << info.mRemain;
-//  if( info.isSuccessfull() ) {
-//    emit remoteStatus( SdRemoteOn );
-
-//    //For object header
-//    SdLibraryHeader header;
-//    //For object store
-//    QByteArray obj;
-
-//    is >> header >> obj;
-
-//    sdLibraryStorage.insert( header, obj );
-
-//    infoAppend( tr("Object received: ") + header.mName );
-
-//    QSettings s;
-//    s.setValue( SDK_REMOTE_REMAIN, QString::number(info.mRemain) );
-
-//    if( mQueryObjects.count() ) {
-//      //There are queried objects
-//      doObject( mQueryObjects.first() );
-//      mQueryObjects.removeFirst();
-//      }
-
-//    }
-//  else {
-//    emit process( error(info.result()), false );
-//    emit remoteStatus( SdRemoteOff );
-//    }
-//  emit objectComplete( info.result(), info.mRemain );
-//  }
 
 
 
@@ -501,6 +437,7 @@ void SdObjectNetClient::cmUploadObject(const QJsonObject &reply)
 
 void SdObjectNetClient::cmFile(QDataStream &is)
   {
+  Q_UNUSED(is)
 //  emit remoteStatus( SdRemoteOn );
 
 //  SdAuthorInfo info;
@@ -519,20 +456,18 @@ void SdObjectNetClient::cmFile(QDataStream &is)
 //!
 void SdObjectNetClient::doDownloadNextObject()
   {
+  if( mLockRemote > 0 )
+    return;
+
   if( mObjectIndexList.count() ) {
     QSettings s;
-    QString author          = s.value( SDK_GLOBAL_AUTHOR ).toString();
-    QString password        = s.value( SDK_GLOBAL_PASSWORD ).toString();
     QString hostRepo        = s.value( SDK_SERVER_REPO ).toString();
-    if( !hostRepo.isEmpty() && !author.isEmpty() && !password.isEmpty() ) {
+    if( !hostRepo.isEmpty() ) {
       //Query next object
       //We need to download object
       //Prepare block for transmition
       QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
-      //qDebug() << "sync query download" << "[" << gindex << "]=" << uid;
-      sdHttpMultiPartAppendField( multiPart, REPO_FIELD_AUTHOR, author.toUtf8() );
-      sdHttpMultiPartAppendField( multiPart, REPO_FIELD_PASSWORD, password.toUtf8() );
       sdHttpMultiPartAppendField( multiPart, REPO_FIELD_INDEX, QByteArray::number(mObjectIndexList.first()) );
 
       mQueryType = SdRemoteQueryDownloadObject;
@@ -556,51 +491,34 @@ void SdObjectNetClient::doDownloadNextObject()
 //!
 void SdObjectNetClient::doUploadNextObject()
   {
+  if( mLockRemote > 0 )
+    return;
+
   QSettings s;
   QString author          = s.value( SDK_GLOBAL_AUTHOR ).toString();
   QString password        = s.value( SDK_GLOBAL_PASSWORD ).toString();
-  int     localSyncIndex  = s.value( SDK_LOCAL_SYNC ).toInt();
-  //int     remoteSyncIndex = s.value( SDK_REMOTE_SYNC ).toInt();
   QString hostRepo        = s.value( SDK_SERVER_REPO ).toString();
-  if( !hostRepo.isEmpty() && !author.isEmpty() && !password.isEmpty() ) {
-    while( localSyncIndex < SdLibraryStorage::instance()->creationIndex() ) {
-      QString uid = SdLibraryStorage::instance()->getUidByIndex( localSyncIndex );
-      if( uid.isEmpty() ) {
-        //No object found with this index. Take next index
-        localSyncIndex++;
-        s.setValue( SDK_LOCAL_SYNC, localSyncIndex );
-        }
-      else {
-        SdLibraryHeader header;
-        if( SdLibraryStorage::instance()->header( uid, header ) ) {
-          QByteArray object;
-          QDataStream os( &object, QIODevice::WriteOnly );
-          os << header << SdLibraryStorage::instance()->object(uid);
+  bool    uploadAvailable = s.value( SDK_UPLOAD_AUTO ).toBool();
+  if( !hostRepo.isEmpty() && !author.isEmpty() && !password.isEmpty() && uploadAvailable ) {
+    QScopedPointer<SdContainerFile> item( SdLibraryStorage::instance()->cfObjectUpload() );
+    if( !item.isNull() ) {
+      //There object to upload to global repo
+      //Prepare block for transmition
+      QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
-          //There object to upload to global repo
-          //Prepare block for transmition
-          QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+      sdHttpMultiPartAppendField( multiPart, REPO_FIELD_AUTHOR, author.toUtf8() );
+      sdHttpMultiPartAppendField( multiPart, REPO_FIELD_PASSWORD, password.toUtf8() );
+      sdHttpMultiPartAppendField( multiPart, REPO_FIELD_UID, item->getUid().toUtf8() );
+      sdHttpMultiPartAppendField( multiPart, REPO_FIELD_TIME, QByteArray::number( item->getTime() ) );
+      sdHttpMultiPartAppendField( multiPart, REPO_FIELD_OBJECT, item->jsonCborCompressedTo().toHex() );
 
-          sdHttpMultiPartAppendField( multiPart, REPO_FIELD_AUTHOR, author.toUtf8() );
-          sdHttpMultiPartAppendField( multiPart, REPO_FIELD_PASSWORD, password.toUtf8() );
-          sdHttpMultiPartAppendField( multiPart, REPO_FIELD_UID, uid.toUtf8() );
-          sdHttpMultiPartAppendField( multiPart, REPO_FIELD_TIME, QByteArray::number(header.mTime) );
-          sdHttpMultiPartAppendField( multiPart, REPO_FIELD_OBJECT, object.toHex() );
+      //qDebug() << "sync query upload" << uid;
+      infoAppend( tr("Upload \"%1\"").arg( item->getTitle() ) );
 
-          //qDebug() << "sync query upload" << uid;
-          infoAppend( tr("Upload \"%1\"").arg(header.mName) );
-
-          mQueryType = SdRemoteQueryUploadObject;
-          QNetworkReply *reply = mNetworkManager->post( QNetworkRequest(QUrl( QStringLiteral("http://") + hostRepo + QStringLiteral("upload.php"))), multiPart );
-          multiPart->setParent(reply); // delete the multiPart with the reply
-          return;
-          }
-        else {
-          //This object can't upload. Skeep it
-          localSyncIndex++;
-          s.setValue( SDK_LOCAL_SYNC, localSyncIndex );
-          }
-        }
+      mQueryType = SdRemoteQueryUploadObject;
+      QNetworkReply *reply = mNetworkManager->post( QNetworkRequest(QUrl( QStringLiteral("http://") + hostRepo + QStringLiteral("upload.php"))), multiPart );
+      multiPart->setParent(reply); // delete the multiPart with the reply
+      return;
       }
     }
   }
@@ -623,17 +541,5 @@ void SdObjectNetClient::infoAppend(const QString info)
   //Send signal to extern objects
   emit informationAppended( info );
   }
-
-
-
-
-
-
-
-
-
-
-
-
 
 

@@ -14,7 +14,7 @@ Description
 #include "SdPItemComponent.h"
 #include "SdPItemSymbol.h"
 #include "SdPartVariant.h"
-#include "SdObjectFactory.h"
+#include "library/SdLibraryStorage.h"
 #include "SdProject.h"
 #include "SdConfig.h"
 
@@ -71,11 +71,11 @@ void SdPItemComponent::setPartId(const QString id, SdUndo *undo)
 
 
 //Return part descripted part variant
-SdPItemPart *SdPItemComponent::extractPartFromFactory(bool soft, QWidget *parent) const
+SdPItemPart *SdPItemComponent::extractPartFromFactory() const
   {
   SdPartVariant *part = getPart();
   if( part != nullptr )
-    return part->extractFromFactory( soft, parent );
+    return part->extractFromFactory();
   return nullptr;
   }
 
@@ -185,11 +185,11 @@ SdSection *SdPItemComponent::getSection(int sectionIndex) const
 
 
 //Return symbol from section by index
-SdPItemSymbol *SdPItemComponent::extractSymbolFromFactory(int sectionIndex, bool soft, QWidget *parent) const
+SdPItemSymbol *SdPItemComponent::extractSymbolFromFactory(int sectionIndex) const
   {
   SdSection *sec = getSection( sectionIndex );
   if( sec != nullptr )
-    return sec->extractFromFactory( soft, parent );
+    return sec->extractFromFactory();
   return nullptr;
   }
 
@@ -290,7 +290,7 @@ SdPItemComponent *sdCreateDefaultComponent(SdPItemSymbol *symbol, bool appendDef
   symbol->getProject()->insertChild( comp, symbol->getUndo() );
 
   //Append symbol to library
-  SdObjectFactory::insertItemObject( symbol, symbol->jsonObjectTo() );
+  SdLibraryStorage::instance()->cfObjectInsert( symbol );
   //Append section with symbol
   comp->appendSection( symbol->getUid(), symbol->getUndo() );
 

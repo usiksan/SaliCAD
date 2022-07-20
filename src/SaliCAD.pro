@@ -174,7 +174,6 @@ SOURCES += \
     windows/SdPNewProjectItem_SelectType.cpp \
     windows/SdPNewProjectItem_EnterName.cpp \
     windows/SdDGetObject.cpp \
-    objects/SdObjectFactory.cpp \
     windows/SdWEditorGraph.cpp \
     windows/SdWEditorGraphSymbol.cpp \
     objects/SdScaler.cpp \
@@ -294,7 +293,6 @@ SOURCES += \
     objects/SdUndoRecordInsertDelete.cpp \
     objects/SdUndoRecordProjectItem.cpp \
     objects/SdObjectNetClient.cpp \
-    windows/SdDNetClient.cpp \
     windows/SdDRegistation.cpp \
     objects/SdPasCadImport.cpp \
     objects/SdSymImpPin.cpp \
@@ -671,7 +669,6 @@ HEADERS  += \
     windows/SdPNewProjectItem_SelectType.h \
     windows/SdPNewProjectItem_EnterName.h \
     windows/SdDGetObject.h \
-    objects/SdObjectFactory.h \
     windows/SdWEditorGraph.h \
     windows/SdWEditorGraphSymbol.h \
     objects/SdScaler.h \
@@ -792,7 +789,6 @@ HEADERS  += \
     objects/SdUndoRecordInsertDelete.h \
     objects/SdUndoRecordProjectItem.h \
     objects/SdObjectNetClient.h \
-    windows/SdDNetClient.h \
     windows/SdDRegistation.h \
     objects/SdPasCadImport.h \
     objects/SdSymImpPin.h \
@@ -926,7 +922,6 @@ FORMS += \
     windows/SdDGetBus.ui \
     windows/SdDEnterPosition.ui \
     windows/SdDPrint.ui \
-    windows/SdDNetClient.ui \
     windows/SdDRegistation.ui \
     windows/SdDGrid.ui \
     windows/SdDLayers.ui \

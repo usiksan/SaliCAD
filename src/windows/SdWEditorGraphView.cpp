@@ -14,7 +14,7 @@ Description
 #include "SdWEditorGraphView.h"
 #include "SdWCommand.h"
 #include "objects/SdPulsar.h"
-#include "objects/SdObjectFactory.h"
+#include "library/SdLibraryStorage.h"
 #include "SdPMasterList.h"
 #include "SdPExport_Dxf.h"
 
@@ -88,8 +88,7 @@ void SdWEditorGraphView::setItem( SdProjectItem *item, bool owner )
 //Set new item by item id
 void SdWEditorGraphView::setItemById(const QString id)
   {
-  SdProjectItem *item = dynamic_cast<SdProjectItem*>( SdObjectFactory::extractObject( id, true, this ) );
-  setItem( item, true );
+  setItem( sdObjectOnly<SdProjectItem>( SdLibraryStorage::instance()->cfObjectGet(id) ), true );
   }
 
 

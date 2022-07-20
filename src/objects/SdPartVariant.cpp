@@ -13,7 +13,7 @@ Description
   different component placement with the same part or different parts of one component.
 */
 #include "SdPartVariant.h"
-#include "SdObjectFactory.h"
+#include "library/SdLibraryStorage.h"
 #include "SdPItemPart.h"
 #include "SdJsonIO.h"
 
@@ -26,9 +26,9 @@ SdPartVariant::SdPartVariant() :
 
 
 
-SdPItemPart *SdPartVariant::extractFromFactory(bool soft, QWidget *parent) const
+SdPItemPart *SdPartVariant::extractFromFactory() const
   {
-  return dynamic_cast<SdPItemPart*>( SdObjectFactory::extractObject( mPartId, soft, parent ) );
+  return sdObjectOnly<SdPItemPart>( SdLibraryStorage::instance()->cfObjectGet( mPartId ) );
   }
 
 
@@ -37,11 +37,11 @@ SdPItemPart *SdPartVariant::extractFromFactory(bool soft, QWidget *parent) const
 void SdPartVariant::setPartId(const QString id, SdUndo *undo)
   {
   SdLibraryHeader hdr;
-  if( SdObjectFactory::extractHeader(id, hdr) ) {
+  if( SdLibraryStorage::instance()->header( id, hdr) ) {
     if( undo != nullptr )
       undo->string2( &mPartId, &mPartTitle );
     mPartId = id;
-    mPartTitle = QString( "%1 (%2)" ).arg(hdr.mName).arg(hdr.mAuthor);
+    mPartTitle = QString( "%1 (%2)" ).arg( hdr.mName, hdr.mAuthor );
     }
   }
 

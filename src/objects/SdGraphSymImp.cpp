@@ -28,7 +28,7 @@ Description
 #include "SdContext.h"
 #include "SdUndo.h"
 #include "SdEnvir.h"
-#include "SdObjectFactory.h"
+#include "library/SdLibraryStorage.h"
 #include "SdJsonIO.h"
 
 #include <QDebug>
@@ -944,16 +944,17 @@ bool SdGraphSymImp::isUsed(SdObject *obj) const
 
 bool SdGraphSymImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
   {
-  if( SdObjectFactory::isThereNewer(mComponent) || SdObjectFactory::isThereNewer(mSymbol) || SdObjectFactory::isThereNewer(mPart) ) {
+  Q_UNUSED(parent)
+  if( SdLibraryStorage::instance()->cfIsOlder(mComponent) || SdLibraryStorage::instance()->cfIsOlder(mSymbol) || SdLibraryStorage::instance()->cfIsOlder(mPart) ) {
     //There newer objects. Upgrade.
 
     //Prepare newer objects
-    SdPItemComponent *comp = sdObjectOnly<SdPItemComponent>( mComponent ? SdObjectFactory::extractObject( mComponent->getUid(), false, parent ) : nullptr );
-    SdPItemSymbol    *sym  = sdObjectOnly<SdPItemSymbol>( comp ? comp->extractSymbolFromFactory( mSectionIndex, false, parent ) : nullptr );
-    SdPItemPart      *part = sdObjectOnly<SdPItemPart>( comp ? comp->extractPartFromFactory( false, parent ) : nullptr );
+    QScopedPointer<SdPItemComponent> comp( sdObjectOnly<SdPItemComponent>( mComponent ? SdLibraryStorage::instance()->cfObjectGet( mComponent->getUid() ) : nullptr ) );
+    QScopedPointer<SdPItemSymbol>    sym( sdObjectOnly<SdPItemSymbol>( comp ? comp->extractSymbolFromFactory( mSectionIndex ) : nullptr ) );
+    QScopedPointer<SdPItemPart>      part( sdObjectOnly<SdPItemPart>( comp ? comp->extractPartFromFactory() : nullptr ) );
 
     //Test if all newer objects prepared
-    if( comp && sym && part ) {
+    if( !comp.isNull() && !sym.isNull() && !part.isNull() ) {
       //Retrive implement properties for restore position and other properties of implement because after
       //upgrading mPartImp will be different from current
       SdPropSelected prop;
@@ -969,9 +970,11 @@ bool SdGraphSymImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
       SdPItemComponent *dcomp = mComponent;
       SdPItemSymbol    *dsym  = mSymbol;
       SdPItemPart      *dpart = mPart;
-      mComponent = comp;
-      mSymbol    = sym;
-      mPart      = part;
+
+      //This assignes are temporary, it will be replace on actual in attach function
+      mComponent = comp.get();
+      mSymbol    = sym.get();
+      mPart      = part.get();
 
       //Replace params which has no variants
       //B065 When upgrading component don't changed ident (and perhaps - value)
@@ -1003,14 +1006,8 @@ bool SdGraphSymImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
       //Setup new param table
       paramTableSet( newMap, undo, nullptr );
 
-      delete comp;
-      delete sym;
-      delete part;
       return true;
       }
-    if( comp ) delete comp;
-    if( sym ) delete sym;
-    if( part ) delete part;
     return false;
     }
   return true;

@@ -39,9 +39,9 @@ Description
 #include "SdDGetObject.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
-#include "objects/SdObjectFactory.h"
 #include "objects/SdObjectNetClient.h"
 #include "guider/SdGuiderCapture.h"
+#include "library/SdLibraryStorage.h"
 
 #include <QSettings>
 #include <QCloseEvent>
@@ -139,7 +139,7 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   sbar->addWidget( mCapture );
 
   mRemote = new QToolButton();
-  if( sdObjectNetClient->isRegistered() ) {
+  if( SdObjectNetClient::instance()->isRegistered() ) {
     mRemote->setIcon( QIcon(QString(":/pic/iconRemoteOn.png")) );
     mRemote->setToolTip( tr("Remote repository status: registered and link ok") );
     }
@@ -148,7 +148,7 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
     mRemote->setToolTip( tr("Remote repository status: unregistered or can't connect to repository. Check Help->Registration.") );
     }
 
-  connect( sdObjectNetClient, &SdObjectNetClient::remoteStatus, this, [this] ( SdRemoteStatus st ) {
+  connect( SdObjectNetClient::instance(), &SdObjectNetClient::remoteStatus, this, [this] ( SdRemoteStatus st ) {
     if( st == SdRemoteOn ) {
       mRemote->setIcon( QIcon(QString(":/pic/iconRemoteOn.png")) );
       mRemote->setToolTip( tr("Remote repository status: registered and link ok") );
@@ -165,7 +165,7 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   connect( mRemote, &QToolButton::clicked, this, &SdWMain::cmRemoteStatus );
   sbar->addWidget( mRemote );
   //Show status when sync operation happens
-  connect( sdObjectNetClient, &SdObjectNetClient::informationAppended, this, [this] ( const QString ) { cmRemoteStatus(); } );
+  connect( SdObjectNetClient::instance(), &SdObjectNetClient::informationAppended, this, [this] ( const QString ) { cmRemoteStatus(); } );
 
   activateProjectName( nullptr );
 
@@ -197,12 +197,12 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   //Show help intro
   cmHelpIntro();
 
-  connect( sdObjectNetClient, &SdObjectNetClient::fileContents, this, &SdWMain::onFileReceived );
+  connect( SdObjectNetClient::instance(), &SdObjectNetClient::fileContents, this, &SdWMain::onFileReceived );
 
   //When start application we check for updating
   QTimer::singleShot( 300, this, [] () {
     //We send request to receiv version info file
-    sdObjectNetClient->doFile( QStringLiteral("version") );
+    SdObjectNetClient::instance()->doFile( QStringLiteral("version") );
     });
   }
 
@@ -756,13 +756,10 @@ void SdWMain::cmFileLoad()
   {
   QString uid = SdDGetObject::getObjectUid( dctProject, tr("Select project to load"), this );
   if( !uid.isEmpty() ) {
-    SdLibraryHeader hdr;
-    if( SdObjectFactory::extractHeader( uid, hdr ) ) {
-      SdProject *prj = sdObjectOnly<SdProject>( SdObjectFactory::extractObject( uid, false, this ) );
-      if( prj )
-        //Open loaded project
-        mWProjectList->fileOpen( hdr.mName, prj );
-      }
+    SdProject *prj = sdObjectOnly<SdProject>( SdLibraryStorage::instance()->cfObjectGet( uid ) );
+    if( prj )
+      //Open loaded project
+      mWProjectList->fileOpen( prj->getTitle(), prj );
     }
   }
 

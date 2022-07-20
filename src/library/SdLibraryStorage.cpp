@@ -19,8 +19,8 @@ Description
   Storage complains all three files and formalized access to it.
 */
 #include "SdLibraryStorage.h"
-#include "objects/SdEnvir.h"
 #include "objects/SdContainerFile.h"
+#include "objects/SdObjectNetClient.h"
 #include "SvLib/SvDir.h"
 
 #include <QDir>
@@ -28,150 +28,256 @@ Description
 #include <QWriteLocker>
 #include <QSaveFile>
 #include <QFileInfo>
+#include <QSettings>
 #include <QDebug>
 
-#define FNAME_REF mPath + QStringLiteral("reference.dat")
-#define FNAME_HDR mPath + QStringLiteral("headers.dat")
-#define FNAME_OBJ mPath + QStringLiteral("objects.dat")
+#define FNAME_REF cachePath() + QStringLiteral("reference.dat")
+#define FNAME_HDR cachePath() + QStringLiteral("headers.dat")
 #define HDR_START 18
 
 SdLibraryStorage::SdLibraryStorage() :
   QObject(),
-  mPath(),
-  mCreationIndex(0),
   mReferenceMap(),
   mHeaderFile(),
-  mObjectFile(),
+  mNetClientLocker(nullptr),
   mDirty(false),
+  mUploadAvailable(false),
   mLock()
   {
-
-  }
-
-void SdLibraryStorage::init()
-  {
-  setLibraryPath( sdEnvir->mLibraryPath );
   }
 
 
 
 
-//With settings library path Storage creates files if yet not created, open files and load map
-void SdLibraryStorage::setLibraryPath(const QString path)
+
+//!
+//! \brief libraryPathSet Set new library path
+//! \param path           New library path
+//!
+//! Current caches are cleared, library path changed and scan start from begin
+void SdLibraryStorage::libraryPathSet(const QString &path)
   {
   QWriteLocker locker( &mLock );
 
+  //Build new library directory
+  SvDir dir( path );
+  QDir().mkpath( dir.slashedPath() );
+  mLibraryPath = dir.slashedPath();
+  QSettings s;
+  s.setValue( QStringLiteral("LIBRARY_PATH"), mLibraryPath );
+
+  //Clear cache
+  mReferenceMap.clear();
+  QFile file(FNAME_HDR);
+  if( file.open( QIODevice::WriteOnly ) ) {
+    file.resize(HDR_START);
+    file.close();
+    }
+
+  //Clear current scan process
+  mScanList.clear();
+  mExistList.clear();
+  mUploadAvailable = false;
+  if( mNetClientLocker == nullptr )
+    mNetClientLocker = new SdNetClientLocker();
+  }
+
+
+
+
+//!
+//! \brief libraryInit Init library system
+//!
+void SdLibraryStorage::libraryInit()
+  {
+  QWriteLocker locker( &mLock );
+
+  if( mNetClientLocker == nullptr )
+    mNetClientLocker = new SdNetClientLocker();
+
+  QSettings s;
+  mLibraryPath = s.value( QStringLiteral("LIBRARY_PATH") ).toString();
+  if( mLibraryPath.isEmpty() ) {
+    //Library path not defined yet
+    SvDir dir( QDir::homePath() );
+    dir.cd( QStringLiteral("SaliLAB/SaliCAD/library/") );
+    QDir().mkpath( dir.slashedPath() );
+    mLibraryPath = dir.slashedPath();
+    s.setValue( QStringLiteral("LIBRARY_PATH"), mLibraryPath );
+    }
+
   //Close previously opened data base
-  if( mHeaderFile.isOpen() ) {
+  if( mHeaderFile.isOpen() )
     mHeaderFile.close();
-    mObjectFile.close();
-    }
 
-  //Setup new path
-  mPath = path;
-  if( mPath == QString("/") ) {
-    //library in root unavailable
-    mPath.clear();
-    return;
-    }
-
-  //Check back slash
-  if( !mPath.endsWith( QChar('/') ) )
-    mPath.append( QChar('/') );
-
-  //mReferenceFile.setFileName( FNAME_REF );
   mHeaderFile.setFileName( FNAME_HDR );
-  mObjectFile.setFileName( FNAME_OBJ );
 
   //Check if directory present
-  QDir dir(mPath);
-  if( !dir.exists() || (!QFile::exists(FNAME_REF) && !QFile::exists(FNAME_HDR) && !QFile::exists(FNAME_OBJ)) ) {
+  QDir dir( cachePath() );
+  if( !dir.exists() || (!QFile::exists(FNAME_REF) && !QFile::exists(FNAME_HDR) ) ) {
     //Directory not exist, create one
-    if( !dir.exists() && !dir.mkpath( mPath ) ) {
-      mPath.clear();
+    if( !dir.exists() && !dir.mkpath( cachePath() ) ) {
+      mLibraryPath.clear();
       return;
       }
     //Create data files
     QFile file(FNAME_REF);
     if( !file.open( QIODevice::WriteOnly ) ) {
-      mPath.clear();
+      mLibraryPath.clear();
       return;
       }
     file.close();
 
     if( !mHeaderFile.open( QIODevice::WriteOnly ) ) {
-      mPath.clear();
+      mLibraryPath.clear();
       return;
       }
     mHeaderFile.write( "saliLibraryHeaders", HDR_START );
     mHeaderFile.close();
-
-    if( !mObjectFile.open( QIODevice::WriteOnly ) ) {
-      mPath.clear();
-      return;
-      }
-    mObjectFile.write( "saliLibraryObjects", 18 );
-    mObjectFile.close();
     }
 
   //Check if file present
-  if( !QFile::exists(FNAME_REF) || !QFile::exists(FNAME_HDR) || !QFile::exists(FNAME_OBJ) ) {
+  if( !QFile::exists(FNAME_REF) || !QFile::exists(FNAME_HDR) ) {
     //One or more files are not exists - work is fail
-    mPath.clear();
+    mLibraryPath.clear();
     return;
     }
 
   //Open headers and objects files
-  if( !mHeaderFile.open( QIODevice::ReadOnly ) || !mObjectFile.open( QIODevice::ReadOnly ) )
-    mPath.clear();
+  if( !mHeaderFile.open( QIODevice::ReadOnly ) )
+    mLibraryPath.clear();
 
   //Read reference file
   QFile file(FNAME_REF);
   if( file.open(QIODevice::ReadOnly) ) {
     QDataStream is( &file );
-    is >> mCreationIndex >> mReferenceMap;
+    is >> mReferenceMap;
     }
-  else mPath.clear();
+  else mLibraryPath.clear();
   }
 
 
 
 
-
-//Return true if object referenced in map
-bool SdLibraryStorage::contains(const QString uid)
+//!
+//! \brief libraryComplete Complete work of libraryStorage. We flush caches and delete libraryStorage
+//!
+void SdLibraryStorage::libraryComplete()
   {
-  QReadLocker locker( &mLock );
-  return mReferenceMap.contains( uid );
+  if( mDirty ) {
+    QWriteLocker locker( &mLock );
+    QSaveFile file(FNAME_REF);
+    if( file.open(QIODevice::WriteOnly) ) {
+      QDataStream os( &file );
+      os << mReferenceMap;
+      if( file.commit() )
+        mDirty = false;
+      }
+    }
+
+  //Close previously opened data base
+  if( mHeaderFile.isOpen() )
+    mHeaderFile.close();
+
+  deleteLater();
   }
 
 
 
 
-//Return true if object contained in map
-bool SdLibraryStorage::isObjectContains(const QString uid)
+//!
+//! \brief cfObjectInsert Insert object into library. If in library already present newest object
+//!                       then nothing done. Older object is never inserted.
+//! \param item           Object for inserting
+//!
+void SdLibraryStorage::cfObjectInsert(const SdContainerFile *item)
   {
-  QReadLocker locker( &mLock );
-  return mReferenceMap.contains( uid ) && mReferenceMap.value(uid).mObjectPtr != 0;
+  //If inserted object is older than present in library then nothing done
+  if( item == nullptr || item->isEditEnable() || cfIsOlder( item ) )
+    return;
+
+  //Insert reference and header
+  insertReferenceAndHeader( item );
+
+  //Insert in library
+  QString fname = item->getLibraryFName();
+  SvDir dir( mLibraryPath );
+  QDir().mkpath( dir.slashedPath() + fname.left(2) );
+
+  item->fileJsonSave( dir.slashedPath() + fname );
   }
 
 
 
 
-
-//Return true if object referenced in map and object is newer or same or if newer reference
-bool SdLibraryStorage::isNewerOrSameObject(const QString uid, qint32 time)
+void SdLibraryStorage::cfObjectDelete(const SdContainerFile *item)
   {
-  QReadLocker locker( &mLock );
-  return mReferenceMap.contains( uid ) && mReferenceMap.value(uid).isObjectNewerOrSame( time );
+  if( item != nullptr && item->getAuthor() == item->getDefaultAuthor() ) {
+    QString uid = item->getUid();
+    if( mReferenceMap.contains(uid) && !mReferenceMap.value(uid).isNeedDelete() ) {
+      //Mark as need to be deleted from server
+      mReferenceMap[uid].deleteSet();
+
+      //Delete object file
+      QFile::remove( fullPath( item->getLibraryFName() ) );
+
+      mDirty = true;
+      }
+    }
   }
 
 
 
 
 
-//Return true if newer object referenced in map
-bool SdLibraryStorage::isNewerObject(const QString uid, qint32 time)
+//!
+//! \brief cfObjectGet Load object from library
+//! \param uid         UID of loaded object
+//! \return            Loaded object or nullptr
+//!
+SdContainerFile *SdLibraryStorage::cfObjectGet(const QString uid) const
+  {
+  if( mReferenceMap.contains( uid ) ) {
+    //Load object
+    return sdObjectOnly<SdContainerFile>( SdObject::fileJsonLoad( fullPath( SdContainerFile::getLibraryFName( uid, mReferenceMap.value(uid).mCreationTime ) ) ) );
+    }
+  return nullptr;
+  }
+
+
+
+
+
+//!
+//! \brief cfObjectUpload Return object available to uploading to remote server
+//! \return               Object to uploading
+//!
+SdContainerFile *SdLibraryStorage::cfObjectUpload() const
+  {
+  //Scan reference map to find object to uploading
+  auto it = mReferenceMap.cbegin();
+  while( it != mReferenceMap.cend() )
+    if( it.value().isNeedUpload() )
+      break;
+    else
+      it++;
+
+  if( it == mReferenceMap.cend() )
+    //No objects to uploading
+    return nullptr;
+  return cfObjectGet( it.key() );
+  }
+
+
+
+
+//!
+//! \brief cfIsOlder Test if object which represents by uid and time present in library and older than there is in library
+//! \param uid       uid of tested object
+//! \param time      time of locking of tested object
+//! \return          true if tested object present in library and it older then in library
+//!
+bool SdLibraryStorage::cfIsOlder(const QString uid, qint32 time) const
   {
   QReadLocker locker( &mLock );
   return mReferenceMap.contains( uid ) && mReferenceMap.value(uid).isNewer( time );
@@ -179,28 +285,37 @@ bool SdLibraryStorage::isNewerObject(const QString uid, qint32 time)
 
 
 
-
-
 //!
-//! \brief getUidByIndex Get object id with index which has not been downloaded
-//! \param index         Index of needed object
-//! \return              UID of object with index
+//! \brief cfIsOlder Overloaded function. Test if object present in library and older than there is in library
+//! \param item      Tested object
+//! \return          true if tested object present in library and it older then in library
 //!
-QString SdLibraryStorage::getUidByIndex(qint32 index)
+bool SdLibraryStorage::cfIsOlder(const SdContainerFile *item) const
   {
-  QReadLocker locker( &mLock );
-  //if index greater or equal creationIndex then no objects after index
-  QMapIterator<QString,SdLibraryReference> iter( mReferenceMap );
-  while( iter.hasNext() ) {
-    iter.next();
-    //If object inside index bound and present not only head but object itsels
-    // then append such object to list
-    if( iter.value().mCreationIndex == index && iter.value().mObjectPtr && !(iter.value().mFlags & SDLR_DOWNLOADED) ) {
-      return iter.key();
-      }
-    }
-  //No objects found with this index
-  return QString{};
+  return cfIsOlder( item->getUid(), item->getTime() );
+  }
+
+
+
+
+
+//!
+//! \brief header Get header of object
+//! \param uid    object unical identificator
+//! \param hdr    place to receiv object header
+//! \return       true if header readed successfully
+//!
+bool SdLibraryStorage::header(const QString uid, SdLibraryHeader &hdr)
+  {
+  //For empty key return false to indicate no header
+  if( uid.isEmpty() ) return false;
+
+  QWriteLocker locker( &mLock );
+  if( !mReferenceMap.contains(uid) ) return false;
+  mHeaderFile.seek( mReferenceMap.value(uid).mHeaderPtr );
+  QDataStream is( &mHeaderFile );
+  hdr.read( is );
+  return true;
   }
 
 
@@ -208,7 +323,13 @@ QString SdLibraryStorage::getUidByIndex(qint32 index)
 
 
 
-//Execute function for each object header
+//!
+//! \brief forEachHeader Scan all available headers and call functor fun1 for each of them
+//! \param fun1          Functor which called for each header
+//!                      Function must return false to continue iteration
+//!                      When function return true - iteration break and return true as indicator
+//! \return              true if at least one functor return true
+//!
 bool SdLibraryStorage::forEachHeader(std::function<bool(SdLibraryHeader&)> fun1)
   {
   QReadLocker locker( &mLock );
@@ -232,237 +353,128 @@ bool SdLibraryStorage::forEachHeader(std::function<bool(SdLibraryHeader&)> fun1)
 
 
 
-//Function for iteration on all or partial uid's
-//When function return true - iteration countinued, else break
-void SdLibraryStorage::forEachUid(std::function<bool (const QString &)> fun1)
+
+
+//!
+//! \brief periodicScan Perform scan step
+//!
+void SdLibraryStorage::periodicScan()
   {
-  QReadLocker locker( &mLock );
-  for( auto iter = mReferenceMap.cbegin(); iter != mReferenceMap.cend(); iter++ )
-    if( fun1(iter.key()) ) return;
-  }
+  if( mScanList.count() ) {
+    //Continue scan
+    //Here we scan single subdirectory
+    QFileInfo subdir = mScanList.takeLast();
 
+    //List of files for subdirectory
+    QFileInfoList fileList = subdir.dir().entryInfoList( QDir::Files );
 
+    //Subdirectory name
+    QString prefix( subdir.baseName() );
+    if( prefix.endsWith( QChar('/') ) )
+      prefix.append( QChar('/') );
 
-//if( (hdr.mClass & mask) && mReferenceMap.value(hdr.uid()).mCreationTime == hdr.mTime ) {
-//  if( expandVariant && hdr.variantTableExist() ) {
-//    int c = hdr.variantCount();
-//    SdLibraryHeader vhdr;
-//    for( int i = 0; i < c; i++ ) {
-//      hdr.variant( vhdr, i );
-//      if( fun1( vhdr ) )
-//        return true;
-//      }
-//    }
+    for( const auto &file : fileList ) {
+      QString fileName = prefix + file.fileName();
 
+      if( mExistList.contains( fileName ) )
+        //File exist, we remove it from existing files because it processed
+        mExistList.remove( fileName );
+      else {
+        //File not exist, we append it to reference
+        //Load object
+        QScopedPointer<SdContainerFile> item( sdObjectOnly<SdContainerFile>(SdObject::fileJsonLoad(file.absoluteFilePath())) );
+        //Append object to reference
+        insertReferenceAndHeader( item.get() );
 
+        emit informationAppended( tr("Object found %1").arg( item->getTitle() )  );
+        }
 
-
-
-//Get header of object
-bool SdLibraryStorage::header(const QString uid, SdLibraryHeader &hdr)
-  {
-  //For empty key return false to indicate no header
-  if( uid.isEmpty() ) return false;
-
-  QWriteLocker locker( &mLock );
-  if( !mReferenceMap.contains(uid) ) return false;
-  mHeaderFile.seek( mReferenceMap.value(uid).mHeaderPtr );
-  QDataStream is( &mHeaderFile );
-  hdr.read( is );
-  return true;
-  }
-
-
-
-
-
-
-
-
-
-//Get object
-QByteArray SdLibraryStorage::object(const QString uid)
-  {
-  QReadLocker locker( &mLock );
-  if( !mReferenceMap.contains(uid) || mReferenceMap.value(uid).mObjectPtr == 0 )
-    return QByteArray();
-
-  mObjectFile.seek( mReferenceMap.value(uid).mObjectPtr );
-  QDataStream is( &mObjectFile );
-  QByteArray res;
-  is >> res;
-  return res;
-  }
-
-
-
-
-
-//Insert new object with creation reference and append header and object
-void SdLibraryStorage::insert(const SdLibraryHeader &hdr, QByteArray obj, bool downloaded )
-  {
-  QWriteLocker locker( &mLock );
-
-  QString key = hdr.uid();
-
-  if( mReferenceMap.contains(key) && mReferenceMap.value(key).isObjectNewerOrSame(hdr.mTime) )
-    //Newer or same object already present in database
-    return;
-
-  QFile fileObj(FNAME_OBJ);
-  QFile fileHdr(FNAME_HDR);
-  if( fileObj.open(QIODevice::Append) && fileHdr.open(QIODevice::Append) ) {
-    SdLibraryReference ref;
-    if( !mReferenceMap.contains(key) || mReferenceMap.value(key).mCreationTime != hdr.mTime ) {
-      //No record with this name and time
-      //write header first
-      ref.mCreationIndex = mCreationIndex++;
-      ref.mHeaderPtr     = fileHdr.size();
-      ref.mCreationTime  = hdr.mTime;
-      ref.mFlags         = downloaded ? SDLR_DOWNLOADED : 0;
-      QDataStream os( &fileHdr );
-      hdr.write( os );
-      fileHdr.close();
       }
-    else ref = mReferenceMap.value(key);
-    //Header info already present
-    //write obj
-    ref.mObjectPtr = fileObj.size();
 
-    QDataStream os( &fileObj );
-    os << obj;
-    fileObj.close();
+    if( mScanList.count() == 0 ) {
+      //Scan is complete
+      //Remain files in existing files map are deleted files
+      //we remove its records from library reference
+      if( mExistList.count() )
+        emit informationAppended( tr("Remove external deleted objects %1").arg( mExistList.count() )  );
+      for( auto it = mExistList.cbegin(); it != mExistList.cend(); it++ )
+        mReferenceMap.remove( it.value() );
 
-    mReferenceMap.insert( key, ref );
-    mDirty = true;
-    }
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-//Flush reference map if needed
-void SdLibraryStorage::flush()
-  {
-  if( mDirty ) {
-    QWriteLocker locker( &mLock );
-    QSaveFile file(FNAME_REF);
-    if( file.open(QIODevice::WriteOnly) ) {
-      QDataStream os( &file );
-      os << mCreationIndex << mReferenceMap;
-      if( file.commit() )
-        mDirty = false;
+      //We can begin sync with remote server
+      if( mNetClientLocker != nullptr ) {
+        delete mNetClientLocker;
+        mNetClientLocker = nullptr;
+        }
       }
     }
-  }
+  else {
+    //Begin new scan
+    QDir dir( mLibraryPath );
+    mScanList = dir.entryInfoList( QDir::AllDirs | QDir::NoDotAndDotDot );
 
-
-
-
-void SdLibraryStorage::flushAndDelete()
-  {
-  flush();
-
-  //Close previously opened data base
-  if( mHeaderFile.isOpen() ) {
-    mHeaderFile.close();
-    mObjectFile.close();
+    //Fill map for existing files
+    mExistList.clear();
+    for( auto it = mReferenceMap.cbegin(); it != mReferenceMap.cend(); it++ )
+      mExistList.insert( SdContainerFile::getLibraryFName( it.key(), it.value().mCreationTime ), it.key() );
     }
-
-  deleteLater();
   }
 
 
 
 
-void SdLibraryStorage::cfObjectInsert(const SdContainerFile *item)
+//!
+//! \brief insertReferenceAndHeader Insert in cache reference to object and header of object
+//! \param item                     Object which inserted
+//!
+void SdLibraryStorage::insertReferenceAndHeader(const SdContainerFile *item)
   {
-  //If inserted object is older than present in library then nothing done
-  if( item == nullptr || item->isEditEnable() || cfIsOlder( item ) )
-    return;
-
-  //Insert reference and header
   QFile fileHdr(FNAME_HDR);
   if( fileHdr.open(QIODevice::Append) ) {
+    QWriteLocker locker( &mLock );
     SdLibraryHeader hdr;
     item->getHeader( hdr );
     QString key = item->getUid();
     SdLibraryReference ref;
     //write header first
-    ref.mCreationIndex = mCreationIndex++;
     ref.mHeaderPtr     = fileHdr.size();
     ref.mCreationTime  = hdr.mTime;
+    //Only for owner objects we allow uploading to server
+    ref.mFlags         = item->getAuthor() == item->getDefaultAuthor() ? SDLR_NEED_UPLOAD : 0;
     QDataStream os( &fileHdr );
     hdr.write( os );
     fileHdr.close();
 
     mReferenceMap.insert( key, ref );
     mDirty = true;
-
-    //Insert in library
-    QString fname = item->getLibraryFName();
-    SvDir dir( mPath );
-    QDir().mkpath( dir.slashedPath() + fname.left(2) );
-
-    item->fileJsonSave( dir.slashedPath() + fname );
     }
   }
 
 
 
 
-SdContainerFile *SdLibraryStorage::cfObjectGet(const QString uid) const
+
+
+
+//!
+//! \brief fullPath Return full path to library file
+//! \param fileName Library file fileName
+//! \return         Full path to library file
+//!
+QString SdLibraryStorage::fullPath(const QString &fileName) const
   {
-  if( mReferenceMap.contains( uid ) ) {
-    //Build file name
-    QString fname( SdContainerFile::getLibraryFName( uid, mReferenceMap.value(uid).mCreationTime ) );
-    SvDir dir( mPath );
-    return sdObjectOnly<SdContainerFile>( SdObject::fileJsonLoad( dir.slashedPath() + fname ) );
-    }
-  return nullptr;
+  SvDir dir( mLibraryPath );
+  return dir.slashedPath() + fileName;
   }
 
 
 
 
-//!
-//! \brief cfIsOlder Test if object which represents by uid and time present in library and older than there is in library
-//! \param uid       uid of tested object
-//! \param time      time of locking of tested object
-//! \return          true if tested object present in library and it older then in library
-//!
-bool SdLibraryStorage::cfIsOlder(const QString uid, qint32 time) const
+QString SdLibraryStorage::cachePath()
   {
-  QReadLocker locker( &mLock );
-  return mReferenceMap.contains( uid ) && mReferenceMap.value(uid).isObjectNewerOrSame( time );
+  SvDir dir( QDir::homePath() );
+  dir.cd( QStringLiteral("SaliLAB/SaliCAD/cache/") );
+  return dir.slashedPath();
   }
-
-
-
-//!
-//! \brief cfIsOlder Overloaded function. Test if object present in library and older than there is in library
-//! \param item      Tested object
-//! \return          true if tested object present in library and it older then in library
-//!
-bool SdLibraryStorage::cfIsOlder(const SdContainerFile *item) const
-  {
-  return cfIsOlder( item->getUid(), item->getTime() );
-  }
-
-
-
-
-
-
-
 
 
 

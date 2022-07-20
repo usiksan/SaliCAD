@@ -20,6 +20,8 @@ Description
 #ifndef SDOBJECTNETCLIENT_H
 #define SDOBJECTNETCLIENT_H
 
+#include "SvLib/SvSingleton.h"
+
 #include <QObject>
 #include <QNetworkAccessManager>
 #include <QTimer>
@@ -43,13 +45,23 @@ class SdObjectNetClient : public QObject
     QTimer                 mTimer;           //!< Timer for periodic sync with global repository
     SdRemoteQueryType      mQueryType;       //!< Type of remote operation
     QList<int>             mObjectIndexList; //!< Object index list of newest objects from remote repository
-    QStringList            mInfoList;       //!< List for information items. When any event happens then information item appends
-  public:
+    QStringList            mInfoList;        //!< List for information items. When any event happens then information item appends
+    int                    mLockRemote;      //!< If this variable not equals 0 then sync with remote repository locked
+
     explicit SdObjectNetClient(QObject *parent = nullptr);
+  public:
+
+    friend SdObjectNetClient *svInstance<SdObjectNetClient>();
+
+    static SdObjectNetClient *instance() { return svInstance<SdObjectNetClient>(); }
 
     bool        isRegistered() const;
 
     QStringList infoList() const { return mInfoList; }
+
+    void        remoteLock() { mLockRemote++; }
+
+    void        remoteUnlock();
 
   signals:
     //Signal on process changed. Send current process state description and completion flag
@@ -91,13 +103,8 @@ class SdObjectNetClient : public QObject
     //!
     void doRegister(const QString repo, const QString authorName, const QString password, const QString email );
 
-    //Begin object receiving process
-    void doObject( const QString hashId );
-
     //By timer do syncronisation
     void doSync();
-
-    void startSync( bool start );
 
     //Receiv file from repository
     void doFile( const QString fileName );
@@ -152,7 +159,12 @@ class SdObjectNetClient : public QObject
     void    infoAppend( const QString info );
   };
 
-//Main object for remote database communication
-extern SdObjectNetClient *sdObjectNetClient;
+
+class SdNetClientLocker {
+  public:
+    SdNetClientLocker() { SdObjectNetClient::instance()->remoteLock(); }
+    ~SdNetClientLocker() { SdObjectNetClient::instance()->remoteUnlock(); }
+  };
+
 
 #endif // SDOBJECTNETCLIENT_H

@@ -34,7 +34,7 @@ class SdPItemComponent : public SdPItemVariant
     //Setup new part id
     void             setPartId( const QString id, SdUndo *undo );
     //Return part descripted part variant
-    SdPItemPart     *extractPartFromFactory( bool soft, QWidget *parent ) const;
+    SdPItemPart     *extractPartFromFactory() const;
     //Return default part
     SdPartVariant   *getPart() const;
 
@@ -52,7 +52,7 @@ class SdPItemComponent : public SdPItemVariant
     //Return section by index
     SdSection       *getSection( int sectionIndex ) const;
     //Return symbol from section by index
-    SdPItemSymbol   *extractSymbolFromFactory( int sectionIndex, bool soft, QWidget *parent ) const;
+    SdPItemSymbol   *extractSymbolFromFactory(int sectionIndex) const;
     //Remove section
     void             removeSection( int sectionIndex, SdUndo *undo );
 

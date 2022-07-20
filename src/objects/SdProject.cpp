@@ -17,7 +17,6 @@ Description
 #include "SdPulsar.h"
 #include "SdPItemPlate.h"
 #include "SdPItemSheet.h"
-#include "SdObjectFactory.h"
 #include "SdGraphNet.h"
 #include "SdEnvir.h"
 #include "SdCopyMapProject.h"
@@ -362,8 +361,8 @@ void SdProject::newerCheckAndMark()
   //if it there then mark object with newer uid
   forEach( dctAll, [] (SdObject *obj) -> bool {
     SdPtr<SdProjectItem> item(obj);
-    if( item.isValid() && item->mThereNewer != SdObjectFactory::isThereNewer(item.ptr()) ) {
-      item->mThereNewer = SdObjectFactory::isThereNewer(item.ptr());
+    if( item.isValid() && item->mThereNewer != SdLibraryStorage::instance()->cfIsOlder(item.ptr()) ) {
+      item->mThereNewer = SdLibraryStorage::instance()->cfIsOlder(item.ptr());
       SdPulsar::sdPulsar->emitRenameItem( item.ptr() );
       }
     return true;
@@ -588,7 +587,7 @@ bool SdProject::upgradeNewerItems(SdUndo *undo, QWidget *parent)
   QList<SdProjectItemPtr> upgradeList;
   forEach( dctComponent | dctSymbol | dctPart, [&upgradeList,this] (SdObject *obj) -> bool {
     SdPtr<SdProjectItem> item(obj);
-    if( item.isValid() && SdObjectFactory::isThereNewer(item.ptr()) && !isUsed(obj) ) {
+    if( item.isValid() && SdLibraryStorage::instance()->cfIsOlder(item.ptr()) && !isUsed(obj) ) {
       //Object may be upgraded and it is not used
       upgradeList.append( item.ptr() );
       }
@@ -600,7 +599,7 @@ bool SdProject::upgradeNewerItems(SdUndo *undo, QWidget *parent)
     //Get uid of item to extract newer object
     QString uid = item->getUid();
     //Extract newer object
-    SdProjectItem *newItem = sdObjectOnly<SdProjectItem>( SdObjectFactory::extractObject( uid, false, parent ) );
+    SdProjectItem *newItem = sdObjectOnly<SdProjectItem>( SdLibraryStorage::instance()->cfObjectGet( uid ) );
     if( newItem == nullptr )
       return false;
     //Delete old item

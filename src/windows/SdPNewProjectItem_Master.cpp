@@ -15,7 +15,7 @@ Description
 #include "SdPNewProjectItem.h"
 #include "SdDGetObject.h"
 
-#include "objects/SdObjectFactory.h"
+#include "library/SdLibraryStorage.h"
 
 //Master dialogs
 #include "master/SdDMasterPartDoubleRect.h"
@@ -108,8 +108,8 @@ void SdPNewProjectItem_Master::initializePage()
       addMaster( tr("Sheet decorator"), tr("Creates empty schematic sheet with inserted sheet form"),
                  QString(":/pic/sheetMasterDecorator.png"), [this] ( SdProjectItem *item, QWidget *p ) -> bool {
         Q_UNUSED(p)
-        SdProject *mPastePrj = sdObjectOnly<SdProject>( SdObjectFactory::extractObject( SdDGetObject::getObjectUid( dctProject, QObject::tr("Select form to insert"), this, "form"), false, this ) );
-        if( mPastePrj == nullptr ) return false;
+        QScopedPointer<SdProject> mPastePrj( sdObjectOnly<SdProject>( SdLibraryStorage::instance()->cfObjectGet( SdDGetObject::getObjectUid( dctProject, QObject::tr("Select form to insert"), this, "form") ) )  );
+        if( mPastePrj.isNull() ) return false;
 
         SdPItemSheet *sheet = mPastePrj->getFirstSheet();
 

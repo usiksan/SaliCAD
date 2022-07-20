@@ -14,7 +14,7 @@ Description
   Allow enter project name in library and project category. On ok pressed project writting to library
 */
 #include "SdDProjectStore.h"
-#include "objects/SdObjectFactory.h"
+#include "library/SdLibraryStorage.h"
 #include "objects/SdProjectItem.h"
 #include "SdDHelp.h"
 
@@ -58,7 +58,7 @@ void SdDProjectStore::onTextChanged(const QString name)
   if( name.isEmpty() ) {
     mUnical->setText( tr("<font color=\"blue\">Name is empty. You must enter correct name at least one symbol.</font>") );
     }
-  else if( SdObjectFactory::isContains( mProject->getType(), name, SdProjectItem::getDefaultAuthor() ) ) {
+  else if( SdLibraryStorage::instance()->cfObjectContains( headerUid( mProject->getType(), name, SdProjectItem::getDefaultAuthor() ) ) ) {
     mUnical->setText( tr("<font color=\"red\">This name already exist and will be overwritted! If You dont want to then enter another name.</font>") );
     }
   else {
@@ -72,18 +72,16 @@ void SdDProjectStore::onTextChanged(const QString name)
 
 void SdDProjectStore::accept()
   {
-  SdLibraryHeader hdr;
-  hdr.mName = mName->text();
-  if( hdr.mName.isEmpty() ) {
+  QString name = mName->text();
+  if( name.isEmpty() ) {
     //Name fail
     QMessageBox::warning( this, tr("Warning!"), tr("Library name of project is empty. Enter name to store project or press cancel.") );
     return;
     }
-  mProject->titleSet( hdr.mName );
-  mProject->getHeader( hdr );
+  mProject->titleSet( name );
 
   //Store project in library
-  SdObjectFactory::insertObject( hdr, mProject->jsonObjectTo() );
+  SdLibraryStorage::instance()->cfObjectInsert( mProject );
 
   //Close dialog
   QDialog::accept();

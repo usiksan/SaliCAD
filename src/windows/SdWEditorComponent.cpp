@@ -22,7 +22,6 @@ Description
 #include "SdPNewProjectItem_EnterName.h"
 #include "objects/SdProject.h"
 #include "objects/SdPartVariant.h"
-#include "objects/SdObjectFactory.h"
 #include "objects/SdGraphPartPin.h"
 
 #include <QSplitter>

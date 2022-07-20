@@ -21,7 +21,7 @@ Description
 #include "objects/SdPItemPart.h"
 #include "objects/SdPItemComponent.h"
 #include "objects/SdPItemSheet.h"
-#include "objects/SdObjectFactory.h"
+#include "library/SdLibraryStorage.h"
 #include "windows/SdPropBarSymImp.h"
 #include "windows/SdWCommand.h"
 #include "windows/SdWEditorGraph.h"
@@ -231,7 +231,7 @@ void SdModeCSymImp::getSection()
       break;
 
     if( sectionIndex >= 0 ) {
-      mSection = mComponent->extractSymbolFromFactory( sectionIndex, false, mEditor );
+      mSection = mComponent->extractSymbolFromFactory( sectionIndex );
       if( mSection == nullptr ) {
         QMessageBox::warning( mEditor, QObject::tr("Warning!"), QObject::tr("Can't load selected component section. Select another.") );
         continue;
@@ -249,7 +249,7 @@ void SdModeCSymImp::getSection()
       }
 
 
-    mPart = mComponent->extractPartFromFactory( false, mEditor );
+    mPart = mComponent->extractPartFromFactory();
     if( mPart != nullptr && mPart->isEditEnable() ) {
       QMessageBox::warning( mEditor, QObject::tr("Warning!"), QObject::tr("Part is in editing state. Switch it to lock state or select another.") );
       continue;
@@ -297,7 +297,7 @@ bool SdModeCSymImp::checkSchematicFragment()
   if( !componentValueParam.isEmpty() ) {
     //Accumulate headers matched to filter
     bool presense = false;
-    SdObjectFactory::forEachHeader( [&presense, componentValueParam] ( SdLibraryHeader &hdr ) -> bool {
+    SdLibraryStorage::instance()->forEachHeader( [&presense, componentValueParam] ( SdLibraryHeader &hdr ) -> bool {
       //test class
       if( hdr.mClass & dctProject ) {
         //Split uid to name type and author

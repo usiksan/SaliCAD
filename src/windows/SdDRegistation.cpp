@@ -17,7 +17,6 @@ Description
 #include "SdConfig.h"
 #include "SdDRegistation.h"
 #include "ui_SdDRegistation.h"
-#include "objects/SdObjectNetClient.h"
 #include "SvLib/SvTime2x.h"
 #include "SdDHelp.h"
 
@@ -34,8 +33,6 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
   {
   ui->setupUi(this);
 
-  sdObjectNetClient->startSync(false);
-
   //Fill fields
   QSettings s;
   ui->mServerRepo->setText( s.value( QStringLiteral(SDK_SERVER_REPO), QString(SD_DEFAULT_REPO)).toString() );
@@ -48,8 +45,8 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
   connect( ui->mClose, &QPushButton::clicked, this, &SdDRegistation::cmClose );
   connect( ui->mName, &QLineEdit::textEdited, this, &SdDRegistation::onEditAuthorName );
 
-  connect( this, &SdDRegistation::doRegistration, sdObjectNetClient, &SdObjectNetClient::doRegister );
-  connect( sdObjectNetClient, &SdObjectNetClient::process, this, [this] (const QString msg, bool stop ) {
+  connect( this, &SdDRegistation::doRegistration, SdObjectNetClient::instance(), &SdObjectNetClient::doRegister );
+  connect( SdObjectNetClient::instance(), &SdObjectNetClient::process, this, [this] (const QString msg, bool stop ) {
     Q_UNUSED(stop)
     ui->mProcess->setText(msg);
     });
@@ -58,7 +55,7 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
     } );
 
   //Check registration status at start
-  connect( sdObjectNetClient, &SdObjectNetClient::registerStatus, this, [this] (const QString msg, const QString email ) {
+  connect( SdObjectNetClient::instance(), &SdObjectNetClient::registerStatus, this, [this] (const QString msg, const QString email ) {
     ui->mRegistrationStatus->setText(msg);
     if( !email.isEmpty() )
       ui->mEmail->setText( email );
@@ -77,7 +74,6 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
 SdDRegistation::~SdDRegistation()
   {
   delete ui;
-  sdObjectNetClient->startSync(true);
   }
 
 
@@ -166,7 +162,7 @@ void SdDRegistation::onEditAuthorName(const QString nm)
 //Close dialog
 void SdDRegistation::cmClose()
   {
-  if( !sdObjectNetClient->isRegistered() ) {
+  if( !SdObjectNetClient::instance()->isRegistered() ) {
     QMessageBox::warning( this, tr("Warning!"), tr("You not registered. SaliCAD will work in autonom mode. In this mode You can not access global component database. This dialog allowed in later with Help menu."));
     }
   else {

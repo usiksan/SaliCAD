@@ -17,7 +17,6 @@ Description
 #include "SdDPadMaster.h"
 #include "script/SdScriptParser3d.h"
 #include "script/SdScriptProgramm.h"
-#include "objects/SdObjectFactory.h"
 #include "objects/Sd3dGraphModel.h"
 #include "SdDHelp.h"
 

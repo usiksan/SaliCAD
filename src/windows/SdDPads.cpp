@@ -3,7 +3,6 @@
 
 #include "objects/SdGraphPartImp.h"
 #include "objects/SdUtil.h"
-#include "objects/SdObjectFactory.h"
 #include "SvLib/SvTime2x.h"
 #include "objects/SdEnvir.h"
 #include "SdDGetObject.h"
@@ -12,6 +11,7 @@
 
 #include <QTableWidgetItem>
 #include <QMessageBox>
+#include <QFileDialog>
 
 
 #define ACTUAL_PIN Qt::UserRole
@@ -223,22 +223,16 @@ void SdDPads::cmAssociationClear()
 void SdDPads::cmAssociationSave()
   {
   QString name = ui->mAssociationName->text();
-  if( name.isEmpty() )
-    QMessageBox::warning( this, tr("Error"), tr("Can't save because name not entered. Enter name for this association table and retry save."));
-  else {
+  QString fname = QFileDialog::getSaveFileName( this, tr("Enter name for save pad association"), QString{}, QStringLiteral("*" SD_PAD_ASSOCIATION_EXTENSION ) );
+  if( !fname.isEmpty() ) {
+    if( !fname.endsWith( QStringLiteral(SD_PAD_ASSOCIATION_EXTENSION) )  )
+      fname.append( QStringLiteral(SD_PAD_ASSOCIATION_EXTENSION) );
     //Object for saving
     SdPadAssociation assoc( mMap, name, SdProjectItem::getDefaultAuthor() );
-    //Creating header
-    SdLibraryHeader hdr;
-    hdr.mName = name;
-    hdr.mType = assoc.getType();
-    hdr.mAuthor = SdProjectItem::getDefaultAuthor();
-    hdr.mTime = SvTime2x::current();
-    hdr.mClass = assoc.getClass();
-    mUid = hdr.uid();
-    //Store in library
-    SdObjectFactory::insertObject( hdr, assoc.jsonObjectTo() );
-    QMessageBox::information( this, tr("Info"), tr("Pad association saved") );
+    if( assoc.fileJsonSave( fname ) )
+      QMessageBox::information( this, tr("Info"), tr("Pad association saved successfully") );
+    else
+      QMessageBox::information( this, tr("Info"), tr("Fail to save pad association") );
     }
   }
 
@@ -248,20 +242,22 @@ void SdDPads::cmAssociationSave()
 //Assign associations from loaded table
 void SdDPads::cmAssociationUse()
   {
-  //Assign associations from loaded table
-  SdPadAssociation *assoc = sdObjectOnly<SdPadAssociation>( SdDGetObject::getObject(dctPadAssociation, tr("Select pad association table"), this) );
-  if( assoc != nullptr ) {
-    //Source table loaded - parse
-    SdPadMap dst;
-    for( auto iter = mMap.cbegin(); iter != mMap.cend(); iter++ )
-      if( assoc->contains(iter.key()) )
-        dst.insert( iter.key(), assoc->pin(iter.key()) );
-      else
-        dst.insert( iter.key(), iter.value() );
-    //Replace mMap with parsed result
-    mMap = dst;
-    //Update visual pin table
-    updatePinTable();
+  QString fname = QFileDialog::getOpenFileName( this, tr("Select pad association file to load"), QString{}, QStringLiteral("*" SD_PAD_ASSOCIATION_EXTENSION ) );
+  if( !fname.isEmpty() ) {
+    QScopedPointer<SdPadAssociation> assoc( sdObjectOnly<SdPadAssociation>( SdObject::fileJsonLoad( fname ) )  );
+    if( !assoc.isNull() ) {
+      //Source table loaded - parse
+      SdPadMap dst;
+      for( auto iter = mMap.cbegin(); iter != mMap.cend(); iter++ )
+        if( assoc->contains(iter.key()) )
+          dst.insert( iter.key(), assoc->pin(iter.key()) );
+        else
+          dst.insert( iter.key(), iter.value() );
+      //Replace mMap with parsed result
+      mMap = dst;
+      //Update visual pin table
+      updatePinTable();
+      }
     }
   }
 
@@ -273,12 +269,15 @@ void SdDPads::cmAssociationUse()
 void SdDPads::cmAssociationLoad()
   {
   //Replace table with loaded
-  SdPadAssociation *assoc = sdObjectOnly<SdPadAssociation>( SdDGetObject::getObject(dctPadAssociation, tr("Select pad association table"), this) );
-  if( assoc != nullptr ) {
-    ui->mAssociationName->setText( assoc->getName() );
-    mMap = assoc->getMap();
-    //Update visual pin table
-    updatePinTable();
+  QString fname = QFileDialog::getOpenFileName( this, tr("Select pad association file to load"), QString{}, QStringLiteral("*" SD_PAD_ASSOCIATION_EXTENSION ) );
+  if( !fname.isEmpty() ) {
+    QScopedPointer<SdPadAssociation> assoc( sdObjectOnly<SdPadAssociation>( SdObject::fileJsonLoad( fname ) )  );
+    if( !assoc.isNull() ) {
+      ui->mAssociationName->setText( assoc->getName() );
+      mMap = assoc->getMap();
+      //Update visual pin table
+      updatePinTable();
+      }
     }
   }
 

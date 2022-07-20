@@ -16,7 +16,6 @@ Description
 #include "SdCopyMap.h"
 #include "SdContainer.h"
 #include "SdProject.h"
-#include "SdObjectFactory.h"
 #include "SdPItemSymbol.h"
 #include "SdPItemPart.h"
 #include "SdPItemComponent.h"
@@ -212,9 +211,6 @@ void SdObject::json(SdJsonWriter &js) const
   {
   js.jsonString( QStringLiteral(SDKO_ID), getId() );
   js.jsonString( QStringLiteral(SDKO_TYPE), getType() );
-  const SdContainerFile *item = dynamic_cast<const SdContainerFile*>(this);
-  if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol | dctProject)) && !item->isEditEnable() )
-    SdObjectFactory::insertItemObject( item, js.object() );
   }
 
 
@@ -454,9 +450,6 @@ SdObject *SdObject::buildFromJson(const SdJsonReader &js)
   SdObject *obj = readPtr( js );
   if( obj != nullptr )
     obj->json( js );
-  SdContainerFile *item = dynamic_cast<SdContainerFile*>(obj);
-  if( item && (item->getClass() & (dctComponent | dctPart | dctSymbol | dctProject)) && !item->isEditEnable() )
-    SdObjectFactory::insertItemObject( item, js.object() );
   return obj;
   }
 

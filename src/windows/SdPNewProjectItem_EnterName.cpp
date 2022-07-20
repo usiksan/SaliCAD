@@ -14,7 +14,7 @@ Description
 #include "SdConfig.h"
 #include "SdPNewProjectItem_EnterName.h"
 #include "SdWCategoryList.h"
-#include "objects/SdObjectFactory.h"
+#include "library/SdLibraryStorage.h"
 
 #include <QVBoxLayout>
 #include <QMessageBox>
@@ -63,7 +63,7 @@ void SdPNewProjectItem_EnterName::onTextChanged(const QString name)
     mUnical->setText( tr("<font color=\"blue\">Name is empty. You must enter correct name at least one symbol.</font>") );
     mValid = false;
     }
-  else if( mProject->isNameUsed( name, (*mItemPtr)->getClass() ) || SdObjectFactory::isContains( (*mItemPtr)->getType(), name, SdProjectItem::getDefaultAuthor() ) ) {
+  else if( mProject->isNameUsed( name, (*mItemPtr)->getClass() ) || SdLibraryStorage::instance()->cfObjectContains( headerUid( (*mItemPtr)->getType(), name, SdProjectItem::getDefaultAuthor() ) ) ) {
     mUnical->setText( tr("<font color=\"red\">This name already exist. Enter another name or this override existing.</font>") );
     mValid = true;
     }
@@ -78,7 +78,7 @@ void SdPNewProjectItem_EnterName::onTextChanged(const QString name)
 bool SdPNewProjectItem_EnterName::validatePage()
   {
   if( mValid ) {
-    if( SdObjectFactory::isContains( (*mItemPtr)->getType(), mName->text(), SdProjectItem::getDefaultAuthor() ) ) {
+    if( SdLibraryStorage::instance()->cfObjectContains( headerUid( (*mItemPtr)->getType(), mName->text(), SdProjectItem::getDefaultAuthor() ) ) ) {
       if( QMessageBox::question( this, tr("Warning!"), tr("Object with this name and author already exist in base. Overwrite existing object?"),
                                  QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel) != QMessageBox::Yes )
         return false;

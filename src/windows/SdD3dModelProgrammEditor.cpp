@@ -19,7 +19,7 @@ Description
 #include "SdDPadMaster.h"
 #include "script/SdScriptParser3d.h"
 #include "script/SdScriptProgramm.h"
-#include "objects/SdObjectFactory.h"
+#include "library/SdLibraryStorage.h"
 #include "objects/Sd3dGraphModel.h"
 
 #include <QVBoxLayout>
@@ -198,7 +198,7 @@ SdD3dModelProgrammEditor::SdD3dModelProgrammEditor(const QString id, QWidget *pa
   //Extract programm source
   if( !id.isEmpty() )
     //Retrive rich object with id from local libary
-    mRich = sdObjectOnly<SdPItemRich>( SdObjectFactory::extractObject( id, false, parent ) );
+    mRich = sdObjectOnly<SdPItemRich>( SdLibraryStorage::instance()->cfObjectGet( id ) );
 
   if( mRich == nullptr ) {
     //Create new empty programm
@@ -448,7 +448,7 @@ void SdD3dModelProgrammEditor::save()
   mRich->paramSet( stdParam3dModelProgramm, mDescription->text(), nullptr );
   mRich->setContents( mTextEdit->toPlainText() );
   //Push to library
-  SdObjectFactory::insertItemObject( mRich, mRich->jsonObjectTo() );
+  SdLibraryStorage::instance()->cfObjectInsert( mRich );
   mDirty = false;
   }
 

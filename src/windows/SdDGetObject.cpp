@@ -16,10 +16,9 @@ Description
 #include "ui_SdDGetObject.h"
 #include "SdWEditorGraphView.h"
 #include "SdWEditor3dPartView.h"
-#include "SdDNetClient.h"
 #include "SdDRowValue.h"
 #include "SdWCategoryList.h"
-#include "objects/SdObjectFactory.h"
+#include "library/SdLibraryStorage.h"
 #include "objects/SdProjectItem.h"
 #include "objects/SdPItemComponent.h"
 #include "objects/SdPItemSymbol.h"
@@ -393,7 +392,7 @@ void SdDGetObject::find()
   mHeaderList.clear();
 
   //Accumulate headers matched to filter
-  SdObjectFactory::forEachHeader( [list] ( SdLibraryHeader &hdr ) -> bool {
+  SdLibraryStorage::instance()->forEachHeader( [list] ( SdLibraryHeader &hdr ) -> bool {
     //test class
     if( hdr.mClass & mSort ) {
       //Split uid to name type and author
@@ -456,10 +455,10 @@ void SdDGetObject::onSelectItem(int row, int column)
     mPartView->setItemById( hdr.uid() );
     }
   else if( hdr.mClass == dctComponent ) {
-    mComponent = sdObjectOnly<SdPItemComponent>( SdObjectFactory::extractObject( hdr.uid(), true, this ) );
+    mComponent = sdObjectOnly<SdPItemComponent>( SdLibraryStorage::instance()->cfObjectGet( hdr.uid() ) );
     }
   else if( hdr.mClass == dctProject ) {
-    mProject = sdObjectOnly<SdProject>( SdObjectFactory::extractObject( hdr.uid(), true, this ) );
+    mProject = sdObjectOnly<SdProject>( SdLibraryStorage::instance()->cfObjectGet( hdr.uid() ) );
     }
 
   mParam = hdr.mParamTable;
@@ -467,7 +466,7 @@ void SdDGetObject::onSelectItem(int row, int column)
   mSections->clear();
   mSectionIndex = -1;
 
-  bool present = SdObjectFactory::isObjectPresent(hdr.uid());
+  bool present = SdLibraryStorage::instance()->cfObjectContains( hdr.uid() );
 
   if( mComponent ) {
     //Get section count
@@ -477,7 +476,7 @@ void SdDGetObject::onSelectItem(int row, int column)
       for( int i = 0; i < sectionCount; i++ ) {
         mSections->addItem( tr("Section %1: %2").arg(i+1).arg(mComponent->getSection(i)->getSymbolTitle()) );
         //If any section not present in library then set present to false
-        if( !SdObjectFactory::isObjectPresent(mComponent->getSection(i)->getSymbolId()) )
+        if( !SdLibraryStorage::instance()->cfObjectContains(mComponent->getSection(i)->getSymbolId()) )
           present = false;
         }
       mSections->setCurrentRow(0);
@@ -490,7 +489,7 @@ void SdDGetObject::onSelectItem(int row, int column)
 
     //Setup part for view
     mPartView->setItemById( mComponent->getPartId() );
-    if( !SdObjectFactory::isObjectPresent( mComponent->getPartId() ) )
+    if( !SdLibraryStorage::instance()->cfObjectContains( mComponent->getPartId() ) )
       present = false;
     }
 
@@ -749,7 +748,7 @@ void SdDGetObject::accept()
 
 SdObject *SdDGetObject::getObject(quint64 sort, const QString title, QWidget *parent, const QString defFiltr)
   {
-  return SdObjectFactory::extractObject( getObjectUid( sort, title, parent, defFiltr), false, parent );
+  return SdLibraryStorage::instance()->cfObjectGet( getObjectUid( sort, title, parent, defFiltr) );
   }
 
 
@@ -778,7 +777,7 @@ SdPItemComponent *SdDGetObject::getComponent(int *logSectionPtr, SdStringMap *pa
     //If available pointer to param then set component or instance params
     if( param )
       *param = mParam;
-    return sdObjectOnly<SdPItemComponent>( SdObjectFactory::extractObject( mCompUid, false, parent ) );
+    return sdObjectOnly<SdPItemComponent>( SdLibraryStorage::instance()->cfObjectGet( mCompUid ) );
     }
   return nullptr;
   }

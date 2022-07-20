@@ -15,7 +15,7 @@ Description
 #include "SdSection.h"
 #include "SdPItemSymbol.h"
 #include "SdGraphSymPin.h"
-#include "SdObjectFactory.h"
+#include "library/SdLibraryStorage.h"
 #include "SdJsonIO.h"
 
 #include <memory>
@@ -37,9 +37,8 @@ void SdSection::setSymbolId(const QString id, SdUndo *undo)
   {
   if( id.isEmpty() )
     return;
-  std::unique_ptr<SdObject> obj( SdObjectFactory::extractObject( id, true, nullptr ) );
-  SdPtr<SdPItemSymbol> symbol( obj.get() );
-  if( symbol.isValid() ) {
+  QScopedPointer<SdPItemSymbol> symbol( sdObjectOnly<SdPItemSymbol>( SdLibraryStorage::instance()->cfObjectGet( id ) )  );
+  if( !symbol.isNull() ) {
     //Store previous state
     undo->string2( &mSymbolId, &mSymbolTitle );
     undo->stringMap( &mAssociationTable );
@@ -62,9 +61,9 @@ void SdSection::setSymbolId(const QString id, SdUndo *undo)
 
 
 
-SdPItemSymbol *SdSection::extractFromFactory( bool soft, QWidget *parent) const
+SdPItemSymbol *SdSection::extractFromFactory() const
   {
-  return dynamic_cast<SdPItemSymbol*>( SdObjectFactory::extractObject( mSymbolId, soft, parent ) );
+  return sdObjectOnly<SdPItemSymbol>( SdLibraryStorage::instance()->cfObjectGet( mSymbolId ) );
   }
 
 

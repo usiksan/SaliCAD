@@ -23,7 +23,6 @@ Description
 #include "objects/SdPItemComponent.h"
 #include "objects/SdPItemSheet.h"
 #include "objects/SdPItemPlate.h"
-#include "objects/SdObjectFactory.h"
 #include "objects/SdCopyMapProject.h"
 
 #include <QVBoxLayout>

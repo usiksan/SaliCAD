@@ -44,7 +44,7 @@ SdDOptionsPagePath::SdDOptionsPagePath(QWidget *parent) :
 
   grid->addWidget( new QLabel(tr("Library path:")), 1, 0 );
   grid->addWidget( mLibraryPath = new QLineEdit(), 1, 1 );
-  mLibraryPath->setText( sdEnvir->mLibraryPath );
+  mLibraryPath->setText( SdLibraryStorage::instance()->libraryPath() );
   grid->addWidget( but = new QPushButton( tr("Select...") ), 1, 2 );
   connect( but, &QPushButton::clicked, this, [this] () {
     QString str = QFileDialog::getExistingDirectory( this, tr("Library path"), mLibraryPath->text() );
@@ -89,14 +89,13 @@ void SdDOptionsPagePath::accept()
   sdEnvir->mHomePath = dir.slashedPath();
 
   dir.set( mLibraryPath->text() );
-  if( sdEnvir->mLibraryPath != dir.slashedPath() ) {
+  if( SdLibraryStorage::instance()->libraryPath() != dir.slashedPath() ) {
     //Library path changed. We change library path to libraryStorage and reset sync counts
     QSettings s;
     s.setValue( SDK_LOCAL_SYNC, 0 );
     s.setValue( SDK_REMOTE_SYNC, 1 );
 
-    sdEnvir->mLibraryPath = dir.slashedPath();
-    SdLibraryStorage::instance()->setLibraryPath( sdEnvir->mLibraryPath );
+    SdLibraryStorage::instance()->libraryPathSet( dir.slashedPath() );
     }
 
   dir.set( mPatternPath->text() );

@@ -15,7 +15,6 @@ Description
 #include "SdPItemSymbol.h"
 #include "SdSection.h"
 #include "SdPartVariant.h"
-#include "SdObjectFactory.h"
 #include "SdGraphIdent.h"
 #include "SdProject.h"
 

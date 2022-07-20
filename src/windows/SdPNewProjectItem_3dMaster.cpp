@@ -20,7 +20,6 @@ Description
 #include "SdWView3d.h"
 #include "SdD3dModelProgrammEditor.h"
 #include "SdD3dModelMaster.h"
-#include "objects/SdObjectFactory.h"
 #include "objects/SdPItemRich.h"
 #include "objects/Sd3dGraphModel.h"
 #include "script/SdScriptParser3d.h"

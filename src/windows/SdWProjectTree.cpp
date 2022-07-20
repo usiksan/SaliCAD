@@ -78,7 +78,7 @@ SdWProjectTree::SdWProjectTree(const QString fname, SdProject *prj, QWidget *par
   connect( SdPulsar::sdPulsar, &SdPulsar::renameItem, this, &SdWProjectTree::renameItem );
   connect( SdPulsar::sdPulsar, &SdPulsar::highlightItem, this, &SdWProjectTree::highlightItem );
   connect( this, &SdWProjectTree::currentItemChanged, this, &SdWProjectTree::onCurrentItemChanged );
-  connect( sdObjectNetClient, &SdObjectNetClient::newObjectsReceived, this, &SdWProjectTree::updateNewestMark );
+  connect( SdObjectNetClient::instance(), &SdObjectNetClient::newObjectsReceived, this, &SdWProjectTree::updateNewestMark );
   }
 
 
