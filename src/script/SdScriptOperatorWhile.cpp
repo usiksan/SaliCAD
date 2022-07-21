@@ -42,6 +42,6 @@ void SdScriptOperatorWhile::execute()
   //Exclude infinite loop. We limit it with 1000 iterations
   for( int i = 0; i < 1000 && mCondition->toBool(); i++ ) {
     mBlock->execute();
-    qDebug() << "Iteration " << i;
+    //qDebug() << "Iteration " << i;
     }
   }

@@ -57,7 +57,7 @@ static void sdHttpMultiPartAppendField( QHttpMultiPart *multiPart, const QString
 SdObjectNetClient::SdObjectNetClient(QObject *parent) :
   QObject( parent ),
   mQueryType(SdRemoteQueryNone),
-  mLockRemote(10)
+  mLockRemote(0)
   {
 
   mTimer.setInterval( 1000 );
@@ -417,7 +417,8 @@ void SdObjectNetClient::cmUploadObject(const QJsonObject &reply)
   if( reply.value( QStringLiteral("result") ).toInt() == 0 ) {
     //Object uploaded successfully
     //qDebug() << "sync uploaded successfully";
-    SdLibraryStorage::instance()->cfObjectUploaded( reply.value(REPO_FIELD_UID).toString() );
+    QString uid = reply.value(REPO_FIELD_UID).toString();
+    SdLibraryStorage::instance()->cfObjectUploaded( uid );
     doUploadNextObject();
     }
   }

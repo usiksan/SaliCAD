@@ -276,6 +276,17 @@ SdContainerFile *SdLibraryStorage::cfObjectUpload() const
 
 
 
+void SdLibraryStorage::cfObjectUploaded(const QString uid)
+  {
+  if( mReferenceMap.contains(uid) ) {
+    mReferenceMap[uid].uploadReset();
+    mDirty = true;
+    }
+  }
+
+
+
+
 //!
 //! \brief cfIsOlder Test if object which represents by uid and time present in library and older than there is in library
 //! \param uid       uid of tested object

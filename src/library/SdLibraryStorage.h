@@ -129,7 +129,7 @@ class SdLibraryStorage : public QObject
     //! \brief cfObjectUploaded Mark object as already uploaded. Marked object no need to be upload
     //! \param uid
     //!
-    void             cfObjectUploaded( const QString uid ) { if( mReferenceMap.contains(uid) ) mReferenceMap[uid].uploadReset(); }
+    void             cfObjectUploaded( const QString uid );
 
     //!
     //! \brief cfIsOlder Test if object which represents by uid and time present in library and older than there is in library
