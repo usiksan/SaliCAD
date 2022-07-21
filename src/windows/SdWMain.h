@@ -267,7 +267,7 @@ class SdWMain : public QMainWindow
     void cmHelpBackward();
     void cmHelpForward();
 
-    void cmRemoteStatus();
+    void cmRemoteStatus( const QString info );
 
     void cmClipboardChange();
     void cmPropertiesChange();

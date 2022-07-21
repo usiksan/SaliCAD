@@ -27,6 +27,7 @@ Description
 #include "windows/SdPNewProjectItem.h"
 #include "windows/SdWCommand.h"
 #include "windows/SdDParamEditor.h"
+#include "library/SdLibraryStorage.h"
 #include "SdDGetObject.h"
 
 #include <QFileInfo>
@@ -78,7 +79,7 @@ SdWProjectTree::SdWProjectTree(const QString fname, SdProject *prj, QWidget *par
   connect( SdPulsar::sdPulsar, &SdPulsar::renameItem, this, &SdWProjectTree::renameItem );
   connect( SdPulsar::sdPulsar, &SdPulsar::highlightItem, this, &SdWProjectTree::highlightItem );
   connect( this, &SdWProjectTree::currentItemChanged, this, &SdWProjectTree::onCurrentItemChanged );
-  connect( SdObjectNetClient::instance(), &SdObjectNetClient::newObjectsReceived, this, &SdWProjectTree::updateNewestMark );
+  connect( SdLibraryStorage::instance(), &SdLibraryStorage::updateNewestMark, this, &SdWProjectTree::updateNewestMark );
   }
 
 

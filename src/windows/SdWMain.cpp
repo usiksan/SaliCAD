@@ -162,12 +162,12 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
       mRemote->setToolTip( tr("Remote repository status: sync being processed") );
       }
     } );
-  connect( mRemote, &QToolButton::clicked, this, &SdWMain::cmRemoteStatus );
+  connect( mRemote, &QToolButton::clicked, this, [this] () { cmRemoteStatus(QString{}); } );
   sbar->addWidget( mRemote );
   //Show status when sync operation happens
-  connect( SdObjectNetClient::instance(), &SdObjectNetClient::informationAppended, this, [this] ( const QString ) { cmRemoteStatus(); } );
+  connect( SdObjectNetClient::instance(), &SdObjectNetClient::informationAppended, this, &SdWMain::cmRemoteStatus );
   //Show status when library scan operation happens
-  connect( SdLibraryStorage::instance(), &SdLibraryStorage::informationAppended, this, [this] ( const QString ) { cmRemoteStatus(); } );
+  connect( SdLibraryStorage::instance(), &SdLibraryStorage::informationAppended, this, &SdWMain::cmRemoteStatus );
 
   activateProjectName( nullptr );
 
@@ -2078,13 +2078,14 @@ void SdWMain::cmHelpForward()
 
 
 
-void SdWMain::cmRemoteStatus()
+void SdWMain::cmRemoteStatus(const QString info)
   {
   if( SdWRemoteStatus::mWRemoteStatus == nullptr ) {
     new SdWRemoteStatus( this );
     SdWRemoteStatus::mWRemoteStatus->resize( 300, 350 );
     SdWRemoteStatus::mWRemoteStatus->move( width() - 220, height() - 400 );
     SdWRemoteStatus::mWRemoteStatus->show();
+    SdWRemoteStatus::mWRemoteStatus->addInfo( info );
     }
   }
 

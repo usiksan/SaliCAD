@@ -42,6 +42,7 @@ SdLibraryStorage::SdLibraryStorage() :
   mNetClientLocker(nullptr),
   mDirty(false),
   mUploadAvailable(false),
+  mNewestMark(false),
   mLock()
   {
   }
@@ -469,6 +470,11 @@ void SdLibraryStorage::periodicScan()
         mNetClientLocker = nullptr;
         }
 
+      if( mNewestMark ) {
+        mNewestMark = false;
+        emit updateNewestMark();
+        }
+
       mScanTimer.start( 5000 );
       }
     }
@@ -518,6 +524,7 @@ void SdLibraryStorage::insertReferenceAndHeader(const SdContainerFile *item)
         //Object already in library and it is older, so we remove its file
         QFile::remove( fullPath( SdContainerFile::getLibraryFName( key, mReferenceMap.value(key).mCreationTime ) ) );
         emit informationAppended( tr("Older object replaced %1").arg( item->getTitle() )  );
+        mNewestMark = true;
         }
       else {
         emit informationAppended( tr("Object appended %1").arg( item->getTitle() )  );

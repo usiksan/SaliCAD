@@ -56,6 +56,7 @@ class SdLibraryStorage : public QObject
     SdNetClientLocker     *mNetClientLocker;
     bool                   mDirty;
     bool                   mUploadAvailable; //!< If true then there available objects to upload
+    bool                   mNewestMark;      //!< True if need to update newst marks
 
     mutable QReadWriteLock mLock;
 
@@ -197,6 +198,8 @@ class SdLibraryStorage : public QObject
 
     //Append information item
     void             informationAppended( const QString info );
+
+    void             updateNewestMark();
 
   private slots:
     //!

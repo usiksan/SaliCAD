@@ -30,6 +30,7 @@ Description
 #include <QHostAddress>
 #include <QSettings>
 #include <QScopedPointer>
+#include <QDebug>
 
 
 
@@ -340,11 +341,12 @@ void SdObjectNetClient::cmSyncList(const QJsonObject &reply)
       for( auto it = list.constBegin(); it != list.constEnd(); it++ ) {
         QJsonObject obj = it.value().toObject();
         QString uid    = obj.value( REPO_FIELD_UID ).toString();
-        int     time   = obj.value( QStringLiteral("time") ).toInt();
+        int     time   = obj.value( REPO_FIELD_TIME ).toString().toInt();
         int     index  = it.key().toInt();
         if( index > indexMax ) indexMax = index;
+        //qDebug() << uid << time;
         //Test if object newer than existing
-        if( !SdLibraryStorage::instance()->cfIsOlder( uid, time ) ) {
+        if( !SdLibraryStorage::instance()->cfIsOlderOrSame( uid, time ) ) {
           //Object is newer than existing or no object with this uid
           //so append object index to download list
           mObjectIndexList.append( index );
