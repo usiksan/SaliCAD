@@ -303,8 +303,7 @@ History
 #define SDK_PREVIOUS_FILES           "PreviousFiles"
 #define SDK_GLOBAL_AUTHOR            "Author global id"
 #define SDK_GLOBAL_PASSWORD          "Author global password"
-#define SDK_LOCAL_SYNC               "Local sync"
-#define SDK_REMOTE_SYNC              "Remote sync"
+#define SDK_REMOTE_SYNC              "Remote sync"              //!< Remote index of last downloaded object
 #define SDK_REMOTE_REMAIN            "Remote remain"
 #define SDK_SERVER_REPO              "SaliCAD repository"
 #define SDK_UPLOAD_AUTO              "Auto upload"

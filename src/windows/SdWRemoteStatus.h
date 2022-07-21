@@ -14,6 +14,7 @@ Description
 #ifndef SDWREMOTESTATUS_H
 #define SDWREMOTESTATUS_H
 
+
 #include <QWidget>
 #include <QListWidget>
 #include <QTimer>
@@ -29,6 +30,9 @@ class SdWRemoteStatus : public QListWidget
 
     static SdWRemoteStatus *mWRemoteStatus;
   signals:
+
+  public slots:
+    void addInfo( const QString info );
 
   protected slots:
     void restartTimer();

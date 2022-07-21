@@ -57,7 +57,7 @@ static void sdHttpMultiPartAppendField( QHttpMultiPart *multiPart, const QString
 SdObjectNetClient::SdObjectNetClient(QObject *parent) :
   QObject( parent ),
   mQueryType(SdRemoteQueryNone),
-  mLockRemote(0)
+  mLockRemote(10)
   {
 
   mTimer.setInterval( 1000 );

@@ -451,7 +451,7 @@ void SdProject::libraryUpdate() const
     if( cf.isValid() && !cf->isEditEnable() )
       //Insert container file into library
       lib->cfObjectInsert( cf.ptr() );
-    return false;
+    return true;
     } );
 
   if( !isEditEnable() )

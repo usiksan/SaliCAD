@@ -166,6 +166,8 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   sbar->addWidget( mRemote );
   //Show status when sync operation happens
   connect( SdObjectNetClient::instance(), &SdObjectNetClient::informationAppended, this, [this] ( const QString ) { cmRemoteStatus(); } );
+  //Show status when library scan operation happens
+  connect( SdLibraryStorage::instance(), &SdLibraryStorage::informationAppended, this, [this] ( const QString ) { cmRemoteStatus(); } );
 
   activateProjectName( nullptr );
 

@@ -147,6 +147,21 @@ class SdLibraryStorage : public QObject
     bool             cfIsOlder( const SdContainerFile *item ) const;
 
     //!
+    //! \brief cfIsOlderOrSame Test if object which represents by uid and time present in library and older or same than there is in library
+    //! \param uid             uid of tested object
+    //! \param time            time of locking of tested object
+    //! \return                true if tested object present in library and it older then in library
+    //!
+    bool             cfIsOlderOrSame( const QString uid, qint32 time ) const;
+
+    //!
+    //! \brief cfIsOlderOrSame Overloaded function. Test if object present in library and older or same than there is in library
+    //! \param item            Tested object
+    //! \return                true if tested object present in library and it older then in library
+    //!
+    bool             cfIsOlderOrSame( const SdContainerFile *item ) const;
+
+    //!
     //! \brief cfObjectContains Return true if object contains in library
     //! \param uid              UID of object
     //! \return                 True if object contains in library

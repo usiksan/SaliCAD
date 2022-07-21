@@ -27,17 +27,23 @@ SdDOptionsPageLibrary::SdDOptionsPageLibrary(QWidget *parent) :
   grid->addWidget( but = new QPushButton( tr("Resync") ), 0, 2 );
   connect( but, &QPushButton::clicked, this, [] () {
     QSettings s;
-    s.setValue( SDK_LOCAL_SYNC, 0 );
     s.setValue( SDK_REMOTE_SYNC, 1 );
-    //s.value( SDK_SERVER_IP ).toString();
+    });
+
+  grid->addWidget( new QLabel(tr("Enable automatic object upload:")), 1, 0 );
+  grid->addWidget( mAutoUpload = new QCheckBox(), 1, 1 );
+  mAutoUpload->setChecked( s.value(SDK_UPLOAD_AUTO, false ).toBool() );
+  connect( mAutoUpload, &QCheckBox::toggled, this, [] ( bool state ) {
+    QSettings s;
+    s.setValue( SDK_UPLOAD_AUTO, state );
     });
 
 
-  grid->addWidget( new QLabel(tr("Author name:")), 1, 0 );
-  grid->addWidget( mAuthorName = new QLineEdit(), 1, 1 );
+  grid->addWidget( new QLabel(tr("Author name:")), 2, 0 );
+  grid->addWidget( mAuthorName = new QLineEdit(), 2, 1 );
   mAuthorName->setText( s.value( QStringLiteral(SDK_GLOBAL_AUTHOR), QString()).toString() );
   mAuthorName->setReadOnly( true );
-  grid->addWidget( but = new QPushButton( tr("Registration...") ), 1, 2 );
+  grid->addWidget( but = new QPushButton( tr("Registration...") ), 2, 2 );
   connect( but, &QPushButton::clicked, this, [this] () {
     SdDRegistation d;
     d.exec();
@@ -48,10 +54,16 @@ SdDOptionsPageLibrary::SdDOptionsPageLibrary(QWidget *parent) :
     });
 
 
-  grid->addWidget( new QLabel(tr("Objects in library:")), 2, 0 );
-  grid->addWidget( mObjectsCount = new QLineEdit(), 2, 1 );
+  grid->addWidget( new QLabel(tr("Objects in library:")), 3, 0 );
+  grid->addWidget( mObjectsCount = new QLineEdit(), 3, 1 );
   mObjectsCount->setText( QString::number(SdLibraryStorage::instance()->objectCount()) );
   mObjectsCount->setReadOnly(true);
+  grid->addWidget( but = new QPushButton( tr("Rescan") ), 3, 2 );
+  connect( but, &QPushButton::clicked, this, [this] () {
+    //Reassign library path will restart scan library process
+    SdLibraryStorage::instance()->libraryPathSet( SdLibraryStorage::instance()->libraryPath() );
+    mObjectsCount->setText( QString::number(SdLibraryStorage::instance()->objectCount()) );
+    });
 //  grid->addWidget( but = new QPushButton( tr("Select...") ), 1, 2 );
 //  connect( but, &QPushButton::clicked, this, [this] () {
 //    QString str = QFileDialog::getExistingDirectory( this, tr("Library path"), mLibraryPath->text() );

@@ -13,6 +13,7 @@ Description
 */
 #include "SdWRemoteStatus.h"
 #include "objects/SdObjectNetClient.h"
+#include "library/SdLibraryStorage.h"
 
 SdWRemoteStatus *SdWRemoteStatus::mWRemoteStatus;
 
@@ -33,21 +34,8 @@ SdWRemoteStatus::SdWRemoteStatus(QWidget *parent) :
   setCurrentRow( count() - 1 );
 
   //When appended new info item
-  connect( SdObjectNetClient::instance(), &SdObjectNetClient::informationAppended, this, [this] ( const QString info ) {
-    //Append info to visual list
-    addItem( info );
-
-    if( count() > 300 ) {
-      //Remove first item
-      auto item = takeItem(0);
-      if( item != nullptr )
-        delete item;
-      }
-
-
-    //Track to end of list
-    setCurrentRow( count() - 1 );
-    } );
+  connect( SdObjectNetClient::instance(), &SdObjectNetClient::informationAppended, this, &SdWRemoteStatus::addInfo );
+  connect( SdLibraryStorage::instance(), &SdLibraryStorage::informationAppended, this, &SdWRemoteStatus::addInfo );
 
   connect( &mHideTimer, &QTimer::timeout, this, &SdWRemoteStatus::close );
   mHideTimer.start( 15000 );
@@ -61,6 +49,25 @@ SdWRemoteStatus::SdWRemoteStatus(QWidget *parent) :
 SdWRemoteStatus::~SdWRemoteStatus()
   {
   mWRemoteStatus = nullptr;
+  }
+
+
+
+void SdWRemoteStatus::addInfo(const QString info)
+  {
+  //Append info to visual list
+  addItem( info );
+
+  if( count() > 300 ) {
+    //Remove first item
+    auto item = takeItem(0);
+    if( item != nullptr )
+      delete item;
+    }
+
+
+  //Track to end of list
+  setCurrentRow( count() - 1 );
   }
 
 
