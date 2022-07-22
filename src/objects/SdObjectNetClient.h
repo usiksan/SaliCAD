@@ -64,21 +64,8 @@ class SdObjectNetClient : public QObject
     void        remoteUnlock();
 
   signals:
-    //Signal on process changed. Send current process state description and completion flag
-    void process( QString desr, bool complete );
-
-    //Signal send on complete object loading process
-    // with result of loading and count of remain object to may be load
-    void objectComplete( int result, int remain );
-
-    //Signal send when on sync new object received
-    void newObjectsReceived();
-
-    //Signal on connection ok and fail
-    void connectionStatus( QString msg, bool ok );
-
     //Signal on registration status
-    void registerStatus( const QString msg, const QString email );
+    void registerStatus( int success, const QString msg, const QString email );
 
     //Signal on file receiv
     void fileContents( int result, QString fileName, QByteArray fileData );

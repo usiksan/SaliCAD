@@ -123,7 +123,7 @@ void SdObjectNetClient::doRegister(const QString repo, const QString authorName,
   sdHttpMultiPartAppendField( multiPart, REPO_FIELD_PASSWORD, password.toUtf8() );
   sdHttpMultiPartAppendField( multiPart, REPO_FIELD_EMAIL, email.toUtf8() );
 
-  emit registerStatus( tr("Register start..."), email );
+  emit registerStatus( -1, tr("Register start..."), email );
   mQueryType = SdRemoteQueryRegister;
   QNetworkReply *reply = mNetworkManager->post( QNetworkRequest(QUrl( QStringLiteral("http://") + fullRepo + QStringLiteral("register.php"))), multiPart );
   multiPart->setParent(reply); // delete the multiPart with the reply
@@ -218,7 +218,7 @@ void SdObjectNetClient::finished(QNetworkReply *reply)
     switch( queryType ) {
       case SdRemoteQueryRegister :
         cmRegister( QJsonObject{} );
-        emit registerStatus( tr("Error when transfer: \"%1\"").arg(reply->errorString()), QString() );
+        emit registerStatus( 1, tr("Error when transfer: \"%1\"").arg(reply->errorString()), QString() );
         break;
       case SdRemoteQueryList :
       case SdRemoteQueryNone :
@@ -275,32 +275,31 @@ void SdObjectNetClient::cmRegister(const QJsonObject &reply)
     switch( result ) {
       case 0 :
         success = true;
-        emit registerStatus( tr("Registration successfully"), email );
+        emit registerStatus( 0, tr("Registration successfully"), email );
         break;
       case 1 :
-        emit registerStatus( tr("Internal data. Check repo address"), email );
+        emit registerStatus( 2, tr("Internal data. Check repo address"), email );
         break;
       case 2 :
-        emit registerStatus( tr("Failure data base connection. Try later"), email );
+        emit registerStatus( 3, tr("Failure data base connection. Try later"), email );
         break;
       case 3 :
-        emit registerStatus( tr("Can't insert this name into data base. Try another name"), email );
+        emit registerStatus( 4, tr("Can't insert this name into data base. Try another name"), email );
         break;
       case 4 :
-        emit registerStatus( tr("This name already present in data base with different password. Try another name or restore password."), email );
+        emit registerStatus( 5, tr("This name already present in data base with different password. Try another name or restore password."), email );
         break;
       default:
-        emit registerStatus( tr("Unresponsible code %1. Check repo address").arg(result), email );
+        emit registerStatus( 6, tr("Unresponsible code %1. Check repo address").arg(result), email );
         break;
       }
     }
   else {
-    emit registerStatus( tr("Unresponsible reply. Check repo address"), QString{} );
+    emit registerStatus( 7, tr("Unresponsible reply. Check repo address"), QString{} );
     }
 
   if( !success ) {
     QSettings s;
-    s.remove( QStringLiteral(SDK_SERVER_REPO) );
     s.remove( QStringLiteral(SDK_GLOBAL_AUTHOR) );
     s.remove( QStringLiteral(SDK_GLOBAL_PASSWORD) );
     }

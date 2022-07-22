@@ -175,6 +175,17 @@ void SdSelector::putToClipboard( const SdProject *project, double scale )
   //Put picture into mime
   mime->setImageData( image );
 
+  //Yet another alternative - textual packet object
+  QByteArray packedHex = qCompress( array ).toHex();
+  QString packedString;
+  packedString.reserve( 20 + (packedHex.length() / 80 + 1) * 81 );
+  packedString.append( QStringLiteral("`SaliCAD compressed") );
+  for( int i = 0; i < packedHex.length(); i += 80 ) {
+    packedString.append( QChar('\n') );
+    packedString.append( packedHex.mid( i, 80 ) );
+    }
+  packedString.append( QChar('`') );
+  mime->setText( packedString );
 
   //Insert into clipboard
   QGuiApplication::clipboard()->setMimeData( mime );
@@ -207,6 +218,37 @@ SdProject *SdSelector::getFromClipboard()
 
     return project;
     }
+
+  //Try convert from textual coding
+  if( mime != nullptr && mime->hasText() ) {
+    QString src = mime->text();
+    if( src.startsWith( QStringLiteral("SaliCAD compressed") )  ) {
+      //This contens is SaliCAD compressed representation
+      QByteArray packedHex;
+      packedHex.reserve( src.size() );
+      //Remove service information
+      for( int i = 19; i < src.size(); i++ )
+        if( src.at(i).isLetterOrNumber() )
+          packedHex.append( src.at(i).toLatin1() );
+
+      QJsonObject obj = QCborValue::fromCbor( qUncompress(QByteArray::fromHex(packedHex)) ).toJsonValue().toObject();
+
+      SdObjectMap map;
+      SdJsonReader js( obj, &map );
+
+      //Create project
+      SdProject *project = nullptr;
+
+      //Project reading
+      js.jsonBuildPtr( js, QStringLiteral("Project"), project );
+
+      //selection reading
+      js.jsonLeavePtr( js, QStringLiteral("Selector"), this );
+
+      return project;
+      }
+    }
+
   //No data in clipboard or wrong data format
   return nullptr;
   }
@@ -319,7 +361,7 @@ void SdSelector::draw(SdContext *ctx)
 bool SdSelector::isClipboardAvailable()
   {
   const QMimeData *mime = QGuiApplication::clipboard()->mimeData();
-  return mime != nullptr && mime->hasFormat( QStringLiteral(SD_CLIP_FORMAT_SELECTOR) );
+  return mime != nullptr && (mime->hasFormat( QStringLiteral(SD_CLIP_FORMAT_SELECTOR) ) || mime->hasText());
   }
 
 

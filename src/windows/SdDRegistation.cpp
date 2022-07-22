@@ -39,6 +39,7 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
   ui->mName->setText( s.value( QStringLiteral(SDK_GLOBAL_AUTHOR), QString()).toString() );
   onEditAuthorName( ui->mName->text() );
   ui->mPassword->setText( s.value( QStringLiteral(SDK_GLOBAL_PASSWORD), QString()).toString() );
+  ui->mAutomaticUpload->setChecked( s.value( QStringLiteral(SDK_UPLOAD_AUTO) ).toBool() );
 
   connect( ui->mRegistration, &QPushButton::clicked, this, &SdDRegistation::cmRegistration );
   connect( ui->mGeneratePassword, &QPushButton::clicked, this, &SdDRegistation::cmGeneratePassword );
@@ -46,27 +47,33 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
   connect( ui->mName, &QLineEdit::textEdited, this, &SdDRegistation::onEditAuthorName );
 
   connect( this, &SdDRegistation::doRegistration, SdObjectNetClient::instance(), &SdObjectNetClient::doRegister );
-  connect( SdObjectNetClient::instance(), &SdObjectNetClient::process, this, [this] (const QString msg, bool stop ) {
-    Q_UNUSED(stop)
-    ui->mProcess->setText(msg);
-    });
   connect( ui->mHelp, &QPushButton::clicked, this, [this] () {
     SdDHelp::help( QString("SdDRegistration.htm"), this );
     } );
 
   //Check registration status at start
-  connect( SdObjectNetClient::instance(), &SdObjectNetClient::registerStatus, this, [this] (const QString msg, const QString email ) {
+  connect( SdObjectNetClient::instance(), &SdObjectNetClient::registerStatus, this, [this] ( int success, const QString msg, const QString email ) {
     ui->mRegistrationStatus->setText(msg);
     if( !email.isEmpty() )
       ui->mEmail->setText( email );
+    if( success > 0 ) {
+      ui->mAutomaticUpload->setChecked( false );
+      ui->mAutomaticUpload->setEnabled( false );
+      }
+    if( success == 0 ) {
+      ui->mAutomaticUpload->setEnabled( true );
+      }
     });
 
   if( s.contains(SDK_GLOBAL_AUTHOR) && s.contains(SDK_GLOBAL_PASSWORD) && s.contains(SDK_SERVER_REPO) ) {
     ui->mEmail->setText( QStringLiteral("email") );
     QTimer::singleShot( 300, this, &SdDRegistation::cmRegistration );
     }
-  else
+  else {
     ui->mRegistrationStatus->setText( tr("Not registered!") );
+    ui->mAutomaticUpload->setChecked( false );
+    ui->mAutomaticUpload->setEnabled( false );
+    }
   }
 
 
@@ -142,6 +149,8 @@ void SdDRegistation::onEditAuthorName(const QString nm)
   else if( nm.toLower().contains( QString("sali") ) )
     nstatus = 1;
 #endif
+  else if( nm == QStringLiteral("Anonymous") )
+    nstatus = 1;
   else
     nstatus = 2;
   if( mNameStatus != nstatus ) {
@@ -162,13 +171,18 @@ void SdDRegistation::onEditAuthorName(const QString nm)
 //Close dialog
 void SdDRegistation::cmClose()
   {
+  QSettings s;
   if( !SdObjectNetClient::instance()->isRegistered() ) {
-    QMessageBox::warning( this, tr("Warning!"), tr("You not registered. SaliCAD will work in autonom mode. In this mode You can not access global component database. This dialog allowed in later with Help menu."));
+    QMessageBox::warning( this, tr("Warning!"), tr("You not registered. You will not be able to save your components in a global repository and share them with society, but you will be able to use components created by others. This dialog allowed in later with Help menu."));
+    if( s.value( QStringLiteral(SDK_GLOBAL_AUTHOR), QString()).toString().isEmpty() )
+      //Create default author name
+      s.setValue( QStringLiteral(SDK_GLOBAL_AUTHOR), QStringLiteral("Anonymous") );
     }
   else {
     if( !mFromHelp )
       QMessageBox::warning( this, tr("Warning!"), tr("This dialog allowed in later with Help menu."));
     }
+  s.setValue( QStringLiteral(SDK_UPLOAD_AUTO), ui->mAutomaticUpload->isChecked() );
   done(1);
   }
 
