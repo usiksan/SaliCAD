@@ -56,6 +56,7 @@ class SdDGetObject : public QDialog
 
     static QString                mObjName;      //Object name
     static QString                mObjUid;       //Unical object id
+    static QString                mItemName;     //!< Item name inside project
     static QString                mCompUid;      //Unical object id for components
     static int                    mSectionIndex; //Section index
     static SdStringMap            mParam;        //Component or instance params
@@ -100,6 +101,7 @@ class SdDGetObject : public QDialog
     static SdObject         *getObject(quint64 sort, const QString title, QWidget *parent, const QString defFiltr = QString{} );
     static QString           getObjectUid( quint64 sort, const QString title, QWidget *parent, const QString defFiltr = QString() );
     static SdPItemComponent *getComponent( int *logSectionPtr, SdStringMap *param, const QString title, QWidget *parent );
+    static SdProject        *getProject( QString &itemName, const QString title, QWidget *parent, const QString defFiltr = QString{} );
 
     // QDialog interface
   public slots:

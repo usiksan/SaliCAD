@@ -123,6 +123,7 @@ class SdWMain : public QMainWindow
     void cmFileSaveAs();
     void cmFileSaveAll();
     void cmFileStore();
+    void cmFileCloud();
     void cmFilePrint();
     void cmFileExit();
 

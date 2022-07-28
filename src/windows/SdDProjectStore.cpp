@@ -79,6 +79,7 @@ void SdDProjectStore::accept()
     return;
     }
   mProject->titleSet( name );
+  mProject->setEditEnable( false );
 
   //Store project in library
   SdLibraryStorage::instance()->cfObjectInsert( mProject );

@@ -42,14 +42,31 @@ class SdProject : public SdContainerFile
     SdProject();
     ~SdProject() override;
 
+    void              setEditEnable( bool ena ) { mEditEnable = ena; }
+
     SdUndo           *getUndo() { return &mUndo; }
 
+    //!
+    //! \brief getItem   Find project item by name
+    //! \param itemClass Item class to find
+    //! \param itemName  Item name to find. Used exact name
+    //! \return          Found item or nullptr if not found
+    //!
+    SdProjectItem    *getItem( quint64 itemClass, const QString itemName ) const;
 
-    //Return first sheet
-    SdPItemSheet     *getFirstSheet() const;
+    //!
+    //! \brief getSheet  Find sheet by name
+    //! \param sheetName Sheet name to find
+    //! \return          Sheet ptr or nullptr if not found
+    //!
+    SdPItemSheet     *getSheet( const QString sheetName ) const;
 
-    //Return first plate
-    SdPItemPlate     *getFirstPlate() const;
+    //!
+    //! \brief getPlate  Find plate by name
+    //! \param plateName Plate name to find
+    //! \return          Plate ptr or nullptr if not found
+    //!
+    SdPItemPlate     *getPlate( const QString plateName ) const;
 
     virtual void      getHeader( SdLibraryHeader &hdr ) const override;
 

@@ -208,6 +208,7 @@ History
   02.06.2022 v1.37 Append face rotation algorithm, so we can do curved pins
 
   20.07.2022 v2.0  Global refactoring library storage system
+  28.07.2022 v2.1  Create project to library storage system
 */
 
 #ifndef SDCONFIG
@@ -219,7 +220,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             2
-#define SD_VERSION_MINOR             0
+#define SD_VERSION_MINOR             1
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

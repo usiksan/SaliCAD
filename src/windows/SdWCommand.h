@@ -93,6 +93,7 @@ class SdWCommand
     static QActionPtr  cmFileExportGerber;
     static QActionPtr  cmFileStoreToLibrary;
     static QActionPtr  cmFileLoadFromLibrary;
+    static QActionPtr  cmFileCloud;
 
     static QActionPtr  cmFilePrevious[PREVIOUS_FILES_COUNT];
 

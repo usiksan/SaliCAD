@@ -170,11 +170,15 @@ void SdWProjectList::onProjectActivated(int index)
   mWProjectStack->setCurrentIndex( index );
   //New active project
   SdWProjectTree *active = activeProject();
-  if( active )
+  if( active ) {
     //Send signal to change project name at programm title
     emit projectNameChanged( active->getProject() );
-  else
+    SdWCommand::cmFileCloud->setChecked( !active->getProject()->isEditEnable() );
+    }
+  else {
     emit projectNameChanged( nullptr );
+    SdWCommand::cmFileCloud->setChecked( false );
+    }
   }
 
 

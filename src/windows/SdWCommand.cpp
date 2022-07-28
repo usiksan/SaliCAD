@@ -60,6 +60,8 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmFileSaveAs = menuFile->addAction( QIcon(QString(":/pic/save_as.png")), QObject::tr("Save project as..."), frame, SLOT(cmFileSaveAs()) );
   cmFileSaveAll = menuFile->addAction( QIcon(QString(":/pic/save_all.png")), QObject::tr("Save all projects"), frame, SLOT(cmFileSaveAll()) );
   cmFileStoreToLibrary = menuFile->addAction( QIcon(QString(":/pic/upload.png")),QObject::tr("Store to library..."), frame, SLOT(cmFileStore()) );
+  cmFileCloud = menuFile->addAction( QIcon(QStringLiteral(":/pic/projectCloud.png")), QObject::tr("Project stored in library"), frame, SLOT(cmFileCloud()) );
+  cmFileCloud->setCheckable(true);
   menuFile->addSeparator();
   cmFileImportPis = menuFile->addAction( QObject::tr("Import PasCAD"), frame, SLOT(cmFileImportPis()) );
   cmFileImport    = menuFile->addAction( QIcon(QString(":/pic/fileImport.png")), QObject::tr("Import..."), frame, SLOT(cmFileImport()) );
@@ -524,6 +526,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barMain->insertAction( nullptr, cmFileOpen );
   barMain->insertAction( nullptr, cmFileSave );
   barMain->insertAction( nullptr, cmFilePrint );
+  barMain->insertAction( nullptr, cmFileCloud );
   barMain->addSeparator();
   barMain->insertAction( nullptr, cmObjectNew );
   barMain->insertAction( nullptr, cmObjectEditEnable );
@@ -799,6 +802,8 @@ QActionPtr SdWCommand::cmFileExport;
 QActionPtr SdWCommand::cmFileExportGerber;
 QActionPtr SdWCommand::cmFileStoreToLibrary;
 QActionPtr SdWCommand::cmFileLoadFromLibrary;
+QActionPtr SdWCommand::cmFileCloud;
+
 
 QActionPtr SdWCommand::cmFilePrevious[PREVIOUS_FILES_COUNT];
 

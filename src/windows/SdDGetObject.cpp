@@ -176,6 +176,7 @@ static QMap<QString,int> sdFieldWidth;
 
 
 QString                SdDGetObject::mObjName;      //Object name
+QString                SdDGetObject::mItemName;
 QString                SdDGetObject::mObjUid;       //Unical object id
 QString                SdDGetObject::mCompUid;      //Unical object id for components
 int                    SdDGetObject::mSectionIndex; //Section index
@@ -494,8 +495,15 @@ void SdDGetObject::onSelectItem(int row, int column)
     }
 
   if( mProject ) {
-    mSymbolView->setItem( mProject->getFirstSheet(), false );
-    mPartView->setItem( mProject->getFirstPlate(), false );
+    mSections->clear();
+    mProject->forEachConst( dctSheet, [this] (SdObject *obj) -> bool {
+      SdPtrConst<SdPItemSheet> sheet(obj);
+      if( sheet.isValid() )
+        mSections->addItem( sheet->getTitle() );
+      return true;
+      });
+    mSections->setCurrentRow(0);
+    onCurrentSection(0);
     present = true;
     }
 
@@ -518,6 +526,11 @@ void SdDGetObject::onCurrentSection(int row)
   if( mComponent != nullptr ) {
     mSymbolView->setItemById( mComponent->getSectionSymbolId(row) );
     mSectionIndex = row;
+    }
+  else if( mProject != nullptr ) {
+    mItemName = mSections->currentItem()->text();
+    mSymbolView->setItem( mProject->getSheet( mItemName ), false );
+    mPartView->setItem( mProject->getPlate( mItemName ), false );
     }
   }
 
@@ -778,6 +791,21 @@ SdPItemComponent *SdDGetObject::getComponent(int *logSectionPtr, SdStringMap *pa
     if( param )
       *param = mParam;
     return sdObjectOnly<SdPItemComponent>( SdLibraryStorage::instance()->cfObjectGet( mCompUid ) );
+    }
+  return nullptr;
+  }
+
+
+
+
+SdProject *SdDGetObject::getProject(QString &itemName, const QString title, QWidget *parent, const QString defFiltr)
+  {
+  SdDGetObject dget( dctProject, title, defFiltr, parent );
+  if( !defFiltr.isEmpty() )
+    dget.find();
+  if( dget.exec() ) {
+    itemName = mItemName;
+    return sdObjectOnly<SdProject>( SdLibraryStorage::instance()->cfObjectGet(mObjUid) );
     }
   return nullptr;
   }

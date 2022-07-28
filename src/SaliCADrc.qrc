@@ -300,5 +300,6 @@
         <file>pic/symbolFragment.png</file>
         <file>pic/3dProgram.png</file>
         <file>pic/colors.png</file>
+        <file>pic/projectCloud.png</file>
     </qresource>
 </RCC>

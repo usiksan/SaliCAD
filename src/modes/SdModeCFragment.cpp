@@ -145,13 +145,14 @@ void SdModeCFragment::getFragment()
   {
   while(1) {
     clear();
-    mPastePrj = sdObjectOnly<SdProject>( SdDGetObject::getObject( dctProject, QObject::tr("Select fragment to insert"), mEditor ) );
+    QString sheetName;
+    mPastePrj = SdDGetObject::getProject( sheetName, QObject::tr("Select fragment to insert"), mEditor );
     if( mPastePrj == nullptr ) {
       cancelMode();
       return;
       }
 
-    SdPItemSheet *sheet = mPastePrj->getFirstSheet();
+    SdPItemSheet *sheet = mPastePrj->getSheet( sheetName );
 
     if( sheet == nullptr ) {
       QMessageBox::warning( mEditor, QObject::tr("Warning!"), QObject::tr("No sheets to insert. Try another fragment.") );

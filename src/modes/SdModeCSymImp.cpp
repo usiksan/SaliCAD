@@ -313,13 +313,14 @@ bool SdModeCSymImp::checkSchematicFragment()
       //Prompt user for select it
       if( QMessageBox::question( mEditor, QObject::tr("Information"), QObject::tr("There at least one fragment with this component. Do You want to select it?") ) == QMessageBox::Yes ) {
         //Show dialog to select fragment
-        mPastePrj = sdObjectOnly<SdProject>( SdDGetObject::getObject( dctProject, QObject::tr("Select fragment to insert"), mEditor, componentValueParam ) );
+        QString sheetName;
+        mPastePrj = SdDGetObject::getProject( sheetName, QObject::tr("Select fragment to insert"), mEditor, componentValueParam );
         if( mPastePrj == nullptr ) {
           cancelMode();
           return false;
           }
 
-        SdPItemSheet *sheet = mPastePrj->getFirstSheet();
+        SdPItemSheet *sheet = mPastePrj->getSheet( sheetName );
 
         if( sheet == nullptr ) {
           QMessageBox::warning( mEditor, QObject::tr("Warning!"), QObject::tr("No sheets to insert. Try another fragment.") );

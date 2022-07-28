@@ -52,33 +52,54 @@ SdProject::~SdProject()
 
 
 
-//Return first sheet
-SdPItemSheet *SdProject::getFirstSheet() const
+//!
+//! \brief getItem   Find project item by name
+//! \param itemClass Item class to find
+//! \param itemName  Item name to find. Used exact name
+//! \return          Found item or nullptr if not found
+//!
+SdProjectItem *SdProject::getItem(quint64 itemClass, const QString itemName) const
   {
-  for( SdObject *obj : mChildList ) {
-    if( !obj->isDeleted() && obj->getClass() == dctSheet ) {
-      //Sheet found. Return it
-      return dynamic_cast<SdPItemSheet*>(obj);
+  for( SdObject *obj : qAsConst(mChildList) ) {
+    if( !obj->isDeleted() && (obj->getClass() & itemClass) ) {
+      SdPtr<SdProjectItem> item(obj);
+      if( item.isValid() && item->getTitle() == itemName )
+        //Item found. Return it
+        return item.ptr();
       }
     }
-  //Sheet not found
+  //Item not found
   return nullptr;
   }
 
 
 
 
-//Return first plate
-SdPItemPlate *SdProject::getFirstPlate() const
+
+
+
+
+//!
+//! \brief getSheet  Find sheet by name
+//! \param sheetName Sheet name to find
+//! \return          Sheet ptr or nullptr if not found
+//!
+SdPItemSheet *SdProject::getSheet(const QString sheetName) const
   {
-  for( SdObject *obj : mChildList ) {
-    if( !obj->isDeleted() && obj->getClass() == dctPlate ) {
-      //Plate found. Return it
-      return dynamic_cast<SdPItemPlate*>(obj);
-      }
-    }
-  //Plate not found
-  return nullptr;
+  return dynamic_cast<SdPItemSheet*>( getItem(dctSheet, sheetName ) );
+  }
+
+
+
+
+//!
+//! \brief getPlate  Find plate by name
+//! \param plateName Plate name to find
+//! \return          Plate ptr or nullptr if not found
+//!
+SdPItemPlate *SdProject::getPlate(const QString plateName) const
+  {
+  return dynamic_cast<SdPItemPlate*>( getItem( dctPlate, plateName ) );
   }
 
 
@@ -87,7 +108,18 @@ SdPItemPlate *SdProject::getFirstPlate() const
 void SdProject::getHeader(SdLibraryHeader &hdr) const
   {
   SdContainerFile::getHeader( hdr );
-  //TODO Fill header with sheet variants
+//  hdr.mParamTable.clear();
+//  hdr.mVariantFieldCount = 1;
+//  hdr.mVariantTable.append( stdParamValue );
+
+//  //TODO Fill header with sheet variants
+//  forEachConst( dctSheet, [&hdr] (SdObject *obj) -> bool {
+//    SdPtrConst<SdPItemSheet> sheet(obj);
+//    if( sheet.isValid() )
+//      hdr.mVariantTable.append( sheet->getTitle() );
+//    return false;
+//    } );
+
   }
 
 
@@ -97,7 +129,7 @@ void SdProject::getHeader(SdLibraryHeader &hdr) const
 SdPItemPlate *SdProject::getDefaultPlate()
   {
   //At first try to find plate in child list
-  for( SdObject *obj : mChildList ) {
+  for( SdObject *obj : qAsConst(mChildList) ) {
     if( !obj->isDeleted() && obj->getClass() == dctPlate ) {
       //Plate found. Return it
       return dynamic_cast<SdPItemPlate*>(obj);

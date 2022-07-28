@@ -108,10 +108,11 @@ void SdPNewProjectItem_Master::initializePage()
       addMaster( tr("Sheet decorator"), tr("Creates empty schematic sheet with inserted sheet form"),
                  QString(":/pic/sheetMasterDecorator.png"), [this] ( SdProjectItem *item, QWidget *p ) -> bool {
         Q_UNUSED(p)
-        QScopedPointer<SdProject> mPastePrj( sdObjectOnly<SdProject>( SdLibraryStorage::instance()->cfObjectGet( SdDGetObject::getObjectUid( dctProject, QObject::tr("Select form to insert"), this, "form") ) )  );
+        QString sheetName;
+        QScopedPointer<SdProject> mPastePrj( SdDGetObject::getProject( sheetName, QObject::tr("Select form to insert"), this, "form" )  );
         if( mPastePrj.isNull() ) return false;
 
-        SdPItemSheet *sheet = mPastePrj->getFirstSheet();
+        SdPItemSheet *sheet = mPastePrj->getSheet( sheetName );
 
         if( sheet == nullptr ) return false;
 

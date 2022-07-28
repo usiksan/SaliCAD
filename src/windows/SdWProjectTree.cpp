@@ -133,6 +133,14 @@ bool SdWProjectTree::cmFileSave()
   //Test if file name default
   if( mFileName == SD_DEFAULT_FILE_NAME )
     return cmFileSaveAs();
+  //Check if project is library project
+  if( !mProject->isEditEnable() && mProject->isDirty() ) {
+    if( mProject->getAuthor() != mProject->getDefaultAuthor() ) {
+      if( QMessageBox::question( this, tr("Warning!"), tr("This project is library project and created another author. You can not edit it. Change author to You to enable editing?") ) != QMessageBox::Yes )
+        return false;
+      }
+    mProject->titleSet( mProject->getTitle() );
+    }
   return mProject->save( mFileName );
   }
 

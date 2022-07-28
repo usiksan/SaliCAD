@@ -872,9 +872,32 @@ void SdWMain::cmFileStore()
   SdWProjectTree *tree = activeProject();
   if( tree ) {
     SdProject *project = tree->getProject();
-    QString    name    = tree->fileName();
-    SdDProjectStore store( name, project, this );
-    store.exec();
+    if( project->isEditEnable() ) {
+      QString    name    = tree->fileName();
+      SdDProjectStore store( name, project, this );
+      store.exec();
+      SdWCommand::cmFileCloud->setChecked( !project->isEditEnable() );
+      }
+    else QMessageBox::information( this, tr("Warning!"), tr("This project also is in the library. It automatic upgrade when save") );
+    }
+  }
+
+
+
+
+void SdWMain::cmFileCloud()
+  {
+  SdWProjectTree *tree = activeProject();
+  if( tree ) {
+    SdProject *project = tree->getProject();
+    if( project->isEditEnable() ) cmFileStore();
+    else {
+      //Exclude file from library
+      project->setEditEnable( true );
+      if( QMessageBox::question( this, tr("Warning!"), tr("Do You want to delete project from library?") ) == QMessageBox::Yes ) {
+        SdLibraryStorage::instance()->cfObjectDelete( project );
+        }
+      }
     }
   }
 
