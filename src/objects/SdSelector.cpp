@@ -24,6 +24,9 @@ Description
 #include <QGuiApplication>
 #include <QImage>
 #include <QPainter>
+#include <QtSvg/QSvgGenerator>
+#include <QBuffer>
+#include <QByteArray>
 
 SdSelector::SdSelector() :
   SdObject(),
@@ -175,17 +178,42 @@ void SdSelector::putToClipboard( const SdProject *project, double scale )
   //Put picture into mime
   mime->setImageData( image );
 
+  //Yet alternative copy as svg
+  QSvgGenerator svgGenerator;
+  QByteArray svgArray;
+  QBuffer svgBuffer( &svgArray );
+  svgGenerator.setOutputDevice( &svgBuffer );
+  //svgGenerator.setResolution( 25 );
+  svgGenerator.setSize( QSize(600,400) );
+  svgGenerator.setViewBox( QRect( 0, 0, r.width(), r.height() ) );
+  svgGenerator.setTitle( "SaliCAD SVG drawing" );
+  svgGenerator.setDescription( "An SVG drawing created by the SaliCAD SVG Generator " );
+  QPainter svgPainter;
+  svgPainter.begin( &svgGenerator );
+
+  //Draw context
+  SdContext svgCtx( SdPoint(10,10), &svgPainter );
+  //View converter
+  SdConverterView svgView( r.size(), r.center(), 1 );
+  svgCtx.setConverter( &svgView );
+  //Draw process
+  draw( &svgCtx );
+
+  svgPainter.end();
+  //Copy drawing as svg text
+  mime->setText( QString::fromUtf8(svgArray) );
+
   //Yet another alternative - textual packet object
-  QByteArray packedHex = qCompress( array ).toHex();
-  QString packedString;
-  packedString.reserve( 20 + (packedHex.length() / 80 + 1) * 81 );
-  packedString.append( QStringLiteral("`SaliCAD compressed") );
-  for( int i = 0; i < packedHex.length(); i += 80 ) {
-    packedString.append( QChar('\n') );
-    packedString.append( packedHex.mid( i, 80 ) );
-    }
-  packedString.append( QChar('`') );
-  mime->setText( packedString );
+//  QByteArray packedHex = qCompress( array ).toHex();
+//  QString packedString;
+//  packedString.reserve( 20 + (packedHex.length() / 80 + 1) * 81 );
+//  packedString.append( QStringLiteral("`SaliCAD compressed") );
+//  for( int i = 0; i < packedHex.length(); i += 80 ) {
+//    packedString.append( QChar('\n') );
+//    packedString.append( packedHex.mid( i, 80 ) );
+//    }
+//  packedString.append( QChar('`') );
+//  mime->setText( packedString );
 
   //Insert into clipboard
   QGuiApplication::clipboard()->setMimeData( mime );

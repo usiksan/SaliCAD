@@ -1,4 +1,20 @@
-﻿#include "SdConfig.h"
+﻿/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Script language is C-style hi-level language for programming 3d models, 2d parametric graphics and
+  schematic calculations.
+
+  This widget is script editor with highlight
+*/
+#include "SdConfig.h"
 #include "SdWScriptEditor.h"
 #include "SdWScriptHighlighter.h"
 #include "SdDPadMaster.h"
@@ -974,6 +990,9 @@ SdWScriptEditor::keyPressEvent(QKeyEvent *e)
               mHelpPopUp->setPlainText( mHelpMap.value(ident) );
               QPoint p = cursorRect( textCursor() ).topLeft();
               p.ry() -= mHelpPopUp->height();
+              //Correct horizontal position of window if it out of editor window
+              if( p.x() + mHelpPopUp->width() > width() )
+                p.rx() -= (p.x() + mHelpPopUp->width()) - width();
               mHelpPopUp->move( p );
               mHelpPopUp->show();
               }

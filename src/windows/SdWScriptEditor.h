@@ -27,24 +27,36 @@ Description
 class SdWScriptHighlighter;
 class LineNumberArea;
 
-///
-/// \brief The BlockNode class локальный блок для С, содержащий начало(строку и символ), конец, уровень вложенности в текстовом документе
-/// используется для построения графа блоков, что затем может использоваться для правильного автоиндента
-///
-class BlockNode: public QObject{
+//!
+//! \brief The BlockNode class Local block for script. It contains line indexes and symbol indexes of begin and end of block.
+//!                            Embed level ised for building graph of blocks, which used for right autoident
+//!
+//! [Локальный блок для С, содержащий начало(строку и символ), конец, уровень вложенности в текстовом документе
+//! используется для построения графа блоков, что затем может использоваться для правильного автоиндента]
+class BlockNode: public QObject {
     Q_OBJECT
   public:
-    int  mStartLineNumber;   //строка начала блока
-    int  mEndLineNumber;     //строка окончания блока
-    int  mLevel;             //уровень вложенности
-    int  mStartIndex;        //начальный индекс
-    int  mEndIndex;          //конечный индекс
-    bool mSingle;            //является ли блок одиночным - без {}, например if () i++;
+    int  mStartLineNumber;   //!< Line index of start of block [строка начала блока]
+    int  mEndLineNumber;     //!< Line index of end of block [строка окончания блока]
+    int  mLevel;             //!< Embed level [уровень вложенности]
+    int  mStartIndex;        //!< Symbol index of start of block [начальный индекс]
+    int  mEndIndex;          //!< Symbol index of end of block [конечный индекс]
+    bool mSingle;            //!< True if block is single - without {}, for example if() i++; [является ли блок одиночным - без {}, например if () i++;]
   public:
-    explicit BlockNode(BlockNode* parent):QObject(parent){}
-    //содержит ли блок строку
+    explicit BlockNode(BlockNode* parent): QObject(parent){}
+
+    //!
+    //! \brief containsLine Test if block contains line with number lineNum [содержит ли блок строку]
+    //! \param lineNum      Tested line number
+    //! \return             true if block contains line with number lineNum
+    //!
     bool containsLine(int lineNum)const { if (mSingle) return lineNum <= mEndLineNumber && lineNum > mStartLineNumber; else return lineNum < mEndLineNumber && lineNum > mStartLineNumber; }
-    //содержит ли блок символ
+
+    //!
+    //! \brief containsIndex Test if block contains symbol with index [содержит ли блок символ]
+    //! \param index         Tested symbol index
+    //! \return              true if block contains symbol with index
+    //!
     bool containsIndex(int index)const { return index <= mEndIndex && index >= mStartIndex; }
   };
 
