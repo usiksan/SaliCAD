@@ -309,6 +309,7 @@ bool SdLibraryStorage::cfIsOlder(const QString uid, qint32 time) const
 //!
 bool SdLibraryStorage::cfIsOlder(const SdContainerFile *item) const
   {
+  if( item == nullptr ) return false;
   return cfIsOlder( item->getUid(), item->getTime() );
   }
 
@@ -337,6 +338,7 @@ bool SdLibraryStorage::cfIsOlderOrSame(const QString uid, qint32 time) const
 //!
 bool SdLibraryStorage::cfIsOlderOrSame(const SdContainerFile *item) const
   {
+  if( item == nullptr ) return false;
   return cfIsOlderOrSame( item->getUid(), item->getTime() );
   }
 
