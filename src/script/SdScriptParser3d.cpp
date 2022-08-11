@@ -95,9 +95,9 @@ SdScriptParser3d::SdScriptParser3d(QTableWidget *tableWidget, Sd3dModel *model )
   addFunction( QStringLiteral("stringPinMatrix"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunStringPinMatrix(); }, QStringLiteral("stringPinMatrix( float row, float columnt )\nBuild pin number as matrix (D23) for bga") );
 
   addFunction( QStringLiteral("matrix"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunMatrix(); }, QStringLiteral("matrix( float angle, float rotateX, float rotateY, float rotateZ, float offX, float offY, float offZ )") );
-  addFunction( QStringLiteral("matrixRotate"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunMatrixRotate(); }, QStringLiteral("matrix( matrix src, float angle, float rotateX, float rotateY, float rotateZ )") );
-  addFunction( QStringLiteral("matrixScale"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunMatrixScale(); }, QStringLiteral("matrix( matrix src, float scaleX, float scaleY, float scaleZ )") );
-  addFunction( QStringLiteral("matrixTranslate"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunMatrixTranslate(); }, QStringLiteral("matrix( matrix src, float offX, float offY, float offZ )") );
+  addFunction( QStringLiteral("matrixRotate"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunMatrixRotate(); }, QStringLiteral("matrixRotate( matrix src, float angle, float rotateX, float rotateY, float rotateZ )") );
+  addFunction( QStringLiteral("matrixScale"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunMatrixScale(); }, QStringLiteral("matrixScale( matrix src, float scaleX, float scaleY, float scaleZ )") );
+  addFunction( QStringLiteral("matrixTranslate"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunMatrixTranslate(); }, QStringLiteral("matrixTranslate( matrix src, float offX, float offY, float offZ )") );
 
   addFunction( QStringLiteral("arc"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunAFloatArc(); }, QStringLiteral("arc( float radius, float angleStart, float angleStop, float sideCount )") );
 

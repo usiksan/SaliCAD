@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт matrix</title>
+  </head>
+  <body>
+    <h1 align="center">matrix</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;matrix</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeMatrix.htm">Matrix</a> matrix( <a href="scriptTypeFloat.htm">Float</a>
+      angleGrad, <a href="scriptTypeFloat.htm">Float</a> rotateX, <a href="scriptTypeFloat.htm">Float</a>
+      rotateY, <a href="scriptTypeFloat.htm">Float</a> rotateZ, <a href="scriptTypeFloat.htm">Float</a>
+      offX, <a href="scriptTypeFloat.htm">Float</a> offY, <a href="scriptTypeFloat.htm">Float</a>
+      offZ ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит строит матрицу поворота и перемещения. На основании
+      параметров angleGrad, rotateX, rotateY и rotateZ выполняется поворот, а на
+      основании параметров offX, offY и offZ - перемещение. Поворот выполняется
+      на угол равный angleGrad вокруг вектора, который определяется значения
+      rotate. Перемещение определяется вектором с координатами off.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>angleGrad - угол поворота в градусах вокруг вектора rotateX, rotateY,
+        rotateZ</li>
+      <li>rotateX - x-компонент вектора поворота</li>
+      <li>rotateY - y-компонент вектора поворота</li>
+      <li>rotateZ - z-компонент вектора поворота</li>
+      <li>offX - x-компонент вектора перемещения</li>
+      <li>offY - y-компонент вектора перемещения</li>
+      <li>offZ - z-компонент вектора перемещения</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <code>matrix2 = matrix( 90, 1, 0, 0, 2, 0, 0 ) <br>
+    </code>
+    <p>Выполняет поворот вокруг оси X на 90 градусов, а затем сдвигает на 2 по
+      этой-же оси</p>
+  </body>
+</html>

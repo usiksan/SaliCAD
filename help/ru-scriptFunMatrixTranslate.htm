@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт matrixTranslate</title>
+  </head>
+  <body>
+    <h1 align="center">matrixTranslate</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;matrixTranslate</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeMatrix.htm">Matrix</a> matrixTranslate( <a href="scriptTypeMatrix.htm">Matrix</a>
+      src, <a href="scriptTypeFloat.htm">Float</a> offX, <a href="scriptTypeFloat.htm">Float</a>
+      offY, <a href="scriptTypeFloat.htm">Float</a> offZ ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит строит матрицу перемещения на основе исходной матрицы.
+      На основании параметров offX, offY и offZ функция строит матрицу
+      перемещения.&nbsp; Перемещение определяется вектором с координатами off.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>src - исходная матрица</li>
+      <li>offX - x-компонент вектора перемещения</li>
+      <li>offY - y-компонент вектора перемещения</li>
+      <li>offZ - z-компонент вектора перемещения</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <code>matrix2 = matrixTranslate( matrix1, 2, 0, 0 ) <br>
+    </code>
+    <p>Выполняет сдвиг на 2 по оси X.</p>
+  </body>
+</html>
