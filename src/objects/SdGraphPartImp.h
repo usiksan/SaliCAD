@@ -199,10 +199,10 @@ class SdGraphPartImp : public SdGraphTraced
     //Parameters
     //Params with local param table
     //Test if param present in local table
-    bool              paramContains( const QString key ) const { return mParamTable.contains(key); }
+    bool              paramContains( const QString key ) const;
 
     //Get param value from local table
-    QString           paramGet( const QString key ) const { return mParamTable.value(key); }
+    QString           paramGet( const QString key ) const;
 
     //Full local param table
     SdStringMap       paramTable() const { return mParamTable; }

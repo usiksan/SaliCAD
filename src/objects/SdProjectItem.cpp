@@ -126,7 +126,7 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
       updateAuthor();
       updateCreationTime();
       //Write object to local library
-      jsonObjectTo();
+      SdLibraryStorage::instance()->cfObjectInsert( this );
       //Upgrade item through project
       //getProject()->upgradeProjectItem( this, undo );
       }

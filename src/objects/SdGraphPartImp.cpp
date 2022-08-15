@@ -494,6 +494,28 @@ void SdGraphPartImp::setIdentIndex(int index)
 
 
 
+bool SdGraphPartImp::paramContains(const QString key) const
+  {
+  //If there section and section contains param then return true
+  if( mSections.count() && mSections.at(0).mSymImp && mSections.at(0).mSymImp->paramContains(key) )
+    return true;
+  //else return parameter presens in local param table
+  return mParamTable.contains(key);
+  }
+
+
+
+QString SdGraphPartImp::paramGet(const QString key) const
+  {
+  //If there section and section contains param then return param from section
+  if( mSections.count() && mSections.at(0).mSymImp && mSections.at(0).mSymImp->paramContains(key) )
+    return mSections.at(0).mSymImp->paramGet(key);
+  return mParamTable.value(key);
+  }
+
+
+
+
 
 
 //Setup full param table
