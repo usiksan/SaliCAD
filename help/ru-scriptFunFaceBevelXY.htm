@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceBevelXY</title>
+  </head>
+  <body>
+    <h1 align="center">faceBevelXY</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceBevelXY</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFace.htm">Face</a> faceBevelXY( <a href="scriptTypeFace.htm">Face</a>
+      src, <a href="scriptTypeFloat.htm">Float</a> radius ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит поверхность в плоскости XY по исходной поверхности
+      также в плоскости XY. Новая поверхность смещается по оси Z на величину
+      радиуса, кроме того она масштабируется по осям X и Y на величину радиуса.
+      Построив стены между исходной и результирующей поверхностями можно
+      получить фаску. Такжу есть функция, которая генерирует скругление между
+      этими двумя поверхностями.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>src - исходная поверхность в плоскости XY</li>
+      <li>radius - радиус скругления или размер фаски</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <code> #Пример для фаски<br>
+      color1 = selectColor("#800000")<br>
+      color2 = selectColor("#008000")<br>
+      <br>
+      c1 = faceCircle( 2, 10, matrix1 )<br>
+      <br>
+      c2 = faceBevelXY( c1, -0.5 )<br>
+      <br>
+      partModel = model( color1, color1, color1, [c1], matrix1 )<br>
+      partModel = model( color2, color2, color2, [c2], matrix1 ) </code>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="file:///home/asibilev/work/SaliCAD/help/scriptFunFaceBevelXY1.png">
+    </p>
+    <br>
+    <code> #Построение фаски<br>
+      color1 = selectColor("#800000")<br>
+      <br>
+      c1 = faceCircle( 2, 10, matrix1 )<br>
+      <br>
+      c2 = faceBevelXY( c1, -0.5 )<br>
+      <br>
+      partModel = model( color1, color1, color1, faceListWall( c1, c2, true ),
+      matrix1 )<br>
+    </code>
+    <p>Этот пример показывает формирование стен в виде фаски между двумя
+      поверхностями</p>
+    <img src="file:///home/asibilev/work/SaliCAD/help/scriptFunFaceBevelXY2.png">
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
