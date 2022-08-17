@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceCircle</title>
+  </head>
+  <body>
+    <h1 align="center">faceCircle</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceCircle</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFace.htm">Face</a> faceCircle( <a href="scriptTypeFloat.htm">Float</a>
+      radius, <a href="scriptTypeFloat.htm">Float</a> stepDegree, <a href="scriptTypeMatrix.htm">Matrix</a>
+      transfer ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит поверхность в виде равностороннего многоугольника
+      вписанного в окружность. Количество сторон многоугольника определяется
+      шагом угла. Полученный многоугольник можно преобразовать с помощью
+      матрицы. Данная функция служит для построения аппроксимированных
+      окружностей. Чем меньше шаг угла - тем выше качество аппроксимации. При
+      больших значениях шага угла с помощью этой функции можно строить другие
+      правильные многоугольники: равносторонний треугольник, квадрат и т.п.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>radius - радиус описанной окружности вокруг многоугольника</li>
+      <li>stepDegree - шаг угла в градусах</li>
+      <li>transfer - заключительное преобразование многоугольника</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <code> #Пример окружности<br>
+      color1 = selectColor("#800000")<br>
+      <br>
+      c1 = faceCircle( 2, 10, matrix1 )<br>
+      <br>
+      partModel = model( color1, color1, color1, [c1], matrix1 )</code>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceCircle1.png"> </p>
+    <br>
+    <code> #Пример шестиугольника<br>
+      color1 = selectColor("#800000")<br>
+      <br>
+      c1 = faceCircle( 2, 60, matrix1 )<br>
+      <br>
+      partModel = model( color1, color1, color1, [c1], matrix1 )</code>
+    <p>Этот пример показывает формирование фигур при больших значениях шага угла</p>
+    <img src="scriptFunFaceCircle2.png">
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
