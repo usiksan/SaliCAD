@@ -44,6 +44,11 @@ class SdWEditor3d : public SdWEditor
     virtual void           onActivateEditor() override;
     virtual void           cmEditUndo() override;
 
+
+    // QWidget interface
+  protected:
+    virtual void keyPressEvent(QKeyEvent *event) override;
+    virtual void keyReleaseEvent(QKeyEvent *event) override;
   };
 
 #endif // SDWEDITOR3D_H

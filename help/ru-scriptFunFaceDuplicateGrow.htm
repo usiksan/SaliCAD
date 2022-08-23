@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceDuplicateGrow</title>
+  </head>
+  <body>
+    <h1 align="center">faceDuplicateGrow</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceDuplicateGrow</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFace.htm">Face</a> faceDuplicateGrow( <a href="scriptTypeFace.htm">Face</a>
+      src, <a href="scriptTypeFloat.htm">Float</a> growX, <a href="scriptTypeFloat.htm">Float</a>
+      growY, <a href="scriptTypeMatrix.htm">Matrix</a> mat) </p>
+    <h3>Описание</h3>
+    <p>Эта функция выполняет увеличение/уменьшение размеров поверхности по осям
+      X и Y. Затем результирующая поверхность преобразуется с помощью матрицы в
+      другую поверхность. Исходная поверхность не обязательно должна быть в
+      плоскости XY, но преобразования размеров ведутся по проекции именно на эту
+      плоскость.</p>
+    Параметры
+    <ul>
+      <li>src - исходная поверхность</li>
+      <li>growX - число с положительным знаком - увеличение размера по оси X, с
+        отрицательным знаком - уменьшение</li>
+      <li>growY - число с положительным знаком - увеличение размера по оси Y, с
+        отрицательным знаком - уменьшение</li>
+      <li>mat - матрица преобразования</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <code>color1 = selectColor("#800000")<br>
+      color2 = selectColor("#008000")<br>
+      <br>
+      c1 = faceCircle( 2, 10, matrix1 )<br>
+      <br>
+      mat = matrixTranslate( matrix1, 5, 0, 0 )<br>
+      <br>
+      c2 = faceDuplicateGrow( c1, 0.5, -1, mat )<br>
+      <br>
+      partModel = model( color1, color1, color1, [c1], matrix1 )<br>
+      partModel = model( color2, color2, color2, [c2], matrix1 ) </code>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceDuplicate.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

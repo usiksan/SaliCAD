@@ -92,6 +92,7 @@ void SdWEditor3d::onActivateEditor()
   SdWCommand::selectMode( mView->mode()->modeId() );
   //Set default status message for activated mode
   SdPulsar::sdPulsar->emitSetStatusMessage( mView->mode()->getStepHelp() );
+  mView->setFocus();
   }
 
 
@@ -100,6 +101,20 @@ void SdWEditor3d::onActivateEditor()
 void SdWEditor3d::cmEditUndo()
   {
   mView->update();
+  }
+
+
+
+void SdWEditor3d::keyPressEvent(QKeyEvent *event)
+  {
+  if( mView ) mView->keyPressEvent(event);
+  }
+
+
+
+void SdWEditor3d::keyReleaseEvent(QKeyEvent *event)
+  {
+  if( mView ) mView->keyReleaseEvent(event);
   }
 
 

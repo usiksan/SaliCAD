@@ -85,7 +85,7 @@ class SdWView3d : public QOpenGLWidget
     //!
     float            scale() const;
     // QWidget interface
-  protected:
+  public:
     virtual void mousePressEvent(QMouseEvent *event) override;
     virtual void mouseReleaseEvent(QMouseEvent *event) override;
     virtual void mouseMoveEvent(QMouseEvent *event) override;
