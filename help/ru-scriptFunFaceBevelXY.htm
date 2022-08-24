@@ -24,6 +24,8 @@
       <li>radius - радиус скругления или размер фаски</li>
     </ul>
     <h3>Пример применения</h3>
+    <p>
+      
     <code> #Пример для фаски<br>
       color1 = selectColor("#800000")<br>
       color2 = selectColor("#008000")<br>
@@ -34,9 +36,12 @@
       <br>
       partModel = model( color1, color1, color1, [c1], matrix1 )<br>
       partModel = model( color2, color2, color2, [c2], matrix1 ) </code>
+      
+    </p>
     <p>Данный пример сформирует следующее изображение:</p>
     <p><img src="scriptFunFaceBevelXY1.png"> </p>
-    <br>
+    <p>
+      
     <code> #Построение фаски<br>
       color1 = selectColor("#800000")<br>
       <br>
@@ -47,6 +52,7 @@
       partModel = model( color1, color1, color1, faceListWall( c1, c2, true ),
       matrix1 )<br>
     </code>
+    </p>
     <p>Этот пример показывает формирование стен в виде фаски между двумя
       поверхностями</p>
     <img src="scriptFunFaceBevelXY2.png">
