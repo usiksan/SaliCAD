@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceEllipse</title>
+  </head>
+  <body>
+    <h1 align="center">faceEllipse</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceEllipse</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFace.htm">Face</a> faceEllipse( <a href="scriptTypeFloat.htm">Float</a>
+      radiusX, <a href="scriptTypeFloat.htm">Float</a> radiusY, <a href="scriptTypeFloat.htm">Float</a>
+      stepDegree, <a href="scriptTypeMatrix.htm">Matrix</a> transfer ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит поверхность в виде равностороннего многоугольника
+      вписанного в элипс. Количество сторон многоугольника определяется шагом
+      угла. Полученный многоугольник можно преобразовать с помощью матрицы.
+      Данная функция служит для построения аппроксимированных элипсов. Чем
+      меньше шаг угла - тем выше качество аппроксимации. </p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>radiusX - радиус X описанноого элипса вокруг многоугольника</li>
+      <li>radiusY - радиус Y описанноого элипса вокруг многоугольника</li>
+      <li>stepDegree - шаг угла в градусах</li>
+      <li>transfer - заключительное преобразование многоугольника</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code> #Пример окружности<br>
+        color1 = selectColor("#800000")<br>
+        <br>
+        c1 = faceEllipse( 3, 2, 10, matrix1 )<br>
+        <br>
+        partModel = model( color1, color1, color1, [c1], matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceEllipse.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
