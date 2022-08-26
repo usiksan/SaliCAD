@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceFlat</title>
+  </head>
+  <body>
+    <h1 align="center">faceFlat</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceFlat</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFace.htm">Face</a> faceFlat( <a href="scriptTypeVertex.htm">Vertex</a>
+      origin, <a href="scriptTypeFloat.htm">Float</a> orientation, <a href="scriptTypeFloatList.htm">FloatList</a>
+      pairs ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит многоугольник в плоскостях XY, YZ или XZ по заданным
+      относительным двумерным координатам. Вершина начала многоугольника
+      определяется параметром origin. Параметр orientation задает плоскость, в
+      которой будет выполнено построение. Параметр pairs содержит список пар
+      относительных координат вершин многоугольника. Каждая следующая вершина
+      определяется как смещение относительно предыдущей. Первая пара определяет
+      смещение относительно вершины origin. Для того, чтобы многоугольник мог
+      использоваться в качестве поверхности он должен быть выпуклым. Если
+      многоугольник невыпуклый, то его необходимо преобразовать к набору
+      выпуклых многоугольников с помощью функции <a href="scriptFunFaceListSimplify.htm">faceListSimplify</a>.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>origin - начальная вершина многоугольника</li>
+      <li>orientation - код ориентации поверхности. 0 - плоскость XY, 1 -
+        плоскость YZ, 2 - плоскость XZ</li>
+      <li>pairs - список пар относительных координат. [ offx0,offy0,&nbsp;
+        offx1,offy1,&nbsp; offx2,offy2 ... ]</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code>color1 = selectColor("#800000")<br>
+        <br>
+        c1 = faceFlat( vertex(0,0,0), 0, [ 0,2, 1,1, 1,-1, 0,-2] )<br>
+        <br>
+        partModel = model( color1, color1, color1, [c1], matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceFlat.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
