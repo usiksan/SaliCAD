@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceFlatMatrix</title>
+  </head>
+  <body>
+    <h1 align="center">faceFlatMatrix</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceFlatMatrix</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFace.htm">Face</a> faceFlatMatrix( <a href="scriptTypeFloatList.htm">FloatList</a>
+      pairs, <a href="scriptTypeMatrix.htm">Matrix</a> matrix ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит многоугольник на плоскости по заданным относительным
+      двумерным координатам в плоскости XY. Вершина начала многоугольника
+      определяется первой парой. Параметр pairs содержит список пар
+      относительных координат вершин многоугольника. Каждая следующая вершина
+      определяется как смещение относительно предыдущей. Первая пара определяет
+      координаты XY первой вершины. Для того, чтобы многоугольник мог
+      использоваться в качестве поверхности он должен быть выпуклым. Если
+      многоугольник невыпуклый, то его необходимо преобразовать к набору
+      выпуклых многоугольников с помощью функции <a href="scriptFunFaceListSimplify.htm">faceListSimplify</a>.
+      Результирующий многоугольник может быть преобразован с помощью матрицы.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>pairs - пара, определяющая первую вершину и список пар относительных
+        координат. [ org0,org0,&nbsp; offx1,offy1,&nbsp; offx2,offy2 ... ]</li>
+      <li>matrix - матрица преобразования результирующего многоугольника</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code>color1 = selectColor("#800000")<br>
+        <br>
+        c1 = faceFlatMatrix( [ 0,0, 0,2, 1,1, 1,-1, 0,-2], matrix1 )<br>
+        <br>
+        partModel = model( color1, color1, color1, [c1], matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceFlat.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

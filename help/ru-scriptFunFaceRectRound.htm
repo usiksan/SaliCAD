@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceRectRound</title>
+  </head>
+  <body>
+    <h1 align="center">faceRectRound</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceRectRound</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFace.htm">Face</a> faceRectRound( <a href="scriptTypeFloat.htm">Float</a>
+      lenght, <a href="scriptTypeFloat.htm">Float</a> width, <a href="scriptTypeFloat.htm">Float</a>
+      radius, <a href="scriptTypeFloat.htm">Float</a> stepDegree, <a href="scriptTypeMatrix.htm">Matrix</a>
+      transfer ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит поверхность в виде прямоугольника с закругленными
+      углами. Скругление выполняется путем аппроксимацией ломаной линией.
+      Полученный прямоугольник можно преобразовать с помощью матрицы.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>lenght - длина</li>
+      <li>width - ширина</li>
+      <li>radius - радиус скругления углов</li>
+      <li>stepDegree - шаг в градусах между соседними вершинами ломаной
+        скругления</li>
+      <li>transfer - заключительное преобразование прямоугольника</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code>color1 = selectColor("#800000")<br>
+        <br>
+        r1 = faceRectRound( 2, 1, 0.2, 10, matrix1 )<br>
+        <br>
+        partModel = model( color1, color1, color1, [r1], matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceRectRound.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
