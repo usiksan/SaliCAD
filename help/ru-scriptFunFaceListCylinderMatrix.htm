@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListCylinderMatrix</title>
+  </head>
+  <body>
+    <h1 align="center">faceListCylinderMatrix</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceListCylinderMatrix</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListCylinderMatrix( <a
+        href="scriptTypeFloat.htm">Float</a> radius, <a href="scriptTypeFloat.htm">Float</a>
+      height, <a href="scriptTypeMatrix.htm">Matrix</a> transfer ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит цилиндр с основанием на плоскости XY. Затем этот
+      цилиндр преобразуется с помощью матрицы. Окружности оснований цилиндра
+      аппроксимируются равносторонними многоугольниками вписанными в окружность.
+      Количество сторон многоугольника определяется автоматически исходя из
+      радиуса, чтобы получить визуально гладкую поверхность.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>radius - радиус описанной окружности вокруг многоугольника основания
+        цилиндра</li>
+      <li>height - высота цилиндра</li>
+      <li>transfer - заключительное преобразование цилиндра</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        c1 = faceListCylinderMatrix( 2, 5, matrixRotate( matrix1, 45, 0, 1, 0 )
+        )<br>
+        <br>
+        partModel = model( color1, color1, color1, c1, matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceListCylinderMatrix.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
