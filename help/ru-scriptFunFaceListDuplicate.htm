@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListDuplicate</title>
+  </head>
+  <body>
+    <h1 align="center">faceListDuplicate</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceListDuplicate</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListDuplicate( <a href="scriptTypeFaceList.htm">FaceList</a>
+      src, <a href="scriptTypeMatrix.htm">Matrix</a> transfer ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция делает копию исходного списка поверхностей, преобразовывая
+      его с помощью матрицы.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>src - исходный список поверхностей</li>
+      <li>transfer - матрица преобразования</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        c1 = faceListCylinder( 2, 5 )<br>
+        c2 = faceListDuplicate( c1, matrixTranslate( matrix1, 5, 0, 0 ) )<br>
+        <br>
+        partModel = model( color1, color1, color1, c1, matrix1 )<br>
+        partModel = model( color1, color1, color1, c2, matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceListDuplicate.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
