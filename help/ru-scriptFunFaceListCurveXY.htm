@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListCurveXY</title>
+  </head>
+  <body>
+    <h1 align="center">faceListCurveXY</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceListCurveXY</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListCurveXY( <a href="scriptTypeFace.htm">Face</a>
+      face, <a href="scriptTypeFloat.htm">Float</a> radius, <a href="scriptTypeFloat.htm">Float</a>
+      angleSrc, <a href="scriptTypeFloat.htm">Float</a> angleDst, <a href="scriptTypeFloat.htm">Float</a>
+      sideCount, <a href="scriptTypeBool.htm">Bool</a> close ) </p>
+    <h3>Описание</h3>
+    <p>Cтроит стены между повернутыми поверхностями, служит для формирования
+      загиба, например вывода. Берет исходную поверхность и поворачивает ее на
+      заданный угол angleDst. Между этими поверхностями формирует промежуточные
+      повернутые поверхности, их количество определяется sideCount. Между всеми
+      сформированными поверхностями строит стены и возвращает их набор.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>face - исходная поверхность</li>
+      <li>radius - радиус поворота</li>
+      <li>angleSrc - угол поворота исходной поверхности относительно плоскости
+        XY</li>
+      <li>angleDst - угол, на который нужно повернуть исходную поверхность</li>
+      <li>sideCount - количество промежуточных поверхностей между начальной и
+        конечной, включая конечную</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        c1 = faceRect( 2, 3, matrix1 )<br>
+        <br>
+        c2 = faceListCurveXZ( c1, 5, 0, 30, 10, true )<br>
+        <br>
+        partModel = model( color1, color1, color1, c2, matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceListCurveXY.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
