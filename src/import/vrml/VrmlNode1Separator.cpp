@@ -60,6 +60,9 @@ void VrmlNode1Separator::generateFaces(Sd3dModel *model, Sd3drInstance &instance
     Sd3drFaceList faceList;
     VrmlNodeMaterial material;
 
+    if( nodeMaterial != nullptr )
+      material = nodeMaterial->material( 0 );
+
     instance.clear();
 
     while( nodeIndexedFaceSet->isCoordValid(vertexIndex) ) {
