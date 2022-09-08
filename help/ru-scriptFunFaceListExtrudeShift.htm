@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListExtrudeShift</title>
+  </head>
+  <body>
+    <h1 align="center">faceListExtrudeShift</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceListExtrudeShift</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListExtrudeShift( <a href="scriptTypeFace.htm">Face</a>
+      src, <a href="scriptTypeFloat.htm">Float</a> height ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция делает вытяжку из исходной поверхности в направлении
+      перпендикуляра к этой поверхности, формируя тело. Исходная поверхность
+      дублируется путем переноса в направлении перпендикуляра к исходной
+      поверхности на заданную величину и между получившимися поверхностями
+      строятся стены. Получившийся набор поверхностей, включая исходную
+      поверхность и дублированную, возвращаются в виде тела.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>src - исходная поверхность</li>
+      <li>height - высота вытяжки (положительные числа - вытяжка вниз,
+        отрицательные - вверх)</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        b1 = faceRect( 3, 2, matrixRotate( matrix1, 20, 0, 1, 0 ) )<br>
+        body = faceListExtrudeShift( b1, -1 )<br>
+        <br>
+        partModel = model( color1, color1, color1, body, matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceListExtrudeShift.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
