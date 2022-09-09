@@ -267,9 +267,9 @@ Sd3drFace Sd3dModel::faceRectangle(float lenght, float width, const QMatrix4x4 &
   width /= 2.0;
   lenght /= 2.0;
   QVector3D p0( -lenght, -width, 0 );
-  QVector3D p1(  lenght, -width, 0 );
+  QVector3D p1( -lenght,  width, 0 );
   QVector3D p2(  lenght,  width, 0 );
-  QVector3D p3( -lenght,  width, 0 );
+  QVector3D p3(  lenght, -width, 0 );
 
   return Sd3drFace( { vertexAppend( map.map(p0) ), vertexAppend( map.map(p1)), vertexAppend( map.map(p2) ), vertexAppend( map.map(p3) ) } );
   }

@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListHexagon</title>
+  </head>
+  <body>
+    <h1 align="center">faceListHexagon</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceListHexagon</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListHexagon( <a href="scriptTypeFloat.htm">Float</a>
+      lenght, <a href="scriptTypeFloat.htm">Float</a> topLenght, <a href="scriptTypeFloat.htm">Float</a>
+      height, <a href="scriptTypeFloat.htm">Float</a> width ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит хексагональный корпус компонента.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>lenght - длина корпуса в средней части</li>
+      <li>topLenght - длина корпуса в верхней и в нижней частях (принимается
+        одинаковой)</li>
+      <li>height - высота корпуса</li>
+      <li>width - ширина корпуса</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        body = faceListHexagon( 4, 3.6, 1, 3 )<br>
+        <br>
+        partModel = model( color1, color1, color1, body, matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceListHexagon.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
