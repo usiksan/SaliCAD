@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListIndexed</title>
+  </head>
+  <body>
+    <h1 align="center">faceListIndexed</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceListIndexed</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListIndexed( <a href="scriptTypeFaceList.htm">FaceList</a>
+      src, <a href="scriptTypeFloatList.htm">FloatList</a> indexes ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция извлекает из списка поверхности, согласно индексам и из них
+      формирует новый список.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>src - исходная поверхность</li>
+      <li>indexes - индексы поверхностей в исходном списке (начиная с 0)</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        color2 = selectColor("#00a000")<br>
+        <br>
+        c1 = faceCircleSide( 3, 6, matrix1 )<br>
+        c2 = faceDuplicateShift( c1, 4 )<br>
+        h1 = faceListWall( c1, c2, true )<br>
+        <br>
+        b1 = faceListIndexed( h1, [0, 2, 4] )<br>
+        b2 = faceListIndexed( h1, [1, 3, 5] )<br>
+        partModel = model( color1, color1, color1, b1, matrix1 )<br>
+        partModel = model( color2, color2, color2, b2, matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceListIndexed.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

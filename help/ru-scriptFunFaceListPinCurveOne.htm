@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListPinCurveOne</title>
+  </head>
+  <body>
+    <h1 align="center">faceListPinCurveOne</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceListPinCurveOne</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListPinCurveOne( <a href="scriptTypeFace.htm">Face</a>
+      src, <a href="scriptTypeFloat.htm">Float</a> firstLen, <a href="scriptTypeFloat.htm">Float</a>
+      middleLen, <a href="scriptTypeFloat.htm">Float</a> radius, <a href="scriptTypeFloat.htm">Float</a>
+      angle, <a href="scriptTypeFloat.htm">Float</a> sideCount ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит вывод по его основанию. На первом этапе основание
+      вытягивается вверх на величину firstLen, затем загибается на угол angle по
+      радиусу radius, при этом для загиба используются sideCount поверхностей
+      для аппроксимации кривой и, наконец, происходит вытяжка на величину
+      middleLen. Обычно эта функция используется для построения выводов, но
+      может использоваться также и для построения других тел.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>src - исходная поверхность</li>
+      <li>firstLen - величина вытяжки вверх</li>
+      <li>middleLen - величина финальной вытяжки</li>
+      <li>radius - радиус загиба</li>
+      <li>angle - угол загиба</li>
+      <li>sideCount - количество сторон для аппроксимации кривой загиба</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        c1 = faceRect( 0.2, 1, matrix1 )<br>
+        <br>
+        pin = faceListPinCurveOne( c1, 2, 3, 1, 90, 10 )<br>
+        <br>
+        partModel = model( color1, color1, color1, pin, matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceListPinCurveOne.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

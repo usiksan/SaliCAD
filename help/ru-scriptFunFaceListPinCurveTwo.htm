@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListPinCurveTwo</title>
+  </head>
+  <body>
+    <h1 align="center">faceListPinCurveTwo</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceListPinCurveTwo</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListPinCurveTwo( <a href="scriptTypeFace.htm">Face</a>
+      src, <a href="scriptTypeFloat.htm">Float</a> firstLen, <a href="scriptTypeFloat.htm">Float</a>
+      middleLen, <a href="scriptTypeFloat.htm">Float</a> lastLen, <a href="scriptTypeFloat.htm">Float</a>
+      radius, <a href="scriptTypeFloat.htm">Float</a> angleFirst, <a href="scriptTypeFloat.htm">Float</a>
+      angleSecond, <a href="scriptTypeFloat.htm">Float</a> sideCount ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит вывод по его основанию. На первом этапе основание
+      вытягивается вверх на величину firstLen, затем загибается на угол
+      angleFirst по радиусу radius, при этом для загиба используются sideCount
+      поверхностей для аппроксимации кривой, затем происходит вытягивание на
+      величину middleLen, затем - второй загиб на угол angleSecond с тем-же
+      радиусом и количеством поверхностей, что и для первого загиба и, наконец,
+      вытяжка на величину lastLen. Обычно эта функция используется для
+      построения выводов, но может использоваться также и для построения других
+      тел.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>src - исходная поверхность</li>
+      <li>firstLen - величина вытяжки вверх</li>
+      <li>middleLen - величина средней вытяжки</li>
+      <li>lastLen - величина финальной вытяжки</li>
+      <li>radius - радиус загиба</li>
+      <li>angleFirst - угол первого загиба</li>
+      <li>angleSecond - угол второго загиба</li>
+      <li>sideCount - количество сторон для аппроксимации кривой загиба</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        c1 = faceRect( 0.2, 1, matrix1 )<br>
+        <br>
+        pin = faceListPinCurveTwo( c1, 2, 3, 2, 1, 90, -90, 10 )<br>
+        <br>
+        partModel = model( color1, color1, color1, pin, matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceListPinCurveTwo.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
