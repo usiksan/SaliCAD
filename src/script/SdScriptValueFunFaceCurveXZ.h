@@ -23,10 +23,10 @@ Description
 
 class SdScriptValueFunFaceCurveXZ : public SdScriptValueFunction
   {
-    Sd3dModel *mModel;
+    Sd3drModel *mModel;
   public:
 
-    SdScriptValueFunFaceCurveXZ( Sd3dModel *model ) :
+    SdScriptValueFunFaceCurveXZ( Sd3drModel *model ) :
       //                                        const Sd3drFace &face, float radius,            float angleSrc,        float angleDst
       SdScriptValueFunction( SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT ),
       mModel(model) { }

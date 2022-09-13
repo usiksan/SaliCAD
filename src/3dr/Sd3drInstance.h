@@ -16,6 +16,7 @@ Description
 #define SD3DRINSTANCE_H
 
 #include "Sd3drBody.h"
+#include "SvLib/SvJson3dIO.h"
 
 #include <QMatrix4x4>
 #include <QList>
@@ -39,18 +40,18 @@ class Sd3drInstance
 
     void addCopy( QMatrix4x4 m ) { mCopyList.append(m); }
 
-    void draw( QOpenGLFunctions_2_0 *f, const Sd3dRegion &vertexList ) const;
+    void draw( QOpenGLFunctions_2_0 *f, const Sd3drRegion &vertexList ) const;
 
-    void json( SdJsonWriter &js ) const;
+    void json( SvJsonWriter3d &js ) const;
 
-    void json( const SdJsonReader &js );
+    void json( const SvJsonReader3d &js );
 
     //!
     //! \brief volumeAdd  Append volume of model to result volume
     //! \param volume     Source and result volume
     //! \param vertexList Vertex list on which referenced bodies
     //!
-    void volumeAdd( QMatrix2x3 &volume, const Sd3dRegion &vertexList ) const;
+    void volumeAdd( QMatrix2x3 &volume, const Sd3drRegion &vertexList ) const;
   };
 
 using Sd3drInstanceList = QList<Sd3drInstance>;

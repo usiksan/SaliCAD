@@ -1,9 +1,9 @@
-#include "Sd3dPointLink.h"
+#include "Sd3drPointLink.h"
 
 #include <list>
 
 
-Sd3dPointLink *Sd3dPointLinkList::alloc()
+Sd3drPointLink *Sd3drPointLinkList::alloc()
   {
   if( mFreeIndex >= mPoolSize ) {
     mList.push_back( Sd3dPointLinkArray{} );
@@ -16,7 +16,7 @@ Sd3dPointLink *Sd3dPointLinkList::alloc()
 
 
 
-Sd3dPointLink *Sd3dPointLinkList::addRegion(Sd3dModel *model, const Sd3drFace &face, bool hole)
+Sd3drPointLink *Sd3drPointLinkList::addRegion(Sd3drModel *model, const Sd3drFace &face, bool hole)
   {
   if( face.count() == 0 )
     return nullptr;
@@ -33,10 +33,10 @@ Sd3dPointLink *Sd3dPointLinkList::addRegion(Sd3dModel *model, const Sd3drFace &f
   if( dir >= 0 )
     hole = !hole;
 
-  Sd3dPointLink *region = nullptr;
+  Sd3drPointLink *region = nullptr;
   //int count = face.count() - 1;
   for( int i = 0; i < face.count(); i++ ) {
-    Sd3dPointLink *p = alloc();
+    Sd3drPointLink *p = alloc();
     p->mIndex = face.at(i);
     p->mPoint = model->point( p->mIndex );
     if( region == nullptr )
@@ -51,7 +51,7 @@ Sd3dPointLink *Sd3dPointLinkList::addRegion(Sd3dModel *model, const Sd3drFace &f
 
 
 
-Sd3dPointLink *Sd3dPointLink::init()
+Sd3drPointLink *Sd3drPointLink::init()
   {
   return mNext = mPrev = this;
   }
@@ -59,7 +59,7 @@ Sd3dPointLink *Sd3dPointLink::init()
 
 
 
-Sd3dPointLink *Sd3dPointLink::remove()
+Sd3drPointLink *Sd3drPointLink::remove()
   {
   mPrev->mNext = mNext;
   mNext->mPrev = mPrev;
@@ -68,10 +68,10 @@ Sd3dPointLink *Sd3dPointLink::remove()
 
 
 
-void Sd3dPointLink::splitRegion(Sd3dPointLink *other, Sd3dPointLinkList *pool)
+void Sd3drPointLink::splitRegion(Sd3drPointLink *other, Sd3drPointLinkList *pool)
   {
-  Sd3dPointLink *otherStop = pool->alloc();
-  Sd3dPointLink *otherStart = pool->alloc();
+  Sd3drPointLink *otherStop = pool->alloc();
+  Sd3drPointLink *otherStart = pool->alloc();
   (*otherStop) = (*other);
   (*otherStart) = (*this);
   otherStop->mPrev->mNext = otherStop;
@@ -86,7 +86,7 @@ void Sd3dPointLink::splitRegion(Sd3dPointLink *other, Sd3dPointLinkList *pool)
 
 
 
-Sd3dPointLink *Sd3dPointLink::appendNext(Sd3dPointLink *other)
+Sd3drPointLink *Sd3drPointLink::appendNext(Sd3drPointLink *other)
   {
   other->mNext = mNext;
   other->mPrev = this;
@@ -97,7 +97,7 @@ Sd3dPointLink *Sd3dPointLink::appendNext(Sd3dPointLink *other)
 
 
 
-Sd3dPointLink *Sd3dPointLink::appendPrev(Sd3dPointLink *other)
+Sd3drPointLink *Sd3drPointLink::appendPrev(Sd3drPointLink *other)
   {
   other->mPrev = mPrev;
   other->mNext = this;
@@ -108,11 +108,11 @@ Sd3dPointLink *Sd3dPointLink::appendPrev(Sd3dPointLink *other)
 
 
 
-Sd3dPointLink *Sd3dPointLink::lessLeft()
+Sd3drPointLink *Sd3drPointLink::lessLeft()
   {
   //Scan region and find most less point
-  Sd3dPointLink *less = this;
-  for( Sd3dPointLink *ptr = mNext; ptr != this; ptr = ptr->mNext ) {
+  Sd3drPointLink *less = this;
+  for( Sd3drPointLink *ptr = mNext; ptr != this; ptr = ptr->mNext ) {
     if( ptr->isLeft( less ) )
       less = ptr;
     }
@@ -124,12 +124,12 @@ Sd3dPointLink *Sd3dPointLink::lessLeft()
 
 
 
-bool Sd3dPointLink::isTriangle() const
+bool Sd3drPointLink::isTriangle() const
   {
   return mNext->mNext->mNext == this;
   }
 
-Sd3drFace Sd3dPointLink::triangle() const
+Sd3drFace Sd3drPointLink::triangle() const
   {
   Sd3drFace triangle;
   triangle.append( mIndex );

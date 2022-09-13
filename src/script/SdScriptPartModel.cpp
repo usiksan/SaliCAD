@@ -20,7 +20,7 @@ Description
 
 #include <QDebug>
 
-SdScriptPartModel::SdScriptPartModel(Sd3dModel *model) :
+SdScriptPartModel::SdScriptPartModel(Sd3drModel *model) :
   SdScriptValueVariable(),
   mModel(model)
   {

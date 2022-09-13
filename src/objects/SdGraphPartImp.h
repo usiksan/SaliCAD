@@ -62,7 +62,7 @@ struct SdPartImpPin {
   //! \param stratum    Stratum for layers
   //! \param map        Map for holes conversion
   //!
-  void        accumHoles( SdPItemPlate *plate, Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const;
+  void        accumHoles( SdPItemPlate *plate, Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const;
 
   //!
   //! \brief json Overloaded function to write object content into json writer
@@ -287,7 +287,7 @@ class SdGraphPartImp : public SdGraphTraced
     //! \param stratum    Stratum for layers
     //! \param map        Map for holes conversion
     //!
-    virtual void         accumHoles( Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const override;
+    virtual void         accumHoles( Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const override;
 
   private:
     void                 updatePinsPositions();

@@ -32,7 +32,7 @@ class SdScriptValueFunFacePart : public SdScriptValueFunction
     //! \brief toFace Convert object to list of vertex index which is face region
     //! \return       List of vertex index which is face region
     //!
-    virtual Sd3drFace toFace() const override { return Sd3dModel::facePart( mParamList[0]->toFace(), mParamList[1]->toFloatList() ); }
+    virtual Sd3drFace toFace() const override { return Sd3drModel::facePart( mParamList[0]->toFace(), mParamList[1]->toFloatList() ); }
 
   };
 

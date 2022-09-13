@@ -93,7 +93,7 @@ class SdGraph : public SdObject
     //! \param stratum    Stratum for layers
     //! \param map        Map for holes conversion
     //!
-    virtual void   accumHoles( Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const;
+    virtual void   accumHoles( Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const;
 
     //Get object state behind cursor
     //!

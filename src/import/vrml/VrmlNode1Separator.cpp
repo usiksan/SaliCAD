@@ -5,7 +5,7 @@
 #include "VrmlNode1IndexedFaceSet.h"
 #include "VrmlNode1Normal.h"
 #include "VrmlNodeMaterial.h"
-#include "objects/Sd3dModel.h"
+#include "3dr/Sd3drModel.h"
 
 VrmlNode1Separator::VrmlNode1Separator() :
   VrmlNode1(),
@@ -41,7 +41,7 @@ VrmlNode1Separator::~VrmlNode1Separator()
 
 
 
-void VrmlNode1Separator::generateFaces(Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body) const
+void VrmlNode1Separator::generateFaces(Sd3drModel *model, Sd3drInstance &instance, Sd3drBody &body) const
   {
   VrmlNode1Material *nodeMaterial = dynamic_cast<VrmlNode1Material*>(mMaterial);
   VrmlNode1Coordinate3 *nodeCoordinate3 = dynamic_cast<VrmlNode1Coordinate3*>(mCoordinate3);

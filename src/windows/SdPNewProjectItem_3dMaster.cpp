@@ -118,7 +118,7 @@ void SdPNewProjectItem_3dMaster::onCurrentRowChanged(int row)
   {
   if( row >= 0 && row < mModelList.count() ) {
     mDescription->setText( mModelList.at(row).mDescription );
-    Sd3dModel model;
+    Sd3drModel model;
     SdScriptParser3d parser( nullptr, &model );
     static SdPItemPart previewPart;
     SdScriptProgrammPtr programm = parser.parse3d( mModelList.at(row).mScript, &previewPart, &model );

@@ -13,7 +13,7 @@
 
 
 
-void VrmlNode::generateFaces(Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body ) const
+void VrmlNode::generateFaces(Sd3drModel *model, Sd3drInstance &instance, Sd3drBody &body ) const
   {
   Q_UNUSED(model)
   Q_UNUSED(instance)

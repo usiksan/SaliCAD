@@ -1,6 +1,6 @@
 #include "SdScanerVrml.h"
 #include "VrmlNode1.h"
-#include "objects/Sd3dModel.h"
+#include "3dr/Sd3drModel.h"
 
 SdScanerVrml::SdScanerVrml()
   {
@@ -59,7 +59,7 @@ bool SdScanerVrml::parseFile(const QString &path)
 //! \brief generateFaces Generates faces for all nodes in mRootList
 //! \param appendFace    Functor to append generated faces
 //!
-void SdScanerVrml::generateFaces(Sd3dModel *model) const
+void SdScanerVrml::generateFaces(Sd3drModel *model) const
   {
   for( auto ptr : mRootList ) {
     Sd3drInstance instance;

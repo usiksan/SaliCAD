@@ -1,7 +1,7 @@
 #include "VrmlNodeShape.h"
 #include "VrmlNodeAppearance.h"
 #include "SdScanerVrml.h"
-#include "objects/Sd3dModel.h"
+#include "3dr/Sd3drModel.h"
 
 VrmlNodeShape::VrmlNodeShape() :
   VrmlNode(),
@@ -47,7 +47,7 @@ bool VrmlNodeShape::parse(SdScanerVrml *scaner, const QString &fieldType)
 
 
 
-void VrmlNodeShape::generateFaces(Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body) const
+void VrmlNodeShape::generateFaces(Sd3drModel *model, Sd3drInstance &instance, Sd3drBody &body) const
   {
   //Get apperance color
   VrmlNodeAppearance *appearance = dynamic_cast<VrmlNodeAppearance*>(mApperance);

@@ -23,9 +23,9 @@ Description
 
 class SdScriptValueFunFaceDuplicateShift : public SdScriptValueFunction
   {
-    Sd3dModel *mModel;
+    Sd3drModel *mModel;
   public:
-    SdScriptValueFunFaceDuplicateShift( Sd3dModel *model ) : SdScriptValueFunction( SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_FLOAT ), mModel(model) { }
+    SdScriptValueFunFaceDuplicateShift( Sd3drModel *model ) : SdScriptValueFunction( SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_FLOAT ), mModel(model) { }
 
     // SdM3dValue interface
   public:

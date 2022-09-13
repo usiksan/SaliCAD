@@ -15,21 +15,18 @@ Description
 #ifndef SD3DRBODY_H
 #define SD3DRBODY_H
 
-#include "Sd3dRegion.h"
+#include "Sd3drRegion.h"
 #include "Sd3drFace.h"
-#include "Sd3dMaterial.h"
+#include "Sd3drMaterial.h"
 
 #include <QList>
 #include <QColor>
-
-class SdJsonWriter;
-class SdJsonReader;
 
 
 class Sd3drBody
   {
     Sd3drFaceList  mFaceList; //!< List of faces. Each face is list of vertex of polygon in global vertex list of model
-    Sd3dMaterial   mColor;    //!< Material of all faces of this body
+    Sd3drMaterial  mColor;    //!< Material of all faces of this body
   public:
     Sd3drBody();
 
@@ -37,7 +34,7 @@ class Sd3drBody
 
     void colorListGet( Sd3ColorList &dst ) const { dst.append( mColor ); }
 
-    void colorListSet( const Sd3dMaterial &src ) { mColor = src; }
+    void colorListSet( const Sd3drMaterial &src ) { mColor = src; }
 
     void colorSet( QColor c ) { mColor.mAmbient = mColor.mDiffuse = c; }
 
@@ -46,11 +43,11 @@ class Sd3drBody
     void faceAppend( const Sd3drFaceList &list ) { mFaceList.append(list); }
 
 
-    void draw( QOpenGLFunctions_2_0 *f, const Sd3dRegion &vertexList, const QMatrix4x4 &map ) const;
+    void draw( QOpenGLFunctions_2_0 *f, const Sd3drRegion &vertexList, const QMatrix4x4 &map ) const;
 
-    void json( SdJsonWriter &js ) const;
+    void json( SvJsonWriter &js ) const;
 
-    void json( const SdJsonReader &js );
+    void json( const SvJsonReader &js );
 
     //!
     //! \brief volumeAdd  Append volume of model to result volume
@@ -58,7 +55,7 @@ class Sd3drBody
     //! \param vertexList Vertex list on which referenced bodies
     //! \param map        Map for body transformation
     //!
-    void volumeAdd( QMatrix2x3 &volume, const Sd3dRegion &vertexList, const QMatrix4x4 &map ) const;
+    void volumeAdd( QMatrix2x3 &volume, const Sd3drRegion &vertexList, const QMatrix4x4 &map ) const;
   };
 
 

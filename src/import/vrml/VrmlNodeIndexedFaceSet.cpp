@@ -1,6 +1,6 @@
 #include "VrmlNodeIndexedFaceSet.h"
 #include "SdScanerVrml.h"
-#include "objects/Sd3dModel.h"
+#include "3dr/Sd3drModel.h"
 
 VrmlNodeIndexedFaceSet::VrmlNodeIndexedFaceSet() :
   VrmlNode(),
@@ -107,7 +107,7 @@ bool VrmlNodeIndexedFaceSet::parse(SdScanerVrml *scaner, const QString &fieldTyp
 
 
 
-void VrmlNodeIndexedFaceSet::generateFaces(Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body) const
+void VrmlNodeIndexedFaceSet::generateFaces(Sd3drModel *model, Sd3drInstance &instance, Sd3drBody &body) const
   {
   VrmlNodeCoordinate *coordinate = dynamic_cast<VrmlNodeCoordinate*>( mCoordinate );
   if( coordinate != nullptr ) {

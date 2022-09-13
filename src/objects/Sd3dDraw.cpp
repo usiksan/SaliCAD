@@ -183,15 +183,3 @@ void Sd3dDraw::colorToFloat(QColor col, float *fcolor)
   }
 
 
-
-
-//!
-//! \brief drawModel Draw model in 3d world
-//! \param f         OpenGL
-//! \param model     Model to draw
-//!
-void Sd3dDraw::drawModel(QOpenGLFunctions_2_0 *f, const Sd3dModel &model)
-  {
-  model.draw3d( f );
-  }
-

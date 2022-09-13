@@ -34,7 +34,7 @@ Sd3dGraph *Sd3dReaderVrml::importVrmlFromFile(QString fname, QWidget *parent)
     //Generate faces
 
     //3d object to put faces in
-    Sd3dModel model;
+    Sd3drModel model;
 
     //Generation
     scanerVrml.generateFaces( &model );

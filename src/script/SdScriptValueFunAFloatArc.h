@@ -33,7 +33,7 @@ class SdScriptValueFunAFloatArc : public SdScriptValueFunction
     //! \brief toIndex Convert object to float list
     //! \return        Float list
     //!
-    virtual QList<float>         toFloatList() const { return Sd3dModel::afloatArc( mParamList[0]->toFloat(), mParamList[1]->toFloat(), mParamList[2]->toFloat(), mParamList[3]->toFloat() ); }
+    virtual QList<float>         toFloatList() const { return Sd3drModel::afloatArc( mParamList[0]->toFloat(), mParamList[1]->toFloat(), mParamList[2]->toFloat(), mParamList[3]->toFloat() ); }
   };
 
 #endif // SDSCRIPTVALUEFUNAFLOATARC_H

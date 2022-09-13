@@ -175,7 +175,7 @@ void SdPItemPlate::appendPadWindow(SdPolyWindowList &dest, SdPoint p, const QStr
 //! \param stratum        Stratum for layers
 //! \param map            Map for holes conversion
 //!
-void SdPItemPlate::appendPadHoles(SdPoint p, const QString pinType, Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+void SdPItemPlate::appendPadHoles(SdPoint p, const QString pinType, Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
   {
   getPad( pinType ).appendPadHoles( p, model, faceList, stratum, map );
   }

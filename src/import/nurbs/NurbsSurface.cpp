@@ -1,7 +1,7 @@
 #include "NurbsSurface.h"
 
 
-Sd3drFaceList NurbsSurface::discrete(int n, Sd3dModel *model) const
+Sd3drFaceList NurbsSurface::discrete(int n, Sd3drModel *model) const
   {
   Sd3drFaceList faceList;
 

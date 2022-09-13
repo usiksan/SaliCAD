@@ -11,8 +11,8 @@ Web
 Description
   3D face material. Material of which face is made
 */
-#ifndef SD3DMATERIAL_H
-#define SD3DMATERIAL_H
+#ifndef SD3DRMATERIAL_H
+#define SD3DRMATERIAL_H
 
 
 #include "SvLib/SvJsonIO.h"
@@ -22,7 +22,7 @@ Description
 #include <QList>
 
 
-struct Sd3dMaterial
+struct Sd3drMaterial
   {
     QColor        mAmbient;
     QColor        mDiffuse;
@@ -30,9 +30,9 @@ struct Sd3dMaterial
     QColor        mEmissive;
     double        mShininnes;
 
-    Sd3dMaterial() : mShininnes(0) {}
+    Sd3drMaterial() : mShininnes(0) {}
 
-    Sd3dMaterial( QColor amb, QColor dif, QColor spec ) : mAmbient(amb), mDiffuse(dif), mSpecular(spec), mEmissive(0,0,0), mShininnes(0.2) {}
+    Sd3drMaterial( QColor amb, QColor dif, QColor spec ) : mAmbient(amb), mDiffuse(dif), mSpecular(spec), mEmissive(0,0,0), mShininnes(0.2) {}
 
     void setAmbientIntensity( float am );
 
@@ -54,8 +54,14 @@ struct Sd3dMaterial
     //!
     void json( const SvJsonReader &js);
 
+    //!
+    //! \brief colorToFloat Convert QColor to array of four float color components
+    //! \param col          Source color
+    //! \param fcolor       Destignation array of float, must be at least 4 item
+    //!
+    static void colorToFloat( QColor col, float *fcolor );
   };
 
-using Sd3ColorList = QList<Sd3dMaterial>;
+using Sd3ColorList = QList<Sd3drMaterial>;
 
-#endif // SD3DMATERIAL_H
+#endif // SD3DRMATERIAL_H

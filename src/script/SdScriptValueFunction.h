@@ -22,8 +22,6 @@ Description
 
 #include "SdScriptValue.h"
 
-#include <initializer_list>
-
 #define SDSCRIPT_FUN_MAX_PARAM 8 //!< Maximal parameters available for functions
 
 class SdScriptValueFunction : public SdScriptValue

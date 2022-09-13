@@ -4,7 +4,7 @@
 #include "NurbsCurve.h"
 #include "NurbsSurfaceInfo.h"
 #include "NurbsConvexHull.h"
-#include "objects/Sd3dModel.h"
+#include "3dr/Sd3drModel.h"
 
 #include <QVector4D>
 
@@ -50,7 +50,7 @@ class NurbsSurface
     void getScattors( NurbsSurfaceInfo &s );
     void offset( double dx, double dy, double dz );
 
-    Sd3drFaceList discrete( int n, Sd3dModel *model ) const;
+    Sd3drFaceList discrete( int n, Sd3drModel *model ) const;
 
   private:
     QVector3D     getKnotPoint( double knot0, double knot1 ) const;

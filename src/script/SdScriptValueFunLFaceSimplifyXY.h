@@ -23,9 +23,9 @@ Description
 
 class SdScriptValueFunLFaceSimplifyXY : public SdScriptValueFunction
   {
-    Sd3dModel *mModel;
+    Sd3drModel *mModel;
   public:
-    SdScriptValueFunLFaceSimplifyXY( Sd3dModel *model ) : SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FACE ), mModel(model) { }
+    SdScriptValueFunLFaceSimplifyXY( Sd3drModel *model ) : SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FACE ), mModel(model) { }
 
     // SdM3dValue interface
   public:

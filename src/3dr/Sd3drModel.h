@@ -19,9 +19,9 @@ Description
 #include "Sd3drInstance.h"
 
 
-class Sd3dModel
+class Sd3drModel
   {
-    Sd3dRegion        mVertexList;   //!< 3d vertex list
+    Sd3drRegion       mVertexList;   //!< 3d vertex list
     Sd3drInstanceList mInstanceList; //!< 3d instance list, each instance contains one or more copy of some body list
   public:
 
@@ -38,7 +38,7 @@ class Sd3dModel
 
     QPointF       point( int index ) const { return mVertexList.at(index).toPointF(); }
 
-    Sd3dRegion    vertexList( const QList<int> &indexList ) const;
+    Sd3drRegion   vertexList( const QList<int> &indexList ) const;
 
     int           vertexAppend( QVector3D v ) { mVertexList.append(v); return mVertexList.count() - 1; }
 
@@ -50,7 +50,7 @@ class Sd3dModel
 
 
 
-    Sd3drFace     faceFromRegion( Sd3dRegion r );
+    Sd3drFace     faceFromRegion( Sd3drRegion r );
 
     //!
     //! \brief faceFlat         Builds flat face from list of pairs floats
@@ -69,19 +69,48 @@ class Sd3dModel
     //!
     Sd3drFace     faceFlatMatrix( const QList<float> &pairList, const QMatrix4x4 &map );
 
+    //!
+    //! \brief faceCircle This function builds circle region on base radius with center at 0
+    //! \param radius     Radius of builded circle
+    //! \param stepDegree Step with which need to create multicorner circle region
+    //! \param map        Finish circle transformation map
+    //! \return           Circle
+    //!
     Sd3drFace     faceCircle( float radius, float stepDegree, const QMatrix4x4 &map );
 
+    //!
+    //! \brief faceCircleSide Builds circle region interpolated polygon on base radius with center at 0 and sideCount sides
+    //! \param radius         Radius of builded circle
+    //! \param sideCount      Side count of polygon
+    //! \param map            Finish circle transformation map
+    //! \return               Circle
+    //!
     Sd3drFace     faceCircleSide( float radius, int sideCount, const QMatrix4x4 &map );
 
     Sd3drFace     faceEllipse( float radiusx, float radiusy, float stepDegree, const QMatrix4x4 &map );
 
     Sd3drFace     faceEllipseSide( float radiusx, float radiusy, int sideCount, const QMatrix4x4 &map );
 
+    //!
+    //! \brief faceRectangle Builds rectangle region with center at 0 and four edges
+    //! \param lenght        Lenght of rectangle (X)
+    //! \param width         Width of rectangle (Y)
+    //! \param map           Finish rectangle transformation map
+    //! \return              Rectangle
+    //!
     Sd3drFace     faceRectangle( float lenght, float width, const QMatrix4x4 &map );
 
     Sd3drFace     faceRectangleRound( float lenght, float width, float radius, float stepDegree, const QMatrix4x4 &map );
 
-    Sd3drFace     faceRectangleSide( float width, float lenght, int sideCount, const QMatrix4x4 &map );
+    //!
+    //! \brief faceRectangleSide Builds rectangle region with center at 0 and sideCount sides reorganized to rectangle
+    //! \param width             Lenght of rectangle (X)
+    //! \param lenght            Width of rectangle (Y)
+    //! \param sideCount         Side count of polygon
+    //! \param map               Finish rectangle transformation map
+    //! \return                  Rectangle
+    //!
+    Sd3drFace     faceRectangleSide( float lenght, float width, int sideCount, const QMatrix4x4 &map );
 
     Sd3drFace     faceDuplicate( const Sd3drFace &face, const QMatrix4x4 &map );
 
@@ -239,18 +268,16 @@ class Sd3dModel
     //!             Overrided function
     //! \param js   Json writer
     //!
-    void       json( SdJsonWriter &js ) const;
+    void       json( SvJsonWriter3d &js ) const;
 
     //!
     //! \brief json Overloaded function to read object content from json reader
     //!             Overrided function
     //! \param js   Json reader
     //!
-    void       json( const SdJsonReader &js );
+    void       json(const SvJsonReader3d &js );
 
     void       draw3d(QOpenGLFunctions_2_0 *f) const;
-
-    void       build( const QString &script );
 
     //!
     //! \brief volumeAdd Append volume of model to result volume
@@ -259,17 +286,8 @@ class Sd3dModel
     void       volumeAdd( QMatrix2x3 &volume ) const;
 
   private:
-    int        lessLeft( const Sd3drFace &face ) const;
-
-    bool       isLeft( QPointF p1, QPointF p2 ) const;
-
-    int        next( int center, const Sd3drFace &face ) const;
-
-    int        prev( int center, const Sd3drFace &face ) const;
-
     void       faceSizeXY( const Sd3drFace &face, float &sizex, float &sizey ) const;
 
   };
-
 
 #endif // SD3DMODEL_H

@@ -83,7 +83,7 @@
 #include "SdScriptValueFunGraphPin.h"
 
 
-SdScriptParser3d::SdScriptParser3d(QTableWidget *tableWidget, Sd3dModel *model ) :
+SdScriptParser3d::SdScriptParser3d(QTableWidget *tableWidget, Sd3drModel *model ) :
   SdScriptParser(tableWidget)
   {
   addFunction( QStringLiteral("selectColor"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunSelectColor(); }, QStringLiteral("selectColor( string color ) Press F2 to select\nConvert textual color in format \"#rrggbb\"") );
@@ -165,7 +165,7 @@ SdScriptParser3d::SdScriptParser3d(QTableWidget *tableWidget, Sd3dModel *model )
 
 
 
-SdScriptProgrammPtr SdScriptParser3d::parse3d(const QString src, SdPItemPart *part, Sd3dModel *model)
+SdScriptProgrammPtr SdScriptParser3d::parse3d(const QString src, SdPItemPart *part, Sd3drModel *model)
   {
   //Insert predefined variables
   mVariables.insert( QStringLiteral("partModel"), new SdScriptPartModel( model ) );

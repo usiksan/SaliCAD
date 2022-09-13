@@ -13,8 +13,7 @@ Description
   So body has single material for many faces
 */
 #include "Sd3drBody.h"
-#include "Sd3dDraw.h"
-#include "SdJsonIO.h"
+#include "SvLib/SvJson3dIO.h"
 
 Sd3drBody::Sd3drBody()
   {
@@ -23,7 +22,7 @@ Sd3drBody::Sd3drBody()
 
 
 
-void Sd3drBody::draw(QOpenGLFunctions_2_0 *f, const Sd3dRegion &vertexList, const QMatrix4x4 &map) const
+void Sd3drBody::draw(QOpenGLFunctions_2_0 *f, const Sd3drRegion &vertexList, const QMatrix4x4 &map) const
   {
   //Setup color
   mColor.draw( f );
@@ -45,7 +44,7 @@ void Sd3drBody::draw(QOpenGLFunctions_2_0 *f, const Sd3dRegion &vertexList, cons
 
 
 
-void Sd3drBody::json(SdJsonWriter &js) const
+void Sd3drBody::json(SvJsonWriter &js) const
   {
   js.jsonListListInt( QStringLiteral("Faces"), mFaceList );
   mColor.json( js );
@@ -54,7 +53,7 @@ void Sd3drBody::json(SdJsonWriter &js) const
 
 
 
-void Sd3drBody::json(const SdJsonReader &js)
+void Sd3drBody::json(const SvJsonReader &js)
   {
   js.jsonListListInt( QStringLiteral("Faces"), mFaceList );
   mColor.json( js );
@@ -69,7 +68,7 @@ void Sd3drBody::json(const SdJsonReader &js)
 //! \param vertexList Vertex list on which referenced bodies
 //! \param map        Map for body transformation
 //!
-void Sd3drBody::volumeAdd(QMatrix2x3 &volume, const Sd3dRegion &vertexList, const QMatrix4x4 &map) const
+void Sd3drBody::volumeAdd(QMatrix2x3 &volume, const Sd3drRegion &vertexList, const QMatrix4x4 &map) const
   {
   //Draw all faces
   for( auto face : qAsConst( mFaceList ) ) {

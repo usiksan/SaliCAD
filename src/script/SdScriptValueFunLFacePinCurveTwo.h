@@ -23,9 +23,9 @@ Description
 
 class SdScriptValueFunLFacePinCurveTwo : public SdScriptValueFunction
   {
-    Sd3dModel *mModel;
+    Sd3drModel *mModel;
   public:
-    SdScriptValueFunLFacePinCurveTwo( Sd3dModel *model ) :
+    SdScriptValueFunLFacePinCurveTwo( Sd3drModel *model ) :
       //                                                Sd3drFace &face,      float firstLen       float middleLen         float lastLen        float radius,         float angleFirst,      float  angleLast,       int sideCount
       SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT ),
       mModel(model)

@@ -23,9 +23,9 @@ Description
 
 class SdScriptValueFunFaceFlat : public SdScriptValueFunction
   {
-    Sd3dModel *mModel;
+    Sd3drModel *mModel;
   public:
-    SdScriptValueFunFaceFlat( Sd3dModel *model ) : SdScriptValueFunction( SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_AFLOAT ), mModel(model) { }
+    SdScriptValueFunFaceFlat( Sd3drModel *model ) : SdScriptValueFunction( SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_AFLOAT ), mModel(model) { }
 
     // SdM3dValue interface
   public:

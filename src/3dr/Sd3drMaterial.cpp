@@ -11,18 +11,17 @@ Web
 Description
   3D face material. Material of which face is made
 */
-#include "Sd3dMaterial.h"
-#include "Sd3dDraw.h"
+#include "Sd3drMaterial.h"
 
 
 
 
 
 
-void Sd3dMaterial::setAmbientIntensity(float am)
+void Sd3drMaterial::setAmbientIntensity(float am)
   {
   float fcolor[4];
-  Sd3dDraw::colorToFloat( mDiffuse, fcolor );
+  colorToFloat( mDiffuse, fcolor );
 
   for( int i = 0; i < 3; i++ )
     fcolor[i] *= am;
@@ -33,13 +32,13 @@ void Sd3dMaterial::setAmbientIntensity(float am)
 
 
 
-void Sd3dMaterial::draw(QOpenGLFunctions_2_0 *f) const
+void Sd3drMaterial::draw(QOpenGLFunctions_2_0 *f) const
   {
   float fcolor[4];
-  Sd3dDraw::colorToFloat( mAmbient, fcolor );
+  colorToFloat( mAmbient, fcolor );
   f->glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, fcolor );
 
-  Sd3dDraw::colorToFloat( mDiffuse, fcolor );
+  colorToFloat( mDiffuse, fcolor );
   f->glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, fcolor );
 
 //  Sd3dDraw::colorToFloat( mEmissive, fcolor );
@@ -53,7 +52,7 @@ void Sd3dMaterial::draw(QOpenGLFunctions_2_0 *f) const
 
 
 
-void Sd3dMaterial::setColor(QColor color)
+void Sd3drMaterial::setColor(QColor color)
   {
   mDiffuse = color;
   }
@@ -64,7 +63,7 @@ void Sd3dMaterial::setColor(QColor color)
 //! \brief json Overloaded function to write object content into json writer
 //! \param js   Json writer
 //!
-void Sd3dMaterial::json(SvJsonWriter &js) const
+void Sd3drMaterial::json(SvJsonWriter &js) const
   {
   js.jsonColor( QStringLiteral("Ambient"), mAmbient );
   js.jsonColor( QStringLiteral("Diffuse"), mDiffuse );
@@ -80,13 +79,23 @@ void Sd3dMaterial::json(SvJsonWriter &js) const
 //! \brief json Overloaded function to read object content from json reader
 //! \param js   Json reader
 //!
-void Sd3dMaterial::json(const SvJsonReader &js)
+void Sd3drMaterial::json(const SvJsonReader &js)
   {
   js.jsonColor( QStringLiteral("Ambient"), mAmbient );
   js.jsonColor( QStringLiteral("Diffuse"), mDiffuse );
   js.jsonColor( QStringLiteral("Emissive"), mEmissive );
   js.jsonColor( QStringLiteral("Specular"), mSpecular );
   js.jsonDouble( QStringLiteral("Shininnes"), mShininnes );
+  }
+
+
+
+void Sd3drMaterial::colorToFloat(QColor col, float *fcolor)
+  {
+  fcolor[0] = col.redF();
+  fcolor[1] = col.greenF();
+  fcolor[2] = col.blueF();
+  fcolor[3] = col.alphaF();
   }
 
 

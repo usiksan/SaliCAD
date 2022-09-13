@@ -154,7 +154,7 @@ void SdPartImpPin::accumWindows(SdPItemPlate *plate, SdPolyWindowList &dest, int
 //! \param stratum    Stratum for layers
 //! \param map        Map for holes conversion
 //!
-void SdPartImpPin::accumHoles(SdPItemPlate *plate, Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+void SdPartImpPin::accumHoles(SdPItemPlate *plate, Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
   {
   plate->appendPadHoles( mPin->getPinOrigin(), mPin->getPinType(), model, faceList, stratum, map );
   }
@@ -1157,7 +1157,7 @@ void SdGraphPartImp::draw3d(QOpenGLFunctions_2_0 *f) const
 //! \param stratum    Stratum for layers
 //! \param map        Map for holes conversion
 //!
-void SdGraphPartImp::accumHoles(Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+void SdGraphPartImp::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
   {
   QMatrix4x4 mp(map);
   mp.translate( mOrigin.xmm(), mOrigin.ymm(), 0 );

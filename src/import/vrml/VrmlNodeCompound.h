@@ -16,7 +16,7 @@ class VrmlNodeCompound : public VrmlNode
 
     // VrmlNode interface
   public:
-    virtual void generateFaces( Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body ) const override;
+    virtual void generateFaces( Sd3drModel *model, Sd3drInstance &instance, Sd3drBody &body ) const override;
   };
 
 #endif // VRMLNODECOMPOUND_H

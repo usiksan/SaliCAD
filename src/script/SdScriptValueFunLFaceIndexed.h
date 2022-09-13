@@ -33,7 +33,7 @@ class SdScriptValueFunLFaceIndexed : public SdScriptValueFunction
     //! \brief toFaceList Convert object to list of face each of which is list of vertex index
     //! \return           List of face each of which is list of vertex index
     //!
-    virtual Sd3drFaceList  toFaceList() const override { return Sd3dModel::faceListIndexed( mParamList[0]->toFaceList(), mParamList[1]->toFloatList() ); }
+    virtual Sd3drFaceList  toFaceList() const override { return Sd3drModel::faceListIndexed( mParamList[0]->toFaceList(), mParamList[1]->toFloatList() ); }
 
   };
 

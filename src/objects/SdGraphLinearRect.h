@@ -78,7 +78,7 @@ class SdGraphLinearRect : public SdGraphLinear
     //! \param stratum    Stratum for layers
     //! \param map        Map for holes conversion
     //!
-    virtual void    accumHoles( Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const override;
+    virtual void    accumHoles( Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const override;
 
     virtual int     behindCursor(SdPoint p) override;
     //Find snap point on object

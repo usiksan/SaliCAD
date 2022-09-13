@@ -81,11 +81,13 @@ SOURCES += \
     modes/SdModeCScript.cpp \
     modes/SdModeCSymHighlight.cpp \
     modes/SdModeSymbolFragment.cpp \
-    objects/Sd3dMaterial.cpp \
-    objects/Sd3dPointLink.cpp \
-    objects/Sd3drBody.cpp \
-    objects/Sd3drFace.cpp \
-    objects/Sd3drInstance.cpp \
+    3dr/Sd3drBody.cpp \
+    3dr/Sd3drFace.cpp \
+    3dr/Sd3drInstance.cpp \
+    3dr/Sd3drMaterial.cpp \
+    3dr/Sd3drModel.cpp \
+    3dr/Sd3drPointLink.cpp \
+    3dr/Sd3drRegion.cpp \
     objects/SdContainerFile.cpp \
     objects/SdCopyMap.cpp \
     objects/SdCopyMapProject.cpp \
@@ -131,9 +133,7 @@ SOURCES += \
     objects/Sd3dDraw.cpp \
     objects/Sd3dGraph.cpp \
     objects/Sd3dGraphModel.cpp \
-    objects/Sd3dModel.cpp \
     objects/Sd3dPoint.cpp \
-    objects/Sd3dRegion.cpp \
     objects/Sd3dStep.cpp \
     objects/SdUndoRecord3dMatrix.cpp \
     script/SdScriptValueVariableRef.cpp \
@@ -407,6 +407,7 @@ SOURCES += \
     objects/SdPlateNetContainer.cpp
 
 HEADERS  += \
+    SvLib/SvJson3dIO.h \
     import/nurbs/NurbsBasis.h \
     import/nurbs/NurbsConvexHull.h \
     import/nurbs/NurbsCurve.h \
@@ -470,11 +471,13 @@ HEADERS  += \
     modes/SdModeCScript.h \
     modes/SdModeCSymHighlight.h \
     modes/SdModeSymbolFragment.h \
-    objects/Sd3dMaterial.h \
-    objects/Sd3dPointLink.h \
-    objects/Sd3drBody.h \
-    objects/Sd3drFace.h \
-    objects/Sd3drInstance.h \
+    3dr/Sd3drBody.h \
+    3dr/Sd3drFace.h \
+    3dr/Sd3drInstance.h \
+    3dr/Sd3drMaterial.h \
+    3dr/Sd3drModel.h \
+    3dr/Sd3drPointLink.h \
+    3dr/Sd3drRegion.h \
     objects/SdContainerFile.h \
     objects/SdCopyMap.h \
     objects/SdCopyMapProject.h \
@@ -624,9 +627,7 @@ HEADERS  += \
     objects/Sd3dDraw.h \
     objects/Sd3dGraph.h \
     objects/Sd3dGraphModel.h \
-    objects/Sd3dModel.h \
     objects/Sd3dPoint.h \
-    objects/Sd3dRegion.h \
     objects/Sd3dStep.h \
     objects/SdProperty.h \
     objects/SdUndoRecord3dMatrix.h \

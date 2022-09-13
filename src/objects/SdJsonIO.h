@@ -1,27 +1,27 @@
 #ifndef SDJSONIO_H
 #define SDJSONIO_H
 
-#include "SvLib/SvJsonIO.h"
+#include "SvLib/SvJson3dIO.h"
 #include "SdObjectMap.h"
 #include "SdObject.h"
 #include "SdRect.h"
 #include "Sd3dPoint.h"
 
 
-class SdJsonWriter : public SvJsonWriter
+class SdJsonWriter : public SvJsonWriter3d
   {
   public:
     //!
     //! \brief SdJsonWriter Constructor with external json object as destignator
     //! \param obj          External destignator json object
     //!
-    SdJsonWriter( QJsonObject &obj ) : SvJsonWriter(obj) {}
+    SdJsonWriter( QJsonObject &obj ) : SvJsonWriter3d(obj) {}
 
 
     //!
     //! \brief SvJsonWriter Constructor with internal json object as destignator
     //!
-    SdJsonWriter() : SvJsonWriter() {}
+    SdJsonWriter() : SvJsonWriter3d() {}
 
 
     void jsonObjectPtr( const QString &key, const SdObjectPtr ptr )
@@ -47,42 +47,19 @@ class SdJsonWriter : public SvJsonWriter
       object().insert( key, js.object() );
       }
 
-    QJsonArray matrix4x4( const QMatrix4x4 &map )
-      {
-      float val[16];
-      map.copyDataTo(val);
-      QJsonArray ar;
-      for( int i = 0; i < 16; i++ )
-        ar.append( val[i] );
-      return ar;
-      }
-
-    void jsonMatrix4x4( const QString &key, const QMatrix4x4 &map )
-      {
-      object().insert( key, matrix4x4(map) );
-      }
-
-    void jsonListMatrix4x4( const QString &key, const QList<QMatrix4x4> &list )
-      {
-      QJsonArray ar;
-      for( auto const &map : list )
-        ar.append( matrix4x4(map) );
-      object().insert( key, ar );
-      }
-
   };
 
 
-class SdJsonReader : public SvJsonReaderExt<SdObjectMap>
+class SdJsonReader : public SvJsonReader3dExt<SdObjectMap>
   {
   public:
     //!
     //! \brief SvJsonReader Constructor for reader
     //! \param obj          Object which json readed
     //!
-    SdJsonReader( const QJsonObject &obj, SdObjectMap *prop ) : SvJsonReaderExt<SdObjectMap>( obj, prop ) {}
+    SdJsonReader( const QJsonObject &obj, SdObjectMap *prop ) : SvJsonReader3dExt<SdObjectMap>( obj, prop ) {}
 
-    SdJsonReader( const QJsonObject &obj, const SdJsonReader &src ) : SvJsonReaderExt<SdObjectMap>( obj, src.property() ) {}
+    SdJsonReader( const QJsonObject &obj, const SdJsonReader &src ) : SvJsonReader3dExt<SdObjectMap>( obj, src.property() ) {}
 
     template <class SvClassPtr>
     void jsonObjectPtr( const QString &key, SvClassPtr &ptr ) const
@@ -104,34 +81,6 @@ class SdJsonReader : public SvJsonReaderExt<SdObjectMap>
       p.setY( obj.value( QStringLiteral("y") ).toDouble() );
       p.setZ( obj.value( QStringLiteral("z") ).toDouble() );
       }
-
-    QMatrix4x4 matrix4x4( const QJsonArray &ar ) const
-      {
-      float val[16];
-      bool notNull = false;
-      for( int i = 0; i < 16; i++ ) {
-        val[i] = ar.at(i).toDouble();
-        notNull = notNull || val[i] != 0;
-        }
-      return notNull ? QMatrix4x4(val) : QMatrix4x4();
-      }
-
-    void jsonMatrix4x4( const QString &key, QMatrix4x4 &map ) const
-      {
-      map = matrix4x4( object().value(key).toArray() );
-      }
-
-    void jsonListMatrix4x4( const QString &key, QList<QMatrix4x4> &list ) const
-      {
-      QJsonArray ar = object().value(key).toArray();
-      list.clear();
-      list.reserve(ar.size());
-      for( auto i = ar.constBegin(); i != ar.constEnd(); i++ ) {
-        QMatrix4x4 v( matrix4x4(i->toArray()) );
-        list.append( v );
-        }
-      }
-
   };
 
 #endif // SDJSONIO_H

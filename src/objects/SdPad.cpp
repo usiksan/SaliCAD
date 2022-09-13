@@ -177,7 +177,7 @@ void SdPad::appendWindow(SdPolyWindowList &dest, SdPoint p, int gap, const QTran
 //! \param stratum        Stratum for layers
 //! \param map            Map for holes conversion
 //!
-void SdPad::appendPadHoles(SdPoint p, Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+void SdPad::appendPadHoles(SdPoint p, Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
   {
   Q_UNUSED(stratum)
   if( isThrough() ) {

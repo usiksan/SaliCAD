@@ -20,13 +20,13 @@ Description
 #define SDSCRIPTVALUEFUNVERTEXBUILD_H
 
 #include "SdScriptValueFunction.h"
-#include "objects/Sd3dModel.h"
+#include "3dr/Sd3drModel.h"
 
 class SdScriptValueFunVertexBuild : public SdScriptValueFunction
   {
-    Sd3dModel *mModel;
+    Sd3drModel *mModel;
   public:
-    SdScriptValueFunVertexBuild( Sd3dModel *model ) :
+    SdScriptValueFunVertexBuild( Sd3drModel *model ) :
       SdScriptValueFunction( SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT ),
       mModel(model)
       { }

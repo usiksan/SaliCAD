@@ -1,106 +1,15 @@
-#include "Sd3dModel.h"
-#include "script/SdScriptParser3d.h"
-#include "SdJsonIO.h"
-#include "Sd3dPointLink.h"
+#include "Sd3drModel.h"
+#include "SvLib/SvJsonIO.h"
+#include "Sd3drPointLink.h"
 
+#include <QLineF>
 #include <math.h>
 
 
 
 
-#if 0
 
-
-
-//!
-//! \brief sd3dModelFlatHole Builds model of flat surface with hole. Outer of surface and hole must contains equals count of edges
-//! \param outer             Outer of surface
-//! \param hole              Hole
-//! \param color             Color of model
-//! \return                  Model with hole
-//!
-Sd3dModel sd3dModelFlatHole(const Sd3dRegion &outer, const Sd3dRegion &hole, QColor color)
-  {
-  int outerCount = outer.count();
-  int holeCount = hole.count();
-  Sd3dModel model;
-  if( outerCount == holeCount ) {
-    //Make as equivalent
-    Sd3dFace face;
-    face.mColor = color;
-    face.mContour.reserve(4);
-    for( int i = 0; i < outerCount; i++ ) {
-      QVector3D v0 = outer.at(i);
-      QVector3D v1 = i + 1 < outerCount ? outer.at( i + 1 ) : outer.first();
-      QVector3D v2 = i + 1 < holeCount ? hole.at( i + 1 ) : hole.first();
-      QVector3D v3 = hole.at(i);
-      face.mContour.clear();
-      face.mContour << v0 << v1 << v2 << v3;
-      model.append( face );
-      }
-    }
-  return model;
-  }
-
-
-
-
-
-
-
-//!
-//! \brief sd3dModelVolume Append model volume to volume matrix
-//! \param model           Model which volume appended
-//! \param volume          Source and destignation volume
-//!
-void sd3dModelVolume( const Sd3dModel &model, QMatrix2x3 &volume)
-  {
-  for( auto const &face : model )
-    face.volume( volume );
-  }
-
-
-
-
-Sd3dModel sd3dModelPinTqfp(float width, float thickness, float fullLenght, float plateLenght, float height, QColor color )
-  {
-  float curveRadius = 2.0 * thickness;
-  float plateFlatLenght = plateLenght - curveRadius;
-
-  Sd3dModel pin = sd3dModelBox( thickness, width, plateFlatLenght, color );
-  Sd3dFace top = pin.takeLast();
-  pin += sd3dModelCurve( top.mContour, QVector3D( -curveRadius, 0, -plateFlatLenght ), QVector3D( 0, 1, 0), 90, 30, color, false );
-
-  top = pin.takeLast();
-  Sd3dModel a = sd3dModelExtrude( top.mContour, height - 2 * curveRadius, color );
-  a.removeFirst();
-  pin += a;
-
-  top = pin.takeLast();
-  pin += sd3dModelCurve( top.mContour, QVector3D( -height + curveRadius, 0, -plateFlatLenght - 2 * curveRadius ), QVector3D( 0, 1, 0), -90, 30, color, false );
-
-  top = pin.takeLast();
-  a = sd3dModelExtrude( top.mContour, (fullLenght - plateFlatLenght - 2 * curveRadius), color );
-  a.removeFirst();
-  pin += a;
-
-  QVector3D origin = sd3dVertexCenterOfRegion( pin.last().mContour );
-  QMatrix4x4 matrix;
-  matrix.rotate( -90, QVector3D( 0, 1, 0) );
-  matrix.translate( -origin );
-  sd3dModelMapInPlace( pin, matrix );
-
-  return pin;
-  }
-
-
-#endif
-
-
-
-
-
-Sd3ColorList Sd3dModel::colorList() const
+Sd3ColorList Sd3drModel::colorList() const
   {
   Sd3ColorList list;
   for( auto const &inst : mInstanceList )
@@ -110,7 +19,7 @@ Sd3ColorList Sd3dModel::colorList() const
 
 
 
-void Sd3dModel::colorListSet(const Sd3ColorList &lst)
+void Sd3drModel::colorListSet(const Sd3ColorList &lst)
   {
   int index = 0;
   for( int i = 0; i < mInstanceList.count(); i++ )
@@ -119,7 +28,7 @@ void Sd3dModel::colorListSet(const Sd3ColorList &lst)
 
 
 
-void Sd3dModel::clear()
+void Sd3drModel::clear()
   {
   mVertexList.clear();
   mInstanceList.clear();
@@ -127,9 +36,9 @@ void Sd3dModel::clear()
 
 
 
-Sd3dRegion Sd3dModel::vertexList(const QList<int> &indexList) const
+Sd3drRegion Sd3drModel::vertexList(const QList<int> &indexList) const
   {
-  Sd3dRegion region;
+  Sd3drRegion region;
   for( auto index : indexList )
     region.append( vertex(index) );
   return region;
@@ -138,7 +47,7 @@ Sd3dRegion Sd3dModel::vertexList(const QList<int> &indexList) const
 
 
 
-QMatrix4x4 Sd3dModel::matrixShift(const Sd3drFace &face, float shift)
+QMatrix4x4 Sd3drModel::matrixShift(const Sd3drFace &face, float shift)
   {
   QMatrix4x4 map;
   if( face.count() < 3 )
@@ -153,7 +62,7 @@ QMatrix4x4 Sd3dModel::matrixShift(const Sd3drFace &face, float shift)
 
 
 
-Sd3drFace Sd3dModel::faceFromRegion(Sd3dRegion r)
+Sd3drFace Sd3drModel::faceFromRegion(Sd3drRegion r)
   {
   Sd3drFace regionRef;
   for( auto v : r ) {
@@ -173,7 +82,7 @@ Sd3drFace Sd3dModel::faceFromRegion(Sd3dRegion r)
 //! \param orientation      0 - xy, 1 - yz, 2 - xz
 //! \return
 //!
-Sd3drFace Sd3dModel::faceFlat( int firstVertexIndex, const QList<float> &pairList, int orientation)
+Sd3drFace Sd3drModel::faceFlat( int firstVertexIndex, const QList<float> &pairList, int orientation)
   {
   Sd3drFace face;
   float xy( orientation == 0 ? 1.0 : 0 );
@@ -201,7 +110,7 @@ Sd3drFace Sd3dModel::faceFlat( int firstVertexIndex, const QList<float> &pairLis
 //! \param map            Transfer map
 //! \return               Face
 //!
-Sd3drFace Sd3dModel::faceFlatMatrix(const QList<float> &pairList, const QMatrix4x4 &map)
+Sd3drFace Sd3drModel::faceFlatMatrix(const QList<float> &pairList, const QMatrix4x4 &map)
   {
   Sd3drFace face;
   int count = pairList.count() / 2;
@@ -220,14 +129,28 @@ Sd3drFace Sd3dModel::faceFlatMatrix(const QList<float> &pairList, const QMatrix4
 
 
 
-Sd3drFace Sd3dModel::faceCircle(float radius, float stepDegree, const QMatrix4x4 &map)
+//!
+//! \brief faceCircleThis function builds circle region on base radius with center at 0
+//! \param radius       Radius of builded circle
+//! \param stepDegree   Step with which need to create multicorner circle region
+//! \param map          Finish circle transformation map
+//! \return             Circle
+//!
+Sd3drFace Sd3drModel::faceCircle(float radius, float stepDegree, const QMatrix4x4 &map)
   {
   return faceEllipse( radius, radius, stepDegree, map );
   }
 
 
 
-Sd3drFace Sd3dModel::faceCircleSide(float radius, int sideCount, const QMatrix4x4 &map)
+//!
+//! \brief faceCircleSide Builds circle region interpolated polygon on base radius with center at 0 and sideCount sides
+//! \param radius         Radius of builded circle
+//! \param sideCount      Side count of polygon
+//! \param map            Finish circle transformation map
+//! \return               Circle
+//!
+Sd3drFace Sd3drModel::faceCircleSide(float radius, int sideCount, const QMatrix4x4 &map)
   {
   float stepDegree = 360.0 / sideCount;
   return faceCircle( radius, stepDegree, map );
@@ -236,7 +159,7 @@ Sd3drFace Sd3dModel::faceCircleSide(float radius, int sideCount, const QMatrix4x
 
 
 
-Sd3drFace Sd3dModel::faceEllipse(float radiusx, float radiusy, float stepDegree, const QMatrix4x4 &map)
+Sd3drFace Sd3drModel::faceEllipse(float radiusx, float radiusy, float stepDegree, const QMatrix4x4 &map)
   {
   Sd3drFace region;
   //Build circle with step degree
@@ -254,7 +177,7 @@ Sd3drFace Sd3dModel::faceEllipse(float radiusx, float radiusy, float stepDegree,
 
 
 
-Sd3drFace Sd3dModel::faceEllipseSide(float radiusx, float radiusy, int sideCount, const QMatrix4x4 &map)
+Sd3drFace Sd3drModel::faceEllipseSide(float radiusx, float radiusy, int sideCount, const QMatrix4x4 &map)
   {
   float stepDegree = 360.0 / sideCount;
   return faceEllipse( radiusx, radiusy, stepDegree, map );
@@ -262,21 +185,28 @@ Sd3drFace Sd3dModel::faceEllipseSide(float radiusx, float radiusy, int sideCount
 
 
 
-Sd3drFace Sd3dModel::faceRectangle(float lenght, float width, const QMatrix4x4 &map)
+//!
+//! \brief faceRectangle Builds rectangle region with center at 0 and four edges
+//! \param lenght        Lenght of rectangle (X)
+//! \param width         Width of rectangle (Y)
+//! \param map           Finish rectangle transformation map
+//! \return              Rectangle
+//!
+Sd3drFace Sd3drModel::faceRectangle(float lenght, float width, const QMatrix4x4 &map)
   {
   width /= 2.0;
   lenght /= 2.0;
   QVector3D p0( -lenght, -width, 0 );
-  QVector3D p1( -lenght,  width, 0 );
+  QVector3D p1(  lenght, -width, 0 );
   QVector3D p2(  lenght,  width, 0 );
-  QVector3D p3(  lenght, -width, 0 );
+  QVector3D p3( -lenght,  width, 0 );
 
   return Sd3drFace( { vertexAppend( map.map(p0) ), vertexAppend( map.map(p1)), vertexAppend( map.map(p2) ), vertexAppend( map.map(p3) ) } );
   }
 
 
 
-Sd3drFace Sd3dModel::faceRectangleRound(float lenght, float width, float radius, float stepDegree, const QMatrix4x4 &map)
+Sd3drFace Sd3drModel::faceRectangleRound(float lenght, float width, float radius, float stepDegree, const QMatrix4x4 &map)
   {
   Sd3drFace region;
   float curX = lenght / 2 - radius;
@@ -338,11 +268,19 @@ Sd3drFace Sd3dModel::faceRectangleRound(float lenght, float width, float radius,
 
 
 
-Sd3drFace Sd3dModel::faceRectangleSide(float width, float lenght, int sideCount, const QMatrix4x4 &map)
+//!
+//! \brief faceRectangleSide Builds rectangle region with center at 0 and sideCount sides reorganized to rectangle
+//! \param width             Lenght of rectangle (X)
+//! \param lenght            Width of rectangle (Y)
+//! \param sideCount         Side count of polygon
+//! \param map               Finish rectangle transformation map
+//! \return                  Rectangle
+//!
+Sd3drFace Sd3drModel::faceRectangleSide(float lenght, float width, int sideCount, const QMatrix4x4 &map)
   {
   float edgeOnSide = sideCount / 4;
-  float stepw = width / edgeOnSide;
-  float steph = lenght / edgeOnSide;
+  float stepw = lenght / edgeOnSide;
+  float steph = width / edgeOnSide;
   QVector3D v( 0, lenght/2.0, 0);
   Sd3drFace face;
   //face.append( vertexAppend( map.map( v ) )   );
@@ -372,7 +310,7 @@ Sd3drFace Sd3dModel::faceRectangleSide(float width, float lenght, int sideCount,
 
 
 
-Sd3drFace Sd3dModel::faceDuplicate(const Sd3drFace &face, const QMatrix4x4 &map)
+Sd3drFace Sd3drModel::faceDuplicate(const Sd3drFace &face, const QMatrix4x4 &map)
   {
   Sd3drFace dest;
   dest.reserve(face.count());
@@ -384,7 +322,7 @@ Sd3drFace Sd3dModel::faceDuplicate(const Sd3drFace &face, const QMatrix4x4 &map)
 
 
 
-Sd3drFace Sd3dModel::faceDuplicateScale(const Sd3drFace &face, float scalex, float scaley, float shift)
+Sd3drFace Sd3drModel::faceDuplicateScale(const Sd3drFace &face, float scalex, float scaley, float shift)
   {
   QMatrix4x4 map;
   map.translate( 0, 0, shift );
@@ -395,7 +333,7 @@ Sd3drFace Sd3dModel::faceDuplicateScale(const Sd3drFace &face, float scalex, flo
 
 
 
-Sd3drFace Sd3dModel::faceDuplicateGrow(const Sd3drFace &face, float deltax, float deltay, const QMatrix4x4 &map)
+Sd3drFace Sd3drModel::faceDuplicateGrow(const Sd3drFace &face, float deltax, float deltay, const QMatrix4x4 &map)
   {
   //Calculate lenght (x) and width (y) of face
   //Calculate dx and dy scale
@@ -413,7 +351,7 @@ Sd3drFace Sd3dModel::faceDuplicateGrow(const Sd3drFace &face, float deltax, floa
 
 
 
-Sd3drFace Sd3dModel::faceTrapezoidZ(const Sd3drFace &face, float height, float lessX, float lessY, float topShiftX, float topShiftY)
+Sd3drFace Sd3drModel::faceTrapezoidZ(const Sd3drFace &face, float height, float lessX, float lessY, float topShiftX, float topShiftY)
   {
   float x(0), y(0);
   for( auto index : face ) {
@@ -434,7 +372,7 @@ Sd3drFace Sd3dModel::faceTrapezoidZ(const Sd3drFace &face, float height, float l
 
 
 
-Sd3drFace Sd3dModel::faceCurveXZ(const Sd3drFace &face, float radius, float angleSrc, float angleDst)
+Sd3drFace Sd3drModel::faceCurveXZ(const Sd3drFace &face, float radius, float angleSrc, float angleDst)
   {
   //Find center of face
   QVector3D center;
@@ -475,7 +413,7 @@ Sd3drFace Sd3dModel::faceCurveXZ(const Sd3drFace &face, float radius, float angl
 //! \param map             Finish translation map
 //! \return                Equidistant face
 //!
-Sd3drFace Sd3dModel::faceEqudistanteXY(const Sd3drFace &face, float distance, const QMatrix4x4 &map)
+Sd3drFace Sd3drModel::faceEqudistanteXY(const Sd3drFace &face, float distance, const QMatrix4x4 &map)
   {
   if( face.count() < 3 )
     return face;
@@ -531,7 +469,7 @@ Sd3drFace Sd3dModel::faceEqudistanteXY(const Sd3drFace &face, float distance, co
 //! \param radius      Distance of new face
 //! \return            Shifted round face
 //!
-Sd3drFace Sd3dModel::faceBevelXY(const Sd3drFace &face, float radius )
+Sd3drFace Sd3drModel::faceBevelXY(const Sd3drFace &face, float radius )
   {
   //Calculate dx and dy scale
   if( face.count() < 3 )
@@ -546,7 +484,7 @@ Sd3drFace Sd3dModel::faceBevelXY(const Sd3drFace &face, float radius )
 
 
 
-Sd3drFace Sd3dModel::facePart(const Sd3drFace &face, const QList<float> &indexes)
+Sd3drFace Sd3drModel::facePart(const Sd3drFace &face, const QList<float> &indexes)
   {
   Sd3drFace dest;
   for( auto v : indexes ) {
@@ -559,7 +497,7 @@ Sd3drFace Sd3dModel::facePart(const Sd3drFace &face, const QList<float> &indexes
 
 
 
-Sd3drFaceList Sd3dModel::faceListDuplicate(const Sd3drFaceList &faceList, const QMatrix4x4 &map)
+Sd3drFaceList Sd3drModel::faceListDuplicate(const Sd3drFaceList &faceList, const QMatrix4x4 &map)
   {
   Sd3drFaceList dest;
   for( auto const &face : faceList )
@@ -605,14 +543,14 @@ struct SdTriangle
 
 
 
-Sd3drFaceList Sd3dModel::faceListSimplifyXY( const Sd3drFace &srcFace )
+Sd3drFaceList Sd3drModel::faceListSimplifyXY( const Sd3drFace &srcFace )
   {
   Sd3drFaceList faceList;
-  Sd3dPointLinkList pointPool;
-  QList<Sd3dPointLinkPtr> srcList;
+  Sd3drPointLinkList pointPool;
+  QList<Sd3drPointLinkPtr> srcList;
   srcList.append( pointPool.addRegion( this, srcFace, false ) );
   for( int faceIndex = 0; faceIndex < srcList.count(); faceIndex++ ) {
-    Sd3dPointLinkPtr face = srcList.at(faceIndex);
+    Sd3drPointLinkPtr face = srcList.at(faceIndex);
     while( !face->isTriangle() ) {
       face = face->lessLeft();
       SdTriangle t;
@@ -622,8 +560,8 @@ Sd3drFaceList Sd3dModel::faceListSimplifyXY( const Sd3drFace &srcFace )
       t.prepare();
 
       //Test all remain points of region
-      Sd3dPointLinkPtr inner = nullptr;
-      for( Sd3dPointLinkPtr ptr = face->mNext->mNext; ptr != face->mPrev; ptr = ptr->mNext ) {
+      Sd3drPointLinkPtr inner = nullptr;
+      for( Sd3drPointLinkPtr ptr = face->mNext->mNext; ptr != face->mPrev; ptr = ptr->mNext ) {
         if( t.isPointInside( ptr->mPoint ) ) {
           if( inner == nullptr || ptr->isLeft( inner ) )
             inner = ptr;
@@ -648,17 +586,17 @@ Sd3drFaceList Sd3dModel::faceListSimplifyXY( const Sd3drFace &srcFace )
 
 
 
-Sd3drFaceList Sd3dModel::faceListHolesXY(const Sd3drFace &srcFace, const Sd3drFaceList &holeList)
+Sd3drFaceList Sd3drModel::faceListHolesXY(const Sd3drFace &srcFace, const Sd3drFaceList &holeList)
   {
   Sd3drFaceList faceList;
-  Sd3dPointLinkList pointPool;
-  QList<Sd3dPointLinkPtr> srcList;
-  QList<Sd3dPointLinkPtr> srcHole;
+  Sd3drPointLinkList pointPool;
+  QList<Sd3drPointLinkPtr> srcList;
+  QList<Sd3drPointLinkPtr> srcHole;
   srcList.append( pointPool.addRegion( this, srcFace, true ) );
   for( auto const &hole : holeList )
     srcHole.append( pointPool.addRegion( this, hole, false ) );
   for( int faceIndex = 0; faceIndex < srcList.count(); faceIndex++ ) {
-    Sd3dPointLinkPtr face = srcList.at(faceIndex);
+    Sd3drPointLinkPtr face = srcList.at(faceIndex);
     while( !face->isTriangle() ) {
       face = face->lessLeft();
       SdTriangle t;
@@ -668,8 +606,8 @@ Sd3drFaceList Sd3dModel::faceListHolesXY(const Sd3drFace &srcFace, const Sd3drFa
       t.prepare();
 
       //Test all remain points of region and holes
-      Sd3dPointLinkPtr inner = nullptr;
-      for( Sd3dPointLinkPtr ptr = face->mNext->mNext; ptr != face->mPrev; ptr = ptr->mNext ) {
+      Sd3drPointLinkPtr inner = nullptr;
+      for( Sd3drPointLinkPtr ptr = face->mNext->mNext; ptr != face->mPrev; ptr = ptr->mNext ) {
         if( t.isPointInside( ptr->mPoint ) ) {
           if( inner == nullptr || ptr->isLeft( inner ) )
             inner = ptr;
@@ -679,8 +617,8 @@ Sd3drFaceList Sd3dModel::faceListHolesXY(const Sd3drFace &srcFace, const Sd3drFa
       int usedHole = -1;
       for( int holeIndex = 0; holeIndex < srcHole.count(); holeIndex++ ) {
         //Test one hole
-        Sd3dPointLinkPtr hole = srcHole.at(holeIndex);
-        Sd3dPointLinkPtr ptr = hole;
+        Sd3drPointLinkPtr hole = srcHole.at(holeIndex);
+        Sd3drPointLinkPtr ptr = hole;
         do {
           if( t.isPointInside( ptr->mPoint ) ) {
             if( inner == nullptr || ptr->isLeft( inner ) ) {
@@ -724,7 +662,7 @@ Sd3drFaceList Sd3dModel::faceListHolesXY(const Sd3drFace &srcFace, const Sd3drFa
 //! \param close          If true then append wall with n-1 and 0 index vertex
 //! \return               List of walls
 //!
-Sd3drFaceList Sd3dModel::faceListWall(const Sd3drFace &face1, const Sd3drFace &face2, bool close)
+Sd3drFaceList Sd3drModel::faceListWall(const Sd3drFace &face1, const Sd3drFace &face2, bool close)
   {
   Sd3drFaceList walls;
   if( face1.count() != face2.count() || face1.count() < 2 )
@@ -746,7 +684,7 @@ Sd3drFaceList Sd3dModel::faceListWall(const Sd3drFace &face1, const Sd3drFace &f
 
 
 
-Sd3drFaceList Sd3dModel::faceListWallList(const Sd3drFaceList &faceList1, const Sd3drFaceList &faceList2, bool close)
+Sd3drFaceList Sd3drModel::faceListWallList(const Sd3drFaceList &faceList1, const Sd3drFaceList &faceList2, bool close)
   {
   Sd3drFaceList walls;
   if( faceList1.count() != faceList2.count() )
@@ -761,7 +699,7 @@ Sd3drFaceList Sd3dModel::faceListWallList(const Sd3drFaceList &faceList1, const 
 
 
 
-Sd3drFaceList Sd3dModel::faceListWallIndexed(const Sd3drFace &face1, const Sd3drFace &face2, const QList<float> &indexes)
+Sd3drFaceList Sd3drModel::faceListWallIndexed(const Sd3drFace &face1, const Sd3drFace &face2, const QList<float> &indexes)
   {
   Sd3drFaceList walls;
 
@@ -779,7 +717,7 @@ Sd3drFaceList Sd3dModel::faceListWallIndexed(const Sd3drFace &face1, const Sd3dr
 
 
 
-Sd3drFaceList Sd3dModel::faceListIndexed(const Sd3drFaceList &faceList, const QList<float> &indexes)
+Sd3drFaceList Sd3drModel::faceListIndexed(const Sd3drFaceList &faceList, const QList<float> &indexes)
   {
   Sd3drFaceList walls;
 
@@ -799,7 +737,7 @@ Sd3drFaceList Sd3dModel::faceListIndexed(const Sd3drFaceList &faceList, const QL
 
 
 
-QList<float> Sd3dModel::afloatArc(float radius, float angleStart, float angleStop, int sideCount )
+QList<float> Sd3drModel::afloatArc(float radius, float angleStart, float angleStop, int sideCount )
   {
   QList<float> list;
   if( sideCount < 2 ) sideCount = 2;
@@ -833,7 +771,7 @@ QList<float> Sd3dModel::afloatArc(float radius, float angleStart, float angleSto
 //! \param map             Direction of extruding
 //! \return                Solid model: floor, roof and walls
 //!
-Sd3drFaceList Sd3dModel::faceListExtrude(const Sd3drFace &face, const QMatrix4x4 &map)
+Sd3drFaceList Sd3drModel::faceListExtrude(const Sd3drFace &face, const QMatrix4x4 &map)
   {
   Sd3drFaceList faceList;
   //Append bottom
@@ -863,7 +801,7 @@ Sd3drFaceList Sd3dModel::faceListExtrude(const Sd3drFace &face, const QMatrix4x4
 //! \param shift                Shift amount of extrude
 //! \return                     Solid model extruded from region in the direction of the normal vector
 //!
-Sd3drFaceList Sd3dModel::faceListExtrudeShift(const Sd3drFace &face, float shift)
+Sd3drFaceList Sd3drModel::faceListExtrudeShift(const Sd3drFace &face, float shift)
   {
   return faceListExtrude( face, matrixShift( face, shift )   );
   }
@@ -880,7 +818,7 @@ Sd3drFaceList Sd3dModel::faceListExtrudeShift(const Sd3drFace &face, float shift
 //! \param verticalHeight       Vertical walls height of body for pin placing
 //! \return                     Model of beveled body of part
 //!
-Sd3drFaceList Sd3dModel::faceListBodyBeveled(float bodyLenght, float bodyWidth, float bodyHeight, float bevelFront, float bevelSide, float verticalHeight )
+Sd3drFaceList Sd3drModel::faceListBodyBeveled(float bodyLenght, float bodyWidth, float bodyHeight, float bevelFront, float bevelSide, float verticalHeight )
   {
   //Bottom rectangle
   Sd3drFace bottom = faceRectangle( bodyLenght, bodyWidth, QMatrix4x4() );
@@ -915,7 +853,7 @@ Sd3drFaceList Sd3dModel::faceListBodyBeveled(float bodyLenght, float bodyWidth, 
 //! \param map          Mapping matrix for box
 //! \return             Box model
 //!
-Sd3drFaceList Sd3dModel::faceListBox(float lenght, float width, float height, const QMatrix4x4 &map )
+Sd3drFaceList Sd3drModel::faceListBox(float lenght, float width, float height, const QMatrix4x4 &map )
   {
   return faceListExtrudeShift( faceRectangle( lenght, width, map ), height );
   }
@@ -928,7 +866,7 @@ Sd3drFaceList Sd3dModel::faceListBox(float lenght, float width, float height, co
 //! \param height            Height of cylinder
 //! \return                  Cylinder model
 //!
-Sd3drFaceList Sd3dModel::faceListCylinder(float radius, float height, const QMatrix4x4 &map)
+Sd3drFaceList Sd3drModel::faceListCylinder(float radius, float height, const QMatrix4x4 &map)
   {
   return faceListExtrudeShift( faceCircleSide( radius, qMax( 20, static_cast<int>(radius * 6.28) ), map ), height );
   }
@@ -944,7 +882,7 @@ Sd3drFaceList Sd3dModel::faceListCylinder(float radius, float height, const QMat
 //! \param color            Color of faces of model
 //! \return                 Model of hexagonal box body of part
 //!
-Sd3drFaceList Sd3dModel::faceListHexagon(float lenght, float topLenght, float height, float width)
+Sd3drFaceList Sd3drModel::faceListHexagon(float lenght, float topLenght, float height, float width)
   {
   //Profile of hexagon
   float bevelLenght = (lenght - topLenght) / 2.0;
@@ -962,7 +900,7 @@ Sd3drFaceList Sd3dModel::faceListHexagon(float lenght, float topLenght, float he
 
 
 
-Sd3drFaceList Sd3dModel::faceListCurveXZ(const Sd3drFace &face, float radius, float angleSrc, float angleDst, int sideCount, bool close )
+Sd3drFaceList Sd3drModel::faceListCurveXZ(const Sd3drFace &face, float radius, float angleSrc, float angleDst, int sideCount, bool close )
   {
   Sd3drFaceList model;
   Sd3drFace first(face);
@@ -984,7 +922,7 @@ Sd3drFaceList Sd3dModel::faceListCurveXZ(const Sd3drFace &face, float radius, fl
 
 
 
-Sd3drFaceList Sd3dModel::faceListPinCurveOne(const Sd3drFace &face, float firstLen, float middleLen, float radius, float angle, int sideCount)
+Sd3drFaceList Sd3drModel::faceListPinCurveOne(const Sd3drFace &face, float firstLen, float middleLen, float radius, float angle, int sideCount)
   {
   Sd3drFaceList pin;
   Sd3drFace faceMiddleStart = faceDuplicateShift( face, firstLen );
@@ -1000,7 +938,7 @@ Sd3drFaceList Sd3dModel::faceListPinCurveOne(const Sd3drFace &face, float firstL
 
 
 
-Sd3drFaceList Sd3dModel::faceListPinCurveTwo(const Sd3drFace &face, float firstLen, float middleLen, float lastLen, float radius, float angleFirst, float angleSecond, int sideCount)
+Sd3drFaceList Sd3drModel::faceListPinCurveTwo(const Sd3drFace &face, float firstLen, float middleLen, float lastLen, float radius, float angleFirst, float angleSecond, int sideCount)
   {
   Sd3drFaceList pin;
   Sd3drFace faceMiddleStart = faceDuplicateShift( face, firstLen );
@@ -1020,7 +958,7 @@ Sd3drFaceList Sd3dModel::faceListPinCurveTwo(const Sd3drFace &face, float firstL
 
 
 
-Sd3drFaceList Sd3dModel::faceListPinTqfp(float width, float thickness, float fullLenght, float plateLenght, float height)
+Sd3drFaceList Sd3drModel::faceListPinTqfp(float width, float thickness, float fullLenght, float plateLenght, float height)
   {
   return faceListPinCurveTwo( faceRectangle( width, thickness, QMatrix4x4()), fullLenght - plateLenght, height, plateLenght, thickness, 90, -90, 30 );
   }
@@ -1028,7 +966,7 @@ Sd3drFaceList Sd3dModel::faceListPinTqfp(float width, float thickness, float ful
 
 
 
-Sd3drFaceList Sd3dModel::faceListWallRound(const Sd3drFace &face1, const Sd3drFace &face2, float scaleX, float scaleY, float radius, float stepDegree)
+Sd3drFaceList Sd3drModel::faceListWallRound(const Sd3drFace &face1, const Sd3drFace &face2, float scaleX, float scaleY, float radius, float stepDegree)
   {
   if( stepDegree >= 90.0 )
     return faceListWall( face1, face2, true );
@@ -1063,7 +1001,7 @@ Sd3drFaceList Sd3dModel::faceListWallRound(const Sd3drFace &face1, const Sd3drFa
 
 
 
-Sd3drFaceList Sd3dModel::faceListWallBevelXY(const Sd3drFace &face1, const Sd3drFace &face2, float radius, float stepDegree)
+Sd3drFaceList Sd3drModel::faceListWallBevelXY(const Sd3drFace &face1, const Sd3drFace &face2, float radius, float stepDegree)
   {
   float sizex,sizey;
   faceSizeXY( face1, sizex, sizey );
@@ -1074,7 +1012,7 @@ Sd3drFaceList Sd3dModel::faceListWallBevelXY(const Sd3drFace &face1, const Sd3dr
 
 
 
-Sd3drFaceList Sd3dModel::faceListWallDoubleBevelXY(const Sd3drFace &face1, const Sd3drFace &face2, float radius1, float radius2, float stepDegree1, float stepDegree2, float height)
+Sd3drFaceList Sd3drModel::faceListWallDoubleBevelXY(const Sd3drFace &face1, const Sd3drFace &face2, float radius1, float radius2, float stepDegree1, float stepDegree2, float height)
   {
   Sd3drFaceList walls;
   float midHeight = height - (fabs(radius1) + fabs(radius2));
@@ -1092,7 +1030,7 @@ Sd3drFaceList Sd3dModel::faceListWallDoubleBevelXY(const Sd3drFace &face1, const
 
 
 
-Sd3drFaceList Sd3dModel::faceListRotation(const QList<float> &pairList, float angleStart, float angleStop, int sideCount, QMatrix4x4 transfer )
+Sd3drFaceList Sd3drModel::faceListRotation(const QList<float> &pairList, float angleStart, float angleStop, int sideCount, QMatrix4x4 transfer )
   {
   Sd3drFaceList faceList;
 
@@ -1152,7 +1090,7 @@ Sd3drFaceList Sd3dModel::faceListRotation(const QList<float> &pairList, float an
 //! \param close         If true then append wall with n-1 and 0 index vertex on each layer
 //! \return              List of walls
 //!
-Sd3drFaceList Sd3dModel::faceListWalls(const Sd3drFaceList &layers, bool close)
+Sd3drFaceList Sd3drModel::faceListWalls(const Sd3drFaceList &layers, bool close)
   {
   Sd3drFaceList walls;
   for( int i = 1; i < layers.count(); i++ )
@@ -1172,7 +1110,7 @@ Sd3drFaceList Sd3dModel::faceListWalls(const Sd3drFaceList &layers, bool close)
 //!             Overrided function
 //! \param js   Json writer
 //!
-void Sd3dModel::json(SdJsonWriter &js) const
+void Sd3drModel::json(SvJsonWriter3d &js) const
   {
   json3dRegion( js, QStringLiteral("Vertex"), mVertexList );
   js.jsonList( js, QStringLiteral("Instance"), mInstanceList );
@@ -1187,7 +1125,7 @@ void Sd3dModel::json(SdJsonWriter &js) const
 //!             Overrided function
 //! \param js   Json reader
 //!
-void Sd3dModel::json(const SdJsonReader &js)
+void Sd3drModel::json(const SvJsonReader3d &js)
   {
   json3dRegion( js, QStringLiteral("Vertex"), mVertexList );
   js.jsonList( js, QStringLiteral("Instance"), mInstanceList );
@@ -1196,22 +1134,12 @@ void Sd3dModel::json(const SdJsonReader &js)
 
 
 
-void Sd3dModel::draw3d(QOpenGLFunctions_2_0 *f) const
+void Sd3drModel::draw3d(QOpenGLFunctions_2_0 *f) const
   {
   for( auto const &instance : mInstanceList )
     instance.draw( f, mVertexList );
   }
 
-
-
-void Sd3dModel::build(const QString &script)
-  {
-  clear();
-  SdScriptParser3d parser( nullptr, this );
-  auto prog = parser.parse3d( script, nullptr, this );
-  if( parser.error().isEmpty() )
-    prog->execute();
-  }
 
 
 
@@ -1220,7 +1148,7 @@ void Sd3dModel::build(const QString &script)
 //! \brief volumeAdd Append volume of model to result volume
 //! \param volume    Source and result volume
 //!
-void Sd3dModel::volumeAdd(QMatrix2x3 &volume) const
+void Sd3drModel::volumeAdd(QMatrix2x3 &volume) const
   {
   for( auto const &inst : qAsConst(mInstanceList) ) {
     inst.volumeAdd( volume, mVertexList );
@@ -1228,42 +1156,8 @@ void Sd3dModel::volumeAdd(QMatrix2x3 &volume) const
   }
 
 
-int Sd3dModel::lessLeft(const Sd3drFace &face) const
-  {
-  //Scan region and find most less point
-  int less = 0;
-  QPointF p = point(face.at(0));
-  for( int i = 1; i < face.count(); i++ ) {
-    QPointF v = point( face.at(i) );
-    if( isLeft( v, p ) ) {
-      p = v;
-      less = i;
-      }
-    }
-  return less;
-  }
 
-bool Sd3dModel::isLeft(QPointF p1, QPointF p2) const
-  {
-  return p1.x() < p2.x() || ((p1.x() == p2.x()) && (p1.y() < p2.y()));
-  }
-
-
-int Sd3dModel::next(int center, const Sd3drFace &face) const
-  {
-  if( center + 1 < face.count() )
-    return center + 1;
-  return 0;
-  }
-
-int Sd3dModel::prev(int center, const Sd3drFace &face) const
-  {
-  if( center > 0 )
-    return center - 1;
-  return face.count() - 1;
-  }
-
-void Sd3dModel::faceSizeXY(const Sd3drFace &face, float &sizex, float &sizey) const
+void Sd3drModel::faceSizeXY(const Sd3drFace &face, float &sizex, float &sizey) const
   {
   QPointF p = point( face.at(0) );
   float minX = p.x();

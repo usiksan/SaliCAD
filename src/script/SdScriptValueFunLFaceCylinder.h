@@ -23,9 +23,9 @@ Description
 
 class SdScriptValueFunLFaceCylinder : public SdScriptValueFunction
   {
-    Sd3dModel *mModel;
+    Sd3drModel *mModel;
   public:
-    SdScriptValueFunLFaceCylinder( Sd3dModel *model ) :
+    SdScriptValueFunLFaceCylinder( Sd3drModel *model ) :
       SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT ),
       mModel(model)
       {

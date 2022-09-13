@@ -186,7 +186,7 @@ void SdGraphLinearCircle::draw3d(QOpenGLFunctions_2_0 *f) const
 //! \param stratum    Stratum for layers
 //! \param map        Map for holes conversion
 //!
-void SdGraphLinearCircle::accumHoles(Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+void SdGraphLinearCircle::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
   {
   Q_UNUSED(stratum)
   QMatrix4x4 mat(map);

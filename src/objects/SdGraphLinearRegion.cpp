@@ -190,7 +190,7 @@ void SdGraphLinearRegion::draw(SdContext *dc)
 //! \param stratum    Stratum for layers
 //! \param map        Map for holes conversion
 //!
-void SdGraphLinearRegion::accumHoles(Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+void SdGraphLinearRegion::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
   {
   Q_UNUSED(stratum)
   Sd3drFace face;

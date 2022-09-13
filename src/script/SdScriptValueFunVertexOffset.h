@@ -23,9 +23,9 @@ Description
 
 class SdScriptValueFunVertexOffset : public SdScriptValueFunction
   {
-    Sd3dModel *mModel;
+    Sd3drModel *mModel;
   public:
-    SdScriptValueFunVertexOffset( Sd3dModel *model ) :
+    SdScriptValueFunVertexOffset( Sd3drModel *model ) :
       SdScriptValueFunction( SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_VERTEX, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT ),
       mModel(model)
       {

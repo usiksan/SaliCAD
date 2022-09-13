@@ -17,8 +17,8 @@ Description
 #ifndef SDSCRIPTTYPES_H
 #define SDSCRIPTTYPES_H
 
-#include "objects/Sd3dRegion.h"
-#include "objects/Sd3dModel.h"
+#include "3dr/Sd3drRegion.h"
+#include "3dr/Sd3drModel.h"
 
 #include <QString>
 #include <QVector3D>

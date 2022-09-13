@@ -29,7 +29,7 @@ class SdScriptValueFunModelBuild : public SdScriptValueFunction
     //!
     virtual Sd3drInstance toModel() const override {
       Sd3drBody body;
-      Sd3dMaterial color( mParamList[0]->toColor(), mParamList[1]->toColor(), mParamList[2]->toColor() );
+      Sd3drMaterial color( mParamList[0]->toColor(), mParamList[1]->toColor(), mParamList[2]->toColor() );
       body.colorListSet( color );
       body.faceAppend( mParamList[3]->toFaceList() );
       Sd3drInstance inst;

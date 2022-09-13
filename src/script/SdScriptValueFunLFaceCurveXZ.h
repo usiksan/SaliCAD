@@ -23,9 +23,9 @@ Description
 
 class SdScriptValueFunLFaceCurveXZ : public SdScriptValueFunction
   {
-    Sd3dModel *mModel;
+    Sd3drModel *mModel;
   public:
-    SdScriptValueFunLFaceCurveXZ( Sd3dModel *model ) :
+    SdScriptValueFunLFaceCurveXZ( Sd3drModel *model ) :
       //                                                Sd3drFace &face,       float radius,         float angleSrc,       float angleDst,        int sideCount,         bool close
       SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_BOOL ),
       mModel(model)

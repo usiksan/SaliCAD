@@ -80,7 +80,7 @@ Sd3dGraphModel *Sd3dReaderStl::importStlFromFile(QString fname)
   QFile file(fname);
 
   if( file.open( QIODevice::ReadOnly ) ) {
-    Sd3dModel model;
+    Sd3drModel model;
     Sd3drFaceList faceList;
     Sd3drInstance inst;
     inst.addCopy( QMatrix4x4() );

@@ -49,9 +49,9 @@ void VrmlNodeMaterial::set(VrmlColor ambient, VrmlColor diffuse, VrmlColor emiss
 
 
 
-Sd3dMaterial VrmlNodeMaterial::to3dMaterial() const
+Sd3drMaterial VrmlNodeMaterial::to3dMaterial() const
   {
-  Sd3dMaterial mat;
+  Sd3drMaterial mat;
   mat.mAmbient   = mDiffuseColor.toColor( mAmbientIntensity );
   mat.mDiffuse   = mDiffuseColor.toColor();
   mat.mEmissive  = mEmissiveColor.toColor();

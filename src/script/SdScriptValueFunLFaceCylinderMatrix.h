@@ -23,9 +23,9 @@ Description
 
 class SdScriptValueFunLFaceCylinderMatrix : public SdScriptValueFunction
   {
-    Sd3dModel *mModel;
+    Sd3drModel *mModel;
   public:
-    SdScriptValueFunLFaceCylinderMatrix( Sd3dModel *model ) :
+    SdScriptValueFunLFaceCylinderMatrix( Sd3drModel *model ) :
       SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_MATRIX ),
       mModel(model)
       {

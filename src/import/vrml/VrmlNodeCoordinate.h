@@ -16,7 +16,7 @@ class VrmlNodeCoordinate : public VrmlNode
 
     int               modelIndex( int index ) const { return mIndexConvertor.at(index); }
 
-    virtual void      generateFaces( Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body ) const override;
+    virtual void      generateFaces( Sd3drModel *model, Sd3drInstance &instance, Sd3drBody &body ) const override;
 
     // VrmlNode interface
   public:

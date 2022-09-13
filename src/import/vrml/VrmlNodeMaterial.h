@@ -4,7 +4,7 @@
 #include "VrmlTypes.h"
 #include "VrmlColor.h"
 #include "VrmlNode.h"
-#include "objects/Sd3dMaterial.h"
+#include "3dr/Sd3drMaterial.h"
 
 class VrmlNodeMaterial : public VrmlNode
   {
@@ -27,7 +27,7 @@ class VrmlNodeMaterial : public VrmlNode
 
     void  set( VrmlColor ambient, VrmlColor diffuse, VrmlColor emissive, VrmlColor specular, float shininnes, float transparency );
 
-    Sd3dMaterial to3dMaterial() const;
+    Sd3drMaterial to3dMaterial() const;
 
     // VrmlNode interface
   public:

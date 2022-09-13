@@ -13,7 +13,7 @@ Description
   Body is list of faces with material of all its faces.
 */
 #include "Sd3drInstance.h"
-#include "SdJsonIO.h"
+
 
 Sd3drInstance::Sd3drInstance()
   {
@@ -40,7 +40,7 @@ void Sd3drInstance::bodyColorSet(const Sd3ColorList &src, int &index)
 
 
 
-void Sd3drInstance::draw(QOpenGLFunctions_2_0 *f, const Sd3dRegion &vertexList) const
+void Sd3drInstance::draw(QOpenGLFunctions_2_0 *f, const Sd3drRegion &vertexList) const
   {
   for( auto const &map : qAsConst( mCopyList ) ) {
     for( auto const &body : qAsConst( mBodyList ) )
@@ -48,13 +48,13 @@ void Sd3drInstance::draw(QOpenGLFunctions_2_0 *f, const Sd3dRegion &vertexList) 
     }
   }
 
-void Sd3drInstance::json(SdJsonWriter &js) const
+void Sd3drInstance::json(SvJsonWriter3d &js) const
   {
   js.jsonList( js, QStringLiteral("Bodies"), mBodyList );
   js.jsonListMatrix4x4( QStringLiteral("Copies"), mCopyList );
   }
 
-void Sd3drInstance::json(const SdJsonReader &js)
+void Sd3drInstance::json(const SvJsonReader3d &js)
   {
   js.jsonList( js, QStringLiteral("Bodies"), mBodyList );
   js.jsonListMatrix4x4( QStringLiteral("Copies"), mCopyList );
@@ -67,7 +67,7 @@ void Sd3drInstance::json(const SdJsonReader &js)
 //! \param volume     Source and result volume
 //! \param vertexList Vertex list on which referenced bodies
 //!
-void Sd3drInstance::volumeAdd(QMatrix2x3 &volume, const Sd3dRegion &vertexList) const
+void Sd3drInstance::volumeAdd(QMatrix2x3 &volume, const Sd3drRegion &vertexList) const
   {
   for( auto const &map : qAsConst( mCopyList ) ) {
     for( auto const &body : qAsConst( mBodyList ) )

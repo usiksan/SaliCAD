@@ -59,17 +59,4 @@ void json3dPointList( SvJsonWriter &js, const QString &key, const Sd3dPointList 
 void json3dPointList( const SvJsonReader &js, const QString &key, Sd3dPointList &list );
 
 
-inline double intMcmToFloatMm( int mcm )
-  {
-  //Convert to double
-  double d = mcm;
-  //Convert mcm to meter
-  return d / 1000.0;
-  }
-
-inline int floatMmToIntMcm( float mm )
-  {
-  return mm * 1000.0;
-  }
-
 #endif // SDPOINT3D_H

@@ -23,9 +23,9 @@ Description
 
 class SdScriptValueFunLFaceHexagon : public SdScriptValueFunction
   {
-    Sd3dModel *mModel;
+    Sd3drModel *mModel;
   public:
-    SdScriptValueFunLFaceHexagon( Sd3dModel *model ) :
+    SdScriptValueFunLFaceHexagon( Sd3drModel *model ) :
       //                                                  lenght                topLenght             height                width
       SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT ),
       mModel(model)

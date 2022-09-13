@@ -23,9 +23,9 @@ Description
 
 class SdScriptValueFunFaceDuplicate : public SdScriptValueFunction
   {
-    Sd3dModel *mModel;
+    Sd3drModel *mModel;
   public:
-    SdScriptValueFunFaceDuplicate( Sd3dModel *model ) : SdScriptValueFunction( SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_MATRIX ), mModel(model) { }
+    SdScriptValueFunFaceDuplicate( Sd3drModel *model ) : SdScriptValueFunction( SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_FACE, SD_SCRIPT_TYPE_MATRIX ), mModel(model) { }
 
     // SdM3dValue interface
   public:

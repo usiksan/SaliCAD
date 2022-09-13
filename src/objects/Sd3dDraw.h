@@ -16,7 +16,6 @@ Description
 
 #include "SdPointList.h"
 #include "SdRect.h"
-#include "Sd3dModel.h"
 
 #include <QOpenGLFunctions_2_0>
 
@@ -83,13 +82,6 @@ class Sd3dDraw
     //!
     static void colorToFloat(QColor col, float *fcolor );
 
-
-    //!
-    //! \brief drawModel Draw model in 3d world
-    //! \param f         OpenGL
-    //! \param model     Model to draw
-    //!
-    static void drawModel( QOpenGLFunctions_2_0 *f, const Sd3dModel &model );
   };
 
 #endif // SD3DDRAW_H

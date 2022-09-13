@@ -1,7 +1,7 @@
 #include "VrmlNodeCoordinate.h"
 #include "SdScanerVrml.h"
 
-#include "objects/Sd3dModel.h"
+#include "3dr/Sd3drModel.h"
 
 VrmlNodeCoordinate::VrmlNodeCoordinate() :
   VrmlNode()
@@ -12,7 +12,7 @@ VrmlNodeCoordinate::VrmlNodeCoordinate() :
 
 
 
-void VrmlNodeCoordinate::generateFaces(Sd3dModel *model, Sd3drInstance &instance, Sd3drBody &body) const
+void VrmlNodeCoordinate::generateFaces(Sd3drModel *model, Sd3drInstance &instance, Sd3drBody &body) const
   {
   Q_UNUSED(instance)
   Q_UNUSED(body)

@@ -23,9 +23,9 @@ Description
 
 class SdScriptValueFunLFaceRotation : public SdScriptValueFunction
   {
-    Sd3dModel *mModel;
+    Sd3drModel *mModel;
   public:
-    SdScriptValueFunLFaceRotation( Sd3dModel *model ) :
+    SdScriptValueFunLFaceRotation( Sd3drModel *model ) :
       SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_MATRIX, SD_SCRIPT_TYPE_AFLOAT ),
       mModel(model)
       {

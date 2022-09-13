@@ -23,9 +23,9 @@ Description
 
 class SdScriptValueFunModelPinTqfp : public SdScriptValueFunction
   {
-    Sd3dModel *mModel;
+    Sd3drModel *mModel;
   public:
-    SdScriptValueFunModelPinTqfp( Sd3dModel *model ) :
+    SdScriptValueFunModelPinTqfp( Sd3drModel *model ) :
       SdScriptValueFunction( SD_SCRIPT_TYPE_FACE_LIST, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT, SD_SCRIPT_TYPE_FLOAT ),
       mModel(model)
       {

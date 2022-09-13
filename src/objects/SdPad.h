@@ -17,7 +17,7 @@ Description
 #include "SdStratum.h"
 #include "SdPoint.h"
 #include "SdPolyWindowList.h"
-#include "Sd3dModel.h"
+#include "3dr/Sd3drModel.h"
 
 #include <QJsonObject>
 #include <QPolygonF>
@@ -44,7 +44,7 @@ class SdPad
     qint32    mSlotAngle;        //Angle for slot. 0 degree is horizontal hole
     //Not saved. Circle determine by mHeight = 0.
     bool      mIsCircle;
-    Sd3dModel mModel;
+    Sd3drModel mModel;
   public:
     SdPad();
 
@@ -71,7 +71,7 @@ class SdPad
     //! \param stratum        Stratum for layers
     //! \param map            Map for holes conversion
     //!
-    void        appendPadHoles( SdPoint p, Sd3dModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const;
+    void        appendPadHoles( SdPoint p, Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const;
 
     //Return over pad circle radius
     int         overCircleRadius() const;

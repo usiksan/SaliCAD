@@ -1,13 +1,14 @@
 #include "Sd3dGraphModel.h"
 #include "Sd3dDraw.h"
 #include "SdJsonIO.h"
+#include "script/SdScriptParser3d.h"
 
 Sd3dGraphModel::Sd3dGraphModel()
   {
 
   }
 
-Sd3dGraphModel::Sd3dGraphModel(const Sd3dModel &model) :
+Sd3dGraphModel::Sd3dGraphModel(const Sd3drModel &model) :
   mModel(model)
   {
 
@@ -20,7 +21,7 @@ void Sd3dGraphModel::scriptSet(const QString script, SdUndo *undo)
   if( undo )
     undo->script( &mModelScript, &mModel );
   mModelScript = script;
-  mModel.build( mModelScript );
+  buildModel( mModelScript );
   }
 
 
@@ -96,7 +97,7 @@ void Sd3dGraphModel::json(const SdJsonReader &js)
   if( js.contains(QStringLiteral("Script")) ) {
     //Script present, we read it and build model
     js.jsonString( QStringLiteral("Script"), mModelScript );
-    mModel.build( mModelScript );
+    buildModel( mModelScript );
     }
   else
     //Script not present, we read model
@@ -123,6 +124,18 @@ void Sd3dGraphModel::draw3d(QOpenGLFunctions_2_0 *f) const
   f->glMultMatrixf( mTransform.constData() );
   mModel.draw3d( f );
   f->glPopMatrix();
+  }
+
+
+
+
+void Sd3dGraphModel::buildModel(const QString &script)
+  {
+  mModel.clear();
+  SdScriptParser3d parser( nullptr, &mModel );
+  auto prog = parser.parse3d( script, nullptr, &mModel );
+  if( parser.error().isEmpty() )
+    prog->execute();
   }
 
 

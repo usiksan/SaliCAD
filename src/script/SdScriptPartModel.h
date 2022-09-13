@@ -24,9 +24,9 @@ class Sd3dGraphModel;
 
 class SdScriptPartModel : public SdScriptValueVariable
   {
-    Sd3dModel *mModel; //!< Model which accumulate all faces
+    Sd3drModel *mModel; //!< Model which accumulate all faces
   public:
-    SdScriptPartModel( Sd3dModel *model );
+    SdScriptPartModel( Sd3drModel *model );
 
     // SdM3dValue interface
   public:

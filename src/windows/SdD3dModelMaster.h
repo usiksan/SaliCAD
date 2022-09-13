@@ -34,7 +34,7 @@ class SdD3dModelMaster : public QDialog
     SdScriptProgrammPtr            mProgramm;     //!< Compiled 3d model programm
     QTableWidget                  *mParamWidget;  //!< Table with 3d model parameters
     SdWView3d                     *mPreview;      //!< 3d model preview
-    Sd3dModel                      mModel;        //!< Prebuilded model
+    Sd3drModel                      mModel;        //!< Prebuilded model
     QString                        mSourceScript; //!< Source script
     bool                           mActive;       //!< Flag to preserve of recursing call
   public:

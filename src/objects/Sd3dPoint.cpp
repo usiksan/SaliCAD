@@ -1,4 +1,5 @@
 #include "Sd3dPoint.h"
+#include "3dr/Sd3drRegion.h"
 
 #include <QJsonArray>
 

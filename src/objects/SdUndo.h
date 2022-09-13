@@ -55,7 +55,7 @@ typedef QMap<QString,SdSymImpPin> SdSymImpPinTable;
 struct SdPartImpPin;
 typedef QMap<QString,SdPartImpPin> SdPartImpPinTable;
 struct SdPropPolygon;
-class Sd3dModel;
+class Sd3drModel;
 
 class SdUndo
   {
@@ -127,7 +127,7 @@ class SdUndo
     //! \param modelScript Changed script
     //! \param model       3d model
     //!
-    void script( QString *modelScript, Sd3dModel *model );
+    void script( QString *modelScript, Sd3drModel *model );
 
     //do undo and redo
     void undoStep();

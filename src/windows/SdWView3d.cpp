@@ -370,7 +370,7 @@ void SdWView3d::paintGL()
 
 
   //Material used for draw 2d graphics and axis
-  Sd3dMaterial axisMaterial;
+  Sd3drMaterial axisMaterial;
 
   //Axis
   axisMaterial.mDiffuse = QColor( 255, 255, 0 );
