@@ -18,6 +18,21 @@ Sd3dPointLink *Sd3dPointLinkList::alloc()
 
 Sd3dPointLink *Sd3dPointLinkList::addRegion(Sd3dModel *model, const Sd3drFace &face, bool hole)
   {
+  if( face.count() == 0 )
+    return nullptr;
+
+  //Detect region direction
+  double dir = 0;
+  QPointF prev = model->point( face.at(face.count() - 1) );
+  for( int i = 0; i < face.count(); i++ ) {
+    auto p = model->point( face.at(i) );
+    dir += (p.x() - prev.x()) * (p.y() + prev.y());
+    prev = p;
+    }
+  //If wrong direction we revert it
+  if( dir >= 0 )
+    hole = !hole;
+
   Sd3dPointLink *region = nullptr;
   //int count = face.count() - 1;
   for( int i = 0; i < face.count(); i++ ) {

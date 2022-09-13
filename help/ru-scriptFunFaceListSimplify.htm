@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListSimplify</title>
+  </head>
+  <body>
+    <h1 align="center">faceListSimplify</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceListSimplify</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListSimplify( <a href="scriptTypeFace.htm">Face</a>
+      src ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция разделяет исходную поверхность на плоскости XY на набор
+      треугольников, т.е. выполняет триангуляцию. Эта операция обязательно
+      требуется когда исходная поверхность невыпуклая, в противном случае она
+      неверно отображается.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>src - исходная поверхность</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        c1 = faceFlatMatrix( [ 0,0, 0,1, 1,0, 0,1, 1,0, 0,-1, 1,0, 0,-1],
+        matrix1 )<br>
+        <br>
+        c2 = faceListSimplify( c1 )<br>
+        <br>
+        partModel = model( color1, color1, color1, c2, matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceListSimplify.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

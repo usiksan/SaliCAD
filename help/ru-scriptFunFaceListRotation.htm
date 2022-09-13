@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListRotation</title>
+  </head>
+  <body>
+    <h1 align="center">faceListRotation</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceListRotation</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListRotation( <a href="scriptTypeFloat.htm">Float</a>
+      angleStart, <a href="scriptTypeFloat.htm">Float</a> angleStop, <a href="scriptTypeFloat.htm">Float</a>
+      sideCount, <a href="scriptTypeMatrix.htm">Matrix</a> translate, <a href="scriptTypeFloatList.htm">FloatList</a>
+      profilePairs ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит набор повернутых профилей на базе исходного профиля.
+      Данная функция вместе с <a href="scriptFunFaceListWalls.htm">faceListWalls</a>
+      служит для построения поверхностей вращения. Исходный профиль строится на
+      плоскости XZ. Затем формируется набор точек поворота путем
+      последовательного поворота исходного профиля вокруг оси OZ на угол, равный
+      шагу угла (разница начального и конечного углов деленная на количество
+      сторон). Результирующий набор точек преобразуется с помощью матрицы.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>angleStart - начальный угол профиля</li>
+      <li>angleStop - конечный угол профиля</li>
+      <li>sideCount - количество сторон аппроксимации поворота</li>
+      <li>translate - матрица результирующего преобразования</li>
+      <li>profilePairs - набор пар значений, которые определяют вершины
+        исходного профиля. Каждая пара представляет собой смещение вершины
+        относительно предыдущей вершины</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        pin = faceListRotation( 0, 80, 20, matrix1, [ 0.5,0, 0.5,0, 0,1, -0.5,0
+        ] )<br>
+        <br>
+        pin = <a href="scriptFunFaceListWalls.htm">faceListWalls</a>( pin,
+        false )<br>
+        <br>
+        partModel = model( color1, color1, color1, pin, matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceListRotation.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

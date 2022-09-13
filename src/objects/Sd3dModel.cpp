@@ -654,9 +654,9 @@ Sd3drFaceList Sd3dModel::faceListHolesXY(const Sd3drFace &srcFace, const Sd3drFa
   Sd3dPointLinkList pointPool;
   QList<Sd3dPointLinkPtr> srcList;
   QList<Sd3dPointLinkPtr> srcHole;
-  srcList.append( pointPool.addRegion( this, srcFace, false ) );
+  srcList.append( pointPool.addRegion( this, srcFace, true ) );
   for( auto const &hole : holeList )
-    srcHole.append( pointPool.addRegion( this, hole, true ) );
+    srcHole.append( pointPool.addRegion( this, hole, false ) );
   for( int faceIndex = 0; faceIndex < srcList.count(); faceIndex++ ) {
     Sd3dPointLinkPtr face = srcList.at(faceIndex);
     while( !face->isTriangle() ) {
