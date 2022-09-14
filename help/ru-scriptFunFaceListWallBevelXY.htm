@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListWallBevelXY</title>
+  </head>
+  <body>
+    <h1 align="center">faceListWallBevelXY</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceListWallBevelXY</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListWallBevelXY( <a href="scriptTypeFace.htm">Face</a>
+      src, <a href="scriptTypeFace.htm">Face</a> dst, <a href="scriptTypeFloat.htm">Float</a>
+      radius, <a href="scriptTypeFloat.htm">Float</a> angleStep ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит стены фаски между поверхностями src и dst. Количество
+      точек в исходных поверхностях должно быть одинаковым. Поверхность dst
+      рекомендуется получать с помощью функции <a href="scriptFunFaceBevelXY.htm">faceBevelXY</a>.
+      Различные комбинации знака в параметрах <a href="scriptFunFaceBevelXY.htm">faceBevelXY</a>
+      и faceListWallBevelXY позволяют получить различные формы фаски.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>src - исходная поверхность</li>
+      <li>dst - целевая поверхность, полученная с помощью функции <a href="scriptFunFaceBevelXY.htm">faceBevelXY</a></li>
+      <li>radius - радиус фаски</li>
+      <li>angleStep - размер шага угла для аппроксимации кривой поверхности
+        фаски</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        c1 = faceCircleSide( 3, 56, matrix1 )<br>
+        c2 = faceBevelXY( c1, 1 )<br>
+        <br>
+        h1 = faceListWallBevelXY( c1, c2, 1, 2 )<br>
+        <br>
+        partModel = model( color1, color1, color1, h1, matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceListBevelXY.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

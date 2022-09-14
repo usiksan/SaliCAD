@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListWallDoubleBevelXY</title>
+  </head>
+  <body>
+    <h1 align="center">faceListWallDoubleBevelXY</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceListWallDoubleBevelXY</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListWallDoubleBevelXY(
+      <a href="scriptTypeFace.htm">Face</a> src, <a href="scriptTypeFace.htm">Face</a>
+      dst, <a href="scriptTypeFloat.htm">Float</a> radiusBot, <a href="scriptTypeFloat.htm">Float</a>
+      radiusTop, <a href="scriptTypeFloat.htm">Float</a> angleStepBot, <a href="scriptTypeFloat.htm">Float</a>
+      angleStepTop, <a href="scriptTypeFloat.htm">Float</a> height ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит стены дву фаски, снизу и сверху, между поверхностями
+      src и dst. Количество точек в исходных поверхностях должно быть
+      одинаковым.&nbsp; Различные комбинации знака в параметрах
+      faceListWallDoubleBevelXY позволяют получить различные формы фасок.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>src - исходная поверхность</li>
+      <li>dst - целевая поверхность, полученная<span style="color: #0000ee;"></span></li>
+      <li>radiusBot - радиус фаски снизу</li>
+      <li>radiusTop - радиус фаски сверху</li>
+      <li>angleStepBot - размер шага угла для аппроксимации кривой поверхности
+        фаски снизу</li>
+      <li>angleStepTop - размер шага угла для аппроксимации кривой поверхности
+        фаски сверху</li>
+      <li>height - высота между нижней и верхней фасками (внешний размер)</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        c1 = faceCircleSide( 3, 56, matrix1 )<br>
+        c2 = faceDuplicateShift( c1, 2 )<br>
+        <br>
+        h1 = faceListWallDoubleBevelXY( c1, c2, 1, -1, -10, 10, 2 )<br>
+        <br>
+        partModel = model( color1, color1, color1, h1, matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceListWallDoubleBevelXY.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
