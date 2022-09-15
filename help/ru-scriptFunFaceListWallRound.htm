@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListWallRound</title>
+  </head>
+  <body>
+    <h1 align="center">faceListWallRound</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceListWallRound</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListWallRound( <a href="scriptTypeFace.htm">Face</a>
+      src, <a href="scriptTypeFace.htm">Face</a> dst, <a href="scriptTypeFloat.htm">Float</a>
+      scaleX, <a href="scriptTypeFloat.htm">Float</a> scaleY, <a href="scriptTypeFloat.htm">Float</a>
+      radius, <a href="scriptTypeFloat.htm">Float</a> stepDegree ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит стены между поверхностями src и dst формируя
+      скругление снизу. Количество точек в исходных поверхностях должно быть
+      одинаковым. Поверхность dst обычно получается путем масштабирования
+      поверхности src с теми-же коэффициентами, что и указываются в вызове этой
+      функции. Параметр radius определяет радиус скругления, а stepDegree
+      количество градусов на шаг аппроксимации кривой поверхности.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>src - исходная поверхность (пол)</li>
+      <li>dst - целевая поверхность (потолок)</li>
+      <li>scaleX - масштабирование целевой поверхности по отношению к исходной
+        по оси X</li>
+      <li>scaleY - масштабирование целевой поверхности по отношению к исходной
+        по оси Y</li>
+      <li>radius - радиус скругления</li>
+      <li>stepDegree - количество градусов на шаг аппроксимации кривой
+        поверхности</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        c1 = faceCircleSide( 3, 6, matrix1 )<br>
+        c2 = faceDuplicate( c1, matrixTranslate( matrixScale( matrix1, 1.3, 1.3,
+        1.0), 0,0,2) )<br>
+        <br>
+        h1 = faceListWallRound( c1, c2, 1.3, 1.3, 1, -10 )<br>
+        <br>
+        partModel = model( color1, color1, color1, h1, matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceListWallRound.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

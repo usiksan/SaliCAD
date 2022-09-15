@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListWalls</title>
+  </head>
+  <body>
+    <h1 align="center">faceListWalls</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceListWalls</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListWalls( <a href="scriptTypeFaceList.htm">FaceList</a>
+      floors, <a href="scriptTypeBool.htm">Bool</a> close ) </p>
+    <h3>Описание</h3>
+    <p>Эта функция строит стены между этажами, представленными набором
+      поверхностей. Количество точек в поверхностях должно быть одинаковым.
+      Параметр close определяет, нужно ли строить стену между конечной и
+      начальной точками каждой поверхности.</p>
+    <p>Расположение этаже - произвольное, а не только горизонтальное. Поэтому с
+      помощью данной функции могут быть получены тела вращения, как показано в
+      примере.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>floors - список поверхностей этажей</li>
+      <li>close - когда true строится стена между последней и первой точками,
+        иначе - эта стена не строится и фигура получается разомкнутой</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        pin = faceListRotation( 0, 80, 20, matrix1, [ 0.5,0, 0.5,0, 0,1, -0.5,0
+        ] )<br>
+        <br>
+        pin = <a href="scriptFunFaceListWalls.htm">faceListWalls</a>( pin,
+        false )<br>
+        <br>
+        partModel = model( color1, color1, color1, pin, matrix1 )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunFaceListRotation.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
