@@ -59,5 +59,6 @@ void VrmlNodeShape::generateFaces(Sd3drModel *model, Sd3drInstance &instance, Sd
   if( mGeometry != nullptr ) {
     mGeometry->generateFaces( model, instance, body );
     instance.add( body );
+    body.clear();
     }
   }

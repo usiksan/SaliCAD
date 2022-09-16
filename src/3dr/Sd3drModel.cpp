@@ -1134,10 +1134,15 @@ void Sd3drModel::json(const SvJsonReader3d &js)
 
 
 
-void Sd3drModel::draw3d(QOpenGLFunctions_2_0 *f) const
+//!
+//! \brief draw3d Draws model in 3d space
+//! \param f      OpenGL functions
+//! \param mat    Conversion matrix for model
+//!
+void Sd3drModel::draw3d(QOpenGLFunctions_2_0 *f, QMatrix4x4 mat) const
   {
   for( auto const &instance : mInstanceList )
-    instance.draw( f, mVertexList );
+    instance.draw( f, mVertexList, mat );
   }
 
 

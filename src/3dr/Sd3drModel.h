@@ -34,8 +34,22 @@ class Sd3drModel
     //!
     void          clear();
 
+    //==============================================================================================
+    //  Vertex section - functions for model vertex manipulations
+    //
+
+    //!
+    //! \brief vertex Retrive vertex by its index
+    //! \param index  Index of vertex
+    //! \return       Vertex
+    //!
     QVector3D     vertex( int index ) const { return mVertexList.at(index); }
 
+    //!
+    //! \brief point Projection of vertex to XY face
+    //! \param index Index of vertex
+    //! \return      2d point
+    //!
     QPointF       point( int index ) const { return mVertexList.at(index).toPointF(); }
 
     Sd3drRegion   vertexList( const QList<int> &indexList ) const;
@@ -46,9 +60,17 @@ class Sd3drModel
 
 
 
+    //==============================================================================================
+    //  Matrix section - functions for matrix calculations
+    //
+
     QMatrix4x4    matrixShift( const Sd3drFace &face, float shift );
 
 
+
+    //==============================================================================================
+    //  Face section - functions for faces generation and conversion
+    //
 
     Sd3drFace     faceFromRegion( Sd3drRegion r );
 
@@ -145,6 +167,9 @@ class Sd3drModel
 
 
 
+    //==============================================================================================
+    //  Face list section - functions for face list generation and conversion
+    //
 
 
     Sd3drFaceList faceListDuplicate(const Sd3drFaceList &faceList, const QMatrix4x4 &map );
@@ -260,7 +285,15 @@ class Sd3drModel
     static QList<float>  afloatArc(float radius, float angleStart, float angleStop, int sideCount);
 
 
-    void          instanceAppend( const Sd3drInstance &inst ) { mInstanceList.append(inst); }
+    //==============================================================================================
+    //  Misc section - some service functions
+    //
+
+    //!
+    //! \brief instanceAppend Appends instance to instance list
+    //! \param inst           Instance to append
+    //!
+    void       instanceAppend( const Sd3drInstance &inst ) { mInstanceList.append(inst); }
 
 
     //!
@@ -277,7 +310,12 @@ class Sd3drModel
     //!
     void       json(const SvJsonReader3d &js );
 
-    void       draw3d(QOpenGLFunctions_2_0 *f) const;
+    //!
+    //! \brief draw3d Draws model in 3d space
+    //! \param f      OpenGL functions
+    //! \param mat    Conversion matrix for model
+    //!
+    void       draw3d(QOpenGLFunctions_2_0 *f, QMatrix4x4 mat = QMatrix4x4() ) const;
 
     //!
     //! \brief volumeAdd Append volume of model to result volume

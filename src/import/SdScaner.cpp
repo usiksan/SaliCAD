@@ -50,7 +50,8 @@ bool SdScaner::tokenNeedValue(char tokenId, QString &value, const QString errorM
   {
   if( mToken == 0 )
     return false;
-  if( mToken == tokenId ) {
+  //Append special case when integer need to be act as float
+  if( (tokenId == 'f' && mToken == 'd') || (mToken == tokenId) ) {
     value = mTokenValue;
     tokenNext();
     return true;

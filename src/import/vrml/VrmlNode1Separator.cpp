@@ -99,6 +99,7 @@ void VrmlNode1Separator::generateFaces(Sd3drModel *model, Sd3drInstance &instanc
       }
     instance.addCopy( QMatrix4x4() );
     model->instanceAppend( instance );
+    instance.clear();
     }
   }
 

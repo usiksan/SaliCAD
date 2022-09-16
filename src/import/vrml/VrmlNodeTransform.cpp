@@ -83,4 +83,5 @@ void VrmlNodeTransform::generateFaces(Sd3drModel *model, Sd3drInstance &instance
 
   VrmlNodeGroup::generateFaces( model, instance, body );
   model->instanceAppend( instance );
+  instance.clear();
   }

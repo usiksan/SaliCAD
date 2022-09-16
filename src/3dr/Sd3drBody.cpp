@@ -22,6 +22,12 @@ Sd3drBody::Sd3drBody()
 
 
 
+//!
+//! \brief draw       Draw body in 3d space
+//! \param f          OpenGL functions
+//! \param vertexList Model vertex list because body contains only indexes of vertexes in this list
+//! \param map        Conversion map
+//!
 void Sd3drBody::draw(QOpenGLFunctions_2_0 *f, const Sd3drRegion &vertexList, const QMatrix4x4 &map) const
   {
   //Setup color
@@ -44,6 +50,10 @@ void Sd3drBody::draw(QOpenGLFunctions_2_0 *f, const Sd3drRegion &vertexList, con
 
 
 
+//!
+//! \brief json Perform writing to json
+//! \param js   JSON writer
+//!
 void Sd3drBody::json(SvJsonWriter &js) const
   {
   js.jsonListListInt( QStringLiteral("Faces"), mFaceList );
@@ -53,6 +63,10 @@ void Sd3drBody::json(SvJsonWriter &js) const
 
 
 
+//!
+//! \brief json Perform reading from json
+//! \param js   JSON reader
+//!
 void Sd3drBody::json(const SvJsonReader &js)
   {
   js.jsonListListInt( QStringLiteral("Faces"), mFaceList );

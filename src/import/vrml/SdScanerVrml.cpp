@@ -65,6 +65,18 @@ void SdScanerVrml::generateFaces(Sd3drModel *model) const
     Sd3drInstance instance;
     Sd3drBody body;
     ptr->generateFaces( model, instance, body );
+    if( !body.isEmpty() ) {
+      //Body genereted but not inserted
+      instance.add( body );
+      }
+    if( !instance.isEmpty() ) {
+      //Instance generated but not inserted
+      if( instance.isNoCopy() )
+        //Instance contains no copy, so we append single copy
+        instance.addCopy( QMatrix4x4{} );
+      //Generated instance we append to model
+      model->instanceAppend( instance );
+      }
     }
   }
 
