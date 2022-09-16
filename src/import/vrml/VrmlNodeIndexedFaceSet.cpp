@@ -110,17 +110,48 @@ bool VrmlNodeIndexedFaceSet::parse(SdScanerVrml *scaner, const QString &fieldTyp
 void VrmlNodeIndexedFaceSet::generateFaces(Sd3drModel *model, Sd3drInstance &instance, Sd3drBody &body) const
   {
   VrmlNodeCoordinate *coordinate = dynamic_cast<VrmlNodeCoordinate*>( mCoordinate );
+  VrmlNodeColor *color = dynamic_cast<VrmlNodeColor*>( mColor );
   if( coordinate != nullptr ) {
     coordinate->generateFaces( model, instance, body );
-    Sd3drFace face;
-    for( auto coordIndex : mCoordIndex ) {
-      if( coordIndex < 0 ) {
-        //Vertex accumulate complete
-        //Normal accum complete
-        body.faceAppend( face );
-        face.clear();
+    if( mColorIndex.count() && color != nullptr ) {
+      //Different colors for different faces
+      //We try group all face with same color into one body
+      int faceIndex = 0;
+      int faceColorIndex = mColorIndex.at(0);
+      body.clear();
+      body.colorListSet( color->material(faceColorIndex) );
+      Sd3drFace face;
+      for( auto coordIndex : mCoordIndex ) {
+        if( coordIndex < 0 ) {
+          //Vertex accumulate complete
+          //Normal accum complete
+          body.faceAppend( face );
+          face.clear();
+          faceIndex++;
+          if( faceIndex < mColorIndex.count() && mColorIndex.at(faceIndex) != faceColorIndex ) {
+            faceColorIndex = mColorIndex.at(faceIndex);
+            //Next face with different color, so we append current body to instance and
+            // begin next body with new color
+            instance.add( body );
+            body.clear();
+            body.colorListSet( color->material(faceColorIndex) );
+            }
+          }
+        else face.append( coordinate->modelIndex(coordIndex) );
         }
-      else face.append( coordinate->modelIndex(coordIndex) );
+      }
+    else {
+      //Single predefined color for all faces
+      Sd3drFace face;
+      for( auto coordIndex : mCoordIndex ) {
+        if( coordIndex < 0 ) {
+          //Vertex accumulate complete
+          //Normal accum complete
+          body.faceAppend( face );
+          face.clear();
+          }
+        else face.append( coordinate->modelIndex(coordIndex) );
+        }
       }
     }
   }

@@ -3,6 +3,7 @@
 
 #include "VrmlColor.h"
 #include "VrmlNode.h"
+#include "3dr/Sd3drMaterial.h"
 
 class VrmlNodeColor : public VrmlNode
   {
@@ -11,7 +12,9 @@ class VrmlNodeColor : public VrmlNode
     VrmlNodeColor();
     VrmlNodeColor( const VrmlNodeColor *color ) : VrmlNode(color), mColorList(color->mColorList) {}
 
-    VrmlColor at( int index ) const { return mColorList.at(index); }
+    VrmlColor     at( int index ) const { return mColorList.at(index); }
+
+    Sd3drMaterial material( int index ) const;
 
     // VrmlNode interface
   public:

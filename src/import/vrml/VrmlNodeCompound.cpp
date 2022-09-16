@@ -22,12 +22,21 @@ VrmlNodeCompound::~VrmlNodeCompound()
 void VrmlNodeCompound::parseChildren(SdScanerVrml *scaner)
   {
   if( scaner->matchToken('[') ) {
-    while( !scaner->matchToken(']') ) {
-      if( scaner->isEndOfScan() ) return;
+    //Multiple children
+    while( !scaner->isEndOfScan() ) {
       VrmlNode *node = parse2Declaration( scaner );
       if( node != nullptr )
         mChildren.append( node );
+      if( scaner->isError() || scaner->matchToken(']') ) return;
+      if( !scaner->tokenNeed( ',', QStringLiteral("Need to be , beatween children") ) )
+        return;
       }
+    }
+  else {
+    //Single child
+    VrmlNode *node = parse2Declaration( scaner );
+    if( node != nullptr )
+      mChildren.append( node );
     }
   }
 

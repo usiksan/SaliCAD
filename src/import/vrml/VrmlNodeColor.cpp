@@ -7,6 +7,13 @@ VrmlNodeColor::VrmlNodeColor() :
 
   }
 
+Sd3drMaterial VrmlNodeColor::material(int index) const
+  {
+  Sd3drMaterial mat;
+  mat.setColor( at(index).toColor() );
+  return mat;
+  }
+
 
 
 

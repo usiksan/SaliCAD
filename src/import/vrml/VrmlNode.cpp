@@ -9,6 +9,7 @@
 #include "VrmlNodeNormal.h"
 #include "VrmlNodeShape.h"
 #include "VrmlNodeTransform.h"
+#include "VrmlNodePointSet.h"
 
 
 
@@ -111,6 +112,7 @@ VrmlNode *VrmlNode::build2Node(const QString nodeType)
   if( nodeType == QStringLiteral("Normal") )                  return new VrmlNodeNormal();
   if( nodeType == QStringLiteral("Shape") )                   return new VrmlNodeShape();
   if( nodeType == QStringLiteral("Transform") )               return new VrmlNodeTransform();
+  if( nodeType == QStringLiteral("PointSet") )                return new VrmlNodePointSet();
   return nullptr;
   }
 

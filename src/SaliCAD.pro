@@ -71,6 +71,7 @@ SOURCES += \
     import/vrml/VrmlNodeIndexedFaceSet.cpp \
     import/vrml/VrmlNodeMaterial.cpp \
     import/vrml/VrmlNodeNormal.cpp \
+    import/vrml/VrmlNodePointSet.cpp \
     import/vrml/VrmlNodeShape.cpp \
     import/vrml/VrmlNodeTransform.cpp \
     import/vrml/VrmlRotation.cpp \
@@ -459,6 +460,7 @@ HEADERS  += \
     import/vrml/VrmlNodeIndexedFaceSet.h \
     import/vrml/VrmlNodeMaterial.h \
     import/vrml/VrmlNodeNormal.h \
+    import/vrml/VrmlNodePointSet.h \
     import/vrml/VrmlNodeShape.h \
     import/vrml/VrmlNodeTransform.h \
     import/vrml/VrmlRotation.h \
