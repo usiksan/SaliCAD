@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт graphPin</title>
+  </head>
+  <body>
+    <h1 align="center">graphPin</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;graphPin</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeGraph2d.htm">Graph2d</a> graphPin( <a href="scriptTypeFloatList.htm">FloatList</a>
+      [pinPosX, pinPosY], <a href="scriptTypeString.htm">String</a>
+      padDescription, <a href="scriptTypeFloatList.htm">FloatList</a>
+      [pinNumberPosX,pinNumberPosY], <a href="scriptTypeString.htm">String</a>
+      pinNumber, <a href="scriptTypeString.htm">String</a> pinNuberAttr, <a href="scriptTypeFloatList.htm">FloatList</a>
+      [pinNamePosX,pinNamePosY], <a href="scriptTypeString.htm">String</a>
+      pinNameAttr ) </p>
+    <h3>Описание</h3>
+    <p>Функция строит 2d объект в 3d пространстве. Функции данного класса
+      предназначены для создания комплексных мастеров генерации компонентов, где
+      в одном скрипте генерируются 3d модель и 2d изображение компонента. Для
+      построения обычных 3d моделей использование данных функций не имеет
+      смысла.<br>
+    </p>
+    <p> Все 2d объекты строятся в плоскости XY с небольшим смещением по осиZ.</p>
+    <p>Эта функция строит вывод компонента на основании своих параметров. В 3d
+      пространстве отображается только контактная площадка. Основное построение
+      происходит в 2d пространстве.</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>pinPosX, pinPosY - координаты центра вывода</li>
+      <li>padDescription - описание контактной площадки</li>
+      <li>pinNumberPosX,pinNumberPosY - позиция номера вывода</li>
+      <li>pinNumber - номер вывода</li>
+      <li>pinNuberAttr - атрибуты номера вывода (выравнивание и угол поворота)</li>
+      <li>pinNamePosX,pinNamePosY - позиция имени вывода</li>
+      <li>pinNameAttr - атрибуты имени вывода</li>
+    </ul>
+    <p><br>
+    </p>
+    <ul>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code>partFlat = graphPin( [0,0], "c1.2d0.6m0.1", [0,0], "1", "CM0",
+        [0,0], "CM0" )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunGraphPin.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

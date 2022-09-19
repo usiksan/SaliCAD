@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт graphRectFilled</title>
+  </head>
+  <body>
+    <h1 align="center">graphRectFilled</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;graphRectFilled</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeGraph2d.htm">Graph2d</a> graphRectFilled( <a href="scriptTypeFloatList.htm">FloatList</a>
+      [cornerX0, cornerY0], <a href="scriptTypeFloatList.htm">FloatList</a>
+      [cornerX1, cornerY1] ) </p>
+    <h3>Описание</h3>
+    <p>Функция строит 2d объект в 3d пространстве. Функции данного класса
+      предназначены для создания комплексных мастеров генерации компонентов, где
+      в одном скрипте генерируются 3d модель и 2d изображение компонента. Для
+      построения обычных 3d моделей использование данных функций не имеет
+      смысла.<br>
+    </p>
+    <p> Все 2d объекты строятся в плоскости XY с небольшим смещением по осиZ.</p>
+    <p>Эта функция строит залитый прямоугольник на основании своих параметров</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>cornerX0,cornerY0 - координаты первого угла прямоугольника</li>
+      <li>cornerX1, cornerY1 - координаты противоположного (по диагонали) угла
+        прямоугольника</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code> partFlat = graphRectFilled( [0,0], [2,1] )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunGraphRectFilled.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

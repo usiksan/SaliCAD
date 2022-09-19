@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт graphCircle</title>
+  </head>
+  <body>
+    <h1 align="center">graphCircle</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;graphCircle</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeGraph2d.htm">Graph2d</a> graphCircle( <a href="scriptTypeFloatList.htm">FloatList</a>
+      [centerX, centerY, radius] ) </p>
+    <h3>Описание</h3>
+    <p>Функция строит 2d объект в 3d пространстве. Функции данного класса
+      предназначены для создания комплексных мастеров генерации компонентов, где
+      в одном скрипте генерируются 3d модель и 2d изображение компонента. Для
+      построения обычных 3d моделей использование данных функций не имеет
+      смысла.</p>
+    <p> Все 2d объекты строятся в плоскости XY с небольшим смещением по осиZ.</p>
+    <p>Эта функция строит окружность на основании своих параметров</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>centerX - центр окружности X</li>
+      <li>centerY - центр окружности Y</li>
+      <li>radius - радиус окружности</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code>partFlat = graphCircle( [0,0,2] ))</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunGraphCircle.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт graphLine</title>
+  </head>
+  <body>
+    <h1 align="center">graphLine</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;graphLine</p>
+    <hr>
+    <h3>Формат вызова</h3>
+    <p><a href="scriptTypeGraph2d.htm">Graph2d</a> graphLine( <a href="scriptTypeFloatList.htm">FloatList</a>
+      [X0, Y0], <a href="scriptTypeFloatList.htm">FloatList</a> [X1, Y1] ) </p>
+    <h3>Описание</h3>
+    <p>Функция строит 2d объект в 3d пространстве. Функции данного класса
+      предназначены для создания комплексных мастеров генерации компонентов, где
+      в одном скрипте генерируются 3d модель и 2d изображение компонента. Для
+      построения обычных 3d моделей использование данных функций не имеет
+      смысла.<br>
+    </p>
+    <p> Все 2d объекты строятся в плоскости XY с небольшим смещением по осиZ.</p>
+    <p>Эта функция строит отрезок на основании своих параметров</p>
+    <h3>Параметры</h3>
+    <ul>
+      <li>X0,Y0 - координаты начала отрезка</li>
+      <li>X1,Y1 - координаты конца отрезка</li>
+    </ul>
+    <h3>Пример применения</h3>
+    <p> <code>partFlat = graphLine( [0,0], [2,1] )</code> </p>
+    <p>Данный пример сформирует следующее изображение:</p>
+    <p><img src="scriptFunGraphLine.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
