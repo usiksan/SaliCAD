@@ -490,6 +490,14 @@ void SdLibraryStorage::periodicScan()
     for( auto it = mReferenceMap.cbegin(); it != mReferenceMap.cend(); it++ )
       mExistList.insert( SdContainerFile::getLibraryFName( it.key(), it.value().mCreationTime ), it.key() );
 
+    if( mScanList.count() == 0 ) {
+      //Nothing to scan
+      //We can begin sync with remote server
+      if( mNetClientLocker != nullptr ) {
+        delete mNetClientLocker;
+        mNetClientLocker = nullptr;
+        }
+      }
     mScanTimer.start( 50 );
     }
   }

@@ -342,7 +342,8 @@ SdObject *SdObject::fileJsonLoad(const QString fname)
   if( file.open(QIODevice::ReadOnly) ) {
     if( fname.endsWith( QStringLiteral(SD_BASE_EXTENSION)) )
       return jsonTextFrom( file.readAll() );
-    return jsonCborCompressedFrom( file.readAll() );
+    if( fname.endsWith( QStringLiteral(SD_BINARY_EXTENSION)) )
+      return jsonCborCompressedFrom( file.readAll() );
     }
   return nullptr;
   }
