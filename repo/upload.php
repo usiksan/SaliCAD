@@ -38,7 +38,8 @@
             //Удалить все предыдущие версии объекта
             $result = mysqli_query( $link, 'DELETE FROM objects WHERE uid = "'.$uid.'" AND time < '.$_POST["time"] );
             $array = array(
-              "result" => 0
+              "result" => 0,
+              "uid" => $_POST["uid"]
               );
             }
           else {
@@ -52,7 +53,8 @@
           //В базе более новый объект, нежели чем переданный
           //Ничего не делаем
           $array = array(
-            "result" => 0
+            "result" => 0,
+            "uid" => $_POST["uid"]
             );
           }
         }
