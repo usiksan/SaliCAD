@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceCircle</title>
+  </head>
+  <body>
+    <h1 align="center">faceCircle</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceCircle</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFace.htm">Face</a> faceCircle( <a href="scriptTypeFloat.htm">Float</a>
+      radius, <a href="scriptTypeFloat.htm">Float</a> stepDegree, <a href="scriptTypeMatrix.htm">Matrix</a>
+      transfer ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function constructs a surface in the form of an equilateral polygon
+      inscribed in a circle. The number of sides of the polygon is determined by
+      the angle pitch. The resulting polygon can be transformed using a matrix.
+      This function is used to construct approximated circles. The smaller the
+      angle step, the higher the approximation quality. With large values of the
+      angle step, this function can be used to build other regular polygons: an
+      equilateral triangle, a square, etc.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>radius - the radius of the circumscribed circle around the polygon</li>
+      <li>stepDegree - angle pitch in degrees</li>
+      <li>transfer - final polygon transformation</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code> #Circle example<br>
+        color1 = selectColor("#800000")<br>
+        <br>
+        c1 = faceCircle( 2, 10, matrix1 )<br>
+        <br>
+        partModel = model( color1, color1, color1, [c1], matrix1 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceCircle1.png"> </p>
+    <p> <code> #Example of a hexagon<br>
+        color1 = selectColor("#800000")<br>
+        <br>
+        c1 = faceCircle( 2, 60, matrix1 )<br>
+        <br>
+        partModel = model( color1, color1, color1, [c1], matrix1 )</code> </p>
+    <p>This example shows the formation of shapes at large values of the angle
+      step</p>
+    <img src="scriptFunFaceCircle2.png">
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
