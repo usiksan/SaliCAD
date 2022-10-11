@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceDuplicateGrow</title>
+  </head>
+  <body>
+    <h1 align="center">faceDuplicateGrow</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceDuplicateGrow</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFace.htm">Face</a> faceDuplicateGrow( <a href="scriptTypeFace.htm">Face</a>
+      src, <a href="scriptTypeFloat.htm">Float</a> growX, <a href="scriptTypeFloat.htm">Float</a>
+      growY, <a href="scriptTypeMatrix.htm">Matrix</a> mat) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function increases/decreases the size of the surface along the X and
+      Y axes. Then the resulting surface is transformed using a matrix into
+      another surface. The original surface does not have to be in the XY plane,
+      but the size transformations are carried out by projection on this plane.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>src - initial surface</li>
+      <li>growX - a number with a positive sign is an increase in size along the
+        X axis, with a negative sign is a decrease</li>
+      <li>growY - a number with a positive sign is an increase in size along the
+        Y axis, with a negative sign is a decrease</li>
+      <li>mat - transformation matrix</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code>color1 = selectColor("#800000")<br>
+        color2 = selectColor("#008000")<br>
+        <br>
+        c1 = faceCircle( 2, 10, matrix1 )<br>
+        <br>
+        mat = matrixTranslate( matrix1, 5, 0, 0 )<br>
+        <br>
+        c2 = faceDuplicateGrow( c1, 0.5, -1, mat )<br>
+        <br>
+        partModel = model( color1, color1, color1, [c1], matrix1 )<br>
+        partModel = model( color2, color2, color2, [c2], matrix1 ) </code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceDuplicateGrow.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

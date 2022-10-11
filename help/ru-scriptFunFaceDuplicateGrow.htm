@@ -18,7 +18,7 @@
       другую поверхность. Исходная поверхность не обязательно должна быть в
       плоскости XY, но преобразования размеров ведутся по проекции именно на эту
       плоскость.</p>
-    Параметры
+    <h3> Параметры </h3>
     <ul>
       <li>src - исходная поверхность</li>
       <li>growX - число с положительным знаком - увеличение размера по оси X, с
@@ -28,21 +28,17 @@
       <li>mat - матрица преобразования</li>
     </ul>
     <h3>Пример применения</h3>
-    <p>
-      
-    <code>color1 = selectColor("#800000")<br>
-      color2 = selectColor("#008000")<br>
-      <br>
-      c1 = faceCircle( 2, 10, matrix1 )<br>
-      <br>
-      mat = matrixTranslate( matrix1, 5, 0, 0 )<br>
-      <br>
-      c2 = faceDuplicateGrow( c1, 0.5, -1, mat )<br>
-      <br>
-      partModel = model( color1, color1, color1, [c1], matrix1 )<br>
-      partModel = model( color2, color2, color2, [c2], matrix1 ) </code>
-      
-    </p>
+    <p> <code>color1 = selectColor("#800000")<br>
+        color2 = selectColor("#008000")<br>
+        <br>
+        c1 = faceCircle( 2, 10, matrix1 )<br>
+        <br>
+        mat = matrixTranslate( matrix1, 5, 0, 0 )<br>
+        <br>
+        c2 = faceDuplicateGrow( c1, 0.5, -1, mat )<br>
+        <br>
+        partModel = model( color1, color1, color1, [c1], matrix1 )<br>
+        partModel = model( color2, color2, color2, [c2], matrix1 ) </code> </p>
     <p>Данный пример сформирует следующее изображение:</p>
     <p><img src="scriptFunFaceDuplicateGrow.png"> </p>
     <p></p>

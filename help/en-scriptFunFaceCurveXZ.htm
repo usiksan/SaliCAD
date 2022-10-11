@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceCurveXZ</title>
+  </head>
+  <body>
+    <h1 align="center">faceCurveXZ</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceCurveXZ</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFace.htm">Face</a> faceCurveXZ( <a href="scriptTypeFace.htm">Face</a>
+      src, <a href="scriptTypeFloat.htm">Float</a> radius, <a href="scriptTypeFloat.htm">Float</a>
+      angleSrc, <a href="scriptTypeFloat.htm">Float</a> angleDst) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function performs a rotation in the XZ plane of the original
+      surface. For the initial surface, the initial angle is set. For the
+      resulting surface, the rotation radius and the resulting angle are set.
+      This function is mainly used for constructing curved leads.</p>
+    <h3>Parameters</h3>
+    <ul>
+      <li>src - initial surface</li>
+      <li>radius - turning radius from the center of mass of the initial surface</li>
+      <li>angleSrc - angle of the initial surface</li>
+      <li>angleDst - angle of the resulting surface</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code> #Example for rotation<br>
+        color1 = selectColor("#800000")<br>
+        color2 = selectColor("#008000")<br>
+        <br>
+        c1 = faceCircle( 2, 10, matrix1 )<br>
+        <br>
+        c2 = faceCurveXZ( c1, 4, 0, 35 )<br>
+        <br>
+        partModel = model( color1, color1, color1, [c1], matrix1 )<br>
+        partModel = model( color2, color2, color2, [c2], matrix1 ) </code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceCurveXZ.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

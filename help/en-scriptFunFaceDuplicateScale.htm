@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceDuplicateScale</title>
+  </head>
+  <body>
+    <h1 align="center">faceDuplicateScale</h1>
+    <p><a href="contents.htm">Содержание</a>=&gt;<a href="script3d.htm">Скрипт
+        3d</a>=&gt;<a href="script3dFun.htm">Функции 3d</a>=&gt;faceDuplicateScale</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFace.htm">Face</a> faceDuplicateScale( <a href="scriptTypeFace.htm">Face</a>
+      src, <a href="scriptTypeFloat.htm">Float</a> scaleX, <a href="scriptTypeFloat.htm">Float</a>
+      scaleY, <a href="scriptTypeFloat.htm">Float</a> radius) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function scales the surface dimensions along the X and Y axes. Then
+      the resulting surface is shifted along the Z axis by the amount of the
+      radius.&nbsp; The original surface does not have to be in the XY plane,
+      but the size transformations are carried out by projection on this plane.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <h3></h3>
+    <ul>
+      <li>src - initial surface</li>
+      <li>scaleX - axis X scaling factor</li>
+      <li>scaleY - axis Y scaling factor</li>
+      <li>radius - the value of the offset along the Z axis</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code>color1 = selectColor("#800000")<br>
+        color2 = selectColor("#008000")<br>
+        <br>
+        c1 = faceCircle( 2, 10, matrix1 )<br>
+        <br>
+        c2 = faceDuplicateScale( c1, 0.5, 2.0, 1 )<br>
+        <br>
+        partModel = model( color1, color1, color1, [c1], matrix1 )<br>
+        partModel = model( color2, color2, color2, [c2], matrix1 ) </code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceDuplicateScale.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
