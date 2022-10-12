@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceEllipse</title>
+  </head>
+  <body>
+    <h1 align="center">faceEllipse</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;faceEllipse</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFace.htm">Face</a> faceEllipse( <a href="scriptTypeFloat.htm">Float</a>
+      radiusX, <a href="scriptTypeFloat.htm">Float</a> radiusY, <a href="scriptTypeFloat.htm">Float</a>
+      stepDegree, <a href="scriptTypeMatrix.htm">Matrix</a> transfer ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function constructs a surface in the form of an equilateral polygon
+      inscribed in an ellipse. The number of sides of the polygon is determined
+      by the angle pitch. The resulting polygon can be transformed using a
+      matrix. This function is used to construct approximated ellipses. The
+      smaller the angle step, the higher the approximation quality.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>radiusX - the radius X of the described ellipse around the polygon</li>
+      <li>radiusY - the radius Y of the described ellipse around the polygon</li>
+      <li>stepDegree - angle pitch in degrees</li>
+      <li>transfer - final polygon transformation</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code>color1 = selectColor("#800000")<br>
+        <br>
+        c1 = faceEllipse( 3, 2, 10, matrix1 )<br>
+        <br>
+        partModel = model( color1, color1, color1, [c1], matrix1 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceEllipse.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
