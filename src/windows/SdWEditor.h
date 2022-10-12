@@ -34,6 +34,12 @@ class SdWEditor : public QAbstractScrollArea
     int    mRecentlyIndex; //Index for release last resently used mechanism
     quint8 padding[4];
   public:
+    enum SdCopyFormat {
+      sdcfDefault = 0,
+      sdcfSvg,
+      sdcfWeb
+    };
+
     explicit SdWEditor( QWidget *parent = nullptr);
     virtual ~SdWEditor() {}
 
@@ -81,7 +87,12 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmEditUndo() {}
     virtual void cmEditRedo() {}
     virtual void cmEditCut() {}
-    virtual void cmEditCopy() {}
+    //!
+    //! \brief cmEditCopy Copy selection to clipboard
+    //! \param format     Copy format: 0 - default internal format and picture, 1 - svg textual format, 2 - web storage
+    //!
+    virtual void cmEditCopy( SdCopyFormat format ) { Q_UNUSED(format) }
+    virtual void cmEditSelectSave() {}
     virtual void cmEditPaste() {}
     virtual void cmEditDelete() {}
     virtual void cmEditSelectAll() {}

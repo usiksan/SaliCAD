@@ -532,7 +532,7 @@ int SdModeSelect::getIndex() const
 void SdModeSelect::keyDown(int key, QChar ch)
   {
   switch( key ) {
-    case Qt::Key_Copy    : copy();  break;
+    case Qt::Key_Copy    : copy(SdWEditor::SdCopyFormat::sdcfDefault);  break;
     case Qt::Key_Paste   : paste(); break;
     case Qt::Key_Cut     : cut();   break;
     case Qt::Key_Select  : selectAll(); break;
@@ -565,7 +565,11 @@ void SdModeSelect::keyUp(int key, QChar ch)
 
 
 
-void SdModeSelect::copy()
+//!
+//! \brief copy   Copy selection to clipboard
+//! \param format Copy format (default, svg, web)
+//!
+void SdModeSelect::copy( SdWEditor::SdCopyFormat format )
   {
   //If selection present, then put it into clipboard
   if( mFragment.count() ) {
@@ -581,7 +585,7 @@ void SdModeSelect::copy()
     mFragment.setOrigin( a );
 
     //Write to clipboard
-    mFragment.putToClipboard( mObject->getProject(), mEditor->scaleGet() );
+    mFragment.putToClipboard( mObject->getProject(), mEditor->scaleGet(), format );
     }
   }
 
@@ -591,7 +595,7 @@ void SdModeSelect::copy()
 void SdModeSelect::cut()
   {
   setDirty();
-  copy();
+  copy( SdWEditor::SdCopyFormat::sdcfDefault );
   deleteSelected();
   }
 

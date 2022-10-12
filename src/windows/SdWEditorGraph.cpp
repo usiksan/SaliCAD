@@ -215,6 +215,9 @@ void SdWEditorGraph::cursorMove(int dx, int dy)
 void SdWEditorGraph::setSelectionStatus(bool status)
   {
   SdWCommand::cmEditCopy->setEnabled( status );
+  SdWCommand::cmEditCopySvg->setEnabled( status );
+  SdWCommand::cmEditCopyWeb->setEnabled( status );
+  SdWCommand::cmEditSelectSave->setEnabled( status );
   SdWCommand::cmEditCut->setEnabled( status );
   SdWCommand::cmEditDelete->setEnabled( status );
   SdWCommand::cmEditProperties->setEnabled( status );
@@ -1038,13 +1041,16 @@ void SdWEditorGraph::cmEditCut()
 
 
 
-
-void SdWEditorGraph::cmEditCopy()
+void SdWEditorGraph::cmEditCopy(SdCopyFormat format)
   {
   //Only for selecting mode
   if( mMode == mSelect && mSelect != nullptr )
-    mSelect->copy();
+    mSelect->copy( format );
   }
+
+
+
+
 
 
 

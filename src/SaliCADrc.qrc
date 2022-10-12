@@ -301,5 +301,10 @@
         <file>pic/3dProgram.png</file>
         <file>pic/colors.png</file>
         <file>pic/projectCloud.png</file>
+        <file>pic/editReplace.png</file>
+        <file>pic/editUnselect.png</file>
+        <file>pic/editCopySvg.png</file>
+        <file>pic/editCopyWeb.png</file>
+        <file>pic/editSelectSave.png</file>
     </qresource>
 </RCC>

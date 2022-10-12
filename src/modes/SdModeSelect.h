@@ -18,6 +18,7 @@ Description
 #include "objects/SdProp.h"
 #include "objects/SdSelector.h"
 #include "objects/SdProject.h"
+#include "windows/SdWEditor.h"
 
 class SdModeSelect : public SdMode
   {
@@ -78,8 +79,11 @@ class SdModeSelect : public SdMode
     virtual void    keyDown(int key, QChar ch) override;
     virtual void    keyUp(int key, QChar ch) override;
 
-
-    void            copy();                  //Copy selection to clipboard
+    //!
+    //! \brief copy   Copy selection to clipboard
+    //! \param format Copy format (default, svg, web)
+    //!
+    void            copy(SdWEditor::SdCopyFormat format );
     void            cut();                   //Cut selection to clipboard
     void            paste();                 //Insert from clipboard
     void            selectAll();             //Select all [Выделить все]

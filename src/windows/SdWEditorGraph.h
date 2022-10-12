@@ -115,7 +115,11 @@ class SdWEditorGraph : public SdWEditor
     virtual void           cmEditUndo() override;
     virtual void           cmEditRedo() override;
     virtual void           cmEditCut() override;
-    virtual void           cmEditCopy() override;
+    //!
+    //! \brief cmEditCopy Copy selection to clipboard
+    //! \param format     Copy format: 0 - default internal format and picture, 1 - svg textual format, 2 - web storage
+    //!
+    virtual void           cmEditCopy( SdCopyFormat format ) override;
     virtual void           cmEditPaste() override;
     virtual void           cmEditDelete() override;
     virtual void           cmEditSelectAll() override;

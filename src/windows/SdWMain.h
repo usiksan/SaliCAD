@@ -152,6 +152,9 @@ class SdWMain : public QMainWindow
     void cmEditRedo();
     void cmEditCut();
     void cmEditCopy();
+    void cmEditCopySvg();
+    void cmEditCopyWeb();
+    void cmEditSelectSave();
     void cmEditPaste();
     void cmEditDelete();
     void cmEditSelectAll();

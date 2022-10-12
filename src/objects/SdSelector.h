@@ -17,6 +17,7 @@ Description
 #include "SdPoint.h"
 #include "SdRect.h"
 #include "SdGraph.h"
+#include "windows/SdWEditor.h"
 
 #include <QList>
 #include <functional>
@@ -66,7 +67,7 @@ class SdSelector : public SdObject
     void                operator = ( const SdSelector &sour );
 
     //Clipboard functions
-    void                putToClipboard(const SdProject *project , double scale);
+    void                putToClipboard(const SdProject *project , double scale, SdWEditor::SdCopyFormat format );
     SdProject          *getFromClipboard();
 
 

@@ -16,6 +16,7 @@ Description
 #include "SdContext.h"
 #include "SdConverterView.h"
 #include "SdJsonIO.h"
+#include "SvLib/SvTime2x.h"
 
 #include <QClipboard>
 #include <QByteArray>
@@ -132,7 +133,7 @@ void SdSelector::operator =(const SdSelector &sour)
 
 
 
-void SdSelector::putToClipboard( const SdProject *project, double scale )
+void SdSelector::putToClipboard(const SdProject *project, double scale , SdWEditor::SdCopyFormat format)
   {
   //Prepare Json object with project and selection
   SdJsonWriter js;
@@ -146,74 +147,89 @@ void SdSelector::putToClipboard( const SdProject *project, double scale )
   //Convert to byteArray
   QByteArray array = svJsonObjectToCbor( js.object() );
 
+  SdRect r = getOverRect();    //Охватывающий прямоугольник
+
   //Prepare mime data
   QMimeData *mime = new QMimeData();
-  mime->setData( QStringLiteral(SD_CLIP_FORMAT_SELECTOR), array );
 
-  SdRect r = getOverRect();    //Охватывающий прямоугольник
-  SdPoint a = r.getBottomLeft();
-  SdPoint b = r.getTopRight();
-  a.move( SdPoint(-10,-10) );
-  b.move( SdPoint(10,10) ); //Расширить, чтобы вошли пограничные объекты
-  r.set( a, b );
-  QSize s;                             //Размер битовой карты в пикселах
-  s.setWidth( qMin( static_cast<int>(r.width() / scale + 10), CLIP_IMAGE_WIDTH ) ); //Вычисление размера
-  s.setHeight( qMin( static_cast<int>(r.height() / scale + 10), CLIP_IMAGE_HEIGHT ) );
+  if( format == SdWEditor::SdCopyFormat::sdcfDefault ) {
+    mime->setData( QStringLiteral(SD_CLIP_FORMAT_SELECTOR), array );
+
+    SdPoint a = r.getBottomLeft();
+    SdPoint b = r.getTopRight();
+    a.move( SdPoint(-10,-10) );
+    b.move( SdPoint(10,10) ); //Расширить, чтобы вошли пограничные объекты
+    r.set( a, b );
+    QSize s;                             //Размер битовой карты в пикселах
+    s.setWidth( qMin( static_cast<int>(r.width() / scale + 10), CLIP_IMAGE_WIDTH ) ); //Вычисление размера
+    s.setHeight( qMin( static_cast<int>(r.height() / scale + 10), CLIP_IMAGE_HEIGHT ) );
 
 
-  //Alternative copy as image
-  QImage image( s, QImage::Format_ARGB32 );
-  //Fill white color
-  image.fill( Qt::white );
-  //Qt painter
-  QPainter painter( &image );
-  //Draw context
-  SdContext ctx( SdPoint(10,10), &painter );
-  //View converter
-  SdConverterView view( s, r.center(), scale );
-  ctx.setConverter( &view );
-  //Draw process
-  draw( &ctx );
+    //Alternative copy as image
+    QImage image( s, QImage::Format_ARGB32 );
+    //Fill white color
+    image.fill( Qt::white );
+    //Qt painter
+    QPainter painter( &image );
+    //Draw context
+    SdContext ctx( SdPoint(10,10), &painter );
+    //View converter
+    SdConverterView view( s, r.center(), scale );
+    ctx.setConverter( &view );
+    //Draw process
+    draw( &ctx );
 
-  //Put picture into mime
-  mime->setImageData( image );
+    //Put picture into mime
+    mime->setImageData( image );
+    }
+  else if( format == SdWEditor::SdCopyFormat::sdcfSvg ) {
+    //Yet alternative copy as svg
+    QSvgGenerator svgGenerator;
+    QByteArray svgArray;
+    QBuffer svgBuffer( &svgArray );
+    svgGenerator.setOutputDevice( &svgBuffer );
+    //svgGenerator.setResolution( 25 );
+    svgGenerator.setSize( QSize(600,400) );
+    svgGenerator.setViewBox( QRect( 0, 0, r.width(), r.height() ) );
+    svgGenerator.setTitle( "SaliCAD SVG drawing" );
+    svgGenerator.setDescription( "An SVG drawing created by the SaliCAD SVG Generator " );
+    QPainter svgPainter;
+    svgPainter.begin( &svgGenerator );
 
-  //Yet alternative copy as svg
-  QSvgGenerator svgGenerator;
-  QByteArray svgArray;
-  QBuffer svgBuffer( &svgArray );
-  svgGenerator.setOutputDevice( &svgBuffer );
-  //svgGenerator.setResolution( 25 );
-  svgGenerator.setSize( QSize(600,400) );
-  svgGenerator.setViewBox( QRect( 0, 0, r.width(), r.height() ) );
-  svgGenerator.setTitle( "SaliCAD SVG drawing" );
-  svgGenerator.setDescription( "An SVG drawing created by the SaliCAD SVG Generator " );
-  QPainter svgPainter;
-  svgPainter.begin( &svgGenerator );
+    //Draw context
+    SdContext svgCtx( SdPoint(10,10), &svgPainter );
+    //View converter
+    SdConverterView svgView( r.size(), r.center(), 1 );
+    svgCtx.setConverter( &svgView );
+    //Draw process
+    draw( &svgCtx );
 
-  //Draw context
-  SdContext svgCtx( SdPoint(10,10), &svgPainter );
-  //View converter
-  SdConverterView svgView( r.size(), r.center(), 1 );
-  svgCtx.setConverter( &svgView );
-  //Draw process
-  draw( &svgCtx );
+    svgPainter.end();
+    //Copy drawing as svg text
+    mime->setText( QString::fromUtf8(svgArray) );
+    }
+  else if( format == SdWEditor::SdCopyFormat::sdcfWeb ) {
+    //Yet another alternative - textual packet object
+    QByteArray packedHex = qCompress( array ).toHex();
+    QString packedString;
+    packedString.reserve( 20 + (packedHex.length() / 80 + 1) * 81 );
+    packedString.append( QStringLiteral("`SaliCAD compressed") );
+    for( int i = 0; i < packedHex.length(); i += 80 ) {
+      packedString.append( QChar('\n') );
+      packedString.append( packedHex.mid( i, 80 ) );
+      }
+    packedString.append( QChar('`') );
 
-  svgPainter.end();
-  //Copy drawing as svg text
-  mime->setText( QString::fromUtf8(svgArray) );
+    //Build web page
+    int fragmentId = SvTime2x::current();
+    mime->setText( QStringLiteral( "<script>\nfunction fragment%1() {\nnavigator.clipboard.writeText(%2)\n"
+                                   ".then(() => {\n   // Success!\n })\n"
+                                   ".catch(() => {\n   // Fail :(\n });\n"
+                                   "  }\n</script>\n"
+                                   "<button onclick=\"fragment%1();\">Copy fragment %1</button>" ).arg(fragmentId).arg(packedString) );
+    }
 
-  //Yet another alternative - textual packet object
-//  QByteArray packedHex = qCompress( array ).toHex();
-//  QString packedString;
-//  packedString.reserve( 20 + (packedHex.length() / 80 + 1) * 81 );
-//  packedString.append( QStringLiteral("`SaliCAD compressed") );
-//  for( int i = 0; i < packedHex.length(); i += 80 ) {
-//    packedString.append( QChar('\n') );
-//    packedString.append( packedHex.mid( i, 80 ) );
-//    }
-//  packedString.append( QChar('`') );
-//  mime->setText( packedString );
+
 
   //Insert into clipboard
   QGuiApplication::clipboard()->setMimeData( mime );

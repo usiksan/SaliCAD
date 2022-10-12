@@ -116,10 +116,13 @@ class SdWCommand
     static QActionPtr  cmEditRedo;
     static QActionPtr  cmEditCut;
     static QActionPtr  cmEditCopy;
+    static QActionPtr  cmEditCopySvg;
+    static QActionPtr  cmEditCopyWeb;
     static QActionPtr  cmEditPaste;
     static QActionPtr  cmEditDelete;
     static QActionPtr  cmEditSelectAll;
     static QActionPtr  cmEditUnSelect;
+    static QActionPtr  cmEditSelectSave;
     static QActionPtr  cmEditFind;
     static QActionPtr  cmEditReplace;
     static QActionPtr  cmEditRotateGroup;

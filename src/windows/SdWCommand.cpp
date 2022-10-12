@@ -85,45 +85,49 @@ void SdWCommand::createMenu(SdWMain *frame)
 
   //Object menu [Меню Объект]
   menuObject = new QMenu( QObject::tr("Objects") );
-  cmObjectNew         = menuObject->addAction( QIcon(QString(":/pic/objectNew.png")), QObject::tr("Create..."), frame, SLOT(cmObjectNew()) );
-  cmObjectLoad        = menuObject->addAction( QIcon(QString(":/pic/download.png")), QObject::tr("Load from library..."), frame, SLOT(cmObjectLoad()) );
-  cmObjectRename      = menuObject->addAction( QIcon(QString(":/pic/objectRename.png")), QObject::tr("Rename..."), frame, SLOT(cmObjectRename()) );
-  cmObjectParam       = menuObject->addAction( QIcon(QString(":/pic/objectParam.png")), QObject::tr("Edit object param..."), frame, SLOT(cmObjectParam()) );
-  cmObjectDelete      = menuObject->addAction( QIcon(QString(":/pic/objectDelete.png")), QObject::tr("Delete"), frame, SLOT(cmObjectDelete()) );
-  cmObjectCopy        = menuObject->addAction( QIcon(QString(":/pic/objectCopy.png")), QObject::tr("Copy"), frame, SLOT(cmObjectCopy()) );
-  cmObjectPaste       = menuObject->addAction( QIcon(QString(":/pic/objectPaste.png")), QObject::tr("Paste"), frame, SLOT(cmObjectPaste()) );
-  cmObjectCut         = menuObject->addAction( QIcon(QString(":/pic/objectCut.png")), QObject::tr("Cut"), frame, SLOT(cmObjectCut()) );
-  cmObjectDuplicate   = menuObject->addAction( QIcon(QString(":/pic/duplicate.png")), QObject::tr("Duplicate"), frame, SLOT(cmObjectDuplicate()) );
-  cmObjectSort        = menuObject->addAction( QIcon(QString(":/pic/objectSort.png")), QObject::tr("Sort"), frame, SLOT(cmObjectSort()) );
-  cmObjectEditEnable  = menuObject->addAction( QIcon(QString(":/pic/objectEditEnable.png")), QObject::tr("Enable edit"), frame, SLOT(cmObjectEditEnable()) );
-  cmObjectEditDisable = menuObject->addAction( QIcon(QString(":/pic/objectEditDisable.png")), QObject::tr("Finish edit"), frame, SLOT(cmObjectEditDisable()) );
-  cmProjectParam      = menuObject->addAction( QIcon(QString(":/pic/editProjectParam.png")), QObject::tr("Edit project param..."), frame, SLOT(cmProjectParam()) );
-  cmProjectUpgrade    = menuObject->addAction( QIcon(QString(":/pic/editProjectUpgrade.png")), QObject::tr("Upgrade with new versions"), frame, SLOT(cmProjectUpgrade()) );
+  cmObjectNew         = menuObject->addAction( QIcon(QStringLiteral(":/pic/objectNew.png")), QObject::tr("Create..."), frame, SLOT(cmObjectNew()) );
+  cmObjectLoad        = menuObject->addAction( QIcon(QStringLiteral(":/pic/download.png")), QObject::tr("Load from library..."), frame, SLOT(cmObjectLoad()) );
+  cmObjectRename      = menuObject->addAction( QIcon(QStringLiteral(":/pic/objectRename.png")), QObject::tr("Rename..."), frame, SLOT(cmObjectRename()) );
+  cmObjectParam       = menuObject->addAction( QIcon(QStringLiteral(":/pic/objectParam.png")), QObject::tr("Edit object param..."), frame, SLOT(cmObjectParam()) );
+  cmObjectDelete      = menuObject->addAction( QIcon(QStringLiteral(":/pic/objectDelete.png")), QObject::tr("Delete"), frame, SLOT(cmObjectDelete()) );
+  cmObjectCopy        = menuObject->addAction( QIcon(QStringLiteral(":/pic/objectCopy.png")), QObject::tr("Copy"), frame, SLOT(cmObjectCopy()) );
+  cmObjectPaste       = menuObject->addAction( QIcon(QStringLiteral(":/pic/objectPaste.png")), QObject::tr("Paste"), frame, SLOT(cmObjectPaste()) );
+  cmObjectCut         = menuObject->addAction( QIcon(QStringLiteral(":/pic/objectCut.png")), QObject::tr("Cut"), frame, SLOT(cmObjectCut()) );
+  cmObjectDuplicate   = menuObject->addAction( QIcon(QStringLiteral(":/pic/duplicate.png")), QObject::tr("Duplicate"), frame, SLOT(cmObjectDuplicate()) );
+  cmObjectSort        = menuObject->addAction( QIcon(QStringLiteral(":/pic/objectSort.png")), QObject::tr("Sort"), frame, SLOT(cmObjectSort()) );
+  cmObjectEditEnable  = menuObject->addAction( QIcon(QStringLiteral(":/pic/objectEditEnable.png")), QObject::tr("Enable edit"), frame, SLOT(cmObjectEditEnable()) );
+  cmObjectEditDisable = menuObject->addAction( QIcon(QStringLiteral(":/pic/objectEditDisable.png")), QObject::tr("Finish edit"), frame, SLOT(cmObjectEditDisable()) );
+  cmProjectParam      = menuObject->addAction( QIcon(QStringLiteral(":/pic/editProjectParam.png")), QObject::tr("Edit project param..."), frame, SLOT(cmProjectParam()) );
+  cmProjectUpgrade    = menuObject->addAction( QIcon(QStringLiteral(":/pic/editProjectUpgrade.png")), QObject::tr("Upgrade with new versions"), frame, SLOT(cmProjectUpgrade()) );
 
 
 
 
   //Edit menu [Меню Редактирование]
   menuEdit = new QMenu( QObject::tr("Edit") );
-  cmEditUndo      = menuEdit->addAction( QIcon(QString(":/pic/editUndo.png")), QObject::tr("Undo"), frame, SLOT(cmEditUndo()) );
+  cmEditUndo      = menuEdit->addAction( QIcon(QStringLiteral(":/pic/editUndo.png")), QObject::tr("Undo"), frame, SLOT(cmEditUndo()) );
   cmEditUndo->setEnabled(false);
-  cmEditRedo      = menuEdit->addAction( QIcon(QString(":/pic/editRedo.png")), QObject::tr("Redo"), frame, SLOT(cmEditRedo()) );
+  cmEditRedo      = menuEdit->addAction( QIcon(QStringLiteral(":/pic/editRedo.png")), QObject::tr("Redo"), frame, SLOT(cmEditRedo()) );
   cmEditRedo->setEnabled(false);
   menuEdit->addSeparator();
-  cmEditCopy      = menuEdit->addAction( QIcon(QString(":/pic/editCopy.png")), QObject::tr("Copy"), frame, SLOT(cmEditCopy()) );
-  cmEditPaste     = menuEdit->addAction( QIcon(QString(":/pic/editPaste.png")), QObject::tr("Paste"), frame, SLOT(cmEditPaste()) );
-  cmEditCut       = menuEdit->addAction( QIcon(QString(":/pic/editCut.png")), QObject::tr("Cut"), frame, SLOT(cmEditCut()) );
-  cmEditDelete    = menuEdit->addAction( QIcon(QString(":/pic/editDel.png")), QObject::tr("Delete"), frame, SLOT(cmEditDelete()) );
+  cmEditCopy      = menuEdit->addAction( QIcon(QStringLiteral(":/pic/editCopy.png")), QObject::tr("Copy"), frame, SLOT(cmEditCopy()) );
+  cmEditPaste     = menuEdit->addAction( QIcon(QStringLiteral(":/pic/editPaste.png")), QObject::tr("Paste"), frame, SLOT(cmEditPaste()) );
+  cmEditCut       = menuEdit->addAction( QIcon(QStringLiteral(":/pic/editCut.png")), QObject::tr("Cut"), frame, SLOT(cmEditCut()) );
+  cmEditDelete    = menuEdit->addAction( QIcon(QStringLiteral(":/pic/editDel.png")), QObject::tr("Delete"), frame, SLOT(cmEditDelete()) );
   menuEdit->addSeparator();
-  cmEditSelectAll = menuEdit->addAction( QIcon(QString(":/pic/editSelectAll.png")), QObject::tr("Select All"), frame, SLOT(cmEditSelectAll()) );
-  cmEditUnSelect  = menuEdit->addAction( QIcon(QString(":/pic/editSelectAll.png")), QObject::tr("UnSelect"), frame, SLOT(cmEditUnSelect()) );
-  cmEditFind      = menuEdit->addAction( QIcon(QString(":/pic/editFind.png")), QObject::tr("Find"), frame, SLOT(cmEditFind()) );
-  cmEditReplace   = menuEdit->addAction( QObject::tr("Replace"), frame, SLOT(cmEditReplace()) );
-  cmEditRotateGroup = menuEdit->addAction( QIcon(QString(":/pic/editRotate.png")), QObject::tr("Rotate group 90 degree [F7]"), frame, SLOT(cmEditRotateGroup()) );
+  cmEditCopySvg   = menuEdit->addAction( QIcon(QStringLiteral(":/pic/editCopySvg.png")), QObject::tr("Copy SVG"), frame, SLOT(cmEditCopySvg()) );
+  cmEditCopyWeb   = menuEdit->addAction( QIcon(QStringLiteral(":/pic/editCopyWeb.png")), QObject::tr("Copy WEB"), frame, SLOT(cmEditCopyWeb()) );
+  cmEditSelectSave= menuEdit->addAction( QIcon(QStringLiteral(":/pic/editSelectSave.png")), QObject::tr("Save selection"), frame, SLOT(cmEditSelectSave()) );
   menuEdit->addSeparator();
-  cmEditProperties  = menuEdit->addAction( QIcon(QString(":/pic/editProp.png")), QObject::tr("Params of selection..."), frame, SLOT(cmEditProperties()) );
-  cmEditCalculations = menuEdit->addAction( QIcon(QString(":/pic/editCalculations.png")), QObject::tr("Calculations..."), frame, SLOT(cmEditCalculations()) );
-  cmEditFragments   = menuEdit->addAction( QIcon(QString(":/pic/editFragments.png")), QObject::tr("Fragments..."), frame, SLOT(cmEditFragments()) );
+  cmEditSelectAll = menuEdit->addAction( QIcon(QStringLiteral(":/pic/editSelectAll.png")), QObject::tr("Select All"), frame, SLOT(cmEditSelectAll()) );
+  cmEditUnSelect  = menuEdit->addAction( QIcon(QStringLiteral(":/pic/editUnselect.png")), QObject::tr("UnSelect"), frame, SLOT(cmEditUnSelect()) );
+  cmEditFind      = menuEdit->addAction( QIcon(QStringLiteral(":/pic/editFind.png")), QObject::tr("Find"), frame, SLOT(cmEditFind()) );
+  cmEditReplace   = menuEdit->addAction( QIcon(QStringLiteral(":/pic/editReplace.png")), QObject::tr("Replace"), frame, SLOT(cmEditReplace()) );
+  cmEditRotateGroup = menuEdit->addAction( QIcon(QStringLiteral(":/pic/editRotate.png")), QObject::tr("Rotate group 90 degree [F7]"), frame, SLOT(cmEditRotateGroup()) );
+  menuEdit->addSeparator();
+  cmEditProperties  = menuEdit->addAction( QIcon(QStringLiteral(":/pic/editProp.png")), QObject::tr("Params of selection..."), frame, SLOT(cmEditProperties()) );
+  cmEditCalculations = menuEdit->addAction( QIcon(QStringLiteral(":/pic/editCalculations.png")), QObject::tr("Calculations..."), frame, SLOT(cmEditCalculations()) );
+  cmEditFragments   = menuEdit->addAction( QIcon(QStringLiteral(":/pic/editFragments.png")), QObject::tr("Fragments..."), frame, SLOT(cmEditFragments()) );
 
 
 
@@ -826,9 +830,12 @@ QActionPtr SdWCommand::cmEditUndo;
 QActionPtr SdWCommand::cmEditRedo;
 QActionPtr SdWCommand::cmEditCut;
 QActionPtr SdWCommand::cmEditCopy;
+QActionPtr SdWCommand::cmEditCopySvg;
+QActionPtr SdWCommand::cmEditCopyWeb;
 QActionPtr SdWCommand::cmEditPaste;
 QActionPtr SdWCommand::cmEditDelete;
 QActionPtr SdWCommand::cmEditSelectAll;
+QActionPtr SdWCommand::cmEditSelectSave;
 QActionPtr SdWCommand::cmEditUnSelect;
 QActionPtr SdWCommand::cmEditFind;
 QActionPtr SdWCommand::cmEditReplace;

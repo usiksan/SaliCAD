@@ -1140,7 +1140,34 @@ void SdWMain::cmEditCut()
 void SdWMain::cmEditCopy()
   {
   if( activeEditor() )
-    activeEditor()->cmEditCopy();
+    activeEditor()->cmEditCopy( SdWEditor::SdCopyFormat::sdcfDefault );
+  }
+
+
+
+
+void SdWMain::cmEditCopySvg()
+  {
+  if( activeEditor() )
+    activeEditor()->cmEditCopy( SdWEditor::SdCopyFormat::sdcfSvg );
+  }
+
+
+
+
+void SdWMain::cmEditCopyWeb()
+  {
+  if( activeEditor() )
+    activeEditor()->cmEditCopy( SdWEditor::SdCopyFormat::sdcfWeb );
+  }
+
+
+
+
+void SdWMain::cmEditSelectSave()
+  {
+  if( activeEditor() )
+    activeEditor()->cmEditSelectSave();
   }
 
 
