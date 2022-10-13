@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListDuplicate</title>
+  </head>
+  <body>
+    <h1 align="center">faceListDuplicate</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a><a
+        href="contents.htm"></a>faceListDuplicate</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListDuplicate( <a href="scriptTypeFaceList.htm">FaceList</a>
+      src, <a href="scriptTypeMatrix.htm">Matrix</a> transfer ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function makes a copy of the original list of surfaces, transforming
+      it using a matrix.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>src - source list of surfaces</li>
+      <li>transfer - transformation matrix</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        c1 = faceListCylinder( 2, 5 )<br>
+        c2 = faceListDuplicate( c1, matrixTranslate( matrix1, 5, 0, 0 ) )<br>
+        <br>
+        partModel = model( color1, color1, color1, c1, matrix1 )<br>
+        partModel = model( color1, color1, color1, c2, matrix1 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceListDuplicate.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

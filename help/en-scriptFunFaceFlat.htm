@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceFlat</title>
+  </head>
+  <body>
+    <h1 align="center">faceFlat</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a>faceFlat</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFace.htm">Face</a> faceFlat( <a href="scriptTypeVertex.htm">Vertex</a>
+      origin, <a href="scriptTypeFloat.htm">Float</a> orientation, <a href="scriptTypeFloatList.htm">FloatList</a>
+      pairs ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function builds a polygon in the XY, YZ or XZ planes according to
+      the given relative two-dimensional coordinates. The vertex of the
+      beginning of the polygon is determined by the origin parameter. The
+      orientation parameter specifies the plane in which the construction will
+      be performed. The pairs parameter contains a list of pairs of relative
+      coordinates of the vertices of the polygon. Each next vertex is defined as
+      an offset relative to the previous one. The first pair defines the offset
+      relative to the origin vertex. In order for a polygon to be used as a
+      surface, it must be convex. If the polygon is non-convex, then it must be
+      converted to a set of convex polygons using the function <a href="scriptFunFaceListSimplify.htm">faceListSimplify</a>.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>origin - the initial vertex of the polygon</li>
+      <li>orientation - the orientation code of the surface. 0 - XY plane, 1 -
+        YZ plane, 2 - XZ plane</li>
+      <li>pairs - a list of pairs of relative coordinates. [ offx0,offy0,&nbsp;
+        offx1,offy1,&nbsp; offx2,offy2 ... ]</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code>color1 = selectColor("#800000")<br>
+        <br>
+        c1 = faceFlat( vertex(0,0,0), 0, [ 0,2, 1,1, 1,-1, 0,-2] )<br>
+        <br>
+        partModel = model( color1, color1, color1, [c1], matrix1 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceFlat.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListCurveXY</title>
+  </head>
+  <body>
+    <h1 align="center">faceListCurveXY</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a><a
+        href="contents.htm"></a>faceListCurveXY</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListCurveXY( <a href="scriptTypeFace.htm">Face</a>
+      face, <a href="scriptTypeFloat.htm">Float</a> radius, <a href="scriptTypeFloat.htm">Float</a>
+      angleSrc, <a href="scriptTypeFloat.htm">Float</a> angleDst, <a href="scriptTypeFloat.htm">Float</a>
+      sideCount, <a href="scriptTypeBool.htm">Bool</a> close ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>Builds walls between rotated surfaces, serves to form a bend, for
+      example, output. Takes the original surface and rotates it to a given
+      angle angle Dist. Between these surfaces forms intermediate rotated
+      surfaces, their number is determined by sideCount. Builds walls between
+      all the formed surfaces and returns their set.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>face - initial surface</li>
+      <li>radius - turning radius</li>
+      <li>angleSrc - the angle of rotation of the initial surface relative to
+        the XY plane</li>
+      <li>angleDst - the angle to which the original surface should be rotated</li>
+      <li>sideCount - the number of intermediate surfaces between the initial
+        and final, including the final</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        c1 = faceRect( 2, 3, matrix1 )<br>
+        <br>
+        c2 = faceListCurveXZ( c1, 5, 0, 30, 10, true )<br>
+        <br>
+        partModel = model( color1, color1, color1, c2, matrix1 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceListCurveXY.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

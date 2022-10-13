@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListBox</title>
+  </head>
+  <body>
+    <h1 align="center">faceListBox</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a><a
+        href="contents.htm"></a>faceListBox</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListBox( <a href="scriptTypeFloat.htm">Float</a>
+      length, <a href="scriptTypeFloat.htm">Float</a> width, <a href="scriptTypeFloat.htm">Float</a>
+      height ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function builds a parallelepiped with a base on the XY plane.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>length - parallelepiped length (X-axis)</li>
+      <li>width - width of the parallelepiped (Y axis)</li>
+      <li>height - height of the parallelepiped (Z axis)</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        c1 = faceListBox( 2, 3, -4 )<br>
+        <br>
+        partModel = model( color1, color1, color1, c1, matrix1 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceListBox.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

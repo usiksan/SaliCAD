@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceFlatMatrix</title>
+  </head>
+  <body>
+    <h1 align="center">faceFlatMatrix</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a>faceFlatMatrix</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFace.htm">Face</a> faceFlatMatrix( <a href="scriptTypeFloatList.htm">FloatList</a>
+      pairs, <a href="scriptTypeMatrix.htm">Matrix</a> matrix ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function builds a polygon on the plane according to the given
+      relative two-dimensional coordinates in the XY plane. The vertex of the
+      beginning of the polygon is determined by the first pair. The pairs
+      parameter contains a list of pairs of relative coordinates of the vertices
+      of the polygon. Each next vertex is defined as an offset relative to the
+      previous one. The first pair defines the X Y coordinates of the first
+      vertex. In order for a polygon to be used as a surface, it must be convex.
+      If the polygon is non-convex, then it must be converted to a set of convex
+      polygons using the function <a href="scriptFunFaceListSimplify.htm">faceListSimplify</a>The
+      resulting polygon can be transformed using a matrix.. </p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>pairs - a pair defining the first vertex and a list of pairs of
+        relative coordinates. [ org0,org0,&nbsp; offx1,offy1,&nbsp; offx2,offy2
+        ... ]</li>
+      <li>matrix - transformation matrix of the resulting polygon</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code>color1 = selectColor("#800000")<br>
+        <br>
+        c1 = faceFlatMatrix( [ 0,0, 0,2, 1,1, 1,-1, 0,-2], matrix1 )<br>
+        <br>
+        partModel = model( color1, color1, color1, [c1], matrix1 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceFlat.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
