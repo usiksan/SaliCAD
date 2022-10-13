@@ -48,6 +48,7 @@ Description
 #include <QPaintEvent>
 #include <QImage>
 #include <QMessageBox>
+#include <QFileDialog>
 #include <QDebug>
 #include <QScrollBar>
 #include <QtPrintSupport/QPrinter>
@@ -1097,6 +1098,29 @@ void SdWEditorGraph::cmEditUnSelect()
   //Only for selecting mode
   if( mMode == mSelect && mSelect != nullptr )
     mSelect->unselect(false);
+  }
+
+
+
+void SdWEditorGraph::cmEditSelectSave()
+  {
+  //Only for selecting mode
+  if( mMode == mSelect && mSelect != nullptr ) {
+    QString filter;
+    QString fname = QFileDialog::getSaveFileName( this, tr("Enter file name for save image"), QString(), tr("PNG files (*.png);;SVG files (*.svg)"), &filter );
+    if( !fname.isEmpty() ) {
+      if( filter.contains("png") ) {
+        if( !fname.endsWith(".png") )
+          fname += ".png";
+        }
+      else if( filter.contains("svg") ) {
+        if( !fname.endsWith(".svg") )
+          fname += ".svg";
+        }
+      qDebug() << "save" << fname << filter;
+      mSelect->storeSelectionToFile( fname );
+      }
+    }
   }
 
 

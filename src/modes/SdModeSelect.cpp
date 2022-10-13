@@ -564,6 +564,32 @@ void SdModeSelect::keyUp(int key, QChar ch)
 
 
 
+//!
+//! \brief storeSelectionToFile Store selection to image file
+//! \param fname                Image file name
+//!
+void SdModeSelect::storeSelectionToFile(const QString fname)
+  {
+  //If selection present, then put it into clipboard
+  if( mFragment.count() ) {
+    //Calculate and write base fragment origin
+    //Вычислить и записать базовую точку фрагмента
+    SdRect over = mFragment.getOverRect();
+    //Align to current grid
+    SdPoint a = over.getBottomLeft();
+    SdPoint grid = mEditor->gridGet();
+    a.setX( (a.x() / grid.x()) * grid.x() );
+    a.setY( (a.y()  / grid.y()) * grid.y() );
+
+    mFragment.setOrigin( a );
+
+    //Store to file
+    mFragment.storeSelectionToFile( mEditor->scaleGet(), fname );
+    }
+  }
+
+
+
 
 //!
 //! \brief copy   Copy selection to clipboard

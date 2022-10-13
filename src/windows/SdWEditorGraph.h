@@ -124,6 +124,7 @@ class SdWEditorGraph : public SdWEditor
     virtual void           cmEditDelete() override;
     virtual void           cmEditSelectAll() override;
     virtual void           cmEditUnSelect() override;
+    virtual void           cmEditSelectSave() override;
 //    virtual void cmEditFind() {}
 //    virtual void cmEditReplace() {}
     virtual void           cmEditRotateGroup() override;

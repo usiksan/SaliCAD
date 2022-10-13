@@ -70,6 +70,13 @@ class SdSelector : public SdObject
     void                putToClipboard(const SdProject *project , double scale, SdWEditor::SdCopyFormat format );
     SdProject          *getFromClipboard();
 
+    //!
+    //! \brief storeSelectionToFile Store selection picture to file
+    //! \param scale                Current scale factor for editor
+    //! \param fname                File name for stored picture
+    //!
+    void                storeSelectionToFile(double scale, const QString fname );
+
 
     //!
     //! \brief json Overloaded function to write object content into json writer

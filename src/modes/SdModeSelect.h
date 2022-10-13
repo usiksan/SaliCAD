@@ -80,6 +80,12 @@ class SdModeSelect : public SdMode
     virtual void    keyUp(int key, QChar ch) override;
 
     //!
+    //! \brief storeSelectionToFile Store selection to image file
+    //! \param fname                Image file name
+    //!
+    void            storeSelectionToFile( const QString fname );
+
+    //!
     //! \brief copy   Copy selection to clipboard
     //! \param format Copy format (default, svg, web)
     //!

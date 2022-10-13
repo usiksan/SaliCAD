@@ -300,6 +300,73 @@ SdProject *SdSelector::getFromClipboard()
 
 
 
+
+
+//!
+//! \brief storeSelectionToFile Store selection picture to file
+//! \param scale                Current scale factor for editor
+//! \param fname                File name for stored picture
+//!
+void SdSelector::storeSelectionToFile( double scale, const QString fname)
+  {
+  SdRect r = getOverRect();    //Охватывающий прямоугольник
+  if( fname.endsWith( QStringLiteral(".svg") )  ) {
+    //Store as svg file
+    QSvgGenerator svgGenerator;
+    svgGenerator.setFileName( fname );
+    //svgGenerator.setResolution( 25 );
+    svgGenerator.setSize( QSize(1200,800) );
+    svgGenerator.setViewBox( QRect( 0, 0, r.width(), r.height() ) );
+    svgGenerator.setTitle( "SaliCAD SVG drawing" );
+    svgGenerator.setDescription( "An SVG drawing created by the SaliCAD SVG Generator " );
+    QPainter svgPainter;
+    svgPainter.begin( &svgGenerator );
+
+    //Draw context
+    SdContext svgCtx( SdPoint(10,10), &svgPainter );
+    svgCtx.setOverZeroWidth(2);
+    //View converter
+    SdConverterView svgView( r.size(), r.center(), 1 );
+    svgCtx.setConverter( &svgView );
+    //Draw process
+    draw( &svgCtx );
+
+    svgPainter.end();
+    }
+  else {
+    //Store as png file
+    SdPoint a = r.getBottomLeft();
+    SdPoint b = r.getTopRight();
+    a.move( SdPoint(-10,-10) );
+    b.move( SdPoint(10,10) ); //Расширить, чтобы вошли пограничные объекты
+    r.set( a, b );
+    QSize s;                             //Размер битовой карты в пикселах
+    s.setWidth( qMin( static_cast<int>(r.width() / scale + 10), CLIP_IMAGE_WIDTH ) ); //Вычисление размера
+    s.setHeight( qMin( static_cast<int>(r.height() / scale + 10), CLIP_IMAGE_HEIGHT ) );
+
+
+    //Alternative copy as image
+    QImage image( s, QImage::Format_ARGB32 );
+    //Fill white color
+    image.fill( Qt::white );
+    //Qt painter
+    QPainter painter( &image );
+    //Draw context
+    SdContext ctx( SdPoint(10,10), &painter );
+    //View converter
+    SdConverterView view( s, r.center(), scale );
+    ctx.setConverter( &view );
+    //Draw process
+    draw( &ctx );
+
+    //Store image
+    image.save( fname );
+    }
+  }
+
+
+
+
 //!
 //! \brief json Overloaded function to write object content into json writer
 //!             Overrided function
