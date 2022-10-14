@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListHexagon</title>
+  </head>
+  <body>
+    <h1 align="center">faceListHexagon</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a><a
+        href="contents.htm"></a><a href="contents.htm"></a>faceListHexagon</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListHexagon( <a href="scriptTypeFloat.htm">Float</a>
+      lenght, <a href="scriptTypeFloat.htm">Float</a> topLenght, <a href="scriptTypeFloat.htm">Float</a>
+      height, <a href="scriptTypeFloat.htm">Float</a> width ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function builds a hexagonal component body.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>lenght - the length of the body in the middle part</li>
+      <li>topLenght - the length of the body in the upper and lower parts
+        (assumed to be the same)</li>
+      <li>height - body height</li>
+      <li>width - body width</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        body = faceListHexagon( 4, 3.6, 1, 3 )<br>
+        <br>
+        partModel = model( color1, color1, color1, body, matrix1 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceListHexagon.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

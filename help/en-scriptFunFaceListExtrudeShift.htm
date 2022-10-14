@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListExtrudeShift</title>
+  </head>
+  <body>
+    <h1 align="center">faceListExtrudeShift</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a><a
+        href="contents.htm"></a><a href="contents.htm"></a>faceListExtrudeShift</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListExtrudeShift( <a href="scriptTypeFace.htm">Face</a>
+      src, <a href="scriptTypeFloat.htm">Float</a> height ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function extrudes from the original surface in the direction
+      perpendicular to this surface, forming a body. The original surface is
+      duplicated by transferring in the direction perpendicular to the original
+      surface by a given amount and walls are built between the resulting
+      surfaces. The resulting set of surfaces, including the original surface
+      and the duplicated one, are returned as a body.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>src - initial surface</li>
+      <li>height - hood height (positive numbers - hood down, negative numbers -
+        up)</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        b1 = faceRect( 3, 2, matrixRotate( matrix1, 20, 0, 1, 0 ) )<br>
+        body = faceListExtrudeShift( b1, -1 )<br>
+        <br>
+        partModel = model( color1, color1, color1, body, matrix1 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceListExtrudeShift.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
