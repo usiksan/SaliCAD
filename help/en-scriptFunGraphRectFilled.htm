@@ -1,17 +1,17 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>SaliCAD скрипт graphRect</title>
+    <title>SaliCAD скрипт graphRectFilled</title>
   </head>
   <body>
-    <h1 align="center">graphRect</h1>
+    <h1 align="center">graphRectFilled</h1>
     <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
         href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a><a
-        href="contents.htm"></a><a href="contents.htm"></a><a href="contents.htm"></a>graphRect</p>
+        href="contents.htm"></a><a href="contents.htm"></a><a href="contents.htm"></a>graphRectFilled</p>
     <hr>
     <h3>Prototype</h3>
     <h3></h3>
-    <p><a href="scriptTypeGraph2d.htm">Graph2d</a> graphRect( <a href="scriptTypeFloatList.htm">FloatList</a>
+    <p><a href="scriptTypeGraph2d.htm">Graph2d</a> graphRectFilled( <a href="scriptTypeFloatList.htm">FloatList</a>
       [cornerX0, cornerY0], <a href="scriptTypeFloatList.htm">FloatList</a>
       [cornerX1, cornerY1] ) </p>
     <h3>Description</h3>
@@ -24,19 +24,19 @@
     All 2d objects are constructed in the XY plane with a slight offset along
     the axis.<br>
     <br>
-    This function builds a rectangle based on its parameters
+    This function builds a filled rectangle based on its parameters
     <h3>Parameters</h3>
     <h3></h3>
     <ul>
-      <li>cornerX0, cornerY0 - coordinates of the first corner of the rectangle</li>
+      <li>cornerX0,cornerY0 - coordinates of the first corner of the rectangle</li>
       <li>cornerX1, cornerY1 - coordinates of the opposite (diagonal) corner of
         the rectangle</li>
     </ul>
     <h3>Example</h3>
     <h3></h3>
-    <p> <code> partFlat = graphRect( [0,0], [2,1] )</code> </p>
+    <p> <code> partFlat = graphRectFilled( [0,0], [2,1] )</code> </p>
     <p>This example will form the following image:</p>
-    <p><img src="scriptFunGraphRect.png"> </p>
+    <p><img src="scriptFunGraphRectFilled.png"> </p>
     <p></p>
     <p> </p>
     <p> </p>

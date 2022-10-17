@@ -5,27 +5,43 @@
   </head>
   <body>
     <h1 align="center">graphPin</h1>
-    <p><a href="3dModel.htm">Contents</a>=&gt;<a href="3dFunctions.htm">Functions</a>=&gt;graphPin</p>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a><a
+        href="contents.htm"></a><a href="contents.htm"></a><a href="contents.htm"></a>graphPin
+    </p>
     <hr>
     <h3>Prototype</h3>
-    <p><a href="3dTypeGraph.htm">Graph</a> graphPin( <a href="3dTypeVertex.htm">Vertex</a>
-      pinPosition, <a href="3dTypeString.htm">String</a> pinPadDescription, <a
-        href="3dTypeVertex.htm">Vertex</a> pinNumberPosition, <a href="3dTypeString.htm">String</a>
-      pinNumber, <a href="3dTypeString.htm">String</a> pinNumberAttributes, <a
-        href="3dTypeVertex.htm">Vertex</a> pinNamePosition, <a href="3dTypeString.htm">String</a>
-      pinNameAttributes) </p>
+    <h3></h3>
+    <p><a href="scriptTypeGraph2d.htm">Graph2d</a> graphPin( <a href="scriptTypeFloatList.htm">FloatList</a>
+      [pinPosX, pinPosY], <a href="scriptTypeString.htm">String</a>
+      padDescription, <a href="scriptTypeFloatList.htm">FloatList</a>
+      [pinNumberPosX,pinNumberPosY], <a href="scriptTypeString.htm">String</a>
+      pinNumber, <a href="scriptTypeString.htm">String</a> pinNuberAttr, <a href="scriptTypeFloatList.htm">FloatList</a>
+      [pinNamePosX,pinNamePosY], <a href="scriptTypeString.htm">String</a>
+      pinNameAttr ) </p>
     <h3>Description</h3>
-    <p> This function builds <a href="3dTypeGraph.htm">Graph</a> pin from its
-      params.</p>
+    <h3></h3>
+    The function builds a 2d object in 3d space. The functions of this class are
+    designed to create complex component generation wizards, where a 3d model
+    and a 2d image of a component are generated in one script. To build ordinary
+    3d models, using these functions does not make sense.<br>
+    <br>
+    All 2d objects are constructed in the XY plane with a slight offset along
+    the axis.<br>
+    <br>
+    This function builds the output of the component based on its parameters. In
+    3d space, only the contact area is displayed. The main construction takes
+    place in 2d space.
     <h3>Parameters</h3>
+    <h3></h3>
     <ul>
-      <li>pinPosition - pin position vertex</li>
-      <li>pinPadDescription - pin pad description</li>
-      <li> pinNumberPosition - pin number position vertex</li>
+      <li>pinPosX, pinPosY - coordinates of the pin center</li>
+      <li>padDescription - pin pad description</li>
+      <li>pinNumberPosX,pinNumberPosY - pin number position</li>
       <li>pinNumber - pin number</li>
-      <li>pinNumberAttributes - pin number attributes, see text attributes</li>
-      <li>pinNamePosition - pin name position</li>
-      <li>pinNameAttributes - pin name attributes, see text attributes</li>
+      <li>pinNuberAttr - pin number attributes, see text attributes</li>
+      <li>pinNamePosX,pinNamePosY - pin name position</li>
+      <li>pinNameAttr - pin name attributes, see text attributes</li>
     </ul>
     <h3>Text attributes</h3>
     <p>Text attributes are used to set the horizontal and vertical alignment of
@@ -38,5 +54,16 @@
       <li>90 - angle of text rotation in degree, may be one of 0, 90, 180 and
         270</li>
     </ul>
+    <p> </p>
+    <ul>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code>partFlat = graphPin( [0,0], "c1.2d0.6m0.1", [0,0], "1", "CM0",
+        [0,0], "CM0" )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunGraphPin.png"></p>
+    <p><a href="3dModel.htm"></a></p>
+    <br>
   </body>
 </html>

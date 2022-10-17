@@ -1,19 +1,18 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>SaliCAD скрипт graphRect</title>
+    <title>SaliCAD скрипт graphLine</title>
   </head>
   <body>
-    <h1 align="center">graphRect</h1>
+    <h1 align="center">graphLine</h1>
     <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
         href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a><a
-        href="contents.htm"></a><a href="contents.htm"></a><a href="contents.htm"></a>graphRect</p>
+        href="contents.htm"></a><a href="contents.htm"></a><a href="contents.htm"></a>graphLine</p>
     <hr>
     <h3>Prototype</h3>
     <h3></h3>
-    <p><a href="scriptTypeGraph2d.htm">Graph2d</a> graphRect( <a href="scriptTypeFloatList.htm">FloatList</a>
-      [cornerX0, cornerY0], <a href="scriptTypeFloatList.htm">FloatList</a>
-      [cornerX1, cornerY1] ) </p>
+    <p><a href="scriptTypeGraph2d.htm">Graph2d</a> graphLine( <a href="scriptTypeFloatList.htm">FloatList</a>
+      [X0, Y0], <a href="scriptTypeFloatList.htm">FloatList</a> [X1, Y1] ) </p>
     <h3>Description</h3>
     <h3></h3>
     The function builds a 2d object in 3d space. The functions of this class are
@@ -24,19 +23,18 @@
     All 2d objects are constructed in the XY plane with a slight offset along
     the axis.<br>
     <br>
-    This function builds a rectangle based on its parameters
+    This function builds a segment based on its parameters
     <h3>Parameters</h3>
     <h3></h3>
     <ul>
-      <li>cornerX0, cornerY0 - coordinates of the first corner of the rectangle</li>
-      <li>cornerX1, cornerY1 - coordinates of the opposite (diagonal) corner of
-        the rectangle</li>
+      <li>X0,Y0 - coordinates of the beginning of the segment</li>
+      <li>X1,Y1 - coordinates of the end of the segment</li>
     </ul>
     <h3>Example</h3>
     <h3></h3>
-    <p> <code> partFlat = graphRect( [0,0], [2,1] )</code> </p>
+    <p> <code>partFlat = graphLine( [0,0], [2,1] )</code> </p>
     <p>This example will form the following image:</p>
-    <p><img src="scriptFunGraphRect.png"> </p>
+    <p><img src="scriptFunGraphLine.png"> </p>
     <p></p>
     <p> </p>
     <p> </p>

@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт facePart</title>
+  </head>
+  <body>
+    <h1 align="center">facePart</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a><a
+        href="contents.htm"></a><a href="contents.htm"></a><a href="contents.htm"></a>facePart</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFace.htm">Face</a> facePart(<a href="scriptTypeFace.htm">Face</a>
+      src, <a href="scriptTypeFloatList.htm">FloatList</a> vertexIndexes ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function builds a polygon from the vertices of another polygon. The
+      source polygon is set by the src parameter. The vertex Indexes parameter
+      contains a sequential list of indexes of the vertices of the source
+      polygon that will make up the resulting polygon.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>src - source polygon</li>
+      <li>vertexIndexes - list of indexes of the original polygon that make up
+        the resulting polygon</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code>color1 = selectColor("#800000")<br>
+        color2 = selectColor("#008000")<br>
+        <br>
+        c1 = faceFlatMatrix( [ 0,0, 0,2, 1,1, 1,-1, 0,-2], matrix1 )<br>
+        <br>
+        c2 = facePart( c1, [ 1, 2, 3 ] )<br>
+        <br>
+        partModel = model( color1, color1, color1, [c1], matrix1 )<br>
+        partModel = model( color2, color2, color2, [c2], matrixTranslate(
+        matrix1, 2.2, 0, 0) ) </code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFacePart.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

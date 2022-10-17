@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceRectSide</title>
+  </head>
+  <body>
+    <h1 align="center">faceRectSide</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a><a
+        href="contents.htm"></a><a href="contents.htm"></a><a href="contents.htm"></a>faceRectSide</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFace.htm">Face</a> faceRectSide( <a href="scriptTypeFloat.htm">Float</a>
+      length, <a href="scriptTypeFloat.htm">Float</a> width, <a href="scriptTypeFloat.htm">Float</a>
+      sideCount, <a href="scriptTypeMatrix.htm">Matrix</a> transfer ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function constructs a surface in the form of a rectangle consisting
+      of a polyline with a specified number of edges. The resulting rectangle
+      can be transformed using a matrix. Despite the number of edges, the shape
+      looks like a rectangle.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>length - rectangle length X</li>
+      <li>width - rectangle width Y</li>
+      <li>sideCount - the number of edges of the polygon must be a multiple of
+        the 4th</li>
+      <li>transfer - final rectangle transformation</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code>color1 = selectColor("#800000")<br>
+        <br>
+        r1 = faceRectSide( 2, 1, 40, matrix1 )<br>
+        <br>
+        partModel = model( color1, color1, color1, [r1], matrix1 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceRect.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
