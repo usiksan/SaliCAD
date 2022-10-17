@@ -63,7 +63,7 @@ class SdPItemPlate : public SdProjectItem
 
     //Stratum count
     int                    stratumCount() const { return mStratumCount; }
-    void                   setStratumCount( int sc ) { mStratumCount = sc; mRatNetDirty = true; }
+    void                   setStratumCount( int sc );
     int                    stratumMask() const;
 
     SdGraphPartImp        *allocPartImp(int *section, SdPItemPart *part, SdPItemComponent *comp, SdPItemSymbol *sym, const SdStringMap &param, SdUndo *undo);

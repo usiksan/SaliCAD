@@ -248,8 +248,8 @@ SdProject *SdSelector::getFromClipboard()
     //Retrive Json object from clipboard
     QJsonObject obj = QCborValue::fromCbor( mime->data(QStringLiteral(SD_CLIP_FORMAT_SELECTOR)) ).toJsonValue().toObject();
 
-    SdObjectMap map;
-    SdJsonReader js( obj, &map );
+    SdJsonReaderProperty prop;
+    SdJsonReader js( obj, &prop );
 
     //Create project
     SdProject *project = nullptr;
@@ -277,8 +277,8 @@ SdProject *SdSelector::getFromClipboard()
 
       QJsonObject obj = QCborValue::fromCbor( qUncompress(QByteArray::fromHex(packedHex)) ).toJsonValue().toObject();
 
-      SdObjectMap map;
-      SdJsonReader js( obj, &map );
+      SdJsonReaderProperty prop;
+      SdJsonReader js( obj, &prop );
 
       //Create project
       SdProject *project = nullptr;

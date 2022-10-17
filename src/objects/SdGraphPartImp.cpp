@@ -212,7 +212,7 @@ void SdPartImpPin::json(const SdJsonReader &js)
 
 
 
-QString SdPartImpPin::fromJson(SdObjectMap *map, const QJsonObject obj)
+QString SdPartImpPin::fromJson(SdJsonReaderProperty *map, const QJsonObject obj)
   {
   SdJsonReader js( obj, map );
   json( js );

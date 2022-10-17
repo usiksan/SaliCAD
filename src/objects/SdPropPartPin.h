@@ -51,7 +51,7 @@ struct SdPropPartPin
     //! \brief json Overloaded function to read object content from json reader
     //! \param js   Json reader
     //!
-    void json( const SvJsonReader &js);
+    void json( const SdJsonReader &js);
 
     void saveState( SdPropPartPinState *dst );
     void swapState( SdPropPartPinState *src );

@@ -256,9 +256,10 @@ History
 //SaliCAD database version
 //Must be compatible with previous versions
 #define SD_BASE_VERSION_1            1
+#define SD_BASE_VERSION_2            2
 
 //Current SaliCAD database version
-#define SD_BASE_VERSION              SD_BASE_VERSION_1
+#define SD_BASE_VERSION              SD_BASE_VERSION_2
 
 //Salicad json file type description
 #define SD_BASE_TYPE                 "SaliCAD file"

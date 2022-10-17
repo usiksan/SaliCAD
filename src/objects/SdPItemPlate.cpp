@@ -49,6 +49,20 @@ SdPItemPlate::SdPItemPlate() :
 
 
 
+void SdPItemPlate::setStratumCount(int sc)
+  {
+  //Count of stratum must be 1, 2, 4, 6 and etc
+  mStratumCount = (sc >> 1) << 1;
+  if( mStratumCount == 0 )
+    mStratumCount = 1;
+  if( mStratumCount > 30 )
+    mStratumCount = 30;
+  mRatNetDirty = true;
+  }
+
+
+
+
 
 int SdPItemPlate::stratumMask() const
   {

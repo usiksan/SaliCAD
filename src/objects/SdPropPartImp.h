@@ -45,7 +45,7 @@ struct SdPropPartImp
     //! \brief json Function to read object content from json reader
     //! \param js   Json reader
     //!
-    void json( const SvJsonReader &js);
+    void json( const SdJsonReader &js);
 
     void saveState( SdPropPartImpState *dst );
     void swapState( SdPropPartImpState *src );

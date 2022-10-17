@@ -50,16 +50,24 @@ class SdJsonWriter : public SvJsonWriter3d
   };
 
 
-class SdJsonReader : public SvJsonReader3dExt<SdObjectMap>
+struct SdJsonReaderProperty
+  {
+    SdObjectMap mMap;
+    int         mVersion;
+  };
+
+
+
+class SdJsonReader : public SvJsonReader3dExt<SdJsonReaderProperty>
   {
   public:
     //!
     //! \brief SvJsonReader Constructor for reader
     //! \param obj          Object which json readed
     //!
-    SdJsonReader( const QJsonObject &obj, SdObjectMap *prop ) : SvJsonReader3dExt<SdObjectMap>( obj, prop ) {}
+    SdJsonReader( const QJsonObject &obj, SdJsonReaderProperty *prop ) : SvJsonReader3dExt<SdJsonReaderProperty>( obj, prop ) {}
 
-    SdJsonReader( const QJsonObject &obj, const SdJsonReader &src ) : SvJsonReader3dExt<SdObjectMap>( obj, src.property() ) {}
+    SdJsonReader( const QJsonObject &obj, const SdJsonReader &src ) : SvJsonReader3dExt<SdJsonReaderProperty>( obj, src.property() ) {}
 
     template <class SvClassPtr>
     void jsonObjectPtr( const QString &key, SvClassPtr &ptr ) const

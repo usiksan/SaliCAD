@@ -33,6 +33,7 @@ class SdPItemSymbol;
 class SdPItemComponent;
 class SdGraphSymImp;
 class SdGraphRoadPin;
+class SdJsonReaderProperty;
 
 //Part implementation pin [Ножка вхождения корпуса]
 struct SdPartImpPin {
@@ -76,7 +77,7 @@ struct SdPartImpPin {
   //!
   void        json( const SdJsonReader &js );
 
-  QString     fromJson( SdObjectMap *map, const QJsonObject obj );
+  QString     fromJson( SdJsonReaderProperty *map, const QJsonObject obj );
   };
 
 typedef QMap<QString,SdPartImpPin> SdPartImpPinTable;

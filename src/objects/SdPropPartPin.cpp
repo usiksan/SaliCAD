@@ -12,6 +12,7 @@ Description
 */
 
 #include "SdPropPartPin.h"
+#include "SdJsonIO.h"
 
 
 void SdPropPartPin::operator =(const SdPropPartPin &sour)
@@ -69,7 +70,7 @@ void SdPropPartPin::json(SvJsonWriter &js) const
 //! \brief json Overloaded function to read object content from json reader
 //! \param js   Json reader
 //!
-void SdPropPartPin::json(const SvJsonReader &js)
+void SdPropPartPin::json(const SdJsonReader &js)
   {
   mLayer.json( QStringLiteral("PartPinLayer"), js );
   mPinType.json( QStringLiteral("PartPinType"), js );

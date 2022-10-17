@@ -13,6 +13,7 @@ Description
 */
 
 #include "SdPropPartImp.h"
+#include "SdJsonIO.h"
 
 
 void SdPropPartImp::operator =(const SdPropPartImp &sour)
@@ -55,7 +56,8 @@ bool SdPropPartImp::match(const SdPropPartImp &prop)
 void SdPropPartImp::json(SvJsonWriter &js) const
   {
   mAngle.json( QStringLiteral("PartImpAngle"), js );
-  mSide.json( QStringLiteral("PartImpSide"), js );
+  //mSide.json( QStringLiteral("PartImpSide"), js );
+  mSide.jsonSide( js );
   }
 
 
@@ -64,10 +66,14 @@ void SdPropPartImp::json(SvJsonWriter &js) const
 //! \brief json Function to read object content from json reader
 //! \param js   Json reader
 //!
-void SdPropPartImp::json(const SvJsonReader &js)
+void SdPropPartImp::json(const SdJsonReader &js)
   {
   mAngle.json( QStringLiteral("PartImpAngle"), js );
-  mSide.json( QStringLiteral("PartImpSide"), js );
+  if( js.property()->mVersion == SD_BASE_VERSION_1 ) {
+    mSide.json( QStringLiteral("PartImpSide"), js );
+    if( mSide == stmBottomV1 ) mSide = stmBottom;
+    }
+  else mSide.jsonSide( js );
   }
 
 

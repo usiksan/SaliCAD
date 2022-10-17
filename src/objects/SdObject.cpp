@@ -255,8 +255,9 @@ QJsonObject SdObject::jsonObjectTo() const
 
 SdObject *SdObject::jsonObjectFrom(const QJsonObject obj)
   {
-  SdObjectMap map;
+  SdJsonReaderProperty map;
   SdJsonReader js( obj, &map );
+  js.jsonInt( "A version", map.mVersion, 0 );
   return buildFromJson( js );
   }
 
@@ -381,15 +382,15 @@ SdObject *SdObject::readPtr(const SdJsonReader &js)
     return nullptr;
 
   //Check if object already in the map
-  if( js.property()->contains(id) )
-    return js.property()->value(id);
+  if( js.property()->mMap.contains(id) )
+    return js.property()->mMap.value(id);
 
   //Build new object
   QString type;
   js.jsonString( QStringLiteral(SDKO_TYPE), type );
   SdObject *r = build( type );
   //Register new object in the map
-  js.property()->insert( id, r );
+  js.property()->mMap.insert( id, r );
   //and return new object
   return r;
   }

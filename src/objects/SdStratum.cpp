@@ -12,6 +12,7 @@ Description
 */
 #include "SdStratum.h"
 #include "SdEnvir.h"
+#include "SdJsonIO.h"
 
 SdStratum::SdStratum() :
   SdPropInt()
@@ -36,10 +37,45 @@ void SdStratum::jsonStratum(SvJsonWriter &js) const
 
 
 
-void SdStratum::jsonStratum(const SvJsonReader &js)
+
+void SdStratum::jsonStratum(const SdJsonReader &js)
   {
   mValue = js.object().value( QStringLiteral("Stratum") ).toString().toInt( nullptr, 16 );
+  if( js.property()->mVersion == SD_BASE_VERSION_1 ) {
+    //Convert bottom stratum
+    if( mValue == stmBottomV1 )
+      mValue = stmBottom;
+    else if( mValue > stmBottomV1 && mValue != stmThrough )
+      mValue >>= 1;
+    }
   }
+
+
+
+void SdStratum::jsonSide(SvJsonWriter &js) const
+  {
+  QString side;
+  switch( mValue ) {
+    case stmTop : side = "top"; break;
+    case stmBottom : side = "bot"; break;
+    default: side = QString::number( mValue, 16 );
+    }
+  js.jsonString( "Side", side );
+  }
+
+
+
+void SdStratum::jsonSide(const SdJsonReader &js)
+  {
+  QString side;
+  js.jsonString( "Side", side );
+  if( side == "top" ) mValue = stmTop;
+  else if( side == "bot" ) mValue = stmBottom;
+  else mValue = side.toInt( nullptr, 16 );
+  }
+
+
+
 
 
 
@@ -138,7 +174,24 @@ int SdStratum::stratumIndex(int stratum)
 //Build stratum stack with stratum count
 int SdStratum::stratumStack(int stratumCount)
   {
-  if( stratumCount < 1 ) stratumCount = 1;
-  if( stratumCount > stmCountMax ) stratumCount = stmCountMax;
-  return stmThrough >> (stmCountMax - stratumCount);
+  switch( stratumCount ) {
+    case 30 : return stmLayer30;
+    case 28 : return stmLayer28;
+    case 26 : return stmLayer26;
+    case 24 : return stmLayer24;
+    case 22 : return stmLayer22;
+    case 20 : return stmLayer20;
+    case 18 : return stmLayer18;
+    case 16 : return stmLayer16;
+    case 14 : return stmLayer14;
+    case 12 : return stmLayer12;
+    case 10 : return stmLayer10;
+    case 8 : return stmLayer8;
+    case 6 : return stmLayer6;
+    case 4 : return stmLayer4;
+    case 2 : return stmLayer2;
+    case 1 : return stmLayer1;
+    default:
+      return stmTop;
+    }
   }
