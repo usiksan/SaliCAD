@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListWallList</title>
+  </head>
+  <body>
+    <h1 align="center">faceListWallList</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a>faceListWallList</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListWallList( <a href="scriptTypeFaceList.htm">FaceList</a>
+      src, <a href="scriptTypeFaceList.htm">FaceList</a> dst, <a href="scriptTypeBool.htm">Bool</a>
+      close ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function builds walls between sets of src and dst surfaces. The
+      number of points in the corresponding source surfaces must be the same,
+      the number of surfaces in the source sets must also be the same. The close
+      parameter determines whether to build a wall between the end and start
+      points of each surface.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>src - source list of surfaces (floors)</li>
+      <li>dst - набор целевых поверхностей (потолоки)</li>
+      <li>close - when true, a wall is built between the last and first points
+        of each surface in the set, otherwise, this wall is not built and the
+        figures are open</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        cb1 = faceCircleSide( 3, 6, matrix1 )<br>
+        ct1 = faceDuplicateShift( cb1, 4 )<br>
+        cb2 = faceCircleSide( 3, 8, matrixTranslate( matrix1, 6, 0, 0 ) )<br>
+        ct2 = faceDuplicateShift( cb2, 2 )<br>
+        <br>
+        h1 = faceListWallList( [cb1,cb2], [ct1,ct2], true )<br>
+        <br>
+        partModel = model( color1, color1, color1, h1, matrix1 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceListWallList.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListWallDoubleBevelXY</title>
+  </head>
+  <body>
+    <h1 align="center">faceListWallDoubleBevelXY</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a>faceListWallDoubleBevelXY</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListWallDoubleBevelXY(
+      <a href="scriptTypeFace.htm">Face</a> src, <a href="scriptTypeFace.htm">Face</a>
+      dst, <a href="scriptTypeFloat.htm">Float</a> radiusBot, <a href="scriptTypeFloat.htm">Float</a>
+      radiusTop, <a href="scriptTypeFloat.htm">Float</a> angleStepBot, <a href="scriptTypeFloat.htm">Float</a>
+      angleStepTop, <a href="scriptTypeFloat.htm">Float</a> height ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function builds two chamfer walls, bottom and top, between the src
+      and DST surfaces. The number of points in the source surfaces must be the
+      same.&nbsp; Different combinations of the sign in the
+      faceListWallDoubleBevelXY parameters allow you to get different shapes of
+      chamfers.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>src - source surface</li>
+      <li>dst - target surface<span style="color: #0000ee;"></span></li>
+      <li>radiusBot - chamfer radius from below</li>
+      <li>radiusTop - chamfer radius from above</li>
+      <li>angleStepBot - the size of the angle step for approximating the curve
+        of the chamfer surface from below</li>
+      <li>angleStepTop - the size of the angle step for approximating the curve
+        of the chamfer surface from above</li>
+      <li>height - height between the lower and upper chamfers (external size)</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        c1 = faceCircleSide( 3, 56, matrix1 )<br>
+        c2 = faceDuplicateShift( c1, 2 )<br>
+        <br>
+        h1 = faceListWallDoubleBevelXY( c1, c2, 1, -1, -10, 10, 2 )<br>
+        <br>
+        partModel = model( color1, color1, color1, h1, matrix1 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceListWallDoubleBevelXY.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListWall</title>
+  </head>
+  <body>
+    <h1 align="center">faceListWall</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a>faceListWall</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListWall( <a href="scriptTypeFace.htm">Face</a>
+      src, <a href="scriptTypeFace.htm">Face</a> dst, <a href="scriptTypeBool.htm">Bool</a>
+      close ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function builds walls between the src and dst surfaces. The number
+      of points in the source surfaces must be the same. In fact, the dst
+      surface is usually obtained by some transformation of the src surface. The
+      close parameter determines whether to build a wall between the end and
+      start points.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>src - source surface (floor)</li>
+      <li>dst - target surface (ceiling)</li>
+      <li>close - when true, a wall is built between the last and first points,
+        otherwise, this wall is not built and the figure turns out to be open</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        c1 = faceCircleSide( 3, 6, matrix1 )<br>
+        c2 = faceDuplicateShift( c1, 4 )<br>
+        <br>
+        h1 = faceListWall( c1, c2, true )<br>
+        <br>
+        partModel = model( color1, color1, color1, h1, matrix1 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceListWall.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

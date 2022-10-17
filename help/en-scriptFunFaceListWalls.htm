@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListWalls</title>
+  </head>
+  <body>
+    <h1 align="center">faceListWalls</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a>faceListWalls</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListWalls( <a href="scriptTypeFaceList.htm">FaceList</a>
+      floors, <a href="scriptTypeBool.htm">Bool</a> close ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    This function builds walls between floors represented by a set of surfaces.
+    The number of points in the surfaces must be the same. The close parameter
+    determines whether to build a wall between the end and start points of each
+    surface.<br>
+    <br>
+    The layout of the floors is arbitrary, not just horizontal. Therefore, using
+    this function, rotation bodies can be obtained, as shown in the example.
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>floors - list of floor surfaces</li>
+      <li>close - when true, a wall is built between the last and first points,
+        otherwise, this wall is not built and the figure turns out to be open</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        pin = faceListRotation( 0, 80, 20, matrix1, [ 0.5,0, 0.5,0, 0,1, -0.5,0
+        ] )<br>
+        <br>
+        pin = <a href="scriptFunFaceListWalls.htm">faceListWalls</a>( pin,
+        false )<br>
+        <br>
+        partModel = model( color1, color1, color1, pin, matrix1 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceListRotation.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListWallBevelXY</title>
+  </head>
+  <body>
+    <h1 align="center">faceListWallBevelXY</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a>faceListWallBevelXY</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListWallBevelXY( <a href="scriptTypeFace.htm">Face</a>
+      src, <a href="scriptTypeFace.htm">Face</a> dst, <a href="scriptTypeFloat.htm">Float</a>
+      radius, <a href="scriptTypeFloat.htm">Float</a> angleStep ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function builds chamfer walls between src and dst surfaces. The
+      number of points in the source surfaces must be the same. It is
+      recommended to get the dst surface using the faceBevelXY function.
+      Different combinations of the sign in the faceBevelXY and
+      faceListWallBevelXY parameters allow you to get different chamfer shapes.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>src - source surface</li>
+      <li>dst - the target surface obtained using the faceBevelXY function<a href="scriptFunFaceBevelXY.htm"></a></li>
+      <li>radius - chamfer radius</li>
+      <li>angleStep - the size of the angle step for approximating the curve of
+        the chamfer surface</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        c1 = faceCircleSide( 3, 56, matrix1 )<br>
+        c2 = faceBevelXY( c1, 1 )<br>
+        <br>
+        h1 = faceListWallBevelXY( c1, c2, 1, 2 )<br>
+        <br>
+        partModel = model( color1, color1, color1, h1, matrix1 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceListBevelXY.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

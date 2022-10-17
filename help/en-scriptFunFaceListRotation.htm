@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт faceListRotation</title>
+  </head>
+  <body>
+    <h1 align="center">faceListRotation</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a>faceListRotation</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeFaceList.htm">FaceList</a> faceListRotation( <a href="scriptTypeFloat.htm">Float</a>
+      angleStart, <a href="scriptTypeFloat.htm">Float</a> angleStop, <a href="scriptTypeFloat.htm">Float</a>
+      sideCount, <a href="scriptTypeMatrix.htm">Matrix</a> translate, <a href="scriptTypeFloatList.htm">FloatList</a>
+      profilePairs ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function builds a set of rotated profiles based on the original
+      profile. This function, together with faceListWalls, is used to build
+      rotation surfaces. The initial profile is built on the XZ plane. Then a
+      set of rotation points is formed by sequentially rotating the initial
+      profile around the OZ axis by an angle equal to the angle step (the
+      difference between the initial and final angles divided by the number of
+      sides). The resulting set of points is transformed using a matrix.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>angleStart - the initial angle of the profile</li>
+      <li>angleStop - the final angle of the profile</li>
+      <li>sideCount - number of sides of the rotation approximation</li>
+      <li>translate - matrix of the resulting transformation</li>
+      <li>profilePairs - a set of pairs of values that define the vertices of
+        the original profile. Each pair represents a vertex offset relative to
+        the previous vertex</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        <br>
+        pin = faceListRotation( 0, 80, 20, matrix1, [ 0.5,0, 0.5,0, 0,1, -0.5,0
+        ] )<br>
+        <br>
+        pin = <a href="scriptFunFaceListWalls.htm">faceListWalls</a>( pin,
+        false )<br>
+        <br>
+        partModel = model( color1, color1, color1, pin, matrix1 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceListRotation.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>
