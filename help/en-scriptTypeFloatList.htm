@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD script. Float list type</title>
+  </head>
+  <body>
+    <h1 align="center">Float list type</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="scriptSch.htm">Schematic
+        script</a>=&gt;<a href="contents.htm"></a>Float list type</p>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="contents.htm"></a>Float list type</p>
+    <hr>
+    <p> Multiple floating-point values can be combined into sets or arrays.
+      These sets are used to set two-dimensional coordinates, indexes, etc. </p>
+    <p>The [] operation is used to create sets. For example,</p>
+    <p> <code>far1 = [ 1.0, 2.0, 900, -1]</code> </p>
+    <p> In this case, the variable var1 is assigned a set of four values. </p>
+    <p>A set can be used inside another set, while all elements of the first set
+      are copied into the second.</p>
+    <p><code>far2 = [ 10.9, far1, -100]</code> </p>
+    В результате набор far2 будет состоять из шести значений: значение 10.9,
+    затем элементы набора far1, затем -100.
+    <p>Важно! Вставка не может быть в первую позицию, т.е.</p>
+    <code>far3 = [far1, 50] #Ошибка!</code>
+    <p>No operations are allowed for sets. The sets themselves are used in
+      function calls and the data placed in such sets is determined by the
+      corresponding function parameter.<br>
+    </p>
+  </body>
+</html>

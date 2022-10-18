@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD 3d script. Face list type</title>
+  </head>
+  <body>
+    <h1 align="center">Face list type</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="contents.htm"></a>Face list type</p>
+    <hr>
+    <p>A list of surfaces is a set of one or more <a href="scriptTypeFace.htm">surfaces</a>.</p>
+    <img src="3dFaceList.png">
+    <p>Sets of surfaces form the basis of <a href="scriptTypeModel.htm">models</a>.<br>
+    </p>
+    <p>A set of surfaces can be made up of individual surfaces, as well as other
+      sets using square brackets. For example:</p>
+    <code>fl1 = [ face0, face1 ]<br>
+      fl2 = [ face2, fl1 ]</code>
+    <p> The fl1 surface set consists of two surfaces: face0 and face1. The fl2
+      surface set consists of the face2 surface and all the surfaces of the fl1
+      set.</p>
+    <p>Important! For a set of surfaces, the first element in square brackets
+      should be a surface.</p>
+    <p> <code>fl3 = [fl1, face2] #Ошибка!</code></p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+  </body>
+</html>
