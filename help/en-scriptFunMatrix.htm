@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт matrix</title>
+  </head>
+  <body>
+    <h1 align="center">matrix</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a><a
+        href="contents.htm"></a><a href="contents.htm"></a><a href="contents.htm"></a>matrix</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeMatrix.htm">Matrix</a> matrix( <a href="scriptTypeFloat.htm">Float</a>
+      angleGrad, <a href="scriptTypeFloat.htm">Float</a> rotateX, <a href="scriptTypeFloat.htm">Float</a>
+      rotateY, <a href="scriptTypeFloat.htm">Float</a> rotateZ, <a href="scriptTypeFloat.htm">Float</a>
+      offX, <a href="scriptTypeFloat.htm">Float</a> offY, <a href="scriptTypeFloat.htm">Float</a>
+      offZ ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function builds builds a rotation and displacement matrix. Based on
+      the parameters angleGrard, rotateX, rotateY and rotateZ, rotation is
+      performed, and based on the parameters offX, offY and offZ, movement is
+      performed. Rotation is performed at an angle equal to angleGrad around the
+      vector, which is determined by the value of rotate. The movement is
+      determined by a vector with coordinates off.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>angleGrad - rotation angle in degrees around the vector rotateX,
+        rotateY, rotateZ</li>
+      <li>rotateX - x-component of the rotation vector</li>
+      <li>rotateY - y-component of the rotation vector</li>
+      <li>rotateZ - z-component of the rotation vector</li>
+      <li>offX - x-component of the displacement vector</li>
+      <li>offY - y-component of the displacement vector</li>
+      <li>offZ - z-component of the displacement vector</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code>matrix2 = matrix( 90, 1, 0, 0, 2, 0, 0 ) <br>
+      </code> </p>
+    <p>Rotates around the X axis by 90 degrees, and then shifts by 2 along the
+      same axis</p>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт modelAppend</title>
+  </head>
+  <body>
+    <h1 align="center">modelAppend</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a><a
+        href="contents.htm"></a><a href="contents.htm"></a><a href="contents.htm"></a><a
+        href="contents.htm"></a>modelAppend</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeModel.htm">Model</a> modelAppend( <a href="scriptTypeModel.htm">Model</a>
+      srcModel, <a href="scriptTypeColor.htm">Color</a> ambient, <a href="scriptTypeColor.htm">Color</a>
+      diffuse, <a href="scriptTypeColor.htm">Color</a> specular, <a href="scriptTypeFaceList.htm">FaceList</a>
+      faces ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function adds a set of surfaces with a different color to the model.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>srcModel - source model</li>
+      <li>ambient - model color</li>
+      <li>diffuse - model color</li>
+      <li>specular - model color</li>
+      <li>faces - set of model surfaces</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code> color1 = selectColor("#a00000")<br>
+        color2 = selectColor("#00a000")<br>
+        <br>
+        c1 = faceListCylinder( 2, 5 )<br>
+        c2 = faceListDuplicate( c1, matrixTranslate( matrix1, 5, 0, 0 ) )<br>
+        <br>
+        m1 = model( color1, color1, color1, c1, matrix1 )<br>
+        partModel = modelAppend( m1, color2, color2, color2, c2 )</code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunModelAppend.png"> </p>
+    <p></p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

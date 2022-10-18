@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт matrixRotate</title>
+  </head>
+  <body>
+    <h1 align="center">matrixRotate</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a><a
+        href="contents.htm"></a><a href="contents.htm"></a><a href="contents.htm"></a><a
+        href="contents.htm"></a>matrixRotate</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeMatrix.htm">Matrix</a> matrixRotate( <a href="scriptTypeMatrix.htm">Matrix</a>
+      src, <a href="scriptTypeFloat.htm">Float</a> angleGrad, <a href="scriptTypeFloat.htm">Float</a>
+      rotateX, <a href="scriptTypeFloat.htm">Float</a> rotateY, <a href="scriptTypeFloat.htm">Float</a>
+      rotateZ ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function builds builds the rotation matrix of the original matrix.
+      Based on the parameters angleGrad, rotateX, rotateY and rotateZ, the
+      rotation of the original src matrix is performed. Rotation is performed at
+      an angle equal to angleGrad around the vector, which is determined by the
+      value of rotate.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>src - the original matrix to which the rotation is added</li>
+      <li>angleGrad - rotation angle in degrees around the vector rotateX,
+        rotateY, rotateZ</li>
+      <li>rotateX - x-component of the rotation vector</li>
+      <li>rotateY - y-component of the rotation vector</li>
+      <li>rotateZ - z-component of the rotation vector</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code>matrix2 = matrixRotate( matrix1, 90, 1, 0, 0 ) <br>
+      </code> </p>
+    <p>Builds a new matrix by adding 90 degrees rotation around the X axis to
+      the original identity matrix matrix1.</p>
+  </body>
+</html>

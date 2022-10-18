@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт matrixTranslate</title>
+  </head>
+  <body>
+    <h1 align="center">matrixTranslate</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a><a
+        href="contents.htm"></a><a href="contents.htm"></a><a href="contents.htm"></a><a
+        href="contents.htm"></a>matrixTranslate</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeMatrix.htm">Matrix</a> matrixTranslate( <a href="scriptTypeMatrix.htm">Matrix</a>
+      src, <a href="scriptTypeFloat.htm">Float</a> offX, <a href="scriptTypeFloat.htm">Float</a>
+      offY, <a href="scriptTypeFloat.htm">Float</a> offZ ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function builds builds a displacement matrix based on the original
+      matrix. Based on the parameters offX, offY and offZ, the function builds a
+      displacement matrix.&nbsp; The movement is determined by a vector with
+      coordinates off.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>src - source matrix</li>
+      <li>offX - x-component of the displacement vector</li>
+      <li>offY - y-component of the displacement vector</li>
+      <li>offZ - z-component of the displacement vector</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code>color1 = selectColor("#800000")<br>
+        color2 = selectColor("#008000")<br>
+        <br>
+        c1 = faceCircle( 2, 10, matrix1 )<br>
+        <br>
+        mat = matrixTranslate( matrix1, 1, 0, 1 )<br>
+        <br>
+        c2 = faceDuplicate( c1, mat )<br>
+        <br>
+        partModel = model( color1, color1, color1, [c1], matrix1 )<br>
+        partModel = model( color2, color2, color2, [c2], matrix1 ) </code> </p>
+    <p>This example will form the following image:</p>
+    <p><img src="scriptFunFaceDuplicate.png"> </p>
+  </body>
+</html>

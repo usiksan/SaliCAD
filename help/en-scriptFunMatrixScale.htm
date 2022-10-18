@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD скрипт matrixScale</title>
+  </head>
+  <body>
+    <h1 align="center">matrixScale</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm">Script 3d</a>=&gt;<a
+        href="script3dFun.htm">Functions 3d</a>=&gt;<a href="contents.htm"></a><a
+        href="contents.htm"></a><a href="contents.htm"></a><a href="contents.htm"></a><a
+        href="contents.htm"></a>matrixScale</p>
+    <hr>
+    <h3>Prototype</h3>
+    <h3></h3>
+    <p><a href="scriptTypeMatrix.htm">Matrix</a> matrixScale( <a href="scriptTypeMatrix.htm">Matrix</a>
+      src, <a href="scriptTypeFloat.htm">Float</a> scaleX, <a href="scriptTypeFloat.htm">Float</a>
+      scaleY, <a href="scriptTypeFloat.htm">Float</a> scaleZ ) </p>
+    <h3>Description</h3>
+    <h3></h3>
+    <p>This function builds builds the scaling matrix of the original matrix.
+      Based on the scaleX, scaleY and scaleZ parameters, the original src matrix
+      is scaled. If the scale parameter is equal to 1.0, then scaling along this
+      axis is not performed, if it is less than 1, then a decrease is made, and
+      if it is greater, an increase is made.</p>
+    <h3>Parameters</h3>
+    <h3></h3>
+    <ul>
+      <li>src - the original matrix to which the scale is added</li>
+      <li>scaleX - scale on the x axis</li>
+      <li>scaleY - scale on the y axis</li>
+      <li>sclaeZ - scale on the z axis</li>
+    </ul>
+    <h3>Example</h3>
+    <h3></h3>
+    <p> <code>matrix2 = matrixScale( matrix1, 2.0, 1, 1 ) <br>
+      </code> </p>
+    <p>Builds a new matrix by adding a doubling of the X-axis to the original
+      identity matrix matrix1.</p>
+  </body>
+</html>
