@@ -1,0 +1,228 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>SaliCAD Скрипт для описания 3d моделей</title>
+  </head>
+  <body>
+    <h1 align="center">Скрипт для описания 3d моделей</h1>
+    <p><a href="contents.htm">Content</a>=&gt;<a href="script3d.htm"></a><a href="contents.htm"></a>Скрипт
+      3d</p>
+    The scripting language for describing 3d models is a C-like scripting
+    language designed for parametric construction of 3d and 2d models of
+    component housings. The script creates a certain design template (a model
+    and a 2d image of the component), which can be changed within certain limits
+    (determined by the script developer) in order to obtain a specific model of
+    the component.<br>
+    <br>
+    The design parameters that can be changed are set by the user in the dialog
+    mode. In this case, the script is recalculated again and the version with
+    the changes is displayed. For example, the shape of the component body is
+    set by a template (a vertical cylinder for a pin capacitor), and the
+    diameter and height of the cylinder are set by the user. In this case, a
+    cylinder with user parameters will be built. Similarly, other changes are
+    made: from the colors of the component, to the number of legs and contact
+    pads for them.
+    <p>See <a href="script3dFun.htm">function list</a></p>
+    <p>The scripting language supports the following types of objects:</p>
+    <ul>
+      <li><a href="script3dTypeBool.htm">bool</a></li>
+      <li><a href="script3dTypeFloat.htm">float</a> number</li>
+      <li><a href="script3dTypeColor.htm">color</a></li>
+      <li><a href="script3dTypeString.htm">string</a></li>
+      <li><a href="script3dType2d.htm">2d objects</a> (line, rectangle, circle,
+        pin)</li>
+      <li><a href="script3dTypeMatrix.htm">matrix 4x4</a></li>
+      <li><a href="script3dTypeFloatList.htm">float list</a> numbers</li>
+      <li><a href="script3dTypeVertex.htm">3d vertex</a></li>
+      <li><a href="script3dTypeFace.htm">face</a></li>
+      <li><a href="script3dTypeFaceList.htm">face list</a></li>
+      <li><a href="script3dTypeModel.htm">model</a></li>
+    </ul>
+    Any of the specified types can be returned by the function.<br>
+    <br>
+    In addition, strings and numbers, boolean values can be set directly.<br>
+    <br>
+    Logical types are obtained as the results of comparison operations.<br>
+    <br>
+    The rest of the objects are constructed using functions from simple objects
+    or as a result of transformation.<br>
+    <br>
+    The script is executed sequentially operator by operator, starting from the
+    first line.<br>
+    <br>
+    The # symbol marks the beginning of the comment. Everything that is in the
+    line after this character is ignored.<br>
+    <br>
+    The following types of operators are available:
+    <ul>
+      <li>assignment operator</li>
+      <li>condition operator</li>
+      <li>loop operator</li>
+      <li>compound operator</li>
+    </ul>
+    <p>Almost all real work is done with the help of built-in functions. Various
+      arithmetic operations are used as auxiliary in these constructions.<br>
+      <br>
+      A typical script is presented below:<br>
+    </p>
+    <code> bodyDiametr = inputFloat( "Body diametr", 4 )<br>
+      bodyHeight = inputFloat( "Body height", 4 )<br>
+      bodyColor = inputColor( "Body color", colorFromString("#4e9a06") )<br>
+      <br>
+      pinDiametr = inputFloat( "Pin diametr", 0.5 )<br>
+      pinDistance = inputFloat( "Distance between pins", 2.5 )<br>
+      pinColor = inputColor( "Pin color", colorFromString("#f0f0f0") )<br>
+      <br>
+      padPlus = inputPad( "Pad plus",
+      stringPadRectThrough(1.0,1.0,pinDiametr*1.2,0.1) )<br>
+      padMinus = inputPad( "Pad minus", "c1.2d0.6m0.1" )<br>
+      <br>
+      plusShow = inputFloat( "Show plus", 0 )<br>
+      <br>
+      bodyRadius = bodyDiametr / 2<br>
+      <br>
+      body = modelCylinder( bodyRadius, bodyHeight, bodyColor )<br>
+      <br>
+      pin = modelCylinder( pinDiametr / 2, -2.0, pinColor )<br>
+      <br>
+      partModel = body<br>
+      <br>
+      pinPlusPos = vertex( -pinDistance / 2, 0, 0 )<br>
+      pinMinusPos = vertex( pinDistance / 2, 0, 0 )<br>
+      <br>
+      partModel = modelTranslate( pin, pinPlusPos )<br>
+      <br>
+      partModel = modelTranslate( pin, pinMinusPos )<br>
+      <br>
+      partFlat = graphCircle( vertex(0,0,0), bodyRadius )<br>
+      <br>
+      partFlat = graphPin( pinPlusPos, padPlus, vertexOffset( pinPlusPos,
+      0,0,0), "1", "CM0", vertexOffset(pinPlusPos, 0,0,0), "CM0" )<br>
+      <br>
+      partFlat = graphPin( pinMinusPos, padMinus, vertexOffset( pinMinusPos,
+      0,0,0), "2", "CM0", vertexOffset(pinMinusPos, 0,0,0), "CM0" )<br>
+      if( plusShow &gt; 0 ) {<br>
+      &nbsp; #Draw plus sign<br>
+      &nbsp; plusCenter = vertex( -bodyRadius - 2, 0, 0 )<br>
+      &nbsp; plusV0 = vertexOffset( plusCenter, 0, -1, 0 )<br>
+      &nbsp; plusV1 = vertexOffset( plusCenter, 0, 1, 0 )<br>
+      &nbsp; partFlat = graphLine( plusV0, plusV1 )<br>
+      <br>
+      &nbsp; plusV0 = vertexOffset( plusCenter, -1, 0, 0 )<br>
+      &nbsp; plusV1 = vertexOffset( plusCenter, 1, 0, 0 )<br>
+      &nbsp; partFlat = graphLine( plusV0, plusV1 )<br>
+      &nbsp; }<br>
+    </code>
+    <p><br>
+    </p>
+    The listing shows that the program consists of a sequence of operators.
+    Assignment operators assign a value to the right of the = sign to a variable
+    to the left of that sign. The variable type is determined automatically
+    based on the value to the right of the = sign. The ; sign after the
+    assignment operator is optional.<br>
+    <br>
+    Variable names must start with a letter and must consist of letters and
+    numbers. Letters of national alphabets are allowed in names.<br>
+    <br>
+    Two special variables part Model and partFlat are used to place models and
+    2d objects in the component body. When assigning these variables, models and
+    2d objects accumulate in the case.<br>
+    <br>
+    Functions whose names begin with input are used to place a parameter in the
+    script parameters table for user input. The remaining functions are used for
+    various data transformations. For a complete list of available functions,
+    see the list of functions.<br>
+    <br>
+    The loop operator looks like this:
+    <p> <code>while( условие_цикла ) {<br>
+        &nbsp; операторы_цикла<br>
+        &nbsp; }<br>
+      </code></p>
+    <p>As long as the expression of the condition of the loop is true, the loop
+      will execute the operators of the loop. For example, the code</p>
+    <p> <code>pinIndex = 0<br>
+        while( pinIndex &lt; 4 ) {<br>
+        &nbsp; pinIndex = pinIndex + 1<br>
+        &nbsp; }<br>
+      </code> </p>
+    <p> will force the loop body to be executed 4 times. </p>
+    <p> The [list] operation forms a complex object from a list of simpler
+      objects: </p>
+    <ul>
+      <li>a surface is formed from the list of points</li>
+      <li> a model is formed from the list of surfaces</li>
+      <li>the list of numbers is used to construct surfaces, as well as as a set
+        of indexes</li>
+    </ul>
+    <p>For example, the code</p>
+    <p> <code>vertex0 = vertexBuild( 0, 0, 0 )<br>
+        vertex1 = vertexBuild( 10, 0, 0 )<br>
+        vertex2 = vertexBuild( 10, 10, 0 )<br>
+        vertex3 = vertexBuild( 0, 10, 0 )<br>
+        face0 = [vertex0, vertex1, vertex2, vertex3]<br>
+      </code> </p>
+    <p>builds a surface from four pre-formed vertices.<br>
+    </p>
+    <h2 align="center">3d models</h2>
+    <p>The basis for constructing models is a point in space, which is the
+      vertex of a closed polyline bounding the surface. Thus, the surface is
+      constructed from a set of vertices.</p>
+    <img src="3dFace.png">
+    <p>The vertex represents the three coordinates of the point X, Y and Z. To
+      build a vertex, the vertex function is used, in the parameters of which
+      three coordinates are specified. For example:</p>
+    <code>v0 = vertex( 10, 11, 12 )</code>
+    <p><br>
+    </p>
+    <img src="3dFaceModel.png">
+    <p><br>
+    </p>
+    <p>The surface consists of three or more vertices. You can build a surface
+      by enumerating vertices, for example:</p>
+    <p> <code>face0 = [ v0, v1, v2 ]</code></p>
+    <p>where v0, v1 and v2 are vertex variables.</p>
+    <br>
+    A faster way to build surfaces by coordinates is to build in a 2d plane with
+    subsequent transformation. This is done using the faceFlatMatrix function.<br>
+    <br>
+    Surfaces are combined into lists of surfaces (Face list). Lists of surfaces
+    together with the colors of their display make up the body (Body). All body
+    surfaces are displayed in a common color.<br>
+    <br>
+    <p>The bodies are combined into lists of bodies. The list of bodies together
+      with the list of copy matrices is a model. The list of model copy matrices
+      must contain at least one matrix. The list of model bodies must also
+      contain at least one body.<img src="3dModel.png"></p>
+    <p>An example of a body is a chip body. Since the entire body of the chip is
+      displayed in one color, then all the surfaces of the body are included in
+      one body. Since the body of the chip is always one, the model contains
+      only one copy matrix for the body of the case.</p>
+    <br>
+    Another example of a body is the output of a chip (leg). The leg is also
+    displayed in one color, respectively, all the surfaces of the leg are
+    included in one body. Since there may be several legs, the model will
+    contain as many copy matrices as the same legs of the chip.<br>
+    <br>
+    Another example of the body is a single connector of the pls type. The model
+    of this connector will contain two bodies: a plastic base and a pin. The
+    number of copying matrices is determined by the number of pins of such a
+    connector.<br>
+    <br>
+    Models are built using the modelXXX functions. The modelXXX set of functions
+    contains the main function of building the model model, as well as two model
+    modification functions modelAppend and modelCopy. The model function builds
+    a model based on a list of surfaces and a color for these surfaces, as well
+    as a copy matrix. A body is formed from the list of surfaces and colors and
+    placed in the list of model bodies, the copy matrix is added to the list of
+    copy matrices. Thus, this function builds a model from a single body with a
+    single copy matrix. The modelAppend function is used to add another body to
+    the model. The modelCopy function is used to add another copy matrix to the
+    model.<br>
+    The list of surfaces consists of one or more surfaces. In addition to
+    directly creating surfaces by vertices, there is a whole set of functions
+    for generating surfaces.<br>
+    <h2 align="center">Генерация поверхностей</h2>
+    <p><br>
+    </p>
+  </body>
+</html>
