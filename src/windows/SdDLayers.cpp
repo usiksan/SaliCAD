@@ -130,7 +130,7 @@ void SdDLayers::loadLayerList(const QString fname)
     QJsonArray ar = doc.array();
 
     //Switch off all layers
-    for( SdLayerPtr ptr : sdEnvir->mLayerTable )
+    for( SdLayerPtr ptr : qAsConst( sdEnvir->mLayerTable ) )
       ptr->setState( layerStateOff );
 
     //Setup layers state
@@ -154,26 +154,26 @@ void SdDLayers::fillLayerList()
 
   if( mShow == 0 ) {
     //Actual list
-    for( SdLayer *layer : sdEnvir->mLayerTable ) {
+    for( SdLayer *layer : qAsConst( sdEnvir->mLayerTable ) ) {
       if( layer->isUsage() || mActualList.contains(layer->id()) )
         mList.append( layer->id() );
       }
     }
   else if( mShow == 1 ) {
     //Used list
-    for( SdLayer *layer : sdEnvir->mLayerTable ) {
+    for( SdLayer *layer : qAsConst( sdEnvir->mLayerTable ) ) {
       if( layer->isUsage() )
         mList.append( layer->id() );
       }
     }
   else {
     //All list
-    for( SdLayer *layer : sdEnvir->mLayerTable )
+    for( SdLayer *layer : qAsConst( sdEnvir->mLayerTable ) )
       mList.append( layer->id() );
     }
 
   ui->mLayerList->setRowCount(0);
-  for( QString id : mList )
+  for( auto const &id : qAsConst( mList ) )
     appendLyaerToVisualList( id );
   }
 

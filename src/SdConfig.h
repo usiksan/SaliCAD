@@ -210,6 +210,7 @@ History
   20.07.2022 v2.0  Global refactoring library storage system
   28.07.2022 v2.1  Create project to library storage system
   12.10.2022 v2.2  Append web page generation and selection save as picture
+  19.10.2022 v2.3  Append via rules, append full list of internal layers, append menu item for pcb layers count
 */
 
 #ifndef SDCONFIG
@@ -221,7 +222,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             2
-#define SD_VERSION_MINOR             2
+#define SD_VERSION_MINOR             3
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

@@ -40,6 +40,7 @@ Description
 #include <QProgressDialog>
 #include <QWizard>
 #include <QMessageBox>
+#include <QInputDialog>
 
 SdWEditorGraphPlate::SdWEditorGraphPlate(SdPItemPlate *pcb, QWidget *parent) :
   SdWEditorGraph( pcb, parent ),
@@ -195,6 +196,17 @@ void SdWEditorGraphPlate::cmPads()
     dirtyCashe();
     update();
     }
+  }
+
+
+
+
+void SdWEditorGraphPlate::cmPcbStratum()
+  {
+  bool ok;
+  int c = QInputDialog::getInt( this, tr("PCB signal layer count"), tr("Enter PCB signal layer count:"), mPlate->stratumCount(), 1, 30, 1, &ok );
+  if( ok )
+    mPlate->setStratumCount( c );
   }
 
 

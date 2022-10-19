@@ -239,6 +239,7 @@ class SdWMain : public QMainWindow
     void cmShowRatNet(bool st);
     void cmShowRuleErrors(bool st);
     void cmPads();
+    void cmPcbStratum();
     void cmModeLineSize();
     void cmModeRadiusSize();
     void cmModeMovePart();

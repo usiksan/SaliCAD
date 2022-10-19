@@ -251,6 +251,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   //PCB editor menu
   menuInsertPcb = new QMenu( QObject::tr("Plate") );
   menuInsertPcb->insertAction( nullptr, cmRenumeration );
+  cmPcbStratum  = menuInsertPcb->addAction( QIcon(QString(":/pic/iconViaThrow.png")), QObject::tr("PCB layer count..."), frame, SLOT(cmPcbStratum()) );
   menuInsertPcb->insertSeparator(nullptr);
   cmShowRatNet = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/viewRatnet.png")), QObject::tr("Show rat net") );
   cmShowRatNet->setCheckable(true);
@@ -870,6 +871,7 @@ QActionPtr SdWCommand::cmShowRuleErrors;
 QActionPtr SdWCommand::cmRenumeration;
 QActionPtr SdWCommand::cmShowField;
 QActionPtr SdWCommand::cmShowPads;
+QActionPtr SdWCommand::cmPcbStratum;
 
 QActionPtr SdWCommand::cmRulesEdit;
 QActionPtr SdWCommand::cmRulesCheck;

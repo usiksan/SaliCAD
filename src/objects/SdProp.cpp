@@ -150,6 +150,7 @@ SdProp::SdProp()
   mViaProp.mStratum      = stmThrough;
   mViaProp.mPadType      = "c0.6d0.2";
   mViaProp.mNetName      = "";
+  mViaRule               = 0;
 //  SdPropText    mTextDocProp;    //Свойства текста в текстовых документах
 
   mLineEnterType     = dleOrtho;       //By default orthogonal vertex line

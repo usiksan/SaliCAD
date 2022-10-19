@@ -62,6 +62,7 @@ struct SdProp
 
     int           mWireNumber;     //Порядковый номер цепи (для формирования имени по умолчанию)
     int           mMaskSide;       //Маска, определяющая возможность выбора компонентов
+    int           mViaRule;        //!< Via creation rule (throught, hidden, blind)
 
 //    DTraseRules traseRules;     //Правила трассировки
 

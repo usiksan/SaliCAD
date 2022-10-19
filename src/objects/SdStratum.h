@@ -75,6 +75,10 @@ Description
 
 #define stmCountMax         30 //Maximum tracing layers
 
+#define stmRuleHided 0x1 //!< Enable hided holes (stmInt00-stmInt01)
+#define stmRuleCore  0x2 //!< Enable core holes (stmInt00-stmInt27)
+#define stmRuleBlind 0x4 //!< Enable blind holes (stmTop-stmInt00)
+
 class SdJsonReader;
 
 class SdStratum : public SdPropInt
@@ -82,6 +86,15 @@ class SdStratum : public SdPropInt
   public:
     SdStratum();
     SdStratum( int str );
+
+    //!
+    //! \brief stratumBuild  Build stratum from one stratum to another
+    //! \param from          Source stratum
+    //! \param to            Destignation stratum
+    //! \param pcbLayerCount Count of pcb signal layers
+    //! \param rule          Rule for building, one of stmRuleXXX
+    //!
+    void     stratumBuild( SdStratum from, SdStratum to, int pcbLayerCount, int rule );
 
     //Return true if this stratum intersect with given stratum presented with int
     bool     operator & ( int s ) const { return mValue > 0 && s > 0 && (mValue & s); }

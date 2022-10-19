@@ -35,7 +35,7 @@ SdPropBar::SdPropBar( const QString title ) :
   updateViewedLayers();
 
   //current layer selection changed. Send signal "prop changed"
-  connect( mLayer, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
+  connect( mLayer, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), this, [this](int index) {
     Q_UNUSED(index)
     emit propChanged();
     });
@@ -91,7 +91,7 @@ void SdPropBar::updateViewedLayers()
   SdLayer *layer = getSelectedLayer();
   mLayer->clear();
   //fill new layers list
-  for( SdLayer *p : sdEnvir->mLayerTable ) {
+  for( SdLayer *p : qAsConst( sdEnvir->mLayerTable ) ) {
     if( p->isEdited() ) {
       mLayer->addItem( p->name(), QVariant( p->id() ) );
       }

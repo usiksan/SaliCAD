@@ -1851,6 +1851,23 @@ void SdWMain::cmPads()
 
 
 
+void SdWMain::cmPcbStratum()
+  {
+  if( activeEditor() ) {
+    activeEditor()->cmPcbStratum();
+
+    sdEnvir->resetForCache();
+    //Signal viewed layers are changed
+    SdPulsar::sdPulsar->emitViewedLayers();
+
+    //For active editor update
+    if( activeEditor() )
+      activeEditor()->cmViewLayers();
+    }
+  }
+
+
+
 
 void SdWMain::cmModeLineSize()
   {

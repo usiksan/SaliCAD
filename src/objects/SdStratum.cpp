@@ -14,6 +14,8 @@ Description
 #include "SdEnvir.h"
 #include "SdJsonIO.h"
 
+#include <algorithm>
+
 SdStratum::SdStratum() :
   SdPropInt()
   {
@@ -24,6 +26,75 @@ SdStratum::SdStratum() :
 SdStratum::SdStratum(int str) :
   SdPropInt(str)
   {
+
+  }
+
+
+
+//!
+//! \brief stratumBuild  Build stratum from one stratum to another
+//! \param from          Source stratum
+//! \param to            Destignation stratum
+//! \param pcbLayerCount Count of pcb signal layers
+//! \param rule          Rule for building, one of stmRuleXXX
+//!
+void SdStratum::stratumBuild(SdStratum from, SdStratum to, int pcbLayerCount, int rule)
+  {
+  int indexFrom = from.getStratumIndex();
+  int indexTo   = to.getStratumIndex();
+  if( indexFrom == indexTo ) {
+    mValue = from.mValue;
+    return;
+    }
+  if( indexFrom > indexTo )
+    std::swap( indexFrom, indexTo );
+
+  if( (indexFrom == 0 && indexTo == 1) || (indexFrom == (pcbLayerCount - 2) && indexTo == 29) ) {
+    //From outer layer to nearest inner
+    if( (rule & stmRuleBlind) == 0 ) {
+      //Blind holes disabled convert to throught
+      indexFrom = 0;
+      indexTo = 29;
+      }
+    }
+  else if( indexFrom == 0 || indexTo == 29 ) {
+    //From outer layer to deep inner
+    //convert to throught
+    indexFrom = 0;
+    indexTo = 29;
+    }
+  else if( (indexFrom & 1) == 0 || (indexFrom + 1) != indexTo ) {
+    //Beatween internal planes
+    if( (rule & stmRuleCore) == 0 ) {
+      //Core holes disabled, convert to throught
+      indexFrom = 0;
+      indexTo = 29;
+      }
+    else {
+      //Convert to core
+      indexFrom = 1;
+      indexTo = 28;
+      }
+    }
+  else {
+    //Beatween internal layers on single plane
+    if( (rule & stmRuleHided) == 0 ) {
+      if( (rule & stmRuleCore) == 0 ) {
+        //Core holes disabled, convert to throught
+        indexFrom = 0;
+        indexTo = 29;
+        }
+      else {
+        //Convert to core
+        indexFrom = 1;
+        indexTo = 28;
+        }
+      }
+    }
+
+  mValue = 0;
+  for( int i = indexFrom; i <= indexTo; i++ )
+    mValue |= 1 << i;
 
   }
 

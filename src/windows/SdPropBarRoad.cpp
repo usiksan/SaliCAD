@@ -41,7 +41,7 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
     //Fill width list with previous values
     if( prevWidth.count() == 0 )
       prevWidth.addDouble( 0.0 );
-    for( const QString &str : prevWidth )
+    for( const QString &str : qAsConst( prevWidth ) )
       mWidth->addItem( str );
     //Select first item
     mWidth->setCurrentIndex(0);
@@ -49,17 +49,17 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
     mWidth->setMinimumWidth(80);
 
     //Activate road width editor
-    connect( but, &QToolButton::clicked, [=] () {
+    connect( but, &QToolButton::clicked, this, [this] () {
       mWidth->lineEdit()->setFocus();
       mWidth->lineEdit()->selectAll();
       });
     //on complete editing
-    connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [=]() {
+    connect( mWidth->lineEdit(), &QLineEdit::editingFinished, this, [this]() {
       prevWidth.reorderComboBoxDoubleString( mWidth );
       emit propChanged();
       });
     //on select other width
-    connect( mWidth, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int){
+    connect( mWidth, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), this, [this](int){
       prevWidth.reorderComboBoxDoubleString( mWidth );
       emit propChanged();
       });
@@ -90,7 +90,7 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
   //Enable-disable automatic road loop detection and removing
   mLoopDetection = addAction( QIcon(QString(":/pic/objRemoveLoop.png")), tr("On-off automatic road loop detection and removing") );
   mLoopDetection->setCheckable(true);
-  connect( mLoopDetection, &QAction::triggered, [=](bool checked) {
+  connect( mLoopDetection, &QAction::triggered, this, [this](bool checked) {
     sdEnvir->mAutoRemoveRoadLoop = checked;
     emit propChanged();
     });
@@ -99,7 +99,7 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
     //Vertex type of two lines
     mEnterOrtho = addAction( QIcon(QString(":/pic/dleOrto.png")), tr("lines connects orthogonal") );
     mEnterOrtho->setCheckable(true);
-    connect( mEnterOrtho, &QAction::triggered, [=](bool checked){
+    connect( mEnterOrtho, &QAction::triggered, this, [this](bool checked){
       Q_UNUSED(checked)
       setVertexType( dleOrtho );
       emit propChanged();
@@ -107,7 +107,7 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
 
     mEnter45degree = addAction( QIcon(QString(":/pic/dle45.png")), tr("lines connects at 45 degree") );
     mEnter45degree->setCheckable(true);
-    connect( mEnter45degree, &QAction::triggered, [=](bool checked){
+    connect( mEnter45degree, &QAction::triggered, this, [this](bool checked){
       Q_UNUSED(checked)
       setVertexType( dle45degree );
       emit propChanged();
@@ -115,7 +115,7 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
 
     mEnterAnyDegree = addAction( QIcon(QString(":/pic/dleAngle.png")), tr("lines connects at any degree") );
     mEnterAnyDegree->setCheckable(true);
-    connect( mEnterAnyDegree, &QAction::triggered, [=](bool checked){
+    connect( mEnterAnyDegree, &QAction::triggered, this, [this](bool checked){
       Q_UNUSED(checked)
       setVertexType( dleAnyDegree );
       emit propChanged();
@@ -129,7 +129,7 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
   //Via through or blind
   mViaThrough = addAction( QIcon(QString(":/pic/iconViaThrow.png")), tr("Via through or blind") );
   mViaThrough->setCheckable(true);
-  connect( mViaThrough, &QAction::triggered, [=](bool checked){
+  connect( mViaThrough, &QAction::triggered, this, [this](bool checked){
     Q_UNUSED(checked)
     emit propChanged();
     });
@@ -140,17 +140,17 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
   mViaPadType = new QComboBox();
   mViaPadType->setEditable(true);
   mViaPadType->setToolTip( tr("Via pad type") );
-  for( const QString &str : padTypeHistory )
+  for( const QString &str : qAsConst( padTypeHistory ) )
     mViaPadType->addItem( str );
   mViaPadType->setMinimumWidth(180);
 
 
   //on select other pin type
-  connect( mViaPadType, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int){
+  connect( mViaPadType, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), this, [this](int){
     padTypeHistory.reorderComboBoxString( mViaPadType );
     emit propChanged();
     });
-  connect( mViaPadType->lineEdit(), &QLineEdit::editingFinished, [=](){
+  connect( mViaPadType->lineEdit(), &QLineEdit::editingFinished, this, [this](){
     padTypeHistory.reorderComboBoxString( mViaPadType );
     emit propChanged();
     });
@@ -274,6 +274,22 @@ void SdPropBarRoad::getPropVia(SdPropVia *propVia)
 
     //Net name not used
     }
+  }
+
+
+
+
+void SdPropBarRoad::setViaRule(int viaRule)
+  {
+  mViaThrough->setChecked( viaRule & stmRuleHided );
+  }
+
+
+
+
+int SdPropBarRoad::getViaRule()
+  {
+  return mViaThrough->isChecked() ? stmRuleHided : 0;
   }
 
 

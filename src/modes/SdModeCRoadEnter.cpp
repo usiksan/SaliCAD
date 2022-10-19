@@ -34,6 +34,7 @@ SdModeCRoadEnter::SdModeCRoadEnter(SdWEditorGraph *editor, SdProjectItem *obj) :
   {
   mProp = sdGlobalProp->mRoadProp;
   mViaProp = sdGlobalProp->mViaProp;
+  //mViaRule
   }
 
 
@@ -189,6 +190,7 @@ void SdModeCRoadEnter::propGetFromBar()
   if( bar ) {
     bar->getPropRoad( &(sdGlobalProp->mRoadProp), &mViaProp, &(sdGlobalProp->mWireEnterType) );
     sdGlobalProp->mViaProp = mViaProp;
+    sdGlobalProp->mViaRule = bar->getViaRule();
     if( getStep() && sdGlobalProp->mRoadProp.mStratum != mProp.mStratum ) {
       //Change stratum
       changeToTraceLayer( sdGlobalProp->mRoadProp.mStratum );
@@ -220,6 +222,7 @@ void SdModeCRoadEnter::propSetToBar()
     //Setup tracing layer count and trace type
     bar->setPlateAndTrace( plate(), layerTraceRoad );
     bar->setPropRoad( &mProp, &mViaProp, mEditor->getPPM(), sdGlobalProp->mWireEnterType );
+    bar->setViaRule( sdGlobalProp->mViaRule );
     sdGlobalProp->mRoadProp = mProp;
     sdGlobalProp->mViaProp = mViaProp;
     }
@@ -813,6 +816,7 @@ void SdModeCRoadEnter::addVia(SdStratum newStratum)
   if( mProp.mStratum != newStratum && !isBarriersContains( mPads, mFirst) ) {
     //Via is available at this point - insert
     mViaProp.mNetName = mProp.mNetName;
+    mViaProp.mStratum.stratumBuild( mProp.mStratum, newStratum, plate()->stratumCount(), sdGlobalProp->mViaRule );
     qDebug() << "Via inserted" << mViaProp.mPadType.str() << mViaProp.mNetName.str();
     addTrace( new SdGraphTracedVia( mFirst, mViaProp ), QObject::tr("Insert trace via") );
     mMiddle = mFirst;

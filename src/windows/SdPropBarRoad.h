@@ -54,6 +54,9 @@ class SdPropBarRoad : public SdPropBarStratum
     void setPropVia( SdPropVia *propVia );
     void getPropVia( SdPropVia *propVia );
 
+    void setViaRule( int viaRule );
+    int  getViaRule();
+
   private:
     void setVertexType( int type );
   };

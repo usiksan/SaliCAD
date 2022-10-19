@@ -72,9 +72,22 @@ SdLayer *SdLayerCache::getVisibleLayer(int stratum)
 void SdLayerCache::setLayerUsage( int stratumCount )
   {
   stratumCount = qMin( stratumCount, stmCountMax );
-  for( int i = 0; i < stratumCount; i++ )
+  if( stratumCount == 1 ) {
+    if( mMap[0] ) {
+      mMap[0]->setUsage();
+      mMap[0]->pair()->setUsage();
+      }
+    }
+  else {
+    if( mMap[stmCountMax-1] ) {
+      mMap[stmCountMax-1]->setUsage();
+      mMap[stmCountMax-1]->pair()->setUsage();
+      }
+    }
+  for( int i = 0; i < stratumCount - 1; i++ ) {
     if( mMap[i] ) {
       mMap[i]->setUsage();
       mMap[i]->pair()->setUsage();
       }
+    }
   }
