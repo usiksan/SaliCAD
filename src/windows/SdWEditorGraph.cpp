@@ -146,6 +146,12 @@ void SdWEditorGraph::originSet(SdPoint org)
   {
   mOrigin = org;
   mCasheDirty = true;
+  QSize s = viewport()->size();
+  //Matrix transformation from screen coord to phis coord
+  mPixelTransform = QTransform::fromTranslate( -s.width()/2,  -s.height()/2 );
+  mPixelTransform *= QTransform::fromScale( 1 / mScale.scaleGet(), -1 / mScale.scaleGet() );
+  mPixelTransform *= QTransform::fromTranslate( mOrigin.x(), mOrigin.y() );
+
   update();
   }
 
@@ -812,7 +818,7 @@ void SdWEditorGraph::mousePressEvent(QMouseEvent *event)
       mDownPoint = mPrevPoint;
       modeGet()->enterPoint( mPrevPoint );
       }
-    else if( event->button() == Qt::MiddleButton )
+    else if( event->button() == Qt::MiddleButton && !(event->modifiers() & Qt::ShiftModifier) )
       mPrevEnter = modeGet()->enterPrev();
     else if( event->button() == Qt::RightButton )
       modeGet()->cancelPoint( mPrevPoint );
@@ -841,6 +847,13 @@ void SdWEditorGraph::mouseMoveEvent(QMouseEvent *event)
   {
   SdPoint pos = pixel2phys( event->pos() );
   if( pos != mPrevPoint ) {
+    if( (event->modifiers() & Qt::ShiftModifier) && (event->buttons() & Qt::MiddleButton) ) {
+      //Drag view origin point
+      originSet( mOrigin + (mPrevPoint - pos) );
+      mPrevPoint = pixel2phys( event->pos() );
+      event->accept();
+      return;
+      }
     //was a mouse mooving
     if( modeGet() ) {
       if( event->buttons() & Qt::LeftButton ) {

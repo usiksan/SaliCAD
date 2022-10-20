@@ -40,11 +40,11 @@ class SdWEditorGraph;
 //By default drawStatic draws all graphics of container. By default drawDynamic draws nothing.
 class SdMode
   {
-    int             mStep;       //Mode step
+    int             mStep;       //!< Mode step
   protected:
-    SdProjectItem  *mObject;     //Object is mode working on
-    SdWEditorGraph *mEditor;     //Editor window is mode working in
-    SdUndo         *mUndo;       //Undo for this project
+    SdProjectItem  *mObject;     //!< Object is mode working on
+    SdWEditorGraph *mEditor;     //!< Editor window is mode working in
+    SdUndo         *mUndo;       //!< Undo for this project
 
    //Исполняемые через обозреватель
    void           update();          //Обновить изображение
