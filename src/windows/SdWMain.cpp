@@ -1951,10 +1951,10 @@ void SdWMain::cmModePolygon()
 
 
 
-void SdWMain::cmModeDeleteWire()
+void SdWMain::cmModeTraceDelete()
   {
   if( activeEditor() )
-    activeEditor()->cmModeDeleteWire();
+    activeEditor()->cmModeTraceDelete();
   }
 
 

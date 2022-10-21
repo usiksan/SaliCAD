@@ -30,16 +30,19 @@ Description
 
 class SdModeCTraceDelete : public SdModeCommon
   {
-    SdGraphTraced  *mToDelete; //!< Traced object appear to delete
+    //SdGraphTraced  *mToDelete; //!< Traced object appear to delete
     SdSelector      mFragment; //!< Traced objects found near current point
+    SdPoint         mFirst;
+    bool            mShift;    //!< With shift we delete rectangle
   public:
     SdModeCTraceDelete( SdWEditorGraph *editor, SdProjectItem *obj );
+    ~SdModeCTraceDelete() override;
 
     // SdMode interface
   public:
 //    virtual void    activate() override;
-//    virtual void    deactivate() override;
-//    virtual void    reset() override;
+    virtual void    deactivate() override;
+    virtual void    reset() override;
     virtual void    drawStatic(SdContext *ctx) override;
     virtual void    drawDynamic(SdContext *ctx) override;
     virtual void    enterPoint(SdPoint) override;
@@ -53,16 +56,13 @@ class SdModeCTraceDelete : public SdModeCommon
     virtual QString getStepThema() const override;
     virtual int     getCursor() const override;
     virtual int     getIndex() const override;
+    virtual void    keyDown(int key, QChar ch) override;
+    virtual void    keyUp(int key, QChar ch) override;
 
   private:
     //Plate where road being inserted
     SdPItemPlate   *plate() { return dynamic_cast<SdPItemPlate*>(mObject); }
 
-    //Change segment1 and segment2
-    void            changeSegments();
-
-    //Update segment. We create or delete segment if nessesery and change its position
-    void            updateSegment(SdPropRoad &prop, SdGraphTracedRoadPtr &segment, SdPoint a, SdPoint b );
   };
 
 #endif // SDMODECTRACEDELETE_H

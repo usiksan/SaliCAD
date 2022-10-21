@@ -257,7 +257,7 @@ SdObject *SdObject::jsonObjectFrom(const QJsonObject obj)
   {
   SdJsonReaderProperty map;
   SdJsonReader js( obj, &map );
-  js.jsonInt( "A version", map.mVersion, 0 );
+  js.jsonInt( "A version", map.mVersion, SD_BASE_VERSION_1 );
   return buildFromJson( js );
   }
 

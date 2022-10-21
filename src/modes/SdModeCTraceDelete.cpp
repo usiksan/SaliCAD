@@ -25,9 +25,29 @@ Description
 
 SdModeCTraceDelete::SdModeCTraceDelete(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeCommon( editor, obj ),
-  mToDelete(nullptr)
+  mShift(false)
   {
 
+  }
+
+
+SdModeCTraceDelete::~SdModeCTraceDelete()
+  {
+  mFragment.removeAll();
+  }
+
+
+void SdModeCTraceDelete::deactivate()
+  {
+  mFragment.removeAll();
+  SdModeCommon::deactivate();
+  }
+
+
+void SdModeCTraceDelete::reset()
+  {
+  mFragment.removeAll();
+  SdModeCommon::reset();
   }
 
 
@@ -52,13 +72,17 @@ void SdModeCTraceDelete::drawDynamic(SdContext *ctx)
   //Draw all selected elements
   ctx->setOverColor( sdEnvir->getSysColor(scSelected) );
   mFragment.draw( ctx );
+  if( getStep() == 1 ) {
+    ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltDotted );
+    ctx->rect( SdRect(mFirst, mPrev) );
+    }
   }
 
 
 
 void SdModeCTraceDelete::enterPoint(SdPoint)
   {
-  if( mFragment.count() ) {
+  if( mFragment.count() && !mShift ) {
     mUndo->begin( QObject::tr("Deletion elements"), mObject, false );
     mFragment.forEach( dctAll, [this] (SdObject *obj) ->bool {
       SdGraph *graph = dynamic_cast<SdGraph*>(obj);
@@ -81,46 +105,93 @@ void SdModeCTraceDelete::enterPoint(SdPoint)
 
 void SdModeCTraceDelete::movePoint(SdPoint p)
   {
-
+  if( mFragment.count() )
+    mFragment.removeAll();
+  if( !mShift ) {
+    //Find nearest smart point
+    SdSnapInfo info;
+    info.mSour = p;
+    info.mSnapMask = snapNearestNet | snapEndPoint | snapMidPoint | snapViaPoint;
+    info.mStratum = stmThrough;
+    info.scan( plate(), dctTraceVia | dctTraceRoad | dctTracePolygon );
+    if( info.mGraph != nullptr )
+      info.mGraph->select( &mFragment );
+    }
+  mPrev = p;
+  setDirtyCashe();
+  update();
   }
+
 
 
 
 void SdModeCTraceDelete::cancelPoint(SdPoint)
   {
-
+  cancelMode();
   }
 
 
 
-void SdModeCTraceDelete::beginDrag(SdPoint p)
+
+void SdModeCTraceDelete::beginDrag(SdPoint point)
   {
-
+  setStep(1);
+  mFirst = point;
+  mPrev = point;
+  update();
   }
+
+
 
 void SdModeCTraceDelete::dragPoint(SdPoint p)
   {
-
+  mFragment.removeAll();
+  if( mShift ) {
+    //Select all trace behind over rectangle
+    SdRect r(mFirst,p);
+    mObject->forEach( dctTraceVia | dctTraceRoad | dctTracePolygon, [this,r] (SdObject *obj) ->bool {
+      SdGraph *graph = dynamic_cast<SdGraph*>(obj);
+      if( graph != nullptr )
+        graph->selectByRect( r, &mFragment );
+      return true;
+      });
+    }
+  mPrev = p;
+  setDirtyCashe();
+  update();
   }
+
+
+
 
 void SdModeCTraceDelete::stopDrag(SdPoint p)
   {
-
+  setStep(0);
+  if( mShift ) {
+    mShift = false;
+    enterPoint(p);
+    mShift = true;
+    }
   }
+
 
 QString SdModeCTraceDelete::getStepHelp() const
   {
-
+  return QObject::tr("Click trace object to delete");
   }
+
+
 
 QString SdModeCTraceDelete::getModeThema() const
   {
-
+  return QString( MODE_HELP "ModeCTraceDelete.htm" );
   }
+
+
 
 QString SdModeCTraceDelete::getStepThema() const
   {
-
+  return QString( MODE_HELP "ModeCTraceDelete.htm" );
   }
 
 
@@ -136,4 +207,28 @@ int SdModeCTraceDelete::getCursor() const
 int SdModeCTraceDelete::getIndex() const
   {
   return MD_TRACE_DELETE;
+  }
+
+
+
+void SdModeCTraceDelete::keyDown(int key, QChar ch)
+  {
+  Q_UNUSED(ch)
+  if( key == Qt::Key_Shift ) {
+    mShift = true;
+    if( getStep() == 0 ) movePoint( mPrev );
+    else                 dragPoint( mPrev );
+    }
+  }
+
+
+
+void SdModeCTraceDelete::keyUp(int key, QChar ch)
+  {
+  Q_UNUSED(ch)
+  if( key == Qt::Key_Shift ) {
+    mShift = false;
+    if( getStep() == 0 ) movePoint( mPrev );
+    else                 dragPoint( mPrev );
+    }
   }

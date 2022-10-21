@@ -211,6 +211,8 @@ History
   28.07.2022 v2.1  Create project to library storage system
   12.10.2022 v2.2  Append web page generation and selection save as picture
   19.10.2022 v2.3  Append via rules, append full list of internal layers, append menu item for pcb layers count
+  21.10.2022 v2.4  Append drag origin point of graph editor with Shift+Middle button
+                   Append trace delete mode
 */
 
 #ifndef SDCONFIG
@@ -222,7 +224,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             2
-#define SD_VERSION_MINOR             3
+#define SD_VERSION_MINOR             4
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

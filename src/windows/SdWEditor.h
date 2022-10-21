@@ -184,7 +184,7 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmModeRoadEnter() {}
     virtual void cmModeRoadMove() {}
     virtual void cmModePolygon() {}
-    virtual void cmModeDeleteWire() {}
+    virtual void cmModeTraceDelete() {}
     virtual void cmModePad() {}
     virtual void cmModeViaEnter() {}
 

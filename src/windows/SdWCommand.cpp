@@ -274,6 +274,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_ROAD_MOVE]  = menuInsertPcb->addAction( QIcon(QString(":/pic/objPcbWireMove.png")), QObject::tr("Road move"), frame, SLOT(cmModeRoadMove()) );
   cmModeTable[MD_POLYGON]    = menuInsertPcb->addAction( QIcon(QString(":/pic/objPolygon.png")), QObject::tr("Polygon enter"), frame, SLOT(cmModePolygon()) );
   cmModeTable[MD_VIA_ENTER]  = menuInsertPcb->addAction( QIcon(QString(":/pic/objVia.png")), QObject::tr("Via enter"), frame, SLOT(cmModeViaEnter()) );
+  cmModeTable[MD_TRACE_DELETE]   = menuInsertPcb->addAction( QIcon(QString(":/pic/objPcbWireDel.png")), QObject::tr("Delete trace"), frame, SLOT(cmModeTraceDelete()) );
   //  cmModePlace      = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
   //  cmModeEditWire   = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
   //  cmModeWire       = menuInsert->addAction( QIcon(QString(":/pic/.png")), QObject::tr(""), frame, SLO );
@@ -634,6 +635,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barPcb->insertAction( nullptr, cmModeTable[MD_MOVE_PART] );
   barPcb->insertAction( nullptr, cmModeTable[MD_ROAD_ENTER] );
   barPcb->insertAction( nullptr, cmModeTable[MD_ROAD_MOVE] );
+  barPcb->insertAction( nullptr, cmModeTable[MD_TRACE_DELETE] );
   barPcb->insertAction( nullptr, cmModeTable[MD_POLYGON] );
   barPcb->insertAction( nullptr, cmModeTable[MD_VIA_ENTER] );
   barPcb->insertAction( nullptr, cmModeTable[MD_PLATE_IDENT] );

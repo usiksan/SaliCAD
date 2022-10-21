@@ -35,6 +35,7 @@ Description
 #include "modes/SdModeCPartImp.h"
 #include "modes/SdModeCViaEnter.h"
 #include "modes/SdModeCOriginPlate.h"
+#include "modes/SdModeCTraceDelete.h"
 
 #include <QDebug>
 #include <QProgressDialog>
@@ -153,8 +154,9 @@ void SdWEditorGraphPlate::cmModePolygon()
 
 
 
-void SdWEditorGraphPlate::cmModeDeleteWire()
+void SdWEditorGraphPlate::cmModeTraceDelete()
   {
+  modeSet( new SdModeCTraceDelete( this, getProjectItem() )  );
   }
 
 
