@@ -43,7 +43,10 @@ using SdObjectPtr = SdObject*;
 class SdObject
   {
     SdContainer *mParent;     //!< Parent object
+    int          mCpid;       //!< id for crossproject association
     bool         mDeleted;    //!< Flag check if object deleted. Deleted objects not save
+
+    static int   mCpidCount;  //!< Count for generation session id
   public:
     SdObject();
     virtual ~SdObject() {}
@@ -53,6 +56,10 @@ class SdObject
     virtual QString   getType() const = 0;
     virtual SdClass   getClass() const = 0;
     virtual bool      isContainer() const { return false; }
+
+    //Session id for crossproject association
+    int               cpid() const { return mCpid; }
+    void              cpidInit() { mCpid = mCpidCount++; }
 
     //Hierarhy
     SdContainer*      getParent() const { return mParent; }

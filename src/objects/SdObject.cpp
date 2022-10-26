@@ -55,9 +55,11 @@ Description
 #include <QFile>
 #include <QDebug>
 
+int SdObject::mCpidCount(1);
 
 SdObject::SdObject() :
   mParent(nullptr),
+  mCpid(0),
   mDeleted(false)
   {
   }
@@ -196,6 +198,7 @@ void SdObject::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
     qDebug() << Q_FUNC_INFO << "Illegal clone source";
     throw( QString("Illegal clone source") );
     }
+  mCpid = src->mCpid;
   }
 
 
@@ -211,6 +214,8 @@ void SdObject::json(SdJsonWriter &js) const
   {
   js.jsonString( QStringLiteral(SDKO_ID), getId() );
   js.jsonString( QStringLiteral(SDKO_TYPE), getType() );
+
+  js.jsonInt( QStringLiteral("Cpid"), mCpid );
   }
 
 
@@ -225,7 +230,7 @@ void SdObject::json(SdJsonWriter &js) const
 void SdObject::json( const SdJsonReader &js )
   {
   //At this moment object is fully readed
-  Q_UNUSED(js)
+  js.jsonInt( QStringLiteral("Cpid"), mCpid, 0 );
   }
 
 

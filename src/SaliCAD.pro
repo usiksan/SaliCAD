@@ -97,6 +97,7 @@ SOURCES += \
     objects/SdGraphScriptRef.cpp \
     objects/SdGraphScriptRefMap.cpp \
     objects/SdJsonIO.cpp \
+    objects/SdPartImpRelativePosition.cpp \
     script/SdScriptOperatorBlock.cpp \
     script/SdScriptOperatorIf.cpp \
     script/SdScriptOperatorWhile.cpp \
@@ -489,6 +490,7 @@ HEADERS  += \
     objects/SdGraphScriptRef.h \
     objects/SdGraphScriptRefMap.h \
     objects/SdJsonIO.h \
+    objects/SdPartImpRelativePosition.h \
     script/SdScriptOperator.h \
     script/SdScriptOperatorAssign.h \
     script/SdScriptOperatorBlock.h \

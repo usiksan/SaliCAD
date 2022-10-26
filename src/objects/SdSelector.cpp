@@ -467,6 +467,16 @@ void SdSelector::draw(SdContext *ctx)
 
 
 
+//!
+//! \brief cpidInitAll Init cpid for all object in selection table
+//!
+void SdSelector::cpidInitAll()
+  {
+  forEach( dctAll, [] ( SdGraph *obj ) -> bool { obj->cpidInit(); return true; } );
+  }
+
+
+
 
 
 bool SdSelector::isClipboardAvailable()

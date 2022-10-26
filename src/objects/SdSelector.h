@@ -97,7 +97,13 @@ class SdSelector : public SdObject
     SdRect              getOverRect();
     void                draw( SdContext *ctx );
 
+    //!
+    //! \brief cpidInitAll Init cpid for all object in selection table
+    //!
+    void                cpidInitAll();
+
     static bool         isClipboardAvailable();
+
   };
 
 #endif // SDSELECTOR_H
