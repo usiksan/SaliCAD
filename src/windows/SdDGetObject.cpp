@@ -523,6 +523,8 @@ void SdDGetObject::onSelectItem(int row, int column)
 //On change component section selection
 void SdDGetObject::onCurrentSection(int row)
   {
+  if( row < 0 )
+    return;
   if( mComponent != nullptr ) {
     mSymbolView->setItemById( mComponent->getSectionSymbolId(row) );
     mSectionIndex = row;
