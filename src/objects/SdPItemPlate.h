@@ -139,6 +139,15 @@ class SdPItemPlate : public SdProjectItem
     //Build rules block for given net
     void                   ruleBlockForNet(const QString netName, SdRuleBlock &blockDest );
 
+    //!
+    //! \brief ruleForNetSet Set new rule for single net
+    //! \param netName       Net name for which rule will be set
+    //! \param ruleId        Rule id
+    //! \param val           Value for rule
+    //! \param undo          Undo
+    //!
+    void                   ruleForNetSet( const QString netName, SdRuleId ruleId, int val, SdUndo *undo );
+
 
 
 

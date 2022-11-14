@@ -24,6 +24,7 @@ Description
 #include "windows/SdWEditorGraph.h"
 
 #include <QDebug>
+#include <QMessageBox>
 #include <math.h>
 
 SdModeCRoadEnter::SdModeCRoadEnter(SdWEditorGraph *editor, SdProjectItem *obj) :
@@ -191,6 +192,22 @@ void SdModeCRoadEnter::propGetFromBar()
     bar->getPropRoad( &(sdGlobalProp->mRoadProp), &mViaProp, &(sdGlobalProp->mWireEnterType) );
     sdGlobalProp->mViaProp = mViaProp;
     sdGlobalProp->mViaRule = bar->getViaRule();
+
+    //If width of road changed we question for change it for all net
+    if( getStep() && mProp.mWidth != sdGlobalProp->mRoadProp.mWidth ) {
+      //Width of riad changed
+      //Check if new width not equal that in rules
+      if( sdGlobalProp->mRoadProp.mWidth != mRule.mRules[ruleRoadWidth] ) {
+        //New width not equal that in rules
+        //We show question for change width in rules for this net
+        if( QMessageBox::question( mEditor, QObject::tr("Query"), QObject::tr("Change width for full net?") ) == QMessageBox::Yes ) {
+          //Change with in rule
+          mRule.mRules[ruleRoadWidth] = sdGlobalProp->mRoadProp.mWidth;
+          plate()->ruleForNetSet( mProp.mNetName.str(), ruleRoadWidth, sdGlobalProp->mRoadProp.mWidth, mUndo );
+          }
+        }
+      }
+
     if( getStep() && sdGlobalProp->mRoadProp.mStratum != mProp.mStratum ) {
       //Change stratum
       changeToTraceLayer( sdGlobalProp->mRoadProp.mStratum );

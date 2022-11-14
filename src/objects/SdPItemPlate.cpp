@@ -358,6 +358,31 @@ void SdPItemPlate::ruleBlockForNet( const QString netName, SdRuleBlock &blockDes
 
 
 
+//!
+//! \brief ruleForNetSet Set new rule for single net
+//! \param netName       Net name for which rule will be set
+//! \param ruleId        Rule id
+//! \param val           Value for rule
+//! \param undo          Undo
+//!
+void SdPItemPlate::ruleForNetSet(const QString netName, SdRuleId ruleId, int val, SdUndo *undo)
+  {
+  if( undo )
+    undo->rule( &mRulesPcb, &mRulesMap );
+  //Rule for net
+  SdRuleBlock rules;
+  //If rule for net already exist in map we extract it for change
+  if( mRulesMap.contains( netName ) )
+    rules = mRulesMap.value( netName );
+  //Update rule value
+  rules.mRules[ruleId] = val;
+  //Write rules to map
+  mRulesMap.insert( netName, rules );
+  }
+
+
+
+
 
 
 
