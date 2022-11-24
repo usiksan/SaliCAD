@@ -306,5 +306,6 @@
         <file>pic/editCopySvg.png</file>
         <file>pic/editCopyWeb.png</file>
         <file>pic/editSelectSave.png</file>
+        <file>pic/partMasterModule.png</file>
     </qresource>
 </RCC>

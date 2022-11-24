@@ -74,6 +74,17 @@ partFlat = graphPin( [hl,0], pinPad, [hl,hw/4], "2", "CB0", [hl,-hw/4], "CT0" )
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 const char16_t *scriptLeadedCapacitor =
 uR"VVV(
 
@@ -169,6 +180,12 @@ partFlat = graphPin( [pinDistance,0], padMinus, [pinDistance,0], "2", "CM0", [pi
 )VVV";
 
 
+
+
+
+
+
+
 const char16_t *scriptSoic =
 uR"VVV(
 #part dimensions
@@ -255,6 +272,315 @@ partModel = pinModel
 
 
 
+
+
+
+const char16_t *scriptModule =
+uR"VVV(
+# First place source params of part
+#f?bodyLenght
+bodyLenght = inputFloat( "Plate length (X)", 13 )
+
+#f?bodyWidth
+bodyWidth = inputFloat( "Plate width (Y)", 27 )
+
+#f?bodyHeight
+bodyHeight = inputFloat( "Plate height (H)", 1 )
+
+#c?bodyColor
+bodyColor = inputColor( "Plate color", "#008080" )
+
+
+# Second place source params of pins
+#f?pinDiametr
+pinDiametr = inputFloat( "Pin width", 1.2 )
+
+#f?pinHoleDiametr
+pinHoleDiametr = inputFloat( "Pin hole diameter", 1 )
+
+#f?pinDistance
+pinDistance = inputFloat( "Pin distance", 1.5 )
+
+#f?pinCountLeft
+pinCountLeft = inputFloat( "Pin count at left", 13 )
+
+#f?pinCountBottom
+pinCountBottom = inputFloat( "Pin count at bottom", 8 )
+
+#f?pinCountRight
+pinCountRight = inputFloat( "Pin count at right", 12 )
+
+#f?pinOffsetLeftY
+pinOffsetLeftY = inputFloat( "Pin offset at left on Y", 1.0 )
+
+#f?pinOffsetBottomX
+pinOffsetBottomX = inputFloat( "Pin offset at bottom on X", 0 )
+
+#f?pinOffsetRightY
+pinOffsetRightY = inputFloat( "Pin offset at right on Y", 1.0 )
+
+# -2 bottom, 0 center, 2 top
+#f?pinLeftAlign
+pinLeftAlign = inputFloat( "Pins alignment at left (-2 bottom, 0 center, 2 top)", -2.0 )
+
+# -2 left, 0 center, 2 right
+#f?pinBottomAlign
+pinBottomAlign = inputFloat( "Pins alignment at bottom (-2 left, 0 center, 2 right)", 0 )
+
+# -2 bottom, 0 center, 2 top
+#f?pinRightAlign
+pinRightAlign = inputFloat( "Pins alignment at right (-2 bottom, 0 center, 2 top)", -2.0 )
+
+#c?pinColor
+pinColor = inputColor( "Pin color", "#edd400" )
+
+#-
+padLeft = inputPad( "Pad left", "r2x1.2m0.1s0.04" )
+
+#-
+padBottom = inputPad( "Pad bottom", "r1.2x2m0.1s0.04" )
+
+#-
+padRight = inputPad( "Pad right", "r2x1.2m0.1s0.04" )
+
+
+#Third place source params of cover
+#f?coverLength
+coverLength = inputFloat( "Cover length (X)", 10.5 )
+
+#f?coverWidth
+coverWidth = inputFloat( "Cover width (Y)", 16.5 )
+
+#f?coverHeight
+coverHeight = inputFloat( "Cover height (H)", 2 )
+
+#f?coverOffsetCenter
+coverOffsetCenter = inputFloat( "Cover offset on horizontal center (X)", 0 )
+
+#f?coverOffsetBottom
+coverOffsetBottom = inputFloat( "Cover offset on vertical bottom (Y)", 1.75 )
+
+#c?coverColor
+coverColor = inputColor( "Pin color", "#f3f3f3" )
+
+
+#========================================================
+#Body construction
+pinOutHoleHalf = (pinDistance - pinHoleDiametr) / 2.0
+pinHoleRadius = pinHoleDiametr / 2.0
+
+#Left side
+#Left pins length
+leftPinsLength = pinDistance * pinCountLeft
+#Center align
+leftPinsStartY = (bodyWidth - leftPinsLength) / 2.0 + pinOffsetLeftY
+if( pinLeftAlign < -1.0 )
+  #Bottom align
+  leftPinsStartY = bodyWidth - leftPinsLength - pinOffsetLeftY
+
+if( pinLeftAlign > 1 )
+  #Top align
+  leftPinsStartY = pinOffsetLeftY
+
+leftPinsStopY = bodyWidth - leftPinsStartY - leftPinsLength
+
+#Left side of bottom body
+bodyBottomVertex = [ 0,bodyWidth ]
+if( leftPinsStartY > 0 )
+  bodyBottomVertex = floatListAppend( bodyBottomVertex, [ 0,-leftPinsStartY] )
+
+i = 0
+while( i < pinCountLeft ) {
+  bodyBottomVertex = floatListAppend( bodyBottomVertex, [ 0,-pinOutHoleHalf, pinHoleRadius,0, 0,-pinHoleDiametr,
+      -pinHoleRadius,0, 0,-pinOutHoleHalf] )
+  i = i + 1.0
+  }
+if( leftPinsStopY > 0 )
+  bodyBottomVertex = floatListAppend( bodyBottomVertex, [0,-leftPinsStopY] )
+
+
+#Bottom side
+bottomPinsLength = pinDistance * pinCountBottom
+#Center align
+bottomPinsStartX = (bodyLenght - bottomPinsLength) / 2.0 + pinOffsetBottomX
+if( pinBottomAlign < -1 )
+  #Left align
+  bottomPinsStartX = pinOffsetBottomX
+
+if( pinBottomAlign > 1 )
+  #Right align
+  bottomPinsStartX = bodyLenght - bottomPinsLength - pinOffsetBottomX
+
+bottomPinsStopX = bodyLenght - bottomPinsStartX - bottomPinsLength
+
+#Bottom side of bottom body
+if( bottomPinsStartX > 0 )
+  bodyBottomVertex = floatListAppend( bodyBottomVertex, [bottomPinsStartX,0] )
+
+i = 0
+while( i < pinCountBottom ) {
+  bodyBottomVertex = floatListAppend( bodyBottomVertex, [ pinOutHoleHalf,0, 0,pinHoleRadius, pinHoleDiametr,0,
+      0,-pinHoleRadius, pinOutHoleHalf,0] )
+  i = i + 1.0
+  }
+if( bottomPinsStopX > 0 )
+  bodyBottomVertex = floatListAppend( bodyBottomVertex, [bottomPinsStopX,0] )
+
+
+#Right side
+rightPinsLength = pinDistance * pinCountRight
+#Center align
+rightPinsStartY = (bodyWidth - rightPinsLength) / 2.0 + pinOffsetRightY
+if( pinRightAlign < 0 )
+  #Bottom align
+  rightPinsStartY = bodyWidth - rightPinsLength - pinOffsetLeftY
+
+if( pinRightAlign > 0 )
+  #Top align
+  rightPinsStartY = pinOffsetRightY
+
+rightPinsStopY = bodyWidth - rightPinsStartY - rightPinsLength
+
+#Right side of bottom body
+if( leftPinsStopY > 0 )
+  bodyBottomVertex = floatListAppend( bodyBottomVertex, [ 0,rightPinsStopY] )
+
+i = 0
+while( i < pinCountRight ) {
+  bodyBottomVertex = floatListAppend( bodyBottomVertex, [ 0,pinOutHoleHalf, -pinHoleRadius,0, 0,pinHoleDiametr,
+      pinHoleRadius,0, 0,pinOutHoleHalf] )
+  i = i + 1.0
+  }
+if( rightPinsStartY > 0 )
+  bodyBottomVertex = floatListAppend( bodyBottomVertex, [0,rightPinsStartY] )
+
+#Build bottom face
+#Construct body faces. See help on embedded functions
+bodyBottomFace = faceFlatMatrix( bodyBottomVertex, matrix1 )
+bodyTopFace = faceDuplicate( bodyBottomFace, matrixTranslate( matrix1, 0, 0, bodyHeight) )
+
+#Set of faces with same color
+body = faceListSimplify( bodyBottomFace )
+body = faceListAppend( body, faceListSimplify( bodyTopFace ) )
+body = faceListAppend( body, faceListWall( bodyBottomFace, bodyTopFace, true ) )
+
+#Model is set of faces with associated with it colors
+bodyModel = model( bodyColor, bodyColor, bodyColor, body, matrix1 )
+
+#Place model into destignation model. After this you can see your construction
+partModel = bodyModel
+
+
+#- 2D Graphics
+partFlat = graphRect( [ 0, 0], [bodyLenght, bodyWidth] )
+#-
+gCoverX = (bodyLenght - coverLength) / 2 + coverOffsetCenter
+#-
+partFlat = graphRect( [ gCoverX, coverOffsetBottom ], [gCoverX+coverLength,coverOffsetBottom+coverWidth] )
+#-
+gLineY = 2.0 * coverOffsetBottom + coverWidth
+#-
+partFlat = graphLine( [ 0, gLineY ], [bodyLenght,gLineY] )
+#-
+partFlat = graphCircle( [ gCoverX + 2, coverOffsetBottom+coverWidth-2, 1 ] )
+
+#=========================================================
+#Pin construction
+
+pinBottomArcVertex = arc( pinHoleRadius, -90, 90, 10 )
+
+pinDiametrHalf = pinDiametr / 2.0
+
+pinOutHalf = (pinDiametr - pinHoleDiametr) / 2.0
+
+pinBottomVertex = [ -pinDiametrHalf,0, pinOutHalf,0, pinBottomArcVertex, pinOutHalf,0,
+  0,pinDiametrHalf, -pinDiametr,0 ]
+
+pinBottomFace = faceFlatMatrix( pinBottomVertex, matrixTranslate( matrix1, 0,0, -0.001 ) )
+pinTopFace = faceFlatMatrix( pinBottomVertex, matrixTranslate( matrix1, 0,0, bodyHeight + 0.001 ))
+
+pin = faceListSimplify( pinBottomFace )
+pin = faceListAppend( pin, faceListSimplify( pinTopFace ) )
+
+pinBottomVertex = [ -pinHoleRadius,0, pinBottomArcVertex ]
+
+pinBottomFace = faceFlatMatrix( pinBottomVertex, matrixTranslate( matrix1, 0,0, -0.001 ) )
+pinTopFace = faceFlatMatrix( pinBottomVertex, matrixTranslate( matrix1, 0,0, bodyHeight + 0.001 ))
+
+pin = faceListAppend( pin, faceListWall( pinBottomFace, pinTopFace, false ) )
+
+pinDistanceHalf = pinDistance / 2.0
+
+pinPosY = bodyWidth - (leftPinsStartY + pinDistanceHalf)
+pinMatrix = matrixTranslate( matrix1, 0, pinPosY, 0 )
+pinMatrix = matrixRotate( pinMatrix, -90, 0, 0, 1.0 )
+#First pin placement
+pinModel = model( pinColor, pinColor, pinColor, pin, pinMatrix )
+
+pinIndex = 1
+#-
+partFlat = graphPin( [0,pinPosY], padLeft, [0,pinPosY+1], stringPinIndex(pinIndex), "CM0", [1,pinPosY], "CM0" )
+
+
+#Left side pins
+i = 1
+while( i < pinCountLeft ) {
+  pinPosY = bodyWidth - (leftPinsStartY + pinDistanceHalf + i * pinDistance)
+  pinMatrix = matrixTranslate( matrix1, 0, pinPosY, 0 )
+  pinMatrix = matrixRotate( pinMatrix, -90, 0, 0, 1.0 )
+  pinModel = modelCopy( pinModel, pinMatrix )
+  i = i + 1
+  pinIndex = pinIndex + 1
+#-
+  partFlat = graphPin( [0,pinPosY], padLeft, [0,pinPosY+1], stringPinIndex(pinIndex), "CM0", [1,pinPosY], "CM0" )
+  }
+
+#Bottom side pins
+pinPosX = 0
+i = 0
+while( i < pinCountBottom ) {
+  pinPosX = bottomPinsStartX + pinDistanceHalf + i * pinDistance
+  pinMatrix = matrixTranslate( matrix1, pinPosX, 0, 0 )
+  pinModel = modelCopy( pinModel, pinMatrix )
+  i = i + 1
+  pinIndex = pinIndex + 1
+#-
+  partFlat = graphPin( [pinPosX,0], padBottom, [pinPosX,-1], stringPinIndex(pinIndex), "CM0", [pinPosX,1], "CM0" )
+  }
+
+#Right side pins
+pinIndex = pinIndex + pinCountRight
+i = 0
+while( i < pinCountRight ) {
+  pinPosY = bodyWidth - (rightPinsStartY + pinDistanceHalf + i * pinDistance)
+  pinMatrix = matrixTranslate( matrix1, bodyLenght, pinPosY, 0 )
+  pinMatrix = matrixRotate( pinMatrix, 90, 0, 0, 1.0 )
+  pinModel = modelCopy( pinModel, pinMatrix )
+  i = i + 1
+#-
+  partFlat = graphPin( [bodyLenght,pinPosY], padRight, [bodyLenght,pinPosY+1], stringPinIndex(pinIndex), "CM0", [bodyLenght-1,pinPosY], "CM0" )
+  pinIndex = pinIndex - 1
+  }
+
+#Place pin model into destignation model
+partModel = pinModel
+
+
+#=========================================================
+#Cover construction
+cover = faceListBox( coverLength, coverWidth, -coverHeight )
+
+partModel = model( coverColor, coverColor, coverColor, cover, matrixTranslate( matrix1, bodyLenght / 2.0 + coverOffsetCenter, coverWidth / 2.0 + coverOffsetBottom, bodyHeight ) )
+
+
+
+)VVV";
+
+
+
+
+
+
 Sd3dModelScript::Sd3dModelScriptList Sd3dModelScript::scriptList()
   {
   static Sd3dModelScriptList list;
@@ -274,6 +600,11 @@ Sd3dModelScript::Sd3dModelScriptList Sd3dModelScript::scriptList()
     ms.mName = QObject::tr("soic 2-row chip");
     ms.mDescription = QObject::tr("This master builds 3d model of soic chip with 2 rows of pins");
     ms.mScript = QString::fromUtf16( scriptSoic );
+    list.append( ms );
+
+    ms.mName = QObject::tr("module on pcb");
+    ms.mDescription = QObject::tr("This master builds 3d model and 2d graphics for pcb modules like esp32 wifi");
+    ms.mScript = QString::fromUtf16( scriptModule );
     list.append( ms );
     }
   return list;

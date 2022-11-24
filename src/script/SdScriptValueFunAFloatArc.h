@@ -14,7 +14,7 @@ Description
 
   Embedded function.
 
-  The function builds rectangle region with rounded corners and with center in 0
+  The function builds arc as pairs of floats (x,y)
 */
 #ifndef SDSCRIPTVALUEFUNAFLOATARC_H
 #define SDSCRIPTVALUEFUNAFLOATARC_H

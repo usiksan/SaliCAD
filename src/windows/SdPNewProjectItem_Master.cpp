@@ -24,6 +24,7 @@ Description
 #include "master/SdDMasterPartDoubleSideLR.h"
 #include "master/SdDMasterPartQuadSide.h"
 #include "master/SdDMasterPartSingleLine.h"
+#include "master/SdDMasterPartModule.h"
 
 #include "master/SdDMasterSymbolConnector.h"
 #include "master/SdDMasterSymbolIc.h"
@@ -195,6 +196,12 @@ void SdPNewProjectItem_Master::initializePage()
         SdDMasterPartQuadSide dlg( item, p );
         return dlg.exec();
         });
+
+//      addMaster( tr("Module part"), tr("Creates module part. Module is small pcb with components and sided pins"),
+//                 QString(":/pic/partMasterModule.png"), [] ( SdProjectItem *item, QWidget *p ) -> bool {
+//        SdDMasterPartModule dlg( item, p );
+//        return dlg.exec();
+//        });
 
       break;
 

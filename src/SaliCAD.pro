@@ -76,6 +76,7 @@ SOURCES += \
     import/vrml/VrmlNodeTransform.cpp \
     import/vrml/VrmlRotation.cpp \
     import/vrml/VrmlVector.cpp \
+    master/SdDMasterPartModule.cpp \
     master/SdDMasterPartSingleLine.cpp \
     master/SdDMasterSheetDecorator.cpp \
     master/SdMasterPart.cpp \
@@ -468,6 +469,7 @@ HEADERS  += \
     import/vrml/VrmlTypes.h \
     import/vrml/VrmlVector.h \
     library/SdStringMap.h \
+    master/SdDMasterPartModule.h \
     master/SdDMasterPartSingleLine.h \
     master/SdDMasterSheetDecorator.h \
     master/SdMasterPart.h \
@@ -509,6 +511,7 @@ HEADERS  += \
     script/SdScriptValueArrayFloat.h \
     script/SdScriptValueBool.h \
     script/SdScriptValueFloat.h \
+    script/SdScriptValueFunAFloatAppend.h \
     script/SdScriptValueFunAFloatArc.h \
     script/SdScriptValueFunColorBuild.h \
     script/SdScriptValueFunColorFromString.h \
@@ -920,6 +923,7 @@ RESOURCES += \
     SaliCADrc.qrc
 
 FORMS += \
+    master/SdDMasterPartModule.ui \
     master/SdDMasterPartSingleLine.ui \
     windows/SdDGetObject.ui \
     windows/SdDNetUnion.ui \

@@ -21,6 +21,7 @@
 #include "SdScriptValueFunMatrixTranslate.h"
 
 #include "SdScriptValueFunAFloatArc.h"
+#include "SdScriptValueFunAFloatAppend.h"
 
 #include "SdScriptValueFunVertexBuild.h"
 #include "SdScriptValueFunVertexOffset.h"
@@ -100,6 +101,7 @@ SdScriptParser3d::SdScriptParser3d(QTableWidget *tableWidget, Sd3drModel *model 
   addFunction( QStringLiteral("matrixTranslate"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunMatrixTranslate(); }, QStringLiteral("matrixTranslate( matrix src, float offX, float offY, float offZ )") );
 
   addFunction( QStringLiteral("arc"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunAFloatArc(); }, QStringLiteral("arc( float radius, float angleStart, float angleStop, float sideCount )") );
+  addFunction( QStringLiteral("floatListAppend"), [] () -> SdScriptValueFunction* { return new SdScriptValueFunAFloatAppend(); }, QStringLiteral("floatListAppend( floatList src, floatList append )") );
 
   addFunction( QStringLiteral("vertex"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunVertexBuild(model); }, QStringLiteral("vertex( float x, float y, float z )") );
   addFunction( QStringLiteral("vertexOffset"), [model] () -> SdScriptValueFunction* { return new SdScriptValueFunVertexOffset(model); }, QStringLiteral("vertexOffset( vertex src, float offX, float offY, float OffZ )") );
