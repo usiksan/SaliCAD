@@ -1,4 +1,5 @@
 #include "IgesEntity.h"
+#include "IgesEntityRationalBSplineCurve.h" //126
 #include "IgesEntityRationalBSplineSurface.h" //128
 #include "IgesEntityColor.h" //314
 
@@ -59,6 +60,7 @@ IgesEntity *IgesEntity::build(int type)
   {
   switch( type ) {
     case 0 : break;
+    case 126 : return new IgesEntityRationalBSplineCurve();
     case 128 : return new IgesEntityRationalBSplineSurface();
     case 314 : return new IgesEntityColor();
     }

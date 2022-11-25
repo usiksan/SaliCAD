@@ -1,7 +1,7 @@
 #ifndef IGESENTITYRATIONALBSPLINESURFACE_H
 #define IGESENTITYRATIONALBSPLINESURFACE_H
 
-#include "IgesEntity.h"
+#include "IgesEntitySurface.h"
 
 #include <QList>
 

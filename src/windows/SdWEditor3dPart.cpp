@@ -173,6 +173,15 @@ void SdWEditor3dPart::cm3dImportVrml()
 
 
 
+void SdWEditor3dPart::cm3dImportIges()
+  {
+
+  }
+
+
+
+
+
 
 
 

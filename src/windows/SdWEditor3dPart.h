@@ -45,6 +45,7 @@ class SdWEditor3dPart : public SdWEditor3d
     virtual void cm3dImportStl() override;
     virtual void cm3dImportStep() override;
     virtual void cm3dImportVrml() override;
+    virtual void cm3dImportIges() override;
 
   private:
     //!

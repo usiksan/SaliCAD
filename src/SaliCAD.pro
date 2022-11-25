@@ -23,6 +23,11 @@ win32: LIBS += -lopengl32
 win64: LIBS += -lopengl32
 
 SOURCES += \
+    import/iges/IgesEntityCurveOnParametricSurface.cpp \
+    import/iges/IgesEntityFaceGenerator.cpp \
+    import/iges/IgesEntityRationalBSplineCurve.cpp \
+    import/iges/IgesEntitySurface.cpp \
+    import/iges/IgesEntityTrimmedParametricSurface.cpp \
     import/nurbs/NurbsBasis.cpp \
     import/nurbs/NurbsConvexHull.cpp \
     import/nurbs/NurbsCurve.cpp \
@@ -411,6 +416,11 @@ SOURCES += \
 
 HEADERS  += \
     SvLib/SvJson3dIO.h \
+    import/iges/IgesEntityCurveOnParametricSurface.h \
+    import/iges/IgesEntityFaceGenerator.h \
+    import/iges/IgesEntityRationalBSplineCurve.h \
+    import/iges/IgesEntitySurface.h \
+    import/iges/IgesEntityTrimmedParametricSurface.h \
     import/nurbs/NurbsBasis.h \
     import/nurbs/NurbsConvexHull.h \
     import/nurbs/NurbsCurve.h \

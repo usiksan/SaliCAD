@@ -1,4 +1,5 @@
 #include "IgesReader.h"
+#include "IgesEntityFaceGenerator.h"
 
 #include <QFile>
 
@@ -7,6 +8,14 @@ IgesReader::IgesReader()
 
   }
 
+
+
+
+//!
+//! \brief scanFile Scan IGES file and divide it into 4 part for subsequent parsing
+//! \param fname    File name for scan
+//! \return         true when scan success
+//!
 bool IgesReader::scanFile(const QString &fname)
   {
   //Open file
@@ -34,6 +43,10 @@ bool IgesReader::scanFile(const QString &fname)
 
 
 
+//!
+//! \brief parse Parse all IGES entity into internal representation
+//! \return      true when parsing success
+//!
 bool IgesReader::parse()
   {
   for( auto it = mDirectoryEntryMap.begin(); it != mDirectoryEntryMap.end(); it++ )
@@ -43,12 +56,42 @@ bool IgesReader::parse()
 
 
 
+
+//!
+//! \brief generateFaces Generate faces into model
+//! \param model         Model into which will be generated
+//!
+void IgesReader::generateFaces(Sd3drModel *model)
+  {
+  //For each "IgesEntityFaceGenerator" we perform generation of faces
+  for( auto it = mDirectoryEntryMap.begin(); it != mDirectoryEntryMap.end(); it++ ) {
+    IgesEntityFaceGenerator *faceGenerator = dynamic_cast<IgesEntityFaceGenerator*>( it.value() );
+    if( faceGenerator != nullptr )
+      faceGenerator->generateFaces( model );
+    }
+  }
+
+
+
+//!
+//! \brief setLine Init parameter scaner
+//! \param line    Parameter block
+//!
 void IgesReader::setLine(const QByteArray &line)
   {
   mLine = line;
   mIndex = 0;
   }
 
+
+
+
+
+//!
+//! \brief paramInt Decode next value as int
+//! \param val      Int value
+//! \return         true if decoding success
+//!
 bool IgesReader::paramInt(int &val)
   {
   if( !scanInt( val, 0, false ) ) return false;
@@ -59,6 +102,11 @@ bool IgesReader::paramInt(int &val)
 
 
 
+//!
+//! \brief paramReal Decode next value as double
+//! \param val       Double value
+//! \return          true if decoding success
+//!
 bool IgesReader::paramReal(double &val)
   {
   if( !scanReal( val, 0.0, false ) ) return false;
@@ -69,7 +117,23 @@ bool IgesReader::paramReal(double &val)
 
 
 
+bool IgesReader::paramEntityPtr(IgesEntityPtr &entityPtr)
+  {
+  entityPtr = nullptr;
+  int index;
+  if( !paramInt( index ) ) return false;
+  if( index == 0 ) return true;
+  entityPtr = entity(index);
+  return entityPtr != nullptr;
+  }
 
+
+
+
+//!
+//! \brief nextLine Retrive next line from file
+//! \return         true if next line readed successfull
+//!
 bool IgesReader::nextLine()
   {
   //Get next line
@@ -88,6 +152,10 @@ bool IgesReader::nextLine()
 
 
 
+//!
+//! \brief scanLine Perform scan current line of file
+//! \return         true of scaning successfull
+//!
 bool IgesReader::scanLine()
   {
   //Scan different sections
@@ -102,96 +170,14 @@ bool IgesReader::scanLine()
 
 
 
-bool IgesReader::scanReal(double &val, double defVal, bool thereDef)
-  {
-  bool ok = true;
-  QByteArray ar;
-  while( mIndex < mLine.count() && mLine.at(mIndex) != mParametrDelimiter && mLine.at(mIndex) != mRecordDelimiter )
-    ar.append( mLine.at(mIndex++) );
-  if( ar.isEmpty() ) {
-    if( !thereDef ) return false;
-    val = defVal;
-    }
-  else
-    val = ar.toDouble( &ok );
-  return ok;
-  }
 
 
 
 
-
-
-
-
-
-bool IgesReader::scanChars(QByteArray &dest, const QByteArray &def, bool thereDef)
-  {
-  dest.clear();
-  //Test for default string (i.e.empty)
-  if( !QChar(mLine.at(mIndex)).isDigit() ) {
-    if( !thereDef ) return false;
-    dest = def;
-    }
-  else {
-    //Get symbol count
-    int countLastPos = mLine.indexOf( 'H', mIndex ) - mIndex;
-    if( countLastPos < 0 ) return false;
-    int count = mLine.mid( mIndex, countLastPos ).toInt();
-    mIndex += countLastPos + 1;
-    dest.reserve( count );
-    for( int i = 0; i < count; i++ ) {
-      if( mIndex >= mLine.count() ) return false;
-      dest.append( mLine.at(mIndex++) );
-      }
-    }
-  return true;
-  }
-
-
-
-
-
-
-bool IgesReader::scanParametrDelimiter()
-  {
-  return mLine.at(mIndex++) == mParametrDelimiter;
-  }
-
-
-
-bool IgesReader::scanRecordDelimiter()
-  {
-  return mLine.at(mIndex++) == mRecordDelimiter;
-  }
-
-
-
-
-bool IgesReader::scanInt(int &val, int defVal, bool thereDef)
-  {
-  bool ok = true;
-  QByteArray ar;
-  //Prefix blank
-  while( mIndex < mLine.count() && mLine.at(mIndex) == ' ' ) mIndex++;
-  if( mLine.at(mIndex) == '+' || mLine.at(mIndex) == '-' )
-    ar.append( mLine.at(mIndex++) );
-  while( mIndex < mLine.count() && mLine.at(mIndex) == ' ' ) mIndex++;
-  while( mIndex < mLine.count() && QChar(mLine.at(mIndex)).isDigit() )
-    ar.append( mLine.at(mIndex++) );
-  while( mIndex < mLine.count() && mLine.at(mIndex) == ' ' ) mIndex++;
-  if( ar.isEmpty() ) {
-    if( !thereDef ) return false;
-    val = defVal;
-    }
-  else
-    val = ar.toInt( &ok );
-  return ok;
-  }
-
-
-
-
+//!
+//! \brief scanStart Scan start part of file
+//! \return          true of scaning successfull
+//!
 bool IgesReader::scanStart()
   {
   //Do nothing
@@ -200,6 +186,11 @@ bool IgesReader::scanStart()
 
 
 
+
+//!
+//! \brief scanGlobal Scan global part of file
+//! \return           true of scaning successfull
+//!
 bool IgesReader::scanGlobal()
   {
   QByteArray chars;
@@ -352,6 +343,11 @@ bool IgesReader::scanGlobal()
 
 
 
+
+//!
+//! \brief scanDirectoryEntry Scan single entry of directory of directory part of file
+//! \return                   true if scaning successfull
+//!
 bool IgesReader::scanDirectoryEntry()
   {
   //First line
@@ -379,6 +375,11 @@ bool IgesReader::scanDirectoryEntry()
 
 
 
+
+//!
+//! \brief scanParametrData Scan single parameter block of parameter part of file
+//! \return                 true if scaning successfull
+//!
 bool IgesReader::scanParametrData()
   {
   QByteArray data;
@@ -399,4 +400,126 @@ bool IgesReader::scanParametrData()
   mParameterDataMap.insert( lineIndex, data );
 
   return true;
+  }
+
+
+
+
+
+
+
+//!
+//! \brief scanReal Scan double value from current position of work line (mLine)
+//! \param val      Scanned value
+//! \param defVal   Default value will assign to scanned value if field is empty (optional)
+//! \param thereDef If true then value may be absent and default value assigned, other side - value must be present
+//! \return         true if scaning successfull
+//!
+bool IgesReader::scanReal(double &val, double defVal, bool thereDef)
+  {
+  bool ok = true;
+  QByteArray ar;
+  while( mIndex < mLine.count() && mLine.at(mIndex) != mParametrDelimiter && mLine.at(mIndex) != mRecordDelimiter )
+    ar.append( mLine.at(mIndex++) );
+  if( ar.isEmpty() ) {
+    if( !thereDef ) return false;
+    val = defVal;
+    }
+  else
+    val = ar.toDouble( &ok );
+  return ok;
+  }
+
+
+
+
+
+
+
+
+
+//!
+//! \brief scanChars Scan chars string from current position of work line (mLine)
+//! \param dest      Scanned string
+//! \param defVal    Default value will assign to scanned value if field is empty (optional)
+//! \param thereDef  If true then value may be absent and default value assigned, other side - value must be present
+//! \return          true if scaning successfull
+//!
+bool IgesReader::scanChars(QByteArray &dest, const QByteArray &def, bool thereDef)
+  {
+  dest.clear();
+  //Test for default string (i.e.empty)
+  if( !QChar(mLine.at(mIndex)).isDigit() ) {
+    if( !thereDef ) return false;
+    dest = def;
+    }
+  else {
+    //Get symbol count
+    int countLastPos = mLine.indexOf( 'H', mIndex ) - mIndex;
+    if( countLastPos < 0 ) return false;
+    int count = mLine.mid( mIndex, countLastPos ).toInt();
+    mIndex += countLastPos + 1;
+    dest.reserve( count );
+    for( int i = 0; i < count; i++ ) {
+      if( mIndex >= mLine.count() ) return false;
+      dest.append( mLine.at(mIndex++) );
+      }
+    }
+  return true;
+  }
+
+
+
+
+
+
+//!
+//! \brief scanParametrDelimiter Scan parameter delimiter
+//! \return                      true if scaning successfull
+//!
+bool IgesReader::scanParametrDelimiter()
+  {
+  return mLine.at(mIndex++) == mParametrDelimiter;
+  }
+
+
+
+//!
+//! \brief scanRecordDelimiter Scan record delimiter
+//! \return                    true if scaning successfull
+//!
+bool IgesReader::scanRecordDelimiter()
+  {
+  return mLine.at(mIndex++) == mRecordDelimiter;
+  }
+
+
+
+
+//!
+//! \brief scanInt  Scan int value from current position of work line (mLine)
+//! \param val      Scanned value
+//! \param defVal   Default value will assign to scanned value if field is empty (optional)
+//! \param thereDef If true then value may be absent and default value assigned, other side - value must be present
+//! \return         true if scaning successfull
+//!
+bool IgesReader::scanInt(int &val, int defVal, bool thereDef)
+  {
+  bool ok = true;
+  QByteArray ar;
+  //Prefix blank
+  while( mIndex < mLine.count() && mLine.at(mIndex) == ' ' ) mIndex++;
+  if( mLine.at(mIndex) == '+' || mLine.at(mIndex) == '-' )
+    ar.append( mLine.at(mIndex++) );
+  while( mIndex < mLine.count() && mLine.at(mIndex) == ' ' ) mIndex++;
+  while( mIndex < mLine.count() && QChar(mLine.at(mIndex)).isDigit() )
+    ar.append( mLine.at(mIndex++) );
+  while( mIndex < mLine.count() && mLine.at(mIndex) == ' ' ) mIndex++;
+  if( ar.isEmpty() ) {
+    if( !thereDef ) return false;
+    val = defVal;
+    }
+  else
+    val = ar.toInt( &ok );
+  return ok;
   }

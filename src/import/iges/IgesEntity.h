@@ -2,6 +2,7 @@
 #define IGESENTITY_H
 
 #include "objects/SdDoubleVector.h"
+#include "3dr/Sd3drModel.h"
 
 #include <QByteArray>
 #include <QList>
