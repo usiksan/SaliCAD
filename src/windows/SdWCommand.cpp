@@ -137,6 +137,9 @@ void SdWCommand::createMenu(SdWMain *frame)
   menuView->addSeparator();
   cmView3d   = menuView->addAction( QIcon(QStringLiteral(":/pic/view3d.png")), QObject::tr("3d-2d switch"), frame, SLOT(cmView3d()) );
   cmView3d->setEnabled(false);
+  cmViewMirror = menuView->addAction( QObject::tr("Mirror"), frame, SLOT(cmViewMirrorHorz()) );
+  cmViewMirror->setCheckable(true);
+  cmViewMirror->setEnabled(false);
   cmViewNets = menuView->addAction( QIcon(QString(":/pic/viewRatnet.png")), QObject::tr("Nets"), frame, SLOT(cmViewNets()) );
   cmViewGrid = menuView->addAction( QIcon(QString(":/pic/viewGrid.png")), QObject::tr("Grid"), frame, SLOT(cmViewGrid()) );
   cmViewGrid->setToolTip( QObject::tr("Show grid tune dialog") );
@@ -849,6 +852,7 @@ QActionPtr SdWCommand::cmEditFragments;
 
 QActionPtr SdWCommand::cmViewProject;
 QActionPtr SdWCommand::cmView3d;
+QActionPtr SdWCommand::cmViewMirror;
 QActionPtr SdWCommand::cmViewFill;
 QActionPtr SdWCommand::cmViewNets;
 QActionPtr SdWCommand::cmViewGrid;

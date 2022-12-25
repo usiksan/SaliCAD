@@ -14,11 +14,12 @@ Description
 #include "SdConverterView.h"
 #include "SdContext.h"
 
-SdConverterView::SdConverterView(QSize viewSize, SdPoint origin, double scale) :
+SdConverterView::SdConverterView(QSize viewSize, SdPoint origin, double scale, bool mirror) :
   SdConverter(),
   mCenter( viewSize.width() / 2, viewSize.height() / 2 ),
   mScale(scale),
-  mOrigin(origin)
+  mOrigin(origin),
+  mMirror(mirror)
   {
   }
 
@@ -30,7 +31,7 @@ QTransform SdConverterView::getMatrix()
   QTransform m = QTransform::fromTranslate( -mOrigin.x(), -mOrigin.y() );
 
   //Second - scaling
-  m *= QTransform::fromScale( mScale, -mScale );
+  m *= QTransform::fromScale( mMirror ? -mScale : mScale, -mScale );
 
   //Third - center view offset
   m *= QTransform::fromTranslate( mCenter.x(), mCenter.y() );

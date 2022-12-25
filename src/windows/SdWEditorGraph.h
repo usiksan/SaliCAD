@@ -52,6 +52,7 @@ class SdWEditorGraph : public SdWEditor
     QTransform       mPixelTransform; //Pixel to phys transformation
     bool             mCasheDirty;     //Cashe dirty flag. When true - static part redrawn
     QImage           mCashe;          //Cashe for static picture part
+    bool             mMirrorHorz;     //!< Mirror on horizontal axiz
 
   public:
     SdWEditorGraph( SdProjectItem *item, QWidget *parent = nullptr );
@@ -138,6 +139,7 @@ class SdWEditorGraph : public SdWEditor
     virtual void           cmViewZoomOut() override;
     virtual void           cmViewWindow() override;
     virtual void           cmViewMeasurement() override;
+    virtual void           cmViewMirrorHorz() override;
 
     virtual void           cmPropChanged() override;
 
@@ -162,8 +164,17 @@ class SdWEditorGraph : public SdWEditor
 
 
   protected:
-    //Print projectItem or selection in desired window
-    void    print(QPrinter &printer, SdRect wnd, int zeroWidth, bool colorPrint, double scale, SdSelector *selector );
+    //!
+    //! \brief print      Print projectItem or selection in desired window
+    //! \param printer    Printer on which printing be made
+    //! \param wnd        Printed window
+    //! \param zeroWidth  Width of lines with width zero
+    //! \param colorPrint When true we leave color information
+    //! \param scale      Scale factor
+    //! \param selector   Selector which contains elements must be printed
+    //! \param mirrorHorz When true we perform horizontal mirror
+    //!
+    void    print(QPrinter &printer, SdRect wnd, int zeroWidth, bool colorPrint, double scale, SdSelector *selector , bool mirrorHorz);
 
     //Activate new mode
     void    modeActivate( SdMode *mode );

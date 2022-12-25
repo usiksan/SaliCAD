@@ -32,11 +32,11 @@ class SdDPrint : public QDialog
   {
     Q_OBJECT
 
-    SdRect          mOver;    //Over rect for print area
-    SdRect          mSel;     //Over rect for selected elements
-    SdRect          mWin;     //Over rect for selected window
-    double          mPPM;     //PPM is how much phys in one logical
-    QPrinter       *mPrinter; //Printer, page print to
+    SdRect          mOver;    //!< Over rect for print area
+    SdRect          mSel;     //!< Over rect for selected elements
+    SdRect          mWin;     //!< Over rect for selected window
+    double          mPPM;     //!< PPM is how much phys in one logical
+    QPrinter       *mPrinter; //!< Printer, page print to
   public:
     explicit SdDPrint(SdRect over, SdRect sel, SdRect wnd, double ppm, QPrinter *printer, QWidget *parent = nullptr);
     ~SdDPrint();
@@ -54,6 +54,12 @@ class SdDPrint : public QDialog
 
     //Return zero width line conversion width
     int    getZeroWidth() const;
+
+    //!
+    //! \brief isMirrorHorz Return current state of mirrored print
+    //! \return             When true must be mirrored on horizontal axiz
+    //!
+    bool   isMirrorHorz() const;
   private:
     Ui::SdDPrint *ui;
 

@@ -201,6 +201,18 @@ int SdDPrint::getZeroWidth() const
 
 
 
+
+//!
+//! \brief isMirrorHorz Return current state of mirrored print
+//! \return             When true must be mirrored on horizontal axiz
+//!
+bool SdDPrint::isMirrorHorz() const
+  {
+  return ui->mMirrorHorz->isChecked();
+  }
+
+
+
 //Setup page orientation
 void SdDPrint::updateOrientation(bool horizontal)
   {

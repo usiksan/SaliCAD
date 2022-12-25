@@ -174,7 +174,7 @@ void SdSelector::putToClipboard(const SdProject *project, double scale , SdWEdit
     //Draw context
     SdContext ctx( SdPoint(10,10), &painter );
     //View converter
-    SdConverterView view( s, r.center(), scale );
+    SdConverterView view( s, r.center(), scale, false );
     ctx.setConverter( &view );
     //Draw process
     draw( &ctx );
@@ -199,7 +199,7 @@ void SdSelector::putToClipboard(const SdProject *project, double scale , SdWEdit
     //Draw context
     SdContext svgCtx( SdPoint(10,10), &svgPainter );
     //View converter
-    SdConverterView svgView( r.size(), r.center(), 1 );
+    SdConverterView svgView( r.size(), r.center(), 1, false );
     svgCtx.setConverter( &svgView );
     //Draw process
     draw( &svgCtx );
@@ -326,7 +326,7 @@ void SdSelector::storeSelectionToFile( double scale, const QString fname)
     SdContext svgCtx( SdPoint(10,10), &svgPainter );
     svgCtx.setOverZeroWidth(2);
     //View converter
-    SdConverterView svgView( r.size(), r.center(), 1 );
+    SdConverterView svgView( r.size(), r.center(), 1, false );
     svgCtx.setConverter( &svgView );
     //Draw process
     draw( &svgCtx );
@@ -354,7 +354,7 @@ void SdSelector::storeSelectionToFile( double scale, const QString fname)
     //Draw context
     SdContext ctx( SdPoint(10,10), &painter );
     //View converter
-    SdConverterView view( s, r.center(), scale );
+    SdConverterView view( s, r.center(), scale, false );
     ctx.setConverter( &view );
     //Draw process
     draw( &ctx );

@@ -99,7 +99,9 @@ void SdWEditor::onActivateEditor()
 
   SdWCommand::cmFilePrint->setEnabled(true);
 
-  SdWCommand::cmView3d->setEnabled( getProjectItem() != nullptr && getProjectItem()->is3dAllowed() );
+  bool ena3d = getProjectItem() != nullptr && getProjectItem()->is3dAllowed();
+  SdWCommand::cmView3d->setEnabled( ena3d );
+  SdWCommand::cmViewMirror->setEnabled( ena3d );
 
   //Highlight item
   if( is3d() )

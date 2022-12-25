@@ -19,11 +19,12 @@ Description
 
 class SdConverterView : public SdConverter
   {
-    SdPoint mCenter; //View center in pixels
-    double  mScale;  //View scale
-    SdPoint mOrigin; //View offset
+    SdPoint mCenter; //!< View center in pixels
+    double  mScale;  //!< View scale
+    SdPoint mOrigin; //!< View offset
+    bool    mMirror; //!< When true view is mirrored on x axiz
   public:
-    SdConverterView( QSize viewSize, SdPoint origin, double scale );
+    SdConverterView( QSize viewSize, SdPoint origin, double scale, bool mirror );
 
     //Return local conversion transformation matrix
     virtual QTransform getMatrix() override;

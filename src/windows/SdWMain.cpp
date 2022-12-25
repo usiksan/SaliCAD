@@ -1397,6 +1397,15 @@ void SdWMain::cmViewMeasurement()
 
 
 
+void SdWMain::cmViewMirrorHorz()
+  {
+  if( activeEditor() )
+    activeEditor()->cmViewMirrorHorz();
+  }
+
+
+
+
 
 void SdWMain::cmShowFields(bool st)
   {

@@ -75,7 +75,8 @@ SdWEditorGraph::SdWEditorGraph(SdProjectItem *item, QWidget *parent) :
   mScrollSizeY(1.0),  //Размер скроллинга на еденицу прокрутки
   mPixelTransform(),  //Pixel to phys transformation
   mCasheDirty(true),  //Cashe dirty flag. When true - static part redrawn
-  mCashe()            //Cashe for static picture part
+  mCashe(),           //Cashe for static picture part
+  mMirrorHorz(false)
   {
   mView = new SdWView();
   setViewport( mView );
@@ -416,6 +417,16 @@ void SdWEditorGraph::cmViewMeasurement()
 
 
 
+void SdWEditorGraph::cmViewMirrorHorz()
+  {
+  mMirrorHorz = !mMirrorHorz;
+  SdWCommand::cmViewMirror->setChecked( mMirrorHorz );
+  mCasheDirty = true;
+  update();
+  }
+
+
+
 void SdWEditorGraph::cmPropChanged()
   {
   if( modeGet() )
@@ -594,12 +605,13 @@ void SdWEditorGraph::printDialog(SdRect wnd)
     double scale = printDlg.getScaleFactor();
     bool colorPrint = printDlg.isColor();
     int zeroWidth = printDlg.getZeroWidth();
+    bool mirrorHorz = printDlg.isMirrorHorz();
     if( printArea == SDPA_FULL_OBJECT )
-      print( printer, printDlg.getWindow(), zeroWidth, colorPrint, scale, nullptr );
+      print( printer, printDlg.getWindow(), zeroWidth, colorPrint, scale, nullptr, mirrorHorz );
     else if( printArea == SDPA_SELECTION )
-      print( printer, printDlg.getWindow(), zeroWidth, colorPrint, scale, mSelect->getFragment() );
+      print( printer, printDlg.getWindow(), zeroWidth, colorPrint, scale, mSelect->getFragment(), mirrorHorz );
     else
-      print( printer, printDlg.getWindow(), zeroWidth, colorPrint, scale, nullptr );
+      print( printer, printDlg.getWindow(), zeroWidth, colorPrint, scale, nullptr, mirrorHorz );
     }
   else if( dlgRes == 2 ) {
     //Select window
@@ -610,8 +622,17 @@ void SdWEditorGraph::printDialog(SdRect wnd)
 
 
 
-//Print projectItem or selection in desired window
-void SdWEditorGraph::print(QPrinter &printer, SdRect wnd, int zeroWidth, bool colorPrint, double scale, SdSelector *selector)
+//!
+//! \brief print      Print projectItem or selection in desired window
+//! \param printer    Printer on which printing be made
+//! \param wnd        Printed window
+//! \param zeroWidth  Width of lines with width zero
+//! \param colorPrint When true we leave color information
+//! \param scale      Scale factor
+//! \param selector   Selector which contains elements must be printed
+//! \param mirrorHorz When true we perform horizontal mirror
+//!
+void SdWEditorGraph::print(QPrinter &printer, SdRect wnd, int zeroWidth, bool colorPrint, double scale, SdSelector *selector, bool mirrorHorz )
   {
   //Size of page in pixels
   QRect r = printer.pageRect(QPrinter::DevicePixel).toRect();
@@ -619,7 +640,7 @@ void SdWEditorGraph::print(QPrinter &printer, SdRect wnd, int zeroWidth, bool co
   //Create painter, context and converter
   QPainter painter( &printer );
   SdContext context( mGrid, &painter );
-  SdConverterView cv( QSize(r.width(),r.height()), wnd.center(), scale );
+  SdConverterView cv( QSize(r.width(),r.height()), wnd.center(), scale, mirrorHorz );
   context.setConverter( &cv );
 
   if( !colorPrint )
@@ -670,7 +691,7 @@ void SdWEditorGraph::paintProcess(bool viewer)
     QPainter painter( &mCashe );
     SdContext context( mGrid, &painter );
     context.setShowFields( showFields() );
-    SdConverterView cv( s, mOrigin, mScale.scaleGet() );
+    SdConverterView cv( s, mOrigin, mScale.scaleGet(), mMirrorHorz );
     context.setConverter( &cv );
 
     //Matrix transformation from screen coord to phis coord
@@ -695,7 +716,7 @@ void SdWEditorGraph::paintProcess(bool viewer)
         //qDebug() << "p" << p;
         painter.resetTransform();
         while( p.y() > 0 ) {
-          while( p.x() < s.width() ) {
+          while( p.x() < s.width() && p.x() > 0 ) {
             painter.drawPoint(p);
             tmp.setX( tmp.x() + mGrid.x() );
             p = context.transform().map( tmp );
@@ -773,7 +794,7 @@ void SdWEditorGraph::paintProcess(bool viewer)
 
   SdContext context( mGrid, &painter );
   context.setShowFields( showFields() );
-  SdConverterView cv( s, mOrigin, mScale.scaleGet() );
+  SdConverterView cv( s, mOrigin, mScale.scaleGet(), mMirrorHorz );
   context.setConverter( &cv );
 
   if( modeGet() ) {

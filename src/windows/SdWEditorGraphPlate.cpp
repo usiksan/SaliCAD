@@ -175,6 +175,7 @@ void SdWEditorGraphPlate::onActivateEditor()
   //Activate menu
   SdWCommand::cmMenuRules->setVisible(true);
   SdWCommand::cmMenuInsertPcb->setVisible(true);
+  SdWCommand::cmViewMirror->setChecked( mMirrorHorz );
 
   //Activate tool bar
   SdWCommand::barPcb->show();

@@ -132,6 +132,7 @@ class SdWCommand
 
     static QActionPtr  cmViewProject;
     static QActionPtr  cmView3d;
+    static QActionPtr  cmViewMirror;
     static QActionPtr  cmViewFill;
     static QActionPtr  cmViewNets;
     static QActionPtr  cmViewGrid;

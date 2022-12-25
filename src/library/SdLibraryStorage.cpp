@@ -443,6 +443,14 @@ void SdLibraryStorage::periodicScan()
             emit informationAppended( tr("Older object removed %1").arg( item->getTitle() )  );
             }
           else {
+            //Sometime file name is different from file name returned by fullPath()
+            //in this case we rename file
+            QString theFullPath( fullPath( item->getLibraryFName() )  );
+            if( file.absoluteFilePath() != theFullPath  ) {
+              qDebug() << "Different name" << file.absoluteFilePath() << theFullPath;
+              QFile::rename( file.absoluteFilePath(), theFullPath );
+              }
+
             //Append object to reference
             insertReferenceAndHeader( item.get() );
             }
@@ -459,6 +467,7 @@ void SdLibraryStorage::periodicScan()
       for( auto it = mExistList.cbegin(); it != mExistList.cend(); it++ ) {
         //Check if file actually removed
         if( !QFile::exists( fullPath( SdContainerFile::getLibraryFName( it.value(), mReferenceMap.value(it.value()).mCreationTime ) ) ) ) {
+          qDebug() << it.value() << fullPath( SdContainerFile::getLibraryFName( it.value(), mReferenceMap.value(it.value()).mCreationTime ) );
           mReferenceMap.remove( it.value() );
           removeCount++;
           }

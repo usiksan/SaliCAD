@@ -177,6 +177,7 @@ class SdWMain : public QMainWindow
     void cmViewZoomOut();
     void cmViewArea();
     void cmViewMeasurement();
+    void cmViewMirrorHorz();
     void cmShowFields( bool st );
 
     //Common graphics modes
