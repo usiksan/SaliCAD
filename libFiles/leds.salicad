@@ -1,6 +1,6 @@
 {
     "A file type": "SaliCAD file",
-    "A version": 1,
+    "A version": 2,
     "Author": "",
     "ChildList": [
         {
@@ -8,6 +8,7 @@
             "Auto": true,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 750,
                         "y": 250
@@ -16,13 +17,14 @@
                         "x": 750,
                         "y": -250
                     },
-                    "id": "55d844097df0",
+                    "id": "555b9ac26d50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 750,
                         "y": -250
@@ -31,13 +33,14 @@
                         "x": 1250,
                         "y": 0
                     },
-                    "id": "55d844a54360",
+                    "id": "555b9a314fb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 1250,
                         "y": 0
@@ -46,13 +49,14 @@
                         "x": 750,
                         "y": 250
                     },
-                    "id": "55d844840110",
+                    "id": "555b99333df0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 250,
                         "y": 0
@@ -61,13 +65,14 @@
                         "x": 1750,
                         "y": 0
                     },
-                    "id": "55d8456886d0",
+                    "id": "555b9b1e7050",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 1250,
                         "y": 250
@@ -76,13 +81,14 @@
                         "x": 1250,
                         "y": -250
                     },
-                    "id": "55d84497ef60",
+                    "id": "555b9b03b300",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 1200,
                         "y": 400
@@ -91,13 +97,14 @@
                         "x": 1650,
                         "y": 850
                     },
-                    "id": "55d843c6fef0",
+                    "id": "555b9b04dbc0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 1450,
                         "y": 750
@@ -106,13 +113,14 @@
                         "x": 1650,
                         "y": 850
                     },
-                    "id": "55d8454c6250",
+                    "id": "555b9972b040",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 1650,
                         "y": 850
@@ -121,13 +129,14 @@
                         "x": 1550,
                         "y": 650
                     },
-                    "id": "55d845a4eab0",
+                    "id": "555b9b025990",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 1350,
                         "y": 250
@@ -136,13 +145,14 @@
                         "x": 1800,
                         "y": 700
                     },
-                    "id": "55d844740f60",
+                    "id": "555b99404700",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 1600,
                         "y": 600
@@ -151,13 +161,14 @@
                         "x": 1800,
                         "y": 700
                     },
-                    "id": "55d844509260",
+                    "id": "555b9b1d1c30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 1800,
                         "y": 700
@@ -166,13 +177,14 @@
                         "x": 1700,
                         "y": 500
                     },
-                    "id": "55d843aebec0",
+                    "id": "555b9ac27850",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "Name": "A",
                     "NamePos": {
                         "x": 250,
@@ -196,10 +208,11 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "55d8495b6760",
+                    "id": "555b9aa15540",
                     "type": "SymPin"
                 },
                 {
+                    "Cpid": 0,
                     "Name": "K",
                     "NamePos": {
                         "x": 1750,
@@ -223,15 +236,16 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "55d84a7a1aa0",
+                    "id": "555b99dc29a0",
                     "type": "SymPin"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 500,
                         "y": 500
                     },
-                    "id": "55d8478b6040",
+                    "id": "555b9eb92760",
                     "over": {
                         "b": 709,
                         "r": 804,
@@ -246,11 +260,12 @@
                     "type": "Ident"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 1000,
                         "y": -500
                     },
-                    "id": "55d84407b6e0",
+                    "id": "555b9991f880",
                     "over": {
                         "b": -291,
                         "r": 1578,
@@ -265,6 +280,7 @@
                     "type": "Value"
                 }
             ],
+            "Cpid": 0,
             "Created": 52479021,
             "Edit enable": false,
             "Origin": {
@@ -275,7 +291,7 @@
                 "category": "{uu.f.b.h"
             },
             "Title": "led",
-            "id": "55d84559b4a0",
+            "id": "555b9b1bcb70",
             "type": "Symbol"
         },
         {
@@ -283,6 +299,7 @@
             "Auto": false,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 150,
                         "y": -800
@@ -291,13 +308,14 @@
                         "x": 3350,
                         "y": 800
                     },
-                    "id": "55d8495c76f0",
+                    "id": "555b9ebf6d40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Rect"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 0,
                         "y": 0
@@ -306,13 +324,14 @@
                         "x": 150,
                         "y": 0
                     },
-                    "id": "55d844ef07a0",
+                    "id": "555b99dd28a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 3350,
                         "y": 0
@@ -321,13 +340,14 @@
                         "x": 3500,
                         "y": 0
                     },
-                    "id": "55d845b54060",
+                    "id": "555b99665600",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 0,
                         "y": -250
@@ -352,10 +372,11 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.5x1.6m0.1s0.04",
                     "Stratum": "1",
-                    "id": "55d844739640",
+                    "id": "555b9ac49670",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 3500,
                         "y": -250
@@ -380,15 +401,16 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.5x1.6m0.1s0.04",
                     "Stratum": "1",
-                    "id": "55d845622800",
+                    "id": "555b99e84e20",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 1750,
                         "y": 1500
                     },
-                    "id": "55d8478589c0",
+                    "id": "555b9990bea0",
                     "over": {
                         "b": 1995,
                         "r": 2604,
@@ -403,11 +425,12 @@
                     "type": "Ident"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 1750,
                         "y": -1375
                     },
-                    "id": "55d84514d0a0",
+                    "id": "555b9990bf10",
                     "over": {
                         "b": -878,
                         "r": 3256,
@@ -422,6 +445,7 @@
                     "type": "Value"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 1250,
                         "y": 500
@@ -430,13 +454,14 @@
                         "x": 1250,
                         "y": -500
                     },
-                    "id": "55d8494e4840",
+                    "id": "555b99703560",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 1250,
                         "y": 500
@@ -445,13 +470,14 @@
                         "x": 2250,
                         "y": 0
                     },
-                    "id": "55d844363e20",
+                    "id": "555b99df8c00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 2250,
                         "y": 0
@@ -460,13 +486,14 @@
                         "x": 1250,
                         "y": -500
                     },
-                    "id": "55d8450c40d0",
+                    "id": "555b99cb1de0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 2250,
                         "y": 500
@@ -475,14 +502,15 @@
                         "x": 2250,
                         "y": -500
                     },
-                    "id": "55d844cd51b0",
+                    "id": "555b9a3000e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
-                    "Script": "#LED model\n#First place source params of part\nledColor = selectColor( \"#ff0000\")\nbodyLenght = 2.0\nbodyWidth = 1.6\nbodyHeight = 1.1\nbodyBevel = 0.2\nbodyColor = selectColor( \"#eeeeec\" )\n\n#Second place source params of pins\npinDiametr = 0.7\npinLenght = 0.6\npinHeight = 0.5\npinTim = (bodyWidth-pinDiametr)/2\npinColor = selectColor( \"#c0c0c0\" )\n\n#========================================================\n#Body construction\n#Pin construction\npinBottomFace = faceFlatMatrix( [ 0,-bodyWidth/2, -pinLenght,0, 0,pinTim,\narc( pinDiametr/2, 180, 0, 20 ), 0,pinTim, pinLenght,0], matrix1 )\n\npinTopFace = faceDuplicateShift( pinBottomFace, pinHeight )\n\n#Set of faces with same color\npin = faceListSimplify(pinBottomFace) + faceListSimplify(pinTopFace) + \n  faceListWall( pinBottomFace, pinTopFace, false )\n\n#Model is set of faces with associated with it colors\npinModel = model( pinColor, pinColor, pinColor, pin, matrixTranslate( matrix1, -bodyLenght/2,0,0) )\npinMatrix = matrixTranslate( matrix1, bodyLenght/2,0,0)\npinMatrix = matrixRotate( pinMatrix, 180, 0,0,1 )\npinModel = modelCopy( pinModel, pinMatrix )\n\n#Place pins into destignation model.\npartModel = pinModel\n\nbodyBottomFace = faceRect( bodyLenght, bodyWidth, matrix1 )\nbodyMidFace = faceDuplicateShift( bodyBottomFace, -pinHeight )\nbodyTopFace = faceDuplicateGrow( bodyMidFace, -bodyBevel, -bodyBevel, matrixTranslate( matrix1, 0,0,bodyHeight-pinHeight) )\n\nbody = [bodyBottomFace,bodyTopFace] + \nfaceListWallIndexed( bodyBottomFace, bodyMidFace, [2,0] ) +\nfaceListWall( bodyMidFace, bodyTopFace, true )\n\nbodyModel = model( bodyColor, bodyColor, bodyColor, body, matrix1 )\n\n#Led color\npartModel = model( ledColor, ledColor, ledColor, [faceCircleSide( (bodyWidth-2*bodyBevel)/2*0.8, 32, matrixTranslate(matrix1, 0,0,bodyHeight+0.001))], matrix1 )\npartModel = bodyModel\n",
+                    "Cpid": 0,
+                    "Script": "#LED model\n#First place source params of part\nledColor = selectColor( \"#ffff7f\")\nbodyLenght = 2.0\nbodyWidth = 1.6\nbodyHeight = 1.1\nbodyBevel = 0.2\nbodyColor = selectColor( \"#eeeeec\" )\n\n#Second place source params of pins\npinDiametr = 0.7\npinLenght = 0.6\npinHeight = 0.5\npinTim = (bodyWidth-pinDiametr)/2\npinColor = selectColor( \"#c0c0c0\" )\n\n#========================================================\n#Body construction\n#Pin construction\npinBottomFace = faceFlatMatrix( [ 0,-bodyWidth/2, -pinLenght,0, 0,pinTim,\narc( pinDiametr/2, 180, 0, 20 ), 0,pinTim, pinLenght,0], matrix1 )\n\npinTopFace = faceDuplicateShift( pinBottomFace, pinHeight )\n\n#Set of faces with same color\npin = faceListSimplify(pinBottomFace) + faceListSimplify(pinTopFace) + \n  faceListWall( pinBottomFace, pinTopFace, false )\n\n#Model is set of faces with associated with it colors\npinModel = model( pinColor, pinColor, pinColor, pin, matrixTranslate( matrix1, -bodyLenght/2,0,0) )\npinMatrix = matrixTranslate( matrix1, bodyLenght/2,0,0)\npinMatrix = matrixRotate( pinMatrix, 180, 0,0,1 )\npinModel = modelCopy( pinModel, pinMatrix )\n\n#Place pins into destignation model.\npartModel = pinModel\n\nbodyBottomFace = faceRect( bodyLenght, bodyWidth, matrix1 )\nbodyMidFace = faceDuplicateShift( bodyBottomFace, -pinHeight )\nbodyTopFace = faceDuplicateGrow( bodyMidFace, -bodyBevel, -bodyBevel, matrixTranslate( matrix1, 0,0,bodyHeight-pinHeight) )\n\nbody = [bodyBottomFace,bodyTopFace] + \nfaceListWallIndexed( bodyBottomFace, bodyMidFace, [2,0] ) +\nfaceListWall( bodyMidFace, bodyTopFace, true )\n\nbodyModel = model( bodyColor, bodyColor, bodyColor, body, matrix1 )\n\n#Led color\npartModel = model( ledColor, ledColor, ledColor, [faceCircleSide( (bodyWidth-2*bodyBevel)/2*0.8, 32, matrixTranslate(matrix1, 0,0,bodyHeight+0.001))], matrix1 )\npartModel = bodyModel\n",
                     "Transform": [
                         1,
                         0,
@@ -501,11 +529,12 @@
                         0,
                         1
                     ],
-                    "id": "7ff7b8034740",
+                    "id": "555b9987fb40",
                     "type": "3dGraphModel"
                 }
             ],
-            "Created": 142777997,
+            "Cpid": 0,
+            "Created": 155545840,
             "Edit enable": false,
             "Origin": {
                 "x": 0,
@@ -514,7 +543,7 @@
             "Parametrs": {
             },
             "Title": "led smd-1206",
-            "id": "55d844899ea0",
+            "id": "555b9ac61c70",
             "type": "Part"
         },
         {
@@ -522,23 +551,26 @@
             "Auto": false,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "PinAssotiation": {
                         "A": "1",
                         "K": "2"
                     },
                     "SymbolId": "Symbol\rled\rsalicad",
                     "SymbolTitle": "led (salicad)",
-                    "id": "55d843b3ccb0",
+                    "id": "555b996e5960",
                     "type": "Section"
                 },
                 {
+                    "Cpid": 0,
                     "Default": false,
                     "PartId": "Part\rled smd-1206\rsalicad",
                     "PartTitle": "led smd-1206 (salicad)",
-                    "id": "55d845aa7e90",
+                    "id": "555b99944690",
                     "type": "PartVariant"
                 }
             ],
+            "Cpid": 0,
             "Created": 42625007,
             "Edit enable": false,
             "Origin": {
@@ -611,7 +643,7 @@
                 "120grad",
                 "BL-HGE33"
             ],
-            "id": "55d8459b4f20",
+            "id": "555b9b23a070",
             "type": "Comp"
         },
         {
@@ -619,6 +651,7 @@
             "Auto": false,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 0,
                         "y": -250
@@ -643,10 +676,11 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.4x1.4d0.7m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55d84786eb10",
+                    "id": "555b9ead7500",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 2540,
                         "y": -250
@@ -671,15 +705,16 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.7m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55d84461d800",
+                    "id": "555b9ebc7790",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 1270,
                         "y": 2250
                     },
-                    "id": "55d844954a30",
+                    "id": "555b9a95e970",
                     "over": {
                         "b": 2745,
                         "r": 2134,
@@ -694,11 +729,12 @@
                     "type": "Ident"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 1270,
                         "y": -1625
                     },
-                    "id": "55d843f90f90",
+                    "id": "555b99951e00",
                     "over": {
                         "b": -1128,
                         "r": 2783,
@@ -713,11 +749,12 @@
                     "type": "Value"
                 },
                 {
+                    "Cpid": 0,
                     "center": {
                         "x": 1250,
                         "y": 0
                     },
-                    "id": "55d844ab2ed0",
+                    "id": "555b9b202800",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -725,11 +762,12 @@
                     "type": "Circle"
                 },
                 {
+                    "Cpid": 0,
                     "center": {
                         "x": 1250,
                         "y": 0
                     },
-                    "id": "55d844918c20",
+                    "id": "555b9a2c28e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -737,6 +775,7 @@
                     "type": "Circle"
                 }
             ],
+            "Cpid": 0,
             "Created": 52479954,
             "Edit enable": false,
             "Origin": {
@@ -747,7 +786,7 @@
                 "category": "{uu.f.b.h"
             },
             "Title": "led leaded d10mm",
-            "id": "55d844bd5840",
+            "id": "555b9a2d0eb0",
             "type": "Part"
         },
         {
@@ -755,23 +794,26 @@
             "Auto": false,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "PinAssotiation": {
                         "A": "1",
                         "K": "2"
                     },
                     "SymbolId": "Symbol\rled\rsalicad",
                     "SymbolTitle": "led (salicad)",
-                    "id": "55d8446acf10",
+                    "id": "555b9b1bbb60",
                     "type": "Section"
                 },
                 {
+                    "Cpid": 0,
                     "Default": false,
                     "PartId": "Part\rled leaded d10mm\rsalicad",
                     "PartTitle": "led leaded d10mm (salicad)",
-                    "id": "55d8450c4130",
+                    "id": "555b99759400",
                     "type": "PartVariant"
                 }
             ],
+            "Cpid": 0,
             "Created": 52479860,
             "Edit enable": false,
             "Origin": {
@@ -809,7 +851,7 @@
                 "2.5V",
                 "640"
             ],
-            "id": "55d848143790",
+            "id": "555b9b039de0",
             "type": "Comp"
         },
         {
@@ -817,6 +859,7 @@
             "Auto": true,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 150,
                         "y": -800
@@ -825,13 +868,14 @@
                         "x": 3350,
                         "y": 800
                     },
-                    "id": "55d8456abbe0",
+                    "id": "555b9b03d560",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Rect"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 0,
                         "y": 0
@@ -840,13 +884,14 @@
                         "x": 150,
                         "y": 0
                     },
-                    "id": "55d843b8c740",
+                    "id": "555b99e65cb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 3350,
                         "y": 0
@@ -855,13 +900,14 @@
                         "x": 3500,
                         "y": 0
                     },
-                    "id": "55d845193340",
+                    "id": "555b99ed4df0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 0,
                         "y": -250
@@ -886,10 +932,11 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.5x1.6m0.1s0.04",
                     "Stratum": "1",
-                    "id": "55d843a6fd20",
+                    "id": "555b9a592760",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 3500,
                         "y": -250
@@ -914,15 +961,16 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.5x1.6m0.1s0.04",
                     "Stratum": "1",
-                    "id": "55d84509dc10",
+                    "id": "555b9ac245e0",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 1750,
                         "y": 1500
                     },
-                    "id": "55d84566a6c0",
+                    "id": "555b9eacf6b0",
                     "over": {
                         "b": 1995,
                         "r": 2604,
@@ -937,11 +985,12 @@
                     "type": "Ident"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 1750,
                         "y": -1375
                     },
-                    "id": "55d8447d70b0",
+                    "id": "555b994b5600",
                     "over": {
                         "b": -878,
                         "r": 3256,
@@ -956,6 +1005,7 @@
                     "type": "Value"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 1250,
                         "y": 500
@@ -964,13 +1014,14 @@
                         "x": 1250,
                         "y": -500
                     },
-                    "id": "55d8454e48d0",
+                    "id": "555b9b037850",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 1250,
                         "y": 500
@@ -979,13 +1030,14 @@
                         "x": 2250,
                         "y": 0
                     },
-                    "id": "55d84518dce0",
+                    "id": "555b9b057bb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 2250,
                         "y": 0
@@ -994,13 +1046,14 @@
                         "x": 1250,
                         "y": -500
                     },
-                    "id": "55d84519e0b0",
+                    "id": "555b997fb740",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 2250,
                         "y": 500
@@ -1009,13 +1062,14 @@
                         "x": 2250,
                         "y": -500
                     },
-                    "id": "55d849481b80",
+                    "id": "555b997f9eb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "Script": "#LED model\n#First place source params of part\nledColor = selectColor( \"#ff0000\")\nbodyLenght = 2.0\nbodyWidth = 1.6\nbodyHeight = 1.1\nbodyBevel = 0.2\nbodyColor = selectColor( \"#eeeeec\" )\n\n#Second place source params of pins\npinDiametr = 0.7\npinLenght = 0.6\npinHeight = 0.5\npinTim = (bodyWidth-pinDiametr)/2\npinColor = selectColor( \"#c0c0c0\" )\n\n#========================================================\n#Body construction\n#Pin construction\npinBottomFace = faceFlatMatrix( [ 0,-bodyWidth/2, -pinLenght,0, 0,pinTim,\narc( pinDiametr/2, 180, 0, 20 ), 0,pinTim, pinLenght,0], matrix1 )\n\npinTopFace = faceDuplicateShift( pinBottomFace, pinHeight )\n\n#Set of faces with same color\npin = faceListSimplify(pinBottomFace) + faceListSimplify(pinTopFace) + \n  faceListWall( pinBottomFace, pinTopFace, false )\n\n#Model is set of faces with associated with it colors\npinModel = model( pinColor, pinColor, pinColor, pin, matrixTranslate( matrix1, -bodyLenght/2,0,0) )\npinMatrix = matrixTranslate( matrix1, bodyLenght/2,0,0)\npinMatrix = matrixRotate( pinMatrix, 180, 0,0,1 )\npinModel = modelCopy( pinModel, pinMatrix )\n\n#Place pins into destignation model.\npartModel = pinModel\n\nbodyBottomFace = faceRect( bodyLenght, bodyWidth, matrix1 )\nbodyMidFace = faceDuplicateShift( bodyBottomFace, -pinHeight )\nbodyTopFace = faceDuplicateGrow( bodyMidFace, -bodyBevel, -bodyBevel, matrixTranslate( matrix1, 0,0,bodyHeight-pinHeight) )\n\nbody = [bodyBottomFace,bodyTopFace] + \nfaceListWallIndexed( bodyBottomFace, bodyMidFace, [2,0] ) +\nfaceListWall( bodyMidFace, bodyTopFace, true )\n\nbodyModel = model( bodyColor, bodyColor, bodyColor, body, matrix1 )\n\n#Led color\npartModel = model( ledColor, ledColor, ledColor, [faceCircleSide( (bodyWidth-2*bodyBevel)/2*0.8, 32, matrixTranslate(matrix1, 0,0,bodyHeight+0.001))], matrix1 )\npartModel = bodyModel\n",
                     "Transform": [
                         1,
@@ -1035,10 +1089,11 @@
                         0,
                         1
                     ],
-                    "id": "55d844741d30",
+                    "id": "555b9a2a1d90",
                     "type": "3dGraphModel"
                 }
             ],
+            "Cpid": 0,
             "Created": 142778053,
             "Edit enable": false,
             "Origin": {
@@ -1049,7 +1104,7 @@
                 "category": "{uu.f.b.h"
             },
             "Title": "led smd-1206 red",
-            "id": "55d845088940",
+            "id": "555b9ac22a50",
             "type": "Part"
         },
         {
@@ -1057,6 +1112,7 @@
             "Auto": true,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 150,
                         "y": -800
@@ -1065,13 +1121,14 @@
                         "x": 3350,
                         "y": 800
                     },
-                    "id": "55d8454cea80",
+                    "id": "555b99e39da0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Rect"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 0,
                         "y": 0
@@ -1080,13 +1137,14 @@
                         "x": 150,
                         "y": 0
                     },
-                    "id": "55d844abc350",
+                    "id": "555b9b1b8b80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 3350,
                         "y": 0
@@ -1095,13 +1153,14 @@
                         "x": 3500,
                         "y": 0
                     },
-                    "id": "55d8447ded10",
+                    "id": "555b9b059a90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 0,
                         "y": -250
@@ -1126,10 +1185,11 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.5x1.6m0.1s0.04",
                     "Stratum": "1",
-                    "id": "55d84a7aa580",
+                    "id": "555b9ebc6e20",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 3500,
                         "y": -250
@@ -1154,15 +1214,16 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.5x1.6m0.1s0.04",
                     "Stratum": "1",
-                    "id": "55d849467e00",
+                    "id": "555b9eace000",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 1750,
                         "y": 1500
                     },
-                    "id": "7ff7b8009570",
+                    "id": "555b994ec890",
                     "over": {
                         "b": 1995,
                         "r": 2604,
@@ -1177,11 +1238,12 @@
                     "type": "Ident"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 1750,
                         "y": -1375
                     },
-                    "id": "55d845633f10",
+                    "id": "555b9eb91260",
                     "over": {
                         "b": -878,
                         "r": 3256,
@@ -1196,6 +1258,7 @@
                     "type": "Value"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 1250,
                         "y": 500
@@ -1204,13 +1267,14 @@
                         "x": 1250,
                         "y": -500
                     },
-                    "id": "55d844abdae0",
+                    "id": "555b9af92d70",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 1250,
                         "y": 500
@@ -1219,13 +1283,14 @@
                         "x": 2250,
                         "y": 0
                     },
-                    "id": "55d8478b54f0",
+                    "id": "555b9b04fb90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 2250,
                         "y": 0
@@ -1234,13 +1299,14 @@
                         "x": 1250,
                         "y": -500
                     },
-                    "id": "55d8456217a0",
+                    "id": "555b9b028460",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 2250,
                         "y": 500
@@ -1249,13 +1315,14 @@
                         "x": 2250,
                         "y": -500
                     },
-                    "id": "55d8449efbb0",
+                    "id": "555b996073c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "Script": "#LED model\n#First place source params of part\nledColor = selectColor( \"#00ff00\")\nbodyLenght = 2.0\nbodyWidth = 1.6\nbodyHeight = 1.1\nbodyBevel = 0.2\nbodyColor = selectColor( \"#eeeeec\" )\n\n#Second place source params of pins\npinDiametr = 0.7\npinLenght = 0.6\npinHeight = 0.5\npinTim = (bodyWidth-pinDiametr)/2\npinColor = selectColor( \"#c0c0c0\" )\n\n#========================================================\n#Body construction\n#Pin construction\npinBottomFace = faceFlatMatrix( [ 0,-bodyWidth/2, -pinLenght,0, 0,pinTim,\narc( pinDiametr/2, 180, 0, 20 ), 0,pinTim, pinLenght,0], matrix1 )\n\npinTopFace = faceDuplicateShift( pinBottomFace, pinHeight )\n\n#Set of faces with same color\npin = faceListSimplify(pinBottomFace) + faceListSimplify(pinTopFace) + \n  faceListWall( pinBottomFace, pinTopFace, false )\n\n#Model is set of faces with associated with it colors\npinModel = model( pinColor, pinColor, pinColor, pin, matrixTranslate( matrix1, -bodyLenght/2,0,0) )\npinMatrix = matrixTranslate( matrix1, bodyLenght/2,0,0)\npinMatrix = matrixRotate( pinMatrix, 180, 0,0,1 )\npinModel = modelCopy( pinModel, pinMatrix )\n\n#Place pins into destignation model.\npartModel = pinModel\n\nbodyBottomFace = faceRect( bodyLenght, bodyWidth, matrix1 )\nbodyMidFace = faceDuplicateShift( bodyBottomFace, -pinHeight )\nbodyTopFace = faceDuplicateGrow( bodyMidFace, -bodyBevel, -bodyBevel, matrixTranslate( matrix1, 0,0,bodyHeight-pinHeight) )\n\nbody = [bodyBottomFace,bodyTopFace] + \nfaceListWallIndexed( bodyBottomFace, bodyMidFace, [2,0] ) +\nfaceListWall( bodyMidFace, bodyTopFace, true )\n\nbodyModel = model( bodyColor, bodyColor, bodyColor, body, matrix1 )\n\n#Led color\npartModel = model( ledColor, ledColor, ledColor, [faceCircleSide( (bodyWidth-2*bodyBevel)/2*0.8, 32, matrixTranslate(matrix1, 0,0,bodyHeight+0.001))], matrix1 )\npartModel = bodyModel\n",
                     "Transform": [
                         1,
@@ -1275,10 +1342,11 @@
                         0,
                         1
                     ],
-                    "id": "55d844924180",
+                    "id": "555b9b026930",
                     "type": "3dGraphModel"
                 }
             ],
+            "Cpid": 0,
             "Created": 142778117,
             "Edit enable": false,
             "Origin": {
@@ -1289,7 +1357,7 @@
                 "category": "{uu.f.b.h"
             },
             "Title": "led smd-1206 green",
-            "id": "55d84555ce10",
+            "id": "555b9b0277e0",
             "type": "Part"
         },
         {
@@ -1297,23 +1365,26 @@
             "Auto": true,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "PinAssotiation": {
                         "A": "1",
                         "K": "2"
                     },
                     "SymbolId": "Symbol\rled\rsalicad",
                     "SymbolTitle": "led (salicad)",
-                    "id": "55d84780b9e0",
+                    "id": "555b9b03f8c0",
                     "type": "Section"
                 },
                 {
+                    "Cpid": 0,
                     "Default": false,
                     "PartId": "Part\rled smd-1206 red\rsalicad",
                     "PartTitle": "led smd-1206 red (salicad)",
-                    "id": "55d84491b710",
+                    "id": "555b9ab147c0",
                     "type": "PartVariant"
                 }
             ],
+            "Cpid": 0,
             "Created": 142778391,
             "Edit enable": false,
             "Origin": {
@@ -1344,7 +1415,7 @@
                 "angle",
                 "value"
             ],
-            "id": "55d843c2fb90",
+            "id": "555b9a98bde0",
             "type": "Comp"
         },
         {
@@ -1352,23 +1423,26 @@
             "Auto": true,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "PinAssotiation": {
                         "A": "1",
                         "K": "2"
                     },
                     "SymbolId": "Symbol\rled\rsalicad",
                     "SymbolTitle": "led (salicad)",
-                    "id": "55d84d7aa830",
+                    "id": "555b9b04e610",
                     "type": "Section"
                 },
                 {
+                    "Cpid": 0,
                     "Default": false,
                     "PartId": "Part\rled smd-1206 green\rsalicad",
                     "PartTitle": "led smd-1206 green (salicad)",
-                    "id": "55d8451322e0",
+                    "id": "555b9eac8060",
                     "type": "PartVariant"
                 }
             ],
+            "Cpid": 0,
             "Created": 142778546,
             "Edit enable": false,
             "Origin": {
@@ -1399,15 +1473,16 @@
                 "angle",
                 "value"
             ],
-            "id": "55d84d496ff0",
+            "id": "555b9af20190",
             "type": "Comp"
         }
     ],
+    "Cpid": 0,
     "Created": 0,
     "Edit enable": true,
     "Parametrs": {
     },
     "Title": "",
-    "id": "55d84946b230",
+    "id": "555b9b0282a0",
     "type": "Project"
 }
