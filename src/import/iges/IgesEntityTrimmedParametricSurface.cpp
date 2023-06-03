@@ -22,15 +22,15 @@ bool IgesEntityTrimmedParametricSurface::parse(IgesReader *reader)
 
   if( !IgesEntity::parse(reader) ) return false;
 
-  if( !reader->paramEntityExPtr( mTrimmedSurface ) ) return false;
+  //if( !reader->paramEntityExPtr( mTrimmedSurface ) ) return false;
   if( !reader->paramInt( mDiffersBoundary ) ) return false;
   int innerBoundCount;
   if( !reader->paramInt( innerBoundCount ) ) return false;
-  if( !reader->paramEntityExPtr( mOuterBoundary ) ) return false;
+  //if( !reader->paramEntityExPtr( mOuterBoundary ) ) return false;
 
   for( int i = 0; i < innerBoundCount; i++ ) {
     IgesCurvePtr curve;
-    if( !reader->paramEntityExPtr( curve ) ) return false;
+    //if( !reader->paramEntityExPtr( curve ) ) return false;
     mInnerBoundary.append( curve );
     }
 

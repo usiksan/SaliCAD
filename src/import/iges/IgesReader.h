@@ -92,14 +92,14 @@ class IgesReader
 
     bool        paramEntityPtr( IgesEntityPtr &entityPtr );
 
-    template <class SdEntityPtr>
-    bool        paramEntityExPtr( SdEntityPtr &entityPtr )
-      {
-      IgesEntityPtr ep;
-      bool res = paramEntityPtr( ep );
-      entityPtr = dynamic_cast<SdEntityPtr>( ep );
-      return res && (ep == nullptr || entityPtr == nullptr);
-      }
+//    template <class SdEntityPtr>
+//    bool        paramEntityExPtr( SdEntityPtr &entityPtr )
+//      {
+//      IgesEntityPtr ep;
+//      bool res = paramEntityPtr( ep );
+//      entityPtr = dynamic_cast<SdEntityPtr>( ep );
+//      return res && (ep == nullptr || entityPtr == nullptr);
+//      }
 
   private:
     //!
