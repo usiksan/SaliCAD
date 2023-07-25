@@ -1,10 +1,14 @@
 {
+    "A file type": "SaliCAD file",
+    "A version": 2,
+    "Author": "",
     "ChildList": [
         {
             "Author": "zubr owk",
             "Auto": false,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 750,
                         "y": 250
@@ -13,13 +17,14 @@
                         "x": 4750,
                         "y": -750
                     },
-                    "id": "55a7a65020e0",
+                    "id": "55cc5de77c00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Rect"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 2000,
                         "y": 250
@@ -28,13 +33,14 @@
                         "x": 2000,
                         "y": -750
                     },
-                    "id": "55a7a64fd4c0",
+                    "id": "55cc5e8db050",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 3500,
                         "y": 250
@@ -43,13 +49,14 @@
                         "x": 3500,
                         "y": -750
                     },
-                    "id": "55a7a64f2400",
+                    "id": "55cc5e2829d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 0,
                         "y": 0
@@ -58,46 +65,42 @@
                         "x": 750,
                         "y": 0
                     },
-                    "id": "55a7a6504c40",
+                    "id": "55cc5ddbc850",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "Name": "IN1",
                     "NamePos": {
                         "x": 1375,
                         "y": 0
                     },
-                    "NameTextDir": 0,
+                    "NameTextDirMirHorVer": "0SCM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 1,
                     "NameTextLayer": "PinName",
-                    "NameTextMirror": 0,
                     "NameTextSize": 350,
-                    "NameTextVert": 1,
                     "NumberPos": {
                         "x": 0,
                         "y": 250
                     },
-                    "NumberTextDir": 0,
+                    "NumberTextDirMirHorVer": "0SLM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 0,
                     "NumberTextLayer": "PinNumber",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 350,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": 0,
                         "y": 0
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "55a7a6ef9220",
+                    "id": "55cc5e836db0",
                     "type": "SymPin"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 0,
                         "y": -500
@@ -106,46 +109,42 @@
                         "x": 750,
                         "y": -500
                     },
-                    "id": "55a7a6085680",
+                    "id": "55cc5e9ece50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "Name": "IN2",
                     "NamePos": {
                         "x": 1375,
                         "y": -500
                     },
-                    "NameTextDir": 0,
+                    "NameTextDirMirHorVer": "0SCM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 1,
                     "NameTextLayer": "PinName",
-                    "NameTextMirror": 0,
                     "NameTextSize": 350,
-                    "NameTextVert": 1,
                     "NumberPos": {
                         "x": 0,
                         "y": -250
                     },
-                    "NumberTextDir": 0,
+                    "NumberTextDirMirHorVer": "0SLM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 0,
                     "NumberTextLayer": "PinNumber",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 350,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": 0,
                         "y": -500
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "55a7a6e54730",
+                    "id": "55cc5e82bca0",
                     "type": "SymPin"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 4750,
                         "y": -250
@@ -154,112 +153,102 @@
                         "x": 5500,
                         "y": -250
                     },
-                    "id": "55a7a6ed2b70",
+                    "id": "55cc5de09bf0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "Name": "GND",
                     "NamePos": {
                         "x": 4125,
                         "y": -250
                     },
-                    "NameTextDir": 0,
+                    "NameTextDirMirHorVer": "0SCM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 1,
                     "NameTextLayer": "PinName",
-                    "NameTextMirror": 0,
                     "NameTextSize": 350,
-                    "NameTextVert": 1,
                     "NumberPos": {
                         "x": 5500,
                         "y": 0
                     },
-                    "NumberTextDir": 0,
+                    "NumberTextDirMirHorVer": "0SRM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 2,
                     "NumberTextLayer": "PinNumber",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 350,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": 5500,
                         "y": -250
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "55a7a61ec9c0",
+                    "id": "55cc5e9a9bc0",
                     "type": "SymPin"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 2750,
                         "y": 500
                     },
-                    "id": "55a7a6501be0",
+                    "id": "55cc5d8c2b40",
                     "over": {
                         "b": 674,
                         "r": 3049,
                         "x": 2452,
                         "y": 324
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
-                    "propTextHorz": 1,
                     "propTextLayer": "Ident",
-                    "propTextMirror": 0,
                     "propTextSize": 350,
-                    "propTextVert": 1,
                     "text": "{id}",
                     "type": "Ident"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 2750,
                         "y": -1000
                     },
-                    "id": "55a7a79490f0",
+                    "id": "55cc5e99bde0",
                     "over": {
                         "b": -825,
                         "r": 3276,
                         "x": 2224,
                         "y": -1175
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
-                    "propTextHorz": 1,
                     "propTextLayer": "Value",
-                    "propTextMirror": 0,
                     "propTextSize": 350,
-                    "propTextVert": 1,
                     "text": "{value}",
                     "type": "Value"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 2750,
                         "y": 0
                     },
-                    "id": "55a7a590dbf0",
+                    "id": "55cc5e9eeeb0",
                     "over": {
                         "b": 174,
                         "r": 3074,
                         "x": 2426,
                         "y": -176
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
-                    "propTextHorz": 1,
                     "propTextLayer": "Component",
-                    "propTextMirror": 0,
                     "propTextSize": 350,
-                    "propTextVert": 1,
                     "text": "ESD",
                     "type": "Text"
                 }
             ],
+            "Cpid": 0,
             "Created": 78739818,
             "Edit enable": false,
             "Origin": {
@@ -270,7 +259,7 @@
                 "category": "{uu.b.b.d"
             },
             "Title": "pesd1can",
-            "id": "55a7a5b7eec0",
+            "id": "55cc5e860f70",
             "type": "Symbol"
         },
         {
@@ -278,6 +267,7 @@
             "Auto": true,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "PinAssotiation": {
                         "GND": "3",
                         "IN1": "1",
@@ -285,17 +275,19 @@
                     },
                     "SymbolId": "Symbol\rpesd1can\rzubr owk",
                     "SymbolTitle": "pesd1can (zubr owk)",
-                    "id": "55a7a644d9d0",
+                    "id": "55cc5d97dab0",
                     "type": "Section"
                 },
                 {
+                    "Cpid": 0,
                     "Default": false,
                     "PartId": "Part\rsot23-3\rsalicad",
                     "PartTitle": "sot23-3 (salicad)",
-                    "id": "55a7a6454640",
+                    "id": "55cc5e88c8f0",
                     "type": "PartVariant"
                 }
             ],
+            "Cpid": 0,
             "Created": 78740379,
             "Edit enable": false,
             "Origin": {
@@ -319,7 +311,7 @@
                 "PESD2CAN",
                 "PESD2CAN"
             ],
-            "id": "55a7a6217e50",
+            "id": "55cc5dea2830",
             "type": "Comp"
         },
         {
@@ -327,23 +319,26 @@
             "Auto": true,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "PinAssotiation": {
                         "A": "2",
                         "K": "1"
                     },
                     "SymbolId": "Symbol\rdiode\rsalicad",
                     "SymbolTitle": "diode (salicad)",
-                    "id": "55a7a5a5bf40",
+                    "id": "55cc5e9d9890",
                     "type": "Section"
                 },
                 {
+                    "Cpid": 0,
                     "Default": false,
                     "PartId": "Part\rSOD323F (SC-90)\rzubr owk",
                     "PartTitle": "SOD323F (SC-90) (zubr owk)",
-                    "id": "55a7a7a873c0",
+                    "id": "55cc5dea3f20",
                     "type": "PartVariant"
                 }
             ],
+            "Cpid": 0,
             "Created": 85932194,
             "Edit enable": false,
             "Origin": {
@@ -364,7 +359,7 @@
                 "www": "www.nexperia.com"
             },
             "Title": "PMEG6010CEJ schottky barrier rectifiers 1A",
-            "id": "55a7a7959530",
+            "id": "55cc5dbb0b50",
             "type": "Comp"
         },
         {
@@ -372,6 +367,7 @@
             "Auto": false,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 250,
                         "y": 1250
@@ -380,13 +376,14 @@
                         "x": 250,
                         "y": 250
                     },
-                    "id": "55a7a6e2d7f0",
+                    "id": "55cc5e36f8f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 250,
                         "y": 1000
@@ -395,13 +392,14 @@
                         "x": 750,
                         "y": 1500
                     },
-                    "id": "55a7a59d4950",
+                    "id": "55cc5d8bc400",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 250,
                         "y": 500
@@ -410,13 +408,14 @@
                         "x": 750,
                         "y": 0
                     },
-                    "id": "55a7a5f35c00",
+                    "id": "55cc5de813b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": -1750,
                         "y": 750
@@ -425,13 +424,14 @@
                         "x": -2500,
                         "y": 750
                     },
-                    "id": "55a7a54d85b0",
+                    "id": "55cc5d8c00b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 750,
                         "y": 1500
@@ -440,13 +440,14 @@
                         "x": 750,
                         "y": 2000
                     },
-                    "id": "55a7a7a04810",
+                    "id": "55cc5dd23920",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 750,
                         "y": -1250
@@ -455,13 +456,14 @@
                         "x": 750,
                         "y": 0
                     },
-                    "id": "55a7a62585a0",
+                    "id": "55cc5dbc2460",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 750,
                         "y": 0
@@ -470,13 +472,14 @@
                         "x": 500,
                         "y": 375
                     },
-                    "id": "55a7a6e0c080",
+                    "id": "55cc5e36fbf0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 750,
                         "y": 0
@@ -485,156 +488,138 @@
                         "x": 375,
                         "y": 250
                     },
-                    "id": "55a7a623e2a0",
+                    "id": "55cc5db32d00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "Name": "B",
                     "NamePos": {
                         "x": -2500,
                         "y": 1250
                     },
-                    "NameTextDir": 0,
+                    "NameTextDirMirHorVer": "0SCM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 1,
                     "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
                     "NameTextSize": 375,
-                    "NameTextVert": 1,
                     "NumberPos": {
                         "x": -3000,
                         "y": 1000
                     },
-                    "NumberTextDir": 0,
+                    "NumberTextDirMirHorVer": "0SCM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
                     "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 375,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": -2500,
                         "y": 750
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55a7a5db2b20",
+                    "id": "55cc5e8a7d10",
                     "type": "SymPin"
                 },
                 {
+                    "Cpid": 0,
                     "Name": "C",
                     "NamePos": {
                         "x": 1250,
                         "y": 2250
                     },
-                    "NameTextDir": 0,
+                    "NameTextDirMirHorVer": "0SCM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 1,
                     "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
                     "NameTextSize": 375,
-                    "NameTextVert": 1,
                     "NumberPos": {
                         "x": 1250,
                         "y": 1750
                     },
-                    "NumberTextDir": 0,
+                    "NumberTextDirMirHorVer": "0SCM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
                     "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 375,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": 750,
                         "y": 2000
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55a7a79d1250",
+                    "id": "55cc5d9f3d00",
                     "type": "SymPin"
                 },
                 {
+                    "Cpid": 0,
                     "Name": "E",
                     "NamePos": {
                         "x": 1250,
                         "y": -1500
                     },
-                    "NameTextDir": 0,
+                    "NameTextDirMirHorVer": "0SCM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 1,
                     "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
                     "NameTextSize": 375,
-                    "NameTextVert": 1,
                     "NumberPos": {
                         "x": 1250,
                         "y": -1000
                     },
-                    "NumberTextDir": 0,
+                    "NumberTextDirMirHorVer": "0SCM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
                     "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 375,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": 750,
                         "y": -1250
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55a7a79d10e0",
+                    "id": "55cc5e86d5e0",
                     "type": "SymPin"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 2000,
                         "y": 1000
                     },
-                    "id": "55a7a6f370f0",
+                    "id": "55cc5d6d7dc0",
                     "over": {
                         "b": 1175,
                         "r": 2299,
                         "x": 1701,
                         "y": 825
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
-                    "propTextHorz": 1,
                     "propTextLayer": "Ident",
-                    "propTextMirror": 0,
                     "propTextSize": 350,
-                    "propTextVert": 1,
                     "text": "{id}",
                     "type": "Ident"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 2250,
                         "y": 0
                     },
-                    "id": "55a7a653fea0",
+                    "id": "55cc5de94910",
                     "over": {
                         "b": 173,
                         "r": 2774,
                         "x": 1725,
                         "y": -177
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
-                    "propTextHorz": 1,
                     "propTextLayer": "Value",
-                    "propTextMirror": 0,
                     "propTextSize": 350,
-                    "propTextVert": 1,
                     "text": "{value}",
                     "type": "Value"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": -625,
                         "y": 500
@@ -643,13 +628,14 @@
                         "x": -1750,
                         "y": 1000
                     },
-                    "id": "7f9478014ed0",
+                    "id": "55cc5e894030",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Rect"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 0,
                         "y": -625
@@ -658,13 +644,14 @@
                         "x": -500,
                         "y": 500
                     },
-                    "id": "7f9478018750",
+                    "id": "55cc5dddc840",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Rect"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": -250,
                         "y": -625
@@ -673,13 +660,14 @@
                         "x": -250,
                         "y": -750
                     },
-                    "id": "7f947801a770",
+                    "id": "55cc5e965000",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": -250,
                         "y": -750
@@ -688,13 +676,14 @@
                         "x": 750,
                         "y": -750
                     },
-                    "id": "55a7a64e83f0",
+                    "id": "55cc5e263bb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": -625,
                         "y": 750
@@ -703,13 +692,14 @@
                         "x": 250,
                         "y": 750
                     },
-                    "id": "55a7a64e77f0",
+                    "id": "55cc5de9ef80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": -250,
                         "y": 750
@@ -718,18 +708,19 @@
                         "x": -250,
                         "y": 500
                     },
-                    "id": "55a7a5545d80",
+                    "id": "55cc5e266150",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "center": {
                         "x": -250,
                         "y": 750
                     },
-                    "id": "55a7a60c5b70",
+                    "id": "55cc5d836160",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -737,11 +728,12 @@
                     "type": "CircleFilled"
                 },
                 {
+                    "Cpid": 0,
                     "center": {
                         "x": 750,
                         "y": -750
                     },
-                    "id": "55a7a64e75f0",
+                    "id": "55cc5dbc2610",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -749,11 +741,12 @@
                     "type": "CircleFilled"
                 },
                 {
+                    "Cpid": 0,
                     "center": {
                         "x": -250,
                         "y": 375
                     },
-                    "id": "55a7a64f3ef0",
+                    "id": "55cc5dbedbd0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -761,6 +754,7 @@
                     "type": "Circle"
                 }
             ],
+            "Cpid": 0,
             "Created": 122892069,
             "Edit enable": false,
             "Origin": {
@@ -771,7 +765,7 @@
                 "category": "{uu.b.a.d"
             },
             "Title": "Bipolar transistor NPN with resistors",
-            "id": "55a7a5c7f190",
+            "id": "55cc5e875e60",
             "type": "Symbol"
         },
         {
@@ -779,13 +773,15 @@
             "Auto": true,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "Default": false,
                     "PartId": "Part\rsot363\rsalicad",
                     "PartTitle": "sot363 (salicad)",
-                    "id": "55a7a5fec2f0",
+                    "id": "55cc5e3696e0",
                     "type": "PartVariant"
                 },
                 {
+                    "Cpid": 0,
                     "PinAssotiation": {
                         "B0": "5",
                         "B1": "2",
@@ -796,10 +792,11 @@
                     },
                     "SymbolId": "Symbol\rBipolar transistor NPN + PNP\rsalicad",
                     "SymbolTitle": "Bipolar transistor NPN + PNP (salicad)",
-                    "id": "55a7a60f62e0",
+                    "id": "55cc5e82bd80",
                     "type": "Section"
                 }
             ],
+            "Cpid": 0,
             "Created": 112284445,
             "Edit enable": false,
             "Origin": {
@@ -829,7 +826,7 @@
                 "article",
                 "device mark"
             ],
-            "id": "55a7a64c5b70",
+            "id": "55cc5e8a1c10",
             "type": "Comp"
         },
         {
@@ -837,13 +834,15 @@
             "Auto": false,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "Default": false,
                     "PartId": "Part\rsot23-3\rsalicad",
                     "PartTitle": "sot23-3 (salicad)",
-                    "id": "55a7a6066310",
+                    "id": "55cc5e967b60",
                     "type": "PartVariant"
                 },
                 {
+                    "Cpid": 0,
                     "PinAssotiation": {
                         "B": "1",
                         "C": "3",
@@ -851,10 +850,11 @@
                     },
                     "SymbolId": "Symbol\rBipolar transistor NPN with resistors\rsalicad",
                     "SymbolTitle": "Bipolar transistor NPN with resistors (salicad)",
-                    "id": "55a7a61ee620",
+                    "id": "55cc5e2662a0",
                     "type": "Section"
                 }
             ],
+            "Cpid": 0,
             "Created": 122891997,
             "Edit enable": false,
             "Origin": {
@@ -878,12 +878,65 @@
                 "value": "PDTC143ET"
             },
             "Title": "bipolar npn transistor with resistors pdtc143et",
-            "id": "55a7a5dc5ab0",
+            "id": "55cc5d9df770",
+            "type": "Comp"
+        },
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "Cpid": 0,
+                    "PinAssotiation": {
+                        "A": "1",
+                        "AK": "3",
+                        "K": "2"
+                    },
+                    "SymbolId": "Symbol\rdouble serial diodes\rsalicad",
+                    "SymbolTitle": "double serial diodes (salicad)",
+                    "id": "55cc5e8f9a30",
+                    "type": "Section"
+                },
+                {
+                    "Cpid": 0,
+                    "Default": false,
+                    "PartId": "Part\rsot23-3\rsalicad",
+                    "PartTitle": "sot23-3 (salicad)",
+                    "id": "55cc5e86d170",
+                    "type": "PartVariant"
+                }
+            ],
+            "Cpid": 0,
+            "Created": 172652578,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "article": "",
+                "bom": "<article> <value>",
+                "category": "{uu.b.b.b",
+                "current": "215mA",
+                "device mark": "A7",
+                "forward voltage": "1V",
+                "manufacturer": "nexperia",
+                "prefix": "D",
+                "reverce voltage": "85V",
+                "title": "diode BAV99",
+                "value": "BAV99"
+            },
+            "Title": "dual serial fast switching diode BAV99",
+            "id": "55cc5e81d1b0",
             "type": "Comp"
         }
     ],
+    "Cpid": 0,
+    "Created": 0,
+    "Edit enable": true,
     "Parametrs": {
     },
-    "id": "55a7a608a1d0",
+    "Title": "",
+    "id": "55cc5e8cc390",
     "type": "Project"
 }
