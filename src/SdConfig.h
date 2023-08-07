@@ -213,6 +213,7 @@ History
   19.10.2022 v2.3  Append via rules, append full list of internal layers, append menu item for pcb layers count
   21.10.2022 v2.4  Append drag origin point of graph editor with Shift+Middle button
                    Append trace delete mode
+  07.08.2023 v2.5  Fix: crash for 3d view with no pcb contour
 */
 
 #ifndef SDCONFIG
@@ -224,7 +225,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             2
-#define SD_VERSION_MINOR             4
+#define SD_VERSION_MINOR             5
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

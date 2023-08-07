@@ -564,52 +564,56 @@ void SdPItemPlate::rebuild3dModel()
     return true;
     } );
 
-  Sd3drFace pcbTop;
-  for( auto p : qAsConst(pointList) ) {
-    QVector3D v( p );
-    v /= 1000.0;
-    v.setZ( pcb3dZLevel );
-    pcbTop.append( m3dModel.vertexAppend(v) );
+  //If no pcb contour then we do nothing
+  if( pointList.count() < 3 ) {
+    Sd3drFace pcbTop;
+    for( auto p : qAsConst(pointList) ) {
+      QVector3D v( p );
+      v /= 1000.0;
+      v.setZ( pcb3dZLevel );
+      pcbTop.append( m3dModel.vertexAppend(v) );
+      }
+
+    //At second we scan all throught holes
+    SdLayer *holeLayer = sdEnvir->getLayer( LID0_HOLE );
+    Sd3drFaceList holes;
+    QMatrix4x4 map;
+    map.translate( 0, 0, pcb3dZLevel );
+    forEach( dctLines|dctPartImp, [&holes,holeLayer,this,map] ( SdObject *obj ) -> bool {
+      SdPtr<SdGraphLinear> linear(obj);
+      if( linear.isValid() && linear->isMatchLayer(holeLayer) )
+        //Append figure to hole list (lines not generate holes)
+        linear->accumHoles( m3dModel, holes, stmThrough, map );
+      else {
+        SdPtr<SdGraphPartImp> partImp(obj);
+        if( partImp.isValid() )
+          //Convert circle to point region
+          partImp->accumHoles( m3dModel, holes, stmThrough, map );
+        }
+      return true;
+      });
+
+
+    Sd3drBody pcbBody;
+    QMatrix4x4 shift;
+    shift.translate( 0, 0, -pcb3dThickness );
+    Sd3drFace pcbBot = m3dModel.faceDuplicate( pcbTop, shift );
+    pcbBody.faceAppend( m3dModel.faceListWall( pcbTop, pcbBot, true ) );
+    pcbBody.colorSet( sdEnvir->getSysColor( sc3dPcb ) );
+
+    Sd3drFaceList pcbTopList = m3dModel.faceListHolesXY( pcbTop, holes );
+    Sd3drFaceList pcbBotList = m3dModel.faceListDuplicate( pcbTopList, shift );
+    pcbBody.faceAppend( pcbTopList );
+    pcbBody.faceAppend( pcbBotList );
+    //pcbBody.faceAppend( holes );
+
+    Sd3drInstance inst;
+    inst.add( pcbBody );
+    inst.addCopy( QMatrix4x4() );
+
+    m3dModel.instanceAppend( inst );
     }
 
-  //At second we scan all throught holes
-  SdLayer *holeLayer = sdEnvir->getLayer( LID0_HOLE );
-  Sd3drFaceList holes;
-  QMatrix4x4 map;
-  map.translate( 0, 0, pcb3dZLevel );
-  forEach( dctLines|dctPartImp, [&holes,holeLayer,this,map] ( SdObject *obj ) -> bool {
-    SdPtr<SdGraphLinear> linear(obj);
-    if( linear.isValid() && linear->isMatchLayer(holeLayer) )
-      //Append figure to hole list (lines not generate holes)
-      linear->accumHoles( m3dModel, holes, stmThrough, map );
-    else {
-      SdPtr<SdGraphPartImp> partImp(obj);
-      if( partImp.isValid() )
-        //Convert circle to point region
-        partImp->accumHoles( m3dModel, holes, stmThrough, map );
-      }
-    return true;
-    });
-
-
-  Sd3drBody pcbBody;
-  QMatrix4x4 shift;
-  shift.translate( 0, 0, -pcb3dThickness );
-  Sd3drFace pcbBot = m3dModel.faceDuplicate( pcbTop, shift );
-  pcbBody.faceAppend( m3dModel.faceListWall( pcbTop, pcbBot, true ) );
-  pcbBody.colorSet( sdEnvir->getSysColor( sc3dPcb ) );
-
-  Sd3drFaceList pcbTopList = m3dModel.faceListHolesXY( pcbTop, holes );
-  Sd3drFaceList pcbBotList = m3dModel.faceListDuplicate( pcbTopList, shift );
-  pcbBody.faceAppend( pcbTopList );
-  pcbBody.faceAppend( pcbBotList );
-  //pcbBody.faceAppend( holes );
-
-  Sd3drInstance inst;
-  inst.add( pcbBody );
-  inst.addCopy( QMatrix4x4() );
-
-  m3dModel.instanceAppend( inst );
   }
 
 
