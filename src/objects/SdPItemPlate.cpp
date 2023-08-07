@@ -565,7 +565,7 @@ void SdPItemPlate::rebuild3dModel()
     } );
 
   //If no pcb contour then we do nothing
-  if( pointList.count() < 3 ) {
+  if( pointList.count() > 2 ) {
     Sd3drFace pcbTop;
     for( auto p : qAsConst(pointList) ) {
       QVector3D v( p );

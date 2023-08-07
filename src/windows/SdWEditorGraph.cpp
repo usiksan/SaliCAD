@@ -716,8 +716,9 @@ void SdWEditorGraph::paintProcess(bool viewer)
         //qDebug() << "p" << p;
         painter.resetTransform();
         while( p.y() > 0 ) {
-          while( p.x() < s.width() && p.x() > 0 ) {
-            painter.drawPoint(p);
+          while( p.x() < s.width() ) {
+            if( p.x() > 0 )
+              painter.drawPoint(p);
             tmp.setX( tmp.x() + mGrid.x() );
             p = context.transform().map( tmp );
             }

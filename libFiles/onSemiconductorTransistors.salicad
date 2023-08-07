@@ -1,10 +1,14 @@
 {
+    "A file type": "SaliCAD file",
+    "A version": 2,
+    "Author": "",
     "ChildList": [
         {
             "Author": "salicad",
             "Auto": false,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "PinAssotiation": {
                         "B": "1",
                         "C": "3",
@@ -12,17 +16,19 @@
                     },
                     "SymbolId": "Symbol\rBipolar transistor PNP\rsalicad",
                     "SymbolTitle": "Bipolar transistor PNP (salicad)",
-                    "id": "55883338cf40",
+                    "id": "555556f21e10",
                     "type": "Section"
                 },
                 {
+                    "Cpid": 0,
                     "Default": false,
                     "PartId": "Part\rsot23-3\rsalicad",
                     "PartTitle": "sot23-3 (salicad)",
-                    "id": "5588333d24d0",
+                    "id": "555556f3bdb0",
                     "type": "PartVariant"
                 }
             ],
+            "Cpid": 0,
             "Created": 42625109,
             "Edit enable": false,
             "Origin": {
@@ -64,7 +70,7 @@
                 "BC857CLT1G",
                 "3G"
             ],
-            "id": "55883339c4c0",
+            "id": "555557077b80",
             "type": "Comp"
         },
         {
@@ -72,13 +78,15 @@
             "Auto": true,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "Default": false,
                     "PartId": "Part\rsot23-3\rsalicad",
                     "PartTitle": "sot23-3 (salicad)",
-                    "id": "5588333ac2f0",
+                    "id": "5555595ffb20",
                     "type": "PartVariant"
                 },
                 {
+                    "Cpid": 0,
                     "PinAssotiation": {
                         "B": "1",
                         "C": "3",
@@ -86,10 +94,11 @@
                     },
                     "SymbolId": "Symbol\rBipolar transistor NPN\rsalicad",
                     "SymbolTitle": "Bipolar transistor NPN (salicad)",
-                    "id": "558830cf1050",
+                    "id": "555556f2d5e0",
                     "type": "Section"
                 }
             ],
+            "Cpid": 0,
             "Created": 42625132,
             "Edit enable": false,
             "Origin": {
@@ -131,7 +140,7 @@
                 "BC847CLT1G",
                 "1G"
             ],
-            "id": "55883273a000",
+            "id": "5555595dd6c0",
             "type": "Comp"
         },
         {
@@ -139,13 +148,15 @@
             "Auto": false,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "Default": false,
                     "PartId": "Part\rsot563\rzubr owk",
                     "PartTitle": "sot563 (zubr owk)",
-                    "id": "55883337fbe0",
+                    "id": "5555595d7770",
                     "type": "PartVariant"
                 },
                 {
+                    "Cpid": 0,
                     "PinAssotiation": {
                         "D1": "6",
                         "D2": "3",
@@ -156,10 +167,11 @@
                     },
                     "SymbolId": "Symbol\rcomplementary mosfet\rsalicad",
                     "SymbolTitle": "complementary mosfet (salicad)",
-                    "id": "5588333c7cc0",
+                    "id": "55555643c480",
                     "type": "Section"
                 }
             ],
+            "Cpid": 0,
             "Created": 93167820,
             "Edit enable": false,
             "Origin": {
@@ -183,7 +195,7 @@
                 "www": "www.onsemi.com"
             },
             "Title": "NTZD3155C complementary mosfet",
-            "id": "5588333cd1d0",
+            "id": "555556eeb800",
             "type": "Comp"
         },
         {
@@ -191,13 +203,15 @@
             "Auto": true,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "Default": false,
                     "PartId": "Part\rtsop-6 318g-02\rsalicad",
                     "PartTitle": "tsop-6 318g-02 (salicad)",
-                    "id": "55883336fe80",
+                    "id": "5555597044d0",
                     "type": "PartVariant"
                 },
                 {
+                    "Cpid": 0,
                     "PinAssotiation": {
                         "D1": "6",
                         "D2": "3",
@@ -208,10 +222,11 @@
                     },
                     "SymbolId": "Symbol\rcomplementary mosfet\rsalicad",
                     "SymbolTitle": "complementary mosfet (salicad)",
-                    "id": "5588333a1c50",
+                    "id": "555556effca0",
                     "type": "Section"
                 }
             ],
+            "Cpid": 0,
             "Created": 106856761,
             "Edit enable": false,
             "Origin": {
@@ -235,7 +250,7 @@
                 "www": "www.onsemi.com"
             },
             "Title": "NTGD4167C complementary mosfet",
-            "id": "558833263e10",
+            "id": "555555f96600",
             "type": "Comp"
         },
         {
@@ -243,6 +258,7 @@
             "Auto": false,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "PinAssotiation": {
                         "D": "3",
                         "G": "1",
@@ -250,17 +266,19 @@
                     },
                     "SymbolId": "Symbol\rn-channel MOSFET enhancement\rsalicad",
                     "SymbolTitle": "n-channel MOSFET enhancement (salicad)",
-                    "id": "55883271bea0",
+                    "id": "555559712510",
                     "type": "Section"
                 },
                 {
+                    "Cpid": 0,
                     "Default": false,
                     "PartId": "Part\rsot23-3\rsalicad",
                     "PartTitle": "sot23-3 (salicad)",
-                    "id": "5588325a0890",
+                    "id": "5555595f4260",
                     "type": "PartVariant"
                 }
             ],
+            "Cpid": 0,
             "Created": 107554793,
             "Edit enable": false,
             "Origin": {
@@ -282,12 +300,66 @@
                 "value": "FDV303N"
             },
             "Title": "N-Channel HEXFET Power MOSFET FDV303N sot23",
-            "id": "5588311b6850",
+            "id": "5555567a9180",
+            "type": "Comp"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "Cpid": 0,
+                    "PinAssotiation": {
+                        "D": "3",
+                        "G": "1",
+                        "S": "2"
+                    },
+                    "SymbolId": "Symbol\rn-channel MOSFET enhancement\rsalicad",
+                    "SymbolTitle": "n-channel MOSFET enhancement (salicad)",
+                    "id": "5555595c8810",
+                    "type": "Section"
+                },
+                {
+                    "Cpid": 0,
+                    "Default": false,
+                    "PartId": "Part\rTO-252 (DPak)\rsalicad",
+                    "PartTitle": "TO-252 (DPak) (salicad)",
+                    "id": "555557497cd0",
+                    "type": "PartVariant"
+                }
+            ],
+            "Cpid": 0,
+            "Created": 176637015,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "Id": "15.2A",
+                "Pd": "3.1W",
+                "Rds on": "0.0085Om",
+                "Vdss": "40V",
+                "Vgs": "20V",
+                "article": "FDD8447L",
+                "bom": "<article>",
+                "category": "{uu.b.a.c",
+                "manufacturer": "OnSemiconductor",
+                "prefix": "VT",
+                "title": "N-Channel HEXFET Power MOSFET D-PAK",
+                "value": "FDD8447L"
+            },
+            "Title": "N-Channel HEXFET Power MOSFET FDD8447L D-PAK (TO-252)",
+            "id": "555556c8aec0",
             "type": "Comp"
         }
     ],
+    "Cpid": 0,
+    "Created": 0,
+    "Edit enable": true,
     "Parametrs": {
     },
-    "id": "5588333a3180",
+    "Title": "",
+    "id": "555555ea8800",
     "type": "Project"
 }
