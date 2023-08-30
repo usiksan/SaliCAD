@@ -7494,7 +7494,7 @@
     <message>
         <location filename="windows/SdWMain.cpp" line="775"/>
         <source>SaliCAD Files (*%1 *%2)</source>
-        <translation>Файлы PasCAD (*%1 %2)</translation>
+        <translation type="unfinished">Файлы PasCAD (*%1 *%2)</translation>
     </message>
     <message>
         <location filename="windows/SdWMain.cpp" line="881"/>
