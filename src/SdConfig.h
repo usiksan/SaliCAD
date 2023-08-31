@@ -214,6 +214,8 @@ History
   21.10.2022 v2.4  Append drag origin point of graph editor with Shift+Middle button
                    Append trace delete mode
   07.08.2023 v2.5  Fix: crash for 3d view with no pcb contour
+  29.08.2023 v2.6  Append assembler export file extension
+                   Append part name to assembler export file
 */
 
 #ifndef SDCONFIG
@@ -225,7 +227,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             2
-#define SD_VERSION_MINOR             5
+#define SD_VERSION_MINOR             6
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -248,6 +250,9 @@ History
 
 //Pads association naming definition
 #define SD_PAD_ASSOCIATION_EXTENSION ".salipads"
+
+//Export to assembler file extension
+#define SD_ASSEMBLER_EXTENSION       ".saliasm"
 
 //Category files
 #define SD_CATEGORY_EXTENSION        ".category"

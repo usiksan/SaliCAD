@@ -289,6 +289,10 @@ QTransform SdGraphPartImp::matrix() const
 
 
 
+QString SdGraphPartImp::partTitle() const
+  {
+  return mPart == nullptr ? QString{} : mPart->getTitle();
+  }
 
 
 

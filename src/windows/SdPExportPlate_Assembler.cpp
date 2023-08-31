@@ -66,6 +66,8 @@ bool SdPExportPlate_Assembler::validatePage()
   //Perform export
   QString fname = QFileDialog::getSaveFileName( this, tr("Select file name for save assemble file") );
   if( !fname.isEmpty() ) {
+    if( !fname.endsWith( SD_ASSEMBLER_EXTENSION ) )
+      fname.append( SD_ASSEMBLER_EXTENSION );
     QFile file(fname);
     if( file.open( QIODevice::WriteOnly ) ) {
       QString os( ";-------------------------------------------------\n" );
@@ -90,6 +92,8 @@ bool SdPExportPlate_Assembler::validatePage()
             os.append( part->ident() ).append( delim );
             //Comp name
             os.append( part->getBomItemLine() ).append( delim );
+            //Part name
+            os.append( part->partTitle() ).append( delim );
             //Angle
             SdPropAngle angle = part->angle();
             if( doBottom ) angle += 180000;

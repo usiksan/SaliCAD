@@ -118,22 +118,22 @@ typedef QList<SdPartImpSection> SdPartImpSectionTable;
 //Part implementation
 class SdGraphPartImp : public SdGraphTraced
   {
-    int                    mLogNumber;   //Logical part number (from 1)
-    SdPoint                mOrigin;      //Position of Implement
-    SdPropPartImp          mProp;        //Implement properties
-    SdRect                 mOverRect;    //Over rect
+    int                    mLogNumber;   //!< Logical part number (from 1)
+    SdPoint                mOrigin;      //!< Position of Implement
+    SdPropPartImp          mProp;        //!< Implement properties
+    SdRect                 mOverRect;    //!< Over rect
 
     //Part identification
-    SdTextImplement        mIdent;       //Part identificator text properties and position
+    SdTextImplement        mIdent;       //!< Part identificator text properties and position
 
     //Part value
-    SdTextImplement        mValue;       //Part value text properties and position
+    SdTextImplement        mValue;       //!< Part value text properties and position
 
-    SdPartImpPinTable      mPins;
-    SdPartImpSectionTable  mSections;
-    SdPItemPart           *mPart;        //Part for this implementation
-    SdPItemComponent      *mComponent;   //Component with pack info
-    SdStringMap            mParamTable;  //Parameters
+    SdPartImpPinTable      mPins;        //!< Part implement pin table
+    SdPartImpSectionTable  mSections;    //!< Part implement schematic sections list
+    SdPItemPart           *mPart;        //!< Part for this implementation
+    SdPItemComponent      *mComponent;   //!< Component with pack info
+    SdStringMap            mParamTable;  //!< Parameters
   public:
     SdGraphPartImp();
     SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param );
@@ -144,6 +144,12 @@ class SdGraphPartImp : public SdGraphTraced
 
     //Angle of component rotation
     SdPropAngle       angle() const { return mProp.mAngle.getValue(); }
+
+    //!
+    //! \brief partTitle Returns part title
+    //! \return          Part title
+    //!
+    QString           partTitle() const;
 
 
     //Identificator
