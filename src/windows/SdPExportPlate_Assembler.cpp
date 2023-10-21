@@ -64,7 +64,8 @@ SdPExportPlate_Assembler::SdPExportPlate_Assembler(SdWEditorGraphPlate *editor, 
 bool SdPExportPlate_Assembler::validatePage()
   {
   //Perform export
-  QString fname = QFileDialog::getSaveFileName( this, tr("Select file name for save assemble file") );
+  QString fname;
+  fname = QFileDialog::getSaveFileName( this, tr("Select file name for save assemble file") );
   if( !fname.isEmpty() ) {
     if( !fname.endsWith( SD_ASSEMBLER_EXTENSION ) )
       fname.append( SD_ASSEMBLER_EXTENSION );
