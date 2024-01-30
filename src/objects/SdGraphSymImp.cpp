@@ -531,6 +531,8 @@ void SdGraphSymImp::draw(SdContext *dc)
   dc->text( mIdent.mOrigin, ov, ident(), mIdent.mProp );
   dc->text( mValue.mOrigin, ov, value(), mValue.mProp );
 
+  dc->paramMapSet( &mParamTable );
+
   //Draw symbol except ident and pins
   mSymbol->forEach( dctAll & ~(dctSymPin | dctIdent | dctValue), [dc] (SdObject *obj) -> bool {
     SdGraph *graph = dynamic_cast<SdGraph*>( obj );
@@ -542,6 +544,8 @@ void SdGraphSymImp::draw(SdContext *dc)
   //Draw pins
   for( SdSymImpPin &pin : mPins )
     pin.draw( dc );
+
+  dc->paramMapSet();
   }
 
 

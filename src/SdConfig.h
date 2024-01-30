@@ -216,6 +216,7 @@ History
   07.08.2023 v2.5  Fix: crash for 3d view with no pcb contour
   29.08.2023 v2.6  Append assembler export file extension
                    Append part name to assembler export file
+  29.01.2024 v2.7  Append stm32 alternative pin names import
 */
 
 #ifndef SDCONFIG
@@ -227,7 +228,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             2
-#define SD_VERSION_MINOR             6
+#define SD_VERSION_MINOR             7
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

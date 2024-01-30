@@ -239,6 +239,11 @@ void SdGraphText::draw(SdContext *dc)
   {
   if( !dc->showFields() && mString.startsWith( QChar('{') ) && mString.endsWith( QChar('}') ) ) {
     //Draw as field
+    //At first try draw with local param
+    if( dc->paramContains(mString) ) {
+      dc->text( mOrigin, mOverRect, dc->paramGet(mString), mProp );
+      return;
+      }
     if( getParent() ) {
 //      qDebug() << mString << ":" << getParent()->paramHierarchy(mString);
       dc->text( mOrigin, mOverRect, getParent()->paramHierarchy(mString), mProp );

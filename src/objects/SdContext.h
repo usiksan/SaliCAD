@@ -24,6 +24,7 @@ Description
 #include "SdPolyWindowList.h"
 #include "SdSnapInfo.h"
 #include "SdScaler.h"
+#include "library/SdStringMap.h"
 
 #include <QPainter>
 #include <QTransform>
@@ -34,23 +35,46 @@ class SdSelector;
 //Контекст вывода графической информации (средство рисования)
 class SdContext {
   protected:
-    QPainter       *mPainter;       //Painter [Рисовальщик]
-    SdConverter    *mConverter;     //Coord converter [Преобразователь координат]
-    SdPoint         mGrid;          //Grid size [Сетка]
-    SdSelector     *mSelector;      //Объект-селектор относительно которого выполняется рисование
-    QTransform      mTransform;     //Transform matrix
-    SdScaler        mScaler;        //Current scale
-    QColor          mOverColor;     //Color for overriding default layers color
-    int             mAngle;         //Rotation angle
-    int             mZeroWidth;     //Width for zero width line
-    bool            mMirror;        //Mirror flag
-    bool            mPairLayer;     //True for paired layer
-    bool            mOverOn;        //True if overriding is on
-    bool            mZeroOn;        //True if overriding zero width line on
-    bool            mShowFields;    //True if show fields contents
+    QPainter          *mPainter;       //!< Painter [Рисовальщик]
+    SdConverter       *mConverter;     //!< Coord converter [Преобразователь координат]
+    SdPoint            mGrid;          //!< Grid size [Сетка]
+    SdSelector        *mSelector;      //!< Объект-селектор относительно которого выполняется рисование
+    QTransform         mTransform;     //!< Transform matrix
+    SdScaler           mScaler;        //!< Current scale
+    QColor             mOverColor;     //!< Color for overriding default layers color
+    const SdStringMap *mParamMap;      //!< Local param map
+    int                mAngle;         //!< Rotation angle
+    int                mZeroWidth;     //!< Width for zero width line
+    bool               mMirror;        //!< Mirror flag
+    bool               mPairLayer;     //!< True for paired layer
+    bool               mOverOn;        //!< True if overriding is on
+    bool               mZeroOn;        //!< True if overriding zero width line on
+    bool               mShowFields;    //!< True if show fields contents
   public:
     SdContext(SdPoint grid, QPainter *painter);
     virtual ~SdContext() {}
+
+    //!
+    //! \brief paramMapSet Set new param map for this context
+    //! \param mp          New param map
+    //!
+    void            paramMapSet( const SdStringMap *mp = nullptr ) { mParamMap = mp; }
+
+    //!
+    //! \brief paramContains Check if param with key contained in param map of this context
+    //! \param key           Key of checked param
+    //! \return              true if param present in param map
+    //!
+    bool            paramContains( const QString &key ) const { return mParamMap != nullptr && mParamMap->contains(key); }
+
+    //!
+    //! \brief paramGet Returns param from param map of this context
+    //! \param key      Key of param
+    //! \return         Value of param with this Key
+    //!
+    QString         paramGet( const QString &key ) const { return mParamMap == nullptr ? QString{} : mParamMap->value(key); }
+
+
 
     //Operations with coord convertor
     SdContext*      setConverter( SdConverter *c );

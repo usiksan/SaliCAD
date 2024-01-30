@@ -9,6 +9,7 @@ Web
   www.saliLab.ru
 
 Description
+  Context for graphics draw
 */
 
 #include "SdContext.h"
@@ -27,6 +28,7 @@ SdContext::SdContext(SdPoint grid, QPainter *painter) :
   mSelector(nullptr),
   mTransform(),
   mScaler(1.0),
+  mParamMap(nullptr),
   mAngle(0),
   mMirror(false),
   mPairLayer(false),

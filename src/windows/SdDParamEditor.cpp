@@ -25,6 +25,7 @@ Description
 #include "SdDHelp.h"
 
 #include <QInputDialog>
+#include <QFileDialog>
 #include <QMessageBox>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -39,6 +40,9 @@ SdDParamEditor::SdDParamEditor(const QString title, const SdStringMap &map, SdPr
   mEditEnable(editEnable)
   {
   setWindowTitle( title );
+
+  //stm32
+  bool stm32 = map.value( QString("value") ).toLower().contains("stm32");
 
   //  param editor
   // (param table, buttons)
@@ -62,6 +66,11 @@ SdDParamEditor::SdDParamEditor(const QString title, const SdStringMap &map, SdPr
           vbox->addWidget( mParamFields = new QPushButton( tr("Accum sheet fields")) );
         else
           mParamFields = nullptr;
+        if( stm32 && mEditEnable ) {
+          vbox->addWidget( mStm32AlterPinAdd = new QPushButton( tr("stm32 pins import...") ) );
+          vbox->addWidget( mStm32AlterPinRemove = new QPushButton( tr("stm32 pins remove") ) );
+          }
+        else mStm32AlterPinAdd = mStm32AlterPinRemove = nullptr;
       lay->addLayout( vbox );
     root->addLayout( lay );
 
@@ -82,6 +91,10 @@ SdDParamEditor::SdDParamEditor(const QString title, const SdStringMap &map, SdPr
     connect( mValueSelector, &QPushButton::clicked, this, &SdDParamEditor::selectValue );
     if( isProject )
       connect( mParamFields, &QPushButton::clicked, this, &SdDParamEditor::paramFields );
+    if( stm32 ) {
+      connect( mStm32AlterPinAdd, &QPushButton::clicked, this, &SdDParamEditor::stm32AlterPinAdd );
+      connect( mStm32AlterPinRemove, &QPushButton::clicked, this, &SdDParamEditor::stm32AlterPinRemove );
+      }
     }
   else {
     //Disable buttons when edit disabled
@@ -357,6 +370,54 @@ void SdDParamEditor::selectValue()
     //Value updated
     fillParams();
     }
+  }
+
+
+
+
+
+void SdDParamEditor::stm32AlterPinAdd()
+  {
+  //Get configuration file
+  QString path = QFileDialog::getOpenFileName( this, tr("STM32CubeIde MX configuration file"), QString{}, tr("STM32CubeIde MX Files (*%1)").arg(".ioc") );
+  if( !path.isEmpty() ) {
+    //Open configuration file
+    QFile is(path);
+    if( is.open(QIODevice::ReadOnly) ) {
+      //Remove previously assigned names
+      stm32AlterPinRemove();
+      //Read full file into string
+      QString content( QString::fromLatin1(is.readAll()) );
+      //Split into separate lines
+      QStringList fileLines( content.split('\x0a') );
+      //Scan configuration file and append defined pin names
+      for( auto const &line : qAsConst(fileLines) ) {
+        //Get next line of configuration file
+        //Check if there is pin definition
+        if( line.contains(".Signal=") ) {
+          //Pin definition presents
+          QStringList list = line.split( QChar('=') );
+          if( list.count() == 2 ) {
+            //Append new pin definition
+            paramAddInt( QString("{%1}").arg(list.at(0)), list.at(1) );
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+
+
+void SdDParamEditor::stm32AlterPinRemove()
+  {
+  for( int row = 0; row < mParamTable->rowCount(); )
+    if( mParamTable->item( row, 0 )->text().contains(".Signal") ) {
+      mParam.remove( mParamTable->item( row, 0 )->text() );
+      mParamTable->removeRow( row );
+      }
+    else row++;
   }
 
 
