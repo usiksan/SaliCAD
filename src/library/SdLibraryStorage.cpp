@@ -436,6 +436,8 @@ void SdLibraryStorage::periodicScan()
         //Check if file actually exist and not have been removed
         if( QFile::exists(file.absoluteFilePath()) ) {
           QScopedPointer<SdContainerFile> item( sdObjectOnly<SdContainerFile>(SdObject::fileJsonLoad(file.absoluteFilePath())) );
+          //Fix crash: check if item readed correctly
+          if( item.isNull() ) continue;
           //Check if this object is older then in library present
           if( cfIsOlder( item.get() ) ) {
             //Remove this file because it is older than in library
