@@ -98,7 +98,7 @@ void SdLibraryStorage::libraryInit()
 
   QSettings s;
   mLibraryPath = s.value( QStringLiteral("LIBRARY_PATH") ).toString();
-  if( mLibraryPath.isEmpty() ) {
+  if( mLibraryPath.isEmpty() || mLibraryPath.count() < 3 ) {
     //Library path not defined yet
     SvDir dir( QDir::homePath() );
     dir.cd( QStringLiteral("SaliLAB/SaliCAD/library/") );
