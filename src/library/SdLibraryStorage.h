@@ -62,10 +62,7 @@ class SdLibraryStorage : public QObject
 
     SdLibraryStorage();
   public:
-
-    friend SdLibraryStorage *svInstance<SdLibraryStorage>();
-
-    static SdLibraryStorage *instance() { return svInstance<SdLibraryStorage>(); }
+    SV_SINGLETON( SdLibraryStorage )
 
     //!
     //! \brief objectCount Return count of referenced objects in library

@@ -29,6 +29,7 @@ Description
 #include <QSaveFile>
 #include <QFileInfo>
 #include <QSettings>
+#include <QStandardPaths>
 #include <QDebug>
 
 #define FNAME_REF cachePath() + QStringLiteral("reference.dat")
@@ -100,8 +101,8 @@ void SdLibraryStorage::libraryInit()
   mLibraryPath = s.value( QStringLiteral("LIBRARY_PATH") ).toString();
   if( mLibraryPath.isEmpty() || mLibraryPath.count() < 3 ) {
     //Library path not defined yet
-    SvDir dir( QDir::homePath() );
-    dir.cd( QStringLiteral("SaliLAB/SaliCAD/library/") );
+    SvDir dir( QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation).at(0) );
+    dir.cd( QStringLiteral("library/") );
     QDir().mkpath( dir.slashedPath() );
     mLibraryPath = dir.slashedPath();
     s.setValue( QStringLiteral("LIBRARY_PATH"), mLibraryPath );

@@ -51,9 +51,7 @@ class SdObjectNetClient : public QObject
     explicit SdObjectNetClient(QObject *parent = nullptr);
   public:
 
-    friend SdObjectNetClient *svInstance<SdObjectNetClient>();
-
-    static SdObjectNetClient *instance() { return svInstance<SdObjectNetClient>(); }
+    SV_SINGLETON(SdObjectNetClient)
 
     bool        isRegistered() const;
 
