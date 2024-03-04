@@ -344,13 +344,15 @@ void SdEnvir::defaultEnvir()
   if( !mHomePath.endsWith( QChar('/') ) )
     mHomePath.append( QChar('/') );
   mHomePath.append( QStringLiteral("SaliLAB/SaliCAD/") );
+
+  //mLibraryPath in SdEnvir is obsolete
   mLibraryPath = mHomePath;            //Каталог библиотек
   mLibraryPath.append( QStringLiteral("library/") );
-  mPatternPath = mHomePath;            //Каталог шаблонов
-  mPatternPath.append( QStringLiteral("pattern/") );
+
+  SvDir def( QCoreApplication::applicationDirPath() );
+  mPatternPath = def.slashedPath() + QStringLiteral("pattern/");   //Каталог шаблонов
 
   //Category file path
-  SvDir def( QCoreApplication::applicationDirPath() );
   mCategoryPath = def.slashedPath() + QString("category/");        //Base path for store category hierarchy
 
 

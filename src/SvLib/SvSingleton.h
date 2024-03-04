@@ -15,50 +15,21 @@
         //SomeClass constructor is private to disable create class object outside svInstance function
         SomeClass() {}
       public:
-        friend SomeClass *svInstance<SomeClass>();
-
         //Singleton function
-        static SomeClass *instance() { return svInstance<SomeClass>(); }
+        static SomeClass *instance() { static SomeClass obj; return &obj; }
       };
 
   History
-   24.08.2022 Append SV_SINGLETON macro to simplify singleton declaration
-              Refactor singleton as object and object ptr
+    24.08.2022 Append SV_SINGLETON macro to simplify singleton declaration
+               Refactor singleton as object and object ptr
+    17.03.2023 v1 Append version macro
+    27.08.2024 v2 Fix error: function template is wrong way
 */
 #ifndef SVSINGLETON_H
 #define SVSINGLETON_H
 
-//!
-//! \brief svInstance template function to release singleton pattern
-//!                   In it we create new object and return it or return previously created object if it already exist
-//! \return           Instance of SvClass
-//!
-template <typename SvClass>
-static SvClass *svInstance()
-  {
-  static SvClass instance;
-  return &instance;
-  }
+#define SV_SINGLETON_VERSION 1
 
-#define SV_SINGLETON( SomeClass ) friend SomeClass *svInstance<SomeClass>(); \
-  static SomeClass *instance() { return svInstance<SomeClass>(); }
-
-
-//!
-//! \brief svInstance template function to release singleton pattern
-//!                   In it we create new object and return it or return previously created object if it already exist
-//! \return           Instance of SvClass
-//!
-template <typename SvClass>
-static SvClass *svInstancePtr()
-  {
-  static SvClass *instance;
-  if( instance == nullptr )
-    instance = new SvClass{};
-  return instance;
-  }
-
-#define SV_SINGLETON_PTR( SomeClass ) friend SomeClass *svInstancePtr<SomeClass>(); \
-  static SomeClass *instance() { return svInstancePtr<SomeClass>(); }
+#define SV_SINGLETON( SomeClass ) static SomeClass *instance() { static SomeClass obj; return &obj; }
 
 #endif // SVSINGLETON_H
