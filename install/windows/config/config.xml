@@ -5,5 +5,5 @@
     <Title>Electronic schematic and pcb layout CAD</Title>
     <Publisher>SaliLAB</Publisher>
     <StartMenuDir>SaliCAD</StartMenuDir>
-    <TargetDir>@ApplicationsDirX86@/SaliLAB/SaliCAD</TargetDir>
+    <TargetDir>C:/SaliLAB/SaliCAD</TargetDir>
 </Installer>
