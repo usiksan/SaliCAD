@@ -24,8 +24,8 @@
         //Create menu
         component.addOperation("CreateShortcut", "@TargetDir@/SaliCAD.exe", "@StartMenuDir@/SaliCAD.lnk",
             "workingDirectory=@TargetDir@", "iconPath=@TargetDir@/SaliCAD.exe", "description=Start SaliCAD schematic and pcb layout CAD" );
-        component.addOperation("CreateShortcut", "@TargetDir@/maintenancetool.exe", "@StartMenuDir@/Remove SaliCAD.lnk",
-            "workingDirectory=@TargetDir@", "description=Remove SaliCAD from computer" );
+        component.addOperation("CreateShortcut", "@TargetDir@/maintenancetool.exe", "@StartMenuDir@/RemoveSaliCAD.lnk",
+            "workingDirectory=@TargetDir@", "iconPath=@TargetDir@/maintenancetool.exe", "description=Remove SaliCAD from computer" );
         }
 
 
