@@ -558,7 +558,7 @@ QString SdGraphPartImp::getBomItemLine() const
       bom.replace( field, iter.value() );
     }
 
-  return bom;
+  return bom.replace( QChar('<'), QChar('(') ).replace( QChar('>'), QChar(')') );
   }
 
 

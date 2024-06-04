@@ -13,6 +13,7 @@ Description
 */
 
 #include "SdProp.h"
+#include "SdEnvir.h"
 
 SdProp *sdGlobalProp;
 
@@ -148,7 +149,7 @@ SdProp::SdProp()
   //TODO D011 setup all prop defaults
   //Via properties [Свойства переходных отверстий]
   mViaProp.mStratum      = stmThrough;
-  mViaProp.mPadType      = "c0.6d0.2";
+  mViaProp.mPadType      = sdEnvir->mViaType;
   mViaProp.mNetName      = "";
   mViaRule               = 0;
 //  SdPropText    mTextDocProp;    //Свойства текста в текстовых документах

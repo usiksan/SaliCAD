@@ -149,7 +149,7 @@ bool SdWProjectTree::cmFileSave()
 
 bool SdWProjectTree::cmFileSaveAs()
   {
-  QString title = QFileDialog::getSaveFileName(this, tr("Save project file"), QString(), tr("SaliCAD binary Files (*%1);; SaliCAD text Files (%2)").arg(SD_BINARY_EXTENSION, SD_BASE_EXTENSION) );
+  QString title = QFileDialog::getSaveFileName(this, tr("Save project file"), QString(), tr("SaliCAD binary Files (*%1);; SaliCAD text Files (*%2)").arg(SD_BINARY_EXTENSION, SD_BASE_EXTENSION) );
 
   if( title.isEmpty() ) return false;
 

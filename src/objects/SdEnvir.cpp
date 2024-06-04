@@ -306,7 +306,7 @@ void SdEnvir::defaultEnvir()
   mEnableComp        = true;           //Разрешить операции с компонентами или заблокировать
   mEnableNet         = true;           //Разрешить операции с цепями
   mEnablePic         = true;           //Разрешить операции с картинкой
-  mViaType           = QStringLiteral("c0.8d0.6");    //Via default type [Тип переходного отверстия по умолчанию]
+  mViaType           = QStringLiteral("c1.0d0.4");    //Via default type [Тип переходного отверстия по умолчанию]
   mShowRatNet        = true;           //Показывать резинки
   mShowRemark        = true;           //Показывать всплывающие подсказки над компонентами
   mShowMessageRemark = true;           //Показывать информацию в строке состояния

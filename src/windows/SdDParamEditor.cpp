@@ -394,7 +394,7 @@ void SdDParamEditor::stm32AlterPinAdd()
       for( auto const &line : qAsConst(fileLines) ) {
         //Get next line of configuration file
         //Check if there is pin definition
-        if( line.contains(".Signal=") ) {
+        if( line.contains(".Signal=") || line.contains(".GPIO_Label=") ) {
           //Pin definition presents
           QStringList list = line.split( QChar('=') );
           if( list.count() == 2 ) {
@@ -412,12 +412,14 @@ void SdDParamEditor::stm32AlterPinAdd()
 
 void SdDParamEditor::stm32AlterPinRemove()
   {
-  for( int row = 0; row < mParamTable->rowCount(); )
-    if( mParamTable->item( row, 0 )->text().contains(".Signal") ) {
+  for( int row = 0; row < mParamTable->rowCount(); ) {
+    QString key = mParamTable->item( row, 0 )->text();
+    if( key.contains(".Signal") || key.contains(".GPIO_Label") ) {
       mParam.remove( mParamTable->item( row, 0 )->text() );
       mParamTable->removeRow( row );
       }
     else row++;
+    }
   }
 
 
