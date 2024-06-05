@@ -239,7 +239,7 @@ History
 
 
 //When defined disable registration with sali name
-#define SD_DISABLE_SALI_AUTHOR
+//#define SD_DISABLE_SALI_AUTHOR
 
 //Project naming definition
 #define SD_BASE_EXTENSION            ".salicad"
@@ -297,8 +297,8 @@ History
 #define SD_CLIP_FORMAT_SELECTOR      "bin/salicad-SdSelector"       //Project and selection SdSelector
 
 //Size of picture to draw fragment to clipboard
-#define CLIP_IMAGE_WIDTH             1920
-#define CLIP_IMAGE_HEIGHT            1280
+#define CLIP_IMAGE_WIDTH             (1920*2)
+#define CLIP_IMAGE_HEIGHT            (1280*2)
 
 //Max default delivered limit elements
 #define SD_DEFAULT_DELIVERED_LIMIT   100
