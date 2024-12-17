@@ -294,10 +294,6 @@ SdPItemComponent *sdCreateDefaultComponent(SdPItemSymbol *symbol, bool appendDef
   //Append section with symbol
   comp->appendSection( symbol->getUid(), symbol->getUndo() );
 
-  //D093 Append category from symbol
-  if( symbol->paramContains( stdParamCategory ) )
-    comp->paramSet( stdParamCategory, symbol->paramGet( stdParamCategory ), symbol->getUndo()  );
-
   if( appendDefaultPart ) {
     //Setup default part
     comp->setPartId( QString("Part\rplug part\rsalicad"), symbol->getUndo() );

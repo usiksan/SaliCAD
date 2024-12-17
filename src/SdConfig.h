@@ -217,6 +217,8 @@ History
   29.08.2023 v2.6  Append assembler export file extension
                    Append part name to assembler export file
   29.01.2024 v2.7  Append stm32 alternative pin names import
+  17.12.2024 v2.8  Remove category as unused attribute
+                   Remove fileds list from object selection dialog
 */
 
 #ifndef SDCONFIG
@@ -228,7 +230,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             2
-#define SD_VERSION_MINOR             7
+#define SD_VERSION_MINOR             8
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -254,11 +256,6 @@ History
 
 //Export to assembler file extension
 #define SD_ASSEMBLER_EXTENSION       ".saliasm"
-
-//Category files
-#define SD_CATEGORY_EXTENSION        ".category"
-#define SD_CATEGORY_FILE             "-salicad.category"
-#define SD_CATEGORY_PREFIX           "{uu"
 
 //Gerber file extension
 #define SD_GERBER_EXTENSION          ".gbr"
@@ -323,7 +320,7 @@ History
 #define SDK_ENVIR_VERSION            "Envir version"
 #define SDK_ENVIR                    "Envir"
 #define SDK_HELP_PATH                "HelpPath"
-#define SDK_GET_OBJECT_DLG_CFG       "DlgGetObjectCfg"
+#define SDK_GET_OBJECT_DLG_CFG       "DlgGetObjectCfg2_8"
 
 #define MODE_HELP                    //Prefix to mode help files
 
@@ -361,7 +358,6 @@ History
 #define stdParamTotalPageCount       QStringLiteral("totalPageCount")
 #define stdParamPageIndex            QStringLiteral("pageIndex")
 #define stdParamDeviceMark           QStringLiteral("device mark")
-#define stdParamCategory             QStringLiteral("category")
 //Capacitor specific
 #define stdParamDielectric           QStringLiteral("dielectric")
 #define stdParamVoltage              QStringLiteral("voltage")

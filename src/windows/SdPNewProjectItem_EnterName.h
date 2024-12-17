@@ -22,19 +22,15 @@ Description
 #include <QLabel>
 #include <QLineEdit>
 
-class SdWCategoryList;
-
 class SdPNewProjectItem_EnterName : public QWizardPage
   {
     Q_OBJECT
 
-    SdProjectItemPtr *mItemPtr;      //Pointer to item pointer which store ProjectItem
-    SdProject        *mProject;      //Project to which will be appended ProjectItem
-    QLabel           *mUnical;       //Message which indicate unical or not ProjectItem name
-    QLineEdit        *mName;         //ProjectItem name
-    QLineEdit        *mCategory;     //Category name
-    SdWCategoryList  *mCategoryList; //Category tree
-    bool              mValid;
+    SdProjectItemPtr *mItemPtr;      //!< Pointer to item pointer which store ProjectItem
+    SdProject        *mProject;      //!< Project to which will be appended ProjectItem
+    QLabel           *mUnical;       //!< Message which indicate unical or not ProjectItem name
+    QLineEdit        *mName;         //!< ProjectItem name
+    bool              mValid;        //!< Flag of name validation
     quint8            padding[3];
   public:
     SdPNewProjectItem_EnterName(SdProjectItemPtr *item, SdProject *prj, QWidget *parent, bool noRename );

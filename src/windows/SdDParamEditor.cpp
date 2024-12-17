@@ -140,7 +140,6 @@ QStringList SdDParamEditor::defParamList()
     stdParamTotalPageCount,
     stdParamPageIndex,
     stdParamDeviceMark,
-    stdParamCategory,
     //Capacitor specific
     stdParamDielectric,
     stdParamVoltage,
@@ -199,7 +198,6 @@ QString SdDParamEditor::defParamDescription(QString paramName)
     map.insert( stdParamDatasheet, tr("Local path to pdf file with datasheet") );
     map.insert( stdParamWww, tr("www page address") );
     map.insert( stdParamDeviceMark, tr("Device marking code") );
-    map.insert( stdParamCategory, tr("Path to element in category tree") );
     //Capacitor specific
     map.insert( stdParamDielectric, tr("Capacitor dielectric type") );
     map.insert( stdParamVoltage, tr("Capacitor working voltage") );

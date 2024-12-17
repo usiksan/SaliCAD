@@ -393,7 +393,6 @@ SOURCES += \
     objects/SdPItemVariant.cpp \
     windows/SdDVariantTable.cpp \
     objects/SdUndoRecordStringList.cpp \
-    windows/SdWCategoryList.cpp \
     master/SdDMasterSymbolIc.cpp \
     objects/SdPItemRich.cpp \
     windows/SdWEditorRich.cpp \
@@ -904,7 +903,6 @@ HEADERS  += \
     objects/SdPItemVariant.h \
     windows/SdDVariantTable.h \
     objects/SdUndoRecordStringList.h \
-    windows/SdWCategoryList.h \
     master/SdDMasterSymbolIc.h \
     objects/SdPItemRich.h \
     windows/SdWEditorRich.h \
