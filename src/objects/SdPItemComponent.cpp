@@ -13,10 +13,8 @@ Description
 */
 #include "SdPItemComponent.h"
 #include "SdPItemSymbol.h"
-#include "SdPartVariant.h"
 #include "library/SdLibraryStorage.h"
 #include "SdProject.h"
-#include "SdConfig.h"
 
 #include <QDebug>
 
@@ -27,74 +25,6 @@ SdPItemComponent::SdPItemComponent() :
   }
 
 
-
-
-
-
-//Part title for visual presentation
-QString SdPItemComponent::getPartTitle() const
-  {
-  SdPartVariant *part = getPart();
-  if( part != nullptr )
-    return part->getPartTitle();
-  return QString();
-  }
-
-
-
-//Part id
-QString SdPItemComponent::getPartId() const
-  {
-  SdPartVariant *part = getPart();
-  if( part != nullptr )
-    return part->getPartId();
-  return QString();
-  }
-
-
-
-
-//Setup new part id
-void SdPItemComponent::setPartId(const QString id, SdUndo *undo)
-  {
-  SdPartVariant *part = getPart();
-  if( part == nullptr ) {
-    //Part yet not present
-    //Insert part variant
-    part = new SdPartVariant();
-    insertChild( part, undo );
-    }
-  part->setPartId( id, undo );
-  }
-
-
-
-
-//Return part descripted part variant
-SdPItemPart *SdPItemComponent::extractPartFromFactory() const
-  {
-  SdPartVariant *part = getPart();
-  if( part != nullptr )
-    return part->extractFromFactory();
-  return nullptr;
-  }
-
-
-
-
-//Return default part
-SdPartVariant *SdPItemComponent::getPart() const
-  {
-  //Pointer where reside SdPartVariant
-  SdPartVariantPtr part = nullptr;
-  //Scan all objects and find SdPartVariant
-  forEachConst( dctPartVariant, [&part] (SdObject *obj) -> bool {
-    part = dynamic_cast<SdPartVariant*>(obj);
-    Q_ASSERT( part != nullptr );
-    return false;
-    });
-  return part;
-  }
 
 
 

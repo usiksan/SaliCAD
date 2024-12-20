@@ -54,7 +54,7 @@ Description
 #define dctPicture       (dctLines | dctText)
 #define dctProjectItems  (dctSymbol | dctPart | dctSheet | dctPlate | dctComponent | dctRich)
 #define dctAll           MAX64_MASK
-#define dctSymbolObjects (dctPicture | dctSymPin | dctIdent | dctValue )
+#define dctSymbolObjects (dctPicture | dctSymPin | dctIdent | dctValue | dctPartVariant )
 #define dctPartObjects   (dctPicture | dctPartPin | dctIdent | dctValue )
 #define dctSheetObjects  (dctPicture | dctSymImp | dctNetWire | dctNetName | dctNetParam | dctGraphScript)
 #define dctPlateObjects  (dctPicture | dctPartImp | dctTraceVia | dctTraceRoad | dctTracePolygon )

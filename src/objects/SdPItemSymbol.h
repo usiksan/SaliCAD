@@ -16,18 +16,14 @@ Description
 #ifndef SDPITEMSYMBOL_H
 #define SDPITEMSYMBOL_H
 
-#include "SdProjectItem.h"
+#include "SdPItemWithPart.h"
 
 class SdPItemSymbol;
-class SdPItemPart;
-class QWidget;
-class SdSection;
-class SdPartVariant;
 
 
 #define SD_TYPE_SYMBOL "Symbol"
 
-class SdPItemSymbol : public SdProjectItem
+class SdPItemSymbol : public SdPItemWithPart
   {
   public:
     SdPItemSymbol();

@@ -26,18 +26,6 @@ class SdPItemComponent : public SdPItemVariant
   public:
     SdPItemComponent();
 
-    //Part
-    //Part title for visual presentation
-    QString          getPartTitle() const;
-    //Part id
-    QString          getPartId() const;
-    //Setup new part id
-    void             setPartId( const QString id, SdUndo *undo );
-    //Return part descripted part variant
-    SdPItemPart     *extractPartFromFactory() const;
-    //Return default part
-    SdPartVariant   *getPart() const;
-
     //Sections
     //Return section count
     int              getSectionCount() const;

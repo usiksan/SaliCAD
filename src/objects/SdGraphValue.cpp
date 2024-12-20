@@ -47,6 +47,10 @@ void SdGraphValue::setText(int index, QString sour, SdPropText &prop, QWidget *p
   Q_UNUSED(index);
   Q_UNUSED(sour);
   Q_UNUSED(parent);
+  if( sour.isEmpty() )
+    mString   = QStringLiteral("{value}");
+  else
+    mString   = sour;
   mProp   = prop;
   }
 

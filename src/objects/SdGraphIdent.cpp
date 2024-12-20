@@ -43,6 +43,10 @@ void SdGraphIdent::setText(int index, QString sour, SdPropText &prop, QWidget *p
   Q_UNUSED(index);
   Q_UNUSED(sour);
   Q_UNUSED(parent);
+  if( sour.isEmpty() )
+    mString   = QStringLiteral("{id}");
+  else
+    mString   = sour;
   mProp   = prop;
   }
 

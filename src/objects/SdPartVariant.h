@@ -24,9 +24,10 @@ class QWidget;
 
 class SdPartVariant : public SdObject
   {
-    QString           mPartTitle;      //Part for this variant
-    QString           mPartId;
-    bool              mDefault;        //True if default part
+    QString           mPartTitle;      //!< Part for this variant
+    QString           mPartId;         //!< Part uid
+    SdPoint           mOrigin;         //!< Part variant position in graph object like SdPItemSymbol
+    bool              mDefault;        //!< True if default part
   public:
     int               mVisualIndex;    //Index in visual list. This is temporary element and not saved
     SdPartVariant();

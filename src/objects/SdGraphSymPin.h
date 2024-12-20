@@ -23,15 +23,16 @@ Description
 
 class SdGraphSymPin : public SdGraph
   {
-    SdPoint      mOrigin;     //Pin origin
-    SdPropSymPin mPinProp;    //Pin properties
-    SdPoint      mNumberPos;  //Pin number position
-    SdRect       mNumberRect; //Pin number over rect
-    SdPropText   mNumberProp; //Pin number properties
-    SdPoint      mNamePos;    //Pin name position
-    SdRect       mNameRect;   //Pin name over rect
-    SdPropText   mNameProp;   //Pin name properties
-    QString      mName;       //Pin name
+    SdPoint      mOrigin;     //!< Pin origin
+    SdPropSymPin mPinProp;    //!< Pin properties
+    SdPoint      mNumberPos;  //!< Pin number position
+    SdRect       mNumberRect; //!< Pin number over rect
+    SdPropText   mNumberProp; //!< Pin number properties
+    QString      mNumber;     //!< Default pin number
+    SdPoint      mNamePos;    //!< Pin name position
+    SdRect       mNameRect;   //!< Pin name over rect
+    SdPropText   mNameProp;   //!< Pin name properties
+    QString      mName;       //!< Pin name
 
     //Different pin part selection
     bool         mPinSelect;  //Pin selected
@@ -39,7 +40,7 @@ class SdGraphSymPin : public SdGraph
     bool         mNamSelect;  //Pin name selected
   public:
     SdGraphSymPin();
-    SdGraphSymPin( SdPoint org, const SdPropSymPin &pinProp, SdPoint numberPos, const SdPropText &numberProp, SdPoint namePos, const SdPropText &nameProp, const QString name );
+    SdGraphSymPin( SdPoint org, const SdPropSymPin &pinProp, SdPoint numberPos, const SdPropText &numberProp, SdPoint namePos, const SdPropText &nameProp, const QString name, const QString number = QString{} );
 
     QString  getPinName() const { return mName; }
     SdPoint  getPinOrigin() const { return mOrigin; }

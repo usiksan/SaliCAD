@@ -16,13 +16,13 @@ Description
 #ifndef SDPITEMVARIANT_H
 #define SDPITEMVARIANT_H
 
-#include "SdProjectItem.h"
+#include "SdPItemWithPart.h"
 #include <QStringList>
 
 #define SD_TYPE_VARIANT "Variant"
 
 
-class SdPItemVariant : public SdProjectItem
+class SdPItemVariant : public SdPItemWithPart
   {
     qint32      mVariantFieldCount;
     QStringList mVariantTable;

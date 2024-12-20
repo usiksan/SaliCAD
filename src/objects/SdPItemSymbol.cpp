@@ -13,13 +13,10 @@ Description
 */
 
 #include "SdPItemSymbol.h"
-#include "SdSection.h"
-#include "SdPartVariant.h"
-#include "SdGraphIdent.h"
-#include "SdProject.h"
+
 
 SdPItemSymbol::SdPItemSymbol() :
-  SdProjectItem()
+  SdPItemWithPart()
   {
 
   }

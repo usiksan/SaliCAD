@@ -33,7 +33,7 @@ SdGraphSymPin::SdGraphSymPin() :
 
 
 
-SdGraphSymPin::SdGraphSymPin(SdPoint org, const SdPropSymPin &pinProp, SdPoint numberPos, const SdPropText &numberProp, SdPoint namePos, const SdPropText &nameProp, const QString name) :
+SdGraphSymPin::SdGraphSymPin(SdPoint org, const SdPropSymPin &pinProp, SdPoint numberPos, const SdPropText &numberProp, SdPoint namePos, const SdPropText &nameProp, const QString name, const QString number) :
   SdGraph(),
   //Different pin parts selection
   mPinSelect(false),  //Pin selected
@@ -44,6 +44,7 @@ SdGraphSymPin::SdGraphSymPin(SdPoint org, const SdPropSymPin &pinProp, SdPoint n
   mPinProp    = pinProp;
   mNumberPos  = numberPos;
   mNumberProp = numberProp;
+  mNumber     = number;
   mNamePos    = namePos;
   mNameProp   = nameProp;
   mName       = name;
@@ -64,7 +65,7 @@ void SdGraphSymPin::drawImp(SdContext *dc, const QString pinNumber, bool com)
 
   //Pin number
   SdRect r;
-  dc->text( mNumberPos, r, pinNumber, mNumberProp );
+  dc->text( mNumberPos, r, pinNumber.isEmpty() ? mNumber : pinNumber, mNumberProp );
   }
 
 
@@ -88,6 +89,7 @@ void SdGraphSymPin::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next
     mNumberPos  = pin->mNumberPos;  //Pin number position
     mNumberRect = pin->mNumberRect; //Pin number over rect
     mNumberProp = pin->mNumberProp; //Pin number properties
+    mNumber     = next ? nextText( pin->mNumber ) : pin->mNumber; //Pin number
     mNamePos    = pin->mNamePos;    //Pin name position
     mNameRect   = pin->mNameRect;   //Pin name over rect
     mNameProp   = pin->mNameProp;   //Pin name properties
@@ -114,6 +116,7 @@ void SdGraphSymPin::json(SdJsonWriter &js) const
   mPinProp.json( js );
   js.jsonPoint( QStringLiteral("NumberPos"), mNumberPos );
   mNumberProp.json( QStringLiteral("Number"), js );
+  js.jsonString( QStringLiteral("Number"), mNumber );
   js.jsonPoint( QStringLiteral("NamePos"), mNamePos );
   mNameProp.json( QStringLiteral("Name"), js );
   js.jsonString( QStringLiteral("Name"), mName );
@@ -134,6 +137,7 @@ void SdGraphSymPin::json(const SdJsonReader &js)
   mPinProp.json( js );
   js.jsonPoint( QStringLiteral("NumberPos"), mNumberPos );
   mNumberProp.json( QStringLiteral("Number"), js );
+  js.jsonString( QStringLiteral("Number"), mNumber );
   js.jsonPoint( QStringLiteral("NamePos"), mNamePos );
   mNameProp.json( QStringLiteral("Name"), js );
   js.jsonString( QStringLiteral("Name"), mName );
@@ -149,7 +153,7 @@ void SdGraphSymPin::json(const SdJsonReader &js)
 void SdGraphSymPin::saveState(SdUndo *undo)
   {
   undo->propSymPin( &mPinProp, &mOrigin );
-  undo->propTextAndText( &mNumberProp, &mNumberPos, &mNumberRect, nullptr );
+  undo->propTextAndText( &mNumberProp, &mNumberPos, &mNumberRect, &mNumber );
   undo->propTextAndText( &mNameProp, &mNamePos, &mNameRect, &mName );
   }
 
@@ -215,22 +219,29 @@ void SdGraphSymPin::getProp(SdPropSelected &prop)
 
 void SdGraphSymPin::setText(int index, QString sour, SdPropText &prop, QWidget *parent)
   {
-  Q_UNUSED(index)
-  //Test if pin name unical
-  if( getParent() ) {
-    bool unical = true;
-    getParent()->forEach( dctSymPin, [&unical, sour, this] (SdObject *obj) -> bool {
-      SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>( obj );
-      if( pin && pin != this && pin->getPinName() == sour ) unical = false;
-      return unical;
-      });
-    if( !unical ) {
-      QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Pin with name '%1' already present. Name must be unical").arg(sour) );
-      return;
+  if( index == 1 ) {
+    //Set pin name
+    //Test if pin name unical
+    if( getParent() ) {
+      bool unical = true;
+      getParent()->forEach( dctSymPin, [&unical, sour, this] (SdObject *obj) -> bool {
+        SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>( obj );
+        if( pin && pin != this && pin->getPinName() == sour ) unical = false;
+        return unical;
+        });
+      if( !unical ) {
+        QMessageBox::warning( parent, QObject::tr("Error"), QObject::tr("Pin with name '%1' already present. Name must be unical").arg(sour) );
+        return;
+        }
       }
+    mName     = sour;
+    mNameProp = prop;
     }
-  mName     = sour;
-  mNameProp = prop;
+  else if( index == 2 ) {
+    //Set pin number
+    mNumber     = sour;
+    mNumberProp = prop;
+    }
   }
 
 
@@ -332,9 +343,9 @@ void SdGraphSymPin::draw(SdContext *dc)
 
   //Pin number as over rectangle.
   //At first calc over rectangle
-  dc->text( mNumberPos, mNumberRect, QString("  "), mNumberProp );
-  //At second draw rectangle
-  if( mNumberProp.mLayer.layer()->isVisible() ) {
+  dc->text( mNumberPos, mNumberRect, mNumber.isEmpty() ? QString("  ") : mNumber, mNumberProp );
+  //At second draw rectangle if no pin number assigned
+  if( mNumber.isEmpty() && mNumberProp.mLayer.layer()->isVisible() ) {
     dc->setPen( 0, mNumberProp.mLayer.layer(), dltDashed );
     dc->rect( mNumberRect );
     }
@@ -359,12 +370,18 @@ int SdGraphSymPin::behindCursor(SdPoint p)
 
 int SdGraphSymPin::behindText(SdPoint p, SdPoint &org, QString &dest, SdPropText &prop)
   {
-  //Тестирование имени вывода
+  //Check if cursor inside pin name
   if( mNameProp.mLayer.isVisible() && mNameRect.isPointInside(p) ) {
     org  = mNamePos;
     dest = mName;
     prop = mNameProp;
     return 1;
+    }
+  if( mNumberProp.mLayer.isVisible() && mNumberRect.isPointInside(p) ) {
+    org  = mNumberPos;
+    dest = mNumber;
+    prop = mNumberProp;
+    return 2;
     }
   return 0;
   }

@@ -1,8 +1,23 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  Variant contains table with parameters variant
+  Table is square array with columns - parameters and with rows - values of parameters.
+  This table contained in StringList, first element of it is fields names
+*/
 #include "SdPItemVariant.h"
 #include "SdJsonIO.h"
 
 SdPItemVariant::SdPItemVariant() :
-  SdProjectItem(),
+  SdPItemWithPart(),
   mVariantFieldCount(0)
   {
 
