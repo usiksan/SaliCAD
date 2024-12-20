@@ -413,7 +413,7 @@ void SdWEditorComponent::partSelect()
   if( !uid.isEmpty() ) {
     //If user selected part then assign it
     mUndo->begin( tr("Part select for component"), mComponent, false );
-    SdPartVariant *part = mComponent->getPart();
+    SdPartVariant *part = mComponent->partGet();
     if( part == nullptr ) {
       part = new SdPartVariant();
       mComponent->insertChild( part, mUndo );
@@ -554,8 +554,8 @@ void SdWEditorComponent::fillSections()
 
 void SdWEditorComponent::fillPart()
   {
-  mPartViewer->setItemById( mComponent->getPartId() );  
-  mPart->setText( mComponent->getPartTitle() );
+  mPartViewer->setItemById( mComponent->partIdGet() );
+  mPart->setText( mComponent->partTitleGet() );
   //Fill available pin numbers
   mPackNumbers.clear();
   mDuplicateNumbers.clear();

@@ -226,7 +226,7 @@ SdPItemComponent *sdCreateDefaultComponent(SdPItemSymbol *symbol, bool appendDef
 
   if( appendDefaultPart ) {
     //Setup default part
-    comp->setPartId( QString("Part\rplug part\rsalicad"), symbol->getUndo() );
+    comp->partIdSet( QString("Part\rplug part\rsalicad"), symbol->getUndo() );
 
     //Setup default packing info
     SdPinAssociation pins = comp->getSectionPins(0);

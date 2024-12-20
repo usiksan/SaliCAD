@@ -24,57 +24,48 @@ class SdPItemWithPart : public SdProjectItem
 
     //Part
     //!
-    //! \brief isPartPresent Returns true if contains one or more part variants
+    //! \brief partIsPresent Returns true if contains one or more part variants
     //! \return              true if contains one or more part variants
     //!
-    bool             isPartPresent() const;
+    bool             partIsPresent() const;
 
     //!
-    //! \brief getPartTitle Returns part title for visual presentation
+    //! \brief partTitleGet Returns part title for visual presentation
     //! \param id           Id of part variant which title need to be returned. If empty then return primary part title
     //! \return             Part title for visual presentation
     //!
-    QString          getPartTitle( const QString id = QString{} ) const;
+    QString          partTitleGet() const;
 
     //!
-    //! \brief getPartId Returns part id for primary part variant
+    //! \brief partIdGet Returns part id for primary part variant
     //! \return          Part id for primary part variant
     //!
-    QString          getPartId() const;
+    QString          partIdGet() const;
 
     //!
-    //! \brief getPartIdList Returns part ids for all parts variants
-    //! \return              Part ids for all parts variants
-    //!
-    QStringList      getPartIdList() const;
-
-    //!
-    //! \brief setPartId Setup new part id for primary part variant
+    //! \brief partIdSet Setup new part id for primary part variant
     //! \param id        New id for primary part
     //! \param undo
     //!
-    void             setPartId( const QString id, SdUndo *undo );
+    void             partIdSet( const QString id, SdUndo *undo );
 
     //!
-    //! \brief extractPartFromFactory Return part descripted part variant
-    //! \param id                     Id of part which need to returned. If empty return primary part
+    //! \brief partExtractFromFactory Return part descripted part variant
     //! \return                       Part descripted part variant
     //!
-    SdPItemPart     *extractPartFromFactory( const QString id = QString{} ) const;
+    SdPItemPart     *partExtractFromFactory() const;
 
     //!
-    //! \brief getPart Returns part variant for id. If id is empty then return primary part variant
-    //! \param id      Id of part which variant need to returned. If empty return primary part variant
+    //! \brief partGet Returns part variant for id. If id is empty then return primary part variant
     //! \return
     //!
-    SdPartVariant   *getPart( const QString id = QString{} ) const;
+    SdPartVariant   *partGet() const;
 
     //!
-    //! \brief removePart Removes part variant from part list
-    //! \param id         Id of part which variant need to be removed
+    //! \brief partRemove Removes part variant from part list
     //! \param undo
     //!
-    void             removePart( const QString id, SdUndo *undo );
+    void             partRemove( SdUndo *undo );
   };
 
 #endif // SDPITEMWITHPART_H

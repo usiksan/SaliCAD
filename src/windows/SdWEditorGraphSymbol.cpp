@@ -13,6 +13,7 @@ Description
 */
 
 #include "SdWEditorGraphSymbol.h"
+#include "SdDSymbolPartParam.h"
 #include "SdWCommand.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
@@ -95,6 +96,15 @@ void SdWEditorGraphSymbol::cmModeValue()
 void SdWEditorGraphSymbol::cmModeSymbolFragment()
   {
   modeSet( new SdModeSymbolFragment( this, mSymbol ) );
+  }
+
+
+
+
+void SdWEditorGraphSymbol::cmSymbolPartParam()
+  {
+  SdDSymbolPartParam editor( mSymbol, this );
+  editor.exec();
   }
 
 

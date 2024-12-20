@@ -33,6 +33,12 @@ class SdWEditorGraphView : public SdWEditorGraph
     //Set new item by item id
     void setItemById( const QString id );
 
+    //!
+    //! \brief itemTitle Returns current item title
+    //! \return          Current item title
+    //!
+    QString itemTitle() const { return mItem == nullptr ? QString{} : mItem->getTitle(); }
+
     // SdWEditor interface
   public:
     virtual SdProjectItem *getProjectItem() const override;

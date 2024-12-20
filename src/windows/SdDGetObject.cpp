@@ -328,8 +328,8 @@ void SdDGetObject::onSelectItem(int row, int column)
       }
 
     //Setup part for view
-    mPartView->setItemById( mComponent->getPartId() );
-    if( !SdLibraryStorage::instance()->cfObjectContains( mComponent->getPartId() ) )
+    mPartView->setItemById( mComponent->partIdGet() );
+    if( !SdLibraryStorage::instance()->cfObjectContains( mComponent->partIdGet() ) )
       present = false;
     }
 

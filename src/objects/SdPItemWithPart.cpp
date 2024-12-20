@@ -22,13 +22,13 @@ SdPItemWithPart::SdPItemWithPart()
 
 
 //!
-//! \brief getPartTitle Returns part title for visual presentation
+//! \brief partTitleGet Returns part title for visual presentation
 //! \param id           Id of part variant which title need to be returned. If empty then return primary part title
 //! \return             Part title for visual presentation
 //!
-QString SdPItemWithPart::getPartTitle(const QString id) const
+QString SdPItemWithPart::partTitleGet() const
   {
-  SdPartVariant *part = getPart( id );
+  SdPartVariant *part = partGet();
   if( part != nullptr )
     return part->getPartTitle();
   return QString();
@@ -38,12 +38,12 @@ QString SdPItemWithPart::getPartTitle(const QString id) const
 
 
 //!
-//! \brief getPartId Returns part id for primary part variant
+//! \brief partIdGet Returns part id for primary part variant
 //! \return          Part id for primary part variant
 //!
-QString SdPItemWithPart::getPartId() const
+QString SdPItemWithPart::partIdGet() const
   {
-  SdPartVariant *part = getPart();
+  SdPartVariant *part = partGet();
   if( part != nullptr )
     return part->getPartId();
   return QString();
@@ -54,34 +54,13 @@ QString SdPItemWithPart::getPartId() const
 
 
 //!
-//! \brief getPartIdList Returns part ids for all parts variants
-//! \return              Part ids for all parts variants
-//!
-QStringList SdPItemWithPart::getPartIdList() const
-  {
-  QStringList idList;
-  //Scan all objects and find SdPartVariant
-  forEachConst( dctPartVariant, [&idList] (SdObject *obj) -> bool {
-    SdPartVariant *part = dynamic_cast<SdPartVariant*>(obj);
-    Q_ASSERT( part != nullptr );
-    idList.append( part->getPartId() );
-    return true;
-    });
-  return idList;
-  }
-
-
-
-
-
-//!
-//! \brief setPartId Setup new part id for primary part variant
+//! \brief partIdSet Setup new part id for primary part variant
 //! \param id        New id for primary part
 //! \param undo
 //!
-void SdPItemWithPart::setPartId(const QString id, SdUndo *undo)
+void SdPItemWithPart::partIdSet(const QString id, SdUndo *undo)
   {
-  SdPartVariant *part = getPart();
+  SdPartVariant *part = partGet();
   if( part == nullptr ) {
     //Part yet not present
     //Insert part variant
@@ -95,13 +74,12 @@ void SdPItemWithPart::setPartId(const QString id, SdUndo *undo)
 
 
 //!
-//! \brief extractPartFromFactory Return part descripted part variant
-//! \param id                     Id of part which need to returned. If empty return primary part
+//! \brief partExtractFromFactory Return part descripted part variant
 //! \return                       Part descripted part variant
 //!
-SdPItemPart *SdPItemWithPart::extractPartFromFactory(const QString id) const
+SdPItemPart *SdPItemWithPart::partExtractFromFactory() const
   {
-  SdPartVariant *part = getPart( id );
+  SdPartVariant *part = partGet();
   if( part != nullptr )
     return part->extractFromFactory();
   return nullptr;
@@ -111,19 +89,18 @@ SdPItemPart *SdPItemWithPart::extractPartFromFactory(const QString id) const
 
 
 //!
-//! \brief getPart Returns part variant for id. If id is empty then return primary part variant
-//! \param id      Id of part which variant need to returned. If empty return primary part variant
+//! \brief partGet Returns part variant for id. If id is empty then return primary part variant
 //! \return
 //!
-SdPartVariant *SdPItemWithPart::getPart(const QString id) const
+SdPartVariant *SdPItemWithPart::partGet() const
   {
   //Pointer where reside SdPartVariant
   SdPartVariantPtr part = nullptr;
   //Scan all objects and find SdPartVariant
-  forEachConst( dctPartVariant, [&part,id] (SdObject *obj) -> bool {
+  forEachConst( dctPartVariant, [&part] (SdObject *obj) -> bool {
     part = dynamic_cast<SdPartVariant*>(obj);
     Q_ASSERT( part != nullptr );
-    return !(id.isEmpty() || part->getPartId() == id);
+    return false;
     });
   return part;
   }
@@ -132,13 +109,13 @@ SdPartVariant *SdPItemWithPart::getPart(const QString id) const
 
 
 //!
-//! \brief removePart Removes part variant from part list
+//! \brief partRemove Removes part variant from part list
 //! \param id         Id of part which variant need to be removed
 //! \param undo
 //!
-void SdPItemWithPart::removePart(const QString id, SdUndo *undo)
+void SdPItemWithPart::partRemove(SdUndo *undo)
   {
-  SdPartVariant *part = getPart( id );
+  SdPartVariant *part = partGet();
   if( part != nullptr )
     deleteChild( part, undo );
   }

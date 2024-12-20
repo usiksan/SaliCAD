@@ -249,7 +249,7 @@ void SdModeCSymImp::getSection()
       }
 
 
-    mPart = mComponent->extractPartFromFactory();
+    mPart = mComponent->partExtractFromFactory();
     if( mPart != nullptr && mPart->isEditEnable() ) {
       QMessageBox::warning( mEditor, QObject::tr("Warning!"), QObject::tr("Part is in editing state. Switch it to lock state or select another.") );
       continue;

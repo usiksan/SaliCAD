@@ -400,7 +400,7 @@ void SdWProjectTree::cmObjectParam()
   //Get current item and show its param
   SdPtr<SdProjectItem> item( mProject->item( mCurrentItem ) );
   if( item.isValid() ) {
-    SdDParamEditor editor( tr("Edit param"), item->paramTable(), mProject, item->isEditEnable(), false, this );
+    SdDParamEditor editor( tr("Edit param for [%1]").arg( item->getTitle() ), item->paramTable(), mProject, item->isEditEnable(), false, this );
     if( editor.exec() ) {
       //Edit successfull. Apply changes
       item->paramTableSet( editor.paramTable(), mProject->getUndo() );

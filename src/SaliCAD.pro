@@ -152,6 +152,8 @@ SOURCES += \
     windows/SdD3dModelProgrammEditor.cpp \
     windows/SdDExpressionEdit.cpp \
     windows/SdDOptionsPageLibrary.cpp \
+    windows/SdDParamBase.cpp \
+    windows/SdDSymbolPartParam.cpp \
     windows/SdExpressionRefMap.cpp \
     windows/SdPNewProjectItem_3dMaster.cpp \
     windows/SdWEditor3d.cpp \
@@ -655,6 +657,8 @@ HEADERS  += \
     windows/SdD3dModelProgrammEditor.h \
     windows/SdDExpressionEdit.h \
     windows/SdDOptionsPageLibrary.h \
+    windows/SdDParamBase.h \
+    windows/SdDSymbolPartParam.h \
     windows/SdExpressionRefMap.h \
     windows/SdPNewProjectItem_3dMaster.h \
     windows/SdWEditor3d.h \

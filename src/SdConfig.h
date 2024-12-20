@@ -219,6 +219,9 @@ History
   29.01.2024 v2.7  Append stm32 alternative pin names import
   17.12.2024 v2.8  Remove category as unused attribute
                    Remove fileds list from object selection dialog
+  20.12.2024 v2.9  Added the ability to use the symbol as a component. To do this, I added the ability to set numbers in a symbol.
+                   Append symbol param and part editor
+                   Rebased param editor to SdDParamBase
 */
 
 #ifndef SDCONFIG
@@ -230,7 +233,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             2
-#define SD_VERSION_MINOR             8
+#define SD_VERSION_MINOR             9
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

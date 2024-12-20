@@ -1699,6 +1699,14 @@ void SdWMain::cmModeSymbolFragment()
 
 
 
+void SdWMain::cmSymbolPartAndParam()
+  {
+  if( activeEditor() )
+    activeEditor()->cmSymbolPartParam();
+  }
+
+
+
 
 void SdWMain::cmRenumeration()
   {
