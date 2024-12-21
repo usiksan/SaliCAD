@@ -5,7 +5,7 @@
 #-------------------------------------------------
 CONFIG += c++17
 
-QT       += core gui network sql printsupport texttospeech opengl svg
+QT       += core gui network sql printsupport texttospeech opengl svg openglwidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
