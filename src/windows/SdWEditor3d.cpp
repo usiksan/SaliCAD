@@ -42,7 +42,7 @@ SdWEditor3d::SdWEditor3d(SdProjectItem *item, QWidget *parent) :
   mView->setEnablePad( SdWCommand::cm3dShowPads->isChecked() );
   connect( SdWCommand::cm3dShowPads, &QAction::toggled, mView, &SdWView3d::setEnablePad );
 
-  box->setMargin(0);
+  box->setContentsMargins( 0, 0, 0, 0 );
   box->addWidget( mView );
   mView->move( 0, 0 );
   setLayout( box );

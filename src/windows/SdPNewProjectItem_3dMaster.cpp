@@ -101,7 +101,7 @@ int SdPNewProjectItem_3dMaster::nextId() const
 void SdPNewProjectItem_3dMaster::initializePage()
   {
   mMasterType->clear();
-  for( const auto &model : qAsConst(mModelList) ) {
+  for( const auto &model : std::as_const(mModelList) ) {
     mMasterType->addItem( model.mName );
     }
   onCurrentRowChanged(0);

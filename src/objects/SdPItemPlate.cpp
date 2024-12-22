@@ -74,7 +74,18 @@ int SdPItemPlate::stratumMask() const
 
 
 
-SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPItemComponent *comp, SdPItemSymbol *sym, const SdStringMap &param, SdUndo *undo )
+//!
+//! \brief allocPartImp Allocate component section in plate
+//! \param section      Destignation of section index of found part
+//! \param part         Part of component
+//! \param comp         Component itself
+//! \param sym          Symbol of component section
+//! \param param        Current param variant
+//! \param undo         Undo for allocation
+//! \return             Part implement with allocated section
+//!
+//! Look for existing component on plate and find in them free section which match to given symbol-part-component-param combination
+SdGraphPartImp *SdPItemPlate::allocPartImp(int *section, SdPItemPart *part, SdPItemVariant *comp, SdPItemSymbol *sym, const SdStringMap &param, SdUndo *undo )
   {
   if( part == nullptr )
     return nullptr;
@@ -567,7 +578,7 @@ void SdPItemPlate::rebuild3dModel()
   //If no pcb contour then we do nothing
   if( pointList.count() > 2 ) {
     Sd3drFace pcbTop;
-    for( auto p : qAsConst(pointList) ) {
+    for( auto p : std::as_const(pointList) ) {
       QVector3D v( p );
       v /= 1000.0;
       v.setZ( pcb3dZLevel );

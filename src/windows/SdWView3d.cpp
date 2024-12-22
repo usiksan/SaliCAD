@@ -21,6 +21,7 @@ Description
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 #include <QOpenGLFunctions_2_0>
+#include <QOpenGLVersionFunctionsFactory>
 #include <QWheelEvent>
 #include <QDebug>
 
@@ -276,7 +277,8 @@ void SdWView3d::initializeGL()
 //  qDebug() << "Wheel delta" << wheelDelta;
 
   // Set up the rendering context, load shaders and other resources, etc.:
-  QOpenGLFunctions_2_0 *f = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_0>();
+  QOpenGLFunctions_2_0 *f =  QOpenGLVersionFunctionsFactory::get<QOpenGLFunctions_2_0>(QOpenGLContext::currentContext());// QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_0>();
+  //QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
   f->glClearColor(0.8f, 0.93f, 0.93f, 1.0f);
   f->glShadeModel( GL_SMOOTH );
 
@@ -325,7 +327,7 @@ void SdWView3d::initializeGL()
 void SdWView3d::resizeGL(int w, int h)
   {
   //qDebug() << "resize 3d";
-  QOpenGLFunctions_2_0 *f = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_0>();
+  QOpenGLFunctions_2_0 *f =  QOpenGLVersionFunctionsFactory::get<QOpenGLFunctions_2_0>(QOpenGLContext::currentContext());// QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_0>();
   f->glViewport( 0, 0, w, h );
   double k = ((double)w) / ((double)h);
   f->glMatrixMode( GL_PROJECTION );
@@ -342,7 +344,7 @@ void SdWView3d::paintGL()
   {
   // Draw the scene:
 
-  QOpenGLFunctions_2_0 *f = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_0>();
+  QOpenGLFunctions_2_0 *f =  QOpenGLVersionFunctionsFactory::get<QOpenGLFunctions_2_0>(QOpenGLContext::currentContext());// QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_2_0>();
 
   f->glLoadIdentity();
   f->glTranslated( mOrigin.x(), mOrigin.y(), 0 );

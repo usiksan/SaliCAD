@@ -5,7 +5,7 @@
 #-------------------------------------------------
 CONFIG += c++17
 
-QT       += core gui network sql printsupport texttospeech opengl svg openglwidgets
+QT       += core gui network sql printsupport texttospeech opengl svg openglwidgets core5compat
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -103,7 +103,6 @@ SOURCES += \
     objects/SdGraphScriptRef.cpp \
     objects/SdGraphScriptRefMap.cpp \
     objects/SdJsonIO.cpp \
-    objects/SdPItemWithPart.cpp \
     objects/SdPartImpRelativePosition.cpp \
     script/SdScriptOperatorBlock.cpp \
     script/SdScriptOperatorIf.cpp \
@@ -504,7 +503,6 @@ HEADERS  += \
     objects/SdGraphScriptRef.h \
     objects/SdGraphScriptRefMap.h \
     objects/SdJsonIO.h \
-    objects/SdPItemWithPart.h \
     objects/SdPartImpRelativePosition.h \
     script/SdScriptOperator.h \
     script/SdScriptOperatorAssign.h \

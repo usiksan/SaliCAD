@@ -222,6 +222,7 @@ History
   20.12.2024 v2.9  Added the ability to use the symbol as a component. To do this, I added the ability to set numbers in a symbol.
                    Append symbol param and part editor
                    Rebased param editor to SdDParamBase
+  22.12.2024 v2.10 Append posibilities to pack component with single section to SdPItemSymbol
 */
 
 #ifndef SDCONFIG
@@ -233,7 +234,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             2
-#define SD_VERSION_MINOR             9
+#define SD_VERSION_MINOR            10
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

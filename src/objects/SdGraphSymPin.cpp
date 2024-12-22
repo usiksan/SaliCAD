@@ -18,7 +18,6 @@ Description
 #include "SdContext.h"
 #include "SdJsonIO.h"
 
-#include <QStringRef>
 #include <QMessageBox>
 
 SdGraphSymPin::SdGraphSymPin() :

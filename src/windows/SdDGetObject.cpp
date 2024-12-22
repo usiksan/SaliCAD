@@ -228,7 +228,7 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, const QString &def
 void SdDGetObject::find()
   {
   auto sdNameFilter = mNameFilter->text();
-  QStringList list = sdNameFilter.split( QRegExp("\\s+"), Qt::SkipEmptyParts );
+  QStringList list = sdNameFilter.split( QRegularExpression("\\s+"), Qt::SkipEmptyParts );
   mHeaderList.clear();
 
   //Accumulate headers matched to filter
@@ -310,18 +310,18 @@ void SdDGetObject::onSelectItem(int row, int column)
 
   if( mComponent ) {
     //Get section count
-    int sectionCount = mComponent->getSectionCount();
+    int sectionCount = mComponent->sectionCount();
     //If sections present, then fill visual list with sections
     if( sectionCount ) {
       for( int i = 0; i < sectionCount; i++ ) {
-        mSections->addItem( tr("Section %1: %2").arg(i+1).arg(mComponent->getSection(i)->getSymbolTitle()) );
+        mSections->addItem( tr("Section %1: %2").arg(i+1).arg(mComponent->sectionSymbolTitleGet(i)) );
         //If any section not present in library then set present to false
-        if( !SdLibraryStorage::instance()->cfObjectContains(mComponent->getSection(i)->getSymbolId()) )
+        if( !SdLibraryStorage::instance()->cfObjectContains(mComponent->sectionSymbolIdGet(i)) )
           present = false;
         }
       mSections->setCurrentRow(0);
       mSectionIndex = 0;
-      mSymbolView->setItemById( mComponent->getSectionSymbolId(0) );
+      mSymbolView->setItemById( mComponent->sectionSymbolIdGet(0) );
       }
     else {
       mSymbolView->setItem( mComponent, true );
@@ -365,7 +365,7 @@ void SdDGetObject::onCurrentSection(int row)
   if( row < 0 )
     return;
   if( mComponent != nullptr ) {
-    mSymbolView->setItemById( mComponent->getSectionSymbolId(row) );
+    mSymbolView->setItemById( mComponent->sectionSymbolIdGet(row) );
     mSectionIndex = row;
     }
   else if( mProject != nullptr ) {

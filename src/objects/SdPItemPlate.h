@@ -28,7 +28,7 @@ class SdGraphPartImp;
 class SdGraphSymImp;
 class SdPItemPart;
 class SdPItemSymbol;
-class SdPItemComponent;
+class SdPItemVariant;
 
 #define SD_TYPE_PLATE "Plate"
 
@@ -66,7 +66,18 @@ class SdPItemPlate : public SdProjectItem
     void                   setStratumCount( int sc );
     int                    stratumMask() const;
 
-    SdGraphPartImp        *allocPartImp(int *section, SdPItemPart *part, SdPItemComponent *comp, SdPItemSymbol *sym, const SdStringMap &param, SdUndo *undo);
+    //!
+    //! \brief allocPartImp Allocate component section in plate
+    //! \param section      Destignation of section index of found part
+    //! \param part         Part of component
+    //! \param comp         Component itself
+    //! \param sym          Symbol of component section
+    //! \param param        Current param variant
+    //! \param undo         Undo for allocation
+    //! \return             Part implement with allocated section
+    //!
+    //! Look for existing component on plate and find in them free section which match to given symbol-part-component-param combination
+    SdGraphPartImp        *allocPartImp(int *section, SdPItemPart *part, SdPItemVariant *comp, SdPItemSymbol *sym, const SdStringMap &param, SdUndo *undo);
 
     //Pin-to-pad association
     //Full association table

@@ -50,7 +50,7 @@ class SdGraphSymImp : public SdGraphParam
     //Symbol value
     SdTextImplement   mValue;        //!< Symbol value text properties and position
 
-    SdPItemComponent *mComponent;    //!< Object contains section information, pin assotiation info. May be same as mSymbol.
+    SdPItemVariant   *mComponent;    //!< Object contains section information, pin assotiation info. May be same as mSymbol.
     SdPItemSymbol    *mSymbol;       //!< Symbol contains graph information
     SdPItemPart      *mPart;         //!< Part for partImp construction
     SdGraphPartImp   *mPartImp;      //!< Part implement in desired plate
@@ -63,7 +63,7 @@ class SdGraphSymImp : public SdGraphParam
     //comp - contains pack info
     //sym  - contains graphics
     //part - part type
-    SdGraphSymImp(SdPItemComponent *comp, SdPItemSymbol *sym, SdPItemPart *part, const SdStringMap &param, SdPoint pos, SdPropSymImp *prp);
+    SdGraphSymImp(SdPItemVariant *comp, SdPItemSymbol *sym, SdPItemPart *part, const SdStringMap &param, SdPoint pos, SdPropSymImp *prp);
 
 
     //Information

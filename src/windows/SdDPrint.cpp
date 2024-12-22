@@ -220,11 +220,11 @@ void SdDPrint::updateOrientation(bool horizontal)
   ui->mOrientationVertical->setChecked( !horizontal );
   if( horizontal ) {
     ui->mOrientationIcon->setPixmap( QPixmap(QStringLiteral(":/pic/printHorz.png")) );
-    mPrinter->setOrientation( QPrinter::Landscape );
+    mPrinter->setPageOrientation( QPageLayout::Landscape );
     }
   else {
     ui->mOrientationIcon->setPixmap( QPixmap(QStringLiteral(":/pic/printVert.png")) );
-    mPrinter->setOrientation( QPrinter::Portrait );
+    mPrinter->setPageOrientation( QPageLayout::Portrait );
     }
 
   updateScaleFactor();

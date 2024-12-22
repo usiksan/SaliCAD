@@ -67,7 +67,7 @@ void SdSelector::selectAll(SdContainer *container, quint64 mask)
 
 void SdSelector::markDeleteAll()
   {
-  for( SdGraph *graph : qAsConst(mTable) ) {
+  for( SdGraph *graph : std::as_const(mTable) ) {
     graph->markDeleted(true);
     }
   }
@@ -77,7 +77,7 @@ void SdSelector::markDeleteAll()
 
 void SdSelector::removeAll()
   {
-  for( SdGraph *graph : qAsConst(mTable) )
+  for( SdGraph *graph : std::as_const(mTable) )
     graph->mSelector = nullptr;
   mTable.clear();
   }
@@ -442,7 +442,7 @@ SdRect SdSelector::getOverRect()
   if( mTable.count() ) {
     SdRect r;
     bool first = true;
-    for( SdGraph *graph : qAsConst(mTable) )
+    for( SdGraph *graph : std::as_const(mTable) )
       if( !graph->isDeleted() ) {
         if( first ) {
           r = graph->getOverRect();
@@ -460,7 +460,7 @@ SdRect SdSelector::getOverRect()
 
 void SdSelector::draw(SdContext *ctx)
   {
-  for( SdGraph *graph : qAsConst(mTable) )
+  for( SdGraph *graph : std::as_const(mTable) )
     if( graph != nullptr && !graph->isDeleted() )
       graph->draw( ctx );
   }

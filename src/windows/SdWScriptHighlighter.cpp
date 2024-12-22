@@ -97,13 +97,15 @@ SdWScriptHighlighter::highlightBlock(const QString &text) {
   int count = text.count();
 
   //FIXME
-  QRegExp expression("\".*\"");
-  int quotPos = expression.indexIn(text);
-  while (quotPos >= 0) {
-      int length = expression.matchedLength();
-      setFormat(quotPos, length, mQuotationFormat);
-      quotPos = expression.indexIn(text, quotPos + length);
-  }
+  QRegularExpression expression("\".*\"");
+  QRegularExpressionMatch match = expression.match(text);
+  while( match.hasMatch() ) {
+    int quotPos = expression.match(text).capturedStart();
+    int length = match.capturedLength();
+    setFormat(quotPos, length, mQuotationFormat);
+    match = expression.match( text, quotPos + length );
+    //quotPos = expression.indexIn(text, quotPos + length);
+    }
 
   //Проверить не является ли текущий блок блоком отладки
   if( (currentBlockState() & 2) == 0 ) {

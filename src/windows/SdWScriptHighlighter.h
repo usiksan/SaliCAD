@@ -2,6 +2,7 @@
 #define HIGHLIGHTER_H
 
 #include <QSyntaxHighlighter>
+#include <QRegularExpression>
 
 
 class SdWScriptHighlighter : public QSyntaxHighlighter {
@@ -32,8 +33,8 @@ class SdWScriptHighlighter : public QSyntaxHighlighter {
 
   private:
 
-    QRegExp commentStartExpression;
-    QRegExp commentEndExpression;
+    QRegularExpression commentStartExpression;
+    QRegularExpression commentEndExpression;
 
     QTextCharFormat mKeywordFormat;           //!< Ключевые слова
     QTextCharFormat mSingleLineCommentFormat; //!< Однострочные коментарии

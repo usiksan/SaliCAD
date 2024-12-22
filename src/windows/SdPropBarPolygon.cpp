@@ -31,7 +31,7 @@ SdPropBarPolygon::SdPropBarPolygon(const QString title) :
     mGap->addItem( str );
   //Select first item
   mGap->setCurrentIndex(0);
-  mGap->lineEdit()->setValidator( new QRegExpValidator( QRegExp("[0-9]{1,3}((\\.|\\,)[0-9]{0,3})?")) );
+  mGap->lineEdit()->setValidator( new QRegularExpressionValidator( QRegularExpression("[0-9]{1,3}((\\.|\\,)[0-9]{0,3})?")) );
   mGap->setMinimumWidth(80);
 
   //on complete editing

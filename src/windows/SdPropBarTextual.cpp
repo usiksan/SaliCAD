@@ -49,7 +49,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
     mSize->addItem( v );
   //Select first item
   mSize->setCurrentIndex(0);
-  mSize->lineEdit()->setValidator( new QRegExpValidator( QRegExp("[0-9]{0,3}((\\.|\\,)[0-9]{0,3})?")) );
+  mSize->lineEdit()->setValidator( new QRegularExpressionValidator( QRegularExpression("[0-9]{0,3}((\\.|\\,)[0-9]{0,3})?")) );
   mSize->setMinimumWidth(80);
 
   //on complete editing

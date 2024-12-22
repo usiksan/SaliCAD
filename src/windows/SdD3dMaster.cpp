@@ -130,7 +130,7 @@ void SdD3dMaster::onCurrentRowChanged(int row)
 void SdD3dMaster::initializePage()
   {
   mMasterType->clear();
-  for( const auto &model : qAsConst(mModelList) ) {
+  for( const auto &model : std::as_const(mModelList) ) {
     mMasterType->addItem( model.mName );
     }
   onCurrentRowChanged(0);

@@ -91,7 +91,7 @@ void SdPropBar::updateViewedLayers()
   SdLayer *layer = getSelectedLayer();
   mLayer->clear();
   //fill new layers list
-  for( SdLayer *p : qAsConst( sdEnvir->mLayerTable ) ) {
+  for( SdLayer *p : std::as_const( sdEnvir->mLayerTable ) ) {
     if( p->isEdited() ) {
       mLayer->addItem( p->name(), QVariant( p->id() ) );
       }

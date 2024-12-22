@@ -19,7 +19,6 @@ Description
 #include "SdPItemPlate.h"
 #include "SdJsonIO.h"
 
-#include <QStringRef>
 #include <QMessageBox>
 
 SdGraphPartPin::SdGraphPartPin() :

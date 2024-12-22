@@ -127,7 +127,7 @@ bool SdDGetBus::translation( const QString sour )
   //Трансляция списка цепей
   if( !sour.isEmpty() ) {
     QStringList netList = sour.split( QChar(','), Qt::SkipEmptyParts );
-    for( const QString &buf : qAsConst(netList) ) {
+    for( const QString &buf : std::as_const(netList) ) {
       if( buf.contains( QChar('<') )  || buf.contains( QChar('>') )  ) {
         //Индексный формат
         int nptr = buf.indexOf( QChar('<') ); //Ожидается скобка
@@ -138,12 +138,12 @@ bool SdDGetBus::translation( const QString sour )
         if( dptr < 0 )
           return syntaxError();
 
-        int start = buf.midRef( nptr + 1, dptr - nptr - 1 ).toInt(); //Выделить начальный индекс
+        int start = buf.mid( nptr + 1, dptr - nptr - 1 ).toInt(); //Выделить начальный индекс
         int tptr = checkDigit( buf, dptr + 1, QChar('>') ); //Проверить второй индекс и скобку
         if( tptr < 0 )
           return syntaxError();
 
-        int stop = buf.midRef( dptr + 1, tptr - dptr - 1 ).toInt(); //Выделить конечный индекс
+        int stop = buf.mid( dptr + 1, tptr - dptr - 1 ).toInt(); //Выделить конечный индекс
 
         //Calculate step
         int step = ( start > stop ) ? -1 : 1;
@@ -157,7 +157,7 @@ bool SdDGetBus::translation( const QString sour )
           if( nptr )
             net = buf.mid( 0, nptr );
           net.append( QString::number(start) );
-          if( tptr+1 < buf.count() ) net.append( buf.mid( tptr+1 ) );
+          if( tptr+1 < buf.length() ) net.append( buf.mid( tptr+1 ) );
           //Append if less then limit
           if( mNets.count() < maxBusNumber )
             mNets.append( net );

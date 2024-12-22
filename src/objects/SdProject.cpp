@@ -60,7 +60,7 @@ SdProject::~SdProject()
 //!
 SdProjectItem *SdProject::getItem(quint64 itemClass, const QString itemName) const
   {
-  for( SdObject *obj : qAsConst(mChildList) ) {
+  for( SdObject *obj : std::as_const(mChildList) ) {
     if( !obj->isDeleted() && (obj->getClass() & itemClass) ) {
       SdPtr<SdProjectItem> item(obj);
       if( item.isValid() && item->getTitle() == itemName )
@@ -129,7 +129,7 @@ void SdProject::getHeader(SdLibraryHeader &hdr) const
 SdPItemPlate *SdProject::getDefaultPlate()
   {
   //At first try to find plate in child list
-  for( SdObject *obj : qAsConst(mChildList) ) {
+  for( SdObject *obj : std::as_const(mChildList) ) {
     if( !obj->isDeleted() && obj->getClass() == dctPlate ) {
       //Plate found. Return it
       return dynamic_cast<SdPItemPlate*>(obj);

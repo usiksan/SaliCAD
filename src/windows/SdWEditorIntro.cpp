@@ -26,7 +26,7 @@ SdWEditorIntro::SdWEditorIntro(SdWMain *main, QWidget *parent) :
   //And fit it to full editor space
   QVBoxLayout *box = new QVBoxLayout;
   box->addWidget( mHelp );
-  box->setMargin(0);
+  box->setContentsMargins( 0, 0, 0, 0 );
 
   setLayout( box );
   }

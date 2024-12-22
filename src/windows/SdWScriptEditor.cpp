@@ -218,7 +218,7 @@ QString cursorLine( QTextCursor c, int *posPtr ) {
 QChar cursorChar( QTextCursor c, int offset ) {
   int pos;
   QString line = cursorLine( c, &pos );
-  if( pos + offset < 0 || pos + offset >= line.count() )
+  if( pos + offset < 0 || pos + offset >= line.length() )
     return QChar();
   return line[ pos + offset ];
   }
@@ -673,7 +673,7 @@ QPair<int, int> SdWScriptEditor::getParenthesisBlock(const QString &text, int po
     }
   else{
     QMap<QChar, int> numOpened;
-    for (end = pos; end <text.count(); end++){
+    for (end = pos; end < text.length(); end++){
       c = text[end];
       if ((c == '(' || c == '[' || c == '{') && end != pos){
         numOpened[cParenthesisPairs[c]]++;
@@ -685,7 +685,7 @@ QPair<int, int> SdWScriptEditor::getParenthesisBlock(const QString &text, int po
         numOpened[c]--;
         }
       }
-    if (end < text.count())
+    if (end < text.length())
       return QPair<int, int>(start, end);
     else
       return QPair<int, int>(-1,-1);
@@ -973,7 +973,7 @@ SdWScriptEditor::keyPressEvent(QKeyEvent *e)
     bool tryIdent = false;
     //QString
     while( pos >= 0 ) {
-      if( pos < line.count() ) {
+      if( pos < line.length() ) {
         ch = line.at(pos);
         if( ch == QChar('(') ) tryIdent = true;
         else if( tryIdent ) {

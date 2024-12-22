@@ -43,6 +43,7 @@ class SdGraphSymPin : public SdGraph
     SdGraphSymPin( SdPoint org, const SdPropSymPin &pinProp, SdPoint numberPos, const SdPropText &numberProp, SdPoint namePos, const SdPropText &nameProp, const QString name, const QString number = QString{} );
 
     QString  getPinName() const { return mName; }
+    QString  getPinNumber() const { return mNumber; }
     SdPoint  getPinOrigin() const { return mOrigin; }
     //Draw pin in symbol implementation
     void     drawImp( SdContext *dc, const QString pinNumber, bool com );

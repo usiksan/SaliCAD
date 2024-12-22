@@ -80,7 +80,8 @@ class SdObject
     //Upgrade project item on new one
     virtual bool      upgradeProjectItem( SdUndo *undo, QWidget *parent );
 
-
+    template <typename SdObjectClass>
+    const SdObjectClass* convertConstPtr() const { return dynamic_cast<const SdObjectClass*>(this); }
 
     //=================================================
     //                  Copy

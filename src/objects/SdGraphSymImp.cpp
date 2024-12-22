@@ -51,7 +51,7 @@ SdGraphSymImp::SdGraphSymImp() :
 
   }
 
-SdGraphSymImp::SdGraphSymImp(SdPItemComponent *comp, SdPItemSymbol *sym, SdPItemPart *part, const SdStringMap &param, SdPoint pos, SdPropSymImp *prp ) :
+SdGraphSymImp::SdGraphSymImp(SdPItemVariant *comp, SdPItemSymbol *sym, SdPItemPart *part, const SdStringMap &param, SdPoint pos, SdPropSymImp *prp ) :
   SdGraphParam(param),
   mArea(nullptr),        //PCB where this symbol implement contains in
   mSectionIndex(0),      //Section index (from 0)
@@ -649,18 +649,18 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
   undo->symImpPins( &mPins );
 
   if( mPart == nullptr ) {
+    return;
     //Get part where this section resides
     int section = -1;
 
     //Link to part
-    SdSection *sectionPtr = mComponent->getSection( section );
-    if( sectionPtr == nullptr ) {
+    if( !mComponent->sectionIsAvailable(section) ) {
       mLinkError = QObject::tr("No pack info in %1 for section %2").arg(mComponent->getTitle()).arg(section+1);
       return;
       }
 
     //Accumulate pins
-    mSymbol->forEach( dctSymPin, [this,sectionPtr] (SdObject *obj) -> bool {
+    mSymbol->forEach( dctSymPin, [this,section] (SdObject *obj) -> bool {
       SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>(obj);
       Q_ASSERT( pin != nullptr );
 
@@ -671,7 +671,7 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
       //Create implement pin
       SdSymImpPin impPin;
       impPin.mPin = pin;
-      impPin.mPinNumber = sectionPtr->getPinNumber( pinName );
+      impPin.mPinNumber = mComponent->sectionPinNumberGet( section, pinName );
 
       //Add pin to table
       mPins.insert( pinName, impPin );
@@ -689,15 +689,14 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
     undo->linkSection( section, this, partImp, true );
     partImp->setLinkSection( section, this );
     setLinkSection( section, partImp );
-    SdSection *sectionPtr = mComponent->getSection( section );
-    if( sectionPtr == nullptr ) {
+    if( !mComponent->sectionIsAvailable(section) ) {
       mLinkError = QObject::tr("No pack info in %1 for section %2").arg(mComponent->getTitle()).arg(section+1);
       return;
       }
 
     mPartImp->savePins( undo );
     //Accumulate pins
-    mSymbol->forEach( dctSymPin, [this,sectionPtr] (SdObject *obj) -> bool {
+    mSymbol->forEach( dctSymPin, [this,section] (SdObject *obj) -> bool {
       SdGraphSymPin *pin = dynamic_cast<SdGraphSymPin*>(obj);
       Q_ASSERT( pin != nullptr );
 
@@ -708,7 +707,7 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
       //Create implement pin
       SdSymImpPin impPin;
       impPin.mPin = pin;
-      impPin.mPinNumber = sectionPtr->getPinNumber( pinName );
+      impPin.mPinNumber = mComponent->sectionPinNumberGet( section, pinName );
 
       //Link pins between symImp and partImp
       if( !mPartImp->partPinLink( impPin.mPinNumber, this, pinName, true ) )
@@ -917,7 +916,7 @@ void SdGraphSymImp::json(const SdJsonReader &js)
   if( js.contains( QStringLiteral("Pins") ) ) {
     //Pins as array
     QJsonArray pins = js.object().value( QStringLiteral("Pins") ).toArray();
-    for( const QJsonValue &vpin : qAsConst(pins) ) {
+    for( const QJsonValue &vpin : std::as_const(pins) ) {
       SdSymImpPin pin;
       SdJsonReader pjs( vpin.toObject(), js );
       QString pinName = pin.fromJson( pjs );
@@ -971,7 +970,7 @@ bool SdGraphSymImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
       detach(undo);
       //Because "detach" perhaps without deleting symImp, then referenced object not autodeleted
       //Perform autodeling it
-      SdPItemComponent *dcomp = mComponent;
+      SdPItemVariant   *dcomp = mComponent;
       SdPItemSymbol    *dsym  = mSymbol;
       SdPItemPart      *dpart = mPart;
 

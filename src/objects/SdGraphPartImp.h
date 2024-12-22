@@ -30,7 +30,7 @@ class SdPItemPlate;
 class SdPItemPart;
 class SdGraphPartPin;
 class SdPItemSymbol;
-class SdPItemComponent;
+class SdPItemVariant;
 class SdGraphSymImp;
 class SdGraphRoadPin;
 class SdJsonReaderProperty;
@@ -132,11 +132,11 @@ class SdGraphPartImp : public SdGraphTraced
     SdPartImpPinTable      mPins;        //!< Part implement pin table
     SdPartImpSectionTable  mSections;    //!< Part implement schematic sections list
     SdPItemPart           *mPart;        //!< Part for this implementation
-    SdPItemComponent      *mComponent;   //!< Component with pack info
+    SdPItemVariant        *mComponent;   //!< Component with pack info
     SdStringMap            mParamTable;  //!< Parameters
   public:
     SdGraphPartImp();
-    SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param );
+    SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemVariant *comp, const SdStringMap &param );
 
     //Information
     //Get implement transform matrix
@@ -173,7 +173,7 @@ class SdGraphPartImp : public SdGraphTraced
     void              valueSet( const SdPropText &prp, SdPoint pos, SdUndo *undo );
 
     //Check if there free section slot. If there - setup section and return true
-    bool              isSectionFree(int *section, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param, SdPItemSymbol *sym );
+    bool              isSectionFree(int *section, SdPItemPart *part, SdPItemVariant *comp, const SdStringMap &param, SdPItemSymbol *sym );
     //Get origin of component
     SdPoint           getOrigin() const { return mOrigin; }
 

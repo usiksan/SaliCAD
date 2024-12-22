@@ -20,7 +20,7 @@ Description
 #include "SdConverterImplement.h"
 #include "SdPItemPart.h"
 #include "SdPItemSymbol.h"
-#include "SdPItemComponent.h"
+#include "SdPItemVariant.h"
 #include "SdProject.h"
 #include "SdContext.h"
 #include "SdSelector.h"
@@ -261,7 +261,7 @@ SdGraphPartImp::SdGraphPartImp() :
 
   }
 
-SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param) :
+SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *part, SdPItemVariant *comp, const SdStringMap &param) :
   SdGraphTraced(),
   mLogNumber(0),          //Logical part number (from 1)
   mOrigin(org),           //Position of Implement
@@ -280,6 +280,9 @@ SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *par
     mValue.mOrigin = part->valueGet()->getOrigin();   //Part value position in part context
     }
   }
+
+
+
 
 QTransform SdGraphPartImp::matrix() const
   {
@@ -363,7 +366,7 @@ void SdGraphPartImp::setLinkSection(int section, SdGraphSymImp *symImp)
 //Check if all section removed, then autodeleted
 void SdGraphPartImp::autoDelete(SdUndo *undo)
   {
-  for( const SdPartImpSection &sect : qAsConst(mSections) )
+  for( const SdPartImpSection &sect : std::as_const(mSections) )
     if( sect.mSymImp != nullptr ) return;
   deleteObject( undo );
   }
@@ -395,7 +398,7 @@ void SdGraphPartImp::accumUsedPins(SdPadMap &map) const
 //Pin iterator
 void SdGraphPartImp::forEachPin(std::function<void(const SdPartImpPin &)> fun1)
   {
-  for( const SdPartImpPin &pin : qAsConst(mPins) )
+  for( const SdPartImpPin &pin : std::as_const(mPins) )
     fun1( pin );
   }
 
@@ -608,7 +611,7 @@ void SdGraphPartImp::drawWithoutPads(SdContext *cdx)
     });
 
   //Draw pins
-  for( const SdPartImpPin &pin : qAsConst(mPins) )
+  for( const SdPartImpPin &pin : std::as_const(mPins) )
     pin.drawWithoutPad( cdx );
   }
 
@@ -624,7 +627,7 @@ void SdGraphPartImp::drawPads(SdContext *cdx, SdStratum stratum, const QString h
     imp.setPairedLayer( true );
   cdx->setConverter( &imp );
   //Draw pins
-  for( const SdPartImpPin &pin : qAsConst(mPins) )
+  for( const SdPartImpPin &pin : std::as_const(mPins) )
     pin.drawPad( cdx, getPlate(), stratum, highlightNetName );
   }
 
@@ -635,7 +638,7 @@ void SdGraphPartImp::drawPads(SdContext *cdx, SdStratum stratum, const QString h
 //Draw rat net
 void SdGraphPartImp::drawRatNet(SdContext *cdx, SdPlateNetList &netList)
   {
-  for( const SdPartImpPin &pin : qAsConst(mPins) )
+  for( const SdPartImpPin &pin : std::as_const(mPins) )
     if( pin.isConnected() ) {
       SdPoint p1 = pin.mPosition;
       SdPoint p2 = netList.nearestPoint( pin.getNetName(), p1 );
@@ -648,7 +651,7 @@ void SdGraphPartImp::drawRatNet(SdContext *cdx, SdPlateNetList &netList)
 
 
 //Check if there free section slot
-bool SdGraphPartImp::isSectionFree(int *section, SdPItemPart *part, SdPItemComponent *comp, const SdStringMap &param, SdPItemSymbol *sym)
+bool SdGraphPartImp::isSectionFree(int *section, SdPItemPart *part, SdPItemVariant *comp, const SdStringMap &param, SdPItemSymbol *sym)
   {
   if( mPart != part || mComponent != comp || mParamTable != param )
     return false;
@@ -727,7 +730,7 @@ void SdGraphPartImp::attach(SdUndo *undo)
   //Section table
   mSections.clear();
   if( mComponent ) {
-    int sectionCount = mComponent->getSectionCount();
+    int sectionCount = mComponent->sectionCount();
     for( int i = 0; i < sectionCount; i++ ) {
       SdPartImpSection s;
       SdPItemSymbol *sym = mComponent->extractSymbolFromFactory( i );
@@ -1000,7 +1003,7 @@ void SdGraphPartImp::drawStratum(SdContext *dc, int stratum)
     }
 
   //Draw pins
-  for( const SdPartImpPin &pin : qAsConst(mPins) )
+  for( const SdPartImpPin &pin : std::as_const(mPins) )
     pin.draw( dc, getPlate(), stratum );
   }
 
@@ -1276,7 +1279,7 @@ bool SdGraphPartImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
       return false;
 
     //Prepare newer objects
-    QScopedPointer<SdPItemComponent> comp( sdObjectOnly<SdPItemComponent>( mComponent ? SdLibraryStorage::instance()->cfObjectGet( mComponent->getUid() ) : nullptr ) );
+    QScopedPointer<SdPItemVariant> comp( sdObjectOnly<SdPItemVariant>( mComponent ? SdLibraryStorage::instance()->cfObjectGet( mComponent->getUid() ) : nullptr ) );
     QScopedPointer<SdPItemPart>      part( sdObjectOnly<SdPItemPart>( comp ? comp->partExtractFromFactory() : nullptr ) );
 
     //Test if all newer objects prepared
@@ -1285,7 +1288,7 @@ bool SdGraphPartImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
 
       //Because "detach" perhaps without deleting symImp, then referenced object not autodeleted
       //Perform autodeling it
-      SdPItemComponent *dcomp = mComponent;
+      SdPItemVariant   *dcomp = mComponent;
       SdPItemPart      *dpart = mPart;
       //Setup newer objects which are temporary and will be replace to actual in attach
       mComponent = comp.get();

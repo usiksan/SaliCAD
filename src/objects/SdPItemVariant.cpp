@@ -17,7 +17,7 @@ Description
 #include "SdJsonIO.h"
 
 SdPItemVariant::SdPItemVariant() :
-  SdPItemWithPart(),
+  SdProjectItem(),
   mVariantFieldCount(0)
   {
 
@@ -47,13 +47,147 @@ void SdPItemVariant::variantTableSet(qint32 fieldCount, QStringList list, SdUndo
 
 
 
-//Test if field name present in variant table
+//!
+//! \brief isFieldPresent Test if field name present in variant table
+//! \param fieldName      Field name for test
+//! \return               true if field with this name presents in variant table
+//!
 bool SdPItemVariant::isFieldPresent(const QString fieldName) const
   {
   //Scan all fields and test
   for( int i = 0; i < mVariantFieldCount; i++ )
     if( mVariantTable.at(i) == fieldName ) return true;
   return false;
+  }
+
+
+
+
+//!
+//! \brief partIsPresent Returns true if contains one or more part variants
+//! \return              true if contains one or more part variants
+//!
+bool SdPItemVariant::partIsPresent() const
+  {
+  return partGet() != nullptr;
+  }
+
+
+
+
+//!
+//! \brief partTitleGet Returns part title for visual presentation
+//! \param id           Id of part variant which title need to be returned. If empty then return primary part title
+//! \return             Part title for visual presentation
+//!
+QString SdPItemVariant::partTitleGet() const
+  {
+  SdPartVariant *part = partGet();
+  if( part != nullptr )
+    return part->getPartTitle();
+  return QString();
+  }
+
+
+
+
+//!
+//! \brief partIdGet Returns part id for primary part variant
+//! \return          Part id for primary part variant
+//!
+QString SdPItemVariant::partIdGet() const
+  {
+  SdPartVariant *part = partGet();
+  if( part != nullptr )
+    return part->getPartId();
+  return QString();
+  }
+
+
+
+
+//!
+//! \brief partIdSet Setup new part id for primary part variant
+//! \param id        New id for primary part
+//! \param undo
+//!
+void SdPItemVariant::partIdSet(const QString id, SdUndo *undo)
+  {
+  SdPartVariant *part = partGet();
+  if( part == nullptr ) {
+    //Part yet not present
+    //Insert part variant
+    part = new SdPartVariant();
+    insertChild( part, undo );
+    }
+  part->setPartId( id, undo );
+  }
+
+
+
+
+//!
+//! \brief partExtractFromFactory Return part descripted part variant
+//! \return                       Part descripted part variant
+//!
+SdPItemPart *SdPItemVariant::partExtractFromFactory() const
+  {
+  SdPartVariant *part = partGet();
+  if( part != nullptr )
+    return part->extractFromFactory();
+  return nullptr;
+  }
+
+
+
+
+//!
+//! \brief partGet Returns part variant for id. If id is empty then return primary part variant
+//! \return
+//!
+SdPartVariant *SdPItemVariant::partGet() const
+  {
+  //Pointer where reside SdPartVariant
+  SdPartVariantPtr part = nullptr;
+  //Scan all objects and find SdPartVariant
+  forEachConst( dctPartVariant, [&part] (SdObject *obj) -> bool {
+    part = dynamic_cast<SdPartVariant*>(obj);
+    Q_ASSERT( part != nullptr );
+    return false;
+    });
+  return part;
+  }
+
+
+
+
+//!
+//! \brief partRemove Removes part variant from part list
+//! \param undo
+//!
+void SdPItemVariant::partRemove(SdUndo *undo)
+  {
+  SdPartVariant *part = partGet();
+  if( part != nullptr )
+    deleteChild( part, undo );
+  }
+
+
+
+
+
+//!
+//! \brief sectionPinNumberGet Return individual pin number for desired pin name for section
+//! \param sectionIndex        Section index
+//! \param pinName             Pin name which number must be retrived
+//! \return                    Pin number for pin name of section with index sectionIndex
+//!
+QString SdPItemVariant::sectionPinNumberGet(int sectionIndex, const QString pinName) const
+  {
+  //By default we return empty pin number
+  Q_UNUSED(sectionIndex)
+  Q_UNUSED(pinName)
+  return QString{};
   }
 
 

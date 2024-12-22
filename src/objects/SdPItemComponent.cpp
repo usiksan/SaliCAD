@@ -27,12 +27,25 @@ SdPItemComponent::SdPItemComponent() :
 
 
 
+//!
+//! \brief sectionIsAvailable Return true if section with sectionIndex available
+//! \param sectionIndex       Section index
+//! \return                   true if section with sectionIndex available
+//!
+bool SdPItemComponent::sectionIsAvailable(int sectionIndex) const
+  {
+  return sectionGet( sectionIndex ) != nullptr;
+  }
+
+
+
+
 
 
 
 
 //Return section count
-int SdPItemComponent::getSectionCount() const
+int SdPItemComponent::sectionCount() const
   {
   int cnt = 0;
   //Scan all objects and count SdSection
@@ -49,7 +62,7 @@ int SdPItemComponent::getSectionCount() const
 
 
 //Append section with symbol id. May be empty
-void SdPItemComponent::appendSection(const QString id, SdUndo *undo)
+void SdPItemComponent::sectionAppend(const QString id, SdUndo *undo)
   {
   //qDebug() << "appendSection" << id;
   SdSection *section = new SdSection();
@@ -61,9 +74,9 @@ void SdPItemComponent::appendSection(const QString id, SdUndo *undo)
 
 
 //Section symbol title for visual presentation
-QString SdPItemComponent::getSectionSymbolTitle(int sectionIndex) const
+QString SdPItemComponent::sectionSymbolTitleGet(int sectionIndex) const
   {
-  SdSection *sec = getSection( sectionIndex );
+  SdSection *sec = sectionGet( sectionIndex );
   if( sec != nullptr )
     return sec->getSymbolTitle();
   return QString();
@@ -73,9 +86,9 @@ QString SdPItemComponent::getSectionSymbolTitle(int sectionIndex) const
 
 
 //Section symbol id
-QString SdPItemComponent::getSectionSymbolId(int sectionIndex) const
+QString SdPItemComponent::sectionSymbolIdGet(int sectionIndex) const
   {
-  SdSection *sec = getSection( sectionIndex );
+  SdSection *sec = sectionGet( sectionIndex );
   if( sec != nullptr )
     return sec->getSymbolId();
   return QString();
@@ -85,9 +98,9 @@ QString SdPItemComponent::getSectionSymbolId(int sectionIndex) const
 
 
 //Setup new section symbol id
-void SdPItemComponent::setSectionSymbolId(const QString id, int sectionIndex, SdUndo *undo)
+void SdPItemComponent::sectionSymbolIdSet(const QString id, int sectionIndex, SdUndo *undo)
   {
-  SdSection *sec = getSection( sectionIndex );
+  SdSection *sec = sectionGet( sectionIndex );
   if( sec != nullptr )
     sec->setSymbolId( id, undo );
   }
@@ -95,8 +108,10 @@ void SdPItemComponent::setSectionSymbolId(const QString id, int sectionIndex, Sd
 
 
 //Return section by index
-SdSection *SdPItemComponent::getSection(int sectionIndex) const
+SdSection *SdPItemComponent::sectionGet(int sectionIndex) const
   {
+  if( sectionIndex < 0 )
+    return nullptr;
   SdSectionPtr section = nullptr;
   forEachConst( dctSection, [&section,&sectionIndex] (SdObject *obj) -> bool {
     if( sectionIndex == 0 ) {
@@ -117,7 +132,7 @@ SdSection *SdPItemComponent::getSection(int sectionIndex) const
 //Return symbol from section by index
 SdPItemSymbol *SdPItemComponent::extractSymbolFromFactory(int sectionIndex) const
   {
-  SdSection *sec = getSection( sectionIndex );
+  SdSection *sec = sectionGet( sectionIndex );
   if( sec != nullptr )
     return sec->extractFromFactory();
   return nullptr;
@@ -127,9 +142,9 @@ SdPItemSymbol *SdPItemComponent::extractSymbolFromFactory(int sectionIndex) cons
 
 
 //Remove section
-void SdPItemComponent::removeSection(int sectionIndex, SdUndo *undo)
+void SdPItemComponent::sectionRemove(int sectionIndex, SdUndo *undo)
   {
-  SdSection *sec = getSection( sectionIndex );
+  SdSection *sec = sectionGet( sectionIndex );
   if( sec != nullptr )
     sec->deleteObject( undo );
   }
@@ -138,9 +153,9 @@ void SdPItemComponent::removeSection(int sectionIndex, SdUndo *undo)
 
 
 //Return full section pin assotiation table
-SdPinAssociation SdPItemComponent::getSectionPins(int sectionIndex) const
+SdPinAssociation SdPItemComponent::sectionPinsGet(int sectionIndex) const
   {
-  SdSection *sec = getSection( sectionIndex );
+  SdSection *sec = sectionGet( sectionIndex );
   if( sec != nullptr )
     return sec->getPins();
   return SdPinAssociation();
@@ -150,9 +165,9 @@ SdPinAssociation SdPItemComponent::getSectionPins(int sectionIndex) const
 
 
 //Return individual pin number for desired pin name for section
-QString SdPItemComponent::getSectionPinNumber(int sectionIndex, const QString pinName)
+QString SdPItemComponent::sectionPinNumberGet(int sectionIndex, const QString pinName) const
   {
-  SdSection *sec = getSection( sectionIndex );
+  SdSection *sec = sectionGet( sectionIndex );
   if( sec != nullptr )
     return sec->getPinNumber( pinName );
   return QString();
@@ -162,9 +177,9 @@ QString SdPItemComponent::getSectionPinNumber(int sectionIndex, const QString pi
 
 
 //Setup new pin number for desired pin name for section
-void SdPItemComponent::setSectionPinNumber(int sectionIndex, const QString pinName, const QString pinNumber, SdUndo *undo)
+void SdPItemComponent::sectionPinNumberSet(int sectionIndex, const QString pinName, const QString pinNumber, SdUndo *undo)
   {
-  SdSection *sec = getSection( sectionIndex );
+  SdSection *sec = sectionGet( sectionIndex );
   if( sec != nullptr )
     return sec->setPinNumber( pinName, pinNumber, undo );
   }
@@ -222,17 +237,17 @@ SdPItemComponent *sdCreateDefaultComponent(SdPItemSymbol *symbol, bool appendDef
   //Append symbol to library
   SdLibraryStorage::instance()->cfObjectInsert( symbol );
   //Append section with symbol
-  comp->appendSection( symbol->getUid(), symbol->getUndo() );
+  comp->sectionAppend( symbol->getUid(), symbol->getUndo() );
 
   if( appendDefaultPart ) {
     //Setup default part
     comp->partIdSet( QString("Part\rplug part\rsalicad"), symbol->getUndo() );
 
     //Setup default packing info
-    SdPinAssociation pins = comp->getSectionPins(0);
+    SdPinAssociation pins = comp->sectionPinsGet(0);
     int pin = 1;
     for( auto iter = pins.cbegin(); iter != pins.cend(); ++iter ) {
-      comp->setSectionPinNumber( 0, iter.key(), QString::number(pin++), symbol->getUndo() );
+      comp->sectionPinNumberSet( 0, iter.key(), QString::number(pin++), symbol->getUndo() );
       }
 
     //Fix component

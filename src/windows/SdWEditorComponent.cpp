@@ -200,7 +200,7 @@ void SdWEditorComponent::sectionAdd()
   if( !uid.isEmpty() ) {
     //Symbol selected
     mUndo->begin( tr("Append section for component"), mComponent, false );
-    mComponent->appendSection( uid, mUndo );
+    mComponent->sectionAppend( uid, mUndo );
     dirtyProject();
     fillSections();
     mSectionList->setCurrentRow(mSectionList->count() - 1);
@@ -216,7 +216,7 @@ void SdWEditorComponent::sectionDubl()
   int row = mSectionList->currentRow();
   if( row >= 0 ) {
     mUndo->begin( tr("Duplicate section for component"), mComponent, false );
-    mComponent->appendSection( mComponent->getSectionSymbolId(row), mUndo );
+    mComponent->sectionAppend( mComponent->sectionSymbolIdGet(row), mUndo );
     dirtyProject();
     fillSections();
     mSectionList->setCurrentRow(row+1);
@@ -233,7 +233,7 @@ void SdWEditorComponent::sectionSelect()
   int row = mSectionList->currentRow();
   if( row >= 0 ) {
     mUndo->begin( tr("Set section for component"), mComponent, false );
-    mComponent->setSectionSymbolId( SdDGetObject::getObjectUid( dctSymbol, tr("Select symbol for section"), this ),
+    mComponent->sectionSymbolIdSet( SdDGetObject::getObjectUid( dctSymbol, tr("Select symbol for section"), this ),
                                     row, mUndo );
     dirtyProject();
     fillSections();
@@ -251,7 +251,7 @@ void SdWEditorComponent::sectionDelete()
   if( row >= 0 ) {
     if( QMessageBox::question( this, tr("Attention!"), tr("You attempting to delete section %1. Delete?").arg(row+1) ) == QMessageBox::Yes ) {
       mUndo->begin( tr("Delete component section"), mComponent, false );
-      mComponent->removeSection( row, mUndo );
+      mComponent->sectionRemove( row, mUndo );
       dirtyProject();
       fillSections();
       }
@@ -265,9 +265,9 @@ void SdWEditorComponent::sectionDeleteAll()
   {
   if( QMessageBox::question( this, tr("Attention!"), tr("Are You sure delete All sections?") ) == QMessageBox::Yes ) {
     mUndo->begin( tr("Delete all sections"), mComponent, false );
-    int count = mComponent->getSectionCount() - 1;
+    int count = mComponent->sectionCount() - 1;
     while( count >= 0 )
-      mComponent->removeSection( count--, mUndo );
+      mComponent->sectionRemove( count--, mUndo );
     dirtyProject();
     fillSections();
     }
@@ -280,9 +280,9 @@ void SdWEditorComponent::onCurrentSection(int index)
   {
   disconnect( mPackTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onPackChanged );
   //Update graph preview
-  mSymbolViewer->setItemById( mComponent->getSectionSymbolId(index) );
+  mSymbolViewer->setItemById( mComponent->sectionSymbolIdGet(index) );
   //Update pins table
-  SdPinAssociation pins = mComponent->getSectionPins(index);
+  SdPinAssociation pins = mComponent->sectionPinsGet(index);
   mPackTable->clear();
   mPackTable->setColumnCount(2);
   mPackTable->setRowCount(pins.count());
@@ -326,12 +326,12 @@ void SdWEditorComponent::sectionUpdate()
   {
   int index = mSectionList->currentRow();
   //Query current section id
-  QString uid = mComponent->getSectionSymbolId( index );
+  QString uid = mComponent->sectionSymbolIdGet( index );
   //If uid present then update it self
   if( !uid.isEmpty() ) {
     //Symbol selected
     mUndo->begin( tr("Update section for component"), mComponent, false );
-    mComponent->getSection(index)->setSymbolId( uid, mUndo );
+    mComponent->sectionSymbolIdSet( uid, index, mUndo );
     dirtyProject();
     fillUsedPins();
     onCurrentSection( index );
@@ -363,20 +363,20 @@ void SdWEditorComponent::onPackChanged(int row, int column)
     else {
       //Correct assignment
       //Check if pin was replaced
-      QString previousNumber = mComponent->getSectionPinNumber( section, name );
+      QString previousNumber = mComponent->sectionPinNumberGet( section, name );
       if( mPackNumbers.value(previousNumber) == packetPin(section,name) )
         mPackNumbers.insert(previousNumber,QString());
       mPackTable->setItem(row,column, new QTableWidgetItem(number) );
       mPackNumbers.insert( number, packetPin(section,name) );
       }
-    mComponent->setSectionPinNumber( section, name, number, mUndo );
+    mComponent->sectionPinNumberSet( section, name, number, mUndo );
     }
   else {
     //Pin was cleared
-    QString previousNumber = mComponent->getSectionPinNumber( section, name );
+    QString previousNumber = mComponent->sectionPinNumberGet( section, name );
     if( mPackNumbers.value(previousNumber) == packetPin(section,name) )
       mPackNumbers.insert(previousNumber,QString());
-    mComponent->setSectionPinNumber( section, name, number, mUndo );
+    mComponent->sectionPinNumberSet( section, name, number, mUndo );
     mPackTable->setItem(row,column, new QTableWidgetItem(number) );
     }
   connect( mPackTable, &QTableWidget::cellChanged, this, &SdWEditorComponent::onPackChanged );
@@ -528,9 +528,9 @@ void SdWEditorComponent::fillSections()
   mSectionList->clear();
 
   //Fill with actual sections
-  int count = mComponent->getSectionCount();
+  int count = mComponent->sectionCount();
   for( int i = 0; i < count; i++ )
-    mSectionList->addItem( mComponent->getSectionSymbolTitle(i) );
+    mSectionList->addItem( mComponent->sectionSymbolTitleGet(i) );
 
   //Enable-disable buttons on editing enable
   if( mComponent->isEditEnable() ) {
@@ -602,9 +602,9 @@ void SdWEditorComponent::fillUsedPins()
   {
   for( QMap<QString,QString>::iterator iter = mPackNumbers.begin(); iter != mPackNumbers.end(); iter++ )
     iter.value() = QString();
-  int sectionCount = mComponent->getSectionCount();
+  int sectionCount = mComponent->sectionCount();
   for( int section = 0; section < sectionCount; section++ ) {
-    SdStringMap pack = mComponent->getSectionPins(section);
+    SdStringMap pack = mComponent->sectionPinsGet(section);
     for( auto iter = pack.constBegin(); iter != pack.constEnd(); iter++ ) {
       if( mPackNumbers.contains(iter.value()) && mPackNumbers.value(iter.value()).isEmpty() )
         mPackNumbers.insert( iter.value(), packetPin(section,iter.key()) );

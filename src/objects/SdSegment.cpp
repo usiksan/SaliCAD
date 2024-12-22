@@ -49,7 +49,7 @@ bool SdSegment::isCross(SdPoint a, SdPoint b, SdPoint *out ) const
   QLineF f1( p1.toPointF(), p2.toPointF() );
   QLineF f2( a.toPointF(), b.toPointF() );
   QPointF of;
-  bool res = f1.intersect( f2, &of ) == QLineF::BoundedIntersection;
+  bool res = f1.intersects( f2, &of ) == QLineF::BoundedIntersection;
   if( out )
     *out = of.toPoint();
   return res;

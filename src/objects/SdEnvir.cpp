@@ -204,7 +204,7 @@ void SdEnvir::saveEnvir()
   //Write layers [Записали слои]
   int c = mLayerTable.count();
   os << c;
-  for( SdLayer *layer : qAsConst(mLayerTable) ) {
+  for( SdLayer *layer : std::as_const(mLayerTable) ) {
     os << layer->id();
     layer->write( os );
     }

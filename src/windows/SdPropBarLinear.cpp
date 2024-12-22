@@ -37,7 +37,7 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
     mWidth->addItem( v );
   //Select first item
   mWidth->setCurrentIndex(0);
-  mWidth->lineEdit()->setValidator( new QRegExpValidator( QRegExp("[0-9]{1,3}((\\.|\\,)[0-9]{0,3})?")) );
+  mWidth->lineEdit()->setValidator( new QRegularExpressionValidator( QRegularExpression("[0-9]{1,3}((\\.|\\,)[0-9]{0,3})?")) );
 //  mWidth->lineEdit()->setValidator( new QDoubleValidator() );
   mWidth->setMinimumWidth(80);
 

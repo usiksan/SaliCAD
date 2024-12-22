@@ -40,7 +40,7 @@ SdDSymbolPartParam::SdDSymbolPartParam(SdPItemSymbol *symbol, QWidget *parent)
   QWidget *w = new QWidget(split);
   split->addWidget( w );
   vbox = new QVBoxLayout();
-  vbox->setMargin(0);
+  vbox->setContentsMargins( 0, 0, 0, 0 );
   w->setLayout(vbox);
   QHBoxLayout *hbox = new QHBoxLayout();
   hbox->addWidget( new QLabel(tr("Part name (empty for none):")) );
@@ -53,7 +53,7 @@ SdDSymbolPartParam::SdDSymbolPartParam(SdPItemSymbol *symbol, QWidget *parent)
   w = new QWidget(split);
   split->addWidget( w );
   QVBoxLayout *root = new QVBoxLayout();
-  root->setMargin(0);
+  root->setContentsMargins( 0, 0, 0, 0 );
   w->setLayout(root);
     QHBoxLayout *lay = new QHBoxLayout();
       //Container param table

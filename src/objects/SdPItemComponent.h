@@ -27,30 +27,48 @@ class SdPItemComponent : public SdPItemVariant
     SdPItemComponent();
 
     //Sections
-    //Return section count
-    int              getSectionCount() const;
+    //!
+    //! \brief sectionIsAvailable Return true if section with sectionIndex available
+    //! \param sectionIndex       Section index
+    //! \return                   true if section with sectionIndex available
+    //!
+    virtual bool     sectionIsAvailable( int sectionIndex ) const override;
+
+    //!
+    //! \brief sectionCount Returns section count
+    //! \return                Section count
+    //!
+    virtual int      sectionCount() const override;
+
     //Append section with symbol id. May be empty
-    void             appendSection( const QString id, SdUndo *undo );
+    void             sectionAppend( const QString id, SdUndo *undo );
     //Section symbol title for visual presentation
-    QString          getSectionSymbolTitle( int sectionIndex ) const;
+    QString          sectionSymbolTitleGet( int sectionIndex ) const;
     //Section symbol id
-    QString          getSectionSymbolId( int sectionIndex ) const;
+    QString          sectionSymbolIdGet( int sectionIndex ) const;
     //Setup new section symbol id
-    void             setSectionSymbolId( const QString id, int sectionIndex, SdUndo *undo );
+    void             sectionSymbolIdSet( const QString id, int sectionIndex, SdUndo *undo );
     //Return section by index
-    SdSection       *getSection( int sectionIndex ) const;
+    SdSection       *sectionGet( int sectionIndex ) const;
     //Return symbol from section by index
     SdPItemSymbol   *extractSymbolFromFactory(int sectionIndex) const;
     //Remove section
-    void             removeSection( int sectionIndex, SdUndo *undo );
+    void             sectionRemove( int sectionIndex, SdUndo *undo );
 
     //Pins in sections
     //Return full section pin assotiation table
-    SdPinAssociation getSectionPins( int sectionIndex ) const;
-    //Return individual pin number for desired pin name for section
-    QString          getSectionPinNumber( int sectionIndex, const QString pinName );
+    SdPinAssociation sectionPinsGet( int sectionIndex ) const;
+
+    //!
+    //! \brief sectionPinNumberGet Return individual pin number for desired pin name for section
+    //! \param sectionIndex        Section index
+    //! \param pinName             Pin name which number must be retrived
+    //! \return                    Pin number for pin name of section with index sectionIndex
+    //!
+    virtual QString  sectionPinNumberGet( int sectionIndex, const QString pinName ) const override;
+
     //Setup new pin number for desired pin name for section
-    void             setSectionPinNumber( int sectionIndex, const QString pinName, const QString pinNumber, SdUndo *undo );
+    void             sectionPinNumberSet( int sectionIndex, const QString pinName, const QString pinNumber, SdUndo *undo );
 
 
     // SdObject interface
