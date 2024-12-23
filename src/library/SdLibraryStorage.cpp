@@ -99,7 +99,7 @@ void SdLibraryStorage::libraryInit()
 
   QSettings s;
   mLibraryPath = s.value( QStringLiteral("LIBRARY_PATH") ).toString();
-  if( mLibraryPath.isEmpty() || mLibraryPath.count() < 3 ) {
+  if( mLibraryPath.isEmpty() || mLibraryPath.length() < 3 ) {
     //Library path not defined yet
     SvDir dir( QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation).at(0) );
     dir.cd( QStringLiteral("library/") );

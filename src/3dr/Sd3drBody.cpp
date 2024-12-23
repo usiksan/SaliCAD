@@ -34,12 +34,12 @@ void Sd3drBody::draw(QOpenGLFunctions_2_0 *f, const Sd3drRegion &vertexList, con
   mColor.draw( f );
 
   //Draw all faces
-  for( auto face : qAsConst( mFaceList ) ) {
+  for( auto face : std::as_const( mFaceList ) ) {
     if( face.count() < 3 ) continue;
     QVector3D normal = QVector3D::normal( map.map( vertexList.at( face.at(0) ) ), map.map( vertexList.at( face.at(1) ) ), map.map( vertexList.at( face.at(2) ) ) );
     f->glBegin(GL_POLYGON);
     f->glNormal3f( normal.x(), normal.y(), normal.z() );
-    for( auto index : qAsConst( face ) ) {
+    for( auto index : std::as_const( face ) ) {
       auto v = map.map( vertexList.at( index ) );
       f->glVertex3f( v.x(), v.y(), v.z() );
       }
@@ -85,8 +85,8 @@ void Sd3drBody::json(const SvJsonReader &js)
 void Sd3drBody::volumeAdd(QMatrix2x3 &volume, const Sd3drRegion &vertexList, const QMatrix4x4 &map) const
   {
   //Draw all faces
-  for( auto face : qAsConst( mFaceList ) ) {
-    for( auto index : qAsConst( face ) ) {
+  for( auto face : std::as_const( mFaceList ) ) {
+    for( auto index : std::as_const( face ) ) {
       auto v = map.map( vertexList.at( index ) );
       if( volume(0,0) > v.x() ) volume(0,0) = v.x();
       if( volume(0,1) < v.x() ) volume(0,1) = v.x();

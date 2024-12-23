@@ -247,7 +247,7 @@ void SdScanerVrml::tokenNext()
         }
       else if( mLine.at(mIndex) == QChar('#') ) {
         //Remark found. Skeep line
-        mIndex = mLine.count();
+        mIndex = mLine.length();
         continue;
         }
       else if( mLine.at(mIndex) == QChar('"') ) {

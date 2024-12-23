@@ -41,7 +41,7 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
     //Fill width list with previous values
     if( prevWidth.count() == 0 )
       prevWidth.addDouble( 0.0 );
-    for( const QString &str : qAsConst( prevWidth ) )
+    for( const QString &str : std::as_const( prevWidth ) )
       mWidth->addItem( str );
     //Select first item
     mWidth->setCurrentIndex(0);
@@ -140,7 +140,7 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
   mViaPadType = new QComboBox();
   mViaPadType->setEditable(true);
   mViaPadType->setToolTip( tr("Via pad type") );
-  for( const QString &str : qAsConst( padTypeHistory ) )
+  for( const QString &str : std::as_const( padTypeHistory ) )
     mViaPadType->addItem( str );
   mViaPadType->setMinimumWidth(180);
 

@@ -41,7 +41,7 @@ void Sd3drInstance::clear()
 //!
 void Sd3drInstance::bodyColorGet(Sd3ColorList &dst) const
   {
-  for( auto const &body : qAsConst( mBodyList ) )
+  for( auto const &body : std::as_const( mBodyList ) )
     body.colorListGet( dst );
   }
 
@@ -69,10 +69,10 @@ void Sd3drInstance::bodyColorSet(const Sd3ColorList &src, int &index)
 //!
 void Sd3drInstance::draw(QOpenGLFunctions_2_0 *f, const Sd3drRegion &vertexList, QMatrix4x4 m) const
   {
-  for( auto const &map : qAsConst( mCopyList ) ) {
+  for( auto const &map : std::as_const( mCopyList ) ) {
     //Build matrix for conversion
     QMatrix4x4 mc = m * map;
-    for( auto const &body : qAsConst( mBodyList ) )
+    for( auto const &body : std::as_const( mBodyList ) )
       body.draw( f, vertexList, mc );
     }
   }
@@ -112,8 +112,8 @@ void Sd3drInstance::json(const SvJsonReader3d &js)
 //!
 void Sd3drInstance::volumeAdd(QMatrix2x3 &volume, const Sd3drRegion &vertexList) const
   {
-  for( auto const &map : qAsConst( mCopyList ) ) {
-    for( auto const &body : qAsConst( mBodyList ) )
+  for( auto const &map : std::as_const( mCopyList ) ) {
+    for( auto const &body : std::as_const( mBodyList ) )
       body.volumeAdd( volume, vertexList, map );
     }
   }

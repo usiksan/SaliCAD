@@ -34,6 +34,6 @@ SdScriptOperatorBlock::~SdScriptOperatorBlock()
 //!
 void SdScriptOperatorBlock::execute()
   {
-  for( auto ptr : qAsConst(mOperatorList) )
+  for( auto ptr : std::as_const(mOperatorList) )
     ptr->execute();
   }

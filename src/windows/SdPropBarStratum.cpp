@@ -89,7 +89,7 @@ void SdPropBarStratum::updateViewedLayers()
   mLayer->clear();
   //Accumulate available layers to signalLayers list
   QList<SdLayer*> signalLayers;
-  for( SdLayer *p : qAsConst( sdEnvir->mLayerTable ) ) {
+  for( SdLayer *p : std::as_const( sdEnvir->mLayerTable ) ) {
     if( p->trace() == mLayerTrace && (p->stratum() & stratumMask) && p->isEdited() ) {
       signalLayers.append( p );
       //mLayer->addItem( p->name(), QVariant( p->id() ) );

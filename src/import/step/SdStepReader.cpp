@@ -58,14 +58,14 @@ QStringList SdStepReader::parseList(const QString line) const
   int index = 0;       //Current char index
 
   //Blank while open '('
-  while( index < line.count() && line.at(index) != QChar('(') ) index++;
+  while( index < line.length() && line.at(index) != QChar('(') ) index++;
 
   //Continue parsing only if line not empty
-  if( index < line.count() ) {
+  if( index < line.length() ) {
     //Skeep first '('
     index++;
     //Split 'line' into param list only for level = 0, for other levels are the nested lists and treat as sigle param
-    while( index < line.count() ) {
+    while( index < line.length() ) {
       //Next char to analise
       char ch = line.at(index).toLatin1();
       switch( ch ) {
@@ -83,7 +83,7 @@ QStringList SdStepReader::parseList(const QString line) const
             //Append last accumulated param
             outList.append( param.simplified() );
             //Stop parsing
-            index = line.count();
+            index = line.length();
             continue;
             }
           break;

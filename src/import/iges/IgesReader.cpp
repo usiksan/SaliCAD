@@ -110,7 +110,7 @@ bool IgesReader::paramInt(int &val)
 bool IgesReader::paramReal(double &val)
   {
   if( !scanReal( val, 0.0, false ) ) return false;
-  if( mIndex > mLine.count() || (mLine.at(mIndex) != mParametrDelimiter && mLine.at(mIndex) != mRecordDelimiter) ) return false;
+  if( mIndex > mLine.length() || (mLine.at(mIndex) != mParametrDelimiter && mLine.at(mIndex) != mRecordDelimiter) ) return false;
   mIndex++;
   return true;
   }
@@ -419,7 +419,7 @@ bool IgesReader::scanReal(double &val, double defVal, bool thereDef)
   {
   bool ok = true;
   QByteArray ar;
-  while( mIndex < mLine.count() && mLine.at(mIndex) != mParametrDelimiter && mLine.at(mIndex) != mRecordDelimiter )
+  while( mIndex < mLine.length() && mLine.at(mIndex) != mParametrDelimiter && mLine.at(mIndex) != mRecordDelimiter )
     ar.append( mLine.at(mIndex++) );
   if( ar.isEmpty() ) {
     if( !thereDef ) return false;
@@ -461,7 +461,7 @@ bool IgesReader::scanChars(QByteArray &dest, const QByteArray &def, bool thereDe
     mIndex += countLastPos + 1;
     dest.reserve( count );
     for( int i = 0; i < count; i++ ) {
-      if( mIndex >= mLine.count() ) return false;
+      if( mIndex >= mLine.length() ) return false;
       dest.append( mLine.at(mIndex++) );
       }
     }
@@ -508,13 +508,13 @@ bool IgesReader::scanInt(int &val, int defVal, bool thereDef)
   bool ok = true;
   QByteArray ar;
   //Prefix blank
-  while( mIndex < mLine.count() && mLine.at(mIndex) == ' ' ) mIndex++;
+  while( mIndex < mLine.length() && mLine.at(mIndex) == ' ' ) mIndex++;
   if( mLine.at(mIndex) == '+' || mLine.at(mIndex) == '-' )
     ar.append( mLine.at(mIndex++) );
-  while( mIndex < mLine.count() && mLine.at(mIndex) == ' ' ) mIndex++;
-  while( mIndex < mLine.count() && QChar(mLine.at(mIndex)).isDigit() )
+  while( mIndex < mLine.length() && mLine.at(mIndex) == ' ' ) mIndex++;
+  while( mIndex < mLine.length() && QChar(mLine.at(mIndex)).isDigit() )
     ar.append( mLine.at(mIndex++) );
-  while( mIndex < mLine.count() && mLine.at(mIndex) == ' ' ) mIndex++;
+  while( mIndex < mLine.length() && mLine.at(mIndex) == ' ' ) mIndex++;
   if( ar.isEmpty() ) {
     if( !thereDef ) return false;
     val = defVal;

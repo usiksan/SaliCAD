@@ -94,7 +94,7 @@ SdWScriptHighlighter::SkipQuotation(const QString &text, int index, int count) {
 void
 SdWScriptHighlighter::highlightBlock(const QString &text) {
   int index = 0;
-  int count = text.count();
+  int count = text.length();
 
   //FIXME
   QRegularExpression expression("\".*\"");

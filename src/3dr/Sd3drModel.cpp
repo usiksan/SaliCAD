@@ -1155,7 +1155,7 @@ void Sd3drModel::draw3d(QOpenGLFunctions_2_0 *f, QMatrix4x4 mat) const
 //!
 void Sd3drModel::volumeAdd(QMatrix2x3 &volume) const
   {
-  for( auto const &inst : qAsConst(mInstanceList) ) {
+  for( auto const &inst : std::as_const(mInstanceList) ) {
     inst.volumeAdd( volume, mVertexList );
     }
   }

@@ -127,7 +127,7 @@ void SdScaner::lineSet(const QString &line)
 void SdScaner::blank()
   {
   while( true ) {
-    if( mIndex >= mLine.count() ) {
+    if( mIndex >= mLine.length() ) {
       //Current string is ended, take next line
       if( !nextLine() ) {
         mEndOfScan = true;
@@ -152,7 +152,7 @@ void SdScaner::scanName()
   {
   mTokenValue.clear();
   //Letters or numbers
-  while( mIndex < mLine.count() && (mLine.at(mIndex).isLetterOrNumber() || mLine.at(mIndex) == QChar('_')) )
+  while( mIndex < mLine.length() && (mLine.at(mIndex).isLetterOrNumber() || mLine.at(mIndex) == QChar('_')) )
     mTokenValue.append( mLine.at(mIndex++) );
   }
 
@@ -173,32 +173,32 @@ void SdScaner::scanDouble(bool allowSign, bool useComma)
       mTokenValue.append( mLine.at(mIndex++) );
     }
   //Digits
-  while( mIndex < mLine.count() && mLine.at(mIndex).isDigit() )
+  while( mIndex < mLine.length() && mLine.at(mIndex).isDigit() )
     mTokenValue.append( mLine.at(mIndex++) );
 
-  if( mIndex >= mLine.count() ) return;
+  if( mIndex >= mLine.length() ) return;
 
   //Point
   if( mLine.at(mIndex) == QChar('.') || (useComma && mLine.at(mIndex) == QChar(',')) ) {
     mIndex++;
     mTokenValue.append( QChar('.') );
     //Digits
-    while( mIndex < mLine.count() && mLine.at(mIndex).isDigit() )
+    while( mIndex < mLine.length() && mLine.at(mIndex).isDigit() )
       mTokenValue.append( mLine.at(mIndex++) );
 
-    if( mIndex >= mLine.count() ) return;
+    if( mIndex >= mLine.length() ) return;
 
     if( mLine.at(mIndex) == QChar('e') || mLine.at(mIndex) == QChar('E') ) {
       mIndex++;
       mTokenValue.append( QChar('e') );
 
-      if( mIndex >= mLine.count() ) return;
+      if( mIndex >= mLine.length() ) return;
 
       if( mLine.at(mIndex) == QChar('+') || mLine.at(mIndex) == QChar('-') )
         mTokenValue.append( mLine.at(mIndex++) );
 
       //Digits
-      while( mIndex < mLine.count() && mLine.at(mIndex).isDigit() )
+      while( mIndex < mLine.length() && mLine.at(mIndex).isDigit() )
         mTokenValue.append( mLine.at(mIndex++) );
       }
     }
@@ -219,7 +219,7 @@ void SdScaner::scanInteger(bool allowSign)
       mTokenValue.append( mLine.at(mIndex++) );
     }
   //Digits
-  while( mIndex < mLine.count() && mLine.at(mIndex).isDigit() )
+  while( mIndex < mLine.length() && mLine.at(mIndex).isDigit() )
     mTokenValue.append( mLine.at(mIndex++) );
   }
 
@@ -238,7 +238,7 @@ void SdScaner::scanString(QChar closeChar, QChar guardChar, const QString unclos
   //Skeep starting open symbol
   mIndex++;
   //String chars
-  while( mIndex < mLine.count() ) {
+  while( mIndex < mLine.length() ) {
     if( mLine.at(mIndex) == closeChar ) {
       //String closed
       mIndex++;
@@ -247,7 +247,7 @@ void SdScaner::scanString(QChar closeChar, QChar guardChar, const QString unclos
     if( mLine.at(mIndex) == guardChar ) {
       //Guarding symbol
       mIndex++;
-      if( mIndex >= mLine.count() ) {
+      if( mIndex >= mLine.length() ) {
         error( unclosedStringError );
         return;
         }

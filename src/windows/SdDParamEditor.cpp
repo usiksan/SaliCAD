@@ -172,7 +172,7 @@ void SdDParamEditor::stm32AlterPinAdd()
       //Split into separate lines
       QStringList fileLines( content.split('\x0a') );
       //Scan configuration file and append defined pin names
-      for( auto const &line : qAsConst(fileLines) ) {
+      for( auto const &line : std::as_const(fileLines) ) {
         //Get next line of configuration file
         //Check if there is pin definition
         if( line.contains(".Signal=") || line.contains(".GPIO_Label=") ) {
