@@ -84,7 +84,34 @@ bool SdPItemSymbol::sectionIsAvailable(int sectionIndex) const
 //!
 int SdPItemSymbol::sectionCount() const
   {
-  return partGet() == nullptr ? 0 : 1;
+  return 1;// partGet() == nullptr ? 0 : 1;
+  }
+
+
+//!
+//! \brief sectionSymbolTitleGet Returns section symbol title for visual presentation
+//! \param sectionIndex          Section index
+//! \return                      Section symbol title for visual presentation
+//!
+QString SdPItemSymbol::sectionSymbolTitleGet(int sectionIndex) const
+  {
+  if( sectionIndex == 0 )
+    return getTitle();
+  return QString{};
+  }
+
+
+
+//!
+//! \brief sectionSymbolIdGet Returns section symbol id
+//! \param sectionIndex       Section index
+//! \return                   Section symbol id
+//!
+QString SdPItemSymbol::sectionSymbolIdGet(int sectionIndex) const
+  {
+  if( sectionIndex == 0 )
+    return getUid();
+  return QString{};
   }
 
 
@@ -126,3 +153,5 @@ SdPItemSymbol *SdPItemSymbol::extractSymbolFromFactory(int sectionIndex) const
     return sdObjectOnly<SdPItemSymbol>( SdLibraryStorage::instance()->cfObjectGet( getUid() ) );
   return nullptr;
   }
+
+

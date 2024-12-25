@@ -18,7 +18,7 @@ Description
 #include "objects/SdProject.h"
 
 class SdPItemSymbol;
-class SdPItemComponent;
+class SdPItemVariant;
 class SdPItemPart;
 
 class SdModeCSymImp : public SdModeCommon
@@ -26,7 +26,7 @@ class SdModeCSymImp : public SdModeCommon
     //When component insertion
     SdPoint           mOrigin;     //!< Current position of origin of section
     SdPItemSymbol    *mSection;    //!< Component schematic section for insertion
-    SdPItemComponent *mComponent;  //!< Component for insertion
+    SdPItemVariant   *mComponent;  //!< Component for insertion
     SdPItemPart      *mPart;       //!< Part of component
     SdStringMap       mParams;     //!< Exact params of component variant
 

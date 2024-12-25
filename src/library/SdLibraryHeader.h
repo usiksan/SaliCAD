@@ -60,6 +60,7 @@ struct SdLibraryHeader
     QString     mAuthor;             //!< Author who create object
     qint32      mTime;               //!< Object time creation
     quint64     mClass;              //!< Object class. When equals 0 then corresponded object is deleted
+    bool        mPartPresent;        //!< Flag of part present in component or symbol
 
     SdStringMap mParamTable;         //!< User defined object params
 
@@ -67,11 +68,11 @@ struct SdLibraryHeader
     qint32      mVariantFieldCount; //!< Variable fields count in extended param table
     QStringList mVariantTable;      //!< Variant table
 
-    SdLibraryHeader() : mName(), mType(), mAuthor(), mTime(0), mClass(0), mParamTable(), mVariantFieldCount(0),mVariantTable() {}
+    SdLibraryHeader() : mName(), mType(), mAuthor(), mTime(0), mClass(0), mPartPresent(false), mParamTable(), mVariantFieldCount(0),mVariantTable() {}
 
-    void    write( QDataStream &os ) const { os << mName << mType << mAuthor << mTime << mClass << mParamTable << mVariantFieldCount << mVariantTable; }
+    void    write( QDataStream &os ) const { os << mName << mType << mAuthor << mTime << mClass << mPartPresent << mParamTable << mVariantFieldCount << mVariantTable; }
 
-    void    read( QDataStream &is ) { is >> mName >> mType >> mAuthor >> mTime >> mClass >> mParamTable >> mVariantFieldCount >> mVariantTable; }
+    void    read( QDataStream &is ) { is >> mName >> mType >> mAuthor >> mTime >> mClass >> mPartPresent >> mParamTable >> mVariantFieldCount >> mVariantTable; }
 
     QString uid() const { return headerUid( mType, mName, mAuthor ); }
 
@@ -86,12 +87,13 @@ struct SdLibraryHeader
       //Build variant "index" in header "hdr"
       //When index == 0 then builded base variant, i.e. that in mParamTable
       //Write base variant
-      hdr.mName       = mName;
-      hdr.mType       = mType;
-      hdr.mAuthor     = mAuthor;
-      hdr.mTime       = mTime;
-      hdr.mClass      = mClass;
-      hdr.mParamTable = mParamTable;
+      hdr.mName        = mName;
+      hdr.mType        = mType;
+      hdr.mAuthor      = mAuthor;
+      hdr.mTime        = mTime;
+      hdr.mClass       = mClass;
+      hdr.mPartPresent = mPartPresent;
+      hdr.mParamTable  = mParamTable;
       hdr.mVariantFieldCount = 0;
       hdr.mVariantTable.clear();
       sdExtractVariant( index, hdr.mParamTable, mVariantFieldCount, mVariantTable );

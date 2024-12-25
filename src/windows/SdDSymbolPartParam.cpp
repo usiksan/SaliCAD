@@ -1,6 +1,7 @@
 #include "SdDSymbolPartParam.h"
 #include "SdDGetObject.h"
 #include "SdDHelp.h"
+#include "SdWEditor3d.h"
 
 #include <QInputDialog>
 #include <QMessageBox>
@@ -47,7 +48,11 @@ SdDSymbolPartParam::SdDSymbolPartParam(SdPItemSymbol *symbol, QWidget *parent)
   hbox->addWidget( mPart = new QLineEdit() );
   hbox->addWidget( mPartSelect = new QPushButton( tr("Select part...") ) );
   vbox->addLayout( hbox );
-  vbox->addWidget( mPartViewer = new SdWEditorGraphView(this) );
+  hbox = new QHBoxLayout();
+  hbox->addWidget( mPartViewer = new SdWEditorGraphView(this) );
+  hbox->addWidget( m3dView = new SdWEditor3d( nullptr, this ) );
+  vbox->addLayout( hbox );
+  //vbox->addWidget( mPartViewer = new SdWEditorGraphView(this) );
 
   //On right - parametr table
   w = new QWidget(split);
@@ -102,6 +107,7 @@ void SdDSymbolPartParam::fillPart()
   {
   mPartViewer->setItemById( mPartUid );
   mPart->setText( mPartViewer->itemTitle() );
+  m3dView->setProjectItem( mPartViewer->getProjectItem() );
   }
 
 
@@ -122,6 +128,8 @@ void SdDSymbolPartParam::accept()
   else {
     if( mPartUid.isEmpty() )
       mComponent->partRemove( mUndo );
+    else
+      mComponent->partIdSet( mPartUid, mUndo );
     }
 
   SdDParamBase::accept();

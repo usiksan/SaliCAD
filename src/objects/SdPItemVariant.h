@@ -97,13 +97,28 @@ class SdPItemVariant : public SdProjectItem
     //! \param sectionIndex       Section index
     //! \return                   true if section with sectionIndex available
     //!
-    virtual bool           sectionIsAvailable( int sectionIndex ) const { Q_UNUSED(sectionIndex) return false; }
+    virtual bool           sectionIsAvailable( int sectionIndex ) const = 0;
 
     //!
     //! \brief sectionCount Returns section count
     //! \return                Section count
     //!
-    virtual int            sectionCount() const { return 0; }
+    virtual int            sectionCount() const = 0;
+
+    //!
+    //! \brief sectionSymbolTitleGet Returns section symbol title for visual presentation
+    //! \param sectionIndex          Section index
+    //! \return                      Section symbol title for visual presentation
+    //!
+    virtual QString        sectionSymbolTitleGet( int sectionIndex ) const = 0;
+
+    //!
+    //! \brief sectionSymbolIdGet Returns section symbol id
+    //! \param sectionIndex       Section index
+    //! \return                   Section symbol id
+    //!
+    virtual QString        sectionSymbolIdGet( int sectionIndex ) const = 0;
+
 
     //!
     //! \brief sectionPinNumberGet Return individual pin number for desired pin name for section
@@ -111,7 +126,7 @@ class SdPItemVariant : public SdProjectItem
     //! \param pinName             Pin name which number must be retrived
     //! \return                    Pin number for pin name of section with index sectionIndex
     //!
-    virtual QString        sectionPinNumberGet( int sectionIndex, const QString pinName ) const;
+    virtual QString        sectionPinNumberGet( int sectionIndex, const QString pinName ) const = 0;
 
     //!
     //! \brief extractSymbolFromFactory Return symbol from section by index
@@ -123,9 +138,6 @@ class SdPItemVariant : public SdProjectItem
 
     // SdObject interface
   public:
-    virtual QString getType() const override;
-    virtual SdClass getClass() const override;
-
     //!
     //! \brief cloneFrom Overrided function. We copy object from source
     //! \param src       Source of object from which copy must be made
@@ -152,8 +164,6 @@ class SdPItemVariant : public SdProjectItem
     // SdProjectItem interface
   public:
     virtual void    getHeader(SdLibraryHeader &hdr) const override;
-    virtual QString getIconName() const override;
-    virtual quint64 getAcceptedObjectsMask() const override;
   };
 
 #endif // SDPITEMVARIANT_H

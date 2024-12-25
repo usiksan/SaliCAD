@@ -22,7 +22,7 @@ Description
 
 class SdObject;
 class SdProjectItem;
-class SdPItemComponent;
+class SdPItemVariant;
 class SdWEditorGraphView;
 class SdWEditor3d;
 class SdProject;
@@ -30,7 +30,6 @@ class QDialogButtonBox;
 class QTableWidget;
 class QLineEdit;
 class QListWidget;
-
 
 
 class SdDGetObject : public QDialog
@@ -44,7 +43,7 @@ class SdDGetObject : public QDialog
     SdWEditorGraphView    *mSymbolView;     //!< Widget for schematic preview
     SdWEditorGraphView    *mPartView;       //!< Widget for part preview
     SdWEditor3d           *m3dView;         //!< 3d part view window
-    SdPItemComponent      *mComponent;      //!< Component if selected
+    SdPItemVariant        *mComponent;      //!< Component if selected
     SdProject             *mProject;        //!< Project if selected
     QLineEdit             *mNameFilter;     //!< Name filter edit line
     QTableWidget          *mTable;          //!< Table with find results
@@ -60,6 +59,7 @@ class SdDGetObject : public QDialog
     static quint64                mSort;          //!< Object select sort (class)
     static SdLibraryHeaderList    mHeaderList;    //!< Header list for filtered objects
     static bool                   mExpandVariant; //!< Flag for find only in titles
+    static bool                   mWithPartOnly;  //!< Check box with flag which filter only components with part
   public:
     explicit SdDGetObject(quint64 sort, const QString title, const QString &defFilter = QString{}, QWidget *parent = nullptr);
 
@@ -86,7 +86,7 @@ class SdDGetObject : public QDialog
   public:
     static SdObject         *getObject(quint64 sort, const QString title, QWidget *parent, const QString defFiltr = QString{} );
     static QString           getObjectUid( quint64 sort, const QString title, QWidget *parent, const QString defFiltr = QString() );
-    static SdPItemComponent *getComponent( int *logSectionPtr, SdStringMap *param, const QString title, QWidget *parent );
+    static SdPItemVariant   *getComponent( int *logSectionPtr, SdStringMap *param, const QString title, QWidget *parent );
     static SdProject        *getProject( QString &itemName, const QString title, QWidget *parent, const QString defFiltr = QString{} );
 
     // QDialog interface

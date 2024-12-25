@@ -220,7 +220,7 @@ void SdModeCSymImp::getSection()
 
     clear();
 
-    mComponent = sdObjectOnly<SdPItemComponent>( obj );
+    mComponent = sdObjectOnly<SdPItemVariant>( obj );
 
     if( mComponent == nullptr ) {
       QMessageBox::warning( mEditor, QObject::tr("Warning!"), QObject::tr("Can't load selected component. Select another.") );
@@ -265,6 +265,8 @@ void SdModeCSymImp::getSection()
 void SdModeCSymImp::clear()
   {
   if( mComponent != nullptr ) {
+    if( mComponent == mSection )
+      mSection = nullptr;
     delete mComponent;
     mComponent = nullptr;
     }

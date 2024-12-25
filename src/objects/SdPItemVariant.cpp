@@ -176,36 +176,6 @@ void SdPItemVariant::partRemove(SdUndo *undo)
 
 
 
-//!
-//! \brief sectionPinNumberGet Return individual pin number for desired pin name for section
-//! \param sectionIndex        Section index
-//! \param pinName             Pin name which number must be retrived
-//! \return                    Pin number for pin name of section with index sectionIndex
-//!
-QString SdPItemVariant::sectionPinNumberGet(int sectionIndex, const QString pinName) const
-  {
-  //By default we return empty pin number
-  Q_UNUSED(sectionIndex)
-  Q_UNUSED(pinName)
-  return QString{};
-  }
-
-
-
-
-QString SdPItemVariant::getType() const
-  {
-  return QStringLiteral(SD_TYPE_VARIANT);
-  }
-
-
-
-
-SdClass SdPItemVariant::getClass() const
-  {
-  return dctVariant;
-  }
-
 
 
 
@@ -274,23 +244,12 @@ void SdPItemVariant::getHeader(SdLibraryHeader &hdr) const
   SdProjectItem::getHeader( hdr );
   hdr.mVariantFieldCount = mVariantFieldCount;
   hdr.mVariantTable      = mVariantTable;
+  hdr.mPartPresent       = partIsPresent();
   }
 
 
 
 
-QString SdPItemVariant::getIconName() const
-  {
-  return QString(":/pic/iconComp.png");
-  }
-
-
-
-
-quint64 SdPItemVariant::getAcceptedObjectsMask() const
-  {
-  return 0;
-  }
 
 
 

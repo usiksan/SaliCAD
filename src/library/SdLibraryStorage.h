@@ -51,8 +51,8 @@ class SdLibraryStorage : public QObject
     QFileInfoList          mScanList;        //!< Library scan list contains list of subdirectories of library
     QTimer                 mScanTimer;       //!< Scan timer for periodic scan library for new or deleted objects
     QMap<QString,QString>  mExistList;       //!< Map of existing objects
-    SdLibraryReferenceMap  mReferenceMap;
-    QFile                  mHeaderFile;
+    SdLibraryReferenceMap  mReferenceMap;    //!< Map with key of object id and value is SdLibraryReference
+    QFile                  mHeaderFile;      //!< File with header of all objects in library
     SdNetClientLocker     *mNetClientLocker;
     bool                   mDirty;
     bool                   mUploadAvailable; //!< If true then there available objects to upload
@@ -217,6 +217,20 @@ class SdLibraryStorage : public QObject
     //! \return         Full path to library file
     //!
     QString          fullPath( const QString &fileName ) const;
+
+    //!
+    //! \brief fileNameOfLibraryObject Returns file name of library object
+    //! \param uid                     Unical id of object
+    //! \return                        File name of library object
+    //!
+    QString          fileNameOfLibraryObject( const QString &uid ) const;
+
+    //!
+    //! \brief fullPathOfLibraryObject Returns full path to object in library
+    //! \param uid                     Unical id of object
+    //! \return                        Full path to file of object in library
+    //!
+    QString          fullPathOfLibraryObject( const QString &uid ) const;
 
     static QString   cachePath();
   };

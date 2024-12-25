@@ -494,7 +494,7 @@ void SdWEditorComponent::paramDelete()
 void SdWEditorComponent::paramCopy()
   {
   SdStringMap param; //Params to get in
-  SdPItemComponent *comp = SdDGetObject::getComponent( nullptr, &param, tr("Select component to copy param from"), this );
+  SdPItemVariant *comp = SdDGetObject::getComponent( nullptr, &param, tr("Select component to copy param from"), this );
   if( comp != nullptr ) {
     //Append params
     mUndo->begin( tr("Copy params from other component"), mComponent, false );
@@ -502,6 +502,7 @@ void SdWEditorComponent::paramCopy()
       mComponent->paramSet( iter.key(), iter.value(), mUndo );
     dirtyProject();
     fillParams();
+    delete comp;
     }
   }
 

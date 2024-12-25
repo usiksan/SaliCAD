@@ -26,15 +26,17 @@ Description
 #include <QTableWidget>
 #include <QDialog>
 
+class SdWEditor3d;
+
 class SdDSymbolPartParam : public SdDParamBase
   {
     Q_OBJECT
 
     SdPItemSymbol        *mComponent;         //!< Editing component
     SdUndo               *mUndo;              //!< Undo for editing
-    SdStringMap           mParam;             //!< Edit param table - internal representation
 
     SdWEditorGraphView   *mPartViewer;        //!< View for part of this symbol
+    SdWEditor3d          *m3dView;            //!< 3d part view window
 
     QLineEdit            *mPart;              //!< Part name for symbol
     QPushButton          *mPartSelect;        //!< Button for part select from library

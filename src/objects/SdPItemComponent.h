@@ -15,7 +15,6 @@ Description
 #define SDPITEMCOMPONENT_H
 
 #include "SdPItemVariant.h"
-#include "SdPartVariant.h"
 #include "SdSection.h"
 
 #define SD_TYPE_COMPONENT "Comp"
@@ -32,32 +31,46 @@ class SdPItemComponent : public SdPItemVariant
     //! \param sectionIndex       Section index
     //! \return                   true if section with sectionIndex available
     //!
-    virtual bool     sectionIsAvailable( int sectionIndex ) const override;
+    virtual bool           sectionIsAvailable( int sectionIndex ) const override;
 
     //!
     //! \brief sectionCount Returns section count
     //! \return                Section count
     //!
-    virtual int      sectionCount() const override;
+    virtual int            sectionCount() const override;
 
     //Append section with symbol id. May be empty
-    void             sectionAppend( const QString id, SdUndo *undo );
-    //Section symbol title for visual presentation
-    QString          sectionSymbolTitleGet( int sectionIndex ) const;
-    //Section symbol id
-    QString          sectionSymbolIdGet( int sectionIndex ) const;
+    void                   sectionAppend( const QString id, SdUndo *undo );
+
+    //!
+    //! \brief sectionSymbolTitleGet Returns section symbol title for visual presentation
+    //! \param sectionIndex          Section index
+    //! \return                      Section symbol title for visual presentation
+    //!
+    virtual QString        sectionSymbolTitleGet( int sectionIndex ) const override;
+
+    //!
+    //! \brief sectionSymbolIdGet Returns section symbol id
+    //! \param sectionIndex       Section index
+    //! \return                   Section symbol id
+    //!
+    virtual QString        sectionSymbolIdGet( int sectionIndex ) const override;
+
     //Setup new section symbol id
-    void             sectionSymbolIdSet( const QString id, int sectionIndex, SdUndo *undo );
+    void                   sectionSymbolIdSet( const QString id, int sectionIndex, SdUndo *undo );
     //Return section by index
-    SdSection       *sectionGet( int sectionIndex ) const;
+    SdSection             *sectionGet( int sectionIndex ) const;
+
     //Return symbol from section by index
-    SdPItemSymbol   *extractSymbolFromFactory(int sectionIndex) const;
+    virtual SdPItemSymbol *extractSymbolFromFactory(int sectionIndex) const override;
+
     //Remove section
-    void             sectionRemove( int sectionIndex, SdUndo *undo );
+    void                   sectionRemove( int sectionIndex, SdUndo *undo );
+
 
     //Pins in sections
     //Return full section pin assotiation table
-    SdPinAssociation sectionPinsGet( int sectionIndex ) const;
+    SdPinAssociation       sectionPinsGet( int sectionIndex ) const;
 
     //!
     //! \brief sectionPinNumberGet Return individual pin number for desired pin name for section
@@ -65,10 +78,10 @@ class SdPItemComponent : public SdPItemVariant
     //! \param pinName             Pin name which number must be retrived
     //! \return                    Pin number for pin name of section with index sectionIndex
     //!
-    virtual QString  sectionPinNumberGet( int sectionIndex, const QString pinName ) const override;
+    virtual QString        sectionPinNumberGet( int sectionIndex, const QString pinName ) const override;
 
     //Setup new pin number for desired pin name for section
-    void             sectionPinNumberSet( int sectionIndex, const QString pinName, const QString pinNumber, SdUndo *undo );
+    void                   sectionPinNumberSet( int sectionIndex, const QString pinName, const QString pinNumber, SdUndo *undo );
 
 
     // SdObject interface

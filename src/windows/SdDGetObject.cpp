@@ -37,6 +37,7 @@ Description
 #include <QDialogButtonBox>
 #include <QLabel>
 #include <QPushButton>
+#include <QCheckBox>
 #include <QTableWidget>
 #include <QLineEdit>
 #include <QListWidget>
@@ -70,6 +71,7 @@ SdStringMap            SdDGetObject::mParam;        //Component or instance para
 quint64                SdDGetObject::mSort;         //Object select sort (class)
 SdLibraryHeaderList    SdDGetObject::mHeaderList;   //Header list for filtered objects
 bool                   SdDGetObject::mExpandVariant = false;    //Flag for find only in titles and not show variants
+bool                   SdDGetObject::mWithPartOnly;
 
 SdDGetObject::SdDGetObject(quint64 sort, const QString title, const QString &defFilter, QWidget *parent) :
   QDialog(parent),
@@ -99,6 +101,15 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, const QString &def
   hbox->addWidget( but = new QPushButton( tr("Find") ) );
   connect( but, &QPushButton::clicked, this, &SdDGetObject::find );
   but->setDefault(true);
+  if( sort & dctComponent ) {
+    QCheckBox *cb = new QCheckBox( tr("With part only") );
+    hbox->addWidget( cb );
+    cb->setChecked( mWithPartOnly );
+    connect( cb, &QCheckBox::clicked, this, [this] ( bool checked ) {
+      mWithPartOnly = checked;
+      find();
+      } );
+    }
   vbox->addLayout( hbox );
   vbox->addWidget( mTable = new QTableWidget() );
   connect( mTable, &QTableWidget::cellClicked, this, &SdDGetObject::onSelectItem );
@@ -235,9 +246,13 @@ void SdDGetObject::find()
   SdLibraryStorage::instance()->forEachHeader( [list] ( SdLibraryHeader &hdr ) -> bool {
     //test class
     if( hdr.mClass & mSort ) {
+      //Skip component or symbol without part
+      if( mWithPartOnly && !hdr.mPartPresent )
+        return false;
+
       //Split uid to name type and author
       QString uid( hdr.uid() );
-      QString name = uid.contains(sdUidDelimiter) ? uid.split( sdUidDelimiter ).at(1) : uid;
+      QString name = hdr.mName; // uid.contains(sdUidDelimiter) ? uid.split( sdUidDelimiter ).at(1) : uid;
 
       //Test for all variants
       if( hdr.variantTableExist() ) {
@@ -285,8 +300,12 @@ void SdDGetObject::onSelectItem(int row, int column)
   {
   Q_UNUSED(column)
   clearComponent();
+
+  mSymbolView->setItem( nullptr, true );
+  mPartView->setItem( nullptr, true );
+
   SdLibraryHeader hdr = mHeaderList.at(row);
-  if( hdr.mClass == dctSymbol || hdr.mClass == dctSheet ) {
+  if( hdr.mClass == dctSheet ) {
     mSymbolView->setItemById( hdr.uid() );
     mPartView->setItem( nullptr, true);
     }
@@ -299,6 +318,9 @@ void SdDGetObject::onSelectItem(int row, int column)
     }
   else if( hdr.mClass == dctProject ) {
     mProject = sdObjectOnly<SdProject>( SdLibraryStorage::instance()->cfObjectGet( hdr.uid() ) );
+    }
+  else if( hdr.mClass == dctSymbol ) {
+    mComponent = sdObjectOnly<SdPItemSymbol>( SdLibraryStorage::instance()->cfObjectGet( hdr.uid() ) );
     }
 
   mParam = hdr.mParamTable;
@@ -323,9 +345,9 @@ void SdDGetObject::onSelectItem(int row, int column)
       mSectionIndex = 0;
       mSymbolView->setItemById( mComponent->sectionSymbolIdGet(0) );
       }
-    else {
-      mSymbolView->setItem( mComponent, true );
-      }
+    // else {
+    //   mSymbolView->setItem( mComponent, true );
+    //   }
 
     //Setup part for view
     mPartView->setItemById( mComponent->partIdGet() );
@@ -344,11 +366,6 @@ void SdDGetObject::onSelectItem(int row, int column)
     mSections->setCurrentRow(0);
     onCurrentSection(0);
     present = true;
-    }
-
-  if( !present ) {
-    mSymbolView->setItem( nullptr, true );
-    mPartView->setItem( nullptr, true );
     }
 
   m3dView->setProjectItem( mPartView->getProjectItem() );
@@ -505,7 +522,7 @@ void SdDGetObject::accept()
     SdLibraryHeader hdr = mHeaderList.at(row);
     mObjName   = hdr.mName;
     mObjUid     = hdr.uid();
-    if( hdr.mClass == dctComponent )
+    if( hdr.mClass == dctComponent || hdr.mClass == dctSymbol )
       mCompUid = mObjUid;
     else
       mCompUid.clear();
@@ -540,9 +557,9 @@ QString SdDGetObject::getObjectUid(quint64 sort, const QString title, QWidget *p
 
 
 
-SdPItemComponent *SdDGetObject::getComponent(int *logSectionPtr, SdStringMap *param, const QString title, QWidget *parent)
+SdPItemVariant *SdDGetObject::getComponent(int *logSectionPtr, SdStringMap *param, const QString title, QWidget *parent)
   {
-  SdDGetObject dget( dctComponent, title, QString{}, parent );
+  SdDGetObject dget( dctComponent | dctSymbol, title, QString{}, parent );
   if( dget.exec() ) {
     //If available pointer to logical section then set selected section
     if( logSectionPtr )
@@ -550,7 +567,7 @@ SdPItemComponent *SdDGetObject::getComponent(int *logSectionPtr, SdStringMap *pa
     //If available pointer to param then set component or instance params
     if( param )
       *param = mParam;
-    return sdObjectOnly<SdPItemComponent>( SdLibraryStorage::instance()->cfObjectGet( mCompUid ) );
+    return sdObjectOnly<SdPItemVariant>( SdLibraryStorage::instance()->cfObjectGet( mCompUid ) );
     }
   return nullptr;
   }

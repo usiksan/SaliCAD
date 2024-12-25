@@ -52,6 +52,20 @@ class SdPItemSymbol : public SdPItemVariant
     virtual int           sectionCount() const override;
 
     //!
+    //! \brief sectionSymbolTitleGet Returns section symbol title for visual presentation
+    //! \param sectionIndex          Section index
+    //! \return                      Section symbol title for visual presentation
+    //!
+    virtual QString        sectionSymbolTitleGet( int sectionIndex ) const override;
+
+    //!
+    //! \brief sectionSymbolIdGet Returns section symbol id
+    //! \param sectionIndex       Section index
+    //! \return                   Section symbol id
+    //!
+    virtual QString        sectionSymbolIdGet( int sectionIndex ) const override;
+
+    //!
     //! \brief sectionPinNumberGet Return individual pin number for desired pin name for section
     //! \param sectionIndex        Section index
     //! \param pinName             Pin name which number must be retrived
@@ -65,6 +79,7 @@ class SdPItemSymbol : public SdPItemVariant
     //! \return                         Symbol extracted from factory
     //!
     virtual SdPItemSymbol *extractSymbolFromFactory(int sectionIndex) const override;
+
   };
 
 #endif // SDPITEMSYMBOL_H

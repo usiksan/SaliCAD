@@ -32,9 +32,10 @@ Description
 #include <QStandardPaths>
 #include <QDebug>
 
-#define FNAME_REF cachePath() + QStringLiteral("reference.dat")
-#define FNAME_HDR cachePath() + QStringLiteral("headers.dat")
-#define HDR_START 18
+#define FNAME_REF    cachePath() + QStringLiteral("reference.dat")
+#define FNAME_HDR_V1 cachePath() + QStringLiteral("headers.dat")
+#define FNAME_HDR    cachePath() + QStringLiteral("headersV2.dat")
+#define HDR_START    18
 
 SdLibraryStorage::SdLibraryStorage() :
   QObject(),
@@ -111,6 +112,10 @@ void SdLibraryStorage::libraryInit()
   //Close previously opened data base
   if( mHeaderFile.isOpen() )
     mHeaderFile.close();
+
+  //Delete Header file of previous version
+  if( QFile::exists(FNAME_HDR_V1) )
+    QFile::remove( FNAME_HDR_V1 );
 
   mHeaderFile.setFileName( FNAME_HDR );
 
@@ -246,7 +251,7 @@ SdContainerFile *SdLibraryStorage::cfObjectGet(const QString uid) const
   {
   if( mReferenceMap.contains( uid ) ) {
     //Load object
-    return sdObjectOnly<SdContainerFile>( SdObject::fileJsonLoad( fullPath( SdContainerFile::getLibraryFName( uid, mReferenceMap.value(uid).mCreationTime ) ) ) );
+    return sdObjectOnly<SdContainerFile>( SdObject::fileJsonLoad( fullPathOfLibraryObject(uid) ) );
     }
   return nullptr;
   }
@@ -385,10 +390,11 @@ bool SdLibraryStorage::forEachHeader(std::function<bool(SdLibraryHeader&)> fun1)
   QDataStream is( &mHeaderFile );
   SdLibraryHeader hdr;
   while( !mHeaderFile.atEnd() ) {
+    auto position = mHeaderFile.pos();
     hdr.read( is );
-    //qDebug() << hdr.uid() << hdr.mTime;
+   // qDebug() << hdr.uid() << hdr.mTime << mHeaderFile.pos();
     //Test if header not deleted
-    if( mReferenceMap.value(hdr.uid()).mCreationTime == hdr.mTime ) {
+    if( mReferenceMap.value(hdr.uid()).mHeaderPtr == position ) {
       if( fun1( hdr) )
         return true;
       }
@@ -451,6 +457,9 @@ void SdLibraryStorage::periodicScan()
             QString theFullPath( fullPath( item->getLibraryFName() )  );
             if( file.absoluteFilePath() != theFullPath  ) {
               qDebug() << "Different name" << file.absoluteFilePath() << theFullPath;
+              SvDir dir( mLibraryPath );
+              QDir().mkpath( dir.slashedPath() + item->getLibraryFName().left(2) );
+
               QFile::rename( file.absoluteFilePath(), theFullPath );
               }
 
@@ -493,6 +502,7 @@ void SdLibraryStorage::periodicScan()
       }
     }
   else {
+
     //Begin new scan
     QDir dir( mLibraryPath );
     mScanList = dir.entryInfoList( QDir::AllDirs | QDir::NoDotAndDotDot );
@@ -500,7 +510,7 @@ void SdLibraryStorage::periodicScan()
     //Fill map for existing files
     mExistList.clear();
     for( auto it = mReferenceMap.cbegin(); it != mReferenceMap.cend(); it++ )
-      mExistList.insert( SdContainerFile::getLibraryFName( it.key(), it.value().mCreationTime ), it.key() );
+      mExistList.insert( fileNameOfLibraryObject( it.key() ), it.key() );
 
     if( mScanList.count() == 0 ) {
       //Nothing to scan
@@ -544,7 +554,7 @@ void SdLibraryStorage::insertReferenceAndHeader(const SdContainerFile *item)
       //Check if there is older object
       if( mReferenceMap.contains(key) ) {
         //Object already in library and it is older, so we remove its file
-        QFile::remove( fullPath( SdContainerFile::getLibraryFName( key, mReferenceMap.value(key).mCreationTime ) ) );
+        QFile::remove( fullPathOfLibraryObject( key ) );
         emit informationAppended( tr("Older object replaced %1").arg( item->getTitle() )  );
         mNewestMark = true;
         }
@@ -574,6 +584,32 @@ QString SdLibraryStorage::fullPath(const QString &fileName) const
   {
   SvDir dir( mLibraryPath );
   return dir.slashedPath() + fileName;
+  }
+
+
+
+
+//!
+//! \brief fileNameOfLibraryObject Returns file name of library object
+//! \param uid                     Unical id of object
+//! \return                        File name of library object
+//!
+QString SdLibraryStorage::fileNameOfLibraryObject(const QString &uid) const
+  {
+  return SdContainerFile::getLibraryFName( uid, mReferenceMap.value(uid).mCreationTime );
+  }
+
+
+
+
+//!
+//! \brief fullPathOfLibraryObject Returns full path to object in library
+//! \param uid                     Unical id of object
+//! \return                        Full path to file of object in library
+//!
+QString SdLibraryStorage::fullPathOfLibraryObject(const QString &uid) const
+  {
+  return fullPath( fileNameOfLibraryObject(uid) );
   }
 
 

@@ -223,6 +223,9 @@ History
                    Append symbol param and part editor
                    Rebased param editor to SdDParamBase
   22.12.2024 v2.10 Append posibilities to pack component with single section to SdPItemSymbol
+  25.12.2024 v2.11 Fix: qHash generate different numbers with different qt version,
+                   so library file names are changed. Replace qHash with local crc.
+                   Continue with possibility symbol used as component
 */
 
 #ifndef SDCONFIG
@@ -234,7 +237,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             2
-#define SD_VERSION_MINOR            10
+#define SD_VERSION_MINOR            11
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"

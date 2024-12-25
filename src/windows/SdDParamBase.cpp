@@ -16,7 +16,7 @@ Description
 #include "SdValueSelector.h"
 #include "SdDParamDefault.h"
 #include "SdDGetObject.h"
-#include "objects/SdProjectItem.h"
+#include "objects/SdPItemVariant.h"
 
 #include <QInputDialog>
 #include <QMessageBox>
@@ -228,12 +228,13 @@ void SdDParamBase::paramDelete()
 void SdDParamBase::paramCopy()
   {
   SdStringMap param; //Params to get in
-  SdPItemComponent *comp = SdDGetObject::getComponent( nullptr, &param, tr("Select component to copy param from"), this );
+  SdPItemVariant *comp = SdDGetObject::getComponent( nullptr, &param, tr("Select component to copy param from"), this );
   if( comp != nullptr ) {
     //Append params
     for( auto iter = param.cbegin(); iter != param.cend(); iter++ )
       mParam.insert( iter.key(), iter.value() );
     fillParams();
+    delete comp;
     }
   }
 
@@ -260,7 +261,7 @@ void SdDParamBase::fillParams()
   mParamTable->setRowCount( mParam.count() );
   //Setup header
   mParamTable->setHorizontalHeaderLabels( {tr("Param name"), tr("Param value")} );
-  mParamTable->setColumnWidth(1,400);
+  mParamTable->setColumnWidth(1,200);
   int row = 0;
   for( auto iter = mParam.constBegin(); iter != mParam.constEnd(); iter++ )
     paramAppend( row++, iter.key(), iter.value() );

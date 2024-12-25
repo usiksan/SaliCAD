@@ -25,6 +25,27 @@ QString SdContainerFile::getUid() const
   }
 
 
+//!
+//! \brief crc  Calculates crc code of line which is hash code for unical file name
+//! \param line
+//! \return
+//!
+//! Previous realisation use qHash, but with change qt version algorithm
+//! of calculation - changed. To fix up this problem we release our owner crc calculation
+static unsigned short crc( const QString &line )
+  {
+  const ushort *ptr = line.utf16();
+  int len = line.length();
+  unsigned short h = 0;
+  //(h << 5) + h ^ c
+  while( len ) {
+    h = (h << 5) + h ^ *ptr;
+    ptr++;
+    len--;
+    }
+  return h;
+  }
+
 
 
 //!
@@ -41,8 +62,8 @@ QString SdContainerFile::getLibraryFName( const QString &fullUid, qint32 time )
   for( int i = 0; i < uid.length(); i++ )
     if( !uid.at(i).isLetterOrNumber() )
       uid[i] = QChar('_');
-  QString hash( QStringLiteral("%1").arg( qHash(fullUid), 8, 16, QChar('0') ) );
-  return QStringLiteral("%1/%2-%3-%4" SD_BINARY_EXTENSION ).arg( hash.left(2), hash.right(6), uid ).arg( time, 0, 16 );
+  QString hash( QStringLiteral("%1").arg( crc(fullUid), 4, 16, QChar('0') ) );
+  return QStringLiteral("%1/%2-%3-%4" SD_BINARY_EXTENSION ).arg( hash.left(2), hash.right(2), uid ).arg( time, 0, 16 );
   }
 
 

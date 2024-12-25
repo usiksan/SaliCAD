@@ -639,7 +639,7 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
   Q_ASSERT( prj != nullptr );
 
   //Realloc objects for this project
-  mComponent = dynamic_cast<SdPItemComponent*>( prj->getFixedProjectItem(mComponent) );  //Object contains section information, pin assotiation info. May be same as mSymbol.
+  mComponent = dynamic_cast<SdPItemVariant*>( prj->getFixedProjectItem(mComponent) );  //Object contains section information, pin assotiation info. May be same as mSymbol.
   mSymbol = dynamic_cast<SdPItemSymbol*>( prj->getFixedProjectItem(mSymbol) );        //Symbol contains graph information
   mPart = dynamic_cast<SdPItemPart*>( prj->getFixedProjectItem(mPart) );
 
