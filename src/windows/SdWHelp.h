@@ -32,7 +32,6 @@ class SdWHelp : public QTextBrowser
 
     //Path where resides help system files
     static QString helpPath();
-    static void    setHelpPath( const QString pth );
 
     //Conversion page name with fragment point in page to URL with current language
     //Преобразование названия страницы в фактический URL в соответствии с выбранным языком
@@ -55,9 +54,6 @@ class SdWHelp : public QTextBrowser
 
     //Show intro topic
     void helpIntro();
-
-    //Path where resides help system files
-    static QString mHelpPath;
   };
 
 #endif // SDWHELP_H

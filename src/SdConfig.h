@@ -226,6 +226,7 @@ History
   25.12.2024 v2.11 Fix: qHash generate different numbers with different qt version,
                    so library file names are changed. Replace qHash with local crc.
                    Continue with possibility symbol used as component
+  08.01.2025 v2.12 Integrate help system into application executable file via resource system
 */
 
 #ifndef SDCONFIG
@@ -237,7 +238,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             2
-#define SD_VERSION_MINOR            11
+#define SD_VERSION_MINOR            12
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -326,7 +327,6 @@ History
 #define SDK_UPLOAD_AUTO              "Auto upload"
 #define SDK_ENVIR_VERSION            "Envir version"
 #define SDK_ENVIR                    "Envir"
-#define SDK_HELP_PATH                "HelpPath"
 #define SDK_GET_OBJECT_DLG_CFG       "DlgGetObjectCfg2_8"
 
 #define MODE_HELP                    //Prefix to mode help files

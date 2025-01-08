@@ -29,9 +29,6 @@ Description
 #include <QMessageBox>
 
 
-//Path where resides help system files
-QString SdWHelp::mHelpPath;
-
 
 //Common constructor for help widgets
 SdWHelp::SdWHelp() :
@@ -249,23 +246,8 @@ void SdWHelp::helpIntro()
 
 QString SdWHelp::helpPath()
   {
-  if( mHelpPath.isEmpty() ) {
-    //Help path not assigned yet, build
-    QSettings s;
-    SvDir def( QCoreApplication::applicationDirPath() );
-    //Help system path
-    SvDir pth(s.value( SDK_HELP_PATH, QVariant( def.slashedPath() + QString("help/")) ).toString());
-    mHelpPath = pth.slashedPath();
-    }
-  return QString(":/help/"); // mHelpPath;
+  return QStringLiteral(":/help/");
   }
 
 
 
-void SdWHelp::setHelpPath(const QString pth)
-  {
-  SvDir hp(pth);
-  mHelpPath = hp.slashedPath();
-  QSettings s;
-  s.setValue( SDK_HELP_PATH, mHelpPath );
-  }

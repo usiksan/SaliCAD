@@ -194,7 +194,7 @@ void SdGraphLinearRegion::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList,
   {
   Q_UNUSED(stratum)
   Sd3drFace face;
-  for( auto p : qAsConst(mList) ) {
+  for( auto p : std::as_const(mList) ) {
     QVector3D v( p );
     v /= 1000.0;
     face.append( model.vertexAppend(map.map(v)) );

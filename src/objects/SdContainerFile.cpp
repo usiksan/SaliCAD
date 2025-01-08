@@ -39,7 +39,7 @@ static unsigned short crc( const QString &line )
   unsigned short h = 0;
   //(h << 5) + h ^ c
   while( len ) {
-    h = (h << 5) + h ^ *ptr;
+    h = (h << 5) + (h ^ *ptr);
     ptr++;
     len--;
     }
