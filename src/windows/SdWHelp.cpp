@@ -257,7 +257,7 @@ QString SdWHelp::helpPath()
     SvDir pth(s.value( SDK_HELP_PATH, QVariant( def.slashedPath() + QString("help/")) ).toString());
     mHelpPath = pth.slashedPath();
     }
-  return mHelpPath;
+  return QString(":/help/"); // mHelpPath;
   }
 
 
