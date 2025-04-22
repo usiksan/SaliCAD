@@ -14,7 +14,8 @@ Description
 #ifndef SDPROPBAR_H
 #define SDPROPBAR_H
 
-#include "objects/SdProp.h"
+#include "objects/SdLayer.h"
+
 #include <QToolBar>
 #include <QComboBox>
 
@@ -23,8 +24,7 @@ class SdPropBar : public QToolBar
     Q_OBJECT
 
   protected:
-    QComboBox *mLayer; //List of available layers
-    //QAction
+    QComboBox    *mLayer;     //!< Visual list of available layers
 
     void     setSelectedLayer( SdLayer *layer );
     SdLayer *getSelectedLayer();
@@ -36,7 +36,7 @@ class SdPropBar : public QToolBar
     void propChanged();
 
   public slots:
-    virtual void updateViewedLayers();
+    virtual void updateViewedLayers( SdLayer *currentLayer );
   };
 
 #endif // SDPROPBAR_H

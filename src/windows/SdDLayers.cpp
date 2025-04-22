@@ -118,6 +118,23 @@ int SdDLayers::getStratumCount() const
 
 
 
+//!
+//! \brief currentLayer Returns current selected layer if it is has edited state
+//! \return             Current selected layer if it is has edited state
+//!
+SdLayer *SdDLayers::currentLayer() const
+  {
+  int index = ui->mLayerList->currentRow();
+  if( index >= 0 && index < mList.count() ) {
+    SdLayer *layer = sdEnvir->getLayer( mList.at(index) );
+    if( layer && layer->isEdited() )
+      return layer;
+    }
+  return nullptr;
+  }
+
+
+
 
 
 //Load layer list (enable-disable status)

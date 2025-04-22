@@ -15,6 +15,8 @@ Description
 #define SDPROPBARWIRE_H
 
 #include "SdPropBar.h"
+#include "objects/SdPropLine.h"
+
 #include <QComboBox>
 
 #define WIRE_WIDTH_PREV_COUNT 10

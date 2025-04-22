@@ -15,6 +15,8 @@ Description
 #define SDPROPBARROAD_H
 
 #include "SdPropBarStratum.h"
+#include "objects/SdPropRoad.h"
+#include "objects/SdPropVia.h"
 
 #define ROAD_WIDTH_PREV_COUNT 10
 

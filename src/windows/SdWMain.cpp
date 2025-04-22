@@ -1351,7 +1351,7 @@ void SdWMain::cmViewLayers()
 
   sdEnvir->resetForCache();
   //Signal viewed layers are changed
-  SdPulsar::sdPulsar->emitViewedLayers();
+  SdPulsar::sdPulsar->emitViewedLayers( layersDlg.currentLayer() );
 
   //For active editor update
   if( activeEditor() )
@@ -1875,7 +1875,7 @@ void SdWMain::cmPcbStratum()
 
     sdEnvir->resetForCache();
     //Signal viewed layers are changed
-    SdPulsar::sdPulsar->emitViewedLayers();
+    SdPulsar::sdPulsar->emitViewedLayers(nullptr);
 
     //For active editor update
     if( activeEditor() )

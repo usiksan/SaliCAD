@@ -299,10 +299,11 @@ void SdPItemPlate::drawTrace(SdContext *ctx, SdStratum curStratum, QString curre
     stratum = stmThrough & (~curStratum.getValue());
 
   //Draw component pads down stratums
-  forEach( dctPartImp, [ctx,stratum] (SdObject *obj) -> bool {
+  forEach( dctPartImp, [ctx,stratum,currentNetName] (SdObject *obj) -> bool {
     SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(obj);
     if( imp != nullptr )
-      imp->drawPads( ctx, stratum, QString() );
+      imp->drawPads( ctx, stratum, currentNetName );
+      // imp->drawPads( ctx, stratum, QString() );
     return true;
     } );
 

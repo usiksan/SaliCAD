@@ -19,6 +19,8 @@ Description
 
 #include <QLineEdit>
 #include <QTableWidget>
+#include <QSpinBox>
+#include <QCheckBox>
 
 class SdWEditorGraphPlate;
 
@@ -33,6 +35,12 @@ class SdPExportPlate_Gerber : public QWizardPage
 
     QLineEdit           *mGroupPath; //Path to store group fiels
     QTableWidget        *mGroup;     //Table for multiple gerber generation
+
+    QCheckBox           *mGridEna;   //!< Enable grid generation
+    QSpinBox            *mColumns;   //!< Column count in grid
+    QDoubleSpinBox      *mColumnGap; //!< Gap beatween columns
+    QSpinBox            *mRows;      //!< Row count in grid
+    QDoubleSpinBox      *mRowGap;    //!< Gap beatween rows
 
     bool                 mGenerated; //True if at least one time generation was pressed
   public:

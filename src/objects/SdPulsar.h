@@ -19,6 +19,7 @@ Description
 
 class SdProject;
 class SdProjectItem;
+class SdLayer;
 
 class SdPulsar : public QObject
   {
@@ -66,7 +67,7 @@ class SdPulsar : public QObject
 
     //Prop bar
     //Emit signal on viewed layers changed. It emited when layer dialog completed
-    void emitViewedLayers();
+    void emitViewedLayers( SdLayer *currentLayer );
 
     //Help system
     void emitHelpTopic( const QString topic );
@@ -112,7 +113,7 @@ class SdPulsar : public QObject
 
     //Prop bar
     //Emit signal on viewed layers changed. It emited when layer dialog completed
-    void viewedLayers();
+    void viewedLayers( SdLayer *currentLayer );
 
 
     //Help system

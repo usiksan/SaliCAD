@@ -29,6 +29,7 @@ class SdPropLayer
     SdPropLayer( QString id );
     SdPropLayer( const SdPropLayer &src ) = default;
 
+    bool       isValid() const { return mValue == OneValue; }
     bool       isVisible( bool otherSide = false ) const;
     bool       isEdited() const;
     bool       operator == ( const SdPropLayer p ) const { return mValue == OneValue && mLayer == p.mLayer; }

@@ -83,6 +83,7 @@ int main(int argc, char *argv[])
   sdEnvir->loadEnvir();
   //Global properties
   sdGlobalProp = new SdProp();
+  sdGlobalProp->loadProp();
 
   //Open library for objectFactory system
   SdLibraryStorage::instance()->libraryInit();
@@ -111,6 +112,7 @@ int main(int argc, char *argv[])
 
   //Save current environment
   sdEnvir->saveEnvir();
+  sdGlobalProp->saveProp();
 
   delete sdGlobalProp;
   delete sdEnvir;

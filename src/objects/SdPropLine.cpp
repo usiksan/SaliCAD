@@ -47,21 +47,21 @@ bool SdPropLine::match( SdPropLine const &prop ) {
 
 
 
-void SdPropLine::json(SvJsonWriter &js) const
+void SdPropLine::json(const QString &prefix, SvJsonWriter &js) const
   {
-  mWidth.json( QStringLiteral("lineWidth"), js );
-  mType.json( QStringLiteral("lineType"), js );
-  mLayer.json( QStringLiteral("lineLayer"), js );
+  mWidth.json( prefix + QStringLiteral("Width"), js );
+  mType.json( prefix + QStringLiteral("Type"), js );
+  mLayer.json( prefix + QStringLiteral("Layer"), js );
   }
 
 
 
 
-void SdPropLine::json(const SvJsonReader &js)
+void SdPropLine::json(const QString &prefix, const SvJsonReader &js)
   {
-  mWidth.json( QStringLiteral("lineWidth"), js );
-  mType.json( QStringLiteral("lineType"), js );
-  mLayer.json( QStringLiteral("lineLayer"), js );
+  mWidth.json( prefix + QStringLiteral("Width"), js );
+  mType.json( prefix + QStringLiteral("Type"), js );
+  mLayer.json( prefix + QStringLiteral("Layer"), js );
   }
 
 

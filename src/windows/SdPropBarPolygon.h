@@ -15,6 +15,7 @@ Description
 #define SDPROPBARPOLYGON_H
 
 #include "SdPropBarStratum.h"
+#include "objects/SdPropPolygon.h"
 
 #define POLYGON_GAP_PREV_COUNT 10
 

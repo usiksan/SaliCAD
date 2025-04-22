@@ -48,6 +48,7 @@ class SdRect : public QRect
     SdPoint     getTopRight() const { return SdPoint( getRight(), getTop() ); }
     SdPoint     getBottomLeft() const { return SdPoint( getLeft(), getBottom() ); }
     SdPoint     getBottomRight() const { return SdPoint( getRight(), getBottom() ); }
+    SdPoint     getSize() const { return SdPoint( width(), height() ); }
 
     void        set( SdPoint a, SdPoint b );
     void        set( QRect r );

@@ -45,6 +45,12 @@ class SdDLayers : public QDialog
     void setStratumCount( int c );
     int  getStratumCount() const;
 
+    //!
+    //! \brief currentLayer Returns current selected layer if it is has edited state
+    //! \return             Current selected layer if it is has edited state
+    //!
+    SdLayer *currentLayer() const;
+
     //Load layer list (enable-disable status)
     static void loadLayerList( const QString fname );
   private:

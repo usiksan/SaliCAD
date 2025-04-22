@@ -26,6 +26,7 @@ Description
 #include <QDir>
 #include <QTextStream>
 #include <QMessageBox>
+#include <QCheckBox>
 #include <QList>
 #include <QMap>
 #include <QLabel>
@@ -350,73 +351,120 @@ SdPExportPlate_Gerber::SdPExportPlate_Gerber(SdWEditorGraphPlate *editor, SdPIte
   setMinimumWidth(800);
   list->addMaster( tr("Gerber"), tr("Creates gerber files for plate"), step, QString(":/pic/gerberExport.png") );
 
-  //Build interface
-  QHBoxLayout *hbox  = new QHBoxLayout();
-    //Left side - single file creation section
-    QVBoxLayout *vbox = new QVBoxLayout();
-      //Title
-      vbox->addWidget( new QLabel( tr("Signle file creation") ) );
-      //Title to gerber file
-      vbox->addWidget( new QLabel( tr("Gerber file name:") ) );
-      //Gerber file name and selection
-      QHBoxLayout *fbox = new QHBoxLayout();
-        mFile = new QLineEdit();
-        fbox->addWidget( mFile );
-        QPushButton *but = new QPushButton( tr("Select...") );
-        fbox->addWidget( but );
-        connect( but, &QPushButton::clicked, this, &SdPExportPlate_Gerber::onFileSelect );
-      vbox->addLayout( fbox );
+  QVBoxLayout *vmb = new QVBoxLayout();
+    QHBoxLayout *hbox = new QHBoxLayout();
+      mGridEna = new QCheckBox( tr("Enable pcb grid (panel)") );
+      mGridEna->setChecked(false);
+      hbox->addWidget( mGridEna );
 
-      //Layers selection
-      fbox = new QHBoxLayout();
-        fbox->addWidget( new QLabel(tr("Layers for gerber:")) );
-        but = new QPushButton( tr("Layers...") );
-        fbox->addWidget( but );
-        connect( but, &QPushButton::clicked, this, &SdPExportPlate_Gerber::onLayers );
-      vbox->addLayout( fbox );
+      hbox->addWidget( new QLabel(" Columns:") );
+      mColumns = new QSpinBox();
+      mColumns->setRange( 1, 100 );
+      mColumns->setValue(1);
+      mColumns->setSingleStep(1);
+      mColumns->setEnabled(false);
+      hbox->addWidget( mColumns );
 
-      //Gerber generation
-      fbox = new QHBoxLayout();
-        fbox->addWidget( new QLabel(tr("Generate single gerber:")) );
-        but = new QPushButton( tr("Generate") );
-        fbox->addWidget( but );
-        connect( but, &QPushButton::clicked, this, &SdPExportPlate_Gerber::onGenerate );
-      vbox->addLayout( fbox );
+      hbox->addWidget( new QLabel(" gap:") );
+      mColumnGap = new QDoubleSpinBox();
+      mColumnGap->setRange( 0, 20.0 );
+      mColumnGap->setValue( 1.0 );
+      mColumnGap->setSingleStep( 0.5 );
+      mColumnGap->setEnabled(false);
+      hbox->addWidget( mColumnGap );
 
-      vbox->addStretch();
+      hbox->addWidget( new QLabel("  Rows:") );
+      mRows = new QSpinBox();
+      mRows->setRange( 1, 100 );
+      mRows->setValue( 1 );
+      mRows->setSingleStep( 1 );
+      mRows->setEnabled( false );
+      hbox->addWidget( mRows );
 
-    hbox->addLayout( vbox );
+      hbox->addWidget( new QLabel(" gap:") );
+      mRowGap = new QDoubleSpinBox();
+      mRowGap->setRange( 0, 20.0 );
+      mRowGap->setValue( 1.0 );
+      mRowGap->setSingleStep( 0.5 );
+      mRowGap->setEnabled(false);
+      hbox->addWidget( mRowGap );
 
-    //Right side - group file creation section
-    vbox = new QVBoxLayout();
-      //Title
-      vbox->addWidget( new QLabel( tr("Multiple file creation") ) );
-      //Title to gerber file
-      vbox->addWidget( new QLabel( tr("Gerber files path:") ) );
-      //Gerber file path and selection
-      fbox = new QHBoxLayout();
-        mGroupPath = new QLineEdit();
-        fbox->addWidget( mGroupPath );
-        but = new QPushButton( tr("Select...") );
-        fbox->addWidget( but );
-        connect( but, &QPushButton::clicked, this, &SdPExportPlate_Gerber::onGroupPathSelect );
-      vbox->addLayout( fbox );
+      connect( mGridEna, &QCheckBox::toggled, mColumns, &QSpinBox::setEnabled );
+      connect( mGridEna, &QCheckBox::toggled, mColumnGap, &QDoubleSpinBox::setEnabled );
+      connect( mGridEna, &QCheckBox::toggled, mRows, &QSpinBox::setEnabled );
+      connect( mGridEna, &QCheckBox::toggled, mRowGap, &QDoubleSpinBox::setEnabled );
 
-      //Table for packet generation
-      mGroup = new QTableWidget();
-      vbox->addWidget( mGroup );
+    vmb->addLayout( hbox );
 
-      //Button to group generation
-      fbox = new QHBoxLayout();
-        fbox->addWidget( new QLabel(tr("Generate gerber group:")) );
-        but = new QPushButton( tr("Generate") );
-        fbox->addWidget( but );
-        connect( but, &QPushButton::clicked, this, &SdPExportPlate_Gerber::onGroupGenerate );
-      vbox->addLayout( fbox );
+    //Build interface
+    hbox  = new QHBoxLayout();
+      //Left side - single file creation section
+      QVBoxLayout *vbox = new QVBoxLayout();
+        //Title
+        vbox->addWidget( new QLabel( tr("Signle file creation") ) );
+        //Title to gerber file
+        vbox->addWidget( new QLabel( tr("Gerber file name:") ) );
+        //Gerber file name and selection
+        QHBoxLayout *fbox = new QHBoxLayout();
+          mFile = new QLineEdit();
+          fbox->addWidget( mFile );
+          QPushButton *but = new QPushButton( tr("Select...") );
+          fbox->addWidget( but );
+          connect( but, &QPushButton::clicked, this, &SdPExportPlate_Gerber::onFileSelect );
+        vbox->addLayout( fbox );
 
-    hbox->addLayout( vbox );
+        //Layers selection
+        fbox = new QHBoxLayout();
+          fbox->addWidget( new QLabel(tr("Layers for gerber:")) );
+          but = new QPushButton( tr("Layers...") );
+          fbox->addWidget( but );
+          connect( but, &QPushButton::clicked, this, &SdPExportPlate_Gerber::onLayers );
+        vbox->addLayout( fbox );
 
-  setLayout( hbox );
+        //Gerber generation
+        fbox = new QHBoxLayout();
+          fbox->addWidget( new QLabel(tr("Generate single gerber:")) );
+          but = new QPushButton( tr("Generate") );
+          fbox->addWidget( but );
+          connect( but, &QPushButton::clicked, this, &SdPExportPlate_Gerber::onGenerate );
+        vbox->addLayout( fbox );
+
+        vbox->addStretch();
+
+      hbox->addLayout( vbox );
+
+      //Right side - group file creation section
+      vbox = new QVBoxLayout();
+        //Title
+        vbox->addWidget( new QLabel( tr("Multiple file creation") ) );
+        //Title to gerber file
+        vbox->addWidget( new QLabel( tr("Gerber files path:") ) );
+        //Gerber file path and selection
+        fbox = new QHBoxLayout();
+          mGroupPath = new QLineEdit();
+          fbox->addWidget( mGroupPath );
+          but = new QPushButton( tr("Select...") );
+          fbox->addWidget( but );
+          connect( but, &QPushButton::clicked, this, &SdPExportPlate_Gerber::onGroupPathSelect );
+        vbox->addLayout( fbox );
+
+        //Table for packet generation
+        mGroup = new QTableWidget();
+        vbox->addWidget( mGroup );
+
+        //Button to group generation
+        fbox = new QHBoxLayout();
+          fbox->addWidget( new QLabel(tr("Generate gerber group:")) );
+          but = new QPushButton( tr("Generate") );
+          fbox->addWidget( but );
+          connect( but, &QPushButton::clicked, this, &SdPExportPlate_Gerber::onGroupGenerate );
+        vbox->addLayout( fbox );
+
+      hbox->addLayout( vbox );
+
+    vmb->addLayout( hbox );
+
+  setLayout( vmb );
 
   //Fill group table
   //We scan pattern directory for existing layers list files
@@ -614,28 +662,47 @@ void SdPExportPlate_Gerber::generation(const QString fileName)
     //Define context [Образовать контекст]
     SdGerberContext gc( app.mApertureMap, os );
 
-    //Offset of picture [Образовать смещение]
-    SdConverterOffset offset( over.getBottomLeft().complement() );
-    gc.setConverter( &offset );
+    //For grid of pcb's
+    int columns = mGridEna->isChecked() ? mColumns->value() : 1;
+    int columnGap = mColumnGap->value() * 1000.0;
+    int rows = mGridEna->isChecked() ? mRows->value() : 1;
+    int rowGap = mRowGap->value() * 1000.0;
 
-    //At first, draw polygons [Рисуем вначале полигоны]
-    mPlate->forEach( dctTracePolygon, [&gc] (SdObject *obj) -> bool {
-      SdPtr<SdGraph> graph(obj);
-      if( graph.isValid() )
-        graph->draw( &gc );
-      return true;
-      });
+    for( int c = 0; c < columns; c++ )
+      for( int r = 0; r < rows; r++ ) {
+        //Offset of picture [Образовать смещение]
+        //Set offset of each item of grid
+        SdConverterOffset offset( over.getBottomLeft().complement() + SdPoint( (over.width() + columnGap) * c, (over.height() + rowGap) * r ) );
+        gc.setConverter( &offset );
+
+        //At first, draw polygons [Рисуем вначале полигоны]
+        mPlate->forEach( dctTracePolygon, [&gc] (SdObject *obj) -> bool {
+          SdPtr<SdGraph> graph(obj);
+          if( graph.isValid() )
+            graph->draw( &gc );
+          return true;
+          });
+        }
 
     //Positiv layer [Определить позитивный слой]
     os << "%LPD*%\n";
 
     //At now, draw all except polygons [Теперь рисуем все кроме полигонов]
-    mPlate->forEach( dctAll & ~dctTracePolygon, [&gc] (SdObject *obj) -> bool {
-      SdPtr<SdGraph> graph(obj);
-      if( graph.isValid() )
-        graph->draw( &gc );
-      return true;
-      });
+    for( int c = 0; c < columns; c++ )
+      for( int r = 0; r < rows; r++ ) {
+        //Offset of picture [Образовать смещение]
+        //Set offset of each item of grid
+        SdConverterOffset offset( over.getBottomLeft().complement() + SdPoint( (over.width() + columnGap) * c, (over.height() + rowGap) * r ) );
+        gc.setConverter( &offset );
+
+        mPlate->forEach( dctAll & ~dctTracePolygon, [&gc] (SdObject *obj) -> bool {
+          SdPtr<SdGraph> graph(obj);
+          if( graph.isValid() )
+            graph->draw( &gc );
+          return true;
+          });
+
+        }
 
 
     //File finish [Завершить файл]

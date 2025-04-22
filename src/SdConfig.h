@@ -227,6 +227,7 @@ History
                    so library file names are changed. Replace qHash with local crc.
                    Continue with possibility symbol used as component
   08.01.2025 v2.12 Integrate help system into application executable file via resource system
+  24.03.2025 v2.13 Append gerber grid generation
 */
 
 #ifndef SDCONFIG
@@ -238,7 +239,7 @@ History
 
 //Version definition
 #define SD_VERSION_MAJOR             2
-#define SD_VERSION_MINOR            12
+#define SD_VERSION_MINOR            13
 
 //Some defaults
 #define SD_DEFAULT_WEB               "www.SaliLAB.com"
@@ -328,6 +329,9 @@ History
 #define SDK_ENVIR_VERSION            "Envir version"
 #define SDK_ENVIR                    "Envir"
 #define SDK_GET_OBJECT_DLG_CFG       "DlgGetObjectCfg2_8"
+#define SDK_PROP                     "Prop"
+#define SDK_PROP_VERSION             "Prop version"
+
 
 #define MODE_HELP                    //Prefix to mode help files
 

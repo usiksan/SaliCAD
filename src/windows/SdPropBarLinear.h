@@ -15,6 +15,8 @@ Description
 #define SDPROPBARLINEAR_H
 
 #include "SdPropBar.h"
+#include "objects/SdPropLine.h"
+
 #include <QComboBox>
 
 #define LINEAR_WIDTH_PREV_COUNT 10

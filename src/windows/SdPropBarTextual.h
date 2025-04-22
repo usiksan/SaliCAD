@@ -15,6 +15,7 @@ Description
 #define SDPROPBARTEXTUAL_H
 
 #include "SdPropBar.h"
+#include "objects/SdPropText.h"
 
 #define FONT_SIZE_PREV_COUNT 10
 

@@ -12,7 +12,7 @@ Description
   Properties bar for lines and other linear objects
 */
 #include "SdPropBarLinear.h"
-#include "objects/SdUtil.h"
+#include "objects/SdProp.h"
 #include "SdStringHistory.h"
 #include "SdWCommand.h"
 #include <QList>

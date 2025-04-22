@@ -13,7 +13,7 @@ Description
 */
 #include "SdPropBarWire.h"
 #include "SdStringHistory.h"
-#include "objects/SdUtil.h"
+#include "objects/SdProp.h"
 
 #include <QLineEdit>
 #include <QPushButton>

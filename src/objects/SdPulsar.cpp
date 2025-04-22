@@ -154,9 +154,9 @@ void SdPulsar::emitSetTracingStatus(int unconnected, int errors)
 
 
 //Emit signal on viewed layers changed. It emited when layer dialog completed
-void SdPulsar::emitViewedLayers()
+void SdPulsar::emitViewedLayers( SdLayer *currentLayer )
   {
-  emit viewedLayers();
+  emit viewedLayers( currentLayer );
   }
 
 

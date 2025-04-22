@@ -17,7 +17,7 @@ Description
 #include "objects/SdPulsar.h"
 
 #include <QStyleFactory>
-
+#include <QTimer>
 
 SdPropBar::SdPropBar( const QString title ) :
   QToolBar( title )
@@ -31,9 +31,6 @@ SdPropBar::SdPropBar( const QString title ) :
   mLayer->setMinimumWidth( 150 );
   mLayer->setToolTip( tr("Current layer") );
 
-  //fill new layers list
-  updateViewedLayers();
-
   //current layer selection changed. Send signal "prop changed"
   connect( mLayer, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), this, [this](int index) {
     Q_UNUSED(index)
@@ -41,6 +38,9 @@ SdPropBar::SdPropBar( const QString title ) :
     });
   //When layer dialog completed
   connect( SdPulsar::sdPulsar, &SdPulsar::viewedLayers, this, &SdPropBar::updateViewedLayers );
+
+  //fill new layers list
+  QTimer::singleShot( 20, this, [this] () { updateViewedLayers(nullptr); } );
   }
 
 
@@ -48,11 +48,22 @@ SdPropBar::SdPropBar( const QString title ) :
 
 void SdPropBar::setSelectedLayer(SdLayer *layer)
   {
-  if( layer ) {
+  if( layer != nullptr ) {
     QString id = layer->id();
     int index = mLayer->findData( QVariant(id) );
     if( index >= 0 )
       mLayer->setCurrentIndex( index );
+    else {
+      //Switch on requred layer
+      layer->setState( layerStateEdit );
+      SdPulsar::sdPulsar->emitViewedLayers( layer );
+      // updateViewedLayers( layer );
+      // index = mLayer->findData( QVariant(id) );
+      // if( index >= 0 )
+      //   mLayer->setCurrentIndex( index );
+      // else
+      //   qDebug() << "setSelectedLayer failure";
+      }
     }
   else {
     int index = mLayer->findText( QString() );
@@ -60,10 +71,6 @@ void SdPropBar::setSelectedLayer(SdLayer *layer)
       mLayer->setCurrentIndex( index );
     else
       mLayer->setCurrentIndex( -1 );
-//      {
-//      mLayer->addItem( QString(), QVariant(QString()) );
-//      setSelectedLayer( layer );
-//      }
     }
   }
 
@@ -85,10 +92,12 @@ SdLayer *SdPropBar::getSelectedLayer()
 
 
 //Visibility state of layers are changed. We need update list and preserve current layer selection
-void SdPropBar::updateViewedLayers()
+void SdPropBar::updateViewedLayers(SdLayer *currentLayer)
   {
+  bool changeCurrentLayer = currentLayer != nullptr;
   //get current selection
-  SdLayer *layer = getSelectedLayer();
+  if( !changeCurrentLayer )
+    currentLayer = getSelectedLayer();
   mLayer->clear();
   //fill new layers list
   for( SdLayer *p : std::as_const( sdEnvir->mLayerTable ) ) {
@@ -96,7 +105,10 @@ void SdPropBar::updateViewedLayers()
       mLayer->addItem( p->name(), QVariant( p->id() ) );
       }
     }
-  setSelectedLayer( layer );
+  setSelectedLayer( currentLayer );
+
+  if( changeCurrentLayer )
+    emit propChanged();
   }
 
 

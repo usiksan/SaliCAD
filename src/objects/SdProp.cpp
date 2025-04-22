@@ -11,20 +11,23 @@ Web
 Description
   Full properties list set
 */
-
+#include "SdConfig.h"
 #include "SdProp.h"
 #include "SdEnvir.h"
+#include "SdJsonIO.h"
+
+#include <QSettings>
 
 SdProp *sdGlobalProp;
 
 SdProp::SdProp()
   {
   //Сформировать свойства по умолчанию
-  mLineProp.mLayer.set( QString( LID0_COMMON ) );       //Свойства линейных объектов
+  mLineProp.mLayer.set( QString( LID0_REMARK ) );       //Свойства линейных объектов
   mLineProp.mType  = dltSolid;
   mLineProp.mWidth = 0;
 
-  mTextProp.mLayer.set( QString( LID0_COMMON ) );       //Свойства текстовых объектов
+  mTextProp.mLayer.set( QString( LID0_REMARK ) );       //Свойства текстовых объектов
   mTextProp.mFont   = 0;
   mTextProp.mSize   = 350;
   mTextProp.mDir    = da0;
@@ -164,5 +167,92 @@ SdProp::SdProp()
 //  int           mWireNumber;     //Порядковый номер цепи (для формирования имени по умолчанию)
 //  int           mMaskSide;       //Маска, определяющая возможность выбора компонентов
 
+  }
+
+void SdProp::loadProp()
+  {
+  QSettings s;
+  if( s.value(QString(SDK_PROP_VERSION),QVariant( static_cast<int>(0) )).toInt() == mPropVersion ) {
+    //Загружаем значения
+    QByteArray ar = s.value(QString(SDK_PROP)).toByteArray();
+    QJsonObject obj( svJsonObjectFromByteArray(ar) );
+    SdJsonReaderProperty rdProp;
+    SdJsonReader js( obj, &rdProp );
+
+    mLineProp.json( "line", js );       //Свойства линейных объектов
+    mTextProp.json( "text", js );       //Свойства текстовых объектов
+    mWireProp.json( "wire", js );       //Свойства сегментов цепей схемы
+    mWireNameProp.json( "wireName", js );   //Свойства имени цепи
+    mSymPinProp.json( js );     //Свойства вывода символа
+    mSymPinNameProp.json( "symPinName", js );    //Свойства имени вывода
+    mSymPinNumberProp.json( "symPinNumber", js );  //Свойства номера вывода
+    mPartPinProp.json( js );    //Свойства вывода корпуса
+    mPartPinNameProp.json( "partPinName", js );    //Свойства имени вывода
+    mPartPinNumberProp.json( "partPinNumber", js );  //Свойства номера вывода
+    mSymImpProp.json( js );     //Свойства вхождения символа
+    mPartImpProp.json( js );    //Свойства вхождения корпуса
+    mSymIdentProp.json( "symIdent", js );   //Свойства идентификатора символа
+    mPartIdentProp.json( "partIdent", js );  //Свойства идентификатора корпуса
+    mSymValueProp.json( "symValue", js );   //Value properties for symbol
+    mPartValueProp.json( "partValue", js );  //Value properties for part
+    mRoadProp.json( js );       //Свойства дорожки
+    mPolygonProp.json( js );        //Tracing polygon properties
+    mViaProp.json( js );        //Свойства переходных отверстий
+    mTextDocProp.json( "textDoc", js );    //Свойства текста в текстовых документах
+
+    js.jsonInt( "lineEnterType", mLineEnterType );
+    js.jsonInt( "wireEnterType", mWireEnterType );
+    js.jsonBool( "textBold", mTextBold );      //Жирный шрифт
+    js.jsonBool( "textItalic", mTextItalic );     //Наклонный текст
+    js.jsonBool( "textUnderline", mTextUderline );   //Подчеркивание текста
+
+    js.jsonInt( "maskSide", mMaskSide );       //Маска, определяющая возможность выбора компонентов
+    js.jsonInt( "viaRule", mViaRule );        //!< Via creation rule (throught, hidden, blind)
+
+    }
+
+  }
+
+
+
+
+
+void SdProp::saveProp()
+  {
+  SdJsonWriter js;
+
+  mLineProp.json( "line", js );       //Свойства линейных объектов
+  mTextProp.json( "text", js );       //Свойства текстовых объектов
+  mWireProp.json( "wire", js );       //Свойства сегментов цепей схемы
+  mWireNameProp.json( "wireName", js );   //Свойства имени цепи
+  mSymPinProp.json( js );     //Свойства вывода символа
+  mSymPinNameProp.json( "symPinName", js );    //Свойства имени вывода
+  mSymPinNumberProp.json( "symPinNumber", js );  //Свойства номера вывода
+  mPartPinProp.json( js );    //Свойства вывода корпуса
+  mPartPinNameProp.json( "partPinName", js );    //Свойства имени вывода
+  mPartPinNumberProp.json( "partPinNumber", js );  //Свойства номера вывода
+  mSymImpProp.json( js );     //Свойства вхождения символа
+  mPartImpProp.json( js );    //Свойства вхождения корпуса
+  mSymIdentProp.json( "symIdent", js );   //Свойства идентификатора символа
+  mPartIdentProp.json( "partIdent", js );  //Свойства идентификатора корпуса
+  mSymValueProp.json( "symValue", js );   //Value properties for symbol
+  mPartValueProp.json( "partValue", js );  //Value properties for part
+  mRoadProp.json( js );       //Свойства дорожки
+  mPolygonProp.json( js );        //Tracing polygon properties
+  mViaProp.json( js );        //Свойства переходных отверстий
+  mTextDocProp.json( "textDoc", js );    //Свойства текста в текстовых документах
+
+  js.jsonInt( "lineEnterType", mLineEnterType );
+  js.jsonInt( "wireEnterType", mWireEnterType );
+  js.jsonBool( "textBold", mTextBold );      //Жирный шрифт
+  js.jsonBool( "textItalic", mTextItalic );     //Наклонный текст
+  js.jsonBool( "textUnderline", mTextUderline );   //Подчеркивание текста
+
+  js.jsonInt( "maskSide", mMaskSide );       //Маска, определяющая возможность выбора компонентов
+  js.jsonInt( "viaRule", mViaRule );        //!< Via creation rule (throught, hidden, blind)
+
+  QSettings s;
+  s.setValue( QString(SDK_PROP_VERSION), mPropVersion );
+  s.setValue( QString(SDK_PROP), svJsonObjectToByteArray( js.object() ) );
   }
 

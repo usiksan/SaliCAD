@@ -66,8 +66,12 @@ struct SdProp
 
 //    DTraseRules traseRules;     //Правила трассировки
 
+    const int     mPropVersion = 1;
 
     SdProp();
+
+    void loadProp();
+    void saveProp();
   };
 
 extern SdProp *sdGlobalProp;
