@@ -83,7 +83,7 @@ class SdScaner
     //! \param errorMsg  Error message which appended if tokenId not equal to last scanned token
     //! \return          true when tokenId equals to last scanned token
     //!
-    bool         tokenNeed( char tokenId, const QString errorMsg );
+    bool         tokenNeed( char tokenId, const QString errorMsg = QString{} );
 
     //!
     //! \brief tokenNeedValue Check if last scanned token equals to tokenVal and return value itself

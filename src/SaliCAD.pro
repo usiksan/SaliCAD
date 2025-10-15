@@ -29,6 +29,8 @@ SOURCES += \
     import/iges/IgesEntitySurface.cpp \
     import/iges/IgesEntityTrimmedParametricSurface.cpp \
     import/kicad/SdScanerKiCad.cpp \
+    import/kicad/kicadFootprint.cpp \
+    import/kicad/kicadSymbolLib.cpp \
     import/nurbs/NurbsBasis.cpp \
     import/nurbs/NurbsConvexHull.cpp \
     import/nurbs/NurbsCurve.cpp \

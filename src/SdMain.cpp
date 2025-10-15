@@ -28,6 +28,8 @@ Description
 #include <QDebug>
 #include <QFile>
 
+#include "import/kicad/SdScanerKiCad.h"
+
 
 int main(int argc, char *argv[])
   {
@@ -42,6 +44,10 @@ int main(int argc, char *argv[])
 //  IgesReader reader;
 //  reader.scanFile( QStringLiteral("/home/asibilev/work/vrml/val.igs") );
 //  reader.parse();
+
+  SdScanerKiCad reader;
+  reader.readFile( "/home/usik/info/kicad/D_01005_0402Metric.kicad_mod" );
+  reader.parseTop( new SdProject() );
 
 
   //Setups for settings

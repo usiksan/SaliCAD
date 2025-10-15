@@ -1,10 +1,31 @@
 #include "SdScanerKiCad.h"
 
+#include <QObject>
 
 SdScanerKiCad::SdScanerKiCad()
   {
 
   }
+
+
+
+void SdScanerKiCad::parseTop(SdProject *project)
+  {
+  //Token map
+  static QMap<QString,std::function<void( SdScanerKiCad*, SdProject* )> >
+      tokenMap( { { QString("footprint"), kicadFootprint },
+                  { QString("kicad_symbol_lib"), kicadSymbolLib }
+                } );
+
+  //Parse full file
+  tokenNext();
+  while( !isEndOfScanOrError() )
+    parseContent( tokenMap, project );
+  }
+
+
+
+
 
 
 void SdScanerKiCad::tokenNext()
@@ -20,11 +41,6 @@ void SdScanerKiCad::tokenNext()
       else if( mLine.at(mIndex).isDigit() || mLine.at(mIndex) == QChar('-') ) {
         scanDouble( true, false );
         mToken = mTokenValue.contains( QChar('.') ) ? 'f' : 'd';
-        }
-      else if( mLine.at(mIndex) == QChar('#') ) {
-        //Remark found. Skeep line
-        mIndex = mLine.length();
-        continue;
         }
       else if( mLine.at(mIndex) == QChar('"') ) {
         //String detected
