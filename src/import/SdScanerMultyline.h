@@ -1,3 +1,16 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  SdScanerMultyline - Append to scaner function to scan from multyline source, such as files
+*/
 #ifndef SDSCANERMULTYLINE_H
 #define SDSCANERMULTYLINE_H
 
@@ -8,11 +21,15 @@
 
 class SdScanerMultyline : public SdScaner
   {
-    QStringList mLines;
-    int         mLineIndex;
+    QStringList mLines;     //!< Source line list
+    int         mLineIndex; //!< Index of next line to analis
   public:
     SdScanerMultyline();
 
+    //!
+    //! \brief sourceSetStringList Set source lines as ready-made line list
+    //! \param lines               Ready-made line list
+    //!
     void sourceSetStringList( QStringList lines );
 
     //!
@@ -37,8 +54,16 @@ class SdScanerMultyline : public SdScaner
 
     // SdScaner interface
   protected:
+    //!
+    //! \brief lineIndex Return index of current line
+    //! \return          Index of current line
+    //!
     virtual int  lineIndex() const override { return mLineIndex - 1; }
 
+    //!
+    //! \brief nextLine Take next line from source
+    //! \return         true if there is next line
+    //!
     virtual bool nextLine() override;
   };
 

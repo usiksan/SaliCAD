@@ -8,6 +8,13 @@ SdScanerMultyline::SdScanerMultyline() :
 
   }
 
+
+
+
+//!
+//! \brief sourceSetStringList Set source lines as ready-made line list
+//! \param lines               Ready-made line list
+//!
 void SdScanerMultyline::sourceSetStringList(QStringList lines)
   {
   mLines = lines;
@@ -61,6 +68,10 @@ bool SdScanerMultyline::readFile(const QString &path)
 
 
 
+//!
+//! \brief nextLine Take next line from source
+//! \return         true if there is next line
+//!
 bool SdScanerMultyline::nextLine()
   {
   if( mLineIndex < mLines.count() ) {

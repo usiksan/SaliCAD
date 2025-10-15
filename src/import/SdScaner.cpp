@@ -1,3 +1,24 @@
+/*
+Project "Electronic schematic and pcb CAD"
+
+Author
+  Sibilev Alexander S.
+
+Web
+  www.saliLab.com
+  www.saliLab.ru
+
+Description
+  SdScaner - base scaner for text import
+
+  Predefined tokens:
+    'f' - for floats
+    'd' - for integer
+  Ordinary tokens (but may be others):
+    'n' - for names
+    's' - for strings
+    Special chars like '(' represents itself.
+*/
 #include "SdScaner.h"
 
 #include <QDebug>
@@ -13,6 +34,13 @@ SdScaner::SdScaner() :
 
   }
 
+
+
+
+//!
+//! \brief error Append error string to error system
+//! \param msg   Error message
+//!
 void SdScaner::error(const QString msg)
   {
   if( mError.isEmpty() )
@@ -20,10 +48,24 @@ void SdScaner::error(const QString msg)
   qDebug() << mError;
   }
 
+
+
+
+
+//!
+//! \brief tokenNeed Check if last scanned token equal to tokenId and if not then append error with errorMsg
+//! \param tokenId   Needed token ident
+//! \param errorMsg  Error message which appended if tokenId not equal to last scanned token
+//! \return          true when tokenId equals to last scanned token
+//!
 bool SdScaner::tokenNeed(char tokenId, const QString errorMsg)
   {
+  //Compare token
   if( matchToken(tokenId) )
     return true;
+
+  //Token not equal
+  //We append error message. If errorMsg is empty then we build its itself
   if( errorMsg.isEmpty() )
     error( QStringLiteral("Need token %1").arg( tokenId ) );
   else
@@ -33,6 +75,12 @@ bool SdScaner::tokenNeed(char tokenId, const QString errorMsg)
 
 
 
+
+//!
+//! \brief tokenNeedValue Check if last scanned token equals to tokenVal and return value itself
+//! \param tokenVal       Needed token ident
+//! \return               Value of token if last scanned token equals to tokenVal
+//!
 QString SdScaner::tokenNeedValue( char tokenVal )
   {
   if( mToken == tokenVal ) {
@@ -46,6 +94,15 @@ QString SdScaner::tokenNeedValue( char tokenVal )
 
 
 
+
+
+//!
+//! \brief tokenNeedValue Check if last scanned token equals to tokenVal and return value itself
+//! \param tokenId        Needed token ident
+//! \param value          Value of token if last scanned token equals to tokenId
+//! \param errorMsg       Error message which appended to error list if last scanned token not equals to tokenId
+//! \return               true when tokenId equals to last scanned token
+//!
 bool SdScaner::tokenNeedValue(char tokenId, QString &value, const QString errorMsg)
   {
   if( mToken == 0 )
@@ -62,6 +119,15 @@ bool SdScaner::tokenNeedValue(char tokenId, QString &value, const QString errorM
 
 
 
+
+
+//!
+//! \brief tokenNeedValueInt  Check if last scanned token equals to tokenId and return value itself as integer
+//! \param tokenId            Needed token ident
+//! \param value              Value of token if last scanned token equals to tokenId
+//! \param errorMsg           Error message which appended to error list if last scanned token not equals to tokenId
+//! \return                   true when tokenId equals to last scanned token and no error in conversion to integer
+//!
 bool SdScaner::tokenNeedValueInt(char tokenId, int &value, const QString errorMsg)
   {
   QString strVal;
@@ -75,6 +141,15 @@ bool SdScaner::tokenNeedValueInt(char tokenId, int &value, const QString errorMs
 
 
 
+
+
+//!
+//! \brief tokenNeedValueFloat  Check if last scanned token equals to tokenId and return value itself as float
+//! \param tokenId              Needed token ident
+//! \param value                Value of token if last scanned token equals to tokenId
+//! \param errorMsg             Error message which appended to error list if last scanned token not equals to tokenId
+//! \return                     true when tokenId equals to last scanned token and no error in conversion to float
+//!
 bool SdScaner::tokenNeedValueFloat(char tokenId, float &value, const QString errorMsg)
   {
   QString strVal;
@@ -89,6 +164,14 @@ bool SdScaner::tokenNeedValueFloat(char tokenId, float &value, const QString err
 
 
 
+
+
+//!
+//! \brief matchTokenValue Checks if last scanned token equals to tokenId and token value equals to val. If both are true then take next token
+//! \param tokenId         Needed token ident
+//! \param val             Value of token to compare
+//! \return                true when last scanned token equals to tokenId and token value equals to val.
+//!
 bool SdScaner::matchTokenValue( char tokenId, const QString &val)
   {
   if( mToken == tokenId && mTokenValue == val ) {
@@ -100,6 +183,13 @@ bool SdScaner::matchTokenValue( char tokenId, const QString &val)
 
 
 
+
+
+//!
+//! \brief matchToken Compares last scanned token to tokenId and if equals then take next token
+//! \param tokenId    Token ident to compare
+//! \return           true if last scanned token equals to tokenId
+//!
 bool SdScaner::matchToken(char tokenId)
   {
   if( mToken == tokenId ) {
@@ -111,6 +201,11 @@ bool SdScaner::matchToken(char tokenId)
 
 
 
+
+//!
+//! \brief lineSet Sets new line to scan
+//! \param line    New line to scan
+//!
 void SdScaner::lineSet(const QString &line)
   {
   mLine = line;
