@@ -17,7 +17,7 @@
                         "x": 3500,
                         "y": -3500
                     },
-                    "id": "55c8fe2e5ae0",
+                    "id": "5647144e8ac0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -33,7 +33,7 @@
                         "x": 5500,
                         "y": -3500
                     },
-                    "id": "55c90041fea0",
+                    "id": "5647147462e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -49,7 +49,7 @@
                         "x": 4550,
                         "y": -3400
                     },
-                    "id": "55c909d6f400",
+                    "id": "5647146edbb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -65,7 +65,7 @@
                         "x": 4450,
                         "y": -3350
                     },
-                    "id": "55c909aee440",
+                    "id": "5647144c7c40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -81,7 +81,7 @@
                         "x": 3500,
                         "y": -3000
                     },
-                    "id": "55c8fd14cea0",
+                    "id": "5647144dd2b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -97,7 +97,7 @@
                         "x": 4250,
                         "y": -3250
                     },
-                    "id": "55c8fe719ce0",
+                    "id": "56471470cb70",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -113,7 +113,7 @@
                         "x": 4700,
                         "y": -2750
                     },
-                    "id": "55c90045ec50",
+                    "id": "5647144a8760",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -129,7 +129,7 @@
                         "x": 4300,
                         "y": -2850
                     },
-                    "id": "55c900495900",
+                    "id": "56471473ab20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -145,7 +145,7 @@
                         "x": 4700,
                         "y": -2850
                     },
-                    "id": "55c9099fd950",
+                    "id": "564714545300",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -161,7 +161,7 @@
                         "x": 4150,
                         "y": -3200
                     },
-                    "id": "55c8fc95bf80",
+                    "id": "564714c263a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -193,7 +193,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c90040b1f0",
+                    "id": "564714651500",
                     "type": "SymPin"
                 },
                 {
@@ -222,7 +222,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c8fd05ccb0",
+                    "id": "5647144d6660",
                     "type": "SymPin"
                 },
                 {
@@ -251,7 +251,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9003b5580",
+                    "id": "5647146b0ed0",
                     "type": "SymPin"
                 },
                 {
@@ -260,7 +260,7 @@
                         "x": 4500,
                         "y": -2500
                     },
-                    "id": "55c909a90980",
+                    "id": "5647146a23d0",
                     "over": {
                         "b": -2325,
                         "r": 4799,
@@ -280,7 +280,7 @@
                         "x": 4500,
                         "y": -3750
                     },
-                    "id": "55c8fd1e5bd0",
+                    "id": "5647146a24b0",
                     "over": {
                         "b": -3577,
                         "r": 5030,
@@ -305,7 +305,7 @@
             "Parametrs": {
             },
             "Title": "button 1-switch",
-            "id": "55c9098cc440",
+            "id": "564714619450",
             "type": "Symbol"
         },
         {
@@ -338,7 +338,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2.2d1.2m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c90985e3c0",
+                    "id": "5647145b38d0",
                     "type": "PartPin"
                 },
                 {
@@ -367,7 +367,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "c2.2d1.2m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c8fd97c620",
+                    "id": "5647145f31a0",
                     "type": "PartPin"
                 },
                 {
@@ -396,7 +396,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "c2.4d1.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c8fca710a0",
+                    "id": "56471470ccd0",
                     "type": "PartPin"
                 },
                 {
@@ -425,7 +425,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "c2.4d1.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c909865410",
+                    "id": "564714509ca0",
                     "type": "PartPin"
                 },
                 {
@@ -438,7 +438,7 @@
                         "x": -1250,
                         "y": 1000
                     },
-                    "id": "55c909c8d1f0",
+                    "id": "5647144a6a80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -454,7 +454,7 @@
                         "x": -1000,
                         "y": 4000
                     },
-                    "id": "55c909c8d250",
+                    "id": "564714554f00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -470,7 +470,7 @@
                         "x": 5500,
                         "y": 4000
                     },
-                    "id": "55c8fc97d640",
+                    "id": "5647144f62c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -486,7 +486,7 @@
                         "x": 3750,
                         "y": -2750
                     },
-                    "id": "55c8fc97d6f0",
+                    "id": "5647146afaa0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -502,7 +502,7 @@
                         "x": 750,
                         "y": -2600
                     },
-                    "id": "55c909906730",
+                    "id": "5647146afb00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -518,7 +518,7 @@
                         "x": 2250,
                         "y": -2750
                     },
-                    "id": "55c9099067e0",
+                    "id": "5647145ba160",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -534,7 +534,7 @@
                         "x": 3750,
                         "y": -2600
                     },
-                    "id": "55c909906890",
+                    "id": "5647145ba1c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -546,7 +546,7 @@
                         "x": 2500,
                         "y": 2500
                     },
-                    "id": "55c8fe30cea0",
+                    "id": "564714607650",
                     "over": {
                         "b": 2997,
                         "r": 3356,
@@ -566,7 +566,7 @@
                         "x": 2500,
                         "y": -3750
                     },
-                    "id": "55c909c763f0",
+                    "id": "5647146076d0",
                     "over": {
                         "b": -3257,
                         "r": 4003,
@@ -591,7 +591,7 @@
             "Parametrs": {
             },
             "Title": "push button switch 1825027 part",
-            "id": "55c8fd827510",
+            "id": "564714715920",
             "type": "Part"
         },
         {
@@ -606,7 +606,7 @@
                     },
                     "SymbolId": "Symbol\rbutton 1-on\rsalicad",
                     "SymbolTitle": "button 1-on (salicad)",
-                    "id": "55c900526db0",
+                    "id": "564714563200",
                     "type": "Section"
                 },
                 {
@@ -614,7 +614,7 @@
                     "Default": false,
                     "PartId": "Part\rpush button switch 1825027 part\rsalicad",
                     "PartTitle": "push button switch 1825027 part (salicad)",
-                    "id": "55c900526fc0",
+                    "id": "5647144deaa0",
                     "type": "PartVariant"
                 }
             ],
@@ -651,7 +651,7 @@
                 "1825027-3",
                 "RED"
             ],
-            "id": "55c90997e7e0",
+            "id": "5647146ec790",
             "type": "Comp"
         },
         {
@@ -668,7 +668,7 @@
                         "x": 12160,
                         "y": 8760
                     },
-                    "id": "55c8fd9ceae0",
+                    "id": "5647145c6070",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -680,7 +680,7 @@
                         "x": 0,
                         "y": -640
                     },
-                    "id": "55c8fd9ceb90",
+                    "id": "5647145dd450",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -713,7 +713,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c8fe8b84a0",
+                    "id": "564714042400",
                     "type": "PartPin"
                 },
                 {
@@ -742,7 +742,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c8fd549c00",
+                    "id": "56471470d000",
                     "type": "PartPin"
                 },
                 {
@@ -771,7 +771,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9097edda0",
+                    "id": "5647146f89e0",
                     "type": "PartPin"
                 },
                 {
@@ -800,7 +800,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9097edf00",
+                    "id": "5647144e1f50",
                     "type": "PartPin"
                 },
                 {
@@ -829,7 +829,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c909c566f0",
+                    "id": "564714795390",
                     "type": "PartPin"
                 },
                 {
@@ -858,7 +858,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c909c56850",
+                    "id": "564714543460",
                     "type": "PartPin"
                 },
                 {
@@ -887,7 +887,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c909c569b0",
+                    "id": "5647144633f0",
                     "type": "PartPin"
                 },
                 {
@@ -916,7 +916,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c909a7a3c0",
+                    "id": "56471459bbd0",
                     "type": "PartPin"
                 },
                 {
@@ -945,7 +945,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c909a7a520",
+                    "id": "5647147ad660",
                     "type": "PartPin"
                 },
                 {
@@ -974,7 +974,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9099fee50",
+                    "id": "564714745a50",
                     "type": "PartPin"
                 },
                 {
@@ -983,7 +983,7 @@
                         "x": -1500,
                         "y": 3810
                     },
-                    "id": "55c9099801f0",
+                    "id": "56471476d0d0",
                     "over": {
                         "b": 4673,
                         "r": -1005,
@@ -1003,7 +1003,7 @@
                         "x": 12660,
                         "y": 3810
                     },
-                    "id": "55c9099ff000",
+                    "id": "5647146b1680",
                     "over": {
                         "b": 5321,
                         "r": 13157,
@@ -1027,7 +1027,7 @@
                         "x": -635,
                         "y": 2540
                     },
-                    "id": "55c9099ff0d0",
+                    "id": "5647145c6120",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1043,7 +1043,7 @@
                         "x": 635,
                         "y": 2540
                     },
-                    "id": "55c9099ff130",
+                    "id": "56471476d1a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1055,7 +1055,7 @@
                         "x": 0,
                         "y": 1905
                     },
-                    "id": "55c909a7a680",
+                    "id": "56471470aed0",
                     "over": {
                         "b": 2405,
                         "r": 248,
@@ -1079,7 +1079,7 @@
                         "x": 1905,
                         "y": 2540
                     },
-                    "id": "55c8fd846400",
+                    "id": "5647146b17a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1095,7 +1095,7 @@
                         "x": 3175,
                         "y": 2540
                     },
-                    "id": "55c8fd846460",
+                    "id": "56471470afa0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1107,7 +1107,7 @@
                         "x": 2540,
                         "y": 1905
                     },
-                    "id": "55c8fd846510",
+                    "id": "564714a9e0c0",
                     "over": {
                         "b": 2405,
                         "r": 2790,
@@ -1131,7 +1131,7 @@
                         "x": 4445,
                         "y": 2540
                     },
-                    "id": "55c8fd846630",
+                    "id": "564714a9e140",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1147,7 +1147,7 @@
                         "x": 5715,
                         "y": 2540
                     },
-                    "id": "55c8fd846690",
+                    "id": "564714799b60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1159,7 +1159,7 @@
                         "x": 5080,
                         "y": 1905
                     },
-                    "id": "55c8fd846740",
+                    "id": "564714cbb680",
                     "over": {
                         "b": 2405,
                         "r": 5332,
@@ -1183,7 +1183,7 @@
                         "x": 6985,
                         "y": 2540
                     },
-                    "id": "55c909a19300",
+                    "id": "564714cbb750",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1199,7 +1199,7 @@
                         "x": 8255,
                         "y": 2540
                     },
-                    "id": "55c909a19360",
+                    "id": "56471469cbc0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1211,7 +1211,7 @@
                         "x": 7620,
                         "y": 1905
                     },
-                    "id": "55c909a19410",
+                    "id": "56471469cc70",
                     "over": {
                         "b": 2405,
                         "r": 7865,
@@ -1235,7 +1235,7 @@
                         "x": 9525,
                         "y": 2540
                     },
-                    "id": "55c909a19530",
+                    "id": "5647144d50f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1251,7 +1251,7 @@
                         "x": 10795,
                         "y": 2540
                     },
-                    "id": "55c909a19590",
+                    "id": "5647144d51a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1263,7 +1263,7 @@
                         "x": 10160,
                         "y": 1905
                     },
-                    "id": "55c8fecebc00",
+                    "id": "5647144efeb0",
                     "over": {
                         "b": 2405,
                         "r": 10407,
@@ -1283,7 +1283,7 @@
                         "x": 0,
                         "y": 5715
                     },
-                    "id": "55c8fecebd20",
+                    "id": "5647144eff80",
                     "over": {
                         "b": 6209,
                         "r": 722,
@@ -1309,7 +1309,7 @@
                 "category": "{uu.e.e.a.b"
             },
             "Title": "DS1040",
-            "id": "55c8fca96950",
+            "id": "56471478fbd0",
             "type": "Part"
         },
         {
@@ -1326,7 +1326,7 @@
                         "x": 3500,
                         "y": -3500
                     },
-                    "id": "55c8fecebf80",
+                    "id": "5647147b7e80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1342,7 +1342,7 @@
                         "x": 5500,
                         "y": -3500
                     },
-                    "id": "55c90047c0b0",
+                    "id": "5647147b7f30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1358,7 +1358,7 @@
                         "x": 4550,
                         "y": -3400
                     },
-                    "id": "55c90047c160",
+                    "id": "56471464b7b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1374,7 +1374,7 @@
                         "x": 4450,
                         "y": -3350
                     },
-                    "id": "55c90047c210",
+                    "id": "56471464b860",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1390,7 +1390,7 @@
                         "x": 4700,
                         "y": -2750
                     },
-                    "id": "55c90047c2c0",
+                    "id": "56471466a120",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1406,7 +1406,7 @@
                         "x": 4300,
                         "y": -2850
                     },
-                    "id": "55c90047c370",
+                    "id": "56471466a1d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1422,7 +1422,7 @@
                         "x": 4700,
                         "y": -2850
                     },
-                    "id": "55c90047c420",
+                    "id": "564714588ce0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1438,7 +1438,7 @@
                         "x": 4150,
                         "y": -3200
                     },
-                    "id": "55c90047c4d0",
+                    "id": "564714588d90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1470,7 +1470,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9004878c0",
+                    "id": "5647146e7c50",
                     "type": "SymPin"
                 },
                 {
@@ -1499,7 +1499,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9003ec750",
+                    "id": "5647144a5a60",
                     "type": "SymPin"
                 },
                 {
@@ -1508,7 +1508,7 @@
                         "x": 4500,
                         "y": -2500
                     },
-                    "id": "55c90047c670",
+                    "id": "5647145e3bf0",
                     "over": {
                         "b": -2325,
                         "r": 4799,
@@ -1528,7 +1528,7 @@
                         "x": 4500,
                         "y": -3750
                     },
-                    "id": "55c909770fc0",
+                    "id": "564714459250",
                     "over": {
                         "b": -3577,
                         "r": 5030,
@@ -1553,7 +1553,7 @@
             "Parametrs": {
             },
             "Title": "button 1-on",
-            "id": "55c8fecebe50",
+            "id": "5647146c3e70",
             "type": "Symbol"
         },
         {
@@ -1570,7 +1570,7 @@
                         "x": 3500,
                         "y": -3500
                     },
-                    "id": "55c909771140",
+                    "id": "5647145e3c70",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1586,7 +1586,7 @@
                         "x": 5500,
                         "y": -3500
                     },
-                    "id": "55c9097711f0",
+                    "id": "564714459320",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1618,7 +1618,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9097712a0",
+                    "id": "5647145faa50",
                     "type": "SymPin"
                 },
                 {
@@ -1647,7 +1647,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c909771440",
+                    "id": "56471451f060",
                     "type": "SymPin"
                 },
                 {
@@ -1656,7 +1656,7 @@
                         "x": 4500,
                         "y": -2750
                     },
-                    "id": "55c909771590",
+                    "id": "5647144fb380",
                     "over": {
                         "b": -2579,
                         "r": 4799,
@@ -1676,7 +1676,7 @@
                         "x": 4500,
                         "y": -6000
                     },
-                    "id": "55c9004a7640",
+                    "id": "56471478de80",
                     "over": {
                         "b": -5829,
                         "r": 5025,
@@ -1700,7 +1700,7 @@
                         "x": 4750,
                         "y": -3250
                     },
-                    "id": "55c9004a7710",
+                    "id": "5647144fb400",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1716,7 +1716,7 @@
                         "x": 3500,
                         "y": -4000
                     },
-                    "id": "55c9004a7770",
+                    "id": "564714706800",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1732,7 +1732,7 @@
                         "x": 5500,
                         "y": -4000
                     },
-                    "id": "55c9004a7820",
+                    "id": "5647147068b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1764,7 +1764,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9004a78d0",
+                    "id": "5647143cca50",
                     "type": "SymPin"
                 },
                 {
@@ -1793,7 +1793,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9004a7a70",
+                    "id": "5647144b3b20",
                     "type": "SymPin"
                 },
                 {
@@ -1806,7 +1806,7 @@
                         "x": 4750,
                         "y": -3750
                     },
-                    "id": "55c9004a7bc0",
+                    "id": "5647144a0550",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1822,7 +1822,7 @@
                         "x": 3500,
                         "y": -4500
                     },
-                    "id": "55c9004a7c20",
+                    "id": "5647144a0600",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1838,7 +1838,7 @@
                         "x": 5500,
                         "y": -4500
                     },
-                    "id": "55c901749d90",
+                    "id": "56471472c9d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1870,7 +1870,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c901749e40",
+                    "id": "5647146ac400",
                     "type": "SymPin"
                 },
                 {
@@ -1899,7 +1899,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c901749fe0",
+                    "id": "5647146b8ef0",
                     "type": "SymPin"
                 },
                 {
@@ -1912,7 +1912,7 @@
                         "x": 4750,
                         "y": -4250
                     },
-                    "id": "55c90174a130",
+                    "id": "56471472ca80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1928,7 +1928,7 @@
                         "x": 3500,
                         "y": -5000
                     },
-                    "id": "55c90174a190",
+                    "id": "5647144d9170",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1944,7 +1944,7 @@
                         "x": 5500,
                         "y": -5000
                     },
-                    "id": "55c90174a240",
+                    "id": "5647144d9220",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -1976,7 +1976,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c90174a2f0",
+                    "id": "5647145ddc00",
                     "type": "SymPin"
                 },
                 {
@@ -2005,7 +2005,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9004a9940",
+                    "id": "564714681620",
                     "type": "SymPin"
                 },
                 {
@@ -2018,7 +2018,7 @@
                         "x": 4750,
                         "y": -4750
                     },
-                    "id": "55c9004a9a90",
+                    "id": "5647144de130",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2034,7 +2034,7 @@
                         "x": 3500,
                         "y": -5500
                     },
-                    "id": "55c9004a9af0",
+                    "id": "5647144de1e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2050,7 +2050,7 @@
                         "x": 5500,
                         "y": -5500
                     },
-                    "id": "55c9004a9ba0",
+                    "id": "564714797360",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2082,7 +2082,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9004a9c50",
+                    "id": "56471454e250",
                     "type": "SymPin"
                 },
                 {
@@ -2111,7 +2111,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9004a9df0",
+                    "id": "5647143c77f0",
                     "type": "SymPin"
                 },
                 {
@@ -2124,7 +2124,7 @@
                         "x": 4750,
                         "y": -5250
                     },
-                    "id": "55c9004a9ef0",
+                    "id": "564714797410",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2140,7 +2140,7 @@
                         "x": 5000,
                         "y": -5750
                     },
-                    "id": "55c900492550",
+                    "id": "5647143cf640",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2158,7 +2158,7 @@
                 "category": "{uu.e.e.a.b"
             },
             "Title": "dip switch x5",
-            "id": "55c909771090",
+            "id": "564714591e30",
             "type": "Symbol"
         },
         {
@@ -2181,7 +2181,7 @@
                     },
                     "SymbolId": "Symbol\rdip switch x5\rsalicad",
                     "SymbolTitle": "dip switch x5 (salicad)",
-                    "id": "55c9004927b0",
+                    "id": "5647146f4100",
                     "type": "Section"
                 },
                 {
@@ -2189,7 +2189,7 @@
                     "Default": false,
                     "PartId": "Part\rDS1040\rsalicad",
                     "PartTitle": "DS1040 (salicad)",
-                    "id": "55c9098b3f10",
+                    "id": "564714791580",
                     "type": "PartVariant"
                 }
             ],
@@ -2208,7 +2208,7 @@
                 "value": "DS1040"
             },
             "Title": "dip switch x5 DS1040",
-            "id": "55c900492660",
+            "id": "5647146505d0",
             "type": "Comp"
         },
         {
@@ -2225,7 +2225,7 @@
                         "x": 6500,
                         "y": 7000
                     },
-                    "id": "55c9098b4250",
+                    "id": "5647144d90c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2237,7 +2237,7 @@
                         "x": -1250,
                         "y": -500
                     },
-                    "id": "55c9098b4300",
+                    "id": "56471460d4f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2270,7 +2270,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.6d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9098b0930",
+                    "id": "564714787150",
                     "type": "PartPin"
                 },
                 {
@@ -2299,7 +2299,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.6d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9098b0ae0",
+                    "id": "5647140d2860",
                     "type": "PartPin"
                 },
                 {
@@ -2328,7 +2328,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.6d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9098b0c40",
+                    "id": "564714c78480",
                     "type": "PartPin"
                 },
                 {
@@ -2357,7 +2357,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.6d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9098b0da0",
+                    "id": "5647145a4d30",
                     "type": "PartPin"
                 },
                 {
@@ -2386,7 +2386,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.6d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c90049a1e0",
+                    "id": "5647146ab5a0",
                     "type": "PartPin"
                 },
                 {
@@ -2415,7 +2415,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.6d0.8m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c90049a340",
+                    "id": "5647146994c0",
                     "type": "PartPin"
                 },
                 {
@@ -2424,7 +2424,7 @@
                         "x": 2500,
                         "y": 4375
                     },
-                    "id": "55c90049a4a0",
+                    "id": "5647145a2070",
                     "over": {
                         "b": 4869,
                         "r": 3363,
@@ -2444,7 +2444,7 @@
                         "x": 2500,
                         "y": 1250
                     },
-                    "id": "55c90049a570",
+                    "id": "5647145a2140",
                     "over": {
                         "b": 1749,
                         "r": 4011,
@@ -2468,7 +2468,7 @@
                         "x": 0,
                         "y": -1875
                     },
-                    "id": "55c90049a640",
+                    "id": "56471460d5e0",
                     "lineLayer": "Common",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2486,7 +2486,7 @@
                 "category": "{uu.e.e.a.d"
             },
             "Title": "PSM1-1-0 mini button with fix",
-            "id": "55c8fef1dec0",
+            "id": "5647144ed330",
             "type": "Part"
         },
         {
@@ -2503,7 +2503,7 @@
                         "x": 3500,
                         "y": -3500
                     },
-                    "id": "55c9098b0f00",
+                    "id": "564714569cf0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2519,7 +2519,7 @@
                         "x": 5500,
                         "y": -3500
                     },
-                    "id": "55c9098b43a0",
+                    "id": "5647147ab950",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2535,7 +2535,7 @@
                         "x": 4550,
                         "y": -4400
                     },
-                    "id": "55c9098adf90",
+                    "id": "5647147aba00",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2551,7 +2551,7 @@
                         "x": 4450,
                         "y": -4350
                     },
-                    "id": "55c9098adff0",
+                    "id": "5647146ee540",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2567,7 +2567,7 @@
                         "x": 3500,
                         "y": -3000
                     },
-                    "id": "55c9098ae0a0",
+                    "id": "5647146ee5f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2583,7 +2583,7 @@
                         "x": 4250,
                         "y": -3250
                     },
-                    "id": "55c9098ae150",
+                    "id": "56471465a2f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2599,7 +2599,7 @@
                         "x": 4700,
                         "y": -2750
                     },
-                    "id": "55c9098ae200",
+                    "id": "56471465a3a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2615,7 +2615,7 @@
                         "x": 4300,
                         "y": -2850
                     },
-                    "id": "55c9098ae2b0",
+                    "id": "5647146d4990",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2631,7 +2631,7 @@
                         "x": 4700,
                         "y": -2850
                     },
-                    "id": "55c9098ae360",
+                    "id": "5647146d4a40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2647,7 +2647,7 @@
                         "x": 4150,
                         "y": -3200
                     },
-                    "id": "55c9098ae410",
+                    "id": "5647144ac440",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2679,7 +2679,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9098ae4c0",
+                    "id": "5647144ac4f0",
                     "type": "SymPin"
                 },
                 {
@@ -2708,7 +2708,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9098b60f0",
+                    "id": "5647146073b0",
                     "type": "SymPin"
                 },
                 {
@@ -2737,7 +2737,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9098b6240",
+                    "id": "564714692890",
                     "type": "SymPin"
                 },
                 {
@@ -2746,7 +2746,7 @@
                         "x": 4500,
                         "y": -2500
                     },
-                    "id": "55c9098b6390",
+                    "id": "5647143bddc0",
                     "over": {
                         "b": -2310,
                         "r": 4804,
@@ -2766,7 +2766,7 @@
                         "x": 4500,
                         "y": -4750
                     },
-                    "id": "55c9098b6460",
+                    "id": "5647143bde90",
                     "over": {
                         "b": -4559,
                         "r": 5031,
@@ -2790,7 +2790,7 @@
                         "x": 3500,
                         "y": -4500
                     },
-                    "id": "55c9098b6530",
+                    "id": "564714692990",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2806,7 +2806,7 @@
                         "x": 5500,
                         "y": -4500
                     },
-                    "id": "55c9098b6590",
+                    "id": "5647146074b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2822,7 +2822,7 @@
                         "x": 3500,
                         "y": -4000
                     },
-                    "id": "55c9098b6640",
+                    "id": "56471450f3b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2838,7 +2838,7 @@
                         "x": 4250,
                         "y": -4250
                     },
-                    "id": "55c9098b66f0",
+                    "id": "56471450f410",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2854,7 +2854,7 @@
                         "x": 4150,
                         "y": -4200
                     },
-                    "id": "55c90047ce90",
+                    "id": "5647146ecc30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -2886,7 +2886,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c90047cf40",
+                    "id": "564714460600",
                     "type": "SymPin"
                 },
                 {
@@ -2915,7 +2915,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c90047d0e0",
+                    "id": "564714553fe0",
                     "type": "SymPin"
                 },
                 {
@@ -2944,7 +2944,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c90047d230",
+                    "id": "564714473200",
                     "type": "SymPin"
                 }
             ],
@@ -2959,7 +2959,7 @@
                 "category": "{uu.e.e.a.d"
             },
             "Title": "PSM1-1-0 mini button with fix",
-            "id": "55c90049a700",
+            "id": "5647143c15a0",
             "type": "Symbol"
         },
         {
@@ -2978,7 +2978,7 @@
                     },
                     "SymbolId": "Symbol\rPSM1-1-0 mini button with fix\rzubr owk",
                     "SymbolTitle": "PSM1-1-0 mini button with fix (zubr owk)",
-                    "id": "55c9098a46f0",
+                    "id": "564714460750",
                     "type": "Section"
                 },
                 {
@@ -2986,7 +2986,7 @@
                     "Default": false,
                     "PartId": "Part\rPSM1-1-0 mini button with fix\rzubr owk",
                     "PartTitle": "PSM1-1-0 mini button with fix (zubr owk)",
-                    "id": "55c9098a4a60",
+                    "id": "564714650c30",
                     "type": "PartVariant"
                 }
             ],
@@ -3008,7 +3008,7 @@
                 "value": "PSM1-1-0"
             },
             "Title": "PSM1-1-0 mini button with fix",
-            "id": "55c90047d3e0",
+            "id": "5647143bab80",
             "type": "Comp"
         },
         {
@@ -3025,7 +3025,7 @@
                         "x": 3500,
                         "y": -3500
                     },
-                    "id": "55c900499680",
+                    "id": "5647145dc800",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3041,7 +3041,7 @@
                         "x": 5500,
                         "y": -3500
                     },
-                    "id": "55c900499730",
+                    "id": "5647145dc900",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3073,7 +3073,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9004997e0",
+                    "id": "5647144859d0",
                     "type": "SymPin"
                 },
                 {
@@ -3102,7 +3102,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c900499980",
+                    "id": "56471447d420",
                     "type": "SymPin"
                 },
                 {
@@ -3111,7 +3111,7 @@
                         "x": 4500,
                         "y": -2750
                     },
-                    "id": "55c9004a6f50",
+                    "id": "5647143cc660",
                     "over": {
                         "b": -2558,
                         "r": 4806,
@@ -3131,7 +3131,7 @@
                         "x": 4500,
                         "y": -5000
                     },
-                    "id": "55c9004a7020",
+                    "id": "5647143cc730",
                     "over": {
                         "b": -4811,
                         "r": 5036,
@@ -3155,7 +3155,7 @@
                         "x": 4750,
                         "y": -3250
                     },
-                    "id": "55c9004a70f0",
+                    "id": "5647143cc7b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3171,7 +3171,7 @@
                         "x": 3500,
                         "y": -4000
                     },
-                    "id": "55c9004a7150",
+                    "id": "56471447d570",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3187,7 +3187,7 @@
                         "x": 5500,
                         "y": -4000
                     },
-                    "id": "55c9004a7200",
+                    "id": "564714485b20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3219,7 +3219,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9004a72b0",
+                    "id": "5647145d0fc0",
                     "type": "SymPin"
                 },
                 {
@@ -3248,7 +3248,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9004a7450",
+                    "id": "5647144fea30",
                     "type": "SymPin"
                 },
                 {
@@ -3261,7 +3261,7 @@
                         "x": 4750,
                         "y": -3750
                     },
-                    "id": "55c9004a7550",
+                    "id": "5647145d1110",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3277,7 +3277,7 @@
                         "x": 3500,
                         "y": -4500
                     },
-                    "id": "55c90048b4a0",
+                    "id": "5647144feb80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3293,7 +3293,7 @@
                         "x": 5500,
                         "y": -4500
                     },
-                    "id": "55c90048b550",
+                    "id": "56471467d000",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3325,7 +3325,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c90048b600",
+                    "id": "5647145eb4f0",
                     "type": "SymPin"
                 },
                 {
@@ -3354,7 +3354,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c90048b7a0",
+                    "id": "5647144b1e50",
                     "type": "SymPin"
                 },
                 {
@@ -3367,7 +3367,7 @@
                         "x": 4750,
                         "y": -4250
                     },
-                    "id": "55c90048b8f0",
+                    "id": "5647145eb640",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3383,7 +3383,7 @@
                         "x": 4000,
                         "y": -3000
                     },
-                    "id": "55c90048b950",
+                    "id": "5647144b1fa0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3401,7 +3401,7 @@
                 "category": "{uu.e.e.a.b"
             },
             "Title": "dip switch x3",
-            "id": "55c900499520",
+            "id": "56471455a740",
             "type": "Symbol"
         },
         {
@@ -3414,7 +3414,7 @@
                         "x": 0,
                         "y": -640
                     },
-                    "id": "55c90048bab0",
+                    "id": "5647143d1d90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3447,7 +3447,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9098ab640",
+                    "id": "5647140e2e00",
                     "type": "PartPin"
                 },
                 {
@@ -3476,7 +3476,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9098ab7f0",
+                    "id": "5647144c7400",
                     "type": "PartPin"
                 },
                 {
@@ -3505,7 +3505,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9098ab950",
+                    "id": "56471457a930",
                     "type": "PartPin"
                 },
                 {
@@ -3534,7 +3534,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9098abab0",
+                    "id": "564713e5d3e0",
                     "type": "PartPin"
                 },
                 {
@@ -3563,7 +3563,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9098b52c0",
+                    "id": "564714744560",
                     "type": "PartPin"
                 },
                 {
@@ -3592,7 +3592,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9098b5420",
+                    "id": "564713f4fc00",
                     "type": "PartPin"
                 },
                 {
@@ -3601,7 +3601,7 @@
                         "x": 2540,
                         "y": 9398
                     },
-                    "id": "55c9098b5580",
+                    "id": "5647144c7510",
                     "over": {
                         "b": 9898,
                         "r": 3402,
@@ -3621,7 +3621,7 @@
                         "x": 2540,
                         "y": -1651
                     },
-                    "id": "55c9098b5650",
+                    "id": "564713e5d4f0",
                     "over": {
                         "b": -1156,
                         "r": 4042,
@@ -3645,7 +3645,7 @@
                         "x": -635,
                         "y": 2540
                     },
-                    "id": "55c9098b5720",
+                    "id": "564713f4fd60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3661,7 +3661,7 @@
                         "x": 635,
                         "y": 2540
                     },
-                    "id": "55c9098b5780",
+                    "id": "5647147446c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3673,7 +3673,7 @@
                         "x": 0,
                         "y": 1905
                     },
-                    "id": "55c9098b5830",
+                    "id": "56471445b5b0",
                     "over": {
                         "b": 2396,
                         "r": 255,
@@ -3697,7 +3697,7 @@
                         "x": 1905,
                         "y": 2540
                     },
-                    "id": "55c9098abc10",
+                    "id": "5647143d0e30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3713,7 +3713,7 @@
                         "x": 3175,
                         "y": 2540
                     },
-                    "id": "55c9098bcb50",
+                    "id": "5647143d0ee0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3725,7 +3725,7 @@
                         "x": 2540,
                         "y": 1905
                     },
-                    "id": "55c9098bcc00",
+                    "id": "564714bd1a60",
                     "over": {
                         "b": 2396,
                         "r": 2792,
@@ -3749,7 +3749,7 @@
                         "x": 4445,
                         "y": 2540
                     },
-                    "id": "55c9098bcd20",
+                    "id": "5647143d0f90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3765,7 +3765,7 @@
                         "x": 5715,
                         "y": 2540
                     },
-                    "id": "55c9098bcd80",
+                    "id": "564714bd1b80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3777,7 +3777,7 @@
                         "x": 5080,
                         "y": 1905
                     },
-                    "id": "55c9098bce30",
+                    "id": "56471478e2b0",
                     "over": {
                         "b": 2396,
                         "r": 5330,
@@ -3797,7 +3797,7 @@
                         "x": 0,
                         "y": 5715
                     },
-                    "id": "55c9098bcf50",
+                    "id": "56471478e380",
                     "over": {
                         "b": 6213,
                         "r": 722,
@@ -3821,7 +3821,7 @@
                         "x": -2032,
                         "y": 8763
                     },
-                    "id": "55c9098bd020",
+                    "id": "5647146fb1f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3839,7 +3839,7 @@
                 "category": "{uu.e.e.a.b"
             },
             "Title": "DS1040-03",
-            "id": "55c90997af00",
+            "id": "5647146c67e0",
             "type": "Part"
         },
         {
@@ -3858,7 +3858,7 @@
                     },
                     "SymbolId": "Symbol\rdip switch x3\rzubr owk",
                     "SymbolTitle": "dip switch x3 (zubr owk)",
-                    "id": "55c90049b120",
+                    "id": "56471470b220",
                     "type": "Section"
                 },
                 {
@@ -3866,7 +3866,7 @@
                     "Default": false,
                     "PartId": "Part\rDS1040-03\rzubr owk",
                     "PartTitle": "DS1040-03 (zubr owk)",
-                    "id": "55c90049b500",
+                    "id": "564714600aa0",
                     "type": "PartVariant"
                 }
             ],
@@ -3895,7 +3895,7 @@
                 "DS1040-03RT",
                 "dip switch x3 DS1040-03RT corner"
             ],
-            "id": "55c9098bd0e0",
+            "id": "56471463b7e0",
             "type": "Comp"
         },
         {
@@ -3912,7 +3912,7 @@
                         "x": 3500,
                         "y": -3500
                     },
-                    "id": "55c901720d90",
+                    "id": "564714497810",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3928,7 +3928,7 @@
                         "x": 5500,
                         "y": -3500
                     },
-                    "id": "55c901720e80",
+                    "id": "56471453d990",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3944,7 +3944,7 @@
                         "x": 4150,
                         "y": -3200
                     },
-                    "id": "55c8fe358210",
+                    "id": "56471453da40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -3976,7 +3976,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c8fe358300",
+                    "id": "564713e84e00",
                     "type": "SymPin"
                 },
                 {
@@ -4005,7 +4005,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c8fe3584e0",
+                    "id": "564714492b80",
                     "type": "SymPin"
                 },
                 {
@@ -4014,7 +4014,7 @@
                         "x": 4500,
                         "y": -2750
                     },
-                    "id": "55c8fe358670",
+                    "id": "564713eb6800",
                     "over": {
                         "b": -2576,
                         "r": 4799,
@@ -4034,7 +4034,7 @@
                         "x": 4500,
                         "y": -3750
                     },
-                    "id": "55c8fe358780",
+                    "id": "564713eb68d0",
                     "over": {
                         "b": -3577,
                         "r": 5030,
@@ -4060,7 +4060,7 @@
                 "category": "{uu.e.e.a"
             },
             "Title": "switch 1-on",
-            "id": "55c901720c00",
+            "id": "564714454650",
             "type": "Symbol"
         },
         {
@@ -4075,7 +4075,7 @@
                     },
                     "SymbolId": "Symbol\rswitch 1-on\rsalicad",
                     "SymbolTitle": "switch 1-on (salicad)",
-                    "id": "55c9098abec0",
+                    "id": "564714536970",
                     "type": "Section"
                 },
                 {
@@ -4083,7 +4083,7 @@
                     "Default": false,
                     "PartId": "Part\rswitch 1-on-off RS-102-1C3 \rsalicad",
                     "PartTitle": "switch 1-on-off RS-102-1C3  (salicad)",
-                    "id": "55c9098ac150",
+                    "id": "5647145a6060",
                     "type": "PartVariant"
                 }
             ],
@@ -4101,7 +4101,7 @@
                 "value": "RS-102-1C3"
             },
             "Title": "switch 1-on-off RS-102-1C3",
-            "id": "55c9098abd80",
+            "id": "564714536870",
             "type": "Comp"
         },
         {
@@ -4118,7 +4118,7 @@
                         "x": 26000,
                         "y": 20000
                     },
-                    "id": "55c9098aef80",
+                    "id": "56471406af10",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4134,7 +4134,7 @@
                         "x": 28000,
                         "y": 20000
                     },
-                    "id": "55c9098af070",
+                    "id": "5647145b2d40",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4154,7 +4154,7 @@
                         "x": 25000,
                         "y": 21032
                     },
-                    "id": "55c9098af160",
+                    "id": "5647145b2df0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4174,7 +4174,7 @@
                         "x": 528,
                         "y": 21000
                     },
-                    "id": "55c9098af250",
+                    "id": "5647145b2e50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4190,7 +4190,7 @@
                         "x": 13000,
                         "y": -6000
                     },
-                    "id": "55c9098af340",
+                    "id": "564714765220",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4206,7 +4206,7 @@
                         "x": 2000,
                         "y": -6000
                     },
-                    "id": "55c900492c30",
+                    "id": "5647147652d0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4222,7 +4222,7 @@
                         "x": 24000,
                         "y": -6000
                     },
-                    "id": "55c900492d20",
+                    "id": "5647144bac60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4254,7 +4254,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "h1",
                     "Stratum": "3fffffff",
-                    "id": "55c900492e10",
+                    "id": "56471477d060",
                     "type": "PartPin"
                 },
                 {
@@ -4283,7 +4283,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "h1",
                     "Stratum": "3fffffff",
-                    "id": "55c900493000",
+                    "id": "5647140fa600",
                     "type": "PartPin"
                 },
                 {
@@ -4312,7 +4312,7 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "h1",
                     "Stratum": "3fffffff",
-                    "id": "55c9098ae680",
+                    "id": "5647143c97d0",
                     "type": "PartPin"
                 }
             ],
@@ -4327,7 +4327,7 @@
                 "category": "{uu.e.e.a.c"
             },
             "Title": "switch 1-on-off RS-102-1C3 ",
-            "id": "55c8fe6a0310",
+            "id": "5647144bb170",
             "type": "Part"
         },
         {
@@ -4344,7 +4344,7 @@
                         "x": 6000,
                         "y": -2501
                     },
-                    "id": "55c9098ae990",
+                    "id": "5647140fa760",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4376,7 +4376,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1.2m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9098aea80",
+                    "id": "564714796940",
                     "type": "PartPin"
                 },
                 {
@@ -4405,7 +4405,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1.2m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9004bf490",
+                    "id": "564714627c00",
                     "type": "PartPin"
                 },
                 {
@@ -4414,7 +4414,7 @@
                         "x": 2250,
                         "y": 2899
                     },
-                    "id": "55c9004bf630",
+                    "id": "5647145c87b0",
                     "over": {
                         "b": 3397,
                         "r": 3107,
@@ -4434,7 +4434,7 @@
                         "x": 2250,
                         "y": 1899
                     },
-                    "id": "55c9004bf740",
+                    "id": "5647145c8880",
                     "over": {
                         "b": 2401,
                         "r": 3763,
@@ -4458,7 +4458,7 @@
                         "x": 6000,
                         "y": -2501
                     },
-                    "id": "55c9004bf850",
+                    "id": "564714627d10",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4490,7 +4490,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1.2m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9004bf8f0",
+                    "id": "56471451e6e0",
                     "type": "PartPin"
                 },
                 {
@@ -4519,7 +4519,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2d1.2m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9004a6810",
+                    "id": "564714716970",
                     "type": "PartPin"
                 },
                 {
@@ -4532,7 +4532,7 @@
                         "x": 700,
                         "y": -7500
                     },
-                    "id": "55c9004bfae0",
+                    "id": "564714716a80",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4548,7 +4548,7 @@
                         "x": 3800,
                         "y": -7500
                     },
-                    "id": "55c9004a69f0",
+                    "id": "564714796a50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4564,7 +4564,7 @@
                         "x": 700,
                         "y": -7500
                     },
-                    "id": "55c9004a6ae0",
+                    "id": "564714c5cd30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4596,7 +4596,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2.4d1.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9004a6bd0",
+                    "id": "564714bb6560",
                     "type": "PartPin"
                 },
                 {
@@ -4625,7 +4625,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c2.4d1.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "55c9098acac0",
+                    "id": "5647145e2ae0",
                     "type": "PartPin"
                 },
                 {
@@ -4649,7 +4649,7 @@
                         0,
                         1
                     ],
-                    "id": "55c9099e8790",
+                    "id": "5647143cda30",
                     "type": "3dGraphModel"
                 }
             ],
@@ -4664,7 +4664,7 @@
                 "category": ""
             },
             "Title": "kls7-6606",
-            "id": "55c8fe94c200",
+            "id": "564714700c80",
             "type": "Part"
         },
         {
@@ -4679,7 +4679,7 @@
                     },
                     "SymbolId": "Symbol\rbutton 1-on\rsalicad",
                     "SymbolTitle": "button 1-on (salicad)",
-                    "id": "55c9099bdd60",
+                    "id": "56471450cf80",
                     "type": "Section"
                 },
                 {
@@ -4687,7 +4687,7 @@
                     "Default": false,
                     "PartId": "Part\rkls7-6606\rsalicad",
                     "PartTitle": "kls7-6606 (salicad)",
-                    "id": "55c8fe8641d0",
+                    "id": "5647143c6600",
                     "type": "PartVariant"
                 }
             ],
@@ -4724,7 +4724,7 @@
                 "1825027-3",
                 "RED"
             ],
-            "id": "55c900519830",
+            "id": "5647143c6c70",
             "type": "Comp"
         },
         {
@@ -4741,7 +4741,7 @@
                         "x": 7500,
                         "y": -5250
                     },
-                    "id": "55c9004a21c0",
+                    "id": "564714753ce0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4753,7 +4753,7 @@
                         "x": 2000,
                         "y": 0
                     },
-                    "id": "55c9004a2220",
+                    "id": "56471478e9e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4770,7 +4770,7 @@
                         "x": 1500,
                         "y": 0
                     },
-                    "id": "55c9004a2100",
+                    "id": "564714753c20",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4786,7 +4786,7 @@
                         "x": 1500,
                         "y": -4500
                     },
-                    "id": "55c9004a2040",
+                    "id": "5647145a3830",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4802,7 +4802,7 @@
                         "x": 7500,
                         "y": -4500
                     },
-                    "id": "55c9004a1f80",
+                    "id": "5647145a3770",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4818,7 +4818,7 @@
                         "x": 7500,
                         "y": 0
                     },
-                    "id": "55c9004a1ec0",
+                    "id": "564714d3f760",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -4850,7 +4850,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.6x1.4m0.1s0.04",
                     "Stratum": "1",
-                    "id": "55c909989430",
+                    "id": "564714475000",
                     "type": "PartPin"
                 },
                 {
@@ -4879,7 +4879,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.6x1.4m0.1s0.04",
                     "Stratum": "1",
-                    "id": "55c90044b2b0",
+                    "id": "564714575b60",
                     "type": "PartPin"
                 },
                 {
@@ -4908,7 +4908,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.6x1.4m0.1s0.04",
                     "Stratum": "1",
-                    "id": "55c9099b61c0",
+                    "id": "5647145bd6a0",
                     "type": "PartPin"
                 },
                 {
@@ -4937,7 +4937,7 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.6x1.4m0.1s0.04",
                     "Stratum": "1",
-                    "id": "55c909c51180",
+                    "id": "564714693530",
                     "type": "PartPin"
                 },
                 {
@@ -4946,7 +4946,7 @@
                         "x": 4500,
                         "y": -2250
                     },
-                    "id": "55c9005198e0",
+                    "id": "56471466d780",
                     "over": {
                         "b": -1753,
                         "r": 5364,
@@ -4966,7 +4966,7 @@
                         "x": 4500,
                         "y": -5750
                     },
-                    "id": "55c9098b5cb0",
+                    "id": "56471476fb90",
                     "over": {
                         "b": -5254,
                         "r": 6015,
@@ -5001,7 +5001,7 @@
                         0,
                         1
                     ],
-                    "id": "55c900519db0",
+                    "id": "564714477ac0",
                     "type": "3dGraphModel"
                 }
             ],
@@ -5015,7 +5015,7 @@
             "Parametrs": {
             },
             "Title": "push button RUICHI IT-1102WA",
-            "id": "55c9098b5be0",
+            "id": "56471459d460",
             "type": "Part"
         },
         {
@@ -5032,7 +5032,7 @@
                         "x": 3500,
                         "y": -3500
                     },
-                    "id": "55c909adb9c0",
+                    "id": "5647146ed5c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5048,7 +5048,7 @@
                         "x": 5500,
                         "y": -3500
                     },
-                    "id": "55c909adb910",
+                    "id": "5647144d7cb0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5064,7 +5064,7 @@
                         "x": 4550,
                         "y": -3400
                     },
-                    "id": "55c8fcbe95d0",
+                    "id": "5647144d7c50",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5080,7 +5080,7 @@
                         "x": 4450,
                         "y": -3350
                     },
-                    "id": "55c9004a5340",
+                    "id": "564714486a90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5096,7 +5096,7 @@
                         "x": 3500,
                         "y": -3000
                     },
-                    "id": "55c909ac8290",
+                    "id": "564714a9e1e0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5112,7 +5112,7 @@
                         "x": 4250,
                         "y": -3250
                     },
-                    "id": "55c909adba80",
+                    "id": "5647144a8440",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5128,7 +5128,7 @@
                         "x": 4700,
                         "y": -2750
                     },
-                    "id": "55c900500bf0",
+                    "id": "56471474fcc0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5144,7 +5144,7 @@
                         "x": 4300,
                         "y": -2850
                     },
-                    "id": "55c9004a36e0",
+                    "id": "564714587e30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5160,7 +5160,7 @@
                         "x": 4700,
                         "y": -2850
                     },
-                    "id": "55c9004a1da0",
+                    "id": "564714537b30",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5176,7 +5176,7 @@
                         "x": 4150,
                         "y": -3200
                     },
-                    "id": "55c9004a1f20",
+                    "id": "5647145a3710",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5208,7 +5208,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c900484830",
+                    "id": "5647144ee230",
                     "type": "SymPin"
                 },
                 {
@@ -5237,7 +5237,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9004a3560",
+                    "id": "5647143bfba0",
                     "type": "SymPin"
                 },
                 {
@@ -5266,7 +5266,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c900489890",
+                    "id": "564714587e90",
                     "type": "SymPin"
                 },
                 {
@@ -5275,7 +5275,7 @@
                         "x": 4500,
                         "y": -2500
                     },
-                    "id": "55c9004988c0",
+                    "id": "564714b93d80",
                     "over": {
                         "b": -2325,
                         "r": 4799,
@@ -5295,7 +5295,7 @@
                         "x": 4500,
                         "y": -3750
                     },
-                    "id": "55c9003e9620",
+                    "id": "56471460a2e0",
                     "over": {
                         "b": -3577,
                         "r": 5030,
@@ -5321,7 +5321,7 @@
                 "category": "{uu.e.e.a.d"
             },
             "Title": "switch button",
-            "id": "55c900490530",
+            "id": "564714586eb0",
             "type": "Symbol"
         },
         {
@@ -5337,7 +5337,7 @@
                     },
                     "SymbolId": "Symbol\rswitch button\rsalicad",
                     "SymbolTitle": "switch button (salicad)",
-                    "id": "55c900498940",
+                    "id": "564714b93e00",
                     "type": "Section"
                 },
                 {
@@ -5345,7 +5345,7 @@
                     "Default": false,
                     "PartId": "Part\rplug part\rsalicad",
                     "PartTitle": " (X7R)",
-                    "id": "55c909989540",
+                    "id": "56471452a880",
                     "type": "PartVariant"
                 }
             ],
@@ -5363,7 +5363,7 @@
                 "value": ""
             },
             "Title": "switch button",
-            "id": "55c900484a00",
+            "id": "56471459d580",
             "type": "Comp"
         },
         {
@@ -5380,7 +5380,7 @@
                         "x": 3500,
                         "y": -3500
                     },
-                    "id": "55c900519d00",
+                    "id": "5647144ee330",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5396,7 +5396,7 @@
                         "x": 5500,
                         "y": -3500
                     },
-                    "id": "55c9099f79d0",
+                    "id": "5647143cc340",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5412,7 +5412,7 @@
                         "x": 4550,
                         "y": -3400
                     },
-                    "id": "55c909989600",
+                    "id": "5647145397a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5428,7 +5428,7 @@
                         "x": 4450,
                         "y": -3350
                     },
-                    "id": "55c8fe864550",
+                    "id": "56471478e8c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5444,7 +5444,7 @@
                         "x": 4700,
                         "y": -2750
                     },
-                    "id": "55c8fe864490",
+                    "id": "5647146871c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5460,7 +5460,7 @@
                         "x": 4300,
                         "y": -2850
                     },
-                    "id": "55c9015e9900",
+                    "id": "564714687100",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5476,7 +5476,7 @@
                         "x": 4700,
                         "y": -2850
                     },
-                    "id": "55c9004a1bc0",
+                    "id": "5647144792f0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5492,7 +5492,7 @@
                         "x": 4150,
                         "y": -3200
                     },
-                    "id": "55c900490310",
+                    "id": "564714534f90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5524,7 +5524,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c909ac82f0",
+                    "id": "564714734760",
                     "type": "SymPin"
                 },
                 {
@@ -5553,7 +5553,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "55c9017393b0",
+                    "id": "5647144cc400",
                     "type": "SymPin"
                 },
                 {
@@ -5562,12 +5562,12 @@
                         "x": 4500,
                         "y": -2500
                     },
-                    "id": "55c9003e95a0",
+                    "id": "56471460a260",
                     "over": {
-                        "b": -2326,
-                        "r": 4799,
+                        "b": -2328,
+                        "r": 4802,
                         "x": 4201,
-                        "y": -2674
+                        "y": -2676
                     },
                     "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
@@ -5582,10 +5582,10 @@
                         "x": 4500,
                         "y": -4250
                     },
-                    "id": "55c9099b90f0",
+                    "id": "5647146996e0",
                     "over": {
                         "b": -4077,
-                        "r": 5027,
+                        "r": 5028,
                         "x": 3974,
                         "y": -4425
                     },
@@ -5606,7 +5606,7 @@
                         "x": 4000,
                         "y": -4000
                     },
-                    "id": "55c900490250",
+                    "id": "564714c88360",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5622,7 +5622,7 @@
                         "x": 3500,
                         "y": -4000
                     },
-                    "id": "55c9097e82c0",
+                    "id": "564714c882a0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5638,7 +5638,7 @@
                         "x": 5000,
                         "y": -4000
                     },
-                    "id": "55c8fe864230",
+                    "id": "56471478e980",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5654,7 +5654,7 @@
                         "x": 5500,
                         "y": -4000
                     },
-                    "id": "55c90044af30",
+                    "id": "5647146ba0b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5666,7 +5666,7 @@
                         "x": 4000,
                         "y": -3500
                     },
-                    "id": "55c9098a0c80",
+                    "id": "564714561090",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5679,7 +5679,7 @@
                         "x": 5000,
                         "y": -3500
                     },
-                    "id": "55c9004a56a0",
+                    "id": "564714507490",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -5712,7 +5712,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "55c9017396f0",
+                    "id": "56471448a3d0",
                     "type": "SymPin"
                 },
                 {
@@ -5741,7 +5741,7 @@
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 0,
-                    "id": "55c901739830",
+                    "id": "5647145d11e0",
                     "type": "SymPin"
                 }
             ],
@@ -5755,7 +5755,7 @@
             "Parametrs": {
             },
             "Title": "button 1-on 4pin",
-            "id": "55c9098b5a00",
+            "id": "564714534e80",
             "type": "Symbol"
         },
         {
@@ -5772,7 +5772,7 @@
                     },
                     "SymbolId": "Symbol\rbutton 1-on 4pin\rsalicad",
                     "SymbolTitle": "button 1-on 4pin (salicad)",
-                    "id": "55c900519b40",
+                    "id": "564714550bd0",
                     "type": "Section"
                 },
                 {
@@ -5780,7 +5780,7 @@
                     "Default": false,
                     "PartId": "Part\rpush button RUICHI IT-1102WA\rsalicad",
                     "PartTitle": "push button RUICHI IT-1102WA (salicad)",
-                    "id": "55c90044aff0",
+                    "id": "5647146ba170",
                     "type": "PartVariant"
                 }
             ],
@@ -5799,7 +5799,1026 @@
                 "value": "IT-1102WA"
             },
             "Title": "push button RUICHI IT-1102WA 1-on 4pin",
-            "id": "55c900490480",
+            "id": "564714586e00",
+            "type": "Comp"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 5750,
+                        "y": -4000
+                    },
+                    "b": {
+                        "x": 3750,
+                        "y": -4000
+                    },
+                    "id": "56471462c9c0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 4750,
+                        "y": -3500
+                    },
+                    "b": {
+                        "x": 5750,
+                        "y": -3500
+                    },
+                    "id": "7f890000a080",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 4550,
+                        "y": -2750
+                    },
+                    "b": {
+                        "x": 4550,
+                        "y": -3400
+                    },
+                    "id": "56471472a210",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 4450,
+                        "y": -2750
+                    },
+                    "b": {
+                        "x": 4450,
+                        "y": -3350
+                    },
+                    "id": "5647140eaeb0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 4300,
+                        "y": -2750
+                    },
+                    "b": {
+                        "x": 4700,
+                        "y": -2750
+                    },
+                    "id": "5647143c35f0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 4300,
+                        "y": -2750
+                    },
+                    "b": {
+                        "x": 4300,
+                        "y": -2850
+                    },
+                    "id": "5647145c2ec0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 4700,
+                        "y": -2750
+                    },
+                    "b": {
+                        "x": 4700,
+                        "y": -2850
+                    },
+                    "id": "564714591690",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 4750,
+                        "y": -3500
+                    },
+                    "b": {
+                        "x": 4150,
+                        "y": -3200
+                    },
+                    "id": "5647144ac390",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "Name": "E",
+                    "NamePos": {
+                        "x": 5500,
+                        "y": -3750
+                    },
+                    "NameTextDirMirHorVer": "0SCM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "PinName",
+                    "NameTextSize": 375,
+                    "Number": "",
+                    "NumberPos": {
+                        "x": 6000,
+                        "y": -3750
+                    },
+                    "NumberTextDirMirHorVer": "0SCM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextSize": 375,
+                    "Origin": {
+                        "x": 5750,
+                        "y": -4000
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "5647143cff00",
+                    "type": "SymPin"
+                },
+                {
+                    "Cpid": 0,
+                    "Name": "D",
+                    "NamePos": {
+                        "x": 5500,
+                        "y": -3250
+                    },
+                    "NameTextDirMirHorVer": "0SCM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "PinName",
+                    "NameTextSize": 375,
+                    "Number": "",
+                    "NumberPos": {
+                        "x": 6000,
+                        "y": -3250
+                    },
+                    "NumberTextDirMirHorVer": "0SCM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextSize": 375,
+                    "Origin": {
+                        "x": 5750,
+                        "y": -3500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 7,
+                    "id": "564714676f00",
+                    "type": "SymPin"
+                },
+                {
+                    "Cpid": 0,
+                    "Origin": {
+                        "x": 4500,
+                        "y": -2500
+                    },
+                    "id": "5647143c55a0",
+                    "over": {
+                        "b": -2330,
+                        "r": 4796,
+                        "x": 4199,
+                        "y": -2676
+                    },
+                    "propTextDirMirHorVer": "0SCM",
+                    "propTextFont": 0,
+                    "propTextLayer": "Ident",
+                    "propTextSize": 350,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Cpid": 0,
+                    "Origin": {
+                        "x": 4500,
+                        "y": -6500
+                    },
+                    "id": "5647147492c0",
+                    "over": {
+                        "b": -6329,
+                        "r": 5023,
+                        "x": 3977,
+                        "y": -6675
+                    },
+                    "propTextDirMirHorVer": "0SCM",
+                    "propTextFont": 0,
+                    "propTextLayer": "Value",
+                    "propTextSize": 350,
+                    "text": "{value}",
+                    "type": "Value"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 3750,
+                        "y": -4000
+                    },
+                    "b": {
+                        "x": 3750,
+                        "y": -3500
+                    },
+                    "id": "5647147275d0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 3750,
+                        "y": -3500
+                    },
+                    "b": {
+                        "x": 4000,
+                        "y": -3500
+                    },
+                    "id": "5647146e3d50",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 4250,
+                        "y": -5500
+                    },
+                    "b": {
+                        "x": 5750,
+                        "y": -5500
+                    },
+                    "id": "5647145e4ee0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "center": {
+                        "x": 4750,
+                        "y": -5500
+                    },
+                    "id": "5647145451f0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "radius": 50,
+                    "type": "CircleFilled"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 4250,
+                        "y": -5250
+                    },
+                    "b": {
+                        "x": 4250,
+                        "y": -5000
+                    },
+                    "id": "564714585e10",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 4250,
+                        "y": -5000
+                    },
+                    "b": {
+                        "x": 5750,
+                        "y": -5000
+                    },
+                    "id": "5647141aba90",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 4250,
+                        "y": -5750
+                    },
+                    "b": {
+                        "x": 4250,
+                        "y": -6000
+                    },
+                    "id": "5647147bc180",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 4250,
+                        "y": -6000
+                    },
+                    "b": {
+                        "x": 5750,
+                        "y": -6000
+                    },
+                    "id": "56471457ba60",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "Name": "A",
+                    "NamePos": {
+                        "x": 5500,
+                        "y": -4750
+                    },
+                    "NameTextDirMirHorVer": "0SCM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "PinName",
+                    "NameTextSize": 350,
+                    "Number": "",
+                    "NumberPos": {
+                        "x": 6000,
+                        "y": -4750
+                    },
+                    "NumberTextDirMirHorVer": "0SCM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextSize": 350,
+                    "Origin": {
+                        "x": 5750,
+                        "y": -5000
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "5647145f5620",
+                    "type": "SymPin"
+                },
+                {
+                    "Cpid": 0,
+                    "Name": "B",
+                    "NamePos": {
+                        "x": 5500,
+                        "y": -5750
+                    },
+                    "NameTextDirMirHorVer": "0SCM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "PinName",
+                    "NameTextSize": 350,
+                    "Number": "",
+                    "NumberPos": {
+                        "x": 6000,
+                        "y": -5750
+                    },
+                    "NumberTextDirMirHorVer": "0SCM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextSize": 350,
+                    "Origin": {
+                        "x": 5750,
+                        "y": -6000
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "5647144b4770",
+                    "type": "SymPin"
+                },
+                {
+                    "Cpid": 0,
+                    "Name": "C",
+                    "NamePos": {
+                        "x": 5500,
+                        "y": -5250
+                    },
+                    "NameTextDirMirHorVer": "0SCM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "PinName",
+                    "NameTextSize": 350,
+                    "Number": "",
+                    "NumberPos": {
+                        "x": 6000,
+                        "y": -5250
+                    },
+                    "NumberTextDirMirHorVer": "0SCM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextSize": 350,
+                    "Origin": {
+                        "x": 5750,
+                        "y": -5500
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "564714758f70",
+                    "type": "SymPin"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 4500,
+                        "y": -2750
+                    },
+                    "b": {
+                        "x": 4500,
+                        "y": -5500
+                    },
+                    "id": "5647146a7db0",
+                    "lineLayer": "Component",
+                    "lineType": 2,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 5250,
+                        "y": -3000
+                    },
+                    "b": {
+                        "x": 3500,
+                        "y": -6250
+                    },
+                    "id": "5647145fc0a0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 3500,
+                        "y": -4250
+                    },
+                    "b": {
+                        "x": 3000,
+                        "y": -4250
+                    },
+                    "id": "5647168018d0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 3500,
+                        "y": -5000
+                    },
+                    "b": {
+                        "x": 3000,
+                        "y": -5000
+                    },
+                    "id": "564718f10360",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "Name": "G1",
+                    "NamePos": {
+                        "x": 3250,
+                        "y": -4000
+                    },
+                    "NameTextDirMirHorVer": "0SCM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextSize": 350,
+                    "Number": "",
+                    "NumberPos": {
+                        "x": 2750,
+                        "y": -4000
+                    },
+                    "NumberTextDirMirHorVer": "0SCM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextSize": 350,
+                    "Origin": {
+                        "x": 3000,
+                        "y": -4250
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "7f8900024d70",
+                    "type": "SymPin"
+                },
+                {
+                    "Cpid": 0,
+                    "Name": "G2",
+                    "NamePos": {
+                        "x": 3250,
+                        "y": -4750
+                    },
+                    "NameTextDirMirHorVer": "0SCM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextSize": 350,
+                    "Number": "",
+                    "NumberPos": {
+                        "x": 2750,
+                        "y": -4750
+                    },
+                    "NumberTextDirMirHorVer": "0SCM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextSize": 350,
+                    "Origin": {
+                        "x": 3000,
+                        "y": -5000
+                    },
+                    "SymPinLayer": "Pin",
+                    "SymPinType": 0,
+                    "id": "564716aff210",
+                    "type": "SymPin"
+                }
+            ],
+            "Cpid": 0,
+            "Created": 245318232,
+            "Edit enable": false,
+            "Origin": {
+                "x": 5750,
+                "y": -3500
+            },
+            "Parametrs": {
+            },
+            "Title": "encoder ec11",
+            "id": "564714611c70",
+            "type": "Symbol"
+        },
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": -3500,
+                        "y": 14500
+                    },
+                    "b": {
+                        "x": 8500,
+                        "y": 500
+                    },
+                    "id": "564716ac0ef0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "Cpid": 0,
+                    "center": {
+                        "x": -3000,
+                        "y": 750
+                    },
+                    "id": "5647167c9b50",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "radius": 250,
+                    "type": "Circle"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 0,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "id": "56471677aa10",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 2500,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": 2500,
+                        "y": 0
+                    },
+                    "id": "5647145f5ad0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 5000,
+                        "y": 250
+                    },
+                    "b": {
+                        "x": 5000,
+                        "y": 0
+                    },
+                    "id": "564714b846d0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 5000,
+                        "y": 14250
+                    },
+                    "b": {
+                        "x": 5000,
+                        "y": 14500
+                    },
+                    "id": "564714023fa0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": 0,
+                        "y": 14250
+                    },
+                    "b": {
+                        "x": 0,
+                        "y": 14500
+                    },
+                    "id": "564714705020",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "NamePos": {
+                        "x": 0,
+                        "y": 250
+                    },
+                    "NameTextDirMirHorVer": "1SLM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextSize": 500,
+                    "Number": "1",
+                    "NumberPos": {
+                        "x": -250,
+                        "y": 0
+                    },
+                    "NumberTextDirMirHorVer": "1SLM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextSize": 500,
+                    "Origin": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "56471459c670",
+                    "type": "PartPin"
+                },
+                {
+                    "Cpid": 0,
+                    "NamePos": {
+                        "x": 2500,
+                        "y": 250
+                    },
+                    "NameTextDirMirHorVer": "1SLM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextSize": 500,
+                    "Number": "2",
+                    "NumberPos": {
+                        "x": 2250,
+                        "y": 0
+                    },
+                    "NumberTextDirMirHorVer": "1SLM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextSize": 500,
+                    "Origin": {
+                        "x": 2500,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "56471472b410",
+                    "type": "PartPin"
+                },
+                {
+                    "Cpid": 0,
+                    "NamePos": {
+                        "x": 5000,
+                        "y": 250
+                    },
+                    "NameTextDirMirHorVer": "1SLM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextSize": 500,
+                    "Number": "3",
+                    "NumberPos": {
+                        "x": 4750,
+                        "y": 0
+                    },
+                    "NumberTextDirMirHorVer": "1SLM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextSize": 500,
+                    "Origin": {
+                        "x": 5000,
+                        "y": 0
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "5647146fd4a0",
+                    "type": "PartPin"
+                },
+                {
+                    "Cpid": 0,
+                    "NamePos": {
+                        "x": 8500,
+                        "y": 7500
+                    },
+                    "NameTextDirMirHorVer": "0SRM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextSize": 500,
+                    "Number": "4",
+                    "NumberPos": {
+                        "x": 8000,
+                        "y": 7750
+                    },
+                    "NumberTextDirMirHorVer": "0SRM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextSize": 500,
+                    "Origin": {
+                        "x": 8000,
+                        "y": 7500
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c4d2m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "5647145be260",
+                    "type": "PartPin"
+                },
+                {
+                    "Cpid": 0,
+                    "NamePos": {
+                        "x": 5000,
+                        "y": 14250
+                    },
+                    "NameTextDirMirHorVer": "1SRM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextSize": 500,
+                    "Number": "5",
+                    "NumberPos": {
+                        "x": 4750,
+                        "y": 14500
+                    },
+                    "NumberTextDirMirHorVer": "1SRM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextSize": 500,
+                    "Origin": {
+                        "x": 5000,
+                        "y": 14500
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "564714550380",
+                    "type": "PartPin"
+                },
+                {
+                    "Cpid": 0,
+                    "NamePos": {
+                        "x": 0,
+                        "y": 14250
+                    },
+                    "NameTextDirMirHorVer": "1SRM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextSize": 500,
+                    "Number": "7",
+                    "NumberPos": {
+                        "x": -250,
+                        "y": 14500
+                    },
+                    "NumberTextDirMirHorVer": "1SRM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextSize": 500,
+                    "Origin": {
+                        "x": 0,
+                        "y": 14500
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c2d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "56471416a850",
+                    "type": "PartPin"
+                },
+                {
+                    "Cpid": 0,
+                    "NamePos": {
+                        "x": -3500,
+                        "y": 7500
+                    },
+                    "NameTextDirMirHorVer": "0SLM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "Invisible",
+                    "NameTextSize": 500,
+                    "Number": "8",
+                    "NumberPos": {
+                        "x": -3000,
+                        "y": 7750
+                    },
+                    "NumberTextDirMirHorVer": "0SLM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "Invisible",
+                    "NumberTextSize": 500,
+                    "Origin": {
+                        "x": -3000,
+                        "y": 7500
+                    },
+                    "PartPinLayer": "Pin",
+                    "PartPinType": "c4d2m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "564716a8f780",
+                    "type": "PartPin"
+                },
+                {
+                    "Cpid": 0,
+                    "Origin": {
+                        "x": 2500,
+                        "y": 11250
+                    },
+                    "id": "5647167edf40",
+                    "over": {
+                        "b": 11744,
+                        "r": 3357,
+                        "x": 1643,
+                        "y": 10753
+                    },
+                    "propTextDirMirHorVer": "0SCM",
+                    "propTextFont": 0,
+                    "propTextLayer": "Ident.Top",
+                    "propTextSize": 1000,
+                    "text": "{id}",
+                    "type": "Ident"
+                },
+                {
+                    "Cpid": 0,
+                    "Origin": {
+                        "x": 2500,
+                        "y": 4500
+                    },
+                    "id": "7f88dc018180",
+                    "over": {
+                        "b": 4983,
+                        "r": 4006,
+                        "x": 1006,
+                        "y": 3992
+                    },
+                    "propTextDirMirHorVer": "0SCM",
+                    "propTextFont": 0,
+                    "propTextLayer": "Value.Top",
+                    "propTextSize": 1000,
+                    "text": "{value}",
+                    "type": "Value"
+                },
+                {
+                    "Cpid": 0,
+                    "Script": "\n#First place source params of part\nbodyLenght = 12\nbodyWidth = 14\nbodyHeight = 6.5\nbodyColor = selectColor( \"#26a269\" )\n\npusherRadius = 6 / 2.0\npusherHeight = 20\npusherColor = selectColor( \"#5e5c64\" )\n\n#part dimensions\npartLenght = inputFloat( \"part width\", 9 )\n\n#Second place source params of pins\n#pin dimensions\npinThickness = inputFloat( \"pin thickness\", 0.2 )\npinWidth = inputFloat( \"pin width\", 0.3 )\npinHeight = inputFloat( \"pin height\", bodyHeight / 4 )\npinLenght = inputFloat( \"pin lenght\", 1.7 )\npinPlateLenght = inputFloat( \"pin plate lenght\", 0.4 )\npinColor = inputColor( \"pin color\", \"#f0f0f0\" )\n\n#pins\npinsLeftCount = inputFloat( \"front side pin count\", 2 )\npinsLeftDistance = inputFloat( \"front side pin distance\", 4.5 )\npinsRightCount = inputFloat( \"rear side pin count\", 2 )\npinsRightDistance = inputFloat( \"rear side pin distance\", 4.5 )\npinColor = selectColor( \"#c0c0c0\" )\n\n#========================================================\n#Body construction\n#Construct body faces. See help on embedded functions\n\n\n#body\nbody = faceListBox( bodyLenght, bodyWidth, -bodyHeight )\nbodyMatrix = matrixTranslate( matrix1, 6-3.5, 8, 0 )\nbodyModel = model( bodyColor, bodyColor, bodyColor, body, bodyMatrix )\n\npartModel = bodyModel\n\npusher = faceListCylinderMatrix( pusherRadius, pusherHeight, matrixTranslate( matrix1, 0, 0, bodyHeight) )\npusherModel = model( pusherColor, pusherColor, pusherColor, pusher, bodyMatrix )\n\npartModel = pusherModel\n\n#Pin model\npinFaceStart = faceRect( pinThickness, pinLenght, matrix1 )\npinFaceMiddleStart = faceDuplicateShift( pinFaceStart, 1 - pinThickness )\npinFaceMiddleStop = faceCurveXZ( pinFaceMiddleStart, -pinThickness, 0, 90 )\npinFaceNarrowStart = faceDuplicateShift( pinFaceMiddleStop, bodyHeight/2 - pinThickness )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinWidth/pinLenght, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceNarrowStop = faceDuplicate( pinFaceNarrowStart, coneMatrix )\npinFaceStop = faceDuplicateShift( pinFaceNarrowStop, 3 )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinThickness/pinWidth, 1.0 )\nconeMatrix = matrixTranslate( coneMatrix, -0.51, 0, 0 )\npinFaceFinish = faceDuplicate( pinFaceStop, coneMatrix )\n\npinBody = faceListWall( pinFaceStart, pinFaceMiddleStart, true )\npinBody = faceListUnion( pinBody, faceListCurveXZ( pinFaceMiddleStart, -pinThickness, 0, 90, 30, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceMiddleStop, pinFaceNarrowStart, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStart, pinFaceNarrowStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceNarrowStop, pinFaceStop, true ) )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceStop, pinFaceFinish, true ) )\npinBody = faceListUnion( pinBody, [pinFaceFinish] )\n\npinMatrix = matrixRotate( matrix1, -90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, -90, 0, 0, 1 )\npinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, 0, 1 )\n\npinModel = model( pinColor, pinColor, pinColor, pinBody, pinTranslate )\n\npinMatrix = matrixRotate( matrix1, -90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, -90, 0, 0, 1 )\npinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, 2.5, 1 )\npinModel = modelCopy( pinModel, pinTranslate )\n\npinMatrix = matrixRotate( matrix1, -90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, -90, 0, 0, 1 )\npinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, 5, 1 )\npinModel = modelCopy( pinModel, pinTranslate )\n\npinMatrix = matrixRotate( matrix1, -90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, 180, 0, 1, 0 )\npinMatrix = matrixRotate( pinMatrix, -90, 0, 0, 1 )\npinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, 0, -bodyWidth )\npinModel = modelCopy( pinModel, pinTranslate )\n\npinMatrix = matrixRotate( matrix1, -90, 1, 0, 0 )\npinMatrix = matrixRotate( pinMatrix, 180, 0, 1, 0 )\npinMatrix = matrixRotate( pinMatrix, -90, 0, 0, 1 )\npinTranslate = matrixTranslate( pinMatrix, bodyHeight*0.5+0.5, -5, -bodyWidth )\npinModel = modelCopy( pinModel, pinTranslate )\n\npartModel = pinModel\n\n#Addon pins model\n#Pin model\npinFaceStart = faceRect( pinThickness, 2, matrix1 )\npinFaceMiddleStart = faceDuplicateShift( pinFaceStart, 2 )\n\nconeMatrix = matrixScale( matrix1, 1.0, pinWidth/pinLenght, 1.0 )\npinFaceNarrowStop = faceDuplicate( pinFaceMiddleStart, coneMatrix )\npinFaceStop = faceDuplicateShift( pinFaceNarrowStop, 0.5 )\n\npinBody = faceListWall( pinFaceStart, pinFaceMiddleStart, true )\npinBody = faceListUnion( pinBody, faceListWall( pinFaceMiddleStart, pinFaceStop, true ) )\npinBody = faceListUnion( pinBody, [pinFaceStop] )\n\npinTranslate = matrixTranslate( matrix1, -3, 7.5, 0 )\n\npinModel = model( pinColor, pinColor, pinColor, pinBody, pinTranslate )\n\npinTranslate = matrixTranslate( matrix1, 8, 7.5, 0 )\npinModel = modelCopy( pinModel, pinTranslate )\n\npartModel = pinModel\n",
+                    "Transform": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "id": "56471444f9e0",
+                    "type": "3dGraphModel"
+                }
+            ],
+            "Cpid": 0,
+            "Created": 245314997,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+            },
+            "Title": "encoder ec11",
+            "id": "7f8900015490",
+            "type": "Part"
+        },
+        {
+            "Author": "salicad",
+            "Auto": true,
+            "ChildList": [
+                {
+                    "Cpid": 0,
+                    "Default": false,
+                    "PartId": "Part\rencoder ec11\rsalicad",
+                    "PartTitle": "encoder ec11 (salicad)",
+                    "id": "564719c85ca0",
+                    "type": "PartVariant"
+                },
+                {
+                    "Cpid": 0,
+                    "PinAssotiation": {
+                        "A": "1",
+                        "B": "3",
+                        "C": "2",
+                        "D": "5",
+                        "E": "7",
+                        "G1": "4",
+                        "G2": "8"
+                    },
+                    "SymbolId": "Symbol\rencoder ec11\rsalicad",
+                    "SymbolTitle": "encoder ec11 (salicad)",
+                    "id": "5647145d38b0",
+                    "type": "Section"
+                }
+            ],
+            "Cpid": 0,
+            "Created": 245318330,
+            "Edit enable": false,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+                "article": "encoder ec11",
+                "bom": "<article>",
+                "manufacturer": "STLXY",
+                "prefix": "SB",
+                "value": "EC11"
+            },
+            "Title": "encoder ec11",
+            "id": "5647140c7430",
             "type": "Comp"
         }
     ],
@@ -5809,6 +6828,6 @@
     "Parametrs": {
     },
     "Title": "",
-    "id": "55c8fda3c800",
+    "id": "5647146cd800",
     "type": "Project"
 }
