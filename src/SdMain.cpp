@@ -28,7 +28,47 @@ Description
 #include <QDebug>
 #include <QFile>
 
+#include <QtConcurrent/QtConcurrent>
+#include <QNetworkRequest>
+#include <QHttpMultiPart>
+#include <QNetworkReply>
+
 #include "import/kicad/SdScanerKiCad.h"
+
+
+QByteArray request(QHttpMultiPart *multiPart, QNetworkAccessManager *networkManager, QUrl url, int timeoutMs = 30000)
+  {
+  QNetworkReply *reply = networkManager->post(QNetworkRequest(url), multiPart);
+  multiPart->setParent(reply);
+
+  // Используем shared_ptr для безопасного разделения между лямбдами
+  auto queryPromise = std::make_shared<QPromise<bool>>();
+  QFuture<bool> query = queryPromise->future();
+  queryPromise->start();
+
+  QObject::connect(reply, &QNetworkReply::finished, [queryPromise,reply]() {
+    if( queryPromise->future().isRunning() ) {
+      queryPromise->addResult(reply->error() == QNetworkReply::NoError);
+      queryPromise->finish();
+      }
+    });
+  QTimer::singleShot( timeoutMs, [queryPromise,reply]() {
+    if( queryPromise->future().isRunning() ) {
+      reply->abort();
+      queryPromise->addResult(false);
+      queryPromise->finish();
+      }
+    });
+
+  query.waitForFinished();
+
+  bool success = query.result();
+  QByteArray result = success ? reply->readAll() : QByteArray();
+
+  reply->deleteLater();
+  return result;
+  }
+
 
 
 int main(int argc, char *argv[])
