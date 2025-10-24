@@ -14,5 +14,10 @@ void kicadFootprint(SdScanerKiCad *scaner, SdProject *project )
 
   part->setTitle( name, QObject::tr("Set part title") );
 
+  static QMap<QString,std::function<void( SdScanerKiCad*, SdPItemPart* )> >
+      tokenMap( { { QString("fp_text"), kicadTextPart },
+                  { QString("fp_line"), kicadLinePart }
+                } );
 
+  scaner->parse( tokenMap, part );
   }

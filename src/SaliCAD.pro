@@ -23,6 +23,7 @@ win32: LIBS += -lopengl32
 win64: LIBS += -lopengl32
 
 SOURCES += \
+    SvLib/SvNetClient.cpp \
     import/iges/IgesEntityCurveOnParametricSurface.cpp \
     import/iges/IgesEntityFaceGenerator.cpp \
     import/iges/IgesEntityRationalBSplineCurve.cpp \
@@ -31,6 +32,7 @@ SOURCES += \
     import/kicad/SdScanerKiCad.cpp \
     import/kicad/kicadFootprint.cpp \
     import/kicad/kicadSymbolLib.cpp \
+    import/kicad/kicadTextPart.cpp \
     import/nurbs/NurbsBasis.cpp \
     import/nurbs/NurbsConvexHull.cpp \
     import/nurbs/NurbsCurve.cpp \
@@ -420,6 +422,7 @@ SOURCES += \
 
 HEADERS  += \
     SvLib/SvJson3dIO.h \
+    SvLib/SvNetClient.h \
     import/iges/IgesEntityCurveOnParametricSurface.h \
     import/iges/IgesEntityFaceGenerator.h \
     import/iges/IgesEntityRationalBSplineCurve.h \

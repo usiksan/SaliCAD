@@ -48,6 +48,8 @@ class SdScanerKiCad : public SdScanerMultyline
         }
       }
 
+    int tokenNeedPartCoord() { return tokenNeedValueFloat('f') * 1000.0; }
+
     // SdScaner interface
   public:
     virtual void tokenNext() override;
@@ -58,5 +60,6 @@ void kicadFootprint( SdScanerKiCad *scaner, SdProject *project );
 void kicadSymbolLib( SdScanerKiCad *scaner, SdProject *project );
 void kicadPropertyPart( SdScanerKiCad *scaner, SdPItemPart *part );
 void kicadLinePart( SdScanerKiCad *scaner, SdPItemPart *part );
+void kicadTextPart( SdScanerKiCad *scaner, SdPItemPart *part );
 
 #endif // SDSCANERKICAD_H
