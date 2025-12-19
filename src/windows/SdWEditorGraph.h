@@ -73,6 +73,12 @@ class SdWEditorGraph : public SdWEditor
     //Return current cursor point coord in logical
     SdPoint cursorPosition() const { return mPrevPoint; }
 
+    //!
+    //! \brief prevEnterPosition Return previous enter point position
+    //! \return                  Previous enter point position
+    //!
+    SdPoint prevEnterPosition() const { return mPrevEnter; }
+
     //Declare paint area as dirty. This rebuild static paint area when next draw
     void    dirtyCashe() { mCasheDirty = true; }
 
@@ -84,6 +90,13 @@ class SdWEditorGraph : public SdWEditor
 
     //Cancel current mode and restore previous
     void    modeCancel();
+
+    //!
+    //! \brief modePopWithEnter Finished temporary mode, pop it from stack and simulate mouse enter
+    //!                         with given point on poped mode
+    //! \param enterPoint       Point to simulate mouse enter
+    //!
+    void    modePopWithEnter( SdPoint enterPoint );
 
     //Get active mode
     SdMode *modeGet() { return mStack == nullptr ? mMode : mStack; }
@@ -154,6 +167,7 @@ class SdWEditorGraph : public SdWEditor
     virtual void           cmModeText() override;
 //    virtual void cmModeField() {}
     virtual void           cmModeSelect() override;
+    virtual void           cmModeBinder() override;
 
     virtual void           cmEnterPosition() override;
 

@@ -1428,6 +1428,15 @@ void SdWMain::cmModeSelect()
 
 
 
+void SdWMain::cmModeBinder()
+  {
+  if( activeEditor() )
+    activeEditor()->cmModeBinder();
+  }
+
+
+
+
 void SdWMain::cmModeLine()
   {
   if( activeEditor() )

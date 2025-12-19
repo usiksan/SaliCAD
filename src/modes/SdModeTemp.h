@@ -18,19 +18,29 @@ Description
 
 class SdModeTemp : public SdMode
   {
-    SdMode *mMainMode; //Main mode temporary replaced this mode
+    SdMode *mMainMode; //!< Main mode that has been temporarily replaced by this mode. This mode acts as a placeholder/container.
+
   public:
+    //! \brief SdModeTemp Constructor for temporary mode
+    //! \param editor     Pointer to the graphical editor
+    //! \param obj        Pointer to the project item being edited
     SdModeTemp( SdWEditorGraph *editor, SdProjectItem *obj );
 
-    //Set new main mode
+
+    //! \brief setMainMode Set new main mode to be stored/restored
+    //! \param mode        Pointer to the main mode instance
     void    setMainMode( SdMode *mode ) { mMainMode = mode; }
 
-    //Get main mode
+
+    //! \brief mainMode Get the stored main mode
+    //! \return         Pointer to the main mode instance
     SdMode *mainMode() { return mMainMode; }
+
 
     // SdMode interface
   public:
+    //! \brief drawStatic Draw static (non-interactive) elements of the scene
+    //! \param ctx        Drawing context for rendering
     virtual void drawStatic(SdContext *ctx) override;
   };
-
 #endif // SDMODETEMP_H

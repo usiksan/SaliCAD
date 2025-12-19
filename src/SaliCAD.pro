@@ -31,6 +31,7 @@ SOURCES += \
     import/iges/IgesEntityTrimmedParametricSurface.cpp \
     import/kicad/SdScanerKiCad.cpp \
     import/kicad/kicadFootprint.cpp \
+    import/kicad/kicadLinePart.cpp \
     import/kicad/kicadSymbolLib.cpp \
     import/kicad/kicadTextPart.cpp \
     import/nurbs/NurbsBasis.cpp \
@@ -100,6 +101,7 @@ SOURCES += \
     3dr/Sd3drModel.cpp \
     3dr/Sd3drPointLink.cpp \
     3dr/Sd3drRegion.cpp \
+    modes/SdModeTBinder.cpp \
     objects/SdContainerFile.cpp \
     objects/SdCopyMap.cpp \
     objects/SdCopyMapProject.cpp \
@@ -155,6 +157,7 @@ SOURCES += \
     windows/SdD3dModelMaster.cpp \
     windows/SdD3dModelProgrammEditor.cpp \
     windows/SdDExpressionEdit.cpp \
+    windows/SdDOffset.cpp \
     windows/SdDOptionsPageLibrary.cpp \
     windows/SdDParamBase.cpp \
     windows/SdDSymbolPartParam.cpp \
@@ -501,6 +504,7 @@ HEADERS  += \
     3dr/Sd3drModel.h \
     3dr/Sd3drPointLink.h \
     3dr/Sd3drRegion.h \
+    modes/SdModeTBinder.h \
     objects/SdContainerFile.h \
     objects/SdCopyMap.h \
     objects/SdCopyMapProject.h \
@@ -661,6 +665,7 @@ HEADERS  += \
     windows/SdD3dModelMaster.h \
     windows/SdD3dModelProgrammEditor.h \
     windows/SdDExpressionEdit.h \
+    windows/SdDOffset.h \
     windows/SdDOptionsPageLibrary.h \
     windows/SdDParamBase.h \
     windows/SdDSymbolPartParam.h \

@@ -183,6 +183,8 @@ class SdWMain : public QMainWindow
     //Common graphics modes
     void cmModeSelect();
 
+    void cmModeBinder();
+
     void cmModeLine();
     void cmModeRect();
     void cmModeFilledRect();

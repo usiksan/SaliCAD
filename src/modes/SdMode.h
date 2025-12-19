@@ -90,6 +90,11 @@ class SdMode
 
     virtual void    enterPoint( SdPoint ) {}                //Ввод точки (левая кнопка)
     virtual void    clickPoint( SdPoint ) {}                //Двойное нажатие левой кнопки
+
+    //!
+    //! \brief cancelPoint Process point rejection/cancellation (right mouse button click)
+    //! \param p           Point coordinates at cancellation moment
+    //!
     virtual void    cancelPoint( SdPoint ) {}               //Точка прекращения (правая кнопка)
     virtual void    movePoint( SdPoint ) {}                 //Перемещение точки
     virtual bool    wheel( SdPoint ) { return false; }      //Вращение колеса мыши

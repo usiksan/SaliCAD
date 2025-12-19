@@ -43,6 +43,7 @@ Description
 #include "modes/SdModeCText.h"
 #include "modes/SdModeSelect.h"
 #include "modes/SdModePrintWindow.h"
+#include "modes/SdModeTBinder.h"
 
 #include <QPainter>
 #include <QPaintEvent>
@@ -353,6 +354,27 @@ void SdWEditorGraph::modeCancel()
 
 
 
+//!
+//! \brief modePopWithEnter Finished temporary mode, pop it from stack and simulate mouse enter
+//!                         with given point on poped mode
+//! \param enterPoint       Point to simulate mouse enter
+//!
+void SdWEditorGraph::modePopWithEnter(SdPoint enterPoint)
+  {
+  if( mStack ) {
+    //Если был стековый режим, то снести и реанимировать текущий режим
+    mStack->deactivate();
+    delete mStack;
+    mStack = nullptr;
+    modeRestore( mMode );
+    mPrevEnter = enterPoint;
+    mMode->enterPoint( enterPoint );
+    }
+  }
+
+
+
+
 //Activate new mode
 void SdWEditorGraph::modeActivate(SdMode *mode)
   {
@@ -512,6 +534,14 @@ void SdWEditorGraph::cmModeText()
 void SdWEditorGraph::cmModeSelect()
   {
   modeSet( mSelect );
+  }
+
+
+
+
+void SdWEditorGraph::cmModeBinder()
+  {
+  modeCall( new SdModeTBinder( this, getProjectItem() ) );
   }
 
 

@@ -83,7 +83,8 @@ Description
 #define MD_3D_VERT_ROTATE  65
 #define MD_3D_FACE_COLOR   66
 #define MD_SYMBOL_FRAGMENT 67
-#define MD_LAST            68
+#define MD_BINDER          68
+#define MD_LAST            69
 
 //Properties tool bar id's
 #define PB_DEFAULT          0
