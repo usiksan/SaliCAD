@@ -32,6 +32,7 @@
 #include <mlpack/methods/ann/layer/dropconnect.hpp>
 #include <mlpack/methods/ann/layer/dropout.hpp>
 #include <mlpack/methods/ann/layer/elu.hpp>
+#include <mlpack/methods/ann/layer/embedding.hpp>
 #include <mlpack/methods/ann/layer/flexible_relu.hpp>
 #include <mlpack/methods/ann/layer/grouped_convolution.hpp>
 #include <mlpack/methods/ann/layer/gru.hpp>
@@ -62,8 +63,8 @@
 
 // Convolution modes.
 #include <mlpack/methods/ann/convolution_rules/border_modes.hpp>
-#include <mlpack/methods/ann/convolution_rules/fft_convolution.hpp>
 #include <mlpack/methods/ann/convolution_rules/naive_convolution.hpp>
+#include <mlpack/methods/ann/convolution_rules/im2col_convolution.hpp>
 
 // Regularizers.
 #include <mlpack/methods/ann/regularizer/no_regularizer.hpp>
