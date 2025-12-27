@@ -30,7 +30,11 @@ SOURCES += \
     import/iges/IgesEntitySurface.cpp \
     import/iges/IgesEntityTrimmedParametricSurface.cpp \
     import/kicad/SdScanerKiCad.cpp \
+    import/kicad/kicadCirclePart.cpp \
     import/kicad/kicadFootprint.cpp \
+    import/kicad/kicadLinePart.cpp \
+    import/kicad/kicadPadPart.cpp \
+    import/kicad/kicadPrimitives.cpp \
     import/kicad/kicadSymbolLib.cpp \
     import/kicad/kicadTextPart.cpp \
     import/nurbs/NurbsBasis.cpp \

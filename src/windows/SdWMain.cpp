@@ -42,6 +42,8 @@ Description
 #include "objects/SdObjectNetClient.h"
 #include "guider/SdGuiderCapture.h"
 #include "library/SdLibraryStorage.h"
+#include "import/kicad/SdScanerKiCad.h"
+
 
 #include <QSettings>
 #include <QCloseEvent>
@@ -772,11 +774,26 @@ void SdWMain::cmFileLoad()
 
 void SdWMain::cmFileOpen()
   {
-  QString title = QFileDialog::getOpenFileName(this, tr("Open project file"), QString(), tr("SaliCAD Files (*%1 *%2)").arg(SD_BASE_EXTENSION, SD_BINARY_EXTENSION) );
+  QString title = QFileDialog::getOpenFileName(this, tr("Open project file"), QString(),
+                                               tr("SaliCAD Files (*%1 *%2);;KiCad files (*.kicad_mod)").arg(SD_BASE_EXTENSION, SD_BINARY_EXTENSION) );
 
   if( title.isEmpty() ) return;
 
-  mWProjectList->fileOpen( title );
+  if( title.endsWith(".kicad_mod") ) {
+    //Import from kicad
+    SdScanerKiCad reader;
+    //reader.readFile( "/home/usik/info/kicad/D_01005_0402Metric.kicad_mod" );
+    if( !reader.readFile( title ) ) {
+      QMessageBox::warning( this, tr("Error"), tr("Can't read file '%1'").arg(title) );
+      return;
+      }
+    SdProject *prj = new SdProject();
+    reader.parseTop( prj );
+
+    mWProjectList->fileOpen( title.left( title.length() - 10 ) + SD_BINARY_EXTENSION, prj );
+    }
+  else
+    mWProjectList->fileOpen( title );
   }
 
 
