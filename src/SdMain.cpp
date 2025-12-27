@@ -46,6 +46,10 @@ int main(int argc, char *argv[])
 //  reader.scanFile( QStringLiteral("/home/asibilev/work/vrml/val.igs") );
 //  reader.parse();
 
+  // SdScanerKiCad reader;
+  // reader.readFile( "/home/asibilev/info/kikad/SOT-23_MCC.kicad_mod" );
+  // reader.parseTop( new SdProject() );
+
 
   //Setups for settings
   QCoreApplication::setOrganizationName("SaliLAB");
@@ -126,5 +130,4 @@ int main(int argc, char *argv[])
 
   return res;
   }
-
 

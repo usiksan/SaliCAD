@@ -43,4 +43,5 @@ void kicadLinePart( SdScanerKiCad *scaner, SdPItemPart *part )
 
   //Build line primitive on lineInfo base
   part->insertChild( new SdGraphLinearLine( lineInfo.mA, lineInfo.mB, lineInfo.mProp ), nullptr );
+
   }

@@ -118,6 +118,9 @@ class SdWEditor : public QAbstractScrollArea
     virtual void cmViewMirrorHorz() {}
 
     virtual void cmModeSelect() {}
+    virtual void cmModeSelectMove() {}
+
+    virtual void cmModeBinder() {}
 
     virtual void cmModeLine() {}
     virtual void cmModeRect() {}

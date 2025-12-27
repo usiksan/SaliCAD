@@ -158,6 +158,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   //Draw menu
   menuDraw = new QMenu( QObject::tr("Draw") );
   cmModeTable[MD_SELECT]      = menuDraw->addAction( QIcon(QString(":/pic/select.png")), QObject::tr("Select and edit"), frame, SLOT(cmModeSelect()) );
+  cmModeTable[MD_BINDER]      = menuDraw->addAction( QIcon(QString(":/pic/objPrtPin.png")), QObject::tr("Binder"), frame, &SdWMain::cmModeBinder );
   menuDraw->addSeparator();
   cmModeTable[MD_LINE]        = menuDraw->addAction( QIcon(QString(":/pic/drawLine.png")), QObject::tr("Line"), frame, SLOT(cmModeLine()) );
   cmModeTable[MD_RECT]        = menuDraw->addAction( QIcon(QString(":/pic/drawRect.png")), QObject::tr("Rect"), frame, SLOT(cmModeRect()) );
