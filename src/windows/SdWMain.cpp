@@ -2042,6 +2042,16 @@ void SdWMain::cmOption()
 
 
 
+
+
+void SdWMain::cmLibrary()
+  {
+
+  }
+
+
+
+
 void SdWMain::cmTools()
   {
 

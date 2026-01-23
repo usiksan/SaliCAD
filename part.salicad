@@ -1,0 +1,197 @@
+{
+    "A file type": "SaliCAD file",
+    "A version": 2,
+    "Author": "",
+    "ChildList": [
+        {
+            "Author": "salicad",
+            "Auto": false,
+            "ChildList": [
+                {
+                    "Cpid": 0,
+                    "NamePos": {
+                        "x": -15000,
+                        "y": 0
+                    },
+                    "NameTextDirMirHorVer": "0SCM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "PinName.Top",
+                    "NameTextSize": 3500,
+                    "Number": "1",
+                    "NumberPos": {
+                        "x": -15000,
+                        "y": 5000
+                    },
+                    "NumberTextDirMirHorVer": "0SCM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextSize": 3500,
+                    "Origin": {
+                        "x": -15000,
+                        "y": 2500
+                    },
+                    "PartPinLayer": "Pin.Top",
+                    "PartPinType": "c1.6d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "55e3ba4dc4d0",
+                    "type": "PartPin"
+                },
+                {
+                    "Cpid": 0,
+                    "NamePos": {
+                        "x": -10000,
+                        "y": 0
+                    },
+                    "NameTextDirMirHorVer": "0SCM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "PinName.Top",
+                    "NameTextSize": 3500,
+                    "Number": "2",
+                    "NumberPos": {
+                        "x": -10000,
+                        "y": 5000
+                    },
+                    "NumberTextDirMirHorVer": "0SCM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextSize": 3500,
+                    "Origin": {
+                        "x": -10000,
+                        "y": 2500
+                    },
+                    "PartPinLayer": "Pin.Top",
+                    "PartPinType": "c1.6d1m0.1",
+                    "Stratum": "3fffffff",
+                    "id": "55e3bb2d23a0",
+                    "type": "PartPin"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": -20000,
+                        "y": 7500
+                    },
+                    "b": {
+                        "x": -5000,
+                        "y": -5000
+                    },
+                    "id": "55e3ba53cd40",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Rect"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": -15000,
+                        "y": -5000
+                    },
+                    "b": {
+                        "x": -15000,
+                        "y": -15000
+                    },
+                    "id": "55e3ba621a50",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": -15000,
+                        "y": -15000
+                    },
+                    "b": {
+                        "x": -12500,
+                        "y": -15000
+                    },
+                    "id": "55e3ba5ceda0",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "a": {
+                        "x": -12500,
+                        "y": -15000
+                    },
+                    "b": {
+                        "x": -12500,
+                        "y": -5000
+                    },
+                    "id": "55e3ba5d2040",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "type": "Line"
+                },
+                {
+                    "Cpid": 0,
+                    "center": {
+                        "x": -17500,
+                        "y": 5000
+                    },
+                    "id": "55e3ba4ff900",
+                    "lineLayer": "Component",
+                    "lineType": 0,
+                    "lineWidth": 0,
+                    "radius": 1000,
+                    "type": "Circle"
+                },
+                {
+                    "Cpid": 0,
+                    "NamePos": {
+                        "x": -17500,
+                        "y": 17500
+                    },
+                    "NameTextDirMirHorVer": "0SCM",
+                    "NameTextFont": 0,
+                    "NameTextLayer": "PinName.Top",
+                    "NameTextSize": 3500,
+                    "Number": "3",
+                    "NumberPos": {
+                        "x": -17500,
+                        "y": 25000
+                    },
+                    "NumberTextDirMirHorVer": "0SCM",
+                    "NumberTextFont": 0,
+                    "NumberTextLayer": "PinNumber",
+                    "NumberTextSize": 3500,
+                    "Origin": {
+                        "x": -17500,
+                        "y": 22500
+                    },
+                    "PartPinLayer": "Pin.Top",
+                    "PartPinType": "r1.6x1.2m0.1s0.05",
+                    "Stratum": "1",
+                    "id": "55e3ba508160",
+                    "type": "PartPin"
+                }
+            ],
+            "Cpid": 0,
+            "Created": 251185822,
+            "Edit enable": true,
+            "Origin": {
+                "x": 0,
+                "y": 0
+            },
+            "Parametrs": {
+            },
+            "Title": "Part1",
+            "id": "55e3bb2d26d0",
+            "type": "Part"
+        }
+    ],
+    "Cpid": 0,
+    "Created": 0,
+    "Edit enable": true,
+    "Parametrs": {
+    },
+    "Title": "",
+    "id": "55e3ba539490",
+    "type": "Project"
+}

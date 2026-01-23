@@ -135,7 +135,7 @@ bool SdWProjectTree::cmFileSave()
     return cmFileSaveAs();
   //Check if project is library project
   if( !mProject->isEditEnable() && mProject->isDirty() ) {
-    if( mProject->getAuthor() != mProject->getDefaultAuthor() ) {
+    if( mProject->getAuthorKey() != mProject->getDefaultAuthor() ) {
       if( QMessageBox::question( this, tr("Warning!"), tr("This project is library project and created another author. You can not edit it. Change author to You to enable editing?") ) != QMessageBox::Yes )
         return false;
       }

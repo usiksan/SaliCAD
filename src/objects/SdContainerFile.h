@@ -8,7 +8,7 @@ class SdContainerFile : public SdContainer
   {
   protected:
     QString                mTitle;      //!< Item title
-    QString                mAuthor;     //!< Item author (registered program copy name)
+    QString                mAuthorKey;     //!< Item author (registered program copy name)
     int                    mCreateTime; //!< Create time with sec from 2000year
     bool                   mEditEnable; //!< True if edit enable for this object
   public:
@@ -20,7 +20,7 @@ class SdContainerFile : public SdContainer
     //Unical ident of item accross world
     QString                getUid() const;
     QString                getExtendTitle() const;
-    QString                getAuthor() const { return mAuthor; }
+    QString                getAuthorKey() const { return mAuthorKey; }
     int                    getTime() const { return mCreateTime; }
     QString                getTitle() const { return mTitle; }
     virtual void           getHeader( SdLibraryHeader &hdr ) const;

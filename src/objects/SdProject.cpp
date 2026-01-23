@@ -279,7 +279,7 @@ bool SdProject::isNameUsed(const QString name, SdClass mask ) const
   forEachConst( mask, [name,&found] (SdObject *obj) -> bool {
     SdPtr<SdProjectItem> pi(obj);
     if( pi.isValid() )
-      found = pi->getTitle() == name && pi->getAuthor() == SdProjectItem::getDefaultAuthor();
+      found = pi->getTitle() == name && pi->getAuthorKey() == SdProjectItem::getDefaultAuthor();
     return !found;
     });
   return found;

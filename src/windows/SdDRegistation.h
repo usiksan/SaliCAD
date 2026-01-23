@@ -57,6 +57,8 @@ class SdDRegistation : public QDialog
 
   private:
     Ui::SdDRegistation *ui;
+
+    static QString generatePrivateKey();
   };
 
 #endif // SDDREGISTATION_H

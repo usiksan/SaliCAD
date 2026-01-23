@@ -224,7 +224,7 @@ void SdLibraryStorage::cfObjectInsert(const SdContainerFile *item)
 
 void SdLibraryStorage::cfObjectDelete(const SdContainerFile *item)
   {
-  if( item != nullptr && item->getAuthor() == item->getDefaultAuthor() ) {
+  if( item != nullptr && item->getAuthorKey() == item->getDefaultAuthor() ) {
     QString uid = item->getUid();
     if( mReferenceMap.contains(uid) && !mReferenceMap.value(uid).isNeedDelete() ) {
       //Mark as need to be deleted from server
@@ -546,7 +546,7 @@ void SdLibraryStorage::insertReferenceAndHeader(const SdContainerFile *item)
       ref.mHeaderPtr     = fileHdr.size();
       ref.mCreationTime  = hdr.mTime;
       //Only for owner objects we allow uploading to server
-      ref.mFlags         = item->getAuthor() == item->getDefaultAuthor() ? SDLR_NEED_UPLOAD : 0;
+      ref.mFlags         = item->getAuthorKey() == item->getDefaultAuthor() ? SDLR_NEED_UPLOAD : 0;
       QDataStream os( &fileHdr );
       hdr.write( os );
       fileHdr.close();

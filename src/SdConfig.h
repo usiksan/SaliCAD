@@ -248,7 +248,7 @@ History
 
 
 //When defined disable registration with sali name
-//#define SD_DISABLE_SALI_AUTHOR
+#define SD_DISABLE_SALI_AUTHOR
 
 //Project naming definition
 #define SD_BASE_EXTENSION            ".salicad"
@@ -320,8 +320,11 @@ History
 #define SDK_LANGUAGE                 "Language"
 #define SDK_MAIN_SPLITTER            "MainSplitter"
 #define SDK_PREVIOUS_FILES           "PreviousFiles"
-#define SDK_GLOBAL_AUTHOR            "Author global id"
-#define SDK_GLOBAL_PASSWORD          "Author global password"
+//#define SDK_GLOBAL_AUTHOR            "Author global id"
+//#define SDK_GLOBAL_PASSWORD          "Author global password"
+#define SDK_PRIVATE_KEY              "PrivateKey"
+//#define SDK_AUTHOR_KEY               "AuthorKey"
+//#define SDK_PUBLIC_NAME              "AuthorName"
 #define SDK_REMOTE_SYNC              "Remote sync"              //!< Remote index of last downloaded object
 #define SDK_REMOTE_REMAIN            "Remote remain"
 #define SDK_SERVER_REPO              "SaliCAD repository"

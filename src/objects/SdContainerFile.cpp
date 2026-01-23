@@ -6,6 +6,7 @@
 #include "SdJsonIO.h"
 
 #include <QSettings>
+#include <QCryptographicHash>
 
 
 SdContainerFile::SdContainerFile() :
@@ -21,7 +22,7 @@ SdContainerFile::SdContainerFile() :
 QString SdContainerFile::getUid() const
   {
   //Id consist from name, user and time creation
-  return headerUid( getType(), mTitle, mAuthor );
+  return headerUid( getType(), mTitle, mAuthorKey );
   }
 
 
@@ -87,7 +88,7 @@ QString SdContainerFile::getLibraryFName() const
 
 QString SdContainerFile::getExtendTitle() const
   {
-  return QString("%1 [r%2] (%3)").arg(mTitle).arg( SvTime2x::toLocalString(getTime()) ).arg(mAuthor);
+  return QString("%1 [r%2] (%3)").arg( mTitle, SvTime2x::toLocalString(getTime()), mAuthorKey );
   }
 
 
@@ -96,7 +97,7 @@ void SdContainerFile::getHeader(SdLibraryHeader &hdr) const
   {
   hdr.mName       = mTitle;
   hdr.mType       = getType();
-  hdr.mAuthor     = mAuthor;
+  hdr.mAuthorKey  = mAuthorKey;
   hdr.mTime       = getTime();
   hdr.mClass      = getClass();
   hdr.mParamTable = mParamTable;
@@ -108,7 +109,7 @@ void SdContainerFile::getHeader(SdLibraryHeader &hdr) const
 
 bool SdContainerFile::isAnotherAuthor() const
   {
-  return mAuthor != getDefaultAuthor();
+  return mAuthorKey != getDefaultAuthor();
   }
 
 
@@ -137,7 +138,7 @@ void SdContainerFile::titleSet(const QString title)
 void SdContainerFile::json(SdJsonWriter &js) const
   {
   js.jsonString( QStringLiteral("Title"),     mTitle );
-  js.jsonString( QStringLiteral("Author"),    mAuthor );
+  js.jsonString( QStringLiteral("Author"),    mAuthorKey );
   js.jsonInt(  QStringLiteral("Created"),     mCreateTime );
   js.jsonBool( QStringLiteral("Edit enable"), mEditEnable );
   SdContainer::json( js );
@@ -154,7 +155,7 @@ void SdContainerFile::json(SdJsonWriter &js) const
 void SdContainerFile::json(const SdJsonReader &js)
   {
   js.jsonString( QStringLiteral("Title"),     mTitle );
-  js.jsonString( QStringLiteral("Author"),    mAuthor );
+  js.jsonString( QStringLiteral("Author"),    mAuthorKey );
   js.jsonInt(  QStringLiteral("Created"),     mCreateTime );
   js.jsonBool( QStringLiteral("Edit enable"), mEditEnable, true );
   SdContainer::json( js );
@@ -176,7 +177,7 @@ void SdContainerFile::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool ne
   SdPtrConst<SdContainerFile> sour(src);
   if( sour.isValid() ) {
     mTitle      = sour->mTitle;
-    mAuthor     = sour->mAuthor;
+    mAuthorKey     = sour->mAuthorKey;
     mCreateTime = sour->mCreateTime;
     mEditEnable = sour->mEditEnable;
     }
@@ -188,8 +189,15 @@ void SdContainerFile::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool ne
 //Return current registered author
 QString SdContainerFile::getDefaultAuthor()
   {
+  static QString cachePrivateKey;
+  static QString cacheAuthorKey;
   QSettings s;
-  return s.value( SDK_GLOBAL_AUTHOR ).toString();
+  if( s.value( SDK_PRIVATE_KEY ).toString() != cachePrivateKey ) {
+    cachePrivateKey = s.value( SDK_PRIVATE_KEY ).toString();
+    QByteArray hash = QCryptographicHash::hash( cachePrivateKey.toUtf8(), QCryptographicHash::Sha3_256 );
+    cacheAuthorKey = QString::fromUtf8( hash.toHex() ).first( 16 );
+    }
+  return cacheAuthorKey;
   }
 
 
@@ -212,7 +220,7 @@ void SdContainerFile::updateCreationTime()
 
 void SdContainerFile::updateAuthor()
   {
-  mAuthor = getDefaultAuthor();
+  mAuthorKey = getDefaultAuthor();
   }
 
 

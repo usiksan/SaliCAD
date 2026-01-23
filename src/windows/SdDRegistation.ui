@@ -17,7 +17,7 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>This is first start of SaliCAD. Programm yet not registered. You need to register. Registration allow global element database access and nothing more.</string>
+      <string>This is first start of SaliCAD. Programm yet not registered. You need to register. Registration allow global element database publish and nothing more.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -39,7 +39,7 @@
      <item row="1" column="0">
       <widget class="QLabel" name="mNameTitle">
        <property name="text">
-        <string>Name:</string>
+        <string>Nik name:</string>
        </property>
       </widget>
      </item>
@@ -59,7 +59,7 @@
      <item row="3" column="0">
       <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>Password:</string>
+        <string>Private key:</string>
        </property>
       </widget>
      </item>
@@ -77,20 +77,6 @@
       <widget class="QLineEdit" name="mRegistrationStatus">
        <property name="readOnly">
         <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Automatic upload:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QCheckBox" name="mAutomaticUpload">
-       <property name="text">
-        <string/>
        </property>
       </widget>
      </item>

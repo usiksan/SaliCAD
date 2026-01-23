@@ -57,7 +57,7 @@ struct SdLibraryHeader
   {
     QString     mName;               //!< Name of stored object
     QString     mType;               //!< Type of stored object
-    QString     mAuthor;             //!< Author who create object
+    QString     mAuthorKey;          //!< Public Key of Author who create object
     qint32      mTime;               //!< Object time creation
     quint64     mClass;              //!< Object class. When equals 0 then corresponded object is deleted
     bool        mPartPresent;        //!< Flag of part present in component or symbol
@@ -68,13 +68,13 @@ struct SdLibraryHeader
     qint32      mVariantFieldCount; //!< Variable fields count in extended param table
     QStringList mVariantTable;      //!< Variant table
 
-    SdLibraryHeader() : mName(), mType(), mAuthor(), mTime(0), mClass(0), mPartPresent(false), mParamTable(), mVariantFieldCount(0),mVariantTable() {}
+    SdLibraryHeader() : mName(), mType(), mAuthorKey(), mTime(0), mClass(0), mPartPresent(false), mParamTable(), mVariantFieldCount(0),mVariantTable() {}
 
-    void    write( QDataStream &os ) const { os << mName << mType << mAuthor << mTime << mClass << mPartPresent << mParamTable << mVariantFieldCount << mVariantTable; }
+    void    write( QDataStream &os ) const { os << mName << mType << mAuthorKey << mTime << mClass << mPartPresent << mParamTable << mVariantFieldCount << mVariantTable; }
 
-    void    read( QDataStream &is ) { is >> mName >> mType >> mAuthor >> mTime >> mClass >> mPartPresent >> mParamTable >> mVariantFieldCount >> mVariantTable; }
+    void    read( QDataStream &is ) { is >> mName >> mType >> mAuthorKey >> mTime >> mClass >> mPartPresent >> mParamTable >> mVariantFieldCount >> mVariantTable; }
 
-    QString uid() const { return headerUid( mType, mName, mAuthor ); }
+    QString uid() const { return headerUid( mType, mName, mAuthorKey ); }
 
     bool    isDeleted() const { return mClass == 0; }
 
@@ -89,7 +89,7 @@ struct SdLibraryHeader
       //Write base variant
       hdr.mName        = mName;
       hdr.mType        = mType;
-      hdr.mAuthor      = mAuthor;
+      hdr.mAuthorKey   = mAuthorKey;
       hdr.mTime        = mTime;
       hdr.mClass       = mClass;
       hdr.mPartPresent = mPartPresent;
