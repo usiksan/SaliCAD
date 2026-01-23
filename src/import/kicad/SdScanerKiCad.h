@@ -9,6 +9,10 @@
 class SdProject;
 class SdPItemPart;
 class SdProjectItem;
+class SdPoint;
+class SdPropInt;
+class SdPropLayer;
+class SdPropLine;
 
 class SdScanerKiCad : public SdScanerMultyline
   {
@@ -60,6 +64,12 @@ void kicadFootprint( SdScanerKiCad *scaner, SdProject *project );
 void kicadSymbolLib( SdScanerKiCad *scaner, SdProject *project );
 void kicadPropertyPart( SdScanerKiCad *scaner, SdPItemPart *part );
 void kicadLinePart( SdScanerKiCad *scaner, SdPItemPart *part );
+void kicadCirclePart( SdScanerKiCad *scaner, SdPItemPart *part );
 void kicadTextPart( SdScanerKiCad *scaner, SdPItemPart *part );
+void kicadPoint( SdScanerKiCad *scaner, SdPoint &point );
+void kicadLineType( SdScanerKiCad *scaner, SdPropInt &type );
+void kicadLineWidth( SdScanerKiCad *scaner, SdPropInt &width );
+void kicadLayer( SdScanerKiCad *scaner, SdPropLayer &layer );
+void kicadStroke( SdScanerKiCad *scaner, SdPropLine *prop );
 
 #endif // SDSCANERKICAD_H

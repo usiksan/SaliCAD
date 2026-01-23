@@ -1,9 +1,11 @@
 #include "SdScanerKiCad.h"
 #include "../../objects/SdPItemPart.h"
-#include "../../objects/SdGraphLinearLine.h"
+#include "../../objects/SdGraphPartPin.h"
 
-struct KiCadLine
+struct KiCadPin
   {
+    QString    mPinNumber;
+    bool       mIsSmd;
     SdPoint    mA;
     SdPoint    mB;
     SdPropLine mProp;
@@ -30,7 +32,7 @@ static void kicadLineLayer( SdScanerKiCad *scaner, KiCadLine *line )
   }
 
 
-void kicadLinePart( SdScanerKiCad *scaner, SdPItemPart *part )
+void kicadPadPart( SdScanerKiCad *scaner, SdPItemPart *part )
   {
   static QMap<QString,std::function<void( SdScanerKiCad*, KiCadLine* )> >
       tokenMap( { { QString("start"),  kicadLineStartPoint },
@@ -43,5 +45,4 @@ void kicadLinePart( SdScanerKiCad *scaner, SdPItemPart *part )
 
   //Build line primitive on lineInfo base
   part->insertChild( new SdGraphLinearLine( lineInfo.mA, lineInfo.mB, lineInfo.mProp ), nullptr );
-
   }

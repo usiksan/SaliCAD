@@ -83,7 +83,7 @@ bool SdScaner::tokenNeed(char tokenId, const QString errorMsg)
 //!
 QString SdScaner::tokenNeedValue( char tokenVal )
   {
-  if( mToken == tokenVal ) {
+  if( (tokenVal == 'f' && mToken == 'd') || (mToken == tokenVal) ) {
     QString val = mTokenValue;
     tokenNext();
     return val;
