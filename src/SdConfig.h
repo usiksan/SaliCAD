@@ -255,16 +255,16 @@ History
 #define SD_DEFAULT_FILE_NAME         "default"
 
 //Binary project naming definition
-#define SD_BINARY_EXTENSION          ".salicadx"
+#define SD_BINARY_EXTENSION          ".salixeda"
 
 //Layer list naming definition
 #define SD_LAYER_LIST_EXTENSION      ".layersSet"
 
 //Pads association naming definition
-#define SD_PAD_ASSOCIATION_EXTENSION ".salipads"
+#define SD_PAD_ASSOCIATION_EXTENSION ".salixpads"
 
 //Export to assembler file extension
-#define SD_ASSEMBLER_EXTENSION       ".saliasm"
+#define SD_ASSEMBLER_EXTENSION       ".salixasm"
 
 //Gerber file extension
 #define SD_GERBER_EXTENSION          ".gbr"
@@ -273,9 +273,10 @@ History
 //Must be compatible with previous versions
 #define SD_BASE_VERSION_1            1
 #define SD_BASE_VERSION_2            2
+#define SD_BASE_VERSION_3            3
 
 //Current SaliCAD database version
-#define SD_BASE_VERSION              SD_BASE_VERSION_2
+#define SD_BASE_VERSION              SD_BASE_VERSION_3
 
 //Salicad json file type description
 #define SD_BASE_TYPE                 "SaliCAD file"

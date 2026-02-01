@@ -19,65 +19,21 @@ SdContainerFile::SdContainerFile() :
   }
 
 
-QString SdContainerFile::getUid() const
+
+
+
+//!
+//! \brief getUidName Builds world unical name of object  as combination object type, object title and objects author public key
+//!                   for previous version of SaliCAD
+//! \return           Worlds unical name of object
+//!
+QString SdContainerFile::getUidName() const
   {
   //Id consist from name, user and time creation
   return headerUid( getType(), mTitle, mAuthorKey );
   }
 
 
-//!
-//! \brief crc  Calculates crc code of line which is hash code for unical file name
-//! \param line
-//! \return
-//!
-//! Previous realisation use qHash, but with change qt version algorithm
-//! of calculation - changed. To fix up this problem we release our owner crc calculation
-static unsigned short crc( const QString &line )
-  {
-  const ushort *ptr = line.utf16();
-  int len = line.length();
-  unsigned short h = 0;
-  //(h << 5) + h ^ c
-  while( len ) {
-    h = (h << 5) + (h ^ *ptr);
-    ptr++;
-    len--;
-    }
-  return h;
-  }
-
-
-
-//!
-//! \brief getLibraryFName Builds and return file name for library storage from full uid and time of contaner file
-//! \param fullUid         Full uid of container file
-//! \param time            Time of containter file
-//! \return                File name for library storage
-//!
-QString SdContainerFile::getLibraryFName( const QString &fullUid, qint32 time )
-  {
-  QString uid( fullUid );
-  if( uid.length() > 64 )
-    uid = uid.left(64);
-  for( int i = 0; i < uid.length(); i++ )
-    if( !uid.at(i).isLetterOrNumber() )
-      uid[i] = QChar('_');
-  QString hash( QStringLiteral("%1").arg( crc(fullUid), 4, 16, QChar('0') ) );
-  return QStringLiteral("%1/%2-%3-%4" SD_BINARY_EXTENSION ).arg( hash.left(2), hash.right(2), uid ).arg( time, 0, 16 );
-  }
-
-
-
-
-//!
-//! \brief getLibraryFName Build and return file name for library storage
-//! \return                File name for library storage
-//!
-QString SdContainerFile::getLibraryFName() const
-  {
-  return getLibraryFName( getUid(), getTime() );
-  }
 
 
 
@@ -88,19 +44,20 @@ QString SdContainerFile::getLibraryFName() const
 
 QString SdContainerFile::getExtendTitle() const
   {
-  return QString("%1 [r%2] (%3)").arg( mTitle, SvTime2x::toLocalString(getTime()), mAuthorKey );
+  return QString("%1 [r%2] (%3)").arg( mTitle, SvTime2x::toLocalString(getTime()), authorGlobalName( mAuthorKey ) );
   }
 
 
 
 void SdContainerFile::getHeader(SdLibraryHeader &hdr) const
   {
-  hdr.mName       = mTitle;
-  hdr.mType       = getType();
-  hdr.mAuthorKey  = mAuthorKey;
-  hdr.mTime       = getTime();
-  hdr.mClass      = getClass();
-  hdr.mParamTable = mParamTable;
+  hdr.mName        = mTitle;
+  hdr.mType        = getType();
+  hdr.mAuthorKey   = mAuthorKey;
+  hdr.mHashUidName = mHashUidName;
+  hdr.mTime        = getTime();
+  hdr.mClass       = getClass();
+  hdr.mParamTable  = mParamTable;
   }
 
 
@@ -116,14 +73,18 @@ bool SdContainerFile::isAnotherAuthor() const
 
 
 
+//!
+//! \brief titleSet Sets new title for object
+//! \param title    New title for object
+//!
 void SdContainerFile::titleSet(const QString title)
   {
-  //Item author (registered program copy name)
-  updateAuthor();
-  //Update creation time
-  updateCreationTime();
   //Title setup
   mTitle      = title;
+  //Update creation time
+  updateCreationTime();
+  //Item author (registered program copy name)
+  updateAuthorAndHash();
   }
 
 
@@ -137,10 +98,11 @@ void SdContainerFile::titleSet(const QString title)
 //!
 void SdContainerFile::json(SdJsonWriter &js) const
   {
-  js.jsonString( QStringLiteral("Title"),     mTitle );
-  js.jsonString( QStringLiteral("Author"),    mAuthorKey );
-  js.jsonInt(  QStringLiteral("Created"),     mCreateTime );
-  js.jsonBool( QStringLiteral("Edit enable"), mEditEnable );
+  js.jsonString( QStringLiteral("Title"),       mTitle );
+  js.jsonString( QStringLiteral("AuthorKey"),   mAuthorKey );
+  js.jsonString( QStringLiteral("HashUidName"), mHashUidName );
+  js.jsonInt(  QStringLiteral("Created"),       mCreateTime );
+  js.jsonBool( QStringLiteral("Edit enable"),   mEditEnable );
   SdContainer::json( js );
   }
 
@@ -154,10 +116,17 @@ void SdContainerFile::json(SdJsonWriter &js) const
 //!
 void SdContainerFile::json(const SdJsonReader &js)
   {
-  js.jsonString( QStringLiteral("Title"),     mTitle );
-  js.jsonString( QStringLiteral("Author"),    mAuthorKey );
-  js.jsonInt(  QStringLiteral("Created"),     mCreateTime );
-  js.jsonBool( QStringLiteral("Edit enable"), mEditEnable, true );
+  js.jsonString( QStringLiteral("Title"),       mTitle );
+  js.jsonInt(  QStringLiteral("Created"),       mCreateTime );
+  js.jsonBool( QStringLiteral("Edit enable"),   mEditEnable, true );
+  if( js.property()->mVersion == SD_BASE_VERSION_2 ) {
+    //Convert previous author into current and build hash
+    updateAuthorAndHash();
+    }
+  else {
+    js.jsonString( QStringLiteral("AuthorKey"),   mAuthorKey );
+    js.jsonString( QStringLiteral("HashUidName"), mHashUidName );
+    }
   SdContainer::json( js );
   }
 
@@ -176,10 +145,11 @@ void SdContainerFile::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool ne
   SdContainer::cloneFrom( src, copyMap, next );
   SdPtrConst<SdContainerFile> sour(src);
   if( sour.isValid() ) {
-    mTitle      = sour->mTitle;
-    mAuthorKey     = sour->mAuthorKey;
-    mCreateTime = sour->mCreateTime;
-    mEditEnable = sour->mEditEnable;
+    mTitle       = sour->mTitle;
+    mAuthorKey   = sour->mAuthorKey;
+    mHashUidName = sour->mHashUidName;
+    mCreateTime  = sour->mCreateTime;
+    mEditEnable  = sour->mEditEnable;
     }
   }
 
@@ -205,6 +175,54 @@ QString SdContainerFile::getDefaultAuthor()
 
 
 
+//!
+//! \brief hashUidName Builds hash code for unical name of object which consists from three parts
+//! \param objectType  Object type
+//! \param objectTitle Object title
+//! \param authorKey   Author for object
+//! \return            hex hash code
+//!
+QString SdContainerFile::hashUidName(const QString &objectType, const QString &objectTitle, const QString &authorKey)
+  {
+  QString unicalName( objectType + objectTitle + authorKey );
+  QByteArray hash = QCryptographicHash::hash( unicalName.toUtf8(), QCryptographicHash::Sha3_256 );
+  return QString::fromUtf8( hash.toHex() );
+  }
+
+
+
+
+
+//!
+//! \brief hashUidFile Builds hash uid code for file name of object on base unical hash code of name and version
+//! \param hashUidName Unical hash code of object name
+//! \param timeVersion Object version (object time creation)
+//! \return            Full file name for object
+//!
+QString SdContainerFile::hashUidFile(const QString &hashUidName, int timeVersion)
+  {
+  return hashUidName + QString( "-%1" SD_BINARY_EXTENSION ).arg( timeVersion, 8, 16, QChar('0') );
+  }
+
+
+
+
+
+//!
+//! \brief authorGlobalName Retrive author global name if registered, otherwise return "anonim" or "yourown"
+//! \param publicAuthorKey  Public author key
+//! \return                 Author global name
+//!
+QString SdContainerFile::authorGlobalName(const QString &publicAuthorKey)
+  {
+
+  }
+
+
+
+
+
+
 //On call this function time setup after previous time
 void SdContainerFile::updateCreationTime()
   {
@@ -218,9 +236,15 @@ void SdContainerFile::updateCreationTime()
 
 
 
-void SdContainerFile::updateAuthor()
+//!
+//! \brief updateAuthorAndHash Set author as current and calculate new hash
+//!
+void SdContainerFile::updateAuthorAndHash()
   {
+  //Set author as current
   mAuthorKey = getDefaultAuthor();
+  //calculate new hash
+  mHashUidName = hashUidName( getType(), mTitle, mAuthorKey );
   }
 
 

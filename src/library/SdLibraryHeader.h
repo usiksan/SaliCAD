@@ -32,9 +32,9 @@ Description
 #define sdUidDelimiter QChar('\r')
 
 //Create uid from type, object name and author name
-inline QString headerUid( QString type, QString name, QString author )
+inline QString headerUid( QString type, QString name, QString authorKey )
   {
-  return type + sdUidDelimiter + name + sdUidDelimiter + author;
+  return type + sdUidDelimiter + name + sdUidDelimiter + authorKey;
   }
 
 
@@ -58,6 +58,7 @@ struct SdLibraryHeader
     QString     mName;               //!< Name of stored object
     QString     mType;               //!< Type of stored object
     QString     mAuthorKey;          //!< Public Key of Author who create object
+    QString     mHashUidName;        //!< Hash code of name
     qint32      mTime;               //!< Object time creation
     quint64     mClass;              //!< Object class. When equals 0 then corresponded object is deleted
     bool        mPartPresent;        //!< Flag of part present in component or symbol
