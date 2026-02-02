@@ -90,6 +90,7 @@ SOURCES += \
     import/vrml/VrmlNodeTransform.cpp \
     import/vrml/VrmlRotation.cpp \
     import/vrml/VrmlVector.cpp \
+    library/SdTcpCborClient.cpp \
     master/SdDMasterPartModule.cpp \
     master/SdDMasterPartSingleLine.cpp \
     master/SdDMasterSheetDecorator.cpp \
@@ -494,6 +495,7 @@ HEADERS  += \
     import/vrml/VrmlTypes.h \
     import/vrml/VrmlVector.h \
     library/SdStringMap.h \
+    library/SdTcpCborClient.h \
     master/SdDMasterPartModule.h \
     master/SdDMasterPartSingleLine.h \
     master/SdDMasterSheetDecorator.h \

@@ -118,7 +118,7 @@ void SdWEditor::cmObjectEditDisable()
   if( getProjectItem() ) {
     SdProjectItem *item = getProjectItem();
     //Check if object already in library
-    bool presenceInLibrary = SdLibraryStorage::instance()->cfObjectContains( item->getUid() );
+    bool presenceInLibrary = SdLibraryStorage::instance()->cfObjectContains( item->hashUidName() );
     getProjectItem()->setEditEnable( false, tr("Object edit disable") );
 
 

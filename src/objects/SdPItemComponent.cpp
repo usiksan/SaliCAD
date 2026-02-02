@@ -237,7 +237,7 @@ SdPItemComponent *sdCreateDefaultComponent(SdPItemSymbol *symbol, bool appendDef
   //Append symbol to library
   SdLibraryStorage::instance()->cfObjectInsert( symbol );
   //Append section with symbol
-  comp->sectionAppend( symbol->getUid(), symbol->getUndo() );
+  comp->sectionAppend( symbol->hashUidName(), symbol->getUndo() );
 
   if( appendDefaultPart ) {
     //Setup default part

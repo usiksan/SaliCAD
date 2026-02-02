@@ -12,6 +12,7 @@ class SdContainerFile : public SdContainer
     QString                mHashUidName; //!< Hash for unical name of object as combination object type, object title and objects author public key
     int                    mCreateTime;  //!< Create time with sec from 2000year
     bool                   mEditEnable;  //!< True if edit enable for this object
+    bool                   mIsPublic;    //!< True if object is public
   public:
     bool                   mThereNewer;  //!< In library present newer object
   public:
@@ -39,6 +40,7 @@ class SdContainerFile : public SdContainer
 
     QString                getExtendTitle() const;
     QString                getAuthorKey() const { return mAuthorKey; }
+    QString                authorGlobalName() const { return authorGlobalName(mAuthorKey); }
     int                    getTime() const { return mCreateTime; }
     QString                getTitle() const { return mTitle; }
     virtual void           getHeader( SdLibraryHeader &hdr ) const;
@@ -96,6 +98,14 @@ class SdContainerFile : public SdContainer
     //! \return            Full file name for object
     //!
     static QString         hashUidFile( const QString &hashUidName, int timeVersion );
+
+    //!
+    //! \brief hashUidPath Build file path from hash uid code name and time
+    //! \param hashUidName Unical hash code of object name
+    //! \param timeVersion Object version (object time creation)
+    //! \return            Path to file of object with directory structure
+    //!
+    static QString         hashUidPath( const QString &hashUidName, int timeVersion );
 
     //!
     //! \brief authorGlobalName Retrive author global name if registered, otherwise return "anonim" or "yourown"

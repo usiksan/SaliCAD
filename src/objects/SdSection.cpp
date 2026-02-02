@@ -43,8 +43,8 @@ void SdSection::setSymbolId(const QString id, SdUndo *undo)
     undo->string2( &mSymbolId, &mSymbolTitle );
     undo->stringMap( &mAssociationTable );
     //Setup new symbol info
-    mSymbolId = symbol->getUid();
-    mSymbolTitle = QString( "%1 (%2)" ).arg(symbol->getTitle()).arg(symbol->getAuthorKey());
+    mSymbolId = symbol->hashUidName();
+    mSymbolTitle = QString( "%1 (%2)" ).arg(symbol->getTitle()).arg(symbol->authorGlobalName());
     //Accum pins
     SdPinAssociation pins;
     symbol->forEach( dctSymPin, [&pins, this] (SdObject *obj) -> bool {

@@ -13,6 +13,7 @@ SdContainerFile::SdContainerFile() :
   SdContainer(),
   mCreateTime(0),
   mEditEnable(true),
+  mIsPublic(false),
   mThereNewer(false)
   {
 
@@ -58,6 +59,7 @@ void SdContainerFile::getHeader(SdLibraryHeader &hdr) const
   hdr.mTime        = getTime();
   hdr.mClass       = getClass();
   hdr.mParamTable  = mParamTable;
+  hdr.mIsPublic    = mIsPublic;
   }
 
 
@@ -103,6 +105,7 @@ void SdContainerFile::json(SdJsonWriter &js) const
   js.jsonString( QStringLiteral("HashUidName"), mHashUidName );
   js.jsonInt(  QStringLiteral("Created"),       mCreateTime );
   js.jsonBool( QStringLiteral("Edit enable"),   mEditEnable );
+  js.jsonBool( QStringLiteral("Is public"),     mIsPublic );
   SdContainer::json( js );
   }
 
@@ -150,6 +153,7 @@ void SdContainerFile::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool ne
     mHashUidName = sour->mHashUidName;
     mCreateTime  = sour->mCreateTime;
     mEditEnable  = sour->mEditEnable;
+    mIsPublic    = sour->mIsPublic;
     }
   }
 
@@ -186,7 +190,35 @@ QString SdContainerFile::hashUidName(const QString &objectType, const QString &o
   {
   QString unicalName( objectType + objectTitle + authorKey );
   QByteArray hash = QCryptographicHash::hash( unicalName.toUtf8(), QCryptographicHash::Sha3_256 );
-  return QString::fromUtf8( hash.toHex() );
+
+  //Convert binary hash to string
+  static const char alphabet[] = "0123456789abcdefghijklmnopqrstuv";
+
+  // Берем только 255 бит (отбрасываем 1 бит)
+  QByteArray result;
+
+  //Prefix
+  result.append('x');
+
+  //First symbol - 3bit for subdir name
+  int buffer = (quint8)hash[0];
+  int bits = 5;
+  result.append(alphabet[(buffer >> bits) & 0x1F]);
+  bits = 2;
+  result.append(alphabet[(buffer >> bits) & 0x1F]);
+
+  // Обрабатываем 31 байт и 7 бит из последнего байта
+  for( int i = 1; i < 32; i++ ) {
+    buffer = (buffer << 8) | (quint8)hash[i];
+    bits += 8;
+
+    while( bits >= 5 ) {
+      bits -= 5;
+      result.append(alphabet[(buffer >> bits) & 0x1F]);
+      }
+    }
+
+  return QString::fromLatin1(result);
   }
 
 
@@ -202,6 +234,22 @@ QString SdContainerFile::hashUidName(const QString &objectType, const QString &o
 QString SdContainerFile::hashUidFile(const QString &hashUidName, int timeVersion)
   {
   return hashUidName + QString( "-%1" SD_BINARY_EXTENSION ).arg( timeVersion, 8, 16, QChar('0') );
+  }
+
+
+
+
+
+
+//!
+//! \brief hashUidPath Build file path from hash uid code name and time
+//! \param hashUidName Unical hash code of object name
+//! \param timeVersion Object version (object time creation)
+//! \return            Path to file of object with directory structure
+//!
+QString SdContainerFile::hashUidPath(const QString &hashUidName, int timeVersion)
+  {
+  return QString( "%1/%2-%3" SD_BINARY_EXTENSION ).arg( hashUidName.mid(0,2), hashUidName ).arg( timeVersion, 8, 16, QChar('0') );
   }
 
 

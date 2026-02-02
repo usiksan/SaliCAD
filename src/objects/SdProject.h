@@ -119,7 +119,7 @@ class SdProject : public SdContainerFile
     //!
     SdObjectPtr       item3d( QTreeWidgetItem *src ) const;
     SdObjectPtr       itemByName( quint64 mask, const QString name ) const;
-    SdObjectPtr       itemByUid( const QString &uid ) const;
+    SdObjectPtr       itemByHashUidName( const QString &theHashUidName ) const;
 
     //Return full net list from all project sheets
     QStringList       netList() const;

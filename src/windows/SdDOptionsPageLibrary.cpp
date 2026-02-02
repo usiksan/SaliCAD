@@ -41,7 +41,7 @@ SdDOptionsPageLibrary::SdDOptionsPageLibrary(QWidget *parent) :
 
   grid->addWidget( new QLabel(tr("Author name:")), 2, 0 );
   grid->addWidget( mAuthorName = new QLineEdit(), 2, 1 );
-  mAuthorName->setText( s.value( QStringLiteral(SDK_GLOBAL_AUTHOR), QString()).toString() );
+  //mAuthorName->setText( s.value( QStringLiteral(SDK_GLOBAL_AUTHOR), QString()).toString() );
   mAuthorName->setReadOnly( true );
   grid->addWidget( but = new QPushButton( tr("Registration...") ), 2, 2 );
   connect( but, &QPushButton::clicked, this, [this] () {
@@ -50,7 +50,7 @@ SdDOptionsPageLibrary::SdDOptionsPageLibrary(QWidget *parent) :
     //After registration update ip and author name
     QSettings s;
     mServerRepo->setText( s.value( QStringLiteral(SDK_SERVER_REPO) ).toString() );
-    mAuthorName->setText( s.value( QStringLiteral(SDK_GLOBAL_AUTHOR), QString()).toString() );
+//    mAuthorName->setText( s.value( QStringLiteral(SDK_GLOBAL_AUTHOR), QString()).toString() );
     });
 
 

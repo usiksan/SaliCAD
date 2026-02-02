@@ -95,16 +95,6 @@ int main(int argc, char *argv[])
   //Open library for objectFactory system
   SdLibraryStorage::instance()->libraryInit();
 
-  //Check if registered
-  if( !s.contains(SDK_GLOBAL_AUTHOR) || !s.contains(SDK_GLOBAL_PASSWORD) || !s.contains(SDK_SERVER_REPO) ) {
-    //Store default ip
-    s.setValue( QStringLiteral(SDK_SERVER_REPO), QStringLiteral(SD_DEFAULT_REPO) );
-    //Not registered, show register dialog
-    SdDRegistation rd(false);
-    if( rd.exec() == 0 )
-      return 0;
-    }
-
 
   //Creating application main window
   SdWMain w( a.arguments() );

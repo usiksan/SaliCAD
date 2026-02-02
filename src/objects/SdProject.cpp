@@ -154,7 +154,7 @@ SdProjectItem *SdProject::getFixedProjectItem( const SdProjectItem *item)
 
   //First try find equal object
   SdClass mask = item->getClass();
-  SdUid   uid  = item->getUid();
+  SdUid   uid  = item->hashUidName();
   qint32  time = item->getTime();
   //Place for result
   SdProjectItem *res = nullptr;
@@ -162,7 +162,7 @@ SdProjectItem *SdProject::getFixedProjectItem( const SdProjectItem *item)
   forEach( mask, [&res, uid, time] (SdObject *obj) -> bool {
     res = dynamic_cast<SdProjectItem*>( obj );
     Q_ASSERT( res != nullptr );
-    if( res->getUid() == uid && res->getTime() >= time )
+    if( res->hashUidName() == uid && res->getTime() >= time )
       return false;
     res = nullptr;
     return true;
@@ -343,12 +343,12 @@ SdObjectPtr SdProject::itemByName(quint64 mask, const QString name) const
 
 
 
-SdObjectPtr SdProject::itemByUid(const QString &uid) const
+SdObjectPtr SdProject::itemByHashUidName(const QString &theHashUidName) const
   {
   SdObjectPtr ptr = nullptr;
-  forEachConst( dctAll, [uid,&ptr] (SdObject *obj ) -> bool {
+  forEachConst( dctAll, [theHashUidName,&ptr] (SdObject *obj ) -> bool {
     SdPtr<SdProjectItem> item(obj);
-    if( item && item->getUid() == uid ) {
+    if( item && item->hashUidName() == theHashUidName ) {
       ptr = item.ptr();
       return false;
       }
@@ -629,7 +629,7 @@ bool SdProject::upgradeNewerItems(SdUndo *undo, QWidget *parent)
   //At second, we get upgraded item, remove old item and insert new one
   for( SdProjectItemPtr item : upgradeList ) {
     //Get uid of item to extract newer object
-    QString uid = item->getUid();
+    QString uid = item->hashUidName();
     //Extract newer object
     SdProjectItem *newItem = sdObjectOnly<SdProjectItem>( SdLibraryStorage::instance()->cfObjectGet( uid ) );
     if( newItem == nullptr )
