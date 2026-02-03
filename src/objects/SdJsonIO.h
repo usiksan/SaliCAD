@@ -52,8 +52,9 @@ class SdJsonWriter : public SvJsonWriter3d
 
 struct SdJsonReaderProperty
   {
-    SdObjectMap mMap;
-    int         mVersion;
+    SdObjectMap mMap;     //!< Object mapping for reference restore
+    int         mVersion; //!< Data base version
+    SdClass     mClass;   //!< Current class reading
   };
 
 

@@ -46,7 +46,7 @@ class SdPropLayer
       }
 
     void       json( const QString name, SvJsonWriter &js ) const { js.jsonString( name, mLayer->id() ); }
-    void       json( const QString name, const SvJsonReader &js );
+    void       json( const QString name, const SdJsonReader &js );
 
     SdLayer   *swap( SdLayer *src );
   };

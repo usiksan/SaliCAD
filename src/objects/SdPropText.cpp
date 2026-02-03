@@ -12,6 +12,7 @@ Description
 */
 
 #include "SdPropText.h"
+#include "SdJsonIO.h"
 
 SdPropText::SdPropText()
   {
@@ -86,7 +87,7 @@ void SdPropText::json(const QString prefix, SvJsonWriter &js) const
 
 
 
-void SdPropText::json(const QString prefix, const SvJsonReader &js)
+void SdPropText::json(const QString prefix, const SdJsonReader &js)
   {
   mLayer.json( prefix + QStringLiteral("TextLayer"), js ); //Слой
   mSize.json( prefix + QStringLiteral("TextSize"), js );   //Размер текста

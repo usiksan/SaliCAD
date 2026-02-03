@@ -35,7 +35,7 @@ struct SdTextImplement
     //! \brief json Overloaded function to read object content from json reader
     //! \param js   Json reader
     //!
-    void json( const QString &prefix, const SvJsonReader &js);
+    void json( const QString &prefix, const SdJsonReader &js);
   };
 
 #endif // SDTEXTIMPLEMENT_H

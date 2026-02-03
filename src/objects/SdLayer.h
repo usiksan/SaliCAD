@@ -70,6 +70,7 @@ enum SdLayerTrace {
 #define LID0_EXCLUSION     "Exclusion"    //Trace exclusion area
 #define LID0_TRACE         "Trace"        //Trace area
 #define LID0_TRACE_DEFAULT "TraceDefault" //Default trace layer for undefined stratum
+#define LID0_SILK          "Silk"         //Silk layer
 
 //Both schematic and PCB
 #define LID0_COMPONENT     "Component"    //Изображение элемента (символа или корпуса)

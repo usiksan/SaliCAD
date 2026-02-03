@@ -46,6 +46,9 @@ SdLayerDescr sdLayerDescrActual[] = {
   { LID0_STENCIL LID1_TOP,       0x003f8000, layerTraceStencil, stmTop },
   { LID0_STENCIL_REPER LID1_TOP, 0x003f4000, layerTraceNone, 0x00000000 },
 
+  { LID0_SILK LID1_TOP,          0x3f3f8000, layerTraceNone, 0x00000000 },
+  { LID0_SILK LID1_BOT,          0x3f3f8000, layerTraceNone, 0x00000000 },
+
   { LID0_EXCLUSION,              0x00002080, layerTraceNone, 0x00000000 },
   { LID0_TRACE,                  0x00200080, layerTraceNone, 0x00000000 },
   { LID0_TRACE_DEFAULT,          0x00404020, layerTraceNone, 0x00000000 }, //Default trace layer for undefined stratum

@@ -46,8 +46,8 @@ struct SdPropLine {
 
   void json( const QString &prefix, SvJsonWriter &js ) const;
   void json( SvJsonWriter &js ) const { json( "line", js ); }
-  void json( const QString &prefix, const SvJsonReader &js );
-  void json( const SvJsonReader &js ) { json( "line", js ); }
+  void json( const QString &prefix, const SdJsonReader &js );
+  void json( const SdJsonReader &js ) { json( "line", js ); }
   void saveState( SdPropLineState *dst );
   void swapState( SdPropLineState *src );
   };
