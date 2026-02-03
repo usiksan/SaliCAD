@@ -789,5 +789,6 @@
         <file>help/viewWin.png</file>
         <file>help/viewZoomIn.png</file>
         <file>help/viewZoomOut.png</file>
+        <file>pic/library.png</file>
     </qresource>
 </RCC>

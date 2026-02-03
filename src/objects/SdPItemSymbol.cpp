@@ -110,7 +110,7 @@ QString SdPItemSymbol::sectionSymbolTitleGet(int sectionIndex) const
 QString SdPItemSymbol::sectionSymbolIdGet(int sectionIndex) const
   {
   if( sectionIndex == 0 )
-    return getUid();
+    return hashUidName();
   return QString{};
   }
 
@@ -150,7 +150,7 @@ QString SdPItemSymbol::sectionPinNumberGet(int sectionIndex, const QString pinNa
 SdPItemSymbol *SdPItemSymbol::extractSymbolFromFactory(int sectionIndex) const
   {
   if( sectionIndex == 0 )
-    return sdObjectOnly<SdPItemSymbol>( SdLibraryStorage::instance()->cfObjectGet( getUid() ) );
+    return sdObjectOnly<SdPItemSymbol>( SdLibraryStorage::instance()->cfObjectGet( hashUidName() ) );
   return nullptr;
   }
 

@@ -98,6 +98,9 @@ class SdLibraryStorage : public QObject
 
 
     //==================================================================
+    // Author association
+
+    //==================================================================
     // SdContainerFile
 
     //!
@@ -115,7 +118,7 @@ class SdLibraryStorage : public QObject
     //! \param uid         UID of loaded object
     //! \return            Loaded object or nullptr
     //!
-    SdContainerFile *cfObjectGet( const QString uid ) const;
+    SdContainerFile *cfObjectGet( const QString hashUidName ) const;
 
     //!
     //! \brief cfObjectUpload Return object available to uploading to remote server
@@ -130,12 +133,12 @@ class SdLibraryStorage : public QObject
     void             cfObjectUploaded( const QString uid );
 
     //!
-    //! \brief cfIsOlder Test if object which represents by uid and time present in library and older than there is in library
-    //! \param uid       uid of tested object
-    //! \param time      time of locking of tested object
-    //! \return          true if tested object present in library and it older then in library
+    //! \brief cfIsOlder   Test if object which represents by hashUidName and time present in library and older than there is in library
+    //! \param hashUidName hashUidName of tested object
+    //! \param time        time of locking of tested object
+    //! \return            true if tested object present in library and it older then in library
     //!
-    bool             cfIsOlder( const QString uid, qint32 time ) const;
+    bool             cfIsOlder( const QString hashUidName, qint32 time ) const;
 
     //!
     //! \brief cfIsOlder Overloaded function. Test if object present in library and older than there is in library
@@ -146,11 +149,11 @@ class SdLibraryStorage : public QObject
 
     //!
     //! \brief cfIsOlderOrSame Test if object which represents by uid and time present in library and older or same than there is in library
-    //! \param uid             uid of tested object
+    //! \param hashUidName     hashUidName of tested object
     //! \param time            time of locking of tested object
     //! \return                true if tested object present in library and it older then in library
     //!
-    bool             cfIsOlderOrSame( const QString uid, qint32 time ) const;
+    bool             cfIsOlderOrSame( const QString hashUidName, qint32 time ) const;
 
     //!
     //! \brief cfIsOlderOrSame Overloaded function. Test if object present in library and older or same than there is in library
@@ -161,22 +164,22 @@ class SdLibraryStorage : public QObject
 
     //!
     //! \brief cfObjectContains Return true if object contains in library
-    //! \param uid              UID of object
+    //! \param hashUidName      hashUidName of object
     //! \return                 True if object contains in library
     //!
-    bool             cfObjectContains( const QString uid ) const { return mReferenceMap.contains(uid) && !mReferenceMap.value(uid).isNeedDelete(); }
+    bool             cfObjectContains( const QString hashUidName ) const { return mReferenceMap.contains(hashUidName) && !mReferenceMap.value(hashUidName).isNeedDelete(); }
 
 
     //==================================================================
     //Headers
 
     //!
-    //! \brief header Get header of object
-    //! \param uid    object unical identificator
-    //! \param hdr    place to receiv object header
-    //! \return       true if header readed successfully
+    //! \brief header      Get header of object
+    //! \param hashUidName object unical identificator
+    //! \param hdr         place to receiv object header
+    //! \return            true if header readed successfully
     //!
-    bool             header( const QString uid, SdLibraryHeader &hdr );
+    bool             header( const QString hashUidName, SdLibraryHeader &hdr );
 
 
     //!
@@ -213,6 +216,13 @@ class SdLibraryStorage : public QObject
 
     //!
     //! \brief fullPath Return full path to library file
+    //! \param item     Item, for which path builded
+    //! \return         Full path to library file
+    //!
+    QString          fullPath( const SdContainerFile *item ) const;
+
+    //!
+    //! \brief fullPath Return full path to library file
     //! \param fileName Library file fileName
     //! \return         Full path to library file
     //!
@@ -220,17 +230,17 @@ class SdLibraryStorage : public QObject
 
     //!
     //! \brief fileNameOfLibraryObject Returns file name of library object
-    //! \param uid                     Unical id of object
+    //! \param hashUidName             Unical id of object
     //! \return                        File name of library object
     //!
-    QString          fileNameOfLibraryObject( const QString &uid ) const;
+    QString          fileNameOfLibraryObject( const QString &hashUidName ) const;
 
     //!
     //! \brief fullPathOfLibraryObject Returns full path to object in library
-    //! \param uid                     Unical id of object
+    //! \param hashUidName             Unical id of object
     //! \return                        Full path to file of object in library
     //!
-    QString          fullPathOfLibraryObject( const QString &uid ) const;
+    QString          fullPathOfLibraryObject( const QString &hashUidName ) const;
 
     static QString   cachePath();
   };

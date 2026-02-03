@@ -212,11 +212,14 @@ void SdLibraryStorage::cfObjectInsert(const SdContainerFile *item)
   insertReferenceAndHeader( item );
 
   //Insert in library
-  QString fname = item->getLibraryFName();
-  SvDir dir( mLibraryPath );
-  QDir().mkpath( dir.slashedPath() + fname.left(2) );
+  QString filePath = fullPath( item );
+  QDir dir;
+  QString dirPath = QFileInfo(filePath).absolutePath();
 
-  item->fileJsonSave( dir.slashedPath() + fname );
+  // mkpath() возвращает true, если путь уже существует или был успешно создан
+  if( !dir.mkpath(dirPath) ) return;
+
+  item->fileJsonSave( filePath );
   }
 
 
@@ -224,14 +227,14 @@ void SdLibraryStorage::cfObjectInsert(const SdContainerFile *item)
 
 void SdLibraryStorage::cfObjectDelete(const SdContainerFile *item)
   {
-  if( item != nullptr && item->getAuthor() == item->getDefaultAuthor() ) {
-    QString uid = item->getUid();
+  if( item != nullptr && item->getAuthorKey() == item->getDefaultAuthor() ) {
+    QString uid = item->hashUidName();
     if( mReferenceMap.contains(uid) && !mReferenceMap.value(uid).isNeedDelete() ) {
       //Mark as need to be deleted from server
       mReferenceMap[uid].deleteSet();
 
       //Delete object file
-      QFile::remove( fullPath( item->getLibraryFName() ) );
+      QFile::remove( fullPath( item->hashUidFile() ) );
 
       mDirty = true;
       }
@@ -244,14 +247,14 @@ void SdLibraryStorage::cfObjectDelete(const SdContainerFile *item)
 
 //!
 //! \brief cfObjectGet Load object from library
-//! \param uid         UID of loaded object
+//! \param hashUidName UID of loaded object
 //! \return            Loaded object or nullptr
 //!
-SdContainerFile *SdLibraryStorage::cfObjectGet(const QString uid) const
+SdContainerFile *SdLibraryStorage::cfObjectGet(const QString hashUidName) const
   {
-  if( mReferenceMap.contains( uid ) ) {
+  if( mReferenceMap.contains( hashUidName ) ) {
     //Load object
-    return sdObjectOnly<SdContainerFile>( SdObject::fileJsonLoad( fullPathOfLibraryObject(uid) ) );
+    return sdObjectOnly<SdContainerFile>( SdObject::fileJsonLoad( fullPathOfLibraryObject(hashUidName) ) );
     }
   return nullptr;
   }
@@ -295,15 +298,15 @@ void SdLibraryStorage::cfObjectUploaded(const QString uid)
 
 
 //!
-//! \brief cfIsOlder Test if object which represents by uid and time present in library and older than there is in library
-//! \param uid       uid of tested object
-//! \param time      time of locking of tested object
-//! \return          true if tested object present in library and it older then in library
+//! \brief cfIsOlder   Test if object which represents by hashUidName and time present in library and older than there is in library
+//! \param hashUidName hashUidName of tested object
+//! \param time        time of locking of tested object
+//! \return            true if tested object present in library and it older then in library
 //!
-bool SdLibraryStorage::cfIsOlder(const QString uid, qint32 time) const
+bool SdLibraryStorage::cfIsOlder(const QString hashUidName, qint32 time) const
   {
   QReadLocker locker( &mLock );
-  return mReferenceMap.contains( uid ) && mReferenceMap.value(uid).isNewer( time );
+  return mReferenceMap.contains( hashUidName ) && mReferenceMap.value(hashUidName).isNewer( time );
   }
 
 
@@ -316,22 +319,22 @@ bool SdLibraryStorage::cfIsOlder(const QString uid, qint32 time) const
 bool SdLibraryStorage::cfIsOlder(const SdContainerFile *item) const
   {
   if( item == nullptr ) return false;
-  return cfIsOlder( item->getUid(), item->getTime() );
+  return cfIsOlder( item->hashUidName(), item->getTime() );
   }
 
 
 
 
 //!
-//! \brief cfIsOlderOrSame Test if object which represents by uid and time present in library and older or same than there is in library
-//! \param uid             uid of tested object
+//! \brief cfIsOlderOrSame Test if object which represents by hashUidName and time present in library and older or same than there is in library
+//! \param hashUidName     hashUidName of tested object
 //! \param time            time of locking of tested object
 //! \return                true if tested object present in library and it older then in library
 //!
-bool SdLibraryStorage::cfIsOlderOrSame(const QString uid, qint32 time) const
+bool SdLibraryStorage::cfIsOlderOrSame(const QString hashUidName, qint32 time) const
   {
   QReadLocker locker( &mLock );
-  return mReferenceMap.contains( uid ) && mReferenceMap.value(uid).isNewerOrSame( time );
+  return mReferenceMap.contains( hashUidName ) && mReferenceMap.value(hashUidName).isNewerOrSame( time );
   }
 
 
@@ -345,7 +348,7 @@ bool SdLibraryStorage::cfIsOlderOrSame(const QString uid, qint32 time) const
 bool SdLibraryStorage::cfIsOlderOrSame(const SdContainerFile *item) const
   {
   if( item == nullptr ) return false;
-  return cfIsOlderOrSame( item->getUid(), item->getTime() );
+  return cfIsOlderOrSame( item->hashUidName(), item->getTime() );
   }
 
 
@@ -353,19 +356,19 @@ bool SdLibraryStorage::cfIsOlderOrSame(const SdContainerFile *item) const
 
 
 //!
-//! \brief header Get header of object
-//! \param uid    object unical identificator
-//! \param hdr    place to receiv object header
-//! \return       true if header readed successfully
+//! \brief header      Get header of object
+//! \param hashUidName object unical identificator
+//! \param hdr         place to receiv object header
+//! \return            true if header readed successfully
 //!
-bool SdLibraryStorage::header(const QString uid, SdLibraryHeader &hdr)
+bool SdLibraryStorage::header(const QString hashUidName, SdLibraryHeader &hdr)
   {
   //For empty key return false to indicate no header
-  if( uid.isEmpty() ) return false;
+  if( hashUidName.isEmpty() ) return false;
 
   QWriteLocker locker( &mLock );
-  if( !mReferenceMap.contains(uid) ) return false;
-  mHeaderFile.seek( mReferenceMap.value(uid).mHeaderPtr );
+  if( !mReferenceMap.contains(hashUidName) ) return false;
+  mHeaderFile.seek( mReferenceMap.value(hashUidName).mHeaderPtr );
   QDataStream is( &mHeaderFile );
   hdr.read( is );
   return true;
@@ -394,7 +397,7 @@ bool SdLibraryStorage::forEachHeader(std::function<bool(SdLibraryHeader&)> fun1)
     hdr.read( is );
    // qDebug() << hdr.uid() << hdr.mTime << mHeaderFile.pos();
     //Test if header not deleted
-    if( mReferenceMap.value(hdr.uid()).mHeaderPtr == position ) {
+    if( mReferenceMap.value(hdr.hashUidName()).mHeaderPtr == position ) {
       if( fun1( hdr) )
         return true;
       }
@@ -452,17 +455,6 @@ void SdLibraryStorage::periodicScan()
             emit informationAppended( tr("Older object removed %1").arg( item->getTitle() )  );
             }
           else {
-            //Sometime file name is different from file name returned by fullPath()
-            //in this case we rename file
-            QString theFullPath( fullPath( item->getLibraryFName() )  );
-            if( file.absoluteFilePath() != theFullPath  ) {
-              qDebug() << "Different name" << file.absoluteFilePath() << theFullPath;
-              SvDir dir( mLibraryPath );
-              QDir().mkpath( dir.slashedPath() + item->getLibraryFName().left(2) );
-
-              QFile::rename( file.absoluteFilePath(), theFullPath );
-              }
-
             //Append object to reference
             insertReferenceAndHeader( item.get() );
             }
@@ -478,8 +470,8 @@ void SdLibraryStorage::periodicScan()
       int removeCount = 0;
       for( auto it = mExistList.cbegin(); it != mExistList.cend(); it++ ) {
         //Check if file actually removed
-        if( !QFile::exists( fullPath( SdContainerFile::getLibraryFName( it.value(), mReferenceMap.value(it.value()).mCreationTime ) ) ) ) {
-          qDebug() << it.value() << fullPath( SdContainerFile::getLibraryFName( it.value(), mReferenceMap.value(it.value()).mCreationTime ) );
+        if( !QFile::exists( fullPathOfLibraryObject( it.value() ) ) ) {
+          qDebug() << it.value() << fullPathOfLibraryObject( it.value() );
           mReferenceMap.remove( it.value() );
           removeCount++;
           }
@@ -540,13 +532,13 @@ void SdLibraryStorage::insertReferenceAndHeader(const SdContainerFile *item)
       QWriteLocker locker( &mLock );
       SdLibraryHeader hdr;
       item->getHeader( hdr );
-      QString key = item->getUid();
+      QString key = item->hashUidName();
       SdLibraryReference ref;
       //write header first
       ref.mHeaderPtr     = fileHdr.size();
       ref.mCreationTime  = hdr.mTime;
       //Only for owner objects we allow uploading to server
-      ref.mFlags         = item->getAuthor() == item->getDefaultAuthor() ? SDLR_NEED_UPLOAD : 0;
+      ref.mFlags         = 0;// item->getAuthorKey() == item->getDefaultAuthor() ? SDLR_NEED_UPLOAD : 0;
       QDataStream os( &fileHdr );
       hdr.write( os );
       fileHdr.close();
@@ -572,6 +564,19 @@ void SdLibraryStorage::insertReferenceAndHeader(const SdContainerFile *item)
 
 
 
+//!
+//! \brief fullPath Return full path to library file
+//! \param item     Item, for which path builded
+//! \return         Full path to library file
+//!
+QString SdLibraryStorage::fullPath(const SdContainerFile *item) const
+  {
+  return fullPath( item->hashUidFile() );
+  }
+
+
+
+
 
 
 
@@ -583,7 +588,7 @@ void SdLibraryStorage::insertReferenceAndHeader(const SdContainerFile *item)
 QString SdLibraryStorage::fullPath(const QString &fileName) const
   {
   SvDir dir( mLibraryPath );
-  return dir.slashedPath() + fileName;
+  return dir.slashedPath() + fileName.mid( 0, 2 ) + QStringLiteral("/") + fileName;
   }
 
 
@@ -591,12 +596,12 @@ QString SdLibraryStorage::fullPath(const QString &fileName) const
 
 //!
 //! \brief fileNameOfLibraryObject Returns file name of library object
-//! \param uid                     Unical id of object
+//! \param hashUidName             Unical id of object
 //! \return                        File name of library object
 //!
-QString SdLibraryStorage::fileNameOfLibraryObject(const QString &uid) const
+QString SdLibraryStorage::fileNameOfLibraryObject(const QString &hashUidName) const
   {
-  return SdContainerFile::getLibraryFName( uid, mReferenceMap.value(uid).mCreationTime );
+  return SdContainerFile::hashUidFile( hashUidName, mReferenceMap.value(hashUidName).mCreationTime );
   }
 
 
@@ -604,12 +609,12 @@ QString SdLibraryStorage::fileNameOfLibraryObject(const QString &uid) const
 
 //!
 //! \brief fullPathOfLibraryObject Returns full path to object in library
-//! \param uid                     Unical id of object
+//! \param hashUidName             Unical id of object
 //! \return                        Full path to file of object in library
 //!
-QString SdLibraryStorage::fullPathOfLibraryObject(const QString &uid) const
+QString SdLibraryStorage::fullPathOfLibraryObject(const QString &hashUidName) const
   {
-  return fullPath( fileNameOfLibraryObject(uid) );
+  return fullPath( fileNameOfLibraryObject(hashUidName) );
   }
 
 

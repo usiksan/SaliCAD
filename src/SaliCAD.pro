@@ -90,6 +90,7 @@ SOURCES += \
     import/vrml/VrmlNodeTransform.cpp \
     import/vrml/VrmlRotation.cpp \
     import/vrml/VrmlVector.cpp \
+    library/SdTcpCborClient.cpp \
     master/SdDMasterPartModule.cpp \
     master/SdDMasterPartSingleLine.cpp \
     master/SdDMasterSheetDecorator.cpp \
@@ -160,6 +161,7 @@ SOURCES += \
     windows/SdD3dModelMaster.cpp \
     windows/SdD3dModelProgrammEditor.cpp \
     windows/SdDExpressionEdit.cpp \
+    windows/SdDLibrary.cpp \
     windows/SdDOffset.cpp \
     windows/SdDOptionsPageLibrary.cpp \
     windows/SdDParamBase.cpp \
@@ -493,6 +495,7 @@ HEADERS  += \
     import/vrml/VrmlTypes.h \
     import/vrml/VrmlVector.h \
     library/SdStringMap.h \
+    library/SdTcpCborClient.h \
     master/SdDMasterPartModule.h \
     master/SdDMasterPartSingleLine.h \
     master/SdDMasterSheetDecorator.h \
@@ -668,6 +671,7 @@ HEADERS  += \
     windows/SdD3dModelMaster.h \
     windows/SdD3dModelProgrammEditor.h \
     windows/SdDExpressionEdit.h \
+    windows/SdDLibrary.h \
     windows/SdDOffset.h \
     windows/SdDOptionsPageLibrary.h \
     windows/SdDParamBase.h \

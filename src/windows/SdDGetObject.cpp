@@ -189,7 +189,7 @@ SdDGetObject::SdDGetObject(quint64 sort, const QString title, const QString &def
       int activeSection = mSectionIndex;
       int activeRow = 0;
       for( SdLibraryHeader &hdr : mHeaderList ) {
-        if( hdr.uid() == mObjUid ) break;
+        if( hdr.hashUidName() == mObjUid ) break;
         activeRow++;
         }
       //Fill visual tables
@@ -251,7 +251,7 @@ void SdDGetObject::find()
         return false;
 
       //Split uid to name type and author
-      QString uid( hdr.uid() );
+      QString uid( hdr.hashUidName() );
       QString name = hdr.mName; // uid.contains(sdUidDelimiter) ? uid.split( sdUidDelimiter ).at(1) : uid;
 
       //Test for all variants
@@ -306,21 +306,21 @@ void SdDGetObject::onSelectItem(int row, int column)
 
   SdLibraryHeader hdr = mHeaderList.at(row);
   if( hdr.mClass == dctSheet ) {
-    mSymbolView->setItemById( hdr.uid() );
+    mSymbolView->setItemById( hdr.hashUidName() );
     mPartView->setItem( nullptr, true);
     }
   else if( hdr.mClass == dctPart ) {
     mSymbolView->setItem( nullptr, true );
-    mPartView->setItemById( hdr.uid() );
+    mPartView->setItemById( hdr.hashUidName() );
     }
   else if( hdr.mClass == dctComponent ) {
-    mComponent = sdObjectOnly<SdPItemComponent>( SdLibraryStorage::instance()->cfObjectGet( hdr.uid() ) );
+    mComponent = sdObjectOnly<SdPItemComponent>( SdLibraryStorage::instance()->cfObjectGet( hdr.hashUidName() ) );
     }
   else if( hdr.mClass == dctProject ) {
-    mProject = sdObjectOnly<SdProject>( SdLibraryStorage::instance()->cfObjectGet( hdr.uid() ) );
+    mProject = sdObjectOnly<SdProject>( SdLibraryStorage::instance()->cfObjectGet( hdr.hashUidName() ) );
     }
   else if( hdr.mClass == dctSymbol ) {
-    mComponent = sdObjectOnly<SdPItemSymbol>( SdLibraryStorage::instance()->cfObjectGet( hdr.uid() ) );
+    mComponent = sdObjectOnly<SdPItemSymbol>( SdLibraryStorage::instance()->cfObjectGet( hdr.hashUidName() ) );
     }
 
   mParam = hdr.mParamTable;
@@ -328,7 +328,7 @@ void SdDGetObject::onSelectItem(int row, int column)
   mSections->clear();
   mSectionIndex = -1;
 
-  bool present = SdLibraryStorage::instance()->cfObjectContains( hdr.uid() );
+  bool present = SdLibraryStorage::instance()->cfObjectContains( hdr.hashUidName() );
 
   if( mComponent ) {
     //Get section count
@@ -488,7 +488,7 @@ void SdDGetObject::fillTable()
   for( SdLibraryHeader &hdr : mHeaderList ) {
     mTable->setRowHeight( row, 20 );
     mTable->setItem( row, 0, new QTableWidgetItem(hdr.mName) );
-    mTable->setItem( row, 1, new QTableWidgetItem(hdr.mAuthor) );
+    mTable->setItem( row, 1, new QTableWidgetItem(hdr.mAuthorKey) );
     mTable->setItem( row, 2, new QTableWidgetItem(SvTime2x::toLocalString(hdr.mTime)) );
     //Fill fields
     for( int i = 3; i < mTable->columnCount(); i++ ) {
@@ -521,7 +521,7 @@ void SdDGetObject::accept()
     //Extract name, author and id
     SdLibraryHeader hdr = mHeaderList.at(row);
     mObjName   = hdr.mName;
-    mObjUid     = hdr.uid();
+    mObjUid    = hdr.hashUidName();
     if( hdr.mClass == dctComponent || hdr.mClass == dctSymbol )
       mCompUid = mObjUid;
     else

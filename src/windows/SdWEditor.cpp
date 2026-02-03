@@ -118,7 +118,7 @@ void SdWEditor::cmObjectEditDisable()
   if( getProjectItem() ) {
     SdProjectItem *item = getProjectItem();
     //Check if object already in library
-    bool presenceInLibrary = SdLibraryStorage::instance()->cfObjectContains( item->getUid() );
+    bool presenceInLibrary = SdLibraryStorage::instance()->cfObjectContains( item->hashUidName() );
     getProjectItem()->setEditEnable( false, tr("Object edit disable") );
 
 
@@ -202,7 +202,7 @@ void SdWEditor::cmObjectEditEnable()
     SdProjectItem *item;
     //Check if author
     if( getProjectItem()->isAnotherAuthor() ) {
-      int r = QMessageBox::question( this, tr("Warning"), tr("Object was created by another author '%1'. Change to your name?").arg(getProjectItem()->getAuthor()) );
+      int r = QMessageBox::question( this, tr("Warning"), tr("Object was created by another author '%1'. Change to your name?").arg(getProjectItem()->getAuthorKey()) );
       //Alien author object edit not allowed
       if( r == QMessageBox::No ) return;
       //Check if name unical for this author

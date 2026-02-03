@@ -305,6 +305,7 @@ void SdWCommand::createMenu(SdWMain *frame)
 
   //Instruments menu
   menuInstruments = new QMenu( QObject::tr("Instruments") );
+  menuInstruments->addAction( QIcon(QString(":/pic/library.png")), QObject::tr("Library"), frame, &SdWMain::cmLibrary );
   cmOption = menuInstruments->addAction( QIcon(QString(":/pic/instrumOptions.png")), QObject::tr("Options"), frame, SLOT(cmOption()) );
   menuInstruments->addSeparator();
   cmTools  = menuInstruments->addAction( QIcon(QString(":/pic/instrumTools.png")), QObject::tr("Tools"), frame, SLOT(cmTools()) );

@@ -952,7 +952,7 @@ bool SdGraphSymImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
     //There newer objects. Upgrade.
 
     //Prepare newer objects
-    QScopedPointer<SdPItemComponent> comp( sdObjectOnly<SdPItemComponent>( mComponent ? SdLibraryStorage::instance()->cfObjectGet( mComponent->getUid() ) : nullptr ) );
+    QScopedPointer<SdPItemComponent> comp( sdObjectOnly<SdPItemComponent>( mComponent ? SdLibraryStorage::instance()->cfObjectGet( mComponent->hashUidName() ) : nullptr ) );
     QScopedPointer<SdPItemSymbol>    sym( sdObjectOnly<SdPItemSymbol>( comp ? comp->extractSymbolFromFactory( mSectionIndex ) : nullptr ) );
     QScopedPointer<SdPItemPart>      part( sdObjectOnly<SdPItemPart>( comp ? comp->partExtractFromFactory() : nullptr ) );
 

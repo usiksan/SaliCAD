@@ -32,9 +32,9 @@ Description
 #define sdUidDelimiter QChar('\r')
 
 //Create uid from type, object name and author name
-inline QString headerUid( QString type, QString name, QString author )
+inline QString headerUid( QString type, QString name, QString authorKey )
   {
-  return type + sdUidDelimiter + name + sdUidDelimiter + author;
+  return type + sdUidDelimiter + name + sdUidDelimiter + authorKey;
   }
 
 
@@ -57,10 +57,12 @@ struct SdLibraryHeader
   {
     QString     mName;               //!< Name of stored object
     QString     mType;               //!< Type of stored object
-    QString     mAuthor;             //!< Author who create object
+    QString     mAuthorKey;          //!< Public Key of Author who create object
+    QString     mHashUidName;        //!< Hash code of name
     qint32      mTime;               //!< Object time creation
     quint64     mClass;              //!< Object class. When equals 0 then corresponded object is deleted
     bool        mPartPresent;        //!< Flag of part present in component or symbol
+    bool        mIsPublic;           //!< True for public objects
 
     SdStringMap mParamTable;         //!< User defined object params
 
@@ -68,13 +70,16 @@ struct SdLibraryHeader
     qint32      mVariantFieldCount; //!< Variable fields count in extended param table
     QStringList mVariantTable;      //!< Variant table
 
-    SdLibraryHeader() : mName(), mType(), mAuthor(), mTime(0), mClass(0), mPartPresent(false), mParamTable(), mVariantFieldCount(0),mVariantTable() {}
+    SdLibraryHeader() : mName(), mType(), mAuthorKey(), mTime(0), mClass(0), mPartPresent(false), mIsPublic(false), mParamTable(), mVariantFieldCount(0),mVariantTable() {}
 
-    void    write( QDataStream &os ) const { os << mName << mType << mAuthor << mTime << mClass << mPartPresent << mParamTable << mVariantFieldCount << mVariantTable; }
+    void    write( QDataStream &os ) const { os << mName << mType << mAuthorKey << mTime << mClass << mPartPresent << mIsPublic << mParamTable << mVariantFieldCount << mVariantTable; }
 
-    void    read( QDataStream &is ) { is >> mName >> mType >> mAuthor >> mTime >> mClass >> mPartPresent >> mParamTable >> mVariantFieldCount >> mVariantTable; }
+    void    read( QDataStream &is ) { is >> mName >> mType >> mAuthorKey >> mTime >> mClass >> mPartPresent >> mParamTable >> mIsPublic >> mVariantFieldCount >> mVariantTable; }
 
-    QString uid() const { return headerUid( mType, mName, mAuthor ); }
+    QString hashUidName() const { return mHashUidName; }
+    //QString uid() const { return headerUid( mType, mName, mAuthorKey ); }
+
+    bool    isPublic() const { return mIsPublic; }
 
     bool    isDeleted() const { return mClass == 0; }
 
@@ -89,10 +94,11 @@ struct SdLibraryHeader
       //Write base variant
       hdr.mName        = mName;
       hdr.mType        = mType;
-      hdr.mAuthor      = mAuthor;
+      hdr.mAuthorKey   = mAuthorKey;
       hdr.mTime        = mTime;
       hdr.mClass       = mClass;
       hdr.mPartPresent = mPartPresent;
+      hdr.mIsPublic    = mIsPublic;
       hdr.mParamTable  = mParamTable;
       hdr.mVariantFieldCount = 0;
       hdr.mVariantTable.clear();

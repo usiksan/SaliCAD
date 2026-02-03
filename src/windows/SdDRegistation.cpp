@@ -35,11 +35,17 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
 
   //Fill fields
   QSettings s;
+  //Check and setup default values
+  if( s.value( QStringLiteral(SDK_SERVER_REPO) ).toString().isEmpty() )
+    s.setValue( QStringLiteral(SDK_SERVER_REPO), QString(SD_DEFAULT_REPO) );
+
+  if( s.value( QStringLiteral(SDK_PRIVATE_KEY) ).toString().isEmpty() )
+    s.setValue( QStringLiteral(SDK_PRIVATE_KEY), generatePrivateKey() );
+
   ui->mServerRepo->setText( s.value( QStringLiteral(SDK_SERVER_REPO), QString(SD_DEFAULT_REPO)).toString() );
-  ui->mName->setText( s.value( QStringLiteral(SDK_GLOBAL_AUTHOR), QString()).toString() );
+  //ui->mName->setText( s.value( QStringLiteral(SDK_GLOBAL_AUTHOR), QString()).toString() );
   onEditAuthorName( ui->mName->text() );
-  ui->mPassword->setText( s.value( QStringLiteral(SDK_GLOBAL_PASSWORD), QString()).toString() );
-  ui->mAutomaticUpload->setChecked( s.value( QStringLiteral(SDK_UPLOAD_AUTO) ).toBool() );
+  ui->mPassword->setText( s.value( QStringLiteral(SDK_PRIVATE_KEY), QString()).toString() );
 
   connect( ui->mRegistration, &QPushButton::clicked, this, &SdDRegistation::cmRegistration );
   connect( ui->mGeneratePassword, &QPushButton::clicked, this, &SdDRegistation::cmGeneratePassword );
@@ -56,24 +62,17 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
     ui->mRegistrationStatus->setText(msg);
     if( !email.isEmpty() )
       ui->mEmail->setText( email );
-    if( success > 0 ) {
-      ui->mAutomaticUpload->setChecked( false );
-      ui->mAutomaticUpload->setEnabled( false );
-      }
-    if( success == 0 ) {
-      ui->mAutomaticUpload->setEnabled( true );
-      }
     });
 
-  if( s.contains(SDK_GLOBAL_AUTHOR) && s.contains(SDK_GLOBAL_PASSWORD) && s.contains(SDK_SERVER_REPO) ) {
-    ui->mEmail->setText( QStringLiteral("email") );
-    QTimer::singleShot( 300, this, &SdDRegistation::cmRegistration );
-    }
-  else {
-    ui->mRegistrationStatus->setText( tr("Not registered!") );
-    ui->mAutomaticUpload->setChecked( false );
-    ui->mAutomaticUpload->setEnabled( false );
-    }
+  // if( s.contains(SDK_GLOBAL_AUTHOR) && s.contains(SDK_GLOBAL_PASSWORD) && s.contains(SDK_SERVER_REPO) ) {
+  //   ui->mEmail->setText( QStringLiteral("email") );
+  //   QTimer::singleShot( 300, this, &SdDRegistation::cmRegistration );
+  //   }
+  // else {
+  //   ui->mRegistrationStatus->setText( tr("Not registered!") );
+  //   ui->mAutomaticUpload->setChecked( false );
+  //   ui->mAutomaticUpload->setEnabled( false );
+  //   }
   }
 
 
@@ -102,13 +101,13 @@ void SdDRegistation::cmRegistration()
     }
   if( ui->mPassword->text().isEmpty() )
     //Check access to existing user
-    QMessageBox::warning( this, tr("Warning!"), tr("Enter password for your name") );
+    QMessageBox::warning( this, tr("Warning!"), tr("Enter private key for your account") );
   else {
     //Store registration data
     QSettings s;
     s.setValue( QStringLiteral(SDK_SERVER_REPO), ui->mServerRepo->text() );
-    s.setValue( QStringLiteral(SDK_GLOBAL_AUTHOR), ui->mName->text() );
-    s.setValue( QStringLiteral(SDK_GLOBAL_PASSWORD), ui->mPassword->text() );
+    //s.setValue( QStringLiteral(SDK_GLOBAL_AUTHOR), ui->mName->text() );
+    s.setValue( QStringLiteral(SDK_PRIVATE_KEY), ui->mPassword->text() );
 
     //Registration new user
     emit doRegistration( ui->mServerRepo->text(), ui->mName->text().toLower(), ui->mPassword->text(), ui->mEmail->text() );
@@ -171,19 +170,34 @@ void SdDRegistation::onEditAuthorName(const QString nm)
 //Close dialog
 void SdDRegistation::cmClose()
   {
-  QSettings s;
-  if( !SdObjectNetClient::instance()->isRegistered() ) {
-    QMessageBox::warning( this, tr("Warning!"), tr("You not registered. You will not be able to save your components in a global repository and share them with society, but you will be able to use components created by others. This dialog allowed in later with Help menu."));
-    if( s.value( QStringLiteral(SDK_GLOBAL_AUTHOR), QString()).toString().isEmpty() )
-      //Create default author name
-      s.setValue( QStringLiteral(SDK_GLOBAL_AUTHOR), QStringLiteral("Anonymous") );
-    }
-  else {
-    if( !mFromHelp )
-      QMessageBox::warning( this, tr("Warning!"), tr("This dialog allowed in later with Help menu."));
-    }
-  s.setValue( QStringLiteral(SDK_UPLOAD_AUTO), ui->mAutomaticUpload->isChecked() );
+  // QSettings s;
+  // if( !SdObjectNetClient::instance()->isRegistered() ) {
+  //   QMessageBox::warning( this, tr("Warning!"), tr("You not registered. You will not be able to save your components in a global repository and share them with society, but you will be able to use components created by others. This dialog allowed in later with Help menu."));
+  //   if( s.value( QStringLiteral(SDK_GLOBAL_AUTHOR), QString()).toString().isEmpty() )
+  //     //Create default author name
+  //     s.setValue( QStringLiteral(SDK_GLOBAL_AUTHOR), QStringLiteral("Anonymous") );
+  //   }
+  // else {
+  //   if( !mFromHelp )
+  //     QMessageBox::warning( this, tr("Warning!"), tr("This dialog allowed in later with Help menu."));
+  //   }
+  // s.setValue( QStringLiteral(SDK_UPLOAD_AUTO), ui->mAutomaticUpload->isChecked() );
   done(1);
+  }
+
+
+
+
+QString SdDRegistation::generatePrivateKey()
+  {
+  static QRandomGenerator64 gen;
+  static bool seed;
+  if( !seed ) {
+    gen.seed( SvTime2x::current() );
+    seed = true;
+    }
+  QString firstPart( QString::number( gen.generate() | 0x8000000000000000, 32 ) + QString::number( gen.generate() | 0x8000000000000000, 32 ) );
+  return "User-" + firstPart.mid( 1, 6 ) + "-" + firstPart.mid( 7, 6 ) + "-" + firstPart.mid( 13, 6 ) + "-" + firstPart.mid( 19, 6 );
   }
 
 

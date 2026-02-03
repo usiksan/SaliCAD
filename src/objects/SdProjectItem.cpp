@@ -61,7 +61,7 @@ void SdProjectItem::setTitle(const QString title, const QString undoTitle)
   if( undo != nullptr ) {
     if( !undoTitle.isEmpty() )
       undo->begin( undoTitle, this, false );
-    undo->projectItemInfo( this, &mTitle, &mAuthor, &mCreateTime, &mEditEnable );
+    undo->projectItemInfo( this, &mTitle, &mAuthorKey, &mCreateTime, &mEditEnable );
     }
 
   titleSet( title );
@@ -119,11 +119,11 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
   if( mEditEnable ) {
     if( !edit ) {
       //Disable edit.
-      undo->projectItemInfo( this, &mTitle, &mAuthor, &mCreateTime, &mEditEnable );
+      undo->projectItemInfo( this, &mTitle, &mAuthorKey, &mCreateTime, &mEditEnable );
 
       mEditEnable = edit;
       //Update object version and author creation
-      updateAuthor();
+      updateAuthorAndHash();
       updateCreationTime();
       //Write object to local library
       SdLibraryStorage::instance()->cfObjectInsert( this );
@@ -142,7 +142,7 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
         //Object is used. Create new one
         SdCopyMapProject copyMap( getProject() );
         SdProjectItem *item = dynamic_cast<SdProjectItem*>( copy( copyMap, false ) );
-        item->updateAuthor();
+        item->updateAuthorAndHash();
         item->updateCreationTime();
         item->mEditEnable = true;
         //Insert item to project

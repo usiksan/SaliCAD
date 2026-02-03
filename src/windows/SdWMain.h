@@ -263,6 +263,7 @@ class SdWMain : public QMainWindow
     void cmRulesErrorNext();
 
     void cmOption();
+    void cmLibrary();
     void cmTools();
 
     void cmHelpIntro();

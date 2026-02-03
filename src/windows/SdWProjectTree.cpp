@@ -135,7 +135,7 @@ bool SdWProjectTree::cmFileSave()
     return cmFileSaveAs();
   //Check if project is library project
   if( !mProject->isEditEnable() && mProject->isDirty() ) {
-    if( mProject->getAuthor() != mProject->getDefaultAuthor() ) {
+    if( mProject->getAuthorKey() != mProject->getDefaultAuthor() ) {
       if( QMessageBox::question( this, tr("Warning!"), tr("This project is library project and created another author. You can not edit it. Change author to You to enable editing?") ) != QMessageBox::Yes )
         return false;
       }
@@ -270,7 +270,7 @@ void SdWProjectTree::cmObjectCopy()
     QJsonObject obj = mProject->jsonObjectTo();
 
     //Store object id to json
-    obj.insert( QStringLiteral("ProjectItem UID"), item->getUid() );
+    obj.insert( QStringLiteral("ProjectItem hashUidName"), item->hashUidName() );
 
     //Convert to byteArray
     QByteArray array = QJsonDocument( obj ).toJson(QJsonDocument::Compact);
@@ -303,19 +303,19 @@ void SdWProjectTree::cmObjectPaste()
     SdProject *project = sdObjectOnly<SdProject>( SdObject::jsonObjectFrom(obj) );
 
     //selection reading
-    QString uid = obj.value( QStringLiteral("ProjectItem UID") ).toString();
+    QString uid = obj.value( QStringLiteral("ProjectItem hashUidName") ).toString();
 
     if( project != nullptr && !uid.isEmpty() ) {
 
       mProject->getUndo()->begin( tr("Paste from clipboard"), nullptr, false );
-      if( mProject->itemByUid(uid) )
+      if( mProject->itemByHashUidName(uid) )
         //Same object already present in project duplicate it
         duplicate( uid );
 
       else {
         //Simple insert object
         SdCopyMapProject copyMap(mProject);
-        mProject->insertChild( project->itemByUid(uid)->copy( copyMap, false ), mProject->getUndo() );
+        mProject->insertChild( project->itemByHashUidName(uid)->copy( copyMap, false ), mProject->getUndo() );
         }
 
 
@@ -362,7 +362,7 @@ void SdWProjectTree::cmObjectDuplicate()
   SdPtr<SdProjectItem> item( mProject->item( mCurrentItem ) );
   if( item.isValid() && (item->getClass() & (dctComponent | dctPart | dctSymbol) ) ) {
     mProject->getUndo()->begin( tr("Duplicate object"), nullptr, false );
-    duplicate( item->getUid() );
+    duplicate( item->hashUidName() );
     //Update status undo and redo commands
     cmUndoRedoUpdate();
     }
@@ -733,7 +733,7 @@ QTreeWidgetItem *SdWProjectTree::classList(quint64 classId)
 //Duplicate object with id
 void SdWProjectTree::duplicate(const QString &uid)
   {
-  SdPtr<SdProjectItem> item( mProject->itemByUid( uid ) );
+  SdPtr<SdProjectItem> item( mProject->itemByHashUidName( uid ) );
   if( item.isValid() && (item->getClass() & (dctComponent | dctPart | dctSymbol) ) ) {
     //Create copy of object
     SdCopyMapProject copyMap(mProject);

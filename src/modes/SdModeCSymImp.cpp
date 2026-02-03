@@ -302,10 +302,8 @@ bool SdModeCSymImp::checkSchematicFragment()
     SdLibraryStorage::instance()->forEachHeader( [&presense, componentValueParam] ( SdLibraryHeader &hdr ) -> bool {
       //test class
       if( hdr.mClass & dctProject ) {
-        //Split uid to name type and author
-        QString uid( hdr.uid() );
-        QString name = uid.contains(sdUidDelimiter) ? uid.split( sdUidDelimiter ).at(1) : uid;
-        if( name.trimmed().toLower().startsWith( componentValueParam ) )
+        QString name( hdr.mName );
+        if( name.trimmed().toLower().contains( componentValueParam ) )
           return presense = true;
         }
       return false;

@@ -1279,7 +1279,7 @@ bool SdGraphPartImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
       return false;
 
     //Prepare newer objects
-    QScopedPointer<SdPItemVariant> comp( sdObjectOnly<SdPItemVariant>( mComponent ? SdLibraryStorage::instance()->cfObjectGet( mComponent->getUid() ) : nullptr ) );
+    QScopedPointer<SdPItemVariant> comp( sdObjectOnly<SdPItemVariant>( mComponent ? SdLibraryStorage::instance()->cfObjectGet( mComponent->hashUidName() ) : nullptr ) );
     QScopedPointer<SdPItemPart>      part( sdObjectOnly<SdPItemPart>( comp ? comp->partExtractFromFactory() : nullptr ) );
 
     //Test if all newer objects prepared
