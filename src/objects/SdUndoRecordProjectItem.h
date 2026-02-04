@@ -15,6 +15,7 @@ Description
 #define SDUNDORECORDPROJECTITEM_H
 
 #include "SdUndoRecord.h"
+#include "SdFileUid.h"
 
 class SdProjectItem;
 
@@ -25,12 +26,12 @@ class SdUndoRecordProjectItem : public SdUndoRecord
     QString       *mTitleSrc;
     QString        mAuthor;
     QString       *mAuthorSrc;
-    int            mTimeCreation;
-    int           *mTimeCreationSrc;
+    SdFileUid      mFileUid;
+    SdFileUid     *mFileUidSrc;
     bool           mEditEnable;
     bool          *mEditEnableSrc;
   public:
-    SdUndoRecordProjectItem( SdProjectItem *item, QString *title, QString *author, int *timeCreation, bool *editEnable );
+    SdUndoRecordProjectItem( SdProjectItem *item, QString *title, QString *author, SdFileUid *fileUid, bool *editEnable );
 
     //Undo elementary operation.
     virtual void    undo() override;

@@ -40,7 +40,7 @@ void SdUndoRecordPropLineRect2Int::undo()
     mProp->swapState( &mPropState );
   if( mRectSrc )
     mRectSrc->swap( mRect );
-  SdUtil::swapInt( mVal1, mValSrc1 );
-  SdUtil::swapInt( mVal2, mValSrc2 );
+  SdUtil::swap( mVal1, mValSrc1 );
+  SdUtil::swap( mVal2, mValSrc2 );
   }
 

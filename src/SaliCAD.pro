@@ -90,6 +90,8 @@ SOURCES += \
     import/vrml/VrmlNodeTransform.cpp \
     import/vrml/VrmlRotation.cpp \
     import/vrml/VrmlVector.cpp \
+    library/SdLibraryHeader.cpp \
+    library/SdLibraryIndicator.cpp \
     library/SdTcpCborClient.cpp \
     master/SdDMasterPartModule.cpp \
     master/SdDMasterPartSingleLine.cpp \
@@ -493,6 +495,7 @@ HEADERS  += \
     import/vrml/VrmlRotation.h \
     import/vrml/VrmlTypes.h \
     import/vrml/VrmlVector.h \
+    library/SdLibraryIndicator.h \
     library/SdStringMap.h \
     library/SdTcpCborClient.h \
     master/SdDMasterPartModule.h \
@@ -514,6 +517,7 @@ HEADERS  += \
     objects/SdCopyMap.h \
     objects/SdCopyMapProject.h \
     objects/SdDoubleVector.h \
+    objects/SdFileUid.h \
     objects/SdGraphParam.h \
     objects/SdGraphScript.h \
     objects/SdGraphScriptRef.h \

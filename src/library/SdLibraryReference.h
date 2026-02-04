@@ -19,7 +19,7 @@ Description
 #ifndef SDLIBRARYREFERENCE_H
 #define SDLIBRARYREFERENCE_H
 
-#include "objects/SdContainerFile.h"
+#include "objects/SdFileUid.h"
 
 #include <QDataStream>
 
@@ -27,6 +27,14 @@ Description
 #define SDLR_PUBLIC         0x2 //!< Object is public and must be uploaded to remote global server
 #define SDLR_REMOVE_GLOBAL  0x4 //!< Object need to be removed from global server
 #define SDLR_REMOVE_PRIVATE 0x8 //!< Object need to be removed from private sync cloud
+
+struct SdLibraryFileUid : public SdFileUid
+  {
+    qint32 mInsertionTime;  //!< Time of object insertion into library
+    qint8  mFlags;          //!< Flags
+
+  };
+
 
 struct SdLibraryReference
   {
@@ -67,7 +75,15 @@ struct SdLibraryReference
 
     bool isRemovePrivate() const { return mFlags & SDLR_REMOVE_PRIVATE; }
 
-    QString fileName( const QString &hashUidName ) const { return SdContainerFile::hashUidFile( hashUidName, mCreationTime ); }
+    bool isRemoveAny() const { return mFlags & (SDLR_REMOVE_GLOBAL | SDLR_REMOVE_PRIVATE); }
+
+    QString fileName( const QString &hashUidName ) const { return SdFileUid::fileUid( hashUidName, mCreationTime ); }
+
+    void    markAsRemoved()
+      {
+      mFlags |= isPublic() ? SDLR_REMOVE_GLOBAL : SDLR_REMOVE_PRIVATE;
+      mHeaderPtr = 0;
+      }
   };
 
 //Write function

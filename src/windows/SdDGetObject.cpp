@@ -488,8 +488,8 @@ void SdDGetObject::fillTable()
   for( SdLibraryHeader &hdr : mHeaderList ) {
     mTable->setRowHeight( row, 20 );
     mTable->setItem( row, 0, new QTableWidgetItem(hdr.mName) );
-    mTable->setItem( row, 1, new QTableWidgetItem(hdr.mAuthorKey) );
-    mTable->setItem( row, 2, new QTableWidgetItem(SvTime2x::toLocalString(hdr.mTime)) );
+    mTable->setItem( row, 1, new QTableWidgetItem(hdr.authorGlobalName()) );
+    mTable->setItem( row, 2, new QTableWidgetItem(SvTime2x::toLocalString(hdr.mFileUid.mCreateTime)) );
     //Fill fields
     for( int i = 3; i < mTable->columnCount(); i++ ) {
       QString name = mTable->horizontalHeaderItem(i)->text();

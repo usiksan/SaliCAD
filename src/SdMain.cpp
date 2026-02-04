@@ -13,11 +13,9 @@ Description
 */
 
 #include "windows/SdWMain.h"
-#include "windows/SdDRegistation.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdProp.h"
-#include "objects/SdObjectNetClient.h"
 #include "library/SdLibraryStorage.h"
 //#include "objects/Sd3dModel.h"
 #include "import/iges/IgesReader.h"
@@ -28,7 +26,6 @@ Description
 #include <QDebug>
 #include <QFile>
 
-#include "import/kicad/SdScanerKiCad.h"
 
 
 
@@ -52,9 +49,9 @@ int main(int argc, char *argv[])
 
 
   //Setups for settings
-  QCoreApplication::setOrganizationName("SaliLAB");
-  QCoreApplication::setOrganizationDomain("http://salilab.com/");
-  QCoreApplication::setApplicationName("SaliCAD");
+  QCoreApplication::setOrganizationName("SalixEDA");
+  QCoreApplication::setOrganizationDomain("http://salixeda.org/");
+  QCoreApplication::setApplicationName("SalixEDA");
 
   //Creating application
   QApplication a(argc, argv);

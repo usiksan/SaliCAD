@@ -12,7 +12,6 @@ Description
   Remote library interchange status
 */
 #include "SdWRemoteStatus.h"
-#include "objects/SdObjectNetClient.h"
 #include "library/SdLibraryStorage.h"
 
 SdWRemoteStatus *SdWRemoteStatus::mWRemoteStatus;
@@ -28,13 +27,13 @@ SdWRemoteStatus::SdWRemoteStatus(QWidget *parent) :
   setWindowTitle( tr("Remote link messages") );
 
   //Add existings info items
-  addItems( SdObjectNetClient::instance()->infoList() );
+//  addItems( SdObjectNetClient::instance()->infoList() );
 
   //Track to end of list
   setCurrentRow( count() - 1 );
 
   //When appended new info item
-  connect( SdObjectNetClient::instance(), &SdObjectNetClient::informationAppended, this, &SdWRemoteStatus::addInfo );
+ // connect( SdObjectNetClient::instance(), &SdObjectNetClient::informationAppended, this, &SdWRemoteStatus::addInfo );
   connect( SdLibraryStorage::instance(), &SdLibraryStorage::informationAppended, this, &SdWRemoteStatus::addInfo );
 
   connect( &mHideTimer, &QTimer::timeout, this, &SdWRemoteStatus::close );

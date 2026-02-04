@@ -17,7 +17,6 @@ Description
 #ifndef SDDREGISTATION_H
 #define SDDREGISTATION_H
 
-#include "objects/SdObjectNetClient.h"
 
 #include <QDialog>
 
@@ -28,8 +27,6 @@ class SdDRegistation;
 class SdDRegistation : public QDialog
   {
     Q_OBJECT
-
-    SdNetClientLocker mLocker;
     bool              mFromHelp;
     int               mNameStatus; //0-empty, 1-sali, 2-other
   public:

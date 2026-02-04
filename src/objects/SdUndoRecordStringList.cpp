@@ -27,6 +27,6 @@ SdUndoRecordStringList::SdUndoRecordStringList( qint32 *val, QStringList *list )
 
 void SdUndoRecordStringList::undo()
   {
-  SdUtil::swapInt( mVal, mValSrc );
+  SdUtil::swap( mVal, mValSrc );
   mListSrc->swap( mList );
   }

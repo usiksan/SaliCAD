@@ -11,7 +11,7 @@
 
 SdContainerFile::SdContainerFile() :
   SdContainer(),
-  mCreateTime(0),
+  mFileUid(),
   mEditEnable(true),
   mIsPublic(false),
   mThereNewer(false)
@@ -55,8 +55,7 @@ void SdContainerFile::getHeader(SdLibraryHeader &hdr) const
   hdr.mName        = mTitle;
   hdr.mType        = getType();
   hdr.mAuthorKey   = mAuthorKey;
-  hdr.mHashUidName = mHashUidName;
-  hdr.mTime        = getTime();
+  hdr.mFileUid     = mFileUid;
   hdr.mClass       = getClass();
   hdr.mParamTable  = mParamTable;
   hdr.mIsPublic    = mIsPublic;
@@ -103,8 +102,8 @@ void SdContainerFile::json(SdJsonWriter &js) const
   {
   js.jsonString( QStringLiteral("Title"),       mTitle );
   js.jsonString( QStringLiteral("AuthorKey"),   mAuthorKey );
-  js.jsonString( QStringLiteral("HashUidName"), mHashUidName );
-  js.jsonInt(  QStringLiteral("Created"),       mCreateTime );
+  js.jsonString( QStringLiteral("HashUidName"), mFileUid.mHashUidName );
+  js.jsonInt(  QStringLiteral("Created"),       mFileUid.mCreateTime );
   js.jsonBool( QStringLiteral("Edit enable"),   mEditEnable );
   js.jsonBool( QStringLiteral("Is public"),     mIsPublic );
   SdContainer::json( js );
@@ -121,7 +120,7 @@ void SdContainerFile::json(SdJsonWriter &js) const
 void SdContainerFile::json(const SdJsonReader &js)
   {
   js.jsonString( QStringLiteral("Title"),       mTitle );
-  js.jsonInt(  QStringLiteral("Created"),       mCreateTime );
+  js.jsonInt(  QStringLiteral("Created"),       mFileUid.mCreateTime );
   js.jsonBool( QStringLiteral("Edit enable"),   mEditEnable, true );
   if( js.property()->mVersion == SD_BASE_VERSION_2 ) {
     //Convert previous author into current and build hash
@@ -130,7 +129,7 @@ void SdContainerFile::json(const SdJsonReader &js)
     }
   else {
     js.jsonString( QStringLiteral("AuthorKey"),   mAuthorKey );
-    js.jsonString( QStringLiteral("HashUidName"), mHashUidName );
+    js.jsonString( QStringLiteral("HashUidName"), mFileUid.mHashUidName );
     js.jsonBool( QStringLiteral("Is public"),     mIsPublic );
     }
   SdContainer::json( js );
@@ -153,8 +152,7 @@ void SdContainerFile::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool ne
   if( sour.isValid() ) {
     mTitle       = sour->mTitle;
     mAuthorKey   = sour->mAuthorKey;
-    mHashUidName = sour->mHashUidName;
-    mCreateTime  = sour->mCreateTime;
+    mFileUid     = sour->mFileUid;
     mEditEnable  = sour->mEditEnable;
     mIsPublic    = sour->mIsPublic;
     }
@@ -228,35 +226,6 @@ QString SdContainerFile::hashUidName(const QString &objectType, const QString &o
 
 
 
-//!
-//! \brief hashUidFile Builds hash uid code for file name of object on base unical hash code of name and version
-//! \param hashUidName Unical hash code of object name
-//! \param timeVersion Object version (object time creation)
-//! \return            Full file name for object
-//!
-QString SdContainerFile::hashUidFile(const QString &hashUidName, int timeVersion)
-  {
-  return hashUidName + QString( "-%1" SD_BINARY_EXTENSION ).arg( timeVersion, 8, 16, QChar('0') );
-  }
-
-
-
-
-
-
-//!
-//! \brief hashUidPath Build file path from hash uid code name and time
-//! \param hashUidName Unical hash code of object name
-//! \param timeVersion Object version (object time creation)
-//! \return            Path to file of object with directory structure
-//!
-QString SdContainerFile::hashUidPath(const QString &hashUidName, int timeVersion)
-  {
-  return QString( "%1/%2-%3" SD_BINARY_EXTENSION ).arg( hashUidName.mid(0,2), hashUidName ).arg( timeVersion, 8, 16, QChar('0') );
-  }
-
-
-
 
 
 //!
@@ -266,7 +235,7 @@ QString SdContainerFile::hashUidPath(const QString &hashUidName, int timeVersion
 //!
 QString SdContainerFile::authorGlobalName(const QString &publicAuthorKey)
   {
-
+  return SdLibraryStorage::instance()->authorGlobalName(publicAuthorKey);
   }
 
 
@@ -278,10 +247,10 @@ QString SdContainerFile::authorGlobalName(const QString &publicAuthorKey)
 void SdContainerFile::updateCreationTime()
   {
   int time = SvTime2x::current();
-  if( time <= mCreateTime )
-    mCreateTime++;
+  if( time <= mFileUid.mCreateTime )
+    mFileUid.mCreateTime++;
   else
-    mCreateTime = time;
+    mFileUid.mCreateTime = time;
   }
 
 
@@ -295,7 +264,7 @@ void SdContainerFile::updateAuthorAndHash()
   //Set author as current
   mAuthorKey = getDefaultAuthor();
   //calculate new hash
-  mHashUidName = hashUidName( getType(), mTitle, mAuthorKey );
+  mFileUid.mHashUidName = hashUidName( getType(), mTitle, mAuthorKey );
   }
 
 

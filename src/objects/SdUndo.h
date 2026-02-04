@@ -56,6 +56,7 @@ struct SdPartImpPin;
 typedef QMap<QString,SdPartImpPin> SdPartImpPinTable;
 struct SdPropPolygon;
 class Sd3drModel;
+class SdFileUid;
 
 class SdUndo
   {
@@ -98,7 +99,7 @@ class SdUndo
     //!
     void begin( QString title, SdProjectItem *item, bool is3d );
 
-    void projectItemInfo(SdProjectItem *item, QString *title, QString *author, int *timeCreation, bool *editEnable );
+    void projectItemInfo(SdProjectItem *item, QString *title, QString *author, SdFileUid *fileUid, bool *editEnable );
 
     //!
     //! \brief string2 Append two string state every of them can be nullptr if none

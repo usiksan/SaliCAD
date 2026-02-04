@@ -41,7 +41,7 @@ void SdPartVariant::setPartId(const QString id, SdUndo *undo)
     if( undo != nullptr )
       undo->string2( &mPartId, &mPartTitle );
     mPartId = id;
-    mPartTitle = QString( "%1 (%2)" ).arg( hdr.mName, hdr.mAuthorKey );
+    mPartTitle = QString( "%1 (%2)" ).arg( hdr.mName, hdr.authorGlobalName() );
     }
   }
 

@@ -39,9 +39,9 @@ Description
 #include "SdDGetObject.h"
 #include "objects/SdPulsar.h"
 #include "objects/SdEnvir.h"
-#include "objects/SdObjectNetClient.h"
 #include "guider/SdGuiderCapture.h"
 #include "library/SdLibraryStorage.h"
+#include "library/SdLibraryIndicator.h"
 #include "import/kicad/SdScanerKiCad.h"
 
 
@@ -139,35 +139,44 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   mCapture->setToolTip( tr("Show status of guide capture video system: stopped") );
   connect( mCapture, &QToolButton::toggled, this, &SdWMain::cmGuiderCapture );
   sbar->addWidget( mCapture );
+  QToolButton *but = new QToolButton();
+  but->setDefaultAction( SdLibraryIndicator::instance()->localLibrary() );
+  sbar->addWidget( but );
+  but = new QToolButton();
+  but->setDefaultAction( SdLibraryIndicator::instance()->globalStorage() );
+  sbar->addWidget( but );
+  but = new QToolButton();
+  but->setDefaultAction(  SdLibraryIndicator::instance()->privateCloud() );
+  sbar->addWidget( but );
 
-  mRemote = new QToolButton();
-  if( SdObjectNetClient::instance()->isRegistered() ) {
-    mRemote->setIcon( QIcon(QString(":/pic/iconRemoteOn.png")) );
-    mRemote->setToolTip( tr("Remote repository status: registered and link ok") );
-    }
-  else {
-    mRemote->setIcon( QIcon(QString(":/pic/iconRemoteOff.png")) );
-    mRemote->setToolTip( tr("Remote repository status: unregistered or can't connect to repository. Check Help->Registration.") );
-    }
+  // mRemote = new QToolButton();
+  // if( SdObjectNetClient::instance()->isRegistered() ) {
+  //   mRemote->setIcon( QIcon(QString(":/pic/iconRemoteOn.png")) );
+  //   mRemote->setToolTip( tr("Remote repository status: registered and link ok") );
+  //   }
+  // else {
+  //   mRemote->setIcon( QIcon(QString(":/pic/iconRemoteOff.png")) );
+  //   mRemote->setToolTip( tr("Remote repository status: unregistered or can't connect to repository. Check Help->Registration.") );
+  //   }
 
-  connect( SdObjectNetClient::instance(), &SdObjectNetClient::remoteStatus, this, [this] ( SdRemoteStatus st ) {
-    if( st == SdRemoteOn ) {
-      mRemote->setIcon( QIcon(QString(":/pic/iconRemoteOn.png")) );
-      mRemote->setToolTip( tr("Remote repository status: registered and link ok") );
-      }
-    else if( st == SdRemoteOff ) {
-      mRemote->setIcon( QIcon(QString(":/pic/iconRemoteOff.png")) );
-      mRemote->setToolTip( tr("Remote repository status: unregistered or can't connect to repository. Check Help->Registration.") );
-      }
-    else {
-      mRemote->setIcon( QIcon(QString(":/pic/iconRemoteSync.png")) );
-      mRemote->setToolTip( tr("Remote repository status: sync being processed") );
-      }
-    } );
-  connect( mRemote, &QToolButton::clicked, this, [this] () { cmRemoteStatus(QString{}); } );
-  sbar->addWidget( mRemote );
+  // connect( SdObjectNetClient::instance(), &SdObjectNetClient::remoteStatus, this, [this] ( SdRemoteStatus st ) {
+  //   if( st == SdRemoteOn ) {
+  //     mRemote->setIcon( QIcon(QString(":/pic/iconRemoteOn.png")) );
+  //     mRemote->setToolTip( tr("Remote repository status: registered and link ok") );
+  //     }
+  //   else if( st == SdRemoteOff ) {
+  //     mRemote->setIcon( QIcon(QString(":/pic/iconRemoteOff.png")) );
+  //     mRemote->setToolTip( tr("Remote repository status: unregistered or can't connect to repository. Check Help->Registration.") );
+  //     }
+  //   else {
+  //     mRemote->setIcon( QIcon(QString(":/pic/iconRemoteSync.png")) );
+  //     mRemote->setToolTip( tr("Remote repository status: sync being processed") );
+  //     }
+  //   } );
+  // connect( mRemote, &QToolButton::clicked, this, [this] () { cmRemoteStatus(QString{}); } );
+  // sbar->addWidget( mRemote );
   //Show status when sync operation happens
-  connect( SdObjectNetClient::instance(), &SdObjectNetClient::informationAppended, this, &SdWMain::cmRemoteStatus );
+//  connect( SdObjectNetClient::instance(), &SdObjectNetClient::informationAppended, this, &SdWMain::cmRemoteStatus );
   //Show status when library scan operation happens
   connect( SdLibraryStorage::instance(), &SdLibraryStorage::informationAppended, this, &SdWMain::cmRemoteStatus );
 
@@ -201,13 +210,13 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   //Show help intro
   cmHelpIntro();
 
-  connect( SdObjectNetClient::instance(), &SdObjectNetClient::fileContents, this, &SdWMain::onFileReceived );
+//  connect( SdObjectNetClient::instance(), &SdObjectNetClient::fileContents, this, &SdWMain::onFileReceived );
 
   //When start application we check for updating
-  QTimer::singleShot( 300, this, [] () {
-    //We send request to receiv version info file
-    SdObjectNetClient::instance()->doFile( QStringLiteral("version") );
-    });
+  // QTimer::singleShot( 300, this, [] () {
+  //   //We send request to receiv version info file
+  //   SdObjectNetClient::instance()->doFile( QStringLiteral("version") );
+  //   });
   }
 
 

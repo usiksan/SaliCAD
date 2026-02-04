@@ -14,15 +14,15 @@ Description
 #include "SdUtil.h"
 #include "SdPulsar.h"
 
-SdUndoRecordProjectItem::SdUndoRecordProjectItem(SdProjectItem *item, QString *title, QString *author, int *timeCreation, bool *editEnable) :
+SdUndoRecordProjectItem::SdUndoRecordProjectItem(SdProjectItem *item, QString *title, QString *author, SdFileUid *fileUid, bool *editEnable) :
   SdUndoRecord(),
   mItem(item),
   mTitle(*title),
   mTitleSrc(title),
   mAuthor(*author),
   mAuthorSrc(author),
-  mTimeCreation(*timeCreation),
-  mTimeCreationSrc(timeCreation),
+  mFileUid(*fileUid),
+  mFileUidSrc(fileUid),
   mEditEnable(*editEnable),
   mEditEnableSrc(editEnable)
   {
@@ -40,7 +40,7 @@ void SdUndoRecordProjectItem::undo()
   //Undo
   mTitleSrc->swap( mTitle );
   mAuthorSrc->swap( mAuthor );
-  SdUtil::swapInt( mTimeCreation, mTimeCreationSrc );
-  SdUtil::swapBool( mEditEnable, mEditEnableSrc );
+  mFileUidSrc->swap( mFileUid );
+  SdUtil::swap( mEditEnable, mEditEnableSrc );
   }
 

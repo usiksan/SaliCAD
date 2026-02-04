@@ -2,19 +2,22 @@
 #define SDCONTAINERFILE_H
 
 #include "SdContainer.h"
+#include "SdFileUid.h"
 #include "library/SdLibraryHeader.h"
+
+
+
 
 class SdContainerFile : public SdContainer
   {
   protected:
-    QString                mTitle;       //!< Item title
-    QString                mAuthorKey;   //!< Public item author Key (uid)
-    QString                mHashUidName; //!< Hash for unical name of object as combination object type, object title and objects author public key
-    int                    mCreateTime;  //!< Create time with sec from 2000year
-    bool                   mEditEnable;  //!< True if edit enable for this object
-    bool                   mIsPublic;    //!< True if object is public
+    QString   mTitle;       //!< Item title
+    QString   mAuthorKey;   //!< Public item author Key (uid)
+    SdFileUid mFileUid;     //!< Unical file id as combination of hash of unical object name and object version
+    bool      mEditEnable;  //!< True if edit enable for this object
+    bool      mIsPublic;    //!< True if object is public
   public:
-    bool                   mThereNewer;  //!< In library present newer object
+    bool      mThereNewer;  //!< In library present newer object
   public:
     SdContainerFile();
 
@@ -23,13 +26,13 @@ class SdContainerFile : public SdContainer
     //! \brief hashUidName Builds hash for unical name of object as combination object type, object title and objects author public key
     //! \return            Hash for unical name
     //!
-    QString                hashUidName() const { return mHashUidName; }
+    QString                hashUidName() const { return mFileUid.mHashUidName; }
 
     //!
-    //! \brief hashUidFile Builds hash for file name (without extension) of object as combination hashUidName and object version
-    //! \return            Hash as unical file name
+    //! \brief fileUid Builds hash for file name (without extension) of object as combination hashUidName and object version
+    //! \return        File name as combination of hash of unical object name and object version (time of creation)
     //!
-    QString                hashUidFile() const { return hashUidFile( hashUidName(), mCreateTime ); }
+    QString                fileUid() const { return mFileUid.fileUid(); }
 
     //!
     //! \brief getUidName Builds world unical name of object  as combination object type, object title and objects author public key
@@ -41,13 +44,15 @@ class SdContainerFile : public SdContainer
     QString                getExtendTitle() const;
     QString                getAuthorKey() const { return mAuthorKey; }
     QString                authorGlobalName() const { return authorGlobalName(mAuthorKey); }
-    int                    getTime() const { return mCreateTime; }
+    int                    getTime() const { return mFileUid.mCreateTime; }
     QString                getTitle() const { return mTitle; }
     virtual void           getHeader( SdLibraryHeader &hdr ) const;
     //Get editEnable flag
     bool                   isEditEnable() const { return mEditEnable; }
     //Check if another author
     bool                   isAnotherAuthor() const;
+
+    bool                   isPublic() const { return mIsPublic; }
 
     //!
     //! \brief titleSet Sets new title for object
@@ -91,13 +96,6 @@ class SdContainerFile : public SdContainer
     //!
     static QString         hashUidName( const QString &objectType, const QString &objectTitle, const QString &authorKey );
 
-    //!
-    //! \brief hashUidFile Builds hash uid code for file name of object on base unical hash code of name and version
-    //! \param hashUidName Unical hash code of object name
-    //! \param timeVersion Object version (object time creation)
-    //! \return            Full file name for object
-    //!
-    static QString         hashUidFile( const QString &hashUidName, int timeVersion );
 
     //!
     //! \brief hashUidPath Build file path from hash uid code name and time

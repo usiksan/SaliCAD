@@ -256,6 +256,7 @@ History
 
 //Binary project naming definition
 #define SD_BINARY_EXTENSION          ".salixeda"
+#define SD_BINARY_EXTENSION_LENGTH   9
 
 //Layer list naming definition
 #define SD_LAYER_LIST_EXTENSION      ".layersSet"
@@ -327,6 +328,9 @@ History
 //#define SDK_AUTHOR_KEY               "AuthorKey"
 //#define SDK_PUBLIC_NAME              "AuthorName"
 #define SDK_PRIVATE_LAST_SYNC        "Private last sync"
+#define SDK_PRIVATE_LAST_LIST        "Private last list"
+#define SDK_GLOBAL_LAST_SYNC         "Global last sync"
+#define SDK_GLOBAL_LAST_LIST         "Global last list"
 #define SDK_REMOTE_SYNC              "Remote sync"              //!< Remote index of last downloaded object
 #define SDK_REMOTE_REMAIN            "Remote remain"
 #define SDK_SERVER_REPO              "SaliCAD repository"

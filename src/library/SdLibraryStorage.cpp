@@ -30,11 +30,11 @@ Description
 #include <QSaveFile>
 #include <QFileInfo>
 #include <QSettings>
-#include <QStandardPaths>
 #include <QDebug>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QCborMap>
 #include <QCborArray>
+#include <QCoreApplication>
 
 
 #define FNAME_REF    cachePath() + QStringLiteral("reference.dat")
@@ -142,17 +142,7 @@ void SdLibraryStorage::libraryComplete()
 //!
 void SdLibraryStorage::cfObjectInsert(const SdContainerFile *item)
   {
-  //If inserted object is older than present in library then nothing done
-  if( mLibraryPath.isEmpty() || item == nullptr || item->isEditEnable() || cfIsOlderOrSame( item ) )
-    return;
-
-  //Insert reference and header
-  insertReferenceAndHeader( item );
-
-  //Insert in library
-  QString filePath = fullPath( item );
-
-  item->fileJsonSave( filePath );
+  objectInsertPrivate( item, false );
   }
 
 
@@ -161,13 +151,14 @@ void SdLibraryStorage::cfObjectInsert(const SdContainerFile *item)
 void SdLibraryStorage::cfObjectDelete(const SdContainerFile *item)
   {
   if( item != nullptr && item->getAuthorKey() == item->getDefaultAuthor() ) {
+    QWriteLocker locker( &mLock );
     QString uid = item->hashUidName();
-    if( mReferenceMap.contains(uid) && !mReferenceMap.value(uid).isNeedDelete() ) {
+    if( mReferenceMap.contains(uid) && !mReferenceMap.value(uid).isRemoveAny() ) {
       //Mark as need to be deleted from server
-      mReferenceMap[uid].deleteSet();
+      mReferenceMap[uid].markAsRemoved();
 
       //Delete object file
-      QFile::remove( fullPath( item ) );
+      QFile::remove( fullPathOfLibraryObject( uid ) );
 
       mDirty = true;
       }
@@ -185,6 +176,7 @@ void SdLibraryStorage::cfObjectDelete(const SdContainerFile *item)
 //!
 SdContainerFile *SdLibraryStorage::cfObjectGet(const QString hashUidName) const
   {
+  QReadLocker locker( &mLock );
   if( mReferenceMap.contains( hashUidName ) ) {
     //Load object
     return sdObjectOnly<SdContainerFile>( SdObject::fileJsonLoad( fullPathOfLibraryObject(hashUidName) ) );
@@ -194,38 +186,6 @@ SdContainerFile *SdLibraryStorage::cfObjectGet(const QString hashUidName) const
 
 
 
-
-
-//!
-//! \brief cfObjectUpload Return object available to uploading to remote server
-//! \return               Object to uploading
-//!
-SdContainerFile *SdLibraryStorage::cfObjectUpload() const
-  {
-  //Scan reference map to find object to uploading
-  auto it = mReferenceMap.cbegin();
-  while( it != mReferenceMap.cend() )
-    if( it.value().isNeedUpload() )
-      break;
-    else
-      it++;
-
-  if( it == mReferenceMap.cend() )
-    //No objects to uploading
-    return nullptr;
-  return cfObjectGet( it.key() );
-  }
-
-
-
-
-void SdLibraryStorage::cfObjectUploaded(const QString uid)
-  {
-  if( mReferenceMap.contains(uid) ) {
-    mReferenceMap[uid].uploadReset();
-    mDirty = true;
-    }
-  }
 
 
 
@@ -286,6 +246,14 @@ bool SdLibraryStorage::cfIsOlderOrSame(const SdContainerFile *item) const
 
 
 
+bool SdLibraryStorage::cfObjectContains(const QString hashUidName) const
+  {
+  QReadLocker locker( &mLock );
+  return mReferenceMap.contains(hashUidName) && !mReferenceMap.value(hashUidName).isRemoved();
+  }
+
+
+
 
 void SdLibraryStorage::cfDeleteReset(const QString hashUidName, quint8 deleteMask)
   {
@@ -295,6 +263,26 @@ void SdLibraryStorage::cfDeleteReset(const QString hashUidName, quint8 deleteMas
     mReferenceMap[hashUidName].mFlags &= ~deleteMask;
   if( mReferenceMap[hashUidName].isCanBeRemove() )
     mReferenceMap.remove( hashUidName );
+  }
+
+
+
+
+SdLibraryReference SdLibraryStorage::cfReference(const QString &hashUidName) const
+  {
+  QReadLocker locker( &mLock );
+  return mReferenceMap.value( hashUidName );
+  }
+
+
+
+
+bool SdLibraryStorage::cfIsPresentAndPrivate(const QString &hashUidName) const
+  {
+  QReadLocker locker( &mLock );
+  if( !mReferenceMap.contains(hashUidName) )
+    return false;
+  return mReferenceMap.value(hashUidName).isPrivate();
   }
 
 
@@ -313,7 +301,7 @@ bool SdLibraryStorage::header(const QString hashUidName, SdLibraryHeader &hdr)
   if( hashUidName.isEmpty() ) return false;
 
   QWriteLocker locker( &mLock );
-  if( !mReferenceMap.contains(hashUidName) ) return false;
+  if( !mReferenceMap.contains(hashUidName) || mReferenceMap.value(hashUidName).isRemoved() ) return false;
   mHeaderFile.seek( mReferenceMap.value(hashUidName).mHeaderPtr );
   QDataStream is( &mHeaderFile );
   hdr.read( is );
@@ -364,6 +352,12 @@ void SdLibraryStorage::forEachReference(std::function<void (const QString &, con
 
 
 
+QString SdLibraryStorage::authorGlobalName(const QString &authorPublicKey) const
+  {
+  QReadLocker locker( &mLock );
+  return mAuthorAssoc.value(authorPublicKey, tr("Anonim") );
+  }
+
 
 
 
@@ -382,15 +376,10 @@ void SdLibraryStorage::periodicScan()
     QString subdr = subdir.filePath();
     if( !subdr.endsWith( QChar('/') ) )
       subdr.append( QChar('/') );
-    //qDebug() << subdr;
+
     QFileInfoList fileList = QDir(subdr).entryInfoList( QDir::Files );
 
-    //Subdirectory name
-    QString prefix( subdir.baseName() );
-    if( !prefix.endsWith( QChar('/') ) )
-      prefix.append( QChar('/') );
-
-    for( const auto &file : fileList ) {
+    for( const auto &file : std::as_const(fileList) ) {
       QString fileName = file.fileName();
 
       if( mExistList.contains( fileName ) )
@@ -412,7 +401,7 @@ void SdLibraryStorage::periodicScan()
             }
           else {
             //Append object to reference
-            insertReferenceAndHeader( item.get() );
+            insertReferenceAndHeader( item.get(), false );
             }
           }
         }
@@ -437,9 +426,9 @@ void SdLibraryStorage::periodicScan()
         emit informationAppended( tr("Remove external deleted objects %1").arg( removeCount )  );
 
       //Perform sync with remote storage
-      QtConcurrent::run( SdLibraryStorage::remoteSync, this ).then( this, [this] () {
+  //    QtConcurrent::run( SdLibraryStorage::remoteSync, this ).then( this, [this] () {
         mScanTimer.start( 30000 );
-        });
+        //});
 
       if( mNewestMark ) {
         mNewestMark = false;
@@ -466,26 +455,55 @@ void SdLibraryStorage::periodicScan()
 
 
 
+
+//!
+//! \brief objectInsertPrivate Insert object into library. If in library already present newest object
+//!                            then nothing done. Older object is never inserted.
+//! \param item                Object for inserting
+//! \param downloaded          true when object downloaded from remote clouds
+//!
+void SdLibraryStorage::objectInsertPrivate(const SdContainerFile *item, bool downloaded)
+  {
+  //If inserted object is older than present in library then nothing done
+  if( mLibraryPath.isEmpty() || item == nullptr || item->isEditEnable() || cfIsOlderOrSame( item ) )
+    return;
+
+  //Insert reference and header
+  insertReferenceAndHeader( item, downloaded );
+
+  //Insert in library
+  QString filePath = fullPath( item );
+
+  item->fileJsonSave( filePath );
+  }
+
+
+
+
 //!
 //! \brief insertReferenceAndHeader Insert in cache reference to object and header of object
 //! \param item                     Object which inserted
 //!
-void SdLibraryStorage::insertReferenceAndHeader(const SdContainerFile *item)
+void SdLibraryStorage::insertReferenceAndHeader(const SdContainerFile *item, bool downloaded)
   {
+  //Check if there is older object
   if( item != nullptr && !cfIsOlderOrSame(item) ) {
-    //Check if there is older object
+    QString key = item->hashUidName();
+    bool isPresentAndPrivate = cfIsPresentAndPrivate( key );
     QFile fileHdr(FNAME_HDR);
     if( fileHdr.open(QIODevice::Append) ) {
       QWriteLocker locker( &mLock );
       SdLibraryHeader hdr;
       item->getHeader( hdr );
-      QString key = item->hashUidName();
       SdLibraryReference ref;
       //write header first
       ref.mHeaderPtr     = fileHdr.size();
-      ref.mCreationTime  = hdr.mTime;
+      ref.mCreationTime  = hdr.mFileUid.mCreateTime;
+      ref.mInsertionTime = SvTime2x::current();
       //Only for owner objects we allow uploading to server
-      ref.mFlags         = 0;// item->getAuthorKey() == item->getDefaultAuthor() ? SDLR_NEED_UPLOAD : 0;
+      ref.mFlags         = downloaded ? 0 : SDLR_LOCAL_CHANGED;
+      if( item->isPublic() && isPresentAndPrivate )
+        ref.mFlags |= SDLR_REMOVE_PRIVATE;
       QDataStream os( &fileHdr );
       hdr.write( os );
       fileHdr.close();
@@ -518,7 +536,7 @@ void SdLibraryStorage::insertReferenceAndHeader(const SdContainerFile *item)
 //!
 QString SdLibraryStorage::fullPath(const SdContainerFile *item) const
   {
-  return fullPath( item->hashUidFile() );
+  return fullPath( item->fileUid() );
   }
 
 
@@ -578,7 +596,7 @@ void SdLibraryStorage::libraryBuildStructure()
   mLibraryPath = s.value( QStringLiteral("LIBRARY_PATH") ).toString();
   if( mLibraryPath.isEmpty() || mLibraryPath.length() < 3 ) {
     //Library path not defined yet
-    SvDir dir( QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation).at(0) );
+    SvDir dir( QCoreApplication::applicationDirPath() );
     dir.cd( QStringLiteral("library/") );
     QDir().mkpath( dir.slashedPath() );
     mLibraryPath = dir.slashedPath();
@@ -682,70 +700,113 @@ QByteArray SdLibraryStorage::objectGetFromFile(const QString &fileName) const
 
 
 
-QString SdLibraryStorage::cachePath()
+
+void SdLibraryStorage::objectDelete(const QString &hashUidName)
   {
-  SvDir dir( QDir::homePath() );
-  dir.cd( QStringLiteral("SaliLAB/SaliCAD/cache/") );
-  return dir.slashedPath();
+  QWriteLocker locker( &mLock );
+  mReferenceMap.remove( hashUidName );
+  mDirty = true;
   }
+
+
+
+
+void SdLibraryStorage::objectPut(const QByteArray &content)
+  {
+  QScopedPointer<SdContainerFile> item( sdObjectOnly<SdContainerFile>( SdObject::jsonCborCompressedFrom(content) )   );
+  if( !item.isNull() )
+    objectInsertPrivate( item.get(), true );
+  }
+
 
 //Fields of query
 #define SDRM_TYPE          0
 #define SDRM_HASH_UID_NAME 1
-#define SDRM_HASH_UID_FILE 2
-#define SDRM_VERSION       3
-#define SDRM_CONTENT       4
+#define SDRM_CREATE_TIME   2
+#define SDRM_CONTENT       3
+#define SDRM_LIST          4
 
-#define SDRM_TYPE_OK       0 //!< OK Accnowledge
-#define SDRM_TYPE_CHECK    1 //!< Check cloud storage is need to sync object or not
-#define SDRM_TYPE_GET      2 //!<
-#define SDRM_TYPE_REMOVE   3 //!< Remove file from cloud
-#define SDRM_TYPE_OBJECT   4
-#define SDRM_TYPE_GET_LIST 5 //!< Query list of newest files
+#define SDRM_TYPE_FAIL     0
+#define SDRM_TYPE_OK       1 //!< OK Accnowledge
+#define SDRM_TYPE_CHECK    2 //!< Check cloud storage is need to sync object or not
+#define SDRM_TYPE_GET      3 //!<
+#define SDRM_TYPE_REMOVE   4 //!< Remove file from cloud
+#define SDRM_TYPE_OBJECT   5
+#define SDRM_TYPE_GET_LIST 6 //!< Query list of newest files
+#define SDRM_TYPE_LIST     7
+
+
+QCborMap SdLibraryStorage::prepareQuery(int queryType, const SdFileUid &uid, bool appendObject) const
+  {
+  QReadLocker locker( &mLock );
+  QCborMap map;
+  map[SDRM_TYPE]          = queryType;
+  map[SDRM_HASH_UID_NAME] = uid.mHashUidName;
+  map[SDRM_CREATE_TIME]   = uid.mCreateTime;
+  if( appendObject )
+    map[SDRM_CONTENT] = objectGetFromFile( uid.fileUid() );
+  return map;
+  }
+
+
+
+QCborMap SdLibraryStorage::prepareQueryList(int queryType, int time)
+  {
+  QCborMap map;
+  map[SDRM_TYPE]        = queryType;
+  map[SDRM_CREATE_TIME] = time;
+  return map;
+  }
+
+
+
+
+QString SdLibraryStorage::cachePath()
+  {
+  SvDir dir( QCoreApplication::applicationDirPath() );
+  dir.cd( QStringLiteral("cache/") );
+  return dir.slashedPath();
+  }
+
 
 
 void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
   {
   //Perform local sync
   QSettings s;
-  QStringList uidListForChange;
+  QList<SdFileUid> fileListForChange;
   qint32 curSync = SvTime2x::current();
   qint32 lastSync = s.value( SDK_PRIVATE_LAST_SYNC, 0 ).toInt();
-  storage->forEachReference( [lastSync,&uidListForChange] (const QString &hashUidName, const SdLibraryReference &ref) {
+  storage->forEachReference( [lastSync,&fileListForChange] (const QString &hashUidName, const SdLibraryReference &ref) {
     if( !ref.isPublic() && ref.mInsertionTime > lastSync )
-      uidListForChange.append( hashUidName );
+      fileListForChange.append( SdFileUid( hashUidName, ref.mCreationTime ) );
     });
 
   try {
     SdTcpCborClient client;
     client.openSocket("host", 1234);
 
-    if( !uidListForChange.isEmpty() ) {
+    if( !fileListForChange.isEmpty() ) {
       //Perform sync for each object
-      for( auto uid : uidListForChange ) {
-        SdLibraryReference ref = storage->cfReference( uid );
+      for( auto fileUid : fileListForChange ) {
+        SdLibraryReference ref = storage->cfReference( fileUid.mHashUidName );
+        if( ref.mCreationTime != fileUid.mCreateTime ) continue;
+
         if( ref.isValid() && ref.isLocalChanged() && ref.isInsertAfter(lastSync) ) {
-          QCborMap map;
           //This object need to be sync
-          map[SDRM_HASH_UID_NAME] = uid;
-          map[SDRM_VERSION]       = ref.mCreationTime;
           if( ref.isRemovePrivate() ) {
             //Build "remove" query
-            map[SDRM_TYPE] = SDRM_TYPE_REMOVE;
-            map = client.transferMap( map );
-            if( map[SDRM_TYPE].toInteger() == SDRM_TYPE_OK )
-              storage->cfDeleteReset( uid, SDLR_REMOVE_PRIVATE );
+            QCborMap res = client.transferMap( storage->prepareQuery( SDRM_TYPE_REMOVE, fileUid ) );
+            if( res[SDRM_TYPE].toInteger() == SDRM_TYPE_OK )
+              storage->cfDeleteReset( fileUid.mHashUidName, SDLR_REMOVE_PRIVATE );
             else return;
             }
           else {
             //Build "check" query
-            map[SDRM_TYPE] = SDRM_TYPE_CHECK;
-            QCborMap res = client.transferMap( map );
+            QCborMap res = client.transferMap( storage->prepareQuery( SDRM_TYPE_CHECK, fileUid ) );
             if( res[SDRM_TYPE].toInteger() == SDRM_TYPE_GET ) {
-              map[SDRM_TYPE]          = SDRM_TYPE_OBJECT;
-              map[SDRM_HASH_UID_FILE] = ref.fileName( uid );
-              map[SDRM_CONTENT]       = storage->objectGetFromFile( ref.fileName( uid ) );
-              res = client.transferMap( map );
+              //Send object
+              res = client.transferMap( storage->prepareQuery( SDRM_TYPE_OBJECT, fileUid, true ) );
               if( res[SDRM_TYPE].toInteger() != SDRM_TYPE_OK )
                 return;
               }
@@ -758,18 +819,133 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
     s.setValue( SDK_PRIVATE_LAST_SYNC, curSync );
 
     //Get from cloud list newest objects
-    QCborMap map;
-    map[SDRM_TYPE] = SDRM_TYPE_CHECK;
+    QCborMap listMap = client.transferMap( prepareQueryList( SDRM_TYPE_GET_LIST, s.value( SDK_PRIVATE_LAST_LIST, 0 ).toInt() ) );
 
-         QCborValue result = client.transferSocket(data);
+    if( listMap[SDRM_TYPE].toInteger() == SDRM_TYPE_LIST ) {
+      QCborArray ar = listMap[SDRM_LIST].toArray();
+      fileListForChange.clear();
+      SdFileUid uid;
+      for( auto const &val : ar ) {
+        if( uid.fromFileUid(val.toString()) )
+          fileListForChange.append( uid );
+        }
 
-         emit registrationResultSignal(result);
+      if( !fileListForChange.isEmpty() ) {
+        //Perform sync for each object
+        for( auto fileUid : fileListForChange ) {
+          if( storage->cfIsOlderOrSame( fileUid.mHashUidName, fileUid.mCreateTime ) )
+            continue;
+          QCborMap res = client.transferMap( storage->prepareQuery( SDRM_TYPE_GET, fileUid ) );
+          if( res[SDRM_TYPE].toInteger() == SDRM_TYPE_OBJECT ) {
+            QByteArray fileContent = res[SDRM_CONTENT].toByteArray();
+            if( fileContent.isEmpty() ) {
+              //Delete from library
+              storage->objectDelete( fileUid.mHashUidName );
+              }
+            else {
+              storage->objectPut( fileContent );
+              }
+            }
+          else return;
+          }
+        }
+      //Update last list time
+      int lastListTime = listMap[SDRM_CREATE_TIME].toInteger();
+      s.setValue( SDK_PRIVATE_LAST_LIST, lastListTime );
+      }
+    }
+  catch(const std::exception& e) {
+    qDebug() << "Error occured" << e.what();
+    }
 
-     } catch(const std::exception& e) {
-         emit errorOccurredSignal(e.what());
-     }
 
 
+
+
+
+  fileListForChange.clear();
+  curSync = SvTime2x::current();
+  lastSync = s.value( SDK_GLOBAL_LAST_SYNC, 0 ).toInt();
+  storage->forEachReference( [lastSync,&fileListForChange] (const QString &hashUidName, const SdLibraryReference &ref) {
+    if( ref.isPublic() && ref.mInsertionTime > lastSync )
+      fileListForChange.append( SdFileUid( hashUidName, ref.mCreationTime ) );
+    });
+
+  try {
+    SdTcpCborClient client;
+    client.openSocket("cloud", 1234);
+
+    if( !fileListForChange.isEmpty() ) {
+      //Perform sync for each object
+      for( auto fileUid : fileListForChange ) {
+        SdLibraryReference ref = storage->cfReference( fileUid.mHashUidName );
+        if( ref.mCreationTime != fileUid.mCreateTime ) continue;
+
+        if( ref.isValid() && ref.isLocalChanged() && ref.isInsertAfter(lastSync) ) {
+          //This object need to be sync
+          if( ref.isRemoveGlobal() ) {
+            //Build "remove" query
+            QCborMap res = client.transferMap( storage->prepareQuery( SDRM_TYPE_REMOVE, fileUid ) );
+            if( res[SDRM_TYPE].toInteger() == SDRM_TYPE_OK )
+              storage->cfDeleteReset( fileUid.mHashUidName, SDLR_REMOVE_PRIVATE );
+            else return;
+            }
+          else {
+            //Build "check" query
+            QCborMap res = client.transferMap( storage->prepareQuery( SDRM_TYPE_CHECK, fileUid ) );
+            if( res[SDRM_TYPE].toInteger() == SDRM_TYPE_GET ) {
+              //Send object
+              res = client.transferMap( storage->prepareQuery( SDRM_TYPE_OBJECT, fileUid, true ) );
+              if( res[SDRM_TYPE].toInteger() != SDRM_TYPE_OK )
+                return;
+              }
+            }
+          }
+        }
+      }
+
+    //Update sync time
+    s.setValue( SDK_GLOBAL_LAST_SYNC, curSync );
+
+    //Get from cloud list newest objects
+    QCborMap listMap = client.transferMap( prepareQueryList( SDRM_TYPE_GET_LIST, s.value( SDK_GLOBAL_LAST_LIST, 0 ).toInt() ) );
+
+    if( listMap[SDRM_TYPE].toInteger() == SDRM_TYPE_LIST ) {
+      QCborArray ar = listMap[SDRM_LIST].toArray();
+      fileListForChange.clear();
+      SdFileUid uid;
+      for( auto const &val : ar ) {
+        if( uid.fromFileUid(val.toString()) )
+          fileListForChange.append( uid );
+        }
+
+      if( !fileListForChange.isEmpty() ) {
+        //Perform sync for each object
+        for( auto fileUid : fileListForChange ) {
+          if( storage->cfIsOlderOrSame( fileUid.mHashUidName, fileUid.mCreateTime ) )
+            continue;
+          QCborMap res = client.transferMap( storage->prepareQuery( SDRM_TYPE_GET, fileUid ) );
+          if( res[SDRM_TYPE].toInteger() == SDRM_TYPE_OBJECT ) {
+            QByteArray fileContent = res[SDRM_CONTENT].toByteArray();
+            if( fileContent.isEmpty() ) {
+              //Delete from library
+              storage->objectDelete( fileUid.mHashUidName );
+              }
+            else {
+              storage->objectPut( fileContent );
+              }
+            }
+          else return;
+          }
+        }
+      //Update last list time
+      int lastListTime = listMap[SDRM_CREATE_TIME].toInteger();
+      s.setValue( SDK_GLOBAL_LAST_LIST, lastListTime );
+      }
+    }
+  catch(const std::exception& e) {
+    qDebug() << "Error occured" << e.what();
+    }
   }
 
 

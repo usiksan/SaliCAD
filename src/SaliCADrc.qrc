@@ -790,5 +790,8 @@
         <file>help/viewZoomIn.png</file>
         <file>help/viewZoomOut.png</file>
         <file>pic/library.png</file>
+        <file>pic/iconLocalLibrary.png</file>
+        <file>pic/iconGlobalStorage.png</file>
+        <file>pic/iconPrivateCloud.png</file>
     </qresource>
 </RCC>

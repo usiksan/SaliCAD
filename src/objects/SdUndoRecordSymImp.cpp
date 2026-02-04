@@ -38,9 +38,9 @@ void SdUndoRecordSymImp::undo()
   mOriginValue.swap( mOriginSrc );
   mPropSrc->swapState( &mProp );
 
-  SdUtil::swapInt( mLogSectionValue, mLogSectionSrc );
+  SdUtil::swap( mLogSectionValue, mLogSectionSrc );
 
-  SdUtil::swapInt( mLogNumberValue, mLogNumberSrc );
+  SdUtil::swap( mLogNumberValue, mLogNumberSrc );
 
   mOver = mOverSrc->swap( mOver );
   }

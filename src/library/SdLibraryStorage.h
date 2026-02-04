@@ -38,6 +38,7 @@ Description
 #include <functional>
 
 class SdContainerFile;
+//class QCborMap;
 
 typedef QMap<QString,SdLibraryReference> SdLibraryReferenceMap;
 
@@ -52,6 +53,7 @@ class SdLibraryStorage : public QObject
     QMap<QString,QString>  mExistList;       //!< Map of existing objects
     SdLibraryReferenceMap  mReferenceMap;    //!< Map with key of object id and value is SdLibraryReference
     QFile                  mHeaderFile;      //!< File with header of all objects in library
+    QMap<QString,QString>  mAuthorAssoc;     //!< Author public hash to author name association
     bool                   mDirty;
     bool                   mUploadAvailable; //!< If true then there available objects to upload
     bool                   mNewestMark;      //!< True if need to update newst marks
@@ -66,7 +68,7 @@ class SdLibraryStorage : public QObject
     //! \brief objectCount Return count of referenced objects in library
     //! \return            Count of referenced objects in library
     //!
-    qint32      objectCount() const { return mReferenceMap.count(); }
+    qint32           objectCount() const { return mReferenceMap.count(); }
 
 
     //==================================================================
@@ -75,14 +77,14 @@ class SdLibraryStorage : public QObject
     //! \brief libraryPath Return current library path
     //! \return            Current library path
     //!
-    QString     libraryPath() const { return mLibraryPath; }
+    QString          libraryPath() const { return mLibraryPath; }
 
     //!
     //! \brief libraryPathSet Set new library path
     //! \param path           New library path
     //!
     //! Current caches are cleared, library path changed and scan start from begin
-    void        libraryPathSet( const QString &path );
+    void             libraryPathSet( const QString &path );
 
     //!
     //! \brief libraryInit Init library system
@@ -118,17 +120,6 @@ class SdLibraryStorage : public QObject
     //!
     SdContainerFile *cfObjectGet( const QString hashUidName ) const;
 
-    //!
-    //! \brief cfObjectUpload Return object available to uploading to remote server
-    //! \return               Object to uploading
-    //!
-    SdContainerFile *cfObjectUpload() const;
-
-    //!
-    //! \brief cfObjectUploaded Mark object as already uploaded. Marked object no need to be upload
-    //! \param uid
-    //!
-    void             cfObjectUploaded( const QString uid );
 
     //!
     //! \brief cfIsOlder   Test if object which represents by hashUidName and time present in library and older than there is in library
@@ -165,11 +156,13 @@ class SdLibraryStorage : public QObject
     //! \param hashUidName      hashUidName of object
     //! \return                 True if object contains in library
     //!
-    bool             cfObjectContains( const QString hashUidName ) const { return mReferenceMap.contains(hashUidName) && !mReferenceMap.value(hashUidName).isNeedDelete(); }
+    bool               cfObjectContains( const QString hashUidName ) const;
 
     void               cfDeleteReset( const QString hashUidName, quint8 deleteMask );
 
-    SdLibraryReference cfReference( const QString &hashUidName ) const { return mReferenceMap.value( hashUidName ); }
+    SdLibraryReference cfReference( const QString &hashUidName ) const;
+
+    bool               cfIsPresentAndPrivate( const QString &hashUidName ) const;
     //==================================================================
     //Headers
 
@@ -195,6 +188,9 @@ class SdLibraryStorage : public QObject
     void             forEachReference( std::function<void( const QString &hashUidName, const SdLibraryReference &ref )> fun1 );
 
 
+    //==================================================================
+    //Authors
+    QString          authorGlobalName( const QString &authorPublicKey ) const;
   signals:
 
     //Append information item
@@ -210,10 +206,19 @@ class SdLibraryStorage : public QObject
 
   private:
     //!
+    //! \brief objectInsertPrivate Insert object into library. If in library already present newest object
+    //!                            then nothing done. Older object is never inserted.
+    //! \param item                Object for inserting
+    //! \param downloaded          true when object downloaded from remote clouds
+    //!
+    void             objectInsertPrivate( const SdContainerFile *item, bool downloaded );
+
+    //!
     //! \brief insertReferenceAndHeader Insert in cache reference to object and header of object
     //! \param item                     Object which inserted
+    //! \param downloaded               true when object loaded from cloud
     //!
-    void             insertReferenceAndHeader( const SdContainerFile *item );
+    void             insertReferenceAndHeader( const SdContainerFile *item, bool downloaded );
 
     //!
     //! \brief fullPath Return full path to library file
@@ -251,6 +256,14 @@ class SdLibraryStorage : public QObject
     QByteArray       objectGet( const QString &hashUidName ) const;
 
     QByteArray       objectGetFromFile( const QString &fileName ) const;
+
+    void             objectDelete( const QString &hashUidName );
+
+    void             objectPut( const QByteArray &content );
+
+    QCborMap         prepareQuery(int queryType, const SdFileUid &uid, bool appendObject = false ) const;
+
+    static QCborMap  prepareQueryList( int queryType, int time );
 
     static QString   cachePath();
 

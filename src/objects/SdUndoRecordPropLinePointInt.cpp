@@ -32,6 +32,6 @@ void SdUndoRecordPropLinePointInt::undo()
   {
   mProp->swapState( &mPropState );
   mSrc1->swap( &mPoint1 );
-  SdUtil::swapInt( mValue2, mSrc2 );
+  SdUtil::swap( mValue2, mSrc2 );
   }
 

@@ -17,7 +17,6 @@ Description
 #include "objects/SdPulsar.h"
 #include "objects/SdProjectItem.h"
 #include "objects/SdPItemSheet.h"
-#include "objects/SdObjectNetClient.h"
 #include "objects/SdCopyMapProject.h"
 #include "windows/SdPNewProjectItem_SelectType.h"
 #include "windows/SdPNewProjectItem_EnterName.h"

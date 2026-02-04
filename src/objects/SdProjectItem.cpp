@@ -61,7 +61,7 @@ void SdProjectItem::setTitle(const QString title, const QString undoTitle)
   if( undo != nullptr ) {
     if( !undoTitle.isEmpty() )
       undo->begin( undoTitle, this, false );
-    undo->projectItemInfo( this, &mTitle, &mAuthorKey, &mCreateTime, &mEditEnable );
+    undo->projectItemInfo( this, &mTitle, &mAuthorKey, &mFileUid, &mEditEnable );
     }
 
   titleSet( title );
@@ -119,7 +119,7 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
   if( mEditEnable ) {
     if( !edit ) {
       //Disable edit.
-      undo->projectItemInfo( this, &mTitle, &mAuthorKey, &mCreateTime, &mEditEnable );
+      undo->projectItemInfo( this, &mTitle, &mAuthorKey, &mFileUid, &mEditEnable );
 
       mEditEnable = edit;
       //Update object version and author creation

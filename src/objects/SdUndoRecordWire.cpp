@@ -36,7 +36,7 @@ void SdUndoRecordWire::undo()
   mSrc1->swap( &mPoint1 );
   mSrc2->swap( &mPoint2 );
 
-  SdUtil::swapBool( mDot1, mDotSrc1 );
-  SdUtil::swapBool( mDot2, mDotSrc2 );
+  SdUtil::swap( mDot1, mDotSrc1 );
+  SdUtil::swap( mDot2, mDotSrc2 );
 
   }

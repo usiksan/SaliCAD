@@ -52,17 +52,17 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
   connect( ui->mClose, &QPushButton::clicked, this, &SdDRegistation::cmClose );
   connect( ui->mName, &QLineEdit::textEdited, this, &SdDRegistation::onEditAuthorName );
 
-  connect( this, &SdDRegistation::doRegistration, SdObjectNetClient::instance(), &SdObjectNetClient::doRegister );
+//  connect( this, &SdDRegistation::doRegistration, SdObjectNetClient::instance(), &SdObjectNetClient::doRegister );
   connect( ui->mHelp, &QPushButton::clicked, this, [this] () {
     SdDHelp::help( QString("SdDRegistration.htm"), this );
     } );
 
   //Check registration status at start
-  connect( SdObjectNetClient::instance(), &SdObjectNetClient::registerStatus, this, [this] ( int success, const QString msg, const QString email ) {
-    ui->mRegistrationStatus->setText(msg);
-    if( !email.isEmpty() )
-      ui->mEmail->setText( email );
-    });
+//  connect( SdObjectNetClient::instance(), &SdObjectNetClient::registerStatus, this, [this] ( int success, const QString msg, const QString email ) {
+//    ui->mRegistrationStatus->setText(msg);
+//    if( !email.isEmpty() )
+//      ui->mEmail->setText( email );
+//    });
 
   // if( s.contains(SDK_GLOBAL_AUTHOR) && s.contains(SDK_GLOBAL_PASSWORD) && s.contains(SDK_SERVER_REPO) ) {
   //   ui->mEmail->setText( QStringLiteral("email") );

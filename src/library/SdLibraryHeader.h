@@ -23,6 +23,7 @@ Description
 #define SDLIBRARYHEADER_H
 
 #include "SdStringMap.h"
+#include "objects/SdFileUid.h"
 
 #include <QString>
 #include <QMap>
@@ -55,39 +56,81 @@ inline void sdExtractVariant( int index, SdStringMap &map, int fieldCount, const
 //Library object header
 struct SdLibraryHeader
   {
-    QString     mName;               //!< Name of stored object
-    QString     mType;               //!< Type of stored object
-    QString     mAuthorKey;          //!< Public Key of Author who create object
-    QString     mHashUidName;        //!< Hash code of name
-    qint32      mTime;               //!< Object time creation
-    quint64     mClass;              //!< Object class. When equals 0 then corresponded object is deleted
-    bool        mPartPresent;        //!< Flag of part present in component or symbol
-    bool        mIsPublic;           //!< True for public objects
+    QString     mName;              //!< Name of stored object
+    QString     mType;              //!< Type of stored object
+    QString     mAuthorKey;         //!< Public Key of Author who create object
+    SdFileUid   mFileUid;           //!< File unical id as combination hash of unical object name and time of object creation
+    quint64     mClass;             //!< Object class. When equals 0 then corresponded object is deleted
+    bool        mPartPresent;       //!< Flag of part present in component or symbol
+    bool        mIsPublic;          //!< True for public objects
 
-    SdStringMap mParamTable;         //!< User defined object params
+    SdStringMap mParamTable;        //!< User defined object params
 
     //Extended param table
     qint32      mVariantFieldCount; //!< Variable fields count in extended param table
     QStringList mVariantTable;      //!< Variant table
 
-    SdLibraryHeader() : mName(), mType(), mAuthorKey(), mTime(0), mClass(0), mPartPresent(false), mIsPublic(false), mParamTable(), mVariantFieldCount(0),mVariantTable() {}
+    //!
+    //! \brief SdLibraryHeader Default constructor
+    //!
+    SdLibraryHeader() : mName(), mType(), mAuthorKey(), mClass(0), mPartPresent(false), mIsPublic(false), mParamTable(), mVariantFieldCount(0),mVariantTable() {}
 
-    void    write( QDataStream &os ) const { os << mName << mType << mAuthorKey << mTime << mClass << mPartPresent << mIsPublic << mParamTable << mVariantFieldCount << mVariantTable; }
+    //!
+    //! \brief write         Write object header to data stream
+    //! \param os            Output data stream
+    //!
+    void    write( QDataStream &os ) const { os << mName << mType << mAuthorKey << mFileUid << mClass << mPartPresent << mIsPublic << mParamTable << mVariantFieldCount << mVariantTable; }
 
-    void    read( QDataStream &is ) { is >> mName >> mType >> mAuthorKey >> mTime >> mClass >> mPartPresent >> mParamTable >> mIsPublic >> mVariantFieldCount >> mVariantTable; }
+    //!
+    //! \brief read          Read object header from data stream
+    //! \param is            Input data stream
+    //!
+    void    read( QDataStream &is ) { is >> mName >> mType >> mAuthorKey >> mFileUid >> mClass >> mPartPresent >> mParamTable >> mIsPublic >> mVariantFieldCount >> mVariantTable; }
 
-    QString hashUidName() const { return mHashUidName; }
-    //QString uid() const { return headerUid( mType, mName, mAuthorKey ); }
+    //!
+    //! \brief hashUidName   Return hash of unical object name
+    //! \return              Hash UID name string
+    //!
+    QString hashUidName() const { return mFileUid.mHashUidName; }
 
+    //!
+    //! \brief isPublic      Check if object is public
+    //! \return              True if object is public
+    //!
     bool    isPublic() const { return mIsPublic; }
 
+    //!
+    //! \brief isDeleted     Check if object is marked as deleted
+    //! \return              True if object class equals 0 (deleted)
+    //!
     bool    isDeleted() const { return mClass == 0; }
 
-    void    setDeleted() { mClass = 0; mTime++; }
+    //!
+    //! \brief setDeleted    Mark object as deleted by setting class to 0 and incrementing creation time
+    //!
+    void    setDeleted() { mClass = 0; mFileUid.mCreateTime++; }
 
-    //Extended param access
+    //==============================================================
+    //        Extended param access
+    //!
+    //! \brief variantTableExist Check if variant table exists (has variable fields)
+    //! \return                  True if variant table has fields
+    //!
     bool    variantTableExist() const { return mVariantFieldCount != 0; }
+
+
+    //!
+    //! \brief variantCount      Get count of variants in variant table
+    //! \return                  Number of variants
+    //!
     int     variantCount() const { return mVariantTable.count() / mVariantFieldCount; }
+
+
+    //!
+    //! \brief variant           Build specified variant into provided header
+    //! \param hdr               Target header to receive variant data
+    //! \param index             Variant index (0 for base variant from mParamTable)
+    //!
     void    variant( SdLibraryHeader &hdr, int index ) {
       //Build variant "index" in header "hdr"
       //When index == 0 then builded base variant, i.e. that in mParamTable
@@ -95,7 +138,7 @@ struct SdLibraryHeader
       hdr.mName        = mName;
       hdr.mType        = mType;
       hdr.mAuthorKey   = mAuthorKey;
-      hdr.mTime        = mTime;
+      hdr.mFileUid     = mFileUid;
       hdr.mClass       = mClass;
       hdr.mPartPresent = mPartPresent;
       hdr.mIsPublic    = mIsPublic;
@@ -105,7 +148,13 @@ struct SdLibraryHeader
       sdExtractVariant( index, hdr.mParamTable, mVariantFieldCount, mVariantTable );
       }
 
+    //!
+    //! \brief authorGlobalName Return global author name associated with mAuthorKey (public author key)
+    //! \return                 Global author name associated with mAuthorKey (public author key)
+    //!
+    QString authorGlobalName() const;
   };
+
 
 inline QDataStream &operator << ( QDataStream &os, const SdLibraryHeader &header ) {
   header.write( os );

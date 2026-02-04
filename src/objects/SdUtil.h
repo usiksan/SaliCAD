@@ -58,11 +58,15 @@ class SdUtil
     //Test if string contains only english symbols
     static bool      isEnglish( const QString str );
 
-    //Swap int
-    static void      swapInt( int &src, int *dst );
-
-    //Swap bool
-    static void      swapBool( bool &src, bool *dst );
+    template <typename Type>
+    static void      swap( Type &src, Type *dst )
+      {
+      if( dst != nullptr ) {
+        Type tmp(*dst);
+        *dst = src;
+        src = tmp;
+        }
+      }
 
     //Create octagon over circle
     static QPolygonF octagon( int centerx, int centery, int radius );
