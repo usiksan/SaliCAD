@@ -11,7 +11,7 @@ Web
 Description
 */
 #include "SdTextImplement.h"
-
+#include "SdJsonIO.h"
 
 
 //!
@@ -31,7 +31,7 @@ void SdTextImplement::json(const QString &prefix, SvJsonWriter &js) const
 //! \brief json Overloaded function to read object content from json reader
 //! \param js   Json reader
 //!
-void SdTextImplement::json(const QString &prefix, const SvJsonReader &js)
+void SdTextImplement::json(const QString &prefix, const SdJsonReader &js)
   {
   mProp.json( prefix, js );
   js.jsonPoint( prefix + QString("org"), mOrigin );

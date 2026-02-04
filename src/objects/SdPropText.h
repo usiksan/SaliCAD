@@ -58,7 +58,7 @@ struct SdPropText {
     bool match( SdPropText const &prop );       //Сравнить на совпадение с эталоном
 
     void json( const QString prefix, SvJsonWriter &js ) const;
-    void json( const QString prefix, const SvJsonReader &js );
+    void json( const QString prefix, const SdJsonReader &js );
 
     void saveState(SdPropTextState *dst );
     void swapState(SdPropTextState *src );

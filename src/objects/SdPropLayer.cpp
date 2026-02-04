@@ -13,6 +13,7 @@ Description
 */
 #include "SdPropLayer.h"
 #include "SdEnvir.h"
+#include "SdJsonIO.h"
 
 SdPropLayer::SdPropLayer() :
   mLayer( sdEnvir->getLayer(LID0_INVISIBLE) ),
@@ -116,7 +117,7 @@ void SdPropLayer::setLayerUsage() const
 
 
 
-void SdPropLayer::json(const QString name, const SvJsonReader &js)
+void SdPropLayer::json(const QString name, const SdJsonReader &js)
   {
   mValue = OneValue;
   mLayer = sdEnvir->getLayer( js.object().value(name).toString() );

@@ -391,6 +391,9 @@ void SdContainer::json(SdJsonWriter &js) const
 
 void SdContainer::json( const SdJsonReader &js )
   {
+  //Assign class for previous version database remapping
+  js.property()->mClass = getClass();
+  //Postfix function for child objects parent setting
   auto fun = [this] ( SdObject *obj ) -> bool { if( obj != nullptr ) obj->setParent(this); return obj != nullptr; };
   js.jsonListPtr( js, QStringLiteral("ChildList"), mChildList, fun );
   js.jsonMapString( QStringLiteral("Parametrs"), mParamTable );

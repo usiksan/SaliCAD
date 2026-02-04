@@ -10,7 +10,7 @@ Web
 
 Description
 */
-
+#include "SdJsonIO.h"
 #include "SdPropLine.h"
 #include "SdUndo.h"
 
@@ -57,7 +57,7 @@ void SdPropLine::json(const QString &prefix, SvJsonWriter &js) const
 
 
 
-void SdPropLine::json(const QString &prefix, const SvJsonReader &js)
+void SdPropLine::json(const QString &prefix, const SdJsonReader &js)
   {
   mWidth.json( prefix + QStringLiteral("Width"), js );
   mType.json( prefix + QStringLiteral("Type"), js );

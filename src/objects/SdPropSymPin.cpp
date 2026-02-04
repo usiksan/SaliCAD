@@ -12,6 +12,7 @@ Description
 */
 
 #include "SdPropSymPin.h"
+#include "SdJsonIO.h"
 
 
 void SdPropSymPin::operator =(const SdPropSymPin &sour)
@@ -65,7 +66,7 @@ void SdPropSymPin::json(SvJsonWriter &js) const
 //! \brief json Function to read object content from json reader
 //! \param js   Json reader
 //!
-void SdPropSymPin::json(const SvJsonReader &js)
+void SdPropSymPin::json(const SdJsonReader &js)
   {
   mLayer.json( QStringLiteral("SymPinLayer"), js );
   mPinType.json( QStringLiteral("SymPinType"), js );
