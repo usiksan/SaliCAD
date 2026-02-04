@@ -315,7 +315,6 @@ SOURCES += \
     bug.cpp \
     objects/SdUndoRecordInsertDelete.cpp \
     objects/SdUndoRecordProjectItem.cpp \
-    objects/SdObjectNetClient.cpp \
     windows/SdDRegistation.cpp \
     objects/SdPasCadImport.cpp \
     objects/SdSymImpPin.cpp \
@@ -828,7 +827,6 @@ HEADERS  += \
     modes/SdModePrintWindow.h \
     objects/SdUndoRecordInsertDelete.h \
     objects/SdUndoRecordProjectItem.h \
-    objects/SdObjectNetClient.h \
     windows/SdDRegistation.h \
     objects/SdPasCadImport.h \
     objects/SdSymImpPin.h \

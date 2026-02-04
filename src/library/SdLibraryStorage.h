@@ -38,7 +38,6 @@ Description
 #include <functional>
 
 class SdContainerFile;
-class SdNetClientLocker;
 
 typedef QMap<QString,SdLibraryReference> SdLibraryReferenceMap;
 
@@ -53,7 +52,6 @@ class SdLibraryStorage : public QObject
     QMap<QString,QString>  mExistList;       //!< Map of existing objects
     SdLibraryReferenceMap  mReferenceMap;    //!< Map with key of object id and value is SdLibraryReference
     QFile                  mHeaderFile;      //!< File with header of all objects in library
-    SdNetClientLocker     *mNetClientLocker;
     bool                   mDirty;
     bool                   mUploadAvailable; //!< If true then there available objects to upload
     bool                   mNewestMark;      //!< True if need to update newst marks
@@ -89,7 +87,7 @@ class SdLibraryStorage : public QObject
     //!
     //! \brief libraryInit Init library system
     //!
-    void        libraryInit();
+    void             libraryInit();
 
     //!
     //! \brief libraryComplete Complete work of libraryStorage. We flush caches and delete libraryStorage
@@ -169,7 +167,9 @@ class SdLibraryStorage : public QObject
     //!
     bool             cfObjectContains( const QString hashUidName ) const { return mReferenceMap.contains(hashUidName) && !mReferenceMap.value(hashUidName).isNeedDelete(); }
 
+    void               cfDeleteReset( const QString hashUidName, quint8 deleteMask );
 
+    SdLibraryReference cfReference( const QString &hashUidName ) const { return mReferenceMap.value( hashUidName ); }
     //==================================================================
     //Headers
 
@@ -192,6 +192,7 @@ class SdLibraryStorage : public QObject
     bool             forEachHeader( std::function<bool(SdLibraryHeader&)> fun1 );
 
 
+    void             forEachReference( std::function<void( const QString &hashUidName, const SdLibraryReference &ref )> fun1 );
 
 
   signals:
@@ -242,7 +243,18 @@ class SdLibraryStorage : public QObject
     //!
     QString          fullPathOfLibraryObject( const QString &hashUidName ) const;
 
+    //!
+    //! \brief libraryBuildStructure Builds structure of library
+    //!
+    void             libraryBuildStructure();
+
+    QByteArray       objectGet( const QString &hashUidName ) const;
+
+    QByteArray       objectGetFromFile( const QString &fileName ) const;
+
     static QString   cachePath();
+
+    static void      remoteSync( SdLibraryStorage *storage );
   };
 
 

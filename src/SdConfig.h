@@ -326,6 +326,7 @@ History
 #define SDK_PRIVATE_KEY              "PrivateKey"
 //#define SDK_AUTHOR_KEY               "AuthorKey"
 //#define SDK_PUBLIC_NAME              "AuthorName"
+#define SDK_PRIVATE_LAST_SYNC        "Private last sync"
 #define SDK_REMOTE_SYNC              "Remote sync"              //!< Remote index of last downloaded object
 #define SDK_REMOTE_REMAIN            "Remote remain"
 #define SDK_SERVER_REPO              "SaliCAD repository"

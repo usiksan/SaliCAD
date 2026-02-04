@@ -83,6 +83,7 @@ void SdContainerFile::titleSet(const QString title)
   {
   //Title setup
   mTitle      = title;
+  mIsPublic   = false;
   //Update creation time
   updateCreationTime();
   //Item author (registered program copy name)
@@ -125,10 +126,12 @@ void SdContainerFile::json(const SdJsonReader &js)
   if( js.property()->mVersion == SD_BASE_VERSION_2 ) {
     //Convert previous author into current and build hash
     updateAuthorAndHash();
+    mIsPublic = false;
     }
   else {
     js.jsonString( QStringLiteral("AuthorKey"),   mAuthorKey );
     js.jsonString( QStringLiteral("HashUidName"), mHashUidName );
+    js.jsonBool( QStringLiteral("Is public"),     mIsPublic );
     }
   SdContainer::json( js );
   }

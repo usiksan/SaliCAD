@@ -19,17 +19,35 @@ Description
 #ifndef SDLIBRARYREFERENCE_H
 #define SDLIBRARYREFERENCE_H
 
+#include "objects/SdContainerFile.h"
+
 #include <QDataStream>
 
-#define SDLR_DOWNLOADED  0x1 //Object loaded from
-#define SDLR_NEED_UPLOAD 0x2 //!< Object need to be upload to remote server
-#define SDLR_NEED_DELETE 0x4 //!< Object need to be deleted from remote server
+#define SDLR_LOCAL_CHANGED  0x1 //!< Object changed locally
+#define SDLR_PUBLIC         0x2 //!< Object is public and must be uploaded to remote global server
+#define SDLR_REMOVE_GLOBAL  0x4 //!< Object need to be removed from global server
+#define SDLR_REMOVE_PRIVATE 0x8 //!< Object need to be removed from private sync cloud
 
 struct SdLibraryReference
   {
     qint32 mCreationTime;   //!< Time of object creation
+    qint32 mInsertionTime;  //!< Time of object insertion into library
     qint64 mHeaderPtr;      //!< Header reference. It contains offset from begining headers file to header of this object
     qint8  mFlags;          //!< Flags
+
+    SdLibraryReference() : mCreationTime(0) {}
+
+    bool isValid() const { return mCreationTime != 0; }
+
+    bool isRemoved() const { return mHeaderPtr == 0; }
+
+    //!
+    //! \brief isCanBeRemove Return true when reference may be removed from library reference storage
+    //! \return              true when reference may be removed from library reference storage
+    //!
+    bool isCanBeRemove() const { return mHeaderPtr == 0 && (mFlags & (SDLR_REMOVE_GLOBAL|SDLR_REMOVE_PRIVATE)) == 0; }
+
+    bool isInsertAfter( qint32 time ) const { return mInsertionTime > time; }
 
     //Test if reference newer than time
     bool isNewer( qint32 time ) const { return mCreationTime > time; }
@@ -37,33 +55,25 @@ struct SdLibraryReference
     //Test if reference newer or same than time
     bool isNewerOrSame( qint32 time ) const { return mCreationTime >= time; }
 
-    //!
-    //! \brief isNeedUpload Returns true if object need to be upload to remote server
-    //! \return             true if object need to be upload to remote server
-    //!
-    bool isNeedUpload() const { return mFlags & SDLR_NEED_UPLOAD; }
+    bool isPublic() const { return mFlags & SDLR_PUBLIC; }
 
-    //!
-    //! \brief uploadReset Reset flag upload
-    //!
-    void uploadReset() { mFlags &= ~SDLR_NEED_UPLOAD; }
+    bool isPrivate() const { return (mFlags & SDLR_PUBLIC) == 0; }
 
-    //!
-    //! \brief isNeedDelete Return true if object need to be removed from remote server
-    //! \return             true if object need to be removed from remote server
-    //!
-    bool isNeedDelete() const { return mFlags & SDLR_NEED_DELETE; }
+    bool isLocalChanged() const { return mFlags & SDLR_LOCAL_CHANGED; }
 
-    //!
-    //! \brief deleteSet Set flag delete
-    //!
-    void deleteSet() { mFlags |= SDLR_NEED_DELETE; }
+    bool isDownloaded() const { return (mFlags & SDLR_LOCAL_CHANGED) == 0; }
+
+    bool isRemoveGlobal() const { return mFlags & SDLR_REMOVE_GLOBAL; }
+
+    bool isRemovePrivate() const { return mFlags & SDLR_REMOVE_PRIVATE; }
+
+    QString fileName( const QString &hashUidName ) const { return SdContainerFile::hashUidFile( hashUidName, mCreationTime ); }
   };
 
 //Write function
 inline QDataStream &operator << ( QDataStream &os, const SdLibraryReference &ref )
   {
-  os << ref.mCreationTime << ref.mHeaderPtr << ref.mFlags;
+  os << ref.mCreationTime << ref.mInsertionTime << ref.mHeaderPtr << ref.mFlags;
   return os;
   }
 
@@ -71,7 +81,7 @@ inline QDataStream &operator << ( QDataStream &os, const SdLibraryReference &ref
 //Read function
 inline QDataStream &operator >> ( QDataStream &is, SdLibraryReference &ref )
   {
-  is >> ref.mCreationTime >> ref.mHeaderPtr >> ref.mFlags;
+  is >> ref.mCreationTime >> ref.mInsertionTime >> ref.mHeaderPtr >> ref.mFlags;
   return is;
   }
 
