@@ -495,6 +495,7 @@ HEADERS  += \
     import/vrml/VrmlRotation.h \
     import/vrml/VrmlTypes.h \
     import/vrml/VrmlVector.h \
+    library/SdAuthorDescription.h \
     library/SdLibraryIndicator.h \
     library/SdStringMap.h \
     library/SdTcpCborClient.h \

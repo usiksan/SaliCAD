@@ -19,6 +19,7 @@ Description
 #include "SdDOptionsPagePath.h"
 #include "SdDOptionsPageLibrary.h"
 #include "SdDHelp.h"
+#include "library/SdLibraryStorage.h"
 
 #include <QVBoxLayout>
 #include <QLabel>
@@ -27,6 +28,9 @@ Description
 SdDOptions::SdDOptions(QWidget *parent) :
   QDialog( parent, Qt::Dialog | Qt::WindowTitleHint )
   {
+  //We disable library manager
+  SdLibraryStorage::instance()->libraryPeriodicBreakResume( true );
+
   QLabel *title = new QLabel( tr("Options"), this );
   mTabWidget = new QTabWidget( this );
   mButtons = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Help);
@@ -68,7 +72,7 @@ SdDOptions::SdDOptions(QWidget *parent) :
 
   //Library page
   SdDOptionsPageLibrary *library = new SdDOptionsPageLibrary();
-  //connect(mButtons, &QDialogButtonBox::accepted, editors, &SdDOptionsPageLibrary::accept );
+  connect(mButtons, &QDialogButtonBox::accepted, library, &SdDOptionsPageLibrary::accept );
   mTabWidget->addTab( library, tr("Library") );
 
 
@@ -81,6 +85,7 @@ SdDOptions::SdDOptions(QWidget *parent) :
 
 SdDOptions::~SdDOptions()
   {
-
+  //Resume library manager
+  SdLibraryStorage::instance()->libraryPeriodicBreakResume( false );
   }
 

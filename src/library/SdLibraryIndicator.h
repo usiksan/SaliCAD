@@ -19,6 +19,15 @@ class SdLibraryIndicator : public QObject
     QLabel  *mPrivateCloudIndicator;
     QLabel  *mLocalLibraryIndicator;
 
+    QString  mGlobalErrorMsg;
+    QString  mPrivateErrorMsg;
+    QString  mLocalErrorMsg;
+
+    QString  mMsgNone;
+    QString  mMsgOk;
+    QString  mMsgTransfer;
+    QString  mMsgError;
+
     SdLibraryIndicator();
   public:
     SV_SINGLETON( SdLibraryIndicator )
@@ -31,19 +40,19 @@ class SdLibraryIndicator : public QObject
 
     void addToStatusBar( QStatusBar *sbar );
 
-    QAction *globalStorage() const { return mGlobalStorage; }
-    QAction *privateCloud() const { return mPrivateCloud; }
-    QAction *localLibrary() const { return mLocalLibrary; }
-    QLabel  *globalStorageIndicator() const { return mGlobalStorageIndicator; }
-    QLabel  *privateCloudIndicator() const { return mPrivateCloudIndicator; }
-    QLabel  *localLibraryIndicator() const { return mLocalLibraryIndicator; }
+    // QAction *globalStorage() const { return mGlobalStorage; }
+    // QAction *privateCloud() const { return mPrivateCloud; }
+    // QAction *localLibrary() const { return mLocalLibrary; }
+    // QLabel  *globalStorageIndicator() const { return mGlobalStorageIndicator; }
+    // QLabel  *privateCloudIndicator() const { return mPrivateCloudIndicator; }
+    // QLabel  *localLibraryIndicator() const { return mLocalLibraryIndicator; }
 
   public slots:
-    void setGlobalStorage( int transferOut, int transferIn, SdLibraryIndicatorStatus stat, const QString errorMsg );
+    void setGlobalStorage( int transferOut, int transferIn, int stat, const QString errorMsg );
 
-    void setPrivateCloud( int transferOut, int transferIn, SdLibraryIndicatorStatus stat, const QString errorMsg );
+    void setPrivateCloud(int transferOut, int transferIn, int stat, const QString errorMsg );
 
-    void setLocalLibrary( int appended, int removed, int updated, SdLibraryIndicatorStatus stat, const QString errorMsg );
+    void setLocalLibrary( int count, int appended, int removed, int updated, int stat, const QString errorMsg );
   };
 
 #endif // SDLIBRARYINDICATOR_H

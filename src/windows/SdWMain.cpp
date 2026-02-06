@@ -139,15 +139,7 @@ SdWMain::SdWMain(QStringList args, QWidget *parent) :
   mCapture->setToolTip( tr("Show status of guide capture video system: stopped") );
   connect( mCapture, &QToolButton::toggled, this, &SdWMain::cmGuiderCapture );
   sbar->addWidget( mCapture );
-  QToolButton *but = new QToolButton();
-  but->setDefaultAction( SdLibraryIndicator::instance()->localLibrary() );
-  sbar->addWidget( but );
-  but = new QToolButton();
-  but->setDefaultAction( SdLibraryIndicator::instance()->globalStorage() );
-  sbar->addWidget( but );
-  but = new QToolButton();
-  but->setDefaultAction(  SdLibraryIndicator::instance()->privateCloud() );
-  sbar->addWidget( but );
+  SdLibraryIndicator::instance()->addToStatusBar( sbar );
 
   // mRemote = new QToolButton();
   // if( SdObjectNetClient::instance()->isRegistered() ) {
@@ -784,7 +776,7 @@ void SdWMain::cmFileLoad()
 void SdWMain::cmFileOpen()
   {
   QString title = QFileDialog::getOpenFileName(this, tr("Open project file"), QString(),
-                                               tr("SaliCAD Files (*%1 *%2);;KiCad files (*.kicad_mod)").arg(SD_BASE_EXTENSION, SD_BINARY_EXTENSION) );
+                                               tr("SaliCAD Files (*%1 *%2);;KiCad files (*.kicad_mod)").arg(".salicadx", SD_BINARY_EXTENSION) );
 
   if( title.isEmpty() ) return;
 

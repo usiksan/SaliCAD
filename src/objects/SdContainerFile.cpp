@@ -1,6 +1,5 @@
 #include "SdConfig.h"
 #include "SdContainerFile.h"
-#include "SdUtil.h"
 #include "library/SdLibraryStorage.h"
 #include "SvLib/SvTime2x.h"
 #include "SdJsonIO.h"
@@ -164,16 +163,10 @@ void SdContainerFile::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool ne
 //Return current registered author
 QString SdContainerFile::getDefaultAuthor()
   {
-  static QString cachePrivateKey;
-  static QString cacheAuthorKey;
-  QSettings s;
-  if( s.value( SDK_PRIVATE_KEY ).toString() != cachePrivateKey ) {
-    cachePrivateKey = s.value( SDK_PRIVATE_KEY ).toString();
-    QByteArray hash = QCryptographicHash::hash( cachePrivateKey.toUtf8(), QCryptographicHash::Sha3_256 );
-    cacheAuthorKey = QString::fromUtf8( hash.toHex() ).first( 16 );
-    }
-  return cacheAuthorKey;
+  return SdLibraryStorage::authorPublicKey();
   }
+
+
 
 
 

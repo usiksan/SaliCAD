@@ -1,7 +1,4 @@
 #include "SdDOptionsPageLibrary.h"
-#include "SdDRegistation.h"
-#include "objects/SdEnvir.h"
-#include "SvLib/SvDir.h"
 #include "library/SdLibraryStorage.h"
 
 #include <QSettings>
@@ -9,27 +6,58 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
+#include <QFileDialog>
 
 SdDOptionsPageLibrary::SdDOptionsPageLibrary(QWidget *parent) :
   QWidget(parent)
   {
-  setWindowTitle( tr("Remote library") );
+  setWindowTitle( tr("Component library") );
 
   QSettings s;
 
   QGridLayout *grid = new QGridLayout();
   QPushButton *but;
 
-  grid->addWidget( new QLabel(tr("Remote library IP:")), 0, 0 );
-  grid->addWidget( mServerRepo = new QLineEdit(), 0, 1 );
-  mServerRepo->setText( s.value( QStringLiteral(SDK_SERVER_REPO) ).toString() );
-  mServerRepo->setReadOnly(true);
-  grid->addWidget( but = new QPushButton( tr("Resync") ), 0, 2 );
-  connect( but, &QPushButton::clicked, this, [] () {
-    QSettings s;
-    s.setValue( SDK_REMOTE_SYNC, 1 );
+  grid->addWidget( new QLabel(tr("Local library path:")), 0, 0 );
+  grid->addWidget( mLocalLibraryPath = new QLineEdit( s.value(SDK_LOCAL_LIBRARY_PATH).toString() ), 0, 1 );
+  grid->addWidget( but = new QPushButton( tr("Select...") ), 1, 2 );
+  connect( but, &QPushButton::clicked, this, [this] () {
+    QString str = QFileDialog::getExistingDirectory( this, tr("Local library path"), mLocalLibraryPath->text() );
+    if( !str.isEmpty() )
+      mLocalLibraryPath->setText( str );
     });
 
+
+  grid->addWidget( new QLabel(tr("Global storage IP:")), 1, 0 );
+  grid->addWidget( mGlobalStorageIp = new QLineEdit(s.value( QStringLiteral(SDK_GLOBAL_STORAGE_IP), SD_DEFAULT_GLOBAL_STORAGE_IP ).toString()), 1, 1 );
+  mGlobalStorageIp->setInputMask( "000.000.000.000;_" );
+  grid->addWidget( but = new QPushButton( tr("Resync") ), 1, 2 );
+  connect( but, &QPushButton::clicked, this, [] () {
+    SdLibraryStorage::instance()->globalStorageSyncReset();
+    });
+
+
+  grid->addWidget( new QLabel(tr("Private cloud IP:")), 2, 0 );
+  grid->addWidget( mPrivateCloudIp = new QLineEdit(s.value( QStringLiteral(SDK_PRIVATE_CLOUD_IP), SD_DEFAULT_PRIVATE_CLOUD_IP ).toString()), 2, 1 );
+  mPrivateCloudIp->setInputMask( "000.000.000.000;_" );
+  grid->addWidget( but = new QPushButton( tr("Resync") ), 2, 2 );
+  connect( but, &QPushButton::clicked, this, [] () {
+    SdLibraryStorage::instance()->privateCloudSyncReset();
+    });
+
+
+  grid->addWidget( new QLabel(tr("Private cloud ID:")), 3, 0 );
+  grid->addWidget( mPrivateCloudId = new QLineEdit( SdLibraryStorage::instance()->privateCloudName() ), 3, 1 );
+  //Cloud id builds in form SlxCloud-00000000-0000-0000-0000-000000000000
+  mPrivateCloudId->setInputMask( "AAAAAAAA-AAAAAAAA-AAAA-AAAA-AAAAAAAAAAAA;#" );
+  grid->addWidget( but = new QPushButton( tr("Get new") ), 3, 2 );
+  connect( but, &QPushButton::clicked, this, [this] () {
+    mPrivateCloudId->setText( SdLibraryStorage::instance()->privateCloudNameNew() );
+    SdLibraryStorage::instance()->privateCloudSyncReset();
+    });
+
+
+/*
   grid->addWidget( new QLabel(tr("Enable automatic object upload:")), 1, 0 );
   grid->addWidget( mAutoUpload = new QCheckBox(), 1, 1 );
   mAutoUpload->setChecked( s.value(SDK_UPLOAD_AUTO, false ).toBool() );
@@ -72,19 +100,42 @@ SdDOptionsPageLibrary::SdDOptionsPageLibrary(QWidget *parent) :
 //    });
 
 
-//  grid->addWidget( new QLabel(tr("Library path:")), 1, 0 );
-//  grid->addWidget( mLibraryPath = new QLineEdit(), 1, 1 );
-//  mLibraryPath->setText( sdEnvir->mLibraryPath );
-//  grid->addWidget( but = new QPushButton( tr("Select...") ), 1, 2 );
-//  connect( but, &QPushButton::clicked, this, [this] () {
-//    QString str = QFileDialog::getExistingDirectory( this, tr("Library path"), mLibraryPath->text() );
-//    if( !str.isEmpty() )
-//      mLibraryPath->setText( str );
-//    });
 
 
 
-
+*/
 
   setLayout( grid );
+  }
+
+
+
+void SdDOptionsPageLibrary::accept()
+  {
+  QSettings s;
+  if( mLocalLibraryPath->text() != s.value(SDK_LOCAL_LIBRARY_PATH).toString() ) {
+    //Library path changed
+    SdLibraryStorage::instance()->libraryPathSet( mLocalLibraryPath->text() );
+    SdLibraryStorage::instance()->globalStorageSyncReset();
+    SdLibraryStorage::instance()->privateCloudSyncReset();
+    }
+
+  if( mGlobalStorageIp->text() != s.value( QStringLiteral(SDK_GLOBAL_STORAGE_IP), SD_DEFAULT_GLOBAL_STORAGE_IP ).toString()  ) {
+    //Global storage ip changed
+    s.setValue( QStringLiteral(SDK_GLOBAL_STORAGE_IP), mGlobalStorageIp->text() );
+    SdLibraryStorage::instance()->globalStorageSyncReset();
+    }
+
+  if( mPrivateCloudIp->text() != s.value( QStringLiteral(SDK_PRIVATE_CLOUD_IP), SD_DEFAULT_PRIVATE_CLOUD_IP ).toString() ) {
+    //Private cloud ip changed
+    s.setValue( QStringLiteral(SDK_PRIVATE_CLOUD_IP), mPrivateCloudIp->text() );
+    SdLibraryStorage::instance()->privateCloudSyncReset();
+    }
+
+  if( mPrivateCloudId->text() != SdLibraryStorage::privateCloudName() ) {
+    //Private cloud name changed
+    s.setValue( QStringLiteral(SDK_PRIVATE_CLOUD_NAME), mPrivateCloudId->text() );
+    SdLibraryStorage::instance()->privateCloudSyncReset();
+    }
+
   }

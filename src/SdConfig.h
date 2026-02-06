@@ -317,24 +317,25 @@ History
 //Max object in find list of GetObject dialog
 #define SD_GET_OBJECT_MAX_FIND_LIST  300
 
+//Default IP for global storage and private cloud
+#define SD_DEFAULT_GLOBAL_STORAGE_IP "127.0.0.1"
+#define SD_DEFAULT_PRIVATE_CLOUD_IP  "127.0.0.1"
+
+#define SD_GLOBAL_STORAGE_PORT       1971
+#define SD_PRIVATE_CLOUD_PORT        1972
+
 //Settings key names
 #define SDK_WMAIN_MAX                "WMainMax"
 #define SDK_LANGUAGE                 "Language"
 #define SDK_MAIN_SPLITTER            "MainSplitter"
 #define SDK_PREVIOUS_FILES           "PreviousFiles"
-//#define SDK_GLOBAL_AUTHOR            "Author global id"
-//#define SDK_GLOBAL_PASSWORD          "Author global password"
 #define SDK_PRIVATE_KEY              "PrivateKey"
-//#define SDK_AUTHOR_KEY               "AuthorKey"
-//#define SDK_PUBLIC_NAME              "AuthorName"
-#define SDK_PRIVATE_LAST_SYNC        "Private last sync"
-#define SDK_PRIVATE_LAST_LIST        "Private last list"
-#define SDK_GLOBAL_LAST_SYNC         "Global last sync"
-#define SDK_GLOBAL_LAST_LIST         "Global last list"
-#define SDK_REMOTE_SYNC              "Remote sync"              //!< Remote index of last downloaded object
-#define SDK_REMOTE_REMAIN            "Remote remain"
-#define SDK_SERVER_REPO              "SaliCAD repository"
-#define SDK_UPLOAD_AUTO              "Auto upload"
+#define SDK_LOCAL_LIBRARY_PATH       "LocalLibraryPath"
+#define SDK_GLOBAL_STORAGE_IP        "GlobalStorageIp"
+#define SDK_PRIVATE_CLOUD_IP         "PrivateCloudIp"
+#define SDK_PRIVATE_CLOUD_NAME       "PrivateCloudName"
+//#define SDK_SERVER_REPO              "SaliCAD repository"
+//#define SDK_UPLOAD_AUTO              "Auto upload"
 #define SDK_ENVIR_VERSION            "Envir version"
 #define SDK_ENVIR                    "Envir"
 #define SDK_GET_OBJECT_DLG_CFG       "DlgGetObjectCfg2_8"

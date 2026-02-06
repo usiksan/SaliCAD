@@ -23,6 +23,7 @@ Description
 
 #include "SdLibraryReference.h"
 #include "SdLibraryHeader.h"
+#include "SdAuthorDescription.h"
 #include "SvLib/SvSingleton.h"
 
 #include <QObject>
@@ -42,27 +43,53 @@ class SdContainerFile;
 
 typedef QMap<QString,SdLibraryReference> SdLibraryReferenceMap;
 
+typedef QMap<QString,SdAuthorDescription> SdAuthorAssocMap;
+
 
 class SdLibraryStorage : public QObject
   {
     Q_OBJECT
 
-    QString                mLibraryPath;     //!< Path where library objects resides
-    QFileInfoList          mScanList;        //!< Library scan list contains list of subdirectories of library
-    QTimer                 mScanTimer;       //!< Scan timer for periodic scan library for new or deleted objects
-    QMap<QString,QString>  mExistList;       //!< Map of existing objects
-    SdLibraryReferenceMap  mReferenceMap;    //!< Map with key of object id and value is SdLibraryReference
-    QFile                  mHeaderFile;      //!< File with header of all objects in library
-    QMap<QString,QString>  mAuthorAssoc;     //!< Author public hash to author name association
+    QString                mLibraryPath;       //!< Path where library objects resides
+    QFileInfoList          mScanList;          //!< Library scan list contains list of subdirectories of library
+    QTimer                 mScanTimer;         //!< Scan timer for periodic scan library for new or deleted objects
+    QMap<QString,QString>  mExistList;         //!< Map of existing objects
+    SdLibraryReferenceMap  mReferenceMap;      //!< Map with key of object id and value is SdLibraryReference
+    QFile                  mHeaderFile;        //!< File with header of all objects in library
+    SdAuthorAssocMap       mAuthorAssoc;       //!< Author public hash to author name association
+    qint32                 mPrivateLastSync;   //!< Time of last sync with private cloud
+    qint32                 mPrivateLastList;   //!< Time of last list from private cloud
+    qint32                 mGlobalLastSync;    //!< Time of last sync with global storage
+    qint32                 mGlobalLastList;    //!< Time of last list from global storage
     bool                   mDirty;
-    bool                   mUploadAvailable; //!< If true then there available objects to upload
-    bool                   mNewestMark;      //!< True if need to update newst marks
+    bool                   mNewestMark;        //!< True if need to update newst marks
 
     mutable QReadWriteLock mLock;
+
+    //Statistic
+    int                    mLocalAppended;
+    int                    mLocalRemoved;
+    int                    mLocalUpdated;
+    bool                   mLocalTransfer;
+
+    int                    mGlobalTransferIn;
+    int                    mGlobalTransferOut;
+    int                    mIterGlobalTransferIn;
+    int                    mIterGlobalTransferOut;
+    QString                mGlobalError;
+
+    int                    mCloudTransferIn;
+    int                    mCloudTransferOut;
+    int                    mIterCloudTransferIn;
+    int                    mIterCloudTransferOut;
+    QString                mCloudError;
+
+    bool                   mPause;
 
     SdLibraryStorage();
   public:
     SV_SINGLETON( SdLibraryStorage )
+
 
     //!
     //! \brief objectCount Return count of referenced objects in library
@@ -73,6 +100,12 @@ class SdLibraryStorage : public QObject
 
     //==================================================================
     // Library common
+    //!
+    //! \brief libraryPeriodicBreakResume Breaks or resume scan and sync process
+    //! \param breakOn         When true scan and sync broken
+    //!
+    void             libraryPeriodicBreakResume( bool breakOn );
+
     //!
     //! \brief libraryPath Return current library path
     //! \return            Current library path
@@ -96,9 +129,29 @@ class SdLibraryStorage : public QObject
     //!
     void             libraryComplete();
 
+    //!
+    //! \brief globalStorageSyncReset Reset sync process with global storage. Sync begins from clear.
+    //!
+    void             globalStorageSyncReset();
 
-    //==================================================================
-    // Author association
+    //!
+    //! \brief privateCloudSyncReset Reset sync process with private cloud. Sync begins from clear.
+    //!
+    void             privateCloudSyncReset();
+
+    //!
+    //! \brief privateCloudNameNew Generate new private cloud name
+    //! \return                    Private cloud name
+    //!
+    static QString   privateCloudNameNew() ;
+
+    //!
+    //! \brief privateCloudName Returns current private cloud namr
+    //! \return                 Current private name
+    //!
+    static QString   privateCloudName();
+
+
 
     //==================================================================
     // SdContainerFile
@@ -108,17 +161,17 @@ class SdLibraryStorage : public QObject
     //!                       then nothing done. Older object is never inserted.
     //! \param item           Object for inserting
     //!
-    void             cfObjectInsert( const SdContainerFile *item );
+    void               cfObjectInsert( const SdContainerFile *item );
 
     //Mark item object as deleted
-    void             cfObjectDelete( const SdContainerFile *item );
+    void               cfObjectDelete( const SdContainerFile *item );
 
     //!
     //! \brief cfObjectGet Load object from library
     //! \param uid         UID of loaded object
     //! \return            Loaded object or nullptr
     //!
-    SdContainerFile *cfObjectGet( const QString hashUidName ) const;
+    SdContainerFile   *cfObjectGet( const QString hashUidName ) const;
 
 
     //!
@@ -127,14 +180,14 @@ class SdLibraryStorage : public QObject
     //! \param time        time of locking of tested object
     //! \return            true if tested object present in library and it older then in library
     //!
-    bool             cfIsOlder( const QString hashUidName, qint32 time ) const;
+    bool               cfIsOlder( const QString hashUidName, qint32 time ) const;
 
     //!
     //! \brief cfIsOlder Overloaded function. Test if object present in library and older than there is in library
     //! \param item      Tested object
     //! \return          true if tested object present in library and it older then in library
     //!
-    bool             cfIsOlder( const SdContainerFile *item ) const;
+    bool               cfIsOlder( const SdContainerFile *item ) const;
 
     //!
     //! \brief cfIsOlderOrSame Test if object which represents by uid and time present in library and older or same than there is in library
@@ -142,14 +195,14 @@ class SdLibraryStorage : public QObject
     //! \param time            time of locking of tested object
     //! \return                true if tested object present in library and it older then in library
     //!
-    bool             cfIsOlderOrSame( const QString hashUidName, qint32 time ) const;
+    bool               cfIsOlderOrSame( const QString hashUidName, qint32 time ) const;
 
     //!
     //! \brief cfIsOlderOrSame Overloaded function. Test if object present in library and older or same than there is in library
     //! \param item            Tested object
     //! \return                true if tested object present in library and it older then in library
     //!
-    bool             cfIsOlderOrSame( const SdContainerFile *item ) const;
+    bool               cfIsOlderOrSame( const SdContainerFile *item ) const;
 
     //!
     //! \brief cfObjectContains Return true if object contains in library
@@ -189,8 +242,19 @@ class SdLibraryStorage : public QObject
 
 
     //==================================================================
-    //Authors
+    // Author association
+    //!
+    //! \brief authorGlobalName Return author visual name by author public key
+    //! \param authorPublicKey  Author public key
+    //! \return                 Author visual name
+    //!
     QString          authorGlobalName( const QString &authorPublicKey ) const;
+
+    QString          authorGlobalNameWithRank( const QString &authorPublicKey ) const;
+
+    static QString   authorPrivateKeyNew();
+
+    static QString   authorPublicKey();
   signals:
 
     //Append information item

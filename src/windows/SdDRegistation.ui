@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>439</width>
-    <height>290</height>
+    <width>519</width>
+    <height>283</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>This is first start of SaliCAD. Programm yet not registered. You need to register. Registration allow global element database publish and nothing more.</string>
+      <string>You can work freely without any restrictions and without registration. Registration only allows you to publish components you’ve created for use by the community. Within a group, all members can use each other’s components even without registration.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -27,24 +27,24 @@
    <item>
     <layout class="QFormLayout" name="formLayout">
      <item row="0" column="0">
-      <widget class="QLabel" name="label_7">
+      <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>SaliCAD server:</string>
+        <string>Private key:</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="mServerRepo"/>
+      <widget class="QLineEdit" name="mPrivateKey"/>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="mNameTitle">
        <property name="text">
-        <string>Nik name:</string>
+        <string>Public name:</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="mName"/>
+      <widget class="QLineEdit" name="mPublicName"/>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_3">
@@ -57,14 +57,14 @@
       <widget class="QLineEdit" name="mEmail"/>
      </item>
      <item row="3" column="0">
-      <widget class="QLabel" name="label_6">
+      <widget class="QLabel" name="label_7">
        <property name="text">
-        <string>Private key:</string>
+        <string>SalixEDA server:</string>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="mPassword"/>
+      <widget class="QLineEdit" name="mServer"/>
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="label_5">
@@ -80,14 +80,14 @@
        </property>
       </widget>
      </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="mProcess">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QLabel" name="mProcess">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -108,7 +108,7 @@
      <item>
       <widget class="QPushButton" name="mGeneratePassword">
        <property name="text">
-        <string>Generate password</string>
+        <string>Generate private key</string>
        </property>
       </widget>
      </item>

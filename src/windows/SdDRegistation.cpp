@@ -17,8 +17,8 @@ Description
 #include "SdConfig.h"
 #include "SdDRegistation.h"
 #include "ui_SdDRegistation.h"
-#include "SvLib/SvTime2x.h"
 #include "SdDHelp.h"
+#include "library/SdLibraryStorage.h"
 
 #include <QSettings>
 #include <QMessageBox>
@@ -32,7 +32,7 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
   ui(new Ui::SdDRegistation)
   {
   ui->setupUi(this);
-
+/*
   //Fill fields
   QSettings s;
   //Check and setup default values
@@ -51,7 +51,7 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
   connect( ui->mGeneratePassword, &QPushButton::clicked, this, &SdDRegistation::cmGeneratePassword );
   connect( ui->mClose, &QPushButton::clicked, this, &SdDRegistation::cmClose );
   connect( ui->mName, &QLineEdit::textEdited, this, &SdDRegistation::onEditAuthorName );
-
+*/
 //  connect( this, &SdDRegistation::doRegistration, SdObjectNetClient::instance(), &SdObjectNetClient::doRegister );
   connect( ui->mHelp, &QPushButton::clicked, this, [this] () {
     SdDHelp::help( QString("SdDRegistration.htm"), this );
@@ -87,6 +87,7 @@ SdDRegistation::~SdDRegistation()
 //Registration new user
 void SdDRegistation::cmRegistration()
   {
+  /*
   if( ui->mServerRepo->text().isEmpty() ) {
     QMessageBox::warning( this, tr("Warning!"), tr("Enter repository server") );
     return;
@@ -112,6 +113,7 @@ void SdDRegistation::cmRegistration()
     //Registration new user
     emit doRegistration( ui->mServerRepo->text(), ui->mName->text().toLower(), ui->mPassword->text(), ui->mEmail->text() );
     }
+    */
   }
 
 
@@ -122,14 +124,7 @@ void SdDRegistation::cmRegistration()
 //!
 void SdDRegistation::cmGeneratePassword()
   {
-  static QRandomGenerator64 gen;
-  static bool seed;
-  if( !seed ) {
-    gen.seed( SvTime2x::current() );
-    seed = true;
-    }
-  qint64 key = gen.generate();
-  ui->mPassword->setText( QString::number(key,16) );
+  ui->mPrivateKey->setText( SdLibraryStorage::authorPrivateKeyNew() );
   }
 
 
@@ -145,7 +140,7 @@ void SdDRegistation::onEditAuthorName(const QString nm)
   if( nm.isEmpty() )
     nstatus = 0;
 #ifdef SD_DISABLE_SALI_AUTHOR
-  else if( nm.toLower().contains( QString("sali") ) )
+  else if( nm.toLower().contains( QString("salix") ) )
     nstatus = 1;
 #endif
   else if( nm == QStringLiteral("Anonymous") )
@@ -188,17 +183,6 @@ void SdDRegistation::cmClose()
 
 
 
-QString SdDRegistation::generatePrivateKey()
-  {
-  static QRandomGenerator64 gen;
-  static bool seed;
-  if( !seed ) {
-    gen.seed( SvTime2x::current() );
-    seed = true;
-    }
-  QString firstPart( QString::number( gen.generate() | 0x8000000000000000, 32 ) + QString::number( gen.generate() | 0x8000000000000000, 32 ) );
-  return "User-" + firstPart.mid( 1, 6 ) + "-" + firstPart.mid( 7, 6 ) + "-" + firstPart.mid( 13, 6 ) + "-" + firstPart.mid( 19, 6 );
-  }
 
 
 

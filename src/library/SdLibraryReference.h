@@ -28,22 +28,16 @@ Description
 #define SDLR_REMOVE_GLOBAL  0x4 //!< Object need to be removed from global server
 #define SDLR_REMOVE_PRIVATE 0x8 //!< Object need to be removed from private sync cloud
 
-struct SdLibraryFileUid : public SdFileUid
-  {
-    qint32 mInsertionTime;  //!< Time of object insertion into library
-    qint8  mFlags;          //!< Flags
-
-  };
-
 
 struct SdLibraryReference
   {
     qint32 mCreationTime;   //!< Time of object creation
     qint32 mInsertionTime;  //!< Time of object insertion into library
     qint64 mHeaderPtr;      //!< Header reference. It contains offset from begining headers file to header of this object
+    qint32 mComplaintCount; //!< Count of complaint about the object
     qint8  mFlags;          //!< Flags
 
-    SdLibraryReference() : mCreationTime(0) {}
+    SdLibraryReference() : mCreationTime(0), mInsertionTime(0), mHeaderPtr(0), mComplaintCount(0), mFlags(0) {}
 
     bool isValid() const { return mCreationTime != 0; }
 
@@ -89,7 +83,7 @@ struct SdLibraryReference
 //Write function
 inline QDataStream &operator << ( QDataStream &os, const SdLibraryReference &ref )
   {
-  os << ref.mCreationTime << ref.mInsertionTime << ref.mHeaderPtr << ref.mFlags;
+  os << ref.mCreationTime << ref.mInsertionTime << ref.mHeaderPtr << ref.mComplaintCount << ref.mFlags;
   return os;
   }
 
@@ -97,7 +91,7 @@ inline QDataStream &operator << ( QDataStream &os, const SdLibraryReference &ref
 //Read function
 inline QDataStream &operator >> ( QDataStream &is, SdLibraryReference &ref )
   {
-  is >> ref.mCreationTime >> ref.mInsertionTime >> ref.mHeaderPtr >> ref.mFlags;
+  is >> ref.mCreationTime >> ref.mInsertionTime >> ref.mHeaderPtr >> ref.mComplaintCount >> ref.mFlags;
   return is;
   }
 

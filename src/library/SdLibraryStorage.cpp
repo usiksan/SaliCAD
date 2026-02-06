@@ -19,6 +19,7 @@ Description
   Storage complains all three files and formalized access to it.
 */
 #include "SdLibraryStorage.h"
+#include "SdLibraryIndicator.h"
 #include "objects/SdContainerFile.h"
 #include "SdTcpCborClient.h"
 #include "SvLib/SvDir.h"
@@ -35,6 +36,9 @@ Description
 #include <QCborMap>
 #include <QCborArray>
 #include <QCoreApplication>
+#include <QMetaObject>
+#include <QCryptographicHash>
+#include <QUuid>
 
 
 #define FNAME_REF    cachePath() + QStringLiteral("reference.dat")
@@ -45,12 +49,48 @@ SdLibraryStorage::SdLibraryStorage() :
   QObject(),
   mReferenceMap(),
   mHeaderFile(),
+  mPrivateLastSync(0),   //!< Time of last sync with private cloud
+  mPrivateLastList(0),   //!< Time of last list from private cloud
+  mGlobalLastSync(0),    //!< Time of last sync with global storage
+  mGlobalLastList(0),    //!< Time of last list from global storage
   mDirty(false),
-  mUploadAvailable(false),
   mNewestMark(false),
-  mLock()
+  mLock(),
+  mLocalAppended(0),
+  mLocalRemoved(0),
+  mLocalUpdated(0),
+  mLocalTransfer(false),
+  mGlobalTransferIn(0),
+  mGlobalTransferOut(0),
+  mIterGlobalTransferIn(0),
+  mIterGlobalTransferOut(0),
+  mCloudTransferIn(0),
+  mCloudTransferOut(0),
+  mIterCloudTransferIn(0),
+  mIterCloudTransferOut(0),
+  mPause(false)
   {
   connect( &mScanTimer, &QTimer::timeout, this, &SdLibraryStorage::periodicScan );
+  }
+
+
+
+
+//!
+//! \brief libraryPeriodicBreakResume Breaks or resume scan and sync process
+//! \param breakOn                    When true scan and sync broken
+//!
+void SdLibraryStorage::libraryPeriodicBreakResume(bool breakOn)
+  {
+  if( breakOn ) {
+    //Signal pause
+    mPause = true;
+    mScanTimer.stop();
+    }
+  else {
+    mPause = false;
+    mScanTimer.start( 1000 );
+    }
   }
 
 
@@ -73,7 +113,7 @@ void SdLibraryStorage::libraryPathSet(const QString &path)
     SvDir dir( path );
     mLibraryPath = dir.slashedPath();
     QSettings s;
-    s.setValue( QStringLiteral("LIBRARY_PATH"), mLibraryPath );
+    s.setValue( QStringLiteral(SDK_LOCAL_LIBRARY_PATH), mLibraryPath );
 
     //Clear cache reference map
     mReferenceMap.clear();
@@ -87,7 +127,13 @@ void SdLibraryStorage::libraryPathSet(const QString &path)
     //Clear current scan process
     mScanList.clear();
     mExistList.clear();
-    mUploadAvailable = false;
+
+    //Clear statistic
+    mPrivateLastSync = mPrivateLastList = mGlobalLastSync = mGlobalLastList = 0;
+    mLocalAppended = mLocalRemoved = mLocalUpdated = 0;
+    mLocalTransfer = false;
+    mGlobalTransferIn = mGlobalTransferOut = mIterGlobalTransferIn = mIterGlobalTransferOut = 0;
+    mCloudTransferIn = mCloudTransferOut = mIterCloudTransferIn = mIterCloudTransferOut = 0;
 
     libraryBuildStructure();
     }
@@ -102,6 +148,11 @@ void SdLibraryStorage::libraryPathSet(const QString &path)
 void SdLibraryStorage::libraryInit()
   {
   QWriteLocker locker( &mLock );
+
+  mLocalAppended = mLocalRemoved = mLocalUpdated = 0;
+  mLocalTransfer = false;
+  mGlobalTransferIn = mGlobalTransferOut = mIterGlobalTransferIn = mIterGlobalTransferOut = 0;
+  mCloudTransferIn = mCloudTransferOut = mIterCloudTransferIn = mIterCloudTransferOut = 0;
 
   libraryBuildStructure();
   }
@@ -119,7 +170,7 @@ void SdLibraryStorage::libraryComplete()
     QSaveFile file(FNAME_REF);
     if( file.open(QIODevice::WriteOnly) ) {
       QDataStream os( &file );
-      os << mReferenceMap;
+      os << mReferenceMap << mAuthorAssoc << mPrivateLastSync << mPrivateLastList << mGlobalLastSync << mGlobalLastList;
       if( file.commit() )
         mDirty = false;
       }
@@ -130,6 +181,59 @@ void SdLibraryStorage::libraryComplete()
     mHeaderFile.close();
 
   deleteLater();
+  }
+
+
+
+
+//!
+//! \brief globalStorageSyncReset Reset sync process with global storage. Sync begins from clear.
+//!
+void SdLibraryStorage::globalStorageSyncReset()
+  {
+  mGlobalLastSync = mGlobalLastList = 0;
+  mDirty = true;
+  }
+
+
+
+
+//!
+//! \brief privateCloudSyncReset Reset sync process with private cloud. Sync begins from clear.
+//!
+void SdLibraryStorage::privateCloudSyncReset()
+  {
+  mPrivateLastSync = mPrivateLastList = 0;
+  mDirty = true;
+  }
+
+
+
+
+//!
+//! \brief privateCloudNameNew Generate new private cloud name
+//! \return                    Private cloud name
+//!
+QString SdLibraryStorage::privateCloudNameNew()
+  {
+  return QStringLiteral("SlxCloud-") + QUuid::createUuid().toString( QUuid::WithoutBraces );
+  }
+
+
+
+
+
+//!
+//! \brief privateCloudName Returns current private cloud name
+//! \return                 Current private name
+//!
+QString SdLibraryStorage::privateCloudName()
+  {
+  QSettings s;
+  if( !s.contains(SDK_PRIVATE_CLOUD_NAME) ) {
+    s.setValue( SDK_PRIVATE_CLOUD_NAME, privateCloudNameNew() );
+    }
+  return s.value( SDK_PRIVATE_CLOUD_NAME ).toString();
   }
 
 
@@ -150,7 +254,7 @@ void SdLibraryStorage::cfObjectInsert(const SdContainerFile *item)
 
 void SdLibraryStorage::cfObjectDelete(const SdContainerFile *item)
   {
-  if( item != nullptr && item->getAuthorKey() == item->getDefaultAuthor() ) {
+  if( item != nullptr && item->getAuthorKey() == authorPublicKey() ) {
     QWriteLocker locker( &mLock );
     QString uid = item->hashUidName();
     if( mReferenceMap.contains(uid) && !mReferenceMap.value(uid).isRemoveAny() ) {
@@ -355,7 +459,51 @@ void SdLibraryStorage::forEachReference(std::function<void (const QString &, con
 QString SdLibraryStorage::authorGlobalName(const QString &authorPublicKey) const
   {
   QReadLocker locker( &mLock );
-  return mAuthorAssoc.value(authorPublicKey, tr("Anonim") );
+  if( mAuthorAssoc.contains(authorPublicKey) )
+    return mAuthorAssoc.value(authorPublicKey ).authorName();
+  return tr("Anonim");
+  }
+
+
+
+
+QString SdLibraryStorage::authorGlobalNameWithRank(const QString &authorPublicKey) const
+  {
+  QReadLocker locker( &mLock );
+  if( mAuthorAssoc.contains(authorPublicKey) )
+    return mAuthorAssoc.value(authorPublicKey ).authorNameWithRank();
+  return tr("Anonim [○□]");
+  }
+
+
+
+
+QString SdLibraryStorage::authorPrivateKeyNew()
+  {
+  return QStringLiteral("SlxUser-") + QUuid::createUuid().toString( QUuid::WithoutBraces );
+  }
+
+
+
+
+QString SdLibraryStorage::authorPublicKey()
+  {
+  static QString cachePrivateKey;
+  static QString cacheAuthorKey;
+  QSettings s;
+
+  if( !s.contains(SDK_PRIVATE_KEY) ) {
+    //Author not assigned yet
+    s.setValue( SDK_PRIVATE_KEY, authorPrivateKeyNew() );
+    }
+
+  if( s.value( SDK_PRIVATE_KEY ).toString() != cachePrivateKey ) {
+    cachePrivateKey = s.value( SDK_PRIVATE_KEY ).toString();
+    QByteArray hash = QCryptographicHash::hash( cachePrivateKey.toUtf8(), QCryptographicHash::Sha3_256 );
+    cacheAuthorKey = QString::fromUtf8( hash.toHex() ).first( 16 );
+    }
+
+  return cacheAuthorKey;
   }
 
 
@@ -367,6 +515,7 @@ QString SdLibraryStorage::authorGlobalName(const QString &authorPublicKey) const
 //!
 void SdLibraryStorage::periodicScan()
   {
+  if( mPause ) return;
   if( mScanList.count() ) {
     //Continue scan
     //Here we scan single subdirectory
@@ -400,6 +549,14 @@ void SdLibraryStorage::periodicScan()
             emit informationAppended( tr("Older object removed %1").arg( item->getTitle() )  );
             }
           else {
+            //Statistic update
+            if( mReferenceMap.contains(item.get()->hashUidName()) )
+              //Will be update because older object in library
+              mLocalUpdated++;
+            else
+              //Will be simple append. No same object in library
+              mLocalAppended++;
+            mLocalTransfer = true;
             //Append object to reference
             insertReferenceAndHeader( item.get(), false );
             }
@@ -419,16 +576,62 @@ void SdLibraryStorage::periodicScan()
         if( !QFile::exists( fullPathOfLibraryObject( it.value() ) ) ) {
           qDebug() << it.value() << fullPathOfLibraryObject( it.value() );
           mReferenceMap.remove( it.value() );
+          mLocalRemoved++;
+          mLocalTransfer = true;
           removeCount++;
           }
         }
       if( removeCount )
         emit informationAppended( tr("Remove external deleted objects %1").arg( removeCount )  );
 
+      //Inform about loop complete
+      SdLibraryIndicator::instance()->setLocalLibrary( mReferenceMap.count(), mLocalAppended, mLocalRemoved, mLocalUpdated, mLocalTransfer ? SdLibraryIndicator::SdLisTransfer : SdLibraryIndicator::SdLisNoTransfer, QString{} );
+
+      //Prepare remote sync
+      mIterGlobalTransferIn = mIterGlobalTransferOut = 0;
+      mGlobalError.clear();
+
+      mIterCloudTransferIn = mIterCloudTransferOut = 0;
+      mCloudError.clear();
+
       //Perform sync with remote storage
-  //    QtConcurrent::run( SdLibraryStorage::remoteSync, this ).then( this, [this] () {
+      QtConcurrent::run( SdLibraryStorage::remoteSync, this ).then( this, [this] () {
+        if( mPause ) return;
+
+        //Send statistic to UI
+
+        //First, global storage
+        if( mGlobalError.isEmpty() ) {
+          //No error at global sync
+          //Define is it was transfer or not
+          int stat = mIterGlobalTransferIn == 0 && mIterGlobalTransferOut == 0 ? SdLibraryIndicator::SdLisNoTransfer : SdLibraryIndicator::SdLisTransfer;
+          //Increment total variables (session)
+          mGlobalTransferIn += mIterGlobalTransferIn;
+          mGlobalTransferOut += mIterGlobalTransferOut;
+          //Send signal to UI
+          SdLibraryIndicator::instance()->setGlobalStorage( mGlobalTransferOut, mGlobalTransferIn, stat, QString{} );
+          }
+        else
+          //Was error
+          SdLibraryIndicator::instance()->setGlobalStorage( 0, 0, SdLibraryIndicator::SdLisError, mGlobalError );
+
+        //Second, private cloud
+        if( mCloudError.isEmpty() ) {
+          //No error at global sync
+          //Define is it was transfer or not
+          int stat = mIterCloudTransferIn == 0 && mIterCloudTransferOut == 0 ? SdLibraryIndicator::SdLisNoTransfer : SdLibraryIndicator::SdLisTransfer;
+          //Increment total variables (session)
+          mCloudTransferIn += mIterCloudTransferIn;
+          mCloudTransferOut += mIterCloudTransferOut;
+          //Send signal to UI
+          SdLibraryIndicator::instance()->setPrivateCloud( mCloudTransferOut, mCloudTransferIn, stat, QString{} );
+          }
+        else
+          //Was error
+          SdLibraryIndicator::instance()->setPrivateCloud( 0, 0, SdLibraryIndicator::SdLisError, mCloudError );
+
         mScanTimer.start( 30000 );
-        //});
+        });
 
       if( mNewestMark ) {
         mNewestMark = false;
@@ -443,12 +646,23 @@ void SdLibraryStorage::periodicScan()
     QDir dir( mLibraryPath );
     mScanList = dir.entryInfoList( QDir::AllDirs | QDir::NoDotAndDotDot );
 
-    //Fill map for existing files
-    mExistList.clear();
-    for( auto it = mReferenceMap.cbegin(); it != mReferenceMap.cend(); it++ )
-      mExistList.insert( fileNameOfLibraryObject( it.key() ), it.key() );
+    if( mScanList.count() ) {
+      //Fill map for existing files
+      mExistList.clear();
+      for( auto it = mReferenceMap.cbegin(); it != mReferenceMap.cend(); it++ )
+        mExistList.insert( fileNameOfLibraryObject( it.key() ), it.key() );
 
-    mScanTimer.start( 100 );
+      mLocalTransfer = false;
+
+      mScanTimer.start( 100 );
+      }
+    else {
+      //In library directory no subdir. It is not prepared or it not library directory
+      //Report error
+      SdLibraryIndicator::instance()->setLocalLibrary( mReferenceMap.count(), mLocalAppended, mLocalRemoved, mLocalUpdated, SdLibraryIndicator::SdLisError, tr("Fail scan local library directory<br>Check library path in settings") );
+      mScanTimer.start( 30000 );
+      }
+
     }
   }
 
@@ -593,14 +807,14 @@ QString SdLibraryStorage::fullPathOfLibraryObject(const QString &hashUidName) co
 void SdLibraryStorage::libraryBuildStructure()
   {
   QSettings s;
-  mLibraryPath = s.value( QStringLiteral("LIBRARY_PATH") ).toString();
+  mLibraryPath = s.value( QStringLiteral(SDK_LOCAL_LIBRARY_PATH) ).toString();
   if( mLibraryPath.isEmpty() || mLibraryPath.length() < 3 ) {
     //Library path not defined yet
     SvDir dir( QCoreApplication::applicationDirPath() );
     dir.cd( QStringLiteral("library/") );
     QDir().mkpath( dir.slashedPath() );
     mLibraryPath = dir.slashedPath();
-    s.setValue( QStringLiteral("LIBRARY_PATH"), mLibraryPath );
+    s.setValue( QStringLiteral(SDK_LOCAL_LIBRARY_PATH), mLibraryPath );
     }
 
   //Check library structure
@@ -666,11 +880,11 @@ void SdLibraryStorage::libraryBuildStructure()
   QFile file(FNAME_REF);
   if( file.open(QIODevice::ReadOnly) ) {
     QDataStream is( &file );
-    is >> mReferenceMap;
+    is >> mReferenceMap >> mAuthorAssoc >> mPrivateLastSync >> mPrivateLastList >> mGlobalLastSync >> mGlobalLastList;
     }
   else mLibraryPath.clear();
 
-  if( !mLibraryPath.isEmpty() ) {
+  if( !mLibraryPath.isEmpty() && !mPause ) {
     mScanTimer.start(20);
     }
   }
@@ -776,19 +990,22 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
   QSettings s;
   QList<SdFileUid> fileListForChange;
   qint32 curSync = SvTime2x::current();
-  qint32 lastSync = s.value( SDK_PRIVATE_LAST_SYNC, 0 ).toInt();
+  qint32 lastSync = storage->mPrivateLastSync;
   storage->forEachReference( [lastSync,&fileListForChange] (const QString &hashUidName, const SdLibraryReference &ref) {
-    if( !ref.isPublic() && ref.mInsertionTime > lastSync )
+    if( !ref.isPublic() && ref.isLocalChanged() && ref.mInsertionTime > lastSync )
       fileListForChange.append( SdFileUid( hashUidName, ref.mCreationTime ) );
     });
 
   try {
     SdTcpCborClient client;
-    client.openSocket("host", 1234);
+    client.openSocket(s.value(SDK_PRIVATE_CLOUD_IP, SD_DEFAULT_PRIVATE_CLOUD_IP).toString(), SD_PRIVATE_CLOUD_PORT );
 
     if( !fileListForChange.isEmpty() ) {
       //Perform sync for each object
-      for( auto fileUid : fileListForChange ) {
+      for( const auto &fileUid : std::as_const(fileListForChange) ) {
+        //Check if we need break operation
+        if( storage->mPause ) return;
+
         SdLibraryReference ref = storage->cfReference( fileUid.mHashUidName );
         if( ref.mCreationTime != fileUid.mCreateTime ) continue;
 
@@ -809,6 +1026,7 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
               res = client.transferMap( storage->prepareQuery( SDRM_TYPE_OBJECT, fileUid, true ) );
               if( res[SDRM_TYPE].toInteger() != SDRM_TYPE_OK )
                 return;
+              storage->mIterCloudTransferOut++;
               }
             }
           }
@@ -816,10 +1034,11 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
       }
 
     //Update sync time
-    s.setValue( SDK_PRIVATE_LAST_SYNC, curSync );
+    storage->mPrivateLastSync = curSync;
+    storage->mDirty = true;
 
     //Get from cloud list newest objects
-    QCborMap listMap = client.transferMap( prepareQueryList( SDRM_TYPE_GET_LIST, s.value( SDK_PRIVATE_LAST_LIST, 0 ).toInt() ) );
+    QCborMap listMap = client.transferMap( prepareQueryList( SDRM_TYPE_GET_LIST, storage->mPrivateLastList ) );
 
     if( listMap[SDRM_TYPE].toInteger() == SDRM_TYPE_LIST ) {
       QCborArray ar = listMap[SDRM_LIST].toArray();
@@ -832,7 +1051,10 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
 
       if( !fileListForChange.isEmpty() ) {
         //Perform sync for each object
-        for( auto fileUid : fileListForChange ) {
+        for( const auto &fileUid : std::as_const(fileListForChange) ) {
+          //Check if we need break operation
+          if( storage->mPause ) return;
+
           if( storage->cfIsOlderOrSame( fileUid.mHashUidName, fileUid.mCreateTime ) )
             continue;
           QCborMap res = client.transferMap( storage->prepareQuery( SDRM_TYPE_GET, fileUid ) );
@@ -844,18 +1066,20 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
               }
             else {
               storage->objectPut( fileContent );
+              storage->mIterCloudTransferIn++;
               }
             }
           else return;
           }
         }
       //Update last list time
-      int lastListTime = listMap[SDRM_CREATE_TIME].toInteger();
-      s.setValue( SDK_PRIVATE_LAST_LIST, lastListTime );
+      storage->mPrivateLastList = listMap[SDRM_CREATE_TIME].toInteger();
+      storage->mDirty = true;
       }
     }
   catch(const std::exception& e) {
     qDebug() << "Error occured" << e.what();
+    storage->mCloudError = e.what();
     }
 
 
@@ -865,19 +1089,22 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
 
   fileListForChange.clear();
   curSync = SvTime2x::current();
-  lastSync = s.value( SDK_GLOBAL_LAST_SYNC, 0 ).toInt();
+  lastSync = storage->mGlobalLastSync;
   storage->forEachReference( [lastSync,&fileListForChange] (const QString &hashUidName, const SdLibraryReference &ref) {
-    if( ref.isPublic() && ref.mInsertionTime > lastSync )
+    if( ref.isPublic() && ref.isLocalChanged() && ref.mInsertionTime > lastSync )
       fileListForChange.append( SdFileUid( hashUidName, ref.mCreationTime ) );
     });
 
   try {
     SdTcpCborClient client;
-    client.openSocket("cloud", 1234);
+    client.openSocket( s.value(SDK_GLOBAL_STORAGE_IP, SD_DEFAULT_GLOBAL_STORAGE_IP).toString(), SD_GLOBAL_STORAGE_PORT );
 
     if( !fileListForChange.isEmpty() ) {
       //Perform sync for each object
-      for( auto fileUid : fileListForChange ) {
+      for( const auto &fileUid : std::as_const(fileListForChange) ) {
+        //Check if we need break operation
+        if( storage->mPause ) return;
+
         SdLibraryReference ref = storage->cfReference( fileUid.mHashUidName );
         if( ref.mCreationTime != fileUid.mCreateTime ) continue;
 
@@ -898,6 +1125,7 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
               res = client.transferMap( storage->prepareQuery( SDRM_TYPE_OBJECT, fileUid, true ) );
               if( res[SDRM_TYPE].toInteger() != SDRM_TYPE_OK )
                 return;
+              storage->mIterGlobalTransferOut++;
               }
             }
           }
@@ -905,10 +1133,10 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
       }
 
     //Update sync time
-    s.setValue( SDK_GLOBAL_LAST_SYNC, curSync );
+    storage->mGlobalLastSync = curSync;
 
     //Get from cloud list newest objects
-    QCborMap listMap = client.transferMap( prepareQueryList( SDRM_TYPE_GET_LIST, s.value( SDK_GLOBAL_LAST_LIST, 0 ).toInt() ) );
+    QCborMap listMap = client.transferMap( prepareQueryList( SDRM_TYPE_GET_LIST, storage->mGlobalLastList ) );
 
     if( listMap[SDRM_TYPE].toInteger() == SDRM_TYPE_LIST ) {
       QCborArray ar = listMap[SDRM_LIST].toArray();
@@ -921,7 +1149,10 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
 
       if( !fileListForChange.isEmpty() ) {
         //Perform sync for each object
-        for( auto fileUid : fileListForChange ) {
+        for( const auto &fileUid : std::as_const(fileListForChange) ) {
+          //Check if we need break operation
+          if( storage->mPause ) return;
+
           if( storage->cfIsOlderOrSame( fileUid.mHashUidName, fileUid.mCreateTime ) )
             continue;
           QCborMap res = client.transferMap( storage->prepareQuery( SDRM_TYPE_GET, fileUid ) );
@@ -933,18 +1164,19 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
               }
             else {
               storage->objectPut( fileContent );
+              storage->mIterGlobalTransferIn++;
               }
             }
           else return;
           }
         }
       //Update last list time
-      int lastListTime = listMap[SDRM_CREATE_TIME].toInteger();
-      s.setValue( SDK_GLOBAL_LAST_LIST, lastListTime );
+      storage->mGlobalLastList = listMap[SDRM_CREATE_TIME].toInteger();
       }
     }
   catch(const std::exception& e) {
     qDebug() << "Error occured" << e.what();
+    storage->mGlobalError = e.what();
     }
   }
 

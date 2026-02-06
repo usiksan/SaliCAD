@@ -91,9 +91,6 @@ void SdDOptionsPagePath::accept()
   dir.set( mLibraryPath->text() );
   if( SdLibraryStorage::instance()->libraryPath() != dir.slashedPath() ) {
     //Library path changed. We change library path to libraryStorage and reset sync counts
-    QSettings s;
-    s.setValue( SDK_REMOTE_SYNC, 1 );
-
     SdLibraryStorage::instance()->libraryPathSet( dir.slashedPath() );
     }
 
