@@ -776,7 +776,10 @@ void SdWMain::cmFileLoad()
 void SdWMain::cmFileOpen()
   {
   QString title = QFileDialog::getOpenFileName(this, tr("Open project file"), QString(),
-                                               tr("SaliCAD Files (*%1 *%2);;KiCad files (*.kicad_mod)").arg(".salicadx", SD_BINARY_EXTENSION) );
+                                               tr("SalixEDA Files (*%1 *%2);;"
+                                                  "SaliCAD files (*%3 *%4);;"
+                                                  "KiCad files (*.kicad_mod)").arg(SD_BASE_EXTENSION, SD_BINARY_EXTENSION)
+                                               .arg( SD_SALICAD_EXTENSION, SD_SALICAD_BIN_EXTENSION ) );
 
   if( title.isEmpty() ) return;
 

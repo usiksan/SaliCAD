@@ -85,7 +85,7 @@ struct SdLibraryHeader
     //! \brief read          Read object header from data stream
     //! \param is            Input data stream
     //!
-    void    read( QDataStream &is ) { is >> mName >> mType >> mAuthorKey >> mFileUid >> mClass >> mPartPresent >> mParamTable >> mIsPublic >> mVariantFieldCount >> mVariantTable; }
+    void    read( QDataStream &is ) { is >> mName >> mType >> mAuthorKey >> mFileUid >> mClass >> mPartPresent >> mIsPublic >> mParamTable >> mVariantFieldCount >> mVariantTable; }
 
     //!
     //! \brief hashUidName   Return hash of unical object name

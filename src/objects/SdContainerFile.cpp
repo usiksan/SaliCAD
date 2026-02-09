@@ -183,12 +183,11 @@ QString SdContainerFile::getDefaultAuthor()
 QString SdContainerFile::hashUidName(const QString &objectType, const QString &objectTitle, const QString &authorKey)
   {
   QString unicalName( objectType + objectTitle + authorKey );
-  QByteArray hash = QCryptographicHash::hash( unicalName.toUtf8(), QCryptographicHash::Sha3_256 );
+  QByteArray hash = QCryptographicHash::hash( unicalName.toUtf8(), QCryptographicHash::Blake2s_128 );
 
   //Convert binary hash to string
   static const char alphabet[] = "0123456789abcdefghijklmnopqrstuv";
 
-  // Берем только 255 бит (отбрасываем 1 бит)
   QByteArray result;
 
   //Prefix
@@ -198,11 +197,9 @@ QString SdContainerFile::hashUidName(const QString &objectType, const QString &o
   int buffer = (quint8)hash[0];
   int bits = 5;
   result.append(alphabet[(buffer >> bits) & 0x1F]);
-  bits = 2;
-  result.append(alphabet[(buffer >> bits) & 0x1F]);
 
-  // Обрабатываем 31 байт и 7 бит из последнего байта
-  for( int i = 1; i < 32; i++ ) {
+  // Обрабатываем 16 байт
+  for( int i = 1; i < 16; i++ ) {
     buffer = (buffer << 8) | (quint8)hash[i];
     bits += 8;
 
@@ -211,6 +208,9 @@ QString SdContainerFile::hashUidName(const QString &objectType, const QString &o
       result.append(alphabet[(buffer >> bits) & 0x1F]);
       }
     }
+
+  if( result.size() != SD_HASH_UID_NAME_LEN )
+    qFatal() << "Hash uid name generator length not equal to global SD_HASH_UID_NAME_LEN";
 
   return QString::fromLatin1(result);
   }

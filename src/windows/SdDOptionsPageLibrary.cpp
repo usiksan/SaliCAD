@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QFileDialog>
+#include <QRegularExpressionValidator>
 
 SdDOptionsPageLibrary::SdDOptionsPageLibrary(QWidget *parent) :
   QWidget(parent)
@@ -28,9 +29,16 @@ SdDOptionsPageLibrary::SdDOptionsPageLibrary(QWidget *parent) :
     });
 
 
+  // Регулярное выражение для IP4
+  QRegularExpression regex(
+      "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}"
+      "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+  );
+
   grid->addWidget( new QLabel(tr("Global storage IP:")), 1, 0 );
   grid->addWidget( mGlobalStorageIp = new QLineEdit(s.value( QStringLiteral(SDK_GLOBAL_STORAGE_IP), SD_DEFAULT_GLOBAL_STORAGE_IP ).toString()), 1, 1 );
-  mGlobalStorageIp->setInputMask( "000.000.000.000;_" );
+  mGlobalStorageIp->setInputMask( "999.999.999.999;#" );
+  mGlobalStorageIp->setValidator( new QRegularExpressionValidator(regex, mGlobalStorageIp ) );
   grid->addWidget( but = new QPushButton( tr("Resync") ), 1, 2 );
   connect( but, &QPushButton::clicked, this, [] () {
     SdLibraryStorage::instance()->globalStorageSyncReset();
@@ -39,7 +47,8 @@ SdDOptionsPageLibrary::SdDOptionsPageLibrary(QWidget *parent) :
 
   grid->addWidget( new QLabel(tr("Private cloud IP:")), 2, 0 );
   grid->addWidget( mPrivateCloudIp = new QLineEdit(s.value( QStringLiteral(SDK_PRIVATE_CLOUD_IP), SD_DEFAULT_PRIVATE_CLOUD_IP ).toString()), 2, 1 );
-  mPrivateCloudIp->setInputMask( "000.000.000.000;_" );
+  mPrivateCloudIp->setInputMask( "999.999.999.999;#" );
+  mPrivateCloudIp->setValidator( new QRegularExpressionValidator(regex, mPrivateCloudIp ) );
   grid->addWidget( but = new QPushButton( tr("Resync") ), 2, 2 );
   connect( but, &QPushButton::clicked, this, [] () {
     SdLibraryStorage::instance()->privateCloudSyncReset();
@@ -49,7 +58,7 @@ SdDOptionsPageLibrary::SdDOptionsPageLibrary(QWidget *parent) :
   grid->addWidget( new QLabel(tr("Private cloud ID:")), 3, 0 );
   grid->addWidget( mPrivateCloudId = new QLineEdit( SdLibraryStorage::instance()->privateCloudName() ), 3, 1 );
   //Cloud id builds in form SlxCloud-00000000-0000-0000-0000-000000000000
-  mPrivateCloudId->setInputMask( "AAAAAAAA-AAAAAAAA-AAAA-AAAA-AAAAAAAAAAAA;#" );
+  mPrivateCloudId->setInputMask( "NNNNNNNN-NNNNNNNN-NNNN-NNNN-NNNNNNNNNNNN;#" );
   grid->addWidget( but = new QPushButton( tr("Get new") ), 3, 2 );
   connect( but, &QPushButton::clicked, this, [this] () {
     mPrivateCloudId->setText( SdLibraryStorage::instance()->privateCloudNameNew() );

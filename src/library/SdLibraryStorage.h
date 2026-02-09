@@ -255,6 +255,8 @@ class SdLibraryStorage : public QObject
     static QString   authorPrivateKeyNew();
 
     static QString   authorPublicKey();
+
+    static QString   convertSaliCadUidToHash( const QString &saliCadUid );
   signals:
 
     //Append information item

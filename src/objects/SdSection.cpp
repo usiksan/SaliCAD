@@ -140,6 +140,9 @@ void SdSection::json(const SdJsonReader &js)
   js.jsonString( QStringLiteral("SymbolTitle"), mSymbolTitle );
   js.jsonString( QStringLiteral("SymbolId"), mSymbolId );
   js.jsonMapString( QStringLiteral("PinAssotiation"), mAssociationTable );
+  if( js.property()->mVersion == SD_BASE_VERSION_2 ) {
+    mSymbolId = SdLibraryStorage::convertSaliCadUidToHash( mSymbolId );
+    }
   SdObject::json( js );
   }
 

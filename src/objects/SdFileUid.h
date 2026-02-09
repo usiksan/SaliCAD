@@ -7,6 +7,7 @@
 #include <QString>
 #include <QDataStream>
 
+
 struct SdFileUid
   {
     QString mHashUidName; //!< Hash for unical name of object as combination object type, object title and objects author public key
@@ -37,10 +38,10 @@ struct SdFileUid
     //!
     bool    fromFileUid( const QString &fileUid )
       {
-      if( fileUid.size() != (62 + SD_BINARY_EXTENSION_LENGTH) || !fileUid.endsWith(SD_BINARY_EXTENSION) || fileUid.at(53) != QChar('-') )
+      if( fileUid.size() != (SD_HASH_UID_NAME_LEN + 9 + SD_BINARY_EXTENSION_LENGTH) || !fileUid.endsWith(SD_BINARY_EXTENSION) || fileUid.at(53) != QChar('-') )
         return false;
-      mHashUidName = fileUid.mid( 0, 53 );
-      mCreateTime  = fileUid.mid( 54, 8 ).toInt( nullptr, 16 );
+      mHashUidName = fileUid.mid( 0, SD_HASH_UID_NAME_LEN );
+      mCreateTime  = fileUid.mid( SD_HASH_UID_NAME_LEN + 1, 8 ).toInt( nullptr, 16 );
       return true;
       }
 

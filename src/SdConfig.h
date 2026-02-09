@@ -251,12 +251,16 @@ History
 #define SD_DISABLE_SALI_AUTHOR
 
 //Project naming definition
-#define SD_BASE_EXTENSION            ".salicad"
+#define SD_BASE_EXTENSION            ".salixeda-ex"
 #define SD_DEFAULT_FILE_NAME         "default"
 
 //Binary project naming definition
 #define SD_BINARY_EXTENSION          ".salixeda"
 #define SD_BINARY_EXTENSION_LENGTH   9
+
+//SaliCAD compatibility
+#define SD_SALICAD_EXTENSION         ".salicad"
+#define SD_SALICAD_BIN_EXTENSION     ".salicadx"
 
 //Layer list naming definition
 #define SD_LAYER_LIST_EXTENSION      ".layersSet"
@@ -281,6 +285,10 @@ History
 
 //Salicad json file type description
 #define SD_BASE_TYPE                 "SaliCAD file"
+
+//Hash uid generator for name result length
+#define SD_HASH_UID_NAME_LEN         27
+
 
 //Previous file count in menu
 #define PREVIOUS_FILES_COUNT         10
@@ -318,8 +326,8 @@ History
 #define SD_GET_OBJECT_MAX_FIND_LIST  300
 
 //Default IP for global storage and private cloud
-#define SD_DEFAULT_GLOBAL_STORAGE_IP "127.0.0.1"
-#define SD_DEFAULT_PRIVATE_CLOUD_IP  "127.0.0.1"
+#define SD_DEFAULT_GLOBAL_STORAGE_IP "127.000.000.001"
+#define SD_DEFAULT_PRIVATE_CLOUD_IP  "127.000.000.001"
 
 #define SD_GLOBAL_STORAGE_PORT       1971
 #define SD_PRIVATE_CLOUD_PORT        1972

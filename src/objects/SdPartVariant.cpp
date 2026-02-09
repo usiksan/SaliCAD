@@ -117,6 +117,9 @@ void SdPartVariant::json(const SdJsonReader &js)
   js.jsonString( QStringLiteral("PartTitle"), mPartTitle );
   js.jsonString( QStringLiteral("PartId"), mPartId );
   js.jsonBool( QString("Default"), mDefault );
+  if( js.property()->mVersion == SD_BASE_VERSION_2 ) {
+    mPartId = SdLibraryStorage::convertSaliCadUidToHash( mPartId );
+    }
   SdObject::json( js );
   }
 

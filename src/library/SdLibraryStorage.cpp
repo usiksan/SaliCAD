@@ -233,6 +233,7 @@ QString SdLibraryStorage::privateCloudName()
   if( !s.contains(SDK_PRIVATE_CLOUD_NAME) ) {
     s.setValue( SDK_PRIVATE_CLOUD_NAME, privateCloudNameNew() );
     }
+  qDebug() << "Private cloud name" << s.value( SDK_PRIVATE_CLOUD_NAME ).toString();
   return s.value( SDK_PRIVATE_CLOUD_NAME ).toString();
   }
 
@@ -499,11 +500,24 @@ QString SdLibraryStorage::authorPublicKey()
 
   if( s.value( SDK_PRIVATE_KEY ).toString() != cachePrivateKey ) {
     cachePrivateKey = s.value( SDK_PRIVATE_KEY ).toString();
-    QByteArray hash = QCryptographicHash::hash( cachePrivateKey.toUtf8(), QCryptographicHash::Sha3_256 );
+    QByteArray hash = QCryptographicHash::hash( cachePrivateKey.toUtf8(), QCryptographicHash::Blake2s_128 );
     cacheAuthorKey = QString::fromUtf8( hash.toHex() ).first( 16 );
     }
 
   return cacheAuthorKey;
+  }
+
+
+
+
+
+QString SdLibraryStorage::convertSaliCadUidToHash(const QString &saliCadUid)
+  {
+  //Split uid to separate parts
+  QStringList list = saliCadUid.split( sdUidDelimiter );
+  if( list.count() != 3 )
+    return QString{};
+  return SdContainerFile::hashUidName( list.at(0), list.at(1), authorPublicKey() );
   }
 
 
@@ -574,7 +588,7 @@ void SdLibraryStorage::periodicScan()
       for( auto it = mExistList.cbegin(); it != mExistList.cend(); it++ ) {
         //Check if file actually removed
         if( !QFile::exists( fullPathOfLibraryObject( it.value() ) ) ) {
-          qDebug() << it.value() << fullPathOfLibraryObject( it.value() );
+          //qDebug() << it.value() << fullPathOfLibraryObject( it.value() );
           mReferenceMap.remove( it.value() );
           mLocalRemoved++;
           mLocalTransfer = true;
