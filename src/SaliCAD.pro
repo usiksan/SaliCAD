@@ -497,6 +497,7 @@ HEADERS  += \
     import/vrml/VrmlVector.h \
     library/SdAuthorDescription.h \
     library/SdLibraryIndicator.h \
+    library/SdLibraryServerDef.h \
     library/SdStringMap.h \
     library/SdTcpCborClient.h \
     master/SdDMasterPartModule.h \

@@ -329,9 +329,6 @@ History
 #define SD_DEFAULT_GLOBAL_STORAGE_IP "127.000.000.001"
 #define SD_DEFAULT_PRIVATE_CLOUD_IP  "127.000.000.001"
 
-#define SD_GLOBAL_STORAGE_PORT       1971
-#define SD_PRIVATE_CLOUD_PORT        1972
-
 //Settings key names
 #define SDK_WMAIN_MAX                "WMainMax"
 #define SDK_LANGUAGE                 "Language"
