@@ -48,7 +48,7 @@ Description
 #define dctGraphScript    0x08000000ul
 #define dctNetParam       0x10000000ul
 
-#define dctLocal          0x80000000ul //This flag setup for objects which must not be send to global storage
+//#define dctLocal          0x80000000ul //This flag setup for objects which must not be send to global storage
 
 
 #define dctPicture       (dctLines | dctText)
@@ -59,6 +59,11 @@ Description
 #define dctSheetObjects  (dctPicture | dctSymImp | dctNetWire | dctNetName | dctNetParam | dctGraphScript)
 #define dctPlateObjects  (dctPicture | dctPartImp | dctTraceVia | dctTraceRoad | dctTracePolygon )
 #define dctTraced        (dctPartImp | dctTraceVia | dctTraceRoad | dctTracePolygon )
+
+//Classes for defining layer membership
+#define dctSchematic     (dctSheet | dctSymbol)
+#define dctConstruct     (dctPart | dctPlate )
+#define dctCommon        (dctSchematic | dctConstruct)
 
 typedef quint64 SdClass;
 

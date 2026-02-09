@@ -30,7 +30,7 @@ class SdLayerCache
     SdLayerCache();
 
     //Build new stratum association
-    void     rebuild(const SdLayerPtrTable &tab, SdLayerTrace tr);
+    void     rebuild(const SdLayerPtrMap &tab, SdLayerTrace tr);
 
     //Return layer mapped to stratum
     SdLayer *getVisibleLayer( int stratum );

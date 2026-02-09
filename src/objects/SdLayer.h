@@ -17,6 +17,7 @@ Description
 #define SDLAYER_H
 
 #include "SdStratum.h"
+#include "SdClass.h"
 
 #include <QString>
 #include <QColor>
@@ -117,10 +118,13 @@ enum SdLayerTrace {
 
 
 struct SdLayerDescr {
-  const char   *mId;       //Layer id
-  unsigned      mColor;    //Layer color
-  SdLayerTrace  mTrace;    //Layer trace type
-  int           mStratum;  //Layer stratum
+  unsigned      mClass;    //!< Classes for defining layer membership
+  const char   *mId;       //!< Layer id
+  const char   *mKiCad;    //!< KiCad layer id
+  const char   *mAltium;   //!< Altium layer id
+  unsigned      mColor;    //!< Layer color
+  SdLayerTrace  mTrace;    //!< Layer trace type
+  int           mStratum;  //!< Layer stratum
   };
 
 //#define LAYER_DESCR_ACTUAL 10 //Actual layers count
@@ -130,9 +134,10 @@ extern SdLayerDescr sdLayerDescrAddon[];
 
 //Translation layer id to human visible name
 struct SdLayerLevel {
-    const char *mLid;       //Level id LIDxxx
-    const char *mTranslate; //Human visible name aka "Schematic net"
-    int         mStratum ;
+    const char *mLid;       //!< Level id LIDxxx
+    const char *mEnglish;   //!< Human visible english name
+    const char *mTranslate; //!< Human visible name aka "Schematic net"
+    int         mStratum;   //!< Stratum for sublevel
   };
 
 extern SdLayerLevel sdLayerLevel0[];
@@ -141,14 +146,18 @@ extern SdLayerLevel sdLayerLevel1[];
 
 class SdLayer
   {
-    QString       mId;       //Layer ident - unical handle
-    QString       mName;     //Layer name for visual
-    SdLayerState  mState;    //State (visible, editing, invisible)
-    SdLayerTrace  mTrace;    //Layer trace type
-    int           mStratum;  //Layer stratum [Позиция слоя при трассировке (верх, низ, внутри)]
-    unsigned      mColor;    //Layer color [Цвет]
-    SdLayer      *mPair;     //Layer pair for flipped component [Парный слой]
-    bool          mUsage;    //Usage flag [Флаг использования]
+    QString       mId;       //!< Layer ident - unical handle
+    QString       mName;     //!< Layer name for visual
+    QString       mEnglish;  //!< Layer name english
+    QString       mKiCadId;  //!< KiCad layer id
+    QString       mAltiumId; //!< Altium layer id
+    SdLayerState  mState;    //!< State (visible, editing, invisible)
+    SdLayerTrace  mTrace;    //!< Layer trace type
+    SdClass       mClass;    //!< Classes for defining layer membership
+    int           mStratum;  //!< Layer stratum [Позиция слоя при трассировке (верх, низ, внутри)]
+    unsigned      mColor;    //!< Layer color [Цвет]
+    SdLayer      *mPair;     //!< Layer pair for flipped component [Парный слой]
+    bool          mUsage;    //!< Usage flag [Флаг использования]
   public:
     SdLayer(QString layerId, QString layerName, unsigned layerColor );
 
@@ -156,6 +165,8 @@ class SdLayer
 
     QString      name() const { return mName; }
     void         setName( const QString nm ) { mName = nm; }
+
+    QString      kiCadId() const { return mKiCadId; }
 
     SdLayer     *pair() { return mPair; }
 
@@ -207,6 +218,6 @@ class SdLayer
 
 typedef SdLayer *SdLayerPtr;
 
-typedef QMap<QString,SdLayerPtr> SdLayerPtrTable;
+typedef QMap<QString,SdLayerPtr> SdLayerPtrMap;
 
 #endif // SDLAYER_H
