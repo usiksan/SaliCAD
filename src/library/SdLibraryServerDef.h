@@ -3,10 +3,11 @@
 
 //Fields of query
 #define SDRM_TYPE                 0
-#define SDRM_HASH_UID_NAME        1
-#define SDRM_CREATE_TIME          2
-#define SDRM_CONTENT              3
-#define SDRM_LIST                 4
+#define SDRM_CLOUD_ID             1
+#define SDRM_HASH_UID_NAME        2
+#define SDRM_CREATE_TIME          3
+#define SDRM_CONTENT              4
+#define SDRM_LIST                 5
 
 #define SDRM_TYPE_FAIL            0
 #define SDRM_TYPE_OK              1 //!< OK Accnowledge
@@ -19,5 +20,9 @@
 
 #define SD_GLOBAL_STORAGE_PORT 1971
 #define SD_PRIVATE_CLOUD_PORT  1972
+
+
+//Hash uid generator for name result length
+#define SD_HASH_UID_NAME_LEN     27
 
 #endif // SDLIBRARYSERVERDEF_H

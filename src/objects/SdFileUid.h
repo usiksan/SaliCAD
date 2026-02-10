@@ -3,6 +3,7 @@
 
 #include "SdConfig.h"
 #include "SdUtil.h"
+#include "library/SdLibraryServerDef.h"
 
 #include <QString>
 #include <QDataStream>

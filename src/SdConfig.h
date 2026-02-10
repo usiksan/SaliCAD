@@ -286,9 +286,6 @@ History
 //Salicad json file type description
 #define SD_BASE_TYPE                 "SaliCAD file"
 
-//Hash uid generator for name result length
-#define SD_HASH_UID_NAME_LEN         27
-
 
 //Previous file count in menu
 #define PREVIOUS_FILES_COUNT         10

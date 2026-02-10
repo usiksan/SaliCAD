@@ -954,6 +954,7 @@ QCborMap SdLibraryStorage::prepareQuery(int queryType, const SdFileUid &uid, boo
   QReadLocker locker( &mLock );
   QCborMap map;
   map[SDRM_TYPE]          = queryType;
+  map[SDRM_CLOUD_ID]      = privateCloudName();
   map[SDRM_HASH_UID_NAME] = uid.mHashUidName;
   map[SDRM_CREATE_TIME]   = uid.mCreateTime;
   if( appendObject )
@@ -967,6 +968,7 @@ QCborMap SdLibraryStorage::prepareQueryList(int queryType, int time)
   {
   QCborMap map;
   map[SDRM_TYPE]        = queryType;
+  map[SDRM_CLOUD_ID]    = privateCloudName();
   map[SDRM_CREATE_TIME] = time;
   return map;
   }
@@ -1000,6 +1002,7 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
     client.openSocket(s.value(SDK_PRIVATE_CLOUD_IP, SD_DEFAULT_PRIVATE_CLOUD_IP).toString(), SD_PRIVATE_CLOUD_PORT );
 
     if( !fileListForChange.isEmpty() ) {
+      qDebug() << "Need to send to cloud objects:" << fileListForChange.count();
       //Perform sync for each object
       for( const auto &fileUid : std::as_const(fileListForChange) ) {
         //Check if we need break operation
@@ -1018,6 +1021,7 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
             else return;
             }
           else {
+            qDebug() << "Check if need to send file:" << fileUid.mHashUidName;
             //Build "check" query
             QCborMap res = client.transferMap( storage->prepareQuery( SDRM_TYPE_CHECK, fileUid ) );
             if( res[SDRM_TYPE].toInteger() == SDRM_TYPE_GET ) {
@@ -1027,6 +1031,8 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
                 return;
               storage->mIterCloudTransferOut++;
               }
+            else if( res[SDRM_TYPE].toInteger() != SDRM_TYPE_OK )
+              return;
             }
           }
         }

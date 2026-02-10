@@ -162,10 +162,10 @@ QCborValue SdTcpCborClient::transferSocket(const QCborValue& data)
 
   // Записываем длину (4 байта, big-endian)
   quint32 size = cborData.size();
-  cborData[0] = (size >> 24) & 0xff;
-  cborData[1] = (size >> 16) & 0xff;
-  cborData[2] = (size >> 8) & 0xff;
-  cborData[3] = (size >> 0) & 0xff;
+  dataToSend[0] = (size >> 24) & 0xff;
+  dataToSend[1] = (size >> 16) & 0xff;
+  dataToSend[2] = (size >> 8) & 0xff;
+  dataToSend[3] = (size >> 0) & 0xff;
 
   // Копируем CBOR данные
   dataToSend.append( cborData );
@@ -235,19 +235,20 @@ QCborValue SdTcpCborClient::transferSocket(const QCborValue& data)
   messageData.reserve(messageLength);
 
   while( messageData.size() < static_cast<int>(messageLength) ) {
-    if( !mSocket->waitForReadyRead(10000) ) {
+    if( mSocket->bytesAvailable() ) {
+      // Читаем доступные данные
+      qint64 bytesToRead = qMin( static_cast<qint64>(messageLength - messageData.size()), mSocket->bytesAvailable() );
+
+      if( bytesToRead > 0 ) {
+        messageData.append(mSocket->read(bytesToRead));
+        }
+
+      qDebug() << "Received " << messageData.size() << " of bytes" << messageLength;
+      }
+    else if( !mSocket->waitForReadyRead(10000) ) {
       qDebug() << "Timeout waiting for message data";
       throw std::runtime_error("Timeout waiting for message data");
       }
-
-    // Читаем доступные данные
-    qint64 bytesToRead = qMin( static_cast<qint64>(messageLength - messageData.size()), mSocket->bytesAvailable() );
-
-    if( bytesToRead > 0 ) {
-      messageData.append(mSocket->read(bytesToRead));
-      }
-
-    qDebug() << "Received " << messageData.size() << " of bytes" << messageLength;
     }
 
   qDebug() << "Received bytes, deserializing..." << messageData.size();
