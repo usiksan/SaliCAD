@@ -65,7 +65,7 @@ class SdEnvir
     QColor          mSysColors[scLast];    //System color table
     QString         mFonts[FONT_COUNT];    //System font table
   public:
-    SdLayerPtrTable mLayerTable;           //Layers table [Таблица слоев]
+    SdLayerPtrMap   mLayerTable;           //Layers table [Таблица слоев]
     int             mDotSize;              //Размер точки соединений сегментов цепи
     int             mDotWidth;             //Толщина линии точки соединения сегментов цепи
     int             mSymPinSize;           //Размер перекрестья ножки символа
@@ -193,6 +193,13 @@ class SdEnvir
     //!
     SdLayer *getLayer( QString id );
 
+    //!
+    //! \brief getLayerKiCad Returns the SalixEDA layer mapped to the KiCAD layer.
+    //! \param kiCadId       KiCad layer name
+    //! \return              Correspond SalixEDA layer. If no mapped layer, then return Common
+    //!
+    SdLayer *getLayerKiCad( const QString &kiCadId ) const;
+
     //Clear stratum layer association cashe
     void     resetForCache();
 
@@ -222,7 +229,7 @@ class SdEnvir
   private:
     void deleteLayers();
     void addLayer( SdLayer *layer );
-    void addLayerId(const QString layerId, unsigned ccolor , SdLayerTrace st, int stratum);
+    void addLayerId(const QString layerId, unsigned ccolor, SdLayerTrace st, int stratum);
   };
 
 extern SdEnvir *sdEnvir;

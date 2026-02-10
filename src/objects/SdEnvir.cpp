@@ -420,6 +420,25 @@ SdLayer *SdEnvir::getLayer(QString id)
 
 
 
+
+//!
+//! \brief getLayerKiCad Returns the SalixEDA layer mapped to the KiCAD layer.
+//! \param kiCadId       KiCad layer name
+//! \return              Correspond SalixEDA layer. If no mapped layer, then return Common
+//!
+SdLayer *SdEnvir::getLayerKiCad(const QString &kiCadId) const
+  {
+  static SdLayerPtrMap kiCadMap;
+  if( kiCadMap.isEmpty() ) {
+    //Fill map
+    for( auto it = mLayerTable.cbegin(); it != mLayerTable.cend(); ++it )
+      kiCadMap.insert( it.value()->kiCadId(), it.value() );
+    }
+  return kiCadMap.value( kiCadId, mLayerTable.value(LID0_COMMON) );
+  }
+
+
+
 void SdEnvir::resetForCache()
   {
   mCacheForPad.rebuild( mLayerTable, layerTracePad );

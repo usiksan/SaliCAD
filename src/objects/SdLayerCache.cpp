@@ -23,7 +23,7 @@ SdLayerCache::SdLayerCache() :
 
 
 //Build new stratum association
-void SdLayerCache::rebuild(const SdLayerPtrTable &tab, SdLayerTrace tr)
+void SdLayerCache::rebuild(const SdLayerPtrMap &tab, SdLayerTrace tr)
   {
   mStratum = -1;
   mCache = nullptr;
