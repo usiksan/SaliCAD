@@ -14,8 +14,8 @@ Description
 #include "SdEnvir.h"
 
 SdLayerDescr sdLayerDescrActual[] = {
-  //   mClass mId                           mKiCad mAltium mReserv0 mReserv1 mReserv2 mReserv3 mReserv4 mReserv5 mColor      mTrace          mStratum
-  { dctCommon, LID0_COMMON,                 "",    "",     "",      "",      "",      "",      "",      "",      0x00404040, layerTraceNone, 0x00000000 }, //0
+  //mId                            mColor      mTrace          mStratum
+  { LID0_COMMON,                 0x00404040, layerTraceNone, 0x00000000 }, //0
   { LID0_INVISIBLE,              0xff007f7f, layerTraceNone, 0x00000000 }, //1
   //Schematic specific
   { LID0_NET,                    0x007fff7f, layerTraceNone, 0x00000000 }, //2

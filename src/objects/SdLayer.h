@@ -49,44 +49,51 @@ enum SdLayerTrace {
 
 
 // Layer identification
+// Both schematic and PCB (without LID1_...)
 #define LID0_COMMON        "Common"       // Any objects
 #define LID0_INVISIBLE     "Invisible"    // Invisible objects
+#define LID0_ERRORS        "Errors"       // For errors display
 
-// Schematic specific
+// For Schematic (without LID1_...)
 #define LID0_NET           "Net"          // Circuit graphics
 #define LID0_NET_NAME      "NetName"      // Net name graphics
 #define LID0_BUS           "Bus"          // Bus graphics
-#define LID0_AREA          "Area"         // PCB area
+#define LID0_AREA          "Area"         // PCB area in schematic editor
+#define LID0_FORM          "Form"         // Drawing form, frames and title blocks
+#define LID0_NAVI          "Navi"         // Navigation grid with alphanumeric addressing
 
-// PCB specific
+// For PCB (without LID1_...)
 #define LID0_PCB           "PCB"          // PCB contour
-#define LID0_WIRE          "Wire"         // PCB wires
-#define LID0_POLYGON       "Polygon"      // Polygon layer
-#define LID0_PAD           "Pad"          // Pads
 #define LID0_HOLE          "Hole"         // Hole
-#define LID0_CLEAR         "Clear"        // Clearance
-#define LID0_SOLDER_MASK   "Mask"         // Mask
+// For PCB (LID1_TOP,LID1_BOT)
 #define LID0_STENCIL       "Stencil"      // Stencil
 #define LID0_STENCIL_REPER "StencilReper" // Stencil fiducial
-#define LID0_EXCLUSION     "Exclusion"    // Trace exclusion area
-#define LID0_TRACE         "Trace"        // Trace area
-#define LID0_TRACE_DEFAULT "TraceDefault" // Default trace layer for undefined stratum
 #define LID0_SILK          "Silk"         // Silk layer
+#define LID0_ADHESIV       "Adhesiv"      // Adhesiv layer
 #define LID0_DIM           "Dim"          // Dimension lines and annotations
 #define LID0_GUIDE         "Guide"        // Construction guides and alignment lines
-
-// Both schematic and PCB
+#define LID0_COURTYARD     "Courtyard"    // Component courtyard
+#define LID0_SOLDER_MASK   "Mask"         // Mask
+// Both schematic and PCB (without LID1_... for schematic; LID1_TOP, LID1_BOT for PCB)
 #define LID0_COMPONENT     "Component"    // Component graphics (symbol or footprint)
 #define LID0_PIN           "Pin"          // Pin graphics
 #define LID0_PIN_NAME      "PinName"      // Pin name graphics
 #define LID0_PIN_NUMBER    "PinNumber"    // Pin number graphics
 #define LID0_IDENT         "Ident"        // Identifier graphics
+#define LID0_VALUE         "Value"        // Value layer
+// Both schematic and PCB (without LID1_... for schematic; without LID1_... and with LID1_xxx for PCB)
 #define LID0_PICTURE       "Picture"      // Arbitrary drawing
 #define LID0_REMARK        "Remark"       // Comment
-#define LID0_VALUE         "Value"        // Value layer
-#define LID0_CONTOUR       "Contour"      // Contour
-#define LID0_FORM          "Form"         // Drawing form, frames and title blocks
-#define LID0_NAVI          "Navi"         // Navigation grid with alphanumeric addressing
+// For PCB (without LID1_... and with LID1_xxx)
+#define LID0_CLEAR         "Clear"        // Clearance
+#define LID0_EXCLUSION     "Exclusion"    // Trace exclusion area
+// For pcb (with LID1_xxx for PCB)
+#define LID0_WIRE          "Wire"         // PCB wires
+#define LID0_POLYGON       "Polygon"      // Polygon layer
+#define LID0_PAD           "Pad"          // Pads
+#define LID0_TRACE         "Trace"        // Trace area
+
+//#define LID0_CONTOUR       "Contour"      // Contour
 
 #define LID1_TOP           ".Top"         // Top side
 #define LID1_BOT           ".Bot"         // Bottom side
@@ -132,14 +139,6 @@ enum SdLayerTrace {
 struct SdLayerDescr {
   unsigned      mClass;    //!< Classes for defining layer membership
   const char   *mId;       //!< Layer id
-  const char   *mKiCad;    //!< KiCad layer id
-  const char   *mAltium;   //!< Altium layer id
-  const char   *mReserv0;  //!< For future extension
-  const char   *mReserv1;
-  const char   *mReserv2;
-  const char   *mReserv3;
-  const char   *mReserv4;
-  const char   *mReserv5;
   unsigned      mColor;    //!< Layer color
   SdLayerTrace  mTrace;    //!< Layer trace type
   int           mStratum;  //!< Layer stratum
