@@ -60,7 +60,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (39 + FONT_COUNT)
+#define SdEnvirVersion  (41 + FONT_COUNT)
 
 
 class SdEnvir
@@ -141,6 +141,8 @@ class SdEnvir
     double          mTextSizeStep;         //Шаг изменения высоты текста
     bool            mCreateBack;           //Создавать BAK файл при сохранении
 
+    //This path depresate
+    QString mPatternPath;
 
     //!
     //! \brief getSysColor Returns system color by its id
@@ -217,9 +219,35 @@ class SdEnvir
     void     layerForEach(quint64 classMask, std::function<bool (SdLayer *)> fun1 );
     void     layerForEachConst( quint64 classMask, std::function<bool(SdLayer*)> fun1 ) const;
 
+    void     layerRemove( const QString &layerId ) { if( mLayerTable.contains(layerId) ) { delete mLayerTable[layerId]; mLayerTable.remove( layerId ); } }
+
+    int      layerCount() const { return mLayerTable.count(); }
+
+    //!
+    //! \brief gridForEach Executes function fun1 to index of grid table
+    //!                    If intex < 0 then for all table
+    //! \param index       Index of row for which need to be executed fun1, if < 0 then for all rows
+    //! \param fun1        Function to execute
+    //!
+    void     gridForEach( int index, std::function<bool (QPointF)> fun1 ) const;
+
+    //!
+    //! \brief gridAppend Appends new record to grid table
+    //! \param p          Record to append
+    //!
+    void     gridAppend( QPointF p );
 
     //Clear stratum layer association cashe
     void     resetForCache();
+
+    SdLayer *layerVisibleForPad( int stratum )      { return mCacheForPad.getVisibleLayer( stratum ); }
+    SdLayer *layerVisibleForMask( int stratum )     { return mCacheForMask.getVisibleLayer( stratum ); }
+    SdLayer *layerVisibleForPolygon( int stratum )  { return mCacheForPolygon.getVisibleLayer( stratum ); }
+    SdLayer *layerVisibleForStencil( int stratum )  { return mCacheForStencil.getVisibleLayer( stratum ); }
+    SdLayer *layerVisibleForHole( int stratum )     { return mCacheForHole.getVisibleLayer( stratum ); }
+    SdLayer *layerVisibleForRoad( int stratum )     { return mCacheForRoad.getVisibleLayer( stratum ); }
+    SdLayer *layerVisibleForBoundary( int stratum ) { return mCacheForBoundary.getVisibleLayer( stratum ); }
+    SdLayer *layerVisibleForKeepout( int stratum )  { return mCacheForKeepout.getVisibleLayer( stratum ); }
 
     //Set layer pair
     void     layerSetPair( QString idTop, QString idBot );
@@ -228,10 +256,6 @@ class SdEnvir
     void     resetLayerUsage();
     //Set "usage" layer flag for stratum layers from caches
     void     setLayerUsage( int stratumCount );
-
-    //Layer id to name translation service
-    QString  layerId2NameLevel0( QString lid0 );
-    QString  layerId2NameLevel1( QString lid1 );
 
     QString  toPhisSchematic( int val ) const { return SdUtil::log2physStr(val,mSchPPM); }
     int      fromPhisSchematic( const QString str ) const { return SdUtil::phys2log(str,mSchPPM); }
@@ -242,12 +266,15 @@ class SdEnvir
     SdPad    getPad( const QString pinType );
     void     resetPads();
 
+    SdRuleBlock defaultRules() const { return mDefaultRules; }
+
     //Return current language settings
     static   QString languageGet();
   private:
     void deleteLayers();
     void addLayer( SdLayer *layer );
     void addLayerId(const SdLayerDescr &descr);
+    void layerSetPairFor( const QString &lid0 );
   };
 
 

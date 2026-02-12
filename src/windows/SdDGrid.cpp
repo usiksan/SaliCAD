@@ -31,8 +31,8 @@ SdDGrid::SdDGrid(QPointF curGrid, QWidget *parent) :
   //Current grid
   printGrid( mGrid );
   ui->mStepX->selectAll();
-  ui->mSyncXY->setChecked( sdEnvir::instance()->mGridSyncXY );
-  ui->mStepY->setDisabled( sdEnvir::instance()->mGridSyncXY );
+  ui->mSyncXY->setChecked( SdEnvir::instance()->mGridSyncXY );
+  ui->mStepY->setDisabled( SdEnvir::instance()->mGridSyncXY );
 
   connect( ui->mStepX, &QLineEdit::textChanged, this, [this] (const QString str) {
     //For syncronous editing when changed X then change and Y
@@ -43,30 +43,34 @@ SdDGrid::SdDGrid(QPointF curGrid, QWidget *parent) :
 
 
   //Fill previous grid list
-  for( QPointF p : sdEnvir::instance()->mGridHistory ) {
-    if( p.x() == 0 || p.y() == 0 ) break;
+  SdEnvir::instance()->gridForEach( -1, [this] ( QPointF p ) -> bool {
+    if( p.x() == 0 || p.y() == 0 ) return false;
     QString str = QString::number( p.x(), 'f', 3 );
     str.append( " x " );
     str.append( QString::number( p.y(), 'f', 3 ) );
     ui->mPreviousList->addItem( str );
-    }
+    return true;
+    });
 
   connect( ui->mPreviousList, &QListWidget::currentRowChanged, this, [this] (int row) {
-    if( row >= 0 && row < sdEnvir::instance()->mGridHistory.count() )
-      printGrid( sdEnvir::instance()->mGridHistory.at(row) );
+    if( row >= 0 )
+      SdEnvir::instance()->gridForEach( row, [this] (QPointF p) -> bool {
+        printGrid( p );
+        return true;
+        });
     });
 
   //Grid view
-  ui->mShowGrid->setChecked( sdEnvir::instance()->mGridShow );
-  ui->mAlignCursor->setChecked( sdEnvir::instance()->mCursorAlignGrid );
-  ui->mShowCursor->setChecked( sdEnvir::instance()->mCursorShow );
+  ui->mShowGrid->setChecked( SdEnvir::instance()->mGridShow );
+  ui->mAlignCursor->setChecked( SdEnvir::instance()->mCursorAlignGrid );
+  ui->mShowCursor->setChecked( SdEnvir::instance()->mCursorShow );
 
   //Crosshair view
-  ui->mCrosshairNone->setChecked( sdEnvir::instance()->mCursorView == 0 );
-  ui->mCrosshairSmall->setChecked( sdEnvir::instance()->mCursorView == 1 );
-  ui->mCrosshairFull->setChecked( sdEnvir::instance()->mCursorView == 2 );
-  ui->mCrosshairSmall45->setChecked( sdEnvir::instance()->mCursorView == 3 );
-  ui->mCrosshairFull45->setChecked( sdEnvir::instance()->mCursorView == 4 );
+  ui->mCrosshairNone->setChecked( SdEnvir::instance()->mCursorView == 0 );
+  ui->mCrosshairSmall->setChecked( SdEnvir::instance()->mCursorView == 1 );
+  ui->mCrosshairFull->setChecked( SdEnvir::instance()->mCursorView == 2 );
+  ui->mCrosshairSmall45->setChecked( SdEnvir::instance()->mCursorView == 3 );
+  ui->mCrosshairFull45->setChecked( SdEnvir::instance()->mCursorView == 4 );
 
   //Help system
   connect( ui->buttonBox, &QDialogButtonBox::helpRequested, this, [this] () { SdDHelp::help( "SdDGrid.htm", this ); });
@@ -90,47 +94,31 @@ void SdDGrid::printGrid(QPointF g)
 void SdDGrid::accept()
   {
   //Syncro flag
-  sdEnvir::instance()->mGridSyncXY = ui->mSyncXY->isChecked();
+  SdEnvir::instance()->mGridSyncXY = ui->mSyncXY->isChecked();
 
   //Current grid
   mGrid.rx() = SdUtil::str2phys( ui->mStepX->text() );
   mGrid.ry() = SdUtil::str2phys( ui->mStepY->text() );
 
   //Grid history
-  int i;
-  for( i = 0; i < sdEnvir::instance()->mGridHistory.count(); i++ )
-    if( sdEnvir::instance()->mGridHistory.at(i) == mGrid ) {
-      if( i ) {
-        //Move grid dimension on top of list
-        sdEnvir::instance()->mGridHistory.removeAt( i );
-        sdEnvir::instance()->mGridHistory.insert( 0, mGrid );
-        }
-      break;
-      }
-  if( i >= sdEnvir::instance()->mGridHistory.count() ) {
-    //This grid dimension is new for list
-    //Check list size. If enough space then simle append else last remove
-    if( sdEnvir::instance()->mGridHistory.count() >= GRID_HISTORY_SIZE )
-      sdEnvir::instance()->mGridHistory.removeLast();
-    sdEnvir::instance()->mGridHistory.insert( 0, mGrid );
-    }
+  SdEnvir::instance()->gridAppend( mGrid );
 
   //Flags
-  sdEnvir::instance()->mGridShow        = ui->mShowGrid->isChecked();
-  sdEnvir::instance()->mCursorAlignGrid = ui->mAlignCursor->isChecked();
-  sdEnvir::instance()->mCursorShow      = ui->mShowCursor->isChecked();
+  SdEnvir::instance()->mGridShow        = ui->mShowGrid->isChecked();
+  SdEnvir::instance()->mCursorAlignGrid = ui->mAlignCursor->isChecked();
+  SdEnvir::instance()->mCursorShow      = ui->mShowCursor->isChecked();
 
   //Cursor crosshair
   if( ui->mCrosshairNone->isChecked() )
-    sdEnvir::instance()->mCursorView = 0;
+    SdEnvir::instance()->mCursorView = 0;
   else if( ui->mCrosshairSmall->isChecked() )
-    sdEnvir::instance()->mCursorView = 1;
+    SdEnvir::instance()->mCursorView = 1;
   else if( ui->mCrosshairFull->isChecked() )
-    sdEnvir::instance()->mCursorView = 2;
+    SdEnvir::instance()->mCursorView = 2;
   else if( ui->mCrosshairSmall45->isChecked() )
-    sdEnvir::instance()->mCursorView = 3;
+    SdEnvir::instance()->mCursorView = 3;
   else
-    sdEnvir::instance()->mCursorView = 4;
+    SdEnvir::instance()->mCursorView = 4;
 
   done(1);
   }

@@ -34,10 +34,10 @@ SdDMasterSymbolConnector::SdDMasterSymbolConnector(SdProjectItem *item, QWidget 
   ui->mPinCount->setText( QString::number(sPinCount) );
 
   //Connector construction defaults
-  ui->mCellHeight->setText( sdEnvir::instance()->toPhisSchematic(sCellHeight) );
-  ui->mPinSizeX->setText( sdEnvir::instance()->toPhisSchematic(sPinSizeX) );
-  ui->mNumberSizeX->setText( sdEnvir::instance()->toPhisSchematic(sNumberSizeX) );
-  ui->mCellSizeX->setText( sdEnvir::instance()->toPhisSchematic(sCellSizeX) );
+  ui->mCellHeight->setText( SdEnvir::instance()->toPhisSchematic(sCellHeight) );
+  ui->mPinSizeX->setText( SdEnvir::instance()->toPhisSchematic(sPinSizeX) );
+  ui->mNumberSizeX->setText( SdEnvir::instance()->toPhisSchematic(sNumberSizeX) );
+  ui->mCellSizeX->setText( SdEnvir::instance()->toPhisSchematic(sCellSizeX) );
   ui->mRightDirection->setChecked(sRightDirection);
 
   onEditChanged( QString() );
@@ -87,10 +87,10 @@ void SdDMasterSymbolConnector::onEditChanged(const QString txt)
 void SdDMasterSymbolConnector::drawSymbol(SdIllustrator &il)
   {
   int pinCount    = ui->mPinCount->text().toInt();
-  int cellHeight  = sdEnvir::instance()->fromPhisSchematic( ui->mCellHeight->text() );
-  int pinSizeX    = sdEnvir::instance()->fromPhisSchematic( ui->mPinSizeX->text() );
-  int numberSizeX = sdEnvir::instance()->fromPhisSchematic( ui->mNumberSizeX->text() );
-  int cellSizeX   = sdEnvir::instance()->fromPhisSchematic( ui->mCellSizeX->text() );
+  int cellHeight  = SdEnvir::instance()->fromPhisSchematic( ui->mCellHeight->text() );
+  int pinSizeX    = SdEnvir::instance()->fromPhisSchematic( ui->mPinSizeX->text() );
+  int numberSizeX = SdEnvir::instance()->fromPhisSchematic( ui->mNumberSizeX->text() );
+  int cellSizeX   = SdEnvir::instance()->fromPhisSchematic( ui->mCellSizeX->text() );
   bool rightDirection = ui->mRightDirection->isChecked();
 
   int rightPos = pinSizeX + numberSizeX + cellSizeX;
@@ -127,10 +127,10 @@ void SdDMasterSymbolConnector::drawSymbol(SdIllustrator &il)
 void SdDMasterSymbolConnector::accept()
   {
   sPinCount    = ui->mPinCount->text().toInt();
-  sCellHeight  = sdEnvir::instance()->fromPhisSchematic( ui->mCellHeight->text() );
-  sPinSizeX    = sdEnvir::instance()->fromPhisSchematic( ui->mPinSizeX->text() );
-  sNumberSizeX = sdEnvir::instance()->fromPhisSchematic( ui->mNumberSizeX->text() );
-  sCellSizeX   = sdEnvir::instance()->fromPhisSchematic( ui->mCellSizeX->text() );
+  sCellHeight  = SdEnvir::instance()->fromPhisSchematic( ui->mCellHeight->text() );
+  sPinSizeX    = SdEnvir::instance()->fromPhisSchematic( ui->mPinSizeX->text() );
+  sNumberSizeX = SdEnvir::instance()->fromPhisSchematic( ui->mNumberSizeX->text() );
+  sCellSizeX   = SdEnvir::instance()->fromPhisSchematic( ui->mCellSizeX->text() );
   sRightDirection = ui->mRightDirection->isChecked();
 
   int rightPos = sPinSizeX + sNumberSizeX + sCellSizeX;

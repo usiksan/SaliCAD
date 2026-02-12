@@ -351,21 +351,27 @@ void SdEnvir::defaultEnvir()
   //Default layer list
   deleteLayers();
   for( int i = 0; sdLayerDescrDefault[i].mId != nullptr; i++ )
-    addLayerId( sdLayerDescrDefault[i].mClass, QString(sdLayerDescrDefault[i].mId), sdLayerDescrDefault[i].mTrace, sdLayerDescrDefault[i].mStratum, sdLayerDescrDefault[i].mColor );
-  for( int i = 0; sdLayerDescrAddon[i].mId != nullptr; i++ )
-    addLayerId( QString(sdLayerDescrAddon[i].mId), sdLayerDescrAddon[i].mColor, sdLayerDescrAddon[i].mTrace, sdLayerDescrAddon[i].mStratum );
+    addLayerId( sdLayerDescrDefault[i] );
 
 
   //Assign paired layers
-  layerSetPair( QString( LID0_COMPONENT ),  QString( LID0_COMPONENT LID1_BOT ) );
-  layerSetPair( QString( LID0_PIN ),        QString( LID0_PIN LID1_BOT ) );
-  layerSetPair( QString( LID0_PIN_NAME ),   QString( LID0_PIN_NAME LID1_BOT ) );
-  layerSetPair( QString( LID0_PIN_NUMBER ), QString( LID0_PIN_NUMBER LID1_BOT ) );
-  layerSetPair( QString( LID0_IDENT ),      QString( LID0_IDENT LID1_BOT ) );
+  layerSetPairFor( LID0_COMPONENT );
+  layerSetPairFor( LID0_PIN );
+  layerSetPairFor( LID0_PIN_NAME );
+  layerSetPairFor( LID0_PIN_NUMBER );
+  layerSetPairFor( LID0_IDENT );
+  layerSetPairFor( LID0_VALUE );
 
-  layerSetPair( QString( LID0_PAD LID1_TOP ),  QString( LID0_PAD LID1_BOT ) );
-  layerSetPair( QString( LID0_CLEAR LID1_TOP ), QString( LID0_CLEAR LID1_BOT ) );
-  layerSetPair( QString( LID0_SOLDER_MASK LID1_TOP ),  QString( LID0_SOLDER_MASK LID1_BOT ) );
+  layerSetPairFor( LID0_PAD );
+  layerSetPairFor( LID0_EXCLUSION );
+  layerSetPairFor( LID0_SOLDER_MASK );
+  layerSetPairFor( LID0_STENCIL );
+  layerSetPairFor( LID0_STENCIL_REPER );
+  layerSetPairFor( LID0_SILK );
+  layerSetPairFor( LID0_ADHESIV );
+  layerSetPairFor( LID0_DIM );
+  layerSetPairFor( LID0_GUIDE );
+  layerSetPairFor( LID0_COURTYARD );
 
 
   //Default pcb rules
@@ -393,9 +399,11 @@ SdLayer *SdEnvir::layerGet(QString id)
     //Not exist. Create new one.
 
     //Build layer name
-    auto [englishName,name] = SdLayer::layerIdToName( id );
+    SdLayerDescr descr;
+    auto [englishName,name] = SdLayer::layerIdToName( id, &descr );
 
-    addLayer( new SdLayer( id, name, englishName, 0x3f803f) );
+    SdLayer *layer = new SdLayer( id, name, englishName, descr.mTrace, descr.mClass, descr.mStratum, descr.mColor );
+    mLayerTable.insert( layer->id(), layer );
     }
 
   return mLayerTable.value(id);
@@ -423,6 +431,54 @@ void SdEnvir::layerForEachConst(quint64 classMask, std::function<bool (SdLayer *
     if( p->classGet() & classMask ) {
       if( !fun1(p) ) return;
       }
+  }
+
+
+
+
+
+
+//!
+//! \brief gridForEach Executes function fun1 to index of grid table
+//!                    If intex < 0 then for all table
+//! \param index       Index of row for which need to be executed fun1, if < 0 then for all rows
+//! \param fun1        Function to execute
+//!
+void SdEnvir::gridForEach(int index, std::function<bool (QPointF)> fun1) const
+  {
+  if( index >= 0 && index < mGridHistory.count() )
+    fun1( mGridHistory.at(index) );
+  else if( index < 0 )
+    for( auto p : std::as_const(mGridHistory) )
+      if( !fun1(p) ) return;
+  }
+
+
+
+
+//!
+//! \brief gridAppend Appends new record to grid table
+//! \param p          Record to append
+//!
+void SdEnvir::gridAppend(QPointF p)
+  {
+  int i;
+  for( i = 0; i < mGridHistory.count(); i++ )
+    if( mGridHistory.at(i) == p ) {
+      if( i ) {
+        //Move grid dimension on top of list
+        SdEnvir::instance()->mGridHistory.removeAt( i );
+        SdEnvir::instance()->mGridHistory.insert( 0, p );
+        }
+      break;
+      }
+  if( i >= mGridHistory.count() ) {
+    //This grid dimension is new for list
+    //Check list size. If enough space then simle append else last remove
+    if( mGridHistory.count() >= GRID_HISTORY_SIZE )
+      mGridHistory.removeLast();
+    mGridHistory.insert( 0, p );
+    }
   }
 
 
@@ -533,10 +589,6 @@ void SdEnvir::deleteLayers()
 
 
 
-void SdEnvir::addLayer(SdLayer *layer)
-  {
-  mLayerTable.insert( layer->id(), layer );
-  }
 
 
 
@@ -546,5 +598,13 @@ void SdEnvir::addLayerId( const SdLayerDescr &descr )
   QString layerId(descr.mId);
   SdLayer *layer = layerGet( layerId );
   auto [englishName,name] = SdLayer::layerIdToName( layerId );
-  layer->init( name, englishName, descr.mTrace, descr.mClass, descr.mStratum, descr.mColor );
+  layer->init( name, englishName, descr.mTrace, descr.mClass, descr.mStratum, descr.mColor, mLayerTable.count() );
+  }
+
+
+
+
+void SdEnvir::layerSetPairFor(const QString &lid0)
+  {
+  layerSetPair( lid0 + QString(LID1_TOP), lid0 + QString(LID1_BOT) );
   }

@@ -1355,10 +1355,14 @@ void SdWMain::cmViewLayers()
     prj = activeProject()->getProject();
   //Get active plate for stratum count definition
   SdPItemPlate *plate = nullptr;
-  if( activeEditor() )
+  int classId = dctCommon;
+  if( activeEditor() ) {
     plate = dynamic_cast<SdPItemPlate*>( activeEditor()->getProjectItem() );
+    if( activeEditor()->getProjectItem() != nullptr )
+      classId = activeEditor()->getProjectItem()->getClass();
+    }
   //Show layers dialog with active project
-  SdDLayers layersDlg( prj, this );
+  SdDLayers layersDlg( classId, prj, this );
   //If active plate then set stratum count for edition
   if( plate != nullptr )
     layersDlg.setStratumCount( plate->stratumCount() );

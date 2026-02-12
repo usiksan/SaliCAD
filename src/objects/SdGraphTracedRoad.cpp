@@ -623,7 +623,7 @@ bool SdGraphTracedRoad::isLinked(SdPoint a, SdStratum stratum, QString netName) 
 //Return layer for road stratum
 SdLayer *SdGraphTracedRoad::getLayer() const
   {
-  return sdEnvir::instance()->mCacheForRoad.getVisibleLayer( mProp.mStratum );
+  return SdEnvir::instance()->layerVisibleForRoad( mProp.mStratum );
   }
 
 

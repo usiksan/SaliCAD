@@ -106,12 +106,12 @@ void SdMode::keyDown(int key, QChar ch)
   if( key == Qt::Key_Asterisk )
     mEditor->cmViewFit();
   else if( key == Qt::Key_Plus ) {
-    if( sdEnvir::instance()->mCenterCursor )
+    if( SdEnvir::instance()->mCenterCursor )
       mEditor->originSet( mEditor->cursorPosition() );
     mEditor->scaleStep( 2.0 );
     }
   else if( key == Qt::Key_Minus ) {
-    if( sdEnvir::instance()->mCenterCursor )
+    if( SdEnvir::instance()->mCenterCursor )
       mEditor->originSet( mEditor->cursorPosition() );
     mEditor->scaleStep( 0.5 );
     }
@@ -119,9 +119,9 @@ void SdMode::keyDown(int key, QChar ch)
     enterPrev();
   else if( key == Qt::Key_X ) {
     //Switch cursor view
-    sdEnvir::instance()->mCursorView++;
-    if( sdEnvir::instance()->mCursorView >= dcvLast )
-      sdEnvir::instance()->mCursorView = dcvNone;
+    SdEnvir::instance()->mCursorView++;
+    if( SdEnvir::instance()->mCursorView >= dcvLast )
+      SdEnvir::instance()->mCursorView = dcvNone;
     update();
     }
   else if( key == Qt::Key_Up )

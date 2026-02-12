@@ -78,7 +78,7 @@ void SdPartImpPin::drawPad(SdContext *dc, SdPItemPlate *plate, int stratum, cons
   {
   //Draw pin pad
   if( !highliteNet.isEmpty() && getNetName() == highliteNet )
-    dc->setOverColor( sdEnvir::instance()->getSysColor(scTraseNet) );
+    dc->setOverColor( SdEnvir::instance()->getSysColor(scTraseNet) );
   plate->drawPad( dc, mPin->getPinOrigin(), mPin->getPinType(), mStratum.stratum() & stratum );
 //  plate->drawPad( dc, mPosition, mPin->getPinType(), mStratum.stratum() & stratum );
   dc->resetOverColor();
@@ -110,7 +110,7 @@ void SdPartImpPin::accumUsedPin(SdPadMap &map) const
   {
   if( !map.contains(mPin->getPinType()) )
     //Append new pin-to-pad association with default pad
-    map.insert( mPin->getPinType(), sdEnvir::instance()->getPad(mPin->getPinType()) );
+    map.insert( mPin->getPinType(), SdEnvir::instance()->getPad(mPin->getPinType()) );
   }
 
 
@@ -1175,7 +1175,7 @@ void SdGraphPartImp::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdSt
   mp.translate( -mPart->getOrigin().xmm(), -mPart->getOrigin().ymm(), 0 );
 
   //At first we scan all throught holes
-  SdLayer *holeLayer = sdEnvir::instance()->layerGet( LID0_HOLE );
+  SdLayer *holeLayer = SdEnvir::instance()->layerGet( LID0_HOLE );
   mPart->forEach( dctLines, [&model,&faceList,holeLayer,mp] ( SdObject *obj ) -> bool {
     SdPtr<SdGraphLinear> linear(obj);
     if( linear.isValid() && linear->isMatchLayer(holeLayer) )

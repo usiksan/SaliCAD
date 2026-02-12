@@ -28,7 +28,7 @@ SdModeCLinearArea::SdModeCLinearArea(SdWEditorGraph *editor, SdProjectItem *obj)
 void SdModeCLinearArea::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sNextPoint ) {
-    ctx->setPen( sdGlobalProp->mLineProp.mWidth.getValue(), sdEnvir::instance()->getSysColor(scEnter),
+    ctx->setPen( sdGlobalProp->mLineProp.mWidth.getValue(), SdEnvir::instance()->getSysColor(scEnter),
                  sdGlobalProp->mLineProp.mType.getValue() );
     ctx->region( mList, false );
     ctx->line( mList.last(), mMiddle );

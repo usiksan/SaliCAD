@@ -27,7 +27,7 @@ SdModePrintWindow::SdModePrintWindow(SdWEditorGraph *editor, SdProjectItem *obj)
 void SdModePrintWindow::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sSecondCorner ) {
-    ctx->setPen( 0, sdEnvir::instance()->getSysColor(scEnter), dltDotted );
+    ctx->setPen( 0, SdEnvir::instance()->getSysColor(scEnter), dltDotted );
     ctx->rect( SdRect(mFirst, mPrevMove) );
     }
   }

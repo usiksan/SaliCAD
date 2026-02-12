@@ -226,7 +226,7 @@ void SdWEditorGraphPlate::cmRulesCheck()
                         return progress.wasCanceled();
                       });
   //Set show rule errors
-  SdWCommand::cmShowRuleErrors->setChecked( sdEnvir::instance()->mShowRuleErrors = true );
+  SdWCommand::cmShowRuleErrors->setChecked( SdEnvir::instance()->mShowRuleErrors = true );
   //Update rat-net
   mPlate->setDirtyRatNet();
   //Update
@@ -306,7 +306,7 @@ void SdWEditorGraphPlate::cmModeViaEnter()
 
 void SdWEditorGraphPlate::cmModeOrigin()
   {
-  modeSet( new SdModeCOriginPlate( this, mPlate, sdEnvir::instance()->mPartPinSize ) );
+  modeSet( new SdModeCOriginPlate( this, mPlate, SdEnvir::instance()->mPartPinSize ) );
   }
 
 

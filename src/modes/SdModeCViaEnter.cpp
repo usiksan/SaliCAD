@@ -25,7 +25,7 @@ Description
 SdModeCViaEnter::SdModeCViaEnter(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdModeCommon( editor, obj )
   {
-  mViaProp.mPadType = sdEnvir::instance()->mViaType;
+  mViaProp.mPadType = SdEnvir::instance()->mViaType;
   mViaProp.mStratum = stmThrough;
   }
 

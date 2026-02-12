@@ -32,10 +32,10 @@ SdDRuleEditor::SdDRuleEditor(SdPItemPlate *plate, QWidget *parent) :
   mNet = mPlate->ruleMapGet();
 
   //Fill pcb block
-  ui->mPcbRoadWidth->setText( sdEnvir::instance()->toPhisPcb(mPcb.mRules[ruleRoadWidth]) );
-  ui->mPcbPad2Pad->setText( sdEnvir::instance()->toPhisPcb(mPcb.mRules[rulePadPad]) );
-  ui->mPcbRoad2Pad->setText( sdEnvir::instance()->toPhisPcb(mPcb.mRules[ruleRoadPad]) );
-  ui->mPcbRoad2Road->setText( sdEnvir::instance()->toPhisPcb(mPcb.mRules[ruleRoadRoad]) );
+  ui->mPcbRoadWidth->setText( SdEnvir::instance()->toPhisPcb(mPcb.mRules[ruleRoadWidth]) );
+  ui->mPcbPad2Pad->setText( SdEnvir::instance()->toPhisPcb(mPcb.mRules[rulePadPad]) );
+  ui->mPcbRoad2Pad->setText( SdEnvir::instance()->toPhisPcb(mPcb.mRules[ruleRoadPad]) );
+  ui->mPcbRoad2Road->setText( SdEnvir::instance()->toPhisPcb(mPcb.mRules[ruleRoadRoad]) );
 
   //Fill net list
   QStringList netList = mPlate->getProject()->netList();
@@ -162,7 +162,7 @@ void SdDRuleEditor::writeToLineEdit(int v, QLineEdit *edit)
   else if( v < 0 )
     edit->setText( QString("-") );
   else
-    edit->setText( sdEnvir::instance()->toPhisPcb(v) );
+    edit->setText( SdEnvir::instance()->toPhisPcb(v) );
   }
 
 
@@ -177,7 +177,7 @@ int SdDRuleEditor::readFromLineEdit(QLineEdit *edit, bool *isEmpty)
   *isEmpty = false;
   if( str.isEmpty() )
     return -2;
-  return sdEnvir::instance()->fromPhisPcb( str );
+  return SdEnvir::instance()->fromPhisPcb( str );
   }
 
 

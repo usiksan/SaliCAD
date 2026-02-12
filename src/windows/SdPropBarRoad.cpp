@@ -84,14 +84,14 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
   mAlignToGrid = addAction( QIcon(QString(":/pic/alignGrid.png")), tr("Align cursor to grid") );
   mAlignToGrid->setCheckable(true);
   connect( mAlignToGrid, &QAction::triggered, [=](bool checked){
-    sdEnvir::instance()->mCursorAlignGrid = checked;
+    SdEnvir::instance()->mCursorAlignGrid = checked;
     });
 
   //Enable-disable automatic road loop detection and removing
   mLoopDetection = addAction( QIcon(QString(":/pic/objRemoveLoop.png")), tr("On-off automatic road loop detection and removing") );
   mLoopDetection->setCheckable(true);
   connect( mLoopDetection, &QAction::triggered, this, [this](bool checked) {
-    sdEnvir::instance()->mAutoRemoveRoadLoop = checked;
+    SdEnvir::instance()->mAutoRemoveRoadLoop = checked;
     emit propChanged();
     });
 
@@ -190,8 +190,8 @@ void SdPropBarRoad::setPropRoad(SdPropRoad *propRoad, SdPropVia *propVia, double
     else
       mWidth->setCurrentText( QString()  );
 
-    mAlignToGrid->setChecked( sdEnvir::instance()->mCursorAlignGrid );
-    mLoopDetection->setChecked( sdEnvir::instance()->mAutoRemoveRoadLoop );
+    mAlignToGrid->setChecked( SdEnvir::instance()->mCursorAlignGrid );
+    mLoopDetection->setChecked( SdEnvir::instance()->mAutoRemoveRoadLoop );
 
     //line enter type
     setVertexType( enterType );
@@ -244,7 +244,7 @@ void SdPropBarRoad::setPropVia(SdPropVia *propVia)
     //Set current stratum
     setSelectedStratum( propVia->mStratum );
 
-    mAlignToGrid->setChecked( sdEnvir::instance()->mCursorAlignGrid );
+    mAlignToGrid->setChecked( SdEnvir::instance()->mCursorAlignGrid );
 
     //Current road name name
     mWireName->setText( propVia->mNetName.str() );

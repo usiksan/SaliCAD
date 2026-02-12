@@ -19,34 +19,52 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="mStratumCountTitle">
          <property name="text">
-          <string>Tracing layers count in plate (1-30):</string>
+          <string>Tracing layers count in plate (2-30):</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="mStratumCount">
+        <widget class="QLineEdit" name="mStratumCountText">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>30</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="maximumSize">
           <size>
-           <width>50</width>
+           <width>30</width>
            <height>16777215</height>
           </size>
          </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
+        <widget class="QSlider" name="mStratumCount">
+         <property name="minimumSize">
           <size>
-           <width>40</width>
-           <height>20</height>
+           <width>300</width>
+           <height>0</height>
           </size>
          </property>
-        </spacer>
+         <property name="minimum">
+          <number>2</number>
+         </property>
+         <property name="maximum">
+          <number>30</number>
+         </property>
+         <property name="singleStep">
+          <number>2</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -87,7 +105,7 @@
      <item>
       <spacer name="verticalSpacer">
        <property name="orientation">
-        <enum>Qt::Vertical</enum>
+        <enum>Qt::Orientation::Vertical</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>

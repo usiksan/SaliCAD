@@ -437,7 +437,7 @@ bool SdGraphTracedPolygon::isLinked(SdPoint a, SdStratum stratum, QString netNam
 //Return layer for polygon stratum
 SdLayer *SdGraphTracedPolygon::getLayer() const
   {
-  return sdEnvir::instance()->mCacheForPolygon.getVisibleLayer( mProp.mStratum );
+  return SdEnvir::instance()->layerVisibleForPolygon( mProp.mStratum );
   }
 
 

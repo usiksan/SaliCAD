@@ -170,12 +170,13 @@ class SdLayer
     SdClass       mClass;    //!< Classes for defining layer membership
     int           mStratum;  //!< Layer stratum [Позиция слоя при трассировке (верх, низ, внутри)]
     unsigned      mColor;    //!< Layer color [Цвет]
+    int           mIndex;    //!< Ordinal index for sorting
     SdLayer      *mPair;     //!< Layer pair for flipped component [Парный слой]
     bool          mUsage;    //!< Usage flag [Флаг использования]
   public:
     SdLayer(QString layerId, QString layerName, QString layerEnglishName, SdLayerTrace layerTrace, int layerClass, int layerStratum, unsigned layerColor );
 
-    void         init( QString layerName, QString layerEnglishName, SdLayerTrace layerTrace, int layerClass, int layerStratum, unsigned layerColor );
+    void         init( QString layerName, QString layerEnglishName, SdLayerTrace layerTrace, int layerClass, int layerStratum, unsigned layerColor, int index );
 
     QString      id() const { return mId; }
 
@@ -183,6 +184,8 @@ class SdLayer
     void         nameSet( const QString nm ) { mName = nm; }
 
     SdLayer     *pair() { return mPair; }
+
+    int          index() const { return mIndex; }
 
     //Установить новую пару для слоя
     void         pairSet( SdLayer *p );

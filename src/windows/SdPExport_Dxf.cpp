@@ -15,6 +15,7 @@ Description
 #include "objects/SdContext.h"
 #include "SdDLayers.h"
 #include "objects/SdEnvir.h"
+#include "objects/SdPItemPlate.h"
 
 #include <QPushButton>
 #include <QFile>
@@ -171,9 +172,8 @@ void SdDxfContext::putHeader()
     putDbItem_n( QString("AcDbSymbolTable") );
 
     //Количество элементов в таблице слоев
-    putGroupNum6_n( 70, sdEnvir::instance()->mLayerTable.count() );
-    for( auto iter = sdEnvir::instance()->mLayerTable.cbegin(); iter != sdEnvir::instance()->mLayerTable.cend(); iter++ ) {
-      SdLayer *layer = iter.value();
+    putGroupNum6_n( 70, SdEnvir::instance()->layerCount() );
+    SdEnvir::instance()->layerForEachConst( dctCommon, [this] (SdLayer *layer) -> bool {
       //Запись для одного слоя
       putGroupName_n( 0, QString("LAYER") );
       putHandle_n();
@@ -181,7 +181,7 @@ void SdDxfContext::putHeader()
       putDbItem_n( QString("AcDbLayerTableRecord") );
       putGroupNum6_n( 70, layer->state() != layerStateEdit ? 4 : 0 ); //Флаг блокировки слоя
       //Имя слоя
-      putGroupName_n( 2, iter.key() );
+      putGroupName_n( 2, layer->id() );
       //Цвет слоя
       unsigned c = layer->color().rgb();
       int color = ((c & 0xc0)>>6) | ((c & 0xc000)>>12) | ((c & 0xc00000)>>18) | ((c & 0xc0000000)>>24 );
@@ -190,7 +190,8 @@ void SdDxfContext::putHeader()
       putGroupNum6_n( 62, color );
       //Тип линии
       putGroupName_n( 6, QString("CONTINUOUS") );
-      }
+      return true;
+      });
     putGroupName_n( 0, QString("ENDTAB") );
 
     putGroupName_n( 0, QString("TABLE") );
@@ -464,7 +465,12 @@ bool SdPExport_Dxf::validatePage()
 void SdPExport_Dxf::onLayers()
   {
   //Create and execute layers dialog
-  SdDLayers dlg( mProjectItem->getProject(), this );
+  SdDLayers dlg( mProjectItem->getClass(), mProjectItem->getProject(), this );
+  SdPItemPlate *plate = dynamic_cast<SdPItemPlate*>( mProjectItem );
+  //If active plate then set stratum count for edition
+  if( plate != nullptr )
+    dlg.setStratumCount( plate->stratumCount() );
+
   dlg.exec();
   }
 

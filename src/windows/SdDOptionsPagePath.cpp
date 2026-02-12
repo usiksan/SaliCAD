@@ -33,7 +33,7 @@ SdDOptionsPagePath::SdDOptionsPagePath(QWidget *parent) :
 
   grid->addWidget( new QLabel(tr("Current user home path:")), 0, 0 );
   grid->addWidget( mHomePath = new QLineEdit(), 0, 1 );
-  mHomePath->setText( sdEnvir::instance()->mHomePath );
+//  mHomePath->setText( SdEnvir::instance()->mHomePath );
   grid->addWidget( but = new QPushButton( tr("Select...") ), 0, 2 );
   connect( but, &QPushButton::clicked, this, [this] () {
     QString str = QFileDialog::getExistingDirectory( this, tr("Current user home path"), mHomePath->text() );
@@ -55,7 +55,7 @@ SdDOptionsPagePath::SdDOptionsPagePath(QWidget *parent) :
 
   grid->addWidget( new QLabel(tr("Pattern path:")), 2, 0 );
   grid->addWidget( mPatternPath = new QLineEdit(), 2, 1 );
-  mPatternPath->setText( sdEnvir::instance()->mPatternPath );
+  mPatternPath->setText( SdEnvir::instance()->mPatternPath );
   grid->addWidget( but = new QPushButton( tr("Select...") ), 2, 2 );
   connect( but, &QPushButton::clicked, this, [this] () {
     QString str = QFileDialog::getExistingDirectory( this, tr("Pattern path"), mPatternPath->text() );
@@ -66,7 +66,7 @@ SdDOptionsPagePath::SdDOptionsPagePath(QWidget *parent) :
 
   grid->addWidget( new QLabel(tr("Category hierarchy path:")), 3, 0 );
   grid->addWidget( mCategoryPath = new QLineEdit(), 3, 1 );
-  mCategoryPath->setText( sdEnvir::instance()->mCategoryPath );
+//  mCategoryPath->setText( SdEnvir::instance()->mCategoryPath );
   grid->addWidget( but = new QPushButton( tr("Select...") ), 3, 2 );
   connect( but, &QPushButton::clicked, this, [this] () {
     QString str = QFileDialog::getExistingDirectory( this, tr("Category hierarchy path"), mCategoryPath->text() );
@@ -86,7 +86,7 @@ void SdDOptionsPagePath::accept()
   //Using SvDir convert user entered path to slash ended path
   SvDir dir;
   dir.set( mHomePath->text() );
-  sdEnvir::instance()->mHomePath = dir.slashedPath();
+//  SdEnvir::instance()->mHomePath = dir.slashedPath();
 
   dir.set( mLibraryPath->text() );
   if( SdLibraryStorage::instance()->libraryPath() != dir.slashedPath() ) {
@@ -95,10 +95,10 @@ void SdDOptionsPagePath::accept()
     }
 
   dir.set( mPatternPath->text() );
-  sdEnvir::instance()->mPatternPath = dir.slashedPath();
+  SdEnvir::instance()->mPatternPath = dir.slashedPath();
 
   //For category it is path to file
   dir.set( mCategoryPath->text() );
-  sdEnvir::instance()->mCategoryPath = dir.slashedPath();
+//  SdEnvir::instance()->mCategoryPath = dir.slashedPath();
 
   }

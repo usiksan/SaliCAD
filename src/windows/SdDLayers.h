@@ -32,13 +32,15 @@ class SdDLayers : public QDialog
   {
     Q_OBJECT
 
-    SdProject    *mProject;     //Active project, on witch layers dialog called
-    QStringList   mList;        //List of id's edited layers
-    QSet<QString> mActualList;  //List of id's minimum layer set
+    SdClass       mEditObjectClass; //!< Class of active editing object
+    SdProject    *mProject;         //!< Active project, on witch layers dialog called
+    QStringList   mList;            //!< List of id's edited layers
+    QSet<QString> mActualList;      //!< List of id's minimum layer set
+    int           mStratumMask;     //!< Stratum mask to remove all outline layers
 
     static int mShow;    //Define show all, actual or used layers
   public:
-    explicit SdDLayers( SdProject *prj, QWidget *parent = nullptr);
+    explicit SdDLayers( SdClass editObjectClass, SdProject *prj, QWidget *parent = nullptr);
     ~SdDLayers();
 
     //Stratum count. By default stratum count disabled. When set stratum count it is enabled
@@ -74,6 +76,8 @@ class SdDLayers : public QDialog
     void onCellClicked( int row, int column );
 
     void onItemChanged( QTableWidgetItem *item );
+
+    void onStratumCountChange( int newCount );
 
   private:
     //Return textual representation of layer state

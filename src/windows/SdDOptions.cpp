@@ -16,7 +16,7 @@ Description
 #include "SdDOptionsPageCommon.h"
 #include "SdDOptionsPageColors.h"
 #include "SdDOptionsPageEditors.h"
-#include "SdDOptionsPagePath.h"
+//#include "SdDOptionsPagePath.h"
 #include "SdDOptionsPageLibrary.h"
 #include "SdDHelp.h"
 #include "library/SdLibraryStorage.h"
@@ -61,9 +61,9 @@ SdDOptions::SdDOptions(QWidget *parent) :
   mTabWidget->addTab( colors, tr("Colors") );
 
   //Path page
-  SdDOptionsPagePath *paths = new SdDOptionsPagePath();
-  connect(mButtons, &QDialogButtonBox::accepted, paths, &SdDOptionsPagePath::accept );
-  mTabWidget->addTab( paths, tr("Paths") );
+  // SdDOptionsPagePath *paths = new SdDOptionsPagePath();
+  // connect(mButtons, &QDialogButtonBox::accepted, paths, &SdDOptionsPagePath::accept );
+  // mTabWidget->addTab( paths, tr("Paths") );
 
   //Editors page
   SdDOptionsPageEditors *editors = new SdDOptionsPageEditors();

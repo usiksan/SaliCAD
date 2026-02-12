@@ -95,7 +95,7 @@ void SdWEditorGraphPart::cmModeReference()
 
 void SdWEditorGraphPart::cmModeOrigin()
   {
-  modeSet( new SdModeCOriginPart( this, mPart, sdEnvir::instance()->mPartPinSize ) );
+  modeSet( new SdModeCOriginPart( this, mPart, SdEnvir::instance()->mPartPinSize ) );
   }
 
 

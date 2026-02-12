@@ -41,20 +41,20 @@ SdDMasterPartDoubleSide::SdDMasterPartDoubleSide(SdProjectItem *item, QWidget *p
   {
   ui->setupUi(this);
 
-  ui->mBodySizeY->setText( sdEnvir::instance()->toPhisPcb(sBodySizeY) );
-  ui->mBodySizeX->setText( sdEnvir::instance()->toPhisPcb(sBodySizeX) );
-  ui->mPinSizeY->setText( sdEnvir::instance()->toPhisPcb(sPinSizeY) );
+  ui->mBodySizeY->setText( SdEnvir::instance()->toPhisPcb(sBodySizeY) );
+  ui->mBodySizeX->setText( SdEnvir::instance()->toPhisPcb(sBodySizeX) );
+  ui->mPinSizeY->setText( SdEnvir::instance()->toPhisPcb(sPinSizeY) );
 
   //Left side
   ui->mBottomPinCount->setText( sBottomPinCount );
-  ui->mBottomPinDistance->setText( sdEnvir::instance()->toPhisPcb(sBottomPinDistance) );
-  ui->mBottomPinOffsetX->setText( sdEnvir::instance()->toPhisPcb(sBottomPinOffsetX) );
+  ui->mBottomPinDistance->setText( SdEnvir::instance()->toPhisPcb(sBottomPinDistance) );
+  ui->mBottomPinOffsetX->setText( SdEnvir::instance()->toPhisPcb(sBottomPinOffsetX) );
   ui->mBottomPinType->setText( sBottomPinType );
 
   //Right side
   ui->mTopPinCount->setText( sTopPinCount );
-  ui->mTopPinDistance->setText( sdEnvir::instance()->toPhisPcb(sTopPinDistance) );
-  ui->mTopPinOffsetX->setText( sdEnvir::instance()->toPhisPcb(sTopPinOffsetX) );
+  ui->mTopPinDistance->setText( SdEnvir::instance()->toPhisPcb(sTopPinDistance) );
+  ui->mTopPinOffsetX->setText( SdEnvir::instance()->toPhisPcb(sTopPinOffsetX) );
   ui->mTopPinType->setText( sTopPinType );
 
   onEditChanged( QString() );
@@ -110,18 +110,18 @@ void SdDMasterPartDoubleSide::onEditChanged(const QString txt)
 //Draw part preview
 void SdDMasterPartDoubleSide::drawPart(SdIllustrator &il)
   {
-  int bodySizeX = sdEnvir::instance()->fromPhisPcb( ui->mBodySizeX->text() );
-  int bodySizeY = sdEnvir::instance()->fromPhisPcb( ui->mBodySizeY->text() );
-  int pinSizeY  = sdEnvir::instance()->fromPhisPcb( ui->mPinSizeY->text() );
+  int bodySizeX = SdEnvir::instance()->fromPhisPcb( ui->mBodySizeX->text() );
+  int bodySizeY = SdEnvir::instance()->fromPhisPcb( ui->mBodySizeY->text() );
+  int pinSizeY  = SdEnvir::instance()->fromPhisPcb( ui->mPinSizeY->text() );
   int pinLen = (pinSizeY - bodySizeY) / 2;
 
   int bottomPinCount    = ui->mBottomPinCount->text().toInt();
-  int bottomPinDistance = sdEnvir::instance()->fromPhisPcb( ui->mBottomPinDistance->text() );
-  int bottomPinOffsetX  = sdEnvir::instance()->fromPhisPcb( ui->mBottomPinOffsetX->text() );
+  int bottomPinDistance = SdEnvir::instance()->fromPhisPcb( ui->mBottomPinDistance->text() );
+  int bottomPinOffsetX  = SdEnvir::instance()->fromPhisPcb( ui->mBottomPinOffsetX->text() );
 
   int topPinCount    = ui->mTopPinCount->text().toInt();
-  int topPinDistance = sdEnvir::instance()->fromPhisPcb( ui->mTopPinDistance->text() );
-  int topPinOffsetX  = sdEnvir::instance()->fromPhisPcb( ui->mTopPinOffsetX->text() );
+  int topPinDistance = SdEnvir::instance()->fromPhisPcb( ui->mTopPinDistance->text() );
+  int topPinOffsetX  = SdEnvir::instance()->fromPhisPcb( ui->mTopPinOffsetX->text() );
 
   QColor red("red");
   QColor green("green");
@@ -171,20 +171,20 @@ void SdDMasterPartDoubleSide::drawPart(SdIllustrator &il)
 
 void SdDMasterPartDoubleSide::accept()
   {
-  int bodySizeX = sBodySizeX = sdEnvir::instance()->fromPhisPcb( ui->mBodySizeX->text() );
-  int bodySizeY = sBodySizeY = sdEnvir::instance()->fromPhisPcb( ui->mBodySizeY->text() );
-  int pinSizeY  = sPinSizeY = sdEnvir::instance()->fromPhisPcb( ui->mPinSizeY->text() );
+  int bodySizeX = sBodySizeX = SdEnvir::instance()->fromPhisPcb( ui->mBodySizeX->text() );
+  int bodySizeY = sBodySizeY = SdEnvir::instance()->fromPhisPcb( ui->mBodySizeY->text() );
+  int pinSizeY  = sPinSizeY = SdEnvir::instance()->fromPhisPcb( ui->mPinSizeY->text() );
   int pinLen = (pinSizeY - bodySizeY) / 2;
 
   sBottomPinCount = ui->mBottomPinCount->text();
   int bottomPinCount    = sBottomPinCount.toInt();
-  int bottomPinDistance = sBottomPinDistance = sdEnvir::instance()->fromPhisPcb( ui->mBottomPinDistance->text() );
-  int bottomPinOffsetX  = sBottomPinOffsetX = sdEnvir::instance()->fromPhisPcb( ui->mBottomPinOffsetX->text() );
+  int bottomPinDistance = sBottomPinDistance = SdEnvir::instance()->fromPhisPcb( ui->mBottomPinDistance->text() );
+  int bottomPinOffsetX  = sBottomPinOffsetX = SdEnvir::instance()->fromPhisPcb( ui->mBottomPinOffsetX->text() );
 
   sTopPinCount = ui->mTopPinCount->text();
   int topPinCount    = sTopPinCount.toInt();
-  int topPinDistance = sTopPinDistance = sdEnvir::instance()->fromPhisPcb( ui->mTopPinDistance->text() );
-  int topPinOffsetX  = sTopPinOffsetX = sdEnvir::instance()->fromPhisPcb( ui->mTopPinOffsetX->text() );
+  int topPinDistance = sTopPinDistance = SdEnvir::instance()->fromPhisPcb( ui->mTopPinDistance->text() );
+  int topPinOffsetX  = sTopPinOffsetX = SdEnvir::instance()->fromPhisPcb( ui->mTopPinOffsetX->text() );
 
   //Pin types
   QString topPinType = sTopPinType = ui->mTopPinType->text();

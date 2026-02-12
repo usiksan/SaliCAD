@@ -270,11 +270,11 @@ void SdDMasterSymbolIc::drawSymbol(SdIllustrator &il)
 
   int maxPins     = qMax(leftCellCount,rightCellCount);
   if( maxPins < 1 ) maxPins = 1;
-  //sdEnvir::instance()->fromPhisSchematic( ui->mCellHeight->text() );
-  //sdEnvir::instance()->fromPhisSchematic( ui->mPinSizeX->text() );
+  //SdEnvir::instance()->fromPhisSchematic( ui->mCellHeight->text() );
+  //SdEnvir::instance()->fromPhisSchematic( ui->mPinSizeX->text() );
   //int nameAreaX   = 1250;
   int cellSizeX   = nameAreaX;
-  if( extended ) cellSizeX += extendedAreaX; //sdEnvir::instance()->fromPhisSchematic( ui->mCellSizeX->text() );
+  if( extended ) cellSizeX += extendedAreaX; //SdEnvir::instance()->fromPhisSchematic( ui->mCellSizeX->text() );
   int leftPin     = 0;
   int leftBody    = pinSizeX;
   int rightBody   = leftBody + 2 * cellSizeX + centralSizeX;
@@ -371,7 +371,7 @@ void SdDMasterSymbolIc::accept()
   int maxPins     = qMax(leftCellCount,rightCellCount);
   if( maxPins < 1 ) maxPins = 1;
   int cellSizeX   = nameAreaX;
-  if( extended ) cellSizeX += extendedAreaX; //sdEnvir::instance()->fromPhisSchematic( ui->mCellSizeX->text() );
+  if( extended ) cellSizeX += extendedAreaX; //SdEnvir::instance()->fromPhisSchematic( ui->mCellSizeX->text() );
   int leftPin      = 0;
   int leftBody     = pinSizeX;
   int rightBody    = leftBody + 2 * cellSizeX + centralSizeX;

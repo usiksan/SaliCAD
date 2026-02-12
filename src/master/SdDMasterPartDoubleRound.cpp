@@ -37,8 +37,8 @@ SdDMasterPartDoubleRound::SdDMasterPartDoubleRound(SdProjectItem *item, bool noP
 
   ui->setupUi(this);
 
-  ui->mBodyDiameter->setText( sdEnvir::instance()->toPhisPcb(partDiameter) );
-  ui->mBetweenPins->setText( sdEnvir::instance()->toPhisPcb(sizeX) );
+  ui->mBodyDiameter->setText( SdEnvir::instance()->toPhisPcb(partDiameter) );
+  ui->mBetweenPins->setText( SdEnvir::instance()->toPhisPcb(sizeX) );
   ui->mLeftPinType->setText( leftPinType );
   ui->mRightPinType->setText( rightPinType );
 
@@ -106,8 +106,8 @@ void SdDMasterPartDoubleRound::changeEvent(QEvent *e)
 //Draw part preview
 void SdDMasterPartDoubleRound::drawPart(SdIllustrator &il)
   {
-  partDiameter = sdEnvir::instance()->fromPhisPcb( ui->mBodyDiameter->text() );
-  sizeX = sdEnvir::instance()->fromPhisPcb( ui->mBetweenPins->text() );
+  partDiameter = SdEnvir::instance()->fromPhisPcb( ui->mBodyDiameter->text() );
+  sizeX = SdEnvir::instance()->fromPhisPcb( ui->mBetweenPins->text() );
   int pinLen = (sizeX - partDiameter) / 2;
 
   QColor red("red");
@@ -134,8 +134,8 @@ void SdDMasterPartDoubleRound::drawPart(SdIllustrator &il)
 void SdDMasterPartDoubleRound::accept()
   {
   //Build part
-  partDiameter = sdEnvir::instance()->fromPhisPcb( ui->mBodyDiameter->text() );
-  sizeX = sdEnvir::instance()->fromPhisPcb( ui->mBetweenPins->text() );
+  partDiameter = SdEnvir::instance()->fromPhisPcb( ui->mBodyDiameter->text() );
+  sizeX = SdEnvir::instance()->fromPhisPcb( ui->mBetweenPins->text() );
   int pinLen = (sizeX - partDiameter) / 2;
   //Pin types
   leftPinType = ui->mLeftPinType->text();

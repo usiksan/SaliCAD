@@ -85,7 +85,7 @@ SdLayer *SdPropBar::getSelectedLayer()
   QString id = mLayer->currentData().toString();
   if( id.isEmpty() )
     return nullptr;
-  return sdEnvir::instance()->layerGet( id );
+  return SdEnvir::instance()->layerGet( id );
   }
 
 
@@ -100,11 +100,12 @@ void SdPropBar::updateViewedLayers(SdLayer *currentLayer)
     currentLayer = getSelectedLayer();
   mLayer->clear();
   //fill new layers list
-  for( SdLayer *p : std::as_const( sdEnvir::instance()->mLayerTable ) ) {
+  SdEnvir::instance()->layerForEachConst( dctCommon, [this] ( SdLayer *p ) -> bool {
     if( p->isEdited() ) {
       mLayer->addItem( p->name(), QVariant( p->id() ) );
       }
-    }
+    return true;
+    } );
   setSelectedLayer( currentLayer );
 
   if( changeCurrentLayer )

@@ -81,9 +81,6 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_PAD LID1_TOP,         0x00bf0000, layerTracePad,          stmTop    }, // 37  Pad Top
       { dctConstruct, LID0_PAD LID1_BOT,         0x000000bf, layerTracePad,          stmBottom }, // 38  Pad Bottom
 
-      { dctConstruct, LID0_CLEAR LID1_TOP,       0x803f3f00, layerTraceNone,         stmTop    }, // 39  Clearance Top
-      { dctConstruct, LID0_CLEAR LID1_BOT,       0x8040407f, layerTraceNone,         stmBottom }, // 40  Clearance Bottom
-
       { dctConstruct, LID0_EXCLUSION LID1_TOP,   0x00002080, layerTraceKeepout,      stmTop    }, // 41  Exclusion Top
       { dctConstruct, LID0_EXCLUSION LID1_BOT,   0x00002080, layerTraceKeepout,      stmBottom }, // 42  Exclusion Bottom
 
@@ -117,49 +114,41 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_WIRE    LID1_INT00,   0x000040cf, layerTraceRoad,         stmInt00  }, // 59  Wire Inner 0
       { dctConstruct, LID0_PAD     LID1_INT00,   0x000040cf, layerTracePad,          stmInt00  }, // 60  Pad Inner 0
       { dctConstruct, LID0_POLYGON LID1_INT00,   0x000040cf, layerTracePolygon,      stmInt00  }, // 61  Polygon Inner 0
-      { dctConstruct, LID0_CLEAR   LID1_INT00,   0x000040cf, layerTraceKeepout,      stmInt00  }, // 62  Clearance Inner 0
       { dctConstruct, LID0_EXCLUSION LID1_INT00, 0x00002080, layerTraceKeepout,      stmInt00  }, // 63  Exclusion Inner 0
 
       { dctConstruct, LID0_WIRE    LID1_INT01,   0x004040cf, layerTraceRoad,         stmInt01  }, // 64  Wire Inner 1
       { dctConstruct, LID0_PAD     LID1_INT01,   0x004040cf, layerTracePad,          stmInt01  }, // 65  Pad Inner 1
       { dctConstruct, LID0_POLYGON LID1_INT01,   0x004040cf, layerTracePolygon,      stmInt01  }, // 66  Polygon Inner 1
-      { dctConstruct, LID0_CLEAR   LID1_INT01,   0x004040cf, layerTraceKeepout,      stmInt01  }, // 67  Clearance Inner 1
       { dctConstruct, LID0_EXCLUSION LID1_INT01, 0x00002080, layerTraceKeepout,      stmInt01  }, // 68  Exclusion Inner 1
 
       { dctConstruct, LID0_WIRE    LID1_INT02,   0x004000cf, layerTraceRoad,         stmInt02  }, // 69  Wire Inner 2
       { dctConstruct, LID0_PAD     LID1_INT02,   0x004000cf, layerTracePad,          stmInt02  }, // 70  Pad Inner 2
       { dctConstruct, LID0_POLYGON LID1_INT02,   0x004000cf, layerTracePolygon,      stmInt02  }, // 71  Polygon Inner 2
-      { dctConstruct, LID0_CLEAR   LID1_INT02,   0x004000cf, layerTraceKeepout,      stmInt02  }, // 72  Clearance Inner 2
       { dctConstruct, LID0_EXCLUSION LID1_INT02, 0x00002080, layerTraceKeepout,      stmInt02  }, // 73  Exclusion Inner 2
 
       { dctConstruct, LID0_WIRE    LID1_INT03,   0x00cf4040, layerTraceRoad,         stmInt03  }, // 74  Wire Inner 3
       { dctConstruct, LID0_PAD     LID1_INT03,   0x00cf4040, layerTracePad,          stmInt03  }, // 75  Pad Inner 3
       { dctConstruct, LID0_POLYGON LID1_INT03,   0x00cf4040, layerTracePolygon,      stmInt03  }, // 76  Polygon Inner 3
-      { dctConstruct, LID0_CLEAR   LID1_INT03,   0x00cf4040, layerTraceKeepout,      stmInt03  }, // 77  Clearance Inner 3
       { dctConstruct, LID0_EXCLUSION LID1_INT03, 0x00002080, layerTraceKeepout,      stmInt03  }, // 78  Exclusion Inner 3
 
       { dctConstruct, LID0_WIRE    LID1_INT04,   0x00cf4080, layerTraceRoad,         stmInt04  }, // 79  Wire Inner 4
       { dctConstruct, LID0_PAD     LID1_INT04,   0x00cf4080, layerTracePad,          stmInt04  }, // 80  Pad Inner 4
       { dctConstruct, LID0_POLYGON LID1_INT04,   0x00cf4080, layerTracePolygon,      stmInt04  }, // 81  Polygon Inner 4
-      { dctConstruct, LID0_CLEAR   LID1_INT04,   0x00cf4080, layerTraceKeepout,      stmInt04  }, // 82  Clearance Inner 4
       { dctConstruct, LID0_EXCLUSION LID1_INT04, 0x00002080, layerTraceKeepout,      stmInt04  }, // 83  Exclusion Inner 4
 
       { dctConstruct, LID0_WIRE    LID1_INT05,   0x00cf8040, layerTraceRoad,         stmInt05  }, // 84  Wire Inner 5
       { dctConstruct, LID0_PAD     LID1_INT05,   0x00cf8040, layerTracePad,          stmInt05  }, // 85  Pad Inner 5
       { dctConstruct, LID0_POLYGON LID1_INT05,   0x00cf8040, layerTracePolygon,      stmInt05  }, // 86  Polygon Inner 5
-      { dctConstruct, LID0_CLEAR   LID1_INT05,   0x00cf8040, layerTraceKeepout,      stmInt05  }, // 87  Clearance Inner 5
       { dctConstruct, LID0_EXCLUSION LID1_INT05, 0x00002080, layerTraceKeepout,      stmInt05  }, // 88  Exclusion Inner 5
 
       { dctConstruct, LID0_WIRE    LID1_INT06,   0x00cf8080, layerTraceRoad,         stmInt06  }, // 89  Wire Inner 6
       { dctConstruct, LID0_PAD     LID1_INT06,   0x00cf8080, layerTracePad,          stmInt06  }, // 90  Pad Inner 6
       { dctConstruct, LID0_POLYGON LID1_INT06,   0x00cf8080, layerTracePolygon,      stmInt06  }, // 91  Polygon Inner 6
-      { dctConstruct, LID0_CLEAR   LID1_INT06,   0x00cf8080, layerTraceKeepout,      stmInt06  }, // 92  Clearance Inner 6
       { dctConstruct, LID0_EXCLUSION LID1_INT06, 0x00002080, layerTraceKeepout,      stmInt06  }, // 93  Exclusion Inner 6
 
       { dctConstruct, LID0_WIRE    LID1_INT07,   0x00cfc040, layerTraceRoad,         stmInt07  }, // 94  Wire Inner 7
       { dctConstruct, LID0_PAD     LID1_INT07,   0x00cfc040, layerTracePad,          stmInt07  }, // 95  Pad Inner 7
       { dctConstruct, LID0_POLYGON LID1_INT07,   0x00cfc040, layerTracePolygon,      stmInt07  }, // 96  Polygon Inner 7
-      { dctConstruct, LID0_CLEAR   LID1_INT07,   0x00cfc040, layerTraceKeepout,      stmInt07  }, // 97  Clearance Inner 7
       { dctConstruct, LID0_EXCLUSION LID1_INT07, 0x00002080, layerTraceKeepout,      stmInt07  }, // 98  Exclusion Inner 7
 
   // ================================================================
@@ -168,121 +157,101 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_WIRE    LID1_INT08,   0x00cfc080, layerTraceRoad,         stmInt08  }, // 99  Wire Inner 8
       { dctConstruct, LID0_PAD     LID1_INT08,   0x00cfc080, layerTracePad,          stmInt08  }, // 100 Pad Inner 8
       { dctConstruct, LID0_POLYGON LID1_INT08,   0x00cfc080, layerTracePolygon,      stmInt08  }, // 101 Polygon Inner 8
-      { dctConstruct, LID0_CLEAR   LID1_INT08,   0x00cfc080, layerTraceKeepout,      stmInt08  }, // 102 Clearance Inner 8
       { dctConstruct, LID0_EXCLUSION LID1_INT08, 0x00002080, layerTraceKeepout,      stmInt08  }, // 103 Exclusion Inner 8
 
       { dctConstruct, LID0_WIRE    LID1_INT09,   0x00cfc0c0, layerTraceRoad,         stmInt09  }, // 104 Wire Inner 9
       { dctConstruct, LID0_PAD     LID1_INT09,   0x00cfc0c0, layerTracePad,          stmInt09  }, // 105 Pad Inner 9
       { dctConstruct, LID0_POLYGON LID1_INT09,   0x00cfc0c0, layerTracePolygon,      stmInt09  }, // 106 Polygon Inner 9
-      { dctConstruct, LID0_CLEAR   LID1_INT09,   0x00cfc0c0, layerTraceKeepout,      stmInt09  }, // 107 Clearance Inner 9
       { dctConstruct, LID0_EXCLUSION LID1_INT09, 0x00002080, layerTraceKeepout,      stmInt09  }, // 108 Exclusion Inner 9
 
       { dctConstruct, LID0_WIRE    LID1_INT10,   0x00cf00c0, layerTraceRoad,         stmInt10  }, // 109 Wire Inner 10
       { dctConstruct, LID0_PAD     LID1_INT10,   0x00cf00c0, layerTracePad,          stmInt10  }, // 110 Pad Inner 10
       { dctConstruct, LID0_POLYGON LID1_INT10,   0x00cf00c0, layerTracePolygon,      stmInt10  }, // 111 Polygon Inner 10
-      { dctConstruct, LID0_CLEAR   LID1_INT10,   0x00cf00c0, layerTraceKeepout,      stmInt10  }, // 112 Clearance Inner 10
       { dctConstruct, LID0_EXCLUSION LID1_INT10, 0x00002080, layerTraceKeepout,      stmInt10  }, // 113 Exclusion Inner 10
 
       { dctConstruct, LID0_WIRE    LID1_INT11,   0x00cf40c0, layerTraceRoad,         stmInt11  }, // 114 Wire Inner 11
       { dctConstruct, LID0_PAD     LID1_INT11,   0x00cf40c0, layerTracePad,          stmInt11  }, // 115 Pad Inner 11
       { dctConstruct, LID0_POLYGON LID1_INT11,   0x00cf40c0, layerTracePolygon,      stmInt11  }, // 116 Polygon Inner 11
-      { dctConstruct, LID0_CLEAR   LID1_INT11,   0x00cf40c0, layerTraceKeepout,      stmInt11  }, // 117 Clearance Inner 11
       { dctConstruct, LID0_EXCLUSION LID1_INT11, 0x00002080, layerTraceKeepout,      stmInt11  }, // 118 Exclusion Inner 11
 
       { dctConstruct, LID0_WIRE    LID1_INT12,   0x00cf80c0, layerTraceRoad,         stmInt12  }, // 119 Wire Inner 12
       { dctConstruct, LID0_PAD     LID1_INT12,   0x00cf80c0, layerTracePad,          stmInt12  }, // 120 Pad Inner 12
       { dctConstruct, LID0_POLYGON LID1_INT12,   0x00cf80c0, layerTracePolygon,      stmInt12  }, // 121 Polygon Inner 12
-      { dctConstruct, LID0_CLEAR   LID1_INT12,   0x00cf80c0, layerTraceKeepout,      stmInt12  }, // 122 Clearance Inner 12
       { dctConstruct, LID0_EXCLUSION LID1_INT12, 0x00002080, layerTraceKeepout,      stmInt12  }, // 123 Exclusion Inner 12
 
       { dctConstruct, LID0_WIRE    LID1_INT13,   0x000080c0, layerTraceRoad,         stmInt13  }, // 124 Wire Inner 13
       { dctConstruct, LID0_PAD     LID1_INT13,   0x000080c0, layerTracePad,          stmInt13  }, // 125 Pad Inner 13
       { dctConstruct, LID0_POLYGON LID1_INT13,   0x000080c0, layerTracePolygon,      stmInt13  }, // 126 Polygon Inner 13
-      { dctConstruct, LID0_CLEAR   LID1_INT13,   0x000080c0, layerTraceKeepout,      stmInt13  }, // 127 Clearance Inner 13
       { dctConstruct, LID0_EXCLUSION LID1_INT13, 0x00002080, layerTraceKeepout,      stmInt13  }, // 128 Exclusion Inner 13
 
       { dctConstruct, LID0_WIRE    LID1_INT14,   0x004080c0, layerTraceRoad,         stmInt14  }, // 129 Wire Inner 14
       { dctConstruct, LID0_PAD     LID1_INT14,   0x004080c0, layerTracePad,          stmInt14  }, // 130 Pad Inner 14
       { dctConstruct, LID0_POLYGON LID1_INT14,   0x004080c0, layerTracePolygon,      stmInt14  }, // 131 Polygon Inner 14
-      { dctConstruct, LID0_CLEAR   LID1_INT14,   0x004080c0, layerTraceKeepout,      stmInt14  }, // 132 Clearance Inner 14
       { dctConstruct, LID0_EXCLUSION LID1_INT14, 0x00002080, layerTraceKeepout,      stmInt14  }, // 133 Exclusion Inner 14
 
       { dctConstruct, LID0_WIRE    LID1_INT15,   0x008080c0, layerTraceRoad,         stmInt15  }, // 134 Wire Inner 15
       { dctConstruct, LID0_PAD     LID1_INT15,   0x008080c0, layerTracePad,          stmInt15  }, // 135 Pad Inner 15
       { dctConstruct, LID0_POLYGON LID1_INT15,   0x008080c0, layerTracePolygon,      stmInt15  }, // 136 Polygon Inner 15
-      { dctConstruct, LID0_CLEAR   LID1_INT15,   0x008080c0, layerTraceKeepout,      stmInt15  }, // 137 Clearance Inner 15
       { dctConstruct, LID0_EXCLUSION LID1_INT15, 0x00002080, layerTraceKeepout,      stmInt15  }, // 138 Exclusion Inner 15
 
       { dctConstruct, LID0_WIRE    LID1_INT16,   0x0080c0c0, layerTraceRoad,         stmInt16  }, // 139 Wire Inner 16
       { dctConstruct, LID0_PAD     LID1_INT16,   0x0080c0c0, layerTracePad,          stmInt16  }, // 140 Pad Inner 16
       { dctConstruct, LID0_POLYGON LID1_INT16,   0x0080c0c0, layerTracePolygon,      stmInt16  }, // 141 Polygon Inner 16
-      { dctConstruct, LID0_CLEAR   LID1_INT16,   0x0080c0c0, layerTraceKeepout,      stmInt16  }, // 142 Clearance Inner 16
       { dctConstruct, LID0_EXCLUSION LID1_INT16, 0x00002080, layerTraceKeepout,      stmInt16  }, // 143 Exclusion Inner 16
 
       { dctConstruct, LID0_WIRE    LID1_INT17,   0x0040c0c0, layerTraceRoad,         stmInt17  }, // 144 Wire Inner 17
       { dctConstruct, LID0_PAD     LID1_INT17,   0x0040c0c0, layerTracePad,          stmInt17  }, // 145 Pad Inner 17
       { dctConstruct, LID0_POLYGON LID1_INT17,   0x0040c0c0, layerTracePolygon,      stmInt17  }, // 146 Polygon Inner 17
-      { dctConstruct, LID0_CLEAR   LID1_INT17,   0x0040c0c0, layerTraceKeepout,      stmInt17  }, // 147 Clearance Inner 17
       { dctConstruct, LID0_EXCLUSION LID1_INT17, 0x00002080, layerTraceKeepout,      stmInt17  }, // 148 Exclusion Inner 17
 
       { dctConstruct, LID0_WIRE    LID1_INT18,   0x0040c080, layerTraceRoad,         stmInt18  }, // 149 Wire Inner 18
       { dctConstruct, LID0_PAD     LID1_INT18,   0x0040c080, layerTracePad,          stmInt18  }, // 150 Pad Inner 18
       { dctConstruct, LID0_POLYGON LID1_INT18,   0x0040c080, layerTracePolygon,      stmInt18  }, // 151 Polygon Inner 18
-      { dctConstruct, LID0_CLEAR   LID1_INT18,   0x0040c080, layerTraceKeepout,      stmInt18  }, // 152 Clearance Inner 18
       { dctConstruct, LID0_EXCLUSION LID1_INT18, 0x00002080, layerTraceKeepout,      stmInt18  }, // 153 Exclusion Inner 18
 
       { dctConstruct, LID0_WIRE    LID1_INT19,   0x0040c040, layerTraceRoad,         stmInt19  }, // 154 Wire Inner 19
       { dctConstruct, LID0_PAD     LID1_INT19,   0x0040c040, layerTracePad,          stmInt19  }, // 155 Pad Inner 19
       { dctConstruct, LID0_POLYGON LID1_INT19,   0x0040c040, layerTracePolygon,      stmInt19  }, // 156 Polygon Inner 19
-      { dctConstruct, LID0_CLEAR   LID1_INT19,   0x0040c040, layerTraceKeepout,      stmInt19  }, // 157 Clearance Inner 19
       { dctConstruct, LID0_EXCLUSION LID1_INT19, 0x00002080, layerTraceKeepout,      stmInt19  }, // 158 Exclusion Inner 19
 
       { dctConstruct, LID0_WIRE    LID1_INT20,   0x00408040, layerTraceRoad,         stmInt20  }, // 159 Wire Inner 20
       { dctConstruct, LID0_PAD     LID1_INT20,   0x00408040, layerTracePad,          stmInt20  }, // 160 Pad Inner 20
       { dctConstruct, LID0_POLYGON LID1_INT20,   0x00408040, layerTracePolygon,      stmInt20  }, // 161 Polygon Inner 20
-      { dctConstruct, LID0_CLEAR   LID1_INT20,   0x00408040, layerTraceKeepout,      stmInt20  }, // 162 Clearance Inner 20
       { dctConstruct, LID0_EXCLUSION LID1_INT20, 0x00002080, layerTraceKeepout,      stmInt20  }, // 163 Exclusion Inner 20
 
       { dctConstruct, LID0_WIRE    LID1_INT21,   0x00408080, layerTraceRoad,         stmInt21  }, // 164 Wire Inner 21
       { dctConstruct, LID0_PAD     LID1_INT21,   0x00408080, layerTracePad,          stmInt21  }, // 165 Pad Inner 21
       { dctConstruct, LID0_POLYGON LID1_INT21,   0x00408080, layerTracePolygon,      stmInt21  }, // 166 Polygon Inner 21
-      { dctConstruct, LID0_CLEAR   LID1_INT21,   0x00408080, layerTraceKeepout,      stmInt21  }, // 167 Clearance Inner 21
       { dctConstruct, LID0_EXCLUSION LID1_INT21, 0x00002080, layerTraceKeepout,      stmInt21  }, // 168 Exclusion Inner 21
 
       { dctConstruct, LID0_WIRE    LID1_INT22,   0x004080c0, layerTraceRoad,         stmInt22  }, // 169 Wire Inner 22
       { dctConstruct, LID0_PAD     LID1_INT22,   0x004080c0, layerTracePad,          stmInt22  }, // 170 Pad Inner 22
       { dctConstruct, LID0_POLYGON LID1_INT22,   0x004080c0, layerTracePolygon,      stmInt22  }, // 171 Polygon Inner 22
-      { dctConstruct, LID0_CLEAR   LID1_INT22,   0x004080c0, layerTraceKeepout,      stmInt22  }, // 172 Clearance Inner 22
       { dctConstruct, LID0_EXCLUSION LID1_INT22, 0x00002080, layerTraceKeepout,      stmInt22  }, // 173 Exclusion Inner 22
 
       { dctConstruct, LID0_WIRE    LID1_INT23,   0x004040c0, layerTraceRoad,         stmInt23  }, // 174 Wire Inner 23
       { dctConstruct, LID0_PAD     LID1_INT23,   0x004040c0, layerTracePad,          stmInt23  }, // 175 Pad Inner 23
       { dctConstruct, LID0_POLYGON LID1_INT23,   0x004040c0, layerTracePolygon,      stmInt23  }, // 176 Polygon Inner 23
-      { dctConstruct, LID0_CLEAR   LID1_INT23,   0x004040c0, layerTraceKeepout,      stmInt23  }, // 177 Clearance Inner 23
       { dctConstruct, LID0_EXCLUSION LID1_INT23, 0x00002080, layerTraceKeepout,      stmInt23  }, // 178 Exclusion Inner 23
 
       { dctConstruct, LID0_WIRE    LID1_INT24,   0x00404080, layerTraceRoad,         stmInt24  }, // 179 Wire Inner 24
       { dctConstruct, LID0_PAD     LID1_INT24,   0x00404080, layerTracePad,          stmInt24  }, // 180 Pad Inner 24
       { dctConstruct, LID0_POLYGON LID1_INT24,   0x00404080, layerTracePolygon,      stmInt24  }, // 181 Polygon Inner 24
-      { dctConstruct, LID0_CLEAR   LID1_INT24,   0x00404080, layerTraceKeepout,      stmInt24  }, // 182 Clearance Inner 24
       { dctConstruct, LID0_EXCLUSION LID1_INT24, 0x00002080, layerTraceKeepout,      stmInt24  }, // 183 Exclusion Inner 24
 
       { dctConstruct, LID0_WIRE    LID1_INT25,   0x00404040, layerTraceRoad,         stmInt25  }, // 184 Wire Inner 25
       { dctConstruct, LID0_PAD     LID1_INT25,   0x00404040, layerTracePad,          stmInt25  }, // 185 Pad Inner 25
       { dctConstruct, LID0_POLYGON LID1_INT25,   0x00404040, layerTracePolygon,      stmInt25  }, // 186 Polygon Inner 25
-      { dctConstruct, LID0_CLEAR   LID1_INT25,   0x00404040, layerTraceKeepout,      stmInt25  }, // 187 Clearance Inner 25
       { dctConstruct, LID0_EXCLUSION LID1_INT25, 0x00002080, layerTraceKeepout,      stmInt25  }, // 188 Exclusion Inner 25
 
       { dctConstruct, LID0_WIRE    LID1_INT26,   0x00804040, layerTraceRoad,         stmInt26  }, // 189 Wire Inner 26
       { dctConstruct, LID0_PAD     LID1_INT26,   0x00804040, layerTracePad,          stmInt26  }, // 190 Pad Inner 26
       { dctConstruct, LID0_POLYGON LID1_INT26,   0x00804040, layerTracePolygon,      stmInt26  }, // 191 Polygon Inner 26
-      { dctConstruct, LID0_CLEAR   LID1_INT26,   0x00804040, layerTraceKeepout,      stmInt26  }, // 192 Clearance Inner 26
       { dctConstruct, LID0_EXCLUSION LID1_INT26, 0x00002080, layerTraceKeepout,      stmInt26  }, // 193 Exclusion Inner 26
 
       { dctConstruct, LID0_WIRE    LID1_INT27,   0x0080f040, layerTraceRoad,         stmInt27  }, // 194 Wire Inner 27
       { dctConstruct, LID0_PAD     LID1_INT27,   0x0080f040, layerTracePad,          stmInt27  }, // 195 Pad Inner 27
       { dctConstruct, LID0_POLYGON LID1_INT27,   0x0080f040, layerTracePolygon,      stmInt27  }, // 196 Polygon Inner 27
-      { dctConstruct, LID0_CLEAR   LID1_INT27,   0x0080f040, layerTraceKeepout,      stmInt27  }, // 197 Clearance Inner 27
       { dctConstruct, LID0_EXCLUSION LID1_INT27, 0x00002080, layerTraceKeepout,      stmInt27  }, // 198 Exclusion Inner 27
 
       { 0, nullptr, 0, layerTraceNone, 0x00000000 }
@@ -292,84 +261,85 @@ SdLayerDescr sdLayerDescrDefault[] = {
 
 SdLayerLevel sdLayerLevel0[] = {
   // Common layers
-  { LID0_COMMON,        QT_TRANSLATE_NOOP( "SdLayer", "Common" ),                   0 },
-  { LID0_INVISIBLE,     QT_TRANSLATE_NOOP( "SdLayer", "Invisible" ),                0 },
-  { LID0_ERRORS,        QT_TRANSLATE_NOOP( "SdLayer", "Errors" ),                   0 },
-  { LID0_PICTURE,       QT_TRANSLATE_NOOP( "SdLayer", "Picture" ),                  0 },
-  { LID0_REMARK,        QT_TRANSLATE_NOOP( "SdLayer", "Remark" ),                   0 },
+  { LID0_COMMON,        QT_TRANSLATE_NOOP( "SdLayer", "Common" ),                   layerTraceNone,     dctCommon },
+  { LID0_INVISIBLE,     QT_TRANSLATE_NOOP( "SdLayer", "Invisible" ),                layerTraceNone,     dctCommon },
+  { LID0_ERRORS,        QT_TRANSLATE_NOOP( "SdLayer", "Errors" ),                   layerTraceNone,     dctCommon },
+  { LID0_PICTURE,       QT_TRANSLATE_NOOP( "SdLayer", "Picture" ),                  layerTraceNone,     dctCommon },
+  { LID0_REMARK,        QT_TRANSLATE_NOOP( "SdLayer", "Remark" ),                   layerTraceNone,     dctCommon },
 
   // Schematic specific
-  { LID0_NET,           QT_TRANSLATE_NOOP( "SdLayer", "Schematic net" ),            0 },
-  { LID0_NET_NAME,      QT_TRANSLATE_NOOP( "SdLayer", "Schematic net name" ),       0 },
-  { LID0_BUS,           QT_TRANSLATE_NOOP( "SdLayer", "Schematic net bus" ),        0 },
-  { LID0_AREA,          QT_TRANSLATE_NOOP( "SdLayer", "Schematic PCB area contour" ),0 },
-  { LID0_FORM,          QT_TRANSLATE_NOOP( "SdLayer", "Drawing form and frame" ),   0 },
-  { LID0_NAVI,          QT_TRANSLATE_NOOP( "SdLayer", "Navigation grid" ),          0 },
+  { LID0_NET,           QT_TRANSLATE_NOOP( "SdLayer", "Schematic net" ),            layerTraceNone,     dctSchematic },
+  { LID0_NET_NAME,      QT_TRANSLATE_NOOP( "SdLayer", "Schematic net name" ),       layerTraceNone,     dctSchematic },
+  { LID0_BUS,           QT_TRANSLATE_NOOP( "SdLayer", "Schematic net bus" ),        layerTraceNone,     dctSchematic },
+  { LID0_AREA,          QT_TRANSLATE_NOOP( "SdLayer", "Schematic PCB area contour" ), layerTraceNone,   dctSchematic },
+  { LID0_FORM,          QT_TRANSLATE_NOOP( "SdLayer", "Drawing form and frame" ),   layerTraceNone,     dctSchematic },
+  { LID0_NAVI,          QT_TRANSLATE_NOOP( "SdLayer", "Navigation grid" ),          layerTraceNone,     dctSchematic },
 
   // PCB specific (without LID1)
-  { LID0_PCB,           QT_TRANSLATE_NOOP( "SdLayer", "PCB contour" ),              0 },
-  { LID0_HOLE,          QT_TRANSLATE_NOOP( "SdLayer", "PCB hole" ),                 0 },
-  { LID0_EXCLUSION,     QT_TRANSLATE_NOOP( "SdLayer", "PCB trace exclusion area" ), 0 },
-  { LID0_CLEAR,         QT_TRANSLATE_NOOP( "SdLayer", "PCB trace clear" ),          0 },
+  { LID0_PCB,           QT_TRANSLATE_NOOP( "SdLayer", "PCB contour" ),              layerTraceBoundary, dctConstruct },
+  { LID0_HOLE,          QT_TRANSLATE_NOOP( "SdLayer", "PCB hole" ),                 layerTraceHole,     dctConstruct },
+  { LID0_EXCLUSION,     QT_TRANSLATE_NOOP( "SdLayer", "PCB trace exclusion area" ), layerTraceKeepout,  dctConstruct },
+  { LID0_CLEAR,         QT_TRANSLATE_NOOP( "SdLayer", "PCB trace clear" ),          layerTraceNone,     dctConstruct },
+
 
   // PCB specific (with LID1)
-  { LID0_WIRE,          QT_TRANSLATE_NOOP( "SdLayer", "PCB wire" ),                 0 },
-  { LID0_POLYGON,       QT_TRANSLATE_NOOP( "SdLayer", "PCB polygon" ),              0 },
-  { LID0_PAD,           QT_TRANSLATE_NOOP( "SdLayer", "PCB pad" ),                  0 },
-  { LID0_SOLDER_MASK,   QT_TRANSLATE_NOOP( "SdLayer", "PCB solder mask" ),          0 },
-  { LID0_STENCIL,       QT_TRANSLATE_NOOP( "SdLayer", "PCB stencil aperture" ),     0 },
-  { LID0_STENCIL_REPER, QT_TRANSLATE_NOOP( "SdLayer", "PCB stencil fiducial" ),     0 },
-  { LID0_SILK,          QT_TRANSLATE_NOOP( "SdLayer", "PCB silkscreen" ),           0 },
-  { LID0_ADHESIV,       QT_TRANSLATE_NOOP( "SdLayer", "PCB adhesive" ),             0 },
-  { LID0_DIM,           QT_TRANSLATE_NOOP( "SdLayer", "PCB dimension" ),            0 },
-  { LID0_GUIDE,         QT_TRANSLATE_NOOP( "SdLayer", "PCB construction guide" ),   0 },
-  { LID0_COURTYARD,     QT_TRANSLATE_NOOP( "SdLayer", "PCB component courtyard" ),  0 },
+  { LID0_WIRE,          QT_TRANSLATE_NOOP( "SdLayer", "PCB wire" ),                 layerTraceRoad,     dctConstruct },
+  { LID0_POLYGON,       QT_TRANSLATE_NOOP( "SdLayer", "PCB polygon" ),              layerTracePolygon,  dctConstruct },
+  { LID0_PAD,           QT_TRANSLATE_NOOP( "SdLayer", "PCB pad" ),                  layerTracePad,      dctConstruct },
+  { LID0_SOLDER_MASK,   QT_TRANSLATE_NOOP( "SdLayer", "PCB solder mask" ),          layerTraceNone,     dctConstruct },
+  { LID0_STENCIL,       QT_TRANSLATE_NOOP( "SdLayer", "PCB stencil aperture" ),     layerTraceNone,     dctConstruct },
+  { LID0_STENCIL_REPER, QT_TRANSLATE_NOOP( "SdLayer", "PCB stencil fiducial" ),     layerTraceNone,     dctConstruct },
+  { LID0_SILK,          QT_TRANSLATE_NOOP( "SdLayer", "PCB silkscreen" ),           layerTraceNone,     dctConstruct },
+  { LID0_ADHESIV,       QT_TRANSLATE_NOOP( "SdLayer", "PCB adhesive" ),             layerTraceNone,     dctConstruct },
+  { LID0_DIM,           QT_TRANSLATE_NOOP( "SdLayer", "PCB dimension" ),            layerTraceNone,     dctConstruct },
+  { LID0_GUIDE,         QT_TRANSLATE_NOOP( "SdLayer", "PCB construction guide" ),   layerTraceNone,     dctConstruct },
+  { LID0_COURTYARD,     QT_TRANSLATE_NOOP( "SdLayer", "PCB component courtyard" ),  layerTraceNone,     dctConstruct },
 
   // Both schematic and PCB
-  { LID0_COMPONENT,     QT_TRANSLATE_NOOP( "SdLayer", "Component" ),                0 },
-  { LID0_PIN,           QT_TRANSLATE_NOOP( "SdLayer", "Pin" ),                      0 },
-  { LID0_PIN_NAME,      QT_TRANSLATE_NOOP( "SdLayer", "Pin name" ),                 0 },
-  { LID0_PIN_NUMBER,    QT_TRANSLATE_NOOP( "SdLayer", "Pin number" ),               0 },
-  { LID0_IDENT,         QT_TRANSLATE_NOOP( "SdLayer", "Component ident" ),          0 },
-  { LID0_VALUE,         QT_TRANSLATE_NOOP( "SdLayer", "Value" ),                    0 },
+  { LID0_COMPONENT,     QT_TRANSLATE_NOOP( "SdLayer", "Component" ),                layerTraceNone,     dctCommon },
+  { LID0_PIN,           QT_TRANSLATE_NOOP( "SdLayer", "Pin" ),                      layerTraceNone,     dctCommon },
+  { LID0_PIN_NAME,      QT_TRANSLATE_NOOP( "SdLayer", "Pin name" ),                 layerTraceNone,     dctCommon },
+  { LID0_PIN_NUMBER,    QT_TRANSLATE_NOOP( "SdLayer", "Pin number" ),               layerTraceNone,     dctCommon },
+  { LID0_IDENT,         QT_TRANSLATE_NOOP( "SdLayer", "Component ident" ),          layerTraceNone,     dctCommon },
+  { LID0_VALUE,         QT_TRANSLATE_NOOP( "SdLayer", "Value" ),                    layerTraceNone,     dctCommon },
 
-  { nullptr, nullptr, 0 }
+  { nullptr, nullptr, layerTraceNone, 0 }
 };
 
 
 SdLayerLevel sdLayerLevel1[] = {
-  { "",                 QT_TRANSLATE_NOOP( "SdLayer", "---" ), stmThrough },
-  { LID1_TOP,           QT_TRANSLATE_NOOP( "SdLayer", "on top" ), stmTop },
-  { LID1_BOT,           QT_TRANSLATE_NOOP( "SdLayer", "on bottom" ), stmBottom },
-  { LID1_INT00,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 1" ), stmInt00 },
-  { LID1_INT01,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 2" ), stmInt01 },
-  { LID1_INT02,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 3" ), stmInt02 },
-  { LID1_INT03,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 4" ), stmInt03 },
-  { LID1_INT04,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 5" ), stmInt04 },
-  { LID1_INT05,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 6" ), stmInt05 },
-  { LID1_INT06,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 7" ), stmInt06 },
-  { LID1_INT07,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 8" ), stmInt07 },
-  { LID1_INT08,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 9" ), stmInt08 },
-  { LID1_INT09,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 10" ), stmInt09 },
-  { LID1_INT10,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 11" ), stmInt10 },
-  { LID1_INT11,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 12" ), stmInt11 },
-  { LID1_INT12,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 13" ), stmInt12 },
-  { LID1_INT13,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 14" ), stmInt13 },
-  { LID1_INT14,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 15" ), stmInt14 },
-  { LID1_INT15,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 16" ), stmInt15 },
-  { LID1_INT16,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 17" ), stmInt16 },
-  { LID1_INT17,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 18" ), stmInt17 },
-  { LID1_INT18,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 19" ), stmInt18 },
-  { LID1_INT19,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 20" ), stmInt19 },
-  { LID1_INT20,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 21" ), stmInt20 },
-  { LID1_INT21,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 22" ), stmInt21 },
-  { LID1_INT22,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 23" ), stmInt22 },
-  { LID1_INT23,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 24" ), stmInt23 },
-  { LID1_INT24,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 25" ), stmInt24 },
-  { LID1_INT25,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 26" ), stmInt25 },
-  { LID1_INT26,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 27" ), stmInt26 },
-  { LID1_INT27,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 28" ), stmInt27 },
-  { nullptr, nullptr, 0 }
+  { "",                 QT_TRANSLATE_NOOP( "SdLayer", "---" ),            layerTraceNone,stmThrough },
+  { LID1_TOP,           QT_TRANSLATE_NOOP( "SdLayer", "on top" ),         layerTraceNone,stmTop },
+  { LID1_BOT,           QT_TRANSLATE_NOOP( "SdLayer", "on bottom" ),      layerTraceNone,stmBottom },
+  { LID1_INT00,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 1" ),  layerTraceNone,stmInt00 },
+  { LID1_INT01,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 2" ),  layerTraceNone,stmInt01 },
+  { LID1_INT02,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 3" ),  layerTraceNone,stmInt02 },
+  { LID1_INT03,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 4" ),  layerTraceNone,stmInt03 },
+  { LID1_INT04,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 5" ),  layerTraceNone,stmInt04 },
+  { LID1_INT05,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 6" ),  layerTraceNone,stmInt05 },
+  { LID1_INT06,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 7" ),  layerTraceNone,stmInt06 },
+  { LID1_INT07,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 8" ),  layerTraceNone,stmInt07 },
+  { LID1_INT08,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 9" ),  layerTraceNone,stmInt08 },
+  { LID1_INT09,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 10" ), layerTraceNone,stmInt09 },
+  { LID1_INT10,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 11" ), layerTraceNone,stmInt10 },
+  { LID1_INT11,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 12" ), layerTraceNone,stmInt11 },
+  { LID1_INT12,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 13" ), layerTraceNone,stmInt12 },
+  { LID1_INT13,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 14" ), layerTraceNone,stmInt13 },
+  { LID1_INT14,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 15" ), layerTraceNone,stmInt14 },
+  { LID1_INT15,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 16" ), layerTraceNone,stmInt15 },
+  { LID1_INT16,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 17" ), layerTraceNone,stmInt16 },
+  { LID1_INT17,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 18" ), layerTraceNone,stmInt17 },
+  { LID1_INT18,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 19" ), layerTraceNone,stmInt18 },
+  { LID1_INT19,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 20" ), layerTraceNone,stmInt19 },
+  { LID1_INT20,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 21" ), layerTraceNone,stmInt20 },
+  { LID1_INT21,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 22" ), layerTraceNone,stmInt21 },
+  { LID1_INT22,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 23" ), layerTraceNone,stmInt22 },
+  { LID1_INT23,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 24" ), layerTraceNone,stmInt23 },
+  { LID1_INT24,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 25" ), layerTraceNone,stmInt24 },
+  { LID1_INT25,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 26" ), layerTraceNone,stmInt25 },
+  { LID1_INT26,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 27" ), layerTraceNone,stmInt26 },
+  { LID1_INT27,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 28" ), layerTraceNone,stmInt27 },
+  { nullptr, nullptr, layerTraceNone,0 }
 };
 
 
@@ -392,6 +362,20 @@ SdLayer::SdLayer(QString layerId, QString layerName, QString layerEnglishName, S
   //По умолчанию пара - этот-же слой
   //By default, pair - is same layer
   mPair = this;
+  }
+
+
+
+
+void SdLayer::init(QString layerName, QString layerEnglishName, SdLayerTrace layerTrace, int layerClass, int layerStratum, unsigned int layerColor, int index)
+  {
+  mName    = layerName;
+  mEnglish = layerEnglishName;
+  mTrace   = layerTrace;
+  mClass   = layerClass;
+  mStratum = layerStratum;
+  mColor   = layerColor;
+  mIndex   = index;
   }
 
 
@@ -435,6 +419,7 @@ void SdLayer::write(QDataStream &os)
      << mClass
      << mStratum
      << mColor
+     << mIndex
      << mPair->mId;
   }
 
@@ -454,6 +439,7 @@ void SdLayer::read(QDataStream &is)
      >> mClass
      >> mStratum
      >> mColor
+     >> mIndex
      >> pair;
   mState = static_cast<SdLayerState>(state);
   mTrace = static_cast<SdLayerTrace>(trace);
@@ -483,11 +469,22 @@ QPair<QString, QString> SdLayer::layerIdToName(const QString layerId, SdLayerDes
 
 QPair<QString, QString> SdLayer::layerIdToName(const QString &lid0, const QString &lid1, SdLayerDescr *descr)
   {
+  //Default values for descr
+  if( descr != nullptr ) {
+    descr->mClass = dctCommon;
+    descr->mColor = 0x00743290;
+    descr->mTrace = layerTraceNone;
+    descr->mStratum = stmThrough;
+    }
   const char *trans0 = nullptr;
   //Find for lid0
   for( int i = 0; sdLayerLevel0[i].mLid != nullptr; i++ )
     if( lid0 == QString(sdLayerLevel0[i].mLid) ) {
       trans0 = sdLayerLevel0[i].mTranslate;
+      if( descr != nullptr ) {
+        descr->mClass = sdLayerLevel0[i].classId();
+        descr->mTrace = sdLayerLevel0[i].mTrace;
+        }
       break;
       }
 
@@ -502,6 +499,9 @@ QPair<QString, QString> SdLayer::layerIdToName(const QString &lid0, const QStrin
     for( int i = 1; sdLayerLevel1[i].mLid != nullptr; i++ )
       if( lid1 == QString(sdLayerLevel1[i].mLid) ) {
         trans1 = sdLayerLevel1[i].mTranslate;
+        if( descr != nullptr ) {
+          descr->mStratum = sdLayerLevel1[i].mStratum;
+          }
         break;
         }
     if( trans1 == nullptr )

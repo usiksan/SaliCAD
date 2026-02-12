@@ -33,7 +33,7 @@ SdDLayerList::SdDLayerList(const QString currentPair, QWidget *parent) :
 
   int currentPairIndex = -1, index = 0;
   //Fill layer list
-  for( SdLayerPtr layer : sdEnvir::instance()->mLayerTable ) {
+  SdEnvir::instance()->layerForEachConst( dctCommon, [this, &currentPairIndex, &index, currentPair] (SdLayer *layer) -> bool {
     //Append id to internal list
     mLayerIdList.append( layer->id() );
     if( layer->id() == currentPair )
@@ -46,7 +46,9 @@ SdDLayerList::SdDLayerList(const QString currentPair, QWidget *parent) :
       name = QString("(*) ");
     name.append( layer->name() );
     ui->mList->addItem( name );
-    }
+    return true;
+    });
+
   if( currentPairIndex >= 0 )
     ui->mList->setCurrentRow( currentPairIndex );
   }
