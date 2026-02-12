@@ -46,7 +46,7 @@ void SdModeCSheetIdentMove::drawDynamic(SdContext *ctx)
   {
   if( getStep() && mImp ) {
     //Draw selected implement with entre color
-    ctx->setOverColor( sdEnvir->getSysColor(scSelected) );
+    ctx->setOverColor( sdEnvir::instance()->getSysColor(scSelected) );
     mImp->draw( ctx );
     }
   }

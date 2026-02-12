@@ -144,17 +144,16 @@ struct SdLayerDescr {
   int           mStratum;  //!< Layer stratum
   };
 
-//#define LAYER_DESCR_ACTUAL 10 //Actual layers count
-//#define LAYER_DESCR_COUNT  20 //Default layers count
-extern SdLayerDescr sdLayerDescrActual[];
-extern SdLayerDescr sdLayerDescrAddon[];
+extern SdLayerDescr sdLayerDescrDefault[];
 
 //Translation layer id to human visible name
 struct SdLayerLevel {
-    const char *mLid;       //!< Level id LIDxxx
-    const char *mEnglish;   //!< Human visible english name
-    const char *mTranslate; //!< Human visible name aka "Schematic net"
-    int         mStratum;   //!< Stratum for sublevel
+    const char   *mLid;       //!< Level id LIDxxx
+    const char   *mTranslate; //!< Human visible name aka "Schematic net"
+    SdLayerTrace  mTrace;     //!< Layer trace type
+    unsigned      mStratum;   //!< Stratum for sublevel or class
+
+    unsigned classId() const { return mStratum; }
   };
 
 extern SdLayerLevel sdLayerLevel0[];
@@ -166,8 +165,6 @@ class SdLayer
     QString       mId;       //!< Layer ident - unical handle
     QString       mName;     //!< Layer name for visual
     QString       mEnglish;  //!< Layer name english
-    QString       mKiCadId;  //!< KiCad layer id
-    QString       mAltiumId; //!< Altium layer id
     SdLayerState  mState;    //!< State (visible, editing, invisible)
     SdLayerTrace  mTrace;    //!< Layer trace type
     SdClass       mClass;    //!< Classes for defining layer membership
@@ -176,22 +173,22 @@ class SdLayer
     SdLayer      *mPair;     //!< Layer pair for flipped component [Парный слой]
     bool          mUsage;    //!< Usage flag [Флаг использования]
   public:
-    SdLayer(QString layerId, QString layerName, unsigned layerColor );
+    SdLayer(QString layerId, QString layerName, QString layerEnglishName, SdLayerTrace layerTrace, int layerClass, int layerStratum, unsigned layerColor );
+
+    void         init( QString layerName, QString layerEnglishName, SdLayerTrace layerTrace, int layerClass, int layerStratum, unsigned layerColor );
 
     QString      id() const { return mId; }
 
     QString      name() const { return mName; }
-    void         setName( const QString nm ) { mName = nm; }
-
-    QString      kiCadId() const { return mKiCadId; }
+    void         nameSet( const QString nm ) { mName = nm; }
 
     SdLayer     *pair() { return mPair; }
 
     //Установить новую пару для слоя
-    void         setPair( SdLayer *p );
+    void         pairSet( SdLayer *p );
 
     //Reset pair for layer
-    void         resetPair();
+    void         pairReset();
 
     //Return true when layer is visible
     bool         isVisible() const { return mState != layerStateOff; }
@@ -201,20 +198,20 @@ class SdLayer
 
     //Layer state
     SdLayerState state() const { return mState; }
-    void         setState( SdLayerState st ) { mState = st; }
+    void         stateSet( SdLayerState st ) { mState = st; }
 
     //Layer trace type
     SdLayerTrace trace() const { return mTrace; }
-    void         setTrace( SdLayerTrace tr ) { mTrace = tr; }
+
+    SdClass      classGet() const { return mClass; }
 
     int          stratum() const { return mStratum; }
-    void         setStratum( int st ) { mStratum = st; }
 
     //Layer color
     //Return layer color
     QColor       color() const { return QColor( QRgb(mColor) ); }
     //Set new color for layer
-    void         setColor( unsigned c ) { mColor = c; }
+    void         colorSet( unsigned c ) { mColor = c; }
 
     //Usage flag. Indicate layer is used anywhere
     //Сбросить флаг использования
@@ -231,6 +228,10 @@ class SdLayer
 
     //Загрузить слой
     void         read( QDataStream &is );
+
+
+    static QPair<QString,QString> layerIdToName( const QString layerId, SdLayerDescr *descr = nullptr );
+    static QPair<QString,QString> layerIdToName(const QString &lid0, const QString &lid1, SdLayerDescr *descr = nullptr );
   };
 
 typedef SdLayer *SdLayerPtr;

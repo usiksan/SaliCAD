@@ -56,7 +56,7 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
     return;
 
   //Draw pad mask
-  SdLayer *layer = sdEnvir->mCacheForMask.getVisibleLayer(stratum);
+  SdLayer *layer = sdEnvir::instance()->mCacheForMask.getVisibleLayer(stratum);
   if( layer != nullptr && layer->isVisible() && mMaskThreshold > 0 ) {
     int w = mDiametrWidth + mMaskThreshold * 2;
     int h = mHeight + mMaskThreshold * 2;
@@ -65,7 +65,7 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
     }
 
   //Draw stencil
-  layer = sdEnvir->mCacheForStencil.getVisibleLayer(stratum);
+  layer = sdEnvir::instance()->mCacheForStencil.getVisibleLayer(stratum);
   if( layer != nullptr && layer->isVisible() && mStencilThreshold > 0 ) {
     int w = mDiametrWidth - mStencilThreshold * 2;
     int h = mHeight - mStencilThreshold * 2;
@@ -91,14 +91,14 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
     }
 
   //Draw pad itself
-  layer = sdEnvir->mCacheForPad.getVisibleLayer(stratum);
+  layer = sdEnvir::instance()->mCacheForPad.getVisibleLayer(stratum);
   if( layer != nullptr && layer->isVisible() ) {
     if( mIsCircle ) dcx->circleFill( SdPoint( p.x() + mCenterX, p.y() + mCenterY), mDiametrWidth >> 1, layer->color() );
     else dcx->fillRect( SdRect( p.x() + mCenterX - (mDiametrWidth >> 1), p.y() + mCenterY - (mHeight >> 1), mDiametrWidth, mHeight), layer->color() );
     }
 
   //Draw hole
-  layer = sdEnvir->mCacheForHole.getVisibleLayer(stratum);
+  layer = sdEnvir::instance()->mCacheForHole.getVisibleLayer(stratum);
   if( layer != nullptr && layer->isVisible() && mHoleDiametr > 0 ) {
     if( mHoleLength > 0 ) {
       //Hole is slot type
@@ -218,7 +218,7 @@ int SdPad::overCircleRadius() const
 //Create textual pad description
 QString SdPad::description() const
   {
-  double ppm = sdEnvir->mPrtPPM;
+  double ppm = sdEnvir::instance()->mPrtPPM;
   if( mIsCircle ) {
     if( mHoleDiametr <= 0 )
       //smd
@@ -430,7 +430,7 @@ void SdPad::parse(const QString nm)
       pad3d = mModel.faceRectangle( static_cast<float>(mDiametrWidth) / 1000.0, static_cast<float>(mHeight) / 1000.0, t );
     body.faceAppend( pad3d );
     }
-  body.colorSet( sdEnvir->getSysColor( sc3dPadTop ) );
+  body.colorSet( sdEnvir::instance()->getSysColor( sc3dPadTop ) );
   Sd3drInstance inst;
   inst.add( body );
   inst.addCopy( QMatrix4x4() );

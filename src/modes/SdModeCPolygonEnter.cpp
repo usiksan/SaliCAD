@@ -44,19 +44,19 @@ void SdModeCPolygonEnter::drawStatic(SdContext *ctx)
 void SdModeCPolygonEnter::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sNextPoint ) {
-    ctx->setPen( 0, sdEnvir->getSysColor(scEnter),
+    ctx->setPen( 0, sdEnvir::instance()->getSysColor(scEnter),
                  sdGlobalProp->mLineProp.mType.getValue() );
     ctx->region( mList, false );
     ctx->line( mList.last(), mMiddle );
     if( mMiddle != mPrevMove )
       ctx->line( mMiddle, mPrevMove );
 
-    if( sdEnvir->mIsSmart && mList.count() > 2 )
+    if( sdEnvir::instance()->mIsSmart && mList.count() > 2 )
       ctx->smartPoint( mList.at(0), snapEndPoint );
     }
   else {
     //Draw snap point with which we retrieve net name for polygon
-    if( !mSmart.isFar() && sdEnvir->mIsSmart )
+    if( !mSmart.isFar() && sdEnvir::instance()->mIsSmart )
       ctx->smartPoint( mSmart, snapEndPoint );
     }
   }

@@ -40,8 +40,8 @@ void SdModeCRoadMove::activate()
   mPreviousGrid = mEditor->gridGet();
   mEditor->gridSet( plate()->mTraceGrid );
 
-  mPreviousCursor = sdEnvir->mCursorAlignGrid;
-  sdEnvir->mCursorAlignGrid = plate()->mTraceCursorGrid;
+  mPreviousCursor = sdEnvir::instance()->mCursorAlignGrid;
+  sdEnvir::instance()->mCursorAlignGrid = plate()->mTraceCursorGrid;
 
   SdModeCommon::activate();
   }
@@ -54,11 +54,11 @@ void SdModeCRoadMove::deactivate()
   {
   //Store to plate current grid and cursor alignment mode
   plate()->mTraceGrid = mEditor->gridGet();
-  plate()->mTraceCursorGrid = sdEnvir->mCursorAlignGrid;
+  plate()->mTraceCursorGrid = sdEnvir::instance()->mCursorAlignGrid;
 
   //Restore previous grid and cursor alignment mode
   mEditor->gridSet( mPreviousGrid );
-  sdEnvir->mCursorAlignGrid = mPreviousCursor;
+  sdEnvir::instance()->mCursorAlignGrid = mPreviousCursor;
   }
 
 
@@ -89,25 +89,25 @@ void SdModeCRoadMove::drawDynamic(SdContext *ctx)
 
     if( mFragment.count() ) {
       //Draw selected fragment
-      ctx->setOverColor( sdEnvir->getSysColor(scSelected) );
+      ctx->setOverColor( sdEnvir::instance()->getSysColor(scSelected) );
       mFragment.draw( ctx );
       }
     }
   if( getStep() == sMoveRoad ) {
     //Draw segments
-    ctx->setOverColor( sdEnvir->getSysColor(scSelected) );
+    ctx->setOverColor( sdEnvir::instance()->getSysColor(scSelected) );
     if( mVia == nullptr ) {
       //Move segments only
       if( mSource1 != mMove1 ) {
-        ctx->setPen( mProp1.mWidth.getValue(), sdEnvir->mCacheForRoad.getVisibleLayer( mProp1.mStratum ), dltSolid );
+        ctx->setPen( mProp1.mWidth.getValue(), sdEnvir::instance()->mCacheForRoad.getVisibleLayer( mProp1.mStratum ), dltSolid );
         ctx->line( mSource1, mMove1 );
         }
       if( mMove1 != mMove2 ) {
-        ctx->setPen( mProp.mWidth.getValue(), sdEnvir->mCacheForRoad.getVisibleLayer( mProp.mStratum ), dltSolid );
+        ctx->setPen( mProp.mWidth.getValue(), sdEnvir::instance()->mCacheForRoad.getVisibleLayer( mProp.mStratum ), dltSolid );
         ctx->line( mMove1, mMove2 );
         }
       if( mMove2 != mSource2 ) {
-        ctx->setPen( mProp2.mWidth.getValue(), sdEnvir->mCacheForRoad.getVisibleLayer( mProp2.mStratum ), dltSolid );
+        ctx->setPen( mProp2.mWidth.getValue(), sdEnvir::instance()->mCacheForRoad.getVisibleLayer( mProp2.mStratum ), dltSolid );
         ctx->line( mSource2, mMove2 );
         }
       }
@@ -115,11 +115,11 @@ void SdModeCRoadMove::drawDynamic(SdContext *ctx)
       //Move via
       mFragment.draw( ctx );
       if( mSource1 != mMove1 ) {
-        ctx->setPen( mProp.mWidth.getValue(), sdEnvir->mCacheForRoad.getVisibleLayer( mViaProp.mStratum ), dltSolid );
+        ctx->setPen( mProp.mWidth.getValue(), sdEnvir::instance()->mCacheForRoad.getVisibleLayer( mViaProp.mStratum ), dltSolid );
         ctx->line( mSource1, mMove1 );
         }
 //      if( mMove1 != mMove2 ) {
-//        ctx->setPen( mProp.mWidth.getValue(), sdEnvir->mCacheForRoad.getVisibleLayer( mViaProp.mStratum ), dltSolid );
+//        ctx->setPen( mProp.mWidth.getValue(), sdEnvir::instance()->mCacheForRoad.getVisibleLayer( mViaProp.mStratum ), dltSolid );
 //        ctx->line( mMove1, mMove2 );
 //        }
       }

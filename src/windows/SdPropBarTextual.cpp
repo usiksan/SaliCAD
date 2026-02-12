@@ -30,7 +30,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
   mFont->setEditable(false);
   //Fill font list with available fonts
   for( int i = 0; i < FONT_COUNT; i++ )
-    mFont->addItem( sdEnvir->getSysFont(i) );
+    mFont->addItem( sdEnvir::instance()->getSysFont(i) );
   //on select other font
   connect( mFont, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
     Q_UNUSED(index)

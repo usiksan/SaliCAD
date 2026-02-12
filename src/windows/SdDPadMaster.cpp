@@ -31,12 +31,12 @@ SdDPadMaster::SdDPadMaster(SdPad pad, QWidget *parent) :
   ui->setupUi(this);
 
   //Fill fields with values
-  ui->mCenterX->setText( sdEnvir->toPhisPcb(mPad.mCenterX) );
-  ui->mCenterY->setText( sdEnvir->toPhisPcb(mPad.mCenterY) );
-  ui->mPadDiametr->setText( sdEnvir->toPhisPcb(mPad.mDiametrWidth) );
+  ui->mCenterX->setText( sdEnvir::instance()->toPhisPcb(mPad.mCenterX) );
+  ui->mCenterY->setText( sdEnvir::instance()->toPhisPcb(mPad.mCenterY) );
+  ui->mPadDiametr->setText( sdEnvir::instance()->toPhisPcb(mPad.mDiametrWidth) );
   ui->mCirclePad->setChecked(mPad.mIsCircle);
   onPadCircleToggle(mPad.mIsCircle);
-  ui->mMaskThreshold->setText( sdEnvir->toPhisPcb(mPad.mMaskThreshold) );
+  ui->mMaskThreshold->setText( sdEnvir::instance()->toPhisPcb(mPad.mMaskThreshold) );
   onThroughPin( mPad.mHoleDiametr > 0 );
   ui->mThroughPin->setChecked( mPad.isThrough() );
 
@@ -55,47 +55,47 @@ SdDPadMaster::SdDPadMaster(SdPad pad, QWidget *parent) :
     });
   //On other editors update value from editor and update pad schematic
   connect( ui->mCenterX, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mCenterX = sdEnvir->fromPhisPcb( txt );
+    mPad.mCenterX = sdEnvir::instance()->fromPhisPcb( txt );
     updatePadSchematic();
     });
   connect( ui->mCenterY, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mCenterY = sdEnvir->fromPhisPcb( txt );
+    mPad.mCenterY = sdEnvir::instance()->fromPhisPcb( txt );
     updatePadSchematic();
     });
   connect( ui->mPadDiametr, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mDiametrWidth = sdEnvir->fromPhisPcb( txt );
+    mPad.mDiametrWidth = sdEnvir::instance()->fromPhisPcb( txt );
     updatePadSchematic();
     });
   connect( ui->mPadHeight, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mHeight = sdEnvir->fromPhisPcb( txt );
+    mPad.mHeight = sdEnvir::instance()->fromPhisPcb( txt );
     updatePadSchematic();
     });
   connect( ui->mMaskThreshold, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mMaskThreshold = sdEnvir->fromPhisPcb( txt );
+    mPad.mMaskThreshold = sdEnvir::instance()->fromPhisPcb( txt );
     updatePadSchematic();
     });
   connect( ui->mHoleDiametr, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mHoleDiametr = sdEnvir->fromPhisPcb( txt );
+    mPad.mHoleDiametr = sdEnvir::instance()->fromPhisPcb( txt );
     updatePadSchematic();
     });
   connect( ui->mHoleLength, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mHoleLength = sdEnvir->fromPhisPcb( txt );
+    mPad.mHoleLength = sdEnvir::instance()->fromPhisPcb( txt );
     updatePadSchematic();
     });
   connect( ui->mSlotAngle, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mSlotAngle = sdEnvir->fromPhisPcb( txt );
+    mPad.mSlotAngle = sdEnvir::instance()->fromPhisPcb( txt );
     updatePadSchematic();
     });
   connect( ui->mStensilThreshold, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mStencilThreshold = sdEnvir->fromPhisPcb( txt );
+    mPad.mStencilThreshold = sdEnvir::instance()->fromPhisPcb( txt );
     updatePadSchematic();
     });
   connect( ui->mStensilWidth, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mStencilWidth = sdEnvir->fromPhisPcb( txt );
+    mPad.mStencilWidth = sdEnvir::instance()->fromPhisPcb( txt );
     updatePadSchematic();
     });
   connect( ui->mStensilHeight, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mStencilHeight = sdEnvir->fromPhisPcb( txt );
+    mPad.mStencilHeight = sdEnvir::instance()->fromPhisPcb( txt );
     updatePadSchematic();
     });
 
@@ -286,7 +286,7 @@ void SdDPadMaster::onPadCircleToggle(bool isCircle)
     }
   else {
     ui->mPadDiametrTitle->setText( tr("Pad witdh") );
-    ui->mPadHeight->setText( sdEnvir->toPhisPcb(mPad.mHeight) );
+    ui->mPadHeight->setText( sdEnvir::instance()->toPhisPcb(mPad.mHeight) );
     ui->mPadHeight->setEnabled(true);
     }
   updatePadSchematic();
@@ -315,15 +315,15 @@ void SdDPadMaster::onThroughPin(bool isThrough)
     //Enable pin hole
     if( mPad.mHoleDiametr <= 0 )
       mPad.mHoleDiametr = 500;
-    ui->mHoleDiametr->setText( sdEnvir->toPhisPcb(mPad.mHoleDiametr) );
-    ui->mHoleLength->setText( sdEnvir->toPhisPcb(mPad.mHoleLength) );
+    ui->mHoleDiametr->setText( sdEnvir::instance()->toPhisPcb(mPad.mHoleDiametr) );
+    ui->mHoleLength->setText( sdEnvir::instance()->toPhisPcb(mPad.mHoleLength) );
     ui->mSlotAngle->setText( SdUtil::log2physStr(mPad.mSlotAngle,0.001) );
     }
   else {
     //Enable stensil hole
     if( mPad.mStencilThreshold <= 0 )
       mPad.mStencilThreshold = 50;
-    ui->mStensilThreshold->setText( sdEnvir->toPhisPcb(mPad.mStencilThreshold) );
+    ui->mStensilThreshold->setText( sdEnvir::instance()->toPhisPcb(mPad.mStencilThreshold) );
     ui->mStensilRows->setText( QString::number(mPad.mStencilRows) );
     ui->mStensilColumns->setText( QString::number(mPad.mStencilCols) );
     //Disable pin hole
@@ -346,8 +346,8 @@ void SdDPadMaster::onArrayEnable(bool isEna)
   ui->mStensilWidth->setEnabled(isEna);
   ui->mStensilHeight->setEnabled(isEna);
   if( isEna ) {
-    ui->mStensilWidth->setText( sdEnvir->toPhisPcb(mPad.mStencilWidth) );
-    ui->mStensilHeight->setText( sdEnvir->toPhisPcb(mPad.mStencilHeight) );
+    ui->mStensilWidth->setText( sdEnvir::instance()->toPhisPcb(mPad.mStencilWidth) );
+    ui->mStensilHeight->setText( sdEnvir::instance()->toPhisPcb(mPad.mStencilHeight) );
     }
   else {
     ui->mStensilWidth->clear();

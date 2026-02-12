@@ -51,8 +51,8 @@ void SdModeCPartPlace::activate()
   mPreviousGrid = mEditor->gridGet();
   mEditor->gridSet( plate()->mPlaceGrid );
 
-  mPreviousCursor = sdEnvir->mCursorAlignGrid;
-  sdEnvir->mCursorAlignGrid = plate()->mPlaceCursorGrid;
+  mPreviousCursor = sdEnvir::instance()->mCursorAlignGrid;
+  sdEnvir::instance()->mCursorAlignGrid = plate()->mPlaceCursorGrid;
 
   if( !mBySheet )
     reset();
@@ -67,11 +67,11 @@ void SdModeCPartPlace::deactivate()
   {
   //Store to plate current grid and cursor alignment mode
   plate()->mPlaceGrid = mEditor->gridGet();
-  plate()->mPlaceCursorGrid = sdEnvir->mCursorAlignGrid;
+  plate()->mPlaceCursorGrid = sdEnvir::instance()->mCursorAlignGrid;
 
   //Restore previous grid and cursor alignment mode
   mEditor->gridSet( mPreviousGrid );
-  sdEnvir->mCursorAlignGrid = mPreviousCursor;
+  sdEnvir::instance()->mCursorAlignGrid = mPreviousCursor;
   }
 
 
@@ -142,13 +142,13 @@ void SdModeCPartPlace::drawStatic(SdContext *ctx)
 void SdModeCPartPlace::drawDynamic(SdContext *ctx)
   {
   //Draw all selected elements
-  ctx->setOverColor( sdEnvir->getSysColor(scSelected) );
+  ctx->setOverColor( sdEnvir::instance()->getSysColor(scSelected) );
   mFragment.draw( ctx );
 
   //If show rat net and selection present
-  if( sdEnvir->mShowRatNet && mFragment.count() ) {
+  if( sdEnvir::instance()->mShowRatNet && mFragment.count() ) {
     //Draw rat net pairs for selected components
-    ctx->setPen( 0, sdEnvir->getSysColor(scRatNet), dltSolid );
+    ctx->setPen( 0, sdEnvir::instance()->getSysColor(scRatNet), dltSolid );
     mFragment.forEach( dctPartImp, [this,ctx] (SdGraph *graph) -> bool {
       SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(graph);
       if( imp )
@@ -159,7 +159,7 @@ void SdModeCPartPlace::drawDynamic(SdContext *ctx)
 
   //On according step
   if( getStep() == psmBeingSelRect ) {
-    ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltDotted );
+    ctx->setPen( 0, sdEnvir::instance()->getSysColor(scEnter), dltDotted );
     ctx->rect( SdRect(mFirst, mPrevMove) );
     }
   }

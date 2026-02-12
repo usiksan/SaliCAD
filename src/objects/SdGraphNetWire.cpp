@@ -612,8 +612,8 @@ void SdGraphNetWire::draw(SdContext *dc)
   if( p1 != p2 ) dc->line( p1, p2, mProp );
   if( p2 != mB ) dc->line( p2, mB, mProp );
   //Draw dot points
-  if( mDotA ) dc->circleFill( mA, sdEnvir->mDotSize, mProp.mLayer.layer() );
-  if( mDotB ) dc->circleFill( mB, sdEnvir->mDotSize, mProp.mLayer.layer() );
+  if( mDotA ) dc->circleFill( mA, sdEnvir::instance()->mDotSize, mProp.mLayer.layer() );
+  if( mDotB ) dc->circleFill( mB, sdEnvir::instance()->mDotSize, mProp.mLayer.layer() );
   }
 
 

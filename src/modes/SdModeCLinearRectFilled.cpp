@@ -27,11 +27,11 @@ SdModeCLinearRectFilled::SdModeCLinearRectFilled(SdWEditorGraph *editor, SdProje
 void SdModeCLinearRectFilled::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sSecondCorner ) {
-    ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltSolid );
-    ctx->setBrush( sdEnvir->getSysColor(scEnter) );
+    ctx->setPen( 0, sdEnvir::instance()->getSysColor(scEnter), dltSolid );
+    ctx->setBrush( sdEnvir::instance()->getSysColor(scEnter) );
     ctx->fillRect( SdRect(mFirst,mPrevMove) );
     }
-  if( sdEnvir->mIsSmart && mSmartType )
+  if( sdEnvir::instance()->mIsSmart && mSmartType )
     ctx->smartPoint( mSmartPoint, mSmartType );
   }
 

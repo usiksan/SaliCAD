@@ -29,7 +29,7 @@ SdModeTZoomWindow::SdModeTZoomWindow( SdWEditorGraph *editor, SdProjectItem *obj
 void SdModeTZoomWindow::drawDynamic(SdContext *ctx)
   {
   if( getStep() ) {
-    ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltDotted );
+    ctx->setPen( 0, sdEnvir::instance()->getSysColor(scEnter), dltDotted );
     ctx->rect( SdRect(mFirst,mSecond) );
     }
   }

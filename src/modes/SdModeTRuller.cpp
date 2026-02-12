@@ -28,7 +28,7 @@ SdModeTRuller::SdModeTRuller(SdWEditorGraph *editor, SdProjectItem *obj) :
 void SdModeTRuller::drawDynamic(SdContext *ctx)
   {
   if( getStep() ) {
-    ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltDotted );
+    ctx->setPen( 0, sdEnvir::instance()->getSysColor(scEnter), dltDotted );
     ctx->line( mFirst, mSecond );
     }
   }

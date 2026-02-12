@@ -34,10 +34,10 @@ SdDMasterSymbolConnector::SdDMasterSymbolConnector(SdProjectItem *item, QWidget 
   ui->mPinCount->setText( QString::number(sPinCount) );
 
   //Connector construction defaults
-  ui->mCellHeight->setText( sdEnvir->toPhisSchematic(sCellHeight) );
-  ui->mPinSizeX->setText( sdEnvir->toPhisSchematic(sPinSizeX) );
-  ui->mNumberSizeX->setText( sdEnvir->toPhisSchematic(sNumberSizeX) );
-  ui->mCellSizeX->setText( sdEnvir->toPhisSchematic(sCellSizeX) );
+  ui->mCellHeight->setText( sdEnvir::instance()->toPhisSchematic(sCellHeight) );
+  ui->mPinSizeX->setText( sdEnvir::instance()->toPhisSchematic(sPinSizeX) );
+  ui->mNumberSizeX->setText( sdEnvir::instance()->toPhisSchematic(sNumberSizeX) );
+  ui->mCellSizeX->setText( sdEnvir::instance()->toPhisSchematic(sCellSizeX) );
   ui->mRightDirection->setChecked(sRightDirection);
 
   onEditChanged( QString() );
@@ -87,10 +87,10 @@ void SdDMasterSymbolConnector::onEditChanged(const QString txt)
 void SdDMasterSymbolConnector::drawSymbol(SdIllustrator &il)
   {
   int pinCount    = ui->mPinCount->text().toInt();
-  int cellHeight  = sdEnvir->fromPhisSchematic( ui->mCellHeight->text() );
-  int pinSizeX    = sdEnvir->fromPhisSchematic( ui->mPinSizeX->text() );
-  int numberSizeX = sdEnvir->fromPhisSchematic( ui->mNumberSizeX->text() );
-  int cellSizeX   = sdEnvir->fromPhisSchematic( ui->mCellSizeX->text() );
+  int cellHeight  = sdEnvir::instance()->fromPhisSchematic( ui->mCellHeight->text() );
+  int pinSizeX    = sdEnvir::instance()->fromPhisSchematic( ui->mPinSizeX->text() );
+  int numberSizeX = sdEnvir::instance()->fromPhisSchematic( ui->mNumberSizeX->text() );
+  int cellSizeX   = sdEnvir::instance()->fromPhisSchematic( ui->mCellSizeX->text() );
   bool rightDirection = ui->mRightDirection->isChecked();
 
   int rightPos = pinSizeX + numberSizeX + cellSizeX;
@@ -127,10 +127,10 @@ void SdDMasterSymbolConnector::drawSymbol(SdIllustrator &il)
 void SdDMasterSymbolConnector::accept()
   {
   sPinCount    = ui->mPinCount->text().toInt();
-  sCellHeight  = sdEnvir->fromPhisSchematic( ui->mCellHeight->text() );
-  sPinSizeX    = sdEnvir->fromPhisSchematic( ui->mPinSizeX->text() );
-  sNumberSizeX = sdEnvir->fromPhisSchematic( ui->mNumberSizeX->text() );
-  sCellSizeX   = sdEnvir->fromPhisSchematic( ui->mCellSizeX->text() );
+  sCellHeight  = sdEnvir::instance()->fromPhisSchematic( ui->mCellHeight->text() );
+  sPinSizeX    = sdEnvir::instance()->fromPhisSchematic( ui->mPinSizeX->text() );
+  sNumberSizeX = sdEnvir::instance()->fromPhisSchematic( ui->mNumberSizeX->text() );
+  sCellSizeX   = sdEnvir::instance()->fromPhisSchematic( ui->mCellSizeX->text() );
   sRightDirection = ui->mRightDirection->isChecked();
 
   int rightPos = sPinSizeX + sNumberSizeX + sCellSizeX;

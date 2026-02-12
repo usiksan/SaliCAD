@@ -33,7 +33,7 @@ SdDLayerList::SdDLayerList(const QString currentPair, QWidget *parent) :
 
   int currentPairIndex = -1, index = 0;
   //Fill layer list
-  for( SdLayerPtr layer : sdEnvir->mLayerTable ) {
+  for( SdLayerPtr layer : sdEnvir::instance()->mLayerTable ) {
     //Append id to internal list
     mLayerIdList.append( layer->id() );
     if( layer->id() == currentPair )

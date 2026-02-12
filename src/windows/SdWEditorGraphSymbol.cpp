@@ -79,7 +79,7 @@ void SdWEditorGraphSymbol::cmModeReference()
 
 void SdWEditorGraphSymbol::cmModeOrigin()
   {
-  modeSet( new SdModeCOrigin( this, mSymbol, sdEnvir->mSymPinSize ) );
+  modeSet( new SdModeCOrigin( this, mSymbol, SdEnvir::instance()->mSymPinSize ) );
   }
 
 

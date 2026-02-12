@@ -194,9 +194,7 @@ double SdWEditorGraph::getPPM() const
   {
   if( getProjectItem() == nullptr )
     return 1.0; //Not used because item not installed
-  if( getProjectItem()->getClass() & (dctPart | dctPlate) )
-    return sdEnvir->mPrtPPM;
-  return sdEnvir->mSchPPM;
+  return SdEnvir::instance()->ppmGet( getProjectItem()->getClass() );
   }
 
 
@@ -243,7 +241,7 @@ void SdWEditorGraph::setSelectionStatus(bool status)
 
 bool SdWEditorGraph::showFields()
   {
-  return sdEnvir->mShowFields;
+  return SdEnvir::instance()->mShowFields;
   }
 
 
@@ -707,7 +705,7 @@ void SdWEditorGraph::paintProcess(bool viewer)
     //Object not present. Show message
     QPainter painter( viewport() );
     QRect r(0,0, s.width(), s.height());
-    painter.fillRect( r, sdEnvir->getSysColor(scGraphBack) );
+    painter.fillRect( r, SdEnvir::instance()->getSysColor(scGraphBack) );
     painter.drawText( r, Qt::AlignCenter,  tr("No object") );
     return;
     }
@@ -716,7 +714,7 @@ void SdWEditorGraph::paintProcess(bool viewer)
     //Redraw static part
     mCashe = QImage( s, QImage::Format_ARGB32_Premultiplied );
     //Clear backspace
-    mCashe.fill( sdEnvir->getSysColor(scGraphBack) );
+    mCashe.fill( SdEnvir::instance()->getSysColor(scGraphBack) );
 
     QPainter painter( &mCashe );
     SdContext context( mGrid, &painter );
@@ -731,12 +729,12 @@ void SdWEditorGraph::paintProcess(bool viewer)
     //qDebug() << "cashe" << mOrigin << mScale.scaleGet();
 
     //Draw grid
-    if( !viewer && sdEnvir->mGridShow && mGrid.x() > 0 ) {
+    if( !viewer && SdEnvir::instance()->mGridShow && mGrid.x() > 0 ) {
       //We don't draw grid with cell less then minViewGrid pixels
       //Не чертить сетку менее чем в minViewGrid пикселов
-      if( mScale.phys2pixel(mGrid.x()) >= sdEnvir->mMinViewGrid && mScale.phys2pixel(mGrid.y()) >= sdEnvir->mMinViewGrid ) {
+      if( mScale.phys2pixel(mGrid.x()) >= SdEnvir::instance()->mMinViewGrid && mScale.phys2pixel(mGrid.y()) >= SdEnvir::instance()->mMinViewGrid ) {
         //Grid color
-        painter.setPen( sdEnvir->getSysColor(scGrid) );
+        painter.setPen( SdEnvir::instance()->getSysColor(scGrid) );
         SdPoint tmp( mPixelTransform.map(QPoint(0,s.height())) );
         //qDebug() << "tmp" << tmp;
         tmp.setX( (tmp.x() / mGrid.x() ) * mGrid.x() );
@@ -837,9 +835,9 @@ void SdWEditorGraph::paintProcess(bool viewer)
   if( !viewer && getProjectItem()->getClass() == dctPlate ) {
     SdPItemPlate *plate = dynamic_cast<SdPItemPlate*>( getProjectItem() );
     Q_ASSERT( plate != nullptr );
-    if( sdEnvir->mShowRatNet )
+    if( SdEnvir::instance()->mShowRatNet )
       plate->drawRatNet( &context );
-    if( sdEnvir->mShowRuleErrors )
+    if( SdEnvir::instance()->mShowRuleErrors )
       plate->drawRuleErrors( &context );
     }
 
@@ -933,7 +931,7 @@ void SdWEditorGraph::mouseMoveEvent(QMouseEvent *event)
       //update actual mouse pos
       displayCursorPositions();
       }
-    if( sdEnvir->mCursorView != dcvNone )
+    if( SdEnvir::instance()->mCursorView != dcvNone )
       update();
     }
   }
@@ -1012,7 +1010,7 @@ SdPoint SdWEditorGraph::pixel2phys(QPoint pos)
   SdPoint tmp( mPixelTransform.map( pos ) );
 
   //Если курсор по сетке - то выровнять
-  if( sdEnvir->mCursorAlignGrid ) {
+  if( SdEnvir::instance()->mCursorAlignGrid ) {
     if( tmp.x() < 0 )
       tmp.setX( ((tmp.x() - mGrid.x()/2) / mGrid.x() ) * mGrid.x() );
     else

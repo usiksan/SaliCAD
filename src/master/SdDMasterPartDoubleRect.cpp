@@ -87,9 +87,9 @@ void SdDMasterPartDoubleRect::changeEvent(QEvent *e)
 
 void SdDMasterPartDoubleRect::drawPart(SdIllustrator &il)
   {
-  int partSizeX = sdEnvir->fromPhisPcb( ui->mBodySizeX->text() );
-  int partSizeY = sdEnvir->fromPhisPcb( ui->mBodySizeY->text() );
-  int sizeX = sdEnvir->fromPhisPcb( ui->mBetweenPins->text() );
+  int partSizeX = sdEnvir::instance()->fromPhisPcb( ui->mBodySizeX->text() );
+  int partSizeY = sdEnvir::instance()->fromPhisPcb( ui->mBodySizeY->text() );
+  int sizeX = sdEnvir::instance()->fromPhisPcb( ui->mBetweenPins->text() );
   int pinLen = (sizeX - partSizeX) / 2;
 
   QColor red("red");
@@ -117,9 +117,9 @@ void SdDMasterPartDoubleRect::drawPart(SdIllustrator &il)
 void SdDMasterPartDoubleRect::accept()
   {
   //Build part
-  int partSizeX = sdEnvir->fromPhisPcb( ui->mBodySizeX->text() );
-  int partSizeY = sdEnvir->fromPhisPcb( ui->mBodySizeY->text() );
-  int sizeX = sdEnvir->fromPhisPcb( ui->mBetweenPins->text() );
+  int partSizeX = sdEnvir::instance()->fromPhisPcb( ui->mBodySizeX->text() );
+  int partSizeY = sdEnvir::instance()->fromPhisPcb( ui->mBodySizeY->text() );
+  int sizeX = sdEnvir::instance()->fromPhisPcb( ui->mBetweenPins->text() );
   int pinLen = (sizeX - partSizeX) / 2;
   //Pin types
   QString leftPinType = ui->mLeftPinType->text();

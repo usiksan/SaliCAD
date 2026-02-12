@@ -344,7 +344,7 @@ void SdModeCTextual::drawText(SdContext *dc)
   {
   if( mPropText ) {
     dc->setFont( *mPropText );
-    dc->setPen(0,sdEnvir->getSysColor(scEnter), dltSolid );
+    dc->setPen(0,sdEnvir::instance()->getSysColor(scEnter), dltSolid );
     dc->textEx( mPrev, mOverRect, mString,
               mPropText->mDir.getValue(), mPropText->mHorz.getValue(), mPropText->mVert.getValue(),
               mPos, &mCursorP1, &mCursorP2,
@@ -355,7 +355,7 @@ void SdModeCTextual::drawText(SdContext *dc)
 
     //Draw selection rect
     if( isSelectionPresent() ) {
-      dc->setPen(0,sdEnvir->getSysColor(scEnter), dltDotted );
+      dc->setPen(0,sdEnvir::instance()->getSysColor(scEnter), dltDotted );
       dc->rect( mSelectRect );
       }
     }

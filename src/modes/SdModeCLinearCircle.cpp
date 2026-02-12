@@ -30,11 +30,11 @@ SdModeCLinearCircle::SdModeCLinearCircle(SdWEditorGraph *editor, SdProjectItem *
 
 void SdModeCLinearCircle::drawDynamic(SdContext *ctx)
   {
-  ctx->setPen( sdGlobalProp->mLineProp.mWidth.getValue(), sdEnvir->getSysColor(scEnter),
+  ctx->setPen( sdGlobalProp->mLineProp.mWidth.getValue(), sdEnvir::instance()->getSysColor(scEnter),
                sdGlobalProp->mLineProp.mType.getValue() );
   if( getStep() == sRadius )
     ctx->circle( mCenter, mRadius );
-  if( sdEnvir->mIsSmart && mSmartType )
+  if( sdEnvir::instance()->mIsSmart && mSmartType )
     ctx->smartPoint( mSmartPoint, mSmartType );
   }
 
@@ -77,7 +77,7 @@ void SdModeCLinearCircle::movePoint(SdPoint p)
   //Вычислить предполагаемую точку вывода
   SdSnapInfo snap;
   snap.mSour     = p;
-  snap.mSnapMask = sdEnvir->mSmartMask;
+  snap.mSnapMask = sdEnvir::instance()->mSmartMask;
   snap.mExclude  = mCenter;
   snap.scan( mObject );
   mSmartType  = snap.mDestMask;
@@ -146,7 +146,7 @@ void SdModeCLinearCircle::addCircle()
 
 SdPoint SdModeCLinearCircle::enterPrev()
   {
-  if( sdEnvir->mIsSmart && mSmartType )
+  if( sdEnvir::instance()->mIsSmart && mSmartType )
     enterPoint( mSmartPoint );
   return mSmartPoint;
   }

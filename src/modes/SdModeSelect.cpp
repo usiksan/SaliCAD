@@ -91,7 +91,7 @@ void SdModeSelect::drawStatic(SdContext *ctx)
 void SdModeSelect::drawDynamic(SdContext *ctx)
   {
   //Draw all selected elements
-  ctx->setOverColor( sdEnvir->getSysColor(scSelected) );
+  ctx->setOverColor( sdEnvir::instance()->getSysColor(scSelected) );
   mFragment.draw( ctx );
 
   {
@@ -755,7 +755,7 @@ int SdModeSelect::checkPoint(SdPoint p)
     return true;
     });
 
-  if( sdEnvir->mShowMessageRemark ) {
+  if( sdEnvir::instance()->mShowMessageRemark ) {
     //If need display extended remark then scan objects behind cursor and get their info
     QString info;
     getInfo( p, info );
@@ -962,7 +962,7 @@ void SdModeSelect::cancelPaste()
 
 void SdModeSelect::showRect(SdContext *ctx)
   {
-  ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltDotted );
+  ctx->setPen( 0, sdEnvir::instance()->getSysColor(scEnter), dltDotted );
   ctx->rect( SdRect(mFirst, mPrevMove) );
   }
 
@@ -1036,8 +1036,8 @@ void SdModeSelect::groupRotation()
 quint64 SdModeSelect::mask() const
   {
   quint64 msk = 0l;
-  if( !sdEnvir->mEnableComp ) msk = dctSymImp | dctPartImp;
-  if( !sdEnvir->mEnableNet ) msk |= dctNetName | dctNetWire | dctNetParam | dctTracePolygon | dctTraceRoad | dctTraceVia;
-  if( !sdEnvir->mEnablePic ) msk |= dctPicture;
+  if( !sdEnvir::instance()->mEnableComp ) msk = dctSymImp | dctPartImp;
+  if( !sdEnvir::instance()->mEnableNet ) msk |= dctNetName | dctNetWire | dctNetParam | dctTracePolygon | dctTraceRoad | dctTraceVia;
+  if( !sdEnvir::instance()->mEnablePic ) msk |= dctPicture;
   return ~msk;
   }

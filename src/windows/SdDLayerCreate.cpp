@@ -99,12 +99,12 @@ void SdDLayerCreate::onLayerIdConstructed(int)
     if( rowModifier > 0 ) {
       QString lid1( sdLayerLevel1[rowModifier].mLid );
       ui->mLayerId->setText( lid0 + lid1 );
-      ui->mLayerName->setText( sdEnvir->layerId2NameLevel0(lid0) + QString(" ") + sdEnvir->layerId2NameLevel1(lid1) );
+      ui->mLayerName->setText( sdEnvir::instance()->layerId2NameLevel0(lid0) + QString(" ") + sdEnvir::instance()->layerId2NameLevel1(lid1) );
       }
     else {
       //No modifier
       ui->mLayerId->setText( lid0 );
-      ui->mLayerName->setText( sdEnvir->layerId2NameLevel0(lid0) );
+      ui->mLayerName->setText( sdEnvir::instance()->layerId2NameLevel0(lid0) );
       }
     }
   }
@@ -124,7 +124,7 @@ void SdDLayerCreate::accept()
   {
   QString id = ui->mLayerId->text();
   if( !id.isEmpty() ) {
-    sdEnvir->getLayer( id );
+    sdEnvir::instance()->layerGet( id );
     done(1);
     }
   else done(0);

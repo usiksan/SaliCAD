@@ -171,8 +171,8 @@ void SdDxfContext::putHeader()
     putDbItem_n( QString("AcDbSymbolTable") );
 
     //Количество элементов в таблице слоев
-    putGroupNum6_n( 70, sdEnvir->mLayerTable.count() );
-    for( auto iter = sdEnvir->mLayerTable.cbegin(); iter != sdEnvir->mLayerTable.cend(); iter++ ) {
+    putGroupNum6_n( 70, sdEnvir::instance()->mLayerTable.count() );
+    for( auto iter = sdEnvir::instance()->mLayerTable.cbegin(); iter != sdEnvir::instance()->mLayerTable.cend(); iter++ ) {
       SdLayer *layer = iter.value();
       //Запись для одного слоя
       putGroupName_n( 0, QString("LAYER") );

@@ -79,7 +79,7 @@ void SdModeCLinearArc::movePoint(SdPoint p)
   //Вычислить предполагаемую точку вывода
   SdSnapInfo snap;
   snap.mSour     = mPrev;
-  snap.mSnapMask = sdEnvir->mSmartMask | snapExcludeExcl;
+  snap.mSnapMask = sdEnvir::instance()->mSmartMask | snapExcludeExcl;
   snap.mExclude  = mCenter;
   snap.scan( mObject );
   mSmartType  = snap.mDestMask;
@@ -93,7 +93,7 @@ void SdModeCLinearArc::movePoint(SdPoint p)
 
 SdPoint SdModeCLinearArc::enterPrev()
   {
-  if( sdEnvir->mIsSmart && mSmartType )
+  if( sdEnvir::instance()->mIsSmart && mSmartType )
     enterPoint( mSmartPoint );
   return mSmartPoint;
   }
@@ -153,7 +153,7 @@ int SdModeCLinearArc::getIndex() const
 
 void SdModeCLinearArc::drawDynamic(SdContext *ctx)
   {
-  ctx->setPen( sdGlobalProp->mLineProp.mWidth.getValue(), sdEnvir->getSysColor(scEnter),
+  ctx->setPen( sdGlobalProp->mLineProp.mWidth.getValue(), sdEnvir::instance()->getSysColor(scEnter),
                sdGlobalProp->mLineProp.mType.getValue() );
   switch( getStep() ) {
     case sStop :
@@ -168,6 +168,6 @@ void SdModeCLinearArc::drawDynamic(SdContext *ctx)
       //В том числе выбор первой точки
       ctx->line( mCenter, mPrev );
     }
-  if( sdEnvir->mIsSmart && mSmartType )
+  if( sdEnvir::instance()->mIsSmart && mSmartType )
     ctx->smartPoint( mSmartPoint, mSmartType );
   }

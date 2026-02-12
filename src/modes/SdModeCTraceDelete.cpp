@@ -70,10 +70,10 @@ void SdModeCTraceDelete::drawStatic(SdContext *ctx)
 void SdModeCTraceDelete::drawDynamic(SdContext *ctx)
   {
   //Draw all selected elements
-  ctx->setOverColor( sdEnvir->getSysColor(scSelected) );
+  ctx->setOverColor( SdEnvir::instance()->getSysColor(scSelected) );
   mFragment.draw( ctx );
   if( getStep() == 1 ) {
-    ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltDotted );
+    ctx->setPen( 0, SdEnvir::instance()->getSysColor(scEnter), dltDotted );
     ctx->rect( SdRect(mFirst, mPrev) );
     }
   }

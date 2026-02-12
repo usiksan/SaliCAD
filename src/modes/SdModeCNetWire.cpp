@@ -53,7 +53,7 @@ void SdModeCNetWire::drawStatic(SdContext *ctx)
 
   //Draw if net present
   if( !mNetName.isEmpty() && mShowNet ) {
-    ctx->setOverColor( sdEnvir->getSysColor(scEnter) );
+    ctx->setOverColor( sdEnvir::instance()->getSysColor(scEnter) );
     mObject->forEach( dctNetWire | dctNetName | dctNetParam, [this,ctx] (SdObject *obj) -> bool {
       SdGraphNet *net = dynamic_cast<SdGraphNet*>( obj );
       if( net != nullptr && net->getNetName() == mNetName )
@@ -71,14 +71,14 @@ void SdModeCNetWire::drawDynamic(SdContext *ctx)
   {
   if( getStep() ) {
     //Draw entering segment with possible vertex
-    ctx->setOverColor( sdEnvir->getSysColor(scEnter) );
+    ctx->setOverColor( sdEnvir::instance()->getSysColor(scEnter) );
     if( mFirst != mMiddle ) ctx->line( mFirst, mMiddle, sdGlobalProp->mWireProp );
     if( mMiddle != mPrevMove ) ctx->line( mMiddle, mPrevMove, sdGlobalProp->mWireProp );
     ctx->resetOverColor();
     }
-  if( sdEnvir->mIsWireSmart && mSmartSour != mSmartDest ) {
+  if( sdEnvir::instance()->mIsWireSmart && mSmartSour != mSmartDest ) {
     //Draw smart variant
-    ctx->setOverColor( sdEnvir->getSysColor(scSmart) );
+    ctx->setOverColor( sdEnvir::instance()->getSysColor(scSmart) );
     //Draw source stringer if present
     if( mSmartSour != mSmartSourStr )   ctx->line( mSmartSour, mSmartSourStr, sdGlobalProp->mWireProp );
     //Draw first intermediate vertex

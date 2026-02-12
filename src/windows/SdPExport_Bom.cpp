@@ -228,7 +228,7 @@ SdPExport_Bom::SdPExport_Bom(SdProjectItem *item, int step, SdPMasterList *list,
     connect( mGenBom, &QCheckBox::toggled, mBom, &QPushButton::setEnabled );
 
     //BOM pattern list
-    QDir patternDir( sdEnvir->mPatternPath );
+    QDir patternDir( sdEnvir::instance()->mPatternPath );
     QFileInfoList lst = patternDir.entryInfoList( QStringList({QString("bom*.*")}), QDir::Files );
     for( const QFileInfo &info : lst ) {
       mBomPatternList->addItem( info.fileName() );
@@ -361,7 +361,7 @@ void SdPExport_Bom::genBom()
     bomItem.insert( stdParamItemIdList, buildItemIdList( logNumberList, bomItem.value( stdParamPrefix ).toString() ) );
     res.append( bomItem );
 
-    SvDir patternDir( sdEnvir->mPatternPath );
+    SvDir patternDir( sdEnvir::instance()->mPatternPath );
     BomArticleMap map = BomArticle::parsePatternFile( patternDir.slashedPath() + pattern->text() );
 
     if( map.isEmpty() )
@@ -535,7 +535,7 @@ void SdPExport_Bom::genRegistry()
     res.append( bomItem );
 
 
-    SvDir patternDir( sdEnvir->mPatternPath );
+    SvDir patternDir( sdEnvir::instance()->mPatternPath );
     BomArticleMap map = BomArticle::parsePatternFile( patternDir.slashedPath() + pattern->text() );
 
     if( map.isEmpty() )

@@ -53,11 +53,11 @@ void SdModeCSymPin::drawDynamic(SdContext *ctx)
     case sPlaceNumber :
       //Rectangle for number
       ctx->text( mNumberPos, r, QString("XX"), sdGlobalProp->mSymPinNumberProp );
-      ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltDashed );
+      ctx->setPen( 0, sdEnvir::instance()->getSysColor(scEnter), dltDashed );
       ctx->rect( r );
       //Pin name
       ctx->setFont( sdGlobalProp->mSymPinNameProp );
-      ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltSolid );
+      ctx->setPen( 0, sdEnvir::instance()->getSysColor(scEnter), dltSolid );
       ctx->textEx( mNamePos, r, mName, sdGlobalProp->mSymPinNameProp.mDir, sdGlobalProp->mSymPinNameProp.mHorz, sdGlobalProp->mSymPinNameProp.mVert );
 
       [[fallthrough]];
@@ -66,11 +66,11 @@ void SdModeCSymPin::drawDynamic(SdContext *ctx)
 
       [[fallthrough]];
     case sPlaceName :
-      ctx->cross( mOrigin, sdEnvir->mSymPinSize, sdEnvir->getSysColor(scEnter) );
+      ctx->cross( mOrigin, sdEnvir::instance()->mSymPinSize, sdEnvir::instance()->getSysColor(scEnter) );
     }
 
   //Draw smart point
-  if( sdEnvir->mIsSmart ) {
+  if( sdEnvir::instance()->mIsSmart ) {
     if( (mSmartType & snapEndPoint) && (getStep() == sPlacePin) )
       ctx->smartPoint( mSmartPoint, snapEndPoint );
     if( (mSmartType & snapPrev) && (getStep() == sPlaceName || getStep() == sPlaceNumber) )
@@ -224,7 +224,7 @@ void SdModeCSymPin::movePoint( SdPoint p )
 
 SdPoint SdModeCSymPin::enterPrev()
   {
-  if( sdEnvir->mIsSmart && mSmartType )
+  if( sdEnvir::instance()->mIsSmart && mSmartType )
     enterPoint( mSmartPoint );
   return mSmartPoint;
   }

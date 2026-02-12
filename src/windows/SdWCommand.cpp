@@ -171,7 +171,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmModeTable[MD_TEXT]        = menuDraw->addAction( QIcon(QString(":/pic/drawText.png")), QObject::tr("Text"), frame, SLOT(cmModeText()) );
   cmShowField = menuDraw->addAction( QIcon(QStringLiteral(":/pic/showField.png")), QObject::tr("Show fields or values") );
   cmShowField->setCheckable(true);
-  cmShowField->setChecked( sdEnvir->mShowFields );
+  cmShowField->setChecked( SdEnvir::instance()->mShowFields );
   cmShowField->connect( cmShowField, &QAction::toggled, frame, &SdWMain::cmShowFields );
 
 
@@ -194,7 +194,7 @@ void SdWCommand::createMenu(SdWMain *frame)
 
   cmShowPads                     = menuInsertPart->addAction( QIcon(QString(":/pic/objVia.png")), QObject::tr("Show pads") );
   cmShowPads->setCheckable(true);
-  cmShowPads->setChecked( sdEnvir->mShowPads );
+  cmShowPads->setChecked( SdEnvir::instance()->mShowPads );
   cmShowPads->connect( cmShowPads, &QAction::toggled, frame, &SdWMain::cmShowPads );
   cmModeTable[MD_PART_PIN]       = menuInsertPart->addAction( QIcon(QString(":/pic/objPrtPin.png")), QObject::tr("Insert pin"), frame, SLOT(cmModePin()) );
   cmModeTable[MD_PART_IDENT]     = menuInsertPart->addAction( QIcon(QString(":/pic/objIdent.png")), QObject::tr("Edit reference"), frame, SLOT(cmModeReference()) );
@@ -261,7 +261,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   menuInsertPcb->insertSeparator(nullptr);
   cmShowRatNet = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/viewRatnet.png")), QObject::tr("Show rat net") );
   cmShowRatNet->setCheckable(true);
-  cmShowRatNet->setChecked( sdEnvir->mShowRatNet );
+  cmShowRatNet->setChecked( SdEnvir::instance()->mShowRatNet );
   cmShowRatNet->connect( cmShowRatNet, &QAction::toggled, frame, &SdWMain::cmShowRatNet );
   cmPads = menuInsertPcb->addAction( QIcon(QStringLiteral(":/pic/pads.png")), QObject::tr("Pads association"), frame, SLOT(cmPads()) );
   //cmShowRatNet->co
@@ -297,7 +297,7 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmRulesEdit = menuRules->addAction( QIcon(QStringLiteral(":/pic/rules.png")), QObject::tr("Edit rules dialog"), frame, SLOT(cmRulesEdit()) );
   cmShowRuleErrors = menuRules->addAction( QIcon(QStringLiteral(":/pic/objShowRuleErrors.png")), QObject::tr("Show rule errors") );
   cmShowRuleErrors->setCheckable(true);
-  cmShowRuleErrors->setChecked( sdEnvir->mShowRuleErrors );
+  cmShowRuleErrors->setChecked( SdEnvir::instance()->mShowRuleErrors );
   cmShowRuleErrors->connect( cmShowRuleErrors, &QAction::toggled, frame, &SdWMain::cmShowRuleErrors );
   cmRulesCheck = menuRules->addAction( QIcon(QStringLiteral(":/pic/objRulesCheck.png")), QObject::tr("Check all rules"), frame, SLOT(cmRulesCheck()) );
   cmRulesErrorNext = menuRules->addAction( QIcon(QStringLiteral(":/pic/rulesNextError.png")), QObject::tr("Center next rules error"), frame, SLOT(cmRulesErrorNext()) );

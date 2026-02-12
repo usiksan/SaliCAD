@@ -43,7 +43,7 @@ SdPItemPlate::SdPItemPlate() :
   mPlaceCursorGrid(true)     //Enable cursor grid align when place
   {
   //Default pcb rules
-  mRulesPcb = sdEnvir->mDefaultRules;
+  mRulesPcb = sdEnvir::instance()->mDefaultRules;
   }
 
 
@@ -139,7 +139,7 @@ SdPad SdPItemPlate::getPad(const QString pinType) const
   if( mPadAssociation.contains(pinType) )
     return mPadAssociation.pin( pinType );
   //else create pad from description
-  return sdEnvir->getPad( pinType );
+  return sdEnvir::instance()->getPad( pinType );
   }
 
 
@@ -240,7 +240,7 @@ void SdPItemPlate::drawRatNet(SdContext *dc)
   if( mRatNetDirty )
     buildRatNet();
   //Draw rat net pairs
-  dc->setPen( 0, sdEnvir->getSysColor(scRatNet), dltSolid );
+  dc->setPen( 0, sdEnvir::instance()->getSysColor(scRatNet), dltSolid );
   for( const SdRatNetPair &pair : mRatNet )
     dc->line( pair.a, pair.b );
   }
@@ -481,7 +481,7 @@ void SdPItemPlate::checkRules(std::function<bool()> fun1)
 
 //Draw rule error indicators
 void SdPItemPlate::drawRuleErrors(SdContext *dc) {
-  dc->setPen( 0, sdEnvir->getSysColor(scRuleErrors), dltSolid );
+  dc->setPen( 0, sdEnvir::instance()->getSysColor(scRuleErrors), dltSolid );
   for( const SdRect &r : mRuleErrors )
     dc->rect( r );
   }
@@ -557,7 +557,7 @@ void SdPItemPlate::rebuild3dModel()
   m3dModel.clear();
   SdPointList pointList;
   //At first, find pcb contour
-  SdLayer *pcbLayer = sdEnvir->getLayer( LID0_PCB );
+  SdLayer *pcbLayer = sdEnvir::instance()->layerGet( LID0_PCB );
   forEach( dctLines, [&pointList, pcbLayer] (SdObject *obj) -> bool {
     SdPtr<SdGraphLinearRect> rect(obj);
     if( rect.isValid() && rect->isMatchLayer(pcbLayer) ) {
@@ -587,7 +587,7 @@ void SdPItemPlate::rebuild3dModel()
       }
 
     //At second we scan all throught holes
-    SdLayer *holeLayer = sdEnvir->getLayer( LID0_HOLE );
+    SdLayer *holeLayer = sdEnvir::instance()->layerGet( LID0_HOLE );
     Sd3drFaceList holes;
     QMatrix4x4 map;
     map.translate( 0, 0, pcb3dZLevel );
@@ -611,7 +611,7 @@ void SdPItemPlate::rebuild3dModel()
     shift.translate( 0, 0, -pcb3dThickness );
     Sd3drFace pcbBot = m3dModel.faceDuplicate( pcbTop, shift );
     pcbBody.faceAppend( m3dModel.faceListWall( pcbTop, pcbBot, true ) );
-    pcbBody.colorSet( sdEnvir->getSysColor( sc3dPcb ) );
+    pcbBody.colorSet( sdEnvir::instance()->getSysColor( sc3dPcb ) );
 
     Sd3drFaceList pcbTopList = m3dModel.faceListHolesXY( pcbTop, holes );
     Sd3drFaceList pcbBotList = m3dModel.faceListDuplicate( pcbTopList, shift );
@@ -759,7 +759,7 @@ void SdPItemPlate::setLayerUsage()
   //Default layers usage
   SdProjectItem::setLayerUsage();
   //Setup usage for cached layers
-  sdEnvir->setLayerUsage( mStratumCount );
+  sdEnvir::instance()->setLayerUsage( mStratumCount );
   }
 
 

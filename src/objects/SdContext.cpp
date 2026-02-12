@@ -35,7 +35,7 @@ SdContext::SdContext(SdPoint grid, QPainter *painter) :
   mOverOn(false),      //True if overriding is on
   mZeroOn(false)       //True if overriding zero width line on
   {
-  mShowFields = sdEnvir->mShowFields;
+  mShowFields = SdEnvir::instance()->mShowFields;
   }
 
 
@@ -96,7 +96,7 @@ void SdContext::line(SdPoint a, SdPoint b, const SdPropLine &prop)
 void SdContext::symPin(SdPoint a, SdLayer *layer)
   {
   if( mSelector || (layer != nullptr && layer->isVisible()) ) {
-    cross( a, sdEnvir->mSymPinSize, convertColor( layer ) );
+    cross( a, SdEnvir::instance()->mSymPinSize, convertColor( layer ) );
     }
   }
 
@@ -107,7 +107,7 @@ void SdContext::partPin(SdPoint a, SdLayer *layer)
   {
   if( mSelector || (layer != nullptr && layer->isVisible()) ) {
     setPen( 0, convertColor( layer ), dltSolid );
-    circle( a, sdEnvir->mPartPinSize );
+    circle( a, SdEnvir::instance()->mPartPinSize );
     }
   }
 
@@ -443,7 +443,7 @@ void SdContext::polygon(const SdPointList &points, const SdPolyWindowList &windo
   //4. image copy to painter
   //Here we store previous opacity
   double op = mPainter->opacity();
-  mPainter->setOpacity( sdEnvir->mPolygonOpacity * op );
+  mPainter->setOpacity( SdEnvir::instance()->mPolygonOpacity * op );
   mPainter->drawImage( 0, 0, intermediate );
   //Restore previous opacity
   mPainter->setOpacity( op );
@@ -463,9 +463,9 @@ void SdContext::smartPoint(SdPoint a, SdSnapMask smartMask)
         p.y() >= 0 && p.y() <= mPainter->device()->height() ) {
 
       //Подготовить перо
-      mPainter->setPen( QPen(QBrush(sdEnvir->getSysColor(scSmart)), sdEnvir->mSmartWidth) );
+      mPainter->setPen( QPen(QBrush(SdEnvir::instance()->getSysColor(scSmart)), SdEnvir::instance()->mSmartWidth) );
       mPainter->setBrush( Qt::transparent );
-      int sm = sdEnvir->mSmartSize;
+      int sm = SdEnvir::instance()->mSmartSize;
 
       //Приступить к рисованию
       if( smartMask & (snapNearestNet | snapNearestNetEnd | snapNearestPin | snapNextPin | snapNetPoint) ) {
@@ -569,32 +569,32 @@ void SdContext::smartPoint(SdPoint a, SdSnapMask smartMask)
 //Draw cursor with current mode
 void SdContext::drawCursor(SdPoint p)
   {
-  if( sdEnvir->mCursorView != dcvNone ) {
+  if( SdEnvir::instance()->mCursorView != dcvNone ) {
     //Рисовать точку
     p = mTransform.map(p);
     //Setup pen
-    mPainter->setPen( QPen( QBrush( sdEnvir->getSysColor(scCursor) ), 0, Qt::SolidLine ) );
+    mPainter->setPen( QPen( QBrush( SdEnvir::instance()->getSysColor(scCursor) ), 0, Qt::SolidLine ) );
     SdPoint a1,a2;
     SdRect r = mPainter->viewport();
     int w;
     //Draw cursor
-    switch( sdEnvir->mCursorView ) {
+    switch( SdEnvir::instance()->mCursorView ) {
       case dcvSmall :
         //X-line
-        a1.set( p.x() - sdEnvir->mSmallCursorSize, p.y() );
-        a2.set( p.x() + sdEnvir->mSmallCursorSize, p.y() );
+        a1.set( p.x() - SdEnvir::instance()->mSmallCursorSize, p.y() );
+        a2.set( p.x() + SdEnvir::instance()->mSmallCursorSize, p.y() );
         mPainter->drawLine( a1, a2 );
         //Y-line
-        a1.set( p.x(), p.y() - sdEnvir->mSmallCursorSize );
-        a2.set( p.x(), p.y() + sdEnvir->mSmallCursorSize );
+        a1.set( p.x(), p.y() - SdEnvir::instance()->mSmallCursorSize );
+        a2.set( p.x(), p.y() + SdEnvir::instance()->mSmallCursorSize );
         mPainter->drawLine( a1, a2 );
         break;
       case dcvSmall45 :
-        a1.set( p.x() - sdEnvir->mSmallCursorSize, p.y() - sdEnvir->mSmallCursorSize );
-        a2.set( p.x() + sdEnvir->mSmallCursorSize, p.y() + sdEnvir->mSmallCursorSize );
+        a1.set( p.x() - SdEnvir::instance()->mSmallCursorSize, p.y() - SdEnvir::instance()->mSmallCursorSize );
+        a2.set( p.x() + SdEnvir::instance()->mSmallCursorSize, p.y() + SdEnvir::instance()->mSmallCursorSize );
         mPainter->drawLine( a1, a2 );
-        a1.set( p.x() + sdEnvir->mSmallCursorSize, p.y() - sdEnvir->mSmallCursorSize );
-        a2.set( p.x() - sdEnvir->mSmallCursorSize, p.y() + sdEnvir->mSmallCursorSize );
+        a1.set( p.x() + SdEnvir::instance()->mSmallCursorSize, p.y() - SdEnvir::instance()->mSmallCursorSize );
+        a2.set( p.x() - SdEnvir::instance()->mSmallCursorSize, p.y() + SdEnvir::instance()->mSmallCursorSize );
         mPainter->drawLine( a1, a2 );
         break;
       case dcvFull :
@@ -678,7 +678,7 @@ void SdContext::setProp( const SdPropLine &prop)
 
 void SdContext::setFont(const SdPropText &prop)
   {
-  QFont font( sdEnvir->getSysFont(prop.mFont.getValue()) );
+  QFont font( SdEnvir::instance()->getSysFont(prop.mFont.getValue()) );
 //  font.setPixelSize( qMax(mScaler.phys2pixel(prop.mSize.getValue()), 5) );
   font.setPixelSize( mScaler.phys2pixel(prop.mSize.getValue()) );
   mPainter->setPen( convertColor(prop.mLayer.layer()) );
@@ -718,6 +718,6 @@ QColor SdContext::convertColor(SdLayer *layer)
   if( mOverOn )
     return mOverColor;
   if( mSelector )
-    return sdEnvir->getSysColor(scSelected);
+    return SdEnvir::instance()->getSysColor(scSelected);
   return convertLayer(layer)->color();
   }

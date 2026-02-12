@@ -57,8 +57,8 @@ void SdModeCRoadEnter::activate()
   mPreviousGrid = mEditor->gridGet();
   mEditor->gridSet( plate()->mTraceGrid );
 
-  mPreviousCursor = sdEnvir->mCursorAlignGrid;
-  sdEnvir->mCursorAlignGrid = plate()->mTraceCursorGrid;
+  mPreviousCursor = sdEnvir::instance()->mCursorAlignGrid;
+  sdEnvir::instance()->mCursorAlignGrid = plate()->mTraceCursorGrid;
 
   SdModeCommon::activate();
   }
@@ -70,11 +70,11 @@ void SdModeCRoadEnter::deactivate()
   {
   //Store to plate current grid and cursor alignment mode
   plate()->mTraceGrid = mEditor->gridGet();
-  plate()->mTraceCursorGrid = sdEnvir->mCursorAlignGrid;
+  plate()->mTraceCursorGrid = sdEnvir::instance()->mCursorAlignGrid;
 
   //Restore previous grid and cursor alignment mode
   mEditor->gridSet( mPreviousGrid );
-  sdEnvir->mCursorAlignGrid = mPreviousCursor;
+  sdEnvir::instance()->mCursorAlignGrid = mPreviousCursor;
   }
 
 
@@ -103,21 +103,21 @@ void SdModeCRoadEnter::drawDynamic(SdContext *ctx)
   {
   //Draw active segment
   if( getStep() ) {
-    SdLayer *layer = sdEnvir->mCacheForRoad.getVisibleLayer(mProp.mStratum);
+    SdLayer *layer = sdEnvir::instance()->mCacheForRoad.getVisibleLayer(mProp.mStratum);
     if( layer != nullptr ) ctx->setPen( mProp.mWidth, layer, dltSolid );
-    else ctx->setPen( mProp.mWidth, sdEnvir->getSysColor(scEnter), dltSolid );
+    else ctx->setPen( mProp.mWidth, sdEnvir::instance()->getSysColor(scEnter), dltSolid );
     if( mFirst != mBarMiddle )
       ctx->line( mFirst, mBarMiddle );
     if( mBarMiddle != mBarLast )
       ctx->line( mBarMiddle, mBarLast );
 
     //When enter path smart point is nearest unconnected pin
-    if( sdEnvir->mIsWireSmart && !mTargetPoint.isFar() ) {
+    if( sdEnvir::instance()->mIsWireSmart && !mTargetPoint.isFar() ) {
       ctx->smartPoint( mTargetPoint, snapEndPoint );
 
       //Show smart path if present
       if( mSmartPath.count() > 1 ) {
-        ctx->setPen( mProp.mWidth, sdEnvir->getSysColor(scSmart), dltSolid );
+        ctx->setPen( mProp.mWidth, sdEnvir::instance()->getSysColor(scSmart), dltSolid );
         for( int i = 1; i < mSmartPath.count(); i++ )
           ctx->line( mSmartPath.at(i-1), mSmartPath.at(i) );
         }
@@ -129,28 +129,28 @@ void SdModeCRoadEnter::drawDynamic(SdContext *ctx)
     int w_diag = static_cast<int>( sqrt( static_cast<double>(w1_2) * static_cast<double>(w1_2) * 2.0 )  );
     switch( mCatch ) {
       case catchFinish :
-        ctx->setPen( 0, sdEnvir->getSysColor(scCatchPoint), dltDashed );
+        ctx->setPen( 0, sdEnvir::instance()->getSysColor(scCatchPoint), dltDashed );
         //ctx->smartPoint( mLast, snapCenter );
         break;
       case catchOrthoX :
         //Draw 3x grid line
-        ctx->setPen( 0, sdEnvir->getSysColor(scCatchPoint), dltDashed );
+        ctx->setPen( 0, sdEnvir::instance()->getSysColor(scCatchPoint), dltDashed );
         ctx->line( SdPoint( mLast.x() - catchSize, mLast.y() + w1_2 ), SdPoint( mLast.x() + catchSize, mLast.y() + w1_2 ) );
         ctx->line( SdPoint( mLast.x() - catchSize, mLast.y() - w1_2 ), SdPoint( mLast.x() + catchSize, mLast.y() - w1_2 ) );
         break;
       case catchOrthoY :
         //Draw 3x grid line
-        ctx->setPen( 0, sdEnvir->getSysColor(scCatchPoint), dltDashed );
+        ctx->setPen( 0, sdEnvir::instance()->getSysColor(scCatchPoint), dltDashed );
         ctx->line( SdPoint( mLast.x() + w1_2, mLast.y() - catchSize ), SdPoint( mLast.x() + w1_2, mLast.y() + catchSize ) );
         ctx->line( SdPoint( mLast.x() - w1_2, mLast.y() - catchSize ), SdPoint( mLast.x() - w1_2, mLast.y() + catchSize ) );
         break;
       case catchDiagQuad1 :
-        ctx->setPen( 0, sdEnvir->getSysColor(scCatchPoint), dltDashed );
+        ctx->setPen( 0, sdEnvir::instance()->getSysColor(scCatchPoint), dltDashed );
         ctx->line( SdPoint( mLast.x() - catchSize, mLast.y() - catchSize + w_diag ), SdPoint( mLast.x() + catchSize, mLast.y() + catchSize + w_diag ) );
         ctx->line( SdPoint( mLast.x() - catchSize, mLast.y() - catchSize - w_diag ), SdPoint( mLast.x() + catchSize, mLast.y() + catchSize - w_diag ) );
         break;
       case catchDiagQuad2 :
-        ctx->setPen( 0, sdEnvir->getSysColor(scCatchPoint), dltDashed );
+        ctx->setPen( 0, sdEnvir::instance()->getSysColor(scCatchPoint), dltDashed );
         ctx->line( SdPoint( mLast.x() + catchSize, mLast.y() - catchSize + w_diag ), SdPoint( mLast.x() - catchSize, mLast.y() + catchSize + w_diag ) );
         ctx->line( SdPoint( mLast.x() + catchSize, mLast.y() - catchSize - w_diag ), SdPoint( mLast.x() - catchSize, mLast.y() + catchSize - w_diag ) );
         break;
@@ -160,14 +160,14 @@ void SdModeCRoadEnter::drawDynamic(SdContext *ctx)
 
     //Overdraw loop path
     if( mLoopPath.count() ) {
-      ctx->setOverColor( sdEnvir->getSysColor(scSelected) );
+      ctx->setOverColor( sdEnvir::instance()->getSysColor(scSelected) );
       mLoopPath.draw( ctx );
       ctx->resetOverColor();
       }
     }
   else {
     //When start enter smart point is nearest unconnected pin
-    if( sdEnvir->mIsWireSmart )
+    if( sdEnvir::instance()->mIsWireSmart )
       ctx->smartPoint( mFirst, snapEndPoint );
     }
   }
@@ -903,7 +903,7 @@ void SdModeCRoadEnter::findLoop(SdPoint src, SdPoint dst, SdStratum st)
   //Remove previous loop path
   mLoopPath.removeAll();
 
-  if( sdEnvir->mAutoRemoveRoadLoop ) {
+  if( sdEnvir::instance()->mAutoRemoveRoadLoop ) {
     //Get current net graph segments
     SdPlateNetGraph graph( mProp.mNetName.str() );
     plate()->accumNetSegments( &graph );
@@ -930,7 +930,7 @@ void SdModeCRoadEnter::findLoop(SdPoint src, SdPoint dst, SdStratum st)
 //Remove loop path if present
 void SdModeCRoadEnter::removeLoop()
   {
-  if( sdEnvir->mAutoRemoveRoadLoop && mLoopPath.count() ) {
+  if( sdEnvir::instance()->mAutoRemoveRoadLoop && mLoopPath.count() ) {
     mUndo->begin( QObject::tr("Deletion loop"), mObject, false );
     mLoopPath.forEach( dctAll, [this] (SdObject *obj) ->bool {
       SdPtr<SdGraph> graph(obj);

@@ -18,7 +18,6 @@ Description
 
 #include <QMap>
 
-typedef QMap<int,SdLayerPtr> SdLayerPtrMap;
 
 class SdLayerCache
   {

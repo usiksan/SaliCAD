@@ -55,7 +55,7 @@ void SdPropBar::setSelectedLayer(SdLayer *layer)
       mLayer->setCurrentIndex( index );
     else {
       //Switch on requred layer
-      layer->setState( layerStateEdit );
+      layer->stateSet( layerStateEdit );
       SdPulsar::sdPulsar->emitViewedLayers( layer );
       // updateViewedLayers( layer );
       // index = mLayer->findData( QVariant(id) );
@@ -85,7 +85,7 @@ SdLayer *SdPropBar::getSelectedLayer()
   QString id = mLayer->currentData().toString();
   if( id.isEmpty() )
     return nullptr;
-  return sdEnvir->getLayer( id );
+  return sdEnvir::instance()->layerGet( id );
   }
 
 
@@ -100,7 +100,7 @@ void SdPropBar::updateViewedLayers(SdLayer *currentLayer)
     currentLayer = getSelectedLayer();
   mLayer->clear();
   //fill new layers list
-  for( SdLayer *p : std::as_const( sdEnvir->mLayerTable ) ) {
+  for( SdLayer *p : std::as_const( sdEnvir::instance()->mLayerTable ) ) {
     if( p->isEdited() ) {
       mLayer->addItem( p->name(), QVariant( p->id() ) );
       }

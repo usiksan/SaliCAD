@@ -483,7 +483,7 @@ SdPExportPlate_Gerber::SdPExportPlate_Gerber(SdWEditorGraphPlate *editor, SdPIte
   mGroup->verticalHeader()->hide();
 
   //Directory with layers list files
-  QDir pat( sdEnvir->mPatternPath );
+  QDir pat( sdEnvir::instance()->mPatternPath );
   //Get file list of existing layers list files
   QStringList filtr;
   filtr << "*" SD_LAYER_LIST_EXTENSION;
@@ -568,7 +568,7 @@ void SdPExportPlate_Gerber::onGroupGenerate()
   for( int row = 0; row < mGroup->rowCount(); row++ )
     if( mGroup->item(row,0)->text() == tr("Yes") ) {
       //Load layer list
-      SvDir dir( sdEnvir->mPatternPath );
+      SvDir dir( sdEnvir::instance()->mPatternPath );
       SdDLayers::loadLayerList( dir.slashedPath() + mGroup->item(row,2)->text() );
 
       //Update editor

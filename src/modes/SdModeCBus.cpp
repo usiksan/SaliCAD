@@ -38,10 +38,10 @@ SdModeCBus::SdModeCBus(SdWEditorGraph *editor, SdProjectItem *obj) :
 
 void SdModeCBus::drawDynamic(SdContext *ctx)
   {
-  ctx->setOverColor( sdEnvir->getSysColor(scEnter) );
+  ctx->setOverColor( sdEnvir::instance()->getSysColor(scEnter) );
   switch( getStep() ) {
     case sNextNet :
-      if( sdEnvir->mIsSmart ) smartDraw( ctx );
+      if( sdEnvir::instance()->mIsSmart ) smartDraw( ctx );
       //break absent specialy
       [[fallthrough]];
     case sFirstPoint :
@@ -223,7 +223,7 @@ void SdModeCBus::movePoint( SdPoint p )
   switch( getStep() ) {
     case sNextNet :
       moveAll( mPrevMove );
-      if( sdEnvir->mIsSmart && mPrevDirection != calcDirection90( mSmartOrigin, mPrevMove ) ) {
+      if( sdEnvir::instance()->mIsSmart && mPrevDirection != calcDirection90( mSmartOrigin, mPrevMove ) ) {
         mPrevDirection = calcDirection90( mSmartOrigin, mPrevMove );
         mSmartTable.clear();
         SdSnapInfo info;

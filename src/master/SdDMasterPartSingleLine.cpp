@@ -36,14 +36,14 @@ SdDMasterPartSingleLine::SdDMasterPartSingleLine(SdProjectItem *item, QWidget *p
   {
   ui->setupUi(this);
 
-  ui->mBodySizeY->setText( sdEnvir->toPhisPcb(sBodySizeY) );
-  ui->mBodySizeX->setText( sdEnvir->toPhisPcb(sBodySizeX) );
+  ui->mBodySizeY->setText( SdEnvir::instance()->toPhisPcb(sBodySizeY) );
+  ui->mBodySizeX->setText( SdEnvir::instance()->toPhisPcb(sBodySizeX) );
 
   //Pins line
   ui->mPinCount->setText( sPinCount );
-  ui->mPinDistance->setText( sdEnvir->toPhisPcb(sPinDistance) );
-  ui->mPinOffsetY->setText( sdEnvir->toPhisPcb(sPinOffsetY) );
-  ui->mPinOffsetX->setText( sdEnvir->toPhisPcb(sPinOffsetX) );
+  ui->mPinDistance->setText( SdEnvir::instance()->toPhisPcb(sPinDistance) );
+  ui->mPinOffsetY->setText( SdEnvir::instance()->toPhisPcb(sPinOffsetY) );
+  ui->mPinOffsetX->setText( SdEnvir::instance()->toPhisPcb(sPinOffsetX) );
   ui->mPinType->setText( sPinType );
 
   onEditChanged( QString() );
@@ -100,13 +100,13 @@ void SdDMasterPartSingleLine::onEditChanged(const QString txt)
 //Draw part preview
 void SdDMasterPartSingleLine::drawPart(SdIllustrator &il)
   {
-  int bodySizeX = sdEnvir->fromPhisPcb( ui->mBodySizeX->text() );
-  int bodySizeY = sdEnvir->fromPhisPcb( ui->mBodySizeY->text() );
+  int bodySizeX = SdEnvir::instance()->fromPhisPcb( ui->mBodySizeX->text() );
+  int bodySizeY = SdEnvir::instance()->fromPhisPcb( ui->mBodySizeY->text() );
 
   int pinCount    = ui->mPinCount->text().toInt();
-  int pinDistance = sdEnvir->fromPhisPcb( ui->mPinDistance->text() );
-  int pinOffsetY  = sdEnvir->fromPhisPcb( ui->mPinOffsetY->text() );
-  int pinOffsetX  = sdEnvir->fromPhisPcb( ui->mPinOffsetX->text() );
+  int pinDistance = SdEnvir::instance()->fromPhisPcb( ui->mPinDistance->text() );
+  int pinOffsetY  = SdEnvir::instance()->fromPhisPcb( ui->mPinOffsetY->text() );
+  int pinOffsetX  = SdEnvir::instance()->fromPhisPcb( ui->mPinOffsetX->text() );
 
 //  int pinLen = (pinSizeX - bodySizeX) / 2;
 
@@ -145,14 +145,14 @@ void SdDMasterPartSingleLine::drawPart(SdIllustrator &il)
 
 void SdDMasterPartSingleLine::accept()
   {
-  sBodySizeX = sdEnvir->fromPhisPcb( ui->mBodySizeX->text() );
-  sBodySizeY = sdEnvir->fromPhisPcb( ui->mBodySizeY->text() );
+  sBodySizeX = SdEnvir::instance()->fromPhisPcb( ui->mBodySizeX->text() );
+  sBodySizeY = SdEnvir::instance()->fromPhisPcb( ui->mBodySizeY->text() );
 
   sPinCount    = ui->mPinCount->text();
   int pinCount = sPinCount.toInt();
-  sPinDistance = sdEnvir->fromPhisPcb( ui->mPinDistance->text() );
-  sPinOffsetY  = sdEnvir->fromPhisPcb( ui->mPinOffsetY->text() );
-  sPinOffsetX  = sdEnvir->fromPhisPcb( ui->mPinOffsetX->text() );
+  sPinDistance = SdEnvir::instance()->fromPhisPcb( ui->mPinDistance->text() );
+  sPinOffsetY  = SdEnvir::instance()->fromPhisPcb( ui->mPinOffsetY->text() );
+  sPinOffsetX  = SdEnvir::instance()->fromPhisPcb( ui->mPinOffsetX->text() );
 
   //Pin types
   sPinType = ui->mPinType->text();

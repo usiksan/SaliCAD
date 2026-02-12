@@ -152,7 +152,7 @@ SdProp::SdProp()
   //TODO D011 setup all prop defaults
   //Via properties [Свойства переходных отверстий]
   mViaProp.mStratum      = stmThrough;
-  mViaProp.mPadType      = sdEnvir->mViaType;
+  mViaProp.mPadType      = SdEnvir::instance()->mViaType;
   mViaProp.mNetName      = "";
   mViaRule               = 0;
 //  SdPropText    mTextDocProp;    //Свойства текста в текстовых документах

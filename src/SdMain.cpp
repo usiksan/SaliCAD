@@ -82,9 +82,8 @@ int main(int argc, char *argv[])
   //Creating pulsar for signals distibution
   SdPulsar::sdPulsar = new SdPulsar();
 
-  sdEnvir = new SdEnvir();  
   //Load environment
-  sdEnvir->loadEnvir();
+  SdEnvir::instance()->loadEnvir();
   //Global properties
   sdGlobalProp = new SdProp();
   sdGlobalProp->loadProp();
@@ -105,11 +104,10 @@ int main(int argc, char *argv[])
   int res = a.exec();
 
   //Save current environment
-  sdEnvir->saveEnvir();
+  SdEnvir::instance()->saveEnvir();
   sdGlobalProp->saveProp();
 
   delete sdGlobalProp;
-  delete sdEnvir;
   delete SdPulsar::sdPulsar;
 
   //Close library and store all changes

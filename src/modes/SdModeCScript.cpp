@@ -54,7 +54,7 @@ void SdModeCScript::drawDynamic(SdContext *ctx)
   {
   if( mEditScript != nullptr ) {
     //Draw selection rectangle over linking item
-    ctx->setPen(0,sdEnvir->getSysColor(scEnter), dltDotted );
+    ctx->setPen(0,SdEnvir::instance()->getSysColor(scEnter), dltDotted );
     ctx->rect( mLinkOver );
     }
   }

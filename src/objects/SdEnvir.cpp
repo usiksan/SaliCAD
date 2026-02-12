@@ -22,8 +22,6 @@ Description
 #include <QDebug>
 #include <QCoreApplication>
 
-SdEnvir *sdEnvir;
-
 SdEnvir::SdEnvir() :
   mPadStack(nullptr)
   {
@@ -102,6 +100,22 @@ void SdEnvir::setSysFont(int fontId, const QString fontName)
 
 
 
+
+//!
+//! \brief ppmGet  Returns ppm in accordance classId
+//! \param classId Class of object for which editor return ppm
+//! \return        ppm
+//!
+double SdEnvir::ppmGet(SdClass classId) const
+  {
+  if( classId & dctConstruct )
+    return mPrtPPM;
+  return mSchPPM;
+  }
+
+
+
+
 //!
 //! \brief loadEnvir Load environment from user settings
 //!
@@ -128,7 +142,7 @@ void SdEnvir::loadEnvir()
     for( int i = 0; i < c; i++ ) {
       QString id;
       is >> id;
-      SdLayer *layer = getLayer(id);
+      SdLayer *layer = layerGet(id);
       layer->read( is );
       }
 
@@ -164,10 +178,6 @@ void SdEnvir::loadEnvir()
        >> mGridShow             //Включение сетки
        >> mCursorAlignGrid           //Включение движения курсора по сетке
        >> mCenterCursor         //Центровать курсор при увеличении и уменьшении
-       >> mHomePath             //Каталог пользователя
-       >> mLibraryPath          //Каталог библиотек
-       >> mPatternPath          //Каталог шаблонов
-       >> mCategoryPath         //Base path for store category hierarchy
        >> mGridHistory          //Previous grid history table
        >> mDefaultRules         //Default rules for pcb
        >> mShowRuleErrors       //If true then over pcb shows rule error indicators as rectangles
@@ -242,10 +252,6 @@ void SdEnvir::saveEnvir()
      << mGridShow             //Включение сетки
      << mCursorAlignGrid      //Включение движения курсора по сетке
      << mCenterCursor         //Центровать курсор при увеличении и уменьшении
-     << mHomePath             //Каталог пользователя
-     << mLibraryPath          //Каталог библиотек
-     << mPatternPath          //Каталог шаблонов
-     << mCategoryPath         //Base path for store category hierarchy
      << mGridHistory          //Previous grid history table
      << mDefaultRules         //Default rules for pcb
      << mShowRuleErrors       //If true then over pcb shows rule error indicators as rectangles
@@ -340,41 +346,26 @@ void SdEnvir::defaultEnvir()
   mProjectRemoveEnabled = false;       //Разрешение автоматического запрещения проекта
   mProjectRemoveTime = 15000;          //Время удержания проекта
 
-  mHomePath = QDir::homePath();        //Каталог пользователя
-  if( !mHomePath.endsWith( QChar('/') ) )
-    mHomePath.append( QChar('/') );
-  mHomePath.append( QStringLiteral("SaliLAB/SaliCAD/") );
-
-  //mLibraryPath in SdEnvir is obsolete
-  mLibraryPath = mHomePath;            //Каталог библиотек
-  mLibraryPath.append( QStringLiteral("library/") );
-
-  SvDir def( QCoreApplication::applicationDirPath() );
-  mPatternPath = def.slashedPath() + QStringLiteral("pattern/");   //Каталог шаблонов
-
-  //Category file path
-  mCategoryPath = def.slashedPath() + QString("category/");        //Base path for store category hierarchy
-
 
   //Перечень слоев по умолчанию
   //Default layer list
   deleteLayers();
-  for( int i = 0; sdLayerDescrActual[i].mId != nullptr; i++ )
-    addLayerId( QString(sdLayerDescrActual[i].mId), sdLayerDescrActual[i].mColor, sdLayerDescrActual[i].mTrace, sdLayerDescrActual[i].mStratum );
+  for( int i = 0; sdLayerDescrDefault[i].mId != nullptr; i++ )
+    addLayerId( sdLayerDescrDefault[i].mClass, QString(sdLayerDescrDefault[i].mId), sdLayerDescrDefault[i].mTrace, sdLayerDescrDefault[i].mStratum, sdLayerDescrDefault[i].mColor );
   for( int i = 0; sdLayerDescrAddon[i].mId != nullptr; i++ )
     addLayerId( QString(sdLayerDescrAddon[i].mId), sdLayerDescrAddon[i].mColor, sdLayerDescrAddon[i].mTrace, sdLayerDescrAddon[i].mStratum );
 
 
   //Assign paired layers
-  setPair( QString( LID0_COMPONENT ),  QString( LID0_COMPONENT LID1_BOT ) );
-  setPair( QString( LID0_PIN ),        QString( LID0_PIN LID1_BOT ) );
-  setPair( QString( LID0_PIN_NAME ),   QString( LID0_PIN_NAME LID1_BOT ) );
-  setPair( QString( LID0_PIN_NUMBER ), QString( LID0_PIN_NUMBER LID1_BOT ) );
-  setPair( QString( LID0_IDENT ),      QString( LID0_IDENT LID1_BOT ) );
+  layerSetPair( QString( LID0_COMPONENT ),  QString( LID0_COMPONENT LID1_BOT ) );
+  layerSetPair( QString( LID0_PIN ),        QString( LID0_PIN LID1_BOT ) );
+  layerSetPair( QString( LID0_PIN_NAME ),   QString( LID0_PIN_NAME LID1_BOT ) );
+  layerSetPair( QString( LID0_PIN_NUMBER ), QString( LID0_PIN_NUMBER LID1_BOT ) );
+  layerSetPair( QString( LID0_IDENT ),      QString( LID0_IDENT LID1_BOT ) );
 
-  setPair( QString( LID0_PAD LID1_TOP ),  QString( LID0_PAD LID1_BOT ) );
-  setPair( QString( LID0_CLEAR LID1_TOP ), QString( LID0_CLEAR LID1_BOT ) );
-  setPair( QString( LID0_SOLDER_MASK LID1_TOP ),  QString( LID0_SOLDER_MASK LID1_BOT ) );
+  layerSetPair( QString( LID0_PAD LID1_TOP ),  QString( LID0_PAD LID1_BOT ) );
+  layerSetPair( QString( LID0_CLEAR LID1_TOP ), QString( LID0_CLEAR LID1_BOT ) );
+  layerSetPair( QString( LID0_SOLDER_MASK LID1_TOP ),  QString( LID0_SOLDER_MASK LID1_BOT ) );
 
 
   //Default pcb rules
@@ -389,30 +380,22 @@ void SdEnvir::defaultEnvir()
 
 
 //!
-//! \brief getLayer Get existing layer, if it is not exist - then it's created as default
+//! \brief layerGet Get existing layer, if it is not exist - then it's created as default
 //! \param id       Id of needed layer
 //! \return         Layer pointer
 //!
-SdLayer *SdEnvir::getLayer(QString id)
+SdLayer *SdEnvir::layerGet(QString id)
   {
   if( id.isEmpty() )
-    return getLayer( LID0_COMMON );
+    return layerGet( LID0_COMMON );
 
   if( !mLayerTable.contains(id) ) {
     //Not exist. Create new one.
 
     //Build layer name
-    QString name;
-    QStringList list = id.split( QChar('.') );
-    QString lid0 = list.at(0);
-    name = layerId2NameLevel0( lid0 );
+    auto [englishName,name] = SdLayer::layerIdToName( id );
 
-    if( list.count() > 1 ) {
-      QString lid1clear = list.at(1);
-      QString lid1 = QString(".") + lid1clear;
-      name.append( " " ).append( layerId2NameLevel1(lid1) );
-      }
-    addLayer( new SdLayer(id, name, 0x3f803f) );
+    addLayer( new SdLayer( id, name, englishName, 0x3f803f) );
     }
 
   return mLayerTable.value(id);
@@ -422,20 +405,29 @@ SdLayer *SdEnvir::getLayer(QString id)
 
 
 //!
-//! \brief getLayerKiCad Returns the SalixEDA layer mapped to the KiCAD layer.
-//! \param kiCadId       KiCad layer name
-//! \return              Correspond SalixEDA layer. If no mapped layer, then return Common
+//! \brief layerForEach - Iterates through all registered layers matching the specified class
+//! \param classMask   - Layer class filter (dctConstruct, dctSchematic, dctCommon or combination)
+//! \param fun1        - Callback function for each layer object. Return true to continue iteration, false to stop
 //!
-SdLayer *SdEnvir::getLayerKiCad(const QString &kiCadId) const
+void SdEnvir::layerForEach(quint64 classMask, std::function<bool (SdLayer *)> fun1)
   {
-  static SdLayerPtrMap kiCadMap;
-  if( kiCadMap.isEmpty() ) {
-    //Fill map
-    for( auto it = mLayerTable.cbegin(); it != mLayerTable.cend(); ++it )
-      kiCadMap.insert( it.value()->kiCadId(), it.value() );
-    }
-  return kiCadMap.value( kiCadId, mLayerTable.value(LID0_COMMON) );
+  for( auto *p : std::as_const(mLayerTable) )
+    if( p->classGet() & classMask ) {
+      if( !fun1(p) ) return;
+      }
   }
+
+void SdEnvir::layerForEachConst(quint64 classMask, std::function<bool (SdLayer *)> fun1) const
+  {
+  for( auto *p : std::as_const(mLayerTable) )
+    if( p->classGet() & classMask ) {
+      if( !fun1(p) ) return;
+      }
+  }
+
+
+
+
 
 
 
@@ -458,9 +450,9 @@ void SdEnvir::resetForCache()
 
 
 //Set layer pair
-void SdEnvir::setPair(QString idTop, QString idBot)
+void SdEnvir::layerSetPair(QString idTop, QString idBot)
   {
-  getLayer(idTop)->setPair( getLayer(idBot) );
+  layerGet(idTop)->pairSet( layerGet(idBot) );
   }
 
 
@@ -495,24 +487,6 @@ void SdEnvir::setLayerUsage(int stratumCount)
 
 
 
-//Layer id to name translation service
-QString SdEnvir::layerId2NameLevel0(QString lid0 )
-  {
-  for( int i = 0; sdLayerLevel0[i].mLid != nullptr; i++ )
-    if( lid0 == QString(sdLayerLevel0[i].mLid) )
-      return QObject::tr( sdLayerLevel0[i].mTranslate );
-  return lid0;
-  }
-
-
-//Layer id to name translation service
-QString SdEnvir::layerId2NameLevel1(QString lid1)
-  {
-  for( int i = 1; sdLayerLevel1[i].mLid != nullptr; i++ )
-    if( lid1 == QString(sdLayerLevel1[i].mLid) )
-      return QObject::tr( sdLayerLevel1[i].mTranslate );
-  return lid1;
-  }
 
 
 
@@ -567,10 +541,10 @@ void SdEnvir::addLayer(SdLayer *layer)
 
 
 
-void SdEnvir::addLayerId(const QString layerId, unsigned ccolor, SdLayerTrace st, int stratum )
+void SdEnvir::addLayerId( const SdLayerDescr &descr )
   {
-  SdLayer *layer = getLayer( layerId );
-  layer->setColor( ccolor );
-  layer->setTrace( st );
-  layer->setStratum( stratum );
+  QString layerId(descr.mId);
+  SdLayer *layer = layerGet( layerId );
+  auto [englishName,name] = SdLayer::layerIdToName( layerId );
+  layer->init( name, englishName, descr.mTrace, descr.mClass, descr.mStratum, descr.mColor );
   }

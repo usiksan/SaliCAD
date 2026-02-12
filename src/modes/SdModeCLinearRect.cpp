@@ -31,11 +31,11 @@ SdModeCLinearRect::SdModeCLinearRect(SdWEditorGraph *editor, SdProjectItem *obj)
 void SdModeCLinearRect::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sSecondCorner ) {
-    ctx->setPen( sdGlobalProp->mLineProp.mWidth.getValue(), sdEnvir->getSysColor(scEnter),
+    ctx->setPen( sdGlobalProp->mLineProp.mWidth.getValue(), sdEnvir::instance()->getSysColor(scEnter),
                  sdGlobalProp->mLineProp.mType.getValue() );
     ctx->rect( SdRect(mFirst,mPrevMove) );
     }
-  if( sdEnvir->mIsSmart && mSmartType )
+  if( sdEnvir::instance()->mIsSmart && mSmartType )
     ctx->smartPoint( mSmartPoint, mSmartType );
   }
 
@@ -80,7 +80,7 @@ void SdModeCLinearRect::movePoint(SdPoint p)
   //Вычислить предполагаемую точку вывода
   SdSnapInfo snap;
   snap.mSour     = mPrevMove;
-  snap.mSnapMask = sdEnvir->mSmartMask | snapExcludeExcl;
+  snap.mSnapMask = sdEnvir::instance()->mSmartMask | snapExcludeExcl;
   snap.mExclude  = mFirst;
   snap.scan( mObject );
   mSmartType  = snap.mDestMask;
@@ -93,7 +93,7 @@ void SdModeCLinearRect::movePoint(SdPoint p)
 
 SdPoint SdModeCLinearRect::enterPrev()
   {
-  if( sdEnvir->mIsSmart && mSmartType )
+  if( sdEnvir::instance()->mIsSmart && mSmartType )
     enterPoint( mSmartPoint );
   return mSmartPoint;
   }

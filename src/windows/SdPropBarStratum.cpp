@@ -46,7 +46,7 @@ void SdPropBarStratum::setSelectedStratum(SdStratum stratum)
     QString id = mLayer->itemData(i).toString();
     if( id.isEmpty() )
       continue;
-    SdLayer *layer = sdEnvir->getLayer( id );
+    SdLayer *layer = sdEnvir::instance()->layerGet( id );
     if( stratum & layer->stratum() ) {
       mLayer->setCurrentIndex(i);
       return;
@@ -67,7 +67,7 @@ SdStratum SdPropBarStratum::getSelectedStratum()
   QString id = mLayer->currentData().toString();
   if( id.isEmpty() )
     return 0;
-  SdLayer *layer = sdEnvir->getLayer( id );
+  SdLayer *layer = sdEnvir::instance()->layerGet( id );
   return layer->stratum();
 //  if( layer->stratum() == 0 )
 //    return 0;
@@ -89,12 +89,12 @@ void SdPropBarStratum::updateViewedLayers()
   mLayer->clear();
   //Accumulate available layers to signalLayers list
   QList<SdLayer*> signalLayers;
-  for( SdLayer *p : std::as_const( sdEnvir->mLayerTable ) ) {
+  SdEnvir::instance()->layerForEachConst( dctCommon, [&signalLayers,this,stratumMask] ( SdLayer *p ) -> bool {
     if( p->trace() == mLayerTrace && (p->stratum() & stratumMask) && p->isEdited() ) {
       signalLayers.append( p );
-      //mLayer->addItem( p->name(), QVariant( p->id() ) );
       }
-    }
+    return true;
+    });
 
   //Sort layer list in non-descending order of layers
   std::stable_sort( signalLayers.begin(), signalLayers.end(), [] ( SdLayer *p1, SdLayer *p2 ) -> bool { return p1->stratum() < p2->stratum(); } );

@@ -22,10 +22,13 @@ Description
 #include "SdUtil.h"
 #include "SdPadAssociation.h"
 #include "SdRuleBlock.h"
+#include "SvLib/SvSingleton.h"
+
 #include <QColor>
 #include <QMap>
 #include <QPointF>
 #include <QList>
+#include <functional>
 
 
 #define scPureBlack     -2 //Pure black color [Чисто черный цвет]
@@ -64,8 +67,32 @@ class SdEnvir
   {
     QColor          mSysColors[scLast];    //System color table
     QString         mFonts[FONT_COUNT];    //System font table
-  public:
     SdLayerPtrMap   mLayerTable;           //Layers table [Таблица слоев]
+    double          mSchPPM;               //Коэффициент преобразования в физическую величину в схемном редакторе
+    double          mPrtPPM;               //Коэффициент преобразования в физическую величину в конструкциях
+
+    QList<QPointF>  mGridHistory;          //Previous grid history
+    SdRuleBlock     mDefaultRules;         //Default rules for pcb
+
+    //Not saved
+    //Cashed layers for stratum
+    SdLayerCache      mCacheForPad;
+    SdLayerCache      mCacheForMask;
+    SdLayerCache      mCacheForStencil;
+    SdLayerCache      mCacheForHole;
+    SdLayerCache      mCacheForRoad;
+    SdLayerCache      mCacheForPolygon;
+    SdLayerCache      mCacheForBoundary;
+    SdLayerCache      mCacheForKeepout;
+    SdPadAssociation *mPadStack;
+
+    SdEnvir();
+  public:
+    ~SdEnvir();
+
+    SV_SINGLETON( SdEnvir )
+
+
     int             mDotSize;              //Размер точки соединений сегментов цепи
     int             mDotWidth;             //Толщина линии точки соединения сегментов цепи
     int             mSymPinSize;           //Размер перекрестья ножки символа
@@ -92,18 +119,11 @@ class SdEnvir
     bool            mCursorShow;           //Show cursor [Показывать курсор]
     int             mTraseDotSize;         //Размер точки, показывающей цепь
                                            //PPM показывает сколько физической величины приходится на одну логическую единицу
-    double          mSchPPM;               //Коэффициент преобразования в физическую величину в схемном редакторе
-    double          mPrtPPM;               //Коэффициент преобразования в физическую величину в конструкциях
     bool            mGridSyncXY;           //Syncronisated edition x and grid steps
     bool            mGridShow;             //Включение сетки
     bool            mCursorAlignGrid;      //Включение движения курсора по сетке
     bool            mCenterCursor;         //Центровать курсор при увеличении и уменьшении
-    QString         mHomePath;             //Current user home path [Каталог пользователя]
-    QString         mLibraryPath;          //Library path [Каталог библиотек]
-    QString         mPatternPath;          //Каталог шаблонов
-    QString         mCategoryPath;         //Category hierarchy file
-    QList<QPointF>  mGridHistory;          //Previous grid history
-    SdRuleBlock     mDefaultRules;         //Default rules for pcb
+
     bool            mShowRuleErrors;       //If true then over pcb shows rule error indicators as rectangles
     bool            mShowFields;           //If true then draw fields as fields names else draw fields as values
     bool            mShowPads;             //If true then draw pads in part editor
@@ -121,21 +141,6 @@ class SdEnvir
     double          mTextSizeStep;         //Шаг изменения высоты текста
     bool            mCreateBack;           //Создавать BAK файл при сохранении
 
-    //Not saved
-    //Cashed layers for stratum
-    SdLayerCache      mCacheForPad;
-    SdLayerCache      mCacheForMask;
-    SdLayerCache      mCacheForStencil;
-    SdLayerCache      mCacheForHole;
-    SdLayerCache      mCacheForRoad;
-    SdLayerCache      mCacheForPolygon;
-    SdLayerCache      mCacheForBoundary;
-    SdLayerCache      mCacheForKeepout;
-    SdPadAssociation *mPadStack;
-
-
-    SdEnvir();
-    ~SdEnvir();
 
     //!
     //! \brief getSysColor Returns system color by its id
@@ -167,6 +172,13 @@ class SdEnvir
     //!
     void     setSysFont( int fontId, const QString fontName );
 
+    //!
+    //! \brief ppmGet  Returns ppm in accordance classId
+    //! \param classId Class of object for which editor return ppm
+    //! \return        ppm
+    //!
+    double   ppmGet( SdClass classId ) const;
+
 
 
     //!
@@ -187,24 +199,30 @@ class SdEnvir
 
 
     //!
-    //! \brief getLayer Get existing layer, if it is not exist - then it's created as default
+    //! \brief layerGet Get existing layer, if it is not exist - then it's created as default
     //! \param id       Id of needed layer
     //! \return         Layer pointer
     //!
-    SdLayer *getLayer( QString id );
+    SdLayer *layerGet( QString id );
 
+    /*[] (SdLayer *layer) -> bool {
+
+       }
+       */
     //!
-    //! \brief getLayerKiCad Returns the SalixEDA layer mapped to the KiCAD layer.
-    //! \param kiCadId       KiCad layer name
-    //! \return              Correspond SalixEDA layer. If no mapped layer, then return Common
+    //! \brief layerForEach - Iterates through all registered layers matching the specified class
+    //! \param classMask   - Layer class filter (dctConstruct, dctSchematic, dctCommon or combination)
+    //! \param fun1        - Callback function for each layer object. Return true to continue iteration, false to stop
     //!
-    SdLayer *getLayerKiCad( const QString &kiCadId ) const;
+    void     layerForEach(quint64 classMask, std::function<bool (SdLayer *)> fun1 );
+    void     layerForEachConst( quint64 classMask, std::function<bool(SdLayer*)> fun1 ) const;
+
 
     //Clear stratum layer association cashe
     void     resetForCache();
 
     //Set layer pair
-    void     setPair( QString idTop, QString idBot );
+    void     layerSetPair( QString idTop, QString idBot );
 
     //Reset "usage" layer flag for all layers
     void     resetLayerUsage();
@@ -212,7 +230,7 @@ class SdEnvir
     void     setLayerUsage( int stratumCount );
 
     //Layer id to name translation service
-    QString  layerId2NameLevel0(QString lid0 );
+    QString  layerId2NameLevel0( QString lid0 );
     QString  layerId2NameLevel1( QString lid1 );
 
     QString  toPhisSchematic( int val ) const { return SdUtil::log2physStr(val,mSchPPM); }
@@ -229,9 +247,8 @@ class SdEnvir
   private:
     void deleteLayers();
     void addLayer( SdLayer *layer );
-    void addLayerId(const QString layerId, unsigned ccolor, SdLayerTrace st, int stratum);
+    void addLayerId(const SdLayerDescr &descr);
   };
 
-extern SdEnvir *sdEnvir;
 
 #endif // SDENVIR_H

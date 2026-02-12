@@ -72,7 +72,7 @@ SdPropBarPartImp::SdPropBarPartImp(const QString title) :
   mAlignToGrid = addAction( QIcon(QString(":/pic/alignGrid.png")), tr("Align cursor to grid") );
   mAlignToGrid->setCheckable(true);
   connect( mAlignToGrid, &QAction::triggered, [=](bool checked){
-    sdEnvir->mCursorAlignGrid = checked;
+    sdEnvir::instance()->mCursorAlignGrid = checked;
     });
 
   mTop = addAction( QIcon(QStringLiteral(":/pic/flipSideTop.png")), tr("Part at top side") );
@@ -102,7 +102,7 @@ SdPropBarPartImp::SdPropBarPartImp(const QString title) :
 void SdPropBarPartImp::setPropPartImp(SdPropPartImp *propPartImp)
   {
   //Update grid align button
-  mAlignToGrid->setChecked( sdEnvir->mCursorAlignGrid );
+  mAlignToGrid->setChecked( sdEnvir::instance()->mCursorAlignGrid );
 
   if( propPartImp ) {
     //Set angle

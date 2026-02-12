@@ -16,7 +16,7 @@ Description
 #include "SdJsonIO.h"
 
 SdPropLayer::SdPropLayer() :
-  mLayer( sdEnvir->getLayer(LID0_INVISIBLE) ),
+  mLayer( sdEnvir::instance()->layerGet(LID0_INVISIBLE) ),
   mValue(NoValue)
   {
 
@@ -25,7 +25,7 @@ SdPropLayer::SdPropLayer() :
 
 
 SdPropLayer::SdPropLayer(QString id) :
-  mLayer( sdEnvir->getLayer(id) ),
+  mLayer( sdEnvir::instance()->layerGet(id) ),
   mValue(OneValue)
   {
 
@@ -59,11 +59,11 @@ void SdPropLayer::set(const QString id)
   {
   if( id.isEmpty() ) {
     mValue = NoValue;
-    mLayer = sdEnvir->getLayer(LID0_INVISIBLE);
+    mLayer = sdEnvir::instance()->layerGet(LID0_INVISIBLE);
     }
   else {
     mValue = OneValue;
-    mLayer = sdEnvir->getLayer(id);
+    mLayer = sdEnvir::instance()->layerGet(id);
     }
   }
 
@@ -120,7 +120,7 @@ void SdPropLayer::setLayerUsage() const
 void SdPropLayer::json(const QString name, const SdJsonReader &js)
   {
   mValue = OneValue;
-  mLayer = sdEnvir->getLayer( js.object().value(name).toString() );
+  mLayer = sdEnvir::instance()->layerGet( js.object().value(name).toString() );
   }
 
 

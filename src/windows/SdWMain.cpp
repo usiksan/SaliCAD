@@ -1370,7 +1370,7 @@ void SdWMain::cmViewLayers()
   if( plate != nullptr )
     plate->setStratumCount( layersDlg.getStratumCount() );
 
-  sdEnvir->resetForCache();
+  SdEnvir::instance()->resetForCache();
   //Signal viewed layers are changed
   SdPulsar::sdPulsar->emitViewedLayers( layersDlg.currentLayer() );
 
@@ -1430,7 +1430,7 @@ void SdWMain::cmViewMirrorHorz()
 
 void SdWMain::cmShowFields(bool st)
   {
-  sdEnvir->mShowFields = st;
+  SdEnvir::instance()->mShowFields = st;
   activeEditorUpdate();
   }
 
@@ -1679,7 +1679,7 @@ void SdWMain::cm3dModeFaceColor()
 void SdWMain::cmShowPads(bool st)
   {
   //Setup new state of show pads flag
-  sdEnvir->mShowPads = st;
+  SdEnvir::instance()->mShowPads = st;
   activeEditorUpdate();
   }
 
@@ -1871,7 +1871,7 @@ void SdWMain::cmModePack()
 
 void SdWMain::cmShowRatNet( bool st )
   {
-  sdEnvir->mShowRatNet = st;
+  SdEnvir::instance()->mShowRatNet = st;
   if( activeEditor() )
     activeEditor()->update();
   }
@@ -1881,7 +1881,7 @@ void SdWMain::cmShowRatNet( bool st )
 
 void SdWMain::cmShowRuleErrors(bool st)
   {
-  sdEnvir->mShowRuleErrors = st;
+  SdEnvir::instance()->mShowRuleErrors = st;
   if( activeEditor() )
     activeEditor()->update();
   }
@@ -1903,7 +1903,7 @@ void SdWMain::cmPcbStratum()
   if( activeEditor() ) {
     activeEditor()->cmPcbStratum();
 
-    sdEnvir->resetForCache();
+    SdEnvir::instance()->resetForCache();
     //Signal viewed layers are changed
     SdPulsar::sdPulsar->emitViewedLayers(nullptr);
 
@@ -2057,7 +2057,7 @@ void SdWMain::cmRulesErrorNext()
 void SdWMain::cmOption()
   {
   SdDOptions(this).exec();
-  sdEnvir->resetPads();
+  SdEnvir::instance()->resetPads();
   }
 
 

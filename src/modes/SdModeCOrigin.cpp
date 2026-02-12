@@ -38,7 +38,7 @@ void SdModeCOrigin::activate()
 void SdModeCOrigin::drawDynamic(SdContext *ctx)
   {
   //Show current position of origin
-  ctx->cross( mObject->getOrigin(), mOriginSize, sdEnvir->getSysColor(scEnter) );
+  ctx->cross( mObject->getOrigin(), mOriginSize, sdEnvir::instance()->getSysColor(scEnter) );
   ctx->circle( mObject->getOrigin(), mOriginSize );
   }
 

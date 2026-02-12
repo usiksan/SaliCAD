@@ -63,7 +63,7 @@ SdDLayers::SdDLayers(SdProject *prj, QWidget *parent) :
 
   //Accum usaged layers
   //At first - clear all usages
-  sdEnvir->resetLayerUsage();
+  sdEnvir::instance()->resetLayerUsage();
 
   //Accum usages
   if( mProject != nullptr )
@@ -126,7 +126,7 @@ SdLayer *SdDLayers::currentLayer() const
   {
   int index = ui->mLayerList->currentRow();
   if( index >= 0 && index < mList.count() ) {
-    SdLayer *layer = sdEnvir->getLayer( mList.at(index) );
+    SdLayer *layer = sdEnvir::instance()->layerGet( mList.at(index) );
     if( layer && layer->isEdited() )
       return layer;
     }
@@ -147,7 +147,7 @@ void SdDLayers::loadLayerList(const QString fname)
     QJsonArray ar = doc.array();
 
     //Switch off all layers
-    for( SdLayerPtr ptr : std::as_const( sdEnvir->mLayerTable ) )
+    for( SdLayerPtr ptr : std::as_const( sdEnvir::instance()->mLayerTable ) )
       ptr->setState( layerStateOff );
 
     //Setup layers state
@@ -155,7 +155,7 @@ void SdDLayers::loadLayerList(const QString fname)
       QJsonObject obj = ar.at(i).toObject();
       QString id = obj.value( QStringLiteral("id") ).toString();
       int state = obj.value( QStringLiteral("state") ).toInt();
-      sdEnvir->getLayer(id)->setState( static_cast<SdLayerState>(state) );
+      sdEnvir::instance()->layerGet(id)->setState( static_cast<SdLayerState>(state) );
       }
     }
   }
@@ -171,21 +171,21 @@ void SdDLayers::fillLayerList()
 
   if( mShow == 0 ) {
     //Actual list
-    for( SdLayer *layer : std::as_const( sdEnvir->mLayerTable ) ) {
+    for( SdLayer *layer : std::as_const( sdEnvir::instance()->mLayerTable ) ) {
       if( layer->isUsage() || mActualList.contains(layer->id()) )
         mList.append( layer->id() );
       }
     }
   else if( mShow == 1 ) {
     //Used list
-    for( SdLayer *layer : std::as_const( sdEnvir->mLayerTable ) ) {
+    for( SdLayer *layer : std::as_const( sdEnvir::instance()->mLayerTable ) ) {
       if( layer->isUsage() )
         mList.append( layer->id() );
       }
     }
   else {
     //All list
-    for( SdLayer *layer : std::as_const( sdEnvir->mLayerTable ) )
+    for( SdLayer *layer : std::as_const( sdEnvir::instance()->mLayerTable ) )
       mList.append( layer->id() );
     }
 
@@ -202,7 +202,7 @@ void SdDLayers::fillLayerList()
 //append layer with desired Id to visual list (i.e. table)
 void SdDLayers::appendLyaerToVisualList(const QString id)
   {
-  SdLayer *layer = sdEnvir->getLayer( id );
+  SdLayer *layer = sdEnvir::instance()->layerGet( id );
 
   //Append row to table
   int row = ui->mLayerList->rowCount();
@@ -267,9 +267,9 @@ void SdDLayers::cmCreate()
     //New layer created, append it to visual list
     appendLyaerToVisualList( cr.layerId() );
     //Mark as usage for visibility
-    sdEnvir->getLayer( cr.layerId() )->setUsage();
+    sdEnvir::instance()->layerGet( cr.layerId() )->setUsage();
     //Setup stratum
-    sdEnvir->getLayer( cr.layerId() )->setStratum( cr.layerStratum() );
+    sdEnvir::instance()->layerGet( cr.layerId() )->setStratum( cr.layerStratum() );
     }
   }
 
@@ -282,11 +282,11 @@ void SdDLayers::cmDelete()
   //Current layer
   int index = ui->mLayerList->currentRow();
   if( index >= 0 && index < mList.count() ) {
-    SdLayer *layer = sdEnvir->getLayer( mList.at(index) );
+    SdLayer *layer = sdEnvir::instance()->layerGet( mList.at(index) );
     //Show acknowledge to delete layer
     if( QMessageBox::question( this, tr("Warning!"), tr("Are You sure to delete layer \"%1\"").arg(layer->name()), QMessageBox::Yes | QMessageBox::No  ) == QMessageBox::Yes ) {
       //Test layer to able be deleted
-      sdEnvir->resetLayerUsage();
+      sdEnvir::instance()->resetLayerUsage();
       for( SdProjectPtr prj : sdProjectList )
         prj->accumLayerUsage();
       if( layer->isUsage() || layer->pair() != layer )
@@ -294,8 +294,8 @@ void SdDLayers::cmDelete()
       else {
         ui->mLayerList->removeRow( index );
         mList.removeAt( index );
-        sdEnvir->mLayerTable.remove( layer->id() );
-        sdEnvir->resetForCache();
+        sdEnvir::instance()->mLayerTable.remove( layer->id() );
+        sdEnvir::instance()->resetForCache();
         delete layer;
         }
       }
@@ -347,7 +347,7 @@ void SdDLayers::cmShowUsed()
 void SdDLayers::cmHideAll()
   {
   for( QString id : mList )
-    sdEnvir->getLayer(id)->setState( layerStateOff );
+    sdEnvir::instance()->layerGet(id)->setState( layerStateOff );
   fillLayerList();
   }
 
@@ -360,11 +360,11 @@ void SdDLayers::cmHideAll()
 void SdDLayers::cmSwitchAll()
   {
   for( QString id : mList ) {
-    SdLayerState state = sdEnvir->getLayer(id)->state();
+    SdLayerState state = sdEnvir::instance()->layerGet(id)->state();
     if( state == layerStateOff ) state = layerStateOn;
     else if( state == layerStateOn ) state = layerStateEdit;
     else state = layerStateOff;
-    sdEnvir->getLayer(id)->setState( state );
+    sdEnvir::instance()->layerGet(id)->setState( state );
     }
   fillLayerList();
   }
@@ -375,7 +375,7 @@ void SdDLayers::cmSwitchAll()
 void SdDLayers::cmLoad()
   {
   QString fname = QFileDialog::getOpenFileName( this, tr("Select file name to load layer state list"),
-                                                sdEnvir->mPatternPath,
+                                                sdEnvir::instance()->mPatternPath,
                                                 QString("Layers list (*%1)").arg(SD_LAYER_LIST_EXTENSION) );
   if( !fname.isEmpty() ) {
     if( !fname.endsWith( QStringLiteral(SD_LAYER_LIST_EXTENSION)) )
@@ -397,11 +397,11 @@ void SdDLayers::cmSave()
   {
   //Create pattern dir for layers lists
   QDir dir;
-  dir.mkpath( sdEnvir->mPatternPath );
+  dir.mkpath( sdEnvir::instance()->mPatternPath );
 
   //Select file name to save list
   QString fname = QFileDialog::getSaveFileName( this, tr("Enter file name to save layer state list"),
-                                                sdEnvir->mPatternPath,
+                                                sdEnvir::instance()->mPatternPath,
                                                 QString("Layers list (*%1)").arg(SD_LAYER_LIST_EXTENSION) );
   if( !fname.isEmpty() ) {
     if( !fname.endsWith( QStringLiteral(SD_LAYER_LIST_EXTENSION)) )
@@ -409,7 +409,7 @@ void SdDLayers::cmSave()
     //Make visible layer list
     QJsonArray ar;
     for( const QString &id : mList ) {
-      int state = sdEnvir->getLayer(id)->state();
+      int state = sdEnvir::instance()->layerGet(id)->state();
       QJsonObject obj;
       obj.insert( QStringLiteral("id"), id );
       obj.insert( QStringLiteral("state"), state );
@@ -435,7 +435,7 @@ void SdDLayers::onCellClicked(int row, int column)
   QString id = mList.at(row);
   if( column == 1 ) {
     //Layer trace
-    SdLayerTrace trace = sdEnvir->getLayer(id)->trace();
+    SdLayerTrace trace = sdEnvir::instance()->layerGet(id)->trace();
     switch( trace ) {
       //Layer not tracing [Слой не трассировочный]
       case layerTraceNone : trace = layerTracePad; break;
@@ -457,47 +457,47 @@ void SdDLayers::onCellClicked(int row, int column)
       case layerTraceKeepout :
       case layerTraceLast : trace = layerTraceNone; break;
       }
-    sdEnvir->getLayer(id)->setTrace( trace );
+    sdEnvir::instance()->layerGet(id)->setTrace( trace );
     //Change in table
     QTableWidgetItem *item = ui->mLayerList->item(row,column);
     if( item != nullptr )
-      item->setText( layerTrace(sdEnvir->getLayer(id)) );
+      item->setText( layerTrace(sdEnvir::instance()->layerGet(id)) );
     }
   else if( column == 2 ) {
     //State field
-    SdLayerState state = sdEnvir->getLayer(id)->state();
+    SdLayerState state = sdEnvir::instance()->layerGet(id)->state();
     if( state == layerStateOff ) state = layerStateOn;
     else if( state == layerStateOn ) state = layerStateEdit;
     else state = layerStateOff;
-    sdEnvir->getLayer(id)->setState( state );
+    sdEnvir::instance()->layerGet(id)->setState( state );
     //Change in table
     QTableWidgetItem *item = ui->mLayerList->item(row,column);
     if( item != nullptr )
-      item->setText( layerState(sdEnvir->getLayer(id)) );
+      item->setText( layerState(sdEnvir::instance()->layerGet(id)) );
     item = ui->mLayerList->item( row, 3 );
     if( item != nullptr )
-      item->setIcon( QIcon( sdEnvir->getLayer(id)->isVisible() ? QString(":/pic/lampEnable.png") : QString(":/pic/lampDisable.png") ) );
+      item->setIcon( QIcon( sdEnvir::instance()->layerGet(id)->isVisible() ? QString(":/pic/lampEnable.png") : QString(":/pic/lampDisable.png") ) );
     }
   else if( column == 3 ) {
     //Icon for visible state. Press on icon change visible state
-    SdLayerState state = sdEnvir->getLayer(id)->state();
+    SdLayerState state = sdEnvir::instance()->layerGet(id)->state();
     if( state == layerStateOff ) state = layerStateOn;
     else state = layerStateOff;
-    sdEnvir->getLayer(id)->setState( state );
+    sdEnvir::instance()->layerGet(id)->setState( state );
     //Change in table
     QTableWidgetItem *item = ui->mLayerList->item(row,2);
     if( item != nullptr )
-      item->setText( layerState(sdEnvir->getLayer(id)) );
+      item->setText( layerState(sdEnvir::instance()->layerGet(id)) );
     //Change visibility
     item = ui->mLayerList->item( row, 3 );
     if( item != nullptr )
-      item->setIcon( QIcon( sdEnvir->getLayer(id)->isVisible() ? QString(":/pic/lampEnable.png") : QString(":/pic/lampDisable.png") ) );
+      item->setIcon( QIcon( sdEnvir::instance()->layerGet(id)->isVisible() ? QString(":/pic/lampEnable.png") : QString(":/pic/lampDisable.png") ) );
     }
   else if( column == 4 ) {
     //Layer color
-    QColor color = QColorDialog::getColor( sdEnvir->getLayer(id)->color(), this, tr("Select layer color") );
+    QColor color = QColorDialog::getColor( sdEnvir::instance()->layerGet(id)->color(), this, tr("Select layer color") );
     if( color.isValid() ) {
-      sdEnvir->getLayer(id)->setColor( color.rgba() );
+      sdEnvir::instance()->layerGet(id)->setColor( color.rgba() );
       //Change in table
       QTableWidgetItem *item = ui->mLayerList->item(row,column);
       if( item != nullptr ) {
@@ -507,7 +507,7 @@ void SdDLayers::onCellClicked(int row, int column)
     }
   else if( column == 5 ) {
     //Layer pair
-    QString pair = sdEnvir->getLayer(id)->pair()->id();
+    QString pair = sdEnvir::instance()->layerGet(id)->pair()->id();
     //If pair not assigned then clear pair id
     if( pair == id )
       pair.clear();
@@ -515,17 +515,17 @@ void SdDLayers::onCellClicked(int row, int column)
     int r = pairList.exec();
     if( r == SdDLayerList_remove )
       //Remove pair
-      sdEnvir->getLayer(id)->setPair( nullptr );
+      sdEnvir::instance()->layerGet(id)->setPair( nullptr );
     else if( r == SdDLayerList_assign ) {
       //Get selected pair
       pair = pairList.pair();
       if( !pair.isEmpty() )
-        sdEnvir->getLayer(id)->setPair( sdEnvir->getLayer(pair) );
+        sdEnvir::instance()->layerGet(id)->setPair( sdEnvir::instance()->layerGet(pair) );
       }
     //Replace pair name in visual representation
     QTableWidgetItem *item = ui->mLayerList->item(row,column);
     if( item != nullptr )
-      item->setText( sdEnvir->getLayer(id)->pair()->name() );
+      item->setText( sdEnvir::instance()->layerGet(id)->pair()->name() );
     }
   //
   }
@@ -542,7 +542,7 @@ void SdDLayers::onItemChanged(QTableWidgetItem *item)
       //Change layer visual name
       //Visual name nor on that not affects, its only visual presentation
       QString id = mList.at(row);
-      sdEnvir->getLayer(id)->setName( item->text() );
+      sdEnvir::instance()->layerGet(id)->setName( item->text() );
       }
     }
   }

@@ -43,7 +43,7 @@ void SdModeWireDisconnect::drawDynamic(SdContext *ctx)
   {
   if( getStep() ) {
     //Draw selecting rectangle
-    ctx->setPen( 0, sdEnvir->getSysColor(scEnter), dltDotted );
+    ctx->setPen( 0, sdEnvir::instance()->getSysColor(scEnter), dltDotted );
     ctx->rect( SdRect(mFirst, mCurPoint) );
     }
   }
