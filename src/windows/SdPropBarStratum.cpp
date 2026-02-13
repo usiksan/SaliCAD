@@ -32,7 +32,7 @@ void SdPropBarStratum::setPlateAndTrace(SdPItemPlate *plate, SdLayerTrace trace)
     //Do only if changed, else do nothing
     mPlate        = plate;
     mLayerTrace   = trace;
-    updateViewedLayers();
+    updateViewedLayers(nullptr);
     }
   }
 
@@ -79,9 +79,11 @@ SdStratum SdPropBarStratum::getSelectedStratum()
 
 
 
-void SdPropBarStratum::updateViewedLayers()
+void SdPropBarStratum::updateViewedLayers(SdLayer *selectedLayer )
   {
   SdStratum curStratum = getSelectedStratum();
+  if( selectedLayer != nullptr && selectedLayer->stratum() != stmThrough && selectedLayer->stratum() != 0 )
+    curStratum = selectedLayer->stratum();
   //fill new layers list
   int c = mPlate == nullptr ? 2 : mPlate->stratumCount();
   int stratumMask = SdStratum::stratumStack( c );

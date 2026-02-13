@@ -627,6 +627,9 @@ void SdPExportPlate_Gerber::onGroupGenerate()
       generation( pat.slashedPath() + mGroup->item(row,1)->text() );
       }
   SdEnvir::instance()->loadEnvir();
+  //Update editor
+  mEditor->dirtyCashe();
+  mEditor->update();
   }
 
 
