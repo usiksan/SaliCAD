@@ -115,8 +115,8 @@ void SdDLayers::setStratumCount(int c)
   {
   c = qBound( 2, c, 30 );
   ui->mStratumCount->setEnabled(true);
-  ui->mStratumCount->setValue( c );
-  onStratumCountChange( c );
+  ui->mStratumCount->setValue( c / 2 );
+  onStratumCountChange( c / 2 );
   }
 
 
@@ -124,7 +124,7 @@ void SdDLayers::setStratumCount(int c)
 
 int SdDLayers::getStratumCount() const
   {
-  return qBound( 2, ui->mStratumCount->value(), 30 );
+  return qBound( 2, ui->mStratumCount->value() * 2, 30 );
   }
 
 
@@ -368,7 +368,7 @@ void SdDLayers::cmShowUsed()
 //Set state of all layers to Hide
 void SdDLayers::cmHideAll()
   {
-  for( QString id : mList )
+  for( const QString &id : std::as_const(mList) )
     SdEnvir::instance()->layerGet(id)->stateSet( layerStateOff );
   fillLayerList();
   }
@@ -381,7 +381,7 @@ void SdDLayers::cmHideAll()
 //Switch state of all layears to next state
 void SdDLayers::cmSwitchAll()
   {
-  for( QString id : mList ) {
+  for( const QString &id : std::as_const(mList) ) {
     SdLayerState state = SdEnvir::instance()->layerGet(id)->state();
     if( state == layerStateOff ) state = layerStateOn;
     else if( state == layerStateOn ) state = layerStateEdit;
@@ -453,7 +453,7 @@ void SdDLayers::onCellClicked(int row, int column)
   QString id = mList.at(row);
   if( column == 1 ) {
     //Layer trace
-#if 0  //Trace locked to change at now
+#if 0  //Disable trace changing
     SdLayerTrace trace = SdEnvir::instance()->layerGet(id)->trace();
     switch( trace ) {
       //Layer not tracing [Слой не трассировочный]
@@ -573,7 +573,7 @@ void SdDLayers::onItemChanged(QTableWidgetItem *item)
 
 void SdDLayers::onStratumCountChange(int newCount)
   {
-  if( newCount & 1 ) newCount++;
+  newCount <<= 1;
   ui->mStratumCountText->setText( QString::number(newCount) );
 
   mStratumMask = (stmTop|stmBottom);

@@ -336,7 +336,28 @@ void SdGerberContext::polygonInt(QPolygon pgn)
 
 
 
+using SdStaticString = const char*;
 
+
+SdStaticString drill[] = { nullptr };
+SdStaticString maskTop[] = { nullptr };
+SdStaticString maskBot[] = { nullptr };
+SdStaticString signalTop[] = { nullptr };
+SdStaticString signalBot[] = { nullptr };
+SdStaticString stencilTop[] = { nullptr };
+SdStaticString stencilBot[] = { nullptr };
+SdStaticString stencilFiducialTop[] = { nullptr };
+SdStaticString stencilFiducialBot[] = { nullptr };
+SdStaticString silkTop[] = { nullptr };
+SdStaticString silkBot[] = { nullptr };
+
+
+struct SdGerberDescr
+  {
+    int mStratum;
+    SdStaticString mGerberName;
+
+  };
 
 //===========================================================================================
 //              Dialog section
@@ -466,6 +487,37 @@ SdPExportPlate_Gerber::SdPExportPlate_Gerber(SdWEditorGraphPlate *editor, SdPIte
 
   setLayout( vmb );
 
+  //Fill group gerber file list
+  addGerberName( "drill" SD_GERBER_EXTENSION, LID0_HOLE );
+  for( const QString &lid1 : QStringList({LID1_TOP,LID1_BOT}) ) {
+    QString suffix( lid1.mid(1) + SD_GERBER_EXTENSION );
+    addGerberName( "mask" + suffix, LID0_SOLDER_MASK, lid1 );
+    addGerberNames( "signal" + suffix, {LID0_WIRE, LID0_POLYGON, LID0_PAD}, lid1 );
+    addGerberName( "silk" + suffix, LID0_SILK, lid1 );
+    addGerberName( "stencil" + suffix, LID0_STENCIL, lid1, false );
+    addGerberName( "stencilReper" + suffix, LID0_STENCIL_REPER, lid1, false );
+    }
+  //For internal layers
+  QStringList intLayers({"","",LID1_INT02,LID1_INT03,LID1_INT04,LID1_INT05,LID1_INT06,LID1_INT07,
+                         LID1_INT08,LID1_INT09,LID1_INT10,LID1_INT11,LID1_INT12,LID1_INT13,
+                         LID1_INT14,LID1_INT15,LID1_INT16,LID1_INT17,LID1_INT18,LID1_INT19,LID1_INT20,LID1_INT21,
+                         LID1_INT22,LID1_INT23,LID1_INT24,LID1_INT25,LID1_INT26,LID1_INT27,LID1_INT28,LID1_INT29});
+  for( int i = 2; i < plate->stratumCount(); ++i ) {
+    if( i == 2 )
+      //Special case for top-int00
+      addGerberName( "drillTop_Int1" SD_GERBER_EXTENSION, LID0_HOLE, LID1_INT02 );
+    else if( i + 1 == plate->stratumCount() )
+      //Special case for lastInt-bot
+      addGerberName( QString("drillInt%1_Bot" SD_GERBER_EXTENSION).arg(i), LID0_HOLE, intLayers.at(i) );
+    else if( (i & 1) == 1 )
+      //Common case for evenInt-oddInt
+      addGerberName( QString("drillInt%1_Int%2" SD_GERBER_EXTENSION).arg(i).arg(i+1), LID0_HOLE, intLayers.at(i) );
+
+    //Signal layer for each
+    addGerberNames( QString("signalInt%1" SD_GERBER_EXTENSION).arg(i), {LID0_WIRE, LID0_POLYGON, LID0_PAD}, intLayers.at(i) );
+    }
+
+
   //Fill group table
   //We scan pattern directory for existing layers list files
   //For each file we create one line in table
@@ -482,25 +534,19 @@ SdPExportPlate_Gerber::SdPExportPlate_Gerber(SdWEditorGraphPlate *editor, SdPIte
   //Hide row header
   mGroup->verticalHeader()->hide();
 
-  //Directory with layers list files
-  QDir pat( SdEnvir::instance()->mPatternPath );
-  //Get file list of existing layers list files
-  QStringList filtr;
-  filtr << "*" SD_LAYER_LIST_EXTENSION;
-  QFileInfoList patList = pat.entryInfoList( filtr );
   //Setup row for each file
-  mGroup->setRowCount( patList.count() );
+  mGroup->setRowCount( mGerberFileList.count() );
   int row = 0;
-  for( const QFileInfo &info : patList ) {
+  for( const SdGerberFile &info : std::as_const(mGerberFileList) ) {
     mGroup->setRowHeight( row, 25 );
     //By default we generate none
     mGroup->setItem( row, 0, new QTableWidgetItem(tr("No")) );
     mGroup->item( row,0 )->setFlags(Qt::ItemIsEnabled);
     //mGroup->item( row,0 )->setFlags(Qt::ItemIsEnabled|Qt::ItemIsUserCheckable);
     //Construct file name
-    mGroup->setItem( row, 1, new QTableWidgetItem( info.completeBaseName() + QStringLiteral(SD_GERBER_EXTENSION)) );
+    mGroup->setItem( row, 1, new QTableWidgetItem( info.mFileName ) );
     //Layers list file name
-    mGroup->setItem( row, 2, new QTableWidgetItem( info.fileName() ) );
+    mGroup->setItem( row, 2, new QTableWidgetItem( info.mLayerList.join(QString(", ")) ) );
     mGroup->item( row,2 )->setFlags(Qt::ItemIsEnabled);
     //Next row
     row++;
@@ -563,14 +609,15 @@ void SdPExportPlate_Gerber::onGroupGenerate()
     QMessageBox::warning( this, tr("Error"), tr("Group path field is empty. Enter path to witch files will be generate.") );
     return;
     }
+  //Save environment
+  SdEnvir::instance()->saveEnvir();
   //For each row of file table we check flag of generation
   // if setup then generate according gerber
   SvDir pat( gn );
   for( int row = 0; row < mGroup->rowCount(); row++ )
     if( mGroup->item(row,0)->text() == tr("Yes") ) {
-      //Load layer list
-      SvDir dir( SdEnvir::instance()->mPatternPath );
-      SdDLayers::loadLayerList( dir.slashedPath() + mGroup->item(row,2)->text() );
+      //Set visible list
+      SdEnvir::instance()->layerVisibleSet( mGerberFileList.at(row).mLayerList );
 
       //Update editor
       mEditor->dirtyCashe();
@@ -579,6 +626,10 @@ void SdPExportPlate_Gerber::onGroupGenerate()
       //Generate Gerber
       generation( pat.slashedPath() + mGroup->item(row,1)->text() );
       }
+  SdEnvir::instance()->loadEnvir();
+  //Update editor
+  mEditor->dirtyCashe();
+  mEditor->update();
   }
 
 
@@ -624,7 +675,7 @@ void SdPExportPlate_Gerber::generation(const QString fileName)
     bool polarPos = true;
     //Header
     //Заголовок
-    os << "G04 SaliCAD Gerber export. www.salilab.com *\n"
+    os << "G04 SalixEDA Gerber export. www.salixeda.org *\n"
           "%ASAXBY*\n"     //Выбор осей
           "FSLAX33Y33*\n"  //Формат, опущены лидирующие нули, абсолютные данные, 3 целых 3 дробных
           "MIA0B0*\n"      //Зеркальность 0=нет, 1=есть
@@ -713,6 +764,25 @@ void SdPExportPlate_Gerber::generation(const QString fileName)
     }
   else
     QMessageBox::warning( this, tr("Error!"), tr("Can't create Gerber file \'%1\'").arg(fileName) );
+  }
+
+
+
+
+
+void SdPExportPlate_Gerber::addGerberNames(const QString &gerber, const QStringList &base, const QString &lid1, bool addPcbContour)
+  {
+  SdGerberFile gerberFile;
+  gerberFile.mFileName = gerber;
+  //Append PCB contour
+  if( addPcbContour )
+    gerberFile.mLayerList.append( QString(LID0_PCB) );
+
+  //Append each layer with suffix lid1
+  for( const QString &layer : std::as_const(base) )
+    gerberFile.mLayerList.append( layer + lid1 );
+
+  mGerberFileList.append( gerberFile );
   }
 
 

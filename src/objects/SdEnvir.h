@@ -60,7 +60,7 @@ Description
 #define dcvLast          5
 
 //Версия SdEnvir
-#define SdEnvirVersion  (41 + FONT_COUNT)
+#define SdEnvirVersion  (42 + FONT_COUNT)
 
 
 class SdEnvir
@@ -223,6 +223,8 @@ class SdEnvir
 
     int      layerCount() const { return mLayerTable.count(); }
 
+    void     layerVisibleSet( const QStringList &layerIdTable );
+
     //!
     //! \brief gridForEach Executes function fun1 to index of grid table
     //!                    If intex < 0 then for all table
@@ -274,6 +276,7 @@ class SdEnvir
     void deleteLayers();
     void addLayer( SdLayer *layer );
     void addLayerId(const SdLayerDescr &descr);
+    void addLayerId(const QString &layerId, const QString &name, const QString &englishName, const SdLayerDescr &descr , int layerIndex);
     void layerSetPairFor( const QString &lid0 );
   };
 

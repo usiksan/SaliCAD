@@ -99,13 +99,15 @@ void SdDLayerCreate::onLayerIdConstructed(int)
     if( rowModifier > 0 ) {
       QString lid1( sdLayerLevel1[rowModifier].mLid );
       ui->mLayerId->setText( lid0 + lid1 );
-      auto [englishName,name] = SdLayer::layerIdToName( lid0, lid1 );
+      int tmp;
+      auto [englishName,name] = SdLayer::layerIdToName( lid0, lid1, tmp );
       ui->mLayerName->setText( name );
       }
     else {
       //No modifier
       ui->mLayerId->setText( lid0 );
-      auto [englishName,name] = SdLayer::layerIdToName( lid0, QString{} );
+      int tmp;
+      auto [englishName,name] = SdLayer::layerIdToName( lid0, QString{}, tmp );
       ui->mLayerName->setText( name );
       }
     }

@@ -15,6 +15,7 @@ Description
 #define SDPROPLAYER_H
 
 #include "SdLayer.h"
+#include "SdJsonIO.h"
 #include <QString>
 
 class SdPropLayer

@@ -21,28 +21,48 @@ Description
 #include <QTableWidget>
 #include <QSpinBox>
 #include <QCheckBox>
+#include <QList>
 
 class SdWEditorGraphPlate;
+
+
+
+
+struct SdGerberFile
+  {
+    QString     mFileName;  //!< Gerber file name
+    QStringList mLayerList; //!< List of layers used for file generation
+  };
+
+
+
+
+
+using SdGerberFileList = QList<SdGerberFile>;
 
 class SdPExportPlate_Gerber : public QWizardPage
   {
     Q_OBJECT
 
-    SdWEditorGraphPlate *mEditor;    //Graphic editor widget
+    SdWEditorGraphPlate *mEditor;         //!< Graphic editor widget
 
-    SdPItemPlate        *mPlate;     //Plate which we export to gerber
-    QLineEdit           *mFile;      //File name for single generation
+    //Single file generation
+    SdPItemPlate        *mPlate;          //!< Plate which we export to gerber
+    QLineEdit           *mFile;           //!< File name for single generation
 
-    QLineEdit           *mGroupPath; //Path to store group fiels
-    QTableWidget        *mGroup;     //Table for multiple gerber generation
+    //Group file generation
+    QLineEdit           *mGroupPath;      //!< Path to store group fiels
+    QTableWidget        *mGroup;          //!< Table for multiple gerber generation
+    SdGerberFileList     mGerberFileList; //!< List of gerber files available for this pcb
 
-    QCheckBox           *mGridEna;   //!< Enable grid generation
-    QSpinBox            *mColumns;   //!< Column count in grid
-    QDoubleSpinBox      *mColumnGap; //!< Gap beatween columns
-    QSpinBox            *mRows;      //!< Row count in grid
-    QDoubleSpinBox      *mRowGap;    //!< Gap beatween rows
+    //PCB multiplate grid
+    QCheckBox           *mGridEna;        //!< Enable grid generation
+    QSpinBox            *mColumns;        //!< Column count in grid
+    QDoubleSpinBox      *mColumnGap;      //!< Gap beatween columns
+    QSpinBox            *mRows;           //!< Row count in grid
+    QDoubleSpinBox      *mRowGap;         //!< Gap beatween rows
 
-    bool                 mGenerated; //True if at least one time generation was pressed
+    bool                 mGenerated;      //!< True if at least one time generation was pressed
   public:
     SdPExportPlate_Gerber( SdWEditorGraphPlate *editor, SdPItemPlate *plate, int step, SdPMasterList *list, QWidget *parent = nullptr );
 
@@ -69,6 +89,9 @@ class SdPExportPlate_Gerber : public QWizardPage
     //Generate gerber for current view to file
     void generation(const QString fileName );
 
+    void addGerberName( const QString &gerber, const QString &base ) { addGerberName( gerber, {base}, QString("") ); }
+    void addGerberName( const QString &gerber, const QString &base, const QString &lid1, bool addPcbContour = true ) { addGerberNames( gerber, {base}, lid1, addPcbContour ); }
+    void addGerberNames( const QString &gerber, const QStringList &base, const QString &lid1, bool addPcbContour = true );
     // QWizardPage interface
   public:
     virtual int  nextId() const override { return -1; }

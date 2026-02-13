@@ -13,6 +13,7 @@ Description
 #ifndef SDPROPBARSTRATUM_H
 #define SDPROPBARSTRATUM_H
 
+#include "objects/SdStratum.h"
 #include "SdPropBar.h"
 
 class SdPItemPlate;
@@ -32,7 +33,7 @@ class SdPropBarStratum : public SdPropBar
 
     void setPlateAndTrace( SdPItemPlate *plate, SdLayerTrace trace );
   public slots:
-    virtual void updateViewedLayers();
+    virtual void updateViewedLayers(SdLayer*selectedLayer) override;
   };
 
 #endif // SDPROPBARSTRATUM_H

@@ -16,7 +16,6 @@ Description
 #ifndef SDLAYER_H
 #define SDLAYER_H
 
-#include "SdStratum.h"
 #include "SdClass.h"
 
 #include <QString>
@@ -97,8 +96,6 @@ enum SdLayerTrace {
 
 #define LID1_TOP           ".Top"         // Top side
 #define LID1_BOT           ".Bot"         // Bottom side
-#define LID1_INT00         ".Int00"       // Inner side 0
-#define LID1_INT01         ".Int01"       // Inner side 1
 #define LID1_INT02         ".Int02"       // Inner side 2
 #define LID1_INT03         ".Int03"       // Inner side 3
 #define LID1_INT04         ".Int04"       // Inner side 4
@@ -125,6 +122,8 @@ enum SdLayerTrace {
 #define LID1_INT25         ".Int25"       // Inner side 25
 #define LID1_INT26         ".Int26"       // Inner side 26
 #define LID1_INT27         ".Int27"       // Inner side 27
+#define LID1_INT28         ".Int28"       // Inner side 28
+#define LID1_INT29         ".Int29"       // Inner side 29
 
 #define LID1_CUSTOM1       ".Custom1"     // User custom layer 1
 #define LID1_CUSTOM2       ".Custom2"     // User custom layer 2
@@ -174,71 +173,163 @@ class SdLayer
     SdLayer      *mPair;     //!< Layer pair for flipped component [Парный слой]
     bool          mUsage;    //!< Usage flag [Флаг использования]
   public:
-    SdLayer(QString layerId, QString layerName, QString layerEnglishName, SdLayerTrace layerTrace, int layerClass, int layerStratum, unsigned layerColor );
+    //!
+    //! \brief SdLayer          Constructor with full layer parameters
+    //! \param layerId          Unique layer identifier
+    //! \param layerName        Visual layer name
+    //! \param layerEnglishName English layer name
+    //! \param layerTrace       Layer trace type
+    //! \param layerClass       Layer class membership
+    //! \param layerStratum     Layer stratum (top, bottom, inner)
+    //! \param layerColor       Layer color as RGB value
+    //! \param index            Ordinal index for sorting
+    //!
+    SdLayer(QString layerId, QString layerName, QString layerEnglishName, SdLayerTrace layerTrace, int layerClass, int layerStratum, unsigned layerColor, int index  );
 
-    void         init( QString layerName, QString layerEnglishName, SdLayerTrace layerTrace, int layerClass, int layerStratum, unsigned layerColor, int index );
-
+    //!
+    //! \brief id               Get layer identifier
+    //! \return                 Unique layer identifier string
+    //!
     QString      id() const { return mId; }
 
+    //!
+    //! \brief name             Get visual layer name
+    //! \return                 Visual layer name string
+    //!
     QString      name() const { return mName; }
+
+    //!
+    //! \brief nameSet          Set visual layer name
+    //! \param nm               New visual layer name
+    //!
     void         nameSet( const QString nm ) { mName = nm; }
 
+    //!
+    //! \brief pair             Get layer pair for flipped component
+    //! \return                 Pointer to paired layer
+    //!
     SdLayer     *pair() { return mPair; }
 
+    //!
+    //! \brief index            Get ordinal index for sorting
+    //! \return                 Layer index value
+    //!
     int          index() const { return mIndex; }
 
-    //Установить новую пару для слоя
+    //!
+    //! \brief pairSet          Set new pair for layer
+    //! \param p                Pointer to new paired layer
+    //!
     void         pairSet( SdLayer *p );
 
-    //Reset pair for layer
+    //!
+    //! \brief pairReset        Reset pair for layer
+    //!
     void         pairReset();
 
-    //Return true when layer is visible
+    //!
+    //! \brief isVisible        Return true when layer is visible
+    //! \return                 True if layer is visible
+    //!
     bool         isVisible() const { return mState != layerStateOff; }
 
-    //Возвращает истину когда слой редактируемый
+    //!
+    //! \brief isEdited         Return true when layer is editable
+    //! \return                 True if layer is in edit state
+    //!
     bool         isEdited() const { return mState == layerStateEdit; }
 
-    //Layer state
+    //!
+    //! \brief state            Get layer state
+    //! \return                 Current layer state (visible, editing, invisible)
+    //!
     SdLayerState state() const { return mState; }
+
+    //!
+    //! \brief stateSet         Set layer state
+    //! \param st               New layer state
+    //!
     void         stateSet( SdLayerState st ) { mState = st; }
 
-    //Layer trace type
+    //!
+    //! \brief trace            Get layer trace type
+    //! \return                 Layer trace type
+    //!
     SdLayerTrace trace() const { return mTrace; }
 
+    //!
+    //! \brief classGet         Get layer class membership
+    //! \return                 Layer class
+    //!
     SdClass      classGet() const { return mClass; }
 
+    //!
+    //! \brief stratum          Get layer stratum
+    //! \return                 Layer stratum value
+    //!
     int          stratum() const { return mStratum; }
 
-    //Layer color
-    //Return layer color
+    //!
+    //! \brief color            Get layer color as QColor
+    //! \return                 Layer color
+    //!
     QColor       color() const { return QColor( QRgb(mColor) ); }
-    //Set new color for layer
+
+    //!
+    //! \brief colorSet         Set new color for layer
+    //! \param c                New color as RGB value
+    //!
     void         colorSet( unsigned c ) { mColor = c; }
 
-    //Usage flag. Indicate layer is used anywhere
-    //Сбросить флаг использования
-    //Reset flag
+    //!
+    //! \brief resetUsage       Reset usage flag
+    //!
     void         resetUsage() { mUsage = false; }
-    //Установить флаг использования
-    //Set flag
+
+    //!
+    //! \brief setUsage         Set usage flag (also sets paired layer flag if exists)
+    //!
     void         setUsage() { mUsage = true; if( pair() ) pair()->mUsage = true; }
-    //Get flag
+
+    //!
+    //! \brief isUsage          Get usage flag
+    //! \return                 True if layer is used anywhere
+    //!
     bool         isUsage() const { return mUsage; }
 
-    //Сохранить слой
+    //!
+    //! \brief write            Save layer to data stream
+    //! \param os               Output data stream
+    //!
     void         write( QDataStream &os );
 
-    //Загрузить слой
+    //!
+    //! \brief read             Load layer from data stream
+    //! \param is               Input data stream
+    //!
     void         read( QDataStream &is );
 
+    //!
+    //! \brief layerIdToName    Convert layer identifier to layer names
+    //! \param layerId          Layer identifier string
+    //! \param layerIndex       Reference to store layer index
+    //! \param descr            Optional pointer to layer description structure
+    //! \return                 Pair of layer names (visual and english)
+    //!
+    static QPair<QString,QString> layerIdToName( const QString layerId, int &layerIndex, SdLayerDescr *descr = nullptr );
 
-    static QPair<QString,QString> layerIdToName( const QString layerId, SdLayerDescr *descr = nullptr );
-    static QPair<QString,QString> layerIdToName(const QString &lid0, const QString &lid1, SdLayerDescr *descr = nullptr );
+    //!
+    //! \brief layerIdToName    Convert two layer identifiers to layer names
+    //! \param lid0             First layer identifier
+    //! \param lid1             Second layer identifier
+    //! \param layerIndex       Reference to store layer index
+    //! \param descr            Optional pointer to layer description structure
+    //! \return                 Pair of layer names (visual and english)
+    //!
+    static QPair<QString,QString> layerIdToName(const QString &lid0, const QString &lid1, int &layerIndex, SdLayerDescr *descr = nullptr );
   };
 
 typedef SdLayer *SdLayerPtr;
 
 typedef QMap<QString,SdLayerPtr> SdLayerPtrMap;
-
 #endif // SDLAYER_H
