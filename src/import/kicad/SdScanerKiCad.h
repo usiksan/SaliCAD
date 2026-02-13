@@ -54,6 +54,8 @@ class SdScanerKiCad : public SdScanerMultyline
 
     int tokenNeedPartCoord() { return tokenNeedValueFloat('f') * 1000.0; }
 
+    int tokenNeedPartAngle() { return tokenNeedValueFloat('f') * 1000.0; }
+
     // SdScaner interface
   public:
     virtual void tokenNext() override;
@@ -67,9 +69,12 @@ void kicadLinePart( SdScanerKiCad *scaner, SdPItemPart *part );
 void kicadCirclePart( SdScanerKiCad *scaner, SdPItemPart *part );
 void kicadTextPart( SdScanerKiCad *scaner, SdPItemPart *part );
 void kicadPoint( SdScanerKiCad *scaner, SdPoint &point );
+void kicadPointWithRotation( SdScanerKiCad *scaner, SdPoint &point, int &rotationAngle );
 void kicadLineType( SdScanerKiCad *scaner, SdPropInt &type );
 void kicadLineWidth( SdScanerKiCad *scaner, SdPropInt &width );
 void kicadLayer( SdScanerKiCad *scaner, SdPropLayer &layer );
+void kicadLayer( SdScanerKiCad *scaner, QString &layerId );
+void kicadLayerList( SdScanerKiCad *scaner, QStringList &mLayerList );
 void kicadStroke( SdScanerKiCad *scaner, SdPropLine *prop );
 
 #endif // SDSCANERKICAD_H

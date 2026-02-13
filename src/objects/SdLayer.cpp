@@ -115,11 +115,13 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_PAD     LID1_INT00,   0x000040cf, layerTracePad,          stmInt00  }, // 60  Pad Inner 0
       { dctConstruct, LID0_POLYGON LID1_INT00,   0x000040cf, layerTracePolygon,      stmInt00  }, // 61  Polygon Inner 0
       { dctConstruct, LID0_EXCLUSION LID1_INT00, 0x00002080, layerTraceKeepout,      stmInt00  }, // 63  Exclusion Inner 0
+      { dctConstruct, LID0_HOLE    LID1_INT00,   0x00bf4000, layerTraceNone,         stmInt00  }, // Hole between TOP and INT00
 
       { dctConstruct, LID0_WIRE    LID1_INT01,   0x004040cf, layerTraceRoad,         stmInt01  }, // 64  Wire Inner 1
       { dctConstruct, LID0_PAD     LID1_INT01,   0x004040cf, layerTracePad,          stmInt01  }, // 65  Pad Inner 1
       { dctConstruct, LID0_POLYGON LID1_INT01,   0x004040cf, layerTracePolygon,      stmInt01  }, // 66  Polygon Inner 1
       { dctConstruct, LID0_EXCLUSION LID1_INT01, 0x00002080, layerTraceKeepout,      stmInt01  }, // 68  Exclusion Inner 1
+      { dctConstruct, LID0_HOLE    LID1_INT01,   0x00bf4000, layerTraceNone,         stmInt01  }, // Hole between INT01 and INT02
 
       { dctConstruct, LID0_WIRE    LID1_INT02,   0x004000cf, layerTraceRoad,         stmInt02  }, // 69  Wire Inner 2
       { dctConstruct, LID0_PAD     LID1_INT02,   0x004000cf, layerTracePad,          stmInt02  }, // 70  Pad Inner 2
@@ -130,6 +132,7 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_PAD     LID1_INT03,   0x00cf4040, layerTracePad,          stmInt03  }, // 75  Pad Inner 3
       { dctConstruct, LID0_POLYGON LID1_INT03,   0x00cf4040, layerTracePolygon,      stmInt03  }, // 76  Polygon Inner 3
       { dctConstruct, LID0_EXCLUSION LID1_INT03, 0x00002080, layerTraceKeepout,      stmInt03  }, // 78  Exclusion Inner 3
+      { dctConstruct, LID0_HOLE    LID1_INT03,   0x00bf4000, layerTraceNone,         stmInt03  }, // Hole between INT03 and INT04
 
       { dctConstruct, LID0_WIRE    LID1_INT04,   0x00cf4080, layerTraceRoad,         stmInt04  }, // 79  Wire Inner 4
       { dctConstruct, LID0_PAD     LID1_INT04,   0x00cf4080, layerTracePad,          stmInt04  }, // 80  Pad Inner 4
@@ -140,6 +143,7 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_PAD     LID1_INT05,   0x00cf8040, layerTracePad,          stmInt05  }, // 85  Pad Inner 5
       { dctConstruct, LID0_POLYGON LID1_INT05,   0x00cf8040, layerTracePolygon,      stmInt05  }, // 86  Polygon Inner 5
       { dctConstruct, LID0_EXCLUSION LID1_INT05, 0x00002080, layerTraceKeepout,      stmInt05  }, // 88  Exclusion Inner 5
+      { dctConstruct, LID0_HOLE    LID1_INT05,   0x00bf4000, layerTraceNone,         stmInt05  }, // Hole between INT05 and INT06
 
       { dctConstruct, LID0_WIRE    LID1_INT06,   0x00cf8080, layerTraceRoad,         stmInt06  }, // 89  Wire Inner 6
       { dctConstruct, LID0_PAD     LID1_INT06,   0x00cf8080, layerTracePad,          stmInt06  }, // 90  Pad Inner 6
@@ -150,6 +154,7 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_PAD     LID1_INT07,   0x00cfc040, layerTracePad,          stmInt07  }, // 95  Pad Inner 7
       { dctConstruct, LID0_POLYGON LID1_INT07,   0x00cfc040, layerTracePolygon,      stmInt07  }, // 96  Polygon Inner 7
       { dctConstruct, LID0_EXCLUSION LID1_INT07, 0x00002080, layerTraceKeepout,      stmInt07  }, // 98  Exclusion Inner 7
+      { dctConstruct, LID0_HOLE    LID1_INT07,   0x00bf4000, layerTraceNone,         stmInt07  }, // Hole between INT07 and INT08
 
   // ================================================================
   // Inner layers INT08 - INT27
@@ -163,6 +168,7 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_PAD     LID1_INT09,   0x00cfc0c0, layerTracePad,          stmInt09  }, // 105 Pad Inner 9
       { dctConstruct, LID0_POLYGON LID1_INT09,   0x00cfc0c0, layerTracePolygon,      stmInt09  }, // 106 Polygon Inner 9
       { dctConstruct, LID0_EXCLUSION LID1_INT09, 0x00002080, layerTraceKeepout,      stmInt09  }, // 108 Exclusion Inner 9
+      { dctConstruct, LID0_HOLE    LID1_INT09,   0x00bf4000, layerTraceNone,         stmInt09  }, // Hole between INT09 and INT10
 
       { dctConstruct, LID0_WIRE    LID1_INT10,   0x00cf00c0, layerTraceRoad,         stmInt10  }, // 109 Wire Inner 10
       { dctConstruct, LID0_PAD     LID1_INT10,   0x00cf00c0, layerTracePad,          stmInt10  }, // 110 Pad Inner 10
@@ -173,6 +179,7 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_PAD     LID1_INT11,   0x00cf40c0, layerTracePad,          stmInt11  }, // 115 Pad Inner 11
       { dctConstruct, LID0_POLYGON LID1_INT11,   0x00cf40c0, layerTracePolygon,      stmInt11  }, // 116 Polygon Inner 11
       { dctConstruct, LID0_EXCLUSION LID1_INT11, 0x00002080, layerTraceKeepout,      stmInt11  }, // 118 Exclusion Inner 11
+      { dctConstruct, LID0_HOLE    LID1_INT11,   0x00bf4000, layerTraceNone,         stmInt11  }, // Hole between INT11 and INT12
 
       { dctConstruct, LID0_WIRE    LID1_INT12,   0x00cf80c0, layerTraceRoad,         stmInt12  }, // 119 Wire Inner 12
       { dctConstruct, LID0_PAD     LID1_INT12,   0x00cf80c0, layerTracePad,          stmInt12  }, // 120 Pad Inner 12
@@ -183,6 +190,7 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_PAD     LID1_INT13,   0x000080c0, layerTracePad,          stmInt13  }, // 125 Pad Inner 13
       { dctConstruct, LID0_POLYGON LID1_INT13,   0x000080c0, layerTracePolygon,      stmInt13  }, // 126 Polygon Inner 13
       { dctConstruct, LID0_EXCLUSION LID1_INT13, 0x00002080, layerTraceKeepout,      stmInt13  }, // 128 Exclusion Inner 13
+      { dctConstruct, LID0_HOLE    LID1_INT13,   0x00bf4000, layerTraceNone,         stmInt13  }, // Hole between INT13 and INT14
 
       { dctConstruct, LID0_WIRE    LID1_INT14,   0x004080c0, layerTraceRoad,         stmInt14  }, // 129 Wire Inner 14
       { dctConstruct, LID0_PAD     LID1_INT14,   0x004080c0, layerTracePad,          stmInt14  }, // 130 Pad Inner 14
@@ -193,6 +201,7 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_PAD     LID1_INT15,   0x008080c0, layerTracePad,          stmInt15  }, // 135 Pad Inner 15
       { dctConstruct, LID0_POLYGON LID1_INT15,   0x008080c0, layerTracePolygon,      stmInt15  }, // 136 Polygon Inner 15
       { dctConstruct, LID0_EXCLUSION LID1_INT15, 0x00002080, layerTraceKeepout,      stmInt15  }, // 138 Exclusion Inner 15
+      { dctConstruct, LID0_HOLE    LID1_INT15,   0x00bf4000, layerTraceNone,         stmInt15  }, // Hole between INT15 and INT16
 
       { dctConstruct, LID0_WIRE    LID1_INT16,   0x0080c0c0, layerTraceRoad,         stmInt16  }, // 139 Wire Inner 16
       { dctConstruct, LID0_PAD     LID1_INT16,   0x0080c0c0, layerTracePad,          stmInt16  }, // 140 Pad Inner 16
@@ -203,6 +212,7 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_PAD     LID1_INT17,   0x0040c0c0, layerTracePad,          stmInt17  }, // 145 Pad Inner 17
       { dctConstruct, LID0_POLYGON LID1_INT17,   0x0040c0c0, layerTracePolygon,      stmInt17  }, // 146 Polygon Inner 17
       { dctConstruct, LID0_EXCLUSION LID1_INT17, 0x00002080, layerTraceKeepout,      stmInt17  }, // 148 Exclusion Inner 17
+      { dctConstruct, LID0_HOLE    LID1_INT17,   0x00bf4000, layerTraceNone,         stmInt17  }, // Hole between INT17 and INT18
 
       { dctConstruct, LID0_WIRE    LID1_INT18,   0x0040c080, layerTraceRoad,         stmInt18  }, // 149 Wire Inner 18
       { dctConstruct, LID0_PAD     LID1_INT18,   0x0040c080, layerTracePad,          stmInt18  }, // 150 Pad Inner 18
@@ -213,6 +223,7 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_PAD     LID1_INT19,   0x0040c040, layerTracePad,          stmInt19  }, // 155 Pad Inner 19
       { dctConstruct, LID0_POLYGON LID1_INT19,   0x0040c040, layerTracePolygon,      stmInt19  }, // 156 Polygon Inner 19
       { dctConstruct, LID0_EXCLUSION LID1_INT19, 0x00002080, layerTraceKeepout,      stmInt19  }, // 158 Exclusion Inner 19
+      { dctConstruct, LID0_HOLE    LID1_INT19,   0x00bf4000, layerTraceNone,         stmInt19  }, // Hole between INT19 and INT20
 
       { dctConstruct, LID0_WIRE    LID1_INT20,   0x00408040, layerTraceRoad,         stmInt20  }, // 159 Wire Inner 20
       { dctConstruct, LID0_PAD     LID1_INT20,   0x00408040, layerTracePad,          stmInt20  }, // 160 Pad Inner 20
@@ -223,6 +234,7 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_PAD     LID1_INT21,   0x00408080, layerTracePad,          stmInt21  }, // 165 Pad Inner 21
       { dctConstruct, LID0_POLYGON LID1_INT21,   0x00408080, layerTracePolygon,      stmInt21  }, // 166 Polygon Inner 21
       { dctConstruct, LID0_EXCLUSION LID1_INT21, 0x00002080, layerTraceKeepout,      stmInt21  }, // 168 Exclusion Inner 21
+      { dctConstruct, LID0_HOLE    LID1_INT21,   0x00bf4000, layerTraceNone,         stmInt21  }, // Hole between INT21 and INT22
 
       { dctConstruct, LID0_WIRE    LID1_INT22,   0x004080c0, layerTraceRoad,         stmInt22  }, // 169 Wire Inner 22
       { dctConstruct, LID0_PAD     LID1_INT22,   0x004080c0, layerTracePad,          stmInt22  }, // 170 Pad Inner 22
@@ -233,6 +245,7 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_PAD     LID1_INT23,   0x004040c0, layerTracePad,          stmInt23  }, // 175 Pad Inner 23
       { dctConstruct, LID0_POLYGON LID1_INT23,   0x004040c0, layerTracePolygon,      stmInt23  }, // 176 Polygon Inner 23
       { dctConstruct, LID0_EXCLUSION LID1_INT23, 0x00002080, layerTraceKeepout,      stmInt23  }, // 178 Exclusion Inner 23
+      { dctConstruct, LID0_HOLE    LID1_INT23,   0x00bf4000, layerTraceNone,         stmInt23  }, // Hole between INT23 and INT24
 
       { dctConstruct, LID0_WIRE    LID1_INT24,   0x00404080, layerTraceRoad,         stmInt24  }, // 179 Wire Inner 24
       { dctConstruct, LID0_PAD     LID1_INT24,   0x00404080, layerTracePad,          stmInt24  }, // 180 Pad Inner 24
@@ -243,6 +256,7 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_PAD     LID1_INT25,   0x00404040, layerTracePad,          stmInt25  }, // 185 Pad Inner 25
       { dctConstruct, LID0_POLYGON LID1_INT25,   0x00404040, layerTracePolygon,      stmInt25  }, // 186 Polygon Inner 25
       { dctConstruct, LID0_EXCLUSION LID1_INT25, 0x00002080, layerTraceKeepout,      stmInt25  }, // 188 Exclusion Inner 25
+      { dctConstruct, LID0_HOLE    LID1_INT25,   0x00bf4000, layerTraceNone,         stmInt25  }, // Hole between INT25 and INT26
 
       { dctConstruct, LID0_WIRE    LID1_INT26,   0x00804040, layerTraceRoad,         stmInt26  }, // 189 Wire Inner 26
       { dctConstruct, LID0_PAD     LID1_INT26,   0x00804040, layerTracePad,          stmInt26  }, // 190 Pad Inner 26
@@ -253,6 +267,7 @@ SdLayerDescr sdLayerDescrDefault[] = {
       { dctConstruct, LID0_PAD     LID1_INT27,   0x0080f040, layerTracePad,          stmInt27  }, // 195 Pad Inner 27
       { dctConstruct, LID0_POLYGON LID1_INT27,   0x0080f040, layerTracePolygon,      stmInt27  }, // 196 Polygon Inner 27
       { dctConstruct, LID0_EXCLUSION LID1_INT27, 0x00002080, layerTraceKeepout,      stmInt27  }, // 198 Exclusion Inner 27
+      { dctConstruct, LID0_HOLE    LID1_INT27,   0x00bf4000, layerTraceNone,         stmInt27  }, // Hole between INT27 and BOT
 
       { 0, nullptr, 0, layerTraceNone, 0x00000000 }
   };
