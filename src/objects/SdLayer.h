@@ -97,8 +97,6 @@ enum SdLayerTrace {
 
 #define LID1_TOP           ".Top"         // Top side
 #define LID1_BOT           ".Bot"         // Bottom side
-#define LID1_INT00         ".Int00"       // Inner side 0
-#define LID1_INT01         ".Int01"       // Inner side 1
 #define LID1_INT02         ".Int02"       // Inner side 2
 #define LID1_INT03         ".Int03"       // Inner side 3
 #define LID1_INT04         ".Int04"       // Inner side 4
@@ -125,6 +123,8 @@ enum SdLayerTrace {
 #define LID1_INT25         ".Int25"       // Inner side 25
 #define LID1_INT26         ".Int26"       // Inner side 26
 #define LID1_INT27         ".Int27"       // Inner side 27
+#define LID1_INT28         ".Int28"       // Inner side 28
+#define LID1_INT29         ".Int29"       // Inner side 29
 
 #define LID1_CUSTOM1       ".Custom1"     // User custom layer 1
 #define LID1_CUSTOM2       ".Custom2"     // User custom layer 2
@@ -174,9 +174,7 @@ class SdLayer
     SdLayer      *mPair;     //!< Layer pair for flipped component [Парный слой]
     bool          mUsage;    //!< Usage flag [Флаг использования]
   public:
-    SdLayer(QString layerId, QString layerName, QString layerEnglishName, SdLayerTrace layerTrace, int layerClass, int layerStratum, unsigned layerColor );
-
-    void         init( QString layerName, QString layerEnglishName, SdLayerTrace layerTrace, int layerClass, int layerStratum, unsigned layerColor, int index );
+    SdLayer(QString layerId, QString layerName, QString layerEnglishName, SdLayerTrace layerTrace, int layerClass, int layerStratum, unsigned layerColor, int index  );
 
     QString      id() const { return mId; }
 
@@ -233,8 +231,8 @@ class SdLayer
     void         read( QDataStream &is );
 
 
-    static QPair<QString,QString> layerIdToName( const QString layerId, SdLayerDescr *descr = nullptr );
-    static QPair<QString,QString> layerIdToName(const QString &lid0, const QString &lid1, SdLayerDescr *descr = nullptr );
+    static QPair<QString,QString> layerIdToName( const QString layerId, int &layerIndex, SdLayerDescr *descr = nullptr );
+    static QPair<QString,QString> layerIdToName(const QString &lid0, const QString &lid1, int &layerIndex, SdLayerDescr *descr = nullptr );
   };
 
 typedef SdLayer *SdLayerPtr;

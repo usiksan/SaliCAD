@@ -398,12 +398,20 @@ SdLayer *SdEnvir::layerGet(QString id)
   if( !mLayerTable.contains(id) ) {
     //Not exist. Create new one.
 
+    //At first we try to find layer in default table
+    for( int i = 0; sdLayerDescrDefault[i].mId != nullptr; i++ )
+      if( QString( sdLayerDescrDefault[i].mId ) == id ) {
+        //We found layer in default table
+        //Layer was removed and now will be inserted again
+        addLayerId( sdLayerDescrDefault[i] );
+        return mLayerTable.value(id);
+        }
+
     //Build layer name
     SdLayerDescr descr;
-    auto [englishName,name] = SdLayer::layerIdToName( id, &descr );
-
-    SdLayer *layer = new SdLayer( id, name, englishName, descr.mTrace, descr.mClass, descr.mStratum, descr.mColor );
-    mLayerTable.insert( layer->id(), layer );
+    int layerIndex;
+    auto [englishName,name] = SdLayer::layerIdToName( id, layerIndex, &descr );
+    addLayerId( id, name, englishName, descr, layerIndex );
     }
 
   return mLayerTable.value(id);
@@ -431,6 +439,23 @@ void SdEnvir::layerForEachConst(quint64 classMask, std::function<bool (SdLayer *
     if( p->classGet() & classMask ) {
       if( !fun1(p) ) return;
       }
+  }
+
+
+
+
+
+
+void SdEnvir::layerVisibleSet(const QStringList &layerIdTable)
+  {
+  //Switch off all layers
+  for( auto layer : mLayerTable )
+    layer->stateSet( layerStateOff );
+
+  //Switch on only layers from list
+  for( const QString &layerId : std::as_const(layerIdTable) )
+    if( mLayerTable.contains(layerId) )
+      mLayerTable.value( layerId )->stateSet( layerStateOn );
   }
 
 
@@ -467,8 +492,8 @@ void SdEnvir::gridAppend(QPointF p)
     if( mGridHistory.at(i) == p ) {
       if( i ) {
         //Move grid dimension on top of list
-        SdEnvir::instance()->mGridHistory.removeAt( i );
-        SdEnvir::instance()->mGridHistory.insert( 0, p );
+        mGridHistory.removeAt( i );
+        mGridHistory.insert( 0, p );
         }
       break;
       }
@@ -596,9 +621,22 @@ void SdEnvir::deleteLayers()
 void SdEnvir::addLayerId( const SdLayerDescr &descr )
   {
   QString layerId(descr.mId);
-  SdLayer *layer = layerGet( layerId );
-  auto [englishName,name] = SdLayer::layerIdToName( layerId );
-  layer->init( name, englishName, descr.mTrace, descr.mClass, descr.mStratum, descr.mColor, mLayerTable.count() );
+  int layerIndex;
+  auto [englishName,name] = SdLayer::layerIdToName( layerId, layerIndex );
+  addLayerId( layerId, name, englishName, descr, layerIndex );
+  }
+
+
+
+
+void SdEnvir::addLayerId(const QString &layerId, const QString &name, const QString &englishName, const SdLayerDescr &descr, int layerIndex )
+  {
+  //Check if layer already in table
+  if( !mLayerTable.contains(layerId) ) {
+    //Build and insert layer
+    SdLayer *layer = new SdLayer( layerId, name, englishName, descr.mTrace, descr.mClass, descr.mStratum, descr.mColor, layerIndex );
+    mLayerTable.insert( layer->id(), layer );
+    }
   }
 
 
