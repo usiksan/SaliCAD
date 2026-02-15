@@ -268,6 +268,30 @@ Sd3drFace Sd3drModel::faceRectangleRound(float lenght, float width, float radius
 
 
 
+
+
+//!
+//! \brief faceFromUmPolygon Builds face from region defined in um
+//! \param poly              Source region
+//! \param map               Map to convert result
+//! \return                  Face
+//!
+Sd3drFace Sd3drModel::faceFromUmPolygon(const QPolygonF &poly, const QMatrix4x4 &map)
+  {
+  Sd3drFace region;
+  //Convert microns into mm
+  for( const QPointF &p : poly ) {
+    QVector3D v( p / 1000.0 );
+    //Append corner to region
+    region.append( vertexAppend( map.map(v) )  );
+    }
+
+  return region;
+  }
+
+
+
+
 //!
 //! \brief faceRectangleSide Builds rectangle region with center at 0 and sideCount sides reorganized to rectangle
 //! \param width             Lenght of rectangle (X)

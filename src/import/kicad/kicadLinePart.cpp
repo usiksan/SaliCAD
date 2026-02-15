@@ -1,47 +1,19 @@
-#include "SdScanerKiCad.h"
+#include "SdKiCad.h"
 #include "../../objects/SdPItemPart.h"
 #include "../../objects/SdGraphLinearLine.h"
 
-struct KiCadLine
+
+
+void kicadGraphLine( SdScanerKiCad *scaner, SdPItemPart *part )
   {
-    SdPoint    mA;
-    SdPoint    mB;
-    SdPropLine mProp;
-  };
+  SdKiCadLine lineInfo;
+  lineInfo.scan( scaner );
 
-static void kicadLineStartPoint( SdScanerKiCad *scaner, KiCadLine *line )
-  {
-  kicadPoint( scaner, line->mA );
-  }
+  if( lineInfo.isValid() ) {
+    SdPropLine prop;
+    kicadFillPropLine( prop, lineInfo.mStroke, lineInfo.mLayer );
 
-static void kicadLineEndPoint( SdScanerKiCad *scaner, KiCadLine *line )
-  {
-  kicadPoint( scaner, line->mB );
-  }
-
-static void kicadLineStroke( SdScanerKiCad *scaner, KiCadLine *line )
-  {
-  kicadStroke( scaner, &(line->mProp) );
-  }
-
-static void kicadLineLayer( SdScanerKiCad *scaner, KiCadLine *line )
-  {
-  kicadLayer( scaner, line->mProp.mLayer );
-  }
-
-
-void kicadLinePart( SdScanerKiCad *scaner, SdPItemPart *part )
-  {
-  static QMap<QString,std::function<void( SdScanerKiCad*, KiCadLine* )> >
-      tokenMap( { { QString("start"),  kicadLineStartPoint },
-                  { QString("end"),    kicadLineEndPoint },
-                  { QString("stroke"), kicadLineStroke },
-                  { QString("layer"),  kicadLineLayer }
-                } );
-  KiCadLine lineInfo;
-  scaner->parse( tokenMap, &lineInfo );
-
-  //Build line primitive on lineInfo base
-  part->insertChild( new SdGraphLinearLine( lineInfo.mA, lineInfo.mB, lineInfo.mProp ), nullptr );
-
+    //Build line primitive on lineInfo base
+    part->insertChild( new SdGraphLinearLine( lineInfo.mStart.mPoint, lineInfo.mEnd.mPoint, prop ), nullptr );
+    }
   }

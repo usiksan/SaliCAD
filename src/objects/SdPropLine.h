@@ -31,9 +31,9 @@ struct SdPropLineState {
   };
 
 struct SdPropLine {
-  SdPropInt   mWidth; //Толщина линии
-  SdPropInt   mType;  //Тип линии
-  SdPropLayer mLayer; //Слой
+  SdPropInt   mWidth; //!< Line width
+  SdPropInt   mType;  //!< Line type
+  SdPropLayer mLayer; //!< Line layer
 
   SdPropLine() : mWidth(0), mType(0), mLayer() { }
   SdPropLine( const SdPropLine &src ) = default;

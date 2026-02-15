@@ -125,6 +125,14 @@ class Sd3drModel
     Sd3drFace     faceRectangleRound( float lenght, float width, float radius, float stepDegree, const QMatrix4x4 &map );
 
     //!
+    //! \brief faceFromUmPolygon Builds face from region defined in um
+    //! \param poly              Source region
+    //! \param map               Map to convert result
+    //! \return                  Face
+    //!
+    Sd3drFace     faceFromUmPolygon( const QPolygonF &poly, const QMatrix4x4 &map );
+
+    //!
     //! \brief faceRectangleSide Builds rectangle region with center at 0 and sideCount sides reorganized to rectangle
     //! \param width             Lenght of rectangle (X)
     //! \param lenght            Width of rectangle (Y)

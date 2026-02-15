@@ -1,4 +1,4 @@
-#include "SdScanerKiCad.h"
+#include "SdKiCad.h"
 #include "../../objects/SdPItemPart.h"
 #include "../../objects/SdGraphText.h"
 #include "../../objects/SdGraphIdent.h"
@@ -15,8 +15,8 @@ struct KiCadText
 
 static void kicadTextAt( SdScanerKiCad *scaner, KiCadText *text )
   {
-  text->mOrg.setX( scaner->tokenNeedPartCoord() );
-  text->mOrg.setY( scaner->tokenNeedPartCoord() );
+  // text->mOrg.setX( scaner->tokenNeedPartCoord() );
+  // text->mOrg.setY( scaner->tokenNeedPartCoord() );
   scaner->tokenNeedValue('n');
   scaner->tokenNeedValue(')');
   }

@@ -1,43 +1,8 @@
-#include "SdScanerKiCad.h"
+#include "SdKiCad.h"
 #include "objects/SdPoint.h"
 #include "objects/SdPropLine.h"
 
 
-void kicadPoint( SdScanerKiCad *scaner, SdPoint &point )
-  {
-  point.setX( scaner->tokenNeedPartCoord() );
-  point.setY( scaner->tokenNeedPartCoord() );
-  scaner->tokenNeed( ')' );
-  }
-
-
-
-
-
-void kicadPointWithRotation( SdScanerKiCad *scaner, SdPoint &point, int &rotationAngle )
-  {
-  point.setX( scaner->tokenNeedPartCoord() );
-  point.setY( scaner->tokenNeedPartCoord() );
-  rotationAngle = scaner->tokenNeedPartAngle();
-  scaner->tokenNeed( ')' );
-  }
-
-
-
-void kicadLineType( SdScanerKiCad *scaner, SdPropInt &type )
-  {
-  QString lineType( scaner->tokenNeedValue('n') );
-  if( lineType == "solid" ) type = dltSolid;
-  else type = dltSolid;
-  scaner->tokenNeed( ')' );
-  }
-
-
-void kicadLineWidth( SdScanerKiCad *scaner, SdPropInt &width )
-  {
-  width = scaner->tokenNeedPartCoord();
-  scaner->tokenNeed( ')' );
-  }
 
 struct SdKiCadLayerMapDescription
   {
@@ -51,34 +16,34 @@ static SdKiCadLayerMapDescription kicadLayerMapDescription[] = {
   // ================================================================
   { "F.Cu", LID0_TRACE LID1_TOP },           // Верхний медный слой - трассы
   { "B.Cu", LID0_TRACE LID1_BOT },           // Нижний медный слой - трассы
-  { "In1.Cu", LID0_TRACE LID1_INT00 },       // Внутренний слой 1 - трассы
-  { "In2.Cu", LID0_TRACE LID1_INT01 },       // Внутренний слой 2 - трассы
-  { "In3.Cu", LID0_TRACE LID1_INT02 },       // Внутренний слой 3 - трассы
-  { "In4.Cu", LID0_TRACE LID1_INT03 },       // Внутренний слой 4 - трассы
-  { "In5.Cu", LID0_TRACE LID1_INT04 },       // Внутренний слой 5 - трассы
-  { "In6.Cu", LID0_TRACE LID1_INT05 },       // Внутренний слой 6 - трассы
-  { "In7.Cu", LID0_TRACE LID1_INT06 },       // Внутренний слой 7 - трассы
-  { "In8.Cu", LID0_TRACE LID1_INT07 },       // Внутренний слой 8 - трассы
-  { "In9.Cu", LID0_TRACE LID1_INT08 },       // Внутренний слой 9 - трассы
-  { "In10.Cu", LID0_TRACE LID1_INT09 },      // Внутренний слой 10 - трассы
-  { "In11.Cu", LID0_TRACE LID1_INT10 },      // Внутренний слой 11 - трассы
-  { "In12.Cu", LID0_TRACE LID1_INT11 },      // Внутренний слой 12 - трассы
-  { "In13.Cu", LID0_TRACE LID1_INT12 },      // Внутренний слой 13 - трассы
-  { "In14.Cu", LID0_TRACE LID1_INT13 },      // Внутренний слой 14 - трассы
-  { "In15.Cu", LID0_TRACE LID1_INT14 },      // Внутренний слой 15 - трассы
-  { "In16.Cu", LID0_TRACE LID1_INT15 },      // Внутренний слой 16 - трассы
-  { "In17.Cu", LID0_TRACE LID1_INT16 },      // Внутренний слой 17 - трассы
-  { "In18.Cu", LID0_TRACE LID1_INT17 },      // Внутренний слой 18 - трассы
-  { "In19.Cu", LID0_TRACE LID1_INT18 },      // Внутренний слой 19 - трассы
-  { "In20.Cu", LID0_TRACE LID1_INT19 },      // Внутренний слой 20 - трассы
-  { "In21.Cu", LID0_TRACE LID1_INT20 },      // Внутренний слой 21 - трассы
-  { "In22.Cu", LID0_TRACE LID1_INT21 },      // Внутренний слой 22 - трассы
-  { "In23.Cu", LID0_TRACE LID1_INT22 },      // Внутренний слой 23 - трассы
-  { "In24.Cu", LID0_TRACE LID1_INT23 },      // Внутренний слой 24 - трассы
-  { "In25.Cu", LID0_TRACE LID1_INT24 },      // Внутренний слой 25 - трассы
-  { "In26.Cu", LID0_TRACE LID1_INT25 },      // Внутренний слой 26 - трассы
-  { "In27.Cu", LID0_TRACE LID1_INT26 },      // Внутренний слой 27 - трассы
-  { "In28.Cu", LID0_TRACE LID1_INT27 },      // Внутренний слой 28 - трассы (макс в вашей системе)
+  { "In1.Cu", LID0_TRACE LID1_INT02 },       // Внутренний слой 1 - трассы
+  { "In2.Cu", LID0_TRACE LID1_INT03 },       // Внутренний слой 2 - трассы
+  { "In3.Cu", LID0_TRACE LID1_INT04 },       // Внутренний слой 3 - трассы
+  { "In4.Cu", LID0_TRACE LID1_INT05 },       // Внутренний слой 4 - трассы
+  { "In5.Cu", LID0_TRACE LID1_INT06 },       // Внутренний слой 5 - трассы
+  { "In6.Cu", LID0_TRACE LID1_INT07 },       // Внутренний слой 6 - трассы
+  { "In7.Cu", LID0_TRACE LID1_INT08 },       // Внутренний слой 7 - трассы
+  { "In8.Cu", LID0_TRACE LID1_INT09 },       // Внутренний слой 8 - трассы
+  { "In9.Cu", LID0_TRACE LID1_INT10 },       // Внутренний слой 9 - трассы
+  { "In10.Cu", LID0_TRACE LID1_INT11 },      // Внутренний слой 10 - трассы
+  { "In11.Cu", LID0_TRACE LID1_INT12 },      // Внутренний слой 11 - трассы
+  { "In12.Cu", LID0_TRACE LID1_INT13 },      // Внутренний слой 12 - трассы
+  { "In13.Cu", LID0_TRACE LID1_INT14 },      // Внутренний слой 13 - трассы
+  { "In14.Cu", LID0_TRACE LID1_INT15 },      // Внутренний слой 14 - трассы
+  { "In15.Cu", LID0_TRACE LID1_INT16 },      // Внутренний слой 15 - трассы
+  { "In16.Cu", LID0_TRACE LID1_INT17 },      // Внутренний слой 16 - трассы
+  { "In17.Cu", LID0_TRACE LID1_INT18 },      // Внутренний слой 17 - трассы
+  { "In18.Cu", LID0_TRACE LID1_INT19 },      // Внутренний слой 18 - трассы
+  { "In19.Cu", LID0_TRACE LID1_INT20 },      // Внутренний слой 19 - трассы
+  { "In20.Cu", LID0_TRACE LID1_INT21 },      // Внутренний слой 20 - трассы
+  { "In21.Cu", LID0_TRACE LID1_INT22 },      // Внутренний слой 21 - трассы
+  { "In22.Cu", LID0_TRACE LID1_INT23 },      // Внутренний слой 22 - трассы
+  { "In23.Cu", LID0_TRACE LID1_INT24 },      // Внутренний слой 23 - трассы
+  { "In24.Cu", LID0_TRACE LID1_INT25 },      // Внутренний слой 24 - трассы
+  { "In25.Cu", LID0_TRACE LID1_INT26 },      // Внутренний слой 25 - трассы
+  { "In26.Cu", LID0_TRACE LID1_INT27 },      // Внутренний слой 26 - трассы
+  { "In27.Cu", LID0_TRACE LID1_INT28 },      // Внутренний слой 27 - трассы
+  { "In28.Cu", LID0_TRACE LID1_INT29 },      // Внутренний слой 28 - трассы (макс в вашей системе)
   { "In29.Cu", nullptr },                    // Не используется (ограничение 30 слоев)
   { "In30.Cu", nullptr },                   // Не используется (ограничение 30 слоев)
 
@@ -127,34 +92,34 @@ static SdKiCadLayerMapDescription kicadLayerMapDescription[] = {
   { "B.KeepOut", LID0_EXCLUSION LID1_BOT },  // Нижний запрет трассировки
 
   // Внутренние слои Keep-Out
-  { "In1.KeepOut", LID0_EXCLUSION LID1_INT00 },
-  { "In2.KeepOut", LID0_EXCLUSION LID1_INT01 },
-  { "In3.KeepOut", LID0_EXCLUSION LID1_INT02 },
-  { "In4.KeepOut", LID0_EXCLUSION LID1_INT03 },
-  { "In5.KeepOut", LID0_EXCLUSION LID1_INT04 },
-  { "In6.KeepOut", LID0_EXCLUSION LID1_INT05 },
-  { "In7.KeepOut", LID0_EXCLUSION LID1_INT06 },
-  { "In8.KeepOut", LID0_EXCLUSION LID1_INT07 },
-  { "In9.KeepOut", LID0_EXCLUSION LID1_INT08 },
-  { "In10.KeepOut", LID0_EXCLUSION LID1_INT09 },
-  { "In11.KeepOut", LID0_EXCLUSION LID1_INT10 },
-  { "In12.KeepOut", LID0_EXCLUSION LID1_INT11 },
-  { "In13.KeepOut", LID0_EXCLUSION LID1_INT12 },
-  { "In14.KeepOut", LID0_EXCLUSION LID1_INT13 },
-  { "In15.KeepOut", LID0_EXCLUSION LID1_INT14 },
-  { "In16.KeepOut", LID0_EXCLUSION LID1_INT15 },
-  { "In17.KeepOut", LID0_EXCLUSION LID1_INT16 },
-  { "In18.KeepOut", LID0_EXCLUSION LID1_INT17 },
-  { "In19.KeepOut", LID0_EXCLUSION LID1_INT18 },
-  { "In20.KeepOut", LID0_EXCLUSION LID1_INT19 },
-  { "In21.KeepOut", LID0_EXCLUSION LID1_INT20 },
-  { "In22.KeepOut", LID0_EXCLUSION LID1_INT21 },
-  { "In23.KeepOut", LID0_EXCLUSION LID1_INT22 },
-  { "In24.KeepOut", LID0_EXCLUSION LID1_INT23 },
-  { "In25.KeepOut", LID0_EXCLUSION LID1_INT24 },
-  { "In26.KeepOut", LID0_EXCLUSION LID1_INT25 },
-  { "In27.KeepOut", LID0_EXCLUSION LID1_INT26 },
-  { "In28.KeepOut", LID0_EXCLUSION LID1_INT27 },
+  { "In1.KeepOut", LID0_EXCLUSION LID1_INT02 },
+  { "In2.KeepOut", LID0_EXCLUSION LID1_INT03 },
+  { "In3.KeepOut", LID0_EXCLUSION LID1_INT04 },
+  { "In4.KeepOut", LID0_EXCLUSION LID1_INT05 },
+  { "In5.KeepOut", LID0_EXCLUSION LID1_INT06 },
+  { "In6.KeepOut", LID0_EXCLUSION LID1_INT07 },
+  { "In7.KeepOut", LID0_EXCLUSION LID1_INT08 },
+  { "In8.KeepOut", LID0_EXCLUSION LID1_INT09 },
+  { "In9.KeepOut", LID0_EXCLUSION LID1_INT10 },
+  { "In10.KeepOut", LID0_EXCLUSION LID1_INT11 },
+  { "In11.KeepOut", LID0_EXCLUSION LID1_INT12 },
+  { "In12.KeepOut", LID0_EXCLUSION LID1_INT13 },
+  { "In13.KeepOut", LID0_EXCLUSION LID1_INT14 },
+  { "In14.KeepOut", LID0_EXCLUSION LID1_INT15 },
+  { "In15.KeepOut", LID0_EXCLUSION LID1_INT16 },
+  { "In16.KeepOut", LID0_EXCLUSION LID1_INT17 },
+  { "In17.KeepOut", LID0_EXCLUSION LID1_INT18 },
+  { "In18.KeepOut", LID0_EXCLUSION LID1_INT19 },
+  { "In19.KeepOut", LID0_EXCLUSION LID1_INT20 },
+  { "In20.KeepOut", LID0_EXCLUSION LID1_INT21 },
+  { "In21.KeepOut", LID0_EXCLUSION LID1_INT22 },
+  { "In22.KeepOut", LID0_EXCLUSION LID1_INT23 },
+  { "In23.KeepOut", LID0_EXCLUSION LID1_INT24 },
+  { "In24.KeepOut", LID0_EXCLUSION LID1_INT25 },
+  { "In25.KeepOut", LID0_EXCLUSION LID1_INT26 },
+  { "In26.KeepOut", LID0_EXCLUSION LID1_INT27 },
+  { "In27.KeepOut", LID0_EXCLUSION LID1_INT28 },
+  { "In28.KeepOut", LID0_EXCLUSION LID1_INT29 },
 
   // ================================================================
   // Edge Cuts / Контур платы
@@ -179,34 +144,34 @@ static SdKiCadLayerMapDescription kicadLayerMapDescription[] = {
   // Via-specific layers (переходные отверстия)
   // ================================================================
   { "Via", LID0_WIRE LID1_TOP LID1_BOT },  // Сквозные переходные отверстия
-  { "Via.In1", LID0_HOLE LID1_INT00 },     // Отверстие между TOP и INT00
-  { "Via.In2", LID0_HOLE LID1_INT01 },     // и так далее...
-  { "Via.In3", LID0_HOLE LID1_INT02 },
-  { "Via.In4", LID0_HOLE LID1_INT03 },
-  { "Via.In5", LID0_HOLE LID1_INT04 },
-  { "Via.In6", LID0_HOLE LID1_INT05 },
-  { "Via.In7", LID0_HOLE LID1_INT06 },
-  { "Via.In8", LID0_HOLE LID1_INT07 },
-  { "Via.In9", LID0_HOLE LID1_INT08 },
-  { "Via.In10", LID0_HOLE LID1_INT09 },
-  { "Via.In11", LID0_HOLE LID1_INT10 },
-  { "Via.In12", LID0_HOLE LID1_INT11 },
-  { "Via.In13", LID0_HOLE LID1_INT12 },
-  { "Via.In14", LID0_HOLE LID1_INT13 },
-  { "Via.In15", LID0_HOLE LID1_INT14 },
-  { "Via.In16", LID0_HOLE LID1_INT15 },
-  { "Via.In17", LID0_HOLE LID1_INT16 },
-  { "Via.In18", LID0_HOLE LID1_INT17 },
-  { "Via.In19", LID0_HOLE LID1_INT18 },
-  { "Via.In20", LID0_HOLE LID1_INT19 },
-  { "Via.In21", LID0_HOLE LID1_INT20 },
-  { "Via.In22", LID0_HOLE LID1_INT21 },
-  { "Via.In23", LID0_HOLE LID1_INT22 },
-  { "Via.In24", LID0_HOLE LID1_INT23 },
-  { "Via.In25", LID0_HOLE LID1_INT24 },
-  { "Via.In26", LID0_HOLE LID1_INT25 },
-  { "Via.In27", LID0_HOLE LID1_INT26 },
-  { "Via.In28", LID0_HOLE LID1_INT27 },
+  { "Via.In1", LID0_HOLE LID1_INT02 },     // Отверстие между TOP и INT00
+  { "Via.In2", LID0_HOLE LID1_INT03 },     // и так далее...
+  { "Via.In3", LID0_HOLE LID1_INT04 },
+  { "Via.In4", LID0_HOLE LID1_INT05 },
+  { "Via.In5", LID0_HOLE LID1_INT06 },
+  { "Via.In6", LID0_HOLE LID1_INT07 },
+  { "Via.In7", LID0_HOLE LID1_INT08 },
+  { "Via.In8", LID0_HOLE LID1_INT09 },
+  { "Via.In9", LID0_HOLE LID1_INT10 },
+  { "Via.In10", LID0_HOLE LID1_INT11 },
+  { "Via.In11", LID0_HOLE LID1_INT12 },
+  { "Via.In12", LID0_HOLE LID1_INT13 },
+  { "Via.In13", LID0_HOLE LID1_INT14 },
+  { "Via.In14", LID0_HOLE LID1_INT15 },
+  { "Via.In15", LID0_HOLE LID1_INT16 },
+  { "Via.In16", LID0_HOLE LID1_INT17 },
+  { "Via.In17", LID0_HOLE LID1_INT18 },
+  { "Via.In18", LID0_HOLE LID1_INT19 },
+  { "Via.In19", LID0_HOLE LID1_INT20 },
+  { "Via.In20", LID0_HOLE LID1_INT21 },
+  { "Via.In21", LID0_HOLE LID1_INT22 },
+  { "Via.In22", LID0_HOLE LID1_INT23 },
+  { "Via.In23", LID0_HOLE LID1_INT24 },
+  { "Via.In24", LID0_HOLE LID1_INT25 },
+  { "Via.In25", LID0_HOLE LID1_INT26 },
+  { "Via.In26", LID0_HOLE LID1_INT26 },
+  { "Via.In27", LID0_HOLE LID1_INT27 },
+  { "Via.In28", LID0_HOLE LID1_INT28 },
 
   // Завершающий элемент
   { nullptr, nullptr }
@@ -218,34 +183,34 @@ static SdKiCadLayerMapDescription kicadLayerMapDescriptionForPads[] = {
   // ================================================================
   { "F.Cu", LID0_PAD LID1_TOP },              // Пады на верхнем слое
   { "B.Cu", LID0_PAD LID1_BOT },              // Пады на нижнем слое
-  { "In1.Cu", LID0_PAD LID1_INT00 },          // Пады на внутреннем слое 1
-  { "In2.Cu", LID0_PAD LID1_INT01 },          // ... и так далее до In28.Cu
-  { "In3.Cu", LID0_PAD LID1_INT02 },
-  { "In4.Cu", LID0_PAD LID1_INT03 },
-  { "In5.Cu", LID0_PAD LID1_INT04 },
-  { "In6.Cu", LID0_PAD LID1_INT05 },
-  { "In7.Cu", LID0_PAD LID1_INT06 },
-  { "In8.Cu", LID0_PAD LID1_INT07 },
-  { "In9.Cu", LID0_PAD LID1_INT08 },
-  { "In10.Cu", LID0_PAD LID1_INT09 },
-  { "In11.Cu", LID0_PAD LID1_INT10 },
-  { "In12.Cu", LID0_PAD LID1_INT11 },
-  { "In13.Cu", LID0_PAD LID1_INT12 },
-  { "In14.Cu", LID0_PAD LID1_INT13 },
-  { "In15.Cu", LID0_PAD LID1_INT14 },
-  { "In16.Cu", LID0_PAD LID1_INT15 },
-  { "In17.Cu", LID0_PAD LID1_INT16 },
-  { "In18.Cu", LID0_PAD LID1_INT17 },
-  { "In19.Cu", LID0_PAD LID1_INT18 },
-  { "In20.Cu", LID0_PAD LID1_INT19 },
-  { "In21.Cu", LID0_PAD LID1_INT20 },
-  { "In22.Cu", LID0_PAD LID1_INT21 },
-  { "In23.Cu", LID0_PAD LID1_INT22 },
-  { "In24.Cu", LID0_PAD LID1_INT23 },
-  { "In25.Cu", LID0_PAD LID1_INT24 },
-  { "In26.Cu", LID0_PAD LID1_INT25 },
-  { "In27.Cu", LID0_PAD LID1_INT26 },
-  { "In28.Cu", LID0_PAD LID1_INT27 },
+  { "In1.Cu", LID0_PAD LID1_INT02 },          // Пады на внутреннем слое 1
+  { "In2.Cu", LID0_PAD LID1_INT03 },          // ... и так далее до In28.Cu
+  { "In3.Cu", LID0_PAD LID1_INT04 },
+  { "In4.Cu", LID0_PAD LID1_INT05 },
+  { "In5.Cu", LID0_PAD LID1_INT06 },
+  { "In6.Cu", LID0_PAD LID1_INT07 },
+  { "In7.Cu", LID0_PAD LID1_INT08 },
+  { "In8.Cu", LID0_PAD LID1_INT09 },
+  { "In9.Cu", LID0_PAD LID1_INT10 },
+  { "In10.Cu", LID0_PAD LID1_INT11 },
+  { "In11.Cu", LID0_PAD LID1_INT12 },
+  { "In12.Cu", LID0_PAD LID1_INT13 },
+  { "In13.Cu", LID0_PAD LID1_INT14 },
+  { "In14.Cu", LID0_PAD LID1_INT15 },
+  { "In15.Cu", LID0_PAD LID1_INT16 },
+  { "In16.Cu", LID0_PAD LID1_INT17 },
+  { "In17.Cu", LID0_PAD LID1_INT18 },
+  { "In18.Cu", LID0_PAD LID1_INT19 },
+  { "In19.Cu", LID0_PAD LID1_INT20 },
+  { "In20.Cu", LID0_PAD LID1_INT21 },
+  { "In21.Cu", LID0_PAD LID1_INT22 },
+  { "In22.Cu", LID0_PAD LID1_INT23 },
+  { "In23.Cu", LID0_PAD LID1_INT24 },
+  { "In24.Cu", LID0_PAD LID1_INT25 },
+  { "In25.Cu", LID0_PAD LID1_INT26 },
+  { "In26.Cu", LID0_PAD LID1_INT27 },
+  { "In27.Cu", LID0_PAD LID1_INT28 },
+  { "In28.Cu", LID0_PAD LID1_INT29 },
 
   // Завершающий элемент
   { nullptr, nullptr }
@@ -259,34 +224,34 @@ static SdKiCadLayerMapDescription kicadLayerMapDescriptionForPolygon[] = {
   // ================================================================
   { "F.Cu", LID0_POLYGON LID1_TOP },         // Полигоны на верхнем слое
   { "B.Cu", LID0_POLYGON LID1_BOT },         // Полигоны на нижнем слое
-  { "In1.Cu", LID0_POLYGON LID1_INT00 },     // Полигоны на внутренних слоях
-  { "In2.Cu", LID0_POLYGON LID1_INT01 },
-  { "In3.Cu", LID0_POLYGON LID1_INT02 },
-  { "In4.Cu", LID0_POLYGON LID1_INT03 },
-  { "In5.Cu", LID0_POLYGON LID1_INT04 },
-  { "In6.Cu", LID0_POLYGON LID1_INT05 },
-  { "In7.Cu", LID0_POLYGON LID1_INT06 },
-  { "In8.Cu", LID0_POLYGON LID1_INT07 },
-  { "In9.Cu", LID0_POLYGON LID1_INT08 },
-  { "In10.Cu", LID0_POLYGON LID1_INT09 },
-  { "In11.Cu", LID0_POLYGON LID1_INT10 },
-  { "In12.Cu", LID0_POLYGON LID1_INT11 },
-  { "In13.Cu", LID0_POLYGON LID1_INT12 },
-  { "In14.Cu", LID0_POLYGON LID1_INT13 },
-  { "In15.Cu", LID0_POLYGON LID1_INT14 },
-  { "In16.Cu", LID0_POLYGON LID1_INT15 },
-  { "In17.Cu", LID0_POLYGON LID1_INT16 },
-  { "In18.Cu", LID0_POLYGON LID1_INT17 },
-  { "In19.Cu", LID0_POLYGON LID1_INT18 },
-  { "In20.Cu", LID0_POLYGON LID1_INT19 },
-  { "In21.Cu", LID0_POLYGON LID1_INT20 },
-  { "In22.Cu", LID0_POLYGON LID1_INT21 },
-  { "In23.Cu", LID0_POLYGON LID1_INT22 },
-  { "In24.Cu", LID0_POLYGON LID1_INT23 },
-  { "In25.Cu", LID0_POLYGON LID1_INT24 },
-  { "In26.Cu", LID0_POLYGON LID1_INT25 },
-  { "In27.Cu", LID0_POLYGON LID1_INT26 },
-  { "In28.Cu", LID0_POLYGON LID1_INT27 },
+  { "In1.Cu", LID0_POLYGON LID1_INT02 },     // Полигоны на внутренних слоях
+  { "In2.Cu", LID0_POLYGON LID1_INT03 },
+  { "In3.Cu", LID0_POLYGON LID1_INT04 },
+  { "In4.Cu", LID0_POLYGON LID1_INT05 },
+  { "In5.Cu", LID0_POLYGON LID1_INT06 },
+  { "In6.Cu", LID0_POLYGON LID1_INT07 },
+  { "In7.Cu", LID0_POLYGON LID1_INT08 },
+  { "In8.Cu", LID0_POLYGON LID1_INT09 },
+  { "In9.Cu", LID0_POLYGON LID1_INT10 },
+  { "In10.Cu", LID0_POLYGON LID1_INT11 },
+  { "In11.Cu", LID0_POLYGON LID1_INT12 },
+  { "In12.Cu", LID0_POLYGON LID1_INT13 },
+  { "In13.Cu", LID0_POLYGON LID1_INT14 },
+  { "In14.Cu", LID0_POLYGON LID1_INT15 },
+  { "In15.Cu", LID0_POLYGON LID1_INT16 },
+  { "In16.Cu", LID0_POLYGON LID1_INT17 },
+  { "In17.Cu", LID0_POLYGON LID1_INT18 },
+  { "In18.Cu", LID0_POLYGON LID1_INT19 },
+  { "In19.Cu", LID0_POLYGON LID1_INT20 },
+  { "In20.Cu", LID0_POLYGON LID1_INT21 },
+  { "In21.Cu", LID0_POLYGON LID1_INT22 },
+  { "In22.Cu", LID0_POLYGON LID1_INT23 },
+  { "In23.Cu", LID0_POLYGON LID1_INT24 },
+  { "In24.Cu", LID0_POLYGON LID1_INT25 },
+  { "In25.Cu", LID0_POLYGON LID1_INT26 },
+  { "In26.Cu", LID0_POLYGON LID1_INT27 },
+  { "In27.Cu", LID0_POLYGON LID1_INT28 },
+  { "In28.Cu", LID0_POLYGON LID1_INT29 },
 
 
   // Завершающий элемент
@@ -307,49 +272,24 @@ QString kicadLayerMap( const QString kicadLayerName )
   }
 
 
-void kicadLayer( SdScanerKiCad *scaner, SdPropLayer &layer )
+void kicadFillPropLine( SdPropLine &prop, const SdKiCadStroke &stroke, const SdKiCadString &layer )
   {
-  QString kicadLayerName( scaner->tokenNeedValue('s') );
-  QString layerId( kicadLayerMap(kicadLayerName) );
-  layer.set( layerId );
-  scaner->tokenNeed( ')' );
-  }
-
-
-
-void kicadLayer( SdScanerKiCad *scaner, QString &layerId )
-  {
-  layerId = scaner->tokenNeedValue('s');
-  scaner->tokenNeed( ')' );
-  }
-
-
-void kicadLayerList( SdScanerKiCad *scaner, QStringList &mLayerList )
-  {
-  while( scaner->token() != ')' ) {
-    mLayerList.append( scaner->tokenNeedValue('s') );
+  if( stroke.isValid() ) {
+    //Setup width
+    prop.mWidth = stroke.mWidth.mValue;
+    //Convert kiCad line type into our
+    switch( stroke.mType.mSelector ) {
+      case SdKiCadStrokeType::typeDashDot :
+      case SdKiCadStrokeType::typeDotted : prop.mType = dltDotted; break;
+      case SdKiCadStrokeType::typeDashed : prop.mType = dltDashed; break;
+      default:
+      case SdKiCadStrokeType::typeSolid : prop.mType = dltSolid; break;
+      }
     }
-  scaner->tokenNeed( ')' );
-  }
-
-
-void kicadStrokeLineType( SdScanerKiCad *scaner, SdPropLine *prop )
-  {
-  kicadLineType( scaner, prop->mType );
-  }
-
-
-void kicadStrokeLineWidth( SdScanerKiCad *scaner, SdPropLine *prop )
-  {
-  kicadLineWidth( scaner, prop->mWidth );
-  }
-
-
-void kicadStroke( SdScanerKiCad *scaner, SdPropLine *prop )
-  {
-  static QMap<QString,std::function<void( SdScanerKiCad*, SdPropLine* )> >
-      tokenMap( { { QString("type"),  kicadStrokeLineType },
-                  { QString("width"), kicadStrokeLineWidth }
-                } );
-  scaner->parse( tokenMap, prop );
+  else {
+    prop.mWidth = 0;
+    prop.mType  = dltSolid;
+    }
+  //Convert layer
+  prop.mLayer.set( kicadLayerMap(layer.mValue) );
   }

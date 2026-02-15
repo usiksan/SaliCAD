@@ -83,7 +83,7 @@ SdDPadMaster::SdDPadMaster(SdPad pad, QWidget *parent) :
     updatePadSchematic();
     });
   connect( ui->mSlotAngle, &QLineEdit::textEdited, this, [this] (QString txt) {
-    mPad.mSlotAngle = SdEnvir::instance()->fromPhisPcb( txt );
+    mPad.mAngle = SdEnvir::instance()->fromPhisPcb( txt );
     updatePadSchematic();
     });
   connect( ui->mStensilThreshold, &QLineEdit::textEdited, this, [this] (QString txt) {
@@ -317,7 +317,7 @@ void SdDPadMaster::onThroughPin(bool isThrough)
       mPad.mHoleDiametr = 500;
     ui->mHoleDiametr->setText( SdEnvir::instance()->toPhisPcb(mPad.mHoleDiametr) );
     ui->mHoleLength->setText( SdEnvir::instance()->toPhisPcb(mPad.mHoleLength) );
-    ui->mSlotAngle->setText( SdUtil::log2physStr(mPad.mSlotAngle,0.001) );
+    ui->mSlotAngle->setText( SdUtil::log2physStr(mPad.mAngle,0.001) );
     }
   else {
     //Enable stensil hole
@@ -330,7 +330,7 @@ void SdDPadMaster::onThroughPin(bool isThrough)
     ui->mHoleDiametr->clear();
     ui->mHoleLength->clear();
     ui->mSlotAngle->clear();
-    mPad.mHoleDiametr = mPad.mHoleLength = mPad.mSlotAngle = 0;
+    mPad.mHoleDiametr = mPad.mHoleLength = mPad.mAngle = 0;
     }
   updatePadProfile();
   updatePadSchematic();

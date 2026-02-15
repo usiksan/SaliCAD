@@ -579,7 +579,7 @@ void SdDLayers::onStratumCountChange(int newCount)
   mStratumMask = (stmTop|stmBottom);
   newCount -= 2;
   for( int i = 0; i < newCount; ++i )
-    mStratumMask |= stmInt00 << i;
+    mStratumMask |= stmInt04 << i;
 
   fillLayerList();
   }

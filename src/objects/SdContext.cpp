@@ -290,6 +290,23 @@ void SdContext::circleFill(SdPoint center, int radius, SdLayerPtr layer)
 
 
 
+void SdContext::polygonFill(const QPolygonF &poly)
+  {
+  mPainter->drawPolygon( mTransform.map(poly) );
+  }
+
+
+
+void SdContext::polygonFill(const QPolygonF &poly, QColor color)
+  {
+  if( mPainter->isActive() )
+    mPainter->setPen( color );
+  setBrush( color );
+  polygonFill( poly );
+  }
+
+
+
 
 void SdContext::textEx(SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert, int cursor, SdPoint *cp1, SdPoint *cp2, SdRect *sel, int start, int stop  )
   {

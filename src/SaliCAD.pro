@@ -437,6 +437,7 @@ HEADERS  += \
     import/iges/IgesEntityRationalBSplineCurve.h \
     import/iges/IgesEntitySurface.h \
     import/iges/IgesEntityTrimmedParametricSurface.h \
+    import/kicad/SdKiCad.h \
     import/kicad/SdScanerKiCad.h \
     import/nurbs/NurbsBasis.h \
     import/nurbs/NurbsConvexHull.h \

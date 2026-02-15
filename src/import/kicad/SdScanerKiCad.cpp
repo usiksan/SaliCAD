@@ -1,4 +1,4 @@
-#include "SdScanerKiCad.h"
+#include "SdKiCad.h"
 
 #include <QObject>
 

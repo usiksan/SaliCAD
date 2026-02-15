@@ -24,56 +24,56 @@ Description
 
 //Tracing layer mask (stratum)
 #define stmTop      0x00000001 //Top layer
-#define stmInt00    0x00000002 //Internal packet 1
-#define stmInt01    0x00000004
-#define stmInt02    0x00000008 //Internal packet 2
-#define stmInt03    0x00000010
-#define stmInt04    0x00000020 //Internal packet 3
-#define stmInt05    0x00000040
-#define stmInt06    0x00000080 //Internal packet 4
-#define stmInt07    0x00000100
-#define stmInt08    0x00000200 //Internal packet 5
-#define stmInt09    0x00000400
-#define stmInt10    0x00000800 //Internal packet 6
-#define stmInt11    0x00001000
-#define stmInt12    0x00002000 //Internal packet 7
-#define stmInt13    0x00004000
-#define stmInt14    0x00008000 //Internal packet 8
-#define stmInt15    0x00010000
-#define stmInt16    0x00020000 //Internal packet 9
-#define stmInt17    0x00040000
-#define stmInt18    0x00080000 //Internal packet 10
-#define stmInt19    0x00100000
-#define stmInt20    0x00200000 //Internal packet 11
-#define stmInt21    0x00400000
-#define stmInt22    0x00800000 //Internal packet 12
-#define stmInt23    0x01000000
-#define stmInt24    0x02000000 //Internal packet 13
-#define stmInt25    0x04000000
-#define stmInt26    0x08000000 //Internal packet 14
-#define stmInt27    0x10000000
+#define stmInt02    0x00000002 //Internal packet 1
+#define stmInt03    0x00000004
+#define stmInt04    0x00000008 //Internal packet 2
+#define stmInt05    0x00000010
+#define stmInt06    0x00000020 //Internal packet 3
+#define stmInt07    0x00000040
+#define stmInt08    0x00000080 //Internal packet 4
+#define stmInt09    0x00000100
+#define stmInt10    0x00000200 //Internal packet 5
+#define stmInt11    0x00000400
+#define stmInt12    0x00000800 //Internal packet 6
+#define stmInt13    0x00001000
+#define stmInt14    0x00002000 //Internal packet 7
+#define stmInt15    0x00004000
+#define stmInt16    0x00008000 //Internal packet 8
+#define stmInt17    0x00010000
+#define stmInt18    0x00020000 //Internal packet 9
+#define stmInt19    0x00040000
+#define stmInt20    0x00080000 //Internal packet 10
+#define stmInt21    0x00100000
+#define stmInt22    0x00200000 //Internal packet 11
+#define stmInt23    0x00400000
+#define stmInt24    0x00800000 //Internal packet 12
+#define stmInt25    0x01000000
+#define stmInt26    0x02000000 //Internal packet 13
+#define stmInt27    0x04000000
+#define stmInt28    0x08000000 //Internal packet 14
+#define stmInt29    0x10000000
 #define stmBottom   0x20000000 //Bottom layer
 #define stmThrough  0x3fffffff
 #define stmEnd      0x40000000
 
-#define stmLayer1   (stmTop)
-#define stmLayer2   (stmTop | stmBottom)
-#define stmLayer4   (stmLayer2 | stmInt00 | stmInt01)
-#define stmLayer6   (stmLayer4 | stmInt02 | stmInt03)
-#define stmLayer8   (stmLayer6 | stmInt04 | stmInt05)
-#define stmLayer10  (stmLayer8 | stmInt06 | stmInt07)
-#define stmLayer12  (stmLayer10 | stmInt08 | stmInt09)
-#define stmLayer14  (stmLayer12 | stmInt10 | stmInt11)
-#define stmLayer16  (stmLayer14 | stmInt12 | stmInt13)
-#define stmLayer18  (stmLayer16 | stmInt14 | stmInt15)
-#define stmLayer20  (stmLayer18 | stmInt16 | stmInt17)
-#define stmLayer22  (stmLayer20 | stmInt18 | stmInt19)
-#define stmLayer24  (stmLayer22 | stmInt20 | stmInt21)
-#define stmLayer26  (stmLayer24 | stmInt22 | stmInt23)
-#define stmLayer28  (stmLayer26 | stmInt24 | stmInt25)
-#define stmLayer30  (stmLayer28 | stmInt26 | stmInt27)
-
-#define stmCountMax         30 //Maximum tracing layers
+//Defines PCB with layer number
+#define stmLayer1   (stmTop)                            //!< Single layer PCB (only top layer)
+#define stmLayer2   (stmTop | stmBottom)                //!< Two layer PCB (top and bottom layers)
+#define stmLayer4   (stmLayer2 | stmInt02 | stmInt03)   //!< 4 layer PCB (adds two inner layers)
+#define stmLayer6   (stmLayer4 | stmInt04 | stmInt05)   //!< 6 layer PCB (adds two more inner layers)
+#define stmLayer8   (stmLayer6 | stmInt06 | stmInt07)   //!< 8 layer PCB configuration
+#define stmLayer10  (stmLayer8 | stmInt08 | stmInt09)   //!< 10 layer PCB configuration
+#define stmLayer12  (stmLayer10 | stmInt10 | stmInt11)  //!< 12 layer PCB configuration
+#define stmLayer14  (stmLayer12 | stmInt12 | stmInt13)  //!< 14 layer PCB configuration
+#define stmLayer16  (stmLayer14 | stmInt14 | stmInt15)  //!< 16 layer PCB configuration
+#define stmLayer18  (stmLayer16 | stmInt16 | stmInt17)  //!< 18 layer PCB configuration
+#define stmLayer20  (stmLayer18 | stmInt18 | stmInt19)  //!< 20 layer PCB configuration
+#define stmLayer22  (stmLayer20 | stmInt20 | stmInt21)  //!< 22 layer PCB configuration
+#define stmLayer24  (stmLayer22 | stmInt22 | stmInt23)  //!< 24 layer PCB configuration
+#define stmLayer26  (stmLayer24 | stmInt24 | stmInt25)  //!< 26 layer PCB configuration
+#define stmLayer28  (stmLayer26 | stmInt26 | stmInt27)  //!< 28 layer PCB configuration
+#define stmLayer30  (stmLayer28 | stmInt28 | stmInt29)  //!< 30 layer PCB configuration (maximum)
+#define stmCountMax         30                          //!< Maximum tracing layers
 
 #define stmRuleHided 0x1 //!< Enable hided holes (stmInt00-stmInt01)
 #define stmRuleCore  0x2 //!< Enable core holes (stmInt00-stmInt27)

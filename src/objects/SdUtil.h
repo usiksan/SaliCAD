@@ -71,6 +71,36 @@ class SdUtil
     //Create octagon over circle
     static QPolygonF octagon( int centerx, int centery, int radius );
 
+    //!
+    //! \brief polygonOverCircle Creates regular polygon circumscribed around circle
+    //! \param centerx           Center X coordinate
+    //! \param centery           Center Y coordinate
+    //! \param radius            Circle radius
+    //! \param sides             Number of polygon sides (minimum 3)
+    //! \return                  Polygon points in clockwise order
+    //!
+    static QPolygonF polygonOverCircle(int centerx, int centery, int radius, int sides);
+
+
+    //!
+    //! \brief roundrect Creates polygon for rectangle with rounded corners
+    //! \param r         Rectangle in integer coordinates (SdPoint system: Y up)
+    //! \param ratio     Rounding ratio in internal units (same as radius)
+    //! \param sides     Total number of points in polygon (should be multiple of 4)
+    //!                  Minimum 4 (just rectangle), recommended 16-32 for smooth corners
+    //! \return          Polygon approximating rounded rectangle with specified total points
+    //!                  Points are in SdPoint coordinate system (Y up)
+    //!
+    static QPolygonF roundrect(QRect r, int ratio, int sides);
+
+
+    //!
+    //! \brief ellipse Creates polygon approximation of ellipse
+    //! \param r       Rectangle defining ellipse bounds
+    //! \return        Polygon with 16 points approximating the ellipse
+    //!
+    static QPolygonF ellipse( QRect r );
+
     //Value limitation
     static int       iLimit( int val, int vmin, int vmax );
   };

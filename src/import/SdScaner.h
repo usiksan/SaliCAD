@@ -125,6 +125,12 @@ class SdScaner
     float        tokenNeedValueFloat(char tokenVal) { return tokenNeedValue(tokenVal).toFloat(); }
 
     //!
+    //! \brief tokenNeedValueDouble Treat next token as double
+    //! \return                     Value of double
+    //!
+    double       tokenNeedValueDouble() { return tokenNeedValue('f').toDouble(); }
+
+    //!
     //! \brief tokenNeedValueFloat  Check if last scanned token equals to tokenId and return value itself as float
     //! \param tokenId              Needed token ident
     //! \param value                Value of token if last scanned token equals to tokenId

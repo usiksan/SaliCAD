@@ -3,6 +3,7 @@
 
 #include "../SdScanerMultyline.h"
 
+#include <QPointF>
 #include <QMap>
 #include <functional>
 
@@ -14,16 +15,28 @@ class SdPropInt;
 class SdPropLayer;
 class SdPropLine;
 
+class SdScanerKiCad;
+
+template <typename SdKiCad>
+using SdKiCadTokenMap = QMap<QString,std::function<void( SdScanerKiCad*, SdKiCad* )> >;
+
 class SdScanerKiCad : public SdScanerMultyline
   {
+    double mPpm; //!< Conversion factor
   public:
     SdScanerKiCad();
+
+    double ppm() const { return mPpm; }
+
+    void   ppmSet( double ppm ) { mPpm = ppm; }
+
+    int    convert( double v ) const { return v * mPpm; }
 
     void parseTop( SdProject *project );
 
 
     template <class SdKiCad>
-    void parse( const QMap<QString,std::function<void( SdScanerKiCad*, SdKiCad* )> > &tokenMap, SdKiCad *obj )
+    void parse( const SdKiCadTokenMap<SdKiCad> &tokenMap, SdKiCad *obj )
       {
       while( !matchToken(')') && !isError() )
         parseContent( tokenMap, obj );
@@ -52,9 +65,11 @@ class SdScanerKiCad : public SdScanerMultyline
         }
       }
 
-    int tokenNeedPartCoord() { return tokenNeedValueFloat('f') * 1000.0; }
+    int tokenNeedCoord() { return convert(tokenNeedValueDouble()); }
 
-    int tokenNeedPartAngle() { return tokenNeedValueFloat('f') * 1000.0; }
+    int tokenNeedAngle() { return tokenNeedValueDouble() * 1000.0; }
+
+    void tokenNeedClose() { tokenNeed(')'); }
 
     // SdScaner interface
   public:
@@ -62,19 +77,6 @@ class SdScanerKiCad : public SdScanerMultyline
   };
 
 
-void kicadFootprint( SdScanerKiCad *scaner, SdProject *project );
-void kicadSymbolLib( SdScanerKiCad *scaner, SdProject *project );
-void kicadPropertyPart( SdScanerKiCad *scaner, SdPItemPart *part );
-void kicadLinePart( SdScanerKiCad *scaner, SdPItemPart *part );
-void kicadCirclePart( SdScanerKiCad *scaner, SdPItemPart *part );
-void kicadTextPart( SdScanerKiCad *scaner, SdPItemPart *part );
-void kicadPoint( SdScanerKiCad *scaner, SdPoint &point );
-void kicadPointWithRotation( SdScanerKiCad *scaner, SdPoint &point, int &rotationAngle );
-void kicadLineType( SdScanerKiCad *scaner, SdPropInt &type );
-void kicadLineWidth( SdScanerKiCad *scaner, SdPropInt &width );
-void kicadLayer( SdScanerKiCad *scaner, SdPropLayer &layer );
-void kicadLayer( SdScanerKiCad *scaner, QString &layerId );
-void kicadLayerList( SdScanerKiCad *scaner, QStringList &mLayerList );
-void kicadStroke( SdScanerKiCad *scaner, SdPropLine *prop );
+
 
 #endif // SDSCANERKICAD_H

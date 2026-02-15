@@ -1,4 +1,4 @@
-#include "SdScanerKiCad.h"
+#include "SdKiCad.h"
 #include "../../objects/SdPItemPart.h"
 #include "../../objects/SdProject.h"
 
@@ -6,6 +6,8 @@
 
 void kicadFootprint(SdScanerKiCad *scaner, SdProject *project )
   {
+  //We work with mm
+  scaner->ppmSet( 1000.0 );
   QString name;
   if( !scaner->tokenNeedValue( 's', name, QObject::tr("Need footprint name") ) ) return;
 
@@ -16,8 +18,8 @@ void kicadFootprint(SdScanerKiCad *scaner, SdProject *project )
 
   static QMap<QString,std::function<void( SdScanerKiCad*, SdPItemPart* )> >
       tokenMap( { //{ QString("fp_text"), kicadTextPart },
-                  { QString("fp_line"), kicadLinePart },
-                  { QString("fp_circle"), kicadCirclePart }
+                  { QString("fp_line"), kicadGraphLine },
+                  { QString("fp_circle"), kicadGraphCircle }
                 } );
 
   scaner->parse( tokenMap, part );
