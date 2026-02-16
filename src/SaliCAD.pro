@@ -527,6 +527,7 @@ HEADERS  += \
     objects/SdGraphScriptRefMap.h \
     objects/SdJsonIO.h \
     objects/SdPartImpRelativePosition.h \
+    objects/SdPropMulty.h \
     objects/SdPropStratum.h \
     objects/SdStratum.h \
     script/SdScriptOperator.h \
