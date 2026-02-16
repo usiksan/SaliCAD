@@ -32,25 +32,41 @@ Description
 
 struct SdProp
   {
-    SdPropLine    mLineProp;       //Свойства линейных объектов
-    SdPropText    mTextProp;       //Свойства текстовых объектов
-    SdPropLine    mWireProp;       //Свойства сегментов цепей схемы
-    SdPropText    mWireNameProp;   //Свойства имени цепи
+    // SdPropLine    mLineProp;       //Свойства линейных объектов
+    // SdPropText    mTextProp;       //Свойства текстовых объектов
+    //Symbol
+    SdPropLine    mSymLineProp;       //Свойства линейных объектов
+    SdPropText    mSymTextProp;       //Свойства текстовых объектов
     SdPropSymPin  mSymPinProp;     //Свойства вывода символа
     SdPropText    mSymPinNameProp;    //Свойства имени вывода
     SdPropText    mSymPinNumberProp;  //Свойства номера вывода
+    SdPropText    mSymIdentProp;   //Свойства идентификатора символа
+    SdPropText    mSymValueProp;   //Value properties for symbol
+
+    //Schematic
+    SdPropLine    mSchLineProp;       //Свойства линейных объектов
+    SdPropText    mSchTextProp;       //Свойства текстовых объектов
+    SdPropLine    mWireProp;       //Свойства сегментов цепей схемы
+    SdPropText    mWireNameProp;   //Свойства имени цепи
+    SdPropSymImp  mSymImpProp;     //Свойства вхождения символа
+
+    //Part
+    SdPropLine    mPartLineProp;       //Свойства линейных объектов
+    SdPropText    mPartTextProp;       //Свойства текстовых объектов
     SdPropPartPin mPartPinProp;    //Свойства вывода корпуса
     SdPropText    mPartPinNameProp;    //Свойства имени вывода
     SdPropText    mPartPinNumberProp;  //Свойства номера вывода
-    SdPropSymImp  mSymImpProp;     //Свойства вхождения символа
-    SdPropPartImp mPartImpProp;    //Свойства вхождения корпуса
-    SdPropText    mSymIdentProp;   //Свойства идентификатора символа
     SdPropText    mPartIdentProp;  //Свойства идентификатора корпуса
-    SdPropText    mSymValueProp;   //Value properties for symbol
     SdPropText    mPartValueProp;  //Value properties for part
+
+    //PCB
+    SdPropLine    mPcbLineProp;       //Свойства линейных объектов
+    SdPropText    mPcbTextProp;       //Свойства текстовых объектов
+    SdPropPartImp mPartImpProp;    //Свойства вхождения корпуса
     SdPropRoad    mRoadProp;       //Свойства дорожки
     SdPropPolygon mPolygonProp;        //Tracing polygon properties
     SdPropVia     mViaProp;        //Свойства переходных отверстий
+
     SdPropText    mTextDocProp;    //Свойства текста в текстовых документах
 
     int           mLineEnterType;
@@ -66,12 +82,15 @@ struct SdProp
 
 //    DTraseRules traseRules;     //Правила трассировки
 
-    const int     mPropVersion = 1;
+    const int     mPropVersion = 2;
 
     SdProp();
 
     void loadProp();
     void saveProp();
+
+    SdPropLine *propLine( SdClass theClass );
+    SdPropText *propText( SdClass theClass );
   };
 
 extern SdProp *sdGlobalProp;

@@ -20,7 +20,7 @@ Description
 #include "SdContext.h"
 #include "SdEnvir.h"
 #include "SdPlateNetList.h"
-#include "SdStratum.h"
+#include "SdPropStratum.h"
 #include "SdPulsar.h"
 #include "SdGraphLinearRect.h"
 #include "SdGraphLinearRegion.h"
@@ -51,12 +51,8 @@ SdPItemPlate::SdPItemPlate() :
 
 void SdPItemPlate::setStratumCount(int sc)
   {
-  //Count of stratum must be 1, 2, 4, 6 and etc
-  mStratumCount = (sc >> 1) << 1;
-  if( mStratumCount == 0 )
-    mStratumCount = 1;
-  if( mStratumCount > 30 )
-    mStratumCount = 30;
+  //Count of stratum must be 2, 4, 6 and etc
+  mStratumCount = qBound( 2, sc & ~1, 30 );
   mRatNetDirty = true;
   }
 
@@ -64,9 +60,9 @@ void SdPItemPlate::setStratumCount(int sc)
 
 
 
-int SdPItemPlate::stratumMask() const
+SdStratum SdPItemPlate::getStratum() const
   {
-  return SdStratum::stratumStack( mStratumCount );
+  return SdPropStratum::stratumStack( mStratumCount );
   }
 
 
@@ -200,7 +196,7 @@ void SdPItemPlate::appendPadWindow(SdPolyWindowList &dest, SdPoint p, const QStr
 //! \param stratum        Stratum for layers
 //! \param map            Map for holes conversion
 //!
-void SdPItemPlate::appendPadHoles(SdPoint p, const QString pinType, Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+void SdPItemPlate::appendPadHoles(SdPoint p, const QString pinType, Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map) const
   {
   getPad( pinType ).appendPadHoles( p, model, faceList, stratum, map );
   }
@@ -273,7 +269,7 @@ void SdPItemPlate::buildRatNet()
 
 
 //Draw pcb for trace
-void SdPItemPlate::drawTrace(SdContext *ctx, SdStratum curStratum, QString currentNetName)
+void SdPItemPlate::drawTrace(SdContext *ctx, SdPropStratum curStratum, QString currentNetName)
   {
   //Draw graphics
   forEach( dctPicture, [ctx] (SdObject *obj) -> bool {
@@ -293,7 +289,7 @@ void SdPItemPlate::drawTrace(SdContext *ctx, SdStratum curStratum, QString curre
 
   //Draw trace elements down stratums
   //Initially, we assume that no current stratum (through stratum)
-  SdStratum stratum = stmThrough;
+  SdPropStratum stratum = stmThrough;
   //If current stratum valid then exclude it from drawing
   if( curStratum.isValid() )
     stratum = stmThrough & (~curStratum.getValue());

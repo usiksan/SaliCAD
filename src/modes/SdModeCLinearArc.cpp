@@ -47,7 +47,7 @@ void SdModeCLinearArc::enterPoint( SdPoint enter )
       break;
     case sStop :
       mPrev = calcArcStop( mCenter, mStart, enter );
-      addPic(  new SdGraphLinearArc( mCenter, mStart, mPrev, sdGlobalProp->mLineProp ), QObject::tr("Insert arc") );
+      addPic(  new SdGraphLinearArc( mCenter, mStart, mPrev, *sdGlobalProp->propLine( mObject->getClass() ) ), QObject::tr("Insert arc") );
       setStep( sCenter );
       mStartOffset = mStart - mCenter;
       mStopOffset = mPrev - mCenter;
@@ -153,8 +153,8 @@ int SdModeCLinearArc::getIndex() const
 
 void SdModeCLinearArc::drawDynamic(SdContext *ctx)
   {
-  ctx->setPen( sdGlobalProp->mLineProp.mWidth.getValue(), SdEnvir::instance()->getSysColor(scEnter),
-               sdGlobalProp->mLineProp.mType.getValue() );
+  ctx->setPen( sdGlobalProp->propLine( mObject->getClass() )->mWidth.getValue(), SdEnvir::instance()->getSysColor(scEnter),
+               sdGlobalProp->propLine( mObject->getClass() )->mType.getValue() );
   switch( getStep() ) {
     case sStop :
       //Выбор воторой точки

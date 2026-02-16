@@ -82,7 +82,7 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
       int w = mDiametrWidth + mMaskThreshold * 2;
       int h = mHeight + mMaskThreshold * 2;
       if( mIsCircle ) dcx->circleFill( transform.map(QPoint{}), w >> 1, layer->color() );
-      else dcx->polygonFill( transform.mapToPolygon( QRectF( -(w >> 1), -(h >> 1), w, h) ), layer->color() );
+      else dcx->polygonFill( transform.mapToPolygon( QRect( -(w >> 1), -(h >> 1), w, h) ), layer->color() );
       }
     }
 
@@ -106,12 +106,12 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
           int offy = (celly - mStencilHeight) / 2;
           for( int y = 0; y < rows; y++ )
             for( int x = 0; x < cols; x++ )
-              dcx->polygonFill( transform.mapToPolygon( QRectF( -(w >> 1) + x * cellx + offx,
+              dcx->polygonFill( transform.mapToPolygon( QRect( -(w >> 1) + x * cellx + offx,
                                      -(h >> 1) + y * celly + offy, mStencilWidth, mStencilHeight) ), layer->color() );
           }
         else
           //Single apreture
-          dcx->polygonFill( transform.mapToPolygon( QRectF( -(w >> 1), -(h >> 1), w, h) ), layer->color() );
+          dcx->polygonFill( transform.mapToPolygon( QRect( -(w >> 1), -(h >> 1), w, h) ), layer->color() );
         }
       }
     }
@@ -122,7 +122,7 @@ void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
     if( !mCachePad.isEmpty() )
       dcx->polygonFill( transform.map(mCachePad), layer->color() );
     else if( mIsCircle ) dcx->circleFill( transform.map(QPoint{}), mDiametrWidth >> 1, layer->color() );
-    else dcx->polygonFill( transform.mapToPolygon( QRectF( -(mDiametrWidth >> 1), -(mHeight >> 1), mDiametrWidth, mHeight) ), layer->color() );
+    else dcx->polygonFill( transform.mapToPolygon( QRect( -(mDiametrWidth >> 1), -(mHeight >> 1), mDiametrWidth, mHeight) ), layer->color() );
     }
 
   //Draw hole
@@ -181,10 +181,10 @@ QPolygonF SdPad::polygon(SdPoint p, int addon ) const
     QRect localRect( -newWidth/2, -newHeight/2, newWidth, newHeight );
 
     if( mEllipse ) {
-      localPoly = SdUtil::ellipse(localRect);
+      localPoly = SdUtil::ellipse(localRect,40);
       }
     else if( !mIsCircle && mRoundRectRatio > 0 ) {
-      localPoly = SdUtil::roundrect(localRect, mRoundRectRatio);
+      localPoly = SdUtil::roundrect(localRect, mRoundRectRatio, 40);
       }
     }
   else if( mIsCircle ) {
@@ -256,7 +256,7 @@ void SdPad::appendWindow(SdPolyWindowList &dest, SdPoint p, int gap, const QTran
 //! \param stratum        Stratum for layers (unused)
 //! \param map            Base map for holes conversion (applied after local transforms)
 //!
-void SdPad::appendPadHoles(SdPoint p, Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+void SdPad::appendPadHoles(SdPoint p, Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map) const
   {
   Q_UNUSED(stratum)
 
@@ -290,7 +290,7 @@ void SdPad::appendPadHoles(SdPoint p, Sd3drModel &model, Sd3drFaceList &faceList
     QRect holeRect( -holeWidth/2, -holeHeight/2, holeWidth, holeHeight );
 
     // Generate rounded rectangle polygon with 0.5 ratio (fully rounded ends)
-    QPolygonF holePoly = SdUtil::roundrect(holeRect, 500);  // 500 = 0.5 in thousandths
+    QPolygonF holePoly = SdUtil::roundrect(holeRect, 500, 40);  // 500 = 0.5 in thousandths
 
     // Convert to 3D face with combined transformation
     faceList.append( model.faceFromUmPolygon(holePoly, combined) );
@@ -661,9 +661,9 @@ void SdPad::parse(const QString nm)
     Sd3drFace hole3d = mModel.faceCircleSide( static_cast<float>(mHoleDiametr) / 2000.0, 40, localMat );
     Sd3drFace pad3d;
     if( mIsCircle )
-      pad3d = mModel.faceCircleSide( radius, 40, t );
+      pad3d = mModel.faceCircleSide( radius, 40, localMat );
     else
-      pad3d = mModel.faceRectangleSide( static_cast<float>(mDiametrWidth) / 1000.0, static_cast<float>(mHeight) / 1000.0, 40, t );
+      pad3d = mModel.faceRectangleSide( static_cast<float>(mDiametrWidth) / 1000.0, static_cast<float>(mHeight) / 1000.0, 40, localMat );
     //Top pad
     body.faceAppend( mModel.faceListWall( pad3d, hole3d, true ) );
     //Bottom pad
@@ -679,9 +679,9 @@ void SdPad::parse(const QString nm)
     //Smd pad
     Sd3drFace pad3d;
     if( mIsCircle )
-      pad3d = mModel.faceCircle( radius, 10, t );
+      pad3d = mModel.faceCircle( radius, 10, localMat );
     else
-      pad3d = mModel.faceRectangle( static_cast<float>(mDiametrWidth) / 1000.0, static_cast<float>(mHeight) / 1000.0, t );
+      pad3d = mModel.faceRectangle( static_cast<float>(mDiametrWidth) / 1000.0, static_cast<float>(mHeight) / 1000.0, localMat );
     body.faceAppend( pad3d );
     }
   body.colorSet( SdEnvir::instance()->getSysColor( sc3dPadTop ) );
@@ -755,14 +755,14 @@ void SdPad::rebuildCache()
   if( mEllipse ) {
     // Elliptical pad
     QRect padRect( -mDiametrWidth/2, -mHeight/2, mDiametrWidth, mHeight );
-    mCachePad = SdUtil::ellipse(padRect);
+    mCachePad = SdUtil::ellipse(padRect, 40);
 
     // Mask for ellipse
     if( mMaskThreshold > 0 ) {
       int maskWidth = mDiametrWidth + mMaskThreshold * 2;
       int maskHeight = mHeight + mMaskThreshold * 2;
       QRect maskRect( -maskWidth/2, -maskHeight/2, maskWidth, maskHeight );
-      mCacheMask = SdUtil::ellipse(maskRect);
+      mCacheMask = SdUtil::ellipse(maskRect, 40);
       }
 
     // Stencil for ellipse
@@ -771,21 +771,21 @@ void SdPad::rebuildCache()
       int stencilHeight = mHeight - mStencilThreshold * 2;
       if( stencilWidth > 0 && stencilHeight > 0 ) {
         QRect stencilRect( -stencilWidth/2, -stencilHeight/2, stencilWidth, stencilHeight );
-        mCacheStencil = SdUtil::ellipse(stencilRect);
+        mCacheStencil = SdUtil::ellipse(stencilRect, 40 );
         }
       }
     }
   else if( !mIsCircle && mRoundRectRatio > 0 ) {
     // Rounded rectangle pad
     QRect padRect( -mDiametrWidth/2, -mHeight/2, mDiametrWidth, mHeight );
-    mCachePad = SdUtil::roundrect(padRect, mRoundRectRatio);
+    mCachePad = SdUtil::roundrect(padRect, mRoundRectRatio, 40);
 
     // Mask for rounded rectangle
     if( mMaskThreshold > 0 ) {
       int maskWidth = mDiametrWidth + mMaskThreshold * 2;
       int maskHeight = mHeight + mMaskThreshold * 2;
       QRect maskRect( -maskWidth/2, -maskHeight/2, maskWidth, maskHeight );
-      mCacheMask = SdUtil::roundrect(maskRect, mRoundRectRatio);
+      mCacheMask = SdUtil::roundrect(maskRect, mRoundRectRatio, 40);
       }
 
     // Stencil for rounded rectangle
@@ -794,7 +794,7 @@ void SdPad::rebuildCache()
       int stencilHeight = mHeight - mStencilThreshold * 2;
       if( stencilWidth > 0 && stencilHeight > 0 ) {
         QRect stencilRect( -stencilWidth/2, -stencilHeight/2, stencilWidth, stencilHeight );
-        mCacheStencil = SdUtil::roundrect(stencilRect, mRoundRectRatio);
+        mCacheStencil = SdUtil::roundrect(stencilRect, mRoundRectRatio, 40);
         }
       }
     }

@@ -3,6 +3,7 @@
 #include "Sd3drPointLink.h"
 
 #include <QLineF>
+#include <QPolygonF>
 #include <math.h>
 
 

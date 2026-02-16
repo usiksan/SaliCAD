@@ -30,8 +30,8 @@ SdModeCLinearCircle::SdModeCLinearCircle(SdWEditorGraph *editor, SdProjectItem *
 
 void SdModeCLinearCircle::drawDynamic(SdContext *ctx)
   {
-  ctx->setPen( sdGlobalProp->mLineProp.mWidth.getValue(), SdEnvir::instance()->getSysColor(scEnter),
-               sdGlobalProp->mLineProp.mType.getValue() );
+  ctx->setPen( sdGlobalProp->propLine( mObject->getClass() )->mWidth.getValue(), SdEnvir::instance()->getSysColor(scEnter),
+               sdGlobalProp->propLine( mObject->getClass() )->mType.getValue() );
   if( getStep() == sRadius )
     ctx->circle( mCenter, mRadius );
   if( SdEnvir::instance()->mIsSmart && mSmartType )
@@ -138,7 +138,7 @@ int SdModeCLinearCircle::getIndex() const
 
 void SdModeCLinearCircle::addCircle()
   {
-  addPic( new SdGraphLinearCircle( mCenter, mRadius, sdGlobalProp->mLineProp ), QObject::tr("Insert circle") );
+  addPic( new SdGraphLinearCircle( mCenter, mRadius, *sdGlobalProp->propLine( mObject->getClass() ) ), QObject::tr("Insert circle") );
   }
 
 

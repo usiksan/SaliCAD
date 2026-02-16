@@ -30,8 +30,8 @@ SdModeCLinearRegion::SdModeCLinearRegion(SdWEditorGraph *editor, SdProjectItem *
 void SdModeCLinearRegion::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sNextPoint ) {
-    ctx->setPen( sdGlobalProp->mLineProp.mWidth.getValue(), SdEnvir::instance()->getSysColor(scEnter),
-                 sdGlobalProp->mLineProp.mType.getValue() );
+    ctx->setPen( sdGlobalProp->propLine( mObject->getClass() )->mWidth.getValue(), SdEnvir::instance()->getSysColor(scEnter),
+                 sdGlobalProp->propLine( mObject->getClass() )->mType.getValue() );
     ctx->region( mList, false );
     ctx->line( mList.last(), mMiddle );
     if( mMiddle != mPrevMove )
@@ -174,5 +174,5 @@ void SdModeCLinearRegion::keyDown(int key, QChar ch)
 //Append region to edit object
 void SdModeCLinearRegion::addRegion()
   {
-  addPic( new SdGraphLinearRegion( mList, sdGlobalProp->mLineProp ), QObject::tr("Insert region") );
+  addPic( new SdGraphLinearRegion( mList, *sdGlobalProp->propLine( mObject->getClass() ) ), QObject::tr("Insert region") );
   }

@@ -30,7 +30,7 @@ SdPlateNet::SdPlateNet() :
 
 
 //Append one net segment. Check and manage subnets
-void SdPlateNet::addNetSegment(SdStratum s, SdPoint p1, SdPoint p2 )
+void SdPlateNet::addNetSegment(SdPropStratum s, SdPoint p1, SdPoint p2 )
   {
   //Prepare pair to append
   SdPlateNetSegment segment;

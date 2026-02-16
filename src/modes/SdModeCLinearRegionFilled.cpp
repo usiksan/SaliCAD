@@ -57,6 +57,6 @@ int SdModeCLinearRegionFilled::getIndex() const
 
 void SdModeCLinearRegionFilled::addRegion()
   {
-  addPic( new SdGraphLinearRegionFilled( mList, sdGlobalProp->mLineProp ), QObject::tr("Insert filled region") );
+  addPic( new SdGraphLinearRegionFilled( mList, *sdGlobalProp->propLine( mObject->getClass() ) ), QObject::tr("Insert filled region") );
   }
 

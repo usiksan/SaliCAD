@@ -117,6 +117,7 @@ SOURCES += \
     objects/SdGraphScriptRefMap.cpp \
     objects/SdJsonIO.cpp \
     objects/SdPartImpRelativePosition.cpp \
+    objects/SdPropStratum.cpp \
     script/SdScriptOperatorBlock.cpp \
     script/SdScriptOperatorIf.cpp \
     script/SdScriptOperatorWhile.cpp \
@@ -292,7 +293,6 @@ SOURCES += \
     windows/SdPropBarWire.cpp \
     windows/SdDNetUnion.cpp \
     objects/SdUndoRecordWire.cpp \
-    objects/SdStratum.cpp \
     objects/SdGraphTraced.cpp \
     objects/SdGraphTracedVia.cpp \
     objects/SdGraphTracedPolygon.cpp \
@@ -527,6 +527,8 @@ HEADERS  += \
     objects/SdGraphScriptRefMap.h \
     objects/SdJsonIO.h \
     objects/SdPartImpRelativePosition.h \
+    objects/SdPropStratum.h \
+    objects/SdStratum.h \
     script/SdScriptOperator.h \
     script/SdScriptOperatorAssign.h \
     script/SdScriptOperatorBlock.h \
@@ -809,7 +811,6 @@ HEADERS  += \
     windows/SdPropBarWire.h \
     windows/SdDNetUnion.h \
     objects/SdUndoRecordWire.h \
-    objects/SdStratum.h \
     objects/SdGraphTraced.h \
     objects/SdGraphTracedVia.h \
     objects/SdGraphTracedPolygon.h \

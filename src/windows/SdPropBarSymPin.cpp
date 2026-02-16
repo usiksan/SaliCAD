@@ -45,7 +45,7 @@ void SdPropBarSymPin::setPropSymPin(SdPropSymPin *propSymPin)
   {
   if( propSymPin ) {
     //Set current layer
-    setSelectedLayer( propSymPin->mLayer.layer(false) );
+    updateEditObjectProp( dctSymbol, stmThrough, propSymPin->mLayer.layer(false) );
 
     //Set current pin type
     mPinType->setCurrentIndex( propSymPin->mPinType.getValue() );

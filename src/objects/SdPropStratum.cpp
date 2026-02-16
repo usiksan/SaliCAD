@@ -10,20 +10,20 @@ Web
 
 Description
 */
-#include "SdStratum.h"
+#include "SdPropStratum.h"
 #include "SdEnvir.h"
 #include "SdJsonIO.h"
 
 #include <algorithm>
 
-SdStratum::SdStratum() :
+SdPropStratum::SdPropStratum() :
   SdPropInt()
   {
 
   }
 
 
-SdStratum::SdStratum(int str) :
+SdPropStratum::SdPropStratum(int str) :
   SdPropInt(str)
   {
 
@@ -38,7 +38,7 @@ SdStratum::SdStratum(int str) :
 //! \param pcbLayerCount Count of pcb signal layers
 //! \param rule          Rule for building, one of stmRuleXXX
 //!
-void SdStratum::stratumBuild(SdStratum from, SdStratum to, int pcbLayerCount, int rule)
+void SdPropStratum::stratumBuild(SdPropStratum from, SdPropStratum to, int pcbLayerCount, int rule)
   {
   int indexFrom = from.getStratumIndex();
   int indexTo   = to.getStratumIndex();
@@ -101,7 +101,7 @@ void SdStratum::stratumBuild(SdStratum from, SdStratum to, int pcbLayerCount, in
 
 
 //Write-read stratum
-void SdStratum::jsonStratum(SvJsonWriter &js) const
+void SdPropStratum::jsonStratum(SvJsonWriter &js) const
   {
   js.object().insert( QStringLiteral("Stratum"), QString::number( mValue, 16 ) );
   }
@@ -109,7 +109,7 @@ void SdStratum::jsonStratum(SvJsonWriter &js) const
 
 
 
-void SdStratum::jsonStratum(const SdJsonReader &js)
+void SdPropStratum::jsonStratum(const SdJsonReader &js)
   {
   mValue = js.object().value( QStringLiteral("Stratum") ).toString().toInt( nullptr, 16 );
   if( js.property()->mVersion == SD_BASE_VERSION_1 ) {
@@ -123,7 +123,7 @@ void SdStratum::jsonStratum(const SdJsonReader &js)
 
 
 
-void SdStratum::jsonSide(SvJsonWriter &js) const
+void SdPropStratum::jsonSide(SvJsonWriter &js) const
   {
   QString side;
   switch( mValue ) {
@@ -136,7 +136,7 @@ void SdStratum::jsonSide(SvJsonWriter &js) const
 
 
 
-void SdStratum::jsonSide(const SdJsonReader &js)
+void SdPropStratum::jsonSide(const SdJsonReader &js)
   {
   QString side;
   js.jsonString( "Side", side );
@@ -158,7 +158,7 @@ void SdStratum::jsonSide(const SdJsonReader &js)
 
 
 //Flip stratum stack for pcb bottom and unchange it if other
-int SdStratum::stratum(bool top) const
+int SdPropStratum::stratum(bool top) const
   {
   if( mValue < 0 ) return 0;
   if( !top && mValue == stmTop )
@@ -170,7 +170,7 @@ int SdStratum::stratum(bool top) const
 
 
 //Flip stratum stack if component is bottom and unchange it if none
-int SdStratum::stratumComp(const SdStratum &src) const
+int SdPropStratum::stratumComp(const SdPropStratum &src) const
   {
   return stratum( !src.isBottom() );
   }
@@ -180,7 +180,7 @@ int SdStratum::stratumComp(const SdStratum &src) const
 
 
 //Get first stratum from stratum stack
-int SdStratum::stratumFirst(SdStratum s) const
+int SdPropStratum::stratumFirst(SdPropStratum s) const
   {
   if( mValue <= 0 || s.mValue <= 0 )
     return stmTop;
@@ -202,7 +202,7 @@ int SdStratum::stratumFirst(SdStratum s) const
 
 
 //Get next stratum from stratum stack
-int SdStratum::stratumNext(SdStratum s) const
+int SdPropStratum::stratumNext(SdPropStratum s) const
   {
   if( mValue <= 0 || s.mValue <= 0 )
     return stmTop;
@@ -222,7 +222,7 @@ int SdStratum::stratumNext(SdStratum s) const
 
 
 
-int SdStratum::getStratumIndex() const
+int SdPropStratum::getStratumIndex() const
   {
   return stratumIndex(mValue);
   }
@@ -232,7 +232,7 @@ int SdStratum::getStratumIndex() const
 
 
 //Get stratum index of first stratum in the stack
-int SdStratum::stratumIndex(int stratum)
+int SdPropStratum::stratumIndex(int stratum)
   {
   for( int i = 0; i < 30; i++ )
     if( stratum & (1 << i) ) return i;
@@ -243,26 +243,11 @@ int SdStratum::stratumIndex(int stratum)
 
 
 //Build stratum stack with stratum count
-int SdStratum::stratumStack(int stratumCount)
+int SdPropStratum::stratumStack(int stratumCount)
   {
-  switch( stratumCount ) {
-    case 30 : return stmLayer30;
-    case 28 : return stmLayer28;
-    case 26 : return stmLayer26;
-    case 24 : return stmLayer24;
-    case 22 : return stmLayer22;
-    case 20 : return stmLayer20;
-    case 18 : return stmLayer18;
-    case 16 : return stmLayer16;
-    case 14 : return stmLayer14;
-    case 12 : return stmLayer12;
-    case 10 : return stmLayer10;
-    case 8 : return stmLayer8;
-    case 6 : return stmLayer6;
-    case 4 : return stmLayer4;
-    case 2 : return stmLayer2;
-    case 1 : return stmLayer1;
-    default:
-      return stmTop;
-    }
+  static const SdStratum map[16] = { stmTop,     stmLayer2,  stmLayer4,  stmLayer6,  stmLayer8,  stmLayer10, stmLayer12, stmLayer14,
+                                     stmLayer16, stmLayer18, stmLayer20, stmLayer22, stmLayer24, stmLayer26, stmLayer28, stmLayer30 };
+  return map[ qBound( 2, stratumCount, 30 ) >> 1 ];
   }
+
+

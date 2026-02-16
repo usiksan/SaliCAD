@@ -75,7 +75,7 @@ void SdModeCScript::propGetFromBar()
     if( mPropText )
       tbar->getPropText( mPropText );
     else
-      tbar->getPropText( &(sdGlobalProp->mTextProp) );
+      tbar->getPropText( sdGlobalProp->propText(mObject->getClass()) );
     mEditor->setFocus();
     update();
     }
@@ -88,9 +88,9 @@ void SdModeCScript::propSetToBar()
   auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>( PB_TEXT );
   if( tbar ) {
     if( mPropText )
-      tbar->setPropText( mPropText, mEditor->getPPM() );
+      tbar->setPropText( mObject, mPropText, mEditor->getPPM() );
     else
-      tbar->setPropText( &(sdGlobalProp->mTextProp), mEditor->getPPM() );
+      tbar->setPropText( mObject, sdGlobalProp->propText(mObject->getClass()), mEditor->getPPM() );
     }
   }
 
@@ -115,7 +115,7 @@ void SdModeCScript::enterPoint( SdPoint p )
       SdDExpressionEdit edit( QString{}, mEditor );
       if( edit.exec() ) {
         //Create and insert new Script object
-        addPic( new SdGraphScript( edit.scriptGet(), p, sdGlobalProp->mTextProp ), QStringLiteral("Append new script")  );
+        addPic( new SdGraphScript( edit.scriptGet(), p, *sdGlobalProp->propText(mObject->getClass()) ), QStringLiteral("Append new script")  );
         }
       }
     else if( pgraph->getClass() == dctGraphScript ) {

@@ -97,9 +97,10 @@ class SdUtil
     //!
     //! \brief ellipse Creates polygon approximation of ellipse
     //! \param r       Rectangle defining ellipse bounds
-    //! \return        Polygon with 16 points approximating the ellipse
+    //! \param sides   Total number of points in polygon (minimum 4, recommended 16-32)
+    //! \return        Polygon approximating the ellipse with specified number of points
     //!
-    static QPolygonF ellipse( QRect r );
+    static QPolygonF ellipse(QRect r, int sides);
 
     //Value limitation
     static int       iLimit( int val, int vmin, int vmax );

@@ -31,8 +31,8 @@ SdModeCLinearLine::SdModeCLinearLine(SdWEditorGraph *editor, SdProjectItem *obj)
 void SdModeCLinearLine::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sNextPoint ) {
-    ctx->setPen( sdGlobalProp->mLineProp.mWidth.getValue(), SdEnvir::instance()->getSysColor(scEnter),
-                 sdGlobalProp->mLineProp.mType.getValue() );
+    ctx->setPen( sdGlobalProp->propLine( mObject->getClass() )->mWidth.getValue(), SdEnvir::instance()->getSysColor(scEnter),
+                 sdGlobalProp->propLine( mObject->getClass() )->mType.getValue() );
     ctx->line( mFirst, mMiddle );
     if( mMiddle != mPrevMove )
       ctx->line( mMiddle, mPrevMove );
@@ -55,7 +55,7 @@ void SdModeCLinearLine::enterPoint(SdPoint enter)
     if( mPrevMove == mFirst ) mPrevMove = enter;
     //Добавить сегмент
     if( mPrevMove != mFirst )
-      addPic( new SdGraphLinearLine( mFirst, mPrevMove, sdGlobalProp->mLineProp ), QObject::tr("Insert line") );
+      addPic( new SdGraphLinearLine( mFirst, mPrevMove, *sdGlobalProp->propLine( mObject->getClass() ) ), QObject::tr("Insert line") );
     mOffset = mPrevMove - mFirst;
     mFirst = mPrevMove;
     mPrevMove = enter;

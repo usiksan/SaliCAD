@@ -90,7 +90,7 @@ SdPropBarPartPlace::SdPropBarPartPlace(const QString title) :
 
 
 //Set new side mask
-void SdPropBarPartPlace::setSideMask(SdStratum mask)
+void SdPropBarPartPlace::setSideMask(SdPropStratum mask)
   {
   mSideMask = mask;
   if( mSideMask == stmTop )

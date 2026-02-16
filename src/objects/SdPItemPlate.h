@@ -16,7 +16,7 @@ Description
 
 #include "SdProjectItem.h"
 #include "SdRect.h"
-#include "SdStratum.h"
+#include "SdPropStratum.h"
 #include "SdGraphTraced.h"
 #include "SdPlateNet.h"
 #include "SdPadAssociation.h"
@@ -64,7 +64,7 @@ class SdPItemPlate : public SdProjectItem
     //Stratum count
     int                    stratumCount() const { return mStratumCount; }
     void                   setStratumCount( int sc );
-    int                    stratumMask() const;
+    virtual SdStratum      getStratum() const override;
 
     //!
     //! \brief allocPartImp Allocate component section in plate
@@ -106,7 +106,7 @@ class SdPItemPlate : public SdProjectItem
     //! \param stratum        Stratum for layers
     //! \param map            Map for holes conversion
     //!
-    void                   appendPadHoles( SdPoint p, const QString pinType, Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const;
+    void                   appendPadHoles( SdPoint p, const QString pinType, Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map ) const;
 
 
 
@@ -128,7 +128,7 @@ class SdPItemPlate : public SdProjectItem
 
 
     //Draw pcb for trace
-    void                   drawTrace( SdContext *ctx, SdStratum curStratum, QString currentNetName );
+    void                   drawTrace( SdContext *ctx, SdPropStratum curStratum, QString currentNetName );
 
     //Unconnected nets count
     int                    unconnectedNetCount() const { return mRatNet.count(); }

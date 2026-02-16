@@ -18,7 +18,7 @@ Description
 
 #include "SdPoint.h"
 #include "SdPropAngle.h"
-#include "SdStratum.h"
+#include "SdPropStratum.h"
 #include "SdClass.h"
 
 //Маска разумной привязки
@@ -69,7 +69,7 @@ struct SdSnapInfo
     SdSnapMask      mDestMask;   //Snapped mask for point dest [Маска сработавшая для точки dest]
     double          mSqDistance; //Current square distance from sour to dest [Текущее расстояние от точки sour до точки dest]
     QString         mNetName;    //Net name for find [Имя цепи для поиска]
-    SdStratum       mStratum;    //Stratum for tracing
+    SdPropStratum       mStratum;    //Stratum for tracing
     SdGraph        *mGraph;      //Snapped graph object
 
     SdSnapInfo();

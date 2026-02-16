@@ -91,7 +91,7 @@ void SdModeCText::enterPoint(SdPoint enter)
       mPrev = enter;
       setText( QString(""), false );
       //Установить глобальные свойства
-      mPropText = &(sdGlobalProp->mTextProp);
+      mPropText = sdGlobalProp->propText( mObject->getClass() );
       propSetToBar();
       //Осуществить редактирование
       setStep( sEnter );
@@ -165,7 +165,7 @@ void SdModeCText::cancelEdit()
 void SdModeCText::applyEdit()
   {
   if( getStep() == sEnter )
-    addPic( new SdGraphText( mPrev, mString, mOverRect, sdGlobalProp->mTextProp ), QObject::tr("Text insertion") );
+    addPic( new SdGraphText( mPrev, mString, mOverRect, *sdGlobalProp->propText( mObject->getClass() ) ), QObject::tr("Text insertion") );
   else if( getStep() == sEdit && mPicAffected ) {
     //Store previous state of editable object
     mUndo->begin( QObject::tr("Text edit"), mObject, false );

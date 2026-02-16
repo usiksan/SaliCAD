@@ -154,7 +154,7 @@ void SdPartImpPin::accumWindows(SdPItemPlate *plate, SdPolyWindowList &dest, int
 //! \param stratum    Stratum for layers
 //! \param map        Map for holes conversion
 //!
-void SdPartImpPin::accumHoles(SdPItemPlate *plate, Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+void SdPartImpPin::accumHoles(SdPItemPlate *plate, Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map) const
   {
   plate->appendPadHoles( mPin->getPinOrigin(), mPin->getPinType(), model, faceList, stratum, map );
   }
@@ -619,7 +619,7 @@ void SdGraphPartImp::drawWithoutPads(SdContext *cdx)
 
 
 //Draw pads only
-void SdGraphPartImp::drawPads(SdContext *cdx, SdStratum stratum, const QString highlightNetName)
+void SdGraphPartImp::drawPads(SdContext *cdx, SdPropStratum stratum, const QString highlightNetName)
   {
   //Convertor for symbol implementation
   SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
@@ -1061,7 +1061,7 @@ void SdGraphPartImp::accumWindows(SdPolyWindowList &dest, int stratum, int gap, 
 
 
 //Check if any pin of part linked to point
-bool SdGraphPartImp::isLinked(SdPoint a, SdStratum stratum, QString netName) const
+bool SdGraphPartImp::isLinked(SdPoint a, SdPropStratum stratum, QString netName) const
   {
   //For each pin test connection
   for( const SdPartImpPin &pin : mPins )
@@ -1164,7 +1164,7 @@ void SdGraphPartImp::draw3d(QOpenGLFunctions_2_0 *f) const
 //! \param stratum    Stratum for layers
 //! \param map        Map for holes conversion
 //!
-void SdGraphPartImp::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+void SdGraphPartImp::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map) const
   {
   QMatrix4x4 mp(map);
   mp.translate( mOrigin.xmm(), mOrigin.ymm(), 0 );
@@ -1225,7 +1225,7 @@ void SdGraphPartImp::updatePinsPositions()
 
 
 
-bool SdGraphPartImp::isPointOnNet(SdPoint p, SdStratum stratum, QString *netName, int *destStratum)
+bool SdGraphPartImp::isPointOnNet(SdPoint p, SdPropStratum stratum, QString *netName, int *destStratum)
   {
   //Run on each pin, test stratum and pos. If match then return true and assign wireName
   for( SdPartImpPin &pin : mPins ) {

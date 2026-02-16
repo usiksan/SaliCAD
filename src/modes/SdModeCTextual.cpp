@@ -299,7 +299,7 @@ void SdModeCTextual::propGetFromBar()
     if( mPropText )
       tbar->getPropText( mPropText );
     else
-      tbar->getPropText( &(sdGlobalProp->mTextProp) );
+      tbar->getPropText( sdGlobalProp->propText( mObject->getClass() ) );
     mEditor->setFocus();
     update();
     }
@@ -313,9 +313,9 @@ void SdModeCTextual::propSetToBar()
   auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>( PB_TEXT );
   if( tbar ) {
     if( mPropText )
-      tbar->setPropText( mPropText, mEditor->getPPM() );
+      tbar->setPropText( mObject, mPropText, mEditor->getPPM() );
     else
-      tbar->setPropText( &(sdGlobalProp->mTextProp), mEditor->getPPM() );
+      tbar->setPropText( mObject, sdGlobalProp->propText( mObject->getClass() ), mEditor->getPPM() );
     }
   }
 

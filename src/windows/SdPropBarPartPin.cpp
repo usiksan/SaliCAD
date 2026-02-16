@@ -70,7 +70,7 @@ void SdPropBarPartPin::setPropPartPin(SdPropPartPin *propPartPin)
   {
   if( propPartPin ) {
     //Set current layer
-    setSelectedLayer( propPartPin->mLayer.layer(false) );
+    updateEditObjectProp( dctPart, stmTop | stmBottom, propPartPin->mLayer.layer(false) );
 
     //Set current pin side
     int side = propPartPin->mSide.getValue();

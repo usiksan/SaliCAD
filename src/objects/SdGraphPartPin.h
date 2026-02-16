@@ -18,7 +18,7 @@ Description
 #include "SdPoint.h"
 #include "SdPropText.h"
 #include "SdPropPartPin.h"
-#include "SdStratum.h"
+#include "SdPropStratum.h"
 
 #define SD_TYPE_PART_PIN "PartPin"
 

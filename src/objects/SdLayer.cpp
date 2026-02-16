@@ -283,12 +283,12 @@ SdLayerLevel sdLayerLevel0[] = {
   { LID0_REMARK,        QT_TRANSLATE_NOOP( "SdLayer", "Remark" ),                   layerTraceNone,     dctCommon },
 
   // Schematic specific
-  { LID0_NET,           QT_TRANSLATE_NOOP( "SdLayer", "Schematic net" ),            layerTraceNone,     dctSchematic },
-  { LID0_NET_NAME,      QT_TRANSLATE_NOOP( "SdLayer", "Schematic net name" ),       layerTraceNone,     dctSchematic },
-  { LID0_BUS,           QT_TRANSLATE_NOOP( "SdLayer", "Schematic net bus" ),        layerTraceNone,     dctSchematic },
-  { LID0_AREA,          QT_TRANSLATE_NOOP( "SdLayer", "Schematic PCB area contour" ), layerTraceNone,   dctSchematic },
-  { LID0_FORM,          QT_TRANSLATE_NOOP( "SdLayer", "Drawing form and frame" ),   layerTraceNone,     dctSchematic },
-  { LID0_NAVI,          QT_TRANSLATE_NOOP( "SdLayer", "Navigation grid" ),          layerTraceNone,     dctSchematic },
+  { LID0_NET,           QT_TRANSLATE_NOOP( "SdLayer", "Schematic net" ),            layerTraceNone,     dctSheet },
+  { LID0_NET_NAME,      QT_TRANSLATE_NOOP( "SdLayer", "Schematic net name" ),       layerTraceNone,     dctSheet },
+  { LID0_BUS,           QT_TRANSLATE_NOOP( "SdLayer", "Schematic net bus" ),        layerTraceNone,     dctSheet },
+  { LID0_AREA,          QT_TRANSLATE_NOOP( "SdLayer", "Schematic PCB area contour" ), layerTraceNone,   dctSheet },
+  { LID0_FORM,          QT_TRANSLATE_NOOP( "SdLayer", "Drawing form and frame" ),   layerTraceNone,     dctSheet },
+  { LID0_NAVI,          QT_TRANSLATE_NOOP( "SdLayer", "Navigation grid" ),          layerTraceNone,     dctSheet },
 
   // Both schematic and PCB
   { LID0_COMPONENT,     QT_TRANSLATE_NOOP( "SdLayer", "Component" ),                layerTraceNone,     dctCommon },
@@ -305,8 +305,8 @@ SdLayerLevel sdLayerLevel0[] = {
   { LID0_CLEAR,         QT_TRANSLATE_NOOP( "SdLayer", "PCB trace clear" ),          layerTraceNone,     dctConstruct },
 
   // PCB specific (with LID1)
-  { LID0_WIRE,          QT_TRANSLATE_NOOP( "SdLayer", "PCB wire" ),                 layerTraceRoad,     dctConstruct },
-  { LID0_POLYGON,       QT_TRANSLATE_NOOP( "SdLayer", "PCB polygon" ),              layerTracePolygon,  dctConstruct },
+  { LID0_WIRE,          QT_TRANSLATE_NOOP( "SdLayer", "PCB wire" ),                 layerTraceRoad,     dctPlate },
+  { LID0_POLYGON,       QT_TRANSLATE_NOOP( "SdLayer", "PCB polygon" ),              layerTracePolygon,  dctPlate },
   { LID0_PAD,           QT_TRANSLATE_NOOP( "SdLayer", "PCB pad" ),                  layerTracePad,      dctConstruct },
   { LID0_SOLDER_MASK,   QT_TRANSLATE_NOOP( "SdLayer", "PCB solder mask" ),          layerTraceNone,     dctConstruct },
   { LID0_STENCIL,       QT_TRANSLATE_NOOP( "SdLayer", "PCB stencil aperture" ),     layerTraceNone,     dctConstruct },
@@ -352,7 +352,7 @@ SdLayerLevel sdLayerLevel1[] = {
   { LID1_INT26,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 26" ), layerTraceNone,stmInt26 },
   { LID1_INT27,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 27" ), layerTraceNone,stmInt27 },
   { LID1_INT28,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 28" ), layerTraceNone,stmInt28 },
-  { LID1_INT29,         QT_TRANSLATE_NOOP( "SdLayer", "on internal 29" ), layerTraceNone,stmInt29 },
+  { LID1_INT29,         QT_TRANSLATE_NOOP( "SdLayer", "on prev bottom" ), layerTraceNone,stmInt29 },
 
   { LID1_CUSTOM1,       QT_TRANSLATE_NOOP( "SdLayer", "on custom 1" ),    layerTraceNone,stmThrough },
   { LID1_CUSTOM2,       QT_TRANSLATE_NOOP( "SdLayer", "on custom 2" ),    layerTraceNone,stmThrough },

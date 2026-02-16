@@ -240,7 +240,7 @@ void SdGraphLinearRect::draw3d(QOpenGLFunctions_2_0 *f) const
 
 
 
-void SdGraphLinearRect::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map) const
+void SdGraphLinearRect::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map) const
   {
   Q_UNUSED(stratum)
   QMatrix4x4 mat(map);

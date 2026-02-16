@@ -14,7 +14,7 @@ SdPlateNetGraph::SdPlateNetGraph(const QString netName) :
 
 
 //Find presented loop from src to dst
-SdGraphTracedPtrList SdPlateNetGraph::findLoop(SdPoint src, SdStratum stratumSrc, SdPoint dst, SdStratum stratumDst)
+SdGraphTracedPtrList SdPlateNetGraph::findLoop(SdPoint src, SdPropStratum stratumSrc, SdPoint dst, SdPropStratum stratumDst)
   {
   int nodeSrc = addNode( stratumSrc, src );
   int nodeDst = addNode( stratumDst, dst );
@@ -31,7 +31,7 @@ SdGraphTracedPtrList SdPlateNetGraph::findLoop(SdPoint src, SdStratum stratumSrc
 
 
 
-void SdPlateNetGraph::addNetSegment(SdGraphTraced *traced, const QString netName, SdStratum s, SdPoint p1, SdPoint p2)
+void SdPlateNetGraph::addNetSegment(SdGraphTraced *traced, const QString netName, SdPropStratum s, SdPoint p1, SdPoint p2)
   {
   if( netName == mNetName ) {
     if( traced->getClass() == dctPartImp ) {
@@ -81,11 +81,11 @@ void SdPlateNetGraph::buildPath(  QList<SdPlateNetGraphSegment>::iterator iter)
   path.mTracedList.append( iter->mTraced );
   iter->mUsed = true;
   SdPoint p = iter->p1;
-  SdStratum s = iter->mStratum;
+  SdPropStratum s = iter->mStratum;
   int node = findNode( s, p );
   while( node < 0 ) {
     SdPoint pp = p;
-    SdStratum sp = s;
+    SdPropStratum sp = s;
     for( auto it = mSegmentList.begin(); it != mSegmentList.end(); it++ )
       if( !it->mUsed && it->isMatch( p, s ) ) {
         //Append segment to path list
@@ -116,7 +116,7 @@ void SdPlateNetGraph::buildPath(  QList<SdPlateNetGraphSegment>::iterator iter)
   node = findNode( s, p );
   while( node < 0 ) {
     SdPoint pp = p;
-    SdStratum sp = s;
+    SdPropStratum sp = s;
     for( auto it = mSegmentList.begin(); it != mSegmentList.end(); it++ )
       if( !it->mUsed && it->isMatch( p, s ) ) {
         //Append segment to path list
@@ -151,7 +151,7 @@ void SdPlateNetGraph::testViaNode( QList<SdPlateNetGraphSegment>::iterator iter)
   {
   if( !iter->mUsed && iter->mTraced->getClass() == dctTraceVia ) {
     SdPoint p = iter->p1;
-    SdStratum s = iter->mStratum;
+    SdPropStratum s = iter->mStratum;
     int ms1 = 0, ms2 = 0;
     for( auto it = mSegmentList.begin(); it != mSegmentList.end(); it++ )
       if( it->mTraced->getClass() == dctTraceRoad && it->isMatch( p, s ) ) {
@@ -174,7 +174,7 @@ void SdPlateNetGraph::testTNode( QList<SdPlateNetGraphSegment>::iterator iter )
   {
   if( !iter->mUsed && iter->mTraced->getClass() == dctTraceRoad ) {
     SdPoint p = iter->p1;
-    SdStratum s = iter->mStratum;
+    SdPropStratum s = iter->mStratum;
     int count = 0;
     for( auto it = mSegmentList.begin(); it != mSegmentList.end(); it++ )
       if( !it->mUsed && iter != it && it->isMatch( p, s ) )
@@ -196,7 +196,7 @@ void SdPlateNetGraph::testTNode( QList<SdPlateNetGraphSegment>::iterator iter )
 
 
 //Add node to node list if it not present in list
-int SdPlateNetGraph::addNode(SdStratum s, SdPoint p)
+int SdPlateNetGraph::addNode(SdPropStratum s, SdPoint p)
   {
   int i;
   for( i = 0; i < mNodeList.count() && mNodeList.at(i).mOrigin != p; i++ );
@@ -214,7 +214,7 @@ int SdPlateNetGraph::addNode(SdStratum s, SdPoint p)
 
 
 
-int SdPlateNetGraph::findNode(SdStratum s, SdPoint p)
+int SdPlateNetGraph::findNode(SdPropStratum s, SdPoint p)
   {
   for( int i = 0; i < mNodeList.count(); i++ )
     if( mNodeList.at(i).isMatch( p, s ) )

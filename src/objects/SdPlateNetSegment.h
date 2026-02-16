@@ -15,14 +15,14 @@ Description
 #define SDPLATENETSEGMENT_H
 
 #include "SdPoint.h"
-#include "SdStratum.h"
+#include "SdPropStratum.h"
 #include "SdSegment.h"
 
 
 struct SdPlateNetSegment
   {
     SdSegment mSegment;
-    SdStratum mStratum;
+    SdPropStratum mStratum;
     int       mSubNet;
 
     bool intersect( const SdPlateNetSegment &p ) const {

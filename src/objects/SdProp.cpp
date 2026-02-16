@@ -23,17 +23,58 @@ SdProp *sdGlobalProp;
 SdProp::SdProp()
   {
   //Сформировать свойства по умолчанию
-  mLineProp.mLayer.set( QString( LID0_REMARK ) );       //Свойства линейных объектов
-  mLineProp.mType  = dltSolid;
-  mLineProp.mWidth = 0;
+  //Symbol
+  mSymLineProp.mLayer.set( QString( LID0_COMPONENT ) );       //Свойства линейных объектов
+  mSymLineProp.mType  = dltSolid;
+  mSymLineProp.mWidth = 0;
 
-  mTextProp.mLayer.set( QString( LID0_REMARK ) );       //Свойства текстовых объектов
-  mTextProp.mFont   = 0;
-  mTextProp.mSize   = 350;
-  mTextProp.mDir    = da0;
-  mTextProp.mHorz   = dhjLeft;
-  mTextProp.mVert   = dvjMiddle;
-  mTextProp.mMirror = 0;
+  mSymTextProp.mLayer.set( QString( LID0_COMPONENT ) );       //Свойства текстовых объектов
+  mSymTextProp.mFont   = 0;
+  mSymTextProp.mSize   = 350;
+  mSymTextProp.mDir    = da0;
+  mSymTextProp.mHorz   = dhjCenter;
+  mSymTextProp.mVert   = dvjMiddle;
+  mSymTextProp.mMirror = 0;
+
+  //Sheet
+  mSchLineProp.mLayer.set( QString( LID0_BUS ) );       //Свойства линейных объектов
+  mSchLineProp.mType  = dltSolid;
+  mSchLineProp.mWidth = 0;
+
+  mSchTextProp.mLayer.set( QString( LID0_FORM ) );       //Свойства текстовых объектов
+  mSchTextProp.mFont   = 0;
+  mSchTextProp.mSize   = 350;
+  mSchTextProp.mDir    = da0;
+  mSchTextProp.mHorz   = dhjLeft;
+  mSchTextProp.mVert   = dvjMiddle;
+  mSchTextProp.mMirror = 0;
+
+  //Part
+  mPartLineProp.mLayer.set( QString( LID0_COMPONENT LID1_TOP ) );       //Свойства линейных объектов
+  mPartLineProp.mType  = dltSolid;
+  mPartLineProp.mWidth = 0;
+
+  mPartTextProp.mLayer.set( QString( LID0_COMPONENT LID1_TOP ) );       //Свойства текстовых объектов
+  mPartTextProp.mFont   = 0;
+  mPartTextProp.mSize   = 2000;
+  mPartTextProp.mDir    = da0;
+  mPartTextProp.mHorz   = dhjLeft;
+  mPartTextProp.mVert   = dvjMiddle;
+  mPartTextProp.mMirror = 0;
+
+  //Pcb
+  mPcbLineProp.mLayer.set( QString( LID0_REMARK ) );       //Свойства линейных объектов
+  mPcbLineProp.mType  = dltSolid;
+  mPcbLineProp.mWidth = 0;
+
+  mPcbTextProp.mLayer.set( QString( LID0_REMARK ) );       //Свойства текстовых объектов
+  mPcbTextProp.mFont   = 0;
+  mPcbTextProp.mSize   = 350;
+  mPcbTextProp.mDir    = da0;
+  mPcbTextProp.mHorz   = dhjLeft;
+  mPcbTextProp.mVert   = dvjMiddle;
+  mPcbTextProp.mMirror = 0;
+
 
   //Props of wire
   mWireProp.mLayer.set( QString( LID0_NET ) );       //Свойства сегментов цепей схемы
@@ -114,7 +155,7 @@ SdProp::SdProp()
   //Part identifier (reference) aka D4
   mPartIdentProp.mLayer.set( QString(LID0_IDENT LID1_TOP) );    //Layer of ident
   mPartIdentProp.mFont   = 0;
-  mPartIdentProp.mSize   = 1000;
+  mPartIdentProp.mSize   = 2000;
   mPartIdentProp.mDir    = da0;
   mPartIdentProp.mHorz   = dhjCenter;
   mPartIdentProp.mVert   = dvjMiddle;
@@ -132,7 +173,7 @@ SdProp::SdProp()
   //Value properties for part
   mPartValueProp.mLayer.set( QString(LID0_VALUE LID1_TOP) );
   mPartValueProp.mFont   = 0;
-  mPartValueProp.mSize   = 1000;
+  mPartValueProp.mSize   = 2000;
   mPartValueProp.mDir    = da0;
   mPartValueProp.mHorz   = dhjCenter;
   mPartValueProp.mVert   = dvjMiddle;
@@ -179,8 +220,18 @@ void SdProp::loadProp()
     SdJsonReaderProperty rdProp;
     SdJsonReader js( obj, &rdProp );
 
-    mLineProp.json( "line", js );       //Свойства линейных объектов
-    mTextProp.json( "text", js );       //Свойства текстовых объектов
+    mSymLineProp.json( "symLine", js );       //Свойства линейных объектов
+    mSymTextProp.json( "symText", js );       //Свойства текстовых объектов
+
+    mSchLineProp.json( "schLine", js );       //Свойства линейных объектов
+    mSchTextProp.json( "schText", js );       //Свойства текстовых объектов
+
+    mPartLineProp.json( "partLine", js );       //Свойства линейных объектов
+    mPartTextProp.json( "partText", js );       //Свойства текстовых объектов
+
+    mPcbLineProp.json( "pcbLine", js );       //Свойства линейных объектов
+    mPcbTextProp.json( "pcbText", js );       //Свойства текстовых объектов
+
     mWireProp.json( "wire", js );       //Свойства сегментов цепей схемы
     mWireNameProp.json( "wireName", js );   //Свойства имени цепи
     mSymPinProp.json( js );     //Свойства вывода символа
@@ -221,8 +272,18 @@ void SdProp::saveProp()
   {
   SdJsonWriter js;
 
-  mLineProp.json( "line", js );       //Свойства линейных объектов
-  mTextProp.json( "text", js );       //Свойства текстовых объектов
+  mSymLineProp.json( "symLine", js );       //Свойства линейных объектов
+  mSymTextProp.json( "symText", js );       //Свойства текстовых объектов
+
+  mSchLineProp.json( "schLine", js );       //Свойства линейных объектов
+  mSchTextProp.json( "schText", js );       //Свойства текстовых объектов
+
+  mPartLineProp.json( "partLine", js );       //Свойства линейных объектов
+  mPartTextProp.json( "partText", js );       //Свойства текстовых объектов
+
+  mPcbLineProp.json( "pcbLine", js );       //Свойства линейных объектов
+  mPcbTextProp.json( "pcbText", js );       //Свойства текстовых объектов
+
   mWireProp.json( "wire", js );       //Свойства сегментов цепей схемы
   mWireNameProp.json( "wireName", js );   //Свойства имени цепи
   mSymPinProp.json( js );     //Свойства вывода символа
@@ -256,3 +317,29 @@ void SdProp::saveProp()
   s.setValue( QString(SDK_PROP), svJsonObjectToByteArray( js.object() ) );
   }
 
+
+
+
+SdPropLine *SdProp::propLine(SdClass theClass)
+  {
+  switch( theClass ) {
+    case dctSymbol : return &mSymLineProp;
+    case dctSheet  : return &mSchLineProp;
+    case dctPart   : return &mPartLineProp;
+    case dctPlate  : return &mPcbLineProp;
+    }
+  qFatal() << "Invalid line property required" << theClass;
+  }
+
+
+
+SdPropText *SdProp::propText( SdClass theClass )
+  {
+  switch( theClass ) {
+    case dctSymbol : return &mSymTextProp;
+    case dctSheet  : return &mSchTextProp;
+    case dctPart   : return &mPartTextProp;
+    case dctPlate  : return &mPcbTextProp;
+    }
+  qFatal() << "Invalid text property required" << theClass;
+  }

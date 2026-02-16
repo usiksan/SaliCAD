@@ -97,7 +97,7 @@ void SdModeCNetName::propSetToBar()
   {
   auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
   if( tbar ) {
-    tbar->setPropText( &(sdGlobalProp->mWireNameProp), mEditor->getPPM() );
+    tbar->setPropText( mObject, &(sdGlobalProp->mWireNameProp), mEditor->getPPM() );
     }
   }
 

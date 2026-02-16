@@ -162,11 +162,11 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
 
 
 
-void SdPropBarTextual::setPropText(SdPropText *propText, double ppm)
+void SdPropBarTextual::setPropText(SdProjectItem *pitem, SdPropText *propText, double ppm)
   {
   if( propText ) {
     //Set current layer
-    setSelectedLayer( propText->mLayer.layer(false) );
+    updateEditObjectProp( pitem, propText->mLayer.layer(false) );
 
     //Set current font
     setFont( propText->mFont.getValue() );

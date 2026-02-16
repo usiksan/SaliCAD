@@ -14,7 +14,7 @@ Description
 #ifndef SDPROPBARPARTPLACE_H
 #define SDPROPBARPARTPLACE_H
 
-#include "objects/SdStratum.h"
+#include "objects/SdPropStratum.h"
 #include "SdPropBarPartImp.h"
 
 class SdPropBarPartPlace : public SdPropBarPartImp
@@ -23,7 +23,7 @@ class SdPropBarPartPlace : public SdPropBarPartImp
 
     //Set side component mask
     QAction   *mSideMaskButton;
-    SdStratum  mSideMask;
+    SdPropStratum  mSideMask;
 
     //Set smart mode selection (on middle button)
     QAction   *mSmartMode;
@@ -46,9 +46,9 @@ class SdPropBarPartPlace : public SdPropBarPartImp
     //void    getPlaceInfo( QString &sheet, QString &comp, bool &sm)
 
     //Set new side mask
-    void      setSideMask( SdStratum mask );
+    void      setSideMask( SdPropStratum mask );
     //Get current side mask
-    SdStratum sideMask() const { return mSideMask; }
+    SdPropStratum sideMask() const { return mSideMask; }
 
     //Set new state of smart mode
     void      setSmartMode( bool smartOrNextNumber );

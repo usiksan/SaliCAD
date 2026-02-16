@@ -64,7 +64,7 @@ class SdModeCPartPlace : public SdModeCommon
     int                mBigCompPins;       //Количество выводов главного компонента
     int                mBigCompIndex;      //Индекс главного компонента в таблице компонентов
     QString            mCurrentSheet;      //Current sheet component selected from
-    SdStratum          mSideMask;          //Available side mask: only top, only bottom or both
+    SdPropStratum          mSideMask;          //Available side mask: only top, only bottom or both
 
     SdPlateNetList     mNetList;           //Net list for rat net creation
 

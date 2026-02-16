@@ -161,7 +161,7 @@ void SdPropBarWire::setPropWire(SdPropLine *propLine, double ppm, int enterType,
   {
   if( propLine ) {
     //Set current layer
-    setSelectedLayer( propLine->mLayer.layer(false) );
+    updateEditObjectProp( dctSheet, stmThrough, propLine->mLayer.layer(false) );
 
     //Set current width
     mPPM = ppm;

@@ -13,7 +13,7 @@ Description
 #ifndef SDPROPBARSTRATUM_H
 #define SDPROPBARSTRATUM_H
 
-#include "objects/SdStratum.h"
+#include "objects/SdPropStratum.h"
 #include "SdPropBar.h"
 
 class SdPItemPlate;
@@ -26,8 +26,8 @@ class SdPropBarStratum : public SdPropBar
     SdPItemPlate *mPlate;      //Plate contains stratum count
     SdLayerTrace  mLayerTrace;
 
-    void      setSelectedStratum( SdStratum stratum );
-    SdStratum getSelectedStratum();
+    void      setSelectedStratum( SdPropStratum stratum );
+    SdPropStratum getSelectedStratum();
   public:
     SdPropBarStratum(const QString title);
 

@@ -20,7 +20,9 @@ Description
 #include <QTimer>
 
 SdPropBar::SdPropBar( const QString title ) :
-  QToolBar( title )
+  QToolBar( title ),
+  mEditObjectClass(dctCommon),
+  mStratum(stmThrough)
   {
   insertAction( nullptr, SdWCommand::cmViewLayers );
   mLayer = new QComboBox();
@@ -94,22 +96,55 @@ SdLayer *SdPropBar::getSelectedLayer()
 //Visibility state of layers are changed. We need update list and preserve current layer selection
 void SdPropBar::updateViewedLayers(SdLayer *currentLayer)
   {
-  bool changeCurrentLayer = currentLayer != nullptr;
+  SdLayer *prevLayer = getSelectedLayer();
   //get current selection
-  if( !changeCurrentLayer )
-    currentLayer = getSelectedLayer();
+  if( currentLayer == nullptr )
+    currentLayer = prevLayer;
+  refillLayers();
+  setSelectedLayer( currentLayer );
+
+  if( prevLayer != currentLayer )
+    emit propChanged();
+  }
+
+
+
+
+
+void SdPropBar::updateEditObjectProp(SdProjectItem *pitem, SdLayer *currentLayer)
+  {
+  if( pitem == nullptr )
+    updateEditObjectProp( dctCommon, stmThrough, currentLayer );
+  else
+    updateEditObjectProp( pitem->getClass(), pitem->getStratum(), currentLayer );
+  }
+
+
+
+
+void SdPropBar::updateEditObjectProp(SdClass theClass, SdStratum stratum, SdLayer *currentLayer)
+  {
+  if( mEditObjectClass != theClass || mStratum != stratum )  {
+    mEditObjectClass = theClass;
+    mStratum         = stratum;
+    refillLayers();
+    }
+  setSelectedLayer( currentLayer );
+  }
+
+
+
+void SdPropBar::refillLayers()
+  {
   mLayer->clear();
   //fill new layers list
-  SdEnvir::instance()->layerForEachConst( dctCommon, [this] ( SdLayer *p ) -> bool {
-    if( p->isEdited() ) {
+  SdEnvir::instance()->layerForEachConst( mEditObjectClass, [this] ( SdLayer *p ) -> bool {
+    if( p->isEdited() && (p->stratum() & mStratum) ) {
       mLayer->addItem( p->name(), QVariant( p->id() ) );
       }
     return true;
     } );
-  setSelectedLayer( currentLayer );
-
-  if( changeCurrentLayer )
-    emit propChanged();
   }
+
 
 

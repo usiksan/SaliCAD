@@ -56,7 +56,7 @@ void SdGraphTraced::accumLinkedTrace(SdGraphTraced *from, SdPoint a, QString net
 
 
 
-bool SdGraphTraced::isMatchNetAndStratum(const QString netName, SdStratum stratum) const
+bool SdGraphTraced::isMatchNetAndStratum(const QString netName, SdPropStratum stratum) const
   {
   Q_UNUSED(netName)
   Q_UNUSED(stratum)

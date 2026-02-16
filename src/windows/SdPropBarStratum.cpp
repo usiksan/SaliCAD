@@ -40,7 +40,7 @@ void SdPropBarStratum::setPlateAndTrace(SdPItemPlate *plate, SdLayerTrace trace)
 
 
 
-void SdPropBarStratum::setSelectedStratum(SdStratum stratum)
+void SdPropBarStratum::setSelectedStratum(SdPropStratum stratum)
   {
   for( int i = 0; i < mLayer->count(); i++ ) {
     QString id = mLayer->itemData(i).toString();
@@ -59,7 +59,7 @@ void SdPropBarStratum::setSelectedStratum(SdStratum stratum)
 
 
 
-SdStratum SdPropBarStratum::getSelectedStratum()
+SdPropStratum SdPropBarStratum::getSelectedStratum()
   {
   int index = mLayer->currentIndex();
   if( index < 0 )
@@ -81,12 +81,12 @@ SdStratum SdPropBarStratum::getSelectedStratum()
 
 void SdPropBarStratum::updateViewedLayers(SdLayer *selectedLayer )
   {
-  SdStratum curStratum = getSelectedStratum();
+  SdPropStratum curStratum = getSelectedStratum();
   if( selectedLayer != nullptr && selectedLayer->stratum() != stmThrough && selectedLayer->stratum() != 0 )
     curStratum = selectedLayer->stratum();
   //fill new layers list
   int c = mPlate == nullptr ? 2 : mPlate->stratumCount();
-  int stratumMask = SdStratum::stratumStack( c );
+  int stratumMask = SdPropStratum::stratumStack( c );
   //Remove previous layers
   mLayer->clear();
   //Accumulate available layers to signalLayers list

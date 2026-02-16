@@ -15,7 +15,7 @@ Description
 #define SDGRAPHPARTIMP_H
 
 #include "SdGraphTraced.h"
-#include "SdStratum.h"
+#include "SdPropStratum.h"
 #include "SdPadAssociation.h"
 #include "SdBarrier.h"
 #include "SdTextImplement.h"
@@ -41,7 +41,7 @@ struct SdPartImpPin {
   SdGraphSymImp  *mSection;   //Schematic section where pin located
   QString         mPinName;   //Part pin name
   SdPoint         mPosition;  //Pin position in plate context
-  SdStratum       mStratum;   //Pin stratum
+  SdPropStratum       mStratum;   //Pin stratum
 
   SdPartImpPin();
 
@@ -63,7 +63,7 @@ struct SdPartImpPin {
   //! \param stratum    Stratum for layers
   //! \param map        Map for holes conversion
   //!
-  void        accumHoles( SdPItemPlate *plate, Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const;
+  void        accumHoles( SdPItemPlate *plate, Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map ) const;
 
   //!
   //! \brief json Overloaded function to write object content into json writer
@@ -227,7 +227,7 @@ class SdGraphPartImp : public SdGraphTraced
     //Draw part without pads
     void              drawWithoutPads( SdContext *cdx );
     //Draw pads only
-    void              drawPads( SdContext *cdx, SdStratum stratum, const QString highlightNetName );
+    void              drawPads( SdContext *cdx, SdPropStratum stratum, const QString highlightNetName );
     //Draw rat net
     void              drawRatNet( SdContext *cdx, SdPlateNetList &netList );
 
@@ -294,7 +294,7 @@ class SdGraphPartImp : public SdGraphTraced
     //! \param stratum    Stratum for layers
     //! \param map        Map for holes conversion
     //!
-    virtual void         accumHoles( Sd3drModel &model, Sd3drFaceList &faceList, SdStratum stratum, const QMatrix4x4 &map ) const override;
+    virtual void         accumHoles( Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map ) const override;
 
   private:
     void                 updatePinsPositions();
@@ -305,15 +305,15 @@ class SdGraphPartImp : public SdGraphTraced
 
     // SdGraphTraced interface
   public:
-    virtual bool         isPointOnNet(SdPoint p, SdStratum stratum, QString *netName, int *destStratum) override;
+    virtual bool         isPointOnNet(SdPoint p, SdPropStratum stratum, QString *netName, int *destStratum) override;
     virtual void         accumNetSegments( SdPlateNetContainer *netContainer ) override;
     virtual void         drawStratum(SdContext *dc, int stratum ) override;
     virtual void         accumBarriers( SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk ) const override;
     virtual void         accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName ) const override;
     //Check if any pin of part linked to point
-    virtual bool         isLinked( SdPoint a, SdStratum stratum, QString netName ) const override;
+    virtual bool         isLinked( SdPoint a, SdPropStratum stratum, QString netName ) const override;
     //Stratum of object
-    virtual SdStratum    stratum() const override { return mProp.mSide; }
+    virtual SdPropStratum    stratum() const override { return mProp.mSide; }
   };
 
 #endif // SDGRAPHPARTIMP_H

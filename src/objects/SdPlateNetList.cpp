@@ -32,7 +32,7 @@ SdPlateNetList::~SdPlateNetList()
 
 
 //Add net segment to appropriate net
-void SdPlateNetList::addNetSegment(SdGraphTraced *traced, const QString netName, SdStratum s, SdPoint p1, SdPoint p2)
+void SdPlateNetList::addNetSegment(SdGraphTraced *traced, const QString netName, SdPropStratum s, SdPoint p1, SdPoint p2)
   {
   Q_UNUSED(traced)
 

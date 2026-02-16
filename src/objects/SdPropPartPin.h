@@ -18,7 +18,7 @@ Description
 #include "SdPropLayer.h"
 #include "SdPropInt.h"
 #include "SdPropString.h"
-#include "SdStratum.h"
+#include "SdPropStratum.h"
 
 
 struct SdPropPartPinState {
@@ -30,7 +30,7 @@ struct SdPropPartPinState {
 struct SdPropPartPin
   {
     SdPropLayer  mLayer;   //Pin layer
-    SdStratum    mSide;    //Side of pin location
+    SdPropStratum    mSide;    //Side of pin location
     SdPropString mPinType; //Pin type for pad assotiation
 
     SdPropPartPin() : mLayer(nullptr), mSide(0), mPinType() {}

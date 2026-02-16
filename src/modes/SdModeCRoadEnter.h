@@ -37,7 +37,7 @@ class SdModeCRoadEnter : public SdModeCommon
     SdPropRoad         mProp;              //!< Current properties for road
     SdPropVia          mViaProp;           //!< Current properties for vias
     //int                mViaRule;           //!< Rule for creation via (throught, hidden, blind)
-    SdStratum          mStack;             //!< Available stratum stack at current point
+    SdPropStratum          mStack;             //!< Available stratum stack at current point
     SdRuleBlock        mRule;              //!< Rule block for segment
     SdPoint            mTargetPoint;       //!< Target point
     QList<SdPoint>     mSmartPath;         //!< Auto roaded path to smart point
@@ -99,10 +99,10 @@ class SdModeCRoadEnter : public SdModeCommon
   private:
     //Plate where road being inserted
     SdPItemPlate   *plate() { return dynamic_cast<SdPItemPlate*>(mObject); }
-    void            getNetOnPoint( SdPoint p, SdStratum s, QString *netName, int *destStratum );
+    void            getNetOnPoint( SdPoint p, SdPropStratum s, QString *netName, int *destStratum );
 
     //If point is on middle of same road segment we split it on point
-    void            splitRoadSegment( SdPoint p, SdStratum s, QString *netName, int *destStratum );
+    void            splitRoadSegment( SdPoint p, SdPropStratum s, QString *netName, int *destStratum );
 
     void            calcFirstSmartPoint();
     void            calcNextSmartPoint(SdPoint fromPoint);
@@ -123,16 +123,16 @@ class SdModeCRoadEnter : public SdModeCommon
     void            changeTraceLayer();
 
     //Change to trace layer
-    void            changeToTraceLayer( SdStratum dest );
+    void            changeToTraceLayer( SdPropStratum dest );
 
     //Add via to change trace layer
-    void            addVia( SdStratum newStratum );
+    void            addVia( SdPropStratum newStratum );
 
     //First point enter
     void            firstPointEnter( bool enter );
 
     //Find loop. If found it will be placed to mLoopPath
-    void            findLoop( SdPoint src, SdPoint dst, SdStratum st );
+    void            findLoop( SdPoint src, SdPoint dst, SdPropStratum st );
 
     //Remove loop path if present
     void            removeLoop();

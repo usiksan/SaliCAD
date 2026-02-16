@@ -16,7 +16,7 @@ Description
 #define SDPLATENET_H
 
 #include "SdPoint.h"
-#include "SdStratum.h"
+#include "SdPropStratum.h"
 #include "SdPlateNetSegment.h"
 #include "SdRatNet.h"
 
@@ -31,7 +31,7 @@ class SdPlateNet
     SdPlateNet();
 
     //Append one net segment. Check and manage subnets
-    void    addNetSegment(SdStratum s, SdPoint p1, SdPoint p2);
+    void    addNetSegment(SdPropStratum s, SdPoint p1, SdPoint p2);
 
     //Build ratnet as pair for each-to-other subnets
     void    buildRatNet( SdRatNet *ratNet ) const;

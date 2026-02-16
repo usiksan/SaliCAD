@@ -17,7 +17,7 @@ Description
 
 #include "SdPropInt.h"
 #include "SdPropAngle.h"
-#include "SdStratum.h"
+#include "SdPropStratum.h"
 
 struct SdPropPartImpState {
     int mAngle;
@@ -27,7 +27,7 @@ struct SdPropPartImpState {
 struct SdPropPartImp
   {
     SdPropAngle   mAngle;  //Angle of rotation component [Угол поворота компонента]
-    SdStratum     mSide;   //Side of component location [Сторона расположения на плате]
+    SdPropStratum     mSide;   //Side of component location [Сторона расположения на плате]
 
     void operator = ( SdPropPartImp const &sour ); //Назначить свойства
     void append( SdPropPartImp const &sour );      //Установить свойства

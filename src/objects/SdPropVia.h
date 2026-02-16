@@ -15,12 +15,12 @@ Description
 #define SDPROPVIA_H
 
 #include "SdPropString.h"
-#include "SdStratum.h"
+#include "SdPropStratum.h"
 
 
 struct SdPropVia
   {
-    SdStratum    mStratum; //Stratum of via
+    SdPropStratum    mStratum; //Stratum of via
     SdPropString mPadType; //Pin type for pad assotiation
     SdPropString mNetName; //Net name which via is
 

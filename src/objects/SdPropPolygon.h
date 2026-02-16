@@ -16,7 +16,7 @@ Description
 
 #include "SdPropInt.h"
 #include "SdPropString.h"
-#include "SdStratum.h"
+#include "SdPropStratum.h"
 
 struct SdPropPolygonState {
     int     mGap;
@@ -28,7 +28,7 @@ struct SdPropPolygon
   {
     SdPropInt    mGap;     //Polygon gap [Зазоры окон полигона]
     SdPropString mNetName; //Net name which polygon is
-    SdStratum    mStratum; //Polygon stratum
+    SdPropStratum    mStratum; //Polygon stratum
 
     SdPropPolygon() : mGap(100), mNetName(), mStratum(1) { }
     void operator = ( SdPropPolygon const &prop );  //Назначить свойства в соответствии с шаблоном

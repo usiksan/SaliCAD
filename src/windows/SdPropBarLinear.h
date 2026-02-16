@@ -42,7 +42,7 @@ class SdPropBarLinear : public SdPropBar
   public:
     SdPropBarLinear( const QString title );
 
-    void setPropLine( SdPropLine *propLine, double ppm, int enterType );
+    void setPropLine( SdProjectItem *pitem, SdPropLine *propLine, double ppm, int enterType );
     void getPropLine( SdPropLine *propLine, int *enterType );
 
   private:

@@ -31,8 +31,8 @@ SdModeCLinearRect::SdModeCLinearRect(SdWEditorGraph *editor, SdProjectItem *obj)
 void SdModeCLinearRect::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sSecondCorner ) {
-    ctx->setPen( sdGlobalProp->mLineProp.mWidth.getValue(), SdEnvir::instance()->getSysColor(scEnter),
-                 sdGlobalProp->mLineProp.mType.getValue() );
+    ctx->setPen( sdGlobalProp->propLine( mObject->getClass() )->mWidth.getValue(), SdEnvir::instance()->getSysColor(scEnter),
+                 sdGlobalProp->propLine( mObject->getClass() )->mType.getValue() );
     ctx->rect( SdRect(mFirst,mPrevMove) );
     }
   if( SdEnvir::instance()->mIsSmart && mSmartType )
@@ -145,5 +145,5 @@ int SdModeCLinearRect::getIndex() const
 void SdModeCLinearRect::addRect()
   {
   qDebug() << Q_FUNC_INFO;
-  addPic( new SdGraphLinearRect( mFirst, mPrevMove, sdGlobalProp->mLineProp ), QObject::tr("Insert rect") );
+  addPic( new SdGraphLinearRect( mFirst, mPrevMove, *sdGlobalProp->propLine( mObject->getClass() ) ), QObject::tr("Insert rect") );
   }

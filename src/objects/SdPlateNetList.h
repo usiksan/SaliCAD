@@ -30,7 +30,7 @@ class SdPlateNetList : public SdPlateNetContainer {
     ~SdPlateNetList();
 
     //Add net segment to appropriate net
-    void    addNetSegment( SdGraphTraced *traced, const QString netName, SdStratum s, SdPoint p1, SdPoint p2);
+    void    addNetSegment( SdGraphTraced *traced, const QString netName, SdPropStratum s, SdPoint p1, SdPoint p2);
 
     //For each net build ratnet
     void    buildRatNet( SdRatNet *ratNet );

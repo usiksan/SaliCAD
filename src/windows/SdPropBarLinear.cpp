@@ -115,11 +115,11 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
 
 
 //Set all visual line properties from SdPropLine structure
-void SdPropBarLinear::setPropLine(SdPropLine *propLine, double ppm, int enterType)
+void SdPropBarLinear::setPropLine(SdProjectItem *pitem, SdPropLine *propLine, double ppm, int enterType)
   {
   if( propLine ) {
     //Set current layer
-    setSelectedLayer( propLine->mLayer.layer(false) );
+    updateEditObjectProp( pitem, propLine->mLayer.layer(false) );
 
     //Set current width
     mPPM = ppm;

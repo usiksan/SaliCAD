@@ -45,7 +45,7 @@ void SdModeCPolygonEnter::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sNextPoint ) {
     ctx->setPen( 0, SdEnvir::instance()->getSysColor(scEnter),
-                 sdGlobalProp->mLineProp.mType.getValue() );
+                 sdGlobalProp->propLine( mObject->getClass() )->mType.getValue() );
     ctx->region( mList, false );
     ctx->line( mList.last(), mMiddle );
     if( mMiddle != mPrevMove )

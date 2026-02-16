@@ -249,7 +249,7 @@ void SdGraphTracedVia::snapPoint(SdSnapInfo *snap)
 
 
 
-SdStratum SdGraphTracedVia::stratum() const
+SdPropStratum SdGraphTracedVia::stratum() const
   {
   return mProp.mStratum;
   }
@@ -258,7 +258,7 @@ SdStratum SdGraphTracedVia::stratum() const
 
 
 
-bool SdGraphTracedVia::isPointOnNet(SdPoint p, SdStratum stratum, QString *netName, int *destStratum)
+bool SdGraphTracedVia::isPointOnNet(SdPoint p, SdPropStratum stratum, QString *netName, int *destStratum)
   {
   if( mPosition == p && mProp.mStratum.match( stratum ) ) {
     if( *netName == mProp.mNetName.str() )
@@ -338,7 +338,7 @@ void SdGraphTracedVia::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId 
 
 
 
-bool SdGraphTracedVia::isMatchNetAndStratum(const QString netName, SdStratum stratum) const
+bool SdGraphTracedVia::isMatchNetAndStratum(const QString netName, SdPropStratum stratum) const
   {
   return mProp.mNetName.str() == netName && mProp.mStratum.match( stratum );
   }
@@ -361,7 +361,7 @@ void SdGraphTracedVia::accumWindows(SdPolyWindowList &dest, int stratum, int gap
 
 
 //Check if road linked to point
-bool SdGraphTracedVia::isLinked(SdPoint a, SdStratum stratum, QString netName) const
+bool SdGraphTracedVia::isLinked(SdPoint a, SdPropStratum stratum, QString netName) const
   {
   return mProp.mNetName == netName && mProp.mStratum.match( stratum ) && mPosition == a;
   }

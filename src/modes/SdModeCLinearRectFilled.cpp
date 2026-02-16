@@ -65,7 +65,7 @@ int SdModeCLinearRectFilled::getIndex() const
 //Insert rectangle into graph object
 void SdModeCLinearRectFilled::addRect()
   {
-  addPic( new SdGraphLinearRectFilled( mFirst, mPrevMove, sdGlobalProp->mLineProp ), QObject::tr("Insert filled rect") );
+  addPic( new SdGraphLinearRectFilled( mFirst, mPrevMove, *sdGlobalProp->propLine( mObject->getClass() ) ), QObject::tr("Insert filled rect") );
   }
 
 
