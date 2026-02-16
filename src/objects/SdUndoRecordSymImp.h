@@ -22,16 +22,16 @@ Description
 
 class SdUndoRecordSymImp : public SdUndoRecord
   {
-    SdPoint           *mOriginSrc;
-    SdPoint            mOriginValue;
-    SdPropSymImp      *mPropSrc;
-    SdPropSymImpState  mProp;
-    int               *mLogSectionSrc;
-    int                mLogSectionValue;
-    int               *mLogNumberSrc;
-    int                mLogNumberValue;
-    SdRect            *mOverSrc;
-    SdRect             mOver;
+    SdPoint      *mOriginSrc;
+    SdPoint       mOriginValue;
+    SdPropSymImp *mPropSrc;
+    SdPropSymImp  mProp;
+    int          *mLogSectionSrc;
+    int           mLogSectionValue;
+    int          *mLogNumberSrc;
+    int           mLogNumberValue;
+    SdRect       *mOverSrc;
+    SdRect        mOver;
   public:
     SdUndoRecordSymImp( SdPoint *origin, SdPropSymImp *imp, int *logSection, int *logNumber, SdRect *over );
 

@@ -14,39 +14,15 @@ Description
 #include "SdPropLine.h"
 #include "SdUndo.h"
 
-void SdPropLine::operator = ( SdPropLine const &sour ) {
-  mWidth = sour.mWidth;
-  mType  = sour.mType;
-  mLayer = sour.mLayer;
-  }
-
-void SdPropLine::append( SdPropLine const &sour ) {
-  mWidth.append( sour.mWidth );
-  mType.append( sour.mType );
-  mLayer.append( sour.mLayer );
-  }
-
-void SdPropLine::clear() {
-  mWidth.clear();
-  mType.clear();
-  mLayer.clear();
-  }
-
-bool SdPropLine::operator == ( SdPropLine const &prop ) {
-  return (prop.mWidth < 0 || prop.mWidth == mWidth) &&
-         (prop.mType < 0  || prop.mType == mType) &&
-         (prop.mLayer == mLayer);
-  }
-
-bool SdPropLine::match( SdPropLine const &prop ) {
-  return mWidth.match( prop.mWidth ) &&
-         mType.match( prop.mType ) &&
-      mLayer.match( prop.mLayer );
-  }
 
 
 
 
+//!
+//! \brief json Write line properties to JSON with specified prefix
+//! \param prefix JSON key prefix for grouped properties
+//! \param js     JSON writer object
+//!
 void SdPropLine::json(const QString &prefix, SvJsonWriter &js) const
   {
   mWidth.json( prefix + QStringLiteral("Width"), js );
@@ -57,6 +33,11 @@ void SdPropLine::json(const QString &prefix, SvJsonWriter &js) const
 
 
 
+//!
+//! \brief json Read line properties from JSON with specified prefix
+//! \param prefix JSON key prefix for grouped properties
+//! \param js     JSON reader object
+//!
 void SdPropLine::json(const QString &prefix, const SdJsonReader &js)
   {
   mWidth.json( prefix + QStringLiteral("Width"), js );
@@ -67,17 +48,17 @@ void SdPropLine::json(const QString &prefix, const SdJsonReader &js)
 
 
 
-void SdPropLine::saveState(SdPropLineState *dst)
+//!
+//! \brief swap Swap all line properties with another instance
+//! \param other Other SdPropLine object to swap with
+//!
+void SdPropLine::swap(SdPropLine &other)
   {
-  dst->mWidth = mWidth.getValue();
-  dst->mType  = mType.getValue();
-  dst->mLayer = mLayer.layer();
+  mWidth.swap( other.mWidth );
+  mType.swap( other.mType );
+  mLayer.swap( other.mLayer );
   }
 
 
-void SdPropLine::swapState(SdPropLineState *src)
-  {
-  src->mWidth = mWidth.swap( src->mWidth );
-  src->mType  = mType.swap( src->mType );
-  src->mLayer = mLayer.swap( src->mLayer );
-  }
+
+

@@ -20,7 +20,7 @@ SdUndoRecordPropLineAnd3Points::SdUndoRecordPropLineAnd3Points(SdPropLine *prop,
   mSrc3(p3)
   {
   if( mProp )
-    mProp->saveState( &mPropState );
+    mPropState = *prop;
   if( p1 )
     mPoint1 = (*p1);
   if( p2 )
@@ -33,7 +33,7 @@ SdUndoRecordPropLineAnd3Points::SdUndoRecordPropLineAnd3Points(SdPropLine *prop,
 void SdUndoRecordPropLineAnd3Points::undo()
   {
   if( mProp )
-    mProp->swapState( &mPropState );
+    mProp->swap( mPropState );
   if( mSrc1 )
     mSrc1->swap( &mPoint1 );
   if( mSrc2 )

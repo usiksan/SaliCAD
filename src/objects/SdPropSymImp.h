@@ -19,23 +19,15 @@ Description
 
 #include "SdPropAngle.h"
 
-struct SdPropSymImpState {
-    int mAngle;
-    int mMirror;
-  };
 
+//!
+//! \brief The SdPropSymImp struct - Symbol implementation properties
+//!        Stores rotation angle and mirror state for component/symbol instances
+//!
 struct SdPropSymImp
   {
-    SdPropAngle   mAngle;  //Angle of symbol implementation rotation [Угол поворота компонента]
-    SdPropInt     mMirror; //Mirror of implementation [Зеркальность компонента]
-
-    SdPropSymImp() : mAngle(0), mMirror(0) {}
-
-    void operator = ( SdPropSymImp const &sour ); //Assign properties [Назначить свойства]
-    void append( SdPropSymImp const &sour );      //Append properties [Установить свойства]
-    void clear();                                 //Set properties to undefined state [Установить в неопределенное состояние]
-    bool match( SdPropSymImp const &prop );       //Compare properties with etalon [Сравнить на совпадение с эталоном]
-
+    SdPropAngle   mAngle;  //!< Angle of symbol implementation rotation [Угол поворота компонента]
+    SdPropInt     mMirror; //!< Mirror of implementation [Зеркальность компонента]
 
     //!
     //! \brief json Overloaded function to write object content into json writer
@@ -49,8 +41,10 @@ struct SdPropSymImp
     //!
     void json( const SvJsonReader &js);
 
-    void saveState( SdPropSymImpState *dst );
-    void swapState( SdPropSymImpState *src );
+    //!
+    //! \brief swap Swap all symbol implementation properties with another instance
+    //! \param other Other SdPropSymImp object to swap with
+    //!
+    void swap( SdPropSymImp &other );
   };
-
 #endif // SDSYMIMPPROP_H

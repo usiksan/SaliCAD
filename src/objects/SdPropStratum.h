@@ -26,9 +26,10 @@ Description
 
 class SdJsonReader;
 
-class SdPropStratum : public SdPropInt
+struct SdPropStratum
   {
-  public:
+    SdStratum mValue;
+
     SdPropStratum();
     SdPropStratum( int str );
 
@@ -42,16 +43,27 @@ class SdPropStratum : public SdPropInt
     void     stratumBuild( SdPropStratum from, SdPropStratum to, int pcbLayerCount, int rule );
 
     //Return true if this stratum intersect with given stratum presented with int
-    bool     operator & ( int s ) const { return mValue > 0 && s > 0 && (mValue & s); }
+    bool     operator & ( int s ) const { return mValue & s; }
 
     void     operator |= ( SdPropStratum s ) { mValue |= s.mValue; }
 
-    //Return true if this stratum intersect with given stratum
-    bool     match( const SdPropStratum &s ) const { return mValue > 0 && s.mValue > 0 && (mValue & s.mValue) != 0; }
+    //!
+    //! \brief json Write integer property to JSON writer
+    //! \param key JSON key name
+    //! \param js  JSON writer object
+    //!
+    void     json( const QString key, SvJsonWriter &js ) const { js.jsonHex32( key, mValue ); }
+
+    //!
+    //! \brief json Read integer property from JSON reader
+    //! \param key JSON key name
+    //! \param js  JSON reader object
+    //!
+    void     json( const QString key, const SvJsonReader &js ) { js.jsonHex32( key, mValue ); }
 
     //Write-read stratum
-    void     jsonStratum( SvJsonWriter &js ) const;
-    void     jsonStratum( const SdJsonReader &js );
+    void     json( SvJsonWriter &js ) const;
+    void     json( const SdJsonReader &js );
 
     //Write-read as side
     void     jsonSide( SvJsonWriter &js ) const;
@@ -76,6 +88,8 @@ class SdPropStratum : public SdPropInt
     int      stratumNext( SdPropStratum s ) const;
 
     int      getStratumIndex() const;
+
+    void     swap( SdPropStratum &other ) { qSwap( mValue, other.mValue ); }
 
     //Get stratum index of first stratum in the stack
     static int stratumIndex( int stratum );

@@ -16,16 +16,15 @@ Description
 SdUndoRecordPropPartPin::SdUndoRecordPropPartPin(SdPropPartPin *prp, SdPoint *org) :
   SdUndoRecord(),
   mSrcProp(prp),
-  mSrcOrigin(org)
+  mProp(*prp),
+  mSrcOrigin(org),
+  mOrigin(*org)
   {
-  //Save original values
-  mSrcProp->saveState( &mProp );
-  mOrigin = *mSrcOrigin;
   }
 
 
 void SdUndoRecordPropPartPin::undo()
   {
-  mSrcProp->swapState( &mProp );
+  mSrcProp->swap( mProp );
   mOrigin.swap( mSrcOrigin );
   }

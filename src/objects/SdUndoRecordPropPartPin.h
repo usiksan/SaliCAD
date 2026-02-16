@@ -22,10 +22,10 @@ Description
 
 class SdUndoRecordPropPartPin : public SdUndoRecord
   {
-    SdPropPartPin      *mSrcProp;   //Source of property
-    SdPropPartPinState  mProp;      //Saved value of property
-    SdPoint            *mSrcOrigin; //Source of origin
-    SdPoint             mOrigin;    //Saved value of origin
+    SdPropPartPin *mSrcProp;   //Source of property
+    SdPropPartPin  mProp;      //Saved value of property
+    SdPoint       *mSrcOrigin; //Source of origin
+    SdPoint        mOrigin;    //Saved value of origin
   public:
     SdUndoRecordPropPartPin(SdPropPartPin *prp, SdPoint *org);
 

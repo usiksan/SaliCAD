@@ -18,26 +18,21 @@ Description
 #include "SdPropString.h"
 #include "SdPropStratum.h"
 
-struct SdPropPolygonState {
-    int     mGap;
-    QString mNetName;
-    int     mStratum;
-  };
-
+//!
+//! \brief The SdPropPolygon struct - Polygon fill properties for PCB copper areas
+//!        Stores gap clearance, net association, and layer stratum for polygon fills
+//!
 struct SdPropPolygon
   {
-    SdPropInt    mGap;     //Polygon gap [Зазоры окон полигона]
-    SdPropString mNetName; //Net name which polygon is
-    SdPropStratum    mStratum; //Polygon stratum
+    SdPropInt     mGap;     //!< Polygon gap clearance [Зазоры окон полигона]
+    SdPropString  mNetName; //!< Net name which polygon belongs to [Имя цепи, которой принадлежит полигон]
+    SdPropStratum mStratum; //!< Polygon stratum (layer) [Слой размещения полигона]
 
-    SdPropPolygon() : mGap(100), mNetName(), mStratum(1) { }
-    void operator = ( SdPropPolygon const &prop );  //Назначить свойства в соответствии с шаблоном
-    void append( SdPropPolygon const &prop );       //Добавить свойства
-    bool operator == ( SdPropPolygon const &prop ); //Сравнить свойства
-    void clear();                                   //Установить в неопределенное состояние
-    bool match( SdPropPolygon const &prop );        //Сравнить на совпадение с эталоном
-
-
+    //!
+    //! \brief SdPropPolygon Default constructor
+    //!        Initializes gap to 100, empty net name, and top stratum
+    //!
+    SdPropPolygon() : mGap(100), mNetName(), mStratum(stmTop) { }
 
     //!
     //! \brief json Function to write object content into json writer
@@ -51,8 +46,11 @@ struct SdPropPolygon
     //!
     void json( const SvJsonReader &js);
 
-    void saveState( SdPropPolygonState *dst );
-    void swapState( SdPropPolygonState *src );
+    //!
+    //! \brief swap Swap all polygon properties with another instance
+    //! \param other Other SdPropPolygon object to swap with
+    //!
+    void swap( SdPropPolygon &other );
   };
 
 #endif // SDPROPPOLYGON_H

@@ -18,37 +18,39 @@ Description
 
 #include <QString>
 
-class SdPropString
+//!
+//! \brief The SdPropString struct - Simple string property wrapper with JSON serialization
+//!        Provides basic string storage with swap and JSON I/O functionality
+//!
+struct SdPropString
   {
-    //Special codes for no value and many values
-    enum Value { NoValue = 0, OneValue = 1, AllValue = 2 };
+    QString  mString;           //!< Stored string value
 
-    QString  mString;
-    Value    mValue;
-  public:
-    SdPropString();
-    SdPropString( QString src );
-    SdPropString( const SdPropString &src ) = default;
+    //!
+    //! \brief SdPropString Constructor with initial string value
+    //! \param src Source string to initialize with
+    //!
+    SdPropString( const QString &src ) : mString(src) {}
 
-    bool       operator == ( SdPropString p ) const { return mValue == OneValue && mString.compare( p.mString ) == 0; }
-    void       operator = ( SdPropString p ) { if( p.mValue == OneValue ) { mString = p.mString; mValue = OneValue; } }
-    void       operator = ( const QString src ) { mString = src; mValue = OneValue; }
-    QString    str() const { return mValue == OneValue ? mString : QString(); }
-    void       append( SdPropString p );
-    void       append( const QString str );
-    void       clear() { mValue = NoValue; mString.clear(); }   //Нет значения
-    bool       match( SdPropString const &s ) {
-      return s.mValue == OneValue && mValue == OneValue ? mString.compare( s.mString ) == 0 : true;
-      }
-
+    //!
+    //! \brief json Write string property to JSON writer
+    //! \param name JSON key name
+    //! \param js   JSON writer object
+    //!
     void       json( const QString name, SvJsonWriter &js ) const { js.jsonString( name, mString ); }
-    void       json( const QString name, const SvJsonReader &js );
 
-    void       swap( QString *src );
+    //!
+    //! \brief json Read string property from JSON reader
+    //! \param name JSON key name
+    //! \param js   JSON reader object
+    //!
+    void       json( const QString name, const SvJsonReader &js ) { js.jsonString( name, mString ); }
 
-    void       assignTo( QString &dst );
-
-    bool       isValid() const { return mValue == OneValue; }
+    //!
+    //! \brief swap Swap string values with another SdPropString instance
+    //! \param other Other string property to swap with
+    //!
+    void       swap( SdPropString &other ) { mString.swap( other.mString ); }
   };
 
 #endif // SDPROPSTRING_H

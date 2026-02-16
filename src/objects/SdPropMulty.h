@@ -1,5 +1,8 @@
 #ifndef SDPROPMULTY_H
 #define SDPROPMULTY_H
+
+#include <type_traits>
+
 //!
 //! \brief The SdPropMulty class - Template class for managing properties that can have single or multiple values
 //!        Used when selecting multiple objects with possibly different property values
@@ -83,6 +86,14 @@ class SdPropMulty
       }
 
 
+    void append( const SdPropMulty<Prop> &pm )
+      {
+      if( mState == spmNone ) (*this) = pm;
+      else if( mState == spmSingle && ((pm.mState == spmSingle && mPropValue != pm.mPropValue) || (pm.mState == spmMulty)) )
+        mState = spmMulty;
+      }
+
+
 
     //!
     //! \brief store Store current property value to destination if state is spmSingle
@@ -93,5 +104,67 @@ class SdPropMulty
       if( mState == spmSingle )
         dest = mPropValue;
       }
+  };
+
+
+
+
+
+
+template <typename Obj, auto Member>
+struct SdPropMultyField
+  {
+    using memberType = std::remove_reference_t< decltype( std::declval<Obj>().*Member) >;
+
+    SdPropMulty<memberType> mField;
+  };
+
+
+
+
+
+template <typename Obj, auto ... Members>
+class SdPropComposer : private SdPropMultyField<Obj,Members>...
+  {
+  public:
+    void clear()
+      {
+      (SdPropMultyField<Obj,Members>::mField.clear(), ...);
+      }
+
+    void reset( const Obj &src )
+      {
+      (SdPropMultyField<Obj,Members>::mField.reset( src.*Members ), ...);
+      }
+
+    void append( const Obj &src )
+      {
+      (SdPropMultyField<Obj,Members>::mField.append( src.*Members ), ...);
+      }
+
+    void store( Obj &src ) const
+      {
+      (SdPropMultyField<Obj,Members>::mField.store( src.*Members ), ...);
+      }
+
+    bool isMatch( const Obj &obj ) const
+      {
+      return (SdPropMultyField<Obj,Members>::mField.isMatch( obj.*Members ) && ...);
+      }
+
+    template<auto Member>
+    auto& get()
+      {
+      using Base = SdPropMultyField<Obj,Member>;
+      return static_cast<Base*>(this)->mField;
+      }
+
+    template<auto Member>
+    const auto& get() const
+      {
+      using Base = SdPropMultyField<Obj,Member>;
+      return static_cast<const Base*>(this)->mField;
+      }
+
   };
 #endif // SDPROPMULTY_H

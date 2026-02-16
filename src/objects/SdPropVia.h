@@ -18,28 +18,21 @@ Description
 #include "SdPropStratum.h"
 
 
+//!
+//! \brief The SdPropVia struct - Via properties for PCB interlayer connections
+//!        Stores stratum (through, blind, buried), pad type association, and net assignment
+//!
 struct SdPropVia
   {
-    SdPropStratum    mStratum; //Stratum of via
-    SdPropString mPadType; //Pin type for pad assotiation
-    SdPropString mNetName; //Net name which via is
+    SdPropStratum mStratum; //!< Via stratum type (through, blind, buried) [Тип переходного отверстия]
+    SdPropString  mPadType; //!< Pad type for pad association [Тип контактной площадки для привязки]
+    SdPropString  mNetName; //!< Net name which via belongs to [Имя цепи, которой принадлежит переходное отверстие]
 
+    //!
+    //! \brief SdPropVia Default constructor
+    //!        Initializes stratum to through via, empty pad type and empty net name
+    //!
     SdPropVia() : mStratum(stmThrough), mPadType(), mNetName() {}
-
-    //Assign properties with pattern accordings [Назначить свойства в соответствии с шаблоном]
-    void operator = ( SdPropVia const &prop );
-
-    //Append properties [Добавить свойства]
-    void append( SdPropVia const &prop );
-
-    //Compare properties [Сравнить свойства]
-    bool operator == ( SdPropVia const &prop );
-
-    //Set to undefined state. When undefined state then appending equals coping [Установить в неопределенное состояние]
-    void clear();
-
-    //Compare with pattern [Сравнить на совпадение с эталоном]
-    bool match( SdPropVia const &prop );
 
     //Write and read
     //!
@@ -53,6 +46,12 @@ struct SdPropVia
     //! \param js   Json reader
     //!
     void json( const SvJsonReader &js);
+
+    //!
+    //! \brief swap Swap all via properties with another instance
+    //! \param other Other SdPropVia object to swap with
+    //!
+    void swap( SdPropVia &other );
   };
 
 #endif // SDPROPVIA_H

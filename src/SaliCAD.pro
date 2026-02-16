@@ -262,7 +262,6 @@ SOURCES += \
     objects/SdPItemSymbol.cpp \
     objects/SdPItemComponent.cpp \
     objects/SdSection.cpp \
-    objects/SdPropString.cpp \
     modes/SdModeView.cpp \
     objects/SdPartVariant.cpp \
     objects/SdUndoRecordPropSymPin.cpp \
@@ -673,7 +672,6 @@ HEADERS  += \
     objects/Sd3dGraphModel.h \
     objects/Sd3dPoint.h \
     objects/Sd3dStep.h \
-    objects/SdProperty.h \
     objects/SdUndoRecord3dMatrix.h \
     windows/Sd3dModelScript.h \
     windows/SdD3dMaster.h \

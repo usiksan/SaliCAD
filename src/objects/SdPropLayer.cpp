@@ -15,18 +15,23 @@ Description
 #include "SdEnvir.h"
 #include "SdJsonIO.h"
 
+//!
+//! \brief SdPropLayer Default constructor - initializes with default layer
+//!
 SdPropLayer::SdPropLayer() :
-  mLayer( SdEnvir::instance()->layerGet(LID0_INVISIBLE) ),
-  mValue(NoValue)
+  mLayer( SdEnvir::instance()->layerGet(LID0_INVISIBLE) )
   {
 
   }
 
 
 
+//!
+//! \brief SdPropLayer Constructor with layer identifier
+//! \param id Layer identifier string to find and set the layer
+//!
 SdPropLayer::SdPropLayer(QString id) :
-  mLayer( SdEnvir::instance()->layerGet(id) ),
-  mValue(OneValue)
+  mLayer( SdEnvir::instance()->layerGet(id) )
   {
 
   }
@@ -34,6 +39,11 @@ SdPropLayer::SdPropLayer(QString id) :
 
 
 
+//!
+//! \brief isVisible Check if layer is visible
+//! \param otherSide If true, check paired layer for flipped components
+//! \return True if layer (or its pair) is visible
+//!
 bool SdPropLayer::isVisible(bool otherSide) const
   {
   SdLayer *lay = layer( otherSide );
@@ -45,6 +55,10 @@ bool SdPropLayer::isVisible(bool otherSide) const
 
 
 
+//!
+//! \brief isEdited Check if layer is in edit mode
+//! \return True if layer is currently editable
+//!
 bool SdPropLayer::isEdited() const
   {
   SdLayer *lay = layer( false );
@@ -55,50 +69,28 @@ bool SdPropLayer::isEdited() const
 
 
 
+//!
+//! \brief set Set layer by identifier
+//! \param id Layer identifier string to find and set
+//!
 void SdPropLayer::set(const QString id)
   {
-  if( id.isEmpty() ) {
-    mValue = NoValue;
-    mLayer = SdEnvir::instance()->layerGet(LID0_INVISIBLE);
-    }
-  else {
-    mValue = OneValue;
-    mLayer = SdEnvir::instance()->layerGet(id);
-    }
+  mLayer = SdEnvir::instance()->layerGet( id.isEmpty() ? LID0_INVISIBLE : id );
   }
 
 
 
 
 
+//!
+//! \brief layer Get layer pointer
+//! \param otherSide If true, return paired layer for flipped components
+//! \return Pointer to SdLayer object
+//!
 SdLayer *SdPropLayer::layer(bool otherSide) const
   {
-  if( mValue == OneValue ) {
-    if( otherSide ) return mLayer->pair();
-    return mLayer;
-    }
-  return nullptr;
-  }
-
-
-
-
-
-void SdPropLayer::append(SdPropLayer p)
-  {
-  //If source not assigned then nothing appended
-  if( p.mValue == NoValue )
-    return;
-
-  if( mValue == NoValue ) {
-    //If there yet nothing assigned then copy source
-    mValue = p.mValue;
-    mLayer = p.mLayer;
-    }
-  else if( mValue == OneValue ) {
-    if( p.mValue != OneValue || p.mLayer != mLayer )
-      mValue = AllValue;
-    }
+  if( otherSide ) return mLayer->pair();
+  return mLayer;
   }
 
 
@@ -107,29 +99,29 @@ void SdPropLayer::append(SdPropLayer p)
 
 
 
+//!
+//! \brief setLayerUsage Mark layer as used (sets usage flag)
+//!
 void SdPropLayer::setLayerUsage() const
   {
-  if( mValue == OneValue && mLayer != nullptr ) {
-    mLayer->setUsage();
-    mLayer->pair()->setUsage();
-    }
+  mLayer->setUsage();
+  mLayer->pair()->setUsage();
   }
 
 
 
+
+
+
+//!
+//! \brief json Read layer property from JSON reader
+//! \param name JSON key name
+//! \param js   JSON reader object
+//!
 void SdPropLayer::json(const QString name, const SdJsonReader &js)
   {
-  mValue = OneValue;
   mLayer = SdEnvir::instance()->layerGet( js.object().value(name).toString() );
   }
 
 
-
-SdLayer *SdPropLayer::swap(SdLayer *src)
-  {
-  SdLayer *lay = mLayer;
-  mLayer = src;
-  if( src ) mValue = OneValue;
-  return lay;
-  }
 

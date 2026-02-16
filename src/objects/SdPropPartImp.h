@@ -19,21 +19,15 @@ Description
 #include "SdPropAngle.h"
 #include "SdPropStratum.h"
 
-struct SdPropPartImpState {
-    int mAngle;
-    int mSide;
-  };
 
+//!
+//! \brief The SdPropPartImp struct - Part implementation properties
+//!        Stores rotation angle and board side placement for component parts
+//!
 struct SdPropPartImp
   {
-    SdPropAngle   mAngle;  //Angle of rotation component [Угол поворота компонента]
-    SdPropStratum     mSide;   //Side of component location [Сторона расположения на плате]
-
-    void operator = ( SdPropPartImp const &sour ); //Назначить свойства
-    void append( SdPropPartImp const &sour );      //Установить свойства
-    void clear();                                  //Установить в неопределенное состояние
-    bool match( SdPropPartImp const &prop );       //Сравнить на совпадение с эталоном
-
+    SdPropAngle   mAngle;  //!< Angle of rotation component [Угол поворота компонента]
+    SdPropStratum mSide;   //!< Side of component location [Сторона расположения на плате]
 
     //!
     //! \brief json Function to write object content into json writer
@@ -47,8 +41,11 @@ struct SdPropPartImp
     //!
     void json( const SdJsonReader &js);
 
-    void saveState( SdPropPartImpState *dst );
-    void swapState( SdPropPartImpState *src );
+    //!
+    //! \brief swap Swap all part implementation properties with another instance
+    //! \param other Other SdPropPartImp object to swap with
+    //!
+    void swap( SdPropPartImp &other );
   };
 
 #endif // SDPARTIMPPROP_H

@@ -16,11 +16,11 @@ Description
 SdUndoRecordPropTextAndText::SdUndoRecordPropTextAndText(SdPropText *prp, SdPoint *org, SdRect *r, QString *str) :
   SdUndoRecord(),
   mSrcProp(prp),
+  mPropState(*prp),
   mSrcOrigin(org),
   mSrcRect(r),
   mSrcString(str)
   {
-  mSrcProp->saveState( &mPropState );
   if( org )
     mOrigin = *org;
   if( r )
@@ -32,7 +32,7 @@ SdUndoRecordPropTextAndText::SdUndoRecordPropTextAndText(SdPropText *prp, SdPoin
 
 void SdUndoRecordPropTextAndText::undo()
   {
-  mSrcProp->swapState( &mPropState );
+  mSrcProp->swap( mPropState );
   if( mSrcOrigin )
     mOrigin.swap( mSrcOrigin );
   if( mSrcRect )

@@ -17,45 +17,51 @@ Description
 
 #include "SvLib/SvJsonIO.h"
 
-class SdPropInt
+//!
+//! \brief The SdPropInt struct - Integer property with conversion between logical and physical values
+//!        Provides JSON serialization and physical value conversion (e.g., for distances, sizes)
+//!
+struct SdPropInt
   {
-  protected:
-    int mValue;
-  public:
-    //Special codes for no value and many values
-    enum { NoValue = -1, AllValue = -2 };
+    int mValue; //!< Stored integer value in logical units
 
-    SdPropInt() : mValue(0) { }
-    SdPropInt( int i ) : mValue( i ) { }
-    SdPropInt( const SdPropInt &src ) = default;
+    SdPropInt() : mValue(0) {}
 
-    bool       operator == ( int i ) const { return mValue == i; }
-               operator int () const { return mValue; }
-    void       operator = ( int i ) { if( i >= 0 || i < AllValue ) mValue = i; }
-    SdPropInt& operator = ( const SdPropInt& s ) { if( s.mValue != NoValue && s.mValue != AllValue ) mValue = s.mValue; return *this; }
-
-    //Value as int
-    int        getValue() const { return mValue; }
-
-    //Value as double
-    double     getDouble() const { return static_cast<double>(mValue); }
-
-    //Visual representation
+    //!
+    //! \brief log2Phis Convert logical value to physical string representation
+    //! \param ppm      Pixels per millimeter conversion factor
+    //! \return         Physical value as formatted string (e.g., "10.5 mm")
+    //!
     QString    log2Phis( double ppm ) const;
+
+
+    //!
+    //! \brief setFromPhis Set logical value from physical string representation
+    //! \param src        Source physical string (e.g., "10.5 mm")
+    //! \param ppm        Pixels per millimeter conversion factor
+    //!
     void       setFromPhis( const QString src, double ppm );
 
-    void       append( int i ) { if( mValue != i && i >= 0 ) mValue = mValue == NoValue ? i : AllValue; }   //Добавить значение
-    void       clear() { mValue = NoValue; }   //Нет значения
-    bool       match( SdPropInt const &s ) {
-      return s.mValue != NoValue && s.mValue != AllValue && mValue != NoValue && mValue != AllValue ? s.mValue == mValue : true;
-      }
-
+    //!
+    //! \brief json Write integer property to JSON writer
+    //! \param key JSON key name
+    //! \param js  JSON writer object
+    //!
     void       json( const QString key, SvJsonWriter &js ) const { js.jsonInt( key, mValue ); }
+
+    //!
+    //! \brief json Read integer property from JSON reader
+    //! \param key JSON key name
+    //! \param js  JSON reader object
+    //!
     void       json( const QString key, const SvJsonReader &js ) { js.jsonInt( key, mValue ); }
 
-    int        swap( int v ) { int t = mValue; mValue = v; return t; }
-
-    bool       isValid() const { return mValue >= 0; }
+    //!
+    //! \brief swap Swap values with another SdPropInt instance
+    //! \param other Other integer property to swap with
+    //!
+    void       swap( SdPropInt &other ) { qSwap( mValue, other.mValue ); }
   };
+
 
 #endif // SDINTPROP_H

@@ -16,56 +16,6 @@ Description
 
 
 
-//Assign properties with pattern accordings [Назначить свойства в соответствии с шаблоном]
-void SdPropVia::operator =(const SdPropVia &prop)
-  {
-  mStratum = prop.mStratum; //Stratum of via
-  mPadType = prop.mPadType; //Pin type for pad assotiation
-  mNetName = prop.mNetName; //Net name which via is
-  }
-
-
-
-
-//Append properties [Добавить свойства]
-void SdPropVia::append(const SdPropVia &prop)
-  {
-  mStratum.append( prop.mStratum );
-  mPadType.append( prop.mPadType );
-  mNetName.append( prop.mNetName );
-  }
-
-
-
-
-//Compare properties [Сравнить свойства]
-bool SdPropVia::operator ==(const SdPropVia &prop)
-  {
-  return mStratum == prop.mStratum && mPadType == prop.mPadType && mNetName == prop.mNetName;
-  }
-
-
-
-
-//Set to undefined state. When undefined state then appending equals coping [Установить в неопределенное состояние]
-void SdPropVia::clear()
-  {
-  mStratum.clear();
-  mPadType.clear();
-  mNetName.clear();
-  }
-
-
-
-
-//Compare with pattern [Сравнить на совпадение с эталоном]
-bool SdPropVia::match(const SdPropVia &prop)
-  {
-  return mStratum.match( prop.mStratum ) && mPadType.match( prop.mPadType ) && mNetName.match( prop.mNetName );
-  }
-
-
-
 //!
 //! \brief json Overloaded function to write object content into json writer
 //! \param js   Json writer
@@ -89,5 +39,19 @@ void SdPropVia::json(const SvJsonReader &js)
   mStratum.json( QStringLiteral("vStratum"), js );
   mNetName.json( QStringLiteral("vNet"), js );
   mPadType.json( QStringLiteral("vPad"), js );
+  }
+
+
+
+
+//!
+//! \brief swap Swap all via properties with another instance
+//! \param other Other SdPropVia object to swap with
+//!
+void SdPropVia::swap(SdPropVia &other)
+  {
+  mStratum.swap( other.mStratum );
+  mPadType.swap( other.mPadType );
+  mNetName.swap( other.mNetName );
   }
 

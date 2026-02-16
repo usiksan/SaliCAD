@@ -14,49 +14,6 @@ Description
 #include "SdPropPolygon.h"
 
 
-void SdPropPolygon::operator =(const SdPropPolygon &prop)
-  {
-  mGap     = prop.mGap;
-  mNetName = prop.mNetName;
-  mStratum = prop.mStratum;
-  }
-
-
-
-
-void SdPropPolygon::append(const SdPropPolygon &prop)
-  {
-  mGap.append( prop.mGap );
-  mNetName.append( prop.mNetName );
-  mStratum.append( prop.mStratum );
-  }
-
-
-
-
-bool SdPropPolygon::operator ==(const SdPropPolygon &prop)
-  {
-  return mGap == prop.mGap && mNetName == prop.mNetName && mStratum == prop.mStratum;
-  }
-
-
-
-
-void SdPropPolygon::clear()
-  {
-  mGap.clear();
-  mNetName.clear();
-  mStratum.clear();
-  }
-
-
-
-
-bool SdPropPolygon::match(const SdPropPolygon &prop)
-  {
-  return mGap.match( prop.mGap ) && mNetName.match( prop.mNetName ) && mStratum.match( prop.mStratum );
-  }
-
 
 
 //!
@@ -86,23 +43,19 @@ void SdPropPolygon::json(const SvJsonReader &js)
 
 
 
-
-
-
-
-void SdPropPolygon::saveState(SdPropPolygonState *dst)
+//!
+//! \brief swap Swap all polygon properties with another instance
+//! \param other Other SdPropPolygon object to swap with
+//!
+void SdPropPolygon::swap(SdPropPolygon &other)
   {
-  dst->mGap     = mGap.getValue();
-  dst->mNetName = mNetName.str();
-  dst->mStratum = mStratum.getValue();
+  mGap.swap( other.mGap );
+  mNetName.swap( other.mNetName );
+  mStratum.swap( other.mStratum );
   }
 
 
 
 
-void SdPropPolygon::swapState(SdPropPolygonState *src)
-  {
-  src->mGap     = mGap.swap( src->mGap );
-  src->mStratum = mStratum.swap( src->mStratum );
-  mNetName.swap( &(src->mNetName) );
-  }
+
+

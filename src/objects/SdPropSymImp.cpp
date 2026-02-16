@@ -17,37 +17,6 @@ Description
 #include "SdPropSymImp.h"
 
 
-void SdPropSymImp::operator =(const SdPropSymImp &sour)
-  {
-  mAngle  = sour.mAngle;
-  mMirror = sour.mMirror;
-  }
-
-
-
-
-void SdPropSymImp::append(const SdPropSymImp &sour)
-  {
-  mAngle.append( sour.mAngle );
-  mMirror.append( sour.mMirror );
-  }
-
-
-
-
-void SdPropSymImp::clear()
-  {
-  mAngle.clear();
-  mMirror.clear();
-  }
-
-
-
-
-bool SdPropSymImp::match(const SdPropSymImp &prop)
-  {
-  return mAngle.match( prop.mAngle ) && mMirror.match( prop.mMirror );
-  }
 
 
 
@@ -76,23 +45,14 @@ void SdPropSymImp::json(const SvJsonReader &js)
 
 
 
-
-
-
-
-
-void SdPropSymImp::saveState(SdPropSymImpState *dst)
+//!
+//! \brief swap Swap all symbol implementation properties with another instance
+//! \param other Other SdPropSymImp object to swap with
+//!
+void SdPropSymImp::swap(SdPropSymImp &other)
   {
-  dst->mAngle  = mAngle.getValue();
-  dst->mMirror = mMirror.getValue();
+  mAngle.swap( other.mAngle );
+  mMirror.swap( other.mMirror );
   }
 
-
-
-
-void SdPropSymImp::swapState(SdPropSymImpState *src)
-  {
-  src->mAngle  = mAngle.swap( src->mAngle );
-  src->mMirror = mMirror.swap( src->mMirror );
-  }
 

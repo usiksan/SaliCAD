@@ -21,14 +21,14 @@ Description
 
 class SdUndoRecordPropLineRect2Int : public SdUndoRecord
   {
-    SdPropLine      *mProp;
-    SdPropLineState  mPropState;
-    SdRect          *mRectSrc;
-    SdRect           mRect;
-    int             *mValSrc1;
-    int              mVal1;
-    int             *mValSrc2;
-    int              mVal2;
+    SdPropLine *mProp;
+    SdPropLine  mPropState;
+    SdRect     *mRectSrc;
+    SdRect      mRect;
+    int        *mValSrc1;
+    int         mVal1;
+    int        *mValSrc2;
+    int         mVal2;
   public:
     SdUndoRecordPropLineRect2Int( SdPropLine *prp, SdRect *r, int *v1, int *v2 );
 

@@ -179,7 +179,7 @@ void SdPartImpPin::json(SdJsonWriter &js) const
 
   //Pin position in plate context
   js.jsonPoint( QStringLiteral("Pos"), mPosition );
-  mStratum.jsonStratum( js );
+  mStratum.json( js );
   }
 
 
@@ -202,7 +202,7 @@ void SdPartImpPin::json(const SdJsonReader &js)
 
   //Pin position in plate context
   js.jsonPoint( QStringLiteral("Pos"), mPosition );
-  mStratum.jsonStratum( js );
+  mStratum.json( js );
   }
 
 

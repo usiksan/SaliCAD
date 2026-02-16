@@ -16,46 +16,6 @@ Description
 
 
 
-void SdPropRoad::operator =(const SdPropRoad &prop)
-  {
-  mWidth   = prop.mWidth;
-  mNetName = prop.mNetName;
-  mStratum = prop.mStratum;
-  }
-
-
-
-void SdPropRoad::append(const SdPropRoad &prop)
-  {
-  mWidth.append( prop.mWidth );
-  mNetName.append( prop.mNetName );
-  mStratum.append( prop.mStratum );
-  }
-
-
-
-bool SdPropRoad::operator ==(const SdPropRoad &prop)
-  {
-  return mWidth == prop.mWidth && mNetName == prop.mNetName && mStratum == prop.mStratum;
-  }
-
-
-
-void SdPropRoad::clear()
-  {
-  mWidth.clear();
-  mNetName.clear();
-  mStratum.clear();
-  }
-
-
-
-bool SdPropRoad::match(const SdPropRoad &prop)
-  {
-  return mWidth.match( prop.mWidth ) && mNetName.match( prop.mNetName ) && mStratum.match( prop.mStratum );
-  }
-
-
 
 //!
 //! \brief json Overloaded function to write object content into json writer
@@ -80,6 +40,21 @@ void SdPropRoad::json(const SvJsonReader &js)
   mWidth.json( QStringLiteral("rWidth"), js );
   mStratum.json( QStringLiteral("rStratum"), js );
   mNetName.json( QStringLiteral("rNet"), js );
+  }
+
+
+
+
+
+//!
+//! \brief swap Swap all road properties with another instance
+//! \param other Other SdPropRoad object to swap with
+//!
+void SdPropRoad::swap(SdPropRoad &other)
+  {
+  mWidth.swap( other.mWidth );
+  mNetName.swap( other.mNetName );
+  mStratum.swap( other.mStratum );
   }
 
 

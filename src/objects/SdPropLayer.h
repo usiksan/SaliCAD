@@ -18,38 +18,77 @@ Description
 #include "SdJsonIO.h"
 #include <QString>
 
+//!
+//! \brief The SdPropLayer class - Property class for managing PCB layer references
+//!        Handles layer visibility, editing state, and JSON serialization
+//!
 class SdPropLayer
   {
-    //Special codes for no value and many values
-    enum Value { NoValue = 0, OneValue = 1, AllValue = 2 };
-  protected:
-    SdLayer *mLayer;
-    Value    mValue;
+    SdLayer *mLayer;            //!< Pointer to the associated SdLayer object
+
   public:
+    //!
+    //! \brief SdPropLayer Default constructor - initializes with default layer
+    //!
     SdPropLayer();
+
+    //!
+    //! \brief SdPropLayer Constructor with layer identifier
+    //! \param id Layer identifier string to find and set the layer
+    //!
     SdPropLayer( QString id );
-    SdPropLayer( const SdPropLayer &src ) = default;
 
-    bool       isValid() const { return mValue == OneValue; }
+    //!
+    //! \brief isVisible Check if layer is visible
+    //! \param otherSide If true, check paired layer for flipped components
+    //! \return True if layer (or its pair) is visible
+    //!
     bool       isVisible( bool otherSide = false ) const;
-    bool       isEdited() const;
-    bool       operator == ( const SdPropLayer p ) const { return mValue == OneValue && mLayer == p.mLayer; }
-    void       operator = ( const SdPropLayer p ) { if( p.mValue == OneValue ) { mLayer = p.mLayer; mValue = OneValue; } }
-    void       operator = ( SdLayer *layer ) { mLayer = layer; mValue = layer ? OneValue : NoValue; }
-    void       set( const QString id );
-    SdLayer   *layer( bool otherSide = false ) const;
-    void       append( SdPropLayer p );
-    void       clear() { mValue = NoValue; }   //Нет значения
-    void       assign( const SdPropLayer &p ) { mLayer = p.mLayer; mValue = p.mValue; }
-    void       setLayerUsage() const;
-    bool       match( SdPropLayer const &s ) {
-      return s.mValue == OneValue && mValue == OneValue ? s.mLayer == mLayer : true;
-      }
 
+    //!
+    //! \brief isEdited Check if layer is in edit mode
+    //! \return True if layer is currently editable
+    //!
+    bool       isEdited() const;
+
+    //!
+    //! \brief set Set layer by identifier
+    //! \param id Layer identifier string to find and set
+    //!
+    void       set( const QString id );
+
+    //!
+    //! \brief layer Get layer pointer
+    //! \param otherSide If true, return paired layer for flipped components
+    //! \return Pointer to SdLayer object
+    //!
+    SdLayer   *layer( bool otherSide = false ) const;
+
+    //!
+    //! \brief setLayerUsage Mark layer as used (sets usage flag)
+    //!
+    void       setLayerUsage() const;
+
+    //!
+    //! \brief json Write layer property to JSON writer
+    //! \param name JSON key name
+    //! \param js   JSON writer object
+    //!
     void       json( const QString name, SvJsonWriter &js ) const { js.jsonString( name, mLayer->id() ); }
+
+    //!
+    //! \brief json Read layer property from JSON reader
+    //! \param name JSON key name
+    //! \param js   JSON reader object
+    //!
     void       json( const QString name, const SdJsonReader &js );
 
-    SdLayer   *swap( SdLayer *src );
+    //!
+    //! \brief swap Swap layer references with another SdPropLayer instance
+    //! \param other Other layer property to swap with
+    //!
+    void       swap( SdPropLayer &other ) { qSwap( mLayer, other.mLayer ); }
   };
+
 
 #endif // SDPROPLAYER_H

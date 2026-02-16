@@ -18,52 +18,58 @@ Description
 #include "SdPropAngle.h"
 #include "SdPropLayer.h"
 
+//!
+//! \defgroup text_alignment Text alignment constants
+//! @{
+//!
+
 //Horizontal alignment
-#define dhjLeft    0
-#define dhjCenter  1
-#define dhjRight   2
+#define dhjLeft    0   //!< Left horizontal alignment
+#define dhjCenter  1   //!< Center horizontal alignment
+#define dhjRight   2   //!< Right horizontal alignment
 
 //Vertical alignment
-#define dvjTop     0
-#define dvjMiddle  1
-#define dvjBottom  2
+#define dvjTop     0   //!< Top vertical alignment
+#define dvjMiddle  1   //!< Middle vertical alignment
+#define dvjBottom  2   //!< Bottom vertical alignment
 
-class SdUndo;
+//! @}
 
-struct SdPropTextState {
-    SdLayer *mLayer;
-    int      mSize;
-    int      mDir;
-    int      mFont;
-    int      mHorz;
-    int      mVert;
-    int      mMirror;
-  };
+//!
+//! \brief The SdPropText struct - Text properties for annotations and labels
+//!        Stores all visual and positioning attributes for text elements
+//!
+struct SdPropText
+  {
+    SdPropLayer mLayer;  //!< Layer of text placement [Слой размещения текста]
+    SdPropInt   mSize;   //!< Text size in logical units [Размер текста]
+    SdPropAngle mDir;    //!< Text direction/rotation angle [Направление/угол поворота]
+    SdPropInt   mFont;   //!< Font identifier [Идентификатор шрифта]
+    SdPropInt   mHorz;   //!< Horizontal alignment (see dhjLeft, dhjCenter, dhjRight) [Выравнивание горизонтальное]
+    SdPropInt   mVert;   //!< Vertical alignment (see dvjTop, dvjMiddle, dvjBottom) [Выравнивание вертикальное]
+    SdPropInt   mMirror; //!< Mirror factor (0 - normal, 1 - mirrored) [Зеркальность]
 
-struct SdPropText {
-    SdPropLayer mLayer;  //Layer of text [Слой]
-    SdPropInt   mSize;   //Text size [Размер текста]
-    SdPropAngle mDir;    //Direction [Направление]
-    SdPropInt   mFont;   //Font ident [Идентификатор шрифта]
-    SdPropInt   mHorz;   //Alignment [Выравнивание горизонтальное, вертикальное и зеркальность]
-    SdPropInt   mVert;
-    SdPropInt   mMirror;
-
-    SdPropText();
-
-    void operator = ( SdPropText const &prop ); //Назначить свойства
-    void assign( SdPropText const &prop );      //Назначить свойства
-    void append( SdPropText const &prop );      //Установить свойства
-    void clear();                               //Установить в неопределенное состояние
-    bool match( SdPropText const &prop );       //Сравнить на совпадение с эталоном
-
+    //!
+    //! \brief json Write text properties to JSON with specified prefix
+    //! \param prefix JSON key prefix for grouped properties
+    //! \param js     JSON writer object
+    //!
     void json( const QString prefix, SvJsonWriter &js ) const;
+
+    //!
+    //! \brief json Read text properties from JSON with specified prefix
+    //! \param prefix JSON key prefix for grouped properties
+    //! \param js     JSON reader object
+    //!
     void json( const QString prefix, const SdJsonReader &js );
 
-    void saveState(SdPropTextState *dst );
-    void swapState(SdPropTextState *src );
-
+    //!
+    //! \brief swap Swap all text properties with another instance
+    //! \param other Other SdPropText object to swap with
+    //!
+    void swap( SdPropText &other );
   };
+
 
 //Parse src string and find numeric substring. Numeric substring converted into int, int incremented
 //and convert to substring. Substring, at end, inserted into src string and return result

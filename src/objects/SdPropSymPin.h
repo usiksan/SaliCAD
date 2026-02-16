@@ -19,23 +19,15 @@ Description
 #include "SdPropInt.h"
 
 
-struct SdPropSymPinState {
-    SdLayer *mLayer;   //Layer is pin on
-    int      mPinType; //Pin type for modelling
-  };
 
-
+//!
+//! \brief The SdPropSymPin struct - Symbol pin properties for schematic components
+//!        Stores layer assignment and pin type for electrical modeling and simulation
+//!
 struct SdPropSymPin
   {
-    SdPropLayer mLayer;   //Layer is pin on
-    SdPropInt   mPinType; //Pin type for modelling
-
-    SdPropSymPin() : mLayer(), mPinType(0) {}
-
-    void operator = ( SdPropSymPin const &sour ); //Назначить свойства
-    void append( SdPropSymPin const &sour );      //Установить свойства
-    void clear();                                 //Установить в неопределенное состояние
-    bool match( SdPropSymPin const &prop );       //Сравнить на совпадение с эталоном
+    SdPropLayer mLayer;   //!< Layer where pin is placed [Слой размещения вывода]
+    SdPropInt   mPinType; //!< Pin type for electrical modeling [Тип вывода для моделирования]
 
     //!
     //! \brief json Function to write object content into json writer
@@ -49,8 +41,11 @@ struct SdPropSymPin
     //!
     void json( const SdJsonReader &js);
 
-    void saveState( SdPropSymPinState *dst );
-    void swapState( SdPropSymPinState *src );
+    //!
+    //! \brief swap Swap all symbol pin properties with another instance
+    //! \param other Other SdPropSymPin object to swap with
+    //!
+    void swap( SdPropSymPin &other );
   };
 
 #endif // SDSYMPINPROP_H

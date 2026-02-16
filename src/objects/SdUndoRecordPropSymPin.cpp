@@ -18,18 +18,17 @@ Description
 SdUndoRecordPropSymPin::SdUndoRecordPropSymPin(SdPropSymPin *prp, SdPoint *org) :
   SdUndoRecord(),
   mSrcProp(prp),
-  mSrcOrigin(org)
+  mProp(*prp),
+  mSrcOrigin(org),
+  mOrigin(*org)
   {
-  //Save original values
-  mSrcProp->saveState( &mProp );
-  mOrigin = *mSrcOrigin;
   }
 
 
 
 void SdUndoRecordPropSymPin::undo()
   {
-  mSrcProp->swapState( &mProp );
+  mSrcProp->swap( mProp );
   mOrigin.swap( mSrcOrigin );
   }
 

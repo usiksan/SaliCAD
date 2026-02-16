@@ -20,12 +20,12 @@ Description
 
 class SdUndoRecordPropLinePointInt : public SdUndoRecord
   {
-    SdPropLine      *mProp;
-    SdPropLineState  mPropState;
-    SdPoint         *mSrc1;
-    SdPoint          mPoint1;
-    int             *mSrc2;
-    int              mValue2;
+    SdPropLine *mProp;
+    SdPropLine  mPropState;
+    SdPoint    *mSrc1;
+    SdPoint     mPoint1;
+    int        *mSrc2;
+    int         mValue2;
   public:
     SdUndoRecordPropLinePointInt( SdPropLine *prop, SdPoint *p1, int *val );
 

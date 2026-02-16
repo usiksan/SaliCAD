@@ -14,45 +14,13 @@ Description
 #include "SdPropText.h"
 #include "SdJsonIO.h"
 
-SdPropText::SdPropText()
-  {
-
-  }
-
-void SdPropText::operator =(const SdPropText &prop)
-  {
-  mSize   = prop.mSize;   //Размер текста
-  mDir    = prop.mDir;    //Направление
-  mLayer  = prop.mLayer;  //Слой
-  mFont   = prop.mFont;   //Идентификатор шрифта
-  mHorz   = prop.mHorz;   //Выравнивание горизонтальное, вертикальное и зеркальность
-  mVert   = prop.mVert;
-  mMirror = prop.mMirror;
-  }
-
-void SdPropText::clear() {
-  mSize.clear();   //Размер текста
-  mDir.clear();    //Направление
-  mLayer.clear();  //Слой
-  mFont.clear();   //Идентификатор шрифта
-  mHorz.clear();   //Выравнивание горизонтальное, вертикальное и зеркальность
-  mVert.clear();
-  mMirror.clear();
-  }
-
-bool SdPropText::match( SdPropText const &prop ) {
-  return mSize.match( prop.mSize ) &&
-         mDir.match( prop.mDir ) &&
-         mLayer.match( prop.mLayer ) &&
-         mFont.match( prop.mFont ) &&
-         mHorz.match( prop.mHorz ) &&
-         mVert.match( prop.mVert ) &&
-      mMirror.match( prop.mMirror);
-  }
 
 
-
-
+//!
+//! \brief json Write text properties to JSON with specified prefix
+//! \param prefix JSON key prefix for grouped properties
+//! \param js     JSON writer object
+//!
 void SdPropText::json(const QString prefix, SvJsonWriter &js) const
   {
   mLayer.json( prefix + QStringLiteral("TextLayer"), js ); //Слой
@@ -78,15 +46,15 @@ void SdPropText::json(const QString prefix, SvJsonWriter &js) const
   else attr.append( QChar('T') );
 
   js.jsonString( prefix + QStringLiteral("TextDirMirHorVer"), attr );
-
-//  mDir.json( prefix + QStringLiteral("TextDir"), js );     //Направление
-//  mHorz.json( prefix + QStringLiteral("TextHorz"), js );   //Выравнивание горизонтальное, вертикальное и зеркальность
-//  mVert.json( prefix + QStringLiteral("TextVert"), js );
-//  mMirror.json( prefix + QStringLiteral("TextMirror"), js );
   }
 
 
 
+//!
+//! \brief json Read text properties from JSON with specified prefix
+//! \param prefix JSON key prefix for grouped properties
+//! \param js     JSON reader object
+//!
 void SdPropText::json(const QString prefix, const SdJsonReader &js)
   {
   mLayer.json( prefix + QStringLiteral("TextLayer"), js ); //Слой
@@ -126,47 +94,23 @@ void SdPropText::json(const QString prefix, const SdJsonReader &js)
   }
 
 
-void SdPropText::assign( SdPropText const &p ) {
-  operator = ( p );
-  }
 
 
-void SdPropText::append( SdPropText const &prop ) {
-  mSize.append( prop.mSize );
-  mDir.append( prop.mDir );
-  mLayer.append( prop.mLayer );
-  mFont.append( prop.mFont );
-  mHorz.append( prop.mHorz );
-  mVert.append( prop.mVert );
-  mMirror.append( prop.mMirror);
-  }
-
-
-
-void SdPropText::saveState(SdPropTextState *dst)
+//!
+//! \brief swap Swap all text properties with another instance
+//! \param other Other SdPropText object to swap with
+//!
+void SdPropText::swap(SdPropText &other)
   {
-  dst->mLayer = mLayer.layer();
-  dst->mSize  = mSize.getValue();
-  dst->mDir   = mDir.getValue();
-  dst->mFont  = mFont.getValue();
-  dst->mHorz  = mHorz.getValue();
-  dst->mVert  = mVert.getValue();
-  dst->mMirror= mMirror.getValue();
+  mLayer.swap( other.mLayer );
+  mSize.swap( other.mSize );
+  mDir.swap( other.mDir );
+  mFont.swap( other.mFont );
+  mHorz.swap( other.mHorz );
+  mVert.swap( other.mVert );
+  mMirror.swap( other.mMirror );
   }
 
-
-
-
-void SdPropText::swapState(SdPropTextState *src)
-  {
-  src->mLayer  = mLayer.swap( src->mLayer );
-  src->mSize   = mSize.swap( src->mSize );
-  src->mDir    = mDir.swap( src->mDir );
-  src->mFont   = mFont.swap( src->mFont );
-  src->mHorz   = mHorz.swap( src->mHorz );
-  src->mVert   = mVert.swap( src->mVert );
-  src->mMirror = mMirror.swap( src->mMirror );
-  }
 
 
 

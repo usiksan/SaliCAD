@@ -16,12 +16,12 @@ Description
 
 SdUndoRecordPropLinePointInt::SdUndoRecordPropLinePointInt(SdPropLine *prop, SdPoint *p1, int *val) :
   mProp(prop),
+  mPropState(*prop),
   mSrc1(p1),
-  mSrc2(val)
+  mPoint1(*p1),
+  mSrc2(val),
+  mValue2(*val)
   {
-  mProp->saveState( &mPropState );
-  mPoint1 = (*p1);
-  mValue2 = (*val);
   }
 
 
@@ -30,7 +30,7 @@ SdUndoRecordPropLinePointInt::SdUndoRecordPropLinePointInt(SdPropLine *prop, SdP
 //Undo elementary operation.
 void SdUndoRecordPropLinePointInt::undo()
   {
-  mProp->swapState( &mPropState );
+  mProp->swap( mPropState );
   mSrc1->swap( &mPoint1 );
   SdUtil::swap( mValue2, mSrc2 );
   }

@@ -15,40 +15,6 @@ Description
 #include "SdJsonIO.h"
 
 
-void SdPropSymPin::operator =(const SdPropSymPin &sour)
-  {
-  mLayer   = sour.mLayer;
-  mPinType = sour.mPinType;
-  }
-
-
-
-
-void SdPropSymPin::append(const SdPropSymPin &sour)
-  {
-  mLayer.append( sour.mLayer );
-  mPinType.append( sour.mPinType );
-  }
-
-
-
-
-void SdPropSymPin::clear()
-  {
-  mLayer.clear();
-  mPinType.clear();
-  }
-
-
-
-
-bool SdPropSymPin::match(const SdPropSymPin &prop)
-  {
-  return mLayer.match(prop.mLayer) && mPinType.match(prop.mPinType);
-  }
-
-
-
 
 //!
 //! \brief json Function to write object content into json writer
@@ -75,21 +41,16 @@ void SdPropSymPin::json(const SdJsonReader &js)
 
 
 
-
-
-void SdPropSymPin::saveState(SdPropSymPinState *dst)
+//!
+//! \brief swap Swap all symbol pin properties with another instance
+//! \param other Other SdPropSymPin object to swap with
+//!
+void SdPropSymPin::swap(SdPropSymPin &other)
   {
-  dst->mPinType = mPinType.getValue();
-  dst->mLayer   = mLayer.layer();
+  mLayer.swap( other.mLayer );
+  mPinType.swap( other.mPinType );
   }
 
 
-
-
-void SdPropSymPin::swapState(SdPropSymPinState *src)
-  {
-  src->mPinType = mPinType.swap( src->mPinType );
-  src->mLayer   = mLayer.swap( src->mLayer );
-  }
 
 

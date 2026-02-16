@@ -101,24 +101,17 @@ void SdPropStratum::stratumBuild(SdPropStratum from, SdPropStratum to, int pcbLa
 
 
 //Write-read stratum
-void SdPropStratum::jsonStratum(SvJsonWriter &js) const
+void SdPropStratum::json(SvJsonWriter &js) const
   {
-  js.object().insert( QStringLiteral("Stratum"), QString::number( mValue, 16 ) );
+  json( QStringLiteral("Stratum"), js );
   }
 
 
 
 
-void SdPropStratum::jsonStratum(const SdJsonReader &js)
+void SdPropStratum::json(const SdJsonReader &js)
   {
-  mValue = js.object().value( QStringLiteral("Stratum") ).toString().toInt( nullptr, 16 );
-  if( js.property()->mVersion == SD_BASE_VERSION_1 ) {
-    //Convert bottom stratum
-    if( mValue == stmBottomV1 )
-      mValue = stmBottom;
-    else if( mValue > stmBottomV1 && mValue != stmThrough )
-      mValue >>= 1;
-    }
+  json( QStringLiteral("Stratum"), js );
   }
 
 

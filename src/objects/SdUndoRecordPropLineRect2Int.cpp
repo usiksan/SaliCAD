@@ -22,7 +22,7 @@ SdUndoRecordPropLineRect2Int::SdUndoRecordPropLineRect2Int(SdPropLine *prp, SdRe
   mValSrc2(v2)
   {
   if( mProp )
-    mProp->saveState( &mPropState );
+    mPropState = *prp;
   if( mRectSrc )
     mRect = (*mRectSrc);
   if( mValSrc1 )
@@ -37,7 +37,7 @@ SdUndoRecordPropLineRect2Int::SdUndoRecordPropLineRect2Int(SdPropLine *prp, SdRe
 void SdUndoRecordPropLineRect2Int::undo()
   {
   if( mProp )
-    mProp->swapState( &mPropState );
+    mProp->swap( mPropState );
   if( mRectSrc )
     mRectSrc->swap( mRect );
   SdUtil::swap( mVal1, mValSrc1 );

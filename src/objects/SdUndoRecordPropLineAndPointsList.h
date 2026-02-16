@@ -22,10 +22,10 @@ Description
 
 class SdUndoRecordPropLineAndPointsList : public SdUndoRecord
   {
-    SdPropLine      *mProp;
-    SdPropLineState  mPropState;
-    SdPointList     *mSrc;
-    SdPointList      mPointList;
+    SdPropLine  *mProp;
+    SdPropLine   mPropState;
+    SdPointList *mSrc;
+    SdPointList  mPointList;
   public:
     SdUndoRecordPropLineAndPointsList( SdPropLine *prp, SdPointList *src );
 

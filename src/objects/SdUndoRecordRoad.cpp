@@ -16,18 +16,18 @@ Description
 SdUndoRecordRoad::SdUndoRecordRoad(SdPropInt *width, SdPoint *p1, SdPoint *p2) :
   SdUndoRecord(),
   mSrcWidth(width),
+  mWidth(*width),
   mSrcP1(p1),
-  mSrcP2(p2)
+  mP1(*p1),
+  mSrcP2(p2),
+  mP2(*p2)
   {
-  mWidth =  mSrcWidth->getValue();
-  mP1    = *mSrcP1;
-  mP2    = *mSrcP2;
   }
 
 
 void SdUndoRecordRoad::undo()
   {
-  mWidth = mSrcWidth->swap( mWidth );
+  mSrcWidth->swap( mWidth );
   mP1.swap( mSrcP1 );
   mP2.swap( mSrcP2 );
   }

@@ -20,14 +20,14 @@ Description
 
 class SdUndoRecordPropLineAnd3Points : public SdUndoRecord
   {
-    SdPropLine      *mProp;
-    SdPropLineState  mPropState;
-    SdPoint         *mSrc1;
-    SdPoint          mPoint1;
-    SdPoint         *mSrc2;
-    SdPoint          mPoint2;
-    SdPoint         *mSrc3;
-    SdPoint          mPoint3;
+    SdPropLine *mProp;
+    SdPropLine  mPropState;
+    SdPoint    *mSrc1;
+    SdPoint     mPoint1;
+    SdPoint    *mSrc2;
+    SdPoint     mPoint2;
+    SdPoint    *mSrc3;
+    SdPoint     mPoint3;
   public:
     SdUndoRecordPropLineAnd3Points( SdPropLine *prop, SdPoint *p1, SdPoint *p2, SdPoint *p3 = nullptr );
 

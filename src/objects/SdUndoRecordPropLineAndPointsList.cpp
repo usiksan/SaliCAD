@@ -16,10 +16,10 @@ Description
 SdUndoRecordPropLineAndPointsList::SdUndoRecordPropLineAndPointsList(SdPropLine *prp, SdPointList *src) :
   SdUndoRecord(),
   mProp(prp),
+  mPropState(*prop),
   mSrc(src),
   mPointList(*src)
   {
-  mProp->saveState( &mPropState );
   }
 
 
@@ -27,7 +27,7 @@ SdUndoRecordPropLineAndPointsList::SdUndoRecordPropLineAndPointsList(SdPropLine 
 
 void SdUndoRecordPropLineAndPointsList::undo()
   {
-  mProp->swapState( &mPropState );
+  mProp->swap( mPropState );
   mPointList.swap( *mSrc );
   }
 

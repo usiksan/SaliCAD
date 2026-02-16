@@ -19,19 +19,21 @@ Description
 #include "SdPropString.h"
 #include "SdPropStratum.h"
 
+//!
+//! \brief The SdPropRoad struct - Routing track properties for PCB traces
+//!        Stores track width, net association, and layer stratum for electrical connections
+//!
 struct SdPropRoad
   {
-    SdPropInt    mWidth;   //Road width [Ширина проводника]
-    SdPropString mNetName; //Net name which road is
-    SdPropStratum    mStratum; //Road stratum
+    SdPropInt     mWidth;   //!< Road width [Ширина проводника]
+    SdPropString  mNetName; //!< Net name which road belongs to [Имя цепи, которой принадлежит проводник]
+    SdPropStratum mStratum; //!< Road stratum (layer) [Слой размещения проводника]
 
-    SdPropRoad() : mWidth(0), mNetName(), mStratum(1) { }
-    void operator = ( SdPropRoad const &prop );  //Назначить свойства в соответствии с шаблоном
-    void append( SdPropRoad const &prop );       //Добавить свойства
-    bool operator == ( SdPropRoad const &prop ); //Сравнить свойства
-    void clear();                                //Установить в неопределенное состояние
-    bool match( SdPropRoad const &prop );        //Сравнить на совпадение с эталоном
-
+    //!
+    //! \brief SdPropRoad Default constructor
+    //!        Initializes width to 200, empty net name, and top stratum
+    //!
+    SdPropRoad() : mWidth(200), mNetName(), mStratum(stmTop) { }
 
     //!
     //! \brief json Overloaded function to write object content into json writer
@@ -44,6 +46,12 @@ struct SdPropRoad
     //! \param js   Json reader
     //!
     void json( const SvJsonReader &js);
+
+    //!
+    //! \brief swap Swap all road properties with another instance
+    //! \param other Other SdPropRoad object to swap with
+    //!
+    void swap( SdPropRoad &other );
   };
 
 #endif // SDROADPROP_H

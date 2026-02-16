@@ -20,14 +20,14 @@ Description
 
 class SdUndoRecordPropTextAndText : public SdUndoRecord
   {
-    SdPropText      *mSrcProp;
-    SdPropTextState  mPropState;
-    SdPoint         *mSrcOrigin;
-    SdPoint          mOrigin;
-    SdRect          *mSrcRect;
-    SdRect           mRect;
-    QString         *mSrcString;
-    QString          mString;
+    SdPropText *mSrcProp;
+    SdPropText  mPropState;
+    SdPoint    *mSrcOrigin;
+    SdPoint     mOrigin;
+    SdRect     *mSrcRect;
+    SdRect      mRect;
+    QString    *mSrcString;
+    QString     mString;
   public:
     SdUndoRecordPropTextAndText( SdPropText *prp, SdPoint *org, SdRect *r, QString *str );
 

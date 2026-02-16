@@ -21,25 +21,15 @@ Description
 #include "SdPropStratum.h"
 
 
-struct SdPropPartPinState {
-    SdLayer *mLayer;   //Layer is pin on
-    int      mSide;    //Side of pin location
-    QString  mPinType; //Pin type for pad assotiation
-  };
-
+//!
+//! \brief The SdPropPartPin struct - Part pin properties
+//!        Stores layer, board side, and pin type for component pin/pad associations
+//!
 struct SdPropPartPin
   {
-    SdPropLayer  mLayer;   //Pin layer
-    SdPropStratum    mSide;    //Side of pin location
-    SdPropString mPinType; //Pin type for pad assotiation
-
-    SdPropPartPin() : mLayer(nullptr), mSide(0), mPinType() {}
-
-    void operator = ( SdPropPartPin const &sour ); //Назначить свойства
-    void append( SdPropPartPin const &sour );      //Установить свойства
-    void clear();                                  //Установить в неопределенное состояние
-    bool match( SdPropPartPin const &prop );       //Сравнить на совпадение с эталоном
-
+    SdPropLayer   mLayer;   //!< Pin layer [Слой вывода]
+    SdPropStratum mSide;    //!< Side of pin location [Сторона расположения вывода]
+    SdPropString  mPinType; //!< Pin type for pad association [Тип вывода для привязки контактной площадки]
 
     //!
     //! \brief json Overloaded function to write object content into json writer
@@ -53,8 +43,11 @@ struct SdPropPartPin
     //!
     void json( const SdJsonReader &js);
 
-    void saveState( SdPropPartPinState *dst );
-    void swapState( SdPropPartPinState *src );
+    //!
+    //! \brief swap Swap all part pin properties with another instance
+    //! \param other Other SdPropPartPin object to swap with
+    //!
+    void swap( SdPropPartPin &other );
   };
 
 #endif // SDPARTPINPROP_H

@@ -21,10 +21,10 @@ Description
 
 class SdUndoRecordPropSymPin : public SdUndoRecord
   {
-    SdPropSymPin      *mSrcProp;   //Source of property
-    SdPropSymPinState  mProp;      //Saved value of property
-    SdPoint           *mSrcOrigin; //Source of origin
-    SdPoint            mOrigin;    //Saved value of origin
+    SdPropSymPin *mSrcProp;   //Source of property
+    SdPropSymPin  mProp;      //Saved value of property
+    SdPoint      *mSrcOrigin; //Source of origin
+    SdPoint       mOrigin;    //Saved value of origin
   public:
     SdUndoRecordPropSymPin( SdPropSymPin *prp, SdPoint *org );
 

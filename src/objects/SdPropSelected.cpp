@@ -110,11 +110,11 @@ int SdPropSelected::getPropBarId()
 //With this function we change layer for all properties group
 void SdPropSelected::setLayer(const SdPropLayer &layer)
   {
-  mLineProp.mLayer.assign( layer );       //Properties for linear objects
-  mTextProp.mLayer.assign( layer );       //Properties for textual objects
-  mWireProp.mLayer.assign( layer );       //Properties for wire objects
-  mSymPinProp.mLayer.assign( layer );     //Properties for symbol pin object
-  mPartPinProp.mLayer.assign( layer );    //Properties for part pin object
+  mLineProp.get<&SdPropLine::mLayer>().reset( layer );       //Properties for linear objects
+  mTextProp.get<&SdPropText::mLayer>().reset( layer );       //Properties for textual objects
+  mWireProp.get<&SdPropLine::mLayer>().reset( layer );       //Properties for wire objects
+  mSymPinProp.get<&SdPropSymPin::mLayer>().reset( layer );     //Properties for symbol pin object
+  mPartPinProp.get<&SdPropPartPin::mLayer>().reset( layer );    //Properties for part pin object
   }
 
 
@@ -124,13 +124,18 @@ void SdPropSelected::setLayer(const SdPropLayer &layer)
 //in different preperties group. With this we union all this group
 void SdPropSelected::unionLayer()
   {
-  SdPropLayer layer;
+  SdPropMulty<SdPropLayer> layer;
   layer.clear();
-  layer.append( mLineProp.mLayer );
-  layer.append( mTextProp.mLayer );
-  layer.append( mWireProp.mLayer );
-  layer.append( mSymPinProp.mLayer );
-  layer.append( mPartPinProp.mLayer );
-  setLayer( layer );
+  layer.append( mLineProp.get<&SdPropLine::mLayer>() );
+  layer.append( mTextProp.get<&SdPropText::mLayer>() );
+  layer.append( mWireProp.get<&SdPropLine::mLayer>() );
+  layer.append( mSymPinProp.get<&SdPropSymPin::mLayer>() );
+  layer.append( mPartPinProp.get<&SdPropPartPin::mLayer>() );
+
+  mLineProp.get<&SdPropLine::mLayer>() = layer;       //Properties for linear objects
+  mTextProp.get<&SdPropText::mLayer>() = layer;       //Properties for textual objects
+  mWireProp.get<&SdPropLine::mLayer>() = layer;       //Properties for wire objects
+  mSymPinProp.get<&SdPropSymPin::mLayer>() = layer;     //Properties for symbol pin object
+  mPartPinProp.get<&SdPropPartPin::mLayer>() = layer;    //Properties for part pin object
   }
 

@@ -20,6 +20,7 @@ SdUndoRecordSymImp::SdUndoRecordSymImp(SdPoint *origin, SdPropSymImp *imp, int *
   mOriginSrc(origin),
   mOriginValue(*origin),
   mPropSrc(imp),
+  mProp(*imp ),
   mLogSectionSrc(logSection),
   mLogSectionValue(*logSection),
   mLogNumberSrc(logNumber),
@@ -27,7 +28,6 @@ SdUndoRecordSymImp::SdUndoRecordSymImp(SdPoint *origin, SdPropSymImp *imp, int *
   mOverSrc(over),
   mOver(*over)
   {
-  imp->saveState( &mProp );
   }
 
 
@@ -36,7 +36,7 @@ SdUndoRecordSymImp::SdUndoRecordSymImp(SdPoint *origin, SdPropSymImp *imp, int *
 void SdUndoRecordSymImp::undo()
   {
   mOriginValue.swap( mOriginSrc );
-  mPropSrc->swapState( &mProp );
+  mPropSrc->swap( mProp );
 
   SdUtil::swap( mLogSectionValue, mLogSectionSrc );
 
