@@ -16,13 +16,13 @@ Description
 
 SdUndoRecordPolygon::SdUndoRecordPolygon(SdPropPolygon *propSource, SdPointList *regionSource, SdPolyWindowList *windowsSource) :
   SdUndoRecord(),
+  mPropState(*propSource),
   mPropSource(propSource),
+  mRegion(*regionSource),
   mRegionSource(regionSource),
+  mWindows(*windowsSource),
   mWindowsSource(windowsSource)
   {
-  mPropSource->saveState( &mPropState );
-  mRegion  = *mRegionSource;
-  mWindows = *mWindowsSource;
   }
 
 
@@ -31,7 +31,7 @@ SdUndoRecordPolygon::SdUndoRecordPolygon(SdPropPolygon *propSource, SdPointList 
 //Undo elementary operation.
 void SdUndoRecordPolygon::undo()
   {
-  mPropSource->swapState( &mPropState );
+  mPropSource->swap( mPropState );
   mRegionSource->swap( mRegion );
   mWindowsSource->swap( mWindows );
   }

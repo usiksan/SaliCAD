@@ -143,7 +143,7 @@ class SdGraphPartImp : public SdGraphTraced
     QTransform        matrix() const;
 
     //Angle of component rotation
-    SdPropAngle       angle() const { return mProp.mAngle.getValue(); }
+    SdPropAngle       angle() const { return mProp.mAngle; }
 
     //!
     //! \brief partTitle Returns part title

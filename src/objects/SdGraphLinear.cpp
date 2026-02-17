@@ -72,7 +72,7 @@ void SdGraphLinear::json(const SdJsonReader &js)
 //Set properties of this object from prop
 void SdGraphLinear::setProp(SdPropSelected &prop)
   {
-  mProp = prop.mLineProp;
+  prop.mLineProp.store( mProp );
   }
 
 

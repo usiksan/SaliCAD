@@ -26,11 +26,14 @@ struct SdPropString
   {
     QString  mString;           //!< Stored string value
 
+    SdPropString() : mString() {}
     //!
     //! \brief SdPropString Constructor with initial string value
     //! \param src Source string to initialize with
     //!
     SdPropString( const QString &src ) : mString(src) {}
+
+    void       operator = (const char *str) { mString = QString(str); }
 
     //!
     //! \brief json Write string property to JSON writer

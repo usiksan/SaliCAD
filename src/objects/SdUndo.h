@@ -34,7 +34,7 @@ class SdContainer;
 class SdObject;
 class SdPoint;
 class SdPointList;
-class SdPropInt;
+struct SdPropInt;
 class SdPropString;
 class SdPropLayer;
 class SdPropLine;
@@ -57,6 +57,50 @@ typedef QMap<QString,SdPartImpPin> SdPartImpPinTable;
 struct SdPropPolygon;
 class Sd3drModel;
 class SdFileUid;
+
+
+template <typename T>
+struct SdUndoFieldBase
+  {
+    T *mSrc;
+    T  mCopy;
+
+    explicit SdUndoFieldBase( T *src ) : mSrc(src), mCopy(*src) {}
+
+    void undoOne()
+      {
+      if constexpr (std::is_trivially_copyable_v<T>)
+        { qSwap( *mSrc, mCopy ); }
+      else
+        { mSrc->swap( mCopy ); }
+      }
+  };
+
+
+
+
+
+
+template <typename ... Ts>
+class SdUndoRecordField : public SdUndoRecord, private SdUndoFieldBase<Ts>...
+  {
+    using PostAction = std::function<void()>;
+    PostAction mPostAction;
+  public:
+    explicit SdUndoRecordField( Ts*... ptrs ) : SdUndoRecord(), SdUndoFieldBase<Ts>(ptrs)..., mPostAction([]{}) {}
+
+    virtual void undo() override
+      {
+      (SdUndoFieldBase<Ts>::undoOne(), ...);
+      mPostAction();
+      }
+
+    void post( PostAction fun ) { mPostAction = std::move(fun); }
+  };
+
+
+
+
 
 class SdUndo
   {
@@ -88,7 +132,6 @@ class SdUndo
     void symImp( SdPoint *origin, SdPropSymImp *imp, int *logSection, int *logNumber, SdRect *over );
     void partImp(SdPoint *origin, SdPropPartImp *imp, int *logNumber, SdRect *over);
     void wire( SdPropLine *prop, SdPoint *p1, SdPoint *p2, bool *dot1, bool *dot2 );
-    void point( SdPoint *src );
 
     //!
     //! \brief begin Appends "begin" record of group of undo commands. When undo then
@@ -101,14 +144,7 @@ class SdUndo
 
     void projectItemInfo(SdProjectItem *item, QString *title, QString *author, SdFileUid *fileUid, bool *editEnable );
 
-    //!
-    //! \brief string2 Append two string state every of them can be nullptr if none
-    //! \param str1    String 1
-    //! \param str2    String 2
-    //!
-    void string2( QString *str1, QString *str2 );
     void stringMapItem( SdStringMap *assoc, const QString key );
-    void stringMap( SdStringMap *assoc );
     void padAssociation( QString *id, QString *srcName, SdPadMap *srcMap );
     void road( SdPropInt *width, SdPoint *p1, SdPoint *p2 );
     void via( SdPropString *pad, SdPoint *pos );
@@ -129,6 +165,18 @@ class SdUndo
     //! \param model       3d model
     //!
     void script( QString *modelScript, Sd3drModel *model );
+
+    template <typename... Ts>
+    SdUndoRecordField<Ts...>& prop( Ts* ... ptrs )
+      {
+      static_assert( (std::is_pointer_v<Ts*> && ...), "Must pass pointer " );
+
+      auto *rec = new SdUndoRecordField<Ts...>(ptrs...);
+      addUndo( rec );
+
+      return *rec;
+      }
+
 
     //do undo and redo
     void undoStep();

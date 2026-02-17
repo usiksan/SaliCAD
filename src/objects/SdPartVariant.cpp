@@ -39,7 +39,7 @@ void SdPartVariant::setPartId(const QString id, SdUndo *undo)
   SdLibraryHeader hdr;
   if( SdLibraryStorage::instance()->header( id, hdr) ) {
     if( undo != nullptr )
-      undo->string2( &mPartId, &mPartTitle );
+      undo->prop( &mPartId, &mPartTitle );
     mPartId = id;
     mPartTitle = QString( "%1 (%2)" ).arg( hdr.mName, hdr.authorGlobalName() );
     }

@@ -22,7 +22,7 @@ Description
 
 class SdUndoRecordPolygon : public SdUndoRecord
   {
-    SdPropPolygonState mPropState;     //Polygon properties
+    SdPropPolygon      mPropState;     //Polygon properties
                                        // - gap for windows creation
                                        // - net name which contains this polygon
                                        // - stratum of polygon

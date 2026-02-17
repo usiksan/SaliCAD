@@ -62,7 +62,7 @@ SdGraphScript::SdGraphScript(const QString &script, SdPoint org, const SdPropTex
 void SdGraphScript::scriptSet(const QString &scr, SdUndo *undo)
   {
   if( undo != nullptr )
-    undo->string2( &mScript, nullptr );
+    undo->prop( &mScript ).post( [this] () { parse(); } );
 
   mScript = scr;
   parse();
@@ -92,6 +92,8 @@ void SdGraphScript::calculate()
     mProgramm->execute();
     }
   }
+
+
 
 int SdGraphScript::tryLink(SdPoint p, SdRect &overRect) const
   {
@@ -211,7 +213,7 @@ void SdGraphScript::move(SdPoint offset)
 
 void SdGraphScript::setProp(SdPropSelected &prop)
   {
-  mProp = prop.mTextProp;
+  prop.mTextProp.store( mProp );
   ajustProp();
   }
 

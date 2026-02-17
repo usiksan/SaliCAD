@@ -34,7 +34,7 @@ void SdGraphNet::setNetName(const QString netName, SdUndo *undo)
   {
   //Store previous net name
   if( undo )
-    undo->string2( &mNetName, nullptr );
+    undo->prop( &mNetName );
   mNetName = netName;
   }
 
@@ -98,7 +98,7 @@ void SdGraphNet::json(const SdJsonReader &js)
 //Set new properties to net
 void SdGraphNet::setProp(SdPropSelected &prop)
   {
-  prop.mWireName.assignTo( mNetName );
+  prop.mWireName.store( mNetName );
   }
 
 
@@ -113,5 +113,5 @@ void SdGraphNet::getProp(SdPropSelected &prop)
 
 void SdGraphNet::saveState(SdUndo *undo)
   {
-  undo->string2( &mNetName, nullptr );
+  undo->prop( &mNetName );
   }

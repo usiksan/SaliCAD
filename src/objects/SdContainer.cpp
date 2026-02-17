@@ -130,7 +130,7 @@ void SdContainer::paramDelete(const QString key, SdUndo *undo)
 void SdContainer::paramTableSet(const SdStringMap map, SdUndo *undo)
   {
   if( undo != nullptr )
-    undo->stringMap( &mParamTable );
+    undo->prop( &mParamTable ).post( [this]() { setProjectDirtyFlag(); } );
   mParamTable = map;
   setProjectDirtyFlag();
   }

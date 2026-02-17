@@ -1,6 +1,8 @@
 #ifndef SDSTRATUM_H
 #define SDSTRATUM_H
 
+#include <QString>
+
 //Stratum difference for version 1
 #define stmBottomV1 0x00000002
 
@@ -58,6 +60,6 @@
 #define stmLayer30  (stmLayer28 | stmInt27 | stmInt28)  //!< 30 layer PCB configuration (maximum)
 #define stmCountMax         30                          //!< Maximum tracing layers
 
-using SdStratum = int;
+using SdStratum = quint32;
 
 #endif // SDSTRATUM_H

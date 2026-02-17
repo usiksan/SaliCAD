@@ -17,6 +17,7 @@ Description
 #define SDLAYER_H
 
 #include "SdClass.h"
+#include "SdStratum.h"
 
 #include <QString>
 #include <QColor>
@@ -167,7 +168,7 @@ class SdLayer
     SdLayerState  mState;    //!< State (visible, editing, invisible)
     SdLayerTrace  mTrace;    //!< Layer trace type
     SdClass       mClass;    //!< Classes for defining layer membership
-    int           mStratum;  //!< Layer stratum [Позиция слоя при трассировке (верх, низ, внутри)]
+    SdStratum     mStratum;  //!< Layer stratum [Позиция слоя при трассировке (верх, низ, внутри)]
     unsigned      mColor;    //!< Layer color [Цвет]
     int           mIndex;    //!< Ordinal index for sorting
     SdLayer      *mPair;     //!< Layer pair for flipped component [Парный слой]
@@ -267,7 +268,7 @@ class SdLayer
     //! \brief stratum          Get layer stratum
     //! \return                 Layer stratum value
     //!
-    int          stratum() const { return mStratum; }
+    SdStratum    stratum() const { return mStratum; }
 
     //!
     //! \brief color            Get layer color as QColor

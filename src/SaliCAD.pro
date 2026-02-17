@@ -268,7 +268,6 @@ SOURCES += \
     modes/SdModeCSymPin.cpp \
     windows/SdPropBarSymPin.cpp \
     modes/SdModeCOrigin.cpp \
-    objects/SdUndoRecordPoint.cpp \
     windows/SdWEditorComponent.cpp \
     objects/SdPItemSheet.cpp \
     objects/SdPItemPlate.cpp \
@@ -328,9 +327,7 @@ SOURCES += \
     objects/SdPropAngle.cpp \
     objects/SdUndoRecordBegin.cpp \
     library/SdLibraryStorage.cpp \
-    objects/SdUndoRecordString2.cpp \
     objects/SdUndoRecordStringMapItem.cpp \
-    objects/SdUndoRecordStringMap.cpp \
     windows/SdDOptionsPageEditors.cpp \
     objects/SdGraphNet.cpp \
     objects/SdGraphNetWire.cpp \
@@ -786,7 +783,6 @@ HEADERS  += \
     modes/SdModeCSymPin.h \
     windows/SdPropBarSymPin.h \
     modes/SdModeCOrigin.h \
-    objects/SdUndoRecordPoint.h \
     windows/SdWEditorComponent.h \
     objects/SdPItemSheet.h \
     objects/SdPItemPlate.h \
@@ -847,9 +843,7 @@ HEADERS  += \
     library/SdLibraryReference.h \
     library/SdLibraryStorage.h \
     library/SdLibraryHeader.h \
-    objects/SdUndoRecordString2.h \
     objects/SdUndoRecordStringMapItem.h \
-    objects/SdUndoRecordStringMap.h \
     windows/SdDOptionsPageEditors.h \
     objects/SdGraphNet.h \
     objects/SdGraphNetWire.h \

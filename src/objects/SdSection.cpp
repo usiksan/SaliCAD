@@ -40,8 +40,7 @@ void SdSection::setSymbolId(const QString id, SdUndo *undo)
   QScopedPointer<SdPItemSymbol> symbol( sdObjectOnly<SdPItemSymbol>( SdLibraryStorage::instance()->cfObjectGet( id ) )  );
   if( !symbol.isNull() ) {
     //Store previous state
-    undo->string2( &mSymbolId, &mSymbolTitle );
-    undo->stringMap( &mAssociationTable );
+    undo->prop( &mSymbolId, &mSymbolTitle, &mAssociationTable );
     //Setup new symbol info
     mSymbolId = symbol->hashUidName();
     mSymbolTitle = QString( "%1 (%2)" ).arg(symbol->getTitle()).arg(symbol->authorGlobalName());

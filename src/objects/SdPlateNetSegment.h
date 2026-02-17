@@ -21,12 +21,12 @@ Description
 
 struct SdPlateNetSegment
   {
-    SdSegment mSegment;
+    SdSegment     mSegment;
     SdPropStratum mStratum;
-    int       mSubNet;
+    int           mSubNet;
 
     bool intersect( const SdPlateNetSegment &p ) const {
-      return mSubNet != p.mSubNet && mStratum.match(p.mStratum) && (p.mSegment.isPointOn(mSegment.getP1()) || p.mSegment.isPointOn(mSegment.getP2()));
+      return mSubNet != p.mSubNet && mStratum.isMatchExact(p.mStratum) && (p.mSegment.isPointOn(mSegment.getP1()) || p.mSegment.isPointOn(mSegment.getP2()));
       }
   };
 

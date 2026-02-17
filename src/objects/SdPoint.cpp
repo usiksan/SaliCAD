@@ -21,7 +21,7 @@ Description
 void SdPoint::rotate(SdPoint origin, SdPropAngle angle)
   {
   SdPoint p;
-  switch( angle ) {
+  switch( angle.mValue ) {
     case da0   :
       p.setX( x() - origin.x() );
       p.setY( y() - origin.y() );

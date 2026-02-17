@@ -29,6 +29,8 @@ class SdPropAngle : public SdPropInt
     SdPropAngle() : SdPropInt() {}
     SdPropAngle( int sour );
 
+    bool        operator != ( const SdPropAngle &v ) const { return mValue != v.mValue; }
+
     double      getDegree() const { return static_cast<double>(mValue) / 1000.0; }
     //Разность между двумя углами (угол на который нужно повернуться, чтобы из данного угла получить целевой)
     double      sweep( SdPropAngle sour ) const;

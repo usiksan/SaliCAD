@@ -30,8 +30,8 @@ struct SdPropStratum
   {
     SdStratum mValue;
 
-    SdPropStratum();
-    SdPropStratum( int str );
+    SdPropStratum() : mValue(stmTop) {}
+    SdPropStratum( SdStratum str ) : mValue(str) {}
 
     //!
     //! \brief stratumBuild  Build stratum from one stratum to another
@@ -43,7 +43,11 @@ struct SdPropStratum
     void     stratumBuild( SdPropStratum from, SdPropStratum to, int pcbLayerCount, int rule );
 
     //Return true if this stratum intersect with given stratum presented with int
-    bool     operator & ( int s ) const { return mValue & s; }
+    bool     isMatchPartial( SdStratum s ) const { return mValue & s; }
+    bool     isMatchPartial( const SdPropStratum &s ) const { return mValue & s.mValue; }
+
+    bool     isMatchExact( SdStratum s ) const { return mValue == s; }
+    bool     isMatchExact( const SdPropStratum &s ) const { return mValue == s.mValue; }
 
     void     operator |= ( SdPropStratum s ) { mValue |= s.mValue; }
 

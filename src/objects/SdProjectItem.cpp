@@ -287,7 +287,7 @@ void SdProjectItem::setOrigin(const SdPoint org, SdUndo *undo)
   {
   if( undo ) {
     undo->begin( QObject::tr("Origin position changed"), this, false );
-    undo->point( &mOrigin );
+    undo->prop( &mOrigin );
     }
   mOrigin = org;
   }

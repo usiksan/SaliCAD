@@ -26,6 +26,11 @@ struct SdPropInt
     int mValue; //!< Stored integer value in logical units
 
     SdPropInt() : mValue(0) {}
+    SdPropInt( int v ) : mValue(v) {}
+
+    operator int() const { return mValue; }
+
+    bool       operator != ( const SdPropInt &v ) const { return mValue != v.mValue; }
 
     //!
     //! \brief log2Phis Convert logical value to physical string representation

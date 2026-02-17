@@ -194,11 +194,6 @@ void SdUndo::wire(SdPropLine *prop, SdPoint *p1, SdPoint *p2, bool *dot1, bool *
 
 
 
-void SdUndo::point(SdPoint *src)
-  {
-  addUndo( new SdUndoRecordPoint(src) );
-  }
-
 
 
 
@@ -234,18 +229,6 @@ void SdUndo::projectItemInfo(SdProjectItem *item, QString *title, QString *autho
 
 
 
-//!
-//! \brief string2 Append two string state every of them can be nullptr if none
-//! \param str1    String 1
-//! \param str2    String 2
-//!
-void SdUndo::string2(QString *str1, QString *str2)
-  {
-  addUndo( new SdUndoRecordString2( str1, str2 ) );
-  }
-
-
-
 
 void SdUndo::stringMapItem(SdStringMap *assoc, const QString key)
   {
@@ -253,12 +236,6 @@ void SdUndo::stringMapItem(SdStringMap *assoc, const QString key)
   }
 
 
-
-
-void SdUndo::stringMap(SdStringMap *assoc)
-  {
-  addUndo( new SdUndoRecordStringMap(assoc) );
-  }
 
 
 

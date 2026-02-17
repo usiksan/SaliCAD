@@ -23,14 +23,14 @@ Description
 
 class SdUndoRecordPartImp : public SdUndoRecord
   {
-    SdPoint           *mOriginSrc;
-    SdPoint            mOriginValue;
-    SdPropPartImp     *mPropSrc;
-    SdPropPartImpState mProp;
-    int               *mLogNumberSrc;
-    int                mLogNumberValue;
-    SdRect            *mOverSrc;
-    SdRect             mOver;
+    SdPoint       *mOriginSrc;
+    SdPoint        mOriginValue;
+    SdPropPartImp *mPropSrc;
+    SdPropPartImp  mProp;
+    int           *mLogNumberSrc;
+    int            mLogNumberValue;
+    SdRect        *mOverSrc;
+    SdRect         mOver;
   public:
     SdUndoRecordPartImp( SdPoint *origin, SdPropPartImp *imp, int *logNumber, SdRect *over );
 

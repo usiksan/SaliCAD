@@ -371,7 +371,7 @@ void SdContext::text( SdPoint pos, SdRect &over, const QString str, const SdProp
   {
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
     setFont( prop );
-    textEx( pos, over, str, prop.mDir.getValue(), prop.mHorz.getValue(), prop.mVert.getValue() );
+    textEx( pos, over, str, prop.mDir, prop.mHorz, prop.mVert );
     }
   }
 
@@ -695,9 +695,9 @@ void SdContext::setProp( const SdPropLine &prop)
 
 void SdContext::setFont(const SdPropText &prop)
   {
-  QFont font( SdEnvir::instance()->getSysFont(prop.mFont.getValue()) );
+  QFont font( SdEnvir::instance()->getSysFont(prop.mFont) );
 //  font.setPixelSize( qMax(mScaler.phys2pixel(prop.mSize.getValue()), 5) );
-  font.setPixelSize( mScaler.phys2pixel(prop.mSize.getValue()) );
+  font.setPixelSize( mScaler.phys2pixel(prop.mSize) );
   mPainter->setPen( convertColor(prop.mLayer.layer()) );
   mPainter->setFont( font );
   }

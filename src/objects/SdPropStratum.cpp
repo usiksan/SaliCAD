@@ -11,23 +11,9 @@ Web
 Description
 */
 #include "SdPropStratum.h"
-#include "SdEnvir.h"
 #include "SdJsonIO.h"
 
 #include <algorithm>
-
-SdPropStratum::SdPropStratum() :
-  SdPropInt()
-  {
-
-  }
-
-
-SdPropStratum::SdPropStratum(int str) :
-  SdPropInt(str)
-  {
-
-  }
 
 
 

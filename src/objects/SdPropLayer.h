@@ -38,6 +38,8 @@ class SdPropLayer
     //!
     SdPropLayer( QString id );
 
+    bool       operator != ( const SdPropLayer &v ) const { return mLayer != v.mLayer; }
+
     //!
     //! \brief isVisible Check if layer is visible
     //! \param otherSide If true, check paired layer for flipped components

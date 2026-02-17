@@ -99,7 +99,7 @@ class SdPropMulty
     //! \brief store Store current property value to destination if state is spmSingle
     //! \param dest Reference to destination property that receives stored value
     //!
-    void store( Prop &dest )
+    void store( Prop &dest ) const
       {
       if( mState == spmSingle )
         dest = mPropValue;

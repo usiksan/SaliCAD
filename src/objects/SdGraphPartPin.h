@@ -48,7 +48,7 @@ class SdGraphPartPin : public SdGraph
     //Return pin number
     QString   getPinNumber() const { return mNumber; }
     //Return pin type
-    QString   getPinType() const { return mPinProp.mPinType.str(); }
+    QString   getPinType() const { return mPinProp.mPinType.mString; }
     //Return pin origin
     SdPoint   getPinOrigin() const { return mOrigin; }
     //Return pin stratum

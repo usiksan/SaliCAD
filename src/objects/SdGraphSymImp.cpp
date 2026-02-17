@@ -124,7 +124,7 @@ void SdGraphSymImp::paramTableSet(const SdStringMap map, SdUndo *undo, SdGraphPa
   {
   //If there undo then save previous param table
   if( undo != nullptr )
-    undo->stringMap( &mParamTable );
+    undo->prop( &mParamTable );
 
   //Setup new table
   mParamTable = map;
