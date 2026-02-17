@@ -85,17 +85,21 @@ template <typename ... Ts>
 class SdUndoRecordField : public SdUndoRecord, private SdUndoFieldBase<Ts>...
   {
     using PostAction = std::function<void()>;
+    PostAction mPredAction;
     PostAction mPostAction;
   public:
-    explicit SdUndoRecordField( Ts*... ptrs ) : SdUndoRecord(), SdUndoFieldBase<Ts>(ptrs)..., mPostAction([]{}) {}
+    explicit SdUndoRecordField( Ts*... ptrs ) : SdUndoRecord(), SdUndoFieldBase<Ts>(ptrs)..., mPredAction([]{}), mPostAction([]{}) {}
 
     virtual void undo() override
       {
+      mPredAction();
       (SdUndoFieldBase<Ts>::undoOne(), ...);
       mPostAction();
       }
 
-    void post( PostAction fun ) { mPostAction = std::move(fun); }
+    SdUndoRecordField<Ts ...> &post( PostAction fun ) { mPostAction = std::move(fun); return *this; }
+
+    SdUndoRecordField<Ts ...> &pred( PostAction fun ) { mPredAction = std::move(fun); return *this; }
   };
 
 
@@ -131,7 +135,6 @@ class SdUndo
     void linkSection( int section, SdGraphSymImp *sym, SdGraphPartImp *part, bool link );
     void symImp( SdPoint *origin, SdPropSymImp *imp, int *logSection, int *logNumber, SdRect *over );
     void partImp(SdPoint *origin, SdPropPartImp *imp, int *logNumber, SdRect *over);
-    void wire( SdPropLine *prop, SdPoint *p1, SdPoint *p2, bool *dot1, bool *dot2 );
 
     //!
     //! \brief begin Appends "begin" record of group of undo commands. When undo then
@@ -145,12 +148,6 @@ class SdUndo
     void projectItemInfo(SdProjectItem *item, QString *title, QString *author, SdFileUid *fileUid, bool *editEnable );
 
     void stringMapItem( SdStringMap *assoc, const QString key );
-    void padAssociation( QString *id, QString *srcName, SdPadMap *srcMap );
-    void road( SdPropInt *width, SdPoint *p1, SdPoint *p2 );
-    void via( SdPropString *pad, SdPoint *pos );
-    void rule( SdRuleBlock *pcbSrc, SdRuleBlockMap *mapSrc );
-    void stringList( int *val, QStringList *list );
-    void polygon( SdPropPolygon *propSource, SdPointList *regionSource, SdPolyWindowList *windowsSource );
 
     //!
     //! \brief matrix3d Add undo for 3d matrix conversion
@@ -159,12 +156,6 @@ class SdUndo
     //!
     void matrix3d( QMatrix4x4 matrix, SdPItemPart *part );
 
-    //!
-    //! \brief script      Add undo script for 3d model changed
-    //! \param modelScript Changed script
-    //! \param model       3d model
-    //!
-    void script( QString *modelScript, Sd3drModel *model );
 
     template <typename... Ts>
     SdUndoRecordField<Ts...>& prop( Ts* ... ptrs )

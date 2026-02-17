@@ -340,7 +340,7 @@ void SdPItemPlate::drawTrace(SdContext *ctx, SdPropStratum curStratum, QString c
 void SdPItemPlate::ruleSet(const SdRuleBlock &pcb, const SdRuleBlockMap &map, SdUndo *undo )
   {
   if( undo )
-    undo->rule( &mRulesPcb, &mRulesMap );
+    undo->prop( &mRulesPcb, &mRulesMap );
   mRulesPcb = pcb;
   mRulesMap = map;
   }
@@ -376,7 +376,7 @@ void SdPItemPlate::ruleBlockForNet( const QString netName, SdRuleBlock &blockDes
 void SdPItemPlate::ruleForNetSet(const QString netName, SdRuleId ruleId, int val, SdUndo *undo)
   {
   if( undo )
-    undo->rule( &mRulesPcb, &mRulesMap );
+    undo->prop( &mRulesPcb, &mRulesMap );
   //Rule for net
   SdRuleBlock rules;
   //If rule for net already exist in map we extract it for change

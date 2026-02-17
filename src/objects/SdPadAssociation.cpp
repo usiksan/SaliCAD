@@ -42,7 +42,7 @@ QString SdPadAssociation::getUid() const
 
 void SdPadAssociation::setMap(const QString name, const SdPadMap &src, SdUndo *undo)
   {
-  undo->padAssociation( &mAuthor, &mName, &mMap );
+  undo->prop( &mAuthor, &mName, &mMap );
   mName   = name;
   mMap    = src;
   mAuthor = SdProjectItem::getDefaultAuthor();

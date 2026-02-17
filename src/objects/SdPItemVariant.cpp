@@ -39,7 +39,7 @@ void SdPItemVariant::variantTableGet(qint32 &fieldCount, QStringList &list) cons
 void SdPItemVariant::variantTableSet(qint32 fieldCount, QStringList list, SdUndo *undo)
   {
   if( undo )
-    undo->stringList( &mVariantFieldCount, &mVariantTable );
+    undo->prop( &mVariantFieldCount, &mVariantTable );
   mVariantFieldCount = fieldCount;
   mVariantTable      = list;
   }

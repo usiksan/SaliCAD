@@ -302,11 +302,11 @@ bool SdPoint::isOnSegment(SdPoint a, SdPoint b) const
 
 
 
-void SdPoint::swap(SdPoint *p)
+void SdPoint::swap(SdPoint &p)
   {
-  int tx = p->x();
-  int ty = p->y();
-  p->set( x(), y() );
+  int tx = p.x();
+  int ty = p.y();
+  p.set( x(), y() );
   set( tx, ty );
   }
 

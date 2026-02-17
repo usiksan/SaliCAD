@@ -134,7 +134,7 @@ void SdGraphTracedPolygon::json(const SdJsonReader &js)
 void SdGraphTracedPolygon::saveState(SdUndo *undo)
   {
   if( undo )
-    undo->polygon( &mProp, &mRegion, &mWindows );
+    undo->prop( &mProp, &mRegion, &mWindows );
   }
 
 

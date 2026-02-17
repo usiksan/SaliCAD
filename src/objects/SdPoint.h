@@ -92,7 +92,7 @@ class SdPoint : public QPoint
     bool        isLeftHigh( SdPoint a ) const;                              //Левее или выше чем a?
     bool        isOnSegment( SdPoint a, SdPoint b ) const;
 
-    void        swap( SdPoint *p );
+    void        swap( SdPoint &p );
 
     //!
     //! \brief json Overloaded function to write object content into json writer

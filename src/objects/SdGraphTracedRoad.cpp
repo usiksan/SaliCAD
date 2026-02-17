@@ -44,7 +44,7 @@ SdGraphTracedRoad::SdGraphTracedRoad(const SdPropRoad &prp, SdPoint a, SdPoint b
 void SdGraphTracedRoad::setSegment(SdPoint a, SdPoint b, SdUndo *undo)
   {
   if( undo )
-    undo->road( &(mProp.mWidth), mSegment.ptrP1(), mSegment.ptrP2() );
+    undo->prop( &(mProp.mWidth), mSegment.ptrP1(), mSegment.ptrP2() );
   mSegment.set( a, b );
   }
 
@@ -177,7 +177,7 @@ void SdGraphTracedRoad::json(const SdJsonReader &js)
 
 void SdGraphTracedRoad::saveState(SdUndo *undo)
   {
-  undo->road( &(mProp.mWidth), mSegment.ptrP1(), mSegment.ptrP2() );
+  undo->prop( &(mProp.mWidth), mSegment.ptrP1(), mSegment.ptrP2() );
   }
 
 

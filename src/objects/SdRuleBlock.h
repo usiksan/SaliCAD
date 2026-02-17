@@ -74,6 +74,11 @@ struct SdRuleBlock
     //Get actual rule block
     void getRuleBlock( SdRuleBlock &dest, const SdRuleBlock &parent ) const;
 
+    void swap( SdRuleBlock &other )
+      {
+      std::swap( mRules, other.mRules );
+      }
+
     //Write-read block
     //!
     //! \brief json Overloaded function to write object content into json writer

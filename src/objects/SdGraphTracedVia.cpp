@@ -110,7 +110,7 @@ void SdGraphTracedVia::json(const SdJsonReader &js)
 
 void SdGraphTracedVia::saveState(SdUndo *undo)
   {
-  undo->via( &(mProp.mPadType), &mPosition );
+  undo->prop( &(mProp.mPadType), &mPosition );
   }
 
 

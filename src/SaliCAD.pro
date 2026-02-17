@@ -290,7 +290,6 @@ SOURCES += \
     objects/SdUndoRecordPartImp.cpp \
     windows/SdPropBarWire.cpp \
     windows/SdDNetUnion.cpp \
-    objects/SdUndoRecordWire.cpp \
     objects/SdGraphTraced.cpp \
     objects/SdGraphTracedVia.cpp \
     objects/SdGraphTracedPolygon.cpp \
@@ -339,7 +338,6 @@ SOURCES += \
     objects/SdPadAssociation.cpp \
     objects/SdLayerCache.cpp \
     windows/SdDPads.cpp \
-    objects/SdUndoRecordPadAssociation.cpp \
     windows/SdDPadMaster.cpp \
     windows/SdIllustrator.cpp \
     objects/SdRuleBlock.cpp \
@@ -350,7 +348,6 @@ SOURCES += \
     windows/SdPropBarStratum.cpp \
     objects/SdPropInt.cpp \
     objects/SdPlateNetList.cpp \
-    objects/SdUndoRecordRoad.cpp \
     objects/SdUtil.cpp \
     windows/SdPNewProjectItem_Master.cpp \
     master/SdDMasterPart.cpp \
@@ -378,12 +375,10 @@ SOURCES += \
     windows/SdPropBarPolygon.cpp \
     windows/SdPropBarDefault.cpp \
     objects/SdPropVia.cpp \
-    objects/SdUndoRecordVia.cpp \
     modes/SdModeCLinearCircleFilled.cpp \
     windows/SdDRuleEditor.cpp \
     objects/SdGraphLinearRegionFilled.cpp \
     modes/SdModeCLinearRegionFilled.cpp \
-    objects/SdUndoRecordRules.cpp \
     objects/SdTextImplement.cpp \
     objects/SdGraphValue.cpp \
     modes/SdModeCValue.cpp \
@@ -404,7 +399,6 @@ SOURCES += \
     master/SdDMasterPartQuadSide.cpp \
     objects/SdPItemVariant.cpp \
     windows/SdDVariantTable.cpp \
-    objects/SdUndoRecordStringList.cpp \
     master/SdDMasterSymbolIc.cpp \
     objects/SdPItemRich.cpp \
     windows/SdWEditorRich.cpp \
@@ -421,7 +415,6 @@ SOURCES += \
     modes/SdModeCOriginPlate.cpp \
     windows/SdPExport_Bom.cpp \
     windows/SdPExport_Dxf.cpp \
-    objects/SdUndoRecordPolygon.cpp \
     objects/SdPlateNetGraph.cpp \
     objects/SdPlateNetContainer.cpp
 
@@ -805,7 +798,6 @@ HEADERS  += \
     objects/SdUndoRecordPartImp.h \
     windows/SdPropBarWire.h \
     windows/SdDNetUnion.h \
-    objects/SdUndoRecordWire.h \
     objects/SdGraphTraced.h \
     objects/SdGraphTracedVia.h \
     objects/SdGraphTracedPolygon.h \
@@ -855,7 +847,6 @@ HEADERS  += \
     objects/SdPadAssociation.h \
     objects/SdLayerCache.h \
     windows/SdDPads.h \
-    objects/SdUndoRecordPadAssociation.h \
     windows/SdDPadMaster.h \
     windows/SdIllustrator.h \
     objects/SdRuleBlock.h \
@@ -868,7 +859,6 @@ HEADERS  += \
     objects/SdRatNet.h \
     objects/SdPlateNetList.h \
     objects/SdPlateNetSegment.h \
-    objects/SdUndoRecordRoad.h \
     objects/SdUtil.h \
     windows/SdPNewProjectItem_Master.h \
     windows/SdPNewProjectItem.h \
@@ -897,12 +887,10 @@ HEADERS  += \
     windows/SdPropBarPolygon.h \
     windows/SdPropBarDefault.h \
     objects/SdPropVia.h \
-    objects/SdUndoRecordVia.h \
     modes/SdModeCLinearCircleFilled.h \
     windows/SdDRuleEditor.h \
     objects/SdGraphLinearRegionFilled.h \
     modes/SdModeCLinearRegionFilled.h \
-    objects/SdUndoRecordRules.h \
     objects/SdTextImplement.h \
     objects/SdGraphValue.h \
     modes/SdModeCValue.h \
@@ -924,7 +912,6 @@ HEADERS  += \
     master/SdDMasterPartQuadSide.h \
     objects/SdPItemVariant.h \
     windows/SdDVariantTable.h \
-    objects/SdUndoRecordStringList.h \
     master/SdDMasterSymbolIc.h \
     objects/SdPItemRich.h \
     windows/SdWEditorRich.h \
@@ -941,7 +928,6 @@ HEADERS  += \
     modes/SdModeCOriginPlate.h \
     windows/SdPExport_Bom.h \
     windows/SdPExport_Dxf.h \
-    objects/SdUndoRecordPolygon.h \
     objects/SdPlateNetGraph.h \
     objects/SdPlateNetContainer.h \
     windows/SdWView3d.h

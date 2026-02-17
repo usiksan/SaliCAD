@@ -186,10 +186,6 @@ void SdUndo::partImp(SdPoint *origin, SdPropPartImp *imp, int *logNumber, SdRect
 
 
 
-void SdUndo::wire(SdPropLine *prop, SdPoint *p1, SdPoint *p2, bool *dot1, bool *dot2)
-  {
-  addUndo( new SdUndoRecordWire( prop, p1, p2, dot1, dot2 ) );
-  }
 
 
 
@@ -240,49 +236,9 @@ void SdUndo::stringMapItem(SdStringMap *assoc, const QString key)
 
 
 
-void SdUndo::padAssociation(QString *id, QString *srcName, SdPadMap *srcMap)
-  {
-  addUndo( new SdUndoRecordPadAssociation( id, srcName, srcMap ) );
-  }
 
 
 
-
-
-void SdUndo::road(SdPropInt *width, SdPoint *p1, SdPoint *p2)
-  {
-  addUndo( new SdUndoRecordRoad( width, p1, p2 ) );
-  }
-
-
-
-
-void SdUndo::via(SdPropString *pad, SdPoint *pos)
-  {
-  addUndo( new SdUndoRecordVia( pad, pos ) );
-  }
-
-
-
-
-void SdUndo::rule(SdRuleBlock *pcbSrc, SdRuleBlockMap *mapSrc)
-  {
-  addUndo( new SdUndoRecordRules( pcbSrc, mapSrc ) );
-  }
-
-void SdUndo::stringList(int *val, QStringList *list)
-  {
-  addUndo( new SdUndoRecordStringList( val, list ) );
-  }
-
-
-
-
-
-void SdUndo::polygon(SdPropPolygon *propSource, SdPointList *regionSource, SdPolyWindowList *windowsSource)
-  {
-  addUndo( new SdUndoRecordPolygon( propSource, regionSource, windowsSource ) );
-  }
 
 
 
@@ -298,16 +254,6 @@ void SdUndo::matrix3d(QMatrix4x4 matrix, SdPItemPart *part)
   }
 
 
-
-//!
-//! \brief script      Add undo script for 3d model changed
-//! \param modelScript Changed script
-//! \param model       3d model
-//!
-void SdUndo::script(QString *modelScript, Sd3drModel *model)
-  {
-  //TODO Append undo for 3d model script
-  }
 
 
 

@@ -19,7 +19,7 @@ Sd3dGraphModel::Sd3dGraphModel(const Sd3drModel &model) :
 void Sd3dGraphModel::scriptSet(const QString script, SdUndo *undo)
   {
   if( undo )
-    undo->script( &mModelScript, &mModel );
+    undo->prop( &mModelScript ).post([this]() { buildModel( mModelScript ); });
   mModelScript = script;
   buildModel( mModelScript );
   }
