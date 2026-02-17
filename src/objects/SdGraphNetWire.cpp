@@ -363,7 +363,7 @@ void SdGraphNetWire::json(const SdJsonReader &js)
 
 void SdGraphNetWire::saveState(SdUndo *undo)
   {
-  undo->wire( &mProp, &mA, &mB, &mDotA, &mDotB );
+  undo->prop( &mProp, &mA, &mB, &mDotA, &mDotB );
   SdGraphNet::saveState(undo);
   }
 
@@ -663,7 +663,7 @@ void SdGraphNetWire::snapPoint(SdSnapInfo *snap)
 void SdGraphNetWire::setNetName(const QString netName, SdUndo *undo)
   {
   if( undo ) {
-    undo->wire( &mProp, &mA, &mB, &mDotA, &mDotB );
+    undo->prop( &mProp, &mA, &mB, &mDotA, &mDotB );
     //Information about wire segment delete to remove connection from pin
     getSheet()->netWireDelete( this, undo );
     SdGraphNet::setNetName( netName, undo );
