@@ -14,7 +14,7 @@ Description
 #ifndef SDPAD_H
 #define SDPAD_H
 
-#include "SdPropStratum.h"
+#include "SdPvStratum.h"
 #include "SdPoint.h"
 #include "SdPolyWindowList.h"
 #include "3dr/Sd3drModel.h"
@@ -59,7 +59,7 @@ class SdPad
     //! \param p     Center position of pad
     //! \param stratum Stratum for layer selection
     //!
-    void        draw(SdContext *dcx, SdPoint p, int stratum ) const;
+    void        draw(SdContext *dcx, SdPoint p, SdPvStratum stratum ) const;
 
     //!
     //! \brief draw3d Draws object in 3d space
@@ -93,7 +93,7 @@ class SdPad
     //! \param stratum        Stratum for layers (unused)
     //! \param map            Base map for holes conversion (applied after local transforms)
     //!
-    void        appendPadHoles( SdPoint p, Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map ) const;
+    void        appendPadHoles( SdPoint p, Sd3drModel &model, Sd3drFaceList &faceList, SdPvStratum stratum, const QMatrix4x4 &map ) const;
 
     //!
     //! \brief overCircleRadius Returns over pad circle radius

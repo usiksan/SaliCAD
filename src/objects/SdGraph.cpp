@@ -38,23 +38,15 @@ void SdGraph::moveComplete(SdPoint grid, SdUndo *undo)
 
 
 
-
-void SdGraph::move(SdPoint offset)
+void SdGraph::transform(const QTransform &map, SdPvAngle angle)
   {
-  Q_UNUSED(offset)
-  }
-
-void SdGraph::rotate(SdPoint center, SdPropAngle angle)
-  {
-  Q_UNUSED(center)
+  Q_UNUSED(map)
   Q_UNUSED(angle)
   }
 
-void SdGraph::mirror(SdPoint a, SdPoint b)
-  {
-  Q_UNUSED(a)
-  Q_UNUSED(b)
-  }
+
+
+
 
 void SdGraph::setProp(SdPropSelected &prop)
   {
@@ -146,7 +138,7 @@ void SdGraph::draw3d(QOpenGLFunctions_2_0 *f) const
 //! \param stratum    Stratum for layers
 //! \param map        Map for holes conversion
 //!
-void SdGraph::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map) const
+void SdGraph::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdPvStratum stratum, const QMatrix4x4 &map) const
   {
   Q_UNUSED(model)
   Q_UNUSED(faceList)

@@ -151,8 +151,7 @@ void SdGraphArea::json(const SdJsonReader &js)
 
 void SdGraphArea::saveState(SdUndo *undo)
   {
-  undo->propLinePointTable( &mRegionProp, &mRegion );
-  undo->platePointer( &mPlate );
+  undo->prop( &mRegionProp, &mRegion, &mPlate );
   }
 
 
@@ -166,30 +165,22 @@ void SdGraphArea::moveComplete(SdPoint grid, SdUndo *undo)
 
 
 
-void SdGraphArea::move(SdPoint offset)
+void SdGraphArea::transform(const QTransform &map)
   {
-  mRegion.move( mFlyIndex, offset );
+  if( map.isTranslating() )
+    mRegion.transform( mFlyIndex, map );
+  else
+    mRegion.transform( map );
   }
 
 
 
-void SdGraphArea::rotate(SdPoint center, SdPropAngle angle)
-  {
-  mRegion.rotate( center, angle );
-  }
-
-
-
-void SdGraphArea::mirror(SdPoint a, SdPoint b)
-  {
-  mRegion.mirror( a, b );
-  }
 
 
 
 void SdGraphArea::setProp(SdPropSelected &prop)
   {
-  mRegionProp = prop.mLineProp;
+  prop.mLineProp.store( mRegionProp );
   }
 
 

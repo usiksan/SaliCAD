@@ -19,10 +19,6 @@ Description
 #include "SdConfig.h"
 #include "SdUndoRecord.h"
 #include "library/SdStringMap.h"
-#include "SdPad.h"
-#include "SdRuleBlock.h"
-#include "SdPointList.h"
-#include "SdPolyWindowList.h"
 
 #include <QStack>
 #include <QMap>
@@ -32,13 +28,6 @@ Description
 
 class SdContainer;
 class SdObject;
-class SdPoint;
-class SdPointList;
-struct SdPropInt;
-class SdPropString;
-class SdPropLayer;
-class SdPropLine;
-class SdPropText;
 class SdPropSymPin;
 class SdPropPartPin;
 class SdPropSymImp;
@@ -59,7 +48,7 @@ class Sd3drModel;
 class SdFileUid;
 
 
-template <typename T>
+template <typename T, std::size_t Index>
 struct SdUndoFieldBase
   {
     T *mSrc;
@@ -81,29 +70,32 @@ struct SdUndoFieldBase
 
 
 
-template <typename ... Ts>
-class SdUndoRecordField : public SdUndoRecord, private SdUndoFieldBase<Ts>...
+template <typename IndexSeq, typename ... Ts> class SdUndoRecordFieldImpl;
+
+template <std::size_t... Is, typename ... Ts>
+class SdUndoRecordFieldImpl<std::index_sequence<Is...>, Ts...> : public SdUndoRecord, private SdUndoFieldBase<Ts,Is>...
   {
     using PostAction = std::function<void()>;
     PostAction mPredAction;
     PostAction mPostAction;
   public:
-    explicit SdUndoRecordField( Ts*... ptrs ) : SdUndoRecord(), SdUndoFieldBase<Ts>(ptrs)..., mPredAction([]{}), mPostAction([]{}) {}
+    explicit SdUndoRecordFieldImpl( Ts*... ptrs ) : SdUndoRecord(), SdUndoFieldBase<Ts,Is>(ptrs)..., mPredAction([]{}), mPostAction([]{}) {}
 
     virtual void undo() override
       {
       mPredAction();
-      (SdUndoFieldBase<Ts>::undoOne(), ...);
+      (SdUndoFieldBase<Ts,Is>::undoOne(), ...);
       mPostAction();
       }
 
-    SdUndoRecordField<Ts ...> &post( PostAction fun ) { mPostAction = std::move(fun); return *this; }
+    auto &post( PostAction fun ) { mPostAction = std::move(fun); return *this; }
 
-    SdUndoRecordField<Ts ...> &pred( PostAction fun ) { mPredAction = std::move(fun); return *this; }
+    auto &pred( PostAction fun ) { mPredAction = std::move(fun); return *this; }
   };
 
 
-
+template <typename ... Ts>
+using SdUndoRecordField = SdUndoRecordFieldImpl<std::index_sequence_for<Ts...>, Ts...>;
 
 
 class SdUndo
@@ -121,20 +113,8 @@ class SdUndo
     //save undo
     void insertObject( SdContainer *container, SdObject *object );
     void deleteObject( SdContainer *container, SdObject *object );
-    void propLineAnd3Point(SdPropLine *prp, SdPoint *p1, SdPoint *p2 , SdPoint *p3 = nullptr);
-    void propLinePointInt( SdPropLine *prp, SdPoint *p, int *val );
-    void propLinePointTable( SdPropLine *prp, SdPointList *list );
-    void propLineRect2Int( SdPropLine *prp, SdRect *r, int *val1, int *val2 );
-    void propTextAndText( SdPropText *prp, SdPoint *org, SdRect *r, QString *str );
-    void propSymPin( SdPropSymPin *prp, SdPoint *org );
-    void propPartPin( SdPropPartPin *prp, SdPoint *org );
-    void platePointer( SdPItemPlatePtr *ptr );
     void pinSymImpStatus( SdGraphSymImp *sym, const QString symPinName );
-    void symImpPins( SdSymImpPinTable *table );
-    void partImpPins( SdPartImpPinTable *table );
     void linkSection( int section, SdGraphSymImp *sym, SdGraphPartImp *part, bool link );
-    void symImp( SdPoint *origin, SdPropSymImp *imp, int *logSection, int *logNumber, SdRect *over );
-    void partImp(SdPoint *origin, SdPropPartImp *imp, int *logNumber, SdRect *over);
 
     //!
     //! \brief begin Appends "begin" record of group of undo commands. When undo then

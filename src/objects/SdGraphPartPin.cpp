@@ -50,11 +50,11 @@ SdGraphPartPin::SdGraphPartPin(SdPoint org, const SdPropPartPin &pinProp, SdPoin
 
 
 
-
-int SdGraphPartPin::getPinStratum(bool otherSide) const
+SdPvStratum SdGraphPartPin::getPinStratum(bool otherSide) const
   {
   return mPinProp.mSide.stratum( !otherSide );
   }
+
 
 
 
@@ -157,49 +157,31 @@ void SdGraphPartPin::json(const SdJsonReader &js)
 
 void SdGraphPartPin::saveState(SdUndo *undo)
   {
-  undo->propPartPin( &mPinProp, &mOrigin );
-  undo->propTextAndText( &mNumberProp, &mNumberPos, &mNumberRect, &mNumber );
-  undo->propTextAndText( &mNameProp, &mNamePos, &mNameRect, nullptr );
+  undo->prop( &mPinProp, &mOrigin, &mNumberProp, &mNumberPos, &mNumberRect, &mNumber, &mNameProp, &mNamePos, &mNameRect );
   }
 
 
 
 
-void SdGraphPartPin::move(SdPoint offset)
+
+void SdGraphPartPin::transform(const QTransform &map, SdPvAngle angle)
   {
-  if( mPinSelect ) mOrigin.move(offset);
-  if( mNamSelect ) mNamePos.move(offset);
-  if( mNumSelect ) mNumberPos.move(offset);
+  if( mPinSelect ) mOrigin = map.map(mOrigin);
+  if( mNamSelect ) { mNamePos = map.map(mNamePos); mNameProp.mDir += angle; }
+  if( mNumSelect ) { mNumberPos = map.map(mNumberPos); mNumberProp.mDir += angle; }
   }
 
 
 
-
-void SdGraphPartPin::rotate(SdPoint center, SdPropAngle angle)
-  {
-  if( mPinSelect ) mOrigin.rotate( center, angle );
-  if( mNamSelect ) mNamePos.rotate( center, angle );
-  if( mNumSelect ) mNumberPos.rotate( center, angle );
-  }
-
-
-
-
-void SdGraphPartPin::mirror(SdPoint a, SdPoint b)
-  {
-  if( mPinSelect ) mOrigin.mirror( a, b );
-  if( mNamSelect ) mNamePos.mirror( a, b );
-  if( mNumSelect ) mNumberPos.mirror( a, b );
-  }
 
 
 
 
 void SdGraphPartPin::setProp(SdPropSelected &prop)
   {
-  if( mPinSelect ) mPinProp = prop.mPartPinProp;
-  if( mNamSelect ) mNameProp = prop.mTextProp;
-  if( mNumSelect ) mNumberProp = prop.mTextProp;
+  if( mPinSelect ) prop.mPartPinProp.store( mPinProp );
+  if( mNamSelect ) prop.mTextProp.store( mNameProp );
+  if( mNumSelect ) prop.mTextProp.store( mNumberProp );
   }
 
 
@@ -339,7 +321,7 @@ void SdGraphPartPin::draw(SdContext *dc)
   //Pin it self
   dc->partPin( mOrigin, mPinProp.mLayer.layer() );
   if( SdEnvir::instance()->mShowPads )
-    SdEnvir::instance()->getPad( mPinProp.mPinType.str() ).draw( dc, mOrigin, stmThrough );
+    SdEnvir::instance()->getPad( mPinProp.mPinType.mString ).draw( dc, mOrigin, stmThrough );
 
   //Pin name
   //At first calc over rectangle
@@ -364,7 +346,7 @@ void SdGraphPartPin::draw(SdContext *dc)
 void SdGraphPartPin::draw3d(QOpenGLFunctions_2_0 *f) const
   {
   //Draw pad only
-  SdEnvir::instance()->getPad( mPinProp.mPinType.str() ).draw3d( f, mOrigin );
+  SdEnvir::instance()->getPad( mPinProp.mPinType.mString ).draw3d( f, mOrigin );
   }
 
 

@@ -27,7 +27,7 @@ Description
 #include "SdSection.h"
 #include "SdGraphPartPin.h"
 #include "SdEnvir.h"
-#include "SdPropStratum.h"
+#include "SdPvStratum.h"
 
 #include <QTextCodec>
 #include <QMessageBox>

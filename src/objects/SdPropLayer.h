@@ -28,15 +28,12 @@ class SdPropLayer
 
   public:
     //!
-    //! \brief SdPropLayer Default constructor - initializes with default layer
-    //!
-    SdPropLayer();
-
-    //!
     //! \brief SdPropLayer Constructor with layer identifier
     //! \param id Layer identifier string to find and set the layer
     //!
-    SdPropLayer( QString id );
+    SdPropLayer( QString id = QString{} );
+
+    SdPropLayer( SdLayer *layer );
 
     bool       operator != ( const SdPropLayer &v ) const { return mLayer != v.mLayer; }
 

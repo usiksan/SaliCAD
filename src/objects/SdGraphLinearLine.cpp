@@ -106,36 +106,19 @@ void SdGraphLinearLine::json(const SdJsonReader &js)
 
 
 
-
-
-
-
-void SdGraphLinearLine::move(SdPoint offset)
+void SdGraphLinearLine::transform(const QTransform &map, SdPvAngle)
   {
-  //Перенести
-  if( mFlyA ) a.move( offset );
-  if( mFlyB ) b.move( offset );
+  if( map.isTranslating() || map.isRotating() ) {
+    if( mFlyA ) a = map.map(a);
+    if( mFlyB ) b = map.map(b);
+    }
+  else {
+    a = map.map(a);
+    b = map.map(b);
+    }
   }
 
 
-
-
-void SdGraphLinearLine::rotate(SdPoint center, SdPropAngle angle)
-  {
-  //Повернуть
-  if( mFlyA ) a.rotate( center, angle );
-  if( mFlyB ) b.rotate( center, angle );
-  }
-
-
-
-
-void SdGraphLinearLine::mirror(SdPoint a, SdPoint b)
-  {
-  //Отразить (зеркальность) относительно линии
-  a.mirror( a, b );
-  b.mirror( a, b );
-  }
 
 
 
@@ -233,5 +216,5 @@ int SdGraphLinearLine::behindCursor(SdPoint p)
 
 void SdGraphLinearLine::saveState(SdUndo *undo)
   {
-  undo->propLineAnd3Point( &mProp, &a, &b );
+  undo->prop( &mProp, &a, &b );
   }

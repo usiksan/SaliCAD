@@ -11,7 +11,7 @@ Web
 Description
   Int property
 */
-#include "SdPropInt.h"
+#include "SdPvInt.h"
 #include "SdUtil.h"
 
 
@@ -21,9 +21,9 @@ Description
 //! \param ppm      Pixels per millimeter conversion factor
 //! \return         Physical value as formatted string (e.g., "10.5 mm")
 //!
-QString SdPropInt::log2Phis(double ppm) const
+QString SdPvInt::log2Phis(double ppm) const
   {
-  return mValue < 0 ? QString() : SdUtil::log2physStr(mValue,ppm);
+  return SdUtil::log2physStr(mValue,ppm);
   }
 
 
@@ -34,7 +34,7 @@ QString SdPropInt::log2Phis(double ppm) const
 //! \param src        Source physical string (e.g., "10.5 mm")
 //! \param ppm        Pixels per millimeter conversion factor
 //!
-void SdPropInt::setFromPhis(const QString src, double ppm)
+void SdPvInt::setFromPhis(const QString &src, double ppm)
   {
   mValue = SdUtil::phys2log(src,ppm);
   }

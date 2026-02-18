@@ -57,9 +57,7 @@ class SdGraphLinearCircle : public SdGraphLinear
     //!
     virtual void    json( const SdJsonReader &js ) override;
 
-    virtual void    move(SdPoint offset) override;
-    virtual void    rotate(SdPoint center, SdPropAngle angle) override;
-    virtual void    mirror(SdPoint a, SdPoint b) override;
+    virtual void    transform( const QTransform &map, SdPvAngle ) override;
     virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;
     virtual void    selectByRect(const SdRect &r, SdSelector *selector) override;
     virtual SdRect  getOverRect() const override;
@@ -78,7 +76,7 @@ class SdGraphLinearCircle : public SdGraphLinear
     //! \param stratum    Stratum for layers
     //! \param map        Map for holes conversion
     //!
-    virtual void    accumHoles( Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map ) const override;
+    virtual void    accumHoles( Sd3drModel &model, Sd3drFaceList &faceList, SdPvStratum stratum, const QMatrix4x4 &map ) const override;
 
     //Find snap point on object
     virtual void    snapPoint(SdSnapInfo *snap) override;

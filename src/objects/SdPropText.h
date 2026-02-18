@@ -14,9 +14,10 @@ Description
 #ifndef SDTEXTPROP_H
 #define SDTEXTPROP_H
 
-#include "SdPropInt.h"
-#include "SdPropAngle.h"
+#include "SdPvInt.h"
+#include "SdPvAngle.h"
 #include "SdPropLayer.h"
+#include "SdPvMulty.h"
 
 //!
 //! \defgroup text_alignment Text alignment constants
@@ -42,12 +43,12 @@ Description
 struct SdPropText
   {
     SdPropLayer mLayer;  //!< Layer of text placement [Слой размещения текста]
-    SdPropInt   mSize;   //!< Text size in logical units [Размер текста]
-    SdPropAngle mDir;    //!< Text direction/rotation angle [Направление/угол поворота]
-    SdPropInt   mFont;   //!< Font identifier [Идентификатор шрифта]
-    SdPropInt   mHorz;   //!< Horizontal alignment (see dhjLeft, dhjCenter, dhjRight) [Выравнивание горизонтальное]
-    SdPropInt   mVert;   //!< Vertical alignment (see dvjTop, dvjMiddle, dvjBottom) [Выравнивание вертикальное]
-    SdPropInt   mMirror; //!< Mirror factor (0 - normal, 1 - mirrored) [Зеркальность]
+    SdPvInt   mSize;   //!< Text size in logical units [Размер текста]
+    SdPvAngle mDir;    //!< Text direction/rotation angle [Направление/угол поворота]
+    SdPvInt   mFont;   //!< Font identifier [Идентификатор шрифта]
+    SdPvInt   mHorz;   //!< Horizontal alignment (see dhjLeft, dhjCenter, dhjRight) [Выравнивание горизонтальное]
+    SdPvInt   mVert;   //!< Vertical alignment (see dvjTop, dvjMiddle, dvjBottom) [Выравнивание вертикальное]
+    SdPvInt   mMirror; //!< Mirror factor (0 - normal, 1 - mirrored) [Зеркальность]
 
     //!
     //! \brief json Write text properties to JSON with specified prefix
@@ -70,6 +71,8 @@ struct SdPropText
     void swap( SdPropText &other );
   };
 
+using SdPropComposerText = SdPropComposer<SdPropText, &SdPropText::mDir, &SdPropText::mFont, &SdPropText::mHorz,
+                                        &SdPropText::mLayer, &SdPropText::mMirror, &SdPropText::mSize, &SdPropText::mVert>;
 
 //Parse src string and find numeric substring. Numeric substring converted into int, int incremented
 //and convert to substring. Substring, at end, inserted into src string and return result

@@ -122,7 +122,7 @@ void SdPropBar::updateEditObjectProp(SdProjectItem *pitem, SdLayer *currentLayer
 
 
 
-void SdPropBar::updateEditObjectProp(SdClass theClass, SdStratum stratum, SdLayer *currentLayer)
+void SdPropBar::updateEditObjectProp(SdClass theClass, SdPvStratum stratum, SdLayer *currentLayer)
   {
   if( mEditObjectClass != theClass || mStratum != stratum )  {
     mEditObjectClass = theClass;
@@ -139,7 +139,7 @@ void SdPropBar::refillLayers()
   mLayer->clear();
   //fill new layers list
   SdEnvir::instance()->layerForEachConst( mEditObjectClass, [this] ( SdLayer *p ) -> bool {
-    if( p->isEdited() && (p->stratum() & mStratum) ) {
+    if( p->isEdited() && p->stratum().isIntersect(mStratum) ) {
       mLayer->addItem( p->name(), QVariant( p->id() ) );
       }
     return true;

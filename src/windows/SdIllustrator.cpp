@@ -60,7 +60,7 @@ void SdIllustrator::drawLineArrow(int x1, int y1, int x2, int y2, QColor color, 
     mPainter.setPen( color );
     mPainter.drawLine( mapX(x1), mapY(y1), mapX(x2), mapY(y2) );
     //On point2 draw arrow with arrow size
-    SdPropAngle angle = SdPoint(x1,y1).getAngle( SdPoint(x2,y2) );
+    SdPvAngle angle = SdPoint(x1,y1).getAngle( SdPoint(x2,y2) );
     x2 = mapX(x2);
     y2 = mapY(y2);
     SdPoint e1( x2 + arrowSize, y2 - arrowSize / 2 );

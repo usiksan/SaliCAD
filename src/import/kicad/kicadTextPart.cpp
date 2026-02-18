@@ -60,7 +60,7 @@ void kicadTextPart( SdScanerKiCad *scaner, SdPItemPart *part )
 
     scaner->parse( tokenMap, &textInfo );
 
-    int half = textInfo.mPropText.mSize.mValue / 2;
+    int half = textInfo.mPropText.mSize.value() / 2;
     SdRect r( textInfo.mOrg.x() - half, textInfo.mOrg.y() - half, half * 2, half * 2 );
     part->identGet()->updateIdent( textInfo.mOrg, r, &textInfo.mPropText );
     }

@@ -53,6 +53,9 @@ class SdPropBarTextual : public SdPropBar
     void setPropText( SdProjectItem *pitem, SdPropText *propText, double ppm );
     void getPropText( SdPropText *propText );
 
+    void setPropText( SdProjectItem *pitem, const SdPropComposerText &propText, double ppm );
+    void getPropText( SdPropComposerText &propText );
+
   private:
     void setFont( int index );
     void setSize( double size );

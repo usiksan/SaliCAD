@@ -15,9 +15,9 @@ Description
 #ifndef SDPARTIMPPROP_H
 #define SDPARTIMPPROP_H
 
-#include "SdPropInt.h"
-#include "SdPropAngle.h"
-#include "SdPropStratum.h"
+#include "SdPvInt.h"
+#include "SdPvAngle.h"
+#include "SdPvStratum.h"
 
 
 //!
@@ -26,8 +26,8 @@ Description
 //!
 struct SdPropPartImp
   {
-    SdPropAngle   mAngle;  //!< Angle of rotation component [Угол поворота компонента]
-    SdPropStratum mSide;   //!< Side of component location [Сторона расположения на плате]
+    SdPvAngle   mAngle;  //!< Angle of rotation component [Угол поворота компонента]
+    SdPvStratum mSide;   //!< Side of component location [Сторона расположения на плате]
 
     //!
     //! \brief json Function to write object content into json writer

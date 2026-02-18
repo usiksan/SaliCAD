@@ -34,7 +34,7 @@ SdModeCPolygonEnter::SdModeCPolygonEnter( SdWEditorGraph *editor, SdProjectItem 
 
 void SdModeCPolygonEnter::drawStatic(SdContext *ctx)
   {
-  plate()->drawTrace( ctx, mProp.mStratum, mProp.mNetName.str() );
+  plate()->drawTrace( ctx, mProp.mStratum, mProp.mNetName.mString );
   }
 
 
@@ -45,7 +45,7 @@ void SdModeCPolygonEnter::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sNextPoint ) {
     ctx->setPen( 0, SdEnvir::instance()->getSysColor(scEnter),
-                 sdGlobalProp->propLine( mObject->getClass() )->mType.getValue() );
+                 sdGlobalProp->propLine( mObject->getClass() )->mType.mValue );
     ctx->region( mList, false );
     ctx->line( mList.last(), mMiddle );
     if( mMiddle != mPrevMove )
@@ -98,7 +98,7 @@ void SdModeCPolygonEnter::propSetToBar()
     //Accum available net names
     QStringList netList = mObject->getProject()->netList();
     //If net name not assigned yet for polygon then assign first one
-    if( mProp.mNetName.str().isEmpty() && netList.count() )
+    if( mProp.mNetName.mString.isEmpty() && netList.count() )
       mProp.mNetName = netList.at(0);
     //Setup tracing layer count and trace type
     bar->setPlateAndTrace( plate(), layerTraceRoad );

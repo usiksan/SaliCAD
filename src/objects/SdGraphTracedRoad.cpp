@@ -86,12 +86,12 @@ void SdGraphTracedRoad::utilize(SdUndo *undo)
     }
   }
 
-bool SdGraphTracedRoad::isLinkedP1(SdPoint a, SdPropStratum stratum, QString netName) const
+bool SdGraphTracedRoad::isLinkedP1(SdPoint a, SdPvStratum stratum, QString netName) const
   {
   return mProp.mNetName == netName && mProp.mStratum == stratum && mSegment.getP1() == a;
   }
 
-bool SdGraphTracedRoad::isLinkedP2(SdPoint a, SdPropStratum stratum, QString netName) const
+bool SdGraphTracedRoad::isLinkedP2(SdPoint a, SdPvStratum stratum, QString netName) const
   {
   return mProp.mNetName == netName && mProp.mStratum == stratum && mSegment.getP2() == a;
   }
@@ -448,7 +448,7 @@ void SdGraphTracedRoad::snapPoint(SdSnapInfo *snap)
 
 
 
-bool SdGraphTracedRoad::isPointOnNet(SdPoint p, SdPropStratum stratum, QString *netName, int *destStratum)
+bool SdGraphTracedRoad::isPointOnNet(SdPoint p, SdPvStratum stratum, QString *netName, int *destStratum)
   {
   if( mProp.mStratum.match( stratum ) && mSegment.isPointOn( p ) ) {
     if( *netName == mProp.mNetName.str() )
@@ -558,7 +558,7 @@ void SdGraphTracedRoad::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId
 
 
 
-bool SdGraphTracedRoad::isMatchNetAndStratum(const QString netName, SdPropStratum stratum) const
+bool SdGraphTracedRoad::isMatchNetAndStratum(const QString netName, SdPvStratum stratum) const
   {
   return mProp.mNetName.str() == netName && mProp.mStratum.match( stratum );
   }
@@ -610,7 +610,7 @@ void SdGraphTracedRoad::accumWindows(SdPolyWindowList &dest, int stratum, int ga
 
 
 //Check if road linked to point
-bool SdGraphTracedRoad::isLinked(SdPoint a, SdPropStratum stratum, QString netName) const
+bool SdGraphTracedRoad::isLinked(SdPoint a, SdPvStratum stratum, QString netName) const
   {
   return mProp.mNetName == netName && mProp.mStratum.match(stratum) && (mSegment.getP1() == a || mSegment.getP2() == a);
   }
@@ -634,7 +634,7 @@ SdGraphTracedRoad *SdGraphTracedRoad::linkedRoad(SdPoint p)
   {
   SdGraphTracedRoad *road = nullptr;
   QString netName = mProp.mNetName.str();
-  SdPropStratum st = mProp.mStratum;
+  SdPvStratum st = mProp.mStratum;
   getPlate()->forEach( dctTraced, [p,&road,st,netName,this] (SdObject *obj) -> bool {
     SdPtr<SdGraphTraced> traced(obj);
     if( traced.isValid() && obj != this ) {
@@ -700,7 +700,7 @@ void SdGraphTracedRoad::utilizeOver(SdUndo *undo)
   //Find road over this segment
   //SdGraphTracedRoad *road = nullptr;
   QString netName = mProp.mNetName.str();
-  SdPropStratum st = mProp.mStratum;
+  SdPvStratum st = mProp.mStratum;
   getPlate()->forEach( dctTraceRoad, [st,netName,this,undo] (SdObject *obj) -> bool {
     SdPtr<SdGraphTracedRoad> road(obj);
     if( road.isValid() && obj != this ) {

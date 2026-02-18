@@ -22,13 +22,13 @@ Description
 struct SdPlateNetGraphSegment {
     SdPoint        p1;
     SdPoint        p2;
-    SdPropStratum      mStratum;
+    SdPvStratum  mStratum;
     SdGraphTraced *mTraced;
     bool           mUsed;
 
-    bool isMatch1( SdPoint p, SdPropStratum s ) { return mStratum.match(s) && p1 == p; }
-    bool isMatch2( SdPoint p, SdPropStratum s ) { return mStratum.match(s) && p2 == p; }
-    bool isMatch( SdPoint p, SdPropStratum s ) { return mStratum.match(s) && (p1 == p || p2 == p); }
+    bool isMatch1( SdPoint p, SdPvStratum s ) { return mStratum.match(s) && p1 == p; }
+    bool isMatch2( SdPoint p, SdPvStratum s ) { return mStratum.match(s) && p2 == p; }
+    bool isMatch( SdPoint p, SdPvStratum s ) { return mStratum.match(s) && (p1 == p || p2 == p); }
   };
 
 typedef QList<SdGraphTracedPtr> SdGraphTracedPtrList;
@@ -50,10 +50,10 @@ struct SdPlateNetGraphPath {
 
 
 struct SdPlateNetGraphNode {
-    SdPropStratum mStratum;
+    SdPvStratum mStratum;
     SdPoint   mOrigin;
 
-    bool isMatch( SdPoint p, SdPropStratum s ) const { return mStratum.match(s) && p == mOrigin; }
+    bool isMatch( SdPoint p, SdPvStratum s ) const { return mStratum.match(s) && p == mOrigin; }
   };
 
 
@@ -73,14 +73,14 @@ class SdPlateNetGraph : public SdPlateNetContainer
     void                 fillPath();
 
     //Find presented loop from src to dst
-    SdGraphTracedPtrList findLoop( SdPoint src, SdPropStratum stratumSrc, SdPoint dst, SdPropStratum stratumDst );
+    SdGraphTracedPtrList findLoop( SdPoint src, SdPvStratum stratumSrc, SdPoint dst, SdPvStratum stratumDst );
 
     //Add node to node list if it not present in list
-    int  addNode( SdPropStratum s, SdPoint p );
+    int  addNode( SdPvStratum s, SdPoint p );
 
     // SdPlateNetContainer interface
   public:
-    virtual void addNetSegment(SdGraphTraced *traced, const QString netName, SdPropStratum s, SdPoint p1, SdPoint p2) override;
+    virtual void addNetSegment(SdGraphTraced *traced, const QString netName, SdPvStratum s, SdPoint p1, SdPoint p2) override;
 
   private:
 
@@ -90,7 +90,7 @@ class SdPlateNetGraph : public SdPlateNetContainer
 
     void testTNode( QList<SdPlateNetGraphSegment>::iterator iter );
 
-    int  findNode( SdPropStratum s, SdPoint p );
+    int  findNode( SdPvStratum s, SdPoint p );
 
     int  findLoopPath(int nodeSrc, int nodeDst);
 

@@ -14,42 +14,30 @@ Description
 
 #include "SdPointList.h"
 
+#include <QTransform>
 
 
 
-
-void SdPointList::move(QSet<int> indexes, SdPoint offset)
+void SdPointList::transform(QSet<int> indexes, const QTransform &map)
   {
   for( int index : indexes ) {
-    SdPoint p( at(index) );
-    p.move(offset);
-    setPoint( index, p );
+    setPoint( index, map.map(at(index)) );
     }
   }
 
 
 
-
-void SdPointList::rotate(SdPoint center, SdPropAngle angle)
+void SdPointList::transform(const QTransform &map)
   {
   for( int index = 0; index < count(); index++ ) {
-    SdPoint p( at(index) );
-    p.rotate( center, angle );
-    setPoint( index, p );
+    setPoint( index, map.map( at(index) ) );
     }
+
   }
 
 
 
 
-void SdPointList::mirror(SdPoint a, SdPoint b)
-  {
-  for( int index = 0; index < count(); index++ ) {
-    SdPoint p( at(index) );
-    p.mirror( a, b );
-    setPoint( index, p );
-    }
-  }
 
 
 

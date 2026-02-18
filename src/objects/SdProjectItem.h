@@ -18,7 +18,7 @@ Description
 #include "SdContainerFile.h"
 #include "SdPoint.h"
 #include "SdSelector.h"
-#include "SdStratum.h"
+#include "SdPvStratum.h"
 
 #include <QString>
 #include <QOpenGLFunctions_2_0>
@@ -45,7 +45,7 @@ class SdProjectItem : public SdContainerFile
     QString                getToolTip() const;
     SdProject             *getProject() const;
     SdUndo                *getUndo() const;
-    virtual SdStratum      getStratum() const { return stmThrough; }
+    virtual SdPvStratum    getStratum() const { return SdPvStratum(stmThrough); }
     //Set information and editing status
     void                   setTitle(const QString title, const QString undoTitle );
     void                   setUnicalTitle( const QString undoTitle );

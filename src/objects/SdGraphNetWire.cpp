@@ -416,7 +416,7 @@ void SdGraphNetWire::move(SdPoint offset)
 
 
 
-void SdGraphNetWire::rotate(SdPoint center, SdPropAngle angle)
+void SdGraphNetWire::rotate(SdPoint center, SdPvAngle angle)
   {
   if( !mFixB ) mB.rotate( center, angle );
   if( !mFixA ) mA.rotate( center, angle );

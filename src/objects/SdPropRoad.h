@@ -15,9 +15,9 @@ Description
 #ifndef SDROADPROP_H
 #define SDROADPROP_H
 
-#include "SdPropInt.h"
-#include "SdPropString.h"
-#include "SdPropStratum.h"
+#include "SdPvInt.h"
+#include "SdPvString.h"
+#include "SdPvStratum.h"
 
 //!
 //! \brief The SdPropRoad struct - Routing track properties for PCB traces
@@ -25,9 +25,9 @@ Description
 //!
 struct SdPropRoad
   {
-    SdPropInt     mWidth;   //!< Road width [Ширина проводника]
-    SdPropString  mNetName; //!< Net name which road belongs to [Имя цепи, которой принадлежит проводник]
-    SdPropStratum mStratum; //!< Road stratum (layer) [Слой размещения проводника]
+    SdPvInt     mWidth;   //!< Road width [Ширина проводника]
+    SdPvString  mNetName; //!< Net name which road belongs to [Имя цепи, которой принадлежит проводник]
+    SdPvStratum mStratum; //!< Road stratum (layer) [Слой размещения проводника]
 
     //!
     //! \brief SdPropRoad Default constructor

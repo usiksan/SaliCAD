@@ -18,7 +18,7 @@ Description
 #include "SdPoint.h"
 #include "SdPropText.h"
 #include "SdPropPartPin.h"
-#include "SdPropStratum.h"
+#include "SdPvStratum.h"
 
 #define SD_TYPE_PART_PIN "PartPin"
 
@@ -46,15 +46,15 @@ class SdGraphPartPin : public SdGraph
     SdGraphPartPin( SdPoint org, const SdPropPartPin &pinProp, SdPoint numberPos, const SdPropText &numberProp, SdPoint namePos, const SdPropText &nameProp, const QString number );
 
     //Return pin number
-    QString   getPinNumber() const { return mNumber; }
+    QString     getPinNumber() const { return mNumber; }
     //Return pin type
-    QString   getPinType() const { return mPinProp.mPinType.mString; }
+    QString     getPinType() const { return mPinProp.mPinType.string(); }
     //Return pin origin
-    SdPoint   getPinOrigin() const { return mOrigin; }
+    SdPoint     getPinOrigin() const { return mOrigin; }
     //Return pin stratum
-    int       getPinStratum( bool otherSide ) const;
+    SdPvStratum getPinStratum( bool otherSide ) const;
 
-    void      drawImp(SdContext *dc, const QString pinName, bool com );
+    void        drawImp(SdContext *dc, const QString pinName, bool com );
 
     // SdObject interface
   public:
@@ -86,9 +86,7 @@ class SdGraphPartPin : public SdGraph
     // SdGraph interface
   public:
     virtual void      saveState(SdUndo *undo) override;
-    virtual void      move(SdPoint offset) override;
-    virtual void      rotate(SdPoint center, SdPropAngle angle) override;
-    virtual void      mirror(SdPoint a, SdPoint b) override;
+    virtual void      transform(const QTransform &map, SdPvAngle angle) override;
     virtual void      setProp(SdPropSelected &prop) override;
     virtual void      getProp(SdPropSelected &prop) override;
     virtual void      setText(int index, QString sour, SdPropText &prop, QWidget *parent) override;

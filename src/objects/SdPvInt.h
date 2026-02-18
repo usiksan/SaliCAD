@@ -12,25 +12,27 @@ Description
   Int property
 */
 
-#ifndef SDINTPROP_H
-#define SDINTPROP_H
+#ifndef SDPVINT_H
+#define SDPVINT_H
 
 #include "SvLib/SvJsonIO.h"
 
 //!
-//! \brief The SdPropInt struct - Integer property with conversion between logical and physical values
+//! \brief The SdPvInt struct - Integer property with conversion between logical and physical values
 //!        Provides JSON serialization and physical value conversion (e.g., for distances, sizes)
 //!
-struct SdPropInt
+class SdPvInt
   {
+  protected:
     int mValue; //!< Stored integer value in logical units
+  public:
+    SdPvInt( int v = 0 ) : mValue(v) {}
+    SdPvInt( const QString &src, double ppm ) { setFromPhis( src, ppm ); }
 
-    SdPropInt() : mValue(0) {}
-    SdPropInt( int v ) : mValue(v) {}
+    int        value() const { return mValue; }
+    //operator int() const { return mValue; }
 
-    operator int() const { return mValue; }
-
-    bool       operator != ( const SdPropInt &v ) const { return mValue != v.mValue; }
+    bool       operator != ( const SdPvInt &v ) const { return mValue != v.mValue; }
 
     //!
     //! \brief log2Phis Convert logical value to physical string representation
@@ -45,7 +47,7 @@ struct SdPropInt
     //! \param src        Source physical string (e.g., "10.5 mm")
     //! \param ppm        Pixels per millimeter conversion factor
     //!
-    void       setFromPhis( const QString src, double ppm );
+    void       setFromPhis( const QString &src, double ppm );
 
     //!
     //! \brief json Write integer property to JSON writer
@@ -65,8 +67,8 @@ struct SdPropInt
     //! \brief swap Swap values with another SdPropInt instance
     //! \param other Other integer property to swap with
     //!
-    void       swap( SdPropInt &other ) { qSwap( mValue, other.mValue ); }
+    void       swap( SdPvInt &other ) { qSwap( mValue, other.mValue ); }
   };
 
 
-#endif // SDINTPROP_H
+#endif // SDPVINT_H

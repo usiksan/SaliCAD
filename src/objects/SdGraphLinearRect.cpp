@@ -122,32 +122,22 @@ void SdGraphLinearRect::json(const SdJsonReader &js)
 
 
 
-
-
-
-void SdGraphLinearRect::move(SdPoint offset)
+void SdGraphLinearRect::transform(const QTransform &map, SdPvAngle)
   {
-  a.move( offset );
-  if( !mFly ) b.move( offset );
+  a = map.map(a);
+  if( map.isTranslating() ) {
+    if( !mFly ) b = map.map(b);
+    }
+  else b = map.map(b);
   }
 
 
 
 
-void SdGraphLinearRect::rotate(SdPoint center, SdPropAngle angle)
-  {
-  a.rotate( center, angle );
-  b.rotate( center, angle );
-  }
 
 
 
 
-void SdGraphLinearRect::mirror(SdPoint p1, SdPoint p2)
-  {
-  a.mirror( p1, p2 );
-  b.mirror( p1, p2 );
-  }
 
 
 
@@ -240,7 +230,7 @@ void SdGraphLinearRect::draw3d(QOpenGLFunctions_2_0 *f) const
 
 
 
-void SdGraphLinearRect::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map) const
+void SdGraphLinearRect::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdPvStratum stratum, const QMatrix4x4 &map) const
   {
   Q_UNUSED(stratum)
   QMatrix4x4 mat(map);
@@ -296,5 +286,5 @@ void SdGraphLinearRect::snapPoint(SdSnapInfo *snap)
 
 void SdGraphLinearRect::saveState(SdUndo *undo)
   {
-  undo->propLineAnd3Point( &mProp, &a, &b );
+  undo->prop( &mProp, &a, &b );
   }

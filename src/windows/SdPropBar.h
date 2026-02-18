@@ -24,8 +24,8 @@ class SdPropBar : public QToolBar
   {
     Q_OBJECT
 
-    SdClass   mEditObjectClass; //!< Class of edit object (one of derived from SdProjectItem)
-    SdStratum mStratum;         //!< Plate stratum otherwise stmThrough
+    SdClass     mEditObjectClass; //!< Class of edit object (one of derived from SdProjectItem)
+    SdPvStratum mStratum;         //!< Plate stratum otherwise stmThrough
   protected:
     QComboBox    *mLayer;     //!< Visual list of available layers
 
@@ -43,7 +43,7 @@ class SdPropBar : public QToolBar
 
     void         updateEditObjectProp(SdProjectItem *pitem, SdLayer *currentLayer);
 
-    void         updateEditObjectProp(SdClass theClass, SdStratum stratum , SdLayer *currentLayer);
+    void         updateEditObjectProp(SdClass theClass, SdPvStratum stratum , SdLayer *currentLayer);
 
   private:
     void         refillLayers();

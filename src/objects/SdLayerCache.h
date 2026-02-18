@@ -14,7 +14,7 @@ Description
 #ifndef SDLAYERCACHE_H
 #define SDLAYERCACHE_H
 
-#include "SdPropStratum.h"
+#include "SdPvStratum.h"
 #include "SdLayer.h"
 
 #include <QMap>

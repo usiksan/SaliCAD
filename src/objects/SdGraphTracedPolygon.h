@@ -68,7 +68,7 @@ class SdGraphTracedPolygon : public SdGraphTraced
     virtual void      saveState(SdUndo *undo) override;
     virtual void      moveComplete(SdPoint grid, SdUndo *undo) override;
     virtual void      move(SdPoint offset) override;
-    virtual void      rotate(SdPoint center, SdPropAngle angle) override;
+    virtual void      rotate(SdPoint center, SdPvAngle angle) override;
     virtual void      setProp(SdPropSelected &prop) override;
     virtual void      getProp(SdPropSelected &prop) override;
     virtual void      selectByPoint(const SdPoint p, SdSelector *selector) override;
@@ -84,15 +84,15 @@ class SdGraphTracedPolygon : public SdGraphTraced
 
     // SdGraphTraced interface
   public:
-    virtual SdPropStratum stratum() const override;
-    virtual bool      isPointOnNet(SdPoint p, SdPropStratum stratum, QString *netName, int *destStratum) override;
+    virtual SdPvStratum stratum() const override;
+    virtual bool      isPointOnNet(SdPoint p, SdPvStratum stratum, QString *netName, int *destStratum) override;
     virtual void      accumNetSegments( SdPlateNetContainer *netContainer ) override;
     virtual void      drawStratum(SdContext *dcx, int stratum) override;
     virtual void accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const override;
-    virtual bool      isMatchNetAndStratum(const QString netName, SdPropStratum stratum) const override;
+    virtual bool      isMatchNetAndStratum(const QString netName, SdPvStratum stratum) const override;
     virtual void      accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName ) const override;
     //Check if polygon linked to point
-    virtual bool      isLinked( SdPoint a, SdPropStratum stratum, QString netName ) const override;
+    virtual bool      isLinked( SdPoint a, SdPvStratum stratum, QString netName ) const override;
 
   private:
     //Return layer for polygon

@@ -52,7 +52,7 @@ SdPad::SdPad() :
 
 
 
-void SdPad::draw(SdContext *dcx, SdPoint p, int stratum) const
+void SdPad::draw(SdContext *dcx, SdPoint p, SdPvStratum stratum) const
   {
   //If no stratum then no draw
   if( stratum == 0 )
@@ -256,7 +256,7 @@ void SdPad::appendWindow(SdPolyWindowList &dest, SdPoint p, int gap, const QTran
 //! \param stratum        Stratum for layers (unused)
 //! \param map            Base map for holes conversion (applied after local transforms)
 //!
-void SdPad::appendPadHoles(SdPoint p, Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map) const
+void SdPad::appendPadHoles(SdPoint p, Sd3drModel &model, Sd3drFaceList &faceList, SdPvStratum stratum, const QMatrix4x4 &map) const
   {
   Q_UNUSED(stratum)
 

@@ -57,9 +57,7 @@ class SdGraphLinearRect : public SdGraphLinear
     virtual void    json( const SdJsonReader &js ) override;
 
     // SdGraph interface
-    virtual void    move(SdPoint offset) override;
-    virtual void    rotate(SdPoint center, SdPropAngle angle) override;
-    virtual void    mirror(SdPoint a, SdPoint b) override;
+    virtual void    transform( const QTransform &map, SdPvAngle ) override;
     virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;
     virtual void    selectByRect(const SdRect &r, SdSelector *selector) override;
     virtual void    select(SdSelector *selector) override;
@@ -78,7 +76,7 @@ class SdGraphLinearRect : public SdGraphLinear
     //! \param stratum    Stratum for layers
     //! \param map        Map for holes conversion
     //!
-    virtual void    accumHoles( Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map ) const override;
+    virtual void    accumHoles( Sd3drModel &model, Sd3drFaceList &faceList, SdPvStratum stratum, const QMatrix4x4 &map ) const override;
 
     virtual int     behindCursor(SdPoint p) override;
     //Find snap point on object

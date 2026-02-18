@@ -133,7 +133,7 @@ class SdGraphScript : public SdGraphParam
     // SdGraph interface
   public:
     virtual void    saveState(SdUndo *undo) override;
-    virtual void    move(SdPoint offset) override;
+    virtual void    transform(const QTransform &map, SdPvAngle) override;
     virtual void    setProp(SdPropSelected &prop) override;
     virtual void    getProp(SdPropSelected &prop) override;
     virtual void    setText(int index, QString sour, SdPropText &prop, QWidget *parent) override;

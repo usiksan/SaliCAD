@@ -164,31 +164,10 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
 
 void SdPropBarTextual::setPropText(SdProjectItem *pitem, SdPropText *propText, double ppm)
   {
-  if( propText ) {
-    //Set current layer
-    updateEditObjectProp( pitem, propText->mLayer.layer(false) );
-
-    //Set current font
-    setFont( propText->mFont.getValue() );
-
-    //Set current width
-    mPPM = ppm;
-    if( propText->mSize.isValid() ) {
-      mSize->setCurrentText( propText->mSize.log2Phis(mPPM) );
-      prevSize.reorderComboBoxDoubleString( mSize );
-      }
-    else
-      mSize->setCurrentText( QString( ) );
-
-    //Vertical alignment
-    setVerticalAlignment( propText->mVert.getValue() );
-
-    //Horizontal alignment
-    setHorizontalAlignment( propText->mHorz.getValue() );
-
-    //Text direction
-    setDirection( propText->mDir.getValue() );
-    }
+  SdPropComposerText composerText;
+  if( propText != nullptr )
+    composerText.reset( *propText );
+  setPropText( pitem, composerText, ppm );
   }
 
 
@@ -196,37 +175,86 @@ void SdPropBarTextual::setPropText(SdProjectItem *pitem, SdPropText *propText, d
 
 void SdPropBarTextual::getPropText(SdPropText *propText)
   {
-  if( propText ) {
-    //Get current layer
-    SdLayer *layer = getSelectedLayer();
-    if( layer )
-      propText->mLayer = layer;
+  SdPropComposerText composerText;
+  getPropText( composerText );
+  if( propText != nullptr )
+    composerText.store( *propText );
+  }
 
-    //Get current font
-    int fontIndex = mFont->currentIndex();
-    if( fontIndex >= 0 )
-      propText->mFont = fontIndex;
 
-    //Get text size
-    if( !mSize->currentText().isEmpty() )
-      propText->mSize.setFromPhis( mSize->currentText(), mPPM );
 
-    //Get text vertical alignment
-    if( mVertTop->isChecked() ) propText->mVert = dvjTop;
-    else if( mVertMiddle->isChecked() ) propText->mVert = dvjMiddle;
-    else if( mVertBottom->isChecked() ) propText->mVert = dvjBottom;
+void SdPropBarTextual::setPropText(SdProjectItem *pitem, const SdPropComposerText &propText, double ppm)
+  {
+  //Set current layer
+  auto &propLayer = propText.get<&SdPropText::mLayer>();
+  if( propLayer.isSingle() )
+    updateEditObjectProp( pitem, propLayer.value().layer(false) );
+  else
+    updateEditObjectProp( pitem, nullptr );
 
-    //Get horizontal alignment
-    if( mHorzLeft->isChecked() ) propText->mHorz = dhjLeft;
-    else if( mHorzCenter->isChecked() ) propText->mHorz = dhjCenter;
-    else if( mHorzRight->isChecked() ) propText->mHorz = dhjRight;
+  //Set current font
+  setFont( propText.get<&SdPropText::mFont>().value().mValue );
 
-    //Get direction
-    if( mDir0->isChecked() ) propText->mDir = da0;
-    else if( mDir90->isChecked() ) propText->mDir = da90;
-    else if( mDir180->isChecked() ) propText->mDir = da180;
-    else if( mDir270->isChecked() ) propText->mDir = da270;
+  //Set current width
+  mPPM = ppm;
+  auto &propSize = propText.get<&SdPropText::mSize>();
+  if( propSize.isSingle() ) {
+    mSize->setCurrentText( propSize.value().log2Phis(mPPM) );
+    prevSize.reorderComboBoxDoubleString( mSize );
     }
+  else
+    mSize->setCurrentText( QString( ) );
+
+  //Vertical alignment
+  auto &propVert = propText.get<&SdPropText::mVert>();
+  setVerticalAlignment( propVert.isSingle() ? propVert.value().mValue : -1 );
+
+  //Horizontal alignment
+  auto &propHorz = propText.get<&SdPropText::mHorz>();
+  setHorizontalAlignment( propHorz.isSingle() ? propHorz.value().mValue : -1 );
+
+  //Text direction
+  auto &propDir = propText.get<&SdPropText::mDir>();
+  setDirection( propDir.isSingle() ? propDir.value().mValue : -1 );
+  }
+
+
+
+
+void SdPropBarTextual::getPropText(SdPropComposerText &propText)
+  {
+  //Get current layer
+  SdLayer *layer = getSelectedLayer();
+  if( layer )
+    propText.get<&SdPropText::mLayer>().reset( SdPropLayer(layer) );
+
+  //Get current font
+  int fontIndex = mFont->currentIndex();
+  if( fontIndex >= 0 )
+    propText.get<&SdPropText::mFont>().reset( SdPvInt(fontIndex) );
+
+  //Get text size
+  if( !mSize->currentText().isEmpty() )
+    propText.get<&SdPropText::mSize>().reset( SdPvInt( mSize->currentText(), mPPM ) );
+
+  //Get text vertical alignment
+  auto &propVert = propText.get<&SdPropText::mVert>();
+  if( mVertTop->isChecked() ) propVert.reset( SdPvInt(dvjTop) );
+  else if( mVertMiddle->isChecked() ) propVert.reset( SdPvInt(dvjMiddle) );
+  else if( mVertBottom->isChecked() ) propVert.reset( SdPvInt(dvjBottom) );
+
+  //Get horizontal alignment
+  auto &propHorz = propText.get<&SdPropText::mHorz>();
+  if( mHorzLeft->isChecked() ) propHorz.reset( SdPvInt(dhjLeft) );
+  else if( mHorzCenter->isChecked() ) propHorz.reset( SdPvInt(dhjCenter) );
+  else if( mHorzRight->isChecked() ) propHorz.reset( SdPvInt(dhjRight) );
+
+  //Get direction
+  auto &propDir = propText.get<&SdPropText::mDir>();
+  if( mDir0->isChecked() ) propDir.reset( SdPvAngle(da0) );
+  else if( mDir90->isChecked() ) propDir.reset( SdPvAngle(da90) );
+  else if( mDir180->isChecked() ) propDir.reset( SdPvAngle(da180) );
+  else if( mDir270->isChecked() ) propDir.reset( SdPvAngle(da270) );
   }
 
 

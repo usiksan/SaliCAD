@@ -14,9 +14,9 @@ Description
 #ifndef SDPROPPOLYGON_H
 #define SDPROPPOLYGON_H
 
-#include "SdPropInt.h"
-#include "SdPropString.h"
-#include "SdPropStratum.h"
+#include "SdPvInt.h"
+#include "SdPvString.h"
+#include "SdPvStratum.h"
 
 //!
 //! \brief The SdPropPolygon struct - Polygon fill properties for PCB copper areas
@@ -24,9 +24,9 @@ Description
 //!
 struct SdPropPolygon
   {
-    SdPropInt     mGap;     //!< Polygon gap clearance [Зазоры окон полигона]
-    SdPropString  mNetName; //!< Net name which polygon belongs to [Имя цепи, которой принадлежит полигон]
-    SdPropStratum mStratum; //!< Polygon stratum (layer) [Слой размещения полигона]
+    SdPvInt     mGap;     //!< Polygon gap clearance [Зазоры окон полигона]
+    SdPvString  mNetName; //!< Net name which polygon belongs to [Имя цепи, которой принадлежит полигон]
+    SdPvStratum mStratum; //!< Polygon stratum (layer) [Слой размещения полигона]
 
     //!
     //! \brief SdPropPolygon Default constructor

@@ -400,7 +400,7 @@ void SdModeCPartPlace::keyDown(int key, QChar ch)
         //Perform rotation
         mFragment.forEach( dctPartImp, [this] (SdObject *obj) -> bool {
           SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>( obj );
-          if( imp ) imp->rotate( mPrevMove, SdPropAngle(90000) );
+          if( imp ) imp->rotate( mPrevMove, SdPvAngle(90000) );
           return true;
           });
         update();

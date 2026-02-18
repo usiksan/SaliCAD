@@ -133,7 +133,7 @@ void SdContext::drawLineArrow(SdPoint p1, SdPoint p2, QColor color, int arrowSiz
   SdPoint mp1 = mTransform.map(p1);
   SdPoint mp2 = mTransform.map(p2);
   //On point2 draw arrow with arrow size
-  SdPropAngle angle = mp1.getAngle( mp2 );
+  SdPvAngle angle = mp1.getAngle( mp2 );
   arrowSize = mScaler.phys2pixel(arrowSize);
   SdPoint e1( mp2.x() + arrowSize, mp2.y() - arrowSize / 2 );
   e1.rotate( mp2, angle );

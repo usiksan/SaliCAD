@@ -14,8 +14,8 @@ Description
 #ifndef SDPROPVIA_H
 #define SDPROPVIA_H
 
-#include "SdPropString.h"
-#include "SdPropStratum.h"
+#include "SdPvString.h"
+#include "SdPvStratum.h"
 
 
 //!
@@ -24,9 +24,9 @@ Description
 //!
 struct SdPropVia
   {
-    SdPropStratum mStratum; //!< Via stratum type (through, blind, buried) [Тип переходного отверстия]
-    SdPropString  mPadType; //!< Pad type for pad association [Тип контактной площадки для привязки]
-    SdPropString  mNetName; //!< Net name which via belongs to [Имя цепи, которой принадлежит переходное отверстие]
+    SdPvStratum mStratum; //!< Via stratum type (through, blind, buried) [Тип переходного отверстия]
+    SdPvString  mPadType; //!< Pad type for pad association [Тип контактной площадки для привязки]
+    SdPvString  mNetName; //!< Net name which via belongs to [Имя цепи, которой принадлежит переходное отверстие]
 
     //!
     //! \brief SdPropVia Default constructor

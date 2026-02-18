@@ -15,15 +15,6 @@ Description
 #include "SdEnvir.h"
 #include "SdJsonIO.h"
 
-//!
-//! \brief SdPropLayer Default constructor - initializes with default layer
-//!
-SdPropLayer::SdPropLayer() :
-  mLayer( SdEnvir::instance()->layerGet(LID0_INVISIBLE) )
-  {
-
-  }
-
 
 
 //!
@@ -34,6 +25,13 @@ SdPropLayer::SdPropLayer(QString id) :
   mLayer( SdEnvir::instance()->layerGet(id) )
   {
 
+  }
+
+SdPropLayer::SdPropLayer(SdLayer *layer) :
+  mLayer(layer)
+  {
+  if( mLayer == nullptr )
+    mLayer = SdEnvir::instance()->layerGet(LID0_INVISIBLE);
   }
 
 

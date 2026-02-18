@@ -16,7 +16,7 @@ Description
 
 #include "SdGraphTraced.h"
 #include "SdPropRoad.h"
-#include "SdPropStratum.h"
+#include "SdPvStratum.h"
 #include "SdSegment.h"
 
 #define SD_TYPE_GRAPH_TRACE_ROAD "Road"
@@ -58,8 +58,8 @@ class SdGraphTracedRoad : public SdGraphTraced
     //Union consequent segments
     void               utilize( SdUndo *undo );
 
-    bool               isLinkedP1( SdPoint a, SdPropStratum stratum, QString netName ) const;
-    bool               isLinkedP2( SdPoint a, SdPropStratum stratum, QString netName ) const;
+    bool               isLinkedP1( SdPoint a, SdPvStratum stratum, QString netName ) const;
+    bool               isLinkedP2( SdPoint a, SdPvStratum stratum, QString netName ) const;
 
     // SdObject interface
   public:
@@ -113,16 +113,16 @@ class SdGraphTracedRoad : public SdGraphTraced
 
     // SdGraphTraced interface
   public:
-    virtual bool       isPointOnNet(SdPoint p, SdPropStratum stratum, QString *netName, int *destStratum) override;
+    virtual bool       isPointOnNet(SdPoint p, SdPvStratum stratum, QString *netName, int *destStratum) override;
     virtual void       accumNetSegments( SdPlateNetContainer *netContainer ) override;
     virtual void       drawStratum(SdContext *dcx, int stratum) override;
     virtual void       accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const override;
-    virtual bool       isMatchNetAndStratum( const QString netName, SdPropStratum stratum ) const override;
+    virtual bool       isMatchNetAndStratum( const QString netName, SdPvStratum stratum ) const override;
     virtual void       accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName ) const override;
     //Check if road linked to point
-    virtual bool       isLinked( SdPoint a, SdPropStratum stratum, QString netName ) const override;
+    virtual bool       isLinked( SdPoint a, SdPvStratum stratum, QString netName ) const override;
     //Stratum of object
-    virtual SdPropStratum  stratum() const override { return mProp.mStratum; }
+    virtual SdPvStratum  stratum() const override { return mProp.mStratum; }
 
   private:
     //Return layer for road stratum

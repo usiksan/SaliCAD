@@ -12,7 +12,7 @@ Description
 */
 #include "SdPropBarPartImp.h"
 #include "SdStringHistory.h"
-#include "objects/SdPropAngle.h"
+#include "objects/SdPvAngle.h"
 #include "objects/SdPropPartImp.h"
 #include "objects/SdEnvir.h"
 #include "SdWCommand.h"
@@ -124,7 +124,7 @@ void SdPropBarPartImp::getPropPartImp(SdPropPartImp *propPartImp)
     //Get direction
     QString angle = mDirection->currentText();
     if( !angle.isEmpty() )
-      propPartImp->mAngle = SdPropAngle::fromString( angle );
+      propPartImp->mAngle = SdPvAngle::fromString( angle );
 
     if( mBottom->isChecked() && !mTop->isChecked() ) propPartImp->mSide = stmBottom;
     if( !mBottom->isChecked() && mTop->isChecked() ) propPartImp->mSide = stmTop;

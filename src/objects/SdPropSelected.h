@@ -15,7 +15,7 @@ Description
 #define SDPROPSELECTED_H
 
 #include "SdProp.h"
-#include "objects/SdPropMulty.h"
+#include "objects/SdPvMulty.h"
 
 //Masks for filled properties types
 #define spsLineProp    0x001
@@ -28,9 +28,6 @@ Description
 #define spsRoadProp    0x080
 #define spsPolygonProp 0x100
 
-using SdPropComposerLine = SdPropComposer<SdPropLine, &SdPropLine::mLayer, &SdPropLine::mType, &SdPropLine::mWidth>;
-using SdPropComposerText = SdPropComposer<SdPropText, &SdPropText::mDir, &SdPropText::mFont, &SdPropText::mHorz,
-                                        &SdPropText::mLayer, &SdPropText::mMirror, &SdPropText::mSize, &SdPropText::mVert>;
 using SdPropComposerSymPin = SdPropComposer<SdPropSymPin, &SdPropSymPin::mLayer, &SdPropSymPin::mPinType>;
 using SdPropComposerPartPin = SdPropComposer<SdPropPartPin, &SdPropPartPin::mLayer, &SdPropPartPin::mPinType, &SdPropPartPin::mSide>;
 using SdPropComposerSymImp = SdPropComposer<SdPropSymImp, &SdPropSymImp::mAngle, &SdPropSymImp::mMirror>;
@@ -38,7 +35,7 @@ using SdPropComposerPartImp = SdPropComposer<SdPropPartImp, &SdPropPartImp::mAng
 using SdPropComposerRoad = SdPropComposer<SdPropRoad, &SdPropRoad::mNetName, &SdPropRoad::mStratum, &SdPropRoad::mWidth>;
 using SdPropComposerPolygon = SdPropComposer<SdPropPolygon, &SdPropPolygon::mGap, &SdPropPolygon::mNetName, &SdPropPolygon::mStratum>;
 using SdPropComposerVia = SdPropComposer<SdPropVia, &SdPropVia::mNetName, &SdPropVia::mPadType, &SdPropVia::mStratum>;
-using SdPropMultyString = SdPropMulty<SdPropString>;
+using SdPropMultyString = SdPvMulty<SdPvString>;
 
 struct SdPropSelected
   {

@@ -57,9 +57,7 @@ class SdGraphLinearLine : public SdGraphLinear
     //!
     virtual void    json( const SdJsonReader &js ) override;
 
-    virtual void    move(SdPoint offset) override;
-    virtual void    rotate(SdPoint center, SdPropAngle angle) override;
-    virtual void    mirror(SdPoint a, SdPoint b) override;
+    virtual void    transform( const QTransform &map, SdPvAngle ) override;
     virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;
     virtual void    selectByRect(const SdRect &r, SdSelector *selector) override;
     virtual void    select(SdSelector *selector) override;

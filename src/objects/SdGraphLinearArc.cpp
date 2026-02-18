@@ -93,39 +93,25 @@ void SdGraphLinearArc::json(const SdJsonReader &js)
 
 void SdGraphLinearArc::saveState(SdUndo *undo)
   {
-  undo->propLineAnd3Point( &mProp, &mCenter, &mStart, &mStop );
+  undo->prop( &mProp, &mCenter, &mStart, &mStop );
   }
 
 
 
 
-void SdGraphLinearArc::move(SdPoint offset)
+void SdGraphLinearArc::transform(const QTransform &map, SdPvAngle)
   {
-  mCenter.move( offset );
-  mStart.move( offset );
-  mStop.move( offset );
+  mCenter = map.map(mCenter);
+  mStart  = map.map(mStart);
+  mStop   = map.map(mStop);
+  if( !(map.isRotating() || map.isScaling() || map.isTranslating()) ) {
+    //For mirror
+    mStart.swap( mStop );
+    }
   }
 
 
 
-
-void SdGraphLinearArc::rotate(SdPoint center, SdPropAngle angle)
-  {
-  mCenter.rotate( center, angle );
-  mStart.rotate( center, angle );
-  mStop.rotate( center, angle );
-  }
-
-
-
-
-void SdGraphLinearArc::mirror(SdPoint a, SdPoint b)
-  {
-  mCenter.mirror( a, b );
-  mStart.mirror( a, b );
-  mStop.mirror( a, b );
-  mStart.swap( &mStop );
-  }
 
 
 

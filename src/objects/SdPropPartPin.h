@@ -16,9 +16,9 @@ Description
 #define SDPARTPINPROP_H
 
 #include "SdPropLayer.h"
-#include "SdPropInt.h"
-#include "SdPropString.h"
-#include "SdPropStratum.h"
+#include "SdPvInt.h"
+#include "SdPvString.h"
+#include "SdPvStratum.h"
 
 
 //!
@@ -28,8 +28,8 @@ Description
 struct SdPropPartPin
   {
     SdPropLayer   mLayer;   //!< Pin layer [Слой вывода]
-    SdPropStratum mSide;    //!< Side of pin location [Сторона расположения вывода]
-    SdPropString  mPinType; //!< Pin type for pad association [Тип вывода для привязки контактной площадки]
+    SdPvStratum mSide;    //!< Side of pin location [Сторона расположения вывода]
+    SdPvString  mPinType; //!< Pin type for pad association [Тип вывода для привязки контактной площадки]
 
     //!
     //! \brief json Overloaded function to write object content into json writer

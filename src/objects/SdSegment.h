@@ -37,9 +37,9 @@ class SdSegment
     void          setP2( SdPoint p ) { p2 = p; }
 
     //Move end points
-    void          move( SdPoint offset ) { p1.move( offset ); p2.move( offset ); }
-    void          moveP1( SdPoint offset ) { p1.move( offset ); }
-    void          moveP2( SdPoint offset ) { p2.move( offset ); }
+    // void          move( SdPoint offset ) { p1.move( offset ); p2.move( offset ); }
+    // void          moveP1( SdPoint offset ) { p1.move( offset ); }
+    // void          moveP2( SdPoint offset ) { p2.move( offset ); }
 
     //End point pointers
     SdPoint      *ptrP1() { return &p1; }
@@ -77,7 +77,7 @@ class SdSegment
     double         getAngleDegree() const { return p2.getAngleDegree(p1); }
 
     //Angle of segment as properties
-    SdPropAngle    getAngle() const { return p2.getAngle(p1); }
+    SdPvAngle    getAngle() const { return p2.getAngle(p1); }
 
     //Distance between two ends
     double         getLenght() const { return p1.getDistance(p2); }

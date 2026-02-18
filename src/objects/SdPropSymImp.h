@@ -17,7 +17,7 @@ Description
 #ifndef SDSYMIMPPROP_H
 #define SDSYMIMPPROP_H
 
-#include "SdPropAngle.h"
+#include "SdPvAngle.h"
 
 
 //!
@@ -26,8 +26,8 @@ Description
 //!
 struct SdPropSymImp
   {
-    SdPropAngle   mAngle;  //!< Angle of symbol implementation rotation [Угол поворота компонента]
-    SdPropInt     mMirror; //!< Mirror of implementation [Зеркальность компонента]
+    SdPvAngle   mAngle;  //!< Angle of symbol implementation rotation [Угол поворота компонента]
+    SdPvInt     mMirror; //!< Mirror of implementation [Зеркальность компонента]
 
     //!
     //! \brief json Overloaded function to write object content into json writer

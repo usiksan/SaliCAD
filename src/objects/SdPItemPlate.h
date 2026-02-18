@@ -16,7 +16,7 @@ Description
 
 #include "SdProjectItem.h"
 #include "SdRect.h"
-#include "SdPropStratum.h"
+#include "SdPvStratum.h"
 #include "SdGraphTraced.h"
 #include "SdPlateNet.h"
 #include "SdPadAssociation.h"
@@ -64,7 +64,7 @@ class SdPItemPlate : public SdProjectItem
     //Stratum count
     int                    stratumCount() const { return mStratumCount; }
     void                   setStratumCount( int sc );
-    virtual SdStratum      getStratum() const override;
+    virtual SdPvStratum      getStratum() const override;
 
     //!
     //! \brief allocPartImp Allocate component section in plate
@@ -87,7 +87,7 @@ class SdPItemPlate : public SdProjectItem
     //Return pad
     SdPad                  getPad( const QString pinType ) const;
     //Draw pad
-    void                   drawPad( SdContext *dc, SdPoint p, const QString pinType, int stratum ) const;
+    void                   drawPad(SdContext *dc, SdPoint p, const QString pinType, SdPvStratum stratum ) const;
     //Setup new map and name
     void                   setPadAssociation(const QString nm, const SdPadMap &map, SdUndo *undo );
     //Return over pad polygon
@@ -106,7 +106,7 @@ class SdPItemPlate : public SdProjectItem
     //! \param stratum        Stratum for layers
     //! \param map            Map for holes conversion
     //!
-    void                   appendPadHoles( SdPoint p, const QString pinType, Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map ) const;
+    void                   appendPadHoles( SdPoint p, const QString pinType, Sd3drModel &model, Sd3drFaceList &faceList, SdPvStratum stratum, const QMatrix4x4 &map ) const;
 
 
 
@@ -128,7 +128,7 @@ class SdPItemPlate : public SdProjectItem
 
 
     //Draw pcb for trace
-    void                   drawTrace( SdContext *ctx, SdPropStratum curStratum, QString currentNetName );
+    void                   drawTrace( SdContext *ctx, SdPvStratum curStratum, QString currentNetName );
 
     //Unconnected nets count
     int                    unconnectedNetCount() const { return mRatNet.count(); }

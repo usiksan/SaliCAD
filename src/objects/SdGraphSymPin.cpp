@@ -151,47 +151,31 @@ void SdGraphSymPin::json(const SdJsonReader &js)
 
 void SdGraphSymPin::saveState(SdUndo *undo)
   {
-  undo->propSymPin( &mPinProp, &mOrigin );
-  undo->propTextAndText( &mNumberProp, &mNumberPos, &mNumberRect, &mNumber );
-  undo->propTextAndText( &mNameProp, &mNamePos, &mNameRect, &mName );
+  undo->prop( &mPinProp, &mOrigin, &mNumberProp, &mNumberPos, &mNumberRect, &mNumber, &mNameProp, &mNamePos, &mNameRect, &mName );
   }
 
 
 
-void SdGraphSymPin::move(SdPoint offset)
+
+
+void SdGraphSymPin::transform(const QTransform &map, SdPvAngle angle)
   {
-  if( mPinSelect ) mOrigin.move(offset);
-  if( mNamSelect ) mNamePos.move(offset);
-  if( mNumSelect ) mNumberPos.move(offset);
+  if( mPinSelect ) mOrigin = map.map(mOrigin);
+  if( mNamSelect ) { mNamePos = map.map(mNamePos); mNameProp.mDir += angle; }
+  if( mNumSelect ) { mNumberPos = map.map(mNumberPos); mNumberProp.mDir += angle; }
   }
 
 
 
-
-void SdGraphSymPin::rotate(SdPoint center, SdPropAngle angle)
-  {
-  if( mPinSelect ) mOrigin.rotate( center, angle );
-  if( mNamSelect ) mNamePos.rotate( center, angle );
-  if( mNumSelect ) mNumberPos.rotate( center, angle );
-  }
-
-
-
-void SdGraphSymPin::mirror(SdPoint a, SdPoint b)
-  {
-  if( mPinSelect ) mOrigin.mirror( a, b );
-  if( mNamSelect ) mNamePos.mirror( a, b );
-  if( mNumSelect ) mNumberPos.mirror( a, b );
-  }
 
 
 
 
 void SdGraphSymPin::setProp(SdPropSelected &prop)
   {
-  if( mPinSelect ) mPinProp = prop.mSymPinProp;
-  if( mNamSelect ) mNameProp = prop.mTextProp;
-  if( mNumSelect ) mNumberProp = prop.mTextProp;
+  if( mPinSelect ) prop.mSymPinProp.store( mPinProp );
+  if( mNamSelect ) prop.mTextProp.store( mNameProp );
+  if( mNumSelect ) prop.mTextProp.store( mNumberProp );
   }
 
 

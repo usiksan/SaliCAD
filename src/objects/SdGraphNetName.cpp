@@ -94,40 +94,26 @@ void SdGraphNetName::json(const SdJsonReader &js)
 void SdGraphNetName::saveState(SdUndo *undo)
   {
   SdGraphNet::saveState(undo);
-  undo->propTextAndText( &mProp, &mOrigin, &mOver, nullptr );
+  undo->prop( &mProp, &mOrigin, &mOver );
   }
 
 
 
 
-void SdGraphNetName::move(SdPoint offset)
+void SdGraphNetName::transform(const QTransform &map, SdPvAngle angle)
   {
-  mOrigin.move( offset );
-  }
-
-
-
-
-void SdGraphNetName::rotate(SdPoint center, SdPropAngle angle)
-  {
-  mOrigin.rotate( center, angle );
+  mOrigin = map.map(mOrigin);
   mProp.mDir += angle;
   }
 
 
 
 
-void SdGraphNetName::mirror(SdPoint a, SdPoint b)
-  {
-  mOrigin.mirror( a, b );
-  }
-
-
 
 
 void SdGraphNetName::setProp(SdPropSelected &prop)
   {
-  mProp = prop.mTextProp;
+  prop.mTextProp.store(mProp);
   SdGraphNet::setProp( prop );
   }
 

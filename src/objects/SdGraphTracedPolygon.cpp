@@ -153,13 +153,13 @@ void SdGraphTracedPolygon::moveComplete(SdPoint grid, SdUndo *undo)
 
 void SdGraphTracedPolygon::move(SdPoint offset)
   {
-  mRegion.move( mFlyIndex, offset );
+  mRegion.transform( mFlyIndex, offset );
   }
 
 
 
 
-void SdGraphTracedPolygon::rotate(SdPoint center, SdPropAngle angle)
+void SdGraphTracedPolygon::rotate(SdPoint center, SdPvAngle angle)
   {
   mRegion.rotate( center, angle );
   }
@@ -327,7 +327,7 @@ void SdGraphTracedPolygon::snapPoint(SdSnapInfo *snap)
 
 
 
-SdPropStratum SdGraphTracedPolygon::stratum() const
+SdPvStratum SdGraphTracedPolygon::stratum() const
   {
   return mProp.mStratum;
   }
@@ -335,7 +335,7 @@ SdPropStratum SdGraphTracedPolygon::stratum() const
 
 
 
-bool SdGraphTracedPolygon::isPointOnNet(SdPoint p, SdPropStratum stratum, QString *netName, int *destStratum)
+bool SdGraphTracedPolygon::isPointOnNet(SdPoint p, SdPvStratum stratum, QString *netName, int *destStratum)
   {
   if( mProp.mStratum & stratum ) {
     if( isContains(p) ) {
@@ -391,7 +391,7 @@ void SdGraphTracedPolygon::accumBarriers(SdBarrierList &dest, int stratum, SdRul
 
 
 
-bool SdGraphTracedPolygon::isMatchNetAndStratum(const QString netName, SdPropStratum stratum) const
+bool SdGraphTracedPolygon::isMatchNetAndStratum(const QString netName, SdPvStratum stratum) const
   {
   return mProp.mNetName.str() == netName && mProp.mStratum.match( stratum );
   }
@@ -423,7 +423,7 @@ void SdGraphTracedPolygon::accumWindows(SdPolyWindowList &dest, int stratum, int
 
 
 //Check if polygon linked to point
-bool SdGraphTracedPolygon::isLinked(SdPoint a, SdPropStratum stratum, QString netName) const
+bool SdGraphTracedPolygon::isLinked(SdPoint a, SdPvStratum stratum, QString netName) const
   {
   return mProp.mNetName == netName && mProp.mStratum.match( stratum ) && isContains(a);
   }

@@ -71,7 +71,7 @@ struct SdProp
 
     int           mLineEnterType;
     int           mWireEnterType;
-    SdPropString  mWireName;       //Имя цепи
+    SdPvString  mWireName;       //Имя цепи
     bool          mTextBold;       //Жирный шрифт
     bool          mTextItalic;     //Наклонный текст
     bool          mTextUderline;   //Подчеркивание текста

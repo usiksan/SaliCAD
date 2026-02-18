@@ -11,29 +11,32 @@ Web
 Description
   String property
 */
-#ifndef SDPROPSTRING_H
-#define SDPROPSTRING_H
+#ifndef SDPVSTRING_H
+#define SDPVSTRING_H
 
 #include "SvLib/SvJsonIO.h"
 
 #include <QString>
 
 //!
-//! \brief The SdPropString struct - Simple string property wrapper with JSON serialization
+//! \brief The SdPvString struct - Simple string property wrapper with JSON serialization
 //!        Provides basic string storage with swap and JSON I/O functionality
 //!
-struct SdPropString
+class SdPvString
   {
     QString  mString;           //!< Stored string value
-
-    SdPropString() : mString() {}
+  public:
     //!
-    //! \brief SdPropString Constructor with initial string value
+    //! \brief SdPvString Constructor with initial string value
     //! \param src Source string to initialize with
     //!
-    SdPropString( const QString &src ) : mString(src) {}
+    SdPvString( const QString &src = QString{} ) : mString(src) {}
 
-    void       operator = (const char *str) { mString = QString(str); }
+    SdPvString( const char *str ) : mString(str) {}
+
+    QString    string() const { return mString; }
+
+    bool       operator != ( const SdPvString &other ) const { return mString != other.mString; }
 
     //!
     //! \brief json Write string property to JSON writer
@@ -53,7 +56,7 @@ struct SdPropString
     //! \brief swap Swap string values with another SdPropString instance
     //! \param other Other string property to swap with
     //!
-    void       swap( SdPropString &other ) { mString.swap( other.mString ); }
+    void       swap( SdPvString &other ) { mString.swap( other.mString ); }
   };
 
-#endif // SDPROPSTRING_H
+#endif // SDPVSTRING_H

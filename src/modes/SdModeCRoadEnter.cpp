@@ -537,7 +537,7 @@ void SdModeCRoadEnter::keyDown(int key, QChar ch)
 
 
 
-void SdModeCRoadEnter::getNetOnPoint(SdPoint p, SdPropStratum s, QString *netName, int *destStratum)
+void SdModeCRoadEnter::getNetOnPoint(SdPoint p, SdPvStratum s, QString *netName, int *destStratum)
   {
   //Clear net name and stratum
   netName->clear();
@@ -556,7 +556,7 @@ void SdModeCRoadEnter::getNetOnPoint(SdPoint p, SdPropStratum s, QString *netNam
 
 
 //If point is on middle of same road segment we split it on point
-void SdModeCRoadEnter::splitRoadSegment(SdPoint p, SdPropStratum s, QString *netName, int *destStratum)
+void SdModeCRoadEnter::splitRoadSegment(SdPoint p, SdPvStratum s, QString *netName, int *destStratum)
   {
   SdUndo *undo = mUndo;
   plate()->forEach( dctTraceRoad, [p,s,netName,destStratum,undo] (SdObject *obj) -> bool {
@@ -794,7 +794,7 @@ void SdModeCRoadEnter::addTrace(SdObject *obj , const QString msg)
 void SdModeCRoadEnter::changeTraceLayer()
   {
   //Circle stratum change
-  SdPropStratum st( plate()->getStratum() );
+  SdPvStratum st( plate()->getStratum() );
   changeToTraceLayer( st.stratumNext( mProp.mStratum ) );
   }
 
@@ -802,7 +802,7 @@ void SdModeCRoadEnter::changeTraceLayer()
 
 
 //Change trace layer to desired stratum
-void SdModeCRoadEnter::changeToTraceLayer(SdPropStratum dest)
+void SdModeCRoadEnter::changeToTraceLayer(SdPvStratum dest)
   {
   //Check if current stack available changing
   if( mStack.match(dest) ) {
@@ -827,7 +827,7 @@ void SdModeCRoadEnter::changeToTraceLayer(SdPropStratum dest)
 
 
 //Add via to change trace layer
-void SdModeCRoadEnter::addVia(SdPropStratum newStratum)
+void SdModeCRoadEnter::addVia(SdPvStratum newStratum)
   {
   //If not same stratum and via available in this place
   if( mProp.mStratum != newStratum && !isBarriersContains( mPads, mFirst) ) {
@@ -898,7 +898,7 @@ void SdModeCRoadEnter::firstPointEnter(bool enter)
 
 
 //Find loop. If found it will be placed to mLoopPath
-void SdModeCRoadEnter::findLoop(SdPoint src, SdPoint dst, SdPropStratum st)
+void SdModeCRoadEnter::findLoop(SdPoint src, SdPoint dst, SdPvStratum st)
   {
   //Remove previous loop path
   mLoopPath.removeAll();

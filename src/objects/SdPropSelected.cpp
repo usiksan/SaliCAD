@@ -124,7 +124,7 @@ void SdPropSelected::setLayer(const SdPropLayer &layer)
 //in different preperties group. With this we union all this group
 void SdPropSelected::unionLayer()
   {
-  SdPropMulty<SdPropLayer> layer;
+  SdPvMulty<SdPropLayer> layer;
   layer.clear();
   layer.append( mLineProp.get<&SdPropLine::mLayer>() );
   layer.append( mTextProp.get<&SdPropText::mLayer>() );

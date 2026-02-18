@@ -346,7 +346,7 @@ void SdModeCTextual::drawText(SdContext *dc)
     dc->setFont( *mPropText );
     dc->setPen(0,SdEnvir::instance()->getSysColor(scEnter), dltSolid );
     dc->textEx( mPrev, mOverRect, mString,
-              mPropText->mDir.getValue(), mPropText->mHorz.getValue(), mPropText->mVert.getValue(),
+              mPropText->mDir.mValue, mPropText->mHorz.mValue, mPropText->mVert.mValue,
               mPos, &mCursorP1, &mCursorP2,
               &mSelectRect, mStartSel, mStopSel );
 

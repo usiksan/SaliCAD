@@ -14,32 +14,10 @@ Description
 #include "SdUndo.h"
 #include "SdUndoRecordBegin.h"
 #include "SdUndoRecordInsertDelete.h"
-#include "SdUndoRecordPropLineAnd3Points.h"
-#include "SdUndoRecordPropTextAndText.h"
-#include "SdUndoRecordPropLinePointInt.h"
-#include "SdUndoRecordPropLineAndPointsList.h"
-#include "SdUndoRecordPropLineRect2Int.h"
-#include "SdUndoRecordPropSymPin.h"
-#include "SdUndoRecordPropPartPin.h"
-#include "SdUndoRecordPoint.h"
-#include "SdUndoRecordPlatePointer.h"
 #include "SdUndoRecordLinkSection.h"
-#include "SdUndoRecordSymImp.h"
 #include "SdUndoRecordSymImpPin.h"
-#include "SdUndoRecordSymImpPins.h"
-#include "SdUndoRecordPartImp.h"
-#include "SdUndoRecordPartImpPins.h"
-#include "SdUndoRecordWire.h"
 #include "SdUndoRecordProjectItem.h"
-#include "SdUndoRecordString2.h"
 #include "SdUndoRecordStringMapItem.h"
-#include "SdUndoRecordStringMap.h"
-#include "SdUndoRecordPadAssociation.h"
-#include "SdUndoRecordRoad.h"
-#include "SdUndoRecordVia.h"
-#include "SdUndoRecordRules.h"
-#include "SdUndoRecordStringList.h"
-#include "SdUndoRecordPolygon.h"
 #include "SdUndoRecord3dMatrix.h"
 #include "windows/SdWCommand.h"
 
@@ -70,66 +48,13 @@ void SdUndo::deleteObject(SdContainer *container, SdObject *object)
 
 
 
-void SdUndo::propLineAnd3Point(SdPropLine *prp, SdPoint *p1, SdPoint *p2, SdPoint *p3 )
-  {
-  addUndo( new SdUndoRecordPropLineAnd3Points(prp, p1, p2, p3) );
-  }
 
 
 
 
-void SdUndo::propLinePointInt(SdPropLine *prp, SdPoint *p, int *val)
-  {
-  addUndo( new SdUndoRecordPropLinePointInt( prp, p, val ) );
-  }
 
 
 
-
-void SdUndo::propLinePointTable(SdPropLine *prp, SdPointList *list)
-  {
-  addUndo( new SdUndoRecordPropLineAndPointsList( prp, list ) );
-  }
-
-
-
-
-void SdUndo::propLineRect2Int(SdPropLine *prp, SdRect *r, int *val1, int *val2)
-  {
-  addUndo( new SdUndoRecordPropLineRect2Int( prp, r, val1, val2 ) );
-  }
-
-
-
-
-void SdUndo::propTextAndText(SdPropText *prp, SdPoint *org, SdRect *r, QString *str)
-  {
-  addUndo( new SdUndoRecordPropTextAndText( prp, org, r, str ) );
-  }
-
-
-
-
-void SdUndo::propSymPin(SdPropSymPin *prp, SdPoint *org)
-  {
-  addUndo( new SdUndoRecordPropSymPin( prp, org ) );
-  }
-
-
-
-
-void SdUndo::propPartPin(SdPropPartPin *prp, SdPoint *org)
-  {
-  addUndo( new SdUndoRecordPropPartPin( prp, org ) );
-  }
-
-
-
-
-void SdUndo::platePointer(SdPItemPlatePtr *ptr)
-  {
-  addUndo( new SdUndoRecordPlatePointer(ptr) );
-  }
 
 
 
@@ -145,20 +70,6 @@ void SdUndo::pinSymImpStatus(SdGraphSymImp *sym, const QString symPinName)
 
 
 
-void SdUndo::symImpPins(SdSymImpPinTable *table)
-  {
-  addUndo( new SdUndoRecordSymImpPins(table) );
-  }
-
-
-
-
-void SdUndo::partImpPins(SdPartImpPinTable *table)
-  {
-  addUndo( new SdUndoRecordPartImpPins(table) );
-  }
-
-
 
 
 
@@ -169,20 +80,6 @@ void SdUndo::linkSection(int section, SdGraphSymImp *sym, SdGraphPartImp *part, 
   addUndo( new SdUndoRecordLinkSection( section, sym, part, link ) );
   }
 
-
-
-
-void SdUndo::symImp(SdPoint *origin, SdPropSymImp *imp, int *logSection, int *logNumber, SdRect *over )
-  {
-  addUndo( new SdUndoRecordSymImp( origin, imp, logSection, logNumber, over ) );
-  }
-
-
-
-void SdUndo::partImp(SdPoint *origin, SdPropPartImp *imp, int *logNumber, SdRect *over )
-  {
-  addUndo( new SdUndoRecordPartImp( origin, imp, logNumber, over ) );
-  }
 
 
 

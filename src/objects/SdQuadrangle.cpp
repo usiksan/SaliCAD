@@ -29,7 +29,7 @@ SdQuadrangle::SdQuadrangle(int x, int y, int w, int h)
   set( SdRect(x,y,w,h) );
   }
 
-void SdQuadrangle::rotate(SdPoint center, SdPropAngle angle)
+void SdQuadrangle::rotate(SdPoint center, SdPvAngle angle)
   {
   p1.rotate( center, angle );
   p2.rotate( center, angle );

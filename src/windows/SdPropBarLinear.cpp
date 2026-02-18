@@ -33,7 +33,7 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
   //Fill width list with previous values
   if( prevWidth.count() == 0 )
     prevWidth.addDouble( 0.0 );
-  for( const QString &v : prevWidth )
+  for( const QString &v : std::as_const(prevWidth) )
     mWidth->addItem( v );
   //Select first item
   mWidth->setCurrentIndex(0);
@@ -117,25 +117,9 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
 //Set all visual line properties from SdPropLine structure
 void SdPropBarLinear::setPropLine(SdProjectItem *pitem, SdPropLine *propLine, double ppm, int enterType)
   {
-  if( propLine ) {
-    //Set current layer
-    updateEditObjectProp( pitem, propLine->mLayer.layer(false) );
-
-    //Set current width
-    mPPM = ppm;
-    if( propLine->mWidth.isValid() ) {
-      mWidth->setCurrentText( propLine->mWidth.log2Phis(mPPM) );
-      prevWidth.reorderComboBoxDoubleString( mWidth );
-      }
-    else
-      mWidth->setCurrentText( QString()  );
-
-    //line enter type
-    setVertexType( enterType );
-
-    //line type
-    setLineType( propLine->mType.getValue() );
-    }
+  SdPropComposerLine composerLine;
+  if( propLine ) composerLine.reset( *propLine );
+  setPropLine( pitem, composerLine, ppm, enterType );
   }
 
 
@@ -143,18 +127,63 @@ void SdPropBarLinear::setPropLine(SdProjectItem *pitem, SdPropLine *propLine, do
 //Get all line properties from visual elements and fill SdPropLine
 void SdPropBarLinear::getPropLine(SdPropLine *propLine, int *enterType )
   {
-  if( propLine ) {
-    SdLayer *layer = getSelectedLayer();
-    if( layer )
-      propLine->mLayer = layer;
+  SdPropComposerLine composerLine;
+  getPropLine( composerLine, enterType );
+  if( propLine != nullptr )
+    composerLine.store( *propLine );
+  }
 
-    if( !mWidth->currentText().isEmpty() )
-      propLine->mWidth.setFromPhis( mWidth->currentText(), mPPM );
 
-    if( mLineSolid->isChecked() ) propLine->mType = dltSolid;
-    else if( mLineDotted->isChecked() ) propLine->mType = dltDotted;
-    else if( mLineDashed->isChecked() ) propLine->mType = dltDashed;
+
+void SdPropBarLinear::setPropLine(SdProjectItem *pitem, const SdPropComposerLine &propLine, double ppm, int enterType)
+  {
+  //Set current layer
+  auto &propLayer = propLine.get<&SdPropLine::mLayer>();
+  if( propLayer.isSingle() )
+    updateEditObjectProp( pitem, propLayer.value().layer(false) );
+  else
+    updateEditObjectProp( pitem, nullptr );
+
+  //Set current width
+  mPPM = ppm;
+  if( propLine.get<&SdPropLine::mWidth>().isSingle() ) {
+    mWidth->setCurrentText( propLine.get<&SdPropLine::mWidth>().value().log2Phis(mPPM) );
+    prevWidth.reorderComboBoxDoubleString( mWidth );
     }
+  else
+    mWidth->setCurrentText( QString()  );
+
+  //line enter type
+  setVertexType( enterType );
+
+  //line type
+  if( propLine.get<&SdPropLine::mType>().isSingle() )
+    setLineType( propLine.get<&SdPropLine::mType>().value().mValue );
+  else
+    setLineType( -1 );
+  }
+
+
+
+
+void SdPropBarLinear::getPropLine(SdPropComposerLine &propLine, int *enterType)
+  {
+  propLine.clear();
+  //Store layer if setted
+  SdLayer *layer = getSelectedLayer();
+  if( layer )
+    propLine.get<&SdPropLine::mLayer>().reset( SdPropLayer(layer) );
+
+  //Store width if setted
+  if( !mWidth->currentText().isEmpty() )
+    propLine.get<&SdPropLine::mWidth>().reset( SdPvInt( mWidth->currentText(), mPPM ) );
+
+  //Store type if setted
+  auto &propType = propLine.get<&SdPropLine::mType>();
+  if( mLineSolid->isChecked() ) propType.reset( SdPvInt(dltSolid) );
+  else if( mLineDotted->isChecked() ) propType.reset( SdPvInt(dltDotted) );
+  else if( mLineDashed->isChecked() ) propType.reset( SdPvInt(dltDashed) );
+
   if( enterType ) {
     if( mEnterOrtho->isChecked() ) *enterType = dleOrtho;
     else if( mEnter45degree->isChecked() ) *enterType = dle45degree;

@@ -16,7 +16,7 @@ Description
 #define SDPLATENETCONTAINER_H
 
 #include "SdPoint.h"
-#include "SdPropStratum.h"
+#include "SdPvStratum.h"
 #include "SdGraphTraced.h"
 
 class SdPlateNetContainer
@@ -25,7 +25,7 @@ class SdPlateNetContainer
     SdPlateNetContainer();
     virtual ~SdPlateNetContainer();
 
-    virtual void addNetSegment( SdGraphTraced *traced, const QString netName, SdPropStratum s, SdPoint p1, SdPoint p2 ) = 0;
+    virtual void addNetSegment( SdGraphTraced *traced, const QString netName, SdPvStratum s, SdPoint p1, SdPoint p2 ) = 0;
   };
 
 #endif // SDPLATENETCONTAINER_H

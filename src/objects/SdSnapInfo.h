@@ -17,8 +17,8 @@ Description
 #define SDSNAPINFO_H
 
 #include "SdPoint.h"
-#include "SdPropAngle.h"
-#include "SdPropStratum.h"
+#include "SdPvAngle.h"
+#include "SdPvStratum.h"
 #include "SdClass.h"
 
 //Маска разумной привязки
@@ -64,12 +64,12 @@ struct SdSnapInfo
     SdPoint         mSour;       //Source point [Исходная точка]
     SdPoint         mDest;       //Destignated point (snapped) [Получившаяся точка]
     SdPoint         mExclude;    //Excluding point, this point excluded from view [Точка, которую нужно исключить из просмотра]
-    SdPropAngle     mDir;        //Find direction [Направление поиска]
+    SdPvAngle     mDir;        //Find direction [Направление поиска]
     SdSnapMask      mSnapMask;   //Testing mask [Маска, которую нужно проверить]
     SdSnapMask      mDestMask;   //Snapped mask for point dest [Маска сработавшая для точки dest]
     double          mSqDistance; //Current square distance from sour to dest [Текущее расстояние от точки sour до точки dest]
     QString         mNetName;    //Net name for find [Имя цепи для поиска]
-    SdPropStratum       mStratum;    //Stratum for tracing
+    SdPvStratum       mStratum;    //Stratum for tracing
     SdGraph        *mGraph;      //Snapped graph object
 
     SdSnapInfo();

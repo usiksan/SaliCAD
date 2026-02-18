@@ -120,7 +120,7 @@ void SdPartImpPin::accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int s
   {
 
   //Compare on stratum
-  if( mStratum & stratum ) {
+  if( mStratum.mValue & stratum ) {
     if( ruleId >= ruleLast )
       clearance = 0;
     else
@@ -138,7 +138,7 @@ void SdPartImpPin::accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int s
 void SdPartImpPin::accumWindows(SdPItemPlate *plate, SdPolyWindowList &dest, int stratum, int gap, const QString netName, const QTransform &t) const
   {
   //Compare on stratum
-  if( (mStratum & stratum) && netName != getNetName() )
+  if( (mStratum.mValue & stratum) && netName != getNetName() )
     //Stratum matched and net name other
     plate->appendPadWindow( dest, mPin->getPinOrigin(), mPin->getPinType(), gap, t );
   }
@@ -154,7 +154,7 @@ void SdPartImpPin::accumWindows(SdPItemPlate *plate, SdPolyWindowList &dest, int
 //! \param stratum    Stratum for layers
 //! \param map        Map for holes conversion
 //!
-void SdPartImpPin::accumHoles(SdPItemPlate *plate, Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map) const
+void SdPartImpPin::accumHoles(SdPItemPlate *plate, Sd3drModel &model, Sd3drFaceList &faceList, SdPvStratum stratum, const QMatrix4x4 &map) const
   {
   plate->appendPadHoles( mPin->getPinOrigin(), mPin->getPinType(), model, faceList, stratum, map );
   }
@@ -286,7 +286,7 @@ SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *par
 
 QTransform SdGraphPartImp::matrix() const
   {
-  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
+  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.mValue, mProp.mSide.isBottom() );
   return imp.getMatrix();
   }
 
@@ -318,7 +318,7 @@ QString SdGraphPartImp::ident() const
 void SdGraphPartImp::identSet(const SdPropText &prp, SdPoint pos, SdUndo *undo)
   {
   if( undo )
-    undo->propTextAndText( &mIdent.mProp, &mIdent.mOrigin, nullptr, nullptr );
+    undo->prop( &mIdent.mProp, &mIdent.mOrigin );
   mIdent.mProp = prp;
   mIdent.mOrigin = pos;
   }
@@ -341,7 +341,7 @@ QString SdGraphPartImp::value() const
 void SdGraphPartImp::valueSet(const SdPropText &prp, SdPoint pos, SdUndo *undo)
   {
   if( undo )
-    undo->propTextAndText( &mValue.mProp, &mValue.mOrigin, nullptr, nullptr );
+    undo->prop( &mValue.mProp, &mValue.mOrigin );
   mValue.mProp = prp;
   mValue.mOrigin = pos;
   }
@@ -379,7 +379,7 @@ void SdGraphPartImp::autoDelete(SdUndo *undo)
 void SdGraphPartImp::savePins(SdUndo *undo)
   {
   //Save state of all pins
-  undo->partImpPins( &mPins );
+  undo->prop( &mPins );
   }
 
 
@@ -593,7 +593,7 @@ QJsonObject SdGraphPartImp::paramTableObject() const
 void SdGraphPartImp::drawWithoutPads(SdContext *cdx)
   {
   //Convertor for symbol implementation
-  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
+  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.mValue, mProp.mSide.isBottom() );
   if( mProp.mSide.isBottom() )
     imp.setPairedLayer( true );
   cdx->setConverter( &imp );
@@ -619,10 +619,10 @@ void SdGraphPartImp::drawWithoutPads(SdContext *cdx)
 
 
 //Draw pads only
-void SdGraphPartImp::drawPads(SdContext *cdx, SdPropStratum stratum, const QString highlightNetName)
+void SdGraphPartImp::drawPads(SdContext *cdx, SdPvStratum stratum, const QString highlightNetName)
   {
   //Convertor for symbol implementation
-  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
+  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.mValue, mProp.mSide.isBottom() );
   if( mProp.mSide.isBottom() )
     imp.setPairedLayer( true );
   cdx->setConverter( &imp );
@@ -875,9 +875,8 @@ void SdGraphPartImp::json(const SdJsonReader &js)
 
 void SdGraphPartImp::saveState(SdUndo *undo)
   {
-  undo->partImp( &mOrigin, &mProp, &mLogNumber, &mOverRect );
-  //Save state of all pins
-  undo->partImpPins( &mPins );
+  //Save state of all properties and pins
+  undo->prop( &mOrigin, &mProp, &mLogNumber, &mOverRect, &mPins );
   }
 
 
@@ -893,7 +892,7 @@ void SdGraphPartImp::move(SdPoint offset)
 
 
 
-void SdGraphPartImp::rotate(SdPoint center, SdPropAngle angle)
+void SdGraphPartImp::rotate(SdPoint center, SdPvAngle angle)
   {
   mOrigin.rotate( center, angle );
   mProp.mAngle += angle;
@@ -1061,7 +1060,7 @@ void SdGraphPartImp::accumWindows(SdPolyWindowList &dest, int stratum, int gap, 
 
 
 //Check if any pin of part linked to point
-bool SdGraphPartImp::isLinked(SdPoint a, SdPropStratum stratum, QString netName) const
+bool SdGraphPartImp::isLinked(SdPoint a, SdPvStratum stratum, QString netName) const
   {
   //For each pin test connection
   for( const SdPartImpPin &pin : mPins )
@@ -1164,7 +1163,7 @@ void SdGraphPartImp::draw3d(QOpenGLFunctions_2_0 *f) const
 //! \param stratum    Stratum for layers
 //! \param map        Map for holes conversion
 //!
-void SdGraphPartImp::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map) const
+void SdGraphPartImp::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdPvStratum stratum, const QMatrix4x4 &map) const
   {
   QMatrix4x4 mp(map);
   mp.translate( mOrigin.xmm(), mOrigin.ymm(), 0 );
@@ -1225,7 +1224,7 @@ void SdGraphPartImp::updatePinsPositions()
 
 
 
-bool SdGraphPartImp::isPointOnNet(SdPoint p, SdPropStratum stratum, QString *netName, int *destStratum)
+bool SdGraphPartImp::isPointOnNet(SdPoint p, SdPvStratum stratum, QString *netName, int *destStratum)
   {
   //Run on each pin, test stratum and pos. If match then return true and assign wireName
   for( SdPartImpPin &pin : mPins ) {

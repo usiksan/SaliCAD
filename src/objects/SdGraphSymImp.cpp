@@ -77,7 +77,7 @@ SdGraphSymImp::SdGraphSymImp(SdPItemVariant *comp, SdPItemSymbol *sym, SdPItemPa
 
 QTransform SdGraphSymImp::matrix() const
   {
-  SdConverterImplement imp( mOrigin, mSymbol->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue() );
+  SdConverterImplement imp( mOrigin, mSymbol->getOrigin(), mProp.mAngle.mValue, mProp.mMirror.mValue );
   return imp.getMatrix();
   }
 
@@ -188,7 +188,7 @@ void SdGraphSymImp::unLinkPart(SdUndo *undo)
   {
   if( mPartImp != nullptr ) {
     //Save pin state
-    undo->symImpPins( &mPins );
+    undo->prop( &mPins );
     //undo->partImpPins( )
     //UnLink pins if mPartImp present
     for( SdSymImpPinTable::iterator i = mPins.begin(); i != mPins.end(); i++ )
@@ -268,7 +268,7 @@ QString SdGraphSymImp::ident() const
 void SdGraphSymImp::identSet(const SdPropText &prp, SdPoint pos, SdUndo *undo)
   {
   if( undo )
-    undo->propTextAndText( &mIdent.mProp, &mIdent.mOrigin, nullptr, nullptr );
+    undo->prop( &mIdent.mProp, &mIdent.mOrigin );
   mIdent.mProp = prp;
   mIdent.mOrigin = pos;
   }
@@ -316,7 +316,7 @@ QString SdGraphSymImp::value() const
 void SdGraphSymImp::valueSet(const SdPropText &prp, SdPoint pos, SdUndo *undo)
   {
   if( undo )
-    undo->propTextAndText( &mValue.mProp, &mValue.mOrigin, nullptr, nullptr );
+    undo->prop( &mValue.mProp, &mValue.mOrigin );
   mValue.mProp = prp;
   mValue.mOrigin = pos;
   }
@@ -392,9 +392,8 @@ void SdGraphSymImp::pinStatusSet(const QString pinName, const SdSymImpPin &pin)
 
 void SdGraphSymImp::saveState(SdUndo *undo)
   {
-  undo->symImp( &mOrigin, &mProp, &mLogSection, &mLogNumber, &mOverRect );
-  //Save state of all pins
-  undo->symImpPins( &mPins );
+  //Save state of all properties and pins
+  undo->prop( &mOrigin, &mProp, &mLogSection, &mLogNumber, &mOverRect, &mPins );
   }
 
 
@@ -439,39 +438,26 @@ void SdGraphSymImp::prepareMove(SdUndo *undo)
 
 
 
-void SdGraphSymImp::move(SdPoint offset)
+
+void SdGraphSymImp::transform(const QTransform &map, SdPvAngle angle)
   {
-  mOrigin.move( offset );
-  updatePinsPositions();
-  }
-
-
-
-
-void SdGraphSymImp::rotate(SdPoint center, SdPropAngle angle)
-  {
-  mOrigin.rotate( center, angle );
+  mOrigin = map.map(mOrigin);
   mProp.mAngle += angle;
   updatePinsPositions();
   }
 
 
 
-void SdGraphSymImp::mirror(SdPoint a, SdPoint b)
-  {
-  mOrigin.mirror( a, b );
-  updatePinsPositions();
-  }
 
 
 
 void SdGraphSymImp::setProp(SdPropSelected &prop)
   {
-  if( !mProp.match( prop.mSymImpProp ) ) {
+  if( prop.mSymImpProp.isNeedUpdate( mProp ) ) {
     //Unconnect all pins from wires
     //ucomAllPins();
     //setup props
-    mProp = prop.mSymImpProp;
+    prop.mSymImpProp.store( mProp );
     //Correct pins positions
     updatePinsPositions();
     }
@@ -523,7 +509,7 @@ SdRect SdGraphSymImp::getOverRect() const
 void SdGraphSymImp::draw(SdContext *dc)
   {
   //Convertor for symbol implementation
-  SdConverterImplement imp( mOrigin, mSymbol->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue() );
+  SdConverterImplement imp( mOrigin, mSymbol->getOrigin(), mProp.mAngle.mValue, mProp.mMirror.mValue );
   dc->setConverter( &imp );
 
   //Draw ident in symbol context
@@ -618,7 +604,7 @@ SdPItemSheet *SdGraphSymImp::getSheet() const
 
 void SdGraphSymImp::updatePinsPositions()
   {
-  SdConverterImplement impl( mOrigin, mSymbol->getOrigin(), mProp.mAngle.getValue(), mProp.mMirror.getValue() );
+  SdConverterImplement impl( mOrigin, mSymbol->getOrigin(), mProp.mAngle.mValue, mProp.mMirror.mValue );
   QTransform t = impl.getMatrix();
   for( SdSymImpPin &pin : mPins )
     pin.mPosition = t.map( pin.mPin->getPinOrigin() );
@@ -646,7 +632,7 @@ void SdGraphSymImp::linkAutoPartInPlate(SdPItemPlate *plate, SdUndo *undo)
   //Apply all items (symbol, component, part and partImp)
   Q_ASSERT( mSymbol != nullptr && mComponent != nullptr );
 
-  undo->symImpPins( &mPins );
+  undo->prop( &mPins );
 
   if( mPart == nullptr ) {
     return;

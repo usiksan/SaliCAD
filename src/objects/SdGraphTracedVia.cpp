@@ -125,10 +125,13 @@ void SdGraphTracedVia::moveComplete(SdPoint grid, SdUndo *undo)
 
 
 
-void SdGraphTracedVia::move(SdPoint offset)
+void SdGraphTracedVia::transform(const QTransform &map, SdPvAngle)
   {
-  mPosition.move( offset );
+  if( map.isTranslating() || map.isRotating() )
+    mPosition = map.map(mPosition);
   }
+
+
 
 
 
@@ -138,7 +141,7 @@ void SdGraphTracedVia::move(SdPoint offset)
 void SdGraphTracedVia::setProp(SdPropSelected &prop)
   {
   //From global we can set only pad type
-  mProp.mPadType = prop.mViaProp.mPadType;
+  prop.mViaProp.get<&SdPropVia::mPadType>().store( mProp.mPadType );
   }
 
 
@@ -200,7 +203,7 @@ bool SdGraphTracedVia::isVisible()
 
 SdRect SdGraphTracedVia::getOverRect() const
   {
-  return getPlate()->getPadPolygon( mPosition, mProp.mPadType.str(), 0 ).boundingRect().toRect();
+  return getPlate()->getPadPolygon( mPosition, mProp.mPadType.string(), 0 ).boundingRect().toRect();
   }
 
 
@@ -222,7 +225,7 @@ bool SdGraphTracedVia::getInfo(SdPoint p, QString &info, bool extInfo)
   {
   Q_UNUSED(extInfo)
   if( behindCursor( p ) ) {
-    info = QObject::tr("Net: ") + mProp.mNetName.str();
+    info = QObject::tr("Net: ") + mProp.mNetName.string();
     return true;
     }
   return false;
@@ -236,7 +239,7 @@ void SdGraphTracedVia::snapPoint(SdSnapInfo *snap)
   {
   if( snap->match( snapNearestPin | snapNearestNetPin ) ) {
     //Perform snap
-    if( (snap->match( snapNearestPin ) || snap->mNetName == mProp.mNetName.str()) && snap->mStratum.match(mProp.mStratum) )
+    if( (snap->match( snapNearestPin ) || snap->mNetName == mProp.mNetName.string()) && snap->mStratum.isIntersect(mProp.mStratum) )
       snap->test( this, mPosition, snapNearestPin | snapNearestNetPin );
     }
   if( snap->match( snapNearestNetVia ) )
@@ -249,7 +252,7 @@ void SdGraphTracedVia::snapPoint(SdSnapInfo *snap)
 
 
 
-SdPropStratum SdGraphTracedVia::stratum() const
+SdPvStratum SdGraphTracedVia::stratum() const
   {
   return mProp.mStratum;
   }
@@ -258,14 +261,14 @@ SdPropStratum SdGraphTracedVia::stratum() const
 
 
 
-bool SdGraphTracedVia::isPointOnNet(SdPoint p, SdPropStratum stratum, QString *netName, int *destStratum)
+bool SdGraphTracedVia::isPointOnNet(SdPoint p, SdPvStratum stratum, QString &netName, SdPvStratum &destStratum)
   {
-  if( mPosition == p && mProp.mStratum.match( stratum ) ) {
-    if( *netName == mProp.mNetName.str() )
-      *destStratum |= mProp.mStratum.getValue();
+  if( mPosition == p && mProp.mStratum.isIntersect( stratum ) ) {
+    if( netName == mProp.mNetName.string() )
+      destStratum |= mProp.mStratum;
     else {
-      *destStratum = mProp.mStratum.getValue();
-      *netName = mProp.mNetName.str();
+      destStratum = mProp.mStratum;
+      netName = mProp.mNetName.string();
       }
     return true;
     }
@@ -279,7 +282,7 @@ bool SdGraphTracedVia::isPointOnNet(SdPoint p, SdPropStratum stratum, QString *n
 
 void SdGraphTracedVia::accumNetSegments(SdPlateNetContainer *netContainer)
   {
-  netContainer->addNetSegment( this, mProp.mNetName.str(), mProp.mStratum, mPosition, mPosition );
+  netContainer->addNetSegment( this, mProp.mNetName.string(), mProp.mStratum, mPosition, mPosition );
   }
 
 
@@ -289,10 +292,10 @@ void SdGraphTracedVia::accumNetSegments(SdPlateNetContainer *netContainer)
 
 
 
-void SdGraphTracedVia::drawStratum(SdContext *dcx, int stratum)
+void SdGraphTracedVia::drawStratum(SdContext *dcx, SdPvStratum stratum)
   {
   //Draw pin pad
-  getPlate()->drawPad( dcx, mPosition, mProp.mPadType.str(), mProp.mStratum.stratum() & stratum );
+  getPlate()->drawPad( dcx, mPosition, mProp.mPadType.string(), mProp.mStratum.stratum() & stratum );
   }
 
 
@@ -338,7 +341,7 @@ void SdGraphTracedVia::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId 
 
 
 
-bool SdGraphTracedVia::isMatchNetAndStratum(const QString netName, SdPropStratum stratum) const
+bool SdGraphTracedVia::isMatchNetAndStratum(const QString netName, SdPvStratum stratum) const
   {
   return mProp.mNetName.str() == netName && mProp.mStratum.match( stratum );
   }
@@ -361,7 +364,7 @@ void SdGraphTracedVia::accumWindows(SdPolyWindowList &dest, int stratum, int gap
 
 
 //Check if road linked to point
-bool SdGraphTracedVia::isLinked(SdPoint a, SdPropStratum stratum, QString netName) const
+bool SdGraphTracedVia::isLinked(SdPoint a, SdPvStratum stratum, QString netName) const
   {
   return mProp.mNetName == netName && mProp.mStratum.match( stratum ) && mPosition == a;
   }

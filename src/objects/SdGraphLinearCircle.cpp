@@ -95,31 +95,16 @@ void SdGraphLinearCircle::json(const SdJsonReader &js)
 
 
 
-
-
-
-
-
-void SdGraphLinearCircle::move(SdPoint offset)
+void SdGraphLinearCircle::transform(const QTransform &map, SdPvAngle)
   {
-  mCenter.move( offset );
+  mCenter = map.map(mCenter);
   }
 
 
 
 
-void SdGraphLinearCircle::rotate(SdPoint center, SdPropAngle angle)
-  {
-  mCenter.rotate( center, angle );
-  }
 
 
-
-
-void SdGraphLinearCircle::mirror(SdPoint a, SdPoint b)
-  {
-  mCenter.mirror( a, b );
-  }
 
 
 
@@ -186,7 +171,7 @@ void SdGraphLinearCircle::draw3d(QOpenGLFunctions_2_0 *f) const
 //! \param stratum    Stratum for layers
 //! \param map        Map for holes conversion
 //!
-void SdGraphLinearCircle::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map) const
+void SdGraphLinearCircle::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdPvStratum stratum, const QMatrix4x4 &map) const
   {
   Q_UNUSED(stratum)
   QMatrix4x4 mat(map);
@@ -236,7 +221,7 @@ int SdGraphLinearCircle::behindCursor(SdPoint p)
 
 void SdGraphLinearCircle::saveState(SdUndo *undo)
   {
-  undo->propLinePointInt( &mProp, &mCenter, &mRadius );
+  undo->prop( &mProp, &mCenter, &mRadius );
   }
 
 

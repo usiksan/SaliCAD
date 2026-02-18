@@ -1,14 +1,14 @@
-#ifndef SDPROPMULTY_H
-#define SDPROPMULTY_H
+#ifndef SDPVMULTY_H
+#define SDPVMULTY_H
 
 #include <type_traits>
 
 //!
-//! \brief The SdPropMulty class - Template class for managing properties that can have single or multiple values
+//! \brief The SdPvMulty class - Template class for managing properties that can have single or multiple values
 //!        Used when selecting multiple objects with possibly different property values
 //!
 template <typename Prop>
-class SdPropMulty
+class SdPvMulty
   {
     Prop mPropValue; //!< Stored property value (valid only when state is spmSingle)
     enum {
@@ -19,9 +19,12 @@ class SdPropMulty
 
   public:
     //!
-    //! \brief SdPropMulty Default constructor. Initializes state to spmNone.
+    //! \brief SdPvMulty Default constructor. Initializes state to spmNone.
     //!
-    SdPropMulty() : mState(spmNone) {}
+    SdPvMulty() : mState(spmNone) {}
+
+
+    const Prop &value() const { return mPropValue; }
 
 
 
@@ -40,12 +43,9 @@ class SdPropMulty
     //!         - State is spmSingle and stored value equals v
     //!         false if state is spmNone
     //!
-    bool isMatch( const Prop &v ) const
-      {
-      if( mState == spmMulty ) return true;
-      if( mState == spmNone ) return false;
-      return mPropValue == v;
-      }
+    //bool isMatch( const Prop &v ) const { return !(mState != spmSingle || mPropValue != v); }
+
+    bool isNeedUpdate( const Prop &v ) const { return (mState == spmSingle && mPropValue != v); }
 
 
 
@@ -86,7 +86,7 @@ class SdPropMulty
       }
 
 
-    void append( const SdPropMulty<Prop> &pm )
+    void append( const SdPvMulty<Prop> &pm )
       {
       if( mState == spmNone ) (*this) = pm;
       else if( mState == spmSingle && ((pm.mState == spmSingle && mPropValue != pm.mPropValue) || (pm.mState == spmMulty)) )
@@ -116,7 +116,7 @@ struct SdPropMultyField
   {
     using memberType = std::remove_reference_t< decltype( std::declval<Obj>().*Member) >;
 
-    SdPropMulty<memberType> mField;
+    SdPvMulty<memberType> mField;
   };
 
 
@@ -147,9 +147,14 @@ class SdPropComposer : private SdPropMultyField<Obj,Members>...
       (SdPropMultyField<Obj,Members>::mField.store( src.*Members ), ...);
       }
 
-    bool isMatch( const Obj &obj ) const
+    // bool isMatch( const Obj &obj ) const
+    //   {
+    //   return (SdPropMultyField<Obj,Members>::mField.isMatch( obj.*Members ) && ...);
+    //   }
+
+    bool isNeedUpdate( const Obj &obj ) const
       {
-      return (SdPropMultyField<Obj,Members>::mField.isMatch( obj.*Members ) && ...);
+      return (SdPropMultyField<Obj,Members>::mField.isNeedUpdate( obj.*Members ) || ...);
       }
 
     template<auto Member>
@@ -167,4 +172,4 @@ class SdPropComposer : private SdPropMultyField<Obj,Members>...
       }
 
   };
-#endif // SDPROPMULTY_H
+#endif // SDPVMULTY_H

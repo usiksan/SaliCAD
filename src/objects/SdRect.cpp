@@ -99,7 +99,7 @@ void SdRect::mirror(SdPoint origin)
 
 
 
-void SdRect::rotate(SdPoint origin, SdPropAngle angle)
+void SdRect::rotate(SdPoint origin, SdPvAngle angle)
   {
   SdPoint p1 = getTopLeft();
   SdPoint p2 = getBottomRight();

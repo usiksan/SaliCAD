@@ -121,46 +121,29 @@ void SdGraphText::json(const SdJsonReader &js)
 void SdGraphText::saveState(SdUndo *undo)
   {
   if( undo )
-    undo->propTextAndText( &mProp, &mOrigin, &mOverRect, &mString );
+    undo->prop( &mProp, &mOrigin, &mOverRect, &mString );
   }
 
 
 
 
-void SdGraphText::move(SdPoint offset)
+
+void SdGraphText::transform(const QTransform &map, SdPvAngle angle)
   {
-  mOrigin.move( offset );
-  mOverRect.move( offset );
+  mOrigin = map.map(mOrigin);
+  mOverRect = map.mapRect(mOverRect);
+  mProp.mDir += angle;
   }
 
 
 
-
-void SdGraphText::rotate(SdPoint center, SdPropAngle angle)
-  {
-  SdPoint rc( mOverRect.center() );
-  rc.rotate( center, angle );
-  mOverRect.moveCenter( rc );
-  mOrigin.rotate( center, angle );
-  }
-
-
-
-
-void SdGraphText::mirror(SdPoint a, SdPoint b)
-  {
-  SdPoint rc( mOverRect.center() );
-  rc.mirror( a, b );
-  mOverRect.moveCenter( rc );
-  mOrigin.mirror( a, b );
-  }
 
 
 
 
 void SdGraphText::setProp(SdPropSelected &prop)
   {
-  mProp = prop.mTextProp;
+  prop.mTextProp.store( mProp );
   }
 
 

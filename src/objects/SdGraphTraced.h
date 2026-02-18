@@ -15,7 +15,7 @@ Description
 #define SDGRAPHTRACED_H
 
 #include "SdGraph.h"
-#include "SdPropStratum.h"
+#include "SdPvStratum.h"
 #include "SdRuleBlock.h"
 #include "SdBarrier.h"
 #include "SdPolyWindowList.h"
@@ -33,7 +33,7 @@ class SdGraphTraced : public SdGraph
     //Rapid plate retrive
     SdPItemPlate        *getPlate() const;
     //Stratum of object
-    virtual SdPropStratum    stratum() const = 0;
+    virtual SdPvStratum  stratum() const = 0;
 
     //Set flag to update rat net. Rat net will be clear and reconstructed
     void                 setDirtyRatNet();
@@ -42,13 +42,13 @@ class SdGraphTraced : public SdGraph
     void                 accumLinkedTrace(SdGraphTraced *from, SdPoint a, QString netName, SdSelector *sel );
 
     //Defined here
-    virtual bool         isPointOnNet( SdPoint p, SdPropStratum stratum, QString *netName, int *destStratum ) = 0;
+    virtual bool         isPointOnNet( SdPoint p, SdPvStratum stratum, QString &netName, SdPvStratum &destStratum ) = 0;
     virtual void         accumNetSegments( SdPlateNetContainer *netContainer ) = 0;
-    virtual void         drawStratum( SdContext *dcx, int stratum ) = 0;
+    virtual void         drawStratum( SdContext *dcx, SdPvStratum stratum ) = 0;
     virtual void         accumBarriers( SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk ) const = 0;
-    virtual bool         isMatchNetAndStratum( const QString netName, SdPropStratum stratum ) const;
+    virtual bool         isMatchNetAndStratum( const QString netName, SdPvStratum stratum ) const;
     virtual void         accumWindows( SdPolyWindowList &dest, int stratum, int gap, const QString netName ) const = 0;
-    virtual bool         isLinked( SdPoint a, SdPropStratum stratum, QString netName ) const = 0;
+    virtual bool         isLinked( SdPoint a, SdPvStratum stratum, QString netName ) const = 0;
 
 
     // SdGraph interface

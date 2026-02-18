@@ -117,7 +117,9 @@ SOURCES += \
     objects/SdGraphScriptRefMap.cpp \
     objects/SdJsonIO.cpp \
     objects/SdPartImpRelativePosition.cpp \
-    objects/SdPropStratum.cpp \
+    objects/SdPvAngle.cpp \
+    objects/SdPvInt.cpp \
+    objects/SdPvStratum.cpp \
     script/SdScriptOperatorBlock.cpp \
     script/SdScriptOperatorIf.cpp \
     script/SdScriptOperatorWhile.cpp \
@@ -246,14 +248,11 @@ SOURCES += \
     modes/SdModeCText.cpp \
     objects/SdGraphText.cpp \
     objects/SdConverterText.cpp \
-    objects/SdUndoRecordPropTextAndText.cpp \
     modes/SdModeCTextual.cpp \
     windows/SdWLabel.cpp \
     objects/SdGraphLinearCircle.cpp \
-    objects/SdUndoRecordPropLinePointInt.cpp \
     objects/SdGraphLinearCircleFilled.cpp \
     objects/SdGraphLinearRegion.cpp \
-    objects/SdUndoRecordPropLineAndPointsList.cpp \
     objects/SdGraphSymPin.cpp \
     objects/SdGraphPartPin.cpp \
     objects/SdGraphSymImp.cpp \
@@ -264,14 +263,12 @@ SOURCES += \
     objects/SdSection.cpp \
     modes/SdModeView.cpp \
     objects/SdPartVariant.cpp \
-    objects/SdUndoRecordPropSymPin.cpp \
     modes/SdModeCSymPin.cpp \
     windows/SdPropBarSymPin.cpp \
     modes/SdModeCOrigin.cpp \
     windows/SdWEditorComponent.cpp \
     objects/SdPItemSheet.cpp \
     objects/SdPItemPlate.cpp \
-    objects/SdUndoRecordPropPartPin.cpp \
     modes/SdModeCPartPin.cpp \
     windows/SdPropBarPartPin.cpp \
     modes/SdModeCOriginPart.cpp \
@@ -282,12 +279,9 @@ SOURCES += \
     windows/SdPropBarSymImp.cpp \
     objects/SdUndoRecordSymImpPin.cpp \
     objects/SdGraphArea.cpp \
-    objects/SdUndoRecordPlatePointer.cpp \
     objects/SdGraphIdent.cpp \
     modes/SdModeCIdent.cpp \
     objects/SdUndoRecordLinkSection.cpp \
-    objects/SdUndoRecordSymImp.cpp \
-    objects/SdUndoRecordPartImp.cpp \
     windows/SdPropBarWire.cpp \
     windows/SdDNetUnion.cpp \
     objects/SdGraphTraced.cpp \
@@ -299,8 +293,6 @@ SOURCES += \
     windows/SdDGetProjectObject.cpp \
     windows/SdWEditorGraphView.cpp \
     objects/SdGraphLinearArc.cpp \
-    objects/SdUndoRecordPropLineRect2Int.cpp \
-    objects/SdUndoRecordPropLineAnd3Points.cpp \
     modes/SdModeCLinearArc.cpp \
     modes/SdModeWireDisconnect.cpp \
     windows/SdDGetBus.cpp \
@@ -317,13 +309,10 @@ SOURCES += \
     windows/SdDRegistation.cpp \
     objects/SdPasCadImport.cpp \
     objects/SdSymImpPin.cpp \
-    objects/SdUndoRecordSymImpPins.cpp \
-    objects/SdUndoRecordPartImpPins.cpp \
     windows/SdDGrid.cpp \
     windows/SdDLayers.cpp \
     windows/SdDLayerList.cpp \
     windows/SdDLayerCreate.cpp \
-    objects/SdPropAngle.cpp \
     objects/SdUndoRecordBegin.cpp \
     library/SdLibraryStorage.cpp \
     objects/SdUndoRecordStringMapItem.cpp \
@@ -346,7 +335,6 @@ SOURCES += \
     modes/SdModeCRoadEnter.cpp \
     windows/SdPropBarRoad.cpp \
     windows/SdPropBarStratum.cpp \
-    objects/SdPropInt.cpp \
     objects/SdPlateNetList.cpp \
     objects/SdUtil.cpp \
     windows/SdPNewProjectItem_Master.cpp \
@@ -516,9 +504,11 @@ HEADERS  += \
     objects/SdGraphScriptRefMap.h \
     objects/SdJsonIO.h \
     objects/SdPartImpRelativePosition.h \
-    objects/SdPropMulty.h \
-    objects/SdPropStratum.h \
-    objects/SdStratum.h \
+    objects/SdPvAngle.h \
+    objects/SdPvInt.h \
+    objects/SdPvMulty.h \
+    objects/SdPvStratum.h \
+    objects/SdPvString.h \
     script/SdScriptOperator.h \
     script/SdScriptOperatorAssign.h \
     script/SdScriptOperatorBlock.h \
@@ -723,7 +713,6 @@ HEADERS  += \
     objects/SdGraph.h \
     objects/SdGraphLinear.h \
     objects/SdPropLine.h \
-    objects/SdPropInt.h \
     objects/SdPropLayer.h \
     objects/SdGraphLinearLine.h \
     objects/SdSelector.h \
@@ -753,14 +742,11 @@ HEADERS  += \
     modes/SdModeCText.h \
     objects/SdGraphText.h \
     objects/SdConverterText.h \
-    objects/SdUndoRecordPropTextAndText.h \
     modes/SdModeCTextual.h \
     windows/SdWLabel.h \
     objects/SdGraphLinearCircle.h \
-    objects/SdUndoRecordPropLinePointInt.h \
     objects/SdGraphLinearCircleFilled.h \
     objects/SdGraphLinearRegion.h \
-    objects/SdUndoRecordPropLineAndPointsList.h \
     objects/SdGraphSymPin.h \
     objects/SdGraphPartPin.h \
     objects/SdGraphSymImp.h \
@@ -769,17 +755,14 @@ HEADERS  += \
     objects/SdPItemSymbol.h \
     objects/SdPItemComponent.h \
     objects/SdSection.h \
-    objects/SdPropString.h \
     modes/SdModeView.h \
     objects/SdPartVariant.h \
-    objects/SdUndoRecordPropSymPin.h \
     modes/SdModeCSymPin.h \
     windows/SdPropBarSymPin.h \
     modes/SdModeCOrigin.h \
     windows/SdWEditorComponent.h \
     objects/SdPItemSheet.h \
     objects/SdPItemPlate.h \
-    objects/SdUndoRecordPropPartPin.h \
     modes/SdModeCPartPin.h \
     windows/SdPropBarPartPin.h \
     modes/SdModeCOriginPart.h \
@@ -790,12 +773,9 @@ HEADERS  += \
     windows/SdPropBarSymImp.h \
     objects/SdUndoRecordSymImpPin.h \
     objects/SdGraphArea.h \
-    objects/SdUndoRecordPlatePointer.h \
     objects/SdGraphIdent.h \
     modes/SdModeCIdent.h \
     objects/SdUndoRecordLinkSection.h \
-    objects/SdUndoRecordSymImp.h \
-    objects/SdUndoRecordPartImp.h \
     windows/SdPropBarWire.h \
     windows/SdDNetUnion.h \
     objects/SdGraphTraced.h \
@@ -807,8 +787,6 @@ HEADERS  += \
     windows/SdDGetProjectObject.h \
     windows/SdWEditorGraphView.h \
     objects/SdGraphLinearArc.h \
-    objects/SdUndoRecordPropLineRect2Int.h \
-    objects/SdUndoRecordPropLineAnd3Points.h \
     modes/SdModeCLinearArc.h \
     modes/SdModeWireDisconnect.h \
     windows/SdDGetBus.h \
@@ -825,13 +803,10 @@ HEADERS  += \
     windows/SdDRegistation.h \
     objects/SdPasCadImport.h \
     objects/SdSymImpPin.h \
-    objects/SdUndoRecordSymImpPins.h \
-    objects/SdUndoRecordPartImpPins.h \
     windows/SdDGrid.h \
     windows/SdDLayers.h \
     windows/SdDLayerList.h \
     windows/SdDLayerCreate.h \
-    objects/SdPropAngle.h \
     library/SdLibraryReference.h \
     library/SdLibraryStorage.h \
     library/SdLibraryHeader.h \

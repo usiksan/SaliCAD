@@ -393,7 +393,7 @@ void SdEnvir::defaultEnvir()
 SdLayer *SdEnvir::layerGet(QString id)
   {
   if( id.isEmpty() )
-    return layerGet( LID0_COMMON );
+    return layerGet( LID0_INVISIBLE );
 
   if( !mLayerTable.contains(id) ) {
     //Not exist. Create new one.

@@ -96,7 +96,7 @@ bool SdPExportPlate_Assembler::validatePage()
             //Part name
             os.append( part->partTitle() ).append( delim );
             //Angle
-            SdPropAngle angle = part->angle();
+            SdPvAngle angle = part->angle();
             if( doBottom ) angle += 180000;
             os.append( QString("%1%2").arg( angle ).arg(delim) );
             //Position

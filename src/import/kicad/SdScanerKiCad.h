@@ -11,9 +11,9 @@ class SdProject;
 class SdPItemPart;
 class SdProjectItem;
 class SdPoint;
-class SdPropInt;
+class SdPvInt;
 class SdPropLayer;
-class SdPropLine;
+struct SdPropLine;
 
 class SdScanerKiCad;
 

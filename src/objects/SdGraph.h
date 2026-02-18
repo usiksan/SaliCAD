@@ -19,6 +19,7 @@ Description
 #include "SdPoint.h"
 #include "SdRect.h"
 #include "SdPropSelected.h"
+#include "3dr/Sd3drFace.h"
 
 #include <QOpenGLFunctions_2_0>
 
@@ -43,10 +44,8 @@ class SdGraph : public SdObject
     virtual void   saveState( SdUndo *undo );
     virtual void   moveComplete( SdPoint grid, SdUndo *undo );
 
-    //Изменение перемещением
-    virtual void   move( SdPoint offset );
-    virtual void   rotate( SdPoint center, SdPropAngle angle );
-    virtual void   mirror( SdPoint a, SdPoint b );
+    //Изменение перемещением, вращением, зеркальностью и др.
+    virtual void   transform( const QTransform &map, SdPvAngle angle );
 
     //Изменение свойствами
     virtual void   setProp( SdPropSelected &prop );
@@ -93,7 +92,7 @@ class SdGraph : public SdObject
     //! \param stratum    Stratum for layers
     //! \param map        Map for holes conversion
     //!
-    virtual void   accumHoles( Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map ) const;
+    virtual void   accumHoles( Sd3drModel &model, Sd3drFaceList &faceList, SdPvStratum stratum, const QMatrix4x4 &map ) const;
 
     //Get object state behind cursor
     //!

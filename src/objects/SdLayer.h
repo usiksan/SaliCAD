@@ -17,7 +17,7 @@ Description
 #define SDLAYER_H
 
 #include "SdClass.h"
-#include "SdStratum.h"
+#include "SdPvStratum.h"
 
 #include <QString>
 #include <QColor>
@@ -137,21 +137,21 @@ enum SdLayerTrace {
 #define LID1_CUSTOM9       ".Custom9"     // User custom layer 9
 
 struct SdLayerDescr {
-  unsigned      mClass;    //!< Classes for defining layer membership
-  const char   *mId;       //!< Layer id
-  unsigned      mColor;    //!< Layer color
-  SdLayerTrace  mTrace;    //!< Layer trace type
-  int           mStratum;  //!< Layer stratum
+  unsigned        mClass;    //!< Classes for defining layer membership
+  const char     *mId;       //!< Layer id
+  unsigned        mColor;    //!< Layer color
+  SdLayerTrace    mTrace;    //!< Layer trace type
+  SdStratumValue  mStratum;  //!< Layer stratum
   };
 
 extern SdLayerDescr sdLayerDescrDefault[];
 
 //Translation layer id to human visible name
 struct SdLayerLevel {
-    const char   *mLid;       //!< Level id LIDxxx
-    const char   *mTranslate; //!< Human visible name aka "Schematic net"
-    SdLayerTrace  mTrace;     //!< Layer trace type
-    unsigned      mStratum;   //!< Stratum for sublevel or class
+    const char     *mLid;       //!< Level id LIDxxx
+    const char     *mTranslate; //!< Human visible name aka "Schematic net"
+    SdLayerTrace    mTrace;     //!< Layer trace type
+    SdStratumValue  mStratum;   //!< Stratum for sublevel or class
 
     unsigned classId() const { return mStratum; }
   };
@@ -168,7 +168,7 @@ class SdLayer
     SdLayerState  mState;    //!< State (visible, editing, invisible)
     SdLayerTrace  mTrace;    //!< Layer trace type
     SdClass       mClass;    //!< Classes for defining layer membership
-    SdStratum     mStratum;  //!< Layer stratum [Позиция слоя при трассировке (верх, низ, внутри)]
+    SdPvStratum   mStratum;  //!< Layer stratum [Позиция слоя при трассировке (верх, низ, внутри)]
     unsigned      mColor;    //!< Layer color [Цвет]
     int           mIndex;    //!< Ordinal index for sorting
     SdLayer      *mPair;     //!< Layer pair for flipped component [Парный слой]
@@ -268,7 +268,7 @@ class SdLayer
     //! \brief stratum          Get layer stratum
     //! \return                 Layer stratum value
     //!
-    SdStratum    stratum() const { return mStratum; }
+    SdPvStratum  stratum() const { return mStratum; }
 
     //!
     //! \brief color            Get layer color as QColor

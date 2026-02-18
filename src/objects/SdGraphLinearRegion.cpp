@@ -86,28 +86,16 @@ void SdGraphLinearRegion::json(const SdJsonReader &js)
 
 
 
-
-void SdGraphLinearRegion::move(SdPoint offset)
+void SdGraphLinearRegion::transform(const QTransform &map, SdPvAngle)
   {
-  mList.move( mFlyIndex, offset );
+  if( map.isTranslating() )
+    mList.transform( mFlyIndex, map );
+  else
+    mList.transform( map );
   }
 
 
 
-
-
-void SdGraphLinearRegion::rotate(SdPoint center, SdPropAngle angle)
-  {
-  mList.rotate( center, angle );
-  }
-
-
-
-
-void SdGraphLinearRegion::mirror(SdPoint a, SdPoint b)
-  {
-  mList.mirror( a, b );
-  }
 
 
 
@@ -190,7 +178,7 @@ void SdGraphLinearRegion::draw(SdContext *dc)
 //! \param stratum    Stratum for layers
 //! \param map        Map for holes conversion
 //!
-void SdGraphLinearRegion::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdPropStratum stratum, const QMatrix4x4 &map) const
+void SdGraphLinearRegion::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdPvStratum stratum, const QMatrix4x4 &map) const
   {
   Q_UNUSED(stratum)
   Sd3drFace face;
@@ -236,7 +224,7 @@ int SdGraphLinearRegion::behindCursor(SdPoint p)
 void SdGraphLinearRegion::saveState(SdUndo *undo)
   {
   if( undo )
-    undo->propLinePointTable( &mProp, &mList );
+    undo->prop( &mProp, &mList );
   }
 
 

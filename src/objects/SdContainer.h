@@ -18,6 +18,9 @@ Description
 #define SDCONTAINER_H
 
 #include "SdObject.h"
+#include "SdPoint.h"
+#include "library/SdStringMap.h"
+
 #include <QList>
 #include <QMap>
 #include <functional>
@@ -25,7 +28,6 @@ Description
 class SdContext;
 
 using SdObjectPtrList = QList<SdObjectPtr>;
-using SdStringMap = QMap<QString,QString>;
 
 class SdContainer : public SdObject
   {

@@ -14,8 +14,9 @@ Description
 #ifndef SDLINEPROP_H
 #define SDLINEPROP_H
 
-#include "SdPropInt.h"
+#include "SdPvInt.h"
 #include "SdPropLayer.h"
+#include "SdPvMulty.h"
 
 //Line types
 #define dltSolid  0 //Solid line _______
@@ -28,8 +29,8 @@ Description
 //!        Combines width, type, and layer properties with JSON serialization
 //!
 struct SdPropLine {
-  SdPropInt   mWidth; //!< Line width property in logical units
-  SdPropInt   mType;  //!< Line type property (solid, dashed, dotted, etc.)
+  SdPvInt   mWidth; //!< Line width property in logical units
+  SdPvInt   mType;  //!< Line type property (solid, dashed, dotted, etc.)
   SdPropLayer mLayer; //!< Layer property where line is drawn
 
   //!
@@ -80,5 +81,9 @@ struct SdPropLine {
   //!
   void swap( SdPropLine &other );
   };
+
+
+using SdPropComposerLine = SdPropComposer<SdPropLine, &SdPropLine::mLayer, &SdPropLine::mType, &SdPropLine::mWidth>;
+
 
 #endif // SDLINEPROP_H

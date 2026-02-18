@@ -14,14 +14,16 @@ Description
 #include "SdPoint.h"
 #include "SdProp.h"
 #include "SdSegment.h"
+
+#include <QTransform>
 #include <math.h>
 //#include <boost/geometry/geometry.hpp>
 
 
-void SdPoint::rotate(SdPoint origin, SdPropAngle angle)
+void SdPoint::rotate(SdPoint origin, SdPvAngle angle)
   {
   SdPoint p;
-  switch( angle.mValue ) {
+  switch( angle.positive() ) {
     case da0   :
       p.setX( x() - origin.x() );
       p.setY( y() - origin.y() );
@@ -40,6 +42,7 @@ void SdPoint::rotate(SdPoint origin, SdPropAngle angle)
       break;
     default :
       //Move to zero point origin
+      //QTransform t;
       double dx = x() - origin.x(), dy = y() - origin.y();
       double sinAngle = sin((M_PI / 180.0) * angle.getDegree()), cosAngle = cos((M_PI / 180.0) * angle.getDegree());
       setX( static_cast<int>(origin.x() + dx*cosAngle - dy*sinAngle) );
@@ -70,7 +73,7 @@ void SdPoint::mirror(SdPoint a, SdPoint b)
   //Переносим
   move( a.complement() );
   //Поворачиваем
-  SdPropAngle ang = b.getAngle(a);
+  SdPvAngle ang = b.getAngle(a);
   rotate( SdPoint(), ang.complement() );
   //Зеркализация
   setY( -y() );
@@ -117,9 +120,9 @@ void SdPoint::moveOriented( int dx, int dy, SdOrientation orient)
 
 
 
-SdPropAngle SdPoint::getAngle(SdPoint center) const
+SdPvAngle SdPoint::getAngle(SdPoint center) const
   {
-  return SdPropAngle( static_cast<int>(getAngleDegree(center) * 1000.0) );
+  return SdPvAngle( static_cast<int>(getAngleDegree(center) * 1000.0) );
   }
 
 
@@ -165,25 +168,6 @@ double SdPoint::getSquareDistance(SdPoint p) const
 
 
 
-SdPoint::CLS SdPoint::classify(SdPoint p0, SdPoint p1) const
-  {
-  QPointF a(p1 - p0);
-  QPointF b( *this - p0);
-  double sa = a.x() * b.y() - b.x() * a.y();
-  if( sa > 0.0 )
-    return LEFT;
-  if( sa < 0.0 )
-    return RIGHT;
-  if( isEqual( p0 ) )
-    return ORIGIN;
-  if( isEqual( p1 ) )
-    return DESTINATION;
-  if( (a.x() * b.x() < 0.0) || (a.y() * b.y() < 0.0) )
-    return BEHIND;
-  if( sqrt(a.x()*a.x() + a.y() * a.y()) < sqrt(a.x()*a.x() + a.y() * a.y()) )
-    return BEYOND;
-  return BETWEEN;
-  }
 
 
 
@@ -198,7 +182,7 @@ double SdPoint::getLenght() const
 
 
 
-SdPoint SdPoint::convertImplement(SdPoint origin, SdPoint offset, SdPropAngle angle, bool mirror)
+SdPoint SdPoint::convertImplement(SdPoint origin, SdPoint offset, SdPvAngle angle, bool mirror)
   {
   //Образовать точку и перенести начало координат в origin
   SdPoint p(x()-origin.x(),y()-origin.y());
@@ -213,7 +197,7 @@ SdPoint SdPoint::convertImplement(SdPoint origin, SdPoint offset, SdPropAngle an
 
 
 
-SdPoint SdPoint::unConvertImplement(SdPoint origin, SdPoint offset, SdPropAngle angle, bool mirror)
+SdPoint SdPoint::unConvertImplement(SdPoint origin, SdPoint offset, SdPvAngle angle, bool mirror)
   {
   //Образовать точку и перенести начало координат в offset
   SdPoint p(x()-offset.x(),y()-offset.y());
@@ -248,9 +232,9 @@ bool SdPoint::isOnArc(SdPoint center, SdPoint start, SdPoint stop, int delta) co
   {
   if( isOnCircle( center, center.getDistanceInt(start), delta )  ) {
     //Расстояние отсюда до центра дуги равно радиусу дуги, проверяем дальше
-    SdPropAngle anStart = start.getAngle(center);
-    SdPropAngle anStop  = stop.getAngle(center);
-    SdPropAngle cur     = getAngle(center);
+    SdPvAngle anStart = start.getAngle(center);
+    SdPvAngle anStop  = stop.getAngle(center);
+    SdPvAngle cur     = getAngle(center);
     return cur - anStart < anStop - anStart;
     }
   return false;
@@ -342,7 +326,7 @@ void SdPoint::json(const SvJsonReader &js)
 
 
 
-SdPropAngle calcDirection90( SdPoint a, SdPoint b ) {
+SdPvAngle calcDirection90( SdPoint a, SdPoint b ) {
   if( abs(b.x() - a.x()) > abs(b.y() - a.y()) )
     //Приоритетная ось X
     return b.x() > a.x() ? da0 : da180;

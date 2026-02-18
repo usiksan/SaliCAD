@@ -196,17 +196,22 @@ void SdGraphScript::json(const SdJsonReader &js)
 void SdGraphScript::saveState(SdUndo *undo)
   {
   if( undo )
-    undo->propTextAndText( &mProp, &mOrigin, &mOverRect, &mScript );
+    undo->prop( &mProp, &mOrigin, &mOverRect, &mScript );
   }
 
 
 
 
-void SdGraphScript::move(SdPoint offset)
+
+void SdGraphScript::transform(const QTransform &map, SdPvAngle)
   {
-  mOrigin.move( offset );
-  mOverRect.move( offset );
+  if( map.isTranslating() ) {
+    mOrigin   = map.map(mOrigin);
+    mOverRect = map.mapRect( mOverRect );
+    }
   }
+
+
 
 
 

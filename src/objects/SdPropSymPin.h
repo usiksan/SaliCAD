@@ -16,7 +16,7 @@ Description
 #define SDSYMPINPROP_H
 
 #include "SdPropLayer.h"
-#include "SdPropInt.h"
+#include "SdPvInt.h"
 
 
 
@@ -27,7 +27,7 @@ Description
 struct SdPropSymPin
   {
     SdPropLayer mLayer;   //!< Layer where pin is placed [Слой размещения вывода]
-    SdPropInt   mPinType; //!< Pin type for electrical modeling [Тип вывода для моделирования]
+    SdPvInt   mPinType; //!< Pin type for electrical modeling [Тип вывода для моделирования]
 
     //!
     //! \brief json Function to write object content into json writer

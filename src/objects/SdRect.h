@@ -56,7 +56,7 @@ class SdRect : public QRect
     void        grow( const SdRect &rect );
     void        move( SdPoint offset ) { translate( offset ); }
     void        mirror( SdPoint origin );
-    void        rotate( SdPoint origin, SdPropAngle angle );
+    void        rotate( SdPoint origin, SdPvAngle angle );
 
     //Test if point inside rectangle or on its border
     bool        isPointInside( const SdPoint point ) const;

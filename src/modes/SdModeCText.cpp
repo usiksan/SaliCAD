@@ -61,7 +61,6 @@ void SdModeCText::enterPoint(SdPoint enter)
     //It's edit or enter new text [Определим цикл ввода или редактирования]
     mIdAffected = 0;
     mPicAffected = nullptr;
-    mEditText.clear();
     mObject->forEach( dctAll, [=]( SdObject *obj ) {
       SdGraph *graph = dynamic_cast<SdGraph*>( obj );
       if( graph ) {
