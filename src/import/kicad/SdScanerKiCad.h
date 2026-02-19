@@ -12,7 +12,7 @@ class SdPItemPart;
 class SdProjectItem;
 class SdPoint;
 class SdPvInt;
-class SdPropLayer;
+class SdPvLayer;
 struct SdPropLine;
 
 class SdScanerKiCad;

@@ -15,7 +15,7 @@ Description
 #define SDLINEPROP_H
 
 #include "SdPvInt.h"
-#include "SdPropLayer.h"
+#include "SdPvLayer.h"
 #include "SdPvMulty.h"
 
 //Line types
@@ -31,7 +31,7 @@ Description
 struct SdPropLine {
   SdPvInt     mWidth; //!< Line width property in logical units
   SdPvInt     mType;  //!< Line type property (solid, dashed, dotted, etc.)
-  SdPropLayer mLayer; //!< Layer property where line is drawn
+  SdPvLayer mLayer; //!< Layer property where line is drawn
 
   //!
   //! \brief SdPropLine Default constructor

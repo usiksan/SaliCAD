@@ -232,10 +232,7 @@ bool SdPoint::isOnArc(SdPoint center, SdPoint start, SdPoint stop, int delta) co
   {
   if( isOnCircle( center, center.getDistanceInt(start), delta )  ) {
     //Расстояние отсюда до центра дуги равно радиусу дуги, проверяем дальше
-    SdPvAngle anStart = start.getAngle(center);
-    SdPvAngle anStop  = stop.getAngle(center);
-    SdPvAngle cur     = getAngle(center);
-    return cur - anStart < anStop - anStart;
+    return angleVector( start, center, stop ) >= angleVector( start, center, *this );
     }
   return false;
   }

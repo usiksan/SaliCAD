@@ -108,7 +108,7 @@ int SdPropSelected::getPropBarId()
 //properties bar will be only for one class of objects. But layer
 //must be changed for all selected objects
 //With this function we change layer for all properties group
-void SdPropSelected::setLayer(const SdPropLayer &layer)
+void SdPropSelected::setLayer(const SdPvLayer &layer)
   {
   mLineProp.get<&SdPropLine::mLayer>().reset( layer );       //Properties for linear objects
   mTextProp.get<&SdPropText::mLayer>().reset( layer );       //Properties for textual objects
@@ -124,7 +124,7 @@ void SdPropSelected::setLayer(const SdPropLayer &layer)
 //in different preperties group. With this we union all this group
 void SdPropSelected::unionLayer()
   {
-  SdPvMulty<SdPropLayer> layer;
+  SdPvMulty<SdPvLayer> layer;
   layer.clear();
   layer.append( mLineProp.get<&SdPropLine::mLayer>() );
   layer.append( mTextProp.get<&SdPropText::mLayer>() );

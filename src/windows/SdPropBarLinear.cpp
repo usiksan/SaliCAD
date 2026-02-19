@@ -158,7 +158,7 @@ void SdPropBarLinear::setPropLine(SdProjectItem *pitem, const SdPropComposerLine
 
   //line type
   if( propLine.get<&SdPropLine::mType>().isSingle() )
-    setLineType( propLine.get<&SdPropLine::mType>().value().mValue );
+    setLineType( propLine.get<&SdPropLine::mType>().value().value() );
   else
     setLineType( -1 );
   }
@@ -172,7 +172,7 @@ void SdPropBarLinear::getPropLine(SdPropComposerLine &propLine, int *enterType)
   //Store layer if setted
   SdLayer *layer = getSelectedLayer();
   if( layer )
-    propLine.get<&SdPropLine::mLayer>().reset( SdPropLayer(layer) );
+    propLine.get<&SdPropLine::mLayer>().reset( SdPvLayer(layer) );
 
   //Store width if setted
   if( !mWidth->currentText().isEmpty() )

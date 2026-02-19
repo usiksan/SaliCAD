@@ -15,7 +15,7 @@ Description
 #ifndef SDPARTPINPROP_H
 #define SDPARTPINPROP_H
 
-#include "SdPropLayer.h"
+#include "SdPvLayer.h"
 #include "SdPvInt.h"
 #include "SdPvString.h"
 #include "SdPvStratum.h"
@@ -27,7 +27,7 @@ Description
 //!
 struct SdPropPartPin
   {
-    SdPropLayer   mLayer;   //!< Pin layer [Слой вывода]
+    SdPvLayer   mLayer;   //!< Pin layer [Слой вывода]
     SdPvStratum mSide;    //!< Side of pin location [Сторона расположения вывода]
     SdPvString  mPinType; //!< Pin type for pad association [Тип вывода для привязки контактной площадки]
 

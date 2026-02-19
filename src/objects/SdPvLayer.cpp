@@ -11,27 +11,27 @@ Web
 Description
   Layer property
 */
-#include "SdPropLayer.h"
+#include "SdPvLayer.h"
 #include "SdEnvir.h"
 #include "SdJsonIO.h"
 
 
 
 //!
-//! \brief SdPropLayer Constructor with layer identifier
+//! \brief SdPvLayer Constructor with layer identifier
 //! \param id Layer identifier string to find and set the layer
 //!
-SdPropLayer::SdPropLayer(QString id) :
-  mLayer( SdEnvir::instance()->layerGet(id) )
+SdPvLayer::SdPvLayer(QString id) :
+  SdPv<SdLayerPtr,SdPvLayer>( SdEnvir::instance()->layerGet(id) )
   {
 
   }
 
-SdPropLayer::SdPropLayer(SdLayer *layer) :
-  mLayer(layer)
+SdPvLayer::SdPvLayer(SdLayer *layer) :
+  SdPv<SdLayerPtr,SdPvLayer>(layer)
   {
-  if( mLayer == nullptr )
-    mLayer = SdEnvir::instance()->layerGet(LID0_INVISIBLE);
+  if( mValue == nullptr )
+    mValue = SdEnvir::instance()->layerGet(LID0_INVISIBLE);
   }
 
 
@@ -42,7 +42,7 @@ SdPropLayer::SdPropLayer(SdLayer *layer) :
 //! \param otherSide If true, check paired layer for flipped components
 //! \return True if layer (or its pair) is visible
 //!
-bool SdPropLayer::isVisible(bool otherSide) const
+bool SdPvLayer::isVisible(bool otherSide) const
   {
   SdLayer *lay = layer( otherSide );
   if( lay )
@@ -57,7 +57,7 @@ bool SdPropLayer::isVisible(bool otherSide) const
 //! \brief isEdited Check if layer is in edit mode
 //! \return True if layer is currently editable
 //!
-bool SdPropLayer::isEdited() const
+bool SdPvLayer::isEdited() const
   {
   SdLayer *lay = layer( false );
   if( lay )
@@ -71,9 +71,9 @@ bool SdPropLayer::isEdited() const
 //! \brief set Set layer by identifier
 //! \param id Layer identifier string to find and set
 //!
-void SdPropLayer::set(const QString id)
+void SdPvLayer::set(const QString id)
   {
-  mLayer = SdEnvir::instance()->layerGet( id.isEmpty() ? LID0_INVISIBLE : id );
+  mValue = SdEnvir::instance()->layerGet( id.isEmpty() ? LID0_INVISIBLE : id );
   }
 
 
@@ -85,10 +85,10 @@ void SdPropLayer::set(const QString id)
 //! \param otherSide If true, return paired layer for flipped components
 //! \return Pointer to SdLayer object
 //!
-SdLayer *SdPropLayer::layer(bool otherSide) const
+SdLayer *SdPvLayer::layer(bool otherSide) const
   {
-  if( otherSide ) return mLayer->pair();
-  return mLayer;
+  if( otherSide ) return mValue->pair();
+  return mValue;
   }
 
 
@@ -100,10 +100,10 @@ SdLayer *SdPropLayer::layer(bool otherSide) const
 //!
 //! \brief setLayerUsage Mark layer as used (sets usage flag)
 //!
-void SdPropLayer::setLayerUsage() const
+void SdPvLayer::setLayerUsage() const
   {
-  mLayer->setUsage();
-  mLayer->pair()->setUsage();
+  mValue->setUsage();
+  mValue->pair()->setUsage();
   }
 
 
@@ -116,9 +116,9 @@ void SdPropLayer::setLayerUsage() const
 //! \param name JSON key name
 //! \param js   JSON reader object
 //!
-void SdPropLayer::json(const QString name, const SdJsonReader &js)
+void SdPvLayer::json(const QString name, const SdJsonReader &js)
   {
-  mLayer = SdEnvir::instance()->layerGet( js.object().value(name).toString() );
+  mValue = SdEnvir::instance()->layerGet( js.object().value(name).toString() );
   }
 
 

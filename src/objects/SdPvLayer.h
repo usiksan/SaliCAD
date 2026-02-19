@@ -11,31 +11,29 @@ Web
 Description
   Layer property
 */
-#ifndef SDPROPLAYER_H
-#define SDPROPLAYER_H
+#ifndef SDPVLAYER_H
+#define SDPVLAYER_H
 
 #include "SdLayer.h"
 #include "SdJsonIO.h"
+#include "objects/SdPv.h"
+
 #include <QString>
 
 //!
-//! \brief The SdPropLayer class - Property class for managing PCB layer references
+//! \brief The SdPvLayer class - Property class for managing PCB layer references
 //!        Handles layer visibility, editing state, and JSON serialization
 //!
-class SdPropLayer
+class SdPvLayer : public SdPv<SdLayerPtr,SdPvLayer>
   {
-    SdLayer *mLayer;            //!< Pointer to the associated SdLayer object
-
   public:
     //!
-    //! \brief SdPropLayer Constructor with layer identifier
+    //! \brief SdPvLayer Constructor with layer identifier
     //! \param id Layer identifier string to find and set the layer
     //!
-    SdPropLayer( QString id = QString{} );
+    SdPvLayer( QString id = QString{} );
 
-    SdPropLayer( SdLayer *layer );
-
-    bool       operator != ( const SdPropLayer &v ) const { return mLayer != v.mLayer; }
+    SdPvLayer( SdLayer *layer );
 
     //!
     //! \brief isVisible Check if layer is visible
@@ -73,7 +71,7 @@ class SdPropLayer
     //! \param name JSON key name
     //! \param js   JSON writer object
     //!
-    void       json( const QString name, SvJsonWriter &js ) const { js.jsonString( name, mLayer->id() ); }
+    void       json( const QString name, SvJsonWriter &js ) const { js.jsonString( name, mValue->id() ); }
 
     //!
     //! \brief json Read layer property from JSON reader
@@ -82,12 +80,7 @@ class SdPropLayer
     //!
     void       json( const QString name, const SdJsonReader &js );
 
-    //!
-    //! \brief swap Swap layer references with another SdPropLayer instance
-    //! \param other Other layer property to swap with
-    //!
-    void       swap( SdPropLayer &other ) { qSwap( mLayer, other.mLayer ); }
   };
 
 
-#endif // SDPROPLAYER_H
+#endif // SDPVLAYER_H

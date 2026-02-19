@@ -15,60 +15,42 @@ Description
 #define SDPVSTRING_H
 
 #include "SvLib/SvJsonIO.h"
+#include "objects/SdPv.h"
 
 #include <QString>
 
-template<typename SdPv>
-class SdPvBase
-  {
-    SdPv mValue;
-  public:
-    bool isEqual( const SdPvBase<SdPv> &other ) const { return mValue == other.mValue; }
-
-    bool operator == ( const SdPvBase<SdPv> &other ) const { return isEqual(other); }
-
-    bool operator != ( const SdPvBase<SdPv> &other ) const { return !isEqual(other); }
-  };
 
 //!
 //! \brief The SdPvString struct - Simple string property wrapper with JSON serialization
 //!        Provides basic string storage with swap and JSON I/O functionality
 //!
-class SdPvString
+class SdPvString : public SdPv<QString,SdPvString>
   {
-    QString  mString;           //!< Stored string value
   public:
     //!
     //! \brief SdPvString Constructor with initial string value
     //! \param src Source string to initialize with
     //!
-    SdPvString( const QString &src = QString{} ) : mString(src) {}
+    SdPvString( const QString &src = QString{} ) : SdPv<QString,SdPvString>(src) {}
 
-    SdPvString( const char *str ) : mString(str) {}
+    SdPvString( const char *str ) : SdPv<QString,SdPvString>( QString(str) ) {}
 
-    QString    string() const { return mString; }
-
-    bool       operator != ( const SdPvString &other ) const { return mString != other.mString; }
+    QString    string() const { return mValue; }
 
     //!
     //! \brief json Write string property to JSON writer
     //! \param name JSON key name
     //! \param js   JSON writer object
     //!
-    void       json( const QString name, SvJsonWriter &js ) const { js.jsonString( name, mString ); }
+    void       json( const QString name, SvJsonWriter &js ) const { js.jsonString( name, mValue ); }
 
     //!
     //! \brief json Read string property from JSON reader
     //! \param name JSON key name
     //! \param js   JSON reader object
     //!
-    void       json( const QString name, const SvJsonReader &js ) { js.jsonString( name, mString ); }
+    void       json( const QString name, const SvJsonReader &js ) { js.jsonString( name, mValue ); }
 
-    //!
-    //! \brief swap Swap string values with another SdPropString instance
-    //! \param other Other string property to swap with
-    //!
-    void       swap( SdPvString &other ) { mString.swap( other.mString ); }
   };
 
 #endif // SDPVSTRING_H

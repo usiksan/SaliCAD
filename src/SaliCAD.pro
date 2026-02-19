@@ -119,6 +119,7 @@ SOURCES += \
     objects/SdPartImpRelativePosition.cpp \
     objects/SdPvAngle.cpp \
     objects/SdPvInt.cpp \
+    objects/SdPvLayer.cpp \
     objects/SdPvStratum.cpp \
     script/SdScriptOperatorBlock.cpp \
     script/SdScriptOperatorIf.cpp \
@@ -221,7 +222,6 @@ SOURCES += \
     objects/SdGraph.cpp \
     objects/SdGraphLinear.cpp \
     objects/SdPropLine.cpp \
-    objects/SdPropLayer.cpp \
     objects/SdGraphLinearLine.cpp \
     objects/SdSelector.cpp \
     windows/SdWEditorGraphPart.cpp \
@@ -504,8 +504,10 @@ HEADERS  += \
     objects/SdGraphScriptRefMap.h \
     objects/SdJsonIO.h \
     objects/SdPartImpRelativePosition.h \
+    objects/SdPv.h \
     objects/SdPvAngle.h \
     objects/SdPvInt.h \
+    objects/SdPvLayer.h \
     objects/SdPvMulty.h \
     objects/SdPvStratum.h \
     objects/SdPvString.h \
@@ -713,7 +715,6 @@ HEADERS  += \
     objects/SdGraph.h \
     objects/SdGraphLinear.h \
     objects/SdPropLine.h \
-    objects/SdPropLayer.h \
     objects/SdGraphLinearLine.h \
     objects/SdSelector.h \
     windows/SdWEditorGraphPart.h \

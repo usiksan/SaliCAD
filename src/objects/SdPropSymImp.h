@@ -18,6 +18,7 @@ Description
 #define SDSYMIMPPROP_H
 
 #include "SdPvAngle.h"
+#include "SdPvInt.h"
 
 
 //!

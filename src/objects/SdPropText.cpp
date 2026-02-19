@@ -29,10 +29,16 @@ void SdPropText::json(const QString prefix, SvJsonWriter &js) const
 
   //Convert attributes to string
   QString attr;
-  if( mDir == SdPvInt(da270) ) attr.append( QChar('3') );
-  else if( mDir == da90 ) attr.append( QChar('1') );
-  else if( mDir == da180 ) attr.append( QChar('2') );
+  if( mDir.isGrad270() ) attr.append( QChar('3') );
+  else if( mDir.isGrad90() ) attr.append( QChar('1') );
+  else if( mDir.isGrad180() ) attr.append( QChar('2') );
   else attr.append( QChar('0') );
+  /* else if( mDir.isGrad0() ) attr.append( QChar('0') );
+  else {
+    //Real angle
+    if( mDir.raw() >= 0 ) attr.append( QChar('+') );
+    attr.append( QString::number(mDir.raw()) );
+    }*/
 
   if( mMirror == 0 ) attr.append( QChar('S') );
   else attr.append( QChar('M') );

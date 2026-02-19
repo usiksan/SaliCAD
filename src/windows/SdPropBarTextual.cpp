@@ -226,7 +226,7 @@ void SdPropBarTextual::getPropText(SdPropComposerText &propText)
   //Get current layer
   SdLayer *layer = getSelectedLayer();
   if( layer )
-    propText.get<&SdPropText::mLayer>().reset( SdPropLayer(layer) );
+    propText.get<&SdPropText::mLayer>().reset( SdPvLayer(layer) );
 
   //Get current font
   int fontIndex = mFont->currentIndex();

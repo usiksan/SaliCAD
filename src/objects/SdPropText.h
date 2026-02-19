@@ -16,7 +16,7 @@ Description
 
 #include "SdPvInt.h"
 #include "SdPvAngle.h"
-#include "SdPropLayer.h"
+#include "SdPvLayer.h"
 #include "SdPvMulty.h"
 
 //!
@@ -42,7 +42,7 @@ Description
 //!
 struct SdPropText
   {
-    SdPropLayer mLayer;  //!< Layer of text placement [Слой размещения текста]
+    SdPvLayer mLayer;  //!< Layer of text placement [Слой размещения текста]
     SdPvInt   mSize;   //!< Text size in logical units [Размер текста]
     SdPvAngle mDir;    //!< Text direction/rotation angle [Направление/угол поворота]
     SdPvInt   mFont;   //!< Font identifier [Идентификатор шрифта]

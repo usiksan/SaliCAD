@@ -17,6 +17,7 @@ Description
 
 #include "SdConfig.h"
 #include "SvLib/SvJsonIO.h"
+#include "objects/SdPv.h"
 
 #include <QString>
 #include <QDataStream>
@@ -87,13 +88,10 @@ Description
 using SdStratumValue = quint32;
 
 
-class SdPvStratum
+class SdPvStratum : public SdPv<SdStratumValue,SdPvStratum>
   {
-    SdStratumValue mValue;
   public:
-    SdPvStratum( SdStratumValue str = stmTop ) : mValue(str) {}
-
-    bool     operator != ( const SdPvStratum &v ) const { return mValue != v.mValue; }
+    SdPvStratum( SdStratumValue str = stmTop ) : SdPv<SdStratumValue,SdPvStratum>(str) {}
 
     bool     isEmpty() const { return mValue == 0; }
 
@@ -161,7 +159,6 @@ class SdPvStratum
 
     int         getStratumIndex() const;
 
-    void        swap( SdPvStratum &other ) { qSwap( mValue, other.mValue ); }
 
     //Get stratum index of first stratum in the stack
     static int         stratumIndex( SdPvStratum stratum );

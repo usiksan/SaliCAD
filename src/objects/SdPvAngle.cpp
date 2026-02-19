@@ -17,12 +17,6 @@ Description
 
 
 
-SdPvAngle::SdPvAngle(int sour)
-  {
-  mValue = norm(sour);
-  }
-
-
 
 
 //Разность между двумя углами (угол на который нужно повернуться, чтобы из данного угла получить целевой)
@@ -72,10 +66,3 @@ SdPvAngle SdPvAngle::fromString(const QString str)
   }
 
 
-int SdPvAngle::norm(int v)
-  {
-  v %= 360000;
-  if( v < -179999 ) v += 360000;
-  if( v > 180000 ) v -= 360000;
-  return v;
-  }

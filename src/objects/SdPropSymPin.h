@@ -15,7 +15,7 @@ Description
 #ifndef SDSYMPINPROP_H
 #define SDSYMPINPROP_H
 
-#include "SdPropLayer.h"
+#include "SdPvLayer.h"
 #include "SdPvInt.h"
 
 
@@ -26,7 +26,7 @@ Description
 //!
 struct SdPropSymPin
   {
-    SdPropLayer mLayer;   //!< Layer where pin is placed [Слой размещения вывода]
+    SdPvLayer mLayer;   //!< Layer where pin is placed [Слой размещения вывода]
     SdPvInt   mPinType; //!< Pin type for electrical modeling [Тип вывода для моделирования]
 
     //!

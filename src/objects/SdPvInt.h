@@ -15,24 +15,18 @@ Description
 #ifndef SDPVINT_H
 #define SDPVINT_H
 
+#include "objects/SdPv.h"
 #include "SvLib/SvJsonIO.h"
 
 //!
 //! \brief The SdPvInt struct - Integer property with conversion between logical and physical values
 //!        Provides JSON serialization and physical value conversion (e.g., for distances, sizes)
 //!
-class SdPvInt
+class SdPvInt : public SdPv<int,SdPvInt>
   {
-  protected:
-    int mValue; //!< Stored integer value in logical units
   public:
-    SdPvInt( int v = 0 ) : mValue(v) {}
-    SdPvInt( const QString &src, double ppm ) { setFromPhis( src, ppm ); }
-
-    int        value() const { return mValue; }
-    //operator int() const { return mValue; }
-
-    bool       operator != ( const SdPvInt &v ) const { return mValue != v.mValue; }
+    SdPvInt( int v = 0 ) : SdPv<int,SdPvInt>(v) {}
+    SdPvInt( const QString &src, double ppm ) : SdPv<int,SdPvInt>(0) { setFromPhis( src, ppm ); }
 
     //!
     //! \brief log2Phis Convert logical value to physical string representation
@@ -63,11 +57,6 @@ class SdPvInt
     //!
     void       json( const QString key, const SvJsonReader &js ) { js.jsonInt( key, mValue ); }
 
-    //!
-    //! \brief swap Swap values with another SdPropInt instance
-    //! \param other Other integer property to swap with
-    //!
-    void       swap( SdPvInt &other ) { qSwap( mValue, other.mValue ); }
   };
 
 
