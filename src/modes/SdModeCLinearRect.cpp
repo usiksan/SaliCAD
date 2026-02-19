@@ -31,8 +31,8 @@ SdModeCLinearRect::SdModeCLinearRect(SdWEditorGraph *editor, SdProjectItem *obj)
 void SdModeCLinearRect::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sSecondCorner ) {
-    ctx->setPen( sdGlobalProp->propLine( mObject->getClass() )->mWidth.mValue, SdEnvir::instance()->getSysColor(scEnter),
-                 sdGlobalProp->propLine( mObject->getClass() )->mType.mValue );
+    ctx->setPen( sdGlobalProp->propLine( mObject->getClass() )->mWidth, SdEnvir::instance()->getSysColor(scEnter),
+                 sdGlobalProp->propLine( mObject->getClass() )->mType );
     ctx->rect( SdRect(mFirst,mPrevMove) );
     }
   if( SdEnvir::instance()->mIsSmart && mSmartType )
