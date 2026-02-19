@@ -29,21 +29,6 @@ SdQuadrangle::SdQuadrangle(int x, int y, int w, int h)
   set( SdRect(x,y,w,h) );
   }
 
-void SdQuadrangle::rotate(SdPoint center, SdPvAngle angle)
-  {
-  p1.rotate( center, angle );
-  p2.rotate( center, angle );
-  p3.rotate( center, angle );
-  p4.rotate( center, angle );
-  }
-
-void SdQuadrangle::move(SdPoint offset)
-  {
-  p1 += offset;
-  p2 += offset;
-  p3 += offset;
-  p4 += offset;
-  }
 
 void SdQuadrangle::set(SdRect r)
   {

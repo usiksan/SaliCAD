@@ -36,7 +36,6 @@ class SdPolyWindow
     SdPolyWindow();
 
     //From circle
-    SdPolyWindow( SdCircle circle, int gap );
     SdPolyWindow(SdPoint center, int rad );
 
     //From region
@@ -44,9 +43,6 @@ class SdPolyWindow
 
     //From rect
     SdPolyWindow( SdRect r, int gap );
-
-    //From road
-    SdPolyWindow( SdPoint a, SdPoint b, int gap );
 
     int         getRadius() const { return radius; }
     SdPoint     getP1() const { return p1; }

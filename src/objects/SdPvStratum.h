@@ -94,6 +94,8 @@ class SdPvStratum
 
     bool     operator != ( const SdPvStratum &v ) const { return mValue != v.mValue; }
 
+    bool     isEmpty() const { return mValue == 0; }
+
     //!
     //! \brief stratumBuild  Build stratum from one stratum to another
     //! \param from          Source stratum
@@ -165,6 +167,12 @@ class SdPvStratum
 
     //Build stratum stack with stratum count
     static SdPvStratum stratumStack( int stratumCount );
+
+    inline static SdPvStratum stratumTop() { return SdPvStratum(stmTop); }
+
+    inline static SdPvStratum stratumBot() { return SdPvStratum(stmBottom); }
+
+    inline static SdPvStratum stratumThrough() { return SdPvStratum(stmThrough); }
 
   };
 

@@ -13,6 +13,7 @@ Description
 */
 #include "SdUtil.h"
 #include <QDateTime>
+#include <QLineF>
 
 
 //Extract value from string
@@ -322,6 +323,230 @@ QPolygonF SdUtil::ellipse(QRect r, int sides)
     }
 
   return poly;
+  }
+
+
+
+
+
+QPointF SdUtil::normalize(const QPointF &v) {
+  double len = std::sqrt(v.x() * v.x() + v.y() * v.y());
+  if( len < EPSILON ) return QPointF(0, 0);
+  return QPointF(v.x() / len, v.y() / len);
+  }
+
+
+
+
+QPointF SdUtil::getEdgeNormal(const QPointF &p1, const QPointF &p2) {
+  QPointF edge = p2 - p1;
+  if( isZero(edge.x()) && isZero(edge.y()) ) {
+    return QPointF(0, 0);  // Ребро нулевой длины
+    }
+  return rotate90(normalize(edge));
+  }
+
+
+
+bool SdUtil::isCounterClockwise(const QPolygon &polygon) {
+  double area = 0;
+  int n = polygon.size();
+  for( int i = 0; i < n; ++i ) {
+    int j = (i + 1) % n;
+    area += double(polygon[i].x()) * double(polygon[j].y()) - double(polygon[j].x()) * double(polygon[i].y());
+    }
+  return area > 0;
+  }
+
+
+
+
+bool SdUtil::isPointBetween(const QPointF &p, const QPointF &a, const QPointF &b) {
+  if( !isZero((b.x() - a.x()) * (p.y() - a.y()) - (b.y() - a.y()) * (p.x() - a.x())) ) {
+    return false;  // Точка не на прямой
+    }
+
+  double dot = (p.x() - a.x()) * (b.x() - a.x()) + (p.y() - a.y()) * (b.y() - a.y());
+  if (dot < -EPSILON) return false;
+
+  double squaredLength = (b.x() - a.x()) * (b.x() - a.x()) + (b.y() - a.y()) * (b.y() - a.y());
+  if( isZero(squaredLength) ) return isEqual(p, a);
+
+  return dot <= squaredLength + EPSILON;
+  }
+
+
+
+
+
+double SdUtil::angleBetween(const QPointF &v1, const QPointF &v2) {
+  double dot = QPointF::dotProduct(v1, v2);
+  double len1 = std::sqrt(v1.x() * v1.x() + v1.y() * v1.y());
+  double len2 = std::sqrt(v2.x() * v2.x() + v2.y() * v2.y());
+
+  if( isZero(len1) || isZero(len2) ) return 0;
+
+  double cosAngle = dot / (len1 * len2);
+  cosAngle = std::max(-1.0, std::min(1.0, cosAngle));
+
+  return std::acos(cosAngle) * 180.0 / M_PI;
+  }
+
+
+
+
+QPolygonF SdUtil::equidistant(const QPolygon &src, double dist)
+  {
+  struct EdgeInfo
+    {
+      QPointF p1, p2;        // Исходные точки
+      QPointF op1, op2;      // Смещенные точки
+      bool isValid;           // Ребро валидно (ненулевой длины)
+      QPointF normal;         // Нормаль к ребру
+
+      EdgeInfo() : isValid(false) {}
+    };
+
+
+  // Пустой регион для неправильного полигона
+  if( src.size() < 3 ) return QPolygon{};
+
+  if( dist == 0 ) return src;
+
+  int n = src.size();
+
+  // Определяем направление смещения
+  bool isCCW = isCounterClockwise(src);
+  double sign = isCCW ? 1.0 : -1.0;
+
+  // Собираем информацию о ребрах, пропуская ребра нулевой длины
+  QVector<EdgeInfo> edges;
+  QVector<int> validIndices;  // Индексы вершин, где начинаются валидные ребра
+
+  for( int i = 0; i < n; ++i ) {
+    int next = (i + 1) % n;
+
+    EdgeInfo edge;
+    edge.p1 = src[i];
+    edge.p2 = src[next];
+
+    // Проверка на ребро нулевой длины
+    if( src[i] == src[next] ) {
+      edge.isValid = false;
+      }
+    else {
+      edge.isValid = true;
+      edge.normal = getEdgeNormal(edge.p1, edge.p2);
+      edge.op1 = edge.p1 + edge.normal * dist * sign;
+      edge.op2 = edge.p2 + edge.normal * dist * sign;
+      validIndices.append(i);
+      }
+
+    edges.append(edge);
+    }
+
+  // Если нет ни одного валидного ребра
+  if( validIndices.size() < 3 ) {
+    return QPolygon{};
+    }
+
+  QPolygonF result;
+
+  // Обрабатываем каждую валидную вершину (где сходятся два валидных ребра)
+  for(int i = 0; i < validIndices.size(); ++i) {
+    int currIdx = validIndices[i];
+    int prevIdx = validIndices[(i - 1 + validIndices.size()) % validIndices.size()];
+
+    // Проверяем, что ребра действительно смежные в исходном полигоне
+    // (между ними могут быть ребра нулевой длины)
+    bool areAdjacent = false;
+    int testIdx = prevIdx;
+    while(testIdx != currIdx) {
+      testIdx = (testIdx + 1) % n;
+      if(testIdx == currIdx) {
+        areAdjacent = true;
+        break;
+        }
+      if (edges[testIdx].isValid) {
+        break;  // Нашли другое валидное ребро - значит не смежные
+        }
+      }
+
+    if(!areAdjacent) {
+      continue;  // Пропускаем несмежные ребра
+      }
+
+    const EdgeInfo& edge1 = edges[prevIdx];
+    const EdgeInfo& edge2 = edges[currIdx];
+
+    // Проверка на угол 0 градусов между ребрами
+    QPointF v1 = normalize(edge1.p2 - edge1.p1);
+    QPointF v2 = normalize(edge2.p2 - edge2.p1);
+    double angle = angleBetween(v1, v2);
+
+    if(isZero(angle)) {
+      qDebug() << "Error: Zero angle between edges";
+      return QPolygon();  // Возвращаем пустой регион
+      }
+
+    QLineF line1(edge1.op1, edge1.op2);
+    QLineF line2(edge2.op1, edge2.op2);
+
+    QPointF intersection;
+    QLineF::IntersectType type = line1.intersects(line2, &intersection);
+
+    // Особый случай: угол 180 градусов (ребра образуют прямую линию)
+    if( isEqual(angle, 180.0) ) {
+      // Используем смещенную точку первого ребра
+      if( !result.isEmpty() && !isEqual(result.last(), edge1.op2) ) {
+        result.append(edge1.op2);
+        }
+      continue;
+      }
+
+    if(type == QLineF::NoIntersection) {
+      // Параллельные линии - проверяем особый случай offsetP1 == offsetP2
+      if(isEqual(edge1.op2, edge2.op1)) {
+        if(result.isEmpty() || !isEqual(result.last(), edge1.op2)) {
+          result.append(edge1.op2);
+          }
+        continue;
+        }
+
+      qDebug() << "Error: Parallel edges with no intersection";
+      return QPolygon();  // Возвращаем пустой регион
+      }
+
+    // Проверяем плохой случай: одна из смещенных точек лежит между соседним ребром и смещенным
+    QPointF testPoint = (type == QLineF::BoundedIntersection) ? intersection :
+                           (i == 0 ? edge1.op2 : edge2.op1);
+
+    // Проверяем для первого ребра
+    if( isPointBetween(edge1.op2, edge2.op1, edge2.op2) &&
+           !isEqual(edge1.op2, edge2.op1) && !isEqual(edge1.op2, edge2.op2)) {
+           qDebug() << "Error: Offset point lies between adjacent edge and its offset";
+           return QPolygon();
+      }
+
+    // Проверяем для второго ребра
+    if( isPointBetween(edge2.op1, edge1.op1, edge1.op2) &&
+           !isEqual(edge2.op1, edge1.op1) && !isEqual(edge2.op1, edge1.op2)) {
+           qDebug() << "Error: Offset point lies between adjacent edge and its offset";
+           return QPolygon();
+      }
+
+    // Добавляем точку пересечения
+    if( result.isEmpty() || !isEqual(result.last(), intersection) ) {
+      result.append(intersection);
+      }
+    }
+
+  // Замыкаем полигон если нужно
+  if (result.size() > 2 && !isEqual(result.first(), result.last())) {
+    result.append(result.first());
+    }
+
+  return result;
   }
 
 

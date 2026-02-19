@@ -25,6 +25,8 @@ Description
 class SdUtil
   {
   public:
+    inline static const double EPSILON = 1e-10;
+
     //Extract value from string
     static double    extractValueFromString( const QString str, int &start );
 
@@ -102,8 +104,35 @@ class SdUtil
     //!
     static QPolygonF ellipse(QRect r, int sides);
 
+    // Нормализация вектора
+    static QPointF   normalize(const QPointF& v);
+
+    // Получение нормали к ребру
+    static QPointF   getEdgeNormal(const QPointF& p1, const QPointF& p2);
+
+    // Определение ориентации полигона
+    static bool      isCounterClockwise(const QPolygon &polygon);
+
+    // Проверка, лежит ли точка между двумя другими на прямой
+    static bool      isPointBetween(const QPointF& p, const QPointF& a, const QPointF& b);
+
+    // Вычисление угла между векторами в градусах
+    static double    angleBetween(const QPointF& v1, const QPointF& v2);
+
+    static QPolygonF equidistant( const QPolygon &src, double gap );
+
     //Value limitation
     static int       iLimit( int val, int vmin, int vmax );
-  };
+
+    // Поворот вектора на 90 градусов против часовой стрелки
+    inline static QPointF rotate90(const QPointF& v) { return QPointF(-v.y(), v.x()); }
+
+    // Сравнение чисел с плавающей точкой
+    inline static bool    isZero(double val) { return qAbs(val) < EPSILON; }
+
+    inline static bool    isEqual(double a, double b) { return isZero(a - b); }
+
+    inline static bool    isEqual(const QPointF& p1, const QPointF& p2) { return isZero(p1.x() - p2.x()) && isZero(p1.y() - p2.y()); }
+    };
 
 #endif // SDUTIL_H

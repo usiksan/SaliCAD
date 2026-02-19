@@ -130,17 +130,15 @@ void SdContext::drawLineArrow(SdPoint p1, SdPoint p2, QColor color, int arrowSiz
   mPainter->setOpacity( 1.0 );
   mPainter->setPen( color );
   line(p1,p2);
-  SdPoint mp1 = mTransform.map(p1);
-  SdPoint mp2 = mTransform.map(p2);
-  //On point2 draw arrow with arrow size
-  SdPvAngle angle = mp1.getAngle( mp2 );
-  arrowSize = mScaler.phys2pixel(arrowSize);
-  SdPoint e1( mp2.x() + arrowSize, mp2.y() - arrowSize / 2 );
-  e1.rotate( mp2, angle );
-  SdPoint e2( mp2.x() + arrowSize, mp2.y() + arrowSize / 2 );
-  e2.rotate( mp2, angle );
-  mPainter->drawLine( e1.x(), e1.y(), mp2.x(), mp2.y() );
-  mPainter->drawLine( e2.x(), e2.y(), mp2.x(), mp2.y() );
+  double angle = SdPoint::angleVector( SdPoint(10,0), SdPoint{}, p1 );
+  SdPoint e1( arrowSize, -arrowSize / 3 );
+  SdPoint e2( arrowSize,  arrowSize / 3 );
+  QTransform map( QTransform::fromTranslate(p2.x(),p2.y()) );
+  map.rotate( angle );
+  e1 = map.map(e1);
+  e2 = map.map(e2);
+  line(p2,e1);
+  line(p2,e2);
   }
 
 
@@ -150,7 +148,7 @@ void SdContext::quadrangle(SdQuadrangle q, const SdPropLine &prop)
   {
   //Draw 4 edges
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
-    setPen( prop.mWidth, prop.mLayer.layer(), prop.mType );
+    setPen( prop.mWidth.value(), prop.mLayer.layer(), prop.mType.value() );
     line( q.p1, q.p2 );
     line( q.p2, q.p3 );
     line( q.p3, q.p4 );
@@ -371,7 +369,7 @@ void SdContext::text( SdPoint pos, SdRect &over, const QString str, const SdProp
   {
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
     setFont( prop );
-    textEx( pos, over, str, prop.mDir, prop.mHorz, prop.mVert );
+    textEx( pos, over, str, prop.mDir.value(), prop.mHorz.value(), prop.mVert.value() );
     }
   }
 
@@ -395,7 +393,7 @@ void SdContext::region( const SdPointList &points, const SdPropLine &prop, bool 
   {
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
     if( points.count() > 1 ) {
-      setPen( prop.mWidth, prop.mLayer.layer(), prop.mType );
+      setProp( prop );
       region( points, autoClose );
       }
     }
@@ -640,7 +638,7 @@ void SdContext::drawCursor(SdPoint p)
 
 
 
-void SdContext::setPen(int width, SdLayer *layer, int lineStyle )
+void SdContext::setPen(SdPvInt width, SdLayer *layer, SdPvInt lineStyle )
   {
   setPen( width, convertColor(layer), lineStyle );
   }
@@ -648,20 +646,20 @@ void SdContext::setPen(int width, SdLayer *layer, int lineStyle )
 
 
 
-void SdContext::setPen(int width, QColor color, int lineStyle)
+void SdContext::setPen(SdPvInt width, QColor color, SdPvInt lineStyle)
   {
   //Convert line styles
   Qt::PenStyle style;
-  if( lineStyle == dltDotted ) style = Qt::DotLine;
-  else if( lineStyle == dltDashed ) style = Qt::DashLine;
+  if( lineStyle.value() == dltDotted ) style = Qt::DotLine;
+  else if( lineStyle.value() == dltDashed ) style = Qt::DashLine;
   else style = Qt::SolidLine;
 
   int penWidthPix;
-  if( mZeroOn && width == 0 )
+  if( mZeroOn && width.value() == 0 )
     //When zero width line conversion is on, then draw zero line with setupped width
     penWidthPix = mZeroWidth;
   else
-    penWidthPix = mScaler.phys2pixel(width);
+    penWidthPix = mScaler.phys2pixel(width.value());
   if( mPainter->isActive() )
     mPainter->setPen( QPen( QBrush( color ), penWidthPix, style, Qt::RoundCap, Qt::RoundJoin ) );
   }
@@ -695,9 +693,9 @@ void SdContext::setProp( const SdPropLine &prop)
 
 void SdContext::setFont(const SdPropText &prop)
   {
-  QFont font( SdEnvir::instance()->getSysFont(prop.mFont) );
+  QFont font( SdEnvir::instance()->getSysFont(prop.mFont.value()) );
 //  font.setPixelSize( qMax(mScaler.phys2pixel(prop.mSize.getValue()), 5) );
-  font.setPixelSize( mScaler.phys2pixel(prop.mSize) );
+  font.setPixelSize( mScaler.phys2pixel(prop.mSize.value()) );
   mPainter->setPen( convertColor(prop.mLayer.layer()) );
   mPainter->setFont( font );
   }

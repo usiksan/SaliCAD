@@ -108,8 +108,8 @@ class SdContext {
     void            setShowFields( bool show = false ) { mShowFields = show; }
 
     //Draw prepare
-    void            setPen(int width, SdLayer *layer, int lineStyle);
-    virtual void    setPen(int width, QColor color, int lineStyle );
+    void            setPen(SdPvInt width, SdLayer *layer, SdPvInt lineStyle);
+    virtual void    setPen(SdPvInt width, QColor color, SdPvInt lineStyle );
     void            setBrush( QColor color );
     void            setProp(const SdPropLine &prop );
     void            setFont( const SdPropText &prop );

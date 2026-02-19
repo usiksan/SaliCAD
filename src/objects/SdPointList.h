@@ -44,6 +44,7 @@ class SdPointList : public QPolygon
     //! \param js   Json reader
     //!
     void       json( const QString &key, const SvJsonReader &js);
+
   };
 
 #endif // SDPOINTLIST_H

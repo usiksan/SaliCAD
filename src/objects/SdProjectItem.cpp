@@ -351,7 +351,8 @@ void SdProjectItem::draw3d(QOpenGLFunctions_2_0 *f)
 void SdProjectItem::insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo, SdSelector *dest, bool next)
   {
   SdCopyMapProject copyMap( getProject() );
-  sour->forEach( dctAll, [this, dest, undo, offset, next, &copyMap ] (SdGraph *obj) ->bool {
+  QTransform map( QTransform::fromTranslate(offset.x(),offset.y())  );
+  sour->forEach( dctAll, [this, dest, undo, map, next, &copyMap ] (SdGraph *obj) ->bool {
     if( obj != nullptr && (obj->getClass() & getAcceptedObjectsMask()) ) {
 
       if( obj->getClass() == dctIdent && findIdent() != nullptr )
@@ -364,7 +365,7 @@ void SdProjectItem::insertObjects(SdPoint offset, SdSelector *sour, SdUndo *undo
       SdGraph *cp = copyMap.copyClass<SdGraph>( obj, next );
       Q_ASSERT( cp != nullptr );
       cp->select( dest );
-      cp->move( offset );
+      cp->transform( map, SdPvAngle{} );
       insertChild( cp, undo );
       }
     return true;

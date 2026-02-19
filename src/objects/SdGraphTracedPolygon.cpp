@@ -150,19 +150,14 @@ void SdGraphTracedPolygon::moveComplete(SdPoint grid, SdUndo *undo)
 
 
 
-
-void SdGraphTracedPolygon::move(SdPoint offset)
+void SdGraphTracedPolygon::transform(const QTransform &map, SdPvAngle)
   {
-  mRegion.transform( mFlyIndex, offset );
+  if( map.isTranslating() )
+    mRegion.transform( mFlyIndex, map );
+  else
+    mRegion.transform( map );
   }
 
-
-
-
-void SdGraphTracedPolygon::rotate(SdPoint center, SdPvAngle angle)
-  {
-  mRegion.rotate( center, angle );
-  }
 
 
 
@@ -172,7 +167,7 @@ void SdGraphTracedPolygon::rotate(SdPoint center, SdPvAngle angle)
 void SdGraphTracedPolygon::setProp(SdPropSelected &prop)
   {
   //From global we can set only gap
-  mProp.mGap = prop.mPolygonProp.mGap;
+  prop.mPolygonProp.get<&SdPropPolygon::mGap>().store( mProp.mGap );
   }
 
 
@@ -299,7 +294,7 @@ bool SdGraphTracedPolygon::getInfo(SdPoint p, QString &info, bool extInfo)
   {
   Q_UNUSED(extInfo)
   if( behindCursor( p ) ) {
-    info = QObject::tr("Net: ") + mProp.mNetName.str();
+    info = QObject::tr("Net: ") + mProp.mNetName.string();
     return true;
     }
   return false;
@@ -310,13 +305,13 @@ bool SdGraphTracedPolygon::getInfo(SdPoint p, QString &info, bool extInfo)
 //Find snap point on object
 void SdGraphTracedPolygon::snapPoint(SdSnapInfo *snap)
   {
-  if( snap->mStratum.match( mProp.mStratum ) && !snap->match(snapExcludeSour) ) {
+  if( snap->mStratum.isMatchPartial( mProp.mStratum ) && !snap->match(snapExcludeSour) ) {
 //    if( snap->match(snapNearestNet) ) {
 //      if( isContains(snap->mSour) ) {
 //        snap->test( this, snap->mSour, snapNearestNet );
 //        }
 //      }
-    if( snap->match(snapNearestNetNet) && snap->mNetName == mProp.mNetName.str() ) {
+    if( snap->match(snapNearestNetNet) && snap->mNetName == mProp.mNetName.string() ) {
       if( isContains(snap->mSour) ) {
         snap->test( this, snap->mSour, snapNearestNetNet );
         }
@@ -335,15 +330,15 @@ SdPvStratum SdGraphTracedPolygon::stratum() const
 
 
 
-bool SdGraphTracedPolygon::isPointOnNet(SdPoint p, SdPvStratum stratum, QString *netName, int *destStratum)
+bool SdGraphTracedPolygon::isPointOnNet(SdPoint p, SdPvStratum stratum, QString &netName, SdPvStratum &destStratum)
   {
-  if( mProp.mStratum & stratum ) {
+  if( mProp.mStratum.isIntersect(stratum) ) {
     if( isContains(p) ) {
-      if( *netName == mProp.mNetName.str() )
-        *destStratum |= mProp.mStratum.getValue();
+      if( netName == mProp.mNetName.string() )
+        destStratum |= mProp.mStratum;
       else {
-        *destStratum = mProp.mStratum.getValue();
-        *netName = mProp.mNetName.str();
+        destStratum = mProp.mStratum;
+        netName = mProp.mNetName.string();
         }
       return true;
       }
@@ -370,9 +365,9 @@ void SdGraphTracedPolygon::accumNetSegments(SdPlateNetContainer *netContainer)
 
 
 
-void SdGraphTracedPolygon::drawStratum(SdContext *dcx, int stratum)
+void SdGraphTracedPolygon::drawStratum(SdContext *dcx, SdPvStratum stratum)
   {
-  if( mProp.mStratum & stratum ) {
+  if( mProp.mStratum.isIntersect(stratum) ) {
     //Layer of road
     SdLayer *layer = getLayer();
     if( layer != nullptr && layer->isVisible() )

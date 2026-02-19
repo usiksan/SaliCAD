@@ -102,6 +102,16 @@ class SdPoint : public QPoint
     //Return far point, point with big coords
     static SdPoint farPoint() { return SdPoint(farCoord,farCoord); }
 
+    //!
+    //! \brief angleVector Calculates the rotation angle from point a to point b around center point
+    //! \param a           First point (start)
+    //! \param center      Center point of rotation
+    //! \param b           Second point (end)
+    //! \return            Angle in degrees in range [0, 360) - counterclockwise rotation from a to b
+    //!                    Returns 0.0 if a or b coincides with center
+    //!
+    static double  angleVector( SdPoint a, SdPoint center, SdPoint b );
+
     //Test if point is far
     bool        isFar() const { return x() == farCoord && y() == farCoord; }
   };

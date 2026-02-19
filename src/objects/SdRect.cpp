@@ -87,7 +87,7 @@ void SdRect::grow(const SdRect &rect)
 
 
 
-
+/*
 void SdRect::mirror(SdPoint origin)
   {
   SdPoint p1 = getTopLeft();
@@ -107,7 +107,7 @@ void SdRect::rotate(SdPoint origin, SdPvAngle angle)
   p2.rotate(origin,angle);
   set( p1, p2 );
   }
-
+*/
 
 
 

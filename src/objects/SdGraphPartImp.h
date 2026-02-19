@@ -41,19 +41,19 @@ struct SdPartImpPin {
   SdGraphSymImp  *mSection;   //Schematic section where pin located
   QString         mPinName;   //Part pin name
   SdPoint         mPosition;  //Pin position in plate context
-  SdPvStratum   mStratum;   //Pin stratum
+  SdPvStratum     mStratum;   //Pin stratum
 
   SdPartImpPin();
 
   void        operator = ( const SdPartImpPin &pin );
-  void        draw(SdContext *dc , SdPItemPlate *plate, int stratum) const;
+  void        draw(SdContext *dc , SdPItemPlate *plate, SdPvStratum stratum) const;
   void        drawWithoutPad( SdContext *dc ) const;
-  void        drawPad(SdContext *dc , SdPItemPlate *plate, int stratum, const QString highliteNet) const;
+  void        drawPad(SdContext *dc , SdPItemPlate *plate, SdPvStratum stratum, const QString highliteNet) const;
   bool        isConnected() const;
   QString     getNetName() const;
   void        accumUsedPin( SdPadMap &map ) const;
-  void        accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int stratum, SdRuleId ruleId, int clearance , int halfWidth, QTransform t) const;
-  void        accumWindows(SdPItemPlate *plate, SdPolyWindowList &dest, int stratum, int gap, const QString netName, const QTransform &t ) const;
+  void        accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, SdPvStratum stratum, SdRuleId ruleId, int clearance , int halfWidth, QTransform t) const;
+  void        accumWindows(SdPItemPlate *plate, SdPolyWindowList &dest, SdPvStratum stratum, int gap, const QString netName, const QTransform &t ) const;
 
   //!
   //! \brief accumHoles Accum holes description into faceList
@@ -266,9 +266,7 @@ class SdGraphPartImp : public SdGraphTraced
     // SdGraph interface
   public:
     virtual void         saveState(SdUndo *undo) override;
-    virtual void         move(SdPoint offset) override;
-    virtual void         rotate(SdPoint center, SdPvAngle angle) override;
-    virtual void         mirror(SdPoint a, SdPoint b) override;
+    virtual void         transform( const QTransform &map, SdPvAngle angle ) override;
     virtual void         setProp(SdPropSelected &prop) override;
     virtual void         getProp(SdPropSelected &prop) override;
     virtual void         selectByPoint(const SdPoint p, SdSelector *selector) override;
@@ -305,9 +303,9 @@ class SdGraphPartImp : public SdGraphTraced
 
     // SdGraphTraced interface
   public:
-    virtual bool         isPointOnNet(SdPoint p, SdPvStratum stratum, QString *netName, int *destStratum) override;
+    virtual bool         isPointOnNet(SdPoint p, SdPvStratum stratum, QString &netName, SdPvStratum &destStratum) override;
     virtual void         accumNetSegments( SdPlateNetContainer *netContainer ) override;
-    virtual void         drawStratum(SdContext *dc, int stratum ) override;
+    virtual void         drawStratum(SdContext *dc, SdPvStratum stratum ) override;
     virtual void         accumBarriers( SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk ) const override;
     virtual void         accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName ) const override;
     //Check if any pin of part linked to point

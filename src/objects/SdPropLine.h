@@ -29,8 +29,8 @@ Description
 //!        Combines width, type, and layer properties with JSON serialization
 //!
 struct SdPropLine {
-  SdPvInt   mWidth; //!< Line width property in logical units
-  SdPvInt   mType;  //!< Line type property (solid, dashed, dotted, etc.)
+  SdPvInt     mWidth; //!< Line width property in logical units
+  SdPvInt     mType;  //!< Line type property (solid, dashed, dotted, etc.)
   SdPropLayer mLayer; //!< Layer property where line is drawn
 
   //!
@@ -38,6 +38,12 @@ struct SdPropLine {
   //!        Initializes width and type to 0, layer to default
   //!
   SdPropLine() : mWidth(0), mType(0), mLayer() { }
+
+  bool isNotEqual( const SdPropLine &other ) const { return mWidth != other.mWidth || mType != other.mType || mLayer != other.mLayer; }
+
+  bool operator != ( const SdPropLine &other ) const { return isNotEqual(other); }
+
+  bool operator == ( const SdPropLine &other ) const { return !isNotEqual(other); }
 
   //!
   //! \brief setLayerUsage Mark the associated layer as used

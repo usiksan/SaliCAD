@@ -165,7 +165,7 @@ void SdGraphArea::moveComplete(SdPoint grid, SdUndo *undo)
 
 
 
-void SdGraphArea::transform(const QTransform &map)
+void SdGraphArea::transform(const QTransform &map, SdPvAngle)
   {
   if( map.isTranslating() )
     mRegion.transform( mFlyIndex, map );

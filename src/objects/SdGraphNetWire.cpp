@@ -407,36 +407,21 @@ void SdGraphNetWire::moveComplete(SdPoint grid, SdUndo *undo)
 
 
 
-void SdGraphNetWire::move(SdPoint offset)
+void SdGraphNetWire::transform(const QTransform &map, SdPvAngle)
   {
-  if( !mFixB ) mB.move( offset );
-  if( !mFixA ) mA.move( offset );
+  if( !mFixB ) mB = map.map(mB);
+  if( !mFixA ) mA = map.map(mA);
   }
 
 
 
-
-void SdGraphNetWire::rotate(SdPoint center, SdPvAngle angle)
-  {
-  if( !mFixB ) mB.rotate( center, angle );
-  if( !mFixA ) mA.rotate( center, angle );
-  }
-
-
-
-
-void SdGraphNetWire::mirror(SdPoint a, SdPoint b)
-  {
-  if( !mFixB ) mB.mirror( a, b );
-  if( !mFixA ) mA.mirror( a, b );
-  }
 
 
 
 //Set new properties to wire
 void SdGraphNetWire::setProp(SdPropSelected &prop)
   {
-  mProp = prop.mWireProp;
+  prop.mWireProp.store(mProp);
   SdGraphNet::setProp(prop);
   }
 

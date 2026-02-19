@@ -19,7 +19,7 @@ Description
 #include <math.h>
 //#include <boost/geometry/geometry.hpp>
 
-
+#if 0
 void SdPoint::rotate(SdPoint origin, SdPvAngle angle)
   {
   SdPoint p;
@@ -83,7 +83,7 @@ void SdPoint::mirror(SdPoint a, SdPoint b)
   move( a );
   }
 
-
+#endif
 
 
 
@@ -181,7 +181,7 @@ double SdPoint::getLenght() const
 
 
 
-
+/*
 SdPoint SdPoint::convertImplement(SdPoint origin, SdPoint offset, SdPvAngle angle, bool mirror)
   {
   //Образовать точку и перенести начало координат в origin
@@ -209,7 +209,7 @@ SdPoint SdPoint::unConvertImplement(SdPoint origin, SdPoint offset, SdPvAngle an
   p.move( origin );
   return p;
   }
-
+*/
 
 
 
@@ -321,6 +321,54 @@ void SdPoint::json(const SvJsonReader &js)
   }
 
 
+
+
+//!
+//! \brief angleVector Calculates the rotation angle from point a to point b around center point
+//! \param a           First point (start)
+//! \param center      Center point of rotation
+//! \param b           Second point (end)
+//! \return            Angle in degrees in range [0, 360) - counterclockwise rotation from a to b
+//!                    Returns 0.0 if a or b coincides with center
+//!
+double SdPoint::angleVector( SdPoint a, SdPoint center, SdPoint b )
+  {
+  // Check if center coincides with either point
+  if( a == center || b == center ) {
+    return 0.0;  // Angle is undefined when center coincides with point
+    }
+
+  // Create vectors from center to points
+  QPoint vecA = a - center;
+  QPoint vecB = b - center;
+
+  // Calculate angles using atan2 (safe even with zero vectors, but we already checked)
+  double angleARad = std::atan2(vecA.y(), vecA.x());
+  double angleBRad = std::atan2(vecB.y(), vecB.x());
+
+  // Calculate difference
+  double angleDiffRad = angleBRad - angleARad;
+
+  // Normalize to range [0, 2π)
+  if( angleDiffRad < 0 ) {
+    angleDiffRad += 2.0 * M_PI;
+    }
+
+  // Convert to degrees
+  double angleDeg = angleDiffRad * 180.0 / M_PI;
+
+  // Ensure result is in [0, 360) (handle floating point edge cases)
+  if( angleDeg >= 360.0 ) {
+    angleDeg -= 360.0;
+    }
+
+  // Handle very small negative values due to floating point precision
+  if( angleDeg < 0 && angleDeg > -1e-10 ) {
+    angleDeg = 0.0;
+    }
+
+  return angleDeg;
+  }
 
 
 
@@ -435,10 +483,10 @@ bool calcFreeNearIntersect(SdPoint sour, SdPoint a, SdPoint b, SdPoint &dest)
 
 SdPoint calcArcStop(SdPoint center, SdPoint start, SdPoint sector)
   {
-  double radius = center.getDistance(start);
-  SdPoint stop( static_cast<int>(center.x()+radius), center.y() );
-  stop.rotate( center, sector.getAngle(center) );
-  return stop;
+  QTransform map( QTransform::fromTranslate(center.x(),center.y()) );
+  map.rotate( SdPoint::angleVector( start, center, sector )  );
+  map.translate(-center.x(),-center.y());
+  return map.map(start);
   }
 
 

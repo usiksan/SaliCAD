@@ -38,12 +38,6 @@ SdPolyWindow::SdPolyWindow() :
 
 
 
-SdPolyWindow::SdPolyWindow(SdCircle circle, int gap) :
-  radius( circle.mRadius + gap ),
-  p1(circle.mCenter),p2(),p3(),p4()
-  {
-
-  }
 
 SdPolyWindow::SdPolyWindow(SdPoint center, int rad) :
   radius( rad ),
@@ -77,26 +71,14 @@ SdPolyWindow::SdPolyWindow(SdRect r, int gap) :
   p3( r.getBottomRight() ),
   p4( r.getBottomLeft() )
   {
-  p1.move( SdPoint(-gap,-gap) );
-  p2.move( SdPoint(gap,-gap) );
-  p3.move( SdPoint(gap,gap) );
-  p4.move( SdPoint(-gap,gap) );
+  p1 += SdPoint(-gap,-gap);
+  p2 += SdPoint(gap,-gap);
+  p3 += SdPoint(gap,gap);
+  p4 += SdPoint(-gap,gap);
   buildPolygon();
   }
 
 
-
-SdPolyWindow::SdPolyWindow(SdPoint a, SdPoint b, int gap) :
-  radius(-1),p1(),p2(),p3(),p4()
-  {
-  SdQuadrangle q( a.x(), a.y()-gap, a.getDistance(b), gap * 2 );
-  q.rotate( a, b.getAngle(a) );
-  p1 = q.p1;
-  p2 = q.p2;
-  p3 = q.p3;
-  p4 = q.p4;
-  buildPolygon();
-  }
 
 
 

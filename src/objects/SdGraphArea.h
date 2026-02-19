@@ -74,7 +74,7 @@ class SdGraphArea : public SdGraph
   public:
     virtual void    saveState(SdUndo *undo) override;
     virtual void    moveComplete( SdPoint grid, SdUndo *undo ) override;
-    virtual void    transform( const QTransform &map ) override;
+    virtual void    transform( const QTransform &map, SdPvAngle ) override;
     virtual void    setProp(SdPropSelected &prop) override;
     virtual void    getProp(SdPropSelected &prop) override;
     virtual void    selectByPoint(const SdPoint p, SdSelector *selector) override;

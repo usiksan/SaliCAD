@@ -57,7 +57,7 @@ class SdDxfContext : public SdContext {
     void    putPicture( SdProjectItem *item );
 
     // SdContext interface
-    virtual void setPen(int width, QColor color, int lineStyle) override;
+    virtual void setPen(SdPvInt width, QColor color, SdPvInt lineStyle) override;
     virtual void line(SdPoint a, SdPoint b) override;
     virtual void fillRect(SdRect r) override;
     virtual void arc(SdPoint center, SdPoint start, SdPoint stop) override;
@@ -228,7 +228,7 @@ void SdDxfContext::putPicture(SdProjectItem *item)
 
 
 
-void SdDxfContext::setPen(int width, QColor color, int lineStyle)
+void SdDxfContext::setPen(SdPvInt width, QColor color, SdPvInt lineStyle)
   {
 
   }

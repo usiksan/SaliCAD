@@ -204,13 +204,17 @@ void SdGraphTracedRoad::moveComplete(SdPoint grid, SdUndo *undo)
 
 
 
-
-void SdGraphTracedRoad::move(SdPoint offset)
+void SdGraphTracedRoad::transform(const QTransform &map, SdPvAngle)
   {
-  if( mFly == flyP1P2 ) mSegment.move( offset );
-  else if( mFly == flyP1 || mFly == flyP1_45 ) mSegment.moveP1( offset );
-  else if( mFly == flyP2 || mFly == flyP2_45 ) mSegment.moveP2( offset );
+  if( map.isTranslating() ) {
+    if( mFly == flyP1P2 ) mSegment.transform(map);
+    else if( mFly == flyP1 || mFly == flyP1_45 ) mSegment.transformP1( map );
+    else if( mFly == flyP2 || mFly == flyP2_45 ) mSegment.transformP2( map );
+    }
   }
+
+
+
 
 
 
@@ -448,14 +452,14 @@ void SdGraphTracedRoad::snapPoint(SdSnapInfo *snap)
 
 
 
-bool SdGraphTracedRoad::isPointOnNet(SdPoint p, SdPvStratum stratum, QString *netName, int *destStratum)
+bool SdGraphTracedRoad::isPointOnNet(SdPoint p, SdPvStratum stratum, QString &netName, SdPvStratum &destStratum)
   {
-  if( mProp.mStratum.match( stratum ) && mSegment.isPointOn( p ) ) {
-    if( *netName == mProp.mNetName.str() )
-      *destStratum |= mProp.mStratum.getValue();
+  if( mProp.mStratum.isMatchExact( stratum ) && mSegment.isPointOn( p ) ) {
+    if( netName == mProp.mNetName.string() )
+      destStratum |= mProp.mStratum;
     else {
-      *destStratum = mProp.mStratum.getValue();
-      *netName = mProp.mNetName.str();
+      destStratum = mProp.mStratum;
+      netName = mProp.mNetName.string();
       }
     return true;
     }
@@ -481,13 +485,13 @@ void SdGraphTracedRoad::accumNetSegments(SdPlateNetContainer *netContainer)
 
 
 
-void SdGraphTracedRoad::drawStratum(SdContext *dcx, int stratum)
+void SdGraphTracedRoad::drawStratum(SdContext *dcx, SdPvStratum stratum)
   {
-  if( mProp.mStratum & stratum ) {
+  if( mProp.mStratum.isMatchPartial(stratum) ) {
     //Layer of road
     SdLayer *layer = getLayer();
     if( layer != nullptr && layer->isVisible() ) {
-      dcx->setPen( mProp.mWidth.getValue(), layer, dltSolid );
+      dcx->setPen( mProp.mWidth.value(), layer, dltSolid );
       if( mFly == flyP1_45 || mFly == flyP2_45 ) {
         //Draw segment with vertex
         SdPoint m = mSegment.vertex45();

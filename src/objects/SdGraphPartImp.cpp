@@ -56,7 +56,7 @@ void SdPartImpPin::operator =(const SdPartImpPin &pin)
 
 
 
-void SdPartImpPin::draw(SdContext *dc, SdPItemPlate *plate, int stratum ) const
+void SdPartImpPin::draw(SdContext *dc, SdPItemPlate *plate, SdPvStratum stratum ) const
   {
   //Draw pin pad
   plate->drawPad( dc, mPin->getPinOrigin(), mPin->getPinType(), mStratum.stratum() & stratum );
@@ -74,7 +74,7 @@ void SdPartImpPin::drawWithoutPad(SdContext *dc) const
 
 
 
-void SdPartImpPin::drawPad(SdContext *dc, SdPItemPlate *plate, int stratum, const QString highliteNet ) const
+void SdPartImpPin::drawPad(SdContext *dc, SdPItemPlate *plate, SdPvStratum stratum, const QString highliteNet ) const
   {
   //Draw pin pad
   if( !highliteNet.isEmpty() && getNetName() == highliteNet )
@@ -116,11 +116,11 @@ void SdPartImpPin::accumUsedPin(SdPadMap &map) const
 
 
 
-void SdPartImpPin::accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int stratum, SdRuleId ruleId, int clearance, int halfWidth, QTransform t ) const
+void SdPartImpPin::accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, SdPvStratum stratum, SdRuleId ruleId, int clearance, int halfWidth, QTransform t ) const
   {
 
   //Compare on stratum
-  if( mStratum.mValue & stratum ) {
+  if( mStratum.isIntersect(stratum) ) {
     if( ruleId >= ruleLast )
       clearance = 0;
     else
@@ -135,10 +135,10 @@ void SdPartImpPin::accumBarriers(SdPItemPlate *plate, SdBarrierList &dest, int s
 
 
 
-void SdPartImpPin::accumWindows(SdPItemPlate *plate, SdPolyWindowList &dest, int stratum, int gap, const QString netName, const QTransform &t) const
+void SdPartImpPin::accumWindows(SdPItemPlate *plate, SdPolyWindowList &dest, SdPvStratum stratum, int gap, const QString netName, const QTransform &t) const
   {
   //Compare on stratum
-  if( (mStratum.mValue & stratum) && netName != getNetName() )
+  if( mStratum.isIntersect(stratum) && netName != getNetName() )
     //Stratum matched and net name other
     plate->appendPadWindow( dest, mPin->getPinOrigin(), mPin->getPinType(), gap, t );
   }
@@ -286,7 +286,7 @@ SdGraphPartImp::SdGraphPartImp(SdPoint org, SdPropPartImp *prp, SdPItemPart *par
 
 QTransform SdGraphPartImp::matrix() const
   {
-  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.mValue, mProp.mSide.isBottom() );
+  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle, mProp.mSide.isBottom() );
   return imp.getMatrix();
   }
 
@@ -593,7 +593,7 @@ QJsonObject SdGraphPartImp::paramTableObject() const
 void SdGraphPartImp::drawWithoutPads(SdContext *cdx)
   {
   //Convertor for symbol implementation
-  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.mValue, mProp.mSide.isBottom() );
+  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle, mProp.mSide.isBottom() );
   if( mProp.mSide.isBottom() )
     imp.setPairedLayer( true );
   cdx->setConverter( &imp );
@@ -622,7 +622,7 @@ void SdGraphPartImp::drawWithoutPads(SdContext *cdx)
 void SdGraphPartImp::drawPads(SdContext *cdx, SdPvStratum stratum, const QString highlightNetName)
   {
   //Convertor for symbol implementation
-  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.mValue, mProp.mSide.isBottom() );
+  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle, mProp.mSide.isBottom() );
   if( mProp.mSide.isBottom() )
     imp.setPairedLayer( true );
   cdx->setConverter( &imp );
@@ -883,18 +883,9 @@ void SdGraphPartImp::saveState(SdUndo *undo)
 
 
 
-void SdGraphPartImp::move(SdPoint offset)
+void SdGraphPartImp::transform(const QTransform &map, SdPvAngle angle)
   {
-  mOrigin.move( offset );
-  updatePinsPositions();
-  }
-
-
-
-
-void SdGraphPartImp::rotate(SdPoint center, SdPvAngle angle)
-  {
-  mOrigin.rotate( center, angle );
+  mOrigin = map.map( mOrigin );
   mProp.mAngle += angle;
   updatePinsPositions();
   }
@@ -902,19 +893,14 @@ void SdGraphPartImp::rotate(SdPoint center, SdPvAngle angle)
 
 
 
-void SdGraphPartImp::mirror(SdPoint a, SdPoint b)
-  {
-  mOrigin.mirror( a, b );
-  updatePinsPositions();
-  }
+
 
 
 
 
 void SdGraphPartImp::setProp(SdPropSelected &prop)
   {
-  if( !mProp.match( prop.mPartImpProp ) ) {
-    mProp = prop.mPartImpProp;
+  if( prop.mPartImpProp.store( mProp ) ) {
     updatePinsPositions();
     }
   }
@@ -976,23 +962,23 @@ SdRect SdGraphPartImp::getOverRect() const
 
 
 
-void SdGraphPartImp::drawStratum(SdContext *dc, int stratum)
+void SdGraphPartImp::drawStratum(SdContext *dc, SdPvStratum stratum)
   {
   //Convertor for part implementation
-  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
+  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle, mProp.mSide.isBottom() );
   if( mProp.mSide.isBottom() )
     imp.setPairedLayer( true );
   dc->setConverter( &imp );
 
   //Draw ident in plate context
   SdRect ov;
-  if( stratum == 0 || stratum == stmThrough ) {
+  if( stratum.isMatchExact(0) || stratum.isMatchExact(stmThrough) ) {
     dc->text( mIdent.mOrigin, ov, ident(), mIdent.mProp );
     dc->text( mValue.mOrigin, ov, value(), mValue.mProp );
     }
 
   //Draw part except ident and pins
-  if( stratum == 0 || stratum == stmThrough ) {
+  if( stratum.isMatchExact(0) || stratum.isMatchExact(stmThrough) ) {
     mPart->forEach( dctAll & ~(dctPartPin | dctIdent | dctValue), [dc] (SdObject *obj) -> bool {
       SdGraph *graph = dynamic_cast<SdGraph*>( obj );
       if( graph )
@@ -1027,7 +1013,7 @@ void SdGraphPartImp::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId to
     halfWidth = blk.mRules[ruleRoadWidth] / 2;
     }
 
-  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
+  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle, mProp.mSide.isBottom() );
   QTransform t( imp.getMatrix() );
 
   for( const SdPartImpPin &pin : mPins )
@@ -1047,7 +1033,7 @@ void SdGraphPartImp::accumWindows(SdPolyWindowList &dest, int stratum, int gap, 
   SdPItemPlate *plate = getPlate();
 
   //Component position and orientation converter
-  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
+  SdConverterImplement imp( mOrigin, mPart->getOrigin(), mProp.mAngle, mProp.mSide.isBottom() );
   QTransform t( imp.getMatrix() );
 
   //For each pin accum windows
@@ -1064,7 +1050,7 @@ bool SdGraphPartImp::isLinked(SdPoint a, SdPvStratum stratum, QString netName) c
   {
   //For each pin test connection
   for( const SdPartImpPin &pin : mPins )
-    if( pin.isConnected() && pin.mStratum.match(stratum) && pin.getNetName() == netName && pin.mPosition == a )
+    if( pin.isConnected() && pin.mStratum.isMatchExact(stratum) && pin.getNetName() == netName && pin.mPosition == a )
       return true;
   return false;
   }
@@ -1113,7 +1099,7 @@ void SdGraphPartImp::snapPoint(SdSnapInfo *snap)
     for( SdPartImpPin &pin : mPins )
       if( pin.isConnected() ) {
         //Perform snap only on connected pins
-        if( (snap->match( snapNearestPin ) || snap->mNetName == pin.getNetName()) && snap->mStratum.match(pin.mStratum) )
+        if( (snap->match( snapNearestPin ) || snap->mNetName == pin.getNetName()) && snap->mStratum.isMatchPartial(pin.mStratum) )
           snap->test( this, pin.mPosition, snapNearestPin | snapNearestNetPin );
         }
     }
@@ -1204,7 +1190,7 @@ void SdGraphPartImp::accumHoles(Sd3drModel &model, Sd3drFaceList &faceList, SdPv
 void SdGraphPartImp::updatePinsPositions()
   {
   //Converter for calculate and get conversion matrix, which convert part origin referenced coords to plate referenced coords
-  SdConverterImplement impl( mOrigin, mPart->getOrigin(), mProp.mAngle.getValue(), mProp.mSide.isBottom() );
+  SdConverterImplement impl( mOrigin, mPart->getOrigin(), mProp.mAngle, mProp.mSide.isBottom() );
   //Conversion matrix
   QTransform t = impl.getMatrix();
   //For each pin perform conversion
@@ -1224,16 +1210,16 @@ void SdGraphPartImp::updatePinsPositions()
 
 
 
-bool SdGraphPartImp::isPointOnNet(SdPoint p, SdPvStratum stratum, QString *netName, int *destStratum)
+bool SdGraphPartImp::isPointOnNet(SdPoint p, SdPvStratum stratum, QString &netName, SdPvStratum &destStratum)
   {
   //Run on each pin, test stratum and pos. If match then return true and assign wireName
   for( SdPartImpPin &pin : mPins ) {
-    if( pin.isConnected() && pin.mPosition == p && pin.mStratum.match( stratum ) ) {
-      if( *netName == pin.getNetName() )
-        *destStratum |= pin.mStratum.getValue();
+    if( pin.isConnected() && pin.mPosition == p && pin.mStratum.isIntersect( stratum ) ) {
+      if( netName == pin.getNetName() )
+        destStratum |= pin.mStratum;
       else {
-        *destStratum = pin.mStratum.getValue();
-        *netName = pin.getNetName();
+        destStratum = pin.mStratum;
+        netName = pin.getNetName();
         }
       return true;
       }

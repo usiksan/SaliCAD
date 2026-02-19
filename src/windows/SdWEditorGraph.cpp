@@ -604,7 +604,7 @@ void SdWEditorGraph::cmEnterPosition()
     //qDebug() << "enter" << p;
     if( dep.getRef() )
       //Referenced coord
-      p.move( mPrevEnter );
+      p += mPrevEnter;
     //qDebug() << "enter" << p;
     //Absolute coord
     mPrevEnter = p;

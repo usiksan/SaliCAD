@@ -71,7 +71,7 @@ struct SdGerberApertureContext : public SdContext {
     ~SdGerberApertureContext() override { delete mPainter; }
 
     // SdContext interface
-    virtual void setPen(int width, QColor color, int lineStyle) override;
+    virtual void setPen(SdPvInt width, QColor color, SdPvInt lineStyle) override;
     virtual void fillRect(SdRect r) override;
     virtual void circle(SdPoint center, int radius ) override;
     virtual void circleFill(SdPoint center, int radius) override;
@@ -87,11 +87,11 @@ SdGerberApertureContext::SdGerberApertureContext() :
 
   }
 
-void SdGerberApertureContext::setPen(int width, QColor color, int lineStyle)
+void SdGerberApertureContext::setPen(SdPvInt width, QColor color, SdPvInt lineStyle)
   {
   Q_UNUSED(color)
   Q_UNUSED(lineStyle)
-  appendAperture( gerberApertureCircle(width/2) );
+  appendAperture( gerberApertureCircle(width.value()/2) );
   }
 
 void SdGerberApertureContext::fillRect(SdRect r)
@@ -161,7 +161,7 @@ class SdGerberContext : public SdContext {
 
     // SdContext interface
   public:
-    virtual void setPen(int width, QColor color, int lineStyle) override;
+    virtual void setPen(SdPvInt width, QColor color, SdPvInt lineStyle) override;
     virtual void line(SdPoint a, SdPoint b) override;
     virtual void fillRect(SdRect r) override;
     virtual void arc(SdPoint center, SdPoint start, SdPoint stop) override;
@@ -180,11 +180,11 @@ class SdGerberContext : public SdContext {
 
 
 
-void SdGerberContext::setPen(int width, QColor color, int lineStyle)
+void SdGerberContext::setPen(SdPvInt width, QColor color, SdPvInt lineStyle)
   {
   Q_UNUSED(color)
   Q_UNUSED(lineStyle)
-  selectAperture( gerberApertureCircle(width/2) );
+  selectAperture( gerberApertureCircle(width.value()/2) );
   }
 
 

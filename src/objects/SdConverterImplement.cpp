@@ -14,13 +14,13 @@ Description
 #include "SdConverterImplement.h"
 
 
-SdConverterImplement::SdConverterImplement(SdPoint pos, SdPoint org, int angle, bool mirror) :
+SdConverterImplement::SdConverterImplement(SdPoint pos, SdPoint org, SdPvAngle angle, bool mirror) :
   SdConverter(),
   mPosition(pos),
   mOrigin(org),
+  mAngle(angle.getDegree()),
   mMirror(mirror)
   {
-  mAngle = static_cast<double>(angle) / 1000.0;
   }
 
 

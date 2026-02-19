@@ -16,6 +16,7 @@ Description
 
 #include <QLineF>
 #include <math.h>
+#include <QTransform>
 
 /*
   int i = (b.x()-a.x())*(y()-a.y()) - (b.y()-a.y())*(x()-a.x());
@@ -24,6 +25,24 @@ Description
       qMin(a.y(),b.y()) <= y() && qMax(a.y(),b.y()) >= y() ) return true;
   return false;
 */
+
+void SdSegment::transform(const QTransform &map)
+  {
+  p1 = map.map(p1);
+  p2 = map.map(p2);
+  }
+
+void SdSegment::transformP1(const QTransform &map)
+  {
+  p1 = map.map(p1);
+  }
+
+void SdSegment::transformP2(const QTransform &map)
+  {
+  p2 = map.map(p2);
+  }
+
+
 
 //Vertex point with 45 degree step
 SdPoint SdSegment::vertex45() const

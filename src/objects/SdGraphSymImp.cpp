@@ -453,11 +453,10 @@ void SdGraphSymImp::transform(const QTransform &map, SdPvAngle angle)
 
 void SdGraphSymImp::setProp(SdPropSelected &prop)
   {
-  if( prop.mSymImpProp.isNeedUpdate( mProp ) ) {
+  if( prop.mSymImpProp.store( mProp ) ) {
     //Unconnect all pins from wires
     //ucomAllPins();
     //setup props
-    prop.mSymImpProp.store( mProp );
     //Correct pins positions
     updatePinsPositions();
     }

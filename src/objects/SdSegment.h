@@ -37,6 +37,9 @@ class SdSegment
     void          setP2( SdPoint p ) { p2 = p; }
 
     //Move end points
+    void          transform( const QTransform &map );
+    void          transformP1( const QTransform &map );
+    void          transformP2( const QTransform &map );
     // void          move( SdPoint offset ) { p1.move( offset ); p2.move( offset ); }
     // void          moveP1( SdPoint offset ) { p1.move( offset ); }
     // void          moveP2( SdPoint offset ) { p2.move( offset ); }

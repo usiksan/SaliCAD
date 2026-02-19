@@ -99,10 +99,13 @@ class SdPvMulty
     //! \brief store Store current property value to destination if state is spmSingle
     //! \param dest Reference to destination property that receives stored value
     //!
-    void store( Prop &dest ) const
+    int  store( Prop &dest ) const
       {
-      if( mState == spmSingle )
+      if( mState == spmSingle && dest != mPropValue ) {
         dest = mPropValue;
+        return 1;
+        }
+      return 0;
       }
   };
 
@@ -142,9 +145,9 @@ class SdPropComposer : private SdPropMultyField<Obj,Members>...
       (SdPropMultyField<Obj,Members>::mField.append( src.*Members ), ...);
       }
 
-    void store( Obj &src ) const
+    bool store( Obj &src ) const
       {
-      (SdPropMultyField<Obj,Members>::mField.store( src.*Members ), ...);
+      return (SdPropMultyField<Obj,Members>::mField.store( src.*Members ) | ...) != 0;
       }
 
     // bool isMatch( const Obj &obj ) const
