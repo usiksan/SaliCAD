@@ -19,6 +19,7 @@ Description
 #include "SvLib/SvJsonIO.h"
 
 #include <QString>
+#include <QDataStream>
 
 #define stmRuleHided 0x1 //!< Enable hided holes (stmInt00-stmInt01)
 #define stmRuleCore  0x2 //!< Enable core holes (stmInt00-stmInt27)
@@ -174,6 +175,20 @@ class SdPvStratum
 
     inline static SdPvStratum stratumThrough() { return SdPvStratum(stmThrough); }
 
+    friend QDataStream &operator << ( QDataStream &os, SdPvStratum stratum );
+    friend QDataStream &operator >> ( QDataStream &is, SdPvStratum &stratum );
   };
+
+inline QDataStream &operator << ( QDataStream &os, SdPvStratum stratum )
+  {
+  os << stratum.mValue;
+  return os;
+  }
+
+inline QDataStream &operator >> ( QDataStream &is, SdPvStratum &stratum )
+  {
+  is >> stratum.mValue;
+  return is;
+  }
 
 #endif // SDPVSTRATUM_H

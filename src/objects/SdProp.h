@@ -32,8 +32,6 @@ Description
 
 struct SdProp
   {
-    // SdPropLine    mLineProp;       //Свойства линейных объектов
-    // SdPropText    mTextProp;       //Свойства текстовых объектов
     //Symbol
     SdPropLine    mSymLineProp;       //Свойства линейных объектов
     SdPropText    mSymTextProp;       //Свойства текстовых объектов
@@ -71,7 +69,7 @@ struct SdProp
 
     int           mLineEnterType;
     int           mWireEnterType;
-    SdPvString  mWireName;       //Имя цепи
+    SdPvString    mWireName;       //Имя цепи
     bool          mTextBold;       //Жирный шрифт
     bool          mTextItalic;     //Наклонный текст
     bool          mTextUderline;   //Подчеркивание текста

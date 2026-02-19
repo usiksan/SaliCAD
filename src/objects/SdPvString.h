@@ -18,6 +18,18 @@ Description
 
 #include <QString>
 
+template<typename SdPv>
+class SdPvBase
+  {
+    SdPv mValue;
+  public:
+    bool isEqual( const SdPvBase<SdPv> &other ) const { return mValue == other.mValue; }
+
+    bool operator == ( const SdPvBase<SdPv> &other ) const { return isEqual(other); }
+
+    bool operator != ( const SdPvBase<SdPv> &other ) const { return !isEqual(other); }
+  };
+
 //!
 //! \brief The SdPvString struct - Simple string property wrapper with JSON serialization
 //!        Provides basic string storage with swap and JSON I/O functionality

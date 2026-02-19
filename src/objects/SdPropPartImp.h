@@ -15,9 +15,9 @@ Description
 #ifndef SDPARTIMPPROP_H
 #define SDPARTIMPPROP_H
 
-#include "SdPvInt.h"
 #include "SdPvAngle.h"
 #include "SdPvStratum.h"
+#include "SdJsonIO.h"
 
 
 //!

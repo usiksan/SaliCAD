@@ -157,8 +157,8 @@ void SdSelector::putToClipboard(const SdProject *project, double scale , SdWEdit
 
     SdPoint a = r.getBottomLeft();
     SdPoint b = r.getTopRight();
-    a.move( SdPoint(-10,-10) );
-    b.move( SdPoint(10,10) ); //Расширить, чтобы вошли пограничные объекты
+    a += SdPoint(-10,-10);
+    b += SdPoint(10,10); //Расширить, чтобы вошли пограничные объекты
     r.set( a, b );
     QSize s;                             //Размер битовой карты в пикселах
     s.setWidth( qMin( static_cast<int>(r.width() / scale + 10), CLIP_IMAGE_WIDTH ) ); //Вычисление размера
@@ -337,8 +337,8 @@ void SdSelector::storeSelectionToFile( double scale, const QString fname)
     //Store as png file
     SdPoint a = r.getBottomLeft();
     SdPoint b = r.getTopRight();
-    a.move( SdPoint(-10,-10) );
-    b.move( SdPoint(10,10) ); //Расширить, чтобы вошли пограничные объекты
+    a += SdPoint(-10,-10);
+    b += SdPoint(10,10); //Расширить, чтобы вошли пограничные объекты
     r.set( a, b );
     QSize s;                             //Размер битовой карты в пикселах
     s.setWidth( qMin( static_cast<int>(r.width() / scale + 10), CLIP_IMAGE_WIDTH ) ); //Вычисление размера

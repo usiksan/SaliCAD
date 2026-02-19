@@ -29,7 +29,7 @@ void SdPropText::json(const QString prefix, SvJsonWriter &js) const
 
   //Convert attributes to string
   QString attr;
-  if( mDir == da270 ) attr.append( QChar('3') );
+  if( mDir == SdPvInt(da270) ) attr.append( QChar('3') );
   else if( mDir == da90 ) attr.append( QChar('1') );
   else if( mDir == da180 ) attr.append( QChar('2') );
   else attr.append( QChar('0') );

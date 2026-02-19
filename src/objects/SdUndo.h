@@ -31,7 +31,6 @@ class SdObject;
 class SdPropSymPin;
 class SdPropPartPin;
 class SdPropSymImp;
-class SdPropPartImp;
 class SdRect;
 class SdPItemPart;
 class SdPItemPlate;
