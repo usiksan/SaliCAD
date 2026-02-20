@@ -50,8 +50,11 @@ class SdPropBarRoad : public SdPropBarStratum
   public:
     SdPropBarRoad(const QString title, bool asRoad = true );
 
-    void setPropRoad( SdPropRoad *propRoad, SdPropVia *propVia, double ppm, int enterType );
-    void getPropRoad( SdPropRoad *propRoad, SdPropVia *propVia, int *enterType );
+    void setPropRoad( const SdPropRoad &propRoad, const SdPropVia &propVia, double ppm, int enterType );
+    void getPropRoad( SdPropRoad &propRoad, SdPropVia &propVia, int *enterType );
+
+    void setPropRoad( const SdPropComposerRoad &propRoad, const SdPropComposerVia &propVia, double ppm, int enterType );
+    void getPropRoad( SdPropComposerRoad &propRoad, SdPropComposerVia &propVia, int *enterType );
 
     void setPropVia( SdPropVia *propVia );
     void getPropVia( SdPropVia *propVia );

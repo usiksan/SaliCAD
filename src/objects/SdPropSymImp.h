@@ -19,6 +19,7 @@ Description
 
 #include "SdPvAngle.h"
 #include "SdPvInt.h"
+#include "objects/SdPvMulty.h"
 
 
 //!
@@ -48,4 +49,7 @@ struct SdPropSymImp
     //!
     void swap( SdPropSymImp &other );
   };
+
+using SdPropComposerSymImp = SdPropComposer<SdPropSymImp, &SdPropSymImp::mAngle, &SdPropSymImp::mMirror>;
+
 #endif // SDSYMIMPPROP_H

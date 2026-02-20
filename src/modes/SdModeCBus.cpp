@@ -118,7 +118,7 @@ void SdModeCBus::propSetToBar()
   else if( mNetList.count() && mIndex < mNetList.count() ) {
     auto bar = SdWCommand::getModeToolBar<SdPropBarWire>( PB_WIRE );
     if( bar )
-      bar->setPropWire( sdGlobalProp->mWireProp, mEditor->getPPM(), sdGlobalProp->mWireEnterType, mNetList.at(mIndex) );
+      bar->setPropWire( sdGlobalProp->mWireProp, mEditor->getPPM(), sdGlobalProp->mWireEnterType, SdPvMulty<SdPvString>( SdPvString(mNetList.at(mIndex)) ) );
     }
   }
 

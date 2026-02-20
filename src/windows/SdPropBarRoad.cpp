@@ -175,58 +175,83 @@ SdPropBarRoad::SdPropBarRoad(const QString title, bool asRoad) :
 
 
 
-void SdPropBarRoad::setPropRoad(SdPropRoad *propRoad, SdPropVia *propVia, double ppm, int enterType)
+void SdPropBarRoad::setPropRoad(const SdPropRoad &propRoad, const SdPropVia &propVia, double ppm, int enterType)
   {
-  if( propRoad && propVia ) {
-    //Set current stratum
-    setSelectedStratum( propRoad->mStratum );
-
-    //Set current width
-    mPPM = ppm;
-    if( propRoad->mWidth.isValid() ) {
-      mWidth->setCurrentText( propRoad->mWidth.log2Phis(mPPM)  );
-      prevWidth.reorderComboBoxDoubleString( mWidth );
-      }
-    else
-      mWidth->setCurrentText( QString()  );
-
-    mAlignToGrid->setChecked( SdEnvir::instance()->mCursorAlignGrid );
-    mLoopDetection->setChecked( SdEnvir::instance()->mAutoRemoveRoadLoop );
-
-    //line enter type
-    setVertexType( enterType );
-
-    //Current road name name
-    mWireName->setText( propRoad->mNetName.str() );
-
-    //Current via type
-    mViaPadType->setCurrentText( propVia->mPadType.str() );
-    padTypeHistory.reorderComboBoxString( mViaPadType );
-    }
+  SdPropComposerRoad propComposerRoad;
+  propComposerRoad.reset( propRoad );
+  SdPropComposerVia propComposerVia;
+  propComposerVia.reset( propVia );
+  setPropRoad( propComposerRoad, propComposerVia, ppm, enterType );
   }
 
 
 
 
 
-void SdPropBarRoad::getPropRoad(SdPropRoad *propRoad, SdPropVia *propVia, int *enterType)
+void SdPropBarRoad::getPropRoad(SdPropRoad &propRoad, SdPropVia &propVia, int *enterType)
   {
-  if( propRoad && propVia ) {
-    int stratum = getSelectedStratum();
-    if( stratum )
-      propRoad->mStratum = stratum;
+  SdPropComposerRoad propComposerRoad;
+  SdPropComposerVia propComposerVia;
+  getPropRoad( propComposerRoad, propComposerVia, enterType );
+  propComposerRoad.store( propRoad );
+  propComposerVia.store( propVia );
+  }
 
-    if( !mWidth->currentText().isEmpty() )
-      propRoad->mWidth.setFromPhis( mWidth->currentText(), mPPM );
 
-    if( !mViaPadType->currentText().isEmpty() )
-      propVia->mPadType = mViaPadType->currentText();
 
-    //TODO D056 Append via through-blink support
-    propVia->mStratum = stmThrough;
+void SdPropBarRoad::setPropRoad(const SdPropComposerRoad &propRoad, const SdPropComposerVia &propVia, double ppm, int enterType)
+  {
+  //Set current stratum
+  auto &propStratum = propRoad.get<&SdPropRoad::mStratum>();
+  setSelectedStratum( propStratum.isSingle() ? propStratum.value() : SdPvStratum(0) );
 
-    //Net name not used
+  //Set current width
+  mPPM = ppm;
+  auto &propWidth = propRoad.get<&SdPropRoad::mWidth>();
+  if( propWidth.isSingle() ) {
+    mWidth->setCurrentText( propWidth.value().log2Phis(mPPM)  );
+    prevWidth.reorderComboBoxDoubleString( mWidth );
     }
+  else
+    mWidth->setCurrentText( QString()  );
+
+  mAlignToGrid->setChecked( SdEnvir::instance()->mCursorAlignGrid );
+  mLoopDetection->setChecked( SdEnvir::instance()->mAutoRemoveRoadLoop );
+
+  //line enter type
+  setVertexType( enterType );
+
+  //Current road name name
+  auto &propNetName = propRoad.get<&SdPropRoad::mNetName>();
+  mWireName->setText( propNetName.isSingle() ? propNetName.value.string() : QString{} );
+
+  //Current via type
+  auto &propPadType = propVia.get<&SdPropVia::mPadType>();
+  mViaPadType->setCurrentText( propPadType.isSingle() ? propPadType.value().string() : QString{} );
+  padTypeHistory.reorderComboBoxString( mViaPadType );
+  }
+
+
+
+void SdPropBarRoad::getPropRoad(SdPropComposerRoad &propRoad, SdPropComposerVia &propVia, int *enterType)
+  {
+  propRoad.clear();
+  propVia.clear();
+  int stratum = getSelectedStratum();
+  if( stratum )
+    propRoad.get<&SdPropRoad::mStratum>().reset(stratum);
+
+  //Store width if setted
+  if( !mWidth->currentText().isEmpty() )
+    propRoad.get<&SdPropRoad::mWidth>().reset( SdPvInt( mWidth->currentText(), mPPM ) );
+
+  if( !mViaPadType->currentText().isEmpty() )
+    propVia.get<&SdPropVia::mPadType>().reset( mViaPadType->currentText() );
+
+  //TODO D056 Append via through-blink support
+  propVia.get<&SdPropVia::mStratum>().reset(stmThrough);
+
+  //Net name not used
   if( enterType ) {
     if( mEnterOrtho->isChecked() ) *enterType = dleOrtho;
     else if( mEnter45degree->isChecked() ) *enterType = dle45degree;

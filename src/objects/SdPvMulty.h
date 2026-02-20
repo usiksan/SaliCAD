@@ -23,6 +23,8 @@ class SdPvMulty
     //!
     SdPvMulty() : mState(spmNone) {}
 
+    SdPvMulty( const Prop &val ) : mPropValue(val), mState(spmSingle) {}
+
 
     const Prop &value() const { return mPropValue; }
 

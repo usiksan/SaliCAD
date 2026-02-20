@@ -109,7 +109,7 @@ void SdModeCNetWire::propGetFromBar()
   SdPropBarWire *bar = dynamic_cast<SdPropBarWire*>( SdWCommand::mbarTable[PB_WIRE] );
   if( bar ) {
     QString wireName;
-    bar->getPropWire( &(sdGlobalProp->mWireProp), &(sdGlobalProp->mWireEnterType), &wireName );
+    bar->getPropWire( sdGlobalProp->mWireProp, &(sdGlobalProp->mWireEnterType), &wireName );
     if( getStep() ) {
       //If wire enter in process then perhaps net union. Detect it
       if( mNetName != wireName ) {
@@ -151,7 +151,7 @@ void SdModeCNetWire::propSetToBar()
   {
   SdPropBarWire *bar = dynamic_cast<SdPropBarWire*>( SdWCommand::mbarTable[PB_WIRE] );
   if( bar )
-    bar->setPropWire( &(sdGlobalProp->mWireProp), mEditor->getPPM(), sdGlobalProp->mWireEnterType, mNetName );
+    bar->setPropWire( sdGlobalProp->mWireProp, mEditor->getPPM(), sdGlobalProp->mWireEnterType, mNetName );
   }
 
 

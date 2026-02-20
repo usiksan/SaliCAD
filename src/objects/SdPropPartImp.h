@@ -18,7 +18,7 @@ Description
 #include "SdPvAngle.h"
 #include "SdPvStratum.h"
 #include "SdJsonIO.h"
-
+#include "objects/SdPvMulty.h"
 
 //!
 //! \brief The SdPropPartImp struct - Part implementation properties
@@ -47,5 +47,8 @@ struct SdPropPartImp
     //!
     void swap( SdPropPartImp &other );
   };
+
+
+using SdPropComposerPartImp = SdPropComposer<SdPropPartImp, &SdPropPartImp::mAngle, &SdPropPartImp::mSide>;
 
 #endif // SDPARTIMPPROP_H

@@ -66,50 +66,76 @@ SdPropBarPartPin::SdPropBarPartPin(const QString title) :
 
 
 
-void SdPropBarPartPin::setPropPartPin(SdPropPartPin *propPartPin)
+void SdPropBarPartPin::setPropPartPin(const SdPropComposerPartPin &propPartPin)
   {
-  if( propPartPin ) {
-    //Set current layer
-    updateEditObjectProp( dctPart, stmTop | stmBottom, propPartPin->mLayer.layer(false) );
+  //Set current layer
+  auto &propLayer = propPartPin.get<&SdPropPartPin::mLayer>();
+  if( propLayer.isSingle() )
+    updateEditObjectProp( dctPart, stmTop | stmBottom, propLayer.value().layer(false) );
+  else
+    updateEditObjectProp( dctPart, stmTop | stmBottom, nullptr );
 
+  auto &propSide = propPartPin.get<&SdPropPartPin::mSide>();
+  if( propSide.isSingle() ) {
     //Set current pin side
-    switch( propPartPin->mSide.value() ) {
+    switch( propSide.value().value() ) {
       case stmTop    : mPinSide->setCurrentIndex(1); break;
       case stmBottom : mPinSide->setCurrentIndex(2); break;
       case stmThrough  : mPinSide->setCurrentIndex(3); break;
       default: mPinSide->setCurrentIndex(0);
       }
-
-    //Set current pin type
-    //qDebug() << "setPropPartPin" << propPartPin->mPinType.str();
-    mPinType->setCurrentText( propPartPin->mPinType.string() );
-    pinTypeHistory.reorderComboBoxString( mPinType );
     }
+  else mPinSide->setCurrentIndex(0);
+
+  auto &propType = propPartPin.get<&SdPropPartPin::mPinType>();
+  //Set current pin type
+  mPinType->setCurrentText( propType.isSingle() ? propType.value().string() : QString{} );
+  pinTypeHistory.reorderComboBoxString( mPinType );
+  }
+
+
+
+void SdPropBarPartPin::getPropPartPin(SdPropComposerPartPin &propPartPin)
+  {
+  propPartPin.clear();
+  //Store layer if setted
+  SdLayer *layer = getSelectedLayer();
+  if( layer )
+    propPartPin.get<&SdPropPartPin::mLayer>().reset( SdPvLayer(layer) );
+
+  //Get pin side
+  auto &propSide = propPartPin.get<&SdPropPartPin::mSide>();
+  int side = mPinSide->currentIndex();
+  switch( side ) {
+    case 1 : propSide.reset(stmTop); break;
+    case 2 : propSide.reset(stmBottom); break;
+    case 3 : propSide.reset(stmThrough); break;
+    }
+
+  //Get current pin type
+  QString pinType = mPinType->currentText();
+  if( !pinType.isEmpty() )
+    propPartPin.get<&SdPropPartPin::mPinType>().reset( SdPvString(pinType) );
   }
 
 
 
 
-void SdPropBarPartPin::getPropPartPin(SdPropPartPin *propPartPin)
+void SdPropBarPartPin::setPropPartPin( const SdPropPartPin &propPartPin)
   {
-  if( propPartPin ) {
-    //Get current layer
-    SdLayer *layer = getSelectedLayer();
-    if( layer )
-      propPartPin->mLayer = layer;
+  SdPropComposerPartPin composerPartPin;
+  composerPartPin.reset( propPartPin );
+  setPropPartPin( composerPartPin );
+  }
 
-    int side = mPinSide->currentIndex();
-    switch( side ) {
-      case 1 : propPartPin->mSide = stmTop; break;
-      case 2 : propPartPin->mSide = stmBottom; break;
-      case 3 : propPartPin->mSide = stmThrough; break;
-      }
 
-    //Get current pin type
-    QString pinType = mPinType->currentText();
-    if( !pinType.isEmpty() )
-      propPartPin->mPinType = pinType;
-    }
+
+
+void SdPropBarPartPin::getPropPartPin(SdPropPartPin &propPartPin)
+  {
+  SdPropComposerPartPin composerPartPin;
+  getPropPartPin( composerPartPin );
+  composerPartPin.store( propPartPin );
   }
 
 

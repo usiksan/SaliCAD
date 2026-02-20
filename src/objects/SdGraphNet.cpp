@@ -68,7 +68,7 @@ void SdGraphNet::cloneFrom(const SdObject *src, SdCopyMap &copyMap, bool next)
 //!
 void SdGraphNet::json(SdJsonWriter &js) const
   {
-  js.jsonString( QStringLiteral("netName"), mNetName );
+  mNetName.json( QStringLiteral("netName"), js );
   SdGraph::json( js );
   }
 
@@ -83,7 +83,7 @@ void SdGraphNet::json(SdJsonWriter &js) const
 //!
 void SdGraphNet::json(const SdJsonReader &js)
   {
-  js.jsonString( QStringLiteral("netName"), mNetName );
+  mNetName.json( QStringLiteral("netName"), js );
   SdGraph::json( js );
   }
 

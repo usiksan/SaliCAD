@@ -14,6 +14,8 @@ Description
 #ifndef SDPROPBARSYMIMP_H
 #define SDPROPBARSYMIMP_H
 
+#include "objects/SdPropSymImp.h"
+
 #include <QToolBar>
 
 struct SdPropSymImp;
@@ -33,8 +35,11 @@ class SdPropBarSymImp : public QToolBar
   public:
     SdPropBarSymImp( const QString title );
 
-    void setPropSymImp( SdPropSymImp *propSymImp );
-    void getPropSymImp( SdPropSymImp *propSymImp );
+    void setPropSymImp( const SdPropSymImp &propSymImp );
+    void getPropSymImp( SdPropSymImp &propSymImp );
+
+    void setPropSymImp( const SdPropComposerSymImp &propSymImp );
+    void getPropSymImp( SdPropComposerSymImp &propSymImp );
 
   signals:
     //On property changed by user

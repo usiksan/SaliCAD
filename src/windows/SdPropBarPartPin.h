@@ -26,8 +26,11 @@ class SdPropBarPartPin : public SdPropBar
   public:
     SdPropBarPartPin( const QString title );
 
-    void setPropPartPin( SdPropPartPin *propPartPin );
-    void getPropPartPin( SdPropPartPin *propPartPin );
+    void setPropPartPin( const SdPropPartPin &propPartPin );
+    void getPropPartPin( SdPropPartPin &propPartPin );
+
+    void setPropPartPin( const SdPropComposerPartPin &propPartPin );
+    void getPropPartPin( SdPropComposerPartPin &propPartPin );
 
   private slots:
     void setPinType();

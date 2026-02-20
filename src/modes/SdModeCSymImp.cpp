@@ -88,7 +88,7 @@ void SdModeCSymImp::propGetFromBar()
   {
   SdPropBarSymImp *sbar = dynamic_cast<SdPropBarSymImp*>( SdWCommand::getModeBar(PB_SYM_IMP) );
   if( sbar ) {
-    sbar->getPropSymImp( &(sdGlobalProp->mSymImpProp) );
+    sbar->getPropSymImp( sdGlobalProp->mSymImpProp );
     update();
     }
   }
@@ -100,7 +100,7 @@ void SdModeCSymImp::propSetToBar()
   {
   SdPropBarSymImp *sbar = dynamic_cast<SdPropBarSymImp*>( SdWCommand::getModeBar(PB_SYM_IMP) );
   if( sbar ) {
-    sbar->setPropSymImp( &(sdGlobalProp->mSymImpProp) );
+    sbar->setPropSymImp( sdGlobalProp->mSymImpProp );
     }
   }
 

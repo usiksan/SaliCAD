@@ -17,6 +17,7 @@ Description
 #define SDDLAYERS_H
 
 #include "objects/SdProject.h"
+#include "objects/SdPvStratum.h"
 
 #include <QDialog>
 #include <QSet>
@@ -36,7 +37,7 @@ class SdDLayers : public QDialog
     SdProject    *mProject;         //!< Active project, on witch layers dialog called
     QStringList   mList;            //!< List of id's edited layers
     QSet<QString> mActualList;      //!< List of id's minimum layer set
-    int           mStratumMask;     //!< Stratum mask to remove all outline layers
+    SdPvStratum   mStratumMask;     //!< Stratum mask to remove all outline layers
 
     static int mShow;    //Define show all, actual or used layers
   public:

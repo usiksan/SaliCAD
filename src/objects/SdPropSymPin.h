@@ -17,7 +17,7 @@ Description
 
 #include "SdPvLayer.h"
 #include "SdPvInt.h"
-
+#include "objects/SdPvMulty.h"
 
 
 //!
@@ -47,5 +47,8 @@ struct SdPropSymPin
     //!
     void swap( SdPropSymPin &other );
   };
+
+using SdPropComposerSymPin = SdPropComposer<SdPropSymPin, &SdPropSymPin::mLayer, &SdPropSymPin::mPinType>;
+
 
 #endif // SDSYMPINPROP_H

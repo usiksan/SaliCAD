@@ -70,32 +70,50 @@ SdPropBarSymImp::SdPropBarSymImp(const QString title) :
 
 
 
-void SdPropBarSymImp::setPropSymImp(SdPropSymImp *propSymImp)
+void SdPropBarSymImp::setPropSymImp(const SdPropSymImp &propSymImp)
   {
-  if( propSymImp ) {
-    //Set angle
-    setDirection( propSymImp->mAngle.as360() );
-
-    //Set mirror
-    mMirror->setChecked( propSymImp->mMirror.asBool() );
-    }
+  SdPropComposerSymImp propComposerSymImp;
+  propComposerSymImp.reset( propSymImp );
+  setPropSymImp( propComposerSymImp );
   }
 
 
 
 
-void SdPropBarSymImp::getPropSymImp(SdPropSymImp *propSymImp)
+void SdPropBarSymImp::getPropSymImp(SdPropSymImp &propSymImp)
   {
-  if( propSymImp ) {
-    //Get direction
-    if( mDir0->isChecked() ) propSymImp->mAngle = da0;
-    else if( mDir90->isChecked() ) propSymImp->mAngle = da90;
-    else if( mDir180->isChecked() ) propSymImp->mAngle = da180;
-    else if( mDir270->isChecked() ) propSymImp->mAngle = da270;
+  SdPropComposerSymImp propComposerSymImp;
+  getPropSymImp( propComposerSymImp );
+  propComposerSymImp.store( propSymImp );
+  }
 
-    if( mMirror->isChecked() ) propSymImp->mMirror = 1;
-    else propSymImp->mMirror = 0;
-    }
+
+
+void SdPropBarSymImp::setPropSymImp(const SdPropComposerSymImp &propSymImp)
+  {
+  //Set angle
+  auto &propAngle = propSymImp.get<&SdPropSymImp::mAngle>();
+  setDirection( propAngle.isSingle() ? propAngle.value().as360() : -1 );
+
+  //Set mirror
+  auto &propMirror = propSymImp.get<&SdPropSymImp::mMirror>();
+  mMirror->setChecked( propMirror.isSingle() && propMirror.value().asBool() );
+  }
+
+
+
+
+void SdPropBarSymImp::getPropSymImp(SdPropComposerSymImp &propSymImp)
+  {
+  propSymImp.clear();
+  //Get direction
+  auto &propAngle = propSymImp.get<&SdPropSymImp::mAngle>();
+  if( mDir0->isChecked() ) propAngle.reset(da0);
+  else if( mDir90->isChecked() ) propAngle.reset(da90);
+  else if( mDir180->isChecked() ) propAngle.reset(da180);
+  else if( mDir270->isChecked() ) propAngle.reset(da270);
+
+  propSymImp.get<&SdPropSymImp::mMirror>().reset( mMirror->isChecked() ? 1 : 0 );
   }
 
 

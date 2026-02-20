@@ -114,7 +114,7 @@ void SdModeCPartPin::propGetFromBar()
   else if( getStep() == sPlacePin ) {
     SdPropBarPartPin *sbar = dynamic_cast<SdPropBarPartPin*>( SdWCommand::getModeBar(PB_PART_PIN) );
     if( sbar ) {
-      sbar->getPropPartPin( &(sdGlobalProp->mPartPinProp) );
+      sbar->getPropPartPin( sdGlobalProp->mPartPinProp );
       mEditor->setFocus();
       update();
       }
@@ -137,7 +137,7 @@ void SdModeCPartPin::propSetToBar()
     }
   else if( getStep() == sPlacePin ) {
     SdPropBarPartPin *sbar = dynamic_cast<SdPropBarPartPin*>( SdWCommand::getModeBar(PB_PART_PIN) );
-    if( sbar ) sbar->setPropPartPin( &(sdGlobalProp->mPartPinProp) );
+    if( sbar ) sbar->setPropPartPin( sdGlobalProp->mPartPinProp );
     }
   }
 

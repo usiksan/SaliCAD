@@ -58,7 +58,6 @@ class SdPvInt : public SdPv<int,SdPvInt>
     //! \param js  JSON reader object
     //!
     void       json( const QString key, const SvJsonReader &js ) { js.jsonInt( key, mValue ); }
-
   };
 
 

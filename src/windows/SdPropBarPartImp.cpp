@@ -44,7 +44,7 @@ SdPropBarPartImp::SdPropBarPartImp(const QString title) :
   mDirection->addItem( QString("180.000") );
   mDirection->addItem( QString("270.000") );
   //Append from history
-  for( const QString &s : prevAngle )
+  for( const QString &s : std::as_const(prevAngle) )
     mDirection->addItem( s );
 
   //on complete editing
@@ -99,36 +99,62 @@ SdPropBarPartImp::SdPropBarPartImp(const QString title) :
 
 
 
-void SdPropBarPartImp::setPropPartImp(SdPropPartImp *propPartImp)
+void SdPropBarPartImp::setPropPartImp(const SdPropPartImp &propPartImp)
   {
-  //Update grid align button
-  mAlignToGrid->setChecked( SdEnvir::instance()->mCursorAlignGrid );
-
-  if( propPartImp ) {
-    //Set angle
-    mDirection->setCurrentText( propPartImp->mAngle.toString() );
-    reorderDirection();
-
-    //Set bottom side
-    mBottom->setChecked( propPartImp->mSide.isBottom() );
-    mTop->setChecked( propPartImp->mSide.isTop() );
-    }
+  SdPropComposerPartImp propComposerPartImp;
+  propComposerPartImp.reset( propPartImp );
+  setPropPartImp( propComposerPartImp );
   }
 
 
 
 
-void SdPropBarPartImp::getPropPartImp(SdPropPartImp *propPartImp)
+void SdPropBarPartImp::getPropPartImp(SdPropPartImp &propPartImp)
   {
-  if( propPartImp ) {
-    //Get direction
-    QString angle = mDirection->currentText();
-    if( !angle.isEmpty() )
-      propPartImp->mAngle = SdPvAngle::fromString( angle );
+  SdPropComposerPartImp propComposerPartImp;
+  getPropPartImp( propComposerPartImp );
+  propComposerPartImp.store( propPartImp );
+  }
 
-    if( mBottom->isChecked() && !mTop->isChecked() ) propPartImp->mSide = stmBottom;
-    if( !mBottom->isChecked() && mTop->isChecked() ) propPartImp->mSide = stmTop;
+
+
+
+
+void SdPropBarPartImp::setPropPartImp(const SdPropComposerPartImp &propPartImp)
+  {
+  //Update grid align button
+  mAlignToGrid->setChecked( SdEnvir::instance()->mCursorAlignGrid );
+
+  auto &propAngle = propPartImp.get<&SdPropPartImp::mAngle>();
+  if( propAngle.isSingle() ) {
+    //Set angle
+    mDirection->setCurrentText( propAngle.value().toString() );
+    reorderDirection();
     }
+  else mDirection->setCurrentText( QString{} );
+
+  //Set bottom side
+  auto &propSide = propPartImp.get<&SdPropPartImp::mSide>();
+  mBottom->setChecked( propSide.isSingle() && propSide.value().isBottom() );
+  mTop->setChecked( propSide.isSingle() && propSide.value().isTop() );
+  }
+
+
+
+
+void SdPropBarPartImp::getPropPartImp(SdPropComposerPartImp &propPartImp)
+  {
+  propPartImp.clear();
+
+  //Get direction
+  auto &propAngle = propPartImp.get<&SdPropPartImp::mAngle>();
+  QString angle = mDirection->currentText();
+  if( !angle.isEmpty() )
+    propAngle.reset( SdPvAngle::fromString( angle ) );
+
+  auto &propSide = propPartImp.get<&SdPropPartImp::mSide>();
+  if( mBottom->isChecked() && !mTop->isChecked() ) propSide.reset(stmBottom);
+  if( !mBottom->isChecked() && mTop->isChecked() ) propSide.reset(stmTop);
   }
 
 

@@ -39,8 +39,11 @@ class SdPropBarPolygon : public SdPropBarStratum
   public:
     SdPropBarPolygon( const QString title );
 
-    void setPropPolygon(SdPropPolygon *propPolygon, double ppm, int enterType , const QStringList list);
-    void getPropPolygon( SdPropPolygon *propPolygon, int *enterType );
+    void setPropPolygon( const SdPropPolygon &propPolygon, double ppm, int enterType , const QStringList list);
+    void getPropPolygon( SdPropPolygon &propPolygon, int *enterType );
+
+    void setPropPolygon( const SdPropComposerPolygon &propPolygon, double ppm, int enterType , const QStringList list);
+    void getPropPolygon( SdPropComposerPolygon &propPolygon, int *enterType );
 
   private:
     void setVertexType( int type );

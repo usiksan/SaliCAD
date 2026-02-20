@@ -28,13 +28,6 @@ Description
 #define spsRoadProp    0x080
 #define spsPolygonProp 0x100
 
-using SdPropComposerSymPin = SdPropComposer<SdPropSymPin, &SdPropSymPin::mLayer, &SdPropSymPin::mPinType>;
-using SdPropComposerPartPin = SdPropComposer<SdPropPartPin, &SdPropPartPin::mLayer, &SdPropPartPin::mPinType, &SdPropPartPin::mSide>;
-using SdPropComposerSymImp = SdPropComposer<SdPropSymImp, &SdPropSymImp::mAngle, &SdPropSymImp::mMirror>;
-using SdPropComposerPartImp = SdPropComposer<SdPropPartImp, &SdPropPartImp::mAngle, &SdPropPartImp::mSide>;
-using SdPropComposerRoad = SdPropComposer<SdPropRoad, &SdPropRoad::mNetName, &SdPropRoad::mStratum, &SdPropRoad::mWidth>;
-using SdPropComposerPolygon = SdPropComposer<SdPropPolygon, &SdPropPolygon::mGap, &SdPropPolygon::mNetName, &SdPropPolygon::mStratum>;
-using SdPropComposerVia = SdPropComposer<SdPropVia, &SdPropVia::mNetName, &SdPropVia::mPadType, &SdPropVia::mStratum>;
 using SdPropMultyString = SdPvMulty<SdPvString>;
 
 struct SdPropSelected

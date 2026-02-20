@@ -19,7 +19,7 @@ Description
 #include "SdPvInt.h"
 #include "SdPvString.h"
 #include "SdPvStratum.h"
-
+#include "objects/SdPvMulty.h"
 
 //!
 //! \brief The SdPropPartPin struct - Part pin properties
@@ -49,5 +49,8 @@ struct SdPropPartPin
     //!
     void swap( SdPropPartPin &other );
   };
+
+using SdPropComposerPartPin = SdPropComposer<SdPropPartPin, &SdPropPartPin::mLayer, &SdPropPartPin::mPinType, &SdPropPartPin::mSide>;
+
 
 #endif // SDPARTPINPROP_H

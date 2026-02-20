@@ -163,33 +163,33 @@ void SdModeSelect::propGetFromBar()
     case PB_SYM_PIN : {
       SdPropBarSymPin  *barSymPin  = dynamic_cast<SdPropBarSymPin*>(SdWCommand::getModeBar(PB_SYM_PIN));
       barSymPin->getPropSymPin( mLocalProp.mSymPinProp );
-      mLocalProp.setLayer( mLocalProp.mSymPinProp.mLayer );
+      mLocalProp.setLayer( mLocalProp.mSymPinProp.get<&SdPropSymPin::mLayer>() );
       }
       break;
     case PB_PART_PIN : {
       SdPropBarPartPin *barPartPin = dynamic_cast<SdPropBarPartPin*>(SdWCommand::getModeBar(PB_PART_PIN));
-      barPartPin->getPropPartPin( &(mLocalProp.mPartPinProp) );
-      mLocalProp.setLayer( mLocalProp.mPartPinProp.mLayer );
+      barPartPin->getPropPartPin( mLocalProp.mPartPinProp );
+      mLocalProp.setLayer( mLocalProp.mPartPinProp.get<&SdPropPartPin::mLayer>() );
       }
       break;
     case PB_SYM_IMP : {
       SdPropBarSymImp  *barSymImp  = dynamic_cast<SdPropBarSymImp*>(SdWCommand::getModeBar(PB_SYM_IMP));
-      barSymImp->getPropSymImp( &(mLocalProp.mSymImpProp) );
+      barSymImp->getPropSymImp( mLocalProp.mSymImpProp );
       }
       break;
     case PB_PART_IMP : {
       SdPropBarPartImp *barPartImp = dynamic_cast<SdPropBarPartImp*>(SdWCommand::getModeBar(PB_PART_IMP));
-      barPartImp->getPropPartImp( &(mLocalProp.mPartImpProp) );
+      barPartImp->getPropPartImp( mLocalProp.mPartImpProp );
       }
       break;
     case PB_ROAD : {
       SdPropBarRoad *barRoad = dynamic_cast<SdPropBarRoad*>(SdWCommand::getModeBar(PB_ROAD) );
-      barRoad->getPropRoad( &(mLocalProp.mRoadProp), &(mLocalProp.mViaProp), &(mLocalProp.mEnterType) );
+      barRoad->getPropRoad( mLocalProp.mRoadProp, mLocalProp.mViaProp, &(mLocalProp.mEnterType) );
       }
       break;
     case PB_POLYGON : {
       SdPropBarPolygon *barPolygon = dynamic_cast<SdPropBarPolygon*>(SdWCommand::getModeBar(PB_POLYGON) );
-      barPolygon->getPropPolygon( &(mLocalProp.mPolygonProp), &(mLocalProp.mEnterType) );
+      barPolygon->getPropPolygon( mLocalProp.mPolygonProp, &(mLocalProp.mEnterType) );
       }
       break;
     }
@@ -250,27 +250,27 @@ void SdModeSelect::propSetToBar()
       break;
     case PB_PART_PIN : {
       SdPropBarPartPin *barPartPin = dynamic_cast<SdPropBarPartPin*>(SdWCommand::getModeBar(PB_PART_PIN));
-      barPartPin->setPropPartPin( &(mLocalProp.mPartPinProp) );
+      barPartPin->setPropPartPin( mLocalProp.mPartPinProp );
       }
       break;
     case PB_SYM_IMP : {
       SdPropBarSymImp  *barSymImp  = dynamic_cast<SdPropBarSymImp*>(SdWCommand::getModeBar(PB_SYM_IMP));
-      barSymImp->setPropSymImp( &(mLocalProp.mSymImpProp) );
+      barSymImp->setPropSymImp( mLocalProp.mSymImpProp );
       }
       break;
     case PB_PART_IMP : {
       SdPropBarPartImp *barPartImp = dynamic_cast<SdPropBarPartImp*>(SdWCommand::getModeBar(PB_PART_IMP));
-      barPartImp->setPropPartImp( &(mLocalProp.mPartImpProp) );
+      barPartImp->setPropPartImp( mLocalProp.mPartImpProp );
       }
       break;
     case PB_ROAD : {
       SdPropBarRoad *barRoad = dynamic_cast<SdPropBarRoad*>(SdWCommand::getModeBar(PB_ROAD) );
-      barRoad->setPropRoad( &(mLocalProp.mRoadProp), &(mLocalProp.mViaProp), getPPM(), mLocalProp.mEnterType );
+      barRoad->setPropRoad( mLocalProp.mRoadProp, mLocalProp.mViaProp, getPPM(), mLocalProp.mEnterType );
       }
       break;
     case PB_POLYGON : {
       SdPropBarPolygon *barPolygon = dynamic_cast<SdPropBarPolygon*>(SdWCommand::getModeBar(PB_POLYGON) );
-      barPolygon->setPropPolygon( &(mLocalProp.mPolygonProp), getPPM(), mLocalProp.mEnterType, mObject->getProject()->netList() );
+      barPolygon->setPropPolygon( mLocalProp.mPolygonProp, getPPM(), mLocalProp.mEnterType, mObject->getProject()->netList() );
       }
       break;
     }
@@ -860,14 +860,15 @@ void SdModeSelect::beginMove(SdPoint p)
 //Moving process
 void SdModeSelect::dragMove(SdPoint p)
   {
-  SdPoint offset = p.sub(mPrevMove);
-  mFragment.forEach( dctAll, [offset] (SdObject *obj) ->bool {
+  //SdPoint offset = p.sub(mPrevMove);
+  QTransform map = p.transformMoveFrom(mPrevMove);
+  mFragment.forEach( dctAll, [map] (SdObject *obj) ->bool {
     SdGraph *graph = dynamic_cast<SdGraph*>(obj);
     if( graph != nullptr )
-      graph->move( offset );
+      graph->transform( map, SdPvAngle{} );
     return true;
     });
-  mPrevMove.move( offset );
+  mPrevMove = p;
   update();
   }
 
@@ -1020,10 +1021,11 @@ void SdModeSelect::groupRotation()
 
   //Поворот как группы компонентов
   if( mFragment.count() && getStep() == smSelPresent ) {
-    mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
-      SdGraph *graph = dynamic_cast<SdGraph*>(obj);
-      if( graph != nullptr )
-        graph->rotate( mCurPoint, da90 );
+    QTransform map( mCurPoint.transformRotation( SdPvAngle(da90) )   );
+    mFragment.forEach( dctAll, [map] (SdObject *obj) -> bool {
+      SdPtr<SdGraph> graph(obj);
+      if( graph.isValid() )
+        graph->transform( map, da90 );
       return true;
       });
     }

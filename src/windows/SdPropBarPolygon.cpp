@@ -94,50 +94,70 @@ SdPropBarPolygon::SdPropBarPolygon(const QString title) :
 
 
 
-void SdPropBarPolygon::setPropPolygon(SdPropPolygon *propPolygon, double ppm, int enterType, const QStringList list )
+void SdPropBarPolygon::setPropPolygon(const SdPropPolygon &propPolygon, double ppm, int enterType, const QStringList list )
   {
-  if( propPolygon ) {
-    //Set current stratum
-    setSelectedStratum( propPolygon->mStratum );
-
-    //Set current width
-    mPPM = ppm;
-    if( propPolygon->mGap.isValid() ) {
-      mGap->setCurrentText( propPolygon->mGap.log2Phis(mPPM)  );
-      prevGap.reorderComboBoxDoubleString( mGap );
-      }
-    else
-      mGap->setCurrentText( QString()  );
-
-    //line enter type
-    setVertexType( enterType );
-
-    //Fill net list
-    mWireName->addItems( list );
-    //Current road name name
-    //qDebug() << "polygon name" << propPolygon->mNetName.str();
-    mWireName->setCurrentText( propPolygon->mNetName.str() );
-    }
+  SdPropComposerPolygon propComposerPolygon;
+  propComposerPolygon.reset( propPolygon );
+  setPropPolygon( propComposerPolygon, ppm, enterType, list );
   }
 
 
 
 
-void SdPropBarPolygon::getPropPolygon(SdPropPolygon *propPolygon, int *enterType)
+void SdPropBarPolygon::getPropPolygon(SdPropPolygon &propPolygon, int *enterType)
   {
-  if( propPolygon ) {
-    int stratum = getSelectedStratum();
-    if( stratum )
-      propPolygon->mStratum = stratum;
+  SdPropComposerPolygon propComposerPolygon;
+  getPropPolygon( propComposerPolygon, enterType );
+  propComposerPolygon.store( propPolygon );
+  }
 
-    if( !mGap->currentText().isEmpty() )
-      propPolygon->mGap.setFromPhis( mGap->currentText(), mPPM );
 
-    //Net name
-    QString netName = mWireName->currentText();
-    if( !netName.isEmpty() )
-      propPolygon->mNetName = netName;
+
+void SdPropBarPolygon::setPropPolygon(const SdPropComposerPolygon &propPolygon, double ppm, int enterType, const QStringList list)
+  {
+  //Set current stratum
+  auto &propStratum = propPolygon.get<&SdPropPolygon::mStratum>();
+  setSelectedStratum( propStratum.isSingle() ? propStratum.value() : SdPvStratum(0) );
+
+  //Set current gap
+  mPPM = ppm;
+  auto &propGap = propPolygon.get<&SdPropPolygon::mGap>();
+  if( propGap.isSingle() ) {
+    mGap->setCurrentText( propGap.value().log2Phis(mPPM)  );
+    prevGap.reorderComboBoxDoubleString( mGap );
     }
+  else
+    mGap->setCurrentText( QString()  );
+
+  //line enter type
+  setVertexType( enterType );
+
+  //Fill net list
+  mWireName->addItems( list );
+  //Current road name name
+  auto &propNetName = propPolygon.get<&SdPropPolygon::mNetName>();
+  mWireName->setCurrentText( propNetName.isSingle() ? propNetName.value.string() : QString{} );
+  }
+
+
+
+
+void SdPropBarPolygon::getPropPolygon(SdPropComposerPolygon &propPolygon, int *enterType)
+  {
+  propPolygon.clear();
+  int stratum = getSelectedStratum();
+  if( stratum )
+    propPolygon.get<&SdPropPolygon::mStratum>().reset(stratum);
+
+  //Store gap if setted
+  if( !mGap->currentText().isEmpty() )
+    propPolygon.get<&SdPropPolygon::mGap>().reset( SdPvInt( mGap->currentText(), mPPM ) );
+
+  //Net name
+  QString netName = mWireName->currentText();
+  if( !netName.isEmpty() )
+    propPolygon.get<&SdPropPolygon::mNetName>().reset( netName );
+
   if( enterType ) {
     if( mEnterOrtho->isChecked() ) *enterType = dleOrtho;
     else if( mEnter45degree->isChecked() ) *enterType = dle45degree;

@@ -91,6 +91,22 @@ class SdPoint : public QPoint
     auto        transformFromOffset() const { return QTransform::fromTranslate( x(), y() ); }
 
     //!
+    //! \brief transformMoveFrom Constructs a transformation matrix that translates point p to the current position
+    //! \param p                 Source translation point
+    //! \return                  Transformation matrix
+    //!
+    QTransform  transformMoveFrom( SdPoint p ) const;
+
+    //!
+    //! \brief transformRotation Constructs a transformation matrix that performs a rotation by the specified angle around
+    //!                          a given point that serves as the center of rotation
+    //! \param angle             Rotation angle
+    //! \return                  Transformation matrix
+    //!
+    QTransform  transformRotation( SdPvAngle angle ) const;
+
+
+    //!
     //! \brief json Overloaded function to write object content into json writer
     //! \param js   Json writer
     //!

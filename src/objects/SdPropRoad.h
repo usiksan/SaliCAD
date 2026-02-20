@@ -18,6 +18,7 @@ Description
 #include "SdPvInt.h"
 #include "SdPvString.h"
 #include "SdPvStratum.h"
+#include "objects/SdPvMulty.h"
 
 //!
 //! \brief The SdPropRoad struct - Routing track properties for PCB traces
@@ -53,5 +54,7 @@ struct SdPropRoad
     //!
     void swap( SdPropRoad &other );
   };
+
+using SdPropComposerRoad = SdPropComposer<SdPropRoad, &SdPropRoad::mNetName, &SdPropRoad::mStratum, &SdPropRoad::mWidth>;
 
 #endif // SDROADPROP_H

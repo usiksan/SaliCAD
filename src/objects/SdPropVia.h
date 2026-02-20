@@ -16,7 +16,7 @@ Description
 
 #include "SdPvString.h"
 #include "SdPvStratum.h"
-
+#include "objects/SdPvMulty.h"
 
 //!
 //! \brief The SdPropVia struct - Via properties for PCB interlayer connections
@@ -53,5 +53,8 @@ struct SdPropVia
     //!
     void swap( SdPropVia &other );
   };
+
+using SdPropComposerVia = SdPropComposer<SdPropVia, &SdPropVia::mNetName, &SdPropVia::mPadType, &SdPropVia::mStratum>;
+
 
 #endif // SDPROPVIA_H

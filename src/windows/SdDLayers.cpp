@@ -185,7 +185,7 @@ void SdDLayers::fillLayerList()
   if( mShow == 0 ) {
     //Actual list
     SdEnvir::instance()->layerForEachConst( mEditObjectClass, [this] (SdLayer *layer) ->bool {
-      if( (layer->isUsage() || mActualList.contains(layer->id()))  && (layer->stratum() & mStratumMask) )
+      if( (layer->isUsage() || mActualList.contains(layer->id()))  && layer->stratum().isIntersect(mStratumMask) )
         mList.append( layer->id() );
       return true;
       });
@@ -193,7 +193,7 @@ void SdDLayers::fillLayerList()
   else if( mShow == 1 ) {
     //Used list
     SdEnvir::instance()->layerForEachConst( mEditObjectClass, [this] (SdLayer *layer) ->bool {
-      if( layer->isUsage()  && (layer->stratum() & mStratumMask) )
+      if( layer->isUsage()  && layer->stratum().isIntersect(mStratumMask) )
         mList.append( layer->id() );
       return true;
       });
@@ -201,7 +201,7 @@ void SdDLayers::fillLayerList()
   else {
     //All list
     SdEnvir::instance()->layerForEachConst( mEditObjectClass, [this] (SdLayer *layer) ->bool {
-      if( (layer->stratum() & mStratumMask) )
+      if( layer->stratum().isIntersect(mStratumMask) )
         mList.append( layer->id() );
       return true;
       });

@@ -16,19 +16,20 @@ Description
 
 #include "SdGraph.h"
 #include "SdPItemSheet.h"
+#include "objects/SdPvString.h"
 
 
 class SdGraphNet : public SdGraph
   {
   protected:
-    QString mNetName;
+    SdPvString mNetName;
   public:
     SdGraphNet();
     SdGraphNet( const QString netName );
 
     SdPItemSheet *getSheet() const { return dynamic_cast<SdPItemSheet*>(getParent()); }
 
-    QString       getNetName() const { return mNetName; }
+    QString       getNetName() const { return mNetName.string(); }
 
     virtual void  setNetName( const QString netName, SdUndo *undo );
 

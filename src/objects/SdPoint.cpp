@@ -293,6 +293,34 @@ void SdPoint::swap(SdPoint &p)
 
 
 
+//!
+//! \brief transformMoveFrom Constructs a transformation matrix that translates point p to the current position
+//! \param p                 Source translation point
+//! \return                  Transformation matrix
+//!
+QTransform SdPoint::transformMoveFrom(SdPoint p) const
+  {
+  return QTransform::fromTranslate( x() - p.x(), y() - p.y() );
+  }
+
+
+
+
+//!
+//! \brief transformRotation Constructs a transformation matrix that performs a rotation by the specified angle around
+//!                          a given point that serves as the center of rotation
+//! \param angle             Rotation angle
+//! \return                  Transformation matrix
+//!
+QTransform SdPoint::transformRotation(SdPvAngle angle) const
+  {
+  QTransform map( QTransform::fromTranslate( x(), y() ) );
+  map.rotate( angle.getDegree() );
+  map.translate( -x(), -y() );
+  }
+
+
+
 
 //!
 //! \brief json Overloaded function to write object content into json writer

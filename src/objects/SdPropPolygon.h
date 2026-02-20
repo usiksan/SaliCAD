@@ -17,6 +17,7 @@ Description
 #include "SdPvInt.h"
 #include "SdPvString.h"
 #include "SdPvStratum.h"
+#include "objects/SdPvMulty.h"
 
 //!
 //! \brief The SdPropPolygon struct - Polygon fill properties for PCB copper areas
@@ -52,5 +53,8 @@ struct SdPropPolygon
     //!
     void swap( SdPropPolygon &other );
   };
+
+
+using SdPropComposerPolygon = SdPropComposer<SdPropPolygon, &SdPropPolygon::mGap, &SdPropPolygon::mNetName, &SdPropPolygon::mStratum>;
 
 #endif // SDPROPPOLYGON_H

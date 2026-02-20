@@ -14,11 +14,12 @@ Description
 #ifndef SDPROPBARPARTIMP_H
 #define SDPROPBARPARTIMP_H
 
+#include "objects/SdPropPartImp.h"
+
 #include <QToolBar>
 #include <QComboBox>
 #include <QList>
 
-struct SdPropPartImp;
 
 class SdPropBarPartImp : public QToolBar
   {
@@ -41,9 +42,11 @@ class SdPropBarPartImp : public QToolBar
   public:
     SdPropBarPartImp( const QString title );
 
-    void setPropPartImp( SdPropPartImp *propPartImp );
-    void getPropPartImp( SdPropPartImp *propPartImp );
+    void setPropPartImp( const SdPropPartImp &propPartImp );
+    void getPropPartImp( SdPropPartImp &propPartImp );
 
+    void setPropPartImp( const SdPropComposerPartImp &propPartImp );
+    void getPropPartImp( SdPropComposerPartImp &propPartImp );
   signals:
     //On property changed by user
     void propChanged();

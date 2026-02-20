@@ -42,14 +42,16 @@ void SdPropBarStratum::setPlateAndTrace(SdPItemPlate *plate, SdLayerTrace trace)
 
 void SdPropBarStratum::setSelectedStratum(SdPvStratum stratum)
   {
-  for( int i = 0; i < mLayer->count(); i++ ) {
-    QString id = mLayer->itemData(i).toString();
-    if( id.isEmpty() )
-      continue;
-    SdLayer *layer = SdEnvir::instance()->layerGet( id );
-    if( stratum & layer->stratum() ) {
-      mLayer->setCurrentIndex(i);
-      return;
+  if( !stratum.isEmpty() ) {
+    for( int i = 0; i < mLayer->count(); i++ ) {
+      QString id = mLayer->itemData(i).toString();
+      if( id.isEmpty() )
+        continue;
+      SdLayer *layer = SdEnvir::instance()->layerGet( id );
+      if( stratum.isIntersect( layer->stratum() ) ) {
+        mLayer->setCurrentIndex(i);
+        return;
+        }
       }
     }
   mLayer->setCurrentText(QString());
