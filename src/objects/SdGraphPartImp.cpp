@@ -972,13 +972,13 @@ void SdGraphPartImp::drawStratum(SdContext *dc, SdPvStratum stratum)
 
   //Draw ident in plate context
   SdRect ov;
-  if( stratum.isMatchExact(0) || stratum.isMatchExact(stmThrough) ) {
+  if( stratum.isEmpty() || stratum == SdPvStratum(stmThrough) ) {
     dc->text( mIdent.mOrigin, ov, ident(), mIdent.mProp );
     dc->text( mValue.mOrigin, ov, value(), mValue.mProp );
     }
 
   //Draw part except ident and pins
-  if( stratum.isMatchExact(0) || stratum.isMatchExact(stmThrough) ) {
+  if( stratum.isEmpty() || stratum == SdPvStratum(stmThrough) ) {
     mPart->forEach( dctAll & ~(dctPartPin | dctIdent | dctValue), [dc] (SdObject *obj) -> bool {
       SdGraph *graph = dynamic_cast<SdGraph*>( obj );
       if( graph )
@@ -996,7 +996,7 @@ void SdGraphPartImp::drawStratum(SdContext *dc, SdPvStratum stratum)
 
 
 //Accum barriers for all pin pad. It allow accum clear pad, pad with clearance only or pad with clearance and road width
-void SdGraphPartImp::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const
+void SdGraphPartImp::accumBarriers(SdBarrierList &dest, SdPvStratum stratum, SdRuleId toWhich, const SdRuleBlock &blk) const
   {
   //Accum barriers for all pin pad
   SdPItemPlate *plate = getPlate();
@@ -1025,7 +1025,7 @@ void SdGraphPartImp::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId to
 
 
 
-void SdGraphPartImp::accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName) const
+void SdGraphPartImp::accumWindows(SdPolyWindowList &dest, SdPvStratum stratum, int gap, const QString netName) const
   {
   //Accum windows for all pin pads
 
@@ -1050,7 +1050,7 @@ bool SdGraphPartImp::isLinked(SdPoint a, SdPvStratum stratum, QString netName) c
   {
   //For each pin test connection
   for( const SdPartImpPin &pin : mPins )
-    if( pin.isConnected() && pin.mStratum.isMatchExact(stratum) && pin.getNetName() == netName && pin.mPosition == a )
+    if( pin.isConnected() && pin.mStratum.isIntersect(stratum) && pin.getNetName() == netName && pin.mPosition == a )
       return true;
   return false;
   }
@@ -1099,7 +1099,7 @@ void SdGraphPartImp::snapPoint(SdSnapInfo *snap)
     for( SdPartImpPin &pin : mPins )
       if( pin.isConnected() ) {
         //Perform snap only on connected pins
-        if( (snap->match( snapNearestPin ) || snap->mNetName == pin.getNetName()) && snap->mStratum.isMatchPartial(pin.mStratum) )
+        if( (snap->match( snapNearestPin ) || snap->mNetName == pin.getNetName()) && snap->mStratum.isIntersect(pin.mStratum) )
           snap->test( this, pin.mPosition, snapNearestPin | snapNearestNetPin );
         }
     }

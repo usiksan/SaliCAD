@@ -14,7 +14,6 @@ Description
 #ifndef SDPLATENETSEGMENT_H
 #define SDPLATENETSEGMENT_H
 
-#include "SdPoint.h"
 #include "SdPvStratum.h"
 #include "SdSegment.h"
 
@@ -22,11 +21,11 @@ Description
 struct SdPlateNetSegment
   {
     SdSegment     mSegment;
-    SdPvStratum mStratum;
+    SdPvStratum   mStratum;
     int           mSubNet;
 
     bool intersect( const SdPlateNetSegment &p ) const {
-      return mSubNet != p.mSubNet && mStratum.isMatchExact(p.mStratum) && (p.mSegment.isPointOn(mSegment.getP1()) || p.mSegment.isPointOn(mSegment.getP2()));
+      return mSubNet != p.mSubNet && mStratum == p.mStratum && (p.mSegment.isPointOn(mSegment.getP1()) || p.mSegment.isPointOn(mSegment.getP2()));
       }
   };
 

@@ -16,6 +16,7 @@ Description
 #define SDPARTVARIANT_H
 
 #include "SdObject.h"
+#include "objects/SdPoint.h"
 
 #define SD_TYPE_PART_VARIANT "PartVariant"
 

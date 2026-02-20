@@ -30,8 +30,8 @@ SdModeCLinearRegion::SdModeCLinearRegion(SdWEditorGraph *editor, SdProjectItem *
 void SdModeCLinearRegion::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sNextPoint ) {
-    ctx->setPen( sdGlobalProp->propLine( mObject->getClass() )->mWidth.getValue(), SdEnvir::instance()->getSysColor(scEnter),
-                 sdGlobalProp->propLine( mObject->getClass() )->mType.getValue() );
+    ctx->setPen( sdGlobalProp->propLine( mObject->getClass() )->mWidth, SdEnvir::instance()->getSysColor(scEnter),
+                 sdGlobalProp->propLine( mObject->getClass() )->mType );
     ctx->region( mList, false );
     ctx->line( mList.last(), mMiddle );
     if( mMiddle != mPrevMove )

@@ -16,6 +16,7 @@ Description
 #include "SdContext.h"
 #include "SdSelector.h"
 #include "SdJsonIO.h"
+#include "3dr/Sd3drModel.h"
 
 SdGraphLinearRegion::SdGraphLinearRegion() :
   SdGraphLinear(),

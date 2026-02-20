@@ -74,10 +74,10 @@ void SdPropBarSymImp::setPropSymImp(SdPropSymImp *propSymImp)
   {
   if( propSymImp ) {
     //Set angle
-    setDirection( propSymImp->mAngle.getValue() );
+    setDirection( propSymImp->mAngle.as360() );
 
     //Set mirror
-    mMirror->setChecked( propSymImp->mMirror.getValue() > 0 );
+    mMirror->setChecked( propSymImp->mMirror.asBool() );
     }
   }
 

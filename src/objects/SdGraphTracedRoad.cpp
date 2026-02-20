@@ -225,7 +225,7 @@ void SdGraphTracedRoad::transform(const QTransform &map, SdPvAngle)
 void SdGraphTracedRoad::setProp(SdPropSelected &prop)
   {
   //From global we can set only width
-  mProp.mWidth = prop.mRoadProp.mWidth;
+  prop.mRoadProp.get<&SdPropRoad::mWidth>().store( mProp.mWidth );
   }
 
 
@@ -330,7 +330,7 @@ void SdGraphTracedRoad::prepareMove(SdUndo *undo)
   //for flying point accum roads connected to end point
   getPlate()->forEach( dctTraceRoad | dctTraceVia, [this,tryP1,tryP2] (SdObject *obj) -> bool {
     SdGraphTraced *trace = dynamic_cast<SdGraphTracedRoad*>(obj);
-    if( trace != nullptr && trace->isMatchNetAndStratum( mProp.mNetName.str(), mProp.mStratum ) && trace != this ) {
+    if( trace != nullptr && trace->isMatchNetAndStratum( mProp.mNetName.string(), mProp.mStratum ) && trace != this ) {
       if( tryP1 )
         trace->selectByPoint( mSegment.getP1(), getSelector() );
       if( tryP2 )
@@ -387,7 +387,7 @@ bool SdGraphTracedRoad::getInfo(SdPoint p, QString &info, bool extInfo)
   {
   Q_UNUSED(extInfo)
   if( behindCursor( p ) ) {
-    info = QObject::tr("Net: ") + mProp.mNetName.str();
+    info = QObject::tr("Net: ") + mProp.mNetName.string();
     return true;
     }
   return false;
@@ -400,7 +400,7 @@ bool SdGraphTracedRoad::getInfo(SdPoint p, QString &info, bool extInfo)
 //Find snap point on object
 void SdGraphTracedRoad::snapPoint(SdSnapInfo *snap)
   {
-  if( snap->mStratum.match( mProp.mStratum ) ) {
+  if( snap->mStratum.isIntersect( mProp.mStratum ) ) {
     if( snap->match(snapNearestNetEnd) ) {
       snap->test( this, mSegment.getP1(), snapNearestNetEnd );
       snap->test( this, mSegment.getP2(), snapNearestNetEnd );
@@ -414,7 +414,7 @@ void SdGraphTracedRoad::snapPoint(SdSnapInfo *snap)
         snap->test( this, center.toPoint(), snapNearestNet );
         }
       }
-    if( snap->match(snapNearestNetNet) && snap->mNetName == mProp.mNetName.str() ) {
+    if( snap->match(snapNearestNetNet) && snap->mNetName == mProp.mNetName.string() ) {
       QLineF line( mSegment.getP1(), mSegment.getP2() );
       QLineF perp = line.normalVector();
       QPointF center = perp.center();
@@ -433,14 +433,14 @@ void SdGraphTracedRoad::snapPoint(SdSnapInfo *snap)
       if( snap->isCandidate(mSegment.getP1(), distance) ) {
         //Good candidate, check end point connections
         SdSelector sel;
-        accumLinkedTrace( this, mSegment.getP1(), mProp.mNetName.str(), &sel );
+        accumLinkedTrace( this, mSegment.getP1(), mProp.mNetName.string(), &sel );
         if( sel.count() == 0 || (sel.count() == 1 && sel.first()->getClass() == dctTraceRoad) )
           snap->test( this, mSegment.getP1(), snapEndPoint );
         }
       if( snap->isCandidate( mSegment.getP2(), distance ) ) {
         //Good candidate, check end point connections
         SdSelector sel;
-        accumLinkedTrace( this, mSegment.getP2(), mProp.mNetName.str(), &sel );
+        accumLinkedTrace( this, mSegment.getP2(), mProp.mNetName.string(), &sel );
         if( sel.count() == 0 || (sel.count() == 1 && sel.first()->getClass() == dctTraceRoad) )
           snap->test( this, mSegment.getP2(), snapEndPoint );
         }
@@ -454,7 +454,7 @@ void SdGraphTracedRoad::snapPoint(SdSnapInfo *snap)
 
 bool SdGraphTracedRoad::isPointOnNet(SdPoint p, SdPvStratum stratum, QString &netName, SdPvStratum &destStratum)
   {
-  if( mProp.mStratum.isMatchExact( stratum ) && mSegment.isPointOn( p ) ) {
+  if( mProp.mStratum == stratum && mSegment.isPointOn( p ) ) {
     if( netName == mProp.mNetName.string() )
       destStratum |= mProp.mStratum;
     else {
@@ -475,7 +475,7 @@ bool SdGraphTracedRoad::isPointOnNet(SdPoint p, SdPvStratum stratum, QString &ne
 
 void SdGraphTracedRoad::accumNetSegments(SdPlateNetContainer *netContainer)
   {
-  netContainer->addNetSegment( this, mProp.mNetName.str(), mProp.mStratum, mSegment.getP1(), mSegment.getP2() );
+  netContainer->addNetSegment( this, mProp.mNetName.string(), mProp.mStratum, mSegment.getP1(), mSegment.getP2() );
   }
 
 
@@ -487,7 +487,7 @@ void SdGraphTracedRoad::accumNetSegments(SdPlateNetContainer *netContainer)
 
 void SdGraphTracedRoad::drawStratum(SdContext *dcx, SdPvStratum stratum)
   {
-  if( mProp.mStratum.isMatchPartial(stratum) ) {
+  if( mProp.mStratum.isIntersect(stratum) ) {
     //Layer of road
     SdLayer *layer = getLayer();
     if( layer != nullptr && layer->isVisible() ) {
@@ -509,7 +509,7 @@ void SdGraphTracedRoad::drawStratum(SdContext *dcx, SdPvStratum stratum)
 
 
 
-void SdGraphTracedRoad::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const
+void SdGraphTracedRoad::accumBarriers(SdBarrierList &dest, SdPvStratum stratum, SdRuleId toWhich, const SdRuleBlock &blk) const
   {
   //Make around line actagon
   //
@@ -521,16 +521,16 @@ void SdGraphTracedRoad::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId
   //
   //Treat road as vector with "angle" and "len" and mA as start point
   //
-  if( mProp.mStratum & stratum ) {
+  if( mProp.mStratum.isIntersect(stratum) ) {
     double angle = mSegment.getAngleDegree();
     double len   = mSegment.getLenght();
-    double halfWidth = mProp.mWidth.getValue() / 2;
+    double halfWidth = mProp.mWidth.value() / 2;
     //In accordings target compares we correct width of over polygon
     if( toWhich != ruleFree ) {
       if( toWhich == ruleRoadPad || toWhich == rulePadPad )
-        halfWidth += qMax( getPlate()->ruleForNet(mProp.mNetName.str(),ruleRoadPad), blk.mRules[ruleRoadPad]) + blk.mRules[ruleRoadWidth] / 2;
+        halfWidth += qMax( getPlate()->ruleForNet(mProp.mNetName.string(),ruleRoadPad), blk.mRules[ruleRoadPad]) + blk.mRules[ruleRoadWidth] / 2;
       else if( toWhich == ruleRoadRoad )
-        halfWidth += qMax( getPlate()->ruleForNet(mProp.mNetName.str(),ruleRoadRoad),blk.mRules[ruleRoadRoad]) + blk.mRules[ruleRoadWidth] / 2;
+        halfWidth += qMax( getPlate()->ruleForNet(mProp.mNetName.string(),ruleRoadRoad),blk.mRules[ruleRoadRoad]) + blk.mRules[ruleRoadWidth] / 2;
       }
     double d = halfWidth * 0.414213562;
     QPolygonF pgn;
@@ -552,7 +552,7 @@ void SdGraphTracedRoad::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId
     pgn.translate( mSegment.getP1().x(), mSegment.getP1().y() );
 
     SdBarrier bar;
-    bar.mNetName = mProp.mNetName.str();
+    bar.mNetName = mProp.mNetName.string();
     bar.mPolygon = pgn;
     dest.append( bar );
     }
@@ -564,16 +564,16 @@ void SdGraphTracedRoad::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId
 
 bool SdGraphTracedRoad::isMatchNetAndStratum(const QString netName, SdPvStratum stratum) const
   {
-  return mProp.mNetName.str() == netName && mProp.mStratum.match( stratum );
+  return mProp.mNetName.string() == netName && mProp.mStratum.isIntersect( stratum );
   }
 
 
 
 
-void SdGraphTracedRoad::accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName) const
+void SdGraphTracedRoad::accumWindows(SdPolyWindowList &dest, SdPvStratum stratum, int gap, const QString netName) const
   {
   //Test if match to stratum and not equal to netName
-  if( mProp.mNetName == netName || (mProp.mStratum & stratum) == 0 )
+  if( mProp.mNetName == netName || mProp.mStratum.isIntersect(stratum) )
     return;
   //We append 3 objects: over rectangle, 2 end solid filled circles
 
@@ -589,7 +589,7 @@ void SdGraphTracedRoad::accumWindows(SdPolyWindowList &dest, int stratum, int ga
   //
   double angle = mSegment.getAngleDegree();
   double len   = mSegment.getLenght();
-  double halfWidth = mProp.mWidth.getValue() / 2 + gap;
+  double halfWidth = mProp.mWidth.value() / 2 + gap;
   QPolygonF pgn;
   pgn << QPointF(  0,       -halfWidth )         //0
       << QPointF(  len,     -halfWidth ) //1
@@ -616,7 +616,7 @@ void SdGraphTracedRoad::accumWindows(SdPolyWindowList &dest, int stratum, int ga
 //Check if road linked to point
 bool SdGraphTracedRoad::isLinked(SdPoint a, SdPvStratum stratum, QString netName) const
   {
-  return mProp.mNetName == netName && mProp.mStratum.match(stratum) && (mSegment.getP1() == a || mSegment.getP2() == a);
+  return mProp.mNetName == netName && mProp.mStratum.isIntersect(stratum) && (mSegment.getP1() == a || mSegment.getP2() == a);
   }
 
 

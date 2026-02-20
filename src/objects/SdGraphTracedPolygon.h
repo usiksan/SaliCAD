@@ -87,9 +87,9 @@ class SdGraphTracedPolygon : public SdGraphTraced
     virtual bool      isPointOnNet(SdPoint p, SdPvStratum stratum, QString &netName, SdPvStratum &destStratum) override;
     virtual void      accumNetSegments( SdPlateNetContainer *netContainer ) override;
     virtual void      drawStratum(SdContext *dcx, SdPvStratum stratum) override;
-    virtual void accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const override;
+    virtual void      accumBarriers(SdBarrierList &dest, SdPvStratum stratum, SdRuleId toWhich, const SdRuleBlock &blk) const override;
     virtual bool      isMatchNetAndStratum(const QString netName, SdPvStratum stratum) const override;
-    virtual void      accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName ) const override;
+    virtual void      accumWindows(SdPolyWindowList &dest, SdPvStratum stratum, int gap, const QString netName ) const override;
     //Check if polygon linked to point
     virtual bool      isLinked( SdPoint a, SdPvStratum stratum, QString netName ) const override;
 

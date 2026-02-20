@@ -29,10 +29,10 @@ void SdLayerCache::rebuild(const SdLayerPtrMap &tab, SdLayerTrace tr)
   mCache = nullptr;
   for( int i = 0; i < stmCountMax; i++ ) {
     //Find layer with match stratum and trace type
-    int stratum = 1 << i;
+    SdPvStratum stratum( 1 << i );
     mMap[i] = nullptr; // tab.value(LID0_TRACE_DEFAULT);
     for( auto iter = tab.cbegin(); iter != tab.cend(); iter++ )
-      if( iter.value()->trace() == tr && (iter.value()->stratum() & stratum) ) {
+      if( iter.value()->trace() == tr && iter.value()->stratum().isIntersect(stratum) ) {
         mMap[i] = iter.value();
         break;
         }
@@ -42,10 +42,10 @@ void SdLayerCache::rebuild(const SdLayerPtrMap &tab, SdLayerTrace tr)
 
 
 //Return layer mapped to stratum
-SdLayer *SdLayerCache::getVisibleLayer(int stratum)
+SdLayer *SdLayerCache::getVisibleLayer(SdPvStratum stratum)
   {
   //If no stratum then return no layer
-  if( stratum == 0 )
+  if( stratum.isEmpty() )
     return nullptr;
 
   //Check if cache hit then return cached layer
@@ -56,7 +56,7 @@ SdLayer *SdLayerCache::getVisibleLayer(int stratum)
   mStratum = stratum;
   mCache = nullptr;
   for( int i = 0; i < stmCountMax; i++ )
-    if( (mStratum & (1 << i)) && mMap[i] && mMap[i]->isVisible() ) {
+    if( mStratum.isIntersect(1 << i) && mMap[i] && mMap[i]->isVisible() ) {
       mCache = mMap[i];
       return mCache;
       }

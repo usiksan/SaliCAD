@@ -211,8 +211,7 @@ void SdContext::arc(SdPoint center, SdPoint start, SdPoint stop)
   {
   double radius = center.getDistance(start);
   QRectF r( center.x()-radius, center.y()-radius, 2.0*radius, 2.0*radius );
-  double ang = mAngle;
-  ang /= 1000.0;
+  double ang = mAngle.getDegree();
   double startAngle = start.getAngleDegree( center );
   double arcAngle = stop.getAngleDegree( center ) - startAngle;
   startAngle += ang;
@@ -306,7 +305,7 @@ void SdContext::polygonFill(const QPolygonF &poly, QColor color)
 
 
 
-void SdContext::textEx(SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert, int cursor, SdPoint *cp1, SdPoint *cp2, SdRect *sel, int start, int stop  )
+void SdContext::textEx(SdPoint pos, SdRect &over, const QString str, SdPvAngle dir, SdPvInt horz, SdPvInt vert, int cursor, SdPoint *cp1, SdPoint *cp2, SdRect *sel, int start, int stop  )
   {
   //Get over rect of text
   if( str.isEmpty() )
@@ -315,14 +314,14 @@ void SdContext::textEx(SdPoint pos, SdRect &over, const QString str, int dir, in
     over.set( mPainter->boundingRect( 0,0, 0,0, Qt::AlignLeft | Qt::AlignTop, str ) );
 
     //Align text with flags
-    switch( horz ) {
+    switch( horz.value() ) {
       case dhjLeft   : break;
       case dhjCenter : over.moveLeft( -over.width() / 2 ); break;
       case dhjRight  : over.moveRight( 0 ); break;
       }
     }
 
-  switch( vert ) {
+  switch( vert.value() ) {
     case dvjTop : break;
     case dvjMiddle : over.moveTop( -over.height() / 2 ); break;
     case dvjBottom : over.moveBottom( 0 ); break;
@@ -369,7 +368,7 @@ void SdContext::text( SdPoint pos, SdRect &over, const QString str, const SdProp
   {
   if( mSelector || prop.mLayer.layer(mPairLayer)->isVisible() ) {
     setFont( prop );
-    textEx( pos, over, str, prop.mDir.value(), prop.mHorz.value(), prop.mVert.value() );
+    textEx( pos, over, str, prop.mDir, prop.mHorz, prop.mVert );
     }
   }
 

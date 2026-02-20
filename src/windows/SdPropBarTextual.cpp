@@ -193,7 +193,8 @@ void SdPropBarTextual::setPropText(SdProjectItem *pitem, const SdPropComposerTex
     updateEditObjectProp( pitem, nullptr );
 
   //Set current font
-  setFont( propText.get<&SdPropText::mFont>().value().mValue );
+  auto &propFont = propText.get<&SdPropText::mFont>();
+  setFont( propFont.isSingle() ? propFont.value().value() : -1 );
 
   //Set current width
   mPPM = ppm;
@@ -207,15 +208,15 @@ void SdPropBarTextual::setPropText(SdProjectItem *pitem, const SdPropComposerTex
 
   //Vertical alignment
   auto &propVert = propText.get<&SdPropText::mVert>();
-  setVerticalAlignment( propVert.isSingle() ? propVert.value().mValue : -1 );
+  setVerticalAlignment( propVert.isSingle() ? propVert.value().value() : -1 );
 
   //Horizontal alignment
   auto &propHorz = propText.get<&SdPropText::mHorz>();
-  setHorizontalAlignment( propHorz.isSingle() ? propHorz.value().mValue : -1 );
+  setHorizontalAlignment( propHorz.isSingle() ? propHorz.value().value() : -1 );
 
   //Text direction
   auto &propDir = propText.get<&SdPropText::mDir>();
-  setDirection( propDir.isSingle() ? propDir.value().mValue : -1 );
+  setDirection( propDir.isSingle() ? propDir.value().as360() : -1 );
   }
 
 

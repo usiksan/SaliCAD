@@ -46,8 +46,11 @@ class SdPropBarWire : public SdPropBar
   public:
     SdPropBarWire( const QString title );
 
-    void setPropWire( SdPropLine *propLine, double ppm, int enterType, const QString wireName );
-    void getPropWire( SdPropLine *propLine, int *enterType, QString *wireName );
+    void setPropWire( const SdPropLine &propLine, double ppm, int enterType, const SdPvMulty<SdPvString> wireName );
+    void getPropWire( SdPropLine &propLine, int *enterType, QString *wireName );
+
+    void setPropWire(SdPropComposerLine &propLine, double ppm, int enterType, const SdPvMulty<SdPvString> wireName );
+    void getPropWire( SdPropComposerLine &propLine, int *enterType, QString *wireName );
 
   private:
     void setVertexType( int type );

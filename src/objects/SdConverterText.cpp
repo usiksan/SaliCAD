@@ -13,12 +13,12 @@ Description
 */
 #include "SdConverterText.h"
 
-SdConverterText::SdConverterText(SdPoint origin, int angle , bool mirror) :
+SdConverterText::SdConverterText(SdPoint origin, SdPvAngle angle , bool mirror) :
   SdConverter(),
   mOrigin(origin),
+  mAngle(angle.getDegree()),
   mMirror(mirror)
   {
-  mAngle = static_cast<double>(angle % 360000) / 1000.0;
   }
 
 QTransform SdConverterText::getMatrix()

@@ -23,7 +23,7 @@ class SdConverterText : public SdConverter
     double  mAngle;  //Angle of text rotation
     bool    mMirror;
   public:
-    SdConverterText( SdPoint origin, int angle, bool mirror );
+    SdConverterText( SdPoint origin, SdPvAngle angle, bool mirror );
 
     //Return local conversion transformation matrix
     virtual QTransform getMatrix() override;

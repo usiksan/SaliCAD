@@ -242,14 +242,14 @@ class SdEnvir
     //Clear stratum layer association cashe
     void     resetForCache();
 
-    SdLayer *layerVisibleForPad( int stratum )      { return mCacheForPad.getVisibleLayer( stratum ); }
-    SdLayer *layerVisibleForMask( int stratum )     { return mCacheForMask.getVisibleLayer( stratum ); }
-    SdLayer *layerVisibleForPolygon( int stratum )  { return mCacheForPolygon.getVisibleLayer( stratum ); }
-    SdLayer *layerVisibleForStencil( int stratum )  { return mCacheForStencil.getVisibleLayer( stratum ); }
-    SdLayer *layerVisibleForHole( int stratum )     { return mCacheForHole.getVisibleLayer( stratum ); }
-    SdLayer *layerVisibleForRoad( int stratum )     { return mCacheForRoad.getVisibleLayer( stratum ); }
-    SdLayer *layerVisibleForBoundary( int stratum ) { return mCacheForBoundary.getVisibleLayer( stratum ); }
-    SdLayer *layerVisibleForKeepout( int stratum )  { return mCacheForKeepout.getVisibleLayer( stratum ); }
+    SdLayer *layerVisibleForPad( SdPvStratum stratum )      { return mCacheForPad.getVisibleLayer( stratum ); }
+    SdLayer *layerVisibleForMask( SdPvStratum stratum )     { return mCacheForMask.getVisibleLayer( stratum ); }
+    SdLayer *layerVisibleForPolygon( SdPvStratum stratum )  { return mCacheForPolygon.getVisibleLayer( stratum ); }
+    SdLayer *layerVisibleForStencil( SdPvStratum stratum )  { return mCacheForStencil.getVisibleLayer( stratum ); }
+    SdLayer *layerVisibleForHole( SdPvStratum stratum )     { return mCacheForHole.getVisibleLayer( stratum ); }
+    SdLayer *layerVisibleForRoad( SdPvStratum stratum )     { return mCacheForRoad.getVisibleLayer( stratum ); }
+    SdLayer *layerVisibleForBoundary( SdPvStratum stratum ) { return mCacheForBoundary.getVisibleLayer( stratum ); }
+    SdLayer *layerVisibleForKeepout( SdPvStratum stratum )  { return mCacheForKeepout.getVisibleLayer( stratum ); }
 
     //Set layer pair
     void     layerSetPair( QString idTop, QString idBot );

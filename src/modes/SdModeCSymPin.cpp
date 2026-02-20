@@ -116,7 +116,7 @@ void SdModeCSymPin::propGetFromBar()
   else if( getStep() == sPlacePin ) {
     SdPropBarSymPin *sbar = dynamic_cast<SdPropBarSymPin*>( SdWCommand::getModeBar(PB_SYM_PIN) );
     if( sbar ) {
-      sbar->getPropSymPin( &(sdGlobalProp->mSymPinProp) );
+      sbar->getPropSymPin( sdGlobalProp->mSymPinProp );
       mEditor->setFocus();
       update();
       }
@@ -139,7 +139,7 @@ void SdModeCSymPin::propSetToBar()
     }
   else if( getStep() == sPlacePin ) {
     SdPropBarSymPin *sbar = dynamic_cast<SdPropBarSymPin*>( SdWCommand::getModeBar(PB_SYM_PIN) );
-    if( sbar ) sbar->setPropSymPin( &(sdGlobalProp->mSymPinProp) );
+    if( sbar ) sbar->setPropSymPin( sdGlobalProp->mSymPinProp );
     }
   }
 

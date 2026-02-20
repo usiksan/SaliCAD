@@ -291,8 +291,8 @@ void SdPItemPlate::drawTrace(SdContext *ctx, SdPvStratum curStratum, QString cur
   //Initially, we assume that no current stratum (through stratum)
   SdPvStratum stratum(stmThrough);
   //If current stratum valid then exclude it from drawing
-  if( curStratum.isValid() )
-    stratum = stmThrough & (~curStratum.getValue());
+  if( !curStratum.isEmpty() )
+    stratum = stmThrough & (~curStratum.value());
 
   //Draw component pads down stratums
   forEach( dctPartImp, [ctx,stratum,currentNetName] (SdObject *obj) -> bool {
@@ -312,9 +312,9 @@ void SdPItemPlate::drawTrace(SdContext *ctx, SdPvStratum curStratum, QString cur
     } );
 
   //Draw component pads for current stratum
-  if( curStratum.isValid() ) {
+  if( !curStratum.isEmpty() ) {
     //Net name for highlighting
-    stratum = curStratum.getValue();
+    stratum = curStratum;
     forEach( dctPartImp, [ctx,stratum,currentNetName] (SdObject *obj) -> bool {
       SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>(obj);
       if( imp != nullptr )

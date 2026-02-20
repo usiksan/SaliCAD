@@ -147,6 +147,15 @@ SdPvStratum SdPvStratum::stratum(bool top) const
 
 
 
+SdPvStratum SdPvStratum::first() const
+  {
+  for( int i = 0; i < stmCountMax; ++i )
+    if( mValue & (1 << i) ) return SdPvStratum(1 << i);
+  return *this;
+  }
+
+
+
 
 //Flip stratum stack if component is bottom and unchange it if none
 SdPvStratum SdPvStratum::stratumComp(const SdPvStratum &src) const

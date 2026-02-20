@@ -66,7 +66,7 @@ void SdModeCSymImp::drawDynamic(SdContext *ctx)
     mPaste.draw( ctx );
     }
   else if( mSection ) {
-    SdConverterImplement imp( mOrigin, mSection->getOrigin(), sdGlobalProp->mSymImpProp.mAngle.getValue(), sdGlobalProp->mSymImpProp.mMirror.getValue() );
+    SdConverterImplement imp( mOrigin, mSection->getOrigin(), sdGlobalProp->mSymImpProp.mAngle, sdGlobalProp->mSymImpProp.mMirror.asBool() );
     ctx->setConverter( &imp );
 
     mSection->draw( ctx );
@@ -156,7 +156,7 @@ void SdModeCSymImp::keyDown(int key, QChar ch)
       break;
     case Qt::Key_F4 :
       //Mirror component
-      sdGlobalProp->mSymImpProp.mMirror = sdGlobalProp->mSymImpProp.mMirror.getValue() ? 0 : 1;
+      sdGlobalProp->mSymImpProp.mMirror = sdGlobalProp->mSymImpProp.mMirror.asBool() ? 0 : 1;
       propSetToBar();
       update();
       break;

@@ -41,33 +41,53 @@ SdPropBarSymPin::SdPropBarSymPin(const QString title) :
 
 
 
-void SdPropBarSymPin::setPropSymPin(SdPropSymPin *propSymPin)
+void SdPropBarSymPin::setPropSymPin( const SdPropSymPin &propSymPin )
   {
-  if( propSymPin ) {
-    //Set current layer
-    updateEditObjectProp( dctSymbol, stmThrough, propSymPin->mLayer.layer(false) );
-
-    //Set current pin type
-    mPinType->setCurrentIndex( propSymPin->mPinType.getValue() );
-    }
+  SdPropComposerSymPin propComposerSymPin;
+  propComposerSymPin.reset( propSymPin );
+  setPropSymPin( propComposerSymPin );
   }
 
 
 
 
 
-void SdPropBarSymPin::getPropSymPin(SdPropSymPin *propSymPin)
+void SdPropBarSymPin::getPropSymPin(SdPropSymPin &propSymPin)
   {
-  if( propSymPin ) {
-    //Get current layer
-    SdLayer *layer = getSelectedLayer();
-    if( layer )
-      propSymPin->mLayer = layer;
+  SdPropComposerSymPin propComposerSymPin;
+  getPropSymPin( propComposerSymPin );
+  propComposerSymPin.store( propSymPin );
+  }
 
-    //Get current font
-    int pinType = mPinType->currentIndex();
-    if( pinType >= 0 )
-      propSymPin->mPinType = pinType;
-    }
+
+
+void SdPropBarSymPin::setPropSymPin(const SdPropComposerSymPin &propSymPin)
+  {
+  //Set current layer
+  auto &propLayer = propSymPin.get<&SdPropSymPin::mLayer>();
+  if( propLayer.isSingle() )
+    updateEditObjectProp( dctSymbol, stmThrough, propLayer.value().layer(false) );
+  else
+    updateEditObjectProp( dctSymbol, stmThrough, nullptr );
+
+  //Set current pin type
+  auto &pinType = propSymPin.get<&SdPropSymPin::mPinType>();
+  mPinType->setCurrentIndex( pinType.isSingle() ? pinType.value().value() : -1 );
+  }
+
+
+
+void SdPropBarSymPin::getPropSymPin(SdPropComposerSymPin &propSymPin)
+  {
+  propSymPin.clear();
+  //Store layer if setted
+  SdLayer *layer = getSelectedLayer();
+  if( layer )
+    propSymPin.get<&SdPropSymPin::mLayer>().reset( SdPvLayer(layer) );
+
+  //Get current font
+  int pinType = mPinType->currentIndex();
+  if( pinType >= 0 )
+    propSymPin.get<&SdPropSymPin::mPinType>().reset( SdPvInt(pinType) );
   }
 

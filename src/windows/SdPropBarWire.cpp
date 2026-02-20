@@ -157,59 +157,85 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
 
 
 
-void SdPropBarWire::setPropWire(SdPropLine *propLine, double ppm, int enterType, const QString wireName)
+void SdPropBarWire::setPropWire(SdPropComposerLine &propLine, double ppm, int enterType, const SdPvMulty<SdPvString> wireName)
   {
-  if( propLine ) {
-    //Set current layer
-    updateEditObjectProp( dctSheet, stmThrough, propLine->mLayer.layer(false) );
+  //Set current layer
+  auto &propLayer = propLine.get<&SdPropLine::mLayer>();
+  if( propLayer.isSingle() )
+    updateEditObjectProp( dctSheet, stmThrough, propLayer.value().layer(false) );
+  else
+    updateEditObjectProp( dctSheet, stmThrough, nullptr );
 
-    //Set current width
-    mPPM = ppm;
-    if( propLine->mWidth.isValid() ) {
-      mWidth->setCurrentText( propLine->mWidth.log2Phis(mPPM) );
-      prevWidth.reorderComboBoxDoubleString( mWidth );
-      }
-    else
-      mWidth->setCurrentText( QString()  );
+  //Set current width
+  mPPM = ppm;
+  if( propLine.get<&SdPropLine::mWidth>().isSingle() ) {
+    mWidth->setCurrentText( propLine.get<&SdPropLine::mWidth>().value().log2Phis(mPPM) );
+    prevWidth.reorderComboBoxDoubleString( mWidth );
+    }
+  else
+    mWidth->setCurrentText( QString()  );
 
-    //line enter type
-    setVertexType( enterType );
+  //line enter type
+  setVertexType( enterType );
 
-    //line type
-    setLineType( propLine->mType.getValue() );
+  //line type
+  if( propLine.get<&SdPropLine::mType>().isSingle() )
+    setLineType( propLine.get<&SdPropLine::mType>().value().value() );
+  else
+    setLineType( -1 );
 
-    //Current wire name
-    mWireName->setCurrentText( wireName );
-    mWireName->lineEdit()->selectAll();
-    prevWires.reorderComboBoxString( mWireName );
+  //Current wire name
+  mWireName->setCurrentText( wireName.isSingle() ? wireName.value().string() : QString{} );
+  mWireName->lineEdit()->selectAll();
+  prevWires.reorderComboBoxString( mWireName );
+  }
+
+
+
+
+void SdPropBarWire::getPropWire(SdPropComposerLine &propLine, int *enterType, QString *wireName)
+  {
+  propLine.clear();
+  //Store layer if setted
+  SdLayer *layer = getSelectedLayer();
+  if( layer )
+    propLine.get<&SdPropLine::mLayer>().reset( SdPvLayer(layer) );
+
+  //Store width if setted
+  if( !mWidth->currentText().isEmpty() )
+    propLine.get<&SdPropLine::mWidth>().reset( SdPvInt( mWidth->currentText(), mPPM ) );
+
+  //Store type if setted
+  auto &propType = propLine.get<&SdPropLine::mType>();
+  if( mLineSolid->isChecked() ) propType.reset( SdPvInt(dltSolid) );
+  else if( mLineDotted->isChecked() ) propType.reset( SdPvInt(dltDotted) );
+  else if( mLineDashed->isChecked() ) propType.reset( SdPvInt(dltDashed) );
+
+  if( enterType ) {
+    if( mEnterOrtho->isChecked() ) *enterType = dleOrtho;
+    else if( mEnter45degree->isChecked() ) *enterType = dle45degree;
+    else *enterType = dleAnyDegree;
     }
   }
 
 
 
 
-void SdPropBarWire::getPropWire(SdPropLine *propLine, int *enterType, QString *wireName)
+void SdPropBarWire::setPropWire(const SdPropLine &propLine, double ppm, int enterType, const SdPvMulty<SdPvString> wireName)
   {
-  if( propLine ) {
-    SdLayer *layer = getSelectedLayer();
-    if( layer )
-      propLine->mLayer = layer;
+  SdPropComposerLine composerLine;
+  composerLine.reset( propLine );
+  setPropWire( composerLine, ppm, enterType, wireName );
+  }
 
-    if( !mWidth->currentText().isEmpty() )
-      propLine->mWidth.setFromPhis( mWidth->currentText(), mPPM );
 
-    if( !mWireName->currentText().isEmpty() )
-      *wireName = mWireName->currentText();
 
-    if( mLineSolid->isChecked() ) propLine->mType = dltSolid;
-    else if( mLineDotted->isChecked() ) propLine->mType = dltDotted;
-    else if( mLineDashed->isChecked() ) propLine->mType = dltDashed;
-    }
-  if( enterType ) {
-    if( mEnterOrtho->isChecked() ) *enterType = dleOrtho;
-    else if( mEnter45degree->isChecked() ) *enterType = dle45degree;
-    else *enterType = dleAnyDegree;
-    }
+
+void SdPropBarWire::getPropWire(SdPropLine &propLine, int *enterType, QString *wireName)
+  {
+  SdPropComposerLine composerLine;
+  getPropWire( composerLine, enterType, wireName );
+  composerLine.store(propLine);
   }
 
 

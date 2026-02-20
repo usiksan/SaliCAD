@@ -321,7 +321,7 @@ void SdGraphPartPin::draw(SdContext *dc)
   //Pin it self
   dc->partPin( mOrigin, mPinProp.mLayer.layer() );
   if( SdEnvir::instance()->mShowPads )
-    SdEnvir::instance()->getPad( mPinProp.mPinType.mString ).draw( dc, mOrigin, stmThrough );
+    SdEnvir::instance()->getPad( mPinProp.mPinType.string() ).draw( dc, mOrigin, stmThrough );
 
   //Pin name
   //At first calc over rectangle
@@ -346,7 +346,7 @@ void SdGraphPartPin::draw(SdContext *dc)
 void SdGraphPartPin::draw3d(QOpenGLFunctions_2_0 *f) const
   {
   //Draw pad only
-  SdEnvir::instance()->getPad( mPinProp.mPinType.mString ).draw3d( f, mOrigin );
+  SdEnvir::instance()->getPad( mPinProp.mPinType.string() ).draw3d( f, mOrigin );
   }
 
 

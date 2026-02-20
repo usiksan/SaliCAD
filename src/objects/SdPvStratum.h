@@ -104,13 +104,6 @@ class SdPvStratum : public SdPv<SdStratumValue,SdPvStratum>
     //!
     void     stratumBuild( SdPvStratum from, SdPvStratum to, int pcbLayerCount, int rule );
 
-    //Return true if this stratum intersect with given stratum presented with int
-    //bool     isMatchPartial( SdPvStratum s ) const { return mValue & s; }
-    bool     isMatchPartial( SdPvStratum s ) const { return mValue & s.mValue; }
-
-    //bool     isMatchExact( SdPvStratum s ) const { return mValue == s; }
-    bool     isMatchExact( SdPvStratum s ) const { return mValue == s.mValue; }
-
     void     operator |= ( SdPvStratum s ) { mValue |= s.mValue; }
 
     bool     isIntersect( SdPvStratum s ) const { return mValue & s.mValue; }
@@ -147,6 +140,8 @@ class SdPvStratum : public SdPv<SdStratumValue,SdPvStratum>
 
     //Flip stratum stack for pcb bottom and unchange it if other
     SdPvStratum stratum( bool top = true ) const;
+
+    SdPvStratum first() const;
 
     //Flip stratum stack if component is bottom and unchange it if none
     SdPvStratum stratumComp( const SdPvStratum &src ) const;

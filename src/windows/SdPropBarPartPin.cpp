@@ -73,8 +73,7 @@ void SdPropBarPartPin::setPropPartPin(SdPropPartPin *propPartPin)
     updateEditObjectProp( dctPart, stmTop | stmBottom, propPartPin->mLayer.layer(false) );
 
     //Set current pin side
-    int side = propPartPin->mSide.getValue();
-    switch(side) {
+    switch( propPartPin->mSide.value() ) {
       case stmTop    : mPinSide->setCurrentIndex(1); break;
       case stmBottom : mPinSide->setCurrentIndex(2); break;
       case stmThrough  : mPinSide->setCurrentIndex(3); break;
@@ -83,7 +82,7 @@ void SdPropBarPartPin::setPropPartPin(SdPropPartPin *propPartPin)
 
     //Set current pin type
     //qDebug() << "setPropPartPin" << propPartPin->mPinType.str();
-    mPinType->setCurrentText( propPartPin->mPinType.str() );
+    mPinType->setCurrentText( propPartPin->mPinType.string() );
     pinTypeHistory.reorderComboBoxString( mPinType );
     }
   }

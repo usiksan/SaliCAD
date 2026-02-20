@@ -305,7 +305,7 @@ bool SdGraphTracedPolygon::getInfo(SdPoint p, QString &info, bool extInfo)
 //Find snap point on object
 void SdGraphTracedPolygon::snapPoint(SdSnapInfo *snap)
   {
-  if( snap->mStratum.isMatchPartial( mProp.mStratum ) && !snap->match(snapExcludeSour) ) {
+  if( snap->mStratum.isIntersect( mProp.mStratum ) && !snap->match(snapExcludeSour) ) {
 //    if( snap->match(snapNearestNet) ) {
 //      if( isContains(snap->mSour) ) {
 //        snap->test( this, snap->mSour, snapNearestNet );
@@ -378,7 +378,7 @@ void SdGraphTracedPolygon::drawStratum(SdContext *dcx, SdPvStratum stratum)
 
 
 
-void SdGraphTracedPolygon::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const
+void SdGraphTracedPolygon::accumBarriers(SdBarrierList &dest, SdPvStratum stratum, SdRuleId toWhich, const SdRuleBlock &blk) const
   {
   //TODO B048 barriars creation for polygon
   }
@@ -388,16 +388,16 @@ void SdGraphTracedPolygon::accumBarriers(SdBarrierList &dest, int stratum, SdRul
 
 bool SdGraphTracedPolygon::isMatchNetAndStratum(const QString netName, SdPvStratum stratum) const
   {
-  return mProp.mNetName.str() == netName && mProp.mStratum.match( stratum );
+  return mProp.mNetName.string() == netName && mProp.mStratum.isIntersect( stratum );
   }
 
 
 
 
 
-void SdGraphTracedPolygon::accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName) const
+void SdGraphTracedPolygon::accumWindows(SdPolyWindowList &dest, SdPvStratum stratum, int gap, const QString netName) const
   {
-  if( (mProp.mStratum & stratum) && mProp.mNetName.str() != netName ) {
+  if( mProp.mStratum.isIntersect(stratum) && mProp.mNetName.string() != netName ) {
     //Find polygon intersection
     QPolygon pgn = dest.polygon()->intersected( mRegion );
 
@@ -420,7 +420,7 @@ void SdGraphTracedPolygon::accumWindows(SdPolyWindowList &dest, int stratum, int
 //Check if polygon linked to point
 bool SdGraphTracedPolygon::isLinked(SdPoint a, SdPvStratum stratum, QString netName) const
   {
-  return mProp.mNetName == netName && mProp.mStratum.match( stratum ) && isContains(a);
+  return mProp.mNetName == netName && mProp.mStratum.isIntersect(stratum) && isContains(a);
   }
 
 
@@ -448,7 +448,7 @@ void SdGraphTracedPolygon::rebuildWindows()
   getParent()->forEach( dctTraced, [this] (SdObject *obj) -> bool {
     SdPtr<SdGraphTraced> traced( obj );
     if( traced.isValid() )
-      traced->accumWindows( mWindows, mProp.mStratum.stratum(), mProp.mGap.getValue(), mProp.mNetName.str() );
+      traced->accumWindows( mWindows, mProp.mStratum.stratum(), mProp.mGap.value(), mProp.mNetName.string() );
     return true;
     });
 

@@ -25,8 +25,11 @@ class SdPropBarSymPin : public SdPropBar
   public:
     SdPropBarSymPin( const QString title );
 
-    void setPropSymPin( SdPropSymPin *propSymPin );
-    void getPropSymPin( SdPropSymPin *propSymPin );
+    void setPropSymPin(const SdPropSymPin &propSymPin );
+    void getPropSymPin( SdPropSymPin &propSymPin );
+
+    void setPropSymPin( const SdPropComposerSymPin &propSymPin );
+    void getPropSymPin( SdPropComposerSymPin &propSymPin );
 
   };
 

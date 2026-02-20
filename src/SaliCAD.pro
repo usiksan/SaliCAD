@@ -22,6 +22,24 @@ INCLUDEPATH += ../third \
 win32: LIBS += -lopengl32
 win64: LIBS += -lopengl32
 
+# Определяем команду для запуска Doxygen
+DOXYGEN_COMMAND = doxygen Doxyfile
+
+# Создаем пользовательскую цель "docs"
+docs.target = docs
+docs.commands = $$DOXYGEN_COMMAND
+docs.CONFIG += recursive  # Позволяет цели зависеть от других целей
+
+# Делаем так, чтобы цель "docs" запускалась при каждой сборке (опционально)
+# Для этого добавляем её в PRE_TARGETDEPS основной цели
+# Но будьте осторожны: это будет генерировать документацию при каждой компиляции,
+# что может замедлить процесс. Лучше сделать отдельную цель.
+# PRE_TARGETDEPS += docs
+
+# Добавляем цель в список целей, которые будут созданы
+#QMAKE_EXTRA_TARGETS += docs
+
+
 SOURCES += \
     SvLib/SvNetClient.cpp \
     import/iges/IgesEntityCurveOnParametricSurface.cpp \

@@ -26,8 +26,12 @@ Description
 
 class SdPvAngle : public SdPv<int,SdPvAngle>
   {
+  private:
+    using SdPv<int,SdPvAngle>::value;
   public:
     SdPvAngle( int sour = 0 ) : SdPv<int,SdPvAngle>( norm(sour) ) {}
+
+
 
     constexpr int raw() const { return mValue; }
 

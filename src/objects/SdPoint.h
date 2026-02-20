@@ -20,6 +20,7 @@ Description
 
 #include <QJsonObject>
 #include <QPoint>
+#include <QTransform>
 
 //Line orientation
 enum SdOrientation {
@@ -87,6 +88,8 @@ class SdPoint : public QPoint
 
     void        swap( SdPoint &p );
 
+    auto        transformFromOffset() const { return QTransform::fromTranslate( x(), y() ); }
+
     //!
     //! \brief json Overloaded function to write object content into json writer
     //! \param js   Json writer
@@ -101,6 +104,8 @@ class SdPoint : public QPoint
 
     //Return far point, point with big coords
     static SdPoint farPoint() { return SdPoint(farCoord,farCoord); }
+
+    inline static auto transformFromOffset( SdPoint offset ) { return offset.transformFromOffset(); }
 
     //!
     //! \brief angleVector Calculates the rotation angle from point a to point b around center point

@@ -18,6 +18,7 @@ Description
 #include "SdSnapInfo.h"
 #include "Sd3dDraw.h"
 #include "SdJsonIO.h"
+#include "3dr/Sd3drModel.h"
 
 SdGraphLinearCircle::SdGraphLinearCircle() :
   SdGraphLinear(),

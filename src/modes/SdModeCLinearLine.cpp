@@ -31,8 +31,8 @@ SdModeCLinearLine::SdModeCLinearLine(SdWEditorGraph *editor, SdProjectItem *obj)
 void SdModeCLinearLine::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sNextPoint ) {
-    ctx->setPen( sdGlobalProp->propLine( mObject->getClass() )->mWidth.mValue, SdEnvir::instance()->getSysColor(scEnter),
-                 sdGlobalProp->propLine( mObject->getClass() )->mType.mValue );
+    ctx->setPen( sdGlobalProp->propLine( mObject->getClass() )->mWidth, SdEnvir::instance()->getSysColor(scEnter),
+                 sdGlobalProp->propLine( mObject->getClass() )->mType );
     ctx->line( mFirst, mMiddle );
     if( mMiddle != mPrevMove )
       ctx->line( mMiddle, mPrevMove );

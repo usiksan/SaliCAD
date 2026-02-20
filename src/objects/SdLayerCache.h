@@ -24,7 +24,7 @@ class SdLayerCache
   {
     SdLayerPtr     mMap[stmCountMax]; //Layer map for all stratum
     //SdLayerPtrMap  mMap;     //Layer map for all stratum
-    int            mStratum;          //Cached stratum
+    SdPvStratum    mStratum;          //Cached stratum
     SdLayer       *mCache;            //Cached layer for stratum
   public:
     SdLayerCache();
@@ -33,7 +33,7 @@ class SdLayerCache
     void     rebuild(const SdLayerPtrMap &tab, SdLayerTrace tr);
 
     //Return layer mapped to stratum
-    SdLayer *getVisibleLayer( int stratum );
+    SdLayer *getVisibleLayer(SdPvStratum stratum );
 
     //Set layer usage. Set usage flag for stratumCount layers of cache
     void     setLayerUsage(int stratumCount);

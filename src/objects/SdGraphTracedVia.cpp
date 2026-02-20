@@ -302,10 +302,10 @@ void SdGraphTracedVia::drawStratum(SdContext *dcx, SdPvStratum stratum)
 
 
 
-void SdGraphTracedVia::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &blk) const
+void SdGraphTracedVia::accumBarriers(SdBarrierList &dest, SdPvStratum stratum, SdRuleId toWhich, const SdRuleBlock &blk) const
   {
   //Compare on stratum
-  if( mProp.mStratum & stratum ) {
+  if( mProp.mStratum.isIntersect(stratum) ) {
     //Accum barriers for all pin pad
     SdPItemPlate *plate = getPlate();
     //Addon clearance and halfWidth
@@ -321,18 +321,18 @@ void SdGraphTracedVia::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId 
         clearance = halfWidth = 0;
         break;
       case rulePadPad :
-        clearance = qMax( plate->ruleForNet(mProp.mNetName.str(),rulePadPad), blk.mRules[rulePadPad] );
+        clearance = qMax( plate->ruleForNet(mProp.mNetName.string(),rulePadPad), blk.mRules[rulePadPad] );
         halfWidth = blk.mRules[ruleRoadWidth] / 2;
         break;
       case ruleRoadPad :
       case ruleRoadRoad :
-        clearance = qMax( plate->ruleForNet(mProp.mNetName.str(),ruleRoadPad), blk.mRules[ruleRoadPad] );
+        clearance = qMax( plate->ruleForNet(mProp.mNetName.string(),ruleRoadPad), blk.mRules[ruleRoadPad] );
         halfWidth = blk.mRules[ruleRoadWidth] / 2;
         break;
       }
     SdBarrier bar;
-    bar.mNetName = mProp.mNetName.str();
-    bar.mPolygon = plate->getPadPolygon( mPosition, mProp.mPadType.str(), clearance + halfWidth );
+    bar.mNetName = mProp.mNetName.string();
+    bar.mPolygon = plate->getPadPolygon( mPosition, mProp.mPadType.string(), clearance + halfWidth );
     dest.append( bar );
     }
   }
@@ -343,20 +343,20 @@ void SdGraphTracedVia::accumBarriers(SdBarrierList &dest, int stratum, SdRuleId 
 
 bool SdGraphTracedVia::isMatchNetAndStratum(const QString netName, SdPvStratum stratum) const
   {
-  return mProp.mNetName.str() == netName && mProp.mStratum.match( stratum );
+  return mProp.mNetName.string() == netName && mProp.mStratum.isIntersect( stratum );
   }
 
 
 
 
 
-void SdGraphTracedVia::accumWindows(SdPolyWindowList &dest, int stratum, int gap, const QString netName) const
+void SdGraphTracedVia::accumWindows(SdPolyWindowList &dest, SdPvStratum stratum, int gap, const QString netName) const
   {
   //Compare on stratum
-  if( (mProp.mStratum & stratum) && mProp.mNetName.str() != netName ) {
+  if( mProp.mStratum.isIntersect(stratum) && mProp.mNetName.string() != netName ) {
     QTransform t;
     //Stratum matched and net name other
-    getPlate()->appendPadWindow( dest, mPosition, mProp.mPadType.str(), gap, t );
+    getPlate()->appendPadWindow( dest, mPosition, mProp.mPadType.string(), gap, t );
     }
   }
 
@@ -366,7 +366,7 @@ void SdGraphTracedVia::accumWindows(SdPolyWindowList &dest, int stratum, int gap
 //Check if road linked to point
 bool SdGraphTracedVia::isLinked(SdPoint a, SdPvStratum stratum, QString netName) const
   {
-  return mProp.mNetName == netName && mProp.mStratum.match( stratum ) && mPosition == a;
+  return mProp.mNetName == netName && mProp.mStratum.isIntersect( stratum ) && mPosition == a;
   }
 
 

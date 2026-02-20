@@ -108,13 +108,13 @@ int SdPropSelected::getPropBarId()
 //properties bar will be only for one class of objects. But layer
 //must be changed for all selected objects
 //With this function we change layer for all properties group
-void SdPropSelected::setLayer(const SdPvLayer &layer)
+void SdPropSelected::setLayer(const SdPvMulty<SdPvLayer> &layer)
   {
-  mLineProp.get<&SdPropLine::mLayer>().reset( layer );       //Properties for linear objects
-  mTextProp.get<&SdPropText::mLayer>().reset( layer );       //Properties for textual objects
-  mWireProp.get<&SdPropLine::mLayer>().reset( layer );       //Properties for wire objects
-  mSymPinProp.get<&SdPropSymPin::mLayer>().reset( layer );     //Properties for symbol pin object
-  mPartPinProp.get<&SdPropPartPin::mLayer>().reset( layer );    //Properties for part pin object
+  mLineProp.get<&SdPropLine::mLayer>() = layer;       //Properties for linear objects
+  mTextProp.get<&SdPropText::mLayer>() = layer;       //Properties for textual objects
+  mWireProp.get<&SdPropLine::mLayer>() = layer;       //Properties for wire objects
+  mSymPinProp.get<&SdPropSymPin::mLayer>() = layer;     //Properties for symbol pin object
+  mPartPinProp.get<&SdPropPartPin::mLayer>() = layer;    //Properties for part pin object
   }
 
 

@@ -28,6 +28,8 @@ class SdPvInt : public SdPv<int,SdPvInt>
     SdPvInt( int v = 0 ) : SdPv<int,SdPvInt>(v) {}
     SdPvInt( const QString &src, double ppm ) : SdPv<int,SdPvInt>(0) { setFromPhis( src, ppm ); }
 
+    bool       asBool() const { return mValue != 0; }
+
     //!
     //! \brief log2Phis Convert logical value to physical string representation
     //! \param ppm      Pixels per millimeter conversion factor

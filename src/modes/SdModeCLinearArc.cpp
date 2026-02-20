@@ -153,8 +153,8 @@ int SdModeCLinearArc::getIndex() const
 
 void SdModeCLinearArc::drawDynamic(SdContext *ctx)
   {
-  ctx->setPen( sdGlobalProp->propLine( mObject->getClass() )->mWidth.getValue(), SdEnvir::instance()->getSysColor(scEnter),
-               sdGlobalProp->propLine( mObject->getClass() )->mType.getValue() );
+  ctx->setPen( sdGlobalProp->propLine( mObject->getClass() )->mWidth, SdEnvir::instance()->getSysColor(scEnter),
+               sdGlobalProp->propLine( mObject->getClass() )->mType );
   switch( getStep() ) {
     case sStop :
       //Выбор воторой точки

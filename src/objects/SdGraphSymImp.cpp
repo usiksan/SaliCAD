@@ -77,7 +77,7 @@ SdGraphSymImp::SdGraphSymImp(SdPItemVariant *comp, SdPItemSymbol *sym, SdPItemPa
 
 QTransform SdGraphSymImp::matrix() const
   {
-  SdConverterImplement imp( mOrigin, mSymbol->getOrigin(), mProp.mAngle.mValue, mProp.mMirror.mValue );
+  SdConverterImplement imp( mOrigin, mSymbol->getOrigin(), mProp.mAngle, mProp.mMirror.asBool() );
   return imp.getMatrix();
   }
 
@@ -508,7 +508,7 @@ SdRect SdGraphSymImp::getOverRect() const
 void SdGraphSymImp::draw(SdContext *dc)
   {
   //Convertor for symbol implementation
-  SdConverterImplement imp( mOrigin, mSymbol->getOrigin(), mProp.mAngle.mValue, mProp.mMirror.mValue );
+  SdConverterImplement imp( mOrigin, mSymbol->getOrigin(), mProp.mAngle, mProp.mMirror.asBool() );
   dc->setConverter( &imp );
 
   //Draw ident in symbol context
@@ -603,7 +603,7 @@ SdPItemSheet *SdGraphSymImp::getSheet() const
 
 void SdGraphSymImp::updatePinsPositions()
   {
-  SdConverterImplement impl( mOrigin, mSymbol->getOrigin(), mProp.mAngle.mValue, mProp.mMirror.mValue );
+  SdConverterImplement impl( mOrigin, mSymbol->getOrigin(), mProp.mAngle, mProp.mMirror.asBool() );
   QTransform t = impl.getMatrix();
   for( SdSymImpPin &pin : mPins )
     pin.mPosition = t.map( pin.mPin->getPinOrigin() );
@@ -987,7 +987,7 @@ bool SdGraphSymImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
         mPartImp->setProp( prop );
         if( !partOrigin.isFar() ) {
           partOrigin = partOrigin.sub( mPartImp->getOrigin() );
-          mPartImp->move( partOrigin );
+          mPartImp->transform( partOrigin.transformFromOffset(), SdPvAngle{} );
           }
         }
 

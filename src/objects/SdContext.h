@@ -43,7 +43,7 @@ class SdContext {
     SdScaler           mScaler;        //!< Current scale
     QColor             mOverColor;     //!< Color for overriding default layers color
     const SdStringMap *mParamMap;      //!< Local param map
-    int                mAngle;         //!< Rotation angle
+    SdPvAngle          mAngle;         //!< Rotation angle
     int                mZeroWidth;     //!< Width for zero width line
     bool               mMirror;        //!< Mirror flag
     bool               mPairLayer;     //!< True for paired layer
@@ -132,7 +132,7 @@ class SdContext {
     void            circleFill( SdPoint center, int radius, SdLayerPtr layer );
     virtual void    polygonFill( const QPolygonF &poly );
     void            polygonFill( const QPolygonF &poly, QColor color );
-    void            textEx(SdPoint pos, SdRect &over, const QString str, int dir, int horz, int vert, int cursor = 0, SdPoint *cp1 = nullptr, SdPoint *cp2 = nullptr, SdRect *sel = nullptr, int start = 0, int stop = 0);
+    void            textEx(SdPoint pos, SdRect &over, const QString str, SdPvAngle dir, SdPvInt horz, SdPvInt vert, int cursor = 0, SdPoint *cp1 = nullptr, SdPoint *cp2 = nullptr, SdRect *sel = nullptr, int start = 0, int stop = 0);
     void            text( SdPoint pos, SdRect &over, const QString str, const SdPropText &prop );
     void            region( const SdPointList &points, bool autoClose = true );
     void            region( const SdPointList &points, const SdPropLine &prop, bool autoClose = true );

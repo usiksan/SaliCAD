@@ -25,7 +25,7 @@ class SdModeCBus : public SdModeCommon
 
     SdPoint       mPrevMove;     //Previous cursor position point
     SdPoint       mSmartOrigin;  //Smart point when pattern enter
-    int           mPrevDirection;
+    SdPvAngle     mPrevDirection;
 
     QStringList   mNetList;      //Net names list
     int           mIndex;        //Current name index

@@ -99,7 +99,7 @@ void SdModeCBus::propGetFromBar()
     auto bar = SdWCommand::getModeToolBar<SdPropBarWire>( PB_WIRE );
     if( bar ) {
       QString wireName;
-      bar->getPropWire( &(sdGlobalProp->mWireProp), &(sdGlobalProp->mWireEnterType), &wireName );
+      bar->getPropWire( sdGlobalProp->mWireProp, &(sdGlobalProp->mWireEnterType), &wireName );
       }
     }
   update();
@@ -118,7 +118,7 @@ void SdModeCBus::propSetToBar()
   else if( mNetList.count() && mIndex < mNetList.count() ) {
     auto bar = SdWCommand::getModeToolBar<SdPropBarWire>( PB_WIRE );
     if( bar )
-      bar->setPropWire( &(sdGlobalProp->mWireProp), mEditor->getPPM(), sdGlobalProp->mWireEnterType, mNetList.at(mIndex) );
+      bar->setPropWire( sdGlobalProp->mWireProp, mEditor->getPPM(), sdGlobalProp->mWireEnterType, mNetList.at(mIndex) );
     }
   }
 
@@ -431,15 +431,13 @@ void SdModeCBus::moveAll(SdPoint p)
   {
   if( !mPattern.count() ) return;
   //Вычислить смещение
-  SdPoint offset = p.SdPoint::operator-( mPattern[0] );
+  QTransform map( SdPoint::transformFromOffset( p - mPattern.get(0) ) );
   //Сместить шаблон
   for( int i = 0; i < mPattern.count(); ++i ) {
-    SdPoint t( mPattern[i] );
-    t.move( offset );
-    mPattern[i] = t;
+    mPattern[i] = map.map( mPattern.at(i) );
     }
   //Сместить имя
-  mNamePos.move( offset );
+  mNamePos = map.map( mNamePos );
   }
 
 
