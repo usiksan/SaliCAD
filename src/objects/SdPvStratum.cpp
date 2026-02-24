@@ -112,7 +112,10 @@ void SdPvStratum::json(SvJsonWriter &js) const
 
 void SdPvStratum::json(const SdJsonReader &js)
   {
-  json( QStringLiteral("Stratum"), js );
+  if( js.property()->mVersion == SD_BASE_VERSION_2 )
+    js.jsonHex32( QStringLiteral("Stratum"), mValue );
+  else
+    json( QStringLiteral("Stratum"), js );
   }
 
 
