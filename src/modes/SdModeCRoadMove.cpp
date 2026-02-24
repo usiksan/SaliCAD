@@ -99,15 +99,15 @@ void SdModeCRoadMove::drawDynamic(SdContext *ctx)
     if( mVia == nullptr ) {
       //Move segments only
       if( mSource1 != mMove1 ) {
-        ctx->setPen( mProp1.mWidth.getValue(), SdEnvir::instance()->layerVisibleForRoad( mProp1.mStratum ), dltSolid );
+        ctx->setPen( mProp1.mWidth, SdEnvir::instance()->layerVisibleForRoad( mProp1.mStratum ), dltSolid );
         ctx->line( mSource1, mMove1 );
         }
       if( mMove1 != mMove2 ) {
-        ctx->setPen( mProp.mWidth.getValue(), SdEnvir::instance()->layerVisibleForRoad( mProp.mStratum ), dltSolid );
+        ctx->setPen( mProp.mWidth, SdEnvir::instance()->layerVisibleForRoad( mProp.mStratum ), dltSolid );
         ctx->line( mMove1, mMove2 );
         }
       if( mMove2 != mSource2 ) {
-        ctx->setPen( mProp2.mWidth.getValue(), SdEnvir::instance()->layerVisibleForRoad( mProp2.mStratum ), dltSolid );
+        ctx->setPen( mProp2.mWidth, SdEnvir::instance()->layerVisibleForRoad( mProp2.mStratum ), dltSolid );
         ctx->line( mSource2, mMove2 );
         }
       }
@@ -115,7 +115,7 @@ void SdModeCRoadMove::drawDynamic(SdContext *ctx)
       //Move via
       mFragment.draw( ctx );
       if( mSource1 != mMove1 ) {
-        ctx->setPen( mProp.mWidth.getValue(), SdEnvir::instance()->layerVisibleForRoad( mViaProp.mStratum ), dltSolid );
+        ctx->setPen( mProp.mWidth, SdEnvir::instance()->layerVisibleForRoad( mViaProp.mStratum ), dltSolid );
         ctx->line( mSource1, mMove1 );
         }
 //      if( mMove1 != mMove2 ) {
@@ -149,7 +149,7 @@ void SdModeCRoadMove::enterPoint(SdPoint)
         mProp  = road->propRoad();
 
         SdSelector sel;
-        mSegment->accumLinkedTrace( mSegment, mMove1, mProp.mNetName.str(), &sel );
+        mSegment->accumLinkedTrace( mSegment, mMove1, mProp.mNetName.string(), &sel );
         if( sel.count() == 1 && sel.first()->getClass() == dctTraceRoad ) {
           //First segment found
           mSegment1 = dynamic_cast<SdGraphTracedRoad*>(sel.first());
@@ -167,7 +167,7 @@ void SdModeCRoadMove::enterPoint(SdPoint)
           }
 
         sel.removeAll();
-        mSegment->accumLinkedTrace( mSegment, mMove2, mProp.mNetName.str(), &sel );
+        mSegment->accumLinkedTrace( mSegment, mMove2, mProp.mNetName.string(), &sel );
         if( sel.count() == 1 && sel.first()->getClass() == dctTraceRoad ) {
           //Second segment found
           mSegment2 = dynamic_cast<SdGraphTracedRoad*>(sel.first());
@@ -210,7 +210,7 @@ void SdModeCRoadMove::enterPoint(SdPoint)
         mProp1 = mProp;
 
         SdSelector sel;
-        mSegment1->accumLinkedTrace( mSegment1, mMove1, mProp.mNetName.str(), &sel );
+        mSegment1->accumLinkedTrace( mSegment1, mMove1, mProp.mNetName.string(), &sel );
         if( sel.count() == 1 && sel.first()->getClass() == dctTraceRoad ) {
           //Second segment found
           mSegment2 = dynamic_cast<SdGraphTracedRoad*>(sel.first());
@@ -245,25 +245,25 @@ void SdModeCRoadMove::enterPoint(SdPoint)
         mMove2 = mMove1;
         mSource2 = mMove2;
         //Get rules for net
-        plate()->ruleBlockForNet( mViaProp.mNetName.str(), mRule );
+        plate()->ruleBlockForNet( mViaProp.mNetName.string(), mRule );
 
         //Prepare prop for building roads
         mProp.mWidth   = mRule.mRules[ruleRoadWidth];
 
         //Barriers for via
-        SdPad viaPad = plate()->getPad( mViaProp.mPadType.str() );
+        SdPad viaPad = plate()->getPad( mViaProp.mPadType.string() );
         mPads.clear();
         //We need via pad diameter
         mRule.mRules[ruleRoadWidth] = viaPad.overCircleRadius() * 2;
         plate()->accumBarriers( dctTraced, mPads, mViaProp.mStratum, rulePadPad, mRule );
 
         //Accumulate roads connected to via
-        mVia->accumLinkedTrace( mVia, mMove1, mViaProp.mNetName.str(), &mFragment );
-        int stratum = 0;
+        mVia->accumLinkedTrace( mVia, mMove1, mViaProp.mNetName.string(), &mFragment );
+        SdPvStratum stratum(0);
         mFragment.forEach( dctTraceRoad, [&stratum] (SdObject *obj) ->bool {
           SdPtr<SdGraphTracedRoad> road(obj);
           if( road.isValid() )
-            stratum |= road->stratum().getValue();
+            stratum |= road->stratum();
           return true;
           });
 
@@ -283,21 +283,21 @@ void SdModeCRoadMove::enterPoint(SdPoint)
 
     //Build barriers
     //Get rules for road
-    plate()->ruleBlockForNet( mProp.mNetName.str(), mRule );
+    plate()->ruleBlockForNet( mProp.mNetName.string(), mRule );
 
     //Barriers for central segment
     mRoads.clear();
-    mRule.mRules[ruleRoadWidth] = mProp.mWidth.getValue();
+    mRule.mRules[ruleRoadWidth] = mProp.mWidth.value();
     plate()->accumBarriers( dctTraced, mRoads, mProp.mStratum, ruleRoadRoad, mRule );
 
     //Rebuild barriers for segment 1
     mRoads1.clear();
-    mRule.mRules[ruleRoadWidth] = mProp1.mWidth.getValue();
+    mRule.mRules[ruleRoadWidth] = mProp1.mWidth.value();
     plate()->accumBarriers( dctTraced, mRoads1, mProp1.mStratum, ruleRoadRoad, mRule );
 
     //Rebuild barriers for segment 2
     mRoads2.clear();
-    mRule.mRules[ruleRoadWidth] = mProp2.mWidth.getValue();
+    mRule.mRules[ruleRoadWidth] = mProp2.mWidth.value();
     plate()->accumBarriers( dctTraced, mRoads2, mProp2.mStratum, ruleRoadRoad, mRule );
 
 
@@ -763,9 +763,9 @@ void SdModeCRoadMove::dragPoint(SdPoint p)
         dest.setX( dest.x() < 0 ? -dy : dy );
       }
 
-    dest.move( mSource1 );
-    if( sdCheckRoadOnBarrierList( mRoads, mSource1, dest, mProp.mNetName.str() ) == dest &&
-        !sdIsBarrierListContains( mPads, mViaProp.mNetName.str(), dest ) ) {
+    dest += mSource1;
+    if( sdCheckRoadOnBarrierList( mRoads, mSource1, dest, mProp.mNetName.string() ) == dest &&
+        !sdIsBarrierListContains( mPads, mViaProp.mNetName.string(), dest ) ) {
       //New point available
       offset = dest.sub( mVia->position() );
       mVia->move(offset);
@@ -809,23 +809,23 @@ void SdModeCRoadMove::dragPoint(SdPoint p)
     //Try moving
     SdPoint move1(mMove1);
     SdPoint move2(mMove2);
-    move1.move( SdPoint(d*mDirX1,d*mDirY1) );
-    move2.move( SdPoint(d*mDirX2,d*mDirY2) );
+    move1 += SdPoint(d*mDirX1,d*mDirY1);
+    move2 += SdPoint(d*mDirX2,d*mDirY2);
     SdPoint source2(mSource2);
     if( mMoveSource2 )
-      source2.move( SdPoint(d*mDirX2,d*mDirY2) );
+      source2 += SdPoint(d*mDirX2,d*mDirY2);
 
 
     //Check if new position available
-    if( sdCheckRoadOnBarrierList( mRoads1, mSource1, move1, mProp.mNetName.str() ) == move1 &&
-        sdCheckRoadOnBarrierList( mRoads, move1, move2, mProp.mNetName.str() ) == move2 &&
-        sdCheckRoadOnBarrierList( mRoads2, source2, move2, mProp.mNetName.str() ) == move2 ) {
+    if( sdCheckRoadOnBarrierList( mRoads1, mSource1, move1, mProp.mNetName.string() ) == move1 &&
+        sdCheckRoadOnBarrierList( mRoads, move1, move2, mProp.mNetName.string() ) == move2 &&
+        sdCheckRoadOnBarrierList( mRoads2, source2, move2, mProp.mNetName.string() ) == move2 ) {
       //Fact moving
       mMove1 = move1;
       mMove2 = move2;
       mSource2 = source2;
       if( !link )
-        mPrevMove.move( offset );
+        mPrevMove += offset;
       }
     }
 
@@ -846,7 +846,7 @@ void SdModeCRoadMove::stopDrag(SdPoint p)
     mProp2.mStratum = mProp1.mStratum;
     do {
       qDebug() << "appended segment" << mSource1 << mMove1 << "and" << mMove2;
-      qDebug() << "at stratum" << mProp1.mStratum.getValue();
+      qDebug() << "at stratum" << mProp1.mStratum.value();
       SdGraphTracedRoad *road1 = nullptr;
       updateSegment( mProp1, road1, mSource1, mMove1 );
       SdGraphTracedRoad *road2 = nullptr;

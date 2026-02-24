@@ -46,6 +46,8 @@ class SdGraph : public SdObject
 
     //Изменение перемещением, вращением, зеркальностью и др.
     virtual void   transform( const QTransform &map, SdPvAngle angle );
+            void   move( SdPoint offset );
+            void   rotate( SdPoint center, SdPvAngle angle );
 
     //Изменение свойствами
     virtual void   setProp( SdPropSelected &prop );

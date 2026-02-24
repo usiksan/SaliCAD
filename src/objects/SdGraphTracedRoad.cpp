@@ -637,7 +637,7 @@ SdLayer *SdGraphTracedRoad::getLayer() const
 SdGraphTracedRoad *SdGraphTracedRoad::linkedRoad(SdPoint p)
   {
   SdGraphTracedRoad *road = nullptr;
-  QString netName = mProp.mNetName.str();
+  QString netName = mProp.mNetName.string();
   SdPvStratum st = mProp.mStratum;
   getPlate()->forEach( dctTraced, [p,&road,st,netName,this] (SdObject *obj) -> bool {
     SdPtr<SdGraphTraced> traced(obj);
@@ -703,7 +703,7 @@ void SdGraphTracedRoad::utilizeOver(SdUndo *undo)
   qDebug() << "utilize over" << this;
   //Find road over this segment
   //SdGraphTracedRoad *road = nullptr;
-  QString netName = mProp.mNetName.str();
+  QString netName = mProp.mNetName.string();
   SdPvStratum st = mProp.mStratum;
   getPlate()->forEach( dctTraceRoad, [st,netName,this,undo] (SdObject *obj) -> bool {
     SdPtr<SdGraphTracedRoad> road(obj);

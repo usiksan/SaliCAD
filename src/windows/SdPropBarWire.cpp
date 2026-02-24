@@ -193,7 +193,7 @@ void SdPropBarWire::setPropWire(SdPropComposerLine &propLine, double ppm, int en
 
 
 
-void SdPropBarWire::getPropWire(SdPropComposerLine &propLine, int *enterType, QString *wireName)
+void SdPropBarWire::getPropWire(SdPropComposerLine &propLine, int *enterType, SdPvMulty<SdPvString> &wireName)
   {
   propLine.clear();
   //Store layer if setted
@@ -216,6 +216,11 @@ void SdPropBarWire::getPropWire(SdPropComposerLine &propLine, int *enterType, QS
     else if( mEnter45degree->isChecked() ) *enterType = dle45degree;
     else *enterType = dleAnyDegree;
     }
+
+  wireName.clear();
+  QString wn = mWireName->currentText();
+  if( !wn.isEmpty() && !wn.startsWith("---") )
+    wireName.reset( SdPvString(wn) );
   }
 
 
@@ -231,7 +236,7 @@ void SdPropBarWire::setPropWire(const SdPropLine &propLine, double ppm, int ente
 
 
 
-void SdPropBarWire::getPropWire(SdPropLine &propLine, int *enterType, QString *wireName)
+void SdPropBarWire::getPropWire(SdPropLine &propLine, int *enterType, SdPvMulty<SdPvString> &wireName)
   {
   SdPropComposerLine composerLine;
   getPropWire( composerLine, enterType, wireName );

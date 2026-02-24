@@ -60,13 +60,13 @@ void SdIllustrator::drawLineArrow(int x1, int y1, int x2, int y2, QColor color, 
     mPainter.setPen( color );
     mPainter.drawLine( mapX(x1), mapY(y1), mapX(x2), mapY(y2) );
     //On point2 draw arrow with arrow size
-    SdPvAngle angle = SdPoint(x1,y1).getAngle( SdPoint(x2,y2) );
-    x2 = mapX(x2);
-    y2 = mapY(y2);
-    SdPoint e1( x2 + arrowSize, y2 - arrowSize / 2 );
-    e1.rotate( SdPoint(x2,y2), angle );
-    SdPoint e2( x2 + arrowSize, y2 + arrowSize / 2 );
-    e2.rotate( SdPoint(x2,y2), angle );
+    double angle = SdPoint::angleVector( SdPoint(10,0), SdPoint{}, SdPoint(x1,y1) );
+    SdPoint e1( arrowSize, -arrowSize / 3 );
+    SdPoint e2( arrowSize,  arrowSize / 3 );
+    QTransform map( QTransform::fromTranslate(x2,y2) );
+    map.rotate( angle );
+    e1 = map.map(e1);
+    e2 = map.map(e2);
     mPainter.drawLine( e1.x(), e1.y(), x2, y2 );
     mPainter.drawLine( e2.x(), e2.y(), x2, y2 );
     }

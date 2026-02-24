@@ -80,12 +80,12 @@ void SdModeCViaEnter::propSetToBar()
 void SdModeCViaEnter::enterPoint(SdPoint p)
   {
   //Find net behind cursor
-  int stratum = mViaProp.mStratum.getValue();
+  SdPvStratum stratum = mViaProp.mStratum;
   QString netName;
   plate()->forEach( dctTraced, [p,&stratum,&netName] (SdObject *obj) -> bool {
     SdPtr<SdGraphTraced> traced(obj);
     if( traced.isValid() )
-      return !traced->isPointOnNet( p, stratum, &netName, &stratum );
+      return !traced->isPointOnNet( p, stratum, netName, stratum );
     return true;
     });
 
@@ -95,7 +95,7 @@ void SdModeCViaEnter::enterPoint(SdPoint p)
     //Accum barriers for via
     mPads.clear();
     //Update width in rule block to current from prop
-    int r = plate()->getPadOverRadius( mViaProp.mPadType.str() );
+    int r = plate()->getPadOverRadius( mViaProp.mPadType.string() );
     if( r > 0 )
       rule.mRules[ruleRoadWidth] = r;
     plate()->accumBarriers( dctTraced, mPads, mViaProp.mStratum, rulePadPad, rule );

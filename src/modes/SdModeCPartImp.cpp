@@ -56,7 +56,7 @@ void SdModeCPartImp::activate()
 void SdModeCPartImp::drawDynamic(SdContext *ctx)
   {
   if( mPart ) {
-    SdConverterImplement imp( mOrigin, mPart->getOrigin(), sdGlobalProp->mPartImpProp.mAngle.getValue(), sdGlobalProp->mPartImpProp.mSide.getValue() );
+    SdConverterImplement imp( mOrigin, mPart->getOrigin(), sdGlobalProp->mPartImpProp.mAngle, sdGlobalProp->mPartImpProp.mSide.isBottom() );
     ctx->setConverter( &imp );
 
     mPart->draw( ctx );
@@ -78,7 +78,7 @@ void SdModeCPartImp::propGetFromBar()
   {
   SdPropBarPartImp *sbar = dynamic_cast<SdPropBarPartImp*>( SdWCommand::getModeBar(PB_PART_IMP) );
   if( sbar ) {
-    sbar->getPropPartImp( &(sdGlobalProp->mPartImpProp) );
+    sbar->getPropPartImp( sdGlobalProp->mPartImpProp );
     update();
     }
   }
@@ -90,7 +90,7 @@ void SdModeCPartImp::propSetToBar()
   {
   SdPropBarPartImp *sbar = dynamic_cast<SdPropBarPartImp*>( SdWCommand::getModeBar(PB_PART_IMP) );
   if( sbar ) {
-    sbar->setPropPartImp( &(sdGlobalProp->mPartImpProp) );
+    sbar->setPropPartImp( sdGlobalProp->mPartImpProp );
     }
   }
 

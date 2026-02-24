@@ -34,7 +34,7 @@ SdModeCPolygonEnter::SdModeCPolygonEnter( SdWEditorGraph *editor, SdProjectItem 
 
 void SdModeCPolygonEnter::drawStatic(SdContext *ctx)
   {
-  plate()->drawTrace( ctx, mProp.mStratum, mProp.mNetName.mString );
+  plate()->drawTrace( ctx, mProp.mStratum, mProp.mNetName.string() );
   }
 
 
@@ -45,7 +45,7 @@ void SdModeCPolygonEnter::drawDynamic(SdContext *ctx)
   {
   if( getStep() == sNextPoint ) {
     ctx->setPen( 0, SdEnvir::instance()->getSysColor(scEnter),
-                 sdGlobalProp->propLine( mObject->getClass() )->mType.mValue );
+                 sdGlobalProp->propLine( mObject->getClass() )->mType );
     ctx->region( mList, false );
     ctx->line( mList.last(), mMiddle );
     if( mMiddle != mPrevMove )
@@ -81,7 +81,7 @@ void SdModeCPolygonEnter::propGetFromBar()
   SdPropBarPolygon *bar = dynamic_cast<SdPropBarPolygon*>( SdWCommand::mbarTable[PB_POLYGON] );
   if( bar ) {
     //Retrive properties from polygon properties bar
-    bar->getPropPolygon( &mProp, &(sdGlobalProp->mWireEnterType) );
+    bar->getPropPolygon( mProp, &(sdGlobalProp->mWireEnterType) );
     mEditor->setFocus();
     setDirtyCashe();
     update();
@@ -98,11 +98,11 @@ void SdModeCPolygonEnter::propSetToBar()
     //Accum available net names
     QStringList netList = mObject->getProject()->netList();
     //If net name not assigned yet for polygon then assign first one
-    if( mProp.mNetName.mString.isEmpty() && netList.count() )
+    if( mProp.mNetName.string().isEmpty() && netList.count() )
       mProp.mNetName = netList.at(0);
     //Setup tracing layer count and trace type
     bar->setPlateAndTrace( plate(), layerTraceRoad );
-    bar->setPropPolygon( &mProp, mEditor->getPPM(), sdGlobalProp->mWireEnterType, netList );
+    bar->setPropPolygon( mProp, mEditor->getPPM(), sdGlobalProp->mWireEnterType, netList );
     }
   }
 
@@ -192,12 +192,12 @@ SdPoint SdModeCPolygonEnter::enterPrev()
     //Retrieve net name for polygon from current smart point
     if( !mSmart.isFar() ) {
       QString netName;
-      int     stratum = mProp.mStratum.getValue();
+      SdPvStratum stratum = mProp.mStratum;
       SdPoint p(mSmart);
       plate()->forEach( dctTraced, [&netName,&stratum,p] ( SdObject *obj ) -> bool {
         SdPtr<SdGraphTraced> traced(obj);
         if( traced.isValid() )
-          return !traced->isPointOnNet( p, stratum, &netName, &stratum );
+          return !traced->isPointOnNet( p, stratum, netName, stratum );
         return true;
         });
       //qDebug() << "smart enter" << netName;

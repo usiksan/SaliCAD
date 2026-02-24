@@ -153,11 +153,8 @@ void SdModeSelect::propGetFromBar()
       break;
     case PB_WIRE : {
       SdPropBarWire    *barWire    = dynamic_cast<SdPropBarWire*>(SdWCommand::getModeBar(PB_WIRE));
-      QString wireName;
-      barWire->getPropWire( mLocalProp.mWireProp, &(mLocalProp.mEnterType), &(wireName) );
+      barWire->getPropWire( mLocalProp.mWireProp, &(mLocalProp.mEnterType), mLocalProp.mWireName );
       mLocalProp.setLayer( mLocalProp.mWireProp.get<&SdPropLine::mLayer>() );
-      if( !wireName.isEmpty() )
-        mLocalProp.mWireName.reset( wireName );
       }
       break;
     case PB_SYM_PIN : {

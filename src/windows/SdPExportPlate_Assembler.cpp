@@ -98,7 +98,7 @@ bool SdPExportPlate_Assembler::validatePage()
             //Angle
             SdPvAngle angle = part->angle();
             if( doBottom ) angle += 180000;
-            os.append( QString("%1%2").arg( angle ).arg(delim) );
+            os.append( QString("%1%2").arg( angle.as360() ).arg(delim) );
             //Position
             SdPoint pos = part->getOverRect().center();
             int x;

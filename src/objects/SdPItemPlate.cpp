@@ -401,7 +401,7 @@ void SdPItemPlate::ruleForNetSet(const QString netName, SdRuleId ruleId, int val
 // stratum - stratum list on which will be barriers
 // toWhich - destignation object type to which barriers will be builded
 // rule    - source object rules
-void SdPItemPlate::accumBarriers(quint64 mask, SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &rule)
+void SdPItemPlate::accumBarriers(quint64 mask, SdBarrierList &dest, SdPvStratum stratum, SdRuleId toWhich, const SdRuleBlock &rule)
   {
   forEach( mask, [&] (SdObject *obj) -> bool {
     SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);

@@ -152,12 +152,12 @@ void SdPlateNetGraph::testViaNode( QList<SdPlateNetGraphSegment>::iterator iter)
   if( !iter->mUsed && iter->mTraced->getClass() == dctTraceVia ) {
     SdPoint p = iter->p1;
     SdPvStratum s = iter->mStratum;
-    int ms1 = 0, ms2 = 0;
+    SdPvStratum ms1(0), ms2(0);
     for( auto it = mSegmentList.begin(); it != mSegmentList.end(); it++ )
       if( it->mTraced->getClass() == dctTraceRoad && it->isMatch( p, s ) ) {
-        int ds = it->mStratum & s;
-        if( ms1 == 0 || ms1 == ds ) ms1 = ds;
-        else if( ms2 == 0 || ms2 == ds ) ms2 = ds;
+        SdPvStratum ds = it->mStratum & s;
+        if( ms1.isEmpty() || ms1 == ds ) ms1 = ds;
+        else if( ms2.isEmpty() || ms2 == ds ) ms2 = ds;
         else {
           //More then two stratum. Via is node
           iter->mUsed = true;

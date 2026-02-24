@@ -136,7 +136,7 @@ void SdPropBarPolygon::setPropPolygon(const SdPropComposerPolygon &propPolygon, 
   mWireName->addItems( list );
   //Current road name name
   auto &propNetName = propPolygon.get<&SdPropPolygon::mNetName>();
-  mWireName->setCurrentText( propNetName.isSingle() ? propNetName.value.string() : QString{} );
+  mWireName->setCurrentText( propNetName.isSingle() ? propNetName.value().string() : QString{} );
   }
 
 
@@ -145,8 +145,8 @@ void SdPropBarPolygon::setPropPolygon(const SdPropComposerPolygon &propPolygon, 
 void SdPropBarPolygon::getPropPolygon(SdPropComposerPolygon &propPolygon, int *enterType)
   {
   propPolygon.clear();
-  int stratum = getSelectedStratum();
-  if( stratum )
+  SdPvStratum stratum = getSelectedStratum();
+  if( !stratum.isEmpty() )
     propPolygon.get<&SdPropPolygon::mStratum>().reset(stratum);
 
   //Store gap if setted

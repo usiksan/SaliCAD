@@ -208,8 +208,8 @@ void SdDPadMaster::drawPadSchematic(SdIllustrator &ill)
       if( mPad.mHoleLength > 0 ) {
         SdPoint a,b;
         mPad.slotPoints( a, b );
-        a.move( mPad.center() );
-        b.move( mPad.center() );
+        a += mPad.center();
+        b += mPad.center();
         ill.drawLineWidth( mPad.mHoleDiametr, a.x(), a.y(), b.x(), b.y(), QColor(0x7F6A00) );
         }
       else
@@ -234,8 +234,8 @@ void SdDPadMaster::drawPadSchematic(SdIllustrator &ill)
       if( mPad.mHoleLength > 0 ) {
         SdPoint a,b;
         mPad.slotPoints( a, b );
-        a.move( mPad.center() );
-        b.move( mPad.center() );
+        a += mPad.center();
+        b += mPad.center();
         ill.drawLineWidth( mPad.mHoleDiametr, a.x(), a.y(), b.x(), b.y(), QColor(0x7F6A00) );
         }
       else

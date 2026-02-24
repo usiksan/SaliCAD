@@ -40,7 +40,7 @@ void SdModeCNetWire::drawStatic(SdContext *ctx)
   mObject->forEach( dctAll, [this,ctx] (SdObject *obj) -> bool {
     SdGraphNet *net = dynamic_cast<SdGraphNet*>( obj );
     if( net != nullptr ) {
-      if( !mShowNet || net->getNetName() != mNetName )
+      if( !mShowNet || mNetName != net->getNetName() )
         net->draw( ctx );
       }
     else {
@@ -56,7 +56,7 @@ void SdModeCNetWire::drawStatic(SdContext *ctx)
     ctx->setOverColor( SdEnvir::instance()->getSysColor(scEnter) );
     mObject->forEach( dctNetWire | dctNetName | dctNetParam, [this,ctx] (SdObject *obj) -> bool {
       SdGraphNet *net = dynamic_cast<SdGraphNet*>( obj );
-      if( net != nullptr && net->getNetName() == mNetName )
+      if( net != nullptr && mNetName == net->getNetName() )
         net->draw( ctx );
       return true;
       });
@@ -108,8 +108,11 @@ void SdModeCNetWire::propGetFromBar()
   {
   SdPropBarWire *bar = dynamic_cast<SdPropBarWire*>( SdWCommand::mbarTable[PB_WIRE] );
   if( bar ) {
+    SdPvMulty<SdPvString> pvWireName;
     QString wireName;
-    bar->getPropWire( sdGlobalProp->mWireProp, &(sdGlobalProp->mWireEnterType), &wireName );
+    bar->getPropWire( sdGlobalProp->mWireProp, &(sdGlobalProp->mWireEnterType), pvWireName );
+    Q_ASSERT( pvWireName.isSingle() );
+    wireName = pvWireName.value().string();
     if( getStep() ) {
       //If wire enter in process then perhaps net union. Detect it
       if( mNetName != wireName ) {
@@ -150,8 +153,11 @@ void SdModeCNetWire::propGetFromBar()
 void SdModeCNetWire::propSetToBar()
   {
   SdPropBarWire *bar = dynamic_cast<SdPropBarWire*>( SdWCommand::mbarTable[PB_WIRE] );
-  if( bar )
-    bar->setPropWire( sdGlobalProp->mWireProp, mEditor->getPPM(), sdGlobalProp->mWireEnterType, mNetName );
+  if( bar ) {
+    SdPvMulty<SdPvString> netName;
+    netName.reset( SdPvString(mNetName) );
+    bar->setPropWire( sdGlobalProp->mWireProp, mEditor->getPPM(), sdGlobalProp->mWireEnterType, netName );
+    }
   }
 
 

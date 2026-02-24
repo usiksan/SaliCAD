@@ -50,12 +50,18 @@ class SdPvMulty
     bool isNeedUpdate( const Prop &v ) const { return (mState == spmSingle && mPropValue != v); }
 
 
+    bool isSingleMatch( const Prop &v ) const { return (mState == spmSingle) && mPropValue == v; }
+
 
     //!
     //! \brief isSingle Check if property has single value state
     //! \return true if state is spmSingle, false otherwise
     //!
     bool isSingle() const { return mState == spmSingle; }
+
+    // bool isEmpty() const { return mState == spmNone; }
+
+    // bool isMulty() const { return mState == spmMulty; }
 
 
 

@@ -29,6 +29,8 @@ class SdGraphNet : public SdGraph
 
     SdPItemSheet *getSheet() const { return dynamic_cast<SdPItemSheet*>(getParent()); }
 
+    SdPvString    netName() const { return mNetName; }
+
     QString       getNetName() const { return mNetName.string(); }
 
     virtual void  setNetName( const QString netName, SdUndo *undo );

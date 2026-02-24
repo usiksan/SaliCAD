@@ -99,10 +99,10 @@ class SdModeCRoadEnter : public SdModeCommon
   private:
     //Plate where road being inserted
     SdPItemPlate   *plate() { return dynamic_cast<SdPItemPlate*>(mObject); }
-    void            getNetOnPoint( SdPoint p, SdPvStratum s, QString *netName, int *destStratum );
+    void            getNetOnPoint( SdPoint p, SdPvStratum s, QString &netName, SdPvStratum &destStratum );
 
     //If point is on middle of same road segment we split it on point
-    void            splitRoadSegment( SdPoint p, SdPvStratum s, QString *netName, int *destStratum );
+    void            splitRoadSegment( SdPoint p, SdPvStratum s, QString &netName, SdPvStratum &destStratum );
 
     void            calcFirstSmartPoint();
     void            calcNextSmartPoint(SdPoint fromPoint);

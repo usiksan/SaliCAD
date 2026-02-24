@@ -223,7 +223,7 @@ void SdPropBarRoad::setPropRoad(const SdPropComposerRoad &propRoad, const SdProp
 
   //Current road name name
   auto &propNetName = propRoad.get<&SdPropRoad::mNetName>();
-  mWireName->setText( propNetName.isSingle() ? propNetName.value.string() : QString{} );
+  mWireName->setText( propNetName.isSingle() ? propNetName.value().string() : QString{} );
 
   //Current via type
   auto &propPadType = propVia.get<&SdPropVia::mPadType>();
@@ -237,8 +237,8 @@ void SdPropBarRoad::getPropRoad(SdPropComposerRoad &propRoad, SdPropComposerVia 
   {
   propRoad.clear();
   propVia.clear();
-  int stratum = getSelectedStratum();
-  if( stratum )
+  SdPvStratum stratum = getSelectedStratum();
+  if( !stratum.isEmpty() )
     propRoad.get<&SdPropRoad::mStratum>().reset(stratum);
 
   //Store width if setted
@@ -272,10 +272,10 @@ void SdPropBarRoad::setPropVia(SdPropVia *propVia)
     mAlignToGrid->setChecked( SdEnvir::instance()->mCursorAlignGrid );
 
     //Current road name name
-    mWireName->setText( propVia->mNetName.str() );
+    mWireName->setText( propVia->mNetName.string() );
 
     //Current via type
-    mViaPadType->setCurrentText( propVia->mPadType.str() );
+    mViaPadType->setCurrentText( propVia->mPadType.string() );
     padTypeHistory.reorderComboBoxString( mViaPadType );
     }
   }

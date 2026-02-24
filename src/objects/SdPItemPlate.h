@@ -163,7 +163,7 @@ class SdPItemPlate : public SdProjectItem
 
 
     //Accum bariers
-    void                   accumBarriers( quint64 mask, SdBarrierList &dest, int stratum, SdRuleId toWhich, const SdRuleBlock &rule );
+    void                   accumBarriers(quint64 mask, SdBarrierList &dest, SdPvStratum stratum, SdRuleId toWhich, const SdRuleBlock &rule );
 
     //Check rules
     void                   checkRules(std::function<bool()> fun1);

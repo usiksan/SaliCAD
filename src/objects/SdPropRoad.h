@@ -36,6 +36,8 @@ struct SdPropRoad
     //!
     SdPropRoad() : mWidth(200), mNetName(), mStratum(stmTop) { }
 
+    bool operator == ( const SdPropRoad &road ) const { return mWidth == road.mWidth && mNetName == road.mNetName && mStratum == road.mStratum; }
+
     //!
     //! \brief json Overloaded function to write object content into json writer
     //! \param js   Json writer

@@ -28,8 +28,8 @@ SdModeCLinearCircleFilled::SdModeCLinearCircleFilled(SdWEditorGraph *editor, SdP
 
 void SdModeCLinearCircleFilled::drawDynamic(SdContext *ctx)
   {
-  ctx->setPen( sdGlobalProp->propLine( mObject->getClass() )->mWidth.getValue(), SdEnvir::instance()->getSysColor(scEnter),
-               sdGlobalProp->propLine( mObject->getClass() )->mType.getValue() );
+  ctx->setPen( sdGlobalProp->propLine( mObject->getClass() )->mWidth, SdEnvir::instance()->getSysColor(scEnter),
+               sdGlobalProp->propLine( mObject->getClass() )->mType );
   if( getStep() == sRadius )
     ctx->circleFill( mCenter, mRadius );
   if( SdEnvir::instance()->mIsSmart && mSmartType )

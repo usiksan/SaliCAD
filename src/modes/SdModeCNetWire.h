@@ -15,7 +15,6 @@ Description
 #define SDMODECWIRE_H
 
 #include "SdModeCommon.h"
-#include "objects/SdPropLine.h"
 
 class SdPItemSheet;
 

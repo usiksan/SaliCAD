@@ -194,7 +194,7 @@ void SdModeCPartPlace::propGetFromBar()
     //Get new props
     mLocalProp.clear();
 
-    barPartPlace->getPropPartImp( &(mLocalProp.mPartImpProp) );
+    barPartPlace->getPropPartImp( mLocalProp.mPartImpProp );
 
     //Setup new properties
     mFragment.forEach( dctAll, [this] (SdObject *obj) -> bool {
@@ -227,7 +227,7 @@ void SdModeCPartPlace::propSetToBar()
   //Set new bar
   //SdWCommand::setModeBar( PB_PART_IMP );
   SdPropBarPartImp *barPartImp = dynamic_cast<SdPropBarPartImp*>(SdWCommand::getModeBar(getPropBarId()));
-  barPartImp->setPropPartImp( &(mLocalProp.mPartImpProp) );
+  barPartImp->setPropPartImp( mLocalProp.mPartImpProp );
 
   dirtyRatNet();
   }
@@ -327,14 +327,14 @@ void SdModeCPartPlace::cancelPoint(SdPoint)
 void SdModeCPartPlace::movePoint(SdPoint p)
   {
   if( getStep() == psmMove && mPrevMove != p ) {
-    SdPoint offset = p.sub(mPrevMove);
-    mFragment.forEach( dctAll, [offset] (SdObject *obj) ->bool {
+    QTransform map( p.transformMoveFrom(mPrevMove) );
+    mFragment.forEach( dctAll, [map] (SdObject *obj) ->bool {
       SdGraph *graph = dynamic_cast<SdGraph*>(obj);
       if( graph != nullptr )
-        graph->move( offset );
+        graph->transform( map, SdPvAngle{} );
       return true;
       });
-    mPrevMove.move( offset );
+    mPrevMove = p;
     update();
     }
   else {
@@ -356,7 +356,12 @@ void SdModeCPartPlace::keyDown(int key, QChar ch)
       if( mFragment.count() && getStep() == psmMove ) {
         //Save state of selected objects
         //saveStateOfSelectedObjects( QObject::tr("Component rotation") );
-        mLocalProp.mPartImpProp.mAngle += 90000;
+        auto &angle = mLocalProp.mPartImpProp.get<&SdPropPartImp::mAngle>();
+        if( angle.isSingle() )
+          angle.reset( angle.value() + 90000 );
+        else
+          angle.reset( 0 );
+        //mLocalProp.mPartImpProp.mAngle += 90000;
         setPropertiesToComponent();
         }
       break;
@@ -365,7 +370,12 @@ void SdModeCPartPlace::keyDown(int key, QChar ch)
       if( mFragment.count() && getStep() == psmMove ) {
         //Save state of selected objects
         //saveStateOfSelectedObjects( QObject::tr("Component flip") );
-        mLocalProp.mPartImpProp.mSide = mLocalProp.mPartImpProp.mSide == stmTop ? stmBottom : stmTop;
+        auto &side = mLocalProp.mPartImpProp.get<&SdPropPartImp::mSide>();
+        if( side.isSingle() )
+          side.reset( side.value().isTop() ? stmBottom : stmTop );
+        else
+          side.reset( stmTop );
+        //mLocalProp.mPartImpProp.mSide = mLocalProp.mPartImpProp.mSide == stmTop ? ;
         setPropertiesToComponent();
         }
       break;
@@ -398,9 +408,10 @@ void SdModeCPartPlace::keyDown(int key, QChar ch)
         //Save state of selected objects
         //saveStateOfSelectedObjects( QObject::tr("Group rotation") );
         //Perform rotation
-        mFragment.forEach( dctPartImp, [this] (SdObject *obj) -> bool {
+        QTransform map( mPrevMove.transformRotation( SdPvAngle(da90) )  );
+        mFragment.forEach( dctPartImp, [map] (SdObject *obj) -> bool {
           SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>( obj );
-          if( imp ) imp->rotate( mPrevMove, SdPvAngle(90000) );
+          if( imp ) imp->transform( map, SdPvAngle(da90) );
           return true;
           });
         update();
@@ -477,7 +488,7 @@ void SdModeCPartPlace::stopDrag(SdPoint p)
     SdRect r(mFirst,p);
     mObject->forEach( dctPartImp, [this,r] (SdObject *obj) -> bool {
       SdPtr<SdGraphPartImp> imp(obj);
-      if( imp.isValid()  && (imp->stratum().match( mSideMask )) )
+      if( imp.isValid()  && (imp->stratum().isIntersect( mSideMask )) )
         imp->selectByRect( r, &mFragment );
       return true;
       });
@@ -658,7 +669,7 @@ void SdModeCPartPlace::checkPoint(SdPoint p)
   mBehindCursorTable.clear();     //Очистить таблицу компонентов под курсором
   mObject->forEach( dctPartImp, [this,p] (SdObject *obj) -> bool {
     SdGraphPartImp *imp = dynamic_cast<SdGraphPartImp*>( obj );
-    if( imp && imp->behindCursor(p) && (imp->stratum().match( mSideMask )) )
+    if( imp && imp->behindCursor(p) && (imp->stratum().isIntersect( mSideMask )) )
       mBehindCursorTable.append( imp );
     return true;
     });

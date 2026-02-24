@@ -394,7 +394,7 @@ void SdDMasterSymbolIc::accept()
   //Properties for extended pin names
   SdPropText ptn;
   ptn = mPinNameProp;
-  ptn.mSize = ptn.mSize.getValue() / 2;
+  ptn.mSize = ptn.mSize.value() / 2;
   ptn.mHorz = dhjLeft;
 
   //Pins

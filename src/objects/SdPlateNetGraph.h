@@ -22,13 +22,13 @@ Description
 struct SdPlateNetGraphSegment {
     SdPoint        p1;
     SdPoint        p2;
-    SdPvStratum  mStratum;
+    SdPvStratum    mStratum;
     SdGraphTraced *mTraced;
     bool           mUsed;
 
-    bool isMatch1( SdPoint p, SdPvStratum s ) { return mStratum.match(s) && p1 == p; }
-    bool isMatch2( SdPoint p, SdPvStratum s ) { return mStratum.match(s) && p2 == p; }
-    bool isMatch( SdPoint p, SdPvStratum s ) { return mStratum.match(s) && (p1 == p || p2 == p); }
+    bool isMatch1( SdPoint p, SdPvStratum s ) { return mStratum.isIntersect(s) && p1 == p; }
+    bool isMatch2( SdPoint p, SdPvStratum s ) { return mStratum.isIntersect(s) && p2 == p; }
+    bool isMatch( SdPoint p, SdPvStratum s ) { return mStratum.isIntersect(s) && (p1 == p || p2 == p); }
   };
 
 typedef QList<SdGraphTracedPtr> SdGraphTracedPtrList;
@@ -51,9 +51,9 @@ struct SdPlateNetGraphPath {
 
 struct SdPlateNetGraphNode {
     SdPvStratum mStratum;
-    SdPoint   mOrigin;
+    SdPoint     mOrigin;
 
-    bool isMatch( SdPoint p, SdPvStratum s ) const { return mStratum.match(s) && p == mOrigin; }
+    bool isMatch( SdPoint p, SdPvStratum s ) const { return mStratum.isIntersect(s) && p == mOrigin; }
   };
 
 

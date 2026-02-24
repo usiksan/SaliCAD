@@ -91,7 +91,7 @@ void SdModeCRoadEnter::reset()
 
 void SdModeCRoadEnter::drawStatic(SdContext *ctx)
   {
-  plate()->drawTrace( ctx, mProp.mStratum, getStep() ? mProp.mNetName.str() : QString() );
+  plate()->drawTrace( ctx, mProp.mStratum, getStep() ? mProp.mNetName.string() : QString() );
   }
 
 
@@ -125,7 +125,7 @@ void SdModeCRoadEnter::drawDynamic(SdContext *ctx)
 
     //Draw catch point if present
     int catchSize = mEditor->gridGet().x() * 2;
-    int w1_2 = mProp.mWidth.getValue() * 12 / 20;
+    int w1_2 = mProp.mWidth.value() * 12 / 20;
     int w_diag = static_cast<int>( sqrt( static_cast<double>(w1_2) * static_cast<double>(w1_2) * 2.0 )  );
     switch( mCatch ) {
       case catchFinish :
@@ -189,7 +189,7 @@ void SdModeCRoadEnter::propGetFromBar()
   {
   SdPropBarRoad *bar = dynamic_cast<SdPropBarRoad*>( SdWCommand::mbarTable[PB_ROAD] );
   if( bar ) {
-    bar->getPropRoad( &(sdGlobalProp->mRoadProp), &mViaProp, &(sdGlobalProp->mWireEnterType) );
+    bar->getPropRoad( sdGlobalProp->mRoadProp, mViaProp, &(sdGlobalProp->mWireEnterType) );
     sdGlobalProp->mViaProp = mViaProp;
     sdGlobalProp->mViaRule = bar->getViaRule();
 
@@ -202,8 +202,8 @@ void SdModeCRoadEnter::propGetFromBar()
         //We show question for change width in rules for this net
         if( QMessageBox::question( mEditor, QObject::tr("Query"), QObject::tr("Change width for full net?") ) == QMessageBox::Yes ) {
           //Change with in rule
-          mRule.mRules[ruleRoadWidth] = sdGlobalProp->mRoadProp.mWidth;
-          plate()->ruleForNetSet( mProp.mNetName.str(), ruleRoadWidth, sdGlobalProp->mRoadProp.mWidth, mUndo );
+          mRule.mRules[ruleRoadWidth] = sdGlobalProp->mRoadProp.mWidth.value();
+          plate()->ruleForNetSet( mProp.mNetName.string(), ruleRoadWidth, sdGlobalProp->mRoadProp.mWidth.value(), mUndo );
           }
         }
       }
@@ -238,7 +238,7 @@ void SdModeCRoadEnter::propSetToBar()
   if( bar ) {
     //Setup tracing layer count and trace type
     bar->setPlateAndTrace( plate(), layerTraceRoad );
-    bar->setPropRoad( &mProp, &mViaProp, mEditor->getPPM(), sdGlobalProp->mWireEnterType );
+    bar->setPropRoad( mProp, mViaProp, mEditor->getPPM(), sdGlobalProp->mWireEnterType );
     bar->setViaRule( sdGlobalProp->mViaRule );
     sdGlobalProp->mRoadProp = mProp;
     sdGlobalProp->mViaProp = mViaProp;
@@ -260,9 +260,9 @@ void SdModeCRoadEnter::enterPoint(SdPoint p)
     else {
       if( mCatch == catchFinish && mBarMiddle == mMiddle && mBarLast == mLast ) {
         //Split road if need
-        QString netName = mProp.mNetName.str();
-        int destStratum = 0;
-        splitRoadSegment( mLast, mProp.mStratum, &netName, &destStratum );
+        QString netName = mProp.mNetName.string();
+        SdPvStratum destStratum(0);
+        splitRoadSegment( mLast, mProp.mStratum, netName, destStratum );
         //Rebuild loop
         findLoop( mFirst, mLast, mProp.mStratum );
         //Connection complete. Append both segments and stop enter
@@ -322,9 +322,9 @@ SdPoint SdModeCRoadEnter::enterPrev()
     //Connection complete. Append both segments and stop enter
 
     //Split road if need
-    QString netName = mProp.mNetName.str();
-    int destStratum = 0;
-    splitRoadSegment( mLast, mProp.mStratum, &netName, &destStratum );
+    QString netName = mProp.mNetName.string();
+    SdPvStratum destStratum(0);
+    splitRoadSegment( mLast, mProp.mStratum, netName, destStratum );
 
     if( mFirst != mMiddle )
       addTrace( new SdGraphTracedRoad( mProp, mFirst, mMiddle ), QObject::tr("Insert trace road") );
@@ -345,9 +345,9 @@ SdPoint SdModeCRoadEnter::enterPrev()
     }
   else if( mSmartPath.count() > 1 ) {
     //Split road if need
-    QString netName = mProp.mNetName.str();
-    int destStratum = 0;
-    splitRoadSegment( mLast, mProp.mStratum, &netName, &destStratum );
+    QString netName = mProp.mNetName.string();
+    SdPvStratum destStratum(0);
+    splitRoadSegment( mLast, mProp.mStratum, netName, destStratum );
 
     if( mFirst != mMiddle )
       addTrace( new SdGraphTracedRoad( mProp, mFirst, mMiddle ), QObject::tr("Insert trace road") );
@@ -448,7 +448,7 @@ void SdModeCRoadEnter::movePoint(SdPoint p)
 
 QString SdModeCRoadEnter::getStepHelp() const
   {
-  return getStep() == sNextPoint ? QObject::tr("Enter next point of road polyline") : QObject::tr("Select point to start road. Left button '%1' net.").arg( mProp.mNetName.str() );
+  return getStep() == sNextPoint ? QObject::tr("Enter next point of road polyline") : QObject::tr("Select point to start road. Left button '%1' net.").arg( mProp.mNetName.string() );
   }
 
 
@@ -512,7 +512,7 @@ void SdModeCRoadEnter::keyDown(int key, QChar ch)
         else {
           SdPtr<SdGraphTracedVia> via( mEnterPath.last() );
           if( via.isValid() ) {
-            mStack = via->stratum().getValue() & plate()->getStratum();
+            mStack = via->stratum() & plate()->getStratum();
             }
           }
         propSetToBar();
@@ -537,12 +537,12 @@ void SdModeCRoadEnter::keyDown(int key, QChar ch)
 
 
 
-void SdModeCRoadEnter::getNetOnPoint(SdPoint p, SdPvStratum s, QString *netName, int *destStratum)
+void SdModeCRoadEnter::getNetOnPoint(SdPoint p, SdPvStratum s, QString &netName, SdPvStratum &destStratum)
   {
   //Clear net name and stratum
-  netName->clear();
-  *destStratum = 0;
-  plate()->forEach( dctTraced, [p,s,netName,destStratum] (SdObject *obj) -> bool {
+  netName.clear();
+  destStratum = 0;
+  plate()->forEach( dctTraced, [p,s,&netName,&destStratum] (SdObject *obj) -> bool {
     SdGraphTraced *traced = dynamic_cast<SdGraphTraced*>(obj);
     if( traced != nullptr ) {
       traced->isPointOnNet( p, s, netName, destStratum );
@@ -556,12 +556,12 @@ void SdModeCRoadEnter::getNetOnPoint(SdPoint p, SdPvStratum s, QString *netName,
 
 
 //If point is on middle of same road segment we split it on point
-void SdModeCRoadEnter::splitRoadSegment(SdPoint p, SdPvStratum s, QString *netName, int *destStratum)
+void SdModeCRoadEnter::splitRoadSegment(SdPoint p, SdPvStratum s, QString &netName, SdPvStratum &destStratum)
   {
   SdUndo *undo = mUndo;
-  plate()->forEach( dctTraceRoad, [p,s,netName,destStratum,undo] (SdObject *obj) -> bool {
+  plate()->forEach( dctTraceRoad, [p,s,&netName,&destStratum,undo] (SdObject *obj) -> bool {
     SdPtr<SdGraphTracedRoad> road(obj);
-    if( road.isValid() && road->isMatchNetAndStratum( *netName, s ) && road->isPointOnNet( p, s, netName, destStratum ) ) {
+    if( road.isValid() && road->isMatchNetAndStratum( netName, s ) && road->isPointOnNet( p, s, netName, destStratum ) ) {
       //Segment with point found
       road->splitRoad( p, undo );
       //qDebug() << "Road splitted at" << p;
@@ -594,16 +594,16 @@ void SdModeCRoadEnter::calcFirstSmartPoint()
   if( info.isFound() ) {
     mFirst = info.mDest;
     QString netName;
-    int destStratum;
-    getNetOnPoint( mFirst, mProp.mStratum, &netName, &destStratum );
-    if( mProp.mNetName.str() != netName ) {
+    SdPvStratum destStratum;
+    getNetOnPoint( mFirst, mProp.mStratum, netName, destStratum );
+    if( mProp.mNetName.string() != netName ) {
       mProp.mNetName = netName;
       SdPulsar::sdPulsar->emitSetStatusMessage( getStepHelp() );
       }
     }
   else {
     mFirst = mPrevMove;
-    mProp.mNetName.clear();
+    mProp.mNetName = SdPvString{};
     }
   }
 
@@ -619,7 +619,7 @@ void SdModeCRoadEnter::calcNextSmartPoint( SdPoint fromPoint )
   //info.mSnapMask = snapNearestNetNet | snapNearestNetPin | snapExcludeSour;
   info.mSnapMask = snapNearestNetPin | snapExcludeSour | snapExcludeExcl;
   info.mStratum = mProp.mStratum;
-  info.mNetName = mProp.mNetName.str();
+  info.mNetName = mProp.mNetName.string();
   info.scan( plate(), dctTraced );
   double stp = mEditor->gridGet().x();
   if( !info.isFound() || info.mSqDistance > stp * stp  ) {
@@ -653,7 +653,7 @@ void SdModeCRoadEnter::calcNextSmartPoint( SdPoint fromPoint )
 //For all barriers: we check intersection point of line(p1,p2) and
 SdPoint SdModeCRoadEnter::checkRoad(SdPoint p1, SdPoint p2) const
   {
-  return sdCheckRoadOnBarrierList( mRoads, p1, p2, mProp.mNetName.str() );
+  return sdCheckRoadOnBarrierList( mRoads, p1, p2, mProp.mNetName.string() );
   }
 
 
@@ -662,7 +662,7 @@ SdPoint SdModeCRoadEnter::checkRoad(SdPoint p1, SdPoint p2) const
 //Check if point p is inside any barrier and return true or false if not
 bool SdModeCRoadEnter::isBarriersContains(const SdBarrierList &bar, SdPoint p) const
   {
-  return sdIsBarrierListContains( bar, mProp.mNetName.str(), p );
+  return sdIsBarrierListContains( bar, mProp.mNetName.string(), p );
   }
 
 
@@ -805,11 +805,11 @@ void SdModeCRoadEnter::changeTraceLayer()
 void SdModeCRoadEnter::changeToTraceLayer(SdPvStratum dest)
   {
   //Check if current stack available changing
-  if( mStack.match(dest) ) {
+  if( mStack.isIntersect(dest) ) {
     //Start point is on through pin. Therefore we simple change stratum
     qDebug() << "Stratum change without via";
     mProp.mStratum = dest;
-    plate()->ruleBlockForNet( mProp.mNetName.str(), mRule );
+    plate()->ruleBlockForNet( mProp.mNetName.string(), mRule );
     mProp.mWidth   = mRule.mRules[ruleRoadWidth];
     }
   else {
@@ -834,7 +834,7 @@ void SdModeCRoadEnter::addVia(SdPvStratum newStratum)
     //Via is available at this point - insert
     mViaProp.mNetName = mProp.mNetName;
     mViaProp.mStratum.stratumBuild( mProp.mStratum, newStratum, plate()->stratumCount(), sdGlobalProp->mViaRule );
-    qDebug() << "Via inserted" << mViaProp.mPadType.str() << mViaProp.mNetName.str();
+    qDebug() << "Via inserted" << mViaProp.mPadType.string() << mViaProp.mNetName.string();
     addTrace( new SdGraphTracedVia( mFirst, mViaProp ), QObject::tr("Insert trace via") );
     mMiddle = mFirst;
     mBarMiddle = mFirst;
@@ -858,13 +858,13 @@ void SdModeCRoadEnter::firstPointEnter(bool enter)
   //Find whose net it contained
   //At first find on current stratum
   QString netName;
-  int destStratum;
-  getNetOnPoint( mFirst, mProp.mStratum, &netName, &destStratum );
+  SdPvStratum destStratum;
+  getNetOnPoint( mFirst, mProp.mStratum, netName, destStratum );
 
   if( netName.isEmpty() )
     //No net on this point at current stratum
     //Try on all stratums
-    getNetOnPoint( mFirst, stmThrough, &netName, &destStratum );
+    getNetOnPoint( mFirst, stmThrough, netName, destStratum );
 
   if( !netName.isEmpty() ) {
     mSource = mFirst;
@@ -875,12 +875,12 @@ void SdModeCRoadEnter::firstPointEnter(bool enter)
     mStack = destStratum & plate()->getStratum();
     mProp.mNetName = netName;
     mProp.mStratum = mStack.stratumFirst(mProp.mStratum);
-    plate()->ruleBlockForNet( mProp.mNetName.str(), mRule );
+    plate()->ruleBlockForNet( mProp.mNetName.string(), mRule );
     mProp.mWidth   = mRule.mRules[ruleRoadWidth];
     propSetToBar();
     if( enter ) {
       //If mFirst is on road segment we split road
-      splitRoadSegment( mFirst, mProp.mStratum, &netName, &destStratum );
+      splitRoadSegment( mFirst, mProp.mStratum, netName, destStratum );
       setStep(sNextPoint);
       mLoopPath.clear();
       }
@@ -905,7 +905,7 @@ void SdModeCRoadEnter::findLoop(SdPoint src, SdPoint dst, SdPvStratum st)
 
   if( SdEnvir::instance()->mAutoRemoveRoadLoop ) {
     //Get current net graph segments
-    SdPlateNetGraph graph( mProp.mNetName.str() );
+    SdPlateNetGraph graph( mProp.mNetName.string() );
     plate()->accumNetSegments( &graph );
 
     //Add source and dest nodes, because it may be not node yet
@@ -951,13 +951,13 @@ void SdModeCRoadEnter::rebuildBarriers()
   //Accum barriers for current segment
   mRoads.clear();
   //Update width in rule block to current from prop
-  mRule.mRules[ruleRoadWidth] = mProp.mWidth.getValue();
+  mRule.mRules[ruleRoadWidth] = mProp.mWidth.value();
   plate()->accumBarriers( dctTraced, mRoads, mProp.mStratum, ruleRoadRoad, mRule );
 
   //Accum barriers for via
   mPads.clear();
   //Update width in rule block to current from prop
-  int r = plate()->getPadOverRadius( mViaProp.mPadType.str() );
+  int r = plate()->getPadOverRadius( mViaProp.mPadType.string() );
   if( r > 0 )
     mRule.mRules[ruleRoadWidth] = r;
   plate()->accumBarriers( dctTraced, mPads, mViaProp.mStratum, rulePadPad, mRule );

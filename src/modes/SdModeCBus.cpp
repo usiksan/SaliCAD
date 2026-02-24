@@ -98,8 +98,8 @@ void SdModeCBus::propGetFromBar()
   else {
     auto bar = SdWCommand::getModeToolBar<SdPropBarWire>( PB_WIRE );
     if( bar ) {
-      QString wireName;
-      bar->getPropWire( sdGlobalProp->mWireProp, &(sdGlobalProp->mWireEnterType), &wireName );
+      SdPvMulty<SdPvString> wireName;
+      bar->getPropWire( sdGlobalProp->mWireProp, &(sdGlobalProp->mWireEnterType), wireName );
       }
     }
   update();
@@ -267,7 +267,7 @@ SdPoint SdModeCBus::enterPrev()
     case sNextNet :
       if( mSmartTable.count() ) {
         //Вводим цепи циклически
-        for( SdPoint t : mSmartTable ) {
+        for( SdPoint t : std::as_const( mSmartTable )  ) {
           moveAll( t );
           enterNet();
           getNextNet();
@@ -382,7 +382,7 @@ bool SdModeCBus::getNextNet()
 
 void SdModeCBus::smartDraw(SdContext *ctx)
   {
-  for( SdPoint p : mSmartTable )
+  for( SdPoint p : std::as_const( mSmartTable )  )
     ctx->smartPoint( p, snapNextPin );
   }
 
