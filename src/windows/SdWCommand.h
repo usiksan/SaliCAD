@@ -26,6 +26,8 @@ typedef QToolBar *QToolBarPtr;
 
 class SdWMain;
 class SdPropBar;
+class SdProjectItem;
+using SdPropBarPtr = SdPropBar*;
 
 class SdWCommand
   {
@@ -78,122 +80,122 @@ class SdWCommand
 
 
 
-    static QActionPtr  cmFileNew;
-    static QActionPtr  cmFileOpen;
-    static QActionPtr  cmFileClose;
-    static QActionPtr  cmFileCloseAll;
-    static QActionPtr  cmFileSave;
-    static QActionPtr  cmFileSaveAs;
-    static QActionPtr  cmFileSaveAll;
-    static QActionPtr  cmFilePrint;
-    static QActionPtr  cmFileExit;
-    static QActionPtr  cmFileImportPis;
-    static QActionPtr  cmFileImport;
-    static QActionPtr  cmFileExport;
-    static QActionPtr  cmFileExportGerber;
-    static QActionPtr  cmFileStoreToLibrary;
-    static QActionPtr  cmFileLoadFromLibrary;
-    static QActionPtr  cmFileCloud;
+    static QActionPtr   cmFileNew;
+    static QActionPtr   cmFileOpen;
+    static QActionPtr   cmFileClose;
+    static QActionPtr   cmFileCloseAll;
+    static QActionPtr   cmFileSave;
+    static QActionPtr   cmFileSaveAs;
+    static QActionPtr   cmFileSaveAll;
+    static QActionPtr   cmFilePrint;
+    static QActionPtr   cmFileExit;
+    static QActionPtr   cmFileImportPis;
+    static QActionPtr   cmFileImport;
+    static QActionPtr   cmFileExport;
+    static QActionPtr   cmFileExportGerber;
+    static QActionPtr   cmFileStoreToLibrary;
+    static QActionPtr   cmFileLoadFromLibrary;
+    static QActionPtr   cmFileCloud;
 
-    static QActionPtr  cmFilePrevious[PREVIOUS_FILES_COUNT];
+    static QActionPtr   cmFilePrevious[PREVIOUS_FILES_COUNT];
 
-    static QActionPtr  cmObjectNew;
-    static QActionPtr  cmObjectLoad;
-    static QActionPtr  cmObjectRename;
-    static QActionPtr  cmObjectDelete;
-    static QActionPtr  cmObjectCopy;
-    static QActionPtr  cmObjectPaste;
-    static QActionPtr  cmObjectCut;
-    static QActionPtr  cmObjectDuplicate;
-    static QActionPtr  cmObjectSort;
-    static QActionPtr  cmObjectParam;
-    static QActionPtr  cmObjectEditEnable;
-    static QActionPtr  cmObjectEditDisable;
-    static QActionPtr  cmProjectParam;
-    static QActionPtr  cmProjectUpgrade;
+    static QActionPtr   cmObjectNew;
+    static QActionPtr   cmObjectLoad;
+    static QActionPtr   cmObjectRename;
+    static QActionPtr   cmObjectDelete;
+    static QActionPtr   cmObjectCopy;
+    static QActionPtr   cmObjectPaste;
+    static QActionPtr   cmObjectCut;
+    static QActionPtr   cmObjectDuplicate;
+    static QActionPtr   cmObjectSort;
+    static QActionPtr   cmObjectParam;
+    static QActionPtr   cmObjectEditEnable;
+    static QActionPtr   cmObjectEditDisable;
+    static QActionPtr   cmProjectParam;
+    static QActionPtr   cmProjectUpgrade;
 
-    static QActionPtr  cmEditUndo;
-    static QActionPtr  cmEditRedo;
-    static QActionPtr  cmEditCut;
-    static QActionPtr  cmEditCopy;
-    static QActionPtr  cmEditCopySvg;
-    static QActionPtr  cmEditCopyWeb;
-    static QActionPtr  cmEditPaste;
-    static QActionPtr  cmEditDelete;
-    static QActionPtr  cmEditSelectAll;
-    static QActionPtr  cmEditUnSelect;
-    static QActionPtr  cmEditSelectSave;
-    static QActionPtr  cmEditFind;
-    static QActionPtr  cmEditReplace;
-    static QActionPtr  cmEditRotateGroup;
-    static QActionPtr  cmEditProperties;
-    static QActionPtr  cmEditCalculations;
-    static QActionPtr  cmEditFragments;
+    static QActionPtr   cmEditUndo;
+    static QActionPtr   cmEditRedo;
+    static QActionPtr   cmEditCut;
+    static QActionPtr   cmEditCopy;
+    static QActionPtr   cmEditCopySvg;
+    static QActionPtr   cmEditCopyWeb;
+    static QActionPtr   cmEditPaste;
+    static QActionPtr   cmEditDelete;
+    static QActionPtr   cmEditSelectAll;
+    static QActionPtr   cmEditUnSelect;
+    static QActionPtr   cmEditSelectSave;
+    static QActionPtr   cmEditFind;
+    static QActionPtr   cmEditReplace;
+    static QActionPtr   cmEditRotateGroup;
+    static QActionPtr   cmEditProperties;
+    static QActionPtr   cmEditCalculations;
+    static QActionPtr   cmEditFragments;
 
-    static QActionPtr  cmViewProject;
-    static QActionPtr  cmView3d;
-    static QActionPtr  cmViewMirror;
-    static QActionPtr  cmViewFill;
-    static QActionPtr  cmViewNets;
-    static QActionPtr  cmViewGrid;
-    static QActionPtr  cmViewLayers;
+    static QActionPtr   cmViewProject;
+    static QActionPtr   cmView3d;
+    static QActionPtr   cmViewMirror;
+    static QActionPtr   cmViewFill;
+    static QActionPtr   cmViewNets;
+    static QActionPtr   cmViewGrid;
+    static QActionPtr   cmViewLayers;
 
-    static QActionPtr  cm3dMaster;
-    static QActionPtr  cm3dProgram;
-    static QActionPtr  cm3dImportStl;
-    static QActionPtr  cm3dImportStep;
-    static QActionPtr  cm3dImportVrml;
-    static QActionPtr  cm3dShow2d;
-    static QActionPtr  cm3dShowPads;
+    static QActionPtr   cm3dMaster;
+    static QActionPtr   cm3dProgram;
+    static QActionPtr   cm3dImportStl;
+    static QActionPtr   cm3dImportStep;
+    static QActionPtr   cm3dImportVrml;
+    static QActionPtr   cm3dShow2d;
+    static QActionPtr   cm3dShowPads;
 
-    static QActionPtr  cmNetSetup;
-    static QActionPtr  cmModeLink;
-    static QActionPtr  cmModeNetName;
-    static QActionPtr  cmModeNetList;
-    static QActionPtr  cmModePack;
-    static QActionPtr  cmPads;
+    static QActionPtr   cmNetSetup;
+    static QActionPtr   cmModeLink;
+    static QActionPtr   cmModeNetName;
+    static QActionPtr   cmModeNetList;
+    static QActionPtr   cmModePack;
+    static QActionPtr   cmPads;
 
-    static QActionPtr  cmShowRatNet;
-    static QActionPtr  cmShowRuleErrors;
-    static QActionPtr  cmRenumeration;
-    static QActionPtr  cmShowField;
-    static QActionPtr  cmShowPads;
-    static QActionPtr  cmPcbStratum;
+    static QActionPtr   cmShowRatNet;
+    static QActionPtr   cmShowRuleErrors;
+    static QActionPtr   cmRenumeration;
+    static QActionPtr   cmShowField;
+    static QActionPtr   cmShowPads;
+    static QActionPtr   cmPcbStratum;
 
-    static QActionPtr  cmRulesEdit;
-    static QActionPtr  cmRulesCheck;
-    static QActionPtr  cmRulesErrorNext;
+    static QActionPtr   cmRulesEdit;
+    static QActionPtr   cmRulesCheck;
+    static QActionPtr   cmRulesErrorNext;
 
-    static QActionPtr  cmSymbolPartParam;
+    static QActionPtr   cmSymbolPartParam;
 
-    static QActionPtr  cmSheetExpression;
+    static QActionPtr   cmSheetExpression;
 
-    static QActionPtr  cmOption;
-    static QActionPtr  cmTools;
+    static QActionPtr   cmOption;
+    static QActionPtr   cmTools;
 
-    static QActionPtr  cmHelpContents;
-    static QActionPtr  cmHelpIndex;
-    static QActionPtr  cmHelpAbout;
-    static QActionPtr  cmHelpRegistration;
-    static QActionPtr  cmHelpHome;
-    static QActionPtr  cmHelpBackward;
-    static QActionPtr  cmHelpForward;
+    static QActionPtr   cmHelpContents;
+    static QActionPtr   cmHelpIndex;
+    static QActionPtr   cmHelpAbout;
+    static QActionPtr   cmHelpRegistration;
+    static QActionPtr   cmHelpHome;
+    static QActionPtr   cmHelpBackward;
+    static QActionPtr   cmHelpForward;
 
-    static QActionPtr  cmGuiderCapture;
-    static QActionPtr  cmGuiderPause;
+    static QActionPtr   cmGuiderCapture;
+    static QActionPtr   cmGuiderPause;
 
     //Full mode action table
-    static QActionPtr  cmModeTable[MD_LAST];
+    static QActionPtr   cmModeTable[MD_LAST];
 
     //Full list mode tool bars
-    static QToolBarPtr mbarTable[PB_LAST];
+    static SdPropBarPtr mBarTable[PB_LAST];
 
     //Set visible properties bar for barId
-    static void        setModeBar( int barId );
+    static void         activateModeBar(int barId, SdProjectItem *pitem );
     //Get properties bar for barId
-    static QToolBar   *getModeBar( int barId );
+    static SdPropBar   *getModeBar( int barId );
     //Get current visible barId
-    static int         getModeBarId();
+    static int          getModeBarId();
 
     //!
     //! \brief getModeToolBar Helper function which convert QToolBar returned by getModeBar to derived class

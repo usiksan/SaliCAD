@@ -14,9 +14,9 @@ Description
 #ifndef SDPROPBARDEFAULT_H
 #define SDPROPBARDEFAULT_H
 
-#include "SdPropBar.h"
+#include "SdPropBarLay.h"
 
-class SdPropBarDefault : public SdPropBar
+class SdPropBarDefault : public SdPropBarLay
   {
     Q_OBJECT
 

@@ -14,12 +14,12 @@ Description
 #ifndef SDPROPBARTEXTUAL_H
 #define SDPROPBARTEXTUAL_H
 
-#include "SdPropBar.h"
+#include "SdPropBarLay.h"
 #include "objects/SdPropText.h"
 
 #define FONT_SIZE_PREV_COUNT 10
 
-class SdPropBarTextual : public SdPropBar
+class SdPropBarTextual : public SdPropBarLay
   {
     Q_OBJECT
 

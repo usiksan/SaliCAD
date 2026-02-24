@@ -187,7 +187,7 @@ int SdModeCRoadEnter::getPropBarId() const
 
 void SdModeCRoadEnter::propGetFromBar()
   {
-  SdPropBarRoad *bar = dynamic_cast<SdPropBarRoad*>( SdWCommand::mbarTable[PB_ROAD] );
+  SdPropBarRoad *bar = dynamic_cast<SdPropBarRoad*>( SdWCommand::mBarTable[PB_ROAD] );
   if( bar ) {
     bar->getPropRoad( sdGlobalProp->mRoadProp, mViaProp, &(sdGlobalProp->mWireEnterType) );
     sdGlobalProp->mViaProp = mViaProp;
@@ -234,7 +234,7 @@ void SdModeCRoadEnter::propGetFromBar()
 
 void SdModeCRoadEnter::propSetToBar()
   {
-  SdPropBarRoad *bar = dynamic_cast<SdPropBarRoad*>( SdWCommand::mbarTable[PB_ROAD] );
+  SdPropBarRoad *bar = dynamic_cast<SdPropBarRoad*>( SdWCommand::mBarTable[PB_ROAD] );
   if( bar ) {
     //Setup tracing layer count and trace type
     bar->setPlateAndTrace( plate(), layerTraceRoad );

@@ -87,7 +87,7 @@ void SdModeCPartPlace::reset()
   mEditor->viewport()->setCursor( loadCursor(getCursor()) );
 
   //setup mode step properties bar
-  SdWCommand::setModeBar( getPropBarId() );
+  SdWCommand::activateModeBar( getPropBarId(), mObject );
   //setup properties in bar
   propSetToBar();
 

@@ -24,7 +24,7 @@ Description
 static SdStringHistory prevAngle;
 
 SdPropBarPartImp::SdPropBarPartImp(const QString title) :
-  QToolBar(title)
+  SdPropBar(title)
   {
   insertAction( nullptr, SdWCommand::cmViewLayers );
 

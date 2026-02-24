@@ -25,7 +25,7 @@ struct SdPlateNetSegment
     int           mSubNet;
 
     bool intersect( const SdPlateNetSegment &p ) const {
-      return mSubNet != p.mSubNet && mStratum == p.mStratum && (p.mSegment.isPointOn(mSegment.getP1()) || p.mSegment.isPointOn(mSegment.getP2()));
+      return mSubNet != p.mSubNet && mStratum.isIntersect(p.mStratum) && (p.mSegment.isPointOn(mSegment.getP1()) || p.mSegment.isPointOn(mSegment.getP2()));
       }
   };
 

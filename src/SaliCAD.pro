@@ -192,6 +192,7 @@ SOURCES += \
     windows/SdDSymbolPartParam.cpp \
     windows/SdExpressionRefMap.cpp \
     windows/SdPNewProjectItem_3dMaster.cpp \
+    windows/SdPropBarLay.cpp \
     windows/SdWEditor3d.cpp \
     windows/SdWEditor3dPart.cpp \
     windows/SdWEditor3dPartView.cpp \
@@ -255,7 +256,6 @@ SOURCES += \
     objects/SdPropSymImp.cpp \
     objects/SdPropSymPin.cpp \
     objects/SdPropText.cpp \
-    windows/SdPropBar.cpp \
     windows/SdPropBarLinear.cpp \
     modes/SdModeCLinearRect.cpp \
     objects/SdGraphLinearRect.cpp \
@@ -685,6 +685,8 @@ HEADERS  += \
     windows/SdDSymbolPartParam.h \
     windows/SdExpressionRefMap.h \
     windows/SdPNewProjectItem_3dMaster.h \
+    windows/SdPropBar.h \
+    windows/SdPropBarLay.h \
     windows/SdWEditor3d.h \
     windows/SdWEditor3dPart.h \
     windows/SdWEditor3dPartView.h \
@@ -749,7 +751,6 @@ HEADERS  += \
     objects/SdPropSymImp.h \
     objects/SdPropPartPin.h \
     objects/SdPropPartImp.h \
-    windows/SdPropBar.h \
     windows/SdPropBarLinear.h \
     modes/SdModeCLinearRect.h \
     objects/SdGraphLinearRect.h \

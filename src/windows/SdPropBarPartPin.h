@@ -14,10 +14,10 @@ Description
 #ifndef SDPROPBARPARTPIN_H
 #define SDPROPBARPARTPIN_H
 
-#include "SdPropBar.h"
+#include "SdPropBarLay.h"
 #include "objects/SdPropPartPin.h"
 
-class SdPropBarPartPin : public SdPropBar
+class SdPropBarPartPin : public SdPropBarLay
   {
     Q_OBJECT
 

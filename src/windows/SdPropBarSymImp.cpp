@@ -17,7 +17,7 @@ Description
 
 
 SdPropBarSymImp::SdPropBarSymImp(const QString title) :
-  QToolBar( title )
+  SdPropBar( title )
   {
   //Layers management
   insertAction( nullptr, SdWCommand::cmViewLayers );

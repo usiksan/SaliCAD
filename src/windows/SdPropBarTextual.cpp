@@ -23,7 +23,7 @@ Description
 static SdStringHistory prevSize;
 
 SdPropBarTextual::SdPropBarTextual(const QString title) :
-  SdPropBar( title )
+  SdPropBarLay( title )
   {
 
   mFont = new QComboBox();

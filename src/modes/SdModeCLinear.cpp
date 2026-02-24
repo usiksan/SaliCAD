@@ -30,7 +30,7 @@ int SdModeCLinear::getPropBarId() const
 
 void SdModeCLinear::propGetFromBar()
   {
-  SdPropBarLinear *bar = dynamic_cast<SdPropBarLinear*>( SdWCommand::mbarTable[PB_LINEAR] );
+  SdPropBarLinear *bar = dynamic_cast<SdPropBarLinear*>( SdWCommand::mBarTable[PB_LINEAR] );
   if( bar ) {
     bar->getPropLine( sdGlobalProp->propLine( mObject->getClass() ), &(sdGlobalProp->mLineEnterType) );
     mEditor->setFocus();
@@ -42,7 +42,7 @@ void SdModeCLinear::propGetFromBar()
 
 void SdModeCLinear::propSetToBar()
   {
-  SdPropBarLinear *bar = dynamic_cast<SdPropBarLinear*>( SdWCommand::mbarTable[PB_LINEAR] );
+  SdPropBarLinear *bar = dynamic_cast<SdPropBarLinear*>( SdWCommand::mBarTable[PB_LINEAR] );
   if( bar )
     bar->setPropLine( mObject, sdGlobalProp->propLine( mObject->getClass() ), mEditor->getPPM(), sdGlobalProp->mLineEnterType );
   }

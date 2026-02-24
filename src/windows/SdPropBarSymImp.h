@@ -15,12 +15,11 @@ Description
 #define SDPROPBARSYMIMP_H
 
 #include "objects/SdPropSymImp.h"
-
-#include <QToolBar>
+#include "SdPropBar.h"
 
 struct SdPropSymImp;
 
-class SdPropBarSymImp : public QToolBar
+class SdPropBarSymImp : public SdPropBar
   {
     Q_OBJECT
 
@@ -40,10 +39,6 @@ class SdPropBarSymImp : public QToolBar
 
     void setPropSymImp( const SdPropComposerSymImp &propSymImp );
     void getPropSymImp( SdPropComposerSymImp &propSymImp );
-
-  signals:
-    //On property changed by user
-    void propChanged();
 
   private:
     void setDirection( int dir );

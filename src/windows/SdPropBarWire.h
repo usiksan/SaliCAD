@@ -14,7 +14,7 @@ Description
 #ifndef SDPROPBARWIRE_H
 #define SDPROPBARWIRE_H
 
-#include "SdPropBar.h"
+#include "SdPropBarLay.h"
 #include "objects/SdPropLine.h"
 
 #include <QComboBox>
@@ -23,7 +23,7 @@ Description
 #define WIRE_NAME_PREV_COUNT  10
 
 
-class SdPropBarWire : public SdPropBar
+class SdPropBarWire : public SdPropBarLay
   {
     Q_OBJECT
 

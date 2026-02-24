@@ -24,7 +24,7 @@ static SdStringHistory prevWidth;
 static SdStringHistory prevWires;
 
 SdPropBarWire::SdPropBarWire( const QString title ) :
-  SdPropBar( title )
+  SdPropBarLay( title )
   {
   QToolButton *but;
   addWidget( but = new QToolButton() );

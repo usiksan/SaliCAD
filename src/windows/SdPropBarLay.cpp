@@ -11,7 +11,7 @@ Web
 Description
   Base tool bar for property bars
 */
-#include "SdPropBar.h"
+#include "SdPropBarLay.h"
 #include "SdWCommand.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdPulsar.h"
@@ -19,8 +19,8 @@ Description
 #include <QStyleFactory>
 #include <QTimer>
 
-SdPropBar::SdPropBar( const QString title ) :
-  QToolBar( title ),
+SdPropBarLay::SdPropBarLay( const QString title ) :
+  SdPropBar( title ),
   mEditObjectClass(dctCommon),
   mStratum(stmThrough)
   {
@@ -39,7 +39,7 @@ SdPropBar::SdPropBar( const QString title ) :
     emit propChanged();
     });
   //When layer dialog completed
-  connect( SdPulsar::sdPulsar, &SdPulsar::viewedLayers, this, &SdPropBar::updateViewedLayers );
+  connect( SdPulsar::sdPulsar, &SdPulsar::viewedLayers, this, &SdPropBarLay::updateViewedLayers );
 
   //fill new layers list
   QTimer::singleShot( 20, this, [this] () { updateViewedLayers(nullptr); } );
@@ -48,7 +48,7 @@ SdPropBar::SdPropBar( const QString title ) :
 
 
 
-void SdPropBar::setSelectedLayer(SdLayer *layer)
+void SdPropBarLay::setSelectedLayer(SdLayer *layer)
   {
   if( layer != nullptr ) {
     QString id = layer->id();
@@ -79,7 +79,7 @@ void SdPropBar::setSelectedLayer(SdLayer *layer)
 
 
 
-SdLayer *SdPropBar::getSelectedLayer()
+SdLayer *SdPropBarLay::getSelectedLayer()
   {
   int index = mLayer->currentIndex();
   if( index < 0 )
@@ -94,7 +94,7 @@ SdLayer *SdPropBar::getSelectedLayer()
 
 
 //Visibility state of layers are changed. We need update list and preserve current layer selection
-void SdPropBar::updateViewedLayers(SdLayer *currentLayer)
+void SdPropBarLay::updateViewedLayers(SdLayer *currentLayer)
   {
   SdLayer *prevLayer = getSelectedLayer();
   //get current selection
@@ -111,7 +111,7 @@ void SdPropBar::updateViewedLayers(SdLayer *currentLayer)
 
 
 
-void SdPropBar::updateEditObjectProp(SdProjectItem *pitem, SdLayer *currentLayer)
+void SdPropBarLay::updateEditObjectProp(SdProjectItem *pitem, SdLayer *currentLayer)
   {
   if( pitem == nullptr )
     updateEditObjectProp( dctCommon, stmThrough, currentLayer );
@@ -122,7 +122,7 @@ void SdPropBar::updateEditObjectProp(SdProjectItem *pitem, SdLayer *currentLayer
 
 
 
-void SdPropBar::updateEditObjectProp(SdClass theClass, SdPvStratum stratum, SdLayer *currentLayer)
+void SdPropBarLay::updateEditObjectProp(SdClass theClass, SdPvStratum stratum, SdLayer *currentLayer)
   {
   if( mEditObjectClass != theClass || mStratum != stratum )  {
     mEditObjectClass = theClass;
@@ -134,7 +134,7 @@ void SdPropBar::updateEditObjectProp(SdClass theClass, SdPvStratum stratum, SdLa
 
 
 
-void SdPropBar::refillLayers()
+void SdPropBarLay::refillLayers()
   {
   mLayer->clear();
   //fill new layers list

@@ -369,7 +369,7 @@ bool SdModeCBus::getNextNet()
   mIndex++;
   if( mIndex < mNetList.count() ) {
     //setup mode step properties bar
-    SdWCommand::setModeBar( getPropBarId() );
+    SdWCommand::activateModeBar( getPropBarId(), mObject );
     //setup properties in bar
     propSetToBar();
     return true;

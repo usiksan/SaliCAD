@@ -15,7 +15,7 @@ Description
 #include <QComboBox>
 
 SdPropBarSymPin::SdPropBarSymPin(const QString title) :
-  SdPropBar( title )
+  SdPropBarLay( title )
   {
   mPinType = new QComboBox();
   mPinType->setEditable(false);

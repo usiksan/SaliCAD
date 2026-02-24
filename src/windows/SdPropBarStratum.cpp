@@ -18,7 +18,7 @@ Description
 #include <algorithm>
 
 SdPropBarStratum::SdPropBarStratum(const QString title) :
-  SdPropBar(title),
+  SdPropBarLay(title),
   mPlate(nullptr)
   {
   }

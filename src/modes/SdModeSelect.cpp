@@ -222,7 +222,7 @@ void SdModeSelect::propSetToBar()
   mLocalProp.unionLayer();
   //Set new bar
   mLocalProp.getPropBarId();
-  SdWCommand::setModeBar( getPropBarId() );
+  SdWCommand::activateModeBar( getPropBarId(), mObject );
   //Set prop into bar
   switch( getPropBarId() ) {
     case PB_LINEAR : {

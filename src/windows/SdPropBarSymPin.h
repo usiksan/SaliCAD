@@ -14,10 +14,10 @@ Description
 #ifndef SDPROPBARSYMPIN_H
 #define SDPROPBARSYMPIN_H
 
-#include "SdPropBar.h"
+#include "SdPropBarLay.h"
 #include "objects/SdPropSymPin.h"
 
-class SdPropBarSymPin : public SdPropBar
+class SdPropBarSymPin : public SdPropBarLay
   {
     Q_OBJECT
 

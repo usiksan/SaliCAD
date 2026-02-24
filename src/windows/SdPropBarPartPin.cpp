@@ -26,7 +26,7 @@ static SdStringHistory pinTypeHistory;
 
 
 SdPropBarPartPin::SdPropBarPartPin(const QString title) :
-  SdPropBar( title )
+  SdPropBarLay( title )
   {
   mPinSide = new QComboBox();
   //Fill side variants

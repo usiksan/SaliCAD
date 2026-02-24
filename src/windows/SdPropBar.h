@@ -1,4 +1,4 @@
-﻿/*
+/*
 Project "Electronic schematic and pcb CAD"
 
 Author
@@ -9,44 +9,29 @@ Web
   www.saliLab.ru
 
 Description
-  Base tool bar for property bars
+  Base tool bar for all property bars
 */
 #ifndef SDPROPBAR_H
 #define SDPROPBAR_H
 
-#include "objects/SdLayer.h"
 #include "objects/SdProjectItem.h"
 
 #include <QToolBar>
-#include <QComboBox>
 
 class SdPropBar : public QToolBar
   {
     Q_OBJECT
 
-    SdClass     mEditObjectClass; //!< Class of edit object (one of derived from SdProjectItem)
-    SdPvStratum mStratum;         //!< Plate stratum otherwise stmThrough
-  protected:
-    QComboBox    *mLayer;     //!< Visual list of available layers
-
-    void     setSelectedLayer( SdLayer *layer );
-    SdLayer *getSelectedLayer();
   public:
-    SdPropBar(const QString title);
+    SdPropBar(const QString title) : QToolBar( title ) {}
 
   signals:
     //On property changed by user
     void propChanged();
 
   public slots:
-    virtual void updateViewedLayers( SdLayer *currentLayer );
-
-    void         updateEditObjectProp(SdProjectItem *pitem, SdLayer *currentLayer);
-
-    void         updateEditObjectProp(SdClass theClass, SdPvStratum stratum , SdLayer *currentLayer);
-
-  private:
-    void         refillLayers();
+    virtual void updateEditObjectProp(SdProjectItem *pitem, SdLayer *currentLayer) { Q_UNUSED(pitem); Q_UNUSED(currentLayer); }
   };
+
 
 #endif // SDPROPBAR_H

@@ -18,7 +18,7 @@ Description
 
 #include "SdWCommand.h"
 #include "SdWMain.h"
-#include "SdPropBar.h"
+#include "SdPropBarLay.h"
 #include "SdPropBarDefault.h"
 #include "SdPropBarLinear.h"
 #include "SdPropBarTextual.h"
@@ -499,21 +499,24 @@ void SdWCommand::addDrawCommands(QToolBar *bar)
 
 
 
-void SdWCommand::setModeBar(int barId)
+void SdWCommand::activateModeBar( int barId, SdProjectItem *pitem )
   {
   if( barId >= 0 && barId < PB_LAST ) {
+    //Loop through all panels, hide inactive panels, and display the active panel.
     for( int i = 0; i < PB_LAST; i++ )
-      if( mbarTable[i] )
-        mbarTable[i]->setVisible( i == barId );
+      if( mBarTable[i] )
+        mBarTable[i]->setVisible( i == barId );
+    //Set the editable element in the active panel.
+    mBarTable[barId]->updateEditObjectProp( pitem, nullptr );
     }
   }
 
 
 
-QToolBar *SdWCommand::getModeBar(int barId)
+SdPropBar *SdWCommand::getModeBar(int barId)
   {
   if( barId >= 0 && barId < PB_LAST )
-    return mbarTable[barId];
+    return mBarTable[barId];
   return nullptr;
   }
 
@@ -524,7 +527,7 @@ QToolBar *SdWCommand::getModeBar(int barId)
 int SdWCommand::getModeBarId()
   {
   for( int i = 0; i < PB_LAST; i++ )
-    if( mbarTable[i] && mbarTable[i]->isVisible() )
+    if( mBarTable[i] && mBarTable[i]->isVisible() )
       return i;
   return PB_DEFAULT;
   }
@@ -674,81 +677,81 @@ void SdWCommand::createToolBars(SdWMain *frame)
 
   frame->addToolBarBreak();
 
-  SdPropBar *mbar;
-  mbar = new SdPropBar( QStringLiteral("Default tool bar") );
+  SdPropBarLay *mbar;
+  mbar = new SdPropBarLay( QStringLiteral("Default tool bar") );
   frame->addToolBar( mbar );
-  mbarTable[PB_DEFAULT] = mbar;
+  mBarTable[PB_DEFAULT] = mbar;
 
   mbar = new SdPropBarLinear( QStringLiteral("Linear mode") );
   frame->addToolBar( mbar );
   mbar->setVisible(false);
-  mbarTable[PB_LINEAR] = mbar;
-  mbar->connect( mbar, &SdPropBar::propChanged, frame, &SdWMain::cmPropertiesChange );
+  mBarTable[PB_LINEAR] = mbar;
+  mbar->connect( mbar, &SdPropBarLay::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   mbar = new SdPropBarTextual( QStringLiteral("Textual mode") );
   frame->addToolBar( mbar );
   mbar->setVisible(false);
-  mbarTable[PB_TEXT] = mbar;
-  mbar->connect( mbar, &SdPropBar::propChanged, frame, &SdWMain::cmPropertiesChange );
+  mBarTable[PB_TEXT] = mbar;
+  mbar->connect( mbar, &SdPropBarLay::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   mbar = new SdPropBarSymPin( QStringLiteral("Sym pin") );
   frame->addToolBar( mbar );
   mbar->setVisible(false);
-  mbarTable[PB_SYM_PIN] = mbar;
-  mbar->connect( mbar, &SdPropBar::propChanged, frame, &SdWMain::cmPropertiesChange );
+  mBarTable[PB_SYM_PIN] = mbar;
+  mbar->connect( mbar, &SdPropBarLay::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   mbar = new SdPropBarPartPin( QStringLiteral("Part pin") );
   frame->addToolBar( mbar );
   mbar->setVisible(false);
-  mbarTable[PB_PART_PIN] = mbar;
-  mbar->connect( mbar, &SdPropBar::propChanged, frame, &SdWMain::cmPropertiesChange );
+  mBarTable[PB_PART_PIN] = mbar;
+  mbar->connect( mbar, &SdPropBarLay::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   SdPropBarSymImp *isbar = new SdPropBarSymImp( QStringLiteral("Symbol implement") );
   frame->addToolBar( isbar );
   isbar->setVisible(false);
-  mbarTable[PB_SYM_IMP] = isbar;
+  mBarTable[PB_SYM_IMP] = isbar;
   isbar->connect( isbar, &SdPropBarSymImp::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   SdPropBarPartImp *ipbar = new SdPropBarPartImp( QStringLiteral("Part implement") );
   frame->addToolBar( ipbar );
   ipbar->setVisible(false);
-  mbarTable[PB_PART_IMP] = ipbar;
+  mBarTable[PB_PART_IMP] = ipbar;
   ipbar->connect( ipbar, &SdPropBarPartImp::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   SdPropBarRoad *rbar = new SdPropBarRoad( QStringLiteral("Road") );
   frame->addToolBar( rbar );
   rbar->setVisible(false);
-  mbarTable[PB_ROAD] = rbar;
+  mBarTable[PB_ROAD] = rbar;
   rbar->connect( rbar, &SdPropBarRoad::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   SdPropBarPolygon *gbar = new SdPropBarPolygon( QStringLiteral("Polygon") );
   frame->addToolBar( gbar );
   gbar->setVisible(false);
-  mbarTable[PB_POLYGON] = gbar;
+  mBarTable[PB_POLYGON] = gbar;
   gbar->connect( gbar, &SdPropBarRoad::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   SdPropBarWire *wbar = new SdPropBarWire( QStringLiteral("Wire") );
   frame->addToolBar( wbar );
   wbar->setVisible(false);
-  mbarTable[PB_WIRE] = wbar;
+  mBarTable[PB_WIRE] = wbar;
   wbar->connect( wbar, &SdPropBarWire::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   SdPropBarPartPlace *pbar = new SdPropBarPartPlace( QStringLiteral("Part place") );
   frame->addToolBar( pbar );
   pbar->setVisible(false);
-  mbarTable[PB_PART_PLACE] = pbar;
+  mBarTable[PB_PART_PLACE] = pbar;
   pbar->connect( pbar, &SdPropBarPartPlace::propChanged, frame, &SdWMain::cmPropertiesChange );
   pbar->connect( pbar, &SdPropBarPartPlace::partSelect, frame, &SdWMain::cmModePartSelect );
 
   SdPropBarDefault *dbar = new SdPropBarDefault( QStringLiteral("No selection") );
   frame->addToolBar( dbar );
   dbar->setVisible(false);
-  mbarTable[PB_NO_SELECTION] = dbar;
+  mBarTable[PB_NO_SELECTION] = dbar;
 
   SdPropBarRoad *vbar = new SdPropBarRoad( QStringLiteral("Via"), false );
   frame->addToolBar( vbar );
   vbar->setVisible(false);
-  mbarTable[PB_VIA] = vbar;
+  mBarTable[PB_VIA] = vbar;
   rbar->connect( vbar, &SdPropBarRoad::propChanged, frame, &SdWMain::cmPropertiesChange );
 
   for( int i = 0; i < MD_LAST; i++ )
@@ -949,7 +952,7 @@ QToolBar *SdWCommand::barHelp;
 
 
 //Full mode action table
-QActionPtr SdWCommand::cmModeTable[MD_LAST];
+QActionPtr   SdWCommand::cmModeTable[MD_LAST];
 
 //Full list mode tool bars
-QToolBarPtr SdWCommand::mbarTable[PB_LAST];
+SdPropBarPtr SdWCommand::mBarTable[PB_LAST];

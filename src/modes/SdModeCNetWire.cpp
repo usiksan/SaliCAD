@@ -106,7 +106,7 @@ int SdModeCNetWire::getPropBarId() const
 
 void SdModeCNetWire::propGetFromBar()
   {
-  SdPropBarWire *bar = dynamic_cast<SdPropBarWire*>( SdWCommand::mbarTable[PB_WIRE] );
+  SdPropBarWire *bar = dynamic_cast<SdPropBarWire*>( SdWCommand::mBarTable[PB_WIRE] );
   if( bar ) {
     SdPvMulty<SdPvString> pvWireName;
     QString wireName;
@@ -152,7 +152,7 @@ void SdModeCNetWire::propGetFromBar()
 
 void SdModeCNetWire::propSetToBar()
   {
-  SdPropBarWire *bar = dynamic_cast<SdPropBarWire*>( SdWCommand::mbarTable[PB_WIRE] );
+  SdPropBarWire *bar = dynamic_cast<SdPropBarWire*>( SdWCommand::mBarTable[PB_WIRE] );
   if( bar ) {
     SdPvMulty<SdPvString> netName;
     netName.reset( SdPvString(mNetName) );

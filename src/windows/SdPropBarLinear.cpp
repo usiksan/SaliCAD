@@ -26,7 +26,7 @@ static SdStringHistory prevWidth;
 //static QList<double> prevWidth;
 
 SdPropBarLinear::SdPropBarLinear(const QString title) :
-  SdPropBar( title )
+  SdPropBarLay( title )
   {
   mWidth = new QComboBox();
   mWidth->setEditable(true);

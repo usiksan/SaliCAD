@@ -15,7 +15,7 @@ Description
 #include "objects/SdEnvir.h"
 
 SdPropBarDefault::SdPropBarDefault(const QString title) :
-  SdPropBar( title )
+  SdPropBarLay( title )
   {
 
   mMaskComp = addAction( QIcon(QStringLiteral(":/pic/iconDisableComp.png")), tr("Do not tought components") );

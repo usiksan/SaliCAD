@@ -14,11 +14,11 @@ Description
 #define SDPROPBARSTRATUM_H
 
 #include "objects/SdPvStratum.h"
-#include "SdPropBar.h"
+#include "SdPropBarLay.h"
 
 class SdPItemPlate;
 
-class SdPropBarStratum : public SdPropBar
+class SdPropBarStratum : public SdPropBarLay
   {
     Q_OBJECT
 

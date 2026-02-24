@@ -15,13 +15,13 @@ Description
 #define SDPROPBARPARTIMP_H
 
 #include "objects/SdPropPartImp.h"
+#include "SdPropBar.h"
 
-#include <QToolBar>
 #include <QComboBox>
 #include <QList>
 
 
-class SdPropBarPartImp : public QToolBar
+class SdPropBarPartImp : public SdPropBar
   {
     Q_OBJECT
 
@@ -47,9 +47,6 @@ class SdPropBarPartImp : public QToolBar
 
     void setPropPartImp( const SdPropComposerPartImp &propPartImp );
     void getPropPartImp( SdPropComposerPartImp &propPartImp );
-  signals:
-    //On property changed by user
-    void propChanged();
 
   private:
     void reorderDirection();

@@ -78,7 +78,7 @@ int SdModeCPolygonEnter::getPropBarId() const
 
 void SdModeCPolygonEnter::propGetFromBar()
   {
-  SdPropBarPolygon *bar = dynamic_cast<SdPropBarPolygon*>( SdWCommand::mbarTable[PB_POLYGON] );
+  SdPropBarPolygon *bar = dynamic_cast<SdPropBarPolygon*>( SdWCommand::mBarTable[PB_POLYGON] );
   if( bar ) {
     //Retrive properties from polygon properties bar
     bar->getPropPolygon( mProp, &(sdGlobalProp->mWireEnterType) );
@@ -93,7 +93,7 @@ void SdModeCPolygonEnter::propGetFromBar()
 
 void SdModeCPolygonEnter::propSetToBar()
   {
-  SdPropBarPolygon *bar = dynamic_cast<SdPropBarPolygon*>( SdWCommand::mbarTable[PB_POLYGON] );
+  SdPropBarPolygon *bar = dynamic_cast<SdPropBarPolygon*>( SdWCommand::mBarTable[PB_POLYGON] );
   if( bar ) {
     //Accum available net names
     QStringList netList = mObject->getProject()->netList();

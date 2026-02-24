@@ -14,14 +14,14 @@ Description
 #ifndef SDPROPBARLINEAR_H
 #define SDPROPBARLINEAR_H
 
-#include "SdPropBar.h"
+#include "SdPropBarLay.h"
 #include "objects/SdPropLine.h"
 
 #include <QComboBox>
 
 #define LINEAR_WIDTH_PREV_COUNT 10
 
-class SdPropBarLinear : public SdPropBar
+class SdPropBarLinear : public SdPropBarLay
   {
     Q_OBJECT
 
