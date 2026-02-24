@@ -34,7 +34,7 @@ void SdPropVia::json(SvJsonWriter &js) const
 //! \brief json Overloaded function to read object content from json reader
 //! \param js   Json reader
 //!
-void SdPropVia::json(const SvJsonReader &js)
+void SdPropVia::json(const SdJsonReader &js)
   {
   mStratum.json( QStringLiteral("vStratum"), js );
   mNetName.json( QStringLiteral("vNet"), js );

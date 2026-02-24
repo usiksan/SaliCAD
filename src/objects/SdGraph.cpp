@@ -46,17 +46,17 @@ void SdGraph::transform(const QTransform &map, SdPvAngle angle)
 
 
 
-void SdGraph::move(SdPoint offset)
-  {
-  transform( offset.transformFromOffset(), SdPvAngle(0) );
-  }
+// void SdGraph::move(SdPoint offset)
+//   {
+//   transform( offset.transformFromOffset(), SdPvAngle(0) );
+//   }
 
 
 
-void SdGraph::rotate(SdPoint center, SdPvAngle angle)
-  {
-  transform( center.transformRotation(angle), angle );
-  }
+// void SdGraph::rotate(SdPoint center, SdPvAngle angle)
+//   {
+//   transform( center.transformRotation(angle), angle );
+//   }
 
 
 

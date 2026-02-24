@@ -33,7 +33,7 @@ void SdPropPolygon::json(SvJsonWriter &js) const
 //! \brief json Function to read object content from json reader
 //! \param js   Json reader
 //!
-void SdPropPolygon::json(const SvJsonReader &js)
+void SdPropPolygon::json(const SdJsonReader &js)
   {
   mGap.json( QStringLiteral("pGap"), js );
   mStratum.json( QStringLiteral("pStratum"), js );

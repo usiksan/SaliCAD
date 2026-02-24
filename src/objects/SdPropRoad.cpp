@@ -35,7 +35,7 @@ void SdPropRoad::json(SvJsonWriter &js) const
 //! \brief json Overloaded function to read object content from json reader
 //! \param js   Json reader
 //!
-void SdPropRoad::json(const SvJsonReader &js)
+void SdPropRoad::json(const SdJsonReader &js)
   {
   mWidth.json( QStringLiteral("rWidth"), js );
   mStratum.json( QStringLiteral("rStratum"), js );

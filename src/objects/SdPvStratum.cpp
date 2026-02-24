@@ -86,6 +86,21 @@ void SdPvStratum::stratumBuild(SdPvStratum from, SdPvStratum to, int pcbLayerCou
 
 
 
+//!
+//! \brief json Read integer property from JSON reader
+//! \param key JSON key name
+//! \param js  JSON reader object
+//!
+void SdPvStratum::json(const QString key, const SdJsonReader &js)
+  {
+  if( js.property()->mVersion == SD_BASE_VERSION_2 )
+    js.jsonInt( key, (int&)mValue );
+  else
+    js.jsonHex32( key, mValue );
+  }
+
+
+
 //Write-read stratum
 void SdPvStratum::json(SvJsonWriter &js) const
   {
@@ -95,7 +110,7 @@ void SdPvStratum::json(SvJsonWriter &js) const
 
 
 
-void SdPvStratum::json(const SvJsonReader &js)
+void SdPvStratum::json(const SdJsonReader &js)
   {
   json( QStringLiteral("Stratum"), js );
   }

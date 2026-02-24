@@ -599,6 +599,8 @@ class SvJsonReader
     //!
     bool contains( const QString &key ) const { return mObject.contains( key ); }
 
+    bool isString( const QString &key ) const { return mObject.value(key).isString(); }
+
     //!
     //! \brief jsonBool Transfer bool value
     //! \param key      Key for value

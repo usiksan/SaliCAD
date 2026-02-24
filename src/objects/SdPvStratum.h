@@ -16,7 +16,7 @@ Description
 #define SDPVSTRATUM_H
 
 #include "SdConfig.h"
-#include "SvLib/SvJsonIO.h"
+#include "objects/SdJsonIO.h"
 #include "objects/SdPv.h"
 
 #include <QString>
@@ -122,11 +122,11 @@ class SdPvStratum : public SdPv<SdStratumValue,SdPvStratum>
     //! \param key JSON key name
     //! \param js  JSON reader object
     //!
-    void     json( const QString key, const SvJsonReader &js ) { js.jsonHex32( key, mValue ); }
+    void     json( const QString key, const SdJsonReader &js );
 
     //Write-read stratum
     void     json( SvJsonWriter &js ) const;
-    void     json( const SvJsonReader &js );
+    void     json( const SdJsonReader &js );
 
     //Write-read as side
     void     jsonSide( SvJsonWriter &js ) const;

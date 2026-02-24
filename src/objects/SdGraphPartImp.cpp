@@ -59,7 +59,7 @@ void SdPartImpPin::operator =(const SdPartImpPin &pin)
 void SdPartImpPin::draw(SdContext *dc, SdPItemPlate *plate, SdPvStratum stratum ) const
   {
   //Draw pin pad
-  plate->drawPad( dc, mPin->getPinOrigin(), mPin->getPinType(), mStratum.stratum() & stratum );
+  plate->drawPad( dc, mPin->getPinOrigin(), mPin->getPinType(), mStratum & stratum );
   //Draw pin connection and also pin name and number
   drawWithoutPad( dc );
   }
@@ -972,13 +972,13 @@ void SdGraphPartImp::drawStratum(SdContext *dc, SdPvStratum stratum)
 
   //Draw ident in plate context
   SdRect ov;
-  if( stratum.isEmpty() || stratum == SdPvStratum(stmThrough) ) {
+  if( stratum.isEmpty() || stratum.isIntersect(SdPvStratum(stmThrough)) ) {
     dc->text( mIdent.mOrigin, ov, ident(), mIdent.mProp );
     dc->text( mValue.mOrigin, ov, value(), mValue.mProp );
     }
 
   //Draw part except ident and pins
-  if( stratum.isEmpty() || stratum == SdPvStratum(stmThrough) ) {
+  if( stratum.isEmpty() || stratum.isIntersect(SdPvStratum(stmThrough)) ) {
     mPart->forEach( dctAll & ~(dctPartPin | dctIdent | dctValue), [dc] (SdObject *obj) -> bool {
       SdGraph *graph = dynamic_cast<SdGraph*>( obj );
       if( graph )

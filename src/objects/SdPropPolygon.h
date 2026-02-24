@@ -18,6 +18,7 @@ Description
 #include "SdPvString.h"
 #include "SdPvStratum.h"
 #include "objects/SdPvMulty.h"
+#include "objects/SdJsonIO.h"
 
 //!
 //! \brief The SdPropPolygon struct - Polygon fill properties for PCB copper areas
@@ -45,7 +46,7 @@ struct SdPropPolygon
     //! \brief json Function to read object content from json reader
     //! \param js   Json reader
     //!
-    void json( const SvJsonReader &js);
+    void json(const SdJsonReader &js);
 
     //!
     //! \brief swap Swap all polygon properties with another instance

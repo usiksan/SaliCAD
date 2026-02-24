@@ -768,7 +768,7 @@ void SdModeCRoadMove::dragPoint(SdPoint p)
         !sdIsBarrierListContains( mPads, mViaProp.mNetName.string(), dest ) ) {
       //New point available
       offset = dest.sub( mVia->position() );
-      mVia->move(offset);
+      mVia->transform( offset.transformFromOffset(), SdPvAngle(0) );
       mMove1 = dest;
       mMove2 = dest;
       }
