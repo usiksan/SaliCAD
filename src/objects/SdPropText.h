@@ -71,8 +71,40 @@ struct SdPropText
     void swap( SdPropText &other );
   };
 
-using SdPropComposerText = SdPropComposer<SdPropText, &SdPropText::mDir, &SdPropText::mFont, &SdPropText::mHorz,
-                                        &SdPropText::mLayer, &SdPropText::mMirror, &SdPropText::mSize, &SdPropText::mVert>;
+// using SdPropComposerText = SdPropComposer<SdPropText, &SdPropText::mDir, &SdPropText::mFont, &SdPropText::mHorz,
+//                                         &SdPropText::mLayer, &SdPropText::mMirror, &SdPropText::mSize, &SdPropText::mVert>;
+
+class SdPropComposerText : public SdPropComposer<SdPropText, &SdPropText::mDir, &SdPropText::mFont, &SdPropText::mHorz,
+    &SdPropText::mLayer, &SdPropText::mMirror, &SdPropText::mSize, &SdPropText::mVert>
+  {
+  public:
+    // SdLayer *getSingleLayer( bool otherSide = false ) const
+    //   {
+    //   auto &propLayer = get<&SdPropText::mLayer>();
+    //   return propLayer.isSingle() ? propLayer.value().layer(otherSide) : nullptr;
+    //   }
+
+    auto& layer() { return get<&SdPropText::mLayer>(); }
+    const auto& layer() const { return get<&SdPropText::mLayer>(); }
+
+    auto& dir() { return get<&SdPropText::mDir>(); }
+    const auto& dir() const { return get<&SdPropText::mDir>(); }
+
+    auto& font() { return get<&SdPropText::mFont>(); }
+    const auto& font() const { return get<&SdPropText::mFont>(); }
+
+    auto& horz() { return get<&SdPropText::mHorz>(); }
+    const auto& horz() const { return get<&SdPropText::mHorz>(); }
+
+    auto& mirror() { return get<&SdPropText::mMirror>(); }
+    const auto& mirror() const { return get<&SdPropText::mMirror>(); }
+
+    auto& size() { return get<&SdPropText::mSize>(); }
+    const auto& size() const { return get<&SdPropText::mSize>(); }
+
+    auto& vert() { return get<&SdPropText::mVert>(); }
+    const auto& vert() const { return get<&SdPropText::mVert>(); }
+  };
 
 //Parse src string and find numeric substring. Numeric substring converted into int, int incremented
 //and convert to substring. Substring, at end, inserted into src string and return result

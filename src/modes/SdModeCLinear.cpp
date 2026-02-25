@@ -44,5 +44,5 @@ void SdModeCLinear::propSetToBar()
   {
   SdPropBarLinear *bar = dynamic_cast<SdPropBarLinear*>( SdWCommand::mBarTable[PB_LINEAR] );
   if( bar )
-    bar->setPropLine( mObject, sdGlobalProp->propLine( mObject->getClass() ), mEditor->getPPM(), sdGlobalProp->mLineEnterType );
+    bar->setPropLine( sdGlobalProp->propLine( mObject->getClass() ), mEditor->getPPM(), sdGlobalProp->mLineEnterType );
   }

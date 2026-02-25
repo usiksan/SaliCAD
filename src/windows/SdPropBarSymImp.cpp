@@ -26,7 +26,7 @@ SdPropBarSymImp::SdPropBarSymImp(const QString title) :
   //Symbol direction
   mDir0 = addAction( QIcon(QString(":/pic/textDirLR.png")), tr("Symbol angle 0 grad") );
   mDir0->setCheckable(true);
-  connect( mDir0, &QAction::triggered, [=](bool checked){
+  connect( mDir0, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setDirection( da0 );
     emit propChanged();
@@ -34,7 +34,7 @@ SdPropBarSymImp::SdPropBarSymImp(const QString title) :
 
   mDir90 = addAction( QIcon(QString(":/pic/textDirBT.png")), tr("Symbol angle 90 grad") );
   mDir90->setCheckable(true);
-  connect( mDir90, &QAction::triggered, [=](bool checked){
+  connect( mDir90, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setDirection( da90 );
     emit propChanged();
@@ -42,7 +42,7 @@ SdPropBarSymImp::SdPropBarSymImp(const QString title) :
 
   mDir180 = addAction( QIcon(QString(":/pic/textDirRL.png")), tr("Symbol angle 180 grad") );
   mDir180->setCheckable(true);
-  connect( mDir180, &QAction::triggered, [=](bool checked){
+  connect( mDir180, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setDirection( da180 );
     emit propChanged();
@@ -50,7 +50,7 @@ SdPropBarSymImp::SdPropBarSymImp(const QString title) :
 
   mDir270 = addAction( QIcon(QString(":/pic/textDirTB.png")), tr("Symbol angle 270 grad") );
   mDir270->setCheckable(true);
-  connect( mDir270, &QAction::triggered, [=](bool checked){
+  connect( mDir270, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setDirection( da270 );
     emit propChanged();
@@ -60,7 +60,7 @@ SdPropBarSymImp::SdPropBarSymImp(const QString title) :
 
   mMirror = addAction( QIcon(QStringLiteral(":/pic/dthMirror.png")), tr("Symbol mirroring") );
   mMirror->setCheckable(true);
-  connect( mMirror, &QAction::triggered, [=](bool checked){
+  connect( mMirror, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     emit propChanged();
     });

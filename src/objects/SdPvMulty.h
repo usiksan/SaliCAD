@@ -2,6 +2,12 @@
 #define SDPVMULTY_H
 
 #include <type_traits>
+#include <QString>
+
+class SdPvInt;
+class SdPvString;
+class SdPvLayer;
+class SdLayer;
 
 //!
 //! \brief The SdPvMulty class - Template class for managing properties that can have single or multiple values
@@ -28,6 +34,22 @@ class SdPvMulty
 
     const Prop &value() const { return mPropValue; }
 
+    int asSingleIntOrMinus() const requires std::is_same_v<Prop,SdPvInt>
+      {
+      return mState == spmSingle ? mPropValue.value() : -1;
+      }
+
+
+    QString asSingleStringOrEmpty() const requires std::is_same_v<Prop, SdPvString>
+      {
+      return mState == spmSingle ? mPropValue.string() : QString{};
+      }
+
+
+    SdLayer *asSingleLayerOrNull( bool otherSide ) const requires std::is_same_v<Prop, SdPvLayer>
+      {
+      return mState == spmSingle ? mPropValue.layer( otherSide ) : nullptr;
+      }
 
 
     //!
@@ -75,6 +97,23 @@ class SdPvMulty
       mState = spmSingle;
       }
 
+
+    void resetIntIfGeZero( int v ) requires std::is_same_v<Prop, SdPvInt>
+      {
+      if( v >= 0 ) reset( Prop(v) );
+      }
+
+
+    void resetLayerNonNull( SdLayer *layer ) requires std::is_same_v<Prop, SdPvLayer>
+      {
+      if( layer != nullptr ) reset( Prop(layer) );
+      }
+
+
+    void resetNonEmptyString( const QString &str ) requires std::is_same_v<Prop, SdPvString>
+      {
+      if( !str.isEmpty() ) reset( Prop(str) );
+      }
 
 
     //!

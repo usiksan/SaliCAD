@@ -42,9 +42,9 @@ class SdPropBarLay : public SdPropBar
   public slots:
     virtual void updateViewedLayers( SdLayer *currentLayer );
 
-    virtual void updateEditObjectProp(SdProjectItem *pitem, SdLayer *currentLayer) override;
+    virtual void setEditObject(SdProjectItem *pitem) override;
 
-    void         updateEditObjectProp(SdClass theClass, SdPvStratum stratum , SdLayer *currentLayer);
+    void         setEditObject(SdClass theClass, SdPvStratum stratum);
 
   private:
     void         refillLayers();

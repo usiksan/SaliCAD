@@ -30,7 +30,7 @@ class SdPropBar : public QToolBar
     void propChanged();
 
   public slots:
-    virtual void updateEditObjectProp(SdProjectItem *pitem, SdLayer *currentLayer) { Q_UNUSED(pitem); Q_UNUSED(currentLayer); }
+    virtual void setEditObject(SdProjectItem *pitem) { Q_UNUSED(pitem); }
   };
 
 

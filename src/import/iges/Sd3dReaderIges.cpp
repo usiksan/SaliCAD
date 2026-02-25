@@ -9,5 +9,5 @@
 //!
 Sd3dGraph *Sd3dReaderIges::importIgesFromFile(QString fname, QWidget *parent)
   {
-
+  return nullptr;
   }

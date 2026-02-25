@@ -111,25 +111,24 @@ void SdPropBarLay::updateViewedLayers(SdLayer *currentLayer)
 
 
 
-void SdPropBarLay::updateEditObjectProp(SdProjectItem *pitem, SdLayer *currentLayer)
+void SdPropBarLay::setEditObject(SdProjectItem *pitem)
   {
   if( pitem == nullptr )
-    updateEditObjectProp( dctCommon, stmThrough, currentLayer );
+    setEditObject( dctCommon, stmThrough );
   else
-    updateEditObjectProp( pitem->getClass(), pitem->getStratum(), currentLayer );
+    setEditObject( pitem->getClass(), pitem->getStratum() );
   }
 
 
 
 
-void SdPropBarLay::updateEditObjectProp(SdClass theClass, SdPvStratum stratum, SdLayer *currentLayer)
+void SdPropBarLay::setEditObject(SdClass theClass, SdPvStratum stratum)
   {
   if( mEditObjectClass != theClass || mStratum != stratum )  {
     mEditObjectClass = theClass;
     mStratum         = stratum;
     refillLayers();
     }
-  setSelectedLayer( currentLayer );
   }
 
 

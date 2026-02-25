@@ -157,7 +157,6 @@ void SdPvStratum::jsonSide(const SvJsonReader &js)
 //Flip stratum stack for pcb bottom and unchange it if other
 SdPvStratum SdPvStratum::stratum(bool top) const
   {
-  if( mValue < 0 ) return 0;
   if( !top && mValue == stmTop )
     return stmBottom;
   return mValue;

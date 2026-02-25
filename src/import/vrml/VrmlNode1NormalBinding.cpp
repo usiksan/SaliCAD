@@ -10,4 +10,5 @@ bool VrmlNode1NormalBinding::parse(SdScanerVrml *scaner, const QString &fieldTyp
   {
   Q_UNUSED(scaner)
   Q_UNUSED(fieldType)
+  return false;
   }

@@ -36,7 +36,7 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
   //Fill width list with previous values
   if( prevWidth.count() == 0 )
     prevWidth.addDouble( 0.0 );
-  for( const QString &v : prevWidth )
+  for( const QString &v : std::as_const(prevWidth) )
     mWidth->addItem( v );
   //Select first item
   mWidth->setCurrentIndex(0);
@@ -44,17 +44,17 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
   mWidth->setMinimumWidth(80);
 
   //on begin editing
-  connect( but, &QToolButton::clicked, [=]() {
+  connect( but, &QToolButton::clicked, [this]() {
     mWidth->lineEdit()->setFocus();
     mWidth->lineEdit()->selectAll();
     });
   //on complete editing
-  connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [=]() {
+  connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [this]() {
     prevWidth.reorderComboBoxDoubleString( mWidth );
     emit propChanged();
     });
   //on select other width
-  connect( mWidth, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int) {
+  connect( mWidth, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [this](int) {
     prevWidth.reorderComboBoxDoubleString( mWidth );
     emit propChanged();
     });
@@ -73,24 +73,24 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
   //Fill name list with previous wire names
   if( prevWires.count() == 0 )
     prevWires.addString( QStringLiteral("----") );
-  for( const QString &v : prevWires )
+  for( const QString &v : std::as_const(prevWires) )
     mWireName->addItem( v );
   //Select first item
   mWireName->setCurrentIndex(0);
   mWireName->setMinimumWidth(120);
 
   //on begin editing
-  connect( but, &QToolButton::clicked, [=]() {
+  connect( but, &QToolButton::clicked, [this]() {
     mWireName->lineEdit()->setFocus();
     mWireName->lineEdit()->selectAll();
     });
   //on complete editing
-  connect( mWireName->lineEdit(), &QLineEdit::editingFinished, [=]() {
+  connect( mWireName->lineEdit(), &QLineEdit::editingFinished, [this]() {
     prevWires.reorderComboBoxString( mWireName );
     emit propChanged();
     });
   //on select other net name
-  connect( mWireName, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int) {
+  connect( mWireName, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [this](int) {
     prevWires.reorderComboBoxString( mWireName );
     emit propChanged();
     });
@@ -102,7 +102,7 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
   //Vertex type of two lines
   mEnterOrtho = addAction( QIcon(QString(":/pic/dleOrto.png")), tr("lines connects orthogonal") );
   mEnterOrtho->setCheckable(true);
-  connect( mEnterOrtho, &QAction::triggered, [=](bool checked){
+  connect( mEnterOrtho, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setVertexType( dleOrtho );
     emit propChanged();
@@ -110,7 +110,7 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
 
   mEnter45degree = addAction( QIcon(QString(":/pic/dle45.png")), tr("lines connects at 45 degree") );
   mEnter45degree->setCheckable(true);
-  connect( mEnter45degree, &QAction::triggered, [=](bool checked){
+  connect( mEnter45degree, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setVertexType( dle45degree );
     emit propChanged();
@@ -118,7 +118,7 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
 
   mEnterAnyDegree = addAction( QIcon(QString(":/pic/dleAngle.png")), tr("lines connects at any degree") );
   mEnterAnyDegree->setCheckable(true);
-  connect( mEnterAnyDegree, &QAction::triggered, [=](bool checked){
+  connect( mEnterAnyDegree, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setVertexType( dleAnyDegree );
     emit propChanged();
@@ -130,7 +130,7 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
   //Line type
   mLineSolid = addAction( QIcon(QString(":/pic/dltSolid.png")), tr("lines connects at any degree") );
   mLineSolid->setCheckable(true);
-  connect( mLineSolid, &QAction::triggered, [=](bool checked){
+  connect( mLineSolid, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setLineType( dltSolid );
     emit propChanged();
@@ -138,7 +138,7 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
 
   mLineDotted = addAction( QIcon(QString(":/pic/dltDotted.png")), tr("lines connects at any degree") );
   mLineDotted->setCheckable(true);
-  connect( mLineDotted, &QAction::triggered, [=](bool checked){
+  connect( mLineDotted, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setLineType( dltDotted );
     emit propChanged();
@@ -146,7 +146,7 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
 
   mLineDashed = addAction( QIcon(QString(":/pic/dltDashed.png")), tr("lines connects at any degree") );
   mLineDashed->setCheckable(true);
-  connect( mLineDashed, &QAction::triggered, [=](bool checked){
+  connect( mLineDashed, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setLineType( dltDashed );
     emit propChanged();
@@ -160,11 +160,7 @@ SdPropBarWire::SdPropBarWire( const QString title ) :
 void SdPropBarWire::setPropWire(SdPropComposerLine &propLine, double ppm, int enterType, const SdPvMulty<SdPvString> wireName)
   {
   //Set current layer
-  auto &propLayer = propLine.get<&SdPropLine::mLayer>();
-  if( propLayer.isSingle() )
-    updateEditObjectProp( dctSheet, stmThrough, propLayer.value().layer(false) );
-  else
-    updateEditObjectProp( dctSheet, stmThrough, nullptr );
+  setSelectedLayer( propLine.getSingleLayer(false) );
 
   //Set current width
   mPPM = ppm;

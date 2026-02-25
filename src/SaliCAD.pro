@@ -3,7 +3,7 @@
 # Project created by QtCreator 2016-10-06T21:29:34
 #
 #-------------------------------------------------
-CONFIG += c++17
+CONFIG += c++20
 
 QT       += core gui network sql printsupport texttospeech opengl svg openglwidgets core5compat
 

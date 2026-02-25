@@ -329,6 +329,7 @@ SdPropLine *SdProp::propLine(SdClass theClass)
     case dctPlate  : return &mPcbLineProp;
     }
   qFatal() << "Invalid line property required" << theClass;
+  return nullptr;
   }
 
 
@@ -342,4 +343,5 @@ SdPropText *SdProp::propText( SdClass theClass )
     case dctPlate  : return &mPcbTextProp;
     }
   qFatal() << "Invalid text property required" << theClass;
+  return nullptr;
   }

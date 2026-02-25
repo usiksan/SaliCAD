@@ -227,12 +227,12 @@ void SdModeSelect::propSetToBar()
   switch( getPropBarId() ) {
     case PB_LINEAR : {
       SdPropBarLinear  *barLinear  = dynamic_cast<SdPropBarLinear*>(SdWCommand::getModeBar(PB_LINEAR));
-      barLinear->setPropLine( mObject, mLocalProp.mLineProp, getPPM(), mLocalProp.mEnterType );
+      barLinear->setPropLine( mLocalProp.mLineProp, getPPM(), mLocalProp.mEnterType );
       }
       break;
     case PB_TEXT : {
       SdPropBarTextual *barTextual = dynamic_cast<SdPropBarTextual*>(SdWCommand::getModeBar(PB_TEXT));
-      barTextual->setPropText( mObject, mLocalProp.mTextProp, getPPM() );
+      barTextual->setPropText( mLocalProp.mTextProp, getPPM() );
       }
       break;
     case PB_WIRE : {

@@ -75,7 +75,7 @@ void SdModeCIdent::propSetToBar()
   {
   auto bar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
   Q_ASSERT( bar != nullptr );
-  bar->setPropText( mObject, mPropText, mEditor->getPPM() );
+  bar->setPropText( mPropText, mEditor->getPPM() );
   }
 
 

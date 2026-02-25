@@ -28,21 +28,11 @@ Description
 
 class SdContainer;
 class SdObject;
-class SdPropSymPin;
-class SdPropPartPin;
-class SdPropSymImp;
-class SdRect;
 class SdPItemPart;
 class SdPItemPlate;
-typedef SdPItemPlate *SdPItemPlatePtr;
 class SdGraphSymImp;
 class SdGraphPartImp;
 class SdProjectItem;
-struct SdSymImpPin;
-typedef QMap<QString,SdSymImpPin> SdSymImpPinTable;
-struct SdPartImpPin;
-typedef QMap<QString,SdPartImpPin> SdPartImpPinTable;
-struct SdPropPolygon;
 class Sd3drModel;
 class SdFileUid;
 

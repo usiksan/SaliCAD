@@ -313,9 +313,9 @@ void SdModeCTextual::propSetToBar()
   auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>( PB_TEXT );
   if( tbar ) {
     if( mPropText )
-      tbar->setPropText( mObject, mPropText, mEditor->getPPM() );
+      tbar->setPropText( mPropText, mEditor->getPPM() );
     else
-      tbar->setPropText( mObject, sdGlobalProp->propText( mObject->getClass() ), mEditor->getPPM() );
+      tbar->setPropText( sdGlobalProp->propText( mObject->getClass() ), mEditor->getPPM() );
     }
   }
 

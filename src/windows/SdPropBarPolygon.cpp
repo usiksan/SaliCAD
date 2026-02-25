@@ -27,7 +27,7 @@ SdPropBarPolygon::SdPropBarPolygon(const QString title) :
   //Fill gap list with previous values
   if( prevGap.count() == 0 )
     prevGap.addDouble( 0.1 );
-  for( const QString &str : prevGap )
+  for( const QString &str : std::as_const(prevGap) )
     mGap->addItem( str );
   //Select first item
   mGap->setCurrentIndex(0);
@@ -35,12 +35,12 @@ SdPropBarPolygon::SdPropBarPolygon(const QString title) :
   mGap->setMinimumWidth(80);
 
   //on complete editing
-  connect( mGap->lineEdit(), &QLineEdit::editingFinished, [=]() {
+  connect( mGap->lineEdit(), &QLineEdit::editingFinished, [this]() {
     prevGap.reorderComboBoxDoubleString( mGap );
     emit propChanged();
     });
   //on select other gap
-  connect( mGap, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int){
+  connect( mGap, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [this](int){
     prevGap.reorderComboBoxDoubleString( mGap );
     emit propChanged();
     });
@@ -56,7 +56,7 @@ SdPropBarPolygon::SdPropBarPolygon(const QString title) :
   mWireName->setMaximumWidth(160);
 
   //on select other gap
-  connect( mWireName, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int){
+  connect( mWireName, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [this](int){
     emit propChanged();
     });
 
@@ -67,7 +67,7 @@ SdPropBarPolygon::SdPropBarPolygon(const QString title) :
   //Vertex type of two lines
   mEnterOrtho = addAction( QIcon(QString(":/pic/dleOrto.png")), tr("lines connects orthogonal") );
   mEnterOrtho->setCheckable(true);
-  connect( mEnterOrtho, &QAction::triggered, [=](bool checked){
+  connect( mEnterOrtho, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setVertexType( dleOrtho );
     emit propChanged();
@@ -75,7 +75,7 @@ SdPropBarPolygon::SdPropBarPolygon(const QString title) :
 
   mEnter45degree = addAction( QIcon(QString(":/pic/dle45.png")), tr("lines connects at 45 degree") );
   mEnter45degree->setCheckable(true);
-  connect( mEnter45degree, &QAction::triggered, [=](bool checked){
+  connect( mEnter45degree, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setVertexType( dle45degree );
     emit propChanged();
@@ -83,7 +83,7 @@ SdPropBarPolygon::SdPropBarPolygon(const QString title) :
 
   mEnterAnyDegree = addAction( QIcon(QString(":/pic/dleAngle.png")), tr("lines connects at any degree") );
   mEnterAnyDegree->setCheckable(true);
-  connect( mEnterAnyDegree, &QAction::triggered, [=](bool checked){
+  connect( mEnterAnyDegree, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setVertexType( dleAnyDegree );
     emit propChanged();

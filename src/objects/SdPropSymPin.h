@@ -48,7 +48,22 @@ struct SdPropSymPin
     void swap( SdPropSymPin &other );
   };
 
-using SdPropComposerSymPin = SdPropComposer<SdPropSymPin, &SdPropSymPin::mLayer, &SdPropSymPin::mPinType>;
+// using SdPropComposerSymPin = SdPropComposer<SdPropSymPin, &SdPropSymPin::mLayer, &SdPropSymPin::mPinType>;
 
+class SdPropComposerSymPin : public SdPropComposer<SdPropSymPin, &SdPropSymPin::mLayer, &SdPropSymPin::mPinType>
+  {
+  public:
+    // SdLayer *getSingleLayer( bool otherSide = false ) const
+    //   {
+    //   auto &propLayer = get<&SdPropSymPin::mLayer>();
+    //   return propLayer.isSingle() ? propLayer.value().layer(otherSide) : nullptr;
+    //   }
+
+    auto& layer() { return get<&SdPropSymPin::mLayer>(); }
+    const auto& layer() const { return get<&SdPropSymPin::mLayer>(); }
+
+    auto& pinType() { return get<&SdPropSymPin::mPinType>(); }
+    const auto& pinType() const { return get<&SdPropSymPin::mPinType>(); }
+  };
 
 #endif // SDSYMPINPROP_H

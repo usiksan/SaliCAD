@@ -42,12 +42,12 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
   mWidth->setMinimumWidth(80);
 
   //on complete editing
-  connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [=](){
+  connect( mWidth->lineEdit(), &QLineEdit::editingFinished, [this](){
     prevWidth.reorderComboBoxDoubleString( mWidth );
     emit propChanged();
     });
   //on select other width
-  connect( mWidth, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
+  connect( mWidth, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [this](int index){
     Q_UNUSED(index)
     prevWidth.reorderComboBoxDoubleString( mWidth );
     emit propChanged();
@@ -60,7 +60,7 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
   //Vertex type of two lines
   mEnterOrtho = addAction( QIcon(QString(":/pic/dleOrto.png")), tr("lines connects orthogonal") );
   mEnterOrtho->setCheckable(true);
-  connect( mEnterOrtho, &QAction::triggered, [=](bool checked){
+  connect( mEnterOrtho, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setVertexType( dleOrtho );
     emit propChanged();
@@ -68,7 +68,7 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
 
   mEnter45degree = addAction( QIcon(QString(":/pic/dle45.png")), tr("lines connects at 45 degree") );
   mEnter45degree->setCheckable(true);
-  connect( mEnter45degree, &QAction::triggered, [=](bool checked){
+  connect( mEnter45degree, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setVertexType( dle45degree );
     emit propChanged();
@@ -76,7 +76,7 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
 
   mEnterAnyDegree = addAction( QIcon(QString(":/pic/dleAngle.png")), tr("lines connects at any degree") );
   mEnterAnyDegree->setCheckable(true);
-  connect( mEnterAnyDegree, &QAction::triggered, [=](bool checked){
+  connect( mEnterAnyDegree, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setVertexType( dleAnyDegree );
     emit propChanged();
@@ -88,7 +88,7 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
   //Line type
   mLineSolid = addAction( QIcon(QString(":/pic/dltSolid.png")), tr("lines connects at any degree") );
   mLineSolid->setCheckable(true);
-  connect( mLineSolid, &QAction::triggered, [=](bool checked){
+  connect( mLineSolid, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setLineType( dltSolid );
     emit propChanged();
@@ -96,7 +96,7 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
 
   mLineDotted = addAction( QIcon(QString(":/pic/dltDotted.png")), tr("lines connects at any degree") );
   mLineDotted->setCheckable(true);
-  connect( mLineDotted, &QAction::triggered, [=](bool checked){
+  connect( mLineDotted, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setLineType( dltDotted );
     emit propChanged();
@@ -104,7 +104,7 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
 
   mLineDashed = addAction( QIcon(QString(":/pic/dltDashed.png")), tr("lines connects at any degree") );
   mLineDashed->setCheckable(true);
-  connect( mLineDashed, &QAction::triggered, [=](bool checked){
+  connect( mLineDashed, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setLineType( dltDashed );
     emit propChanged();
@@ -115,11 +115,12 @@ SdPropBarLinear::SdPropBarLinear(const QString title) :
 
 
 //Set all visual line properties from SdPropLine structure
-void SdPropBarLinear::setPropLine(SdProjectItem *pitem, SdPropLine *propLine, double ppm, int enterType)
+void SdPropBarLinear::setPropLine(const SdPropLine *propLine, double ppm, int enterType)
   {
   SdPropComposerLine composerLine;
-  if( propLine ) composerLine.reset( *propLine );
-  setPropLine( pitem, composerLine, ppm, enterType );
+  if( propLine != nullptr )
+    composerLine.reset( *propLine );
+  setPropLine( composerLine, ppm, enterType );
   }
 
 
@@ -135,19 +136,15 @@ void SdPropBarLinear::getPropLine(SdPropLine *propLine, int *enterType )
 
 
 
-void SdPropBarLinear::setPropLine(SdProjectItem *pitem, const SdPropComposerLine &propLine, double ppm, int enterType)
+void SdPropBarLinear::setPropLine(const SdPropComposerLine &propLine, double ppm, int enterType)
   {
   //Set current layer
-  auto &propLayer = propLine.get<&SdPropLine::mLayer>();
-  if( propLayer.isSingle() )
-    updateEditObjectProp( pitem, propLayer.value().layer(false) );
-  else
-    updateEditObjectProp( pitem, nullptr );
+  setSelectedLayer( propLine.layer().asSingleLayerOrNull(false) );
 
   //Set current width
   mPPM = ppm;
-  if( propLine.get<&SdPropLine::mWidth>().isSingle() ) {
-    mWidth->setCurrentText( propLine.get<&SdPropLine::mWidth>().value().log2Phis(mPPM) );
+  if( propLine.width().isSingle() ) {
+    mWidth->setCurrentText( propLine.width().value().log2Phis(mPPM) );
     prevWidth.reorderComboBoxDoubleString( mWidth );
     }
   else
@@ -157,8 +154,8 @@ void SdPropBarLinear::setPropLine(SdProjectItem *pitem, const SdPropComposerLine
   setVertexType( enterType );
 
   //line type
-  if( propLine.get<&SdPropLine::mType>().isSingle() )
-    setLineType( propLine.get<&SdPropLine::mType>().value().value() );
+  if( propLine.type().isSingle() )
+    setLineType( propLine.type().value().value() );
   else
     setLineType( -1 );
   }
@@ -170,16 +167,14 @@ void SdPropBarLinear::getPropLine(SdPropComposerLine &propLine, int *enterType)
   {
   propLine.clear();
   //Store layer if setted
-  SdLayer *layer = getSelectedLayer();
-  if( layer )
-    propLine.get<&SdPropLine::mLayer>().reset( SdPvLayer(layer) );
+  propLine.layer().resetLayerNonNull( getSelectedLayer() );
 
   //Store width if setted
   if( !mWidth->currentText().isEmpty() )
-    propLine.get<&SdPropLine::mWidth>().reset( SdPvInt( mWidth->currentText(), mPPM ) );
+    propLine.width().reset( SdPvInt( mWidth->currentText(), mPPM ) );
 
   //Store type if setted
-  auto &propType = propLine.get<&SdPropLine::mType>();
+  auto &propType = propLine.type();
   if( mLineSolid->isChecked() ) propType.reset( SdPvInt(dltSolid) );
   else if( mLineDotted->isChecked() ) propType.reset( SdPvInt(dltDotted) );
   else if( mLineDashed->isChecked() ) propType.reset( SdPvInt(dltDashed) );

@@ -130,12 +130,12 @@ void SdModeCSymPin::propSetToBar()
   {
   if( getStep() == sPlaceNumber ) {
     auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
-    if( tbar ) tbar->setPropText( mObject, &(sdGlobalProp->mSymPinNumberProp), mEditor->getPPM() );
+    if( tbar ) tbar->setPropText( &(sdGlobalProp->mSymPinNumberProp), mEditor->getPPM() );
     }
   else if( getStep() == sEnterName ) SdModeCTextual::propSetToBar();
   else if( getStep() == sPlaceName ) {
     auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
-    if( tbar ) tbar->setPropText( mObject, &(sdGlobalProp->mSymPinNameProp), mEditor->getPPM() );
+    if( tbar ) tbar->setPropText( &(sdGlobalProp->mSymPinNameProp), mEditor->getPPM() );
     }
   else if( getStep() == sPlacePin ) {
     SdPropBarSymPin *sbar = dynamic_cast<SdPropBarSymPin*>( SdWCommand::getModeBar(PB_SYM_PIN) );

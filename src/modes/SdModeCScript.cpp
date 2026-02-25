@@ -1,7 +1,6 @@
 #include "SdModeCScript.h"
 #include "objects/SdEnvir.h"
 #include "objects/SdPropLine.h"
-#include "objects/SdPropText.h"
 #include "objects/SdGraphScript.h"
 #include "windows/SdWCommand.h"
 #include "windows/SdPropBarTextual.h"
@@ -88,9 +87,9 @@ void SdModeCScript::propSetToBar()
   auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>( PB_TEXT );
   if( tbar ) {
     if( mPropText )
-      tbar->setPropText( mObject, mPropText, mEditor->getPPM() );
+      tbar->setPropText( mPropText, mEditor->getPPM() );
     else
-      tbar->setPropText( mObject, sdGlobalProp->propText(mObject->getClass()), mEditor->getPPM() );
+      tbar->setPropText( sdGlobalProp->propText(mObject->getClass()), mEditor->getPPM() );
     }
   }
 
@@ -201,6 +200,7 @@ void SdModeCScript::keyUp(int key, QChar ch)
 
 SdPoint SdModeCScript::enterPrev()
   {
+  return SdPoint{};
   }
 
 void SdModeCScript::beginDrag(SdPoint)

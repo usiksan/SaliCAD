@@ -89,7 +89,26 @@ struct SdPropLine {
   };
 
 
-using SdPropComposerLine = SdPropComposer<SdPropLine, &SdPropLine::mLayer, &SdPropLine::mType, &SdPropLine::mWidth>;
+//using SdPropComposerLine = SdPropComposer<SdPropLine, &SdPropLine::mLayer, &SdPropLine::mType, &SdPropLine::mWidth>;
+
+class SdPropComposerLine : public SdPropComposer<SdPropLine, &SdPropLine::mLayer, &SdPropLine::mType, &SdPropLine::mWidth>
+  {
+  public:
+    SdLayer *getSingleLayer( bool otherSide = false ) const
+      {
+      auto &propLayer = get<&SdPropLine::mLayer>();
+      return propLayer.isSingle() ? propLayer.value().layer(otherSide) : nullptr;
+      }
+
+    auto& layer() { return get<&SdPropLine::mLayer>(); }
+    const auto& layer() const { return get<&SdPropLine::mLayer>(); }
+
+    auto& type() { return get<&SdPropLine::mType>(); }
+    const auto& type() const { return get<&SdPropLine::mType>(); }
+
+    auto& width() { return get<&SdPropLine::mWidth>(); }
+    const auto& width() const { return get<&SdPropLine::mWidth>(); }
+  };
 
 
 #endif // SDLINEPROP_H

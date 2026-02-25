@@ -32,7 +32,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
   for( int i = 0; i < FONT_COUNT; i++ )
     mFont->addItem( SdEnvir::instance()->getSysFont(i) );
   //on select other font
-  connect( mFont, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
+  connect( mFont, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [this](int index){
     Q_UNUSED(index)
     emit propChanged();
     });
@@ -44,7 +44,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
   //Fill font sizes list with previous values
   if( prevSize.count() == 0 )
     prevSize.addDouble( 3.5 );
-  for( const QString &v : prevSize )
+  for( const QString &v : std::as_const(prevSize) )
     mSize->addItem( v );
   //Select first item
   mSize->setCurrentIndex(0);
@@ -52,12 +52,12 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
   mSize->setMinimumWidth(80);
 
   //on complete editing
-  connect( mSize->lineEdit(), &QLineEdit::editingFinished, [=]() {
+  connect( mSize->lineEdit(), &QLineEdit::editingFinished, [this]() {
     prevSize.reorderComboBoxDoubleString( mSize );
     emit propChanged();
     });
   //on select other size
-  connect( mSize, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int) {
+  connect( mSize, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [this](int) {
     prevSize.reorderComboBoxDoubleString( mSize );
     emit propChanged();
     });
@@ -71,7 +71,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
   //Vertical alignment
   mVertTop = addAction( QIcon(QString(":/pic/tjTop.png")), tr("Text aligned to top") );
   mVertTop->setCheckable(true);
-  connect( mVertTop, &QAction::triggered, [=](bool checked){
+  connect( mVertTop, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setVerticalAlignment( dvjTop );
     emit propChanged();
@@ -79,7 +79,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
 
   mVertMiddle = addAction( QIcon(QString(":/pic/tjMiddle.png")), tr("Text aligned to vertical middle") );
   mVertMiddle->setCheckable(true);
-  connect( mVertMiddle, &QAction::triggered, [=](bool checked){
+  connect( mVertMiddle, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setVerticalAlignment( dvjMiddle );
     emit propChanged();
@@ -87,7 +87,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
 
   mVertBottom = addAction( QIcon(QString(":/pic/tjBottom.png")), tr("Text aligned to bottom") );
   mVertBottom->setCheckable(true);
-  connect( mVertBottom, &QAction::triggered, [=](bool checked){
+  connect( mVertBottom, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setVerticalAlignment( dvjBottom );
     emit propChanged();
@@ -99,7 +99,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
   //Horizontal alignment
   mHorzLeft = addAction( QIcon(QString(":/pic/tjLeft.png")), tr("Text aligned to left") );
   mHorzLeft->setCheckable(true);
-  connect( mHorzLeft, &QAction::triggered, [=](bool checked){
+  connect( mHorzLeft, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setHorizontalAlignment( dhjLeft );
     emit propChanged();
@@ -107,7 +107,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
 
   mHorzCenter = addAction( QIcon(QString(":/pic/tjCenter.png")), tr("Text aligned to horizontal center") );
   mHorzCenter->setCheckable(true);
-  connect( mHorzCenter, &QAction::triggered, [=](bool checked){
+  connect( mHorzCenter, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setHorizontalAlignment( dhjCenter );
     emit propChanged();
@@ -115,7 +115,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
 
   mHorzRight = addAction( QIcon(QString(":/pic/tjRight.png")), tr("Text aligned to right") );
   mHorzRight->setCheckable(true);
-  connect( mHorzRight, &QAction::triggered, [=](bool checked){
+  connect( mHorzRight, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setHorizontalAlignment( dhjRight );
     emit propChanged();
@@ -126,7 +126,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
   //Text direction
   mDir0 = addAction( QIcon(QString(":/pic/textDirLR.png")), tr("Text direction left to right") );
   mDir0->setCheckable(true);
-  connect( mDir0, &QAction::triggered, [=](bool checked){
+  connect( mDir0, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setDirection( da0 );
     emit propChanged();
@@ -134,7 +134,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
 
   mDir90 = addAction( QIcon(QString(":/pic/textDirBT.png")), tr("Text direction bottom to top") );
   mDir90->setCheckable(true);
-  connect( mDir90, &QAction::triggered, [=](bool checked){
+  connect( mDir90, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setDirection( da90 );
     emit propChanged();
@@ -142,7 +142,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
 
   mDir180 = addAction( QIcon(QString(":/pic/textDirRL.png")), tr("Text direction right to left") );
   mDir180->setCheckable(true);
-  connect( mDir180, &QAction::triggered, [=](bool checked){
+  connect( mDir180, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setDirection( da180 );
     emit propChanged();
@@ -150,7 +150,7 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
 
   mDir270 = addAction( QIcon(QString(":/pic/textDirTB.png")), tr("Text direction top to bottom") );
   mDir270->setCheckable(true);
-  connect( mDir270, &QAction::triggered, [=](bool checked){
+  connect( mDir270, &QAction::triggered, [this](bool checked){
     Q_UNUSED(checked)
     setDirection( da270 );
     emit propChanged();
@@ -162,12 +162,12 @@ SdPropBarTextual::SdPropBarTextual(const QString title) :
 
 
 
-void SdPropBarTextual::setPropText(SdProjectItem *pitem, SdPropText *propText, double ppm)
+void SdPropBarTextual::setPropText(const SdPropText *propText, double ppm)
   {
   SdPropComposerText composerText;
   if( propText != nullptr )
     composerText.reset( *propText );
-  setPropText( pitem, composerText, ppm );
+  setPropText( composerText, ppm );
   }
 
 
@@ -183,14 +183,10 @@ void SdPropBarTextual::getPropText(SdPropText *propText)
 
 
 
-void SdPropBarTextual::setPropText(SdProjectItem *pitem, const SdPropComposerText &propText, double ppm)
+void SdPropBarTextual::setPropText(const SdPropComposerText &propText, double ppm)
   {
   //Set current layer
-  auto &propLayer = propText.get<&SdPropText::mLayer>();
-  if( propLayer.isSingle() )
-    updateEditObjectProp( pitem, propLayer.value().layer(false) );
-  else
-    updateEditObjectProp( pitem, nullptr );
+  setSelectedLayer( propText.layer().asSingleLayerOrNull(false) );
 
   //Set current font
   auto &propFont = propText.get<&SdPropText::mFont>();
@@ -207,12 +203,10 @@ void SdPropBarTextual::setPropText(SdProjectItem *pitem, const SdPropComposerTex
     mSize->setCurrentText( QString( ) );
 
   //Vertical alignment
-  auto &propVert = propText.get<&SdPropText::mVert>();
-  setVerticalAlignment( propVert.isSingle() ? propVert.value().value() : -1 );
+  setVerticalAlignment( propText.vert().asSingleIntOrMinus() );
 
   //Horizontal alignment
-  auto &propHorz = propText.get<&SdPropText::mHorz>();
-  setHorizontalAlignment( propHorz.isSingle() ? propHorz.value().value() : -1 );
+  setHorizontalAlignment( propText.horz().asSingleIntOrMinus() );
 
   //Text direction
   auto &propDir = propText.get<&SdPropText::mDir>();
@@ -225,14 +219,10 @@ void SdPropBarTextual::setPropText(SdProjectItem *pitem, const SdPropComposerTex
 void SdPropBarTextual::getPropText(SdPropComposerText &propText)
   {
   //Get current layer
-  SdLayer *layer = getSelectedLayer();
-  if( layer )
-    propText.get<&SdPropText::mLayer>().reset( SdPvLayer(layer) );
+  propText.layer().resetLayerNonNull( getSelectedLayer() );
 
   //Get current font
-  int fontIndex = mFont->currentIndex();
-  if( fontIndex >= 0 )
-    propText.get<&SdPropText::mFont>().reset( SdPvInt(fontIndex) );
+  propText.font().resetIntIfGeZero( mFont->currentIndex() );
 
   //Get text size
   if( !mSize->currentText().isEmpty() )

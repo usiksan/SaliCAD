@@ -112,7 +112,7 @@ void SdModeCBus::propSetToBar()
   if( getStep() == sNamePlace ) {
     auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
     if( tbar ) {
-      tbar->setPropText( mObject, &(sdGlobalProp->mWireNameProp), mEditor->getPPM() );
+      tbar->setPropText( &(sdGlobalProp->mWireNameProp), mEditor->getPPM() );
       }
     }
   else if( mNetList.count() && mIndex < mNetList.count() ) {

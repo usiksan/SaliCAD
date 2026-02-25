@@ -22,7 +22,7 @@ SdPropBarPartPlace::SdPropBarPartPlace(const QString title) :
   {
   mSideMaskButton = addAction( QIcon(QStringLiteral(":/pic/flipSide.png")), tr("Take component from both side top and bottom") );
   mSideMask = stmTop | stmBottom;
-  connect( mSideMaskButton, &QAction::triggered, [=](bool) {
+  connect( mSideMaskButton, &QAction::triggered, [this](bool) {
     if( mSideMask == (stmTop | stmBottom) )
       setSideMask( stmTop );
     else if( mSideMask == stmTop )
@@ -34,7 +34,7 @@ SdPropBarPartPlace::SdPropBarPartPlace(const QString title) :
 
   mSmartMode = addAction( QIcon(QStringLiteral(":/pic/placeSmartMode.png")), tr("Smart mode on middle button") );
   mSmartMode->setCheckable(true);
-  connect( mSmartMode, &QAction::triggered, [=](bool) {
+  connect( mSmartMode, &QAction::triggered, [this](bool) {
     if( mSmartMode->isChecked() )
       mNextNumberMode->setChecked(false);
     else
@@ -44,7 +44,7 @@ SdPropBarPartPlace::SdPropBarPartPlace(const QString title) :
 
   mNextNumberMode = addAction( QIcon(QStringLiteral(":/pic/placeNextId.png")), tr("Selection consistently components on middle button") );
   mNextNumberMode->setCheckable(true);
-  connect( mNextNumberMode, &QAction::triggered, [=](bool) {
+  connect( mNextNumberMode, &QAction::triggered, [this](bool) {
     if( mNextNumberMode->isChecked() )
       mSmartMode->setChecked(false);
     else
@@ -54,7 +54,7 @@ SdPropBarPartPlace::SdPropBarPartPlace(const QString title) :
 
   mSheetSelection = addAction( QIcon(QStringLiteral(":/pic/placeSheet.png")), tr("Selection from schematic sheet") );
   mSheetSelection->setCheckable(true);
-  connect( mSheetSelection, &QAction::triggered, [=](bool) {
+  connect( mSheetSelection, &QAction::triggered, [this](bool) {
     emit propChanged();
     });
   addWidget( new QLabel(tr("Sheets:")) );
@@ -63,7 +63,7 @@ SdPropBarPartPlace::SdPropBarPartPlace(const QString title) :
   //Disable handle enter component ident
   mSheetList->setEditable(false);
   //on select other sheet
-  connect( mSheetList, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int) {
+  connect( mSheetList, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [this](int) {
     emit propChanged();
     });
   addWidget( mSheetList );
@@ -75,11 +75,11 @@ SdPropBarPartPlace::SdPropBarPartPlace(const QString title) :
   //Enable handle enter component ident
   mComponent->setEditable(true);
   //on complete editing
-  connect( mComponent->lineEdit(), &QLineEdit::editingFinished, [=]() {
+  connect( mComponent->lineEdit(), &QLineEdit::editingFinished, [this]() {
     emit partSelect( {mComponent->currentText()} );
     });
   //on select other component
-  connect( mComponent, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int) {
+  connect( mComponent, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [this](int) {
     emit partSelect( {mComponent->currentText()} );
     });
 

@@ -32,7 +32,7 @@ SdPropBarPartPin::SdPropBarPartPin(const QString title) :
   //Fill side variants
   mPinSide->addItems( {tr("---"), tr("Top smd"), tr("Bottom smd"), tr("Through")} );
   //on select other pin side
-  connect( mPinSide, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
+  connect( mPinSide, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [this](int index){
     Q_UNUSED(index)
     emit propChanged();
     });
@@ -40,7 +40,7 @@ SdPropBarPartPin::SdPropBarPartPin(const QString title) :
 
   mPinType = new QComboBox();
   mPinType->setEditable(true);
-  for( const QString &str : pinTypeHistory )
+  for( const QString &str : std::as_const(pinTypeHistory) )
     mPinType->addItem( str );
   mPinType->setMinimumWidth(180);
 
@@ -69,11 +69,7 @@ SdPropBarPartPin::SdPropBarPartPin(const QString title) :
 void SdPropBarPartPin::setPropPartPin(const SdPropComposerPartPin &propPartPin)
   {
   //Set current layer
-  auto &propLayer = propPartPin.get<&SdPropPartPin::mLayer>();
-  if( propLayer.isSingle() )
-    updateEditObjectProp( dctPart, stmTop | stmBottom, propLayer.value().layer(false) );
-  else
-    updateEditObjectProp( dctPart, stmTop | stmBottom, nullptr );
+  setSelectedLayer( propPartPin.layer().asSingleLayerOrNull(false) );
 
   auto &propSide = propPartPin.get<&SdPropPartPin::mSide>();
   if( propSide.isSingle() ) {
@@ -99,9 +95,7 @@ void SdPropBarPartPin::getPropPartPin(SdPropComposerPartPin &propPartPin)
   {
   propPartPin.clear();
   //Store layer if setted
-  SdLayer *layer = getSelectedLayer();
-  if( layer )
-    propPartPin.get<&SdPropPartPin::mLayer>().reset( SdPvLayer(layer) );
+  propPartPin.layer().resetLayerNonNull( getSelectedLayer() );
 
   //Get pin side
   auto &propSide = propPartPin.get<&SdPropPartPin::mSide>();

@@ -50,10 +50,10 @@ class SdPropBarTextual : public SdPropBarLay
   public:
     SdPropBarTextual( const QString title );
 
-    void setPropText( SdProjectItem *pitem, SdPropText *propText, double ppm );
+    void setPropText(const SdPropText *propText, double ppm );
     void getPropText( SdPropText *propText );
 
-    void setPropText( SdProjectItem *pitem, const SdPropComposerText &propText, double ppm );
+    void setPropText( const SdPropComposerText &propText, double ppm );
     void getPropText( SdPropComposerText &propText );
 
   private:

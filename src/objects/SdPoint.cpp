@@ -317,6 +317,7 @@ QTransform SdPoint::transformRotation(SdPvAngle angle) const
   QTransform map( QTransform::fromTranslate( x(), y() ) );
   map.rotate( angle.getDegree() );
   map.translate( -x(), -y() );
+  return map;
   }
 
 

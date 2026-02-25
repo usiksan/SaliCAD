@@ -27,6 +27,7 @@ class  SdLayer;
 class  SdPropText;
 class  SdPItemComponent;
 class  SdGraphIdent;
+class  SdRect;
 
 typedef QMap<int,SdObjectPtr> SdImportMap;
 

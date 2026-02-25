@@ -27,6 +27,8 @@ class SdPointList : public QPolygon
     SdPointList() {}
     SdPointList( const SdPointList &src ) : QPolygon( src ) {}
 
+    SdPointList& operator = (const SdPointList&) = default;
+
     SdPoint    get(int i) const { return SdPoint( at(i) ); }
 
     void       transform( QSet<int> indexes, const QTransform &map );

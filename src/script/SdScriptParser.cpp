@@ -188,6 +188,8 @@ SdScriptOperator *SdScriptParser::parseOperator()
     case SD_SCRIPT_TYPE_REF       :
       var = buildRefVariable( variableName, val );
       if( var != nullptr ) break;
+
+    [[fallthrough]];
     default:
       mScaner.error( QObject::tr("Can't create variable with this type %1").arg(val->type()) );
       //Can't create variable

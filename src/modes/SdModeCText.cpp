@@ -30,7 +30,7 @@ SdModeCText::SdModeCText(SdWEditorGraph *editor, SdProjectItem *obj) :
 
 void SdModeCText::drawStatic(SdContext *ctx)
   {
-  mObject->forEach( dctAll, [=]( SdObject *obj ) {
+  mObject->forEach( dctAll, [this,ctx]( SdObject *obj ) {
     SdPtr<SdGraph> graph(obj);
     if( graph.isValid() ) {
       if( obj == mPicAffected )
@@ -61,7 +61,7 @@ void SdModeCText::enterPoint(SdPoint enter)
     //It's edit or enter new text [Определим цикл ввода или редактирования]
     mIdAffected = 0;
     mPicAffected = nullptr;
-    mObject->forEach( dctAll, [=]( SdObject *obj ) {
+    mObject->forEach( dctAll, [this,enter]( SdObject *obj ) {
       SdGraph *graph = dynamic_cast<SdGraph*>( obj );
       if( graph ) {
         mIdAffected = graph->behindText( enter, mPrev, mString, mEditText );

@@ -128,12 +128,12 @@ void SdModeCPartPin::propSetToBar()
   {
   if( getStep() == sPlaceName ) {
     auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
-    if( tbar ) tbar->setPropText( mObject, &(sdGlobalProp->mPartPinNameProp), mEditor->getPPM() );
+    if( tbar ) tbar->setPropText( &(sdGlobalProp->mPartPinNameProp), mEditor->getPPM() );
     }
   else if( getStep() == sEnterNumber ) SdModeCTextual::propSetToBar();
   else if( getStep() == sPlaceNumber ) {
     auto tbar = SdWCommand::getModeToolBar<SdPropBarTextual>(PB_TEXT);
-    if( tbar ) tbar->setPropText( mObject, &(sdGlobalProp->mPartPinNumberProp), mEditor->getPPM() );
+    if( tbar ) tbar->setPropText( &(sdGlobalProp->mPartPinNumberProp), mEditor->getPPM() );
     }
   else if( getStep() == sPlacePin ) {
     SdPropBarPartPin *sbar = dynamic_cast<SdPropBarPartPin*>( SdWCommand::getModeBar(PB_PART_PIN) );

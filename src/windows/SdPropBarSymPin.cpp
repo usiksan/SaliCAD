@@ -30,7 +30,7 @@ SdPropBarSymPin::SdPropBarSymPin(const QString title) :
   mPinType->addItem( tr("power") );
 
   //on select other font
-  connect( mPinType, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int index){
+  connect( mPinType, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [this](int index){
     Q_UNUSED(index)
     emit propChanged();
     });
@@ -64,15 +64,10 @@ void SdPropBarSymPin::getPropSymPin(SdPropSymPin &propSymPin)
 void SdPropBarSymPin::setPropSymPin(const SdPropComposerSymPin &propSymPin)
   {
   //Set current layer
-  auto &propLayer = propSymPin.get<&SdPropSymPin::mLayer>();
-  if( propLayer.isSingle() )
-    updateEditObjectProp( dctSymbol, stmThrough, propLayer.value().layer(false) );
-  else
-    updateEditObjectProp( dctSymbol, stmThrough, nullptr );
+  setSelectedLayer( propSymPin.layer().asSingleLayerOrNull(false) );
 
   //Set current pin type
-  auto &pinType = propSymPin.get<&SdPropSymPin::mPinType>();
-  mPinType->setCurrentIndex( pinType.isSingle() ? pinType.value().value() : -1 );
+  mPinType->setCurrentIndex( propSymPin.pinType().asSingleIntOrMinus() );
   }
 
 
@@ -81,13 +76,9 @@ void SdPropBarSymPin::getPropSymPin(SdPropComposerSymPin &propSymPin)
   {
   propSymPin.clear();
   //Store layer if setted
-  SdLayer *layer = getSelectedLayer();
-  if( layer )
-    propSymPin.get<&SdPropSymPin::mLayer>().reset( SdPvLayer(layer) );
+  propSymPin.layer().resetLayerNonNull( getSelectedLayer() );
 
-  //Get current font
-  int pinType = mPinType->currentIndex();
-  if( pinType >= 0 )
-    propSymPin.get<&SdPropSymPin::mPinType>().reset( SdPvInt(pinType) );
+  //Get current symbol pin type
+  propSymPin.pinType().resetIntIfGeZero( mPinType->currentIndex() );
   }
 

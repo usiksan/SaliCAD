@@ -50,7 +50,25 @@ struct SdPropPartPin
     void swap( SdPropPartPin &other );
   };
 
-using SdPropComposerPartPin = SdPropComposer<SdPropPartPin, &SdPropPartPin::mLayer, &SdPropPartPin::mPinType, &SdPropPartPin::mSide>;
+// using SdPropComposerPartPin = SdPropComposer<SdPropPartPin, &SdPropPartPin::mLayer, &SdPropPartPin::mPinType, &SdPropPartPin::mSide>;
 
+class SdPropComposerPartPin : public SdPropComposer<SdPropPartPin, &SdPropPartPin::mLayer, &SdPropPartPin::mPinType, &SdPropPartPin::mSide>
+  {
+  public:
+    // SdLayer *getSingleLayer( bool otherSide = false ) const
+    //   {
+    //   auto &propLayer = get<&SdPropPartPin::mLayer>();
+    //   return propLayer.isSingle() ? propLayer.value().layer(otherSide) : nullptr;
+    //   }
+
+    auto& layer() { return get<&SdPropPartPin::mLayer>(); }
+    const auto& layer() const { return get<&SdPropPartPin::mLayer>(); }
+
+    auto& side() { return get<&SdPropPartPin::mSide>(); }
+    const auto& side() const { return get<&SdPropPartPin::mSide>(); }
+
+    auto& pinType() { return get<&SdPropPartPin::mPinType>(); }
+    const auto& pinType() const { return get<&SdPropPartPin::mPinType>(); }
+  };
 
 #endif // SDPARTPINPROP_H

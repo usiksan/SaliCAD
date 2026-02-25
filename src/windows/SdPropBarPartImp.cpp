@@ -48,12 +48,12 @@ SdPropBarPartImp::SdPropBarPartImp(const QString title) :
     mDirection->addItem( s );
 
   //on complete editing
-  connect( mDirection->lineEdit(), &QLineEdit::editingFinished, [=]() {
+  connect( mDirection->lineEdit(), &QLineEdit::editingFinished, [this]() {
     reorderDirection();
     emit propChanged();
     });
   //on select other size
-  connect( mDirection, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [=](int) {
+  connect( mDirection, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [this](int) {
     reorderDirection();
     emit propChanged();
     });
@@ -77,7 +77,7 @@ SdPropBarPartImp::SdPropBarPartImp(const QString title) :
 
   mTop = addAction( QIcon(QStringLiteral(":/pic/flipSideTop.png")), tr("Part at top side") );
   mTop->setCheckable(true);
-  connect( mTop, &QAction::triggered, [=](bool) {
+  connect( mTop, &QAction::triggered, [this](bool) {
     if( mBottom->isChecked() ) {
       mBottom->setChecked(false);
       mTop->setChecked(true);
@@ -87,7 +87,7 @@ SdPropBarPartImp::SdPropBarPartImp(const QString title) :
 
   mBottom = addAction( QIcon(QStringLiteral(":/pic/flipSideBottom.png")), tr("Part at bottom side") );
   mBottom->setCheckable(true);
-  connect( mBottom, &QAction::triggered, [=](bool) {
+  connect( mBottom, &QAction::triggered, [this](bool) {
     if( mTop->isChecked() ) {
       mTop->setChecked(false);
       mBottom->setChecked(true);
