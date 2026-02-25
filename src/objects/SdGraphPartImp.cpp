@@ -849,7 +849,7 @@ void SdGraphPartImp::json(const SdJsonReader &js)
   else {
     //Pin information table
     QJsonArray pins = js.object().value( QStringLiteral("Pins") ).toArray();
-    for( const QJsonValue &vpin : pins ) {
+    for( const QJsonValue &vpin : std::as_const(pins) ) {
       SdPartImpPin pin;
       QString pinNumber = pin.fromJson( js.property(), vpin.toObject() );
       mPins.insert( pinNumber, pin );
@@ -1235,7 +1235,7 @@ bool SdGraphPartImp::isPointOnNet(SdPoint p, SdPvStratum stratum, QString &netNa
 
 void SdGraphPartImp::accumNetSegments(SdPlateNetContainer *netContainer)
   {
-  for( const SdPartImpPin &pin : mPins )
+  for( const SdPartImpPin &pin : std::as_const(mPins) )
     if( pin.isConnected() )
       netContainer->addNetSegment( this, pin.getNetName(), pin.mStratum, pin.mPosition, pin.mPosition );
   }

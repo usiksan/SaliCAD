@@ -6,6 +6,11 @@ SdGraphScriptRefMap::SdGraphScriptRefMap()
 
   }
 
+void SdGraphScriptRefMap::clear()
+  {
+
+  }
+
 
 
 void SdGraphScriptRefMap::setText(int index, QString sour)

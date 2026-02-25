@@ -21,6 +21,8 @@ class SdGraphScriptRefMap : public SdScriptRefMap
 
     int    count() const { return mRefList.count(); }
 
+    void   clear();
+
     void   setText(int index, QString sour);
     SdRect getOverRect() const { return mOverRect; }
     int    tryLink( SdPoint p, SdRect &overRect ) const;
