@@ -35,9 +35,14 @@ struct SdLibraryReference
 
     SdLibraryReference() : mCreationTime(0), mInsertionTimePrivate(0), mInsertionTimePublic(0), mHeaderPtr(0), mComplaintCount(0) {}
 
-    bool isValid() const { return mCreationTime != 0; }
-
     bool isRemoved() const { return mHeaderPtr == 0; }
+
+    void markAsRemoved( qint32 insertionTime )
+      {
+      if( isPublic() ) mInsertionTimePublic = insertionTime;
+      else             mInsertionTimePrivate = insertionTime;
+      mHeaderPtr = 0;
+      }
 
     bool isInsertAfterPrivate( qint32 time ) const { return mInsertionTimePrivate > time; }
 
@@ -49,13 +54,15 @@ struct SdLibraryReference
     //Test if reference newer or same than time
     bool isNewerOrSame( qint32 time ) const { return mCreationTime >= time; }
 
+    bool isOlder( qint32 time ) const { return mCreationTime < time; }
+
     bool isPublic() const { return mInsertionTimePublic >= mInsertionTimePrivate; }
 
     bool isLocalChanged() const { return mIsLocalChanged; }
 
     bool isRemovePrivate() const { return mInsertionTimePrivate <= mInsertionTimePublic || mHeaderPtr == 0; }
 
-    bool isRemovePublic() const { return mInsertionTimePublic > mInsertionTimePrivate && mHeaderPtr == 0; }
+    bool isRemovePublic() const { return mInsertionTimePublic < mInsertionTimePrivate || mHeaderPtr == 0; }
 
     QString fileName( const QString &hashUidName ) const { return SdFileUid::fileUid( hashUidName, mCreationTime ); }
   };

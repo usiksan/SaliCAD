@@ -5,7 +5,7 @@
 #include "SdFileUid.h"
 #include "library/SdLibraryHeader.h"
 
-
+#include <QSharedPointer>
 
 
 class SdContainerFile : public SdContainer
@@ -122,5 +122,7 @@ class SdContainerFile : public SdContainer
     void                   updateAuthorAndHash();
 
   };
+
+using SdContainerFilePtr = QSharedPointer<SdContainerFile>;
 
 #endif // SDCONTAINERFILE_H

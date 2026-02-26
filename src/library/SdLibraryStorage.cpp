@@ -259,9 +259,9 @@ void SdLibraryStorage::cfObjectDelete(const SdContainerFile *item)
   if( item != nullptr && item->getAuthorKey() == authorPublicKey() ) {
     QWriteLocker locker( &mLock );
     QString uid = item->hashUidName();
-    if( mReferenceMap.contains(uid) && !mReferenceMap.value(uid).isRemoveAny() ) {
+    if( mReferenceMap.contains(uid) ) {
       //Mark as need to be deleted from server
-      mReferenceMap[uid].markAsRemoved();
+      mReferenceMap[uid].markAsRemoved( SvTime2x::current() );
 
       //Delete object file
       QFile::remove( fullPathOfLibraryObject( uid ) );
@@ -283,7 +283,7 @@ void SdLibraryStorage::cfObjectDelete(const SdContainerFile *item)
 SdContainerFile *SdLibraryStorage::cfObjectGet(const QString hashUidName) const
   {
   QReadLocker locker( &mLock );
-  if( mReferenceMap.contains( hashUidName ) ) {
+  if( mReferenceMap.contains( hashUidName ) && mReferenceMap[hashUidName].isValid() ) {
     //Load object
     return sdObjectOnly<SdContainerFile>( SdObject::fileJsonLoad( fullPathOfLibraryObject(hashUidName) ) );
     }
@@ -352,10 +352,27 @@ bool SdLibraryStorage::cfIsOlderOrSame(const SdContainerFile *item) const
 
 
 
+
+
+//!
+//! \brief cfIsNewer   Test if object which represent by hashUidName and time not present in library or newer than in library
+//! \param hashUidName hashUidName of tested object
+//! \param time        time of locking of tested object
+//! \return            true if object which represent by hashUidName and time not present in library or newer than in library
+//!
+bool SdLibraryStorage::cfIsNewer(const QString hashUidName, qint32 time) const
+  {
+  QReadLocker locker( &mLock );
+  //Library object is older than time, so time is newer
+  return !mReferenceMap.contains( hashUidName ) || mReferenceMap.value(hashUidName).isOlder( time );
+  }
+
+
+
 bool SdLibraryStorage::cfObjectContains(const QString hashUidName) const
   {
   QReadLocker locker( &mLock );
-  return mReferenceMap.contains(hashUidName) && !mReferenceMap.value(hashUidName).isRemoved();
+  return mReferenceMap.contains(hashUidName) && mReferenceMap.value(hashUidName).isValid();
   }
 
 
@@ -371,14 +388,6 @@ SdLibraryReference SdLibraryStorage::cfReference(const QString &hashUidName) con
 
 
 
-
-bool SdLibraryStorage::cfIsPresentAndPrivate(const QString &hashUidName) const
-  {
-  QReadLocker locker( &mLock );
-  if( !mReferenceMap.contains(hashUidName) )
-    return false;
-  return mReferenceMap.value(hashUidName).isPrivate();
-  }
 
 
 
@@ -535,58 +544,41 @@ void SdLibraryStorage::periodicScan()
     for( const auto &file : std::as_const(fileList) ) {
       QString fileName = file.fileName();
 
-      if( mExistList.contains( fileName ) )
-        //File exist, we remove it from existing files because it processed
-        mExistList.remove( fileName );
-      else {
-        //File not exist, we append it to reference
-        //Load object
-        //Check if file actually exist and not have been removed
+      SdFileUid fileUid( fileName );
+      if( cfIsOlder( fileUid ) ) {
+        //This file older than in library and can be removed
+        //Remove this file because it is older than in library
+        QFile::remove( file.absoluteFilePath() );
+        mLocalRemoved++;
+        mLocalTransfer = true;
+        }
+      else if( cfIsNewer( fileUid ) ) {
+        //Replace old object or append new
+        //Statistic update
+        if( mReferenceMap.contains( fileUid.mHashUidName ) ) {
+          //Will be update because older object in library
+          mLocalUpdated++;
+          mNewestMark = true;
+          }
+        else
+          //Will be simple append. No same object in library
+          mLocalAppended++;
+        mLocalTransfer = true;
+
         if( QFile::exists(file.absoluteFilePath()) ) {
           QScopedPointer<SdContainerFile> item( sdObjectOnly<SdContainerFile>(SdObject::fileJsonLoad(file.absoluteFilePath())) );
           //Fix crash: check if item readed correctly
           if( item.isNull() ) continue;
-          //Check if this object is older then in library present
-          if( cfIsOlder( item.get() ) ) {
-            //Remove this file because it is older than in library
-            QFile::remove( file.absoluteFilePath() );
-            emit informationAppended( tr("Older object removed %1").arg( item->getTitle() )  );
-            }
-          else {
-            //Statistic update
-            if( mReferenceMap.contains(item.get()->hashUidName()) )
-              //Will be update because older object in library
-              mLocalUpdated++;
-            else
-              //Will be simple append. No same object in library
-              mLocalAppended++;
-            mLocalTransfer = true;
-            //Append object to reference
-            insertReferenceAndHeader( item.get(), false );
-            }
+          objectInsertPrivate( item, false );
           }
         }
-
       }
 
     if( mScanList.count() == 0 ) {
       mScanTimer.stop();
       //Scan is complete
-      //Remain files in existing files map are deleted files
-      //we remove its records from library reference
-      int removeCount = 0;
-      for( auto it = mExistList.cbegin(); it != mExistList.cend(); it++ ) {
-        //Check if file actually removed
-        if( !QFile::exists( fullPathOfLibraryObject( it.value() ) ) ) {
-          //qDebug() << it.value() << fullPathOfLibraryObject( it.value() );
-          mReferenceMap.remove( it.value() );
-          mLocalRemoved++;
-          mLocalTransfer = true;
-          removeCount++;
-          }
-        }
-      if( removeCount )
-        emit informationAppended( tr("Remove external deleted objects %1").arg( removeCount )  );
+      // if( removeCount )
+      //   emit informationAppended( tr("Remove external deleted objects %1").arg( removeCount )  );
 
       //Inform about loop complete
       SdLibraryIndicator::instance()->setLocalLibrary( mReferenceMap.count(), mLocalAppended, mLocalRemoved, mLocalUpdated, mLocalTransfer ? SdLibraryIndicator::SdLisTransfer : SdLibraryIndicator::SdLisNoTransfer, QString{} );
@@ -651,10 +643,6 @@ void SdLibraryStorage::periodicScan()
     mScanList = dir.entryInfoList( QDir::AllDirs | QDir::NoDotAndDotDot );
 
     if( mScanList.count() ) {
-      //Fill map for existing files
-      mExistList.clear();
-      for( auto it = mReferenceMap.cbegin(); it != mReferenceMap.cend(); it++ )
-        mExistList.insert( fileNameOfLibraryObject( it.key() ), it.key() );
 
       mLocalTransfer = false;
 
@@ -1022,7 +1010,7 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
         SdLibraryReference ref = storage->cfReference( fileUid.mHashUidName );
         if( ref.mCreationTime != fileUid.mCreateTime ) continue;
 
-        if( ref.isValid() && ref.isLocalChanged() && ref.isInsertAfterPrivate(lastSync) ) {
+        if( ref.isLocalChanged() && ref.isInsertAfterPrivate(lastSync) ) {
           //This object need to be sync
           if( ref.isRemovePrivate() ) {
             //Build "remove" query

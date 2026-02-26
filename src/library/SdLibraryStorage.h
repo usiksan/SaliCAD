@@ -25,6 +25,7 @@ Description
 #include "SdLibraryHeader.h"
 #include "SdAuthorDescription.h"
 #include "SvLib/SvSingleton.h"
+#include "objects/SdFileUid.h"
 
 #include <QObject>
 #include <QString>
@@ -53,7 +54,6 @@ class SdLibraryStorage : public QObject
     QString                mLibraryPath;       //!< Path where library objects resides
     QFileInfoList          mScanList;          //!< Library scan list contains list of subdirectories of library
     QTimer                 mScanTimer;         //!< Scan timer for periodic scan library for new or deleted objects
-    QMap<QString,QString>  mExistList;         //!< Map of existing objects
     SdLibraryReferenceMap  mReferenceMap;      //!< Map with key of object id and value is SdLibraryReference
     QFile                  mHeaderFile;        //!< File with header of all objects in library
     SdAuthorAssocMap       mAuthorAssoc;       //!< Author public hash to author name association
@@ -183,7 +183,14 @@ class SdLibraryStorage : public QObject
     bool               cfIsOlder( const QString hashUidName, qint32 time ) const;
 
     //!
-    //! \brief cfIsOlder Overloaded function. Test if object present in library and older than there is in library
+    //! \brief cfIsOlder Overloaded function. Test if object represents by fileUid present in library and older than there is in library
+    //! \param fileUid   Tested object
+    //! \return          true if tested object present in library and it older then in library
+    //!
+    bool               cfIsOlder( const SdFileUid &fileUid ) const { return cfIsOlder( fileUid.mHashFileUid, fileUid.mCreateTime ); }
+
+    //!
+    //! \brief cfIsOlder Overloaded function. Test if object represent by item present in library and older than there is in library
     //! \param item      Tested object
     //! \return          true if tested object present in library and it older then in library
     //!
@@ -205,6 +212,21 @@ class SdLibraryStorage : public QObject
     bool               cfIsOlderOrSame( const SdContainerFile *item ) const;
 
     //!
+    //! \brief cfIsNewer   Test if object which represent by hashUidName and time not present in library or newer than in library
+    //! \param hashUidName hashUidName of tested object
+    //! \param time        time of locking of tested object
+    //! \return            true if object which represent by hashUidName and time not present in library or newer than in library
+    //!
+    bool               cfIsNewer( const QString hashUidName, qint32 time ) const;
+
+    //!
+    //! \brief cfIsNewer Overloaded function. Test if object is not present in library or fileUid object is newer than in library
+    //! \param fileUid   Tested object
+    //! \return          true if object is not present in library or fileUid object is newer than in library
+    //!
+    bool               cfIsNewer( const SdFileUid &fileUid ) const { return cfIsNewer( fileUid.mHashUidName, fileUid.mCreateTime ); }
+
+    //!
     //! \brief cfObjectContains Return true if object contains in library
     //! \param hashUidName      hashUidName of object
     //! \return                 True if object contains in library
@@ -214,7 +236,7 @@ class SdLibraryStorage : public QObject
 
     SdLibraryReference cfReference( const QString &hashUidName ) const;
 
-    bool               cfIsPresentAndPrivate( const QString &hashUidName ) const;
+
     //==================================================================
     //Headers
 
@@ -326,7 +348,7 @@ class SdLibraryStorage : public QObject
 
     void             objectPut( const QByteArray &content );
 
-    QCborMap         prepareQuery(int queryType, const SdFileUid &uid, bool appendObject = false ) const;
+    QCborMap         prepareQuery(int queryType, const SdFileUid &uid, bool appendObject ) const;
 
     static QCborMap  prepareQueryList( int queryType, int time );
 
