@@ -23,33 +23,25 @@ Description
 
 #include <QDataStream>
 
-#define SDLR_LOCAL_CHANGED  0x1 //!< Object changed locally
-#define SDLR_PUBLIC         0x2 //!< Object is public and must be uploaded to remote global server
-#define SDLR_REMOVE_GLOBAL  0x4 //!< Object need to be removed from global server
-#define SDLR_REMOVE_PRIVATE 0x8 //!< Object need to be removed from private sync cloud
-
 
 struct SdLibraryReference
   {
-    qint32 mCreationTime;   //!< Time of object creation
-    qint32 mInsertionTime;  //!< Time of object insertion into library
-    qint64 mHeaderPtr;      //!< Header reference. It contains offset from begining headers file to header of this object
-    qint32 mComplaintCount; //!< Count of complaint about the object
-    qint8  mFlags;          //!< Flags
+    qint32 mCreationTime;          //!< Time of object creation
+    qint32 mInsertionTimePrivate;  //!< Time of private object insertion into library
+    qint32 mInsertionTimePublic;   //!< Time of public object insertion into library
+    qint64 mHeaderPtr;             //!< Header reference. It contains offset from begining headers file to header of this object
+    qint32 mComplaintCount;        //!< Count of complaint about the object
+    bool   mIsLocalChanged;
 
-    SdLibraryReference() : mCreationTime(0), mInsertionTime(0), mHeaderPtr(0), mComplaintCount(0), mFlags(0) {}
+    SdLibraryReference() : mCreationTime(0), mInsertionTimePrivate(0), mInsertionTimePublic(0), mHeaderPtr(0), mComplaintCount(0) {}
 
     bool isValid() const { return mCreationTime != 0; }
 
     bool isRemoved() const { return mHeaderPtr == 0; }
 
-    //!
-    //! \brief isCanBeRemove Return true when reference may be removed from library reference storage
-    //! \return              true when reference may be removed from library reference storage
-    //!
-    bool isCanBeRemove() const { return mHeaderPtr == 0 && (mFlags & (SDLR_REMOVE_GLOBAL|SDLR_REMOVE_PRIVATE)) == 0; }
+    bool isInsertAfterPrivate( qint32 time ) const { return mInsertionTimePrivate > time; }
 
-    bool isInsertAfter( qint32 time ) const { return mInsertionTime > time; }
+    bool isInsertAfterPublic( qint32 time ) const { return mInsertionTimePublic > time; }
 
     //Test if reference newer than time
     bool isNewer( qint32 time ) const { return mCreationTime > time; }
@@ -57,33 +49,22 @@ struct SdLibraryReference
     //Test if reference newer or same than time
     bool isNewerOrSame( qint32 time ) const { return mCreationTime >= time; }
 
-    bool isPublic() const { return mFlags & SDLR_PUBLIC; }
+    bool isPublic() const { return mInsertionTimePublic >= mInsertionTimePrivate; }
 
-    bool isPrivate() const { return (mFlags & SDLR_PUBLIC) == 0; }
+    bool isLocalChanged() const { return mIsLocalChanged; }
 
-    bool isLocalChanged() const { return mFlags & SDLR_LOCAL_CHANGED; }
+    bool isRemovePrivate() const { return mInsertionTimePrivate <= mInsertionTimePublic || mHeaderPtr == 0; }
 
-    bool isDownloaded() const { return (mFlags & SDLR_LOCAL_CHANGED) == 0; }
-
-    bool isRemoveGlobal() const { return mFlags & SDLR_REMOVE_GLOBAL; }
-
-    bool isRemovePrivate() const { return mFlags & SDLR_REMOVE_PRIVATE; }
-
-    bool isRemoveAny() const { return mFlags & (SDLR_REMOVE_GLOBAL | SDLR_REMOVE_PRIVATE); }
+    bool isRemovePublic() const { return mInsertionTimePublic > mInsertionTimePrivate && mHeaderPtr == 0; }
 
     QString fileName( const QString &hashUidName ) const { return SdFileUid::fileUid( hashUidName, mCreationTime ); }
-
-    void    markAsRemoved()
-      {
-      mFlags |= isPublic() ? SDLR_REMOVE_GLOBAL : SDLR_REMOVE_PRIVATE;
-      mHeaderPtr = 0;
-      }
   };
+
 
 //Write function
 inline QDataStream &operator << ( QDataStream &os, const SdLibraryReference &ref )
   {
-  os << ref.mCreationTime << ref.mInsertionTime << ref.mHeaderPtr << ref.mComplaintCount << ref.mFlags;
+  os << ref.mCreationTime << ref.mInsertionTimePrivate << ref.mInsertionTimePublic << ref.mHeaderPtr << ref.mComplaintCount;
   return os;
   }
 
@@ -91,7 +72,7 @@ inline QDataStream &operator << ( QDataStream &os, const SdLibraryReference &ref
 //Read function
 inline QDataStream &operator >> ( QDataStream &is, SdLibraryReference &ref )
   {
-  is >> ref.mCreationTime >> ref.mInsertionTime >> ref.mHeaderPtr >> ref.mComplaintCount >> ref.mFlags;
+  is >> ref.mCreationTime >> ref.mInsertionTimePrivate >> ref.mInsertionTimePublic >> ref.mHeaderPtr >> ref.mComplaintCount;
   return is;
   }
 

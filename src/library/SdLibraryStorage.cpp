@@ -361,17 +361,6 @@ bool SdLibraryStorage::cfObjectContains(const QString hashUidName) const
 
 
 
-void SdLibraryStorage::cfDeleteReset(const QString hashUidName, quint8 deleteMask)
-  {
-  QWriteLocker locker( &mLock );
-  if( !mReferenceMap.contains(hashUidName) ) return;
-  if( mReferenceMap[hashUidName].mFlags & deleteMask )
-    mReferenceMap[hashUidName].mFlags &= ~deleteMask;
-  if( mReferenceMap[hashUidName].isCanBeRemove() )
-    mReferenceMap.remove( hashUidName );
-  }
-
-
 
 
 SdLibraryReference SdLibraryStorage::cfReference(const QString &hashUidName) const
@@ -718,21 +707,22 @@ void SdLibraryStorage::insertReferenceAndHeader(const SdContainerFile *item, boo
   //Check if there is older object
   if( item != nullptr && !cfIsOlderOrSame(item) ) {
     QString key = item->hashUidName();
-    bool isPresentAndPrivate = cfIsPresentAndPrivate( key );
     QFile fileHdr(FNAME_HDR);
     if( fileHdr.open(QIODevice::Append) ) {
       QWriteLocker locker( &mLock );
       SdLibraryHeader hdr;
       item->getHeader( hdr );
-      SdLibraryReference ref;
+      SdLibraryReference ref( mReferenceMap.value(key) );
       //write header first
       ref.mHeaderPtr     = fileHdr.size();
       ref.mCreationTime  = hdr.mFileUid.mCreateTime;
-      ref.mInsertionTime = SvTime2x::current();
+      if( hdr.isPublic() )
+        ref.mInsertionTimePublic = SvTime2x::current();
+      else
+        ref.mInsertionTimePrivate = SvTime2x::current();
       //Only for owner objects we allow uploading to server
-      ref.mFlags         = downloaded ? 0 : SDLR_LOCAL_CHANGED;
-      if( item->isPublic() && isPresentAndPrivate )
-        ref.mFlags |= SDLR_REMOVE_PRIVATE;
+      ref.mIsLocalChanged = !downloaded;
+
       QDataStream os( &fileHdr );
       hdr.write( os );
       fileHdr.close();
@@ -930,11 +920,32 @@ QByteArray SdLibraryStorage::objectGetFromFile(const QString &fileName) const
 
 
 
-void SdLibraryStorage::objectDelete(const QString &hashUidName)
+void SdLibraryStorage::objectDelete(const QString &hashUidName, qint32 timeCreation, bool isPrivate )
   {
   QWriteLocker locker( &mLock );
-  mReferenceMap.remove( hashUidName );
-  mDirty = true;
+  if( mReferenceMap.contains(hashUidName) ) {
+    SdLibraryReference ref( mReferenceMap.value(hashUidName) );
+    if( ref.isNewerOrSame(timeCreation) ) {
+      if( isPrivate && ref.isPublic() ) return;
+
+      //Remove library file
+      QFile::remove( fullPathOfLibraryObject( hashUidName ) );
+
+      //Mark as removed object
+      ref.mHeaderPtr = 0;
+
+      //Update insertion time
+      ref.mInsertionTimePrivate = ref.mInsertionTimePublic = SvTime2x::current();
+
+      ref.mCreationTime = timeCreation;
+
+      ref.mIsLocalChanged = false;
+
+      mReferenceMap.insert( hashUidName, ref );
+
+      mDirty = true;
+      }
+    }
   }
 
 
@@ -993,7 +1004,7 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
   qint32 curSync = SvTime2x::current();
   qint32 lastSync = storage->mPrivateLastSync;
   storage->forEachReference( [lastSync,&fileListForChange] (const QString &hashUidName, const SdLibraryReference &ref) {
-    if( !ref.isPublic() && ref.isLocalChanged() && ref.mInsertionTime > lastSync )
+    if( !ref.isPublic() && ref.isLocalChanged() && ref.mInsertionTimePrivate > lastSync )
       fileListForChange.append( SdFileUid( hashUidName, ref.mCreationTime ) );
     });
 
@@ -1011,14 +1022,12 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
         SdLibraryReference ref = storage->cfReference( fileUid.mHashUidName );
         if( ref.mCreationTime != fileUid.mCreateTime ) continue;
 
-        if( ref.isValid() && ref.isLocalChanged() && ref.isInsertAfter(lastSync) ) {
+        if( ref.isValid() && ref.isLocalChanged() && ref.isInsertAfterPrivate(lastSync) ) {
           //This object need to be sync
           if( ref.isRemovePrivate() ) {
             //Build "remove" query
             QCborMap res = client.transferMap( storage->prepareQuery( SDRM_TYPE_REMOVE, fileUid ) );
-            if( res[SDRM_TYPE].toInteger() == SDRM_TYPE_OK )
-              storage->cfDeleteReset( fileUid.mHashUidName, SDLR_REMOVE_PRIVATE );
-            else return;
+            if( res[SDRM_TYPE].toInteger() != SDRM_TYPE_OK ) return;
             }
           else {
             qDebug() << "Check if need to send file:" << fileUid.mHashUidName;
@@ -1067,7 +1076,7 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
             QByteArray fileContent = res[SDRM_CONTENT].toByteArray();
             if( fileContent.isEmpty() ) {
               //Delete from library
-              storage->objectDelete( fileUid.mHashUidName );
+              storage->objectDelete( fileUid.mHashUidName, fileUid.mCreateTime, true );
               }
             else {
               storage->objectPut( fileContent );
@@ -1096,7 +1105,7 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
   curSync = SvTime2x::current();
   lastSync = storage->mGlobalLastSync;
   storage->forEachReference( [lastSync,&fileListForChange] (const QString &hashUidName, const SdLibraryReference &ref) {
-    if( ref.isPublic() && ref.isLocalChanged() && ref.mInsertionTime > lastSync )
+    if( ref.isPublic() && ref.isLocalChanged() && ref.mInsertionTimePublic > lastSync )
       fileListForChange.append( SdFileUid( hashUidName, ref.mCreationTime ) );
     });
 
@@ -1113,14 +1122,12 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
         SdLibraryReference ref = storage->cfReference( fileUid.mHashUidName );
         if( ref.mCreationTime != fileUid.mCreateTime ) continue;
 
-        if( ref.isValid() && ref.isLocalChanged() && ref.isInsertAfter(lastSync) ) {
+        if( ref.isValid() && ref.isLocalChanged() && ref.isInsertAfterPublic(lastSync) ) {
           //This object need to be sync
-          if( ref.isRemoveGlobal() ) {
+          if( ref.isRemovePublic() ) {
             //Build "remove" query
             QCborMap res = client.transferMap( storage->prepareQuery( SDRM_TYPE_REMOVE, fileUid ) );
-            if( res[SDRM_TYPE].toInteger() == SDRM_TYPE_OK )
-              storage->cfDeleteReset( fileUid.mHashUidName, SDLR_REMOVE_PRIVATE );
-            else return;
+            if( res[SDRM_TYPE].toInteger() != SDRM_TYPE_OK ) return;
             }
           else {
             //Build "check" query
@@ -1165,7 +1172,7 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
             QByteArray fileContent = res[SDRM_CONTENT].toByteArray();
             if( fileContent.isEmpty() ) {
               //Delete from library
-              storage->objectDelete( fileUid.mHashUidName );
+              storage->objectDelete( fileUid.mHashUidName, fileUid.mCreateTime, false );
               }
             else {
               storage->objectPut( fileContent );

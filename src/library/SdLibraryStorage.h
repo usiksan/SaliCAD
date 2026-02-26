@@ -211,7 +211,6 @@ class SdLibraryStorage : public QObject
     //!
     bool               cfObjectContains( const QString hashUidName ) const;
 
-    void               cfDeleteReset( const QString hashUidName, quint8 deleteMask );
 
     SdLibraryReference cfReference( const QString &hashUidName ) const;
 
@@ -323,7 +322,7 @@ class SdLibraryStorage : public QObject
 
     QByteArray       objectGetFromFile( const QString &fileName ) const;
 
-    void             objectDelete( const QString &hashUidName );
+    void             objectDelete(const QString &hashUidName, qint32 timeCreation , bool isPrivate);
 
     void             objectPut( const QByteArray &content );
 
